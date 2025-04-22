@@ -1,0 +1,69 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('list-item') {
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  background: mixins.css-variable('list-bg--default');
+
+  @include mixins.e('main') {
+    display: flex;
+    flex: 1;
+    box-sizing: border-box;
+    width: 0;
+
+    @include mixins.m('sider') {
+      margin-right: mixins.css-variable('list-margin-right--main-sider');
+    }
+
+    @include mixins.m('content') {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      justify-content: center;
+      width: 0;
+    }
+
+    @include mixins.m('title-wrapper') {
+      @include mixins.is('bold') {
+        font-weight: mixins.css-variable('list-font-weight--title--bold');
+      }
+    }
+
+    @include mixins.m('title') {
+      margin-bottom: mixins.css-variable('list-margin-bottom--main-title');
+      color: mixins.css-variable('list-color--main-title');
+      font-size: mixins.css-variable('list-font-size--main-title');
+      font-style: normal;
+      line-height: mixins.css-variable('list-line-height--main-title');
+    }
+
+    @include mixins.m('subtitle') {
+      margin-left: mixins.css-variable('list-margin-left--subtitle');
+      color: mixins.css-variable('list-color--main-subtitle');
+      font-size: mixins.css-variable('list-font-size--main-subtitle');
+    }
+
+    @include mixins.m('describe') {
+      color: mixins.css-variable('list-color--describe');
+      font-size: mixins.css-variable('list-font-size--describe');
+      font-style: normal;
+      line-height: mixins.css-variable('list-line-height--describe');
+      word-wrap: break-word;
+      word-break: normal;
+    }
+
+    @include mixins.m('default') {
+      color: mixins.css-variable('list-color--default');
+      font-size: mixins.css-variable('list-font-size--default');
+      font-style: normal;
+      line-height: mixins.css-variable('list-line-height--default');
+      word-wrap: break-word;
+      word-break: normal;
+    }
+  }
+
+  @include mixins.e('right') {
+    padding-left: mixins.css-variable('list-padding-left--right');
+  }
+}

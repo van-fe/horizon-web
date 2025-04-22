@@ -1,0 +1,63 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('date-picker-panel-header') {
+  background: mixins.css-variable('date-picker-bg--panel-header');
+  border-radius: mixins.css-variable('date-picker-border-radius');
+
+  @include mixins.e('container') {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 48px;
+    padding: mixins.css-variable('date-picker-padding--panel-header--container');
+    border-bottom: mixins.css-variable('date-picker-border--panel-header--container');
+  }
+  & #{mixins.block-name('date-picker-panel-header__icon')} {
+    font-size: mixins.css-variable('date-picker-font-size--panel-header--icon') !important;
+    cursor: pointer;
+
+    &:hover {
+      color: mixins.css-variable('date-picker-color--panel-header--icon--hover');
+    }
+
+    &.disabled {
+      color: mixins.css-variable('date-picker-color--panel-table--render-box--disabled--inner-grid') !important;
+      cursor: not-allowed;
+    }
+  }
+
+  @include mixins.e('side') {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 48px;
+    height: 16px;
+
+    & > span {
+      width: 16px;
+      height: 16px;
+    }
+
+    @include mixins.m('single') {
+      width: 16px;
+    }
+  }
+
+  @include mixins.e('center') {
+    width: 156px;
+    height: 17px;
+    color: mixins.css-variable('date-picker-color--panel-header--center');
+    font-weight: mixins.css-variable('date-picker-font-weight--panel-header--center');
+    font-size: mixins.css-variable('date-picker-font-size--panel-header--center');
+    line-height: 17px;
+    text-align: center;
+
+    .year, .month {
+      cursor: pointer;
+
+      &:hover {
+        color: var(--n-date-picker-color--panel-header--icon--hover);
+      }
+    }
+  }
+}

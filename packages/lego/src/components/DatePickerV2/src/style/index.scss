@@ -1,0 +1,58 @@
+@use '../../../../styles/mixins';
+@import './panel-header';
+@import './panel-body';
+@import './shortcuts';
+
+@include mixins.b('date-picker-v2') {
+  @include mixins.e('input-wrapper') {
+    display: flex;
+    align-items: center;
+
+    @include mixins.m('separator'){
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: mixins.css-variable('date-picker-v2', 'color', 'panel', 'header', 'separator');
+    }
+  }
+
+  @include mixins.e('date-panel-container') {
+    display: flex;
+    align-items: stretch;
+
+    @include mixins.e('date-panel') {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      align-items: stretch;
+      width: min-content;
+
+      &:first-child:not(:last-child) {
+        @include mixins.nested('date-picker-v2-panel-body') {
+          border-right: mixins.css-variable('date-picker-v2', 'divider');
+        }
+      }
+    }
+
+    @include mixins.is-not('visible') {
+      pointer-events: none;
+    }
+  }
+
+  @include mixins.is('clearable') {
+    --n-picker-width--append-icon: 32px;
+  }
+
+  @include mixins.e('range-panel-separator') {
+    position: absolute;
+    right: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: mixins.css-variable('date-picker-v2', 'size', 'panel', 'header', 'datetime', 'trigger', 'height');
+    margin: 0 auto;
+    color: mixins.css-variable('date-picker-v2', 'color', 'range-panel-separator');
+    pointer-events: none;
+  }
+}

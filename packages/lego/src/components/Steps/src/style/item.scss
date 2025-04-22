@@ -1,0 +1,164 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('step') {
+  @include mixins.e('wrapper') {
+    display: flex;
+  }
+
+  @include mixins.e('icon') {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    order: 1;
+    width: mixins.css-variable('steps-size--icon');
+    height: mixins.css-variable('steps-size--icon');
+    color: mixins.css-variable('steps-color--icon');
+    border: mixins.css-variable('steps-border--icon');
+    border-radius: 100%;
+    transition: mixins.css-variable('steps-transition--all');
+  }
+
+  @include mixins.e('content') {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    order: 2;
+    margin-left: mixins.css-variable('steps-margin-left--content');
+
+    @include mixins.m('title') {
+      display: flex;
+      align-items: center;
+      height: mixins.css-variable('steps-size--icon');
+      margin-bottom: mixins.css-variable('steps-margin-bottom--title');
+      color: mixins.css-variable('steps-color--title');
+      font-size: mixins.css-variable('steps-font-size--title');
+      white-space: nowrap;
+      transition: mixins.css-variable('steps-transition--all');
+
+      &::after {
+        display: block;
+        flex: 1;
+        height: 1px;
+        margin: 0 mixins.css-variable('steps-margin-x--tail');
+        background: mixins.css-variable('steps-bg--tail');
+        content: '';
+      }
+    }
+
+    @include mixins.m('subtitle') {
+      margin-bottom: mixins.css-variable('steps-margin-bottom--subtitle');
+      color: mixins.css-variable('steps-color--subtitle');
+      font-size: mixins.css-variable('steps-font-size--subtitle');
+      word-break: break-word;
+      transition: mixins.css-variable('steps-transition--all');
+    }
+
+    @include mixins.m('description') {
+      color: mixins.css-variable('steps-color--description');
+      font-size: mixins.css-variable('steps-font-size--description');
+      word-break: break-word;
+      transition: mixins.css-variable('steps-transition--all');
+    }
+  }
+
+  @include mixins.e('tail') {
+    display: none;
+  }
+
+  &:last-child {
+    @include mixins.bem('step', 'content', 'title', false) {
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  @include mixins.is('finish') {
+    @include mixins.e('icon') {
+      color: mixins.css-variable('steps-color--icon--finished');
+      border-color: mixins.css-variable('steps-border-color--icon--finished');
+    }
+  }
+
+  @include mixins.is('process') {
+    @include mixins.e('icon') {
+      color: mixins.css-variable('steps-color--icon--process');
+      background: mixins.css-variable('steps-bg--icon--process');
+      border-color: mixins.css-variable('steps-border-color--icon--process');
+    }
+  }
+
+  @include mixins.is('warning') {
+    @include mixins.e('icon') {
+      color: mixins.css-variable('steps-color--icon--warning');
+      background: mixins.css-variable('steps-bg--icon--warning');
+      border-color: mixins.css-variable('steps-border-color--icon--warning');
+    }
+  }
+
+  @include mixins.is('error') {
+    @include mixins.e('icon') {
+      color: mixins.css-variable('steps-color--icon--error');
+      background: mixins.css-variable('steps-bg--icon--error');
+      border-color: mixins.css-variable('steps-border-color--icon--error');
+    }
+  }
+
+  @include mixins.is('disabled') {
+    cursor: not-allowed;
+
+    @include mixins.e('icon') {
+      color: mixins.css-variable('steps-color--icon--disabled');
+      background: mixins.css-variable('steps-bg--icon--disabled');
+      border-color: mixins.css-variable('steps-border-color--icon--disabled');
+    }
+
+    @include mixins.e('content') {
+      @include mixins.m('title') {
+        color: mixins.css-variable('steps-color--title--disabled');
+      }
+    }
+  }
+
+  /**
+  @include mixins.is('next-finish') {
+    @include mixins.e('content') {
+      @include mixins.m('title') {
+        &::after {
+          background: mixins.css-variable('steps-bg--tail--finished');
+        }
+      }
+    }
+  }
+
+  @include mixins.is('next-process') {
+    @include mixins.e('content') {
+      @include mixins.m('title') {
+        &::after {
+          background: mixins.css-variable('steps-bg--tail--process');
+        }
+      }
+    }
+  }
+
+  @include mixins.is('next-warning') {
+    @include mixins.e('content') {
+      @include mixins.m('title') {
+        &::after {
+          background: mixins.css-variable('steps-bg--tail--warning');
+        }
+      }
+    }
+  }
+
+  @include mixins.is('next-error') {
+    @include mixins.e('content') {
+      @include mixins.m('title') {
+        &::after {
+          background: mixins.css-variable('steps-bg--tail--error');
+        }
+      }
+    }
+  }
+  **/
+}

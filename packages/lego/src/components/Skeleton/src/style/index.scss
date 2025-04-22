@@ -1,0 +1,74 @@
+@use '../../../../styles/mixins';
+
+@mixin skeleton-color() {
+  background:
+    linear-gradient(
+      90deg,
+      #{mixins.css-variable('bg-tertiary')} 25%,
+      #{mixins.css-variable('bg-secondary')} 37%,
+      #{mixins.css-variable('bg-tertiary')} 63%
+    );
+  background-size: 400% 100%;
+  animation: #{mixins.block('skeleton-loading')} 2s ease-in-out infinite;
+}
+
+@keyframes #{mixins.block('skeleton-loading')} {
+  0% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+@include mixins.b('skeleton') {
+  width: 100%;
+
+  @include mixins.e('animated') {
+    @include mixins.be('skeleton', 'item', false) {
+      @include skeleton-color;
+    }
+  }
+}
+
+@include mixins.b('skeleton__item') {
+  @include mixins.e('avatar') {
+    display: inline-block;
+    width: mixins.css-variable('skeleton-size--avatar');
+    height: mixins.css-variable('skeleton-size--avatar');
+    background: mixins.css-variable('skeleton-bg');
+    border-radius: mixins.css-variable('skeleton-border-radius--avatar');
+  }
+
+  @include mixins.e('text') {
+    width: 100%;
+    height: mixins.css-variable('skeleton-height--text');
+    margin-bottom: mixins.css-variable('skeleton-margin-bottom');
+    background: mixins.css-variable('skeleton-bg');
+    border-radius: mixins.css-variable('skeleton-border-radius');
+  }
+
+  @include mixins.e('operate') {
+    width: mixins.css-variable('skeleton-width--operate');
+    height: mixins.css-variable('skeleton-height--operate');
+    margin-bottom: mixins.css-variable('skeleton-margin-bottom');
+    background: mixins.css-variable('skeleton-bg');
+    border-radius: mixins.css-variable('skeleton-border-radius');
+  }
+
+  @include mixins.e('image') {
+    width: mixins.css-variable('skeleton-size--image');
+    height: mixins.css-variable('skeleton-size--image');
+    margin-bottom: mixins.css-variable('skeleton-margin-bottom');
+    background: mixins.css-variable('skeleton-bg');
+    border-radius: mixins.css-variable('skeleton-border-radius');
+  }
+
+  @include mixins.e('picture') {
+    width: mixins.css-variable('skeleton-size--picture');
+    height: mixins.css-variable('skeleton-size--picture');
+    background: mixins.css-variable('skeleton-bg');
+    border-radius: mixins.css-variable('skeleton-border-radius');
+  }
+}

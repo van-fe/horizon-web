@@ -1,0 +1,22 @@
+{
+  "name": "@nio-fe/api-generator",
+  "version": "1.0.0",
+  "description": "Build necessary types file for lego",
+  "scripts": {
+    "build": "pnpm run build:analysis-dependencies && pnpm run build:analysis-options && pnpm run build:ide-json",
+    "build:analysis-dependencies": "bun run src/analysis-dependencies/index.ts",
+    "build:analysis-options": "bun run src/analysis-options/index.ts",
+    "build:ide-json": "bun run src/generator-ide-json/index.ts",
+    "rm": "rm -rf dist"
+  },
+  "dependencies": {
+    "sucrase": "^3.35.0"
+  },
+  "devDependencies": {
+    "@nio-fe/shared": "workspace:*",
+    "chalk": "^4.1.2",
+    "deepmerge": "^4.2.2",
+    "fast-glob": "^3.2.11",
+    "ts-morph": "^24.0.0"
+  }
+}

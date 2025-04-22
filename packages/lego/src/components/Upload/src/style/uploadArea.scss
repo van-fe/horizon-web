@@ -1,0 +1,69 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('upload-area') {
+  display: flex;
+  justify-content: center;
+  height: mixins.css-variable('upload-height--area');
+  padding: mixins.css-variable('upload-padding--area');
+  background-color: mixins.css-variable('upload-bg--area');
+  border: mixins.css-variable('upload-border--area');
+  cursor: pointer;
+
+  @include mixins.m('disabled') {
+    background-color: mixins.css-variable('upload-bg--area--disabled');
+    cursor: not-allowed;
+  }
+
+  @include mixins.m('normal') {
+    &:hover {
+      background-color: mixins.css-variable('upload-bg--area--normal--hover');
+      border-color: mixins.css-variable('upload-border-color--area--normal--hover');
+
+      @include mixins.e('icon-box') {
+        color: mixins.css-variable('upload-color--icon-box--area--normal');
+      }
+
+      @include mixins.e('title-text') {
+        color: mixins.css-variable('upload-color--icon-box--area--normal');
+      }
+    }
+
+    &:active {
+      background-color: mixins.css-variable('upload-bg--area--normal--active');
+      border-color: mixins.css-variable('upload-border-color--area--normal--active');
+
+      @include mixins.e('icon-box') {
+        color: mixins.css-variable('upload-color--icon-box--area--normal--active');
+      }
+      @include mixins.e('title-text') {
+        color: mixins.css-variable('upload-color--icon-box--area--normal--active');
+      }
+    }
+  }
+
+  @include mixins.e('inner-box') {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    height: 100%;
+  }
+
+  @include mixins.e('title') {
+    display: flex;
+    justify-content: center;
+    margin-bottom: mixins.css-variable('upload-margin-bottom--title--area');
+    color: mixins.css-variable('upload-color--title--area');
+    line-height: mixins.css-variable('upload-line-height--title--area');
+  }
+
+  @include mixins.e('title-text') {
+    margin-left: mixins.css-variable('upload-margin-left--title-text-area');
+  }
+
+  @include mixins.e('tips') {
+    color: mixins.css-variable('upload-color--tips--area');
+    line-height: mixins.css-variable('upload-line-height--tips--area');
+  }
+}

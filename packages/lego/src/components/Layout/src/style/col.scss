@@ -1,0 +1,95 @@
+@use 'sass:math';
+@use '../../../../styles/mixins';
+
+@mixin col-style($size) {
+  @for $i from 0 through 24 {
+    @include mixins.m((#{$size}-#{$i})) {
+      flex: 0 0 (math.div(1, 24) * $i * 100) * 1%;
+      max-width: (math.div(1, 24) * $i * 100) * 1%;
+    }
+
+    @include mixins.m((offset-#{$size}-#{$i})) {
+      margin-left: (math.div(1, 24) * $i * 100) * 1%;
+    }
+
+    @include mixins.m((pull-#{$size}-#{$i})) {
+      position: relative;
+      right: (math.div(1, 24) * $i * 100) * 1%;
+    }
+
+    @include mixins.m((push-#{$size}-#{$i})) {
+      position: relative;
+      left: (math.div(1, 24) * $i * 100) * 1%;
+    }
+  }
+}
+
+@include mixins.b('col') {
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 100%;
+
+  @for $i from 0 through 24 {
+    @include mixins.m(span-#{$i}) {
+      flex: 0 0 (math.div(1, 24) * $i * 100) * 1%;
+      max-width: (math.div(1, 24) * $i * 100) * 1%;
+    }
+
+    @include mixins.m(offset-#{$i}) {
+      margin-left: (math.div(1, 24) * $i * 100) * 1%;
+    }
+
+    @include mixins.m(pull-#{$i}) {
+      position: relative;
+      right: (math.div(1, 24) * $i * 100) * 1%;
+    }
+
+    @include mixins.m(push-#{$i}) {
+      position: relative;
+      left: (math.div(1, 24) * $i * 100) * 1%;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    @include col-style('xs');
+
+    padding: 0 calc(#{mixins.css-variable('layout-margin-bottom--row--xsmall')} / 2);
+  }
+
+  @media screen and (min-width: 480px) and (max-width: 1023px) {
+    @include col-style('sm');
+
+    padding: 0 calc(#{mixins.css-variable('layout-margin-bottom--row--small')} / 2);
+  }
+
+  @media screen and (min-width: 1024px) and (max-width: 1439px) {
+    @include col-style('md');
+
+    padding: 0 calc(#{mixins.css-variable('layout-margin-bottom--row--medium')} / 2);
+  }
+
+  @media screen and (min-width: 1440px) and (max-width: 1919px) {
+    @include col-style('lg');
+
+    padding: 0 calc(#{mixins.css-variable('layout-margin-bottom--row--large')} / 2);
+  }
+
+  @media screen and (min-width: 1920px) and (max-width: 2879px) {
+    @include col-style('xl');
+
+    padding: 0 calc(#{mixins.css-variable('layout-margin-bottom--row--xlarge')} / 2);
+  }
+
+  @media screen and (min-width: 2880px) and (max-width: 3839px) {
+    @include col-style('xxl');
+
+    padding: 0 calc(#{mixins.css-variable('layout-margin-bottom--row--xxlarge')} / 2);
+  }
+
+
+  @media screen and (min-width: 3840px) {
+    @include col-style('xxl');
+
+    padding: 0 calc(#{mixins.css-variable('layout-margin-bottom--row--xxlarge')} / 2);
+  }
+}

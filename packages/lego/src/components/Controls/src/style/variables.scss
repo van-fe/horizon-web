@@ -1,0 +1,19 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  'size--control': 24px,
+  'color--control-icon': #{function.css-variable('text-primary')},
+  'color--control-icon--disabled': #{function.css-variable('text-disabled')},
+  'color--control-icon--light': #{function.css-variable('text-inverse')},
+  'color--control-icon--light--disabled': #{function.css-variable('text-inverse-disabled')},
+  'border-radius': #{function.css-variable('radius-m')},
+  'bg--disabled': #{function.css-variable('bg-disabled')},
+  'bg--disabled--light': #{function.css-variable('bg-overlay-default')},
+  'bg--control--hover': #{function.css-variable('bg-hover')},
+  'bg--control--press': #{function.css-variable('bg-press')},
+  'bg--control--hover--light': #{function.css-variable('bg-overlay-inverse')},
+  'bg--control--press--light': #{function.css-variable('bg-overlay-inverse')},
+  'margin-x--control-siblings': #{function.css-variable('spacing-2')},
+  'margin': #{function.css-variable('spacing-4')},
+  'margin-right--dropdown-item--svg': #{function.css-variable('dropdown-margin-right--item--icon')},
+);

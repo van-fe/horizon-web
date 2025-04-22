@@ -1,0 +1,70 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('menu') {
+  @include mixins.is('vertical') {
+    width: mixins.css-variable('menu-width--vertical');
+    border-right: mixins.css-variable('menu-border--placeholder');
+
+    @include mixins.e('container', false) {
+      flex-direction: column;
+      min-width: 0;
+      transition: mixins.css-variable('menu-transiton--all');
+    }
+
+    @include mixins.e('prepend') {
+      flex: 0 0 mixins.css-variable('menu-height--prepend--vertical');
+      padding: mixins.css-variable('menu-padding--prepend--vertical');
+    }
+
+    @include mixins.e('inner') {
+      flex: 1;
+      min-height: 0;
+    }
+
+    @include mixins.e('append') {
+      display: flex;
+      flex: 0 0 mixins.css-variable('menu-height--append--vertical');
+      align-items: center;
+      padding: mixins.css-variable('menu-padding--append--vertical');
+
+      @include mixins.m('inner') {
+        display: flex;
+        flex: 1;
+        grid-column-gap: mixins.css-variable('menu-column-gap--append--vertical');
+        align-items: center;
+        margin-left: mixins.css-variable('menu-column-gap--append--vertical');
+      }
+    }
+
+    @include mixins.is('collapsed') {
+      width: mixins.css-variable('menu-width--vertical--collapsed') !important;
+
+      @include mixins.e('title', false) {
+        @include mixins.m('inner') {
+          justify-content: center;
+          padding: mixins.css-variable('menu-padding--title-inner--collapsed');
+        }
+
+        @include mixins.m('content') {
+          flex-direction: column;
+        }
+      }
+
+      @include mixins.is('collapsed-show-title') {
+        @include mixins.e('title', false) {
+          height: mixins.css-variable('menu-height--title--collapsed');
+
+          @include mixins.m('text') {
+            display: block !important;
+            max-width: 100%;
+            margin-top: mixins.css-variable('menu-margin-top--title-text--collapsed');
+            overflow: hidden;
+            font-size: mixins.css-variable('menu-font-size--title-span--collapsed');
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+  }
+}

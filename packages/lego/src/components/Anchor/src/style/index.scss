@@ -1,0 +1,146 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('anchor') {
+  position: relative;
+  display: inline-block;
+  margin: mixins.css-variable('anchor-margin');
+
+  @include mixins.e('collapse-btn') {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: mixins.css-variable('anchor-min-height--collapse-btn');
+    padding: mixins.css-variable('anchor-padding--collapse-btn');
+    color: mixins.css-variable('anchor-color--collapse-btn-arrow');
+    font-weight: bold;
+    font-size: mixins.css-variable('anchor-font-size--small');
+    background-color: mixins.css-variable('anchor-bg--collapse-btn');
+    border-radius: mixins.css-variable('anchor-border-radius--collapse-btn');
+    transform: translateX(-100%);
+    cursor: pointer;
+
+    @include mixins.e('collapse-btn-txt') {
+      display: none;
+      margin-left: mixins.css-variable('anchor-margin-left--collapse-btn-txt');
+      color: mixins.css-variable('anchor-color--collapse-btn-txt');
+      font-weight: normal;
+    }
+
+    @include mixins.is('collapse') {
+      position: relative;
+      max-width: mixins.css-variable('anchor-max-width--collapse-btn');
+      padding: mixins.css-variable('anchor-padding--collapse-btn--is-collapse');
+      border: mixins.css-variable('anchor-border--collapse-btn');
+      box-shadow: 0 4px 6px rgba(0, 22, 60, 2%), 0 2px 4px rgba(0, 22, 60, 2%), 0 1px 2px rgba(0, 0, 60, 1%);
+      transform: translateX(0);
+
+      @include mixins.e('collapse-btn-txt') {
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
+  @include mixins.e('wrap') {
+    position: relative;
+    max-width: mixins.css-variable('anchor-width');
+    padding-left: mixins.css-variable('anchor-width--line');
+    font-size: mixins.css-variable('anchor-font-size');
+    background-color: mixins.css-variable('anchor-bg');
+
+    @include mixins.e('line') {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: mixins.css-variable('anchor-width--line');
+      height: 100%;
+      background-color: mixins.css-variable('anchor-bg--line');
+
+      @include mixins.m('highlight') {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: mixins.css-variable('anchor-bg--line--highlight');
+        transition: all mixins.css-variable('anchor-transition-time');
+      }
+    }
+
+    @include mixins.e('link') {
+      padding-left: mixins.css-variable('anchor-padding-left--link');
+
+      @include mixins.e('link-title') {
+        width: 100%;
+        height: 100%;
+        margin-top: mixins.css-variable('anchor-margin-top--link-title');
+        padding: mixins.css-variable('anchor-padding--title');
+
+        @include mixins.e('link-title-txt') {
+          display: inline-block;
+          display: -webkit-box;
+          width: 100%;
+          min-height: mixins.css-variable('anchor-min-height--line-text');
+          max-height: calc(#{mixins.css-variable('anchor-min-height--line-text')} * 2);
+          overflow: hidden;
+          color: mixins.css-variable('anchor-color--link-text');
+          line-height: mixins.css-variable('anchor-min-height--line-text');
+          text-align: left;
+          text-decoration: none;
+          text-overflow: ellipsis;
+          word-break: break-all;
+          transition: color mixins.css-variable('anchor-transition-time');
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+        }
+
+        @include mixins.is('active') {
+          @include mixins.e('link-title-txt') {
+            color: mixins.css-variable('anchor-color--link-text--activated') !important;
+          }
+        }
+        @include mixins.is('hide') {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+@include mixins.b('anchor') {
+  @include mixins.e('wrap') {
+    @include mixins.child-element('>', 'link', true) {
+      padding-left: mixins.css-variable('anchor-padding-left--link--next');
+
+      @include mixins.child-element('>', 'link-title', true) {
+        margin-top: mixins.css-variable('anchor-margin-top--link-title--next');
+      }
+
+      &:nth-child(2) {
+        @include mixins.child-element('>', 'link-title') {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+
+  // 尺寸切换
+  @include mixins.m('small') {
+    @include mixins.e('wrap') {
+      max-width: mixins.css-variable('anchor-width--small');
+      font-size: mixins.css-variable('anchor-font-size--small');
+
+      @include mixins.e('link-title') {
+        @include mixins.e('link-title-txt') {
+          min-height: mixins.css-variable('anchor-min-height--line-text--small');
+          max-height: calc(#{mixins.css-variable('anchor-min-height--line-text--small')} * 2);
+          line-height: mixins.css-variable('anchor-min-height--line-text--small');
+        }
+      }
+    }
+  }
+}

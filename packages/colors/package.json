@@ -1,0 +1,21 @@
+{
+  "name": "@nio-fe/colors",
+  "version": "1.0.0",
+  "main": "./dist/colors.cjs",
+  "module": "./dist/colors.js",
+  "unpkg": "./dist/colors.umd.js",
+  "types": "./types/index.d.ts",
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "bunx --bun vite build && pnpm build:browser && pnpm build:ts",
+    "build:browser": "bunx --bun vite build --config vite.browser.config.ts",
+    "build:ts": "tsc -d --pretty --emitDeclarationOnly --declarationDir ./types"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@nio-fe/shared": "workspace:*",
+    "@ctrl/tinycolor": "^3.6.0"
+  }
+}

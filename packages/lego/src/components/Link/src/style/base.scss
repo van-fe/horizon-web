@@ -1,0 +1,78 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('link') {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: mixins.css-variable('link-transition--all');
+
+  + * {
+    margin-left: mixins.css-variable('link-margin-left--siblings');
+  }
+
+  @include mixins.e('prefix') {
+    margin-right: mixins.css-variable('link-margin-left--prefix');
+  }
+
+  @include mixins.e('suffix') {
+    margin-left: mixins.css-variable('link-margin-left--suffix');
+  }
+
+  @include mixins.has('underline') {
+    text-decoration: underline;
+    text-decoration-color: transparent;
+  }
+
+  @include mixins.has('attribute') {
+    text-decoration-style: dotted;
+    text-underline-offset: 4px;
+  }
+
+  @include mixins.has('anchor') {
+    @include mixins.e('anchor') {
+      margin-left: mixins.css-variable('link-margin-left--anchor');
+      visibility: hidden;
+      cursor: pointer;
+    }
+
+    @include mixins.is('anchor-left') {
+      @include mixins.e('anchor') {
+        position: absolute;
+        left: 0;
+        margin-left: 0;
+        padding-right: mixins.css-variable('link-margin-left--anchor');
+        transform: translateX(-100%);
+      }
+    }
+  }
+
+  &:hover {
+    @include mixins.has('anchor') {
+      @include mixins.e('anchor') {
+        visibility: visible;
+      }
+    }
+  }
+
+  &:active {
+    @include mixins.has('anchor') {
+      @include mixins.e('anchor') {
+        visibility: visible;
+      }
+    }
+  }
+
+  &:visited {
+    @include mixins.has('anchor') {
+      @include mixins.e('anchor') {
+        visibility: visible;
+      }
+    }
+  }
+
+  svg {
+    margin-right: mixins.css-variable('link-margin-right--loading-svg');
+  }
+}

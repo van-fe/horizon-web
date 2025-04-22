@@ -1,0 +1,61 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('upload-img') {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  margin: mixins.css-variable('upload-margin--img');
+
+  @include mixins.e('control') {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: mixins.css-variable('upload-margin--control--img');
+    background-color: mixins.css-variable('upload-bg--control--img');
+    border: mixins.css-variable('upload-border--control--img');
+    border-radius: mixins.css-variable('upload-border-radius');
+    cursor: pointer;
+
+    @include mixins.m('normal') {
+      &:hover {
+        color: mixins.css-variable('upload-color--control--normal--hover');
+        background-color: mixins.css-variable('upload-bg--control--img--hover');
+        border-color: mixins.css-variable('upload-border-color--control--img--hover');
+      }
+
+      &:active {
+        color: mixins.css-variable('upload-color--control--normal--active');
+        background-color: mixins.css-variable('upload-bg--control--img--active');
+        border-color: mixins.css-variable('upload-border-color--control--img--active');
+      }
+    }
+
+    @include mixins.m('disabled') {
+      background-color: mixins.css-variable('upload-bg--control--img--disabled');
+      cursor: not-allowed;
+    }
+  }
+
+  #{mixins.block-name('upload-file-preview')}, #{mixins.block-name('upload-img-preview')} {
+    margin: mixins.css-variable('upload-margin--file-preview');
+  }
+
+  @include mixins.be('upload-file-preview', 'content', false) {
+    width: 200px;
+  }
+
+  @include mixins.bm('upload-file-preview', 'large', false) {
+    padding-top: mixins.css-variable('upload-padding-top--file-preview--large');
+    padding-bottom: mixins.css-variable('upload-padding-bottom--file-preview--large');
+  }
+
+  @include mixins.bm('upload-file-preview', 'medium', false) {
+    padding-top: mixins.css-variable('upload-padding-top--file-preview--medium');
+    padding-bottom: mixins.css-variable('upload-padding-bottom--file-preview--medium');
+  }
+
+  @include mixins.bm('upload-file-preview', 'small', false) {
+    padding-top: mixins.css-variable('upload-padding-top--file-preview--small');
+    padding-bottom: mixins.css-variable('upload-padding-bottom--file-preview--small');
+  }
+}

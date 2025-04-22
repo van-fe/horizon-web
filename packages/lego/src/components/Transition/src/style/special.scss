@@ -1,0 +1,36 @@
+@use '../../../../styles/mixins';
+
+@mixin float-animate($speed) {
+  $time-func: '';
+
+  @if  $speed == 'normal' {
+    $time-func: mixins.css-variable('transition-time');
+  } @else if $speed == 'fast' {
+    $time-func: mixins.css-variable('transition-time-fast');
+  } @else if $speed == 'slow' {
+    $time-func: mixins.css-variable('transition-time-slow');
+  } @else if $speed == 'extra-fast' {
+    $time-func: mixins.css-variable('transition-time-extra-fast');
+  }
+
+  #{mixins.block-name('float-#{$speed}-enter-active')},
+  #{mixins.block-name('float-#{$speed}-leave-active')} {
+    transition: opacity #{$time-func}, transform #{$time-func};
+  }
+
+  #{mixins.block-name('float-#{$speed}-enter-from')},
+  #{mixins.block-name('float-#{$speed}-leave-to')} {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+
+  #{mixins.block-name('float-#{$speed}-leave-active')} {
+    position: absolute !important;
+  }
+}
+
+@include float-animate('normal');
+@include float-animate('fast');
+@include float-animate('slow');
+
+

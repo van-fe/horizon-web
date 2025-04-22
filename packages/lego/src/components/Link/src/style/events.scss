@@ -1,0 +1,20 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('link') {
+  @include mixins.has('anchor') {
+    cursor: default;
+
+    @include mixins.e('anchor') {
+      cursor: pointer;
+      pointer-events: auto;
+    }
+  }
+
+  @include mixins.is('disabled') {
+    cursor: not-allowed;
+
+    @include mixins.has('underline') {
+      text-decoration: none;
+    }
+  }
+}

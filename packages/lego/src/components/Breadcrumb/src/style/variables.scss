@@ -1,0 +1,14 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  'max-width--item': 150px,
+  'font-size': #{function.css-variable('text-base')},
+  'font-size--small': #{function.css-variable('text-sm')},
+  'font-weight': #{function.css-variable('weight-strong')},
+  'color--default': #{function.css-variable('text-tertiary')},
+  'color--active': #{function.css-variable('text-primary')},
+  'color--hover': #{function.css-variable('text-brand-hover')},
+  'color--press': #{function.css-variable('text-brand-press')},
+  'line-height': #{function.css-variable('line-height-standard-for-odd')},
+  'spacing': #{function.css-variable('spacing-2')},
+);

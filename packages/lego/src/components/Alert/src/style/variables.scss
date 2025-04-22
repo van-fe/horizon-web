@@ -1,0 +1,22 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  'bg--default': #{function.css-variable('bg-default')},
+  'bg--info': #{function.css-variable('bg-info-weak-hover')},
+  'bg--success': #{function.css-variable('bg-success-weak-hover')},
+  'bg--warning': #{function.css-variable('bg-warning-weak-hover')},
+  'bg--error': #{function.css-variable('bg-error-weak-hover')},
+  'color': #{function.css-variable('text-primary')},
+  'line-height': #{function.css-variable('line-height-standard')},
+  'font-size--title': #{function.css-variable('text-lg')},
+  'font-size--content': #{function.css-variable('text-base')},
+  'font-weight--title': #{function.css-variable('weight-strong')},
+  'padding': #{function.css-variable('spacing-5')},
+  'padding--small': #{function.css-variable('spacing-3')},
+  'radius': #{function.css-variable('radius-m')},
+  'content--gap--small': #{function.css-variable('spacing-2')},
+  'content--gap': #{function.css-variable('spacing-3')},
+  'content--action-gap--small': #{function.css-variable('spacing-5')},
+  'content--action-gap': #{function.css-variable('spacing-7')},
+  'title-weight': #{function.css-variable('weight-3')},
+);

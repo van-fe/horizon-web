@@ -1,0 +1,66 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('recycle-scroller') {
+  position: relative;
+
+  @include mixins.is('direction-vertical') {
+    &:not(.is-page-mode) {
+      overflow-y: auto;
+    }
+
+    @include mixins.e('item-wrapper') {
+      width: 100%;
+    }
+
+    @include mixins.is('expand-by-children') {
+      @include mixins.e('item-view') {
+        width: fit-content;
+        min-width: var(--scroller-width);
+      }
+    }
+
+    @include mixins.is-not('expand-by-children') {
+      @include mixins.e('item-view') {
+        width: 100%;
+      }
+    }
+  }
+
+  @include mixins.e('slot') {
+    flex: auto 0 0;
+  }
+
+  @include mixins.e('item-wrapper') {
+    position: relative;
+    flex: 1;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  @include mixins.e('item-view') {
+    position: absolute;
+    top: 0;
+    left: 0;
+    will-change: transform;
+  }
+
+  @include mixins.is('direction-horizontal') {
+    display: flex;
+
+    &:not(.is-page-mode) {
+      overflow-x: auto;
+    }
+
+    @include mixins.e('item-wrapper') {
+      height: 100%;
+    }
+
+    @include mixins.e('item-view') {
+      height: 100%;
+    }
+
+    @include mixins.be('scrollbar', 'view', false) {
+      height: 100%;
+    }
+  }
+}

@@ -1,0 +1,37 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('card') {
+  display: flex;
+  flex-direction: column;
+  padding: mixins.css-variable('card-padding');
+  background-color: mixins.css-variable('background-color');
+  row-gap: mixins.css-variable('card-row-gap');
+
+  @include mixins.m('none') {
+    border-radius: 0;
+  }
+  @include mixins.m('small') {
+    border-radius: mixins.css-variable('card-radius-small');
+  }
+  @include mixins.m('medium') {
+    border-radius: mixins.css-variable('card-radius-medium');
+  }
+  @include mixins.m('large') {
+    border-radius: mixins.css-variable('card-radius-large');
+  }
+  @include mixins.is('border') {
+    border: 1px solid mixins.css-variable('card-divider-color');
+  }
+  @include mixins.e('header') {
+    font-weight: mixins.css-variable('card-header-font-weight');
+    font-size: mixins.css-variable('card-header-font-size');
+  }
+  @include mixins.e('content') {
+    font-size: mixins.css-variable('card-content-font-size');
+  }
+  @include mixins.e('divider') {
+    width: 100%;
+    height: 1px;
+    background-color: mixins.css-variable('card-divider-color');
+  }
+}

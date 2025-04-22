@@ -1,0 +1,83 @@
+@use '../../../../styles/mixins';
+
+@mixin zoom-in-animate($speed) {
+  $time-func: '';
+
+  @if  $speed == 'normal' {
+    $time-func: mixins.css-variable('transition-time');
+  } @else if $speed == 'fast' {
+    $time-func: mixins.css-variable('transition-time-fast');
+  } @else if $speed == 'slow' {
+    $time-func: mixins.css-variable('transition-time-slow');
+  } @else if $speed == 'extra-fast' {
+    $time-func: mixins.css-variable('transition-time-extra-fast');
+  }
+
+  #{mixins.block-name('zoom-in-center-#{$speed}-enter-active')},
+  #{mixins.block-name('zoom-in-center-#{$speed}-leave-active')} {
+    transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);
+    transition-duration: #{$time-func};
+    transition-property: opacity, transform;
+  }
+  #{mixins.block-name('zoom-in-center-#{$speed}-enter-from')},
+  #{mixins.block-name('zoom-in-center-#{$speed}-leave-active')} {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+
+  #{mixins.block-name('zoom-in-top-#{$speed}-enter-active')},
+  #{mixins.block-name('zoom-in-top-#{$speed}-leave-active')} {
+    transform: scaleY(1);
+    transform-origin: center top;
+    opacity: 1;
+    transition-timing-function: mixins.css-variable('transition-func-fast-bezier');
+    transition-duration: #{$time-func};
+    transition-property: opacity, transform;
+
+    &[data-popper-placement^='top'] {
+      transform-origin: center bottom;
+    }
+  }
+  #{mixins.block-name('zoom-in-top-#{$speed}-enter-from')},
+  #{mixins.block-name('zoom-in-top-#{$speed}-leave-active')} {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+
+  #{mixins.block-name('zoom-in-bottom-#{$speed}-enter-active')},
+  #{mixins.block-name('zoom-in-bottom-#{$speed}-leave-active')} {
+    transform: scaleY(1);
+    transform-origin: center bottom;
+    opacity: 1;
+    transition-timing-function: mixins.css-variable('transition-func-fast-bezier');
+    transition-duration: #{$time-func};
+    transition-property: opacity, transform;
+  }
+  #{mixins.block-name('zoom-in-bottom-#{$speed}-enter-from')},
+  #{mixins.block-name('zoom-in-bottom-#{$speed}-leave-active')} {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+
+  #{mixins.block-name('zoom-in-left-#{$speed}-enter-active')},
+  #{mixins.block-name('zoom-in-left-#{$speed}-leave-active')} {
+    transform: scale(1, 1);
+    transform-origin: top left;
+    opacity: 1;
+    transition-timing-function: mixins.css-variable('transition-func-fast-bezier');
+    transition-duration: #{$time-func};
+    transition-property: opacity, transform;
+  }
+
+  #{mixins.block-name('zoom-in-left-#{$speed}-enter-from')},
+  #{mixins.block-name('zoom-in-left-#{$speed}-leave-active')} {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+}
+
+@include zoom-in-animate('normal');
+@include zoom-in-animate('fast');
+@include zoom-in-animate('slow');
+
+

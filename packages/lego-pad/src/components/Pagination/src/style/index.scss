@@ -1,0 +1,17 @@
+@use 'sass:map';
+@use '@nio-fe/lego/es/styles/mixins';
+@use '@nio-fe/lego/es/components/Pagination/src/style/variables' as paginationVariables;
+@use '@nio-fe/lego/es/components/InputNumber/src/style/variables' as inputNumberVariables;
+
+.is-suit-pad {
+  &:not(.not-for-pagination) {
+    @include mixins.b('pagination', false) {
+      #{mixins.css-variable-name('pagination', 'height')}: map.get(paginationVariables.$values, 'height--large');
+      #{mixins.css-variable-name('pagination', 'border-radius')}: map.get(paginationVariables.$values, 'border-radius--large');
+      #{mixins.css-variable-name('input-number', 'height', '-small')}: map.get(inputNumberVariables.$values, 'height--default');
+      #{mixins.css-variable-name('input-number', 'font-size', '-small')}: map.get(inputNumberVariables.$values, 'font-size');
+      #{mixins.css-variable-name('input-number', 'line-height', '-small')}: map.get(inputNumberVariables.$values, 'line-height');
+      #{mixins.css-variable-name('input-number', 'border-radius', '-small')}: map.get(inputNumberVariables.$values, 'border-radius');
+    }
+  }
+}

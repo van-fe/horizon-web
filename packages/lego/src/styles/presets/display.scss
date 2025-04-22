@@ -1,0 +1,11 @@
+$display-values: (inline, inline-block, block, flex, inline-flex, grid, inline-grid);
+
+.hidden {
+  display: none !important;
+}
+
+@each $display-value in $display-values {
+  .#{$display-value} {
+    display: $display-value !important;
+  }
+}

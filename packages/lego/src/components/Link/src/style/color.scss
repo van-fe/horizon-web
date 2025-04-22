@@ -1,0 +1,78 @@
+@use '../../../../styles/mixins';
+
+@mixin set-color-by-event($event, $color) {
+  &:#{$event} {
+    color: $color;
+    text-decoration-color: $color;
+  }
+}
+
+@include mixins.b('link') {
+  @include mixins.m('default', 'positive') {
+    color: mixins.css-variable('link-color--positive');
+
+    @include mixins.is('underline-always') {
+      text-decoration-color: mixins.css-variable('link-color--positive')
+    }
+
+    @include set-color-by-event('hover', mixins.css-variable('link-color--positive--hover'));
+    @include set-color-by-event('active', mixins.css-variable('link-color--positive--active'));
+  }
+
+  @include mixins.m('text', 'neutral') {
+    color: mixins.css-variable('link-color--neutral');
+
+    @include mixins.is('underline-always') {
+      text-decoration-color: mixins.css-variable('link-color--neatural')
+    }
+
+    @include set-color-by-event('hover', mixins.css-variable('link-color--neutral--hover'));
+    @include set-color-by-event('active', mixins.css-variable('link-color--neutral--active'));
+  }
+
+  @include mixins.m('negative') {
+    color: mixins.css-variable('link-color--negative');
+
+    @include mixins.is('underline-always') {
+      text-decoration-color: mixins.css-variable('link-color--negative')
+    }
+
+    @include set-color-by-event('hover', mixins.css-variable('link-color--negative--hover'));
+    @include set-color-by-event('active', mixins.css-variable('link-color--negative--active'));
+  }
+
+  @include mixins.has('attribute') {
+    text-decoration-color: mixins.css-variable('link-border-color--attribute');
+  }
+
+  @include mixins.has('anchor') {
+    color: mixins.css-variable('link-color--neutral');
+    text-decoration-color: mixins.css-variable('link-color--neutral');
+  }
+
+  @include mixins.e('anchor') {
+    color: mixins.css-variable('link-color--positive');
+
+    @include mixins.is('underline-always') {
+      text-decoration-color: mixins.css-variable('link-color--positive')
+    }
+
+    @include set-color-by-event('hover', mixins.css-variable('link-color--positive--hover'));
+    @include set-color-by-event('active', mixins.css-variable('link-color--positive--active'));
+  }
+
+  &:visited {
+    color: mixins.css-variable('link-color--visited') !important;
+    text-decoration-color: mixins.css-variable('link-color--visited');
+  }
+}
+
+@include mixins.b('link') {
+  @include mixins.is('disabled') {
+    color: mixins.css-variable('link-color--disabled');
+
+    @include mixins.e('anchor') {
+      color: mixins.css-variable('link-color--disabled');
+    }
+  }
+}

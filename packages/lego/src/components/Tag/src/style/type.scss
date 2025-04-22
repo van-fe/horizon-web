@@ -1,0 +1,105 @@
+@use '../../../../styles/mixins';
+
+@mixin set-tag-style-by-status($status) {
+  color: mixins.css-variable('tag-color--#{$status}');
+  background: mixins.css-variable('tag-bg--#{$status}');
+
+  @include mixins.e('icon', false) {
+    color: mixins.css-variable('tag-color--#{$status}');
+  }
+
+  @include mixins.is-not('colored') {
+    @include mixins.e('close', false) {
+      color: mixins.css-variable('tag-color--icon--close');
+
+      &:hover {
+        color: mixins.css-variable('tag-color--icon--close--#{$status}--hover');
+      }
+
+      &:active {
+        color: mixins.css-variable('tag-color--icon--close--#{$status}--press');
+      }
+    }
+  }
+
+  @include mixins.is('auto-fit-color') {
+    @include mixins.e('close') {
+      &:hover {
+        color: mixins.css-variable('tag-color--icon--close--#{$status}--hover');
+      }
+
+      &:active {
+        color: mixins.css-variable('tag-color--icon--close--#{$status}--press');
+      }
+    }
+  }
+
+  &:focus-within {
+    color: mixins.css-variable('tag-color--#{$status}--hover');
+    background: mixins.css-variable('tag-bg--#{$status}--hover');
+  }
+
+  @include mixins.is('disabled') {
+    color: mixins.css-variable('tag-color--#{$status}--disabled');
+    background: mixins.css-variable('tag-bg--#{$status}--disabled');
+
+    @include mixins.e('icon', false) {
+      color: mixins.css-variable('tag-color--#{$status}--disabled');
+    }
+  }
+
+  @include mixins.is('active'){
+    @include mixins.is-not('colorful') {
+      color: mixins.css-variable('tag-color--#{$status}--activated');
+      background: mixins.css-variable('tag-bg--#{$status}--activated');
+
+      @include mixins.e('icon', false) {
+        color: mixins.css-variable('tag-color--#{$status}--activated');
+      }
+    }
+  }
+
+  @include mixins.is-not('disabled') {
+    @include mixins.is('clickable') {
+      &:hover {
+        color: mixins.css-variable('tag-color--#{$status}--hover');
+        background: mixins.css-variable('tag-bg--#{$status}--hover');
+
+        @include mixins.is('auto-fit-color') {
+          @include mixins.e('icon', false) {
+            color: mixins.css-variable('tag-color--#{$status}--hover');
+          }
+        }
+      }
+
+      &:active {
+        color: mixins.css-variable('tag-color--#{$status}--press');
+        background: mixins.css-variable('tag-bg--#{$status}--press');
+
+        @include mixins.e('icon', false) {
+          color: mixins.css-variable('tag-color--#{$status}--press');
+        }
+      }
+    }
+  }
+}
+
+@include mixins.b('tag') {
+  @include set-tag-style-by-status('default');
+
+  @include mixins.m('success') {
+    @include set-tag-style-by-status('success');
+  }
+
+  @include mixins.m('info') {
+    @include set-tag-style-by-status('info');
+  }
+
+  @include mixins.m('warning') {
+    @include set-tag-style-by-status('warning');
+  }
+
+  @include mixins.m('error') {
+    @include set-tag-style-by-status('error');
+  }
+}

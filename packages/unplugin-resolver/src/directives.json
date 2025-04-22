@@ -1,0 +1,11 @@
+{
+  "ClickOutside": { "importName": "NVClickOutside", "from": "v-click-outside", "hasStyle": false },
+  "EventOutside": { "importName": "NVEventOutside", "from": "v-event-outside", "hasStyle": false },
+  "InfiniteScroll": { "importName": "NVInfiniteScroll", "from": "v-infinite-scroll", "hasStyle": false },
+  "Draggable": { "importName": "NVDraggable", "from": "v-draggable", "hasStyle": false },
+  "Loading": { "importName": "NVLoading", "from": "v-loading", "hasStyle": true },
+  "Popconfirm": { "importName": "NVPopconfirm", "from": "v-popconfirm", "hasStyle": true },
+  "Tooltip": { "importName": "NVTooltip", "from": "v-tooltip", "hasStyle": false },
+  "SafeHtml": { "importName": "NVSafeHtml", "from": "v-safe-html", "hasStyle": false },
+  "Watermark": { "importName": "NVWatermark", "from": "v-watermark", "hasStyle": false }
+}

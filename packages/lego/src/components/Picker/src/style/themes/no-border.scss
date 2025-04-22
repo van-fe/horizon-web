@@ -1,0 +1,250 @@
+@use '../../../../../styles/mixins';
+
+@include mixins.b('picker') {
+  @include mixins.m('no-border') {
+    width: mixins.css-variable('picker-min-width--no-border');
+  }
+
+  @include mixins.e('input') {
+    @include mixins.m('no-border') {
+      width: mixins.css-variable('picker-min-width--no-border');
+      max-width: 100%;
+      background: mixins.css-variable('picker-bg--input--no-border');
+      border: mixins.css-variable('picker-border--input--no-border');
+
+      @include mixins.standalone-modifier('inner') {
+        width: 100%;
+        color: mixins.css-variable('picker-color--input--no-border');
+        outline: none;
+        cursor: pointer;
+
+        &::placeholder {
+          color: mixins.css-variable('picker-color--input-placeholder--no-border');
+        }
+      }
+
+      @include mixins.standalone-modifier('append-icon') {
+        color: mixins.css-variable('picker-color--input-append-icon--no-border');
+      }
+
+      @include mixins.standalone-modifier('icon') {
+        @include mixins.is('clear') {
+          background: transparent !important;
+
+          > svg {
+            background: mixins.css-variable('picker-bg--input') !important;
+            border-radius: 50%;
+          }
+        }
+      }
+
+      @include mixins.is-not('disabled') {
+        &:hover {
+          background: mixins.css-variable('picker-bg--input--no-border--hover');
+          border-color: mixins.css-variable('picker-border-color--input--no-border--hover');
+
+          @include mixins.standalone-modifier('inner') {
+            color: mixins.css-variable('picker-color--input--no-border--hover');
+
+            &::placeholder {
+              color: mixins.css-variable('picker-color--input-placeholder--no-border--hover');
+            }
+          }
+
+          @include mixins.standalone-modifier('append-icon') {
+            color: mixins.css-variable('picker-color--input-append-icon--no-border--hover');
+          }
+        }
+
+        &:focus, &:focus-within {
+          background: mixins.css-variable('picker-bg--input--no-border--focus');
+          border-color: mixins.css-variable('picker-border-color--input--no-border--focus');
+
+          @include mixins.standalone-modifier('inner') {
+            color: mixins.css-variable('picker-color--input--no-border--focus');
+
+            &::placeholder {
+              color: mixins.css-variable('picker-color--input-placeholder--no-border--focus');
+            }
+          }
+
+          @include mixins.standalone-modifier('append-icon') {
+            color: mixins.css-variable('picker-color--input-append-icon--no-border--focus');
+          }
+        }
+
+        &:active {
+          background: mixins.css-variable('picker-bg--input--no-border--press');
+          border-color: mixins.css-variable('picker-border-color--input--no-border--press');
+
+          @include mixins.standalone-modifier('inner') {
+            color: mixins.css-variable('picker-color--input--no-border--press');
+
+            &::placeholder {
+              color: mixins.css-variable('picker-color--input-placeholder--no-border--press');
+            }
+          }
+
+          @include mixins.standalone-modifier('append-icon') {
+            color: mixins.css-variable('picker-color--input-append-icon--no-border--press');
+          }
+        }
+
+        @include mixins.is('focusing') {
+          @include mixins.is-not('readonly') {
+            background: mixins.css-variable('picker-bg--input--no-border--inputing');
+            border-color: mixins.css-variable('picker-border-color--input--no-border--inputing');
+
+            @include mixins.standalone-modifier('inner') {
+              color: mixins.css-variable('picker-color--input--no-border--inputing');
+
+              &::placeholder {
+                color: mixins.css-variable('picker-color--input-placeholder--no-border--inputing');
+              }
+            }
+
+            @include mixins.standalone-modifier('append-icon') {
+              color: mixins.css-variable('picker-color--input-append-icon--no-border--inputing');
+            }
+          }
+        }
+      }
+
+      @include mixins.is('error') {
+        color: mixins.css-variable('picker-color--input--no-border--error');
+        background: mixins.css-variable('picker-bg--input--no-border--error');
+        border-color: mixins.css-variable('picker-border-color--input--no-border--error') !important;
+
+        @include mixins.standalone-modifier('inner') {
+          color: mixins.css-variable('picker-color--input--no-border--error');
+        }
+
+        @include mixins.standalone-modifier('append-icon') {
+          color: mixins.css-variable('picker-color--input--no-border--error');
+        }
+      }
+
+      @include mixins.is('disabled') {
+        color: mixins.css-variable('picker-color--input--no-border--disabled');
+        background: mixins.css-variable('picker-bg--input--no-border--disabled');
+        border-color: mixins.css-variable('picker-border-color--input--no-border--disabled');
+
+        @include mixins.standalone-modifier('inner') {
+          color: mixins.css-variable('picker-color--input--no-border--disabled');
+        }
+
+        @include mixins.standalone-modifier('append-icon') {
+          color: mixins.css-variable('picker-color--input--no-border--disabled');
+        }
+      }
+    }
+
+    @include mixins.parallel-modifier('no-border', 'medium') {
+      padding: mixins.css-variable('picker-padding--input--outer--no-border');
+
+      @include mixins.standalone-modifier('inner') {
+        padding: mixins.css-variable('picker-padding--input--no-border');
+      }
+
+      @include mixins.standalone-modifier('static-text') {
+        padding: mixins.css-variable('picker-padding--input--no-border');
+      }
+
+      @include mixins.standalone-modifier('append-icon') {
+        @include mixins.standalone-modifier('icon') {
+          @include mixins.is-not('dropdown') {
+            margin: mixins.css-variable('picker-margin--input-append-icon--no-border');
+          }
+
+          @include mixins.is('dropdown') {
+            margin: mixins.css-variable('picker-margin--input-dropdown-icon--no-border');
+          }
+        }
+      }
+
+      @include mixins.standalone-modifier('icon') {
+        @include mixins.is('clear') {
+          padding: 0 mixins.css-variable('picker-padding-x--input-clear-icon--no-border');
+        }
+      }
+
+      @include mixins.standalone-modifier('container') {
+        @include mixins.nested('tag-group') {
+          padding: mixins.css-variable('picker-padding--input--tag-group--no-border');
+        }
+      }
+    }
+
+    @include mixins.parallel-modifier('no-border', 'small') {
+      padding: mixins.css-variable('picker-padding--input--outer--no-border--small');
+
+      @include mixins.standalone-modifier('inner') {
+        padding: mixins.css-variable('picker-padding--input--no-border--small');
+      }
+
+      @include mixins.standalone-modifier('static-text') {
+        padding: mixins.css-variable('picker-padding--input--no-border--small');
+      }
+
+      @include mixins.standalone-modifier('append-icon') {
+        @include mixins.standalone-modifier('icon') {
+          @include mixins.is-not('dropdown') {
+            margin: mixins.css-variable('picker-margin--input-append-icon--no-border--small');
+          }
+
+          @include mixins.is('dropdown') {
+            margin: mixins.css-variable('picker-margin--input-dropdown-icon--no-border--small');
+          }
+        }
+      }
+
+      @include mixins.standalone-modifier('icon') {
+        @include mixins.is('clear') {
+          padding: 0 mixins.css-variable('picker-padding-x--input-clear-icon--no-border--small');
+        }
+      }
+
+      @include mixins.standalone-modifier('container') {
+        @include mixins.nested('tag-group') {
+          padding: mixins.css-variable('picker-padding--input--tag-group--no-border--small');
+        }
+      }
+    }
+
+    @include mixins.parallel-modifier('no-border', 'large') {
+      padding: mixins.css-variable('picker-padding--input--outer--no-border--large');
+
+      @include mixins.standalone-modifier('inner') {
+        padding: mixins.css-variable('picker-padding--input--no-border--large');
+      }
+
+      @include mixins.standalone-modifier('static-text') {
+        padding: mixins.css-variable('picker-padding--input--no-border--large');
+      }
+
+      @include mixins.standalone-modifier('append-icon') {
+        @include mixins.standalone-modifier('icon') {
+          @include mixins.is-not('dropdown') {
+            margin: mixins.css-variable('picker-margin--input-append-icon--no-border--large');
+          }
+
+          @include mixins.is('dropdown') {
+            margin: mixins.css-variable('picker-margin--input-dropdown-icon--no-border--large');
+          }
+        }
+      }
+
+      @include mixins.standalone-modifier('icon') {
+        @include mixins.is('clear') {
+          padding: 0 mixins.css-variable('picker-padding-x--input-clear-icon--no-border--large');
+        }
+      }
+
+      @include mixins.standalone-modifier('container') {
+        @include mixins.nested('tag-group') {
+          padding: mixins.css-variable('picker-padding--input--tag-group--no-border--large');
+        }
+      }
+    }
+  }
+}

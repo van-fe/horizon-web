@@ -1,0 +1,188 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('calendar-year') {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+  min-height: 870px;
+
+  @include mixins.e('month') {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+
+    @include mixins.m('header') {
+      display: flex;
+      flex: 0 0 mixins.css-variable('calendar-height--year--month-header');
+      align-items: center;
+      padding: mixins.css-variable('calendar-padding--year--month-header');
+
+      &-num {
+        color: mixins.css-variable('calendar-color--year--month-header--num');
+        font-weight: mixins.css-variable('calendar-font-weight--year--month-header--num');
+        font-size: mixins.css-variable('calendar-font-size--year--month-header--num');
+      }
+
+      &-suffix {
+        flex: 1;
+        height: 100%;
+      }
+    }
+
+    @include mixins.m('body') {
+      position: relative;
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      min-height: 0;
+      padding: 0 mixins.css-variable('calendar-padding--year--month-wrapper');
+
+      &::after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        box-sizing: border-box;
+        width: 200%;
+        height: 200%;
+        border-right: mixins.css-variable('calendar-border--day-row');
+        transform: scale(0.5, 0.5);
+        transform-origin: 0 0;
+        content: '';
+        pointer-events: none;
+      }
+    }
+
+    @include mixins.m('week') {
+      color: mixins.css-variable('calendar-color--year--month-body--week');
+      font-size: mixins.css-variable('calendar-font-size--year--month-body--week');
+      text-align: center;
+
+      &-wrapper {
+        display: grid;
+        flex: 0 0 mixins.css-variable('calendar-height--year--week');
+        grid-template-columns: repeat(7, 1fr);
+        align-items: center;
+        width: 100%;
+      }
+    }
+
+    @include mixins.m('days') {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+
+      &-wrapper {
+        display: grid;
+        flex: 1;
+        grid-template-rows: repeat(6, 1fr);
+        align-items: center;
+        width: 100%;
+      }
+    }
+
+    @include mixins.m('day') {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: mixins.css-variable('calendar-min-height--year--month-day');
+      color: mixins.css-variable('calendar-color--year--month-body--day');
+      font-size: mixins.css-variable('calendar-font-size--year--month-body--day');
+
+      @include mixins.is('current-month') {
+        color: mixins.css-variable('calendar-color--year--month-body--day--current-month');
+
+        @include mixins.is('current-day') {
+          color: mixins.css-variable('calendar-color--year--month-body--day--current-day');
+
+          &::before {
+            background: mixins.css-variable('calendar-bg--year--month-body--day--current-day') !important;
+          }
+        }
+      }
+
+      @include mixins.is('disabled') {
+        color: mixins.css-variable('calendar-color--year--month-body--day--disabled');
+        cursor: not-allowed !important;
+
+        &::before {
+          background: mixins.css-variable('calendar-bg--year--month-body--day--disabled') !important;
+        }
+      }
+
+      @include mixins.is('invisible') {
+        visibility: hidden;
+      }
+
+      &::before {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 1;
+        display: block;
+        width: 26px;
+        height: 26px;
+        border-radius: mixins.css-variable('calendar-border-radius');
+        transform: translate(-50%, -50%);
+        content: '';
+      }
+
+      @include mixins.has('flag') {
+        &::after {
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: 0;
+          width: 100%;
+          height: 100%;
+          background: mixins.css-variable('calendar-bg--year--month-body--day--has-flag');
+          content: '';
+        }
+
+        @include mixins.is('flag-start') {
+          &::after {
+            border-top-left-radius: mixins.css-variable('calendar-border-radius--pill');
+            border-bottom-left-radius: mixins.css-variable('calendar-border-radius--pill');
+          }
+        }
+
+        @include mixins.is('flag-end') {
+          &::after {
+            border-top-right-radius: mixins.css-variable('calendar-border-radius--pill');
+            border-bottom-right-radius: mixins.css-variable('calendar-border-radius--pill');
+          }
+        }
+      }
+
+      &-num {
+        position: relative;
+        z-index: 2;
+      }
+    }
+
+    &:nth-child(4n) {
+      @include mixins.bem('calendar-year', 'month', 'body', false) {
+        border-right: 0;
+      }
+    }
+  }
+
+  @include mixins.is('pickable') {
+    @include mixins.bem('calendar-year', 'month', 'day', false) {
+      cursor: pointer;
+
+      &:hover {
+        &::before {
+          background: mixins.css-variable('calendar-bg--year--month-body--day--current-day--hover');
+        }
+      }
+
+      &:active {
+        &::before {
+          background: mixins.css-variable('calendar-bg--year--month-body--day--current-day--active');
+        }
+      }
+    }
+  }
+}

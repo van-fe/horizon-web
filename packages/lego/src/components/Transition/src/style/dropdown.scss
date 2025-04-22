@@ -1,0 +1,40 @@
+@use '../../../../styles/mixins';
+
+@mixin dropdown-animate() {
+  $enter-time-func: mixins.css-variable('transition-time-slow');
+  $leave-time-func: mixins.css-variable('transition-time-fast');
+
+  [data-popper-placement^='top'] {
+    &#{mixins.block-name('dropdown-enter-active')}, &#{mixins.block-name('dropdown-leave-active')} {
+      transform-origin: center bottom !important;
+    }
+  }
+
+  #{mixins.block-name('dropdown-enter-active')} {
+    transform-origin: center top;
+    transition: opacity #{$enter-time-func} cubic-bezier(0.21, 0, 0.36, 1),
+      transform #{$enter-time-func} cubic-bezier(0.23, 1, 0.33, 1);
+  }
+
+  #{mixins.block-name('dropdown-leave-active')} {
+    transform-origin: center top;
+    transition: opacity #{$leave-time-func} cubic-bezier(0.21, 0, 0.36, 1),
+      transform #{$leave-time-func} cubic-bezier(0.32, 0, 0.67, 0);
+  }
+
+  #{mixins.block-name('dropdown-enter-from')},
+  #{mixins.block-name('dropdown-leave-to')} {
+    transform: scaleY(0.7);
+    opacity: 0;
+  }
+
+  #{mixins.block-name('dropdown-enter-to')},
+  #{mixins.block-name('dropdown-leave-from')} {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@include dropdown-animate;
+
+

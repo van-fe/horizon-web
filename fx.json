@@ -1,0 +1,14 @@
+{
+  "useFms": true,
+  "headers": [
+    {
+      "src": "/assets/*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "max-age=2591001"
+        }
+      ]
+    }
+  ]
+}

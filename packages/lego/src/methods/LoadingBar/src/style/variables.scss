@@ -1,0 +1,10 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  'bg': #{function.css-variable('bg-hover')},
+  'bg--primary': #{function.css-variable('bg-brand-default')},
+  'bg--error': #{function.css-variable('bg-error-hover')},
+  'transition-time': 0.2s,
+  'transition-animate': linear,
+  'transition': width #{function.css-variable('loading-bar-transition-time')} #{function.css-variable('loading-bar-transition-animate')},
+);

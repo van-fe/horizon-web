@@ -1,0 +1,10 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  'color--circle': #{function.css-variable('text-brand-default')},
+  'color--text': #{function.css-variable('text-brand-default')},
+  'color--dots-left': #{function.css-variable('text-brand-default')},
+  'color--dots-right': rgb(#{function.css-variable('color-2-4')}),
+  'font-size': #{function.css-variable('text-sm')},
+  'line-height': #{function.css-variable('line-height-standard')},
+);

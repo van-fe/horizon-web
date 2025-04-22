@@ -1,0 +1,111 @@
+@use 'sass:map';
+@use '../../../../styles/mixins';
+@use 'var' as *;
+
+@include mixins.b('notification') {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  width: mixins.css-variable('notification-width--normal');
+  padding: mixins.css-variable('notification-padding');
+  background: mixins.css-variable('notification-bg');
+  border-radius: mixins.css-variable('notification-border-radius');
+  box-shadow: mixins.css-variable('notification-box-shadow');
+  transition: all mixins.css-variable('notification-transition-time');
+
+  &.right {
+    right: mixins.css-variable('notification-right');
+  }
+
+  &.left {
+    left: mixins.css-variable('notification-left');
+  }
+
+  @each $size in (small, medium) {
+    @include mixins.m($size) {
+      width: #{map.get($notification-width, $size)};
+
+      @include mixins.e('title') {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        // height: 24px;
+        margin: 0;
+        color: mixins.css-variable('notification-color--title');
+        font-weight: mixins.css-variable('notification-font-weight--title');
+        font-size: mixins.css-variable('notification-font-size--title');
+        line-height: mixins.css-variable('notification-line-height--title');
+      }
+
+      @include mixins.e('close') {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: mixins.css-variable('notification-size--close');
+        height: mixins.css-variable('notification-size--close');
+        font-size: mixins.css-variable('notification-font-size--close');
+        cursor: pointer;
+
+        & .#{mixins.$namespace}-icon {
+          font-size: mixins.css-variable('notification-font-size--close') !important;
+        }
+      }
+    }
+  }
+
+  @each $type in (success, info, warning, error) {
+    @include mixins.m($type) {
+      color: #{map.get($notification-colors, $type, 'base')};
+    }
+  }
+
+  & .#{mixins.$namespace}-notification__icon {
+    width: mixins.css-variable('notification-size--icon');
+    height: mixins.css-variable('notification-size--icon');
+    margin-right: mixins.css-variable('notification-margin-right--icon');
+    font-size: mixins.css-variable('notification-font-size--icon');
+  }
+
+  @include mixins.e('body') {
+    display: flex;
+  }
+
+  @include mixins.e('group') {
+    flex: 1;
+    width: 100%;
+  }
+
+  @include mixins.e('header') {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: mixins.css-variable('notification-height--header');
+  }
+
+  @include mixins.e('content') {
+    width: 100%;
+    margin: mixins.css-variable('notification-margin--content');
+    color: mixins.css-variable('notification-color--content');
+    font-weight: mixins.css-variable('notification-font-weight--content');
+    font-size: mixins.css-variable('notification-font-size--content');
+    word-break: break-all;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  @include mixins.e('footer') {
+    display: flex;
+    margin-top: mixins.css-variable('notification-margin-top-footer');
+  }
+
+  @each $align in (left, center, right) {
+    @include mixins.m($align) {
+      justify-content: #{map.get($justify-content, $align, 'base')};
+    }
+  }
+
+  @include mixins.e('confirm') {
+    margin-left: mixins.css-variable('notification-margin-left-confirm') !important;
+  }
+}

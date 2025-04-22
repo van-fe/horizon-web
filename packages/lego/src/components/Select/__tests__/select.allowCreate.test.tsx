@@ -1,0 +1,106 @@
+import { mount } from '@vue/test-utils';
+import { describe, expect, test } from 'vitest';
+import { ref } from 'vue';
+import { NOption, NSelect } from '../index';
+import type { Ref } from 'vue';
+import type { SelectProps } from '../src/composables/useProps';
+import NPickerInput from '../../Picker/src/components/NPickerInput';
+import NPickerPopper from '../../Picker/src/components/NPickerPopper';
+
+const sleep = (time = 300) => new Promise(resolve => setTimeout(resolve, time));
+
+const basicRender = (modelValue: Ref<string | undefined>, props?: Partial<SelectProps>) => {
+  const list = [
+    {
+      label: '上海',
+      value: '1',
+    },
+    {
+      label: '合肥',
+      value: '2',
+    },
+    {
+      label: '北京',
+      value: '3',
+    },
+  ];
+  return mount(() => (
+    <NSelect allowCreate={true} v-model={modelValue.value} {...(props ?? {})} toBody={false}>
+      {list.map(item => (
+        <NOption label={item.label} value={item.value} />
+      ))}
+    </NSelect>
+  ));
+};
+
+describe('allowCreate works same as search', () => {
+  test('not matched option hidden', async () => {
+    const modelValue = ref<string>();
+    const wrapper = basicRender(modelValue);
+
+    const InputComponent = wrapper.findComponent(NPickerInput);
+    const OptionPanelComponent = wrapper.findComponent(NPickerPopper);
+
+    const inpEl = InputComponent.find('.n-picker__input input');
+
+    await inpEl.setValue('上海');
+
+    await sleep(300);
+
+    const optionList = OptionPanelComponent.findAll('.n-select-option').filter(
+      item => !item.classes('is-hide'),
+    );
+
+    expect(optionList.length).toBe(1);
+
+    const htmlContent = optionList[0].html();
+
+    expect(htmlContent).contains(
+      '<div class="n-select-option__content"><span><span class="keyword">上海</span></span></div>',
+    );
+  });
+});
+
+describe('auto selected when enter fire', () => {
+  const customCreate = async (props?: Partial<SelectProps>, value = '南京') => {
+    const modelValue = ref<string>();
+    const wrapper = basicRender(modelValue, props);
+
+    const InputComponent = wrapper.findComponent(NPickerInput);
+    const OptionPanelComponent = wrapper.findComponent(NPickerPopper);
+    const inpEl = InputComponent.find('.n-picker__input input');
+
+    await inpEl.trigger('focus');
+    await inpEl.setValue(value);
+    await sleep(300);
+
+    const addItem = OptionPanelComponent.find('.n-select__create-option');
+    await addItem.trigger('click');
+
+    return {
+      wrapper,
+      modelValue,
+      OptionPanelComponent,
+    };
+  };
+
+  test('should create custom option as expected', async () => {
+    const { modelValue, OptionPanelComponent } = await customCreate();
+
+    await sleep(300);
+    expect(modelValue.value).toBe('南京');
+    expect(OptionPanelComponent.html()).toContain(
+      '<div class="n-select-option__content">南京</div>',
+    );
+  });
+
+  test('should not create custom with beforeCreate returned false', async () => {
+    const { OptionPanelComponent } = await customCreate({
+      beforeCreate: () => false,
+    });
+
+    expect(OptionPanelComponent.html()).not.toContain(
+      '<div class="n-select-option__content">南京</div>',
+    );
+  });
+});

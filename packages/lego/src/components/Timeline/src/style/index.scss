@@ -1,0 +1,149 @@
+@use '../../../../styles/mixins';
+@include mixins.b('timeline') {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+@include mixins.b('timeline-item') {
+  position: relative;
+  display: flex;
+
+  @include mixins.e('step') {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: mixins.css-variable('timeline-width--item-step');
+
+    @include mixins.m('small') {
+      // top: 6px;
+    }
+
+    @include mixins.m('medium') {
+      // top: 5px;
+    }
+  }
+
+  @include mixins.e('dot-wrapper') {
+    display: flex;
+    align-items: center;
+
+    &::before {
+      // 占位
+      display: block;
+      width: 0;
+      color: transparent;
+      font-size: mixins.css-variable('timeline-font-size--item--name');
+      content: '*';
+    }
+    @include mixins.m('timestamp') {
+      &::before {
+        font-size: mixins.css-variable('timeline-font-size--item--timestamp');
+      }
+    }
+  }
+
+  @include mixins.e('dot') {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: mixins.css-variable('timeline-color--item--dot');
+    border-radius: mixins.css-variable('timeline-border-radius--item--dot');
+
+    @include mixins.m('small') {
+      width: mixins.css-variable('timeline-width--item--dot--small');
+      height: mixins.css-variable('timeline-width--item--dot--small');
+    }
+
+    @include mixins.m('medium') {
+      width: mixins.css-variable('timeline-width--item--dot--medium');
+      height: mixins.css-variable('timeline-width--item--dot--medium');
+    }
+
+    @include mixins.m('large') {
+      width: mixins.css-variable('timeline-width--item--dot--large');
+      height: mixins.css-variable('timeline-width--item--dot--large');
+    }
+
+    @include mixins.m('disc') {
+      background-color: mixins.css-variable('timeline-bg--item--disc');
+    }
+
+    @include mixins.m('circle') {
+      color: mixins.css-variable('timeline-color--item--dot--circle');
+      background-color: mixins.css-variable('timeline-bg--item--dot--circle');
+      border: mixins.css-variable('timeline-border--item--dot--circle');
+    }
+  }
+
+  @include mixins.e('tail') {
+    flex: 1;
+    width: 0;
+    border-left: mixins.css-variable('timeline-border--item--tail');
+
+    &--dashed {
+      border-left-style: dashed;
+    }
+  }
+
+  @include mixins.e('wrapper') {
+    flex: 1;
+    margin-bottom: mixins.css-variable('timeline-margin-bottom--time--wrapper');
+    margin-left: mixins.css-variable('timeline-margin-left--time--wrapper');
+  }
+
+  @include mixins.e('name') {
+    display: flex;
+    align-items: center;
+    margin-bottom: mixins.css-variable('timeline-margin-bottom--time--name');
+    line-height: mixins.css-variable('timeline-line-height--item--name');
+
+    @include mixins.m('content') {
+      color: mixins.css-variable('timeline-color--item--name');
+      font-weight: mixins.css-variable('timeline-font-weight--item--name');
+      font-size: mixins.css-variable('timeline-font-size--item--name');
+    }
+  }
+
+  @include mixins.e('timestamp') {
+    margin-bottom: mixins.css-variable('timeline-margin-bottom--time--timestamp');
+    color: mixins.css-variable('timeline-color--item--timestamp');
+    font-weight: mixins.css-variable('timeline-font-weight--item--timestamp');
+    font-size: mixins.css-variable('timeline-font-size--item--timestamp');
+    line-height: mixins.css-variable('timeline-line-height--item--timestamp');
+  }
+
+  @include mixins.e('desc') {
+    margin-bottom: mixins.css-variable('timeline-margin-bottom--time--desc');
+    color: mixins.css-variable('timeline-color--item--desc');
+    font-size: mixins.css-variable('timeline-font-size--item--desc');
+    line-height: mixins.css-variable('timeline-line-height--item--desc');
+  }
+
+  @include mixins.e('desc--hidden') {
+    color: mixins.css-variable('timeline-color--item--desc--hidden');
+  }
+}
+
+@include mixins.bem('timeline-item', 'name', 'content') {
+  & + #{mixins.block-name('timeline-item__timestamp')} {
+    margin-bottom: 0;
+    margin-left: mixins.css-variable('timeline-margin-left--item--timestamp--siblings');
+    line-height: mixins.css-variable('timeline-line-height--item--timestamp--siblings');
+  }
+}
+
+@include mixins.be('timeline-item', 'icon') {
+  @include mixins.parallel-modifier('icon', 'large') {
+    font-size: mixins.css-variable('timeline-font-size--item--icon');
+  }
+
+  @include mixins.parallel-modifier('icon', 'medium') {
+    transform: scale(0.5); // chrome 默认最小字体12px
+  }
+
+  @include mixins.parallel-modifier('icon', 'small') {
+    transform: scale(0.25);
+  }
+}

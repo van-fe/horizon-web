@@ -1,0 +1,127 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('tag-group') {
+  display: block;
+
+  @include mixins.e('create-tag') {
+    flex-shrink: 0;
+    border-style: dashed;
+  }
+
+  @include mixins.e('container') {
+    display: flex;
+    flex-wrap: wrap;
+    grid-gap: mixins.css-variable('tag-spacing-siblings');
+    min-width: 100%;
+    max-width: max-content;
+  }
+
+  @include mixins.m('collapse') {
+    width: 100%;
+    white-space: nowrap;
+
+    @include mixins.e('tags', false) {
+      flex-wrap: nowrap;
+    }
+
+    @include mixins.e('container', false) {
+      flex-wrap: nowrap;
+    }
+  }
+
+  @include mixins.m('wrap-line') {
+    white-space: normal;
+
+    @include mixins.e('tags', false) {
+      flex-wrap: wrap;
+    }
+
+    @include mixins.e('container', false) {
+      flex-wrap: wrap;
+    }
+  }
+
+  @include mixins.has-not('min-displayed') {
+    @include mixins.is('collapsed') {
+      @include mixins.is('fill-up') {
+        @include mixins.e('container', false) {
+          > #{mixins.block-name('tag')} {
+            @include mixins.is-not('editing') {
+              @include mixins.is('last-tag') {
+                flex: 1;
+                min-width: calc(2em + 2 * #{mixins.css-variable('tag-padding-x')});
+                max-width: fit-content;
+
+                @include mixins.is('closable') {
+                  min-width: calc(2em + 2 * #{mixins.css-variable('tag-padding-x')} + #{mixins.css-variable('tag-gap--inner')} + #{mixins.css-variable('tag-size--icon')});
+
+                  &#{mixins.block-modifier-name('small', 'tag')} {
+                    min-width: calc(2em + 2 * #{mixins.css-variable('tag-padding-x')} + #{mixins.css-variable('tag-gap--inner')} + #{mixins.css-variable('tag-size--icon--small')});
+                  }
+
+                  &#{mixins.block-modifier-name('large', 'tag')} {
+                    min-width: calc(2em + 2 * #{mixins.css-variable('tag-padding-x')} + #{mixins.css-variable('tag-gap--inner')} + #{mixins.css-variable('tag-size--icon--large')});
+                  }
+                }
+
+                &#{mixins.block-modifier-name('equally', 'tag')} {
+                  min-width: mixins.css-variable('tag-size');
+
+                  &#{mixins.block-modifier-name('small', 'tag')} {
+                    min-width: mixins.css-variable('tag-size--small');
+                  }
+
+                  &#{mixins.block-modifier-name('large', 'tag')} {
+                    min-width: mixins.css-variable('tag-size--large');
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @include mixins.e('popper-inner') {
+    display: flex;
+    flex-wrap: wrap;
+    grid-gap: mixins.css-variable('tag-spacing-siblings');
+    max-width: 100%;
+
+    @include mixins.nested('tag') {
+      margin-left: 0;
+    }
+  }
+
+  @include mixins.e('tags') {
+    display: inline-flex;
+    flex-wrap: wrap;
+    grid-gap: mixins.css-variable('tag-spacing-siblings');
+    width: fit-content;
+
+    @include mixins.nested('tag') {
+      margin-left: 0;
+    }
+  }
+
+  @include mixins.m('small') {
+    @include mixins.e('container', false) {
+      grid-gap: mixins.css-variable('tag-spacing-siblings--small');
+    }
+  }
+
+  @include mixins.m('large') {
+    @include mixins.e('container', false) {
+      grid-gap: mixins.css-variable('tag-spacing-siblings--large');
+    }
+  }
+
+  @include mixins.nested('popover__reference') {
+    line-height: 0;
+  }
+
+  @include mixins.siblings-block('tag') {
+    margin-left: 0;
+  }
+}

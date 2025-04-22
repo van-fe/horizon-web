@@ -1,0 +1,13 @@
+@use './text';
+@use './border';
+@use './divider';
+@use './background';
+@use '../../mixins/function';
+@use '../../mixins/mixins';
+
+$values: function.map-merge-multi(
+  function.flatten-variables(text.$values, 'text'),
+  function.flatten-variables(border.$values, 'border'),
+  function.flatten-variables(divider.$values, 'divider'),
+  function.flatten-variables(background.$values, 'bg'),
+);

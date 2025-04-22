@@ -1,0 +1,133 @@
+@use '../../../../styles/mixins';
+
+@mixin icon-color-with-status($status) {
+  @include mixins.is($status) {
+    color: mixins.css-variable('message-color--close-icon--#{$status}');
+
+    &:hover {
+      color: mixins.css-variable('message-color--close-icon--#{$status}--hover');
+    }
+
+    &:active {
+      color: mixins.css-variable('message-color--close-icon--#{$status}--press');
+    }
+  }
+}
+
+@include mixins.b('message') {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-width: mixins.css-variable('message-min-width');
+  max-width: mixins.css-variable('message-max-width');
+  padding: mixins.css-variable('message-padding');
+  color: mixins.css-variable('message-color');
+  column-gap: mixins.css-variable('message-margin-right--content-icon');
+  background: mixins.css-variable('message-bg');
+  border: mixins.css-variable('message-border');
+  border-radius: mixins.css-variable('message-radius');
+  box-shadow: mixins.css-variable('message-box-shadow');
+  transform: translateX(-50%);
+  transition: opacity 0.3s, transform 0.4s, top 0.4s;
+
+  @include mixins.is('info') {
+    color: mixins.css-variable('message-color--info');
+    background: mixins.css-variable('message-bg--info');
+    border-color: mixins.css-variable('message-border-color--info');
+  }
+
+  @include mixins.is('success') {
+    color: mixins.css-variable('message-color--success');
+    background: mixins.css-variable('message-bg--success');
+    border-color: mixins.css-variable('message-border-color--success');
+  }
+
+  @include mixins.is('warning') {
+    color: mixins.css-variable('message-color--warning');
+    background: mixins.css-variable('message-bg--warning');
+    border-color: mixins.css-variable('message-border-color--warning');
+  }
+
+  @include mixins.is('error') {
+    color: mixins.css-variable('message-color--error');
+    background: mixins.css-variable('message-bg--error');
+    border-color: mixins.css-variable('message-border-color--error');
+  }
+
+  p {
+    margin: mixins.css-variable('message-margin--p');
+  }
+
+  @include mixins.e('content') {
+    font-weight: mixins.css-variable('message-font-weight--content');
+    font-size: mixins.css-variable('message-font-size--content');
+    font-style: normal;
+    line-height: 26px;
+  }
+
+  @include mixins.e('plaintext') {
+    word-break: break-all;
+  }
+
+  @include mixins.e('status-icon') {
+    // flex: 0 0 mixins.css-variable('message-font-size--preset-icon');
+    flex-shrink: 0;
+
+    // margin-right: mixins.css-variable('message-margin-right--content-icon');
+  }
+
+  @include mixins.e('ellipsis') {
+    display: inline-block;
+    width: 16px;
+    overflow: hidden;
+    color: mixins.css-variable('text-primary');
+    transform: translateY(50%);
+    animation: ellipsis-show-gradually 2s infinite step-start;
+  }
+
+  @include mixins.e('close-container') {
+    align-self: center;
+    width: mixins.css-variable('message-font-size--close-icon');
+    height: mixins.css-variable('message-font-size--close-icon');
+    cursor: pointer;
+
+    &:focus {
+      outline-width: 0;
+    }
+  }
+
+  @include mixins.e('close') {
+    margin-right: mixins.css-variable('message-margin-right--close-icon') !important;
+
+    @include icon-color-with-status('success');
+    @include icon-color-with-status('info');
+    @include icon-color-with-status('warning');
+    @include icon-color-with-status('error');
+  }
+}
+
+#{mixins.block-name('message-fade-enter-from')}, #{mixins.block-name('message-fade-leave-to')} {
+  transform: translate(-50%, -100%);
+  opacity: 0;
+}
+
+@keyframes ellipsis-show-gradually {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  33% {
+    clip-path: inset(0 66% 0 0);
+  }
+
+  66% {
+    clip-path: inset(0 33% 0 0);
+  }
+
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}

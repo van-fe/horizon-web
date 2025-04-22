@@ -1,0 +1,88 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('form') {
+  margin-bottom: mixins.css-variable('form-margin-bottom--form-item');
+
+  @include mixins.is('spacing-default') {
+    @include mixins.nested('form-item') {
+      @include mixins.is('error') {
+        #{mixins.e('form-item', 'tip')} {
+          display: none;
+        }
+      }
+    }
+  }
+
+  @include mixins.is('spacing-static') {
+    @include mixins.nested('form-item') {
+      @include mixins.is('error') {
+        #{mixins.e('form-item', 'tip')} {
+          display: none;
+        }
+      }
+
+      #{mixins.e('form-item', 'ext')} {
+        height: mixins.css-variable('form-min-height--ext-info');
+        min-height: initial;
+      }
+    }
+  }
+
+  @include mixins.is('spacing-compact') {
+    @include mixins.nested('form-item') {
+      margin-bottom: mixins.css-variable('form-margin-bottom--form-item--label--compact');
+
+      @include mixins.be('form-item', 'label', false) {
+        #{mixins.css-variable-name('form-margin-top--form-item--label--vertical-middle')}: 0;
+      }
+
+      @include mixins.be('form-item', 'ext', false) {
+        display: none;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  @include mixins.is('spacing-dynamic') {
+    @include mixins.nested('form-item') {
+      margin-bottom: mixins.css-variable('form-margin-bottom--form-item--label--dynamic');
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    @include mixins.is('position-left') {
+      @include mixins.nested('form-item') {
+        margin-bottom: mixins.css-variable('form-margin-bottom--form-item--label--dynamic');
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  @include mixins.is('spacing-dynamic') {
+    @include mixins.nested('form-item') {
+      margin-bottom: mixins.css-variable('form-margin-bottom--form-item--label--dynamic');
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    @include mixins.is('position-left') {
+      @include mixins.nested('form-item') {
+        margin-bottom: mixins.css-variable('form-margin-bottom--form-item--label--dynamic');
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}

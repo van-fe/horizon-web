@@ -1,0 +1,7 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('time') {
+  @include mixins.e('content') {
+    color: mixins.css-variable('text-brand-default');
+  }
+}

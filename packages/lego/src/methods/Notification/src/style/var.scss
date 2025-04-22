@@ -1,0 +1,39 @@
+@use 'sass:map';
+@use '../../../../styles/mixins';
+
+$notification-colors: (
+  'primary': (
+    'base': mixins.css-variable('notification-color--primary'),
+  ),
+  'info': (
+    'base': mixins.css-variable('notification-color--info'),
+  ),
+  'success': (
+    'base': mixins.css-variable('notification-color--success'),
+  ),
+  'warning': (
+    'base': mixins.css-variable('notification-color--warning'),
+  ),
+  'error': (
+    'base': mixins.css-variable('notification-color--error'),
+  ),
+);
+$justify-content: (
+  'left': (
+    'base': 'left',
+  ),
+  'center': (
+    'base': 'center',
+  ),
+  'right': (
+    'base': 'right',
+  ),
+);
+$notification-width: () !default;
+$notification-width: map.merge(
+  (
+    'small': mixins.css-variable('notification-width--small'),
+    'medium': mixins.css-variable('notification-width--medium'),
+  ),
+  $notification-width
+);

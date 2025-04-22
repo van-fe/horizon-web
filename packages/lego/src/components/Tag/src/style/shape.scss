@@ -1,0 +1,76 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('tag') {
+  @include mixins.m('equally') {
+    position: relative;
+    flex-shrink: 0;
+    justify-content: center;
+    width: mixins.css-variable('tag-size');
+    padding: 0;
+    overflow: hidden;
+    vertical-align: middle;
+
+    @include mixins.e('close', false) {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      opacity: 0;
+    }
+
+    @include mixins.is('closable') {
+      @include mixins.is('show-close') {
+        @include mixins.e('prefix', false) {
+          opacity: 0;
+        }
+
+        @include mixins.e('suffix', false) {
+          opacity: 0;
+        }
+
+        @include mixins.e('content', false) {
+          opacity: 0;
+        }
+
+        @include mixins.e('close', false) {
+          opacity: 1;
+        }
+      }
+    }
+
+    @include mixins.is('loading') {
+      @include mixins.e('content', false) {
+        display: none;
+      }
+
+      @include mixins.e('avatar', false) {
+        display: none;
+      }
+
+      @include mixins.e('icon', false) {
+        display: none;
+      }
+
+      @include mixins.e('close', false) {
+        display: none;
+      }
+    }
+  }
+
+  @include mixins.parallel-modifier('small', 'equally') {
+    width: mixins.css-variable('tag-size--small');
+  }
+
+  @include mixins.parallel-modifier('large', 'equally') {
+    width: mixins.css-variable('tag-size--large');
+  }
+
+  @include mixins.m('round') {
+    border-radius: mixins.css-variable('tag-border-radius--round');
+  }
+}

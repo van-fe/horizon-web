@@ -1,0 +1,50 @@
+# common
+node_modules
+.idea
+.DS_Store
+.pnpm-debug.log
+deprecated
+lib
+es
+dist
+umd
+.gitconfig
+types
+
+# shared
+packages/shared/plugins/*.js
+packages/shared/plugins/*.js.map
+
+# lego
+packages/lego/src/styles/colors.ts
+packages/lego/src/styles/theme-config.ts
+packages/lego/src/styles/theme-types.ts
+packages/lego/src/styles/basicTokens.ts
+packages/lego/src/styles/elementTokens.ts
+packages/lego/json/
+packages/lego/coverage/
+packages/lego/src/components/emits.ts
+packages/lego/src/components/slots.ts
+packages/lego/src/components/exposes.ts
+packages/lego/src/components/globalComponents.ts
+packages/lego/src/components/globalTypes.ts
+packages/lego/src/components/index.ts
+packages/lego/src/components/props.ts
+packages/lego/src/directives/index.ts
+packages/lego/src/methods/index.ts
+packages/lego/build/**/*.js
+*.temp.*
+
+# doc
+packages/doc/src/config/themes/default.json
+packages/doc/dist
+packages/doc/part-html
+packages/doc/docs/features/tokens/demos/theme.json
+packages/doc/build/json/components-analysis.json
+packages/doc/build/json/directives-analysis.json
+packages/doc/build/json/methods-analysis.json
+
+# docs
+packages/docs/.vitepress/dist
+packages/docs/.vitepress/cache
+.vscode

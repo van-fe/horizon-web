@@ -1,0 +1,17 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  'size--arrow': 8px,
+  'width': 320px,
+  'font-size--content': #{function.css-variable('text-base')},
+  'color': #{function.css-variable('text-primary')},
+  'line-height--icon': #{function.css-variable('line-height-default')},
+  'line-height--content': #{function.css-variable('line-height-loose')},
+  'bg': #{function.css-variable('bg-default')},
+  'border-radius': #{function.css-variable('radius-m')},
+  'box-shadow': #{function.css-variable('shadow-down2')},
+  'box-shadow--arrow': 2px 2px 3px 0 rgb(0 0 0 / 4%),
+  'padding': #{function.css-variable('spacing-5')},
+  'margin-bottom--body': #{function.css-variable('spacing-5')},
+  'margin-right--icon': #{function.css-variable('spacing-4')},
+);

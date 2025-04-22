@@ -1,0 +1,26 @@
+/**
+ * 这是一组非常基础的变量，不含代任何组件、状态值
+ * 这个文件的内容不允许引入
+ * 必须使用 ../element/index 提供的变量
+ */
+@use 'sass:map';
+@use 'sass:list';
+@use '../mixins/config';
+@use '../mixins/mixins';
+@use '../mixins/function';
+@use './color';
+@use './opacity';
+@use './font';
+
+$values: function.map-merge-multi(
+  function.flatten-variables(color.$values, 'color'),
+  function.flatten-variables(opacity.$values, 'opacity'),
+  function.flatten-variables(font.$values)
+);
+$dark-values: function.map-merge-multi(
+  function.flatten-variables(color.$dark-values, 'color'),
+  function.flatten-variables(opacity.$values, 'opacity'),
+  function.flatten-variables(font.$values)
+);
+
+@include mixins.create-root($dark-values, ':root.' + config.$dark-mode-class-name);

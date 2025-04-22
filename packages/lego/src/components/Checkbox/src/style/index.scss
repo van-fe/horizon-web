@@ -1,0 +1,273 @@
+@use '../../../../styles/mixins';
+
+@mixin checkbox-checked {
+  color: mixins.css-variable('checkbox-color--checked');
+  border-color: mixins.css-variable('checkbox-border-color--checked') !important;
+
+  @include mixins.be('checkbox', 'icon', false) {
+    margin-right: mixins.css-variable('checkbox-margin--icon');
+    font-size: mixins.css-variable('checkbox-font-size--icon') !important;
+    background-color: mixins.css-variable('checkbox-bg--icon--checked') !important;
+    border: none;
+    opacity: 1;
+
+    &::before {
+      opacity: 1;
+    }
+  }
+}
+
+@include mixins.b('checkbox') {
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  color: mixins.css-variable('checkbox-color--default');
+  font-size: mixins.css-variable('checkbox-font-size--default');
+  vertical-align: bottom;
+  cursor: pointer;
+
+  @include mixins.e('original') {
+    display: none;
+    outline: none;
+    appearance: none;
+    pointer-events: none;
+  }
+
+  @include mixins.e('icon') {
+    flex-shrink: 0;
+    width: mixins.css-variable('checkbox-width--default');
+    height: mixins.css-variable('checkbox-height--default');
+    margin-right: mixins.css-variable('checkbox-margin--icon');
+    font-size: mixins.css-variable('checkbox-font-size--icon') !important;
+    background-color: mixins.css-variable('checkbox-bg');
+    border: mixins.css-variable('checkbox-border--default');
+    border-radius: mixins.css-variable('checkbox-border-radius');
+
+    &::before {
+      opacity: 0;
+    }
+  }
+
+  @include mixins.m('checked') {
+    color: mixins.css-variable('checkbox-color--checked');
+    border-color: mixins.css-variable('checkbox-border-color--checked') !important;
+
+    @include mixins.e('icon') {
+      background-color: mixins.css-variable('checkbox-bg') !important;
+      border: none;
+      opacity: 1;
+
+      &::before {
+        opacity: 1;
+      }
+    }
+
+    @include mixins.e('label') {
+      color: mixins.css-variable('checkbox-color--label--checked');
+    }
+  }
+
+  &:hover {
+    @include mixins.e('icon') {
+      border-color: mixins.css-variable('checkbox-border-color--hover');
+    }
+  }
+
+  @include mixins.m('indeterminate') {
+    @include checkbox-checked;
+
+    @include mixins.be('checkbox', 'label') {
+      color: mixins.css-variable('checkbox-color--checkbox--indeterminate');
+      user-select: none;
+    }
+  }
+
+  @include mixins.m('disabled') {
+    color: mixins.css-variable('checkbox-color--disabled');
+    cursor: not-allowed;
+
+    @include mixins.e('icon') {
+      background-color: mixins.css-variable('checkbox-bg--disabled');
+      border-color: mixins.css-variable('checkbox-border-color--disabled') !important;
+    }
+
+    &:hover {
+      @include mixins.e('icon') {
+        border-color: mixins.css-variable('checkbox-border-color--disabled');
+      }
+    }
+  }
+
+  @include mixins.m('border') {
+    padding: mixins.css-variable('checkbox-padding--border');
+    border: mixins.css-variable('checkbox-border--border');
+    border-radius: mixins.css-variable('checkbox-border-radius--border');
+
+    &:hover {
+      border-color: mixins.css-variable('checkbox-border-color--hover');
+    }
+
+    @include mixins.e('icon') {
+      border-color: mixins.css-variable('checkbox-border-color--border-icon');
+    }
+  }
+
+  @include mixins.m('viewable') {
+    height: auto;
+    margin-right: mixins.css-variable('checkbox-margin-right--viewable');
+    padding: 0 !important;
+    color: mixins.css-variable('checkbox-color--viewable') !important;
+    background-color: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    cursor: default !important;
+
+    &:hover {
+      color: mixins.css-variable('checkbox-color--viewable--hover') !important;
+    }
+  }
+
+  @include mixins.parallel-modifier('border', 'medium') {
+    height: mixins.css-variable('checkbox-height--medium');
+  }
+
+  @include mixins.parallel-modifier('border', 'large') {
+    height: mixins.css-variable('checkbox-height--large');
+    font-size: mixins.css-variable('checkbox-font-size--large');
+  }
+
+  @include mixins.parallel-modifier('border', 'disabled') {
+    color: mixins.css-variable('checkbox-color--disabled');
+    background-color: mixins.css-variable('checkbox-bg--disabled');
+    border-color: mixins.css-variable('checkbox-border-color--disabled') !important;
+    cursor: not-allowed;
+  }
+}
+
+@include mixins.b('checkbox-button') {
+  display: inline-flex;
+  align-items: center;
+  padding: mixins.css-variable('checkbox-padding--button');
+  overflow: hidden;
+  color: mixins.css-variable('checkbox-color--button');
+  font-size: mixins.css-variable('checkbox-font-size--button');
+  background-color: mixins.css-variable('checkbox-bg--button');
+  border: mixins.css-variable('checkbox-border--button');
+  border-radius: mixins.css-variable('checkbox-border-radius--button');
+  cursor: pointer;
+  user-select: none;
+
+  &:hover {
+    color: mixins.css-variable('checkbox-color--button--hover');
+  }
+
+  @include mixins.e('original') {
+    display: none;
+    outline: none;
+    appearance: none;
+  }
+
+  @include mixins.m('medium') {
+    height: mixins.css-variable('checkbox-height--medium');
+  }
+
+  @include mixins.m('large') {
+    height: mixins.css-variable('checkbox-height--large');
+    font-size: mixins.css-variable('checkbox-font-size--button--large');
+  }
+
+  @include mixins.m('checked') {
+    color: mixins.css-variable('checkbox-color--button--checked');
+    background-color: mixins.css-variable('checkbox-bg--button--checked');
+    border-color: mixins.css-variable('checkbox-border-color--button-checked') !important;
+
+    &:hover {
+      color: mixins.css-variable('checkbox-color--button--checked--hover');
+    }
+  }
+
+  @include mixins.m('disabled') {
+    color: mixins.css-variable('checkbox-color--button--disabled');
+    cursor: not-allowed;
+
+    &:hover {
+      color: mixins.css-variable('checkbox-color--button--disabled--hover');
+    }
+  }
+
+  @include mixins.m('checked-disabled') {
+    color: mixins.css-variable('checkbox-color--button--checked--disabled');
+    background-color: mixins.css-variable('checkbox-bg--button--checked--disabled');
+    cursor: not-allowed;
+
+    &:hover {
+      color: mixins.css-variable('checkbox-color--button--checked--disabled--hover');
+    }
+  }
+}
+
+@include mixins.b('checkbox-group') {
+  display: flex;
+  align-items: center;
+
+  @include mixins.b('checkbox-group__border') {
+    width: mixins.size(1);
+    background-color: mixins.css-variable('checkbox-bg--group-border');
+
+    @include mixins.m('medium') {
+      height: mixins.css-variable('checkbox-height--medium');
+    }
+
+    @include mixins.m('large') {
+      height: mixins.css-variable('checkbox-height--large');
+    }
+
+    @include mixins.m('checked') {
+      background-color: mixins.css-variable('checkbox-bg--group-border--checked');
+    }
+
+    @include mixins.m('disabled') {
+      background-color: mixins.css-variable('checkbox-bg--group-border--disabled');
+    }
+
+    @include mixins.m('divider') {
+      background-color: mixins.css-variable('checkbox-bg--group-border--divider');
+    }
+  }
+
+  @include mixins.b('checkbox-button') {
+    position: relative;
+    border-color: mixins.css-variable('checkbox-border-color--border');
+    border-left: none;
+    border-radius: mixins.css-variable('checkbox-border-radius--group-button');
+
+    &:first-child {
+      border-left: mixins.css-variable('checkbox-border--border');
+      border-top-left-radius: mixins.css-variable('checkbox-border-radius--border');
+      border-bottom-left-radius: mixins.css-variable('checkbox-border-radius--border');
+    }
+
+    &:last-child {
+      border-right: mixins.css-variable('checkbox-border--border');
+      border-top-right-radius: mixins.css-variable('checkbox-border-radius--border');
+      border-bottom-right-radius: mixins.css-variable('checkbox-border-radius--border');
+    }
+
+    @include mixins.m('checked') {
+      box-shadow: mixins.css-variable('checkbox-box-shadow--button--checked');
+
+      & + & {
+        box-shadow: mixins.css-variable('checkbox-box-shadow--button--checked-siblings');
+      }
+    }
+  }
+
+  @include mixins.b('checkbox') {
+    margin-right: mixins.css-variable('checkbox-margin-right--group-checkbox');
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

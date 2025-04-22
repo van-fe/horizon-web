@@ -1,0 +1,93 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('steps') {
+  @include mixins.is('vertical') {
+    flex-direction: column;
+    height: 100%;
+
+    @include mixins.b('step', false) {
+      position: relative;
+      min-height: calc(#{mixins.css-variable('steps-min-height--tail--vertical')} + #{mixins.css-variable('steps-size--icon')} + #{mixins.css-variable('steps-margin-y--tail')} * 2);
+      max-height: calc(#{mixins.css-variable('steps-max-height--tail--vertical')} + #{mixins.css-variable('steps-size--icon')} + #{mixins.css-variable('steps-margin-y--tail')} * 2);
+
+      @include mixins.e('tail') {
+        display: none;
+      }
+
+      @include mixins.em('content', 'title') {
+        &::after {
+          display: none;
+        }
+      }
+
+      @include mixins.e('icon') {
+        &::after {
+          position: absolute;
+          top: calc(#{mixins.css-variable('steps-size--icon')} + #{mixins.css-variable('steps-margin-y--tail')});
+          bottom: mixins.css-variable('steps-margin-y--tail');
+          left: calc(#{mixins.css-variable('steps-size--icon')} / 2);
+          display: block;
+          width: 1px;
+          margin: 0 auto;
+          background: mixins.css-variable('steps-border-color--icon--dot');
+          transform: translateX(-50%);
+          content: '';
+        }
+      }
+
+      &:last-child {
+        @include mixins.e('icon') {
+          &::after {
+            display: none;
+          }
+        }
+      }
+
+      /**
+      @include mixins.is('next-finish') {
+        @include mixins.e('icon') {
+          &::after {
+            background: mixins.css-variable('steps-border-color--icon--finished--dot');
+          }
+        }
+      }
+
+      @include mixins.is('next-process') {
+        @include mixins.e('icon') {
+          &::after {
+            background: mixins.css-variable('steps-border-color--icon--process--dot');
+          }
+        }
+      }
+
+      @include mixins.is('next-error') {
+        @include mixins.e('icon') {
+          &::after {
+            background: mixins.css-variable('steps-border-color--icon--error--dot');
+          }
+        }
+      }
+      **/
+    }
+
+    @include mixins.is('dot') {
+      @include mixins.b('step', false) {
+        @include mixins.e('icon') {
+          margin-top: calc(#{mixins.css-variable('steps-size--icon')} / 2 - #{mixins.css-variable('steps-size--icon--dot')} / 2);
+
+          &::after {
+            top: calc(#{mixins.css-variable('steps-size--icon')} / 2 + #{mixins.css-variable('steps-size--icon--dot')} / 2);
+            bottom: calc((#{mixins.css-variable('steps-size--icon')} / 2 - #{mixins.css-variable('steps-size--icon--dot')} / 2) * -1);
+            left: calc(#{mixins.css-variable('steps-size--icon--dot')} / 2);
+          }
+        }
+
+        @include mixins.e('content') {
+          flex: 1;
+          margin-top: 0;
+          margin-left: mixins.css-variable('steps-margin-left--content--dot');
+        }
+      }
+    }
+  }
+}

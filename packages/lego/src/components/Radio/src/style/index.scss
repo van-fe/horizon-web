@@ -1,0 +1,241 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('radio') {
+  display: inline-flex;
+  align-items: center;
+  color: mixins.css-variable('radio-color');
+  font-size: mixins.css-variable('radio-font-size');
+  column-gap: mixins.css-variable('radio-margin-right--original');
+  cursor: pointer;
+
+  @include mixins.e('input') {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    @include mixins.m('original') {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: block;
+      width: mixins.css-variable('radio-size--original');
+      height: mixins.css-variable('radio-size--original');
+      outline: none;
+      visibility: hidden;
+      appearance: none;
+
+      &:checked {
+        + #{mixins.modifier-name('cursor', 'input', mixins.block('radio'))} {
+          border: mixins.css-variable('radio-border--original--checked');
+        }
+      }
+
+      &:hover {
+        + #{mixins.modifier-name('cursor', 'input', mixins.block('radio'))} {
+          border-color: mixins.css-variable('radio-border-color--original--hover');
+        }
+
+        &:checked {
+          border-color: mixins.css-variable('radio-border-color--original--checked--hover');
+        }
+      }
+    }
+
+    @include mixins.m('cursor') {
+      width: mixins.css-variable('radio-size--original');
+      height: mixins.css-variable('radio-size--original');
+      background: mixins.css-variable('radio-bg--checked--original');
+      border: mixins.css-variable('radio-border');
+      border-radius: mixins.css-variable('radio-border-radius--original');
+      cursor: pointer;
+      transition: mixins.css-variable('radio-transiton--all');
+    }
+  }
+
+  @include mixins.e('label') {
+    white-space: nowrap;
+  }
+
+  @include mixins.m('checked') {
+    color: mixins.css-variable('radio-color--checked');
+    border-color: mixins.css-variable('radio-border-color--checked') !important;
+
+    @include mixins.e('original') {
+      background-color: mixins.css-variable('radio-bg--checked--original') !important;
+      border: mixins.css-variable('radio-border--checked--original');
+
+      &:hover {
+        border-color: mixins.css-variable('radio-border-color--checked--original--hover');
+      }
+    }
+
+    @include mixins.e('label') {
+      color: mixins.css-variable('radio-color--label--checked');
+    }
+  }
+
+  @include mixins.m('border') {
+    padding: mixins.css-variable('radio-padding--border');
+    border: mixins.css-variable('radio-border--border');
+    border-radius: mixins.css-variable('radio-border-radius--border');
+
+    &:hover {
+      border-color: mixins.css-variable('radio-border-color--border--hover');
+    }
+  }
+
+  @include mixins.m('disabled') {
+    color: mixins.css-variable('radio-color--disabled');
+    border-color: mixins.css-variable('radio-border-color--disabled') !important;
+    cursor: not-allowed;
+
+    @include mixins.e('input', false) {
+      @include mixins.m('cursor') {
+        background-color: mixins.css-variable('radio-bg--checked--disabled--original');
+        border-color: mixins.css-variable('radio-border-color--disabled--original') !important;
+        cursor: not-allowed;
+      }
+
+      @include mixins.m('original') {
+        &:hover {
+          + #{mixins.modifier-name('cursor', 'input', mixins.block('radio'))} {
+            border-color: mixins.css-variable('radio-border-color--disabled--original--hover');
+          }
+        }
+      }
+    }
+
+    @include mixins.e('label') {
+      color: mixins.css-variable('radio-color--disabled');
+    }
+  }
+
+  @include mixins.m('viewable') {
+    height: auto;
+    padding: mixins.css-variable('radio-padding--viewable');
+    color: mixins.css-variable('radio-color--viewable');
+    background-color: mixins.css-variable('radio-bg--viewable');
+    border: none !important;
+    cursor: default;
+
+    &:hover {
+      color: mixins.css-variable('radio-color--viewable--hover');
+    }
+  }
+
+  @include mixins.parallel-modifier('border', 'medium') {
+    height: mixins.css-variable('radio-height--medium');
+  }
+
+  @include mixins.parallel-modifier('border', 'large') {
+    height: mixins.css-variable('radio-height--large');
+    font-size: mixins.css-variable('radio-font-size--large');
+  }
+
+  @include mixins.parallel-modifier('border', 'disabled') {
+    color: mixins.css-variable('radio-color--border--disabled');
+    background-color: mixins.css-variable('radio-bg--border--disabled');
+
+    @include mixins.e('label') {
+      color: mixins.css-variable('radio-color--border--disabled');
+    }
+  }
+}
+
+@include mixins.b('radio-button') {
+  display: inline-flex;
+  align-items: center;
+  padding-right: mixins.css-variable('radio-padding--button');
+  padding-left: mixins.css-variable('radio-padding--button');
+  overflow: hidden;
+  color: mixins.css-variable('radio-color--button');
+  font-size: mixins.css-variable('radio-font-size--button');
+  background-color: mixins.css-variable('radio-bg--button');
+  border: mixins.css-variable('radio-border--button');
+  border-radius: mixins.css-variable('radio-border-radius--button');
+  cursor: pointer;
+
+  &:hover {
+    color: mixins.css-variable('radio-color--button--hover');
+  }
+
+  @include mixins.m('medium') {
+    height: mixins.css-variable('radio-height--medium');
+  }
+
+  @include mixins.m('large') {
+    height: mixins.css-variable('radio-height--large');
+    font-size: mixins.css-variable('radio-font-size--large');
+  }
+
+  @include mixins.m('checked') {
+    color: mixins.css-variable('radio-color--button--checked');
+    background-color: mixins.css-variable('radio-bg--button--checked');
+    border: mixins.css-variable('radio-border--button--checked');
+
+    &:hover {
+      color: mixins.css-variable('radio-color--button--checked--hover');
+    }
+  }
+
+  @include mixins.m('disabled') {
+    color: mixins.css-variable('radio-color--button--disabled');
+    cursor: not-allowed;
+
+    &:hover {
+      color: mixins.css-variable('radio-color--button--disabled--hover');
+    }
+  }
+
+  @include mixins.m('checked-disabled') {
+    color: mixins.css-variable('radio-color--button--checked--disabled');
+    background-color: mixins.css-variable('radio-bg--button--checked--disabled');
+    cursor: not-allowed;
+
+    &:hover {
+      color: mixins.css-variable('radio-color--button--checked--disabled--hover');
+    }
+  }
+
+  @include mixins.em('input', 'original') {
+    display: none;
+  }
+}
+
+@include mixins.b('radio-group') {
+  display: flex;
+  align-items: center;
+
+  @include mixins.b('radio-button') {
+    border-color: mixins.css-variable('radio-border-color--button');
+    border-left: none;
+    border-radius: 0;
+
+    &:first-child {
+      border-left: mixins.css-variable('radio-border--button');
+      border-top-left-radius: mixins.css-variable('radio-border-radius--button');
+      border-bottom-left-radius: mixins.css-variable('radio-border-radius--button');
+    }
+
+    &:last-child {
+      border-top-right-radius: mixins.css-variable('radio-border-radius--button');
+      border-bottom-right-radius: mixins.css-variable('radio-border-radius--button');
+    }
+
+    @include mixins.m('checked') {
+      border-color: mixins.css-variable('radio-border-color--button--checked');
+      border-left-color: transparent !important;
+      box-shadow: mixins.css-variable('radio-box-shadow');
+    }
+  }
+
+  @include mixins.b('radio') {
+    margin-right: mixins.css-variable('radio-margin-right--siblings');
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "lego": "2.12.18",
+  "shared": "2.12.18",
+  "locale": "2.12.18",
+  "locale-vue": "2.12.18",
+  "unplugin-resolver": "2.12.18",
+  "lego-sensor-tracker": "2.12.18",
+  "colors": "2.12.18", 
+  "lego-pad": "2.12.18"
+}

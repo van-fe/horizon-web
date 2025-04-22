@@ -1,0 +1,64 @@
+@use 'sass:map';
+@use '../../../../styles/mixins';
+@import './var';
+
+@include mixins.b('date-picker-panel') {
+  flex: 1;
+
+  @include mixins.m('range') {
+    border-right: mixins.css-variable('date-picker-border--panel--range');
+  }
+
+  @include mixins.m('left') {
+    flex: 1;
+  }
+
+  @include mixins.m('right') {
+    #{mixins.block-name('panel-time')} {
+      #{mixins.block-name('popover__reference')} {
+        width: 100%;
+      }
+
+      #{mixins.block-name('time-select__item')} {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+    }
+
+    #{mixins.block-name('time-select')} {
+      border: none;
+
+      #{mixins.block-name('time-select__item')} {
+        &#{mixins.block-name('time-select__item--selected')} {
+          background: mixins.css-variable('date-picker-bg--panel--time-select-item--selected');
+        }
+
+        &#{mixins.block-name('time-select__item--blank')} {
+          &:hover {
+            background: mixins.css-variable('date-picker-bg--panel--time-select-item--blank');
+            cursor: default;
+          }
+        }
+      }
+    }
+  }
+
+  @include mixins.m('six-rows') {
+    #{mixins.block-name('panel-time')} {
+      height: 296px !important;
+    }
+  }
+
+  @each $type in (time, minutes, seconds) {
+    @include mixins.m($type) {
+      width: #{map.get($panel-time-width, $type)};
+    }
+  }
+}
+
+@include mixins.b('date-picker-panel-body') {
+  display: flex;
+  height: calc(100% - 48px);
+}

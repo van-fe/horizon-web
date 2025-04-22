@@ -1,0 +1,26 @@
+{
+  "name": "@nio-fe/unplugin-resolver",
+  "version": "1.0.0",
+  "description": "auto load on demand for unplugin-vue-component",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "dev": "tsc",
+    "build": "tsc"
+  },
+  "files": [
+    "dist"
+  ],
+  "devConfig": {
+    "watch": false
+  },
+  "keywords": [],
+  "license": "ISC",
+  "dependencies": {
+    "@nio-fe/shared": "workspace:*",
+    "consola": "^3.2.3"
+  },
+  "devDependencies": {
+    "vite-plugin-style-import": "^2.0.0"
+  }
+}

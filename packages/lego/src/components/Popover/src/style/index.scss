@@ -1,0 +1,120 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('popover') {
+  @include mixins.e('arrow') {
+    position: absolute;
+    width: mixins.css-variable('popover-size--arrow');
+    height: mixins.css-variable('popover-size--arrow');
+
+    &::before {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: mixins.css-variable('popover-bg');
+      border-right: mixins.css-variable('popover-border');
+      border-bottom: mixins.css-variable('popover-border');
+      visibility: visible;
+      content: '';
+    }
+
+    @include mixins.is('dark') {
+      &::before {
+        background: mixins.css-variable('popover-bg--dark');
+        border-color: mixins.css-variable('popover-border-color--dark');
+      }
+    }
+  }
+
+  // 动画
+  @include mixins.e('anim-enter-active') {
+    transition: opacity 0.3s ease;
+  }
+
+  @include mixins.e('anim-leave-active') {
+    transition: opacity 0.3s ease;
+  }
+
+  @include mixins.e('anim-enter-from') {
+    opacity: 0;
+  }
+
+  @include mixins.e('anim-leave-to') {
+    opacity: 0;
+  }
+
+  @include mixins.e('anim-enter-to') {
+    opacity: 1;
+  }
+
+  @include mixins.e('anim-leave-from') {
+    opacity: 1;
+  }
+
+  @include mixins.e('popper') {
+    position: fixed;
+
+    // reference离开可视区域
+    &[data-reference-overflow-observed],
+    &[data-reference-overflow-observed] #{mixins.element-name('arrow', mixins.block('popover'))}::before {
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    // 小三角位置
+    &[data-popper-placement^='top'] > #{mixins.element-name('arrow', mixins.block('popover'))} {
+      bottom: calc(-1 * #{mixins.css-variable('popover-size--arrow')} / 2);
+
+      &::before {
+        transform: rotate(45deg);
+      }
+    }
+
+    &[data-popper-placement^='bottom'] > #{mixins.element-name('arrow', mixins.block('popover'))} {
+      top: calc(-1 * #{mixins.css-variable('popover-size--arrow')} / 2);
+
+      &::before {
+        transform: rotate(225deg);
+      }
+    }
+
+    &[data-popper-placement^='left'] > #{mixins.element-name('arrow', mixins.block('popover'))} {
+      right: calc(-1 * #{mixins.css-variable('popover-size--arrow')} / 2);
+
+      &::before {
+        transform: rotate(-45deg);
+      }
+    }
+
+    &[data-popper-placement^='right'] > #{mixins.element-name('arrow', mixins.block('popover'))} {
+      left: calc(-1 * #{mixins.css-variable('popover-size--arrow')} / 2);
+
+      &::before {
+        transform: rotate(135deg);
+      }
+    }
+  }
+
+  @include mixins.e('mask') {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: mixins.css-variable('popover-bg--mask');
+  }
+
+  @include mixins.e('popcontent') {
+    padding: mixins.css-variable('popover-padding--content');
+    color: mixins.css-variable('popover-color');
+    background: mixins.css-variable('popover-bg');
+    border: mixins.css-variable('popover-border');
+    border-radius: mixins.css-variable('popover-border-radius');
+    box-shadow: mixins.css-variable('popover-box-shadow--popcontent');
+
+    @include mixins.is('dark') {
+      color: mixins.css-variable('popover-color--dark');
+      background: mixins.css-variable('popover-bg--dark');
+      border-color: mixins.css-variable('popover-border-color--dark');
+    }
+  }
+}

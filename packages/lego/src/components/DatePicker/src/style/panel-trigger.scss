@@ -1,0 +1,214 @@
+@use 'sass:map';
+@use '../../../../styles/mixins';
+@import './var';
+
+@include mixins.b('date-picker-trigger-content') {
+  width: 100%;
+
+  #{mixins.block-name('input--with-prefix')} #{mixins.block-name('input__inner')} {
+    padding-left: 40px;
+  }
+
+  #{mixins.block-name('input__prefix')} {
+    color: mixins.css-variable('date-picker-color--input-icon');
+  }
+
+  @include mixins.m('range') {
+    width: 100%;
+    border: mixins.css-variable('date-picker-border--default');
+    border-radius: mixins.css-variable('date-picker-border-radius');
+
+    &:hover {
+      border-color: mixins.css-variable('date-picker-border-color--hover');
+    }
+
+    &:focus {
+      border-color: mixins.css-variable('date-picker-border-color--focus');
+      outline: none;
+    }
+
+    #{mixins.block-name('input--with-suffix')} #{mixins.block-name('input__inner')} {
+      padding-right: 0;
+    }
+
+    @include mixins.e('body') {
+      display: flex;
+      align-items: center;
+      width: 100%;
+
+      @include mixins.m('single') {
+        @include mixins.e('left') {
+          width: 100% !important;
+
+          &#{mixins.block-name('input--with-suffix')} #{mixins.block-name('input__inner')} {
+            padding-right: 40px;
+          }
+        }
+      }
+
+      @include mixins.e('left') {
+        flex: 1;
+        #{mixins.block-name('input__inner-wrap')} {
+          padding: mixins.css-variable('date-picker-padding--panel-trigger-left-input__inner-wrap');
+        }
+      }
+
+      @include mixins.e('right') {
+        flex: 1;
+
+        #{mixins.block-name('input__inner-wrap')} {
+          padding: mixins.css-variable('date-picker-padding--panel-trigger-right-input__inner-wrap');
+        }
+        #{mixins.block-name('input__inner')} {
+          padding-left: 0;
+        }
+
+        &#{mixins.block-name('input--with-suffix')} #{mixins.block-name('input__inner')} {
+          padding-right: 33px;
+        }
+      }
+
+      @include mixins.e('separator') {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: mixins.css-variable('date-picker-color--input-icon');
+        @include mixins.m('emphasize') {
+          background-color: mixins.css-variable('date-picker-bg--panel-trigger-input--inner-wrap--filled');
+        }
+        @include mixins.m('no-border') {
+          background-color: transparent;
+        }
+      }
+    }
+    &#{mixins.block-name('date-picker-trigger-content--emphasize')} {
+      @include mixins.e('separator') {
+        background-color: mixins.css-variable('input-bg--inner-wrap--filled') !important;
+      }
+    }
+  }
+
+  @include mixins.m('emphasize') {
+    border: 1px solid transparent;
+  }
+
+  @include mixins.m('no-border') {
+    border: 1px solid transparent;
+
+    &:hover {
+      overflow: hidden;
+      border-color: transparent;
+      border-radius: mixins.css-variable('input-border-radius');
+      #{mixins.block-name('input__inner-wrap')} {
+        background-color: mixins.css-variable('date-picker-bg--panel-trigger-input--inner-wrap--no-border');
+        border-radius: 0;
+      }
+      @include mixins.e('separator') {
+        background-color: mixins.css-variable('date-picker-bg--panel-trigger-input--inner-wrap--no-border');
+      }
+    }
+  }
+
+  @include mixins.is('error') {
+    @include mixins.b('date-picker-trigger-content') {
+      @include mixins.m('range') {
+        border-color: mixins.css-variable('date-picker-border-color--error');
+      }
+    }
+  }
+
+  @include mixins.m('active') {
+    background-color: mixins.css-variable('date-picker-bg--wrapper--content') !important;
+    border-color: mixins.css-variable('date-picker-border-color--active') !important;
+    outline: none;
+    #{mixins.block-name('input__inner-wrap')} {
+      background-color: mixins.css-variable('date-picker-bg--wrapper--content') !important;
+    }
+    @include mixins.e('separator') {
+      background-color: mixins.css-variable('date-picker-bg--wrapper--content') !important;
+    }
+    &#{mixins.block-name('date-picker-trigger-content--emphasize')} {
+      #{mixins.block-name('input__inner-wrap')} {
+        background-color: mixins.css-variable('input-bg--inner-wrap--filled') !important;
+      } 
+      @include mixins.e('separator') {
+        background-color: mixins.css-variable('input-bg--inner-wrap--filled') !important;
+      }
+    }
+  }
+
+  @include mixins.m('disabled') {
+    background-color: mixins.css-variable('date-picker-bg--trigger-content--disabled');
+
+    &:hover {
+      border-color: mixins.css-variable('date-picker-border-color--trigger-content--disabled');
+    }
+
+    #{mixins.block-name('input__inner-wrap')} {
+      background-color: transparent;
+    }
+    @include mixins.e('separator') {
+      background-color: transparent;
+    }
+
+    &#{mixins.block-name('date-picker-trigger-content--no-border')} {
+      border-color: mixins.css-variable('date-picker-bg--wrapper--content') !important;
+
+      &:hover {
+        #{mixins.block-name('input__inner-wrap')} {
+          background-color: mixins.css-variable('date-picker-bg--wrapper--content') !important;
+        }
+      }
+      #{mixins.block-name('input__inner-wrap')} {
+        border-color: mixins.css-variable('date-picker-bg--wrapper--content') !important;
+      }
+      @include mixins.e('separator') {
+        background-color: mixins.css-variable('date-picker-bg--wrapper--content') !important;
+      }
+    }
+    &#{mixins.block-name('date-picker-trigger-content--emphasize')} {
+      &:hover {
+        border-color: mixins.css-variable('date-picker-bg--wrapper--content') !important;
+      }
+    }
+  }
+
+  @each $size in (small, medium, large) {
+    @include mixins.m($size) {
+      #{mixins.block-name('input__inner-wrap')} {
+        height: #{map.get($trigger-height, $size)} !important;
+        border-color: transparent !important;
+  
+        &:hover {
+          border-color: transparent !important;
+        }
+
+        #{mixins.block-name('input__suffix')} {
+          width: 16px;
+          height: 100%;
+        }
+      }
+      @include mixins.e('separator') {
+        height: #{map.get($trigger-height, $size)} !important;
+      }
+    }
+  }
+
+  @each $type in (time, minutes, seconds) {
+    @include mixins.m($type) {
+      width: #{map.get($panel-time-width, $type)};
+    }
+  }
+
+  @include mixins.e('icon-wrapper') {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 100%;
+  }
+
+  @include mixins.e('icon') {
+    @include mixins.clear-icon;
+  }
+}

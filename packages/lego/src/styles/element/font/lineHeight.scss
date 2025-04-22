@@ -1,0 +1,8 @@
+@use '../../mixins/function';
+
+$values: (
+  'default': function.css-variable('font-line-height-1'),
+  'standard': function.css-variable('font-line-height-2'),
+  'loose': function.css-variable('font-line-height-3'),
+  'standard-for-odd': function.css-variable('font-line-height-4'),
+);

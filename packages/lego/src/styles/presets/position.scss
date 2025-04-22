@@ -1,0 +1,23 @@
+$positions: (static, relative, absolute, fixed, sticky);
+
+@each $position in $positions {
+  .#{$position} {
+    position: $position !important;
+  }
+}
+
+.position-x-center {
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+
+.position-y-center {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
+
+.position-center {
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+}

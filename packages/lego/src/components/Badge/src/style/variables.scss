@@ -1,0 +1,10 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  'bg--content': #{function.css-variable('bg-default')},
+  'border-color--content': #{function.css-variable('border-inverse')},
+  'color': #{function.css-variable('text-inverse')},
+  'border-radius--content--default': #{function.css-variable('radius-circle')},
+  'border-radius--content--pill': #{function.css-variable('radius-pill')},
+  'font-size--content': #{function.css-variable('text-sm')},
+);
