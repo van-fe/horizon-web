@@ -1,4 +1,4 @@
-import { generatorInjectedKeyName } from '@aurora/shared';
+import { generatorInjectedKeyName } from '@aurora/utils';
 import type { ComputedRef, InjectionKey, Ref } from 'vue';
 import type { StepProps, StepsProps } from '../composables/useProps';
 import type { NApplicationSizeType } from '~/components/Application/src/composables/useProps';

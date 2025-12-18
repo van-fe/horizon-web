@@ -1,6 +1,6 @@
 import type { ComputedRef, CSSProperties, Ref, VNode } from 'vue';
 import type { TableColumnProps } from '../composables/useProps';
-import type { LegoSetupContext, Promisable } from '@aurora/shared';
+import type { LegoSetupContext, Promisable } from '@aurora/utils';
 import type { TableColumnEmits } from '../composables/useEmits';
 import type { TableColumnSlots } from '../composables/useSlots';
 

@@ -1,5 +1,5 @@
 import type { CSSProperties, ExtractPropTypes, PropType } from 'vue';
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 import type { TagProps } from '~/components/Tag/src/composables/useProps';
 import type { PickerInputStatusType } from '~/components/Picker/src/composables/useProps';
 import type { PopoverProps } from '~/components/Popover/src/composables/useProps';

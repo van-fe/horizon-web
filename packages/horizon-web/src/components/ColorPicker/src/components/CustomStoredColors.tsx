@@ -1,5 +1,5 @@
 import { computed, defineComponent, Fragment, inject, watch } from 'vue';
-import { cls, ComponentClassBlock, isString, isNull } from '@aurora/shared';
+import { cls, ComponentClassBlock, isString, isNull } from '@aurora/utils';
 import { ColorPickerCurrentValue } from '../utils/InjectedKeys';
 import { getCustomStoredColors } from '../utils/useStorageColor';
 import useLocaleLang from '~/utils/useLocaleLang';

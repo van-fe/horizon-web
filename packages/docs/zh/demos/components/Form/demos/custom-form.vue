@@ -34,7 +34,7 @@
 import { defineComponent, ref, h, watch, inject } from 'vue';
 import type { NFormInstance } from '@aurora/horizon-web';
 import { $message, NFormItemTriggerInjectedKey, NFormItemErrorInjectedKey } from '@aurora/horizon-web';
-import { isString, isUndefined } from '@aurora/shared';
+import { isString, isUndefined } from '@aurora/utils';
 
 const CustomInput = defineComponent({
   name: 'CustomInput',

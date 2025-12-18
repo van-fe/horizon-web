@@ -1,5 +1,5 @@
 import type { ApplicationProps } from '~/components/Application/src/composables/useProps';
-import { isBoolean } from '@aurora/shared';
+import { isBoolean } from '@aurora/utils';
 import { NApplicationShowTimeZoneInjectedKey } from '~/components/Application/src/utils/injectedKeys';
 import { computed, inject } from 'vue';
 

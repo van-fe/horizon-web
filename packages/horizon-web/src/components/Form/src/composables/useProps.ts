@@ -1,6 +1,6 @@
 import type { ExtractPropTypes, PropType, Ref, VNode } from 'vue';
 import type { RuleItem } from 'async-validator';
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 
 export interface NFormItemHelper {
   /**

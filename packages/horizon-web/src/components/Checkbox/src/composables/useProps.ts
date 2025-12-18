@@ -1,6 +1,6 @@
 import type { ExtractPropTypes, PropType, SetupContext } from 'vue';
 import type { CheckboxEmits } from './useEmits';
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 import { nextTick } from 'vue';
 import type { CheckboxGroupPropsProvideType, CheckboxUnionType } from '../utils/types';
 

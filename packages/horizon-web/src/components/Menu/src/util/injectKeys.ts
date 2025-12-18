@@ -1,6 +1,6 @@
 import type { ComputedRef, InjectionKey, Ref } from 'vue';
-import type { LegoSetupContext } from '@aurora/shared';
-import { generatorInjectedKeyName } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { generatorInjectedKeyName } from '@aurora/utils';
 import type { MenuProps } from '../composables/useProps';
 import type { MenuEmits } from '../composables/useEmits';
 import type { NMenuTreeData } from './types';

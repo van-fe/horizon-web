@@ -3,14 +3,14 @@ import { defineComponent, ref, provide } from 'vue';
 import { useImageListProps } from './composables/useProps';
 import NViewer from '~/components/Viewer/src/Viewer';
 import type { NViewerSource } from '~/components/Viewer/src/composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
 import {
   ComponentClassBlock,
   slotVNodes,
   flattenVNodes,
   getUnitString,
   useNamespace,
-} from '@aurora/shared';
+} from '@aurora/utils';
 import type { ImageListSlots } from './composables/useSlots';
 import { useImageListSlots } from './composables/useSlots';
 

@@ -1,4 +1,4 @@
-import type { LegoComponentInstance } from '@aurora/shared';
+import type { LegoComponentInstance } from '@aurora/utils';
 import {
   cls,
   ComponentClassBlock,
@@ -6,7 +6,7 @@ import {
   useNamespace,
   safelyGetEventTarget,
   sizeUnitTransform,
-} from '@aurora/shared';
+} from '@aurora/utils';
 import type { CSSProperties } from 'vue';
 import {
   Fragment,

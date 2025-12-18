@@ -5,7 +5,7 @@
     "paths": {
       "~/*": ["src/*"],
       "@aurora/horizon-web": ["../horizon-web/src"],
-      "@aurora/shared": ["../shared/src"]
+      "@aurora/utils": ["../shared/src"]
     }
   }
 }

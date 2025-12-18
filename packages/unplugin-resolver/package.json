@@ -17,7 +17,7 @@
   "keywords": [],
   "license": "ISC",
   "dependencies": {
-    "@aurora/shared": "workspace:*",
+    "@aurora/utils": "workspace:*",
     "consola": "^3.2.3"
   },
   "devDependencies": {

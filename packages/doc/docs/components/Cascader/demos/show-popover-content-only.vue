@@ -30,7 +30,7 @@
 import { onMounted, ref } from 'vue';
 import { CascaderExposes, NCascader } from '@aurora/horizon-web';
 import type { NCascaderExtendOption, NCascaderModelValueType } from '@aurora/horizon-web';
-import { LegoComponentInstance } from '@aurora/shared';
+import { LegoComponentInstance } from '@aurora/utils';
 
 const cascaderDomRef1 = ref<LegoComponentInstance<typeof NCascader, CascaderExposes>>();
 const cascaderDomRef2 = ref<LegoComponentInstance<typeof NCascader, CascaderExposes>>();

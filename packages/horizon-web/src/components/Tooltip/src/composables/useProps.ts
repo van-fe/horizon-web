@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType, TeleportProps } from 'vue';
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 
 export type TooltipSize = 'medium' | 'small';
 export const useTooltipProps = declarePropType({

@@ -1,6 +1,6 @@
 import { computed, ref } from 'vue';
-import type { LegoComponentInstance } from '@aurora/shared';
-import { cls, ComponentClassBlock } from '@aurora/shared';
+import type { LegoComponentInstance } from '@aurora/utils';
+import { cls, ComponentClassBlock } from '@aurora/utils';
 import type NScrollbar from '~/components/Scrollbar/src/Scrollbar';
 import type { ScrollbarExposes } from '~/components/Scrollbar/src/composables/useExposes';
 import { unrefElement } from '@vueuse/core';

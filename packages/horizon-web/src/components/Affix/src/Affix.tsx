@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'vue';
 import { defineComponent, Fragment, onBeforeUnmount, onMounted, ref, toRefs, watch } from 'vue';
-import { useNamespace, ComponentClassBlock } from '@aurora/shared';
-import type { LegoSetupContext } from '@aurora/shared';
+import { useNamespace, ComponentClassBlock } from '@aurora/utils';
+import type { LegoSetupContext } from '@aurora/utils';
 import { useAffixProps } from './composables/useProps';
 import { useAffixEmits } from './composables/useEmits';
 import { useAffixSlots } from './composables/useSlots';

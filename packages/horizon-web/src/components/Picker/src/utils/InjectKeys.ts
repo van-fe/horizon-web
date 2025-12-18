@@ -1,5 +1,5 @@
-import type { LegoComponentInstance, LegoSetupContext } from '@aurora/shared';
-import { generatorInjectedKeyName } from '@aurora/shared';
+import type { LegoComponentInstance, LegoSetupContext } from '@aurora/utils';
+import { generatorInjectedKeyName } from '@aurora/utils';
 import type { InjectionKey, Ref } from 'vue';
 import type { PickerProps, PickerInputStatusType, PickerStatusType } from '../composables/useProps';
 import type { PickerEmits } from '../composables/useEmits';

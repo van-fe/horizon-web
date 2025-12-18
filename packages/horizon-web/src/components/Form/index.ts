@@ -1,6 +1,6 @@
 import { default as Form } from './src/Form';
 import { default as FormItem } from './src/FormItem';
-import { withInstall, withNoopInstall } from '@aurora/shared';
+import { withInstall, withNoopInstall } from '@aurora/utils';
 import type { NFormInstance, NFormRule, NFormItemHelper } from './src/composables/useProps';
 export {
   NFormItemErrorInjectedKey,

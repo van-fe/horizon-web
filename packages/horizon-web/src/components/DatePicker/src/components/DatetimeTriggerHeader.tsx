@@ -1,6 +1,6 @@
 import { defineComponent, inject, ref } from 'vue';
-import type { LegoComponentInstance, LegoSetupContext } from '@aurora/shared';
-import { cls, ComponentClassBlock } from '@aurora/shared';
+import type { LegoComponentInstance, LegoSetupContext } from '@aurora/utils';
+import { cls, ComponentClassBlock } from '@aurora/utils';
 import type { DatePickerDatetimeTriggerHeaderProps } from '../composables/useProps';
 import { useDatePickerDatetimeTriggerHeaderProps } from '../composables/useProps';
 import NInput from '~/components/Input/src/Input';

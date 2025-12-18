@@ -9,8 +9,8 @@ import {
   watch,
 } from 'vue';
 import { NSliderGetTrackSizeInjectedKey, NSliderPropsInjectedKey } from '../utils/injectedKeys';
-import type { LegoSetupContext } from '@aurora/shared';
-import { ComponentClassBlock, getClientXY, getPrecision } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { ComponentClassBlock, getClientXY, getPrecision } from '@aurora/utils';
 import round from 'lodash/round';
 import NTooltip from '~/components/Tooltip/src/Tooltip';
 import type { SliderCursorEmits } from '../composables/useEmits';

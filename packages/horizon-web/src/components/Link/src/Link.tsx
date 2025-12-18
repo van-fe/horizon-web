@@ -10,9 +10,9 @@ import {
 } from 'vue';
 import { useLinkProps } from './composables/useProps';
 import type { Router } from 'vue-router';
-import type { LegoSetupContext } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
 import { IconLoadingLine } from '@aurora/icon';
-import { cls, ComponentClassBlock, NOnlyChild, useNamespace } from '@aurora/shared';
+import { cls, ComponentClassBlock, NOnlyChild, useNamespace } from '@aurora/utils';
 import type { LinkEmits } from './composables/useEmits';
 import { useLinkEmits } from './composables/useEmits';
 import type { LinkSlots } from './composables/useSlots';

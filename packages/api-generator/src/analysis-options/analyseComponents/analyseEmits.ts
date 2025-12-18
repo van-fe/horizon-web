@@ -1,5 +1,5 @@
 import type { Project, PropertyAssignment, ArrowFunction } from 'ts-morph';
-import type { ApiGeneratorAnalysedEmitType, ApiGeneratorExportedComponent } from '@aurora/shared';
+import type { ApiGeneratorAnalysedEmitType, ApiGeneratorExportedComponent } from '@aurora/utils';
 import { ts } from 'ts-morph';
 import type { FileElements } from '../../utils/analyseFileElements';
 import analysisFileElements from '../../utils/analyseFileElements';

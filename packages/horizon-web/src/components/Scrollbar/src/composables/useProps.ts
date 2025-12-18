@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType, CSSProperties } from 'vue';
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 
 export const useScrollbarProps = declarePropType({
   /**

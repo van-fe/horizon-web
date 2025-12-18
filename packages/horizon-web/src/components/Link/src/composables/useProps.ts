@@ -1,6 +1,6 @@
 import type { ExtractPropTypes, PropType } from 'vue';
 import type { RouteLocationRaw } from 'vue-router';
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 import { IconPropType } from '~/utils/useIcon';
 
 export const useLinkProps = declarePropType({

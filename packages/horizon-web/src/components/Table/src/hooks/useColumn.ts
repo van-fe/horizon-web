@@ -7,7 +7,7 @@ import {
   NTableGetLastFixedRightColumnInjectKey,
   NTableIsColumnsHaveFixedInjectKey,
 } from '../utils/injectKeys';
-import { cssVariable, sizeUnitTransform } from '@aurora/shared';
+import { cssVariable, sizeUnitTransform } from '@aurora/utils';
 import useSelection from './useSelection';
 import type { TableEmits } from '../composables/useEmits';
 import type {

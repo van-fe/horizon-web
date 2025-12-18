@@ -1,6 +1,6 @@
 import type { NTreeNodeData, NTreeNodeDataWithLevel } from '~/components/Tree/src/utils/types';
 import type { VNode } from 'vue';
-import { isBoolean, isObject, isString, isNumber, isUndefined } from '@aurora/shared';
+import { isBoolean, isObject, isString, isNumber, isUndefined } from '@aurora/utils';
 import type { NTreeSelectModelValueType } from '../utils/types';
 import { isTreeModelValue } from '~/components/Tree/src/utils/config';
 import { isVNode } from 'vue';

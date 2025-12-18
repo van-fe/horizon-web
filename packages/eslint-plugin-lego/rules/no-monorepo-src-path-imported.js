@@ -16,7 +16,7 @@ module.exports = {
   create(context) {
     return {
       ImportDeclaration(node) {
-        const errorPath = ['@aurora/icon/src', '@aurora/colors/src', '@aurora/shared/src', '@aurora/locale-vue/src', '@aurora/locale/src'];
+        const errorPath = ['@aurora/icon/src', '@aurora/colors/src', '@aurora/utils/src', '@aurora/locale-vue/src', '@aurora/locale/src'];
 
         if (errorPath.includes(node.source.value)) {
           context.report({

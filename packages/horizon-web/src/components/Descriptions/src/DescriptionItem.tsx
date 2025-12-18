@@ -1,7 +1,7 @@
 import { defineComponent, inject, toRefs, ref, nextTick, onBeforeUnmount, watchEffect } from 'vue';
 import { useDescriptionItemProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
-import { ComponentClassBlock, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import type { DescriptionItemSlots } from './composables/useSlots';
 import { useDescriptionItemSlots } from './composables/useSlots';
 import { useIntersectionObserver } from '@vueuse/core';

@@ -1,4 +1,4 @@
-import type { ExposeType, ExtractExposeTypes } from '@aurora/shared';
+import type { ExposeType, ExtractExposeTypes } from '@aurora/utils';
 export const useVirtualScrollerExposes = {
   /**
    * 使组件滚动到指定索引值位置;

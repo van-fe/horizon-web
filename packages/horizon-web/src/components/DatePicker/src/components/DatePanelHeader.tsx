@@ -1,6 +1,6 @@
 import { computed, defineComponent, inject, Fragment, ref } from 'vue';
-import type { LegoComponentInstance, LegoSetupContext } from '@aurora/shared';
-import { cls, ComponentClassBlock } from '@aurora/shared';
+import type { LegoComponentInstance, LegoSetupContext } from '@aurora/utils';
+import { cls, ComponentClassBlock } from '@aurora/utils';
 import {
   NDatePickerDateSwitcherShowFormatMappingMappingInjectKey,
   NDatePickerFormatInjectKey,

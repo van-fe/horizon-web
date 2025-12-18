@@ -2,14 +2,14 @@ import type { VNode, ComponentOptions } from 'vue';
 import { defineComponent, toRefs, ref, watch } from 'vue';
 import type { PanelProps } from './composables/useProps';
 import { usePanelsProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
 import {
   flattenVNodes,
   slotVNodes,
   getBooleanProp,
   ComponentClassBlock,
   useNamespace,
-} from '@aurora/shared';
+} from '@aurora/utils';
 import type { PanelsSlots } from './composables/useSlots';
 import { usePanelsSlots } from './composables/useSlots';
 import NTransition from '~/components/Transition/src/Transition';

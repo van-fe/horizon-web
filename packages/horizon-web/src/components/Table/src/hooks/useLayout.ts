@@ -7,8 +7,8 @@ import {
   NTableRefreshLayoutInjectKey,
   NTableScrollbarTrackSpacingInjectKey,
 } from '../utils/injectKeys';
-import type { LegoComponentInstance } from '@aurora/shared';
-import { sizeUnitTransform } from '@aurora/shared';
+import type { LegoComponentInstance } from '@aurora/utils';
+import { sizeUnitTransform } from '@aurora/utils';
 import type TableFooter from '../components/TableFooter';
 
 export function formatFixed(fixedValue: TableColumnProps['fixed'] | undefined) {

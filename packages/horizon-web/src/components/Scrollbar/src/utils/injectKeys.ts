@@ -1,6 +1,6 @@
 import type { InjectionKey, Ref, ComputedRef } from 'vue';
 import type { ScrollbarProps } from '../composables/useProps';
-import { generatorInjectedKeyName } from '@aurora/shared';
+import { generatorInjectedKeyName } from '@aurora/utils';
 
 export const NScrollbarPropsInjectKey = Symbol(
   generatorInjectedKeyName('scrollbar', 'props'),

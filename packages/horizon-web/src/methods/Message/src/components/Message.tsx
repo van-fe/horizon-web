@@ -7,8 +7,8 @@ import {
   IconSuccessFilledLight,
   IconWarningFilledLight,
 } from '@aurora/icon';
-import type { LegoSetupContext } from '@aurora/shared';
-import { cls, ComponentClassBlock, cssVariable, useNamespace, useZIndex } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { cls, ComponentClassBlock, cssVariable, useNamespace, useZIndex } from '@aurora/utils';
 import type { CSSProperties } from 'vue';
 import { computed, defineComponent, onMounted, ref, Transition, watch } from 'vue';
 import { useSensor } from '~/utils/useSensor';

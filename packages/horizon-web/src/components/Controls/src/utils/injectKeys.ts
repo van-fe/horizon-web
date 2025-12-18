@@ -1,5 +1,5 @@
 import type { InjectionKey, SetupContext } from 'vue';
-import { generatorInjectedKeyName } from '@aurora/shared';
+import { generatorInjectedKeyName } from '@aurora/utils';
 import type { ControlsProps } from '../composables/useProps';
 import type { ControlsEmits } from '../composables/useEmits';
 

@@ -1,5 +1,5 @@
 import path from 'path';
-import { componentRoot, directiveRoot, legoSourceRoot, methodsRoot } from '@aurora/shared/plugins';
+import { componentRoot, directiveRoot, legoSourceRoot, methodsRoot } from '@aurora/utils/plugins';
 import * as sass from 'sass';
 import type { PluginDependencies, PluginType } from './vite.css.plugin';
 import fs from 'fs-extra';

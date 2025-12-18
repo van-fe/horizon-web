@@ -1,6 +1,6 @@
 import { NIconSVG } from '@aurora/icon';
-import type { LegoSetupContext } from '@aurora/shared';
-import { ComponentClassBlock, useNamespace, cls } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { ComponentClassBlock, useNamespace, cls } from '@aurora/utils';
 import type { ComputedRef, Ref } from 'vue';
 import { computed, defineComponent, inject, provide, reactive, ref, toRefs, watch } from 'vue';
 import type { NApplicationSizeType } from '~/components/Application/src/composables/useProps';

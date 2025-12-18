@@ -1,4 +1,4 @@
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 import type { ExtractPropTypes, PropType, StyleValue } from 'vue';
 import { type NApplicationSizeType } from '~/components/Application/src/composables/useProps';
 

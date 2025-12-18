@@ -1,5 +1,5 @@
 import { default as DatePicker } from './src/DatePicker';
-import { withInstall } from '@aurora/shared';
+import { withInstall } from '@aurora/utils';
 
 export const NDatePicker = withInstall(DatePicker);
 export default NDatePicker;

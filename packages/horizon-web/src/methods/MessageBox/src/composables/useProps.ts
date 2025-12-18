@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType, VNode } from 'vue';
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 import type { ButtonProps } from '~/components/Button/src/composables/useProps';
 
 export const useMsgBoxAlertProps = declarePropType({

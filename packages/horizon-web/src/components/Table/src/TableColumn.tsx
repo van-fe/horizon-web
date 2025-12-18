@@ -1,6 +1,6 @@
 import { defineComponent, inject, onBeforeUnmount, onMounted } from 'vue';
-import { ComponentClassBlock, cls, useNamespace } from '@aurora/shared';
-import type { LegoSetupContext } from '@aurora/shared';
+import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
+import type { LegoSetupContext } from '@aurora/utils';
 import type { TableColumnProps } from './composables/useProps';
 import { useTableColumnProps } from './composables/useProps';
 import type { TableColumnEmits } from './composables/useEmits';

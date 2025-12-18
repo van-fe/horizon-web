@@ -1,7 +1,7 @@
 import type { ComponentPublicInstance } from 'vue';
 import { ref, inject, computed, defineComponent, provide, toRefs, watch, Fragment } from 'vue';
-import { ComponentClassBlock, cls, useNamespace, isNil } from '@aurora/shared';
-import type { LegoSetupContext, Data } from '@aurora/shared';
+import { ComponentClassBlock, cls, useNamespace, isNil } from '@aurora/utils';
+import type { LegoSetupContext, Data } from '@aurora/utils';
 import { useUploadProps } from './composables/useProps';
 import { useUploadEmits } from './composables/useEmits';
 import { useUploadSlots } from './composables/useSlots';

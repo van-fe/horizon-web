@@ -10,7 +10,7 @@ import {
   IconLinkFilledLight,
   IconUnknownFilledLight,
 } from '@aurora/icon';
-import type { Data, DefinedComponent, PartialInclude } from '@aurora/shared';
+import type { Data, DefinedComponent, PartialInclude } from '@aurora/utils';
 
 export type NUploadRawFileType = NUploadUserFile | File | NUploadFileType;
 

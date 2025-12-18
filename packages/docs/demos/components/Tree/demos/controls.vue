@@ -41,7 +41,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { NTree, useTreeExposes } from '@aurora/horizon-web';
-import { ExtractExposeTypes } from '@aurora/shared';
+import { ExtractExposeTypes } from '@aurora/utils';
 
 const baseTreeData = ref([]);
 const treeDomRef = ref<InstanceType<typeof NTree> & ExtractExposeTypes<typeof useTreeExposes>>();

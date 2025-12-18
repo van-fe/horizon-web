@@ -3,7 +3,7 @@ import DropdownGroup from './src/DropdownGroup';
 import DropdownItem from './src/DropdownItem';
 import DropdownMenu from './src/DropdownMenu';
 import DropdownSubmenu from './src/DropdownSubmenu';
-import { withInstall, withNoopInstall } from '@aurora/shared';
+import { withInstall, withNoopInstall } from '@aurora/utils';
 
 export const NDropdown = withInstall(Dropdown, {
   DropdownMenu,

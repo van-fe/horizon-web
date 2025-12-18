@@ -1,4 +1,4 @@
-import { cls, ComponentClassBlock, useNamespace } from '@aurora/shared';
+import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import {
   computed,
   defineComponent,

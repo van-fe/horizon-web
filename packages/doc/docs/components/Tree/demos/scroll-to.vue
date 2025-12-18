@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { LegoComponentInstance } from '@aurora/shared';
+import { LegoComponentInstance } from '@aurora/utils';
 import { NTree, TreeExposes } from '@aurora/horizon-web';
 
 const baseTreeData = ref([]);

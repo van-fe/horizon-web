@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue';
 import { useSkeletonItemProps } from './composables/useProps';
-import { ComponentClassBlock, cls, useNamespace } from '@aurora/shared';
+import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
 import NTransition from '~/components/Transition/src/Transition';
 
 export default defineComponent({

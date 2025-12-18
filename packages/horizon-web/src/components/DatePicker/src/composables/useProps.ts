@@ -1,5 +1,5 @@
 import type { Component, CSSProperties, ExtractPropTypes, PropType, VNode } from 'vue';
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 import type { ButtonProps } from '~/components/Button/src/composables/useProps';
 import type { PopoverProps } from '~/components/Popover/src/composables/useProps';
 import { IconMaybeFalsyPropType, IconPropType } from '~/utils/useIcon';

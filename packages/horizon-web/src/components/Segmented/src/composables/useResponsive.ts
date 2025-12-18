@@ -2,7 +2,7 @@ import type { CSSProperties, Ref, ToRefs } from 'vue';
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import type { NSegmentedValue, SegmentedProps } from './useProps';
 import { useResize } from './useResize';
-import { cssVariable } from '@aurora/shared';
+import { cssVariable } from '@aurora/utils';
 
 export interface IndicatorOptions extends SegmentedProps {
   container: HTMLElement | undefined;

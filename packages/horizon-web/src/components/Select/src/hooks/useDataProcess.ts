@@ -1,5 +1,5 @@
 import type { SelectProps } from '../composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
 import type { SelectEmits } from '../composables/useEmits';
 import type { SelectSlots } from '../composables/useSlots';
 import type { SelectExposes } from '../composables/useExposes';

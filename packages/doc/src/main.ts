@@ -7,7 +7,7 @@ import App from './App.vue';
 import { router } from './routes';
 import './styles/index.scss';
 import './styles/forward.scss';
-import { setCssVariableUseVersion } from '@aurora/shared';
+import { setCssVariableUseVersion } from '@aurora/utils';
 import Lego from '@aurora/horizon-web';
 import LegoPad from '@aurora/horizon-web-pad';
 import DeprecatedTips from '~/components/Common/DeprecatedTips.vue';

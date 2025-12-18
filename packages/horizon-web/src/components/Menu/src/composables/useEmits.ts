@@ -1,4 +1,4 @@
-import { isBoolean, isObject } from '@aurora/shared';
+import { isBoolean, isObject } from '@aurora/utils';
 import type { SubMenuProps, MenuItemProps } from './useProps';
 
 export const useMenuEmits = {

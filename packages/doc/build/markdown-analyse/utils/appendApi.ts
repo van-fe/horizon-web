@@ -9,8 +9,8 @@ import type {
   ApiGeneratorAnalysedPropType,
   ApiGeneratorAnalysedSlotType,
   ApiGeneratorAnalysedOptionType,
-} from '@aurora/shared';
-import { kebabCase, isString } from '@aurora/shared';
+} from '@aurora/utils';
+import { kebabCase, isString } from '@aurora/utils';
 
 function createDeprecatedTips(deprecated: string) {
   return `<deprecated-tips name="${deprecated}" />`;

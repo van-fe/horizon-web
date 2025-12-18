@@ -1,6 +1,6 @@
 import type { InjectionKey } from 'vue';
 import type { AnchorProps } from '../composables/useProps';
-import { generatorInjectedKeyName } from '@aurora/shared';
+import { generatorInjectedKeyName } from '@aurora/utils';
 import type { AnchorContext } from '../Anchor';
 
 export const AnchorPropsInjectedKey = Symbol(

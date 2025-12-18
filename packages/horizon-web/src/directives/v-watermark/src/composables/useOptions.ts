@@ -1,5 +1,5 @@
-import type { ExtractDirectiveOptionTypes } from '@aurora/shared';
-import { declareDirectiveOptionType } from '@aurora/shared';
+import type { ExtractDirectiveOptionTypes } from '@aurora/utils';
+import { declareDirectiveOptionType } from '@aurora/utils';
 import { useWatermarkProps } from '~/components/Watermark/src/composables/useProps';
 
 export const useWatermarkOptions = declareDirectiveOptionType(useWatermarkProps);

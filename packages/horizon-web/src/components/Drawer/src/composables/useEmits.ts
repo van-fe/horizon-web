@@ -1,4 +1,4 @@
-import { isBoolean } from '@aurora/shared';
+import { isBoolean } from '@aurora/utils';
 
 export const useDrawerEmits = {
   /**

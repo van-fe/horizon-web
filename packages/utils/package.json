@@ -1,5 +1,5 @@
 {
-  "name": "@aurora/shared",
+  "name": "@aurora/utils",
   "version": "1.0.0",
   "description": "For @aurora/horizon-web. Include a series of functions for developing.",
   "main": "dist/shared.cjs",

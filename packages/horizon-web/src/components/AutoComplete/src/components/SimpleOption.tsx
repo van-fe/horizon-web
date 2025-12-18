@@ -1,6 +1,6 @@
 import type { PropType, VNode } from 'vue';
 import { computed, defineComponent, Fragment, inject, ref, toRefs, watch } from 'vue';
-import { cls, ComponentClassBlock, useNamespace } from '@aurora/shared';
+import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import NTooltip from '~/components/Tooltip/src/Tooltip';
 import {
   NAutoCompleteFocusedOptionValueInjectKey,

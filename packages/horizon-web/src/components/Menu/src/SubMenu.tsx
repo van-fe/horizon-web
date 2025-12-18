@@ -12,8 +12,8 @@ import {
   withKeys,
   withModifiers,
 } from 'vue';
-import { ComponentClassBlock, cls, useNamespace, cssVariableKey } from '@aurora/shared';
-import type { LegoSetupContext, LegoComponentInstance } from '@aurora/shared';
+import { ComponentClassBlock, cls, useNamespace, cssVariableKey } from '@aurora/utils';
+import type { LegoSetupContext, LegoComponentInstance } from '@aurora/utils';
 import type { MenuItemProps, SubMenuProps } from './composables/useProps';
 import { useSubMenuProps } from './composables/useProps';
 import type { SubMenuEmits, MenuItemEmits } from './composables/useEmits';

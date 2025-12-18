@@ -1,8 +1,8 @@
 import { computed, defineComponent, inject, provide, reactive, toRefs } from 'vue';
 import type { RadioGroupPropsProvideType } from './composables/useProps';
 import { useRadioGroupProps } from './composables/useProps';
-import { ComponentClassBlock, useNamespace } from '@aurora/shared';
-import type { LegoSetupContext } from '@aurora/shared';
+import { ComponentClassBlock, useNamespace } from '@aurora/utils';
+import type { LegoSetupContext } from '@aurora/utils';
 import type { RadioEmits } from './composables/useEmits';
 import { useRadioEmits } from './composables/useEmits';
 import type { RadioSlots } from './composables/useSlots';

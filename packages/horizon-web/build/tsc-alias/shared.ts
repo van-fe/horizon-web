@@ -1,7 +1,7 @@
 import type { AliasReplacerArguments } from 'tsc-alias';
 
 const mapping = [
-  '@aurora/shared',
+  '@aurora/utils',
   'vue-router',
   'dayjs',
   'async-validator',

@@ -39,7 +39,7 @@
 import { ref, Ref } from 'vue';
 import type { NFormInstance, NFormRule } from '@aurora/horizon-web';
 import { $message } from '@aurora/horizon-web';
-import { Arrayable } from '@aurora/shared';
+import { Arrayable } from '@aurora/utils';
 
 const formRef = ref<NFormInstance | null>(null);
 const formData = ref({

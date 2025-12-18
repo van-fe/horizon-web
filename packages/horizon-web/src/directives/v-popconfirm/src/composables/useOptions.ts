@@ -1,5 +1,5 @@
-import type { DirectiveOptionType, ExtractDirectiveOptionTypes } from '@aurora/shared';
-import { declareDirectiveOptionType } from '@aurora/shared';
+import type { DirectiveOptionType, ExtractDirectiveOptionTypes } from '@aurora/utils';
+import { declareDirectiveOptionType } from '@aurora/utils';
 import type { ButtonProps } from '~/components/Button/src/composables/useProps';
 
 export const usePopConfirmOptions = declareDirectiveOptionType({

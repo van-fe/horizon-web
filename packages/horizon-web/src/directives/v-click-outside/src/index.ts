@@ -1,5 +1,5 @@
 import { useClickOutsideOptions } from './composables/useOptions';
-import { defineDirective } from '@aurora/shared';
+import { defineDirective } from '@aurora/utils';
 import { useSensor } from '~/utils/useSensor';
 
 const eventOptions = { passive: true, capture: true };

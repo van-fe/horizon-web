@@ -11,9 +11,9 @@ umd
 .gitconfig
 types
 
-# shared
-packages/shared/plugins/*.js
-packages/shared/plugins/*.js.map
+# utils
+packages/utils/plugins/*.js
+packages/utils/plugins/*.js.map
 
 # horizon-web
 packages/horizon-web/src/styles/colors.ts

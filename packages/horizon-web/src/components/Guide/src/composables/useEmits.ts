@@ -1,4 +1,4 @@
-import { isBoolean, isNumber } from '@aurora/shared';
+import { isBoolean, isNumber } from '@aurora/utils';
 
 export const useGuideEmits = {
   /**

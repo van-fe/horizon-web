@@ -1,6 +1,6 @@
 import components from './components.json';
 import directives from './directives.json';
-import { useNamespace, pascalize } from '@aurora/shared';
+import { useNamespace, pascalize } from '@aurora/utils';
 import type { Lib } from 'vite-plugin-style-import';
 
 enum PluginResolverType {

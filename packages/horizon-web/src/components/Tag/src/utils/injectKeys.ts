@@ -1,6 +1,6 @@
 import type { ComputedRef, InjectionKey } from 'vue';
 import type { TagGroupProps, TagProps } from '../composables/useProps';
-import { generatorInjectedKeyName } from '@aurora/shared';
+import { generatorInjectedKeyName } from '@aurora/utils';
 
 export const NTagGroupPropsInjectKey = Symbol(
   generatorInjectedKeyName('tag-group', 'props'),

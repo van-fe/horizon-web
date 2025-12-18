@@ -1,5 +1,5 @@
-import type { LegoSetupContext } from '@aurora/shared';
-import { ComponentClassBlock, getUnitString, isVNodeEmpty, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { ComponentClassBlock, getUnitString, isVNodeEmpty, useNamespace } from '@aurora/utils';
 import type { CSSProperties, Ref, VNode } from 'vue';
 import { Fragment, computed, defineComponent, inject, ref } from 'vue';
 import { type NApplicationSizeType } from '~/components/Application/src/composables/useProps';

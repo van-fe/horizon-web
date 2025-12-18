@@ -1,6 +1,6 @@
 import type { CSSProperties, ExtractPropTypes, PropType, VNode, StyleValue } from 'vue';
-import type { Awaitable, PartialRequired } from '@aurora/shared';
-import { declarePropType } from '@aurora/shared';
+import type { Awaitable, PartialRequired } from '@aurora/utils';
+import { declarePropType } from '@aurora/utils';
 import type { PopoverProps } from '~/components/Popover/src/composables/useProps';
 import { IconMaybeFalsyPropType, IconPropType } from '~/utils/useIcon';
 import { IconCheck, IconSearch } from '@aurora/icon';

@@ -1,4 +1,4 @@
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 import { useTimePickerProps, type NDrawerProps } from '@aurora/horizon-web';
 import type { ExtractPropTypes, PropType } from 'vue';
 

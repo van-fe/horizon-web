@@ -6,15 +6,15 @@ import {
   directiveRoot,
   methodsRoot,
   styleRoot,
-} from '@aurora/shared/plugins';
+} from '@aurora/utils/plugins';
 import * as shell from 'shelljs';
 import type {
   ApiGeneratorExportedComponent,
   ApiGeneratorExportedDirectives,
   ApiGeneratorExportedMethod,
   ApiGeneratorExportedPluginType,
-} from '@aurora/shared';
-import { camelCase, kebabCase } from '@aurora/shared';
+} from '@aurora/utils';
+import { camelCase, kebabCase } from '@aurora/utils';
 
 function capitalizeCamelCase(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);

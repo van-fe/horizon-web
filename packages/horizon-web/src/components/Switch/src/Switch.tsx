@@ -6,8 +6,8 @@ import {
   isDefined,
   isUndefined,
   useNamespace,
-} from '@aurora/shared';
-import type { LegoSetupContext } from '@aurora/shared';
+} from '@aurora/utils';
+import type { LegoSetupContext } from '@aurora/utils';
 import { useSwitchProps } from './composables/useProps';
 import type { SwitchEmits } from './composables/useEmits';
 import { useSwitchEmits } from './composables/useEmits';

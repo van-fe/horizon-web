@@ -3,8 +3,8 @@ import { watchEffect, watch, defineComponent, ref, computed, toRefs } from 'vue'
 import { useAvatarProps } from './composables/useProps';
 import type { AvatarProps } from './composables/useProps';
 import { useDrawImages, useWorkText, randomAvatar } from './composables/useAvatar';
-import type { LegoSetupContext } from '@aurora/shared';
-import { cls, ComponentClassBlock, isNumber, isString, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { cls, ComponentClassBlock, isNumber, isString, useNamespace } from '@aurora/utils';
 import { NIcon } from '@aurora/icon';
 import type { AvatarEmits } from './composables/useEmits';
 import { useAvatarEmits } from './composables/useEmits';

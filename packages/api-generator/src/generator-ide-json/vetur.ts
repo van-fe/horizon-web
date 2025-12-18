@@ -1,5 +1,5 @@
-import { apiGeneratorOutPut, writeJsonFile } from '@aurora/shared/plugins';
-import { kebabCase } from '@aurora/shared';
+import { apiGeneratorOutPut, writeJsonFile } from '@aurora/utils/plugins';
+import { kebabCase } from '@aurora/utils';
 import components from '../../dist/components-analysis.json';
 import directives from '../../dist/directives-analysis.json';
 

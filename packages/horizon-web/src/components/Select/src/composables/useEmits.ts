@@ -1,6 +1,6 @@
 import type { ModelValueType } from '../utils/types';
 import type { OptionProps } from './useProps';
-import { isObject, isBoolean, isDefined, isNil, isString, isUndefined } from '@aurora/shared';
+import { isObject, isBoolean, isDefined, isNil, isString, isUndefined } from '@aurora/utils';
 
 export const useSelectEmits = {
   /**

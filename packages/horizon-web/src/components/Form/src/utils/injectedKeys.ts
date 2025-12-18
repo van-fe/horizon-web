@@ -4,8 +4,8 @@ import type {
   FormProps,
   FormItemProps,
 } from '~/components/Form/src/composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
-import { generatorInjectedKeyName } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { generatorInjectedKeyName } from '@aurora/utils';
 import type { FormEmits } from '../composables/useEmits';
 import type { FormItemSlots } from '../composables/useSlots';
 

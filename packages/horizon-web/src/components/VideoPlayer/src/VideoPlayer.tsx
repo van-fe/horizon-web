@@ -1,8 +1,8 @@
 import { defineComponent, ref, onMounted, onUnmounted, watch, nextTick, inject } from 'vue';
 import { useResizeObserver } from '@vueuse/core';
 import { useVideoPlayerProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
-import { ComponentClassBlock, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { IconVideoError } from '@aurora/icon';
 import videojs from 'video.js';
 import './qualityLevels/plugin.js';

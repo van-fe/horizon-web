@@ -1,6 +1,6 @@
 import type { PropType } from 'vue';
 import { computed, defineComponent, inject, onMounted, shallowRef, watch } from 'vue';
-import { ComponentClassBlock, useNamespace, getElement, cls, cssVariable } from '@aurora/shared';
+import { ComponentClassBlock, useNamespace, getElement, cls, cssVariable } from '@aurora/utils';
 import type { NGuideCollectedItems } from '../utils/injectedKeys';
 import type { UseElementBoundingReturn } from '@vueuse/core';
 import { useElementBounding, useWindowSize } from '@vueuse/core';

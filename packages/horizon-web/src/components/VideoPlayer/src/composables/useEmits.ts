@@ -1,5 +1,5 @@
 import type { VideoJsPlayer } from 'video.js';
-import { isObject } from '@aurora/shared';
+import { isObject } from '@aurora/utils';
 
 export const useVideoPlayerEmits = {
   /**

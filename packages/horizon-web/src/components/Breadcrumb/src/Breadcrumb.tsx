@@ -13,8 +13,8 @@ import {
   watch,
 } from 'vue';
 import { IconEllipsis } from '@aurora/icon';
-import type { LegoSetupContext } from '@aurora/shared';
-import { cls, ComponentClassBlock, useNamespace, getSymbolNodeChildren } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { cls, ComponentClassBlock, useNamespace, getSymbolNodeChildren } from '@aurora/utils';
 import tooltip from '~/directives/v-tooltip';
 import NDropdown from '~/components/Dropdown/src/Dropdown';
 import NDropdownMenu from '~/components/Dropdown/src/DropdownMenu';

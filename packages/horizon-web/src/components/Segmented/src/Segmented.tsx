@@ -1,6 +1,6 @@
 import { NIconSVG } from '@aurora/icon';
-import type { LegoSetupContext } from '@aurora/shared';
-import { ComponentClassBlock, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import {
   type ComputedRef,
   type Ref,

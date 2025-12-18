@@ -5,7 +5,7 @@ import type {
   RendererElement,
   TeleportProps,
 } from 'vue';
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 import type { TransitionProps } from '~/components/Transition/src/composables/useProps';
 
 export type NPopoverShowWithMask = {

@@ -1,5 +1,5 @@
 import { default as Upload } from './src/Upload';
-import { withInstall } from '@aurora/shared';
+import { withInstall } from '@aurora/utils';
 import {
   createBackgroundUploadInstance,
   destroyBackgroundUploadInstance,

@@ -1,5 +1,5 @@
-import type { LegoComponentInstance } from '@aurora/shared';
-import { generatorInjectedKeyName } from '@aurora/shared';
+import type { LegoComponentInstance } from '@aurora/utils';
+import { generatorInjectedKeyName } from '@aurora/utils';
 import type { OptionProps } from '../composables/useProps';
 import type { Ref } from 'vue';
 import type { PickerExposes, ScrollbarExposes, TagGroupExposes } from '~/components/exposes';

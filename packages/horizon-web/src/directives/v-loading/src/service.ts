@@ -1,8 +1,8 @@
 import { createApp } from 'vue';
 import type { App } from 'vue';
 import NLoadingComponent from './components/Loading';
-import type { Data, ExtractDirectiveOptionTypes } from '@aurora/shared';
-import { useZIndex } from '@aurora/shared';
+import type { Data, ExtractDirectiveOptionTypes } from '@aurora/utils';
+import { useZIndex } from '@aurora/utils';
 import type { LoadingOptions, useLoadingOptions } from './composables/useOptions';
 import type { LoadingElement } from './index';
 import { LoadingIsShow } from './utils/utils';

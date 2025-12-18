@@ -1,4 +1,4 @@
-import type { ExtractExposeTypes } from '@aurora/shared';
+import type { ExtractExposeTypes } from '@aurora/utils';
 
 export const usePaginationExposes = {};
 

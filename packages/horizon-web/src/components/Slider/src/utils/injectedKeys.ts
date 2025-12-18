@@ -1,4 +1,4 @@
-import { generatorInjectedKeyName } from '@aurora/shared';
+import { generatorInjectedKeyName } from '@aurora/utils';
 import type { InjectionKey, Ref } from 'vue';
 import type { SliderProps } from '../composables/useProps';
 

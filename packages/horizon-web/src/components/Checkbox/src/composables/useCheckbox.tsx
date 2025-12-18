@@ -1,6 +1,6 @@
 import { defineComponent, toRefs, inject } from 'vue';
 import { useCheckboxProps, isChecked } from './useProps';
-import { ComponentClassBlock } from '@aurora/shared';
+import { ComponentClassBlock } from '@aurora/utils';
 import { IconCheckboxHalf, IconCheckboxAll } from '@aurora/icon';
 import { nanoid } from 'nanoid';
 

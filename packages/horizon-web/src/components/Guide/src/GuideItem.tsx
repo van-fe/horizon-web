@@ -10,8 +10,8 @@ import {
   watch,
   watchEffect,
 } from 'vue';
-import { ComponentClassBlock, cls, useNamespace, getElement } from '@aurora/shared';
-import type { LegoSetupContext } from '@aurora/shared';
+import { ComponentClassBlock, cls, useNamespace, getElement } from '@aurora/utils';
+import type { LegoSetupContext } from '@aurora/utils';
 import type { GuideItemProps } from './composables/useProps';
 import { useGuideItemProps } from './composables/useProps';
 import { useGuideItemEmits } from './composables/useEmits';

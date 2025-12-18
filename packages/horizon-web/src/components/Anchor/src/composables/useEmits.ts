@@ -1,4 +1,4 @@
-import { isObject, isString } from '@aurora/shared';
+import { isObject, isString } from '@aurora/utils';
 import { isBoolean } from 'lodash';
 
 export const useAnchorEmits = {

@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType, CSSProperties } from 'vue';
-import { declarePropType, isString } from '@aurora/shared';
+import { declarePropType, isString } from '@aurora/utils';
 import { tinycolor } from '@aurora/colors';
 
 export const useMaskProps = declarePropType({

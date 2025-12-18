@@ -1,8 +1,8 @@
 import { computed, defineComponent, h, inject } from 'vue';
 import type { NColumnResponsiveSetting } from './composables/useProps';
 import { useColProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
-import { cls, ComponentClassBlock, isDefined, isNumber, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { cls, ComponentClassBlock, isDefined, isNumber, useNamespace } from '@aurora/utils';
 
 import { ROW_KEY } from './Row';
 import type { ColumnSlots } from './composables/useSlots';

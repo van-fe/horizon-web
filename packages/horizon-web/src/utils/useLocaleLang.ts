@@ -2,7 +2,7 @@ import { computed, inject } from 'vue';
 import get from 'lodash/get';
 import { defaultLocale, localeInjectKey } from '~/provides';
 import type { En } from '~/locales/en';
-import type { Paths } from '@aurora/shared';
+import type { Paths } from '@aurora/utils';
 
 export default function (path: Paths<(typeof En)['horizon-web']>, def?: string) {
   const locale = inject(localeInjectKey, defaultLocale);

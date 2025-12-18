@@ -3,8 +3,8 @@ import NTooltip from '~/components/Tooltip/src/Tooltip';
 import { useAnchorLinkProps } from './composables/useProps';
 import type { AnchorLinkSlots } from './composables/useSlots';
 import { useAnchorLinkSlots } from './composables/useSlots';
-import type { LegoSetupContext } from '@aurora/shared';
-import { isNil, cls, ComponentClassBlock, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { isNil, cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { useCustomEllipsis } from './composables/useCustomEllipsis';
 import { AnchorContextInjectedKey, AnchorPropsInjectedKey } from './utils/InjectedKeys';
 

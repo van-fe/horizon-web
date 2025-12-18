@@ -17,8 +17,8 @@ import {
   getSymbolNodeChildren,
   isDefined,
   isUndefined,
-} from '@aurora/shared';
-import type { LegoSetupContext } from '@aurora/shared';
+} from '@aurora/utils';
+import type { LegoSetupContext } from '@aurora/utils';
 import { useTagGroupProps } from './composables/useProps';
 import { useTagGroupEmits } from './composables/useEmits';
 import { useTagGroupSlots } from './composables/useSlots';

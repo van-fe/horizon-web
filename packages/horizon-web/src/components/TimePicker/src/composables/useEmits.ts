@@ -1,6 +1,6 @@
 import type { Dayjs } from 'dayjs';
 import { isDayjs } from 'dayjs';
-import { isBoolean, isNil, isString } from '@aurora/shared';
+import { isBoolean, isNil, isString } from '@aurora/utils';
 import type { SingleOrArrayPickerDataType } from '../utils/types';
 
 export const useTimePickerEmits = {

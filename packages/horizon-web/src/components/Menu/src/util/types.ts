@@ -1,6 +1,6 @@
 import type { MenuItemProps, SubMenuProps } from '../composables/useProps';
 import type { MenuItemSlots, SubMenuSlots } from '../composables/useSlots';
-import type { LegoSetupContext } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
 import type { MenuItemEmits, SubMenuEmits } from '../composables/useEmits';
 
 export interface NMenuTreeData<Type extends 'subMenu' | 'menuItem' = 'menuItem'> {

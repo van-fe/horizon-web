@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType } from 'vue';
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 
 export type CheckboxUnionType = string | boolean | number;
 export type TransferDataProps = {

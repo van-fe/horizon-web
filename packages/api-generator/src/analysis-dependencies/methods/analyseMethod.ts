@@ -1,4 +1,4 @@
-import type { ApiGeneratorExportedMethod } from '@aurora/shared';
+import type { ApiGeneratorExportedMethod } from '@aurora/utils';
 import type {
   Project,
   ImportDeclaration,

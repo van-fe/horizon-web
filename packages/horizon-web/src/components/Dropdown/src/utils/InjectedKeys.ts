@@ -1,5 +1,5 @@
 import type { ComputedRef, InjectionKey, Ref, UnwrapNestedRefs } from 'vue';
-import { generatorInjectedKeyName } from '@aurora/shared';
+import { generatorInjectedKeyName } from '@aurora/utils';
 import type { DropdownItemProps, DropdownProps } from '../composables/useProps';
 import type { NDropdownTreeData } from './types';
 

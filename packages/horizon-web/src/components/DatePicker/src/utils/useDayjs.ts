@@ -1,7 +1,7 @@
 import type { Dayjs } from 'dayjs';
 import dayjs from '~/utils/useDayJs';
 import type { NDatePickerAccessDatetimeType, NDatePickerSupportType } from './types';
-import { isNil, isNumber, isString } from '@aurora/shared';
+import { isNil, isNumber, isString } from '@aurora/utils';
 import { transformType } from './utils';
 
 export function mergeDateTime(date: Dayjs | undefined | null, time: Dayjs | undefined | null) {

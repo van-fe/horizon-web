@@ -1,6 +1,6 @@
 import type { DatePickerProps } from '../composables/useProps';
 import type { NDatePickerBaseSupportType } from './types';
-import { camelCapitalCaseToKebabCase } from '@aurora/shared';
+import { camelCapitalCaseToKebabCase } from '@aurora/utils';
 
 export function transformType<T extends DatePickerProps['type']>(
   type: T,

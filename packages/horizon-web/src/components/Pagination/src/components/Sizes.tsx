@@ -1,5 +1,5 @@
 import { defineComponent, inject, ref, withKeys } from 'vue';
-import { cls, ComponentClassBlock, isNumber, useNamespace } from '@aurora/shared';
+import { cls, ComponentClassBlock, isNumber, useNamespace } from '@aurora/utils';
 import { defaultLocale, localeInjectKey } from '~/provides';
 import { NPaginationPropsInjectKey } from '../utils/injectKeys';
 import NPopover from '~/components/Popover/src/Popover';

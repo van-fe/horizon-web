@@ -1,6 +1,6 @@
 import { computed, defineComponent, inject, onBeforeUnmount, ref, toRefs, watch } from 'vue';
-import { ComponentClassBlock, cls, useNamespace, cssVariable } from '@aurora/shared';
-import type { LegoSetupContext } from '@aurora/shared';
+import { ComponentClassBlock, cls, useNamespace, cssVariable } from '@aurora/utils';
+import type { LegoSetupContext } from '@aurora/utils';
 import { useFloatButtonProps } from './composables/useProps';
 import { useFloatButtonEmits } from './composables/useEmits';
 import { useFloatButtonSlots } from './composables/useSlots';

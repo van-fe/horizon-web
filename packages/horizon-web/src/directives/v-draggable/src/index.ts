@@ -1,7 +1,7 @@
 import type { DraggableOptions } from './composables/useOptions';
 import { useDraggableOptions } from './composables/useOptions';
 import type { DirectiveBinding } from 'vue';
-import { defineDirective } from '@aurora/shared';
+import { defineDirective } from '@aurora/utils';
 import { useSensor } from '~/utils/useSensor';
 
 const draggableMethod = (el: HTMLElement, binding: DirectiveBinding<Partial<DraggableOptions>>) => {

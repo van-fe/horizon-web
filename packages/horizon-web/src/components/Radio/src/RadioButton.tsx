@@ -1,7 +1,7 @@
 import { defineComponent, inject, computed, toRefs, provide } from 'vue';
 import { useRadioButtonProps, handleChange, handleBlur } from './composables/useProps';
-import { ComponentClassBlock, useNamespace } from '@aurora/shared';
-import type { LegoSetupContext } from '@aurora/shared';
+import { ComponentClassBlock, useNamespace } from '@aurora/utils';
+import type { LegoSetupContext } from '@aurora/utils';
 import { useColors } from '~/globalMethods';
 import Radio from './composables/useRadio';
 import type { RadioEmits } from './composables/useEmits';

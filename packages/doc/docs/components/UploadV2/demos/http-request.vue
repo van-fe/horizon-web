@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import type { NUploadFileType, NUploadHttpRequestInstanceMethods } from '@aurora/horizon-web';
-import type { Data } from '@aurora/shared';
+import type { Data } from '@aurora/utils';
 import { NUploadFileStatusEnum } from '@aurora/horizon-web';
 
 const modelValue = ref();

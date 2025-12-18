@@ -4,8 +4,8 @@ import { useTimeEmits } from './composables/useEmits';
 import type { TimeSlots } from './composables/useSlots';
 import { useTimeSlots } from './composables/useSlots';
 import type { TimeEmits } from './composables/useEmits';
-import type { LegoSetupContext } from '@aurora/shared';
-import { ComponentClassBlock, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 
 export default defineComponent({
   name: `${useNamespace()}Time`,

@@ -2,7 +2,7 @@ import { describe, expect, test, vi } from 'vitest';
 import { createInstance } from './tree-helper';
 import { h, nextTick, ref } from 'vue';
 import type { TreeProps } from '../src/composables/useProps';
-import { ComponentClassBlock } from '@aurora/shared';
+import { ComponentClassBlock } from '@aurora/utils';
 import type {
   NTreeData,
   NTreeDynamicLoadNode,

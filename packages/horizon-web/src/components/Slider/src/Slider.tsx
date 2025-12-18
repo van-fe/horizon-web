@@ -13,8 +13,8 @@ import {
 import { useSliderProps } from './composables/useProps';
 import type { SliderEmits } from './composables/useEmits';
 import { useSliderEmits } from './composables/useEmits';
-import type { LegoSetupContext } from '@aurora/shared';
-import { cls, ComponentClassBlock, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import {
   NFormDisabledInjectedKey,
   NFormItemTriggerInjectedKey,

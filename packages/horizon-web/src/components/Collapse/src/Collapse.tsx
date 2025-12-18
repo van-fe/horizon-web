@@ -6,8 +6,8 @@ import { useCollapseEmits } from './composables/useEmits';
 import type { CollapseSlots } from './composables/useSlots';
 import { useCollapseSlots } from './composables/useSlots';
 import type { CollapseEmits } from './composables/useEmits';
-import type { LegoSetupContext } from '@aurora/shared';
-import { cls, ComponentClassBlock, generatorInjectedKeyName, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { cls, ComponentClassBlock, generatorInjectedKeyName, useNamespace } from '@aurora/utils';
 import useSize from '~/utils/useSize';
 
 export interface CollapseProvidesData {

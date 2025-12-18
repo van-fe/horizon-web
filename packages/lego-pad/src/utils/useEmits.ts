@@ -1,4 +1,4 @@
-import { upperFirst } from '@aurora/shared';
+import { upperFirst } from '@aurora/utils';
 import type { SetupContext } from 'vue';
 
 type UpperFirst<T extends string> = T extends `${infer L}${infer R}` ? `${Uppercase<L>}${R}` : T;

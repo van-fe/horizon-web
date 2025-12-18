@@ -1,5 +1,5 @@
-import type { ExtractDirectiveOptionTypes } from '@aurora/shared';
-import { declareDirectiveOptionType, isNull } from '@aurora/shared';
+import type { ExtractDirectiveOptionTypes } from '@aurora/utils';
+import { declareDirectiveOptionType, isNull } from '@aurora/utils';
 
 /**
  * 点击目标元素外部区域时调用的函数

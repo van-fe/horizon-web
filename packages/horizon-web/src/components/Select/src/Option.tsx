@@ -1,5 +1,5 @@
-import type { LegoSetupContext } from '@aurora/shared';
-import { cls, ComponentClassBlock, cssVariableKey, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { cls, ComponentClassBlock, cssVariableKey, useNamespace } from '@aurora/utils';
 import { computed, defineComponent, inject, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { useOptionProps } from './composables/useProps';
 import type { OptionSlots } from './composables/useSlots';

@@ -1,8 +1,8 @@
 import type { VNode } from 'vue';
 import { onMounted, defineComponent, toRefs, provide, ref, watch } from 'vue';
 import { useTimelineProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
-import { ComponentClassBlock, isObject, slotAdapter, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { ComponentClassBlock, isObject, slotAdapter, useNamespace } from '@aurora/utils';
 import type { TimelineSlots } from './composables/useSlots';
 import { useTimelineSlots } from './composables/useSlots';
 

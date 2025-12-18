@@ -1,4 +1,4 @@
-import type { ExposeType, ExtractExposeTypes } from '@aurora/shared';
+import type { ExposeType, ExtractExposeTypes } from '@aurora/utils';
 import type { NTableRowKeyType, NTableTransformedRowDataType } from '../utils/types';
 
 export const useTableExposes = {

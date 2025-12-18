@@ -1,4 +1,4 @@
-import { useDeprecatedWarnProperty } from '@aurora/shared';
+import { useDeprecatedWarnProperty } from '@aurora/utils';
 import { type ToRefs } from 'vue';
 import { type TabProps, type TabsProps } from './useProps';
 

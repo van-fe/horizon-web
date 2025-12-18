@@ -1,6 +1,6 @@
 import type { ExtractPropTypes, PropType, VNode } from 'vue';
 import type { ButtonProps } from '~/components/Button/src/composables/useProps';
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 import type { NotifyFunctions } from '../index';
 
 export type PlacementType = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';

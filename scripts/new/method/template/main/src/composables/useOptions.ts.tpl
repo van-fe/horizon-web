@@ -1,5 +1,5 @@
-import type { ExtractMethodOptions } from '@aurora/shared';
-import { declarePropType } from '@aurora/shared';
+import type { ExtractMethodOptions } from '@aurora/utils';
+import { declarePropType } from '@aurora/utils';
 
 export const use${capitalName}Options = declarePropType({});
 

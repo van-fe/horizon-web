@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType } from 'vue';
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 import type { LocaleSupportLang, LocaleSupportLang } from '@aurora/locale';
 
 export type NApplicationSizeType = 'large' | 'medium' | 'small';

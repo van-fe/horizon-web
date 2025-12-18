@@ -1,6 +1,6 @@
 import type { NTableColumnData } from '../utils/types';
 import { NTableColumnContextKey } from '../utils/types';
-import { cls, ComponentClassBlock, cssVariableKey } from '@aurora/shared';
+import { cls, ComponentClassBlock, cssVariableKey } from '@aurora/utils';
 import type { StyleValue } from 'vue';
 import { inject, provide, ref } from 'vue';
 import {

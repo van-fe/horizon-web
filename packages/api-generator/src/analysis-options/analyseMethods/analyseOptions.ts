@@ -4,7 +4,7 @@ import type { FileElements } from '../../utils/analyseFileElements';
 import analysisFileElements from '../../utils/analyseFileElements';
 import checkInvisibleTagExits from '../../utils/checkInvisibleTagExist';
 import completeFileExtName from '../../utils/completeFileExtName';
-import type { ApiGeneratorAnalysedOptionType, ApiGeneratorExportedMethod } from '@aurora/shared';
+import type { ApiGeneratorAnalysedOptionType, ApiGeneratorExportedMethod } from '@aurora/utils';
 import analyseJsDocs from '../../utils/analyseJsDocs';
 import { analyseFunctionExpression } from '../../utils/analysisType/analyseFunction';
 

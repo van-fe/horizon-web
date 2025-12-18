@@ -7,7 +7,7 @@ import type {
   ExportDeclaration,
 } from 'ts-morph';
 import { ts } from 'ts-morph';
-import type { ApiGeneratorExportedComponent, ApiGeneratorExportedPluginType } from '@aurora/shared';
+import type { ApiGeneratorExportedComponent, ApiGeneratorExportedPluginType } from '@aurora/utils';
 import { analyseComponent } from './analyseComponent';
 import { analyseImportExportStatement } from '../../utils/analyseImportExportStatement';
 import { analyseExportedTypes } from '../../utils/analysisType/analyseExportedTypes';

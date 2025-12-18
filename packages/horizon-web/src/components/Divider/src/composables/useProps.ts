@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType } from 'vue';
-import { declarePropType, cssVariable } from '@aurora/shared';
+import { declarePropType, cssVariable } from '@aurora/utils';
 
 export const useDividerProps = declarePropType({
   /**

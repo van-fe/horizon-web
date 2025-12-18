@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import tokens from './theme.json';
-import { snakeCase } from '@aurora/shared';
+import { snakeCase } from '@aurora/utils';
 import { ref } from 'vue';
 
 type Data<T = unknown> = Record<string, T>;

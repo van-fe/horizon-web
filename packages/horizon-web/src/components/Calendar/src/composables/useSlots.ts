@@ -1,6 +1,6 @@
 import type { SlotsType, VNode } from 'vue';
 import type { Dayjs } from 'dayjs';
-import type { Arrayable } from '@aurora/shared';
+import type { Arrayable } from '@aurora/utils';
 
 export const useCalendarSlots = Object as SlotsType<{
   /**

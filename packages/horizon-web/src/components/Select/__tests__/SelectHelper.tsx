@@ -1,7 +1,7 @@
 import type { SelectProps, OptionProps } from '~/components/Select/src/composables/useProps';
 import type { SelectEmits } from '~/components/Select/src/composables/useEmits';
-import type { LegoComponentInstance, MaybeRef, PartialExclude } from '@aurora/shared';
-import { isObject } from '@aurora/shared';
+import type { LegoComponentInstance, MaybeRef, PartialExclude } from '@aurora/utils';
+import { isObject } from '@aurora/utils';
 import NSelect from '~/components/Select/src/Select';
 import NOption from '~/components/Select/src/Option';
 import type { Mock } from 'vitest';

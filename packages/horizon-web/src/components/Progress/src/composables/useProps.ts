@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType } from 'vue';
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 
 type Color = { color: string; percentage: number };
 type ProgressFn = (percentage: number) => string;

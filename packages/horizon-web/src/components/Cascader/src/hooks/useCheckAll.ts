@@ -1,7 +1,7 @@
 import type { ComputedRef, Ref } from 'vue';
 import { computed } from 'vue';
 import type { NCascaderExtendOption, NCascaderUuidType } from '../utils/types';
-import type { LegoSetupContext } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
 import type { CascaderSearchPanelEmits } from '../composables/useEmits';
 import type { CascaderProps } from '../composables/useProps';
 

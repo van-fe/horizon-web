@@ -1,4 +1,4 @@
-import { green } from '@aurora/shared/plugins';
+import { green } from '@aurora/utils/plugins';
 import { rollupTheme } from './rollup-theme';
 
 export const viteBuildScssPlugin = () => {

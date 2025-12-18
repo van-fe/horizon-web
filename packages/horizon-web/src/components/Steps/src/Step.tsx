@@ -1,8 +1,8 @@
 import type { CSSProperties } from 'vue';
 import { defineComponent, inject, ref, onBeforeUnmount, computed, onMounted } from 'vue';
 import { useStepProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
-import { ComponentClassBlock, cls, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
 import { IconCheck, IconClose } from '@aurora/icon';
 import type { StepEmits } from './composables/useEmits';
 import { useStepEmits } from './composables/useEmits';

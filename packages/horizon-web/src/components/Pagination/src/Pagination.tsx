@@ -1,6 +1,6 @@
 import { computed, defineComponent, provide, ref, toRefs, watch } from 'vue';
-import { ComponentClassBlock, cls, useNamespace } from '@aurora/shared';
-import type { LegoSetupContext } from '@aurora/shared';
+import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
+import type { LegoSetupContext } from '@aurora/utils';
 import { usePaginationProps } from './composables/useProps';
 import { usePaginationEmits } from './composables/useEmits';
 import { usePaginationSlots } from './composables/useSlots';

@@ -2,7 +2,7 @@ import { defineComponent, onMounted, ref } from 'vue';
 import { useMsgBoxAlertProps } from '../composables/useProps';
 import NDialog from '~/components/Dialog/src/Dialog';
 import { useSensor } from '~/utils/useSensor';
-import { ComponentClassBlock } from '@aurora/shared';
+import { ComponentClassBlock } from '@aurora/utils';
 
 export default defineComponent({
   name: 'MessageBoxAlert',

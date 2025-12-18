@@ -1,6 +1,6 @@
 import { defineComponent, Fragment } from 'vue';
-import { ComponentClassBlock, cls, useNamespace } from '@aurora/shared';
-import type { LegoSetupContext } from '@aurora/shared';
+import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
+import type { LegoSetupContext } from '@aurora/utils';
 import { usePageHeaderProps } from './composables/useProps';
 import { usePageHeaderEmits } from './composables/useEmits';
 import { usePageHeaderSlots } from './composables/useSlots';

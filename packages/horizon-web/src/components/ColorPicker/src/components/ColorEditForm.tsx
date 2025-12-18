@@ -1,5 +1,5 @@
 import { defineComponent, Fragment, inject, nextTick, ref, watch } from 'vue';
-import { cls, ComponentClassBlock, isNumber } from '@aurora/shared';
+import { cls, ComponentClassBlock, isNumber } from '@aurora/utils';
 import NInput from '~/components/Input/src/Input';
 import NInputNumber from '~/components/InputNumber/src/InputNumber';
 import { ColorPickerCurrentValue, ColorPickerEmit, ColorPickerProps } from '../utils/InjectedKeys';

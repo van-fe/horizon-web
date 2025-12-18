@@ -5,8 +5,8 @@ import {
   useNamespace,
   isNil,
   safelyGetEventTarget,
-} from '@aurora/shared';
-import type { LegoSetupContext, LegoComponentInstance } from '@aurora/shared';
+} from '@aurora/utils';
+import type { LegoSetupContext, LegoComponentInstance } from '@aurora/utils';
 import { useAutoCompleteProps } from './composables/useProps';
 import { useAutoCompleteEmits } from './composables/useEmits';
 import { useAutoCompleteSlots } from './composables/useSlots';

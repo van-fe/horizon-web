@@ -7,7 +7,7 @@ import type {
   UnwrapNestedRefs,
 } from 'vue';
 import type { RadioEmits } from './useEmits';
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 import type { NFormItemTriggerType } from '~/components/Form/src/utils/injectedKeys';
 import { nextTick } from 'vue';
 

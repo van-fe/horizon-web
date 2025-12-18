@@ -23,7 +23,7 @@
     "es"
   ],
   "dependencies": {
-    "@aurora/shared": "workspace:*"
+    "@aurora/utils": "workspace:*"
   },
   "devDependencies": {
     "@aurora/horizon-web": "workspace:*",

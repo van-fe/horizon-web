@@ -1,6 +1,6 @@
 import type { VNode } from 'vue';
 import { computed, defineComponent, inject, provide, ref, toRefs } from 'vue';
-import { cls, ComponentClassBlock, type LegoComponentInstance, useNamespace } from '@aurora/shared';
+import { cls, ComponentClassBlock, type LegoComponentInstance, useNamespace } from '@aurora/utils';
 import type { TreeSelectProps } from './composables/useProps';
 import { useTreeSelectProps } from './composables/useProps';
 import { useTreeSelectEmits } from './composables/useEmits';

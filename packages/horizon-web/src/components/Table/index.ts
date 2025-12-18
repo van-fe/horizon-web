@@ -1,6 +1,6 @@
 import { default as Table } from './src/Table';
 import { default as TableColumn } from './src/TableColumn';
-import { withInstall, withNoopInstall } from '@aurora/shared';
+import { withInstall, withNoopInstall } from '@aurora/utils';
 
 export const NTableV3 = withInstall(Table, {
   TableColumn,

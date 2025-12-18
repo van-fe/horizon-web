@@ -1,8 +1,8 @@
-import type { AvailableSize } from '@aurora/shared';
+import type { AvailableSize } from '@aurora/utils';
 import type { ComputedRef, PropType, Ref } from 'vue';
 import { computed, inject, ref } from 'vue';
 import { GlobalSizeInjectedKey } from '~/components/Application/src/utils/injectedKeys';
-import { isDefined, isString, sizeAdapter } from '@aurora/shared';
+import { isDefined, isString, sizeAdapter } from '@aurora/utils';
 import useInject from '~/utils/useInject';
 
 export const sizeProp = String as PropType<'mini' | 'small' | 'medium' | 'large'>;

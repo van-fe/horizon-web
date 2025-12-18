@@ -1,7 +1,7 @@
 import { defineComponent } from 'vue';
 import { useSkeletonProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
-import { ComponentClassBlock, cls, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
 import SkeletonItem from './SkeletonItem';
 import type { SkeletonSlots } from './composables/useSlots';
 import { useSkeletonSlots } from './composables/useSlots';

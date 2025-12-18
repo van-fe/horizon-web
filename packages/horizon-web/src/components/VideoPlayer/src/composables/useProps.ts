@@ -1,6 +1,6 @@
 import type { ExtractPropTypes, PropType } from 'vue';
 import type { VideoJsPlayerOptions } from 'video.js';
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 
 declare module 'video.js' {
   interface VideoJsPlayerOptions {

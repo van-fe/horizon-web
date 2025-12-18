@@ -1,13 +1,13 @@
 import type { PropType, VNode } from 'vue';
 import { defineComponent, inject, provide, ref, watch } from 'vue';
-import type { LegoComponentInstance } from '@aurora/shared';
+import type { LegoComponentInstance } from '@aurora/utils';
 import {
   cls,
   ComponentClassBlock,
   isDefined,
   sizeUnitTransform,
   useNamespace,
-} from '@aurora/shared';
+} from '@aurora/utils';
 import type { NCascaderExtendOption } from '../utils/types';
 import CascaderItem from './CascaderItem';
 import NScrollbar from '~/components/Scrollbar/src/Scrollbar';

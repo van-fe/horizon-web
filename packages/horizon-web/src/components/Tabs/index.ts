@@ -1,6 +1,6 @@
 import { default as Tabs } from './src/Tabs';
 import { default as Tab } from './src/Tab';
-import { withInstall, withNoopInstall } from '@aurora/shared';
+import { withInstall, withNoopInstall } from '@aurora/utils';
 
 export type {
   NTabValue,

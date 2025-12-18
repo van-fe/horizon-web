@@ -1,4 +1,4 @@
-import { getUnitString } from '@aurora/shared';
+import { getUnitString } from '@aurora/utils';
 import { useDraggable, useWindowSize, type Position } from '@vueuse/core';
 import { computed, reactive, ref, watch, type Ref } from 'vue';
 import { type DrawerPlacement, type DrawerSize } from './useProps';

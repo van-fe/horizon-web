@@ -1,7 +1,7 @@
 import { computed, defineComponent, inject, nextTick, provide, ref, toRef, watch } from 'vue';
 import { useColorPickerProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
-import { cls, ComponentClassBlock, cssVariable, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { cls, ComponentClassBlock, cssVariable, useNamespace } from '@aurora/utils';
 import ColorPickerColor from './utils/ColorPickerColor';
 import type { ColorPickerEmits } from './composables/useEmits';
 import { useColorPickerEmits } from './composables/useEmits';

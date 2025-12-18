@@ -1,6 +1,6 @@
 import * as fs from 'fs-extra';
 import path from 'path';
-import { legoSourceRoot } from '@aurora/shared/plugins';
+import { legoSourceRoot } from '@aurora/utils/plugins';
 import fastGlob from 'fast-glob';
 
 fastGlob(`${legoSourceRoot}/**/*.scss`).then(res => {

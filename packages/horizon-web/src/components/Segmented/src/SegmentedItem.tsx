@@ -1,6 +1,6 @@
 import { NIconSVG } from '@aurora/icon';
-import type { LegoSetupContext } from '@aurora/shared';
-import { ComponentClassBlock, getBooleanProp, useNamespace, isVNodeEmpty } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { ComponentClassBlock, getBooleanProp, useNamespace, isVNodeEmpty } from '@aurora/utils';
 import {
   cloneVNode,
   computed,

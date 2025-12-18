@@ -1,6 +1,6 @@
 import type { PropType, VNodeArrayChildren, VNodeChild } from 'vue';
 import { defineComponent, Fragment, inject, computed } from 'vue';
-import { cls, ComponentClassBlock, cssVariable, upperFirst } from '@aurora/shared';
+import { cls, ComponentClassBlock, cssVariable, upperFirst } from '@aurora/utils';
 import { getFixedStyle, getHeaderStyle, isLastColumn, isLastFixedColumn } from '../hooks/useLayout';
 import NTooltip from '~/components/Tooltip/src/Tooltip';
 import NCheckbox from '~/components/Checkbox/src/Checkbox';

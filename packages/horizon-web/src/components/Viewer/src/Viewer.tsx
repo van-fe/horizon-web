@@ -12,8 +12,8 @@ import {
 } from 'vue';
 import { useResizeObserver, onKeyStroke } from '@vueuse/core';
 import { useViewerProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
-import { ComponentClassBlock, useNamespace, useZIndex } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { ComponentClassBlock, useNamespace, useZIndex } from '@aurora/utils';
 import { NIcon, IconLoadingLine, IconPlayFilled } from '@aurora/icon';
 import tooltip from '~/directives/v-tooltip';
 import draggable from '~/directives/v-draggable';

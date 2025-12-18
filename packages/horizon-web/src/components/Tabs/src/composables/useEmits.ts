@@ -1,4 +1,4 @@
-import { isNumber, isString } from '@aurora/shared';
+import { isNumber, isString } from '@aurora/utils';
 import type { NTabValue } from './useProps';
 import isUndefined from 'lodash/isUndefined';
 

@@ -1,6 +1,6 @@
 import { computed, defineComponent, provide, ref, toRefs } from 'vue';
-import { ComponentClassBlock, cls, useNamespace, useZIndex } from '@aurora/shared';
-import type { LegoSetupContext, LegoComponentInstance } from '@aurora/shared';
+import { ComponentClassBlock, cls, useNamespace, useZIndex } from '@aurora/utils';
+import type { LegoSetupContext, LegoComponentInstance } from '@aurora/utils';
 import type { FloatButtonGroupProps } from './composables/useProps';
 import { useFloatButtonGroupProps } from './composables/useProps';
 import type { FloatButtonGroupEmits } from './composables/useEmits';

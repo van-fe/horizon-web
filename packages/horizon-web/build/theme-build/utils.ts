@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import path, { resolve } from 'path';
 import * as cssTree from 'css-tree';
 import * as sass from 'sass';
-import { styleRoot } from '@aurora/shared/plugins';
+import { styleRoot } from '@aurora/utils/plugins';
 
 export type OneDeepRecordType<T = string> = {
   [key: string]: string | OneDeepRecordType<T>;

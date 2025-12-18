@@ -1,6 +1,6 @@
 import type { DirectiveHook } from 'vue';
 import dompurify from 'dompurify';
-import { defineDirective } from '@aurora/shared';
+import { defineDirective } from '@aurora/utils';
 import type { SafeHtmlOptions } from './composables/useOptions';
 import { useSafeHtmlOptions } from './composables/useOptions';
 import { useSensor } from '~/utils/useSensor';

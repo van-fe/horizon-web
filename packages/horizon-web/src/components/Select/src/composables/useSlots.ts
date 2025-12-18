@@ -1,6 +1,6 @@
 import type { SlotsType, VNode } from 'vue';
 import type { OptionProps } from './useProps';
-import type { Arrayable } from '@aurora/shared';
+import type { Arrayable } from '@aurora/utils';
 
 export type NSelectOptionValue = OptionProps & Record<string, unknown> & { active: boolean };
 

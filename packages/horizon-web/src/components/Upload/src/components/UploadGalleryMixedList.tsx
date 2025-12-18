@@ -1,6 +1,6 @@
 import { computed, defineComponent, inject } from 'vue';
 import type { SlotsType } from 'vue';
-import { cls, ComponentClassBlock, cssVariable } from '@aurora/shared';
+import { cls, ComponentClassBlock, cssVariable } from '@aurora/utils';
 import {
   NUploadPropsInjectKey,
   NUploadSizeInjectKey,

@@ -9,7 +9,7 @@ import {
   docMethodsDocs,
   docOthersDocs,
   docPartHtml,
-} from '@aurora/shared/plugins';
+} from '@aurora/utils/plugins';
 import * as fs from 'fs-extra';
 import path from 'path';
 import md from './markdown-analyse/markdown';

@@ -1,7 +1,7 @@
 import type { SourceFile } from 'ts-morph';
 import { Project, SyntaxKind } from 'ts-morph';
 import { excludeFiles } from '../utils';
-import type { ApiGeneratorExportedPlugin } from '@aurora/shared';
+import type { ApiGeneratorExportedPlugin } from '@aurora/utils';
 import * as fs from 'fs';
 import merge from 'deepmerge';
 import {
@@ -10,7 +10,7 @@ import {
   docDescriptionOutput,
   legoProjectRoot,
   apiGeneratorOutPut,
-} from '@aurora/shared/plugins';
+} from '@aurora/utils/plugins';
 
 export interface ComponentDeclarationType {
   props: Record<string, string>;

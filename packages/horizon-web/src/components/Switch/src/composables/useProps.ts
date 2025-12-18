@@ -1,6 +1,6 @@
 import type { ExtractPropTypes, PropType } from 'vue';
-import type { Awaitable } from '@aurora/shared';
-import { declarePropType } from '@aurora/shared';
+import type { Awaitable } from '@aurora/utils';
+import { declarePropType } from '@aurora/utils';
 
 export const useSwitchProps = declarePropType({
   /** 绑定值 */

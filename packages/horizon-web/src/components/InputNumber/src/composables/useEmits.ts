@@ -1,4 +1,4 @@
-import { isNumber, isNil, isNull, isString } from '@aurora/shared';
+import { isNumber, isNil, isNull, isString } from '@aurora/utils';
 
 export const useInputNumberEmits = {
   /**

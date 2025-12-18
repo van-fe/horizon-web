@@ -1,7 +1,7 @@
 import type { PropType } from 'vue';
 import { ref, watch, defineComponent } from 'vue';
-import type { LegoComponentInstance, LegoSetupContext } from '@aurora/shared';
-import { isDefined, cls, ComponentClassBlock } from '@aurora/shared';
+import type { LegoComponentInstance, LegoSetupContext } from '@aurora/utils';
+import { isDefined, cls, ComponentClassBlock } from '@aurora/utils';
 import NScrollbar from '~/components/Scrollbar/src/Scrollbar';
 import type { NTimePickerPanelOptionType, NTimePickerShowTimeTooltipType } from '../utils/types';
 import type { ScrollbarExposes } from '~/components/Scrollbar/src/composables/useExposes';

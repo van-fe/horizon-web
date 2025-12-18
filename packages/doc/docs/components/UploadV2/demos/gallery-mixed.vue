@@ -47,7 +47,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import type { NUploadUserFile, UploadProps, NUploadFileType } from '@aurora/horizon-web';
-import type { Data } from '@aurora/shared';
+import type { Data } from '@aurora/utils';
 
 const size = ref<NonNullable<UploadProps['size']>>('medium');
 const galleryShape = ref<UploadProps['galleryShape']>('rectangle');

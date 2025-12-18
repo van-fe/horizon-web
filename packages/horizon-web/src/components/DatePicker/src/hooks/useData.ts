@@ -4,8 +4,8 @@ import type { DatePickerProps } from '../composables/useProps';
 import dayjs, { isDayjsEqual } from '~/utils/useDayJs';
 import type { Dayjs } from 'dayjs';
 import type { DatePickerEmits } from '../composables/useEmits';
-import type { LegoSetupContext } from '@aurora/shared';
-import { isFunction, isNil, isDefined, isString } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { isFunction, isNil, isDefined, isString } from '@aurora/utils';
 import type { DatePickerSlots } from '../composables/useSlots';
 import type { DatePickerExposes } from '../composables/useExposes';
 import {

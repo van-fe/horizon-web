@@ -1,6 +1,6 @@
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
-import { cssVariable, cssVariableKey } from '@aurora/shared';
+import { cssVariable, cssVariableKey } from '@aurora/utils';
 
 export function sortDays(...days: Dayjs[]) {
   return days.sort((d1, d2) => (d1.isBefore(d2) ? -1 : 1));

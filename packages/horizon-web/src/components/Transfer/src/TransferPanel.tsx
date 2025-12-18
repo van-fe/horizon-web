@@ -7,8 +7,8 @@ import type {
 import { useTransferPanelProps } from './composables/useProps';
 import { useTransferPanelEmits } from './composables/useEmits';
 import type { TransferPanelEmits } from './composables/useEmits';
-import { cls, cssVariable, type LegoSetupContext } from '@aurora/shared';
-import { ComponentClassBlock, useNamespace } from '@aurora/shared';
+import { cls, cssVariable, type LegoSetupContext } from '@aurora/utils';
+import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import NCheckbox from '~/components/Checkbox/src/Checkbox';
 import NCheckboxGroup from '~/components/Checkbox/src/CheckboxGroup';
 import NTooltip from '~/components/Tooltip/src/Tooltip';

@@ -1,5 +1,5 @@
 import BaseMultipartUploadHelper from './BaseMultipartUploadHelper';
-import type { Data } from '@aurora/shared';
+import type { Data } from '@aurora/utils';
 import type {
   NUploadMultipartSetting,
   NUploadChunk,

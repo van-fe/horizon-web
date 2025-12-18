@@ -1,4 +1,4 @@
-import { isNumber, isString, isUndefined } from '@aurora/shared';
+import { isNumber, isString, isUndefined } from '@aurora/utils';
 
 export const usePickerEmits = {
   'update:modelValue': (value: string) => isString(value),

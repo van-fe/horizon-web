@@ -14,8 +14,8 @@ import {
   useNamespace,
   cssVariableKey,
   flattenVNodes,
-} from '@aurora/shared';
-import type { LegoSetupContext, LegoComponentInstance } from '@aurora/shared';
+} from '@aurora/utils';
+import type { LegoSetupContext, LegoComponentInstance } from '@aurora/utils';
 import { useSelectProps } from './composables/useProps';
 import { useSelectEmits } from './composables/useEmits';
 import { useSelectSlots } from './composables/useSlots';

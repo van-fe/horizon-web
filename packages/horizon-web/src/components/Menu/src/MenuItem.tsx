@@ -10,8 +10,8 @@ import {
   withKeys,
   withModifiers,
 } from 'vue';
-import { ComponentClassBlock, cls, useNamespace, cssVariableKey } from '@aurora/shared';
-import type { LegoSetupContext } from '@aurora/shared';
+import { ComponentClassBlock, cls, useNamespace, cssVariableKey } from '@aurora/utils';
+import type { LegoSetupContext } from '@aurora/utils';
 import { useMenuItemProps } from './composables/useProps';
 import { useMenuItemEmits } from './composables/useEmits';
 import { useMenuItemSlots } from './composables/useSlots';

@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import type { Ref } from 'vue';
 import { ref, unref, watch } from 'vue';
 import type { CalendarProps } from '../composables/useProps';
-import type { MaybeRef } from '@aurora/shared';
+import type { MaybeRef } from '@aurora/utils';
 
 export default class CalendarHelper {
   private current: Ref<Dayjs> = ref(dayjs());

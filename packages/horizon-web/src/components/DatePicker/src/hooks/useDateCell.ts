@@ -1,8 +1,8 @@
 import { computed, inject } from 'vue';
 import type { DatePickerDatePanelComponentsProps } from '../composables/useProps';
 import type { Dayjs } from 'dayjs';
-import type { LegoSetupContext } from '@aurora/shared';
-import { ComponentClassBlock } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { ComponentClassBlock } from '@aurora/utils';
 import {
   NDatePickerEmitsInjectKey,
   NDatePickerFormatInjectKey,

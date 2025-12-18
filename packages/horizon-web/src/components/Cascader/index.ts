@@ -1,5 +1,5 @@
 import Cascader from './src/Cascader';
-import { withInstall } from '@aurora/shared';
+import { withInstall } from '@aurora/utils';
 
 export const NCascader = withInstall(Cascader);
 export default NCascader;

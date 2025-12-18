@@ -1,7 +1,7 @@
 import type { Component, Ref, SetupContext, VNode } from 'vue';
 import { computed, Fragment, defineComponent, provide, ref, toRefs } from 'vue';
-import type { LegoSetupContext, LegoComponentInstance } from '@aurora/shared';
-import { isNil, cls, ComponentClassBlock, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext, LegoComponentInstance } from '@aurora/utils';
+import { isNil, cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { useDatePickerProps } from './composables/useProps';
 import { useDatePickerEmits } from './composables/useEmits';
 import { useDatePickerSlots } from './composables/useSlots';

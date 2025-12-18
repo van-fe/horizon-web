@@ -4,7 +4,7 @@ import type {
   LegoComponentInstance,
   KebabCaseToCamelCase,
   KebabCaseToLowerCase,
-} from '@aurora/shared';
+} from '@aurora/utils';
 import type { DatePickerDatePanelExposes } from '../composables/useExposes';
 import type NPicker from '~/components/Picker/src/Picker';
 import type {

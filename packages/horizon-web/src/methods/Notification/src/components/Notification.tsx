@@ -1,6 +1,6 @@
 import { NIcon } from '@aurora/icon';
-import type { LegoSetupContext } from '@aurora/shared';
-import { ComponentClassBlock, cls, useNamespace, usePopupContainerGetter } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { ComponentClassBlock, cls, useNamespace, usePopupContainerGetter } from '@aurora/utils';
 import { useTimeoutFn } from '@vueuse/core';
 import type { CSSProperties } from 'vue';
 import { Teleport, Transition, computed, defineComponent, onMounted, ref, toRefs } from 'vue';

@@ -4,7 +4,7 @@ import type { NTableInsertedColumnData, NTableTransformedRowDataType } from '../
 import { NTableTransformedRowContextKey } from '../utils/types';
 import type { TableEmits } from '../composables/useEmits';
 import { warn } from '~/utils/useLog';
-import { isDefined, isNil } from '@aurora/shared';
+import { isDefined, isNil } from '@aurora/utils';
 import type { SelectProps } from '~/components/Select/src/composables/useProps';
 import type { DatePickerProps } from '~/components/DatePicker/src/composables/useProps';
 import dayjs from '~/utils/useDayJs';

@@ -9,14 +9,14 @@ import {
 } from './utils/injectedKeys';
 import type { ApplicationSlots } from './composables/useSlots';
 import { useApplicationSlots } from './composables/useSlots';
-import type { LegoSetupContext } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
 import {
   ComponentClassBlock,
   setNamespace,
   useNamespace,
   cssVariable,
   setPopupContainerGetter,
-} from '@aurora/shared';
+} from '@aurora/utils';
 
 export default defineComponent({
   name: `${useNamespace()}Application`,

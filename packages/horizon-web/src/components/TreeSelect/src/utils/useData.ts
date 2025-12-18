@@ -8,7 +8,7 @@ import {
   NFormDisabledInjectedKey,
   NFormItemTriggerInjectedKey,
 } from '~/components/Form/src/utils/injectedKeys';
-import { isNil } from '@aurora/shared';
+import { isNil } from '@aurora/utils';
 import type TreeHelper from '~/utils/useTree/index';
 
 export default function useData(

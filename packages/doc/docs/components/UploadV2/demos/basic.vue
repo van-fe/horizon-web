@@ -46,7 +46,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import type { NUploadRawFileType, UploadProps, NUploadFileType } from '@aurora/horizon-web';
-import type { Data } from '@aurora/shared';
+import type { Data } from '@aurora/utils';
 
 const size = ref<Exclude<UploadProps['size'], undefined>>('medium');
 const fileItemSize = ref<Exclude<UploadProps['fileItemSize'], undefined>>('medium');

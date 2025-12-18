@@ -1,4 +1,4 @@
-import { kebabCase } from '@aurora/shared';
+import { kebabCase } from '@aurora/utils';
 
 function log(type: 'info' | 'warn' | 'error', plugin: string, ...data: unknown[]) {
   if (globalThis?.process?.env?.NODE_ENV === 'development' || localStorage.getItem('debug')) {

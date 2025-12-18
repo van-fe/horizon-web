@@ -7,7 +7,7 @@ import {
   isDefined,
   isFunction,
   safelyGetEventTarget,
-} from '@aurora/shared';
+} from '@aurora/utils';
 import {
   NTableEmitsInjectKey,
   NTableFlattenDataInjectKey,

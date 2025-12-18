@@ -21,7 +21,7 @@
 
 <script lang="ts" setup>
 import type { NUploadFileType } from '@aurora/horizon-web';
-import type { Data } from '@aurora/shared';
+import type { Data } from '@aurora/utils';
 import { ref } from 'vue';
 
 const fileList = ref([]);

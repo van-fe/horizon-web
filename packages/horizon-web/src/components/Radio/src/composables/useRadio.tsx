@@ -1,6 +1,6 @@
 import { defineComponent, toRefs, inject, ref, watch, computed, nextTick } from 'vue';
 import { useRadioProps } from './useProps';
-import { cls, ComponentClassBlock } from '@aurora/shared';
+import { cls, ComponentClassBlock } from '@aurora/utils';
 
 export default defineComponent({
   name: 'Radio',

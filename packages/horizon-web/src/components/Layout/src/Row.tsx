@@ -1,8 +1,8 @@
 import type { ComputedRef, InjectionKey } from 'vue';
 import { computed, defineComponent, provide, ref } from 'vue';
 import { useRowProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
-import { ComponentClassBlock, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { useEventListener } from '@vueuse/core';
 import type { RowSlots } from './composables/useSlots';
 import { useRowSlots } from './composables/useSlots';

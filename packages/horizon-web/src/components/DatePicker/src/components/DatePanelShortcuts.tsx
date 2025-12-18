@@ -1,6 +1,6 @@
 import type { PropType, Ref } from 'vue';
 import { computed, defineComponent, inject, ref } from 'vue';
-import { cls, ComponentClassBlock, isUndefined } from '@aurora/shared';
+import { cls, ComponentClassBlock, isUndefined } from '@aurora/utils';
 import {
   NDatePickerEmitsInjectKey,
   NDatePickerFormatInjectKey,

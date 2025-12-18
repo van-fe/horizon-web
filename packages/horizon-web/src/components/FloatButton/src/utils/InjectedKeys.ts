@@ -1,5 +1,5 @@
 import type { InjectionKey, Ref } from 'vue';
-import { generatorInjectedKeyName } from '@aurora/shared';
+import { generatorInjectedKeyName } from '@aurora/utils';
 import type { FloatButtonGroupProps } from '../composables/useProps';
 
 export const NFloatButtonGroupProps = Symbol(

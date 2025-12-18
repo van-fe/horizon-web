@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType, StyleValue, VNode, Ref } from 'vue';
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 import { sizeProp } from '~/utils/useSize';
 import type {
   NTableDynamicLoadMethodType,
@@ -38,19 +38,19 @@ export const useTableProps = declarePropType({
     default: () => [],
   },
   /**
-   * 表格高度，默认根据表格数据自适应。 会使用 `@aurora/shared.sizeUnitTransform` 转化尺寸
+   * 表格高度，默认根据表格数据自适应。 会使用 `@aurora/utils.sizeUnitTransform` 转化尺寸
    */
   height: {
     type: [String, Number],
   },
   /**
-   * 表格最小高度。 会使用 `@aurora/shared.sizeUnitTransform` 转化尺寸
+   * 表格最小高度。 会使用 `@aurora/utils.sizeUnitTransform` 转化尺寸
    */
   minHeight: {
     type: [String, Number],
   },
   /**
-   * 表格最大高度。 会使用 `@aurora/shared.sizeUnitTransform` 转化尺寸
+   * 表格最大高度。 会使用 `@aurora/utils.sizeUnitTransform` 转化尺寸
    */
   maxHeight: {
     type: [String, Number],

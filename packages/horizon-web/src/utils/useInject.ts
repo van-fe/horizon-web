@@ -1,6 +1,6 @@
 import type { InjectionKey } from 'vue';
 import { inject } from 'vue';
-import { isPropertyKey } from '@aurora/shared';
+import { isPropertyKey } from '@aurora/utils';
 
 function useInject<T>(key: InjectionKey<T> | string): T | undefined;
 function useInject<T>(key: InjectionKey<T> | string, defaultValue: T): T;

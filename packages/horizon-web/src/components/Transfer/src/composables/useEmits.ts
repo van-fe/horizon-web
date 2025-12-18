@@ -1,5 +1,5 @@
 import type { TransferDataProps, CheckboxUnionType } from './useProps';
-import { isObject, isString } from '@aurora/shared';
+import { isObject, isString } from '@aurora/utils';
 
 export const useTransferEmits = {
   /**

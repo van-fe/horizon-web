@@ -1,5 +1,5 @@
 import type { TreeProps } from '~/components/Tree/src/composables/useProps';
-import type { MaybeRef, LegoComponentInstance } from '@aurora/shared';
+import type { MaybeRef, LegoComponentInstance } from '@aurora/utils';
 import { nextTick, ref, SetupContext, unref } from 'vue';
 import { mount } from '@vue/test-utils';
 import NTree from '~/components/Tree/src/Tree';

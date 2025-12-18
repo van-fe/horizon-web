@@ -1,4 +1,4 @@
-import type { ExposeType, ExtractExposeTypes } from '@aurora/shared';
+import type { ExposeType, ExtractExposeTypes } from '@aurora/utils';
 import type { Dayjs } from 'dayjs';
 
 export const useDatePickerExposes = {

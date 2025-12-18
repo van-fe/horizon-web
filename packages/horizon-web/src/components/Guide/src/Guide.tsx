@@ -8,8 +8,8 @@ import {
   watch,
   watchEffect,
 } from 'vue';
-import { ComponentClassBlock, cls, useNamespace, isNumber, useZIndex } from '@aurora/shared';
-import type { LegoSetupContext } from '@aurora/shared';
+import { ComponentClassBlock, cls, useNamespace, isNumber, useZIndex } from '@aurora/utils';
+import type { LegoSetupContext } from '@aurora/utils';
 import { useGuideProps } from './composables/useProps';
 import { useGuideEmits } from './composables/useEmits';
 import { useGuideSlots } from './composables/useSlots';

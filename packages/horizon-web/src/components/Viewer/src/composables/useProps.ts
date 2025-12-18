@@ -1,6 +1,6 @@
 import type { ExtractPropTypes, PropType } from 'vue';
 import type { VideoJsPlayerOptions } from 'video.js';
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 
 export interface NViewerLegend {
   /** 图注相对原始图片左上角的横轴位置 */

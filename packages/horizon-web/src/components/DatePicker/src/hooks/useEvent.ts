@@ -1,5 +1,5 @@
-import type { LegoSetupContext } from '@aurora/shared';
-import { safelyGetEventTarget } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { safelyGetEventTarget } from '@aurora/utils';
 import dayjs from '~/utils/useDayJs';
 import type { ComputedRef, ToRefs, Ref } from 'vue';
 import { nextTick, inject } from 'vue';

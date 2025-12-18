@@ -9,7 +9,7 @@ import {
   NCalendarPropsInjectKey,
   NCalendarSlotsInjectKey,
 } from '../utils/injectKeys';
-import { cls, ComponentClassBlock, cssVariable, isObject, useNamespace } from '@aurora/shared';
+import { cls, ComponentClassBlock, cssVariable, isObject, useNamespace } from '@aurora/utils';
 import { defaultLocale, localeInjectKey } from '~/provides';
 import type { Dayjs } from 'dayjs';
 import dayjs, { isDayjs } from 'dayjs';

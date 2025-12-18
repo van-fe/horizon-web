@@ -1,5 +1,5 @@
 import { default as TimePicker } from './src/TimePicker';
-import { withInstall } from '@aurora/shared';
+import { withInstall } from '@aurora/utils';
 
 export const NTimePicker = withInstall(TimePicker);
 export default NTimePicker;

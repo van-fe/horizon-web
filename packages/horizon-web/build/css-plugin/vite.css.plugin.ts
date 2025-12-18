@@ -1,6 +1,6 @@
 import compile from './build-scss';
 import type { Plugin } from 'vite';
-import { legoEsmOutput, legoLibOutput } from '@aurora/shared/plugins';
+import { legoEsmOutput, legoLibOutput } from '@aurora/utils/plugins';
 
 function definePlugin(plugin: (opts?: { excludes?: string[]; outputDirs?: string[] }) => Plugin) {
   return plugin;

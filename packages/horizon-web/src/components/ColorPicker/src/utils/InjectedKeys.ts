@@ -1,8 +1,8 @@
 import type { InjectionKey, SetupContext } from 'vue';
 import type ColorPickerColor from './ColorPickerColor';
 import type { ColorPickerProps as ColorPickerPropsType } from '../composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
-import { generatorInjectedKeyName } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { generatorInjectedKeyName } from '@aurora/utils';
 import type { ColorPickerSlots } from '~/components/ColorPicker/src/composables/useSlots';
 import type { ColorPickerEmits } from '~/components/ColorPicker/src/composables/useEmits';
 

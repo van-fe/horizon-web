@@ -1,5 +1,5 @@
 import { Project } from 'ts-morph';
-import { apiGeneratorOutPut, legoProjectRoot, writeJsonFile } from '@aurora/shared/plugins';
+import { apiGeneratorOutPut, legoProjectRoot, writeJsonFile } from '@aurora/utils/plugins';
 import type {
   ApiGeneratorAnalysedComponentDetail,
   ApiGeneratorAnalysedEmitType,
@@ -7,7 +7,7 @@ import type {
   ApiGeneratorAnalysedPropType,
   ApiGeneratorAnalysedSlotType,
   ApiGeneratorExportedComponent,
-} from '@aurora/shared';
+} from '@aurora/utils';
 import analyseProps from './analyseProps';
 import analyseEmits from './analyseEmits';
 import analyseSlots from './analyseSlots';

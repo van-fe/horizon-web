@@ -1,4 +1,4 @@
-import type { ExposeType, ExtractExposeTypes } from '@aurora/shared';
+import type { ExposeType, ExtractExposeTypes } from '@aurora/utils';
 import type { AnchorListItem } from '../utils/extra';
 
 export const useAnchorExposes = {

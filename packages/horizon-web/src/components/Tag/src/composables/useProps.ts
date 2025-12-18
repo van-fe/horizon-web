@@ -1,6 +1,6 @@
 import type { Component, ExtractPropTypes, PropType } from 'vue';
-import type { Awaitable } from '@aurora/shared';
-import { declarePropType, isNumber } from '@aurora/shared';
+import type { Awaitable } from '@aurora/utils';
+import { declarePropType, isNumber } from '@aurora/utils';
 import type { TooltipProps } from '~/components/Tooltip/src/composables/useProps';
 import { warn } from '~/utils/useLog';
 

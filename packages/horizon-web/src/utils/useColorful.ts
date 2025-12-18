@@ -1,5 +1,5 @@
 import { generator, tinycolor } from '@aurora/colors';
-import { cssVariable, cssVariableKey } from '@aurora/shared';
+import { cssVariable, cssVariableKey } from '@aurora/utils';
 
 export function generateColorList(
   basicTextColor: string,

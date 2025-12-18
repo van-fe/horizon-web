@@ -6,8 +6,8 @@ import {
   cssVariableKey,
   getSymbolNodeChildren,
   useNamespace,
-} from '@aurora/shared';
-import type { LegoSetupContext } from '@aurora/shared';
+} from '@aurora/utils';
+import type { LegoSetupContext } from '@aurora/utils';
 import type { ControlProps } from './composables/useProps';
 import { useControlsProps } from './composables/useProps';
 import { useControlsEmits } from './composables/useEmits';

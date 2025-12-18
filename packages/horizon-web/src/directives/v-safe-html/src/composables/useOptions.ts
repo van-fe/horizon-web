@@ -1,5 +1,5 @@
-import type { DirectiveOptionType, ExtractDirectiveOptionTypes } from '@aurora/shared';
-import { declareDirectiveOptionType } from '@aurora/shared';
+import type { DirectiveOptionType, ExtractDirectiveOptionTypes } from '@aurora/utils';
+import { declareDirectiveOptionType } from '@aurora/utils';
 import type DOMPurify from 'dompurify';
 
 export const useSafeHtmlOptions = declareDirectiveOptionType({

@@ -3,8 +3,8 @@ import type { NCalendarPinFlag } from './types';
 import dayjs, { type Dayjs } from 'dayjs';
 import { ref, unref } from 'vue';
 import { nanoid } from 'nanoid';
-import type { MaybeRef } from '@aurora/shared';
-import { EventEmitter } from '@aurora/shared';
+import type { MaybeRef } from '@aurora/utils';
+import { EventEmitter } from '@aurora/utils';
 import type { UnwrapRef } from 'vue';
 import cloneDeep from 'lodash/cloneDeep';
 import {

@@ -11,8 +11,8 @@ import {
 } from 'vue';
 import { useFormProps } from './composables/useProps';
 import type { ValidateReturnType, BindComponent } from './composables/useProps';
-import type { Arrayable, LegoSetupContext } from '@aurora/shared';
-import { cls, ComponentClassBlock, isNil, useNamespace } from '@aurora/shared';
+import type { Arrayable, LegoSetupContext } from '@aurora/utils';
+import { cls, ComponentClassBlock, isNil, useNamespace } from '@aurora/utils';
 import type { FormEmits } from './composables/useEmits';
 import { useFormEmits } from './composables/useEmits';
 import { NFormDisabledInjectedKey, NFormInjectedKey } from './utils/injectedKeys';

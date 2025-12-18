@@ -1,8 +1,8 @@
 import { computed, defineComponent, ref, toRefs, inject } from 'vue';
 import { useTimelineItemProps } from './composables/useProps';
 import { useDateFormative, useDateFormative } from './composables/useDateFormat';
-import { ComponentClassBlock, useNamespace } from '@aurora/shared';
-import type { LegoSetupContext } from '@aurora/shared';
+import { ComponentClassBlock, useNamespace } from '@aurora/utils';
+import type { LegoSetupContext } from '@aurora/utils';
 import { useColors } from '~/globalMethods';
 import { defaultLocale, localeInjectKey } from '~/provides/localable';
 import { NIcon } from '@aurora/icon';

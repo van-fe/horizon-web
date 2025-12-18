@@ -1,7 +1,7 @@
 import { defineComponent, Transition, ref, onBeforeUnmount, toRef, computed } from 'vue';
 import { useAlertProps, typeMap } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
-import { cls, ComponentClassBlock, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { NIcon } from '@aurora/icon';
 import NLink from '../../Link';
 import type { AlertEmits } from './composables/useEmits';

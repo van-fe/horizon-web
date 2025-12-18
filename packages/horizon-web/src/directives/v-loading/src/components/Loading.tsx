@@ -2,7 +2,7 @@ import type { CSSProperties } from 'vue';
 import { computed, defineComponent } from 'vue';
 import type { LoadingProps } from '../composables/useProps';
 import { useLoadingProps } from '../composables/useProps';
-import { cls, ComponentClassBlock, useNamespace } from '@aurora/shared';
+import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import NTransition from '~/components/Transition/src/Transition';
 
 export default defineComponent({

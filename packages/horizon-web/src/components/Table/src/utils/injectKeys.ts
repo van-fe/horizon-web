@@ -1,5 +1,5 @@
-import type { LegoSetupContext } from '@aurora/shared';
-import { generatorInjectedKeyName } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { generatorInjectedKeyName } from '@aurora/utils';
 import type { ComputedRef, InjectionKey, UnwrapNestedRefs, Ref } from 'vue';
 import type { TableProps } from '../composables/useProps';
 import type { TableEmits } from '../composables/useEmits';

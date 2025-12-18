@@ -1,6 +1,6 @@
 import { defineComponent, ref, toRefs, watch } from 'vue';
 import { useTooltipProps } from '~/components/Tooltip/src/composables/useProps';
-import { ComponentClassBlock, useZIndex } from '@aurora/shared';
+import { ComponentClassBlock, useZIndex } from '@aurora/utils';
 import useSize from '~/utils/useSize';
 import NTransition from '~/components/Transition/src/Transition';
 

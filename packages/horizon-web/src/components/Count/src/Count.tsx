@@ -3,8 +3,8 @@ import { useFormatNumber } from './composables/useTools';
 import { useCountProps } from './composables/useProps';
 import { useCountEmits } from './composables/useEmits';
 import type { CountEmits } from './composables/useEmits';
-import type { LegoSetupContext } from '@aurora/shared';
-import { ComponentClassBlock, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import type { CountSlots } from './composables/useSlots';
 import { useCountSlots } from './composables/useSlots';
 

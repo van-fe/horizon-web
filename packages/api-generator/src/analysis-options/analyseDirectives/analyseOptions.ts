@@ -7,7 +7,7 @@ import completeFileExtName from '../../utils/completeFileExtName';
 import type {
   ApiGeneratorAnalysedOptionType,
   ApiGeneratorExportedDirectives,
-} from '@aurora/shared';
+} from '@aurora/utils';
 import analyseJsDocs from '../../utils/analyseJsDocs';
 import { analyseFunctionExpression } from '../../utils/analysisType/analyseFunction';
 

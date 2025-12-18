@@ -1,6 +1,6 @@
 import type { ExtractPropTypes, PropType } from 'vue';
 import type { PopoverProps } from '~/components/Popover/src/composables/useProps';
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 
 export const useColorPickerProps = declarePropType({
   /**

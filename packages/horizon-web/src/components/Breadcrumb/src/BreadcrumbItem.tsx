@@ -1,7 +1,7 @@
 import { defineComponent, toRefs, getCurrentInstance, h, inject, computed } from 'vue';
 import { useBreadcrumbItemProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
-import { cls, ComponentClassBlock, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import type { BreadcrumbItemSlots } from './composables/useSlots';
 import { useBreadcrumbItemSlots } from './composables/useSlots';
 import useSize from '~/utils/useSize';

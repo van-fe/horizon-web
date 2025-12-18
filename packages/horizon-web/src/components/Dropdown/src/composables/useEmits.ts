@@ -1,4 +1,4 @@
-import { isBoolean, isDefined } from '@aurora/shared';
+import { isBoolean, isDefined } from '@aurora/utils';
 
 export const useDropdownEmits = {
   /**

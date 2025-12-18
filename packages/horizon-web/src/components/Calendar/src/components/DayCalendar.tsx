@@ -1,5 +1,5 @@
 import { computed, defineComponent, inject, onMounted, ref } from 'vue';
-import { cls, ComponentClassBlock, cssVariable, useNamespace } from '@aurora/shared';
+import { cls, ComponentClassBlock, cssVariable, useNamespace } from '@aurora/utils';
 import {
   NCalendarPropsInjectKey,
   NCalendarCurrentDateInjectKey,

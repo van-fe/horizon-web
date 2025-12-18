@@ -1,5 +1,5 @@
-import type { LegoSetupContext } from '@aurora/shared';
-import { generatorInjectedKeyName } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { generatorInjectedKeyName } from '@aurora/utils';
 import type { ComputedRef, InjectionKey, Ref, UnwrapNestedRefs, VNode } from 'vue';
 import type { TreeItemProps, TreeProps } from '../composables/useProps';
 import type { TreeEmits } from '../composables/useEmits';

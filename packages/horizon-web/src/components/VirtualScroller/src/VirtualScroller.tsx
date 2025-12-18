@@ -10,9 +10,9 @@ import {
   // onUnmounted,
   nextTick,
 } from 'vue';
-// import { ComponentClassBlock } from '@aurora/shared';
-import type { LegoSetupContext } from '@aurora/shared';
-import { EventEmitter, useNamespace } from '@aurora/shared';
+// import { ComponentClassBlock } from '@aurora/utils';
+import type { LegoSetupContext } from '@aurora/utils';
+import { EventEmitter, useNamespace } from '@aurora/utils';
 import type { NRecycleScrollerInstance } from './composables/useProps';
 import { useVirtualScrollerProps } from './composables/useProps';
 import { useVirtualScrollerEmits } from './composables/useEmits';

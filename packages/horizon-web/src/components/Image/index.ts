@@ -1,6 +1,6 @@
 import { default as Image } from './src/Image';
 import { default as ImageList } from './src/ImageList';
-import { withInstall, withNoopInstall } from '@aurora/shared';
+import { withInstall, withNoopInstall } from '@aurora/utils';
 import type { NImageAction } from './src/composables/useProps';
 export const NImage = withInstall(Image, {
   ImageList,

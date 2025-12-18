@@ -14,7 +14,7 @@ import {
 } from 'vue';
 import type { NFormRule, NFormItemHelper } from './composables/useProps';
 import { useFormItemProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
 import {
   slotVNodes,
   ComponentClassBlock,
@@ -26,7 +26,7 @@ import {
   isObject,
   sizeUnitTransform,
   cssVariableKey,
-} from '@aurora/shared';
+} from '@aurora/utils';
 import Schema from 'async-validator';
 import type { NFormItemTriggerType } from './utils/injectedKeys';
 import {

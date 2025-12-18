@@ -1,4 +1,4 @@
-import type { ExposeType, ExtractExposeTypes } from '@aurora/shared';
+import type { ExposeType, ExtractExposeTypes } from '@aurora/utils';
 import type { ModelValueSingleType } from '../utils/types';
 import type { VNode, Ref } from 'vue';
 import { JSX } from 'vue/jsx-runtime';

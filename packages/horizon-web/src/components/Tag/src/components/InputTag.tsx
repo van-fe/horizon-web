@@ -1,5 +1,5 @@
 import { defineComponent, onMounted, ref, watch } from 'vue';
-import { cls, ComponentClassBlock, isString } from '@aurora/shared';
+import { cls, ComponentClassBlock, isString } from '@aurora/utils';
 
 export default defineComponent({
   name: 'InputTag',

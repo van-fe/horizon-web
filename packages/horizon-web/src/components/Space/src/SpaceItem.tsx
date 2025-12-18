@@ -1,4 +1,4 @@
-import { ComponentClassBlock, type LegoSetupContext } from '@aurora/shared';
+import { ComponentClassBlock, type LegoSetupContext } from '@aurora/utils';
 import { defineComponent } from 'vue';
 import { useNamespace } from '~/globalMethods';
 import { type SpaceExposes, useSpaceExposes } from './composables/useExposes';

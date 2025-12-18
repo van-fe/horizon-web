@@ -4,7 +4,7 @@ import type {
   NViewerCustomToolItem,
   NViewerLegend,
 } from './src/composables/useProps';
-import { withInstall } from '@aurora/shared';
+import { withInstall } from '@aurora/utils';
 
 export const NViewer = withInstall(Viewer);
 export default NViewer;

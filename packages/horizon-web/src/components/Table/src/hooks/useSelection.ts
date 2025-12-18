@@ -1,6 +1,6 @@
 import type { SetupContext } from 'vue';
 import { computed, ref, watch } from 'vue';
-import { isBoolean, isDefined } from '@aurora/shared';
+import { isBoolean, isDefined } from '@aurora/utils';
 import { warn } from '~/utils/useLog';
 import type {
   NTableInsertedColumnData,

@@ -1,4 +1,4 @@
-import { defineMethod } from '@aurora/shared';
+import { defineMethod } from '@aurora/utils';
 import type { ${capitalName}Options } from './composables/useOptions';
 import { use${capitalName}Options } from './composables/useOptions';
 

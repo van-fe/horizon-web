@@ -5,7 +5,7 @@ import { NUploadFileStatusEnum, NUploadFileTypeEnum } from '../utils/fileDefines
 import NControls from '~/components/Controls/src/Controls';
 import NControl from '~/components/Controls/src/Control';
 import { IconEnd, IconPause, IconPlay, IconRefresh, IconRubbish, IconScaleBig } from '@aurora/icon';
-import { ComponentClassBlock } from '@aurora/shared';
+import { ComponentClassBlock } from '@aurora/utils';
 import useLocaleLang from '~/utils/useLocaleLang';
 import type { UploadProps } from '../composables/useProps';
 import type { NUploadMultipartSetting } from '../composables/useMultipartUpload';

@@ -15,8 +15,8 @@ import {
   isDefined,
   useNamespace,
   cssVariable,
-} from '@aurora/shared';
-import type { LegoSetupContext, LegoComponentInstance } from '@aurora/shared';
+} from '@aurora/utils';
+import type { LegoSetupContext, LegoComponentInstance } from '@aurora/utils';
 import { useMenuProps } from './composables/useProps';
 import { useMenuEmits } from './composables/useEmits';
 import { useMenuSlots } from './composables/useSlots';

@@ -1,13 +1,13 @@
 import type { Project, PropertyAssignment } from 'ts-morph';
 import { ts } from 'ts-morph';
-import type { ApiGeneratorAnalysedExposeType, ApiGeneratorExportedComponent } from '@aurora/shared';
+import type { ApiGeneratorAnalysedExposeType, ApiGeneratorExportedComponent } from '@aurora/utils';
 import type { FileElements } from '../../utils/analyseFileElements';
 import analyseFileElements from '../../utils/analyseFileElements';
 import completeFileExtName from '../../utils/completeFileExtName';
 import analyseJsDocs from '../../utils/analyseJsDocs';
 import { analyseObjectExpression } from '../../utils/analysisType/analyseObject';
 import { analyseFunctionExpression } from '../../utils/analysisType/analyseFunction';
-import { ApiGeneratorAnalysedBaseType } from '@aurora/shared';
+import { ApiGeneratorAnalysedBaseType } from '@aurora/utils';
 
 function analysePropertyAssignment(
   property: PropertyAssignment,

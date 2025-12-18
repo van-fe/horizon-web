@@ -1,5 +1,5 @@
 import { computed, defineComponent, inject, onMounted, ref } from 'vue';
-import { ComponentClassBlock, cssVariable } from '@aurora/shared';
+import { ComponentClassBlock, cssVariable } from '@aurora/utils';
 import NButton from '~/components/Button/src/Button';
 import {
   NUploadPropsInjectKey,

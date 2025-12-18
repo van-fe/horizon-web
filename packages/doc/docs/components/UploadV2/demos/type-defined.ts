@@ -1,4 +1,4 @@
-import type { Data } from '@aurora/shared';
+import type { Data } from '@aurora/utils';
 
 export type NUploadRawFileType = NUploadUserFile | File | NUploadFileType;
 

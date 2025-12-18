@@ -10,8 +10,8 @@ import {
   onBeforeUnmount,
 } from 'vue';
 import type { Ref, WatchStopHandle } from 'vue';
-import type { LegoSetupContext } from '@aurora/shared';
-import { isDefined, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { isDefined, useNamespace } from '@aurora/utils';
 import { useVirtualScrollerItemProps } from './composables/useProps';
 import { useVirtualScrollerItemEmits } from './composables/useEmits';
 import { useVirtualScrollerItemSlots } from './composables/useSlots';

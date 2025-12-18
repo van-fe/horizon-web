@@ -3,7 +3,7 @@ import { computed, createVNode, isVNode, nextTick, render, watch } from 'vue';
 import Notification from './components/Notification';
 import type { Action, PlacementType, NotificationProps } from './composables/useProps';
 import { useNotificationProps } from './composables/useProps';
-import { defineMethod, useZIndex } from '@aurora/shared';
+import { defineMethod, useZIndex } from '@aurora/utils';
 
 const instances: Record<PlacementType, VNode[]> = {
   'top-left': [],

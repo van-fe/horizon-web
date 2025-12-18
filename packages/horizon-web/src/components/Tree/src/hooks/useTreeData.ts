@@ -4,8 +4,8 @@ import type { TreeProps } from '../composables/useProps';
 import type { NTreeData, NTreeExtendsData } from '../utils/types';
 import type { TopBaseTreeData } from '~/utils/useTree/types';
 import type Tree from '~/utils/useTree/index';
-import type { LegoSetupContext } from '@aurora/shared';
-import { isUndefined } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { isUndefined } from '@aurora/utils';
 import type { TreeEmits } from '~/components/Tree/src/composables/useEmits';
 
 export default function (

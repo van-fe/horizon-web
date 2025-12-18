@@ -1,5 +1,5 @@
 import { defineComponent, inject, nextTick, PropType, ref, withKeys } from 'vue';
-import { ComponentClassBlock, isNumber, useNamespace } from '@aurora/shared';
+import { ComponentClassBlock, isNumber, useNamespace } from '@aurora/utils';
 import { defaultLocale, localeInjectKey } from '~/provides';
 import { NPaginationEmitInjectKey, NPaginationPropsInjectKey } from '../utils/injectKeys';
 import NInputNumber from '~/components/InputNumber/src/InputNumber';

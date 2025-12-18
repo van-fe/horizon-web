@@ -1,5 +1,5 @@
 import type { InjectionKey, SetupContext } from 'vue';
-import { generatorInjectedKeyName } from '@aurora/shared';
+import { generatorInjectedKeyName } from '@aurora/utils';
 import type { PaginationProps } from '../composables/useProps';
 import type { PaginationEmits } from '../composables/useEmits';
 import type { PaginationSlots } from '../composables/useSlots';

@@ -1,5 +1,5 @@
 import { computed, defineComponent, inject, onMounted, ref, watch } from 'vue';
-import { cls, ComponentClassBlock, getClientXY } from '@aurora/shared';
+import { cls, ComponentClassBlock, getClientXY } from '@aurora/utils';
 import type { Position } from '@vueuse/core';
 import { clamp, useDraggable } from '@vueuse/core';
 import { $message } from '~/methods';

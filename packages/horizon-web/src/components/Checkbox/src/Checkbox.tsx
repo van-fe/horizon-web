@@ -1,8 +1,8 @@
 import { computed, defineComponent, inject, toRefs } from 'vue';
 import type { CheckboxUnionType } from './utils/types';
-import type { LegoSetupContext } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
 import { useCheckboxProps, handleChange, isChecked, handleBlur } from './composables/useProps';
-import { ComponentClassBlock, useNamespace } from '@aurora/shared';
+import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import Checkbox from './composables/useCheckbox';
 import type { CheckboxEmits } from './composables/useEmits';
 import { useCheckboxEmits } from './composables/useEmits';

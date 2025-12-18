@@ -1,5 +1,5 @@
 import type { ModelValueType, NCascaderExtendOption, NCascaderOption } from '../utils/types';
-import { isBoolean, isDefined, isNil, isObject, isString, isUndefined } from '@aurora/shared';
+import { isBoolean, isDefined, isNil, isObject, isString, isUndefined } from '@aurora/utils';
 
 export const useCascaderEmits = {
   /**

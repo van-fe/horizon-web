@@ -3,7 +3,7 @@ import { inject } from 'vue';
 import type { NTreeData, NTreeExtendsData } from '../utils/types';
 import type { TreeProps } from '../composables/useProps';
 import type Tree from '~/utils/useTree/index';
-import { cls, ComponentClassBlock } from '@aurora/shared';
+import { cls, ComponentClassBlock } from '@aurora/utils';
 import { NTreeSizeInjectKey } from '../utils/injectKeys';
 
 export default function useLine(

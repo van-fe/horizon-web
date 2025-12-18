@@ -2,7 +2,7 @@ import type { App, ComponentPublicInstance, ObjectEmitsOptions } from 'vue';
 import { createApp } from 'vue';
 import UploadBackground from '../components/UploadBackground';
 import type { UploadProps } from '../composables/useProps';
-import { isObject } from '@aurora/shared';
+import { isObject } from '@aurora/utils';
 import { error } from '~/utils/useLog';
 import type { UploadBackgroundExposes } from '../composables/useExposes';
 import type { UploadBackgroundEmits } from '../composables/useEmits';

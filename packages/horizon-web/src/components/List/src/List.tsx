@@ -1,7 +1,7 @@
 import { defineComponent, toRefs } from 'vue';
 import { useListProps } from './composables/useProps';
-import { ComponentClassBlock, cls, useNamespace } from '@aurora/shared';
-import type { LegoSetupContext } from '@aurora/shared';
+import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
+import type { LegoSetupContext } from '@aurora/utils';
 import type { ListSlots } from './composables/useSlots';
 import { useListSlots } from './composables/useSlots';
 import NScrollbar from '~/components/Scrollbar/src/Scrollbar';

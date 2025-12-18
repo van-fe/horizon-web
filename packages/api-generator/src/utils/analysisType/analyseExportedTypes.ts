@@ -1,4 +1,4 @@
-import type { ApiGeneratorExportedPluginType } from '@aurora/shared';
+import type { ApiGeneratorExportedPluginType } from '@aurora/utils';
 import type { ExportDeclaration } from 'ts-morph';
 
 export function analyseExportedTypes(

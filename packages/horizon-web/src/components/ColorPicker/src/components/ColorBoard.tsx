@@ -1,5 +1,5 @@
 import { defineComponent, inject, onMounted, ref, watch } from 'vue';
-import { ComponentClassBlock, getClientXY } from '@aurora/shared';
+import { ComponentClassBlock, getClientXY } from '@aurora/utils';
 import type { Position } from '@vueuse/core';
 import { useDraggable, clamp } from '@vueuse/core';
 import { ColorPickerCurrentValue } from '../utils/InjectedKeys';

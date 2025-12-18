@@ -8,8 +8,8 @@ import {
   onMounted,
   onUnmounted,
 } from 'vue';
-import { ComponentClassBlock, useNamespace, isNil } from '@aurora/shared';
-import type { LegoSetupContext } from '@aurora/shared';
+import { ComponentClassBlock, useNamespace, isNil } from '@aurora/utils';
+import type { LegoSetupContext } from '@aurora/utils';
 import { useWatermarkProps } from './composables/useProps';
 import { useWatermarkEmits } from './composables/useEmits';
 import { useWatermarkSlots } from './composables/useSlots';

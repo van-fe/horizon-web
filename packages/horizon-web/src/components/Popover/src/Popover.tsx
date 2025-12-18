@@ -8,14 +8,14 @@ import {
   toRefs,
   provide,
 } from 'vue';
-import type { LegoSetupContext } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
 import {
   cls,
   ComponentClassBlock,
   useNamespace,
   useZIndex,
   usePopupContainerGetter,
-} from '@aurora/shared';
+} from '@aurora/utils';
 import type { PopperInstance } from '~/utils/popper';
 import { usePopper } from '~/utils/popper';
 import { usePopoverProps } from './composables/useProps';

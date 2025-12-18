@@ -1,5 +1,5 @@
 import type { CascaderProps } from '~/components/Cascader/src/composables/useProps';
-import type { MaybeRef, Capitalize, LegoComponentInstance } from '@aurora/shared';
+import type { MaybeRef, Capitalize, LegoComponentInstance } from '@aurora/utils';
 import { Fragment, nextTick, ref, unref } from 'vue';
 import type { VueWrapper } from '@vue/test-utils';
 import { mount } from '@vue/test-utils';

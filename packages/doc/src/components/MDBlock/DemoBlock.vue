@@ -2,7 +2,7 @@
 import { nextTick, ref, useSlots } from 'vue';
 import { version } from '@aurora/horizon-web';
 import { IconApplets, IconCopy, IconFullscreen, IconJump, IconMinimize, IconRefresh } from '@aurora/icon';
-import { cls, ComponentClassBlock } from '@aurora/shared';
+import { cls, ComponentClassBlock } from '@aurora/utils';
 import Prism from 'prismjs';
 
 const darkBackground = ref(false);

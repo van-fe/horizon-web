@@ -1,4 +1,4 @@
-import { isUndefined, isString } from '@aurora/shared';
+import { isUndefined, isString } from '@aurora/utils';
 
 export const useImageEmits = {
   /**

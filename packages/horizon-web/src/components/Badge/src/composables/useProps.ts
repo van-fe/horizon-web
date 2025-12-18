@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType } from 'vue';
-import { cssVariable, declarePropType } from '@aurora/shared';
+import { cssVariable, declarePropType } from '@aurora/utils';
 
 export interface Offset {
   /** 往左偏移的值 */

@@ -1,5 +1,5 @@
-import { arrayableToArray, getRemoteUrlFileHeader, isObject } from '@aurora/shared';
-import type { Arrayable } from '@aurora/shared';
+import { arrayableToArray, getRemoteUrlFileHeader, isObject } from '@aurora/utils';
+import type { Arrayable } from '@aurora/utils';
 import type { NUploadFileType, NUploadRawFileType, NUploadUserFile } from './fileDefines';
 import { NUploadFileStatusEnum, fileTypeMapping, NUploadFileTypeEnum } from './fileDefines';
 import { nanoid } from 'nanoid';

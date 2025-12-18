@@ -1,8 +1,8 @@
 import { defineComponent, toRefs } from 'vue';
 import { useListItemProps } from './composables/useProps';
 import type { ListItemProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
-import { ComponentClassBlock, cls, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
 import type { ListItemSlots } from './composables/useSlots';
 import { useListItemSlots } from './composables/useSlots';
 import useSize from '~/utils/useSize';

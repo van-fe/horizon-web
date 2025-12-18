@@ -3,7 +3,7 @@ import type { Dayjs } from 'dayjs';
 import type { CalendarProps } from '../composables/useProps';
 import type { CalendarEmits } from '../composables/useEmits';
 import type PinFlagsHelper from './PinFlagsHelper';
-import { generatorInjectedKeyName } from '@aurora/shared';
+import { generatorInjectedKeyName } from '@aurora/utils';
 import type CalendarHelper from './CalendarHelper';
 import type { CalendarSlots } from '../composables/useSlots';
 

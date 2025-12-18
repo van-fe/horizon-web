@@ -1,4 +1,4 @@
-import { generatorInjectedKeyName } from '@aurora/shared';
+import { generatorInjectedKeyName } from '@aurora/utils';
 import type { InjectionKey } from 'vue';
 import type { TreeSelectProps } from '../composables/useProps';
 

@@ -1,7 +1,7 @@
 import { flushPromises, mount } from '@vue/test-utils';
 import { describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
-import { resetPopupContainerGetter } from '@aurora/shared';
+import { resetPopupContainerGetter } from '@aurora/utils';
 import { NApplication } from '../../Application';
 import { NButton } from '../../Button/index';
 import type { DialogProps } from '../src/composables/useProps';

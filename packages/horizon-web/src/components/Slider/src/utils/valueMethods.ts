@@ -1,5 +1,5 @@
 import type { SliderProps } from '../composables/useProps';
-import { getPrecision, remainderValue, subValue } from '@aurora/shared';
+import { getPrecision, remainderValue, subValue } from '@aurora/utils';
 import round from 'lodash/round';
 import { clamp } from '@vueuse/core';
 

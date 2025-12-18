@@ -54,7 +54,7 @@
     "@aurora/icon": "^2.11.2",
     "@aurora/horizon-web-sensor-tracker": "workspace:*",
     "@aurora/locale-vue": "workspace:*",
-    "@aurora/shared": "workspace:*",
+    "@aurora/utils": "workspace:*",
     "@aurora/upload-helper": "0.0.7-beta.3",
     "@popperjs/core": "^2.11.8",
     "@vueuse/core": "^9.6.0",

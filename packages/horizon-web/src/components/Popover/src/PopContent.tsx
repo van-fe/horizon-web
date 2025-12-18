@@ -1,6 +1,6 @@
 import { defineComponent, inject } from 'vue';
-import type { LegoSetupContext } from '@aurora/shared';
-import { cls, ComponentClassBlock, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import type { PopContentSlots } from './composables/useSlots';
 import { usePopContentSlots } from './composables/useSlots';
 import { NPickerPopoverPropsInjectKey } from './utils/injectKeys';

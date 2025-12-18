@@ -1,4 +1,4 @@
-import type { LegoSetupContext } from '@/@aurora/shared/types';
+import type { LegoSetupContext } from '@/@aurora/utils/types';
 import type { Ref } from 'vue';
 import type { SelectEmits } from '../composables/useEmits';
 import type { SelectExposes } from '../composables/useExposes';

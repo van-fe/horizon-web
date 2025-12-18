@@ -18,13 +18,11 @@ const { confirm, tag } = argv;
 // the packages of need to be published
 const publishPackages = [
   'horizon-web',
-  'shared',
+  'utils',
   'locale',
   'locale-vue',
   'unplugin-resolver',
-  'horizon-web-sensor-tracker',
   'colors',
-  'horizon-web-pad',
 ];
 
 const packageJsonOrigin: Record<string, string> = {};

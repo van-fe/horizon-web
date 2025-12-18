@@ -1,5 +1,5 @@
-import type { LegoComponentInstance } from '@aurora/shared';
-import { cls, ComponentClassBlock, sizeUnitTransform, useNamespace } from '@aurora/shared';
+import type { LegoComponentInstance } from '@aurora/utils';
+import { cls, ComponentClassBlock, sizeUnitTransform, useNamespace } from '@aurora/utils';
 import { defineComponent, inject, ref } from 'vue';
 import {
   NCascaderPickOptionInjectKey,

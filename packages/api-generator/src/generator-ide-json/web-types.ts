@@ -2,7 +2,7 @@
  * web-types is a json file which just for Jetbrains's IDEs to provide autocomplete.
  * for more details: https://github.com/jetbrains/web-types
  */
-import { apiGeneratorOutPut, writeJsonFile } from '@aurora/shared/plugins';
+import { apiGeneratorOutPut, writeJsonFile } from '@aurora/utils/plugins';
 import type {
   ApiGeneratorAnalysedComponentDetail,
   ApiGeneratorAnalysedEmitParamType,
@@ -11,8 +11,8 @@ import type {
   ApiGeneratorAnalysedSlotType,
   ApiGeneratorAnalysedDirectiveDetail,
   ApiGeneratorAnalysedOptionType,
-} from '@aurora/shared';
-import { capitalize, kebabCase } from '@aurora/shared';
+} from '@aurora/utils';
+import { capitalize, kebabCase } from '@aurora/utils';
 import version from '../../../../versions.json';
 import components from '../../dist/components-analysis.json';
 import directives from '../../dist/directives-analysis.json';

@@ -1,6 +1,6 @@
 import NLoadingBarComponent from './components/LoadingBar';
 import type { LoadingBarOptions } from './composables/useProps';
-import { defineMethod } from '@aurora/shared';
+import { defineMethod } from '@aurora/utils';
 
 let loadingBarInstance: {
   update: Function;

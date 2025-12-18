@@ -1,6 +1,6 @@
 import type { Component, VNode, Slot } from 'vue';
 import { NIcon } from '@aurora/icon';
-import { isDefined, isString } from '@aurora/shared';
+import { isDefined, isString } from '@aurora/utils';
 
 export default function (
   icon: string | Component | VNode | undefined | null | false,

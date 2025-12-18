@@ -1,5 +1,5 @@
-import type { LegoSetupContext } from '@aurora/shared';
-import { ComponentClassBlock, NOnlyChild, cls, useNamespace, useZIndex } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { ComponentClassBlock, NOnlyChild, cls, useNamespace, useZIndex } from '@aurora/utils';
 import { useClipboard, useMutationObserver, useResizeObserver } from '@vueuse/core';
 import type { ComputedRef } from 'vue';
 import {

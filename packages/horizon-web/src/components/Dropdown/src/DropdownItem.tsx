@@ -7,8 +7,8 @@ import {
   withKeys,
   withModifiers,
 } from 'vue';
-import { ComponentClassBlock, cls, useNamespace, isUndefined } from '@aurora/shared';
-import type { LegoSetupContext } from '@aurora/shared';
+import { ComponentClassBlock, cls, useNamespace, isUndefined } from '@aurora/utils';
+import type { LegoSetupContext } from '@aurora/utils';
 import type { DropdownItemProps } from './composables/useProps';
 import { useDropdownItemProps } from './composables/useProps';
 import { useDropdownItemEmits } from './composables/useEmits';

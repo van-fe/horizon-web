@@ -4,7 +4,7 @@ import type {
 } from '../fileDefines';
 import { NUploadFileStatusEnum } from '../fileDefines';
 import type { NUploadChunk } from '../../composables/useMultipartUpload';
-import type { Data } from '@aurora/shared';
+import type { Data } from '@aurora/utils';
 import UploadHelperOptions from '../UploadHelperOptions';
 import type { ToRefs } from 'vue';
 import type { UploadProps } from '../../composables/useProps';

@@ -1,6 +1,6 @@
 import type { VNode, PropType } from 'vue';
-import type { ExtractMethodOptions } from '@aurora/shared';
-import { declarePropType } from '@aurora/shared';
+import type { ExtractMethodOptions } from '@aurora/utils';
+import { declarePropType } from '@aurora/utils';
 
 export type MessageType = 'success' | 'info' | 'warning' | 'error' | 'loading';
 

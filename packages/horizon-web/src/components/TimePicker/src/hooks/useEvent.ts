@@ -1,4 +1,4 @@
-import { type LegoSetupContext, safelyGetEventTarget } from '@aurora/shared';
+import { type LegoSetupContext, safelyGetEventTarget } from '@aurora/utils';
 import dayjs from '~/utils/useDayJs';
 import type { Dayjs } from 'dayjs';
 import type { ComputedRef, Ref, ToRefs } from 'vue';

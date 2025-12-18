@@ -1,5 +1,5 @@
 import { defineComponent, inject, provide, ref } from 'vue';
-import { LegoSetupContext, useNamespace } from '@aurora/shared';
+import { LegoSetupContext, useNamespace } from '@aurora/utils';
 import type { NRecycleScrollerInstance } from '~/components/VirtualScroller/src/composables/useProps';
 import NVirtualScroller from '~/components/VirtualScroller/src/VirtualScroller';
 import NVirtualScrollerItem from '~/components/VirtualScroller/src/VirtualScrollerItem';

@@ -8,8 +8,8 @@ import {
   toRefs,
   watch,
 } from 'vue';
-import type { Arrayable, LegoSetupContext } from '@aurora/shared';
-import { cls, ComponentClassBlock, cssVariable, useNamespace } from '@aurora/shared';
+import type { Arrayable, LegoSetupContext } from '@aurora/utils';
+import { cls, ComponentClassBlock, cssVariable, useNamespace } from '@aurora/utils';
 import type { NUploadFileType } from '../utils/fileDefines';
 import { NUploadFileTypeEnum, NUploadFileStatusEnum } from '../utils/fileDefines';
 import {

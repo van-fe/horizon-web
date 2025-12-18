@@ -1,4 +1,4 @@
-import { isString, isNumber, isUndefined } from '@aurora/shared';
+import { isString, isNumber, isUndefined } from '@aurora/utils';
 
 export const useCollapseEmits = {
   /**

@@ -1,6 +1,6 @@
 import { computed, defineComponent } from 'vue';
-import type { LegoSetupContext } from '@aurora/shared';
-import { cls, ComponentClassBlock, sizeUnitTransform, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { cls, ComponentClassBlock, sizeUnitTransform, useNamespace } from '@aurora/utils';
 import { useFooterProps } from './composables/useProps';
 import type { FooterSlots } from './composables/useSlots';
 import { useFooterSlots } from './composables/useSlots';

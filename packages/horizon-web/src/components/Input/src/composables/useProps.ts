@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType } from 'vue';
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 import { IconMaybeFalsyPropType } from '~/utils/useIcon';
 
 export const useInputProps = declarePropType({

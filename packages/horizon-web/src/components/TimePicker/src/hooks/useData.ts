@@ -5,8 +5,8 @@ import dayjs, { isDayjsEqual } from '~/utils/useDayJs';
 import type { Dayjs } from 'dayjs';
 import { isDayjs } from 'dayjs';
 import type { TimePickerEmits } from '../composables/useEmits';
-import type { LegoSetupContext } from '@aurora/shared';
-import { isNil, isDefined } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { isNil, isDefined } from '@aurora/utils';
 import type { TimePickerSlots } from '../composables/useSlots';
 import type { TimePickerExposes } from '../composables/useExposes';
 import {

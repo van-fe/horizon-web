@@ -1,4 +1,4 @@
-import { isObject, isString } from '@aurora/shared';
+import { isObject, isString } from '@aurora/utils';
 import type { NCalendarPinFlag } from '../utils/types';
 import type { Dayjs } from 'dayjs';
 import { isDayjs } from 'dayjs';

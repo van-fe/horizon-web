@@ -4,8 +4,8 @@ import { useMaskEmits } from './composables/useEmits';
 import type { MaskSlots } from './composables/useSlots';
 import { useMaskSlots } from './composables/useSlots';
 import type { MaskEmits } from './composables/useEmits';
-import type { LegoSetupContext } from '@aurora/shared';
-import { cls, ComponentClassBlock, cssVariable, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { cls, ComponentClassBlock, cssVariable, useNamespace } from '@aurora/utils';
 
 export default defineComponent({
   name: `${useNamespace()}Mask`,

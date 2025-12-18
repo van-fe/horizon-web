@@ -1,6 +1,6 @@
 import { computed, defineComponent, Fragment, provide, ref, toRefs, watch } from 'vue';
-import { ComponentClassBlock, cls, useNamespace, cssVariable } from '@aurora/shared';
-import type { LegoSetupContext, LegoComponentInstance } from '@aurora/shared';
+import { ComponentClassBlock, cls, useNamespace, cssVariable } from '@aurora/utils';
+import type { LegoSetupContext, LegoComponentInstance } from '@aurora/utils';
 import { useTreeProps } from './composables/useProps';
 import { useTreeEmits } from './composables/useEmits';
 import { useTreeSlots } from './composables/useSlots';

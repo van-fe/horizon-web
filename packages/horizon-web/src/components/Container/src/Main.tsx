@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue';
-import type { LegoSetupContext } from '@aurora/shared';
-import { cls, ComponentClassBlock, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import type { MainSlots } from './composables/useSlots';
 import { useMainSlots } from './composables/useSlots';
 

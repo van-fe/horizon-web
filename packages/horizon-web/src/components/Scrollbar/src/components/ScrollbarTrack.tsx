@@ -1,6 +1,6 @@
 import type { PropType } from 'vue';
 import { computed, defineComponent, inject, onMounted, ref } from 'vue';
-import { cls, ComponentClassBlock, isBoolean, isNumber, sizeUnitTransform } from '@aurora/shared';
+import { cls, ComponentClassBlock, isBoolean, isNumber, sizeUnitTransform } from '@aurora/utils';
 import { NScrollbarViewSizeInjectKey } from '../utils/injectKeys';
 import type { Position } from '@vueuse/core';
 import { useDraggable } from '@vueuse/core';

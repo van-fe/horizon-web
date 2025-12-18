@@ -1,13 +1,13 @@
 import type { RendererElement } from 'vue';
 import { computed, defineComponent, ref, Transition, TransitionGroup } from 'vue';
-import type { LegoSetupContext } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
 import { useTransitionProps } from './composables/useProps';
 import { useTransitionEmits } from './composables/useEmits';
 import { useTransitionSlots } from './composables/useSlots';
 import { useTransitionExposes } from './composables/useExposes';
 import type { TransitionEmits } from './composables/useEmits';
 import type { TransitionSlots } from './composables/useSlots';
-import { useNamespace, useLowCaseNamespace } from '@aurora/shared';
+import { useNamespace, useLowCaseNamespace } from '@aurora/utils';
 
 export default defineComponent({
   name: `${useNamespace()}Transition`,

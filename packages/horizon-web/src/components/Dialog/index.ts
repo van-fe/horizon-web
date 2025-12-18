@@ -1,5 +1,5 @@
 import { default as Dialog } from './src/Dialog';
-import { withInstall } from '@aurora/shared';
+import { withInstall } from '@aurora/utils';
 import type {
   DialogProps as NDialogProps,
   DialogSize as NDialogSize,

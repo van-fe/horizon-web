@@ -1,5 +1,5 @@
 import { defineComponent, inject } from 'vue';
-import { cls, ComponentClassBlock } from '@aurora/shared';
+import { cls, ComponentClassBlock } from '@aurora/utils';
 import { ColorPickerCurrentValue } from '../utils/InjectedKeys';
 import { getRecentlyColors } from '../utils/useStorageColor';
 

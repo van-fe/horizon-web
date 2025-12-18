@@ -1,7 +1,7 @@
 import type { Ref } from 'vue';
 import { provide, ref } from 'vue';
 import { NTimePickerPanelVisibleInjectKey } from '../utils/injectKeys';
-import type { LegoComponentInstance, LegoSetupContext } from '@aurora/shared';
+import type { LegoComponentInstance, LegoSetupContext } from '@aurora/utils';
 import type NPicker from '~/components/Picker/src/Picker';
 import type { PickerExposes } from '~/components/Picker/src/composables/useExposes';
 import type { TimePickerEmits } from '../composables/useEmits';

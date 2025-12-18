@@ -7,7 +7,7 @@ import {
   getClientXY,
   safelyGetEventTarget,
   findElementInEventTargetTreeByClass,
-} from '@aurora/shared';
+} from '@aurora/utils';
 import type { TopBaseTreeData } from '~/utils/useTree/types';
 import type Tree from '~/utils/useTree/index';
 import { warn } from '~/utils/useLog';

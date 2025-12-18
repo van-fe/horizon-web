@@ -1,5 +1,5 @@
-import type { DefinedComponent, LegoComponentInstance } from '@aurora/shared';
-import { cls, ComponentClassBlock, isNil } from '@aurora/shared';
+import type { DefinedComponent, LegoComponentInstance } from '@aurora/utils';
+import { cls, ComponentClassBlock, isNil } from '@aurora/utils';
 import { computed, inject, type Ref, ref } from 'vue';
 import type { NTableColumnData, NTableTransformedRowDataType } from '../utils/types';
 import { NTableColumnFilterKey, NTableSortOrderEnum } from '../utils/types';

@@ -1,6 +1,6 @@
 import * as shell from 'shelljs';
 import path from 'path';
-import { legoEsmOutput, legoLibOutput, legoBuildOutput } from '@aurora/shared/plugins';
+import { legoEsmOutput, legoLibOutput, legoBuildOutput } from '@aurora/utils/plugins';
 
 /** lib **/
 shell.cp(

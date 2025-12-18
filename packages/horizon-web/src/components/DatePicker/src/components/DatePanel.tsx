@@ -1,7 +1,7 @@
 import { defineComponent, inject, ref } from 'vue';
 import { useDatePickerDatePanelProps } from '../composables/useProps';
-import type { LegoComponentInstance, LegoSetupContext } from '@aurora/shared';
-import { cls, ComponentClassBlock } from '@aurora/shared';
+import type { LegoComponentInstance, LegoSetupContext } from '@aurora/utils';
+import { cls, ComponentClassBlock } from '@aurora/utils';
 import DatePanelHeader from './DatePanelHeader';
 import type { DatePickerDatePanelEmits } from '../composables/useEmits';
 import { useDatePickerDatePanelEmit } from '../composables/useEmits';

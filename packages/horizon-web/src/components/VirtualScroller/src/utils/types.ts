@@ -1,4 +1,4 @@
-import type { EventEmitter } from '@aurora/shared';
+import type { EventEmitter } from '@aurora/utils';
 // import type { Emitter, EventType } from 'mitt';
 import type { Ref } from 'vue';
 

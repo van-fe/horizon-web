@@ -1,5 +1,5 @@
 import { computed, defineComponent, inject, PropType, withKeys } from 'vue';
-import { cls, ComponentClassBlock, isNumber, useNamespace } from '@aurora/shared';
+import { cls, ComponentClassBlock, isNumber, useNamespace } from '@aurora/utils';
 import { IconArrowLeft, IconArrowRight } from '@aurora/icon';
 import {
   NPaginationEmitInjectKey,

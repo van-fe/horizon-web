@@ -3,7 +3,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import dtsPlugin from 'vite-plugin-dts';
-import { genedBundlePlugin, green } from '@aurora/shared/plugins';
+import { genedBundlePlugin, green } from '@aurora/utils/plugins';
 import { rollupTheme } from './rollup-theme';
 
 export default defineConfig({

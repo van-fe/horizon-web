@@ -1,5 +1,5 @@
 import type { CascaderItemProps } from '../composables/useProps';
-import { isObject } from '@aurora/shared';
+import { isObject } from '@aurora/utils';
 import isEqual from 'lodash/isEqual';
 
 export type ObjectWithCtx = Record<string & '_ctx', unknown>;

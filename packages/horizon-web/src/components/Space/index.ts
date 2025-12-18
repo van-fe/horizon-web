@@ -1,4 +1,4 @@
-import { withInstall, withNoopInstall } from '@aurora/shared';
+import { withInstall, withNoopInstall } from '@aurora/utils';
 import { default as Space } from './src/Space';
 import { default as SpaceItem } from './src/SpaceItem';
 

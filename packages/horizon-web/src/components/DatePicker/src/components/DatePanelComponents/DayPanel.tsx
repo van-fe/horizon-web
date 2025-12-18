@@ -1,6 +1,6 @@
 import { computed, defineComponent, inject } from 'vue';
 import dayjs from '~/utils/useDayJs';
-import { cls, ComponentClassBlock, type LegoSetupContext } from '@aurora/shared';
+import { cls, ComponentClassBlock, type LegoSetupContext } from '@aurora/utils';
 import type { DatePickerDatePanelComponentsProps } from '../../composables/useProps';
 import { useDatePickerDatePanelComponentsProps } from '../../composables/useProps';
 import {

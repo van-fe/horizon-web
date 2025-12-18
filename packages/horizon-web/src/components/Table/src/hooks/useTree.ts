@@ -7,7 +7,7 @@ import type {
 } from '../utils/types';
 import { NTableTransformedRowContextKey } from '../utils/types';
 import type { TableProps } from '../composables/useProps';
-import { isFunction, isNil } from '@aurora/shared';
+import { isFunction, isNil } from '@aurora/utils';
 import { warn } from '~/utils/useLog';
 import {
   NTableFieldMapFormattedInjectKey,

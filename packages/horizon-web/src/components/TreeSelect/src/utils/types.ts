@@ -1,5 +1,5 @@
 import type { Ref } from 'vue';
-import type { LegoSetupContext, LegoComponentInstance } from '@aurora/shared';
+import type { LegoSetupContext, LegoComponentInstance } from '@aurora/utils';
 import type { TreeSelectEmits } from '~/components/TreeSelect/src/composables/useEmits';
 import type { TreeSelectSlots } from '~/components/TreeSelect/src/composables/useSlots';
 import type { TreeSelectExposes } from '~/components/TreeSelect/src/composables/useExposes';

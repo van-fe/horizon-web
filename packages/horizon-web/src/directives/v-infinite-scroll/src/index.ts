@@ -1,4 +1,4 @@
-import { defineDirective } from '@aurora/shared';
+import { defineDirective } from '@aurora/utils';
 import type { InfiniteScrollOptions } from './composables/useOptions';
 import { useInfiniteScrollOptions } from './composables/useOptions';
 import type { DirectiveBinding } from 'vue';

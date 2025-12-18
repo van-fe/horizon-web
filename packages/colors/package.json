@@ -15,7 +15,7 @@
     "dist"
   ],
   "dependencies": {
-    "@aurora/shared": "workspace:*",
+    "@aurora/utils": "workspace:*",
     "@ctrl/tinycolor": "^3.6.0"
   }
 }

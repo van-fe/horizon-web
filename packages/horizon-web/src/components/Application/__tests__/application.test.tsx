@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils';
 import { describe, expect, test } from 'vitest';
 import { shallowRef, nextTick } from 'vue';
 import NApplication from '../src/Application';
-import { usePopupContainerGetter, resetPopupContainerGetter } from '@aurora/shared';
+import { usePopupContainerGetter, resetPopupContainerGetter } from '@aurora/utils';
 
 describe('Application.tsx', () => {
   test('basic', async () => {

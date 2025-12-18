@@ -1,11 +1,11 @@
-import type { LegoSetupContext } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
 import {
   ComponentClassBlock,
   cssVariable,
   useLockScroll,
   useNamespace,
   useZIndex,
-} from '@aurora/shared';
+} from '@aurora/utils';
 import { onKeyStroke, useWindowSize, useElementSize } from '@vueuse/core';
 import type { CSSProperties, ComponentInternalInstance } from 'vue';
 import {

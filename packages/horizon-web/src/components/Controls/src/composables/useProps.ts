@@ -1,5 +1,5 @@
 import type { Component, ExtractPropTypes, PropType } from 'vue';
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 
 export const useControlsProps = declarePropType({
   /**

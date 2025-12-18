@@ -1,4 +1,4 @@
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 import type { ExtractPropTypes, PropType, VNode, TeleportProps } from 'vue';
 import { IconPropType } from '~/utils/useIcon';
 import type { TooltipProps } from '~/components/Tooltip/src/composables/useProps';

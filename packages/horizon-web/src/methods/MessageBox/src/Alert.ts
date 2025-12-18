@@ -1,4 +1,4 @@
-import { defineMethod } from '@aurora/shared';
+import { defineMethod } from '@aurora/utils';
 import type { MsgBoxAlertProps } from './composables/useProps';
 import { useMsgBoxAlertProps } from './composables/useProps';
 import type { VNode, AppContext } from 'vue';

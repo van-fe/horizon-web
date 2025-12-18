@@ -1,8 +1,8 @@
 import type { Ref } from 'vue';
 import { unref, computed, ref, watch, readonly } from 'vue';
 import type { Position } from '@vueuse/core';
-import type { MaybeRef } from '@aurora/shared';
-import { getClientXY, isDefined } from '@aurora/shared';
+import type { MaybeRef } from '@aurora/utils';
+import { getClientXY, isDefined } from '@aurora/utils';
 
 export interface UseDragOption {
   disabled?: MaybeRef<boolean>;

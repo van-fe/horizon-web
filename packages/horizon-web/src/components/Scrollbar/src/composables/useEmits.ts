@@ -1,4 +1,4 @@
-import { isObject } from '@aurora/shared';
+import { isObject } from '@aurora/utils';
 
 export const useScrollbarEmits = {
   /**

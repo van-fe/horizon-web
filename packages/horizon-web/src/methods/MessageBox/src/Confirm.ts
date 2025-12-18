@@ -2,7 +2,7 @@ import type { VNode, AppContext } from 'vue';
 import { createVNode, isVNode, render } from 'vue';
 import type { MsgBoxAlertProps, MsgBoxConfirmProps } from './composables/useProps';
 import ConfirmComponent from './components/Confirm';
-import { defineMethod } from '@aurora/shared';
+import { defineMethod } from '@aurora/utils';
 import { useMsgBoxConfirmProps } from './composables/useProps';
 
 const Confirm = defineMethod({

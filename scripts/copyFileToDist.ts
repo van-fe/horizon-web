@@ -17,11 +17,11 @@ export function cloneBrowserBuildFileToDist(tag: string) {
   shell.cp('-R', '../packages/horizon-web/dist/style.css', `../dist/horizon-web-style@${tag}.css`);
   shell.cp('-R', '../packages/horizon-web/dist/style.css', `../dist/style@${tag}.css`);
 
-  // shared
-  shell.cp('-R', '../packages/shared/dist/shared.js', `../dist/shared@${tag}.js`);
-  shell.cp('-R', '../packages/shared/dist/shared.umd.js', `../dist/shared@${tag}.umd.js`);
-  shell.cp('-R', '../packages/shared/dist/shared.js.map', `../dist/shared@${tag}.js.map`);
-  shell.cp('-R', '../packages/shared/dist/shared.umd.js.map', `../dist/shared@${tag}.umd.js.map`);
+  // utils
+  shell.cp('-R', '../packages/utils/dist/utils.js', `../dist/utils@${tag}.js`);
+  shell.cp('-R', '../packages/utils/dist/utils.umd.js', `../dist/utils@${tag}.umd.js`);
+  shell.cp('-R', '../packages/utils/dist/utils.js.map', `../dist/utils@${tag}.js.map`);
+  shell.cp('-R', '../packages/utils/dist/utils.umd.js.map', `../dist/utils@${tag}.umd.js.map`);
 
   // colors
   shell.cp('-R', '../packages/colors/dist/colors-browser.js', `../dist/colors@${tag}.js`);

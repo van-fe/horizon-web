@@ -2,7 +2,7 @@ import type { Dayjs } from 'dayjs';
 import type { NCalendarPinFlag } from '~/components/Calendar/src/utils/types';
 import cloneDeep from 'lodash/cloneDeep';
 import type PinFlagsHelper from './PinFlagsHelper';
-import { isObject, cssVariableKey } from '@aurora/shared';
+import { isObject, cssVariableKey } from '@aurora/utils';
 import type { Ref } from 'vue';
 import { unref } from 'vue';
 import type { CalendarProps } from '../composables/useProps';

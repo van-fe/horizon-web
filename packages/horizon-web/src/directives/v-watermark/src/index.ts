@@ -1,6 +1,6 @@
 import type { DirectiveBinding, App } from 'vue';
 import { createApp } from 'vue';
-import { defineDirective } from '@aurora/shared';
+import { defineDirective } from '@aurora/utils';
 import type { WatermarkOptions } from './composables/useOptions';
 import { useWatermarkOptions } from './composables/useOptions';
 import Watermark from '~/components/Watermark/src/Watermark';

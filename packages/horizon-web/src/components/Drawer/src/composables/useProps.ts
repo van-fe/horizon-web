@@ -1,4 +1,4 @@
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 import type { ExtractPropTypes, PropType, TeleportProps } from 'vue';
 import { type ButtonProps } from '~/components/Button/src/composables/useProps';
 

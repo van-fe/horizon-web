@@ -1,5 +1,5 @@
 import { default as Transfer } from './src/Transfer';
-import { withInstall } from '@aurora/shared';
+import { withInstall } from '@aurora/utils';
 
 export const NTransfer = withInstall(Transfer);
 export default NTransfer;

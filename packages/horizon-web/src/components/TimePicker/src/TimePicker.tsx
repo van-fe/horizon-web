@@ -1,7 +1,7 @@
 import type { Component, Slot, VNode } from 'vue';
 import { defineComponent, provide, ref, toRefs } from 'vue';
-import type { LegoSetupContext, LegoComponentInstance } from '@aurora/shared';
-import { isNil, cls, ComponentClassBlock, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext, LegoComponentInstance } from '@aurora/utils';
+import { isNil, cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { useTimePickerProps } from './composables/useProps';
 import { useTimePickerEmits } from './composables/useEmits';
 import { useTimePickerSlots } from './composables/useSlots';

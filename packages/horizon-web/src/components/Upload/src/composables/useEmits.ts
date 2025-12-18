@@ -1,5 +1,5 @@
-import type { Data } from '@aurora/shared';
-import { isObject, isBoolean, isDefined, isNumber, isString, isUndefined } from '@aurora/shared';
+import type { Data } from '@aurora/utils';
+import { isObject, isBoolean, isDefined, isNumber, isString, isUndefined } from '@aurora/utils';
 import type { NUploadFileType } from '../utils/fileDefines';
 import { isUploadFile } from '../utils/helper';
 

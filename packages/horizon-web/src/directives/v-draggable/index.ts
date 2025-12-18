@@ -1,5 +1,5 @@
 import draggable from './src';
-import { withDirectiveInstall } from '@aurora/shared';
+import { withDirectiveInstall } from '@aurora/utils';
 
 export const NVDraggable = withDirectiveInstall(draggable);
 

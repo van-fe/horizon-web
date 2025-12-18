@@ -1,6 +1,6 @@
 import type { ComputedRef, InjectionKey } from 'vue';
 import type { ButtonGroupProps } from '../composables/useProps';
-import { generatorInjectedKeyName } from '@aurora/shared';
+import { generatorInjectedKeyName } from '@aurora/utils';
 
 export const NButtonGroupPropsInjectKey = Symbol(
   generatorInjectedKeyName('button-group', 'props'),

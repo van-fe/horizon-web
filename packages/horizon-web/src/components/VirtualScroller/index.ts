@@ -3,7 +3,7 @@ import { default as RecycleScroller } from './src/RecycleScroller';
 import { default as VirtualScrollerItem } from './src/VirtualScrollerItem';
 import type { NRecycleScrollerInstance } from './src/composables/useProps';
 
-import { withInstall, withNoopInstall } from '@aurora/shared';
+import { withInstall, withNoopInstall } from '@aurora/utils';
 
 // https://vue-virtual-scroller-demo.netlify.app/dynamic
 

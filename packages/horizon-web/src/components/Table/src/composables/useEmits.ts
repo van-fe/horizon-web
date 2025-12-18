@@ -1,4 +1,4 @@
-import { isDefined, isNil, isNumber, isObject, isString } from '@aurora/shared';
+import { isDefined, isNil, isNumber, isObject, isString } from '@aurora/utils';
 import type { NTableColumnData } from '../utils/types';
 import { NTableSortOrderEnum } from '../utils/types';
 

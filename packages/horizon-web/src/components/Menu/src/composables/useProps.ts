@@ -1,6 +1,6 @@
 import type { Component, ExtractPropTypes, PropType } from 'vue';
-import type { Promisable } from '@aurora/shared';
-import { declarePropType, isNumber, isString } from '@aurora/shared';
+import type { Promisable } from '@aurora/utils';
+import { declarePropType, isNumber, isString } from '@aurora/utils';
 import { warn } from '~/utils/useLog';
 
 export const useMenuProps = declarePropType({

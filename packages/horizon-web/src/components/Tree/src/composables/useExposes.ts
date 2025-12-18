@@ -1,5 +1,5 @@
 import type { NTreeBaseNodeData, NTreeData, NTreeNodeDataWithLevel } from '../utils/types';
-import type { ExposeType, ExtractExposeTypes } from '@aurora/shared';
+import type { ExposeType, ExtractExposeTypes } from '@aurora/utils';
 import type { Ref } from 'vue';
 import type { TopBaseTreeData } from '~/utils/useTree/types';
 

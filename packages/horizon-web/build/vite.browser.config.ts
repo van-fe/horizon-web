@@ -24,13 +24,13 @@ export default defineConfig({
       },
     },
     rollupOptions: {
-      external: ['vue', '@aurora/icon', '@aurora/shared', '@aurora/locale-vue'],
+      external: ['vue', '@aurora/icon', '@aurora/utils', '@aurora/locale-vue'],
       preserveEntrySignatures: 'strict',
       output: {
         globals: {
           vue: 'Vue',
           '@aurora/locale-vue': 'localeVue',
-          '@aurora/shared': 'shared',
+          '@aurora/utils': 'shared',
         },
         minifyInternalExports: false,
         externalLiveBindings: false,

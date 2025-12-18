@@ -1,6 +1,6 @@
 import type { PropType } from 'vue';
 import { computed, defineComponent, inject, toRef } from 'vue';
-import { cls, ComponentClassBlock, cssVariable } from '@aurora/shared';
+import { cls, ComponentClassBlock, cssVariable } from '@aurora/utils';
 import {
   NUploadPropsInjectKey,
   NUploadSizeInjectKey,

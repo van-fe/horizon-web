@@ -1,4 +1,4 @@
-import type { ExtractExposeTypes, ExposeType } from '@aurora/shared';
+import type { ExtractExposeTypes, ExposeType } from '@aurora/utils';
 
 export const useAutoCompleteExposes = {
   /**

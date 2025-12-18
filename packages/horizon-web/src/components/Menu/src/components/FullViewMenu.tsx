@@ -1,8 +1,8 @@
 import type { PropType } from 'vue';
 import { withKeys, withModifiers, computed, defineComponent, inject, nextTick } from 'vue';
 import type { NMenuTreeData, NMenuTreePickedValuesData } from '../util/types';
-import type { LegoSetupContext } from '@aurora/shared';
-import { cls, ComponentClassBlock, sizeUnitTransform } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { cls, ComponentClassBlock, sizeUnitTransform } from '@aurora/utils';
 import {
   NMenuActivatedMenusInjectKey,
   NMenuAddExpandMenuInjectKey,

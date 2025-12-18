@@ -1,5 +1,5 @@
 import type { ExtractPropTypes } from 'vue';
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 import { IconNullablePropType } from '~/utils/useIcon';
 import { IconBack } from '@aurora/icon';
 

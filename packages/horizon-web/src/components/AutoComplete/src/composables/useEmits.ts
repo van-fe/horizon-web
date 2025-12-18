@@ -1,5 +1,5 @@
 import type { ModelValueType } from './useProps';
-import { isBoolean, isDefined, isNil, isString } from '@aurora/shared';
+import { isBoolean, isDefined, isNil, isString } from '@aurora/utils';
 
 export const useAutoCompleteEmits = {
   /**

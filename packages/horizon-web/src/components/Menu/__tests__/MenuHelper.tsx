@@ -1,4 +1,4 @@
-import type { LegoComponentInstance, MaybeRef } from '@aurora/shared';
+import type { LegoComponentInstance, MaybeRef } from '@aurora/utils';
 import type { Mock } from 'vitest';
 import type { SetupContext } from 'vue';
 import { ref, unref } from 'vue';

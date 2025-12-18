@@ -1,6 +1,6 @@
 import type { Dayjs } from 'dayjs';
 import type { Ref } from 'vue';
-import type { LegoComponentInstance } from '@aurora/shared';
+import type { LegoComponentInstance } from '@aurora/utils';
 import type TimePanel from '../components/TimePanel';
 import type { TimePickerTimePanelExposes } from '../composables/useExposes';
 import type NPicker from '~/components/Picker/src/Picker';

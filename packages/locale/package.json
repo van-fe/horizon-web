@@ -19,7 +19,7 @@
     "build:js": "bunx --bun vite build --config vite.config.ts"
   },
   "dependencies": {
-    "@aurora/shared": "workspace:*",
+    "@aurora/utils": "workspace:*",
     "dayjs": "^1.11.13",
     "lodash": "^4.17.21"
   }

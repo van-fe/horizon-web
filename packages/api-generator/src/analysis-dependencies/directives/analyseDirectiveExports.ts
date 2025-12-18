@@ -9,7 +9,7 @@ import type {
 import type {
   ApiGeneratorExportedDirectives,
   ApiGeneratorExportedPluginType,
-} from '@aurora/shared';
+} from '@aurora/utils';
 import { ts } from 'ts-morph';
 import { analyseImportExportStatement } from '../../utils/analyseImportExportStatement';
 import { analyseExportedTypes } from '../../utils/analysisType/analyseExportedTypes';

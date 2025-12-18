@@ -1,4 +1,4 @@
-import { isDefined, isNil } from '@aurora/shared';
+import { isDefined, isNil } from '@aurora/utils';
 import type { InputNumberProps } from '../composables/useProps';
 import { error } from '~/utils/useLog';
 import { Decimal } from 'decimal.js';

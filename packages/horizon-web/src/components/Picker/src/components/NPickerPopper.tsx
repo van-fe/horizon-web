@@ -5,7 +5,7 @@ import {
   sizeUnitTransform,
   useNamespace,
   safelyGetEventTarget,
-} from '@aurora/shared';
+} from '@aurora/utils';
 import { defineComponent, inject, ref, watch } from 'vue';
 import {
   NPickerDomRefInjectKey,

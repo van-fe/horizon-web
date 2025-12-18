@@ -1,5 +1,5 @@
 import { default as Tree } from './src/Tree';
-import { withInstall } from '@aurora/shared';
+import { withInstall } from '@aurora/utils';
 
 export const NTree = withInstall(Tree);
 export default NTree;

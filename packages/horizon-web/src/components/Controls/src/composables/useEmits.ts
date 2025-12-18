@@ -1,4 +1,4 @@
-import { isString } from '@aurora/shared';
+import { isString } from '@aurora/utils';
 
 export const useControlsEmits = {
   /**

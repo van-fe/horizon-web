@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType, VNode } from 'vue';
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 import { IconPropType } from '~/utils/useIcon';
 import type { TooltipProps } from '~/components/Tooltip/src/composables/useProps';
 import type { BadgeProps } from '~/components/Badge/src/composables/useProps';

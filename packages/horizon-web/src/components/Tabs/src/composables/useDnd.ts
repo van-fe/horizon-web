@@ -1,4 +1,4 @@
-import type { LegoSetupContext } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
 import { ref, toRef, type ToRefs } from 'vue';
 import { type TabsEmits } from './useEmits';
 import type { NTabValue, TabsProps } from './useProps';

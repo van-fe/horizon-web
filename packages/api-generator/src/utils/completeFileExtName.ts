@@ -1,6 +1,6 @@
 import * as path from 'path';
 import fs from 'fs';
-import { legoSourceRoot } from '@aurora/shared/plugins';
+import { legoSourceRoot } from '@aurora/utils/plugins';
 
 function completeFilePath(filePath: string): undefined | string {
   const basename = path.basename(filePath);

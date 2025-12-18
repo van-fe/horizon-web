@@ -1,5 +1,5 @@
-import type { ExtractMethodOptions } from '@aurora/shared';
-import { defineMethod, usePopupContainerGetter, useZIndex } from '@aurora/shared';
+import type { ExtractMethodOptions } from '@aurora/utils';
+import { defineMethod, usePopupContainerGetter, useZIndex } from '@aurora/utils';
 import type { ExtractPropTypes, VNode } from 'vue';
 import { createVNode, isVNode, render } from 'vue';
 import NMessageComponent from './components/Message';

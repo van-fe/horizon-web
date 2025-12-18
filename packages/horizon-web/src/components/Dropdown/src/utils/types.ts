@@ -1,5 +1,5 @@
 import type { DropdownItemProps, DropdownSubmenuProps } from '../composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
 import type { DropdownItemEmits, DropdownSubmenuEmits } from '../composables/useEmits';
 import type { DropdownItemSlots, DropdownSubmenuSlots } from '../composables/useSlots';
 

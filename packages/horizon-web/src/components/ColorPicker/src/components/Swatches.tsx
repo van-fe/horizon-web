@@ -1,5 +1,5 @@
 import { defineComponent, inject } from 'vue';
-import { cls, ComponentClassBlock } from '@aurora/shared';
+import { cls, ComponentClassBlock } from '@aurora/utils';
 import NTooltip from '~/components/Tooltip/src/Tooltip';
 import { ColorPickerCurrentValue, ColorPickerProps } from '../utils/InjectedKeys';
 import NScrollbar from '~/components/Scrollbar/src/Scrollbar';

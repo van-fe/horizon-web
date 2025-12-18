@@ -1,6 +1,6 @@
 import { computed, defineComponent, inject, nextTick, ref, toRefs, watch } from 'vue';
 import { useInputNumberProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
 import {
   ComponentClassBlock,
   cls,
@@ -8,7 +8,7 @@ import {
   useNamespace,
   isDefined,
   safelyGetEventTarget,
-} from '@aurora/shared';
+} from '@aurora/utils';
 import type { InputNumberEmits } from './composables/useEmits';
 import { useInputNumberEmits } from './composables/useEmits';
 import ValueHandler from './utils/setValue';

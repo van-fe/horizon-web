@@ -20,8 +20,8 @@ import {
   isNil,
   useNamespace,
   isDefined,
-} from '@aurora/shared';
-import type { LegoSetupContext, LegoComponentInstance } from '@aurora/shared';
+} from '@aurora/utils';
+import type { LegoSetupContext, LegoComponentInstance } from '@aurora/utils';
 import { useRecycleScrollerProps } from './composables/useProps';
 import { useRecycleScrollerEmits } from './composables/useEmits';
 import { useRecycleScrollerSlots } from './composables/useSlots';

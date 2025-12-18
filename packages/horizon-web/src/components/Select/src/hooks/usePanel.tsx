@@ -4,7 +4,7 @@ import type { OptionProps, SelectProps } from '../composables/useProps';
 import type { SelectEmits } from '../composables/useEmits';
 import type { SelectSlots } from '../composables/useSlots';
 import type { SelectExposes } from '../composables/useExposes';
-import { ComponentClassBlock, isDefined, type LegoSetupContext } from '@aurora/shared';
+import { ComponentClassBlock, isDefined, type LegoSetupContext } from '@aurora/utils';
 import {
   NSelectValueFormatSymbol,
   type ModelValueSingleType,

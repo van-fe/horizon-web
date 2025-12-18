@@ -3,7 +3,7 @@ import { default as Container } from './src/Container';
 import { default as Footer } from './src/Footer';
 import { default as Header } from './src/Header';
 import { default as Main } from './src/Main';
-import { withInstall } from '@aurora/shared';
+import { withInstall } from '@aurora/utils';
 
 export const NAside = withInstall(Aside);
 export const NContainer = withInstall(Container);

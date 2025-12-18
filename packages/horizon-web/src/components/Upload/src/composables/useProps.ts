@@ -1,6 +1,6 @@
 import type { ExtractPropTypes, PropType, StyleValue, UnwrapRef } from 'vue';
-import type { Arrayable, Promisable } from '@aurora/shared';
-import { declarePropType, isNumber, isObject } from '@aurora/shared';
+import type { Arrayable, Promisable } from '@aurora/utils';
+import { declarePropType, isNumber, isObject } from '@aurora/utils';
 import type { ButtonProps } from '~/components/Button/src/composables/useProps';
 import type { NUploadMultipartSetting } from './useMultipartUpload';
 import type {

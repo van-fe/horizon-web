@@ -11,7 +11,7 @@ import {
   toRefs,
   watch,
 } from 'vue';
-import type { LegoComponentInstance, LegoSetupContext } from '@aurora/shared';
+import type { LegoComponentInstance, LegoSetupContext } from '@aurora/utils';
 import {
   cls,
   ComponentClassBlock,
@@ -20,7 +20,7 @@ import {
   isNil,
   isObject,
   useNamespace,
-} from '@aurora/shared';
+} from '@aurora/utils';
 import type { CascaderProps } from './composables/useProps';
 import { useCascaderProps } from './composables/useProps';
 import type { CascaderEmits } from './composables/useEmits';

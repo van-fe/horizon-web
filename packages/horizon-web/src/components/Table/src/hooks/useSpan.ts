@@ -1,5 +1,5 @@
 import type { TableProps } from '../composables/useProps';
-import { isFunction, isObject } from '@aurora/shared';
+import { isFunction, isObject } from '@aurora/utils';
 import type { NTableColumnData, NTableTransformedRowDataType } from '../utils/types';
 
 export default function useSpan(tableProps: TableProps) {

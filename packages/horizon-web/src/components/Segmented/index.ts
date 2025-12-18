@@ -1,6 +1,6 @@
 import { default as Segmented } from './src/Segmented';
 import { default as SegmentedItem } from './src/SegmentedItem';
-import { withInstall, withNoopInstall } from '@aurora/shared';
+import { withInstall, withNoopInstall } from '@aurora/utils';
 
 export type {
   NSegmentedSize,

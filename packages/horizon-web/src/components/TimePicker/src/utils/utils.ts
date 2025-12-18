@@ -1,4 +1,4 @@
-import { isNil, isNumber, isString } from '@aurora/shared';
+import { isNil, isNumber, isString } from '@aurora/utils';
 import dayjs from '~/utils/useDayJs';
 import type { ConfigType } from 'dayjs';
 

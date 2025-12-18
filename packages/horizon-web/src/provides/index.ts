@@ -3,7 +3,7 @@ import sensorProvider from './sensor';
 import versionProvide from './version';
 import type { App } from 'vue';
 import type { LegoOption } from '~/makeInstaller';
-import { isDefined, setCssVariableUseVersion } from '@aurora/shared';
+import { isDefined, setCssVariableUseVersion } from '@aurora/utils';
 export { default as localizableProvide, localeInjectKey, defaultLocale } from './localable';
 export { sensorTracker, sensorInjectKey } from './sensor';
 

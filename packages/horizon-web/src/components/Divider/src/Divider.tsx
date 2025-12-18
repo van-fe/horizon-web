@@ -1,7 +1,7 @@
 import { computed, defineComponent, Fragment } from 'vue';
 import { useDividerProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
-import { cls, ComponentClassBlock, sizeUnitTransform, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { cls, ComponentClassBlock, sizeUnitTransform, useNamespace } from '@aurora/utils';
 import type { DividerSlots } from './composables/useSlots';
 import { useDividerSlots } from './composables/useSlots';
 

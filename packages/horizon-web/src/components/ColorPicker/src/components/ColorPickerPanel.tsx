@@ -1,5 +1,5 @@
 import { defineComponent, inject, ref } from 'vue';
-import { ComponentClassBlock, cssVariableKey } from '@aurora/shared';
+import { ComponentClassBlock, cssVariableKey } from '@aurora/utils';
 import ColorBoard from './ColorBoard';
 import PreviewBlock from './PreviewBlock';
 import ColorEditForm from './ColorEditForm';

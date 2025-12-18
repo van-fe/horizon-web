@@ -1,5 +1,5 @@
 import type { CSSProperties, ExtractPropTypes, PropType, VNode } from 'vue';
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 
 export const useAnchorProps = declarePropType({
   /**

@@ -12,8 +12,8 @@ import {
   toRefs,
   watch,
 } from 'vue';
-import { ComponentClassBlock, cls, useNamespace } from '@aurora/shared';
-import type { LegoSetupContext } from '@aurora/shared';
+import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
+import type { LegoSetupContext } from '@aurora/utils';
 import { useTagProps } from './composables/useProps';
 import { useTagEmits } from './composables/useEmits';
 import { useTagSlots } from './composables/useSlots';

@@ -18,8 +18,8 @@ import {
   isDefined,
   useZIndex,
   isUndefined,
-} from '@aurora/shared';
-import type { LegoSetupContext, LegoComponentInstance } from '@aurora/shared';
+} from '@aurora/utils';
+import type { LegoSetupContext, LegoComponentInstance } from '@aurora/utils';
 import { useDropdownProps } from './composables/useProps';
 import { useDropdownEmits } from './composables/useEmits';
 import { useDropdownSlots } from './composables/useSlots';

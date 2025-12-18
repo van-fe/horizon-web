@@ -1,5 +1,5 @@
-import type { LegoComponentInstance } from '@aurora/shared';
-import { ComponentClassBlock, useNamespace } from '@aurora/shared';
+import type { LegoComponentInstance } from '@aurora/utils';
+import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { computed, defineComponent, Fragment, inject, ref } from 'vue';
 import type { PickerExposes } from '@aurora/horizon-web';
 import {

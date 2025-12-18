@@ -1,7 +1,7 @@
 import type { Ref, VNode } from 'vue';
 import { provide, ref, watch, reactive } from 'vue';
 import type { OptionProps, SelectProps } from '../composables/useProps';
-import { isNil, type LegoSetupContext } from '@aurora/shared';
+import { isNil, type LegoSetupContext } from '@aurora/utils';
 import type { SelectEmits } from '../composables/useEmits';
 import type { SelectSlots } from '../composables/useSlots';
 import type { SelectExposes } from '../composables/useExposes';

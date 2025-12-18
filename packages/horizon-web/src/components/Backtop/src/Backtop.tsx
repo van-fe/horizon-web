@@ -1,8 +1,8 @@
 import { defineComponent, ref, computed, onMounted, shallowRef } from 'vue';
 import { useEventListener, useDebounceFn } from '@vueuse/core';
 import { useBacktopProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
-import { easeInOutCubic, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { easeInOutCubic, useNamespace } from '@aurora/utils';
 import { NIcon } from '@aurora/icon';
 import type { BacktopEmits } from './composables/useEmits';
 import { useBacktopEmits } from './composables/useEmits';

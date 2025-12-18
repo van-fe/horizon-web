@@ -1,6 +1,6 @@
 import { computed, defineComponent, inject, toRef } from 'vue';
-import { cls, ComponentClassBlock, useNamespace } from '@aurora/shared';
-import type { LegoSetupContext } from '@aurora/shared';
+import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
+import type { LegoSetupContext } from '@aurora/utils';
 import { useResultProps } from './composables/useProps';
 import { useResultEmits } from './composables/useEmits';
 import { useResultSlots } from './composables/useSlots';

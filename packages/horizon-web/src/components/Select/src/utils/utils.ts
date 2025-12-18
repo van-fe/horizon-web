@@ -1,5 +1,5 @@
 import isArrayLike from 'lodash/isArrayLike';
-import { isBoolean, isNumber, isObject } from '@aurora/shared';
+import { isBoolean, isNumber, isObject } from '@aurora/utils';
 import isEqual from 'lodash/isEqual';
 import { unwrapValueFormattedValue } from './valueFormat';
 import type { ModelValueType } from './types';

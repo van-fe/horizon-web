@@ -12,7 +12,7 @@ import {
   watch,
 } from 'vue';
 import { useDescriptionsProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
 import type { DescriptionsSlots } from './composables/useSlots';
 import { useDescriptionsSlots } from './composables/useSlots';
 import {
@@ -20,7 +20,7 @@ import {
   sizeAdapter,
   useNamespace,
   getSymbolNodeChildren,
-} from '@aurora/shared';
+} from '@aurora/utils';
 import { GlobalSizeInjectedKey } from '~/components/Application/src/utils/injectedKeys';
 import type { NApplicationSizeType } from '~/components/Application/src/composables/useProps';
 import { useElementSize, useDebounceFn } from '@vueuse/core';

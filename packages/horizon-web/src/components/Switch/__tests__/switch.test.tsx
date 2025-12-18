@@ -2,7 +2,7 @@ import { mount, shallowMount } from '@vue/test-utils';
 import NSwitch from '../src/Switch';
 import { describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
-import type { Awaitable } from '@aurora/shared';
+import type { Awaitable } from '@aurora/utils';
 
 describe('Switch.tsx', () => {
   test('basic', async () => {

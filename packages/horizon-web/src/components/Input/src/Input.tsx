@@ -2,7 +2,7 @@ import type { VNode } from 'vue';
 import { computed, defineComponent, inject, nextTick, ref, toRefs, watch } from 'vue';
 import type { InputProps } from './composables/useProps';
 import { useInputProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
 import {
   pickFromObject,
   ComponentClassBlock,
@@ -10,7 +10,7 @@ import {
   isDefined,
   useNamespace,
   safelyGetEventTarget,
-} from '@aurora/shared';
+} from '@aurora/utils';
 import { NIcon } from '@aurora/icon';
 import type { InputEmits } from './composables/useEmits';
 import { useInputEmits } from './composables/useEmits';

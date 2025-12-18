@@ -1,5 +1,5 @@
-import type { LegoSetupContext } from '@aurora/shared';
-import { generatorInjectedKeyName } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { generatorInjectedKeyName } from '@aurora/utils';
 import type { ComputedRef, InjectionKey, Ref, SetupContext } from 'vue';
 import type { AutoCompleteProps, ModelValueType } from '../composables/useProps';
 import type { AutoCompleteEmits } from '../composables/useEmits';

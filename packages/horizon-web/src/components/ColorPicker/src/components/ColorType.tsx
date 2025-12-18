@@ -7,7 +7,7 @@ import {
   watch,
   withModifiers,
 } from 'vue';
-import { cls, ComponentClassBlock, getClientXY } from '@aurora/shared';
+import { cls, ComponentClassBlock, getClientXY } from '@aurora/utils';
 import { ColorTypeEnum } from '../utils/ColorPickerColor';
 import { defaultLocale, localeInjectKey } from '~/provides';
 import { ColorPickerCurrentValue, ColorPickerProps } from '../utils/InjectedKeys';

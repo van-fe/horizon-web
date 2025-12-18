@@ -1,8 +1,8 @@
 import { defineComponent, provide, toRefs } from 'vue';
 import type { ButtonGroupProps } from './composables/useProps';
 import { useButtonGroupProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
-import { ComponentClassBlock, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import type { ButtonGroupSlots } from './composables/useSlots';
 import { useButtonGroupSlots } from './composables/useSlots';
 import { NButtonGroupPropsInjectKey, NButtonGroupSizeInjectKey } from './utils/injectKeys';

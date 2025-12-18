@@ -1,4 +1,4 @@
-import '../env.d';
+import '../env';
 import { safelyGetEventTarget } from '../helpers';
 
 export function isElementInEventPathByClass(e: MouseEvent, findClasses: string[]): boolean {

@@ -1,6 +1,6 @@
 import Guide from './src/Guide';
 import GuideItem from './src/GuideItem';
-import { withInstall, withNoopInstall } from '@aurora/shared';
+import { withInstall, withNoopInstall } from '@aurora/utils';
 
 export const NGuide = withInstall(Guide, {
   GuideItem,

@@ -1,6 +1,6 @@
 import { themeConfig, themeConfigMapping } from './theme-config';
 import type { ThemeType } from './theme-types';
-import { isDefined } from '@aurora/shared';
+import { isDefined } from '@aurora/utils';
 import colorsMap from './colors';
 
 type ThemesMethod = {

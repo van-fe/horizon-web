@@ -1,4 +1,4 @@
-import { isNumber } from '@aurora/shared';
+import { isNumber } from '@aurora/utils';
 
 export const usePaginationEmits = {
   /**

@@ -2,7 +2,7 @@ import type {
   ApiGeneratorAnalysedComponentDetail,
   ApiGeneratorAnalysedDirectiveDetail,
   ApiGeneratorAnalysedMethodDetail,
-} from '@aurora/shared';
+} from '@aurora/utils';
 import type { OtherInfo } from '../index';
 
 export default function (

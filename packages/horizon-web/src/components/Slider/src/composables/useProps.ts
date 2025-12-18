@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType } from 'vue';
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 import type { InputNumberProps } from '~/components/InputNumber/src/composables/useProps';
 
 export const useSliderProps = declarePropType({

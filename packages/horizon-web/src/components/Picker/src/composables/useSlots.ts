@@ -1,6 +1,6 @@
 import type { SlotsType, VNode } from 'vue';
 import type { ModelValueType, PickerInputStatusType, PickerStatusType } from './useProps';
-import type { Arrayable } from '@aurora/shared';
+import type { Arrayable } from '@aurora/utils';
 
 export const usePickerSlots = Object as SlotsType<{
   /**

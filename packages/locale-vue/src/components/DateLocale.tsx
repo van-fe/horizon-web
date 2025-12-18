@@ -1,7 +1,7 @@
 import type { PropType } from 'vue';
 import { defineComponent, getCurrentInstance } from 'vue';
 import type { DateLocaleAvailableShownType } from '@aurora/locale';
-import { useNamespace } from '@aurora/shared';
+import { useNamespace } from '@aurora/utils';
 
 export default defineComponent({
   name: `${useNamespace()}DateLocale`,

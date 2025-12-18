@@ -1,5 +1,5 @@
 import { default as Backtop } from './src/Backtop';
-import { withInstall } from '@aurora/shared';
+import { withInstall } from '@aurora/utils';
 
 export const NBacktop = withInstall(Backtop);
 

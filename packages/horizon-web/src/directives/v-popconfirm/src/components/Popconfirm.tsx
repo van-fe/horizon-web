@@ -1,6 +1,6 @@
 import { defineComponent, ref, watch } from 'vue';
 import { NButton } from '../../../../components/Button';
-import { ComponentClassBlock, cssVariable, isNil, useNamespace, useZIndex } from '@aurora/shared';
+import { ComponentClassBlock, cssVariable, isNil, useNamespace, useZIndex } from '@aurora/utils';
 import { usePopconfirmProps } from '../composables/useProps';
 import clickOutside from '~/directives/v-click-outside';
 import { NIcon } from '@aurora/icon';

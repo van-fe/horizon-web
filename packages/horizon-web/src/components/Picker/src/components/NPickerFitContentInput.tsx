@@ -1,5 +1,5 @@
 import { defineComponent, inject, ref, watch } from 'vue';
-import { cls, ComponentClassBlock, sizeUnitTransform, useNamespace } from '@aurora/shared';
+import { cls, ComponentClassBlock, sizeUnitTransform, useNamespace } from '@aurora/utils';
 import { NPickerPopperVisibleInjectKey } from '../utils/InjectKeys';
 import { usePickerFitContentInputExposes } from '../composables/useExposes';
 import { usePickerPureInputProps } from '../composables/useProps';

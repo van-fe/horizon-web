@@ -1,4 +1,4 @@
-import { styleRoot } from '@aurora/shared/plugins';
+import { styleRoot } from '@aurora/utils/plugins';
 import * as fs from 'fs';
 import { resolve } from 'path';
 import { groupBy } from 'lodash';

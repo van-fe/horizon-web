@@ -1,6 +1,6 @@
 import type { Component, ExtractPropTypes, PropType } from 'vue';
 import type { RouteLocationRaw } from 'vue-router';
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 
 export interface BreadcrumbItem extends Partial<BreadcrumbItemProps> {
   text?: string;

@@ -1,6 +1,6 @@
 import type { Dayjs } from 'dayjs';
 import { isDayjs } from 'dayjs';
-import { isBoolean, isNil, isObject, isString, isUndefined } from '@aurora/shared';
+import { isBoolean, isNil, isObject, isString, isUndefined } from '@aurora/utils';
 import type { NDatePickerShortcutsType } from '../utils/types';
 
 export const useDatePickerEmits = {

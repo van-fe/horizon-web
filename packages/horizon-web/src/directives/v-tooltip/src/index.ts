@@ -1,4 +1,4 @@
-import { defineDirective, useNamespace, usePopupContainerGetter } from '@aurora/shared';
+import { defineDirective, useNamespace, usePopupContainerGetter } from '@aurora/utils';
 import type { Placement } from '@popperjs/core';
 import type { DirectiveBinding, VNode } from 'vue';
 import { createVNode, render, watch } from 'vue';

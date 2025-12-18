@@ -1,4 +1,4 @@
-import type { Awaitable, Data } from '@aurora/shared';
+import type { Awaitable, Data } from '@aurora/utils';
 import type { NUploadFileType } from '../utils/fileDefines';
 
 export interface NUploadChunk {

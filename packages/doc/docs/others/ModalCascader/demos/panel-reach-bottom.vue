@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { CascaderExposes, NCascader, type NCascaderOption , NCascaderExtendOption } from '@aurora/horizon-web';
-import { LegoComponentInstance } from '@aurora/shared';
+import { LegoComponentInstance } from '@aurora/utils';
 import { faker } from '@faker-js/faker';
 
 const cascaderDomRef1 = ref<LegoComponentInstance<typeof NCascader, CascaderExposes>>();

@@ -1,5 +1,5 @@
 import { computed, defineComponent, inject, onMounted } from 'vue';
-import { cls, ComponentClassBlock } from '@aurora/shared';
+import { cls, ComponentClassBlock } from '@aurora/utils';
 import {
   NUploadPropsInjectKey,
   NUploadSizeInjectKey,

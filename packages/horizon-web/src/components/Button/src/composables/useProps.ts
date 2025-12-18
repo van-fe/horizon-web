@@ -1,6 +1,6 @@
 import type { Component, ExtractPropTypes, PropType } from 'vue';
-import type { Awaitable } from '@aurora/shared';
-import { declarePropType } from '@aurora/shared';
+import type { Awaitable } from '@aurora/utils';
+import { declarePropType } from '@aurora/utils';
 import type { RouteLocationRaw } from 'vue-router';
 import { warn } from '~/utils/useLog';
 

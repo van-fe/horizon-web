@@ -1,4 +1,4 @@
-import type { Arrayable, ExposeType, ExtractExposeTypes } from '@aurora/shared';
+import type { Arrayable, ExposeType, ExtractExposeTypes } from '@aurora/utils';
 import type {
   NUploadFileStatusEnum,
   NUploadFileType,

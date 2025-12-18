@@ -1,4 +1,4 @@
-import type { LegoSetupContext } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
 import type { SelectEmits } from '../composables/useEmits';
 import type { SelectExposes } from '../composables/useExposes';
 import type { OptionProps } from '../composables/useProps';

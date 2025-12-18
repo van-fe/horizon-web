@@ -1,6 +1,6 @@
 import type { InjectionKey } from 'vue';
-import type { LegoSetupContext } from '@aurora/shared';
-import { generatorInjectedKeyName } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { generatorInjectedKeyName } from '@aurora/utils';
 import type { BreadcrumbItemProps, BreadcrumbProps } from '../composables/useProps';
 import type { BreadcrumbSlots } from '../composables/useSlots';
 

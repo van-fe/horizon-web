@@ -1,8 +1,8 @@
 import * as fs from 'fs-extra';
 import * as cssTree from 'css-tree';
 import path from 'path';
-import { componentRoot, directiveRoot, methodsRoot } from '@aurora/shared/plugins';
-import { kebabCase } from '@aurora/shared';
+import { componentRoot, directiveRoot, methodsRoot } from '@aurora/utils/plugins';
+import { kebabCase } from '@aurora/utils';
 
 function action(baseRoot: string) {
   fs.readdirSync(baseRoot, { withFileTypes: true }).forEach(file => {

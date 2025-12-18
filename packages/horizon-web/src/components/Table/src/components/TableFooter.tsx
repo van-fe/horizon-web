@@ -1,6 +1,6 @@
 import type { VNodeArrayChildren } from 'vue';
 import { inject, defineComponent } from 'vue';
-import { cls, ComponentClassBlock } from '@aurora/shared';
+import { cls, ComponentClassBlock } from '@aurora/utils';
 import { getFixedStyle, getFooterStyle, isLastFixedColumn } from '../hooks/useLayout';
 import NTooltip from '~/components/Tooltip/src/Tooltip';
 import {

@@ -19,7 +19,7 @@
     "@aurora/horizon-web-pad": "workspace:*",
     "@aurora/horizon-web-table": "^2.9.1",
     "@aurora/locale-vue": "workspace:*",
-    "@aurora/shared": "workspace:*",
+    "@aurora/utils": "workspace:*",
     "@nio-wad/fx-web": "^0.2.0",
     "@vueuse/core": "^9.6.0",
     "axios": "^1.7.4",

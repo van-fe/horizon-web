@@ -1,7 +1,7 @@
 import { defineComponent, ref, watch, onMounted, nextTick, inject } from 'vue';
 import { useImageProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
-import { ComponentClassBlock, getUnitString, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { ComponentClassBlock, getUnitString, useNamespace } from '@aurora/utils';
 import { IconLogo, IconPictureError, NIcon } from '@aurora/icon';
 import NViewer from '~/components/Viewer/src/Viewer';
 import NDropdown from '~/components/Dropdown/src/Dropdown';

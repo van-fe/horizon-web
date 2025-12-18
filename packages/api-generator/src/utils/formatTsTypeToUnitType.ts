@@ -1,7 +1,7 @@
 import type { Node } from 'ts-morph';
 import { ts } from 'ts-morph';
 import type { FileElements } from './analyseFileElements';
-import { ApiGeneratorAnalysedBaseType } from '@aurora/shared';
+import { ApiGeneratorAnalysedBaseType } from '@aurora/utils';
 
 export default function formatTsTypeToUnitType(
   typeNode: Node,

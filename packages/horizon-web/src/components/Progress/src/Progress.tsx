@@ -1,7 +1,7 @@
 import { defineComponent, computed, ref, toRefs } from 'vue';
 import type { CSSProperties } from 'vue';
 import { useProgressProps } from './composables/useProps';
-import { ComponentClassBlock, cssVariable, useNamespace } from '@aurora/shared';
+import { ComponentClassBlock, cssVariable, useNamespace } from '@aurora/utils';
 import { NIcon } from '@aurora/icon';
 import type { NApplicationSizeType } from '~/components/Application/src/composables/useProps';
 import useSize from '~/utils/useSize';

@@ -5,7 +5,7 @@ import {
   ComponentClassBlock,
   useNamespace,
   isRawSlotsForVNodeNormalizedChildren,
-} from '@aurora/shared';
+} from '@aurora/utils';
 import type { ControlProps } from '../composables/useProps';
 import { useControlSlots } from '../composables/useSlots';
 import { NControlsEmitInjectKey, NControlsPropsInjectKey } from '../utils/injectKeys';

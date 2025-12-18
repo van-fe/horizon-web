@@ -1,5 +1,5 @@
 import { IconClose, NIcon } from '@aurora/icon';
-import type { LegoSetupContext } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
 import {
   ComponentClassBlock,
   getUnitString,
@@ -10,7 +10,7 @@ import {
   useNamespace,
   useZIndex,
   usePopupContainerGetter,
-} from '@aurora/shared';
+} from '@aurora/utils';
 import { onKeyStroke } from '@vueuse/core';
 import type { VNode } from 'vue';
 import {

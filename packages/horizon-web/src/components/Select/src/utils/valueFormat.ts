@@ -1,5 +1,5 @@
 import type { OptionProps } from '../composables/useProps';
-import { isObject } from '@aurora/shared';
+import { isObject } from '@aurora/utils';
 import isEqual from 'lodash/isEqual';
 import type { ModelValueSingleType, ModelValueFormattedType } from './types';
 import { NSelectValueFormatSymbol } from './types';

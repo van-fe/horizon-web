@@ -1,6 +1,6 @@
 import { computed, defineComponent, nextTick, ref, watch, Fragment, inject } from 'vue';
-import type { LegoComponentInstance, LegoSetupContext } from '@aurora/shared';
-import { cls, ComponentClassBlock, isDefined } from '@aurora/shared';
+import type { LegoComponentInstance, LegoSetupContext } from '@aurora/utils';
+import { cls, ComponentClassBlock, isDefined } from '@aurora/utils';
 import type { TimePickerTimePanelProps } from '../composables/useProps';
 import { useTimePickerTimePanelProps } from '../composables/useProps';
 import TimeColumnPanel from './TimeColumnPanel';

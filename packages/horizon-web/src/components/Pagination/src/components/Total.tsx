@@ -1,7 +1,7 @@
 import { defineComponent, inject } from 'vue';
 import { localeInjectKey } from '~/injectedKeys';
 import { defaultLocale } from '~/provides/localable';
-import { ComponentClassBlock, useNamespace } from '@aurora/shared';
+import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { NPaginationPropsInjectKey } from '../utils/injectKeys';
 
 export default defineComponent({

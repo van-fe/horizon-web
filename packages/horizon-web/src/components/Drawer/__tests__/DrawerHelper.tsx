@@ -1,6 +1,6 @@
 import type { DrawerProps } from '~/components/Drawer/src/composables/useProps';
 import type { DrawerEmits } from '~/components/Drawer/src/composables/useEmits';
-import type { LegoComponentInstance, MaybeRef } from '@aurora/shared';
+import type { LegoComponentInstance, MaybeRef } from '@aurora/utils';
 import NDrawer from '~/components/Drawer/src/Drawer';
 import type { Mock } from 'vitest';
 import type { SetupContext } from 'vue';

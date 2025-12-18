@@ -9,7 +9,7 @@ import {
   toRefs,
   watch,
 } from 'vue';
-import type { LegoSetupContext } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
 import {
   cls,
   ComponentClassBlock,
@@ -17,7 +17,7 @@ import {
   isBoolean,
   sizeUnitTransform,
   useNamespace,
-} from '@aurora/shared';
+} from '@aurora/utils';
 import type { TableProps } from './composables/useProps';
 import { useTableProps } from './composables/useProps';
 import type { TableEmits } from './composables/useEmits';

@@ -1,6 +1,6 @@
 import type { BaseTreeData, BaseTreeWithLevelData, ExtendTreeData } from '~/utils/useTree/types';
 import type { Component, VNode } from 'vue';
-import type { Awaitable } from '@aurora/shared';
+import type { Awaitable } from '@aurora/utils';
 
 export type NTreeUuidType = string | number;
 

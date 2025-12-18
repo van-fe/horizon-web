@@ -1,4 +1,4 @@
-import type { MaybeRef, LegoComponentInstance, Arrayable } from '@aurora/shared';
+import type { MaybeRef, LegoComponentInstance, Arrayable } from '@aurora/utils';
 import { Fragment, nextTick, ref, SetupContext, unref } from 'vue';
 import type { DOMWrapper, VueWrapper } from '@vue/test-utils';
 import { mount } from '@vue/test-utils';

@@ -1,5 +1,5 @@
 import { default as Drawer } from './src/Drawer';
-import { withInstall } from '@aurora/shared';
+import { withInstall } from '@aurora/utils';
 import type {
   DrawerSize as NDrawerSize,
   DrawerPlacement as NDrawerPlacement,

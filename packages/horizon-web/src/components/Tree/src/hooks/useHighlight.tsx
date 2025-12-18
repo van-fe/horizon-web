@@ -1,7 +1,7 @@
 import type { ToRefs } from 'vue';
 import { computed } from 'vue';
 import type { TreeProps } from '../composables/useProps';
-import { isObject } from '@aurora/shared';
+import { isObject } from '@aurora/utils';
 
 const useHighlightMethod = (props: ToRefs<TreeProps>) =>
   computed(() => {

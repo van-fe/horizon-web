@@ -1,6 +1,6 @@
 import type { TreeProps } from '../composables/useProps';
 import type { NTreeExtendsData, NTreeData } from './types';
-import { isNumber, isString } from '@aurora/shared';
+import { isNumber, isString } from '@aurora/utils';
 import type Tree from '~/utils/useTree/index';
 
 export const sizeMapping: Record<Exclude<TreeProps['size'], undefined>, number> = {

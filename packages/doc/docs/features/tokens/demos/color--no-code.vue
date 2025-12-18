@@ -5,7 +5,7 @@ import tokens from './theme.json';
 import { ref } from 'vue';
 import groupBy from 'lodash/groupBy';
 import { ThemeType } from '@aurora/horizon-web';
-import { snakeCase } from '@aurora/shared';
+import { snakeCase } from '@aurora/utils';
 
 interface GroupedBasicOpacityItem {
   label: string;

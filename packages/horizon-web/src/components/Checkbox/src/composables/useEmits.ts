@@ -1,5 +1,5 @@
 import type { CheckboxUnionType } from '../utils/types';
-import { isBoolean, isNumber, isString } from '@aurora/shared';
+import { isBoolean, isNumber, isString } from '@aurora/utils';
 
 export const useCheckboxEmits = {
   /**

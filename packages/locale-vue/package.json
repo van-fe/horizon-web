@@ -25,6 +25,6 @@
     "@aurora/locale": "workspace:*"
   },
   "devDependencies": {
-    "@aurora/shared": "workspace:*"
+    "@aurora/utils": "workspace:*"
   }
 }

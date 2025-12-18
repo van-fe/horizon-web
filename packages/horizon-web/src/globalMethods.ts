@@ -1,4 +1,4 @@
-export { useZIndex, generatorInjectedKeyName, useNamespace, setNamespace } from '@aurora/shared';
+export { useZIndex, generatorInjectedKeyName, useNamespace, setNamespace } from '@aurora/utils';
 
 export {
   default as LegoProvides,

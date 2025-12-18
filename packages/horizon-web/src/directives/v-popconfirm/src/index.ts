@@ -1,6 +1,6 @@
 import { createVNode, cloneVNode, render } from 'vue';
 import type { DirectiveBinding, VNode } from 'vue';
-import { defineDirective, useZIndex, usePopupContainerGetter } from '@aurora/shared';
+import { defineDirective, useZIndex, usePopupContainerGetter } from '@aurora/utils';
 import { usePopper } from '~/utils/popper';
 import Popconfirm from './components/Popconfirm';
 import type { PopConfirmOptions } from './composables/useOptions';

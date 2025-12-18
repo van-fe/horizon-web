@@ -1,5 +1,5 @@
 import type { RendererElement } from 'vue';
-import { isDefined } from '@aurora/shared';
+import { isDefined } from '@aurora/utils';
 
 export const useTransitionEmits = {
   /**

@@ -7,7 +7,7 @@
 import { hexOne, hsv2Hsl, hsv2rgb, toHex } from './colorHelper';
 import type { ColorPickerProps } from '../composables/useProps';
 import { tinycolor } from '@aurora/colors';
-import { EventEmitter, isNumber } from '@aurora/shared';
+import { EventEmitter, isNumber } from '@aurora/utils';
 
 export interface ColorPickerColorSettings {
   hue: number;

@@ -1,6 +1,6 @@
 import type { PropType } from 'vue';
 import { inject, computed, defineComponent, ref, toRef, Fragment } from 'vue';
-import { cls, ComponentClassBlock, cssVariable, sizeUnitTransform } from '@aurora/shared';
+import { cls, ComponentClassBlock, cssVariable, sizeUnitTransform } from '@aurora/utils';
 import { IconRemind, IconComplete, IconStart } from '@aurora/icon';
 import NTooltip from '~/components/Tooltip/src/Tooltip';
 import NViewer from '~/components/Viewer/src/Viewer';

@@ -8,7 +8,7 @@ import {
   ref,
   watch,
 } from 'vue';
-import { ComponentClassBlock, isBoolean, useNamespace } from '@aurora/shared';
+import { ComponentClassBlock, isBoolean, useNamespace } from '@aurora/utils';
 import CascaderPanel from './CascaderPanel';
 import {
   NCascaderActivatedChildNodeInjectKey,

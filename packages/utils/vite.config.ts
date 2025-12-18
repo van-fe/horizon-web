@@ -7,17 +7,17 @@ export default defineConfig({
     outDir: './dist',
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
-      name: 'shared',
+      name: 'utils',
       formats: ['cjs', 'es', 'umd'],
       fileName: format => {
         switch (format) {
           case 'cjs':
-            return 'shared.cjs';
+            return 'utils.cjs';
           case 'umd':
-            return 'shared.umd.js';
+            return 'utils.umd.js';
           case 'es':
           default:
-            return 'shared.js';
+            return 'utils.js';
         }
       },
     },

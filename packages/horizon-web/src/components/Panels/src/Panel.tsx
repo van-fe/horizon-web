@@ -1,7 +1,7 @@
 import { defineComponent } from 'vue';
 import { usePanelProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
-import { slotVNodes, ComponentClassBlock, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { slotVNodes, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import type { PanelSlots } from './composables/useSlots';
 import { usePanelSlots } from './composables/useSlots';
 

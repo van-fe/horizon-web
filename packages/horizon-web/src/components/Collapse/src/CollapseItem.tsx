@@ -1,8 +1,8 @@
 import type { Component } from 'vue';
 import { defineComponent, inject, toRefs, onMounted } from 'vue';
 import { useCollapseItemProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
-import { ComponentClassBlock, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { NIcon } from '@aurora/icon';
 import type { CollapseProvidesData } from './Collapse';
 import { injectedKey } from './Collapse';

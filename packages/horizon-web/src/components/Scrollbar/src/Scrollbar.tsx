@@ -10,8 +10,8 @@ import {
   toRefs,
   watch,
 } from 'vue';
-import { ComponentClassBlock, cls, sizeUnitTransform, useNamespace } from '@aurora/shared';
-import type { LegoSetupContext } from '@aurora/shared';
+import { ComponentClassBlock, cls, sizeUnitTransform, useNamespace } from '@aurora/utils';
+import type { LegoSetupContext } from '@aurora/utils';
 import type { ScrollbarProps } from './composables/useProps';
 import { useScrollbarProps } from './composables/useProps';
 import { useScrollbarEmits } from './composables/useEmits';

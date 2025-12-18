@@ -8,8 +8,8 @@ import {
   ref,
   toRefs,
 } from 'vue';
-import { ComponentClassBlock, cls, useNamespace } from '@aurora/shared';
-import type { LegoSetupContext } from '@aurora/shared';
+import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
+import type { LegoSetupContext } from '@aurora/utils';
 import { useButtonProps } from './composables/useProps';
 import { useButtonEmits } from './composables/useEmits';
 import { useButtonSlots } from './composables/useSlots';

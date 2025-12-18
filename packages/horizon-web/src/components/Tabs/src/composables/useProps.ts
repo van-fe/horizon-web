@@ -1,4 +1,4 @@
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 import type { ExtractPropTypes, PropType } from 'vue';
 
 export type NTabSize = 'small' | 'medium' | 'large' | 'huge';

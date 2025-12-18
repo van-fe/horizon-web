@@ -2,7 +2,7 @@ import type {
   ApiGeneratorAnalysedComponentDetail,
   ApiGeneratorAnalysedDirectiveDetail,
   ApiGeneratorAnalysedMethodDetail,
-} from '@aurora/shared';
+} from '@aurora/utils';
 import { getHeadingContent } from './utils';
 
 function getApiAnchor(

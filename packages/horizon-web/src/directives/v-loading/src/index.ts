@@ -1,6 +1,6 @@
 import type { App, DirectiveBinding } from 'vue';
 import { LoadingService } from './service';
-import { defineDirective } from '@aurora/shared';
+import { defineDirective } from '@aurora/utils';
 import type { LoadingOptions } from './composables/useOptions';
 import { useLoadingOptions } from './composables/useOptions';
 import { useSensor } from '~/utils/useSensor';

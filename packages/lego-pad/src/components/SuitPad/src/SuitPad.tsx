@@ -1,4 +1,4 @@
-import { useNamespace } from '@aurora/shared';
+import { useNamespace } from '@aurora/utils';
 import type { PropType } from 'vue';
 import { onBeforeUnmount, defineComponent, onMounted, watch, ref, provide } from 'vue';
 import { isPadBrowser } from './utils/deviceJudge';

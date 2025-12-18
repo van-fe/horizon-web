@@ -1,5 +1,5 @@
 import type { ExtractPropTypes } from 'vue';
-import { declarePropType } from '@aurora/shared';
+import { declarePropType } from '@aurora/utils';
 
 export const useBacktopProps = declarePropType({
   /** 滚动高度达到此参数值才出现 */

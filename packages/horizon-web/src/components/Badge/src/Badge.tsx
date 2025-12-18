@@ -1,7 +1,7 @@
 import { computed, defineComponent, toRefs } from 'vue';
 import { useBadgeProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/shared';
-import { slotVNodes, ComponentClassBlock, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/utils';
+import { slotVNodes, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { NIcon } from '@aurora/icon';
 import type { BadgeSlots } from './composables/useSlots';
 import { useBadgeSlots } from './composables/useSlots';

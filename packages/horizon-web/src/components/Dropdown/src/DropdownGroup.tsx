@@ -1,6 +1,6 @@
 import { defineComponent, ref } from 'vue';
-import { ComponentClassBlock, cls, useNamespace, isDefined } from '@aurora/shared';
-import type { LegoSetupContext } from '@aurora/shared';
+import { ComponentClassBlock, cls, useNamespace, isDefined } from '@aurora/utils';
+import type { LegoSetupContext } from '@aurora/utils';
 import type { DropdownGroupProps } from './composables/useProps';
 import { useDropdownGroupProps } from './composables/useProps';
 import type { DropdownGroupEmits } from './composables/useEmits';

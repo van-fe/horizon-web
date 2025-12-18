@@ -2,7 +2,7 @@ import type { CSSProperties } from 'vue';
 import { computed, createVNode, defineComponent, render } from 'vue';
 import type { LoadingBarOptions } from '../composables/useProps';
 import { useLoadingBarOptions } from '../composables/useProps';
-import { cls, ComponentClassBlock, useNamespace } from '@aurora/shared';
+import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { useSensor } from '~/utils/useSensor';
 import NTransition from '~/components/Transition/src/Transition';
 

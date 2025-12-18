@@ -1,6 +1,6 @@
 import { computed, defineComponent, nextTick, provide, ref, toRefs, watch } from 'vue';
-import { ComponentClassBlock, cls, useNamespace, safelyGetEventTarget } from '@aurora/shared';
-import type { LegoSetupContext, LegoComponentInstance } from '@aurora/shared';
+import { ComponentClassBlock, cls, useNamespace, safelyGetEventTarget } from '@aurora/utils';
+import type { LegoSetupContext, LegoComponentInstance } from '@aurora/utils';
 import { usePickerProps } from './composables/useProps';
 import { usePickerEmits } from './composables/useEmits';
 import { usePickerSlots } from './composables/useSlots';

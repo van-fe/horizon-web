@@ -9,7 +9,7 @@ import {
   onMounted,
   onBeforeUnmount,
 } from 'vue';
-import { cls, ComponentClassBlock, cssVariableKey, useNamespace } from '@aurora/shared';
+import { cls, ComponentClassBlock, cssVariableKey, useNamespace } from '@aurora/utils';
 import NCheckbox from '~/components/Checkbox/src/Checkbox';
 import NTooltip from '~/components/Tooltip/src/Tooltip';
 import useIconRender from '~/utils/useIconRender';

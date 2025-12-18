@@ -1,5 +1,5 @@
 import type { ComputedRef, InjectionKey, SetupContext } from 'vue';
-import { generatorInjectedKeyName } from '@aurora/shared';
+import { generatorInjectedKeyName } from '@aurora/utils';
 import type { UploadProps } from '../composables/useProps';
 import type UploadFileHelper from './UploadFileHelper';
 import type { UploadSlots } from '../composables/useSlots';

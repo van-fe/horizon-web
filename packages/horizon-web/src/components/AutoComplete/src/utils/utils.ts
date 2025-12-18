@@ -1,5 +1,5 @@
 import isArrayLike from 'lodash/isArrayLike';
-import { isBoolean, isMap, isNumber, isObject, isSet } from '@aurora/shared';
+import { isBoolean, isMap, isNumber, isObject, isSet } from '@aurora/utils';
 import isEqual from 'lodash/isEqual';
 import type { ModelValueType } from '../composables/useProps';
 
