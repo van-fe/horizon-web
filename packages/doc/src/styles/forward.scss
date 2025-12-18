@@ -1,0 +1,9 @@
+@forward '@nio-fe/lego/src/styles/mixins/config' with (
+  $css-variable-with-version: false,
+);
+
+@forward '@nio-fe/lego/src/styles/index.scss';
+
+@forward '@nio-fe/lego-pad/src/styles/index.scss';
+
+@forward '@nio-fe/icon/dist/index.scss';

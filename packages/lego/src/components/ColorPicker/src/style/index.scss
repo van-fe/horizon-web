@@ -1,0 +1,63 @@
+@use '../../../../styles/mixins';
+@import './utils';
+@import './trigger';
+@import 'color-type';
+@import './panel';
+@import './swatches';
+@import './edit-form';
+@import './color-board';
+@import './preview';
+
+@include mixins.b('color-picker') {
+  @include mixins.m('square') {
+    #{mixins.css-variable-name('picker-min-width--normal')}: 0;
+    #{mixins.css-variable-name('picker-min-width--fit-content-input')}: 20px;
+    #{mixins.css-variable-name('picker-margin--input-dropdown-icon')}: 0;
+    #{mixins.css-variable-name('picker-margin--input-dropdown-icon--small')}: 0;
+    #{mixins.css-variable-name('picker-margin--input-dropdown-icon--large')}: 0;
+    display: inline-flex;
+    min-width: mixins.css-variable('color-picker-size--trigger--default');
+    height: mixins.css-variable('color-picker-size--trigger--default');
+
+    > #{mixins.block-name('popover__reference')} {
+      > #{mixins.block-name('picker__input')} {
+        justify-content: center;
+
+        & > #{mixins.block-name('picker__input--container')} {
+          display: none;
+        }
+
+        & > #{mixins.block-name('picker__input--append-icon')} {
+          width: auto;
+          min-width: auto;
+          margin: 0;
+          overflow: hidden;
+          line-height: normal;
+          text-align: left;
+          border-radius: mixins.css-variable('color-picker-border-radius--trigger');
+        }
+      }
+    }
+  }
+
+  @include mixins.parallel-modifier('square', 'small') {
+    #{mixins.css-variable-name('picker-padding--input--outer--small')}: #{mixins.css-variable('color-picker-padding--square--small')};
+    min-width: mixins.css-variable('color-picker-size--trigger--small');
+    height: mixins.css-variable('color-picker-size--trigger--small');
+
+    @include mixins.be('picker', 'input', false) {
+      min-width: mixins.css-variable('color-picker-size--trigger--small');
+      height: mixins.css-variable('color-picker-size--trigger--small');
+    }
+  }
+
+  @include mixins.parallel-modifier('square', 'large') {
+    min-width: mixins.css-variable('color-picker-size--trigger--large');
+    height: mixins.css-variable('color-picker-size--trigger--large');
+
+    @include mixins.be('picker', 'input', false) {
+      min-width: mixins.css-variable('color-picker-size--trigger--large');
+      height: mixins.css-variable('color-picker-size--trigger--large');
+    }
+  }
+}

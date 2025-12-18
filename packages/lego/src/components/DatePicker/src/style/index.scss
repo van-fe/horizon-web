@@ -1,0 +1,42 @@
+@use '../../../../styles/mixins';
+@import './panel-trigger';
+@import './panel-content';
+@import './range-header';
+@import './panel-table';
+@import './panel-header';
+@import './panel-footer';
+@import './date-table';
+@import './year-month-table';
+
+@include mixins.b('date-picker') {
+  z-index: 9999;
+  padding: 0;
+
+  @include mixins.e('body') {
+    background: mixins.css-variable('date-picker-bg--wrapper--content');
+    border: mixins.css-variable('date-picker-border--noninteractive');
+    border-radius: mixins.css-variable('date-picker-border-radius');
+    box-shadow: mixins.css-variable('date-picker-box-shadow--wrapper-content');
+
+    @include mixins.m('panel') {
+      box-shadow: none;
+    }
+  }
+}
+
+@include mixins.b('date-picker-trigger') {
+  width: 100%;
+
+  @include mixins.m('disabled') {
+    cursor: not-allowed;
+  }
+
+  @include mixins.m('reference') {
+    width: fit-content;
+    min-width: fit-content;
+  }
+}
+
+@include mixins.b('date-picker-reference') {
+  width: 100%;
+}

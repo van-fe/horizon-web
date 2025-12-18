@@ -1,0 +1,42 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "import"
+  ],
+  "categories": {
+    "correctness": "off"
+  },
+  "env": {
+    "builtin": true
+  },
+  "rules": {
+    "import/no-named-as-default": "off",
+    "import/namespace": [
+      2,
+      {
+        "allowComputed": true
+      }
+    ],
+    "import/no-named-as-default-member": "off",
+    "no-var": "error",
+    "no-console": [
+      2,
+      {
+        "allow": [
+          "info",
+          "warn",
+          "error",
+          "debug"
+        ]
+      }
+    ],
+    "no-unused-vars": [
+      2,
+      {
+        "ignoreRestSiblings": true,
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "no-extra-boolean-cast": "off"
+  }
+}

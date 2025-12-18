@@ -1,0 +1,37 @@
+@use '../../../../styles/mixins';
+
+@mixin fade-animate($time) {
+  $time-func: '';
+
+  @if  $time == 'normal' {
+    $time-func: mixins.css-variable('transition-time');
+  } @else if $time == 'fast' {
+    $time-func: mixins.css-variable('transition-time-fast');
+  } @else if $time == 'slow' {
+    $time-func: mixins.css-variable('transition-time-slow');
+  } @else if $time == 'extra-fast' {
+    $time-func: mixins.css-variable('transition-time-extra-fast');
+  }
+
+  #{mixins.block-name('fade-in-linear-#{$time}-enter-active')}, #{mixins.block-name('fade-in-linear-#{$time}-leave-active')} {
+    transition: mixins.css-variable('transition-fade-linear');
+  }
+
+  #{mixins.block-name('fade-in-linear-#{$time}-enter-from')}, #{mixins.block-name('fade-in-linear-#{$time}-leave-to')} {
+    opacity: 0;
+  }
+
+  #{mixins.block-name('fade-in-#{$time}-enter-active')}, #{mixins.block-name('fade-in-#{$time}-leave-active')} {
+    transition: opacity #{$time-func} cubic-bezier(0.55, 0, 0.1, 1);
+  }
+
+  #{mixins.block-name('fade-in-#{$time}-enter-from')}, #{mixins.block-name('fade-in-#{$time}-leave-active')} {
+    opacity: 0;
+  }
+}
+
+@include fade-animate('normal');
+@include fade-animate('fast');
+@include fade-animate('slow');
+
+

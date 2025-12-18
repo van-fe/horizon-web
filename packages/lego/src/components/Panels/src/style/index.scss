@@ -1,0 +1,11 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('panels') {
+  position: relative;
+  overflow: hidden;
+
+  @include mixins.e('panel') {
+    width: 100%;
+    height: 100%;
+  }
+}

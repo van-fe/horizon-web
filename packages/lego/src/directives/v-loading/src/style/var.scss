@@ -1,0 +1,55 @@
+@use '../../../../styles/mixins';
+
+$loading-circle-color: mixins.css-variable('v-loading-color--circle');
+$loading-text-color: mixins.css-variable('v-loading-color--text');
+$loading-dots-left-color: mixins.css-variable('v-loading-color--dots-left');
+$loading-dots-right-color: mixins.css-variable('v-loading-color--dots-right');
+$dot-sizes: (
+  'small': (
+    'height': #{mixins.size(8)},
+    'width': #{mixins.size(8)},
+    'gap': #{mixins.size(16)},
+    'text-row-gap': #{mixins.size(12 + 16)},
+    'text-column-gap': #{mixins.size(16)},
+    'dots-translate-x': #{mixins.size(-(16))},
+    'dots-right-left': #{mixins.size((8 + 16))},
+  ),
+  'medium': (
+    'height': #{mixins.size(12)},
+    'width': #{mixins.size(12)},
+    'gap': #{mixins.size(16)},
+    'text-row-gap': #{mixins.size(16 + (20))},
+    'text-column-gap': #{mixins.size(18)},
+    'dots-translate-x': #{mixins.size(-(20))},
+    'dots-right-left': #{mixins.size((12 + 16))},
+  ),
+  'large': (
+    'height': #{mixins.size(16)},
+    'width': #{mixins.size(16)},
+    'gap': #{mixins.size(10)},
+    'text-row-gap': #{mixins.size(27 + (21))},
+    'text-column-gap': #{mixins.size(24)},
+    'dots-translate-x': #{mixins.size(-(21))},
+    'dots-right-left': #{mixins.size((16 + 10))},
+  ),
+);
+$circle-sizes: (
+  'small': (
+    'height': #{mixins.size(13.6)},
+    'width': #{mixins.size(13.6)},
+    'text-row-gap': #{mixins.size(9.2)},
+    'text-column-gap': #{mixins.size(9.2)},
+  ),
+  'medium': (
+    'height': #{mixins.size(20.4)},
+    'width': #{mixins.size(20.4)},
+    'text-row-gap': #{mixins.size(9.8)},
+    'text-column-gap': #{mixins.size(9.8)},
+  ),
+  'large': (
+    'height': #{mixins.size(27.2)},
+    'width': #{mixins.size(27.2)},
+    'text-row-gap': #{mixins.size(10.4)},
+    'text-column-gap': #{mixins.size(10.4)},
+  ),
+);

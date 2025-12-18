@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "exclude": ["node_modules", "src/**/__snapshots__/*", "src/**/__tests__"],
+  "tsc-alias": {
+    "resolveFullPaths": true,
+    "replacers": {
+      "shared": {
+        "enabled": true,
+        "file": "./build/tsc-alias/shared.js"
+      }
+    }
+  }
+}

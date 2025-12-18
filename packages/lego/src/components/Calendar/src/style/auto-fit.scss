@@ -1,0 +1,11 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('calendar') {
+  @include mixins.is('auto-fit') {
+    height: 100%;
+
+    @include mixins.be('calendar-month', 'day-wrapper', false) {
+      height: 100%;
+    }
+  }
+}

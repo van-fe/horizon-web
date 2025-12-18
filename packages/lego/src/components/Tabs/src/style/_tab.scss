@@ -1,0 +1,202 @@
+@use '../../../../styles/mixins';
+
+@mixin style {
+  @include mixins.parallel-modifier('line', 'underline') {
+    @include mixins.e('nav') {
+      &::after {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: mixins.css-variable('tabs-height--underline--line');
+        background-color: mixins.css-variable('tabs-border-color--header--line--underline');
+        content: '';
+      }
+    }
+  }
+
+  @include mixins.m('line', 'card', 'segment') {
+    @include mixins.e('tab') {
+      &:hover:active:not([aria-disabled='true']) {
+        color: mixins.css-variable('tabs-color--tab--press');
+      }
+
+      &:hover {
+        color: mixins.css-variable('tabs-color--tab--hover');
+      }
+    }
+
+    @include mixins.e('tab--disabled') {
+      $c: mixins.css-variable('text-disabled');
+      color: $c;
+      cursor: not-allowed;
+
+      &:hover {
+        color: $c;
+      }
+    }
+  }
+
+  @include mixins.m('line') {
+    position: relative;
+    overflow: hidden;
+
+    // @include mixins.e('nav') {
+    //   padding-bottom: mixins.css-variable('tabs-padding-bottom--nav-list--line');
+    // }
+
+    @include mixins.e('nav-wrap') {
+      display: flex;
+      align-items: center;
+      column-gap: 20px;
+
+      @include mixins.e('icon-outer') {
+        @include mixins.m('follow') {
+          padding-top: 0;
+        }
+      }
+    }
+
+    @include mixins.e('nav-list') {
+      @include mixins.m('space') {
+        padding-right: mixins.css-variable('font-size-6');
+      }
+    }
+
+    @include mixins.e('tab') {
+      padding: mixins.css-variable('tabs-padding--tab--line');
+    }
+
+    @include mixins.e('tab--active') {
+      color: mixins.css-variable('tabs-color--tab--line--activated');
+      text-shadow: 0 0 0.25px currentcolor;
+
+      &:hover {
+        color: mixins.css-variable('tabs-color--tab--line--activated--hover');
+      }
+    }
+
+    @include mixins.e('indicator') {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      z-index: 2;
+      height: calc(#{mixins.css-variable('tabs-height--underline--line')} + 1px);
+      background-color: mixins.css-variable('tabs-border-color--indicator--line');
+      border-radius: mixins.css-variable('tabs-border-radius--indicator--line');
+      transition: all mixins.css-variable('tabs-transition-time')
+        mixins.css-variable('tabs-transition-fn');
+    }
+  }
+
+  @include mixins.m('card') {
+    @include mixins.e('nav') {
+      align-items: stretch;
+
+      &::after {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background-color: mixins.css-variable('tabs-border-color--header--card');
+        content: '';
+      }
+    }
+
+    @include mixins.e('nav-wrap') {
+      display: flex;
+      padding: 0 mixins.css-variable('spacing-7') 0
+        mixins.css-variable('tabs-padding--nav-wrap--card');
+      column-gap: mixins.css-variable('tabs-space-right--tab--card');
+    }
+
+    @include mixins.e('nav-list') {
+      display: flex;
+      align-items: stretch;
+      column-gap: mixins.css-variable('tabs-space-right--tab--card');
+    }
+
+    @include mixins.e('tab') {
+      display: flex;
+      align-items: center;
+      background: mixins.css-variable('tabs-bg--tab--card');
+      border: mixins.css-variable('tabs-border--tab--card');
+      border-radius: mixins.css-variable('tabs-border-radius--tab--card');
+      transition: background mixins.css-variable('tabs-transition-time')
+        mixins.css-variable('tabs-transition-fn');
+
+      @include mixins.m('active') {
+        color: mixins.css-variable('tabs-color--tab--card--activated');
+        background: mixins.css-variable('tabs-bg--tab--card--activated');
+        border-bottom: 1px solid transparent;
+      }
+
+      @include mixins.m('dragging') {
+        opacity: 0.3;
+      }
+
+      @include mixins.m('dropping') {
+        // 处理拖拽时候，覆盖到某个 tab 上的样式，暂时去掉
+        // border-color: mixins.css-variable('tabs-color--tab--card--activated')
+        //   mixins.css-variable('tabs-color--tab--card--activated') mixins.css-variable('tabs-border-color--header--card');
+        // border-style: dashed;
+        // transition: border-color mixins.css-variable('tabs-transition-time') mixins.css-variable('tabs-transition-fn');
+      }
+    }
+
+    @include mixins.e('icon-outer') {
+      @include mixins.m('add') {
+        display: flex;
+        align-items: center;
+        width: auto !important;
+        height: 100% !important;
+        background: mixins.css-variable('tabs-bg--add--card');
+        border: mixins.css-variable('tabs-border--add--card');
+        border-radius: mixins.css-variable('tabs-border-radius--tab--card');
+      }
+    }
+  }
+
+  @include mixins.m('segment') {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    background: mixins.css-variable('tabs-bg--segment');
+    border-radius: mixins.css-variable('tabs-border-radius--segment');
+
+    @include mixins.e('extra-outer') {
+      @include mixins.m('blur') {
+        &::before {
+          background: linear-gradient(
+            to right,
+            transparent 0%,
+            mixins.css-variable('tabs-bg--page') 100%
+          );
+        }
+      }
+    }
+
+    @include mixins.e('tab') {
+      margin-left: mixins.css-variable('tabs-margin-left--tab--segment');
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+
+    @include mixins.e('tab--active') {
+      color: mixins.css-variable('tabs-color--tab--segment--activated');
+    }
+
+    @include mixins.e('indicator') {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: -1;
+      background: mixins.css-variable('tabs-bg--indicator--segment');
+      box-shadow: mixins.css-variable('tabs-box-shadow--indicator--segment');
+    }
+  }
+}

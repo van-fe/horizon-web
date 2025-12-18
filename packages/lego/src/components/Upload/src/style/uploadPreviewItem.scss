@@ -1,0 +1,308 @@
+@use 'sass:list';
+@use 'sass:map';
+@use '../../../../styles/mixins';
+
+$height-large: 62;
+$content-height-large: 40;
+$icon-size-large: 48;
+$height-medium: 46;
+$content-height-medium: 40;
+$icon-size-medium: 32;
+$height-small: 38;
+$content-height-small: 22;
+$icon-size-small: 24;
+$height-map: (
+  large: (
+    $height-large,
+    $content-height-large,
+    $icon-size-large,
+  ),
+  medium: (
+    $height-medium,
+    $content-height-medium,
+    $icon-size-medium,
+  ),
+  small: (
+    $height-small,
+    $content-height-small,
+    $icon-size-small,
+  ),
+);
+$class-names: (
+  '': (),
+  'content': (
+    'height',
+  ),
+  'icon': (
+    'height',
+    'width',
+  ),
+);
+
+@mixin use-height($map) {
+  @each $key, $value in $map {
+    $idx: 0;
+    #{mixins.block-name('upload-file-preview--#{$key}')} {
+      @each $val in $value {
+        $idx: $idx + 1;
+
+        @if $idx == 1 {
+          height: mixins.size($val);
+        } @else {
+          $map-key: list.nth(map.keys($class-names), $idx);
+          $map-val: map.get($class-names, $map-key);
+
+          #{mixins.block-name('upload-file-preview__#{$map-key}')} {
+            @each $k in $map-val {
+              #{$k}: mixins.size($val);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@include use-height($height-map);
+
+@include mixins.b('upload-file-preview') {
+  display: flex;
+  align-items: center;
+  box-sizing: content-box;
+  padding: 0 mixins.css-variable('upload-padding-x--file-preview');
+  background-color: mixins.css-variable('upload-bg--file-preview');
+  border: mixins.css-variable('upload-border--file-preview');
+  border-radius: mixins.css-variable('upload-border-radius');
+
+  &:hover {
+    background-color: mixins.css-variable('upload-bg--file-preview--hover');
+
+    @include mixins.e('operators-uploading') {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    @include mixins.e('operators-success') {
+      opacity: 1;
+      pointer-events: all;
+    }
+  }
+
+  @include mixins.m('small') {
+    @include mixins.e('progress-bar') {
+      transform: translateY(mixins.size(7));
+    }
+  }
+
+  @include mixins.e('icon') {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+
+    @include mixins.m('thumbnail') {
+      border-radius: mixins.css-variable('upload-border-radius--icon--thumbnail');
+    }
+  }
+
+  @include mixins.e('content') {
+    flex-grow: 1;
+    flex-shrink: 0;
+    margin: 0 mixins.css-variable('upload-margin-x--content--file-preview');
+  }
+
+  @include mixins.e('content-info') {
+    @include mixins.m('vertical') {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    @include mixins.m('horizontal') {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+      overflow: hidden;
+
+      @include mixins.e('file-size') {
+        display: none;
+      }
+    }
+  }
+
+  @include mixins.e('top-line') {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: mixins.css-variable('upload-height--top-line--file-preview');
+    line-height: mixins.css-variable('upload-height--top-line--file-preview');
+
+    @include mixins.e('icon-box') {
+      display: flex;
+      align-items: center;
+      margin-left: mixins.css-variable('upload-margin-left--top-line--icon-box--file-preview');
+    }
+  }
+
+  @include mixins.e('operators') {
+    flex-shrink: 0;
+  }
+
+  @include mixins.e('operators-uploading') {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @include mixins.e('operators-success') {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @include mixins.e('op-icon-item') {
+    cursor: pointer;
+
+    &:nth-child(n + 2) {
+      margin-left: mixins.css-variable('upload-margin-left--op-icon-item--file-preview');
+    }
+
+    #{mixins.block-name('icon')} {
+      display: inline-block;
+      padding: mixins.css-variable('upload-padding--icon--file-preview');
+      border-radius: mixins.css-variable('upload-border-radius');
+    }
+
+    &:hover {
+      & > #{mixins.block-name('icon')} {
+        background: mixins.css-variable('upload-bg--icon--file-preview--hover');
+      }
+    }
+
+    &:active {
+      & > #{mixins.block-name('icon')} {
+        background: mixins.css-variable('upload-bg--icon--file-preview--active');
+      }
+    }
+  }
+
+  @include mixins.e('icon-text') {
+    margin-left: mixins.css-variable('upload-margin-left--icon-text--file-preview');
+  }
+
+  @include mixins.e('file-name') {
+    max-width: calc(100% - 20px);
+    overflow: hidden;
+    color: mixins.css-variable('upload-color--file-name--file-preview');
+    font-size: mixins.css-variable('upload-font-size--file-name--file-preview');
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    @include mixins.m('error') {
+      color: mixins.css-variable('upload-color--file-name--file-preview--error');
+    }
+  }
+
+  @include mixins.e('file-size') {
+    height: mixins.css-variable('upload-height--file-size--file-preview');
+    color: mixins.css-variable('upload-color--file-size--file-preview');
+    font-size: mixins.css-variable('upload-font-size--file-size--file-preview');
+    line-height: mixins.css-variable('upload-height--file-size--file-preview');
+  }
+
+  @include mixins.e('progress-bar') {
+    @include mixins.m('no-text') {
+      margin-top: mixins.css-variable('upload-margin-top--progress-bar--no-text--file-preview');
+
+      & #{mixins.block-name('progress__text')} {
+        width: 0;
+      }
+    }
+
+    & #{mixins.block-name('progress__text')} {
+      min-width: 0;
+    }
+  }
+}
+
+@include mixins.b('upload-img-preview') {
+  position: relative;
+  box-sizing: content-box;
+  overflow: hidden;
+  background-color: mixins.css-variable('upload-bg--img-preview');
+  border-radius: mixins.css-variable('upload-border-radius');
+
+  @include mixins.e('content') {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+
+    & #{mixins.block-name('progress-small')} {
+      width: calc(100% - 16px);
+
+      & > #{mixins.block-name('progress-bar')} {
+        flex-shrink: 0;
+        width: 100%;
+        margin-top: mixins.css-variable('upload-margin-top--progress-text--img-preview');
+      }
+    }
+
+    & #{mixins.block-name('progress__text')} {
+      width: 0;
+      min-width: 0;
+    }
+  }
+
+  @include mixins.e('file-name') {
+    width: calc(100% - 16px);
+    overflow: hidden;
+    color: mixins.css-variable('upload-color--file-name');
+    font-size: mixins.css-variable('upload-font-size--file-name');
+    line-height: mixins.css-variable('upload-line-height--file-name');
+    white-space: nowrap;
+    text-align: center;
+    text-overflow: ellipsis;
+    word-break: break-all;
+
+    @include mixins.m('error') {
+      color: mixins.css-variable('upload-color--file-name--error');
+    }
+  }
+
+  @include mixins.e('mask') {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: mixins.css-variable('upload-bg--mask');
+  }
+
+  @include mixins.e('op-icon') {
+    cursor: pointer;
+
+    &:nth-child(n + 2) {
+      margin-left: mixins.css-variable('upload-margin-left--op-icon');
+    }
+
+    #{mixins.block-name('icon')} {
+      display: inline-block;
+      padding: mixins.css-variable('upload-padding--op-icon');
+      color: mixins.css-variable('upload-color--icon--hover');
+      border-radius: mixins.css-variable('upload-border-radius');
+    }
+
+    &:hover {
+      & > #{mixins.block-name('icon')} {
+        background-color: mixins.css-variable('upload-bg--icon--hover');
+      }
+    }
+  }
+}

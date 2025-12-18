@@ -1,0 +1,83 @@
+{
+  "name": "@nio-fe/lego",
+  "version": "1.0.0",
+  "description": "Vue3 UI components library.",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "unpkg": "dist/lego-browser.umd.js",
+  "types": "es/index.d.ts",
+  "vetur": {
+    "tags": "json/tags.json",
+    "attributes": "json/attributes.json"
+  },
+  "web-types": "json/web-types.json",
+  "keywords": [
+    "@nio-fe/lego",
+    "ui",
+    "components",
+    "vue3",
+    "rollup"
+  ],
+  "scripts": {
+    "build": "pnpm run build:index && pnpm run build:theme && pnpm run build:dist && pnpm run build:browser && pnpm run compatibility",
+    "build:index": "bun run ./build/build-index.ts",
+    "build:theme": "bun run ./build/theme-build/index.ts",
+    "build:browser": "bunx --bun vite build --config ./build/vite.browser.config.ts",
+    "build:dist": "bunx --bun vite build && pnpm build:ts",
+    "build:json": "bun run ./build/build-json.ts",
+    "build:ts": "tsc -d -p tsconfig.build.json --pretty --emitDeclarationOnly && pnpm run recorrect:tsc-alias",
+    "recorrect:tsc-alias": "tsc ./build/tsc-alias/shared.ts && tsc-alias -p tsconfig.json",
+    "compatibility": "bun run ./build/compatibility.ts",
+    "ts:check": "tsc --noEmit",
+    "test": "vitest",
+    "lint": "pnpx oxlint && eslint --fix --ext .jsx,.js,.ts,.tsx ./src"
+  },
+  "license": "ISC",
+  "files": [
+    "dist",
+    "lib",
+    "json",
+    "es"
+  ],
+  "sideEffects": [
+    "dist/lego-browser.iife.js",
+    "dist/lego-browser.mjs",
+    "dist/lego-browser.umd.js",
+    "dist/style.css",
+    "*.css",
+    "*.scss"
+  ],
+  "dependencies": {
+    "@babel/runtime": "7.17.2",
+    "@floating-ui/vue": "^1.1.4",
+    "@nio-fe/colors": "workspace:*",
+    "@nio-fe/icon": "^2.11.2",
+    "@nio-fe/lego-sensor-tracker": "workspace:*",
+    "@nio-fe/locale-vue": "workspace:*",
+    "@nio-fe/shared": "workspace:*",
+    "@nio-fe/upload-helper": "0.0.7-beta.3",
+    "@popperjs/core": "^2.11.8",
+    "@vueuse/core": "^9.6.0",
+    "async-validator": "^4.1.1",
+    "dayjs": "^1.10.7",
+    "decimal.js": "^10.4.3",
+    "deepmerge": "^4.2.2",
+    "dompurify": "^2.3.10",
+    "lodash": "^4.17.21",
+    "nanoid": "^3.3.4",
+    "resize-observer-polyfill": "^1.5.1",
+    "video.js": "^7.18.1"
+  },
+  "devDependencies": {
+    "@nio-fe/locale": "workspace:*",
+    "@types/dompurify": "^2.3.3",
+    "@types/video.js": "^7.3.39",
+    "vue": "^3.2.47",
+    "@vue/reactivity": "^3.2.47",
+    "fast-glob": "^3.2.11",
+    "rollup-plugin-copy": "^3.4.0",
+    "ts-morph": "^13.0.2",
+    "vue-router": "^4.1.6"
+  },
+  "imports": {}
+}

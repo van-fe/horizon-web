@@ -1,0 +1,58 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  'min-width': 92px,
+  'max-width': 320px,
+  'height--item': 40px,
+  'height--item--small': 32px,
+  'max-height': 296px,
+  'max-width--inner': 270px,
+  'font-size--item': #{function.css-variable('text-base')},
+  'font-size--group-title': #{function.css-variable('text-sm')},
+  'font-weight--item--active': #{function.css-variable('weight-strong')},
+  'color': #{function.css-variable('text-primary')},
+  'color--active': #{function.css-variable('text-brand-activated')},
+  'color--active--disabled': #{function.css-variable('text-brand-disabled')},
+  'color--group-title': #{function.css-variable('text-tertiary')},
+  'color--disabled': #{function.css-variable('text-disabled')},
+  'color--gray': #{function.css-variable('text-primary')},
+  'color--gray--disabled': #{function.css-variable('text-disabled')},
+  'color--gray--active': #{function.css-variable('text-brand-activated')},
+  'color--gray--active--disabled': #{function.css-variable('text-brand-disabled')},
+  'color--midnight': rgba(255, 255, 255, 70%),
+  'color--midnight--disabled': rgba(255, 255, 255, 50%),
+  'color--midnight--active': rgba(255, 255, 255, 100%),
+  'color--midnight--active--disabled': rgba(1, 160, 172, 50%),
+  'color--midnight--submenu--active': rgba(33, 201, 204, 100%),
+  'color--midnight--submenu--active--disabled': rgba(1, 160, 172, 50%),
+  'bg': #{function.css-variable('bg-default')},
+  'bg--item--hover': #{function.css-variable('bg-hover')},
+  'bg--item--active': #{function.css-variable('bg-weak-activated')},
+  'bg--item--active--disabled': #{function.css-variable('bg-weak-disabled')},
+  'bg--gray': #{function.css-variable('bg-navigator')},
+  'bg--gray--item--hover': #{function.css-variable('bg-hover')},
+  'bg--gray--item--active': #{function.css-variable('bg-weak-activated')},
+  'bg--gray--item--active--disabled': #{function.css-variable('bg-weak-disabled')},
+  'bg--midnight': #00263c,
+  'bg--midnight--item--hover': rgba(33, 201, 204, 20%),
+  'bg--midnight--submenu--active': rgba(33, 201, 204, 100%),
+  'bg--midnight--item--active': rgba(33, 201, 204, 70%),
+  'bg--midnight--item--active--disabled': rgba(255, 255, 255, 50%),
+  'border-color--group-siblings--no-title': #{function.css-variable('border-noninteractive')},
+  'outline-color': function.css-variable('border-focused'),
+  'margin-top-bottom--first-last-child': #{function.css-variable('spacing-3')},
+  'margin-top-bottom--first-last-child--small': #{calc(
+    function.css-variable('spacing-3') - function.css-variable('spacing-1')
+  )},
+  'margin--group-divider--no-title': #{function.css-variable('spacing-3')} #{function.css-variable(
+    'spacing-4'
+  )},
+  'margin-right--item--icon': #{function.css-variable('spacing-3')},
+  'padding--item': 0 #{function.css-variable('spacing-4')},
+  'padding--item--small': 0 #{function.css-variable('spacing-3')},
+  'padding--group-title': #{function.css-variable('spacing-2')} #{function.css-variable(
+    'spacing-4'
+  )},
+  'spacing--group-siblings': #{function.css-variable('spacing-3')},
+  'transition--all': all #{function.css-variable('transition-time')},
+);

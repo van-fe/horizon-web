@@ -1,0 +1,49 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('slider') {
+  @include mixins.m('small') {
+    @include mixins.e('container') {
+      height: mixins.css-variable('slider-height--container--small');
+
+      &::before {
+        height: mixins.css-variable('slider-height--container--placeholder--small');
+      }
+    }
+
+    @include mixins.e('track') {
+      border-radius: mixins.css-variable('slider-border-radius--progress--small');
+    }
+
+    @include mixins.e('progress') {
+      border-radius: mixins.css-variable('slider-border-radius--progress--small');
+    }
+
+    @include mixins.e('cursor') {
+      width: mixins.css-variable('slider-size--cursor--small');
+      height: mixins.css-variable('slider-size--cursor--small');
+    }
+  }
+
+  @include mixins.m('large') {
+    @include mixins.e('container') {
+      height: mixins.css-variable('slider-height--container--large');
+
+      &::before {
+        height: mixins.css-variable('slider-height--container--placeholder--large');
+      }
+    }
+
+    @include mixins.e('track') {
+      border-radius: mixins.css-variable('slider-border-radius--progress--large');
+    }
+
+    @include mixins.e('progress') {
+      border-radius: mixins.css-variable('slider-border-radius--progress--large');
+    }
+
+    @include mixins.e('cursor') {
+      width: mixins.css-variable('slider-size--cursor--large');
+      height: mixins.css-variable('slider-size--cursor--large');
+    }
+  }
+}

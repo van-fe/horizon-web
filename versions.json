@@ -1,0 +1,10 @@
+{
+  "lego": "2.12.19-alpha.0",
+  "shared": "2.12.19-alpha.0",
+  "locale": "2.12.19-alpha.0",
+  "locale-vue": "2.12.19-alpha.0",
+  "unplugin-resolver": "2.12.19-alpha.0",
+  "lego-sensor-tracker": "2.12.19-alpha.0",
+  "colors": "2.12.19-alpha.0", 
+  "lego-pad": "2.12.19-alpha.0"
+}

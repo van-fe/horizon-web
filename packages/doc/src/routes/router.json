@@ -1,0 +1,1734 @@
+{
+  ".md": {
+    "directives": {
+      "v-draggable": {
+        "doc.md": {}
+      },
+      "v-tooltip": {
+        "doc.md": {}
+      },
+      "v-loading": {
+        "doc.md": {}
+      },
+      "v-watermark": {
+        "doc.md": {}
+      },
+      "v-click-outside": {
+        "doc.md": {}
+      },
+      "v-safe-html": {
+        "doc.md": {}
+      },
+      "v-popconfirm": {
+        "doc.md": {}
+      },
+      "v-event-outside": {
+        "doc.md": {}
+      },
+      "v-infinite-scroll": {
+        "doc.md": {}
+      }
+    },
+    "methods": {
+      "MessageBox": {
+        "doc.md": {}
+      },
+      "Notification": {
+        "doc.md": {}
+      },
+      "Message": {
+        "doc.md": {}
+      },
+      "LoadingBar": {
+        "doc.md": {}
+      }
+    },
+    "features": {
+      "tools": {
+        "doc.md": {}
+      },
+      "locale": {
+        "doc.md": {}
+      },
+      "namespace": {
+        "doc.md": {}
+      },
+      "tree-shaking": {
+        "doc.md": {}
+      },
+      "theme": {
+        "doc.md": {}
+      },
+      "tokens": {
+        "doc.md": {}
+      }
+    },
+    "others": {
+      "ModalCascader": {
+        "doc.md": {}
+      },
+      "TableV2": {
+        "doc.md": {}
+      },
+      "ModalPicker": {
+        "doc.md": {}
+      },
+      "ModalTimePicker": {
+        "doc.md": {}
+      },
+      "Icon": {
+        "doc.md": {}
+      },
+      "ModalSelect": {
+        "doc.md": {}
+      }
+    },
+    "components": {
+      "TreeSelect": {
+        "doc.md": {}
+      },
+      "Guide": {
+        "doc.md": {}
+      },
+      "Tabs": {
+        "doc.md": {}
+      },
+      "Tree": {
+        "doc.md": {}
+      },
+      "Rate": {
+        "doc.md": {}
+      },
+      "FloatButton": {
+        "doc.md": {}
+      },
+      "Dropdown": {
+        "doc.md": {}
+      },
+      "Transition": {
+        "doc.md": {}
+      },
+      "Drawer": {
+        "doc.md": {}
+      },
+      "Pagination": {
+        "doc.md": {}
+      },
+      "TimePicker": {
+        "doc.md": {}
+      },
+      "Form": {
+        "doc.md": {}
+      },
+      "Tooltip": {
+        "doc.md": {}
+      },
+      "Hover": {
+        "doc.md": {}
+      },
+      "Result": {
+        "doc.md": {}
+      },
+      "Calendar": {
+        "doc.md": {}
+      },
+      "Radio": {
+        "doc.md": {}
+      },
+      "Card": {
+        "doc.md": {}
+      },
+      "AutoComplete": {
+        "doc.md": {}
+      },
+      "Empty": {
+        "doc.md": {}
+      },
+      "Progress": {
+        "doc.md": {}
+      },
+      "TimePickerV2": {
+        "doc.md": {}
+      },
+      "Picker": {
+        "doc.md": {}
+      },
+      "Input": {
+        "doc.md": {}
+      },
+      "Alert": {
+        "doc.md": {}
+      },
+      "Skeleton": {
+        "doc.md": {}
+      },
+      "Layout": {
+        "doc.md": {}
+      },
+      "VideoPlayer": {
+        "doc.md": {}
+      },
+      "Segmented": {
+        "doc.md": {}
+      },
+      "UploadV2": {
+        "doc.md": {}
+      },
+      "DatePicker": {
+        "doc.md": {}
+      },
+      "Panels": {
+        "doc.md": {}
+      },
+      "Cascader": {
+        "doc.md": {}
+      },
+      "Count": {
+        "doc.md": {}
+      },
+      "Checkbox": {
+        "doc.md": {}
+      },
+      "Transfer": {
+        "doc.md": {}
+      },
+      "DatePickerV2": {
+        "doc.md": {}
+      },
+      "Descriptions": {
+        "doc.md": {}
+      },
+      "Slider": {
+        "doc.md": {}
+      },
+      "PageHeader": {
+        "doc.md": {}
+      },
+      "Collapse": {
+        "doc.md": {}
+      },
+      "InputNumber": {
+        "doc.md": {}
+      },
+      "TransferV2": {
+        "doc.md": {}
+      },
+      "Image": {
+        "doc.md": {}
+      },
+      "Time": {
+        "doc.md": {}
+      },
+      "Dialog": {
+        "doc.md": {}
+      },
+      "Popover": {
+        "doc.md": {}
+      },
+      "Controls": {
+        "doc.md": {}
+      },
+      "Container": {
+        "doc.md": {}
+      },
+      "Watermark": {
+        "doc.md": {}
+      },
+      "Viewer": {
+        "doc.md": {}
+      },
+      "Mask": {
+        "doc.md": {}
+      },
+      "Button": {
+        "doc.md": {}
+      },
+      "Steps": {
+        "doc.md": {}
+      },
+      "Link": {
+        "doc.md": {}
+      },
+      "Table": {
+        "doc.md": {}
+      },
+      "List": {
+        "doc.md": {}
+      },
+      "Divider": {
+        "doc.md": {}
+      },
+      "Menu": {
+        "doc.md": {}
+      },
+      "Avatar": {
+        "doc.md": {}
+      },
+      "ColorPicker": {
+        "doc.md": {}
+      },
+      "Switch": {
+        "doc.md": {}
+      },
+      "Anchor": {
+        "doc.md": {}
+      },
+      "Application": {
+        "doc.md": {}
+      },
+      "Select": {
+        "doc.md": {}
+      },
+      "Breadcrumb": {
+        "doc.md": {}
+      },
+      "VirtualScroller": {
+        "doc.md": {}
+      },
+      "Space": {
+        "doc.md": {}
+      },
+      "Timeline": {
+        "doc.md": {}
+      },
+      "Tag": {
+        "doc.md": {}
+      },
+      "Scrollbar": {
+        "doc.md": {}
+      },
+      "Affix": {
+        "doc.md": {}
+      },
+      "Upload": {
+        "doc.md": {}
+      },
+      "Backtop": {
+        "doc.md": {}
+      },
+      "Badge": {
+        "doc.md": {}
+      }
+    },
+    "getting-started": {
+      "start.md": {}
+    },
+    "style-animation": {
+      "position": {
+        "doc.md": {}
+      },
+      "center": {
+        "doc.md": {}
+      },
+      "shadow": {
+        "doc.md": {}
+      },
+      "overflow": {
+        "doc.md": {}
+      },
+      "colors": {
+        "doc.md": {}
+      },
+      "spacing": {
+        "doc.md": {}
+      },
+      "typography": {
+        "doc.md": {}
+      },
+      "display": {
+        "doc.md": {}
+      },
+      "flex": {
+        "doc.md": {}
+      },
+      "border-radius": {
+        "doc.md": {}
+      }
+    }
+  },
+  ".vue": {
+    "directives": {
+      "v-draggable": {
+        "demos": {
+          "demo1.vue": {},
+          "demo2.vue": {}
+        }
+      },
+      "v-tooltip": {
+        "demos": {
+          "trigger.vue": {},
+          "placement.vue": {},
+          "options.vue": {},
+          "basic.vue": {}
+        }
+      },
+      "v-loading": {
+        "demos": {
+          "demo1.vue": {},
+          "demo2.vue": {},
+          "demo3.vue": {},
+          "delay.vue": {}
+        }
+      },
+      "v-watermark": {
+        "demos": {
+          "demo1.vue": {},
+          "demo2.vue": {},
+          "demo3.vue": {},
+          "demo4.vue": {}
+        }
+      },
+      "v-click-outside": {
+        "demos": {
+          "demo1.vue": {}
+        }
+      },
+      "v-safe-html": {
+        "demos": {
+          "demo1.vue": {},
+          "demo2.vue": {}
+        }
+      },
+      "v-popconfirm": {
+        "demos": {
+          "type.vue": {},
+          "title.vue": {},
+          "customize.vue": {},
+          "placement.vue": {},
+          "basic.vue": {}
+        }
+      },
+      "v-event-outside": {
+        "demos": {
+          "demo1.vue": {}
+        }
+      },
+      "v-infinite-scroll": {
+        "demos": {
+          "demo1.vue": {}
+        }
+      }
+    },
+    "methods": {
+      "MessageBox": {
+        "demos": {
+          "demo3.vue": {},
+          "debounce-fn.vue": {},
+          "confirm.vue": {},
+          "basic.vue": {}
+        }
+      },
+      "Notification": {
+        "demos": {
+          "width.vue": {},
+          "different-types.vue": {},
+          "content.vue": {},
+          "placement.vue": {},
+          "offset.vue": {},
+          "overload.vue": {},
+          "basic.vue": {},
+          "close.vue": {},
+          "methods.vue": {},
+          "operation.vue": {}
+        }
+      },
+      "Message": {
+        "demos": {
+          "type.vue": {},
+          "demo1.vue": {},
+          "demo2.vue": {},
+          "demo4.vue": {},
+          "config.vue": {},
+          "customize.vue": {},
+          "basic.vue": {},
+          "loading.vue": {},
+          "closable.vue": {}
+        }
+      },
+      "LoadingBar": {
+        "demos": {
+          "demo1.vue": {},
+          "demo2.vue": {}
+        }
+      }
+    },
+    "features": {
+      "tools": {
+        "demos": {
+          "useZIndex.vue": {}
+        }
+      },
+      "locale": {
+        "demos": {
+          "demo1.vue": {}
+        }
+      },
+      "theme": {
+        "demos": {
+          "theme.vue": {}
+        }
+      },
+      "tokens": {
+        "demos": {
+          "color--no-code.vue": {},
+          "radius--no-code.vue": {},
+          "transition--no-code.vue": {},
+          "spacing--no-code.vue": {},
+          "shadow--no-code.vue": {},
+          "font-size--no-code.vue": {}
+        }
+      }
+    },
+    "others": {
+      "ModalCascader": {
+        "demos": {
+          "filter-render-slot.vue": {},
+          "filterable-config.vue": {},
+          "expand-strictly.vue": {},
+          "panel-reach-bottom.vue": {},
+          "check-all-summary.vue": {},
+          "common-search-confirm.vue": {},
+          "display-way.vue": {},
+          "filter-reserve-keyword.vue": {},
+          "dynamic-load.vue": {},
+          "custom-trigger.vue": {},
+          "panel-grouped.vue": {},
+          "custom-selected-item.vue": {},
+          "filter-check-all.vue": {},
+          "panel-trigger.vue": {},
+          "custom-icon.vue": {},
+          "empty.vue": {},
+          "custom-trigger-inner.vue": {},
+          "unmatched-value.vue": {},
+          "trigger-hover.vue": {},
+          "selectable.vue": {},
+          "field-map.vue": {},
+          "multiple.vue": {},
+          "filterable.vue": {},
+          "check-strictly.vue": {},
+          "statistic.vue": {},
+          "confirm.vue": {},
+          "basic.vue": {},
+          "custom-confirm.vue": {},
+          "empty-list.vue": {},
+          "custom-option-render.vue": {},
+          "single.vue": {},
+          "virtual-scroll.vue": {}
+        }
+      },
+      "ModalPicker": {
+        "demos": {
+          "basic.vue": {}
+        }
+      },
+      "ModalTimePicker": {
+        "demos": {
+          "time.vue": {},
+          "seconds.vue": {},
+          "single-trigger.vue": {},
+          "show-now.vue": {},
+          "format-cell-text.vue": {},
+          "clearable.vue": {},
+          "show-time-tooltip.vue": {},
+          "step.vue": {},
+          "readonly.vue": {},
+          "disabled-time.vue": {},
+          "start-end-range.vue": {},
+          "multiple.vue": {},
+          "basic.vue": {},
+          "initial-value.vue": {},
+          "is-range.vue": {}
+        }
+      },
+      "Icon": {
+        "demos": {
+          "dynamic-modification.vue": {},
+          "need-svg.vue": {},
+          "svg-sprite.vue": {},
+          "font-class.vue": {}
+        }
+      },
+      "ModalSelect": {
+        "demos": {
+          "group.vue": {},
+          "icon-style.vue": {},
+          "tag-fold.vue": {},
+          "size.vue": {},
+          "reach-bottom.vue": {},
+          "custom-tag-render.vue": {},
+          "virtual-scroller.vue": {},
+          "overflow.vue": {},
+          "check-all.vue": {},
+          "events.vue": {},
+          "reserve-keyword.vue": {},
+          "hide-selected.vue": {},
+          "empty.vue": {},
+          "dynamic-collapse.vue": {},
+          "option.vue": {},
+          "remote-search.vue": {},
+          "description.vue": {},
+          "filter.vue": {},
+          "multiple-render.vue": {},
+          "test.vue": {},
+          "multiple.vue": {},
+          "format-value.vue": {},
+          "disabled.vue": {},
+          "single-render.vue": {},
+          "statistic.vue": {},
+          "confirm.vue": {},
+          "selected-option-order-to-top.vue": {},
+          "basic.vue": {},
+          "fit-width.vue": {},
+          "initial-value.vue": {},
+          "single.vue": {},
+          "creatable.vue": {}
+        }
+      }
+    },
+    "components": {
+      "TreeSelect": {
+        "demos": {
+          "prefix-icon.vue": {},
+          "custom-render.vue": {},
+          "dynamic-load.vue": {},
+          "multiple-limit.vue": {},
+          "clearable.vue": {},
+          "reserve-keyword.vue": {},
+          "check-on-leaf.vue": {},
+          "filter.vue": {},
+          "selectable.vue": {},
+          "expand-icon.vue": {},
+          "expand-and-check.vue": {},
+          "filter-in-panel.vue": {},
+          "field-map.vue": {},
+          "multiple.vue": {},
+          "check-strictly.vue": {},
+          "disabled.vue": {},
+          "statistic.vue": {},
+          "expand-values.vue": {},
+          "basic.vue": {},
+          "highlight-filter.vue": {},
+          "default-expand-all.vue": {},
+          "single.vue": {},
+          "stress.vue": {},
+          "virtual-scroll.vue": {}
+        }
+      },
+      "Guide": {
+        "demos": {
+          "drag.vue": {},
+          "itemList.vue": {},
+          "mask.vue": {},
+          "whole.vue": {},
+          "basic.vue": {}
+        }
+      },
+      "Tabs": {
+        "demos": {
+          "editable.vue": {},
+          "with-panel.vue": {},
+          "width.vue": {},
+          "compatible.vue": {},
+          "tab-menu.vue": {},
+          "card.vue": {},
+          "basic-segmented.vue": {},
+          "icon.vue": {},
+          "tab-text.vue": {},
+          "slot.vue": {},
+          "size-and-type.vue": {},
+          "disable.vue": {},
+          "before-change.vue": {},
+          "extra.vue": {},
+          "draggable.vue": {},
+          "basic.vue": {},
+          "scroll.vue": {},
+          "text-overflow.vue": {}
+        }
+      },
+      "Tree": {
+        "demos": {
+          "show-line.vue": {},
+          "prefix-icon.vue": {},
+          "optimize-selected-values.vue": {},
+          "custom-render.vue": {},
+          "dynamic-load.vue": {},
+          "multiple-limit.vue": {},
+          "checkbox-and-radio.vue": {},
+          "draggable.vue": {},
+          "check-on-leaf.vue": {},
+          "filter.vue": {},
+          "selectable.vue": {},
+          "scroll-to.vue": {},
+          "expand-icon.vue": {},
+          "expand-and-check.vue": {},
+          "field-map.vue": {},
+          "check-strictly.vue": {},
+          "disabled.vue": {},
+          "prefix-icon-in-node.vue": {},
+          "expand-values.vue": {},
+          "basic.vue": {},
+          "highlight-filter.vue": {},
+          "selected-values.vue": {},
+          "default-expand-all.vue": {},
+          "controls.vue": {},
+          "stress.vue": {},
+          "virtual-scroll.vue": {}
+        }
+      },
+      "Rate": {
+        "demos": {
+          "useSlot.vue": {},
+          "customStyle_color.vue": {},
+          "customCount.vue": {},
+          "tooltip.vue": {},
+          "customStyle_size.vue": {},
+          "allowHalf.vue": {},
+          "basic.vue": {},
+          "customStyle_gutter.vue": {},
+          "unable.vue": {},
+          "customIcon.vue": {}
+        }
+      },
+      "FloatButton": {
+        "demos": {
+          "type.vue": {},
+          "group.vue": {},
+          "shape.vue": {},
+          "draggable.vue": {},
+          "badge.vue": {},
+          "basic.vue": {},
+          "description-icon.vue": {}
+        }
+      },
+      "Dropdown": {
+        "demos": {
+          "group.vue": {},
+          "size.vue": {},
+          "themes.vue": {},
+          "submenu.vue": {},
+          "icon.vue": {},
+          "trigger-target.vue": {},
+          "dropdown-button.vue": {},
+          "trigger.vue": {},
+          "manual.vue": {},
+          "command.vue": {},
+          "basic.vue": {}
+        }
+      },
+      "Transition": {
+        "demos": {
+          "zoom.vue": {},
+          "fade.vue": {},
+          "collapse.vue": {},
+          "special.vue": {},
+          "slide.vue": {}
+        }
+      },
+      "Drawer": {
+        "demos": {
+          "position.vue": {},
+          "draggable-size.vue": {},
+          "size.vue": {},
+          "compatible.vue": {},
+          "draggable-size-nest.vue": {},
+          "customize.vue": {},
+          "nest.vue": {},
+          "customize-mask.vue": {},
+          "confirm.vue": {},
+          "basic.vue": {},
+          "destroy-on-close.vue": {},
+          "to.vue": {}
+        }
+      },
+      "Pagination": {
+        "demos": {
+          "type.vue": {},
+          "slots.vue": {},
+          "show-range.vue": {},
+          "hide-on-single-page.vue": {},
+          "prev-next.vue": {},
+          "disabled.vue": {},
+          "layout.vue": {},
+          "basic.vue": {},
+          "max-buttons-amount.vue": {}
+        }
+      },
+      "TimePicker": {
+        "demos": {
+          "demo1.vue": {},
+          "demo2.vue": {},
+          "demo3.vue": {},
+          "demo7.vue": {},
+          "demo6.vue": {},
+          "demo4.vue": {},
+          "demo5.vue": {},
+          "demo8.vue": {},
+          "demo9.vue": {}
+        }
+      },
+      "Form": {
+        "demos": {
+          "dynamic-change-item-amount.vue": {},
+          "validate-trigger.vue": {},
+          "clear-validate.vue": {},
+          "size.vue": {},
+          "label-append.vue": {},
+          "label-position.vue": {},
+          "spacing.vue": {},
+          "validate-with-submit.vue": {},
+          "inline.vue": {},
+          "validate-required-default-show-text.vue": {},
+          "validate.vue": {},
+          "build-in-required.vue": {},
+          "custom-form.vue": {},
+          "disabled.vue": {},
+          "basic.vue": {},
+          "tips-helper.vue": {},
+          "only-render.vue": {}
+        }
+      },
+      "Tooltip": {
+        "demos": {
+          "width.vue": {},
+          "size.vue": {},
+          "enterable.vue": {},
+          "theme.vue": {},
+          "placement.vue": {},
+          "basic.vue": {}
+        }
+      },
+      "Hover": {
+        "demos": {
+          "delay.vue": {},
+          "disabled.vue": {},
+          "hover.vue": {}
+        }
+      },
+      "Result": {
+        "demos": {
+          "custom-slot.vue": {},
+          "custom-icon.vue": {},
+          "status.vue": {},
+          "basic.vue": {},
+          "types.vue": {}
+        }
+      },
+      "Calendar": {
+        "demos": {
+          "pin-flag-week-day.vue": {},
+          "date-type.vue": {},
+          "custom-header.vue": {},
+          "year.vue": {},
+          "pickable.vue": {},
+          "base.vue": {},
+          "pin-flag.vue": {},
+          "custom-date.vue": {}
+        }
+      },
+      "Radio": {
+        "demos": {
+          "group.vue": {},
+          "border.vue": {},
+          "disabled.vue": {},
+          "basic.vue": {},
+          "button.vue": {}
+        }
+      },
+      "Card": {
+        "demos": {
+          "content.vue": {},
+          "footer.vue": {},
+          "other.vue": {},
+          "header.vue": {},
+          "basic.vue": {}
+        }
+      },
+      "AutoComplete": {
+        "demos": {
+          "custom-render.vue": {},
+          "value-label.vue": {},
+          "description.vue": {},
+          "basic.vue": {},
+          "loading.vue": {}
+        }
+      },
+      "Empty": {
+        "demos": {
+          "size.vue": {},
+          "image-slot.vue": {},
+          "description.vue": {},
+          "image-external.vue": {},
+          "description-slot.vue": {},
+          "basic.vue": {},
+          "image-presented.vue": {},
+          "bottom-slot.vue": {}
+        }
+      },
+      "Progress": {
+        "demos": {
+          "size.vue": {},
+          "colors.vue": {},
+          "circle.vue": {},
+          "contentText.vue": {},
+          "circleColor.vue": {},
+          "line.vue": {}
+        }
+      },
+      "TimePickerV2": {
+        "demos": {
+          "time.vue": {},
+          "show-popover-content-only.vue": {},
+          "seconds.vue": {},
+          "single-trigger.vue": {},
+          "show-now.vue": {},
+          "confirm-type.vue": {},
+          "format-cell-text.vue": {},
+          "clearable.vue": {},
+          "show-time-tooltip.vue": {},
+          "step.vue": {},
+          "readonly.vue": {},
+          "disabled-time.vue": {},
+          "start-end-range.vue": {},
+          "multiple.vue": {},
+          "basic.vue": {},
+          "inputable.vue": {},
+          "initial-value.vue": {},
+          "is-range.vue": {}
+        }
+      },
+      "Picker": {
+        "demos": {
+          "basic.vue": {}
+        }
+      },
+      "Input": {
+        "demos": {
+          "size.vue": {},
+          "event.vue": {},
+          "icon.vue": {},
+          "limit.vue": {},
+          "clearable.vue": {},
+          "search.vue": {},
+          "textarea-auto-size.vue": {},
+          "base.vue": {},
+          "mixed.vue": {},
+          "disabled.vue": {},
+          "status.vue": {},
+          "password.vue": {},
+          "textarea.vue": {}
+        }
+      },
+      "Alert": {
+        "demos": {
+          "demo1.vue": {},
+          "size.vue": {},
+          "demo2.vue": {},
+          "demo3.vue": {},
+          "basic.vue": {}
+        }
+      },
+      "Skeleton": {
+        "demos": {
+          "demo1.vue": {},
+          "demo2.vue": {},
+          "demo3.vue": {}
+        }
+      },
+      "Layout": {
+        "demos": {
+          "demo1.vue": {},
+          "demo2.vue": {},
+          "demo3.vue": {},
+          "responsive.vue": {}
+        }
+      },
+      "VideoPlayer": {
+        "demos": {
+          "action.vue": {},
+          "rotate.vue": {},
+          "quality.vue": {},
+          "error.vue": {},
+          "basic.vue": {}
+        }
+      },
+      "Segmented": {
+        "demos": {
+          "size.vue": {},
+          "icon.vue": {},
+          "controlled.vue": {},
+          "customize.vue": {},
+          "block.vue": {},
+          "disabled.vue": {},
+          "basic.vue": {},
+          "scroll.vue": {},
+          "load-more.vue": {},
+          "form.vue": {}
+        }
+      },
+      "UploadV2": {
+        "demos": {
+          "show-file-thumbnail.vue": {},
+          "gallery.vue": {},
+          "before-preview.vue": {},
+          "clipboard.vue": {},
+          "background.vue": {},
+          "controls-always-visible.vue": {},
+          "http-request.vue": {},
+          "multiple.vue": {},
+          "avatar.vue": {},
+          "disabled.vue": {},
+          "drop.vue": {},
+          "before-upload.vue": {},
+          "gallery-mixed.vue": {},
+          "basic.vue": {},
+          "file-size-exceed.vue": {}
+        }
+      },
+      "DatePicker": {
+        "demos": {
+          "demo1.vue": {},
+          "demo2.vue": {},
+          "demo3.vue": {},
+          "demo7.vue": {},
+          "demo6.vue": {},
+          "demo4.vue": {},
+          "demo5.vue": {},
+          "demo15.vue": {},
+          "demo14.vue": {},
+          "demo16.vue": {},
+          "demo17.vue": {},
+          "demo13.vue": {},
+          "demo10.vue": {},
+          "demo11.vue": {},
+          "demo8.vue": {},
+          "demo9.vue": {}
+        }
+      },
+      "Panels": {
+        "demos": {
+          "tab.vue": {},
+          "vertical.vue": {},
+          "style.vue": {},
+          "basic.vue": {}
+        }
+      },
+      "Cascader": {
+        "demos": {
+          "filter-render-slot.vue": {},
+          "filterable-config.vue": {},
+          "expand-strictly.vue": {},
+          "panel-reach-bottom.vue": {},
+          "check-all-summary.vue": {},
+          "common-search-confirm.vue": {},
+          "show-popover-content-only.vue": {},
+          "display-way.vue": {},
+          "filter-reserve-keyword.vue": {},
+          "dynamic-load.vue": {},
+          "custom-trigger.vue": {},
+          "panel-grouped.vue": {},
+          "custom-selected-item.vue": {},
+          "filter-check-all.vue": {},
+          "panel-trigger.vue": {},
+          "custom-icon.vue": {},
+          "empty.vue": {},
+          "custom-trigger-inner.vue": {},
+          "unmatched-value.vue": {},
+          "trigger-hover.vue": {},
+          "selectable.vue": {},
+          "field-map.vue": {},
+          "multiple.vue": {},
+          "filterable.vue": {},
+          "check-strictly.vue": {},
+          "statistic.vue": {},
+          "confirm.vue": {},
+          "basic.vue": {},
+          "custom-confirm.vue": {},
+          "empty-list.vue": {},
+          "custom-option-render.vue": {},
+          "single.vue": {},
+          "virtual-scroll.vue": {}
+        }
+      },
+      "Count": {
+        "demos": {
+          "demo1.vue": {},
+          "prop.vue": {}
+        }
+      },
+      "Checkbox": {
+        "demos": {
+          "group.vue": {},
+          "border.vue": {},
+          "indeterminate.vue": {},
+          "inverse.vue": {},
+          "disabled.vue": {},
+          "basic.vue": {},
+          "button.vue": {}
+        }
+      },
+      "Transfer": {
+        "demos": {
+          "group.vue": {},
+          "radio.vue": {},
+          "drag.vue": {},
+          "tree.vue": {},
+          "basic.vue": {},
+          "table.vue": {},
+          "people.vue": {}
+        }
+      },
+      "DatePickerV2": {
+        "demos": {
+          "show-popover-content-only.vue": {},
+          "show-tooltip.vue": {},
+          "datetime.vue": {},
+          "default-slot.vue": {},
+          "single-trigger.vue": {},
+          "custom-trigger.vue": {},
+          "week.vue": {},
+          "show-now.vue": {},
+          "need-confirm.vue": {},
+          "confirm-type.vue": {},
+          "clearable.vue": {},
+          "hover-to-display-value.vue": {},
+          "default-time.vue": {},
+          "custom-icon.vue": {},
+          "date-display.vue": {},
+          "disabled-date-and-time.vue": {},
+          "step.vue": {},
+          "year-month.vue": {},
+          "readonly.vue": {},
+          "show-year-button.vue": {},
+          "value-format.vue": {},
+          "multiple.vue": {},
+          "basic.vue": {},
+          "format-trigger-text.vue": {},
+          "format.vue": {},
+          "panel-show-date.vue": {},
+          "inputable.vue": {},
+          "initial-value.vue": {},
+          "first-day-of-week.vue": {},
+          "show-dot.vue": {},
+          "shortcuts.vue": {}
+        }
+      },
+      "Descriptions": {
+        "demos": {
+          "border.vue": {},
+          "vertical.vue": {},
+          "basic.vue": {},
+          "props.vue": {},
+          "single.vue": {},
+          "responsive.vue": {}
+        }
+      },
+      "Slider": {
+        "demos": {
+          "index.vue": {},
+          "size.vue": {},
+          "custom-tooltip.vue": {},
+          "with-input.vue": {},
+          "disable.vue": {},
+          "step.vue": {},
+          "color.vue": {},
+          "range.vue": {},
+          "types.vue": {}
+        }
+      },
+      "PageHeader": {
+        "demos": {
+          "interactive.vue": {},
+          "breadcrumb.vue": {},
+          "basic.vue": {},
+          "no-icon.vue": {}
+        }
+      },
+      "Collapse": {
+        "demos": {
+          "size.vue": {},
+          "border.vue": {},
+          "accordion.vue": {},
+          "nest.vue": {},
+          "other.vue": {},
+          "basic.vue": {}
+        }
+      },
+      "InputNumber": {
+        "demos": {
+          "controls-position.vue": {},
+          "lang-press.vue": {},
+          "size.vue": {},
+          "formatter.vue": {},
+          "clearable.vue": {},
+          "prepend-append.vue": {},
+          "readonly.vue": {},
+          "precision-update.vue": {},
+          "precision.vue": {},
+          "placeholder.vue": {},
+          "disabled.vue": {},
+          "reserve-decimal-separator.vue": {},
+          "style.vue": {},
+          "prefix-suffix.vue": {},
+          "range.vue": {}
+        }
+      },
+      "TransferV2": {
+        "demos": {
+          "custom.vue": {},
+          "group.vue": {},
+          "order.vue": {},
+          "radio.vue": {},
+          "drag.vue": {},
+          "tree.vue": {},
+          "filter.vue": {},
+          "field-map.vue": {},
+          "basic.vue": {},
+          "table.vue": {},
+          "people.vue": {}
+        }
+      },
+      "Image": {
+        "demos": {
+          "title.vue": {},
+          "actions.vue": {},
+          "listCustom.vue": {},
+          "slot.vue": {},
+          "list.vue": {},
+          "rounded.vue": {},
+          "fit.vue": {},
+          "height.vue": {},
+          "aspect.vue": {},
+          "placeholder.vue": {},
+          "error.vue": {},
+          "basic.vue": {},
+          "viewer.vue": {},
+          "lazyload.vue": {}
+        }
+      },
+      "Time": {
+        "demos": {
+          "demo1.vue": {},
+          "slot.vue": {},
+          "props.vue": {}
+        }
+      },
+      "Dialog": {
+        "demos": {
+          "size.vue": {},
+          "btn.vue": {},
+          "overflow.vue": {},
+          "icon.vue": {},
+          "divider.vue": {},
+          "draggable.vue": {},
+          "customize.vue": {},
+          "vertical-position.vue": {},
+          "basic.vue": {},
+          "user-form.vue": {},
+          "render.vue": {}
+        }
+      },
+      "Popover": {
+        "demos": {
+          "pop-content.vue": {},
+          "position.vue": {},
+          "close-trigger.vue": {},
+          "arrow.vue": {},
+          "delay.vue": {},
+          "trigger.vue": {},
+          "complex.vue": {},
+          "offset.vue": {},
+          "disabled.vue": {},
+          "flip.vue": {},
+          "mask.vue": {},
+          "basic.vue": {},
+          "popper-class.vue": {}
+        }
+      },
+      "Controls": {
+        "demos": {
+          "access.vue": {},
+          "theme.vue": {},
+          "tooltip.vue": {},
+          "disabled.vue": {},
+          "basic.vue": {},
+          "resize.vue": {}
+        }
+      },
+      "Container": {
+        "demos": {
+          "demo1.vue": {},
+          "demo2.vue": {},
+          "demo3.vue": {},
+          "demo7.vue": {},
+          "demo6.vue": {},
+          "demo4.vue": {},
+          "demo5.vue": {}
+        }
+      },
+      "Watermark": {
+        "demos": {
+          "demo1.vue": {},
+          "demo2.vue": {},
+          "demo3.vue": {},
+          "demo4.vue": {}
+        }
+      },
+      "Viewer": {
+        "demos": {
+          "legend.vue": {},
+          "tools.vue": {},
+          "imgclick.vue": {},
+          "basic.vue": {},
+          "autohide.vue": {},
+          "loop.vue": {}
+        }
+      },
+      "Mask": {
+        "demos": {
+          "demo1.vue": {},
+          "demo2.vue": {},
+          "demo3.vue": {},
+          "demo4.vue": {},
+          "demo5.vue": {}
+        }
+      },
+      "Button": {
+        "demos": {
+          "size.vue": {},
+          "size-compatibility.vue": {},
+          "link.vue": {},
+          "button-group.vue": {},
+          "debounce-fn.vue": {},
+          "icon.vue": {},
+          "button-collapse.vue": {},
+          "custom-color.vue": {},
+          "block.vue": {},
+          "disabled.vue": {},
+          "plain.vue": {},
+          "basic.vue": {},
+          "border-style.vue": {},
+          "active.vue": {},
+          "text.vue": {},
+          "button-dropdown.vue": {}
+        }
+      },
+      "Steps": {
+        "demos": {
+          "async-load.vue": {},
+          "dot.vue": {},
+          "label-align.vue": {},
+          "vertical.vue": {},
+          "before-change.vue": {},
+          "small-size.vue": {},
+          "switch-step.vue": {},
+          "align-center.vue": {},
+          "disabled.vue": {},
+          "click.vue": {},
+          "basic.vue": {}
+        }
+      },
+      "Link": {
+        "demos": {
+          "type.vue": {},
+          "size.vue": {},
+          "jump-reaction.vue": {},
+          "icon.vue": {},
+          "attribute.vue": {},
+          "underline.vue": {},
+          "base.vue": {},
+          "vue-router.vue": {},
+          "status.vue": {},
+          "prefix-suffix.vue": {},
+          "anchor.vue": {}
+        }
+      },
+      "Table": {
+        "demos": {
+          "index.vue": {},
+          "expand.vue": {},
+          "size.vue": {},
+          "border.vue": {},
+          "header-sticky.vue": {},
+          "span-method.vue": {},
+          "column-header-slot.vue": {},
+          "tree-single-selection.vue": {},
+          "column-default-slot.vue": {},
+          "resizable.vue": {},
+          "empty.vue": {},
+          "table-layout.vue": {},
+          "tree-multiple-selection.vue": {},
+          "use-column-manager.vue": {},
+          "max-height.vue": {},
+          "tree.vue": {},
+          "filter.vue": {},
+          "sort.vue": {},
+          "height.vue": {},
+          "row-class-name.vue": {},
+          "multiple.vue": {},
+          "basic.vue": {},
+          "loading.vue": {},
+          "multiple-header.vue": {},
+          "fixed.vue": {},
+          "nested-tables.vue": {},
+          "show-overflow-tooltip.vue": {},
+          "single.vue": {},
+          "stripe.vue": {},
+          "tip.vue": {},
+          "summary.vue": {}
+        }
+      },
+      "List": {
+        "demos": {
+          "demo1.vue": {},
+          "demo2.vue": {}
+        }
+      },
+      "Divider": {
+        "demos": {
+          "line-style.vue": {},
+          "slots.vue": {},
+          "vertical.vue": {},
+          "basic.vue": {}
+        }
+      },
+      "Menu": {
+        "demos": {
+          "resizer.vue": {},
+          "horizontal.vue": {},
+          "shrink.vue": {},
+          "basic.vue": {},
+          "before-select.vue": {}
+        }
+      },
+      "Avatar": {
+        "demos": {
+          "type.vue": {},
+          "work.vue": {},
+          "normal.vue": {},
+          "error.vue": {}
+        }
+      },
+      "ColorPicker": {
+        "demos": {
+          "size.vue": {},
+          "custom-trigger.vue": {},
+          "examples.vue": {},
+          "trigger.vue": {},
+          "alpha.vue": {}
+        }
+      },
+      "Switch": {
+        "demos": {
+          "labelPosition.vue": {},
+          "size.vue": {},
+          "beforeChange.vue": {},
+          "disabled.vue": {},
+          "basic.vue": {}
+        }
+      },
+      "Anchor": {
+        "demos": {
+          "demo1.vue": {},
+          "demo2.vue": {},
+          "demo3.vue": {},
+          "demo7.vue": {},
+          "demo6.vue": {},
+          "demo4.vue": {},
+          "demo5.vue": {},
+          "demo8.vue": {},
+          "demo9.vue": {}
+        }
+      },
+      "Application": {
+        "demos": {
+          "size.vue": {},
+          "i18n.vue": {},
+          "show-time-zone.vue": {},
+          "popup-container.vue": {},
+          "container-demos": {
+            "popover.vue": {},
+            "popconfirm.vue": {},
+            "message-box.vue": {},
+            "dialog.vue": {},
+            "message.vue": {},
+            "notification.vue": {}
+          }
+        }
+      },
+      "Select": {
+        "demos": {
+          "group.vue": {},
+          "icon-style.vue": {},
+          "tag-fold.vue": {},
+          "size.vue": {},
+          "reach-bottom.vue": {},
+          "custom-tag-render.vue": {},
+          "virtual-scroller.vue": {},
+          "show-popover-content-only.vue": {},
+          "overflow.vue": {},
+          "check-all.vue": {},
+          "events.vue": {},
+          "reserve-keyword.vue": {},
+          "hide-selected.vue": {},
+          "empty.vue": {},
+          "dynamic-collapse.vue": {},
+          "option.vue": {},
+          "remote-search.vue": {},
+          "description.vue": {},
+          "filter.vue": {},
+          "multiple-render.vue": {},
+          "test.vue": {},
+          "multiple.vue": {},
+          "format-value.vue": {},
+          "disabled.vue": {},
+          "single-render.vue": {},
+          "statistic.vue": {},
+          "confirm.vue": {},
+          "selected-option-order-to-top.vue": {},
+          "basic.vue": {},
+          "fit-width.vue": {},
+          "initial-value.vue": {},
+          "single.vue": {},
+          "creatable.vue": {}
+        }
+      },
+      "Breadcrumb": {
+        "demos": {
+          "custom.vue": {},
+          "custom-divider.vue": {},
+          "size.vue": {},
+          "collapse.vue": {},
+          "link-mode.vue": {},
+          "basic.vue": {},
+          "special-style.vue": {},
+          "custom-item.vue": {}
+        }
+      },
+      "VirtualScroller": {
+        "demos": {
+          "GridDemo.vue": {},
+          "RecycleScrollerDemo.vue": {},
+          "HorizontalDemo.vue": {},
+          "VirtualScrollerDemo.vue": {}
+        }
+      },
+      "Space": {
+        "demos": {
+          "size.vue": {},
+          "vertical.vue": {},
+          "align.vue": {},
+          "wrap.vue": {},
+          "basic.vue": {},
+          "separator.vue": {},
+          "customize-item.vue": {}
+        }
+      },
+      "Timeline": {
+        "demos": {
+          "time.vue": {},
+          "business.vue": {},
+          "prop.vue": {},
+          "basic.vue": {}
+        }
+      },
+      "Tag": {
+        "demos": {
+          "type.vue": {},
+          "create-update.vue": {},
+          "collapse.vue": {},
+          "icon.vue": {},
+          "shape.vue": {},
+          "colorful.vue": {},
+          "avatar.vue": {},
+          "disabled.vue": {},
+          "plain.vue": {},
+          "basic.vue": {},
+          "loading.vue": {},
+          "closable.vue": {},
+          "active.vue": {}
+        }
+      },
+      "Scrollbar": {
+        "demos": {
+          "size.vue": {},
+          "min-size.vue": {},
+          "horizon.vue": {},
+          "max-height.vue": {},
+          "manual.vue": {},
+          "basic.vue": {},
+          "always.vue": {}
+        }
+      },
+      "Affix": {
+        "demos": {
+          "target.vue": {},
+          "multiple-scroll-container.vue": {},
+          "bottom.vue": {},
+          "offset.vue": {},
+          "basic.vue": {}
+        }
+      },
+      "Upload": {
+        "demos": {
+          "area.vue": {},
+          "icon.vue": {},
+          "preview.vue": {},
+          "upload-base.vue": {},
+          "upload-customrequest.vue": {},
+          "button.vue": {},
+          "image.vue": {},
+          "upload-complete.vue": {},
+          "upload-display.vue": {}
+        }
+      },
+      "Backtop": {
+        "demos": {
+          "custom.vue": {},
+          "target.vue": {},
+          "basic.vue": {}
+        }
+      },
+      "Badge": {
+        "demos": {
+          "icon.vue": {},
+          "align.vue": {},
+          "hidden.vue": {},
+          "color.vue": {},
+          "basic.vue": {},
+          "num.vue": {}
+        }
+      }
+    },
+    "style-animation": {
+      "position": {
+        "demos": {
+          "demo1.vue": {}
+        }
+      },
+      "center": {
+        "demos": {
+          "position.vue": {},
+          "textcenter.vue": {},
+          "flex.vue": {},
+          "margin.vue": {}
+        }
+      },
+      "shadow": {
+        "demos": {
+          "demo1.vue": {}
+        }
+      },
+      "overflow": {
+        "demos": {
+          "demo1.vue": {}
+        }
+      },
+      "colors": {
+        "demos": {
+          "demo1.vue": {},
+          "demo2.vue": {},
+          "index--no-code.vue": {},
+          "generator.vue": {}
+        }
+      },
+      "spacing": {
+        "demos": {
+          "demo1.vue": {}
+        }
+      },
+      "typography": {
+        "demos": {
+          "fontweight.vue": {},
+          "align.vue": {},
+          "ellipsis.vue": {},
+          "fontsize.vue": {},
+          "fonts.vue": {}
+        }
+      },
+      "display": {
+        "demos": {
+          "demo1.vue": {}
+        }
+      },
+      "flex": {
+        "demos": {
+          "demo1.vue": {}
+        }
+      },
+      "border-radius": {
+        "demos": {
+          "demo1.vue": {}
+        }
+      }
+    }
+  },
+  ".json": {
+    "features": {
+      "theme": {
+        "default.json": {}
+      },
+      "tokens": {
+        "demos": {
+          "theme.json": {}
+        }
+      }
+    }
+  },
+  ".js": {
+    "others": {
+      "Icon": {
+        "demos": {
+          "icons.name.js": {}
+        }
+      }
+    }
+  },
+  ".scss": {
+    "components": {
+      "Tabs": {
+        "demos": {
+          "design-token.scss": {}
+        }
+      }
+    }
+  },
+  ".ts": {
+    "components": {
+      "UploadV2": {
+        "demos": {
+          "type-defined.ts": {}
+        }
+      },
+      "Application": {
+        "demos": {
+          "container-demos": {
+            "index.ts": {}
+          }
+        }
+      },
+      "Upload": {
+        "demos": {
+          "mock-server.ts": {}
+        }
+      }
+    }
+  },
+  ".png": {
+    "components": {
+      "Mask": {
+        "demos": {
+          "1.png": {}
+        }
+      }
+    }
+  },
+  ".tsx": {
+    "components": {
+      "VirtualScroller": {
+        "demos": {
+          "ChatDemo.tsx": {}
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  'font-size--small': #{function.css-variable('text-sm')},
+  'font-size--medium': #{function.css-variable('text-base')},
+  'font-size--large': #{function.css-variable('text-lg')},
+  'color--positive': #{function.css-variable('text-link-default')},
+  'color--positive--hover': #{function.css-variable('text-link-hover')},
+  'color--positive--active': #{function.css-variable('text-link-press')},
+  'color--neutral': #{function.css-variable('text-primary')},
+  'color--neutral--hover': #{function.css-variable('text-secondary')},
+  'color--neutral--active': #{function.css-variable('text-primary')},
+  'color--negative': #{function.css-variable('text-error-default')},
+  'color--negative--hover': #{function.css-variable('text-error-hover')},
+  'color--negative--active': #{function.css-variable('text-error-press')},
+  'color--disabled': #{function.css-variable('text-link-disabled')},
+  'color--visited': #{function.css-variable('text-link-visited')},
+  'border-color--attribute': #{function.css-variable('text-primary')},
+  'border--inactive': 1px solid #{function.css-variable('bg-transparent')},
+  'margin-left--siblings': #{function.css-variable('spacing-3')},
+  'margin-left--prefix': #{function.css-variable('spacing-2')},
+  'margin-left--suffix': #{function.css-variable('spacing-2')},
+  'margin-left--anchor': #{function.css-variable('spacing-2')},
+  'margin-right--loading-svg': #{function.css-variable('spacing-2')},
+  'transition--all': #{function.css-variable('transition-all--fast')}
+);

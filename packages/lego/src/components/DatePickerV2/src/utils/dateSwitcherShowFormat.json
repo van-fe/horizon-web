@@ -1,0 +1,38 @@
+{
+  "En": {
+    "year-month": ["MMM", " ", "YYYY"],
+    "year": ["YYYY"]
+  },
+  "EnGB": {
+    "year-month": ["MMM", " ", "YYYY"],
+    "year": ["YYYY"]
+  },
+  "EnUS": {
+    "year-month": ["MMM", " ", "YYYY"],
+    "year": ["YYYY"]
+  },
+  "SvSE": {
+    "year-month": ["MMM", " ", "YYYY"],
+    "year": ["YYYY"]
+  },
+  "ZhCN": {
+    "year-month": ["YYYY年", "MM月"],
+    "year": ["YYYY年"]
+  },
+  "ZhTW": {
+    "year-month": ["YYYY年", "MM月"],
+    "year": ["YYYY年"]
+  },
+  "AE": {
+    "year-month": ["MMM", " ", "YYYY"],
+    "year": ["YYYY"]
+  },
+  "SG": {
+    "year-month": ["MMM", " ", "YYYY"],
+    "year": ["YYYY"]
+  },
+  "DE": {
+    "year-month": ["MMM", " ", "YYYY"],
+    "year": ["YYYY"]
+  }
+}

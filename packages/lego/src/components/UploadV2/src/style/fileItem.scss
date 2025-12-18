@@ -1,0 +1,178 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('upload-v2--file-item') {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: mixins.css-variable('upload-v2', 'size', 'file-list', 'item', 'height', 'medium');
+  padding: mixins.css-variable('upload-v2', 'spacing', 'file-list', 'item', 'padding');
+  background: mixins.css-variable('upload-v2', 'background', 'file-list', 'item');
+  border: mixins.css-variable('upload-v2', 'border', 'file-list', 'item');
+  border-radius: mixins.css-variable('upload-v2', 'border-radius', 'file-list', 'item');
+  transition: mixins.css-variable('upload-v2', 'transition');
+
+  @include mixins.e('preview') {
+    display: flex;
+    flex: 0 0 mixins.css-variable('upload-v2', 'size', 'file-list', 'item', 'preview');
+    align-items: center;
+    justify-content: center;
+    width: mixins.css-variable('upload-v2', 'size', 'file-list', 'item', 'preview');
+    height: mixins.css-variable('upload-v2', 'size', 'file-list', 'item', 'preview');
+    margin-right: mixins.css-variable('upload-v2', 'spacing', 'file-list', 'item', 'preview', 'margin-right');
+
+    @include mixins.m('preview-icon') {
+      position: relative;
+
+      @include mixins.has('thumbnail') {
+        cursor: pointer;
+      }
+
+      &-play {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+      }
+
+      > img, video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: mixins.css-variable('upload-v2', 'border-radius', 'file-list', 'control');
+      }
+    }
+  }
+
+  @include mixins.e('details') {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    min-width: 0;
+    margin-right: mixins.css-variable('upload-v2', 'spacing', 'file-list', 'item', 'preview', 'margin-right');
+
+    @include mixins.m('wrapper') {
+      display: flex;
+      flex: 1;
+      align-items: center;
+    }
+
+    @include mixins.m('file-name') {
+      display: flex;
+      flex: 0 0 100%;
+      align-items: center;
+      min-width: 0;
+      max-width: fit-content;
+      white-space: nowrap;
+    }
+
+    @include mixins.m('file-base-name') {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    @include mixins.m('file-status') {
+      width: mixins.css-variable('upload-v2', 'size', 'button', 'icon');
+      height: mixins.css-variable('upload-v2', 'size', 'button', 'icon');
+      margin-left: mixins.css-variable('upload-v2', 'spacing', 'file-list', 'item', 'status', 'margin-left');
+    }
+
+    @include mixins.m('size') {
+      flex: 0 0 100%;
+      min-width: 0;
+      color: mixins.css-variable('upload-v2', 'color', 'file-list', 'item');
+      font-size: mixins.css-variable('upload-v2', 'font-size', 'file-list', 'item');
+    }
+
+    @include mixins.m('progress') {
+      display: flex;
+      flex: 0 0 100%;
+      align-items: center;
+      min-width: 0;
+      height: mixins.css-variable('upload-v2', 'size', 'file-list', 'item', 'progress', 'height');
+
+      .#{mixins.block('progress')} {
+        flex: 1;
+      }
+    }
+  }
+
+  &:hover {
+    background: mixins.css-variable('upload-v2', 'background', 'file-list', 'item', 'hover');
+  }
+
+  @include mixins.with-parallel-state('uploading', 'pause') {
+    @include mixins.em('details', 'file-name', false) {
+      flex: 1;
+    }
+
+    @include mixins.em('details', 'size', false) {
+      flex: 0 0 fit-content;
+      margin-left: mixins.css-variable('upload-v2', 'spacing', 'file-list', 'item', 'controls', 'margin');
+    }
+  }
+
+  @include mixins.is('fail') {
+    @include mixins.em('details', 'file-name', false) {
+      color: mixins.css-variable('upload-v2', 'color', 'file-list', 'item', 'fail');
+    }
+  }
+
+  @include mixins.m('small') {
+    height: mixins.css-variable('upload-v2', 'size', 'file-list', 'item', 'height', 'small');
+
+    @include mixins.e('preview', false) {
+      width: mixins.css-variable('upload-v2', 'size', 'file-list', 'item', 'preview', 'small');
+      height: mixins.css-variable('upload-v2', 'size', 'file-list', 'item', 'preview', 'small');
+    }
+
+    @include mixins.e('details', false) {
+      height: 100%;
+
+      @include mixins.m('size') {
+        flex: auto;
+        margin-left: mixins.css-variable('upload-v2', 'spacing', 'file-list', 'item', 'file-size', 'margin-left')
+      }
+    }
+
+    @include mixins.em('details', 'progress', false) {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: mixins.css-variable('upload-v2', 'spacing', 'file-list', 'item', 'progress', 'small', 'left');
+      height: auto;
+
+      @include mixins.nested('progress-bar') {
+        min-width: 100%;
+      }
+    }
+  }
+
+  @include mixins.m('large') {
+    height: mixins.css-variable('upload-v2', 'size', 'file-list', 'item', 'height', 'large');
+
+    @include mixins.e('preview', false) {
+      width: mixins.css-variable('upload-v2', 'size', 'file-list', 'item', 'preview', 'large');
+      height: mixins.css-variable('upload-v2', 'size', 'file-list', 'item', 'preview', 'large');
+    }
+  }
+
+  @include mixins.m('huge') {
+    height: mixins.css-variable('upload-v2', 'size', 'file-list', 'item', 'height', 'huge');
+
+    @include mixins.e('preview', false) {
+      width: mixins.css-variable('upload-v2', 'size', 'file-list', 'item', 'preview', 'huge');
+      height: mixins.css-variable('upload-v2', 'size', 'file-list', 'item', 'preview', 'huge');
+    }
+  }
+
+  @include mixins.m('gigantic') {
+    height: mixins.css-variable('upload-v2', 'size', 'file-list', 'item', 'height', 'gigantic');
+
+    @include mixins.e('preview', false) {
+      width: mixins.css-variable('upload-v2', 'size', 'file-list', 'item', 'preview', 'gigantic');
+      height: mixins.css-variable('upload-v2', 'size', 'file-list', 'item', 'preview', 'gigantic');
+    }
+  }
+}

@@ -1,0 +1,97 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('menu--full-view') {
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  transition: mixins.css-variable('menu-transiton--all');
+
+  @include mixins.e('container') {
+    display: flex;
+    grid-column-gap: mixins.css-variable('menu-column-gap--full-view--group');
+    justify-content: center;
+    margin: 0 auto;
+    padding: mixins.css-variable('menu-padding--full-view');
+  }
+
+  @include mixins.e('group') {
+    display: flex;
+    flex-direction: column;
+    width: mixins.css-variable('menu-width--full-view--group');
+    padding: mixins.css-variable('menu-padding--full-view--group');
+
+    @include mixins.m('title') {
+      &-content {
+        padding: mixins.css-variable('menu-padding--full-view--item');
+        outline-color: mixins.css-variable('menu-outline-color');
+      }
+
+      @include mixins.has-not('router') {
+        &::after {
+          display: block;
+          height: 1px;
+          margin: mixins.css-variable('menu-margin--full-view--group--title--divider');
+          content: '';
+        }
+      }
+
+      @include mixins.is-not('disabled') {
+        @include mixins.has('router') {
+          cursor: pointer;
+        }
+
+        @include mixins.is('active') {
+          font-weight: mixins.css-variable('menu-font-weight--title--active');
+        }
+
+        @include mixins.is('selectable') {
+          cursor: pointer;
+        }
+      }
+    }
+
+    @include mixins.m('list') {
+      display: grid;
+      grid-gap: mixins.css-variable('menu-column-gap-rows--full-view--group--item') mixins.css-variable('menu-column-gap-columns--full-view--group--item');
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @include mixins.m('item') {
+      display: flex;
+      align-items: center;
+      min-width: 0;
+      height: mixins.css-variable('menu-height--full-view--group--item');
+      padding: mixins.css-variable('menu-padding--full-view--item');
+      border-radius: mixins.css-variable('menu-border-radius--item');
+      outline-color: mixins.css-variable('menu-outline-color');
+      cursor: pointer;
+      transition: mixins.css-variable('menu-transiton--all');
+
+      &-icon {
+        margin-right: mixins.css-variable('menu-margin-right--title-icon--full-view');
+        line-height: 1;
+      }
+
+      &-content {
+        max-width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      @include mixins.is('disabled') {
+        cursor: not-allowed;
+      }
+
+      @include mixins.is-not('disabled') {
+        @include mixins.is('router') {
+          cursor: pointer;
+        }
+      }
+
+      @include mixins.is('active') {
+        font-weight: mixins.css-variable('menu-font-weight--title--active');
+      }
+    }
+  }
+}

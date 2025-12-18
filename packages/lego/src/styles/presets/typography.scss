@@ -1,0 +1,124 @@
+@use '../mixins';
+
+// 字号
+.text-sm {
+  font-size: mixins.css-variable('text-sm') !important;
+}
+
+.text-base {
+  font-size: mixins.css-variable('text-base') !important;
+}
+
+.text-lg {
+  font-size: mixins.css-variable('text-lg') !important;
+}
+
+.text-xl {
+  font-size: mixins.css-variable('text-xl') !important;
+}
+
+.text-2xl {
+  font-size: mixins.css-variable('text-2xl') !important;
+}
+
+.text-3xl {
+  font-size: mixins.css-variable('text-3xl') !important;
+}
+
+// 字重
+.font-normal {
+  font-weight: mixins.css-variable('weight-normal') !important;
+}
+
+.font-bold {
+  font-weight: mixins.css-variable('weight-strong') !important;
+}
+
+// 排版工具类
+.text-chat-1 {
+  @include mixins.chat-1(!important);
+}
+
+.text-chat-2 {
+  @include mixins.chat-2(!important);
+}
+
+.text-chat-3 {
+  @include mixins.chat-3(!important);
+}
+
+.text-headline-1 {
+  @include mixins.headline-1(!important);
+}
+
+.text-headline-2 {
+  @include mixins.headline-2(!important);
+}
+
+.text-subtitle-1 {
+  @include mixins.subtitle-1(!important);
+}
+
+.text-subtitle-2 {
+  @include mixins.subtitle-2(!important);
+}
+
+.text-subtitle-3 {
+  @include mixins.subtitle-3(!important);
+}
+
+.text-body-1 {
+  @include mixins.body-1(!important);
+}
+
+.text-body-2 {
+  @include mixins.body-2(!important);
+}
+
+.text-body-3 {
+  @include mixins.body-3(!important);
+}
+
+.text-caption-1 {
+  @include mixins.caption-1(!important);
+}
+
+.text-caption-2 {
+  @include mixins.caption-2(!important);
+}
+
+// 对齐
+.text-left {
+  text-align: left !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.text-justify {
+  text-align: justify !important;
+}
+
+// 截取
+.text-ellipsis {
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+  word-break: break-word !important;
+}
+
+@for $i from 0 through 5 {
+  .text-ellipsis-#{$i} {
+    display: -webkit-box !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    -webkit-line-clamp: $i !important;
+    -webkit-box-orient: vertical !important;
+    word-break: break-word !important;
+  }
+}

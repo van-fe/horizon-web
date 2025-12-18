@@ -1,0 +1,15 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  'size--track': #{function.css-variable('spacing-5')},
+  'size--track--small': #{function.css-variable('spacing-3')},
+  'size--thumb': #{function.css-variable('spacing-3')},
+  'size--thumb--small': #{function.css-variable('spacing-2')},
+  'bg-thumb': #{function.css-variable('bg-overlay-weak')},
+  'bg-thumb--hover': #{rgba(#{function.css-variable('color-1-10')}, #{function.css-variable('opacity-5')})},
+  'bg-thumb--active': #{rgba(#{function.css-variable('color-1-10')}, #{function.css-variable('opacity-5')})},
+  'border-radius--track': #{function.css-variable('radius-pill')},
+  'padding--track': #{function.css-variable('spacing-2')},
+  'padding--track--small': #{function.css-variable('spacing-1')},
+  'transition--background': background 0.2s,
+);

@@ -1,0 +1,68 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('date-picker-content') {
+  display: flex;
+
+  @include mixins.e('sidebar') {
+    padding: mixins.css-variable('date-picker-padding--content--sidebar');
+    border-right: mixins.css-variable('date-picker-border--content--sidebar');
+
+    @include mixins.nested('radio-group') {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    @include mixins.nested('radio') {
+      margin: mixins.css-variable('date-picker-margin--content--radio');
+    }
+
+    @include mixins.nested('radio__original') {
+      border: mixins.css-variable('date-picker-radio-border');
+    }
+  }
+
+  @include mixins.e('main') {
+    flex: 1;
+    width: 304px;
+    min-width: 304px;
+
+    @include mixins.m('range') {
+      width: 608px;
+      min-width: 608px;
+    }
+
+    @include mixins.m('time') {
+      width: 386px;
+      min-width: 386px;
+    }
+
+    @include mixins.m('minutes') {
+      width: 419px;
+      min-width: 419px;
+    }
+
+    @include mixins.m('seconds') {
+      width: 476px;
+      min-width: 476px;
+    }
+  }
+
+  @include mixins.e('body-wrapper') {
+    display: flex;
+  }
+
+  @include mixins.m('left') {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+}
+
+@include mixins.bem('date-picker', 'content', 'panel') {
+  @include mixins.e('main') {
+    width: auto;
+    min-width: auto;
+  }
+}

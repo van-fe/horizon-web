@@ -1,0 +1,119 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('color-picker-trigger') {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: mixins.css-variable('color-picker-color--trigger');
+
+  @include mixins.e('color') {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border: mixins.css-variable('color-picker-border--default--opacity-50');
+    border-radius: mixins.css-variable('color-picker-border-radius--trigger');
+
+    @include mixins.m('wrapper') {
+      min-width: mixins.css-variable('color-picker-size--trigger-input--default');
+      height: 100%;
+      border-radius: mixins.css-variable('color-picker-border-radius--trigger');
+
+      @include mixins.is('alpha') {
+        @include mixins.with-alpha(3px);
+      }
+    }
+
+    @include mixins.is('empty') {
+      overflow: hidden;
+
+      &::after {
+        position: absolute;
+        display: block;
+        width: 1.5px;
+        height: 150%;
+        background: red;
+        transform:  translate(-2px, -1px) rotate(-45deg);
+        transform-origin: top;
+        content: '';
+      }
+    }
+  }
+
+  @include mixins.e('text') {
+    width: max-content;
+    margin: mixins.css-variable('color-picker-margin--trigger-text');
+    color: mixins.css-variable('color-picker-color--trigger-text');
+  }
+}
+
+@include mixins.b('color-picker') {
+  @include mixins.m('small') {
+    @include mixins.nested('color-picker-trigger') {
+      min-width: mixins.css-variable('color-picker-size--trigger-input--small');
+      height: mixins.css-variable('color-picker-size--trigger-input--small');
+
+      &__color {
+        &--wrapper {
+          min-width: mixins.css-variable('color-picker-size--trigger-input--small');
+        }
+      }
+
+      &__text {
+        font-size: mixins.css-variable('color-picker-font-size--trigger-text--small');
+      }
+    }
+
+    > #{mixins.block-name('popover__reference')} {
+      > #{mixins.block-name('picker__input')} {
+        > #{mixins.block-name('picker__input--append-icon')} {
+          width: mixins.css-variable('color-picker-size--trigger-input--small');
+        }
+      }
+    }
+  }
+
+  @include mixins.m('medium') {
+    @include mixins.nested('color-picker-trigger') {
+      min-width: mixins.css-variable('color-picker-size--trigger-input--default');
+      height: mixins.css-variable('color-picker-size--trigger-input--default');
+
+      &__text {
+        font-size: mixins.css-variable('color-picker-font-size--trigger-text--medium');
+      }
+    }
+
+    > #{mixins.block-name('popover__reference')} {
+      > #{mixins.block-name('picker__input')} {
+        > #{mixins.block-name('picker__input--append-icon')} {
+          width: mixins.css-variable('color-picker-size--trigger-input--default');
+        }
+      }
+    }
+  }
+
+  @include mixins.m('large') {
+    @include mixins.nested('color-picker-trigger') {
+      min-width: mixins.css-variable('color-picker-size--trigger-input--large');
+      height: mixins.css-variable('color-picker-size--trigger-input--large');
+
+      &__color {
+        &--wrapper {
+          min-width: mixins.css-variable('color-picker-size--trigger-input--large');
+        }
+      }
+
+      &__text {
+        font-size: mixins.css-variable('color-picker-font-size--trigger-text--large');
+      }
+    }
+
+    > #{mixins.block-name('popover__reference')} {
+      > #{mixins.block-name('picker__input')} {
+        > #{mixins.block-name('picker__input--append-icon')} {
+          width: mixins.css-variable('color-picker-size--trigger-input--large');
+        }
+      }
+    }
+  }
+}

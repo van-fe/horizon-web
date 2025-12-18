@@ -1,0 +1,20 @@
+@use 'sass:map';
+
+$panel-time-width: () !default;
+$panel-time-width: map.merge(
+  (
+    'time': 80px,
+    'minutes': 114px,
+    'seconds': 171px
+  ),
+  $panel-time-width
+);
+$trigger-height: () !default;
+$trigger-height: map.merge(
+  (
+    'small': 20px,
+    'medium': 30px,
+    'large': 38px
+  ),
+  $trigger-height
+);

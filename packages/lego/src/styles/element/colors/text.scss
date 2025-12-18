@@ -1,0 +1,73 @@
+@use '../../mixins/function';
+
+$values: (
+  'primary': rgb(function.css-variable('color-1-9')),
+  'secondary': rgb(function.css-variable('color-1-8')),
+  'tertiary': rgb(function.css-variable('color-1-7')),
+  'disabled': rgb(function.css-variable('color-1-5')),
+  'brand': (
+    'default': rgb(function.css-variable('color-2-7')),
+    'hover': rgb(function.css-variable('color-2-6')),
+    'press': rgb(function.css-variable('color-2-8')),
+    'disabled': rgba(function.css-variable('color-2-7'), function.css-variable('opacity-6')),
+    'activated': rgb(function.css-variable('color-2-6')),
+  ),
+  'link': (
+    'default': rgb(function.css-variable('color-2-7')),
+    'hover': rgb(function.css-variable('color-2-6')),
+    'press': rgb(function.css-variable('color-2-8')),
+    'disabled': rgba(function.css-variable('color-2-7'), function.css-variable('opacity-6')),
+    'visited': rgb(function.css-variable('color-14-6')),
+  ),
+  'error': (
+    'default': rgb(function.css-variable('color-6-6')),
+    'hover': rgb(function.css-variable('color-6-5')),
+    'press': rgb(function.css-variable('color-6-7')),
+    'disabled': rgb(function.css-variable('color-6-3')),
+    'activated': rgb(function.css-variable('color-6-6')),
+    'display': rgb(function.css-variable('color-6-8')),
+  ),
+  'info': (
+    'default': rgb(function.css-variable('color-12-6')),
+    'hover': rgb(function.css-variable('color-12-5')),
+    'press': rgb(function.css-variable('color-12-7')),
+    'disabled': rgb(function.css-variable('color-12-3')),
+    'activated': rgb(function.css-variable('color-12-6')),
+    'display': rgb(function.css-variable('color-12-8')),
+  ),
+  'warning': (
+    'default': rgb(function.css-variable('color-3-6')),
+    'hover': rgb(function.css-variable('color-3-5')),
+    'press': rgb(function.css-variable('color-3-7')),
+    'disabled': rgb(function.css-variable('color-3-3')),
+    'activated': rgb(function.css-variable('color-3-6')),
+    'display': rgb(function.css-variable('color-3-8')),
+  ),
+  'success': (
+    'default': rgb(function.css-variable('color-10-6')),
+    'hover': rgb(function.css-variable('color-10-5')),
+    'press': rgb(function.css-variable('color-10-7')),
+    'disabled': rgb(function.css-variable('color-10-3')),
+    'activated': rgb(function.css-variable('color-10-6')),
+    'display': rgb(function.css-variable('color-10-8')),
+  ),
+  'inverse': (
+    '': rgb(function.css-variable('color-1-1')),
+    'hover': rgba(function.css-variable('color-1-1'), function.css-variable('opacity-9')),
+    'press': rgba(function.css-variable('color-1-1'), function.css-variable('opacity-7')),
+    'disabled': rgba(function.css-variable('color-1-1'), function.css-variable('opacity-6')),
+    'activated': rgb(function.css-variable('color-1-1')),
+    'brand': (
+      'default': rgb(function.css-variable('color-2-5')),
+      'hover': rgba(function.css-variable('color-2-5'), function.css-variable('opacity-9')),
+      'press': rgba(function.css-variable('color-2-5'), function.css-variable('opacity-7')),
+      'disabled': rgba(function.css-variable('color-2-5'), function.css-variable('opacity-6')),
+    ),
+    'error': (
+      'default': rgb(function.css-variable('color-6-5')),
+      'hover': rgba(function.css-variable('color-6-5'), function.css-variable('opacity-9')),
+      'press': rgba(function.css-variable('color-6-5'), function.css-variable('opacity-7')),
+      'disabled': rgba(function.css-variable('color-6-5'), function.css-variable('opacity-6')),
+    ),
+  ),
+);

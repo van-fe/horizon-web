@@ -1,0 +1,228 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('table-v3') {
+  @include mixins.e('cell') {
+    position: relative;
+    box-sizing: border-box;
+    min-width: 0;
+    padding-right: mixins.css-variable('table', 'spacing', 'padding', 'cell', 'x');
+    padding-left: mixins.css-variable('table', 'spacing', 'padding', 'cell', 'x');
+    text-overflow: ellipsis;
+    background: inherit;
+
+    @include mixins.e('cell-wrap') {
+      display: inline-flex;
+      grid-column-gap: mixins.css-variable('table', 'spacing', 'gap', 'cell', 'wrap');
+      align-items: center;
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    @include mixins.e('cell-inner') {
+      box-sizing: border-box;
+      overflow: hidden;
+      white-space: normal;
+      text-overflow: ellipsis;
+      vertical-align: top;
+      overflow-wrap: break-word;
+    }
+
+    @include mixins.e('cell-prepend') {
+      display: inline-flex;
+      grid-column-gap: mixins.css-variable('table', 'spacing', 'gap', 'cell', 'prepend-append');
+      vertical-align: top;
+    }
+
+    @include mixins.e('cell-append') {
+      display: inline-flex;
+      grid-column-gap: mixins.css-variable('table', 'spacing', 'gap', 'cell', 'prepend-append');
+      vertical-align: top;
+    }
+
+    @include mixins.e('expand-icon') {
+      width: mixins.css-variable('table', 'size', 'body', 'action-button');
+      height: mixins.css-variable('table', 'size', 'body', 'action-button');
+      margin-right: mixins.css-variable('table', 'spacing', 'margin', 'cell', 'expand-icon');
+      line-height: initial;
+      border-radius: mixins.css-variable('table', 'border-radius');
+      cursor: pointer;
+      transition: mixins.css-variable('table', 'transition', 'color-behavior');
+
+      svg {
+        transition: mixins.css-variable('table', 'transition', 'transform');
+        pointer-events: none;
+      }
+
+      @include mixins.m('loading') {
+        pointer-events: none;
+      }
+
+      @include mixins.m('placeholder') {
+        pointer-events: none;
+      }
+
+      @include mixins.is('active') {
+        > * {
+          transform: rotate(90deg);
+        }
+      }
+
+      &:hover {
+        background: mixins.css-variable('table', 'background', 'body', 'action-button', 'hover');
+      }
+
+      &:active {
+        background: mixins.css-variable('table', 'background', 'body', 'action-button', 'press');
+      }
+    }
+
+    @include mixins.e('selection') {
+      display: inline-flex;
+      align-items: center;
+      line-height: initial;
+
+      @include mixins.is('hidden') {
+        visibility: hidden;
+      }
+    }
+
+    @include mixins.is('text-left') {
+      text-align: left;
+    }
+
+    @include mixins.is('text-right') {
+      text-align: right;
+    }
+
+    @include mixins.is('text-center') {
+      text-align: center;
+    }
+
+    @include mixins.is('selection') {
+      padding: mixins.css-variable('table', 'spacing', 'padding', 'cell', 'selection');
+
+      @include mixins.e('cell-inner') {
+        #{mixins.css-variable-name('radio', 'margin-right', '-original')}: 0;
+        #{mixins.css-variable-name('checkbox', 'margin', '-icon')}: 0;
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    @include mixins.is('last-fixed-column') {
+      &::before {
+        position: absolute;
+        top: 0;
+        bottom: -1px;
+        width: 10px;
+        overflow: hidden;
+        box-shadow: none;
+        content: '';
+        pointer-events: none;
+        touch-action: none;
+      }
+    }
+
+    @include mixins.has('tooltip') {
+      @include mixins.be('table-v3', 'cell-inner', false) {
+        white-space: nowrap;
+      }
+    }
+
+    @include mixins.with-parallel-state('fixed-left', 'fixed-right') {
+      position: sticky;
+      z-index: mixins.css-variable('table', 'z-index', 'default');
+      background: inherit;
+    }
+  }
+
+  @include mixins.is('mini') {
+    @include mixins.e('cell') {
+      line-height: mixins.css-variable('table', 'font', 'line-height', 'mini');
+
+      @include mixins.is('selection') {
+        @include mixins.e('cell-inner') {
+          min-height: calc(#{mixins.css-variable('table', 'font', 'line-height', 'mini')} + #{mixins.css-variable('table', 'spacing', 'padding', 'cell', 'mini')} * 2);
+        }
+      }
+    }
+
+    @include mixins.e('cell-inner') {
+      padding-top: mixins.css-variable('table', 'spacing', 'padding', 'cell', 'mini');
+      padding-bottom: mixins.css-variable('table', 'spacing', 'padding', 'cell', 'mini');
+    }
+  }
+
+  @include mixins.is('small') {
+    @include mixins.e('cell') {
+      line-height: mixins.css-variable('table', 'font', 'line-height', 'small');
+
+      @include mixins.is('selection') {
+        @include mixins.e('cell-inner') {
+          min-height: calc(#{mixins.css-variable('table', 'font', 'line-height', 'small')} + #{mixins.css-variable('table', 'spacing', 'padding', 'cell', 'small')} * 2);
+        }
+      }
+    }
+
+    @include mixins.e('cell-inner') {
+      padding-top: mixins.css-variable('table', 'spacing', 'padding', 'cell', 'small');
+      padding-bottom: mixins.css-variable('table', 'spacing', 'padding', 'cell', 'small');
+    }
+  }
+
+  @include mixins.is('medium') {
+    @include mixins.e('cell') {
+      line-height: mixins.css-variable('table', 'font', 'line-height', 'medium');
+
+      @include mixins.is('selection') {
+        @include mixins.e('cell-inner') {
+          min-height: calc(#{mixins.css-variable('table', 'font', 'line-height', 'medium')} + #{mixins.css-variable('table', 'spacing', 'padding', 'cell', 'medium')} * 2);
+        }
+      }
+    }
+
+    @include mixins.e('cell-inner') {
+      padding-top: mixins.css-variable('table', 'spacing', 'padding', 'cell', 'medium');
+      padding-bottom: mixins.css-variable('table', 'spacing', 'padding', 'cell', 'medium');
+    }
+  }
+
+  @include mixins.is('large') {
+    @include mixins.e('cell') {
+      line-height: mixins.css-variable('table', 'font', 'line-height', 'large');
+
+      @include mixins.is('selection') {
+        @include mixins.e('cell-inner') {
+          min-height: calc(#{mixins.css-variable('table', 'font', 'line-height', 'large')} + #{mixins.css-variable('table', 'spacing', 'padding', 'cell', 'large')} * 2);
+        }
+      }
+    }
+
+    @include mixins.e('cell-inner') {
+      padding-top: mixins.css-variable('table', 'spacing', 'padding', 'cell', 'large');
+      padding-bottom: mixins.css-variable('table', 'spacing', 'padding', 'cell', 'large');
+    }
+  }
+
+  @include mixins.is('scrolling-left') {
+    @include mixins.e('cell') {
+      @include mixins.with-multi-state('last-fixed-column', 'fixed-left') {
+        &::before {
+          right: -10px;
+          box-shadow: mixins.css-variable('table', 'box-shadow', 'scrolling', 'left');
+        }
+      }
+    }
+  }
+
+  @include mixins.is('scrolling-right') {
+    @include mixins.e('cell') {
+      @include mixins.with-multi-state('last-fixed-column', 'fixed-right') {
+        &::before {
+          left: -10px;
+          box-shadow: mixins.css-variable('table', 'box-shadow', 'scrolling', 'right');
+        }
+      }
+    }
+  }
+}

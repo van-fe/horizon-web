@@ -1,0 +1,288 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('transfer-v2') {
+  display: flex;
+  min-height: 300px;
+  color: mixins.css-variable('transfer-v2-color');
+
+  @include mixins.e('header') {
+    width: 100%;
+
+    @include mixins.m('clear') {
+      min-width: max-content;
+      padding: 0;
+      color: mixins.css-variable('transfer-v2-color--clear--header');
+      background-color: transparent !important;
+      cursor: pointer;
+    }
+  }
+
+  @include mixins.e('control') {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: mixins.css-variable('transfer-v2-margin--control');
+
+    @include mixins.siblings-block('button') {
+      margin-top: mixins.css-variable('transfer-v2-margin-top--control--button-siblings');
+    }
+  }
+
+  @include mixins.m('none-control') {
+    @include mixins.bm('transfer-v2', 'left', false) {
+      @include mixins.be('transfer-v2-panel', 'header', false) {
+        border-top-right-radius: 0;
+      }
+    }
+
+    @include mixins.bm('transfer-v2', 'right', false) {
+      @include mixins.be('transfer-v2-panel', 'header', false) {
+        border-left-color: transparent;
+        border-top-left-radius: 0;
+      }
+
+      @include mixins.be('transfer-v2-panel', 'body', false) {
+        border-left-color: transparent;
+      }
+    }
+  }
+
+  @include mixins.m('left') {
+    border-top-left-radius: mixins.css-variable('transfer-v2-border-radius');
+    border-bottom-left-radius: mixins.css-variable('transfer-v2-border-radius');
+  }
+
+  @include mixins.m('right') {
+    border-top-right-radius: mixins.css-variable('transfer-v2-border-radius');
+    border-bottom-right-radius: mixins.css-variable('transfer-v2-border-radius');
+  }
+}
+
+@include mixins.b('transfer-v2-panel') {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding-bottom: 16px;
+  overflow: hidden;
+  background-color: mixins.css-variable('transfer-v2-bg--panel');
+  border: mixins.css-variable('transfer-v2-border--panel');
+
+  & + & {
+    border-left: none;
+  }
+
+  @include mixins.e('header') {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 48px;
+    padding: mixins.css-variable('transfer-v2-padding--panel-header');
+  }
+
+  @include mixins.em('header', 'empty') {
+    height: 0;
+    padding: 0;
+  }
+
+  @include mixins.e('input') {
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    padding: mixins.css-variable('transfer-v2-padding--panel-input');
+    background-color: mixins.css-variable('transfer-v2-bg--panel-input');
+  }
+
+  @include mixins.e('breadcrumb') {
+    max-height: 88px;
+    padding: mixins.css-variable('transfer-v2-padding--panel-breadcrumb');
+    overflow-y: scroll;
+  }
+
+  @include mixins.e('body') {
+    position: relative;
+    flex: 1;
+    box-sizing: content-box;
+    max-height: mixins.css-variable('transfer-v2-height--panel-body');
+    padding: mixins.css-variable('transfer-v2-padding--panel-body');
+    overflow: auto;
+
+    @include mixins.nested('breadcrumb') {
+      overflow: hidden;
+      text-align: left;
+      text-overflow: ellipsis;
+
+      &-item {
+        display: inline-block;
+      }
+    }
+
+    @include mixins.nested('checkbox-group') {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  @include mixins.e('item') {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    width: 100%;
+    padding: mixins.css-variable('transfer-v2-padding--panel-item');
+    line-height: 22px;
+    border-radius: mixins.css-variable('transfer-v2-border-radius--item');
+    cursor: pointer;
+
+    @include mixins.is('draggable') {
+      &:hover {
+        background: mixins.css-variable('transfer-v2-bg--panel-item--hover');
+      }
+    }
+
+    &-label {
+      overflow: hidden;
+      white-space: nowrap;
+      text-align: left;
+      text-overflow: ellipsis;
+    }
+
+    &-group {
+      padding: mixins.css-variable('transfer-v2-padding--panel-item--group');
+      color: mixins.css-variable('transfer-v2-color--panel-item--group');
+      font-size: 12px;
+    }
+
+    @include mixins.nested('checkbox') {
+      display: flex;
+      width: 100%;
+
+      &__label {
+        flex: 1;
+        overflow: hidden;
+        white-space: nowrap;
+        text-align: left;
+        text-overflow: ellipsis;
+      }
+    }
+
+    &::before {
+      position: absolute;
+      right: 0;
+      left: 0;
+      display: none;
+      height: 2px;
+      border-radius: 1px;
+      content: '';
+    }
+
+    @include mixins.nested('icon_drag') {
+      cursor: grab;
+    }
+
+    #{mixins.block-name('icon_close')},
+    #{mixins.block-name('icon_arrow_right')},
+    #{mixins.block-name('icon_drag')} {
+      color: #929398;
+
+      &:hover {
+        color: #73757a;
+      }
+    }
+
+    @include mixins.m('gap-top') {
+      &::before {
+        top: 0;
+        display: block;
+        background-color: mixins.css-variable('transfer-v2-bg--panel-item--gap-top');
+      }
+    }
+
+    @include mixins.m('gap-bottom') {
+      &::before {
+        bottom: 0;
+        display: block;
+        background-color: mixins.css-variable('transfer-v2-bg--panel-item--gap-bottom');
+      }
+    }
+
+    @include mixins.e('content') {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  @include mixins.e('item-drag-over-wrap') {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    height: 100%;
+    background-color: mixins.css-variable('transfer-v2-bg--item--drag-over');
+
+    @include mixins.is('sibling') {
+      width: 100%;
+    }
+    @include mixins.e('item-drag-over-cursor') {
+      position: absolute;
+      right: calc(#{mixins.css-variable('transfer-v2-size--drag-over-cursor-arrow')} + #{mixins.css-variable('transfer-v2-height--drag-over-cursor')} * 2);
+      bottom: 0;
+      width: 100%;
+      height: mixins.css-variable('transfer-v2-height--drag-over-cursor');
+      background: mixins.css-variable('transfer-v2-bg--drag-over-cursor');
+      opacity: 1;
+      @include mixins.is('top') {
+        top: 0;
+      }
+      @include mixins.is('bottom') {
+        bottom: 0;
+      }
+    
+      &::before, &::after {
+        position: absolute;
+        top: 50%;
+        display: block;
+        width: mixins.css-variable('transfer-v2-size--drag-over-cursor-arrow');
+        height: mixins.css-variable('transfer-v2-size--drag-over-cursor-arrow');
+        border: mixins.css-variable('transfer-v2-border--drag-over-cursor-arrow');
+        border-radius: mixins.css-variable('transfer-v2-border-radius--drag-over-cursor-arrow');
+        transform: translateY(-50%);
+        content: '';
+      }
+    
+      &::before {
+        left: calc((#{mixins.css-variable('transfer-v2-size--drag-over-cursor-arrow')} + #{mixins.css-variable('transfer-v2-height--drag-over-cursor')} * 2) * -1);
+      }
+    
+      &::after {
+        right: calc((#{mixins.css-variable('transfer-v2-size--drag-over-cursor-arrow')} + #{mixins.css-variable('transfer-v2-height--drag-over-cursor')}) * -1);
+      }
+    }
+  }
+
+  @include mixins.e('footer') {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: mixins.css-variable('transfer-v2-padding--panel-footer');
+  }
+
+  @include mixins.m('empty') {
+    @include mixins.be('transfer-v2-panel', 'body', false) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: mixins.css-variable('transfer-v2-padding-bottom--panel-body--empty');
+    }
+
+    @include mixins.bem('transfer-v2-panel', 'body', 'empty', false) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      color: mixins.css-variable('transfer-v2-color--panel-body--empty');
+    }
+  }
+}

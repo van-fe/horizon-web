@@ -1,0 +1,12 @@
+@use '../../mixins/function';
+
+$values: (
+  'sm': function.css-variable('font-size-10'),
+  'base': function.css-variable('font-size-9'),
+  'lg': function.css-variable('font-size-8'),
+  'xl': function.css-variable('font-size-13'),
+  '2xl': function.css-variable('font-size-6'),
+  '3xl': function.css-variable('font-size-4'),
+  '4xl': function.css-variable('font-size-16'),
+  '5xl': function.css-variable('font-size-17'),
+);

@@ -1,0 +1,99 @@
+@use '../../../../styles/mixins';
+@import './utils';
+
+@include mixins.b('color-picker-panel') {
+  @include mixins.e('swatches') {
+    @include mixins.is-not('empty') {
+      display: grid;
+      grid-row-gap: 4px;
+      grid-template-columns: repeat(10, 1fr);
+    }
+
+    @include mixins.m('item') {
+      position: relative;
+      box-sizing: border-box;
+      width: mixins.css-variable('color-picker-size--swatch-item');
+      height: mixins.css-variable('color-picker-size--swatch-item');
+      cursor: pointer;
+
+      &::after {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        box-sizing: border-box;
+        width: mixins.css-variable('color-picker-size--swatch-item');
+        height: mixins.css-variable('color-picker-size--swatch-item');
+        border: mixins.css-variable('color-picker-border--transparent');
+        border-radius: 100%;
+        transform: translate(-50%, -50%);
+        transition: mixins.css-variable('color-picker-transition--border-color');
+        content: '';
+      }
+
+      .color-picker-swatch-bg {
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        bottom: 1px;
+        left: 1px;
+        z-index: 1;
+        border: mixins.css-variable('color-picker-border--swatch-item');
+        border-radius: 100%;
+        transform: scale(88.88%);
+      }
+
+      .color-picker-swatch-alpha {
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        bottom: 1px;
+        left: 1px;
+        border-radius: 100%;
+        transform: scale(88.88%);
+        @include mixins.with-alpha(2px);
+      }
+    }
+
+    @include mixins.is-not('empty') {
+      @include mixins.em('swatches', 'item', false) {
+        &:hover {
+          &::after {
+            border-color: mixins.css-variable('color-picker-border-color--color-type-item--hover');
+          }
+        }
+
+        &:active {
+          &::after {
+            border-color: mixins.css-variable('color-picker-border-color--color-type-item--press');
+          }
+        }
+
+        @include mixins.is('active') {
+          &::after {
+            border-color: mixins.css-variable('color-picker-border-color--color-type-item--active');
+          }
+        }
+      }
+    }
+
+    @include mixins.is('empty') {
+      display: flex;
+      align-items: center;
+
+      @include mixins.em('swatches', 'item', false) {
+        display: inline-flex;
+        width: mixins.css-variable('color-picker-size--swatch-item--inner');
+        height: mixins.css-variable('color-picker-size--swatch-item--inner');
+        border: mixins.css-variable('color-picker-border--swatch-item--empty');
+        border-radius: 100%;
+        cursor: default;
+      }
+
+      @include mixins.em('swatches', 'description', false) {
+        margin-left: mixins.css-variable('color-picker-margin-left--swatches-description');
+        color: mixins.css-variable('color-picker-color--swatches-description');
+        font-size: mixins.css-variable('color-picker-font-size--swatches-description');
+      }
+    }
+  }
+}

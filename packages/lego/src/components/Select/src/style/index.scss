@@ -1,0 +1,109 @@
+@use '../../../../styles/mixins';
+@import './option';
+@import './option-group';
+@import './input';
+
+@include mixins.b('select') {
+  @include mixins.e('check-all') {
+    display: flex;
+    align-items: center;
+    height: mixins.css-variable('select-height--check-all');
+    padding: mixins.css-variable('select-padding--check-all');
+    border-bottom: 1px solid mixins.css-variable('select-border-color--option-group--divider');
+    cursor: pointer;
+    transition: mixins.css-variable('select-transition');
+
+    @include mixins.is('focus') {
+      background: mixins.css-variable('select-bg--option--hover');
+    }
+
+    &:hover {
+      background: mixins.css-variable('select-bg--option--hover');
+    }
+
+    &-label {
+      display: inline-flex;
+      align-items: center;
+
+      @include mixins.is('active') {
+        font-weight: mixins.css-variable('select-font-weight-active');
+      }
+
+      @include mixins.m('count') {
+        margin-left: mixins.css-variable('select-margin', 'check-all-count', 'left')
+      }
+    }
+  }
+
+  @include mixins.e('create-option') {
+    display: flex;
+    align-items: center;
+    min-height: mixins.css-variable('select-height--option');
+    padding: mixins.css-variable('select-padding--option');
+    font-size: mixins.css-variable('select-font-size--create-option');
+    background: mixins.css-variable('select-bg--option');
+    cursor: pointer;
+    transition: mixins.css-variable('select-transition');
+
+    @include mixins.m('prefix') {
+      margin-right: mixins.css-variable('select-margin-right--create-option--prefix');
+      color: mixins.css-variable('select-color--create-option--prefix');
+    }
+
+    @include mixins.m('content') {
+      display: -webkit-box;
+      flex: 1;
+      overflow: hidden;
+      word-break: break-all;
+      -webkit-line-clamp: mixins.css-variable-with-default-value('select-max-line--option', 1);
+      -webkit-box-orient: vertical;
+    }
+
+    @include mixins.is('focus') {
+      background: mixins.css-variable('select-bg--option--hover');
+    }
+
+    &:hover {
+      background: mixins.css-variable('select-bg--option--hover');
+    }
+  }
+
+  @include mixins.nested('picker__pop-content--inner') {
+    height: 100%;
+  }
+
+  @include mixins.e('panel-content') {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+
+    @include mixins.e('panel-tags') {
+      min-height: fit-content;
+      max-height: mixins.css-variable('select', 'size', 'panel-tags', 'max-height');
+      margin-bottom: mixins.css-variable('select', 'margin', 'panel-tags', 'bottom');
+      overflow-y: auto;
+    }
+  }
+
+  @include mixins.e('panel') {
+    @include mixins.nested('scrollbar') {
+      margin: mixins.css-variable('select-margin-y--scrollbar') 0;
+
+      &__view {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        min-height: 0;
+      }
+
+      @include mixins.is('empty') {
+        margin: 0;
+      }
+
+      @include mixins.has('panel-input') {
+        margin-top: 0;
+      }
+    }
+  }
+}

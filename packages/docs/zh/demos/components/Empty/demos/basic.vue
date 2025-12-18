@@ -1,0 +1,3 @@
+<template>
+  <n-empty />
+</template>

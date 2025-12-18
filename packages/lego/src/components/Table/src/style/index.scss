@@ -1,0 +1,131 @@
+@use '../../../../styles/mixins';
+@import './cell';
+@import './header';
+@import './border';
+@import './footer';
+@import './column-manager';
+
+@include mixins.b('table-v3') {
+  width: 100%;
+  #{mixins.css-variable-name('table', 'row', 'hover', 'background')}: mixins.css-variable('table', 'background', 'row-hover');
+
+  @include mixins.e('hidden-columns') {
+    display: none;
+  }
+
+  @include mixins.e('table') {
+    width: max-content;
+    min-width: 100%;
+
+    @include mixins.is('layout-fixed') {
+      table-layout: fixed;
+    }
+
+    @include mixins.is('layout-auto') {
+      table-layout: auto;
+    }
+  }
+
+  @include mixins.e('row') {
+    background: mixins.css-variable('table', 'background', 'body');
+
+    @include mixins.m('expand') {
+      background: mixins.css-variable('table', 'background', 'body', 'expand');
+
+      @include mixins.be('table-v3', 'cell', false) {
+        &-wrap {
+          #{mixins.css-variable-name('table-z-index-temp')}: mixins.css-variable('table-z-index-default');
+          width: 100%;
+        }
+
+        &-inner {
+          #{mixins.css-variable-name('table-z-index-default')}: calc(#{mixins.css-variable('table-z-index-temp')} - 2);
+          #{mixins.css-variable-name('table-background-header')}: mixins.css-variable('table', 'background', 'body');
+          flex: 1;
+        }
+      }
+    }
+
+    @include mixins.is('expanded') {
+      > td {
+        position: sticky;
+        top: var(--table-header-height);
+        z-index: mixins.css-variable('table', 'z-index', 'default');
+        margin-top: var(--table-header-height);
+      }
+    }
+  }
+
+  @include mixins.is('stripe') {
+    @include mixins.e('table-body') {
+      tr {
+        &:nth-child(even) {
+          background: #{mixins.css-variable('table', 'background', 'row-stripe')};
+
+          @include mixins.e('cell') {
+            @include mixins.is('row-span-cell') {
+              background: mixins.css-variable('table', 'background', 'body');
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @include mixins.is('hoverable') {
+    #{mixins.e('table-v3', 'table-body')}, #{mixins.e('table-v3', 'table-foot')}{
+      @include mixins.be('table-v3', 'cell', false) {
+        transition: mixins.css-variable('table', 'transition', 'color-behavior');
+      }
+
+      @include mixins.be('table-v3', 'row', false) {
+        &:not(#{mixins.modifier-name('expand', 'row', #{mixins.block('table-v3')})}) {
+          &:hover {
+            @include mixins.be('table-v3', 'cell', false) {
+              @include mixins.is-not('row-span-cell') {
+                background: mixins.css-variable('table', 'row', 'hover', 'background');
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @include mixins.is('highlight-selected') {
+    @include mixins.e('row') {
+      @include mixins.is('selected') {
+        background: mixins.css-variable('table', 'background', 'body', 'selected');
+      }
+    }
+  }
+
+  @include mixins.e('resizing-cursor-line') {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: calc(#{mixins.css-variable('table', 'z-index', 'default')} + 5);
+    display: none;
+    width: 2px;
+    height: calc(#{mixins.css-variable('table', 'wrapper', 'height')} - #{mixins.css-variable('table', 'header', 'height')} + #{mixins.css-variable-with-default-value('table-column-height', '0px')});
+    background: mixins.css-variable('table', 'divider', 'header', 'resizing-color');
+  }
+
+  @include mixins.has('column-manager') {
+    #{mixins.e('table-v3', 'table-head')} {
+      tr:nth-of-type(1) {
+        #{mixins.e('table-v3', 'cell')} {
+          @include mixins.is('last-column') {
+            padding-right: calc(#{mixins.css-variable('table', 'spacing', 'padding', 'cell', 'x')} + 24px + 16px);
+          }
+        }
+      }
+    }
+  }
+}
+
+:root.#{mixins.$dark-mode-class-name} {
+  @include mixins.b('table-v3', false) {
+    #{mixins.css-variable-name('table', 'row', 'hover', 'background')}: mixins.css-variable('table', 'background', 'row-hover', 'dark');
+  }
+}

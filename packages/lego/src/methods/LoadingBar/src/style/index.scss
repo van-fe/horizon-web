@@ -1,0 +1,23 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('loading-bar') {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 10000;
+  width: 100%;
+  background-color: mixins.css-variable('loading-bar-bg');
+
+  @include mixins.e('bar') {
+    transition: mixins.css-variable('loading-bar-transition');
+
+    @include mixins.m('primary') {
+      background: mixins.css-variable('loading-bar-bg--primary');
+    }
+
+    @include mixins.m('error') {
+      background: mixins.css-variable('loading-bar-bg--error');
+    }
+  }
+}

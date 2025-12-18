@@ -1,0 +1,23 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  'min-width': 40px,
+  'max-width': 296px,
+  'size--arrow': 12px,
+  'arrow-offset': calc(-1 * #{function.css-variable('tooltip-size--arrow')} / 2),
+  'spacing': calc(#{function.css-variable('spacing-4')} - 1px),
+  'spacing--small': #{function.css-variable('spacing-3')},
+  'font-size': #{function.css-variable('text-sm')},
+  'font-weight': #{function.css-variable('weight-normal')},
+  'line-height': #{function.css-variable('line-height-standard')},
+  'color': #{function.css-variable('text-inverse')},
+  'color-light': #{function.css-variable('text-primary')},
+  'bg': #{function.css-variable('text-primary')},
+  'bg-light': #{function.css-variable('bg-default')},
+  'border-radius': #{function.css-variable('radius-m')},
+  'border-color': #{function.css-variable('tooltip-bg')},
+  'border-color-light': #{function.css-variable('border-hover')},
+  'padding': #{function.css-variable('spacing-3')},
+  'padding--small': #{function.css-variable('spacing-3')},
+  'transition-time': #{function.css-variable('transition-time')},
+);

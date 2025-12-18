@@ -1,0 +1,107 @@
+@use '../../../../styles/mixins';
+
+@mixin on-hover() {
+  background: mixins.css-variable('upload-v2', 'background', 'drop-area', 'hover');
+  border: mixins.css-variable('upload-v2', 'border', 'drop-area', 'hover');
+
+  @include mixins.e('inner') {
+    @include mixins.e('title') {
+      color: mixins.css-variable('upload-v2', 'color', 'drop-area', 'title', 'hover');
+    }
+  }
+}
+
+@mixin on-active() {
+  background: mixins.css-variable('upload-v2', 'background', 'drop-area', 'active');
+  border: mixins.css-variable('upload-v2', 'border', 'drop-area', 'active');
+
+  @include mixins.e('inner') {
+    @include mixins.e('title') {
+      color: mixins.css-variable('upload-v2', 'color', 'drop-area', 'title', 'active');
+    }
+  }
+}
+
+@include mixins.b('upload-v2--drop-area') {
+  display: inline-block;
+  min-width: mixins.css-variable('upload-v2', 'size', 'drop-area', 'width');
+  min-height: mixins.css-variable('upload-v2', 'size', 'drop-area', 'height');
+  padding: mixins.css-variable('upload-v2', 'spacing', 'drop-area', 'padding');
+  overflow: hidden;
+  background: mixins.css-variable('upload-v2', 'background', 'drop-area');
+  border: mixins.css-variable('upload-v2', 'border', 'drop-area');
+  border-radius: mixins.css-variable('upload-v2', 'border-radius', 'drop-area');
+  cursor: pointer;
+  transition: mixins.css-variable('upload-v2', 'transition');
+
+  input[type='file'] {
+    padding-top: 100%;
+    cursor: pointer;
+  }
+
+  @include mixins.e('inner') {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @include mixins.e('title') {
+      display: flex;
+      align-items: center;
+      color: mixins.css-variable('upload-v2', 'color', 'drop-area', 'title');
+      transition: mixins.css-variable('upload-v2', 'transition');
+
+      @include mixins.m('icon') {
+        width: mixins.css-variable('upload-v2', 'size', 'drop-area', 'icon');
+        height: mixins.css-variable('upload-v2', 'size', 'drop-area', 'icon');
+        margin-right: mixins.css-variable('upload-v2', 'spacing', 'drop-area', 'icon', 'margin-right');
+      }
+
+      @include mixins.m('text') {
+        font-size: mixins.css-variable('upload-v2', 'font-size', 'drop-area');
+      }
+    }
+
+    @include mixins.e('tips') {
+      margin-top: mixins.css-variable('upload-v2', 'spacing', 'drop-area', 'tips', 'margin-top');
+      color: mixins.css-variable('upload-v2', 'color', 'drop-area', 'tips');
+      text-align: center;
+    }
+  }
+
+  @include mixins.is-not('disabled') {
+    @include mixins.is('drag-over') {
+      @include on-hover;
+    }
+
+    &:hover {
+      @include on-hover;
+    }
+
+    &:active {
+      @include on-active;
+    }
+  }
+
+  @include mixins.is('disabled') {
+    background: mixins.css-variable('upload-v2', 'background', 'drop-area', 'disabled');
+    border-color: mixins.css-variable('upload-v2', 'border-color', 'drop-area', 'disabled');
+    cursor: not-allowed;
+    user-select: none;
+
+    @include mixins.e('title') {
+      color: mixins.css-variable('upload-v2', 'color', 'drop-area', 'title', 'disabled');
+    }
+
+    @include mixins.e('tips') {
+      color: mixins.css-variable('upload-v2', 'color', 'drop-area', 'tips', 'disabled');
+    }
+  }
+}
+
+@include mixins.b('upload-v2') {
+  @include mixins.is('error') {
+    @include mixins.b('upload-v2--drop-area') {
+      border-color: mixins.css-variable('upload-v2', 'border-color', 'drop-area', 'error');
+    }
+  }
+}

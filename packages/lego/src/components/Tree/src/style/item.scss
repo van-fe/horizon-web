@@ -1,0 +1,227 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('tree-item') {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  min-width: 100%;
+  min-height: mixins.css-variable('tree-height--item');
+  color: mixins.css-variable('tree-color--item');
+  font-size: mixins.css-variable('tree-font-size');
+  background: mixins.css-variable('tree-bg--item');
+  border-radius: mixins.css-variable('tree-border-radius--item');
+  cursor: pointer;
+  transition: mixins.css-variable('tree-transition--color-behavior');
+
+  @include mixins.e('icon') {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: mixins.css-variable('tree-size--icon');
+    height: mixins.css-variable('tree-size--icon');
+    font-size: mixins.css-variable('tree-font-size--icon');
+    transition: mixins.css-variable('tree-transition--all--fast');
+    user-select: none;
+
+    > * {
+      transition: mixins.css-variable('tree-transition--all--fast');
+    }
+
+    @include mixins.nested('icon') {
+      pointer-events: none;
+    }
+  }
+
+  @include mixins.e('draggable-icon') {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    opacity: 0;
+
+    @include mixins.is('always-visible') {
+      opacity: 1;
+    }
+  }
+
+  @include mixins.e('loading-icon') {
+    margin-right: mixins.css-variable('tree-margin-right--expand-icon');
+    color: mixins.css-variable('tree-color--loading-icon');
+  }
+
+  @include mixins.e('expand-icon') {
+    margin-right: mixins.css-variable('tree-margin-right--expand-icon');
+    background: mixins.css-variable('tree-bg--action-icon');
+    cursor: pointer;
+
+    @include mixins.is('active') {
+      > * {
+        transform: rotate(90deg);
+      }
+    }
+
+    &:hover {
+      background: mixins.css-variable('tree-bg--action-icon--hover');
+    }
+
+    &:active {
+      background: mixins.css-variable('tree-bg--action-icon--press');
+    }
+  }
+
+  @include mixins.e('prefix-icon') {
+    margin-right: mixins.css-variable('tree-margin-right--expand-icon');
+  }
+
+  @include mixins.e('content') {
+    display: -webkit-box;
+    flex: 1;
+    padding-right: mixins.css-variable('tree-padding-right--item--content');
+
+    @include mixins.is('ellipsis') {
+      overflow: hidden;
+      word-break: break-all;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+    }
+
+    @include mixins.m('wrapper') {
+      flex: 1;
+      align-items: center;
+    }
+  }
+
+  @include mixins.e('checkbox') {
+    display: inline-flex;
+    align-items: center;
+    user-select: none;
+  }
+
+  @include mixins.e('radio') {
+    display: inline-flex;
+    align-items: center;
+    user-select: none;
+  }
+
+  /* stylelint-disable-next-line selector-type-no-unknown */
+  &::highlight(keyword) {
+    color: rgb(1, 160, 172);
+  }
+
+  @include mixins.is-not('disabled') {
+    &:hover {
+      color: mixins.css-variable('tree-color--item--hover');
+      background: mixins.css-variable('tree-bg--item--hover');
+
+      @include mixins.e('draggable-icon') {
+        opacity: 1;
+      }
+    }
+
+    @include mixins.is('clickable') {
+      &:active {
+        color: mixins.css-variable('tree-color--item--press');
+        background: mixins.css-variable('tree-bg--item--press');
+      }
+    }
+
+    @include mixins.is('checked') {
+      font-weight: mixins.css-variable('tree-font-weight--item--checked');
+
+      @include mixins.is('stress') {
+        color: mixins.css-variable('tree-color--item--stress');
+        background: mixins.css-variable('tree-bg--item--stress');
+      }
+    }
+  }
+
+  @include mixins.is('disabled') {
+    @include mixins.e('content') {
+      color: mixins.css-variable('tree-color--item--disabled');
+      cursor: not-allowed;
+    }
+
+    @include mixins.is('checked') {
+      @include mixins.e('content') {
+        font-weight: mixins.css-variable('tree-font-weight--item--checked');
+      }
+
+      @include mixins.is('stress') {
+        background: mixins.css-variable('tree-bg--item--stress');
+      }
+    }
+  }
+
+  @include mixins.e('parent-shown-line') {
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+    display: block;
+    width: 1px;
+    height: 150%;
+    background: mixins.css-variable('divider-default');
+    transform: translateX(-50%) translateY(-50%);
+
+    @include mixins.is('stop-in-middle') {
+      top:-25%;
+      height: 75%;
+      transform: translateX(-50%);
+    }
+  }
+}
+
+@include mixins.b('tree') {
+  @include mixins.m('small') {
+    @include mixins.b('tree-item', false) {
+      min-height: mixins.css-variable('tree-height--item--small');
+      font-size: mixins.css-variable('tree-font-size--small');
+
+      @include mixins.e('icon') {
+        width: mixins.css-variable('tree-size--icon--small');
+        height: mixins.css-variable('tree-size--icon--small');
+      }
+    }
+  }
+}
+
+@include mixins.b('tree') {
+  @include mixins.m('large') {
+    @include mixins.b('tree-item', false) {
+      min-height: mixins.css-variable('tree-height--item--large');
+      font-size: mixins.css-variable('tree-font-size--large');
+
+      @include mixins.e('icon') {
+        width: mixins.css-variable('tree-size--icon--large');
+        height: mixins.css-variable('tree-size--icon--large');
+      }
+    }
+  }
+}
+
+@include mixins.b('tree') {
+  @include mixins.m('huge') {
+    @include mixins.b('tree-item', false) {
+      min-height: mixins.css-variable('tree-height--item--huge');
+      font-size: mixins.css-variable('tree-font-size--huge');
+
+      @include mixins.e('icon') {
+        width: mixins.css-variable('tree-size--icon--huge');
+        height: mixins.css-variable('tree-size--icon--huge');
+      }
+    }
+  }
+}
+
+@include mixins.b('tree') {
+  @include mixins.is-not('multiple') {
+    @include mixins.b('tree-item', false) {
+      @include mixins.is-not('disabled') {
+        @include mixins.is('checked') {
+          color: mixins.css-variable('tree-color--item--stress');
+        }
+      }
+    }
+  }
+}

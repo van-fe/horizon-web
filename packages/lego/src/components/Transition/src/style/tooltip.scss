@@ -1,0 +1,52 @@
+@use '../../../../styles/mixins';
+
+@mixin tooltip-animate() {
+  $enter-time-func: mixins.css-variable('transition-time-slow');
+  $leave-time-func: mixins.css-variable('transition-time-fast');
+
+  [data-popper-placement^='top'] {
+    &#{mixins.block-name('tooltip-enter-active')}, &#{mixins.block-name('tooltip-leave-active')} {
+      transform-origin: center bottom !important;
+    }
+  }
+
+  [data-popper-placement^='left'] {
+    &#{mixins.block-name('tooltip-enter-active')}, &#{mixins.block-name('tooltip-leave-active')} {
+      transform-origin: right center !important;
+    }
+  }
+
+  [data-popper-placement^='right'] {
+    &#{mixins.block-name('tooltip-enter-active')}, &#{mixins.block-name('tooltip-leave-active')} {
+      transform-origin: left center !important;
+    }
+  }
+
+  #{mixins.block-name('tooltip-enter-active')} {
+    transform-origin: center top;
+    transition: opacity #{$enter-time-func} cubic-bezier(0.21, 0, 0.36, 1),
+      transform #{$enter-time-func} cubic-bezier(0.23, 1, 0.33, 1);
+  }
+
+  #{mixins.block-name('tooltip-leave-active')} {
+    transform-origin: center top;
+    transition: opacity #{$leave-time-func} cubic-bezier(0.21, 0, 0.36, 1),
+      transform #{$leave-time-func} cubic-bezier(0.23, 0, .67, 0);
+  }
+
+  #{mixins.block-name('tooltip-enter-from')},
+  #{mixins.block-name('tooltip-leave-to')} {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+
+  #{mixins.block-name('tooltip-enter-to')},
+  #{mixins.block-name('tooltip-leave-from')} {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@include tooltip-animate;
+
+

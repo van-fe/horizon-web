@@ -1,0 +1,63 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('menu') {
+  @include mixins.e('collapse-button') {
+    overflow: hidden;
+
+    @include mixins.be('button', 'icon', false) {
+      // transition: all 0.2s;
+    }
+
+    @include mixins.is('collapsed') {
+      @include mixins.be('button', 'icon', false) {
+        transform: scaleX(-1);
+
+        // animation: menu-collapse-button-collapsed 0.5s ease;
+      }
+    }
+
+    @include mixins.is-not('collapsed') {
+      @include mixins.be('button', 'icon', false) {
+        transform: scaleX(1);
+
+        // animation: menu-collapse-button-expand 0.5s ease;
+      }
+    }
+  }
+}
+
+@keyframes menu-collapse-button-collapsed {
+  0% {
+    transform: translateX(0);
+  }
+
+  33% {
+    transform: translateX(-100%);
+  }
+
+  50% {
+    transform: translateX(-100%) scaleX(-1);
+  }
+
+  100% {
+    transform: translateX(0) scaleX(-1);
+  }
+}
+
+@keyframes menu-collapse-button-expand {
+  0% {
+    transform: translateX(0) scaleX(-1);
+  }
+
+  33% {
+    transform: translateX(100%) scaleX(-1);
+  }
+
+  50% {
+    transform: translateX(100%) scaleX(1);
+  }
+
+  100% {
+    transform: translateX(0) scaleX(1);
+  }
+}

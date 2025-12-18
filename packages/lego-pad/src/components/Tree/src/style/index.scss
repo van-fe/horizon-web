@@ -1,0 +1,44 @@
+@use 'sass:map';
+@use '@nio-fe/lego/es/styles/mixins';
+@use '@nio-fe/lego/es/components/Tree/src/style/variables';
+
+.is-suit-pad {
+  &:not(.not-for-tree) {
+    @include mixins.b('tree'){
+      #{mixins.css-variable-name('tree', 'height', '-item', '-small')}: map.get(variables.$values, 'height--item--large');
+      #{mixins.css-variable-name('tree', 'height', '-item')}: map.get(variables.$values, 'height--item--large');
+      #{mixins.css-variable-name('tree', 'size', '-icon', '-small')}: map.get(variables.$values, 'size--icon--large');
+      #{mixins.css-variable-name('tree', 'size', '-icon')}: map.get(variables.$values, 'size--icon--large');
+      #{mixins.css-variable-name('tree', 'font-size', '-small')}: map.get(variables.$values, 'font-size--large');
+      #{mixins.css-variable-name('tree', 'font-size')}: map.get(variables.$values, 'font-size--large');
+      #{mixins.css-variable-name('tree', 'font-size', '-icon', '-small')}: map.get(variables.$values, 'font-size--icon--large');
+      #{mixins.css-variable-name('tree', 'font-size', '-icon')}: map.get(variables.$values, 'font-size--icon--large');
+
+      // just for pad
+      #{mixins.css-variable-name('tree', 'size', 'height', 'drop-down-icon', 'hot-zone')}: map.get(variables.$values, 'height--item--large');
+
+      @include mixins.be('tree-item', 'icon', false) {
+        svg {
+          font-size: 24px !important;
+        }
+      }
+
+      @include mixins.m('huge') {
+        #{mixins.css-variable-name('tree', 'size', 'height', 'drop-down-icon', 'hot-zone')}: map.get(variables.$values, 'height--item--huge');
+      }
+
+      @include mixins.be('tree-item', 'expand-icon', false) {
+        &::after {
+          position: absolute;
+          top: 50%;
+          left: 0;
+          display: block;
+          width: calc(100% + 8px);
+          height: mixins.css-variable('tree', 'size', 'height', 'drop-down-icon', 'hot-zone');
+          transform: translateY(-50%);
+          content: '';
+        }
+      }
+    }
+  }
+}

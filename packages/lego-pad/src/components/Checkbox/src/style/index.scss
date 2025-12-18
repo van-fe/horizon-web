@@ -1,0 +1,28 @@
+@use 'sass:map';
+@use '@nio-fe/lego/es/styles/mixins';
+@use '@nio-fe/lego/es/components/Checkbox/src/style/variables';
+
+.is-suit-pad {
+  &:not(.not-for-checkbox) {
+    #{mixins.block-name('checkbox')}, #{mixins.block-name('checkbox-button')} {
+      #{mixins.css-variable-name('checkbox', 'height', '-medium')}: map.get(variables.$values, 'height--large');
+      #{mixins.css-variable-name('checkbox', 'font-size', '-default')}: map.get(variables.$values, 'font-size--default');
+    }
+
+    @include mixins.b('checkbox') {
+      position: relative;
+      overflow: initial;
+
+      &::after {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        display: block;
+        width: 100%;
+        height: 40px;
+        transform: translateY(-50%);
+        content: '';
+      }
+    }
+  }
+}

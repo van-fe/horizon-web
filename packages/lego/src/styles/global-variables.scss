@@ -1,0 +1,166 @@
+/**
+ * global-variables
+ * This file is generated automatically by script: pnpm run build:index
+ */
+
+@use './mixins/function';
+@use './mixins/mixins';
+@use './basic';
+@use './element';
+@use '../components/TreeSelect/src/style/variables' as tree-select;
+@use '../components/Guide/src/style/variables' as guide;
+@use '../components/Tabs/src/style/variables' as tabs;
+@use '../components/Tree/src/style/variables' as tree;
+@use '../components/Rate/src/style/variables' as rate;
+@use '../components/FloatButton/src/style/variables' as float-button;
+@use '../components/Dropdown/src/style/variables' as dropdown;
+@use '../components/Drawer/src/style/variables' as drawer;
+@use '../components/Pagination/src/style/variables' as pagination;
+@use '../components/TimePicker/src/style/variables' as time-picker;
+@use '../components/Form/src/style/variables' as form;
+@use '../components/Tooltip/src/style/variables' as tooltip;
+@use '../components/Result/src/style/variables' as result;
+@use '../components/Calendar/src/style/variables' as calendar;
+@use '../components/Radio/src/style/variables' as radio;
+@use '../components/Card/src/style/variables' as card;
+@use '../components/AutoComplete/src/style/variables' as auto-complete;
+@use '../components/Empty/src/style/variables' as empty;
+@use '../components/Progress/src/style/variables' as progress;
+@use '../components/TimePickerV2/src/style/variables' as time-picker-v2;
+@use '../components/Picker/src/style/variables' as picker;
+@use '../components/Input/src/style/variables' as input;
+@use '../components/Alert/src/style/variables' as alert;
+@use '../components/Skeleton/src/style/variables' as skeleton;
+@use '../components/Layout/src/style/variables' as layout;
+@use '../components/VideoPlayer/src/style/variables' as video-player;
+@use '../components/Segmented/src/style/variables' as segmented;
+@use '../components/UploadV2/src/style/variables' as upload-v2;
+@use '../components/DatePicker/src/style/variables' as date-picker;
+@use '../components/Panels/src/style/variables' as panels;
+@use '../components/Cascader/src/style/variables' as cascader;
+@use '../components/Count/src/style/variables' as count;
+@use '../components/Checkbox/src/style/variables' as checkbox;
+@use '../components/Transfer/src/style/variables' as transfer;
+@use '../components/DatePickerV2/src/style/variables' as date-picker-v2;
+@use '../components/Descriptions/src/style/variables' as descriptions;
+@use '../components/Slider/src/style/variables' as slider;
+@use '../components/PageHeader/src/style/variables' as page-header;
+@use '../components/Collapse/src/style/variables' as collapse;
+@use '../components/InputNumber/src/style/variables' as input-number;
+@use '../components/TransferV2/src/style/variables' as transfer-v2;
+@use '../components/Image/src/style/variables' as image;
+@use '../components/Time/src/style/variables' as time;
+@use '../components/Dialog/src/style/variables' as dialog;
+@use '../components/Popover/src/style/variables' as popover;
+@use '../components/Controls/src/style/variables' as controls;
+@use '../components/Container/src/style/variables' as container;
+@use '../components/Viewer/src/style/variables' as viewer;
+@use '../components/Mask/src/style/variables' as mask;
+@use '../components/Button/src/style/variables' as button;
+@use '../components/Steps/src/style/variables' as steps;
+@use '../components/Link/src/style/variables' as link;
+@use '../components/Table/src/style/variables' as table;
+@use '../components/List/src/style/variables' as list;
+@use '../components/Divider/src/style/variables' as divider;
+@use '../components/Menu/src/style/variables' as menu;
+@use '../components/Avatar/src/style/variables' as avatar;
+@use '../components/ColorPicker/src/style/variables' as color-picker;
+@use '../components/Switch/src/style/variables' as switch;
+@use '../components/Anchor/src/style/variables' as anchor;
+@use '../components/Select/src/style/variables' as select;
+@use '../components/Breadcrumb/src/style/variables' as breadcrumb;
+@use '../components/Space/src/style/variables' as space;
+@use '../components/Timeline/src/style/variables' as timeline;
+@use '../components/Tag/src/style/variables' as tag;
+@use '../components/Scrollbar/src/style/variables' as scrollbar;
+@use '../components/Affix/src/style/variables' as affix;
+@use '../components/Upload/src/style/variables' as upload;
+@use '../components/Backtop/src/style/variables' as backtop;
+@use '../components/Badge/src/style/variables' as badge;
+@use '../directives/v-loading/src/style/variables' as v-loading;
+@use '../directives/v-popconfirm/src/style/variables' as v-popconfirm;
+@use '../methods/Notification/src/style/variables' as notification;
+@use '../methods/Message/src/style/variables' as message;
+@use '../methods/LoadingBar/src/style/variables' as loading-bar;
+
+$values: function.map-merge-multi(
+  function.flatten-variables(basic.$values),
+  function.flatten-variables(element.$values),
+  function.flatten-variables(tree-select.$values, 'tree-select'),
+  function.flatten-variables(guide.$values, 'guide'),
+  function.flatten-variables(tabs.$values, 'tabs'),
+  function.flatten-variables(tree.$values, 'tree'),
+  function.flatten-variables(rate.$values, 'rate'),
+  function.flatten-variables(float-button.$values, 'float-button'),
+  function.flatten-variables(dropdown.$values, 'dropdown'),
+  function.flatten-variables(drawer.$values, 'drawer'),
+  function.flatten-variables(pagination.$values, 'pagination'),
+  function.flatten-variables(time-picker.$values, 'time-picker'),
+  function.flatten-variables(form.$values, 'form'),
+  function.flatten-variables(tooltip.$values, 'tooltip'),
+  function.flatten-variables(result.$values, 'result'),
+  function.flatten-variables(calendar.$values, 'calendar'),
+  function.flatten-variables(radio.$values, 'radio'),
+  function.flatten-variables(card.$values, 'card'),
+  function.flatten-variables(auto-complete.$values, 'auto-complete'),
+  function.flatten-variables(empty.$values, 'empty'),
+  function.flatten-variables(progress.$values, 'progress'),
+  function.flatten-variables(time-picker-v2.$values, 'time-picker-v2'),
+  function.flatten-variables(picker.$values, 'picker'),
+  function.flatten-variables(input.$values, 'input'),
+  function.flatten-variables(alert.$values, 'alert'),
+  function.flatten-variables(skeleton.$values, 'skeleton'),
+  function.flatten-variables(layout.$values, 'layout'),
+  function.flatten-variables(video-player.$values, 'video-player'),
+  function.flatten-variables(segmented.$values, 'segmented'),
+  function.flatten-variables(upload-v2.$values, 'upload-v2'),
+  function.flatten-variables(date-picker.$values, 'date-picker'),
+  function.flatten-variables(panels.$values, 'panels'),
+  function.flatten-variables(cascader.$values, 'cascader'),
+  function.flatten-variables(count.$values, 'count'),
+  function.flatten-variables(checkbox.$values, 'checkbox'),
+  function.flatten-variables(transfer.$values, 'transfer'),
+  function.flatten-variables(date-picker-v2.$values, 'date-picker-v2'),
+  function.flatten-variables(descriptions.$values, 'descriptions'),
+  function.flatten-variables(slider.$values, 'slider'),
+  function.flatten-variables(page-header.$values, 'page-header'),
+  function.flatten-variables(collapse.$values, 'collapse'),
+  function.flatten-variables(input-number.$values, 'input-number'),
+  function.flatten-variables(transfer-v2.$values, 'transfer-v2'),
+  function.flatten-variables(image.$values, 'image'),
+  function.flatten-variables(time.$values, 'time'),
+  function.flatten-variables(dialog.$values, 'dialog'),
+  function.flatten-variables(popover.$values, 'popover'),
+  function.flatten-variables(controls.$values, 'controls'),
+  function.flatten-variables(container.$values, 'container'),
+  function.flatten-variables(viewer.$values, 'viewer'),
+  function.flatten-variables(mask.$values, 'mask'),
+  function.flatten-variables(button.$values, 'button'),
+  function.flatten-variables(steps.$values, 'steps'),
+  function.flatten-variables(link.$values, 'link'),
+  function.flatten-variables(table.$values, 'table'),
+  function.flatten-variables(list.$values, 'list'),
+  function.flatten-variables(divider.$values, 'divider'),
+  function.flatten-variables(menu.$values, 'menu'),
+  function.flatten-variables(avatar.$values, 'avatar'),
+  function.flatten-variables(color-picker.$values, 'color-picker'),
+  function.flatten-variables(switch.$values, 'switch'),
+  function.flatten-variables(anchor.$values, 'anchor'),
+  function.flatten-variables(select.$values, 'select'),
+  function.flatten-variables(breadcrumb.$values, 'breadcrumb'),
+  function.flatten-variables(space.$values, 'space'),
+  function.flatten-variables(timeline.$values, 'timeline'),
+  function.flatten-variables(tag.$values, 'tag'),
+  function.flatten-variables(scrollbar.$values, 'scrollbar'),
+  function.flatten-variables(affix.$values, 'affix'),
+  function.flatten-variables(upload.$values, 'upload'),
+  function.flatten-variables(backtop.$values, 'backtop'),
+  function.flatten-variables(badge.$values, 'badge'),
+  function.flatten-variables(v-loading.$values, 'v-loading'),
+  function.flatten-variables(v-popconfirm.$values, 'v-popconfirm'),
+  function.flatten-variables(notification.$values, 'notification'),
+  function.flatten-variables(message.$values, 'message'),
+  function.flatten-variables(loading-bar.$values, 'loading-bar')
+);
+
+@include mixins.create-root($values);

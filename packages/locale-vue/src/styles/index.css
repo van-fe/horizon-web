@@ -1,0 +1,4 @@
+.lego-date-locale, .lego-number-locale, .lego-lang-locale {
+  display: inline-block;
+  white-space: nowrap;
+}

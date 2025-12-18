@@ -1,0 +1,160 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('upload-v2--gallery-mixed') {
+  #{mixins.css-variable-name('upload-v2', 'spacing', 'file-list-item', 'siblings', 'margin-top')}: 0;
+  display: flex;
+  flex-wrap: wrap;
+  grid-gap: mixins.css-variable('upload-v2', 'spacing', 'gallery', 'item', 'row', 'gap') mixins.css-variable('upload-v2', 'spacing', 'gallery', 'item', 'siblings', 'gap');
+
+  @include mixins.e('list') {
+    display: flex;
+    grid-gap: mixins.css-variable('upload-v2', 'spacing', 'gallery', 'item', 'row', 'gap') mixins.css-variable('upload-v2', 'spacing', 'gallery', 'item', 'siblings', 'gap');
+  }
+
+  @include mixins.e('item') {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: mixins.css-variable('upload-v2', 'background', 'gallery', 'item');
+    border-radius: mixins.css-variable('upload-v2', 'border-radius', 'gallery', 'item');
+
+    @include mixins.m('duration') {
+      position: absolute;
+      top: mixins.css-variable('upload-v2', 'spacing', 'gallery', 'item', 'duration', 'top');
+      left: mixins.css-variable('upload-v2', 'spacing', 'gallery', 'item', 'duration', 'left');
+      display: flex;
+      grid-column-gap: mixins.css-variable('upload-v2', 'spacing', 'gallery', 'item', 'duration-icon', 'margin-right');
+      align-items: center;
+      padding: mixins.css-variable('upload-v2', 'spacing', 'gallery', 'item', 'duration', 'padding');
+      color: mixins.css-variable('upload-v2', 'color', 'gallery', 'item', 'duration');
+      font-size: mixins.css-variable('upload-v2', 'font-size', 'gallery', 'item', 'duration');
+      background: mixins.css-variable('upload-v2', 'background', 'gallery', 'item', 'duration');
+      border-radius: mixins.css-variable('upload-v2', 'border-radius', 'gallery', 'item', 'duration');
+      transform: scale(0.8);
+
+      &-icon {
+        line-height: 0
+      }
+    }
+
+    @include mixins.m('inner') {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+
+      > * {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    @include mixins.m('success') {
+      &-image {
+        width: 100%;
+        height: 100%;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      &-video {
+        width: 100%;
+        height: 100%;
+
+        video {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+
+    @include mixins.m('uploading') {
+      &-progress {
+        width: 100%;
+
+        @include mixins.nested('progress') {
+          justify-content: center;
+          width: 100%;
+
+          &-bar {
+            width: 100%;
+          }
+
+          &__outer {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    @include mixins.m('error') {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      &-icon {
+        width: mixins.css-variable('upload-v2', 'size', 'gallery', 'icon', 'medium');
+        height: mixins.css-variable('upload-v2', 'size', 'gallery', 'icon', 'medium');
+      }
+
+      &-name {
+        display: flex;
+        align-items: center;
+        max-width: 90%;
+
+        @include mixins.nested('upload-v2--gallery__details--file-base-name') {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+
+    @include mixins.m('others') {
+      &-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  @include mixins.m('huge') {
+    @include mixins.em('item', 'uploading', false) {
+      padding: mixins.css-variable('upload-v2', 'spacing', 'gallery-item', 'padding', 'huge');
+    }
+  }
+
+  @include mixins.m('large') {
+    @include mixins.em('item', 'uploading', false) {
+      padding: mixins.css-variable('upload-v2', 'spacing', 'gallery-item', 'padding', 'large');
+    }
+  }
+
+  @include mixins.m('medium') {
+    @include mixins.em('item', 'uploading', false) {
+      padding: mixins.css-variable('upload-v2', 'spacing', 'gallery-item', 'padding', 'medium');
+    }
+  }
+
+  @include mixins.m('small') {
+    @include mixins.em('item', 'uploading', false) {
+      padding: mixins.css-variable('upload-v2', 'spacing', 'gallery-item', 'padding', 'small');
+    }
+  }
+}

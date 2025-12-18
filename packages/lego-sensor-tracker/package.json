@@ -1,0 +1,22 @@
+{
+  "name": "@nio-fe/lego-sensor-tracker",
+  "version": "1.0.0",
+  "main": "dist/lego-sensor-tracker.cjs",
+  "module": "dist/lego-sensor-tracker.js",
+  "types": "types/index.d.ts",
+  "files": [
+    "dist",
+    "types"
+  ],
+  "scripts": {
+    "dev": "vite build --watch & pnpm run build:types-watch",
+    "build": "pnpm run build:types && bunx --bun vite build",
+    "build:types-watch": "rm -rf ./types && tsc -d --pretty --declarationDir ./types --emitDeclarationOnly -w",
+    "build:types": "rm -rf ./types && tsc -d --pretty --declarationDir ./types --emitDeclarationOnly"
+  },
+  "dependencies": {
+    "@nio-fe/shared": "workspace:*",
+    "@nio-fe/sensor-sdk": "^1.0.0",
+    "lodash": "^4.17.21"
+  }
+}

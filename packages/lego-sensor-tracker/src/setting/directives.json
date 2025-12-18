@@ -1,0 +1,11 @@
+{
+  "v-click-outside": [],
+  "v-event-outside": ["events"],
+  "v-draggable": [],
+  "v-infinite-scroll": [],
+  "v-loading": [],
+  "v-popconfirm": [],
+  "v-safe-html": [],
+  "v-tooltip": [],
+  "v-watermark": []
+}

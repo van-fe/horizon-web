@@ -1,0 +1,6 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  'margin-left': #{function.css-variable('spacing-3')},
+  'margin-right': #{function.css-variable('spacing-2')},
+);

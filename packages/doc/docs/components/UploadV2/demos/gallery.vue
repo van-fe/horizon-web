@@ -1,0 +1,76 @@
+<template>
+  <n-form>
+    <n-form-item label="尺寸">
+      <n-radio-group v-model="size">
+        <n-radio label="small" />
+        <n-radio label="medium" />
+        <n-radio label="large" />
+        <n-radio label="huge" />
+      </n-radio-group>
+    </n-form-item>
+    <n-form-item label="形状">
+      <n-radio-group v-model="galleryShape">
+        <n-radio label="square" />
+        <n-radio label="rectangle" />
+      </n-radio-group>
+    </n-form-item>
+  </n-form>
+  <n-button class="mb-2" @click="change">修改原始 modelValue</n-button>
+  <n-upload-v2
+    v-model="modelValue"
+    action="https://lego-inspector.nioint.com/upload-mock"
+    type="gallery"
+    :multiple="true"
+    :size="size"
+    :gallery-shape="galleryShape"
+    accept="image/*, video/*"
+    :handle-success="handleSuccess"
+    :auto-upload="false"
+    crossorigin="anonymous"
+    @uploading="onUploading"
+    @update:model-value="onUpdateModelValue"
+  />
+</template>
+
+<script lang="ts" setup>
+import { ref } from 'vue';
+import type { NUploadV2UserFile, UploadV2Props, NUploadV2FileType } from '@nio-fe/lego';
+import type { Data } from '@nio-fe/shared';
+
+const size = ref<NonNullable<UploadV2Props['size']>>('medium');
+const galleryShape = ref<UploadV2Props['galleryShape']>('rectangle');
+
+const modelValue = ref<NUploadV2UserFile[]>(
+  [
+    {
+      name: 'background.jpg',
+      url: 'https://cdn-public-dev.nio.com/aurora-resource/5cBiDhad9L9aZ3nAml1m8/23244a6b-69c3-4465-bbd6-5db4b476abf4.jpg?imageView2/0/h/198/ignore-error/1',
+    },
+    {
+      name: 'preview.mp4',
+      url: 'https://cdn-fx.nio.com/fx/lego/__cdn__/aurora-background.mp4',
+    },
+  ],
+);
+
+function onUploading(file: NUploadV2FileType, process: number, response: Data | undefined) {
+  console.log(file, process, response);
+}
+
+function handleSuccess(res: any, file: NUploadV2FileType) {
+  // 因为接口是模拟返回，所以不处理 res 数据
+  // 直接把 blobUrl 假定为上传接口返回的预览地址
+  return file.url || file.blobUrl || '';
+}
+
+function change() {
+  modelValue.value = [{
+    name: 'preview.mp4',
+    url: 'https://static.nio.com/wad_basement/vt/51_KMQfG7_2cQXhf9yMIRiUS_skyline-min.mp4.mp4',
+  }];
+}
+
+function onUpdateModelValue(modelValue: NUploadV2FileType[]) {
+  console.log('update: ', modelValue);
+}
+</script>

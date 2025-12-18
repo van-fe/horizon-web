@@ -1,0 +1,47 @@
+@use '../../../../styles/mixins';
+
+@mixin collapse-animate($speed) {
+  $time-func: '';
+
+  @if  $speed == 'normal' {
+    $time-func: mixins.css-variable('transition-time');
+  } @else if $speed == 'fast' {
+    $time-func: mixins.css-variable('transition-time-fast');
+  } @else if $speed == 'slow' {
+    $time-func: mixins.css-variable('transition-time-slow');
+  } @else if $speed == 'extra-fast' {
+    $time-func: mixins.css-variable('transition-time-extra-fast');
+  }
+
+  #{mixins.block-name('collapse-#{$speed}')} {
+    transition: #{$time-func} height ease-in-out,
+      #{$time-func} padding-top ease-in-out,
+      #{$time-func} padding-bottom ease-in-out;
+  }
+
+  #{mixins.block-name('collapse-#{$speed}-leave-active')},
+  #{mixins.block-name('collapse-#{$speed}-enter-active')} {
+    transition: #{$time-func} max-height ease-in-out,
+      #{$time-func} padding-top ease-in-out,
+      #{$time-func} padding-bottom ease-in-out;
+  }
+
+  #{mixins.block-name('collapse-horizontal-#{$speed}')} {
+    transition: #{$time-func} width ease-in-out,
+      #{$time-func} padding-left ease-in-out,
+      #{$time-func} padding-right ease-in-out;
+  }
+
+  #{mixins.block-name('collapse-horizontal-#{$speed}-leave-active')},
+  #{mixins.block-name('collapse-horizontal-#{$speed}-enter-active')} {
+    transition: #{$time-func} max-width ease-in-out,
+      #{$time-func} padding-left ease-in-out,
+      #{$time-func} padding-right ease-in-out;
+  }
+}
+
+@include collapse-animate('normal');
+@include collapse-animate('fast');
+@include collapse-animate('slow');
+
+

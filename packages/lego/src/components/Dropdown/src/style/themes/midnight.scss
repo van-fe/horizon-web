@@ -1,0 +1,131 @@
+@use '../../../../../styles/mixins';
+
+@include mixins.b('dropdown') {
+  @include mixins.e('inner') {
+    @include mixins.m('midnight') {
+      background: mixins.css-variable('dropdown-bg--midnight') !important;
+      border-color: transparent !important;
+
+      @include mixins.b('dropdown-item', false) {
+        color: mixins.css-variable('dropdown-color--midnight');
+
+        @include mixins.is-not('disabled') {
+          @include mixins.e('inner', false) {
+            outline-color: mixins.css-variable('dropdown-outline-color');
+
+            &:hover {
+              background: mixins.css-variable('dropdown-bg--midnight--item--hover');
+            }
+          }
+
+          @include mixins.is('active') {
+            color: mixins.css-variable('dropdown-color--midnight--active');
+
+            @include mixins.e('inner', false) {
+              background: mixins.css-variable('dropdown-bg--midnight--item--active');
+            }
+          }
+        }
+
+        @include mixins.is('disabled') {
+          color: mixins.css-variable('dropdown-color--midnight--disabled');
+
+          @include mixins.is('active') {
+            color: mixins.css-variable('dropdown-color--midnight--active--disabled');
+
+            @include mixins.e('inner', false) {
+              background: mixins.css-variable('dropdown-bg--midnight--item--active--disabled');
+            }
+          }
+        }
+      }
+
+      @include mixins.b('dropdown-submenu', false) {
+        color: mixins.css-variable('dropdown-color--midnight');
+
+        @include mixins.is-not('disabled') {
+          @include mixins.em('item', 'inner', false) {
+            outline-color: mixins.css-variable('dropdown-outline-color');
+          }
+
+          @include mixins.e('inner', false) {
+            background: mixins.css-variable('dropdown-bg--midnight');
+          }
+
+          > #{mixins.element-name('reference', mixins.block('popover'))} {
+            > #{mixins.element-name('item', mixins.block('dropdown-submenu'))} {
+              @include mixins.m('inner') {
+                background: mixins.css-variable('dropdown-bg--midnight');
+              }
+
+              &:hover {
+                @include mixins.em('item', 'inner', false) {
+                  background: mixins.css-variable('dropdown-bg--midnight--item--hover');
+                }
+              }
+            }
+          }
+
+          @include mixins.is('active') {
+            > #{mixins.element-name('reference', mixins.block('popover'))} {
+              > #{mixins.element-name('item', mixins.block('dropdown-submenu'))} {
+                color: mixins.css-variable('dropdown-color--midnight--submenu--active');
+              }
+            }
+          }
+
+          @include mixins.is('selected') {
+            > #{mixins.element-name('reference', mixins.block('popover'))} {
+              > #{mixins.element-name('item', mixins.block('dropdown-submenu'))} {
+                color: mixins.css-variable('dropdown-color--midnight--active');
+
+                > #{mixins.modifier-name('inner', 'item', mixins.block('dropdown-submenu'))} {
+                  background: mixins.css-variable('dropdown-bg--midnight--item--active');
+                }
+              }
+            }
+          }
+        }
+
+        @include mixins.is('disabled') {
+          @include mixins.e('item', false) {
+            color: mixins.css-variable('dropdown-color--midnight--disabled');
+          }
+
+          @include mixins.is('active') {
+            > #{mixins.element-name('reference', mixins.block('popover'))} {
+              > #{mixins.element-name('item', mixins.block('dropdown-submenu'))} {
+                color: mixins.css-variable('dropdown-color--midnight--submenu--active--disabled');
+              }
+            }
+          }
+
+          @include mixins.is('selected') {
+            > #{mixins.element-name('reference', mixins.block('popover'))} {
+              > #{mixins.element-name('item', mixins.block('dropdown-submenu'))} {
+                color: mixins.css-variable('dropdown-color--midnight--active--disabled');
+
+                > #{mixins.modifier-name('inner', 'item', mixins.block('dropdown-submenu'))} {
+                  background: mixins.css-variable('dropdown-bg--midnight--item--active--disabled');
+                }
+              }
+            }
+          }
+        }
+
+        @include mixins.e('inner') {
+          background: mixins.css-variable('dropdown-bg--midnight') !important;
+          border-color: transparent !important;
+
+          @include mixins.bem('scrollbar', 'track', 'thumb', false) {
+            background: mixins.css-variable('menu-bg--item--midnight--scrollbar');
+
+            &:hover {
+              background: mixins.css-variable('menu-bg--item--midnight--scrollbar--hover');
+            }
+          }
+        }
+      }
+    }
+  }
+}

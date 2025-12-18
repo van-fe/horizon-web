@@ -1,0 +1,155 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('upload-v2--gallery') {
+  @include mixins.e('add-file') {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: mixins.css-variable('upload-v2', 'background', 'gallery', 'add-file');
+    border: mixins.css-variable('upload-v2', 'border', 'gallery', 'add-file');
+    border-radius: mixins.css-variable('upload-v2', 'border-radius', 'gallery-item');
+    cursor: pointer;
+    transition: mixins.css-variable('upload-v2', 'transition');
+
+    @include mixins.m('icon') {
+      color: mixins.css-variable('upload-v2', 'color', 'gallery', 'add-file', 'icon');
+      line-height: 0;
+      transition: mixins.css-variable('upload-v2', 'transition');
+    }
+
+    &:hover {
+      background: mixins.css-variable('upload-v2', 'background', 'gallery', 'add-file', 'hover');
+      border: mixins.css-variable('upload-v2', 'border', 'gallery', 'add-file', 'hover');
+
+      @include mixins.bem('upload-v2--gallery', 'add-file', 'icon', false) {
+        color: mixins.css-variable('upload-v2', 'color', 'gallery', 'add-file', 'icon', 'hover');
+      }
+    }
+
+    &:active {
+      background: mixins.css-variable('upload-v2', 'background', 'gallery', 'add-file', 'active');
+      border: mixins.css-variable('upload-v2', 'border', 'gallery', 'add-file', 'active');
+
+      @include mixins.bem('upload-v2--gallery', 'add-file', 'icon', false) {
+        color: mixins.css-variable('upload-v2', 'color', 'gallery', 'add-file', 'icon', 'active');
+      }
+    }
+  }
+
+  @include mixins.m('small') {
+    --font-size--add-file--icon: #{mixins.css-variable('upload-v2', 'font-size', 'gallery', 'add-file', 'small')};
+  }
+
+  @include mixins.m('medium') {
+    --font-size--add-file--icon: #{mixins.css-variable('upload-v2', 'font-size', 'gallery', 'add-file', 'medium')};
+  }
+
+  @include mixins.m('large') {
+    --font-size--add-file--icon: #{mixins.css-variable('upload-v2', 'font-size', 'gallery', 'add-file', 'large')};
+  }
+
+  @include mixins.m('huge') {
+    --font-size--add-file--icon: #{mixins.css-variable('upload-v2', 'font-size', 'gallery', 'add-file', 'huge')};
+  }
+
+  @include mixins.parallel-modifier('rectangle', 'small') {
+    @include mixins.e('item') {
+      width: mixins.css-variable('upload-v2', 'size', 'gallery', 'rectangle', 'small', 'width');
+      height: mixins.css-variable('upload-v2', 'size', 'gallery', 'rectangle', 'small', 'height');
+    }
+  }
+
+  @include mixins.parallel-modifier('rectangle', 'medium') {
+    @include mixins.e('item') {
+      width: mixins.css-variable('upload-v2', 'size', 'gallery', 'rectangle', 'medium', 'width');
+      height: mixins.css-variable('upload-v2', 'size', 'gallery', 'rectangle', 'medium', 'height');
+    }
+  }
+
+  @include mixins.parallel-modifier('rectangle', 'large') {
+    @include mixins.e('item') {
+      width: mixins.css-variable('upload-v2', 'size', 'gallery', 'rectangle', 'large', 'width');
+      height: mixins.css-variable('upload-v2', 'size', 'gallery', 'rectangle', 'large', 'height');
+    }
+  }
+
+  @include mixins.parallel-modifier('rectangle', 'huge') {
+    @include mixins.e('item') {
+      width: mixins.css-variable('upload-v2', 'size', 'gallery', 'rectangle', 'huge', 'width');
+      height: mixins.css-variable('upload-v2', 'size', 'gallery', 'rectangle', 'huge', 'height');
+    }
+  }
+
+  @include mixins.parallel-modifier('square', 'small') {
+    @include mixins.e('item') {
+      width: mixins.css-variable('upload-v2', 'size', 'gallery', 'square', 'small');
+      height: mixins.css-variable('upload-v2', 'size', 'gallery', 'square', 'small');
+    }
+  }
+
+  @include mixins.parallel-modifier('square', 'medium') {
+    @include mixins.e('item') {
+      width: mixins.css-variable('upload-v2', 'size', 'gallery', 'square', 'medium');
+      height: mixins.css-variable('upload-v2', 'size', 'gallery', 'square', 'medium');
+    }
+  }
+
+  @include mixins.parallel-modifier('square', 'large') {
+    @include mixins.e('item') {
+      width: mixins.css-variable('upload-v2', 'size', 'gallery', 'square', 'large');
+      height: mixins.css-variable('upload-v2', 'size', 'gallery', 'square', 'large');
+    }
+  }
+
+  @include mixins.parallel-modifier('square', 'huge') {
+    @include mixins.e('item') {
+      width: mixins.css-variable('upload-v2', 'size', 'gallery', 'square', 'huge');
+      height: mixins.css-variable('upload-v2', 'size', 'gallery', 'square', 'huge');
+    }
+  }
+
+  @include mixins.is('disabled') {
+    @include mixins.e('add-file') {
+      background: mixins.css-variable('upload-v2', 'background', 'gallery', 'add-file', 'disabled');
+      border-color: mixins.css-variable('upload-v2', 'border-color', 'gallery-add-file', 'disabled');
+      cursor: not-allowed;
+      user-select: none;
+
+      @include mixins.bem('upload-v2--gallery', 'add-file', 'icon', false) {
+        color: mixins.css-variable('upload-v2', 'color', 'gallery', 'add-file', 'icon', 'disabled');
+      }
+    }
+  }
+
+  @include mixins.b('controls', false) {
+    justify-content: center;
+  }
+}
+
+@include mixins.b('upload-v2') {
+  @include mixins.is('error') {
+    @include mixins.b('upload-v2--gallery') {
+      @include mixins.e('add-file') {
+        border-color: mixins.css-variable('upload-v2', 'border-color', 'gallery', 'add-file', 'error');
+
+        @include mixins.m('icon') {
+          color: mixins.css-variable('upload-v2', 'color', 'gallery', 'add-file', 'icon', 'error');
+        }
+      }
+    }
+
+    @include mixins.is('disabled') {
+      @include mixins.b('upload-v2--gallery') {
+        @include mixins.e('add-file') {
+          border-color: mixins.css-variable('upload-v2', 'border-color', 'gallery', 'add-file', 'error');
+
+          @include mixins.m('icon') {
+            color: mixins.css-variable('upload-v2', 'color', 'gallery', 'add-file', 'icon', 'disabled-error');
+          }
+        }
+      }
+    }
+  }
+}

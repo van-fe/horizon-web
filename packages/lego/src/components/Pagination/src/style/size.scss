@@ -1,0 +1,18 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('pagination') {
+  @include mixins.m('large') {
+    @include mixins.e('pager') {
+      @include mixins.m('item') {
+        min-width: mixins.css-variable('pagination-height--large');
+        min-height: mixins.css-variable('pagination-height--large');
+        border-radius: mixins.css-variable('pagination-border-radius--large');
+      }
+    }
+
+    @include mixins.e('sizes') {
+      min-height: mixins.css-variable('pagination-height--large');
+      border-radius: mixins.css-variable('pagination-border-radius--large');
+    }
+  }
+}

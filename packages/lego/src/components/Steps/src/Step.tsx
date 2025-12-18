@@ -1,0 +1,183 @@
+import type { CSSProperties } from 'vue';
+import { defineComponent, inject, ref, onBeforeUnmount, computed, onMounted } from 'vue';
+import { useStepProps } from './composables/useProps';
+import type { LegoSetupContext } from '@nio-fe/shared';
+import { ComponentClassBlock, cls, useNamespace } from '@nio-fe/shared';
+import { IconCheck, IconClose } from '@nio-fe/icon';
+import type { StepEmits } from './composables/useEmits';
+import { useStepEmits } from './composables/useEmits';
+import type { StepSlots } from './composables/useSlots';
+import { useStepSlots } from './composables/useSlots';
+import { nanoid } from 'nanoid';
+import {
+  NStepsActiveIndexInjectKey,
+  NStepsCollectInjectKey,
+  NStepsItemsInjectKey,
+  NStepsOnClickStepInjectKey,
+  NStepsPropsInjectKey,
+  NStepsRemoveInjectKey,
+  NStepsSizeInjectKey,
+} from './utils/injectedKeys';
+
+export default defineComponent({
+  name: `${useNamespace()}Step`,
+  props: useStepProps,
+  emits: useStepEmits,
+  slots: useStepSlots,
+  setup(props, { slots, emit }: LegoSetupContext<StepEmits, StepSlots>) {
+    const uuid = nanoid();
+    const classHelper = new ComponentClassBlock('step');
+    const index = ref(-1);
+
+    const parentProps = inject(NStepsPropsInjectKey)!;
+    const stepsCollect = inject(NStepsCollectInjectKey)!;
+    const stepsRemove = inject(NStepsRemoveInjectKey)!;
+    const activeIndex = inject(NStepsActiveIndexInjectKey)!;
+    const items = inject(NStepsItemsInjectKey)!;
+    const onClickStep = inject(NStepsOnClickStepInjectKey)!;
+    const sizeRef = inject(NStepsSizeInjectKey)!;
+
+    const isClickable = computed(
+      () => !props.disabled && (props.clickable ?? parentProps.clickable),
+    );
+
+    const currentStatus = computed(() => {
+      if (props.disabled) {
+        return 'disabled';
+      } else if (activeIndex.value > index.value) {
+        return 'finish';
+      } else if (activeIndex.value === index.value) {
+        return parentProps.status;
+      } else {
+        return 'wait';
+      }
+    });
+
+    const nextStatus = computed(() => {
+      if (activeIndex.value > index.value + 1) {
+        return 'finish';
+      } else if (activeIndex.value === index.value + 1) {
+        return parentProps.status;
+      } else {
+        return 'wait';
+      }
+    });
+
+    const stepStyle = computed(() => {
+      const style: CSSProperties = {};
+
+      if (
+        parentProps.labelAlign === 'center' &&
+        (parentProps.labelPlacement === 'vertical' || parentProps.progressDot)
+      ) {
+        style.flex = `1 1 ${(1 / items.value.length) * 100}%`;
+      } else {
+        if (index.value < items.value.length - 1 + parentProps.initial) {
+          style.flex = `1 1 ${(1 / (items.value.length - 1)) * 100}%`;
+        } else {
+          style.flex = 'auto 0 0';
+
+          if (parentProps.direction === 'vertical') {
+            style.maxHeight = `${(1 / items.value.length) * 100}%`;
+          } else {
+            style.maxWidth = `${(1 / items.value.length) * 100}%`;
+          }
+        }
+      }
+
+      return style;
+    });
+
+    function onClick(evt: MouseEvent) {
+      if (isClickable.value) {
+        emit('click', evt, index.value);
+
+        onClickStep(index.value);
+      }
+    }
+
+    function onKeyUP(evt: KeyboardEvent) {
+      if (evt.code === 'Enter' && isClickable.value) {
+        emit('click', evt, index.value);
+
+        onClickStep(index.value);
+      }
+    }
+
+    onMounted(() => {
+      stepsCollect(
+        props,
+        uuid,
+        i => {
+          index.value = i;
+        },
+        () => index.value,
+      );
+    });
+
+    onBeforeUnmount(() => {
+      stepsRemove(props, uuid);
+    });
+
+    const renderIcon = () => {
+      if (slots.icon) {
+        return slots.icon();
+      }
+
+      if (parentProps.progressDot) {
+        return undefined;
+      }
+
+      switch (currentStatus.value) {
+        case 'finish':
+          return <IconCheck size={sizeRef.value === 'medium' ? 16 : 12} />;
+        case 'error':
+          return <IconClose size={sizeRef.value === 'medium' ? 16 : 12} />;
+        default:
+          return (
+            <div class={classHelper.em('icon', 'number')}>
+              {index.value + 1 + parentProps.initial}
+            </div>
+          );
+      }
+    };
+
+    return () => {
+      return (
+        <div
+          class={cls(
+            classHelper.block,
+            classHelper.is(currentStatus.value),
+            classHelper.is('dot', parentProps.progressDot),
+            classHelper.is(`next-${nextStatus.value}`, index.value < items.value.length - 1),
+            classHelper.is('clickable', isClickable.value),
+          )}
+          style={stepStyle.value}
+          data-index={index.value}
+          role={isClickable.value ? 'button' : undefined}
+          tabindex={isClickable.value ? '0' : undefined}
+          onClick={onClick}
+          onKeyup={onKeyUP}
+        >
+          <div class={classHelper.e('wrapper')}>
+            <div class={classHelper.e('tail')}></div>
+            <div class={classHelper.e('icon')}>{renderIcon()}</div>
+            <div class={classHelper.e('content')}>
+              <div class={classHelper.em('content', 'title')}>{slots.title?.() ?? props.title}</div>
+              {(slots.subtitle?.() || props.subtitle) && (
+                <div class={classHelper.em('content', 'subtitle')}>
+                  {slots.subtitle?.() || props.subtitle}
+                </div>
+              )}
+              {(slots.description?.() || props.description) && (
+                <div class={classHelper.em('content', 'description')}>
+                  {slots.description?.() || props.description}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      );
+    };
+  },
+});

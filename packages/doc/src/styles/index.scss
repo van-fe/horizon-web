@@ -1,0 +1,229 @@
+@use '@nio-fe/lego/es/styles/mixins/config.scss';
+@use '@nio-fe/lego/es/styles/mixins';
+@import './codeThemes/one-light';
+@import './codeThemes/vs-dark';
+
+// presets
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: mixins.css-variable('bg-default');
+}
+
+table.md-table {
+  width: 100%;
+  margin-bottom: 16px;
+  border-collapse: collapse;
+
+  td,
+  th {
+    max-width: 20vw;
+    padding: 10px;
+    text-align: left;
+    word-break: break-word;
+    border: 1px solid mixins.css-variable('divider-default');
+  }
+
+  th {
+    background: mixins.css-variable('bg-secondary');
+  }
+
+  p {
+    margin: 0;
+  }
+
+  &.text-center {
+    td, th {
+      text-align: center;
+    }
+  }
+}
+
+ul {
+  margin-bottom: 20px;
+}
+
+ol {
+  padding-left: 1em;
+
+  li {
+    list-style-type: decimal;
+  }
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin-bottom: 2em;
+}
+
+h1 {
+  margin-bottom: 1em;
+  font-size: 40px;
+}
+
+h2 {
+  margin-top: 1em;
+  margin-bottom: 2em;
+}
+
+p {
+  margin-bottom: 10px;
+}
+
+// 站点样式
+.lego-doc {
+  display: flex;
+  height: 100vh;
+
+  &.n-container {
+    > .n-header {
+      border-bottom: 1px solid mixins.css-variable('border-default');
+    }
+
+    > .n-container > .n-aside {
+      border-right: 1px solid mixins.css-variable('border-default');
+    }
+  }
+}
+
+.component-content {
+  margin-right: 240px;
+  margin-left: 60px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+pre {
+  margin-bottom: 12px;
+}
+
+@media screen and (max-width: 1200px) {
+  .right-menu {
+    display: none;
+  }
+}
+
+.right-menu {
+  position: fixed;
+  top: 60px;
+  right: 0;
+  width: 200px;
+  height: 100%;
+  padding: 10px;
+  overflow-y: auto;
+  color: #333;
+
+  --n-anchor--margin: 0;
+  --n-anchor-width: 100%;
+
+  .right-menu-item {
+    display: block;
+    margin-bottom: 5px;
+    overflow: hidden;
+    color: mixins.css-variable('text-secondary');
+    white-space: nowrap;
+    text-decoration: none;
+    text-overflow: ellipsis;
+
+    &:hover {
+      color: mixins.css-variable('text-brand-hover');
+    }
+  }
+}
+
+code {
+  padding: 3px 8px;
+  color: mixins.css-variable('text-secondary');
+  font-weight: mixins.css-variable('weight-normal');
+  font-size: mixins.css-variable('text-sm');
+  background: mixins.css-variable('bg-secondary');
+  border-radius: mixins.css-variable('radius-s');
+}
+
+.code-area {
+  code {
+    padding: 0;
+    color: initial;
+    font-weight: initial;
+    font-size: initial;
+    background: initial;
+    border-radius: initial;
+  }
+}
+
+kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 4px;
+  margin-bottom: 10px;
+  padding: 0 4px;
+  font-size: 12px;
+  background: linear-gradient(-225deg, #d5dbe4, #f8f8f8);
+  border-radius: 2px;
+  box-shadow: inset 0 -2px 0 0 #cdcde6, inset 0 0 1px 1px #fff, 0 1px 2px 1px rgba(30, 35, 90, 40%);
+  cursor: pointer;
+  user-select: none;
+}
+
+.demo-title {
+  margin: 10px 0;
+  color: mixins.css-variable('text-primary');
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.demo-description {
+  margin: 10px 0;
+  color: mixins.css-variable('text-secondary');
+}
+
+.full-width-form-item {
+  .#{config.$namespace}-form-item__label {
+    display: flex;
+    width: 100% !important;
+
+    .#{config.$namespace}-form-item__text {
+      width: 100%;
+    }
+  }
+}
+
+.n-link {
+  &.no-underline {
+    text-decoration: none !important;
+  }
+
+  &.h1 {
+    color: #565656;
+    font-weight: bolder;
+    font-size: 40px;
+    line-height: 48px;
+  }
+
+  &.h2 {
+    color: #565656;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 48px;
+  }
+
+  &.h3 {
+    margin-bottom: 12px;
+    color: #565656;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 36px;
+  }
+}
+
+.description {
+  margin: 24px 0 !important;
+  font-weight: 420;
+  font-size: 14px;
+  line-height: 17px;
+}

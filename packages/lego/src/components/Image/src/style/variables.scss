@@ -1,0 +1,18 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  'size--actions-container--dropdown-btn': 28px,
+  'color--actions-container--dropdown-item': #{function.css-variable('text-primary')},
+  'color--image-list--item--overflow': #{function.css-variable('text-inverse')},
+  'line-height--actions-container--icon': #{function.css-variable('line-height-default')},
+  'border-radius--actions-container--dropdown-btn': #{function.css-variable('radius-s')},
+  'bg--placeholder': #{function.css-variable('bg-secondary')},
+  'bg--actions-container': #{function.css-variable('bg-overlay-weak')},
+  'bg--actions-container--dropdown-btn': #{function.css-variable('bg-transparent')},
+  'bg--actions-container--dropdown-btn--hover': #{function.css-variable('bg-overlay-weak')},
+  'bg--image-list--item--overflow': #{function.css-variable('bg-overlay-weak')},
+  'padding-right--actions-container--bottom-right': 10px,
+  'padding-bottom--actions-container--bottom-right': 10px,
+  'margin-right--actions-container--icon': 10px,
+  'margin-left--actions-container--dropdown-item--span': #{function.css-variable('spacing-3')},
+);

@@ -1,0 +1,36 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('select-option-group') {
+  display: flex;
+  flex-direction: column;
+
+  @include mixins.e('title') {
+    padding: mixins.css-variable('select-padding--option-group--title');
+    overflow: hidden;
+    color: mixins.css-variable('select-color--option-group--title');
+    font-size: mixins.css-variable('select-font-size--option-group--title');
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  @include mixins.e('divider') {
+    order: 99999;
+    height: 1px;
+    margin: mixins.css-variable('select-margin--option-group--divider');
+    background: mixins.css-variable('select-border-color--option-group--divider');
+  }
+
+  @include mixins.has('title') {
+    margin-bottom: mixins.css-variable('select-margin-bottom--option-group--title');
+  }
+
+  &:last-child {
+    @include mixins.e('divider', false) {
+      display: none;
+    }
+
+    @include mixins.has('title') {
+      margin-bottom: 0;
+    }
+  }
+}

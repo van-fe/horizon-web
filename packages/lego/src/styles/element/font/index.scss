@@ -1,0 +1,11 @@
+@use './size';
+@use './lineHeight';
+@use './weight';
+@use '../../mixins/function';
+@use '../../mixins/mixins';
+
+$values: function.map-merge-multi(
+  function.flatten-variables(size.$values, 'text'),
+  function.flatten-variables(lineHeight.$values, 'line-height'),
+  function.flatten-variables(weight.$values, 'weight')
+);
