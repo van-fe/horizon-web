@@ -257,7 +257,7 @@ export const ZhCN = {
     tag: {
       create: '添加标签',
     },
-    tableV2: {
+    table: {
       filter: {
         reset: '重置',
         confirm: '确定',

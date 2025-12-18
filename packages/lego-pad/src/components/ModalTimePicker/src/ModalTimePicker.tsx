@@ -1,13 +1,13 @@
 import type { LegoComponentInstance } from '@nio-fe/shared';
 import { ComponentClassBlock, useNamespace } from '@nio-fe/shared';
 import { computed, defineComponent, Fragment, inject, ref } from 'vue';
-import type { TimePickerV2Exposes } from '@nio-fe/lego';
+import type { TimePickerExposes } from '@nio-fe/lego';
 import {
-  useTimePickerV2Emits,
-  useTimePickerV2Exposes,
-  useTimePickerV2Slots,
+  useTimePickerEmits,
+  useTimePickerExposes,
+  useTimePickerSlots,
   NDrawer,
-  NTimePickerV2,
+  NTimePicker,
   NFormItemPropsInjectedKey,
   NFormItemSlotsInjectedKey,
   NButton,
@@ -25,15 +25,15 @@ export default defineComponent({
   inheritAttrs: false,
   props: useModalTimePickerProps,
   emits: useModalTimePickerEmits,
-  slots: useTimePickerV2Slots,
-  exposes: useTimePickerV2Exposes,
+  slots: useTimePickerSlots,
+  exposes: useTimePickerExposes,
   setup(props, context) {
     const classHelper = new ComponentClassBlock('modal-time-picker');
 
     const timePickerDomRef =
-      ref<LegoComponentInstance<typeof NTimePickerV2, TimePickerV2Exposes>>();
+      ref<LegoComponentInstance<typeof NTimePicker, TimePickerExposes>>();
     const bodyTimePickerDomRef =
-      ref<LegoComponentInstance<typeof NTimePickerV2, TimePickerV2Exposes>>();
+      ref<LegoComponentInstance<typeof NTimePicker, TimePickerExposes>>();
 
     const isPadModeInject = inject(NSuitPadIsPadModeInjectKey, undefined);
     const formItemPropsInject = inject(NFormItemPropsInjectedKey, undefined);
@@ -47,7 +47,7 @@ export default defineComponent({
       footer: props.drawerProps.footer ?? false,
     }));
 
-    const emitsHandlers = useEmits(useTimePickerV2Emits, context.emit);
+    const emitsHandlers = useEmits(useTimePickerEmits, context.emit);
 
     const drawerVisible = ref(false);
 
@@ -56,12 +56,12 @@ export default defineComponent({
       context.emit('click', evt);
     }
 
-    useExposes(useTimePickerV2Exposes, context.expose, bodyTimePickerDomRef);
+    useExposes(useTimePickerExposes, context.expose, bodyTimePickerDomRef);
 
     return () =>
       isPadModeInject?.value ? (
         <Fragment>
-          <NTimePickerV2
+          <NTimePicker
             ref={timePickerDomRef}
             {...props}
             {...context.attrs}
@@ -74,7 +74,7 @@ export default defineComponent({
             {{
               ...context.slots,
             }}
-          </NTimePickerV2>
+          </NTimePicker>
           <NDrawer
             v-model:visible={drawerVisible.value}
             class={classHelper.e('drawer')}
@@ -116,7 +116,7 @@ export default defineComponent({
               ),
               default: () => (
                 <div class={classHelper.e('body')}>
-                  <NTimePickerV2
+                  <NTimePicker
                     ref={bodyTimePickerDomRef}
                     {...props}
                     {...context.attrs}
@@ -140,18 +140,18 @@ export default defineComponent({
                       panelConfirmLeft: () => undefined,
                       ...context.slots,
                     }}
-                  </NTimePickerV2>
+                  </NTimePicker>
                 </div>
               ),
             }}
           </NDrawer>
         </Fragment>
       ) : (
-        <NTimePickerV2 {...props} {...context.attrs} {...emitsHandlers}>
+        <NTimePicker {...props} {...context.attrs} {...emitsHandlers}>
           {{
             ...context.slots,
           }}
-        </NTimePickerV2>
+        </NTimePicker>
       );
   },
 });

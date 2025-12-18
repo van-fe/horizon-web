@@ -1,4 +1,4 @@
-:::warning 为了防止和 `@nio-fe/lego-table`、`@nio-fe/lego-table-v2` 的组件名称冲突，所以命名为 `n-table-v3` `n-table-column-v3`, `lego@3.x` 时将会移除 `v3` 字符:::
+:::warning 为了防止和 `@nio-fe/lego-table`、`@nio-fe/lego-table` 的组件名称冲突，所以命名为 `n-table-v3` `n-table-column-v3`, `lego@3.x` 时将会移除 `v3` 字符:::
 
 ### 基本用法
 与传统 `vue` 表格组件一致，给 `n-table-v3` 传入 `data` 即表格数据；给 `n-table-column-v3` 传入 `title` 作为标题，`field` 作为表格数据中每行摘取的数据

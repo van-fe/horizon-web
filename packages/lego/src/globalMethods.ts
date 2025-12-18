@@ -10,11 +10,11 @@ export {
 export { LoadingService } from './directives/v-loading';
 
 export {
-  NUploadV2FileStatusEnum,
-  NUploadV2FileTypeEnum,
+  NUploadFileStatusEnum,
+  NUploadFileTypeEnum,
   fileTypeMapping,
   fileTypeIconMapping,
-} from './components/UploadV2';
+} from './components/Upload';
 
 export {
   NTableAlignEnum,

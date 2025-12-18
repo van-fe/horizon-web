@@ -66,7 +66,7 @@
 :::demo ./demos/datetime.vue :::
 
 ### 格式化
-`date-picker-v2` 内置使用 `dayjs` 作为数据处理，所以支持所有 `dayjs` 支持的格式化方案
+`date-picker` 内置使用 `dayjs` 作为数据处理，所以支持所有 `dayjs` 支持的格式化方案
 
 另外也支持插件 `AdvancedFormat` 所支持的格式
 
@@ -175,7 +175,7 @@
 :::code ../../../../lego/src/utils/useDayJs.ts:::
 
 ### 类型定义
-:::code ../../../../lego/src/components/DatePickerV2/src/utils/types.ts :::
+:::code ../../../../lego/src/components/DatePicker/src/utils/types.ts :::
 
 ### 格式化格式
 根据当前的国际化配置，会有相应不同的日期格式展示形式

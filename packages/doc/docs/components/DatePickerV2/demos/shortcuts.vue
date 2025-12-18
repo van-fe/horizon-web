@@ -1,10 +1,10 @@
 <template>
   <n-row>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value" type="date" :shortcuts="shortcuts" need-confirm />
+      <n-date-picker v-model="value" type="date" :shortcuts="shortcuts" need-confirm />
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value2" type="dateRange" :shortcuts="shortcutRange" need-confirm />
+      <n-date-picker v-model="value2" type="dateRange" :shortcuts="shortcutRange" need-confirm />
     </n-col>
   </n-row>
 </template>
@@ -12,12 +12,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { dayjs } from '@nio-fe/lego';
-import type { NDatePickerV2ShortcutsType } from '@nio-fe/lego';
+import type { NDatePickerShortcutsType } from '@nio-fe/lego';
 
 const value = ref();
 const value2 = ref();
 
-const shortcuts = ref<NDatePickerV2ShortcutsType[]>([
+const shortcuts = ref<NDatePickerShortcutsType[]>([
   {
     label: 'Last 7 days',
     value: dayjs().subtract(7, 'day'),
@@ -33,7 +33,7 @@ const shortcuts = ref<NDatePickerV2ShortcutsType[]>([
   },
 ]);
 
-const shortcutRange = ref<NDatePickerV2ShortcutsType[]>([
+const shortcutRange = ref<NDatePickerShortcutsType[]>([
   {
     label: 'Last Year',
     value: [dayjs().subtract(1, 'year'), dayjs()],

@@ -1,0 +1,21 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('upload--button') {
+  overflow: hidden;
+
+  input[type='file'] {
+    padding-top: 100%;
+    cursor: pointer;
+  }
+
+  @include mixins.e('inner') {
+    display: flex;
+    align-items: center;
+  }
+
+  @include mixins.e('icon') {
+    width: mixins.css-variable('upload', 'size', 'button', 'icon');
+    height: mixins.css-variable('upload', 'size', 'button', 'icon');
+    margin-right: mixins.css-variable('upload', 'spacing', 'button', 'icon', 'margin-right');
+  }
+}

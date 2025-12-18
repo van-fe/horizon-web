@@ -28,10 +28,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { TimePickerV2Props } from '@nio-fe/lego';
+import type { TimePickerProps } from '@nio-fe/lego';
 
 const value = ref();
-const size = ref<NonNullable<TimePickerV2Props['size']>>('medium');
-const inputStyle = ref<TimePickerV2Props['inputStyle']>('normal');
+const size = ref<NonNullable<TimePickerProps['size']>>('medium');
+const inputStyle = ref<TimePickerProps['inputStyle']>('normal');
 const disabled = ref(false);
 </script>

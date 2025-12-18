@@ -7,7 +7,7 @@
       <n-switch v-model="multiple" :status="true" />
     </n-form-item>
   </n-form>
-  <n-upload-v2
+  <n-upload
     v-model="modelValue"
     action="https://lego-inspector.nioint.com/upload-mock"
     method="POST"
@@ -21,14 +21,14 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { $message, NUploadV2FileType, NUploadV2RawFileType } from '@nio-fe/lego';
+import { $message, NUploadFileType, NUploadRawFileType } from '@nio-fe/lego';
 
 const enableFileSizeLimit = ref(false);
 const multiple = ref(false);
 
-const modelValue = ref<NUploadV2RawFileType>();
+const modelValue = ref<NUploadRawFileType>();
 
-function onBeforeUpload(file: NUploadV2FileType) {
+function onBeforeUpload(file: NUploadFileType) {
   console.log('before-upload:', file);
   if ((file.size || 0) > 1024 * 1024 * 2) {
     $message.error('手动拦截：您选择的文件超过 2MB 大小');
@@ -36,7 +36,7 @@ function onBeforeUpload(file: NUploadV2FileType) {
   } else return true;
 }
 
-function onFileSizeExceed(files: NUploadV2FileType[]) {
+function onFileSizeExceed(files: NUploadFileType[]) {
   console.log(files);
 
   $message.error(`自动拦截： ${files.map(file => file.name).join('、')} 超过 2MB 大小`);

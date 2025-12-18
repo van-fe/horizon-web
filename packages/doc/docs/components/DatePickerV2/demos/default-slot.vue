@@ -1,7 +1,7 @@
 <template>
   <n-row>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value" type="date" :to-body="false">
+      <n-date-picker v-model="value" type="date" :to-body="false">
         <template #default="{ grid }">
           <div :class="{'custom-grid': true, 'is-selected': grid.isSelected ,'is-holiday': ([0, 6].includes(grid.date.day()) && !isInWorkday(grid.date)) || isInHoliday(grid.date)}">
             {{ grid.text }}
@@ -9,7 +9,7 @@
             <div v-if="isInWorkday(grid.date)" class="badge workday">班</div>
           </div>
         </template>
-      </n-date-picker-v2>
+      </n-date-picker>
     </n-col>
   </n-row>
 </template>

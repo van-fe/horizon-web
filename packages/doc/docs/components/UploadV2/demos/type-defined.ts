@@ -1,8 +1,8 @@
 import type { Data } from '@nio-fe/shared';
 
-export type NUploadV2RawFileType = NUploadV2UserFile | File | NUploadV2FileType;
+export type NUploadRawFileType = NUploadUserFile | File | NUploadFileType;
 
-export enum NUploadV2FileTypeEnum {
+export enum NUploadFileTypeEnum {
   Unknown = 'unknown',
   Pdf = 'pdf',
   Word = 'word',
@@ -15,20 +15,20 @@ export enum NUploadV2FileTypeEnum {
   Link = 'link',
 }
 
-export const fileTypeMapping: Record<NUploadV2FileTypeEnum, string[]> = {
-  [NUploadV2FileTypeEnum.Image]: ['jpeg', 'jpg', 'png', 'gif', 'bmp', 'webp', 'svg'],
-  [NUploadV2FileTypeEnum.Word]: ['doc', 'docx'],
-  [NUploadV2FileTypeEnum.Excel]: ['xls', 'xlsx'],
-  [NUploadV2FileTypeEnum.Ppt]: ['ppt', 'pptx'],
-  [NUploadV2FileTypeEnum.Pdf]: ['pdf'],
-  [NUploadV2FileTypeEnum.Audio]: ['mp3', 'wav', 'wma'],
-  [NUploadV2FileTypeEnum.Video]: ['mp4', 'wam', 'webm'],
-  [NUploadV2FileTypeEnum.Zip]: ['zip', 'rar', '7z'],
-  [NUploadV2FileTypeEnum.Link]: ['lnk', 'url', 'uri'],
-  [NUploadV2FileTypeEnum.Unknown]: [],
+export const fileTypeMapping: Record<NUploadFileTypeEnum, string[]> = {
+  [NUploadFileTypeEnum.Image]: ['jpeg', 'jpg', 'png', 'gif', 'bmp', 'webp', 'svg'],
+  [NUploadFileTypeEnum.Word]: ['doc', 'docx'],
+  [NUploadFileTypeEnum.Excel]: ['xls', 'xlsx'],
+  [NUploadFileTypeEnum.Ppt]: ['ppt', 'pptx'],
+  [NUploadFileTypeEnum.Pdf]: ['pdf'],
+  [NUploadFileTypeEnum.Audio]: ['mp3', 'wav', 'wma'],
+  [NUploadFileTypeEnum.Video]: ['mp4', 'wam', 'webm'],
+  [NUploadFileTypeEnum.Zip]: ['zip', 'rar', '7z'],
+  [NUploadFileTypeEnum.Link]: ['lnk', 'url', 'uri'],
+  [NUploadFileTypeEnum.Unknown]: [],
 };
 
-export enum NUploadV2FileStatusEnum {
+export enum NUploadFileStatusEnum {
   New = 'new',
   Pending = 'pending',
   Uploading = 'uploading',
@@ -40,7 +40,7 @@ export enum NUploadV2FileStatusEnum {
   Retrying = 'retrying',
 }
 
-export interface NUploadV2FileType {
+export interface NUploadFileType {
   /**
    * 文件名
    */
@@ -52,11 +52,11 @@ export interface NUploadV2FileType {
   /**
    * 文件状态
    */
-  status: NUploadV2FileStatusEnum;
+  status: NUploadFileStatusEnum;
   /**
    * 文件类型
    */
-  type: NUploadV2FileTypeEnum;
+  type: NUploadFileTypeEnum;
   /**
    * 文件大小
    */
@@ -97,65 +97,65 @@ type PartialInclude<T, K extends keyof T = keyof T> = {
   [Key in keyof T as Key extends K ? never : Key]: T[Key];
 }
 
-export type NUploadV2UserFile = PartialInclude<
-  NUploadV2FileType,
+export type NUploadUserFile = PartialInclude<
+  NUploadFileType,
   'status' | 'uuid' | 'type' | 'blobUrl'
 >;
 
-export interface NUploadV2SetStatusOptionsMapping {
-  [NUploadV2FileStatusEnum.Success]: {
+export interface NUploadSetStatusOptionsMapping {
+  [NUploadFileStatusEnum.Success]: {
     response: Data | undefined;
     uploadUrl: string | undefined;
   };
-  [NUploadV2FileStatusEnum.Fail]: {
+  [NUploadFileStatusEnum.Fail]: {
     reason: string;
     response: Data | undefined;
   };
-  [NUploadV2FileStatusEnum.New]: undefined;
-  [NUploadV2FileStatusEnum.Pending]: undefined;
-  [NUploadV2FileStatusEnum.Uploading]: {
+  [NUploadFileStatusEnum.New]: undefined;
+  [NUploadFileStatusEnum.Pending]: undefined;
+  [NUploadFileStatusEnum.Uploading]: {
     progress: number;
     response: Data | undefined;
   };
-  [NUploadV2FileStatusEnum.Canceling]: undefined;
-  [NUploadV2FileStatusEnum.Canceled]: undefined;
-  [NUploadV2FileStatusEnum.Pause]: undefined;
-  [NUploadV2FileStatusEnum.Retrying]: undefined;
+  [NUploadFileStatusEnum.Canceling]: undefined;
+  [NUploadFileStatusEnum.Canceled]: undefined;
+  [NUploadFileStatusEnum.Pause]: undefined;
+  [NUploadFileStatusEnum.Retrying]: undefined;
 }
 
-export interface NUploadV2HttpRequestInstanceMethods {
+export interface NUploadHttpRequestInstanceMethods {
   /**
    * 设置当前文件状态，可以通过这个方法设置文件的各种状态，包括上传进度
    * @param file 当前文件
    * @param status 状态
    * @param args 参数
    */
-  setStatus: <T extends NUploadV2FileStatusEnum = NUploadV2FileStatusEnum>(
-    file: NUploadV2FileType,
+  setStatus: <T extends NUploadFileStatusEnum = NUploadFileStatusEnum>(
+    file: NUploadFileType,
     status: T,
-    args?: NUploadV2SetStatusOptionsMapping[T],
+    args?: NUploadSetStatusOptionsMapping[T],
   ) => void;
   /**
    * 当文件上传成功后调用，会自动修改文件状态，调用后会自动从队列中拿取下一个上传的文件
    * @param file 当前文件
    */
-  onUploadSuccess: (file: NUploadV2FileType, response: string) => void;
+  onUploadSuccess: (file: NUploadFileType, response: string) => void;
   /**
    * 当文件上传失败时调用，会自动修改文件状态，调用后会自动从队列中拿取下一个上传的文件
    * @param file 当前文件
    * @param responseText
    * @param response
    */
-  onUploadFail: (file: NUploadV2FileType, responseText: string, response: string) => void;
+  onUploadFail: (file: NUploadFileType, responseText: string, response: string) => void;
   /**
    * 上传结束后调用，不处理文件状态，调用后会自动从队列中拿取下一个上传的文件
    * @param file 当前文件
    */
-  onUploadFinished: (file: NUploadV2FileType) => void;
+  onUploadFinished: (file: NUploadFileType) => void;
   /**
    * 在上传开始前调用，会将文件加到上传队列
    * @param file 当前文件
    * @param requestInstance 请求时的实例，可以是 xhr 也可以是 fetch 返回的对象
    */
-  addUploadingQueue: (file: NUploadV2FileType, requestInstance: unknown) => void;
+  addUploadingQueue: (file: NUploadFileType, requestInstance: unknown) => void;
 }

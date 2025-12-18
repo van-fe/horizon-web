@@ -4,10 +4,10 @@
       Date:
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value" show-now default-time="00:00" />
+      <n-date-picker v-model="value" show-now default-time="00:00" />
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="values" type="dateRange" show-now default-time="00:00" />
+      <n-date-picker v-model="values" type="dateRange" show-now default-time="00:00" />
     </n-col>
   </n-row>
   <n-row align="middle">
@@ -15,10 +15,10 @@
       Datetime:
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value2" type="dateSeconds" show-now default-time="00:00" need-confirm />
+      <n-date-picker v-model="value2" type="dateSeconds" show-now default-time="00:00" need-confirm />
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="values2" type="dateSecondsRange" show-now need-confirm />
+      <n-date-picker v-model="values2" type="dateSecondsRange" show-now need-confirm />
     </n-col>
   </n-row>
   <n-row align="middle">
@@ -26,18 +26,18 @@
       Custom:
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 ref="datePickerRef" v-model="value3">
+      <n-date-picker ref="datePickerRef" v-model="value3">
         <template #showNow>
           <n-button size="small" plain @click="setSingleDate">Tomorrow</n-button>
         </template>
-      </n-date-picker-v2>
+      </n-date-picker>
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 ref="datePickerRef2" v-model="values3" type="datetimeRange">
+      <n-date-picker ref="datePickerRef2" v-model="values3" type="datetimeRange">
         <template #showNow>
           <n-button size="small" plain @click="setRangeDate">Five minute later</n-button>
         </template>
-      </n-date-picker-v2>
+      </n-date-picker>
     </n-col>
   </n-row>
 </template>

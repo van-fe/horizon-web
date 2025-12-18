@@ -1,7 +1,7 @@
 <template>
   <n-row>
     <n-col :span="24">
-      <n-date-picker-v2
+      <n-date-picker
         v-model="value"
         type="date"
         :show-popover-content-only="true"
@@ -11,7 +11,7 @@
       />
     </n-col>
     <n-col :span="24">
-      <n-date-picker-v2
+      <n-date-picker
         v-model="value2"
         type="date-range"
         :show-popover-content-only="true"

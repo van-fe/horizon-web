@@ -26,7 +26,7 @@
 @use '../components/AutoComplete/src/style/variables' as auto-complete;
 @use '../components/Empty/src/style/variables' as empty;
 @use '../components/Progress/src/style/variables' as progress;
-@use '../components/TimePickerV2/src/style/variables' as time-picker-v2;
+@use '../components/TimePicker/src/style/variables' as time-picker;
 @use '../components/Picker/src/style/variables' as picker;
 @use '../components/Input/src/style/variables' as input;
 @use '../components/Alert/src/style/variables' as alert;
@@ -34,20 +34,20 @@
 @use '../components/Layout/src/style/variables' as layout;
 @use '../components/VideoPlayer/src/style/variables' as video-player;
 @use '../components/Segmented/src/style/variables' as segmented;
-@use '../components/UploadV2/src/style/variables' as upload-v2;
+@use '../components/Upload/src/style/variables' as upload;
 @use '../components/DatePicker/src/style/variables' as date-picker;
 @use '../components/Panels/src/style/variables' as panels;
 @use '../components/Cascader/src/style/variables' as cascader;
 @use '../components/Count/src/style/variables' as count;
 @use '../components/Checkbox/src/style/variables' as checkbox;
 @use '../components/Transfer/src/style/variables' as transfer;
-@use '../components/DatePickerV2/src/style/variables' as date-picker-v2;
+@use '../components/DatePicker/src/style/variables' as date-picker;
 @use '../components/Descriptions/src/style/variables' as descriptions;
 @use '../components/Slider/src/style/variables' as slider;
 @use '../components/PageHeader/src/style/variables' as page-header;
 @use '../components/Collapse/src/style/variables' as collapse;
 @use '../components/InputNumber/src/style/variables' as input-number;
-@use '../components/TransferV2/src/style/variables' as transfer-v2;
+@use '../components/Transfer/src/style/variables' as transfer;
 @use '../components/Image/src/style/variables' as image;
 @use '../components/Time/src/style/variables' as time;
 @use '../components/Dialog/src/style/variables' as dialog;
@@ -105,7 +105,7 @@ $values: function.map-merge-multi(
   function.flatten-variables(auto-complete.$values, 'auto-complete'),
   function.flatten-variables(empty.$values, 'empty'),
   function.flatten-variables(progress.$values, 'progress'),
-  function.flatten-variables(time-picker-v2.$values, 'time-picker-v2'),
+  function.flatten-variables(time-picker.$values, 'time-picker'),
   function.flatten-variables(picker.$values, 'picker'),
   function.flatten-variables(input.$values, 'input'),
   function.flatten-variables(alert.$values, 'alert'),
@@ -113,20 +113,20 @@ $values: function.map-merge-multi(
   function.flatten-variables(layout.$values, 'layout'),
   function.flatten-variables(video-player.$values, 'video-player'),
   function.flatten-variables(segmented.$values, 'segmented'),
-  function.flatten-variables(upload-v2.$values, 'upload-v2'),
+  function.flatten-variables(upload.$values, 'upload'),
   function.flatten-variables(date-picker.$values, 'date-picker'),
   function.flatten-variables(panels.$values, 'panels'),
   function.flatten-variables(cascader.$values, 'cascader'),
   function.flatten-variables(count.$values, 'count'),
   function.flatten-variables(checkbox.$values, 'checkbox'),
   function.flatten-variables(transfer.$values, 'transfer'),
-  function.flatten-variables(date-picker-v2.$values, 'date-picker-v2'),
+  function.flatten-variables(date-picker.$values, 'date-picker'),
   function.flatten-variables(descriptions.$values, 'descriptions'),
   function.flatten-variables(slider.$values, 'slider'),
   function.flatten-variables(page-header.$values, 'page-header'),
   function.flatten-variables(collapse.$values, 'collapse'),
   function.flatten-variables(input-number.$values, 'input-number'),
-  function.flatten-variables(transfer-v2.$values, 'transfer-v2'),
+  function.flatten-variables(transfer.$values, 'transfer'),
   function.flatten-variables(image.$values, 'image'),
   function.flatten-variables(time.$values, 'time'),
   function.flatten-variables(dialog.$values, 'dialog'),

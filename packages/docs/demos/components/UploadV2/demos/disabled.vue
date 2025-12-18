@@ -1,11 +1,11 @@
 <template>
-  <n-upload-v2 action="https://lego-inspector.nioint.com/upload-mock" :disabled="true" />
-  <n-upload-v2
+  <n-upload action="https://lego-inspector.nioint.com/upload-mock" :disabled="true" />
+  <n-upload
     action="https://lego-inspector.nioint.com/upload-mock"
     type="gallery"
     :disabled="true"
   />
-  <n-upload-v2 action="https://lego-inspector.nioint.com/upload-mock" type="drop" :disabled="true" accept="image/*" />
+  <n-upload action="https://lego-inspector.nioint.com/upload-mock" type="drop" :disabled="true" accept="image/*" />
 </template>
 
 <script lang="ts">
@@ -18,7 +18,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.n-upload-v2 + .n-upload-v2 {
+.n-upload + .n-upload {
   margin-top: 10px;
 }
 </style>

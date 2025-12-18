@@ -9,18 +9,18 @@
   </n-form>
   <n-row>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value" type="date" :hover-to-display-value="hoverToDisplayValue" />
+      <n-date-picker v-model="value" type="date" :hover-to-display-value="hoverToDisplayValue" />
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="values" type="dateRange" :hover-to-display-value="hoverToDisplayValue" />
+      <n-date-picker v-model="values" type="dateRange" :hover-to-display-value="hoverToDisplayValue" />
     </n-col>
   </n-row>
   <n-row>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value2" type="dateMinutes" :hover-to-display-value="hoverToDisplayValue" />
+      <n-date-picker v-model="value2" type="dateMinutes" :hover-to-display-value="hoverToDisplayValue" />
     </n-col>
     <n-col :span="12">
-      <n-date-picker-v2 v-model="values2" type="dateMinutesRange" :hover-to-display-value="hoverToDisplayValue" />
+      <n-date-picker v-model="values2" type="dateMinutesRange" :hover-to-display-value="hoverToDisplayValue" />
     </n-col>
   </n-row>
 </template>

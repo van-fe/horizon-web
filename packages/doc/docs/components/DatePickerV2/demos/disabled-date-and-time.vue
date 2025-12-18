@@ -1,16 +1,16 @@
 <template>
   <n-row>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value" :disabled-date="disabledDate" />
+      <n-date-picker v-model="value" :disabled-date="disabledDate" />
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value2" type="dateRange" :disabled-date="disabledDate" />
+      <n-date-picker v-model="value2" type="dateRange" :disabled-date="disabledDate" />
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value3" type="datetime" :disabled-date="disabledDate" :disabled-time="disabledTime" />
+      <n-date-picker v-model="value3" type="datetime" :disabled-date="disabledDate" :disabled-time="disabledTime" />
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value4" type="datetimeRange" :disabled-date="disabledDate" :begin-disabled-time="disabledTime" :end-disabled-time="disabledTime" />
+      <n-date-picker v-model="value4" type="datetimeRange" :disabled-date="disabledDate" :begin-disabled-time="disabledTime" :end-disabled-time="disabledTime" />
     </n-col>
   </n-row>
 </template>

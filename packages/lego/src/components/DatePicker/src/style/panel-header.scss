@@ -1,63 +1,95 @@
 @use '../../../../styles/mixins';
 
 @include mixins.b('date-picker-panel-header') {
-  background: mixins.css-variable('date-picker-bg--panel-header');
-  border-radius: mixins.css-variable('date-picker-border-radius');
-
-  @include mixins.e('container') {
+  @include mixins.e('inner') {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    height: 48px;
-    padding: mixins.css-variable('date-picker-padding--panel-header--container');
-    border-bottom: mixins.css-variable('date-picker-border--panel-header--container');
-  }
-  & #{mixins.block-name('date-picker-panel-header__icon')} {
-    font-size: mixins.css-variable('date-picker-font-size--panel-header--icon') !important;
-    cursor: pointer;
+    justify-content: space-around;
+    height: mixins.css-variable('date-picker', 'size', 'panel', 'header', 'height');
+    padding: mixins.css-variable('date-picker', 'spacing', 'panel', 'header', 'padding');
+    border-bottom: mixins.css-variable('date-picker', 'divider');
 
-    &:hover {
-      color: mixins.css-variable('date-picker-color--panel-header--icon--hover');
+    @include mixins.m('left') {
+      display: flex;
+      grid-column-gap: 16px;
+      align-items: center;
+      line-height: 1;
+      text-align: left;
     }
 
-    &.disabled {
-      color: mixins.css-variable('date-picker-color--panel-table--render-box--disabled--inner-grid') !important;
-      cursor: not-allowed;
+    @include mixins.m('center') {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      font-weight: mixins.css-variable('date-picker', 'font', 'weight', 'panel', 'header', 'date-show');
+    }
+
+    @include mixins.m('right') {
+      display: flex;
+      grid-column-gap: 16px;
+      align-items: center;
+      line-height: 1;
+      text-align: right;
     }
   }
 
-  @include mixins.e('side') {
+  @include mixins.e('switcher') {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 48px;
-    height: 16px;
+    justify-content: center;
 
-    & > span {
-      width: 16px;
-      height: 16px;
-    }
-
-    @include mixins.m('single') {
-      width: 16px;
-    }
-  }
-
-  @include mixins.e('center') {
-    width: 156px;
-    height: 17px;
-    color: mixins.css-variable('date-picker-color--panel-header--center');
-    font-weight: mixins.css-variable('date-picker-font-weight--panel-header--center');
-    font-size: mixins.css-variable('date-picker-font-size--panel-header--center');
-    line-height: 17px;
-    text-align: center;
-
-    .year, .month {
+    @include mixins.m('item') {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: mixins.css-variable('date-picker', 'size', 'panel', 'header', 'switcher', 'size');
+      min-height: mixins.css-variable('date-picker', 'size', 'panel', 'header', 'switcher', 'size');
+      color: mixins.css-variable('date-picker', 'color', 'panel', 'header');
       cursor: pointer;
+      transition: mixins.css-variable('date-picker', 'transition', 'color-behavior');
 
       &:hover {
-        color: var(--n-date-picker-color--panel-header--icon--hover);
+        color: mixins.css-variable('date-picker', 'color', 'panel', 'header', 'hover');
       }
+
+      &:active {
+        color: mixins.css-variable('date-picker', 'color', 'panel', 'header', 'press');
+      }
+
+      @include mixins.is('disabled') {
+        color: mixins.css-variable('date-picker', 'color', 'panel', 'header', 'disabled');
+        cursor: not-allowed;
+      }
+
+      @include mixins.is('readonly') {
+        color: mixins.css-variable('date-picker', 'color', 'panel', 'header');
+        cursor: default;
+      }
+    }
+
+    @include mixins.is('hidden') {
+      visibility: hidden;
+    }
+  }
+
+  @include mixins.e('datetime-trigger') {
+    display: flex;
+    grid-column-gap: mixins.css-variable('date-picker', 'spacing', 'panel', 'header', 'datetime-trigger', 'gap');
+    align-items: center;
+    justify-content: space-between;
+    min-width: 0;
+    height: mixins.css-variable('date-picker', 'size', 'panel', 'header', 'datetime-trigger', 'height');
+    padding: mixins.css-variable('date-picker', 'spacing', 'panel', 'header', 'datetime-trigger', 'padding');
+    border-bottom: mixins.css-variable('date-picker', 'divider');
+
+    @include mixins.nested('input') {
+      flex: 1;
+    }
+
+    @include mixins.nested('picker') {
+      --n-picker-width--append-icon: 0;
+      flex: 1;
     }
   }
 }

@@ -1,10 +1,10 @@
 <template>
   <n-row>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value" readonly />
+      <n-date-picker v-model="value" readonly />
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="values" readonly type="dateRange" />
+      <n-date-picker v-model="values" readonly type="dateRange" />
     </n-col>
   </n-row>
 </template>

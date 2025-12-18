@@ -6,10 +6,10 @@ import type { TableEmits } from '../composables/useEmits';
 import { warn } from '~/utils/useLog';
 import { isDefined, isNil } from '@nio-fe/shared';
 import type { SelectProps } from '~/components/Select/src/composables/useProps';
-import type { DatePickerV2Props } from '~/components/DatePickerV2/src/composables/useProps';
+import type { DatePickerProps } from '~/components/DatePicker/src/composables/useProps';
 import dayjs from '~/utils/useDayJs';
-import { getCompareUnitByType } from '~/components/DatePickerV2/src/utils/useDayjs';
-import type { TimePickerV2Props } from '~/components/TimePickerV2/src/composables/useProps';
+import { getCompareUnitByType } from '~/components/DatePicker/src/utils/useDayjs';
+import type { TimePickerProps } from '~/components/TimePicker/src/composables/useProps';
 import type { TreeSelectProps } from '~/components/TreeSelect/src/composables/useProps';
 
 export default function useFilter(
@@ -73,11 +73,11 @@ export default function useFilter(
             {
               const currDayjs = dayjs(rowColumnValue);
               const compareUnit = getCompareUnitByType(
-                (column.props.filterOptions as Partial<DatePickerV2Props>).type ?? 'date',
+                (column.props.filterOptions as Partial<DatePickerProps>).type ?? 'date',
               );
 
               if (
-                (column.props.filterOptions as Partial<DatePickerV2Props>)?.type
+                (column.props.filterOptions as Partial<DatePickerProps>)?.type
                   ?.toLowerCase()
                   .includes('range')
               ) {
@@ -96,7 +96,7 @@ export default function useFilter(
             {
               const currDayjs = dayjs(rowColumnValue, 'HH:mm:ss');
 
-              if ((column.props.filterOptions as Partial<TimePickerV2Props>)?.isRange) {
+              if ((column.props.filterOptions as Partial<TimePickerProps>)?.isRange) {
                 row[NTableTransformedRowContextKey].visible[column.props.field] =
                   currDayjs.isSameOrAfter(dayjs(val[0], 'HH:mm:ss'), 'seconds') &&
                   currDayjs.isSameOrBefore(dayjs(val[1], 'HH:mm:ss'), 'seconds');

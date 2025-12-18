@@ -7,7 +7,7 @@
     class="mb-2"
   />
 
-  <n-upload-v2
+  <n-upload
     v-model="fileList"
     action="https://lego-inspector.nioint.com/upload-mock"
     :multiple="true"

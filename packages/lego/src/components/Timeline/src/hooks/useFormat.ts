@@ -1,7 +1,7 @@
 import { getCurrentLocale } from '~/utils/useLocaleLang';
 import type { Ref } from 'vue';
 import { computed } from 'vue';
-import { LocaleSupportLangV2 } from '@nio-fe/locale';
+import { LocaleSupportLang } from '@nio-fe/locale';
 import valueFormatJson from '~/locales/dateFormat.json';
 import useShowTimeZone from '~/utils/useShowTimeZone';
 
@@ -10,7 +10,7 @@ export default function useFormat(formatProp: Ref<string | undefined>) {
   const showTimeZone = useShowTimeZone('timeline');
 
   const valueFormatMapping = computed(
-    () => valueFormatJson[locale.value ?? LocaleSupportLangV2.En],
+    () => valueFormatJson[locale.value ?? LocaleSupportLang.En],
   );
 
   const format = computed(() => {

@@ -1,6 +1,6 @@
 import type { PropType } from 'vue';
 import { defineComponent, getCurrentInstance } from 'vue';
-import type { LocaleSupportLangV2 } from '@nio-fe/locale';
+import type { LocaleSupportLang } from '@nio-fe/locale';
 import { useNamespace } from '@nio-fe/shared';
 
 export default defineComponent({
@@ -11,7 +11,7 @@ export default defineComponent({
       required: true,
     },
     lang: {
-      type: String as PropType<LocaleSupportLangV2>,
+      type: String as PropType<LocaleSupportLang>,
     },
   },
   setup(props) {

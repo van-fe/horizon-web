@@ -1,7 +1,7 @@
 <template>
   <n-row>
     <n-col :span="6">
-      <n-time-picker-v2 v-model="value" type="time" :show-time-tooltip="showTimeTooltip" />
+      <n-time-picker v-model="value" type="time" :show-time-tooltip="showTimeTooltip" />
     </n-col>
   </n-row>
 </template>

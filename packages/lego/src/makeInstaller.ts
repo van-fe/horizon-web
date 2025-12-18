@@ -1,13 +1,11 @@
 import type { App, Plugin } from 'vue';
 import type { LocalOptionType } from '@nio-fe/locale-vue';
-import type { ConfigType as SensorConfigType } from '@nio-fe/lego-sensor-tracker';
 import provides from '~/provides';
 import version from './version.json';
 import methodsRegister from './methods';
 
 export interface LegoOption {
   locale?: LocalOptionType;
-  sensor?: SensorConfigType;
   /**
    * 是否让 css 变量中存在版本号
    */

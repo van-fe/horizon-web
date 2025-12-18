@@ -16,9 +16,9 @@ import type { TooltipProps } from '~/components/Tooltip/src/composables/useProps
 import type { LoadingProps } from '~/directives/v-loading/src/composables/useProps';
 import type { PopoverProps } from '~/components/Popover/src/composables/useProps';
 import type { CascaderProps } from '~/components/Cascader/src/composables/useProps';
-import type { DatePickerV2Props } from '~/components/DatePickerV2/src/composables/useProps';
+import type { DatePickerProps } from '~/components/DatePicker/src/composables/useProps';
 import type { SelectProps } from '~/components/Select/src/composables/useProps';
-import type { TimePickerV2Props } from '~/components/TimePickerV2/src/composables/useProps';
+import type { TimePickerProps } from '~/components/TimePicker/src/composables/useProps';
 import type { TreeSelectProps } from '~/components/TreeSelect/src/composables/useProps';
 import type { InputNumberProps } from '~/components/InputNumber/src/composables/useProps';
 import type { InputProps } from '~/components/Input/src/composables/useProps';
@@ -756,8 +756,8 @@ export const useTableColumnProps = declarePropType({
         | SelectProps
         | CascaderProps
         | TreeSelectProps
-        | DatePickerV2Props
-        | TimePickerV2Props
+        | DatePickerProps
+        | TimePickerProps
       >
     >,
   },

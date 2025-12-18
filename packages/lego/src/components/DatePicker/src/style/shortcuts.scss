@@ -1,0 +1,12 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('date-picker') {
+  @include mixins.e('shortcuts') {
+    height: 100%;
+    border-right: mixins.css-variable('date-picker', 'divider');
+
+    @include mixins.e('shortcuts-item') {
+      height: mixins.css-variable('date-picker', 'size', 'panel', 'shortcuts', 'item', 'height');
+    }
+  }
+}

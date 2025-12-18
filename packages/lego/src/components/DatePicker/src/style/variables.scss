@@ -1,116 +1,145 @@
-@use '../../../../styles/mixins/function';
+@use '../../../../styles/mixins';
 
 $values: (
-  'font-size--panel-table--header': #{function.css-variable('text-sm')},
-  'font-size--panel-table--render-box': #{function.css-variable('text-base')},
-  'font-size--content--left-button': #{function.css-variable('text-base')},
-  'font-size--panel-header--icon': #{function.css-variable('text-lg')},
-  'font-size--panel-header--center': #{function.css-variable('text-base')},
-  'font-size--year-month--render-box': #{function.css-variable('text-base')},
-  'font-weight--panel-header--center': #{function.css-variable('weight-strong')},
-  'line-height--content--left-button': #{function.css-variable('line-height-standard')},
-  'color--input-icon': #{function.css-variable('text-disabled')},
-  'color--input-icon--hover': #979797,
-  'color--panel-table--header': #{function.css-variable('text-primary')},
-  'color--panel-table--render-box': #{function.css-variable('text-disabled')},
-  'color--panel-table--render-box--current': #{function.css-variable('text-primary')},
-  'color--panel-table--render-box--begin--inner-grid': #{function.css-variable('text-inverse')},
-  'color--panel-table--render-box--end--inner-grid': #{function.css-variable('text-inverse')},
-  'color--panel-table--render-box--selected--inner-grid': #{function.css-variable('text-inverse')},
-  'color--panel-table--render-box--disabled--inner-grid': #{function.css-variable('text-disabled')},
-  'color--content--left-button': #{function.css-variable('text-brand-default')},
-  'color--panel-header--icon--hover': #{function.css-variable('text-brand-default')},
-  'color--panel-header--center': #{function.css-variable('text-primary')},
-  'color--year-month--render-box': #{function.css-variable('text-primary')},
-  'color--year-month--render-box--current--grid': #{function.css-variable('text-primary')},
-  'color--year-month--render-box--selected--grid': #{function.css-variable('text-inverse')},
-  'color--year-month--render-box--disabled--grid': #{function.css-variable('text-disabled')},
-  'color--year-month--render-box--inner-grid': #{function.css-variable('text-primary')},
-  'color--year-month--render-box--begin--inner-grid': #{function.css-variable('text-inverse')},
-  'color--year-month--render-box--end--inner-grid': #{function.css-variable('date-picker-color--year-month--render-box--begin--inner-grid')},
-  'color--range-header--separator': #{function.css-variable('text-tertiary')},
-  'border-color--default': #{function.css-variable('border-default')},
-  'border-color--noninteractive': #{function.css-variable('border-noninteractive')},
-  'border-color--hover': #{function.css-variable('border-brand-hover')},
-  'border-color--focus': #{function.css-variable('border-brand-default')},
-  'border-color--active': #{function.css-variable('border-brand-default')},
-  'border-color--today': #{function.css-variable('border-default')},
-  'border-color--trigger-content--disabled': #{function.css-variable('border-disabled')},
-  'border-color--panel-table--render-box--begin--grid': #{function.css-variable('border-brand-default')},
-  'border-color--content--sidebar': #{function.css-variable('border-default')},
-  'border-color--panel-header--container': #{function.css-variable('border-default')},
-  'border-color--panel--range': #{function.css-variable('border-default')},
-  'border-color--year-month--render-box--today--grid': #{function.css-variable('border-default')},
-  'border-color--panel-table--inner-grid--disabled': #{function.css-variable('border-disabled')},
-  'border-color--year-month--render-box--begin--before': #{function.css-variable('border-brand-default')},
-  'border-color--year-month--render-box--inner-grid--disabled': #{function.css-variable('date-picker-border-color--panel-table--inner-grid--disabled')},
-  'border-color--error': #{function.css-variable('border-error-default')},
-  'border--default': 1px solid #{function.css-variable('date-picker-border-color--default')},
-  'border--noninteractive': #{function.css-variable('date-picker-border-color--noninteractive')},
-  'border--today': 1px solid #{function.css-variable('date-picker-border-color--today')},
-  'border--today--disabled': 1px solid #{function.css-variable('border-disabled')},
-  'border--panel-table--render-box--begin--grid': 1px solid #{function.css-variable('date-picker-border-color--panel-table--render-box--begin--grid')},
-  'border--content--sidebar': 1px solid #{function.css-variable('date-picker-border-color--content--sidebar')},
-  'border--panel-header--container': 1px solid #{function.css-variable('date-picker-border-color--panel-header--container')},
-  'border--panel--range': 1px solid #{function.css-variable('date-picker-border-color--panel--range')},
-  'border--year-month--render-box--today--grid': 1px solid #{function.css-variable('date-picker-border-color--year-month--render-box--today--grid')},
-  'border--year-month--render-box--begin--before': 1px solid #{function.css-variable('date-picker-border-color--year-month--render-box--begin--before')},
-  'border--range-header--container': 1px solid #{function.css-variable('date-picker-border-color--panel-header--container')},
-  'radio-border': 1px solid #{function.css-variable('border-default')},
-  'border-radius': #{function.css-variable('radius-m')},
-  'border-radius--panel-table--render-box--grid': #{function.css-variable('radius-s')},
-  'border-radius--panel-table--render-box--dot': #{function.css-variable('radius-circle')},
-  'border-radius--panel-table--render-box--begin--grid': 3px,
-  'border-radius--year-month--render-box--grid': #{function.css-variable('radius-m')},
-  'bg--wrapper--content': #{function.css-variable('bg-default')},
-  'bg--trigger-content--disabled': #{function.css-variable('bg-disabled')},
-  'bg--panel-trigger-input--inner-wrap--filled': #{function.css-variable('bg-secondary')},
-  'bg--panel-trigger-input--inner-wrap--no-border': #{function.css-variable('bg-hover')},
-  'bg--panel-table--render-box--current--hover': #{function.css-variable('bg-secondary')},
-  'bg--panel-table--render-box--current-dot': #{function.css-variable('bg-brand-default')},
-  'bg--panel-table--render-box--no-current--inner-grid--hover': #{function.css-variable('bg-default')},
-  'bg--panel-table--render-box--no-current--inner-grid--range': #{function.css-variable('bg-default')},
-  'bg--panel-table--render-box--today--inner-grid--hover': #{function.css-variable('bg-secondary')},
-  'bg--panel-table--render-box--begin--inner-grid': #{function.css-variable('bg-brand-default')},
-  'bg--panel-table--render-box--begin--inner-grid--hover': #{function.css-variable('bg-brand-default')},
-  'bg--panel-table--render-box--begin--inner-grid--dot': #{function.css-variable('bg-default')},
-  'bg--panel-table--render-box--range': #{function.css-variable('bg-weak-hover')},
-  'bg--panel-table--render-box--range--inner-grid': #{function.css-variable('bg-weak-hover')},
-  'bg--panel-table--render-box--end--inner-grid': #{function.css-variable('bg-brand-default')},
-  'bg--panel-table--render-box--end--inner-grid--hover': #{function.css-variable('bg-brand-default')},
-  'bg--panel-table--render-box--end--inner-grid--dot': #{function.css-variable('bg-default')},
-  'bg--panel-table--render-box--end--inner-grid--grid': #{function.css-variable('bg-default')},
-  'bg--panel-table--render-box--selected--inner-grid': #{function.css-variable('bg-brand-default')},
-  'bg--panel-table--render-box--selected--inner-grid--hover': #{function.css-variable('bg-brand-default')},
-  'bg--panel-table--render-box--selected--inner-grid--dot': #{function.css-variable('bg-default')},
-  'bg--panel-table--render-box--disabled--inner-grid': #{function.css-variable('bg-default')},
-  'bg--panel-header': #{function.css-variable('bg-default')},
-  'bg--panel--time-select-item--selected': #{function.css-variable('bg-weak-hover')},
-  'bg--panel--time-select-item--blank': #{function.css-variable('bg-default')},
-  'bg--panel--year-month--render-box--today--grid--hover': #{function.css-variable('bg-secondary')},
-  'bg--panel--year-month--render-box--begin--grid': #{function.css-variable('bg-brand-default')},
-  'bg--panel--year-month--render-box--begin--grid--hover': #{function.css-variable('bg-brand-default')},
-  'bg--panel--year-month--render-box--range': #{function.css-variable('bg-weak-hover')},
-  'bg--panel--year-month--render-box--range--grid': #{function.css-variable('bg-weak-hover')},
-  'bg--panel--year-month--render-box--end--grid': #{function.css-variable('bg-brand-default')},
-  'bg--panel--year-month--render-box--end--grid--hover': #{function.css-variable('bg-brand-default')},
-  'bg--panel--year-month--render-box--selected--grid': #{function.css-variable('bg-brand-default')},
-  'bg--panel--year-month--render-box--selected--grid--hover': #{function.css-variable('bg-brand-default')},
-  'bg--panel--year-month--render-box--disabled--grid--hover': #{function.css-variable('bg-default')},
-  'bg--panel--year-month--render-box--inner-grid--hover': #{function.css-variable('bg-secondary')},
-  'bg--panel--year-month--render-box--begin--grid--hover--before': #{function.css-variable('bg-default')},
-  'box-shadow--wrapper-content': #{function.css-variable('shadow-down2')},
-  'padding--content--sidebar': 17px 24px 17px 16px,
-  'padding--content--footer': 16px,
-  'padding--content--footer--button--primary': 3px 16px,
-  'padding--panel-header--container': 16px,
-  'padding--year-month--body': 16px 16px 8px,
-  'padding--panel-trigger-left-input__inner-wrap': 4px 6px 4px 12px,
-  'padding--panel-trigger-right-input__inner-wrap': 4px 12px 4px 6px,
-  'padding--range-header': 12px,
-  'margin--content--radio': 0 0 18px,
-  'margin--content--footer--button--siblings': 0 0 0 8px,
-  'margin--year-month--body': 0,
-  'margin--year-month--render-box': 0 0 8px,
-  'margin--range-header__input': 0 4px,
+  size: (
+    panel: (
+      shortcuts: (
+        item: (
+          height: 40px,
+        )
+      ),
+      header: (
+        height: 48px,
+        switcher: (
+          size: 32px,
+        ),
+        datetime-trigger: (
+          height: 56px,
+        )
+      ),
+      body: (
+        grid-item: (
+          dot: 4px,
+        ),
+        year: (
+          item: (
+            height: 32px,
+            width: 60px
+          )
+        ),
+        month: (
+          item: (
+            height: 32px,
+            width: 60px
+          )
+        ),
+        day: (
+          item: (
+            height: 32px,
+            width: 32px
+          )
+        ),
+        time-panel: (
+          min-width: 80px,
+        )
+      )
+    )
+  ),
+  color: (
+    '': mixins.css-variable('text', 'primary'),
+    range-panel-separator: mixins.css-variable('text', 'tertiary'),
+    panel: (
+      header: (
+        '': mixins.css-variable('text', 'primary'),
+        disabled: mixins.css-variable('text', 'disabled'),
+        hover: mixins.css-variable('text', 'brand', 'hover'),
+        press: mixins.css-variable('text', 'brand', 'press'),
+        separator: mixins.css-variable('text', 'disabled')
+      ),
+      body: (
+        grid-item: (
+          '': mixins.css-variable('text', 'primary'),
+          hover: mixins.css-variable('text', 'primary'),
+          press: mixins.css-variable('text', 'primary'),
+          active: mixins.css-variable('text', 'inverse'),
+          range: mixins.css-variable('text', 'primary'),
+          disabled: mixins.css-variable('text', 'disabled'),
+          prev-next: mixins.css-variable('text', 'disabled'),
+        ),
+      )
+    )
+  ),
+  background: (
+    panel: (
+      body: (
+        grid-item: (
+          '': mixins.css-variable('bg', 'transparent'),
+          hover: mixins.css-variable('bg', 'secondary'),
+          press: mixins.css-variable('bg', 'tertiary'),
+          active: mixins.css-variable('bg', 'brand', 'default'),
+          range: mixins.css-variable('bg', 'weak', 'hover'),
+          disabled: mixins.css-variable('bg', 'default'),
+          prev-next: mixins.css-variable('bg', 'transparent'),
+          dot: mixins.css-variable('bg', 'brand', 'default'),
+          dot-active: mixins.css-variable('bg', 'default'),
+        ),
+      )
+    )
+  ),
+  font: (
+    weight: (
+      panel: (
+        header: (
+          date-show: mixins.css-variable('weight', 'strong'),
+        )
+      )
+    ),
+    size: (
+      panel: (
+        body: (
+          week: mixins.css-variable('text', 'sm')
+        )
+      )
+    )
+  ),
+  divider: (
+    '': #{1px solid mixins.css-variable('divider', 'default')}
+  ),
+  border: (
+    panel: (
+      body: (
+        grid-item: (
+          today: #{1px solid mixins.css-variable('border', 'default')},
+          same-start-end: #{1px solid mixins.css-variable('border', 'brand', 'default')}
+        )
+      )
+    )
+  ),
+  border-radius: (
+    '': mixins.css-variable('radius', 'm'),
+  ),
+  spacing: (
+    panel: (
+      shortcuts: mixins.css-variable('spacing-5'),
+      header: (
+        padding: #{0 mixins.css-variable('spacing-3')},
+        datetime-trigger: (
+          padding: #{mixins.css-variable('spacing-4') mixins.css-variable('spacing-5')},
+          gap: mixins.css-variable('spacing-3'),
+        )
+      ),
+      body: (
+        year: mixins.css-variable('spacing-5'),
+        month: mixins.css-variable('spacing-5'),
+        day: mixins.css-variable('spacing-5'),
+        grid-item: (
+          gap: #{mixins.css-variable('spacing-3') 0},
+          padding: #{0 mixins.css-variable('spacing-2')}
+        ),
+      )
+    )
+  ),
+  transition: (
+    color-behavior: mixins.css-variable('transition', 'color-behavior'),
+  )
 );

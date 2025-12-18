@@ -72,7 +72,7 @@
       @include mixins.nested('picker__pop-content--inner') {
         height: 100%;
 
-        @include mixins.nested('time-picker-v2__panels-wrapper') {
+        @include mixins.nested('time-picker__panels-wrapper') {
           height: 100%;
         }
       }
@@ -88,8 +88,8 @@
           @include mixins.nested('picker__pop-content--center') {
             #{mixins.css-variable-name('picker-border-top--popper--confirm-wrapper')}: none;
             #{mixins.css-variable-name('picker-margin-left--confirm-wrapper--button')}: 12px;
-            #{mixins.css-variable-name('time-picker-v2', 'size', 'height', 'time-cell')}: 48px;
-            #{mixins.css-variable-name('time-picker-v2', 'spacing', 'padding', 'time-cell')}: 0 24px;
+            #{mixins.css-variable-name('time-picker', 'size', 'height', 'time-cell')}: 48px;
+            #{mixins.css-variable-name('time-picker', 'spacing', 'padding', 'time-cell')}: 0 24px;
             display: flex;
             flex-direction: column;
             height: 100%;
@@ -98,7 +98,7 @@
               margin-bottom: 12px;
             }
 
-            @include mixins.nested('time-picker-v2__time-panel') {
+            @include mixins.nested('time-picker__time-panel') {
               height: 100%;
             }
 

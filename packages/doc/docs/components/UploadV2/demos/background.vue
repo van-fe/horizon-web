@@ -12,7 +12,7 @@
   </n-form>
   <n-row>
     <n-col :span="24">
-      <n-upload-v2
+      <n-upload
         id="background-uploader"
         v-model:use-background="useBackground"
         action="https://lego-inspector.nioint.com/upload-mock"
@@ -24,7 +24,7 @@
       />
     </n-col>
     <n-col :span="24">
-      <n-upload-v2
+      <n-upload
         v-model:use-background="useBackground"
         action="https://lego-inspector.nioint.com/upload-mock"
         button-text="多选自动上传"
@@ -39,7 +39,7 @@
 
 <script setup lang="ts">
 import { ref, watch, onBeforeUnmount } from 'vue';
-import type { NUploadV2FileType } from '@nio-fe/lego';
+import type { NUploadFileType } from '@nio-fe/lego';
 
 declare global {
   interface WindowEventMap {
@@ -70,7 +70,7 @@ function onBackgroundUploadDestroy(evt: WindowEventMap['backgroundUploadDestroy'
   console.log(`id: ${evt.detail} 的后台已销毁`);
 }
 
-function onPreview(file: NUploadV2FileType) {
+function onPreview(file: NUploadFileType) {
   console.log('Preview File:', file);
 }
 

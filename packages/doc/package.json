@@ -17,7 +17,7 @@
     "@nio-fe/icon": "^2.11.4",
     "@nio-fe/lego": "workspace:*",
     "@nio-fe/lego-pad": "workspace:*",
-    "@nio-fe/lego-table-v2": "^2.9.1",
+    "@nio-fe/lego-table": "^2.9.1",
     "@nio-fe/locale-vue": "workspace:*",
     "@nio-fe/shared": "workspace:*",
     "@nio-wad/fx-web": "^0.2.0",

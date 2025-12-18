@@ -91,11 +91,11 @@
 
 也可以通过配置 `background-standalone = true`，表示此实例独立，不和其他已存在的实例共用一个上传列表
 
-如果希望自控组件，可以使用 `UploadV2` 的 `createBackgroundUploadInstance` 静态方法自己创建实例，传入 `uploadV2Props` 即可
+如果希望自控组件，可以使用 `Upload` 的 `createBackgroundUploadInstance` 静态方法自己创建实例，传入 `uploadProps` 即可
 
-销毁时可以使用 `UploadV2` 的 `destroyBackgroundUploadInstance` 静态方法
+销毁时可以使用 `Upload` 的 `destroyBackgroundUploadInstance` 静态方法
 
-此时对于 `upload-v2` 组件只需开启 `use-background`，就可以直接将上传文件同步到你初始化的后台上传组件中。（需要在开启了 `use-background` 的 `upload-v2` 挂载之前初始化好，否则会创建多份后台上传组件）
+此时对于 `upload` 组件只需开启 `use-background`，就可以直接将上传文件同步到你初始化的后台上传组件中。（需要在开启了 `use-background` 的 `upload` 挂载之前初始化好，否则会创建多份后台上传组件）
 
 对于在后台上传组件中操作文件的一些事件，需要自己创建实例，然后监听事件
 

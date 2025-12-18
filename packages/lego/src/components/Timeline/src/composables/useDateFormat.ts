@@ -1,5 +1,5 @@
 import type { LocaleSupportLang } from '@nio-fe/locale-vue';
-import { LocaleSupportLangV2 } from '@nio-fe/locale-vue';
+import { LocaleSupportLang } from '@nio-fe/locale-vue';
 
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
@@ -12,7 +12,7 @@ import 'dayjs/locale/nb';
 dayjs.extend(advancedFormat);
 
 export function formatProp2DayjsParams(
-  locale: LocaleSupportLangV2 | LocaleSupportLang,
+  locale: LocaleSupportLang | LocaleSupportLang,
   date: Date,
   format: string,
 ) {
@@ -55,7 +55,7 @@ export function formatProp2DayjsParams(
         return 'dddd';
       case 'q':
         const quarter = Math.floor((date.getMonth() + 3) / 3);
-        return locale === LocaleSupportLangV2.ZhCN
+        return locale === LocaleSupportLang.ZhCN
           ? ['[第一季度]', '[第二季度]', '[第三季度]', '[第四季度]'][quarter - 1]
           : ['[Q1]', '[Q2]', '[Q3]', '[Q4]'][quarter - 1];
       default:
@@ -67,7 +67,7 @@ export function formatProp2DayjsParams(
 export const useDateFormative = (
   time: string | number | Date,
   format = 'mm/dd/yyyy',
-  locale: LocaleSupportLangV2 | LocaleSupportLang = LocaleSupportLangV2.ZhCN,
+  locale: LocaleSupportLang | LocaleSupportLang = LocaleSupportLang.ZhCN,
 ) => {
   if (
     !time ||
@@ -97,10 +97,10 @@ export const useDateFormative = (
   return dayjs(date).locale(locale).format(formatter);
 };
 
-export const useDateFormativeV2 = (
+export const useDateFormative = (
   time: string | number | Date,
   format = 'mm/dd/yyyy',
-  locale: LocaleSupportLangV2 | LocaleSupportLang = LocaleSupportLangV2.ZhCN,
+  locale: LocaleSupportLang | LocaleSupportLang = LocaleSupportLang.ZhCN,
 ) => {
   if (
     Object.prototype.toString.call(time) !== '[object Date]' &&

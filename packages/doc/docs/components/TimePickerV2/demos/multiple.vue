@@ -1,7 +1,7 @@
 <template>
   <n-row>
     <n-col :span="6">
-      <n-time-picker-v2 v-model="value" type="time" :multiple="true" />
+      <n-time-picker v-model="value" type="time" :multiple="true" />
     </n-col>
   </n-row>
 </template>

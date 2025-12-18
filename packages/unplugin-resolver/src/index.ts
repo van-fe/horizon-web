@@ -75,14 +75,14 @@ const resolveComponents = (name: string, options: LegoResolverOption) => {
     };
   }
 
-  const tableV2Pattern = new RegExp(`^${options.namespace}TableV2$`);
-  if (tableV2Pattern.test(name)) {
+  const tablePattern = new RegExp(`^${options.namespace}Table$`);
+  if (tablePattern.test(name)) {
     return {
       name,
-      from: '@nio-fe/lego-table-v2',
+      from: '@nio-fe/lego-table',
       sideEffects: options.importStyle
         ? [
-            `@nio-fe/lego-table-v2/dist/${
+            `@nio-fe/lego-table/dist/${
               options.importStyle === 'scss' ? 'styles/index.scss' : 'style.css'
             }`,
           ]

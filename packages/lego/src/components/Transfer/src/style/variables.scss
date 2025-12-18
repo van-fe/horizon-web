@@ -2,6 +2,8 @@
 
 $values: (
   'height--panel-body': 246px,
+  'size--drag-over-cursor-arrow': 6px,
+  'height--drag-over-cursor': 2px,
   'color': #{function.css-variable('text-primary')},
   'color--clear--header': #{function.css-variable('text-brand-default')},
   'color--panel-item--group': #{function.css-variable('text-tertiary')},
@@ -12,6 +14,13 @@ $values: (
   'bg--panel-input': #{function.css-variable('bg-default')},
   'bg--panel-item--gap-top': #{function.css-variable('bg-brand-default')},
   'bg--panel-item--gap-bottom': #{function.css-variable('bg-brand-default')},
+  'bg--panel-item--hover': #{function.css-variable('bg-hover')},
+  'bg--item--drag-over': #{function.css-variable('bg-weak-activated')},
+  'bg--drag-over-cursor': #{function.css-variable('bg-brand-activated')},
+  'border-radius--item': #{function.css-variable('radius-m')},
+  'border-radius--drag-over-cursor-arrow': #{function.css-variable('radius-circle')},
+  'border-color--drag-over-cursor-arrow': #{function.css-variable('bg-brand-activated')},
+  'border--drag-over-cursor-arrow': #{function.css-variable('transfer-height--drag-over-cursor')} solid #{function.css-variable('transfer-border-color--drag-over-cursor-arrow')},
   'padding--panel-header': 16px 20px 0,
   'padding--panel-body': 8px 0 0,
   'padding--panel-breadcrumb': 8px 20px 0,

@@ -232,7 +232,7 @@ export const SvSE = {
     tag: {
       create: 'Legg til tagg',
     },
-    tableV2: {
+    table: {
       filter: {
         reset: 'Återställ',
         confirm: 'Bekräfta',

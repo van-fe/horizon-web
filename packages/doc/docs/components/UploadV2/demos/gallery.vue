@@ -16,7 +16,7 @@
     </n-form-item>
   </n-form>
   <n-button class="mb-2" @click="change">修改原始 modelValue</n-button>
-  <n-upload-v2
+  <n-upload
     v-model="modelValue"
     action="https://lego-inspector.nioint.com/upload-mock"
     type="gallery"
@@ -34,13 +34,13 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import type { NUploadV2UserFile, UploadV2Props, NUploadV2FileType } from '@nio-fe/lego';
+import type { NUploadUserFile, UploadProps, NUploadFileType } from '@nio-fe/lego';
 import type { Data } from '@nio-fe/shared';
 
-const size = ref<NonNullable<UploadV2Props['size']>>('medium');
-const galleryShape = ref<UploadV2Props['galleryShape']>('rectangle');
+const size = ref<NonNullable<UploadProps['size']>>('medium');
+const galleryShape = ref<UploadProps['galleryShape']>('rectangle');
 
-const modelValue = ref<NUploadV2UserFile[]>(
+const modelValue = ref<NUploadUserFile[]>(
   [
     {
       name: 'background.jpg',
@@ -53,11 +53,11 @@ const modelValue = ref<NUploadV2UserFile[]>(
   ],
 );
 
-function onUploading(file: NUploadV2FileType, process: number, response: Data | undefined) {
+function onUploading(file: NUploadFileType, process: number, response: Data | undefined) {
   console.log(file, process, response);
 }
 
-function handleSuccess(res: any, file: NUploadV2FileType) {
+function handleSuccess(res: any, file: NUploadFileType) {
   // 因为接口是模拟返回，所以不处理 res 数据
   // 直接把 blobUrl 假定为上传接口返回的预览地址
   return file.url || file.blobUrl || '';
@@ -70,7 +70,7 @@ function change() {
   }];
 }
 
-function onUpdateModelValue(modelValue: NUploadV2FileType[]) {
+function onUpdateModelValue(modelValue: NUploadFileType[]) {
   console.log('update: ', modelValue);
 }
 </script>

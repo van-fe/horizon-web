@@ -1,7 +1,7 @@
-import { useTimePickerV2Emits } from '@nio-fe/lego';
+import { useTimePickerEmits } from '@nio-fe/lego';
 
 export const useModalTimePickerEmits = {
-  ...useTimePickerV2Emits,
+  ...useTimePickerEmits,
   click: (evt: MouseEvent) => evt instanceof MouseEvent,
 };
 

@@ -40,7 +40,8 @@ export const useTransferProps = declarePropType({
    */
   disabled: {
     type: Boolean,
-    default: undefined,
+    required: false,
+    default: false,
   },
   /**
    * 类型
@@ -63,7 +64,9 @@ export const useTransferProps = declarePropType({
    * 展示搜索框
    */
   filterable: {
-    type: [Function, Boolean] as PropType<boolean | ((value: string, item: any) => boolean)>,
+    type: [Function, Boolean] as PropType<
+      boolean | ((value: string, item: TransferDataProps) => boolean)
+    >,
     required: false,
     default: false,
   },
@@ -75,6 +78,15 @@ export const useTransferProps = declarePropType({
     required: false,
     default: '',
   },
+  /**
+   * 自定义搜索方法
+   * @version 2.12.5
+   */
+  filterMethod: {
+    type: Function as PropType<(inputValue: string, item: TransferDataProps) => boolean>,
+    required: false,
+  },
+
   /**
    * 数据源的字段别名
    */
@@ -109,6 +121,23 @@ export const useTransferProps = declarePropType({
     type: String,
     required: false,
     default: 'NIO',
+  },
+  /**
+   * 右侧列表元素的排序策略: 若为 original，则保持与数据源相同的顺序； 若为 push，则新加入的元素排在最后； 若为 unshift，则新加入的元素排在最前
+   * @version 2.12.5
+   */
+  targetOrder: {
+    type: String as PropType<'original' | 'push' | 'unshift'>,
+    required: false,
+    default: 'push',
+  },
+  /**
+   * options 字段映射，给定一个字段映射规则以达到在 option 中覆盖默认指定字段名称的目的
+   */
+  fieldMap: {
+    type: Object as PropType<
+      Partial<Record<keyof TransferDataProps, keyof TransferDataProps | string>>
+    >,
   },
   /**
    * 是否可拖拽
@@ -178,7 +207,9 @@ export const useTransferPanelProps = declarePropType({
     default: false,
   },
   props: {
-    type: Object as PropType<Record<keyof TransferDataProps, keyof TransferDataProps>>,
+    type: Object as PropType<
+      Partial<Record<keyof TransferDataProps, keyof TransferDataProps | string>>
+    >,
     required: true,
     default: () => {
       return {
@@ -211,6 +242,10 @@ export const useTransferPanelProps = declarePropType({
     type: [Function, Boolean] as PropType<((value: string, item: any) => boolean) | boolean>,
     required: false,
     default: false,
+  },
+  filterMethod: {
+    type: Function as PropType<(inputValue: string, item: TransferDataProps) => boolean>,
+    required: false,
   },
   placeholder: {
     type: String,

@@ -1,426 +1,365 @@
-import {
-  defineComponent,
-  ref,
-  h,
-  toRefs,
-  reactive,
-  computed,
-  watch,
-  provide,
-  inject,
-  nextTick,
-} from 'vue';
+import type { Component, Slot, VNode } from 'vue';
+import { defineComponent, provide, ref, toRefs } from 'vue';
+import type { LegoSetupContext, LegoComponentInstance } from '@nio-fe/shared';
+import { isNil, cls, ComponentClassBlock, useNamespace } from '@nio-fe/shared';
 import { useTimePickerProps } from './composables/useProps';
-import type { LegoSetupContext } from '@nio-fe/shared';
-import { pickFromObject, ComponentClassBlock, cls, useNamespace } from '@nio-fe/shared';
-import NPopover from '~/components/Popover/src/Popover';
-import PanelTrigger from './time-components/panel-trigger';
-import NInput from '~/components/Input/src/Input';
-import PanelContent from './time-components/panel-content';
-import PanelTime from './time-components/panel-time';
-import PanelFooter from '~/components/DatePicker/src/calendar-components/panel-footer';
-import eventOutside from '~/directives/v-event-outside';
-import dayjs from '~/components/DatePicker/src/composables/dayjs';
-import { NDatejs } from '~/components/DatePicker/src/composables/NDatejs';
-import type { TimePickerProps, PanelTimeType, PickerTimeType } from './composables/useProps';
-import { NIcon } from '@nio-fe/icon';
-import type { TimePickerEmits } from './composables/useEmits';
 import { useTimePickerEmits } from './composables/useEmits';
-import {
-  NFormDisabledInjectedKey,
-  NFormItemTriggerInjectedKey,
-} from '~/components/Form/src/utils/injectedKeys';
-import type { TimePickerSlots } from './composables/useSlots';
 import { useTimePickerSlots } from './composables/useSlots';
-import type { TimePickerExposes } from './composables/useExposes';
 import { useTimePickerExposes } from './composables/useExposes';
-import { defaultLocale, localeInjectKey } from '~/provides/localable';
+import type { TimePickerProps } from './composables/useProps';
+import type { TimePickerEmits } from './composables/useEmits';
+import type { TimePickerSlots } from './composables/useSlots';
+import type { TimePickerExposes, TimePickerTimePanelExposes } from './composables/useExposes';
+import NPicker from '~/components/Picker/src/Picker';
+import { NTimePickerEmitsInjectKey, NTimePickerPropsInjectKey } from './utils/injectKeys';
+import useSize from '~/utils/useSize';
+import TimePanel from './components/TimePanel';
+import useData from './hooks/useData';
+import useVisible from './hooks/useVisible';
+import type {
+  PickerExposes,
+  PickerPureInputExposes,
+} from '~/components/Picker/src/composables/useExposes';
+import { IconTime } from '@nio-fe/icon';
+import useLocaleLang from '~/utils/useLocaleLang';
+import NPickerPureInput from '~/components/Picker/src/components/NPickerPureInput';
+import { renderIcon } from '~/utils/useIcon';
+import NTooltip from '~/components/Tooltip/src/Tooltip';
+import NButton from '~/components/Button/src/Button';
+import useEvent from './hooks/useEvent';
+import type {
+  ModelValueType,
+  PickerInputStatusType,
+  PickerStatusType,
+} from '~/components/Picker/src/composables/useProps';
+import type { Dayjs } from 'dayjs';
 
 export default defineComponent({
   name: `${useNamespace()}TimePicker`,
   desc: '选择或输入时间的控件',
-  components: {
-    NPopover,
-    NInput,
-    PanelTime,
-    PanelFooter,
-    NIcon,
-  },
-  directives: {
-    eventOutside,
-  },
   props: useTimePickerProps,
   emits: useTimePickerEmits,
   slots: useTimePickerSlots,
   exposes: useTimePickerExposes,
   setup(
-    props,
-    {
-      attrs,
-      slots,
-      emit,
-      expose,
-    }: LegoSetupContext<TimePickerEmits, TimePickerSlots, TimePickerExposes>,
+    props: TimePickerProps,
+    context: LegoSetupContext<TimePickerEmits, TimePickerSlots, TimePickerExposes>,
   ) {
     const classHelper = new ComponentClassBlock('time-picker');
-    const classHelperReference = new ComponentClassBlock('time-picker-reference');
-    const classHelperTrigger = new ComponentClassBlock('time-picker-trigger');
-    const locale = inject(localeInjectKey, defaultLocale);
-    const visible = ref(false);
+    const pickerDomRef = ref<LegoComponentInstance<typeof NPicker, PickerExposes>>();
+    const startInputDomRef =
+      ref<LegoComponentInstance<typeof NPickerPureInput, PickerPureInputExposes>>();
+    const endInputDomRef =
+      ref<LegoComponentInstance<typeof NPickerPureInput, PickerPureInputExposes>>();
+    const startTimePanelDomRef =
+      ref<LegoComponentInstance<typeof TimePanel, TimePickerTimePanelExposes>>();
+    const endTimePanelDomRef =
+      ref<LegoComponentInstance<typeof TimePanel, TimePickerTimePanelExposes>>();
+
+    const propRefs = toRefs<TimePickerProps>(props);
+
+    const size = useSize(propRefs.size, 'medium');
+
+    const { visible, onShow, onHide, modifyPanelVisible } = useVisible(context, pickerDomRef);
+
     const {
-      modelValue,
-      valueFormat,
-      type,
-      isRange: propsIsRange,
-      popperClass: propsPopperClass,
-      width: propsWidth,
-      disabled,
-      inputStatus,
-      placement,
-      fallbackPlacements,
-      preventOverflow,
-      showFooter,
-      toBody,
-      isMultipleTime,
-      supportSecondDay,
-    } = toRefs<TimePickerProps>(props);
-    const originalAttrs = computed(() =>
-      pickFromObject(attrs, [
-        'id',
-        'name',
-        'tabindex',
-        'onKeydown',
-        'onKeypress',
-        'onKeyup',
-        'onClick',
-        /^data-[\w-]+$/,
-      ]),
-    );
-
-    /** formItemTrigger **/
-    const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
-    // because time-picker use n-input, so provide NFormItemTriggerInjectedKey as undefined
-    provide(NFormItemTriggerInjectedKey, undefined);
-
-    // form disabled inject
-    const formDisabled = inject(NFormDisabledInjectedKey, undefined);
-    const isDisabled = computed(() => disabled?.value ?? formDisabled?.value ?? false);
-
-    const isRange = computed(() => propsIsRange.value);
-    const isMultipleSingleTime = computed(() => type.value === 'time' && isMultipleTime.value);
-    // dayjs替换后，兼容yyyy、dd -> YYYY、DD
-    const parseValueFormat = computed(() =>
-      valueFormat.value.replace(/y/g, 'Y').replace(/d/g, 'D'),
-    );
-    const defaultPickerValue = ref({
-      hours: undefined,
-      minutes: undefined,
-      seconds: undefined,
-    });
-    const userModelValue = computed(() => {
-      if (isRange.value || isMultipleSingleTime.value) {
-        return modelValue.value || [];
-      }
-      return modelValue.value;
-    });
-    // 解析用户输入
-    const picker = computed(() => {
-      let result: PickerTimeType;
-
-      if (Array.isArray(userModelValue.value)) {
-        result = (userModelValue.value.length === 2 &&
-          (userModelValue.value as PanelTimeType[])?.map(item =>
-            NDatejs.getHoursMinutesSecondsObject(item, supportSecondDay.value),
-          )) || [defaultPickerValue.value, defaultPickerValue.value];
-        // 多选单独处理
-        if (isMultipleSingleTime.value) {
-          result = (userModelValue.value as PanelTimeType[])?.map(item =>
-            NDatejs.getHoursMinutesSecondsObject(item, supportSecondDay.value),
-          );
-        }
-      } else {
-        result = NDatejs.getHoursMinutesSecondsObject(userModelValue.value, supportSecondDay.value);
-      }
-
-      return result;
-    });
-    const panelTime = ref<PickerTimeType>(picker.value);
-    const PanelReferenceRef = ref<HTMLElement | null>(null);
-    const PanelTriggerRef = ref<HTMLElement | null>(null);
-    const PanelDateRef = ref<HTMLElement | null>(null);
-    const InputRef = ref<typeof NInput | null>(null);
-    const isFooter = computed(() => {
-      return (
-        showFooter.value || isRange.value || type.value === 'minutes' || type.value === 'seconds'
-      );
-    });
-    const popperClass = computed(() => {
-      const classList = {
-        [classHelper.m('range')]: isRange.value,
-        [classHelper.m('time')]: !isRange.value && type.value === 'time',
-        [classHelper.m('minutes')]: !isRange.value && type.value === 'minutes',
-        [classHelper.m('seconds')]: !isRange.value && type.value === 'seconds',
-      };
-      return [
-        propsPopperClass.value,
-        classHelper.block,
-        ...Object.entries(classList)
-          .filter(item => item[1])
-          .map(item => item[0]),
-      ];
-    });
-
-    const triggerStyle = computed(() => {
-      if (typeof propsWidth.value === 'string' && propsWidth.value.indexOf('%') > -1) {
-        return {
-          width: `${propsWidth.value} !important`,
-        };
-      }
-      const width = parseFloat(propsWidth.value as string);
-      if (isNaN(width)) {
-        return {};
-      }
-      return {
-        width: `${width}px !important`,
-      };
-    });
-
-    function onShow() {
-      visible.value = true;
-    }
-    function onHide() {
-      visible.value = false;
-    }
-    function onClickOutsidePanelDate(value: Node) {
-      if (visible.value && !PanelReferenceRef.value!.contains(value)) {
-        onCancel();
-      }
-    }
-    function focus() {
-      (InputRef.value?.input as HTMLInputElement)?.focus();
-    }
-    function onFocus(event: FocusEvent) {
-      if (!isDisabled.value) {
-        emit('focus', event);
-        onShow();
-      }
-    }
-    function onBlur(event: FocusEvent) {
-      if (!isDisabled.value) {
-        emit('blur', event);
-        nextTick().then(() => {
-          formItemTrigger?.('blur');
-        });
-      }
-    }
-    // trigger emit pick event
-    function onPanelTriggerPick(time: PickerTimeType) {
-      onPick(time);
-    }
-    function onPick(time: PickerTimeType) {
-      emitModelValue(time);
-      onHide();
-    }
-    function onChangePanelTime(value: PickerTimeType) {
-      changePanelTime(value);
-      if (!isFooter.value) {
-        onPick(panelTime.value);
-      }
-    }
-    function changePanelTime(time: PickerTimeType) {
-      if (!visible.value || (Array.isArray(time) && time.length === 0)) {
-        panelTime.value = time;
-        return;
-      }
-      if (!(JSON.stringify(time) === JSON.stringify(panelTime.value))) {
-        emit('changePanelTime', time);
-      }
-      panelTime.value = time;
-    }
-    // v-model绑定值
-    function emitModelValue(time: PickerTimeType | null) {
-      const result = handleDateModelValue(time);
-      if (userModelValue.value === result) {
-        return;
-      }
-      emit('update:modelValue', result);
-      emit('change', result);
-      nextTick().then(() => {
-        formItemTrigger?.('change');
-      });
-    }
-    function handleDateModelValue(date: PickerTimeType | null) {
-      let result;
-
-      if (Array.isArray(date)) {
-        result = date.map(item => handleValueFormat(item));
-      } else {
-        result = handleValueFormat(date);
-      }
-      return result;
-    }
-    function handleValueFormat(time: PanelTimeType | null) {
-      if (!time) {
-        return time;
-      }
-      // 解析为当天时间对象
-      const date = NDatejs.parseTodayDateTime(NDatejs.formatTime(time));
-
-      if (!parseValueFormat.value) {
-        return date;
-      }
-      if (parseValueFormat.value === 'timestamp') {
-        return dayjs(date).valueOf();
-      }
-      return dayjs(date).format(parseValueFormat.value);
-    }
-    function onClear() {
-      emitModelValue(null);
-      onHide();
-      focus();
-    }
-    function onCancel() {
-      onHide();
-    }
-    function onConfirm() {
-      onPick(panelTime.value);
-    }
-    function onPickTime(value: number, type: string) {
-      emit('pick', value, type);
-    }
-    function handleEmitPopperChange() {
-      emit('popperChange', visible.value);
-    }
-    function onClickPanelTrigger() {
-      if (!isDisabled.value) {
-        onShow();
-      }
-    }
-    function manualControlPopperVisible(visible: boolean) {
-      if (visible) {
-        onShow();
-      } else {
-        onHide();
-      }
-    }
-
-    watch(
-      () => visible.value,
-      value => {
-        // popper visible变化时触发
-        handleEmitPopperChange();
-        if (value) {
-          // init
-          changePanelTime(picker.value);
-        }
-      },
-    );
-
-    watch(
-      () => picker.value,
-      value => {
-        changePanelTime(value);
+      startTime,
+      endTime,
+      showValue,
+      previewTime,
+      isDisabled,
+      canConfirmBtnClick,
+      dayjsFormat,
+      formItemError,
+      onUpdateTime,
+      doConfirm,
+      doCancel,
+      doClear,
+      onClickNow,
+    } = useData(
+      propRefs,
+      context,
+      {
+        startTimePanelDomRef,
+        endTimePanelDomRef,
+        pickerDomRef,
+        startInputDomRef,
+        endInputDomRef,
       },
       {
-        immediate: true,
+        visible,
+        modifyPanelVisible,
       },
     );
 
-    const popoverSlots = {
-      reference: () => (
-        <div
-          ref={PanelReferenceRef}
-          class={[
-            cls(classHelperTrigger.block),
-            {
-              [classHelper.m('disabled')]: isDisabled.value,
-              [classHelper.m('reference')]: slots.reference,
-            },
-          ]}
-          style={triggerStyle.value}
-          onClick={onClickPanelTrigger}
-        >
-          {slots.reference ? (
-            slots.reference({
-              reference: userModelValue.value,
-            })
-          ) : (
-            <PanelTrigger
-              ref={PanelTriggerRef}
-              model-value={userModelValue.value}
-              visible={visible.value}
-              inputStatus={inputStatus?.value}
-              onFocus={onFocus}
-              onBlur={onBlur}
-              onClear={onClear}
-              onPick={onPanelTriggerPick}
-            />
-          )}
-        </div>
-      ),
-      popper: () => (
-        <div
-          ref={PanelDateRef}
-          class={cls(classHelper.e('body'))}
-          v-event-outside={{
-            handler: onClickOutsidePanelDate,
-            events: ['mousedown', 'focus'],
-          }}
-        >
-          <PanelContent
-            panelTime={panelTime.value}
-            isFooter={isFooter.value}
-            onPickTime={onPickTime}
-            onChangePanelTime={onChangePanelTime}
-            onCancel={onCancel}
-            onConfirm={onConfirm}
-          ></PanelContent>
-        </div>
-      ),
-    };
+    const { onKeydown, onInput, onClick, handleFocus, handleBlur } = useEvent(
+      propRefs,
+      context,
+      {
+        startTimePanelDomRef,
+        endTimePanelDomRef,
+        pickerDomRef,
+        startInputDomRef,
+        endInputDomRef,
+      },
+      {
+        startTime,
+        endTime,
+        doConfirm,
+        dayjsFormat,
+      },
+    );
 
-    provide('N_TIME_PICKER', {
-      props: reactive({
-        ...toRefs(props),
-        locale: computed(() => locale.value),
-        legoLocale: computed(() => locale.value?.langService.td()?.lego),
-        isTimePicker: true,
-        updateTimePosCount: ref(1),
-        isRange: computed(() => isRange.value),
-        originalAttrs: computed(() => originalAttrs.value),
-        originalPanelTime: computed(() => panelTime.value),
-        isMultipleSingleTime: computed(() => isMultipleSingleTime.value),
-      }),
-      prefixIconSlots: slots.prefix,
-      suffixIconSlots: slots.suffix,
-      gridSlots: slots.default,
-      rangeSeparatorSlots: slots.rangeSeparator,
-      footerSlots: slots.footer,
+    function renderSeparator(
+      separatorProp: string | Component | VNode | undefined,
+      separatorSlot?: Slot,
+    ) {
+      return typeof separatorProp === 'string'
+        ? separatorProp
+        : renderIcon(separatorProp, separatorSlot);
+    }
+
+    provide(NTimePickerPropsInjectKey, props);
+    provide(NTimePickerEmitsInjectKey, context.emit);
+
+    context.expose({
+      clickTimeCell: (
+        time: Dayjs,
+        triggerType: 'click' | 'input' = 'click',
+        type: 'start' | 'end' = 'start',
+      ) => {
+        if (type === 'start') {
+          startTimePanelDomRef.value?.clickTimeCell(time, triggerType);
+        } else {
+          endTimePanelDomRef.value?.clickTimeCell(time, triggerType);
+        }
+      },
+      changePanelVisible: modifyPanelVisible,
+      confirmHandle: doConfirm,
+      cancelHandle: doCancel,
+      clearHandle: doClear,
+      focus: () => {
+        pickerDomRef.value?.focus();
+      },
+      blur: () => {
+        pickerDomRef.value?.forceBlur();
+      },
+      clear: doClear,
     });
 
-    expose({
-      changePanelVisible: manualControlPopperVisible,
-      onHide,
-      timePicker: computed(() => InputRef.value?.input),
-    });
-
-    return () =>
-      h(
-        NPopover,
-        {
-          ref: 'refNPopover',
-          trigger: 'manual',
-          placement: placement.value,
-          arrow: false,
-          distance: 4,
-          visible: visible.value,
-          popperClass: cls(popperClass.value),
-          referenceClass: cls(classHelperReference.block),
-          fallbackPlacements: fallbackPlacements.value,
-          preventOverflow: preventOverflow.value,
-          toBody: toBody.value,
-        },
-        popoverSlots,
-      );
+    return () => (
+      <NPicker
+        ref={pickerDomRef}
+        modelValue={
+          Array.isArray(showValue.value)
+            ? showValue.value.length && showValue.value.every(curr => isNil(curr))
+              ? undefined
+              : showValue.value.join(' - ')
+            : showValue.value
+        }
+        disabled={isDisabled.value}
+        clearable={propRefs.clearable.value && !isDisabled.value && !propRefs.readonly.value}
+        readonly={propRefs.readonly.value}
+        size={size.value}
+        class={cls(classHelper.block, classHelper.is('clearable', propRefs.clearable.value))}
+        trigger={propRefs.trigger.value}
+        inputable={propRefs.inputable.value}
+        inputStyle={propRefs.inputStyle.value}
+        inputStatus={!!formItemError?.value ? 'error' : propRefs.inputStatus?.value}
+        needConfirm={propRefs.needConfirm.value}
+        fitInputWidth={propRefs.fitInputWidth.value}
+        panelWidth={propRefs.panelWidth?.value}
+        panelMinWidth={propRefs.panelMinWidth.value}
+        panelMaxWidth={propRefs.panelMaxWidth.value}
+        pickerMinWidth={propRefs.pickerMinWidth?.value ?? (propRefs.isRange.value ? 180 : 160)}
+        pickerMaxWidth={propRefs.pickerMaxWidth?.value}
+        pickerWidth={propRefs.width?.value}
+        pickerPrefixIcon={
+          propRefs.prefixIcon?.value ??
+          (propRefs.inputStyle.value === 'no-border' ? false : IconTime)
+        }
+        placeholder={
+          propRefs.placeholder?.value ?? (useLocaleLang('timePicker.placeholder').value as string)
+        }
+        dropdownIcon={propRefs.suffixIcon?.value}
+        dropdownIconCanTurned={false}
+        preserveSuffixIconSpace={false}
+        confirmDisabled={!canConfirmBtnClick.value}
+        panelClass={propRefs.panelClass?.value}
+        panelStyle={propRefs.panelStyle?.value}
+        toBody={propRefs.toBody.value}
+        confirmNeedCancel={propRefs.showCancelButton.value}
+        confirmButtonText={propRefs.confirmButtonText?.value}
+        cancelButtonText={propRefs.cancelButtonText?.value}
+        confirmButtonProps={propRefs.confirmButtonProps?.value}
+        cancelButtonProps={propRefs.cancelButtonProps?.value}
+        popoverOptions={{
+          preventOverflow: propRefs.preventOverflow.value,
+          fallbackPlacements: propRefs.fallbackPlacements.value,
+          ...propRefs.popoverOptions?.value,
+        }}
+        showPopoverContentOnly={props.showPopoverContentOnly}
+        onShow={onShow}
+        onHide={onHide}
+        onConfirm={() => doConfirm()}
+        onCancel={doCancel}
+        onClear={doClear}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        onInput={onInput}
+        onKeydown={onKeydown}
+        onClick={onClick}
+      >
+        {{
+          default: () => (
+            <div
+              class={cls(
+                classHelper.e('panels-wrapper'),
+                classHelper.is('range', propRefs.isRange.value),
+              )}
+            >
+              <div
+                v-show={propRefs.isRange.value}
+                class={classHelper.em('panels-wrapper', 'header')}
+              >
+                <div class={classHelper.em('panels-wrapper', 'header-label')}>
+                  {useLocaleLang('timePicker.startTime').value}
+                </div>
+                <div class={classHelper.em('panels-wrapper', 'header-separator')}>
+                  {renderSeparator(
+                    propRefs.rangePanelSeparator?.value,
+                    context.slots.rangePanelSeparator,
+                  )}
+                </div>
+                <div class={classHelper.em('panels-wrapper', 'header-label')}>
+                  {useLocaleLang('timePicker.endTime').value}
+                </div>
+              </div>
+              <div class={classHelper.em('panels-wrapper', 'body')}>
+                <TimePanel
+                  ref={startTimePanelDomRef}
+                  modelValue={startTime.value}
+                  type={propRefs.isRange.value ? 'start' : undefined}
+                  dateType={propRefs.type.value}
+                  timeStep={propRefs.timeStep.value}
+                  hourStep={propRefs.hourStep.value}
+                  minuteStep={propRefs.minuteStep.value}
+                  secondStep={propRefs.secondStep.value}
+                  startAt={propRefs.startAt.value}
+                  endAt={propRefs.endAt.value}
+                  previewTime={previewTime.value}
+                  optionListMaxHeight={propRefs.optionListMaxHeight.value}
+                  disabledAfter={propRefs.isLinkPanels.value ? endTime.value : undefined}
+                  formatCellText={propRefs.formatCellText?.value}
+                  disabledTime={propRefs.disabledTime?.value}
+                  panelVisible={visible.value}
+                  showTimeTooltip={propRefs.showTimeTooltip?.value}
+                  tooltipShowAfter={propRefs.tooltipShowAfter.value}
+                  tooltipHideAfter={propRefs.tooltipHideAfter.value}
+                  onUpdate:modelValue={(val, triggerType) =>
+                    onUpdateTime(val, endTime.value, triggerType)
+                  }
+                  onUpdate:previewTime={val => (previewTime.value = val)}
+                />
+                {propRefs.isRange.value ? (
+                  <TimePanel
+                    ref={endTimePanelDomRef}
+                    modelValue={endTime.value}
+                    type="end"
+                    dateType={propRefs.type.value}
+                    timeStep={propRefs.timeStep.value}
+                    hourStep={propRefs.hourStep.value}
+                    minuteStep={propRefs.minuteStep.value}
+                    secondStep={propRefs.secondStep.value}
+                    startAt={propRefs.startAt.value}
+                    endAt={propRefs.endAt.value}
+                    previewTime={previewTime.value}
+                    optionListMaxHeight={propRefs.optionListMaxHeight.value}
+                    disabledBefore={propRefs.isLinkPanels.value ? startTime.value : undefined}
+                    formatCellText={propRefs.formatCellText?.value}
+                    disabledTime={propRefs.disabledTime?.value}
+                    panelVisible={visible.value}
+                    showTimeTooltip={propRefs.showTimeTooltip?.value}
+                    tooltipShowAfter={propRefs.tooltipShowAfter.value}
+                    tooltipHideAfter={propRefs.tooltipHideAfter.value}
+                    onUpdate:modelValue={(val, triggerType) =>
+                      onUpdateTime(startTime.value, val, triggerType)
+                    }
+                    onUpdate:previewTime={val => (previewTime.value = val)}
+                  />
+                ) : undefined}
+              </div>
+            </div>
+          ),
+          panelPrefix: context.slots.panelHeaderRender,
+          panelSuffix: context.slots.panelFooterRender,
+          pickerPrefix: context.slots.prefix,
+          pickerSuffix: context.slots.suffix,
+          panelConfirm: context.slots.dropConfirmRender,
+          pickerContainer: context.slots.pickerContainer,
+          pickerInner: context.slots.pickerInner,
+          pickerOuter: context.slots.pickerOuter,
+          picker: context.slots.picker,
+          ...(propRefs.showNow.value || context.slots.showNow
+            ? {
+                panelConfirmLeft: () =>
+                  context.slots.showNow?.() ?? (
+                    <NButton size="small" link={true} onClick={onClickNow}>
+                      {useLocaleLang('datePicker.now').value}
+                    </NButton>
+                  ),
+              }
+            : {}),
+          ...(propRefs.isRange.value && !propRefs.singleTrigger.value
+            ? {
+                pickerInner: (
+                  modelValue: ModelValueType,
+                  inputStatus: PickerInputStatusType,
+                  pickerStatus: PickerStatusType,
+                  onInputFocus: (evt: FocusEvent) => void,
+                  onInputBlur: (evt: FocusEvent) => void,
+                ) => (
+                  <div class={classHelper.e('input-wrapper')}>
+                    <NTooltip content={showValue.value?.[0]} overflow={true}>
+                      <NPickerPureInput
+                        ref={startInputDomRef}
+                        modelValue={showValue.value?.[0]}
+                        placeholder={
+                          propRefs.startPlaceholder?.value ??
+                          (useLocaleLang('timePicker.startTime').value as string)
+                        }
+                        readonly={propRefs.readonly.value}
+                        onInput={onInput}
+                        onFocus={onInputFocus}
+                        onBlur={onInputBlur}
+                      />
+                    </NTooltip>
+                    <div class={classHelper.em('input-wrapper', 'separator')}>
+                      {renderSeparator(
+                        propRefs.rangeSeparator?.value,
+                        context.slots.rangeSeparator,
+                      )}
+                    </div>
+                    <NTooltip content={showValue.value?.[1]} overflow={true}>
+                      <NPickerPureInput
+                        ref={endInputDomRef}
+                        modelValue={showValue.value?.[1]}
+                        placeholder={
+                          propRefs.endPlaceholder?.value ??
+                          (useLocaleLang('timePicker.endTime').value as string)
+                        }
+                        readonly={propRefs.readonly.value}
+                        onInput={evt => onInput(evt, 'end')}
+                        onFocus={onInputFocus}
+                        onBlur={onInputBlur}
+                      />
+                    </NTooltip>
+                  </div>
+                ),
+              }
+            : {}),
+        }}
+      </NPicker>
+    );
   },
 });

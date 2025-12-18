@@ -12,7 +12,7 @@
   </n-form>
   <n-row>
     <n-col :span="24">
-      <n-upload-v2
+      <n-upload
         id="background-uploader"
         v-model:use-background="useBackground"
         action="https://lego-inspector.nioint.com/upload-mock"
@@ -22,7 +22,7 @@
       />
     </n-col>
     <n-col :span="24">
-      <n-upload-v2
+      <n-upload
         v-model:use-background="useBackground"
         action="https://lego-inspector.nioint.com/upload-mock"
         button-text="多选自动上传"

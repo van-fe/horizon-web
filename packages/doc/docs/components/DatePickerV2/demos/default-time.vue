@@ -1,13 +1,13 @@
 <template>
   <n-row>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value" type="datetime" :default-time="defaultTime" :need-confirm="true" />
+      <n-date-picker v-model="value" type="datetime" :default-time="defaultTime" :need-confirm="true" />
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value2" type="dateMinutesRange" :default-time="defaultTimes" />
+      <n-date-picker v-model="value2" type="dateMinutesRange" :default-time="defaultTimes" />
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value3" type="dateRange" :default-time="defaultTimes" format="YYYY-MM-DD HH:mm:ss" />
+      <n-date-picker v-model="value3" type="dateRange" :default-time="defaultTimes" format="YYYY-MM-DD HH:mm:ss" />
     </n-col>
   </n-row>
 </template>

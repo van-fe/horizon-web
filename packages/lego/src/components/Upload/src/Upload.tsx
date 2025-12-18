@@ -1,320 +1,335 @@
-import {
-  computed,
-  defineComponent,
-  inject,
-  nextTick,
-  provide,
-  shallowRef,
-  toRefs,
-  watch,
-} from 'vue';
-import type { UploadHelperFile } from '@nio-fe/upload-helper';
-import { UploadHelper, xhrUpload, getNanoid } from '@nio-fe/upload-helper';
-import NUploadButton from './UploadButton';
-import NUploadImg from './UploadImg';
+import type { ComponentPublicInstance } from 'vue';
+import { ref, inject, computed, defineComponent, provide, toRefs, watch, Fragment } from 'vue';
+import { ComponentClassBlock, cls, useNamespace, isNil } from '@nio-fe/shared';
+import type { LegoSetupContext, Data } from '@nio-fe/shared';
 import { useUploadProps } from './composables/useProps';
-import type {
-  NUploadCustomRequest,
-  NUploadRequestOptions,
-  NUploadOptions,
-} from './composables/useProps';
-import type { UploadEmits } from './composables/useEmits';
 import { useUploadEmits } from './composables/useEmits';
-import type { UploadSlots } from './composables/useSlots';
 import { useUploadSlots } from './composables/useSlots';
-import type { LegoSetupContext } from '@nio-fe/shared';
+import { useUploadExposes } from './composables/useExposes';
+import type { UploadProps } from './composables/useProps';
+import type { UploadEmits } from './composables/useEmits';
+import type { UploadSlots } from './composables/useSlots';
+import type { UploadExposes, UploadBackgroundExposes } from './composables/useExposes';
+import UploadFileHelper from './utils/UploadFileHelper';
+import {
+  NUploadEmitsInjectKey,
+  NUploadOpenViewerInjectKey,
+  NUploadPropsInjectKey,
+  NUploadSizeInjectKey,
+  NUploadSlotsInjectKey,
+  NUploadUploadFileHelperInjectKey,
+} from './utils/injectKeys';
 import {
   NFormDisabledInjectedKey,
+  NFormItemErrorInjectedKey,
   NFormItemTriggerInjectedKey,
 } from '~/components/Form/src/utils/injectedKeys';
-import { useNamespace } from '@nio-fe/shared';
+import UploadButton from './components/UploadButton';
+import UploadGallery from './components/UploadGallery';
+import UploadDropArea from './components/UploadDropArea';
+import type { NUploadFileType, NUploadRawFileType } from './utils/fileDefines';
+import { NUploadFileTypeEnum, NUploadFileStatusEnum } from './utils/fileDefines';
+import UploadGalleryList from './components/UploadGalleryList';
+import UploadFileList from './components/UploadFileList';
 import useSize from '~/utils/useSize';
+import {
+  createBackgroundUploadInstance,
+  destroyBackgroundUploadInstance,
+} from './utils/uploadBackgroundHelper';
+import NViewer from '~/components/Viewer/src/Viewer';
+import { useClipboard } from './utils/useClipboard';
+import UploadGalleryMixedList from '~/components/Upload/src/components/UploadGalleryMixedList';
 
 export default defineComponent({
   name: `${useNamespace()}Upload`,
-  desc: '用户通过该组件传输自己的本地文件',
+  desc: '通过点击或拖拽，将信息（文件、图片、视频等）上传到远程服务器上的过程',
   props: useUploadProps,
   emits: useUploadEmits,
   slots: useUploadSlots,
-  setup(props, { emit, slots }: LegoSetupContext<UploadEmits, UploadSlots>) {
-    const {
-      icon,
-      text,
-      type,
-      limit,
-      accept,
-      listenClipBorad,
-      disabled,
-      readonly,
-      directory,
-      multiple,
-      mimeIcons,
-      proportion,
-      afterUpload,
-      beforeUpload,
-      uploadOptions,
-      operators,
-      progressNumberVisible,
-      size,
-    } = toRefs(props);
-    let uploadHelper: UploadHelper | null = null;
+  exposes: useUploadExposes,
+  setup(
+    props: UploadProps,
+    { emit, slots, expose }: LegoSetupContext<UploadEmits, UploadSlots, UploadExposes>,
+  ) {
+    const classHelper = new ComponentClassBlock('upload');
+    const propsRef = toRefs(props);
 
-    // global size
-    const sizeRef = useSize(size, 'medium');
+    const viewerVisible = ref(false);
+    const viewerIndex = ref(0);
 
+    const sizeRef = useSize(propsRef.size, 'medium');
+
+    // form-item injects
     const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
-    // because uploader use many form element, so provide NFormItemTriggerInjectedKey as undefined
-    provide(NFormItemTriggerInjectedKey, undefined);
-
-    // form disabled inject
     const formDisabled = inject(NFormDisabledInjectedKey, undefined);
-    const isDisabled = computed(() => disabled?.value ?? formDisabled?.value ?? false);
+    const nFormError = inject(NFormItemErrorInjectedKey, ref(''));
 
-    function updateModelValue(val: UploadHelperFile[]) {
-      emit('update:modelValue', val);
-      nextTick().then(() => {
-        formItemTrigger?.('change');
-      });
-    }
+    const isDisabled = computed(() => props.disabled ?? formDisabled?.value ?? false);
 
-    const uploadFileList = shallowRef<UploadHelperFile[]>([]);
-    const updatingProps = shallowRef(false);
+    const uploadFileHelper = new UploadFileHelper(propsRef);
 
-    if (uploadOptions.value) {
-      const uploadChange = (obj: UploadHelperFile, fileArr: UploadHelperFile[]) => {
-        if (updatingProps.value) {
-          return;
-        }
+    const canViewerFiles = computed(() =>
+      Array.from(uploadFileHelper.fileList.value.values())
+        .filter(file =>
+          [NUploadFileTypeEnum.Image, NUploadFileTypeEnum.Video].includes(file.type),
+        )
+        .filter(file => propsRef.beforeViewerPreview?.value?.(file) ?? true),
+    );
 
-        let arr = uploadFileList.value.slice();
-        fileArr.forEach(file => {
-          let idx;
-          if (file.status === 'deleted') {
-            arr = arr.filter(v => v.helpName !== file.helpName);
-          } else if ((idx = arr.findIndex(v => v.helpName === file.helpName)) > -1) {
-            arr[idx] = { ...file };
-          } else {
-            arr.push(file);
-          }
-        });
+    useClipboard(propsRef, uploadFileHelper, isDisabled);
 
-        uploadFileList.value = arr.slice();
-        updateModelValue(uploadFileList.value);
-
-        if (
-          fileArr.every(v => ['success', 'error', 'canceled', 'deleted'].includes(v.status || ''))
-        ) {
-          afterUpload.value?.(uploadFileList.value, fileArr);
-        }
-      };
-
-      const getUploadRequest =
-        ({
-          requestOptions,
-          customRequest,
-        }: {
-          requestOptions?: NUploadRequestOptions;
-          customRequest?: NUploadCustomRequest;
-        }) =>
-        async ({ file, onChange, data }: any) => {
-          const req = (customRequest || xhrUpload) as any;
-
-          const xhr = await req({
-            ...requestOptions,
-            file,
-            onChange: ({ status, progress, response, error }: any) => {
-              onChange({ status, progress, response, error });
-            },
-            data: {
-              ...data,
-              ...requestOptions?.data,
-            },
-          });
-
-          return xhr;
-        };
-
-      const createInstance = (options: NUploadOptions) => {
-        uploadHelper = new UploadHelper({
-          ...options,
-          request: getUploadRequest(options),
-          onChange: uploadChange,
-        });
-      };
-
-      if (typeof uploadOptions.value === 'function') {
-        uploadOptions.value().then(res => {
-          createInstance(res);
-        });
-      } else {
-        createInstance(uploadOptions.value);
+    provide(NUploadPropsInjectKey, props);
+    provide(NUploadEmitsInjectKey, emit);
+    provide(NUploadSlotsInjectKey, slots);
+    provide(NUploadSizeInjectKey, sizeRef);
+    provide(NUploadUploadFileHelperInjectKey, uploadFileHelper);
+    provide(NUploadOpenViewerInjectKey, file => {
+      viewerIndex.value = canViewerFiles.value.indexOf(file);
+      if (viewerIndex.value !== -1) {
+        viewerVisible.value = true;
       }
-    }
+    });
 
-    const deleteHandler = (helpName: string) => () => {
-      if (updatingProps.value) {
-        return;
+    const shouldShowFileList = computed(
+      () => props.showFileList && uploadFileHelper.fileList.value.size > 0,
+    );
+
+    const uploadTrigger = computed(() => {
+      if (props.noUploader) {
+        return undefined;
       }
 
-      uploadFileList.value = uploadFileList.value.filter(v => v.helpName !== helpName);
-      updateModelValue(uploadFileList.value);
-    };
+      switch (props.type) {
+        case 'button':
+        default:
+          return <UploadButton />;
+        case 'gallery':
+        case 'gallery-mixed':
+          return <UploadGallery />;
+        case 'drop':
+          return <UploadDropArea />;
+      }
+    });
+
+    let backgroundUploader: ComponentPublicInstance<
+      {},
+      {},
+      {},
+      {},
+      UploadBackgroundExposes
+    > | null = null;
+    let backgroundUploaderInstanceIndex: number | null = null;
+
+    function emitChange(file: NUploadFileType, response?: Data | undefined) {
+      emit('update:modelValue', Array.from(uploadFileHelper.fileList.value.values()));
+      emit('change', file, response);
+      formItemTrigger?.('change');
+      formItemTrigger?.('blur');
+    }
+
+    uploadFileHelper.eventEmitter.on('change', (file, response) => {
+      if (file.status === NUploadFileStatusEnum.New) {
+        backgroundUploader?.addFile?.(file);
+      }
+
+      if (
+        [
+          NUploadFileStatusEnum.New,
+          NUploadFileStatusEnum.Success,
+          NUploadFileStatusEnum.Fail,
+        ].includes(file.status)
+      ) {
+        emitChange(file, response);
+      }
+    });
+
+    uploadFileHelper.eventEmitter.on('preview', file => {
+      emit('preview', file);
+    });
+
+    uploadFileHelper.eventEmitter.on('add', file => {
+      emit('add', file);
+    });
+
+    uploadFileHelper.eventEmitter.on('upload', file => {
+      emit('upload', file);
+    });
+
+    uploadFileHelper.eventEmitter.on('remove', file => {
+      backgroundUploader?.removeFile?.(file);
+      emitChange(file);
+      emit('remove', file);
+    });
+
+    uploadFileHelper.eventEmitter.on('uploading', (file, process, response) => {
+      emit('uploading', file, process, response);
+    });
+
+    uploadFileHelper.eventEmitter.on('uploaded', (file, response) => {
+      emit('uploaded', file, response);
+    });
+
+    uploadFileHelper.eventEmitter.on('pause', file => {
+      emit('pause', file);
+    });
+
+    uploadFileHelper.eventEmitter.on('continue', file => {
+      emit('continue', file);
+    });
+
+    uploadFileHelper.eventEmitter.on('retry', file => {
+      emit('retry', file);
+    });
+
+    uploadFileHelper.eventEmitter.on('fail', (file, reason, response) => {
+      emit('fail', file, reason, response);
+    });
+
+    uploadFileHelper.eventEmitter.on('exceed', (picked, existed) => {
+      emit('exceed', picked, existed);
+    });
+
+    uploadFileHelper.eventEmitter.on('fileSizeExceed', files => {
+      emit('fileSizeExceed', files);
+    });
+
+    uploadFileHelper.eventEmitter.on('acceptError', files => {
+      emit('acceptError', files);
+    });
+
+    uploadFileHelper.eventEmitter.on('update:modelValue', files => {
+      emit('update:modelValue', files);
+    });
 
     watch(
-      () => props.modelValue,
-      arrProps => {
-        updatingProps.value = true;
-
-        // 传undefined认为是空数组
-        if (!arrProps) {
-          arrProps = [];
-        }
-
-        if (arrProps.length > 0) {
-          const arrOrigin = uploadFileList.value.slice();
-          // 增加文件
-          arrProps.forEach(v => {
-            // 如果没传helpName就给一个
-            if (!v.helpName) {
-              v.helpName = getNanoid();
-            }
-            //
-            if (!arrOrigin.find(vv => vv.helpName === v.helpName)) {
-              if (!v.delete) {
-                v.delete = deleteHandler(v.helpName || '');
-              }
-              arrOrigin.push(v);
-            }
-          });
-
-          // 删除文件
-          for (let i = 0; i < arrOrigin.length; i++) {
-            if (!arrProps.find(vv => vv.helpName === arrOrigin[i].helpName)) {
-              arrOrigin[i]?.delete?.();
-              arrOrigin.splice(i, 1);
-              i--;
-            }
-          }
-
-          uploadFileList.value = arrOrigin.slice();
+      propsRef.useBackground,
+      val => {
+        if (val) {
+          ({ instance: backgroundUploader, index: backgroundUploaderInstanceIndex } =
+            createBackgroundUploadInstance(props));
         } else {
-          // 清空
-          if (uploadFileList.value.length > 0) {
-            uploadFileList.value.forEach(v => {
-              v?.delete?.();
-            });
-            uploadFileList.value = [];
-          }
+          backgroundUploader = null;
         }
-
-        updatingProps.value = false;
       },
       {
         immediate: true,
       },
     );
 
-    const commonProps = computed(() => ({
-      size: sizeRef.value,
-      limit: limit.value,
-      accept: accept.value,
-      listenClipBorad: listenClipBorad.value,
-      multiple: multiple.value,
-      disabled: isDisabled.value,
-      directory: directory.value,
-      mimeIcons: mimeIcons.value,
-      operators: operators.value,
-      readonly: readonly.value,
-      progressNumberVisible: progressNumberVisible.value,
-    }));
-
-    const changeHandle = async (files: FileList | File[] | null) => {
-      if (!files) {
-        return;
-      }
-      emit('change', files);
-
-      let uploadFiles: FileList | File[] = [];
-      const removedFile: FileList | File[] = [];
-      if (files && limit.value && files.length > limit.value - uploadFileList.value.length) {
-        const len = limit.value - uploadFileList.value.length;
-        for (let i = 0; i < files.length; i++) {
-          if (i < len) {
-            uploadFiles.push(files[i]);
-          } else {
-            removedFile.push(files[i]);
-          }
+    expose({
+      async upload(files?: NUploadFileType[]) {
+        if (files?.length) {
+          await uploadFileHelper.addFiles(files);
         }
-      } else {
-        uploadFiles = files;
+
+        await uploadFileHelper.uploadFiles();
+      },
+      async abort(files?: NUploadFileType[]) {
+        if (files?.length) {
+          await uploadFileHelper.abortFiles(files);
+        }
+      },
+      clearFiles(status?: NUploadFileStatusEnum[]) {
+        if (status?.length) {
+          const readyToClearFiles = Array.from(uploadFileHelper.fileList.value).filter(curr =>
+            status.includes(curr.status),
+          );
+
+          void uploadFileHelper.removeFile(readyToClearFiles, false);
+        } else if (isNil(status)) {
+          uploadFileHelper.removeAllFiles();
+        }
+      },
+      handleSelect() {
+        uploadFileHelper.clickInput();
+      },
+      handleRemove(rawFiles?: NUploadRawFileType[]) {
+        if (rawFiles?.length) {
+          void uploadFileHelper.removeFile(rawFiles, false);
+        } else if (isNil(rawFiles)) {
+          uploadFileHelper.removeAllFiles();
+        }
+      },
+      destroyBackgroundUploader() {
+        destroyBackgroundUploadInstance(props.id, backgroundUploaderInstanceIndex);
+      },
+    });
+
+    return () => {
+      const uploadTriggerElement = uploadTrigger.value ? (
+        <div class={cls(classHelper.e('trigger'))}>{uploadTrigger.value}</div>
+      ) : undefined;
+
+      function getFileListNode() {
+        switch (props.type) {
+          case 'gallery':
+            return (
+              slots.uploadedFiles?.(Array.from(uploadFileHelper.fileList.value)) ?? (
+                <UploadGalleryList>
+                  {{
+                    append: () => uploadTriggerElement,
+                  }}
+                </UploadGalleryList>
+              )
+            );
+          case 'gallery-mixed':
+            return (
+              slots.uploadedFiles?.(Array.from(uploadFileHelper.fileList.value)) ?? (
+                <UploadGalleryMixedList>
+                  {{
+                    append: () => uploadTriggerElement,
+                  }}
+                </UploadGalleryMixedList>
+              )
+            );
+          case 'button':
+          case 'drop':
+            return (
+              <Fragment>
+                {uploadTriggerElement}
+                {slots.uploadedFiles?.(Array.from(uploadFileHelper.fileList.value)) || (
+                  <UploadFileList
+                    fileList={uploadFileHelper.fileList.value}
+                    multipart={propsRef.multipart.value}
+                    controls={propsRef.controls.value}
+                    controlsAlwaysVisible={props.controlsAlwaysVisible}
+                  />
+                )}
+              </Fragment>
+            );
+        }
       }
 
-      if (removedFile.length > 0) {
-        emit('overLimited', removedFile);
-      }
-
-      const beforeRes = beforeUpload.value
-        ? await beforeUpload.value(uploadFiles as FileList)
-        : uploadFiles;
-      beforeRes && beforeRes.length && uploadHelper?.addFiles(beforeRes as FileList);
+      return (
+        <div
+          class={cls(
+            classHelper.block,
+            classHelper.m(props.type),
+            classHelper.is('disabled', isDisabled.value),
+            classHelper.is('error', !!nFormError.value),
+          )}
+        >
+          {shouldShowFileList.value ? getFileListNode() : uploadTriggerElement}
+          <NViewer
+            v-model={viewerVisible.value}
+            initIndex={viewerIndex.value}
+            sources={canViewerFiles.value.map(file => ({
+              type: file.type as 'image' | 'video',
+              cover: (file.posterUrl || file.url || file.blobUrl)!,
+              title: file.name,
+              videoSources:
+                file.type === NUploadFileTypeEnum.Video
+                  ? [
+                      {
+                        src: (file.url || file.blobUrl)!,
+                        type: 'video/mp4',
+                      },
+                    ]
+                  : undefined,
+            }))}
+          />
+        </div>
+      );
     };
-
-    function onBlur(evt: FocusEvent) {
-      emit('blur', evt);
-      nextTick().then(() => {
-        formItemTrigger?.('blur');
-      });
-    }
-
-    if (type.value === 'list') {
-      return () => (
-        <NUploadButton
-          {...commonProps.value}
-          icon={icon.value}
-          text={text.value}
-          uploadFileList={uploadFileList.value}
-          onChange={changeHandle}
-          onDelete={file => emit('delete', file)}
-          onPause={file => emit('pause', file)}
-          onResume={file => emit('resume', file)}
-          onRetry={file => emit('retry', file)}
-          onPreview={file => emit('preview', file)}
-          onDownload={file => emit('download', file)}
-          onBlur={onBlur}
-        >
-          {{
-            default: slots.default,
-            content: slots.content,
-            icon: slots.icon,
-            text: slots.text,
-            operators: slots.operators,
-          }}
-        </NUploadButton>
-      );
-    } else if (type.value === 'img') {
-      return () => (
-        <NUploadImg
-          {...commonProps.value}
-          proportion={proportion.value}
-          uploadFileList={uploadFileList.value}
-          onChange={changeHandle}
-          onDelete={file => emit('delete', file)}
-          onPause={file => emit('pause', file)}
-          onResume={file => emit('resume', file)}
-          onRetry={file => emit('retry', file)}
-          onPreview={file => emit('preview', file)}
-          onDownload={file => emit('download', file)}
-          onBlur={onBlur}
-        >
-          {{
-            default: slots.default,
-            content: slots.content,
-            operators: slots.operators,
-          }}
-        </NUploadImg>
-      );
-    } else {
-      return null;
-    }
   },
 });

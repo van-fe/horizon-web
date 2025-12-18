@@ -1,8 +1,8 @@
 import * as Vue from 'vue';
 import { createApp } from 'vue';
 import { NIcon, NIconSVG } from '@nio-fe/icon';
-import { NTableV2 } from '@nio-fe/lego-table-v2';
-import '@nio-fe/lego-table-v2/dist/style.css';
+import { NTable } from '@nio-fe/lego-table';
+import '@nio-fe/lego-table/dist/style.css';
 import App from './App.vue';
 import { router } from './routes';
 import './styles/index.scss';
@@ -26,7 +26,7 @@ setCssVariableUseVersion(false);
 const app = createApp(App)
   .component('NIcon', NIcon)
   .component('NIconSVG', NIconSVG)
-  .component('NTableV2', NTableV2)
+  .component('NTable', NTable)
   .component('DeprecatedTips', DeprecatedTips)
   .component('VersionTips', VersionTips)
   .component('CopyBtn', CopyBtn)

@@ -35,7 +35,7 @@ import NTab from '~/components/Tabs/src/Tab';
 import NTabs from '~/components/Tabs/src/Tabs';
 import NButton from '~/components/Button/src/Button';
 import PinFlagsHelper from './utils/PinFlagsHelper';
-import NDatePickerV2 from '~/components/DatePickerV2/src/DatePickerV2';
+import NDatePicker from '~/components/DatePicker/src/DatePicker';
 import uniq from 'lodash/uniq';
 import CalendarHelper from './utils/CalendarHelper';
 import MonthCalendar from './components/MonthCalendar';
@@ -279,7 +279,7 @@ export default defineComponent({
                 >
                   <NIcon name="arrow_left" size={12} />
                 </div>
-                <NDatePickerV2 v-model={currentDate.value} type={datePickerType.value}>
+                <NDatePicker v-model={currentDate.value} type={datePickerType.value}>
                   {{
                     pickerOuter: () => (
                       <div class={classHelper.em('header', 'switcher-date')}>
@@ -287,7 +287,7 @@ export default defineComponent({
                       </div>
                     ),
                   }}
-                </NDatePickerV2>
+                </NDatePicker>
 
                 <div
                   class={cls(classHelper.em('header', 'switcher-item'), classHelper.is('next'))}

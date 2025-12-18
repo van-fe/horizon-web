@@ -1,7 +1,7 @@
 <template>
   <n-row>
     <n-col :span="6">
-      <n-date-picker-v2
+      <n-date-picker
         v-model="value"
         type="date"
         placeholder="Press Enter key to confirm"
@@ -9,7 +9,7 @@
         @change="onChange" />
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2
+      <n-date-picker
         v-model="value2"
         type="date"
         confirm-type="blur"

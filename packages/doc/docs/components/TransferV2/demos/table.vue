@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3 class="m-4">搜索Address</h3>
-    <n-transfer-v2
+    <n-transfer
       v-model="dataModel"
       :props="{ key: 'id', label: 'address' }"
       :data="sourceData"
@@ -53,7 +53,7 @@
       <template #leftFooter>
         <n-pagination :total="sourceData.length" type="simplest" />
       </template>
-    </n-transfer-v2>
+    </n-transfer>
   </div>
 </template>
 

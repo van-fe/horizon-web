@@ -244,7 +244,7 @@ export const ZhTW = {
     tag: {
       create: '添加標籤',
     },
-    tableV2: {
+    table: {
       filter: {
         reset: '重置',
         confirm: '確定',

@@ -1,7 +1,7 @@
 <template>
   <n-row>
     <n-col :span="6">
-      <n-date-picker-v2
+      <n-date-picker
         v-model="value"
         type="datetime"
         :show-date-tooltip="showDateTooltip"

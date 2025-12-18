@@ -1,4 +1,4 @@
-import type { LocaleSupportLangV2 } from '../lang';
+import type { LocaleSupportLang } from '../lang';
 
 export type LocaleDateSpecialSetting = {
   date: string;
@@ -11,5 +11,5 @@ export type LocaleDateSpecialSetting = {
   timeSuffixSplit: string;
 };
 
-export type LocaleDateSpecialSettings = Record<LocaleSupportLangV2, LocaleDateSpecialSetting>;
+export type LocaleDateSpecialSettings = Record<LocaleSupportLang, LocaleDateSpecialSetting>;
 export type PartialLocaleDateSpecialSettings = Partial<LocaleDateSpecialSettings>;

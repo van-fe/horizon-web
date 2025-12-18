@@ -1,5 +1,5 @@
 <template>
-  <n-upload-v2
+  <n-upload
     v-model="modelValue"
     action="https://lego-inspector.nioint.com/upload-mock"
     method="POST"
@@ -17,12 +17,12 @@ import { ref } from 'vue';
 import {
   $confirm,
   $message,
-  NUploadV2FileType,
-  NUploadV2FileTypeEnum,
-  type NUploadV2UserFile,
+  NUploadFileType,
+  NUploadFileTypeEnum,
+  type NUploadUserFile,
 } from '@nio-fe/lego';
 
-const modelValue = ref<NUploadV2UserFile[]>(
+const modelValue = ref<NUploadUserFile[]>(
   [
     {
       name: 'success.png',
@@ -39,13 +39,13 @@ const modelValue = ref<NUploadV2UserFile[]>(
   ],
 );
 
-function onBeforePreview(file: NUploadV2FileType) {
+function onBeforePreview(file: NUploadFileType) {
   console.log('before-preview:', file);
 
-  if (file.type === NUploadV2FileTypeEnum.Pdf) {
+  if (file.type === NUploadFileTypeEnum.Pdf) {
     $message.error('不可预览 pdf 文件');
     return false;
-  } else if (file.type === NUploadV2FileTypeEnum.Image && file.name.endsWith('.png')) {
+  } else if (file.type === NUploadFileTypeEnum.Image && file.name.endsWith('.png')) {
     return new Promise((resolve, reject) => {
       $confirm('是否预览 PNG 图片?', '提示').then((close) => {
         resolve(true);
@@ -58,11 +58,11 @@ function onBeforePreview(file: NUploadV2FileType) {
   } else return true;
 }
 
-function onPreview(file: NUploadV2FileType) {
+function onPreview(file: NUploadFileType) {
   console.log('Preview file:', file);
 }
 
-function onBeforeViewerPreview(file: NUploadV2UserFile) {
+function onBeforeViewerPreview(file: NUploadUserFile) {
   return file.name.endsWith('.png');
 }
 </script>

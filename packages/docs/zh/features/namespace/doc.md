@@ -30,7 +30,7 @@ setNamespace('x');
 // then you can createApp
 ```
 
-:::warning 以上方法会对 `lego` 和 `table-v2` 和 `icon` 都进行 `namespace` 的修改:::
+:::warning 以上方法会对 `lego` 和 `table` 和 `icon` 都进行 `namespace` 的修改:::
 
 ## 设置 scss 变量
 
@@ -42,10 +42,10 @@ setNamespace('x');
   $namespace: 'x',
 );
 
-// if you use table-v2 at the same time, you should set namespace too.
-@forward '@nio-fe/lego-table-v2/dist/styles/index.scss' with (
+// if you use table at the same time, you should set namespace too.
+@forward '@nio-fe/lego-table/dist/styles/index.scss' with (
     $lego-namespace: 'x',
-    $table-v2-namespace: 'x-tableV2'
+    $table-namespace: 'x-table'
 );
 
 // if you use @nio-fe/icon at the same time, you should set namespace too.
@@ -62,7 +62,7 @@ setNamespace('x');
 
 因为只有 `lego` 拥有按需引用的能力，所以只能创建一个只有 `lego` 的 `forward` 文件 (例如：`styles/lego.scss`)
 
-:::tip 如果你还同时使用 `table-v2` `icon`，则按照上方的 `全量引用` 中，只保留 `table-v2` `icon` 的配置并在入口文件引用即可）:::
+:::tip 如果你还同时使用 `table` `icon`，则按照上方的 `全量引用` 中，只保留 `table` `icon` 的配置并在入口文件引用即可）:::
 
 
 ```scss
@@ -129,7 +129,7 @@ module.exports = {
 
 ### 按需引入 + SCSS变量
 
-按需引入只有 `@nio-fe/lego` 支持。`@nio-fe/lego-table-v2` 和 `@nio-fe/icon` 都是全量引入
+按需引入只有 `@nio-fe/lego` 支持。`@nio-fe/lego-table` 和 `@nio-fe/icon` 都是全量引入
 
 和上面的 **设置 SCSS 变量** 区别在于，`styles/lego.scss` 的内容改为：
 
@@ -138,10 +138,10 @@ module.exports = {
   $namespace: 'x',
 );
 
-// if you use table-v2 at the same time, you should set namespace too.
-@forward '@nio-fe/lego-table-v2/dist/styles/index.scss' with (
+// if you use table at the same time, you should set namespace too.
+@forward '@nio-fe/lego-table/dist/styles/index.scss' with (
     $lego-namespace: 'x',
-    $table-v2-namespace: 'x-tableV2'
+    $table-namespace: 'x-table'
 );
 
 // if you use @nio-fe/icon at the same time, you should set namespace too.

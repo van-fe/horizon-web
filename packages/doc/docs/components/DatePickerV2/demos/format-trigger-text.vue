@@ -1,14 +1,14 @@
 <template>
   <n-row>
     <n-col :span="6">
-      <n-date-picker-v2
+      <n-date-picker
         v-model="value"
         type="date"
         :format-trigger-text="formatTriggerText"
       />
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2
+      <n-date-picker
         v-model="value2"
         type="datetimeRange"
         :single-trigger="true"
@@ -21,12 +21,12 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { DatePickerV2Props } from '@nio-fe/lego';
+import type { DatePickerProps } from '@nio-fe/lego';
 
 const value = ref();
 const value2 = ref();
 
-const formatTriggerText: DatePickerV2Props['formatTriggerText'] = (days, text) => {
+const formatTriggerText: DatePickerProps['formatTriggerText'] = (days, text) => {
   console.log('format trigger text param: ', days, text);
 
   if (Array.isArray(days)) {

@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { NUploadV2FileType, NUploadV2HttpRequestInstanceMethods } from '@nio-fe/lego';
+import type { NUploadFileType, NUploadHttpRequestInstanceMethods } from '@nio-fe/lego';
 import type { Data } from '@nio-fe/shared';
-import { NUploadV2FileStatusEnum } from '@nio-fe/lego';
+import { NUploadFileStatusEnum } from '@nio-fe/lego';
 
 const modelValue = ref();
 
-function httpRequest(file: NUploadV2FileType, instanceMethods: NUploadV2HttpRequestInstanceMethods) {
+function httpRequest(file: NUploadFileType, instanceMethods: NUploadHttpRequestInstanceMethods) {
   if (!file.raw) {
     console.error('Cannot find upload file');
     return;
@@ -17,7 +17,7 @@ function httpRequest(file: NUploadV2FileType, instanceMethods: NUploadV2HttpRequ
   xhr.upload.addEventListener('progress', evt => {
     const progress = Math.min(evt.loaded / evt.total, 1) * 100;
 
-    instanceMethods.setStatus(file, NUploadV2FileStatusEnum.Uploading, {
+    instanceMethods.setStatus(file, NUploadFileStatusEnum.Uploading, {
       progress,
       response: undefined,
     });
@@ -26,7 +26,7 @@ function httpRequest(file: NUploadV2FileType, instanceMethods: NUploadV2HttpRequ
   xhr.open('POST', 'https://lego-inspector.nioint.com/upload-mock', true);
   xhr.withCredentials = false;
 
-  instanceMethods.setStatus(file, NUploadV2FileStatusEnum.Uploading, {
+  instanceMethods.setStatus(file, NUploadFileStatusEnum.Uploading, {
     progress: 0,
     response: undefined,
   });
@@ -56,53 +56,53 @@ function httpRequest(file: NUploadV2FileType, instanceMethods: NUploadV2HttpRequ
   xhr.send(formData);
 }
 
-function handleChange(file: NUploadV2FileType, response?: Data) {
+function handleChange(file: NUploadFileType, response?: Data) {
   console.log('change:', file, response);
 }
 
-function onAddFile(file: NUploadV2FileType) {
+function onAddFile(file: NUploadFileType) {
   console.log('Add File: ', file);
 }
 
-function onUploadFile(file: NUploadV2FileType) {
+function onUploadFile(file: NUploadFileType) {
   console.log('Upload File: ', file);
 }
 
-function onRemoveFile(file: NUploadV2FileType) {
+function onRemoveFile(file: NUploadFileType) {
   console.log('Remove File: ', file);
 }
 
-function onUploadingFile(file: NUploadV2FileType, process: number, response?: Data) {
+function onUploadingFile(file: NUploadFileType, process: number, response?: Data) {
   console.log('Uploading File: ', file, process, response);
 }
 
-function onUploadedFile(file: NUploadV2FileType, response?: Data) {
+function onUploadedFile(file: NUploadFileType, response?: Data) {
   console.log('Uploaded File: ', file, response);
 }
 
-function onPauseFile(file: NUploadV2FileType) {
+function onPauseFile(file: NUploadFileType) {
   console.log('Pause File: ', file);
 }
 
-function onContinueFile(file: NUploadV2FileType) {
+function onContinueFile(file: NUploadFileType) {
   console.log('Continue File: ', file);
 }
 
-function onRetryFile(file: NUploadV2FileType) {
+function onRetryFile(file: NUploadFileType) {
   console.log('Retry File: ', file);
 }
 
-function onPreview(file: NUploadV2FileType) {
+function onPreview(file: NUploadFileType) {
   console.log('Preview File: ', file);
 }
 
-function onFailFile(file: NUploadV2FileType, reason: string, response?: Data) {
+function onFailFile(file: NUploadFileType, reason: string, response?: Data) {
   console.log('Fail File: ', file, reason, response);
 }
 </script>
 
 <template>
-  <n-upload-v2
+  <n-upload
     v-model="modelValue"
     :http-request="httpRequest"
     :multiple="true"

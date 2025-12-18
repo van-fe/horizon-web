@@ -4,10 +4,10 @@
       Datetime:
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value" type="datetime" />
+      <n-date-picker v-model="value" type="datetime" />
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="rangeValue" type="datetime-range" />
+      <n-date-picker v-model="rangeValue" type="datetime-range" />
     </n-col>
   </n-row>
   <n-row align="middle">
@@ -15,10 +15,10 @@
       DateMinutes:
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value2" type="date-minutes" />
+      <n-date-picker v-model="value2" type="date-minutes" />
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="rangeValue2" type="date-minutes-range" />
+      <n-date-picker v-model="rangeValue2" type="date-minutes-range" />
     </n-col>
   </n-row>
   <n-row align="middle">
@@ -26,10 +26,10 @@
       DateSeconds:
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value3" type="date-seconds" />
+      <n-date-picker v-model="value3" type="date-seconds" />
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="rangeValue3" type="date-seconds-range" />
+      <n-date-picker v-model="rangeValue3" type="date-seconds-range" />
     </n-col>
   </n-row>
 </template>

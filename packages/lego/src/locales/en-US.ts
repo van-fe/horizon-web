@@ -244,7 +244,7 @@ export const EnUS = {
     tag: {
       create: 'Add Tag',
     },
-    tableV2: {
+    table: {
       filter: {
         reset: 'Reset',
         confirm: 'Confirm',

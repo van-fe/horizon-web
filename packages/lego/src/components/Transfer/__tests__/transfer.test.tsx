@@ -3,7 +3,7 @@ import { shallowMount, mount } from '@vue/test-utils';
 import NTransfer from '../';
 import NTransferPanel from '../src/TransferPanel';
 import { localeInjectKey } from '~/provides';
-import VueLocaleService, { LocaleSupportLangV2 } from '@nio-fe/locale-vue';
+import VueLocaleService, { LocaleSupportLang } from '@nio-fe/locale-vue';
 import { dictionaries } from '~/locales';
 import { describe, expect, test } from 'vitest';
 import { ref, nextTick, reactive } from 'vue';
@@ -88,7 +88,12 @@ describe('Transfer.tsx', () => {
       value: [],
     });
     const wrapper = mount(() => (
-      <NTransfer v-model={state.value} filterable={true} data={getTestData()} placeholder="hhhh" />
+      <NTransfer
+        v-model={state.value}
+        filterable={true}
+        data={getTestData()}
+        placeholder="hhhh"
+      />
     ));
     const transferELE = wrapper.findComponent(NTransfer);
     expect(transferELE.find('.n-input__inner').attributes('placeholder')).eq('hhhh');
@@ -99,7 +104,7 @@ describe('Transfer.tsx', () => {
       value: [],
     });
     const localeService = new VueLocaleService({
-      current: LocaleSupportLangV2.En,
+      current: LocaleSupportLang.En,
       lang: {
         dictionaries,
       },
@@ -117,7 +122,7 @@ describe('Transfer.tsx', () => {
     const transferELE = wrapper.findComponent(NTransfer);
     expect(transferELE.find('.n-input__inner').attributes('placeholder')).eq('Please Input');
 
-    localeService.current = LocaleSupportLangV2.ZhCN;
+    localeService.current = LocaleSupportLang.ZhCN;
     await nextTick();
     expect(transferELE.find('.n-input__inner').attributes('placeholder')).eq('请输入');
   });

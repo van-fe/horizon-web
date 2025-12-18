@@ -2,11 +2,11 @@
   <n-row>
     <n-col :span="6">
       {{ Object.prototype.toString.call(value) }}
-      <n-date-picker-v2 v-model="value" type="date" :initial-value="null" @update:modelValue="onUpdate" @change="onChange" @pick="onPick" />
+      <n-date-picker v-model="value" type="date" :initial-value="null" @update:modelValue="onUpdate" @change="onChange" @pick="onPick" />
     </n-col>
     <n-col :span="6">
       {{ Object.prototype.toString.call(value2) }}
-      <n-date-picker-v2 v-model="value2" type="date-range" :initial-value="null" @update:modelValue="onUpdate" @change="onChange" @pick="onPick" />
+      <n-date-picker v-model="value2" type="date-range" :initial-value="null" @update:modelValue="onUpdate" @change="onChange" @pick="onPick" />
     </n-col>
   </n-row>
 </template>

@@ -1,6 +1,6 @@
 import { computed, defineComponent, ref, toRefs, inject } from 'vue';
 import { useTimelineItemProps } from './composables/useProps';
-import { useDateFormative, useDateFormativeV2 } from './composables/useDateFormat';
+import { useDateFormative, useDateFormative } from './composables/useDateFormat';
 import { ComponentClassBlock, useNamespace } from '@nio-fe/shared';
 import type { LegoSetupContext } from '@nio-fe/shared';
 import { useColors } from '~/globalMethods';
@@ -162,7 +162,7 @@ export default defineComponent({
               ]}
             >
               {injectProp?.v2
-                ? useDateFormativeV2(timestampProp.value, format.value, locale.value?.current)
+                ? useDateFormative(timestampProp.value, format.value, locale.value?.current)
                 : formatProp.value
                   ? useDateFormative(timestampProp.value, formatProp.value, locale.value?.current)
                   : timestampProp.value}
@@ -179,7 +179,7 @@ export default defineComponent({
                   ]}
                 >
                   {injectProp?.v2
-                    ? useDateFormativeV2(timestampProp.value, format.value, locale.value?.current)
+                    ? useDateFormative(timestampProp.value, format.value, locale.value?.current)
                     : formatProp.value
                       ? useDateFormative(
                           timestampProp.value,
@@ -202,7 +202,7 @@ export default defineComponent({
               ]}
             >
               {injectProp?.v2
-                ? useDateFormativeV2(timestampProp.value, format.value, locale.value?.current)
+                ? useDateFormative(timestampProp.value, format.value, locale.value?.current)
                 : formatProp.value
                   ? useDateFormative(timestampProp.value, formatProp.value, locale.value?.current)
                   : timestampProp.value}

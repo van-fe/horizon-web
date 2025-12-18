@@ -1,328 +1,444 @@
-import type { ExtractPropTypes, PropType } from 'vue';
-import { declarePropType } from '@nio-fe/shared';
-import type { UploadHelperFile, XhrUploadOnChange } from '@nio-fe/upload-helper';
+import type { ExtractPropTypes, PropType, StyleValue, UnwrapRef } from 'vue';
+import type { Arrayable, Promisable } from '@nio-fe/shared';
+import { declarePropType, isNumber, isObject } from '@nio-fe/shared';
+import type { ButtonProps } from '~/components/Button/src/composables/useProps';
+import type { NUploadMultipartSetting } from '../composables/useMultipartUpload';
+import type {
+  NUploadRawFileType,
+  NUploadFileType,
+  NUploadHttpRequestInstanceMethods,
+} from '../utils/fileDefines';
 
-export type NUploadRequestOptions = {
-  fileKey?: string;
-  url: string;
-  method?: string;
-  withCredentials?: boolean;
-  headers?: any;
-  data?: any;
-  xhrSuccess?: (xhr: XMLHttpRequest) => boolean;
-};
-
-export type NUploadCustomRequest = UploadHelperFile & {
-  file: File | Blob;
-  onChange: XhrUploadOnChange;
-};
-
-export type NUploadOptions = {
-  concurrent?: number;
-  sliceSize?: number;
-  sliceMethod?: (file: File | Blob, start: number, end: number) => void;
-  customRequest?: NUploadCustomRequest;
-  requestOptions?: NUploadRequestOptions;
-};
-
-export type NUploadListenClipBorad = {
-  enable?: boolean;
-  filter?: (file: File[]) => File[];
-};
-
-export type NMIMEIconType = {
-  [key: string]: (
-    fileType: string,
-    fileName: string,
-  ) => {
-    name: string;
-    color: string;
-  };
-};
-
-const triggerItemProps = declarePropType({
+export const useUploadProps = declarePropType({
   /**
-   * 文件类型限制
+   * 唯一标识符
+   * 会标注在 `input` 上
+   * 在后台上传时，也可以标注其具体归属
    */
-  accept: { type: String, default: '*' },
-
-  /**
-   * 单选多选
-   */
-  multiple: { type: Boolean, default: false },
-
-  /**
-   * 监听剪贴板
-   * @version 2.0.0-beta.4
-   */
-  listenClipBorad: {
-    type: Object as PropType<NUploadListenClipBorad>,
-    required: false,
-  },
-
-  /**
-   * 选择目录
-   */
-  directory: { type: Boolean, default: false },
-
-  /**
-   * 禁用
-   */
-  disabled: { type: Boolean, default: undefined },
-});
-
-const combineItemProps = declarePropType({
-  /**
-   * 自定义不同 MIME 类型对应的展示图标
-   */
-  mimeIcons: {
-    type: Object as PropType<NMIMEIconType>,
+  id: {
+    type: String,
   },
   /**
-   * 最大上传数量
+   * 请求 URL
+   */
+  action: {
+    type: String,
+  },
+  /**
+   * 上传请求头部
+   */
+  header: {
+    type: Object as PropType<Record<string, any>>,
+  },
+  /**
+   * 请求方式
+   */
+  method: {
+    type: String as PropType<'POST' | 'GET' | string>,
+    default: 'POST',
+  },
+  /**
+   * 是否允许多选
+   */
+  multiple: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * 上传限制个数
    */
   limit: {
     type: Number,
-    default: undefined,
+    default: Infinity,
   },
-
   /**
-   * 是否展示进度数字内容
+   * 上传时额外参数
    */
-  progressNumberVisible: {
-    type: Boolean,
-    default: true,
+  data: {
+    type: Object as PropType<Record<string, any>>,
   },
-
   /**
-   * 组件大小风格
+   * 上传文件字段名
    */
-  size: {
-    type: String as PropType<'small' | 'medium' | 'large'>,
-    required: false,
+  name: {
+    type: String,
+    default: 'file',
   },
-
   /**
-   * 操作按钮，有默认实现的有delete（删除）和status，status为上传时操作为暂停，status为暂停时操作为恢复上传，status为出错时操作为重试，status为成功时操作为查看文件
+   * 是否发送 `cookie` 凭证信息
    */
-  operators: {
-    type: Array as PropType<('delete' | 'download' | 'status')[]>,
-    default() {
-      return [];
-    },
-  },
-
-  /**
-   * 是否只展示列表
-   */
-  readonly: {
+  withCredentials: {
     type: Boolean,
     default: false,
   },
-});
-
-const previewItemProps = declarePropType({
   /**
-   * 单个文件信息
+   * 原生属性 [crossorigin](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin)
    */
-  file: {
-    type: Object as PropType<UploadHelperFile>,
-    default() {
-      return {};
-    },
+  crossorigin: {
+    type: String as PropType<'' | 'anonymous' | 'use-credentials'>,
   },
-
-  readonly: {
-    type: Boolean,
-    default: false,
-  },
-
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-
   /**
-   * 控件尺寸
-   */
-  size: {
-    type: String as PropType<'large' | 'medium' | 'small'>,
-    required: false,
-  },
-
-  /**
-   * 自定义不同 MIME 类型对应的展示图标
-   */
-  mimeIcons: {
-    type: Object as PropType<NMIMEIconType>,
-  },
-
-  /**
-   * 操作按钮，有默认实现的有delete（删除）和status，status为上传时操作为暂停，status为暂停时操作为恢复上传，status为出错时操作为重试，status为成功时操作为查看文件
-   */
-  operators: {
-    type: Array as PropType<('delete' | 'download' | 'status')[]>,
-    default() {
-      return [];
-    },
-  },
-
-  /**
-   * 扩展 classname
-   */
-  externalClassName: {
-    type: String,
-  },
-});
-
-export const useUploadButtonProps = declarePropType({
-  ...triggerItemProps,
-  ...combineItemProps,
-  /**
-   * 上传文件列表
-   */
-  uploadFileList: {
-    type: Array as PropType<UploadHelperFile[]>,
-  },
-
-  /**
-   * button icon
-   */
-  icon: { type: String, default: 'upload' },
-
-  /**
-   * button 展示文案
-   */
-  text: { type: String, default: '上传' },
-});
-export type UploadButtonProps = ExtractPropTypes<typeof useUploadButtonProps>;
-
-export const useUploadImgProps = declarePropType({
-  ...triggerItemProps,
-  ...combineItemProps,
-  /**
-   * 上传文件列表
-   */
-  uploadFileList: {
-    type: Array as PropType<UploadHelperFile[]>,
-  },
-
-  /**
-   * 控件展示宽高比例
-   */
-  proportion: {
-    type: String as PropType<'rectangle' | 'square'>,
-    default: 'rectangle',
-  },
-});
-export type UploadImgProps = ExtractPropTypes<typeof useUploadImgProps>;
-
-export const useUploadAreaProps = declarePropType({
-  ...triggerItemProps,
-
-  /**
-   * 标题
-   */
-  title: {
-    type: String,
-    default: '点击上传或将文件拖拽至此区域',
-  },
-
-  /**
-   * 说明文案
-   */
-  text: {
-    type: String,
-    default: '',
-  },
-});
-export type UploadAreaProps = ExtractPropTypes<typeof useUploadAreaProps>;
-
-export const useUploadPreviewImgItemProps = declarePropType({
-  ...previewItemProps,
-
-  /**
-   * 控件展示宽高比例
-   */
-  proportion: {
-    type: String as PropType<'rectangle' | 'square'>,
-    default: 'rectangle',
-  },
-});
-export type UploadPreviewImgItemProps = ExtractPropTypes<typeof useUploadPreviewImgItemProps>;
-
-export const useUploadPreviewFileItemProps = declarePropType({
-  ...previewItemProps,
-
-  /**
-   * 是否展示进度数字内容
-   */
-  progressNumberVisible: {
-    type: Boolean,
-    default: true,
-  },
-});
-export type UploadPreviewFileItemProps = ExtractPropTypes<typeof useUploadPreviewFileItemProps>;
-
-export const useUploadProps = declarePropType({
-  ...triggerItemProps,
-  ...combineItemProps,
-
-  /**
-   * 上传组件类型
-   */
-  type: {
-    type: String as PropType<'list' | 'img'>,
-    default: 'list',
-  },
-
-  /**
-   * 上传配置，可以设置并行上传的文件数、自定义上传行为等，可以是一个对象或者是一个返回Promise的函数，细节可以参考UploadHelper文档
-   */
-  uploadOptions: {
-    type: [Object, Function] as PropType<NUploadOptions | (() => Promise<NUploadOptions>)>,
-  },
-
-  /**
-   * 默认上传的文件列表
+   * 文件信息
    */
   modelValue: {
-    type: Array as PropType<UploadHelperFile[]>,
+    type: [Object, Array] as PropType<Arrayable<NUploadRawFileType> | null>,
   },
-
   /**
-   * button icon，type 为 list 时生效
+   * 上传类型
+   * @version 2.12.14 支持 gallery-mixed
    */
-  icon: { type: String, default: 'upload' },
-
+  type: {
+    type: String as PropType<'button' | 'drop' | 'gallery' | 'gallery-mixed'>,
+    default: 'button',
+  },
   /**
-   * button 展示文案，type 为 list 时生效
+   * 在 `type = 'button'` 时按钮显示的文字
    */
-  text: { type: String, default: '上传' },
-
+  buttonText: {
+    type: String,
+    default: undefined,
+  },
   /**
-   * 控件展示宽高比例，type 为 img 时生效
+   * 在 `type = 'button'` 时透传给 `button` 组件
    */
-  proportion: {
-    type: String as PropType<'rectangle' | 'square'>,
+  buttonProps: {
+    type: Object as PropType<Partial<ButtonProps>>,
+  },
+  /**
+   * 接收上传的 [文件类型](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/accept)
+   */
+  accept: {
+    type: String,
+  },
+  /**
+   * 上传严格模式
+   * `false`: 与原生一致，如果用户不接受 `accept` 限制，则需要使用 `beforeUpload` 拦截
+   * `true`: 严格处理用户选择的文件，非 `accept` 允许的文件不会显示在上传列表里
+   */
+  acceptStrict: {
+    type: Boolean,
+    default: true,
+  },
+  /**
+   * 使用内部的文件类型检查
+   * 如果 `accept` 是后缀名格式，支持各种类型检查
+   * 但如果 `accept` 使用的是文件类型，支持的类型需要查看组件相关 DEMO 说明
+   */
+  useBuildInAcceptCheck: {
+    type: Boolean,
+    default: true,
+  },
+  /**
+   * 尺寸
+   */
+  size: {
+    type: String as PropType<'small' | 'medium' | 'large' | 'huge'>,
+  },
+  /**
+   * 文件元素尺寸
+   */
+  fileItemSize: {
+    type: String as PropType<'small' | 'medium' | 'large' | 'huge'>,
+  },
+  /**
+   * 图片列表展示形式
+   */
+  galleryShape: {
+    type: String as PropType<'square' | 'rectangle'>,
     default: 'rectangle',
   },
-
   /**
-   * 上传前 hook，可用于过滤掉不上传的文件
+   * 是否选择文件后自动上传
+   */
+  autoUpload: {
+    type: Boolean,
+    default: true,
+  },
+  /**
+   * 文件大小限制，单位 `MB`
+   * 如果超出则会抛出 `file-size-exceed` 事件并直接过滤掉
+   */
+  fileSizeLimit: {
+    type: Number,
+  },
+  /**
+   * 是否显示文件列表
+   */
+  showFileList: {
+    type: Boolean,
+    default: true,
+  },
+  /**
+   * 是否显示文件的缩略图
+   * 仅对 `type = 'button' | 'drop'` 有效
+   * @version 2.12.14
+   */
+  showFileThumbnail: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * 文件元素的操作
+   * 如果传入的是方法，注意不能是异步方法
+   * `upload`: 上传功能，包括开始上传和终止上传
+   * `view`: 是否允许查看文件
+   * `delete`: 是否允许显示删除按钮
+   */
+  controls: {
+    type: [Array, Function] as PropType<
+      | ('upload' | 'delete' | 'view')[]
+      | ((file: UnwrapRef<NUploadFileType>) => ('upload' | 'delete' | 'view')[])
+    >,
+    default: () => ['upload', 'view', 'delete'] as const,
+    validator(val) {
+      if (val === undefined || val === null) return true;
+
+      if (Array.isArray(val)) {
+        return !val.some(curr => !['upload', 'view', 'delete'].includes(curr));
+      }
+
+      return typeof val === 'function';
+    },
+  },
+  /**
+   * 控制器是否始终显示
+   * @version 2.12.14
+   */
+  controlsAlwaysVisible: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * 是否让当前上传框使用后台上传
+   * 开启后在当前页面销毁后也不会停止上传
+   */
+  useBackground: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * 是否让后台上传使用单独的实例
+   */
+  backgroundStandalone: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * 指定 `uploadBackground` 组件传送的位置
+   * 不支持动态修改
+   * 如需修改还需要切换 `useBackground` 值来做到重载
+   * 另外如果已经有 `uploadBackground` 实例存在，则此处设置的值无效
+   * 类型请参考 [Teleport.to](https://cn.vuejs.org/api/built-in-components.html#teleport)
+   */
+  backgroundTeleportTo: {
+    type: [String, Object] as PropType<string | HTMLElement>,
+    default: 'body',
+  },
+  /**
+   * 后台上传的附加样式
+   */
+  backgroundStyle: {
+    type: [String, Object] as PropType<StyleValue>,
+  },
+  /**
+   * 后台上传的附加类名
+   */
+  backgroundClass: {
+    type: [String, Object] as PropType<string | object | null>,
+  },
+  /**
+   * 是否禁用上传
+   */
+  disabled: {
+    type: Boolean,
+    default: undefined,
+  },
+  /**
+   * 上传/选择前的钩子，可以用来判断文件是否允许上传
+   * 但只会拦截用户手动选择的文件，对于由 api 传入的文件不做拦截
+   * 如果返回 `false` 或 `Promise.reject`，则停止上传
+   * @param files 待上传的文件
    */
   beforeUpload: {
-    type: Function as PropType<(files: FileList | null) => FileList | File[]>,
+    type: Function as PropType<(file: NUploadFileType) => Promisable<boolean>>,
   },
-
   /**
-   * 上传后 hook，所有文件上传完成（成功、失败、取消、删除都算完成，上传中、上传暂停和等待上传不算）后触发
+   * 点击删除前的钩子，可以用来判断文件是否允许删除
+   * 如果返回 `false` 或 `Promise.reject`，则不允许删除
+   * @param file 待删除的文件
    */
-  afterUpload: {
+  beforeRemove: {
+    type: Function as PropType<(file: NUploadFileType) => Promisable<boolean>>,
+  },
+  /**
+   * 点击暂停上传前的钩子，可以用来判断文件是否允许暂停上传
+   * 如果返回 `false` 或 `Promise.reject`，则不允许暂停上传
+   * @param file 待暂停上传的文件
+   */
+  beforeAbort: {
+    type: Function as PropType<(file: NUploadFileType) => Promisable<boolean>>,
+  },
+  /**
+   * 在点击预览按钮执行预览前的钩子，如果回调为 `false`，则不允许进行预览
+   * @param file 待预览文件
+   */
+  beforePreview: {
+    type: Function as PropType<(file: NUploadFileType) => Promisable<boolean | void>>,
+  },
+  /**
+   * 传入 `Viewer` 组件的文件列表过滤函数，不可传入异步函数
+   * 此钩子会在文件列表发生改动时调用，用于过滤哪些文件可以被传入 `Viewer` 中查看，但此时会先过滤出图片和视频资源文件后再调用
+   * @param file 待预览文件
+   * @version 2.11.6
+   */
+  beforeViewerPreview: {
+    type: Function as PropType<(file: NUploadFileType) => boolean>,
+  },
+  /**
+   * 在 `http` 返回 `200` 时的处理回调，需要返回的是文件实际上传后的地址
+   * 如果没有传入此方法，则会递归去寻找以 `http(s)://` 开始的第一个链接作为上传后的地址
+   */
+  handleSuccess: {
+    type: Function as PropType<(responseData: any, file: NUploadFileType) => Promisable<string>>,
+  },
+  /**
+   * 最大同时上传数量
+   */
+  maxUploadsAmountAtSameTime: {
+    type: Number,
+    default: 5,
+  },
+  /**
+   * 自动裁剪掉超出 `limit` 的文件
+   * 对于单选时，如果超出 1 个文件，也可以通过这个属性拦截自动截取
+   * `true`: 裁剪掉超出 `limit` 的文件，然后塞入文件队列，并抛出 `exceed` 事件
+   * `false`: 只抛出 `exceed` 事件，不进行裁剪，也不塞入文件队列
+   */
+  autoSliceExceedFiles: {
+    type: Boolean,
+    default: true,
+  },
+  /**
+   * 是否隐藏上传功能
+   * 设置为 `true` 时，将隐藏所有的上传按钮和区块
+   * @version 2.9.4
+   */
+  noUploader: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * 覆盖默认的上传函数
+   * 需参考 [uploadFileDirectly](https://git.nevint.com/lego/lego/-/blob/master/packages/lego/src/components/Upload/src/utils/UploadHelper.ts) 的行为
+   * @version 2.9.4
+   */
+  httpRequest: {
     type: Function as PropType<
-      (uploadFileList: UploadHelperFile[], fileArr: UploadHelperFile[]) => void
+      (file: NUploadFileType, instanceMethods: NUploadHttpRequestInstanceMethods) => void
     >,
+  },
+  /**
+   * 是否显示文件大小
+   * @version 2.9.4
+   */
+  showFileSize: {
+    type: Boolean,
+    default: true,
+  },
+  /**
+   * 是否监听剪切板粘贴事件
+   * 只有在用户粘贴且剪切板中是文件时才会触发
+   * @version 2.10.1
+   */
+  useClipboard: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * 粘贴文件前的钩子
+   * 如果需要对用户粘贴的事件进行拦截，请使用此钩子判断
+   * @version 2.10.1
+   */
+  beforePaste: {
+    type: Function as PropType<(files: File[]) => Promisable<File[]>>,
+  },
+  /**
+   * 是否在 `gallery-mixed` 模式下媒体文件显示为普通文件样式
+   * @version 2.12.16
+   */
+  showMediaWithNormalModeInGalleryMixed: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * 是否启用分片断点上传
+   * 如需使用，需要传入相关配置
+   * @invisible
+   */
+  multipart: {
+    type: [Boolean, Object] as PropType<false | NUploadMultipartSetting>,
+    default: false,
+    validator(val) {
+      if (typeof val === 'boolean' && !val) {
+        return true;
+      } else if (isObject(val)) {
+        return true;
+      }
+
+      return false;
+    },
+  },
+  /**
+   * 分包大小，单位为 `MB`
+   * 大小范围为 `1~1024 MB`
+   * @invisible
+   */
+  multipartChunkSize: {
+    type: Number,
+    default: 2,
+    validator(val) {
+      return isNumber(val) && val >= 1 && val <= 1024;
+    },
+  },
+  /**
+   * 分包时，最大同时上传分片的大小
+   * @invisible
+   */
+  multipartMaxAmountUploadingAtSameTime: {
+    type: Number,
+    default: 5,
+  },
+});
+
+export const useUploadBackgroundProps = declarePropType({
+  /**
+   * 唯一标识
+   */
+  id: {
+    type: String,
+  },
+  /**
+   * 后台上传默认是否收起
+   * 可以通过监听 `update:backgroundCollapsed` 获取变更通知
+   */
+  collapsed: {
+    type: Boolean,
+    default: true,
+  },
+  /**
+   * 后台上传是否可由用户关闭
+   */
+  closable: {
+    type: Boolean,
+    default: true,
+  },
+  /**
+   * `upload` 组件的入参
+   */
+  uploadProps: {
+    type: Object as PropType<UploadProps>,
   },
 });
 
 export type UploadProps = ExtractPropTypes<typeof useUploadProps>;
+export type UploadBackgroundProps = ExtractPropTypes<typeof useUploadBackgroundProps>;

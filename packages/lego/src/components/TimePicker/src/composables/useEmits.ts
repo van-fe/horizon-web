@@ -1,57 +1,110 @@
-import { isNumber, isObject, isString, isBoolean, isNull } from '@nio-fe/shared';
-import dayjs from '~/components/DatePicker/src/composables/dayjs';
-import type { ModelValueType, PickerTimeType } from './useProps';
-import type { ConfigType } from 'dayjs';
+import type { Dayjs } from 'dayjs';
+import { isDayjs } from 'dayjs';
+import { isBoolean, isNil, isString } from '@nio-fe/shared';
+import type { SingleOrArrayPickerDataType } from '../utils/types';
 
 export const useTimePickerEmits = {
   /**
-   *  更新 `modelValue`
+   * 更新日期
+   * @param val 当前选择的日期或日期范围
+   * @param triggerType 触发方式
    */
-  'update:modelValue': (value: ModelValueType) =>
-    isNull(value) ||
-    isString(value) ||
-    isNumber(value) ||
-    isObject(value) ||
-    Array.isArray(value) ||
-    dayjs(value as ConfigType).isValid(),
+  'update:modelValue': (
+    val: SingleOrArrayPickerDataType<Dayjs | string | undefined | null>,
+    triggerType: 'click' | 'input' | 'confirmable-input',
+  ) =>
+    (isDayjs(val) || isString(val) || Array.isArray(val) || isNil(val)) &&
+    ['click', 'input', 'confirmable-input'].includes(triggerType),
   /**
-   * 当时间改变时触发
-   * @param value 时间值
+   * 更新预览时间
+   * @param val 预览时间
+   * @invisible
    */
-  change: (value: ModelValueType) =>
-    isNull(value) ||
-    isString(value) ||
-    isObject(value) ||
-    Array.isArray(value) ||
-    dayjs(value as ConfigType).isValid(),
+  'update:previewTime': (val: Dayjs | undefined) => isNil(val) || isDayjs(val),
   /**
-   * 当选择器聚焦时触发
-   * @param evt 聚焦事件
+   * 当 `model-value` 变化时触发
+   * @param val 变化的 `model-value` 值
    */
-  focus: (evt: FocusEvent) => evt instanceof FocusEvent,
+  change: (val: SingleOrArrayPickerDataType<Dayjs | string | undefined | null>) =>
+    isDayjs(val) || isString(val) || Array.isArray(val) || isNil(val),
   /**
-   * 当选择器失焦时触发
-   * @param evt 失焦事件
+   * 当用户选择时间时触发
+   * @param val 选择的日期
+   * @param type 当前选择器类型
    */
-  blur: (evt: FocusEvent) => evt instanceof FocusEvent,
+  pick: (val: Dayjs, type: 'time' | 'hour' | 'minute' | 'second') =>
+    isDayjs(val) && ['time', 'hour', 'minute', 'second'].includes(type),
   /**
-   * 当时间选中时触发
-   * @param value 时间值
-   * @param type 类型
+   * 输入时触发
+   * @param val 输入的文字
+   * @param evt 输入事件
    */
-  pick: (value: number | string, type: string) =>
-    (isString(value) || isNumber(value)) && isString(type),
+  input: (val: string, evt: Event) => isString(val) && evt instanceof Event,
   /**
-   * 当时间改变时触发
-   * @param value 时间值
+   * 聚焦时触发
    */
-  changePanelTime: (value: PickerTimeType) =>
-    isObject(value) || isNull(value) || Array.isArray(value),
+  focus: () => true,
   /**
-   * popper visible变化时触发
-   * @param value visible值
+   * 失焦时触发
    */
-  popperChange: (value: boolean) => isBoolean(value),
+  blur: () => true,
+  /**
+   * 清空时触发
+   */
+  clear: () => true,
+  /**
+   * 点击确定时触发
+   */
+  confirm: () => true,
+  /**
+   * 点击取消时触发
+   */
+  cancel: () => true,
+  /**
+   * 下拉面板显隐通知
+   * @param visible 是否显示
+   */
+  dropdownVisibleChange: (visible: boolean) => isBoolean(visible),
+  /**
+   * 点击时触发
+   * @param evt 点击事件
+   * @version 2.12.15-alpha.3
+   */
+  click: (evt: MouseEvent) => evt instanceof MouseEvent,
+};
+
+export const useTimePickerTimePanelEmit = {
+  /**
+   * 更新日期
+   * @param val 当前值
+   * @param triggerType 触发方式
+   */
+  'update:modelValue': (val: Dayjs, triggerType: 'click' | 'input' | 'confirmable-input') =>
+    isDayjs(val) && ['click', 'input', 'confirmable-input'].includes(triggerType),
+  /**
+   * 更新预览时间
+   * @param val 预览时间
+   * @invisible
+   */
+  'update:previewTime': (val: Dayjs | undefined) => isNil(val) || isDayjs(val),
+};
+
+export const useTimePickerTimeColumnPanelEmit = {
+  /**
+   * 更新值
+   * @param val 当前值
+   * @param triggerType 触发方式
+   */
+  'update:modelValue': (val: Dayjs, triggerType: 'click' | 'input' | 'confirmable-input') =>
+    isDayjs(val) && ['click', 'input', 'confirmable-input'].includes(triggerType),
+  /**
+   * 更新预览时间
+   * @param val 预览时间
+   * @invisible
+   */
+  'update:previewTime': (val: Dayjs | undefined) => isNil(val) || isDayjs(val),
 };
 
 export type TimePickerEmits = typeof useTimePickerEmits;
+export type TimePickerTimePanelEmits = typeof useTimePickerTimePanelEmit;
+export type TimePickerTimeColumnPanelEmits = typeof useTimePickerTimeColumnPanelEmit;

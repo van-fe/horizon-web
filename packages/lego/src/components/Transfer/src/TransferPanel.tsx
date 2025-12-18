@@ -1,6 +1,4 @@
-// @ts-nocheck
-// 已经放弃对此文件进行类型检查
-import { defineComponent, toRefs, ref, watch, computed, inject } from 'vue';
+import { defineComponent, toRefs, ref, watch, computed, inject, Fragment } from 'vue';
 import type {
   TransferDataProps,
   CheckboxUnionType,
@@ -9,7 +7,7 @@ import type {
 import { useTransferPanelProps } from './composables/useProps';
 import { useTransferPanelEmits } from './composables/useEmits';
 import type { TransferPanelEmits } from './composables/useEmits';
-import { cls, type LegoSetupContext } from '@nio-fe/shared';
+import { cls, cssVariable, type LegoSetupContext } from '@nio-fe/shared';
 import { ComponentClassBlock, useNamespace } from '@nio-fe/shared';
 import NCheckbox from '~/components/Checkbox/src/Checkbox';
 import NCheckboxGroup from '~/components/Checkbox/src/CheckboxGroup';
@@ -20,8 +18,8 @@ import NInput from '~/components/Input/src/Input';
 import NBreadcrumb from '~/components/Breadcrumb/src/Breadcrumb';
 import NBreadcrumbItem from '~/components/Breadcrumb/src/BreadcrumbItem';
 import { NIcon } from '@nio-fe/icon';
-import type { TransferSlots } from './composables/useSlots';
-import { useTransferSlots } from './composables/useSlots';
+import type { TransferPanelSlots } from './composables/useSlots';
+import { useTransferPanelSlots } from './composables/useSlots';
 import { defaultLocale, localeInjectKey } from '~/provides/localable';
 import { nanoid } from 'nanoid';
 import NVirtualScroller from '~/components/VirtualScroller/src/VirtualScroller';
@@ -45,10 +43,10 @@ export default defineComponent({
   },
   props: useTransferPanelProps,
   emits: useTransferPanelEmits,
-  slots: useTransferSlots,
+  slots: useTransferPanelSlots,
   setup(
     props: TransferPanelProps,
-    { slots, emit, expose }: LegoSetupContext<TransferPanelEmits, TransferSlots>,
+    { slots, emit, expose }: LegoSetupContext<TransferPanelEmits, TransferPanelSlots>,
   ) {
     const locale = inject(localeInjectKey, defaultLocale);
 
@@ -57,6 +55,7 @@ export default defineComponent({
       type: typeProp,
       checkedArr: checkedArrProp,
       filterable: filterableProp,
+      filterMethod: filterMethodProp,
       placeholder: placeholderProp,
       draggable: draggableProp,
       emptyTxt: emptyTxtProp,
@@ -81,12 +80,12 @@ export default defineComponent({
     const filterDataComputed = computed(() => {
       if (typeProp.value === 'right') return dataProp.value;
       return dataProp.value.filter((item: any) => {
-        if (typeof filterableProp.value === 'function') {
-          return filterableProp.value(searchInput.value, item);
+        if (!!filterMethodProp?.value) {
+          return filterMethodProp.value(searchInput.value, item);
         } else {
-          return item[propsProp.value.label as string]
+          return (item[propsProp.value.label as keyof TransferDataProps] as string)
             ?.toLowerCase()
-            ?.includes(searchInput.value.toLowerCase());
+            ?.includes(searchInput.value);
         }
       });
     });
@@ -130,11 +129,12 @@ export default defineComponent({
       if (!draggableProp.value) return;
       event.stopPropagation();
       event.preventDefault();
-      dragOverKey.value = item[propsProp.value.key as keyof TransferDataProps] as string;
       const rect = (event.target as HTMLElement).getBoundingClientRect();
-      const position = event.pageY > window.pageYOffset + rect.top + rect.height / 2 ? 1 : -1;
+
       dragOver.value = true;
-      dragPosition.value = position;
+      const position = event.pageY > window.pageYOffset + rect.top + rect.height / 4 ? 1 : -1; // -1上 1下
+      dragPosition.value = dataProp.value[0].key === dragOverKey.value ? position : 1;
+      dragOverKey.value = item[propsProp.value.key as keyof TransferDataProps] as string;
       onDragOverProp?.value?.(event, item);
     };
     const handleDragleave = (event: DragEvent, item: TransferDataProps) => {
@@ -202,6 +202,7 @@ export default defineComponent({
             <div class={classHelper.e('breadcrumb')}>
               <NBreadcrumb>
                 <NBreadcrumbItem
+                  clickable={true}
                   v-slots={{
                     separator: () => <NIcon name="arrow_right" size="12" />,
                   }}
@@ -212,6 +213,7 @@ export default defineComponent({
                   return (
                     <NBreadcrumbItem
                       key={index}
+                      clickable={true}
                       v-slots={{
                         separator: () => <NIcon name="arrow_right" size="12" />,
                       }}
@@ -307,9 +309,8 @@ export default defineComponent({
                                 classHelper.e('item'),
                                 classHelper.em('item', 'right'),
                                 classHelper.is(
-                                  'drag-over',
-                                  item[propsProp.value.key as keyof TransferDataProps] ===
-                                    dragOverKey.value,
+                                  'draggable',
+                                  draggableProp.value && !disabledProp.value,
                                 ),
                               )}
                               key={item[propsProp.value.key as keyof TransferDataProps] as string}
@@ -320,6 +321,31 @@ export default defineComponent({
                               onDragleave={e => handleDragleave(e, item)}
                               onDrop={e => handleDrop(e, item)}
                             >
+                              {item[propsProp.value.key as keyof TransferDataProps] ===
+                                dragOverKey.value && (
+                                <Fragment>
+                                  <div
+                                    class={cls(
+                                      classHelper.e('item-drag-over-wrap'),
+                                      classHelper.is('sibling'),
+                                    )}
+                                  >
+                                    <div
+                                      class={cls(
+                                        classHelper.e('item-drag-over-cursor'),
+                                        dragPosition.value === 1
+                                          ? classHelper.is('bottom')
+                                          : classHelper.is('top'),
+                                      )}
+                                      style={{
+                                        width: `calc(100% - 16px - ((${cssVariable(
+                                          'transfer-size--drag-over-cursor-arrow',
+                                        )} + ${cssVariable('transfer-height--drag-over-cursor')} * 2))`,
+                                      }}
+                                    />
+                                  </div>
+                                </Fragment>
+                              )}
                               {draggableProp.value && !disabledProp.value && (
                                 <NIcon class={'mr-3'} name="drag_form" />
                               )}

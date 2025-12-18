@@ -1,5 +1,0 @@
-@use '../../../../styles/mixins';
-
-@include mixins.b('panel-time') {
-  height: mixins.css-variable('time-picker-height--panel-time');
-}

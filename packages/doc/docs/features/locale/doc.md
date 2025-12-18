@@ -10,12 +10,12 @@ Lego 提供了全局配置国际化的配置。
 import App from './App.vue';
 import { createApp } from 'vue';
 import lego, { defineOption } from '@nio-fe/lego';
-import { LocaleSupportLangV2 } from "@nio-fe/locale-vue";
+import { LocaleSupportLang } from "@nio-fe/locale-vue";
 
 createApp(App)
   .use(lego, defineOption({
   locale: {
-    current: LocaleSupportLangV2.ZH_CN,
+    current: LocaleSupportLang.ZH_CN,
   }
 }));
 ```
@@ -30,12 +30,12 @@ createApp(App)
 import App from './App.vue';
 import { createApp } from 'vue';
 import { LegoProvides, defineOption } from '@nio-fe/lego';
-import { LocaleSupportLangV2 } from "@nio-fe/locale-vue";
+import { LocaleSupportLang } from "@nio-fe/locale-vue";
 
 createApp(App)
   .use(LegoProvides, defineOption({
     locale: {
-      current: LocaleSupportLangV2.ZH_CN,
+      current: LocaleSupportLang.ZH_CN,
     }
   }));
 ```
@@ -60,14 +60,14 @@ Lego 还提供了一个 Vue 组件 [Application](/lego/components/Application) �
 
 ```ts
 import { LegoProvides, defineOption } from "@nio-fe/lego";
-import { LocaleSupportLangV2 } from "@nio-fe/locale-vue";
+import { LocaleSupportLang } from "@nio-fe/locale-vue";
 import En from "your-En-dictionary-file-path";
 import ZhCN from "your-ZhCn-dictionary-file-path";
 
 createApp(App)
   .use(LegoProvides, defineOption({
     locale: {
-      current: LocaleSupportLangV2.En,
+      current: LocaleSupportLang.En,
       lang: {
         dictionaries: {
           En,

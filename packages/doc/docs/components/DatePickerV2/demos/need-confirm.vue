@@ -4,10 +4,10 @@
       Year:
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value1" type="year" need-confirm />
+      <n-date-picker v-model="value1" type="year" need-confirm />
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="rangeValue1" type="year-range" need-confirm />
+      <n-date-picker v-model="rangeValue1" type="year-range" need-confirm />
     </n-col>
   </n-row>
   <n-row align="middle">
@@ -15,10 +15,10 @@
       Month:
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value2" type="month" need-confirm />
+      <n-date-picker v-model="value2" type="month" need-confirm />
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="rangeValue2" type="month-range" need-confirm />
+      <n-date-picker v-model="rangeValue2" type="month-range" need-confirm />
     </n-col>
   </n-row>
   <n-row align="middle">
@@ -26,7 +26,7 @@
       Week:
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value3" type="week" format="[week] ww" need-confirm />
+      <n-date-picker v-model="value3" type="week" format="[week] ww" need-confirm />
     </n-col>
   </n-row>
   <n-row align="middle">
@@ -34,10 +34,10 @@
       Date:
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value4" type="date" need-confirm />
+      <n-date-picker v-model="value4" type="date" need-confirm />
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="rangeValue4" type="date-range" need-confirm />
+      <n-date-picker v-model="rangeValue4" type="date-range" need-confirm />
     </n-col>
   </n-row>
   <n-row align="middle">
@@ -45,10 +45,10 @@
       Datetime:
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value5" type="datetime" need-confirm />
+      <n-date-picker v-model="value5" type="datetime" need-confirm />
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="rangeValue5" type="datetime-range" need-confirm />
+      <n-date-picker v-model="rangeValue5" type="datetime-range" need-confirm />
     </n-col>
   </n-row>
   <n-row align="middle">
@@ -56,10 +56,10 @@
       DateMinutes:
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value6" type="date-minutes" need-confirm />
+      <n-date-picker v-model="value6" type="date-minutes" need-confirm />
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="rangeValue6" type="date-minutes-range" need-confirm />
+      <n-date-picker v-model="rangeValue6" type="date-minutes-range" need-confirm />
     </n-col>
   </n-row>
   <n-row align="middle">
@@ -67,10 +67,10 @@
       DateSeconds:
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value7" type="date-seconds" need-confirm />
+      <n-date-picker v-model="value7" type="date-seconds" need-confirm />
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="rangeValue7" type="date-seconds-range" need-confirm />
+      <n-date-picker v-model="rangeValue7" type="date-seconds-range" need-confirm />
     </n-col>
   </n-row>
 </template>

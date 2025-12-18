@@ -20,9 +20,9 @@ import NInputNumber from '../../../InputNumber/src/InputNumber';
 import type { PickerExposes } from '../../../Picker/src/composables/useExposes';
 import useLocaleLang from '~/utils/useLocaleLang';
 import NCascader from '../../../Cascader/src/Cascader';
-import NDatePickerV2 from '../../../DatePickerV2/src/DatePickerV2';
+import NDatePicker from '../../../DatePicker/src/DatePicker';
 import NSelect from '../../../Select/src/Select';
-import NTimePickerV2 from '../../../TimePickerV2/src/TimePickerV2';
+import NTimePicker from '../../../TimePicker/src/TimePicker';
 import NTreeSelect from '../../../TreeSelect/src/TreeSelect';
 import NTooltip from '../../../Tooltip/src/Tooltip';
 import type { TableColumnProps } from '../composables/useProps';
@@ -127,11 +127,11 @@ export function useFilterPlugin(
       triggerIcon = IconFilter;
       break;
     case 'time-picker':
-      RenderComponent = NTimePickerV2;
+      RenderComponent = NTimePicker;
       triggerIcon = IconTime;
       break;
     case 'date-picker':
-      RenderComponent = NDatePickerV2;
+      RenderComponent = NDatePicker;
       triggerIcon = IconCalendar;
       break;
   }

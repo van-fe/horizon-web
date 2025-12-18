@@ -73,4 +73,4 @@
 :::demo ./demos/show-popover-content-only.vue :::
 
 ### 类型定义
-:::code ../../../../lego/src/components/TimePickerV2/src/utils/types.ts :::
+:::code ../../../../lego/src/components/TimePicker/src/utils/types.ts :::

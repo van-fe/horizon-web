@@ -1,9 +1,9 @@
 import { declarePropType } from '@nio-fe/shared';
-import { useTimePickerV2Props, type NDrawerProps } from '@nio-fe/lego';
+import { useTimePickerProps, type NDrawerProps } from '@nio-fe/lego';
 import type { ExtractPropTypes, PropType } from 'vue';
 
 export const useModalTimePickerProps = declarePropType({
-  ...useTimePickerV2Props,
+  ...useTimePickerProps,
   /**
    * 抽屉属性
    */

@@ -4,10 +4,10 @@
       Year:
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value1" type="year" />
+      <n-date-picker v-model="value1" type="year" />
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="rangeValue1" type="year-range" />
+      <n-date-picker v-model="rangeValue1" type="year-range" />
     </n-col>
   </n-row>
   <n-row align="middle">
@@ -15,10 +15,10 @@
       Month:
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value2" type="month" />
+      <n-date-picker v-model="value2" type="month" />
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="rangeValue2" type="month-range" />
+      <n-date-picker v-model="rangeValue2" type="month-range" />
     </n-col>
   </n-row>
 </template>

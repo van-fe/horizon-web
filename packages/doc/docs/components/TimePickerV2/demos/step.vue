@@ -2,28 +2,28 @@
   <n-row align="middle">
     <n-col :span="2">Time:</n-col>
     <n-col :span="6">
-      <n-time-picker-v2 v-model="value" type="time" :time-step="60" />
+      <n-time-picker v-model="value" type="time" :time-step="60" />
     </n-col>
     <n-col :span="6">
-      <n-time-picker-v2 v-model="rangeValue" type="time" :time-step="60" is-range />
+      <n-time-picker v-model="rangeValue" type="time" :time-step="60" is-range />
     </n-col>
   </n-row>
   <n-row align="middle">
     <n-col :span="2">Minute:</n-col>
     <n-col :span="6">
-      <n-time-picker-v2 v-model="value2" type="minutes" :hour-step="3" :minute-step="5" />
+      <n-time-picker v-model="value2" type="minutes" :hour-step="3" :minute-step="5" />
     </n-col>
     <n-col :span="6">
-      <n-time-picker-v2 v-model="rangeValue2" type="minutes" :hour-step="3" :minute-step="5" is-range />
+      <n-time-picker v-model="rangeValue2" type="minutes" :hour-step="3" :minute-step="5" is-range />
     </n-col>
   </n-row>
   <n-row align="middle">
     <n-col :span="2">Second:</n-col>
     <n-col :span="6">
-      <n-time-picker-v2 v-model="value3" type="seconds" :hour-step="3" :minute-step="5" :second-step="10" />
+      <n-time-picker v-model="value3" type="seconds" :hour-step="3" :minute-step="5" :second-step="10" />
     </n-col>
     <n-col :span="6">
-      <n-time-picker-v2 v-model="rangeValue3" type="seconds" :hour-step="3" :minute-step="5" :second-step="10" is-range />
+      <n-time-picker v-model="rangeValue3" type="seconds" :hour-step="3" :minute-step="5" :second-step="10" is-range />
     </n-col>
   </n-row>
 </template>

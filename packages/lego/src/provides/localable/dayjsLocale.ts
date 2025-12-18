@@ -1,6 +1,6 @@
 import type { ComputedRef, UnwrapNestedRefs } from 'vue';
 import { watch } from 'vue';
-import { aeLocale, LocaleSupportLangV2 } from '@nio-fe/locale';
+import { aeLocale, LocaleSupportLang } from '@nio-fe/locale';
 import dayjs from '~/utils/useDayJs';
 import type { VueLocaleService } from '@nio-fe/locale-vue';
 
@@ -14,27 +14,27 @@ export default function (locale: ComputedRef<UnwrapNestedRefs<VueLocaleService>>
       let localeVal;
 
       switch (val) {
-        case LocaleSupportLangV2.AE:
+        case LocaleSupportLang.AE:
           localeVal = aeLocale;
           break;
-        case LocaleSupportLangV2.DE:
+        case LocaleSupportLang.DE:
           localeVal = 'de';
           break;
-        case LocaleSupportLangV2.En:
-        case LocaleSupportLangV2.EnGB:
-        case LocaleSupportLangV2.EnUS:
+        case LocaleSupportLang.En:
+        case LocaleSupportLang.EnGB:
+        case LocaleSupportLang.EnUS:
           localeVal = 'en';
           break;
-        case LocaleSupportLangV2.ZhCN:
+        case LocaleSupportLang.ZhCN:
           localeVal = 'zh-cn';
           break;
-        case LocaleSupportLangV2.ZhTW:
+        case LocaleSupportLang.ZhTW:
           localeVal = 'zh-tw';
           break;
-        case LocaleSupportLangV2.SG:
+        case LocaleSupportLang.SG:
           localeVal = 'en-sg';
           break;
-        case LocaleSupportLangV2.SvSE:
+        case LocaleSupportLang.SvSE:
           localeVal = 'se';
           break;
       }

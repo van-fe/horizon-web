@@ -6,7 +6,7 @@
     status-off-text="hide thumbnail"
     class="mb-2"
   />
-  <n-upload-v2
+  <n-upload
     v-model="modelValue"
     action="https://lego-inspector.nioint.com/upload-mock"
     method="POST"
@@ -18,11 +18,11 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { type NUploadV2UserFile } from '@nio-fe/lego';
+import { type NUploadUserFile } from '@nio-fe/lego';
 
 const showFileThumbnail = ref(false);
 
-const modelValue = ref<NUploadV2UserFile[]>(
+const modelValue = ref<NUploadUserFile[]>(
   [
     {
       name: 'background.jpg',

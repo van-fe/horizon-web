@@ -14,7 +14,7 @@
 
 ### 显示时区
 配置 `show-time-zone = true` 后，可以在包裹下的以下组件显示时区：
-1. DatePickerV2：在不设置 `format` 时才有效 （切换开启关闭后，需要聚焦一下输入框才会更新时区）
+1. DatePicker：在不设置 `format` 时才有效 （切换开启关闭后，需要聚焦一下输入框才会更新时区）
 2. Timeline：在开启 `v2` 且不设置 `format` 时才有效
 
 :::demo ./demos/show-time-zone.vue :::

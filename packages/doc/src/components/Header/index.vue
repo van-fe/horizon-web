@@ -4,7 +4,6 @@ import Locale from './Locale.vue';
 import { inject, watch } from 'vue';
 import { useLocalStorage } from '@vueuse/core';
 import { padModeInjectedKey, showTimeZoneInjectedKey } from '~/utils/injectedKeys';
-// import ThemeSetting from './ThemeSetting/index.vue';
 
 const dark = useLocalStorage('dark-mode', false);
 const padMode = inject(padModeInjectedKey)!;

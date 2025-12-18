@@ -1,7 +1,7 @@
 <template>
   <n-row>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value" :show-dot="isShowDot" :show-date-tooltip="showDateTooltip" />
+      <n-date-picker v-model="value" :show-dot="isShowDot" :show-date-tooltip="showDateTooltip" />
     </n-col>
   </n-row>
 </template>

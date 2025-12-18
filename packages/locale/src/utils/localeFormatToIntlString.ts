@@ -1,13 +1,13 @@
-import { LocaleSupportLangV2 } from '../config';
+import { LocaleSupportLang } from '../config';
 
 export default {
-  [LocaleSupportLangV2.En]: 'en',
-  [LocaleSupportLangV2.EnGB]: 'en-GB',
-  [LocaleSupportLangV2.EnUS]: 'en-US',
-  [LocaleSupportLangV2.SvSE]: 'nb-NO',
-  [LocaleSupportLangV2.ZhCN]: 'zh-Hans-CN',
-  [LocaleSupportLangV2.ZhTW]: 'zh-Hant-TW',
-  [LocaleSupportLangV2.AE]: 'ar-AE',
-  [LocaleSupportLangV2.SG]: 'en-SG',
-  [LocaleSupportLangV2.DE]: 'de-DE',
-} satisfies Record<LocaleSupportLangV2, string>;
+  [LocaleSupportLang.En]: 'en',
+  [LocaleSupportLang.EnGB]: 'en-GB',
+  [LocaleSupportLang.EnUS]: 'en-US',
+  [LocaleSupportLang.SvSE]: 'nb-NO',
+  [LocaleSupportLang.ZhCN]: 'zh-Hans-CN',
+  [LocaleSupportLang.ZhTW]: 'zh-Hant-TW',
+  [LocaleSupportLang.AE]: 'ar-AE',
+  [LocaleSupportLang.SG]: 'en-SG',
+  [LocaleSupportLang.DE]: 'de-DE',
+} satisfies Record<LocaleSupportLang, string>;

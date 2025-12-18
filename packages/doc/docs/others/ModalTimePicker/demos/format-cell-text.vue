@@ -9,11 +9,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { dayjs } from '@nio-fe/lego';
-import type { TimePickerV2Props } from '@nio-fe/lego';
+import type { TimePickerProps } from '@nio-fe/lego';
 
 const value = ref();
 
-const formatCellText: TimePickerV2Props['formatCellText'] = (unit, value) => {
+const formatCellText: TimePickerProps['formatCellText'] = (unit, value) => {
   if (unit === 'hours') {
     if ((Number(value)) > 23) {
       return `次日 ${(Number(value) - 24).toString().padStart(2, '0')}`;
@@ -23,7 +23,7 @@ const formatCellText: TimePickerV2Props['formatCellText'] = (unit, value) => {
   return value;
 };
 
-const formatTriggerText: TimePickerV2Props['formatTriggerText'] = (day, text) => {
+const formatTriggerText: TimePickerProps['formatTriggerText'] = (day, text) => {
   if (day.diff(dayjs().startOf('day'), 'hours') > 23) {
     return `次日 ${text}`;
   } else return text;

@@ -1,10 +1,10 @@
 <template>
   <n-row>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value" type="date" format="X" />
+      <n-date-picker v-model="value" type="date" format="X" />
     </n-col>
     <n-col :span="12">
-      <n-date-picker-v2 v-model="value2" type="date-range" format="YYYY-MMM-DD [Quarter:] Q [week:] wo" />
+      <n-date-picker v-model="value2" type="date-range" format="YYYY-MMM-DD [Quarter:] Q [week:] wo" />
     </n-col>
   </n-row>
 </template>

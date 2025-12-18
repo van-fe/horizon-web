@@ -1,6 +1,6 @@
 import type { ExtractPropTypes, PropType } from 'vue';
 import { declarePropType } from '@nio-fe/shared';
-import type { LocaleSupportLang, LocaleSupportLangV2 } from '@nio-fe/locale';
+import type { LocaleSupportLang, LocaleSupportLang } from '@nio-fe/locale';
 
 export type NApplicationSizeType = 'large' | 'medium' | 'small';
 
@@ -9,7 +9,7 @@ export const useApplicationProps = declarePropType({
    * 当前语言
    */
   locale: {
-    type: String as PropType<LocaleSupportLang | LocaleSupportLangV2>,
+    type: String as PropType<LocaleSupportLang | LocaleSupportLang>,
     required: false,
   },
   /**
@@ -56,7 +56,7 @@ export const useApplicationProps = declarePropType({
   /**
    * 是否在需要显示时区的地方显示时区
    * 启用后，以下组件在不配置 `format` 时会默认显示时区：
-   * 1. 日期选择器 (仅 date-picker-v2 有效）
+   * 1. 日期选择器 (仅 date-picker 有效）
    * 2. 时间轴 （仅在 n-timeline 开启了 v2 时有效）
    * @version 2.12.14
    */

@@ -1,7 +1,7 @@
 <template>
   <n-row>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value" :inputable="false" />
+      <n-date-picker v-model="value" :inputable="false" />
     </n-col>
   </n-row>
 </template>

@@ -55,7 +55,7 @@
       </n-select>
     </n-form-item>
     <n-form-item label="Date" prop="date" :helper="dateHelper">
-      <n-date-picker-v2
+      <n-date-picker
         v-model="formData.date"
         type="date-range"
         value-format="YYYY/MM/DD"

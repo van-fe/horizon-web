@@ -1,6 +1,6 @@
 <template>
   <n-space>
-    <n-upload-v2
+    <n-upload
       v-model="fileList"
       action="https://lego-inspector.nioint.com/upload-mock"
       :multiple="true"
@@ -21,53 +21,53 @@
 </template>
 
 <script lang="ts" setup>
-import type { NUploadV2FileType } from '@nio-fe/lego';
+import type { NUploadFileType } from '@nio-fe/lego';
 import type { Data } from '@nio-fe/shared';
 import { ref } from 'vue';
 
 const fileList = ref([]);
 
-function handleChange(file: NUploadV2FileType, response: Data) {
+function handleChange(file: NUploadFileType, response: Data) {
   console.log('change:', file, response);
 }
 
-function onAddFile(file: NUploadV2FileType) {
+function onAddFile(file: NUploadFileType) {
   console.log('Add File: ', file);
 }
 
-function onUploadFile(file: NUploadV2FileType) {
+function onUploadFile(file: NUploadFileType) {
   console.log('Upload File: ', file);
 }
 
-function onRemoveFile(file: NUploadV2FileType) {
+function onRemoveFile(file: NUploadFileType) {
   console.log('Remove File: ', file);
 }
 
-function onUploadingFile(file: NUploadV2FileType, process: number, response: Data) {
+function onUploadingFile(file: NUploadFileType, process: number, response: Data) {
   console.log('Uploading File: ', file, process, response);
 }
 
-function onUploadedFile(file: NUploadV2FileType, response: Data) {
+function onUploadedFile(file: NUploadFileType, response: Data) {
   console.log('Uploaded File: ', file, response);
 }
 
-function onPauseFile(file: NUploadV2FileType) {
+function onPauseFile(file: NUploadFileType) {
   console.log('Pause File: ', file);
 }
 
-function onContinueFile(file: NUploadV2FileType) {
+function onContinueFile(file: NUploadFileType) {
   console.log('Continue File: ', file);
 }
 
-function onRetryFile(file: NUploadV2FileType) {
+function onRetryFile(file: NUploadFileType) {
   console.log('Retry File: ', file);
 }
 
-function onFailFile(file: NUploadV2FileType, reason: string, response: Data) {
+function onFailFile(file: NUploadFileType, reason: string, response: Data) {
   console.log('Fail File: ', file, reason, response);
 }
 
-function onExceed(pickedFiles: NUploadV2FileType[], existedFiles: NUploadV2FileType[]) {
+function onExceed(pickedFiles: NUploadFileType[], existedFiles: NUploadFileType[]) {
   console.log('Exceed Files: ', pickedFiles, existedFiles);
 }
 </script>

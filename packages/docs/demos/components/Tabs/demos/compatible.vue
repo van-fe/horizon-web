@@ -22,7 +22,7 @@ const beforeChange = (tabKey: string, update: () => void) => {
 };
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-const beforeChangeUsedV2 = async (tabKey: string) => {
+const beforeChangeUsed = async (tabKey: string) => {
   if (tabKey === '2') {
     $message.warning({ message: '等待一下', duration: 2000 });
     await delay(2000);
@@ -47,7 +47,7 @@ const onTabClose = (tabKey: string) => {
     editable
     v2
     :underline="false"
-    :before-change="beforeChangeUsedV2"
+    :before-change="beforeChangeUsed"
     @change="onTabChanged"
     @close="onTabClose"
   >

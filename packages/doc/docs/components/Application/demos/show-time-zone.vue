@@ -3,13 +3,13 @@
 
   <n-application :show-time-zone="showTimeZone">
     <n-form>
-      <n-form-item label="DatePickerV2">
+      <n-form-item label="DatePicker">
         <n-row>
           <n-col :span="12">
-            <n-date-picker-v2 v-model="value1" />
+            <n-date-picker v-model="value1" />
           </n-col>
           <n-col :span="12">
-            <n-date-picker-v2 v-model="value2" type="date-minutes" />
+            <n-date-picker v-model="value2" type="date-minutes" />
           </n-col>
         </n-row>
       </n-form-item>

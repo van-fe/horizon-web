@@ -51,13 +51,13 @@ export const legoTableBuildOutput = resolve(legoTableProjectRoot, 'dist');
 export const legoTableLibOutput = resolve(legoTableProjectRoot, 'lib');
 
 /**
- * lego-table-v2
+ * lego-table
  */
-export const legoTableV2ProjectRoot = resolve(packagesRoot, 'lego-table-v2');
-export const legoTableV2ComponentRoot = resolve(legoTableV2ProjectRoot, 'components');
-export const legoTableV2StyleRoot = resolve(legoTableV2ProjectRoot, 'styles');
-export const legoTableV2BuildOutput = resolve(legoTableV2ProjectRoot, 'dist');
-export const legoTableV2LibOutput = resolve(legoTableV2ProjectRoot, 'lib');
+export const legoTableProjectRoot = resolve(packagesRoot, 'lego-table');
+export const legoTableComponentRoot = resolve(legoTableProjectRoot, 'components');
+export const legoTableStyleRoot = resolve(legoTableProjectRoot, 'styles');
+export const legoTableBuildOutput = resolve(legoTableProjectRoot, 'dist');
+export const legoTableLibOutput = resolve(legoTableProjectRoot, 'lib');
 
 /**
  * lego-sensor-tracker

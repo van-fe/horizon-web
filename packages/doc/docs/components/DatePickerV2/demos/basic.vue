@@ -22,7 +22,7 @@
   </n-form>
   <n-row>
     <n-col :span="24">
-      <n-date-picker-v2
+      <n-date-picker
         v-model="value"
         type="date"
         :size="size"
@@ -34,7 +34,7 @@
       />
     </n-col>
     <n-col :span="24">
-      <n-date-picker-v2
+      <n-date-picker
         v-model="value2"
         type="date-range"
         :size="size"
@@ -50,12 +50,12 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { DatePickerV2Props } from '@nio-fe/lego';
+import { DatePickerProps } from '@nio-fe/lego';
 
 const value = ref();
 const value2 = ref('');
-const size = ref<NonNullable<DatePickerV2Props['size']>>('medium');
-const inputStyle = ref<DatePickerV2Props['inputStyle']>('normal');
+const size = ref<NonNullable<DatePickerProps['size']>>('medium');
+const inputStyle = ref<DatePickerProps['inputStyle']>('normal');
 const disabled = ref(false);
 
 function onUpdate(val: unknown) {

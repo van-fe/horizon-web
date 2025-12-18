@@ -3,7 +3,7 @@ import type { App, ComputedRef, InjectionKey, Plugin } from 'vue';
 import type { LegoOption } from '~/makeInstaller';
 import type { EnGB } from '~/locales/en-GB';
 import type { LocalOptionType } from '@nio-fe/locale-vue';
-import { LocaleSupportLangV2, VueLocaleService } from '@nio-fe/locale-vue';
+import { LocaleSupportLang, VueLocaleService } from '@nio-fe/locale-vue';
 import { dictionaries } from '~/locales';
 import deepMerge from 'deepmerge';
 
@@ -21,7 +21,7 @@ export default function localableProvide(app: App, options?: LegoOption): App {
   app[LOCALE_PROVIDED_KEY] = true;
 
   const defaultLocaleOption: LocalOptionType = {
-    current: LocaleSupportLangV2.En,
+    current: LocaleSupportLang.En,
     lang: {
       dictionaries,
     },

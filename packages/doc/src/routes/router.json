@@ -67,7 +67,7 @@
       "ModalCascader": {
         "doc.md": {}
       },
-      "TableV2": {
+      "Table": {
         "doc.md": {}
       },
       "ModalPicker": {
@@ -147,7 +147,7 @@
       "Progress": {
         "doc.md": {}
       },
-      "TimePickerV2": {
+      "TimePicker": {
         "doc.md": {}
       },
       "Picker": {
@@ -171,7 +171,7 @@
       "Segmented": {
         "doc.md": {}
       },
-      "UploadV2": {
+      "Upload": {
         "doc.md": {}
       },
       "DatePicker": {
@@ -192,7 +192,7 @@
       "Transfer": {
         "doc.md": {}
       },
-      "DatePickerV2": {
+      "DatePicker": {
         "doc.md": {}
       },
       "Descriptions": {
@@ -210,7 +210,7 @@
       "InputNumber": {
         "doc.md": {}
       },
-      "TransferV2": {
+      "Transfer": {
         "doc.md": {}
       },
       "Image": {
@@ -874,7 +874,7 @@
           "line.vue": {}
         }
       },
-      "TimePickerV2": {
+      "TimePicker": {
         "demos": {
           "time.vue": {},
           "show-popover-content-only.vue": {},
@@ -965,7 +965,7 @@
           "form.vue": {}
         }
       },
-      "UploadV2": {
+      "Upload": {
         "demos": {
           "show-file-thumbnail.vue": {},
           "gallery.vue": {},
@@ -1077,7 +1077,7 @@
           "people.vue": {}
         }
       },
-      "DatePickerV2": {
+      "DatePicker": {
         "demos": {
           "show-popover-content-only.vue": {},
           "show-tooltip.vue": {},
@@ -1172,7 +1172,7 @@
           "range.vue": {}
         }
       },
-      "TransferV2": {
+      "Transfer": {
         "demos": {
           "custom.vue": {},
           "group.vue": {},
@@ -1694,7 +1694,7 @@
   },
   ".ts": {
     "components": {
-      "UploadV2": {
+      "Upload": {
         "demos": {
           "type-defined.ts": {}
         }

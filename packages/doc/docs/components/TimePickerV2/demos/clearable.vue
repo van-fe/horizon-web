@@ -1,10 +1,10 @@
 <template>
   <n-row>
     <n-col :span="6">
-      <n-time-picker-v2 v-model="value" clearable />
+      <n-time-picker v-model="value" clearable />
     </n-col>
     <n-col :span="6">
-      <n-time-picker-v2 v-model="value2" is-range clearable />
+      <n-time-picker v-model="value2" is-range clearable />
     </n-col>
   </n-row>
 </template>

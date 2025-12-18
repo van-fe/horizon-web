@@ -1,0 +1,265 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('date-picker-panel-body') {
+  flex: 1;
+
+  @include mixins.e('panel-container') {
+    display: flex;
+    align-items: stretch;
+
+    &-time-panel {
+      min-width: mixins.css-variable('date-picker', 'size', 'panel', 'body', 'time-panel', 'min-width');
+      border-left: mixins.css-variable('date-picker', 'divider');
+    }
+  }
+
+  @include mixins.e('grid-item') {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: mixins.css-variable('date-picker', 'background', 'panel', 'body', 'grid-item');
+      border-radius: mixins.css-variable('date-picker', 'border-radius');
+      transition: mixins.css-variable('date-picker', 'transition', 'color-behavior');
+    }
+
+    @include mixins.has('dot') {
+      &::after {
+        position: absolute;
+        right: 0;
+        bottom: mixins.css-variable('date-picker', 'size', 'panel', 'body', 'grid-item', 'dot');
+        left: 0;
+        z-index: 1;
+        display: block;
+        width: mixins.css-variable('date-picker', 'size', 'panel', 'body', 'grid-item', 'dot');
+        height: mixins.css-variable('date-picker', 'size', 'panel', 'body', 'grid-item', 'dot');
+        margin: 0 auto;
+        background: mixins.css-variable('date-picker', 'background', 'panel', 'body', 'grid-item', 'dot');
+        border-radius: mixins.css-variable('date-picker', 'border-radius');
+        transition: mixins.css-variable('date-picker', 'transition', 'color-behavior');
+        content: '';
+      }
+    }
+
+    @include mixins.is('today') {
+      @include mixins.be('date-picker-panel-body', 'grid-item-inner', false) {
+        border: mixins.css-variable('date-picker', 'border', 'panel', 'body', 'grid-item', 'today');
+      }
+    }
+
+    @include mixins.is-not('disabled') {
+      @include mixins.be('date-picker-panel-body', 'grid-item-inner', false) {
+        cursor: pointer;
+      }
+
+      @include mixins.is('range') {
+        background: mixins.css-variable('date-picker', 'background', 'panel', 'body', 'grid-item', 'range');
+
+        @include mixins.be('date-picker-panel-body', 'grid-item-inner', false) {
+          color: mixins.css-variable('date-picker', 'color', 'panel', 'body', 'grid-item', 'range');
+        }
+      }
+
+      @include mixins.is-not('week-hover') {
+        &:hover {
+          @include mixins.be('date-picker-panel-body', 'grid-item-inner', false) {
+            background: mixins.css-variable('date-picker', 'background', 'panel', 'body', 'grid-item', 'hover');
+          }
+        }
+
+        &:active {
+          @include mixins.be('date-picker-panel-body', 'grid-item-inner', false) {
+            background: mixins.css-variable('date-picker', 'background', 'panel', 'body', 'grid-item', 'press');
+          }
+        }
+      }
+
+      @include mixins.with-parallel-state('prev', 'next') {
+        pointer-events: none;
+
+        @include mixins.be('date-picker-panel-body', 'grid-item-inner', false) {
+          color: mixins.css-variable('date-picker', 'color', 'panel', 'body', 'grid-item', 'prev-next');
+          background: mixins.css-variable('date-picker', 'background', 'panel', 'body', 'grid-item', 'prev-next');
+        }
+      }
+
+      @include mixins.is('week-hover') {
+        @include mixins.is-not('range') {
+          &::before {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: 0;
+            display: block;
+            width: 100%;
+            height: 100%;
+            background: mixins.css-variable('date-picker', 'background', 'panel', 'body', 'grid-item', 'hover');
+            content: '';
+          }
+
+          &:nth-child(7n) {
+            &::before {
+              right: initial;
+              width: calc(#{mixins.css-variable('date-picker', 'size', 'panel', 'body', 'day', 'item', 'width')} + (100% - #{mixins.css-variable('date-picker', 'size', 'panel', 'body', 'day', 'item', 'width')}) / 2);
+              border-top-right-radius: mixins.css-variable('date-picker', 'border-radius');
+              border-bottom-right-radius: mixins.css-variable('date-picker', 'border-radius');
+            }
+          }
+
+          &:nth-child(7n + 1) {
+            &::before {
+              left: initial;
+              width: calc(#{mixins.css-variable('date-picker', 'size', 'panel', 'body', 'day', 'item', 'width')} + (100% - #{mixins.css-variable('date-picker', 'size', 'panel', 'body', 'day', 'item', 'width')}) / 2);
+              border-top-left-radius: mixins.css-variable('date-picker', 'border-radius');
+              border-bottom-left-radius: mixins.css-variable('date-picker', 'border-radius');
+            }
+          }
+        }
+      }
+
+      @include mixins.with-parallel-state('active', 'start-active', 'end-active') {
+        &::after {
+          background: mixins.css-variable('date-picker', 'background', 'panel', 'body', 'grid-item', 'dot-active');
+        }
+
+        @include mixins.be('date-picker-panel-body', 'grid-item-inner', false) {
+          color: mixins.css-variable('date-picker', 'color', 'panel', 'body', 'grid-item', 'active');
+          background: mixins.css-variable('date-picker', 'background', 'panel', 'body', 'grid-item', 'active') !important;
+        }
+
+        @include mixins.is('range') {
+          background: mixins.css-variable('date-picker', 'background', 'panel', 'body', 'grid-item');
+
+          &::before {
+            position: absolute;
+            top: 0;
+            z-index: 0;
+            display: block;
+            width: 50%;
+            height: 100%;
+            background: mixins.css-variable('date-picker', 'background', 'panel', 'body', 'grid-item', 'range');
+            content: '';
+          }
+
+          @include mixins.is('start-active') {
+            &::before {
+              right: 0;
+            }
+          }
+
+          @include mixins.is('end-active') {
+            &::before {
+              left: 0;
+            }
+          }
+        }
+      }
+
+      @include mixins.with-multi-state('start-active', 'end-active') {
+        &::before {
+          display: none;
+        }
+
+        @include mixins.be('date-picker-panel-body', 'grid-item-inner', false) {
+          &::before {
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            display: block;
+            box-sizing: content-box;
+            width: calc(100% + 2px);
+            height: calc(100% + 2px);
+            border: mixins.css-variable('date-picker', 'border', 'panel', 'body', 'grid-item', 'same-start-end');
+            border-radius: mixins.css-variable('date-picker', 'border-radius');
+            content: '';
+          }
+        }
+      }
+    }
+
+    @include mixins.is('disabled') {
+      @include mixins.be('date-picker-panel-body', 'grid-item-inner', false) {
+        color: mixins.css-variable('date-picker', 'color', 'panel', 'body', 'grid-item', 'disabled');
+        background: mixins.css-variable('date-picker', 'background', 'panel', 'body', 'grid-item', 'disabled');
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  @include mixins.e('year') {
+    display: grid;
+    grid-gap: mixins.css-variable('date-picker', 'spacing', 'panel', 'body', 'grid-item', 'gap');
+    grid-template: repeat(3, 1fr) / repeat(4, 1fr);
+    justify-items: center;
+    padding: mixins.css-variable('date-picker', 'spacing', 'panel', 'body', 'year');
+
+    @include mixins.m('item') {
+      padding: mixins.css-variable('date-picker', 'spacing', 'panel', 'body', 'grid-item', 'padding');
+
+      &-inner {
+        width: mixins.css-variable('date-picker', 'size', 'panel', 'body', 'year', 'item', 'width');
+        height: mixins.css-variable('date-picker', 'size', 'panel', 'body', 'year', 'item', 'height');
+      }
+    }
+  }
+
+  @include mixins.e('month') {
+    display: grid;
+    grid-gap: mixins.css-variable('date-picker', 'spacing', 'panel', 'body', 'grid-item', 'gap');
+    grid-template: repeat(3, 1fr) / repeat(4, 1fr);
+    justify-items: center;
+    padding: mixins.css-variable('date-picker', 'spacing', 'panel', 'body', 'year');
+
+    @include mixins.m('item') {
+      padding: mixins.css-variable('date-picker', 'spacing', 'panel', 'body', 'grid-item', 'padding');
+
+      &-inner {
+        width: mixins.css-variable('date-picker', 'size', 'panel', 'body', 'month', 'item', 'width');
+        height: mixins.css-variable('date-picker', 'size', 'panel', 'body', 'month', 'item', 'height');
+      }
+    }
+  }
+
+  @include mixins.e('day') {
+    display: grid;
+    grid-gap: mixins.css-variable('date-picker', 'spacing', 'panel', 'body', 'grid-item', 'gap');
+    grid-template-columns: repeat(7, 1fr);
+    justify-items: center;
+    padding: mixins.css-variable('date-picker', 'spacing', 'panel', 'body', 'day');
+
+    @include mixins.m('item') {
+      padding: mixins.css-variable('date-picker', 'spacing', 'panel', 'body', 'grid-item', 'padding');
+
+      &-inner {
+        width: mixins.css-variable('date-picker', 'size', 'panel', 'body', 'day', 'item', 'width');
+        height: mixins.css-variable('date-picker', 'size', 'panel', 'body', 'day', 'item', 'height');
+      }
+
+      &-week {
+        font-size: mixins.css-variable('date-picker', 'font', 'size', 'panel', 'body', 'week')
+      }
+    }
+  }
+}
+
+@include mixins.b('date-picker') {
+  @include mixins.e('date-panel-container') {
+    @include mixins.is-not('show-before-after-date') {
+      @include mixins.be('date-picker-panel-body', 'grid-item', false) {
+        &:not(#{mixins.modifier-name('item', 'year', #{mixins.block('date-picker-panel-body')})}) {
+          @include mixins.with-parallel-state('prev', 'next') {
+            visibility: hidden;
+          }
+        }
+      }
+    }
+  }
+}

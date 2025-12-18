@@ -1,87 +1,39 @@
 import type { SlotsType } from 'vue';
-import type { UploadHelperFile } from '@nio-fe/upload-helper';
+import type { NUploadFileType } from '../utils/fileDefines';
 
 export const useUploadSlots = Object as SlotsType<{
   /**
-   * 自定义渲染内容
-   * @param onClick: 点击事件
-   * @param disabled: 是否禁用
+   * 上传区域的内部渲染
    */
-  default?: { onClick: () => void; disabled: boolean },
+  default?: {};
   /**
-   * 透传给 `NUploadPreviewFileItem` 和 `NUploadPreviewImgItem`
+   * 上传 `Icon`
    */
-  content?: {},
+  icon?: {};
   /**
-   * 自定义 Icon
+   * 上传说明
+   * `type = 'button'` 时，是"上传"文字
+   * `type = 'drop'` 时，是"点击上传或将文件拖拽至此区域"文字
    */
-  icon?: {},
+  text?: {};
   /**
-   * 自定义文本
+   * 上传内容触发区域，会覆盖 `icon` 和 `text` 区域
    */
-  text?: {},
+  trigger?: {};
   /**
-   * 自定义操作，作用域插槽
+   * 上传提示
    */
-  operators?: {},
-}>
+  tips?: {};
+  /**
+   * 已上传列表，可以自定义列表的整体展示
+   * @param files 已上传的文件对象数组
+   */
+  uploadedFiles?: NUploadFileType[];
+  /**
+   * 单个已上传文件的自定义展示
+   * @param file 对应的文件对象
+   */
+  file?: NUploadFileType;
+}>;
 
 export type UploadSlots = typeof useUploadSlots;
-
-export const useUploadImageSlots = Object as SlotsType<{
-  /**
-   * 自定义渲染内容
-   */
-  default?: {},
-  /**
-   * 透传给 `NUploadPreviewFileItem` 和 `NUploadPreviewImgItem`
-   */
-  content?: {},
-  /**
-   * 自定义操作，作用域插槽
-   */
-  operators?: {},
-}>
-
-export type UploadImageSlots = typeof useUploadImageSlots;
-
-export const useUploadAreaSlots = Object as SlotsType<{
-  /**
-   * 自定义 Icon
-   */
-  icon?: {},
-  /**
-   * 自定义文本
-   */
-  text?: {},
-}>
-
-export type UploadAreaSlots = typeof useUploadAreaSlots;
-
-export const useUploadPreviewFileItemSlots = Object as SlotsType<{
-  /**
-   * 渲染内容
-   */
-  content?: UploadHelperFile,
-  /**
-   * 自定义操作，作用域插槽
-   * @param file 渲染当前文件
-   */
-  operators?: UploadHelperFile,
-}>
-
-export type UploadPreviewFileItemSlots = typeof useUploadPreviewFileItemSlots;
-
-export const useUploadPreviewImgItemSlots = Object as SlotsType<{
-  /**
-   * 渲染内容
-   */
-  content?: UploadHelperFile,
-  /**
-   * 自定义操作，作用域插槽
-   * @param file 渲染当前文件
-   */
-  operators?: UploadHelperFile,
-}>
-
-export type UploadPreviewImgItemSlots = typeof useUploadPreviewImgItemSlots;

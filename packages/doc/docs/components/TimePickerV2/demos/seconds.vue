@@ -1,10 +1,10 @@
 <template>
   <n-row>
     <n-col :span="6">
-      <n-time-picker-v2 v-model="value" type="seconds" />
+      <n-time-picker v-model="value" type="seconds" />
     </n-col>
     <n-col :span="6">
-      <n-time-picker-v2 v-model="rangeValue" type="seconds" is-range />
+      <n-time-picker v-model="rangeValue" type="seconds" is-range />
     </n-col>
   </n-row>
 </template>

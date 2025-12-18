@@ -1,13 +1,13 @@
 <template>
   <n-row>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value" type="datetimeRange" single-trigger />
+      <n-date-picker v-model="value" type="datetimeRange" single-trigger />
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value2" type="dateRange" single-trigger placeholder="Do Not Link Panels" :is-link-panels="false" />
+      <n-date-picker v-model="value2" type="dateRange" single-trigger placeholder="Do Not Link Panels" :is-link-panels="false" />
     </n-col>
     <n-col :span="6">
-      <n-date-picker-v2 v-model="value3" type="dateRange" single-trigger single-panel placeholder="Single Panel" />
+      <n-date-picker v-model="value3" type="dateRange" single-trigger single-panel placeholder="Single Panel" />
     </n-col>
   </n-row>
 </template>

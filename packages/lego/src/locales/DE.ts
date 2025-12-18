@@ -247,7 +247,7 @@ export const DE = {
     tag: {
       create: 'Schlagwort erstellen',
     },
-    tableV2: {
+    table: {
       filter: {
         reset: 'Zurücksetzen',
         confirm: 'Bestätigen',

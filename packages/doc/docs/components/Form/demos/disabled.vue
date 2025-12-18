@@ -40,7 +40,7 @@
       />
     </n-form-item>
     <n-form-item label="Date" prop="date" required>
-      <n-date-picker-v2
+      <n-date-picker
         v-model="formData.date"
         type="date-range"
         start-placeholder="Start date"
@@ -48,7 +48,7 @@
       />
     </n-form-item>
     <n-form-item label="Time" prop="time" required>
-      <n-time-picker-v2
+      <n-time-picker
         v-model="formData.time"
         type="time"
         is-range
@@ -74,13 +74,13 @@
       />
     </n-form-item>
     <n-form-item label="Upload" prop="upload" required>
-      <n-upload-v2 v-model="formData.upload"></n-upload-v2>
+      <n-upload v-model="formData.upload"></n-upload>
     </n-form-item>
     <n-form-item label="Upload Drop" prop="upload" required>
-      <n-upload-v2 v-model="formData.upload" type="drop" :limit="5" :multiple="true"></n-upload-v2>
+      <n-upload v-model="formData.upload" type="drop" :limit="5" :multiple="true"></n-upload>
     </n-form-item>
     <n-form-item label="Upload Gallery" prop="upload" required>
-      <n-upload-v2 v-model="formData.upload" type="gallery"></n-upload-v2>
+      <n-upload v-model="formData.upload" type="gallery"></n-upload>
     </n-form-item>
 
     <n-button native-type="submit">Submit</n-button>

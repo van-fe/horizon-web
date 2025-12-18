@@ -257,7 +257,7 @@ export const AE = {
     tag: {
       create: 'إضافة تسمية',
     },
-    tableV2: {
+    table: {
       filter: {
         reset: 'إعادة تعيين',
         confirm: 'تأكيد',

@@ -10,7 +10,7 @@
       <n-switch v-model="multiple" />
     </n-form-item>
   </n-form>
-  <n-upload-v2
+  <n-upload
     v-model="modelValue"
     action="https://lego-inspector.nioint.com/upload-mock"
     method="POST"
@@ -39,18 +39,18 @@
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
-import type { NUploadV2RawFileType, UploadV2Props, NUploadV2FileType } from '@nio-fe/lego';
+import type { NUploadRawFileType, UploadProps, NUploadFileType } from '@nio-fe/lego';
 import type { Data } from '@nio-fe/shared';
 import { $confirm } from '@nio-fe/lego';
 
-const size = ref<Exclude<UploadV2Props['size'], undefined>>('medium');
-const fileItemSize = ref<Exclude<UploadV2Props['fileItemSize'], undefined>>('medium');
+const size = ref<Exclude<UploadProps['size'], undefined>>('medium');
+const fileItemSize = ref<Exclude<UploadProps['fileItemSize'], undefined>>('medium');
 const showUploader = ref(true);
 const useClipboard = ref(true);
 const enableBeforePaste = ref(false);
 const multiple = ref(true);
 
-const modelValue = ref<NUploadV2RawFileType>();
+const modelValue = ref<NUploadRawFileType>();
 
 const beforePaste = computed(() => {
   if (enableBeforePaste.value) {
@@ -69,51 +69,51 @@ const beforePaste = computed(() => {
   }
 });
 
-function handleChange(file: NUploadV2FileType, response: Data) {
+function handleChange(file: NUploadFileType, response: Data) {
   console.log('change:', file, response);
 }
 
-function onAddFile(file: NUploadV2FileType) {
+function onAddFile(file: NUploadFileType) {
   console.log('Add File: ', file);
 }
 
-function onUploadFile(file: NUploadV2FileType) {
+function onUploadFile(file: NUploadFileType) {
   console.log('Upload File: ', file);
 }
 
-function onRemoveFile(file: NUploadV2FileType) {
+function onRemoveFile(file: NUploadFileType) {
   console.log('Remove File: ', file);
 }
 
-function onUploadingFile(file: NUploadV2FileType, process: number, response: Data) {
+function onUploadingFile(file: NUploadFileType, process: number, response: Data) {
   console.log('Uploading File: ', file, process, response);
 }
 
-function onUploadedFile(file: NUploadV2FileType, response: Data) {
+function onUploadedFile(file: NUploadFileType, response: Data) {
   console.log('Uploaded File: ', file, response);
 }
 
-function onPauseFile(file: NUploadV2FileType) {
+function onPauseFile(file: NUploadFileType) {
   console.log('Pause File: ', file);
 }
 
-function onContinueFile(file: NUploadV2FileType) {
+function onContinueFile(file: NUploadFileType) {
   console.log('Continue File: ', file);
 }
 
-function onRetryFile(file: NUploadV2FileType) {
+function onRetryFile(file: NUploadFileType) {
   console.log('Retry File: ', file);
 }
 
-function onFailFile(file: NUploadV2FileType, reason: string, response: Data) {
+function onFailFile(file: NUploadFileType, reason: string, response: Data) {
   console.log('Fail File: ', file, reason, response);
 }
 
-function onExceed(pickedFiles: NUploadV2FileType[], existedFiles: NUploadV2FileType[]) {
+function onExceed(pickedFiles: NUploadFileType[], existedFiles: NUploadFileType[]) {
   console.log('Exceed Files: ', pickedFiles, existedFiles);
 }
 
-function handleSuccess(res: any, file: NUploadV2File) {
+function handleSuccess(res: any, file: NUploadFile) {
   // 因为接口是模拟返回，所以不处理 res 数据
   // 直接把 blobUrl 假定为上传接口返回的预览地址
   return file.blobUrl;

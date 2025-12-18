@@ -21,17 +21,17 @@
   </n-form>
   <n-row>
     <n-col :span="6">
-      <n-time-picker-v2 v-model="value" :size="size" :input-style="inputStyle" :disabled="disabled" />
+      <n-time-picker v-model="value" :size="size" :input-style="inputStyle" :disabled="disabled" />
     </n-col>
   </n-row>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { TimePickerV2Props } from '@nio-fe/lego';
+import type { TimePickerProps } from '@nio-fe/lego';
 
 const value = ref();
-const size = ref<NonNullable<TimePickerV2Props['size']>>('medium');
-const inputStyle = ref<TimePickerV2Props['inputStyle']>('normal');
+const size = ref<NonNullable<TimePickerProps['size']>>('medium');
+const inputStyle = ref<TimePickerProps['inputStyle']>('normal');
 const disabled = ref(false);
 </script>
