@@ -46,8 +46,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { colors } from '@nio-fe/lego';
-import { tinyColor } from '@nio-fe/colors';
+import { colors } from '@aurora/horizon-web';
+import { tinyColor } from '@aurora/colors';
 
 export default defineComponent({
   setup() {

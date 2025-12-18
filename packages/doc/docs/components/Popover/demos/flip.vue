@@ -44,7 +44,7 @@
 
 <script>
 import { defineComponent, h } from 'vue';
-import { NPopContent } from '@nio-fe/lego';
+import { NPopContent } from '@aurora/horizon-web';
 
 const DemoContent = defineComponent({
   render: () =>

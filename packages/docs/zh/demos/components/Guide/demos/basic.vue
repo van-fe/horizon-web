@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
 import { ref, shallowRef } from 'vue';
-import { $message } from '@nio-fe/lego';
+import { $message } from '@aurora/horizon-web';
 
 const firstRef = shallowRef<HTMLElement | null>(null);
 const thirdRef = shallowRef<HTMLElement | null>(null);

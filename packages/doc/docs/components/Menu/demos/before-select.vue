@@ -117,9 +117,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { NIcon } from '@nio-fe/icon';
-import { $confirm, NMenu } from '@nio-fe/lego';
-import type { MenuItemProps, SubMenuProps } from '@nio-fe/lego';
+import { NIcon } from '@aurora/icon';
+import { $confirm, NMenu } from '@aurora/horizon-web';
+import type { MenuItemProps, SubMenuProps } from '@aurora/horizon-web';
 
 const menuRef = ref<typeof NMenu | null>(null);
 const collapse = ref(false);

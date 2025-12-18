@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import generator, { tinyColor } from '@nio-fe/colors';
+import generator, { tinyColor } from '@aurora/colors';
 
 const inputColor = ref('#1890ff');
 const color = ref<string[]>([]);

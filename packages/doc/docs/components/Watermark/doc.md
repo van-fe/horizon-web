@@ -19,4 +19,4 @@
 :::demo ./demos/demo4.vue :::
 
 ### 类型定义
-:::code ../../../../lego/src/components/Watermark/src/utils/types.ts :::
+:::code ../../../../horizon-web/src/components/Watermark/src/utils/types.ts :::

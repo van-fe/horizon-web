@@ -5,8 +5,8 @@ import analyseJsDocs from '../analyseJsDocs';
 import type { FileElements } from '../analyseFileElements';
 import formatTsTypeToUnitType from '../formatTsTypeToUnitType';
 import { analyseFunctionExpression } from './analyseFunction';
-import type { ApiGeneratorAnalysedExposeParamType } from '@nio-fe/shared';
-import { ApiGeneratorAnalysedBaseType } from '@nio-fe/shared';
+import type { ApiGeneratorAnalysedExposeParamType } from '@aurora/shared';
+import { ApiGeneratorAnalysedBaseType } from '@aurora/shared';
 import deepmerge from 'deepmerge';
 
 export function analyseObjectExpression(

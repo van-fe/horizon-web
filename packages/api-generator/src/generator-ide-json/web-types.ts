@@ -2,7 +2,7 @@
  * web-types is a json file which just for Jetbrains's IDEs to provide autocomplete.
  * for more details: https://github.com/jetbrains/web-types
  */
-import { apiGeneratorOutPut, writeJsonFile } from '@nio-fe/shared/plugins';
+import { apiGeneratorOutPut, writeJsonFile } from '@aurora/shared/plugins';
 import type {
   ApiGeneratorAnalysedComponentDetail,
   ApiGeneratorAnalysedEmitParamType,
@@ -11,8 +11,8 @@ import type {
   ApiGeneratorAnalysedSlotType,
   ApiGeneratorAnalysedDirectiveDetail,
   ApiGeneratorAnalysedOptionType,
-} from '@nio-fe/shared';
-import { capitalize, kebabCase } from '@nio-fe/shared';
+} from '@aurora/shared';
+import { capitalize, kebabCase } from '@aurora/shared';
 import version from '../../../../versions.json';
 import components from '../../dist/components-analysis.json';
 import directives from '../../dist/directives-analysis.json';
@@ -127,8 +127,8 @@ export default async function createWebTypesJson() {
   const webTypes = {
     $schema: 'https://raw.githubusercontent.com/JetBrains/web-types/master/schema/web-types.json',
     framework: 'vue',
-    name: 'lego',
-    version: version.lego,
+    name: 'horizon-web',
+    version: version.horizon-web,
     'js-types-syntax': 'typescript',
     'description-markup': 'markdown',
     contributions: {

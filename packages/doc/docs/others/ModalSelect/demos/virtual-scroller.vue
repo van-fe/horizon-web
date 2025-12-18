@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { faker } from '@faker-js/faker';
-import type { SelectProps } from '@nio-fe/lego';
+import type { SelectProps } from '@aurora/horizon-web';
 
 const options = new Array(5000).fill(0).map((_, index) => {
   const value = faker.name.fullName();

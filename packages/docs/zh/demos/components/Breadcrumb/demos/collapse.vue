@@ -44,7 +44,7 @@
 
 <script setup lang="ts">
 import { ExtractPropTypes, ref } from 'vue';
-import { useBreadcrumbItemProps } from '@nio-fe/lego';
+import { useBreadcrumbItemProps } from '@aurora/horizon-web';
 
 const width = ref(600);
 

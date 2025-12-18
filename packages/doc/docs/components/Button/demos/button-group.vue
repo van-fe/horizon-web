@@ -6,7 +6,7 @@ import {
   IconEye,
   IconEdit,
   IconRubbish,
-} from '@nio-fe/icon';
+} from '@aurora/icon';
 </script>
 
 <template>

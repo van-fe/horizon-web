@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { NAutoCompleteOptionProps } from '@nio-fe/lego';
+import type { NAutoCompleteOptionProps } from '@aurora/horizon-web';
 
 const options1 = ref<Partial<NAutoCompleteOptionProps>[]>([]);
 const options2 = ref<Partial<NAutoCompleteOptionProps>[]>([]);

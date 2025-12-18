@@ -28,8 +28,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { $message } from '@nio-fe/lego';
-import { IconArrowDown } from '@nio-fe/icon';
+import { $message } from '@aurora/horizon-web';
+import { IconArrowDown } from '@aurora/icon';
 
 const visible1 = ref(false);
 

@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { NCascaderDynamicLoadNode } from '@nio-fe/lego';
+import { NCascaderDynamicLoadNode } from '@aurora/horizon-web';
 
 const dynOptions = [
   {
@@ -49,7 +49,7 @@ export default defineComponent({
 
     const options = ref([]);
     fetch(
-      'https://static.nio.com/fx-static/lego/clhoirqpc0000088sgljrau3o/cascader-options.json',
+      'https://static.nio.com/fx-static/horizon-web/clhoirqpc0000088sgljrau3o/cascader-options.json',
     ).then(res => {
       res.json().then(value => {
         options.value = value;

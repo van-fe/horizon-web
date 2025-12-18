@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, Ref } from 'vue';
-import type { TransferDataProps } from '@nio-fe/lego';
+import type { TransferDataProps } from '@aurora/horizon-web';
 export default defineComponent({
   setup() {
     const data = ref([]) as Ref<TransferDataProps[]>;

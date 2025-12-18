@@ -46,7 +46,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { $confirm, $message, NTreeNodeDataWithLevel } from '@nio-fe/lego';
+import { $confirm, $message, NTreeNodeDataWithLevel } from '@aurora/horizon-web';
 
 const draggable = ref(true);
 const dragOnHandler = ref(true);
@@ -69,7 +69,7 @@ function beforeDrop(from: NTreeNodeDataWithLevel, to: NTreeNodeDataWithLevel | n
 }
 
 onMounted(() => {
-  fetch('https://static.nio.com/fx-static/lego/clrk8znpi000109bebmtiggbz/tree-data.json')
+  fetch('https://static.nio.com/fx-static/horizon-web/clrk8znpi000109bebmtiggbz/tree-data.json')
     .then(res => res.json())
     .then(res => {
       baseTreeData1.value = res;

@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { $message, NTableCellScopeSlots } from '@nio-fe/lego';
+import { $message, NTableCellScopeSlots } from '@aurora/horizon-web';
 import { faker } from '@faker-js/faker';
 
 interface TableData {

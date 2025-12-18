@@ -17,14 +17,14 @@ const { confirm, tag } = argv;
 
 // the packages of need to be published
 const publishPackages = [
-  'lego',
+  'horizon-web',
   'shared',
   'locale',
   'locale-vue',
   'unplugin-resolver',
-  'lego-sensor-tracker',
+  'horizon-web-sensor-tracker',
   'colors',
-  'lego-pad',
+  'horizon-web-pad',
 ];
 
 const packageJsonOrigin: Record<string, string> = {};
@@ -32,7 +32,7 @@ const packagesPath = resolve(__dirname, '../packages');
 const packageJsonModified: Record<string, string> = {};
 
 const rmLego = () => {
-  // shell.exec(`rm -rf ${resolve(__dirname, './.lego')}`);
+  // shell.exec(`rm -rf ${resolve(__dirname, './.horizon-web')}`);
 };
 
 const replacePackageJson = (packageName: string, jsonStr: string) => {
@@ -47,13 +47,13 @@ const resetPackageVersion = () => {
 };
 
 async function ensureVersion() {
-  if (!fs.existsSync(resolve(__dirname, './.lego'))) {
+  if (!fs.existsSync(resolve(__dirname, './.horizon-web'))) {
     rmLego();
     shell.exec(
-      `git clone -b keep-version git@git.nevint.com:lego/lego.git ${resolve(__dirname, './.lego')}`,
+      `git clone -b keep-version git@git.nevint.com:horizon-web/horizon-web.git ${resolve(__dirname, './.horizon-web')}`,
     );
   } else {
-    shell.exec(`cd ${resolve(__dirname, './.lego')} && git pull`);
+    shell.exec(`cd ${resolve(__dirname, './.horizon-web')} && git pull`);
   }
 
   if (!confirm) {
@@ -77,7 +77,7 @@ async function ensureVersion() {
     json.version = versions[pkg];
 
     function replaceDependenciesVersion(pkgName: string, type = 'dependencies') {
-      const noScopeName = pkgName.replace(/^@nio-fe\//, '');
+      const noScopeName = pkgName.replace(/^@aurora\//, '');
       if (Object.keys(versions).includes(noScopeName)) {
         json[type][pkgName] = versions[noScopeName];
       }
@@ -115,7 +115,7 @@ async function ensureVersion() {
   // empty dir
   shell.rm('-rf', '../dist/*');
 
-  cloneBrowserBuildFileToDist(versions.lego);
+  cloneBrowserBuildFileToDist(versions.horizon-web);
   cloneBrowserBuildFileToDist(tag || 'latest');
 
   // publish doc to fx manually
@@ -129,12 +129,12 @@ function publish() {
 }
 
 function writeVersionFileAndPush(versions: unknown) {
-  fs.writeFileSync(resolve(__dirname, './.lego/version.json'), JSON.stringify(versions, null, 2));
+  fs.writeFileSync(resolve(__dirname, './.horizon-web/version.json'), JSON.stringify(versions, null, 2));
 
   shell.exec(
     `cd ${resolve(
       __dirname,
-      './.lego',
+      './.horizon-web',
     )} && git add . && git commit -m "release: update version" && git push`,
   );
   rmLego();
@@ -149,7 +149,7 @@ function checkPublishedVersion() {
   }> = [];
   Object.entries(versions).forEach(([pkgName, version]) => {
     const npmMirrorVersion = shell.exec(
-      `npm view @nio-fe/${pkgName} version ${
+      `npm view @aurora/${pkgName} version ${
         tag ? `--tag ${tag}` : ''
       } --registry https://npmmirror.nioint.com/`,
       { silent: true },

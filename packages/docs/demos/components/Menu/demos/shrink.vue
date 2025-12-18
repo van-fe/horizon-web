@@ -72,7 +72,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { NMenu } from '@nio-fe/lego';
+import { NMenu } from '@aurora/horizon-web';
 
 const menuRef = ref<typeof NMenu | null>(null);
 const collapse = ref(false);

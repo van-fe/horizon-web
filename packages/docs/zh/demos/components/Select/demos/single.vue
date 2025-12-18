@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { IconPin } from '@nio-fe/icon';
+import { IconPin } from '@aurora/icon';
 import { ref } from 'vue';
 
 const value1 = ref();

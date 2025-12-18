@@ -50,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { $message } from '@nio-fe/lego';
+import { $message } from '@aurora/horizon-web';
 
 const list = [{
   label: '小学',

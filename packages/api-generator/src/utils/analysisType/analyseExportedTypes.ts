@@ -1,4 +1,4 @@
-import type { ApiGeneratorExportedPluginType } from '@nio-fe/shared';
+import type { ApiGeneratorExportedPluginType } from '@aurora/shared';
 import type { ExportDeclaration } from 'ts-morph';
 
 export function analyseExportedTypes(

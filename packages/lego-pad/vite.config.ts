@@ -12,7 +12,7 @@ export default defineConfig({
     cssCodeSplit: true,
     minify: false,
     rollupOptions: {
-      external: ['vue', /@vue/, /@nio-fe\//, /^lodash/, /@popperjs/, /^@vueuse/],
+      external: ['vue', /@vue/, /@aurora\//, /^lodash/, /@popperjs/, /^@vueuse/],
       output: [
         {
           format: 'es',

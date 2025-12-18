@@ -50,7 +50,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { DatePickerProps } from '@nio-fe/lego';
+import { DatePickerProps } from '@aurora/horizon-web';
 
 const value = ref();
 const value2 = ref('');

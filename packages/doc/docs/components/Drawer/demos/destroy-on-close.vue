@@ -17,7 +17,7 @@
 
 <script lang="tsx" setup>
 import { ref, defineComponent, reactive } from 'vue';
-import { $message, NForm, NFormInstance, NFormItem, NInput } from '@nio-fe/lego';
+import { $message, NForm, NFormInstance, NFormItem, NInput } from '@aurora/horizon-web';
 
 const inst = ref<any>();
 const destroyOnClose = ref(false);

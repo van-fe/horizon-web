@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { IconEdit, IconRubbish } from '@nio-fe/icon';
-import { $message } from '@nio-fe/lego';
+import { IconEdit, IconRubbish } from '@aurora/icon';
+import { $message } from '@aurora/horizon-web';
 import { ref } from 'vue';
 
 const disabled = ref(true);

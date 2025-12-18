@@ -1,10 +1,10 @@
 /**
  * 因为 IDE 对 monorepo 结构支持不好，所以有时引用某些包时，会错误地从 /src 下引入
  * // bad
- * import { IconEye } from '@nio-fe/icon/src';
+ * import { IconEye } from '@aurora/icon/src';
  *
  * // good
- * import { IconEye } from '@nio-fe/icon';
+ * import { IconEye } from '@aurora/icon';
  */
 module.exports = {
   meta: {
@@ -16,7 +16,7 @@ module.exports = {
   create(context) {
     return {
       ImportDeclaration(node) {
-        const errorPath = ['@nio-fe/icon/src', '@nio-fe/colors/src', '@nio-fe/shared/src', '@nio-fe/locale-vue/src', '@nio-fe/locale/src'];
+        const errorPath = ['@aurora/icon/src', '@aurora/colors/src', '@aurora/shared/src', '@aurora/locale-vue/src', '@aurora/locale/src'];
 
         if (errorPath.includes(node.source.value)) {
           context.report({

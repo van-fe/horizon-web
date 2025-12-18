@@ -37,9 +37,9 @@
 
 <script setup lang="ts">
 import { ref, Ref } from 'vue';
-import type { NFormInstance, NFormRule } from '@nio-fe/lego';
-import { $message } from '@nio-fe/lego';
-import { Arrayable } from '@nio-fe/shared';
+import type { NFormInstance, NFormRule } from '@aurora/horizon-web';
+import { $message } from '@aurora/horizon-web';
+import { Arrayable } from '@aurora/shared';
 
 const formRef = ref<NFormInstance | null>(null);
 const formData = ref({

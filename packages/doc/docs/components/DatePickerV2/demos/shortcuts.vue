@@ -11,8 +11,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { dayjs } from '@nio-fe/lego';
-import type { NDatePickerShortcutsType } from '@nio-fe/lego';
+import { dayjs } from '@aurora/horizon-web';
+import type { NDatePickerShortcutsType } from '@aurora/horizon-web';
 
 const value = ref();
 const value2 = ref();

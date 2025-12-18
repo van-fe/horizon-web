@@ -1,6 +1,6 @@
 import * as shell from 'shelljs';
 import * as fs from 'fs-extra';
-import { apiGeneratorOutPut } from '@nio-fe/shared/plugins';
+import { apiGeneratorOutPut } from '@aurora/shared/plugins';
 import path from 'path';
 
 export default function (checkExist = true) {

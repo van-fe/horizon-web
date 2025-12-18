@@ -1,5 +1,5 @@
 import ModalTimePicker from './src/ModalTimePicker';
-import { withInstall } from '@nio-fe/shared';
+import { withInstall } from '@aurora/shared';
 
 export const NModalTimePicker = withInstall(ModalTimePicker);
 

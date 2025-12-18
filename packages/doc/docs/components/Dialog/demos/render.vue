@@ -16,7 +16,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import UserForm, { UserExpose } from './user-form.vue';
-import { $message } from '@nio-fe/lego';
+import { $message } from '@aurora/horizon-web';
 
 const destroyOnClose = ref(true);
 const visible = ref(false);

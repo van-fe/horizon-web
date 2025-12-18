@@ -8,8 +8,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { dayjs } from '@nio-fe/lego';
-import type { TimePickerProps } from '@nio-fe/lego';
+import { dayjs } from '@aurora/horizon-web';
+import type { TimePickerProps } from '@aurora/horizon-web';
 
 const value = ref();
 

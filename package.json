@@ -1,5 +1,5 @@
 {
-  "name": "@nio-fe/lego-monorepo-workspace",
+  "name": "@aurora/horizon-web-monorepo-workspace",
   "private": true,
   "engines": {
     "node": ">= 20",
@@ -11,7 +11,7 @@
   "scripts": {
     "prepare": "husky install && ts-patch install -s",
     "build": "pnpm setVersion && pnpm --filter doc... build",
-    "build:theme": "pnpm --filter lego build:theme",
+    "build:theme": "pnpm --filter horizon-web build:theme",
     "dev:quick": "pnpm --filter doc dev",
     "dev:fast": "pnpm --filter doc dev:fast",
     "new": "sucrase-node scripts/new/index.ts",
@@ -21,8 +21,8 @@
     "modify:version": "bun run scripts/modifyVersion.ts",
     "pub": "sucrase-node scripts/publish.ts",
     "setVersion": "bun run scripts/setVersionFile.ts",
-    "vitest:all": "pnpm vitest:lego && pnpm vitest:unplugin-resolver && pnpm vitest:colors",
-    "vitest:lego": "vitest run --dir ./packages/lego/src --config ./packages/lego/vitest.config.ts",
+    "vitest:all": "pnpm vitest:horizon-web && pnpm vitest:unplugin-resolver && pnpm vitest:colors",
+    "vitest:horizon-web": "vitest run --dir ./packages/horizon-web/src --config ./packages/horizon-web/vitest.config.ts",
     "vitest:unplugin-resolver": "vitest run --dir ./packages/unplugin-resolver --config ./packages/unplugin-resolver/vitest.config.ts",
     "vitest:colors": "vitest run --dir ./packages/colors/src --config ./packages/colors/vite.config.ts",
     "git:prune": "git remote prune origin && git branch -vv | grep 'origin/.*: gone]' | awk '{print $1}' | xargs git branch -d",
@@ -38,8 +38,8 @@
     "@codemirror/lang-javascript": "^6.2.2",
     "@commitlint/cli": "^17.6.7",
     "@commitlint/config-conventional": "^17.6.7",
-    "@nio-fe/eslint-plugin-lego": "workspace:*",
-    "@nio-fe/lego": "workspace:*",
+    "@aurora/eslint-plugin-horizon-web": "workspace:*",
+    "@aurora/horizon-web": "workspace:*",
     "@oxlint/migrate": "^0.16.5",
     "@rollup/plugin-alias": "^3.1.9",
     "@rollup/plugin-babel": "^6.0.3",

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { IconEdit, IconEye, IconRubbish } from '@nio-fe/icon';
-import { $message } from '@nio-fe/lego';
+import { IconEdit, IconEye, IconRubbish } from '@aurora/icon';
+import { $message } from '@aurora/horizon-web';
 import { ref } from 'vue';
 
 const size = ref(150);

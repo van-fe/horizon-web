@@ -4,8 +4,8 @@
 
 <script lang="tsx">
 import { defineComponent } from 'vue';
-import { IconCopy } from '@nio-fe/icon';
-import { $message } from '@nio-fe/lego';
+import { IconCopy } from '@aurora/icon';
+import { $message } from '@aurora/horizon-web';
 
 export default defineComponent({
   name: 'CopyBtn',

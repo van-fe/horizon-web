@@ -4,7 +4,7 @@
 </template>
 
 <script setup lang="ts">
-import { $alert, $confirm, $message } from '@nio-fe/lego';
+import { $alert, $confirm, $message } from '@aurora/horizon-web';
 
 const showAlert = () => {
   $alert('这是一段文本', '提示', {

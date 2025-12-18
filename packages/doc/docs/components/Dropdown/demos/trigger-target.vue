@@ -41,7 +41,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { IconArrowDown } from '@nio-fe/icon';
+import { IconArrowDown } from '@aurora/icon';
 
 const visible1 = ref(false);
 const visible2 = ref(false);

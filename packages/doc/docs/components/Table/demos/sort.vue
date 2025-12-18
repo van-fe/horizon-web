@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { faker } from '@faker-js/faker';
-import { dayjs, NTableColumnData, NTableSortOrderEnum } from '@nio-fe/lego';
+import { dayjs, NTableColumnData, NTableSortOrderEnum } from '@aurora/horizon-web';
 
 interface TableData {
   id: number;

@@ -8,7 +8,7 @@
 
 <script lang="ts" setup>
 import { onUnmounted } from 'vue';
-import { $loadingBar } from '@nio-fe/lego';
+import { $loadingBar } from '@aurora/horizon-web';
 const start = () => {
   $loadingBar.start();
 };

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { inject } from 'vue';
-import { defaultLocale, localeInjectKey } from '@nio-fe/lego';
-import { LocaleSupportLang } from '@nio-fe/locale-vue';
+import { defaultLocale, localeInjectKey } from '@aurora/horizon-web';
+import { LocaleSupportLang } from '@aurora/locale-vue';
 
 const locale = inject(localeInjectKey, defaultLocale);
 </script>

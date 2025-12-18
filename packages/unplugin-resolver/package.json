@@ -1,5 +1,5 @@
 {
-  "name": "@nio-fe/unplugin-resolver",
+  "name": "@aurora/unplugin-resolver",
   "version": "1.0.0",
   "description": "auto load on demand for unplugin-vue-component",
   "main": "dist/index.js",
@@ -17,7 +17,7 @@
   "keywords": [],
   "license": "ISC",
   "dependencies": {
-    "@nio-fe/shared": "workspace:*",
+    "@aurora/shared": "workspace:*",
     "consola": "^3.2.3"
   },
   "devDependencies": {

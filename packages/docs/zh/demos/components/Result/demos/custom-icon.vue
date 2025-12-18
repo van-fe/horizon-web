@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IconLoading } from '@nio-fe/icon';
+import { IconLoading } from '@aurora/icon';
 </script>
 
 <template>

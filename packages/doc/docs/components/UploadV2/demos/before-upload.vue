@@ -9,7 +9,7 @@
   </n-form>
   <n-upload
     v-model="modelValue"
-    action="https://lego-inspector.nioint.com/upload-mock"
+    action="https://horizon-web-inspector.nioint.com/upload-mock"
     method="POST"
     accept=".png"
     :multiple="multiple"
@@ -22,7 +22,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { $message, NUploadFileType, NUploadRawFileType, UploadProps , NUploadFileTypeEnum } from '@nio-fe/lego';
+import { $message, NUploadFileType, NUploadRawFileType, UploadProps , NUploadFileTypeEnum } from '@aurora/horizon-web';
 
 const acceptStrict = ref<UploadProps['acceptStrict']>(false);
 const multiple = ref(false);

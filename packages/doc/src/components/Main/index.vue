@@ -6,7 +6,7 @@
 
 
 <style lang="scss" scoped>
-@use '@nio-fe/lego/es/styles/mixins';
+@use '@aurora/horizon-web/es/styles/mixins';
 
 .main {
   width: 100%;

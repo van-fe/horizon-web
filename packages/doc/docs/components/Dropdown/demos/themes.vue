@@ -55,9 +55,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { $message } from '@nio-fe/lego';
-import { IconArrowDown } from '@nio-fe/icon';
-import type { DropdownProps } from '@nio-fe/lego';
+import { $message } from '@aurora/horizon-web';
+import { IconArrowDown } from '@aurora/icon';
+import type { DropdownProps } from '@aurora/horizon-web';
 
 const visible1 = ref(false);
 const theme = ref<DropdownProps['theme']>('default');

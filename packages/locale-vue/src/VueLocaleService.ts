@@ -1,5 +1,5 @@
-import type { LocalOptionType, LangService, NumberService, DateService } from '@nio-fe/locale';
-import { LocaleService, LocaleSupportLang } from '@nio-fe/locale';
+import type { LocalOptionType, LangService, NumberService, DateService } from '@aurora/locale';
+import { LocaleService, LocaleSupportLang } from '@aurora/locale';
 import type { App } from 'vue';
 import { reactive } from 'vue';
 import LangLocale from './components/LangLocale';

@@ -82,7 +82,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import type { NFormInstance } from '@nio-fe/lego';
+import type { NFormInstance } from '@aurora/horizon-web';
 
 const disabled = ref(true);
 const cascaderData = ref([]);

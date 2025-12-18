@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import type { NViewerSource } from '@nio-fe/lego';
+import type { NViewerSource } from '@aurora/horizon-web';
 export default defineComponent({
   setup() {
     const imagesRef = ref<NViewerSource[]>([]);

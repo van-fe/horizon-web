@@ -51,7 +51,7 @@
 <script lang="ts">
 import { faker } from '@faker-js/faker';
 import { defineComponent, onMounted, ref, computed } from 'vue';
-import { IconSearch } from '@nio-fe/icon';
+import { IconSearch } from '@aurora/icon';
 
 type Message = {
   id: number;

@@ -9,11 +9,11 @@ Lego 提供了全局配置国际化的配置。
 ```ts
 import App from './App.vue';
 import { createApp } from 'vue';
-import lego, { defineOption } from '@nio-fe/lego';
-import { LocaleSupportLang } from "@nio-fe/locale-vue";
+import horizon-web, { defineOption } from '@aurora/horizon-web';
+import { LocaleSupportLang } from "@aurora/locale-vue";
 
 createApp(App)
-  .use(lego, defineOption({
+  .use(horizon-web, defineOption({
   locale: {
     current: LocaleSupportLang.ZH_CN,
   }
@@ -29,8 +29,8 @@ createApp(App)
 ```ts
 import App from './App.vue';
 import { createApp } from 'vue';
-import { LegoProvides, defineOption } from '@nio-fe/lego';
-import { LocaleSupportLang } from "@nio-fe/locale-vue";
+import { LegoProvides, defineOption } from '@aurora/horizon-web';
+import { LocaleSupportLang } from "@aurora/locale-vue";
 
 createApp(App)
   .use(LegoProvides, defineOption({
@@ -44,7 +44,7 @@ createApp(App)
 
 ## Application
 
-Lego 还提供了一个 Vue 组件 [Application](/lego/components/Application) 用于全局配置国际化的设置
+Lego 还提供了一个 Vue 组件 [Application](/horizon-web/components/Application) 用于全局配置国际化的设置
 如果更改 `locale`，可以动态修改语言
 
 :::demo ../../components/Application/demos/i18n.vue:::
@@ -59,8 +59,8 @@ Lego 还提供了一个 Vue 组件 [Application](/lego/components/Application) �
 如果业务中有需要使用自定义的语言包，可以配置如下：
 
 ```ts
-import { LegoProvides, defineOption } from "@nio-fe/lego";
-import { LocaleSupportLang } from "@nio-fe/locale-vue";
+import { LegoProvides, defineOption } from "@aurora/horizon-web";
+import { LocaleSupportLang } from "@aurora/locale-vue";
 import En from "your-En-dictionary-file-path";
 import ZhCN from "your-ZhCn-dictionary-file-path";
 
@@ -79,7 +79,7 @@ createApp(App)
 
 // 需要IDE智能提示，则需要增加下面的代码：(只支持ts）
 
-declare module '@nio-fe/locale' {
+declare module '@aurora/locale' {
   type LocaleReturnLangDictionaryDataType = {
     [K in keyof typeof En]: typeof En[K];
   };
@@ -102,8 +102,8 @@ declare module '@vue/runtime-core' {
 
 ```ts
 import { defineComponent } from 'vue';
-import { localeInjectKey, defaultLocale } from '~/provides/localable'; // for lego developer
-// import { localeInjectKey } from '@nio-fe/lego'; // for third-part developer
+import { localeInjectKey, defaultLocale } from '~/provides/localable'; // for horizon-web developer
+// import { localeInjectKey } from '@aurora/horizon-web'; // for third-part developer
 import { inject } from '@vue/runtime-core';
 
 export default defineComponent({
@@ -111,7 +111,7 @@ export default defineComponent({
     const locale = inject(localeInjectKey, defaultLocale);
 
     return () => (
-      { locale?.value.langService.td().lego.colorPicker.clear }
+      { locale?.value.langService.td().horizon-web.colorPicker.clear }
     )
   }
 })

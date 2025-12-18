@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { $message } from '@nio-fe/lego';
+import { $message } from '@aurora/horizon-web';
 
 function onCommand(val: string) {
   $message.info(val);

@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { PickerProps } from '@nio-fe/lego';
+import type { PickerProps } from '@aurora/horizon-web';
 
 const size = ref<PickerProps['size']>('medium');
 const inputStyle = ref<PickerProps['inputStyle']>('normal');

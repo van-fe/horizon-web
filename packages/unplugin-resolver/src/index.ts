@@ -1,6 +1,6 @@
 import components from './components.json';
 import directives from './directives.json';
-import { useNamespace, pascalize } from '@nio-fe/shared';
+import { useNamespace, pascalize } from '@aurora/shared';
 import type { Lib } from 'vite-plugin-style-import';
 
 enum PluginResolverType {
@@ -68,9 +68,9 @@ const resolveComponents = (name: string, options: LegoResolverOption) => {
   if (iconPattern.test(name)) {
     return {
       name,
-      from: '@nio-fe/icon',
+      from: '@aurora/icon',
       sideEffects: options.importStyle
-        ? [`@nio-fe/icon/dist/${options.importStyle === 'scss' ? 'index.scss' : 'style.css'}`]
+        ? [`@aurora/icon/dist/${options.importStyle === 'scss' ? 'index.scss' : 'style.css'}`]
         : [],
     };
   }
@@ -79,10 +79,10 @@ const resolveComponents = (name: string, options: LegoResolverOption) => {
   if (tablePattern.test(name)) {
     return {
       name,
-      from: '@nio-fe/lego-table',
+      from: '@aurora/horizon-web-table',
       sideEffects: options.importStyle
         ? [
-            `@nio-fe/lego-table/dist/${
+            `@aurora/horizon-web-table/dist/${
               options.importStyle === 'scss' ? 'styles/index.scss' : 'style.css'
             }`,
           ]
@@ -95,24 +95,24 @@ const resolveComponents = (name: string, options: LegoResolverOption) => {
   });
 
   if (matched) {
-    const from = `@nio-fe/lego/${dirType}/components/${matched[0]}`;
+    const from = `@aurora/horizon-web/${dirType}/components/${matched[0]}`;
     const sideEffects: string[] = [];
 
     if (options.importStyle) {
       sideEffects.push(
-        `@nio-fe/lego/${dirType}/styles/base.${styleExt}`,
-        `@nio-fe/lego/${dirType}/styles/global-variables.${styleExt}`,
-        `@nio-fe/lego/${dirType}/components/${matched[0]}/src/style/index.${
+        `@aurora/horizon-web/${dirType}/styles/base.${styleExt}`,
+        `@aurora/horizon-web/${dirType}/styles/global-variables.${styleExt}`,
+        `@aurora/horizon-web/${dirType}/components/${matched[0]}/src/style/index.${
           styleExt === 'scss' ? 'unplugin.scss' : 'css'
         }`,
       );
 
       if (options.useResetStyle !== false) {
-        sideEffects.push(`@nio-fe/lego/${dirType}/styles/presets/reset.${styleExt}`);
+        sideEffects.push(`@aurora/horizon-web/${dirType}/styles/presets/reset.${styleExt}`);
       }
 
       if (options.usePresetStyle !== false) {
-        sideEffects.push(`@nio-fe/lego/${dirType}/styles/presets/index.${styleExt}`);
+        sideEffects.push(`@aurora/horizon-web/${dirType}/styles/presets/index.${styleExt}`);
       }
     }
 
@@ -142,17 +142,17 @@ const resolveDirectives = (name: string, options: LegoResolverOption) => {
 
   if (options.importStyle) {
     sideEffects.push(
-      `@nio-fe/lego/${dirType}/styles/base.${styleExt}`,
-      `@nio-fe/lego/${dirType}/styles/global-variables.${styleExt}`,
+      `@aurora/horizon-web/${dirType}/styles/base.${styleExt}`,
+      `@aurora/horizon-web/${dirType}/styles/global-variables.${styleExt}`,
     );
 
     if (options.useResetStyle === true || options.useResetStyle === undefined) {
-      sideEffects.push(`@nio-fe/lego/${dirType}/styles/presets/reset.${styleExt}`);
+      sideEffects.push(`@aurora/horizon-web/${dirType}/styles/presets/reset.${styleExt}`);
     }
 
     if (directive.hasStyle) {
       sideEffects.push(
-        `@nio-fe/lego/${dirType}/directives/${directive.from}/src/style/index.${
+        `@aurora/horizon-web/${dirType}/directives/${directive.from}/src/style/index.${
           styleExt === 'scss' ? 'unplugin.scss' : 'css'
         }`,
       );
@@ -161,7 +161,7 @@ const resolveDirectives = (name: string, options: LegoResolverOption) => {
 
   return {
     name: directive.importName,
-    from: `@nio-fe/lego/${dirType}/directives/${directive.from}`,
+    from: `@aurora/horizon-web/${dirType}/directives/${directive.from}`,
     sideEffects,
   };
 };
@@ -194,7 +194,7 @@ export function LegoVitePluginStyleImportResolvers(options: LegoBaseResolverOpti
   };
 
   return {
-    libraryName: '@nio-fe/lego',
+    libraryName: '@aurora/horizon-web',
     resolveStyle: (name: string) => {
       name = pascalize(name);
 
@@ -202,7 +202,7 @@ export function LegoVitePluginStyleImportResolvers(options: LegoBaseResolverOpti
 
       const iconPattern = new RegExp(`^NIcon$`);
       if (iconPattern.test(name)) {
-        return '@nio-fe/icon/dist/style.css';
+        return '@aurora/icon/dist/style.css';
       }
 
       const matched = Object.entries(components).find(([, reg]) => {
@@ -210,7 +210,7 @@ export function LegoVitePluginStyleImportResolvers(options: LegoBaseResolverOpti
       });
 
       if (matched) {
-        return `@nio-fe/lego/${dirType}/components/${matched[0]}/src/style/index${
+        return `@aurora/horizon-web/${dirType}/components/${matched[0]}/src/style/index${
           options.importStyle === 'css' ? '.css' : 'unplugin.scss'
         }`;
       }

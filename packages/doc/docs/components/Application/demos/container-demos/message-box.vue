@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { $confirm, $alert } from '@nio-fe/lego';
+import { $confirm, $alert } from '@aurora/horizon-web';
 import { ref } from 'vue';
 
 const method = ref('$alert');

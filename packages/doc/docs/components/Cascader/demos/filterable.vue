@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import type { NCascaderExtendOption } from '@nio-fe/lego';
+import type { NCascaderExtendOption } from '@aurora/horizon-web';
 import { onMounted, ref } from 'vue';
 
 const currentVal1 = ref<string[]>([]);

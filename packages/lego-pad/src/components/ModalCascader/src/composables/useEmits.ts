@@ -1,4 +1,4 @@
-import { useCascaderEmits } from '@nio-fe/lego';
+import { useCascaderEmits } from '@aurora/horizon-web';
 
 export const useModalCascaderEmits = {
   ...useCascaderEmits,

@@ -1,19 +1,19 @@
-# @nio-fe/locale-vue
+# @aurora/locale-vue
 
 ## What is it
-It is a library for `lego ui` to provide multiple locale methods.
+It is a library for `horizon-web ui` to provide multiple locale methods.
 
-It is based on `@nio-fe/locale` and `vue@3+`.
+It is based on `@aurora/locale` and `vue@3+`.
 
 ## How to Install
 ```bash
-pnpm add @nio-fe/locales-vue
+pnpm add @aurora/locales-vue
 ```
 
 ## How to use
 ```typescript
 import {app} from 'vue';
-import VueLocaleService from "@nio-fe/locale-vue";
+import VueLocaleService from "@aurora/locale-vue";
 
 app.use(VueLocaleService);
 ```

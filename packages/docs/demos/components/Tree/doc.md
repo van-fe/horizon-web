@@ -120,9 +120,9 @@
 对于 `ts` 类型报错的问题，可以在全局 `declare NTreeExtendsData` 类型解决（以下方 `demo` 中使用字段为例）：
 
 ```ts
-import type { NTreeExtendsData } from '@nio-fe/lego';
+import type { NTreeExtendsData } from '@aurora/horizon-web';
 
-declare module '@nio-fe/lego' {
+declare module '@aurora/horizon-web' {
   interface NTreeExtendsData {
     key?: string;
     text?: string;

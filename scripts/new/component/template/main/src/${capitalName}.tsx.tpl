@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue';
-import { ComponentClassBlock, cls, useNamespace } from '@nio-fe/shared';
-import type { LegoSetupContext } from '@nio-fe/shared';
+import { ComponentClassBlock, cls, useNamespace } from '@aurora/shared';
+import type { LegoSetupContext } from '@aurora/shared';
 import { use${capitalName}Props } from './composables/useProps';
 import { use${capitalName}Emits } from './composables/useEmits';
 import { use${capitalName}Slots } from './composables/useSlots';

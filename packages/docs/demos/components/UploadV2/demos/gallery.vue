@@ -18,7 +18,7 @@
   <n-button class="mb-2" @click="change">修改原始 modelValue</n-button>
   <n-upload
     v-model="modelValue"
-    action="https://lego-inspector.nioint.com/upload-mock"
+    action="https://horizon-web-inspector.nioint.com/upload-mock"
     type="gallery"
     :multiple="true"
     :size="size"
@@ -33,8 +33,8 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import type { NUploadUserFile, UploadProps, NUploadFileType } from '@nio-fe/lego';
-import type { Data } from '@nio-fe/shared';
+import type { NUploadUserFile, UploadProps, NUploadFileType } from '@aurora/horizon-web';
+import type { Data } from '@aurora/shared';
 
 const size = ref<UploadProps['size']>('medium');
 const galleryShape = ref<UploadProps['galleryShape']>('rectangle');
@@ -47,7 +47,7 @@ const modelValue = ref<NUploadUserFile[]>(
     },
     {
       name: 'preview.mp4',
-      url: 'https://cdn-fx.nio.com/fx/lego/__cdn__/aurora-background.mp4',
+      url: 'https://cdn-fx.nio.com/fx/horizon-web/__cdn__/aurora-background.mp4',
     },
   ],
 );

@@ -15,24 +15,24 @@ types
 packages/shared/plugins/*.js
 packages/shared/plugins/*.js.map
 
-# lego
-packages/lego/src/styles/colors.ts
-packages/lego/src/styles/theme-config.ts
-packages/lego/src/styles/theme-types.ts
-packages/lego/src/styles/basicTokens.ts
-packages/lego/src/styles/elementTokens.ts
-packages/lego/json/
-packages/lego/coverage/
-packages/lego/src/components/emits.ts
-packages/lego/src/components/slots.ts
-packages/lego/src/components/exposes.ts
-packages/lego/src/components/globalComponents.ts
-packages/lego/src/components/globalTypes.ts
-packages/lego/src/components/index.ts
-packages/lego/src/components/props.ts
-packages/lego/src/directives/index.ts
-packages/lego/src/methods/index.ts
-packages/lego/build/**/*.js
+# horizon-web
+packages/horizon-web/src/styles/colors.ts
+packages/horizon-web/src/styles/theme-config.ts
+packages/horizon-web/src/styles/theme-types.ts
+packages/horizon-web/src/styles/basicTokens.ts
+packages/horizon-web/src/styles/elementTokens.ts
+packages/horizon-web/json/
+packages/horizon-web/coverage/
+packages/horizon-web/src/components/emits.ts
+packages/horizon-web/src/components/slots.ts
+packages/horizon-web/src/components/exposes.ts
+packages/horizon-web/src/components/globalComponents.ts
+packages/horizon-web/src/components/globalTypes.ts
+packages/horizon-web/src/components/index.ts
+packages/horizon-web/src/components/props.ts
+packages/horizon-web/src/directives/index.ts
+packages/horizon-web/src/methods/index.ts
+packages/horizon-web/build/**/*.js
 *.temp.*
 
 # doc

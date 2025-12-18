@@ -19,7 +19,7 @@ const values2 = ref([]);
 const baseData = ref([]);
 
 onMounted(async()=>{
-  baseData.value = await fetch('https://static.nio.com/fx-static/lego/clhoirqpc0000088sgljrau3o/cascader-options.json').then(r => r.json());
+  baseData.value = await fetch('https://static.nio.com/fx-static/horizon-web/clhoirqpc0000088sgljrau3o/cascader-options.json').then(r => r.json());
 });
 </script>
 

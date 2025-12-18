@@ -1,5 +1,5 @@
 import type { InjectionKey, Ref, ComputedRef } from 'vue';
-import { generatorInjectedKeyName } from '@nio-fe/shared';
+import { generatorInjectedKeyName } from '@aurora/shared';
 import type { GroupedBasicToken } from '~/config/themes/Tokens';
 import type { CurrentConfigType } from '~/components/Header/ThemeSetting/utils/oldTokenTransform';
 

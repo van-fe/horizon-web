@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import { ref, shallowRef } from 'vue';
-import { $alert, $message, NGuide } from '@nio-fe/lego';
+import { $alert, $message, NGuide } from '@aurora/horizon-web';
 
 const guideRef = shallowRef<typeof NGuide | null>(null);
 const inputRef = shallowRef<HTMLElement | null>(null);

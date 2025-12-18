@@ -16,8 +16,8 @@
 
 <script setup lang="ts">
 import { onMounted, ref, shallowRef } from 'vue';
-import type { GuideItemProps } from '@nio-fe/lego';
-import { $message } from '@nio-fe/lego';
+import type { GuideItemProps } from '@aurora/horizon-web';
+import { $message } from '@aurora/horizon-web';
 
 const firstRef = shallowRef<HTMLElement | null>(null);
 const thirdRef = shallowRef<HTMLElement | null>(null);

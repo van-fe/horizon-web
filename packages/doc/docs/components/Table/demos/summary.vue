@@ -29,7 +29,7 @@
 import { ref, h } from 'vue';
 import type { VNode } from 'vue';
 import { faker } from '@faker-js/faker';
-import { NTableSummaryMethodType } from '@nio-fe/lego';
+import { NTableSummaryMethodType } from '@aurora/horizon-web';
 import { Decimal } from 'decimal.js';
 import get from 'lodash/get';
 

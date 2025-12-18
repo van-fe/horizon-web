@@ -1,5 +1,5 @@
 import ModalSelect from './src/ModalSelect';
-import { withInstall } from '@nio-fe/shared';
+import { withInstall } from '@aurora/shared';
 
 export const NModalSelect = withInstall(ModalSelect);
 

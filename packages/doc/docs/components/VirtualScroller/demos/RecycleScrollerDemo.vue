@@ -119,7 +119,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted, nextTick, watch, computed } from 'vue';
-import { NRecycleScrollerInstance } from '@nio-fe/lego';
+import { NRecycleScrollerInstance } from '@aurora/horizon-web';
 import { faker } from '@faker-js/faker';
 
 type Value = {

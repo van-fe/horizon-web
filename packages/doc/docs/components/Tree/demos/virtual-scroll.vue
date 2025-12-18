@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import { shallowRef } from 'vue';
-import type { NTreeData } from '@nio-fe/lego';
+import type { NTreeData } from '@aurora/horizon-web';
 
 const baseData = shallowRef<NTreeData[]>(new Array(100).fill(0).map((_, i) => ({
   label: `${i + 1}`,

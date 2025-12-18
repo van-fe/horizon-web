@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { $confirm } from '@nio-fe/lego';
+import { $confirm } from '@aurora/horizon-web';
 
 const modelValue = ref(false);
 

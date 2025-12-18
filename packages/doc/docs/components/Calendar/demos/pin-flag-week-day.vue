@@ -58,7 +58,7 @@
 
 <script setup lang="ts">
 import { defineComponent, ref } from 'vue';
-import { NCalendarPinFlag } from '@nio-fe/lego';
+import { NCalendarPinFlag } from '@aurora/horizon-web';
 import dayjs, { Dayjs } from 'dayjs';
 
 const reserveEvent = ref(1);

@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts" setup>
-import { DrawerPlacement } from '@nio-fe/lego/es/components/Drawer/src/composables/useProps';
+import { DrawerPlacement } from '@aurora/horizon-web/es/components/Drawer/src/composables/useProps';
 import { ref } from 'vue';
 
 const placement = ref<DrawerPlacement>('right');

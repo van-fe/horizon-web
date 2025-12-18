@@ -44,7 +44,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { NDropdown } from '@nio-fe/lego';
+import { NDropdown } from '@aurora/horizon-web';
 
 const dropdown = ref<typeof NDropdown | null>(null);
 const visible = ref(false);

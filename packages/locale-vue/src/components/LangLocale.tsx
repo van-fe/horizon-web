@@ -1,7 +1,7 @@
 import type { PropType } from 'vue';
 import { defineComponent, getCurrentInstance } from 'vue';
-import type { LocaleSupportLang } from '@nio-fe/locale';
-import { useNamespace } from '@nio-fe/shared';
+import type { LocaleSupportLang } from '@aurora/locale';
+import { useNamespace } from '@aurora/shared';
 
 export default defineComponent({
   name: `${useNamespace()}LangLocale`,
@@ -16,6 +16,6 @@ export default defineComponent({
   },
   setup(props) {
     const { proxy } = getCurrentInstance()!;
-    return () => <div class="lego-date-locale">{proxy!.$root!.t(props.value, props.lang)}</div>;
+    return () => <div class="horizon-web-date-locale">{proxy!.$root!.t(props.value, props.lang)}</div>;
   },
 });

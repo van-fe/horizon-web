@@ -2,13 +2,13 @@
 
 ### 安装
 ```
-npm i @nio-fe/lego
+npm i @aurora/horizon-web
 ```
 ### 全量使用
 ```ts
 import { createApp } from 'vue';
-import Lego from '@nio-fe/lego';
-import '@nio-fe/lego/dist/style.css';
+import Lego from '@aurora/horizon-web';
+import '@aurora/horizon-web/dist/style.css';
 import App from './App.vue';
 
 const app = createApp(App).use(Lego);
@@ -20,7 +20,7 @@ app.mount('#app');
 ```ts
 // src/main.ts
 import { createApp } from 'vue';
-import { LegoProvides } from '@nio-fe/lego';
+import { LegoProvides } from '@aurora/horizon-web';
 import App from './App.vue';
 
 const app = createApp(App).use(LegoProvides);
@@ -31,7 +31,7 @@ app.mount('#app');
 // vite.config.ts
 import { defineConfig } from 'vite';
 import Components from 'unplugin-vue-components/vite';
-import { LegoPluginResolvers } from '@nio-fe/unplugin-resolver';
+import { LegoPluginResolvers } from '@aurora/unplugin-resolver';
 
 export default defineConfig({
   // ...

@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
-import { NScrollbar } from '@nio-fe/lego';
+import { NScrollbar } from '@aurora/horizon-web';
 
 const scrollbar = ref<typeof NScrollbar | null>(null);
 const scrollHeight = ref(0);

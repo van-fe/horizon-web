@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref, h } from 'vue';
-import type { NTreeHighlightMethod, NExtendTreeNodeData } from '@nio-fe/lego';
+import type { NTreeHighlightMethod, NExtendTreeNodeData } from '@aurora/horizon-web';
 
 const baseTreeData = ref([]);
 
@@ -42,7 +42,7 @@ const highlightMethod: NTreeHighlightMethod = (inputValue, node) => {
 };
 
 onMounted(() => {
-  fetch('https://static.nio.com/fx-static/lego/clrk8znpi000109bebmtiggbz/tree-data.json')
+  fetch('https://static.nio.com/fx-static/horizon-web/clrk8znpi000109bebmtiggbz/tree-data.json')
     .then(res => res.json())
     .then(res => {
       baseTreeData.value = res;

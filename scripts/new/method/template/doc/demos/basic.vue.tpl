@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { ${nameWithPrefix} } from '@nio-fe/lego';
+import { ${nameWithPrefix} } from '@aurora/horizon-web';
 
 function onClick() {
   ${nameWithPrefix}({});

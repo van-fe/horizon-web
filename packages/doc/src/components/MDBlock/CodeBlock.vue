@@ -61,7 +61,7 @@ const highlightedCode = Prism.highlight(decode(slots.highlight?.()[0].children a
 </template>
 
 <style lang="scss" scoped>
-@use '@nio-fe/lego/es/styles/mixins';
+@use '@aurora/horizon-web/es/styles/mixins';
 
 .code-area {
   :deep(#{mixins.block-name('collapse-item__content')}) {

@@ -6,13 +6,13 @@
 
 ::: code-group
 ```sh [npm]
-$ npm install unplugin-vue-components @nio-fe/unplugin-resolver -D
+$ npm install unplugin-vue-components @aurora/unplugin-resolver -D
 ```
 ```sh [yarn]
-$ yarn add unplugin-vue-components @nio-fe/unplugin-resolver -D
+$ yarn add unplugin-vue-components @aurora/unplugin-resolver -D
 ```
 ```sh [pnpm]
-$ pnpm add unplugin-vue-components @nio-fe/unplugin-resolver -D
+$ pnpm add unplugin-vue-components @aurora/unplugin-resolver -D
 ```
 :::
 
@@ -23,8 +23,8 @@ $ pnpm add unplugin-vue-components @nio-fe/unplugin-resolver -D
 ```ts {3,4,7}
 import { createApp } from 'vue';
 import App from './App.vue';
-import { LegoProvides } from '@nio-fe/lego';
-import '@nio-fe/lego/es/styles/base.css';
+import { LegoProvides } from '@aurora/horizon-web';
+import '@aurora/horizon-web/es/styles/base.css';
 
 createApp(App)
   .use(LegoProvides)
@@ -36,7 +36,7 @@ createApp(App)
 ```ts [Vite]
 import { defineConfig } from 'vite';
 import Components from 'unplugin-vue-components/vite';
-import { LegoPluginResolvers } from '@nio-fe/unplugin-resolver';
+import { LegoPluginResolvers } from '@aurora/unplugin-resolver';
 
 export default defineConfig({
   plugins: [
@@ -52,7 +52,7 @@ export default defineConfig({
 ```
 ```ts [VueCli]
 const { default: Components } = require('unplugin-vue-components/webpack');
-const { LegoPluginResolvers } = require('@nio-fe/unplugin-resolver');
+const { LegoPluginResolvers } = require('@aurora/unplugin-resolver');
 
 module.exports = {
   configureWebpack: {
@@ -70,7 +70,7 @@ module.exports = {
 ```
 ```ts [Webpack]
 const { default: Components } = require('unplugin-vue-components/webpack');
-const { LegoPluginResolvers } = require('@nio-fe/unplugin-resolver');
+const { LegoPluginResolvers } = require('@aurora/unplugin-resolver');
 
 module.exports = {
   plugins: [

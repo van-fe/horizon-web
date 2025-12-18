@@ -53,8 +53,8 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { $confirm, $message } from '@nio-fe/lego';
-import type { NTreeNodeDataWithLevel, NTreeNodeData } from '@nio-fe/lego';
+import { $confirm, $message } from '@aurora/horizon-web';
+import type { NTreeNodeDataWithLevel, NTreeNodeData } from '@aurora/horizon-web';
 
 const draggable = ref(true);
 const dragOnHandler = ref(true);
@@ -82,7 +82,7 @@ function onUpdate(treeData: NTreeNodeData[]) {
 }
 
 onMounted(() => {
-  fetch('https://static.nio.com/fx-static/lego/cm5nijv7000mb083a5m3n3l46/tree-data-undraggable.json')
+  fetch('https://static.nio.com/fx-static/horizon-web/cm5nijv7000mb083a5m3n3l46/tree-data-undraggable.json')
     .then(res => res.json())
     .then(res => {
       baseTreeData1.value = res.concat();

@@ -1,10 +1,10 @@
 import { Project } from 'ts-morph';
-import { apiGeneratorOutPut, legoProjectRoot, writeJsonFile } from '@nio-fe/shared/plugins';
+import { apiGeneratorOutPut, legoProjectRoot, writeJsonFile } from '@aurora/shared/plugins';
 import type {
   ApiGeneratorAnalysedDirectiveDetail,
   ApiGeneratorAnalysedOptionType,
   ApiGeneratorExportedDirectives,
-} from '@nio-fe/shared';
+} from '@aurora/shared';
 import analyseOptions from './analyseOptions';
 import directivesData from '../../../dist/directives-dependencies.json';
 

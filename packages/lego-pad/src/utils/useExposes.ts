@@ -1,4 +1,4 @@
-import type { LegoComponentInstance, LegoSetupContext } from '@nio-fe/shared';
+import type { LegoComponentInstance, LegoSetupContext } from '@aurora/shared';
 import type { Ref } from 'vue';
 
 export default function useExposes<T extends Record<string, any>, Key extends keyof T & string>(

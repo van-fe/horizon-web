@@ -14,24 +14,24 @@ export default defineConfig({
       fileName: format => {
         switch (format) {
           case 'iife':
-            return 'lego-pad-browser.iife.js';
+            return 'horizon-web-pad-browser.iife.js';
           case 'umd':
-            return 'lego-pad-browser.umd.js';
+            return 'horizon-web-pad-browser.umd.js';
           case 'es':
           default:
-            return 'lego-pad-browser.mjs';
+            return 'horizon-web-pad-browser.mjs';
         }
       },
     },
     rollupOptions: {
-      external: ['vue', '@nio-fe/icon', '@nio-fe/shared', '@nio-fe/locale-vue', '@nio-fe/lego'],
+      external: ['vue', '@aurora/icon', '@aurora/shared', '@aurora/locale-vue', '@aurora/horizon-web'],
       preserveEntrySignatures: 'strict',
       output: {
         globals: {
           vue: 'Vue',
-          '@nio-fe/locale-vue': 'localeVue',
-          '@nio-fe/shared': 'shared',
-          '@nio-fe/lego': 'lego',
+          '@aurora/locale-vue': 'localeVue',
+          '@aurora/shared': 'shared',
+          '@aurora/horizon-web': 'horizon-web',
         },
         minifyInternalExports: false,
         externalLiveBindings: false,

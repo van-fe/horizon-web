@@ -85,7 +85,7 @@
 
 <script setup lang="ts">
 import { ref, h } from 'vue';
-import { $message, NFormRule, NFormItemHelper, NFormInstance } from '@nio-fe/lego';
+import { $message, NFormRule, NFormItemHelper, NFormInstance } from '@aurora/horizon-web';
 
 const helperTheme = ref('light');
 

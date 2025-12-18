@@ -1,4 +1,4 @@
-@use '@nio-fe/lego/es/styles/mixins';
+@use '@aurora/horizon-web/es/styles/mixins';
 
 @include mixins.b('modal-select') {
   @include mixins.e('drawer') {

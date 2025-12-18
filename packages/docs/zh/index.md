@@ -8,7 +8,7 @@ hero:
   actions:
     - theme: brand
       text: 为什么选用 LEGO ?
-      link: /guide/why-choose-lego
+      link: /guide/why-choose-horizon-web
     - theme: alt
       text: 快速开始
       link: /guide/start

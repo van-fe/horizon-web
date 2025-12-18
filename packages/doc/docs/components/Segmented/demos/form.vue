@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { NFormInstance, $message } from '@nio-fe/lego';
+import { NFormInstance, $message } from '@aurora/horizon-web';
 import { ref } from 'vue';
 
 const values = ref({

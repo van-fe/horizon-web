@@ -15,7 +15,7 @@
       <n-upload
         id="background-uploader"
         v-model:use-background="useBackground"
-        action="https://lego-inspector.nioint.com/upload-mock"
+        action="https://horizon-web-inspector.nioint.com/upload-mock"
         button-text="单选手动上传"
         :show-file-list="showFileList"
         :auto-upload="false"
@@ -26,7 +26,7 @@
     <n-col :span="24">
       <n-upload
         v-model:use-background="useBackground"
-        action="https://lego-inspector.nioint.com/upload-mock"
+        action="https://horizon-web-inspector.nioint.com/upload-mock"
         button-text="多选自动上传"
         :multiple="true"
         :show-file-list="showFileList"
@@ -39,7 +39,7 @@
 
 <script setup lang="ts">
 import { ref, watch, onBeforeUnmount } from 'vue';
-import type { NUploadFileType } from '@nio-fe/lego';
+import type { NUploadFileType } from '@aurora/horizon-web';
 
 declare global {
   interface WindowEventMap {

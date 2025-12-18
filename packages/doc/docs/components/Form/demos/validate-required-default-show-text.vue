@@ -21,8 +21,8 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import type { NFormInstance } from '@nio-fe/lego';
-import { $message } from '@nio-fe/lego';
+import type { NFormInstance } from '@aurora/horizon-web';
+import { $message } from '@aurora/horizon-web';
 
 const formRef = ref<NFormInstance | null>(null);
 const formData = ref({

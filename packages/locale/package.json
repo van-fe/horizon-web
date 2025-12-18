@@ -1,5 +1,5 @@
 {
-  "name": "@nio-fe/locale",
+  "name": "@aurora/locale",
   "version": "1.0.0",
   "main": "./dist/locale.cjs",
   "module": "./dist/locale.js",
@@ -19,7 +19,7 @@
     "build:js": "bunx --bun vite build --config vite.config.ts"
   },
   "dependencies": {
-    "@nio-fe/shared": "workspace:*",
+    "@aurora/shared": "workspace:*",
     "dayjs": "^1.11.13",
     "lodash": "^4.17.21"
   }

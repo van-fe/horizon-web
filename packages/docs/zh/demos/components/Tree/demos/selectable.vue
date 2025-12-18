@@ -23,7 +23,7 @@ import { onMounted, ref } from 'vue';
 const baseTreeData = ref([]);
 
 onMounted(() => {
-  fetch('https://static.nio.com/fx-static/lego/clup57llj000808a34cambuix/unselectable-options.json')
+  fetch('https://static.nio.com/fx-static/horizon-web/clup57llj000808a34cambuix/unselectable-options.json')
     .then(res => res.json())
     .then(res => {
       baseTreeData.value = res;

@@ -1,5 +1,5 @@
-import type { ExtractMethodOptions } from '@nio-fe/shared';
-import { declarePropType } from '@nio-fe/shared';
+import type { ExtractMethodOptions } from '@aurora/shared';
+import { declarePropType } from '@aurora/shared';
 
 export const use${capitalName}Options = declarePropType({});
 

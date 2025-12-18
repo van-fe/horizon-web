@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { IconPhone, IconMessage, IconStar, IconStarFilled } from '@nio-fe/icon';
-import { $message } from '@nio-fe/lego';
+import { IconPhone, IconMessage, IconStar, IconStarFilled } from '@aurora/icon';
+import { $message } from '@aurora/horizon-web';
 import { ref } from 'vue';
 
 const isStared = ref(false);

@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, h } from 'vue';
-import type { NCascaderOption } from '@nio-fe/lego';
+import type { NCascaderOption } from '@aurora/horizon-web';
 
 
 export default defineComponent({

@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import { ref, Ref } from 'vue';
-import type { TransferDataProps } from '@nio-fe/lego';
+import type { TransferDataProps } from '@aurora/horizon-web';
 
 const order = ref('push') as Ref<'original' | 'push' | 'unshift'>; 
 

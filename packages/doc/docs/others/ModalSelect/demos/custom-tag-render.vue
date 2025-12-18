@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { SelectProps, TagProps } from '@nio-fe/lego';
+import type { SelectProps, TagProps } from '@aurora/horizon-web';
 
 const optionList: Array<{label: string; type?: TagProps['type']; color?: string}> = [
   {label: '正常', color: 'brand' },

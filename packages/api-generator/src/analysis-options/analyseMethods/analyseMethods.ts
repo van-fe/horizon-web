@@ -1,7 +1,7 @@
 import type { MethodDeclaration, Project, PropertyAssignment, ArrowFunction } from 'ts-morph';
 import { ts } from 'ts-morph';
-import type { ApiGeneratorExportedMethod, ApiGeneratorAnalysedMethodType } from '@nio-fe/shared';
-import { ApiGeneratorAnalysedBaseType } from '@nio-fe/shared';
+import type { ApiGeneratorExportedMethod, ApiGeneratorAnalysedMethodType } from '@aurora/shared';
+import { ApiGeneratorAnalysedBaseType } from '@aurora/shared';
 import type { FileElements } from '../../utils/analyseFileElements';
 import analyseFileElements from '../../utils/analyseFileElements';
 import completeFileExtName from '../../utils/completeFileExtName';

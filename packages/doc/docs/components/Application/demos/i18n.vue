@@ -8,18 +8,18 @@
       </n-form-item>
     </n-form>
     <p style="margin-top: 20px;">
-      {{ td().lego.datePicker.now }}
+      {{ td().horizon-web.datePicker.now }}
     </p>
     <p>
-      {{ td().lego.datePicker.today }}
+      {{ td().horizon-web.datePicker.today }}
     </p>
   </n-application>
 </template>
 
 <script setup lang="ts">
 import { inject } from 'vue';
-import { LocaleSupportLang } from '@nio-fe/locale-vue';
-import { localeInjectKey, defaultLocale } from '@nio-fe/lego';
+import { LocaleSupportLang } from '@aurora/locale-vue';
+import { localeInjectKey, defaultLocale } from '@aurora/horizon-web';
 
 const locale = inject(localeInjectKey, defaultLocale);
 </script>

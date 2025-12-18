@@ -7,13 +7,13 @@ import {
   legoProjectRoot,
   apiGeneratorOutPut,
   methodsRoot,
-} from '@nio-fe/shared/plugins';
+} from '@aurora/shared/plugins';
 import type {
   ApiGeneratorExportedPluginType,
   ApiGeneratorExportedComponent,
   ApiGeneratorExportedDirectives,
   ApiGeneratorExportedMethod,
-} from '@nio-fe/shared';
+} from '@aurora/shared';
 import { analyseComponentExports } from './components';
 import { analyseDirectiveExports } from './directives';
 import { analyseMethodExports } from './methods';

@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import { shallowRef } from 'vue';
-import type { OptionProps } from '@nio-fe/lego/es/components/Select/src/composables/useProps';
+import type { OptionProps } from '@aurora/horizon-web/es/components/Select/src/composables/useProps';
 
 const value1 = shallowRef({ "value": 1, "label": "中国" });
 const value2 = shallowRef([{ "value": 1, "label": "中国" }]);

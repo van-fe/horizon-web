@@ -11,9 +11,9 @@ const showTimeZone = inject(showTimeZoneInjectedKey)!;
 
 watch(dark, val => {
   if (val) {
-    document.querySelector('html')?.classList.add('lego-dark-mode');
+    document.querySelector('html')?.classList.add('horizon-web-dark-mode');
   } else {
-    document.querySelector('html')?.classList.remove('lego-dark-mode');
+    document.querySelector('html')?.classList.remove('horizon-web-dark-mode');
   }
 }, {
   immediate: true,
@@ -23,7 +23,7 @@ watch(dark, val => {
 <template>
   <div class='header'>
     <div class='logo-wrapper'>
-      <img src="https://cdn-fx.nio.com/fx/lego/ObrJWptCzEzZto4D0eMjS/logo.png" height="40" alt="lego logo" />
+      <img src="https://cdn-fx.nio.com/fx/horizon-web/ObrJWptCzEzZto4D0eMjS/logo.png" height="40" alt="horizon-web logo" />
     </div>
     <div class='header-body'>
       <n-space size="small">
@@ -51,7 +51,7 @@ watch(dark, val => {
 
 
 <style lang="scss" scoped>
-@use '@nio-fe/lego/es/styles/mixins';
+@use '@aurora/horizon-web/es/styles/mixins';
 
 .header {
   height: 100%;

@@ -2,11 +2,11 @@
 import Aside from './components/Aside/index.vue';
 import Main from './components/Main/index.vue';
 import Header from './components/Header/index.vue';
-import { NSuitPad } from '@nio-fe/lego-pad';
+import { NSuitPad } from '@aurora/horizon-web-pad';
 import { routes } from './routes';
 import { inject, provide, ref } from 'vue';
-import type { ApplicationProps } from '@nio-fe/lego';
-import { defaultLocale, localeInjectKey } from '@nio-fe/lego';
+import type { ApplicationProps } from '@aurora/horizon-web';
+import { defaultLocale, localeInjectKey } from '@aurora/horizon-web';
 import { padModeInjectedKey, showTimeZoneInjectedKey, sizeChangeInjectedKey } from './utils/injectedKeys';
 import { useLocalStorage } from '@vueuse/core';
 
@@ -26,7 +26,7 @@ provide(showTimeZoneInjectedKey, showTimeZone);
 <template>
   <n-suit-pad :force="padMode">
     <n-application :locale="locale?.current" :size="size" :use-button-spacing="true" :show-time-zone="showTimeZone">
-      <n-container class="lego-doc">
+      <n-container class="horizon-web-doc">
         <n-header>
           <Header />
         </n-header>

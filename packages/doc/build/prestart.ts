@@ -2,7 +2,7 @@ import getAnalysisJsonFiles from './getAnalysisJsonFiles';
 import * as shell from 'shelljs';
 
 function runLegoCreateIndexScript() {
-  shell.cd('../lego');
+  shell.cd('../horizon-web');
   shell.exec('pnpm run build:index');
 }
 

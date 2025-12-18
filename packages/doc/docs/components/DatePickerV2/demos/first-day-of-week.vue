@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { DatePickerProps } from '@nio-fe/lego';
+import type { DatePickerProps } from '@aurora/horizon-web';
 
 const value = ref();
 const values = ref();

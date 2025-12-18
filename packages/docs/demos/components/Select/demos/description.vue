@@ -40,7 +40,7 @@
 
 <script lang="ts" setup>
 import { ExtractPropTypes, ref } from 'vue';
-import { useOptionProps } from '@nio-fe/lego';
+import { useOptionProps } from '@aurora/horizon-web';
 
 const value1 = ref();
 const value2 = ref();

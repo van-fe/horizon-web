@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { NTreeDynamicLoadNode, NTreeNodeData } from '@nio-fe/lego';
+import type { NTreeDynamicLoadNode, NTreeNodeData } from '@aurora/horizon-web';
 
 const dynamicTreeData = ref<NTreeNodeData[]>([
   {

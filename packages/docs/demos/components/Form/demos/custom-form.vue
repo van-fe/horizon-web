@@ -32,9 +32,9 @@
 
 <script lang="ts">
 import { defineComponent, ref, h, watch, inject } from 'vue';
-import type { NFormInstance } from '@nio-fe/lego';
-import { $message, NFormItemTriggerInjectedKey, NFormItemErrorInjectedKey } from '@nio-fe/lego';
-import { isString, isUndefined } from '@nio-fe/shared';
+import type { NFormInstance } from '@aurora/horizon-web';
+import { $message, NFormItemTriggerInjectedKey, NFormItemErrorInjectedKey } from '@aurora/horizon-web';
+import { isString, isUndefined } from '@aurora/shared';
 
 const CustomInput = defineComponent({
   name: 'CustomInput',

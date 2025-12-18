@@ -25,7 +25,7 @@
 <script lang="ts">
 import { defineComponent, ref, h, watchEffect } from 'vue';
 
-import { $themes, colors } from '@nio-fe/lego';
+import { $themes, colors } from '@aurora/horizon-web';
 
 export default defineComponent({
   setup() {

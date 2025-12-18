@@ -72,9 +72,9 @@
 
 <script setup lang="ts">
 import { ExtractPropTypes, onMounted, ref } from 'vue';
-import { CascaderExposes, NCascader, useCascaderProps } from '@nio-fe/lego';
-import type { NCascaderExtendOption, NCascaderModelValueType } from '@nio-fe/lego';
-import { LegoComponentInstance } from '@nio-fe/shared';
+import { CascaderExposes, NCascader, useCascaderProps } from '@aurora/horizon-web';
+import type { NCascaderExtendOption, NCascaderModelValueType } from '@aurora/horizon-web';
+import { LegoComponentInstance } from '@aurora/shared';
 
 const cascaderDomRef1 = ref<LegoComponentInstance<typeof NCascader, CascaderExposes>>();
 const cascaderDomRef2 = ref<LegoComponentInstance<typeof NCascader, CascaderExposes>>();

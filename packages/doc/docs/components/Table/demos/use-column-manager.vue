@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { IconCheck, IconClose } from '@nio-fe/icon';
+import { IconCheck, IconClose } from '@aurora/icon';
 import { faker } from '@faker-js/faker';
 
 interface TableData {

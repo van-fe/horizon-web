@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { NEmpty } from '@nio-fe/lego';
+import { NEmpty } from '@aurora/horizon-web';
 
 type PresentedImageName = keyof typeof NEmpty.PRESENTED_IMAGES;
 

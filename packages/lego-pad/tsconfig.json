@@ -4,8 +4,8 @@
     "baseUrl": "./",
     "paths": {
       "~/*": ["src/*"],
-      "@nio-fe/lego": ["../lego/src"],
-      "@nio-fe/shared": ["../shared/src"]
+      "@aurora/horizon-web": ["../horizon-web/src"],
+      "@aurora/shared": ["../shared/src"]
     }
   }
 }

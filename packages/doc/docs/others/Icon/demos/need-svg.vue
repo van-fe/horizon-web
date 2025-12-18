@@ -42,7 +42,7 @@ import {
   IconLoadingLine,
   IconNio,
   IconTime,
-} from '@nio-fe/icon';
+} from '@aurora/icon';
 export default defineComponent({
   components: {
     IconTime,

@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import { $message, NButton, NSpace } from '@nio-fe/lego';
+import { $message, NButton, NSpace } from '@aurora/horizon-web';
 import { defineComponent, h } from 'vue';
 
 const ButtonGroup = defineComponent({

@@ -15,7 +15,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { $message } from '@nio-fe/lego';
+import { $message } from '@aurora/horizon-web';
 
 const visible = ref(false);
 const visible2 = ref(false);

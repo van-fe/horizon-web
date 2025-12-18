@@ -12,8 +12,8 @@ import type {
   ApiGeneratorAnalysedComponentDetail,
   ApiGeneratorAnalysedDirectiveDetail,
   ApiGeneratorAnalysedMethodDetail,
-} from '@nio-fe/shared';
-import { pascalize } from '@nio-fe/shared';
+} from '@aurora/shared';
+import { pascalize } from '@aurora/shared';
 
 const componentsAnalysis = componentsJson as unknown as ApiGeneratorAnalysedComponentDetail[];
 const directivesAnalysis = directivesJson as unknown as ApiGeneratorAnalysedDirectiveDetail[];

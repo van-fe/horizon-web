@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import type { NImageAction } from '@nio-fe/lego';
+import type { NImageAction } from '@aurora/horizon-web';
 export default defineComponent({
   setup() {
     const sizes = [150, 80, 40];

@@ -85,8 +85,8 @@
 
 <script setup lang="ts">
 import { ref, h } from 'vue';
-import { $message } from '@nio-fe/lego';
-import type { NFormRule, NFormItemHelper, NFormInstance, FormProps, InputProps } from '@nio-fe/lego';
+import { $message } from '@aurora/horizon-web';
+import type { NFormRule, NFormItemHelper, NFormInstance, FormProps, InputProps } from '@aurora/horizon-web';
 
 const helperTheme = ref<FormProps['helperTheme']>('light');
 

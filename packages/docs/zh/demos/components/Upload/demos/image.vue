@@ -40,7 +40,7 @@
 
 <script>
 import { defineComponent, ref } from 'vue';
-import { NUpload } from '@nio-fe/lego';
+import { NUpload } from '@aurora/horizon-web';
 
 export default defineComponent({
   setup() {

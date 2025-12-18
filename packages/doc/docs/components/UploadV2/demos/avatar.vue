@@ -1,7 +1,7 @@
 <template>
   <n-upload
     v-model="modelValue"
-    action="https://lego-inspector.nioint.com/upload-mock"
+    action="https://horizon-web-inspector.nioint.com/upload-mock"
     type="gallery"
     size="huge"
     gallery-shape="square"
@@ -13,8 +13,8 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { NUploadUserFile } from '@nio-fe/lego';
-import type { NUploadFile } from '@nio-fe/lego';
+import { NUploadUserFile } from '@aurora/horizon-web';
+import type { NUploadFile } from '@aurora/horizon-web';
 
 const modelValue = ref<NUploadUserFile>({
   name: 'background.jpg',

@@ -6,12 +6,12 @@
 
 ### 全量引入
 
-通常来说我们使用 lego 的方式如下：
+通常来说我们使用 horizon-web 的方式如下：
 
 ```ts
 import { createApp } from 'vue';
-import { Lego } from '@nio-fe/lego';
-import '@nio-fe/lego/dist/style.css'; 
+import { Lego } from '@aurora/horizon-web';
+import '@aurora/horizon-web/dist/style.css'; 
 
 import App from './App.vue';
 
@@ -28,9 +28,9 @@ app.use(Lego);
 
 ```javascript
 import { createApp } from 'vue';
-import { NButton, NInput } from 'packages/lego/src/index';
-import 'packages/lego/es/components/Button/src/style/index.css';
-import 'packages/lego/es/components/Input/src/style/index.css';
+import { NButton, NInput } from 'packages/horizon-web/src/index';
+import 'packages/horizon-web/es/components/Button/src/style/index.css';
+import 'packages/horizon-web/es/components/Input/src/style/index.css';
 
 import App from './App.vue';
 
@@ -44,13 +44,13 @@ app.use(NInput);
 
 ### 自动按需引入
 
-基于上面提到的问题，lego 在这里提供了一种自动按需加载的能力，其工作原理是会在构建过程中分析用到的组件，所以需要根据构建工具的不同做如下配置，以 `vite` 为例：
+基于上面提到的问题，horizon-web 在这里提供了一种自动按需加载的能力，其工作原理是会在构建过程中分析用到的组件，所以需要根据构建工具的不同做如下配置，以 `vite` 为例：
 
 ```ts
 // vite.config.ts
 import { defineConfig } from 'vite'
 import Components from 'unplugin-vue-components/vite'
-import { LegoPluginResolvers } from '@nio-fe/unplugin-resolver'
+import { LegoPluginResolvers } from '@aurora/unplugin-resolver'
 
 export default defineConfig({
   // ...
@@ -70,7 +70,7 @@ export default defineConfig({
 ```ts
 // main.ts
 import { createApp } from 'vue';
-import { LegoProvides } from '@nio-fe/lego';
+import { LegoProvides } from '@aurora/horizon-web';
 import App from './App.vue';
 
 const app = createApp(App).use(LegoProvides);
@@ -94,5 +94,5 @@ app.mount('#app');
 
 无需通过任何导入就可以直接使用组件，并且不会打包没有出现的代码，但是这种方式存在如下问题：
 
-* 不适合 JSX，无法在 JSX 中识别出来使用到的 lego 组件
+* 不适合 JSX，无法在 JSX 中识别出来使用到的 horizon-web 组件
 * 使用的组件名称必须是 `<n-xxx>`，不支持`动态组件`的按需引入，如果存在动态组件(形如：`<component :is="input" />`)，则涉及到的组件请参照 `手动按需引入` 的方式进行引入

@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-pnpm run vitest:all && pnpm -F lego run ts:check
+pnpm run vitest:all && pnpm -F horizon-web run ts:check

@@ -1,5 +1,5 @@
-@use '@nio-fe/lego/es/styles/mixins/config.scss';
-@use '@nio-fe/lego/es/styles/mixins';
+@use '@aurora/horizon-web/es/styles/mixins/config.scss';
+@use '@aurora/horizon-web/es/styles/mixins';
 @import './codeThemes/one-light';
 @import './codeThemes/vs-dark';
 
@@ -75,7 +75,7 @@ p {
 }
 
 // 站点样式
-.lego-doc {
+.horizon-web-doc {
   display: flex;
   height: 100vh;
 

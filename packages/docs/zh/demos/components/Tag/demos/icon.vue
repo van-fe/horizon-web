@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import {IconEye, IconComplete, IconHelp, IconRemind, IconCloseCircle} from '@nio-fe/icon';
+import {IconEye, IconComplete, IconHelp, IconRemind, IconCloseCircle} from '@aurora/icon';
 </script>
 
 <style scoped>

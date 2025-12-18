@@ -1,11 +1,11 @@
 <template>
-  <n-upload action="https://lego-inspector.nioint.com/upload-mock" :disabled="true" />
+  <n-upload action="https://horizon-web-inspector.nioint.com/upload-mock" :disabled="true" />
   <n-upload
-    action="https://lego-inspector.nioint.com/upload-mock"
+    action="https://horizon-web-inspector.nioint.com/upload-mock"
     type="gallery"
     :disabled="true"
   />
-  <n-upload action="https://lego-inspector.nioint.com/upload-mock" type="drop" :disabled="true" accept="image/*" />
+  <n-upload action="https://horizon-web-inspector.nioint.com/upload-mock" type="drop" :disabled="true" accept="image/*" />
 </template>
 
 <script lang="ts">

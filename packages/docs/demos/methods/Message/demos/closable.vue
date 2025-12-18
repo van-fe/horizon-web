@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts" setup>
-import { $message } from '@nio-fe/lego';
+import { $message } from '@aurora/horizon-web';
 const open1 = () => {
   $message({
     showClose: true,

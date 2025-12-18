@@ -11,7 +11,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { colors } from '@nio-fe/lego';
+import { colors } from '@aurora/horizon-web';
 
 export default defineComponent({
   setup() {

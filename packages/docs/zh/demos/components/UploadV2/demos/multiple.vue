@@ -2,7 +2,7 @@
   <n-space>
     <n-upload
       v-model="fileList"
-      action="https://lego-inspector.nioint.com/upload-mock"
+      action="https://horizon-web-inspector.nioint.com/upload-mock"
       :multiple="true"
       :limit="3"
       @change="handleChange"
@@ -21,8 +21,8 @@
 </template>
 
 <script lang="ts" setup>
-import type { NUploadFileType } from '@nio-fe/lego';
-import type { Data } from '@nio-fe/shared';
+import type { NUploadFileType } from '@aurora/horizon-web';
+import type { Data } from '@aurora/shared';
 import { ref } from 'vue';
 
 const fileList = ref([]);

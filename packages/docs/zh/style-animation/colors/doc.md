@@ -15,16 +15,16 @@
 :::demo ./demos/demo1.vue :::
 
 ### JavaScript 中使用
-`lego` 模块导出了一个叫做 `colors` 的对象，对于上述主题色以及位于 others 中的颜色，你可以直接通过如 `colors.primary` 拿到色值；对于包含 1~10 层次的颜色如 `brand`，`colors.brand` 会返回一个数组，你可以通过 0~9 下标获取到色值。
+`horizon-web` 模块导出了一个叫做 `colors` 的对象，对于上述主题色以及位于 others 中的颜色，你可以直接通过如 `colors.primary` 拿到色值；对于包含 1~10 层次的颜色如 `brand`，`colors.brand` 会返回一个数组，你可以通过 0~9 下标获取到色值。
 
 ### Demo
 ```js
-import { colors } from '@nio-fe/lego';
+import { colors } from '@aurora/horizon-web';
 colors.gray; // ['#FFFFFF', '#F4F5F7', '#E9EAEC', '#DFE1E5', '#CED0D6', '#929398', '#6C6E73', '#54565A', '#242629', '#000000']
 colors.white; // #FFFFFF
 colors.red[5]; // #E83030
 ```
 
 ### 色彩生成工具
-使用 `@nio-fe/colors` 提供的 `generator` 方法 可以传递一个颜色，然后生成相关色带
+使用 `@aurora/colors` 提供的 `generator` 方法 可以传递一个颜色，然后生成相关色带
 :::demo ./demos/generator.vue :::

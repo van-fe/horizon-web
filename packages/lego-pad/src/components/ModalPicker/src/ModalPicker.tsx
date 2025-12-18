@@ -1,7 +1,7 @@
-import type { LegoComponentInstance } from '@nio-fe/shared';
-import { ComponentClassBlock, useNamespace } from '@nio-fe/shared';
+import type { LegoComponentInstance } from '@aurora/shared';
+import { ComponentClassBlock, useNamespace } from '@aurora/shared';
 import { computed, defineComponent, Fragment, inject, ref } from 'vue';
-import type { PickerExposes } from '@nio-fe/lego';
+import type { PickerExposes } from '@aurora/horizon-web';
 import {
   usePickerEmits,
   usePickerExposes,
@@ -11,12 +11,12 @@ import {
   NFormItemPropsInjectedKey,
   NFormItemSlotsInjectedKey,
   NButton,
-} from '@nio-fe/lego';
-import useLocaleLang from '@nio-fe/lego/es/utils/useLocaleLang';
+} from '@aurora/horizon-web';
+import useLocaleLang from '@aurora/horizon-web/es/utils/useLocaleLang';
 import { NSuitPadIsPadModeInjectKey } from '~/components/SuitPad/src/utils/injectKeys';
 import useEmits from '~/utils/useEmits';
 import { useModalPickerProps } from './composables/useProps';
-import { IconClose } from '@nio-fe/icon';
+import { IconClose } from '@aurora/icon';
 import useExposes from '~/utils/useExposes';
 
 export default defineComponent({

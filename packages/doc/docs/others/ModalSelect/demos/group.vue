@@ -140,7 +140,7 @@
 
 <script lang="ts" setup>
 import { ExtractPropTypes, ref } from 'vue';
-import { useOptionGroupProps, useOptionProps } from '@nio-fe/lego';
+import { useOptionGroupProps, useOptionProps } from '@aurora/horizon-web';
 
 const value1 = ref();
 const value2 = ref();

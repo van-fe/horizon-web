@@ -14,13 +14,13 @@
 
 ::: code-group
 ```sh [npm]
-$ npm install @nio-fe/lego
+$ npm install @aurora/horizon-web
 ```
 ```sh [yarn]
-$ yarn add @nio-fe/lego
+$ yarn add @aurora/horizon-web
 ```
 ```sh [pnpm]
-$ pnpm add @nio-fe/lego
+$ pnpm add @aurora/horizon-web
 ```
 :::
 
@@ -35,7 +35,7 @@ $ pnpm add @nio-fe/lego
 
 - **样式文件**
 ```html
-<link rel="stylesheet" href="https://static.nio.com/fx-static/lego/latest/dist/lego-style@latest.css" />
+<link rel="stylesheet" href="https://static.nio.com/fx-static/horizon-web/latest/dist/horizon-web-style@latest.css" />
 ```
 
 - **脚本文件**
@@ -44,13 +44,13 @@ $ pnpm add @nio-fe/lego
 <!-- Import Vue 3 -->
 <script src="//cdn.jsdelivr.net/npm/vue@3"></script>
 <!-- Import component library -->
-<script src="https://static.nio.com/fx-static/lego/latest/dist/lego-browser@latest.js"></script>
+<script src="https://static.nio.com/fx-static/horizon-web/latest/dist/horizon-web-browser@latest.js"></script>
 ```
 ```html [UMD]
 <!-- Import Vue 3 -->
 <script src="//cdn.jsdelivr.net/npm/vue@3"></script>
 <!-- Import component library -->
-<script src="https://static.nio.com/fx-static/lego/latest/dist/lego@latest.umd.js"></script>
+<script src="https://static.nio.com/fx-static/horizon-web/latest/dist/horizon-web@latest.umd.js"></script>
 ```
 :::
 
@@ -65,8 +65,8 @@ $ pnpm add @nio-fe/lego
 ```ts
 import { createApp } from 'vue';
 import App from './App.vue';
-import Lego from '@nio-fe/lego';
-import '@nio-fe/lego/es/index.css';
+import Lego from '@aurora/horizon-web';
+import '@aurora/horizon-web/es/index.css';
 
 createApp(App)
   .use(Lego)
@@ -81,11 +81,11 @@ createApp(App)
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <link rel="stylesheet" href="https://static.nio.com/fx-static/lego/latest/dist/lego-style@latest.css" />
+    <link rel="stylesheet" href="https://static.nio.com/fx-static/horizon-web/latest/dist/horizon-web-style@latest.css" />
     <!-- Import Vue 3 -->
     <script src="//cdn.jsdelivr.net/npm/vue@3"></script>
     <!-- Import component library -->
-    <script src="https://static.nio.com/fx-static/lego/latest/dist/lego-browser@latest.js"></script>
+    <script src="https://static.nio.com/fx-static/horizon-web/latest/dist/horizon-web-browser@latest.js"></script>
     <title>LEGO demo</title>
   </head>
   <body>
@@ -112,4 +112,4 @@ createApp(App)
 ## 下一步
 - 如果需要按需引入，请参照 [按需引入](./on-demand-import)
 - 如果需要自定义命名空间防止冲突，请参照 [命名空间](./namespace)
-- 需要配置 `LEGO`，请参照 [Lego Usage](./config-lego-usage.md)
+- 需要配置 `LEGO`，请参照 [Lego Usage](./config-horizon-web-usage.md)

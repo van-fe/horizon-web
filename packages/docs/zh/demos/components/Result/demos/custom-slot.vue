@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { IconLogo } from '@nio-fe/icon';
-import { $alert } from '@nio-fe/lego';
+import { IconLogo } from '@aurora/icon';
+import { $alert } from '@aurora/horizon-web';
 
 function submit() {
   $alert('点击了确定', '提示');

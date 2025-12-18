@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NFormInstance } from '@nio-fe/lego';
+import { NFormInstance } from '@aurora/horizon-web';
 import { ref } from 'vue';
 
 const formInstance = ref<NFormInstance>();

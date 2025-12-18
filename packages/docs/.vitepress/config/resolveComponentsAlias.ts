@@ -1,9 +1,9 @@
 export default () => ({
   name: 'resolveComponentsAlias',
   transform(code: string, id: string) {
-    if (id.includes('packages/lego/')) {
-      if (/import\s*[^"]*"@nio-fe\/lego/gm.test(code)) {
-        code = code.replace(/(import\s*[^"]*"@nio-fe\/lego)"/gm, '$1/src/"');
+    if (id.includes('packages/horizon-web/')) {
+      if (/import\s*[^"]*"@aurora\/horizon-web/gm.test(code)) {
+        code = code.replace(/(import\s*[^"]*"@aurora\/horizon-web)"/gm, '$1/src/"');
         return code;
       }
 

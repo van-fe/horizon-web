@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { NCascaderExtendOption } from '@nio-fe/lego';
+import { NCascaderExtendOption } from '@aurora/horizon-web';
 
 const currentVal1 = ref<string[]>([]);
 const currentVal2 = ref<string[]>([]);

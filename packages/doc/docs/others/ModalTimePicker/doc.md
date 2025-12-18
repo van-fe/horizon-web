@@ -58,4 +58,4 @@
 :::demo ./demos/initial-value.vue :::
 
 ### 类型定义
-:::code ../../../../lego/src/components/TimePicker/src/utils/types.ts :::
+:::code ../../../../horizon-web/src/components/TimePicker/src/utils/types.ts :::

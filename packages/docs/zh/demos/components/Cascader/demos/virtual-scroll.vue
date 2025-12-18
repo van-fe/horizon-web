@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { BaseTreeData } from '@nio-fe/lego/es/utils/useTree';
+import type { BaseTreeData } from '@aurora/horizon-web/es/utils/useTree';
 
 const currentVal1 = ref<string[]>();
 const currentVal2 = ref<string[][]>();

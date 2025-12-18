@@ -1,4 +1,4 @@
-import { useSelectEmits } from '@nio-fe/lego';
+import { useSelectEmits } from '@aurora/horizon-web';
 
 export const useModalSelectEmits = {
   ...useSelectEmits,

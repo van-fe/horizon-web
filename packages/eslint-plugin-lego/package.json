@@ -1,7 +1,7 @@
 {
-  "name": "@nio-fe/eslint-plugin-lego",
+  "name": "@aurora/eslint-plugin-horizon-web",
   "version": "1.0.0",
-  "description": "Eslint plugin for lego components lib",
+  "description": "Eslint plugin for horizon-web components lib",
   "main": "dest/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

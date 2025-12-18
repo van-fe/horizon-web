@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { NAutoCompleteOptionProps } from '@nio-fe/lego';
+import type { NAutoCompleteOptionProps } from '@aurora/horizon-web';
 import { faker } from '@faker-js/faker';
 
 const options = ref<Partial<NAutoCompleteOptionProps>[]>([]);

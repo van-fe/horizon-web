@@ -1,4 +1,4 @@
-import type { ExtractExposeTypes } from '@nio-fe/shared';
+import type { ExtractExposeTypes } from '@aurora/shared';
 
 export const use${capitalName}Exposes = {};
 

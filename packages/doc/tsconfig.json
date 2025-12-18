@@ -22,11 +22,11 @@
       "~/*": [
         "src/*"
       ],
-      "@nio-fe/lego-pad": [
-        "../lego-pad/src/index.ts"
+      "@aurora/horizon-web-pad": [
+        "../horizon-web-pad/src/index.ts"
       ],
-      "@nio-fe/lego-pad/*": [
-        "../lego-pad/src/*"
+      "@aurora/horizon-web-pad/*": [
+        "../horizon-web-pad/src/*"
       ]
     }
   },

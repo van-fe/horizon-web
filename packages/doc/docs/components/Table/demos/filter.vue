@@ -34,7 +34,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { faker } from '@faker-js/faker';
-import { dayjs } from '@nio-fe/lego';
+import { dayjs } from '@aurora/horizon-web';
 
 interface TableData {
   id: number;

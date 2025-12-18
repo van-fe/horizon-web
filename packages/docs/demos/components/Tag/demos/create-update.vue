@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { $confirm, $message } from '@nio-fe/lego';
+import { $confirm, $message } from '@aurora/horizon-web';
 
 function sleep(ms: number) {
   return new Promise((resolve) => {

@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { IconSearch, IconCollection } from '@nio-fe/icon';
+import { IconSearch, IconCollection } from '@aurora/icon';
 </script>
 
 <style scoped>

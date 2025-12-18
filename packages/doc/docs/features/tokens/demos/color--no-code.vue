@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { tinyColor } from '@nio-fe/colors';
-import type { TinyColor } from '@nio-fe/colors';
+import { tinyColor } from '@aurora/colors';
+import type { TinyColor } from '@aurora/colors';
 import tokens from './theme.json';
 import { ref } from 'vue';
 import groupBy from 'lodash/groupBy';
-import { ThemeType } from '@nio-fe/lego';
-import { snakeCase } from '@nio-fe/shared';
+import { ThemeType } from '@aurora/horizon-web';
+import { snakeCase } from '@aurora/shared';
 
 interface GroupedBasicOpacityItem {
   label: string;

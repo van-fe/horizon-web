@@ -2,7 +2,7 @@ import { escapeHtml, traverseContent } from './utils';
 import path from 'path';
 import fs from 'fs';
 
-const gitDocBaseUrl = 'https://git.nevint.com/lego/lego/blob/feature/packages/doc/docs';
+const gitDocBaseUrl = 'https://git.nevint.com/horizon-web/horizon-web/blob/feature/packages/doc/docs';
 
 export default function (content: string, filePath: string, root: string) {
   const noCode = '--no-code.vue';

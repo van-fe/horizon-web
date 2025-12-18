@@ -22,8 +22,8 @@
 </template>
 
 <script lang="ts" setup>
-import { $message } from '@nio-fe/lego';
-import { DrawerPlacement } from '@nio-fe/lego/es/components/Drawer/src/composables/useProps';
+import { $message } from '@aurora/horizon-web';
+import { DrawerPlacement } from '@aurora/horizon-web/es/components/Drawer/src/composables/useProps';
 import { ref } from 'vue';
 
 const visible = ref(false);

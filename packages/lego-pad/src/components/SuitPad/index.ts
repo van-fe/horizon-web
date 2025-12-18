@@ -1,5 +1,5 @@
 import SuitPad from './src/SuitPad';
-import { withInstall } from '@nio-fe/shared';
+import { withInstall } from '@aurora/shared';
 
 export const NSuitPad = withInstall(SuitPad);
 

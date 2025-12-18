@@ -5,5 +5,5 @@ export function generatorInjectedKeyName(block: string, efficacy?: string) {
 }
 
 export function generatorSymbolKeyName(block: string, efficacy?: string) {
-  return `[lego-${kebabCase(block)}]${efficacy ? ` ${efficacy}` : ''}`;
+  return `[horizon-web-${kebabCase(block)}]${efficacy ? ` ${efficacy}` : ''}`;
 }

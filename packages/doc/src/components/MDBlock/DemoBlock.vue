@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { nextTick, ref, useSlots } from 'vue';
-import { version } from '@nio-fe/lego';
-import { IconApplets, IconCopy, IconFullscreen, IconJump, IconMinimize, IconRefresh } from '@nio-fe/icon';
-import { cls, ComponentClassBlock } from '@nio-fe/shared';
+import { version } from '@aurora/horizon-web';
+import { IconApplets, IconCopy, IconFullscreen, IconJump, IconMinimize, IconRefresh } from '@aurora/icon';
+import { cls, ComponentClassBlock } from '@aurora/shared';
 import Prism from 'prismjs';
 
 const darkBackground = ref(false);
@@ -52,7 +52,7 @@ function tryInPlayground() {
   };
 
   window.open(
-    `https://fx.nioint.com/pages/sfc/?vue=latest&lego=${version}#${btoa(
+    `https://fx.nioint.com/pages/sfc/?vue=latest&horizon-web=${version}#${btoa(
       unescape(encodeURIComponent(JSON.stringify(json))),
     )}`,
   );
@@ -147,7 +147,7 @@ function reload() {
 </template>
 
 <style lang="scss">
-@use '@nio-fe/lego/es/styles/mixins';
+@use '@aurora/horizon-web/es/styles/mixins';
 
 @include mixins.b('demo') {
   min-width: 500px;

@@ -1,11 +1,11 @@
 import { Project } from 'ts-morph';
-import { apiGeneratorOutPut, legoProjectRoot, writeJsonFile } from '@nio-fe/shared/plugins';
+import { apiGeneratorOutPut, legoProjectRoot, writeJsonFile } from '@aurora/shared/plugins';
 import type {
   ApiGeneratorAnalysedMethodDetail,
   ApiGeneratorAnalysedMethodType,
   ApiGeneratorAnalysedOptionType,
   ApiGeneratorExportedMethod,
-} from '@nio-fe/shared';
+} from '@aurora/shared';
 import analyseOptions from './analyseOptions';
 import analyseMethods from './analyseMethods';
 import methodsData from '../../../dist/methods-dependencies.json';

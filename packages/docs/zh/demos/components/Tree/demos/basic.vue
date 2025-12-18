@@ -31,13 +31,13 @@
 
 <script setup lang="ts">
 import { ExtractPropTypes, onMounted, ref } from 'vue';
-import { useTreeProps } from '@nio-fe/lego';
+import { useTreeProps } from '@aurora/horizon-web';
 
 const size = ref<Exclude<ExtractPropTypes<typeof useTreeProps>['size'], undefined>>('medium');
 const baseTreeData = ref([]);
 
 onMounted(() => {
-  fetch('https://static.nio.com/fx-static/lego/clrk8znpi000109bebmtiggbz/tree-data.json')
+  fetch('https://static.nio.com/fx-static/horizon-web/clrk8znpi000109bebmtiggbz/tree-data.json')
     .then(res => res.json())
     .then(res => {
       baseTreeData.value = res;

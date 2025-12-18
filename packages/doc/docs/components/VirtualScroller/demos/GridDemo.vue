@@ -30,7 +30,7 @@
 
 <script setup lang='ts'>
 import { ref, onMounted } from 'vue';
-import { NRecycleScroller } from '@nio-fe/lego';
+import { NRecycleScroller } from '@aurora/horizon-web';
 import { faker } from '@faker-js/faker';
 
 type Item = {

@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { InputProps } from '@nio-fe/lego';
+import type { InputProps } from '@aurora/horizon-web';
 
 const inputStyle = ref<InputProps['inputStyle']>('normal');
 

@@ -48,8 +48,8 @@
 
 <script setup lang="ts">
 import { ExtractPropTypes, ref } from 'vue';
-import { useBreadcrumbItemProps } from '@nio-fe/lego';
-import { IconArrowRight } from '@nio-fe/icon';
+import { useBreadcrumbItemProps } from '@aurora/horizon-web';
+import { IconArrowRight } from '@aurora/icon';
 
 const width = ref(600);
 

@@ -128,8 +128,8 @@
 
 <script setup lang="ts">
 import { ExtractPropTypes, ref } from 'vue';
-import { NIcon } from '@nio-fe/icon';
-import { NMenu, useMenuProps, useSubMenuProps } from '@nio-fe/lego';
+import { NIcon } from '@aurora/icon';
+import { NMenu, useMenuProps, useSubMenuProps } from '@aurora/horizon-web';
 
 const menuRef = ref<typeof NMenu | null>(null);
 const collapse = ref(false);

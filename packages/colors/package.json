@@ -1,5 +1,5 @@
 {
-  "name": "@nio-fe/colors",
+  "name": "@aurora/colors",
   "version": "1.0.0",
   "main": "./dist/colors.cjs",
   "module": "./dist/colors.js",
@@ -15,7 +15,7 @@
     "dist"
   ],
   "dependencies": {
-    "@nio-fe/shared": "workspace:*",
+    "@aurora/shared": "workspace:*",
     "@ctrl/tinycolor": "^3.6.0"
   }
 }

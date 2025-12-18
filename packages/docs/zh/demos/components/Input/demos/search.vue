@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { NIcon } from '@nio-fe/icon';
+import { NIcon } from '@aurora/icon';
 export default defineComponent({
   components: { NIcon },
   setup() {

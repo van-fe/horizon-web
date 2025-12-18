@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { useZIndex } from '@nio-fe/lego';
+import { useZIndex } from '@aurora/horizon-web';
 
 export default defineComponent({
   name: 'UseZIndex',

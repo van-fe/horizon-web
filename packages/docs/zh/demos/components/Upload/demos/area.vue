@@ -29,7 +29,7 @@
 
 <script>
 import { defineComponent, ref } from 'vue';
-import { NUpload } from '@nio-fe/lego';
+import { NUpload } from '@aurora/horizon-web';
 import { demoUrl } from './mock-server';
 
 export default defineComponent({

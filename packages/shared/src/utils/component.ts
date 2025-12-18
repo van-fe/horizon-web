@@ -54,7 +54,7 @@ type ExposeMethod<T, TConstructor = any> = T extends ((...args: any) => any) | u
   : never;
 
 /**
- * define lego component
+ * define horizon-web component
  */
 export type LegoSetupContext<
   Em extends EmitsOptions = EmitsOptions,

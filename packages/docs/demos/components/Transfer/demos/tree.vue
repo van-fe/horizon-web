@@ -60,7 +60,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue';
-import { IconLogo } from '@nio-fe/icon';
+import { IconLogo } from '@aurora/icon';
 const originData = [
   {
     key: 0,

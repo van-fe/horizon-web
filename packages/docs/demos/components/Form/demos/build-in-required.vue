@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { $message } from '@nio-fe/lego';
+import { $message } from '@aurora/horizon-web';
 
 const formDomRef = ref();
 

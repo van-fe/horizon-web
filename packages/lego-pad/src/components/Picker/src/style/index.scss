@@ -1,7 +1,7 @@
 @use 'sass:map';
-@use '@nio-fe/lego/es/styles/mixins';
-@use '@nio-fe/lego/es/components/Picker/src/style/variables';
-@use '@nio-fe/lego/es/components/Tag/src/style/variables' as tag-variables;
+@use '@aurora/horizon-web/es/styles/mixins';
+@use '@aurora/horizon-web/es/components/Picker/src/style/variables';
+@use '@aurora/horizon-web/es/components/Tag/src/style/variables' as tag-variables;
 
 .is-suit-pad {
   &:not(.not-for-picker) {

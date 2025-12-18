@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { NUploadFileType, NUploadHttpRequestInstanceMethods } from '@nio-fe/lego';
-import type { Data } from '@nio-fe/shared';
-import { NUploadFileStatusEnum } from '@nio-fe/lego';
+import type { NUploadFileType, NUploadHttpRequestInstanceMethods } from '@aurora/horizon-web';
+import type { Data } from '@aurora/shared';
+import { NUploadFileStatusEnum } from '@aurora/horizon-web';
 
 const modelValue = ref();
 
@@ -23,7 +23,7 @@ function httpRequest(file: NUploadFileType, instanceMethods: NUploadHttpRequestI
     });
   });
 
-  xhr.open('POST', 'https://lego-inspector.nioint.com/upload-mock', true);
+  xhr.open('POST', 'https://horizon-web-inspector.nioint.com/upload-mock', true);
   xhr.withCredentials = false;
 
   instanceMethods.setStatus(file, NUploadFileStatusEnum.Uploading, {

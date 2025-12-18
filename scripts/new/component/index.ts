@@ -5,7 +5,7 @@ import fs from 'fs';
 import { green } from '../../../packages/shared/plugins';
 
 function writeFiles(replacer: Record<string, string>) {
-  const mainDir = resolve(__dirname, '../../../packages/lego/src/components', replacer.capitalName);
+  const mainDir = resolve(__dirname, '../../../packages/horizon-web/src/components', replacer.capitalName);
   const docDir = resolve(__dirname, '../../../packages/doc/docs/components', replacer.capitalName);
 
   fs.mkdirSync(mainDir, { recursive: true });
@@ -40,7 +40,7 @@ function register(replacer: Record<string, string>) {
   function registerOnSensorTracker() {
     const targetFile = resolve(
       __dirname,
-      '../../../packages/lego-sensor-tracker/src/setting/components.json',
+      '../../../packages/horizon-web-sensor-tracker/src/setting/components.json',
     );
 
     const fileContent = fs.readFileSync(targetFile, { encoding: 'utf-8' });

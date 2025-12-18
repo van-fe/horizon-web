@@ -86,7 +86,7 @@ NUploadPreviewFileItem 和 NUploadPreviewImgItem 只提供展示文件的功能
 
 ### UploadHelper
 
-NUpload 的上传逻辑使用的是 @nio-fe/upload-helper，NUploadStatusMap 类型对应 UploadHelper 的 UploadStatusMap 类型， NUploadHelperOptions 类型对应 UploadHelper 的构造函数参数（其中 NUpload 实现了 onChange 函数 ，映射了 customRequest），可参考 UploadHelper 的文档 <https://nio.feishu.cn/docs/doccnUCcgTXQRiFDmhjTcAtxLjc>
+NUpload 的上传逻辑使用的是 @aurora/upload-helper，NUploadStatusMap 类型对应 UploadHelper 的 UploadStatusMap 类型， NUploadHelperOptions 类型对应 UploadHelper 的构造函数参数（其中 NUpload 实现了 onChange 函数 ，映射了 customRequest），可参考 UploadHelper 的文档 <https://nio.feishu.cn/docs/doccnUCcgTXQRiFDmhjTcAtxLjc>
 
 ### NMIMEIconType
 

@@ -1,6 +1,6 @@
 // 如果用cdn链接可以考虑用方法
 import { ref } from 'vue';
-import { ICON_FONT_URL } from '@nio-fe/icon';
+import { ICON_FONT_URL } from '@aurora/icon';
 
 export const icon_none_suffix_name = ref([]);
 export const icon_filled_name = ref([]);

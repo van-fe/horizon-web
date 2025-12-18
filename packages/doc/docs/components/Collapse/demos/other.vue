@@ -106,7 +106,7 @@
 </template>
 
 <script lang="ts">
-import { NCheckbox } from '@nio-fe/lego';
+import { NCheckbox } from '@aurora/horizon-web';
 import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {

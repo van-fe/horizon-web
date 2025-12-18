@@ -2,7 +2,7 @@ import type {
   ApiGeneratorAnalysedComponentDetail,
   ApiGeneratorAnalysedDirectiveDetail,
   ApiGeneratorAnalysedMethodDetail,
-} from '@nio-fe/shared';
+} from '@aurora/shared';
 import type { OtherInfo } from '../index';
 
 export default function (

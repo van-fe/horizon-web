@@ -6,7 +6,7 @@
 
 <script lang="ts" setup>
 import { getCurrentInstance, h } from 'vue';
-import { $message } from '@nio-fe/lego';
+import { $message } from '@aurora/horizon-web';
 
 const instance = getCurrentInstance();
 

@@ -31,8 +31,8 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue';
-import type { NFormInstance } from '@nio-fe/lego';
-import { $message } from '@nio-fe/lego';
+import type { NFormInstance } from '@aurora/horizon-web';
+import { $message } from '@aurora/horizon-web';
 
 export default defineComponent({
   setup() {

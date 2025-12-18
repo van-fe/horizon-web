@@ -1,7 +1,7 @@
 <template>
   <n-upload
     v-model="modelValue"
-    action="https://lego-inspector.nioint.com/upload-mock"
+    action="https://horizon-web-inspector.nioint.com/upload-mock"
     method="POST"
     multiple
     no-uploader
@@ -20,7 +20,7 @@ import {
   NUploadFileType,
   NUploadFileTypeEnum,
   type NUploadUserFile,
-} from '@nio-fe/lego';
+} from '@aurora/horizon-web';
 
 const modelValue = ref<NUploadUserFile[]>(
   [
@@ -30,11 +30,11 @@ const modelValue = ref<NUploadUserFile[]>(
     },
     {
       name: 'fail.pdf',
-      url: 'https://static.nio.com/fx-static/lego/cm11m7f1g00d008a7bx48434r/failed_default.pdf',
+      url: 'https://static.nio.com/fx-static/horizon-web/cm11m7f1g00d008a7bx48434r/failed_default.pdf',
     },
     {
       name: 'preview.mp4',
-      url: 'https://cdn-fx.nio.com/fx/lego/__cdn__/aurora-background.mp4',
+      url: 'https://cdn-fx.nio.com/fx/horizon-web/__cdn__/aurora-background.mp4',
     },
   ],
 );

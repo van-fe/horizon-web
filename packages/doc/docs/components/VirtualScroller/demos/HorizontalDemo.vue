@@ -47,10 +47,10 @@
 </template>
 
 <script setup lang="ts">
-import { NVirtualScroller } from '@nio-fe/lego';
+import { NVirtualScroller } from '@aurora/horizon-web';
 import { ref, computed } from 'vue';
 import { faker } from '@faker-js/faker';
-import { IconSearch } from '@nio-fe/icon';
+import { IconSearch } from '@aurora/icon';
 
 type Message = {
   id: number | string;

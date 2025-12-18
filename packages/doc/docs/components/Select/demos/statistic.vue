@@ -55,7 +55,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { SelectProps } from '@nio-fe/lego';
+import { SelectProps } from '@aurora/horizon-web';
 
 const size = ref('medium');
 const inputStyle = ref<SelectProps['inputStyle']>('normal');

@@ -14,7 +14,7 @@ const values= ref([]);
 const baseData = ref([]);
 
 onMounted(async()=>{
-  baseData.value = await fetch('https://static.nio.com/fx-static/lego/clup57llj000808a34cambuix/unselectable-options.json').then(r => r.json());
+  baseData.value = await fetch('https://static.nio.com/fx-static/horizon-web/clup57llj000808a34cambuix/unselectable-options.json').then(r => r.json());
 });
 </script>
 

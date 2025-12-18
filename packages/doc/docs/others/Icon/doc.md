@@ -3,13 +3,13 @@
 **安装**
 
 ```bash
-npm i @nio-fe/icon
+npm i @aurora/icon
 ```
 
 **引入样式文件**
 
 ```javascript
-import '@nio-fe/icon/dist/style.css';
+import '@aurora/icon/dist/style.css';
 ```
 
 **使用默认的 icon 图标**
@@ -17,21 +17,21 @@ import '@nio-fe/icon/dist/style.css';
 > // iconfont
 
 ```javascript
-import { NIcon } from '@nio-fe/icon';
+import { NIcon } from '@aurora/icon';
 createAPP(APP).component('NIcon', NIcon);
 ```
 
 // svg-sprite
 
 ```javascript
-import { NIconSVG } from '@nio-fe/icon';
+import { NIconSVG } from '@aurora/icon';
 createAPP(APP).component('NIconSVG', NIconSVG);
 ```
 
 // 按需引入
 
 ```javascript
-import { IconSuccessFilledLight } from '@nio-fe/icon';
+import { IconSuccessFilledLight } from '@aurora/icon';
 ```
 
 **使用自定义的 iconfont/svg-sprite 图标**
@@ -39,7 +39,7 @@ import { IconSuccessFilledLight } from '@nio-fe/icon';
 > // useReplaceSource 方法会根据后缀名匹配来进行 css/js 的引入替换
 
 ```javascript
-import { useReplaceSource } from '@nio-fe/icon';
+import { useReplaceSource } from '@aurora/icon';
 useReplaceSource('//at.alicdn.com/t/font_2962239_5iytu1pvi1u.css');
 ```
 
@@ -48,7 +48,7 @@ useReplaceSource('//at.alicdn.com/t/font_2962239_5iytu1pvi1u.css');
 > // useLinkLoad, useScriptLoad 均接收两个参数，第一个参数是引入的 url，第二个参数是 link/script 的 className
 
 ```javascript
-import { useLinkLoad, useScriptLoad } from '@nio-fe/icon';
+import { useLinkLoad, useScriptLoad } from '@aurora/icon';
 useLinkLoad('url://example.css', 'className');
 useScriptLoad('url://example.js', 'className');
 ```

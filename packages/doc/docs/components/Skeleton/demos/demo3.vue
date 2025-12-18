@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import { NSkeletonItem } from '@nio-fe/lego';
+import { NSkeletonItem } from '@aurora/horizon-web';
 import { ref, onUnmounted } from 'vue';
 const isLoading = ref(true);
 const timer3 = setInterval(function () {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, useSlots, watch } from 'vue';
-import { $message } from '@nio-fe/lego';
+import { $message } from '@aurora/horizon-web';
 import CodeEditor from './CodeEditor.vue';
 
 const props = defineProps({
@@ -53,7 +53,7 @@ function toggleCode() {
 </template>
 
 <style lang="scss" scoped>
-@use "@nio-fe/lego/es/styles/mixins";
+@use "@aurora/horizon-web/es/styles/mixins";
 
 .demo-block {
   border: 1px solid mixins.css-variable('border-default');

@@ -45,7 +45,7 @@
 </template>
 
 <script lang="ts" setup>
-import { NListItem } from '@nio-fe/lego';
+import { NListItem } from '@aurora/horizon-web';
 import { reactive, ref } from 'vue';
 const list = reactive(
   Array(10)

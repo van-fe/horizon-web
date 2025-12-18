@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import { $confirm, $message, NMessageBoxProps } from '@nio-fe/lego';
+import { $confirm, $message, NMessageBoxProps } from '@aurora/horizon-web';
 import { ref } from 'vue';
 
 const fakeSentences = `Quasi et dolore ipsum aut. Nemo earum corrupti eos magnam perspiciatis repudiandae assumenda quo aut. Et nisi optio unde dicta. Reprehenderit illo assumenda expedita animi eos.`;

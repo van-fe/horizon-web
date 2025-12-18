@@ -40,7 +40,7 @@
     "replacers": {
       "shared": {
         "enabled": true,
-        "file": "../lego/build/tsc-alias/shared.js"
+        "file": "../horizon-web/build/tsc-alias/shared.js"
       }
     }
   }

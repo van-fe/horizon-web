@@ -5,7 +5,7 @@
     </n-form-item>
   </n-form>
   <n-upload
-    action="https://lego-inspector.nioint.com/upload-mock"
+    action="https://horizon-web-inspector.nioint.com/upload-mock"
     type="drop"
     :multiple="multiple"
     :limit="5"
@@ -20,8 +20,8 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { $message } from '@nio-fe/lego';
-import type { NUploadFileType } from '@nio-fe/lego';
+import { $message } from '@aurora/horizon-web';
+import type { NUploadFileType } from '@aurora/horizon-web';
 const accept = ref('.png');
 const multiple = ref(true);
 

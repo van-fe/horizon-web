@@ -1,4 +1,4 @@
-import { useTimePickerEmits } from '@nio-fe/lego';
+import { useTimePickerEmits } from '@aurora/horizon-web';
 
 export const useModalTimePickerEmits = {
   ...useTimePickerEmits,

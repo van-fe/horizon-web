@@ -8,8 +8,8 @@ import type {
   ApiGeneratorAnalysedExposeParamType,
   ApiGeneratorAnalysedOptionParamType,
   ApiGeneratorAnalysedExposeReturnType,
-} from '@nio-fe/shared';
-import { ApiGeneratorAnalysedBaseType } from '@nio-fe/shared';
+} from '@aurora/shared';
+import { ApiGeneratorAnalysedBaseType } from '@aurora/shared';
 
 export function analyseFunctionExpression(
   node: Node,

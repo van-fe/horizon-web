@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { $notify, $message } from '@nio-fe/lego';
+import { $notify, $message } from '@aurora/horizon-web';
 
 export default defineComponent({
   setup() {

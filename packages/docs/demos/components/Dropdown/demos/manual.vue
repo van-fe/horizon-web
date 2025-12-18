@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { NDropdown } from '@nio-fe/lego';
+import { NDropdown } from '@aurora/horizon-web';
 import { ref } from 'vue';
 
 const dropdown = ref<typeof NDropdown | null>(null);

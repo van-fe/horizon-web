@@ -50,8 +50,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { $message, NFormInstance } from '@nio-fe/lego';
-import type { FormProps } from '@nio-fe/lego';
+import { $message, NFormInstance } from '@aurora/horizon-web';
+import type { FormProps } from '@aurora/horizon-web';
 
 const formRef = ref<NFormInstance>();
 const spacing = ref<FormProps['spacing']>('default');

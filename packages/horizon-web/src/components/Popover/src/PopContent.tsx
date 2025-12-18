@@ -1,0 +1,26 @@
+import { defineComponent, inject } from 'vue';
+import type { LegoSetupContext } from '@aurora/shared';
+import { cls, ComponentClassBlock, useNamespace } from '@aurora/shared';
+import type { PopContentSlots } from './composables/useSlots';
+import { usePopContentSlots } from './composables/useSlots';
+import { NPickerPopoverPropsInjectKey } from './utils/injectKeys';
+import { usePopContentProps } from './composables/useProps';
+
+export default defineComponent({
+  name: `${useNamespace()}PopContent`,
+  props: usePopContentProps,
+  slots: usePopContentSlots,
+  setup(props, { slots }: LegoSetupContext<{}, PopContentSlots>) {
+    const classHelper = new ComponentClassBlock('popover');
+
+    const parentProps = inject(NPickerPopoverPropsInjectKey, undefined);
+
+    return () => (
+      <div
+        class={cls(classHelper.e('popcontent'), classHelper.is(parentProps?.theme ?? props.theme))}
+      >
+        {slots.default?.()}
+      </div>
+    );
+  },
+});

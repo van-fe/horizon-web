@@ -1,4 +1,4 @@
-import type { ApiGeneratorExportedMethod } from '@nio-fe/shared';
+import type { ApiGeneratorExportedMethod } from '@aurora/shared';
 import type {
   Project,
   ImportDeclaration,

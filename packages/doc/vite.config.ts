@@ -29,20 +29,20 @@ export default defineConfig({
         replacement: path.join(__dirname, 'node_modules/'),
       },
       {
-        find: /^@nio-fe\/lego$/,
-        replacement: path.join(__dirname, 'node_modules/@nio-fe/lego/src/'),
+        find: /^@aurora\/horizon-web$/,
+        replacement: path.join(__dirname, 'node_modules/@aurora/horizon-web/src/'),
       },
       {
-        find: /^@nio-fe\/lego-pad$/,
-        replacement: path.join(__dirname, 'node_modules/@nio-fe/lego-pad/src/'),
+        find: /^@aurora\/horizon-web-pad$/,
+        replacement: path.join(__dirname, 'node_modules/@aurora/horizon-web-pad/src/'),
       },
       {
-        find: /^lego-package\//,
-        replacement: path.join(__dirname, 'node_modules/@nio-fe/lego/'),
+        find: /^horizon-web-package\//,
+        replacement: path.join(__dirname, 'node_modules/@aurora/horizon-web/'),
       },
       {
-        find: /^lego-pad-package\//,
-        replacement: path.join(__dirname, 'node_modules/@nio-fe/lego-pad/'),
+        find: /^horizon-web-pad-package\//,
+        replacement: path.join(__dirname, 'node_modules/@aurora/horizon-web-pad/'),
       },
       {
         find: /^~\//,

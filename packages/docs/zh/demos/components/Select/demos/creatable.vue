@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { IconHelp } from '@nio-fe/icon';
+import { IconHelp } from '@aurora/icon';
 
 const value1 = ref();
 const values1 = ref([]);

@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { TimePickerProps } from '@nio-fe/lego';
+import type { TimePickerProps } from '@aurora/horizon-web';
 
 const value = ref();
 const size = ref<NonNullable<TimePickerProps['size']>>('medium');

@@ -41,7 +41,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref, h } from 'vue';
-import { IconArrowRight, IconAdd, IconReduce } from '@nio-fe/icon';
+import { IconArrowRight, IconAdd, IconReduce } from '@aurora/icon';
 
 const baseTreeData = ref([]);
 
@@ -58,7 +58,7 @@ const customIconExpand = h(IconReduce, {
 });
 
 onMounted(() => {
-  fetch('https://static.nio.com/fx-static/lego/clrk8znpi000109bebmtiggbz/tree-data.json')
+  fetch('https://static.nio.com/fx-static/horizon-web/clrk8znpi000109bebmtiggbz/tree-data.json')
     .then(res => res.json())
     .then(res => {
       baseTreeData.value = res;

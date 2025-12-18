@@ -13,7 +13,7 @@
 
 ### 入口文件配置
 ```ts
-import { setNamespace } from '@nio-fe/lego';
+import { setNamespace } from '@aurora/horizon-web';
 
 setNamespace('x');
 
@@ -36,15 +36,15 @@ setNamespace('x');
 ### 全量使用
 新建一个 `scss` 文件，然后引入这个文件即可：
 ```scss
-@forward '@nio-fe/lego/es/styles/index.scss' with (
+@forward '@aurora/horizon-web/es/styles/index.scss' with (
   $namespace: 'x',
 );
 ```
 
 ### 按需使用
-1. 新建一个 `scss` 文件 （假定路径是 `./src/assets/lego.scss`）:
+1. 新建一个 `scss` 文件 （假定路径是 `./src/assets/horizon-web.scss`）:
     ```scss
-    @forward '@nio-fe/lego/es/styles/mixins/config.scss' with (
+    @forward '@aurora/horizon-web/es/styles/mixins/config.scss' with (
       $namespace: 'x',
     );
     ```
@@ -53,14 +53,14 @@ setNamespace('x');
     ```ts [Vite]
     import { defineConfig } from 'vite';
     import Components from 'unplugin-vue-components/vite';
-    import { LegoPluginResolvers } from '@nio-fe/unplugin-resolver';
+    import { LegoPluginResolvers } from '@aurora/unplugin-resolver';
     
     // https://vitejs.dev/config/
     export default defineConfig({
       css: {
         preprocessorOptions: {
           scss: {
-            additionalData: `@use "./src/assets/lego.scss" as *;`,
+            additionalData: `@use "./src/assets/horizon-web.scss" as *;`,
           },
         },
       },
@@ -77,13 +77,13 @@ setNamespace('x');
     ```
     ```ts [VueCli]
     const { default: Components } = require('unplugin-vue-components/webpack');
-    const { LegoPluginResolvers } = require('@nio-fe/unplugin-resolver');
+    const { LegoPluginResolvers } = require('@aurora/unplugin-resolver');
     
     module.exports = {
       css: {
         loaderOptions: {
           scss: {
-            additionalData: `@use "./src/assets/lego.scss" as *;`,
+            additionalData: `@use "./src/assets/horizon-web.scss" as *;`,
           },
         }
       },

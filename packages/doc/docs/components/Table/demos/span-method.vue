@@ -27,7 +27,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { faker } from '@faker-js/faker';
-import { type NTableSpanMethodType } from '@nio-fe/lego';
+import { type NTableSpanMethodType } from '@aurora/horizon-web';
 
 interface TableData {
   id: string;

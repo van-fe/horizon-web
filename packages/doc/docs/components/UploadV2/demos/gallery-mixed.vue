@@ -29,7 +29,7 @@
   </n-form>
   <n-upload
     v-model="modelValue"
-    action="https://lego-inspector.nioint.com/upload-mock"
+    action="https://horizon-web-inspector.nioint.com/upload-mock"
     type="gallery-mixed"
     :multiple="true"
     :size="size"
@@ -46,8 +46,8 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import type { NUploadUserFile, UploadProps, NUploadFileType } from '@nio-fe/lego';
-import type { Data } from '@nio-fe/shared';
+import type { NUploadUserFile, UploadProps, NUploadFileType } from '@aurora/horizon-web';
+import type { Data } from '@aurora/shared';
 
 const size = ref<NonNullable<UploadProps['size']>>('medium');
 const galleryShape = ref<UploadProps['galleryShape']>('rectangle');
@@ -61,15 +61,15 @@ const modelValue = ref<NUploadUserFile[]>(
     },
     {
       name: 'failed_default.pdf',
-      url: 'https://static.nio.com/fx-static/lego/cm11m7f1g00d008a7bx48434r/failed_default.pdf',
+      url: 'https://static.nio.com/fx-static/horizon-web/cm11m7f1g00d008a7bx48434r/failed_default.pdf',
     },
     {
       name: 'preview.mp4',
-      url: 'https://cdn-fx.nio.com/fx/lego/__cdn__/aurora-background.mp4',
+      url: 'https://cdn-fx.nio.com/fx/horizon-web/__cdn__/aurora-background.mp4',
     },
     {
       name: '上传演示文档.docx',
-      url: 'https://static.nio.com/fx-static/lego/cm8436m6408ov086s9a1h8wx3/上传演示文档.docx',
+      url: 'https://static.nio.com/fx-static/horizon-web/cm8436m6408ov086s9a1h8wx3/上传演示文档.docx',
     },
   ],
 );

@@ -1,5 +1,5 @@
 {
-  "name": "@nio-fe/locale-vue",
+  "name": "@aurora/locale-vue",
   "version": "1.0.0",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -22,9 +22,9 @@
     "vue": "^3.2.33"
   },
   "dependencies": {
-    "@nio-fe/locale": "workspace:*"
+    "@aurora/locale": "workspace:*"
   },
   "devDependencies": {
-    "@nio-fe/shared": "workspace:*"
+    "@aurora/shared": "workspace:*"
   }
 }

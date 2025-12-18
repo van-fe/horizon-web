@@ -1,10 +1,10 @@
 {
-  "name": "@nio-fe/lego-pad",
+  "name": "@aurora/horizon-web-pad",
   "version": "1.0.0",
-  "description": "Adapt @nio-fe/lego for pad mode",
+  "description": "Adapt @aurora/horizon-web for pad mode",
   "main": "lib/index.js",
   "module": "es/index.js",
-  "unpkg": "dist/lego-pad-browser.umd.js",
+  "unpkg": "dist/horizon-web-pad-browser.umd.js",
   "types": "es/index.d.ts",
   "scripts": {
     "build": "pnpm run build:lib && pnpm run build:dist && pnpm run build:style && pnpm build:ts",
@@ -23,10 +23,10 @@
     "es"
   ],
   "dependencies": {
-    "@nio-fe/shared": "workspace:*"
+    "@aurora/shared": "workspace:*"
   },
   "devDependencies": {
-    "@nio-fe/lego": "workspace:*",
-    "@nio-fe/icon": "^2.11.2"
+    "@aurora/horizon-web": "workspace:*",
+    "@aurora/icon": "^2.11.2"
   }
 }

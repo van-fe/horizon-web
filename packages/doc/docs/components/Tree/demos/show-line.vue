@@ -32,13 +32,13 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import type { TreeProps } from '@nio-fe/lego';
+import type { TreeProps } from '@aurora/horizon-web';
 
 const size = ref<Exclude<TreeProps['size'], undefined>>('medium');
 const baseTreeData = ref([]);
 
 onMounted(() => {
-  fetch('https://static.nio.com/fx-static/lego/cm3faqjzf00bw084ogw7l2u62/deep-level-tree-data.json')
+  fetch('https://static.nio.com/fx-static/horizon-web/cm3faqjzf00bw084ogw7l2u62/deep-level-tree-data.json')
     .then(res => res.json())
     .then(res => {
       baseTreeData.value = res;

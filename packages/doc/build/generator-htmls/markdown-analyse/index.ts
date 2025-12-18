@@ -10,8 +10,8 @@ import type {
   ApiGeneratorAnalysedComponentDetail,
   ApiGeneratorAnalysedDirectiveDetail,
   ApiGeneratorAnalysedMethodDetail,
-} from '@nio-fe/shared';
-import { pascalize } from '@nio-fe/shared';
+} from '@aurora/shared';
+import { pascalize } from '@aurora/shared';
 import parseCode from './utils/parseCode';
 
 const componentsAnalysis = componentsJson as unknown as ApiGeneratorAnalysedComponentDetail[];

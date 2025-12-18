@@ -1,5 +1,5 @@
-import type { DirectiveOptionType, ExtractDirectiveOptionTypes } from '@nio-fe/shared';
-import { declareDirectiveOptionType } from '@nio-fe/shared';
+import type { DirectiveOptionType, ExtractDirectiveOptionTypes } from '@aurora/shared';
+import { declareDirectiveOptionType } from '@aurora/shared';
 
 export const use${capitalName}Options = declareDirectiveOptionType({
 });

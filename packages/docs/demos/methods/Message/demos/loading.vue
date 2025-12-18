@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import { $message } from '@nio-fe/lego';
+import { $message } from '@aurora/horizon-web';
 const open = () => {
   const inst = $message.loading('After 2 seconds, the asynchronous operation will be completed');
   setTimeout(() => {

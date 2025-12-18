@@ -1,5 +1,5 @@
 {
-  "name": "@nio-fe/doc",
+  "name": "@aurora/doc",
   "private": true,
   "version": "1.0.0",
   "scripts": {
@@ -13,13 +13,13 @@
     "dev:quick": "pnpm run dev"
   },
   "dependencies": {
-    "@nio-fe/colors": "workspace:*",
-    "@nio-fe/icon": "^2.11.4",
-    "@nio-fe/lego": "workspace:*",
-    "@nio-fe/lego-pad": "workspace:*",
-    "@nio-fe/lego-table": "^2.9.1",
-    "@nio-fe/locale-vue": "workspace:*",
-    "@nio-fe/shared": "workspace:*",
+    "@aurora/colors": "workspace:*",
+    "@aurora/icon": "^2.11.4",
+    "@aurora/horizon-web": "workspace:*",
+    "@aurora/horizon-web-pad": "workspace:*",
+    "@aurora/horizon-web-table": "^2.9.1",
+    "@aurora/locale-vue": "workspace:*",
+    "@aurora/shared": "workspace:*",
     "@nio-wad/fx-web": "^0.2.0",
     "@vueuse/core": "^9.6.0",
     "axios": "^1.7.4",
@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
-    "@nio-fe/unplugin-resolver": "workspace:*",
+    "@aurora/unplugin-resolver": "workspace:*",
     "@types/prismjs": "^1.26.4",
     "@types/qs": "^6.9.7",
     "@vitejs/plugin-basic-ssl": "^1.1.0",

@@ -17,7 +17,7 @@
 ### lego与其他组件库共用时可能的情况
 当项目中同时使用lego与其它组件库时，其它组件库中存在v-loading同名的vue指令时，可能会造成lego的v-loading指令失效，此时，lego用户可以重新注册v-loading指令，如下
 ```javascript
-import { loading } from '@nio-fe/lego';
+import { loading } from '@aurora/horizon-web';
 app.directive('my-loading', loading);
 // 在组件中使用时
  <div v-my-loading="{isShow,loadingType:'circle',textOrient:'column',size:'medium',}" class="loadingContainer">测试</div>
@@ -28,7 +28,7 @@ app.directive('my-loading', loading);
 可以引入 `LoadingService`，使用函数形式调用 `Loading`
 
 ```ts
-import { LoadingService } from '@nio-fe/lego';
+import { LoadingService } from '@aurora/horizon-web';
 
 const { close } = LoadingService(document.body, {
   fullscreen: true,

@@ -161,8 +161,8 @@
 
 <script setup lang="ts">
 import { ExtractPropTypes, ref } from 'vue';
-import { NIcon } from '@nio-fe/icon';
-import { NMenu, useMenuItemProps, useMenuProps, useSubMenuProps } from '@nio-fe/lego';
+import { NIcon } from '@aurora/icon';
+import { NMenu, useMenuItemProps, useMenuProps, useSubMenuProps } from '@aurora/horizon-web';
 
 type menuPropType = ExtractPropTypes<typeof useMenuProps>;
 type menuItemPropType = ExtractPropTypes<typeof useMenuItemProps>;

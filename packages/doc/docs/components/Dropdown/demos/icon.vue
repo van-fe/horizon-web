@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { IconSearch, IconCollection, IconArrowDown } from '@nio-fe/icon';
+import { IconSearch, IconCollection, IconArrowDown } from '@aurora/icon';
 
 const visible1 = ref(false);
 </script>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IconEye, IconEdit, IconRubbish } from '@nio-fe/icon';
+import { IconEye, IconEdit, IconRubbish } from '@aurora/icon';
 </script>
 
 <template>

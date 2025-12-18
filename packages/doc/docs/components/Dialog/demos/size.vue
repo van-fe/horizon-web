@@ -19,8 +19,8 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import type { DialogProps } from '@nio-fe/lego/es/components/Dialog/src/composables/useProps';
-import { $message } from '@nio-fe/lego';
+import type { DialogProps } from '@aurora/horizon-web/es/components/Dialog/src/composables/useProps';
+import { $message } from '@aurora/horizon-web';
 
 const size = ref<DialogProps['size']>('medium');
 const visible = ref(false);

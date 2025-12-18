@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { IconArrowDown } from '@nio-fe/icon';
+import { IconArrowDown } from '@aurora/icon';
 </script>
 
 <style scoped>

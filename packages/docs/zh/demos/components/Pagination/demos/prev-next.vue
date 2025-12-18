@@ -9,5 +9,5 @@
   </n-pagination>
 </template>
 <script setup lang="ts">
-import {IconTriangleLeftFilled, IconTriangleRightFilled} from '@nio-fe/icon';
+import {IconTriangleLeftFilled, IconTriangleRightFilled} from '@aurora/icon';
 </script>

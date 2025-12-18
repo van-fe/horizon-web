@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import type { NCascaderExtendOption, NCascaderModelValueType } from '@nio-fe/lego';
+import type { NCascaderExtendOption, NCascaderModelValueType } from '@aurora/horizon-web';
 
 const currentVal1 = ref<string[]>([]);
 const currentVal2 = ref<string[][]>([]);
@@ -47,6 +47,6 @@ const updateHandle = (value: NCascaderModelValueType) => {
 };
 
 onMounted(async()=>{
-  baseData.value = await fetch('https://static.nio.com/fx-static/lego/clup57llj000808a34cambuix/unselectable-options.json').then(r => r.json());
+  baseData.value = await fetch('https://static.nio.com/fx-static/horizon-web/clup57llj000808a34cambuix/unselectable-options.json').then(r => r.json());
 });
 </script>

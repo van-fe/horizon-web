@@ -82,8 +82,8 @@
 
 <script setup lang="ts">
 import { ref, watch, watchEffect } from 'vue';
-import { DefinedComponent } from '@nio-fe/shared';
-import { $message } from '@nio-fe/lego';
+import { DefinedComponent } from '@aurora/shared';
+import { $message } from '@aurora/horizon-web';
 
 const tagGroup = ref<InstanceType<DefinedComponent> | null>(null);
 

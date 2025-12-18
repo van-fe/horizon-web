@@ -1,4 +1,4 @@
-import type { ApiGeneratorExportedComponent } from '@nio-fe/shared';
+import type { ApiGeneratorExportedComponent } from '@aurora/shared';
 import type {
   Project,
   ImportDeclaration,

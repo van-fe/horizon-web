@@ -72,7 +72,7 @@
 
 <script setup lang="ts">
 import { ExtractPropTypes, ref } from 'vue';
-import { useOptionProps } from '@nio-fe/lego';
+import { useOptionProps } from '@aurora/horizon-web';
 
 const size = ref('medium');
 const inputStyle = ref('normal');

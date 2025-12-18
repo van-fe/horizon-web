@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { TableProps } from '@nio-fe/lego';
+import { TableProps } from '@aurora/horizon-web';
 import { faker } from '@faker-js/faker';
 
 interface TableData {

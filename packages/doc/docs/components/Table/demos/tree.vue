@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { faker } from '@faker-js/faker';
-import type { NTableTransformedRowDataType } from '@nio-fe/lego';
+import type { NTableTransformedRowDataType } from '@aurora/horizon-web';
 
 interface TableData {
   uuid: string;

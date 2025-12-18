@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { $message, NFormInstance } from '@nio-fe/lego';
+import { $message, NFormInstance } from '@aurora/horizon-web';
 
 const formRef = ref<NFormInstance>(null);
 const compact = ref(true);

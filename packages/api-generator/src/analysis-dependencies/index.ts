@@ -1,5 +1,5 @@
 import analysisExportedPlugins from './analyseExportedPlugins';
-import { apiGeneratorOutPut, writeJsonFile } from '@nio-fe/shared/plugins';
+import { apiGeneratorOutPut, writeJsonFile } from '@aurora/shared/plugins';
 import chalk from 'chalk';
 
 async function buildDependencies() {

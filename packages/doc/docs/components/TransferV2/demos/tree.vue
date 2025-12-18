@@ -60,7 +60,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import type { TransferDataProps } from '@nio-fe/lego';
+import type { TransferDataProps } from '@aurora/horizon-web';
 
 const originData = [
   {

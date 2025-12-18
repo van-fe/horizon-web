@@ -9,7 +9,7 @@
 
   <n-upload
     v-model="fileList"
-    action="https://lego-inspector.nioint.com/upload-mock"
+    action="https://horizon-web-inspector.nioint.com/upload-mock"
     :multiple="true"
     :no-uploader="true"
     :controls-always-visible="controlsAlwaysVisible"
@@ -29,15 +29,15 @@ const fileList = ref([
   },
   {
     name: 'failed_default.pdf',
-    url: 'https://static.nio.com/fx-static/lego/cm11m7f1g00d008a7bx48434r/failed_default.pdf',
+    url: 'https://static.nio.com/fx-static/horizon-web/cm11m7f1g00d008a7bx48434r/failed_default.pdf',
   },
   {
     name: 'preview.mp4',
-    url: 'https://cdn-fx.nio.com/fx/lego/__cdn__/aurora-background.mp4',
+    url: 'https://cdn-fx.nio.com/fx/horizon-web/__cdn__/aurora-background.mp4',
   },
   {
     name: '上传演示文档.docx',
-    url: 'https://static.nio.com/fx-static/lego/cm8436m6408ov086s9a1h8wx3/上传演示文档.docx',
+    url: 'https://static.nio.com/fx-static/horizon-web/cm8436m6408ov086s9a1h8wx3/上传演示文档.docx',
   },
 ]);
 </script>

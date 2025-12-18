@@ -1,5 +1,5 @@
-import { declarePropType } from '@nio-fe/shared';
-import { usePickerProps, type NDrawerProps } from '@nio-fe/lego';
+import { declarePropType } from '@aurora/shared';
+import { usePickerProps, type NDrawerProps } from '@aurora/horizon-web';
 import type { ExtractPropTypes, PropType } from 'vue';
 
 export const useModalPickerProps = declarePropType({

@@ -27,4 +27,4 @@
 :::demo ./demos/inverse.vue :::
 
 ### 类型定义
-:::code ../../../../lego/src/components/Checkbox/src/utils/types.ts :::
+:::code ../../../../horizon-web/src/components/Checkbox/src/utils/types.ts :::

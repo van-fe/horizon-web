@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts" setup>
-import { $message } from '@nio-fe/lego';
+import { $message } from '@aurora/horizon-web';
 import { ref } from 'vue';
 
 const visible = ref(false);

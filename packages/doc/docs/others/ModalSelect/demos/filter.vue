@@ -103,8 +103,8 @@
 
 <script setup lang="ts">
 import { ExtractPropTypes, ref } from 'vue';
-import { useOptionProps } from '@nio-fe/lego';
-import { IconSearch } from '@nio-fe/icon';
+import { useOptionProps } from '@aurora/horizon-web';
+import { IconSearch } from '@aurora/icon';
 
 const values1 = ref([1, 2]);
 const value2 = ref();

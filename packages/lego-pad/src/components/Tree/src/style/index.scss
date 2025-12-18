@@ -1,6 +1,6 @@
 @use 'sass:map';
-@use '@nio-fe/lego/es/styles/mixins';
-@use '@nio-fe/lego/es/components/Tree/src/style/variables';
+@use '@aurora/horizon-web/es/styles/mixins';
+@use '@aurora/horizon-web/es/components/Tree/src/style/variables';
 
 .is-suit-pad {
   &:not(.not-for-tree) {

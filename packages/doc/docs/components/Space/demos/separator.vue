@@ -36,5 +36,5 @@
 </template>
 
 <script setup>
-import { IconCollect, IconDownload, IconRefresh } from '@nio-fe/icon';
+import { IconCollect, IconDownload, IconRefresh } from '@aurora/icon';
 </script>

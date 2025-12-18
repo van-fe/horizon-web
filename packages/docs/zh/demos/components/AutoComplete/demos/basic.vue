@@ -24,8 +24,8 @@
 
 <script setup lang="ts">
 import { ExtractPropTypes, ref } from 'vue';
-import type { NAutoCompleteOptionProps } from '@nio-fe/lego';
-import { useAutoCompleteProps } from '@nio-fe/lego';
+import type { NAutoCompleteOptionProps } from '@aurora/horizon-web';
+import { useAutoCompleteProps } from '@aurora/horizon-web';
 
 const sizeValue = ref<Required<ExtractPropTypes<typeof useAutoCompleteProps>['size']>>('medium');
 const inputStyle = ref<Required<ExtractPropTypes<typeof useAutoCompleteProps>['inputStyle']>>('normal');

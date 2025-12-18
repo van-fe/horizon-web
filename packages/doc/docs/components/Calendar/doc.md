@@ -25,4 +25,4 @@
 :::demo ./demos/custom-date.vue :::
 
 ### 类型定义
-:::code ../../../../lego/src/components/Calendar/src/utils/types.ts :::
+:::code ../../../../horizon-web/src/components/Calendar/src/utils/types.ts :::

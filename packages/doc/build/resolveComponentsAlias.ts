@@ -1,14 +1,14 @@
 export default () => ({
   name: 'resolveComponentsAlias',
   transform(code: string, id: string) {
-    if (id.includes('packages/lego/')) {
-      if (/import\s*[^"]*"@nio-fe\/lego/gm.test(code)) {
-        code = code.replace(/(import\s*[^"]*"@nio-fe\/lego)"/gm, '$1/src/"');
+    if (id.includes('packages/horizon-web/')) {
+      if (/import\s*[^"]*"@aurora\/horizon-web/gm.test(code)) {
+        code = code.replace(/(import\s*[^"]*"@aurora\/horizon-web)"/gm, '$1/src/"');
         return code;
       }
 
-      if (/import\s*[^"]*"@nio-fe\/lego-pad/gm.test(code)) {
-        code = code.replace(/(import\s*[^"]*"@nio-fe\/lego-pad)"/gm, '$1/src/"');
+      if (/import\s*[^"]*"@aurora\/horizon-web-pad/gm.test(code)) {
+        code = code.replace(/(import\s*[^"]*"@aurora\/horizon-web-pad)"/gm, '$1/src/"');
         return code;
       }
 
@@ -18,14 +18,14 @@ export default () => ({
       }
     }
 
-    if (id.includes('packages/lego-pad/')) {
-      if (/import\s*[^"]*"@nio-fe\/lego/gm.test(code)) {
-        code = code.replace(/(import\s*[^"]*"@nio-fe\/lego)"/gm, '$1/src/"');
+    if (id.includes('packages/horizon-web-pad/')) {
+      if (/import\s*[^"]*"@aurora\/horizon-web/gm.test(code)) {
+        code = code.replace(/(import\s*[^"]*"@aurora\/horizon-web)"/gm, '$1/src/"');
         return code;
       }
 
-      if (/import\s*[^"]*"@nio-fe\/lego-pad/gm.test(code)) {
-        code = code.replace(/(import\s*[^"]*"@nio-fe\/lego-pad)"/gm, '$1/src/"');
+      if (/import\s*[^"]*"@aurora\/horizon-web-pad/gm.test(code)) {
+        code = code.replace(/(import\s*[^"]*"@aurora\/horizon-web-pad)"/gm, '$1/src/"');
         return code;
       }
 

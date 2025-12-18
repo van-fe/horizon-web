@@ -1,5 +1,5 @@
 import ModalCascader from './src/ModalCascader';
-import { withInstall } from '@nio-fe/shared';
+import { withInstall } from '@aurora/shared';
 
 export const NModalCascader = withInstall(ModalCascader);
 

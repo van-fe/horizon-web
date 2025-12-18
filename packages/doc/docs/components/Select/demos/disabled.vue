@@ -150,8 +150,8 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { OptionProps, OptionGroupProps } from '@nio-fe/lego';
-import type { ModelValueType } from '@nio-fe/lego/es/components/Select/src/utils/types';
+import { OptionProps, OptionGroupProps } from '@aurora/horizon-web';
+import type { ModelValueType } from '@aurora/horizon-web/es/components/Select/src/utils/types';
 
 const value1 = ref(1);
 const value2 = ref(1);

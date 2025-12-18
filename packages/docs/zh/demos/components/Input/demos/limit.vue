@@ -39,7 +39,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { NFormRule } from '@nio-fe/lego';
+import { NFormRule } from '@aurora/horizon-web';
 
 export default defineComponent({
   setup() {

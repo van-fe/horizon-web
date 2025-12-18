@@ -48,7 +48,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, h } from 'vue';
-import { NCalendarPinFlag } from '@nio-fe/lego';
+import { NCalendarPinFlag } from '@aurora/horizon-web';
 import { Dayjs } from 'dayjs';
 
 export default defineComponent({

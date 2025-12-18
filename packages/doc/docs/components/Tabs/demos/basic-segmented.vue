@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { $message, type NTabValue } from '@nio-fe/lego';
+import { $message, type NTabValue } from '@aurora/horizon-web';
 import { onMounted, ref } from 'vue';
 
 const onTabChanged = (tab: NTabValue) => {

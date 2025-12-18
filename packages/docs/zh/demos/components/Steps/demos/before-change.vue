@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import { ExtractPropTypes, ref } from 'vue';
-import { $confirm, useStepProps } from '@nio-fe/lego';
+import { $confirm, useStepProps } from '@aurora/horizon-web';
 
 const modelValue = ref(0);
 

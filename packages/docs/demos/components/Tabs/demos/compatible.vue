@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { $message, type NTabValue } from '@nio-fe/lego';
+import { $message, type NTabValue } from '@aurora/horizon-web';
 
 const activeKey = ref('1');
 const v2 = ref(false);

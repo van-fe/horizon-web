@@ -1,5 +1,5 @@
-import { declarePropType } from '@nio-fe/shared';
-import { useCascaderProps, type NDrawerProps } from '@nio-fe/lego';
+import { declarePropType } from '@aurora/shared';
+import { useCascaderProps, type NDrawerProps } from '@aurora/horizon-web';
 import type { ExtractPropTypes, PropType } from 'vue';
 
 export const useModalCascaderProps = declarePropType({

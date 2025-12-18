@@ -1,7 +1,7 @@
 {
-  "name": "@nio-fe/api-generator",
+  "name": "@aurora/api-generator",
   "version": "1.0.0",
-  "description": "Build necessary types file for lego",
+  "description": "Build necessary types file for horizon-web",
   "scripts": {
     "build": "pnpm run build:analysis-dependencies && pnpm run build:analysis-options && pnpm run build:ide-json",
     "build:analysis-dependencies": "bun run src/analysis-dependencies/index.ts",
@@ -13,7 +13,7 @@
     "sucrase": "^3.35.0"
   },
   "devDependencies": {
-    "@nio-fe/shared": "workspace:*",
+    "@aurora/shared": "workspace:*",
     "chalk": "^4.1.2",
     "deepmerge": "^4.2.2",
     "fast-glob": "^3.2.11",

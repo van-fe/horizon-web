@@ -172,11 +172,11 @@
 
 ### Dayjs 基础配置
 组件内置使用 `dayjs`，以下是基础配置（全局通用）：
-:::code ../../../../lego/src/utils/useDayJs.ts:::
+:::code ../../../../horizon-web/src/utils/useDayJs.ts:::
 
 ### 类型定义
-:::code ../../../../lego/src/components/DatePicker/src/utils/types.ts :::
+:::code ../../../../horizon-web/src/components/DatePicker/src/utils/types.ts :::
 
 ### 格式化格式
 根据当前的国际化配置，会有相应不同的日期格式展示形式
-:::code ../../../../lego/src/locales/dateFormat.json :::
+:::code ../../../../horizon-web/src/locales/dateFormat.json :::

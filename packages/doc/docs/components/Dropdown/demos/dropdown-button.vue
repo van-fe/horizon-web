@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { IconArrowDown } from '@nio-fe/icon';
+import { IconArrowDown } from '@aurora/icon';
 
 defineProps({
   visible: { type: Boolean, default: false },

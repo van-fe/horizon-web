@@ -22,7 +22,7 @@
 
 <script setup lang="tsx">
 import { ref } from 'vue';
-import {IconTriangleDownFilled} from '@nio-fe/icon';
+import {IconTriangleDownFilled} from '@aurora/icon';
 
 const value1 = ref();
 const value2 = ref();

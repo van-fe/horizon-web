@@ -77,7 +77,7 @@
 :::demo ./demos/only-render.vue :::
 
 ### 使用自定义表单组件
-如果使用了 `lego` 外的表单组件，但也需要用到 `n-form` `n-form-item` 的验证功能，直接使用提供的 `provide` 值来做即可
+如果使用了 `horizon-web` 外的表单组件，但也需要用到 `n-form` `n-form-item` 的验证功能，直接使用提供的 `provide` 值来做即可
 
 只需要 `inject('NFormItemTriggerInjectedKey')`，在表单有 `change` 或 `blur` 事件时调用即可
 

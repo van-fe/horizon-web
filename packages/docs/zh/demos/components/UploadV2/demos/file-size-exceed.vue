@@ -10,7 +10,7 @@
   <n-space>
     <n-upload
       v-model="modelValue"
-      action="https://lego-inspector.nioint.com/upload-mock"
+      action="https://horizon-web-inspector.nioint.com/upload-mock"
       method="POST"
       :multiple="multiple"
       :file-size-limit="enableFileSizeLimit ? 2 : undefined"
@@ -22,7 +22,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { $message, NUploadFileType, NUploadRawFileType } from '@nio-fe/lego';
+import { $message, NUploadFileType, NUploadRawFileType } from '@aurora/horizon-web';
 
 const enableFileSizeLimit = ref(false);
 const multiple = ref(false);

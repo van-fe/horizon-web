@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { $alert } from '@nio-fe/lego';
+import { $alert } from '@aurora/horizon-web';
 
 function onPrimaryClick() {
   $alert('点击了主按钮', '提示');

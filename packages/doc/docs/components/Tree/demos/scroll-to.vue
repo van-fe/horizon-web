@@ -37,8 +37,8 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { LegoComponentInstance } from '@nio-fe/shared';
-import { NTree, TreeExposes } from '@nio-fe/lego';
+import { LegoComponentInstance } from '@aurora/shared';
+import { NTree, TreeExposes } from '@aurora/horizon-web';
 
 const baseTreeData = ref([]);
 const treeDomRef1 = ref<LegoComponentInstance<typeof NTree, TreeExposes>>();
@@ -57,7 +57,7 @@ function collapseAll(type: 1 | 2) {
 }
 
 onMounted(() => {
-  fetch('https://static.nio.com/fx-static/lego/clrk8znpi000109bebmtiggbz/tree-data.json')
+  fetch('https://static.nio.com/fx-static/horizon-web/clrk8znpi000109bebmtiggbz/tree-data.json')
     .then(res => res.json())
     .then(res => {
       baseTreeData.value = res;

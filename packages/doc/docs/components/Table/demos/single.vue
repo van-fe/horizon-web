@@ -37,8 +37,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { faker } from '@faker-js/faker';
-import { NTableColumnV3, NTableRowDataType, type TableColumnExposes } from '@nio-fe/lego';
-import { LegoComponentInstance } from '@nio-fe/shared';
+import { NTableColumnV3, NTableRowDataType, type TableColumnExposes } from '@aurora/horizon-web';
+import { LegoComponentInstance } from '@aurora/shared';
 
 interface TableData {
   id: number;

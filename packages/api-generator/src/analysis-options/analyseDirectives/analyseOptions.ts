@@ -7,7 +7,7 @@ import completeFileExtName from '../../utils/completeFileExtName';
 import type {
   ApiGeneratorAnalysedOptionType,
   ApiGeneratorExportedDirectives,
-} from '@nio-fe/shared';
+} from '@aurora/shared';
 import analyseJsDocs from '../../utils/analyseJsDocs';
 import { analyseFunctionExpression } from '../../utils/analysisType/analyseFunction';
 

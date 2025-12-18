@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { $message } from '@nio-fe/lego';
+import { $message } from '@aurora/horizon-web';
 
 function onCommand(value: string) {
   $message.info(`点击了 ${value}`);

@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { ref, h } from 'vue';
-import { IconFlip } from '@nio-fe/icon';
+import { IconFlip } from '@aurora/icon';
 
 const value = ref();
 const value2 = ref();

@@ -32,8 +32,8 @@
 
 <script setup lang="ts">
 import { h, onMounted, ref } from 'vue';
-import type { NTreeNodeData } from '@nio-fe/lego';
-import { $message } from '@nio-fe/lego';
+import type { NTreeNodeData } from '@aurora/horizon-web';
+import { $message } from '@aurora/horizon-web';
 
 const renderTreeData = ref<NTreeNodeData[]>([
   {
@@ -75,7 +75,7 @@ function action(command: unknown) {
 const baseTreeData = ref([]);
 
 onMounted(() => {
-  fetch('https://static.nio.com/fx-static/lego/clrk8znpi000109bebmtiggbz/tree-data.json')
+  fetch('https://static.nio.com/fx-static/horizon-web/clrk8znpi000109bebmtiggbz/tree-data.json')
     .then(res => res.json())
     .then(res => {
       baseTreeData.value = res;

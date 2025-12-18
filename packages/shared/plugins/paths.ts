@@ -27,9 +27,9 @@ export const apiGeneratorRoot = resolve(packagesRoot, 'api-generator');
 export const apiGeneratorOutPut = resolve(apiGeneratorRoot, 'dist');
 
 /**
- * lego
+ * horizon-web
  */
-export const legoProjectRoot = resolve(packagesRoot, 'lego');
+export const legoProjectRoot = resolve(packagesRoot, 'horizon-web');
 export const legoSourceRoot = resolve(legoProjectRoot, 'src');
 export const componentRoot = resolve(legoSourceRoot, 'components');
 export const directiveRoot = resolve(legoSourceRoot, 'directives');
@@ -42,27 +42,27 @@ export const legoLibOutput = resolve(legoProjectRoot, 'lib');
 export const legoEsmOutput = resolve(legoProjectRoot, 'es');
 
 /**
- * lego-table
+ * horizon-web-table
  */
-export const legoTableProjectRoot = resolve(packagesRoot, 'lego-table');
+export const legoTableProjectRoot = resolve(packagesRoot, 'horizon-web-table');
 export const legoTableComponentRoot = resolve(legoTableProjectRoot, 'components');
 export const legoTableStyleRoot = resolve(legoTableProjectRoot, 'styles');
 export const legoTableBuildOutput = resolve(legoTableProjectRoot, 'dist');
 export const legoTableLibOutput = resolve(legoTableProjectRoot, 'lib');
 
 /**
- * lego-table
+ * horizon-web-table
  */
-export const legoTableProjectRoot = resolve(packagesRoot, 'lego-table');
+export const legoTableProjectRoot = resolve(packagesRoot, 'horizon-web-table');
 export const legoTableComponentRoot = resolve(legoTableProjectRoot, 'components');
 export const legoTableStyleRoot = resolve(legoTableProjectRoot, 'styles');
 export const legoTableBuildOutput = resolve(legoTableProjectRoot, 'dist');
 export const legoTableLibOutput = resolve(legoTableProjectRoot, 'lib');
 
 /**
- * lego-sensor-tracker
+ * horizon-web-sensor-tracker
  */
-export const legoSensorTrackerRoot = resolve(packagesRoot, 'lego-sensor-tracker');
+export const legoSensorTrackerRoot = resolve(packagesRoot, 'horizon-web-sensor-tracker');
 export const legoSensorTrackerSourceRoot = resolve(legoSensorTrackerRoot, 'src');
 
 /**

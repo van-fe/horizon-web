@@ -1,5 +1,5 @@
 import type { Project, PropertyAssignment, AsExpression, Node } from 'ts-morph';
-import type { ApiGeneratorAnalysedPropType, ApiGeneratorExportedComponent } from '@nio-fe/shared';
+import type { ApiGeneratorAnalysedPropType, ApiGeneratorExportedComponent } from '@aurora/shared';
 import { ts } from 'ts-morph';
 import type { FileElements } from '../../utils/analyseFileElements';
 import analysisFileElements from '../../utils/analyseFileElements';

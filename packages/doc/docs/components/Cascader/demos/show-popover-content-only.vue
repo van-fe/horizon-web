@@ -28,9 +28,9 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { CascaderExposes, NCascader } from '@nio-fe/lego';
-import type { NCascaderExtendOption, NCascaderModelValueType } from '@nio-fe/lego';
-import { LegoComponentInstance } from '@nio-fe/shared';
+import { CascaderExposes, NCascader } from '@aurora/horizon-web';
+import type { NCascaderExtendOption, NCascaderModelValueType } from '@aurora/horizon-web';
+import { LegoComponentInstance } from '@aurora/shared';
 
 const cascaderDomRef1 = ref<LegoComponentInstance<typeof NCascader, CascaderExposes>>();
 const cascaderDomRef2 = ref<LegoComponentInstance<typeof NCascader, CascaderExposes>>();
@@ -48,7 +48,7 @@ const updateHandle = (value: NCascaderModelValueType) => {
 };
 
 onMounted(async()=>{
-  baseData.value = await fetch(`https://static.nio.com/fx-static/lego/clzuyi8za019o086o9mtt36gn/tree-data-level-not-equal.json?t=12`).then(r => r.json());
+  baseData.value = await fetch(`https://static.nio.com/fx-static/horizon-web/clzuyi8za019o086o9mtt36gn/tree-data-level-not-equal.json?t=12`).then(r => r.json());
   currentVal2.value.push(["guide", "navigation", "side nav"]);
 });
 </script>

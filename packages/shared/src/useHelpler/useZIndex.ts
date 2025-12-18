@@ -1,7 +1,7 @@
 import { isNumber } from '../utils/validate';
 import { useSessionStorage } from '@vueuse/core';
 
-const index = useSessionStorage<number>('lego-z-index', 2000);
+const index = useSessionStorage<number>('horizon-web-z-index', 2000);
 
 export function useZIndex(current?: number) {
   if (isNumber(current) && current > index.value) {

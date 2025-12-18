@@ -24,7 +24,7 @@
   <n-space>
     <n-upload
       v-model="modelValue"
-      action="https://lego-inspector.nioint.com/upload-mock"
+      action="https://horizon-web-inspector.nioint.com/upload-mock"
       method="POST"
       :size="size"
       :file-item-size="fileItemSize"
@@ -45,8 +45,8 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import type { NUploadRawFileType, UploadProps, NUploadFileType } from '@nio-fe/lego';
-import type { Data } from '@nio-fe/shared';
+import type { NUploadRawFileType, UploadProps, NUploadFileType } from '@aurora/horizon-web';
+import type { Data } from '@aurora/shared';
 
 const size = ref<Exclude<UploadProps['size'], undefined>>('medium');
 const fileItemSize = ref<Exclude<UploadProps['fileItemSize'], undefined>>('medium');
