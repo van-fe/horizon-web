@@ -277,7 +277,7 @@ export default defineComponent({
                   <div class={classHelper.e('icon')}>
                     {useIconRender(
                       isLoading.value ? (
-                        <NIcon name="loading" spin="cw"></NIcon>
+                        <AIcon name="loading" spin="cw"></AIcon>
                       ) : (
                         parentProps.expandIcon ?? IconArrowRight
                       ),
