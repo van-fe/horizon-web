@@ -1,10 +1,10 @@
 import getAnalysisJsonFiles from './getAnalysisJsonFiles';
 import * as shell from 'shelljs';
 
-function runLegoCreateIndexScript() {
+function runHorizonWebCreateIndexScript() {
   shell.cd('../horizon-web');
-  shell.exec('pnpm run build:index');
+  shell.exec('bun run build:index');
 }
 
-runLegoCreateIndexScript();
+runHorizonWebCreateIndexScript();
 getAnalysisJsonFiles();

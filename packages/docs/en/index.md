@@ -2,7 +2,7 @@
 layout: home
 
 hero:
-  name: "LEGO"
+  name: "HORIZONWEB"
   text: "A Vue3 Modern Components"
   tagline: To better improve your efficiency
   actions:

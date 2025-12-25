@@ -28,21 +28,21 @@ export default defineComponent({
           icon: 'scale_big',
           title: '放大',
           handler: (src: string) => {
-            console.log('scale_big', src);
+            console.info('scale_big', src);
           },
         },
         {
           icon: 'download',
           title: '下载',
           handler: (src: string) => {
-            console.log('download', src);
+            console.info('download', src);
           },
         },
         {
           icon: 'rubbish',
           title: '删除',
           handler: (src: string) => {
-            console.log('close', src);
+            console.info('close', src);
           },
         },
       ];
@@ -53,7 +53,7 @@ export default defineComponent({
           icon: 'refresh',
           title: '重新加载',
           handler: (src: string) => {
-            console.log('refresh', src);
+            console.info('refresh', src);
           },
         },
       ];

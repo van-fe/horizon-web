@@ -7,7 +7,7 @@
           <template #content>
             由于折叠需要执行宽度计算，在选项较多时，会对性能造成影响
           </template>
-          <n-icon name="help" />
+          <a-icon name="help" />
         </n-tooltip>
       </div>
       <n-modal-select v-model="values4" collapse multiple :to-body="false">

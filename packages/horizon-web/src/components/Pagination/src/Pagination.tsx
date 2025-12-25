@@ -1,6 +1,6 @@
 import { computed, defineComponent, provide, ref, toRefs, watch } from 'vue';
 import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { usePaginationProps } from './composables/useProps';
 import { usePaginationEmits } from './composables/useEmits';
 import { usePaginationSlots } from './composables/useSlots';
@@ -30,7 +30,7 @@ export default defineComponent({
   exposes: usePaginationExposes,
   setup(
     props: PaginationProps,
-    { emit, slots }: LegoSetupContext<PaginationEmits, PaginationSlots, PaginationExposes>,
+    { emit, slots }: HorizonWebSetupContext<PaginationEmits, PaginationSlots, PaginationExposes>,
   ) {
     const { size } = toRefs(props);
     const classHelper = new ComponentClassBlock('pagination');

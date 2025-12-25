@@ -20,7 +20,7 @@ import { $confirm, useStepProps } from '@aurora/horizon-web';
 const modelValue = ref(0);
 
 function onBeforeChange(next: number, curr: number, nextProp: ExtractPropTypes<typeof useStepProps>, currProp: ExtractPropTypes<typeof useStepProps>) {
-  console.log({ next, curr, nextProp, currProp });
+  console.info({ next, curr, nextProp, currProp });
 
   return new Promise((resolve, reject) => {
     $confirm(`是否同意切换步骤？从 【${curr}】 切换到 【${next}】`, '切换步骤确认').then((close) => {

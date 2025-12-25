@@ -78,7 +78,7 @@
             </n-sub-menu>
             <n-menu-item value="4">
               <template #icon>
-                <n-icon size="20" name="matestore_filled" />
+                <a-icon size="20" name="matestore_filled" />
               </template>
               <template #title>一级菜单 4</template>
             </n-menu-item>
@@ -92,7 +92,7 @@
             </n-sub-menu>
             <n-sub-menu value="6" :selectable="true">
               <template #icon>
-                <n-icon name="matestore_filled" size="20"></n-icon>
+                <a-icon name="matestore_filled" size="20"></a-icon>
               </template>
               <template #title>一级菜单 6</template>
               <n-sub-menu value="6-1" :selectable="true">
@@ -111,7 +111,7 @@
 
 <script setup lang="ts">
 import {  ref } from 'vue';
-import { NIcon } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 import { $confirm, NMenu } from '@aurora/horizon-web';
 import type { MenuItemProps, SubMenuProps } from '@aurora/horizon-web';
 
@@ -120,25 +120,25 @@ const collapse = ref(false);
 const selectedValue = ref('3-1-1');
 const onSelected = (value: string, values: Array<MenuItemProps | SubMenuProps>, current: MenuItemProps | SubMenuProps) => {
   selectedValue.value = value;
-  console.log('selected', value, values, current);
+  console.info('selected', value, values, current);
 };
 
 const onCollapseChanged = (status: boolean) => {
   collapse.value = status;
-  console.log(`菜单目前的折叠状态为：${status}`);
+  console.info(`菜单目前的折叠状态为：${status}`);
 };
 
 function onOpen(curr: string, paths: SubMenuProps[]) {
-  console.log('open:', curr, paths);
+  console.info('open:', curr, paths);
 }
 
 function onClose(curr: string, paths: SubMenuProps[]) {
-  console.log('close:', curr, paths);
+  console.info('close:', curr, paths);
 }
 
 function onBeforeSelect(value: string, props:  MenuItemProps | SubMenuProps) {
   return new Promise<boolean>((resolve, reject) => {
-    console.log(props);
+    console.info(props);
     $confirm(`是否跳转到${value}`, '提示').then((close) => {
       resolve(true);
       close();

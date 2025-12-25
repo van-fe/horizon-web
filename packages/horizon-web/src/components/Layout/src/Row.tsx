@@ -1,7 +1,7 @@
 import type { ComputedRef, InjectionKey } from 'vue';
 import { computed, defineComponent, provide, ref } from 'vue';
 import { useRowProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { useEventListener } from '@vueuse/core';
 import type { RowSlots } from './composables/useSlots';
@@ -12,14 +12,14 @@ export type RowProvide = {
   hspace: ComputedRef<number | undefined>;
 };
 
-export const ROW_KEY: InjectionKey<RowProvide> = Symbol(`Lego-row`);
+export const ROW_KEY: InjectionKey<RowProvide> = Symbol(`HorizonWeb-row`);
 
 export default defineComponent({
   name: `${useNamespace()}Row`,
   desc: 'Layout 提供了 n-row 和 n-col 两个组件来进行行列布局，在不同分辨率下有所区别',
   props: useRowProps,
   slots: useRowSlots,
-  setup(props, { slots }: LegoSetupContext<{}, RowSlots>) {
+  setup(props, { slots }: HorizonWebSetupContext<{}, RowSlots>) {
     const classHelper = new ComponentClassBlock('row');
 
     const innerWidth = ref(window.innerWidth);

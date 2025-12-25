@@ -20,7 +20,7 @@
       <n-input v-model="val3">
         <template #suffix>
           <n-tooltip placement="top" content="show location detail">
-            <n-icon name="location" />
+            <a-icon name="location" />
           </n-tooltip>
         </template>
       </n-input>
@@ -30,11 +30,11 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { NIcon } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 
 export default defineComponent({
   components: {
-    NIcon,
+    AIcon,
   },
   setup() {
     const val1 = ref('');

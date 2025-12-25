@@ -1,4 +1,4 @@
-import type { LegoComponentInstance } from '@aurora/utils';
+import type { HorizonWebComponentInstance } from '@aurora/utils';
 import { cls, ComponentClassBlock, sizeUnitTransform, useNamespace } from '@aurora/utils';
 import { defineComponent, inject, ref } from 'vue';
 import {
@@ -35,7 +35,7 @@ export default defineComponent({
     const treeHelper = inject(NCascaderTreeHelperInjectKey)!;
     const pickOption = inject(NCascaderPickOptionInjectKey)!;
 
-    const scrollerDomRef = ref<LegoComponentInstance<
+    const scrollerDomRef = ref<HorizonWebComponentInstance<
       typeof NVirtualScroller,
       VirtualScrollerExposes
     > | null>(null);

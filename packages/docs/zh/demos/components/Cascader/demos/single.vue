@@ -42,7 +42,7 @@ const baseData = ref([]);
 const checkStrictly = ref(true);
 
 function handleChange(selectOrDeselect?: boolean | undefined, option?: NCascaderExtendOption | undefined) {
-  console.log(selectOrDeselect, option);
+  console.info(selectOrDeselect, option);
 }
 
 onMounted(async()=>{

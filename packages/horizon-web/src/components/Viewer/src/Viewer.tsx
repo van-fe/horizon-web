@@ -12,9 +12,9 @@ import {
 } from 'vue';
 import { useResizeObserver, onKeyStroke } from '@vueuse/core';
 import { useViewerProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, useNamespace, useZIndex } from '@aurora/utils';
-import { NIcon, IconLoadingLine, IconPlayFilled } from '@aurora/icon';
+import { AIcon, IconLoadingLine, IconPlayFilled } from '@aurora/icon';
 import tooltip from '~/directives/v-tooltip';
 import draggable from '~/directives/v-draggable';
 import useZoom from './composables/useZoom';
@@ -30,7 +30,7 @@ export default defineComponent({
   name: `${useNamespace()}Viewer`,
   desc: '图片视频查看器',
   components: {
-    NIcon,
+    AIcon,
     IconLoadingLine,
     IconPlayFilled,
     NVideoPlayer,
@@ -43,7 +43,7 @@ export default defineComponent({
   inheritAttrs: false,
   props: useViewerProps,
   emits: useViewerEmits,
-  setup(props, { attrs, emit }: LegoSetupContext<ViewerEmits>) {
+  setup(props, { attrs, emit }: HorizonWebSetupContext<ViewerEmits>) {
     const locale = inject(localeInjectKey, defaultLocale);
     const {
       modelValue: modelValueRef,
@@ -283,7 +283,7 @@ export default defineComponent({
           sourceUrl = currentSource.value.videoSources[0].src;
         } else {
           // eslint-disable-next-line no-console
-          console.warn('[LEGO] Viewer Error: videoSources[0].src is required!');
+          console.warn('[HORIZONWEB] Viewer Error: videoSources[0].src is required!');
           return;
         }
       } else {
@@ -528,13 +528,13 @@ export default defineComponent({
                             <button
                               v-tooltip={
                                 showThumbnailRef.value
-                                  ? locale.value?.langService.td().horizon-web.viewer.closeThumbnail
-                                  : locale.value?.langService.td().horizon-web.viewer.thumbnail
+                                  ? locale.value?.langService.td().horizonWeb.viewer.closeThumbnail
+                                  : locale.value?.langService.td().horizonWeb.viewer.thumbnail
                               }
                               type="button"
                               onClick={toggleThumbnail}
                             >
-                              <NIcon
+                              <AIcon
                                 name={`${showThumbnailRef.value ? 'thumbnail_close' : 'thumbnail'}`}
                                 size="24"
                               />
@@ -545,23 +545,23 @@ export default defineComponent({
                         case 'previous':
                           return (
                             <button
-                              v-tooltip={locale.value?.langService.td().horizon-web.viewer.previous}
+                              v-tooltip={locale.value?.langService.td().horizonWeb.viewer.previous}
                               type="button"
                               onClick={goToPrevious}
                               disabled={previewDisabledRef.value}
                             >
-                              <NIcon name="arrow_left" size="24" />
+                              <AIcon name="arrow_left" size="24" />
                             </button>
                           );
                         case 'next':
                           return (
                             <button
-                              v-tooltip={locale.value?.langService.td().horizon-web.viewer.next}
+                              v-tooltip={locale.value?.langService.td().horizonWeb.viewer.next}
                               type="button"
                               onClick={goToNext}
                               disabled={nextDisabledRef.value}
                             >
-                              <NIcon name="arrow_right" size="24" />
+                              <AIcon name="arrow_right" size="24" />
                             </button>
                           );
                         case 'current':
@@ -573,21 +573,21 @@ export default defineComponent({
                         case 'zoomOut':
                           return (
                             <button
-                              v-tooltip={locale.value?.langService.td().horizon-web.viewer.zoomOut}
+                              v-tooltip={locale.value?.langService.td().horizonWeb.viewer.zoomOut}
                               type="button"
                               onClick={zoomOut}
                             >
-                              <NIcon name="scale_small" size="24" />
+                              <AIcon name="scale_small" size="24" />
                             </button>
                           );
                         case 'zoomIn':
                           return (
                             <button
-                              v-tooltip={locale.value?.langService.td().horizon-web.viewer.zoomIn}
+                              v-tooltip={locale.value?.langService.td().horizonWeb.viewer.zoomIn}
                               type="button"
                               onClick={zoomIn}
                             >
-                              <NIcon name="scale_big" size="24" />
+                              <AIcon name="scale_big" size="24" />
                             </button>
                           );
                         case 'ratio':
@@ -597,13 +597,13 @@ export default defineComponent({
                             <button
                               v-tooltip={
                                 originIconRef.value
-                                  ? locale.value?.langService.td().horizon-web.viewer.fitContent
+                                  ? locale.value?.langService.td().horizonWeb.viewer.fitContent
                                   : '1:1'
                               }
                               type="button"
                               onClick={adaptClick}
                             >
-                              <NIcon
+                              <AIcon
                                 name={`${originIconRef.value ? 'scaling' : 'adapt'}`}
                                 size="24"
                               />
@@ -612,11 +612,11 @@ export default defineComponent({
                         case 'rotate':
                           return (
                             <button
-                              v-tooltip={locale.value?.langService.td().horizon-web.viewer.spin}
+                              v-tooltip={locale.value?.langService.td().horizonWeb.viewer.spin}
                               type="button"
                               onClick={rotate}
                             >
-                              <NIcon name="spin" size="24" />
+                              <AIcon name="spin" size="24" />
                             </button>
                           );
                         case 'legend':
@@ -625,13 +625,13 @@ export default defineComponent({
                               <button
                                 v-tooltip={
                                   showLegendRef.value
-                                    ? locale.value?.langService.td().horizon-web.viewer.hideLabel
-                                    : locale.value?.langService.td().horizon-web.viewer.displayLabel
+                                    ? locale.value?.langService.td().horizonWeb.viewer.hideLabel
+                                    : locale.value?.langService.td().horizonWeb.viewer.displayLabel
                                 }
                                 type="button"
                                 onClick={toggleLegend}
                               >
-                                <NIcon
+                                <AIcon
                                   name={`${showLegendRef.value ? 'label_close' : 'label'}`}
                                   size="24"
                                 />
@@ -642,11 +642,11 @@ export default defineComponent({
                         case 'download':
                           return (
                             <button
-                              v-tooltip={locale.value?.langService.td().horizon-web.viewer.download}
+                              v-tooltip={locale.value?.langService.td().horizonWeb.viewer.download}
                               type="button"
                               onClick={download}
                             >
-                              <NIcon name="download" size="24" />
+                              <AIcon name="download" size="24" />
                             </button>
                           );
                         default:
@@ -660,7 +660,7 @@ export default defineComponent({
                                 type="button"
                                 onClick={() => tool.handler(currentSource.value.cover)}
                               >
-                                <NIcon
+                                <AIcon
                                   name={tool.iconName}
                                   size={tool.iconSize}
                                   color={tool.iconColor}
@@ -681,7 +681,7 @@ export default defineComponent({
                   type="button"
                   onClick={withModifiers(closeModal, ['stop'])}
                 >
-                  <NIcon name="close" size="20" />
+                  <AIcon name="close" size="20" />
                 </button>
               </div>
             </div>

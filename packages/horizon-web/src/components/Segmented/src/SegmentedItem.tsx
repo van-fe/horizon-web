@@ -1,5 +1,5 @@
-import { NIconSVG } from '@aurora/icon';
-import type { LegoSetupContext } from '@aurora/utils';
+import { AIconSVG } from '@aurora/icon';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, getBooleanProp, useNamespace, isVNodeEmpty } from '@aurora/utils';
 import {
   cloneVNode,
@@ -19,11 +19,11 @@ import { contextKey } from './constants';
 
 export default defineComponent({
   name: `${useNamespace()}SegmentedItem`,
-  components: { NIconSVG },
+  components: { AIconSVG },
   props: useSegmentedItemProps,
   slots: useSegmentedItemSlots,
   emits: useSegmentedItemEmits,
-  setup(props, { slots, emit }: LegoSetupContext<SegmentedItemEmits, SegmentedItemSlots>) {
+  setup(props, { slots, emit }: HorizonWebSetupContext<SegmentedItemEmits, SegmentedItemSlots>) {
     const ctx = inject(contextKey);
     if (!ctx) throw new Error('Please using <n-segmented-item /> in the <n-segmented />');
 
@@ -68,7 +68,7 @@ export default defineComponent({
             {slots.icon
               ? cloneVNode(slots.icon()[0], { class: cls.e('icon') })
               : props.icon && (
-                  <NIconSVG class={cls.e('icon')} name={props.icon} size={props.iconSize} />
+                  <AIconSVG class={cls.e('icon')} name={props.icon} size={props.iconSize} />
                 )}
 
             {isVNodeEmpty(slotDefaults)

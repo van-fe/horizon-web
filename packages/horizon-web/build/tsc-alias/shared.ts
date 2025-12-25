@@ -5,7 +5,6 @@ const mapping = [
   'vue-router',
   'dayjs',
   'async-validator',
-  '@aurora/upload-helper',
   '@aurora/locale',
 ];
 

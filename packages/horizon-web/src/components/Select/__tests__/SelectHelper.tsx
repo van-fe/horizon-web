@@ -1,6 +1,6 @@
 import type { SelectProps, OptionProps } from '~/components/Select/src/composables/useProps';
 import type { SelectEmits } from '~/components/Select/src/composables/useEmits';
-import type { LegoComponentInstance, MaybeRef, PartialExclude } from '@aurora/utils';
+import type { HorizonWebComponentInstance, MaybeRef, PartialExclude } from '@aurora/utils';
 import { isObject } from '@aurora/utils';
 import NSelect from '~/components/Select/src/Select';
 import NOption from '~/components/Select/src/Option';
@@ -26,12 +26,12 @@ export default class SelectHelper<
   };
   public options = ref<PartialExclude<OptionProps, 'value' | 'label'>[]>([]);
   public slots?: Partial<SetupContext<{}, SelectSlots>['slots']>;
-  public domRef = ref<LegoComponentInstance<typeof NSelect, SelectExposes>>();
+  public domRef = ref<HorizonWebComponentInstance<typeof NSelect, SelectExposes>>();
   public outer!: DOMWrapper<Element>;
   public wrapper!: VueWrapper<any, any>;
-  public element!: VueWrapper<LegoComponentInstance<typeof NSelect, SelectExposes>>;
-  public popover!: VueWrapper<LegoComponentInstance<typeof NPickerPopper>>;
-  public mainInput?: VueWrapper<LegoComponentInstance<typeof NPickerInput, PickerInputExposes>>;
+  public element!: VueWrapper<HorizonWebComponentInstance<typeof NSelect, SelectExposes>>;
+  public popover!: VueWrapper<HorizonWebComponentInstance<typeof NPickerPopper>>;
+  public mainInput?: VueWrapper<HorizonWebComponentInstance<typeof NPickerInput, PickerInputExposes>>;
   public confirmWrapper?: DOMWrapper<Element>;
 
   constructor(
@@ -76,14 +76,14 @@ export default class SelectHelper<
   private mountComponent() {
     this.mountDirectly();
     this.element = this.wrapper.findComponent(NSelect) as VueWrapper<
-      LegoComponentInstance<typeof NSelect, SelectExposes>
+      HorizonWebComponentInstance<typeof NSelect, SelectExposes>
     >;
     this.popover = this.wrapper.findComponent(NPickerPopper) as VueWrapper<
-      LegoComponentInstance<typeof NPickerPopper>
+      HorizonWebComponentInstance<typeof NPickerPopper>
     >;
     this.outer = this.wrapper.find('#outer');
     this.mainInput = this.wrapper.findComponent(NPickerInput) as VueWrapper<
-      LegoComponentInstance<typeof NPickerInput, PickerInputExposes>
+      HorizonWebComponentInstance<typeof NPickerInput, PickerInputExposes>
     >;
   }
 

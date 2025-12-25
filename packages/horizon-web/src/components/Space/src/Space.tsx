@@ -1,4 +1,4 @@
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, getUnitString, isVNodeEmpty, useNamespace } from '@aurora/utils';
 import type { CSSProperties, Ref, VNode } from 'vue';
 import { Fragment, computed, defineComponent, inject, ref } from 'vue';
@@ -25,7 +25,7 @@ export default defineComponent({
   exposes: useSpaceExposes,
   setup(
     props: SpaceProps,
-    { slots, attrs }: LegoSetupContext<SpaceEmits, SpaceSlots, SpaceExposes>,
+    { slots, attrs }: HorizonWebSetupContext<SpaceEmits, SpaceSlots, SpaceExposes>,
   ) {
     const classHelper = new ComponentClassBlock('space');
 

@@ -307,6 +307,6 @@ describe('Cascader.tsx special', () => {
 
     const { panels } = await openCascader(wrapper);
 
-    console.log(panels.html());
+    console.info(panels.html());
   });
 });

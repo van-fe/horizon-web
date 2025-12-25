@@ -40,7 +40,7 @@ import { ref } from 'vue';
 import { faker } from '@faker-js/faker';
 import { NTableColumnV3 } from '@aurora/horizon-web';
 import type { NTableRowDataType, TableColumnExposes } from '@aurora/horizon-web';
-import { LegoComponentInstance } from '@aurora/utils';
+import { HorizonWebComponentInstance } from '@aurora/utils';
 
 interface TableData {
   id: number;
@@ -49,7 +49,7 @@ interface TableData {
   address: string;
 }
 
-const selectionColumnDomRef = ref<LegoComponentInstance<typeof NTableColumnV3, TableColumnExposes>>();
+const selectionColumnDomRef = ref<HorizonWebComponentInstance<typeof NTableColumnV3, TableColumnExposes>>();
 
 const checkedRows = ref([]);
 
@@ -69,7 +69,7 @@ function setSelected(ignoreSelectable = false) {
 }
 
 function getSelected() {
-  console.log(selectionColumnDomRef.value?.getSelectionRows());
+  console.info(selectionColumnDomRef.value?.getSelectionRows());
 }
 
 function clearSelection(ignoreSelectable = false) {

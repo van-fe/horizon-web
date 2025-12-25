@@ -1,6 +1,6 @@
 import { computed, defineComponent, inject } from 'vue';
 import dayjs from '~/utils/useDayJs';
-import { cls, ComponentClassBlock, type LegoSetupContext } from '@aurora/utils';
+import { cls, ComponentClassBlock, type HorizonWebSetupContext } from '@aurora/utils';
 import type { DatePickerDatePanelComponentsProps } from '../../composables/useProps';
 import { useDatePickerDatePanelComponentsProps } from '../../composables/useProps';
 import {
@@ -30,7 +30,7 @@ export default defineComponent({
   exposes: useDatePickerDatePanelComponentExposes,
   setup(
     props: DatePickerDatePanelComponentsProps,
-    context: LegoSetupContext<
+    context: HorizonWebSetupContext<
       DatePickerTimePanelComponentsEmits,
       {},
       DatePickerDatePanelComponentExposes

@@ -1,4 +1,4 @@
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import {
   ComponentClassBlock,
   cssVariable,
@@ -43,7 +43,7 @@ export default defineComponent({
   props: useDrawerProps,
   emits: useDrawerEmits,
   slots: useDrawerSlots,
-  setup(props, { slots, emit, attrs, expose }: LegoSetupContext<DrawerEmits, DrawerSlots>) {
+  setup(props, { slots, emit, attrs, expose }: HorizonWebSetupContext<DrawerEmits, DrawerSlots>) {
     const classHelper = new ComponentClassBlock('drawer');
 
     const instance = getCurrentInstance();
@@ -76,13 +76,13 @@ export default defineComponent({
     const okButton = computed(() => props.okButton && props.primaryButton);
     const okButtonText = computed(
       () =>
-        props.okButtonText ?? props.primaryText ?? locale.value?.langService.td().horizon-web.global.ok,
+        props.okButtonText ?? props.primaryText ?? locale.value?.langService.td().horizonWeb.global.ok,
     );
     const cancelButtonText = computed(
       () =>
         props.cancelButtonText ??
         props.secondaryText ??
-        locale.value?.langService.td().horizon-web.global.cancel,
+        locale.value?.langService.td().horizonWeb.global.cancel,
     );
 
     const showHeader = computed(() => {

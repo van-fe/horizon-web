@@ -29,7 +29,7 @@
   "Form": "^(NForm|NFormItem)$",
   "Guide": "^(NGuide|NGuideItem)$",
   "Hover": "^NHover$",
-  "Icon": "^NIcon$",
+  "Icon": "^AIcon$",
   "Image": "^(NImage|NImageList)$",
   "Input": "^NInput$",
   "InputNumber": "^NInputNumber$",

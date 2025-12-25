@@ -28,7 +28,7 @@ function generateRandomOptions() {
 }
 
 const onOptionListReachBottom = throttle(() => {
-  console.log('reach bottom');
+  console.info('reach bottom');
   generateRandomOptions();
 }, 500);
 

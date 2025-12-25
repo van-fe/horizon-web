@@ -11,7 +11,7 @@ import {
 } from 'vue';
 import { useFormProps } from './composables/useProps';
 import type { ValidateReturnType, BindComponent } from './composables/useProps';
-import type { Arrayable, LegoSetupContext } from '@aurora/utils';
+import type { Arrayable, HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, isNil, useNamespace } from '@aurora/utils';
 import type { FormEmits } from './composables/useEmits';
 import { useFormEmits } from './composables/useEmits';
@@ -30,7 +30,7 @@ export default defineComponent({
   emits: useFormEmits,
   slots: useFormSlots,
   exposes: useFormExposes,
-  setup(props, { slots, expose, emit }: LegoSetupContext<FormEmits, FormSlots, FormExposes>) {
+  setup(props, { slots, expose, emit }: HorizonWebSetupContext<FormEmits, FormSlots, FormExposes>) {
     const classHelper = new ComponentClassBlock('form');
 
     const formDomRef = ref<HTMLFormElement>();

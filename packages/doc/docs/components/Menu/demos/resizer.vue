@@ -93,7 +93,7 @@
             </n-sub-menu>
             <n-menu-item value="4">
               <template #icon>
-                <n-icon size="20" name="matestore_filled" />
+                <a-icon size="20" name="matestore_filled" />
               </template>
               <template #title>一级菜单 4</template>
             </n-menu-item>
@@ -107,7 +107,7 @@
             </n-sub-menu>
             <n-sub-menu value="6" :selectable="true">
               <template #icon>
-                <n-icon name="matestore_filled" size="20"></n-icon>
+                <a-icon name="matestore_filled" size="20"></a-icon>
               </template>
               <template #title>一级菜单 6</template>
               <n-sub-menu value="6-1" :selectable="true">
@@ -126,7 +126,7 @@
 
 <script setup lang="ts">
 import { ExtractPropTypes, ref } from 'vue';
-import { NIcon } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 import { NMenu, useMenuProps } from '@aurora/horizon-web';
 
 const menuRef = ref<typeof NMenu | null>(null);

@@ -39,7 +39,7 @@ export default defineComponent({
             },
           },
           customRequest: ({ onChange, url, method, withCredentials, headers, data }) => {
-            console.log(url, method, withCredentials, headers, data);
+            console.info(url, method, withCredentials, headers, data);
             onChange({ status: 'uploading', progress: 0 });
             setTimeout(() => {
               onChange({ status: 'success', progress: 100 });
@@ -47,7 +47,7 @@ export default defineComponent({
 
             return {
               abort: () => {
-                console.log('abort');
+                console.info('abort');
               },
             };
           },
@@ -77,7 +77,7 @@ export default defineComponent({
     ]);
 
     const getFileList = () => {
-      console.log(fileList.value);
+      console.info(fileList.value);
     };
 
     const beforeUpload = files => {
@@ -124,7 +124,7 @@ export default defineComponent({
         ];
         visibleRef.value = true;
       } else {
-        console.log(file, 'preview');
+        console.info(file, 'preview');
       }
     };
 
@@ -142,7 +142,7 @@ export default defineComponent({
         link.click();
         document.body.removeChild(link);
       } else {
-        console.log(file, 'download');
+        console.info(file, 'download');
       }
     };
 

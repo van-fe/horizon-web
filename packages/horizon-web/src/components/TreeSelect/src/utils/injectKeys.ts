@@ -1,4 +1,4 @@
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { generatorInjectedKeyName } from '@aurora/utils';
 import type { ComputedRef, InjectionKey, Ref } from 'vue';
 import type { TreeSelectProps } from '../composables/useProps';
@@ -11,11 +11,11 @@ export const NTreeSelectPropsInjectKey = Symbol(
 
 export const NTreeSelectEmitsInjectKey = Symbol(
   generatorInjectedKeyName('treeSelect', 'emits'),
-) as InjectionKey<LegoSetupContext<TreeSelectEmits>['emit']>;
+) as InjectionKey<HorizonWebSetupContext<TreeSelectEmits>['emit']>;
 
 export const NTreeSelectSlotsInjectKey = Symbol(
   generatorInjectedKeyName('treeSelect', 'slots'),
-) as InjectionKey<LegoSetupContext<{}, TreeSelectSlots>['slots']>;
+) as InjectionKey<HorizonWebSetupContext<{}, TreeSelectSlots>['slots']>;
 
 export const NTreeSelectPopperVisibleInjectKey = Symbol(
   generatorInjectedKeyName('treeSelect', 'popper-visible'),

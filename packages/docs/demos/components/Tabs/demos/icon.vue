@@ -8,7 +8,7 @@ const tabs = ['Tab 1', 'Tab 2', 'Tab 3'];
 const icons = ['car', 'change_power', 'card_voucher'];
 
 const onTabChanged = (tab: NTabValue) => {
-  console.log('tab changed', tab);
+  console.info('tab changed', tab);
   $message({ type: 'success', message: `Tab ${tab} is clicked` });
 };
 </script>

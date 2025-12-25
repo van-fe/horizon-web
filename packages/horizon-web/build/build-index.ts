@@ -6,7 +6,7 @@ import {
   directiveRoot,
   methodsRoot,
   styleRoot,
-} from '@aurora/utils/plugins';
+} from '../../../scripts/paths';
 import * as shell from 'shelljs';
 import type {
   ApiGeneratorExportedComponent,
@@ -22,7 +22,7 @@ function capitalizeCamelCase(str: string) {
 
 const banner = `/**
  * {name}
- * This file is generated automatically by script: pnpm run build:index
+ * This file is generated automatically by script: bun run build:index
  */\n\n`;
 
 let componentDependencies: ApiGeneratorExportedComponent[] = [];
@@ -31,7 +31,7 @@ let methodDependencies: ApiGeneratorExportedMethod[] = [];
 let typesDependencies: ApiGeneratorExportedPluginType[] = [];
 
 function generateDependenciesJson() {
-  shell.exec('pnpm run build:json');
+  shell.exec('bun run build:json');
   componentDependencies = require(apiGeneratorOutPut + `/components-dependencies.json`);
   directiveDependencies = require(apiGeneratorOutPut + `/directives-dependencies.json`);
   methodDependencies = require(apiGeneratorOutPut + `/methods-dependencies.json`);

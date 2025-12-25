@@ -1,9 +1,9 @@
 import { defineComponent, ref, computed, onMounted, shallowRef } from 'vue';
 import { useEventListener, useDebounceFn } from '@vueuse/core';
 import { useBacktopProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { easeInOutCubic, useNamespace } from '@aurora/utils';
-import { NIcon } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 import type { BacktopEmits } from './composables/useEmits';
 import { useBacktopEmits } from './composables/useEmits';
 import type { BacktopSlots } from './composables/useSlots';
@@ -14,11 +14,11 @@ import { error } from '~/utils/useLog';
 export default defineComponent({
   name: `${useNamespace()}Backtop`,
   desc: '返回页面顶部按钮',
-  components: { NIcon, NTransition },
+  components: { AIcon, NTransition },
   props: useBacktopProps,
   emits: useBacktopEmits,
   slots: useBacktopSlots,
-  setup(props, { emit, slots }: LegoSetupContext<BacktopEmits, BacktopSlots>) {
+  setup(props, { emit, slots }: HorizonWebSetupContext<BacktopEmits, BacktopSlots>) {
     const visible = ref(false);
     const el = shallowRef<HTMLElement | undefined>(document.documentElement);
     const container = shallowRef<Document | HTMLElement>(document);
@@ -78,7 +78,7 @@ export default defineComponent({
             class="n-backtop"
             onClick={handleClick}
           >
-            {slots.default?.() ?? <NIcon class="n-backtop__icon" name="top" size="16" />}
+            {slots.default?.() ?? <AIcon class="n-backtop__icon" name="top" size="16" />}
           </div>
         ) : undefined}
       </NTransition>

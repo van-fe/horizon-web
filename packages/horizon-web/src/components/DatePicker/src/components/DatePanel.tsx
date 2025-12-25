@@ -1,6 +1,6 @@
 import { defineComponent, inject, ref } from 'vue';
 import { useDatePickerDatePanelProps } from '../composables/useProps';
-import type { LegoComponentInstance, LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebComponentInstance, HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock } from '@aurora/utils';
 import DatePanelHeader from './DatePanelHeader';
 import type { DatePickerDatePanelEmits } from '../composables/useEmits';
@@ -25,17 +25,17 @@ export default defineComponent({
     {
       emit,
       expose,
-    }: LegoSetupContext<DatePickerDatePanelEmits, {}, DatePickerDatePanelExposes>,
+    }: HorizonWebSetupContext<DatePickerDatePanelEmits, {}, DatePickerDatePanelExposes>,
   ) {
     const classHelper = new ComponentClassBlock('date-picker');
 
     const parentProps = inject(NDatePickerPropsInjectKey)!;
 
     const datePanelHeaderDomRef =
-      ref<LegoComponentInstance<typeof DatePanelHeader, DatePickerDatePanelHeaderExposes>>();
+      ref<HorizonWebComponentInstance<typeof DatePanelHeader, DatePickerDatePanelHeaderExposes>>();
 
     const datePanelBodyDomRef =
-      ref<LegoComponentInstance<typeof DatePanelBody, DatePickerDatePanelBodyExposes>>();
+      ref<HorizonWebComponentInstance<typeof DatePanelBody, DatePickerDatePanelBodyExposes>>();
 
     expose({
       clickDateCell: (

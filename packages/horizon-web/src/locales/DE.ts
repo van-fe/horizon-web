@@ -1,5 +1,5 @@
 export const DE = {
-  horizon-web: {
+  horizonWeb: {
     global: {
       ok: 'OK',
       cancel: 'Abbrechen',
@@ -184,19 +184,6 @@ export const DE = {
       view: 'Datei anzeigen',
       deleteFile: 'Datei löschen',
       download: 'Datei herunterladen',
-    },
-    table: {
-      emptyText: 'Keine Daten',
-      confirmFilter: 'Bestätigen',
-      resetFilter: 'Zurücksetzen',
-      clearFilter: 'Alles',
-      sumText: 'Summe',
-      loading: 'Wird geladen',
-      pinToLeft: 'Nach links pinnen',
-      pinToRight: 'Nach rechts pinnen',
-      pin: 'Spalte pinnen',
-      unPin: 'Loslösen',
-      lockPin: 'Die fixierte Spalte ist gesperrt',
     },
     tree: {
       emptyText: 'Keine Daten',

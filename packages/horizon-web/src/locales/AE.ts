@@ -1,5 +1,5 @@
 export const AE = {
-  horizon-web: {
+  horizonWeb: {
     global: {
       ok: 'تم',
       cancel: 'إلغاء',
@@ -194,19 +194,6 @@ export const AE = {
       view: 'عرض الملف',
       deleteFile: 'حذف الملف',
       download: 'تنزيل الملف',
-    },
-    table: {
-      emptyText: 'لا توجد بيانات',
-      confirmFilter: 'تأكيد',
-      resetFilter: 'إعادة تعيين',
-      clearFilter: 'الكل',
-      sumText: 'المجموع',
-      loading: 'جار التحميل',
-      pinToLeft: 'التثبيت إلى اليسار',
-      pinToRight: 'التثبيت إلى اليمين',
-      pin: 'تثبيت هذا العمود',
-      unPin: 'إلغاء التثبيت',
-      lockPin: 'العمود الثابت محصور',
     },
     tree: {
       emptyText: 'لا توجد بيانات',

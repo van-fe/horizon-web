@@ -21,7 +21,7 @@ function change() {
 }
 
 function onAcceptError(files: NUploadFileType[]) {
-  console.log(files);
+  console.info(files);
 
   $message.error(`自动拦截：您选择的 ${files.map(file => file.name).join('、')} 不是 ${accept.value} 文件`);
 }

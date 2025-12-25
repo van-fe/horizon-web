@@ -17,8 +17,8 @@ import '@aurora/icon/dist/style.css';
 > // iconfont
 
 ```javascript
-import { NIcon } from '@aurora/icon';
-createAPP(APP).component('NIcon', NIcon);
+import { AIcon } from '@aurora/icon';
+createAPP(APP).component('AIcon', AIcon);
 ```
 
 // svg-sprite

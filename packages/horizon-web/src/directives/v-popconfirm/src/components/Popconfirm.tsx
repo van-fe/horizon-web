@@ -3,7 +3,7 @@ import { NButton } from '../../../../components/Button';
 import { ComponentClassBlock, cssVariable, isNil, useNamespace, useZIndex } from '@aurora/utils';
 import { usePopconfirmProps } from '../composables/useProps';
 import clickOutside from '~/directives/v-click-outside';
-import { NIcon } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 import NTransition from '~/components/Transition/src/Transition';
 import useLocaleLang from '~/utils/useLocaleLang';
 
@@ -11,7 +11,7 @@ export default defineComponent({
   name: `${useNamespace()}PopConfirm`,
   components: {
     NButton,
-    NIcon,
+    AIcon,
     NTransition,
   },
   directives: {
@@ -95,7 +95,7 @@ export default defineComponent({
         >
           <div class={classHelper.e('body')}>
             {getIcon() ? (
-              <NIcon
+              <AIcon
                 class={`${classHelper.e('icon')}`}
                 name={getIcon()?.name}
                 color={getIcon()?.color}

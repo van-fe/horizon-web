@@ -1,5 +1,5 @@
 import { Project } from 'ts-morph';
-import { apiGeneratorOutPut, legoProjectRoot, writeJsonFile } from '@aurora/utils/plugins';
+import { apiGeneratorOutPut, horizonwebProjectRoot, writeJsonFile } from '@aurora/utils/plugins';
 import type {
   ApiGeneratorAnalysedComponentDetail,
   ApiGeneratorAnalysedEmitType,
@@ -22,10 +22,10 @@ function analysisComponents(
   const project = new Project({
     compilerOptions: {
       emitDeclarationOnly: true,
-      baseUrl: legoProjectRoot,
+      baseUrl: horizonwebProjectRoot,
       preserveSymlinks: true,
     },
-    tsConfigFilePath: legoProjectRoot + '/tsconfig.json',
+    tsConfigFilePath: horizonwebProjectRoot + '/tsconfig.json',
     skipAddingFilesFromTsConfig: true,
   });
 

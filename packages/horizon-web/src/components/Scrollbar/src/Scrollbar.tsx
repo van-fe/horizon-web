@@ -11,7 +11,7 @@ import {
   watch,
 } from 'vue';
 import { ComponentClassBlock, cls, sizeUnitTransform, useNamespace } from '@aurora/utils';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { ScrollbarProps } from './composables/useProps';
 import { useScrollbarProps } from './composables/useProps';
 import { useScrollbarEmits } from './composables/useEmits';
@@ -47,7 +47,7 @@ export default defineComponent({
       slots,
       expose,
       attrs,
-    }: LegoSetupContext<ScrollbarEmits, ScrollbarSlots, ScrollbarExposes>,
+    }: HorizonWebSetupContext<ScrollbarEmits, ScrollbarSlots, ScrollbarExposes>,
   ) {
     const classHelper = new ComponentClassBlock('scrollbar');
     const propsRef = toRefs(props);

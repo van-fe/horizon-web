@@ -8,7 +8,7 @@ import {
   toRefs,
   provide,
 } from 'vue';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import {
   cls,
   ComponentClassBlock,
@@ -37,7 +37,7 @@ export default defineComponent({
   exposes: usePopoverExposes,
   setup(
     props,
-    { slots, emit, expose }: LegoSetupContext<PopoverEmits, PopoverSlots, PopoverExposes>,
+    { slots, emit, expose }: HorizonWebSetupContext<PopoverEmits, PopoverSlots, PopoverExposes>,
   ) {
     const popupContainerGetter = usePopupContainerGetter();
     const classHelper = new ComponentClassBlock('popover');

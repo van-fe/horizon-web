@@ -1,4 +1,4 @@
-import { NIconSVG } from '@aurora/icon';
+import { AIconSVG } from '@aurora/icon';
 import { mount } from '@vue/test-utils';
 import { describe, expect, test, vi } from 'vitest';
 import { nextTick, reactive, ref } from 'vue';
@@ -260,14 +260,14 @@ describe('Segmented.tsx', () => {
           <div class="n-segmented__nav-wrap">
             <div class="n-segmented__nav-list">
               <div class="n-segmented__item" role="tab" tabindex="0" aria-selected="false">
-                <div class="n-segmented__item-inner"><svg class="n-icon n-icon__v2_11_24 n-icon__svg n-segmented__icon" style="transform: rotate(undefineddeg);">
+                <div class="n-segmented__item-inner"><svg class="a-icon n-icon__v2_11_24 n-icon__svg n-segmented__icon" style="transform: rotate(undefineddeg);">
                     <use href="#n-icon_layout"></use>
                   </svg>
                   <div class="n-segmented__item-text" title="1">1</div>
                 </div>
               </div>
               <div class="n-segmented__item" role="tab" tabindex="0" aria-selected="false">
-                <div class="n-segmented__item-inner"><svg class="n-icon n-icon__v2_11_24 n-icon__svg n-segmented__icon" style="transform: rotate(undefineddeg);">
+                <div class="n-segmented__item-inner"><svg class="a-icon n-icon__v2_11_24 n-icon__svg n-segmented__icon" style="transform: rotate(undefineddeg);">
                     <use href="#n-icon_list"></use>
                   </svg>
                   <div class="n-segmented__item-text" title="2">2</div>
@@ -285,7 +285,7 @@ describe('Segmented.tsx', () => {
 
     const sgm = wrapper.findComponent(NSegmented);
     expect(sgm.exists()).toBe(true);
-    const icons = wrapper.findAllComponents(NIconSVG);
+    const icons = wrapper.findAllComponents(AIconSVG);
     expect(icons).toHaveLength(2);
   });
 

@@ -6,7 +6,7 @@ import { useCollapseEmits } from './composables/useEmits';
 import type { CollapseSlots } from './composables/useSlots';
 import { useCollapseSlots } from './composables/useSlots';
 import type { CollapseEmits } from './composables/useEmits';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, generatorInjectedKeyName, useNamespace } from '@aurora/utils';
 import useSize from '~/utils/useSize';
 
@@ -28,7 +28,7 @@ export default defineComponent({
   props: useCollapseProps,
   emits: useCollapseEmits,
   slots: useCollapseSlots,
-  setup(props: CollapseProps, { emit, slots }: LegoSetupContext<CollapseEmits, CollapseSlots>) {
+  setup(props: CollapseProps, { emit, slots }: HorizonWebSetupContext<CollapseEmits, CollapseSlots>) {
     const {
       activeKey: activeKeyProp,
       accordion: accordionProp,

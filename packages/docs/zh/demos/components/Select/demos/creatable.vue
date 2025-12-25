@@ -44,14 +44,14 @@ const values1 = ref([]);
 const values2 = ref([]);
 
 const beforeCreate = (value: string, optionMap: Map<any, any>) => {
-  console.log(value);
-  console.log(optionMap);
+  console.info(value);
+  console.info(optionMap);
 
   if (optionMap.get(value) || value === '南京') return false;
 };
 
 function onInput(val) {
-  console.log('input:', val);
+  console.info('input:', val);
 }
 </script>
 

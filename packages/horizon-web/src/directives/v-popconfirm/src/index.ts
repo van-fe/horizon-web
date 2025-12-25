@@ -5,7 +5,6 @@ import { usePopper } from '~/utils/popper';
 import Popconfirm from './components/Popconfirm';
 import type { PopConfirmOptions } from './composables/useOptions';
 import { usePopConfirmOptions } from './composables/useOptions';
-import { useSensor } from '~/utils/useSensor';
 
 const bindingValueSymbol = Symbol('popconfirm binding value');
 
@@ -93,8 +92,6 @@ export default defineDirective<PopconfirmEl, typeof usePopConfirmOptions | strin
   options: usePopConfirmOptions,
   desc: '用于二次确认场景，会在点击元素上弹出浮层进行提示确认',
   created(el, binding, vNode) {
-    useSensor('v-popconfirm', binding.value, 'directive');
-
     el[bindingValueSymbol] = binding.value;
 
     el.popconfirmClick = (e: Event) => {

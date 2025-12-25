@@ -1,4 +1,4 @@
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, NOnlyChild, cls, useNamespace, useZIndex } from '@aurora/utils';
 import { useClipboard, useMutationObserver, useResizeObserver } from '@vueuse/core';
 import type { ComputedRef } from 'vue';
@@ -38,7 +38,7 @@ export default defineComponent({
   exposes: useTooltipExposes,
   setup(
     props,
-    { emit, slots, expose }: LegoSetupContext<TooltipEmits, TooltipSlots, TooltipExposes>,
+    { emit, slots, expose }: HorizonWebSetupContext<TooltipEmits, TooltipSlots, TooltipExposes>,
   ) {
     let instance: PopperInstance | null = null;
 

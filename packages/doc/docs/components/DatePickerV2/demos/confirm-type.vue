@@ -27,10 +27,10 @@ const value = ref();
 const value2 = ref();
 
 function onUpdate(val: unknown) {
-  console.log('update: ', val);
+  console.info('update: ', val);
 }
 
 function onChange(val: unknown) {
-  console.log('change: ', val);
+  console.info('change: ', val);
 }
 </script>

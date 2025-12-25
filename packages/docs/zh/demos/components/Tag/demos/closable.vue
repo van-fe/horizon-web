@@ -33,11 +33,11 @@
 
 <script setup lang="ts">
 function onClick() {
-  console.log('click');
+  console.info('click');
 }
 
 function onClose() {
-  console.log('close');
+  console.info('close');
 }
 </script>
 

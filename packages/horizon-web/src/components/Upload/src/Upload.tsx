@@ -1,7 +1,7 @@
 import type { ComponentPublicInstance } from 'vue';
 import { ref, inject, computed, defineComponent, provide, toRefs, watch, Fragment } from 'vue';
 import { ComponentClassBlock, cls, useNamespace, isNil } from '@aurora/utils';
-import type { LegoSetupContext, Data } from '@aurora/utils';
+import type { HorizonWebSetupContext, Data } from '@aurora/utils';
 import { useUploadProps } from './composables/useProps';
 import { useUploadEmits } from './composables/useEmits';
 import { useUploadSlots } from './composables/useSlots';
@@ -49,7 +49,7 @@ export default defineComponent({
   exposes: useUploadExposes,
   setup(
     props: UploadProps,
-    { emit, slots, expose }: LegoSetupContext<UploadEmits, UploadSlots, UploadExposes>,
+    { emit, slots, expose }: HorizonWebSetupContext<UploadEmits, UploadSlots, UploadExposes>,
   ) {
     const classHelper = new ComponentClassBlock('upload');
     const propsRef = toRefs(props);

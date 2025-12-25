@@ -24,7 +24,7 @@ export default defineComponent({
       notes: '',
     });
     const submit = () => {
-      console.log('formData:', formData.value);
+      console.info('formData:', formData.value);
       $message.success('Submit');
     };
     return {

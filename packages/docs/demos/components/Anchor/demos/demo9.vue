@@ -2,7 +2,7 @@
 const scrollContainer = top?.document.querySelector('main.n-main');
 
 const collapseUpdateHandle = (collapse: boolean) => {
-  console.log('是否处于折叠状态: ', collapse);
+  console.info('是否处于折叠状态: ', collapse);
 };
 </script>
 

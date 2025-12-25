@@ -51,7 +51,7 @@ export default defineComponent({
       <div class={classHelper.e('jumper')}>
         {parentProps.label?.jumpPrefixText ??
           parentProps.label?.jump_prefix_text ??
-          locale.value?.langService.td().horizon-web.pagination.goto}
+          locale.value?.langService.td().horizonWeb.pagination.goto}
         <NInputNumber
           ref={inputNumberRef}
           v-model={jumpTo.value}
@@ -68,7 +68,7 @@ export default defineComponent({
         />
         {parentProps.label?.jumpSuffixText ??
           parentProps.label?.jump_suffix_text ??
-          locale.value?.langService.td().horizon-web.pagination.pageClassifier}
+          locale.value?.langService.td().horizonWeb.pagination.pageClassifier}
       </div>
     );
   },

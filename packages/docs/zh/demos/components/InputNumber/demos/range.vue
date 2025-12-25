@@ -6,11 +6,11 @@ const value2 = ref(0);
 const value3 = ref();
 
 function onChange(val: number) {
-  console.log('change: ', val);
+  console.info('change: ', val);
 }
 
 function onUpdate(val: number) {
-  console.log('update: ', val);
+  console.info('update: ', val);
 }
 </script>
 

@@ -1,7 +1,7 @@
 import * as fs from 'fs-extra';
 import * as cssTree from 'css-tree';
 import path from 'path';
-import { componentRoot, directiveRoot, methodsRoot } from '@aurora/utils/plugins';
+import { componentRoot, directiveRoot, methodsRoot } from '../../../../scripts/paths';
 import { kebabCase } from '@aurora/utils';
 
 function action(baseRoot: string) {

@@ -4,7 +4,7 @@ import { useMaskEmits } from './composables/useEmits';
 import type { MaskSlots } from './composables/useSlots';
 import { useMaskSlots } from './composables/useSlots';
 import type { MaskEmits } from './composables/useEmits';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, cssVariable, useNamespace } from '@aurora/utils';
 
 export default defineComponent({
@@ -13,7 +13,7 @@ export default defineComponent({
   props: useMaskProps,
   emits: useMaskEmits,
   slots: useMaskSlots,
-  setup(props, { emit, slots }: LegoSetupContext<MaskEmits, MaskSlots>) {
+  setup(props, { emit, slots }: HorizonWebSetupContext<MaskEmits, MaskSlots>) {
     // 默认type的情况 进行渲染
     const backgroundColorMap = new Map([
       ['default', cssVariable('bg-overlay-default')],

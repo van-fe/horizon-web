@@ -1,4 +1,4 @@
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { generatorInjectedKeyName } from '@aurora/utils';
 import type { ComputedRef, InjectionKey, UnwrapNestedRefs, Ref } from 'vue';
 import type { TableProps } from '../composables/useProps';
@@ -20,11 +20,11 @@ export const NTablePropsInjectKey = Symbol(
 
 export const NTableEmitsInjectKey = Symbol(
   generatorInjectedKeyName('table', 'emits'),
-) as InjectionKey<LegoSetupContext<TableEmits>['emit']>;
+) as InjectionKey<HorizonWebSetupContext<TableEmits>['emit']>;
 
 export const NTableSlotsInjectKey = Symbol(
   generatorInjectedKeyName('table', 'slots'),
-) as InjectionKey<LegoSetupContext<{}, TableSlots>['slots']>;
+) as InjectionKey<HorizonWebSetupContext<{}, TableSlots>['slots']>;
 
 export const NTableSizeInjectKey = Symbol(
   generatorInjectedKeyName('table', 'size'),

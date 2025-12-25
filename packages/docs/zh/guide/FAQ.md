@@ -2,7 +2,7 @@
 
 在此会列出经常遇到的问题以及其解答
 
-## 1. 提示 `request to https://registry.npmjs.org/@aurora%21flego failed` {#registry}
+## 1. 提示 `request to https://registry.npmjs.org/@aurora%21fhorizonweb failed` {#registry}
 
 是因为没有设置源 (`registry`)，目前 `@aurora/horizon-web` 相关包只发布在了公司内网，请选用以下任一方式设置：
 
@@ -14,7 +14,7 @@
     ```
     安装好后输入命令：
     ```shell
-    $ nrm add nio https://npmmirror.nioint.com/
+    $ nrm add nio https://registry.npmmirror.com/
     ```
     再启用：
     ```shell
@@ -22,11 +22,11 @@
     ```
 - 或者替换全局设置 **(推荐 :thumbsup: )**：
     ```shell
-    $ npm config set registry https://npmmirror.nioint.com/
+    $ npm config set registry https://registry.npmmirror.com/
     ```
 - 或者安装时特别指定：
     ```shell
-    $ npm i @aurora/horizon-web --registry https://npmmirror.nioint.com/
+    $ npm i @aurora/horizon-web --registry https://registry.npmmirror.com/
     ```
   
 ## 2. 构建好项目后，使用指令时出现 `TypeError: Cannot read properties of undefined (reading 'deep')` 的报错： {#version-same}

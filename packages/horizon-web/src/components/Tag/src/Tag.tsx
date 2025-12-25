@@ -13,7 +13,7 @@ import {
   watch,
 } from 'vue';
 import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { useTagProps } from './composables/useProps';
 import { useTagEmits } from './composables/useEmits';
 import { useTagSlots } from './composables/useSlots';
@@ -22,7 +22,7 @@ import type { TagEmits } from './composables/useEmits';
 import type { TagSlots } from './composables/useSlots';
 import type { TagExposes } from './composables/useExposes';
 import useSize from '~/utils/useSize';
-import { IconClose, IconLoadingLine, NIcon } from '@aurora/icon';
+import { IconClose, IconLoadingLine, AIcon } from '@aurora/icon';
 import {
   NTagGroupCloseCallbackInjectKey,
   NTagGroupDoCollapseInjectKey,
@@ -55,7 +55,7 @@ export default defineComponent({
   emits: useTagEmits,
   slots: useTagSlots,
   exposes: useTagExposes,
-  setup(props, { emit, slots, expose }: LegoSetupContext<TagEmits, TagSlots, TagExposes>) {
+  setup(props, { emit, slots, expose }: HorizonWebSetupContext<TagEmits, TagSlots, TagExposes>) {
     const classHelper = new ComponentClassBlock('tag');
 
     const { size, tooltip: tooltipRef, modelValue, plain } = toRefs(props);
@@ -442,7 +442,7 @@ export default defineComponent({
                       {(props.icon || slots.icon) && (
                         <div class={cls(classHelper.e('icon'))}>
                           {typeof props.icon === 'string' ? (
-                            <NIcon
+                            <AIcon
                               name={props.icon}
                               size={iconSizeMapping[sizeRef.value]}
                               color={style.value?.color}

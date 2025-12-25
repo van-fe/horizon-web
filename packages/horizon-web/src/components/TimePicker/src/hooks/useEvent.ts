@@ -1,4 +1,4 @@
-import { type LegoSetupContext, safelyGetEventTarget } from '@aurora/utils';
+import { type HorizonWebSetupContext, safelyGetEventTarget } from '@aurora/utils';
 import dayjs from '~/utils/useDayJs';
 import type { Dayjs } from 'dayjs';
 import type { ComputedRef, Ref, ToRefs } from 'vue';
@@ -12,7 +12,7 @@ import { NFormItemTriggerInjectedKey } from '~/components/Form/src/utils/injecte
 
 export default function useEvent(
   propRefs: ToRefs<TimePickerProps>,
-  context: LegoSetupContext<TimePickerEmits, TimePickerSlots, TimePickerExposes>,
+  context: HorizonWebSetupContext<TimePickerEmits, TimePickerSlots, TimePickerExposes>,
   domRefs: NTimePickerDomRefs,
   options: {
     dayjsFormat: ComputedRef<string>;

@@ -49,7 +49,7 @@
   $result: ();
 
   @each $val in $arg {
-    @if type-of($val) != color {
+    @if meta.type-of($val) != color {
       $result: list.join($result, size($val));
     } @else {
       $result: list.join($result, $val);
@@ -63,7 +63,7 @@
   $result: ();
 
   @each $val in $arg {
-    @if type-of($val) != 0 {
+    @if meta.type-of($val) != 0 {
       $result: list.join($result, size($val));
     } @else {
       $result: list.join($result, $val);
@@ -84,7 +84,7 @@
 @function contains-modifier($selector) {
   $selector: selector-to-string($selector);
 
-  @if str-index($selector, config.$modifier-separator) {
+  @if string.index($selector, config.$modifier-separator) {
     @return true;
   } @else {
     @return false;
@@ -94,7 +94,7 @@
 @function contain-when-flag($selector) {
   $selector: selector-to-string($selector);
 
-  @if str-index($selector, '.' + config.$state-prefix) {
+  @if string.index($selector, '.' + config.$state-prefix) {
     @return true;
   } @else {
     @return false;
@@ -104,7 +104,7 @@
 @function contain-pseudo-class($selector) {
   $selector: selector-to-string($selector);
 
-  @if str-index($selector, ':') {
+  @if string.index($selector, ':') {
     @return true;
   } @else {
     @return false;
@@ -129,7 +129,7 @@
 @function package-modifier($modifier...) {
   $current-selector: ();
 
-  @if global-variable-exists('-element') {
+  @if meta.global-variable-exists('-element') {
     @each $e in $-element {
       $be: #{'.' + $-block + config.$element-separator + $e};
 

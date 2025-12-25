@@ -35,7 +35,7 @@
 import { ref } from 'vue';
 
 function onClick() {
-  console.log('click');
+  console.info('click');
 }
 
 const active1 = ref(false);

@@ -30,7 +30,7 @@ import {
   NCascaderSlotsInjectKey,
   NCascaderTreeHelperInjectKey,
 } from '../utils/injectKeys';
-import { IconArrowRight, IconCheck, NIconSVG } from '@aurora/icon';
+import { IconArrowRight, IconCheck, AIcon } from '@aurora/icon';
 import NTransition from '~/components/Transition/src/Transition';
 import type { NCascaderUuidType } from '../utils/types';
 import { useHighlightCascaderItem } from '../hooks/useHighlight';
@@ -277,7 +277,7 @@ export default defineComponent({
                   <div class={classHelper.e('icon')}>
                     {useIconRender(
                       isLoading.value ? (
-                        <NIconSVG name="loading" spin="cw"></NIconSVG>
+                        <NIcon name="loading" spin="cw"></NIcon>
                       ) : (
                         parentProps.expandIcon ?? IconArrowRight
                       ),

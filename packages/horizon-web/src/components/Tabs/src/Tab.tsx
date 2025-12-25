@@ -1,5 +1,5 @@
-import { NIconSVG } from '@aurora/icon';
-import type { LegoSetupContext } from '@aurora/utils';
+import { AIconSVG } from '@aurora/icon';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import {
   ComponentClassBlock,
   getBooleanProp,
@@ -27,13 +27,13 @@ import { tabsContextKey } from './constants';
 export default defineComponent({
   name: `${useNamespace()}Tab`,
   components: {
-    NIconSVG,
+    AIconSVG,
   },
   inheritAttrs: false,
   props: useTabProps,
   slots: useTabSlots,
   emits: useTabEmits,
-  setup(props, { slots, emit, attrs }: LegoSetupContext<TabEmits, TabSlots>) {
+  setup(props, { slots, emit, attrs }: HorizonWebSetupContext<TabEmits, TabSlots>) {
     useTabPropsLogWarnProperty(toRefs(props));
 
     const ctx = inject(tabsContextKey);
@@ -142,7 +142,7 @@ export default defineComponent({
             {slots.icon
               ? cloneVNode(slots.icon()[0], { class: cls.e('icon') })
               : props.icon && (
-                  <NIconSVG class={cls.e('icon')} name={props.icon} size={props.iconSize} />
+                  <AIconSVG class={cls.e('icon')} name={props.icon} size={props.iconSize} />
                 )}
 
             {isVNodeEmpty(slotDefaults) ? (
@@ -152,7 +152,7 @@ export default defineComponent({
             )}
 
             {closable.value && ctx.type.value !== 'segment' && (
-              <NIconSVG name="close" class={[cls.e('icon'), cls.e('close')]} onClick={onClose} />
+              <AIconSVG name="close" class={[cls.e('icon'), cls.e('close')]} onClick={onClose} />
             )}
           </div>
         </div>

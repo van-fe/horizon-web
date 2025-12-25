@@ -9,7 +9,7 @@ import {
   onUnmounted,
 } from 'vue';
 import { ComponentClassBlock, useNamespace, isNil } from '@aurora/utils';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { useWatermarkProps } from './composables/useProps';
 import { useWatermarkEmits } from './composables/useEmits';
 import { useWatermarkSlots } from './composables/useSlots';
@@ -34,7 +34,7 @@ export default defineComponent({
   props: useWatermarkProps,
   emits: useWatermarkEmits,
   slots: useWatermarkSlots,
-  setup(props, { emit, slots }: LegoSetupContext<WatermarkEmits, WatermarkSlots>) {
+  setup(props, { emit, slots }: HorizonWebSetupContext<WatermarkEmits, WatermarkSlots>) {
     const classHelper = new ComponentClassBlock('watermark');
     const wrapRef = ref<HTMLElement | null>(null);
     const watermarkRef = ref<HTMLElement | null>(null);

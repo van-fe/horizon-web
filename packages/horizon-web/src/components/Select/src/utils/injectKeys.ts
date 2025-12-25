@@ -1,4 +1,4 @@
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { generatorInjectedKeyName } from '@aurora/utils';
 import type { ComputedRef, InjectionKey, Ref } from 'vue';
 import type { SelectProps, OptionProps, OptionGroupProps } from '../composables/useProps';
@@ -8,7 +8,7 @@ import type { OptionSlots, SelectSlots } from '../composables/useSlots';
 export interface SelectCollectedOptionData<T extends 'option' | 'option-group'> {
   props: T extends 'option' ? OptionProps : OptionGroupProps & { value: string };
   attrs: Record<string, unknown>;
-  slots: T extends 'option' ? LegoSetupContext<{}, OptionSlots>['slots'] : undefined;
+  slots: T extends 'option' ? HorizonWebSetupContext<{}, OptionSlots>['slots'] : undefined;
   parentProps?: T extends 'option' ? OptionGroupProps : undefined;
   type: T;
   el: Ref<HTMLElement | null>;
@@ -37,11 +37,11 @@ export const NOptionGroupPropsInjectKey = Symbol.for(
 
 export const NSelectEmitsInjectKey = Symbol.for(
   generatorInjectedKeyName('select', 'emits'),
-) as InjectionKey<LegoSetupContext<SelectEmits>['emit']>;
+) as InjectionKey<HorizonWebSetupContext<SelectEmits>['emit']>;
 
 export const NSelectSlotsInjectKey = Symbol.for(
   generatorInjectedKeyName('select', 'slots'),
-) as InjectionKey<LegoSetupContext<{}, SelectSlots>['slots']>;
+) as InjectionKey<HorizonWebSetupContext<{}, SelectSlots>['slots']>;
 
 export const NSelectPopperVisibleInjectKey = Symbol.for(
   generatorInjectedKeyName('select', 'popper-visible'),

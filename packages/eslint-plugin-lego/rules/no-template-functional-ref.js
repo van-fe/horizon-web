@@ -8,7 +8,7 @@
  *
  *    onMounted(() => {
  *     // the DOM element will be assigned to the ref after initial render
- *      console.log(root.value) // <div/>
+ *      console.info(root.value) // <div/>
  *    })
  *
  *    return {

@@ -10,7 +10,7 @@ You should use `@aurora/locale-vue` or `@aurora/locale-react` instead of this.
 
 ## How to Install
 ```bash
-pnpm add @aurora/locales
+bun add @aurora/locales
 ```
 
 ## How to use

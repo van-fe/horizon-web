@@ -4,7 +4,6 @@ import type { DirectiveBinding, VNode } from 'vue';
 import { createVNode, render, watch } from 'vue';
 import type { TooltipProps } from '~/components/Tooltip/src/composables/useProps';
 import { usePopper } from '~/utils/popper';
-import { useSensor } from '~/utils/useSensor';
 import PopTooltip from './components/PopTooltip';
 import { useTooltipOptions } from './composables/useOptions';
 
@@ -182,8 +181,6 @@ export default defineDirective<PopTooltipEl, typeof useTooltipOptions>({
   options: useTooltipOptions,
   desc: '`v-tooltip` 是 `tooltip` 组件的指令使用方式',
   mounted(el, binding, vnode) {
-    useSensor('v-tooltip', binding.value, 'directive');
-
     const originObj = getPropOptions(el, binding);
     useEvent(el, originObj, vnode);
     generateTooltip(el, originObj, vnode);

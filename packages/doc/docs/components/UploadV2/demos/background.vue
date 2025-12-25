@@ -62,16 +62,16 @@ watch(backgroundVisible, visible => {
 });
 
 function onBackgroundUploadVisibleChanged(evt: WindowEventMap['backgroundUploadVisibleChanged']) {
-  console.log(`id: ${evt.detail.id} 的后台上传状态改变为 ${evt.detail.visible}`);
+  console.info(`id: ${evt.detail.id} 的后台上传状态改变为 ${evt.detail.visible}`);
   backgroundVisible.value = evt.detail.visible;
 }
 
 function onBackgroundUploadDestroy(evt: WindowEventMap['backgroundUploadDestroy']) {
-  console.log(`id: ${evt.detail} 的后台已销毁`);
+  console.info(`id: ${evt.detail} 的后台已销毁`);
 }
 
 function onPreview(file: NUploadFileType) {
-  console.log('Preview File:', file);
+  console.info('Preview File:', file);
 }
 
 window.addEventListener('backgroundUploadVisibleChanged', onBackgroundUploadVisibleChanged);

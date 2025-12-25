@@ -92,7 +92,7 @@ describe('Input.tsx', () => {
     // await wrapper.setProps({
     //   type: 'textarea',
     // });
-    // console.log(wrapper.html());
+    // console.info(wrapper.html());
     // expect(wrapper.find('textarea').exists()).toBe(true);
 
     // await wrapper.setProps({

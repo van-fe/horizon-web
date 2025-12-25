@@ -36,12 +36,12 @@ const selectOptions = [
 ];
 
 const focusHandle = () => {
-  console.log('focus');
+  console.info('focus');
   collapse.value = false;
 };
 
 const blurHandle = () => {
-  console.log('blur');
+  console.info('blur');
   collapse.value = true;
 };
 </script>

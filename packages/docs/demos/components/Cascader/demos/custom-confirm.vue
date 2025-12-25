@@ -18,7 +18,7 @@
         <div class="demo-title">
           自定义 confirm render
           <n-tooltip content="使用自定义 render 时请确保 confirm 参数不是 false 或者 undefined">
-            <n-icon name="help" />
+            <a-icon name="help" />
           </n-tooltip>
         </div>
         <n-cascader v-model="currentVal2" :options="options" :need-confirm="true" multiple :to-body="false">

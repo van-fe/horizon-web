@@ -1,5 +1,5 @@
 export const ZhTW = {
-  horizon-web: {
+  horizonWeb: {
     global: {
       ok: '確認',
       cancel: '取消',
@@ -194,19 +194,6 @@ export const ZhTW = {
       view: '查看文件',
       deleteFile: '刪除文件',
       download: '下載文件',
-    },
-    table: {
-      emptyText: '暫無資料',
-      confirmFilter: '篩選',
-      resetFilter: '重置',
-      clearFilter: '全部',
-      sumText: '共',
-      loading: '加載中',
-      pinToLeft: '固定到左側',
-      pinToRight: '固定到右側',
-      pin: '固定該列',
-      unPin: '取消固定',
-      lockPin: '固定欄已鎖定',
     },
     tree: {
       emptyText: '暫無資料',

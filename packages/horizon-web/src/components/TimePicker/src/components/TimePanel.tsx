@@ -1,5 +1,5 @@
 import { computed, defineComponent, nextTick, ref, watch, Fragment, inject } from 'vue';
-import type { LegoComponentInstance, LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebComponentInstance, HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, isDefined } from '@aurora/utils';
 import type { TimePickerTimePanelProps } from '../composables/useProps';
 import { useTimePickerTimePanelProps } from '../composables/useProps';
@@ -26,20 +26,20 @@ export default defineComponent({
     {
       emit,
       expose,
-    }: LegoSetupContext<TimePickerTimePanelEmits, {}, TimePickerTimePanelExposes>,
+    }: HorizonWebSetupContext<TimePickerTimePanelEmits, {}, TimePickerTimePanelExposes>,
   ) {
     const classHelper = new ComponentClassBlock('time-picker');
 
     const parentEmit = inject(NTimePickerEmitsInjectKey, undefined);
 
     const timePanelDomRef =
-      ref<LegoComponentInstance<typeof TimeColumnPanel, TimePickerTimeColumnPanelExposes>>();
+      ref<HorizonWebComponentInstance<typeof TimeColumnPanel, TimePickerTimeColumnPanelExposes>>();
     const hourPanelDomRef =
-      ref<LegoComponentInstance<typeof TimeColumnPanel, TimePickerTimeColumnPanelExposes>>();
+      ref<HorizonWebComponentInstance<typeof TimeColumnPanel, TimePickerTimeColumnPanelExposes>>();
     const minutePanelDomRef =
-      ref<LegoComponentInstance<typeof TimeColumnPanel, TimePickerTimeColumnPanelExposes>>();
+      ref<HorizonWebComponentInstance<typeof TimeColumnPanel, TimePickerTimeColumnPanelExposes>>();
     const secondPanelDomRef =
-      ref<LegoComponentInstance<typeof TimeColumnPanel, TimePickerTimeColumnPanelExposes>>();
+      ref<HorizonWebComponentInstance<typeof TimeColumnPanel, TimePickerTimeColumnPanelExposes>>();
 
     const currentTime = ref<Dayjs | null>();
     const currentHour = ref<Dayjs | null>();

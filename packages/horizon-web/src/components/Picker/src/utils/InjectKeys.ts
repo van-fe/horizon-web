@@ -1,4 +1,4 @@
-import type { LegoComponentInstance, LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebComponentInstance, HorizonWebSetupContext } from '@aurora/utils';
 import { generatorInjectedKeyName } from '@aurora/utils';
 import type { InjectionKey, Ref } from 'vue';
 import type { PickerProps, PickerInputStatusType, PickerStatusType } from '../composables/useProps';
@@ -14,11 +14,11 @@ export const NPickerPropsInjectKey = Symbol(
 
 export const NPickerEmitsInjectKey = Symbol(
   generatorInjectedKeyName('picker', 'emits'),
-) as InjectionKey<LegoSetupContext<PickerEmits>['emit']>;
+) as InjectionKey<HorizonWebSetupContext<PickerEmits>['emit']>;
 
 export const NPickerSlotsInjectKey = Symbol(
   generatorInjectedKeyName('picker', 'slots'),
-) as InjectionKey<LegoSetupContext<{}, PickerSlots>['slots']>;
+) as InjectionKey<HorizonWebSetupContext<{}, PickerSlots>['slots']>;
 
 export const NPickerPopperVisibleInjectKey = Symbol(
   generatorInjectedKeyName('picker', 'popper-visible'),
@@ -38,7 +38,7 @@ export const NPickerDomRefInjectKey = Symbol(
 
 export const NPickerPopoverDomRefInjectKey = Symbol(
   generatorInjectedKeyName('picker', 'popover-dom-ref'),
-) as InjectionKey<Ref<null | LegoComponentInstance<typeof NPopover, PopoverExposes>>>;
+) as InjectionKey<Ref<null | HorizonWebComponentInstance<typeof NPopover, PopoverExposes>>>;
 
 export const NPickerPopContentDomRefInjectKey = Symbol(
   generatorInjectedKeyName('picker', 'pop-content-dom-ref'),

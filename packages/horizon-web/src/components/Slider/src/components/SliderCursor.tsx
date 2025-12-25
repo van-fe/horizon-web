@@ -9,7 +9,7 @@ import {
   watch,
 } from 'vue';
 import { NSliderGetTrackSizeInjectedKey, NSliderPropsInjectedKey } from '../utils/injectedKeys';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, getClientXY, getPrecision } from '@aurora/utils';
 import round from 'lodash/round';
 import NTooltip from '~/components/Tooltip/src/Tooltip';
@@ -39,7 +39,7 @@ export default defineComponent({
   exposes: useSliderCursorExposes,
   setup(
     props,
-    { emit, expose }: LegoSetupContext<SliderCursorEmits, SliderCursorSlots, SliderCursorExposes>,
+    { emit, expose }: HorizonWebSetupContext<SliderCursorEmits, SliderCursorSlots, SliderCursorExposes>,
   ) {
     const classHelper = new ComponentClassBlock('slider');
 

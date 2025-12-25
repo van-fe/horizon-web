@@ -16,7 +16,7 @@ const value2 = ref([options[12].value, options[15].value]);
 const descriptionPosition = ref('right');
 
 function onReachBottom() {
-  console.log('reach bottom');
+  console.info('reach bottom');
 }
 </script>
 

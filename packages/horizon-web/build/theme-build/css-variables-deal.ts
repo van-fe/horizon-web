@@ -1,4 +1,4 @@
-import { componentRoot, directiveRoot, methodsRoot, styleRoot } from '@aurora/utils/plugins';
+import { componentRoot, directiveRoot, methodsRoot, styleRoot } from '../../../../scripts/paths';
 import { resolve } from 'path';
 import type { OneDeepRecordType } from './utils';
 import {

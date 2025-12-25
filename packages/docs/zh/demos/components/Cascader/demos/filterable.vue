@@ -39,7 +39,7 @@
       <div class="demo-title">
         单选-下拉列表带筛选功能
         <n-tooltip content="内置 input">
-          <n-icon name="question" />
+          <a-icon name="question" />
         </n-tooltip>
       </div>
       <n-cascader
@@ -96,17 +96,17 @@ const currentVal4 = ref<string[][]>([]);
 const checkStrictly = ref(true);
 const panelFilterInputValue2 = ref('');
 const changeHandle = (value: boolean, option: NCascaderExtendOption) => {
-  console.log(value, option);
+  console.info(value, option);
 };
 
 const options = ref([]);
 
 function onFocus() {
-  console.log('focus');
+  console.info('focus');
 }
 
 function onBlur() {
-  console.log('blur');
+  console.info('blur');
 }
 
 onMounted(async()=>{

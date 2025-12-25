@@ -1,4 +1,4 @@
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import {
   computed,
@@ -29,7 +29,7 @@ export default defineComponent({
   name: `${useNamespace()}OptionGroup`,
   props: useOptionGroupProps,
   slots: useOptionGroupSlots,
-  setup(props, { slots, attrs }: LegoSetupContext<{}, OptionGroupSlots>) {
+  setup(props, { slots, attrs }: HorizonWebSetupContext<{}, OptionGroupSlots>) {
     const classHelper = new ComponentClassBlock('select-option-group');
 
     const { label: labelRef } = toRefs(props);

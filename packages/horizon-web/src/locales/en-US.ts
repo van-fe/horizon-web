@@ -1,5 +1,5 @@
 export const EnUS = {
-  horizon-web: {
+  horizonWeb: {
     global: {
       ok: 'OK',
       cancel: 'Cancel',
@@ -181,19 +181,6 @@ export const EnUS = {
       view: 'View File',
       deleteFile: 'Delete File',
       download: 'Download File',
-    },
-    table: {
-      emptyText: 'No Data',
-      confirmFilter: 'Confirm',
-      resetFilter: 'Reset',
-      clearFilter: 'All',
-      sumText: 'Sum',
-      loading: 'Loading',
-      pinToLeft: 'Pin to left',
-      pinToRight: 'Pin to right',
-      pin: 'Pin this column',
-      unPin: 'Unpin',
-      lockPin: 'Fixed column is locked',
     },
     tree: {
       emptyText: 'No Data',

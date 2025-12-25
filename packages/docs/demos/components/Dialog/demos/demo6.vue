@@ -93,7 +93,7 @@ export default defineComponent({
     ]);
     const visible = ref(false);
     const onPrimary = () => {
-      console.log('Primary button clicked!');
+      console.info('Primary button clicked!');
       if (formRef.value) {
         formRef.value
           .validate()
@@ -102,12 +102,12 @@ export default defineComponent({
             visible.value = false;
           })
           .catch(errors => {
-            console.log('errors:', errors);
+            console.info('errors:', errors);
           });
       }
     };
     const onSecondary = () => {
-      console.log('Secondary button clicked!');
+      console.info('Secondary button clicked!');
     };
     const currentTab = ref('tab1');
     return {

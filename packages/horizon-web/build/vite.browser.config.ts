@@ -10,7 +10,7 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, '../src/index.ts'),
       formats: ['iife', 'es', 'umd'],
-      name: 'horizon-web',
+      name: 'horizonWeb',
       fileName: format => {
         switch (format) {
           case 'iife':

@@ -8,7 +8,7 @@ const tabs = Array(5)
   .map((_, index) => `TAG ${index + 1}`);
 
 const onTabChanged = (tab: NTabValue) => {
-  console.log('tab changed', tab);
+  console.info('tab changed', tab);
   $message({ type: 'success', message: `Tab ${tab} is clicked` });
 };
 </script>

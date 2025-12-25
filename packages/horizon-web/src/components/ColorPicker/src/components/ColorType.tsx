@@ -137,7 +137,7 @@ export default defineComponent({
               return (
                 <NTooltip
                   showAfter={200}
-                  content={locale?.value?.langService.td().horizon-web.colorPicker[colorTypeKey]}
+                  content={locale?.value?.langService.td().horizonWeb.colorPicker[colorTypeKey]}
                 >
                   <div
                     class={cls(

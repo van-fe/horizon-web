@@ -7,7 +7,7 @@ import type {
 import { useTransferPanelProps } from './composables/useProps';
 import { useTransferPanelEmits } from './composables/useEmits';
 import type { TransferPanelEmits } from './composables/useEmits';
-import { cls, cssVariable, type LegoSetupContext } from '@aurora/utils';
+import { cls, cssVariable, type HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import NCheckbox from '~/components/Checkbox/src/Checkbox';
 import NCheckboxGroup from '~/components/Checkbox/src/CheckboxGroup';
@@ -17,7 +17,7 @@ import NTree from '~/components/Tree/src/Tree';
 import NInput from '~/components/Input/src/Input';
 import NBreadcrumb from '~/components/Breadcrumb/src/Breadcrumb';
 import NBreadcrumbItem from '~/components/Breadcrumb/src/BreadcrumbItem';
-import { NIcon } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 import type { TransferPanelSlots } from './composables/useSlots';
 import { useTransferPanelSlots } from './composables/useSlots';
 import { defaultLocale, localeInjectKey } from '~/provides/localable';
@@ -34,7 +34,7 @@ export default defineComponent({
     NCheckboxGroup,
     NButton,
     NTree,
-    NIcon,
+    AIcon,
     NInput,
     NBreadcrumb,
     NBreadcrumbItem,
@@ -46,7 +46,7 @@ export default defineComponent({
   slots: useTransferPanelSlots,
   setup(
     props: TransferPanelProps,
-    { slots, emit, expose }: LegoSetupContext<TransferPanelEmits, TransferPanelSlots>,
+    { slots, emit, expose }: HorizonWebSetupContext<TransferPanelEmits, TransferPanelSlots>,
   ) {
     const locale = inject(localeInjectKey, defaultLocale);
 
@@ -204,7 +204,7 @@ export default defineComponent({
                 <NBreadcrumbItem
                   clickable={true}
                   v-slots={{
-                    separator: () => <NIcon name="arrow_right" size="12" />,
+                    separator: () => <AIcon name="arrow_right" size="12" />,
                   }}
                 >
                   <span onClick={handleCollapseItem}>{breadcrumbProp.value}</span>
@@ -215,7 +215,7 @@ export default defineComponent({
                       key={index}
                       clickable={true}
                       v-slots={{
-                        separator: () => <NIcon name="arrow_right" size="12" />,
+                        separator: () => <AIcon name="arrow_right" size="12" />,
                       }}
                     >
                       <span onClick={() => handleClickBreadcrumbItem(item, index)}>
@@ -347,7 +347,7 @@ export default defineComponent({
                                 </Fragment>
                               )}
                               {draggableProp.value && !disabledProp.value && (
-                                <NIcon class={'mr-3'} name="drag_form" />
+                                <AIcon class={'mr-3'} name="drag_form" />
                               )}
                               <NTooltip
                                 overflow
@@ -362,7 +362,7 @@ export default defineComponent({
                               </NTooltip>
                               {!item[propsProp.value.disabled as keyof TransferDataProps] &&
                                 !disabledProp.value && (
-                                  <NIcon
+                                  <AIcon
                                     name="close"
                                     class={'ml-3'}
                                     onClick={() =>

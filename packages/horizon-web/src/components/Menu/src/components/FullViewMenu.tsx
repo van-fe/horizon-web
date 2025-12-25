@@ -1,7 +1,7 @@
 import type { PropType } from 'vue';
 import { withKeys, withModifiers, computed, defineComponent, inject, nextTick } from 'vue';
 import type { NMenuTreeData, NMenuTreePickedValuesData } from '../util/types';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, sizeUnitTransform } from '@aurora/utils';
 import {
   NMenuActivatedMenusInjectKey,
@@ -69,11 +69,11 @@ export default defineComponent({
 
       addExpandMenu?.(target.uuid);
       setActivatedMenu?.(target.uuid);
-      (target.emits as LegoSetupContext<MenuItemEmits>['emit'])(
+      (target.emits as HorizonWebSetupContext<MenuItemEmits>['emit'])(
         'click',
         target.props as MenuItemProps,
       );
-      (target.emits as LegoSetupContext<MenuItemEmits>['emit'])(
+      (target.emits as HorizonWebSetupContext<MenuItemEmits>['emit'])(
         'menuItemActive',
         target.props as MenuItemProps,
       );
@@ -107,7 +107,7 @@ export default defineComponent({
       addExpandMenu?.(target.uuid);
       if (target.props.selectable) {
         setActivatedMenu?.(target.uuid);
-        (target.emits as LegoSetupContext<SubMenuEmits>['emit'])('click', target.props);
+        (target.emits as HorizonWebSetupContext<SubMenuEmits>['emit'])('click', target.props);
 
         void nextTick(() => {
           parentEmits?.(

@@ -16,7 +16,7 @@ import {
   useNamespace,
   cssVariable,
 } from '@aurora/utils';
-import type { LegoSetupContext, LegoComponentInstance } from '@aurora/utils';
+import type { HorizonWebSetupContext, HorizonWebComponentInstance } from '@aurora/utils';
 import { useMenuProps } from './composables/useProps';
 import { useMenuEmits } from './composables/useEmits';
 import { useMenuSlots } from './composables/useSlots';
@@ -70,14 +70,14 @@ export default defineComponent({
   exposes: useMenuExposes,
   setup(
     props: MenuProps,
-    { emit, slots, expose }: LegoSetupContext<MenuEmits, MenuSlots, MenuExposes>,
+    { emit, slots, expose }: HorizonWebSetupContext<MenuEmits, MenuSlots, MenuExposes>,
   ) {
     const instance = getCurrentInstance();
 
     const classHelper = new ComponentClassBlock('menu');
 
     const menuRef = ref<HTMLElement | null>(null);
-    const scrollbarRef = ref<LegoComponentInstance<typeof NScrollbar, ScrollbarExposes> | null>(
+    const scrollbarRef = ref<HorizonWebComponentInstance<typeof NScrollbar, ScrollbarExposes> | null>(
       null,
     );
     const resizerDomRef = ref<HTMLElement | null>(null);

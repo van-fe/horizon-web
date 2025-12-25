@@ -54,7 +54,7 @@ import { ref } from 'vue';
 const radio = ref(1);
 
 const selectRadio = (val: boolean) => {
-  console.log('selectRadio ==> ', val);
+  console.info('selectRadio ==> ', val);
 };
 </script>
 

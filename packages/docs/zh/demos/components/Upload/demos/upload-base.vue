@@ -65,7 +65,7 @@ export default defineComponent({
         }, 2000);
         return {
           abort: () => {
-            console.log('xxx');
+            console.info('xxx');
           },
         };
       },
@@ -87,7 +87,7 @@ export default defineComponent({
             }, 2000);
             return {
               abort: () => {
-                console.log('xxx');
+                console.info('xxx');
               },
             };
           },
@@ -107,19 +107,19 @@ export default defineComponent({
     ]);
 
     watch(fileList1, val => {
-      console.log(val, 'fileList1 change');
+      console.info(val, 'fileList1 change');
     });
 
     const overLimited = fileArr => {
-      console.log(fileArr, 'overLimited');
+      console.info(fileArr, 'overLimited');
     };
 
     const onUpdate = fileArr => {
-      console.log(fileArr, 'onUpdate');
+      console.info(fileArr, 'onUpdate');
     };
 
     const onChange = fileArr => {
-      console.log(fileArr, 'onChange');
+      console.info(fileArr, 'onChange');
     };
 
     return {
@@ -132,7 +132,7 @@ export default defineComponent({
       clipboradOptions: {
         enable: false,
         filter: files => {
-          console.log(files, 'xxxxx');
+          console.info(files, 'xxxxx');
           return files;
         },
       },

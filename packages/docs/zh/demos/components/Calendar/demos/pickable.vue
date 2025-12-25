@@ -32,7 +32,7 @@ export default defineComponent({
     const dateType = ref('full');
 
     function onDateClick(date: string, type: 'month' | 'year' | 'week') {
-      console.log(date, type);
+      console.info(date, type);
     }
 
     function disableDate(date: Dayjs) {

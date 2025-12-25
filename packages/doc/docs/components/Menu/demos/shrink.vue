@@ -81,12 +81,12 @@ const theme = ref('gray');
 const selectedValue = ref('1');
 const onSelected = (value: string, values: string[]) => {
   selectedValue.value = value;
-  console.log('selected', value, values);
+  console.info('selected', value, values);
 };
 
 const onCollapseChanged = (status: boolean) => {
   collapse.value = status;
-  console.log(`菜单目前的折叠状态为：${status}`);
+  console.info(`菜单目前的折叠状态为：${status}`);
 };
 </script>
 

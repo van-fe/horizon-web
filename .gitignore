@@ -11,6 +11,9 @@ umd
 .gitconfig
 types
 
+# icon
+packages/icon/src/components/icons/*
+
 # utils
 packages/utils/plugins/*.js
 packages/utils/plugins/*.js.map

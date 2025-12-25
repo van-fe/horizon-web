@@ -9,7 +9,7 @@ const cardType = ref('line');
 const all = ref(true);
 
 const onTabChanged = (tab: NTabValue) => {
-  console.log('tab changed', tab);
+  console.info('tab changed', tab);
 };
 
 const onClick = () => {

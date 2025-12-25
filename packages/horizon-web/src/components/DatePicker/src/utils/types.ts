@@ -1,7 +1,7 @@
 import type { ConfigType, Dayjs } from 'dayjs';
 import type { Ref } from 'vue';
 import type {
-  LegoComponentInstance,
+  HorizonWebComponentInstance,
   KebabCaseToCamelCase,
   KebabCaseToLowerCase,
 } from '@aurora/utils';
@@ -178,16 +178,16 @@ export interface NDatePickerDateCellType {
 
 export interface NDatePickerDomRefs {
   startDatePanelsDomRef: Ref<
-    LegoComponentInstance<typeof DatePanel, DatePickerDatePanelExposes> | undefined
+    HorizonWebComponentInstance<typeof DatePanel, DatePickerDatePanelExposes> | undefined
   >;
   endDatePanelsDomRef: Ref<
-    LegoComponentInstance<typeof DatePanel, DatePickerDatePanelExposes> | undefined
+    HorizonWebComponentInstance<typeof DatePanel, DatePickerDatePanelExposes> | undefined
   >;
-  pickerDomRef: Ref<LegoComponentInstance<typeof NPicker, PickerExposes> | undefined>;
+  pickerDomRef: Ref<HorizonWebComponentInstance<typeof NPicker, PickerExposes> | undefined>;
   startInputDomRef: Ref<
-    LegoComponentInstance<typeof NPickerPureInput, PickerPureInputExposes> | undefined
+    HorizonWebComponentInstance<typeof NPickerPureInput, PickerPureInputExposes> | undefined
   >;
   endInputDomRef: Ref<
-    LegoComponentInstance<typeof NPickerPureInput, PickerPureInputExposes> | undefined
+    HorizonWebComponentInstance<typeof NPickerPureInput, PickerPureInputExposes> | undefined
   >;
 }

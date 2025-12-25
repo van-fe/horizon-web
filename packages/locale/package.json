@@ -13,8 +13,8 @@
     "types"
   ],
   "scripts": {
-    "dev": "pnpm run build:types && pnpm run build:js -- --watch",
-    "build": "pnpm run build:types && pnpm run build:js",
+    "dev": "bun run build:types && bun run build:js -- --watch",
+    "build": "bun run build:types && bun run build:js",
     "build:types": "rm -rf types && tsc -d --emitDeclarationOnly --declarationDir ./types",
     "build:js": "bunx --bun vite build --config vite.config.ts"
   },

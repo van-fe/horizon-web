@@ -1,5 +1,5 @@
-import { NIconSVG } from '@aurora/icon';
-import type { LegoSetupContext } from '@aurora/utils';
+import { AIconSVG } from '@aurora/icon';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, useNamespace, cls } from '@aurora/utils';
 import type { ComputedRef, Ref } from 'vue';
 import { computed, defineComponent, inject, provide, reactive, ref, toRefs, watch } from 'vue';
@@ -20,12 +20,12 @@ import { useTabsPropsLogWarnProperty } from './composables/useWarning';
 export default defineComponent({
   name: `${useNamespace()}Tabs`,
   desc: '页签通常用来快速切换不同的选项',
-  components: { NIconSVG },
+  components: { AIconSVG },
   inheritAttrs: false,
   props: useTabsProps,
   emits: useTabsEmits,
   slots: useTabsSlots,
-  setup(props, context: LegoSetupContext<TabsEmits, TabsSlots>) {
+  setup(props, context: HorizonWebSetupContext<TabsEmits, TabsSlots>) {
     useTabsPropsLogWarnProperty(toRefs(props));
     const classHelper = new ComponentClassBlock('tabs');
     const { slots, emit, attrs } = context;
@@ -182,7 +182,7 @@ export default defineComponent({
           )}
           onClick={() => onAdd()}
         >
-          <NIconSVG name="add" class={classHelper.e('icon')} />
+          <AIconSVG name="add" class={classHelper.e('icon')} />
         </div>
       );
 
@@ -237,7 +237,7 @@ export default defineComponent({
                       ]}
                       onClick={onArrowLeft}
                     >
-                      <NIconSVG name="arrow_left" class={classHelper.e('icon')} />
+                      <AIconSVG name="arrow_left" class={classHelper.e('icon')} />
                     </div>
                     <div
                       class={[
@@ -246,7 +246,7 @@ export default defineComponent({
                       ]}
                       onClick={onArrowRight}
                     >
-                      <NIconSVG name="arrow_right" class={classHelper.e('icon')} />
+                      <AIconSVG name="arrow_right" class={classHelper.e('icon')} />
                     </div>
                   </div>
                 )}

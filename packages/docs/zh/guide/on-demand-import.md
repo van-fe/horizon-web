@@ -1,5 +1,5 @@
 # 按需引入
-如果对于打包后产物的体积有要求，则请使用按需引入的方式使用 `LEGO`.
+如果对于打包后产物的体积有要求，则请使用按需引入的方式使用 `HORIZONWEB`.
 
 ## 安装
 需要安装一些包来启用按需引入:
@@ -11,8 +11,8 @@ $ npm install unplugin-vue-components @aurora/unplugin-resolver -D
 ```sh [yarn]
 $ yarn add unplugin-vue-components @aurora/unplugin-resolver -D
 ```
-```sh [pnpm]
-$ pnpm add unplugin-vue-components @aurora/unplugin-resolver -D
+```sh [bun]
+$ bun add unplugin-vue-components @aurora/unplugin-resolver -D
 ```
 :::
 
@@ -23,11 +23,11 @@ $ pnpm add unplugin-vue-components @aurora/unplugin-resolver -D
 ```ts {3,4,7}
 import { createApp } from 'vue';
 import App from './App.vue';
-import { LegoProvides } from '@aurora/horizon-web';
+import { HorizonWebProvides } from '@aurora/horizon-web';
 import '@aurora/horizon-web/es/styles/base.css';
 
 createApp(App)
-  .use(LegoProvides)
+  .use(HorizonWebProvides)
   .mount('#app');
 ```
 
@@ -36,13 +36,13 @@ createApp(App)
 ```ts [Vite]
 import { defineConfig } from 'vite';
 import Components from 'unplugin-vue-components/vite';
-import { LegoPluginResolvers } from '@aurora/unplugin-resolver';
+import { HorizonWebPluginResolvers } from '@aurora/unplugin-resolver';
 
 export default defineConfig({
   plugins: [
     Components({
       resolvers: [
-        LegoPluginResolvers({
+        HorizonWebPluginResolvers({
             // your config
         })
       ]
@@ -52,14 +52,14 @@ export default defineConfig({
 ```
 ```ts [VueCli]
 const { default: Components } = require('unplugin-vue-components/webpack');
-const { LegoPluginResolvers } = require('@aurora/unplugin-resolver');
+const { HorizonWebPluginResolvers } = require('@aurora/unplugin-resolver');
 
 module.exports = {
   configureWebpack: {
     plugins: [
       Components({
         resolvers: [
-          LegoPluginResolvers({
+          HorizonWebPluginResolvers({
             // your config
           }),
         ],
@@ -70,13 +70,13 @@ module.exports = {
 ```
 ```ts [Webpack]
 const { default: Components } = require('unplugin-vue-components/webpack');
-const { LegoPluginResolvers } = require('@aurora/unplugin-resolver');
+const { HorizonWebPluginResolvers } = require('@aurora/unplugin-resolver');
 
 module.exports = {
   plugins: [
     Components({
       resolvers: [
-        LegoPluginResolvers({
+        HorizonWebPluginResolvers({
           // your config
         }),
       ],

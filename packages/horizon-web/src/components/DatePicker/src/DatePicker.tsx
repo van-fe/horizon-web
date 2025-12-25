@@ -1,6 +1,6 @@
 import type { Component, Ref, SetupContext, VNode } from 'vue';
 import { computed, Fragment, defineComponent, provide, ref, toRefs } from 'vue';
-import type { LegoSetupContext, LegoComponentInstance } from '@aurora/utils';
+import type { HorizonWebSetupContext, HorizonWebComponentInstance } from '@aurora/utils';
 import { isNil, cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { useDatePickerProps } from './composables/useProps';
 import { useDatePickerEmits } from './composables/useEmits';
@@ -53,18 +53,18 @@ export default defineComponent({
   exposes: useDatePickerExposes,
   setup(
     props: DatePickerProps,
-    context: LegoSetupContext<DatePickerEmits, DatePickerSlots, DatePickerExposes>,
+    context: HorizonWebSetupContext<DatePickerEmits, DatePickerSlots, DatePickerExposes>,
   ) {
     const classHelper = new ComponentClassBlock('date-picker');
-    const pickerDomRef = ref<LegoComponentInstance<typeof NPicker, PickerExposes>>();
+    const pickerDomRef = ref<HorizonWebComponentInstance<typeof NPicker, PickerExposes>>();
     const startInputDomRef =
-      ref<LegoComponentInstance<typeof NPickerPureInput, PickerPureInputExposes>>();
+      ref<HorizonWebComponentInstance<typeof NPickerPureInput, PickerPureInputExposes>>();
     const endInputDomRef =
-      ref<LegoComponentInstance<typeof NPickerPureInput, PickerPureInputExposes>>();
+      ref<HorizonWebComponentInstance<typeof NPickerPureInput, PickerPureInputExposes>>();
     const startDatePanelsDomRef =
-      ref<LegoComponentInstance<typeof DatePanel, DatePickerDatePanelExposes>>();
+      ref<HorizonWebComponentInstance<typeof DatePanel, DatePickerDatePanelExposes>>();
     const endDatePanelsDomRef =
-      ref<LegoComponentInstance<typeof DatePanel, DatePickerDatePanelExposes>>();
+      ref<HorizonWebComponentInstance<typeof DatePanel, DatePickerDatePanelExposes>>();
 
     const propRefs = toRefs<DatePickerProps>(props);
 

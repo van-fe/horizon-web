@@ -56,7 +56,7 @@ export default defineConfig({
   plugins: [
     Components({
       dts: false,
-      // resolvers: [LegoPluginResolvers()],
+      // resolvers: [HorizonWebPluginResolvers()],
       include: [/\.vue$/, /\.vue\?vue/, /\.md$/, /\.tsx$/],
     }),
     vue({

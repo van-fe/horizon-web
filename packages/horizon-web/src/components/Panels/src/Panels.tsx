@@ -2,7 +2,7 @@ import type { VNode, ComponentOptions } from 'vue';
 import { defineComponent, toRefs, ref, watch } from 'vue';
 import type { PanelProps } from './composables/useProps';
 import { usePanelsProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import {
   flattenVNodes,
   slotVNodes,
@@ -20,7 +20,7 @@ export default defineComponent({
   desc: 'Panels 组件用来显示可切换的更多内容，可以单独使用，也常常结合 `radio`, `tabs` 等组件一起使用',
   props: usePanelsProps,
   slots: usePanelsSlots,
-  setup(props, { slots }: LegoSetupContext<{}, PanelsSlots>) {
+  setup(props, { slots }: HorizonWebSetupContext<{}, PanelsSlots>) {
     const {
       modelValue: modelValueRef,
       animated: animatedRef,

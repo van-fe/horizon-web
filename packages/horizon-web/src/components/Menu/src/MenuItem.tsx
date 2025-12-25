@@ -11,7 +11,7 @@ import {
   withModifiers,
 } from 'vue';
 import { ComponentClassBlock, cls, useNamespace, cssVariableKey } from '@aurora/utils';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { useMenuItemProps } from './composables/useProps';
 import { useMenuItemEmits } from './composables/useEmits';
 import { useMenuItemSlots } from './composables/useSlots';
@@ -44,7 +44,7 @@ export default defineComponent({
   slots: useMenuItemSlots,
   setup(
     props: MenuItemProps,
-    { emit, slots }: LegoSetupContext<MenuItemEmits, MenuItemSlots, MenuExposes>,
+    { emit, slots }: HorizonWebSetupContext<MenuItemEmits, MenuItemSlots, MenuExposes>,
   ) {
     const classHelper = new ComponentClassBlock('menu');
     const uuid = nanoid();

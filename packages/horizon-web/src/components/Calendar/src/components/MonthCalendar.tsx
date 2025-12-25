@@ -186,7 +186,7 @@ export default defineComponent({
         <div class={classHelper.e('week-wrapper')}>
           {new Array(7).fill(0).map((_: number, index: number) => (
             <div class={classHelper.e('week')}>
-              {locale!.value?.langService.td().horizon-web.calendar.weeks[index]}
+              {locale!.value?.langService.td().horizonWeb.calendar.weeks[index]}
             </div>
           ))}
         </div>
@@ -342,11 +342,11 @@ export default defineComponent({
                             <div class={classHelper.em('day', 'header')}>
                               <div class={classHelper.em('day', 'header-number')}>
                                 {date.format('D') === '1'
-                                  ? locale.value?.langService.td().horizon-web.calendar.simpleMonths[
+                                  ? locale.value?.langService.td().horizonWeb.calendar.simpleMonths[
                                       Number(date.format('M')) - 1
                                     ] +
                                     date.format('D') +
-                                    locale.value?.langService.td().horizon-web.calendar.simpleDay
+                                    locale.value?.langService.td().horizonWeb.calendar.simpleDay
                                   : date.format('D')}
                               </div>
                             </div>

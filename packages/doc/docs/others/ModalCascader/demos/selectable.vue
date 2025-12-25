@@ -39,11 +39,11 @@ const currentVal2 = ref<string[][]>([]);
 const baseData = ref([]);
 
 const changeHandle = (value: NCascaderModelValueType, option: NCascaderExtendOption) => {
-  console.log('change: ', value, option);
+  console.info('change: ', value, option);
 };
 
 const updateHandle = (value: NCascaderModelValueType) => {
-  console.log('update: ', value);
+  console.info('update: ', value);
 };
 
 onMounted(async()=>{

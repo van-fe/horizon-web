@@ -1,6 +1,6 @@
 <template>
   <p>
-    <n-icon :name="value === 1 ? 'close' : 'check'" />
+    <a-icon :name="value === 1 ? 'close' : 'check'" />
   </p>
 
   <n-button @click="value = value === 1 ? 2 : 1">修改</n-button>

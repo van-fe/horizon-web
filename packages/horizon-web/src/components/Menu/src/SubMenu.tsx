@@ -13,7 +13,7 @@ import {
   withModifiers,
 } from 'vue';
 import { ComponentClassBlock, cls, useNamespace, cssVariableKey } from '@aurora/utils';
-import type { LegoSetupContext, LegoComponentInstance } from '@aurora/utils';
+import type { HorizonWebSetupContext, HorizonWebComponentInstance } from '@aurora/utils';
 import type { MenuItemProps, SubMenuProps } from './composables/useProps';
 import { useSubMenuProps } from './composables/useProps';
 import type { SubMenuEmits, MenuItemEmits } from './composables/useEmits';
@@ -58,7 +58,7 @@ export default defineComponent({
   slots: useSubMenuSlots,
   setup(
     props: SubMenuProps,
-    { emit, slots }: LegoSetupContext<SubMenuEmits, SubMenuSlots, MenuExposes>,
+    { emit, slots }: HorizonWebSetupContext<SubMenuEmits, SubMenuSlots, MenuExposes>,
   ) {
     const classHelper = new ComponentClassBlock('menu');
     const uuid = nanoid();
@@ -66,7 +66,7 @@ export default defineComponent({
     const elementRef = ref<HTMLElement | null>(null);
     const titleInnerDomRef = ref<HTMLElement | null>(null);
     const textRef = ref<HTMLElement | null>(null);
-    const dropdownDomRef = ref<LegoComponentInstance<typeof NDropdown, DropdownExposes> | null>(
+    const dropdownDomRef = ref<HorizonWebComponentInstance<typeof NDropdown, DropdownExposes> | null>(
       null,
     );
 
@@ -260,7 +260,7 @@ export default defineComponent({
         }
 
         setActivatedMenu?.(target.uuid);
-        (target.emits as LegoSetupContext<SubMenuEmits>['emit'])(
+        (target.emits as HorizonWebSetupContext<SubMenuEmits>['emit'])(
           'click',
           target.props as SubMenuProps,
         );
@@ -319,11 +319,11 @@ export default defineComponent({
       }
 
       setActivatedMenu?.(target.uuid);
-      (target.emits as LegoSetupContext<MenuItemEmits>['emit'])(
+      (target.emits as HorizonWebSetupContext<MenuItemEmits>['emit'])(
         'click',
         target.props as MenuItemProps,
       );
-      (target.emits as LegoSetupContext<MenuItemEmits>['emit'])(
+      (target.emits as HorizonWebSetupContext<MenuItemEmits>['emit'])(
         'menuItemActive',
         target.props as MenuItemProps,
       );

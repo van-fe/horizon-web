@@ -94,14 +94,14 @@ const selectOptions = [
 ];
 
 function onChange(inp: string, opts: ExtractPropTypes<typeof useOptionProps>[]) {
-  console.log(inp, opts);
+  console.info(inp, opts);
 }
 
 function onFocus() {
-  console.log('focus');
+  console.info('focus');
 }
 
 function onBlur() {
-  console.log('blur');
+  console.info('blur');
 }
 </script>

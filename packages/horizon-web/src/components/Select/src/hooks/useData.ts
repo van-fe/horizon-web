@@ -1,7 +1,7 @@
 import type { Ref, VNode } from 'vue';
 import { provide, ref, watch, reactive } from 'vue';
 import type { OptionProps, SelectProps } from '../composables/useProps';
-import { isNil, type LegoSetupContext } from '@aurora/utils';
+import { isNil, type HorizonWebSetupContext } from '@aurora/utils';
 import type { SelectEmits } from '../composables/useEmits';
 import type { SelectSlots } from '../composables/useSlots';
 import type { SelectExposes } from '../composables/useExposes';
@@ -15,7 +15,7 @@ import { NSelectValueFormatSymbol } from '../utils/types';
 
 export default function useData(
   props: SelectProps,
-  context: LegoSetupContext<SelectEmits, SelectSlots, SelectExposes>,
+  context: HorizonWebSetupContext<SelectEmits, SelectSlots, SelectExposes>,
 ) {
   const modelValueSet = ref(new Set<ModelValueSingleType>());
   const presetModelValueSet = ref(new Set<ModelValueSingleType>());

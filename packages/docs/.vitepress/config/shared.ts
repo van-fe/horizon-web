@@ -6,7 +6,7 @@ import path from 'path';
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "LEGO",
+  title: "HORIZONWEB",
   cleanUrls: true,
   rewrites: {
     'zh/:rest*': ':rest*'

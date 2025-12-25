@@ -30,13 +30,13 @@ function change() {
 }
 
 function onAcceptError(files: NUploadFileType[]) {
-  console.log(files);
+  console.info(files);
 
   $message.error(`自动拦截：您选择的 ${files.map(file => file.name).join('、')} 不是 ${accept.value} 文件`);
 }
 
 function onExceed(pickedFiles: NUploadFileType[], existedFiles: NUploadFileType[]) {
-  console.log('Exceed Files: ', pickedFiles, existedFiles);
+  console.info('Exceed Files: ', pickedFiles, existedFiles);
 }
 
 function handleSuccess(res: any, file: NUploadFileType) {

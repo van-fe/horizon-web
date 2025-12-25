@@ -2,7 +2,7 @@ import { computed, defineComponent, inject, provide, reactive, toRefs } from 'vu
 import type { RadioGroupPropsProvideType } from './composables/useProps';
 import { useRadioGroupProps } from './composables/useProps';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { RadioEmits } from './composables/useEmits';
 import { useRadioEmits } from './composables/useEmits';
 import type { RadioSlots } from './composables/useSlots';
@@ -20,7 +20,7 @@ export default defineComponent({
   props: useRadioGroupProps,
   emits: useRadioEmits,
   slots: useRadioSlots,
-  setup(props, { slots, emit }: LegoSetupContext<RadioEmits, RadioSlots>) {
+  setup(props, { slots, emit }: HorizonWebSetupContext<RadioEmits, RadioSlots>) {
     const {
       modelValue: propModelValue,
       disabled: propDisabled,

@@ -54,14 +54,14 @@ fetch(
 });
 
 const onConfirm = (value: any) => {
-  console.log('confirm: ', value);
+  console.info('confirm: ', value);
 };
 
 const onCancel = (value: any) => {
-  console.log('cancel: ', value);
+  console.info('cancel: ', value);
 };
 
 const onChange = (value: NCascaderModelValueType, option: NCascaderExtendOption) => {
-  console.log('change: ', value, option);
+  console.info('change: ', value, option);
 };
 </script>

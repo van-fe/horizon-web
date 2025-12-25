@@ -20,7 +20,7 @@ export default defineComponent({
           showConfirmButton: true,
           showCancelButton: true,
           callback(action, instance) {
-            console.log(action, instance);
+            console.info(action, instance);
           },
         },
       );
@@ -38,7 +38,7 @@ export default defineComponent({
         confirmButtonProps: {
           debounceType: 'loading',
           debounceFn: () => {
-            console.log('clicked!');
+            console.info('clicked!');
             return new Promise((resolve) => {
               setTimeout(() => {
                 $message.success('保存成功！');

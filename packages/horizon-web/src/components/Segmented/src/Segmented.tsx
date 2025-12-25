@@ -1,5 +1,5 @@
-import { NIconSVG } from '@aurora/icon';
-import type { LegoSetupContext } from '@aurora/utils';
+import { AIconSVG } from '@aurora/icon';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import {
   type ComputedRef,
@@ -36,7 +36,7 @@ export default defineComponent({
   exposes: useSegmentedExposes,
   setup(
     props,
-    { emit, slots, attrs }: LegoSetupContext<SegmentedEmits, SegmentedSlots, SegmentedExposes>,
+    { emit, slots, attrs }: HorizonWebSetupContext<SegmentedEmits, SegmentedSlots, SegmentedExposes>,
   ) {
     const cls = new ComponentClassBlock('segmented');
 
@@ -143,7 +143,7 @@ export default defineComponent({
                     onClick={onArrowLeft}
                     test-id="left-btn"
                   >
-                    <NIconSVG name="arrow_left" class={cls.e('icon')} />
+                    <AIconSVG name="arrow_left" class={cls.e('icon')} />
                   </div>
                   <div
                     class={[
@@ -153,7 +153,7 @@ export default defineComponent({
                     onClick={onArrowRight}
                     test-id="right-btn"
                   >
-                    <NIconSVG name="arrow_right" class={cls.e('icon')} />
+                    <AIconSVG name="arrow_right" class={cls.e('icon')} />
                   </div>
                 </div>
               )}

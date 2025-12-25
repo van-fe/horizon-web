@@ -26,11 +26,11 @@ import { ref } from 'vue';
 const visible = ref(false);
 const visible2 = ref(false);
 const onPrimary = () => {
-  console.log('Primary button clicked!');
+  console.info('Primary button clicked!');
   visible2.value = true;
 };
 const onSecondary = () => {
-  console.log('Secondary button clicked!');
+  console.info('Secondary button clicked!');
   visible.value = false;
 };
 </script>

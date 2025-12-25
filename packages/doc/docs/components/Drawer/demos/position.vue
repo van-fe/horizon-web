@@ -30,12 +30,12 @@ const visible = ref(false);
 const placement = ref<DrawerPlacement>('right');
 
 const ok = () => {
-  console.log('ok button clicked!');
+  console.info('ok button clicked!');
   visible.value = false;
   $message({ type: 'success', message: 'ok button clicked' });
 };
 const cancel = () => {
-  console.log('cancel button clicked!');
+  console.info('cancel button clicked!');
   visible.value = false;
   $message({ type: 'warning', message: 'cancel button clicked!' });
 };

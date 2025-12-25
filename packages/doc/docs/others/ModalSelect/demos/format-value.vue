@@ -29,7 +29,7 @@ const value1 = shallowRef({ "value": 1, "label": "中国" });
 const value2 = shallowRef([{ "value": 1, "label": "中国" }]);
 
 function valueFormat(originValue: OptionProps) {
-  console.log(JSON.stringify(originValue));
+  console.info(JSON.stringify(originValue));
   return {
     value: originValue.value,
     label: originValue.label,

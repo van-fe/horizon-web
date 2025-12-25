@@ -34,7 +34,7 @@
       @update:modelValue="onUpdate"
     >
       <template #operators="file">
-        <n-icon style="margin-left: 4px" name="download" color="red" @click="onDownload(file)" />
+        <a-icon style="margin-left: 4px" name="download" color="red" @click="onDownload(file)" />
       </template>
     </n-upload>
     <!--  -->
@@ -60,11 +60,11 @@
 <script>
 import { defineComponent, ref } from 'vue';
 import { demoUrl } from './mock-server';
-import { NIcon } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 
 export default defineComponent({
   components: {
-    NIcon,
+    AIcon,
   },
   setup() {
     const uploadOptions = () => {
@@ -102,7 +102,7 @@ export default defineComponent({
     ]);
 
     const getFileList = () => {
-      console.log(fileList.value);
+      console.info(fileList.value);
     };
 
     const beforeUpload = files => {
@@ -144,7 +144,7 @@ export default defineComponent({
         ];
         visibleRef.value = true;
       } else {
-        console.log(file, 'preview');
+        console.info(file, 'preview');
       }
     };
 
@@ -162,7 +162,7 @@ export default defineComponent({
         link.click();
         document.body.removeChild(link);
       } else {
-        console.log(file, 'download');
+        console.info(file, 'download');
       }
     };
 

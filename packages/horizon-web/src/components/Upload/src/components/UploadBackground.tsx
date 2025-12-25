@@ -8,7 +8,7 @@ import {
   toRefs,
   watch,
 } from 'vue';
-import type { Arrayable, LegoSetupContext } from '@aurora/utils';
+import type { Arrayable, HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, cssVariable, useNamespace } from '@aurora/utils';
 import type { NUploadFileType } from '../utils/fileDefines';
 import { NUploadFileTypeEnum, NUploadFileStatusEnum } from '../utils/fileDefines';
@@ -51,7 +51,7 @@ export default defineComponent({
   exposes: useUploadBackgroundExposes,
   setup(
     props,
-    { emit, expose }: LegoSetupContext<UploadBackgroundEmits, {}, UploadBackgroundExposes>,
+    { emit, expose }: HorizonWebSetupContext<UploadBackgroundEmits, {}, UploadBackgroundExposes>,
   ) {
     const classHelper = new ComponentClassBlock('upload--background');
 

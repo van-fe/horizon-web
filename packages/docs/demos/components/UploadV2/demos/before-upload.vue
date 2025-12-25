@@ -31,7 +31,7 @@ const multiple = ref(false);
 const modelValue = ref<NUploadRawFileType>();
 
 function onBeforeUpload(file: NUploadFileType) {
-  console.log('before-upload:', file);
+  console.info('before-upload:', file);
   if (!(file.type === NUploadFileTypeEnum.Image && file.raw?.type === 'image/png')) {
     $message.error('手动拦截：您选择的不是 PNG 文件');
     return false;
@@ -39,7 +39,7 @@ function onBeforeUpload(file: NUploadFileType) {
 }
 
 function onAcceptError(files: NUploadFileType[]) {
-  console.log(files);
+  console.info(files);
 
   $message.error(`自动拦截：您选择的 ${files.map(file => file.name).join('、')} 不是 PNG 文件`);
 }

@@ -5,7 +5,7 @@ import type { HoverEmits } from './composables/useEmits';
 import type { HoverSlots } from './composables/useSlots';
 import { useHoverSlots } from './composables/useSlots';
 import { NOnlyChild, useNamespace } from '@aurora/utils';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { HoverExposes } from './composables/useExposes';
 import { useHoverExposes } from './composables/useExposes';
 import { NHoverSwitchVisibleInjectKey } from '~/components/Hover/src/utils/injectKeys';
@@ -17,7 +17,7 @@ export default defineComponent({
   emits: useHoverEmits,
   slots: useHoverSlots,
   exposes: useHoverExposes,
-  setup(props, { emit, slots, expose }: LegoSetupContext<HoverEmits, HoverSlots, HoverExposes>) {
+  setup(props, { emit, slots, expose }: HorizonWebSetupContext<HoverEmits, HoverSlots, HoverExposes>) {
     const targetRef = ref<(typeof NOnlyChild & { el: HTMLElement }) | null>(null);
     const hoverVisible = ref<boolean>(false);
     const openHoverTimer = ref<ReturnType<typeof setTimeout> | undefined>();

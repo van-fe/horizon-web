@@ -57,7 +57,7 @@ export default defineComponent({
     });
 
     const dynamicLoad = (node: NCascaderDynamicLoadNode) => {
-      console.log(node);
+      console.info(node);
       return new Promise(resolve => {
         setTimeout(() => {
           const codePoint = 97 + node.level;

@@ -1,7 +1,7 @@
 import type { ToRefs, UnwrapNestedRefs } from 'vue';
 import { computed, ref, watch } from 'vue';
 import type { TreeProps } from '../composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { isObject } from '@aurora/utils';
 import type { NTreeExtendsData, NTreeData } from '../utils/types';
 import type Tree from '~/utils/useTree/index';
@@ -9,7 +9,7 @@ import type { TreeEmits } from '../composables/useEmits';
 
 export default function (
   props: ToRefs<TreeProps>,
-  emit: LegoSetupContext<TreeEmits>['emit'],
+  emit: HorizonWebSetupContext<TreeEmits>['emit'],
   tree: Tree<NTreeData, NTreeExtendsData>,
   expandedNodesUuid: UnwrapNestedRefs<Set<string | number>>,
 ) {

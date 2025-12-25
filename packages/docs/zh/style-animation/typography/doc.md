@@ -28,7 +28,7 @@
 :::demo ./demos/fontweight.vue :::
 
 ### 排版
-为了更方便使用，基于 LEGO UI 设计规范，我们还提供了一套排版工具类，它是字号和字重的组合。
+为了更方便使用，基于 HORIZONWEB UI 设计规范，我们还提供了一套排版工具类，它是字号和字重的组合。
 
 |Class|Properties|
 |-|-|

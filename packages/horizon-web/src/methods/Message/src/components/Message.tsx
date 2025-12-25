@@ -7,11 +7,10 @@ import {
   IconSuccessFilledLight,
   IconWarningFilledLight,
 } from '@aurora/icon';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, cssVariable, useNamespace, useZIndex } from '@aurora/utils';
 import type { CSSProperties } from 'vue';
 import { computed, defineComponent, onMounted, ref, Transition, watch } from 'vue';
-import { useSensor } from '~/utils/useSensor';
 import type { MessageEmits } from '../composables/useEmits';
 import { useMessageEmits } from '../composables/useEmits';
 import type { MessageExposes } from '../composables/useExposes';
@@ -29,7 +28,7 @@ export default defineComponent({
   inheritAttrs: false,
   props: useMessageOptions,
   emits: useMessageEmits,
-  setup(props, { emit, expose }: LegoSetupContext<MessageEmits, any, MessageExposes>) {
+  setup(props, { emit, expose }: HorizonWebSetupContext<MessageEmits, any, MessageExposes>) {
     const classHelper = new ComponentClassBlock('message');
     const visible = ref(false);
     const duration = ref(props.duration);
@@ -40,8 +39,6 @@ export default defineComponent({
     onMounted(() => {
       startTimer();
       visible.value = true;
-
-      useSensor('$message', props, 'method');
     });
 
     let timer: ReturnType<typeof setTimeout> | null = null;

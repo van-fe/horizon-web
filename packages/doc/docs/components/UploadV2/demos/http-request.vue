@@ -57,47 +57,47 @@ function httpRequest(file: NUploadFileType, instanceMethods: NUploadHttpRequestI
 }
 
 function handleChange(file: NUploadFileType, response?: Data) {
-  console.log('change:', file, response);
+  console.info('change:', file, response);
 }
 
 function onAddFile(file: NUploadFileType) {
-  console.log('Add File: ', file);
+  console.info('Add File: ', file);
 }
 
 function onUploadFile(file: NUploadFileType) {
-  console.log('Upload File: ', file);
+  console.info('Upload File: ', file);
 }
 
 function onRemoveFile(file: NUploadFileType) {
-  console.log('Remove File: ', file);
+  console.info('Remove File: ', file);
 }
 
 function onUploadingFile(file: NUploadFileType, process: number, response?: Data) {
-  console.log('Uploading File: ', file, process, response);
+  console.info('Uploading File: ', file, process, response);
 }
 
 function onUploadedFile(file: NUploadFileType, response?: Data) {
-  console.log('Uploaded File: ', file, response);
+  console.info('Uploaded File: ', file, response);
 }
 
 function onPauseFile(file: NUploadFileType) {
-  console.log('Pause File: ', file);
+  console.info('Pause File: ', file);
 }
 
 function onContinueFile(file: NUploadFileType) {
-  console.log('Continue File: ', file);
+  console.info('Continue File: ', file);
 }
 
 function onRetryFile(file: NUploadFileType) {
-  console.log('Retry File: ', file);
+  console.info('Retry File: ', file);
 }
 
 function onPreview(file: NUploadFileType) {
-  console.log('Preview File: ', file);
+  console.info('Preview File: ', file);
 }
 
 function onFailFile(file: NUploadFileType, reason: string, response?: Data) {
-  console.log('Fail File: ', file, reason, response);
+  console.info('Fail File: ', file, reason, response);
 }
 </script>
 

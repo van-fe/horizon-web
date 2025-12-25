@@ -1,4 +1,4 @@
-import type { LegoComponentInstance, MaybeRef } from '@aurora/utils';
+import type { HorizonWebComponentInstance, MaybeRef } from '@aurora/utils';
 import type { Mock } from 'vitest';
 import type { SetupContext } from 'vue';
 import { Fragment, ref, unref } from 'vue';
@@ -25,8 +25,8 @@ export default class AutoCompleteHelper<
   }>;
   public slots?: Partial<SetupContext<{}, AutoCompleteSlots>['slots']>;
   public wrapper!: VueWrapper<any, any>;
-  public element!: VueWrapper<LegoComponentInstance<typeof NAutoComplete, AutoCompleteExposes>>;
-  public picker!: VueWrapper<LegoComponentInstance<typeof NPicker, PickerExposes>>;
+  public element!: VueWrapper<HorizonWebComponentInstance<typeof NAutoComplete, AutoCompleteExposes>>;
+  public picker!: VueWrapper<HorizonWebComponentInstance<typeof NPicker, PickerExposes>>;
 
   constructor(
     propsOrEmits?: Partial<{
@@ -63,10 +63,10 @@ export default class AutoCompleteHelper<
     );
 
     this.element = this.wrapper.findComponent(NAutoComplete) as VueWrapper<
-      LegoComponentInstance<typeof NAutoComplete, AutoCompleteExposes>
+      HorizonWebComponentInstance<typeof NAutoComplete, AutoCompleteExposes>
     >;
     this.picker = this.element.findComponent(NPicker) as VueWrapper<
-      LegoComponentInstance<typeof NPicker, PickerExposes>
+      HorizonWebComponentInstance<typeof NPicker, PickerExposes>
     >;
   }
 

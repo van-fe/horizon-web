@@ -3,14 +3,14 @@ import { computed, reactive, watch } from 'vue';
 import type { TreeProps } from '../composables/useProps';
 import type { NTreeData, NTreeExtendsData } from '../utils/types';
 import type Tree from '~/utils/useTree/index';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { TreeEmits } from '../composables/useEmits';
 
 export default function (
   props: ToRefs<TreeProps>,
   tree: Tree<NTreeData, NTreeExtendsData>,
   dynamicLoad: (currentNode: NTreeExtendsData, vNode?: VNode) => void,
-  emit: LegoSetupContext<TreeEmits>['emit'],
+  emit: HorizonWebSetupContext<TreeEmits>['emit'],
 ) {
   const expandedNodesUuid = reactive(new Set<string | number>(props.expandValues?.value));
 

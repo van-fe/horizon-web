@@ -3,13 +3,13 @@ import { computed, reactive, watch } from 'vue';
 import type { TreeProps } from '../composables/useProps';
 import type Tree from '~/utils/useTree/index';
 import type { NTreeData, NTreeExtendsData, NTreeUuidType } from '../utils/types';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { TreeEmits } from '../composables/useEmits';
 
 export default function (
   props: ToRefs<TreeProps>,
   tree: Tree<NTreeData, NTreeExtendsData>,
-  emit: LegoSetupContext<TreeEmits>['emit'],
+  emit: HorizonWebSetupContext<TreeEmits>['emit'],
 ) {
   const selectedValuesUuid = reactive<Set<NTreeUuidType>>(
     new Set<NTreeUuidType>(props.selectedValues?.value),

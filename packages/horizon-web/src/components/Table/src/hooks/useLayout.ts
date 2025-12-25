@@ -7,7 +7,7 @@ import {
   NTableRefreshLayoutInjectKey,
   NTableScrollbarTrackSpacingInjectKey,
 } from '../utils/injectKeys';
-import type { LegoComponentInstance } from '@aurora/utils';
+import type { HorizonWebComponentInstance } from '@aurora/utils';
 import { sizeUnitTransform } from '@aurora/utils';
 import type TableFooter from '../components/TableFooter';
 
@@ -26,7 +26,7 @@ export default function useLayout(
   }>,
   getFixedState: (uuid: string) => NTableFixedValue,
 ) {
-  const tableFooterDomRef = ref<LegoComponentInstance<typeof TableFooter>>();
+  const tableFooterDomRef = ref<HorizonWebComponentInstance<typeof TableFooter>>();
   const footerRowHeight = ref<number[]>([]);
 
   function calculateColumnsLayout() {

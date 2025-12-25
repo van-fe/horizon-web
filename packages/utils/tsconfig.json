@@ -12,7 +12,9 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "baseUrl": ".",
+    "paths": {
+      "*": ["./*"]
+    },
     "skipLibCheck": true,
     "types": [
       "node"

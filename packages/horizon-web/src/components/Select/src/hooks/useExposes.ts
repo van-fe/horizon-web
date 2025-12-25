@@ -1,4 +1,4 @@
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { SelectEmits } from '../composables/useEmits';
 import type { SelectExposes } from '../composables/useExposes';
 import type { OptionProps } from '../composables/useProps';
@@ -8,7 +8,7 @@ import type { Ref, VNode } from 'vue';
 import type { JSX } from 'vue/jsx-runtime';
 
 export default function useExposes(
-  context: LegoSetupContext<SelectEmits, SelectSlots, SelectExposes>,
+  context: HorizonWebSetupContext<SelectEmits, SelectSlots, SelectExposes>,
   options: {
     handleConfirm: () => void;
     handleCancel: () => void;

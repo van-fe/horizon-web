@@ -78,7 +78,7 @@ function beforeDrop(current: NTreeNodeDataWithLevel, to: NTreeNodeDataWithLevel 
 }
 
 function onUpdate(treeData: NTreeNodeData[]) {
-  console.log('update:', treeData);
+  console.info('update:', treeData);
 }
 
 onMounted(() => {

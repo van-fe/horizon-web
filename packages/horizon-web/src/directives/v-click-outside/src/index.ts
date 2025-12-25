@@ -1,6 +1,5 @@
 import { useClickOutsideOptions } from './composables/useOptions';
 import { defineDirective } from '@aurora/utils';
-import { useSensor } from '~/utils/useSensor';
 
 const eventOptions = { passive: true, capture: true };
 
@@ -15,8 +14,6 @@ export default defineDirective<ClickOutsideElement, typeof useClickOutsideOption
   options: useClickOutsideOptions,
   desc: '点击目标元素外部区域时调用指定的函数',
   mounted(el, binding) {
-    useSensor('v-click-outside', binding.value, 'directive');
-
     el[clickOutsideEventKey] = (event: Event) => {
       if (!(el == event.target || el.contains(event.target as Node))) {
         binding.value?.(event.target, event as MouseEvent);

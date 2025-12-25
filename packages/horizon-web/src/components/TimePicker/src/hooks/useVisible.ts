@@ -1,7 +1,7 @@
 import type { Ref } from 'vue';
 import { provide, ref } from 'vue';
 import { NTimePickerPanelVisibleInjectKey } from '../utils/injectKeys';
-import type { LegoComponentInstance, LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebComponentInstance, HorizonWebSetupContext } from '@aurora/utils';
 import type NPicker from '~/components/Picker/src/Picker';
 import type { PickerExposes } from '~/components/Picker/src/composables/useExposes';
 import type { TimePickerEmits } from '../composables/useEmits';
@@ -9,8 +9,8 @@ import type { TimePickerSlots } from '../composables/useSlots';
 import type { TimePickerExposes } from '../composables/useExposes';
 
 export default function useVisible(
-  context: LegoSetupContext<TimePickerEmits, TimePickerSlots, TimePickerExposes>,
-  pickerDomRef: Ref<LegoComponentInstance<typeof NPicker, PickerExposes> | undefined>,
+  context: HorizonWebSetupContext<TimePickerEmits, TimePickerSlots, TimePickerExposes>,
+  pickerDomRef: Ref<HorizonWebComponentInstance<typeof NPicker, PickerExposes> | undefined>,
 ) {
   const visible = ref(false);
 

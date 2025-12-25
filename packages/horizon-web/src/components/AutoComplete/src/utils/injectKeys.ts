@@ -1,4 +1,4 @@
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { generatorInjectedKeyName } from '@aurora/utils';
 import type { ComputedRef, InjectionKey, Ref, SetupContext } from 'vue';
 import type { AutoCompleteProps, ModelValueType } from '../composables/useProps';
@@ -12,7 +12,7 @@ export const NAutoCompletePropsInjectKey = Symbol(
 
 export const NAutoCompleteEmitsInjectKey = Symbol(
   generatorInjectedKeyName('auto-complete', 'emits'),
-) as InjectionKey<LegoSetupContext<AutoCompleteEmits>['emit']>;
+) as InjectionKey<HorizonWebSetupContext<AutoCompleteEmits>['emit']>;
 
 export const NAutoCompleteSlotsInjectKey = Symbol(
   generatorInjectedKeyName('auto-complete', 'slots'),

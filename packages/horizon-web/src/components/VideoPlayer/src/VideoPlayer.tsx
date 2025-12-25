@@ -1,7 +1,7 @@
 import { defineComponent, ref, onMounted, onUnmounted, watch, nextTick, inject } from 'vue';
 import { useResizeObserver } from '@vueuse/core';
 import { useVideoPlayerProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { IconVideoError } from '@aurora/icon';
 import videojs from 'video.js';
@@ -23,7 +23,7 @@ export default defineComponent({
   emits: useVideoPlayerEmits,
   slots: useVideoPlayerSlots,
   exposes: useVideoPlayerExposes,
-  setup(props, { emit }: LegoSetupContext<VideoPlayerEmits, VideoPlayerSlots, VideoPlayerExposes>) {
+  setup(props, { emit }: HorizonWebSetupContext<VideoPlayerEmits, VideoPlayerSlots, VideoPlayerExposes>) {
     const classHelper = new ComponentClassBlock('video-player');
     const playerIns = ref();
     const wrapRef = ref<HTMLElement | null>(null);
@@ -155,9 +155,9 @@ export default defineComponent({
             <div class={classHelper.e('error')}>
               <div class={classHelper.e('error-content')}>
                 <IconVideoError size={40} color={['#8B8E94', '#8B8E94', '#8B8E94']} />
-                <p>{locale.value?.langService.td().horizon-web.videoPlayer.error}</p>
+                <p>{locale.value?.langService.td().horizonWeb.videoPlayer.error}</p>
                 <NButton forceNewestSize={true} onClick={reload}>
-                  {locale.value?.langService.td().horizon-web.global.refresh}
+                  {locale.value?.langService.td().horizonWeb.global.refresh}
                 </NButton>
               </div>
             </div>

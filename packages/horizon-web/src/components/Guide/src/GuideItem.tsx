@@ -11,7 +11,7 @@ import {
   watchEffect,
 } from 'vue';
 import { ComponentClassBlock, cls, useNamespace, getElement } from '@aurora/utils';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { GuideItemProps } from './composables/useProps';
 import { useGuideItemProps } from './composables/useProps';
 import { useGuideItemEmits } from './composables/useEmits';
@@ -49,7 +49,7 @@ export default defineComponent({
   exposes: useGuideItemExposes,
   setup(
     props: GuideItemProps,
-    { emit, slots, expose }: LegoSetupContext<GuideItemEmits, GuideItemSlots, GuideItemExposes>,
+    { emit, slots, expose }: HorizonWebSetupContext<GuideItemEmits, GuideItemSlots, GuideItemExposes>,
   ) {
     const classHelper = new ComponentClassBlock('guide-item');
 

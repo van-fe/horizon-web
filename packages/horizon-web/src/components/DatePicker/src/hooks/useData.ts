@@ -4,7 +4,7 @@ import type { DatePickerProps } from '../composables/useProps';
 import dayjs, { isDayjsEqual } from '~/utils/useDayJs';
 import type { Dayjs } from 'dayjs';
 import type { DatePickerEmits } from '../composables/useEmits';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { isFunction, isNil, isDefined, isString } from '@aurora/utils';
 import type { DatePickerSlots } from '../composables/useSlots';
 import type { DatePickerExposes } from '../composables/useExposes';
@@ -54,7 +54,7 @@ export function useTime() {
 
 export default function useData(
   propRefs: ToRefs<DatePickerProps>,
-  context: LegoSetupContext<DatePickerEmits, DatePickerSlots, DatePickerExposes>,
+  context: HorizonWebSetupContext<DatePickerEmits, DatePickerSlots, DatePickerExposes>,
   domRefs: NDatePickerDomRefs,
   options: {
     pickerType: ComputedRef<NDatePickerBaseSupportType>;

@@ -1,6 +1,6 @@
 import type { PropType } from 'vue';
 import { ref, watch, defineComponent } from 'vue';
-import type { LegoComponentInstance, LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebComponentInstance, HorizonWebSetupContext } from '@aurora/utils';
 import { isDefined, cls, ComponentClassBlock } from '@aurora/utils';
 import NScrollbar from '~/components/Scrollbar/src/Scrollbar';
 import type { NTimePickerPanelOptionType, NTimePickerShowTimeTooltipType } from '../utils/types';
@@ -62,11 +62,11 @@ export default defineComponent({
     {
       emit,
       expose,
-    }: LegoSetupContext<TimePickerTimeColumnPanelEmits, {}, TimePickerTimeColumnPanelExposes>,
+    }: HorizonWebSetupContext<TimePickerTimeColumnPanelEmits, {}, TimePickerTimeColumnPanelExposes>,
   ) {
     const classHelper = new ComponentClassBlock('time-picker');
 
-    const scrollbarDomRefs = ref<LegoComponentInstance<typeof NScrollbar, ScrollbarExposes>>();
+    const scrollbarDomRefs = ref<HorizonWebComponentInstance<typeof NScrollbar, ScrollbarExposes>>();
 
     watch(
       () => [props.panelVisible, props.modelValue],

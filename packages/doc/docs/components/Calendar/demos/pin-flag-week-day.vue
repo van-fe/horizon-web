@@ -100,11 +100,11 @@ const pinFlags = ref<NCalendarPinFlag[]>([
 ]);
 
 function onFlagClick(flag: NCalendarPinFlag) {
-  console.log(flag);
+  console.info(flag);
 }
 
 function onCreatingPinFlagCallback(date: Dayjs) {
-  console.log(date.format('YYYY-MM-DD HH:mm'));
+  console.info(date.format('YYYY-MM-DD HH:mm'));
 
   return {
     title: 'New Event',
@@ -114,7 +114,7 @@ function onCreatingPinFlagCallback(date: Dayjs) {
 
 function onCreatFinishFlagCallback(flag: NCalendarPinFlag) {
   return new Promise(resolve => {
-    console.log(flag);
+    console.info(flag);
 
     switch (reserveEvent.value) {
       case 1:

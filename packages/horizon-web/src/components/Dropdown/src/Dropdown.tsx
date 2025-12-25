@@ -19,7 +19,7 @@ import {
   useZIndex,
   isUndefined,
 } from '@aurora/utils';
-import type { LegoSetupContext, LegoComponentInstance } from '@aurora/utils';
+import type { HorizonWebSetupContext, HorizonWebComponentInstance } from '@aurora/utils';
 import { useDropdownProps } from './composables/useProps';
 import { useDropdownEmits } from './composables/useEmits';
 import { useDropdownSlots } from './composables/useSlots';
@@ -62,7 +62,7 @@ export default defineComponent({
   exposes: useDropdownExposes,
   setup(
     props: DropdownProps,
-    { emit, slots, expose }: LegoSetupContext<DropdownEmits, DropdownSlots, DropdownExposes>,
+    { emit, slots, expose }: HorizonWebSetupContext<DropdownEmits, DropdownSlots, DropdownExposes>,
   ) {
     const uuid = nanoid();
     const classHelper = new ComponentClassBlock('dropdown');
@@ -73,8 +73,8 @@ export default defineComponent({
     const visible = ref(props.visible);
 
     const wrapperDomRef = ref<HTMLElement | null>(null);
-    const popoverRef = ref<LegoComponentInstance<typeof NPopover, PopoverExposes> | null>(null);
-    const popContentDomRef = ref<LegoComponentInstance<typeof NPopContent> | null>(null);
+    const popoverRef = ref<HorizonWebComponentInstance<typeof NPopover, PopoverExposes> | null>(null);
+    const popContentDomRef = ref<HorizonWebComponentInstance<typeof NPopContent> | null>(null);
 
     const dropdownTree = reactive(new Map<string, NDropdownTreeData>());
     const isDropdownTreeHasThirdLevel = ref(false);

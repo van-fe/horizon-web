@@ -1,6 +1,6 @@
 import type { Component, Slot, VNode } from 'vue';
 import { defineComponent, provide, ref, toRefs } from 'vue';
-import type { LegoSetupContext, LegoComponentInstance } from '@aurora/utils';
+import type { HorizonWebSetupContext, HorizonWebComponentInstance } from '@aurora/utils';
 import { isNil, cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { useTimePickerProps } from './composables/useProps';
 import { useTimePickerEmits } from './composables/useEmits';
@@ -43,18 +43,18 @@ export default defineComponent({
   exposes: useTimePickerExposes,
   setup(
     props: TimePickerProps,
-    context: LegoSetupContext<TimePickerEmits, TimePickerSlots, TimePickerExposes>,
+    context: HorizonWebSetupContext<TimePickerEmits, TimePickerSlots, TimePickerExposes>,
   ) {
     const classHelper = new ComponentClassBlock('time-picker');
-    const pickerDomRef = ref<LegoComponentInstance<typeof NPicker, PickerExposes>>();
+    const pickerDomRef = ref<HorizonWebComponentInstance<typeof NPicker, PickerExposes>>();
     const startInputDomRef =
-      ref<LegoComponentInstance<typeof NPickerPureInput, PickerPureInputExposes>>();
+      ref<HorizonWebComponentInstance<typeof NPickerPureInput, PickerPureInputExposes>>();
     const endInputDomRef =
-      ref<LegoComponentInstance<typeof NPickerPureInput, PickerPureInputExposes>>();
+      ref<HorizonWebComponentInstance<typeof NPickerPureInput, PickerPureInputExposes>>();
     const startTimePanelDomRef =
-      ref<LegoComponentInstance<typeof TimePanel, TimePickerTimePanelExposes>>();
+      ref<HorizonWebComponentInstance<typeof TimePanel, TimePickerTimePanelExposes>>();
     const endTimePanelDomRef =
-      ref<LegoComponentInstance<typeof TimePanel, TimePickerTimePanelExposes>>();
+      ref<HorizonWebComponentInstance<typeof TimePanel, TimePickerTimePanelExposes>>();
 
     const propRefs = toRefs<TimePickerProps>(props);
 

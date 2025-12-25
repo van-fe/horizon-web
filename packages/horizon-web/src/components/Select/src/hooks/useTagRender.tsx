@@ -2,7 +2,7 @@ import type { Ref, VNode, Reactive } from 'vue';
 import { computed, ref, watch } from 'vue';
 import type { JSX } from 'vue/jsx-runtime';
 import type { OptionProps, SelectProps } from '../composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { SelectEmits } from '../composables/useEmits';
 import type { SelectSlots } from '../composables/useSlots';
 import type { SelectExposes } from '../composables/useExposes';
@@ -16,7 +16,7 @@ import NScrollbar from '~/components/Scrollbar';
 
 export default function useTagRender(
   props: SelectProps,
-  context: LegoSetupContext<SelectEmits, SelectSlots, SelectExposes>,
+  context: HorizonWebSetupContext<SelectEmits, SelectSlots, SelectExposes>,
   options: {
     domRefs: SelectDomRefs;
     renderedModelValueTags: Ref<Array<VNode | JSX.Element>>;

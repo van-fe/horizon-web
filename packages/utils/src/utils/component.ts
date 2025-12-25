@@ -1,16 +1,9 @@
 import type {
   EmitsOptions,
   SetupContext,
-  ComponentOptionsMixin,
-  ComponentOptionsWithObjectProps,
-  ComponentPropsOptions,
-  ComputedOptions,
-  DefineComponent,
-  MethodOptions,
   UnwrapRef,
   SlotsType
 } from 'vue';
-import { defineComponent } from 'vue';
 
 export type ExposeOptions = Record<string, any>;
 
@@ -56,7 +49,7 @@ type ExposeMethod<T, TConstructor = any> = T extends ((...args: any) => any) | u
 /**
  * define horizon-web component
  */
-export type LegoSetupContext<
+export type HorizonWebSetupContext<
   Em extends EmitsOptions = EmitsOptions,
   S extends SlotsType = SlotsType,
   Ex extends ExposeOptions = ExposeOptions,
@@ -73,28 +66,3 @@ declare module '@vue/runtime-core' {
   }
 }
 
-export function defineLegoComponent<
-  PropsOptions extends Readonly<ComponentPropsOptions>,
-  RawBindings,
-  D,
-  C extends ComputedOptions = {},
-  M extends MethodOptions = {},
-  Mixin extends ComponentOptionsMixin = ComponentOptionsMixin,
-  Extends extends ComponentOptionsMixin = ComponentOptionsMixin,
-  E extends EmitsOptions = Record<string, any>,
-  EE extends string = string,
->(
-  options: ComponentOptionsWithObjectProps<
-    PropsOptions,
-    RawBindings,
-    D,
-    C,
-    M,
-    Mixin,
-    Extends,
-    E,
-    EE
-  >,
-): DefineComponent<PropsOptions, RawBindings, D, C, M, Mixin, Extends, E, EE> {
-  return defineComponent(options);
-}

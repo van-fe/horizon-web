@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue';
 import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { use${capitalName}Props } from './composables/useProps';
 import { use${capitalName}Emits } from './composables/useEmits';
 import { use${capitalName}Slots } from './composables/useSlots';
@@ -17,7 +17,7 @@ export default defineComponent({
   emits: use${capitalName}Emits,
   slots: use${capitalName}Slots,
   exposes: use${capitalName}Exposes,
-  setup(props: ${capitalName}Props, { emit, slots, expose }: LegoSetupContext<${capitalName}Emits, ${capitalName}Slots, ${capitalName}Exposes>) {
+  setup(props: ${capitalName}Props, { emit, slots, expose }: HorizonWebSetupContext<${capitalName}Emits, ${capitalName}Slots, ${capitalName}Exposes>) {
     const classHelper = new ComponentClassBlock('${kebabName}');
 
     expose({});

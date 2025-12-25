@@ -1,4 +1,4 @@
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { generatorInjectedKeyName } from '@aurora/utils';
 import type { ComputedRef, InjectionKey, Ref } from 'vue';
 import type { DatePickerProps } from '../composables/useProps';
@@ -15,11 +15,11 @@ export const NDatePickerPropsInjectKey = Symbol(
 
 export const NDatePickerEmitsInjectKey = Symbol(
   generatorInjectedKeyName('datePicker', 'emits'),
-) as InjectionKey<LegoSetupContext<DatePickerEmits>['emit']>;
+) as InjectionKey<HorizonWebSetupContext<DatePickerEmits>['emit']>;
 
 export const NDatePickerSlotsInjectKey = Symbol(
   generatorInjectedKeyName('datePicker', 'slots'),
-) as InjectionKey<LegoSetupContext<{}, DatePickerSlots>['slots']>;
+) as InjectionKey<HorizonWebSetupContext<{}, DatePickerSlots>['slots']>;
 
 export const NDatePickerPopperVisibleInjectKey = Symbol(
   generatorInjectedKeyName('datePicker', 'popper-visible'),

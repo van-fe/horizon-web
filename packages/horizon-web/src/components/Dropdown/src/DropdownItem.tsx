@@ -8,7 +8,7 @@ import {
   withModifiers,
 } from 'vue';
 import { ComponentClassBlock, cls, useNamespace, isUndefined } from '@aurora/utils';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { DropdownItemProps } from './composables/useProps';
 import { useDropdownItemProps } from './composables/useProps';
 import { useDropdownItemEmits } from './composables/useEmits';
@@ -35,7 +35,7 @@ export default defineComponent({
   slots: useDropdownItemSlots,
   setup(
     props: DropdownItemProps,
-    { emit, slots }: LegoSetupContext<DropdownItemEmits, DropdownItemSlots>,
+    { emit, slots }: HorizonWebSetupContext<DropdownItemEmits, DropdownItemSlots>,
   ) {
     const uuid = nanoid();
 

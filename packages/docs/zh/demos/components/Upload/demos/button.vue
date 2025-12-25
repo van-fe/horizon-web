@@ -83,12 +83,12 @@ export default defineComponent({
     getFile() {
       NUpload.getUploadFile({
         onChange: files => {
-          console.log('got files with getUploadFile', files);
+          console.info('got files with getUploadFile', files);
         },
       });
     },
     onChange(files) {
-      console.log('got files', files);
+      console.info('got files', files);
     },
     onChangeToUpload(files) {
       if (files && files.length > 0) {

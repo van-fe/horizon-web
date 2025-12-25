@@ -1,6 +1,6 @@
 import { defineComponent, ref } from 'vue';
 import { ComponentClassBlock, cls, useNamespace, isDefined } from '@aurora/utils';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { DropdownGroupProps } from './composables/useProps';
 import { useDropdownGroupProps } from './composables/useProps';
 import type { DropdownGroupEmits } from './composables/useEmits';
@@ -19,7 +19,7 @@ export default defineComponent({
   slots: useDropdownGroupSlots,
   setup(
     props: DropdownGroupProps,
-    { slots }: LegoSetupContext<DropdownGroupEmits, DropdownGroupSlots>,
+    { slots }: HorizonWebSetupContext<DropdownGroupEmits, DropdownGroupSlots>,
   ) {
     const classHelper = new ComponentClassBlock('dropdown-group');
 

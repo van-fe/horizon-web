@@ -7,7 +7,7 @@ import {
   getSymbolNodeChildren,
   useNamespace,
 } from '@aurora/utils';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { ControlProps } from './composables/useProps';
 import { useControlsProps } from './composables/useProps';
 import { useControlsEmits } from './composables/useEmits';
@@ -28,7 +28,7 @@ export default defineComponent({
   props: useControlsProps,
   emits: useControlsEmits,
   slots: useControlsSlots,
-  setup(props, { emit, slots }: LegoSetupContext<ControlsEmits, ControlsSlots>) {
+  setup(props, { emit, slots }: HorizonWebSetupContext<ControlsEmits, ControlsSlots>) {
     const classHelper = new ComponentClassBlock('controls');
     const { theme: themeRef, accessList: accessListProp } = toRefs(props);
     const maxAvailableAmount = ref(0);
@@ -64,7 +64,7 @@ export default defineComponent({
 
     const controlItemLength = ref(0);
 
-    const getNeedRenderedItems = (slots: LegoSetupContext<{}, ControlsSlots>['slots']) => {
+    const getNeedRenderedItems = (slots: HorizonWebSetupContext<{}, ControlsSlots>['slots']) => {
       const controlItems = slots.default
         ? (
             getSymbolNodeChildren(slots.default) as VNode<

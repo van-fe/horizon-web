@@ -2,12 +2,12 @@
 layout: home
 
 hero:
-  name: "LEGO"
+  name: "HORIZONWEB"
   text: "现代 Vue3 组件库"
   tagline: 致力于为你的工作提效
   actions:
     - theme: brand
-      text: 为什么选用 LEGO ?
+      text: 为什么选用 HORIZONWEB ?
       link: /guide/why-choose-horizon-web
     - theme: alt
       text: 快速开始

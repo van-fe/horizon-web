@@ -67,13 +67,13 @@ export const useLinkProps = declarePropType({
     default: 0,
   },
   /**
-   * 字体，即 `n-icon` 的 `name` 属性，或直接传入 icon 对象
+   * 字体，即 `a-icon` 的 `name` 属性，或直接传入 icon 对象
    */
   icon: {
     type: IconPropType,
   },
   /**
-   * `n-icon` 的 `size` 属性
+   * `a-icon` 的 `size` 属性
    */
   iconSize: {
     type: [String, Number],

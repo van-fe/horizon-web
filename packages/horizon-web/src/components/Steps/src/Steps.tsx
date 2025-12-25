@@ -1,6 +1,6 @@
 import { defineComponent, provide, ref, toRefs, watch, watchEffect } from 'vue';
 import { useStepsProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, isNumber, useNamespace } from '@aurora/utils';
 import type { StepsEmits } from './composables/useEmits';
 import { useStepsEmits } from './composables/useEmits';
@@ -24,7 +24,7 @@ export default defineComponent({
   props: useStepsProps,
   slots: useStepsSlots,
   emits: useStepsEmits,
-  setup(props, { emit, slots }: LegoSetupContext<StepsEmits, StepsSlots>) {
+  setup(props, { emit, slots }: HorizonWebSetupContext<StepsEmits, StepsSlots>) {
     const classBlock = new ComponentClassBlock('steps');
     const { direction, labelPlacement, progressDot, size, clickable, labelAlign } = toRefs(props);
     const stepItems = ref<Array<StepInstance>>([]);

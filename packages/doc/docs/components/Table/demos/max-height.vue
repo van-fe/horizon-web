@@ -41,10 +41,10 @@ function insertData(amount = 1) {
 insertData(2);
 
 function view(data: TableData) {
-  console.log('view:', data.name);
+  console.info('view:', data.name);
 }
 
 function edit(data: TableData) {
-  console.log('edit:', data.name);
+  console.info('edit:', data.name);
 }
 </script>

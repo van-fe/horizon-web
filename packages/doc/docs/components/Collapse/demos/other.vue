@@ -3,7 +3,7 @@
     <n-collapse :active-key="activeKey" style="width: 500px" size="small" @change="handleExpand">
       <n-collapse-item name="1">
         <template #title>
-          <NIcon name="task_complete" class="mr-2" size="16" />
+          <AIcon name="task_complete" class="mr-2" size="16" />
           This is a panel header.
         </template>
         <div>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</div>
@@ -35,7 +35,7 @@
         <template #title>
           <div class="flex align-center justify-space-between flex-1">
             <div>What are Promotion Products?</div>
-            <NIcon class="ml-3" name="alarm" />
+            <AIcon class="ml-3" name="alarm" />
           </div>
         </template>
         What are Promotion Products?
@@ -51,7 +51,7 @@
               </div>
               <div>This is a panel header.</div>
             </div>
-            <NIcon name="rubbish" style="margin-right: 28px;" size="16" />
+            <AIcon name="rubbish" style="margin-right: 28px;" size="16" />
           </div>
         </template>
         <div>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</div>
@@ -67,7 +67,7 @@
               </div>
               <div>Why can i not submit a higher price?</div>
             </div>
-            <NIcon name="rubbish" style="margin-right: 28px;" size="16" />
+            <AIcon name="rubbish" style="margin-right: 28px;" size="16" />
           </div>
         </template>
         <div>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</div>
@@ -82,7 +82,7 @@
               </div>
               <div>How are you？</div>
             </div>
-            <NIcon name="rubbish" style="margin-right: 28px;" size="16" />
+            <AIcon name="rubbish" style="margin-right: 28px;" size="16" />
           </div>
         </template>
         How are you？
@@ -96,7 +96,7 @@
               </div>
               <div>What are Promotion Products?</div>
             </div>
-            <NIcon name="rubbish" style="margin-right: 28px;" size="16" />
+            <AIcon name="rubbish" style="margin-right: 28px;" size="16" />
           </div>
         </template>
         What are Promotion Products?
@@ -112,10 +112,10 @@ export default defineComponent({
   setup() {
     const activeKey = ref(['1', '2']);
     const handleExpand = (activeKeys: string) => {
-      console.log(`activeKeys ===> `, activeKeys);
+      console.info(`activeKeys ===> `, activeKeys);
     };
     const handleClickButton = () => {
-      console.log('click button');
+      console.info('click button');
     };
     const checkboxOptions = ref([
       {

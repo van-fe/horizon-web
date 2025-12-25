@@ -1,4 +1,4 @@
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, cssVariableKey, useNamespace } from '@aurora/utils';
 import { computed, defineComponent, inject, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { useOptionProps } from './composables/useProps';
@@ -39,7 +39,7 @@ export default defineComponent({
   props: useOptionProps,
   emits: useOptionEmits,
   slots: useOptionSlots,
-  setup(props, { emit, slots, attrs }: LegoSetupContext<OptionEmits, OptionSlots>) {
+  setup(props, { emit, slots, attrs }: HorizonWebSetupContext<OptionEmits, OptionSlots>) {
     const classHelper = new ComponentClassBlock('select-option');
 
     const orderValue = ref(1);

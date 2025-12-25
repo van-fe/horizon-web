@@ -1,10 +1,10 @@
 import { describe, expect, test } from 'vitest';
-import { LegoPluginResolvers } from '../src';
+import { HorizonWebPluginResolvers } from '../src';
 import components from '../../api-generator/dist/components-dependencies.json';
 import directives from '../../api-generator/dist/directives-dependencies.json';
 
 describe('unplugin-resolver', () => {
-  const [component, directive] = LegoPluginResolvers();
+  const [component, directive] = HorizonWebPluginResolvers();
 
   test('component', () => {
     for (const comp of components) {
@@ -35,7 +35,7 @@ describe('unplugin-resolver', () => {
 
   test('no directive', () => {
     expect(
-      LegoPluginResolvers({
+      HorizonWebPluginResolvers({
         directives: false,
       })[1].resolve('ClickOutside'),
     ).toBeUndefined();
@@ -43,25 +43,25 @@ describe('unplugin-resolver', () => {
 
   test('exclude', () => {
     expect(
-      LegoPluginResolvers({
+      HorizonWebPluginResolvers({
         exclude: /NButton/,
       })[0].resolve('NButton'),
     ).toBeUndefined();
 
     expect(
-      LegoPluginResolvers({
+      HorizonWebPluginResolvers({
         exclude: /NButton/,
       })[0].resolve('NInput'),
     ).not.toBeUndefined();
 
     expect(
-      LegoPluginResolvers({
+      HorizonWebPluginResolvers({
         exclude: /ClickOutside/,
       })[1].resolve('ClickOutside'),
     ).toBeUndefined();
 
     expect(
-      LegoPluginResolvers({
+      HorizonWebPluginResolvers({
         exclude: /ClickOutside/,
       })[1].resolve('Tooltip'),
     ).not.toBeUndefined();
@@ -69,13 +69,13 @@ describe('unplugin-resolver', () => {
 
   test('ssr', () => {
     expect(
-      LegoPluginResolvers({
+      HorizonWebPluginResolvers({
         ssr: false,
       })[0].resolve('NButton')?.sideEffects,
     ).toEqual(expect.arrayContaining([expect.stringMatching('/es/')]));
 
     expect(
-      LegoPluginResolvers({
+      HorizonWebPluginResolvers({
         ssr: true,
       })[0].resolve('NButton')?.sideEffects,
     ).toEqual(expect.arrayContaining([expect.stringMatching('/lib/')]));
@@ -83,25 +83,25 @@ describe('unplugin-resolver', () => {
 
   test('import style', () => {
     expect(
-      LegoPluginResolvers({
+      HorizonWebPluginResolvers({
         importStyle: 'css',
       })[0].resolve('NButton')?.sideEffects,
     ).toEqual(expect.arrayContaining([expect.stringMatching(/\.css$/)]));
 
     expect(
-      LegoPluginResolvers({
+      HorizonWebPluginResolvers({
         importStyle: 'scss',
       })[0].resolve('NButton')?.sideEffects,
     ).toEqual(expect.arrayContaining([expect.stringMatching(/\.scss$/)]));
 
     expect(
-      LegoPluginResolvers({
+      HorizonWebPluginResolvers({
         importStyle: 'css',
       })[1].resolve('Loading')?.sideEffects,
     ).toEqual(expect.arrayContaining([expect.stringMatching(/\.css$/)]));
 
     expect(
-      LegoPluginResolvers({
+      HorizonWebPluginResolvers({
         importStyle: 'scss',
       })[1].resolve('Loading')?.sideEffects,
     ).toEqual(expect.arrayContaining([expect.stringMatching(/\.scss$/)]));
@@ -109,25 +109,25 @@ describe('unplugin-resolver', () => {
 
   test('useResetStyle', () => {
     expect(
-      LegoPluginResolvers({
+      HorizonWebPluginResolvers({
         useResetStyle: true,
       })[0].resolve('NButton')?.sideEffects,
     ).toEqual(expect.arrayContaining([expect.stringMatching(/reset\.css$/)]));
 
     expect(
-      LegoPluginResolvers({
+      HorizonWebPluginResolvers({
         useResetStyle: false,
       })[0].resolve('NButton')?.sideEffects,
     ).not.toEqual(expect.arrayContaining([expect.stringMatching(/reset\.scss$/)]));
 
     expect(
-      LegoPluginResolvers({
+      HorizonWebPluginResolvers({
         useResetStyle: true,
       })[1].resolve('Loading')?.sideEffects,
     ).toEqual(expect.arrayContaining([expect.stringMatching(/reset\.css$/)]));
 
     expect(
-      LegoPluginResolvers({
+      HorizonWebPluginResolvers({
         useResetStyle: false,
       })[1].resolve('Loading')?.sideEffects,
     ).not.toEqual(expect.arrayContaining([expect.stringMatching(/reset\.scss$/)]));

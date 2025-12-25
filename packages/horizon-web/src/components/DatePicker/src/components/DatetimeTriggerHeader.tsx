@@ -1,5 +1,5 @@
 import { defineComponent, inject, ref } from 'vue';
-import type { LegoComponentInstance, LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebComponentInstance, HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock } from '@aurora/utils';
 import type { DatePickerDatetimeTriggerHeaderProps } from '../composables/useProps';
 import { useDatePickerDatetimeTriggerHeaderProps } from '../composables/useProps';
@@ -28,7 +28,7 @@ export default defineComponent({
     {
       emit,
       expose,
-    }: LegoSetupContext<
+    }: HorizonWebSetupContext<
       DatePickerDatePanelTriggerHeaderEmits,
       {},
       DatePickerDatePanelHeaderExposes
@@ -37,7 +37,7 @@ export default defineComponent({
     const classHelper = new ComponentClassBlock('date-picker-panel-header');
 
     const timePickerDomRef =
-      ref<LegoComponentInstance<typeof NTimePicker, TimePickerExposes>>();
+      ref<HorizonWebComponentInstance<typeof NTimePicker, TimePickerExposes>>();
 
     const parentProps = inject(NDatePickerPropsInjectKey)!;
     const valueFormatMapping = inject(NDatePickerValueFormatMappingInjectKey)!;

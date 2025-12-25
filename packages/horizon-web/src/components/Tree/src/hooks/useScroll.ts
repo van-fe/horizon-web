@@ -4,7 +4,7 @@ import type { TreeProps } from '../composables/useProps';
 import type Tree from '~/utils/useTree/index';
 import type { NTreeData, NTreeExtendsData } from '../utils/types';
 import { warn } from '~/utils/useLog';
-import type { LegoComponentInstance } from '@aurora/utils';
+import type { HorizonWebComponentInstance } from '@aurora/utils';
 import { ComponentClassBlock } from '@aurora/utils';
 import type { VirtualScrollerExposes } from '~/components/VirtualScroller/src/composables/useExposes';
 import { sleep } from '~/utils/tools';
@@ -13,7 +13,7 @@ import type { NVirtualScroller } from '~/components/VirtualScroller';
 export default function useScroll(
   props: ToRefs<TreeProps>,
   tree: Tree<NTreeData, NTreeExtendsData>,
-  scrollerDomRef: Ref<LegoComponentInstance<
+  scrollerDomRef: Ref<HorizonWebComponentInstance<
     typeof NVirtualScroller,
     VirtualScrollerExposes
   > | null>,

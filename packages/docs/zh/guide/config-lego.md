@@ -1,5 +1,5 @@
-# LEGO 使用配置
-在使用 `createApp` 创建 `app` 时，会使用 `app.use(Lego)`，其中 `use` 的第二个参数可以用来配置 `LEGO` 的一些表现: 
+# HORIZONWEB 使用配置
+在使用 `createApp` 创建 `app` 时，会使用 `app.use(HorizonWeb)`，其中 `use` 的第二个参数可以用来配置 `HORIZONWEB` 的一些表现: 
 
 ::: warning 注意
 以下配置中，`locale` 和 `sensor` 是通过 `provide` 传导，因此如果你创建了多个 `app`，则需要分别配置它们
@@ -9,7 +9,7 @@
 - 类型: `Boolean`
 - 默认: `false`
 
-因为不同版本的 `LEGO` 默认情况下 `css` 变量前缀相同，所以为了防止互相影响，请设置此项为 `true`
+因为不同版本的 `HORIZONWEB` 默认情况下 `css` 变量前缀相同，所以为了防止互相影响，请设置此项为 `true`
 
 ::: tip
 为适配微应用等场景，此配置项会存于 `localStorage`
@@ -19,7 +19,7 @@
 - 类型: `Boolean`
 - 默认: `${current-version}-css-variable-use-version`
 
-为了防止相同版本号的 `LEGO` 因为配置的全局变量相同而互相影响，所以可以通过此项配置防止此问题
+为了防止相同版本号的 `HORIZONWEB` 因为配置的全局变量相同而互相影响，所以可以通过此项配置防止此问题
 
 ::: tip
 为适配微应用等场景，此配置项会存于 `localStorage`
@@ -81,7 +81,7 @@ export type PartialLocaleLangFileType = Partial<LocaleLangDictionaries>;
 
 ### 举例
 ```ts
-app.use(Lego, {
+app.use(HorizonWeb, {
   locale: {
     lang: {
       dictionaries: {

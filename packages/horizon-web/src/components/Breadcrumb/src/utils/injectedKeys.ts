@@ -1,5 +1,5 @@
 import type { InjectionKey } from 'vue';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { generatorInjectedKeyName } from '@aurora/utils';
 import type { BreadcrumbItemProps, BreadcrumbProps } from '../composables/useProps';
 import type { BreadcrumbSlots } from '../composables/useSlots';
@@ -10,7 +10,7 @@ export const NBreadcrumbProps = Symbol(
 
 export const NBreadcrumbSlots = Symbol(
   generatorInjectedKeyName('breadcrumb', 'slots'),
-) as InjectionKey<LegoSetupContext<{}, BreadcrumbSlots>['slots']>;
+) as InjectionKey<HorizonWebSetupContext<{}, BreadcrumbSlots>['slots']>;
 
 export const NBreadcrumbItemClickInjectKey = Symbol(
   generatorInjectedKeyName('breadcrumb', 'item-click'),

@@ -2,7 +2,7 @@ import { type Ref, unref, watch } from 'vue';
 
 function warnPropertyLog(propertyName: string, replacePropertyName: string) {
   console.warn(
-    `[LEGO] '${propertyName}' is deprecated, please use '${replacePropertyName}' instead.`,
+    `[HORIZONWEB] '${propertyName}' is deprecated, please use '${replacePropertyName}' instead.`,
   );
 }
 

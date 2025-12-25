@@ -30,7 +30,7 @@ export default defineComponent({
       src.value = 'https://cdn-app.nio.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg';
     };
     const errorHandler1 = () => {
-      console.log('图片加载失败了');
+      console.info('图片加载失败了');
     };
     return {
       errorHandler,

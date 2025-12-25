@@ -1,12 +1,11 @@
-import { NIcon } from '@aurora/icon';
-import type { LegoSetupContext } from '@aurora/utils';
+import { AIcon } from '@aurora/icon';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, cls, useNamespace, usePopupContainerGetter } from '@aurora/utils';
 import { useTimeoutFn } from '@vueuse/core';
 import type { CSSProperties } from 'vue';
 import { Teleport, Transition, computed, defineComponent, onMounted, ref, toRefs } from 'vue';
 import NButton from '~/components/Button/src/Button';
 import useLocaleLang from '~/utils/useLocaleLang';
-import { useSensor } from '~/utils/useSensor';
 import useSize from '~/utils/useSize';
 import type { NotificationEmits } from '../composables/useEmits';
 import { useNotificationEmits } from '../composables/useEmits';
@@ -19,13 +18,13 @@ export default defineComponent({
   name: `${useNamespace()}Notification`,
   desc: '全局展示通知提醒，悬浮出现在页面角落，将信息及时有效的传达给用户。更偏向系统本身的通知，大多数与用户操作无关',
   components: {
-    NIcon,
+    AIcon,
     NButton,
   },
   props: useNotificationProps,
   emits: useNotificationEmits,
   exposes: useNotificationExposes,
-  setup(props, { emit, expose }: LegoSetupContext<NotificationEmits, {}, NotificationExposes>) {
+  setup(props, { emit, expose }: HorizonWebSetupContext<NotificationEmits, {}, NotificationExposes>) {
     const classHelper = new ComponentClassBlock('notification');
     const {
       placement,
@@ -56,7 +55,6 @@ export default defineComponent({
     onMounted(() => {
       initTimer();
       open();
-      useSensor('$notify', props, 'method');
     });
 
     const horizontalCls = computed(() => {
@@ -172,7 +170,7 @@ export default defineComponent({
           >
             <div class={cls(classHelper.e('body'))}>
               {typeIcon.value ? (
-                <NIcon
+                <AIcon
                   class={cls([classHelper.e('icon'), classHelper.m(type.value)])}
                   name={typeIcon.value}
                 />
@@ -184,7 +182,7 @@ export default defineComponent({
                   <h2 class={cls(classHelper.e('title'))} v-text={title.value}></h2>
                   {showClose.value ? (
                     <span class={cls(classHelper.e('close'))} onClick={close}>
-                      <NIcon name="close" size={12} />
+                      <AIcon name="close" size={12} />
                     </span>
                   ) : (
                     ''

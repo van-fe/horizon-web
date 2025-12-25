@@ -17,7 +17,7 @@ export default defineComponent({
   setup() {
     const value = ref();
     function onDateClick(date: string, type: string) {
-      console.log(date, type);
+      console.info(date, type);
     }
 
     return {

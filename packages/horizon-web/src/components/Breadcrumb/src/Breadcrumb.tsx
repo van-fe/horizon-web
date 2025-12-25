@@ -13,7 +13,7 @@ import {
   watch,
 } from 'vue';
 import { IconEllipsis } from '@aurora/icon';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, useNamespace, getSymbolNodeChildren } from '@aurora/utils';
 import tooltip from '~/directives/v-tooltip';
 import NDropdown from '~/components/Dropdown/src/Dropdown';
@@ -53,7 +53,7 @@ export default defineComponent({
   props: useBreadcrumbProps,
   emits: useBreadcrumbEmits,
   slots: useBreadcrumbSlots,
-  setup(props, { emit, slots }: LegoSetupContext<BreadcrumbEmits, BreadcrumbSlots>) {
+  setup(props, { emit, slots }: HorizonWebSetupContext<BreadcrumbEmits, BreadcrumbSlots>) {
     const classHelper = new ComponentClassBlock('breadcrumb');
 
     const breadcrumbRef = ref<null | HTMLElement>(null);

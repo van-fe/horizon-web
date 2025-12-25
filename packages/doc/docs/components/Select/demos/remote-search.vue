@@ -153,7 +153,7 @@ const values2 = ref([]);
 const options = ref<{value: string; text: string}[]>([]);
 
 const searchHandle = (value: string) => {
-  console.log('search: ', value);
+  console.info('search: ', value);
   if (value) {
     fetch(value, (data: any) => (options.value = data));
   } else {
@@ -162,11 +162,11 @@ const searchHandle = (value: string) => {
 };
 
 function onFocus() {
-  console.log('focus');
+  console.info('focus');
 }
 
 function onBlur() {
-  console.log('blur');
+  console.info('blur');
 }
 </script>
 

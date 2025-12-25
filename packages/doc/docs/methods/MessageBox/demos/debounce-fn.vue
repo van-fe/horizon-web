@@ -25,7 +25,7 @@ const showAlert = () => {
       },
     },
   }).then(() => {
-    console.log('OK clicked!');
+    console.info('OK clicked!');
   });
 };
 const showConfirm = () => {
@@ -57,11 +57,11 @@ const showConfirm = () => {
     },
   })
     .then(close => {
-      console.log('Confirmed!');
+      console.info('Confirmed!');
       close();
     })
     .catch(() => {
-      console.log('Cancelled!');
+      console.info('Cancelled!');
     });
 };
 </script>

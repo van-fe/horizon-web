@@ -65,13 +65,13 @@
             <template #append>
               <n-button v-tooltip="'提醒'" type="normal" :text="true">
                 <template #icon>
-                  <n-icon
+                  <a-icon
                     name="notice"
                     size="20"
                     :color="
                       theme === 'midnight' ? 'var(--n-text-inverse)' : 'var(--n-text-primary)'
                     "
-                  ></n-icon>
+                  ></a-icon>
                 </template>
               </n-button>
               <n-popover class="avatar-popover" placement="bottom-end">
@@ -161,7 +161,7 @@
 
 <script setup lang="ts">
 import { ExtractPropTypes, ref } from 'vue';
-import { NIcon } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 import { NMenu, useMenuItemProps, useMenuProps, useSubMenuProps } from '@aurora/horizon-web';
 
 type menuPropType = ExtractPropTypes<typeof useMenuProps>;
@@ -176,7 +176,7 @@ const selectedValue = ref('3-1-2');
 
 const onSelected = (value: string, values: (menuItemPropType | subMenuPropType)[]) => {
   selectedValue.value = value;
-  console.log('selected', value, values);
+  console.info('selected', value, values);
 };
 </script>
 

@@ -4,7 +4,7 @@ import glob from 'fast-glob';
 import {
   componentRoot,
   directiveRoot,
-  legoProjectRoot,
+  horizonwebProjectRoot,
   apiGeneratorOutPut,
   methodsRoot,
 } from '@aurora/utils/plugins';
@@ -30,10 +30,10 @@ export default async function (): Promise<
     compilerOptions: {
       emitDeclarationOnly: true,
       outDir: apiGeneratorOutPut,
-      baseUrl: legoProjectRoot,
+      baseUrl: horizonwebProjectRoot,
       preserveSymlinks: true,
     },
-    tsConfigFilePath: legoProjectRoot + '/tsconfig.json',
+    tsConfigFilePath: horizonwebProjectRoot + '/tsconfig.json',
     skipAddingFilesFromTsConfig: true,
   });
 

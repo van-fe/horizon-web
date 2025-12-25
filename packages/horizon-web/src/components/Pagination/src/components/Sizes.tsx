@@ -55,7 +55,7 @@ export default defineComponent({
               {props.pageSize}
               {parentProps.label?.sizeText ??
                 parentProps.label?.size_text ??
-                locale.value?.langService.td().horizon-web.pagination.pageSize}
+                locale.value?.langService.td().horizonWeb.pagination.pageSize}
               <IconArrowDown size={10} rotate={popoverVisible.value ? 180 : 0} />
             </div>
           ),
@@ -72,7 +72,7 @@ export default defineComponent({
                   {size}
                   {parentProps.label?.sizeItemText ??
                     parentProps.label?.size_item_text ??
-                    locale.value?.langService.td().horizon-web.pagination.pageSize}
+                    locale.value?.langService.td().horizonWeb.pagination.pageSize}
                 </div>
               ))}
             </NPopContent>

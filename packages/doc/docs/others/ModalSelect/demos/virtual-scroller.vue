@@ -20,7 +20,7 @@ const fitInputWidth = ref(true);
 const expandPanelByChildren = ref(false);
 
 function onReachBottom() {
-  console.log('reach bottom');
+  console.info('reach bottom');
 }
 </script>
 

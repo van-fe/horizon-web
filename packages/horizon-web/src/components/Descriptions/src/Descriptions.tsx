@@ -12,7 +12,7 @@ import {
   watch,
 } from 'vue';
 import { useDescriptionsProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { DescriptionsSlots } from './composables/useSlots';
 import { useDescriptionsSlots } from './composables/useSlots';
 import {
@@ -30,7 +30,7 @@ export default defineComponent({
   desc: '成组展示多个只读字段，一般用于详情页的信息展示',
   props: useDescriptionsProps,
   slots: useDescriptionsSlots,
-  setup(props, { slots }: LegoSetupContext<{}, DescriptionsSlots>) {
+  setup(props, { slots }: HorizonWebSetupContext<{}, DescriptionsSlots>) {
     const {
       title: titleProp,
       border: borderProp,

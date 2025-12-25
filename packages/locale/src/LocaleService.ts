@@ -1,8 +1,8 @@
 import NumberService from './service/number/NumberService';
 import ReadDirectionService from './service/readDirection';
 import LangService from './service/lang/LangService';
-import type { LocalOptionType, LocaleSupportLang } from './config';
-import { LocaleSupportLang } from './config';
+import type { LocalOptionType } from './config';
+import { LocaleSupportLang } from './config/lang/enum';
 import DateService from './service/date/DateService';
 
 export class LocaleService {
@@ -18,11 +18,11 @@ export class LocaleService {
 
   public static instance: LocaleService;
 
-  public get current(): LocaleSupportLang | LocaleSupportLang {
+  public get current(): LocaleSupportLang {
     return this.options.current!;
   }
 
-  public set current(current: LocaleSupportLang | LocaleSupportLang) {
+  public set current(current: LocaleSupportLang) {
     this.options.current = current;
   }
 

@@ -7,7 +7,7 @@
           <template #content>
             你可以在 tagRender 这个 slot 中接受到传递到每一个选项上的所有参数。自定义 tag 不支持在可以输入（例如：filterOption、allowCreate）中生效
           </template>
-          <n-icon name="help" />
+          <a-icon name="help" />
         </n-tooltip>
       </div>
       <n-select v-model="value1" :to-body="false" :to-body="false">

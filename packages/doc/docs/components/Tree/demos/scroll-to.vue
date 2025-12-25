@@ -37,12 +37,12 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { LegoComponentInstance } from '@aurora/utils';
+import { HorizonWebComponentInstance } from '@aurora/utils';
 import { NTree, TreeExposes } from '@aurora/horizon-web';
 
 const baseTreeData = ref([]);
-const treeDomRef1 = ref<LegoComponentInstance<typeof NTree, TreeExposes>>();
-const treeDomRef2 = ref<LegoComponentInstance<typeof NTree, TreeExposes>>();
+const treeDomRef1 = ref<HorizonWebComponentInstance<typeof NTree, TreeExposes>>();
+const treeDomRef2 = ref<HorizonWebComponentInstance<typeof NTree, TreeExposes>>();
 
 function scroll(type: 1 | 2) {
   type === 1 ? treeDomRef1.value?.scrollTo('rate') : treeDomRef2.value?.scrollTo('rate');

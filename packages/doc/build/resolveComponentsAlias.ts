@@ -13,7 +13,7 @@ export default () => ({
       }
 
       if (/(import\s*[^"']*["'])~/.test(code)) {
-        code = code.replace(/(import\s*[^'"]*["'])~/g, '$1lego-package/src');
+        code = code.replace(/(import\s*[^'"]*["'])~/g, '$1horizonweb-package/src');
         return code;
       }
     }
@@ -30,7 +30,7 @@ export default () => ({
       }
 
       if (/(import\s*[^"']*["'])~/.test(code)) {
-        code = code.replace(/(import\s*[^'"]*["'])~/g, '$1lego-pad-package/src');
+        code = code.replace(/(import\s*[^'"]*["'])~/g, '$1horizonweb-pad-package/src');
         return code;
       }
     }

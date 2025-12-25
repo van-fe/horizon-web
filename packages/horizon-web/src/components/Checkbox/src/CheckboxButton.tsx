@@ -1,4 +1,4 @@
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { defineComponent, inject, computed, toRefs, provide } from 'vue';
 import type { CheckboxUnionType } from './utils/types';
 import {
@@ -28,7 +28,7 @@ export default defineComponent({
   props: useCheckboxButtonProps,
   emits: useCheckboxEmits,
   slots: useCheckboxButtonSlots,
-  setup(props, { slots, emit }: LegoSetupContext<CheckboxEmits, CheckboxButtonSlots>) {
+  setup(props, { slots, emit }: HorizonWebSetupContext<CheckboxEmits, CheckboxButtonSlots>) {
     const {
       modelValue: propModelValue,
       disabled: propDisabled,

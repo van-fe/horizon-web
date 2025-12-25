@@ -3,7 +3,7 @@
     <n-collapse :active-key="activeKey" style="width: 500px" @change="handleExpand">
       <n-collapse-item name="1">
         <template #title>
-          <NIcon name="task_complete" class="mr-2" size="24" />
+          <AIcon name="task_complete" class="mr-2" size="24" />
           This is a panel header.
         </template>
         <div>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</div>
@@ -35,7 +35,7 @@
         <template #title>
           <div class="flex justify-space-between flex-1">
             <div>What are Promotion Products?</div>
-            <NIcon class="ml-3" name="alarm" />
+            <AIcon class="ml-3" name="alarm" />
           </div>
         </template>
         What are Promotion Products?
@@ -50,10 +50,10 @@ export default defineComponent({
   setup() {
     const activeKey = ref(['1', '2']);
     const handleExpand = activeKeys => {
-      console.log(`activeKeys ===> `, activeKeys);
+      console.info(`activeKeys ===> `, activeKeys);
     };
     const handleClickButton = () => {
-      console.log('click button');
+      console.info('click button');
     };
     return {
       activeKey,

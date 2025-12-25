@@ -1,5 +1,5 @@
 import type { Ref } from 'vue';
-import type { LegoSetupContext, LegoComponentInstance } from '@aurora/utils';
+import type { HorizonWebSetupContext, HorizonWebComponentInstance } from '@aurora/utils';
 import type { TreeSelectEmits } from '~/components/TreeSelect/src/composables/useEmits';
 import type { TreeSelectSlots } from '~/components/TreeSelect/src/composables/useSlots';
 import type { TreeSelectExposes } from '~/components/TreeSelect/src/composables/useExposes';
@@ -17,18 +17,18 @@ import type { TreeExposes } from '~/components/Tree/src/composables/useExposes';
 export type NTreeSelectModelValueType = Array<string | number> | string | number | null | undefined;
 export type NTreeSelectModelValueSetType = Array<string | number>;
 
-export type NTreeSelectContext = LegoSetupContext<
+export type NTreeSelectContext = HorizonWebSetupContext<
   TreeSelectEmits,
   TreeSelectSlots,
   TreeSelectExposes
 >;
 
 export interface NTreeSelectDomRefs {
-  picker: Ref<LegoComponentInstance<typeof NPicker, PickerExposes> | null>;
-  filterInput: Ref<LegoComponentInstance<
+  picker: Ref<HorizonWebComponentInstance<typeof NPicker, PickerExposes> | null>;
+  filterInput: Ref<HorizonWebComponentInstance<
     typeof NPickerFitContentInput,
     PickerFitContentInputExposes
   > | null>;
-  tagGroup: Ref<LegoComponentInstance<typeof NTagGroup, TagGroupExposes> | null>;
-  tree: Ref<LegoComponentInstance<typeof NTree, TreeExposes> | null>;
+  tagGroup: Ref<HorizonWebComponentInstance<typeof NTagGroup, TagGroupExposes> | null>;
+  tree: Ref<HorizonWebComponentInstance<typeof NTree, TreeExposes> | null>;
 }

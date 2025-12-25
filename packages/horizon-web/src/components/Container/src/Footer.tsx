@@ -1,5 +1,5 @@
 import { computed, defineComponent } from 'vue';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, sizeUnitTransform, useNamespace } from '@aurora/utils';
 import { useFooterProps } from './composables/useProps';
 import type { FooterSlots } from './composables/useSlots';
@@ -9,7 +9,7 @@ export default defineComponent({
   name: `${useNamespace()}Footer`,
   props: useFooterProps,
   slots: useFooterSlots,
-  setup(props, { slots }: LegoSetupContext<{}, FooterSlots>) {
+  setup(props, { slots }: HorizonWebSetupContext<{}, FooterSlots>) {
     const classHelper = new ComponentClassBlock('footer');
 
     const style = computed(() => {

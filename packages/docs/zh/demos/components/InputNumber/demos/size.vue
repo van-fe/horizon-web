@@ -4,11 +4,11 @@ import { ref } from 'vue';
 const value = ref(0);
 
 function onInput(value: number) {
-  console.log('input', value);
+  console.info('input', value);
 }
 
 function onChange(value: number) {
-  console.log('change', value);
+  console.info('change', value);
 }
 </script>
 

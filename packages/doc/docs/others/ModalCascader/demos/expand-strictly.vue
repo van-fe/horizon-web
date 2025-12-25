@@ -43,7 +43,7 @@ const baseData = ref([]);
 const expandStrictly = ref(true);
 
 const changeHandle = (value: any) => {
-  console.log(value);
+  console.info(value);
 };
 onMounted(async()=>{
   baseData.value = await fetch(`https://static.nio.com/fx-static/51/fixed/cascader-tree-data.prod.json?t=${Date.now()}`).then(r => r.json());

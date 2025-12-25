@@ -19,8 +19,8 @@ $ npm install @aurora/horizon-web
 ```sh [yarn]
 $ yarn add @aurora/horizon-web
 ```
-```sh [pnpm]
-$ pnpm add @aurora/horizon-web
+```sh [bun]
+$ bun add @aurora/horizon-web
 ```
 :::
 
@@ -31,7 +31,7 @@ $ pnpm add @aurora/horizon-web
 ---
 ### 浏览器直接引入
 
-通过 `script` `link` 标签，可以直接使用 `LEGO` 组件。
+通过 `script` `link` 标签，可以直接使用 `HORIZONWEB` 组件。
 
 - **样式文件**
 ```html
@@ -65,11 +65,11 @@ $ pnpm add @aurora/horizon-web
 ```ts
 import { createApp } from 'vue';
 import App from './App.vue';
-import Lego from '@aurora/horizon-web';
+import HorizonWeb from '@aurora/horizon-web';
 import '@aurora/horizon-web/es/index.css';
 
 createApp(App)
-  .use(Lego)
+  .use(HorizonWeb)
   .mount('#app');
 
 ```
@@ -86,7 +86,7 @@ createApp(App)
     <script src="//cdn.jsdelivr.net/npm/vue@3"></script>
     <!-- Import component library -->
     <script src="https://static.nio.com/fx-static/horizon-web/latest/dist/horizon-web-browser@latest.js"></script>
-    <title>LEGO demo</title>
+    <title>HORIZONWEB demo</title>
   </head>
   <body>
       <div id="app">
@@ -96,13 +96,13 @@ createApp(App)
         const App = {
           data() {
             return {
-              text: 'Hello LEGO'
+              text: 'Hello HORIZONWEB'
             }
           }
         };
     
         Vue.createApp(App)
-          .use(Lego)
+          .use(HorizonWeb)
           .mount('#app');
       </script>
   </body>
@@ -112,4 +112,4 @@ createApp(App)
 ## 下一步
 - 如果需要按需引入，请参照 [按需引入](./on-demand-import)
 - 如果需要自定义命名空间防止冲突，请参照 [命名空间](./namespace)
-- 需要配置 `LEGO`，请参照 [Lego Usage](./config-horizon-web-usage.md)
+- 需要配置 `HORIZONWEB`，请参照 [HorizonWeb Usage](./config-horizon-web-usage.md)

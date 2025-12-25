@@ -88,7 +88,7 @@ export type SFCInstallWithContext<T> = SFCWithInstall<T> & {
   _context: AppContext | null;
 };
 
-export type LegoComponentInstance<
+export type HorizonWebComponentInstance<
   T extends DefinedComponent,
   Exposes extends ExtractExposeTypes<ExposeOptions> = {},
 > = InstanceType<T> & Exposes;

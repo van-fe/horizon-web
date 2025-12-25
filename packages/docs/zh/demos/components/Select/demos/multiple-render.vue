@@ -8,7 +8,7 @@
           <template #content>
             你可以在 tagRender 这个 slot 中接受到传递到每一个选项上的所有参数
           </template>
-          <n-icon name="help" />
+          <a-icon name="help" />
         </n-tooltip>
       </div>
       <n-select v-model="values1" multiple collapse :to-body="false">
@@ -28,7 +28,7 @@
           <template #content>
             你可以在 tagRender 这个 slot 中接受到传递到每一个选项上的所有参数
           </template>
-          <n-icon name="help" />
+          <a-icon name="help" />
         </n-tooltip>
       </div>
       <n-select v-model="values2" multiple allow-create collapse :to-body="false">

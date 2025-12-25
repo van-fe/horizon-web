@@ -5,7 +5,7 @@ import { $message } from '@aurora/horizon-web';
 const debounceType = ref('disabled');
 
 const saveData = () => {
-  console.log('clicked!');
+  console.info('clicked!');
   return new Promise(resolve => {
     setTimeout(() => {
       $message.success('保存成功！');

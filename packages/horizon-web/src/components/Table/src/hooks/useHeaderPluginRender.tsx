@@ -1,4 +1,4 @@
-import type { DefinedComponent, LegoComponentInstance } from '@aurora/utils';
+import type { DefinedComponent, HorizonWebComponentInstance } from '@aurora/utils';
 import { cls, ComponentClassBlock, isNil } from '@aurora/utils';
 import { computed, inject, type Ref, ref } from 'vue';
 import type { NTableColumnData, NTableTransformedRowDataType } from '../utils/types';
@@ -186,7 +186,7 @@ export function useFilterPlugin(
 export function useSearchPlugin(column: NTableColumnData) {
   const classHelper = new ComponentClassBlock('table-v3');
 
-  const pickerDomRef = ref<LegoComponentInstance<typeof NPicker, PickerExposes>>();
+  const pickerDomRef = ref<HorizonWebComponentInstance<typeof NPicker, PickerExposes>>();
   const value = ref(column[NTableColumnFilterKey].currentFilterValue.value);
 
   let RenderComponent: DefinedComponent = NInput;

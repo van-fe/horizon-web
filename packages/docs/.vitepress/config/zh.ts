@@ -29,7 +29,7 @@ export default defineConfig({
             collapsed: false,
             items: [
               {
-                text: '为什么选用 LEGO ?', link: 'why-choose-horizon-web'
+                text: '为什么选用 HORIZONWEB ?', link: 'why-choose-horizon-web'
               },{
                 text: '快速开始', link: 'start'
               },{
@@ -46,7 +46,7 @@ export default defineConfig({
             collapsed: false,
             items: [
               {
-                text: 'Lego', link: 'config-horizon-web'
+                text: 'HorizonWeb', link: 'config-horizon-web'
               },{
                 text: 'UnpluginResolver', link: 'config-unplugin-resolver'
               },

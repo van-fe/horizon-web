@@ -133,7 +133,7 @@ export default defineComponent({
     const confirmRef2 = ref<any>(null);
 
     const changeHandle = () => {
-      console.log(value3.value);
+      console.info(value3.value);
     };
 
     return {
@@ -147,19 +147,19 @@ export default defineComponent({
       confirmRef2,
       changeHandle,
       confirmHandle() {
-        console.log('confirm');
+        console.info('confirm');
         confirmRef.value.confirmHandle();
       },
       confirmHandle2() {
-        console.log('confirm');
+        console.info('confirm');
         confirmRef2.value.confirmHandle();
       },
       cancelHandle() {
-        console.log('cancel');
+        console.info('cancel');
         confirmRef.value.cancelHandle();
       },
       cancelHandle2() {
-        console.log('cancel');
+        console.info('cancel');
         confirmRef2.value.cancelHandle();
       },
     };

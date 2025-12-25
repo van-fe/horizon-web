@@ -6,7 +6,7 @@ const activeKey = ref();
 const tabs = ref(['Operators']);
 
 const onTabChanged = (tab: NTabValue) => {
-  console.log('tab changed', tab);
+  console.info('tab changed', tab);
   $message({ type: 'success', message: `Tab ${tab} is clicked` });
 };
 

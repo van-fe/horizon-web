@@ -1,4 +1,4 @@
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ref, toRef, type ToRefs } from 'vue';
 import { type TabsEmits } from './useEmits';
 import type { NTabValue, TabsProps } from './useProps';
@@ -10,7 +10,7 @@ export interface UseDndOptions extends TabsProps {
 
 export function useDnd(
   options: ToRefs<UseDndOptions>,
-  context: LegoSetupContext<TabsEmits, TabsSlots>,
+  context: HorizonWebSetupContext<TabsEmits, TabsSlots>,
 ) {
   const dragging = ref(false);
   const moveKey = ref<NTabValue>();

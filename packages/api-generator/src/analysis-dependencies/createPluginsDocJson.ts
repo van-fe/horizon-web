@@ -8,7 +8,7 @@ import {
   red,
   writeJsonFile,
   docDescriptionOutput,
-  legoProjectRoot,
+  horizonwebProjectRoot,
   apiGeneratorOutPut,
 } from '@aurora/utils/plugins';
 
@@ -34,10 +34,10 @@ export default async function (exportedPlugins: Record<string, ApiGeneratorExpor
     compilerOptions: {
       emitDeclarationOnly: true,
       outDir: apiGeneratorOutPut,
-      baseUrl: legoProjectRoot,
+      baseUrl: horizonwebProjectRoot,
       preserveSymlinks: true,
     },
-    tsConfigFilePath: legoProjectRoot + '/tsconfig.json',
+    tsConfigFilePath: horizonwebProjectRoot + '/tsconfig.json',
     skipAddingFilesFromTsConfig: true,
   });
 

@@ -1,10 +1,9 @@
 export { useZIndex, generatorInjectedKeyName, useNamespace, setNamespace } from '@aurora/utils';
 
 export {
-  default as LegoProvides,
+  default as HorizonWebProvides,
   localizableProvide,
   defaultLocale,
-  sensorTracker,
 } from './provides';
 
 export { LoadingService } from './directives/v-loading';

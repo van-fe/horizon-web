@@ -22,7 +22,7 @@ export default defineComponent({
           type: 'text',
         },
       }).then(() => {
-        console.log('OK clicked!');
+        console.info('OK clicked!');
       });
     };
     const showConfirm = () => {
@@ -43,10 +43,10 @@ export default defineComponent({
         },
       })
         .then(() => {
-          console.log('Confirmed!');
+          console.info('Confirmed!');
         })
         .catch(() => {
-          console.log('Cancelled!');
+          console.info('Cancelled!');
         });
     };
     const showNoClose = () => {
@@ -68,10 +68,10 @@ export default defineComponent({
         },
       })
         .then(() => {
-          console.log('Confirmed!');
+          console.info('Confirmed!');
         })
         .catch(() => {
-          console.log('Cancelled!');
+          console.info('Cancelled!');
         });
     };
     return {

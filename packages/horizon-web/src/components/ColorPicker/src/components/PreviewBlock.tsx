@@ -108,7 +108,7 @@ export default defineComponent({
     function runEyeDropper() {
       if (parentProps?.enableEyeDropper) {
         if (!window.EyeDropper) {
-          $message.error(locale?.value?.langService?.td().horizon-web.colorPicker.noEyeDropper || '');
+          $message.error(locale?.value?.langService?.td().horizonWeb.colorPicker.noEyeDropper || '');
           return;
         }
 

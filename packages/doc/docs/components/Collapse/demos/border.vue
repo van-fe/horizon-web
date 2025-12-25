@@ -54,7 +54,7 @@
     setup() {
       const activeKey = ref(['1', '2']);
       const handleExpand = (activeKeys: any) => {
-        console.log(`activeKeys ===> `, activeKeys);
+        console.info(`activeKeys ===> `, activeKeys);
       };
       const selectPosition = ref('left');
       const selectSize = ref('small');

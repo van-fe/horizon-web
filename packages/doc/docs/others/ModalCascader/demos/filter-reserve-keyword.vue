@@ -54,7 +54,7 @@ const currentVal2 = ref<string[][]>([]);
 const currentVal3 = ref<string[][]>([]);
 
 const changeHandle = (value: boolean, option: NCascaderExtendOption) => {
-  console.log(value, option);
+  console.info(value, option);
 };
 
 const options = ref([]);

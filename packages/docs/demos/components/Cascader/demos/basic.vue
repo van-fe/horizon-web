@@ -74,10 +74,10 @@
 import { ExtractPropTypes, onMounted, ref } from 'vue';
 import { CascaderExposes, NCascader, useCascaderProps } from '@aurora/horizon-web';
 import type { NCascaderExtendOption, NCascaderModelValueType } from '@aurora/horizon-web';
-import { LegoComponentInstance } from '@aurora/utils';
+import { HorizonWebComponentInstance } from '@aurora/utils';
 
-const cascaderDomRef1 = ref<LegoComponentInstance<typeof NCascader, CascaderExposes>>();
-const cascaderDomRef2 = ref<LegoComponentInstance<typeof NCascader, CascaderExposes>>();
+const cascaderDomRef1 = ref<HorizonWebComponentInstance<typeof NCascader, CascaderExposes>>();
+const cascaderDomRef2 = ref<HorizonWebComponentInstance<typeof NCascader, CascaderExposes>>();
 
 const currentVal1 = ref<string[]>(["guide", "navigation", "side nav"]);
 const currentVal2 = ref<string[][]>([]);
@@ -89,29 +89,29 @@ const disabled = ref(false);
 const checkStrictly = ref(false);
 
 const changeHandle = (value: NCascaderModelValueType, option: NCascaderExtendOption) => {
-  console.log('change: ', value, option);
+  console.info('change: ', value, option);
 };
 
 const inputHandle = (value: string) => {
-  console.log('input: ', value);
+  console.info('input: ', value);
 };
 
 const updateHandle = (value: NCascaderModelValueType) => {
-  console.log('update: ', value);
+  console.info('update: ', value);
 };
 
 function onFocus() {
-  console.log('focus');
+  console.info('focus');
 }
 
 function onBlur() {
-  console.log('blur');
+  console.info('blur');
 }
 
 onMounted(async()=>{
   baseData.value = await fetch(`https://static.nio.com/fx-static/51/fixed/cascader-tree-data.prod.json?t=${Date.now()}`).then(r => r.json());
   currentVal2.value.push(["guide", "navigation", "side nav"]);
 
-  console.log(cascaderDomRef1.value, cascaderDomRef2.value);
+  console.info(cascaderDomRef1.value, cascaderDomRef2.value);
 });
 </script>

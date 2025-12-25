@@ -234,7 +234,7 @@ export const useTreeSelectProps = declarePropType({
   },
   /**
    * 自定义下拉按钮
-   * 可以传入 `n-icon` 的 `name`，也可以直接是 `svg`
+   * 可以传入 `a-icon` 的 `name`，也可以直接是 `svg`
    * 如果传入 `false`，即不展示图标
    * @version 2.3.5
    */

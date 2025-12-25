@@ -4,7 +4,7 @@ import type { OptionProps, SelectProps } from '../composables/useProps';
 import type { SelectEmits } from '../composables/useEmits';
 import type { SelectSlots } from '../composables/useSlots';
 import type { SelectExposes } from '../composables/useExposes';
-import { ComponentClassBlock, isDefined, type LegoSetupContext } from '@aurora/utils';
+import { ComponentClassBlock, isDefined, type HorizonWebSetupContext } from '@aurora/utils';
 import {
   NSelectValueFormatSymbol,
   type ModelValueSingleType,
@@ -16,7 +16,7 @@ import { isValueFormatWrapped, unwrapValueFormattedValue } from '../utils/valueF
 
 export default function usePanel(
   props: SelectProps,
-  context: LegoSetupContext<SelectEmits, SelectSlots, SelectExposes>,
+  context: HorizonWebSetupContext<SelectEmits, SelectSlots, SelectExposes>,
   options: {
     domRefs: SelectDomRefs;
     popperVisible: Ref<boolean>;

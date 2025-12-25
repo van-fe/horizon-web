@@ -61,7 +61,7 @@ export default defineComponent({
     });
 
     const changeHandle1 = files => {
-      console.log(files, 'changeHandle1');
+      console.info(files, 'changeHandle1');
     };
 
     const changeHandle2 = files => {
@@ -96,7 +96,7 @@ export default defineComponent({
       clipboradOptions: {
         enable: false,
         filter: files => {
-          console.log(files, 'xxxxx');
+          console.info(files, 'xxxxx');
           return files;
         },
       },

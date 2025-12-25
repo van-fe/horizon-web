@@ -1,5 +1,5 @@
 export const ZhCN = {
-  horizon-web: {
+  horizonWeb: {
     global: {
       ok: '确定',
       cancel: '取消',
@@ -194,19 +194,6 @@ export const ZhCN = {
       view: '查看文件',
       deleteFile: '删除文件',
       download: '下载文件',
-    },
-    table: {
-      emptyText: '暂无数据',
-      confirmFilter: '筛选',
-      resetFilter: '重置',
-      clearFilter: '全部',
-      sumText: '合计',
-      loading: '加载中',
-      pinToLeft: '固定到左侧',
-      pinToRight: '固定到右侧',
-      pin: '固定该列',
-      unPin: '取消固定',
-      lockPin: '固定列已锁定',
     },
     tree: {
       emptyText: '暂无数据',

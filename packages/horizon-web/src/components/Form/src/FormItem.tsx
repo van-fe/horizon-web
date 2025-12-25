@@ -14,7 +14,7 @@ import {
 } from 'vue';
 import type { NFormRule, NFormItemHelper } from './composables/useProps';
 import { useFormItemProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import {
   slotVNodes,
   ComponentClassBlock,
@@ -57,7 +57,7 @@ export default defineComponent({
   props: useFormItemProps,
   slots: useFormItemSlots,
   exposes: useFormItemExposes,
-  setup(props, { slots, expose }: LegoSetupContext<{}, FormItemSlots, FormItemExposes>) {
+  setup(props, { slots, expose }: HorizonWebSetupContext<{}, FormItemSlots, FormItemExposes>) {
     const classHelper = new ComponentClassBlock('form-item');
     const blockRef = ref<HTMLElement | null>(null);
     const uid = getCurrentInstance()?.uid;

@@ -37,7 +37,7 @@
         <div class="demo-title">前后缀-默认状态</div>
         <n-input-number :min="0" suffix-icon="points">
           <template #prefix>
-            <n-icon v-tooltip="`请注意，这里是积分`" name="remind" size="12" />
+            <a-icon v-tooltip="`请注意，这里是积分`" name="remind" size="12" />
           </template>
         </n-input-number>
       </n-col>
@@ -45,7 +45,7 @@
         <div class="demo-title">前后缀-控制器位于两侧</div>
         <n-input-number controls-position="between" :min="0" suffix-icon="points">
           <template #prefix>
-            <n-icon v-tooltip="`请注意，这里是积分`" name="remind" size="12" />
+            <a-icon v-tooltip="`请注意，这里是积分`" name="remind" size="12" />
           </template>
         </n-input-number>
       </n-col>
@@ -53,7 +53,7 @@
         <div class="demo-title">前后缀-控制器隐藏</div>
         <n-input-number :controls="false" :min="0" suffix-icon="points">
           <template #prefix>
-            <n-icon v-tooltip="`请注意，这里是积分`" name="remind" size="12" />
+            <a-icon v-tooltip="`请注意，这里是积分`" name="remind" size="12" />
           </template>
         </n-input-number>
       </n-col>
@@ -63,11 +63,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { NIcon } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 
 export default defineComponent({
   components: {
-    NIcon,
+    AIcon,
   },
 });
 </script>

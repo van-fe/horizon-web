@@ -1,8 +1,8 @@
 import { defineComponent, Transition, ref, onBeforeUnmount, toRef, computed } from 'vue';
 import { useAlertProps, typeMap } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
-import { NIcon } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 import NLink from '../../Link';
 import type { AlertEmits } from './composables/useEmits';
 import { useAlertEmits } from './composables/useEmits';
@@ -22,7 +22,7 @@ export default defineComponent({
   emits: useAlertEmits,
   slots: useAlertSlots,
   exposes: useAlertExposes,
-  setup(props, { emit, slots }: LegoSetupContext<AlertEmits, AlertSlots, AlertExposes>) {
+  setup(props, { emit, slots }: HorizonWebSetupContext<AlertEmits, AlertSlots, AlertExposes>) {
     const textRef = ref<MaybeElement>(null);
     const classHelper = new ComponentClassBlock('alert');
     const visible = ref(true);
@@ -88,7 +88,7 @@ export default defineComponent({
         >
           {props.type && props.showIcon && (
             <div class={classHelper.e('icon-box')}>
-              <NIcon
+              <AIcon
                 size={24}
                 name={typeMap[props.type]?.icon}
                 color={typeMap[props.type]?.color}
@@ -139,7 +139,7 @@ export default defineComponent({
               )}
               onClick={close}
             >
-              <NIcon size={12} name="close" />
+              <AIcon size={12} name="close" />
             </div>
           )}
         </div>

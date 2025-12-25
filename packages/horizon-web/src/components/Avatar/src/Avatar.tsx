@@ -3,9 +3,9 @@ import { watchEffect, watch, defineComponent, ref, computed, toRefs } from 'vue'
 import { useAvatarProps } from './composables/useProps';
 import type { AvatarProps } from './composables/useProps';
 import { useDrawImages, useWorkText, randomAvatar } from './composables/useAvatar';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, isNumber, isString, useNamespace } from '@aurora/utils';
-import { NIcon } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 import type { AvatarEmits } from './composables/useEmits';
 import { useAvatarEmits } from './composables/useEmits';
 import type { AvatarSlots } from './composables/useSlots';
@@ -15,11 +15,11 @@ import useSize from '~/utils/useSize';
 export default defineComponent({
   name: `${useNamespace()}Avatar`,
   desc: '返回页面顶部按钮',
-  components: { NIcon },
+  components: { AIcon },
   props: useAvatarProps,
   emits: useAvatarEmits,
   slots: useAvatarSlots,
-  setup(props: AvatarProps, { emit, slots }: LegoSetupContext<AvatarEmits, AvatarSlots>) {
+  setup(props: AvatarProps, { emit, slots }: HorizonWebSetupContext<AvatarEmits, AvatarSlots>) {
     const imgRef = ref<Element | null>(null);
     const classHelper = new ComponentClassBlock('avatar');
     const { size } = toRefs(props);
@@ -67,7 +67,7 @@ export default defineComponent({
       );
 
       if (props.icon) {
-        tsxStr = <NIcon name={props.icon} class={classHelper.e('icon')} />;
+        tsxStr = <AIcon name={props.icon} class={classHelper.e('icon')} />;
       } else if (props.type === 'work' && !isArray.value) {
         const strArr = useWorkText(props.src as string, sizeRef.value);
         tsxStr = strArr.map((txt: string) => <span class={classHelper.e('txt')}>{txt}</span>);

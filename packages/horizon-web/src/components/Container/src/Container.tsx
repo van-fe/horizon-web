@@ -1,6 +1,6 @@
 import type { Component } from 'vue';
 import { computed, defineComponent } from 'vue';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { useContainerProps } from './composables/useProps';
 import type { ContainerSlots } from './composables/useSlots';
@@ -17,7 +17,7 @@ export default defineComponent({
     '<n-footer>：底栏容器。',
   props: useContainerProps,
   slots: useContainerSlots,
-  setup(props, { slots }: LegoSetupContext<{}, ContainerSlots>) {
+  setup(props, { slots }: HorizonWebSetupContext<{}, ContainerSlots>) {
     const classHelper = new ComponentClassBlock('container');
 
     const isVertical = computed(() => {

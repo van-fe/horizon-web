@@ -1,9 +1,9 @@
 import type { Component } from 'vue';
 import { defineComponent, inject, toRefs, onMounted } from 'vue';
 import { useCollapseItemProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
-import { NIcon } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 import type { CollapseProvidesData } from './Collapse';
 import { injectedKey } from './Collapse';
 import type { CollapseItemSlots } from './composables/useSlots';
@@ -12,10 +12,10 @@ import NTransition from '~/components/Transition/src/Transition';
 
 export default defineComponent({
   name: `${useNamespace()}CollapseItem`,
-  components: { NIcon },
+  components: { AIcon },
   props: useCollapseItemProps,
   slots: useCollapseItemSlots,
-  setup(props, { slots }: LegoSetupContext<{}, CollapseItemSlots>) {
+  setup(props, { slots }: HorizonWebSetupContext<{}, CollapseItemSlots>) {
     const {
       title: titleProp,
       name: nameProp,
@@ -75,7 +75,7 @@ export default defineComponent({
             )}
             <div class={[classHelper.e('icon'), isActiveName && classHelper.e('icon--expand')]}>
               {slots?.icon?.() ?? (
-                <NIcon name={expandIconProp.value ? expandIconProp.value : 'arrow_down'} />
+                <AIcon name={expandIconProp.value ? expandIconProp.value : 'arrow_down'} />
               )}
             </div>
           </div>

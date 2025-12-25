@@ -30,7 +30,7 @@ const multiple = ref(false);
 const modelValue = ref<NUploadRawFileType>();
 
 function onBeforeUpload(file: NUploadFileType) {
-  console.log('before-upload:', file);
+  console.info('before-upload:', file);
   if ((file.size || 0) > 1024 * 1024 * 2) {
     $message.error('手动拦截：您选择的文件超过 2MB 大小');
     return false;
@@ -38,7 +38,7 @@ function onBeforeUpload(file: NUploadFileType) {
 }
 
 function onFileSizeExceed(files: NUploadFileType[]) {
-  console.log(files);
+  console.info(files);
 
   $message.error(`自动拦截： ${files.map(file => file.name).join('、')} 超过 2MB 大小`);
 }

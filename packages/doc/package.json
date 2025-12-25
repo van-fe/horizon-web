@@ -3,46 +3,41 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "dev": "pnpm prestart && pnpm dirScan && bunx --bun vite dev --host",
-    "build": "pnpm prestart && pnpm dirScan && bunx --bun vite build && pnpm build:plugins",
+    "dev": "bun run prestart && bun run dirScan && bunx --bun vite dev --host",
+    "build": "bun run prestart && bun run dirScan && bunx --bun vite build && bun run build:plugins",
     "dev:fast": "bunx --bun vite dev --host",
     "build:fast": "bunx --bun vite build",
     "dirScan": "bun run ./build/dirScan.ts",
     "prestart": "bun run build/prestart.ts",
-    "build:plugins": "bun run build/generator-htmls/index.ts",
-    "dev:quick": "pnpm run dev"
+    "build:plugins": "bun run build/generator-htmls/index.ts"
   },
   "dependencies": {
     "@aurora/colors": "workspace:*",
-    "@aurora/icon": "^2.11.4",
+    "@aurora/icon": "workspace:*",
     "@aurora/horizon-web": "workspace:*",
-    "@aurora/horizon-web-pad": "workspace:*",
-    "@aurora/horizon-web-table": "^2.9.1",
     "@aurora/locale-vue": "workspace:*",
     "@aurora/utils": "workspace:*",
-    "@nio-wad/fx-web": "^0.2.0",
-    "@vueuse/core": "^9.6.0",
-    "axios": "^1.7.4",
-    "dayjs": "^1.10.7",
+    "@vueuse/core": "^11.0.0",
+    "axios": "^1.7.9",
+    "dayjs": "^1.11.13",
     "decimal.js": "^10.4.3",
-    "exceljs": "^4.3.0",
+    "exceljs": "^4.4.0",
     "fetch-jsonp": "^1.2.1",
     "markdown-it-highlightjs": "^4.0.1",
     "markdown-it-link-attributes": "^4.0.1",
     "prismjs": "^1.29.0",
-    "qs": "^6.10.3",
-    "vxe-table-plugin-export-xlsx": "^3.0.3"
+    "qs": "^6.13.2"
   },
   "devDependencies": {
-    "@faker-js/faker": "^7.6.0",
+    "@faker-js/faker": "^10.1.0",
     "@aurora/unplugin-resolver": "workspace:*",
     "@types/prismjs": "^1.26.4",
-    "@types/qs": "^6.9.7",
+    "@types/qs": "^6.9.16",
     "@vitejs/plugin-basic-ssl": "^1.1.0",
-    "markdown-it": "^13.0.1",
+    "markdown-it": "^14.1.0",
     "markdown-it-chain": "^1.3.0",
-    "rollup-plugin-visualizer": "^5.9.0",
+    "rollup-plugin-visualizer": "^6.0.5",
     "rollup-pluginutils": "^2.8.2",
-    "unplugin-vue-components": "^0.22.11"
+    "unplugin-vue-components": "^30.0.0"
   }
 }

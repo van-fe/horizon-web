@@ -1,4 +1,4 @@
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { generatorInjectedKeyName } from '@aurora/utils';
 import type { ComputedRef, InjectionKey, Ref } from 'vue';
 import type { TimePickerProps } from '../composables/useProps';
@@ -11,11 +11,11 @@ export const NTimePickerPropsInjectKey = Symbol(
 
 export const NTimePickerEmitsInjectKey = Symbol(
   generatorInjectedKeyName('timePicker', 'emits'),
-) as InjectionKey<LegoSetupContext<TimePickerEmits>['emit']>;
+) as InjectionKey<HorizonWebSetupContext<TimePickerEmits>['emit']>;
 
 export const NTimePickerSlotsInjectKey = Symbol(
   generatorInjectedKeyName('timePicker', 'slots'),
-) as InjectionKey<LegoSetupContext<{}, TimePickerSlots>['slots']>;
+) as InjectionKey<HorizonWebSetupContext<{}, TimePickerSlots>['slots']>;
 
 export const NTimePickerPopperVisibleInjectKey = Symbol(
   generatorInjectedKeyName('timePicker', 'popper-visible'),

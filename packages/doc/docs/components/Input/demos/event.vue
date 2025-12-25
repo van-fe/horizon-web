@@ -19,17 +19,17 @@ export default defineComponent({
     const val = ref('');
     const hint = ref('');
     const handleInput = (value: string) => {
-      console.log('[handleInput]', value);
+      console.info('[handleInput]', value);
     };
     const handleChange = (value: string) => {
-      console.log('[handleChange]', value);
+      console.info('[handleChange]', value);
     };
     const handleClear = () => {
-      console.log('[handleClear]');
+      console.info('[handleClear]');
       hint.value = 'Cleared';
     };
     const handleKeyUpEnter = (event: Event) => {
-      console.log('[pressEnter]', event);
+      console.info('[pressEnter]', event);
       hint.value = 'Pressed Enter';
     };
     return {

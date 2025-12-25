@@ -1,11 +1,11 @@
 import { computed, defineComponent, ref, toRefs, inject } from 'vue';
 import { useTimelineItemProps } from './composables/useProps';
-import { useDateFormative, useDateFormative } from './composables/useDateFormat';
+import { useDateFormative } from './composables/useDateFormat';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { useColors } from '~/globalMethods';
 import { defaultLocale, localeInjectKey } from '~/provides/localable';
-import { NIcon } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 import type { TimelineItemSlots } from './composables/useSlots';
 import { useTimelineItemSlots } from './composables/useSlots';
 import useFormat from './hooks/useFormat';
@@ -13,10 +13,10 @@ import useSize from '~/utils/useSize';
 
 export default defineComponent({
   name: `${useNamespace()}TimelineItem`,
-  components: { NIcon },
+  components: { AIcon },
   props: useTimelineItemProps,
   slots: useTimelineItemSlots,
-  setup(props, { slots }: LegoSetupContext<{}, TimelineItemSlots>) {
+  setup(props, { slots }: HorizonWebSetupContext<{}, TimelineItemSlots>) {
     const {
       timestamp: timestampProp,
       placement: placementProp,
@@ -110,7 +110,7 @@ export default defineComponent({
                     }
                   >
                     {dotIcon.value && (
-                      <NIcon name={dotIcon.value} class={classHelper.e(`icon--${dotSize.value}`)} />
+                      <AIcon name={dotIcon.value} class={classHelper.e(`icon--${dotSize.value}`)} />
                     )}
                   </div>
                 )
@@ -134,7 +134,7 @@ export default defineComponent({
                     }
                   >
                     {iconProp.value && (
-                      <NIcon
+                      <AIcon
                         name={iconProp.value}
                         class={classHelper.e(`icon--${sizeRef.value}`)}
                       />

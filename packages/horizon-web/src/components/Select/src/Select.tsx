@@ -15,7 +15,7 @@ import {
   cssVariableKey,
   flattenVNodes,
 } from '@aurora/utils';
-import type { LegoSetupContext, LegoComponentInstance } from '@aurora/utils';
+import type { HorizonWebSetupContext, HorizonWebComponentInstance } from '@aurora/utils';
 import { useSelectProps } from './composables/useProps';
 import { useSelectEmits } from './composables/useEmits';
 import { useSelectSlots } from './composables/useSlots';
@@ -66,20 +66,20 @@ export default defineComponent({
   emits: useSelectEmits,
   slots: useSelectSlots,
   exposes: useSelectExposes,
-  setup(props: SelectProps, context: LegoSetupContext<SelectEmits, SelectSlots, SelectExposes>) {
+  setup(props: SelectProps, context: HorizonWebSetupContext<SelectEmits, SelectSlots, SelectExposes>) {
     const classHelper = new ComponentClassBlock('select');
 
     /**
      * dom ref
      */
     const domRefs: SelectDomRefs = {
-      pickerDomRef: ref<LegoComponentInstance<typeof NPicker, PickerExposes>>(),
-      scrollbarDomRef: ref<LegoComponentInstance<typeof NScrollbar, ScrollbarExposes>>(),
+      pickerDomRef: ref<HorizonWebComponentInstance<typeof NPicker, PickerExposes>>(),
+      scrollbarDomRef: ref<HorizonWebComponentInstance<typeof NScrollbar, ScrollbarExposes>>(),
       filterInputDomRef:
-        ref<LegoComponentInstance<typeof NPickerFitContentInput, PickerFitContentInputExposes>>(),
-      tagGroupDomRef: ref<LegoComponentInstance<typeof NTagGroup, TagGroupExposes>>(),
+        ref<HorizonWebComponentInstance<typeof NPickerFitContentInput, PickerFitContentInputExposes>>(),
+      tagGroupDomRef: ref<HorizonWebComponentInstance<typeof NTagGroup, TagGroupExposes>>(),
       virtualScrollListDomRef:
-        ref<LegoComponentInstance<typeof VirtualScrollList, SelectVirtualScrollListExposes>>(),
+        ref<HorizonWebComponentInstance<typeof VirtualScrollList, SelectVirtualScrollListExposes>>(),
     };
 
     const {
@@ -330,7 +330,7 @@ export default defineComponent({
     // Because of when jsx mode on, the default options can't be mounted correctly. (VUE bug)
     // So SELECT should render slots to a shallowRef value to correct the behavior.
     const defaultSlotContent = shallowRef();
-    function renderDefaultSlot(slots: LegoSetupContext<{}, SelectSlots>['slots']) {
+    function renderDefaultSlot(slots: HorizonWebSetupContext<{}, SelectSlots>['slots']) {
       defaultSlotContent.value = slots.default?.();
     }
 

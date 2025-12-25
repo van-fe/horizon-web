@@ -73,7 +73,7 @@ export default defineComponent({
   setup() {
     const activeKey = ref(['1', '2']);
     const handleExpand = activeKeys => {
-      console.log(`activeKeys ===> `, activeKeys);
+      console.info(`activeKeys ===> `, activeKeys);
     };
     const selectSize = ref('medium');
     const selectPosition = ref('left');

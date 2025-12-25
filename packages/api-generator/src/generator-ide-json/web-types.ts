@@ -128,7 +128,7 @@ export default async function createWebTypesJson() {
     $schema: 'https://raw.githubusercontent.com/JetBrains/web-types/master/schema/web-types.json',
     framework: 'vue',
     name: 'horizon-web',
-    version: version.horizon-web,
+    version: version['horizon-web'],
     'js-types-syntax': 'typescript',
     'description-markup': 'markdown',
     contributions: {

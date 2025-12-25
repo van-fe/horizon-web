@@ -1,6 +1,6 @@
 import { defineComponent, toRefs, getCurrentInstance, h, inject, computed } from 'vue';
 import { useBreadcrumbItemProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import type { BreadcrumbItemSlots } from './composables/useSlots';
 import { useBreadcrumbItemSlots } from './composables/useSlots';
@@ -20,7 +20,7 @@ export default defineComponent({
   props: useBreadcrumbItemProps,
   emits: useBreadcrumbItemEmits,
   slots: useBreadcrumbItemSlots,
-  setup(props, { emit, slots }: LegoSetupContext<BreadcrumbItemEmits, BreadcrumbItemSlots>) {
+  setup(props, { emit, slots }: HorizonWebSetupContext<BreadcrumbItemEmits, BreadcrumbItemSlots>) {
     const classHelper = new ComponentClassBlock('breadcrumb-item');
     const { size } = toRefs(props);
 

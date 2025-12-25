@@ -1,6 +1,6 @@
 import { defineComponent, inject, toRefs, ref, nextTick, onBeforeUnmount, watchEffect } from 'vue';
 import { useDescriptionItemProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import type { DescriptionItemSlots } from './composables/useSlots';
 import { useDescriptionItemSlots } from './composables/useSlots';
@@ -15,7 +15,7 @@ export default defineComponent({
   name: `${useNamespace()}DescriptionItem`,
   props: useDescriptionItemProps,
   slots: useDescriptionItemSlots,
-  setup(props, { slots }: LegoSetupContext<{}, DescriptionItemSlots>) {
+  setup(props, { slots }: HorizonWebSetupContext<{}, DescriptionItemSlots>) {
     const {
       label: labelProp,
       value: valueProp,

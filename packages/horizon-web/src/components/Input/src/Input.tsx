@@ -2,7 +2,7 @@ import type { VNode } from 'vue';
 import { computed, defineComponent, inject, nextTick, ref, toRefs, watch } from 'vue';
 import type { InputProps } from './composables/useProps';
 import { useInputProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import {
   pickFromObject,
   ComponentClassBlock,
@@ -11,7 +11,7 @@ import {
   useNamespace,
   safelyGetEventTarget,
 } from '@aurora/utils';
-import { NIcon } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 import type { InputEmits } from './composables/useEmits';
 import { useInputEmits } from './composables/useEmits';
 import {
@@ -38,7 +38,7 @@ export default defineComponent({
   exposes: useInputExposes,
   setup(
     props: InputProps,
-    { slots, attrs, emit, expose }: LegoSetupContext<InputEmits, InputSlots, InputExposes>,
+    { slots, attrs, emit, expose }: HorizonWebSetupContext<InputEmits, InputSlots, InputExposes>,
   ) {
     const cHelper = new ComponentClassBlock('input');
     const originalAttrs = pickFromObject(attrs, [
@@ -75,7 +75,7 @@ export default defineComponent({
         return props.type;
       }
       console.warn(
-        '[Lego input warn] Please use one of these values as the input prop "type": "text"/"textarea"/"password". Or it will be converted to "text".',
+        '[HorizonWeb input warn] Please use one of these values as the input prop "type": "text"/"textarea"/"password". Or it will be converted to "text".',
       );
       return 'text';
     });
@@ -246,7 +246,7 @@ export default defineComponent({
         suffixNode = (
           <span class={[cHelper.e('suffix')]} onClick={focus}>
             {!isDisabled.value && props.clearable && localValue.value ? (
-              <NIcon
+              <AIcon
                 class={[
                   (props.type === 'password' && props.showPassword) ||
                   slots.suffix ||
@@ -260,7 +260,7 @@ export default defineComponent({
               />
             ) : null}
             {props.type === 'password' && props.showPassword ? (
-              <NIcon
+              <AIcon
                 class={[cHelper.m('password-action')]}
                 name={showPassword.value ? 'eye' : 'eye_off'}
                 size={iconSize.value}

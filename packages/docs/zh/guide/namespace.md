@@ -1,12 +1,12 @@
 # 命名空间
-`LEGO` 默认的命名空间是 `n`，在以下情况下，可能需要自定义命名空间：
-- 多个版本 `LEGO` 混用
+`HORIZONWEB` 默认的命名空间是 `n`，在以下情况下，可能需要自定义命名空间：
+- 多个版本 `HORIZONWEB` 混用
 - 三方工具包
 - ...
 
 **而使用自定义命名空间的好处**：
 - 不同版本 `css` 样式可以完全隔离，互不干扰
-- 三方工具包可以稳定使用当前版本的 `LEGO`，不受最新版本的各种影响
+- 三方工具包可以稳定使用当前版本的 `HORIZONWEB`，不受最新版本的各种影响
 - ...
 
 ## 脚本配置
@@ -53,7 +53,7 @@ setNamespace('x');
     ```ts [Vite]
     import { defineConfig } from 'vite';
     import Components from 'unplugin-vue-components/vite';
-    import { LegoPluginResolvers } from '@aurora/unplugin-resolver';
+    import { HorizonWebPluginResolvers } from '@aurora/unplugin-resolver';
     
     // https://vitejs.dev/config/
     export default defineConfig({
@@ -67,7 +67,7 @@ setNamespace('x');
       plugins: [
         Components({
           resolvers: [
-            LegoPluginResolvers({
+            HorizonWebPluginResolvers({
               importStyle: 'scss',
             }),
           ],
@@ -77,7 +77,7 @@ setNamespace('x');
     ```
     ```ts [VueCli]
     const { default: Components } = require('unplugin-vue-components/webpack');
-    const { LegoPluginResolvers } = require('@aurora/unplugin-resolver');
+    const { HorizonWebPluginResolvers } = require('@aurora/unplugin-resolver');
     
     module.exports = {
       css: {
@@ -91,7 +91,7 @@ setNamespace('x');
         plugins: [
           Components({
             resolvers: [
-              LegoPluginResolvers({
+              HorizonWebPluginResolvers({
                 importStyle: 'scss',
               }),
             ],

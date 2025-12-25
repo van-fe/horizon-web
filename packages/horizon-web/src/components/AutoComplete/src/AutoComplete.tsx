@@ -6,7 +6,7 @@ import {
   isNil,
   safelyGetEventTarget,
 } from '@aurora/utils';
-import type { LegoSetupContext, LegoComponentInstance } from '@aurora/utils';
+import type { HorizonWebSetupContext, HorizonWebComponentInstance } from '@aurora/utils';
 import { useAutoCompleteProps } from './composables/useProps';
 import { useAutoCompleteEmits } from './composables/useEmits';
 import { useAutoCompleteSlots } from './composables/useSlots';
@@ -62,7 +62,7 @@ export default defineComponent({
       emit,
       slots,
       expose,
-    }: LegoSetupContext<AutoCompleteEmits, AutoCompleteSlots, AutoCompleteExposes>,
+    }: HorizonWebSetupContext<AutoCompleteEmits, AutoCompleteSlots, AutoCompleteExposes>,
   ) {
     const classHelper = new ComponentClassBlock('auto-complete');
 
@@ -98,7 +98,7 @@ export default defineComponent({
     /**
      * dom ref
      */
-    const pickerDomRef = ref<null | LegoComponentInstance<typeof NPicker, PickerExposes>>(null);
+    const pickerDomRef = ref<null | HorizonWebComponentInstance<typeof NPicker, PickerExposes>>(null);
     const virtualScrollListDomRef = ref<null | typeof VirtualScrollList>(null);
 
     /**

@@ -64,11 +64,11 @@ const disabled = ref(false);
 const baseTreeData = ref([]);
 
 function onFocus() {
-  console.log('focus');
+  console.info('focus');
 }
 
 function onBlur() {
-  console.log('blur');
+  console.info('blur');
 }
 
 onMounted(() => {

@@ -13,7 +13,7 @@ import {
 import { useSliderProps } from './composables/useProps';
 import type { SliderEmits } from './composables/useEmits';
 import { useSliderEmits } from './composables/useEmits';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import {
   NFormDisabledInjectedKey,
@@ -33,7 +33,7 @@ export default defineComponent({
   },
   props: useSliderProps,
   emits: useSliderEmits,
-  setup(props, { emit }: LegoSetupContext<SliderEmits>) {
+  setup(props, { emit }: HorizonWebSetupContext<SliderEmits>) {
     const classHelper = new ComponentClassBlock('slider');
     const { disabled, modelValue, max, min, step, type, color, range } = toRefs(props);
 

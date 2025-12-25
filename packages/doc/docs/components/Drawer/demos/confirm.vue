@@ -24,12 +24,12 @@ const visible = ref(false);
 const loading = ref(false);
 
 const onOk = () => {
-  console.log('ok button clicked!');
+  console.info('ok button clicked!');
   $message({ type: 'success', message: 'ok button clicked' });
   // visible.value = false;
 };
 const onCancel = () => {
-  console.log('cancel button clicked!');
+  console.info('cancel button clicked!');
   $message({ type: 'warning', message: 'cancel button clicked!' });
   visible.value = false;
 };

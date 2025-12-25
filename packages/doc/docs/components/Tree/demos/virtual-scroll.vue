@@ -39,6 +39,6 @@ const baseData = shallowRef<NTreeData[]>(new Array(100).fill(0).map((_, i) => ({
 
 function onUpdate(data) {
   debugger;
-  console.log(data);
+  console.info(data);
 }
 </script>

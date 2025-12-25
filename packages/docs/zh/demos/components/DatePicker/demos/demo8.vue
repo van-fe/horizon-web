@@ -41,7 +41,7 @@ export default defineComponent({
 
     function onPick(date: Date) {
       pickDate.value = date;
-      console.log('onPick', date);
+      console.info('onPick', date);
     }
     function close() {
       datePickerRef.value.onHide();

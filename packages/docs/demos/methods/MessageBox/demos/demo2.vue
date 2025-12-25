@@ -16,11 +16,11 @@ export default defineComponent({
         type,
       })
         .then(close => {
-          console.log('Confirmed!');
+          console.info('Confirmed!');
           close();
         })
         .catch(() => {
-          console.log('Cancelled!');
+          console.info('Cancelled!');
         });
     };
     return {

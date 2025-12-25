@@ -6,19 +6,19 @@ const value2 = ref(0);
 const value3 = ref();
 
 function onChange(val: number | string | null | undefined) {
-  console.log('change: ', val);
+  console.info('change: ', val);
 }
 
 function onUpdate(val: number | string | null | undefined) {
-  console.log('update: ', val);
+  console.info('update: ', val);
 }
 
 function onFocus(evt: FocusEvent) {
-  console.log('focus: ', evt);
+  console.info('focus: ', evt);
 }
 
 function onBlur(evt: FocusEvent) {
-  console.log('blur: ', evt);
+  console.info('blur: ', evt);
 }
 </script>
 

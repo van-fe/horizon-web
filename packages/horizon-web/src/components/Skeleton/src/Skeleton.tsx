@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue';
 import { useSkeletonProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
 import SkeletonItem from './SkeletonItem';
 import type { SkeletonSlots } from './composables/useSlots';
@@ -20,7 +20,7 @@ export default defineComponent({
   },
   props: useSkeletonProps,
   slots: useSkeletonSlots,
-  setup(props, { slots }: LegoSetupContext<{}, SkeletonSlots>) {
+  setup(props, { slots }: HorizonWebSetupContext<{}, SkeletonSlots>) {
     const classHelper = new ComponentClassBlock('skeleton');
     return () => (
       <NTransition name="fade-in">

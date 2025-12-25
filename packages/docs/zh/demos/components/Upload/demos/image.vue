@@ -81,7 +81,7 @@ export default defineComponent({
       proportion,
       uploadFileList,
       onChange(fileArr) {
-        console.log(fileArr, 'onChange');
+        console.info(fileArr, 'onChange');
         uploadFileList.value = uploadFileList.value.concat(
           fileArr.map(v => ({
             name: v.name,
@@ -96,7 +96,7 @@ export default defineComponent({
       clipboradOptions: {
         enable: true,
         filter: files => {
-          console.log(files, 'xxxxx');
+          console.info(files, 'xxxxx');
           return files.filter(v => v.type.startsWith('image'));
         },
       },

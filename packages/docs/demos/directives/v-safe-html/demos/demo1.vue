@@ -5,7 +5,7 @@
 
 <script lang="ts" setup>
 const html1 = `<span>some text</span>
-  <img src=x onerror="console.log('XSS attack with v-html!')">`;
+  <img src=x onerror="console.info('XSS attack with v-html!')">`;
 const html2 = `<span>some text</span>
-  <img src=x onerror="console.log('XSS attack with v-safe-html!')">`;
+  <img src=x onerror="console.info('XSS attack with v-safe-html!')">`;
 </script>

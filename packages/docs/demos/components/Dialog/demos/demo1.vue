@@ -28,19 +28,19 @@ export default defineComponent({
     const visible = ref(false);
     const visible2 = ref(false);
     const onPrimary = () => {
-      console.log('Primary button clicked!');
+      console.info('Primary button clicked!');
       visible2.value = true;
     };
     const onPrimary2 = () => {
-      console.log(`2nd dialog's primary button clicked!`);
+      console.info(`2nd dialog's primary button clicked!`);
       visible2.value = false;
     };
     const onSecondary = () => {
-      console.log('Secondary button clicked!');
+      console.info('Secondary button clicked!');
       visible.value = false;
     };
     const onSecondary2 = () => {
-      console.log("2nd dialog's secondary button clicked!");
+      console.info("2nd dialog's secondary button clicked!");
       visible.value = false;
       visible2.value = false;
     };

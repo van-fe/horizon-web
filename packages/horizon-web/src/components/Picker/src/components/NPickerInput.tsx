@@ -1,4 +1,4 @@
-import type { LegoComponentInstance } from '@aurora/utils';
+import type { HorizonWebComponentInstance } from '@aurora/utils';
 import {
   cls,
   ComponentClassBlock,
@@ -70,11 +70,11 @@ export default defineComponent({
     const classHelper = new ComponentClassBlock('picker');
 
     const inputWrapperDomRef = ref<HTMLElement | null>(null);
-    const inputDomRef = ref<LegoComponentInstance<
+    const inputDomRef = ref<HorizonWebComponentInstance<
       typeof NPickerPureInput,
       PickerFitContentInputExposes
     > | null>(null);
-    const fitContentInputDomRef = ref<LegoComponentInstance<
+    const fitContentInputDomRef = ref<HorizonWebComponentInstance<
       typeof NPickerFitContentInput,
       PickerFitContentInputExposes
     > | null>(null);

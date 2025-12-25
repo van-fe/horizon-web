@@ -10,7 +10,7 @@ import { $message } from '@aurora/horizon-web';
 
 const instance = getCurrentInstance();
 
-console.log(instance);
+console.info(instance);
 
 const open = () => {
   $message({

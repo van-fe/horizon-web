@@ -1,6 +1,6 @@
 import { computed, defineComponent, inject, onBeforeUnmount, ref, toRefs, watch } from 'vue';
 import { ComponentClassBlock, cls, useNamespace, cssVariable } from '@aurora/utils';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { useFloatButtonProps } from './composables/useProps';
 import { useFloatButtonEmits } from './composables/useEmits';
 import { useFloatButtonSlots } from './composables/useSlots';
@@ -41,7 +41,7 @@ export default defineComponent({
       slots,
       expose,
       attrs,
-    }: LegoSetupContext<FloatButtonEmits, FloatButtonSlots, FloatButtonExposes>,
+    }: HorizonWebSetupContext<FloatButtonEmits, FloatButtonSlots, FloatButtonExposes>,
   ) {
     const uuid = nanoid();
 

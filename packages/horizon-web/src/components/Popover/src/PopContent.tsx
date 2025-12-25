@@ -1,5 +1,5 @@
 import { defineComponent, inject } from 'vue';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import type { PopContentSlots } from './composables/useSlots';
 import { usePopContentSlots } from './composables/useSlots';
@@ -10,7 +10,7 @@ export default defineComponent({
   name: `${useNamespace()}PopContent`,
   props: usePopContentProps,
   slots: usePopContentSlots,
-  setup(props, { slots }: LegoSetupContext<{}, PopContentSlots>) {
+  setup(props, { slots }: HorizonWebSetupContext<{}, PopContentSlots>) {
     const classHelper = new ComponentClassBlock('popover');
 
     const parentProps = inject(NPickerPopoverPropsInjectKey, undefined);

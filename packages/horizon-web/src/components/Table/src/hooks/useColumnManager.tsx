@@ -3,7 +3,7 @@ import { nextTick, ref, computed } from 'vue';
 import type { NTableFixedValue, NTableInsertedColumnData } from '../utils/types';
 import type { TableColumnProps } from '../composables/useProps';
 import type { NTreeData, NTreeNodeDataWithLevel } from '~/components/Tree/src/utils/types';
-import type { LegoComponentInstance } from '@aurora/utils';
+import type { HorizonWebComponentInstance } from '@aurora/utils';
 import { ComponentClassBlock, cls, upperFirst } from '@aurora/utils';
 import NButton from '~/components/Button/src/Button';
 import NTreeSelect from '~/components/TreeSelect/src/TreeSelect';
@@ -30,7 +30,7 @@ export default function useColumnManager(options: {
 }) {
   const classHelper = new ComponentClassBlock('table-v3');
 
-  const treeSelectDomRef = ref<LegoComponentInstance<typeof NTreeSelect, TreeSelectExposes>>();
+  const treeSelectDomRef = ref<HorizonWebComponentInstance<typeof NTreeSelect, TreeSelectExposes>>();
 
   const visibleColumnsTemp = ref<string[]>([]);
   const fixedStoreTemp = ref(new Map<string, NTableFixedValue>());

@@ -1,7 +1,7 @@
 import { defineComponent, inject, computed, toRefs, provide } from 'vue';
 import { useRadioButtonProps, handleChange, handleBlur } from './composables/useProps';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { useColors } from '~/globalMethods';
 import Radio from './composables/useRadio';
 import type { RadioEmits } from './composables/useEmits';
@@ -22,7 +22,7 @@ export default defineComponent({
   props: useRadioButtonProps,
   emits: useRadioEmits,
   slots: useRadioSlots,
-  setup(props, { slots, emit }: LegoSetupContext<RadioEmits, RadioSlots>) {
+  setup(props, { slots, emit }: HorizonWebSetupContext<RadioEmits, RadioSlots>) {
     const {
       modelValue: propModelValue,
       disabled: propDisabled,

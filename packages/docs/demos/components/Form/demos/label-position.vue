@@ -51,7 +51,7 @@ export default defineComponent({
     const labelJustifyAlign = ref('left');
     const labelVerticalAlign = ref('top');
     const submit = () => {
-      console.log('formData:', formData.value);
+      console.info('formData:', formData.value);
       $message.success('Submit');
     };
     return {

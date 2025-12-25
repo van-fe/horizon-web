@@ -47,11 +47,11 @@ function onSearch(val: string) {
 }
 
 function onSelect(val: string) {
-  console.log('select: ', val);
+  console.info('select: ', val);
 }
 
 function onUpdate(val: string) {
-  console.log('update: ', val);
+  console.info('update: ', val);
 }
 </script>
 

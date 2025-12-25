@@ -1,5 +1,5 @@
 import { snakeCase } from '@aurora/utils';
-import { styleRoot } from '@aurora/utils/plugins';
+import { styleRoot } from '../../../../scripts/paths';
 import * as fs from 'fs';
 import { resolve } from 'path';
 

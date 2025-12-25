@@ -20,10 +20,10 @@
       <div class="trigger-box">
         <n-button class="trigger-button" plain @click="onShow">日期面板嵌入</n-button>
         <div v-if="visible" class="arrow-box">
-          <n-icon name="toggle_left" @click="onChangeYear(-1)" />
-          <n-icon name="arrow_left" @click="onChangeMonth(-1)" />
-          <n-icon name="arrow_right" @click="onChangeMonth(1)" />
-          <n-icon name="toggle_right" @click="onChangeYear(1)" />
+          <a-icon name="toggle_left" @click="onChangeYear(-1)" />
+          <a-icon name="arrow_left" @click="onChangeMonth(-1)" />
+          <a-icon name="arrow_right" @click="onChangeMonth(1)" />
+          <a-icon name="toggle_right" @click="onChangeYear(1)" />
         </div>
       </div>
       <n-date-picker
@@ -56,11 +56,11 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { NIcon } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 
 export default defineComponent({
   components: {
-    NIcon,
+    AIcon,
   },
   setup() {
     let time1 = ref('2022/06/01');
@@ -71,7 +71,7 @@ export default defineComponent({
     const datePickerPanelRef = ref();
 
     function onPick(date: Date) {
-      console.log('onPick date', date);
+      console.info('onPick date', date);
       onHide();
     }
     function onShow() {
@@ -93,7 +93,7 @@ export default defineComponent({
       datePickerPanelRef.value.changeMonth(num);
     }
     function popperChange(value: boolean) {
-      console.log('popperChange', value);
+      console.info('popperChange', value);
     }
 
     return {
@@ -151,7 +151,7 @@ export default defineComponent({
   flex: 1;
 }
 
-.demo-wrapper .box .trigger-box .arrow-box .n-icon {
+.demo-wrapper .box .trigger-box .arrow-box .a-icon {
   cursor: pointer;
 }
 </style>

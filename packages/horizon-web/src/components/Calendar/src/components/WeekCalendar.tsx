@@ -86,7 +86,7 @@ export default defineComponent({
                 ) ?? (
                   <div class={classHelper.em('header', 'date-inner')}>
                     <div class={classHelper.em('header', 'date-week')}>
-                      {locale.value?.langService.td().horizon-web.calendar.weeks[index]}
+                      {locale.value?.langService.td().horizonWeb.calendar.weeks[index]}
                     </div>
                     <div class={classHelper.em('header', 'date-num')}>{date.format('D')}</div>
                   </div>

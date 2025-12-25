@@ -3,7 +3,6 @@ import { computed, createVNode, defineComponent, render } from 'vue';
 import type { LoadingBarOptions } from '../composables/useProps';
 import { useLoadingBarOptions } from '../composables/useProps';
 import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
-import { useSensor } from '~/utils/useSensor';
 import NTransition from '~/components/Transition/src/Transition';
 
 const NLoadingBarComponent = defineComponent({
@@ -56,8 +55,6 @@ NLoadingBarComponent.newInstance = (properties: LoadingBarOptions) => {
   let root: HTMLElement | null = document.createElement('div');
   document.body.appendChild(root);
   render(loadingBarNode, root);
-
-  useSensor('$loadingBar', properties, 'method');
 
   return {
     update(options: { percent?: number; status?: number; show?: boolean; height?: number }) {

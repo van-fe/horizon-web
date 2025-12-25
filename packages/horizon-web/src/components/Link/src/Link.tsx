@@ -10,7 +10,7 @@ import {
 } from 'vue';
 import { useLinkProps } from './composables/useProps';
 import type { Router } from 'vue-router';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { IconLoadingLine } from '@aurora/icon';
 import { cls, ComponentClassBlock, NOnlyChild, useNamespace } from '@aurora/utils';
 import type { LinkEmits } from './composables/useEmits';
@@ -28,7 +28,7 @@ export default defineComponent({
   props: useLinkProps,
   emits: useLinkEmits,
   slots: useLinkSlots,
-  setup(props, { slots, emit }: LegoSetupContext<LinkEmits, LinkSlots>) {
+  setup(props, { slots, emit }: HorizonWebSetupContext<LinkEmits, LinkSlots>) {
     const classHelper = new ComponentClassBlock('link');
     const instance = getCurrentInstance();
     const router = instance?.appContext.config.globalProperties.$router as Router | undefined;
@@ -163,7 +163,7 @@ export default defineComponent({
         {props.loading ? (
           <NOnlyChild>
             <IconLoadingLine spin="cw" size={loadingSvgSizeMapping[sizeRef.value]} />
-            {locale.value?.langService.td().horizon-web.link.loading}
+            {locale.value?.langService.td().horizonWeb.link.loading}
           </NOnlyChild>
         ) : (
           contentRender()

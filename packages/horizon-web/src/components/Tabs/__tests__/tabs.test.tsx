@@ -1,4 +1,4 @@
-import { NIconSVG } from '@aurora/icon';
+import { AIconSVG } from '@aurora/icon';
 import { mount } from '@vue/test-utils';
 import { describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
@@ -46,10 +46,10 @@ describe('Tabs.tsx', () => {
             <div class="n-tabs__default-actions">
               <!---->
               <div class="n-tabs__arrow">
-                <div class="n-tabs__icon-outer n-tabs__icon-outer--disabled"><svg class="n-icon n-icon__v2_11_24 n-icon__svg n-tabs__icon" style="transform: rotate(undefineddeg);">
+                <div class="n-tabs__icon-outer n-tabs__icon-outer--disabled"><svg class="a-icon n-icon__v2_11_24 n-icon__svg n-tabs__icon" style="transform: rotate(undefineddeg);">
                     <use href="#n-icon_arrow_left"></use>
                   </svg></div>
-                <div class="n-tabs__icon-outer"><svg class="n-icon n-icon__v2_11_24 n-icon__svg n-tabs__icon" style="transform: rotate(undefineddeg);">
+                <div class="n-tabs__icon-outer"><svg class="a-icon n-icon__v2_11_24 n-icon__svg n-tabs__icon" style="transform: rotate(undefineddeg);">
                     <use href="#n-icon_arrow_right"></use>
                   </svg></div>
               </div>
@@ -131,7 +131,7 @@ describe('Tabs.tsx', () => {
 
       const tabs = wrapper.findComponent(NTabs);
       expect(tabs.exists()).toBe(true);
-      expect(wrapper.findAllComponents(NIconSVG)).toHaveLength(2);
+      expect(wrapper.findAllComponents(AIconSVG)).toHaveLength(2);
     });
 
     test('closable and addable #render', async () => {
@@ -160,21 +160,21 @@ describe('Tabs.tsx', () => {
               <div class="n-tabs__nav-list">
                 <div role="tab" test-id="tab1" data-name="tab1" class="n-tabs__tab" tabindex="0" aria-selected="false" aria-disabled="false">
                   <div class="n-tabs__tab-inner">
-                    <div class="n-tabs__tab-text">tab1</div><svg class="n-icon n-icon__v2_11_24 n-icon__svg n-tabs__icon n-tabs__close" style="transform: rotate(undefineddeg);">
+                    <div class="n-tabs__tab-text">tab1</div><svg class="a-icon n-icon__v2_11_24 n-icon__svg n-tabs__icon n-tabs__close" style="transform: rotate(undefineddeg);">
                       <use href="#n-icon_close"></use>
                     </svg>
                   </div>
                 </div>
                 <div role="tab" test-id="tab2" data-name="tab2" class="n-tabs__tab" tabindex="0" aria-selected="false" aria-disabled="false">
                   <div class="n-tabs__tab-inner">
-                    <div class="n-tabs__tab-text">tab2</div><svg class="n-icon n-icon__v2_11_24 n-icon__svg n-tabs__icon n-tabs__close" style="transform: rotate(undefineddeg);">
+                    <div class="n-tabs__tab-text">tab2</div><svg class="a-icon n-icon__v2_11_24 n-icon__svg n-tabs__icon n-tabs__close" style="transform: rotate(undefineddeg);">
                       <use href="#n-icon_close"></use>
                     </svg>
                   </div>
                 </div>
                 <div class="n-tabs__indicator"></div>
               </div>
-              <div class="n-tabs__icon-outer n-tabs__icon-outer--add n-tabs__icon-outer--follow"><svg class="n-icon n-icon__v2_11_24 n-icon__svg n-tabs__icon" style="transform: rotate(undefineddeg);">
+              <div class="n-tabs__icon-outer n-tabs__icon-outer--add n-tabs__icon-outer--follow"><svg class="a-icon n-icon__v2_11_24 n-icon__svg n-tabs__icon" style="transform: rotate(undefineddeg);">
                   <use href="#n-icon_add"></use>
                 </svg></div>
             </div>

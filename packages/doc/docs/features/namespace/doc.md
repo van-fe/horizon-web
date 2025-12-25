@@ -65,7 +65,7 @@ setNamespace('x');
 ```ts
 import { defineConfig } from 'vite';
 import Components from 'unplugin-vue-components/vite';
-import { LegoPluginResolvers } from '@aurora/unplugin-resolver';
+import { HorizonWebPluginResolvers } from '@aurora/unplugin-resolver';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -79,7 +79,7 @@ export default defineConfig({
   plugins: [
     Components({
       resolvers: [
-        LegoPluginResolvers({
+        HorizonWebPluginResolvers({
           importStyle: 'scss',
         }),
       ],
@@ -92,7 +92,7 @@ export default defineConfig({
 
 ```js
 const { default: Components } = require('unplugin-vue-components/webpack');
-const { LegoPluginResolvers } = require('@aurora/unplugin-resolver');
+const { HorizonWebPluginResolvers } = require('@aurora/unplugin-resolver');
 
 module.exports = {
   css: {
@@ -106,7 +106,7 @@ module.exports = {
     plugins: [
       Components({
         resolvers: [
-          LegoPluginResolvers({
+          HorizonWebPluginResolvers({
             importStyle: 'scss',
           }),
         ],

@@ -40,7 +40,7 @@ let currentValue: string = '';
 const options = ref<{value: string; text: string}[]>([]);
 
 const searchHandle = (value: string) => {
-  console.log('search: ', value);
+  console.info('search: ', value);
   if (value) {
     fetch(value, (data: any) => (options.value = data));
   } else {
@@ -86,11 +86,11 @@ function fetch(value: string, callback: Function) {
 }
 
 const onOk = () => {
-  console.log('ok button clicked!');
+  console.info('ok button clicked!');
   $message({ type: 'success', message: 'ok button clicked' });
 };
 const onCancel = () => {
-  console.log('cancel button clicked!');
+  console.info('cancel button clicked!');
   $message({ type: 'warning', message: 'cancel button clicked!' });
 };
 

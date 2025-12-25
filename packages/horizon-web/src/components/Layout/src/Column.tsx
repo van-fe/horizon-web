@@ -1,7 +1,7 @@
 import { computed, defineComponent, h, inject } from 'vue';
 import type { NColumnResponsiveSetting } from './composables/useProps';
 import { useColProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, isDefined, isNumber, useNamespace } from '@aurora/utils';
 
 import { ROW_KEY } from './Row';
@@ -12,7 +12,7 @@ export default defineComponent({
   name: `${useNamespace()}Col`,
   props: useColProps,
   slots: useColumnSlots,
-  setup(props, { slots }: LegoSetupContext<{}, ColumnSlots>) {
+  setup(props, { slots }: HorizonWebSetupContext<{}, ColumnSlots>) {
     const classHelper = new ComponentClassBlock('col');
     const { hspace } = inject(ROW_KEY, {
       hspace: computed(() => undefined),

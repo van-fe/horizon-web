@@ -41,7 +41,7 @@ export default defineComponent({
   setup() {
     const activeKey = ref('1');
     const handleExpand = val => {
-      console.log(`activeKey ===> `, val);
+      console.info(`activeKey ===> `, val);
     };
     return {
       activeKey,

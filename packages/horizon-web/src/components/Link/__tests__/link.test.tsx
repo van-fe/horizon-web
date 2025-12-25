@@ -88,7 +88,7 @@ describe('Link.tsx', () => {
           Default
         </NLink>
       ));
-      const icon = wrapper.find('.n-icon');
+      const icon = wrapper.find('.a-icon');
 
       expect(icon.exists()).toBe(true);
 
@@ -99,14 +99,14 @@ describe('Link.tsx', () => {
       const isLoading = ref(false);
       const wrapper = mount(() => <NLink loading={isLoading.value}>Default</NLink>);
 
-      let icon = wrapper.find('.n-icon');
+      let icon = wrapper.find('.a-icon');
 
       expect(icon.exists()).toBe(false);
 
       isLoading.value = true;
       await nextTick();
 
-      icon = wrapper.find('.n-icon');
+      icon = wrapper.find('.a-icon');
 
       expect(icon.exists()).toBe(true);
     });

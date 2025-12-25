@@ -1,6 +1,6 @@
 import compile from './build-scss';
 import type { Plugin } from 'vite';
-import { legoEsmOutput, legoLibOutput } from '@aurora/utils/plugins';
+import { horizonwebEsmOutput, horizonwebLibOutput } from '../../../../scripts/paths';
 
 function definePlugin(plugin: (opts?: { excludes?: string[]; outputDirs?: string[] }) => Plugin) {
   return plugin;
@@ -88,7 +88,7 @@ export default definePlugin(opts => ({
     await compile({
       dependencies,
       excludes: opts?.excludes ?? [],
-      outputDirs: opts?.outputDirs ?? [legoEsmOutput, legoLibOutput],
+      outputDirs: opts?.outputDirs ?? [horizonwebEsmOutput, horizonwebLibOutput],
     });
   },
 }));

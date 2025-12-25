@@ -1,6 +1,6 @@
 import { defineComponent, provide, ref } from 'vue';
 import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { DropdownMenuProps } from './composables/useProps';
 import { useDropdownMenuEmits } from './composables/useEmits';
 import { useDropdownMenuSlots } from './composables/useSlots';
@@ -14,7 +14,7 @@ export default defineComponent({
   slots: useDropdownMenuSlots,
   setup(
     props: DropdownMenuProps,
-    { slots }: LegoSetupContext<DropdownMenuEmits, DropdownMenuSlots>,
+    { slots }: HorizonWebSetupContext<DropdownMenuEmits, DropdownMenuSlots>,
   ) {
     const classHelper = new ComponentClassBlock('dropdown-menu');
 

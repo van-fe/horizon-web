@@ -3,7 +3,7 @@
     <n-tab key="tab1" label="普通Tab" />
     <n-tab key="tab2" label="2s延迟">
       <template v-if="loading" #icon>
-        <n-icon spin="ccw" name="loading" />
+        <a-icon spin="ccw" name="loading" />
       </template>
     </n-tab>
     <n-tab key="tab3" label="不可访问" />

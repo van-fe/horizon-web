@@ -24,7 +24,7 @@ const value4 = ref();
 const squareText = computed(() => type.value === 'square-text');
 
 function onChange(color: string) {
-  console.log('change:', color);
+  console.info('change:', color);
 }
 </script>
 

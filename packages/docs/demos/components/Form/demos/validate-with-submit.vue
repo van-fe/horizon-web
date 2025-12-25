@@ -78,7 +78,7 @@ export default defineComponent({
             $message.success('Submit');
           })
           .catch(errors => {
-            console.log('errors:', errors);
+            console.info('errors:', errors);
           });
       }
     };
@@ -88,7 +88,7 @@ export default defineComponent({
       isValidated: boolean,
       message?: string,
     ) => {
-      console.log(`[${prop}] field is ${isValidated}${isValidated ? '' : `: ${message}`}`);
+      console.info(`[${prop}] field is ${isValidated}${isValidated ? '' : `: ${message}`}`);
       validateInfo.value[prop] = isValidated;
     };
 

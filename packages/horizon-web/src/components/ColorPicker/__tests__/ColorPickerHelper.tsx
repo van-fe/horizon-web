@@ -1,4 +1,4 @@
-import type { LegoComponentInstance, MaybeRef } from '@aurora/utils';
+import type { HorizonWebComponentInstance, MaybeRef } from '@aurora/utils';
 import type { Mock } from 'vitest';
 import { Fragment, ref, unref } from 'vue';
 import type { SetupContext } from 'vue';
@@ -23,7 +23,7 @@ export default class ColorPickerHelper<
   public slots?: Partial<SetupContext<{}, ColorPickerSlots>['slots']>;
   public outer!: DOMWrapper<Element>;
   public wrapper!: VueWrapper<any, any>;
-  public element!: VueWrapper<LegoComponentInstance<typeof NColorPicker, ColorPickerExposes>>;
+  public element!: VueWrapper<HorizonWebComponentInstance<typeof NColorPicker, ColorPickerExposes>>;
 
   constructor(
     propsOrEmits?: Partial<
@@ -57,7 +57,7 @@ export default class ColorPickerHelper<
     );
 
     this.element = this.wrapper.findComponent(NColorPicker) as VueWrapper<
-      LegoComponentInstance<typeof NColorPicker, ColorPickerExposes>
+      HorizonWebComponentInstance<typeof NColorPicker, ColorPickerExposes>
     >;
     this.outer = this.wrapper.find('#outer');
   }
@@ -67,7 +67,7 @@ export default class ColorPickerHelper<
     await sleep(waitTime);
 
     return this.wrapper.findComponent(ColorPickerPanel) as VueWrapper<
-      LegoComponentInstance<typeof ColorPickerPanel>
+      HorizonWebComponentInstance<typeof ColorPickerPanel>
     >;
   }
 
@@ -76,7 +76,7 @@ export default class ColorPickerHelper<
     await sleep(waitTime);
 
     return this.wrapper.findComponent(ColorPickerPanel) as VueWrapper<
-      LegoComponentInstance<typeof ColorPickerPanel>
+      HorizonWebComponentInstance<typeof ColorPickerPanel>
     >;
   }
 }

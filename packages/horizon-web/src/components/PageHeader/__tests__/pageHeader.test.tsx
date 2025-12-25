@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import NPageHeader from '../src/PageHeader';
 import { describe, expect, test, vi } from 'vitest';
-import { IconArrowLeft, NIcon } from '@aurora/icon';
+import { IconArrowLeft, AIcon } from '@aurora/icon';
 import { nextTick, ref } from 'vue';
 import NButton from '../../Button';
 
@@ -23,7 +23,7 @@ describe('PageHeader.tsx', () => {
     test('icon name', async () => {
       const wrapper = mount(() => <NPageHeader icon="arrow_left" />);
 
-      expect(wrapper.findComponent(NIcon).exists()).toBeTruthy();
+      expect(wrapper.findComponent(AIcon).exists()).toBeTruthy();
     });
 
     test('title', async () => {

@@ -95,7 +95,7 @@
             </n-sub-menu>
             <n-menu-item value="4">
               <template #icon>
-                <n-icon size="20" name="matestore_filled" />
+                <a-icon size="20" name="matestore_filled" />
               </template>
               <template #title>一级菜单 4</template>
             </n-menu-item>
@@ -109,7 +109,7 @@
             </n-sub-menu>
             <n-sub-menu value="6" :selectable="true">
               <template #icon>
-                <n-icon name="matestore_filled" size="20"></n-icon>
+                <a-icon name="matestore_filled" size="20"></a-icon>
               </template>
               <template #title>一级菜单 6</template>
               <n-sub-menu value="6-1" :selectable="true">
@@ -128,7 +128,7 @@
 
 <script setup lang="ts">
 import { ExtractPropTypes, ref } from 'vue';
-import { NIcon } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 import { NMenu, useMenuProps, useSubMenuProps } from '@aurora/horizon-web';
 
 const menuRef = ref<typeof NMenu | null>(null);
@@ -137,12 +137,12 @@ const theme = ref<ExtractPropTypes<typeof useMenuProps>['theme']>('default');
 const selectedValue = ref('3-1-1');
 const onSelected = (value: string, values: string[], current) => {
   selectedValue.value = value;
-  console.log('selected', value, values, current);
+  console.info('selected', value, values, current);
 };
 
 const onCollapseChanged = (status: boolean) => {
   collapse.value = status;
-  console.log(`菜单目前的折叠状态为：${status}`);
+  console.info(`菜单目前的折叠状态为：${status}`);
 };
 
 const expandAll = () => {
@@ -154,11 +154,11 @@ const collapseAll = () => {
 };
 
 function onOpen(curr: string, paths: ExtractPropTypes<typeof useSubMenuProps>[]) {
-  console.log('open:', curr, paths);
+  console.info('open:', curr, paths);
 }
 
 function onClose(curr: string, paths: ExtractPropTypes<typeof useSubMenuProps>[]) {
-  console.log('close:', curr, paths);
+  console.info('close:', curr, paths);
 }
 </script>
 

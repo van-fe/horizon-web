@@ -55,7 +55,7 @@
   const myRefs = ref([]);
 
   const selectCheckbox = (val: boolean) => {
-    console.log('selectCheckbox ==> ', val);
+    console.info('selectCheckbox ==> ', val);
   };
 
   const inverse = () => {

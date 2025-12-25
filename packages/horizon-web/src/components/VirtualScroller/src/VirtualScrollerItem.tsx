@@ -10,7 +10,7 @@ import {
   onBeforeUnmount,
 } from 'vue';
 import type { Ref, WatchStopHandle } from 'vue';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { isDefined, useNamespace } from '@aurora/utils';
 import { useVirtualScrollerItemProps } from './composables/useProps';
 import { useVirtualScrollerItemEmits } from './composables/useEmits';
@@ -35,7 +35,7 @@ export default defineComponent({
       emit,
       slots,
       expose,
-    }: LegoSetupContext<
+    }: HorizonWebSetupContext<
       VirtualScrollerItemEmits,
       VirtualScrollerItemSlots,
       VirtualScrollerItemExposes

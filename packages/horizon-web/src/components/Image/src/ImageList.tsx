@@ -3,7 +3,7 @@ import { defineComponent, ref, provide } from 'vue';
 import { useImageListProps } from './composables/useProps';
 import NViewer from '~/components/Viewer/src/Viewer';
 import type { NViewerSource } from '~/components/Viewer/src/composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import {
   ComponentClassBlock,
   slotVNodes,
@@ -21,7 +21,7 @@ export default defineComponent({
   },
   props: useImageListProps,
   slots: useImageListSlots,
-  setup(props, { slots }: LegoSetupContext<{}, ImageListSlots>) {
+  setup(props, { slots }: HorizonWebSetupContext<{}, ImageListSlots>) {
     const classHelper = new ComponentClassBlock('image-list');
     provide('nImageList', {});
 

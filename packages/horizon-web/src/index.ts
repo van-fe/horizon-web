@@ -13,6 +13,6 @@ export * from './components/props';
 export * from './components/emits';
 export * from './components/slots';
 export * from './components/exposes';
-export { type LegoOption, defineOption } from './makeInstaller';
+export { type HorizonWebOption, defineOption } from './makeInstaller';
 export * from './globalMethods';
 export * from './injectedKeys';

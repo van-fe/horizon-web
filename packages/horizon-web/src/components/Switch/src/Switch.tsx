@@ -7,7 +7,7 @@ import {
   isUndefined,
   useNamespace,
 } from '@aurora/utils';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { useSwitchProps } from './composables/useProps';
 import type { SwitchEmits } from './composables/useEmits';
 import { useSwitchEmits } from './composables/useEmits';
@@ -23,7 +23,7 @@ export default defineComponent({
   desc: '开关选择器组件',
   props: useSwitchProps,
   emits: useSwitchEmits,
-  setup(props, { emit }: LegoSetupContext<SwitchEmits>) {
+  setup(props, { emit }: HorizonWebSetupContext<SwitchEmits>) {
     const {
       modelValue: modelValueRef,
       status: statusRef,

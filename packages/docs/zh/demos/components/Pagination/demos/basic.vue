@@ -40,7 +40,7 @@ function onSizeChange(size: number) {
 }
 
 function onModify(currentPage: number, pageSize: number) {
-  console.log({currentPage, pageSize});
+  console.info({currentPage, pageSize});
 }
 </script>
 

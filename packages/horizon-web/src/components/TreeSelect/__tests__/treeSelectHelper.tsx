@@ -1,4 +1,4 @@
-import type { MaybeRef, LegoComponentInstance, Arrayable } from '@aurora/utils';
+import type { MaybeRef, HorizonWebComponentInstance, Arrayable } from '@aurora/utils';
 import { Fragment, nextTick, ref, SetupContext, unref } from 'vue';
 import type { DOMWrapper, VueWrapper } from '@vue/test-utils';
 import { mount } from '@vue/test-utils';
@@ -28,7 +28,7 @@ export class TreeSelectHelper<
   public modelValue = ref<NTreeUuidType | NTreeUuidType[]>();
   public selectedValues = ref();
   public expandedValues = ref();
-  public domRef = ref<LegoComponentInstance<typeof NTreeSelect, TreeSelectExposes> | null>(null);
+  public domRef = ref<HorizonWebComponentInstance<typeof NTreeSelect, TreeSelectExposes> | null>(null);
 
   public wrapper?: VueWrapper<any, any>;
   public element?: VueWrapper<typeof NTreeSelect, any>;
@@ -123,7 +123,7 @@ export async function createInstance<T extends string | keyof TreeSelectProps>(
 ) {
   const selectedValues = ref();
   const expandedValues = ref();
-  const domRef = ref<LegoComponentInstance<typeof NTreeSelect, TreeSelectExposes> | null>(null);
+  const domRef = ref<HorizonWebComponentInstance<typeof NTreeSelect, TreeSelectExposes> | null>(null);
 
   const wrapper = mount(
     () => (

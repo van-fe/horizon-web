@@ -16,7 +16,7 @@ const items = ref([
 const firstTab = reactive({ label: 'FirstTab', uid: randomUid(), show: true });
 
 const onTabChanged = (tab: NTabValue) => {
-  console.log('tab changed', tab);
+  console.info('tab changed', tab);
 };
 
 const onTabAdd = () => {

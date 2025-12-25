@@ -21,7 +21,7 @@ import {
   useNamespace,
   isDefined,
 } from '@aurora/utils';
-import type { LegoSetupContext, LegoComponentInstance } from '@aurora/utils';
+import type { HorizonWebSetupContext, HorizonWebComponentInstance } from '@aurora/utils';
 import { useRecycleScrollerProps } from './composables/useProps';
 import { useRecycleScrollerEmits } from './composables/useEmits';
 import { useRecycleScrollerSlots } from './composables/useSlots';
@@ -56,7 +56,7 @@ export default defineComponent({
       emit,
       slots,
       expose,
-    }: LegoSetupContext<RecycleScrollerEmits, RecycleScrollerSlots, RecycleScrollerExposes>,
+    }: HorizonWebSetupContext<RecycleScrollerEmits, RecycleScrollerSlots, RecycleScrollerExposes>,
   ) {
     // 本地变量
     let $_startIndex = 0;
@@ -81,7 +81,7 @@ export default defineComponent({
     const cls = new ComponentClassBlock('recycle-scroller');
 
     // dom ref(s) ---------------------------------------
-    const scrollbar = ref<LegoComponentInstance<typeof NScrollbar, ScrollbarExposes>>();
+    const scrollbar = ref<HorizonWebComponentInstance<typeof NScrollbar, ScrollbarExposes>>();
     const wrapperRef = ref<HTMLElement | null | undefined>();
     const wiewRef = ref<HTMLElement | null | undefined>();
     const beforeRef = ref<HTMLElement | null | undefined>();
@@ -771,7 +771,7 @@ export default defineComponent({
       }
 
       return pool.value.map(view => {
-        // console.log(view, 'view...pool')
+        // console.info(view, 'view...pool')
         return h(
           props.itemTag,
           // props

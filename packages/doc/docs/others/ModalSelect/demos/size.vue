@@ -110,16 +110,16 @@ export default defineComponent({
     ];
 
     const changeHandle = () => {
-      console.log(value1.value);
+      console.info(value1.value);
     };
 
     const onUpdateModelValue = (val: any) => {
-      console.log('update-modelValue', val);
+      console.info('update-modelValue', val);
       value1.value = val;
     };
 
     const onUpdateMultipleModelValue = (val: any) => {
-      console.log('update-multiple-modelValue', val);
+      console.info('update-multiple-modelValue', val);
       values1.value = val;
     };
 

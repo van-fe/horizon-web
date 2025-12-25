@@ -57,7 +57,7 @@ export default defineComponent({
     ]);
 
     const getFileList = () => {
-      console.log(fileList.value);
+      console.info(fileList.value);
     };
 
     const beforeUpload = files => {
@@ -104,7 +104,7 @@ export default defineComponent({
         ];
         visibleRef.value = true;
       } else {
-        console.log(file, 'preview');
+        console.info(file, 'preview');
       }
     };
 
@@ -122,7 +122,7 @@ export default defineComponent({
         link.click();
         document.body.removeChild(link);
       } else {
-        console.log(file, 'download');
+        console.info(file, 'download');
       }
     };
 

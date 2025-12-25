@@ -2,13 +2,11 @@ import { defineDirective } from '@aurora/utils';
 import type { InfiniteScrollOptions } from './composables/useOptions';
 import { useInfiniteScrollOptions } from './composables/useOptions';
 import type { DirectiveBinding } from 'vue';
-import { useSensor } from '~/utils/useSensor';
 
 const scrollMethod = (
   el: HTMLElement,
   binding: DirectiveBinding<Partial<InfiniteScrollOptions>>,
 ) => {
-  useSensor('v-infinite-scroll', binding.value, 'directive');
   const debounce = (fn: any, wait: number) => {
     let timeout: any = null;
     return () => {
@@ -19,12 +17,12 @@ const scrollMethod = (
   const callBack = () => {
     if (el.scrollHeight - (el.scrollTop + el.clientHeight) < (binding.value.distance || 10)) {
       // 判断是否触底
-      // console.log('触底');
+      // console.info('触底');
       const handler = binding.value.onReachBottom;
       handler?.();
     } else if (el.scrollTop <= 0 && binding.value.onReachTop) {
       // 判断是否触顶
-      // console.log("触顶");
+      // console.info("触顶");
       const handler = binding.value.onReachTop;
       handler();
     }

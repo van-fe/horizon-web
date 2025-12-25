@@ -7,11 +7,11 @@ npm i @aurora/horizon-web
 ### 全量使用
 ```ts
 import { createApp } from 'vue';
-import Lego from '@aurora/horizon-web';
+import HorizonWeb from '@aurora/horizon-web';
 import '@aurora/horizon-web/dist/style.css';
 import App from './App.vue';
 
-const app = createApp(App).use(Lego);
+const app = createApp(App).use(HorizonWeb);
 app.mount('#app');
 ```
 
@@ -20,10 +20,10 @@ app.mount('#app');
 ```ts
 // src/main.ts
 import { createApp } from 'vue';
-import { LegoProvides } from '@aurora/horizon-web';
+import { HorizonWebProvides } from '@aurora/horizon-web';
 import App from './App.vue';
 
-const app = createApp(App).use(LegoProvides);
+const app = createApp(App).use(HorizonWebProvides);
 app.mount('#app');
 ```
 
@@ -31,14 +31,14 @@ app.mount('#app');
 // vite.config.ts
 import { defineConfig } from 'vite';
 import Components from 'unplugin-vue-components/vite';
-import { LegoPluginResolvers } from '@aurora/unplugin-resolver';
+import { HorizonWebPluginResolvers } from '@aurora/unplugin-resolver';
 
 export default defineConfig({
   // ...
   plugins: [
   Components({
     resolvers: [
-      LegoPluginResolvers()
+      HorizonWebPluginResolvers()
     ]
   }),
   // ...

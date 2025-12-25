@@ -1,6 +1,6 @@
 import { computed, defineComponent, nextTick, provide, ref, toRefs, watch } from 'vue';
 import { ComponentClassBlock, cls, useNamespace, safelyGetEventTarget } from '@aurora/utils';
-import type { LegoSetupContext, LegoComponentInstance } from '@aurora/utils';
+import type { HorizonWebSetupContext, HorizonWebComponentInstance } from '@aurora/utils';
 import { usePickerProps } from './composables/useProps';
 import { usePickerEmits } from './composables/useEmits';
 import { usePickerSlots } from './composables/useSlots';
@@ -45,7 +45,7 @@ export default defineComponent({
   exposes: usePickerExposes,
   setup(
     props: PickerProps,
-    { emit, slots, expose }: LegoSetupContext<PickerEmits, PickerSlots, PickerExposes>,
+    { emit, slots, expose }: HorizonWebSetupContext<PickerEmits, PickerSlots, PickerExposes>,
   ) {
     const classHelper = new ComponentClassBlock('picker');
 
@@ -56,10 +56,10 @@ export default defineComponent({
     } = toRefs(props);
 
     const pickerDomRef = ref<HTMLDivElement | null>(null);
-    const inputDomRef = ref<LegoComponentInstance<typeof NPickerInput, PickerInputExposes> | null>(
+    const inputDomRef = ref<HorizonWebComponentInstance<typeof NPickerInput, PickerInputExposes> | null>(
       null,
     );
-    const popoverDomRef = ref<LegoComponentInstance<typeof NPopover, PopoverExposes> | null>(null);
+    const popoverDomRef = ref<HorizonWebComponentInstance<typeof NPopover, PopoverExposes> | null>(null);
     const popContentDomRef = ref<(InstanceType<typeof NPopContent> & HTMLElement) | null>(null);
 
     const popperVisible = ref(false);

@@ -22,11 +22,11 @@ export default defineComponent({
         {parentProps.showRange && parentProps.type === 'default'
           ? locale.value?.langService
               .td()
-              .horizon-web.pagination.rangeTotal.replace('{total}', parentProps.total.toString())
+              .horizonWeb.pagination.rangeTotal.replace('{total}', parentProps.total.toString())
               .replace('{range}', props.range)
           : locale.value?.langService
               .td()
-              .horizon-web.pagination.total.replace('{total}', parentProps.total.toString())}
+              .horizonWeb.pagination.total.replace('{total}', parentProps.total.toString())}
       </div>
     );
   },

@@ -44,7 +44,7 @@ onMounted(() => {
 });
 
 const dynLoad = (data: NTreeDynamicLoadNode) => {
-  console.log(data, data.node);
+  console.info(data, data.node);
 
   return new Promise<NTreeNodeData[]>((resolve, reject) => {
     if (!data.node) return reject();

@@ -1,6 +1,6 @@
 import type { MenuItemProps, SubMenuProps } from '../composables/useProps';
 import type { MenuItemSlots, SubMenuSlots } from '../composables/useSlots';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { MenuItemEmits, SubMenuEmits } from '../composables/useEmits';
 
 export interface NMenuTreeData<Type extends 'subMenu' | 'menuItem' = 'menuItem'> {
@@ -8,11 +8,11 @@ export interface NMenuTreeData<Type extends 'subMenu' | 'menuItem' = 'menuItem'>
   type: Type;
   props: Type extends 'subMenu' ? SubMenuProps : MenuItemProps;
   emits: Type extends 'subMenu'
-    ? LegoSetupContext<SubMenuEmits>['emit']
-    : LegoSetupContext<MenuItemEmits>['emit'];
+    ? HorizonWebSetupContext<SubMenuEmits>['emit']
+    : HorizonWebSetupContext<MenuItemEmits>['emit'];
   slots: Type extends 'subMenu'
-    ? LegoSetupContext<{}, SubMenuSlots>['slots']
-    : LegoSetupContext<{}, MenuItemSlots>['slots'];
+    ? HorizonWebSetupContext<{}, SubMenuSlots>['slots']
+    : HorizonWebSetupContext<{}, MenuItemSlots>['slots'];
   children: Type extends 'subMenu' ? Map<string, NMenuTreeData> : null;
   level: number;
   scrollTo: () => void;
@@ -23,11 +23,11 @@ export interface NMenuTreePickedValuesData<Type extends 'subMenu' | 'menuItem' =
   type: Type;
   props: Type extends 'subMenu' ? SubMenuProps : MenuItemProps;
   emits: Type extends 'subMenu'
-    ? LegoSetupContext<SubMenuEmits>['emit']
-    : LegoSetupContext<MenuItemEmits>['emit'];
+    ? HorizonWebSetupContext<SubMenuEmits>['emit']
+    : HorizonWebSetupContext<MenuItemEmits>['emit'];
   slots: Type extends 'subMenu'
-    ? LegoSetupContext<{}, SubMenuSlots>['slots']
-    : LegoSetupContext<{}, MenuItemSlots>['slots'];
+    ? HorizonWebSetupContext<{}, SubMenuSlots>['slots']
+    : HorizonWebSetupContext<{}, MenuItemSlots>['slots'];
   children: NMenuTreePickedValuesData<'subMenu' | 'menuItem'>[];
   scrollTo: () => void;
 }

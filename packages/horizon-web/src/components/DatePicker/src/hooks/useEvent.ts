@@ -1,4 +1,4 @@
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { safelyGetEventTarget } from '@aurora/utils';
 import dayjs from '~/utils/useDayJs';
 import type { ComputedRef, ToRefs, Ref } from 'vue';
@@ -14,7 +14,7 @@ import type { Dayjs } from 'dayjs';
 
 export default function useEvent(
   propRefs: ToRefs<DatePickerProps>,
-  context: LegoSetupContext<DatePickerEmits, DatePickerSlots, DatePickerExposes>,
+  context: HorizonWebSetupContext<DatePickerEmits, DatePickerSlots, DatePickerExposes>,
   domRefs: NDatePickerDomRefs,
   options: {
     format: ComputedRef<string>;

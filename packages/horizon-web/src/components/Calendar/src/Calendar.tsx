@@ -16,10 +16,10 @@ import { useCalendarEmits } from './composables/useEmits';
 import type { CalendarSlots } from './composables/useSlots';
 import { useCalendarSlots } from './composables/useSlots';
 import type { CalendarEmits } from './composables/useEmits';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { defaultLocale, localeInjectKey } from '~/provides';
-import { NIcon } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 import dayjs from '~/utils/useDayJs';
 import {
   NCalendarCurrentDateInjectKey,
@@ -52,7 +52,7 @@ export default defineComponent({
   props: useCalendarProps,
   emits: useCalendarEmits,
   slots: useCalendarSlots,
-  setup(props, { slots, emit }: LegoSetupContext<CalendarEmits, CalendarSlots>) {
+  setup(props, { slots, emit }: HorizonWebSetupContext<CalendarEmits, CalendarSlots>) {
     const classHelper = new ComponentClassBlock('calendar');
     const {
       pinFlags: pinFlagsRef,
@@ -186,21 +186,21 @@ export default defineComponent({
         switch (item) {
           case 'year':
             nodes.push(
-              <NTab label={locale.value?.langService.td().horizon-web.calendar.year} key="year" />,
+              <NTab label={locale.value?.langService.td().horizonWeb.calendar.year} key="year" />,
             );
             break;
           case 'month':
             nodes.push(
-              <NTab label={locale.value?.langService.td().horizon-web.calendar.month} key="month" />,
+              <NTab label={locale.value?.langService.td().horizonWeb.calendar.month} key="month" />,
             );
             break;
           case 'week':
             nodes.push(
-              <NTab label={locale.value?.langService.td().horizon-web.calendar.week} key="week" />,
+              <NTab label={locale.value?.langService.td().horizonWeb.calendar.week} key="week" />,
             );
             break;
           case 'day':
-            nodes.push(<NTab label={locale.value?.langService.td().horizon-web.calendar.day} key="day" />);
+            nodes.push(<NTab label={locale.value?.langService.td().horizonWeb.calendar.day} key="day" />);
             break;
         }
       });
@@ -270,14 +270,14 @@ export default defineComponent({
                 class={classHelper.em('header', 'today')}
                 onClick={() => (currentDate.value = dayjs())}
               >
-                {locale?.value?.langService.td().horizon-web.datePicker.today}
+                {locale?.value?.langService.td().horizonWeb.datePicker.today}
               </NButton>
               <div class={classHelper.em('header', 'switcher')}>
                 <div
                   class={cls(classHelper.em('header', 'switcher-item'), classHelper.is('prev'))}
                   onClick={prev}
                 >
-                  <NIcon name="arrow_left" size={12} />
+                  <AIcon name="arrow_left" size={12} />
                 </div>
                 <NDatePicker v-model={currentDate.value} type={datePickerType.value}>
                   {{
@@ -293,7 +293,7 @@ export default defineComponent({
                   class={cls(classHelper.em('header', 'switcher-item'), classHelper.is('next'))}
                   onClick={next}
                 >
-                  <NIcon name="arrow_right" size={12} />
+                  <AIcon name="arrow_right" size={12} />
                 </div>
               </div>
             </div>

@@ -1,6 +1,6 @@
 import { defineComponent, Fragment } from 'vue';
 import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { usePageHeaderProps } from './composables/useProps';
 import { usePageHeaderEmits } from './composables/useEmits';
 import { usePageHeaderSlots } from './composables/useSlots';
@@ -21,7 +21,7 @@ export default defineComponent({
   exposes: usePageHeaderExposes,
   setup(
     props: PageHeaderProps,
-    { emit, slots }: LegoSetupContext<PageHeaderEmits, PageHeaderSlots>,
+    { emit, slots }: HorizonWebSetupContext<PageHeaderEmits, PageHeaderSlots>,
   ) {
     const classHelper = new ComponentClassBlock('page-header');
 

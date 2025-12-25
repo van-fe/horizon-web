@@ -2,7 +2,7 @@
 
 ## Tree Shaking
 
-`Lego` 组件支持 ES module 提供的 tree-shaking 能力，如果只想使用其中某几个组件，引入全量组件包将会增加项目构建之后的体积。而 es module 提供了原始的 tree-shaking 能力，可以避免该场景下将全量的组件代码打包到项目中。
+`HorizonWeb` 组件支持 ES module 提供的 tree-shaking 能力，如果只想使用其中某几个组件，引入全量组件包将会增加项目构建之后的体积。而 es module 提供了原始的 tree-shaking 能力，可以避免该场景下将全量的组件代码打包到项目中。
 
 ### 全量引入
 
@@ -10,17 +10,17 @@
 
 ```ts
 import { createApp } from 'vue';
-import { Lego } from '@aurora/horizon-web';
+import { HorizonWeb } from '@aurora/horizon-web';
 import '@aurora/horizon-web/dist/style.css'; 
 
 import App from './App.vue';
 
 const app = createApp(App);
 
-app.use(Lego);
+app.use(HorizonWeb);
 ```
 
-通过如上的方式注册之后就可以在任意组件中使用 Lego 提供的组件能力，例如：`<n-button>`、`<n-input>` 等 vue 组件。这种方式的优点是可以无需单独注册组件，直接就可以在自定义组件中使用，但是这种方式的问题是会将全量的组件库代码构建到项目中，增大了项目体积。
+通过如上的方式注册之后就可以在任意组件中使用 HorizonWeb 提供的组件能力，例如：`<n-button>`、`<n-input>` 等 vue 组件。这种方式的优点是可以无需单独注册组件，直接就可以在自定义组件中使用，但是这种方式的问题是会将全量的组件库代码构建到项目中，增大了项目体积。
 
 ### 手动按需引入
 
@@ -50,14 +50,14 @@ app.use(NInput);
 // vite.config.ts
 import { defineConfig } from 'vite'
 import Components from 'unplugin-vue-components/vite'
-import { LegoPluginResolvers } from '@aurora/unplugin-resolver'
+import { HorizonWebPluginResolvers } from '@aurora/unplugin-resolver'
 
 export default defineConfig({
   // ...
   plugins: [
     Components({
       resolvers: [
-        LegoPluginResolvers()
+        HorizonWebPluginResolvers()
       ]
     }),
     // ...
@@ -70,10 +70,10 @@ export default defineConfig({
 ```ts
 // main.ts
 import { createApp } from 'vue';
-import { LegoProvides } from '@aurora/horizon-web';
+import { HorizonWebProvides } from '@aurora/horizon-web';
 import App from './App.vue';
 
-const app = createApp(App).use(LegoProvides);
+const app = createApp(App).use(HorizonWebProvides);
 app.mount('#app');
 ```
 

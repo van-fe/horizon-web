@@ -68,7 +68,7 @@ export default defineComponent({
             $message.success('Submit');
           })
           .catch(errors => {
-            console.log('errors:', errors);
+            console.info('errors:', errors);
           });
       }
     };

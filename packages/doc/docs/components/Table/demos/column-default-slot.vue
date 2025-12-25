@@ -41,11 +41,11 @@ const data = ref<TableData[]>(new Array(20).fill(0).map((_, index) => ({
 
 function view(data: NTableCellScopeSlots) {
   $message(`view ${data.row.name}`);
-  console.log('view: ', data);
+  console.info('view: ', data);
 }
 
 function edit(data: NTableCellScopeSlots) {
   $message(`edit ${data.row.name}`);
-  console.log('edit: ', data);
+  console.info('edit: ', data);
 }
 </script>

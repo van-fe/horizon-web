@@ -1,14 +1,14 @@
-import type { LocalOptionType, LocaleSupportLang } from '../config';
+import type { LocalOptionType } from '../config';
 import { LocaleSupportLang } from '../config';
 
 export class BaseService {
   private currOptions!: LocalOptionType;
 
-  public get current(): LocaleSupportLang | LocaleSupportLang {
+  public get current(): LocaleSupportLang {
     return this.options.current!;
   }
 
-  public set current(lang: LocaleSupportLang | LocaleSupportLang) {
+  public set current(lang: LocaleSupportLang) {
     this.options.current = lang;
   }
 

@@ -31,7 +31,7 @@ export default defineComponent({
           y: 100,
           label: 'Paint off',
           handler(url: string) {
-            console.log('Click legend', url);
+            console.info('Click legend', url);
           },
         },
       ];

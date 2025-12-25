@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import path, { resolve } from 'path';
 import * as cssTree from 'css-tree';
 import * as sass from 'sass';
-import { styleRoot } from '@aurora/utils/plugins';
+import { styleRoot } from '../../../../scripts/paths';
 
 export type OneDeepRecordType<T = string> = {
   [key: string]: string | OneDeepRecordType<T>;
@@ -52,7 +52,7 @@ export function getBasicElementCssVariables(filePath: string, withVersion = true
 
   fs.writeFileSync(tempFilePath, content, 'utf-8');
 
-  const res = sass.renderSync({ file: tempFilePath });
+  const res = sass.compile(tempFilePath);
 
   fs.rmSync(tempFilePath);
 
@@ -120,7 +120,7 @@ export function getFileName(fileRawName: string) {
 }
 
 export function getScssProperties(filePath: string) {
-  const cssItem = sass.renderSync({ file: filePath });
+  const cssItem = sass.compile(filePath);
 
   const { propertyNameMap } = getPropertyName(cssItem.css.toString());
 

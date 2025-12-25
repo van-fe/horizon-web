@@ -2,7 +2,7 @@ import { defineComponent, computed, ref, toRefs } from 'vue';
 import type { CSSProperties } from 'vue';
 import { useProgressProps } from './composables/useProps';
 import { ComponentClassBlock, cssVariable, useNamespace } from '@aurora/utils';
-import { NIcon } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 import type { NApplicationSizeType } from '~/components/Application/src/composables/useProps';
 import useSize from '~/utils/useSize';
 export default defineComponent({
@@ -238,7 +238,7 @@ export default defineComponent({
                   {content || formatContent.value}
                 </span>
               ) : (
-                <NIcon
+                <AIcon
                   size={type == 'circle' ? circleIconSize[sizeRef.value] : 14}
                   name={iconMap[props.status]?.icon}
                   color={iconMap[props.status]?.color}

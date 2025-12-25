@@ -1,8 +1,8 @@
 import { defineComponent, ref, watch, onMounted, nextTick, inject } from 'vue';
 import { useImageProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, getUnitString, useNamespace } from '@aurora/utils';
-import { IconLogo, IconPictureError, NIcon } from '@aurora/icon';
+import { IconLogo, IconPictureError, AIcon } from '@aurora/icon';
 import NViewer from '~/components/Viewer/src/Viewer';
 import NDropdown from '~/components/Dropdown/src/Dropdown';
 import NDropdownMenu from '~/components/Dropdown/src/DropdownMenu';
@@ -21,7 +21,7 @@ export default defineComponent({
   components: {
     IconLogo,
     IconPictureError,
-    NIcon,
+    AIcon,
   },
   directives: {
     tooltip,
@@ -29,7 +29,7 @@ export default defineComponent({
   props: useImageProps,
   emits: useImageEmits,
   slots: useImageSlots,
-  setup(props, { slots, emit }: LegoSetupContext<ImageEmits, ImageSlots>) {
+  setup(props, { slots, emit }: HorizonWebSetupContext<ImageEmits, ImageSlots>) {
     const nImageList = inject('nImageList', undefined);
     const classHelper = new ComponentClassBlock('image');
     const loading = ref(true);
@@ -222,7 +222,7 @@ export default defineComponent({
                 <NDropdown>
                   <div class="ref">
                     <div class={classHelper.e('actions-dropdown-btn')}>
-                      <NIcon name="ellipsis" size={16} color="#fff" />
+                      <AIcon name="ellipsis" size={16} color="#fff" />
                     </div>
                   </div>
                   <NDropdownMenu>
@@ -232,7 +232,7 @@ export default defineComponent({
                           class={classHelper.e('actions-dropdown-item')}
                           onClick={() => action.handler(props.src || '')}
                         >
-                          <NIcon name={action.icon} size={14} />
+                          <AIcon name={action.icon} size={14} />
                           <span>{action.title}</span>
                         </div>
                       </NDropdownItem>
@@ -243,7 +243,7 @@ export default defineComponent({
             ) : (
               <div class={classHelper.e('actions-icon')}>
                 {props.actionsList.map(action => (
-                  <NIcon
+                  <AIcon
                     v-tooltip={action.title}
                     name={action.icon}
                     size={16}

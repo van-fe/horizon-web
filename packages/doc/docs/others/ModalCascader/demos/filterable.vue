@@ -45,17 +45,17 @@ const currentVal1 = ref<string[]>([]);
 const currentVal2 = ref<string[][]>([['component', 'basic', 'color']]);
 const checkStrictly = ref(true);
 const changeHandle = (value: boolean, option: NCascaderExtendOption) => {
-  console.log(value, option);
+  console.info(value, option);
 };
 
 const options = ref([]);
 
 function onFocus() {
-  console.log('focus');
+  console.info('focus');
 }
 
 function onBlur() {
-  console.log('blur');
+  console.info('blur');
 }
 
 onMounted(async()=>{

@@ -16,7 +16,7 @@ import { useAnchorEmits } from './composables/useEmits';
 import type { AnchorSlots } from './composables/useSlots';
 import { useAnchorSlots } from './composables/useSlots';
 import type { AnchorEmits } from './composables/useEmits';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { customScrollTo, getCustomOffset, getOffsetTop, getScrollTop } from './utils/base';
 import { deepSearch, genListByDomList } from './utils/extra';
@@ -28,7 +28,7 @@ import type { AnchorExposes } from './composables/useExposes';
 import { useAnchorExposes } from './composables/useExposes';
 import useSize from '~/utils/useSize';
 import { AnchorContextInjectedKey, AnchorPropsInjectedKey } from './utils/InjectedKeys';
-import { NIcon } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 import useLocaleLang from '~/utils/useLocaleLang';
 
 export interface AnchorContext {
@@ -56,7 +56,7 @@ export default defineComponent({
   emits: useAnchorEmits,
   slots: useAnchorSlots,
   exposes: useAnchorExposes,
-  setup(props, { slots, emit, expose }: LegoSetupContext<AnchorEmits, AnchorSlots, AnchorExposes>) {
+  setup(props, { slots, emit, expose }: HorizonWebSetupContext<AnchorEmits, AnchorSlots, AnchorExposes>) {
     const classHelper = new ComponentClassBlock('anchor');
     const { size } = toRefs(props);
 
@@ -306,7 +306,7 @@ export default defineComponent({
             )}
             onClick={collapseBtnHandle}
           >
-            <NIcon name={isCollapsed.value ? 'toggle_left' : 'toggle_right'} size={12} />
+            <AIcon name={isCollapsed.value ? 'toggle_left' : 'toggle_right'} size={12} />
             <NTooltip
               content={tooltipContent.value}
               disabled={tooltipDisabled.value}

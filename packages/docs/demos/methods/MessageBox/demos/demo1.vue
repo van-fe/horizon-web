@@ -15,9 +15,9 @@ export default defineComponent({
       $alert('这是一段文本', '提示', {
         type,
       }).then(() => {
-        console.log('OK clicked!');
+        console.info('OK clicked!');
       }).catch(() => {
-        console.log('Close clicked!');
+        console.info('Close clicked!');
       });
     };
     return {

@@ -12,7 +12,7 @@ import {
   withModifiers,
 } from 'vue';
 import { ComponentClassBlock, cls, useNamespace, isUndefined } from '@aurora/utils';
-import type { LegoSetupContext, LegoComponentInstance } from '@aurora/utils';
+import type { HorizonWebSetupContext, HorizonWebComponentInstance } from '@aurora/utils';
 import type { DropdownSubmenuProps } from './composables/useProps';
 import { useDropdownSubmenuProps } from './composables/useProps';
 import { useDropdownSubmenuEmits } from './composables/useEmits';
@@ -49,12 +49,12 @@ export default defineComponent({
   slots: useDropdownSubmenuSlots,
   setup(
     props: DropdownSubmenuProps,
-    { slots, emit }: LegoSetupContext<DropdownSubmenuEmits, DropdownSubmenuSlots>,
+    { slots, emit }: HorizonWebSetupContext<DropdownSubmenuEmits, DropdownSubmenuSlots>,
   ) {
     const uuid = nanoid();
     const classHelper = new ComponentClassBlock('dropdown-submenu');
 
-    const popoverDomRef = ref<LegoComponentInstance<typeof NPopover, PopoverExposes> | null>(null);
+    const popoverDomRef = ref<HorizonWebComponentInstance<typeof NPopover, PopoverExposes> | null>(null);
     const dropdownItemDomRef = ref<HTMLElement | null>(null);
 
     const popoverVisible = ref(false);

@@ -8,7 +8,7 @@ enum PluginResolverType {
   Directive = 'directive',
 }
 
-export interface LegoBaseResolverOption {
+export interface HorizonWebBaseResolverOption {
   /**
    * exclusions
    */
@@ -25,7 +25,7 @@ export interface LegoBaseResolverOption {
   importStyle?: 'scss' | 'css' | false;
 }
 
-export interface LegoResolverOption extends LegoBaseResolverOption {
+export interface HorizonWebResolverOption extends HorizonWebBaseResolverOption {
   /**
    * Whether directive is included
    * @default true
@@ -49,7 +49,7 @@ export interface LegoResolverOption extends LegoBaseResolverOption {
   usePresetStyle?: boolean;
 }
 
-const resolveComponents = (name: string, options: LegoResolverOption) => {
+const resolveComponents = (name: string, options: HorizonWebResolverOption) => {
   name = name.replace(new RegExp(`^${useNamespace()}`), 'N');
   const dirType = options.ssr ? 'lib' : 'es';
   const styleExt = options.importStyle ?? 'css';
@@ -124,7 +124,7 @@ const resolveComponents = (name: string, options: LegoResolverOption) => {
   }
 };
 
-const resolveDirectives = (name: string, options: LegoResolverOption) => {
+const resolveDirectives = (name: string, options: HorizonWebResolverOption) => {
   if (!options.directives) return;
 
   const dirType = options.ssr ? 'lib' : 'es';
@@ -166,7 +166,7 @@ const resolveDirectives = (name: string, options: LegoResolverOption) => {
   };
 };
 
-export function LegoPluginResolvers(options: LegoResolverOption = {}) {
+export function HorizonWebPluginResolvers(options: HorizonWebResolverOption = {}) {
   options = {
     directives: true,
     importStyle: 'css',
@@ -187,7 +187,7 @@ export function LegoPluginResolvers(options: LegoResolverOption = {}) {
   ];
 }
 
-export function LegoVitePluginStyleImportResolvers(options: LegoBaseResolverOption = {}): Lib {
+export function HorizonWebVitePluginStyleImportResolvers(options: HorizonWebBaseResolverOption = {}): Lib {
   options = {
     importStyle: 'css',
     ...options,
@@ -200,7 +200,7 @@ export function LegoVitePluginStyleImportResolvers(options: LegoBaseResolverOpti
 
       const dirType = options.ssr ? 'lib' : 'es';
 
-      const iconPattern = new RegExp(`^NIcon$`);
+      const iconPattern = new RegExp(`^AIcon$`);
       if (iconPattern.test(name)) {
         return '@aurora/icon/dist/style.css';
       }

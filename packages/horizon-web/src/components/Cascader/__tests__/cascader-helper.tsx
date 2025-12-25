@@ -1,5 +1,5 @@
 import type { CascaderProps } from '~/components/Cascader/src/composables/useProps';
-import type { MaybeRef, Capitalize, LegoComponentInstance } from '@aurora/utils';
+import type { MaybeRef, Capitalize, HorizonWebComponentInstance } from '@aurora/utils';
 import { Fragment, nextTick, ref, unref } from 'vue';
 import type { VueWrapper } from '@vue/test-utils';
 import { mount } from '@vue/test-utils';
@@ -29,7 +29,7 @@ export function createInstance<
   optionsType: 'default' | 'disabled' | 'unselectable' = 'default',
 ) {
   const modelValue = ref<ModelValueSingleType | ModelValueSingleType[]>();
-  const cascaderDomRef = ref<LegoComponentInstance<typeof NCascader, CascaderExposes>>();
+  const cascaderDomRef = ref<HorizonWebComponentInstance<typeof NCascader, CascaderExposes>>();
   const wrapper = mount(
     () => (
       <Fragment>

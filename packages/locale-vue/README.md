@@ -7,7 +7,7 @@ It is based on `@aurora/locale` and `vue@3+`.
 
 ## How to Install
 ```bash
-pnpm add @aurora/locales-vue
+bun add @aurora/locales-vue
 ```
 
 ## How to use

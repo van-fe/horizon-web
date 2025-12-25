@@ -1,7 +1,7 @@
 import type { OneDeepRecordType } from './utils';
 import fs from 'fs';
 import { resolve } from 'path';
-import { styleRoot } from '@aurora/utils/plugins';
+import { styleRoot } from '../../../../scripts/paths';
 
 export default function (tokensTree: OneDeepRecordType) {
   const basic = tokensTree.basic;

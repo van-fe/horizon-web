@@ -1,6 +1,6 @@
 import { computed, defineComponent, Fragment, provide, ref, toRefs, watch } from 'vue';
 import { ComponentClassBlock, cls, useNamespace, cssVariable } from '@aurora/utils';
-import type { LegoSetupContext, LegoComponentInstance } from '@aurora/utils';
+import type { HorizonWebSetupContext, HorizonWebComponentInstance } from '@aurora/utils';
 import { useTreeProps } from './composables/useProps';
 import { useTreeEmits } from './composables/useEmits';
 import { useTreeSlots } from './composables/useSlots';
@@ -65,7 +65,7 @@ export default defineComponent({
   exposes: useTreeExposes,
   setup(
     props: TreeProps,
-    { emit, slots, expose }: LegoSetupContext<TreeEmits, TreeSlots, TreeExposes>,
+    { emit, slots, expose }: HorizonWebSetupContext<TreeEmits, TreeSlots, TreeExposes>,
   ) {
     const classHelper = new ComponentClassBlock('tree');
 
@@ -106,11 +106,11 @@ export default defineComponent({
      * dom ref
      */
     const wrapperDomRef = ref<HTMLDivElement | null>(null);
-    const scrollerDomRef = ref<LegoComponentInstance<
+    const scrollerDomRef = ref<HorizonWebComponentInstance<
       typeof NVirtualScroller,
       VirtualScrollerExposes
     > | null>(null);
-    const shadowItemDomRef = ref<LegoComponentInstance<typeof TreeItem> | null>(null);
+    const shadowItemDomRef = ref<HorizonWebComponentInstance<typeof TreeItem> | null>(null);
 
     /**
      * tree helper

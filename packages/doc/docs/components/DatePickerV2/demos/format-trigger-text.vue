@@ -27,7 +27,7 @@ const value = ref();
 const value2 = ref();
 
 const formatTriggerText: DatePickerProps['formatTriggerText'] = (days, text) => {
-  console.log('format trigger text param: ', days, text);
+  console.info('format trigger text param: ', days, text);
 
   if (Array.isArray(days)) {
     return days.map(day => day?.format('YYYY-MM-DD HH:mm:ss')).join(' 至 ');

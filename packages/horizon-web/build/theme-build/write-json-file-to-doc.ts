@@ -1,6 +1,6 @@
 import type { OneDeepRecordType } from './utils';
 import fs from 'fs';
-import { docDemoThemesConfig, docThemesConfig } from '@aurora/utils/plugins';
+import { docDemoThemesConfig, docThemesConfig } from '../../../../scripts/paths';
 import { resolve } from 'path';
 import { snakeCase } from 'lodash';
 

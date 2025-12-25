@@ -285,7 +285,7 @@ export const useCascaderProps = declarePropType({
 
   /**
    * 自定义下拉按钮
-   * 可以传入 `n-icon` 的 `name`，也可以直接是 `svg`
+   * 可以传入 `a-icon` 的 `name`，也可以直接是 `svg`
    * 如果传入 `false`，即不展示图标
    * @version 2.4.0
    */
@@ -303,7 +303,7 @@ export const useCascaderProps = declarePropType({
 
   /**
    * 自定义单选场景下选中项图标，只对叶子节点起作用
-   * 默认：<NIcon name="check" />
+   * 默认：<AIcon name="check" />
    */
   selectedIcon: {
     type: IconPropType,

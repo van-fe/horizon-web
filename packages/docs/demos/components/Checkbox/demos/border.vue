@@ -44,7 +44,7 @@ const checkboxOptions = ref([
 ]);
 
 const selectCheckbox = (val: boolean) => {
-  console.log('selectCheckbox ==> ', val);
+  console.info('selectCheckbox ==> ', val);
 };
 </script>
 

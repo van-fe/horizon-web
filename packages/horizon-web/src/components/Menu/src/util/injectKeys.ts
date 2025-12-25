@@ -1,5 +1,5 @@
 import type { ComputedRef, InjectionKey, Ref } from 'vue';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { generatorInjectedKeyName } from '@aurora/utils';
 import type { MenuProps } from '../composables/useProps';
 import type { MenuEmits } from '../composables/useEmits';
@@ -14,7 +14,7 @@ export const NMenuPropsInjectKey = Symbol(
 ) as InjectionKey<MenuProps>;
 
 export const NMenuEmitInjectKey = Symbol(generatorInjectedKeyName('menu', 'emit')) as InjectionKey<
-  LegoSetupContext<MenuEmits>['emit']
+  HorizonWebSetupContext<MenuEmits>['emit']
 >;
 
 export const NMenuAppendChildInjectKey = Symbol(

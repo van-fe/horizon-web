@@ -14,7 +14,7 @@ const onSubmit = () => {
   formDomRef.value.validate().then(() => {
     $message.success('Success');
   }).catch((err: any) => {
-    console.log(err);
+    console.info(err);
   });
 };
 </script>

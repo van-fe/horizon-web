@@ -1,6 +1,6 @@
 # 主题色
 
-LEGO 提供了可以动态修改主题色的方式，效果参考如下 DEMO
+HORIZONWEB 提供了可以动态修改主题色的方式，效果参考如下 DEMO
 
 ### 注意事项
 
@@ -8,7 +8,7 @@ LEGO 提供了可以动态修改主题色的方式，效果参考如下 DEMO
 
 ### 使用方式
 
-LEGO 内部提供了主题切换工具，在 `ESModule` 中你可以通过如下的方式导入该工具：
+HORIZONWEB 内部提供了主题切换工具，在 `ESModule` 中你可以通过如下的方式导入该工具：
 
 ```typescript
 import { $themes } from '@aurora/horizon-web';
@@ -40,7 +40,7 @@ $themes.set({
 ```
 
 ### `remove`
-此方法是用来删除使用了 `set` 设置的 `style element` 的，如果不传入参数，则会把后来设置的 `:root` 删除（但lego中原本基础的变量不会改动）。
+此方法是用来删除使用了 `set` 设置的 `style element` 的，如果不传入参数，则会把后来设置的 `:root` 删除（但horizonweb中原本基础的变量不会改动）。
 
 使用方法如下：
 

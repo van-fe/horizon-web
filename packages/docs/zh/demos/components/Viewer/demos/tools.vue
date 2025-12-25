@@ -42,7 +42,7 @@ export default defineComponent({
         iconColor: 'white',
         title: 'More info',
         handler(url: string) {
-          console.log('Click info button', url);
+          console.info('Click info button', url);
         },
       } as NViewerCustomToolItem,
     ];

@@ -1,4 +1,4 @@
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { generatorInjectedKeyName } from '@aurora/utils';
 import type { ComputedRef, InjectionKey, Ref, VNode } from 'vue';
 import type { CascaderProps } from '../composables/useProps';
@@ -21,11 +21,11 @@ export const NCascaderPropsInjectKey = Symbol(
 
 export const NCascaderEmitsInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'emits'),
-) as InjectionKey<LegoSetupContext<CascaderEmits>['emit']>;
+) as InjectionKey<HorizonWebSetupContext<CascaderEmits>['emit']>;
 
 export const NCascaderSlotsInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'slots'),
-) as InjectionKey<LegoSetupContext<{}, CascaderSlots>['slots']>;
+) as InjectionKey<HorizonWebSetupContext<{}, CascaderSlots>['slots']>;
 
 export const NCascaderPopperVisibleInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'popper-visible'),

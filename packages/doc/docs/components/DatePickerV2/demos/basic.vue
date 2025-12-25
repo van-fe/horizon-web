@@ -59,15 +59,15 @@ const inputStyle = ref<DatePickerProps['inputStyle']>('normal');
 const disabled = ref(false);
 
 function onUpdate(val: unknown) {
-  console.log('update: ', val);
+  console.info('update: ', val);
 }
 
 function onChange(val: unknown) {
-  console.log('change: ', val);
+  console.info('change: ', val);
 }
 
 function onPick(val: unknown) {
-  console.log('pick: ', val);
+  console.info('pick: ', val);
 }
 
 onMounted(() => {

@@ -11,7 +11,7 @@ import {
   nextTick,
 } from 'vue';
 // import { ComponentClassBlock } from '@aurora/utils';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { EventEmitter, useNamespace } from '@aurora/utils';
 import type { NRecycleScrollerInstance } from './composables/useProps';
 import { useVirtualScrollerProps } from './composables/useProps';
@@ -46,7 +46,7 @@ export default defineComponent({
       slots,
       expose,
       attrs,
-    }: LegoSetupContext<VirtualScrollerEmits, VirtualScrollerSlots, VirtualScrollerExposes>,
+    }: HorizonWebSetupContext<VirtualScrollerEmits, VirtualScrollerSlots, VirtualScrollerExposes>,
   ) {
     // refs
     const elRef = ref<HTMLDivElement | null | undefined>(null);
@@ -91,7 +91,7 @@ export default defineComponent({
           size,
         });
       }
-      // console.log(Object.entries(vscrollData.sizes).map(item => `${item[0]}:${item[1]}`).join(' | '));
+      // console.info(Object.entries(vscrollData.sizes).map(item => `${item[0]}:${item[1]}`).join(' | '));
       return result;
     });
 
@@ -174,7 +174,7 @@ export default defineComponent({
               width = entry.contentRect.width;
               height = entry.contentRect.height;
             }
-            // console.log(entry.target.$_vs_id, height);
+            // console.info(entry.target.$_vs_id, height);
             entry.target.$_vs_onResize(entry.target.$_vs_id!, width, height);
           }
         } // end for

@@ -7,4 +7,4 @@ if (__dirname.includes('components')) {
   );
 }
 
-shell.exec(`pnpm run gitcase`);
+shell.exec(`bun run gitcase`);

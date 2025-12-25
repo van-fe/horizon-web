@@ -29,7 +29,7 @@ const packageJsonOrigin: Record<string, string> = {};
 const packagesPath = resolve(__dirname, '../packages');
 const packageJsonModified: Record<string, string> = {};
 
-const rmLego = () => {
+const rmHorizonWeb = () => {
   // shell.exec(`rm -rf ${resolve(__dirname, './.horizon-web')}`);
 };
 
@@ -46,7 +46,7 @@ const resetPackageVersion = () => {
 
 async function ensureVersion() {
   if (!fs.existsSync(resolve(__dirname, './.horizon-web'))) {
-    rmLego();
+    rmHorizonWeb();
     shell.exec(
       `git clone -b keep-version git@git.nevint.com:horizon-web/horizon-web.git ${resolve(__dirname, './.horizon-web')}`,
     );
@@ -56,12 +56,12 @@ async function ensureVersion() {
 
   if (!confirm) {
     throw new Error(
-      `Please confirm ./versions.json file is modified. Then enter 'pnpm run pub -- --confirm'.`,
+      `Please confirm ./versions.json file is modified. Then enter 'bun run pub -- --confirm'.`,
     );
   }
 
   for (const pkg of publishPackages) {
-    // console.log(
+    // console.info(
     //   resolve(packagesPath, pkg, 'package.json'),
     //   fs.readFileSync(resolve(packagesPath, pkg, 'package.json'), 'utf-8'),
     // );
@@ -122,7 +122,7 @@ async function ensureVersion() {
 function publish() {
   Object.keys(packageJsonModified).forEach(pkgName => {
     shell.cd(resolve(__dirname, '../packages', pkgName));
-    shell.exec(`npm publish --registry https://npmmirror.nioint.com/ ${tag ? `--tag ${tag}` : ''}`);
+    shell.exec(`npm publish --registry https://registry.npmmirror.com/ ${tag ? `--tag ${tag}` : ''}`);
   });
 }
 
@@ -135,7 +135,7 @@ function writeVersionFileAndPush(versions: unknown) {
       './.horizon-web',
     )} && git add . && git commit -m "release: update version" && git push`,
   );
-  rmLego();
+  rmHorizonWeb();
 }
 
 function checkPublishedVersion() {
@@ -149,7 +149,7 @@ function checkPublishedVersion() {
     const npmMirrorVersion = shell.exec(
       `npm view @aurora/${pkgName} version ${
         tag ? `--tag ${tag}` : ''
-      } --registry https://npmmirror.nioint.com/`,
+      } --registry https://registry.npmmirror.com/`,
       { silent: true },
     );
 
@@ -176,6 +176,6 @@ ensureVersion().then(() => {
 
 process.on('uncaughtException', err => {
   console.error(chalk.bgRed(err));
-  rmLego();
+  rmHorizonWeb();
   resetPackageVersion();
 });

@@ -1,6 +1,6 @@
 import { computed, defineComponent, Fragment } from 'vue';
 import { useDividerProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, sizeUnitTransform, useNamespace } from '@aurora/utils';
 import type { DividerSlots } from './composables/useSlots';
 import { useDividerSlots } from './composables/useSlots';
@@ -10,7 +10,7 @@ export default defineComponent({
   desc: '分割线用于分割内容\n有两种颜色的分割线，通常使用常规分割线，特殊情况下，如分割内部的元素或区块，可使用辅助分割线（次要分割线）',
   props: useDividerProps,
   slots: useDividerSlots,
-  setup(props, { slots }: LegoSetupContext<{}, DividerSlots>) {
+  setup(props, { slots }: HorizonWebSetupContext<{}, DividerSlots>) {
     const classHelper = new ComponentClassBlock('divider');
 
     const borderStyle = computed(() => {

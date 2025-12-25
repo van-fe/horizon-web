@@ -1,15 +1,13 @@
 import * as Vue from 'vue';
 import { createApp } from 'vue';
-import { NIcon, NIconSVG } from '@aurora/icon';
-import { NTable } from '@aurora/horizon-web-table';
+import { AIcon } from '@aurora/icon';
 import '@aurora/horizon-web-table/dist/style.css';
 import App from './App.vue';
 import { router } from './routes';
 import './styles/index.scss';
 import './styles/forward.scss';
 import { setCssVariableUseVersion } from '@aurora/utils';
-import Lego from '@aurora/horizon-web';
-import LegoPad from '@aurora/horizon-web-pad';
+import HorizonWeb from '@aurora/horizon-web';
 import DeprecatedTips from '~/components/Common/DeprecatedTips.vue';
 import VersionTips from '~/components/Common/VersionTips.vue';
 import CopyBtn from '~/components/Common/CopyBtn.vue';
@@ -24,14 +22,11 @@ import CopyBtn from '~/components/Common/CopyBtn.vue';
 setCssVariableUseVersion(false);
 
 const app = createApp(App)
-  .component('NIcon', NIcon)
-  .component('NIconSVG', NIconSVG)
-  .component('NTable', NTable)
+  .component('AIcon', AIcon)
   .component('DeprecatedTips', DeprecatedTips)
   .component('VersionTips', VersionTips)
   .component('CopyBtn', CopyBtn)
-  .use(Lego)
-  .use(LegoPad)
+  .use(HorizonWeb)
   .use(router);
 
 app.mount('#app');

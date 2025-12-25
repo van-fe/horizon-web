@@ -4,15 +4,15 @@ import { ref } from 'vue';
 const value = ref('');
 
 function onInput(value: number | string | null) {
-  console.log('input: ', value);
+  console.info('input: ', value);
 }
 
 function onChange(value: number | string | null | undefined) {
-  console.log('change: ', value);
+  console.info('change: ', value);
 }
 
 function onUpdate(value: number | string | null | undefined) {
-  console.log('update: ', value);
+  console.info('update: ', value);
 }
 </script>
 

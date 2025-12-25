@@ -18,7 +18,7 @@ import {
   isDefined,
   isUndefined,
 } from '@aurora/utils';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { useTagGroupProps } from './composables/useProps';
 import { useTagGroupEmits } from './composables/useEmits';
 import { useTagGroupSlots } from './composables/useSlots';
@@ -59,7 +59,7 @@ export default defineComponent({
   exposes: useTagGroupExposes,
   setup(
     props: TagGroupProps,
-    { emit, slots, expose }: LegoSetupContext<TagGroupEmits, TagGroupSlots, TagGroupExposes>,
+    { emit, slots, expose }: HorizonWebSetupContext<TagGroupEmits, TagGroupSlots, TagGroupExposes>,
   ) {
     const classHelper = new ComponentClassBlock('tag-group');
 
@@ -187,7 +187,7 @@ export default defineComponent({
     const useCollapse = ref(collapseProp.value);
     const collapseEnable = computed(() => collapseProp.value && useCollapse.value);
     const needRenderedItemsLength = ref<number>(0);
-    const getNeedRenderedItems = (slots: LegoSetupContext<{}, TagGroupSlots>['slots']) => {
+    const getNeedRenderedItems = (slots: HorizonWebSetupContext<{}, TagGroupSlots>['slots']) => {
       const result = slots.default
         ? getSymbolNodeChildren(slots.default).map(curr => cloneVNode(curr))
         : [];

@@ -1,6 +1,6 @@
 import { defineComponent, inject, onBeforeUnmount, onMounted } from 'vue';
 import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { TableColumnProps } from './composables/useProps';
 import { useTableColumnProps } from './composables/useProps';
 import type { TableColumnEmits } from './composables/useEmits';
@@ -32,7 +32,7 @@ export default defineComponent({
       emit,
       slots,
       expose,
-    }: LegoSetupContext<TableColumnEmits, TableColumnSlots, TableColumnExposes>,
+    }: HorizonWebSetupContext<TableColumnEmits, TableColumnSlots, TableColumnExposes>,
   ) {
     const uuid = nanoid();
     const classHelper = new ComponentClassBlock('table-column-v3');

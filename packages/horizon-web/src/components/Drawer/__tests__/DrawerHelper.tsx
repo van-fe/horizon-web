@@ -1,6 +1,6 @@
 import type { DrawerProps } from '~/components/Drawer/src/composables/useProps';
 import type { DrawerEmits } from '~/components/Drawer/src/composables/useEmits';
-import type { LegoComponentInstance, MaybeRef } from '@aurora/utils';
+import type { HorizonWebComponentInstance, MaybeRef } from '@aurora/utils';
 import NDrawer from '~/components/Drawer/src/Drawer';
 import type { Mock } from 'vitest';
 import type { SetupContext } from 'vue';
@@ -24,8 +24,8 @@ export default class DrawerHelper<
   public slots?: Partial<SetupContext<{}, DrawerSlots>['slots']>;
   public outer?: () => JSX.Element;
   public wrapper!: VueWrapper<any, any>;
-  public element!: VueWrapper<LegoComponentInstance<typeof NDrawer, DrawerExposes>>;
-  public openButton!: VueWrapper<LegoComponentInstance<typeof NButton, ButtonExposes>>;
+  public element!: VueWrapper<HorizonWebComponentInstance<typeof NDrawer, DrawerExposes>>;
+  public openButton!: VueWrapper<HorizonWebComponentInstance<typeof NButton, ButtonExposes>>;
 
   constructor(
     propsOrEmits?: Partial<
@@ -98,7 +98,7 @@ export default class DrawerHelper<
     this.openButton = this.wrapper
       .findAllComponents(NButton)
       .find(comp => comp.attributes('id') === 'open') as VueWrapper<
-      LegoComponentInstance<typeof NButton, ButtonExposes>
+      HorizonWebComponentInstance<typeof NButton, ButtonExposes>
     >;
   }
 

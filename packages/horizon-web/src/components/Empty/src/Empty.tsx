@@ -3,7 +3,7 @@ import type { ComputedRef, CSSProperties } from 'vue';
 import { useEmptyProps } from './composables/useProps';
 import type { EmptySlots } from './composables/useSlots';
 import { useEmptySlots } from './composables/useSlots';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
 import { GlobalSizeInjectedKey } from '~/components/Application/src/utils/injectedKeys';
 import type { NApplicationSizeType } from '~/components/Application/src/composables/useProps';
@@ -14,7 +14,7 @@ export default defineComponent({
   desc: '空状态时的占位提示，并提供多场景可供使用',
   props: useEmptyProps,
   slots: useEmptySlots,
-  setup(props, { slots }: LegoSetupContext<{}, EmptySlots>) {
+  setup(props, { slots }: HorizonWebSetupContext<{}, EmptySlots>) {
     const classHelper = new ComponentClassBlock('empty');
 
     // size, support global size

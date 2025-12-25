@@ -1,6 +1,6 @@
 import { computed, ref } from 'vue';
 import type { App, ComputedRef, InjectionKey, Plugin } from 'vue';
-import type { LegoOption } from '~/makeInstaller';
+import type { HorizonWebOption } from '~/makeInstaller';
 import type { EnGB } from '~/locales/en-GB';
 import type { LocalOptionType } from '@aurora/locale-vue';
 import { LocaleSupportLang, VueLocaleService } from '@aurora/locale-vue';
@@ -15,7 +15,7 @@ const LOCALE_PROVIDED_KEY = Symbol.for('LOCALE_PROVIDED_KEY');
 
 export const defaultLocale = ref<VueLocaleService | null>(null);
 
-export default function localableProvide(app: App, options?: LegoOption): App {
+export default function localableProvide(app: App, options?: HorizonWebOption): App {
   if (app[LOCALE_PROVIDED_KEY]) return app;
 
   app[LOCALE_PROVIDED_KEY] = true;

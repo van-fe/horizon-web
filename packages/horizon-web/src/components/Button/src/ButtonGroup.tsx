@@ -1,7 +1,7 @@
 import { defineComponent, provide, toRefs } from 'vue';
 import type { ButtonGroupProps } from './composables/useProps';
 import { useButtonGroupProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import type { ButtonGroupSlots } from './composables/useSlots';
 import { useButtonGroupSlots } from './composables/useSlots';
@@ -12,7 +12,7 @@ export default defineComponent({
   name: `${useNamespace()}ButtonGroup`,
   props: useButtonGroupProps,
   slots: useButtonGroupSlots,
-  setup(props: ButtonGroupProps, { slots }: LegoSetupContext<{}, ButtonGroupSlots>) {
+  setup(props: ButtonGroupProps, { slots }: HorizonWebSetupContext<{}, ButtonGroupSlots>) {
     const classHelper = new ComponentClassBlock('button-group');
 
     const { size } = toRefs(props);

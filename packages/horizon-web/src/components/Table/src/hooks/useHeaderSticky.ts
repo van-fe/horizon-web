@@ -61,7 +61,7 @@ export default function useHeaderSticky(
   //   stopIntersectionObserver = useIntersectionObserver(
   //     wrapperDomRef,
   //     (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
-  //       console.log(entries, observer);
+  //       console.info(entries, observer);
   //     },
   //     {
   //       threshold: [0, 0.5, 1],

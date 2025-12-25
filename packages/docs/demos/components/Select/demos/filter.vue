@@ -7,7 +7,7 @@
           <template #content>
             默认的规则为 `label.toLowerCase().includes(value)`，label 是传入的 option 上的 label/description 属性值，value 是输入的内容，默认规则是忽略大小写进行字符串匹配的
           </template>
-          <n-icon name="help" />
+          <a-icon name="help" />
         </n-tooltip>
       </div>
       <n-select v-model="values1" :filterable="true" :multiple="true" :to-body="false" :fit-content-input-min-width="1">
@@ -27,7 +27,7 @@
           <template #content>
             这个示例展示的是自定义过滤方法，过滤方法中是大小写敏感的字符串匹配
           </template>
-          <n-icon name="help" />
+          <a-icon name="help" />
         </n-tooltip>
       </div>
       <n-select v-model="value2" :filter-option="filterOption" :clearable="true" placeholder="请选择" :to-body="false" @input="onInput">
@@ -137,7 +137,7 @@ const dropdownVisibleChange = (visible: boolean) => {
 };
 
 function onInput(val: string) {
-  console.log('input: ', val);
+  console.info('input: ', val);
 }
 </script>
 

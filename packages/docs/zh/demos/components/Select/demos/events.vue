@@ -52,8 +52,8 @@ export default defineComponent({
 
     const changeHandle = (value: any, option: any) => {
       console.group('change');
-      console.log(value);
-      console.log(option);
+      console.info(value);
+      console.info(option);
       console.groupEnd();
     };
 
@@ -69,19 +69,19 @@ export default defineComponent({
         return label.includes(input.toUpperCase());
       },
       blur() {
-        console.log('blur');
+        console.info('blur');
       },
       focus() {
-        console.log('focus');
+        console.info('focus');
       },
       clear() {
-        console.log('clear');
+        console.info('clear');
       },
       deselect(value: any) {
-        console.log('deselect', value);
+        console.info('deselect', value);
       },
       dropdownVisibleChange(visible: boolean) {
-        console.log('dropdownVisibleChange', visible);
+        console.info('dropdownVisibleChange', visible);
       },
 
       changeHandle,

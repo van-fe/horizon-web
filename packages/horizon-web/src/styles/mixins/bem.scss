@@ -208,11 +208,12 @@
 @mixin prev($spec-selector: '', $element, $has-cascade: false) {
   $current-selector: '';
   $value: list.nth(list.nth(&, 1), 1);
-  $root: if(
-    $has-cascade,
-    &,
-    string.slice($value, 0, string.index($value, ' ') or string.length($value))
-  );
+  $root: null;
+  @if $has-cascade {
+    $root: &;
+  } @else {
+    $root: string.slice($value, 0, string.index($value, ' ') or string.length($value));
+  }
   $-element: $element !global;
 
   @each $unit in $element {

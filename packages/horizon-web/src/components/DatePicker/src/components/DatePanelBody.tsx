@@ -1,5 +1,5 @@
 import { computed, defineComponent, inject, ref } from 'vue';
-import type { LegoComponentInstance, LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebComponentInstance, HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock } from '@aurora/utils';
 import type { DatePickerDatePanelProps } from '../composables/useProps';
 import { useDatePickerDatePanelProps } from '../composables/useProps';
@@ -35,18 +35,18 @@ export default defineComponent({
     {
       emit,
       expose,
-    }: LegoSetupContext<DatePickerDatePanelEmits, {}, DatePickerDatePanelBodyExposes>,
+    }: HorizonWebSetupContext<DatePickerDatePanelEmits, {}, DatePickerDatePanelBodyExposes>,
   ) {
     const classHelper = new ComponentClassBlock('date-picker-panel-body');
 
     const yearDomRef =
-      ref<LegoComponentInstance<typeof YearPanel, DatePickerDatePanelComponentExposes>>();
+      ref<HorizonWebComponentInstance<typeof YearPanel, DatePickerDatePanelComponentExposes>>();
     const monthDomRef =
-      ref<LegoComponentInstance<typeof MonthPanel, DatePickerDatePanelComponentExposes>>();
+      ref<HorizonWebComponentInstance<typeof MonthPanel, DatePickerDatePanelComponentExposes>>();
     const dayDomRef =
-      ref<LegoComponentInstance<typeof DayPanel, DatePickerDatePanelComponentExposes>>();
+      ref<HorizonWebComponentInstance<typeof DayPanel, DatePickerDatePanelComponentExposes>>();
     const timePanelDomRef =
-      ref<LegoComponentInstance<typeof TimePanel, TimePickerTimePanelExposes>>();
+      ref<HorizonWebComponentInstance<typeof TimePanel, TimePickerTimePanelExposes>>();
 
     const parentProps = inject(NDatePickerPropsInjectKey)!;
     const parentEmits = inject(NDatePickerEmitsInjectKey)!;

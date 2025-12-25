@@ -1,8 +1,8 @@
 import { computed, defineComponent, toRefs } from 'vue';
 import { useBadgeProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { slotVNodes, ComponentClassBlock, useNamespace } from '@aurora/utils';
-import { NIcon } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 import type { BadgeSlots } from './composables/useSlots';
 import { useBadgeSlots } from './composables/useSlots';
 
@@ -10,11 +10,11 @@ export default defineComponent({
   name: `${useNamespace()}Badge`,
   desc: '元素上的状态或数字标记',
   components: {
-    NIcon,
+    AIcon,
   },
   props: useBadgeProps,
   slots: useBadgeSlots,
-  setup(props, { slots }: LegoSetupContext<{}, BadgeSlots>) {
+  setup(props, { slots }: HorizonWebSetupContext<{}, BadgeSlots>) {
     const {
       type: typeRef,
       content: contentRef,
@@ -58,7 +58,7 @@ export default defineComponent({
             >
               {typeRef.value === 'num' && <span>{numDisplayRef.value}</span>}
               {typeRef.value === 'icon' && (
-                <NIcon
+                <AIcon
                   name={contentRef.value.toString()}
                   size={iconSizeRef.value}
                   color={iconColorRef.value}

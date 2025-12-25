@@ -1,6 +1,6 @@
 import { ref, defineComponent, toRefs, computed, watch, inject, provide, nextTick } from 'vue';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { useTransferProps } from './composables/useProps';
 import type { CheckboxUnionType, TransferDataProps, TransferProps } from './composables/useProps';
 import { useTransferEmits } from './composables/useEmits';
@@ -32,7 +32,7 @@ export default defineComponent({
   exposes: useTransferExposes,
   setup(
     props: TransferProps,
-    { emit, slots }: LegoSetupContext<TransferEmits, TransferSlots>,
+    { emit, slots }: HorizonWebSetupContext<TransferEmits, TransferSlots>,
   ) {
     const {
       data: dataProp,

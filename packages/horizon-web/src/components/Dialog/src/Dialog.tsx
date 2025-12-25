@@ -1,5 +1,5 @@
-import { IconClose, NIcon } from '@aurora/icon';
-import type { LegoSetupContext } from '@aurora/utils';
+import { IconClose, AIcon } from '@aurora/icon';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import {
   ComponentClassBlock,
   getUnitString,
@@ -44,7 +44,7 @@ export default defineComponent({
   desc: '对话框是一种模态窗口，干扰性比较强。通常用来展示用户当前需要的或用户必须关注的信息或操作，其他情况不建议使用弹出框，可考虑 Message 等其他非模态窗口',
   components: {
     NButton,
-    NIcon,
+    AIcon,
     IconClose,
     NTransition,
   },
@@ -53,7 +53,7 @@ export default defineComponent({
   emits: useDialogEmits,
   slots: useDialogSlots,
   exposes: useDialogExposes,
-  setup(props, { slots, emit, attrs }: LegoSetupContext<DialogEmits, DialogSlots, DialogExposes>) {
+  setup(props, { slots, emit, attrs }: HorizonWebSetupContext<DialogEmits, DialogSlots, DialogExposes>) {
     // const locale = inject(localeInjectKey, defaultLocale);
 
     const {
@@ -204,7 +204,7 @@ export default defineComponent({
           <div class={classHelper.e('inner')}>
             {iconNameRef.value && (
               <div class={classHelper.e('icon-box')}>
-                <NIcon
+                <AIcon
                   class={classHelper.e('icon')}
                   name={iconNameRef.value}
                   size={iconSizeRef.value}

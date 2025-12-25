@@ -1,7 +1,7 @@
 import type { VNode } from 'vue';
 import { onMounted, defineComponent, toRefs, provide, ref, watch } from 'vue';
 import { useTimelineProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, isObject, slotAdapter, useNamespace } from '@aurora/utils';
 import type { TimelineSlots } from './composables/useSlots';
 import { useTimelineSlots } from './composables/useSlots';
@@ -14,7 +14,7 @@ export default defineComponent({
   desc: '垂直展示的时间流信息，例如对任务跟踪、操作历史的回顾',
   props: useTimelineProps,
   slots: useTimelineSlots,
-  setup(props, { slots }: LegoSetupContext<{}, TimelineSlots>) {
+  setup(props, { slots }: HorizonWebSetupContext<{}, TimelineSlots>) {
     const { sort: sortProp, first: firstProp, last: lastProp, v2: v2Prop } = toRefs(props);
     const classHelper = new ComponentClassBlock('timeline');
     const showItem = ref<VNode[] | undefined>([]);

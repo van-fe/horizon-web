@@ -34,7 +34,7 @@ const formData = ref({
 
 const submit = () => {
   formRef.value?.validate().then((res) => {
-    console.log('formData:', formData.value, res);
+    console.info('formData:', formData.value, res);
     $message.success('Submit');
   });
 };

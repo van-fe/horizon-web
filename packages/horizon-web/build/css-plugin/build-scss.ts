@@ -1,5 +1,5 @@
 import path from 'path';
-import { componentRoot, directiveRoot, legoSourceRoot, methodsRoot } from '@aurora/utils/plugins';
+import { componentRoot, directiveRoot, horizonwebSourceRoot, methodsRoot } from '../../../../scripts/paths';
 import * as sass from 'sass';
 import type { PluginDependencies, PluginType } from './vite.css.plugin';
 import fs from 'fs-extra';
@@ -8,11 +8,11 @@ import { rollupTheme } from '../rollup-theme';
 function getPluginStyleIndexPath(pluginName: string, type: PluginType, relativeFrom: string) {
   return path.relative(
     relativeFrom,
-    path.resolve(legoSourceRoot, type, pluginName, 'src/style/index.scss'),
+    path.resolve(horizonwebSourceRoot, type, pluginName, 'src/style/index.scss'),
   );
 }
 
-function getScssImportString(pluginName: string, type: PluginType, relativeFrom = legoSourceRoot) {
+function getScssImportString(pluginName: string, type: PluginType, relativeFrom = horizonwebSourceRoot) {
   const importPath = getPluginStyleIndexPath(pluginName, type, relativeFrom);
 
   if (fs.pathExistsSync(path.resolve(relativeFrom, importPath))) {
@@ -98,7 +98,7 @@ export default async ({
     buildCssFile();
     outputDirs.forEach(dir => {
       buildScssFile(
-        path.resolve(dir, path.resolve(legoSourceRoot, info.type, name, 'src/style')),
+        path.resolve(dir, path.resolve(horizonwebSourceRoot, info.type, name, 'src/style')),
         dir,
       );
     });

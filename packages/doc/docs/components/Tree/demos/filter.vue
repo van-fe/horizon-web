@@ -36,7 +36,7 @@ const filterToHideChildren = ref(true);
 const baseTreeData = ref([]);
 
 function handleFilterValue(value: string) {
-  console.log('filterValue:', value);
+  console.info('filterValue:', value);
 }
 
 onMounted(() => {

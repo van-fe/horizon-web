@@ -1,6 +1,6 @@
 /**
  * styles
- * This file is generated automatically by script: pnpm run build:index
+ * This file is generated automatically by script: bun run build:index
  */
 
 @forward './mixins';
@@ -28,7 +28,6 @@
 @forward '../components/AutoComplete/src/style/index';
 @forward '../components/Empty/src/style/index';
 @forward '../components/Progress/src/style/index';
-@forward '../components/TimePicker/src/style/index';
 @forward '../components/Picker/src/style/index';
 @forward '../components/Input/src/style/index';
 @forward '../components/Alert/src/style/index';
@@ -36,20 +35,17 @@
 @forward '../components/Layout/src/style/index';
 @forward '../components/VideoPlayer/src/style/index';
 @forward '../components/Segmented/src/style/index';
-@forward '../components/Upload/src/style/index';
 @forward '../components/DatePicker/src/style/index';
 @forward '../components/Panels/src/style/index';
 @forward '../components/Cascader/src/style/index';
 @forward '../components/Count/src/style/index';
 @forward '../components/Checkbox/src/style/index';
 @forward '../components/Transfer/src/style/index';
-@forward '../components/DatePicker/src/style/index';
 @forward '../components/Descriptions/src/style/index';
 @forward '../components/Slider/src/style/index';
 @forward '../components/PageHeader/src/style/index';
 @forward '../components/Collapse/src/style/index';
 @forward '../components/InputNumber/src/style/index';
-@forward '../components/Transfer/src/style/index';
 @forward '../components/Image/src/style/index';
 @forward '../components/Time/src/style/index';
 @forward '../components/Dialog/src/style/index';

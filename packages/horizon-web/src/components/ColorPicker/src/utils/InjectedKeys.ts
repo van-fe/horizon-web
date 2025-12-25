@@ -1,7 +1,7 @@
 import type { InjectionKey, SetupContext } from 'vue';
 import type ColorPickerColor from './ColorPickerColor';
 import type { ColorPickerProps as ColorPickerPropsType } from '../composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { generatorInjectedKeyName } from '@aurora/utils';
 import type { ColorPickerSlots } from '~/components/ColorPicker/src/composables/useSlots';
 import type { ColorPickerEmits } from '~/components/ColorPicker/src/composables/useEmits';
@@ -28,7 +28,7 @@ export const ColorPickerEmit = Symbol(
 
 export const ColorPickerSlotsInjectedKey = Symbol(
   generatorInjectedKeyName('color-picker', 'slots'),
-) as InjectionKey<LegoSetupContext<{}, ColorPickerSlots>['slots']>;
+) as InjectionKey<HorizonWebSetupContext<{}, ColorPickerSlots>['slots']>;
 
 export const ColorPickerOnCancel = Symbol('[horizon-web color-picker] on-cancel') as InjectionKey<
   () => void

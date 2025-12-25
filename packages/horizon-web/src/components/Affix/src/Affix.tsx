@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'vue';
 import { defineComponent, Fragment, onBeforeUnmount, onMounted, ref, toRefs, watch } from 'vue';
 import { useNamespace, ComponentClassBlock } from '@aurora/utils';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { useAffixProps } from './composables/useProps';
 import { useAffixEmits } from './composables/useEmits';
 import { useAffixSlots } from './composables/useSlots';
@@ -29,7 +29,7 @@ export default defineComponent({
   exposes: useAffixExposes,
   setup(
     props: AffixProps,
-    { slots, expose, attrs }: LegoSetupContext<AffixEmits, AffixSlots, AffixExposes>,
+    { slots, expose, attrs }: HorizonWebSetupContext<AffixEmits, AffixSlots, AffixExposes>,
   ) {
     const classHelper = new ComponentClassBlock('affix');
 

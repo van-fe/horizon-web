@@ -54,10 +54,10 @@ import { IconArrowRight } from '@aurora/icon';
 const width = ref(600);
 
 function onItemClick(prop: ExtractPropTypes<typeof useBreadcrumbItemProps>, evt: MouseEvent) {
-  console.log('item-click: ', prop, evt);
+  console.info('item-click: ', prop, evt);
 }
 
 function onClick(evt: MouseEvent) {
-  console.log('click:', evt);
+  console.info('click:', evt);
 }
 </script>

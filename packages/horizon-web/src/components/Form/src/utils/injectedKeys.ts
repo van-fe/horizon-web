@@ -4,7 +4,7 @@ import type {
   FormProps,
   FormItemProps,
 } from '~/components/Form/src/composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { generatorInjectedKeyName } from '@aurora/utils';
 import type { FormEmits } from '../composables/useEmits';
 import type { FormItemSlots } from '../composables/useSlots';
@@ -39,4 +39,4 @@ export const NFormItemPropsInjectedKey = Symbol.for(
 
 export const NFormItemSlotsInjectedKey = Symbol.for(
   generatorInjectedKeyName('form-item', 'slots'),
-) as InjectionKey<LegoSetupContext<{}, FormItemSlots>['slots']>;
+) as InjectionKey<HorizonWebSetupContext<{}, FormItemSlots>['slots']>;

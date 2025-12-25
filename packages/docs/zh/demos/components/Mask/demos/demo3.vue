@@ -14,11 +14,11 @@ export default defineComponent({
   setup() {
     const show = ref(false);
     const open = function () {
-      console.log('打开');
+      console.info('打开');
       show.value = true;
     };
     const close = function () {
-      console.log('关闭');
+      console.info('关闭');
       show.value = false;
     };
     return {

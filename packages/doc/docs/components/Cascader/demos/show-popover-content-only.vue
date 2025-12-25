@@ -30,21 +30,21 @@
 import { onMounted, ref } from 'vue';
 import { CascaderExposes, NCascader } from '@aurora/horizon-web';
 import type { NCascaderExtendOption, NCascaderModelValueType } from '@aurora/horizon-web';
-import { LegoComponentInstance } from '@aurora/utils';
+import { HorizonWebComponentInstance } from '@aurora/utils';
 
-const cascaderDomRef1 = ref<LegoComponentInstance<typeof NCascader, CascaderExposes>>();
-const cascaderDomRef2 = ref<LegoComponentInstance<typeof NCascader, CascaderExposes>>();
+const cascaderDomRef1 = ref<HorizonWebComponentInstance<typeof NCascader, CascaderExposes>>();
+const cascaderDomRef2 = ref<HorizonWebComponentInstance<typeof NCascader, CascaderExposes>>();
 
 const currentVal1 = ref<string[]>(["guide", "navigation", "side nav"]);
 const currentVal2 = ref<string[][]>([]);
 const baseData = ref([]);
 
 const changeHandle = (selectOrDeselect: boolean | undefined, option?: NCascaderExtendOption) => {
-  console.log('change: ', selectOrDeselect, option);
+  console.info('change: ', selectOrDeselect, option);
 };
 
 const updateHandle = (value: NCascaderModelValueType) => {
-  console.log('update: ', value);
+  console.info('update: ', value);
 };
 
 onMounted(async()=>{

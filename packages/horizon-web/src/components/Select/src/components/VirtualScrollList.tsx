@@ -1,5 +1,5 @@
 import { defineComponent, inject, provide, ref } from 'vue';
-import { LegoSetupContext, useNamespace } from '@aurora/utils';
+import { HorizonWebSetupContext, useNamespace } from '@aurora/utils';
 import type { NRecycleScrollerInstance } from '~/components/VirtualScroller/src/composables/useProps';
 import NVirtualScroller from '~/components/VirtualScroller/src/VirtualScroller';
 import NVirtualScrollerItem from '~/components/VirtualScroller/src/VirtualScrollerItem';
@@ -18,7 +18,7 @@ export default defineComponent({
   name: `${useNamespace()}VirtualScrollList`,
   emits: useVirtualScrollListEmits,
   exposes: useSelectVirtualScrollListExposes,
-  setup(_, { emit, expose }: LegoSetupContext<VirtualScrollListEmits, {}, SelectVirtualScrollListExposes>) {
+  setup(_, { emit, expose }: HorizonWebSetupContext<VirtualScrollListEmits, {}, SelectVirtualScrollListExposes>) {
     const parentProps = inject(NSelectPropsInjectKey)!;
     const visibleOptions = inject(NSelectVisibleOptionsInjectKey)!;
     const modelValueSet = inject(NSelectModelValueInjectKey)!;

@@ -60,6 +60,6 @@ const selectOptions = [
 ];
 
 const changeHandle = () => {
-  console.log(value1.value);
+  console.info(value1.value);
 };
 </script>

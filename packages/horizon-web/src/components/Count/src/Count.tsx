@@ -3,7 +3,7 @@ import { useFormatNumber } from './composables/useTools';
 import { useCountProps } from './composables/useProps';
 import { useCountEmits } from './composables/useEmits';
 import type { CountEmits } from './composables/useEmits';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import type { CountSlots } from './composables/useSlots';
 import { useCountSlots } from './composables/useSlots';
@@ -14,7 +14,7 @@ export default defineComponent({
   props: useCountProps,
   emits: useCountEmits,
   slots: useCountSlots,
-  setup(props, { slots, emit }: LegoSetupContext<CountEmits, CountSlots>) {
+  setup(props, { slots, emit }: HorizonWebSetupContext<CountEmits, CountSlots>) {
     const {
       prefix: prefixProp,
       suffix: suffixProp,

@@ -1,4 +1,4 @@
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { isDefined, safelyGetEventTarget } from '@aurora/utils';
 import type { SelectEmits } from '../composables/useEmits';
 import type { SelectSlots } from '../composables/useSlots';
@@ -17,7 +17,7 @@ import { clamp } from '@vueuse/core';
 
 export default function useEvents(
   props: SelectProps,
-  context: LegoSetupContext<SelectEmits, SelectSlots, SelectExposes>,
+  context: HorizonWebSetupContext<SelectEmits, SelectSlots, SelectExposes>,
   options: {
     domRefs: SelectDomRefs;
     inputValue: Ref<string>;

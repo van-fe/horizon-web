@@ -53,7 +53,7 @@ export default defineComponent({
   },
   setup() {
     const test = () => {
-      console.log('svg');
+      console.info('svg');
     };
     return {
       test,
@@ -77,7 +77,7 @@ export default defineComponent({
   display: inline-block;
 }
 
-.container .block .n-icon {
+.container .block .a-icon {
   margin-right: 20px;
 }
 </style>

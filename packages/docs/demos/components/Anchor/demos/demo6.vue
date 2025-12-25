@@ -22,10 +22,10 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   setup() {
     const clickHandle = (linkInfo: { href: string; title: string }, e: MouseEvent) => {
-      console.log(linkInfo, e);
+      console.info(linkInfo, e);
     };
     const changeHandle = (link: string, prevLink: string) => {
-      console.log(link, prevLink);
+      console.info(link, prevLink);
     };
 
     const scrollContainer = top?.document.querySelector('main.n-main');

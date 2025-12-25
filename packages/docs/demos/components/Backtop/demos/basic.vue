@@ -10,7 +10,7 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   setup() {
     const onClick = () => {
-      console.log('----点击事件触发----');
+      console.info('----点击事件触发----');
     };
     return {
       onClick,

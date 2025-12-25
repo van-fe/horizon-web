@@ -1,7 +1,6 @@
 import { defineComponent, onMounted, ref } from 'vue';
 import { useMsgBoxConfirmProps } from '../composables/useProps';
 import NDialog from '~/components/Dialog/src/Dialog';
-import { useSensor } from '~/utils/useSensor';
 import { ComponentClassBlock } from '@aurora/utils';
 
 export default defineComponent({
@@ -67,10 +66,6 @@ export default defineComponent({
     };
 
     expose({ open });
-
-    onMounted(() => {
-      useSensor('$confirm', props, 'method');
-    });
 
     return () => (
       <NDialog

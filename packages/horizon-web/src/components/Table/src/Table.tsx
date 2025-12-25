@@ -9,7 +9,7 @@ import {
   toRefs,
   watch,
 } from 'vue';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import {
   cls,
   ComponentClassBlock,
@@ -72,7 +72,7 @@ export default defineComponent({
   exposes: useTableExposes,
   setup(
     props: TableProps,
-    { emit, slots, expose }: LegoSetupContext<TableEmits, TableSlots, TableExposes>,
+    { emit, slots, expose }: HorizonWebSetupContext<TableEmits, TableSlots, TableExposes>,
   ) {
     const classHelper = new ComponentClassBlock('table-v3');
 

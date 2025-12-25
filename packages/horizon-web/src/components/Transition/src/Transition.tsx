@@ -1,6 +1,6 @@
 import type { RendererElement } from 'vue';
 import { computed, defineComponent, ref, Transition, TransitionGroup } from 'vue';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { useTransitionProps } from './composables/useProps';
 import { useTransitionEmits } from './composables/useEmits';
 import { useTransitionSlots } from './composables/useSlots';
@@ -17,7 +17,7 @@ export default defineComponent({
   emits: useTransitionEmits,
   slots: useTransitionSlots,
   exposes: useTransitionExposes,
-  setup(props, { slots, emit, attrs }: LegoSetupContext<TransitionEmits, TransitionSlots>) {
+  setup(props, { slots, emit, attrs }: HorizonWebSetupContext<TransitionEmits, TransitionSlots>) {
     const isEntered = ref(false);
     const isLeaved = ref(true);
 

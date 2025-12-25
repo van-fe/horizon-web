@@ -1,6 +1,6 @@
 import type { PropType, VNode } from 'vue';
 import { defineComponent, inject, provide, ref, watch } from 'vue';
-import type { LegoComponentInstance } from '@aurora/utils';
+import type { HorizonWebComponentInstance } from '@aurora/utils';
 import {
   cls,
   ComponentClassBlock,
@@ -41,7 +41,7 @@ export default defineComponent({
     const popperVisible = inject(NCascaderPopperVisibleInjectKey)!;
     const treeHelper = inject(NCascaderTreeHelperInjectKey)!;
 
-    const scrollerDomRef = ref<LegoComponentInstance<
+    const scrollerDomRef = ref<HorizonWebComponentInstance<
       typeof NVirtualScroller,
       VirtualScrollerExposes
     > | null>(null);

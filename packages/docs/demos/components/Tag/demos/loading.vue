@@ -48,11 +48,11 @@ import { ref } from 'vue';
 const isLoading = ref(true);
 
 function onClick() {
-  console.log('click');
+  console.info('click');
 }
 
 function onClose() {
-  console.log('close');
+  console.info('close');
 }
 </script>
 

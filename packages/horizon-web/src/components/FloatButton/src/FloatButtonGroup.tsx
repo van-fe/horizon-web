@@ -1,6 +1,6 @@
 import { computed, defineComponent, provide, ref, toRefs } from 'vue';
 import { ComponentClassBlock, cls, useNamespace, useZIndex } from '@aurora/utils';
-import type { LegoSetupContext, LegoComponentInstance } from '@aurora/utils';
+import type { HorizonWebSetupContext, HorizonWebComponentInstance } from '@aurora/utils';
 import type { FloatButtonGroupProps } from './composables/useProps';
 import { useFloatButtonGroupProps } from './composables/useProps';
 import type { FloatButtonGroupEmits } from './composables/useEmits';
@@ -27,11 +27,11 @@ export default defineComponent({
       emit,
       slots,
       expose,
-    }: LegoSetupContext<FloatButtonGroupEmits, FloatButtonGroupSlots, FloatButtonExposes>,
+    }: HorizonWebSetupContext<FloatButtonGroupEmits, FloatButtonGroupSlots, FloatButtonExposes>,
   ) {
     const classHelper = new ComponentClassBlock('float-button-group');
 
-    const popoverDomRef = ref<LegoComponentInstance<typeof NPopover, PopoverExposes> | null>(null);
+    const popoverDomRef = ref<HorizonWebComponentInstance<typeof NPopover, PopoverExposes> | null>(null);
 
     const zIndexHandler = useZIndex();
     const zIndex = ref(zIndexHandler.current);

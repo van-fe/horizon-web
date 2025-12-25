@@ -1,5 +1,5 @@
 import type { TreeProps } from '~/components/Tree/src/composables/useProps';
-import type { MaybeRef, LegoComponentInstance } from '@aurora/utils';
+import type { MaybeRef, HorizonWebComponentInstance } from '@aurora/utils';
 import { nextTick, ref, SetupContext, unref } from 'vue';
 import { mount } from '@vue/test-utils';
 import NTree from '~/components/Tree/src/Tree';
@@ -22,7 +22,7 @@ export async function createInstance<
 ) {
   const selectedValues = ref();
   const expandedValues = ref();
-  const domRef = ref<LegoComponentInstance<typeof Tree, TreeExposes> | null>(null);
+  const domRef = ref<HorizonWebComponentInstance<typeof Tree, TreeExposes> | null>(null);
 
   const wrapper = mount(
     () => (

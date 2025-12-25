@@ -44,13 +44,13 @@ function dateSort(order: NTableSortOrderEnum) {
 }
 
 function onSortChange(states: Array<{ column: NTableColumnData; order: NTableSortOrderEnum }>) {
-  console.log('Table sort change', states);
+  console.info('Table sort change', states);
 
   // You can sort by your self
 }
 
 function onColumnSortChange(order: NTableSortOrderEnum | null) {
-  console.log('Column(Address) sort change:', order);
+  console.info('Column(Address) sort change:', order);
   isLoading.value = true;
 
   setTimeout(() => {

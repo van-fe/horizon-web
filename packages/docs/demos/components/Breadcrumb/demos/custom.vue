@@ -6,7 +6,7 @@
     separator="*"
   />
   <n-breadcrumb :texts="[{ text: 'Home' }, { text: 'Sub Page1' }, { text: 'Sub Page2' }]">
-    <template #separator><n-icon name="gift" size="12" /></template>
+    <template #separator><a-icon name="gift" size="12" /></template>
   </n-breadcrumb>
   <!--  -->
   <div class="text-subtitle-2 mt-4 mb-2">自定义面包屑内容</div>
@@ -14,7 +14,7 @@
     <n-breadcrumb-item>Home</n-breadcrumb-item>
     <n-breadcrumb-item>
       Sub Page1
-      <n-icon name="repair_filled" size="12" />
+      <a-icon name="repair_filled" size="12" />
     </n-breadcrumb-item>
     <n-breadcrumb-item>Sub Page2</n-breadcrumb-item>
   </n-breadcrumb>
@@ -43,11 +43,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { NIcon } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 
 export default defineComponent({
   components: {
-    NIcon,
+    AIcon,
   },
 });
 </script>

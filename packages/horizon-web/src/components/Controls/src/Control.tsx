@@ -1,6 +1,6 @@
 import { computed, defineComponent, h, inject, ref } from 'vue';
 import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { ControlProps } from './composables/useProps';
 import { useControlProps } from './composables/useProps';
 import { useControlEmits } from './composables/useEmits';
@@ -18,7 +18,7 @@ export default defineComponent({
   props: useControlProps,
   emits: useControlEmits,
   slots: useControlSlots,
-  setup(props: ControlProps, { slots }: LegoSetupContext<ControlEmits, ControlSlots>) {
+  setup(props: ControlProps, { slots }: HorizonWebSetupContext<ControlEmits, ControlSlots>) {
     const classHelper = new ComponentClassBlock('control');
     const index = ref(-1);
 

@@ -1,6 +1,6 @@
 import { computed, defineComponent, inject, toRef } from 'vue';
 import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { useResultProps } from './composables/useProps';
 import { useResultEmits } from './composables/useEmits';
 import { useResultSlots } from './composables/useSlots';
@@ -16,7 +16,6 @@ import {
 import NButton from '~/components/Button/src/Button';
 import { defaultLocale, localeInjectKey } from '~/provides';
 import useSize from '~/utils/useSize';
-import './utils/types';
 import notAllowed from './source/not-allowed.svg';
 import notFound from './source/not-found.svg';
 import serverError from './source/server-error.svg';
@@ -35,7 +34,7 @@ export default defineComponent({
   emits: useResultEmits,
   slots: useResultSlots,
   exposes: useResultExposes,
-  setup(props, { emit, slots }: LegoSetupContext<ResultEmits, ResultSlots>) {
+  setup(props, { emit, slots }: HorizonWebSetupContext<ResultEmits, ResultSlots>) {
     const classHelper = new ComponentClassBlock('result');
 
     const isIcon = computed(() =>
@@ -102,7 +101,7 @@ export default defineComponent({
                   onClick={evt => emit('secondaryClick', evt)}
                 >
                   {props.secondaryButtonText ??
-                    locale.value?.langService.td().horizon-web.result.secondaryButtonText}
+                    locale.value?.langService.td().horizonWeb.result.secondaryButtonText}
                 </NButton>
               ) : undefined}
               {props.primaryButton ? (
@@ -113,7 +112,7 @@ export default defineComponent({
                   onClick={evt => emit('primaryClick', evt)}
                 >
                   {props.primaryButtonText ??
-                    locale.value?.langService.td().horizon-web.result.primaryButtonText}
+                    locale.value?.langService.td().horizonWeb.result.primaryButtonText}
                 </NButton>
               ) : undefined}
             </div>

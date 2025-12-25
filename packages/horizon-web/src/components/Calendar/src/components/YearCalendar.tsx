@@ -31,7 +31,7 @@ export default defineComponent({
     const weeksText = computed(() =>
       new Array(7)
         .fill(0)
-        .map((_, week) => locale.value?.langService.td().horizon-web.calendar.simpleWeeks[week]),
+        .map((_, week) => locale.value?.langService.td().horizonWeb.calendar.simpleWeeks[week]),
     );
 
     const monthDayHelpers = shallowRef<MonthDayHelper[]>([]);
@@ -69,7 +69,7 @@ export default defineComponent({
             <div class={cls(classHelper.e('month'))}>
               <div class={cls(classHelper.em('month', 'header'))}>
                 <div class={cls(classHelper.em('month', 'header-num'))}>
-                  {locale.value?.langService.td().horizon-web.calendar.simpleMonths[month]}
+                  {locale.value?.langService.td().horizonWeb.calendar.simpleMonths[month]}
                 </div>
                 <div class={cls(classHelper.em('month', 'header-suffix'))}>
                   {parentSlots.monthHeader?.(currentDate.value.month(month).startOf('month'))}

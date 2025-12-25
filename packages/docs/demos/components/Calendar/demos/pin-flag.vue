@@ -113,11 +113,11 @@ export default defineComponent({
     ]);
 
     function onFlagClick(flag: NCalendarPinFlag) {
-      console.log(flag);
+      console.info(flag);
     }
 
     function onCreatingPinFlagCallback(date: Dayjs) {
-      console.log(date.format('YYYY-MM-DD'));
+      console.info(date.format('YYYY-MM-DD'));
 
       return {
         title: 'New Event',
@@ -127,7 +127,7 @@ export default defineComponent({
 
     function onCreatFinishFlagCallback(flag: NCalendarPinFlag) {
       return new Promise(resolve => {
-        console.log(flag);
+        console.info(flag);
 
         switch (reserveEvent.value) {
           case 1:

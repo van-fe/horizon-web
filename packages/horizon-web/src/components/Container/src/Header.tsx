@@ -1,5 +1,5 @@
 import { computed, defineComponent } from 'vue';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, sizeUnitTransform, useNamespace } from '@aurora/utils';
 import { useHeaderProps } from './composables/useProps';
 import type { HeaderSlots } from './composables/useSlots';
@@ -9,7 +9,7 @@ export default defineComponent({
   name: `${useNamespace()}Header`,
   props: useHeaderProps,
   slots: useHeaderSlots,
-  setup(props, { slots }: LegoSetupContext<{}, HeaderSlots>) {
+  setup(props, { slots }: HorizonWebSetupContext<{}, HeaderSlots>) {
     const classHelper = new ComponentClassBlock('header');
 
     const style = computed(() => {

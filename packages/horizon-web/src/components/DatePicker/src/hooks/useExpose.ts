@@ -1,4 +1,4 @@
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { DatePickerEmits } from '../composables/useEmits';
 import type { DatePickerSlots } from '../composables/useSlots';
 import type { DatePickerExposes } from '../composables/useExposes';
@@ -6,7 +6,7 @@ import type { Dayjs } from 'dayjs';
 import type { Ref } from 'vue';
 
 export default function useExpose(
-  context: LegoSetupContext<DatePickerEmits, DatePickerSlots, DatePickerExposes>,
+  context: HorizonWebSetupContext<DatePickerEmits, DatePickerSlots, DatePickerExposes>,
   options: {
     modifyPanelVisible: (visible: boolean) => void;
     startPanelShowDate: Ref<Dayjs>;

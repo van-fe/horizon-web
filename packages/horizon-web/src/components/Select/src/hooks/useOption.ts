@@ -14,7 +14,7 @@ import {
   isDefined,
   isNil,
   isObject,
-  type LegoSetupContext,
+  type HorizonWebSetupContext,
 } from '@aurora/utils';
 import type { SelectEmits } from '../composables/useEmits';
 import type { SelectSlots } from '../composables/useSlots';
@@ -30,7 +30,7 @@ import { transformOptionList } from './useVirtualList';
 
 export default function useOption(
   props: SelectProps,
-  context: LegoSetupContext<SelectEmits, SelectSlots, SelectExposes>,
+  context: HorizonWebSetupContext<SelectEmits, SelectSlots, SelectExposes>,
   options: {
     domRefs: SelectDomRefs;
     optionsMap: Reactive<Map<OptionProps['value'], SelectCollectedOptionData<'option'>>>;

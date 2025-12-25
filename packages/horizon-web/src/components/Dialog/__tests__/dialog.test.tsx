@@ -88,7 +88,7 @@ describe('Dialog.tsx', () => {
                 <div class="n-dialog__header">
                   <div class="n-dialog__default-title">
                     <div class="n-dialog__default-title--text">Title</div><button class="n-button n-button--normal n-button--small n-button--text n-button--equally is-solid is-with-icon n-dialog__header-close n-dialog__header-close" type="button" tabindex="0" autofocus="false">
-                      <div class="n-button__icon is-custom-size"><svg fill="none" viewBox="0 0 24 24" width="1em" height="1em" class="n-icon n-icon__v2_11_24 n-icon__close" style="transform: rotate(undefineddeg);">
+                      <div class="n-button__icon is-custom-size"><svg fill="none" viewBox="0 0 24 24" width="1em" height="1em" class="a-icon n-icon__v2_11_24 n-icon__close" style="transform: rotate(undefineddeg);">
                           <path fill="currentColor" d="M12 10.95L19.94 3a1.5 1.5 0 010 2.12L13.06 12 21 19.96a1.5 1.5 0 01-2.11 0L12 13.06l-6.89 6.9a1.5 1.5 0 01-2.11 0l7.94-7.95-6.88-6.9a1.5 1.5 0 010-2.11L12 10.95z"></path>
                         </svg></div>
                       <!---->
@@ -284,7 +284,7 @@ describe('Dialog.tsx', () => {
                   <div class="n-dialog__header n-dialog__header--draggable">
                     <div class="n-dialog__default-title">
                       <div class="n-dialog__default-title--text">Title</div><button class="n-button n-button--normal n-button--small n-button--text n-button--equally is-solid is-with-icon n-dialog__header-close n-dialog__header-close" type="button" tabindex="0" autofocus="false">
-                        <div class="n-button__icon is-custom-size"><svg fill="none" viewBox="0 0 24 24" width="1em" height="1em" class="n-icon n-icon__v2_11_24 n-icon__close" style="transform: rotate(undefineddeg);">
+                        <div class="n-button__icon is-custom-size"><svg fill="none" viewBox="0 0 24 24" width="1em" height="1em" class="a-icon n-icon__v2_11_24 n-icon__close" style="transform: rotate(undefineddeg);">
                             <path fill="currentColor" d="M12 10.95L19.94 3a1.5 1.5 0 010 2.12L13.06 12 21 19.96a1.5 1.5 0 01-2.11 0L12 13.06l-6.89 6.9a1.5 1.5 0 01-2.11 0l7.94-7.95-6.88-6.9a1.5 1.5 0 010-2.11L12 10.95z"></path>
                           </svg></div>
                         <!---->
@@ -376,7 +376,7 @@ describe('Dialog.tsx', () => {
                   <div class="n-dialog__header">
                     <div class="n-dialog__default-title">
                       <div class="n-dialog__default-title--text">Title</div><button class="n-button n-button--normal n-button--small n-button--text n-button--equally is-solid is-with-icon n-dialog__header-close n-dialog__header-close" type="button" tabindex="0" autofocus="false">
-                        <div class="n-button__icon is-custom-size"><svg fill="none" viewBox="0 0 24 24" width="1em" height="1em" class="n-icon n-icon__v2_11_24 n-icon__close" style="transform: rotate(undefineddeg);">
+                        <div class="n-button__icon is-custom-size"><svg fill="none" viewBox="0 0 24 24" width="1em" height="1em" class="a-icon n-icon__v2_11_24 n-icon__close" style="transform: rotate(undefineddeg);">
                             <path fill="currentColor" d="M12 10.95L19.94 3a1.5 1.5 0 010 2.12L13.06 12 21 19.96a1.5 1.5 0 01-2.11 0L12 13.06l-6.89 6.9a1.5 1.5 0 01-2.11 0l7.94-7.95-6.88-6.9a1.5 1.5 0 010-2.11L12 10.95z"></path>
                           </svg></div>
                         <!---->
@@ -460,7 +460,7 @@ describe('Dialog.tsx', () => {
                   <div class="n-dialog__header">
                     <div class="n-dialog__default-title">
                       <div class="n-dialog__default-title--text">Title</div><button class="n-button n-button--normal n-button--small n-button--text n-button--equally is-solid is-with-icon n-dialog__header-close n-dialog__header-close" type="button" tabindex="0" autofocus="false">
-                        <div class="n-button__icon is-custom-size"><svg fill="none" viewBox="0 0 24 24" width="1em" height="1em" class="n-icon n-icon__v2_11_24 n-icon__close" style="transform: rotate(undefineddeg);">
+                        <div class="n-button__icon is-custom-size"><svg fill="none" viewBox="0 0 24 24" width="1em" height="1em" class="a-icon n-icon__v2_11_24 n-icon__close" style="transform: rotate(undefineddeg);">
                             <path fill="currentColor" d="M12 10.95L19.94 3a1.5 1.5 0 010 2.12L13.06 12 21 19.96a1.5 1.5 0 01-2.11 0L12 13.06l-6.89 6.9a1.5 1.5 0 01-2.11 0l7.94-7.95-6.88-6.9a1.5 1.5 0 010-2.11L12 10.95z"></path>
                           </svg></div>
                         <!---->
@@ -529,7 +529,7 @@ describe('Dialog.tsx', () => {
                   <div class="n-dialog__header">
                     <div class="n-dialog__default-title">
                       <div class="n-dialog__default-title--text">Title</div><button class="n-button n-button--normal n-button--small n-button--text n-button--equally is-solid is-with-icon n-dialog__header-close n-dialog__header-close" type="button" tabindex="0" autofocus="false">
-                        <div class="n-button__icon is-custom-size"><svg fill="none" viewBox="0 0 24 24" width="1em" height="1em" class="n-icon n-icon__v2_11_24 n-icon__close" style="transform: rotate(undefineddeg);">
+                        <div class="n-button__icon is-custom-size"><svg fill="none" viewBox="0 0 24 24" width="1em" height="1em" class="a-icon n-icon__v2_11_24 n-icon__close" style="transform: rotate(undefineddeg);">
                             <path fill="currentColor" d="M12 10.95L19.94 3a1.5 1.5 0 010 2.12L13.06 12 21 19.96a1.5 1.5 0 01-2.11 0L12 13.06l-6.89 6.9a1.5 1.5 0 01-2.11 0l7.94-7.95-6.88-6.9a1.5 1.5 0 010-2.11L12 10.95z"></path>
                           </svg></div>
                         <!---->

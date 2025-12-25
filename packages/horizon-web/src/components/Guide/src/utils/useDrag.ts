@@ -77,7 +77,7 @@ export const useDrag = (
         if (itemDomRef.value && targetRef.value) {
             targetRef.value.addEventListener('mousedown', onMousedown);
             targetRef.value.addEventListener('mouseenter', () => {
-                console.log('mouseenter11111');
+                console.info('mouseenter11111');
                 document.body.style.cursor = 'move';
             });
             targetRef.value.addEventListener('mouseleave', () => {

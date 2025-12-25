@@ -2,10 +2,10 @@ import type { ComputedRef } from 'vue';
 import { computed, defineComponent, inject, nextTick, ref, toRefs } from 'vue';
 import { useRateProps } from './composables/useProps';
 import type { RateEmits } from './composables/useEmits';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { useRateEmits } from './composables/useEmits';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
-import { NIcon } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 import { GlobalSizeInjectedKey } from '~/components/Application/src/utils/injectedKeys';
 import type { NApplicationSizeType } from '~/components/Application/src/composables/useProps';
 import {
@@ -34,12 +34,12 @@ export default defineComponent({
   name: `${useNamespace()}Rate`,
   desc: '用于评分操作',
   components: {
-    NIcon,
+    AIcon,
   },
   props: useRateProps,
   emits: useRateEmits,
   slots: useRateSlots,
-  setup(props, { emit, slots }: LegoSetupContext<RateEmits, RateSlots>) {
+  setup(props, { emit, slots }: HorizonWebSetupContext<RateEmits, RateSlots>) {
     const classHelper = new ComponentClassBlock('rate');
     const iconSizeMap = {
       small: 12,
@@ -186,9 +186,9 @@ export default defineComponent({
           class={getClass}
           onClick={onChange}
         >
-          <NIcon name={iconRef.value} size={getSize} color={getColor} />
+          <AIcon name={iconRef.value} size={getSize} color={getColor} />
           {isHalf && (
-            <NIcon
+            <AIcon
               style={{
                 ...getHalfStyle,
               }}

@@ -1,6 +1,6 @@
 import { computed, defineComponent, inject, nextTick, provide, ref, toRef, watch } from 'vue';
 import { useColorPickerProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, cssVariable, useNamespace } from '@aurora/utils';
 import ColorPickerColor from './utils/ColorPickerColor';
 import type { ColorPickerEmits } from './composables/useEmits';
@@ -47,7 +47,7 @@ export default defineComponent({
       emit,
       expose,
       slots,
-    }: LegoSetupContext<ColorPickerEmits, ColorPickerSlots, ColorPickerExposes>,
+    }: HorizonWebSetupContext<ColorPickerEmits, ColorPickerSlots, ColorPickerExposes>,
   ) {
     const classHelper = new ComponentClassBlock('color-picker');
     const pickerRef = ref<typeof NPicker | null>(null);

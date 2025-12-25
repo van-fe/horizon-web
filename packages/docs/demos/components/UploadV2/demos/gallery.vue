@@ -53,7 +53,7 @@ const modelValue = ref<NUploadUserFile[]>(
 );
 
 function onUploading(file: NUploadFileType, process: number, response: Data | undefined) {
-  console.log(file, process, response);
+  console.info(file, process, response);
 }
 
 function handleSuccess(res: any, file: NUploadFileType) {
@@ -70,6 +70,6 @@ function change() {
 }
 
 function onUpdateModelValue(modelValue: NUploadFileType[]) {
-  console.log('update: ', modelValue);
+  console.info('update: ', modelValue);
 }
 </script>

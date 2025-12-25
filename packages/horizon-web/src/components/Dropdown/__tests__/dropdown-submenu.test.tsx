@@ -109,7 +109,7 @@ describe('DropdownSubmenu.tsx', () => {
 
       await sleep(200);
 
-      await expect(wrapper.findComponent(NDropdownSubmenu).find('.n-icon').exists()).toBeTruthy();
+      await expect(wrapper.findComponent(NDropdownSubmenu).find('.a-icon').exists()).toBeTruthy();
     });
 
     test('active', async () => {

@@ -3,14 +3,11 @@ import dompurify from 'dompurify';
 import { defineDirective } from '@aurora/utils';
 import type { SafeHtmlOptions } from './composables/useOptions';
 import { useSafeHtmlOptions } from './composables/useOptions';
-import { useSensor } from '~/utils/useSensor';
 
 const fn: DirectiveHook<HTMLElement, unknown, Partial<SafeHtmlOptions> | string> = (
   el,
   binding,
 ) => {
-  useSensor('v-safe-html', binding.value, 'directive');
-
   let result = '';
 
   if (typeof binding.value === 'string') {

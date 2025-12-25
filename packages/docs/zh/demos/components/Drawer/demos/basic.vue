@@ -15,11 +15,11 @@ import { $message } from '@aurora/horizon-web';
 const visible = ref(false);
 
 const onOk = () => {
-  console.log('ok button clicked!');
+  console.info('ok button clicked!');
   $message({ type: 'success', message: 'ok button clicked' });
 };
 const onCancel = () => {
-  console.log('cancel button clicked!');
+  console.info('cancel button clicked!');
   $message({ type: 'warning', message: 'cancel button clicked!' });
 };
 </script>

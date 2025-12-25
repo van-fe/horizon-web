@@ -1,4 +1,4 @@
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { generatorInjectedKeyName } from '@aurora/utils';
 import type { ComputedRef, InjectionKey, Ref, UnwrapNestedRefs, VNode } from 'vue';
 import type { TreeItemProps, TreeProps } from '../composables/useProps';
@@ -13,11 +13,11 @@ export const NTreePropsInjectKey = Symbol(
 
 export const NTreeEmitsInjectKey = Symbol(
   generatorInjectedKeyName('tree', 'emits'),
-) as InjectionKey<LegoSetupContext<TreeEmits>['emit']>;
+) as InjectionKey<HorizonWebSetupContext<TreeEmits>['emit']>;
 
 export const NTreeSlotsInjectKey = Symbol(
   generatorInjectedKeyName('tree', 'slots'),
-) as InjectionKey<LegoSetupContext<{}, TreeSlots>['slots']>;
+) as InjectionKey<HorizonWebSetupContext<{}, TreeSlots>['slots']>;
 
 export const NTreeFilterInputValueInjectKey = Symbol(
   generatorInjectedKeyName('tree', 'filter-input-value'),

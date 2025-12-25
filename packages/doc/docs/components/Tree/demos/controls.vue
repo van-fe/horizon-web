@@ -47,7 +47,7 @@ const baseTreeData = ref([]);
 const treeDomRef = ref<InstanceType<typeof NTree> & ExtractExposeTypes<typeof useTreeExposes>>();
 
 function getExpand() {
-  console.log(treeDomRef.value?.getExpandNodes());
+  console.info(treeDomRef.value?.getExpandNodes());
 }
 
 function setExpand() {
@@ -67,15 +67,15 @@ function setFoldAll() {
 }
 
 function getAllCheckedValues() {
-  console.log(treeDomRef.value?.getSelectedNodes());
+  console.info(treeDomRef.value?.getSelectedNodes());
 }
 
 function getHalfCheckedValues() {
-  console.log(treeDomRef.value?.getPartSelectedNodes());
+  console.info(treeDomRef.value?.getPartSelectedNodes());
 }
 
 function getUnCheckedValues() {
-  console.log(treeDomRef.value?.getUnSelectedNodes());
+  console.info(treeDomRef.value?.getUnSelectedNodes());
 }
 
 function setSelectedValues() {
@@ -87,7 +87,7 @@ function deleteSelectedValues() {
 }
 
 function getNodes() {
-  console.log(treeDomRef.value?.getNodeByValues(['feedback']));
+  console.info(treeDomRef.value?.getNodeByValues(['feedback']));
 }
 
 function setNode() {

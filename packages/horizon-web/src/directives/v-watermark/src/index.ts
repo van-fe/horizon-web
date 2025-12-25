@@ -5,7 +5,6 @@ import type { WatermarkOptions } from './composables/useOptions';
 import { useWatermarkOptions } from './composables/useOptions';
 import Watermark from '~/components/Watermark/src/Watermark';
 import { transOptions } from './utils/base';
-import { useSensor } from '~/utils/useSensor';
 
 const INS = Symbol('NWatermark');
 const DOM_WRAP = Symbol('NWatermark_DomWrap');
@@ -19,8 +18,6 @@ const watermarkFunc = (
   el: WatermarkElement,
   binding: DirectiveBinding<string | string[] | Partial<WatermarkOptions>>,
 ) => {
-  useSensor('v-watermark', binding.value, 'directive');
-
   const resOptions = transOptions(binding.value);
 
   if (!resOptions.global) {

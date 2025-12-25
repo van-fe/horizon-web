@@ -1,5 +1,5 @@
 import { computed, defineComponent, inject, Fragment, ref } from 'vue';
-import type { LegoComponentInstance, LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebComponentInstance, HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock } from '@aurora/utils';
 import {
   NDatePickerDateSwitcherShowFormatMappingMappingInjectKey,
@@ -27,13 +27,13 @@ export default defineComponent({
     {
       emit,
       expose,
-    }: LegoSetupContext<DatePickerDatePanelEmits, {}, DatePickerDatePanelHeaderExposes>,
+    }: HorizonWebSetupContext<DatePickerDatePanelEmits, {}, DatePickerDatePanelHeaderExposes>,
   ) {
     const classHelper = new ComponentClassBlock('date-picker-panel-header');
 
     const triggerHeaderDomRef =
       ref<
-        LegoComponentInstance<typeof DatetimeTriggerHeader, DatePickerDatePanelHeaderExposes>
+        HorizonWebComponentInstance<typeof DatetimeTriggerHeader, DatePickerDatePanelHeaderExposes>
       >();
 
     const parentProps = inject(NDatePickerPropsInjectKey)!;

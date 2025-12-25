@@ -114,10 +114,10 @@ onMounted(async () => {
 });
 
 function onInput() {
-  console.log('input:', formData.value.number);
+  console.info('input:', formData.value.number);
 }
 function onChange() {
-  console.log('change:', formData.value.number);
+  console.info('change:', formData.value.number);
 }
 
 function onSubmit() {

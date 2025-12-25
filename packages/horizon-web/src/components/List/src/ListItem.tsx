@@ -1,7 +1,7 @@
 import { defineComponent, toRefs } from 'vue';
 import { useListItemProps } from './composables/useProps';
 import type { ListItemProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
 import type { ListItemSlots } from './composables/useSlots';
 import { useListItemSlots } from './composables/useSlots';
@@ -11,7 +11,7 @@ export default defineComponent({
   name: `${useNamespace()}ListItem`,
   props: useListItemProps,
   slots: useListItemSlots,
-  setup(props: ListItemProps, { slots }: LegoSetupContext<{}, ListItemSlots>) {
+  setup(props: ListItemProps, { slots }: HorizonWebSetupContext<{}, ListItemSlots>) {
     const classHelper = new ComponentClassBlock('list-item');
 
     const { titleSize } = toRefs(props);

@@ -7,7 +7,7 @@ import type { Paths } from '@aurora/utils';
 export default function (path: Paths<(typeof En)['horizon-web']>, def?: string) {
   const locale = inject(localeInjectKey, defaultLocale);
 
-  return computed(() => get(locale?.value?.langService.td()?.horizon-web, path) || def);
+  return computed(() => get(locale?.value?.langService.td()?.horizonWeb, path) || def);
 }
 
 export function getCurrentLocale() {

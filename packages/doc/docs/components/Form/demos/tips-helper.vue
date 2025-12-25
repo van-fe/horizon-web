@@ -102,7 +102,7 @@ const formData = ref({
 });
 
 const submit = () => {
-  console.log('formData:', formData.value);
+  console.info('formData:', formData.value);
   formRef.value
     ?.validate()
     .then(() => {
@@ -146,11 +146,11 @@ const dateHelper: NFormItemHelper = {
 };
 
 function onInput() {
-  console.log('input:', formData.value.age);
+  console.info('input:', formData.value.age);
 }
 
 function onChange() {
-  console.log('change:', formData.value.age);
+  console.info('change:', formData.value.age);
 }
 
 </script>

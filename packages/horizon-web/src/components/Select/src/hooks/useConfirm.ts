@@ -1,4 +1,4 @@
-import type { LegoSetupContext } from '@/@aurora/utils/types';
+import type { HorizonWebSetupContext } from '@/@aurora/utils/types';
 import type { Ref } from 'vue';
 import type { SelectEmits } from '../composables/useEmits';
 import type { SelectExposes } from '../composables/useExposes';
@@ -8,7 +8,7 @@ import type { ModelValueType } from '../utils/types';
 
 export default function useConfirm(
   props: SelectProps,
-  context: LegoSetupContext<SelectEmits, SelectSlots, SelectExposes>,
+  context: HorizonWebSetupContext<SelectEmits, SelectSlots, SelectExposes>,
   options: {
     modelValueSet: Ref<Set<OptionProps['value']>>;
     presetModelValueSet: Ref<Set<OptionProps['value']>>;

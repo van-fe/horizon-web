@@ -26,7 +26,7 @@ const checked = ref<string[]>(['1']);
 const indeterminate = computed(() => checked.value.length > 0 && checked.value.length < 2);
 
 const selectCheckbox = (val: string[]) => {
-  console.log('selectCheckbox ==> ', val);
+  console.info('selectCheckbox ==> ', val);
   checkAll.value = val.length === 2;
 };
 

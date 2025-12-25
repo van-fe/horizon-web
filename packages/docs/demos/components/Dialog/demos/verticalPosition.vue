@@ -18,10 +18,10 @@ export default defineComponent({
   setup() {
     const visible = ref(false);
     const onPrimary = () => {
-      console.log('Primary button clicked!');
+      console.info('Primary button clicked!');
     };
     const onSecondary = () => {
-      console.log('Secondary button clicked!');
+      console.info('Secondary button clicked!');
       visible.value = false;
     };
     return {

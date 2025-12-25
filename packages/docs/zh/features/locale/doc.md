@@ -1,10 +1,10 @@
 # 国际化
 
-Lego 组件 **默认** 使用英语，如果你希望使用其他语言，你可以参考下面的方案。
+HorizonWeb 组件 **默认** 使用英语，如果你希望使用其他语言，你可以参考下面的方案。
 
 ## 全局配置
 
-Lego 提供了全局配置国际化的配置。
+HorizonWeb 提供了全局配置国际化的配置。
 
 ```ts
 import App from './App.vue';
@@ -24,16 +24,16 @@ createApp(App)
 
 ## 按需加载
 
-如果使用了按需加载，则需要单独引用并使用 `LegoProvides`
+如果使用了按需加载，则需要单独引用并使用 `HorizonWebProvides`
 
 ```ts
 import App from './App.vue';
 import { createApp } from 'vue';
-import { LegoProvides, defineOption } from '@aurora/horizon-web';
+import { HorizonWebProvides, defineOption } from '@aurora/horizon-web';
 import { LocaleSupportLang } from "@aurora/locale-vue";
 
 createApp(App)
-  .use(LegoProvides, defineOption({
+  .use(HorizonWebProvides, defineOption({
     locale: {
       current: LocaleSupportLang.ZH_CN,
     }
@@ -44,7 +44,7 @@ createApp(App)
 
 ## Application
 
-Lego 还提供了一个 Vue 组件 [Application](/horizon-web/components/Application) 用于全局配置国际化的设置
+HorizonWeb 还提供了一个 Vue 组件 [Application](/horizon-web/components/Application) 用于全局配置国际化的设置
 如果更改 `locale`，可以动态修改语言
 
 :::demo ../../components/Application/demos/i18n.vue:::
@@ -59,13 +59,13 @@ Lego 还提供了一个 Vue 组件 [Application](/horizon-web/components/Applica
 如果业务中有需要使用自定义的语言包，可以配置如下：
 
 ```ts
-import { LegoProvides, defineOption } from "@aurora/horizon-web";
+import { HorizonWebProvides, defineOption } from "@aurora/horizon-web";
 import { LocaleSupportLang } from "@aurora/locale-vue";
 import En from "your-En-dictionary-file-path";
 import ZhCN from "your-ZhCn-dictionary-file-path";
 
 createApp(App)
-  .use(LegoProvides, defineOption({
+  .use(HorizonWebProvides, defineOption({
     locale: {
       current: LocaleSupportLang.En,
       lang: {

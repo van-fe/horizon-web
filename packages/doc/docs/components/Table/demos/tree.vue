@@ -46,6 +46,6 @@ function dynamicLoad(rowData: NTableTransformedRowDataType) {
 }
 
 function onUpdate(data: any) {
-  console.log(data);
+  console.info(data);
 }
 </script>

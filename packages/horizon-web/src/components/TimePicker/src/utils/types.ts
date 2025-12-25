@@ -1,6 +1,6 @@
 import type { Dayjs } from 'dayjs';
 import type { Ref } from 'vue';
-import type { LegoComponentInstance } from '@aurora/utils';
+import type { HorizonWebComponentInstance } from '@aurora/utils';
 import type TimePanel from '../components/TimePanel';
 import type { TimePickerTimePanelExposes } from '../composables/useExposes';
 import type NPicker from '~/components/Picker/src/Picker';
@@ -42,16 +42,16 @@ export type NTimePickerShowTimeTooltipType = (
 
 export interface NTimePickerDomRefs {
   startTimePanelDomRef: Ref<
-    LegoComponentInstance<typeof TimePanel, TimePickerTimePanelExposes> | undefined
+    HorizonWebComponentInstance<typeof TimePanel, TimePickerTimePanelExposes> | undefined
   >;
   endTimePanelDomRef: Ref<
-    LegoComponentInstance<typeof TimePanel, TimePickerTimePanelExposes> | undefined
+    HorizonWebComponentInstance<typeof TimePanel, TimePickerTimePanelExposes> | undefined
   >;
-  pickerDomRef: Ref<LegoComponentInstance<typeof NPicker, PickerExposes> | undefined>;
+  pickerDomRef: Ref<HorizonWebComponentInstance<typeof NPicker, PickerExposes> | undefined>;
   startInputDomRef: Ref<
-    LegoComponentInstance<typeof NPickerPureInput, PickerPureInputExposes> | undefined
+    HorizonWebComponentInstance<typeof NPickerPureInput, PickerPureInputExposes> | undefined
   >;
   endInputDomRef: Ref<
-    LegoComponentInstance<typeof NPickerPureInput, PickerPureInputExposes> | undefined
+    HorizonWebComponentInstance<typeof NPickerPureInput, PickerPureInputExposes> | undefined
   >;
 }

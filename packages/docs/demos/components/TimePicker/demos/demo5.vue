@@ -37,7 +37,7 @@ export default defineComponent({
 
     function onChangePanelTime(date: Date) {
       pickDate.value = date;
-      console.log('onChangePanelTime', date);
+      console.info('onChangePanelTime', date);
     }
 
     function close() {

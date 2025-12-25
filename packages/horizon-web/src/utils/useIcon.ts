@@ -1,6 +1,6 @@
 import type { Component, PropType, VNode, Slot } from 'vue';
 import { h, isVNode } from 'vue';
-import { NIcon } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 
 export const IconPropType = [String, Object] as PropType<string | Component | VNode>;
 export const IconNullablePropType = [String, Object] as PropType<string | Component | VNode | null>;
@@ -35,7 +35,7 @@ export function renderIcon(
     : (iconSlot?.() ??
         (iconProp &&
           (typeof iconProp === 'string'
-            ? h(NIcon, {
+            ? h(AIcon, {
                 name: iconProp,
                 ...(iconAttrs || {}),
               })

@@ -11,7 +11,7 @@ import {
   toRefs,
   watch,
 } from 'vue';
-import type { LegoComponentInstance, LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebComponentInstance, HorizonWebSetupContext } from '@aurora/utils';
 import {
   cls,
   ComponentClassBlock,
@@ -103,7 +103,7 @@ export default defineComponent({
   exposes: useCascaderExposes,
   setup(
     props: CascaderProps,
-    { emit, slots, expose }: LegoSetupContext<CascaderEmits, CascaderSlots, CascaderExposes>,
+    { emit, slots, expose }: HorizonWebSetupContext<CascaderEmits, CascaderSlots, CascaderExposes>,
   ) {
     const classHelper = new ComponentClassBlock('cascader');
 
@@ -169,15 +169,15 @@ export default defineComponent({
     /**
      * dom ref
      */
-    const pickerDomRef = ref<null | LegoComponentInstance<typeof NPicker, PickerExposes>>(null);
-    const filterInputDomRef = ref<null | LegoComponentInstance<
+    const pickerDomRef = ref<null | HorizonWebComponentInstance<typeof NPicker, PickerExposes>>(null);
+    const filterInputDomRef = ref<null | HorizonWebComponentInstance<
       typeof NPickerFitContentInput,
       PickerFitContentInputExposes
     >>(null);
-    const tagGroupDomRef = ref<null | LegoComponentInstance<typeof NTagGroup, TagGroupExposes>>(
+    const tagGroupDomRef = ref<null | HorizonWebComponentInstance<typeof NTagGroup, TagGroupExposes>>(
       null,
     );
-    const cascaderPanelsDomRef = ref<null | LegoComponentInstance<
+    const cascaderPanelsDomRef = ref<null | HorizonWebComponentInstance<
       typeof CascaderPanels,
       CascaderPanelsExposes
     >>(null);

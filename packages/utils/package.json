@@ -2,23 +2,21 @@
   "name": "@aurora/utils",
   "version": "1.0.0",
   "description": "For @aurora/horizon-web. Include a series of functions for developing.",
-  "main": "dist/shared.cjs",
-  "module": "dist/shared.js",
-  "unpkg": "dist/shared.umd.js",
+  "main": "dist/utils.cjs",
+  "module": "dist/utils.js",
+  "unpkg": "dist/utils.umd.js",
   "types": "types/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/shared.js",
-      "require": "./dist/shared.cjs",
-      "types": "./types/index.d.ts"
-    },
-    "./plugins": "./plugins/index.js"
+      "types": "./types/index.d.ts",
+      "import": "./dist/utils.js",
+      "require": "./dist/utils.cjs"
+    }
   },
   "scripts": {
-    "dev": "pnpm run build:types && pnpm run build:plugin && vite build -- --watch",
-    "build": "pnpm run build:dist && pnpm run build:types && pnpm run build:plugin",
+    "dev": "bun run build:types && vite build -- --watch",
+    "build": "bun run build:dist && bun run build:types",
     "build:dist": "bunx --bun vite build",
-    "build:plugin": "tsc ./plugins/index.ts",
     "build:types": "rm -rf types && tsc -d --pretty --emitDeclarationOnly --declarationDir ./types",
     "rm": "rm -rf dist && rm -rf plugins/*.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -33,7 +31,7 @@
   "keywords": [],
   "license": "ISC",
   "dependencies": {
-    "@vueuse/core": "^9.6.0",
+    "@vueuse/core": "^11.0.0",
     "lodash": "^4.17.21"
   }
 }

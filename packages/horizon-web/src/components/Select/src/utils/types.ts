@@ -1,4 +1,4 @@
-import type { LegoComponentInstance } from '@aurora/utils';
+import type { HorizonWebComponentInstance } from '@aurora/utils';
 import { generatorInjectedKeyName } from '@aurora/utils';
 import type { OptionProps } from '../composables/useProps';
 import type { Ref } from 'vue';
@@ -32,13 +32,13 @@ export type NSelectFilterFunction = (
 ) => boolean;
 
 export type SelectDomRefs = {
-  pickerDomRef: Ref<LegoComponentInstance<typeof NPicker, PickerExposes> | undefined>;
-  scrollbarDomRef: Ref<LegoComponentInstance<typeof NScrollbar, ScrollbarExposes> | undefined>;
+  pickerDomRef: Ref<HorizonWebComponentInstance<typeof NPicker, PickerExposes> | undefined>;
+  scrollbarDomRef: Ref<HorizonWebComponentInstance<typeof NScrollbar, ScrollbarExposes> | undefined>;
   filterInputDomRef: Ref<
-    LegoComponentInstance<typeof NPickerFitContentInput, PickerFitContentInputExposes> | undefined
+    HorizonWebComponentInstance<typeof NPickerFitContentInput, PickerFitContentInputExposes> | undefined
   >;
-  tagGroupDomRef: Ref<LegoComponentInstance<typeof NTagGroup, TagGroupExposes> | undefined>;
+  tagGroupDomRef: Ref<HorizonWebComponentInstance<typeof NTagGroup, TagGroupExposes> | undefined>;
   virtualScrollListDomRef: Ref<
-    LegoComponentInstance<typeof VirtualScrollList, SelectVirtualScrollListExposes> | undefined
+    HorizonWebComponentInstance<typeof VirtualScrollList, SelectVirtualScrollListExposes> | undefined
   >;
 };

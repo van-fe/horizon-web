@@ -284,11 +284,11 @@ export default defineComponent({
     }
 
     function onScrollTop() {
-      console.log('组件滚动到起始位置了~~');
+      console.info('组件滚动到起始位置了~~');
     }
 
     function onScrollEnd() {
-      console.log('组件滚动到未尾位置了~~');
+      console.info('组件滚动到未尾位置了~~');
     }
 
     return {

@@ -3,7 +3,6 @@ import { LoadingService } from './service';
 import { defineDirective } from '@aurora/utils';
 import type { LoadingOptions } from './composables/useOptions';
 import { useLoadingOptions } from './composables/useOptions';
-import { useSensor } from '~/utils/useSensor';
 import { LoadingInstance, LoadingTimer, LoadingIsShow } from './utils/utils';
 
 export interface LoadingElement extends HTMLElement {
@@ -54,8 +53,6 @@ export default defineDirective<LoadingElement, typeof useLoadingOptions | boolea
   options: useLoadingOptions,
   desc: '用于页面和区块的加载中状态,页面局部处于等待异步数据或正在渲染过程时，合适的加载动效会有效缓解用户的焦虑',
   mounted(el, binding) {
-    useSensor('v-loading', binding.value, 'directive');
-
     const value = binding.value;
 
     if ((typeof value === 'boolean' && value) || (typeof value === 'object' && value.isShow)) {

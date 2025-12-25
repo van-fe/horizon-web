@@ -63,7 +63,7 @@ describe('DropdownItem.tsx', () => {
       );
       const items = wrapper.findAllComponents(NDropdownItem);
 
-      await expect(items[0].find('.n-icon').exists()).toBeTruthy();
+      await expect(items[0].find('.a-icon').exists()).toBeTruthy();
 
       await expect(items[0].find('.n-icon_eye').classes()).toBeTruthy();
     });

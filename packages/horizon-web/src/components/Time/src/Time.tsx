@@ -4,7 +4,7 @@ import { useTimeEmits } from './composables/useEmits';
 import type { TimeSlots } from './composables/useSlots';
 import { useTimeSlots } from './composables/useSlots';
 import type { TimeEmits } from './composables/useEmits';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 
 export default defineComponent({
@@ -13,7 +13,7 @@ export default defineComponent({
   props: useTimeProps,
   emits: useTimeEmits,
   slots: useTimeSlots,
-  setup(props, { slots, emit }: LegoSetupContext<TimeEmits, TimeSlots>) {
+  setup(props, { slots, emit }: HorizonWebSetupContext<TimeEmits, TimeSlots>) {
     const {
       time: timeProp,
       endTime: endTimeProp,

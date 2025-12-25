@@ -9,7 +9,7 @@ import {
 } from './utils/injectedKeys';
 import type { ApplicationSlots } from './composables/useSlots';
 import { useApplicationSlots } from './composables/useSlots';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import {
   ComponentClassBlock,
   setNamespace,
@@ -23,7 +23,7 @@ export default defineComponent({
   desc: '被用来提供全局的配置选项，让你的配置能够在全局都能够被访问到',
   props: useApplicationProps,
   slots: useApplicationSlots,
-  setup(props, { slots }: LegoSetupContext<{}, ApplicationSlots>) {
+  setup(props, { slots }: HorizonWebSetupContext<{}, ApplicationSlots>) {
     const locale = inject(localeInjectKey, defaultLocale);
 
     const sizeRef = ref<ApplicationProps['size']>(props.size);

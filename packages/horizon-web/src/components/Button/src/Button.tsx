@@ -9,7 +9,7 @@ import {
   toRefs,
 } from 'vue';
 import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { useButtonProps } from './composables/useProps';
 import { useButtonEmits } from './composables/useEmits';
 import { useButtonSlots } from './composables/useSlots';
@@ -20,7 +20,7 @@ import type { ButtonSlots } from './composables/useSlots';
 import type { ButtonExposes } from './composables/useExposes';
 import useSize from '~/utils/useSize';
 import { iconSizeMapping, onlyIconSizeMapping } from './utils/config';
-import { IconLoadingLine, NIcon } from '@aurora/icon';
+import { IconLoadingLine, AIcon } from '@aurora/icon';
 import { NButtonGroupPropsInjectKey, NButtonGroupSizeInjectKey } from './utils/injectKeys';
 import type { Router } from 'vue-router';
 import { NApplicationCompatibilityInjectedKey } from '~/components/Application/src/utils/injectedKeys';
@@ -37,7 +37,7 @@ export default defineComponent({
   exposes: useButtonExposes,
   setup(
     props: ButtonProps,
-    { emit, slots, attrs }: LegoSetupContext<ButtonEmits, ButtonSlots, ButtonExposes>,
+    { emit, slots, attrs }: HorizonWebSetupContext<ButtonEmits, ButtonSlots, ButtonExposes>,
   ) {
     const { size, color: colorProp, borderStyle: borderStyleProp } = toRefs(props);
     const classHelper = new ComponentClassBlock('button');
@@ -235,7 +235,7 @@ export default defineComponent({
             >
               {props.icon ? (
                 typeof props.icon === 'string' ? (
-                  <NIcon
+                  <AIcon
                     name={props.icon}
                     size={
                       props.iconSize ??

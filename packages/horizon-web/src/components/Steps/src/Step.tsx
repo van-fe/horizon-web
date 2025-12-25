@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'vue';
 import { defineComponent, inject, ref, onBeforeUnmount, computed, onMounted } from 'vue';
 import { useStepProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
 import { IconCheck, IconClose } from '@aurora/icon';
 import type { StepEmits } from './composables/useEmits';
@@ -24,7 +24,7 @@ export default defineComponent({
   props: useStepProps,
   emits: useStepEmits,
   slots: useStepSlots,
-  setup(props, { slots, emit }: LegoSetupContext<StepEmits, StepSlots>) {
+  setup(props, { slots, emit }: HorizonWebSetupContext<StepEmits, StepSlots>) {
     const uuid = nanoid();
     const classHelper = new ComponentClassBlock('step');
     const index = ref(-1);

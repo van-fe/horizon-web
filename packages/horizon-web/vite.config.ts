@@ -67,13 +67,13 @@ export default defineConfig({
         replacement: path.join(__dirname, 'src/'),
       },
       {
-        find: /^~root\//,
-        replacement: path.join(__dirname, '../'),
-      },
-      {
         find: /^@\//,
         replacement: path.join(__dirname, 'node_modules/'),
       },
+      {
+        find: /^@root\//,
+        replacement: path.join(__dirname, '../../'),
+      }
     ],
   },
   define: {

@@ -1,6 +1,6 @@
 import { defineComponent, toRefs } from 'vue';
 import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { useCardProps } from './composables/useProps';
 import { useCardEmits } from './composables/useEmits';
 import { useCardSlots } from './composables/useSlots';
@@ -17,7 +17,7 @@ export default defineComponent({
   emits: useCardEmits,
   slots: useCardSlots,
   exposes: useCardExposes,
-  setup(props: CardProps, { slots }: LegoSetupContext<CardEmits, CardSlots, CardExposes>) {
+  setup(props: CardProps, { slots }: HorizonWebSetupContext<CardEmits, CardSlots, CardExposes>) {
     const classHelper = new ComponentClassBlock('card');
     const { radius, border, title, topDivider, bottomDivider } = toRefs(props);
 

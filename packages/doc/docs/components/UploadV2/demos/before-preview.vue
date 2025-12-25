@@ -40,7 +40,7 @@ const modelValue = ref<NUploadUserFile[]>(
 );
 
 function onBeforePreview(file: NUploadFileType) {
-  console.log('before-preview:', file);
+  console.info('before-preview:', file);
 
   if (file.type === NUploadFileTypeEnum.Pdf) {
     $message.error('不可预览 pdf 文件');
@@ -59,7 +59,7 @@ function onBeforePreview(file: NUploadFileType) {
 }
 
 function onPreview(file: NUploadFileType) {
-  console.log('Preview file:', file);
+  console.info('Preview file:', file);
 }
 
 function onBeforeViewerPreview(file: NUploadUserFile) {

@@ -5,7 +5,7 @@ import dayjs, { isDayjsEqual } from '~/utils/useDayJs';
 import type { Dayjs } from 'dayjs';
 import { isDayjs } from 'dayjs';
 import type { TimePickerEmits } from '../composables/useEmits';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { isNil, isDefined } from '@aurora/utils';
 import type { TimePickerSlots } from '../composables/useSlots';
 import type { TimePickerExposes } from '../composables/useExposes';
@@ -19,7 +19,7 @@ import { tryToAnalysisTime } from '~/components/TimePicker/src/utils/utils';
 
 export default function useData(
   propRefs: ToRefs<TimePickerProps>,
-  context: LegoSetupContext<TimePickerEmits, TimePickerSlots, TimePickerExposes>,
+  context: HorizonWebSetupContext<TimePickerEmits, TimePickerSlots, TimePickerExposes>,
   domRefs: NTimePickerDomRefs,
   options: {
     visible: Ref<boolean>;

@@ -99,7 +99,7 @@ watch(showImage, () => {
 });
 
 const tamperedHandle = () => {
-  console.log("水印元素被“删除”或“篡改”啦！");
+  console.info("水印元素被“删除”或“篡改”啦！");
 };
 </script>
 

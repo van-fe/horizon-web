@@ -50,7 +50,7 @@ export default defineComponent({
     const confirmRef = ref<any>(null);
 
     const changeHandle = () => {
-      console.log(value3.value);
+      console.info(value3.value);
     };
 
     return {
@@ -64,11 +64,11 @@ export default defineComponent({
       confirmRef,
       changeHandle,
       confirmHandle() {
-        console.log('confirm');
+        console.info('confirm');
         confirmRef.value.confirmHandle();
       },
       cancleHandle() {
-        console.log('cancle');
+        console.info('cancle');
         confirmRef.value.cancelHandle();
       },
     };

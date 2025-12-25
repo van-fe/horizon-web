@@ -5,7 +5,7 @@ import { ref } from 'vue';
 const cardType = ref('line');
 
 const onTabChanged = (tab: NTabValue) => {
-  console.log('tab changed', tab);
+  console.info('tab changed', tab);
   $message({ type: 'success', message: `Tab ${tab} is clicked` });
 };
 </script>

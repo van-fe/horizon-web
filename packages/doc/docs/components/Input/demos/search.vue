@@ -1,19 +1,19 @@
 <template>
   <n-input v-model="val" clearable placeholder="Please input search keywords" @keyup.enter="handleSearch">
     <template #prefix>
-      <n-icon name="search" style="color: var(--n-text-disabled)" />
+      <a-icon name="search" style="color: var(--n-text-disabled)" />
     </template>
   </n-input>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { NIcon } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 export default defineComponent({
-  components: { NIcon },
+  components: { AIcon },
   setup() {
     const handleSearch = e => {
-      console.log('[handleSearch]', e.target.value);
+      console.info('[handleSearch]', e.target.value);
     };
     const val = ref('');
     return {

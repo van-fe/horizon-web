@@ -1,6 +1,6 @@
 import { computed, defineComponent, inject, toRefs } from 'vue';
 import type { CheckboxUnionType } from './utils/types';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { useCheckboxProps, handleChange, isChecked, handleBlur } from './composables/useProps';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import Checkbox from './composables/useCheckbox';
@@ -28,7 +28,7 @@ export default defineComponent({
   exposes: useCheckboxExposes,
   setup(
     props,
-    { slots, expose, emit }: LegoSetupContext<CheckboxEmits, CheckboxSlots, CheckboxExposes>,
+    { slots, expose, emit }: HorizonWebSetupContext<CheckboxEmits, CheckboxSlots, CheckboxExposes>,
   ) {
     const {
       modelValue: propModelValue,

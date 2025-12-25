@@ -1,4 +1,4 @@
-import type { LegoComponentInstance, MaybeRef } from '@aurora/utils';
+import type { HorizonWebComponentInstance, MaybeRef } from '@aurora/utils';
 import type { Mock } from 'vitest';
 import type { SetupContext } from 'vue';
 import { ref, unref } from 'vue';
@@ -25,9 +25,9 @@ export default class MenuHelper<T extends keyof MenuProps | `on${Capitalize<keyo
     Record<T, T extends keyof MenuProps ? MaybeRef<MenuProps[T]> : Mock | Function>
   >;
   public slots?: SetupContext<{}, MenuSlots>['slots'];
-  public domRef = ref<LegoComponentInstance<typeof NMenu, MenuExposes> | null>(null);
+  public domRef = ref<HorizonWebComponentInstance<typeof NMenu, MenuExposes> | null>(null);
   public wrapper!: VueWrapper<any, any>;
-  public element!: VueWrapper<LegoComponentInstance<typeof NMenu, MenuExposes>>;
+  public element!: VueWrapper<HorizonWebComponentInstance<typeof NMenu, MenuExposes>>;
 
   constructor(
     propsOrEmits?: Partial<
@@ -74,7 +74,7 @@ export default class MenuHelper<T extends keyof MenuProps | `on${Capitalize<keyo
     );
 
     this.element = this.wrapper.findComponent(NMenu) as VueWrapper<
-      LegoComponentInstance<typeof NMenu, MenuExposes>
+      HorizonWebComponentInstance<typeof NMenu, MenuExposes>
     >;
   }
 }

@@ -1,5 +1,5 @@
 export const SvSE = {
-  horizon-web: {
+  horizonWeb: {
     global: {
       ok: 'OK',
       cancel: 'Avbryt',
@@ -181,19 +181,6 @@ export const SvSE = {
       view: 'Visa fil',
       deleteFile: 'Ta bort fil',
       download: 'Ladda ner fil',
-    },
-    table: {
-      emptyText: 'Inga Data',
-      confirmFilter: 'Bekräfta',
-      resetFilter: 'Återställ',
-      clearFilter: 'Alla',
-      sumText: 'Summa',
-      loading: 'Laddar',
-      pinToLeft: 'Fäst till vänster',
-      pinToRight: 'Fäst till höger',
-      pin: 'Fäst kolumn',
-      unPin: 'Lossa',
-      lockPin: 'Den faste kolonnen er låst',
     },
     tree: {
       emptyText: 'Ingen data',

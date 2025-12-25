@@ -1,6 +1,6 @@
 import type { VNode } from 'vue';
 import { computed, defineComponent, inject, provide, ref, toRefs } from 'vue';
-import { cls, ComponentClassBlock, type LegoComponentInstance, useNamespace } from '@aurora/utils';
+import { cls, ComponentClassBlock, type HorizonWebComponentInstance, useNamespace } from '@aurora/utils';
 import type { TreeSelectProps } from './composables/useProps';
 import { useTreeSelectProps } from './composables/useProps';
 import { useTreeSelectEmits } from './composables/useEmits';
@@ -94,13 +94,13 @@ export default defineComponent({
      * dom ref
      */
     const domRefs: NTreeSelectDomRefs = {
-      picker: ref<LegoComponentInstance<typeof NPicker, PickerExposes> | null>(null),
-      filterInput: ref<LegoComponentInstance<
+      picker: ref<HorizonWebComponentInstance<typeof NPicker, PickerExposes> | null>(null),
+      filterInput: ref<HorizonWebComponentInstance<
         typeof NPickerFitContentInput,
         PickerFitContentInputExposes
       > | null>(null),
-      tagGroup: ref<LegoComponentInstance<typeof NTagGroup, TagGroupExposes> | null>(null),
-      tree: ref<LegoComponentInstance<typeof NTree, TreeExposes> | null>(null),
+      tagGroup: ref<HorizonWebComponentInstance<typeof NTagGroup, TagGroupExposes> | null>(null),
+      tree: ref<HorizonWebComponentInstance<typeof NTree, TreeExposes> | null>(null),
     };
 
     /**

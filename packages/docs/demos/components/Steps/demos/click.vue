@@ -24,10 +24,10 @@ export default defineComponent({
   },
   methods: {
     onChange(current: number) {
-      console.log('onChange:', current);
+      console.info('onChange:', current);
     },
     onClickStep1(evt: Event, index: number) {
-      console.log({evt, index});
+      console.info({evt, index});
     },
   },
 });

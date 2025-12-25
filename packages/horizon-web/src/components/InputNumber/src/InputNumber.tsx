@@ -1,6 +1,6 @@
 import { computed, defineComponent, inject, nextTick, ref, toRefs, watch } from 'vue';
 import { useInputNumberProps } from './composables/useProps';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import {
   ComponentClassBlock,
   cls,
@@ -43,7 +43,7 @@ export default defineComponent({
       emit,
       slots,
       expose,
-    }: LegoSetupContext<InputNumberEmits, InputNumberSlots, InputNumberExposes>,
+    }: HorizonWebSetupContext<InputNumberEmits, InputNumberSlots, InputNumberExposes>,
   ) {
     const classHelper = new ComponentClassBlock('input-number');
 

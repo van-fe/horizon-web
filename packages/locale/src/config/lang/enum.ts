@@ -9,13 +9,3 @@ export enum LocaleSupportLang {
   ZhCN = 'ZhCN',
   ZhTW = 'ZhTW',
 }
-
-/**
- * @deprecated
- */
-export enum LocaleSupportLang {
-  EN = LocaleSupportLang.En,
-  SvSE = LocaleSupportLang.SvSE,
-  ZH_CN = LocaleSupportLang.ZhCN,
-  ZH_TW = LocaleSupportLang.ZhTW,
-}

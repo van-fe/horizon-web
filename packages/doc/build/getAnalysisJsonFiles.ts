@@ -7,7 +7,7 @@ export default function (checkExist = true) {
   shell.cd('../api-generator');
 
   if (checkExist && !fs.existsSync(path.resolve(apiGeneratorOutPut, 'components-analysis.json'))) {
-    shell.exec('pnpm run build');
+    shell.exec('bun run build');
   }
 
   fs.cpSync(

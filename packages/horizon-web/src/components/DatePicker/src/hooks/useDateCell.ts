@@ -1,7 +1,7 @@
 import { computed, inject } from 'vue';
 import type { DatePickerDatePanelComponentsProps } from '../composables/useProps';
 import type { Dayjs } from 'dayjs';
-import type { LegoSetupContext } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock } from '@aurora/utils';
 import {
   NDatePickerEmitsInjectKey,
@@ -16,7 +16,7 @@ import { transformWeekPickedDate } from './useData';
 export default function useDateCell(
   props: DatePickerDatePanelComponentsProps,
   panelType: 'day' | 'month' | 'year',
-  context: LegoSetupContext<
+  context: HorizonWebSetupContext<
     DatePickerTimePanelComponentsEmits,
     {},
     DatePickerDatePanelComponentExposes
