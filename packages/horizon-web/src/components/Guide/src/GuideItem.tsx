@@ -22,18 +22,18 @@ import type { GuideItemEmits } from './composables/useEmits';
 import type { GuideItemSlots } from './composables/useSlots';
 import { IconClose } from '@aurora/icon';
 import {
-  NGuideCollectItemInjectKey,
-  NGuideCurrentIndexInjectKey,
-  NGuideIsStartedInjectKey,
-  NGuideItemsInjectKey,
-  NGuideOnCloseInjectKey,
-  NGuideOnFinishInjectKey,
-  NGuidePropsInjectKey,
-  NGuideRemoveItemInjectKey,
+  HGuideCollectItemInjectKey,
+  HGuideCurrentIndexInjectKey,
+  HGuideIsStartedInjectKey,
+  HGuideItemsInjectKey,
+  HGuideOnCloseInjectKey,
+  HGuideOnFinishInjectKey,
+  HGuidePropsInjectKey,
+  HGuideRemoveItemInjectKey,
 } from './utils/injectedKeys';
 import { nanoid } from 'nanoid';
 import { usePopper } from '~/utils/popper';
-import NButton from '~/components/Button/src/Button';
+import HButton from '~/components/Button/src/Button';
 import useLocaleLang from '~/utils/useLocaleLang';
 import { useDrag } from './utils/useDrag';
 
@@ -41,7 +41,7 @@ export default defineComponent({
   name: `${useNamespace()}GuideItem`,
   components: {
     IconClose,
-    NButton,
+    HButton,
   },
   props: useGuideItemProps,
   emits: useGuideItemEmits,
@@ -58,14 +58,14 @@ export default defineComponent({
     const targetRef = ref<HTMLElement | null>(null);
     const currentIndex = ref<number | null>(props.index ?? null);
 
-    const parentProps = inject(NGuidePropsInjectKey);
-    const collectItem = inject(NGuideCollectItemInjectKey);
-    const removeItem = inject(NGuideRemoveItemInjectKey);
-    const guideItems = inject(NGuideItemsInjectKey)!;
-    const current = inject(NGuideCurrentIndexInjectKey)!;
-    const onParentClose = inject(NGuideOnCloseInjectKey)!;
-    const onParentFinish = inject(NGuideOnFinishInjectKey)!;
-    const isStarted = inject(NGuideIsStartedInjectKey)!;
+    const parentProps = inject(HGuidePropsInjectKey);
+    const collectItem = inject(HGuideCollectItemInjectKey);
+    const removeItem = inject(HGuideRemoveItemInjectKey);
+    const guideItems = inject(HGuideItemsInjectKey)!;
+    const current = inject(HGuideCurrentIndexInjectKey)!;
+    const onParentClose = inject(HGuideOnCloseInjectKey)!;
+    const onParentFinish = inject(HGuideOnFinishInjectKey)!;
+    const isStarted = inject(HGuideIsStartedInjectKey)!;
 
     const triggerExist = ref(true);
     const customStyle = ref<CSSProperties>({});
@@ -176,14 +176,14 @@ export default defineComponent({
           )}
           {closeable.value && (
             <div class={classHelper.em('header', 'close')}>
-              <NButton
+              <HButton
                 type="normal"
                 text={true}
                 icon={<IconClose />}
                 iconSize={16}
                 size="small"
                 onClick={onClickClose}
-              ></NButton>
+              ></HButton>
             </div>
           )}
         </div>
@@ -212,16 +212,16 @@ export default defineComponent({
           {(props.useControls ?? parentProps?.useControls) && (
             <div class={classHelper.em('footer', 'controls')}>
               {(currentIndex.value || 0) > 0 && (
-                <NButton
+                <HButton
                   plain={true}
                   size="small"
                   class={classHelper.em('footer', 'control-cancel')}
                   onClick={onClickPrev}
                 >
                   {useLocaleLang('guide.prev').value}
-                </NButton>
+                </HButton>
               )}
-              <NButton
+              <HButton
                 size="small"
                 class={classHelper.em('footer', 'control-confirm')}
                 onClick={onClickNext}
@@ -231,7 +231,7 @@ export default defineComponent({
                     parentProps?.finishText ??
                     useLocaleLang('guide.finish').value
                   : useLocaleLang('guide.next').value}
-              </NButton>
+              </HButton>
             </div>
           )}
         </div>

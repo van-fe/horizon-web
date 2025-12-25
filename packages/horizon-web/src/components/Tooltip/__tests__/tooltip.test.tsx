@@ -1,18 +1,18 @@
 import { mount, shallowMount } from '@vue/test-utils';
-import NTooltip from '../src/Tooltip';
+import HTooltip from '../src/Tooltip';
 import { describe, expect, test } from 'vitest';
 import { Transition } from 'vue';
 
 describe('Tooltip.tsx', () => {
   test('basic', async () => {
-    const wrapper = shallowMount(() => <NTooltip>Something...</NTooltip>);
-    const element = wrapper.findComponent(NTooltip);
+    const wrapper = shallowMount(() => <HTooltip>Something...</HTooltip>);
+    const element = wrapper.findComponent(HTooltip);
 
     expect(element.exists()).toBe(true);
   });
 
   test('tooltip should turn invisible when props.disabled is updated to true', async () => {
-    const wrapper = mount(NTooltip, {
+    const wrapper = mount(HTooltip, {
       propsData: {
         trigger: 'manual',
         visible: true,

@@ -34,14 +34,14 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { NCascaderExtendOption } from '@aurora/horizon-web';
+import { HCascaderExtendOption } from '@aurora/horizon-web';
 
 const currentVal1 = ref<string[]>([]);
 const currentVal2 = ref<string[]>([]);
 const baseData = ref([]);
 const checkStrictly = ref(true);
 
-function handleChange(selectOrDeselect?: boolean | undefined, option?: NCascaderExtendOption | undefined) {
+function handleChange(selectOrDeselect?: boolean | undefined, option?: HCascaderExtendOption | undefined) {
   console.info(selectOrDeselect, option);
 }
 

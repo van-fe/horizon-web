@@ -2,13 +2,13 @@ import { computed, defineComponent, inject } from 'vue';
 import type { SlotsType } from 'vue';
 import { cls, ComponentClassBlock, cssVariable } from '@aurora/utils';
 import {
-  NUploadPropsInjectKey,
-  NUploadSizeInjectKey,
-  NUploadSlotsInjectKey,
-  NUploadUploadFileHelperInjectKey,
+  HUploadPropsInjectKey,
+  HUploadSizeInjectKey,
+  HUploadSlotsInjectKey,
+  HUploadUploadFileHelperInjectKey,
 } from '../utils/injectKeys';
 import UploadGalleryItem from './UploadGalleryItem';
-import { NUploadFileTypeEnum } from '~/components/Upload';
+import { HUploadFileTypeEnum } from '~/components/Upload/src/utils/fileDefines';
 import UploadFileItem from '~/components/Upload/src/components/UploadFileItem';
 
 export default defineComponent({
@@ -21,10 +21,10 @@ export default defineComponent({
   }>,
   setup(_, { slots }) {
     const classHelper = new ComponentClassBlock('upload--gallery');
-    const uploadFileHelper = inject(NUploadUploadFileHelperInjectKey)!;
-    const props = inject(NUploadPropsInjectKey)!;
-    const sizeRef = inject(NUploadSizeInjectKey)!;
-    const parentSlots = inject(NUploadSlotsInjectKey, undefined);
+    const uploadFileHelper = inject(HUploadUploadFileHelperInjectKey)!;
+    const props = inject(HUploadPropsInjectKey)!;
+    const sizeRef = inject(HUploadSizeInjectKey)!;
+    const parentSlots = inject(HUploadSlotsInjectKey, undefined);
 
     const fileItemSize = computed(() => {
       switch (sizeRef.value) {
@@ -68,7 +68,7 @@ export default defineComponent({
       >
         {Array.from(uploadFileHelper.fileList.value).map(file =>
           parentSlots?.file?.(file) ??
-          ([NUploadFileTypeEnum.Video, NUploadFileTypeEnum.Image].includes(file.type) &&
+          ([HUploadFileTypeEnum.Video, HUploadFileTypeEnum.Image].includes(file.type) &&
             props?.showMediaWithNormalModeInGalleryMixed === false) ? (
             <UploadGalleryItem file={file} />
           ) : (

@@ -1,5 +1,5 @@
 import { computed, defineComponent, h, inject } from 'vue';
-import type { NColumnResponsiveSetting } from './composables/useProps';
+import type { HColumnResponsiveSetting } from './composables/useProps';
 import { useColProps } from './composables/useProps';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, isDefined, isNumber, useNamespace } from '@aurora/utils';
@@ -30,7 +30,7 @@ export default defineComponent({
     });
 
     const responsiveClasses = computed(() => {
-      function method(size: string, propValue: number | NColumnResponsiveSetting | undefined) {
+      function method(size: string, propValue: number | HColumnResponsiveSetting | undefined) {
         if (isDefined(propValue)) {
           if (isNumber(propValue)) {
             return classHelper.m(`${size}-${propValue}`);

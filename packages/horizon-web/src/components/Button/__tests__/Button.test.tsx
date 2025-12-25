@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import NButton from '../src/Button';
+import HButton from '../src/Button';
 import { describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
 import type { ButtonProps } from '../src/composables/useProps';
@@ -8,8 +8,8 @@ import { sleep } from '../../../utils/tools';
 
 describe('Button.tsx', () => {
   test('basic', async () => {
-    const wrapper = mount(() => <NButton>OK</NButton>);
-    const element = wrapper.findComponent(NButton);
+    const wrapper = mount(() => <HButton>OK</HButton>);
+    const element = wrapper.findComponent(HButton);
 
     expect(element.exists()).toBe(true);
   });
@@ -17,8 +17,8 @@ describe('Button.tsx', () => {
   describe('props', () => {
     test('type', async () => {
       const type = ref<ButtonProps['type']>();
-      const wrapper = mount(() => <NButton type={type.value}>OK</NButton>);
-      const element = wrapper.findComponent(NButton);
+      const wrapper = mount(() => <HButton type={type.value}>OK</HButton>);
+      const element = wrapper.findComponent(HButton);
 
       expect(element.classes('n-button--primary')).toBe(true);
 
@@ -31,8 +31,8 @@ describe('Button.tsx', () => {
 
     test('size', async () => {
       const size = ref<ButtonProps['size']>();
-      const wrapper = mount(() => <NButton size={size.value}>OK</NButton>);
-      const element = wrapper.findComponent(NButton);
+      const wrapper = mount(() => <HButton size={size.value}>OK</HButton>);
+      const element = wrapper.findComponent(HButton);
 
       expect(element.classes('n-button--medium')).toBe(true);
 
@@ -45,8 +45,8 @@ describe('Button.tsx', () => {
 
     test('round', async () => {
       const round = ref<ButtonProps['round']>(false);
-      const wrapper = mount(() => <NButton round={round.value}>OK</NButton>);
-      const element = wrapper.findComponent(NButton);
+      const wrapper = mount(() => <HButton round={round.value}>OK</HButton>);
+      const element = wrapper.findComponent(HButton);
 
       expect(element.classes('n-button--round')).toBe(false);
 
@@ -59,8 +59,8 @@ describe('Button.tsx', () => {
 
     test('text', async () => {
       const text = ref<ButtonProps['text']>(false);
-      const wrapper = mount(() => <NButton text={text.value}>OK</NButton>);
-      const element = wrapper.findComponent(NButton);
+      const wrapper = mount(() => <HButton text={text.value}>OK</HButton>);
+      const element = wrapper.findComponent(HButton);
 
       expect(element.classes('n-button--text')).toBe(false);
 
@@ -73,8 +73,8 @@ describe('Button.tsx', () => {
 
     test('link', async () => {
       const link = ref<ButtonProps['link']>(false);
-      const wrapper = mount(() => <NButton link={link.value}>OK</NButton>);
-      const element = wrapper.findComponent(NButton);
+      const wrapper = mount(() => <HButton link={link.value}>OK</HButton>);
+      const element = wrapper.findComponent(HButton);
 
       expect(element.classes('n-button--link')).toBe(false);
 
@@ -87,8 +87,8 @@ describe('Button.tsx', () => {
 
     test('block', async () => {
       const block = ref<ButtonProps['block']>(false);
-      const wrapper = mount(() => <NButton block={block.value}>OK</NButton>);
-      const element = wrapper.findComponent(NButton);
+      const wrapper = mount(() => <HButton block={block.value}>OK</HButton>);
+      const element = wrapper.findComponent(HButton);
 
       expect(element.classes('n-button--block')).toBe(false);
 
@@ -101,8 +101,8 @@ describe('Button.tsx', () => {
 
     test('plain', async () => {
       const plain = ref<ButtonProps['plain']>(false);
-      const wrapper = mount(() => <NButton plain={plain.value}>OK</NButton>);
-      const element = wrapper.findComponent(NButton);
+      const wrapper = mount(() => <HButton plain={plain.value}>OK</HButton>);
+      const element = wrapper.findComponent(HButton);
 
       expect(element.classes('n-button--plain')).toBe(false);
 
@@ -116,11 +116,11 @@ describe('Button.tsx', () => {
     test('plain ghost', async () => {
       const ghost = ref<ButtonProps['ghost']>(false);
       const wrapper = mount(() => (
-        <NButton plain ghost={ghost.value}>
+        <HButton plain ghost={ghost.value}>
           OK
-        </NButton>
+        </HButton>
       ));
-      const element = wrapper.findComponent(NButton);
+      const element = wrapper.findComponent(HButton);
 
       expect(element.classes('is-ghost')).toBe(false);
 
@@ -132,16 +132,16 @@ describe('Button.tsx', () => {
     });
 
     test('type=secondary', async () => {
-      const wrapper = mount(() => <NButton type="secondary">OK</NButton>);
-      const element = wrapper.findComponent(NButton);
+      const wrapper = mount(() => <HButton type="secondary">OK</HButton>);
+      const element = wrapper.findComponent(HButton);
 
       expect(element.classes('n-button--plain')).toBe(true);
     });
 
     test('loading', async () => {
       const loading = ref<ButtonProps['loading']>(false);
-      const wrapper = mount(() => <NButton loading={loading.value}>OK</NButton>);
-      const element = wrapper.findComponent(NButton);
+      const wrapper = mount(() => <HButton loading={loading.value}>OK</HButton>);
+      const element = wrapper.findComponent(HButton);
 
       expect(element.classes('is-loading')).toBe(false);
 
@@ -155,8 +155,8 @@ describe('Button.tsx', () => {
 
     test('disabled', async () => {
       const disabled = ref<ButtonProps['disabled']>(false);
-      const wrapper = mount(() => <NButton disabled={disabled.value}>OK</NButton>);
-      const element = wrapper.findComponent(NButton);
+      const wrapper = mount(() => <HButton disabled={disabled.value}>OK</HButton>);
+      const element = wrapper.findComponent(HButton);
 
       expect(element.attributes('disabled')).toBeUndefined();
 
@@ -169,8 +169,8 @@ describe('Button.tsx', () => {
 
     test('icon & icon-size', async () => {
       const iconSize = ref<ButtonProps['iconSize']>(12);
-      const wrapper = mount(() => <NButton icon={IconEye} iconSize={iconSize.value}></NButton>);
-      const element = wrapper.findComponent(NButton);
+      const wrapper = mount(() => <HButton icon={IconEye} iconSize={iconSize.value}></HButton>);
+      const element = wrapper.findComponent(HButton);
 
       expect(element.classes('n-button--equally')).toBe(true);
       expect(wrapper.findComponent(IconEye).exists()).toBeTruthy();
@@ -180,8 +180,8 @@ describe('Button.tsx', () => {
 
     test('native-type', async () => {
       const nativeType = ref<ButtonProps['nativeType']>();
-      const wrapper = mount(() => <NButton nativeType={nativeType.value}>OK</NButton>);
-      const element = wrapper.findComponent(NButton);
+      const wrapper = mount(() => <HButton nativeType={nativeType.value}>OK</HButton>);
+      const element = wrapper.findComponent(HButton);
 
       expect(element.attributes('type')).toBe('button');
 
@@ -194,8 +194,8 @@ describe('Button.tsx', () => {
 
     test('tag', async () => {
       const tag = ref<ButtonProps['tag']>();
-      const wrapper = mount(() => <NButton tag={tag.value}>OK</NButton>);
-      const element = wrapper.findComponent(NButton);
+      const wrapper = mount(() => <HButton tag={tag.value}>OK</HButton>);
+      const element = wrapper.findComponent(HButton);
 
       expect(element.element.tagName).toBe('BUTTON');
 
@@ -219,11 +219,11 @@ describe('Button.tsx', () => {
       };
 
       const wrapper = mount(() => (
-        <NButton debounceFn={saveData} debounceType="loading">
+        <HButton debounceFn={saveData} debounceType="loading">
           OK
-        </NButton>
+        </HButton>
       ));
-      const element = wrapper.findComponent(NButton);
+      const element = wrapper.findComponent(HButton);
 
       await element.trigger('click');
       expect(element.classes('is-loading')).toBeTruthy();
@@ -243,9 +243,9 @@ describe('Button.tsx', () => {
   describe('emit', () => {
     test('click', async () => {
       const onClick = vi.fn();
-      const wrapper = mount(() => <NButton onClick={onClick}>OK</NButton>);
+      const wrapper = mount(() => <HButton onClick={onClick}>OK</HButton>);
 
-      await wrapper.findComponent(NButton).trigger('click');
+      await wrapper.findComponent(HButton).trigger('click');
 
       expect(onClick).toHaveBeenCalledOnce();
     });
@@ -253,22 +253,22 @@ describe('Button.tsx', () => {
 
   describe('slots', () => {
     test('default', async () => {
-      const wrapper = mount(() => <NButton>OK</NButton>);
-      const element = wrapper.findComponent(NButton);
+      const wrapper = mount(() => <HButton>OK</HButton>);
+      const element = wrapper.findComponent(HButton);
 
       expect(element.text()).toEqual('OK');
     });
 
     test('icon', async () => {
-      const wrapper = mount(() => <NButton>{{ icon: () => <IconEye /> }}</NButton>);
-      const element = wrapper.findComponent(NButton);
+      const wrapper = mount(() => <HButton>{{ icon: () => <IconEye /> }}</HButton>);
+      const element = wrapper.findComponent(HButton);
 
       expect(element.findComponent(IconEye)).toBeTruthy();
     });
 
     test('suffix', async () => {
-      const wrapper = mount(() => <NButton>{{ suffix: () => 'SUFFIX' }}</NButton>);
-      const element = wrapper.findComponent(NButton);
+      const wrapper = mount(() => <HButton>{{ suffix: () => 'SUFFIX' }}</HButton>);
+      const element = wrapper.findComponent(HButton);
 
       expect(element.find('.n-button__suffix').text()).toEqual('SUFFIX');
     });

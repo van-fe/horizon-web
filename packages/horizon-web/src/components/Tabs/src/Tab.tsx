@@ -1,4 +1,4 @@
-import { AIconSVG } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import {
   ComponentClassBlock,
@@ -18,7 +18,7 @@ import {
   type VNodeRef,
 } from 'vue';
 import { useTabEmits, type TabEmits } from './composables/useEmits';
-import { useTabProps, type NTabValue } from './composables/useProps';
+import { useTabProps, type HTabValue } from './composables/useProps';
 import type { TabSlots } from './composables/useSlots';
 import { useTabSlots } from './composables/useSlots';
 import { useTabPropsLogWarnProperty } from './composables/useWarning';
@@ -27,7 +27,7 @@ import { tabsContextKey } from './constants';
 export default defineComponent({
   name: `${useNamespace()}Tab`,
   components: {
-    AIconSVG,
+    AIcon,
   },
   inheritAttrs: false,
   props: useTabProps,
@@ -43,7 +43,7 @@ export default defineComponent({
 
     const instance = getCurrentInstance();
 
-    const key = computed(() => props.name ?? (instance?.vnode.key as NTabValue));
+    const key = computed(() => props.name ?? (instance?.vnode.key as HTabValue));
     const closable = computed(() => props.showClose ?? props.closable);
 
     const dragActivated = computed(
@@ -142,7 +142,7 @@ export default defineComponent({
             {slots.icon
               ? cloneVNode(slots.icon()[0], { class: cls.e('icon') })
               : props.icon && (
-                  <AIconSVG class={cls.e('icon')} name={props.icon} size={props.iconSize} />
+                  <AIcon class={cls.e('icon')} name={props.icon} size={props.iconSize} />
                 )}
 
             {isVNodeEmpty(slotDefaults) ? (
@@ -152,7 +152,7 @@ export default defineComponent({
             )}
 
             {closable.value && ctx.type.value !== 'segment' && (
-              <AIconSVG name="close" class={[cls.e('icon'), cls.e('close')]} onClick={onClose} />
+              <AIcon name="close" class={[cls.e('icon'), cls.e('close')]} onClick={onClose} />
             )}
           </div>
         </div>

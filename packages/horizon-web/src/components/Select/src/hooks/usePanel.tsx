@@ -6,11 +6,11 @@ import type { SelectSlots } from '../composables/useSlots';
 import type { SelectExposes } from '../composables/useExposes';
 import { ComponentClassBlock, isDefined, type HorizonWebSetupContext } from '@aurora/utils';
 import {
-  NSelectValueFormatSymbol,
+  HSelectValueFormatSymbol,
   type ModelValueSingleType,
   type SelectDomRefs,
 } from '../utils/types';
-import { NSelectPopperVisibleInjectKey, type SelectCollectedOptionData } from '../utils/injectKeys';
+import { HSelectPopperVisibleInjectKey, type SelectCollectedOptionData } from '../utils/injectKeys';
 import useLocaleLang from '~/utils/useLocaleLang';
 import { isValueFormatWrapped, unwrapValueFormattedValue } from '../utils/valueFormat';
 
@@ -168,7 +168,7 @@ export default function usePanel(
 
         const formattedValue = props.valueFormat!({ ...tempData?.props, ...tempData?.attrs });
 
-        formattedValue[NSelectValueFormatSymbol] = curr;
+        formattedValue[HSelectValueFormatSymbol] = curr;
 
         return formattedValue;
       });
@@ -177,7 +177,7 @@ export default function usePanel(
     return values;
   }
 
-  provide(NSelectPopperVisibleInjectKey, options.popperVisible);
+  provide(HSelectPopperVisibleInjectKey, options.popperVisible);
 
   return {
     inputDisplayValue,

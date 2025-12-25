@@ -24,20 +24,20 @@ import type { SelectProps } from './composables/useProps';
 import type { SelectEmits } from './composables/useEmits';
 import type { SelectSlots } from './composables/useSlots';
 import type { SelectExposes, SelectVirtualScrollListExposes } from './composables/useExposes';
-import NPicker from '~/components/Picker/src/Picker';
+import HPicker from '~/components/Picker/src/Picker';
 import {
-  NSelectEmitsInjectKey,
-  NSelectPropsInjectKey,
-  NSelectSlotsInjectKey,
+  HSelectEmitsInjectKey,
+  HSelectPropsInjectKey,
+  HSelectSlotsInjectKey,
 } from './utils/injectKeys';
-import NScrollbar from '~/components/Scrollbar/src/Scrollbar';
-import NTagGroup from '~/components/Tag/src/TagGroup';
+import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
+import HTagGroup from '~/components/Tag/src/TagGroup';
 import useSize from '~/utils/useSize';
-import NPickerFitContentInput from '~/components/Picker/src/components/NPickerFitContentInput';
-import NCheckbox from '~/components/Checkbox/src/Checkbox';
+import HPickerFitContentInput from '~/components/Picker/src/components/PickerFitContentInput';
+import HCheckbox from '~/components/Checkbox/src/Checkbox';
 import useLocaleLang from '~/utils/useLocaleLang';
-import NOption from './Option';
-import { NFormItemErrorInjectedKey } from '~/components/Form/src/utils/injectedKeys';
+import HOption from './Option';
+import { HFormItemErrorInjectedKey } from '~/components/Form/src/utils/injectedKeys';
 import VirtualScrollList from './components/VirtualScrollList';
 import type {
   PickerExposes,
@@ -73,11 +73,11 @@ export default defineComponent({
      * dom ref
      */
     const domRefs: SelectDomRefs = {
-      pickerDomRef: ref<HorizonWebComponentInstance<typeof NPicker, PickerExposes>>(),
-      scrollbarDomRef: ref<HorizonWebComponentInstance<typeof NScrollbar, ScrollbarExposes>>(),
+      pickerDomRef: ref<HorizonWebComponentInstance<typeof HPicker, PickerExposes>>(),
+      scrollbarDomRef: ref<HorizonWebComponentInstance<typeof HScrollbar, ScrollbarExposes>>(),
       filterInputDomRef:
-        ref<HorizonWebComponentInstance<typeof NPickerFitContentInput, PickerFitContentInputExposes>>(),
-      tagGroupDomRef: ref<HorizonWebComponentInstance<typeof NTagGroup, TagGroupExposes>>(),
+        ref<HorizonWebComponentInstance<typeof HPickerFitContentInput, PickerFitContentInputExposes>>(),
+      tagGroupDomRef: ref<HorizonWebComponentInstance<typeof HTagGroup, TagGroupExposes>>(),
       virtualScrollListDomRef:
         ref<HorizonWebComponentInstance<typeof VirtualScrollList, SelectVirtualScrollListExposes>>(),
     };
@@ -102,7 +102,7 @@ export default defineComponent({
     const sizeRef = useSize(size, 'medium');
 
     // form-item validate trigger
-    const nFormError = inject(NFormItemErrorInjectedKey, undefined);
+    const nFormError = inject(HFormItemErrorInjectedKey, undefined);
 
     function setPopperVisible(visible: boolean) {
       if (visible) {
@@ -323,9 +323,9 @@ export default defineComponent({
     /**
      * normal provide
      */
-    provide(NSelectPropsInjectKey, props);
-    provide(NSelectEmitsInjectKey, context.emit);
-    provide(NSelectSlotsInjectKey, context.slots);
+    provide(HSelectPropsInjectKey, props);
+    provide(HSelectEmitsInjectKey, context.emit);
+    provide(HSelectSlotsInjectKey, context.slots);
 
     // Because of when jsx mode on, the default options can't be mounted correctly. (VUE bug)
     // So SELECT should render slots to a shallowRef value to correct the behavior.
@@ -337,7 +337,7 @@ export default defineComponent({
     return () => {
       renderDefaultSlot(context.slots);
       return (
-        <NPicker
+        <HPicker
           ref={domRefs.pickerDomRef}
           size={sizeRef.value}
           modelValue={inputDisplayValue.value}
@@ -417,11 +417,11 @@ export default defineComponent({
                 {context.slots.panelHeaderRender?.()}
                 {props.showTagsInPanel && presetRenderedModelValueTags.value.length > 0 && (
                   <div class={classHelper.e('panel-tags')}>
-                    <NScrollbar maxHeight={104}>
-                      <NTagGroup collapse={false}>
+                    <HScrollbar maxHeight={104}>
+                      <HTagGroup collapse={false}>
                         {flattenVNodes(presetRenderedModelValueTags.value)}
-                      </NTagGroup>
-                    </NScrollbar>
+                      </HTagGroup>
+                    </HScrollbar>
                   </div>
                 )}
               </Fragment>
@@ -442,7 +442,7 @@ export default defineComponent({
                     )}
                     onClick={toggleCheckAll}
                   >
-                    <NCheckbox modelValue={isCheckAll.value} indeterminate={isIndeterminate.value}>
+                    <HCheckbox modelValue={isCheckAll.value} indeterminate={isIndeterminate.value}>
                       <span
                         class={cls(
                           classHelper.e('check-all-label'),
@@ -459,7 +459,7 @@ export default defineComponent({
                           </span>
                         )}
                       </span>
-                    </NCheckbox>
+                    </HCheckbox>
                   </div>
                 )}
                 {isCreateOptionVisible.value && (
@@ -487,7 +487,7 @@ export default defineComponent({
                     onReachBottom={onReachBottom}
                   />
                 ) : (
-                  <NScrollbar
+                  <HScrollbar
                     ref={domRefs.scrollbarDomRef}
                     maxHeight={props.optionListMaxHeight}
                     size="small"
@@ -504,11 +504,11 @@ export default defineComponent({
                     onReachBottom={onReachBottom}
                   >
                     {defaultSlotContent.value}
-                    {props.options?.map(val => <NOption {...val} />)}
+                    {props.options?.map(val => <HOption {...val} />)}
                     {tempCreateOptions.value.map(val => (
-                      <NOption value={val} label={val} />
+                      <HOption value={val} label={val} />
                     ))}
-                  </NScrollbar>
+                  </HScrollbar>
                 )}
               </div>
             ),
@@ -530,7 +530,7 @@ export default defineComponent({
                           },
                         )
                     : () => (
-                        <NTagGroup
+                        <HTagGroup
                           ref={domRefs.tagGroupDomRef}
                           collapse={useCollapse.value}
                           tooltipRenderType="full"
@@ -556,7 +556,7 @@ export default defineComponent({
                                   )
                                 : renderedModelValueTags.value,
                             suffix: () => (
-                              <NPickerFitContentInput
+                              <HPickerFitContentInput
                                 ref={domRefs.filterInputDomRef}
                                 v-show={shouldTagAppendInputExists.value}
                                 modelValue={inputValue.value}
@@ -569,7 +569,7 @@ export default defineComponent({
                               />
                             ),
                           }}
-                        </NTagGroup>
+                        </HTagGroup>
                       )
                   : undefined
                 : context.slots.tagRender && modelValueSet.value.size > 0
@@ -599,7 +599,7 @@ export default defineComponent({
                             )}
                           </div>
                           {isInputable.value && (
-                            <NPickerFitContentInput
+                            <HPickerFitContentInput
                               ref={domRefs.filterInputDomRef}
                               v-model={inputValue.value}
                               onInput={handleInput}
@@ -614,7 +614,7 @@ export default defineComponent({
                     }
                   : undefined),
           }}
-        </NPicker>
+        </HPicker>
       );
     };
   },

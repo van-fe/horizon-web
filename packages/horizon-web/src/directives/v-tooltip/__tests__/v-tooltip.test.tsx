@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import NVTooltip from '../index';
+import HVTooltip from '../index';
 import { describe, expect, test } from 'vitest';
 
 describe('v-loading.tsx', () => {
@@ -10,7 +10,7 @@ describe('v-loading.tsx', () => {
         attachTo: document.body,
         global: {
           directives: {
-            [NVTooltip.name]: NVTooltip,
+            [HVTooltip.name]: HVTooltip,
           },
         },
       },

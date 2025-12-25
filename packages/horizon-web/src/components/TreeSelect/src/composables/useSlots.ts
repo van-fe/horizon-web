@@ -1,8 +1,8 @@
 import type {
-  NTreeExtendsData,
-  NTreeNodeData,
-  NTreeNodeDataWithLevel,
-  NTreeUuidType,
+  HTreeExtendsData,
+  HTreeNodeData,
+  HTreeNodeDataWithLevel,
+  HTreeUuidType,
 } from '~/components/Tree/src/utils/types';
 import type { Ref, VNode, SlotsType } from 'vue';
 
@@ -10,22 +10,22 @@ export const useTreeSelectSlots = Object as SlotsType<{
   /**
    * 自定义触发器完整展示内容
    */
-  default?: { visible: Ref<boolean>; treeDataMap: Map<NTreeUuidType, NTreeNodeData> };
+  default?: { visible: Ref<boolean>; treeDataMap: Map<HTreeUuidType, HTreeNodeData> };
 
   /**
    * 自定义 `select` 中被选中的项目
    */
-  tagRender?: (value: NTreeExtendsData) => VNode[];
+  tagRender?: (value: HTreeExtendsData) => VNode[];
 
   /**
    * 自定义 完整 `select` 渲染内容
    */
-  selectRender?: (value: NTreeExtendsData) => VNode[];
+  selectRender?: (value: HTreeExtendsData) => VNode[];
 
   /**
-   * 自定义渲染节点，接收当前节点对应的 `NTreeNodeData` 和 `VNode` 作为参数
+   * 自定义渲染节点，接收当前节点对应的 `HTreeNodeData` 和 `VNode` 作为参数
    */
-  treeNodeRender?: { data: NTreeNodeDataWithLevel; vnode: VNode };
+  treeNodeRender?: { data: HTreeNodeDataWithLevel; vnode: VNode };
   /**
    * @version 2.3.2
    * 自定义 `option` 面板中的顶部内容

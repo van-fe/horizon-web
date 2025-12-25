@@ -1,7 +1,7 @@
 import type { Ref, SetupContext } from 'vue';
 import { ref, watch } from 'vue';
-import type { NTableInsertedColumnData, NTableTransformedRowDataType } from '../utils/types';
-import { NTableTransformedRowContextKey } from '../utils/types';
+import type { HTableInsertedColumnData, HTableTransformedRowDataType } from '../utils/types';
+import { HTableTransformedRowContextKey } from '../utils/types';
 import type { TableEmits } from '../composables/useEmits';
 import { warn } from '~/utils/useLog';
 import { isDefined, isNil } from '@aurora/utils';
@@ -13,9 +13,9 @@ import type { TimePickerProps } from '~/components/TimePicker/src/composables/us
 import type { TreeSelectProps } from '~/components/TreeSelect/src/composables/useProps';
 
 export default function useFilter(
-  column: NTableInsertedColumnData,
+  column: HTableInsertedColumnData,
   emit: SetupContext<TableEmits>['emit'],
-  flattenData: Ref<NTableTransformedRowDataType[]>,
+  flattenData: Ref<HTableTransformedRowDataType[]>,
 ) {
   const currentFilterValue = ref();
 
@@ -35,7 +35,7 @@ export default function useFilter(
       const rowColumnValue = row[column.props.field];
 
       if (isDefined(column.props.filterMethod)) {
-        row[NTableTransformedRowContextKey].visible[column.props.field] = column.props.filterMethod(
+        row[HTableTransformedRowContextKey].visible[column.props.field] = column.props.filterMethod(
           val,
           row,
           column,
@@ -45,12 +45,12 @@ export default function useFilter(
       }
 
       if (isNil(val)) {
-        row[NTableTransformedRowContextKey].visible[column.props.field] = true;
+        row[HTableTransformedRowContextKey].visible[column.props.field] = true;
       } else {
         switch (column.props.filterType) {
           case 'input':
           case 'input-number':
-            row[NTableTransformedRowContextKey].visible[column.props.field] = rowColumnValue
+            row[HTableTransformedRowContextKey].visible[column.props.field] = rowColumnValue
               .toString()
               .toLowerCase()
               .includes(val.toString().trim().toLowerCase());
@@ -61,11 +61,11 @@ export default function useFilter(
               (column.props.filterOptions as Partial<SelectProps | TreeSelectProps>)?.multiple !==
               false
             ) {
-              row[NTableTransformedRowContextKey].visible[column.props.field] = val.length
+              row[HTableTransformedRowContextKey].visible[column.props.field] = val.length
                 ? val.some((curr: unknown) => curr === rowColumnValue)
                 : true;
             } else {
-              row[NTableTransformedRowContextKey].visible[column.props.field] =
+              row[HTableTransformedRowContextKey].visible[column.props.field] =
                 rowColumnValue?.toString() === val.toString();
             }
             break;
@@ -81,11 +81,11 @@ export default function useFilter(
                   ?.toLowerCase()
                   .includes('range')
               ) {
-                row[NTableTransformedRowContextKey].visible[column.props.field] =
+                row[HTableTransformedRowContextKey].visible[column.props.field] =
                   currDayjs.isSameOrAfter(dayjs(val[0]), compareUnit) &&
                   currDayjs.isSameOrBefore(dayjs(val[1]), compareUnit);
               } else {
-                row[NTableTransformedRowContextKey].visible[column.props.field] = currDayjs.isSame(
+                row[HTableTransformedRowContextKey].visible[column.props.field] = currDayjs.isSame(
                   dayjs(val),
                   compareUnit,
                 );
@@ -97,11 +97,11 @@ export default function useFilter(
               const currDayjs = dayjs(rowColumnValue, 'HH:mm:ss');
 
               if ((column.props.filterOptions as Partial<TimePickerProps>)?.isRange) {
-                row[NTableTransformedRowContextKey].visible[column.props.field] =
+                row[HTableTransformedRowContextKey].visible[column.props.field] =
                   currDayjs.isSameOrAfter(dayjs(val[0], 'HH:mm:ss'), 'seconds') &&
                   currDayjs.isSameOrBefore(dayjs(val[1], 'HH:mm:ss'), 'seconds');
               } else {
-                row[NTableTransformedRowContextKey].visible[column.props.field] = currDayjs.isSame(
+                row[HTableTransformedRowContextKey].visible[column.props.field] = currDayjs.isSame(
                   dayjs(val, 'HH:mm:ss'),
                   'seconds',
                 );

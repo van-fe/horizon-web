@@ -1,4 +1,4 @@
-import { ref, defineComponent, toRefs, computed, watch, inject, provide, nextTick } from 'vue';
+import { ref, defineComponent, toRefs, computed, watch, provide, nextTick, inject } from 'vue';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { useTransferProps } from './composables/useProps';
@@ -10,14 +10,14 @@ import type { TransferSlots } from './composables/useSlots';
 import { useTransferExposes } from './composables/useExposes';
 import { handleFlatTree } from './utils/useFunc';
 import TransferPanel from './TransferPanel';
-import NCheckbox from '~/components/Checkbox/src/Checkbox';
-import NButton from '~/components/Button/src/Button';
-import NInput from '~/components/Input/src/Input';
+import HCheckbox from '~/components/Checkbox/src/Checkbox';
+import HButton from '~/components/Button/src/Button';
+import HInput from '~/components/Input/src/Input';
 import {
-  NFormItemTriggerInjectedKey,
-  NFormDisabledInjectedKey,
+  HFormItemTriggerInjectedKey,
+  HFormDisabledInjectedKey,
 } from '~/components/Form/src/utils/injectedKeys';
-import { defaultLocale, localeInjectKey } from '~/provides/localable';
+import useLocaleLang from '~/utils/useLocaleLang';
 
 export default defineComponent({
   name: `${useNamespace()}Transfer`,
@@ -25,7 +25,7 @@ export default defineComponent({
     '需要在多个可选项中进行多选时，用直观的方式在两栏中移动元素，完成选择行为。\n' +
     '比起 `Select` 和 `TreeSelect`，穿梭框占据更大的空间，可以展示可选项的更多信息。',
   author: '@chris.deng',
-  components: { TransferPanel, NButton, NCheckbox, NInput },
+  components: { TransferPanel, HButton, HCheckbox, HInput },
   props: useTransferProps,
   emits: useTransferEmits,
   slots: useTransferSlots,
@@ -56,14 +56,12 @@ export default defineComponent({
     } = toRefs(props);
     const classHelper = new ComponentClassBlock('transfer');
 
-    const locale = inject(localeInjectKey, defaultLocale);
-
     /** formItemTrigger **/
-    const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
-    // because transfer use many form element, so provide NFormItemTriggerInjectedKey as undefined
-    provide(NFormItemTriggerInjectedKey, undefined);
+    const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
+    // because transfer use many form element, so provide HFormItemTriggerInjectedKey as undefined
+    provide(HFormItemTriggerInjectedKey, undefined);
 
-    const formDisabled = inject(NFormDisabledInjectedKey, undefined);
+    const formDisabled = inject(HFormDisabledInjectedKey, undefined);
     const isDisabled = computed(() => formDisabled?.value || disabledProp.value);
 
     const itemKeyMap = computed(() => {
@@ -133,12 +131,12 @@ export default defineComponent({
       if (!peopleArr.length && !departArr.length) return 0;
       let txt = '';
       if (peopleArr.length) {
-        txt += `${peopleArr.length} ${locale.value?.langService?.td()?.horizon-web?.transfer?.people}`;
+        txt += `${peopleArr.length} ${useLocaleLang('transfer.people').value}`;
       }
       if (departArr.length) {
         txt += peopleArr.length
-          ? `、${departArr.length} ${locale.value?.langService?.td()?.horizon-web?.transfer?.group}`
-          : `${departArr.length} ${locale.value?.langService?.td()?.horizon-web?.transfer?.group}`;
+          ? `、${departArr.length} ${useLocaleLang('transfer.group').value}`
+          : `${departArr.length} ${useLocaleLang('transfer.group').value}`;
       }
       return txt;
     });
@@ -340,7 +338,7 @@ export default defineComponent({
             header: () =>
               slots?.leftHeader?.() ??
               (titlesProp.value[0] && (
-                <NCheckbox
+                <HCheckbox
                   class={classHelper.e('header')}
                   disabled={isDisabled.value}
                   indeterminate={indeterminate.value}
@@ -348,7 +346,7 @@ export default defineComponent({
                   v-model={checkedAll.value}
                 >
                   {titlesProp.value[0]}
-                </NCheckbox>
+                </HCheckbox>
               )),
             empty: slots.leftEmpty,
             footer: slots.leftFooter,
@@ -380,12 +378,12 @@ export default defineComponent({
                   <div>
                     {titlesProp.value[1]
                       ? titlesProp.value[1]
-                      : `${locale.value?.langService?.td()?.horizon-web?.transfer?.hasCheckedFormat}: ${
+                      : `${useLocaleLang('transfer.hasCheckedFormat').value}: ${
                           checkedDataTotal.value
                         }`}
                   </div>
                   <div style="min-height: 32px;">
-                    <NButton
+                    <HButton
                       v-show={canClearChecked.value}
                       class={[classHelper.em('header', 'clear')]}
                       size="medium"
@@ -394,8 +392,8 @@ export default defineComponent({
                       onClick={() => clearChecked()}
                       disabled={isDisabled.value}
                     >
-                      {locale.value?.langService?.td()?.horizon-web?.transfer?.clear}
-                    </NButton>
+                      {useLocaleLang('transfer.clear').value}
+                    </HButton>
                   </div>
                 </div>
               ),

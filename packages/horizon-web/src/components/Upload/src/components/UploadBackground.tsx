@@ -10,8 +10,8 @@ import {
 } from 'vue';
 import type { Arrayable, HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, cssVariable, useNamespace } from '@aurora/utils';
-import type { NUploadFileType } from '../utils/fileDefines';
-import { NUploadFileTypeEnum, NUploadFileStatusEnum } from '../utils/fileDefines';
+import type { HUploadFileType } from '../utils/fileDefines';
+import { HUploadFileTypeEnum, HUploadFileStatusEnum } from '../utils/fileDefines';
 import {
   IconArrowDown,
   IconClose,
@@ -22,29 +22,29 @@ import {
   IconWarningFilledLight,
 } from '@aurora/icon';
 import UploadFileList from './UploadFileList';
-import NTransition from '~/components/Transition/src/Transition';
-import NButton from '~/components/Button/src/Button';
-import NEmpty from '~/components/Empty/src/Empty';
+import HTransition from '~/components/Transition/src/Transition';
+import HButton from '~/components/Button/src/Button';
+import HEmpty from '~/components/Empty/src/Empty';
 import useLocaleLang from '~/utils/useLocaleLang';
 import { useUploadBackgroundProps } from '../composables/useProps';
 import type { UploadBackgroundEmits } from '../composables/useEmits';
 import { useUploadBackgroundEmits } from '../composables/useEmits';
 import UploadFileHelper from '../utils/UploadFileHelper';
 import { suitSizeValue } from '../utils/helper';
-import NScrollbar from '~/components/Scrollbar/src/Scrollbar';
+import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
 import type { UploadBackgroundExposes } from '../composables/useExposes';
 import { useUploadBackgroundExposes } from '../composables/useExposes';
 import {
-  NUploadOpenViewerInjectKey,
-  NUploadPropsInjectKey,
-  NUploadUploadFileHelperInjectKey,
+  HUploadOpenViewerInjectKey,
+  HUploadPropsInjectKey,
+  HUploadUploadFileHelperInjectKey,
 } from '../utils/injectKeys';
-import NViewer from '~/components/Viewer/src/Viewer';
+import HViewer from '~/components/Viewer/src/Viewer';
 
 export default defineComponent({
   name: `${useNamespace()}UploadBackground`,
   components: {
-    NScrollbar,
+    HScrollbar,
   },
   props: useUploadBackgroundProps,
   emits: useUploadBackgroundEmits,
@@ -112,7 +112,7 @@ export default defineComponent({
     const canViewerFiles = computed(() =>
       Array.from(uploadFileHelper.fileList.value.values())
         .filter(file =>
-          [NUploadFileTypeEnum.Image, NUploadFileTypeEnum.Video].includes(file.type),
+          [HUploadFileTypeEnum.Image, HUploadFileTypeEnum.Video].includes(file.type),
         )
         .filter(file => props.uploadProps?.beforeViewerPreview?.(file) ?? true),
     );
@@ -126,21 +126,21 @@ export default defineComponent({
     );
 
     const uploadingAmount = computed(
-      () => fileStatuses.value.filter(curr => curr === NUploadFileStatusEnum.Uploading).length,
+      () => fileStatuses.value.filter(curr => curr === HUploadFileStatusEnum.Uploading).length,
     );
     const successAmount = computed(
-      () => fileStatuses.value.filter(curr => curr === NUploadFileStatusEnum.Success).length,
+      () => fileStatuses.value.filter(curr => curr === HUploadFileStatusEnum.Success).length,
     );
     const failAmount = computed(
-      () => fileStatuses.value.filter(curr => curr === NUploadFileStatusEnum.Fail).length,
+      () => fileStatuses.value.filter(curr => curr === HUploadFileStatusEnum.Fail).length,
     );
     const pendingAmount = computed(
       () =>
         fileStatuses.value.filter(curr =>
           [
-            NUploadFileStatusEnum.Pending,
-            NUploadFileStatusEnum.Pause,
-            NUploadFileStatusEnum.New,
+            HUploadFileStatusEnum.Pending,
+            HUploadFileStatusEnum.Pause,
+            HUploadFileStatusEnum.New,
           ].includes(curr),
         ).length,
     );
@@ -256,9 +256,9 @@ export default defineComponent({
       emit('close');
     }
 
-    provide(NUploadPropsInjectKey, props.uploadProps);
-    provide(NUploadUploadFileHelperInjectKey, uploadFileHelper);
-    provide(NUploadOpenViewerInjectKey, file => {
+    provide(HUploadPropsInjectKey, props.uploadProps);
+    provide(HUploadUploadFileHelperInjectKey, uploadFileHelper);
+    provide(HUploadOpenViewerInjectKey, file => {
       viewerIndex.value = canViewerFiles.value.indexOf(file);
       if (viewerIndex.value !== -1) {
         viewerVisible.value = true;
@@ -266,10 +266,10 @@ export default defineComponent({
     });
 
     expose({
-      addFile(file: Arrayable<NUploadFileType>) {
+      addFile(file: Arrayable<HUploadFileType>) {
         void uploadFileHelper.addFiles(file);
       },
-      removeFile(file: NUploadFileType) {
+      removeFile(file: HUploadFileType) {
         void uploadFileHelper.removeFile([file], false);
       },
       switchVisible(visible: boolean) {
@@ -293,7 +293,7 @@ export default defineComponent({
           </div>
           <div class={classHelper.em('header', 'right')}>
             <div class={classHelper.em('header', 'control')}>
-              <NButton
+              <HButton
                 type="normal"
                 text
                 icon={IconArrowDown}
@@ -304,7 +304,7 @@ export default defineComponent({
             </div>
             {props.closable && (
               <div class={classHelper.em('header', 'control')}>
-                <NButton
+                <HButton
                   type="normal"
                   text
                   icon={IconClose}
@@ -315,7 +315,7 @@ export default defineComponent({
             )}
           </div>
         </div>
-        <NTransition name="collapse">
+        <HTransition name="collapse">
           <div v-show={!bodyCollapsed.value} class={classHelper.e('body')}>
             <div
               v-show={uploadFileHelper.fileList.value.size > 0}
@@ -327,23 +327,23 @@ export default defineComponent({
               v-show={uploadFileHelper.fileList.value.size > 0}
               class={classHelper.em('body', 'inner')}
             >
-              <NScrollbar maxHeight="292">
+              <HScrollbar maxHeight="292">
                 <UploadFileList
                   fileList={uploadFileHelper.fileList.value}
                   multipart={false}
                   controlsAlwaysVisible={true}
                 />
-              </NScrollbar>
+              </HScrollbar>
             </div>
-            <NEmpty
+            <HEmpty
               v-show={uploadFileHelper.fileList.value.size === 0}
               size="small"
               description={useLocaleLang('upload.backgroundStatusText.noFile').value as string}
             />
           </div>
-        </NTransition>
+        </HTransition>
 
-        <NViewer
+        <HViewer
           v-model={viewerVisible.value}
           initIndex={viewerIndex.value}
           sources={canViewerFiles.value.map(file => ({
@@ -351,7 +351,7 @@ export default defineComponent({
             cover: (file.posterUrl || file.url || file.blobUrl)!,
             title: file.name,
             videoSources:
-              file.type === NUploadFileTypeEnum.Video
+              file.type === HUploadFileTypeEnum.Video
                 ? [
                     {
                       src: (file.url || file.blobUrl)!,

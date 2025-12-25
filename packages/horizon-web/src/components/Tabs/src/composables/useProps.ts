@@ -1,13 +1,13 @@
 import { declarePropType } from '@aurora/utils';
 import type { ExtractPropTypes, PropType } from 'vue';
 
-export type NTabSize = 'small' | 'medium' | 'large' | 'huge';
+export type HTabSize = 'small' | 'medium' | 'large' | 'huge';
 
-export type NTabValue = string | number;
+export type HTabValue = string | number;
 
 /** @deprecated: 已过时，请使用 `Segmented` 组件替代 */
 export type Segment = 'segment';
-export type NTabType = 'line' | 'card' | Segment | 'page';
+export type HTabType = 'line' | 'card' | Segment | 'page';
 
 export const useTabsProps = declarePropType({
   /**
@@ -15,7 +15,7 @@ export const useTabsProps = declarePropType({
    * @deprecated `activeKey`
    * */
   modelValue: {
-    type: [String, Number] as PropType<NTabValue>,
+    type: [String, Number] as PropType<HTabValue>,
     required: false,
   },
 
@@ -24,7 +24,7 @@ export const useTabsProps = declarePropType({
    * @version 2.0.16
    **/
   activeKey: {
-    type: [String, Number] as PropType<NTabValue>,
+    type: [String, Number] as PropType<HTabValue>,
     required: false,
   },
 
@@ -41,7 +41,7 @@ export const useTabsProps = declarePropType({
    * @version 2.0.16
    **/
   defaultActiveKey: {
-    type: [String, Number] as PropType<NTabValue>,
+    type: [String, Number] as PropType<HTabValue>,
     required: false,
   },
 
@@ -49,7 +49,7 @@ export const useTabsProps = declarePropType({
    * 选项卡尺寸大小，当 `type=page`, 该选项无效
    **/
   size: {
-    type: String as PropType<NTabSize>,
+    type: String as PropType<HTabSize>,
   },
 
   /**
@@ -98,11 +98,11 @@ export const useTabsProps = declarePropType({
   },
 
   /**
-   * 选项卡类型, `type=segment` 已过时，请使用 `NSegmented` 替代
+   * 选项卡类型, `type=segment` 已过时，请使用 `HSegmented` 替代
    * @version 2.7.0
    **/
   type: {
-    type: String as PropType<NTabType>,
+    type: String as PropType<HTabType>,
     default: 'line',
   },
 
@@ -157,7 +157,7 @@ export const useTabsProps = declarePropType({
    * v2: 当 `v2` 启用时候，beforeChange 返回 Promise<false>/false 来取消跳转
    */
   beforeChange: {
-    type: Function as PropType<(key: NTabValue, change?: () => void) => PromiseLike<boolean>>,
+    type: Function as PropType<(key: HTabValue, change?: () => void) => PromiseLike<boolean>>,
     required: false,
   },
 });
@@ -168,7 +168,7 @@ export const useTabProps = declarePropType({
    * @deprecated `key`
    */
   name: {
-    type: [String, Number] as PropType<NTabValue>,
+    type: [String, Number] as PropType<HTabValue>,
     required: false,
   },
 
@@ -176,7 +176,7 @@ export const useTabProps = declarePropType({
    * 选项卡显示名称
    **/
   label: {
-    type: [String, Number] as PropType<NTabValue>,
+    type: [String, Number] as PropType<HTabValue>,
   },
 
   /** 图标名字，为空表示没有图标 */
@@ -187,7 +187,7 @@ export const useTabProps = declarePropType({
 
   /** 图标大小 */
   iconSize: {
-    type: [String, Number] as PropType<NTabValue>,
+    type: [String, Number] as PropType<HTabValue>,
   },
 
   /**
@@ -227,7 +227,7 @@ export const useTabProps = declarePropType({
 
   /**
    * 最小宽度，（请不要使用）
-   * @deprecated 请直接设置 `NTab.style` 来控制宽度d
+   * @deprecated 请直接设置 `HTab.style` 来控制宽度d
    **/
   minWidth: {
     type: [String, Number],
@@ -235,7 +235,7 @@ export const useTabProps = declarePropType({
 
   /**
    * 最大宽度，超出的文本会自动截断（请不要使用）
-   * @deprecated 请直接设置 `NTab.style` 来控制宽度
+   * @deprecated 请直接设置 `HTab.style` 来控制宽度
    **/
   maxWidth: {
     type: [String, Number],

@@ -1,16 +1,16 @@
 import type { Ref } from 'vue';
 import { provide, watch, ref } from 'vue';
-import type { NTableColumnData, NTableFixedValue, NTableInsertedColumnData } from '../utils/types';
+import type { HTableColumnData, HTableFixedValue, HTableInsertedColumnData } from '../utils/types';
 import { formatFixed } from './useLayout';
-import { NTableGetColumnFixedStateInjectKey } from '../utils/injectKeys';
+import { HTableGetColumnFixedStateInjectKey } from '../utils/injectKeys';
 
 export function sortColumnsMethod(
   getFixedState: (
     columnUuid: string,
-    checkStore?: Map<string, NTableFixedValue>,
-  ) => NTableFixedValue,
+    checkStore?: Map<string, HTableFixedValue>,
+  ) => HTableFixedValue,
 ) {
-  return (a: NTableColumnData, b: NTableColumnData) => {
+  return (a: HTableColumnData, b: HTableColumnData) => {
     switch (getFixedState(a.uuid)) {
       case 'left':
         switch (getFixedState(b.uuid)) {
@@ -38,8 +38,8 @@ export function sortColumnsMethod(
   };
 }
 
-export default function useColumnFixed(columns: Ref<NTableInsertedColumnData[]>) {
-  const fixedStore = ref(new Map<string, NTableFixedValue>());
+export default function useColumnFixed(columns: Ref<HTableInsertedColumnData[]>) {
+  const fixedStore = ref(new Map<string, HTableFixedValue>());
   const fixedStoreBack = ref(new Map(fixedStore.value));
 
   watch(
@@ -65,8 +65,8 @@ export default function useColumnFixed(columns: Ref<NTableInsertedColumnData[]>)
 
   function getTopParentInTree(
     uuid: string,
-    currentTree: NTableInsertedColumnData[],
-    parent: null | NTableInsertedColumnData = null,
+    currentTree: HTableInsertedColumnData[],
+    parent: null | HTableInsertedColumnData = null,
   ) {
     if (currentTree.some(column => column.uuid === uuid)) {
       return parent;
@@ -101,7 +101,7 @@ export default function useColumnFixed(columns: Ref<NTableInsertedColumnData[]>)
     fixedStore.value = new Map(fixedStoreBack.value);
   }
 
-  provide(NTableGetColumnFixedStateInjectKey, getFixedState);
+  provide(HTableGetColumnFixedStateInjectKey, getFixedState);
 
   return {
     fixedStore,

@@ -1,5 +1,5 @@
 import { isObject, isString } from '@aurora/utils';
-import type { NCalendarPinFlag } from '../utils/types';
+import type { HCalendarPinFlag } from '../utils/types';
 import type { Dayjs } from 'dayjs';
 import { isDayjs } from 'dayjs';
 
@@ -13,7 +13,7 @@ export const useCalendarEmits = {
    * 当 `pinFlags` 变化时触发
    * @param pinFlags 更改后的 `pinFlags`
    */
-  'update:pinFlags': (pinFlags: NCalendarPinFlag[]) => Array.isArray(pinFlags),
+  'update:pinFlags': (pinFlags: HCalendarPinFlag[]) => Array.isArray(pinFlags),
   /**
    * 当 `mode` 变化时触发
    * @param mode `month` | `year` | `week` | `day`
@@ -47,7 +47,7 @@ export const useCalendarEmits = {
    * 当横幅被点击时触发
    * @param pinFlag
    */
-  pinFlagClick: (pinFlag: NCalendarPinFlag) => isObject(pinFlag),
+  pinFlagClick: (pinFlag: HCalendarPinFlag) => isObject(pinFlag),
   /**
    * 点击切换上一个切换时触发
    * @param prevDate 切换后的日期时间

@@ -22,20 +22,20 @@ import { defaultLocale, localeInjectKey } from '~/provides';
 import { AIcon } from '@aurora/icon';
 import dayjs from '~/utils/useDayJs';
 import {
-  NCalendarCurrentDateInjectKey,
-  NCalendarCurrentFormatDateInjectKey,
-  NCalendarCurrentTimeInjectKey,
-  NCalendarEmitInjectKey,
-  NCalendarHelperInjectKey,
-  NCalendarPinFlagsInjectKey,
-  NCalendarPropsInjectKey,
-  NCalendarSlotsInjectKey,
+  HCalendarCurrentDateInjectKey,
+  HCalendarCurrentFormatDateInjectKey,
+  HCalendarCurrentTimeInjectKey,
+  HCalendarEmitInjectKey,
+  HCalendarHelperInjectKey,
+  HCalendarPinFlagsInjectKey,
+  HCalendarPropsInjectKey,
+  HCalendarSlotsInjectKey,
 } from './utils/injectKeys';
-import NTab from '~/components/Tabs/src/Tab';
-import NTabs from '~/components/Tabs/src/Tabs';
-import NButton from '~/components/Button/src/Button';
+import HTab from '~/components/Tabs/src/Tab';
+import HTabs from '~/components/Tabs/src/Tabs';
+import HButton from '~/components/Button/src/Button';
 import PinFlagsHelper from './utils/PinFlagsHelper';
-import NDatePicker from '~/components/DatePicker/src/DatePicker';
+import HDatePicker from '~/components/DatePicker/src/DatePicker';
 import uniq from 'lodash/uniq';
 import CalendarHelper from './utils/CalendarHelper';
 import MonthCalendar from './components/MonthCalendar';
@@ -47,7 +47,7 @@ export default defineComponent({
   name: `${useNamespace()}Calendar`,
   desc: '用来显示日期，并且可以方便的在日历上以横幅的方式展示某些活动',
   components: {
-    NButton,
+    HButton,
   },
   props: useCalendarProps,
   emits: useCalendarEmits,
@@ -145,14 +145,14 @@ export default defineComponent({
       calendarHelper.updateCurrentDate(val);
     });
 
-    provide(NCalendarPropsInjectKey, props);
-    provide(NCalendarEmitInjectKey, emit);
-    provide(NCalendarSlotsInjectKey, slots);
-    provide(NCalendarPinFlagsInjectKey, pinFlags);
-    provide(NCalendarCurrentDateInjectKey, currentDate);
-    provide(NCalendarCurrentFormatDateInjectKey, currentFormatDate);
-    provide(NCalendarHelperInjectKey, calendarHelper);
-    provide(NCalendarCurrentTimeInjectKey, currentTime);
+    provide(HCalendarPropsInjectKey, props);
+    provide(HCalendarEmitInjectKey, emit);
+    provide(HCalendarSlotsInjectKey, slots);
+    provide(HCalendarPinFlagsInjectKey, pinFlags);
+    provide(HCalendarCurrentDateInjectKey, currentDate);
+    provide(HCalendarCurrentFormatDateInjectKey, currentFormatDate);
+    provide(HCalendarHelperInjectKey, calendarHelper);
+    provide(HCalendarCurrentTimeInjectKey, currentTime);
 
     watch(
       pinFlagsRef,
@@ -186,21 +186,21 @@ export default defineComponent({
         switch (item) {
           case 'year':
             nodes.push(
-              <NTab label={locale.value?.langService.td().horizonWeb.calendar.year} key="year" />,
+              <HTab label={locale.value?.langService.td().horizonWeb.calendar.year} key="year" />,
             );
             break;
           case 'month':
             nodes.push(
-              <NTab label={locale.value?.langService.td().horizonWeb.calendar.month} key="month" />,
+              <HTab label={locale.value?.langService.td().horizonWeb.calendar.month} key="month" />,
             );
             break;
           case 'week':
             nodes.push(
-              <NTab label={locale.value?.langService.td().horizonWeb.calendar.week} key="week" />,
+              <HTab label={locale.value?.langService.td().horizonWeb.calendar.week} key="week" />,
             );
             break;
           case 'day':
-            nodes.push(<NTab label={locale.value?.langService.td().horizonWeb.calendar.day} key="day" />);
+            nodes.push(<HTab label={locale.value?.langService.td().horizonWeb.calendar.day} key="day" />);
             break;
         }
       });
@@ -262,7 +262,7 @@ export default defineComponent({
         <div class={classHelper.e('header')}>
           {slots.switchDate?.(currentFormatDate.value, currentDate.value) ?? (
             <div class={classHelper.em('header', 'switcher-wrapper')}>
-              <NButton
+              <HButton
                 type="normal"
                 plain={true}
                 size="large"
@@ -271,7 +271,7 @@ export default defineComponent({
                 onClick={() => (currentDate.value = dayjs())}
               >
                 {locale?.value?.langService.td().horizonWeb.datePicker.today}
-              </NButton>
+              </HButton>
               <div class={classHelper.em('header', 'switcher')}>
                 <div
                   class={cls(classHelper.em('header', 'switcher-item'), classHelper.is('prev'))}
@@ -279,7 +279,7 @@ export default defineComponent({
                 >
                   <AIcon name="arrow_left" size={12} />
                 </div>
-                <NDatePicker v-model={currentDate.value} type={datePickerType.value}>
+                <HDatePicker v-model={currentDate.value} type={datePickerType.value}>
                   {{
                     pickerOuter: () => (
                       <div class={classHelper.em('header', 'switcher-date')}>
@@ -287,7 +287,7 @@ export default defineComponent({
                       </div>
                     ),
                   }}
-                </NDatePicker>
+                </HDatePicker>
 
                 <div
                   class={cls(classHelper.em('header', 'switcher-item'), classHelper.is('next'))}
@@ -302,7 +302,7 @@ export default defineComponent({
           <div class={classHelper.em('header', 'suffix')}>{slots.header?.()}</div>
           {props.modeSwitchable && (
             <div class={classHelper.em('header', 'mode-switcher')}>
-              <NTabs
+              <HTabs
                 activeKey={currentMode.value}
                 type="segment"
                 size="medium"
@@ -311,7 +311,7 @@ export default defineComponent({
                 }
               >
                 {switchModes.value}
-              </NTabs>
+              </HTabs>
             </div>
           )}
         </div>

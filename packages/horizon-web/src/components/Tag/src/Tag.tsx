@@ -24,22 +24,22 @@ import type { TagExposes } from './composables/useExposes';
 import useSize from '~/utils/useSize';
 import { IconClose, IconLoadingLine, AIcon } from '@aurora/icon';
 import {
-  NTagGroupCloseCallbackInjectKey,
-  NTagGroupDoCollapseInjectKey,
-  NTagGroupEditCallbackInjectKey,
-  NTagGroupEditingNoticeInjectKey,
-  NTagGroupNoticeTagMountedInjectKey,
-  NTagGroupNoticeTagUnmountedInjectKey,
-  NTagGroupPropsInjectKey,
-  NTagGroupSizeInjectKey,
+  HTagGroupCloseCallbackInjectKey,
+  HTagGroupDoCollapseInjectKey,
+  HTagGroupEditCallbackInjectKey,
+  HTagGroupEditingNoticeInjectKey,
+  HTagGroupNoticeTagMountedInjectKey,
+  HTagGroupNoticeTagUnmountedInjectKey,
+  HTagGroupPropsInjectKey,
+  HTagGroupSizeInjectKey,
 } from './utils/injectKeys';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
-import NAvatar from '~/components/Avatar/src/Avatar';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
+import HAvatar from '~/components/Avatar/src/Avatar';
 import debounce from 'lodash/debounce';
 import { generateColorList } from '~/utils/useColorful';
 import InputTag from './components/InputTag';
 import { nanoid } from 'nanoid';
-import { NFormItemTriggerInjectedKey } from '~/components/Form/src/utils/injectedKeys';
+import { HFormItemTriggerInjectedKey } from '~/components/Form/src/utils/injectedKeys';
 import { avatarSizeMapping, builtinColorMapping, iconSizeMapping } from './utils/config';
 import { useColors } from '~/styles';
 import { useResizeObserver } from '@vueuse/core';
@@ -63,17 +63,17 @@ export default defineComponent({
     const uid = nanoid();
     const wrapperDomRef = ref<HTMLDivElement | null>(null);
     const contentRef = ref<HTMLDivElement | null>(null);
-    const tooltipDomRef = ref<typeof NTooltip | null>(null);
+    const tooltipDomRef = ref<typeof HTooltip | null>(null);
 
     /***** injects *****/
-    const parentProps = inject(NTagGroupPropsInjectKey, undefined);
-    const parentSize = inject(NTagGroupSizeInjectKey, undefined);
-    const onEditingNotice = inject(NTagGroupEditingNoticeInjectKey, undefined);
-    const onEditNotice = inject(NTagGroupEditCallbackInjectKey, undefined);
-    const onCloseNotice = inject(NTagGroupCloseCallbackInjectKey, undefined);
-    const onMountedNotice = inject(NTagGroupNoticeTagMountedInjectKey, undefined);
-    const onUnmountedNotice = inject(NTagGroupNoticeTagUnmountedInjectKey, undefined);
-    const doCollapse = inject(NTagGroupDoCollapseInjectKey, undefined);
+    const parentProps = inject(HTagGroupPropsInjectKey, undefined);
+    const parentSize = inject(HTagGroupSizeInjectKey, undefined);
+    const onEditingNotice = inject(HTagGroupEditingNoticeInjectKey, undefined);
+    const onEditNotice = inject(HTagGroupEditCallbackInjectKey, undefined);
+    const onCloseNotice = inject(HTagGroupCloseCallbackInjectKey, undefined);
+    const onMountedNotice = inject(HTagGroupNoticeTagMountedInjectKey, undefined);
+    const onUnmountedNotice = inject(HTagGroupNoticeTagUnmountedInjectKey, undefined);
+    const doCollapse = inject(HTagGroupDoCollapseInjectKey, undefined);
 
     /***** data *****/
     const sizeRef = useSize(
@@ -87,7 +87,7 @@ export default defineComponent({
     const isOverflow = ref(false);
 
     // form-item validate trigger
-    const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
+    const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
 
     const canUseToggled = computed(() => typeof modelValue?.value === 'boolean');
     const isActivated = computed(() => {
@@ -403,7 +403,7 @@ export default defineComponent({
           onClick={onClickTag}
           onDblclick={onDoubleClick}
         >
-          <NTooltip
+          <HTooltip
             ref={tooltipDomRef}
             enterable={true}
             showAfter={props.tooltipShowAfter}
@@ -435,7 +435,7 @@ export default defineComponent({
                       {(props.avatar || slots.avatar) && (
                         <div class={cls(classHelper.e('avatar'))}>
                           {slots.avatar?.() ?? (
-                            <NAvatar src={props.avatar} size={avatarSizeMapping[sizeRef.value]} />
+                            <HAvatar src={props.avatar} size={avatarSizeMapping[sizeRef.value]} />
                           )}
                         </div>
                       )}
@@ -483,7 +483,7 @@ export default defineComponent({
                 </div>
               ),
             }}
-          </NTooltip>
+          </HTooltip>
         </div>
       );
     };

@@ -1,6 +1,6 @@
 import safeHtml from './src';
 import { withDirectiveInstall } from '@aurora/utils';
 
-export const NVSafeHtml = withDirectiveInstall(safeHtml);
+export const HVSafeHtml = withDirectiveInstall(safeHtml);
 
-export default NVSafeHtml;
+export default HVSafeHtml;

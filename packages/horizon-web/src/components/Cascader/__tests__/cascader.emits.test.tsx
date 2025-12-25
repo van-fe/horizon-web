@@ -8,8 +8,8 @@ import {
 } from './cascader-helper';
 import CascaderPanel from '~/components/Cascader/src/components/CascaderPanel';
 import CascaderItem from '~/components/Cascader/src/components/CascaderItem';
-import NCheckbox from '~/components/Checkbox/src/Checkbox';
-import NTag from '~/components/Tag/src/Tag';
+import HCheckbox from '~/components/Checkbox/src/Checkbox';
+import HTag from '~/components/Tag/src/Tag';
 
 describe('Cascader.tsx emits', () => {
   test('change', async () => {
@@ -78,21 +78,21 @@ describe('Cascader.tsx emits', () => {
 
     const panel = wrapper.findComponent(CascaderPanel);
 
-    await panel?.findAllComponents(CascaderItem)?.at(0)?.findComponent(NCheckbox).trigger('click');
+    await panel?.findAllComponents(CascaderItem)?.at(0)?.findComponent(HCheckbox).trigger('click');
 
     expect(modelValue.value?.length).toEqual(6);
     expect(onChange).toHaveBeenCalledOnce();
     expect(onChange.mock.calls[0][0]).toBeTruthy();
     expect(onChange.mock.calls[0][1]).toEqual(expect.objectContaining({ value: 'guide' }));
 
-    await panel?.findAllComponents(CascaderItem)?.at(1)?.findComponent(NCheckbox).trigger('click');
+    await panel?.findAllComponents(CascaderItem)?.at(1)?.findComponent(HCheckbox).trigger('click');
 
     expect(modelValue.value?.length).toEqual(46);
     expect(onChange).toHaveBeenCalledTimes(2);
     expect(onChange.mock.calls[1][0]).toBeTruthy();
     expect(onChange.mock.calls[1][1]).toEqual(expect.objectContaining({ value: 'component' }));
 
-    await panel?.findAllComponents(CascaderItem)?.at(0)?.findComponent(NCheckbox).trigger('click');
+    await panel?.findAllComponents(CascaderItem)?.at(0)?.findComponent(HCheckbox).trigger('click');
 
     expect(modelValue.value?.length).toEqual(40);
     expect(onChange).toHaveBeenCalledTimes(3);
@@ -112,11 +112,11 @@ describe('Cascader.tsx emits', () => {
 
     const panel = wrapper.findComponent(CascaderPanel);
 
-    await panel?.findAllComponents(CascaderItem)?.at(0)?.findComponent(NCheckbox).trigger('click');
+    await panel?.findAllComponents(CascaderItem)?.at(0)?.findComponent(HCheckbox).trigger('click');
 
     expect(modelValue.value?.length).toEqual(6);
 
-    await pickerInput.findComponent(NTag).find('.n-tag__close').trigger('click');
+    await pickerInput.findComponent(HTag).find('.n-tag__close').trigger('click');
 
     expect(onChange).toHaveBeenCalledTimes(2);
     expect(onChange).toHaveBeenLastCalledWith(

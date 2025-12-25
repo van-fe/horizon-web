@@ -5,13 +5,13 @@ import { IconMaybeFalsyPropType, IconPropType } from '~/utils/useIcon';
 import type { PopoverProps } from '~/components/Popover/src/composables/useProps';
 import type { PickerInputStatusType } from '~/components/Picker/src/composables/useProps';
 import type {
-  NCascaderOption,
-  NCascaderExtendOption,
+  HCascaderOption,
+  HCascaderExtendOption,
   ModelValueType,
-  NCascaderDynamicLoadNode,
-  NCascaderSearchParams,
-  NCascaderFilterFunction,
-  NCascaderFilterSortFunction,
+  HCascaderDynamicLoadNode,
+  HCascaderSearchParams,
+  HCascaderFilterFunction,
+  HCascaderFilterSortFunction,
 } from '../utils/types';
 import { IconCheck } from '@aurora/icon';
 import type { LoadingOptions } from '~/directives/v-loading/src/composables/useOptions';
@@ -246,10 +246,10 @@ export const useCascaderProps = declarePropType({
     default: 256,
   },
   /**
-   * 可选数据源，具体字段见 NCascaderOption 参数说明
+   * 可选数据源，具体字段见 HCascaderOption 参数说明
    */
   options: {
-    type: Array as PropType<NCascaderOption[]>,
+    type: Array as PropType<HCascaderOption[]>,
     required: true,
   },
   /**
@@ -298,7 +298,7 @@ export const useCascaderProps = declarePropType({
    * 动态加载 options
    */
   dynamicLoad: {
-    type: Function as PropType<(node: NCascaderDynamicLoadNode) => Promise<NCascaderOption[]>>,
+    type: Function as PropType<(node: HCascaderDynamicLoadNode) => Promise<HCascaderOption[]>>,
   },
 
   /**
@@ -331,7 +331,7 @@ export const useCascaderProps = declarePropType({
    * SearchParams 具体类型见下表
    */
   filter: {
-    type: [Object, Boolean] as PropType<boolean | NCascaderSearchParams>,
+    type: [Object, Boolean] as PropType<boolean | HCascaderSearchParams>,
     default: false,
   },
   /**
@@ -347,7 +347,7 @@ export const useCascaderProps = declarePropType({
    * @version 2.4.0
    */
   filterMethod: {
-    type: Function as PropType<NCascaderFilterFunction>,
+    type: Function as PropType<HCascaderFilterFunction>,
   },
 
   /**
@@ -421,7 +421,7 @@ export const useCascaderProps = declarePropType({
    */
   fieldMap: {
     type: Object as PropType<
-      Partial<Record<keyof NCascaderOption, keyof NCascaderOption | string>>
+      Partial<Record<keyof HCascaderOption, keyof HCascaderOption | string>>
     >,
   },
   /**
@@ -437,7 +437,7 @@ export const useCascaderProps = declarePropType({
    * @version 2.4.0
    */
   filterResultSort: {
-    type: Function as PropType<NCascaderFilterSortFunction>,
+    type: Function as PropType<HCascaderFilterSortFunction>,
   },
   /**
    * 是否在选项列表中使用过滤功能
@@ -671,7 +671,7 @@ export const useCascaderItemProp = declarePropType({
    * 展示文字
    */
   label: {
-    type: [String, Function] as PropType<string | ((option: NCascaderExtendOption) => VNode)>,
+    type: [String, Function] as PropType<string | ((option: HCascaderExtendOption) => VNode)>,
   },
   /**
    * 层级
@@ -698,7 +698,7 @@ export const useCascaderItemProp = declarePropType({
    * 转化后的节点信息
    */
   extendsOption: {
-    type: Object as PropType<NCascaderExtendOption>,
+    type: Object as PropType<HCascaderExtendOption>,
     required: true,
   },
   /**

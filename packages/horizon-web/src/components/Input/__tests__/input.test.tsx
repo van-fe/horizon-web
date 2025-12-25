@@ -1,5 +1,5 @@
 import { mount, shallowMount } from '@vue/test-utils';
-import NInput from '../src/Input';
+import HInput from '../src/Input';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
 import type { InputExposes } from '../src/composables/useExposes';
@@ -15,7 +15,7 @@ describe('Input.tsx', () => {
     const handleChange = vi.fn();
 
     const wrapper = shallowMount(() => (
-      <NInput
+      <HInput
         modelValue={inputValue.value}
         placeholder="Please input"
         onFocus={handleFocus}
@@ -23,7 +23,7 @@ describe('Input.tsx', () => {
       />
     ));
 
-    const inputElm = wrapper.findComponent(NInput);
+    const inputElm = wrapper.findComponent(HInput);
 
     await inputElm.trigger('focus');
 
@@ -40,13 +40,13 @@ describe('Input.tsx', () => {
   });
 
   test('disabled', () => {
-    const wrapper = shallowMount(() => <NInput disabled />);
+    const wrapper = shallowMount(() => <HInput disabled />);
 
     expect(wrapper.attributes('disabled')).not.toBeNull();
   });
 
   test('status.error', () => {
-    const wrapper = mount(() => <NInput status="error" />);
+    const wrapper = mount(() => <HInput status="error" />);
 
     expect(wrapper.classes()).toContain('n-input__error--normal');
   });
@@ -54,7 +54,7 @@ describe('Input.tsx', () => {
   test('prefix', async () => {
     const icon = ref('time');
 
-    const wrapper = mount(() => <NInput prefix-icon={icon.value} />);
+    const wrapper = mount(() => <HInput prefix-icon={icon.value} />);
     const timeIcon = wrapper.find('.n-icon_time');
 
     expect(timeIcon.exists()).toBe(true);
@@ -66,7 +66,7 @@ describe('Input.tsx', () => {
   });
 
   test('suffix', () => {
-    const wrapper = mount(() => <NInput suffix-icon="time" />);
+    const wrapper = mount(() => <HInput suffix-icon="time" />);
     const suffixIcon = wrapper.find('.n-icon_time');
 
     expect(suffixIcon.exists()).toBe(true);
@@ -75,7 +75,7 @@ describe('Input.tsx', () => {
   test('size', async () => {
     const size = ref<'small' | 'large'>('small');
 
-    const wrapper = mount(() => <NInput size={size.value} />);
+    const wrapper = mount(() => <HInput size={size.value} />);
     expect(wrapper.classes()).toContain('n-input--small');
 
     size.value = 'large';
@@ -85,7 +85,7 @@ describe('Input.tsx', () => {
   });
 
   test('type', async () => {
-    const wrapper = mount(() => <NInput type="text" />);
+    const wrapper = mount(() => <HInput type="text" />);
     expect(wrapper.find('input').exists()).toBe(true);
 
     // todo:: need to provide type modified dynamically
@@ -107,7 +107,7 @@ describe('Input.tsx', () => {
   test('input.max-length', async () => {
     const modelValue = ref('12345678901111');
     const wrapper = mount(() => (
-      <NInput
+      <HInput
         v-model={modelValue.value}
         maxlength={10}
         showLimit={true}
@@ -122,7 +122,7 @@ describe('Input.tsx', () => {
   test('textarea.max-length', async () => {
     const modelValue = ref('12345678901111');
     const wrapper = mount(() => (
-      <NInput
+      <HInput
         v-model={modelValue.value}
         type="textarea"
         maxlength={10}
@@ -143,7 +143,7 @@ describe('Input.tsx', () => {
       const onBlur = vi.fn();
 
       const wrapper = mount(() => (
-        <NInput modelValue={modelValue.value} onInput={onInput} onFocus={onFocus} onBlur={onBlur} />
+        <HInput modelValue={modelValue.value} onInput={onInput} onFocus={onFocus} onBlur={onBlur} />
       ));
       const element = wrapper.find('input');
 
@@ -163,7 +163,7 @@ describe('Input.tsx', () => {
     test('Do not trigger "change event" before input manually', async () => {
       const modelValue = ref('111');
       const onChange = vi.fn();
-      const wrapper = mount(() => <NInput modelValue={modelValue.value} onChange={onChange} />);
+      const wrapper = mount(() => <HInput modelValue={modelValue.value} onChange={onChange} />);
 
       expect(onChange).toHaveBeenCalledTimes(0);
 
@@ -177,13 +177,13 @@ describe('Input.tsx', () => {
     });
 
     test('clear', async () => {
-      const inputRef = ref<(typeof NInput & InputExposes) | null>(null);
+      const inputRef = ref<(typeof HInput & InputExposes) | null>(null);
       const modelValue = ref('1234');
       const onClear = vi.fn();
       const onFocus = vi.fn();
 
       const wrapper = mount(() => (
-        <NInput
+        <HInput
           ref={inputRef}
           modelValue={modelValue.value}
           clearable={true}
@@ -206,10 +206,10 @@ describe('Input.tsx', () => {
     });
 
     test('click', async () => {
-      const inputRef = ref<(typeof NInput & InputExposes) | null>(null);
+      const inputRef = ref<(typeof HInput & InputExposes) | null>(null);
       const onClick = vi.fn();
 
-      const wrapper = mount(() => <NInput ref={inputRef} clearable={true} onClick={onClick} />);
+      const wrapper = mount(() => <HInput ref={inputRef} clearable={true} onClick={onClick} />);
       const element = wrapper.find('input');
 
       await element.trigger('click');

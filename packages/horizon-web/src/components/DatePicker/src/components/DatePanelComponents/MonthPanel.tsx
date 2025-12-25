@@ -11,7 +11,7 @@ import useLocaleLang from '~/utils/useLocaleLang';
 import useDateCell from '../../hooks/useDateCell';
 import type { DatePickerDatePanelComponentExposes } from '../../composables/useExposes';
 import { useDatePickerDatePanelComponentExposes } from '../../composables/useExposes';
-import { NDatePickerPropsInjectKey, NDatePickerSlotsInjectKey } from '../../utils/injectKeys';
+import { HDatePickerPropsInjectKey, HDatePickerSlotsInjectKey } from '../../utils/injectKeys';
 import tooltip from '~/directives/v-tooltip/src';
 
 export default defineComponent({
@@ -32,8 +32,8 @@ export default defineComponent({
   ) {
     const classHelper = new ComponentClassBlock('date-picker-panel-body');
 
-    const parentProps = inject(NDatePickerPropsInjectKey)!;
-    const parentSlots = inject(NDatePickerSlotsInjectKey)!;
+    const parentProps = inject(HDatePickerPropsInjectKey)!;
+    const parentSlots = inject(HDatePickerSlotsInjectKey)!;
 
     const {
       panelFirstDate,

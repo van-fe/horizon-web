@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { NBreadcrumb, NBreadcrumbItem } from '..';
+import { HBreadcrumb, HBreadcrumbItem } from '..';
 import { describe, expect, test } from 'vitest';
 import type { BreadcrumbProps } from '../src/composables/useProps';
 import { nextTick, ref } from 'vue';
@@ -7,10 +7,10 @@ import { nextTick, ref } from 'vue';
 describe('Breadcrumb.tsx', () => {
   test('basic', async () => {
     const wrapper = mount(() => (
-      <NBreadcrumb texts={[{ text: 'Home' }, { text: 'Sub Page1' }, { text: 'Sub Page2' }]} />
+      <HBreadcrumb texts={[{ text: 'Home' }, { text: 'Sub Page1' }, { text: 'Sub Page2' }]} />
     ));
 
-    const element = wrapper.findComponent(NBreadcrumb);
+    const element = wrapper.findComponent(HBreadcrumb);
 
     expect(element.exists()).toBe(true);
   });
@@ -19,7 +19,7 @@ describe('Breadcrumb.tsx', () => {
     test('breadcrumb size', async () => {
       const size = ref<BreadcrumbProps['size']>('medium');
       const wrapper = mount(() => (
-        <NBreadcrumb
+        <HBreadcrumb
           size={size.value}
           texts={[{ text: 'Home' }, { text: 'Sub Page1' }, { text: 'Sub Page2' }]}
         />
@@ -36,11 +36,11 @@ describe('Breadcrumb.tsx', () => {
 
     test('breadcrumb-item size', async () => {
       const wrapper = mount(() => (
-        <NBreadcrumb size="medium">
-          <NBreadcrumbItem>Home</NBreadcrumbItem>
-          <NBreadcrumbItem>Components</NBreadcrumbItem>
-          <NBreadcrumbItem size="small">Breadcrumb</NBreadcrumbItem>
-        </NBreadcrumb>
+        <HBreadcrumb size="medium">
+          <HBreadcrumbItem>Home</HBreadcrumbItem>
+          <HBreadcrumbItem>Components</HBreadcrumbItem>
+          <HBreadcrumbItem size="small">Breadcrumb</HBreadcrumbItem>
+        </HBreadcrumb>
       ));
 
       expect(wrapper.classes('n-breadcrumb--medium')).eq(true);

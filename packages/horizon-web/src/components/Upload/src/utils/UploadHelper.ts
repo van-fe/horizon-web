@@ -4,8 +4,8 @@ import { ref } from 'vue';
 import type { UploadProps } from '../composables/useProps';
 import type { Data, EmitValueCallbackToVoid } from '@aurora/utils';
 import { EventEmitter, jsonParse, getVideoDuration } from '@aurora/utils';
-import type { NUploadFileType, NUploadSetStatusOptionsMapping } from './fileDefines';
-import { NUploadFileTypeEnum, NUploadFileStatusEnum } from './fileDefines';
+import type { HUploadFileType, HUploadSetStatusOptionsMapping } from './fileDefines';
+import { HUploadFileTypeEnum, HUploadFileStatusEnum } from './fileDefines';
 import type { UploadEmits } from '../composables/useEmits';
 import MultipartUploadHelper from './multipart';
 import UploadHelperOptions from './UploadHelperOptions';
@@ -16,12 +16,12 @@ export default class UploadHelper extends UploadHelperOptions {
   protected readonly uuid: string;
 
   public readonly eventEmitter = new EventEmitter<EmitValueCallbackToVoid<UploadEmits>>();
-  protected _fileList = ref(new Set<NUploadFileType>());
+  protected _fileList = ref(new Set<HUploadFileType>());
   protected xhrFileMapping = new Map<string, XMLHttpRequest>();
 
-  private readyUploadFilesQueue: NUploadFileType[] = [];
+  private readyUploadFilesQueue: HUploadFileType[] = [];
   private uploadingFilesQueue: {
-    file: NUploadFileType;
+    file: HUploadFileType;
     requestInstance: unknown;
   }[] = [];
 
@@ -33,10 +33,10 @@ export default class UploadHelper extends UploadHelperOptions {
   public async uploadFiles() {
     this.readyUploadFilesQueue = (
       Array.from(this._fileList.value).filter(curr =>
-        [NUploadFileStatusEnum.New, NUploadFileStatusEnum.Pending].includes(curr.status),
-      ) as NUploadFileType[]
+        [HUploadFileStatusEnum.New, HUploadFileStatusEnum.Pending].includes(curr.status),
+      ) as HUploadFileType[]
     ).map(file => {
-      file.status = NUploadFileStatusEnum.Pending;
+      file.status = HUploadFileStatusEnum.Pending;
       return file;
     });
 
@@ -52,7 +52,7 @@ export default class UploadHelper extends UploadHelperOptions {
     }
   }
 
-  protected removeFileFromReadyUploadFilesQueue(file: NUploadFileType) {
+  protected removeFileFromReadyUploadFilesQueue(file: HUploadFileType) {
     const index = this.readyUploadFilesQueue.indexOf(file);
 
     if (index >= 0) {
@@ -60,7 +60,7 @@ export default class UploadHelper extends UploadHelperOptions {
     }
   }
 
-  private addUploadingQueue(file: NUploadFileType, requestInstance: unknown) {
+  private addUploadingQueue(file: HUploadFileType, requestInstance: unknown) {
     const index = this.uploadingFilesQueue.findIndex(curr => curr.file === file);
 
     if (index >= 0) {
@@ -73,7 +73,7 @@ export default class UploadHelper extends UploadHelperOptions {
     }
   }
 
-  protected removeFromUploadingQueue(file: NUploadFileType) {
+  protected removeFromUploadingQueue(file: HUploadFileType) {
     const index = this.uploadingFilesQueue.findIndex(curr => curr.file === file);
 
     if (index >= 0) {
@@ -81,7 +81,7 @@ export default class UploadHelper extends UploadHelperOptions {
     }
   }
 
-  private async onUploadSuccess(file: NUploadFileType, response: string) {
+  private async onUploadSuccess(file: HUploadFileType, response: string) {
     let uploadUrl: string | undefined;
 
     if (this.handleSuccess) {
@@ -106,7 +106,7 @@ export default class UploadHelper extends UploadHelperOptions {
       uploadUrl = findHttpUrl(jsonParse<Data>(response));
     }
 
-    this.setStatus(file, NUploadFileStatusEnum.Success, {
+    this.setStatus(file, HUploadFileStatusEnum.Success, {
       response: jsonParse<Data>(response),
       uploadUrl,
     });
@@ -114,15 +114,15 @@ export default class UploadHelper extends UploadHelperOptions {
     await this.onUploadFinished(file);
   }
 
-  private async onUploadFail(file: NUploadFileType, responseText: string, response: string) {
-    this.setStatus(file, NUploadFileStatusEnum.Fail, {
+  private async onUploadFail(file: HUploadFileType, responseText: string, response: string) {
+    this.setStatus(file, HUploadFileStatusEnum.Fail, {
       reason: responseText,
       response: jsonParse<Data>(response),
     });
     await this.onUploadFinished(file);
   }
 
-  private async onUploadFinished(file: NUploadFileType) {
+  private async onUploadFinished(file: HUploadFileType) {
     const index = this.uploadingFilesQueue.findIndex(curr => curr.file === file);
 
     if (index >= 0) {
@@ -144,19 +144,19 @@ export default class UploadHelper extends UploadHelperOptions {
     });
   }
 
-  public getVideoDuration(file: NUploadFileType) {
+  public getVideoDuration(file: HUploadFileType) {
     const url = file.url || file.blobUrl;
-    if (file.type === NUploadFileTypeEnum.Video && url) {
+    if (file.type === HUploadFileTypeEnum.Video && url) {
       getVideoDuration(url, duration => {
         file.duration = duration;
       });
     }
   }
 
-  public setStatus<T extends NUploadFileStatusEnum = NUploadFileStatusEnum>(
-    file: NUploadFileType,
+  public setStatus<T extends HUploadFileStatusEnum = HUploadFileStatusEnum>(
+    file: HUploadFileType,
     status: T,
-    args?: NUploadSetStatusOptionsMapping[T],
+    args?: HUploadSetStatusOptionsMapping[T],
   ) {
     file.status = status;
 
@@ -165,9 +165,9 @@ export default class UploadHelper extends UploadHelperOptions {
     this.eventEmitter.emit('change', this, response);
 
     switch (status) {
-      case NUploadFileStatusEnum.Success:
+      case HUploadFileStatusEnum.Success:
         const { uploadUrl } =
-          args as NUploadSetStatusOptionsMapping[NUploadFileStatusEnum.Success];
+          args as HUploadSetStatusOptionsMapping[HUploadFileStatusEnum.Success];
 
         this.eventEmitter.emit('uploaded', file, response);
 
@@ -176,24 +176,24 @@ export default class UploadHelper extends UploadHelperOptions {
           this.getVideoDuration(file);
         }
         break;
-      case NUploadFileStatusEnum.Uploading:
+      case HUploadFileStatusEnum.Uploading:
         {
           const { progress } =
-            args as NUploadSetStatusOptionsMapping[NUploadFileStatusEnum.Uploading];
+            args as HUploadSetStatusOptionsMapping[HUploadFileStatusEnum.Uploading];
 
           this.eventEmitter.emit('uploading', file, round(progress, 2), response);
           file.percentage = round(progress, 2);
         }
         break;
-      case NUploadFileStatusEnum.Pause:
+      case HUploadFileStatusEnum.Pause:
         this.eventEmitter.emit('pause', file);
         break;
-      case NUploadFileStatusEnum.Retrying:
+      case HUploadFileStatusEnum.Retrying:
         this.eventEmitter.emit('retry', file);
         break;
-      case NUploadFileStatusEnum.Fail:
+      case HUploadFileStatusEnum.Fail:
         {
-          const { reason } = args as NUploadSetStatusOptionsMapping[NUploadFileStatusEnum.Fail];
+          const { reason } = args as HUploadSetStatusOptionsMapping[HUploadFileStatusEnum.Fail];
           file.response = reason;
           this.eventEmitter.emit('fail', file, reason, response);
         }
@@ -205,7 +205,7 @@ export default class UploadHelper extends UploadHelperOptions {
     this.fitStatus(file);
   }
 
-  public async beforeUploadFile(file: NUploadFileType) {
+  public async beforeUploadFile(file: HUploadFileType) {
     const handler = this.beforeUpload;
 
     if (handler) {
@@ -220,7 +220,7 @@ export default class UploadHelper extends UploadHelperOptions {
     return true;
   }
 
-  public async uploadFile(file: NUploadFileType) {
+  public async uploadFile(file: HUploadFileType) {
     this.removeFileFromReadyUploadFilesQueue(file);
 
     if (this.multipart) {
@@ -250,13 +250,13 @@ export default class UploadHelper extends UploadHelperOptions {
     }
   }
 
-  public pauseUpload(file: NUploadFileType) {
+  public pauseUpload(file: HUploadFileType) {
     this.xhrFileMapping.get(file.uuid)?.abort();
 
-    this.setStatus(file, NUploadFileStatusEnum.Pause);
+    this.setStatus(file, HUploadFileStatusEnum.Pause);
   }
 
-  public continueUpload(file: NUploadFileType) {
+  public continueUpload(file: HUploadFileType) {
     if (this.multipart) {
       // todo:: not finished
     } else {
@@ -264,7 +264,7 @@ export default class UploadHelper extends UploadHelperOptions {
     }
   }
 
-  private uploadFileDirectly(file: NUploadFileType) {
+  private uploadFileDirectly(file: HUploadFileType) {
     if (!this.action) {
       warn('upload', `You haven't set action.`);
       return;
@@ -281,7 +281,7 @@ export default class UploadHelper extends UploadHelperOptions {
     xhr.upload.addEventListener('progress', evt => {
       const progress = Math.min(evt.loaded / evt.total, 1) * 100;
 
-      this.setStatus(file, NUploadFileStatusEnum.Uploading, {
+      this.setStatus(file, HUploadFileStatusEnum.Uploading, {
         progress,
         response: undefined,
       });
@@ -291,7 +291,7 @@ export default class UploadHelper extends UploadHelperOptions {
     xhr.withCredentials = this.withCredentials || false;
     this.appendHeader(xhr);
 
-    this.setStatus(file, NUploadFileStatusEnum.Uploading, {
+    this.setStatus(file, HUploadFileStatusEnum.Uploading, {
       progress: 0,
       response: undefined,
     });
@@ -323,12 +323,12 @@ export default class UploadHelper extends UploadHelperOptions {
     xhr.send(formData);
   }
 
-  private fitStatus(file: NUploadFileType) {
+  private fitStatus(file: HUploadFileType) {
     switch (file.status) {
-      case NUploadFileStatusEnum.Success:
+      case HUploadFileStatusEnum.Success:
         file.percentage = 100;
         break;
-      case NUploadFileStatusEnum.Pending:
+      case HUploadFileStatusEnum.Pending:
         file.percentage = 0;
         break;
     }

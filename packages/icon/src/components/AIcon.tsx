@@ -15,9 +15,20 @@ export default defineComponent({
     color: {
       type: [String, Array] as PropType<(string | string[])| undefined>,
       default: undefined
+    },
+    spin: {
+      type: String as PropType<'cw' | 'ccw'>,
+      default: undefined,
+    },
+    rotate: {
+      type: Number,
+      default: undefined,
     }
   },
-  setup(props) {
+  emits: {
+    click: (evt: MouseEvent) => evt instanceof MouseEvent,
+  },
+  setup(props, { emit }) {
     const svgContent = ref<string>('')
     const viewBox = ref<string>('0 0 24 24')
     const fill = ref<string>('currentColor')
@@ -139,9 +150,14 @@ export default defineComponent({
         fill: fill.value,
         style: {
           display: 'inline-block',
-          verticalAlign: 'middle'
+          verticalAlign: 'middle',
+          transform: props.rotate ? `rotate(${props.rotate}deg)` : undefined,
         },
         innerHTML: svgContent.value
+      }, {
+        on: {
+          click: (evt: MouseEvent) => emit('click', evt)
+        }
       })
     }
   }

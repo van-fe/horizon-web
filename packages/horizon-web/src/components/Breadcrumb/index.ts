@@ -2,9 +2,9 @@ import Breadcrumb from './src/Breadcrumb';
 import BreadcrumbItem from './src/BreadcrumbItem';
 import { withInstall, withNoopInstall } from '@aurora/utils';
 
-export const NBreadcrumb = withInstall(Breadcrumb, {
+export const HBreadcrumb = withInstall(Breadcrumb, {
   BreadcrumbItem,
 });
-export const NBreadcrumbItem = withNoopInstall(BreadcrumbItem);
+export const HBreadcrumbItem = withNoopInstall(BreadcrumbItem);
 
-export default NBreadcrumb;
+export default HBreadcrumb;

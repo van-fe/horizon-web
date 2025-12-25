@@ -1,9 +1,9 @@
 import { defineComponent, inject, ref, withKeys } from 'vue';
 import { cls, ComponentClassBlock, isNumber, useNamespace } from '@aurora/utils';
 import { defaultLocale, localeInjectKey } from '~/provides';
-import { NPaginationPropsInjectKey } from '../utils/injectKeys';
-import NPopover from '~/components/Popover/src/Popover';
-import NPopContent from '~/components/Popover/src/PopContent';
+import { HPaginationPropsInjectKey } from '../utils/injectKeys';
+import HPopover from '~/components/Popover/src/Popover';
+import HPopContent from '~/components/Popover/src/PopContent';
 import { IconArrowDown } from '@aurora/icon';
 
 export default defineComponent({
@@ -19,9 +19,9 @@ export default defineComponent({
   setup(props, { emit }) {
     const classHelper = new ComponentClassBlock('pagination');
     const locale = inject(localeInjectKey, defaultLocale);
-    const parentProps = inject(NPaginationPropsInjectKey)!;
+    const parentProps = inject(HPaginationPropsInjectKey)!;
 
-    const popoverRef = ref<typeof NPopover | null>(null);
+    const popoverRef = ref<typeof HPopover | null>(null);
     const popoverVisible = ref(false);
 
     function onSwitchSizeItem(amount: number) {
@@ -30,7 +30,7 @@ export default defineComponent({
     }
 
     return () => (
-      <NPopover
+      <HPopover
         ref={popoverRef}
         arrow={false}
         distance={4}
@@ -60,7 +60,7 @@ export default defineComponent({
             </div>
           ),
           popper: () => (
-            <NPopContent class={classHelper.e('sizes-popper')}>
+            <HPopContent class={classHelper.e('sizes-popper')}>
               {parentProps.pageSizes.map(size => (
                 <div
                   class={cls(
@@ -75,10 +75,10 @@ export default defineComponent({
                     locale.value?.langService.td().horizonWeb.pagination.pageSize}
                 </div>
               ))}
-            </NPopContent>
+            </HPopContent>
           ),
         }}
-      </NPopover>
+      </HPopover>
     );
   },
 });

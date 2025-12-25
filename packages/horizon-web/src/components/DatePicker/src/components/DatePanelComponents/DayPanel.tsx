@@ -10,9 +10,9 @@ import {
 import useDateCell from '../../hooks/useDateCell';
 import useLocaleLang from '~/utils/useLocaleLang';
 import {
-  NDatePickerFormatInjectKey,
-  NDatePickerPropsInjectKey,
-  NDatePickerSlotsInjectKey,
+  HDatePickerFormatInjectKey,
+  HDatePickerPropsInjectKey,
+  HDatePickerSlotsInjectKey,
 } from '../../utils/injectKeys';
 import type { DatePickerDatePanelComponentExposes } from '../../composables/useExposes';
 import { useDatePickerDatePanelComponentExposes } from '../../composables/useExposes';
@@ -38,9 +38,9 @@ export default defineComponent({
   ) {
     const classHelper = new ComponentClassBlock('date-picker-panel-body');
 
-    const parentProps = inject(NDatePickerPropsInjectKey)!;
-    const parentSlots = inject(NDatePickerSlotsInjectKey)!;
-    const pickerType = inject(NDatePickerFormatInjectKey)!;
+    const parentProps = inject(HDatePickerPropsInjectKey)!;
+    const parentSlots = inject(HDatePickerSlotsInjectKey)!;
+    const pickerType = inject(HDatePickerFormatInjectKey)!;
 
     const {
       panelFirstDate,

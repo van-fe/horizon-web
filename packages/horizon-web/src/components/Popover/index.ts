@@ -2,7 +2,7 @@ import { default as Popover } from './src/Popover';
 import { default as PopContent } from './src/PopContent';
 import { withInstall } from '@aurora/utils';
 
-export const NPopover = withInstall(Popover);
-export const NPopContent = withInstall(PopContent);
+export const HPopover = withInstall(Popover);
+export const HPopContent = withInstall(PopContent);
 
-export default NPopover;
+export default HPopover;

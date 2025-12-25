@@ -29,45 +29,45 @@ import type { CascaderSlots } from './composables/useSlots';
 import { useCascaderSlots } from './composables/useSlots';
 import type { CascaderExposes, CascaderPanelsExposes } from './composables/useExposes';
 import { useCascaderExposes } from './composables/useExposes';
-import NPicker from '~/components/Picker/src/Picker';
+import HPicker from '~/components/Picker/src/Picker';
 import {
-  NCascaderChosenOptionListInjectKey,
-  NCascaderEmitsInjectKey,
-  NCascaderInputStringInjectKey,
-  NCascaderIsOutOfLimitInjectKey,
-  NCascaderModelValueInjectKey,
-  NCascaderModifyOptionChildrenListInjectKey,
-  NCascaderOptionListInjectKey,
-  NCascaderOptionListMapInjectKey,
-  NCascaderPickOptionInjectKey,
-  NCascaderPopperVisibleInjectKey,
-  NCascaderPresetModelValueInjectKey,
-  NCascaderPropsInjectKey,
-  NCascaderRegisterVNodeGetterInjectKey,
-  NCascaderSlotsInjectKey,
-  NCascaderTreeHelperInjectKey,
-  NCascaderVisibleOptionsInjectKey,
+  HCascaderChosenOptionListInjectKey,
+  HCascaderEmitsInjectKey,
+  HCascaderInputStringInjectKey,
+  HCascaderIsOutOfLimitInjectKey,
+  HCascaderModelValueInjectKey,
+  HCascaderModifyOptionChildrenListInjectKey,
+  HCascaderOptionListInjectKey,
+  HCascaderOptionListMapInjectKey,
+  HCascaderPickOptionInjectKey,
+  HCascaderPopperVisibleInjectKey,
+  HCascaderPresetModelValueInjectKey,
+  HCascaderPropsInjectKey,
+  HCascaderRegisterVNodeGetterInjectKey,
+  HCascaderSlotsInjectKey,
+  HCascaderTreeHelperInjectKey,
+  HCascaderVisibleOptionsInjectKey,
 } from './utils/injectKeys';
-import NScrollbar from '~/components/Scrollbar/src/Scrollbar';
-import NTag from '~/components/Tag/src/Tag';
-import NTagGroup from '~/components/Tag/src/TagGroup';
+import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
+import HTag from '~/components/Tag/src/Tag';
+import HTagGroup from '~/components/Tag/src/TagGroup';
 import useSize from '~/utils/useSize';
 import debounce from 'lodash/debounce';
-import NPickerFitContentInput from '~/components/Picker/src/components/NPickerFitContentInput';
+import HPickerFitContentInput from '~/components/Picker/src/components/PickerFitContentInput';
 import useLocaleLang from '~/utils/useLocaleLang';
 import {
-  NFormItemErrorInjectedKey,
-  NFormItemTriggerInjectedKey,
-  NFormDisabledInjectedKey,
+  HFormItemErrorInjectedKey,
+  HFormItemTriggerInjectedKey,
+  HFormDisabledInjectedKey,
 } from '~/components/Form/src/utils/injectedKeys';
 import { isEmpty } from '~/components/Select/src/utils/utils';
 import CascaderPanels from './components/CascaderPanels';
 import type {
-  NCascaderExtendOption,
-  NCascaderUuidType,
-  NCascaderOption,
+  HCascaderExtendOption,
+  HCascaderUuidType,
+  HCascaderOption,
   ModelValueType,
-  NCascaderFilterFunction,
+  HCascaderFilterFunction,
   ModelValueSingleType,
 } from './utils/types';
 import {
@@ -90,11 +90,11 @@ export default defineComponent({
   name: `${useNamespace()}Cascader`,
   desc: '当一个数据集合有清晰的层级结构时，可通过级联选择器逐级查看并选择',
   components: {
-    NPicker,
-    NScrollbar,
-    NTagGroup,
-    NTag,
-    NPickerFitContentInput,
+    HPicker,
+    HScrollbar,
+    HTagGroup,
+    HTag,
+    HPickerFitContentInput,
     CascaderPanels,
   },
   props: useCascaderProps,
@@ -169,12 +169,12 @@ export default defineComponent({
     /**
      * dom ref
      */
-    const pickerDomRef = ref<null | HorizonWebComponentInstance<typeof NPicker, PickerExposes>>(null);
+    const pickerDomRef = ref<null | HorizonWebComponentInstance<typeof HPicker, PickerExposes>>(null);
     const filterInputDomRef = ref<null | HorizonWebComponentInstance<
-      typeof NPickerFitContentInput,
+      typeof HPickerFitContentInput,
       PickerFitContentInputExposes
     >>(null);
-    const tagGroupDomRef = ref<null | HorizonWebComponentInstance<typeof NTagGroup, TagGroupExposes>>(
+    const tagGroupDomRef = ref<null | HorizonWebComponentInstance<typeof HTagGroup, TagGroupExposes>>(
       null,
     );
     const cascaderPanelsDomRef = ref<null | HorizonWebComponentInstance<
@@ -189,9 +189,9 @@ export default defineComponent({
     const useCollapse = computed(() => collapseRef?.value ?? collapseTagsRef.value);
 
     // form-item validate trigger
-    const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
-    const nFormError = inject(NFormItemErrorInjectedKey, ref(''));
-    const formDisabled = inject(NFormDisabledInjectedKey, undefined);
+    const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
+    const nFormError = inject(HFormItemErrorInjectedKey, ref(''));
+    const formDisabled = inject(HFormDisabledInjectedKey, undefined);
 
     const isDisabled = computed(() => disabledRef?.value ?? formDisabled?.value ?? false);
 
@@ -212,14 +212,14 @@ export default defineComponent({
     );
 
     const inputValueMerged = computed(() => inputValue.value || panelFilterInputValueRef.value);
-    provide(NCascaderInputStringInjectKey, inputValueMerged);
+    provide(HCascaderInputStringInjectKey, inputValueMerged);
 
     /**
      * visible deal
      */
     const popperVisible = ref(false);
 
-    provide(NCascaderPopperVisibleInjectKey, popperVisible);
+    provide(HCascaderPopperVisibleInjectKey, popperVisible);
 
     watch(popperVisible, val => {
       emit('dropdownVisibleChange', val);
@@ -261,7 +261,7 @@ export default defineComponent({
      */
     const useFilter = computed(() => !!filterRef?.value || filterableRef.value);
     const filterMethod = computed(() => {
-      const defaultFilterMethod: NCascaderFilterFunction = (input, paths) => {
+      const defaultFilterMethod: HCascaderFilterFunction = (input, paths) => {
         return paths.at(-1)?.label.toLowerCase().includes(input.toLowerCase()) || false;
       };
 
@@ -298,7 +298,7 @@ export default defineComponent({
     const isDuringComposition = ref(false);
 
     let modifiedType: undefined | boolean = undefined;
-    let modifiedOption: undefined | NCascaderExtendOption = undefined;
+    let modifiedOption: undefined | HCascaderExtendOption = undefined;
 
     function emitSelectOrDeselect() {
       modifiedType
@@ -311,7 +311,7 @@ export default defineComponent({
     });
 
     const visibleOptions = computed(() => {
-      let tempVisibleOptions: Array<NCascaderExtendOption> = optionList.value;
+      let tempVisibleOptions: Array<HCascaderExtendOption> = optionList.value;
 
       if (!checkStrictlyRef.value) {
         tempVisibleOptions = tempVisibleOptions.filter(item => item.isLeaf);
@@ -352,7 +352,7 @@ export default defineComponent({
       return tempVisibleOptions.slice(0, filterResultLimit.value);
     });
 
-    provide(NCascaderVisibleOptionsInjectKey, visibleOptions);
+    provide(HCascaderVisibleOptionsInjectKey, visibleOptions);
 
     const handleInput = (evt: Event) => {
       const target = (evt.composedPath?.()?.[0] ?? evt.target) as HTMLInputElement;
@@ -465,12 +465,12 @@ export default defineComponent({
     /**
      * collect options
      */
-    const optionList = ref<NCascaderExtendOption[]>([]);
-    const optionListMap = ref(new Map<NCascaderUuidType, NCascaderExtendOption>());
-    provide(NCascaderOptionListInjectKey, optionList);
-    provide(NCascaderOptionListMapInjectKey, optionListMap);
+    const optionList = ref<HCascaderExtendOption[]>([]);
+    const optionListMap = ref(new Map<HCascaderUuidType, HCascaderExtendOption>());
+    provide(HCascaderOptionListInjectKey, optionList);
+    provide(HCascaderOptionListMapInjectKey, optionListMap);
     provide(
-      NCascaderChosenOptionListInjectKey,
+      HCascaderChosenOptionListInjectKey,
       computed(() =>
         Array.from(presetModelValueSet.value.values())
           .map(uuid => optionListMap.value.get(uuid))
@@ -478,7 +478,7 @@ export default defineComponent({
       ),
     );
 
-    provide(NCascaderRegisterVNodeGetterInjectKey, (uuid, getter) => {
+    provide(HCascaderRegisterVNodeGetterInjectKey, (uuid, getter) => {
       const target = optionListMap.value.get(uuid);
 
       if (target) {
@@ -486,7 +486,7 @@ export default defineComponent({
       }
     });
 
-    function modifyOptionChildrenList(node: NCascaderExtendOption, children: NCascaderOption[]) {
+    function modifyOptionChildrenList(node: HCascaderExtendOption, children: HCascaderOption[]) {
       const tempInstance = new Tree(
         children,
         fieldMappingRef?.value ?? {},
@@ -505,15 +505,15 @@ export default defineComponent({
       emit('update:options', getTreeDataOriginData(Array.from(optionListMap.value.values())));
     }
 
-    provide(NCascaderModifyOptionChildrenListInjectKey, modifyOptionChildrenList);
+    provide(HCascaderModifyOptionChildrenListInjectKey, modifyOptionChildrenList);
 
-    const tree = new Tree<NCascaderOption, NCascaderExtendOption>(
+    const tree = new Tree<HCascaderOption, HCascaderExtendOption>(
       optionsRef.value,
       fieldMappingRef?.value ?? {},
       option => (!!option.groupLabel ? nanoid() : option.path.join(' / ')),
     );
 
-    provide(NCascaderTreeHelperInjectKey, tree);
+    provide(HCascaderTreeHelperInjectKey, tree);
 
     watch(
       optionsRef,
@@ -523,7 +523,7 @@ export default defineComponent({
           optionList.value = tree.flattenTreeData.value;
           optionListMap.value = tree.flattenTreeDataMapping.value as Map<
             string,
-            NCascaderExtendOption
+            HCascaderExtendOption
           >;
         } else {
           optionListMap.value.clear();
@@ -539,8 +539,8 @@ export default defineComponent({
      * model value collect
      */
     const modelValue = ref<ModelValueType>();
-    const modelValueSet = ref(new Set<NCascaderUuidType>());
-    const presetModelValueSet = ref(new Set<NCascaderUuidType>());
+    const modelValueSet = ref(new Set<HCascaderUuidType>());
+    const presetModelValueSet = ref(new Set<HCascaderUuidType>());
 
     const isOutOfLimit = computed(() =>
       multipleRef.value ? multipleLimitRef.value <= presetModelValueSet.value.size : false,
@@ -638,7 +638,7 @@ export default defineComponent({
       return true;
     }
 
-    function getShowLabel(uuid: NCascaderUuidType) {
+    function getShowLabel(uuid: HCascaderUuidType) {
       const option = optionListMap.value.get(uuid);
 
       if (showCheckedStrategyRef.value === 'fullPath') {
@@ -662,7 +662,7 @@ export default defineComponent({
     }
 
     // in order to prevent optionList changed after the showValue is empty
-    let prevSelectedValue: NCascaderUuidType | null = null;
+    let prevSelectedValue: HCascaderUuidType | null = null;
     let prevSelectedLabel: string = '';
 
     const showValue = computed(() => {
@@ -682,7 +682,7 @@ export default defineComponent({
         if (inputable.value && inputValue.value && modelValueSet.value.size === 0) {
           return inputValue.value;
         } else {
-          const value = modelValueSet.value.values().next().value as NCascaderUuidType;
+          const value = modelValueSet.value.values().next().value as HCascaderUuidType;
           const option = optionListMap.value.get(value);
 
           if (!option) {
@@ -722,7 +722,7 @@ export default defineComponent({
     });
 
     function pickOption(
-      uuid: NCascaderUuidType,
+      uuid: HCascaderUuidType,
       singleChooseHide = true,
       forcePick = false,
       emitChange = true,
@@ -864,17 +864,17 @@ export default defineComponent({
       resetRenderedTags();
     });
 
-    provide(NCascaderModelValueInjectKey, modelValueSet);
-    provide(NCascaderPresetModelValueInjectKey, presetModelValueSet);
-    provide(NCascaderPickOptionInjectKey, pickOption);
-    provide(NCascaderIsOutOfLimitInjectKey, isOutOfLimit);
+    provide(HCascaderModelValueInjectKey, modelValueSet);
+    provide(HCascaderPresetModelValueInjectKey, presetModelValueSet);
+    provide(HCascaderPickOptionInjectKey, pickOption);
+    provide(HCascaderIsOutOfLimitInjectKey, isOutOfLimit);
 
     const renderedModelValueTags = ref<Array<VNode | JSX.Element>>([]);
     const presetRenderedModelValueTags = ref<Array<VNode | JSX.Element>>([]);
     // To prevent optionList changes that cause already selected options to fail to render
-    const prevRenderedModelValueTags = new Map<NCascaderUuidType, VNode | JSX.Element>();
+    const prevRenderedModelValueTags = new Map<HCascaderUuidType, VNode | JSX.Element>();
 
-    function getShouldRenderedTags(fromValueSet: Set<NCascaderUuidType> = modelValueSet.value) {
+    function getShouldRenderedTags(fromValueSet: Set<HCascaderUuidType> = modelValueSet.value) {
       return Array.from(fromValueSet.values())
         .map(uuid => {
           const option = optionListMap.value.get(uuid);
@@ -882,7 +882,7 @@ export default defineComponent({
           if (!option) {
             return (
               prevRenderedModelValueTags.get(uuid) ?? (
-                <NTag
+                <HTag
                   clickable={false}
                   closable={true}
                   disabled={isDisabled.value}
@@ -890,13 +890,13 @@ export default defineComponent({
                   onClose={() => pickOption(uuid, true, true, true, true)}
                 >
                   {getShowLabel(uuid)}
-                </NTag>
+                </HTag>
               )
             );
           }
 
           const res = slots.tagRender?.({ ...option, label: option.fullPathLabel }) ?? (
-            <NTag
+            <HTag
               clickable={false}
               closable={
                 !option?.disabled &&
@@ -908,7 +908,7 @@ export default defineComponent({
               onClose={() => pickOption(uuid, true, true, true, true)}
             >
               {getShowLabel(uuid)}
-            </NTag>
+            </HTag>
           );
 
           prevRenderedModelValueTags.set(uuid, res as VNode | JSX.Element);
@@ -929,9 +929,9 @@ export default defineComponent({
             ))
       ) {
         renderedModelValueTags.value = [
-          <NTag clickable={false} closable={true} disabled={isDisabled.value} onClose={handleClear}>
+          <HTag clickable={false} closable={true} disabled={isDisabled.value} onClose={handleClear}>
             {checkAllSummaryTextRef?.value ?? useLocaleLang('select.all', 'All').value}
-          </NTag>,
+          </HTag>,
         ] as Array<VNode>;
         return;
       }
@@ -987,9 +987,9 @@ export default defineComponent({
     /**
      * normal provide
      */
-    provide(NCascaderPropsInjectKey, props);
-    provide(NCascaderEmitsInjectKey, emit);
-    provide(NCascaderSlotsInjectKey, slots);
+    provide(HCascaderPropsInjectKey, props);
+    provide(HCascaderEmitsInjectKey, emit);
+    provide(HCascaderSlotsInjectKey, slots);
 
     expose({
       confirmHandle,
@@ -1018,7 +1018,7 @@ export default defineComponent({
     });
 
     return () => (
-      <NPicker
+      <HPicker
         ref={pickerDomRef}
         size={sizeRef.value}
         modelValue={showValue.value?.toString?.()}
@@ -1092,11 +1092,11 @@ export default defineComponent({
               {slots.panelHeaderRender?.()}
               {props.showTagsInPanel && presetRenderedModelValueTags.value.length > 0 && (
                 <div class={classHelper.e('panel-tags')}>
-                  <NScrollbar maxHeight={104}>
-                    <NTagGroup collapse={false}>
+                  <HScrollbar maxHeight={104}>
+                    <HTagGroup collapse={false}>
                       {flattenVNodes(presetRenderedModelValueTags.value)}
-                    </NTagGroup>
-                  </NScrollbar>
+                    </HTagGroup>
+                  </HScrollbar>
                 </div>
               )}
             </Fragment>
@@ -1113,7 +1113,7 @@ export default defineComponent({
               if (modelValueSet.value.size > 0) {
                 return (
                   !useStatisticRef.value && (
-                    <NTagGroup
+                    <HTagGroup
                       ref={tagGroupDomRef}
                       class={classHelper.em('tag-group', 'normal', !!slots.tagRender)}
                       collapse={useCollapse.value}
@@ -1140,7 +1140,7 @@ export default defineComponent({
                               )
                             : renderedModelValueTags.value,
                         suffix: () => (
-                          <NPickerFitContentInput
+                          <HPickerFitContentInput
                             ref={filterInputDomRef}
                             v-show={
                               multipleRef.value &&
@@ -1167,7 +1167,7 @@ export default defineComponent({
                           />
                         ),
                       }}
-                    </NTagGroup>
+                    </HTagGroup>
                   )
                 );
               }
@@ -1197,7 +1197,7 @@ export default defineComponent({
             </div>
           ),
         }}
-      </NPicker>
+      </HPicker>
     );
   },
 });

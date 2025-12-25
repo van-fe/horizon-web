@@ -7,12 +7,12 @@ import type { DropdownGroupEmits } from './composables/useEmits';
 import { useDropdownGroupEmits } from './composables/useEmits';
 import type { DropdownGroupSlots } from './composables/useSlots';
 import { useDropdownGroupSlots } from './composables/useSlots';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
 
 export default defineComponent({
   name: `${useNamespace()}DropdownGroup`,
   components: {
-    NTooltip,
+    HTooltip,
   },
   props: useDropdownGroupProps,
   emits: useDropdownGroupEmits,
@@ -43,7 +43,7 @@ export default defineComponent({
         )}
       >
         {(slots.title || props.title) && (
-          <NTooltip
+          <HTooltip
             trigger="manual"
             visible={tooltipVisible.value}
             fallbackPlacements={['auto']}
@@ -62,7 +62,7 @@ export default defineComponent({
               ),
               content: () => slots.title?.() ?? props.title,
             }}
-          </NTooltip>
+          </HTooltip>
         )}
         <div class={cls(classHelper.e('inner'))}>{slots.default?.()}</div>
       </div>

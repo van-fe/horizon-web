@@ -1,10 +1,10 @@
 import { default as Tooltip } from './src/Tooltip';
 import { withInstall } from '@aurora/utils';
 
-export const NTooltip = withInstall(Tooltip);
-export default NTooltip;
+export const HTooltip = withInstall(Tooltip);
+export default HTooltip;
 
 export type {
-  TooltipProps as NTooltipProps,
-  TooltipSize as NTooltipSize,
+  TooltipProps as HTooltipProps,
+  TooltipSize as HTooltipSize,
 } from './src/composables/useProps';

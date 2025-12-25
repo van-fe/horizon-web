@@ -1,5 +1,6 @@
 import { Project } from 'ts-morph';
-import { apiGeneratorOutPut, horizonwebProjectRoot, writeJsonFile } from '@aurora/utils/plugins';
+import { apiGeneratorOutPut, horizonwebProjectRoot } from '@root/scripts/paths';
+import { writeJsonFile } from '@root/scripts/writeJsonFile';
 import type {
   ApiGeneratorAnalysedMethodDetail,
   ApiGeneratorAnalysedMethodType,
@@ -11,7 +12,7 @@ import analyseMethods from './analyseMethods';
 import methodsData from '../../../dist/methods-dependencies.json';
 
 function analyseMethod(methodInfo: ApiGeneratorExportedMethod): ApiGeneratorAnalysedMethodDetail {
-  const methodNameWithoutPrefix = methodInfo.name.replace(/^N/, '');
+  const methodNameWithoutPrefix = methodInfo.name.replace(/^H/, '');
 
   const project = new Project({
     compilerOptions: {

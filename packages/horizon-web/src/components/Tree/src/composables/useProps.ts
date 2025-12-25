@@ -1,13 +1,13 @@
 import type { CSSProperties, ExtractPropTypes, PropType } from 'vue';
 import { declarePropType } from '@aurora/utils';
 import type {
-  NTreeData,
-  NTreeExtendsData,
-  NTreeFilterMethodType,
-  NTreeHighlightMethod,
-  NTreeDynamicLoadMethod,
-  NTreeNodeDataWithLevel,
-  NTreeFilterType,
+  HTreeData,
+  HTreeExtendsData,
+  HTreeFilterMethodType,
+  HTreeHighlightMethod,
+  HTreeDynamicLoadMethod,
+  HTreeNodeDataWithLevel,
+  HTreeFilterType,
 } from '../utils/types';
 import type { InputProps } from '~/components/Input/src/composables/useProps';
 import type { BaseTreeData } from '~/utils/useTree/types';
@@ -21,13 +21,13 @@ export const useTreeProps = declarePropType({
    * 可能由 tree-select 传入
    */
   treeHelper: {
-    type: Object as PropType<Tree<NTreeData, NTreeExtendsData>>,
+    type: Object as PropType<Tree<HTreeData, HTreeExtendsData>>,
   },
   /**
    * 树结构数据，具备响应式，在使用中如果你改变了整个变量的引用，将会导致组件的重新渲染
    */
   treeData: {
-    type: Array as PropType<NTreeData[]>,
+    type: Array as PropType<HTreeData[]>,
     default: () => [],
   },
   /**
@@ -56,7 +56,7 @@ export const useTreeProps = declarePropType({
    * @deprecated filterable / filterMethod / highlightMethod / expandFilteredTree
    */
   filter: {
-    type: [Boolean, Object] as PropType<boolean | NTreeFilterType>,
+    type: [Boolean, Object] as PropType<boolean | HTreeFilterType>,
   },
   /**
    * 是否开启过滤
@@ -78,7 +78,7 @@ export const useTreeProps = declarePropType({
    * @version 2.3.5
    */
   filterMethod: {
-    type: Function as PropType<NTreeFilterMethodType>,
+    type: Function as PropType<HTreeFilterMethodType>,
   },
   /**
    * 内置输入框过滤的值，可以双向绑定
@@ -93,7 +93,7 @@ export const useTreeProps = declarePropType({
    * @version 2.3.5
    */
   highlightMethod: {
-    type: Function as PropType<NTreeHighlightMethod>,
+    type: Function as PropType<HTreeHighlightMethod>,
   },
   /**
    * 过滤的输入框的传参
@@ -277,14 +277,14 @@ export const useTreeProps = declarePropType({
    * @deprecated dynamicLoad
    */
   dynamicLoadData: {
-    type: Function as PropType<NTreeDynamicLoadMethod>,
+    type: Function as PropType<HTreeDynamicLoadMethod>,
   },
   /**
    * 动态加载数据方法
    * @version 2.3.5
    */
   dynamicLoad: {
-    type: Function as PropType<NTreeDynamicLoadMethod>,
+    type: Function as PropType<HTreeDynamicLoadMethod>,
   },
   /**
    * 是否默认展开全部
@@ -434,9 +434,9 @@ export const useTreeProps = declarePropType({
   beforeDrop: {
     type: Function as PropType<
       (
-        current: NTreeNodeDataWithLevel,
-        target: NTreeNodeDataWithLevel | null,
-        prev: NTreeNodeDataWithLevel | null,
+        current: HTreeNodeDataWithLevel,
+        target: HTreeNodeDataWithLevel | null,
+        prev: HTreeNodeDataWithLevel | null,
       ) => Awaited<boolean>
     >,
   },
@@ -463,7 +463,7 @@ export const useTreeItemProps = declarePropType({
    * 子节点数据
    */
   value: {
-    type: Object as PropType<NTreeExtendsData>,
+    type: Object as PropType<HTreeExtendsData>,
     required: true,
   },
   /**

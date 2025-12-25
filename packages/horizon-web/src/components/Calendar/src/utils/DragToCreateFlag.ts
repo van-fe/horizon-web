@@ -1,5 +1,5 @@
 import type { Dayjs } from 'dayjs';
-import type { NCalendarPinFlag } from '~/components/Calendar/src/utils/types';
+import type { HCalendarPinFlag } from '~/components/Calendar/src/utils/types';
 import cloneDeep from 'lodash/cloneDeep';
 import type PinFlagsHelper from './PinFlagsHelper';
 import { isObject, cssVariableKey } from '@aurora/utils';
@@ -38,7 +38,7 @@ export default class DragToCreateFlag {
 
     const cbData = this.props.creatingPinFlagCallback?.(startAt) ?? {};
 
-    let tempPinFlag: NCalendarPinFlag | null = cloneDeep(
+    let tempPinFlag: HCalendarPinFlag | null = cloneDeep(
       this.pinFlags.addTempPinFlag(startAt, endAt, cbData?.title, cbData?.type),
     );
 

@@ -10,9 +10,9 @@ import type { PaginationEmits } from './composables/useEmits';
 import type { PaginationSlots } from './composables/useSlots';
 import type { PaginationExposes } from './composables/useExposes';
 import {
-  NPaginationEmitInjectKey,
-  NPaginationPropsInjectKey,
-  NPaginationSlotsInjectKey,
+  HPaginationEmitInjectKey,
+  HPaginationPropsInjectKey,
+  HPaginationSlotsInjectKey,
 } from './utils/injectKeys';
 import Total from './components/Total';
 import Pager from './components/Pager';
@@ -87,9 +87,9 @@ export default defineComponent({
       },
     );
 
-    provide(NPaginationPropsInjectKey, props);
-    provide(NPaginationEmitInjectKey, emit);
-    provide(NPaginationSlotsInjectKey, slots);
+    provide(HPaginationPropsInjectKey, props);
+    provide(HPaginationEmitInjectKey, emit);
+    provide(HPaginationSlotsInjectKey, slots);
 
     const layoutComponents = computed(() => {
       switch (props.type) {

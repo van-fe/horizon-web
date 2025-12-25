@@ -5,24 +5,24 @@ import type { PickerInputStatusType } from '~/components/Picker/src/composables/
 import type { PopoverProps } from '~/components/Popover/src/composables/useProps';
 import { IconMaybeFalsyPropType, IconNullablePropType, IconPropType } from '~/utils/useIcon';
 import type {
-  NTreeData,
-  NTreeDynamicLoadMethod,
-  NTreeFilterMethodType,
-  NTreeFilterType,
-  NTreeHighlightMethod,
-  NTreeNodeDataWithLevel,
-  NTreeUuidType,
+  HTreeData,
+  HTreeDynamicLoadMethod,
+  HTreeFilterMethodType,
+  HTreeFilterType,
+  HTreeHighlightMethod,
+  HTreeNodeDataWithLevel,
+  HTreeUuidType,
 } from '~/components/Tree/src/utils/types';
 import { IconCheck, IconDragForm, IconTriangleRightFilled } from '@aurora/icon';
 import type { BaseTreeData } from '~/utils/useTree/types';
-import type { NTreeSelectModelValueType } from '../utils/types';
+import type { HTreeSelectModelValueType } from '../utils/types';
 
 export const useTreeSelectProps = declarePropType({
   /**
    * 选中项绑定的值
    */
   modelValue: {
-    type: [Array, String] as PropType<NTreeSelectModelValueType>,
+    type: [Array, String] as PropType<HTreeSelectModelValueType>,
   },
   /**
    * 触发方式
@@ -403,7 +403,7 @@ export const useTreeSelectProps = declarePropType({
    * 树结构数据，具备响应式，在使用中如果你改变了整个变量的引用，将会导致组件的重新渲染
    */
   treeData: {
-    type: Array as PropType<NTreeData[]>,
+    type: Array as PropType<HTreeData[]>,
     default: () => [],
   },
   /**
@@ -418,7 +418,7 @@ export const useTreeSelectProps = declarePropType({
    * @deprecated filterable
    */
   filter: {
-    type: [Boolean, Object] as PropType<boolean | NTreeFilterType>,
+    type: [Boolean, Object] as PropType<boolean | HTreeFilterType>,
   },
   /**
    * 是否开启过滤
@@ -432,7 +432,7 @@ export const useTreeSelectProps = declarePropType({
    * @version 2.3.5
    */
   filterMethod: {
-    type: Function as PropType<NTreeFilterMethodType>,
+    type: Function as PropType<HTreeFilterMethodType>,
   },
   /**
    * 过滤时是否隐藏子节点
@@ -480,7 +480,7 @@ export const useTreeSelectProps = declarePropType({
    * @version 2.3.5
    */
   highlightMethod: {
-    type: Function as PropType<NTreeHighlightMethod>,
+    type: Function as PropType<HTreeHighlightMethod>,
   },
   /**
    * 是否自动展开搜索子树
@@ -502,7 +502,7 @@ export const useTreeSelectProps = declarePropType({
    * 展开的节点
    */
   expandValues: {
-    type: Array as PropType<NTreeUuidType[]>,
+    type: Array as PropType<HTreeUuidType[]>,
   },
   /**
    * 折叠时 `icon`
@@ -544,7 +544,7 @@ export const useTreeSelectProps = declarePropType({
    * 选中的树节点
    */
   selectedValues: {
-    type: Array as PropType<NTreeUuidType[]>,
+    type: Array as PropType<HTreeUuidType[]>,
     default: () => [],
   },
   /**
@@ -578,14 +578,14 @@ export const useTreeSelectProps = declarePropType({
    * @deprecated dynamicLoad
    */
   dynamicLoadData: {
-    type: Function as PropType<NTreeDynamicLoadMethod>,
+    type: Function as PropType<HTreeDynamicLoadMethod>,
   },
   /**
    * 动态加载数据方法
    * @version 2.3.5
    */
   dynamicLoad: {
-    type: Function as PropType<NTreeDynamicLoadMethod>,
+    type: Function as PropType<HTreeDynamicLoadMethod>,
   },
   /**
    * 是否默认展开全部
@@ -757,9 +757,9 @@ export const useTreeSelectProps = declarePropType({
   beforeDrop: {
     type: Function as PropType<
       (
-        current: NTreeNodeDataWithLevel,
-        target: NTreeNodeDataWithLevel | null,
-        prev: NTreeNodeDataWithLevel | null,
+        current: HTreeNodeDataWithLevel,
+        target: HTreeNodeDataWithLevel | null,
+        prev: HTreeNodeDataWithLevel | null,
       ) => Awaited<boolean>
     >,
   },

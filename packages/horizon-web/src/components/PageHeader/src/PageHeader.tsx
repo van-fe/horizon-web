@@ -9,8 +9,8 @@ import type { PageHeaderProps } from './composables/useProps';
 import type { PageHeaderEmits } from './composables/useEmits';
 import type { PageHeaderSlots } from './composables/useSlots';
 import { renderIcon } from '~/utils/useIcon';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
-import NButton from '~/components/Button/src/Button';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
+import HButton from '~/components/Button/src/Button';
 
 export default defineComponent({
   name: `${useNamespace()}PageHeader`,
@@ -34,7 +34,7 @@ export default defineComponent({
         {slots.breadcrumb && <div class={classHelper.e('breadcrumb')}>{slots.breadcrumb()}</div>}
         <div class={classHelper.e('main')}>
           {(slots.icon || props.icon) && props.icon !== null && (
-            <NButton
+            <HButton
               text={true}
               type="normal"
               class={classHelper.e('back')}
@@ -46,14 +46,14 @@ export default defineComponent({
                     size: 20,
                   }),
               }}
-            </NButton>
+            </HButton>
           )}
           <div class={classHelper.e('inner')}>
             <div class={classHelper.e('header')}>
               {slots.header?.() ?? (
                 <Fragment>
                   {slots.titleOuter?.() ?? (
-                    <NTooltip
+                    <HTooltip
                       overflow={true}
                       enterable={true}
                       disabled={props.disabledHeaderTooltip}
@@ -66,7 +66,7 @@ export default defineComponent({
                           </div>
                         ),
                       }}
-                    </NTooltip>
+                    </HTooltip>
                   )}
                   {slots.tags && <div class={classHelper.em('header', 'tags')}>{slots.tags()}</div>}
                 </Fragment>

@@ -1,6 +1,6 @@
 import eventOutside from './src';
 import { withDirectiveInstall } from '@aurora/utils';
 
-export const NVEventOutside = withDirectiveInstall(eventOutside);
+export const HVEventOutside = withDirectiveInstall(eventOutside);
 
-export default NVEventOutside;
+export default HVEventOutside;

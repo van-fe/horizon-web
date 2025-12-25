@@ -15,32 +15,32 @@ import type { AutoCompleteProps, ModelValueType } from './composables/useProps';
 import type { AutoCompleteEmits } from './composables/useEmits';
 import type { AutoCompleteSlots } from './composables/useSlots';
 import type { AutoCompleteExposes } from './composables/useExposes';
-import NPicker from '~/components/Picker/src/Picker';
+import HPicker from '~/components/Picker/src/Picker';
 import {
-  NAutoCompleteEmitsInjectKey,
-  NAutoCompleteFocusedOptionValueInjectKey,
-  NAutoCompleteModelValueInjectKey,
-  NAutoCompleteMouseOverOptionInjectKey,
-  NAutoCompletePickOptionInjectKey,
-  NAutoCompletePopperVisibleInjectKey,
-  NAutoCompletePropsInjectKey,
-  NAutoCompleteSlotsInjectKey,
-  NAutoCompleteVisibleOptionsInjectKey,
+  HAutoCompleteEmitsInjectKey,
+  HAutoCompleteFocusedOptionValueInjectKey,
+  HAutoCompleteModelValueInjectKey,
+  HAutoCompleteMouseOverOptionInjectKey,
+  HAutoCompletePickOptionInjectKey,
+  HAutoCompletePopperVisibleInjectKey,
+  HAutoCompletePropsInjectKey,
+  HAutoCompleteSlotsInjectKey,
+  HAutoCompleteVisibleOptionsInjectKey,
 } from './utils/injectKeys';
 import useSize from '~/utils/useSize';
 import debounce from 'lodash/debounce';
 import { clamp } from '@vueuse/core';
-import NPickerFitContentInput from '~/components/Picker/src/components/NPickerFitContentInput';
+import HPickerFitContentInput from '~/components/Picker/src/components/PickerFitContentInput';
 import {
-  NFormItemErrorInjectedKey,
-  NFormItemTriggerInjectedKey,
-  NFormDisabledInjectedKey,
+  HFormItemErrorInjectedKey,
+  HFormItemTriggerInjectedKey,
+  HFormDisabledInjectedKey,
 } from '~/components/Form/src/utils/injectedKeys';
 import { isEqualLoose } from './utils/utils';
 import VirtualScrollList from './components/VirtualScrollList';
 import throttle from 'lodash/throttle';
 import { nanoid } from 'nanoid';
-import type { NAutoCompleteOptionWithUuid, NAutoCompleteOption } from './utils/typed';
+import type { HAutoCompleteOptionWithUuid, HAutoCompleteOption } from './utils/typed';
 import type { PickerExposes } from '~/components/Picker/src/composables/useExposes';
 import useLocaleLang from '~/utils/useLocaleLang';
 
@@ -48,8 +48,8 @@ export default defineComponent({
   name: `${useNamespace()}AutoComplete`,
   desc: '根据输入内容提供对应的输入建议',
   components: {
-    NPicker,
-    NPickerFitContentInput,
+    HPicker,
+    HPickerFitContentInput,
     VirtualScrollList,
   },
   props: useAutoCompleteProps,
@@ -98,7 +98,7 @@ export default defineComponent({
     /**
      * dom ref
      */
-    const pickerDomRef = ref<null | HorizonWebComponentInstance<typeof NPicker, PickerExposes>>(null);
+    const pickerDomRef = ref<null | HorizonWebComponentInstance<typeof HPicker, PickerExposes>>(null);
     const virtualScrollListDomRef = ref<null | typeof VirtualScrollList>(null);
 
     /**
@@ -107,11 +107,11 @@ export default defineComponent({
     const sizeRef = useSize(size, 'medium');
 
     // form-item validate trigger
-    const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
-    const nFormError = inject(NFormItemErrorInjectedKey, ref(''));
+    const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
+    const nFormError = inject(HFormItemErrorInjectedKey, ref(''));
 
     // form disabled inject
-    const formDisabled = inject(NFormDisabledInjectedKey, undefined);
+    const formDisabled = inject(HFormDisabledInjectedKey, undefined);
     const isDisabled = computed(() => disabledProp?.value ?? formDisabled?.value ?? false);
 
     /**
@@ -148,7 +148,7 @@ export default defineComponent({
       }
     });
 
-    provide(NAutoCompletePopperVisibleInjectKey, popperVisible);
+    provide(HAutoCompletePopperVisibleInjectKey, popperVisible);
 
     function manualControlPopperVisible(visible: boolean) {
       if (visible) {
@@ -162,7 +162,7 @@ export default defineComponent({
 
     const visibleOptions = computed(() => Array.from(optionList.value.values()));
 
-    provide(NAutoCompleteVisibleOptionsInjectKey, visibleOptions);
+    provide(HAutoCompleteVisibleOptionsInjectKey, visibleOptions);
 
     const handleInput = (evt: Event) => {
       const target = safelyGetEventTarget(evt) as HTMLInputElement;
@@ -231,7 +231,7 @@ export default defineComponent({
      */
     const optionList = computed(
       () =>
-        new Map<NAutoCompleteOptionWithUuid['label'], NAutoCompleteOptionWithUuid>(
+        new Map<HAutoCompleteOptionWithUuid['label'], HAutoCompleteOptionWithUuid>(
           optionsProp.value.map(opt => [
             opt.label,
             {
@@ -256,7 +256,7 @@ export default defineComponent({
       });
     });
 
-    function pickOption(value: NAutoCompleteOption['label'] | NAutoCompleteOption['value']) {
+    function pickOption(value: HAutoCompleteOption['label'] | HAutoCompleteOption['value']) {
       modelValue.value = value;
 
       emit('change', value);
@@ -265,7 +265,7 @@ export default defineComponent({
       judgeWhetherInputCanFocus(false);
     }
 
-    provide(NAutoCompletePickOptionInjectKey, pickOption);
+    provide(HAutoCompletePickOptionInjectKey, pickOption);
 
     watch(
       () => modelValueProp?.value,
@@ -291,9 +291,9 @@ export default defineComponent({
 
     /******* keyboard up down to focus option *******/
     const focusedOptionValue = ref<
-      NAutoCompleteOption['label'] | NAutoCompleteOption['value'] | undefined
+      HAutoCompleteOption['label'] | HAutoCompleteOption['value'] | undefined
     >();
-    provide(NAutoCompleteFocusedOptionValueInjectKey, focusedOptionValue);
+    provide(HAutoCompleteFocusedOptionValueInjectKey, focusedOptionValue);
 
     const focusOnOptionByKeyboard = throttle((evt: KeyboardEvent) => {
       const options = visibleOptions.value;
@@ -341,26 +341,26 @@ export default defineComponent({
       }
     }
 
-    function onMouseOverOption(value: NAutoCompleteOption['label'] | NAutoCompleteOption['value']) {
+    function onMouseOverOption(value: HAutoCompleteOption['label'] | HAutoCompleteOption['value']) {
       focusedOptionValue.value = value;
     }
 
-    provide(NAutoCompleteMouseOverOptionInjectKey, onMouseOverOption);
+    provide(HAutoCompleteMouseOverOptionInjectKey, onMouseOverOption);
 
     /**
      * normal provide
      */
-    provide(NAutoCompletePropsInjectKey, props);
-    provide(NAutoCompleteEmitsInjectKey, emit);
-    provide(NAutoCompleteSlotsInjectKey, slots);
-    provide(NAutoCompleteModelValueInjectKey, modelValue);
+    provide(HAutoCompletePropsInjectKey, props);
+    provide(HAutoCompleteEmitsInjectKey, emit);
+    provide(HAutoCompleteSlotsInjectKey, slots);
+    provide(HAutoCompleteModelValueInjectKey, modelValue);
 
     expose({
       changePanelVisible: manualControlPopperVisible,
     });
 
     return () => (
-      <NPicker
+      <HPicker
         ref={pickerDomRef}
         size={sizeRef.value}
         modelValue={modelValue.value}
@@ -415,7 +415,7 @@ export default defineComponent({
           picker: slots.picker,
           default: () => <VirtualScrollList ref={virtualScrollListDomRef} />,
         }}
-      </NPicker>
+      </HPicker>
     );
   },
 });

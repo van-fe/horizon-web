@@ -39,13 +39,13 @@
 </template>
 
 <script setup lang="ts">
-import type { NCascaderExtendOption } from '@aurora/horizon-web';
+import type { HCascaderExtendOption } from '@aurora/horizon-web';
 import { onMounted, ref } from 'vue';
 
 const currentVal1 = ref<string[]>([]);
 const currentVal2 = ref<string[][]>([['component', 'basic', 'color']]);
 const checkStrictly = ref(true);
-const changeHandle = (value: boolean, option: NCascaderExtendOption) => {
+const changeHandle = (value: boolean, option: HCascaderExtendOption) => {
   console.info(value, option);
 };
 

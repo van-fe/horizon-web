@@ -1,15 +1,15 @@
 import type { Ref, ToRefs } from 'vue';
 import { provide, ref, watch } from 'vue';
 import type { TreeSelectProps } from '../composables/useProps';
-import { NTreeSelectPopperVisibleInjectKey } from './injectKeys';
-import type { NTreeSelectContext, NTreeSelectDomRefs } from './types';
-import type { NTreeUuidType } from '~/components/Tree/src/utils/types';
+import { HTreeSelectPopperVisibleInjectKey } from './injectKeys';
+import type { HTreeSelectContext, HTreeSelectDomRefs } from './types';
+import type { HTreeUuidType } from '~/components/Tree/src/utils/types';
 
 export default function (
   props: ToRefs<TreeSelectProps>,
-  context: NTreeSelectContext,
-  domRefs: NTreeSelectDomRefs,
-  modelValueSet: Ref<Set<NTreeUuidType>>,
+  context: HTreeSelectContext,
+  domRefs: HTreeSelectDomRefs,
+  modelValueSet: Ref<Set<HTreeUuidType>>,
 ) {
   const popperVisible = ref(false);
 
@@ -30,7 +30,7 @@ export default function (
   });
 
   /** provides **/
-  provide(NTreeSelectPopperVisibleInjectKey, popperVisible);
+  provide(HTreeSelectPopperVisibleInjectKey, popperVisible);
 
   return {
     popperVisible,

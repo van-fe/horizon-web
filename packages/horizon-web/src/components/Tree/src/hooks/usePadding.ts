@@ -1,20 +1,20 @@
 import type { TreeProps } from '../composables/useProps';
 import type { ComputedRef, Ref } from 'vue';
 import { computed, inject } from 'vue';
-import { NTreeSizeInjectKey } from '../utils/injectKeys';
-import type { NTreeData, NTreeExtendsData } from '../utils/types';
+import { HTreeSizeInjectKey } from '../utils/injectKeys';
+import type { HTreeData, HTreeExtendsData } from '../utils/types';
 import type Tree from '~/utils/useTree/index';
 
 export default function usePadding(
   treeProps: TreeProps,
   options: {
-    treeItem: Ref<NTreeExtendsData>;
+    treeItem: Ref<HTreeExtendsData>;
     isLoading: ComputedRef<boolean>;
-    treeHelper: Tree<NTreeData, NTreeExtendsData>;
+    treeHelper: Tree<HTreeData, HTreeExtendsData>;
     indent: Ref<number>;
   },
 ) {
-  const size = inject(NTreeSizeInjectKey)!;
+  const size = inject(HTreeSizeInjectKey)!;
 
   function getPadding(level: number) {
     return (

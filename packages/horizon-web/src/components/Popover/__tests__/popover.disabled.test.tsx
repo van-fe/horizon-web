@@ -1,23 +1,23 @@
 import { mount } from '@vue/test-utils';
-import NPopover from '../src/Popover';
+import HPopover from '../src/Popover';
 import { describe, expect, test } from 'vitest';
 import { nextTick, ref } from 'vue';
-import NButton from '../../Button';
+import HButton from '../../Button';
 
 describe('Popover.disabled.tsx', () => {
   test('disabled', async () => {
     const disabled = ref(false);
 
     const wrapper = mount(() => (
-      <NPopover toBody={false} trigger="click" disabled={disabled.value}>
+      <HPopover toBody={false} trigger="click" disabled={disabled.value}>
         {{
-          reference: () => <NButton>Trigger</NButton>,
+          reference: () => <HButton>Trigger</HButton>,
           popper: () => <div class="popper">Popper</div>,
         }}
-      </NPopover>
+      </HPopover>
     ));
 
-    const trigger = wrapper.findComponent(NButton);
+    const trigger = wrapper.findComponent(HButton);
 
     await trigger.trigger('click');
 
@@ -38,15 +38,15 @@ describe('Popover.disabled.tsx', () => {
     const disabled = ref(false);
 
     const wrapper = mount(() => (
-      <NPopover toBody={false} trigger="click" disabled={disabled.value}>
+      <HPopover toBody={false} trigger="click" disabled={disabled.value}>
         {{
-          reference: () => <NButton>Trigger</NButton>,
+          reference: () => <HButton>Trigger</HButton>,
           popper: () => <div class="popper">Popper</div>,
         }}
-      </NPopover>
+      </HPopover>
     ));
 
-    const trigger = wrapper.findComponent(NButton);
+    const trigger = wrapper.findComponent(HButton);
 
     await trigger.trigger('click');
 
@@ -66,7 +66,7 @@ describe('Popover.disabled.tsx', () => {
     const disabled = ref(false);
 
     const wrapper = mount(() => (
-      <NPopover
+      <HPopover
         toBody={false}
         visible={visible.value}
         trigger="manual"
@@ -74,10 +74,10 @@ describe('Popover.disabled.tsx', () => {
         onHide={() => (visible.value = false)}
       >
         {{
-          reference: () => <NButton>Trigger</NButton>,
+          reference: () => <HButton>Trigger</HButton>,
           popper: () => <div class="popper">Popper</div>,
         }}
-      </NPopover>
+      </HPopover>
     ));
 
     const popper = wrapper.find('.popper');

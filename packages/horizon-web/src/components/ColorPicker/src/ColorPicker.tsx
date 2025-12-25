@@ -20,12 +20,12 @@ import { useColorPickerSlots } from './composables/useSlots';
 import type { ColorPickerExposes } from './composables/useExposes';
 import { useColorPickerExposes } from './composables/useExposes';
 import {
-  NFormDisabledInjectedKey,
-  NFormItemErrorInjectedKey,
-  NFormItemTriggerInjectedKey,
+  HFormDisabledInjectedKey,
+  HFormItemErrorInjectedKey,
+  HFormItemTriggerInjectedKey,
 } from '~/components/Form/src/utils/injectedKeys';
 import useSize from '~/utils/useSize';
-import NPicker from '~/components/Picker/src/Picker';
+import HPicker from '~/components/Picker/src/Picker';
 import ColorPickerPanel from './components/ColorPickerPanel';
 import ColorPickerTrigger from './components/ColorPickerTrigger';
 import { recordRecentlyColor } from '~/components/ColorPicker/src/utils/useStorageColor';
@@ -34,7 +34,7 @@ export default defineComponent({
   name: `${useNamespace()}ColorPicker`,
   desc: '用于选择颜色，支持HEX、RGB、HSL、HSB四种格式',
   components: {
-    NPicker,
+    HPicker,
   },
   props: useColorPickerProps,
   emits: useColorPickerEmits,
@@ -50,16 +50,16 @@ export default defineComponent({
     }: HorizonWebSetupContext<ColorPickerEmits, ColorPickerSlots, ColorPickerExposes>,
   ) {
     const classHelper = new ComponentClassBlock('color-picker');
-    const pickerRef = ref<typeof NPicker | null>(null);
+    const pickerRef = ref<typeof HPicker | null>(null);
 
     const modelValue = new ColorPickerColor(props);
 
     /** formItemTrigger **/
-    const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
-    // because color-picker use n-input and so no, so provide NFormItemTriggerInjectedKey as undefined
-    provide(NFormItemTriggerInjectedKey, undefined);
+    const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
+    // because color-picker use n-input and so no, so provide HFormItemTriggerInjectedKey as undefined
+    provide(HFormItemTriggerInjectedKey, undefined);
 
-    const formDisabled = inject(NFormDisabledInjectedKey, undefined);
+    const formDisabled = inject(HFormDisabledInjectedKey, undefined);
     const isDisabled = computed(() => props.disabled ?? formDisabled?.value ?? false);
 
     function onModelValueChanged(value: string) {
@@ -165,14 +165,14 @@ export default defineComponent({
     const sizeRef = useSize(size, 'medium');
 
     // form-error
-    const error = inject(NFormItemErrorInjectedKey, ref(''));
+    const error = inject(HFormItemErrorInjectedKey, ref(''));
 
     expose({
       colorPicker: pickerRef.value?.wrapperDom?.().input,
     });
 
     return () => (
-      <NPicker
+      <HPicker
         ref={pickerRef}
         modelValue={modelValue.resultsValue.value}
         class={cls(
@@ -210,7 +210,7 @@ export default defineComponent({
           ),
           ...(slots.trigger ? { pickerOuter: () => slots.trigger?.(modelValue) } : {}),
         }}
-      </NPicker>
+      </HPicker>
     );
   },
 });

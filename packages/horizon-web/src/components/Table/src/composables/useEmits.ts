@@ -1,6 +1,6 @@
 import { isDefined, isNil, isNumber, isObject, isString } from '@aurora/utils';
-import type { NTableColumnData } from '../utils/types';
-import { NTableSortOrderEnum } from '../utils/types';
+import type { HTableColumnData } from '../utils/types';
+import { HTableSortOrderEnum } from '../utils/types';
 
 export const useTableEmits = {
   /**
@@ -36,7 +36,7 @@ export const useTableEmits = {
    * @param cell 当前单元格对象
    * @param evt 鼠标事件
    */
-  cellMouseEnter: (row: any, column: NTableColumnData, cell: HTMLElement, evt: MouseEvent) =>
+  cellMouseEnter: (row: any, column: HTableColumnData, cell: HTMLElement, evt: MouseEvent) =>
     cell instanceof HTMLElement && evt instanceof MouseEvent,
   /**
    * 鼠标离开单元格时触发
@@ -45,7 +45,7 @@ export const useTableEmits = {
    * @param cell 当前单元格对象
    * @param evt 鼠标事件
    */
-  cellMouseLeave: (row: any, column: NTableColumnData, cell: HTMLElement, evt: MouseEvent) =>
+  cellMouseLeave: (row: any, column: HTableColumnData, cell: HTMLElement, evt: MouseEvent) =>
     cell instanceof HTMLElement && evt instanceof MouseEvent,
   /**
    * 点击单元格时触发
@@ -54,7 +54,7 @@ export const useTableEmits = {
    * @param cell 当前单元格对象
    * @param evt 鼠标事件
    */
-  cellClick: (row: any, column: NTableColumnData, cell: HTMLElement, evt: MouseEvent) =>
+  cellClick: (row: any, column: HTableColumnData, cell: HTMLElement, evt: MouseEvent) =>
     cell instanceof HTMLElement && evt instanceof MouseEvent,
   /**
    * 双击单元格时触发
@@ -63,7 +63,7 @@ export const useTableEmits = {
    * @param cell 当前单元格对象
    * @param evt 鼠标事件
    */
-  cellDblclick: (row: any, column: NTableColumnData, cell: HTMLElement, evt: MouseEvent) =>
+  cellDblclick: (row: any, column: HTableColumnData, cell: HTMLElement, evt: MouseEvent) =>
     cell instanceof HTMLElement && evt instanceof MouseEvent,
   /**
    * 右键单元格时触发
@@ -72,7 +72,7 @@ export const useTableEmits = {
    * @param cell 当前单元格对象
    * @param evt 鼠标事件
    */
-  cellContextmenu: (row: any, column: NTableColumnData, cell: HTMLElement, evt: MouseEvent) =>
+  cellContextmenu: (row: any, column: HTableColumnData, cell: HTMLElement, evt: MouseEvent) =>
     cell instanceof HTMLElement && evt instanceof MouseEvent,
   /**
    * 行点击时触发
@@ -96,7 +96,7 @@ export const useTableEmits = {
    * 当排序发生改变时触发
    * @param status 状态，以数组形式给予 \n column: 当前列; \n order 当前排序状态
    */
-  sortChange: (status: Array<{ column: NTableColumnData; order: NTableSortOrderEnum }>) =>
+  sortChange: (status: Array<{ column: HTableColumnData; order: HTableSortOrderEnum }>) =>
     Array.isArray(status),
   /**
    * 当拖动表头结束时，且宽度发生了改变时触发
@@ -137,8 +137,8 @@ export const useTableColumnEmits = {
    * 当排序发生改变时触发
    * @param order 排序结果，为 null 时即取消排序
    */
-  sortChange: (order: NTableSortOrderEnum | null) =>
-    isNil(order) || [NTableSortOrderEnum.DESC, NTableSortOrderEnum.ASC].includes(order),
+  sortChange: (order: HTableSortOrderEnum | null) =>
+    isNil(order) || [HTableSortOrderEnum.DESC, HTableSortOrderEnum.ASC].includes(order),
 };
 
 export type TableEmits = typeof useTableEmits;

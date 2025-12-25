@@ -1,13 +1,13 @@
 import { mount } from '@vue/test-utils';
-import NAnchor from '../src/Anchor';
-import NAnchorLink from '../src/AnchorLink';
+import HAnchor from '../src/Anchor';
+import HAnchorLink from '../src/AnchorLink';
 import { describe, expect, test, vi } from 'vitest';
 import { ref, nextTick } from 'vue';
 
 describe('Anchor.tsx', () => {
   test('basic', async () => {
-    const wrapper = mount(() => <NAnchor scrollContainer={document.body} />);
-    const element = wrapper.findComponent(NAnchor);
+    const wrapper = mount(() => <HAnchor scrollContainer={document.body} />);
+    const element = wrapper.findComponent(HAnchor);
 
     expect(element.exists()).toBe(true);
     expect(element.classes()).toContain('n-anchor');
@@ -18,11 +18,11 @@ describe('Anchor.tsx', () => {
       const size = ref<'small' | 'medium'>('medium');
 
       const wrapper = mount(() => (
-        <NAnchor scrollContainer={document.body} size={size.value}>
-          <NAnchorLink href="#sectionOne1" title="sectionOne1" />
-        </NAnchor>
+        <HAnchor scrollContainer={document.body} size={size.value}>
+          <HAnchorLink href="#sectionOne1" title="sectionOne1" />
+        </HAnchor>
       ));
-      const anchor = wrapper.findComponent(NAnchor);
+      const anchor = wrapper.findComponent(HAnchor);
       expect(anchor.classes()).toContain('n-anchor--medium');
 
       size.value = 'small';
@@ -34,11 +34,11 @@ describe('Anchor.tsx', () => {
       const showLine = ref(true);
 
       const wrapper = mount(() => (
-        <NAnchor scrollContainer={document.body} showLine={showLine.value}>
-          <NAnchorLink href="#sectionOne1" title="sectionOne1" />
-        </NAnchor>
+        <HAnchor scrollContainer={document.body} showLine={showLine.value}>
+          <HAnchorLink href="#sectionOne1" title="sectionOne1" />
+        </HAnchor>
       ));
-      const anchor = wrapper.findComponent(NAnchor);
+      const anchor = wrapper.findComponent(HAnchor);
 
       const lineElem = anchor.find('.n-anchor__line');
       expect(lineElem.exists()).toBe(true);
@@ -55,12 +55,12 @@ describe('Anchor.tsx', () => {
       const changeHandle = vi.fn();
 
       const wrapper = mount(() => (
-        <NAnchor scrollContainer={document.body} onClick={clickHandle} onChange={changeHandle}>
-          <NAnchorLink href="#sectionOne1" title="sectionOne1" />
-          <NAnchorLink href="#sectionOne2" title="sectionOne2" />
-        </NAnchor>
+        <HAnchor scrollContainer={document.body} onClick={clickHandle} onChange={changeHandle}>
+          <HAnchorLink href="#sectionOne1" title="sectionOne1" />
+          <HAnchorLink href="#sectionOne2" title="sectionOne2" />
+        </HAnchor>
       ));
-      const anchor = wrapper.findComponent(NAnchor);
+      const anchor = wrapper.findComponent(HAnchor);
 
       const links = anchor.findAll('.n-anchor__link-title-txt');
       const lastLink = links[links.length - 1];

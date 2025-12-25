@@ -1,11 +1,11 @@
 import { defineComponent, ref, watch } from 'vue';
-import NButton from '~/components/Button/src/Button';
+import HButton from '~/components/Button/src/Button';
 import { cls, ComponentClassBlock, isBoolean } from '@aurora/utils';
 
 export default defineComponent({
   name: 'CollapseButton',
   components: {
-    NButton,
+    HButton,
   },
   props: {
     modelValue: {
@@ -36,7 +36,7 @@ export default defineComponent({
     }
 
     return () => (
-      <NButton
+      <HButton
         type="normal"
         text={true}
         iconSize={24}
@@ -66,7 +66,7 @@ export default defineComponent({
             </svg>
           ),
         }}
-      </NButton>
+      </HButton>
     );
   },
 });

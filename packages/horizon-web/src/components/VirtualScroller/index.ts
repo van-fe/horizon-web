@@ -1,18 +1,18 @@
 import { default as VirtualScroller } from './src/VirtualScroller';
 import { default as RecycleScroller } from './src/RecycleScroller';
 import { default as VirtualScrollerItem } from './src/VirtualScrollerItem';
-import type { NRecycleScrollerInstance } from './src/composables/useProps';
+import type { HRecycleScrollerInstance } from './src/composables/useProps';
 
 import { withInstall, withNoopInstall } from '@aurora/utils';
 
 // https://vue-virtual-scroller-demo.netlify.app/dynamic
 
-export const NVirtualScroller = withInstall(VirtualScroller, {
+export const HVirtualScroller = withInstall(VirtualScroller, {
   VirtualScrollerItem,
 });
-export const NVirtualScrollerItem = withNoopInstall(VirtualScrollerItem);
-export const NRecycleScroller = withInstall(RecycleScroller);
+export const HVirtualScrollerItem = withNoopInstall(VirtualScrollerItem);
+export const HRecycleScroller = withInstall(RecycleScroller);
 
-export type { NRecycleScrollerInstance };
+export type { HRecycleScrollerInstance };
 
-export default NVirtualScroller;
+export default HVirtualScroller;

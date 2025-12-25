@@ -1,9 +1,9 @@
 import type {
   ModelValueSingleType,
   ModelValueType,
-  NCascaderExtendOption,
-  NCascaderOption,
-  NCascaderUuidType,
+  HCascaderExtendOption,
+  HCascaderOption,
+  HCascaderUuidType,
 } from './types';
 
 export function transformModelValue(modelValue: ModelValueType) {
@@ -18,14 +18,14 @@ export function transformModelValue(modelValue: ModelValueType) {
   return [];
 }
 
-export function transformUuidToModelValue(uuid: NCascaderUuidType[], multiple: boolean) {
+export function transformUuidToModelValue(uuid: HCascaderUuidType[], multiple: boolean) {
   const values = uuid.map(item => item.toString().split(' / '));
 
   return multiple ? values : values[0];
 }
 
-export function getTreeDataOriginData(treeDataList: NCascaderExtendOption[], level = 0) {
-  const res: NCascaderOption[] = [];
+export function getTreeDataOriginData(treeDataList: HCascaderExtendOption[], level = 0) {
+  const res: HCascaderOption[] = [];
 
   for (const opt of treeDataList) {
     if (level === 0 && !opt.isRoot) continue;

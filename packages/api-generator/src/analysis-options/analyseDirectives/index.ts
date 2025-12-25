@@ -1,5 +1,6 @@
 import { Project } from 'ts-morph';
-import { apiGeneratorOutPut, horizonwebProjectRoot, writeJsonFile } from '@aurora/utils/plugins';
+import { apiGeneratorOutPut, horizonwebProjectRoot } from '@root/scripts/paths';
+import { writeJsonFile } from '@root/scripts/writeJsonFile';
 import type {
   ApiGeneratorAnalysedDirectiveDetail,
   ApiGeneratorAnalysedOptionType,

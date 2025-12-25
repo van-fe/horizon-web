@@ -10,13 +10,13 @@ import type { StepSlots } from './composables/useSlots';
 import { useStepSlots } from './composables/useSlots';
 import { nanoid } from 'nanoid';
 import {
-  NStepsActiveIndexInjectKey,
-  NStepsCollectInjectKey,
-  NStepsItemsInjectKey,
-  NStepsOnClickStepInjectKey,
-  NStepsPropsInjectKey,
-  NStepsRemoveInjectKey,
-  NStepsSizeInjectKey,
+  HStepsActiveIndexInjectKey,
+  HStepsCollectInjectKey,
+  HStepsItemsInjectKey,
+  HStepsOnClickStepInjectKey,
+  HStepsPropsInjectKey,
+  HStepsRemoveInjectKey,
+  HStepsSizeInjectKey,
 } from './utils/injectedKeys';
 
 export default defineComponent({
@@ -29,13 +29,13 @@ export default defineComponent({
     const classHelper = new ComponentClassBlock('step');
     const index = ref(-1);
 
-    const parentProps = inject(NStepsPropsInjectKey)!;
-    const stepsCollect = inject(NStepsCollectInjectKey)!;
-    const stepsRemove = inject(NStepsRemoveInjectKey)!;
-    const activeIndex = inject(NStepsActiveIndexInjectKey)!;
-    const items = inject(NStepsItemsInjectKey)!;
-    const onClickStep = inject(NStepsOnClickStepInjectKey)!;
-    const sizeRef = inject(NStepsSizeInjectKey)!;
+    const parentProps = inject(HStepsPropsInjectKey)!;
+    const stepsCollect = inject(HStepsCollectInjectKey)!;
+    const stepsRemove = inject(HStepsRemoveInjectKey)!;
+    const activeIndex = inject(HStepsActiveIndexInjectKey)!;
+    const items = inject(HStepsItemsInjectKey)!;
+    const onClickStep = inject(HStepsOnClickStepInjectKey)!;
+    const sizeRef = inject(HStepsSizeInjectKey)!;
 
     const isClickable = computed(
       () => !props.disabled && (props.clickable ?? parentProps.clickable),

@@ -1,14 +1,14 @@
 import { mount, shallowMount } from '@vue/test-utils';
-import NSteps from '../src/Steps';
+import HSteps from '../src/Steps';
 import { describe, expect, test, vi } from 'vitest';
-import { NStep } from '../index';
+import { HStep } from '../index';
 import { nextTick, ref } from 'vue';
 import type { StepsProps } from '../src/composables/useProps';
 
 describe('Steps.tsx', () => {
   test('basic', async () => {
-    const wrapper = shallowMount(() => <NSteps />);
-    const element = wrapper.findComponent(NSteps);
+    const wrapper = shallowMount(() => <HSteps />);
+    const element = wrapper.findComponent(HSteps);
 
     expect(element.exists()).toBe(true);
   });
@@ -20,16 +20,16 @@ describe('Steps.tsx', () => {
       const clickable = ref(false);
 
       const wrapper = mount(() => (
-        <NSteps v-model={current.value} clickable={clickable.value} onChange={onChange}>
-          <NStep title="1"></NStep>
-          <NStep title="2"></NStep>
-          <NStep title="3" clickable={false}></NStep>
-        </NSteps>
+        <HSteps v-model={current.value} clickable={clickable.value} onChange={onChange}>
+          <HStep title="1"></HStep>
+          <HStep title="2"></HStep>
+          <HStep title="3" clickable={false}></HStep>
+        </HSteps>
       ));
 
       await nextTick();
 
-      const element = wrapper.findAllComponents(NStep)[1];
+      const element = wrapper.findAllComponents(HStep)[1];
 
       await element.trigger('click');
 
@@ -45,7 +45,7 @@ describe('Steps.tsx', () => {
       expect(onChange).toHaveBeenCalledOnce();
       expect(current.value).eq(1);
 
-      const nonClickable = wrapper.findAllComponents(NStep)[2];
+      const nonClickable = wrapper.findAllComponents(HStep)[2];
       await nonClickable.trigger('click');
       expect(onChange).toHaveBeenCalledTimes(1);
       expect(current.value).eq(1);
@@ -57,20 +57,20 @@ describe('Steps.tsx', () => {
       const controllable = ref(false);
 
       const wrapper = mount(() => (
-        <NSteps
+        <HSteps
           v-model={current.value}
           clickable
           controllable={controllable.value}
           onChange={onChange}
         >
-          <NStep title="1"></NStep>
-          <NStep title="2"></NStep>
-        </NSteps>
+          <HStep title="1"></HStep>
+          <HStep title="2"></HStep>
+        </HSteps>
       ));
 
       await nextTick();
 
-      const element = wrapper.findAllComponents(NStep)[1];
+      const element = wrapper.findAllComponents(HStep)[1];
 
       await element.trigger('click');
 
@@ -92,15 +92,15 @@ describe('Steps.tsx', () => {
       const beforeChange = ref<StepsProps['beforeChange']>(() => false);
 
       const wrapper = mount(() => (
-        <NSteps v-model={current.value} clickable={true} beforeChange={beforeChange.value}>
-          <NStep title="1"></NStep>
-          <NStep title="2"></NStep>
-          <NStep title="3"></NStep>
-        </NSteps>
+        <HSteps v-model={current.value} clickable={true} beforeChange={beforeChange.value}>
+          <HStep title="1"></HStep>
+          <HStep title="2"></HStep>
+          <HStep title="3"></HStep>
+        </HSteps>
       ));
 
-      const step1 = wrapper.findAllComponents(NStep)[1];
-      const step2 = wrapper.findAllComponents(NStep)[2];
+      const step1 = wrapper.findAllComponents(HStep)[1];
+      const step2 = wrapper.findAllComponents(HStep)[2];
 
       await step1.trigger('click');
 
@@ -143,22 +143,22 @@ describe('Steps.tsx', () => {
       const current = ref(0);
 
       const wrapper = mount(() => (
-        <NSteps v-model={current.value} clickable>
-          <NStep title="1"></NStep>
-          <NStep title="2" disabled></NStep>
-          <NStep title="3"></NStep>
-        </NSteps>
+        <HSteps v-model={current.value} clickable>
+          <HStep title="1"></HStep>
+          <HStep title="2" disabled></HStep>
+          <HStep title="3"></HStep>
+        </HSteps>
       ));
 
       await nextTick();
 
-      const element = wrapper.findAllComponents(NStep)[1];
+      const element = wrapper.findAllComponents(HStep)[1];
 
       await element.trigger('click');
 
       expect(current.value).eq(0);
 
-      const element2 = wrapper.findAllComponents(NStep)[2];
+      const element2 = wrapper.findAllComponents(HStep)[2];
 
       await element2.trigger('click');
 
@@ -175,18 +175,18 @@ describe('Steps.tsx', () => {
       const steps = ref<string[]>([]);
 
       const wrapper = mount(() => (
-        <NSteps
+        <HSteps
           v-model={current.value}
           clickable
           controllable={controllable.value}
           onChange={onChange}
         >
-          <NStep title="Start" index={0}></NStep>
+          <HStep title="Start" index={0}></HStep>
           {steps.value.map((step, index) => (
-            <NStep title={step} index={index + 1}></NStep>
+            <HStep title={step} index={index + 1}></HStep>
           ))}
-          <NStep title="End" index={steps.value.length + 1}></NStep>
-        </NSteps>
+          <HStep title="End" index={steps.value.length + 1}></HStep>
+        </HSteps>
       ));
 
       await nextTick();
@@ -195,14 +195,14 @@ describe('Steps.tsx', () => {
 
       await nextTick();
 
-      expect(wrapper.findAllComponents(NStep)[1].classes('is-wait')).toBeTruthy();
+      expect(wrapper.findAllComponents(HStep)[1].classes('is-wait')).toBeTruthy();
 
       current.value++;
 
       await nextTick();
 
-      expect(wrapper.findAllComponents(NStep)[0].classes('is-finish')).toBeTruthy();
-      expect(wrapper.findAllComponents(NStep)[1].classes('is-process')).toBeTruthy();
+      expect(wrapper.findAllComponents(HStep)[0].classes('is-finish')).toBeTruthy();
+      expect(wrapper.findAllComponents(HStep)[1].classes('is-process')).toBeTruthy();
     });
   });
 });

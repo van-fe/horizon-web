@@ -1,7 +1,7 @@
 import type { PropType } from 'vue';
 import { computed, defineComponent, inject, onMounted, ref } from 'vue';
 import { cls, ComponentClassBlock, isBoolean, isNumber, sizeUnitTransform } from '@aurora/utils';
-import { NScrollbarViewSizeInjectKey } from '../utils/injectKeys';
+import { HScrollbarViewSizeInjectKey } from '../utils/injectKeys';
 import type { Position } from '@vueuse/core';
 import { useDraggable } from '@vueuse/core';
 
@@ -50,7 +50,7 @@ export default defineComponent({
     const trackRef = ref<HTMLDivElement | null>(null);
     const thumbRef = ref<HTMLDivElement | null>(null);
 
-    const viewSize = inject(NScrollbarViewSizeInjectKey)!;
+    const viewSize = inject(HScrollbarViewSizeInjectKey)!;
 
     const trackStyle = computed(() => {
       if (props.vertical) {

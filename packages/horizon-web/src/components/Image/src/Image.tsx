@@ -3,17 +3,17 @@ import { useImageProps } from './composables/useProps';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, getUnitString, useNamespace } from '@aurora/utils';
 import { IconLogo, IconPictureError, AIcon } from '@aurora/icon';
-import NViewer from '~/components/Viewer/src/Viewer';
-import NDropdown from '~/components/Dropdown/src/Dropdown';
-import NDropdownMenu from '~/components/Dropdown/src/DropdownMenu';
-import NDropdownItem from '~/components/Dropdown/src/DropdownItem';
+import HViewer from '~/components/Viewer/src/Viewer';
+import HDropdown from '~/components/Dropdown/src/Dropdown';
+import HDropdownMenu from '~/components/Dropdown/src/DropdownMenu';
+import HDropdownItem from '~/components/Dropdown/src/DropdownItem';
 import tooltip from '~/directives/v-tooltip';
 import { useResizeObserver } from '@vueuse/core';
 import type { ImageEmits } from './composables/useEmits';
 import { useImageEmits } from './composables/useEmits';
 import type { ImageSlots } from './composables/useSlots';
 import { useImageSlots } from './composables/useSlots';
-import NTransition from '~/components/Transition/src/Transition';
+import HTransition from '~/components/Transition/src/Transition';
 
 export default defineComponent({
   name: `${useNamespace()}Image`,
@@ -173,7 +173,7 @@ export default defineComponent({
         }}
         onClick={onClick}
       >
-        <NTransition name="fade-in" css={props.animated}>
+        <HTransition name="fade-in" css={props.animated}>
           {realSrc.value ? (
             <img
               v-show={!loading.value && !error.value}
@@ -191,7 +191,7 @@ export default defineComponent({
               onError={onError}
             />
           ) : null}
-        </NTransition>
+        </HTransition>
         {loading.value &&
           props.showPlaceholder &&
           (slots.placeholder ? (
@@ -219,15 +219,15 @@ export default defineComponent({
           <div class={[classHelper.e('actions-container'), adjustActionsPosition.value]}>
             {adjustActionsType.value === 'dropdown' ? (
               <div class={classHelper.e('actions-dropdown')}>
-                <NDropdown>
+                <HDropdown>
                   <div class="ref">
                     <div class={classHelper.e('actions-dropdown-btn')}>
                       <AIcon name="ellipsis" size={16} color="#fff" />
                     </div>
                   </div>
-                  <NDropdownMenu>
+                  <HDropdownMenu>
                     {props.actionsList.map(action => (
-                      <NDropdownItem>
+                      <HDropdownItem>
                         <div
                           class={classHelper.e('actions-dropdown-item')}
                           onClick={() => action.handler(props.src || '')}
@@ -235,10 +235,10 @@ export default defineComponent({
                           <AIcon name={action.icon} size={14} />
                           <span>{action.title}</span>
                         </div>
-                      </NDropdownItem>
+                      </HDropdownItem>
                     ))}
-                  </NDropdownMenu>
-                </NDropdown>
+                  </HDropdownMenu>
+                </HDropdown>
               </div>
             ) : (
               <div class={classHelper.e('actions-icon')}>
@@ -256,7 +256,7 @@ export default defineComponent({
           </div>
         )}
         {props.showViewer && !nImageList && (
-          <NViewer
+          <HViewer
             v-model={viewerShown.value}
             sources={[
               {

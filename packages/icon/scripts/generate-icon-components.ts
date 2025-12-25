@@ -63,9 +63,20 @@ export default defineComponent({
     color: {
       type: [String, Array] as PropType<string | string[] | undefined>,
       default: undefined
+    },
+    spin: {
+      type: String as PropType<'cw' | 'ccw'>,
+      default: undefined,
+    },
+    rotate: {
+      type: Number,
+      default: undefined,
     }
   },
-  setup(props) {
+  emits: {
+    click: (evt: MouseEvent) => evt instanceof MouseEvent,
+  },
+  setup(props, { emit }) {
     const sizeValue = typeof props.size === 'number' ? \`\${props.size}px\` : props.size
     
     const processMultiColor = (content: string, colors: string[]): string => {
@@ -146,9 +157,14 @@ export default defineComponent({
         fill: fill,
         style: {
           display: 'inline-block',
-          verticalAlign: 'middle'
+          verticalAlign: 'middle',
+          transform: props.rotate ? \`rotate(\${props.rotate}deg)\` : undefined,
         },
         innerHTML: svgContent
+      }, {
+        on: {
+          click: (evt: MouseEvent) => emit('click', evt)
+        }
       })
     }
   }

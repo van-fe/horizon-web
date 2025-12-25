@@ -4,8 +4,8 @@ import { useApplicationProps } from './composables/useProps';
 import { defaultLocale, localeInjectKey } from '~/provides/localable';
 import {
   GlobalSizeInjectedKey,
-  NApplicationCompatibilityInjectedKey,
-  NApplicationShowTimeZoneInjectedKey,
+  HApplicationCompatibilityInjectedKey,
+  HApplicationShowTimeZoneInjectedKey,
 } from './utils/injectedKeys';
 import type { ApplicationSlots } from './composables/useSlots';
 import { useApplicationSlots } from './composables/useSlots';
@@ -30,8 +30,8 @@ export default defineComponent({
     const compatibilityRef = ref<ApplicationProps['compatibility']>(props.compatibility);
 
     provide(GlobalSizeInjectedKey, sizeRef);
-    provide(NApplicationCompatibilityInjectedKey, compatibilityRef);
-    provide(NApplicationShowTimeZoneInjectedKey, toRef(props, 'showTimeZone'));
+    provide(HApplicationCompatibilityInjectedKey, compatibilityRef);
+    provide(HApplicationShowTimeZoneInjectedKey, toRef(props, 'showTimeZone'));
 
     watch(
       () => props.size,

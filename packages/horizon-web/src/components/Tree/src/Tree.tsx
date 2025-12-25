@@ -10,35 +10,35 @@ import type { TreeEmits } from './composables/useEmits';
 import type { TreeSlots } from './composables/useSlots';
 import type { TreeExposes } from './composables/useExposes';
 import {
-  NTreeDragFromNodeInjectKey,
-  NTreeDragToNodeUuidInjectKey,
-  NTreeEmitsInjectKey,
-  NTreeExpandedNodesUuidInjectKey,
-  NTreeFilterInputValueInjectKey,
-  NTreeFullCheckedValuesInjectKey,
-  NTreeHalfCheckedValuesInjectKey,
-  NTreeHelperInjectKey,
-  NTreeHighlightMethodInjectKey,
-  NTreeIsDraggingInjectKey,
-  NTreeLoadingNodesInjectKey,
-  NTreeOnDragStartInjectKey,
-  NTreePropsInjectKey,
-  NTreeSelectedNodesUuidInjectKey,
-  NTreeSizeInjectKey,
-  NTreeSlotsInjectKey,
-  NTreeSwitchNodeExpandStatusInjectKey,
-  NTreeSwitchNodeSelectedStatusInjectKey,
-  NTreeVNodeCollectionInjectKey,
+  HTreeDragFromNodeInjectKey,
+  HTreeDragToNodeUuidInjectKey,
+  HTreeEmitsInjectKey,
+  HTreeExpandedNodesUuidInjectKey,
+  HTreeFilterInputValueInjectKey,
+  HTreeFullCheckedValuesInjectKey,
+  HTreeHalfCheckedValuesInjectKey,
+  HTreeHelperInjectKey,
+  HTreeHighlightMethodInjectKey,
+  HTreeIsDraggingInjectKey,
+  HTreeLoadingNodesInjectKey,
+  HTreeOnDragStartInjectKey,
+  HTreePropsInjectKey,
+  HTreeSelectedNodesUuidInjectKey,
+  HTreeSizeInjectKey,
+  HTreeSlotsInjectKey,
+  HTreeSwitchNodeExpandStatusInjectKey,
+  HTreeSwitchNodeSelectedStatusInjectKey,
+  HTreeVNodeCollectionInjectKey,
 } from './utils/injectKeys';
-import NInput from '~/components/Input/src/Input';
+import HInput from '~/components/Input/src/Input';
 import Tree from '~/utils/useTree/index';
-import type { NTreeExtendsData, NTreeData } from './utils/types';
+import type { HTreeExtendsData, HTreeData } from './utils/types';
 import TreeItem from './components/TreeItem';
-import { NVirtualScroller, NVirtualScrollerItem } from '~/components/VirtualScroller';
+import { HVirtualScroller, HVirtualScrollerItem } from '~/components/VirtualScroller';
 import useSize from '~/utils/useSize';
 import { sizeMapping, transformUuid } from './utils/config';
 import useLocaleLang from '~/utils/useLocaleLang';
-import useHighlightMethod from './hooks/useHighlight';
+import useHighlightMethod from './hooks/useHighlightMethod';
 import useDynamicLoad from './hooks/useDynamicLoad';
 import useTreeData from './hooks/useTreeData';
 import useExpand from './hooks/useExpand';
@@ -47,7 +47,7 @@ import useFilter from './hooks/useFilter';
 import isEqual from 'lodash/isEqual';
 import useVNodeCollection from './hooks/useVNodeCollection';
 import useDraggable from './hooks/useDraggable';
-import NScrollbar from '~/components/Scrollbar/src/Scrollbar';
+import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
 import loading from '~/directives/v-loading';
 import useScroll from './hooks/useScroll';
 import type { VirtualScrollerExposes } from '~/components/VirtualScroller/src/composables/useExposes';
@@ -107,7 +107,7 @@ export default defineComponent({
      */
     const wrapperDomRef = ref<HTMLDivElement | null>(null);
     const scrollerDomRef = ref<HorizonWebComponentInstance<
-      typeof NVirtualScroller,
+      typeof HVirtualScroller,
       VirtualScrollerExposes
     > | null>(null);
     const shadowItemDomRef = ref<HorizonWebComponentInstance<typeof TreeItem> | null>(null);
@@ -117,7 +117,7 @@ export default defineComponent({
      */
     const tree = treeHelper?.value
       ? treeHelper.value
-      : new Tree<NTreeData, NTreeExtendsData>(
+      : new Tree<HTreeData, HTreeExtendsData>(
           treeDataProp.value,
           fieldMapProp?.value ?? {},
           transformUuid,
@@ -213,25 +213,25 @@ export default defineComponent({
     /**
      * provides
      */
-    provide(NTreePropsInjectKey, props);
-    provide(NTreeEmitsInjectKey, emit);
-    provide(NTreeSlotsInjectKey, slots);
-    provide(NTreeFilterInputValueInjectKey, filterValueMerged);
-    provide(NTreeSizeInjectKey, size);
-    provide(NTreeExpandedNodesUuidInjectKey, expandedNodesUuid);
-    provide(NTreeSwitchNodeExpandStatusInjectKey, switchNodeExpandStatus);
-    provide(NTreeSelectedNodesUuidInjectKey, selectedValuesUuid);
-    provide(NTreeSwitchNodeSelectedStatusInjectKey, switchNodeSelectedStatus);
-    provide(NTreeHelperInjectKey, tree);
-    provide(NTreeHighlightMethodInjectKey, useHighlightMethod(refProps));
-    provide(NTreeLoadingNodesInjectKey, loadingNodes);
-    provide(NTreeVNodeCollectionInjectKey, collectVNode);
-    provide(NTreeFullCheckedValuesInjectKey, fullCheckedValues);
-    provide(NTreeHalfCheckedValuesInjectKey, halfCheckedValues);
-    provide(NTreeOnDragStartInjectKey, onDragStart);
-    provide(NTreeIsDraggingInjectKey, isDragging);
-    provide(NTreeDragToNodeUuidInjectKey, dragToNodeUuid);
-    provide(NTreeDragFromNodeInjectKey, dragFromNode);
+    provide(HTreePropsInjectKey, props);
+    provide(HTreeEmitsInjectKey, emit);
+    provide(HTreeSlotsInjectKey, slots);
+    provide(HTreeFilterInputValueInjectKey, filterValueMerged);
+    provide(HTreeSizeInjectKey, size);
+    provide(HTreeExpandedNodesUuidInjectKey, expandedNodesUuid);
+    provide(HTreeSwitchNodeExpandStatusInjectKey, switchNodeExpandStatus);
+    provide(HTreeSelectedNodesUuidInjectKey, selectedValuesUuid);
+    provide(HTreeSwitchNodeSelectedStatusInjectKey, switchNodeSelectedStatus);
+    provide(HTreeHelperInjectKey, tree);
+    provide(HTreeHighlightMethodInjectKey, useHighlightMethod(refProps));
+    provide(HTreeLoadingNodesInjectKey, loadingNodes);
+    provide(HTreeVNodeCollectionInjectKey, collectVNode);
+    provide(HTreeFullCheckedValuesInjectKey, fullCheckedValues);
+    provide(HTreeHalfCheckedValuesInjectKey, halfCheckedValues);
+    provide(HTreeOnDragStartInjectKey, onDragStart);
+    provide(HTreeIsDraggingInjectKey, isDragging);
+    provide(HTreeDragToNodeUuidInjectKey, dragToNodeUuid);
+    provide(HTreeDragFromNodeInjectKey, dragFromNode);
 
     /**
      * exposes
@@ -335,7 +335,7 @@ export default defineComponent({
       >
         {isUsingFilter.value && !hideFilterInputProp.value && (
           <div class={cls(classHelper.e('filter'))}>
-            <NInput
+            <HInput
               v-model={filterValue.value}
               type="text"
               size={size.value === 'huge' ? 'large' : size.value}
@@ -349,7 +349,7 @@ export default defineComponent({
         )}
         <div v-show={visibleItems.value.length > 0} class={cls(classHelper.e('list'))}>
           {useVirtualScrollProp.value ? (
-            <NVirtualScroller
+            <HVirtualScroller
               ref={scrollerDomRef}
               scrollerHeight={heightProp?.value}
               scrollerMaxHeight={maxHeightProp?.value}
@@ -368,15 +368,15 @@ export default defineComponent({
               onScrollStop={() => (isScrolling.value = false)}
             >
               {{
-                default: (row: { item: NTreeExtendsData; index: number; active: boolean }) => (
-                  <NVirtualScrollerItem item={row.item} active={row.active} index={row.index}>
+                default: (row: { item: HTreeExtendsData; index: number; active: boolean }) => (
+                  <HVirtualScrollerItem item={row.item} active={row.active} index={row.index}>
                     <TreeItem key={row.item._uuid} value={row.item} indent={indentValue.value} />
-                  </NVirtualScrollerItem>
+                  </HVirtualScrollerItem>
                 ),
               }}
-            </NVirtualScroller>
+            </HVirtualScroller>
           ) : (
-            <NScrollbar
+            <HScrollbar
               size="small"
               height={heightProp?.value}
               maxHeight={maxHeightProp?.value}
@@ -388,7 +388,7 @@ export default defineComponent({
               {visibleItems.value.map(item => (
                 <TreeItem key={item._uuid} value={item} indent={indentValue.value} />
               ))}
-            </NScrollbar>
+            </HScrollbar>
           )}
         </div>
         <div v-show={visibleItems.value.length === 0} class={classHelper.e('empty')}>

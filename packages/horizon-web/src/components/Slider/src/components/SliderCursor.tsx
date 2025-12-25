@@ -8,11 +8,11 @@ import {
   ref,
   watch,
 } from 'vue';
-import { NSliderGetTrackSizeInjectedKey, NSliderPropsInjectedKey } from '../utils/injectedKeys';
+import { HSliderGetTrackSizeInjectedKey, HSliderPropsInjectedKey } from '../utils/injectedKeys';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, getClientXY, getPrecision } from '@aurora/utils';
 import round from 'lodash/round';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
 import type { SliderCursorEmits } from '../composables/useEmits';
 import { useSliderCursorEmits } from '../composables/useEmits';
 import type { Position } from '@vueuse/core';
@@ -26,7 +26,7 @@ import { useSliderCursorExposes } from '../composables/useExposes';
 export default defineComponent({
   name: 'SliderCursor',
   components: {
-    NTooltip,
+    HTooltip,
   },
   props: {
     modelValue: {
@@ -43,11 +43,11 @@ export default defineComponent({
   ) {
     const classHelper = new ComponentClassBlock('slider');
 
-    const tooltipRef = ref<(typeof NTooltip & { updateTooltip: Function }) | null>(null);
+    const tooltipRef = ref<(typeof HTooltip & { updateTooltip: Function }) | null>(null);
     const cursorRef = ref<HTMLElement | null>(null);
 
-    const parentProps = inject(NSliderPropsInjectedKey)!;
-    const getTrackSize = inject(NSliderGetTrackSizeInjectedKey)!;
+    const parentProps = inject(HSliderPropsInjectedKey)!;
+    const getTrackSize = inject(HSliderGetTrackSizeInjectedKey)!;
 
     const isDuringDragging = ref(false);
     const cursorToLeft = ref('0px');
@@ -234,7 +234,7 @@ export default defineComponent({
     });
 
     return () => (
-      <NTooltip
+      <HTooltip
         content={
           parentProps.tooltipFormatter
             ? parentProps.tooltipFormatter(currentValue.value)
@@ -256,7 +256,7 @@ export default defineComponent({
           onKeydown={onKeyDown}
           onKeyup={onKeyUp}
         />
-      </NTooltip>
+      </HTooltip>
     );
   },
 });

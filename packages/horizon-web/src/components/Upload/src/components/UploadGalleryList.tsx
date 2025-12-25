@@ -2,10 +2,10 @@ import { defineComponent, inject } from 'vue';
 import type { SlotsType } from 'vue';
 import { cls, ComponentClassBlock } from '@aurora/utils';
 import {
-  NUploadPropsInjectKey,
-  NUploadSizeInjectKey,
-  NUploadSlotsInjectKey,
-  NUploadUploadFileHelperInjectKey,
+  HUploadPropsInjectKey,
+  HUploadSizeInjectKey,
+  HUploadSlotsInjectKey,
+  HUploadUploadFileHelperInjectKey,
 } from '../utils/injectKeys';
 import UploadGalleryItem from './UploadGalleryItem';
 
@@ -19,10 +19,10 @@ export default defineComponent({
   }>,
   setup(_, { slots }) {
     const classHelper = new ComponentClassBlock('upload--gallery');
-    const uploadFileHelper = inject(NUploadUploadFileHelperInjectKey)!;
-    const props = inject(NUploadPropsInjectKey)!;
-    const sizeRef = inject(NUploadSizeInjectKey)!;
-    const parentSlots = inject(NUploadSlotsInjectKey, undefined);
+    const uploadFileHelper = inject(HUploadUploadFileHelperInjectKey)!;
+    const props = inject(HUploadPropsInjectKey)!;
+    const sizeRef = inject(HUploadSizeInjectKey)!;
+    const parentSlots = inject(HUploadSlotsInjectKey, undefined);
 
     return () => (
       <div

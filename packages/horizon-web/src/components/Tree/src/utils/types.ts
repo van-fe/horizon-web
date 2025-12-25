@@ -2,9 +2,9 @@ import type { BaseTreeData, BaseTreeWithLevelData, ExtendTreeData } from '~/util
 import type { Component, VNode } from 'vue';
 import type { Awaitable } from '@aurora/utils';
 
-export type NTreeUuidType = string | number;
+export type HTreeUuidType = string | number;
 
-export interface NTreeData extends BaseTreeData {
+export interface HTreeData extends BaseTreeData {
   /**
    * 前置自定义 icon
    * @version 2.12.10
@@ -21,7 +21,7 @@ export interface NTreeData extends BaseTreeData {
   prefixIconClassName?: string;
 }
 
-export interface NTreeExtendsData extends ExtendTreeData<NTreeData>, NTreeData {
+export interface HTreeExtendsData extends ExtendTreeData<HTreeData>, HTreeData {
   // empty
 }
 
@@ -30,29 +30,29 @@ export interface NTreeExtendsData extends ExtendTreeData<NTreeData>, NTreeData {
  * @param inputValue: 输入内容
  * @param treeData: 原始 treeData
  */
-export type NTreeFilterMethodType = (inputValue: string, node: NTreeExtendsData) => boolean;
+export type HTreeFilterMethodType = (inputValue: string, node: HTreeExtendsData) => boolean;
 
 /**
  * 自定义高亮逻辑
  * @param inputValue: 输入内容
  * @param treeData: 原始 treeData
  */
-export type NTreeHighlightMethod = (inputValue: string, node: NTreeExtendsData) => VNode | string;
+export type HTreeHighlightMethod = (inputValue: string, node: HTreeExtendsData) => VNode | string;
 
-export interface NTreeFilterType {
+export interface HTreeFilterType {
   /**
    * 自定义筛选逻辑
    * @param inputValue: 输入内容
    * @param treeData: 原始 treeData
    */
-  filterMethod: NTreeFilterMethodType;
+  filterMethod: HTreeFilterMethodType;
 
   /**
    * 自定义高亮逻辑
    * @param inputValue: 输入内容
    * @param treeData: 原始 treeData
    */
-  highLightMethod: NTreeHighlightMethod;
+  highLightMethod: HTreeHighlightMethod;
 
   /**
    * 是否展开搜索结果子树，默认展开
@@ -60,7 +60,7 @@ export interface NTreeFilterType {
   expandSearchedTree: boolean;
 }
 
-export interface NTreeDynamicLoadNode {
+export interface HTreeDynamicLoadNode {
   /**
    * 当前节点层级
    */
@@ -68,7 +68,7 @@ export interface NTreeDynamicLoadNode {
   /**
    * 当前节点信息
    */
-  node: NExtendTreeNodeData | null;
+  node: HExtendTreeNodeData | null;
   /**
    * 当前节点 `vNode`
    * @deprecated `vNode`
@@ -80,14 +80,14 @@ export interface NTreeDynamicLoadNode {
   vNode?: VNode;
 }
 
-export interface NTreeBaseNodeData {
+export interface HTreeBaseNodeData {
   vnode?: VNode;
-  node: NTreeExtendsData;
+  node: HTreeExtendsData;
   value: string | number;
 }
 
-export type NTreeDynamicLoadMethod = (node: NTreeDynamicLoadNode) => Awaitable<NTreeData[]>;
-export type NTreeNodeData = NTreeData;
-export type NExtendTreeNodeData = NTreeExtendsData;
-export type NTreeNodeDataWithLevel = BaseTreeWithLevelData;
-export type BaseNode = NTreeBaseNodeData;
+export type HTreeDynamicLoadMethod = (node: HTreeDynamicLoadNode) => Awaitable<HTreeData[]>;
+export type HTreeNodeData = HTreeData;
+export type HExtendTreeNodeData = HTreeExtendsData;
+export type HTreeNodeDataWithLevel = BaseTreeWithLevelData;
+export type BaseNode = HTreeBaseNodeData;

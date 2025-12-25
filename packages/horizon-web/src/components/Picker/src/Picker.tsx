@@ -9,35 +9,33 @@ import type { PickerProps, PickerInputStatusType, PickerStatusType } from './com
 import type { PickerEmits } from './composables/useEmits';
 import type { PickerSlots } from './composables/useSlots';
 import type { PickerExposes, PickerInputExposes } from './composables/useExposes';
-import NPopover from '~/components/Popover/src/Popover';
-import NPopContent from '~/components/Popover/src/PopContent';
+import HPopover from '~/components/Popover/src/Popover';
+import HPopContent from '~/components/Popover/src/PopContent';
 import { IconLoadingLine } from '@aurora/icon';
 import {
-  NPickerDomRefInjectKey,
-  NPickerEmitsInjectKey,
-  NPickerInputStatusInjectKey,
-  NPickerPopContentDomRefInjectKey,
-  NPickerPopoverDomRefInjectKey,
-  NPickerPopperVisibleInjectKey,
-  NPickerPropsInjectKey,
-  NPickerSlotsInjectKey,
-  NPickerStatusInjectKey,
+  HPickerDomRefInjectKey,
+  HPickerEmitsInjectKey,
+  HPickerInputStatusInjectKey,
+  HPickerPopContentDomRefInjectKey,
+  HPickerPopoverDomRefInjectKey,
+  HPickerPopperVisibleInjectKey,
+  HPickerPropsInjectKey,
+  HPickerSlotsInjectKey,
+  HPickerStatusInjectKey,
 } from './utils/InjectKeys';
-import NPickerInput from './components/NPickerInput';
-import NPickerPopper from './components/NPickerPopper';
+import PickerInput from './components/PickerInput';
+import PickerPopper from './components/PickerPopper';
 import { unrefElement } from '@vueuse/core';
 import type { PopoverExposes } from '~/components/Popover/src/composables/useExposes';
-import { NScrollbarUpdateDelayInjectKey } from '~/components/Scrollbar/src/utils/injectKeys';
+import { HScrollbarUpdateDelayInjectKey } from '~/components/Scrollbar/src/utils/injectKeys';
 
 export default defineComponent({
   name: `${useNamespace()}Picker`,
   desc: '所有选择器的公用组件，也可以以此为基础做自定义选择器',
   components: {
-    NPopover,
-    NPopContent,
+    HPopover,
+    HPopContent,
     IconLoadingLine,
-    NPickerInput,
-    NPickerPopper,
   },
   props: usePickerProps,
   emits: usePickerEmits,
@@ -56,11 +54,11 @@ export default defineComponent({
     } = toRefs(props);
 
     const pickerDomRef = ref<HTMLDivElement | null>(null);
-    const inputDomRef = ref<HorizonWebComponentInstance<typeof NPickerInput, PickerInputExposes> | null>(
+    const inputDomRef = ref<HorizonWebComponentInstance<typeof PickerInput, PickerInputExposes> | null>(
       null,
     );
-    const popoverDomRef = ref<HorizonWebComponentInstance<typeof NPopover, PopoverExposes> | null>(null);
-    const popContentDomRef = ref<(InstanceType<typeof NPopContent> & HTMLElement) | null>(null);
+    const popoverDomRef = ref<HorizonWebComponentInstance<typeof HPopover, PopoverExposes> | null>(null);
+    const popContentDomRef = ref<(InstanceType<typeof HPopContent> & HTMLElement) | null>(null);
 
     const popperVisible = ref(false);
 
@@ -84,15 +82,15 @@ export default defineComponent({
       }
     });
 
-    provide(NPickerPropsInjectKey, props);
-    provide(NPickerEmitsInjectKey, emit);
-    provide(NPickerSlotsInjectKey, slots);
-    provide(NPickerPopperVisibleInjectKey, popperVisible);
-    provide(NPickerStatusInjectKey, pickerStatus);
-    provide(NPickerInputStatusInjectKey, inputStatus);
-    provide(NPickerPopoverDomRefInjectKey, popoverDomRef);
-    provide(NPickerDomRefInjectKey, pickerDomRef);
-    provide(NPickerPopContentDomRefInjectKey, popContentDomRef);
+    provide(HPickerPropsInjectKey, props);
+    provide(HPickerEmitsInjectKey, emit);
+    provide(HPickerSlotsInjectKey, slots);
+    provide(HPickerPopperVisibleInjectKey, popperVisible);
+    provide(HPickerStatusInjectKey, pickerStatus);
+    provide(HPickerInputStatusInjectKey, inputStatus);
+    provide(HPickerPopoverDomRefInjectKey, popoverDomRef);
+    provide(HPickerDomRefInjectKey, pickerDomRef);
+    provide(HPickerPopContentDomRefInjectKey, popContentDomRef);
 
     watch(
       () => props.disabled,
@@ -255,7 +253,7 @@ export default defineComponent({
       emit('inputBlur', evt);
     }
 
-    provide(NScrollbarUpdateDelayInjectKey, 400);
+    provide(HScrollbarUpdateDelayInjectKey, 400);
 
     expose({
       show: showPopover,
@@ -275,7 +273,7 @@ export default defineComponent({
 
     return () =>
       props.showPopoverContentOnly ? (
-        <NPickerPopper
+        <PickerPopper
           class={classHelper.is('show-popover-content-only', props.showPopoverContentOnly)}
         />
       ) : (
@@ -291,7 +289,7 @@ export default defineComponent({
           onMouseenter={onMouseEnter}
           onMouseleave={onMouseLeave}
         >
-          <NPopover
+          <HPopover
             ref={popoverDomRef}
             visible={popperVisible.value}
             trigger={
@@ -320,7 +318,7 @@ export default defineComponent({
             {{
               reference: () =>
                 slots.pickerOuter?.(props.modelValue, inputStatus.value, pickerStatus.value) ?? (
-                  <NPickerInput
+                  <PickerInput
                     ref={inputDomRef}
                     onSwitchPopperVisible={setPopoverVisible}
                     onFocus={handleInputFocus}
@@ -330,10 +328,10 @@ export default defineComponent({
                 ),
               popper: () =>
                 slots.panelOuter?.(props.modelValue, pickerStatus.value) ?? (
-                  <NPickerPopper onSwitchPopperVisible={setPopoverVisible} />
+                  <PickerPopper onSwitchPopperVisible={setPopoverVisible} />
                 ),
             }}
-          </NPopover>
+          </HPopover>
         </div>
       );
   },

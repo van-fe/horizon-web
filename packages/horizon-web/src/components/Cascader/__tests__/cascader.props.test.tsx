@@ -1,9 +1,9 @@
 import { describe, expect, test } from 'vitest';
 import { nextTick, ref } from 'vue';
 import type { CascaderProps } from '../src/composables/useProps';
-import type { NCascaderDynamicLoadNode } from '../src/utils/types';
-import NPickerInput from '../../Picker/src/components/NPickerInput';
-import NPickerPopper from '../../Picker/src/components/NPickerPopper';
+import type { HCascaderDynamicLoadNode } from '../src/utils/types';
+import HPickerInput from '../../Picker/src/components/PickerInput';
+import HPickerPopper from '../../Picker/src/components/PickerPopper';
 import { IconCloseFilled } from '@aurora/icon';
 import {
   checkAllItems,
@@ -14,11 +14,11 @@ import {
   maskClearIconVisible,
   openCascader,
 } from './cascader-helper';
-import type { NCascaderOption } from '~/components/Cascader/src/utils/types';
+import type { HCascaderOption } from '~/components/Cascader/src/utils/types';
 import { sleep } from '~/utils/tools';
-import NCascaderItem from '../src/components/CascaderItem';
-import NCascaderPanels from '../src/components/CascaderPanels';
-import NRadio from '~/components/Radio/src/Radio';
+import HCascaderItem from '../src/components/CascaderItem';
+import HCascaderPanels from '../src/components/CascaderPanels';
+import HRadio from '~/components/Radio/src/Radio';
 
 describe('Cascader.tsx props', () => {
   test('model-value', async () => {
@@ -39,19 +39,19 @@ describe('Cascader.tsx props', () => {
     const inputStyle = ref<CascaderProps['inputStyle']>('normal');
     const { wrapper } = createInstance({ inputStyle });
 
-    expect(wrapper.findComponent(NPickerInput).classes('n-picker__input--normal')).toBeTruthy();
+    expect(wrapper.findComponent(HPickerInput).classes('n-picker__input--normal')).toBeTruthy();
 
     inputStyle.value = 'emphasize';
 
     await nextTick();
 
-    expect(wrapper.findComponent(NPickerInput).classes('n-picker__input--emphasize')).toBeTruthy();
+    expect(wrapper.findComponent(HPickerInput).classes('n-picker__input--emphasize')).toBeTruthy();
 
     inputStyle.value = 'no-border';
 
     await nextTick();
 
-    expect(wrapper.findComponent(NPickerInput).classes('n-picker__input--no-border')).toBeTruthy();
+    expect(wrapper.findComponent(HPickerInput).classes('n-picker__input--no-border')).toBeTruthy();
   });
 
   test('trigger', async () => {
@@ -60,11 +60,11 @@ describe('Cascader.tsx props', () => {
 
     await openCascader(wrapper);
 
-    expect(wrapper.findComponent(NPickerPopper).isVisible()).toBeTruthy();
+    expect(wrapper.findComponent(HPickerPopper).isVisible()).toBeTruthy();
 
     await closeCascader(wrapper);
 
-    expect(wrapper.findComponent(NPickerPopper).isVisible()).toBeFalsy();
+    expect(wrapper.findComponent(HPickerPopper).isVisible()).toBeFalsy();
 
     trigger.value = 'hover';
 
@@ -72,11 +72,11 @@ describe('Cascader.tsx props', () => {
 
     await openCascader(wrapper, 'hover');
 
-    expect(wrapper.findComponent(NPickerPopper).isVisible()).toBeTruthy();
+    expect(wrapper.findComponent(HPickerPopper).isVisible()).toBeTruthy();
 
     await closeCascader(wrapper);
 
-    expect(wrapper.findComponent(NPickerPopper).isVisible()).toBeFalsy();
+    expect(wrapper.findComponent(HPickerPopper).isVisible()).toBeFalsy();
   });
 
   test('clearable', async () => {
@@ -97,7 +97,7 @@ describe('Cascader.tsx props', () => {
 
     await clearBtn.trigger('click');
 
-    expect(wrapper.findComponent(NCascaderPanels).isVisible()).toBeFalsy();
+    expect(wrapper.findComponent(HCascaderPanels).isVisible()).toBeFalsy();
 
     expect(modelValue.value).toStrictEqual([]);
 
@@ -113,7 +113,7 @@ describe('Cascader.tsx props', () => {
   });
 
   test('dynamic-load', async () => {
-    const options = ref<NCascaderOption[]>([
+    const options = ref<HCascaderOption[]>([
       {
         label: 'Root',
         value: 'root',
@@ -123,7 +123,7 @@ describe('Cascader.tsx props', () => {
 
     const { wrapper, modelValue, pickerInput } = createInstance({
       options,
-      dynamicLoad: (node: NCascaderDynamicLoadNode) =>
+      dynamicLoad: (node: HCascaderDynamicLoadNode) =>
         new Promise(resolve => {
           const codePoint = 97 + node.level;
 
@@ -136,7 +136,7 @@ describe('Cascader.tsx props', () => {
             })),
           );
         }),
-      'onUpdate:options': (val: NCascaderOption[]) => (options.value = val),
+      'onUpdate:options': (val: HCascaderOption[]) => (options.value = val),
     });
 
     await openCascader(wrapper);
@@ -165,12 +165,12 @@ describe('Cascader.tsx props', () => {
     await pickerInput.find('input').setValue('e');
     await sleep(200);
 
-    expect(wrapper.findAllComponents(NCascaderItem).length).toBe(20);
+    expect(wrapper.findAllComponents(HCascaderItem).length).toBe(20);
 
     filterMaxResult.value = 1000;
     await nextTick();
 
-    expect(wrapper.findAllComponents(NCascaderItem).length).toBe(49);
+    expect(wrapper.findAllComponents(HCascaderItem).length).toBe(49);
   });
 
   test('use-filter-check-all', async () => {
@@ -230,7 +230,7 @@ describe('Cascader.tsx props', () => {
     expect(checkAll.exists()).toBeTruthy();
     expect(checkAll.find('.n-checkbox--checked').exists()).toBeTruthy();
 
-    await wrapper.findComponent(NCascaderItem).trigger('click');
+    await wrapper.findComponent(HCascaderItem).trigger('click');
 
     expect(checkAll.find('.n-checkbox--checked').exists()).toBeFalsy();
     expect(checkAll.find('.n-checkbox--indeterminate').exists()).toBeTruthy();
@@ -288,15 +288,15 @@ describe('Cascader.tsx props', () => {
     });
 
     await openCascader(wrapper);
-    for (const item of wrapper.findAllComponents(NCascaderItem)) {
-      expect(item.findComponent(NRadio).exists()).toBeFalsy();
+    for (const item of wrapper.findAllComponents(HCascaderItem)) {
+      expect(item.findComponent(HRadio).exists()).toBeFalsy();
     }
 
     showRadio.value = true;
     await nextTick();
 
-    for (const item of wrapper.findAllComponents(NCascaderItem)) {
-      expect(item.findComponent(NRadio).exists()).toBeTruthy();
+    for (const item of wrapper.findAllComponents(HCascaderItem)) {
+      expect(item.findComponent(HRadio).exists()).toBeTruthy();
     }
   });
 });

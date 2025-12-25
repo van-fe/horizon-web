@@ -3,13 +3,13 @@ import { computed, createVNode, defineComponent, render } from 'vue';
 import type { LoadingBarOptions } from '../composables/useProps';
 import { useLoadingBarOptions } from '../composables/useProps';
 import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
-import NTransition from '~/components/Transition/src/Transition';
+import HTransition from '~/components/Transition/src/Transition';
 
-const NLoadingBarComponent = defineComponent({
+const HLoadingBarComponent = defineComponent({
   name: `${useNamespace()}LoadingBar`,
   desc: '在页面最顶端创建了一个用于显示页面加载、异步请求文件上传的加载进度条，缓解用户等待时的焦虑感，因为可复用性的关系，全局只会存在一个loadingBar的实例',
   components: {
-    NTransition,
+    HTransition,
   },
   props: useLoadingBarOptions,
   setup(props) {
@@ -24,7 +24,7 @@ const NLoadingBarComponent = defineComponent({
     });
     const classHelper = new ComponentClassBlock('loading-bar');
     return () => (
-      <NTransition name="fade-in">
+      <HTransition name="fade-in">
         <div v-show={props.show} class={cls(classHelper.block)} style={outerStyles.value}>
           <div
             class={cls(
@@ -37,15 +37,15 @@ const NLoadingBarComponent = defineComponent({
             style={styles.value}
           ></div>
         </div>
-      </NTransition>
+      </HTransition>
     );
   },
 });
 
-NLoadingBarComponent.newInstance = (properties: LoadingBarOptions) => {
+HLoadingBarComponent.newInstance = (properties: LoadingBarOptions) => {
   const _props = properties || {};
 
-  const loadingBarNode: any = createVNode(NLoadingBarComponent, {
+  const loadingBarNode: any = createVNode(HLoadingBarComponent, {
     height: _props.height,
     percent: _props.percent,
     status: _props.status,
@@ -81,4 +81,4 @@ NLoadingBarComponent.newInstance = (properties: LoadingBarOptions) => {
   };
 };
 
-export default NLoadingBarComponent;
+export default HLoadingBarComponent;

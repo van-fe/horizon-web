@@ -6,7 +6,7 @@ import { useEmptySlots } from './composables/useSlots';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
 import { GlobalSizeInjectedKey } from '~/components/Application/src/utils/injectedKeys';
-import type { NApplicationSizeType } from '~/components/Application/src/composables/useProps';
+import type { HApplicationSizeType } from '~/components/Application/src/composables/useProps';
 import { PRESENTED_IMAGES } from './utils/presentedImages';
 
 export default defineComponent({
@@ -21,7 +21,7 @@ export default defineComponent({
     const globalSize = inject(GlobalSizeInjectedKey, ref('medium'));
     const sizeRef = computed(() =>
       typeof props.size === 'number' ? '' : props.size || globalSize.value,
-    ) as ComputedRef<NApplicationSizeType>;
+    ) as ComputedRef<HApplicationSizeType>;
 
     // size style
     const sizeStyleRef = computed(() => {

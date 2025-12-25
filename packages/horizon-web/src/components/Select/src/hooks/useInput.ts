@@ -6,12 +6,12 @@ import type { SelectEmits } from '../composables/useEmits';
 import type { SelectSlots } from '../composables/useSlots';
 import type { SelectExposes } from '../composables/useExposes';
 import {
-  NSelectFilterInputValueInjectKey,
-  NSelectInputValueInjectKey,
+  HSelectFilterInputValueInjectKey,
+  HSelectInputValueInjectKey,
   type SelectCollectedOptionData,
 } from '../utils/injectKeys';
-import type { NSelectFilterFunction, SelectDomRefs } from '../utils/types';
-import { NFormItemTriggerInjectedKey } from '~/components/Form/src/utils/injectedKeys';
+import type { HSelectFilterFunction, SelectDomRefs } from '../utils/types';
+import { HFormItemTriggerInjectedKey } from '~/components/Form/src/utils/injectedKeys';
 import debounce from 'lodash/debounce';
 
 export default function useInput(
@@ -45,7 +45,7 @@ export default function useInput(
   /**
    * inject
    */
-  const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
+  const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
 
   /**
    * computed
@@ -62,7 +62,7 @@ export default function useInput(
     }
   });
 
-  const filterMethod = computed<NSelectFilterFunction>(() => {
+  const filterMethod = computed<HSelectFilterFunction>(() => {
     const defaultFilterMethod = (input: string, option: OptionProps & Record<string, unknown>) => {
       return (
         option.label?.toString().toLowerCase().includes(input.toLowerCase()) ||
@@ -208,8 +208,8 @@ export default function useInput(
     });
   }
 
-  provide(NSelectInputValueInjectKey, options.inputValue);
-  provide(NSelectFilterInputValueInjectKey, options.filterInputValue);
+  provide(HSelectInputValueInjectKey, options.inputValue);
+  provide(HSelectFilterInputValueInjectKey, options.filterInputValue);
 
   return {
     isDuringComposition,

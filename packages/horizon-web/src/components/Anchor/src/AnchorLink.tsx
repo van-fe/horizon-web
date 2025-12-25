@@ -1,5 +1,5 @@
 import { defineComponent, computed, inject, onBeforeUnmount, onMounted, watch, ref } from 'vue';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
 import { useAnchorLinkProps } from './composables/useProps';
 import type { AnchorLinkSlots } from './composables/useSlots';
 import { useAnchorLinkSlots } from './composables/useSlots';
@@ -11,7 +11,7 @@ import { AnchorContextInjectedKey, AnchorPropsInjectedKey } from './utils/Inject
 export default defineComponent({
   name: `${useNamespace()}AnchorLink`,
   components: {
-    NTooltip,
+    HTooltip,
   },
   props: useAnchorLinkProps,
   slots: useAnchorLinkSlots,
@@ -96,7 +96,7 @@ export default defineComponent({
 
     return () => (
       <div class={`${classHelper.e('link')}`} ref={linkRef}>
-        <NTooltip
+        <HTooltip
           placement={sharedProps.value.placement}
           disabled={tooltipDisabled.value}
           v-slots={{
@@ -115,7 +115,7 @@ export default defineComponent({
               {showCustomEllipsis.value && <span>{titleSuffix.value}</span>}
             </a>
           </div>
-        </NTooltip>
+        </HTooltip>
         {slots?.default?.()}
       </div>
     );

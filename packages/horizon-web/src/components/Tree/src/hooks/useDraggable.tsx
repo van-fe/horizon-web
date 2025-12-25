@@ -1,5 +1,5 @@
 import type { Ref, ToRefs, UnwrapNestedRefs } from 'vue';
-import type { NTreeExtendsData, NTreeUuidType, NTreeData } from '../utils/types';
+import type { HTreeExtendsData, HTreeUuidType, HTreeData } from '../utils/types';
 import { ref, watch } from 'vue';
 import type { TreeProps } from '../composables/useProps';
 import {
@@ -16,13 +16,13 @@ import type TreeItem from '../components/TreeItem';
 export default function (
   props: ToRefs<TreeProps>,
   treeDomRef: Ref<HTMLElement | null>,
-  treeHelper: Tree<NTreeData, NTreeExtendsData>,
-  setNodeExpandStatus: (node: NTreeExtendsData, expand: boolean) => void,
-  expandedNodesUuid: UnwrapNestedRefs<Set<NTreeUuidType>>,
-  deleteNode: (value?: string | number, emitUpdate?: boolean) => NTreeData[],
-  setNodeChildren: (value: string | number | null, children: NTreeData[]) => void,
+  treeHelper: Tree<HTreeData, HTreeExtendsData>,
+  setNodeExpandStatus: (node: HTreeExtendsData, expand: boolean) => void,
+  expandedNodesUuid: UnwrapNestedRefs<Set<HTreeUuidType>>,
+  deleteNode: (value?: string | number, emitUpdate?: boolean) => HTreeData[],
+  setNodeChildren: (value: string | number | null, children: HTreeData[]) => void,
   addNodeChildren: (
-    arr: Array<TopBaseTreeData & Partial<NTreeData>>,
+    arr: Array<TopBaseTreeData & Partial<HTreeData>>,
     value?: string | number,
     append?: boolean,
   ) => void,
@@ -51,10 +51,10 @@ export default function (
     y: 0,
   };
 
-  let currentExpandedNodes: NTreeExtendsData[] = [];
+  let currentExpandedNodes: HTreeExtendsData[] = [];
 
-  const dragFromNode = ref<NTreeExtendsData>();
-  const dragToNodeUuid = ref<NTreeUuidType>();
+  const dragFromNode = ref<HTreeExtendsData>();
+  const dragToNodeUuid = ref<HTreeUuidType>();
 
   const dragToTop = ref(false);
 
@@ -104,7 +104,7 @@ export default function (
     return curr;
   }
 
-  function onDragStart(domRef: Ref<HTMLElement | null>, node: NTreeExtendsData, evt: MouseEvent) {
+  function onDragStart(domRef: Ref<HTMLElement | null>, node: HTreeExtendsData, evt: MouseEvent) {
     if (!isDragging.value) {
       isDragStart = true;
       dragFromNode.value = node;
@@ -186,7 +186,7 @@ export default function (
       document.removeEventListener('mousemove', onDragMove);
       document.removeEventListener('mouseup', onDragEnd);
 
-      let toNode: NTreeExtendsData | undefined;
+      let toNode: HTreeExtendsData | undefined;
       let isMoveToChild: boolean = true;
 
       if (!dragToTop.value) {

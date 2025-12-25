@@ -1,7 +1,7 @@
 import type { LoadingOptions } from '../src/composables/useOptions';
 import type { DOMWrapper } from '@vue/test-utils';
 import { mount } from '@vue/test-utils';
-import NVLoading from '../index';
+import HVLoading from '../index';
 import type { Ref, VNode } from 'vue';
 import { isRef, nextTick } from 'vue';
 import type { JSX } from 'vue/jsx-runtime';
@@ -25,7 +25,7 @@ export async function createInstance(
       attachTo: document.body,
       global: {
         directives: {
-          [NVLoading.name]: NVLoading,
+          [HVLoading.name]: HVLoading,
         },
       },
     },

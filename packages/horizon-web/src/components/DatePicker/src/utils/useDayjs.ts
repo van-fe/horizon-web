@@ -1,6 +1,6 @@
 import type { Dayjs } from 'dayjs';
 import dayjs from '~/utils/useDayJs';
-import type { NDatePickerAccessDatetimeType, NDatePickerSupportType } from './types';
+import type { HDatePickerAccessDatetimeType, HDatePickerSupportType } from './types';
 import { isNil, isNumber, isString } from '@aurora/utils';
 import { transformType } from './utils';
 
@@ -17,7 +17,7 @@ export function onlyCloneTime(datetime: Dayjs | undefined | null) {
 }
 
 export function tryToAnalysisDate(
-  date: NDatePickerAccessDatetimeType,
+  date: HDatePickerAccessDatetimeType,
   format: string,
   defaultValue: null | undefined,
 ) {
@@ -34,7 +34,7 @@ export function tryToAnalysisDate(
   }
 }
 
-export function getCompareUnitByType(type: NDatePickerSupportType) {
+export function getCompareUnitByType(type: HDatePickerSupportType) {
   const typeFormatted = transformType(type);
 
   switch (typeFormatted) {

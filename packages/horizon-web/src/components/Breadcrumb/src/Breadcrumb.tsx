@@ -16,22 +16,22 @@ import { IconEllipsis } from '@aurora/icon';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, useNamespace, getSymbolNodeChildren } from '@aurora/utils';
 import tooltip from '~/directives/v-tooltip';
-import NDropdown from '~/components/Dropdown/src/Dropdown';
-import NDropdownMenu from '~/components/Dropdown/src/DropdownMenu';
-import NDropdownItem from '~/components/Dropdown/src/DropdownItem';
-import NBreadcrumbItem from './BreadcrumbItem';
+import HDropdown from '~/components/Dropdown/src/Dropdown';
+import HDropdownMenu from '~/components/Dropdown/src/DropdownMenu';
+import HDropdownItem from '~/components/Dropdown/src/DropdownItem';
+import HBreadcrumbItem from './BreadcrumbItem';
 import type { BreadcrumbItem, BreadcrumbItemProps } from './composables/useProps';
 import { useBreadcrumbProps } from './composables/useProps';
 import type { BreadcrumbSlots } from './composables/useSlots';
 import { useBreadcrumbSlots } from './composables/useSlots';
-import NLink from '~/components/Link/src/Link';
+import HLink from '~/components/Link/src/Link';
 import useSize from '~/utils/useSize';
 import type { ResizeObserverEntry } from '@vueuse/core';
 import { useResizeObserver } from '@vueuse/core';
 import {
-  NBreadcrumbItemClickInjectKey,
-  NBreadcrumbProps,
-  NBreadcrumbSlots,
+  HBreadcrumbItemClickInjectKey,
+  HBreadcrumbProps,
+  HBreadcrumbSlots,
 } from './utils/injectedKeys';
 import debounce from 'lodash/debounce';
 import { onClickBreadcrumbItem } from './utils/helpers';
@@ -43,12 +43,12 @@ export default defineComponent({
   desc: '面包屑导航主要用来呈现系统页面的架构层级，帮助用户快速定位和了解网站内容和组织方式，从而形成很好的位置感，知晓当前所处位置，以及页面的往返路径。同时提供快速的跳转操作，快速返回各个层级的页面',
   directives: { tooltip },
   components: {
-    NBreadcrumbItem,
-    NLink,
+    HBreadcrumbItem,
+    HLink,
     IconEllipsis,
-    NDropdown,
-    NDropdownMenu,
-    NDropdownItem,
+    HDropdown,
+    HDropdownMenu,
+    HDropdownItem,
   },
   props: useBreadcrumbProps,
   emits: useBreadcrumbEmits,
@@ -61,8 +61,8 @@ export default defineComponent({
     const instance = getCurrentInstance();
     const router = instance?.appContext.config.globalProperties.$router;
 
-    provide(NBreadcrumbProps, props);
-    provide(NBreadcrumbSlots, slots);
+    provide(HBreadcrumbProps, props);
+    provide(HBreadcrumbSlots, slots);
 
     // global size
     const sizeRef = useSize(toRef(props, 'size'), 'medium');
@@ -71,12 +71,12 @@ export default defineComponent({
 
     const renderItem = (arr: BreadcrumbItem[] = []) => {
       return arr.map((v, k) => (
-        <NBreadcrumbItem key={k} size={sizeRef.value} {...v} title={title.value}>
+        <HBreadcrumbItem key={k} size={sizeRef.value} {...v} title={title.value}>
           {{
             default: () => v.text,
             separator: slots.separator,
           }}
-        </NBreadcrumbItem>
+        </HBreadcrumbItem>
       ));
     };
 
@@ -88,7 +88,7 @@ export default defineComponent({
       }
     }
 
-    provide(NBreadcrumbItemClickInjectKey, onClickItem);
+    provide(HBreadcrumbItemClickInjectKey, onClickItem);
 
     const ellipsisItemsAmount = ref(0);
     const needRenderedItems = computed(() =>
@@ -175,8 +175,8 @@ export default defineComponent({
         >
           {needRenderedItems.value[0]}
           {ellipsisItemsAmount.value > 0 && (
-            <NBreadcrumbItem>
-              <NDropdown>
+            <HBreadcrumbItem>
+              <HDropdown>
                 {{
                   default: () => (
                     <div class={classHelper.e('ellipsis')}>
@@ -184,17 +184,17 @@ export default defineComponent({
                     </div>
                   ),
                   dropdown: () => (
-                    <NDropdownMenu>
+                    <HDropdownMenu>
                       {needRenderedItems.value.slice(1, ellipsisItemsAmount.value + 1).map(curr => (
-                        <NDropdownItem onClick={e => onClickItemNode(curr, e)}>
+                        <HDropdownItem onClick={e => onClickItemNode(curr, e)}>
                           {curr.el?.innerText ?? ''}
-                        </NDropdownItem>
+                        </HDropdownItem>
                       ))}
-                    </NDropdownMenu>
+                    </HDropdownMenu>
                   ),
                 }}
-              </NDropdown>
-            </NBreadcrumbItem>
+              </HDropdown>
+            </HBreadcrumbItem>
           )}
           {...needRenderedItems.value.slice(ellipsisItemsAmount.value + 1)}
         </div>

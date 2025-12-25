@@ -6,8 +6,8 @@ import { useWatermarkOptions } from './composables/useOptions';
 import Watermark from '~/components/Watermark/src/Watermark';
 import { transOptions } from './utils/base';
 
-const INS = Symbol('NWatermark');
-const DOM_WRAP = Symbol('NWatermark_DomWrap');
+const INS = Symbol('HWatermark');
+const DOM_WRAP = Symbol('HWatermark_DomWrap');
 
 export interface WatermarkElement extends HTMLElement {
   [INS]?: App<Element>;

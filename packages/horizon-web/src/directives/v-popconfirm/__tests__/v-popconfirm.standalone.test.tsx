@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils';
-import NVPopconfirm from '../index';
-import { NVClickOutside } from '../../v-click-outside';
+import HVPopconfirm from '../index';
+import { HVClickOutside } from '../../v-click-outside';
 import { describe, expect, test } from 'vitest';
 import { computed, nextTick, ref } from 'vue';
-import { NButton } from '../../../components/Button';
+import { HButton } from '../../../components/Button';
 
 describe('v-popconfirm.tsx', () => {
   test.only('update options', async () => {
@@ -20,21 +20,21 @@ describe('v-popconfirm.tsx', () => {
 
     const wrapper = mount(
       () => (
-        <NButton v-popconfirm={popconfirmOption.value} onClick={onClick}>
+        <HButton v-popconfirm={popconfirmOption.value} onClick={onClick}>
           Click
-        </NButton>
+        </HButton>
       ),
       {
         global: {
           directives: {
-            [NVPopconfirm.name]: NVPopconfirm,
-            [NVClickOutside.name]: NVClickOutside,
+            [HVPopconfirm.name]: HVPopconfirm,
+            [HVClickOutside.name]: HVClickOutside,
           },
         },
       },
     );
 
-    const button = wrapper.findComponent(NButton);
+    const button = wrapper.findComponent(HButton);
 
     await button.trigger('click');
 

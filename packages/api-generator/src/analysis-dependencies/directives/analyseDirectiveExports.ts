@@ -64,7 +64,7 @@ export function analyseDirectiveExports(
 
           const insureVariableName = insureVariables[0].getText();
 
-          if (/^N/.test(exportedVariableName)) {
+          if (/^H/.test(exportedVariableName)) {
             // try {
             const res: ApiGeneratorExportedDirectives = {
               dirName,

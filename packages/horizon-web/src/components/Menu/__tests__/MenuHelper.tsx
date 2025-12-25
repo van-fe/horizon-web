@@ -8,10 +8,10 @@ import type { MenuProps } from '../src/composables/useProps';
 import type { MenuEmits } from '../src/composables/useEmits';
 import type { MenuSlots } from '../src/composables/useSlots';
 import type { MenuExposes } from '../src/composables/useExposes';
-import NMenu from '../src/Menu';
+import HMenu from '../src/Menu';
 import options from './options.json';
-import NSubMenu from '../src/SubMenu';
-import NMenuItem from '../src/MenuItem';
+import HSubMenu from '../src/SubMenu';
+import HMenuItem from '../src/MenuItem';
 
 type OptionType = {
   value: string;
@@ -25,9 +25,9 @@ export default class MenuHelper<T extends keyof MenuProps | `on${Capitalize<keyo
     Record<T, T extends keyof MenuProps ? MaybeRef<MenuProps[T]> : Mock | Function>
   >;
   public slots?: SetupContext<{}, MenuSlots>['slots'];
-  public domRef = ref<HorizonWebComponentInstance<typeof NMenu, MenuExposes> | null>(null);
+  public domRef = ref<HorizonWebComponentInstance<typeof HMenu, MenuExposes> | null>(null);
   public wrapper!: VueWrapper<any, any>;
-  public element!: VueWrapper<HorizonWebComponentInstance<typeof NMenu, MenuExposes>>;
+  public element!: VueWrapper<HorizonWebComponentInstance<typeof HMenu, MenuExposes>>;
 
   constructor(
     propsOrEmits?: Partial<
@@ -44,12 +44,12 @@ export default class MenuHelper<T extends keyof MenuProps | `on${Capitalize<keyo
     return children.map(curr => {
       if (Array.isArray(curr.children) && curr.children.length > 0) {
         return (
-          <NSubMenu name={curr.label} value={curr.value}>
+          <HSubMenu name={curr.label} value={curr.value}>
             {this.renderChildren(curr.children)}
-          </NSubMenu>
+          </HSubMenu>
         );
       } else {
-        return <NMenuItem name={curr.label} value={curr.value} />;
+        return <HMenuItem name={curr.label} value={curr.value} />;
       }
     });
   }
@@ -57,7 +57,7 @@ export default class MenuHelper<T extends keyof MenuProps | `on${Capitalize<keyo
   private mountComponent() {
     this.wrapper = mount(
       () => (
-        <NMenu
+        <HMenu
           ref={this.domRef}
           v-model={this.modelValue.value}
           {...Object.fromEntries(
@@ -66,15 +66,15 @@ export default class MenuHelper<T extends keyof MenuProps | `on${Capitalize<keyo
           v-slots={this.slots}
         >
           {this.renderChildren(options as OptionType[])}
-        </NMenu>
+        </HMenu>
       ),
       {
         attachTo: document.body,
       },
     );
 
-    this.element = this.wrapper.findComponent(NMenu) as VueWrapper<
-      HorizonWebComponentInstance<typeof NMenu, MenuExposes>
+    this.element = this.wrapper.findComponent(HMenu) as VueWrapper<
+      HorizonWebComponentInstance<typeof HMenu, MenuExposes>
     >;
   }
 }

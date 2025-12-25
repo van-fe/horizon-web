@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import NPagination from '../src/Pagination';
+import HPagination from '../src/Pagination';
 import { describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
 import Sizes from '../src/components/Sizes';
@@ -9,13 +9,13 @@ import Total from '../src/components/Total';
 import type { PaginationProps } from '../src/composables/useProps';
 import SimplestPager from '../src/components/SimplestPager';
 import Pagination from '../index';
-import NInputNumber from '../../InputNumber';
+import HInputNumber from '../../InputNumber';
 import { sleep } from '~/utils/tools';
 
 describe('Pagination.tsx', () => {
   test('basic', async () => {
-    const wrapper = mount(() => <NPagination total={10} />);
-    const element = wrapper.findComponent(NPagination);
+    const wrapper = mount(() => <HPagination total={10} />);
+    const element = wrapper.findComponent(HPagination);
 
     expect(element.exists()).toBe(true);
   });
@@ -26,7 +26,7 @@ describe('Pagination.tsx', () => {
       const onChange = vi.fn();
 
       const wrapper = mount(() => (
-        <NPagination total={100} v-model:currentPage={currentPage.value} onChange={onChange} />
+        <HPagination total={100} v-model:currentPage={currentPage.value} onChange={onChange} />
       ));
 
       const pageItem = wrapper.findAll('.n-pagination__pager--item:not(.is-active)');
@@ -40,7 +40,7 @@ describe('Pagination.tsx', () => {
     test('total', async () => {
       const total = ref(100);
 
-      const wrapper = mount(() => <NPagination total={total.value} />);
+      const wrapper = mount(() => <HPagination total={total.value} />);
 
       expect(wrapper.findAll('.n-pagination__pager--item').length).eq(9);
 
@@ -64,7 +64,7 @@ describe('Pagination.tsx', () => {
 
       const wrapper = mount(
         () => (
-          <NPagination
+          <HPagination
             total={100}
             v-model:pageSize={pageSize.value}
             pageSizes={pageSizes.value}
@@ -110,7 +110,7 @@ describe('Pagination.tsx', () => {
     test('pagerCount', async () => {
       const pagerCount = ref(7);
 
-      const wrapper = mount(() => <NPagination total={100} pagerCount={pagerCount.value} />);
+      const wrapper = mount(() => <HPagination total={100} pagerCount={pagerCount.value} />);
 
       expect(wrapper.findAll('.n-pagination__pager--item').length).eq(9);
 
@@ -124,7 +124,7 @@ describe('Pagination.tsx', () => {
     test('layout', async () => {
       const layout = ref('pager, sizes');
 
-      const wrapper = mount(() => <NPagination total={100} layout={layout.value} />);
+      const wrapper = mount(() => <HPagination total={100} layout={layout.value} />);
 
       expect(wrapper.findComponent(Pager).exists()).toBeTruthy();
       expect(wrapper.findComponent(Sizes).exists()).toBeTruthy();
@@ -140,7 +140,7 @@ describe('Pagination.tsx', () => {
     test('type', async () => {
       const type = ref<PaginationProps['type']>('simple');
 
-      const wrapper = mount(() => <NPagination total={100} type={type.value} />);
+      const wrapper = mount(() => <HPagination total={100} type={type.value} />);
 
       expect(wrapper.findComponent(Pager).exists()).toBeTruthy();
       expect(wrapper.findComponent(Total).exists()).toBeTruthy();
@@ -161,7 +161,7 @@ describe('Pagination.tsx', () => {
     test('simplest input page', async () => {
       const currentPage = ref(1);
       const wrapper = mount(() => (
-        <NPagination v-model:currentPage={currentPage.value} total={100} type="simplest" />
+        <HPagination v-model:currentPage={currentPage.value} total={100} type="simplest" />
       ));
 
       const inputEl = wrapper.find('input');
@@ -175,7 +175,7 @@ describe('Pagination.tsx', () => {
       const hideOnSinglePage = ref(false);
 
       const wrapper = mount(() => (
-        <NPagination total={10} hideOnSinglePage={hideOnSinglePage.value} />
+        <HPagination total={10} hideOnSinglePage={hideOnSinglePage.value} />
       ));
 
       expect(wrapper.findComponent(Pagination).exists()).toBeTruthy();
@@ -190,7 +190,7 @@ describe('Pagination.tsx', () => {
     test('align', async () => {
       const align = ref<PaginationProps['align']>('right');
 
-      const wrapper = mount(() => <NPagination total={10} align={align.value} />);
+      const wrapper = mount(() => <HPagination total={10} align={align.value} />);
 
       expect(
         wrapper.findComponent(Pagination).classes(`n-pagination--${align.value}`),
@@ -219,23 +219,23 @@ describe('Pagination.tsx', () => {
       const disabled = ref(false);
 
       const wrapper = mount(() => (
-        <NPagination v-model:currentPage={currentPage.value} total={50} disabled={disabled.value} />
+        <HPagination v-model:currentPage={currentPage.value} total={50} disabled={disabled.value} />
       ));
 
-      expect(wrapper.findComponent(NPagination).classes('is-disabled')).toBeFalsy();
+      expect(wrapper.findComponent(HPagination).classes('is-disabled')).toBeFalsy();
 
       disabled.value = true;
 
       await nextTick();
 
-      expect(wrapper.findComponent(NPagination).classes('is-disabled')).toBeTruthy();
+      expect(wrapper.findComponent(HPagination).classes('is-disabled')).toBeTruthy();
 
       await wrapper.findComponent(Pager).find('.is-next').trigger('click');
 
       expect(currentPage.value).toBe(1);
 
       expect(
-        wrapper.findComponent(Jumper).findComponent(NInputNumber).classes('is-disabled'),
+        wrapper.findComponent(Jumper).findComponent(HInputNumber).classes('is-disabled'),
       ).toBeTruthy();
 
       expect(
@@ -249,7 +249,7 @@ describe('Pagination.tsx', () => {
       const disabled = ref(false);
 
       const wrapper = mount(() => (
-        <NPagination
+        <HPagination
           v-model:currentPage={currentPage.value}
           total={50}
           disabled={disabled.value}
@@ -257,16 +257,16 @@ describe('Pagination.tsx', () => {
         />
       ));
 
-      expect(wrapper.findComponent(NPagination).classes('is-disabled')).toBeFalsy();
+      expect(wrapper.findComponent(HPagination).classes('is-disabled')).toBeFalsy();
 
       disabled.value = true;
 
       await nextTick();
 
-      expect(wrapper.findComponent(NPagination).classes('is-disabled')).toBeTruthy();
+      expect(wrapper.findComponent(HPagination).classes('is-disabled')).toBeTruthy();
 
       expect(
-        wrapper.findComponent(SimplestPager).findComponent(NInputNumber).classes('is-disabled'),
+        wrapper.findComponent(SimplestPager).findComponent(HInputNumber).classes('is-disabled'),
       ).toBeTruthy();
     });
   });
@@ -279,7 +279,7 @@ describe('Pagination.tsx', () => {
       const onClickNextPage = vi.fn();
 
       const wrapper = mount(() => (
-        <NPagination
+        <HPagination
           total={100}
           v-model:currentPage={currentPage.value}
           layout="pager"
@@ -313,7 +313,7 @@ describe('Pagination.tsx', () => {
       const onJump = vi.fn();
 
       const wrapper = mount(() => (
-        <NPagination
+        <HPagination
           total={100}
           v-model:currentPage={currentPage.value}
           layout="jumper"
@@ -321,7 +321,7 @@ describe('Pagination.tsx', () => {
         />
       ));
 
-      const inputNumber = wrapper.findComponent(NInputNumber);
+      const inputNumber = wrapper.findComponent(HInputNumber);
 
       await inputNumber.find('input').setValue('5');
 
@@ -338,7 +338,7 @@ describe('Pagination.tsx', () => {
       const onModify = vi.fn();
 
       const wrapper = mount(() => (
-        <NPagination
+        <HPagination
           total={100}
           v-model:currentPage={currentPage.value}
           v-model:pageSize={size.value}
@@ -369,12 +369,12 @@ describe('Pagination.tsx', () => {
     test('prefix & suffix', () => {
       const wrapper = mount(
         () => (
-          <NPagination total={100} layout={['pager', 'sizes']} pageSizes={[1, 3, 5, 10]}>
+          <HPagination total={100} layout={['pager', 'sizes']} pageSizes={[1, 3, 5, 10]}>
             {{
               prefix: () => <div class="is-prefix">PREFIX</div>,
               suffix: () => <div class="is-suffix">SUFFIX</div>,
             }}
-          </NPagination>
+          </HPagination>
         ),
         {
           attachTo: document.body,
@@ -391,7 +391,7 @@ describe('Pagination.tsx', () => {
 
       const wrapper = mount(
         () => (
-          <NPagination
+          <HPagination
             v-model:current-page={currentPage.value}
             v-model:page-size={pageSize.value}
             total={200}
@@ -400,9 +400,9 @@ describe('Pagination.tsx', () => {
           >
             {{
               prev: () => <div>PREV</div>,
-              next: () => <div>NEXT</div>,
+              next: () => <div>HEXT</div>,
             }}
-          </NPagination>
+          </HPagination>
         ),
         {
           attachTo: document.body,
@@ -410,7 +410,7 @@ describe('Pagination.tsx', () => {
       );
 
       expect(wrapper.find('.is-prev').text()).eq('PREV');
-      expect(wrapper.find('.is-next').text()).eq('NEXT');
+      expect(wrapper.find('.is-next').text()).eq('HEXT');
     });
   });
 
@@ -419,7 +419,7 @@ describe('Pagination.tsx', () => {
       const currentPage = ref(10);
       const pageSize = ref(10);
       const wrapper = mount(() => (
-        <NPagination
+        <HPagination
           total={100}
           v-model:currentPage={currentPage.value}
           v-model:pageSize={pageSize.value}
@@ -440,7 +440,7 @@ describe('Pagination.tsx', () => {
       const currentPage = ref(10);
       const pageSize = ref(10);
       const wrapper = mount(() => (
-        <NPagination
+        <HPagination
           total={100}
           v-model:currentPage={currentPage.value}
           v-model:pageSize={pageSize.value}
@@ -460,7 +460,7 @@ describe('Pagination.tsx', () => {
       const currentPage = ref(1);
 
       const wrapper = mount(() => (
-        <NPagination total={100} v-model:currentPage={currentPage.value} />
+        <HPagination total={100} v-model:currentPage={currentPage.value} />
       ));
 
       const input = wrapper.find('input');
@@ -474,7 +474,7 @@ describe('Pagination.tsx', () => {
     test('simplest set decimals', async () => {
       const currentPage = ref(1);
       const wrapper = mount(() => (
-        <NPagination v-model:currentPage={currentPage.value} total={100} type="simplest" />
+        <HPagination v-model:currentPage={currentPage.value} total={100} type="simplest" />
       ));
 
       const input = wrapper.find('input');

@@ -8,47 +8,47 @@ import {
   sizeUnitTransform,
   useNamespace,
 } from '@aurora/utils';
-import type { NCascaderExtendOption } from '../utils/types';
+import type { HCascaderExtendOption } from '../utils/types';
 import CascaderItem from './CascaderItem';
-import NScrollbar from '~/components/Scrollbar/src/Scrollbar';
+import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
 import {
-  NCascaderActiveOptionInPanelInjectKey,
-  NCascaderEmitsInjectKey,
-  NCascaderPopperVisibleInjectKey,
-  NCascaderPropsInjectKey,
-  NCascaderSlotsInjectKey,
-  NCascaderTreeHelperInjectKey,
+  HCascaderActiveOptionInPanelInjectKey,
+  HCascaderEmitsInjectKey,
+  HCascaderPopperVisibleInjectKey,
+  HCascaderPropsInjectKey,
+  HCascaderSlotsInjectKey,
+  HCascaderTreeHelperInjectKey,
 } from '../utils/injectKeys';
 import useLocaleLang from '~/utils/useLocaleLang';
-import NVirtualScroller from '~/components/VirtualScroller/src/VirtualScroller';
-import NVirtualScrollerItem from '~/components/VirtualScroller/src/VirtualScrollerItem';
+import HVirtualScroller from '~/components/VirtualScroller/src/VirtualScroller';
+import HVirtualScrollerItem from '~/components/VirtualScroller/src/VirtualScrollerItem';
 import type { VirtualScrollerExposes } from '~/components/VirtualScroller/src/composables/useExposes';
 
 export default defineComponent({
   name: `${useNamespace()}CascaderPanel`,
   props: {
     list: {
-      type: Array as PropType<NCascaderExtendOption[]>,
+      type: Array as PropType<HCascaderExtendOption[]>,
       required: true,
     },
   },
   setup(props) {
     const classHelper = new ComponentClassBlock('cascader-panel');
 
-    const parentProps = inject(NCascaderPropsInjectKey)!;
-    const parentEmits = inject(NCascaderEmitsInjectKey)!;
-    const parentSlots = inject(NCascaderSlotsInjectKey)!;
-    const popperVisible = inject(NCascaderPopperVisibleInjectKey)!;
-    const treeHelper = inject(NCascaderTreeHelperInjectKey)!;
+    const parentProps = inject(HCascaderPropsInjectKey)!;
+    const parentEmits = inject(HCascaderEmitsInjectKey)!;
+    const parentSlots = inject(HCascaderSlotsInjectKey)!;
+    const popperVisible = inject(HCascaderPopperVisibleInjectKey)!;
+    const treeHelper = inject(HCascaderTreeHelperInjectKey)!;
 
     const scrollerDomRef = ref<HorizonWebComponentInstance<
-      typeof NVirtualScroller,
+      typeof HVirtualScroller,
       VirtualScrollerExposes
     > | null>(null);
 
-    const activeOption = ref<NCascaderExtendOption>();
+    const activeOption = ref<HCascaderExtendOption>();
 
-    provide(NCascaderActiveOptionInPanelInjectKey, activeOption);
+    provide(HCascaderActiveOptionInPanelInjectKey, activeOption);
 
     watch(popperVisible, val => {
       if (!val) {
@@ -56,7 +56,7 @@ export default defineComponent({
       }
     });
 
-    function getOptionValue<T extends NCascaderExtendOption, K extends keyof T>(
+    function getOptionValue<T extends HCascaderExtendOption, K extends keyof T>(
       option: T,
       key: K,
     ): T[K] {
@@ -67,7 +67,7 @@ export default defineComponent({
       <div class={classHelper.block}>
         {props.list?.length > 0 ? (
           parentProps.useVirtualScroll ? (
-            <NVirtualScroller
+            <HVirtualScroller
               ref={scrollerDomRef}
               class={cls(
                 classHelper.em('scrollbar', 'view'),
@@ -81,8 +81,8 @@ export default defineComponent({
               onScrollEnd={() => parentEmits('panelReachBottom', undefined, props.list[0]?.parent)}
             >
               {{
-                default: (row: { item: NCascaderExtendOption; index: number; active: boolean }) => (
-                  <NVirtualScrollerItem item={row.item} active={row.active} index={row.index}>
+                default: (row: { item: HCascaderExtendOption; index: number; active: boolean }) => (
+                  <HVirtualScrollerItem item={row.item} active={row.active} index={row.index}>
                     <CascaderItem
                       key={row.item._uuid}
                       value={getOptionValue(row.item, 'value')}
@@ -93,12 +93,12 @@ export default defineComponent({
                       extendsOption={row.item}
                       duringFilter={false}
                     />
-                  </NVirtualScrollerItem>
+                  </HVirtualScrollerItem>
                 ),
               }}
-            </NVirtualScroller>
+            </HVirtualScroller>
           ) : (
-            <NScrollbar
+            <HScrollbar
               class={cls(classHelper.e('scrollbar'))}
               viewClass={cls(
                 classHelper.em('scrollbar', 'view'),
@@ -128,7 +128,7 @@ export default defineComponent({
                   />
                 ),
               )}
-            </NScrollbar>
+            </HScrollbar>
           )
         ) : (
           <div class={classHelper.e('empty')}>

@@ -41,7 +41,7 @@ export default defineComponent({
         }
       });
     };
-    provide('NTimeline', {
+    provide('HTimeline', {
       hide: onHide,
       show: onShow,
       v2: v2Prop.value,

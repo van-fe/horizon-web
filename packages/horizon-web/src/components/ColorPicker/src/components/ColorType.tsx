@@ -13,14 +13,14 @@ import { defaultLocale, localeInjectKey } from '~/provides';
 import { ColorPickerCurrentValue, ColorPickerProps } from '../utils/InjectedKeys';
 import type { Position } from '@vueuse/core';
 import { clamp, useDraggable, useResizeObserver } from '@vueuse/core';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
-import NInputNumber from '~/components/InputNumber/src/InputNumber';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
+import HInputNumber from '~/components/InputNumber/src/InputNumber';
 
 export default defineComponent({
   name: 'ColorType',
   components: {
-    NTooltip,
-    NInputNumber,
+    HTooltip,
+    HInputNumber,
   },
   setup() {
     const classHelper = new ComponentClassBlock('color-picker-panel__color-type');
@@ -135,7 +135,7 @@ export default defineComponent({
             {['pure', ...(parentProps?.gradientList || [])].map(key => {
               const colorTypeKey = key as 'pure' | 'linear' | 'radial' | 'conic';
               return (
-                <NTooltip
+                <HTooltip
                   showAfter={200}
                   content={locale?.value?.langService.td().horizonWeb.colorPicker[colorTypeKey]}
                 >
@@ -147,7 +147,7 @@ export default defineComponent({
                     )}
                     onClick={() => switchColorType(colorTypeKey as ColorTypeEnum)}
                   />
-                </NTooltip>
+                </HTooltip>
               );
             })}
           </div>
@@ -185,7 +185,7 @@ export default defineComponent({
 
           {currentColor.colorType.value === ColorTypeEnum.Linear && (
             <div class={cls(classHelper.em('gradient', 'input'))}>
-              <NInputNumber
+              <HInputNumber
                 modelValue={currentColor.degree.value}
                 size="small"
                 controls={false}

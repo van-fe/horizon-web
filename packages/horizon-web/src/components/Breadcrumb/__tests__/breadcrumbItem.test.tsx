@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { NBreadcrumb, NBreadcrumbItem } from '..';
+import { HBreadcrumb, HBreadcrumbItem } from '..';
 import { describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
 
@@ -10,11 +10,11 @@ describe('BreadcrumbItem.tsx', () => {
       const onClick = vi.fn();
 
       const wrapper = mount(() => (
-        <NBreadcrumb>
-          <NBreadcrumbItem clickable={clickable.value} onClick={onClick}>
+        <HBreadcrumb>
+          <HBreadcrumbItem clickable={clickable.value} onClick={onClick}>
             HOME
-          </NBreadcrumbItem>
-        </NBreadcrumb>
+          </HBreadcrumbItem>
+        </HBreadcrumb>
       ));
 
       await wrapper.find('.n-breadcrumb-item__text').trigger('click');
@@ -35,7 +35,7 @@ describe('BreadcrumbItem.tsx', () => {
       const onClick = vi.fn();
 
       const wrapper = mount(() => (
-        <NBreadcrumb
+        <HBreadcrumb
           texts={[
             {
               text: 'HOME',

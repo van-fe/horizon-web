@@ -2,7 +2,7 @@ import { defineComponent, inject } from 'vue';
 import { localeInjectKey } from '~/injectedKeys';
 import { defaultLocale } from '~/provides/localable';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
-import { NPaginationPropsInjectKey } from '../utils/injectKeys';
+import { HPaginationPropsInjectKey } from '../utils/injectKeys';
 
 export default defineComponent({
   name: `${useNamespace()}PaginationTotal`,
@@ -15,7 +15,7 @@ export default defineComponent({
   setup(props) {
     const classHelper = new ComponentClassBlock('pagination');
     const locale = inject(localeInjectKey, defaultLocale);
-    const parentProps = inject(NPaginationPropsInjectKey)!;
+    const parentProps = inject(HPaginationPropsInjectKey)!;
 
     return () => (
       <div class={classHelper.e('total')}>

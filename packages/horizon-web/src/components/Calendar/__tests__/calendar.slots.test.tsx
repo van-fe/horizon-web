@@ -1,11 +1,11 @@
 import { mount } from '@vue/test-utils';
-import NCalendar from '..';
+import HCalendar from '..';
 import { describe, expect, test } from 'vitest';
 
 describe('Calendar slots.tsx', () => {
   test('header', () => {
     const wrapper = mount(() => (
-      <NCalendar>{{ header: () => <div>Here is header slot</div> }}</NCalendar>
+      <HCalendar>{{ header: () => <div>Here is header slot</div> }}</HCalendar>
     ));
 
     expect(wrapper.find('.n-calendar__header--suffix').text()).eq('Here is header slot');
@@ -13,7 +13,7 @@ describe('Calendar slots.tsx', () => {
 
   test('switchDate', () => {
     const wrapper = mount(() => (
-      <NCalendar>{{ switchDate: () => <div>Here is switchDate slot</div> }}</NCalendar>
+      <HCalendar>{{ switchDate: () => <div>Here is switchDate slot</div> }}</HCalendar>
     ));
 
     expect(wrapper.find('.n-calendar__header').text()).eq('Here is switchDate slot');
@@ -21,7 +21,7 @@ describe('Calendar slots.tsx', () => {
 
   test('dateCell', async () => {
     const wrapper = mount(() => (
-      <NCalendar>{{ dateCell: () => <div>Here is dateCell slot</div> }}</NCalendar>
+      <HCalendar>{{ dateCell: () => <div>Here is dateCell slot</div> }}</HCalendar>
     ));
     const dates = wrapper.findAll('.n-calendar-month__day');
 
@@ -30,7 +30,7 @@ describe('Calendar slots.tsx', () => {
 
   test('dateCellTitle', async () => {
     const wrapper = mount(() => (
-      <NCalendar>{{ dateCellTitle: () => <div>Here is dateCellTitle slot</div> }}</NCalendar>
+      <HCalendar>{{ dateCellTitle: () => <div>Here is dateCellTitle slot</div> }}</HCalendar>
     ));
 
     expect(wrapper.find('.n-calendar-month__day').text()).eq('Here is dateCellTitle slot');
@@ -38,7 +38,7 @@ describe('Calendar slots.tsx', () => {
 
   test('dateCellAppend', async () => {
     const wrapper = mount(() => (
-      <NCalendar>{{ dateCellAppend: () => <div>Here is dateCellAppend slot</div> }}</NCalendar>
+      <HCalendar>{{ dateCellAppend: () => <div>Here is dateCellAppend slot</div> }}</HCalendar>
     ));
 
     expect(wrapper.find('.n-calendar-month__day--cell-append').text()).eq(
@@ -48,9 +48,9 @@ describe('Calendar slots.tsx', () => {
 
   test('monthHeader', async () => {
     const wrapper = mount(() => (
-      <NCalendar mode="year">
+      <HCalendar mode="year">
         {{ monthHeader: () => <div>Here is monthHeader slot</div> }}
-      </NCalendar>
+      </HCalendar>
     ));
 
     expect(wrapper.find('.n-calendar-year__month--header-suffix').text()).eq(
@@ -60,9 +60,9 @@ describe('Calendar slots.tsx', () => {
 
   test('weekDayHeader', async () => {
     const wrapper = mount(() => (
-      <NCalendar mode="week">
+      <HCalendar mode="week">
         {{ weekDayHeader: () => <div>Here is weekDayHeader slot</div> }}
-      </NCalendar>
+      </HCalendar>
     ));
 
     expect(wrapper.find('.n-calendar-week__header--date').text()).eq('Here is weekDayHeader slot');
@@ -70,9 +70,9 @@ describe('Calendar slots.tsx', () => {
 
   test('dayHeader', async () => {
     const wrapper = mount(() => (
-      <NCalendar mode="day" modeSwitchableList={['day']}>
+      <HCalendar mode="day" modeSwitchableList={['day']}>
         {{ dayHeader: () => <div>Here is dayHeader slot</div> }}
-      </NCalendar>
+      </HCalendar>
     ));
 
     expect(wrapper.find('.n-calendar-day__header--date').text()).eq('Here is dayHeader slot');
@@ -80,7 +80,7 @@ describe('Calendar slots.tsx', () => {
 
   test('timezone: week', async () => {
     const wrapper = mount(() => (
-      <NCalendar mode="week">{{ timezone: () => <div>Here is timezone slot</div> }}</NCalendar>
+      <HCalendar mode="week">{{ timezone: () => <div>Here is timezone slot</div> }}</HCalendar>
     ));
 
     expect(wrapper.find('.n-calendar-week__header--time-zone').text()).eq('Here is timezone slot');
@@ -88,9 +88,9 @@ describe('Calendar slots.tsx', () => {
 
   test('timezone: day', async () => {
     const wrapper = mount(() => (
-      <NCalendar mode="day" modeSwitchableList={['day']}>
+      <HCalendar mode="day" modeSwitchableList={['day']}>
         {{ timezone: () => <div>Here is timezone slot</div> }}
-      </NCalendar>
+      </HCalendar>
     ));
 
     expect(wrapper.find('.n-calendar-day__header--time-zone').text()).eq('Here is timezone slot');

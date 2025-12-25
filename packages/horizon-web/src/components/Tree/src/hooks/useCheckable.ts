@@ -2,17 +2,17 @@ import type { ToRefs, VNode } from 'vue';
 import { computed, reactive, watch } from 'vue';
 import type { TreeProps } from '../composables/useProps';
 import type Tree from '~/utils/useTree/index';
-import type { NTreeData, NTreeExtendsData, NTreeUuidType } from '../utils/types';
+import type { HTreeData, HTreeExtendsData, HTreeUuidType } from '../utils/types';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { TreeEmits } from '../composables/useEmits';
 
 export default function (
   props: ToRefs<TreeProps>,
-  tree: Tree<NTreeData, NTreeExtendsData>,
+  tree: Tree<HTreeData, HTreeExtendsData>,
   emit: HorizonWebSetupContext<TreeEmits>['emit'],
 ) {
-  const selectedValuesUuid = reactive<Set<NTreeUuidType>>(
-    new Set<NTreeUuidType>(props.selectedValues?.value),
+  const selectedValuesUuid = reactive<Set<HTreeUuidType>>(
+    new Set<HTreeUuidType>(props.selectedValues?.value),
   );
 
   const isCheckComponentVisible = computed(
@@ -28,7 +28,7 @@ export default function (
     } else {
       const res: Array<string | number> = Array.from(selectedValuesUuid.values());
 
-      function action(node: NTreeExtendsData) {
+      function action(node: HTreeExtendsData) {
         if (node.isLeaf) return selectedValuesUuid.has(node._uuid);
 
         let count = 0;
@@ -145,7 +145,7 @@ export default function (
     }
   }
 
-  function switchChildrenCheckedStatus(node: NTreeExtendsData, check = true) {
+  function switchChildrenCheckedStatus(node: HTreeExtendsData, check = true) {
     if (
       (!node.disabled || (node.disabled && props.parentEffectDisabledChild.value)) &&
       node.selectable !== false

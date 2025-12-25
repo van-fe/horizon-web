@@ -1,11 +1,11 @@
 import { AlertMethod } from './src/Alert';
 import { ConfirmMethod } from './src/Confirm';
 
-export const NAlert = AlertMethod;
+export const HAlert = AlertMethod;
 
-export const NConfirm = ConfirmMethod;
+export const HConfirm = ConfirmMethod;
 
 export type {
-  MessageBoxProps as NMessageBoxProps,
-  MessageBoxConfirmProps as NMessageBoxConfirmProps,
+  MessageBoxProps as HMessageBoxProps,
+  MessageBoxConfirmProps as HMessageBoxConfirmProps,
 } from './src/composables/useProps';

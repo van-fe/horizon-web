@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import NInputNumber from '../src/InputNumber';
+import HInputNumber from '../src/InputNumber';
 import { describe, expect, test, vi } from 'vitest';
 import { computed, nextTick, ref } from 'vue';
 import type { InputNumberExposes } from '../src/composables/useExposes';
@@ -9,7 +9,7 @@ describe('InputNumber.tsx special', () => {
   test('do not trigger "change event" before input manually', async () => {
     const modelValue = ref(0);
     const onChange = vi.fn();
-    const wrapper = mount(() => <NInputNumber v-model={modelValue.value} onChange={onChange} />);
+    const wrapper = mount(() => <HInputNumber v-model={modelValue.value} onChange={onChange} />);
 
     expect(onChange).toHaveBeenCalledTimes(0);
 
@@ -29,7 +29,7 @@ describe('InputNumber.tsx special', () => {
   test('do not trigger "change event" when modelValue change', async () => {
     const modelValue = ref(0);
     const onChange = vi.fn();
-    mount(() => <NInputNumber v-model={modelValue.value} onChange={onChange} />);
+    mount(() => <HInputNumber v-model={modelValue.value} onChange={onChange} />);
 
     modelValue.value = 1;
 
@@ -41,7 +41,7 @@ describe('InputNumber.tsx special', () => {
   test('trigger "update:modelValue" when modelValue is less than props.min or gather than props.max', async () => {
     const modelValue = ref(0);
     const onChange = vi.fn();
-    mount(() => <NInputNumber v-model={modelValue.value} min={5} onChange={onChange} />);
+    mount(() => <HInputNumber v-model={modelValue.value} min={5} onChange={onChange} />);
 
     await nextTick();
 
@@ -53,7 +53,7 @@ describe('InputNumber.tsx special', () => {
     const modelValue = ref<number>();
     const onChange = vi.fn();
     const wrapper = mount(() => (
-      <NInputNumber v-model={modelValue.value} min={5} onChange={onChange} />
+      <HInputNumber v-model={modelValue.value} min={5} onChange={onChange} />
     ));
 
     const upTrigger = wrapper.find('.n-input-number__step-up');
@@ -65,13 +65,13 @@ describe('InputNumber.tsx special', () => {
   });
 
   test('clear', async () => {
-    const inputRef = ref<(typeof NInputNumber & InputNumberExposes) | null>(null);
+    const inputRef = ref<(typeof HInputNumber & InputNumberExposes) | null>(null);
     const modelValue = ref(12);
     const onClear = vi.fn();
     const onFocus = vi.fn();
 
     const wrapper = mount(() => (
-      <NInputNumber
+      <HInputNumber
         ref={inputRef}
         v-model={modelValue.value}
         clearable={true}
@@ -98,9 +98,9 @@ describe('InputNumber.tsx special', () => {
     const modelValue = ref();
     const modelValue2 = ref();
 
-    const wrapper = mount(() => <NInputNumber v-model={modelValue.value} />);
+    const wrapper = mount(() => <HInputNumber v-model={modelValue.value} />);
     const wrapper2 = mount(() => (
-      <NInputNumber v-model={modelValue2.value} controlsPosition="between" />
+      <HInputNumber v-model={modelValue2.value} controlsPosition="between" />
     ));
 
     const input = wrapper.find('input');
@@ -132,7 +132,7 @@ describe('InputNumber.tsx special', () => {
   test('not trigger change event when modelValue is 0', async () => {
     const modelValue = ref(0);
     const onChange = vi.fn();
-    const wrapper = mount(() => <NInputNumber v-model={modelValue.value} onChange={onChange} />);
+    const wrapper = mount(() => <HInputNumber v-model={modelValue.value} onChange={onChange} />);
     const input = wrapper.find('input');
 
     await input.trigger('blur');
@@ -143,7 +143,7 @@ describe('InputNumber.tsx special', () => {
   test('not trigger change event when modelValue is null', async () => {
     const modelValue = ref(null);
     const onChange = vi.fn();
-    const wrapper = mount(() => <NInputNumber v-model={modelValue.value} onChange={onChange} />);
+    const wrapper = mount(() => <HInputNumber v-model={modelValue.value} onChange={onChange} />);
     const input = wrapper.find('input');
 
     await input.trigger('blur');
@@ -155,7 +155,7 @@ describe('InputNumber.tsx special', () => {
     const modelValue = ref();
     const onUpdate = vi.fn();
 
-    mount(() => <NInputNumber v-model={modelValue.value} onUpdate:modelValue={onUpdate} />);
+    mount(() => <HInputNumber v-model={modelValue.value} onUpdate:modelValue={onUpdate} />);
 
     expect(onUpdate).toHaveBeenCalledTimes(0);
   });
@@ -164,7 +164,7 @@ describe('InputNumber.tsx special', () => {
     const modelValue = ref(12);
     const onUpdate = vi.fn();
 
-    mount(() => <NInputNumber v-model={modelValue.value} onUpdate:modelValue={onUpdate} />);
+    mount(() => <HInputNumber v-model={modelValue.value} onUpdate:modelValue={onUpdate} />);
 
     expect(onUpdate).toHaveBeenCalledTimes(0);
   });
@@ -172,12 +172,12 @@ describe('InputNumber.tsx special', () => {
   test('always show prefix/suffix when disabled', async () => {
     const modelValue = ref(null);
     const wrapper = mount(() => (
-      <NInputNumber v-model={modelValue.value} disabled={true}>
+      <HInputNumber v-model={modelValue.value} disabled={true}>
         {{
           prefix: () => <span id="prefix">prefix</span>,
           suffix: () => <span id="suffix">suffix</span>,
         }}
-      </NInputNumber>
+      </HInputNumber>
     ));
 
     expect(wrapper.find('#prefix').exists()).toBeTruthy();
@@ -187,7 +187,7 @@ describe('InputNumber.tsx special', () => {
   test('do not emit update event while modelValue has changed', async () => {
     const modelValue = ref<null | number>(null);
     const onUpdate = vi.fn();
-    mount(() => <NInputNumber v-model={modelValue.value} onUpdate:modelValue={onUpdate} />);
+    mount(() => <HInputNumber v-model={modelValue.value} onUpdate:modelValue={onUpdate} />);
 
     expect(onUpdate).toHaveBeenCalledTimes(0);
 
@@ -201,7 +201,7 @@ describe('InputNumber.tsx special', () => {
     const domRef = ref<(HTMLElement & InputNumberExposes) | null>(null);
 
     const wrapper = mount(() => (
-      <NInputNumber
+      <HInputNumber
         ref={domRef}
         v-model={value.value}
         // @ts-ignore
@@ -230,7 +230,7 @@ describe('InputNumber.tsx special', () => {
   test('zero fill', async () => {
     const value = ref(1000);
 
-    const wrapper = mount(() => <NInputNumber v-model={value.value} precision={4} stringMode />);
+    const wrapper = mount(() => <HInputNumber v-model={value.value} precision={4} stringMode />);
 
     expect(wrapper.find('input').element.value).toBe('1000.0000');
     expect(value.value).toBe('1000.0000');
@@ -241,7 +241,7 @@ describe('InputNumber.tsx special', () => {
     const value = ref(1000);
 
     const wrapper = mount(() => (
-      <NInputNumber v-model={value.value} precision={precision.value} stringMode />
+      <HInputNumber v-model={value.value} precision={precision.value} stringMode />
     ));
 
     expect(wrapper.find('input').element.value).toBe('1000.00');
@@ -260,7 +260,7 @@ describe('InputNumber.tsx special', () => {
     const value = ref(10000);
 
     const wrapper = mount(() => (
-      <NInputNumber v-model={value.value} precision={precision.value} max={9999.99} stringMode />
+      <HInputNumber v-model={value.value} precision={precision.value} max={9999.99} stringMode />
     ));
 
     expect(wrapper.find('input').element.value).toBe('9999.99');
@@ -300,7 +300,7 @@ describe('InputNumber.tsx special', () => {
   ])('illegal input $input => $expected', async ({ input, expected }) => {
     const onUpdate = vi.fn();
 
-    const wrapper = mount(() => <NInputNumber onUpdate:modelValue={onUpdate} />);
+    const wrapper = mount(() => <HInputNumber onUpdate:modelValue={onUpdate} />);
 
     await wrapper.find('input').setValue(input);
 
@@ -328,7 +328,7 @@ describe('InputNumber.tsx special', () => {
     });
 
     const wrapper = mount(() => (
-      <NInputNumber
+      <HInputNumber
         v-model={value.value}
         onChange={onChange}
         onInput={onInput}
@@ -353,7 +353,7 @@ describe('InputNumber.tsx special', () => {
     const onUpdate = vi.fn();
 
     const wrapper = mount(() => (
-      <NInputNumber
+      <HInputNumber
         v-model={value.value}
         onFocus={onFocus}
         onBlur={onBlur}
@@ -380,7 +380,7 @@ describe('InputNumber.tsx special', () => {
     const onUpdate = vi.fn();
 
     const wrapper = mount(() => (
-      <NInputNumber v-model={value.value} onUpdate:modelValue={onUpdate} />
+      <HInputNumber v-model={value.value} onUpdate:modelValue={onUpdate} />
     ));
 
     expect(onUpdate).toHaveBeenCalledTimes(0);
@@ -395,7 +395,7 @@ describe('InputNumber.tsx special', () => {
     const onUpdate = vi.fn();
 
     const wrapper = mount(() => (
-      <NInputNumber v-model={value.value} onUpdate:modelValue={onUpdate} />
+      <HInputNumber v-model={value.value} onUpdate:modelValue={onUpdate} />
     ));
 
     expect(onUpdate).toHaveBeenCalledTimes(0);
@@ -412,7 +412,7 @@ describe('InputNumber.tsx special', () => {
     const onBlur = vi.fn();
 
     const wrapper = mount(() => (
-      <NInputNumber v-model={value.value} onUpdate:modelValue={onUpdate} onBlur={onBlur} />
+      <HInputNumber v-model={value.value} onUpdate:modelValue={onUpdate} onBlur={onBlur} />
     ));
 
     expect(onUpdate).toHaveBeenCalledTimes(0);
@@ -438,7 +438,7 @@ describe('InputNumber.tsx special', () => {
     const onBlur = vi.fn();
 
     const wrapper = mount(() => (
-      <NInputNumber v-model={value.value} onUpdate:modelValue={onUpdate} onBlur={onBlur} />
+      <HInputNumber v-model={value.value} onUpdate:modelValue={onUpdate} onBlur={onBlur} />
     ));
 
     expect(onUpdate).toHaveBeenCalledTimes(0);
@@ -465,7 +465,7 @@ describe('InputNumber.tsx special', () => {
     const onBlur = vi.fn();
 
     const wrapper = mount(() => (
-      <NInputNumber
+      <HInputNumber
         v-model={value.value}
         onUpdate:modelValue={onUpdate}
         onBlur={onBlur}
@@ -501,7 +501,7 @@ describe('InputNumber.tsx special', () => {
     const onBlur = vi.fn();
 
     const wrapper = mount(() => (
-      <NInputNumber
+      <HInputNumber
         v-model={value.value}
         onUpdate:modelValue={onUpdate}
         onBlur={onBlur}
@@ -533,7 +533,7 @@ describe('InputNumber.tsx special', () => {
     const onBlur = vi.fn();
 
     const wrapper = mount(() => (
-      <NInputNumber
+      <HInputNumber
         v-model={value.value}
         max={9}
         onUpdate:modelValue={onUpdate}

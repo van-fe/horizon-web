@@ -1,3 +1,3 @@
 import { NotifyMethod } from './src';
 
-export const NNotify = NotifyMethod;
+export const HNotify = NotifyMethod;

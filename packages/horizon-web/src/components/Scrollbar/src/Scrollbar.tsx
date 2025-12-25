@@ -22,12 +22,12 @@ import type { ScrollbarSlots } from './composables/useSlots';
 import type { ScrollbarExposes } from './composables/useExposes';
 import ScrollbarTrack from './components/ScrollbarTrack';
 import {
-  NScrollbarPropsInjectKey,
-  NScrollbarUpdateDelayInjectKey,
-  NScrollbarViewSizeInjectKey,
+  HScrollbarPropsInjectKey,
+  HScrollbarUpdateDelayInjectKey,
+  HScrollbarViewSizeInjectKey,
 } from './utils/injectKeys';
-import NHover from '~/components/Hover/src/Hover';
-import NTransition from '~/components/Transition/src/Transition';
+import HHover from '~/components/Hover/src/Hover';
+import HTransition from '~/components/Transition/src/Transition';
 import { useEventListener, useResizeObserver } from '@vueuse/core';
 import useSize from '~/utils/useSize';
 import useBeginEndSpacing from './hooks/useBeginEndSpacing';
@@ -73,7 +73,7 @@ export default defineComponent({
 
     const size = useSize(sizeProp, 'medium');
 
-    const updateDelay = inject(NScrollbarUpdateDelayInjectKey, props.updateDelay);
+    const updateDelay = inject(HScrollbarUpdateDelayInjectKey, props.updateDelay);
 
     const widthRatio = computed(() => wrapSize.value.width / viewSize.value.width);
     const heightRatio = computed(() => wrapSize.value.height / viewSize.value.height);
@@ -103,8 +103,8 @@ export default defineComponent({
     const thumbToLeft = computed(() => toLeft.value * widthRatio.value - toLeftSkewing.value);
     const thumbToTop = computed(() => toTop.value * heightRatio.value - toTopSkewing.value);
 
-    provide(NScrollbarPropsInjectKey, props);
-    provide(NScrollbarViewSizeInjectKey, viewSize);
+    provide(HScrollbarPropsInjectKey, props);
+    provide(HScrollbarViewSizeInjectKey, viewSize);
 
     let stopResizeObserver: (() => void) | undefined = undefined;
     let stopResizeListener: (() => void) | undefined = undefined;
@@ -268,7 +268,7 @@ export default defineComponent({
     });
 
     return () => (
-      <NHover
+      <HHover
         onMouseEnter={evt => emit('mouseEnter', evt)}
         onMouseMove={handleMouseMove}
         onMouseLeave={evt => emit('mouseLeave', evt)}
@@ -312,7 +312,7 @@ export default defineComponent({
                 )}
               </div>
               {!props.native && (
-                <NTransition name="fade-in-linear" group={true}>
+                <HTransition name="fade-in-linear" group={true}>
                   {verticalBarVisible.value && verticalVisibleProp.value && (
                     <ScrollbarTrack
                       v-show={hover || isDragging.value || props.always}
@@ -342,12 +342,12 @@ export default defineComponent({
                       onSetDragging={val => (isDragging.value = val)}
                     />
                   )}
-                </NTransition>
+                </HTransition>
               )}
             </div>
           ),
         }}
-      </NHover>
+      </HHover>
     );
   },
 });

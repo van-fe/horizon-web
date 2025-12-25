@@ -8,12 +8,12 @@ import { useCheckboxEmits } from './composables/useEmits';
 import type { CheckboxGroupSlots } from './composables/useSlots';
 import { useCheckboxGroupSlots } from './composables/useSlots';
 import {
-  NFormDisabledInjectedKey,
-  NFormItemTriggerInjectedKey,
+  HFormDisabledInjectedKey,
+  HFormItemTriggerInjectedKey,
 } from '~/components/Form/src/utils/injectedKeys';
-import { NCheckboxGroupInjectedKey } from './utils/injectedKeys';
+import { HCheckboxGroupInjectedKey } from './utils/injectedKeys';
 import useSize from '~/utils/useSize';
-import { NApplicationCompatibilityInjectedKey } from '~/components/Application/src/utils/injectedKeys';
+import { HApplicationCompatibilityInjectedKey } from '~/components/Application/src/utils/injectedKeys';
 
 export default defineComponent({
   name: `${useNamespace()}CheckboxGroup`,
@@ -29,7 +29,7 @@ export default defineComponent({
     const classHelper = new ComponentClassBlock('checkbox-group');
 
     /** formItemTrigger **/
-    const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
+    const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
 
     const handleChange = (value: Array<CheckboxUnionType>) => {
       emit('update:modelValue', value);
@@ -42,7 +42,7 @@ export default defineComponent({
       formItemTrigger?.('blur');
     };
 
-    const compatibility = inject(NApplicationCompatibilityInjectedKey, undefined);
+    const compatibility = inject(HApplicationCompatibilityInjectedKey, undefined);
 
     // global size
     const size = toRef(props, 'size');
@@ -69,11 +69,11 @@ export default defineComponent({
     });
 
     // form disabled inject
-    const formDisabled = inject(NFormDisabledInjectedKey, undefined);
+    const formDisabled = inject(HFormDisabledInjectedKey, undefined);
     const isDisabled = computed(() => propDisabled?.value ?? formDisabled?.value);
 
     provide(
-      NCheckboxGroupInjectedKey,
+      HCheckboxGroupInjectedKey,
       reactive({
         value: computed(() => propModelValue.value || false),
         changeEvent: handleChange,

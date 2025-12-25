@@ -1,10 +1,10 @@
 import { mount } from '@vue/test-utils';
-import NDropdown from '../src/Dropdown';
+import HDropdown from '../src/Dropdown';
 import { describe, expect, test } from 'vitest';
-import NButton from '../../Button';
-import { NDropdownItem, NDropdownMenu } from '../index';
+import HButton from '../../Button';
+import { HDropdownItem, HDropdownMenu } from '../index';
 import { nextTick, ref } from 'vue';
-import NTooltip from '../../Tooltip';
+import HTooltip from '../../Tooltip';
 
 describe('DropdownItem.tsx', () => {
   describe('props', () => {
@@ -13,24 +13,24 @@ describe('DropdownItem.tsx', () => {
 
       const wrapper = mount(
         () => (
-          <NDropdown visible={true} toBody={false}>
+          <HDropdown visible={true} toBody={false}>
             {{
-              default: () => <NButton>Trigger</NButton>,
+              default: () => <HButton>Trigger</HButton>,
               dropdown: () => (
-                <NDropdownMenu>
-                  <NDropdownItem disabled={disabled.value}>1</NDropdownItem>
-                  <NDropdownItem>2</NDropdownItem>
-                  <NDropdownItem>3</NDropdownItem>
-                </NDropdownMenu>
+                <HDropdownMenu>
+                  <HDropdownItem disabled={disabled.value}>1</HDropdownItem>
+                  <HDropdownItem>2</HDropdownItem>
+                  <HDropdownItem>3</HDropdownItem>
+                </HDropdownMenu>
               ),
             }}
-          </NDropdown>
+          </HDropdown>
         ),
         {
           attachTo: document.body,
         },
       );
-      const items = wrapper.findAllComponents(NDropdownItem);
+      const items = wrapper.findAllComponents(HDropdownItem);
 
       await expect(items[0].classes('is-disabled')).toBeFalsy();
 
@@ -44,24 +44,24 @@ describe('DropdownItem.tsx', () => {
     test('icon', async () => {
       const wrapper = mount(
         () => (
-          <NDropdown visible={true} toBody={false}>
+          <HDropdown visible={true} toBody={false}>
             {{
-              default: () => <NButton>Trigger</NButton>,
+              default: () => <HButton>Trigger</HButton>,
               dropdown: () => (
-                <NDropdownMenu>
-                  <NDropdownItem icon="eye">1</NDropdownItem>
-                  <NDropdownItem>2</NDropdownItem>
-                  <NDropdownItem>3</NDropdownItem>
-                </NDropdownMenu>
+                <HDropdownMenu>
+                  <HDropdownItem icon="eye">1</HDropdownItem>
+                  <HDropdownItem>2</HDropdownItem>
+                  <HDropdownItem>3</HDropdownItem>
+                </HDropdownMenu>
               ),
             }}
-          </NDropdown>
+          </HDropdown>
         ),
         {
           attachTo: document.body,
         },
       );
-      const items = wrapper.findAllComponents(NDropdownItem);
+      const items = wrapper.findAllComponents(HDropdownItem);
 
       await expect(items[0].find('.a-icon').exists()).toBeTruthy();
 
@@ -71,24 +71,24 @@ describe('DropdownItem.tsx', () => {
     test('active', async () => {
       const wrapper = mount(
         () => (
-          <NDropdown visible={true} toBody={false}>
+          <HDropdown visible={true} toBody={false}>
             {{
-              default: () => <NButton>Trigger</NButton>,
+              default: () => <HButton>Trigger</HButton>,
               dropdown: () => (
-                <NDropdownMenu>
-                  <NDropdownItem active={true}>1</NDropdownItem>
-                  <NDropdownItem>2</NDropdownItem>
-                  <NDropdownItem>3</NDropdownItem>
-                </NDropdownMenu>
+                <HDropdownMenu>
+                  <HDropdownItem active={true}>1</HDropdownItem>
+                  <HDropdownItem>2</HDropdownItem>
+                  <HDropdownItem>3</HDropdownItem>
+                </HDropdownMenu>
               ),
             }}
-          </NDropdown>
+          </HDropdown>
         ),
         {
           attachTo: document.body,
         },
       );
-      const items = wrapper.findAllComponents(NDropdownItem);
+      const items = wrapper.findAllComponents(HDropdownItem);
 
       await expect(items[0].classes('is-active')).toBeTruthy();
     });
@@ -96,24 +96,24 @@ describe('DropdownItem.tsx', () => {
     test('divided', async () => {
       const wrapper = mount(
         () => (
-          <NDropdown visible={true} toBody={false}>
+          <HDropdown visible={true} toBody={false}>
             {{
-              default: () => <NButton>Trigger</NButton>,
+              default: () => <HButton>Trigger</HButton>,
               dropdown: () => (
-                <NDropdownMenu>
-                  <NDropdownItem divided={true}>1</NDropdownItem>
-                  <NDropdownItem>2</NDropdownItem>
-                  <NDropdownItem>3</NDropdownItem>
-                </NDropdownMenu>
+                <HDropdownMenu>
+                  <HDropdownItem divided={true}>1</HDropdownItem>
+                  <HDropdownItem>2</HDropdownItem>
+                  <HDropdownItem>3</HDropdownItem>
+                </HDropdownMenu>
               ),
             }}
-          </NDropdown>
+          </HDropdown>
         ),
         {
           attachTo: document.body,
         },
       );
-      const items = wrapper.findAllComponents(NDropdownItem);
+      const items = wrapper.findAllComponents(HDropdownItem);
 
       await expect(items[0].classes('is-divided')).toBeTruthy();
     });
@@ -121,26 +121,26 @@ describe('DropdownItem.tsx', () => {
     test('tooltip-options', async () => {
       const wrapper = mount(
         () => (
-          <NDropdown visible={true} toBody={false}>
+          <HDropdown visible={true} toBody={false}>
             {{
-              default: () => <NButton>Trigger</NButton>,
+              default: () => <HButton>Trigger</HButton>,
               dropdown: () => (
-                <NDropdownMenu>
-                  <NDropdownItem tooltipOptions={{ visible: true, toBody: false }}>1</NDropdownItem>
-                  <NDropdownItem>2</NDropdownItem>
-                  <NDropdownItem>3</NDropdownItem>
-                </NDropdownMenu>
+                <HDropdownMenu>
+                  <HDropdownItem tooltipOptions={{ visible: true, toBody: false }}>1</HDropdownItem>
+                  <HDropdownItem>2</HDropdownItem>
+                  <HDropdownItem>3</HDropdownItem>
+                </HDropdownMenu>
               ),
             }}
-          </NDropdown>
+          </HDropdown>
         ),
         {
           attachTo: document.body,
         },
       );
-      const items = wrapper.findAllComponents(NDropdownItem);
+      const items = wrapper.findAllComponents(HDropdownItem);
 
-      expect(items[0].findComponent(NTooltip).exists()).toBeTruthy();
+      expect(items[0].findComponent(HTooltip).exists()).toBeTruthy();
     });
   });
 });

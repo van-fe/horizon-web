@@ -1,6 +1,6 @@
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, cssVariableKey, useNamespace } from '@aurora/utils';
-import { computed, defineComponent, inject, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { computed, defineComponent, inject, onBeforeUnmount, onMounted, ref, watch, type Ref } from 'vue';
 import { useOptionProps } from './composables/useProps';
 import type { OptionSlots } from './composables/useSlots';
 import { useOptionSlots } from './composables/useSlots';
@@ -8,21 +8,21 @@ import type { OptionEmits } from './composables/useEmits';
 import { useOptionEmits } from './composables/useEmits';
 import type { SelectCollectedOptionData } from './utils/injectKeys';
 import {
-  NOptionGroupPropsInjectKey,
-  NSelectAddOptionInjectKey,
-  NSelectFocusedOptionValueInjectKey,
-  NSelectMouseOverOptionInjectKey,
-  NSelectPickOptionInjectKey,
-  NSelectPopperVisibleInjectKey,
-  NSelectPresetModelValueInjectKey,
-  NSelectPropsInjectKey,
-  NSelectRemoveOptionInjectKey,
-  NSelectSlotsInjectKey,
-  NSelectVisibleOptionsInjectKey,
+  HOptionGroupPropsInjectKey,
+  HSelectAddOptionInjectKey,
+  HSelectFocusedOptionValueInjectKey,
+  HSelectMouseOverOptionInjectKey,
+  HSelectPickOptionInjectKey,
+  HSelectPopperVisibleInjectKey,
+  HSelectPresetModelValueInjectKey,
+  HSelectPropsInjectKey,
+  HSelectRemoveOptionInjectKey,
+  HSelectSlotsInjectKey,
+  HSelectVisibleOptionsInjectKey,
 } from './utils/injectKeys';
-import NCheckbox from '~/components/Checkbox/src/Checkbox';
+import HCheckbox from '~/components/Checkbox/src/Checkbox';
 import useIconRender from '~/utils/useIconRender';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
 import { isOptionChecked } from './utils/valueFormat';
 import SafeHtml from '~/directives/v-safe-html/src/index';
 import { useHighlightOption } from './hooks/useHighlight';
@@ -30,8 +30,8 @@ import { useHighlightOption } from './hooks/useHighlight';
 export default defineComponent({
   name: `${useNamespace()}Option`,
   components: {
-    NCheckbox,
-    NTooltip,
+    HCheckbox,
+    HTooltip,
   },
   directives: {
     safeHtml: SafeHtml,
@@ -49,17 +49,17 @@ export default defineComponent({
     const contentDomRef = ref<HTMLDivElement>();
     const descriptionDomRef = ref<HTMLDivElement>();
 
-    const presetModelValue = inject(NSelectPresetModelValueInjectKey)!;
-    const parentProps = inject(NSelectPropsInjectKey)!;
-    const parentSlots = inject(NSelectSlotsInjectKey)!;
-    const groupProps = inject(NOptionGroupPropsInjectKey, undefined);
-    const addOption = inject(NSelectAddOptionInjectKey);
-    const removeOption = inject(NSelectRemoveOptionInjectKey);
-    const pickOption = inject(NSelectPickOptionInjectKey)!;
-    const visibleOptions = inject(NSelectVisibleOptionsInjectKey)!;
-    const focusedOptionValue = inject(NSelectFocusedOptionValueInjectKey)!;
-    const popperVisible = inject(NSelectPopperVisibleInjectKey)!;
-    const onMouseOverOption = inject(NSelectMouseOverOptionInjectKey)!;
+    const presetModelValue = inject(HSelectPresetModelValueInjectKey)!;
+    const parentProps = inject(HSelectPropsInjectKey)!;
+    const parentSlots = inject(HSelectSlotsInjectKey)!;
+    const groupProps = inject(HOptionGroupPropsInjectKey, undefined);
+    const addOption = inject(HSelectAddOptionInjectKey);
+    const removeOption = inject(HSelectRemoveOptionInjectKey);
+    const pickOption = inject(HSelectPickOptionInjectKey)!;
+    const visibleOptions = inject(HSelectVisibleOptionsInjectKey)!;
+    const focusedOptionValue = inject(HSelectFocusedOptionValueInjectKey)!;
+    const popperVisible = inject(HSelectPopperVisibleInjectKey)!;
+    const onMouseOverOption = inject(HSelectMouseOverOptionInjectKey)!;
 
     watch(popperVisible, val => {
       if (val && parentProps.selectedOptionOrderToTop) {
@@ -110,7 +110,7 @@ export default defineComponent({
       props,
       slots,
       attrs,
-      el: optionDomRef,
+      el: optionDomRef as Ref<HTMLElement | null>,
       active: isChecked,
       disabled: isDisabled,
       children: null,
@@ -169,7 +169,7 @@ export default defineComponent({
               {slots.labelPrefix?.({ ...props, ...attrs, active: isChecked.value })}
               {parentProps.multiple && (
                 <div class={classHelper.e('checkbox')}>
-                  <NCheckbox
+                  <HCheckbox
                     true-label={true}
                     false-label={false}
                     modelValue={isChecked.value}
@@ -178,7 +178,7 @@ export default defineComponent({
                 </div>
               )}
               <div class={classHelper.e('content-wrapper')}>
-                <NTooltip
+                <HTooltip
                   overflow={true}
                   referenceHiddenObserve={true}
                   showAfter={parentProps.tooltipShowAfter}
@@ -197,10 +197,10 @@ export default defineComponent({
                       </div>
                     ),
                   }}
-                </NTooltip>
+                </HTooltip>
                 {slots.labelSuffix?.({ ...props, ...attrs, active: isChecked.value })}
                 {(props.description || slots.description) && (
-                  <NTooltip
+                  <HTooltip
                     overflow={true}
                     referenceHiddenObserve={true}
                     showAfter={parentProps.tooltipShowAfter}
@@ -217,7 +217,7 @@ export default defineComponent({
                         </div>
                       ),
                     }}
-                  </NTooltip>
+                  </HTooltip>
                 )}
               </div>
               {parentProps.showSelectedIcon && isChecked.value && (

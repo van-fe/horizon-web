@@ -16,7 +16,7 @@ const HIDDEN_TEXTAREA_STYLE = `
   pointer-events: none !important;
 `;
 
-const SIZING_STYLE = [
+const SIZIHG_STYLE = [
   'letter-spacing',
   'line-height',
   'padding-top',
@@ -71,7 +71,7 @@ export function calculateNodeStyling(node: HTMLElement, useCache = false) {
     parseFloat(style.getPropertyValue('border-bottom-width')) +
     parseFloat(style.getPropertyValue('border-top-width'));
 
-  const sizingStyle = SIZING_STYLE.map(name => `${name}:${style.getPropertyValue(name)}`).join(';');
+  const sizingStyle = SIZIHG_STYLE.map(name => `${name}:${style.getPropertyValue(name)}`).join(';');
 
   const nodeInfo: NodeType = {
     sizingStyle,

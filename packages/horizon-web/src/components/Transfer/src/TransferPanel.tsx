@@ -1,4 +1,4 @@
-import { defineComponent, toRefs, ref, watch, computed, inject, Fragment } from 'vue';
+import { defineComponent, toRefs, ref, watch, computed, Fragment } from 'vue';
 import type {
   TransferDataProps,
   CheckboxUnionType,
@@ -9,37 +9,37 @@ import { useTransferPanelEmits } from './composables/useEmits';
 import type { TransferPanelEmits } from './composables/useEmits';
 import { cls, cssVariable, type HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
-import NCheckbox from '~/components/Checkbox/src/Checkbox';
-import NCheckboxGroup from '~/components/Checkbox/src/CheckboxGroup';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
-import NButton from '~/components/Button/src/Button';
-import NTree from '~/components/Tree/src/Tree';
-import NInput from '~/components/Input/src/Input';
-import NBreadcrumb from '~/components/Breadcrumb/src/Breadcrumb';
-import NBreadcrumbItem from '~/components/Breadcrumb/src/BreadcrumbItem';
+import HCheckbox from '~/components/Checkbox/src/Checkbox';
+import HCheckboxGroup from '~/components/Checkbox/src/CheckboxGroup';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
+import HButton from '~/components/Button/src/Button';
+import HTree from '~/components/Tree/src/Tree';
+import HInput from '~/components/Input/src/Input';
+import HBreadcrumb from '~/components/Breadcrumb/src/Breadcrumb';
+import HBreadcrumbItem from '~/components/Breadcrumb/src/BreadcrumbItem';
 import { AIcon } from '@aurora/icon';
 import type { TransferPanelSlots } from './composables/useSlots';
 import { useTransferPanelSlots } from './composables/useSlots';
-import { defaultLocale, localeInjectKey } from '~/provides/localable';
 import { nanoid } from 'nanoid';
-import NVirtualScroller from '~/components/VirtualScroller/src/VirtualScroller';
-import NVirtualScrollerItem from '~/components/VirtualScroller/src/VirtualScrollerItem';
+import HVirtualScroller from '~/components/VirtualScroller/src/VirtualScroller';
+import HVirtualScrollerItem from '~/components/VirtualScroller/src/VirtualScrollerItem';
 import type { VirtualScrollerDefaultSlotRowType } from '~/components/VirtualScroller/src/composables/useSlots';
+import useLocaleLang from '~/utils/useLocaleLang';
 
 export default defineComponent({
   name: `${useNamespace()}TransferPanel`,
   components: {
-    NCheckbox,
-    NTooltip,
-    NCheckboxGroup,
-    NButton,
-    NTree,
+    HCheckbox,
+    HTooltip,
+    HCheckboxGroup,
+    HButton,
+    HTree,
     AIcon,
-    NInput,
-    NBreadcrumb,
-    NBreadcrumbItem,
-    NVirtualScroller,
-    NVirtualScrollerItem,
+    HInput,
+    HBreadcrumb,
+    HBreadcrumbItem,
+    HVirtualScroller,
+    HVirtualScrollerItem,
   },
   props: useTransferPanelProps,
   emits: useTransferPanelEmits,
@@ -48,8 +48,6 @@ export default defineComponent({
     props: TransferPanelProps,
     { slots, emit, expose }: HorizonWebSetupContext<TransferPanelEmits, TransferPanelSlots>,
   ) {
-    const locale = inject(localeInjectKey, defaultLocale);
-
     const {
       data: dataProp,
       type: typeProp,
@@ -187,31 +185,31 @@ export default defineComponent({
           {slots?.filter?.() ??
             (!!(filterableProp.value as any) && (
               <div class={[classHelper.e('input')]}>
-                <NInput
+                <HInput
                   v-model={searchInput.value}
                   clearable={true}
                   disabled={disabledProp.value}
                   placeholder={
                     placeholderProp.value ||
-                    locale.value?.langService?.td()?.horizon-web?.transfer?.filterPlaceholder
+                    useLocaleLang('transfer.filterPlaceholder').value as string
                   }
                 />
               </div>
             ))}
           {showBreadcrumb.value && (
             <div class={classHelper.e('breadcrumb')}>
-              <NBreadcrumb>
-                <NBreadcrumbItem
+              <HBreadcrumb>
+                <HBreadcrumbItem
                   clickable={true}
                   v-slots={{
                     separator: () => <AIcon name="arrow_right" size="12" />,
                   }}
                 >
                   <span onClick={handleCollapseItem}>{breadcrumbProp.value}</span>
-                </NBreadcrumbItem>
+                </HBreadcrumbItem>
                 {breadcrumbArr.value.map((item: any, index) => {
                   return (
-                    <NBreadcrumbItem
+                    <HBreadcrumbItem
                       key={index}
                       clickable={true}
                       v-slots={{
@@ -221,10 +219,10 @@ export default defineComponent({
                       <span onClick={() => handleClickBreadcrumbItem(item, index)}>
                         {item[propsProp.value.label as string]}
                       </span>
-                    </NBreadcrumbItem>
+                    </HBreadcrumbItem>
                   );
                 })}
-              </NBreadcrumb>
+              </HBreadcrumb>
             </div>
           )}
           <div class={[classHelper.e('body')]}>
@@ -234,13 +232,13 @@ export default defineComponent({
                 slots?.body?.({
                   data: filterDataComputed.value,
                 }) ?? (
-                  <NVirtualScroller items={filterDataComputed.value} minItemSize={38}>
+                  <HVirtualScroller items={filterDataComputed.value} minItemSize={38}>
                     {{
                       default: ({ item, index }: VirtualScrollerDefaultSlotRowType) => {
                         if (item[propsProp.value.isGroup as string]) {
                           return (
-                            <NVirtualScrollerItem item={item} data-index={index}>
-                              <NTooltip overflow content={item[propsProp.value.label as string]}>
+                            <HVirtualScrollerItem item={item} data-index={index}>
+                              <HTooltip overflow content={item[propsProp.value.label as string]}>
                                 <div
                                   class={[classHelper.e('item-label'), classHelper.e('item-group')]}
                                   key={index}
@@ -248,18 +246,18 @@ export default defineComponent({
                                   {item[propsProp.value.label as string]}
                                   {item[propsProp.value.isGroup as string]}
                                 </div>
-                              </NTooltip>
-                            </NVirtualScrollerItem>
+                              </HTooltip>
+                            </HVirtualScrollerItem>
                           );
                         } else {
                           return (
-                            <NVirtualScrollerItem
+                            <HVirtualScrollerItem
                               class={[classHelper.e('item')]}
                               key={index}
                               item={item}
                               data-index={index}
                             >
-                              <NCheckbox
+                              <HCheckbox
                                 disabled={
                                   item[propsProp.value.disabled as string] || disabledProp.value
                                 }
@@ -268,18 +266,18 @@ export default defineComponent({
                                 onChange={handleCheckedItem}
                               >
                                 {slots?.item?.({ item, type: typeProp.value }) ?? (
-                                  <NTooltip
+                                  <HTooltip
                                     overflow
                                     content={item[propsProp.value.label as string]}
                                   >
                                     <div class={[classHelper.e('item-label')]}>
                                       {item[propsProp.value.label as string]}
                                     </div>
-                                  </NTooltip>
+                                  </HTooltip>
                                 )}
-                              </NCheckbox>
+                              </HCheckbox>
                               {item[propsProp.value.children as string]?.length ? (
-                                <NButton
+                                <HButton
                                   text
                                   size="medium"
                                   icon="arrow_right"
@@ -288,22 +286,22 @@ export default defineComponent({
                               ) : (
                                 ''
                               )}
-                            </NVirtualScrollerItem>
+                            </HVirtualScrollerItem>
                           );
                         }
                       },
                     }}
-                  </NVirtualScroller>
+                  </HVirtualScroller>
                 )
               ) : (
                 slots?.body?.({
                   data: dataProp.value,
                 }) ?? (
-                  <NVirtualScroller items={dataProp.value} minItemSize={38}>
+                  <HVirtualScroller items={dataProp.value} minItemSize={38}>
                     {{
                       default: ({ item, index }: VirtualScrollerDefaultSlotRowType) => {
                         return (
-                          <NVirtualScrollerItem item={item} data-index={index}>
+                          <HVirtualScrollerItem item={item} data-index={index}>
                             <div
                               class={cls(
                                 classHelper.e('item'),
@@ -349,7 +347,7 @@ export default defineComponent({
                               {draggableProp.value && !disabledProp.value && (
                                 <AIcon class={'mr-3'} name="drag_form" />
                               )}
-                              <NTooltip
+                              <HTooltip
                                 overflow
                                 content={
                                   item[propsProp.value.label as keyof TransferDataProps] as string
@@ -359,7 +357,7 @@ export default defineComponent({
                                   {slots?.item?.({ item, type: typeProp.value }) ??
                                     item[propsProp.value.label as keyof TransferDataProps]}
                                 </div>
-                              </NTooltip>
+                              </HTooltip>
                               {!item[propsProp.value.disabled as keyof TransferDataProps] &&
                                 !disabledProp.value && (
                                   <AIcon
@@ -375,11 +373,11 @@ export default defineComponent({
                                   />
                                 )}
                             </div>
-                          </NVirtualScrollerItem>
+                          </HVirtualScrollerItem>
                         );
                       },
                     }}
-                  </NVirtualScroller>
+                  </HVirtualScroller>
                 )
               )
             ) : (

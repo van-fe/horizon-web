@@ -1,5 +1,5 @@
 import { default as Switch } from './src/Switch';
 import { withInstall } from '@aurora/utils';
 
-export const NSwitch = withInstall(Switch);
-export default NSwitch;
+export const HSwitch = withInstall(Switch);
+export default HSwitch;

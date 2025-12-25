@@ -3,7 +3,7 @@ import type { MenuItemSlots, SubMenuSlots } from '../composables/useSlots';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { MenuItemEmits, SubMenuEmits } from '../composables/useEmits';
 
-export interface NMenuTreeData<Type extends 'subMenu' | 'menuItem' = 'menuItem'> {
+export interface HMenuTreeData<Type extends 'subMenu' | 'menuItem' = 'menuItem'> {
   uuid: string;
   type: Type;
   props: Type extends 'subMenu' ? SubMenuProps : MenuItemProps;
@@ -13,12 +13,12 @@ export interface NMenuTreeData<Type extends 'subMenu' | 'menuItem' = 'menuItem'>
   slots: Type extends 'subMenu'
     ? HorizonWebSetupContext<{}, SubMenuSlots>['slots']
     : HorizonWebSetupContext<{}, MenuItemSlots>['slots'];
-  children: Type extends 'subMenu' ? Map<string, NMenuTreeData> : null;
+  children: Type extends 'subMenu' ? Map<string, HMenuTreeData> : null;
   level: number;
   scrollTo: () => void;
 }
 
-export interface NMenuTreePickedValuesData<Type extends 'subMenu' | 'menuItem' = 'menuItem'> {
+export interface HMenuTreePickedValuesData<Type extends 'subMenu' | 'menuItem' = 'menuItem'> {
   uuid: string;
   type: Type;
   props: Type extends 'subMenu' ? SubMenuProps : MenuItemProps;
@@ -28,6 +28,6 @@ export interface NMenuTreePickedValuesData<Type extends 'subMenu' | 'menuItem' =
   slots: Type extends 'subMenu'
     ? HorizonWebSetupContext<{}, SubMenuSlots>['slots']
     : HorizonWebSetupContext<{}, MenuItemSlots>['slots'];
-  children: NMenuTreePickedValuesData<'subMenu' | 'menuItem'>[];
+  children: HMenuTreePickedValuesData<'subMenu' | 'menuItem'>[];
   scrollTo: () => void;
 }

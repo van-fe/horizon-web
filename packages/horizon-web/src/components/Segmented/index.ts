@@ -3,12 +3,12 @@ import { default as SegmentedItem } from './src/SegmentedItem';
 import { withInstall, withNoopInstall } from '@aurora/utils';
 
 export type {
-  NSegmentedSize,
-  NSegmentedValue,
+  HSegmentedSize,
+  HSegmentedValue,
   SegmentedProps,
   SegmentedItemProps,
 } from './src/composables/useProps';
 
-export const NSegmented = withInstall(Segmented, { SegmentedItem });
-export const NSegmentedItem = withNoopInstall(SegmentedItem);
-export default NSegmented;
+export const HSegmented = withInstall(Segmented, { SegmentedItem });
+export const HSegmentedItem = withNoopInstall(SegmentedItem);
+export default HSegmented;

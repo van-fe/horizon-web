@@ -2,11 +2,11 @@ import type { ExtractPropTypes, PropType, StyleValue, UnwrapRef } from 'vue';
 import type { Arrayable, Promisable } from '@aurora/utils';
 import { declarePropType, isNumber, isObject } from '@aurora/utils';
 import type { ButtonProps } from '~/components/Button/src/composables/useProps';
-import type { NUploadMultipartSetting } from './useMultipartUpload';
+import type { HUploadMultipartSetting } from './useMultipartUpload';
 import type {
-  NUploadRawFileType,
-  NUploadFileType,
-  NUploadHttpRequestInstanceMethods,
+  HUploadFileType,
+  HUploadRawFileType,
+  HUploadHttpRequestInstanceMethods,
 } from '../utils/fileDefines';
 
 export const useUploadProps = declarePropType({
@@ -81,7 +81,7 @@ export const useUploadProps = declarePropType({
    * 文件信息
    */
   modelValue: {
-    type: [Object, Array] as PropType<Arrayable<NUploadRawFileType> | null>,
+    type: [Object, Array] as PropType<Arrayable<HUploadRawFileType> | null>,
   },
   /**
    * 上传类型
@@ -187,7 +187,7 @@ export const useUploadProps = declarePropType({
   controls: {
     type: [Array, Function] as PropType<
       | ('upload' | 'delete' | 'view')[]
-      | ((file: UnwrapRef<NUploadFileType>) => ('upload' | 'delete' | 'view')[])
+      | ((file: UnwrapRef<HUploadFileType>) => ('upload' | 'delete' | 'view')[])
     >,
     default: () => ['upload', 'view', 'delete'] as const,
     validator(val) {
@@ -260,7 +260,7 @@ export const useUploadProps = declarePropType({
    * @param files 待上传的文件
    */
   beforeUpload: {
-    type: Function as PropType<(file: NUploadFileType) => Promisable<boolean>>,
+    type: Function as PropType<(file: HUploadFileType) => Promisable<boolean>>,
   },
   /**
    * 点击删除前的钩子，可以用来判断文件是否允许删除
@@ -268,7 +268,7 @@ export const useUploadProps = declarePropType({
    * @param file 待删除的文件
    */
   beforeRemove: {
-    type: Function as PropType<(file: NUploadFileType) => Promisable<boolean>>,
+    type: Function as PropType<(file: HUploadFileType) => Promisable<boolean>>,
   },
   /**
    * 点击暂停上传前的钩子，可以用来判断文件是否允许暂停上传
@@ -276,14 +276,14 @@ export const useUploadProps = declarePropType({
    * @param file 待暂停上传的文件
    */
   beforeAbort: {
-    type: Function as PropType<(file: NUploadFileType) => Promisable<boolean>>,
+    type: Function as PropType<(file: HUploadFileType) => Promisable<boolean>>,
   },
   /**
    * 在点击预览按钮执行预览前的钩子，如果回调为 `false`，则不允许进行预览
    * @param file 待预览文件
    */
   beforePreview: {
-    type: Function as PropType<(file: NUploadFileType) => Promisable<boolean | void>>,
+    type: Function as PropType<(file: HUploadFileType) => Promisable<boolean | void>>,
   },
   /**
    * 传入 `Viewer` 组件的文件列表过滤函数，不可传入异步函数
@@ -292,14 +292,14 @@ export const useUploadProps = declarePropType({
    * @version 2.11.6
    */
   beforeViewerPreview: {
-    type: Function as PropType<(file: NUploadFileType) => boolean>,
+    type: Function as PropType<(file: HUploadFileType) => boolean>,
   },
   /**
    * 在 `http` 返回 `200` 时的处理回调，需要返回的是文件实际上传后的地址
    * 如果没有传入此方法，则会递归去寻找以 `http(s)://` 开始的第一个链接作为上传后的地址
    */
   handleSuccess: {
-    type: Function as PropType<(responseData: any, file: NUploadFileType) => Promisable<string>>,
+    type: Function as PropType<(responseData: any, file: HUploadFileType) => Promisable<string>>,
   },
   /**
    * 最大同时上传数量
@@ -334,7 +334,7 @@ export const useUploadProps = declarePropType({
    */
   httpRequest: {
     type: Function as PropType<
-      (file: NUploadFileType, instanceMethods: NUploadHttpRequestInstanceMethods) => void
+      (file: HUploadFileType, instanceMethods: HUploadHttpRequestInstanceMethods) => void
     >,
   },
   /**
@@ -376,7 +376,7 @@ export const useUploadProps = declarePropType({
    * @invisible
    */
   multipart: {
-    type: [Boolean, Object] as PropType<false | NUploadMultipartSetting>,
+    type: [Boolean, Object] as PropType<false | HUploadMultipartSetting>,
     default: false,
     validator(val) {
       if (typeof val === 'boolean' && !val) {

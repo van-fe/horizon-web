@@ -1,19 +1,19 @@
 import type {
-  NUploadFileType,
-  NUploadHttpRequestInstanceMethods,
+  HUploadFileType,
+  HUploadHttpRequestInstanceMethods,
 } from '../fileDefines';
-import { NUploadFileStatusEnum } from '../fileDefines';
-import type { NUploadChunk } from '../../composables/useMultipartUpload';
+import { HUploadFileStatusEnum } from '../fileDefines';
+import type { HUploadChunk } from '../../composables/useMultipartUpload';
 import type { Data } from '@aurora/utils';
 import UploadHelperOptions from '../UploadHelperOptions';
 import type { ToRefs } from 'vue';
 import type { UploadProps } from '../../composables/useProps';
 
 export default abstract class BaseMultipartUploadHelper extends UploadHelperOptions {
-  protected readonly file: NUploadFileType;
-  protected readonly instanceMethods: NUploadHttpRequestInstanceMethods;
+  protected readonly file: HUploadFileType;
+  protected readonly instanceMethods: HUploadHttpRequestInstanceMethods;
 
-  private uploadStoredChunksRecorder: NUploadChunk[] = [];
+  private uploadStoredChunksRecorder: HUploadChunk[] = [];
 
   protected get chunkSize() {
     return (this.multipartChunkSize || 2) * 1024 * 1024;
@@ -24,8 +24,8 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
   }
 
   protected constructor(
-    file: NUploadFileType,
-    instanceMethods: NUploadHttpRequestInstanceMethods,
+    file: HUploadFileType,
+    instanceMethods: HUploadHttpRequestInstanceMethods,
     props?: ToRefs<Partial<UploadProps>>,
   ) {
     super(props);
@@ -38,18 +38,18 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
     });
   }
 
-  abstract initUpload(file: NUploadFileType): Promise<void>;
+  abstract initUpload(file: HUploadFileType): Promise<void>;
 
-  abstract mergeFiles(file: NUploadFileType, chunks: NUploadChunk[]): Promise<void>;
+  abstract mergeFiles(file: HUploadFileType, chunks: HUploadChunk[]): Promise<void>;
 
   abstract filenameModify(fileRawName: string, index: number, part: Blob): string;
 
-  abstract beforeFilePartUpload(file: NUploadFileType, index: number, part: Blob): Data;
+  abstract beforeFilePartUpload(file: HUploadFileType, index: number, part: Blob): Data;
 
-  abstract uploadActionModify(chunk: NUploadChunk): string;
+  abstract uploadActionModify(chunk: HUploadChunk): string;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected appendHeader(xhr: XMLHttpRequest, header: Data, chunk?: NUploadChunk) {
+  protected appendHeader(xhr: XMLHttpRequest, header: Data, chunk?: HUploadChunk) {
     Object.entries({ ...this.header, ...header }).forEach(([key, value]) => {
       xhr.setRequestHeader(key, (value as string).toString());
     });
@@ -80,7 +80,7 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
     }
   }
 
-  private uploadChunk(chunk: NUploadChunk) {
+  private uploadChunk(chunk: HUploadChunk) {
     const xhr = new XMLHttpRequest();
     xhr.open(this.uploadMethod, this.uploadActionModify(chunk), true);
     xhr.withCredentials = this.withCredentials;
@@ -105,7 +105,7 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
           1,
         ) * 100;
 
-      this.file.status = NUploadFileStatusEnum.Uploading;
+      this.file.status = HUploadFileStatusEnum.Uploading;
       this.file.percentage = progress;
       this.file.response = xhr.response;
     };

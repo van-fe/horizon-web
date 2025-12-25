@@ -1,18 +1,18 @@
 import { mount } from '@vue/test-utils';
 import { describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
-import { NButton } from '../../Button';
-import NSpace from '../src/Space';
-import type { NSpaceSize } from '../src/composables/useProps';
+import { HButton } from '../../Button';
+import HSpace from '../src/Space';
+import type { HSpaceSize } from '../src/composables/useProps';
 
 describe('Space.tsx', () => {
   describe('test props', () => {
     test('test basic #render', async () => {
       const wrapper = mount(() => (
-        <NSpace>
+        <HSpace>
           <button>Hello</button>
           <button>Hello</button>
-        </NSpace>
+        </HSpace>
       ));
 
       expect(wrapper.html()).toMatchInlineSnapshot(`
@@ -22,17 +22,17 @@ describe('Space.tsx', () => {
         </div>"
       `);
 
-      const space = wrapper.findComponent(NSpace);
+      const space = wrapper.findComponent(HSpace);
       expect(space.exists()).toBe(true);
       expect(space.findAll('.n-space--item')).toHaveLength(2);
     });
 
     test('test vertical layout #render', async () => {
       const wrapper = mount(() => (
-        <NSpace direction="vertical">
+        <HSpace direction="vertical">
           <button>Hello</button>
           <button>Hello</button>
-        </NSpace>
+        </HSpace>
       ));
 
       expect(wrapper.html()).toMatchInlineSnapshot(`
@@ -42,18 +42,18 @@ describe('Space.tsx', () => {
         </div>"
       `);
 
-      const space = wrapper.findComponent(NSpace);
+      const space = wrapper.findComponent(HSpace);
       expect(space.exists()).toBe(true);
       expect(space.classes().join(' ')).contains('vertical');
     });
 
     test('custom size #render', async () => {
-      const size = ref<NSpaceSize>(10);
+      const size = ref<HSpaceSize>(10);
       const wrapper = mount(() => (
-        <NSpace size={size.value}>
+        <HSpace size={size.value}>
           <button>Hello</button>
           <button>Hello</button>
-        </NSpace>
+        </HSpace>
       ));
 
       expect(wrapper.html()).toMatchInlineSnapshot(`
@@ -72,10 +72,10 @@ describe('Space.tsx', () => {
 
     test('test separator #render', async () => {
       const wrapper = mount(() => (
-        <NSpace separator>
+        <HSpace separator>
           <button>Hello</button>
           <button>World</button>
-        </NSpace>
+        </HSpace>
       ));
 
       expect(wrapper.html()).toMatchInlineSnapshot(`
@@ -89,7 +89,7 @@ describe('Space.tsx', () => {
         </div>"
       `);
 
-      const space = wrapper.findComponent(NSpace);
+      const space = wrapper.findComponent(HSpace);
       expect(space.exists()).toBe(true);
       expect(space.findAll('.n-divider--vertical')).toHaveLength(1);
     });
@@ -101,11 +101,11 @@ describe('Space.tsx', () => {
       const show = ref(false);
       const onClick = vi.fn();
       const wrapper = mount(() => (
-        <NSpace>
+        <HSpace>
           <div>Hello World</div>
-          <NButton onClick={onClick}>{msg.value}</NButton>
+          <HButton onClick={onClick}>{msg.value}</HButton>
           {show.value && <div test-id="show">Any</div>}
-        </NSpace>
+        </HSpace>
       ));
 
       expect(wrapper.html()).toMatchInlineSnapshot(`
@@ -121,14 +121,14 @@ describe('Space.tsx', () => {
         </div>"
       `);
 
-      const space = wrapper.findComponent(NSpace);
+      const space = wrapper.findComponent(HSpace);
       expect(space.exists()).toBe(true);
 
       msg.value = 'Hello World 2';
       await nextTick();
       expect(space.element.textContent).contains(msg.value);
 
-      await wrapper.findComponent(NButton).trigger('click');
+      await wrapper.findComponent(HButton).trigger('click');
       expect(onClick).toBeCalledTimes(1);
 
       show.value = true;
@@ -138,10 +138,10 @@ describe('Space.tsx', () => {
 
     test('test custom separator #render', async () => {
       const wrapper = mount(() => (
-        <NSpace v-slots={{ separator: () => <span class="custom-separator">|</span> }}>
+        <HSpace v-slots={{ separator: () => <span class="custom-separator">|</span> }}>
           <button>Hello</button>
           <button>World</button>
-        </NSpace>
+        </HSpace>
       ));
 
       expect(wrapper.html()).toMatchInlineSnapshot(`
@@ -150,7 +150,7 @@ describe('Space.tsx', () => {
           <div class="n-space--item"><button>World</button></div>
         </div>"
       `);
-      const space = wrapper.findComponent(NSpace);
+      const space = wrapper.findComponent(HSpace);
       expect(space.exists()).toBe(true);
       expect(space.findAll('.custom-separator')).toHaveLength(1);
       expect(space.find('.custom-separator').text()).toBe('|');

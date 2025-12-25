@@ -1,5 +1,5 @@
 import type { SlotsType } from 'vue';
-import type { NSegmentedValue } from './useProps';
+import type { HSegmentedValue } from './useProps';
 
 export const useSegmentedSlots = Object as SlotsType<{
   /**
@@ -14,7 +14,7 @@ export const useSegmentedItemSlots = Object as SlotsType<{
   /**
    * 自定义选项卡
    */
-  default?: { state: boolean; activeKey: NSegmentedValue };
+  default?: { state: boolean; activeKey: HSegmentedValue };
 
   /**
    * 自定义 icon

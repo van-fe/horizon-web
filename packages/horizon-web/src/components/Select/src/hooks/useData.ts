@@ -7,11 +7,11 @@ import type { SelectSlots } from '../composables/useSlots';
 import type { SelectExposes } from '../composables/useExposes';
 import { isEqualLoose } from '../utils/utils';
 import type { SelectCollectedOptionData } from '../utils/injectKeys';
-import { NSelectModelValueInjectKey, NSelectPresetModelValueInjectKey } from '../utils/injectKeys';
+import { HSelectModelValueInjectKey, HSelectPresetModelValueInjectKey } from '../utils/injectKeys';
 import { unwrapValueFormattedValue } from '../utils/valueFormat';
 import type { ModelValueType, ModelValueSingleType } from '../utils/types';
 import type { JSX } from 'vue/jsx-runtime';
-import { NSelectValueFormatSymbol } from '../utils/types';
+import { HSelectValueFormatSymbol } from '../utils/types';
 
 export default function useData(
   props: SelectProps,
@@ -141,8 +141,8 @@ export default function useData(
     }
   }
 
-  provide(NSelectModelValueInjectKey, modelValueSet);
-  provide(NSelectPresetModelValueInjectKey, presetModelValueSet);
+  provide(HSelectModelValueInjectKey, modelValueSet);
+  provide(HSelectPresetModelValueInjectKey, presetModelValueSet);
 
   return {
     modelValueSet,
@@ -159,6 +159,6 @@ export default function useData(
     isModelValueSetHasValue,
     modelValueSetDeleteValue,
     reserveNumberOfModelValues,
-    NSelectValueFormatSymbol,
+    HSelectValueFormatSymbol,
   };
 }

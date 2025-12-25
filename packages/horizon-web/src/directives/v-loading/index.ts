@@ -3,6 +3,6 @@ import { withDirectiveInstall } from '@aurora/utils';
 
 export { LoadingService } from './src/service';
 
-export const NVLoading = withDirectiveInstall(Loading);
+export const HVLoading = withDirectiveInstall(Loading);
 
-export default NVLoading;
+export default HVLoading;

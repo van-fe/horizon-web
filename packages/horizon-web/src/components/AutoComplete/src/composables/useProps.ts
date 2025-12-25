@@ -6,7 +6,7 @@ import type {
   PickerInputStatusType,
   PickerInputStyleType,
 } from '~/components/Picker/src/composables/useProps';
-import type { NAutoCompleteOption } from '../utils/typed';
+import type { HAutoCompleteOption } from '../utils/typed';
 
 export type ModelValueType = string | undefined | null;
 
@@ -253,7 +253,7 @@ export const useAutoCompleteProps = declarePropType({
    * 展示的选项
    */
   options: {
-    type: Array as PropType<NAutoCompleteOption[]>,
+    type: Array as PropType<HAutoCompleteOption[]>,
     default: () => [],
   },
   /**

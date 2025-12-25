@@ -7,14 +7,14 @@ import Radio from './composables/useRadio';
 import type { RadioEmits } from './composables/useEmits';
 import { useRadioEmits } from './composables/useEmits';
 import {
-  NFormDisabledInjectedKey,
-  NFormItemTriggerInjectedKey,
+  HFormDisabledInjectedKey,
+  HFormItemTriggerInjectedKey,
 } from '~/components/Form/src/utils/injectedKeys';
-import { NRadioGroupInjectedKey } from '~/components/Radio/src/utils/injectedKeys';
+import { HRadioGroupInjectedKey } from '~/components/Radio/src/utils/injectedKeys';
 import type { RadioSlots } from './composables/useSlots';
 import { useRadioSlots } from './composables/useSlots';
 import useSize from '~/utils/useSize';
-import { NApplicationCompatibilityInjectedKey } from '~/components/Application/src/utils/injectedKeys';
+import { HApplicationCompatibilityInjectedKey } from '~/components/Application/src/utils/injectedKeys';
 
 export default defineComponent({
   name: `${useNamespace()}RadioButton`,
@@ -34,21 +34,21 @@ export default defineComponent({
       name: propName,
     } = toRefs(props);
     const classHelper = new ComponentClassBlock('radio-button');
-    const NRadioGroup = inject(NRadioGroupInjectedKey, undefined);
+    const HRadioGroup = inject(HRadioGroupInjectedKey, undefined);
     provide('type', 'radio-button');
-    const isGroup = computed(() => !!NRadioGroup);
+    const isGroup = computed(() => !!HRadioGroup);
 
     // form disabled inject
-    const formDisabled = inject(NFormDisabledInjectedKey, undefined);
+    const formDisabled = inject(HFormDisabledInjectedKey, undefined);
     const isDisabled = computed(
-      () => NRadioGroup?.disabled ?? propDisabled?.value ?? formDisabled?.value ?? false,
+      () => HRadioGroup?.disabled ?? propDisabled?.value ?? formDisabled?.value ?? false,
     );
     const radioButtonValue = computed(() => propValue.value || propLabel.value);
 
-    const viewable = computed(() => (isGroup.value ? NRadioGroup!.viewable : propViewable.value));
-    const size = computed(() => (isGroup.value ? NRadioGroup!.size : propSize.value));
+    const viewable = computed(() => (isGroup.value ? HRadioGroup!.viewable : propViewable.value));
+    const size = computed(() => (isGroup.value ? HRadioGroup!.size : propSize.value));
 
-    const compatibility = inject(NApplicationCompatibilityInjectedKey, undefined);
+    const compatibility = inject(HApplicationCompatibilityInjectedKey, undefined);
 
     // global size
     const oldStandardSizeRef = useSize(size, 'medium', {
@@ -74,16 +74,16 @@ export default defineComponent({
     });
 
     // form-item validate trigger
-    const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
+    const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
 
-    const modelValue = computed(() => (isGroup.value ? NRadioGroup!.value : propModelValue.value));
+    const modelValue = computed(() => (isGroup.value ? HRadioGroup!.value : propModelValue.value));
     const color = computed(() => useColors(propFill.value));
     const changeRadioButton = () => {
-      handleChange(radioButtonValue.value, emit, NRadioGroup, formItemTrigger);
+      handleChange(radioButtonValue.value, emit, HRadioGroup, formItemTrigger);
     };
 
     function onBlur(e: FocusEvent) {
-      handleBlur(e, emit, NRadioGroup, formItemTrigger);
+      handleBlur(e, emit, HRadioGroup, formItemTrigger);
     }
 
     return () => (
@@ -106,7 +106,7 @@ export default defineComponent({
         disabled={isDisabled.value}
         value={radioButtonValue.value}
         viewable={viewable.value}
-        name={propName.value ?? NRadioGroup?.name}
+        name={propName.value ?? HRadioGroup?.name}
         onChangeInput={changeRadioButton}
         onBlur={onBlur}
       >

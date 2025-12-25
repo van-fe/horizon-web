@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { createInstance } from './tree-helper';
-import NTreeItem from '../src/components/TreeItem';
+import HTreeItem from '../src/components/TreeItem';
 
 describe('Tree.tsx slots', () => {
   test('tree-node-render', async () => {
@@ -8,7 +8,7 @@ describe('Tree.tsx slots', () => {
       treeNodeRender: ({ data }) => [<span>{data.value}</span>],
     });
 
-    const guide = element.findComponent(NTreeItem);
+    const guide = element.findComponent(HTreeItem);
 
     expect(guide.text()).toBe('guide');
   });

@@ -1,31 +1,31 @@
 import type { CSSProperties, Ref, SetupContext } from 'vue';
 import { computed, inject, provide, ref } from 'vue';
 import {
-  NTableColumnDecreaseCollectionInjectKey,
-  NTableColumnIncreaseCollectionInjectKey,
-  NTableGetLastFixedLeftColumnInjectKey,
-  NTableGetLastFixedRightColumnInjectKey,
-  NTableIsColumnsHaveFixedInjectKey,
+  HTableColumnDecreaseCollectionInjectKey,
+  HTableColumnIncreaseCollectionInjectKey,
+  HTableGetLastFixedLeftColumnInjectKey,
+  HTableGetLastFixedRightColumnInjectKey,
+  HTableIsColumnsHaveFixedInjectKey,
 } from '../utils/injectKeys';
 import { cssVariable, sizeUnitTransform } from '@aurora/utils';
 import useSelection from './useSelection';
 import type { TableEmits } from '../composables/useEmits';
 import type {
-  NTableColumnData,
-  NTableInsertedColumnData,
-  NTableRowKeyType,
-  NTableTransformedRowDataType,
+  HTableColumnData,
+  HTableInsertedColumnData,
+  HTableRowKeyType,
+  HTableTransformedRowDataType,
 } from '../utils/types';
 import {
-  NTableColumnContextKey,
-  NTableColumnFilterKey,
-  NTableColumnSelectionKey,
+  HTableColumnContextKey,
+  HTableColumnFilterKey,
+  HTableColumnSelectionKey,
 } from '../utils/types';
 import useFilter from './useFilter';
 import useColumnFixed, { sortColumnsMethod } from './useColumnFixed';
 import useColumnVisible from './useColumnVisible';
 
-function getColumnWidthStyle(column: NTableInsertedColumnData) {
+function getColumnWidthStyle(column: HTableInsertedColumnData) {
   switch (column.props.type) {
     default:
     case 'default':
@@ -43,7 +43,7 @@ function getColumnWidthStyle(column: NTableInsertedColumnData) {
   }
 }
 
-function getColumnOverflowTooltipStyle(column: NTableInsertedColumnData): CSSProperties {
+function getColumnOverflowTooltipStyle(column: HTableInsertedColumnData): CSSProperties {
   switch (column.props.type) {
     default:
     case 'default':
@@ -63,16 +63,16 @@ function getColumnOverflowTooltipStyle(column: NTableInsertedColumnData): CSSPro
   }
 }
 
-function getWidthStyleForCol(columns: NTableColumnData[]) {
-  const colWithStyle: Array<{ column: NTableColumnData; style: CSSProperties }> = [];
+function getWidthStyleForCol(columns: HTableColumnData[]) {
+  const colWithStyle: Array<{ column: HTableColumnData; style: CSSProperties }> = [];
 
   for (let i = columns.length - 1; i >= 0; i--) {
-    const sizeStyle = columns[i][NTableColumnContextKey].sizeStyle;
+    const sizeStyle = columns[i][HTableColumnContextKey].sizeStyle;
 
     if (sizeStyle.width || sizeStyle.minWidth || colWithStyle.length) {
       colWithStyle.unshift({
         column: columns[i],
-        style: columns[i][NTableColumnContextKey].sizeStyle,
+        style: columns[i][HTableColumnContextKey].sizeStyle,
       });
     }
   }
@@ -81,28 +81,28 @@ function getWidthStyleForCol(columns: NTableColumnData[]) {
 }
 
 export default function useColumn(
-  flattenData: Ref<NTableTransformedRowDataType[]>,
+  flattenData: Ref<HTableTransformedRowDataType[]>,
   emit: SetupContext<TableEmits>['emit'],
 ) {
-  const currColumns = ref<NTableInsertedColumnData[]>([]);
+  const currColumns = ref<HTableInsertedColumnData[]>([]);
   const { fixedStore, getFixedState, resetFixedState } = useColumnFixed(currColumns);
   const { visibleStore, getVisibleState, resetVisibleState } = useColumnVisible(currColumns);
 
   const analysisColumns = computed(() => {
-    const flattenColumns: NTableColumnData[] = [];
-    const columnGroups: NTableColumnData[][] = [];
+    const flattenColumns: HTableColumnData[] = [];
+    const columnGroups: HTableColumnData[][] = [];
 
     let index = 0;
-    function sortColumns(columns: NTableColumnData[]) {
+    function sortColumns(columns: HTableColumnData[]) {
       const sortedColumns = columns.toSorted(sortColumnsMethod(getFixedState));
 
-      sortedColumns.reduce<undefined | NTableColumnData>((prev, curr) => {
-        curr[NTableColumnContextKey].prevColumn = prev;
+      sortedColumns.reduce<undefined | HTableColumnData>((prev, curr) => {
+        curr[HTableColumnContextKey].prevColumn = prev;
         return curr;
       }, undefined);
 
-      sortedColumns.reduceRight<undefined | NTableColumnData>((prev, curr) => {
-        curr[NTableColumnContextKey].nextColumn = prev;
+      sortedColumns.reduceRight<undefined | HTableColumnData>((prev, curr) => {
+        curr[HTableColumnContextKey].nextColumn = prev;
         return curr;
       }, undefined);
 
@@ -110,15 +110,15 @@ export default function useColumn(
     }
 
     const action = (
-      current: NTableInsertedColumnData[],
-      parent: NTableColumnData | undefined = undefined,
+      current: HTableInsertedColumnData[],
+      parent: HTableColumnData | undefined = undefined,
       level = 0,
     ) => {
-      const currentRow: NTableColumnData[] = [];
+      const currentRow: HTableColumnData[] = [];
       let headerRowSpan = 1;
 
-      current.forEach((column: NTableInsertedColumnData) => {
-        const calcChildren: NTableColumnData[] = [];
+      current.forEach((column: HTableInsertedColumnData) => {
+        const calcChildren: HTableColumnData[] = [];
 
         if (!getVisibleState(column.uuid)) {
           return;
@@ -138,13 +138,13 @@ export default function useColumn(
 
         const { currentFilterValue } = useFilter(column, emit, flattenData);
 
-        const currentColumn: NTableColumnData = {
+        const currentColumn: HTableColumnData = {
           ...column,
           headerColSpan: 1,
           headerRowSpan: 1,
           calcChildren,
           index: -1,
-          [NTableColumnContextKey]: {
+          [HTableColumnContextKey]: {
             sizeStyle: getColumnWidthStyle(column),
             resizeWidth: -1,
             isResizing: false,
@@ -158,7 +158,7 @@ export default function useColumn(
             parentColumnsHeightSum: 0,
             childrenEachRowColumnsHeightSum: 0,
           },
-          [NTableColumnSelectionKey]: {
+          [HTableColumnSelectionKey]: {
             checkedRows: checkedRows.value,
             isSelectable: computed(
               () => (rowIndex: number) => isSelectable.value(flattenData.value, rowIndex),
@@ -171,12 +171,12 @@ export default function useColumn(
               handleClear(flattenData.value, ignoreSelectable),
             getSelectionRows: () => getSelectionRows(flattenData.value),
             toggleRowSelection: (
-              rowKey: NTableRowKeyType | NTableRowKeyType[],
+              rowKey: HTableRowKeyType | HTableRowKeyType[],
               selected?: boolean,
               ignoreSelectable?: boolean,
             ) => toggleRowSelection(flattenData.value, rowKey, selected, ignoreSelectable),
           },
-          [NTableColumnFilterKey]: {
+          [HTableColumnFilterKey]: {
             currentFilterValue,
           },
         };
@@ -201,7 +201,7 @@ export default function useColumn(
         currentRow.push(currentColumn);
       });
 
-      currentRow.forEach((column: NTableColumnData) => {
+      currentRow.forEach((column: HTableColumnData) => {
         column.headerRowSpan = column.children.length > 0 ? 1 : headerRowSpan;
       });
 
@@ -227,7 +227,7 @@ export default function useColumn(
     analysisColumns.value.flattenColumns.some(column => getFixedState(column.uuid)),
   );
 
-  function getLastFixedLeftColumn(): NTableColumnData | null {
+  function getLastFixedLeftColumn(): HTableColumnData | null {
     let res = null;
 
     const list = analysisColumns.value.flattenColumns;
@@ -247,7 +247,7 @@ export default function useColumn(
     return res;
   }
 
-  function getLastFixedRightColumn(): NTableColumnData | null {
+  function getLastFixedRightColumn(): HTableColumnData | null {
     let res = null;
 
     const list = analysisColumns.value.flattenColumns.toReversed();
@@ -267,20 +267,20 @@ export default function useColumn(
     return res;
   }
 
-  const increaseChild = inject(NTableColumnIncreaseCollectionInjectKey, undefined);
-  const decreaseChild = inject(NTableColumnDecreaseCollectionInjectKey, undefined);
+  const increaseChild = inject(HTableColumnIncreaseCollectionInjectKey, undefined);
+  const decreaseChild = inject(HTableColumnDecreaseCollectionInjectKey, undefined);
 
-  provide(NTableColumnIncreaseCollectionInjectKey, column => {
+  provide(HTableColumnIncreaseCollectionInjectKey, column => {
     currColumns.value.push(column);
   });
 
-  provide(NTableColumnDecreaseCollectionInjectKey, uuid => {
+  provide(HTableColumnDecreaseCollectionInjectKey, uuid => {
     currColumns.value = currColumns.value.filter(column => column.uuid !== uuid);
   });
 
-  provide(NTableGetLastFixedLeftColumnInjectKey, getLastFixedLeftColumn);
-  provide(NTableGetLastFixedRightColumnInjectKey, getLastFixedRightColumn);
-  provide(NTableIsColumnsHaveFixedInjectKey, isColumnsHaveFixed);
+  provide(HTableGetLastFixedLeftColumnInjectKey, getLastFixedLeftColumn);
+  provide(HTableGetLastFixedRightColumnInjectKey, getLastFixedRightColumn);
+  provide(HTableIsColumnsHaveFixedInjectKey, isColumnsHaveFixed);
 
   return {
     columns: currColumns,

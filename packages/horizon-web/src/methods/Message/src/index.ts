@@ -2,7 +2,7 @@ import type { ExtractMethodOptions } from '@aurora/utils';
 import { defineMethod, usePopupContainerGetter, useZIndex } from '@aurora/utils';
 import type { ExtractPropTypes, VNode } from 'vue';
 import { createVNode, isVNode, render } from 'vue';
-import NMessageComponent from './components/Message';
+import HMessageComponent from './components/Message';
 import type { MessageOriginOption } from './composables/useProps';
 import { useMessageOptions } from './composables/useProps';
 import {} from './composables/useExposes';
@@ -117,7 +117,7 @@ const createMessage = (
     type,
   };
 
-  const vm = createVNode(NMessageComponent, {
+  const vm = createVNode(HMessageComponent, {
     ...opts,
     key,
     onClose: () => {

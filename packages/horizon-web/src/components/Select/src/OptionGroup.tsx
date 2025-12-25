@@ -1,6 +1,7 @@
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import {
+  ref,
   computed,
   defineComponent,
   inject,
@@ -13,16 +14,16 @@ import {
 } from 'vue';
 import type { SelectCollectedOptionData } from './utils/injectKeys';
 import {
-  NOptionGroupPropsInjectKey,
-  NSelectAddOptionInjectKey,
-  NSelectRemoveOptionInjectKey,
-  NSelectVisibleOptionsInjectKey,
+  HOptionGroupPropsInjectKey,
+  HSelectAddOptionInjectKey,
+  HSelectRemoveOptionInjectKey,
+  HSelectVisibleOptionsInjectKey,
 } from './utils/injectKeys';
 import type { OptionProps } from './composables/useProps';
 import { useOptionGroupProps } from './composables/useProps';
 import type { OptionGroupSlots } from './composables/useSlots';
 import { useOptionGroupSlots } from './composables/useSlots';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
 import { nanoid } from 'nanoid';
 
 export default defineComponent({
@@ -38,7 +39,7 @@ export default defineComponent({
 
     let isMounted = false;
 
-    const optionGroupDomRef = ref<HTMLDivElement>();
+    const optionGroupDomRef = ref<HTMLDivElement | null>(null);
 
     const optionList = reactive(
       new Map<OptionProps['value'], SelectCollectedOptionData<'option'>>(),
@@ -65,13 +66,13 @@ export default defineComponent({
       }
     }
 
-    provide(NSelectAddOptionInjectKey, selfAddOption);
-    provide(NSelectRemoveOptionInjectKey, selfRemoveOption);
-    provide(NOptionGroupPropsInjectKey, props);
+    provide(HSelectAddOptionInjectKey, selfAddOption);
+    provide(HSelectRemoveOptionInjectKey, selfRemoveOption);
+    provide(HOptionGroupPropsInjectKey, props);
 
-    const addOption = inject(NSelectAddOptionInjectKey);
-    const removeOption = inject(NSelectRemoveOptionInjectKey);
-    const visibleOptions = inject(NSelectVisibleOptionsInjectKey);
+    const addOption = inject(HSelectAddOptionInjectKey);
+    const removeOption = inject(HSelectRemoveOptionInjectKey);
+    const visibleOptions = inject(HSelectVisibleOptionsInjectKey);
 
     const isVisible = computed(
       () =>
@@ -111,12 +112,12 @@ export default defineComponent({
         class={cls(classHelper.block, classHelper.has('title', !!labelRef.value))}
       >
         {labelRef?.value && (
-          <NTooltip overflow={true}>
+          <HTooltip overflow={true}>
             {{
               content: () => labelRef.value,
               default: () => <div class={classHelper.e('title')}>{labelRef.value}</div>,
             }}
-          </NTooltip>
+          </HTooltip>
         )}
         {slots.default?.()}
         {!labelRef?.value && <div class={classHelper.e('divider')} />}

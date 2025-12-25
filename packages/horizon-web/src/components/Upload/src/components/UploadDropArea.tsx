@@ -1,13 +1,13 @@
 import { computed, defineComponent, inject, onMounted, ref } from 'vue';
 import { capitalize, cls, ComponentClassBlock, cssVariable } from '@aurora/utils';
 import {
-  NUploadPropsInjectKey,
-  NUploadSlotsInjectKey,
-  NUploadUploadFileHelperInjectKey,
+  HUploadPropsInjectKey,
+  HUploadSlotsInjectKey,
+  HUploadUploadFileHelperInjectKey,
 } from '../utils/injectKeys';
 import { IconAdd } from '@aurora/icon';
 import useLocaleLang from '~/utils/useLocaleLang';
-import { NFormDisabledInjectedKey } from '~/components/Form/src/utils/injectedKeys';
+import { HFormDisabledInjectedKey } from '~/components/Form/src/utils/injectedKeys';
 
 export default defineComponent({
   name: 'UploadDropArea',
@@ -17,12 +17,12 @@ export default defineComponent({
     const dropAreaRef = ref<HTMLElement | null>(null);
     const isDragOver = ref(false);
 
-    const props = inject(NUploadPropsInjectKey)!;
-    const slots = inject(NUploadSlotsInjectKey)!;
-    const uploadFileHelper = inject(NUploadUploadFileHelperInjectKey)!;
+    const props = inject(HUploadPropsInjectKey)!;
+    const slots = inject(HUploadSlotsInjectKey)!;
+    const uploadFileHelper = inject(HUploadUploadFileHelperInjectKey)!;
 
     // form disabled inject
-    const formDisabled = inject(NFormDisabledInjectedKey, undefined);
+    const formDisabled = inject(HFormDisabledInjectedKey, undefined);
     const isDisabled = computed(() => props.disabled ?? formDisabled?.value ?? false);
 
     const acceptText = useLocaleLang('upload.dropAreaTips.fileTypeLimit');

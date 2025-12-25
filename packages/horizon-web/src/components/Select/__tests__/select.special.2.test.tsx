@@ -1,27 +1,27 @@
 import { mount } from '@vue/test-utils';
-import NSelect from '../src/Select';
-import NOption from '../src/Option';
+import HSelect from '../src/Select';
+import HOption from '../src/Option';
 import { describe, expect, test } from 'vitest';
-import NPickerInput from '../../Picker/src/components/NPickerInput';
+import HPickerInput from '../../Picker/src/components/PickerInput';
 import { sleep } from '~/utils/tools';
-import NOptionGroup from '../src/OptionGroup';
+import HOptionGroup from '../src/OptionGroup';
 
 describe('Select.tsx special 2', () => {
   test("disabled option won't focus when keyboard press up or down", async () => {
     const wrapper = mount(
       () => (
-        <NSelect toBody={false} filterable>
-          <NOption value={1} label="A" disabled={true} />
-          <NOption value={2} label="B" />
-          <NOption value={3} label="C" />
-        </NSelect>
+        <HSelect toBody={false} filterable>
+          <HOption value={1} label="A" disabled={true} />
+          <HOption value={2} label="B" />
+          <HOption value={3} label="C" />
+        </HSelect>
       ),
       {
         attachTo: document.body,
       },
     );
 
-    const select = wrapper.findComponent(NPickerInput);
+    const select = wrapper.findComponent(HPickerInput);
 
     await select.trigger('click');
     await select.trigger('keydown.ArrowDown');
@@ -46,25 +46,25 @@ describe('Select.tsx special 2', () => {
   test("disabled group and disabled option mixin won't focus when keyboard press up or down", async () => {
     const wrapper = mount(
       () => (
-        <NSelect toBody={false} filterable>
-          <NOptionGroup disabled={true}>
-            <NOption value={1} label="A" />
-            <NOption value={2} label="B" />
-            <NOption value={3} label="C" />
-          </NOptionGroup>
-          <NOptionGroup>
-            <NOption value={4} label="D" />
-            <NOption value={5} label="E" disabled={true} />
-            <NOption value={6} label="F" />
-          </NOptionGroup>
-        </NSelect>
+        <HSelect toBody={false} filterable>
+          <HOptionGroup disabled={true}>
+            <HOption value={1} label="A" />
+            <HOption value={2} label="B" />
+            <HOption value={3} label="C" />
+          </HOptionGroup>
+          <HOptionGroup>
+            <HOption value={4} label="D" />
+            <HOption value={5} label="E" disabled={true} />
+            <HOption value={6} label="F" />
+          </HOptionGroup>
+        </HSelect>
       ),
       {
         attachTo: document.body,
       },
     );
 
-    const select = wrapper.findComponent(NPickerInput);
+    const select = wrapper.findComponent(HPickerInput);
 
     await select.trigger('click');
     await select.trigger('keydown.ArrowDown');

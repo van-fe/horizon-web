@@ -1,6 +1,6 @@
 import type { CSSProperties, Ref, ToRefs } from 'vue';
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
-import type { NTabValue, TabsProps } from './useProps';
+import type { HTabValue, TabsProps } from './useProps';
 import { useResize } from './useResize';
 import { cssVariable } from '@aurora/utils';
 
@@ -16,12 +16,12 @@ export default function useResponsive(options: ToRefs<IndicatorOptions>) {
   >;
 
   const indicatorStyle = ref<any>({});
-  const items = ref<Map<NTabValue, HTMLElement>>(new Map());
+  const items = ref<Map<HTabValue, HTMLElement>>(new Map());
   const scrollable = ref(options.arrow.value);
   const keys = computed({
     get: () => Array.from(items.value.keys()),
     set: sorted => {
-      const map = new Map<NTabValue, HTMLElement>();
+      const map = new Map<HTabValue, HTMLElement>();
       sorted.forEach(key => {
         const el = items.value.get(key);
         if (el) map.set(key, el);
@@ -117,7 +117,7 @@ export default function useResponsive(options: ToRefs<IndicatorOptions>) {
     containerEl.style.transition = `transform ${cssVariable('tabs-transition-time')} ease`;
   };
 
-  const createTab = (key: NTabValue) => {
+  const createTab = (key: HTabValue) => {
     return function addTab(el: Element | null) {
       if (el) items.value.set(key, el as HTMLElement);
       else items.value.delete(key);

@@ -1,16 +1,16 @@
 import type { ComputedRef, Ref } from 'vue';
 import { computed } from 'vue';
-import type { NCascaderExtendOption, NCascaderUuidType } from '../utils/types';
+import type { HCascaderExtendOption, HCascaderUuidType } from '../utils/types';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { CascaderSearchPanelEmits } from '../composables/useEmits';
 import type { CascaderProps } from '../composables/useProps';
 
 export default function (
   props: CascaderProps,
-  visibleOptions: ComputedRef<NCascaderExtendOption[]>,
-  presetModelValueSet: Ref<Set<NCascaderUuidType>>,
+  visibleOptions: ComputedRef<HCascaderExtendOption[]>,
+  presetModelValueSet: Ref<Set<HCascaderUuidType>>,
   pickOption: (
-    value: NCascaderUuidType,
+    value: HCascaderUuidType,
     singleChooseHide?: boolean,
     forcePick?: boolean,
     emitChange?: boolean,

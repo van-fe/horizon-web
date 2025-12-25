@@ -16,19 +16,19 @@ import { useDropdownItemSlots } from './composables/useSlots';
 import type { DropdownItemEmits } from './composables/useEmits';
 import type { DropdownItemSlots } from './composables/useSlots';
 import {
-  NDropdownActivatedChildInjectKey,
-  NDropdownAppendChildInjectKey,
-  NDropdownCommandFnInjectKey,
-  NDropdownRemoveChildInjectKey,
+  HDropdownActivatedChildInjectKey,
+  HDropdownAppendChildInjectKey,
+  HDropdownCommandFnInjectKey,
+  HDropdownRemoveChildInjectKey,
 } from './utils/InjectedKeys';
 import { renderIcon } from '~/utils/useIcon';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
 import { nanoid } from 'nanoid';
 
 export default defineComponent({
   name: `${useNamespace()}DropdownItem`,
   components: {
-    NTooltip,
+    HTooltip,
   },
   props: useDropdownItemProps,
   emits: useDropdownItemEmits,
@@ -42,10 +42,10 @@ export default defineComponent({
     const dropdownItemDomRef = ref<HTMLElement | null>(null);
     const classHelper = new ComponentClassBlock('dropdown-item');
 
-    const command = inject(NDropdownCommandFnInjectKey, undefined);
-    const appendChild = inject(NDropdownAppendChildInjectKey, undefined);
-    const removeChild = inject(NDropdownRemoveChildInjectKey, undefined);
-    const parentActivatedChildUuid = inject(NDropdownActivatedChildInjectKey, undefined);
+    const command = inject(HDropdownCommandFnInjectKey, undefined);
+    const appendChild = inject(HDropdownAppendChildInjectKey, undefined);
+    const removeChild = inject(HDropdownRemoveChildInjectKey, undefined);
+    const parentActivatedChildUuid = inject(HDropdownActivatedChildInjectKey, undefined);
 
     function onClick(evt: MouseEvent | KeyboardEvent) {
       evt.preventDefault();
@@ -107,12 +107,12 @@ export default defineComponent({
             </div>
           )}
 
-          <NTooltip size="small" overflow={true} {...(props.tooltipOptions || {})}>
+          <HTooltip size="small" overflow={true} {...(props.tooltipOptions || {})}>
             {{
               content: () => slots.default?.(),
               default: () => <div class={classHelper.e('content')}>{slots.default?.()}</div>,
             }}
-          </NTooltip>
+          </HTooltip>
         </div>
       </div>
     );

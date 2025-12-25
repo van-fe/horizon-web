@@ -8,7 +8,7 @@ import type {
 import { declarePropType } from '@aurora/utils';
 import type { TransitionProps } from '~/components/Transition/src/composables/useProps';
 
-export type NPopoverShowWithMask = {
+export type HPopoverShowWithMask = {
   enable?: boolean;
   style?: Partial<CSSProperties>;
   class?: string;
@@ -249,7 +249,7 @@ export const usePopoverProps = declarePropType({
    * popper显示时是否带mask
    */
   showWithMask: {
-    type: Object as PropType<NPopoverShowWithMask>,
+    type: Object as PropType<HPopoverShowWithMask>,
     required: false,
   },
   /**

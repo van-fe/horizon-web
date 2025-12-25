@@ -1,5 +1,5 @@
 import { mount, shallowMount } from '@vue/test-utils';
-import { NList, NListItem } from '..';
+import { HList, HListItem } from '..';
 import { describe, expect, test } from 'vitest';
 import { nextTick, ref } from 'vue';
 
@@ -13,8 +13,8 @@ const templateData = Array(20)
 
 describe('List.tsx', () => {
   test('basic', async () => {
-    const wrapper = shallowMount(() => <NList />);
-    const element = wrapper.findComponent(NList);
+    const wrapper = shallowMount(() => <HList />);
+    const element = wrapper.findComponent(HList);
 
     expect(element.exists()).toBe(true);
   });
@@ -23,13 +23,13 @@ describe('List.tsx', () => {
     test('zebra', async () => {
       const zebra = ref(false);
       const wrapper = mount(() => (
-        <NList data={templateData} zebra={zebra.value}>
+        <HList data={templateData} zebra={zebra.value}>
           {{
             item: ({ item }: { item: (typeof templateData)[number] }) => (
-              <NListItem title={item.title} subtitle={item.subtitle} describe={item.describe} />
+              <HListItem title={item.title} subtitle={item.subtitle} describe={item.describe} />
             ),
           }}
-        </NList>
+        </HList>
       ));
 
       const listElm = wrapper.find('.n-list');
@@ -46,13 +46,13 @@ describe('List.tsx', () => {
     test('border', async () => {
       const border = ref(false);
       const wrapper = mount(() => (
-        <NList data={templateData} isBorder={border.value}>
+        <HList data={templateData} isBorder={border.value}>
           {{
             item: ({ item }: { item: (typeof templateData)[number] }) => (
-              <NListItem title={item.title} subtitle={item.subtitle} describe={item.describe} />
+              <HListItem title={item.title} subtitle={item.subtitle} describe={item.describe} />
             ),
           }}
-        </NList>
+        </HList>
       ));
 
       const listElm = wrapper.find('.n-list');
@@ -69,13 +69,13 @@ describe('List.tsx', () => {
     test('split', async () => {
       const split = ref(false);
       const wrapper = mount(() => (
-        <NList data={templateData} split={split.value}>
+        <HList data={templateData} split={split.value}>
           {{
             item: ({ item }: { item: (typeof templateData)[number] }) => (
-              <NListItem title={item.title} subtitle={item.subtitle} describe={item.describe} />
+              <HListItem title={item.title} subtitle={item.subtitle} describe={item.describe} />
             ),
           }}
-        </NList>
+        </HList>
       ));
 
       const listElm = wrapper.find('.n-list');
@@ -93,11 +93,11 @@ describe('List.tsx', () => {
   describe('slots', () => {
     test('default', () => {
       const wrapper = mount(() => (
-        <NList data={templateData}>
+        <HList data={templateData}>
           {{
             default: () => <div>DEFAULT</div>,
           }}
-        </NList>
+        </HList>
       ));
 
       expect(wrapper.text()).contain('DEFAULT');
@@ -105,11 +105,11 @@ describe('List.tsx', () => {
 
     test('header', () => {
       const wrapper = mount(() => (
-        <NList data={templateData}>
+        <HList data={templateData}>
           {{
             header: () => <div>HEADER</div>,
           }}
-        </NList>
+        </HList>
       ));
 
       expect(wrapper.find('.n-list__header').text()).contain('HEADER');
@@ -117,11 +117,11 @@ describe('List.tsx', () => {
 
     test('footer', () => {
       const wrapper = mount(() => (
-        <NList data={templateData}>
+        <HList data={templateData}>
           {{
             footer: () => <div>FOOTER</div>,
           }}
-        </NList>
+        </HList>
       ));
 
       expect(wrapper.find('.n-list__footer').text()).contain('FOOTER');

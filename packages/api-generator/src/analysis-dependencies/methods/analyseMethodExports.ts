@@ -58,7 +58,7 @@ export function analyseMethodExports(
             continue;
           }
 
-          if (/^N/.test(exportedVariableName)) {
+          if (/^H/.test(exportedVariableName)) {
             const res: ApiGeneratorExportedMethod = {
               dirName,
               name: exportedVariableName,

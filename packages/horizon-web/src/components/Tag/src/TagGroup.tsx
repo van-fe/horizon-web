@@ -29,29 +29,29 @@ import type { TagGroupSlots } from './composables/useSlots';
 import type { TagGroupExposes } from './composables/useExposes';
 import useSize from '~/utils/useSize';
 import {
-  NTagGroupCloseCallbackInjectKey,
-  NTagGroupDoCollapseInjectKey,
-  NTagGroupEditCallbackInjectKey,
-  NTagGroupEditingNoticeInjectKey,
-  NTagGroupNoticeTagMountedInjectKey,
-  NTagGroupNoticeTagUnmountedInjectKey,
-  NTagGroupPropsInjectKey,
-  NTagGroupSizeInjectKey,
+  HTagGroupCloseCallbackInjectKey,
+  HTagGroupDoCollapseInjectKey,
+  HTagGroupEditCallbackInjectKey,
+  HTagGroupEditingNoticeInjectKey,
+  HTagGroupNoticeTagMountedInjectKey,
+  HTagGroupNoticeTagUnmountedInjectKey,
+  HTagGroupPropsInjectKey,
+  HTagGroupSizeInjectKey,
 } from './utils/injectKeys';
-import NTag from './Tag';
+import HTag from './Tag';
 import useLocaleLang from '~/utils/useLocaleLang';
 import { IconAdd, IconTriangleUpFilled } from '@aurora/icon';
 import { useResizeObserver } from '@vueuse/core';
 import debounce from 'lodash/debounce';
-import NPopover from '~/components/Popover/src/Popover';
-import NPopContent from '~/components/Popover/src/PopContent';
-import NScrollbar from '~/components/Scrollbar/src/Scrollbar';
+import HPopover from '~/components/Popover/src/Popover';
+import HPopContent from '~/components/Popover/src/PopContent';
+import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
 
 export default defineComponent({
   name: `${useNamespace()}TagGroup`,
   components: {
-    NPopover,
-    NScrollbar,
+    HPopover,
+    HScrollbar,
   },
   props: useTagGroupProps,
   emits: useTagGroupEmits,
@@ -65,7 +65,7 @@ export default defineComponent({
 
     const tagGroupRef = ref<HTMLDivElement | null>(null);
     const tagGroupContainerRef = ref<HTMLElement | null>(null);
-    const createTagRef = ref<typeof NTag | null>(null);
+    const createTagRef = ref<typeof HTag | null>(null);
     const createTagId = Symbol('create tag');
     const isLoading = ref(false);
     const tagsList = ref(new Map<string, TagProps>());
@@ -174,13 +174,13 @@ export default defineComponent({
       createTagRef.value?.edit('');
     }
 
-    provide(NTagGroupPropsInjectKey, props);
-    provide(NTagGroupSizeInjectKey, sizeRef);
-    provide(NTagGroupEditingNoticeInjectKey, onEditing);
-    provide(NTagGroupEditCallbackInjectKey, onEdit);
-    provide(NTagGroupCloseCallbackInjectKey, onClose);
-    provide(NTagGroupNoticeTagMountedInjectKey, onTagMounted);
-    provide(NTagGroupNoticeTagUnmountedInjectKey, onTagUnmounted);
+    provide(HTagGroupPropsInjectKey, props);
+    provide(HTagGroupSizeInjectKey, sizeRef);
+    provide(HTagGroupEditingNoticeInjectKey, onEditing);
+    provide(HTagGroupEditCallbackInjectKey, onEdit);
+    provide(HTagGroupCloseCallbackInjectKey, onClose);
+    provide(HTagGroupNoticeTagMountedInjectKey, onTagMounted);
+    provide(HTagGroupNoticeTagUnmountedInjectKey, onTagUnmounted);
 
     /***** collapse *****/
     const collapseProp = computed(() => props.ellipsis ?? props.collapse);
@@ -205,7 +205,7 @@ export default defineComponent({
       maxWait: 500,
     });
 
-    provide(NTagGroupDoCollapseInjectKey, debouncedDoCollapse);
+    provide(HTagGroupDoCollapseInjectKey, debouncedDoCollapse);
 
     const isDuringRenderCalculating = ref(false);
 
@@ -393,12 +393,12 @@ export default defineComponent({
               }),
             )}
             {renderSlotResult.length > visibleItemsAmount.value && collapseProp.value && (
-              <NPopover
+              <HPopover
                 disabled={props.tooltipRenderType === 'innerText' || !props.collapseUseTooltip}
               >
                 {{
                   reference: () => (
-                    <NTag
+                    <HTag
                       key="collapsed-tags"
                       tooltip={props.tooltipRenderType === 'innerText' && props.collapseUseTooltip}
                       clickable={props.collapseUseTooltip}
@@ -426,11 +426,11 @@ export default defineComponent({
                         ),
                         default: () => `+${renderSlotResult.length - visibleItemsAmount.value}`,
                       }}
-                    </NTag>
+                    </HTag>
                   ),
                   popper: () => (
-                    <NPopContent style={{ maxWidth: '320px' }}>
-                      <NScrollbar maxHeight={152} size="small">
+                    <HPopContent style={{ maxWidth: '320px' }}>
+                      <HScrollbar maxHeight={152} size="small">
                         <div class={cls(classHelper.e('popper-inner'), props.popperInnerClass)}>
                           {...renderSlotResult.slice(visibleItemsAmount.value).map(node =>
                             cloneVNode(node, {
@@ -440,17 +440,17 @@ export default defineComponent({
                             }),
                           )}
                         </div>
-                      </NScrollbar>
-                    </NPopContent>
+                      </HScrollbar>
+                    </HPopContent>
                   ),
                 }}
-              </NPopover>
+              </HPopover>
             )}
             {collapseProp.value &&
               !useCollapse.value &&
               renderSlotResult.length === visibleItemsAmount.value &&
               linesOfTags.value > 1 && (
-                <NTag
+                <HTag
                   editable={false}
                   clickable={true}
                   icon={IconTriangleUpFilled}
@@ -462,7 +462,7 @@ export default defineComponent({
               )}
             {slots.create?.(Array.from(tagsList.value.values())) ??
               (props.useCreate && tagsList.value.size < props.maxTags && (
-                <NTag
+                <HTag
                   id={createTagId}
                   ref={createTagRef}
                   editable={props.editable}
@@ -477,7 +477,7 @@ export default defineComponent({
                   {slots.createText?.(Array.from(tagsList.value.values())) ??
                     props.createText ??
                     useLocaleLang('tag.create').value}
-                </NTag>
+                </HTag>
               ))}
             {slots.suffix?.()}
           </div>

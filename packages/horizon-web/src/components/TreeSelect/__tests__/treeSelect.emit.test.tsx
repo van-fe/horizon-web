@@ -1,17 +1,17 @@
 import { describe, expect, test, vi } from 'vitest';
 import { TreeSelectHelper } from './treeSelectHelper';
-import NTreeItem from '~/components/Tree/src/components/TreeItem';
-import type { NTreeUuidType } from '~/components/Tree/src/utils/types';
+import HTreeItem from '~/components/Tree/src/components/TreeItem';
+import type { HTreeUuidType } from '~/components/Tree/src/utils/types';
 import { ref } from 'vue';
 
 describe('TreeSelect.tsx emits', () => {
   test('update:expand-values', async () => {
-    const expandValues = ref<NTreeUuidType[]>([]);
+    const expandValues = ref<HTreeUuidType[]>([]);
     const onUpdateExpandValues = vi.fn();
 
     const instance = new TreeSelectHelper({
       expandValues,
-      'onUpdate:expandValues': (val: NTreeUuidType[]) => {
+      'onUpdate:expandValues': (val: HTreeUuidType[]) => {
         expandValues.value = val;
         onUpdateExpandValues();
       },
@@ -100,7 +100,7 @@ describe('TreeSelect.tsx emits', () => {
     await instance.open(true);
 
     const feedback = instance.tree
-      ?.findAllComponents(NTreeItem)
+      ?.findAllComponents(HTreeItem)
       .find(curr => curr.element.getAttribute('data-uuid') === 'feedback');
 
     await feedback?.trigger('contextmenu');

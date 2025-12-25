@@ -1,9 +1,9 @@
-import type { NTableInsertedColumnData } from './types';
+import type { HTableInsertedColumnData } from './types';
 
 export function getTopParentInTree(
   uuid: string,
-  currentTree: NTableInsertedColumnData[],
-  parent: null | NTableInsertedColumnData = null,
+  currentTree: HTableInsertedColumnData[],
+  parent: null | HTableInsertedColumnData = null,
 ) {
   if (currentTree.some(column => column.uuid === uuid)) {
     return parent;

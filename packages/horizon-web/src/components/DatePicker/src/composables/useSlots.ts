@@ -1,22 +1,22 @@
 import type { SlotsType } from 'vue';
-import type { NDatePickerDateCellType } from '../utils/types';
+import type { HDatePickerDateCellType } from '../utils/types';
 
 export const useDatePickerSlots = Object as SlotsType<{
   /**
    * 自定义日单元格内容
    * @param grid 内容请参考【类型定义】
    */
-  default?: { grid: NDatePickerDateCellType };
+  default?: { grid: HDatePickerDateCellType };
   /**
    * 自定义月单元格内容
    * @param grid 内容请参考【类型定义】
    */
-  month?: { grid: NDatePickerDateCellType };
+  month?: { grid: HDatePickerDateCellType };
   /**
    * 自定义年单元格内容
    * @param grid 内容请参考【类型定义】
    */
-  year?: { grid: NDatePickerDateCellType };
+  year?: { grid: HDatePickerDateCellType };
   /**
    * 时间范围分隔符
    */

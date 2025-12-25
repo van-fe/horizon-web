@@ -37,7 +37,7 @@ export default defineComponent({
       labelClass: string;
       valueClass: string;
       setLabelWidth: (val: number | string) => void;
-    }>('NDescriptions');
+    }>('HDescriptions');
     const labelRef = ref<HTMLElement | null>(null);
 
     const { stop } = useIntersectionObserver(labelRef, ([{ target, isIntersecting }]) => {

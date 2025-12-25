@@ -4,118 +4,118 @@ import type { ComputedRef, InjectionKey, Ref, VNode } from 'vue';
 import type { CascaderProps } from '../composables/useProps';
 import type { CascaderEmits } from '../composables/useEmits';
 import type { CascaderSlots } from '../composables/useSlots';
-import type { NCascaderExtendOption, NCascaderUuidType, NCascaderOption } from './types';
+import type { HCascaderExtendOption, HCascaderUuidType, HCascaderOption } from './types';
 import type Tree from '~/utils/useTree/index';
 
-export const NCascaderModelValueInjectKey = Symbol(
+export const HCascaderModelValueInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'model-value'),
-) as InjectionKey<Ref<Set<NCascaderUuidType>>>;
+) as InjectionKey<Ref<Set<HCascaderUuidType>>>;
 
-export const NCascaderPresetModelValueInjectKey = Symbol(
+export const HCascaderPresetModelValueInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'preset-model-value'),
-) as InjectionKey<Ref<Set<NCascaderUuidType>>>;
+) as InjectionKey<Ref<Set<HCascaderUuidType>>>;
 
-export const NCascaderPropsInjectKey = Symbol(
+export const HCascaderPropsInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'props'),
 ) as InjectionKey<CascaderProps>;
 
-export const NCascaderEmitsInjectKey = Symbol(
+export const HCascaderEmitsInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'emits'),
 ) as InjectionKey<HorizonWebSetupContext<CascaderEmits>['emit']>;
 
-export const NCascaderSlotsInjectKey = Symbol(
+export const HCascaderSlotsInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'slots'),
 ) as InjectionKey<HorizonWebSetupContext<{}, CascaderSlots>['slots']>;
 
-export const NCascaderPopperVisibleInjectKey = Symbol(
+export const HCascaderPopperVisibleInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'popper-visible'),
 ) as InjectionKey<Ref<boolean>>;
 
-export const NCascaderOptionListInjectKey = Symbol(
+export const HCascaderOptionListInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'option-list'),
-) as InjectionKey<Ref<NCascaderExtendOption[]>>;
+) as InjectionKey<Ref<HCascaderExtendOption[]>>;
 
-export const NCascaderOptionListMapInjectKey = Symbol(
+export const HCascaderOptionListMapInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'option-list-map'),
-) as InjectionKey<Ref<Map<NCascaderUuidType, NCascaderExtendOption>>>;
+) as InjectionKey<Ref<Map<HCascaderUuidType, HCascaderExtendOption>>>;
 
-export const NCascaderModifyOptionChildrenListInjectKey = Symbol(
+export const HCascaderModifyOptionChildrenListInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'modify-option-children-list'),
-) as InjectionKey<(node: NCascaderExtendOption, children: NCascaderOption[]) => void>;
+) as InjectionKey<(node: HCascaderExtendOption, children: HCascaderOption[]) => void>;
 
-export const NCascaderChosenOptionListInjectKey = Symbol(
+export const HCascaderChosenOptionListInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'chosen-option-list'),
-) as InjectionKey<ComputedRef<NCascaderExtendOption[]>>;
+) as InjectionKey<ComputedRef<HCascaderExtendOption[]>>;
 
-export const NCascaderPickOptionInjectKey = Symbol(
+export const HCascaderPickOptionInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'picker-option'),
 ) as InjectionKey<
   (
-    value: NCascaderUuidType,
+    value: HCascaderUuidType,
     singleChooseHide?: boolean,
     forcePick?: boolean,
     emitChange?: boolean,
   ) => void
 >;
 
-export const NCascaderVisibleOptionsInjectKey = Symbol(
+export const HCascaderVisibleOptionsInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'visible-options'),
-) as InjectionKey<ComputedRef<NCascaderExtendOption[]>>;
+) as InjectionKey<ComputedRef<HCascaderExtendOption[]>>;
 
-export const NCascaderFocusedOptionInjectKey = Symbol(
+export const HCascaderFocusedOptionInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'focused-option'),
-) as InjectionKey<ComputedRef<NCascaderExtendOption | undefined>>;
+) as InjectionKey<ComputedRef<HCascaderExtendOption | undefined>>;
 
-export const NCascaderFocusedOptionsStackInjectKey = Symbol(
+export const HCascaderFocusedOptionsStackInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'focused-options-stack'),
-) as InjectionKey<Ref<NCascaderExtendOption[]>>;
+) as InjectionKey<Ref<HCascaderExtendOption[]>>;
 
-export const NCascaderOnClickNodeInjectKey = Symbol(
+export const HCascaderOnClickNodeInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'on-click-node'),
-) as InjectionKey<(option: NCascaderExtendOption, clickOnCheckbox?: boolean) => void>;
+) as InjectionKey<(option: HCascaderExtendOption, clickOnCheckbox?: boolean) => void>;
 
-export const NCascaderExpandNodeInjectKey = Symbol(
+export const HCascaderExpandNodeInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'expand-node'),
 ) as InjectionKey<
   (
-    currentNode: NCascaderExtendOption,
+    currentNode: HCascaderExtendOption,
     onRadioOrCheckbox: boolean,
     forceExpandChildren: boolean,
   ) => void
 >;
 
-export const NCascaderActivatedChildNodeInjectKey = Symbol(
+export const HCascaderActivatedChildNodeInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'activated-child-node'),
-) as InjectionKey<Ref<NCascaderExtendOption | undefined>>;
+) as InjectionKey<Ref<HCascaderExtendOption | undefined>>;
 
-export const NCascaderLoadingNodesInjectKey = Symbol(
+export const HCascaderLoadingNodesInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'loading-nodes'),
-) as InjectionKey<Ref<Set<NCascaderExtendOption>>>;
+) as InjectionKey<Ref<Set<HCascaderExtendOption>>>;
 
-export const NCascaderInputStringInjectKey = Symbol(
+export const HCascaderInputStringInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'input-string'),
 ) as InjectionKey<ComputedRef<string>>;
 
-export const NCascaderRegisterVNodeGetterInjectKey = Symbol(
+export const HCascaderRegisterVNodeGetterInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'register-v-node-getter'),
-) as InjectionKey<(uuid: NCascaderUuidType, getter: () => VNode | undefined) => void>;
+) as InjectionKey<(uuid: HCascaderUuidType, getter: () => VNode | undefined) => void>;
 
-export const NCascaderMouseOverOptionInjectKey = Symbol(
+export const HCascaderMouseOverOptionInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'mouse-over-option'),
-) as InjectionKey<(uuid: NCascaderUuidType) => void>;
+) as InjectionKey<(uuid: HCascaderUuidType) => void>;
 
-export const NCascaderActiveOptionInPanelInjectKey = Symbol(
+export const HCascaderActiveOptionInPanelInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'active-option-in-panel'),
-) as InjectionKey<Ref<NCascaderExtendOption | undefined>>;
+) as InjectionKey<Ref<HCascaderExtendOption | undefined>>;
 
-export const NCascaderTreeHelperInjectKey = Symbol(
+export const HCascaderTreeHelperInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'tree-instance'),
-) as InjectionKey<Tree<NCascaderOption, NCascaderExtendOption>>;
+) as InjectionKey<Tree<HCascaderOption, HCascaderExtendOption>>;
 
-export const NCascaderIsOutOfLimitInjectKey = Symbol(
+export const HCascaderIsOutOfLimitInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'is-out-of-limit'),
 ) as InjectionKey<ComputedRef<boolean>>;
 
-export const NCascaderHighlightRangesInjectKey = Symbol(
+export const HCascaderHighlightRangesInjectKey = Symbol(
   generatorInjectedKeyName('cascader', 'highlight-ranges'),
-) as InjectionKey<Ref<Map<NCascaderUuidType, Range>>>;
+) as InjectionKey<Ref<Map<HCascaderUuidType, Range>>>;

@@ -4,21 +4,21 @@ import { h, nextTick, ref } from 'vue';
 import type { TreeProps } from '../src/composables/useProps';
 import { ComponentClassBlock } from '@aurora/utils';
 import type {
-  NTreeData,
-  NTreeDynamicLoadNode,
-  NTreeExtendsData,
-  NTreeFilterMethodType,
-  NTreeHighlightMethod,
-  NTreeNodeDataWithLevel,
-  NTreeUuidType,
+  HTreeData,
+  HTreeDynamicLoadNode,
+  HTreeExtendsData,
+  HTreeFilterMethodType,
+  HTreeHighlightMethod,
+  HTreeNodeDataWithLevel,
+  HTreeUuidType,
 } from '../src/utils/types';
-import NTreeItem from '../src/components/TreeItem';
-import NInput from '../../Input';
+import HTreeItem from '../src/components/TreeItem';
+import HInput from '../../Input';
 import fieldMapOptions from './modifiedOptions/field-map-options.json';
 import { IconAdd, IconCar, IconReduce } from '@aurora/icon';
-import NCheckbox from '../../Checkbox';
+import HCheckbox from '../../Checkbox';
 import { sleep } from '~/utils/tools';
-import NRadio from '../../Radio';
+import HRadio from '../../Radio';
 
 const treeClassHelper = new ComponentClassBlock('tree');
 const treeItemClassHelper = new ComponentClassBlock('tree-item');
@@ -83,7 +83,7 @@ describe('Tree.tsx props', () => {
 
     await inputElem.setValue('g');
 
-    domRef.value?.getVisibleItems().forEach((item: NTreeNodeDataWithLevel) => {
+    domRef.value?.getVisibleItems().forEach((item: HTreeNodeDataWithLevel) => {
       if (!item?.children) {
         expect(item.label).toMatch(/g/i);
       }
@@ -91,7 +91,7 @@ describe('Tree.tsx props', () => {
   });
 
   test('filter-method', async () => {
-    const filterMethod: NTreeFilterMethodType = (inputValue, node) => {
+    const filterMethod: HTreeFilterMethodType = (inputValue, node) => {
       if (node && node.stringLabel) return node.stringLabel.includes(inputValue);
 
       return false;
@@ -103,7 +103,7 @@ describe('Tree.tsx props', () => {
 
     await inputElem.setValue('g');
 
-    domRef.value?.getVisibleItems().forEach((item: NTreeNodeDataWithLevel) => {
+    domRef.value?.getVisibleItems().forEach((item: HTreeNodeDataWithLevel) => {
       if (!item?.children) {
         expect(item.label).toContain('g');
       }
@@ -111,7 +111,7 @@ describe('Tree.tsx props', () => {
   });
 
   test('highlight-method', async () => {
-    const highlightMethod: NTreeHighlightMethod = (inputValue: string, node?: NTreeExtendsData) => {
+    const highlightMethod: HTreeHighlightMethod = (inputValue: string, node?: HTreeExtendsData) => {
       if (!node) return '';
 
       if (inputValue) {
@@ -132,7 +132,7 @@ describe('Tree.tsx props', () => {
 
     await inputElem.setValue('g');
 
-    wrapper.findAllComponents(NTreeItem).forEach(item => {
+    wrapper.findAllComponents(HTreeItem).forEach(item => {
       if (parseInt(item.element.getAttribute('data-children-amount') || '') === 0) {
         expect(item.find('.kw').exists()).toBeTruthy();
       }
@@ -147,7 +147,7 @@ describe('Tree.tsx props', () => {
       },
     });
 
-    const inputElem = wrapper.findComponent(NInput);
+    const inputElem = wrapper.findComponent(HInput);
 
     expect(inputElem.classes()).toContain('n-input--no-border');
   });
@@ -159,9 +159,9 @@ describe('Tree.tsx props', () => {
       hideFilterInput: true,
     });
 
-    expect(wrapper.findComponent(NInput).exists()).toBeFalsy();
+    expect(wrapper.findComponent(HInput).exists()).toBeFalsy();
 
-    wrapper.findAllComponents(NTreeItem).forEach(item => {
+    wrapper.findAllComponents(HTreeItem).forEach(item => {
       if (parseInt(item.element.getAttribute('data-children-amount') || '') === 0) {
         expect(item.text()).toMatch(/g/i);
       }
@@ -189,7 +189,7 @@ describe('Tree.tsx props', () => {
 
     await wrapper.find('input').setValue('g');
 
-    wrapper.findAllComponents(NTreeItem).forEach(item => {
+    wrapper.findAllComponents(HTreeItem).forEach(item => {
       expect(item.element.getAttribute('data-level')).toBe('0');
     });
 
@@ -199,14 +199,14 @@ describe('Tree.tsx props', () => {
 
     expect(
       wrapper
-        .findAllComponents(NTreeItem)
+        .findAllComponents(HTreeItem)
         .filter(item => item.element.getAttribute('data-level') !== '0').length,
     ).toBeGreaterThan(3);
   });
 
   test('field-map', async () => {
     const { wrapper } = await createInstance({
-      treeData: fieldMapOptions as unknown as NTreeData[],
+      treeData: fieldMapOptions as unknown as HTreeData[],
       fieldMap: {
         value: 'key',
         label: 'text',
@@ -214,7 +214,7 @@ describe('Tree.tsx props', () => {
       },
     });
 
-    wrapper.findAllComponents(NTreeItem).forEach(item => {
+    wrapper.findAllComponents(HTreeItem).forEach(item => {
       expect(item.text()).not.toBe('');
       expect(item.element.getAttribute('data-uuid')).not.toBe('');
     });
@@ -262,11 +262,11 @@ describe('Tree.tsx props', () => {
   });
 
   test('expand-values', async () => {
-    const expandValues = ref<NTreeUuidType[]>(['disciplines', 'navigation']);
+    const expandValues = ref<HTreeUuidType[]>(['disciplines', 'navigation']);
 
     const { domRef } = await createInstance({
       expandValues,
-      'onUpdate:expandValues': (values: NTreeUuidType[]) => (expandValues.value = values),
+      'onUpdate:expandValues': (values: HTreeUuidType[]) => (expandValues.value = values),
     });
 
     await nextTick();
@@ -283,12 +283,12 @@ describe('Tree.tsx props', () => {
   });
 
   test('is-default-expand-parent', async () => {
-    const expandValues = ref<NTreeUuidType[]>(['disciplines', 'navigation']);
+    const expandValues = ref<HTreeUuidType[]>(['disciplines', 'navigation']);
 
     const { domRef } = await createInstance({
       expandValues,
       isDefaultExpandParent: false,
-      'onUpdate:expandValues': (values: NTreeUuidType[]) => (expandValues.value = values),
+      'onUpdate:expandValues': (values: HTreeUuidType[]) => (expandValues.value = values),
     });
 
     expect(domRef.value?.getVisibleItems().length).toBe(3);
@@ -327,7 +327,7 @@ describe('Tree.tsx props', () => {
       onExpand,
     });
 
-    const guideEl = wrapper.findComponent(NTreeItem);
+    const guideEl = wrapper.findComponent(HTreeItem);
 
     expect(guideEl.text()).toBe('Guide');
 
@@ -337,7 +337,7 @@ describe('Tree.tsx props', () => {
 
     expect(onExpand).toHaveBeenCalledOnce();
 
-    expect(wrapper.findAllComponents(NTreeItem).length).toBeGreaterThan(3);
+    expect(wrapper.findAllComponents(HTreeItem).length).toBeGreaterThan(3);
 
     expandOnClickNode.value = false;
 
@@ -345,7 +345,7 @@ describe('Tree.tsx props', () => {
 
     await guideEl.trigger('click');
 
-    expect(wrapper.findAllComponents(NTreeItem).length).toBeGreaterThan(3);
+    expect(wrapper.findAllComponents(HTreeItem).length).toBeGreaterThan(3);
 
     expandOnClickNode.value = true;
 
@@ -355,7 +355,7 @@ describe('Tree.tsx props', () => {
 
     expect(onExpand).toHaveBeenCalledTimes(2);
 
-    expect(wrapper.findAllComponents(NTreeItem).length).toEqual(3);
+    expect(wrapper.findAllComponents(HTreeItem).length).toEqual(3);
   });
 
   test('prefix-icon', async () => {
@@ -368,17 +368,17 @@ describe('Tree.tsx props', () => {
 
   test('check-strictly', async () => {
     const checkStrictly = ref(false);
-    const selectedValues = ref<NTreeUuidType[]>([]);
+    const selectedValues = ref<HTreeUuidType[]>([]);
 
     const { wrapper } = await createInstance({
       checkStrictly,
       selectedValues,
       isDefaultExpandAll: true,
       multiple: true,
-      'onUpdate:selectedValues': (values: NTreeUuidType[]) => (selectedValues.value = values),
+      'onUpdate:selectedValues': (values: HTreeUuidType[]) => (selectedValues.value = values),
     });
 
-    const items = wrapper.findAllComponents(NTreeItem);
+    const items = wrapper.findAllComponents(HTreeItem);
 
     const navigation = items.find(item => item.element.getAttribute('data-uuid') === 'navigation');
 
@@ -419,17 +419,17 @@ describe('Tree.tsx props', () => {
       multiple,
     });
 
-    expect(wrapper.findComponent(NCheckbox).exists()).toBeFalsy();
+    expect(wrapper.findComponent(HCheckbox).exists()).toBeFalsy();
 
     multiple.value = true;
 
     await nextTick();
 
-    expect(wrapper.findComponent(NCheckbox).exists()).toBeTruthy();
+    expect(wrapper.findComponent(HCheckbox).exists()).toBeTruthy();
   });
 
   test('multiple-limit', async () => {
-    const selectedValues = ref<NTreeUuidType[]>([]);
+    const selectedValues = ref<HTreeUuidType[]>([]);
 
     const { wrapper } = await createInstance({
       selectedValues,
@@ -437,10 +437,10 @@ describe('Tree.tsx props', () => {
       multiple: true,
       multipleLimit: 3,
       checkOnClickNode: true,
-      'onUpdate:selectedValues': (values: NTreeUuidType[]) => (selectedValues.value = values),
+      'onUpdate:selectedValues': (values: HTreeUuidType[]) => (selectedValues.value = values),
     });
 
-    for (const item of wrapper.findAllComponents(NTreeItem)) {
+    for (const item of wrapper.findAllComponents(HTreeItem)) {
       await item.trigger('click');
     }
 
@@ -449,7 +449,7 @@ describe('Tree.tsx props', () => {
   });
 
   test('selected-values', async () => {
-    const selectedValues = ref<NTreeUuidType[]>([]);
+    const selectedValues = ref<HTreeUuidType[]>([]);
 
     const { domRef } = await createInstance({
       selectedValues,
@@ -473,7 +473,7 @@ describe('Tree.tsx props', () => {
 
   test('check-on-click-node', async () => {
     const checkOnClickNode = ref(false);
-    const selectedValues = ref<NTreeUuidType[]>([]);
+    const selectedValues = ref<HTreeUuidType[]>([]);
     const onSelect = vi.fn();
 
     const { wrapper } = await createInstance({
@@ -482,11 +482,11 @@ describe('Tree.tsx props', () => {
       checkOnClickNode,
       multiple: true,
       isDefaultExpandAll: true,
-      'onUpdate:selectedValues': (values: NTreeUuidType[]) => (selectedValues.value = values),
+      'onUpdate:selectedValues': (values: HTreeUuidType[]) => (selectedValues.value = values),
       onSelect,
     });
 
-    const items = wrapper.findAllComponents(NTreeItem);
+    const items = wrapper.findAllComponents(HTreeItem);
 
     const navigation = items.find(item => item.element.getAttribute('data-uuid') === 'navigation');
 
@@ -519,7 +519,7 @@ describe('Tree.tsx props', () => {
 
   test('check-on-click-leaf', async () => {
     const checkOnClickLeaf = ref(true);
-    const selectedValues = ref<NTreeUuidType[]>([]);
+    const selectedValues = ref<HTreeUuidType[]>([]);
     const onSelect = vi.fn();
 
     const { wrapper } = await createInstance({
@@ -528,11 +528,11 @@ describe('Tree.tsx props', () => {
       checkOnClickLeaf,
       multiple: true,
       isDefaultExpandAll: true,
-      'onUpdate:selectedValues': (values: NTreeUuidType[]) => (selectedValues.value = values),
+      'onUpdate:selectedValues': (values: HTreeUuidType[]) => (selectedValues.value = values),
       onSelect,
     });
 
-    const items = wrapper.findAllComponents(NTreeItem);
+    const items = wrapper.findAllComponents(HTreeItem);
 
     const feedback = items.find(item => item.element.getAttribute('data-uuid') === 'feedback');
 
@@ -563,7 +563,7 @@ describe('Tree.tsx props', () => {
       checkOnClickNode: true,
     });
 
-    const items = wrapper.findAllComponents(NTreeItem);
+    const items = wrapper.findAllComponents(HTreeItem);
 
     const feedback = items.find(item => item.element.getAttribute('data-uuid') === 'feedback');
 
@@ -592,7 +592,7 @@ describe('Tree.tsx props', () => {
   });
 
   test('dynamic-load', async () => {
-    const dynamicLoad = (node?: NTreeDynamicLoadNode) =>
+    const dynamicLoad = (node?: HTreeDynamicLoadNode) =>
       new Promise((resolve, reject) => {
         if (!node) return reject();
 
@@ -616,7 +616,7 @@ describe('Tree.tsx props', () => {
         ]);
       });
 
-    const treeData = ref<NTreeData[]>([
+    const treeData = ref<HTreeData[]>([
       {
         value: 'guide',
         label: 'Guide',
@@ -635,13 +635,13 @@ describe('Tree.tsx props', () => {
       treeData,
       expandValues: ['guide'],
       dynamicLoad,
-      'onUpdate:treeData': (val: NTreeData[]) => {
+      'onUpdate:treeData': (val: HTreeData[]) => {
         treeData.value = val;
       },
     });
 
     const item = wrapper
-      .findAllComponents(NTreeItem)
+      .findAllComponents(HTreeItem)
       .find(item => item.element.getAttribute('data-uuid') === 'disciplines');
 
     await item?.trigger('click');
@@ -707,7 +707,7 @@ describe('Tree.tsx props', () => {
 
     expect(
       element
-        .findAllComponents(NTreeItem)
+        .findAllComponents(HTreeItem)
         .find(curr => curr.element.getAttribute('data-level') === '2')
         ?.element.getAttribute('style'),
     ).toContain('padding-left: 56px');
@@ -722,7 +722,7 @@ describe('Tree.tsx props', () => {
 
     expect(
       element
-        .findComponent(NTreeItem)
+        .findComponent(HTreeItem)
         .find(`.${treeItemClassHelper.e('content')}`)
         .classes('is-ellipsis'),
     ).toBeTruthy();
@@ -733,7 +733,7 @@ describe('Tree.tsx props', () => {
 
     expect(
       element
-        .findComponent(NTreeItem)
+        .findComponent(HTreeItem)
         .find(`.${treeItemClassHelper.e('content')}`)
         .classes('is-ellipsis'),
     ).toBeFalsy();
@@ -753,7 +753,7 @@ describe('Tree.tsx props', () => {
       true,
     );
 
-    const guide = element.findComponent(NTreeItem);
+    const guide = element.findComponent(HTreeItem);
 
     await guide.trigger('click');
 
@@ -779,13 +779,13 @@ describe('Tree.tsx props', () => {
       multiple: true,
     });
 
-    expect(element.findComponent(NCheckbox).exists()).toBeTruthy();
+    expect(element.findComponent(HCheckbox).exists()).toBeTruthy();
 
     showCheckbox.value = false;
 
     await nextTick();
 
-    expect(element.findComponent(NCheckbox).exists()).toBeFalsy();
+    expect(element.findComponent(HCheckbox).exists()).toBeFalsy();
   });
 
   test('show-radio', async () => {
@@ -798,22 +798,22 @@ describe('Tree.tsx props', () => {
       isDefaultExpandAll: true,
     });
 
-    expect(element.findComponent(NRadio).exists()).toBeFalsy();
+    expect(element.findComponent(HRadio).exists()).toBeFalsy();
 
     showRadio.value = true;
 
     await nextTick();
 
-    const guide = element.findComponent(NTreeItem);
+    const guide = element.findComponent(HTreeItem);
 
-    expect(element.findComponent(NRadio).exists()).toBeTruthy();
-    expect(guide.findComponent(NRadio).exists()).toBeFalsy();
+    expect(element.findComponent(HRadio).exists()).toBeTruthy();
+    expect(guide.findComponent(HRadio).exists()).toBeFalsy();
 
     checkStrictly.value = true;
 
     await nextTick();
 
-    expect(guide.findComponent(NRadio).exists()).toBeTruthy();
+    expect(guide.findComponent(HRadio).exists()).toBeTruthy();
   });
 
   test('draggable', async () => {
@@ -823,7 +823,7 @@ describe('Tree.tsx props', () => {
       draggable,
     });
 
-    const guide = element.findComponent(NTreeItem);
+    const guide = element.findComponent(HTreeItem);
 
     expect(guide.find(`.${treeItemClassHelper.e('draggable-icon')}`).exists()).toBeFalsy();
 
@@ -849,7 +849,7 @@ describe('Tree.tsx props', () => {
       dragOnHandler,
     });
 
-    const guide = element.findComponent(NTreeItem);
+    const guide = element.findComponent(HTreeItem);
 
     const handler = guide.find(`.${treeItemClassHelper.e('draggable-icon')}`);
 
@@ -882,16 +882,16 @@ describe('Tree.tsx props', () => {
       filterToHideChildren,
     });
 
-    const inputComp = element.findComponent(NInput);
+    const inputComp = element.findComponent(HInput);
 
     await inputComp.find('input').setValue('Disciplines');
 
-    expect(element.findAllComponents(NTreeItem).length).toBe(2);
+    expect(element.findAllComponents(HTreeItem).length).toBe(2);
 
     filterToHideChildren.value = false;
 
     await nextTick();
 
-    expect(element.findAllComponents(NTreeItem).length).toBe(6);
+    expect(element.findAllComponents(HTreeItem).length).toBe(6);
   });
 });

@@ -39,7 +39,7 @@
 
 <script setup lang="ts">
 import { ref} from 'vue';
-import type { NCascaderExtendOption, NCascaderModelValueType } from '@aurora/horizon-web';
+import type { HCascaderExtendOption, HCascaderModelValueType } from '@aurora/horizon-web';
 
 const currentVal1 = ref<string[]>([]);
 const currentVal2 = ref<string[][]>([]);
@@ -61,7 +61,7 @@ const onCancel = (value: any) => {
   console.info('cancel: ', value);
 };
 
-const onChange = (value: NCascaderModelValueType, option: NCascaderExtendOption) => {
+const onChange = (value: HCascaderModelValueType, option: HCascaderExtendOption) => {
   console.info('change: ', value, option);
 };
 </script>

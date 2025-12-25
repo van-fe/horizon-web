@@ -2,19 +2,19 @@ import type { HorizonWebComponentInstance } from '@aurora/utils';
 import { cls, ComponentClassBlock, sizeUnitTransform, useNamespace } from '@aurora/utils';
 import { defineComponent, inject, ref } from 'vue';
 import {
-  NCascaderPickOptionInjectKey,
-  NCascaderPresetModelValueInjectKey,
-  NCascaderPropsInjectKey,
-  NCascaderTreeHelperInjectKey,
-  NCascaderVisibleOptionsInjectKey,
+  HCascaderPickOptionInjectKey,
+  HCascaderPresetModelValueInjectKey,
+  HCascaderPropsInjectKey,
+  HCascaderTreeHelperInjectKey,
+  HCascaderVisibleOptionsInjectKey,
 } from '../utils/injectKeys';
-import NScrollbar from '~/components/Scrollbar/src/Scrollbar';
+import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
 import CascaderItem from './CascaderItem';
-import NCheckbox from '~/components/Checkbox/src/Checkbox';
-import NVirtualScroller from '~/components/VirtualScroller/src/VirtualScroller';
-import NVirtualScrollerItem from '~/components/VirtualScroller/src/VirtualScrollerItem';
+import HCheckbox from '~/components/Checkbox/src/Checkbox';
+import HVirtualScroller from '~/components/VirtualScroller/src/VirtualScroller';
+import HVirtualScrollerItem from '~/components/VirtualScroller/src/VirtualScrollerItem';
 import useLocaleLang from '~/utils/useLocaleLang';
-import type { NCascaderExtendOption } from '../utils/types';
+import type { HCascaderExtendOption } from '../utils/types';
 import type { VirtualScrollerExposes } from '~/components/VirtualScroller/src/composables/useExposes';
 import { useCascaderSearchPanelEmits } from '../composables/useEmits';
 import useCheckAll from '../hooks/useCheckAll';
@@ -22,21 +22,21 @@ import useCheckAll from '../hooks/useCheckAll';
 export default defineComponent({
   name: `${useNamespace()}CascaderSearchPanel`,
   components: {
-    NScrollbar,
+    HScrollbar,
     CascaderItem,
   },
   emits: useCascaderSearchPanelEmits,
   setup(_, { emit }) {
     const classHelper = new ComponentClassBlock('cascader-search-panel');
 
-    const optionList = inject(NCascaderVisibleOptionsInjectKey)!;
-    const parentProps = inject(NCascaderPropsInjectKey)!;
-    const presetModelValueSet = inject(NCascaderPresetModelValueInjectKey)!;
-    const treeHelper = inject(NCascaderTreeHelperInjectKey)!;
-    const pickOption = inject(NCascaderPickOptionInjectKey)!;
+    const optionList = inject(HCascaderVisibleOptionsInjectKey)!;
+    const parentProps = inject(HCascaderPropsInjectKey)!;
+    const presetModelValueSet = inject(HCascaderPresetModelValueInjectKey)!;
+    const treeHelper = inject(HCascaderTreeHelperInjectKey)!;
+    const pickOption = inject(HCascaderPickOptionInjectKey)!;
 
     const scrollerDomRef = ref<HorizonWebComponentInstance<
-      typeof NVirtualScroller,
+      typeof HVirtualScroller,
       VirtualScrollerExposes
     > | null>(null);
 
@@ -48,7 +48,7 @@ export default defineComponent({
       emit,
     );
 
-    function getOptionValue<T extends NCascaderExtendOption, K extends keyof T>(
+    function getOptionValue<T extends HCascaderExtendOption, K extends keyof T>(
       option: T,
       key: K,
     ): T[K] {
@@ -59,13 +59,13 @@ export default defineComponent({
       <div class={classHelper.block}>
         {parentProps.multiple && parentProps.useFilterCheckAll && (
           <div class={cls(classHelper.e('check-all'))} onClick={toggleCheckAll}>
-            <NCheckbox modelValue={isCheckAll.value} indeterminate={isIndeterminate.value}>
+            <HCheckbox modelValue={isCheckAll.value} indeterminate={isIndeterminate.value}>
               {useLocaleLang('select.checkAll').value}
-            </NCheckbox>
+            </HCheckbox>
           </div>
         )}
         {parentProps.useVirtualScroll ? (
-          <NVirtualScroller
+          <HVirtualScroller
             ref={scrollerDomRef}
             class={cls(
               classHelper.em('scrollbar', 'view'),
@@ -78,8 +78,8 @@ export default defineComponent({
             size="small"
           >
             {{
-              default: (row: { item: NCascaderExtendOption; index: number; active: boolean }) => (
-                <NVirtualScrollerItem item={row.item} active={row.active} index={row.index}>
+              default: (row: { item: HCascaderExtendOption; index: number; active: boolean }) => (
+                <HVirtualScrollerItem item={row.item} active={row.active} index={row.index}>
                   <CascaderItem
                     key={row.item._uuid}
                     value={getOptionValue(row.item, 'value')}
@@ -91,12 +91,12 @@ export default defineComponent({
                     expand={false}
                     duringFilter={true}
                   />
-                </NVirtualScrollerItem>
+                </HVirtualScrollerItem>
               ),
             }}
-          </NVirtualScroller>
+          </HVirtualScroller>
         ) : (
-          <NScrollbar
+          <HScrollbar
             class={cls(classHelper.e('scrollbar'))}
             viewClass={cls(
               classHelper.em('scrollbar', 'view'),
@@ -118,7 +118,7 @@ export default defineComponent({
                 duringFilter={true}
               />
             ))}
-          </NScrollbar>
+          </HScrollbar>
         )}
       </div>
     );

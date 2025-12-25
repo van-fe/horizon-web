@@ -1,12 +1,12 @@
 import { computed, ref } from 'vue';
 import type { HorizonWebComponentInstance } from '@aurora/utils';
 import { cls, ComponentClassBlock } from '@aurora/utils';
-import type NScrollbar from '~/components/Scrollbar/src/Scrollbar';
+import type HScrollbar from '~/components/Scrollbar/src/Scrollbar';
 import type { ScrollbarExposes } from '~/components/Scrollbar/src/composables/useExposes';
 import { unrefElement } from '@vueuse/core';
 
 export default function useScroll() {
-  const scrollbarDomRef = ref<HorizonWebComponentInstance<typeof NScrollbar, ScrollbarExposes>>();
+  const scrollbarDomRef = ref<HorizonWebComponentInstance<typeof HScrollbar, ScrollbarExposes>>();
   const scrollLeft = ref(0);
   const scrollRight = ref(0);
   const classHelper = new ComponentClassBlock('table-v3');

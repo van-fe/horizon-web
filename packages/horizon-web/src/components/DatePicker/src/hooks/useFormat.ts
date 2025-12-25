@@ -6,17 +6,17 @@ import { LocaleSupportLang } from '@aurora/locale';
 import valueFormatJson from '~/locales/dateFormat.json';
 import dateSwitcherShowFormat from '../utils/dateSwitcherShowFormat.json';
 import {
-  NDatePickerDateSwitcherShowFormatMappingMappingInjectKey,
-  NDatePickerValueFormatMappingInjectKey,
+  HDatePickerDateSwitcherShowFormatMappingMappingInjectKey,
+  HDatePickerValueFormatMappingInjectKey,
 } from '../utils/injectKeys';
-import type { NDatePickerBaseSupportType } from '../utils/types';
+import type { HDatePickerBaseSupportType } from '../utils/types';
 import useShowTimeZone from '~/utils/useShowTimeZone';
 
 export default function useFormat(
   propRefs: ToRefs<DatePickerProps>,
   options: {
     visible: Ref<boolean>;
-    pickerType: ComputedRef<NDatePickerBaseSupportType>;
+    pickerType: ComputedRef<HDatePickerBaseSupportType>;
   },
 ) {
   const locale = getCurrentLocale();
@@ -50,9 +50,9 @@ export default function useFormat(
     }
   });
 
-  provide(NDatePickerValueFormatMappingInjectKey, valueFormatMapping);
+  provide(HDatePickerValueFormatMappingInjectKey, valueFormatMapping);
   provide(
-    NDatePickerDateSwitcherShowFormatMappingMappingInjectKey,
+    HDatePickerDateSwitcherShowFormatMappingMappingInjectKey,
     dateSwitcherShowFormatMapping,
   );
 

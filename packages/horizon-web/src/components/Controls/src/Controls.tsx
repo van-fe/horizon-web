@@ -14,10 +14,10 @@ import { useControlsEmits } from './composables/useEmits';
 import { useControlsSlots } from './composables/useSlots';
 import type { ControlsEmits } from './composables/useEmits';
 import type { ControlsSlots } from './composables/useSlots';
-import { NControlsEmitInjectKey, NControlsPropsInjectKey } from './utils/injectKeys';
+import { HControlsEmitInjectKey, HControlsPropsInjectKey } from './utils/injectKeys';
 import { useResizeObserver } from '@vueuse/core';
 import Ellipsis from './components/Ellipsis';
-import { NHoverSwitchVisibleInjectKey } from '~/components/Hover/src/utils/injectKeys';
+import { HHoverSwitchVisibleInjectKey } from '~/components/Hover/src/utils/injectKeys';
 
 export default defineComponent({
   name: `${useNamespace()}Controls`,
@@ -57,7 +57,7 @@ export default defineComponent({
       });
     });
 
-    const hoverSwitchVisibleInject = inject(NHoverSwitchVisibleInjectKey, undefined);
+    const hoverSwitchVisibleInject = inject(HHoverSwitchVisibleInjectKey, undefined);
     function onDropdownItemClick() {
       hoverSwitchVisibleInject?.(false);
     }
@@ -97,8 +97,8 @@ export default defineComponent({
       resizeObserverStop();
     });
 
-    provide(NControlsPropsInjectKey, props);
-    provide(NControlsEmitInjectKey, emit);
+    provide(HControlsPropsInjectKey, props);
+    provide(HControlsEmitInjectKey, emit);
 
     return () => {
       const controlItems = getNeedRenderedItems(slots);

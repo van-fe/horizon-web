@@ -25,8 +25,8 @@ import type { PopoverSlots } from './composables/useSlots';
 import { usePopoverSlots } from './composables/useSlots';
 import type { PopoverExposes } from './composables/useExposes';
 import { usePopoverExposes } from './composables/useExposes';
-import NTransition from '~/components/Transition/src/Transition';
-import { NPickerPopoverPropsInjectKey } from './utils/injectKeys';
+import HTransition from '~/components/Transition/src/Transition';
+import { HPickerPopoverPropsInjectKey } from './utils/injectKeys';
 
 export default defineComponent({
   name: `${useNamespace()}Popover`,
@@ -56,7 +56,7 @@ export default defineComponent({
     const zIndexHandler = useZIndex(props.zIndex);
     const zIndex = ref(zIndexHandler.current);
 
-    provide(NPickerPopoverPropsInjectKey, props);
+    provide(HPickerPopoverPropsInjectKey, props);
 
     // trigger为click下处理隐藏
     const hideClickShowPop = () => {
@@ -302,7 +302,7 @@ export default defineComponent({
         )}
         {/* popper */}
         <Teleport to={toRef.value} disabled={!toRef.value}>
-          <NTransition
+          <HTransition
             appear
             name={props.transitionName}
             speed={props.transitionSpeed}
@@ -333,7 +333,7 @@ export default defineComponent({
                 )}
               </span>
             )}
-          </NTransition>
+          </HTransition>
         </Teleport>
       </span>
     );

@@ -3,74 +3,74 @@ import type { HorizonWebSetupContext } from '@aurora/utils';
 import { generatorInjectedKeyName } from '@aurora/utils';
 import type { MenuProps } from '../composables/useProps';
 import type { MenuEmits } from '../composables/useEmits';
-import type { NMenuTreeData } from './types';
+import type { HMenuTreeData } from './types';
 
-export const NMenuRefInjectKey = Symbol(generatorInjectedKeyName('menu', 'ref')) as InjectionKey<
+export const HMenuRefInjectKey = Symbol(generatorInjectedKeyName('menu', 'ref')) as InjectionKey<
   Ref<HTMLElement | null>
 >;
 
-export const NMenuPropsInjectKey = Symbol(
+export const HMenuPropsInjectKey = Symbol(
   generatorInjectedKeyName('menu', 'props'),
 ) as InjectionKey<MenuProps>;
 
-export const NMenuEmitInjectKey = Symbol(generatorInjectedKeyName('menu', 'emit')) as InjectionKey<
+export const HMenuEmitInjectKey = Symbol(generatorInjectedKeyName('menu', 'emit')) as InjectionKey<
   HorizonWebSetupContext<MenuEmits>['emit']
 >;
 
-export const NMenuAppendChildInjectKey = Symbol(
+export const HMenuAppendChildInjectKey = Symbol(
   generatorInjectedKeyName('menu', 'append-child'),
 ) as InjectionKey<
-  <Type extends 'subMenu' | 'menuItem' = 'menuItem'>(child: NMenuTreeData<Type>) => void
+  <Type extends 'subMenu' | 'menuItem' = 'menuItem'>(child: HMenuTreeData<Type>) => void
 >;
 
-export const NMenuRemoveChildInjectKey = Symbol(
+export const HMenuRemoveChildInjectKey = Symbol(
   generatorInjectedKeyName('menu', 'remove-child'),
 ) as InjectionKey<(uuid: string) => void>;
 
-export const NMenuExpandedMenuInjectKey = Symbol(
+export const HMenuExpandedMenuInjectKey = Symbol(
   generatorInjectedKeyName('menu', 'expanded-menu'),
 ) as InjectionKey<Ref<Set<string>>>;
 
-export const NMenuAddExpandMenuInjectKey = Symbol(
+export const HMenuAddExpandMenuInjectKey = Symbol(
   generatorInjectedKeyName('menu', 'add-expand-menu'),
 ) as InjectionKey<(uuid: string) => void>;
 
-export const NMenuRemoveExpandMenuInjectKey = Symbol(
+export const HMenuRemoveExpandMenuInjectKey = Symbol(
   generatorInjectedKeyName('menu', 'remove-expand-menu'),
 ) as InjectionKey<(uuid: string) => void>;
 
-export const NMenuActivatedMenusInjectKey = Symbol(
+export const HMenuActivatedMenusInjectKey = Symbol(
   generatorInjectedKeyName('menu', 'activated-menus'),
-) as InjectionKey<ComputedRef<NMenuTreeData<'subMenu' | 'menuItem'>[]>>;
+) as InjectionKey<ComputedRef<HMenuTreeData<'subMenu' | 'menuItem'>[]>>;
 
-export const NMenuSetActivatedMenuInjectKey = Symbol(
+export const HMenuSetActivatedMenuInjectKey = Symbol(
   generatorInjectedKeyName('menu', 'set-activated-menu'),
 ) as InjectionKey<(uuid: string) => void>;
 
-export const NMenuMenuTreeInjectKey = Symbol(
+export const HMenuMenuTreeInjectKey = Symbol(
   generatorInjectedKeyName('menu', 'tree'),
-) as InjectionKey<Ref<Map<string, NMenuTreeData<'subMenu' | 'menuItem'>>>>;
+) as InjectionKey<Ref<Map<string, HMenuTreeData<'subMenu' | 'menuItem'>>>>;
 
-export const NMenuTreeLevelInjectKey = Symbol(
+export const HMenuTreeLevelInjectKey = Symbol(
   generatorInjectedKeyName('menu', 'tree-level'),
 ) as InjectionKey<number>;
 
-export const NMenuParentHasIconAmountInjectKey = Symbol(
+export const HMenuParentHasIconAmountInjectKey = Symbol(
   generatorInjectedKeyName('menu', 'parent-has-icon-amount'),
 ) as InjectionKey<ComputedRef<number>>;
 
-export const NMenuIsCollapsedInjectKey = Symbol(
+export const HMenuIsCollapsedInjectKey = Symbol(
   generatorInjectedKeyName('menu', 'is-collapsed'),
 ) as InjectionKey<Ref<boolean>>;
 
-export const NMenuScrollTopTopInjectKey = Symbol(
+export const HMenuScrollTopTopInjectKey = Symbol(
   generatorInjectedKeyName('menu', 'scroll-to-top'),
 ) as InjectionKey<(top: number) => void>;
 
-export const NMenuActiveTopMenuUuidInjectKey = Symbol(
+export const HMenuActiveTopMenuUuidInjectKey = Symbol(
   generatorInjectedKeyName('menu', 'active-top-menu-uuid'),
 ) as InjectionKey<Ref<string>>;
 
-export const NMenuSwitchFullViewMenuVisibleInjectKey = Symbol(
+export const HMenuSwitchFullViewMenuVisibleInjectKey = Symbol(
   generatorInjectedKeyName('menu', 'switch-full-view-menu-visible'),
 ) as InjectionKey<() => void>;

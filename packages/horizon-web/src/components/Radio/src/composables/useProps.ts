@@ -8,7 +8,7 @@ import type {
 } from 'vue';
 import type { RadioEmits } from './useEmits';
 import { declarePropType } from '@aurora/utils';
-import type { NFormItemTriggerType } from '~/components/Form/src/utils/injectedKeys';
+import type { HFormItemTriggerType } from '~/components/Form/src/utils/injectedKeys';
 import { nextTick } from 'vue';
 
 export const useRadioProps = declarePropType({
@@ -216,7 +216,7 @@ export function handleChange(
   value: string | number | boolean,
   emit: SetupContext<RadioEmits>['emit'],
   RadioGroupInject: UnwrapNestedRefs<RadioGroupPropsProvideType> | undefined,
-  formItemTrigger?: NFormItemTriggerType,
+  formItemTrigger?: HFormItemTriggerType,
 ): void {
   if (!!RadioGroupInject) {
     emit('change', value);
@@ -234,7 +234,7 @@ export function handleBlur(
   evt: FocusEvent,
   emit: SetupContext<RadioEmits>['emit'],
   RadioGroupInject: UnwrapNestedRefs<RadioGroupPropsProvideType> | undefined,
-  formItemTrigger?: NFormItemTriggerType,
+  formItemTrigger?: HFormItemTriggerType,
 ) {
   if (!!RadioGroupInject) {
     emit('blur', evt);

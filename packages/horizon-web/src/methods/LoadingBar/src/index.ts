@@ -1,4 +1,4 @@
-import NLoadingBarComponent from './components/LoadingBar';
+import HLoadingBarComponent from './components/LoadingBar';
 import type { LoadingBarOptions } from './composables/useProps';
 import { defineMethod } from '@aurora/utils';
 
@@ -13,7 +13,7 @@ let timer: NodeJS.Timeout | null;
 function getLoadingBarInstance() {
   loadingBarInstance =
     loadingBarInstance ||
-    NLoadingBarComponent.newInstance({
+    HLoadingBarComponent.newInstance({
       height,
     });
 

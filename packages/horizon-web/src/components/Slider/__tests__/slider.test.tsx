@@ -1,5 +1,5 @@
 import { shallowMount, mount } from '@vue/test-utils';
-import NSlider from '../src/Slider';
+import HSlider from '../src/Slider';
 import { describe, expect, test, vi } from 'vitest';
 import { ref, nextTick } from 'vue';
 import type { SliderProps } from '../src/composables/useProps';
@@ -9,15 +9,15 @@ describe('Slider.tsx', () => {
   describe('basic', () => {
     test('create', async () => {
       const modelValue = ref();
-      const wrapper = shallowMount(() => <NSlider v-model={modelValue.value} />);
-      const element = wrapper.findComponent(NSlider);
+      const wrapper = shallowMount(() => <HSlider v-model={modelValue.value} />);
+      const element = wrapper.findComponent(HSlider);
 
       expect(element.exists()).toBe(true);
     });
 
     test('step', async () => {
       const modelValue = ref(8);
-      mount(() => <NSlider v-model={modelValue.value} min={0} max={100} step={10} />);
+      mount(() => <HSlider v-model={modelValue.value} min={0} max={100} step={10} />);
       expect(modelValue.value).toEqual(10);
     });
 
@@ -25,7 +25,7 @@ describe('Slider.tsx', () => {
       const modelValue = ref(0);
       const sizeRef = ref<SliderProps['size']>('small');
 
-      const wrapper = mount(() => <NSlider v-model={modelValue.value} size={sizeRef.value} />);
+      const wrapper = mount(() => <HSlider v-model={modelValue.value} size={sizeRef.value} />);
 
       expect(wrapper.find('.n-slider--small').exists()).toBe(true);
 
@@ -38,7 +38,7 @@ describe('Slider.tsx', () => {
 
     test('should not exceed min and max', async () => {
       const modelValue = ref(120);
-      mount(() => <NSlider v-model={modelValue.value} />);
+      mount(() => <HSlider v-model={modelValue.value} />);
 
       expect(modelValue.value).toEqual(100);
 
@@ -55,7 +55,7 @@ describe('Slider.tsx', () => {
       const wrapper = mount(
         () => (
           <div style="width: 100px;">
-            <NSlider v-model={modelValue.value} />
+            <HSlider v-model={modelValue.value} />
           </div>
         ),
         {
@@ -81,7 +81,7 @@ describe('Slider.tsx', () => {
     test('keyboard event', async () => {
       const modelValue = ref(50);
       const onFocus = vi.fn();
-      const wrapper = mount(() => <NSlider v-model={modelValue.value} onFocus={onFocus} />);
+      const wrapper = mount(() => <HSlider v-model={modelValue.value} onFocus={onFocus} />);
 
       const cursor = wrapper.findComponent(SliderCursor);
 

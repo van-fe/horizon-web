@@ -3,13 +3,13 @@ import { default as Tab } from './src/Tab';
 import { withInstall, withNoopInstall } from '@aurora/utils';
 
 export type {
-  NTabValue,
+  HTabValue,
   TabsProps,
   TabProps,
-  NTabSize,
-  NTabType,
+  HTabSize,
+  HTabType,
 } from './src/composables/useProps';
 
-export const NTabs = withInstall(Tabs, { Tab });
-export const NTab = withNoopInstall(Tab);
-export default NTabs;
+export const HTabs = withInstall(Tabs, { Tab });
+export const HTab = withNoopInstall(Tab);
+export default HTabs;

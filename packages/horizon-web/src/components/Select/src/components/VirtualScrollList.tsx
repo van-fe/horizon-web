@@ -1,14 +1,14 @@
 import { defineComponent, inject, provide, ref } from 'vue';
 import { HorizonWebSetupContext, useNamespace } from '@aurora/utils';
-import type { NRecycleScrollerInstance } from '~/components/VirtualScroller/src/composables/useProps';
-import NVirtualScroller from '~/components/VirtualScroller/src/VirtualScroller';
-import NVirtualScrollerItem from '~/components/VirtualScroller/src/VirtualScrollerItem';
+import type { HRecycleScrollerInstance } from '~/components/VirtualScroller/src/composables/useProps';
+import HVirtualScroller from '~/components/VirtualScroller/src/VirtualScroller';
+import HVirtualScrollerItem from '~/components/VirtualScroller/src/VirtualScrollerItem';
 import type { SelectCollectedOptionData } from '../utils/injectKeys';
 import {
-  NSelectModelValueInjectKey,
-  NSelectPropsInjectKey,
-  NSelectVirtualScrollListIsScrollingInjectKey,
-  NSelectVisibleOptionsInjectKey,
+  HSelectModelValueInjectKey,
+  HSelectPropsInjectKey,
+  HSelectVirtualScrollListIsScrollingInjectKey,
+  HSelectVisibleOptionsInjectKey,
 } from '../utils/injectKeys';
 import SimpleOption from './SimpleOption';
 import { SelectVirtualScrollListExposes, useSelectVirtualScrollListExposes } from '../composables/useExposes';
@@ -19,14 +19,14 @@ export default defineComponent({
   emits: useVirtualScrollListEmits,
   exposes: useSelectVirtualScrollListExposes,
   setup(_, { emit, expose }: HorizonWebSetupContext<VirtualScrollListEmits, {}, SelectVirtualScrollListExposes>) {
-    const parentProps = inject(NSelectPropsInjectKey)!;
-    const visibleOptions = inject(NSelectVisibleOptionsInjectKey)!;
-    const modelValueSet = inject(NSelectModelValueInjectKey)!;
+    const parentProps = inject(HSelectPropsInjectKey)!;
+    const visibleOptions = inject(HSelectVisibleOptionsInjectKey)!;
+    const modelValueSet = inject(HSelectModelValueInjectKey)!;
 
-    const scrollerDomRef = ref<(NRecycleScrollerInstance & HTMLElement) | null>(null);
+    const scrollerDomRef = ref<(HRecycleScrollerInstance & HTMLElement) | null>(null);
     const isScrolling = ref(false);
 
-    provide(NSelectVirtualScrollListIsScrollingInjectKey, isScrolling);
+    provide(HSelectVirtualScrollListIsScrollingInjectKey, isScrolling);
 
     let startIndex = 0;
     let endIndex = 0;
@@ -78,7 +78,7 @@ export default defineComponent({
     });
 
     return () => (
-      <NVirtualScroller
+      <HVirtualScroller
         ref={scrollerDomRef}
         scrollerMaxHeight={parentProps.optionListMaxHeight}
         items={visibleOptions.value}
@@ -99,7 +99,7 @@ export default defineComponent({
             index: number;
             active: boolean;
           }) => (
-            <NVirtualScrollerItem item={row.item} active={row.active} index={row.index}>
+            <HVirtualScrollerItem item={row.item} active={row.active} index={row.index}>
               <SimpleOption
                 key={row.item.props.value!.toString()}
                 disabled={row.item.props.disabled}
@@ -107,10 +107,10 @@ export default defineComponent({
                 label={row.item.props.label}
                 description={row.item.props.description}
               />
-            </NVirtualScrollerItem>
+            </HVirtualScrollerItem>
           ),
         }}
-      </NVirtualScroller>
+      </HVirtualScroller>
     );
   },
 });

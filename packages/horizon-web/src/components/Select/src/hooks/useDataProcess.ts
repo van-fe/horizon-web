@@ -5,9 +5,9 @@ import type { SelectSlots } from '../composables/useSlots';
 import type { SelectExposes } from '../composables/useExposes';
 import { watch, type Ref, nextTick, inject } from 'vue';
 import type { ModelValueSingleType, ModelValueType } from '../utils/types';
-import { NSelectInitialValueUndefined } from '../utils/types';
+import { HSelectInitialValueUndefined } from '../utils/types';
 import { isEmpty, isEqualLoose } from '../utils/utils';
-import { NFormItemTriggerInjectedKey } from '~/components/Form/src/utils/injectedKeys';
+import { HFormItemTriggerInjectedKey } from '~/components/Form/src/utils/injectedKeys';
 
 export default function useDataProcess(
   props: SelectProps,
@@ -23,7 +23,7 @@ export default function useDataProcess(
 ) {
   let prevEmitModelValue: ModelValueType = props.modelValue;
 
-  const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
+  const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
 
   watch(
     options.modelValueSet,
@@ -54,7 +54,7 @@ export default function useDataProcess(
     let modelValue: ModelValueType = props.multiple ? transformedValue : transformedValue[0];
 
     if (isEmpty(modelValue)) {
-      if (props.initialValue === NSelectInitialValueUndefined) {
+      if (props.initialValue === HSelectInitialValueUndefined) {
         modelValue = props.multiple ? [] : undefined;
       } else {
         modelValue =

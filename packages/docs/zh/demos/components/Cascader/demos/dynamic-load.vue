@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { NCascaderDynamicLoadNode } from '@aurora/horizon-web';
+import { HCascaderDynamicLoadNode } from '@aurora/horizon-web';
 
 const dynOptions = [
   {
@@ -56,7 +56,7 @@ export default defineComponent({
       });
     });
 
-    const dynamicLoad = (node: NCascaderDynamicLoadNode) => {
+    const dynamicLoad = (node: HCascaderDynamicLoadNode) => {
       console.info(node);
       return new Promise(resolve => {
         setTimeout(() => {

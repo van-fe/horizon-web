@@ -141,16 +141,16 @@
 ### 字段映射
 配置 `field-map` 来控制映射的字段，从而可以直接使用自定的 `options` 结构而不必改成 `cascader` 指定默认字段
 
-对于 `ts` 类型报错的问题，可以在全局 `declare NCascaderOption` 类型解决（以下方 `demo` 中使用字段为例）：
+对于 `ts` 类型报错的问题，可以在全局 `declare HCascaderOption` 类型解决（以下方 `demo` 中使用字段为例）：
 
 ```ts
-import type { NCascaderOption } from '@aurora/horizon-web';
+import type { HCascaderOption } from '@aurora/horizon-web';
 
 declare module '@aurora/horizon-web' {
-  interface NCascaderOption {
-    id?: NCascaderOption['value'];
-    tag?: NCascaderOption['label'];
-    tagString?: NCascaderOption['stringLabel'];
+  interface HCascaderOption {
+    id?: HCascaderOption['value'];
+    tag?: HCascaderOption['label'];
+    tagString?: HCascaderOption['stringLabel'];
   }
 }
 ```

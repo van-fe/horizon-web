@@ -10,17 +10,17 @@ import { isNil, isDefined } from '@aurora/utils';
 import type { TimePickerSlots } from '../composables/useSlots';
 import type { TimePickerExposes } from '../composables/useExposes';
 import {
-  NFormDisabledInjectedKey,
-  NFormItemErrorInjectedKey,
-  NFormItemTriggerInjectedKey,
+  HFormDisabledInjectedKey,
+  HFormItemErrorInjectedKey,
+  HFormItemTriggerInjectedKey,
 } from '~/components/Form/src/utils/injectedKeys';
-import type { NTimePickerDomRefs, SingleOrArrayPickerDataType } from '../utils/types';
+import type { HTimePickerDomRefs, SingleOrArrayPickerDataType } from '../utils/types';
 import { tryToAnalysisTime } from '~/components/TimePicker/src/utils/utils';
 
 export default function useData(
   propRefs: ToRefs<TimePickerProps>,
   context: HorizonWebSetupContext<TimePickerEmits, TimePickerSlots, TimePickerExposes>,
-  domRefs: NTimePickerDomRefs,
+  domRefs: HTimePickerDomRefs,
   options: {
     visible: Ref<boolean>;
     modifyPanelVisible: (visible: boolean) => void;
@@ -38,9 +38,9 @@ export default function useData(
     | null = undefined;
 
   /** injects **/
-  const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
-  const formDisabled = inject(NFormDisabledInjectedKey, undefined);
-  const formItemError = inject(NFormItemErrorInjectedKey, undefined);
+  const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
+  const formDisabled = inject(HFormDisabledInjectedKey, undefined);
+  const formItemError = inject(HFormItemErrorInjectedKey, undefined);
 
   /** computed **/
   const isDisabled = computed(() => propRefs.disabled?.value ?? formDisabled?.value ?? false);

@@ -2,7 +2,7 @@ import { default as FloatButton } from './src/FloatButton';
 import { default as FloatButtonGroup } from './src/FloatButtonGroup';
 import { withInstall } from '@aurora/utils';
 
-export const NFloatButton = withInstall(FloatButton);
-export const NFloatButtonGroup = withInstall(FloatButtonGroup);
+export const HFloatButton = withInstall(FloatButton);
+export const HFloatButtonGroup = withInstall(FloatButtonGroup);
 
-export default NFloatButton;
+export default HFloatButton;

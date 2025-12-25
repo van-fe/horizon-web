@@ -1,13 +1,13 @@
 import { shallowMount } from '@vue/test-utils';
-import NViewer from '../src/Viewer';
+import HViewer from '../src/Viewer';
 import { describe, expect, test } from 'vitest';
 import { ref } from 'vue';
-import type { NViewerSource } from '..';
+import type { HViewerSource } from '..';
 
 describe('Viewer.tsx', () => {
   test('basic', async () => {
     const generateImages = (count: number) => {
-      const list: NViewerSource[] = [];
+      const list: HViewerSource[] = [];
       const base = Math.floor(Math.random() * 60) + 10;
       for (let i = 0; i < count; i++) {
         list.push({
@@ -20,10 +20,10 @@ describe('Viewer.tsx', () => {
       return list;
     };
 
-    const imagesRef = ref<NViewerSource[]>(generateImages(5));
+    const imagesRef = ref<HViewerSource[]>(generateImages(5));
 
-    const wrapper = shallowMount(() => <NViewer sources={imagesRef.value} />);
-    const element = wrapper.findComponent(NViewer);
+    const wrapper = shallowMount(() => <HViewer sources={imagesRef.value} />);
+    const element = wrapper.findComponent(HViewer);
 
     expect(element.exists()).toBe(true);
   });

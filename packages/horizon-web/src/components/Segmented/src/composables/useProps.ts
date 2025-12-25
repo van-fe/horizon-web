@@ -1,9 +1,9 @@
 import { declarePropType } from '@aurora/utils';
 import type { ExtractPropTypes, PropType } from 'vue';
 
-export type NSegmentedSize = 'small' | 'medium' | 'large' | 'huge';
+export type HSegmentedSize = 'small' | 'medium' | 'large' | 'huge';
 
-export type NSegmentedValue = string | number;
+export type HSegmentedValue = string | number;
 
 export const useSegmentedProps = declarePropType({
   /**
@@ -11,7 +11,7 @@ export const useSegmentedProps = declarePropType({
    * 特别说明：undefined、null 值均会当成空值处理
    */
   activeKey: {
-    type: [String, Number] as PropType<NSegmentedValue>,
+    type: [String, Number] as PropType<HSegmentedValue>,
     required: false,
   },
 
@@ -20,7 +20,7 @@ export const useSegmentedProps = declarePropType({
    * 特别说明：undefined、null 值均会当成空值处理
    */
   defaultActiveKey: {
-    type: [String, Number] as PropType<NSegmentedValue>,
+    type: [String, Number] as PropType<HSegmentedValue>,
     required: false,
   },
 
@@ -28,7 +28,7 @@ export const useSegmentedProps = declarePropType({
    * Segmented 尺寸大小
    **/
   size: {
-    type: String as PropType<NSegmentedSize>,
+    type: String as PropType<HSegmentedSize>,
   },
 
   /**
@@ -75,7 +75,7 @@ export const useSegmentedItemProps = declarePropType({
    * 名称，值使用 `key`
    **/
   label: {
-    type: [String, Number] as PropType<NSegmentedValue>,
+    type: [String, Number] as PropType<HSegmentedValue>,
   },
 
   /** 图标名字，为空表示没有图标 */
@@ -86,7 +86,7 @@ export const useSegmentedItemProps = declarePropType({
 
   /** 图标大小 */
   iconSize: {
-    type: [String, Number] as PropType<NSegmentedValue>,
+    type: [String, Number] as PropType<HSegmentedValue>,
   },
 
   /**

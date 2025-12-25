@@ -4,9 +4,9 @@ import type { DatePickerProps } from '../composables/useProps';
 import dayjs from '~/utils/useDayJs';
 import type { Dayjs, ManipulateType } from 'dayjs';
 import type { TimePickerProps } from '~/components/TimePicker/src/composables/useProps';
-import type { NDatePickerBaseSupportType } from '../utils/types';
+import type { HDatePickerBaseSupportType } from '../utils/types';
 
-export function getDayjsUnitByType(type: NDatePickerBaseSupportType) {
+export function getDayjsUnitByType(type: HDatePickerBaseSupportType) {
   switch (type) {
     case 'year':
     case 'year-range':
@@ -20,7 +20,7 @@ export function getDayjsUnitByType(type: NDatePickerBaseSupportType) {
 }
 
 export function getTimePanelTypeByType(
-  type: NDatePickerBaseSupportType,
+  type: HDatePickerBaseSupportType,
 ): TimePickerProps['type'] {
   switch (type) {
     case 'datetime':
@@ -43,7 +43,7 @@ export default function usePanel(
     startDate: Ref<Dayjs | undefined | null>;
     endDate: Ref<Dayjs | undefined | null>;
     visible: Ref<boolean>;
-    pickerType: ComputedRef<NDatePickerBaseSupportType>;
+    pickerType: ComputedRef<HDatePickerBaseSupportType>;
   },
 ) {
   const startPickerType = ref<'year' | 'month' | 'day'>('day');

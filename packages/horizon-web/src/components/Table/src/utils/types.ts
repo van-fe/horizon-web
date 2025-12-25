@@ -4,23 +4,23 @@ import type { HorizonWebSetupContext, Promisable } from '@aurora/utils';
 import type { TableColumnEmits } from '../composables/useEmits';
 import type { TableColumnSlots } from '../composables/useSlots';
 
-export const NTableTransformedRowContextKey = Symbol('table transformed row context key');
+export const HTableTransformedRowContextKey = Symbol('table transformed row context key');
 
-export const NTableColumnContextKey = Symbol('table column context key');
-export const NTableColumnSelectionKey = Symbol('table column selection key');
-export const NTableColumnFilterKey = Symbol('table column filter key');
+export const HTableColumnContextKey = Symbol('table column context key');
+export const HTableColumnSelectionKey = Symbol('table column selection key');
+export const HTableColumnFilterKey = Symbol('table column filter key');
 
-export type NTableRowKeyType = string | number;
+export type HTableRowKeyType = string | number;
 
-export type NTableRowDataType = (any & NTableTreeRowDataType) & {};
+export type HTableRowDataType = (any & HTableTreeRowDataType) & {};
 
-export interface NTableTreeRowDataType {
-  children?: NTableRowDataType[];
+export interface HTableTreeRowDataType {
+  children?: HTableRowDataType[];
   isLeaf?: boolean;
 }
 
-export type NTableTransformedRowDataType = NTableRowDataType & {
-  [NTableTransformedRowContextKey]: {
+export type HTableTransformedRowDataType = HTableRowDataType & {
+  [HTableTransformedRowContextKey]: {
     uuid: string;
     index: number;
     visible: Ref<Record<string, boolean>>;
@@ -30,69 +30,69 @@ export type NTableTransformedRowDataType = NTableRowDataType & {
   };
 };
 
-export enum NTableSortOrderEnum {
+export enum HTableSortOrderEnum {
   ASC = 'ASC',
   DESC = 'DESC',
 }
 
-export enum NTableAlignEnum {
+export enum HTableAlignEnum {
   LEFT = 'left',
   RIGHT = 'right',
   CENTER = 'center',
 }
 
-export type NTableSortType = {
+export type HTableSortType = {
   prop: string;
-  order: NTableSortOrderEnum;
+  order: HTableSortOrderEnum;
   init?: any;
   silent?: any;
 };
 
-export type NTableSummaryMethodType = (data: {
+export type HTableSummaryMethodType = (data: {
   /**
    * Flatten columns data
    */
-  columns: NTableColumnData[];
+  columns: HTableColumnData[];
   /**
    * origin table data
    */
-  data: NTableRowDataType[];
+  data: HTableRowDataType[];
   /**
    * flatten by row-id's table data
    */
-  flattenData: NTableTransformedRowDataType[];
+  flattenData: HTableTransformedRowDataType[];
 }) => (VNode | string)[][];
 
-export type NTableSpanMethodType = (data: {
+export type HTableSpanMethodType = (data: {
   row: any;
   column: any;
   rowIndex: number;
   columnIndex: number;
 }) => number[] | { rowSpan: number; colSpan: number } | void;
 
-export type NTableDynamicLoadMethodType = (
-  row: NTableTransformedRowDataType,
-) => Promisable<NTableRowDataType[]>;
+export type HTableDynamicLoadMethodType = (
+  row: HTableTransformedRowDataType,
+) => Promisable<HTableRowDataType[]>;
 
-export interface NTableHeaderCellScopeSlots {
-  column: NTableColumnData | {};
+export interface HTableHeaderCellScopeSlots {
+  column: HTableColumnData | {};
   columnIndex: number;
   fixed: 'left' | 'right' | 'hover' | undefined;
 }
 
-export interface NTableFooterCellScopeSlots extends NTableHeaderCellScopeSlots {
+export interface HTableFooterCellScopeSlots extends HTableHeaderCellScopeSlots {
   /**
    * The row index of summary footer. Starts with 0
    */
   rowIndex: number;
 }
 
-export interface NTableCellScopeSlots extends NTableHeaderCellScopeSlots {
+export interface HTableCellScopeSlots extends HTableHeaderCellScopeSlots {
   rowIndex: number;
-  row: NTableTransformedRowDataType | {};
+  row: HTableTransformedRowDataType | {};
 }
 
-export interface NTableInsertedColumnData<
+export interface HTableInsertedColumnData<
   Context extends HorizonWebSetupContext<TableColumnEmits, TableColumnSlots> = HorizonWebSetupContext<
     TableColumnEmits,
     TableColumnSlots
@@ -102,10 +102,10 @@ export interface NTableInsertedColumnData<
   props: TableColumnProps;
   emit: Context['emit'];
   slots: Context['slots'];
-  children: NTableInsertedColumnData<Context>[];
+  children: HTableInsertedColumnData<Context>[];
 }
 
-export interface NTableColumnContextData {
+export interface HTableColumnContextData {
   /**
    * append size style to column which is created by column analysis method
    */
@@ -129,17 +129,17 @@ export interface NTableColumnContextData {
   /**
    * prev columns
    */
-  prevColumn: NTableColumnData | undefined;
+  prevColumn: HTableColumnData | undefined;
   prevColumnsWidthSum: number;
   /**
    * prev columns
    */
-  nextColumn: NTableColumnData | undefined;
+  nextColumn: HTableColumnData | undefined;
   nextColumnsWidthSum: number;
   /**
    * parents
    */
-  parentColumn: NTableColumnData | undefined;
+  parentColumn: HTableColumnData | undefined;
   parentColumnsHeightSum: number;
   /**
    * children
@@ -147,34 +147,34 @@ export interface NTableColumnContextData {
   childrenEachRowColumnsHeightSum: number;
 }
 
-export interface NTableColumnSelectionData {
+export interface HTableColumnSelectionData {
   checkedRows: Set<unknown>;
   isSelectable: ComputedRef<(rowIndex: number) => boolean>;
-  isCheckedAll: ComputedRef<(rowsData: NTableTransformedRowDataType[]) => boolean>;
-  isIndeterminate: ComputedRef<(rowsData: NTableTransformedRowDataType[]) => boolean>;
-  handleSelect: (rowData: NTableTransformedRowDataType, rowIndex: number) => void;
+  isCheckedAll: ComputedRef<(rowsData: HTableTransformedRowDataType[]) => boolean>;
+  isIndeterminate: ComputedRef<(rowsData: HTableTransformedRowDataType[]) => boolean>;
+  handleSelect: (rowData: HTableTransformedRowDataType, rowIndex: number) => void;
   handleSelectAll: () => void;
   handleClear: (ignoreSelectable: boolean) => void;
-  getSelectionRows: () => NTableTransformedRowDataType[];
+  getSelectionRows: () => HTableTransformedRowDataType[];
   toggleRowSelection: (
-    rowKey: NTableRowKeyType | NTableRowKeyType[],
+    rowKey: HTableRowKeyType | HTableRowKeyType[],
     selected?: boolean,
     ignoreSelectable?: boolean,
   ) => void;
 }
 
-export interface NTableColumnFilterData {
+export interface HTableColumnFilterData {
   currentFilterValue: Ref<unknown>;
 }
 
-export interface NTableColumnData extends NTableInsertedColumnData {
+export interface HTableColumnData extends HTableInsertedColumnData {
   headerColSpan: number;
   headerRowSpan: number;
   index: number;
-  calcChildren: NTableColumnData[];
-  [NTableColumnContextKey]: NTableColumnContextData;
-  [NTableColumnSelectionKey]: NTableColumnSelectionData;
-  [NTableColumnFilterKey]: NTableColumnFilterData;
+  calcChildren: HTableColumnData[];
+  [HTableColumnContextKey]: HTableColumnContextData;
+  [HTableColumnSelectionKey]: HTableColumnSelectionData;
+  [HTableColumnFilterKey]: HTableColumnFilterData;
 }
 
-export type NTableFixedValue = 'left' | 'right' | 'hover' | undefined;
+export type HTableFixedValue = 'left' | 'right' | 'hover' | undefined;

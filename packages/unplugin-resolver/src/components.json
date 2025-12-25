@@ -11,7 +11,7 @@
   "Button": "^(NButton|NButtonGroup)$",
   "Calendar": "^NCalendar$",
   "Card": "^NCard$",
-  "Cascader": "^NCascader$",
+  "Cascader": "^HCascader$",
   "Checkbox": "^(NCheckbox|NCheckboxButton|NCheckboxGroup)$",
   "Collapse": "^(NCollapse|NCollapseItem)$",
   "ColorPicker": "^NColorPicker$",

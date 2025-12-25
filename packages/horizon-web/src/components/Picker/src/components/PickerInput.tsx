@@ -23,23 +23,23 @@ import {
 import useLocaleLang from '~/utils/useLocaleLang';
 import { renderIcon } from '~/utils/useIcon';
 import {
-  NPickerEmitsInjectKey,
-  NPickerInputStatusInjectKey,
-  NPickerPopContentDomRefInjectKey,
-  NPickerPopperVisibleInjectKey,
-  NPickerPropsInjectKey,
-  NPickerSlotsInjectKey,
-  NPickerStatusInjectKey,
+  HPickerEmitsInjectKey,
+  HPickerInputStatusInjectKey,
+  HPickerPopContentDomRefInjectKey,
+  HPickerPopperVisibleInjectKey,
+  HPickerPropsInjectKey,
+  HPickerSlotsInjectKey,
+  HPickerStatusInjectKey,
 } from '../utils/InjectKeys';
 import useSize from '~/utils/useSize';
 import { IconCloseFilled } from '@aurora/icon';
 import { unrefElement, useResizeObserver } from '@vueuse/core';
-import NPickerFitContentInput from './NPickerFitContentInput';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
+import PickerFitContentInput from './PickerFitContentInput';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
 import useOverflow from '~/utils/useOverflow';
 import type { PickerFitContentInputExposes } from '../composables/useExposes';
 import { usePickerInputExposes } from '../composables/useExposes';
-import NPickerPureInput from './NPickerPureInput';
+import PickerPureInput from './PickerPureInput';
 
 export default defineComponent({
   name: `${useNamespace()}PickerInput`,
@@ -71,22 +71,22 @@ export default defineComponent({
 
     const inputWrapperDomRef = ref<HTMLElement | null>(null);
     const inputDomRef = ref<HorizonWebComponentInstance<
-      typeof NPickerPureInput,
+      typeof PickerPureInput,
       PickerFitContentInputExposes
     > | null>(null);
     const fitContentInputDomRef = ref<HorizonWebComponentInstance<
-      typeof NPickerFitContentInput,
+      typeof PickerFitContentInput,
       PickerFitContentInputExposes
     > | null>(null);
     const inputPrependDomRef = ref<HTMLDivElement | null>(null);
 
-    const parentProps = inject(NPickerPropsInjectKey)!;
-    const parentEmit = inject(NPickerEmitsInjectKey)!;
-    const parentSlots = inject(NPickerSlotsInjectKey)!;
-    const popperVisible = inject(NPickerPopperVisibleInjectKey)!;
-    const pickerStatus = inject(NPickerStatusInjectKey)!;
-    const inputStatus = inject(NPickerInputStatusInjectKey)!;
-    const popContentDomRef = inject(NPickerPopContentDomRefInjectKey)!;
+    const parentProps = inject(HPickerPropsInjectKey)!;
+    const parentEmit = inject(HPickerEmitsInjectKey)!;
+    const parentSlots = inject(HPickerSlotsInjectKey)!;
+    const popperVisible = inject(HPickerPopperVisibleInjectKey)!;
+    const pickerStatus = inject(HPickerStatusInjectKey)!;
+    const inputStatus = inject(HPickerInputStatusInjectKey)!;
+    const popContentDomRef = inject(HPickerPopContentDomRefInjectKey)!;
 
     const currentInputDomRef = computed(() =>
       parentProps.useFitContentInput ? fitContentInputDomRef.value : inputDomRef.value,
@@ -330,13 +330,13 @@ export default defineComponent({
                     onInputFocus,
                     onInputBlur,
                   ) ?? (
-                    <NTooltip
+                    <HTooltip
                       trigger="manual"
                       visible={isShowTooltip.value}
                       content={tooltipShowContent.value}
                     >
                       {parentProps.useFitContentInput ? (
-                        <NPickerFitContentInput
+                        <PickerFitContentInput
                           v-show={!parentProps.hideInput}
                           v-model={inputValue.value}
                           ref={fitContentInputDomRef}
@@ -370,7 +370,7 @@ export default defineComponent({
                           }
                         />
                       ) : (
-                        <NPickerPureInput
+                        <PickerPureInput
                           v-show={!parentProps.hideInput}
                           ref={inputDomRef}
                           modelValue={inputValue.value}
@@ -403,7 +403,7 @@ export default defineComponent({
                           }
                         />
                       )}
-                    </NTooltip>
+                    </HTooltip>
                   )}
                   {parentSlots.pickerSuffix?.(
                     parentProps.modelValue,

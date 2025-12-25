@@ -1,5 +1,5 @@
 import { shallowMount, mount } from '@vue/test-utils';
-import { NRadio, NRadioGroup, NRadioButton } from '..';
+import { HRadio, HRadioGroup, HRadioButton } from '..';
 import { describe, expect, test } from 'vitest';
 import { ref, nextTick } from 'vue';
 
@@ -8,11 +8,11 @@ describe('Radio.tsx', () => {
     const modelValue = ref('1');
     const wrapper = shallowMount(() => (
       <div>
-        <NRadio modelValue={modelValue.value} label="1" />
-        <NRadio modelValue={modelValue.value} label="2" />
+        <HRadio modelValue={modelValue.value} label="1" />
+        <HRadio modelValue={modelValue.value} label="2" />
       </div>
     ));
-    const elements = wrapper.findAllComponents(NRadio);
+    const elements = wrapper.findAllComponents(HRadio);
 
     expect(elements.length).toBe(2);
   });
@@ -21,11 +21,11 @@ describe('Radio.tsx', () => {
 test('sizeBorder', async () => {
   const size = ref<'small' | 'medium' | 'large'>('small');
 
-  const wrapperBorder = mount(() => <NRadio size={size.value} border={true} />);
-  const wrapperNoneBorder = mount(() => <NRadio size={size.value} border={false} />);
+  const wrapperBorder = mount(() => <HRadio size={size.value} border={true} />);
+  const wrapperNoneBorder = mount(() => <HRadio size={size.value} border={false} />);
 
-  const radioBorder = wrapperBorder.findComponent(NRadio);
-  const radioNoneBorder = wrapperNoneBorder.findComponent(NRadio);
+  const radioBorder = wrapperBorder.findComponent(HRadio);
+  const radioNoneBorder = wrapperNoneBorder.findComponent(HRadio);
 
   expect(radioBorder.classes()).toContain('n-radio--medium');
   expect(radioNoneBorder.classes()).not.toContain('n-radio--medium');
@@ -43,9 +43,9 @@ test('sizeBorder', async () => {
 
 test('sizeButton', async () => {
   const size = ref<'small' | 'medium' | 'large'>('small');
-  const wrapper = mount(() => <NRadioButton size={size.value} />);
+  const wrapper = mount(() => <HRadioButton size={size.value} />);
 
-  const radio = wrapper.findComponent(NRadioButton);
+  const radio = wrapper.findComponent(HRadioButton);
 
   expect(radio.classes()).toContain('n-radio-button--medium');
 
@@ -62,19 +62,19 @@ test('sizeGroup', async () => {
   const size = ref<'small' | 'medium' | 'large'>('small');
   const modelValue = ref(false);
   const wrapperRadioBorder = mount(() => (
-    <NRadioGroup modelValue={modelValue.value} size={size.value}>
-      <NRadio border={true} />
-    </NRadioGroup>
+    <HRadioGroup modelValue={modelValue.value} size={size.value}>
+      <HRadio border={true} />
+    </HRadioGroup>
   ));
   const wrapperRadioNoneBorder = mount(() => (
-    <NRadioGroup modelValue={modelValue.value} size={size.value}>
-      <NRadio border={false} />
-    </NRadioGroup>
+    <HRadioGroup modelValue={modelValue.value} size={size.value}>
+      <HRadio border={false} />
+    </HRadioGroup>
   ));
   const wrapperRadioButton = mount(() => (
-    <NRadioGroup modelValue={modelValue.value} size={size.value}>
-      <NRadioButton />
-    </NRadioGroup>
+    <HRadioGroup modelValue={modelValue.value} size={size.value}>
+      <HRadioButton />
+    </HRadioGroup>
   ));
   const elementRadioBorder = wrapperRadioBorder.find('.n-radio');
   const elementRadioNoneBorder = wrapperRadioNoneBorder.find('.n-radio');

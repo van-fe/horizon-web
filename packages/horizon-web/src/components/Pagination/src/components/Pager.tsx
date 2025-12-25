@@ -2,9 +2,9 @@ import { computed, defineComponent, inject, withKeys } from 'vue';
 import { cls, ComponentClassBlock, isNumber, useNamespace } from '@aurora/utils';
 import { IconArrowLeft, IconArrowRight, IconToggleLeft, IconToggleRight } from '@aurora/icon';
 import {
-  NPaginationEmitInjectKey,
-  NPaginationPropsInjectKey,
-  NPaginationSlotsInjectKey,
+  HPaginationEmitInjectKey,
+  HPaginationPropsInjectKey,
+  HPaginationSlotsInjectKey,
 } from '../utils/injectKeys';
 
 export default defineComponent({
@@ -23,9 +23,9 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const classHelper = new ComponentClassBlock('pagination');
-    const parentProps = inject(NPaginationPropsInjectKey)!;
-    const parentEmits = inject(NPaginationEmitInjectKey)!;
-    const parentSlots = inject(NPaginationSlotsInjectKey)!;
+    const parentProps = inject(HPaginationPropsInjectKey)!;
+    const parentEmits = inject(HPaginationEmitInjectKey)!;
+    const parentSlots = inject(HPaginationSlotsInjectKey)!;
 
     const currentPage = computed(() => props.currentPage!);
 

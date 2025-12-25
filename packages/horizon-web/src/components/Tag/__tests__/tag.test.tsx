@@ -1,16 +1,16 @@
 import { mount } from '@vue/test-utils';
-import NTag from '../src/Tag';
+import HTag from '../src/Tag';
 import { describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
 import type { TagProps } from '../src/composables/useProps';
-import NAvatar from '../../Avatar';
+import HAvatar from '../../Avatar';
 import { IconEye } from '@aurora/icon';
 import { sleep } from '../../../utils/tools';
 
 describe('Tag.tsx', () => {
   test('basic', async () => {
-    const wrapper = mount(() => <NTag />);
-    const element = wrapper.findComponent(NTag);
+    const wrapper = mount(() => <HTag />);
+    const element = wrapper.findComponent(HTag);
 
     expect(element.exists()).toBe(true);
   });
@@ -18,7 +18,7 @@ describe('Tag.tsx', () => {
   describe('props', () => {
     test('modelValue', async () => {
       const modelValue = ref(false);
-      const wrapper = mount(() => <NTag v-model={modelValue.value} />);
+      const wrapper = mount(() => <HTag v-model={modelValue.value} />);
       const element = wrapper.find('.n-tag');
 
       expect(element.classes('is-clickable')).eq(true);
@@ -30,7 +30,7 @@ describe('Tag.tsx', () => {
 
     test('type', async () => {
       const type = ref<TagProps['type']>('success');
-      const wrapper = mount(() => <NTag type={type.value} />);
+      const wrapper = mount(() => <HTag type={type.value} />);
       const element = wrapper.find('.n-tag');
 
       expect(element.classes('n-tag--success')).eq(true);
@@ -44,7 +44,7 @@ describe('Tag.tsx', () => {
 
     test('size', async () => {
       const size = ref<TagProps['size']>('medium');
-      const wrapper = mount(() => <NTag size={size.value} />);
+      const wrapper = mount(() => <HTag size={size.value} />);
       const element = wrapper.find('.n-tag');
 
       expect(element.classes('n-tag--medium')).eq(true);
@@ -58,7 +58,7 @@ describe('Tag.tsx', () => {
 
     test('bold', async () => {
       const bold = ref<TagProps['bold']>(false);
-      const wrapper = mount(() => <NTag bold={bold.value} />);
+      const wrapper = mount(() => <HTag bold={bold.value} />);
       const element = wrapper.find('.n-tag');
 
       expect(element.classes('n-tag--bold')).eq(false);
@@ -72,7 +72,7 @@ describe('Tag.tsx', () => {
 
     test('clickable', async () => {
       const clickable = ref<TagProps['clickable']>(false);
-      const wrapper = mount(() => <NTag clickable={clickable.value} />);
+      const wrapper = mount(() => <HTag clickable={clickable.value} />);
       const element = wrapper.find('.n-tag');
 
       expect(element.classes('is-clickable')).eq(false);
@@ -86,7 +86,7 @@ describe('Tag.tsx', () => {
 
     test('closable', async () => {
       const closable = ref<TagProps['closable']>(false);
-      const wrapper = mount(() => <NTag closable={closable.value} />);
+      const wrapper = mount(() => <HTag closable={closable.value} />);
       const element = wrapper.find('.n-tag');
 
       expect(element.classes('is-closable')).eq(false);
@@ -101,7 +101,7 @@ describe('Tag.tsx', () => {
 
     test('disabled', async () => {
       const disabled = ref<TagProps['disabled']>(false);
-      const wrapper = mount(() => <NTag disabled={disabled.value} />);
+      const wrapper = mount(() => <HTag disabled={disabled.value} />);
       const element = wrapper.find('.n-tag');
 
       expect(element.classes('is-disabled')).eq(false);
@@ -115,7 +115,7 @@ describe('Tag.tsx', () => {
 
     test('plain', async () => {
       const plain = ref<TagProps['plain']>(false);
-      const wrapper = mount(() => <NTag plain={plain.value} />);
+      const wrapper = mount(() => <HTag plain={plain.value} />);
       const element = wrapper.find('.n-tag');
 
       expect(element.classes('is-plain')).eq(false);
@@ -129,7 +129,7 @@ describe('Tag.tsx', () => {
 
     test('round', async () => {
       const round = ref<TagProps['round']>(false);
-      const wrapper = mount(() => <NTag round={round.value} />);
+      const wrapper = mount(() => <HTag round={round.value} />);
       const element = wrapper.find('.n-tag');
 
       expect(element.classes('n-tag--round')).eq(false);
@@ -143,9 +143,9 @@ describe('Tag.tsx', () => {
 
     test('avatar', async () => {
       const size = ref<TagProps['size']>('medium');
-      const wrapper = mount(() => <NTag size={size.value} avatar="1" />);
+      const wrapper = mount(() => <HTag size={size.value} avatar="1" />);
       const element = wrapper.find('.n-tag');
-      const avatar = element.findComponent(NAvatar);
+      const avatar = element.findComponent(HAvatar);
 
       expect(avatar.find('img').exists()).eq(true);
       expect(avatar.attributes('style')).contain('width: 16px');
@@ -161,7 +161,7 @@ describe('Tag.tsx', () => {
 
     test('icon', async () => {
       const size = ref<TagProps['size']>('medium');
-      const wrapper = mount(() => <NTag size={size.value} icon={IconEye} />);
+      const wrapper = mount(() => <HTag size={size.value} icon={IconEye} />);
       const element = wrapper.find('.n-tag');
       const icon = element.findComponent(IconEye);
 
@@ -170,7 +170,7 @@ describe('Tag.tsx', () => {
 
     test('equally', async () => {
       const equally = ref<TagProps['equally']>(false);
-      const wrapper = mount(() => <NTag equally={equally.value} />);
+      const wrapper = mount(() => <HTag equally={equally.value} />);
       const element = wrapper.find('.n-tag');
 
       expect(element.classes('n-tag--equally')).eq(false);
@@ -184,9 +184,9 @@ describe('Tag.tsx', () => {
 
     test('delay-show-close', async () => {
       const wrapper = mount(() => (
-        <NTag equally={true} closable={true} clickable={true}>
+        <HTag equally={true} closable={true} clickable={true}>
           普
-        </NTag>
+        </HTag>
       ));
       const element = wrapper.find('.n-tag');
 
@@ -207,7 +207,7 @@ describe('Tag.tsx', () => {
 
     test('loading', async () => {
       const loading = ref<TagProps['loading']>(true);
-      const wrapper = mount(() => <NTag loading={loading.value}>普</NTag>);
+      const wrapper = mount(() => <HTag loading={loading.value}>普</HTag>);
       const element = wrapper.find('.n-tag');
 
       expect(element.find('.n-tag__loading').exists()).eq(true);
@@ -221,7 +221,7 @@ describe('Tag.tsx', () => {
 
     test('disable-transitions', async () => {
       const disableTransitions = ref<TagProps['disableTransitions']>(false);
-      const wrapper = mount(() => <NTag disableTransitions={disableTransitions.value} />);
+      const wrapper = mount(() => <HTag disableTransitions={disableTransitions.value} />);
       const element = wrapper.find('.n-tag');
 
       expect(element.classes('is-disable-transitions')).eq(false);
@@ -237,7 +237,7 @@ describe('Tag.tsx', () => {
   describe('emits', () => {
     test('click', async () => {
       const onClick = vi.fn();
-      const wrapper = mount(() => <NTag clickable={true} onClick={onClick} />);
+      const wrapper = mount(() => <HTag clickable={true} onClick={onClick} />);
       const element = wrapper.find('.n-tag');
 
       await element.trigger('click');
@@ -247,7 +247,7 @@ describe('Tag.tsx', () => {
 
     test('close', async () => {
       const onClose = vi.fn();
-      const wrapper = mount(() => <NTag closable={true} onClose={onClose} />);
+      const wrapper = mount(() => <HTag closable={true} onClose={onClose} />);
       const element = wrapper.find('.n-tag');
       const closeIcon = element.find('.n-tag__close');
 
@@ -259,14 +259,14 @@ describe('Tag.tsx', () => {
 
   describe('slots', () => {
     test('icon', () => {
-      const wrapper = mount(() => <NTag>{{ icon: () => <IconEye /> }}</NTag>);
+      const wrapper = mount(() => <HTag>{{ icon: () => <IconEye /> }}</HTag>);
 
       expect(wrapper.findComponent(IconEye).exists()).eq(true);
     });
     test('avatar', () => {
-      const wrapper = mount(() => <NTag>{{ avatar: () => <NAvatar /> }}</NTag>);
+      const wrapper = mount(() => <HTag>{{ avatar: () => <HAvatar /> }}</HTag>);
 
-      expect(wrapper.findComponent(NAvatar).exists()).eq(true);
+      expect(wrapper.findComponent(HAvatar).exists()).eq(true);
     });
   });
 });

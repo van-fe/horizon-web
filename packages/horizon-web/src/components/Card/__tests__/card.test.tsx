@@ -1,11 +1,11 @@
 import { mount } from '@vue/test-utils';
-import NCard from '../src/Card';
+import HCard from '../src/Card';
 import { describe, expect, test } from 'vitest';
 
 describe('Card.tsx', () => {
   test('basic', async () => {
-    const wrapper = mount(() => <NCard />);
-    const element = wrapper.findComponent(NCard);
+    const wrapper = mount(() => <HCard />);
+    const element = wrapper.findComponent(HCard);
 
     expect(element.exists()).toBe(true);
   });

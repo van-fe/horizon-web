@@ -1,17 +1,17 @@
 import { expect, test, describe, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
-import type { NCalendarPinFlag } from '../src/utils/types';
+import type { HCalendarPinFlag } from '../src/utils/types';
 import { mount } from '@vue/test-utils';
-import NCalendar from '../index';
+import HCalendar from '../index';
 import '../src/style/index.scss';
 
 describe('calendar.pin-flags', function () {
   test('creatingPinFlagCallback', async () => {
-    const pinFlags = ref<NCalendarPinFlag[]>([]);
+    const pinFlags = ref<HCalendarPinFlag[]>([]);
 
     function onCreatingPinFlagCallback(): {
       title: string;
-      type: NCalendarPinFlag['type'];
+      type: HCalendarPinFlag['type'];
     } {
       return {
         title: 'test',
@@ -26,7 +26,7 @@ describe('calendar.pin-flags', function () {
     }
 
     const wrapper = mount(() => (
-      <NCalendar
+      <HCalendar
         v-model:pinFlags={pinFlags.value}
         pickable={true}
         enableCreatePinFlags={true}
@@ -49,12 +49,12 @@ describe('calendar.pin-flags', function () {
   });
 
   test('delete one of pinFlags', async () => {
-    const pinFlags = ref<NCalendarPinFlag[]>([
+    const pinFlags = ref<HCalendarPinFlag[]>([
       {
-        title: 'NIO Auto Show',
+        title: 'HIO Auto Show',
         startAt: '2022-10-14',
         endAt: '2022-10-20 23:59:59',
-        tooltip: `Don't miss the NIO auto show`,
+        tooltip: `Don't miss the HIO auto show`,
         clickable: true,
       },
       {
@@ -69,7 +69,7 @@ describe('calendar.pin-flags', function () {
     const onUpdatePinFlags = vi.fn();
 
     mount(() => (
-      <NCalendar
+      <HCalendar
         modelValue="2022-11-30"
         v-model:pinFlags={pinFlags.value}
         onUpdate:pinFlags={onUpdatePinFlags}
@@ -84,12 +84,12 @@ describe('calendar.pin-flags', function () {
   });
 
   test('pinFlags: start/end date class is set correctly', async () => {
-    const pinFlags = ref<NCalendarPinFlag[]>([
+    const pinFlags = ref<HCalendarPinFlag[]>([
       {
-        title: 'NIO Auto Show',
+        title: 'HIO Auto Show',
         startAt: '2022-10-14',
         endAt: '2022-10-19',
-        tooltip: `Don't miss the NIO auto show`,
+        tooltip: `Don't miss the HIO auto show`,
         clickable: true,
       },
       {
@@ -118,7 +118,7 @@ describe('calendar.pin-flags', function () {
     ]);
 
     const wrapper = mount(() => (
-      <NCalendar modelValue="2022-10-01" v-model:pinFlags={pinFlags.value} mode="year" />
+      <HCalendar modelValue="2022-10-01" v-model:pinFlags={pinFlags.value} mode="year" />
     ));
 
     const octoberCell = wrapper.findAll('.n-calendar-year__month')[9];
@@ -139,12 +139,12 @@ describe('calendar.pin-flags', function () {
   });
 
   test(`pinFlags: before reserve temp flags won't emit update:pinFlags`, async () => {
-    const pinFlags = ref<NCalendarPinFlag[]>([
+    const pinFlags = ref<HCalendarPinFlag[]>([
       {
-        title: 'NIO Auto Show',
+        title: 'HIO Auto Show',
         startAt: '2022-10-14',
         endAt: '2022-10-20 23:59:59',
-        tooltip: `Don't miss the NIO auto show`,
+        tooltip: `Don't miss the HIO auto show`,
         clickable: true,
       },
       {
@@ -168,7 +168,7 @@ describe('calendar.pin-flags', function () {
     }
 
     const wrapper = mount(() => (
-      <NCalendar
+      <HCalendar
         modelValue="2022-11-30"
         v-model:pinFlags={pinFlags.value}
         creatFinishFlagCallback={creatFinishFlagCallback}
@@ -182,14 +182,14 @@ describe('calendar.pin-flags', function () {
   });
 
   test(`create flag in week mode`, async () => {
-    const pinFlags = ref<NCalendarPinFlag[]>([]);
+    const pinFlags = ref<HCalendarPinFlag[]>([]);
 
     function creatFinishFlagCallback(): Promise<boolean> {
       return Promise.resolve(true);
     }
 
     const wrapper = mount(() => (
-      <NCalendar
+      <HCalendar
         v-model:pinFlags={pinFlags.value}
         mode="week"
         creatFinishFlagCallback={creatFinishFlagCallback}

@@ -1,20 +1,20 @@
 import { mount } from '@vue/test-utils';
-import { NResult } from '..';
+import { HResult } from '..';
 import { describe, expect, test, vi } from 'vitest';
-import NButton from '../../Button';
+import HButton from '../../Button';
 import { nextTick, ref } from 'vue';
 
 describe('Result.tsx', () => {
   test('basic', async () => {
-    const wrapper = mount(() => <NResult />);
-    const element = wrapper.findComponent(NResult);
+    const wrapper = mount(() => <HResult />);
+    const element = wrapper.findComponent(HResult);
 
     expect(element.exists()).toBe(true);
   });
 
   describe('props', () => {
     test('title', () => {
-      const wrapper = mount(() => <NResult title="Here is TITLE" />);
+      const wrapper = mount(() => <HResult title="Here is TITLE" />);
 
       const title = wrapper.find('.n-result__title');
 
@@ -22,7 +22,7 @@ describe('Result.tsx', () => {
     });
 
     test('subtitle', () => {
-      const wrapper = mount(() => <NResult subtitle="Here is SUBTITLE" />);
+      const wrapper = mount(() => <HResult subtitle="Here is SUBTITLE" />);
 
       const subtitle = wrapper.find('.n-result__subtitle');
 
@@ -31,7 +31,7 @@ describe('Result.tsx', () => {
 
     test('type', async () => {
       const type = ref<'info' | 'success' | 'error' | 'warning'>('info');
-      const wrapper = mount(() => <NResult type={type.value} />);
+      const wrapper = mount(() => <HResult type={type.value} />);
 
       expect(wrapper.find('svg').classes('n-icon__info_filled_light')).eq(true);
 
@@ -58,7 +58,7 @@ describe('Result.tsx', () => {
       const primaryButtonVisible = ref(true);
       const secondaryButtonVisible = ref(true);
       const wrapper = mount(() => (
-        <NResult
+        <HResult
           primaryButton={primaryButtonVisible.value}
           primaryButtonText="okay"
           primaryButtonProps={{ size: 'small' }}
@@ -68,29 +68,29 @@ describe('Result.tsx', () => {
         />
       ));
 
-      expect(wrapper.findAllComponents(NButton).length).eq(2);
-      expect(wrapper.findAllComponents(NButton)[0].text()).eq('no');
-      expect(wrapper.findAllComponents(NButton)[0].classes('n-button--plain')).eq(true);
-      expect(wrapper.findAllComponents(NButton)[1].text()).eq('okay');
-      expect(wrapper.findAllComponents(NButton)[1].classes('n-button--small')).eq(true);
+      expect(wrapper.findAllComponents(HButton).length).eq(2);
+      expect(wrapper.findAllComponents(HButton)[0].text()).eq('no');
+      expect(wrapper.findAllComponents(HButton)[0].classes('n-button--plain')).eq(true);
+      expect(wrapper.findAllComponents(HButton)[1].text()).eq('okay');
+      expect(wrapper.findAllComponents(HButton)[1].classes('n-button--small')).eq(true);
 
       primaryButtonVisible.value = false;
 
       await nextTick();
 
-      expect(wrapper.findAllComponents(NButton).length).eq(1);
+      expect(wrapper.findAllComponents(HButton).length).eq(1);
 
       secondaryButtonVisible.value = false;
 
       await nextTick();
 
-      expect(wrapper.findAllComponents(NButton).length).eq(0);
+      expect(wrapper.findAllComponents(HButton).length).eq(0);
     });
 
     test('size', () => {
-      const wrapper = mount(() => <NResult size="small" />);
+      const wrapper = mount(() => <HResult size="small" />);
 
-      const buttons = wrapper.findAllComponents(NButton);
+      const buttons = wrapper.findAllComponents(HButton);
 
       expect(buttons[0].classes('n-button--small')).eq(true);
       expect(buttons[1].classes('n-button--small')).eq(true);
@@ -98,7 +98,7 @@ describe('Result.tsx', () => {
 
     test('403 404 500', async () => {
       const status = ref<403 | 404 | 500>(403);
-      const wrapper = mount(() => <NResult type={status.value} />);
+      const wrapper = mount(() => <HResult type={status.value} />);
 
       expect(wrapper.html()).contains('not-allowed.svg');
 
@@ -122,10 +122,10 @@ describe('Result.tsx', () => {
       const onSecondaryClick = vi.fn();
 
       const wrapper = mount(() => (
-        <NResult onPrimaryClick={onPrimaryClick} onSecondaryClick={onSecondaryClick} />
+        <HResult onPrimaryClick={onPrimaryClick} onSecondaryClick={onSecondaryClick} />
       ));
 
-      const buttons = wrapper.findAllComponents(NButton);
+      const buttons = wrapper.findAllComponents(HButton);
 
       await buttons[0].trigger('click');
 
@@ -140,14 +140,14 @@ describe('Result.tsx', () => {
   describe('slots', () => {
     test('all', () => {
       const wrapper = mount(() => (
-        <NResult>
+        <HResult>
           {{
             icon: () => <div class="slot-icon" />,
             title: () => <div class="slot-title" />,
             subtitle: () => <div class="slot-subtitle" />,
             extra: () => <div class="slot-extra" />,
           }}
-        </NResult>
+        </HResult>
       ));
 
       const iconSlot = wrapper.find('.slot-icon');

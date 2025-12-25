@@ -1,6 +1,6 @@
 import type { Ref, WatchStopHandle } from 'vue';
 import { ref, provide, watch, inject } from 'vue';
-import { NTreeHighlightRangesInjectKey, NTreeFilterInputValueInjectKey } from '../utils/injectKeys';
+import { HTreeHighlightRangesInjectKey, HTreeFilterInputValueInjectKey } from '../utils/injectKeys';
 import type { TreeItemProps } from '../composables/useProps';
 
 export default function useHighlight() {
@@ -25,7 +25,7 @@ export default function useHighlight() {
     },
   );
 
-  provide(NTreeHighlightRangesInjectKey, highlightRanges);
+  provide(HTreeHighlightRangesInjectKey, highlightRanges);
 }
 
 export function useHighlightTreeItem(
@@ -34,8 +34,8 @@ export function useHighlightTreeItem(
     contentDomRef: Ref<HTMLElement | undefined>;
   },
 ) {
-  const highlightRanges = inject(NTreeHighlightRangesInjectKey)!;
-  const filterInputValue = inject(NTreeFilterInputValueInjectKey)!;
+  const highlightRanges = inject(HTreeHighlightRangesInjectKey)!;
+  const filterInputValue = inject(HTreeFilterInputValueInjectKey)!;
 
   let watchStopHandle: WatchStopHandle;
 

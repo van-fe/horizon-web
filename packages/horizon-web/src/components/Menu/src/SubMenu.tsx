@@ -22,32 +22,32 @@ import type { SubMenuSlots } from './composables/useSlots';
 import { useSubMenuSlots } from './composables/useSlots';
 import type { MenuExposes } from './composables/useExposes';
 import {
-  NMenuExpandedMenuInjectKey,
-  NMenuAddExpandMenuInjectKey,
-  NMenuAppendChildInjectKey,
-  NMenuRemoveExpandMenuInjectKey,
-  NMenuRemoveChildInjectKey,
-  NMenuActivatedMenusInjectKey,
-  NMenuTreeLevelInjectKey,
-  NMenuParentHasIconAmountInjectKey,
-  NMenuIsCollapsedInjectKey,
-  NMenuPropsInjectKey,
-  NMenuSetActivatedMenuInjectKey,
-  NMenuActiveTopMenuUuidInjectKey,
-  NMenuEmitInjectKey,
-  NMenuSwitchFullViewMenuVisibleInjectKey,
+  HMenuExpandedMenuInjectKey,
+  HMenuAddExpandMenuInjectKey,
+  HMenuAppendChildInjectKey,
+  HMenuRemoveExpandMenuInjectKey,
+  HMenuRemoveChildInjectKey,
+  HMenuActivatedMenusInjectKey,
+  HMenuTreeLevelInjectKey,
+  HMenuParentHasIconAmountInjectKey,
+  HMenuIsCollapsedInjectKey,
+  HMenuPropsInjectKey,
+  HMenuSetActivatedMenuInjectKey,
+  HMenuActiveTopMenuUuidInjectKey,
+  HMenuEmitInjectKey,
+  HMenuSwitchFullViewMenuVisibleInjectKey,
 } from './util/injectKeys';
-import type { NMenuTreeData } from './util/types';
+import type { HMenuTreeData } from './util/types';
 import { nanoid } from 'nanoid';
 import useIconRender from '~/utils/useIconRender';
-import NTransition from '~/components/Transition/src/Transition';
+import HTransition from '~/components/Transition/src/Transition';
 import { IconArrowDown, IconArrowRight } from '@aurora/icon';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
-import NDropdown from '~/components/Dropdown/src/Dropdown';
-import NDropdownGroup from '~/components/Dropdown/src/DropdownGroup';
-import NDropdownItem from '~/components/Dropdown/src/DropdownItem';
-import NDropdownMenu from '~/components/Dropdown/src/DropdownMenu';
-import NDropdownSubmenu from '~/components/Dropdown/src/DropdownSubmenu';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
+import HDropdown from '~/components/Dropdown/src/Dropdown';
+import HDropdownGroup from '~/components/Dropdown/src/DropdownGroup';
+import HDropdownItem from '~/components/Dropdown/src/DropdownItem';
+import HDropdownMenu from '~/components/Dropdown/src/DropdownMenu';
+import HDropdownSubmenu from '~/components/Dropdown/src/DropdownSubmenu';
 import type { DropdownExposes } from '~/components/Dropdown/src/composables/useExposes';
 import useTooltip from './util/useTooltip';
 
@@ -66,7 +66,7 @@ export default defineComponent({
     const elementRef = ref<HTMLElement | null>(null);
     const titleInnerDomRef = ref<HTMLElement | null>(null);
     const textRef = ref<HTMLElement | null>(null);
-    const dropdownDomRef = ref<HorizonWebComponentInstance<typeof NDropdown, DropdownExposes> | null>(
+    const dropdownDomRef = ref<HorizonWebComponentInstance<typeof HDropdown, DropdownExposes> | null>(
       null,
     );
 
@@ -86,23 +86,23 @@ export default defineComponent({
         (parentProps.mode === 'horizontal' && parentProps.submenuExpandType === 'single'),
     );
 
-    const parentProps = inject(NMenuPropsInjectKey)!;
-    const parentEmits = inject(NMenuEmitInjectKey)!;
-    const passiveTreeLevel = inject(NMenuTreeLevelInjectKey, 0);
-    const parentHasIconAmount = inject(NMenuParentHasIconAmountInjectKey, ref(0));
-    const appendChild = inject(NMenuAppendChildInjectKey);
-    const removeChild = inject(NMenuRemoveChildInjectKey);
-    const expandedMenu = inject(NMenuExpandedMenuInjectKey);
-    const addExpandMenu = inject(NMenuAddExpandMenuInjectKey);
-    const removeExpandMenu = inject(NMenuRemoveExpandMenuInjectKey);
-    const setActivatedMenu = inject(NMenuSetActivatedMenuInjectKey);
-    const activatedMenus = inject(NMenuActivatedMenusInjectKey);
-    const isCollapsed = inject(NMenuIsCollapsedInjectKey);
-    const activeTopMenuUuid = inject(NMenuActiveTopMenuUuidInjectKey);
-    const switchFullViewMenuVisible = inject(NMenuSwitchFullViewMenuVisibleInjectKey);
+    const parentProps = inject(HMenuPropsInjectKey)!;
+    const parentEmits = inject(HMenuEmitInjectKey)!;
+    const passiveTreeLevel = inject(HMenuTreeLevelInjectKey, 0);
+    const parentHasIconAmount = inject(HMenuParentHasIconAmountInjectKey, ref(0));
+    const appendChild = inject(HMenuAppendChildInjectKey);
+    const removeChild = inject(HMenuRemoveChildInjectKey);
+    const expandedMenu = inject(HMenuExpandedMenuInjectKey);
+    const addExpandMenu = inject(HMenuAddExpandMenuInjectKey);
+    const removeExpandMenu = inject(HMenuRemoveExpandMenuInjectKey);
+    const setActivatedMenu = inject(HMenuSetActivatedMenuInjectKey);
+    const activatedMenus = inject(HMenuActivatedMenusInjectKey);
+    const isCollapsed = inject(HMenuIsCollapsedInjectKey);
+    const activeTopMenuUuid = inject(HMenuActiveTopMenuUuidInjectKey);
+    const switchFullViewMenuVisible = inject(HMenuSwitchFullViewMenuVisibleInjectKey);
 
-    const menuTree = ref(new Map<string, NMenuTreeData<'subMenu' | 'menuItem'>>());
-    function selfAppendChild(item: NMenuTreeData<'subMenu' | 'menuItem'>) {
+    const menuTree = ref(new Map<string, HMenuTreeData<'subMenu' | 'menuItem'>>());
+    function selfAppendChild(item: HMenuTreeData<'subMenu' | 'menuItem'>) {
       menuTree.value.set(item.uuid, item);
     }
 
@@ -156,7 +156,7 @@ export default defineComponent({
     function updateTreeData() {
       appendChild?.({
         uuid,
-        children: menuTree.value as Map<string, NMenuTreeData>,
+        children: menuTree.value as Map<string, HMenuTreeData>,
         props,
         slots,
         emits: emit,
@@ -171,11 +171,11 @@ export default defineComponent({
       });
     }
 
-    provide(NMenuAppendChildInjectKey, selfAppendChild);
-    provide(NMenuRemoveChildInjectKey, selfRemoveChild);
-    provide(NMenuTreeLevelInjectKey, passiveTreeLevel + 1);
+    provide(HMenuAppendChildInjectKey, selfAppendChild);
+    provide(HMenuRemoveChildInjectKey, selfRemoveChild);
+    provide(HMenuTreeLevelInjectKey, passiveTreeLevel + 1);
     provide(
-      NMenuParentHasIconAmountInjectKey,
+      HMenuParentHasIconAmountInjectKey,
       computed(() => parentHasIconAmount.value + (iconRender.value ? 1 : 0)),
     );
 
@@ -243,7 +243,7 @@ export default defineComponent({
       emit('click', props);
     }
 
-    async function onClickSubMenu(target: NMenuTreeData<'subMenu'>) {
+    async function onClickSubMenu(target: HMenuTreeData<'subMenu'>) {
       if (target.props.disabled) return;
 
       if (target.props.selectable) {
@@ -299,7 +299,7 @@ export default defineComponent({
       }
     }
 
-    async function onClickMenuItem(target: NMenuTreeData) {
+    async function onClickMenuItem(target: HMenuTreeData) {
       if (target.props.disabled) return;
 
       try {
@@ -398,7 +398,7 @@ export default defineComponent({
         }}
         data-tree-level={passiveTreeLevel}
       >
-        <NTooltip
+        <HTooltip
           trigger="manual"
           visible={tooltipVisible.value}
           placement="right"
@@ -408,7 +408,7 @@ export default defineComponent({
         >
           {{
             default: () => (
-              <NDropdown
+              <HDropdown
                 ref={dropdownDomRef}
                 trigger={shouldChildrenCollapsed.value ? parentProps.menuTrigger : 'manual'}
                 v-model:visible={dropdownVisible.value}
@@ -495,8 +495,8 @@ export default defineComponent({
                     </div>
                   ),
                   dropdown: () => (
-                    <NDropdownMenu>
-                      <NDropdownGroup
+                    <HDropdownMenu>
+                      <HDropdownGroup
                         titleTooltipOptions={{
                           arrow: false,
                           distance: 4,
@@ -511,12 +511,12 @@ export default defineComponent({
                               : undefined,
                           default: () => {
                             function renderFunc(
-                              item: NMenuTreeData<'subMenu' | 'menuItem'>,
+                              item: HMenuTreeData<'subMenu' | 'menuItem'>,
                               level: number,
                             ) {
                               if (item.children?.size) {
                                 return (
-                                  <NDropdownSubmenu
+                                  <HDropdownSubmenu
                                     disabled={item.props.disabled}
                                     icon={item.props.icon}
                                     active={
@@ -529,7 +529,7 @@ export default defineComponent({
                                         ? {}
                                         : { mainAxisCheck: false }
                                     }
-                                    onClick={() => onClickSubMenu(item as NMenuTreeData<'subMenu'>)}
+                                    onClick={() => onClickSubMenu(item as HMenuTreeData<'subMenu'>)}
                                   >
                                     {{
                                       title: () => item.slots.title?.() ?? item.props.name,
@@ -542,11 +542,11 @@ export default defineComponent({
                                         </Fragment>
                                       ),
                                     }}
-                                  </NDropdownSubmenu>
+                                  </HDropdownSubmenu>
                                 );
                               } else {
                                 return (
-                                  <NDropdownItem
+                                  <HDropdownItem
                                     active={
                                       activatedMenus?.value.some(curr => curr.uuid === item.uuid) ??
                                       false
@@ -554,7 +554,7 @@ export default defineComponent({
                                     icon={level > 0 ? undefined : item.props.icon}
                                     disabled={item.props.disabled}
                                     tooltipOptions={{ arrow: false, distance: 4 }}
-                                    onClick={() => onClickMenuItem(item as NMenuTreeData)}
+                                    onClick={() => onClickMenuItem(item as HMenuTreeData)}
                                   >
                                     {{
                                       default: () => (
@@ -567,7 +567,7 @@ export default defineComponent({
                                       ),
                                       icon: item.slots.icon,
                                     }}
-                                  </NDropdownItem>
+                                  </HDropdownItem>
                                 );
                               }
                             }
@@ -576,21 +576,21 @@ export default defineComponent({
                             );
                           },
                         }}
-                      </NDropdownGroup>
-                    </NDropdownMenu>
+                      </HDropdownGroup>
+                    </HDropdownMenu>
                   ),
                 }}
-              </NDropdown>
+              </HDropdown>
             ),
             content: () => slots.title?.() ?? props.name,
           }}
-        </NTooltip>
+        </HTooltip>
         {slots.default && (
-          <NTransition name="collapse">
+          <HTransition name="collapse">
             <div v-show={expandedMenu?.value.has(uuid)} class={cls(classHelper.e('inner'))}>
               {slots.default()}
             </div>
-          </NTransition>
+          </HTransition>
         )}
       </div>
     );

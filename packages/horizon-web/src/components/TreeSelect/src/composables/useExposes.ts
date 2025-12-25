@@ -1,8 +1,8 @@
 import type { ExposeType, ExtractExposeTypes } from '@aurora/utils';
 import type {
-  NTreeBaseNodeData,
-  NTreeData,
-  NTreeNodeDataWithLevel,
+  HTreeBaseNodeData,
+  HTreeData,
+  HTreeNodeDataWithLevel,
 } from '~/components/Tree/src/utils/types';
 import type { TopBaseTreeData } from '~/utils/useTree/types';
 
@@ -28,7 +28,7 @@ export const useTreeSelectExposes = {
    * @version 2.12.5
    */
   getSelectedNodes: Function as ExposeType<
-    () => { values: Array<string | number>; nodes: NTreeBaseNodeData[] }
+    () => { values: Array<string | number>; nodes: HTreeBaseNodeData[] }
   >,
 
   /**
@@ -40,7 +40,7 @@ export const useTreeSelectExposes = {
    * @version 2.12.5
    */
   getPartSelectedNodes: Function as ExposeType<
-    () => { values: Array<string | number>; nodes: NTreeBaseNodeData[] }
+    () => { values: Array<string | number>; nodes: HTreeBaseNodeData[] }
   >,
 
   /**
@@ -52,7 +52,7 @@ export const useTreeSelectExposes = {
    * @version 2.12.5
    */
   getUnSelectedNodes: Function as ExposeType<
-    () => { values: Array<string | number>; nodes: NTreeBaseNodeData[] }
+    () => { values: Array<string | number>; nodes: HTreeBaseNodeData[] }
   >,
 
   /**
@@ -83,7 +83,7 @@ export const useTreeSelectExposes = {
    * @version 2.12.5
    */
   getExpandNodes: Function as ExposeType<
-    () => { values: Array<string | number>; nodes: NTreeBaseNodeData[] }
+    () => { values: Array<string | number>; nodes: HTreeBaseNodeData[] }
   >,
 
   /**
@@ -116,7 +116,7 @@ export const useTreeSelectExposes = {
    * @version 2.12.5
    */
   getNodeByValues: Function as ExposeType<
-    (value: Array<string | number>) => Record<string | number, NTreeBaseNodeData>
+    (value: Array<string | number>) => Record<string | number, HTreeBaseNodeData>
   >,
 
   /**
@@ -128,7 +128,7 @@ export const useTreeSelectExposes = {
    * @version 2.12.5
    */
   setNodeByValue: Function as ExposeType<
-    (treeData: TopBaseTreeData & Partial<NTreeData>, value?: string | number) => void
+    (treeData: TopBaseTreeData & Partial<HTreeData>, value?: string | number) => void
   >,
 
   /**
@@ -140,7 +140,7 @@ export const useTreeSelectExposes = {
    * @version 2.12.5
    */
   addNodeChildrenByValue: Function as ExposeType<
-    (treeDataArray: Array<TopBaseTreeData & Partial<NTreeData>>, value?: string | number) => void
+    (treeDataArray: Array<TopBaseTreeData & Partial<HTreeData>>, value?: string | number) => void
   >,
 
   /**
@@ -156,7 +156,7 @@ export const useTreeSelectExposes = {
    *
    * @version 2.12.5
    */
-  getVisibleItems: Function as ExposeType<() => NTreeNodeDataWithLevel[]>,
+  getVisibleItems: Function as ExposeType<() => HTreeNodeDataWithLevel[]>,
 
   /**
    * 滚动到传入的 value 节点所在位置

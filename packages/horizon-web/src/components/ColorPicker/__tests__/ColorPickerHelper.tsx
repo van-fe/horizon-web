@@ -9,7 +9,7 @@ import type { ColorPickerProps } from '../src/composables/useProps';
 import type { ColorPickerEmits } from '../src/composables/useEmits';
 import type { ColorPickerSlots } from '../src/composables/useSlots';
 import type { ColorPickerExposes } from '../src/composables/useExposes';
-import NColorPicker from '../src/ColorPicker';
+import HColorPicker from '../src/ColorPicker';
 import ColorPickerTrigger from '../src/components/ColorPickerTrigger';
 import ColorPickerPanel from '../src/components/ColorPickerPanel';
 
@@ -23,7 +23,7 @@ export default class ColorPickerHelper<
   public slots?: Partial<SetupContext<{}, ColorPickerSlots>['slots']>;
   public outer!: DOMWrapper<Element>;
   public wrapper!: VueWrapper<any, any>;
-  public element!: VueWrapper<HorizonWebComponentInstance<typeof NColorPicker, ColorPickerExposes>>;
+  public element!: VueWrapper<HorizonWebComponentInstance<typeof HColorPicker, ColorPickerExposes>>;
 
   constructor(
     propsOrEmits?: Partial<
@@ -40,7 +40,7 @@ export default class ColorPickerHelper<
     this.wrapper = mount(
       () => (
         <Fragment>
-          <NColorPicker
+          <HColorPicker
             v-model={this.modelValue.value}
             popoverProps={{ toBody: false }}
             {...Object.fromEntries(
@@ -56,8 +56,8 @@ export default class ColorPickerHelper<
       },
     );
 
-    this.element = this.wrapper.findComponent(NColorPicker) as VueWrapper<
-      HorizonWebComponentInstance<typeof NColorPicker, ColorPickerExposes>
+    this.element = this.wrapper.findComponent(HColorPicker) as VueWrapper<
+      HorizonWebComponentInstance<typeof HColorPicker, ColorPickerExposes>
     >;
     this.outer = this.wrapper.find('#outer');
   }

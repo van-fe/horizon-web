@@ -3,7 +3,7 @@ import { type ToRefs } from 'vue';
 import { type TabProps, type TabsProps } from './useProps';
 
 export function useTabsPropsLogWarnProperty(props: ToRefs<TabsProps>) {
-  useDeprecatedWarnProperty(props.type, value => value === 'segment', 'type', 'NSegmented');
+  useDeprecatedWarnProperty(props.type, value => value === 'segment', 'type', 'HSegmented');
   useDeprecatedWarnProperty(props.modelValue, value => !!value, 'modelValue', 'activeKey');
   useDeprecatedWarnProperty(props.showUnderline, value => !!value, 'showUnderline', 'underline');
   useDeprecatedWarnProperty(props.showAdd, value => !!value, 'showAdd', 'editable');

@@ -1,5 +1,5 @@
 import type { VNode } from 'vue';
-import type { NTreeExtendsData, NTreeNodeData, NTreeNodeDataWithLevel } from '../utils/types';
+import type { HTreeExtendsData, HTreeNodeData, HTreeNodeDataWithLevel } from '../utils/types';
 import { isObject, isString, isUndefined } from '@aurora/utils';
 import { isVNode } from 'vue';
 import { isTreeModelValue } from '~/components/Tree/src/utils/config';
@@ -9,7 +9,7 @@ export const useTreeEmits = {
    * 动态加载改变时会通知
    * @param data `tree-data` 数据
    */
-  'update:treeData': (data: NTreeNodeData[]) => Array.isArray(data),
+  'update:treeData': (data: HTreeNodeData[]) => Array.isArray(data),
 
   /**
    * 同步展开节点 `values`
@@ -29,7 +29,7 @@ export const useTreeEmits = {
    * 可见选项列表
    * @param values 节点 `value`
    */
-  'update:visibleNodes': (values: NTreeExtendsData[]) => Array.isArray(values),
+  'update:visibleNodes': (values: HTreeExtendsData[]) => Array.isArray(values),
   /**
    * filterValue 触发时调用
    * @param value 过滤的值
@@ -47,8 +47,8 @@ export const useTreeEmits = {
     value: string | number,
     e: {
       expanded: boolean;
-      node: NTreeNodeDataWithLevel;
-      nodeComputed: NTreeExtendsData;
+      node: HTreeNodeDataWithLevel;
+      nodeComputed: HTreeExtendsData;
       nativeEvent?: Event;
       vnode?: VNode;
     },
@@ -65,8 +65,8 @@ export const useTreeEmits = {
     value: string | number,
     e: {
       checked: boolean;
-      node: NTreeNodeData;
-      nodeComputed: NTreeExtendsData;
+      node: HTreeNodeData;
+      nodeComputed: HTreeExtendsData;
       allCheckedValues: (string | number)[];
       halfCheckedValues: (string | number)[];
       vnode?: VNode;
@@ -81,7 +81,7 @@ export const useTreeEmits = {
    * @param node 当前操作的 Tree Item 对应的数据信息
    * @param vnode 当前操作的 Tree Item 对应的 VNode 节点信息
    */
-  click: (evt: MouseEvent, value: string | number, node: NTreeNodeData, vnode?: VNode) =>
+  click: (evt: MouseEvent, value: string | number, node: HTreeNodeData, vnode?: VNode) =>
     evt instanceof MouseEvent &&
     isTreeModelValue(value) &&
     isObject(node) &&
@@ -94,7 +94,7 @@ export const useTreeEmits = {
    * @param node 当前操作的 Tree Item 对应的数据信息
    * @param vnode 当前操作的 Tree Item 对应的 VNode 节点信息
    */
-  contextmenu: (evt: MouseEvent, value: string | number, node: NTreeNodeData, vnode?: VNode) =>
+  contextmenu: (evt: MouseEvent, value: string | number, node: HTreeNodeData, vnode?: VNode) =>
     evt instanceof MouseEvent &&
     isTreeModelValue(value) &&
     isObject(node) &&

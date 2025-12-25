@@ -1,11 +1,11 @@
 import { mount } from '@vue/test-utils';
 import { describe, expect, test } from 'vitest';
 import { ref } from 'vue';
-import { NOption, NSelect } from '../index';
+import { HOption, HSelect } from '../index';
 import type { Ref } from 'vue';
 import type { SelectProps } from '../src/composables/useProps';
-import NPickerInput from '../../Picker/src/components/NPickerInput';
-import NPickerPopper from '../../Picker/src/components/NPickerPopper';
+import HPickerInput from '../../Picker/src/components/PickerInput';
+import HPickerPopper from '../../Picker/src/components/PickerPopper';
 
 const sleep = (time = 300) => new Promise(resolve => setTimeout(resolve, time));
 
@@ -25,11 +25,11 @@ const basicRender = (modelValue: Ref<string | undefined>, props?: Partial<Select
     },
   ];
   return mount(() => (
-    <NSelect allowCreate={true} v-model={modelValue.value} {...(props ?? {})} toBody={false}>
+    <HSelect allowCreate={true} v-model={modelValue.value} {...(props ?? {})} toBody={false}>
       {list.map(item => (
-        <NOption label={item.label} value={item.value} />
+        <HOption label={item.label} value={item.value} />
       ))}
-    </NSelect>
+    </HSelect>
   ));
 };
 
@@ -38,8 +38,8 @@ describe('allowCreate works same as search', () => {
     const modelValue = ref<string>();
     const wrapper = basicRender(modelValue);
 
-    const InputComponent = wrapper.findComponent(NPickerInput);
-    const OptionPanelComponent = wrapper.findComponent(NPickerPopper);
+    const InputComponent = wrapper.findComponent(HPickerInput);
+    const OptionPanelComponent = wrapper.findComponent(HPickerPopper);
 
     const inpEl = InputComponent.find('.n-picker__input input');
 
@@ -64,8 +64,8 @@ describe('auto selected when enter fire', () => {
     const modelValue = ref<string>();
     const wrapper = basicRender(modelValue, props);
 
-    const InputComponent = wrapper.findComponent(NPickerInput);
-    const OptionPanelComponent = wrapper.findComponent(NPickerPopper);
+    const InputComponent = wrapper.findComponent(HPickerInput);
+    const OptionPanelComponent = wrapper.findComponent(HPickerPopper);
     const inpEl = InputComponent.find('.n-picker__input input');
 
     await inpEl.trigger('focus');

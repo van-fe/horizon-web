@@ -6,7 +6,7 @@ import { useDropdownMenuEmits } from './composables/useEmits';
 import { useDropdownMenuSlots } from './composables/useSlots';
 import type { DropdownMenuEmits } from './composables/useEmits';
 import type { DropdownMenuSlots } from './composables/useSlots';
-import { NDropdownActivatedChildInjectKey } from './utils/InjectedKeys';
+import { HDropdownActivatedChildInjectKey } from './utils/InjectedKeys';
 
 export default defineComponent({
   name: `${useNamespace()}DropdownMenu`,
@@ -20,7 +20,7 @@ export default defineComponent({
 
     const activeChildUuid = ref<string>();
 
-    provide(NDropdownActivatedChildInjectKey, activeChildUuid);
+    provide(HDropdownActivatedChildInjectKey, activeChildUuid);
 
     return () => <div class={cls(classHelper.block)}>{slots.default?.()}</div>;
   },

@@ -1,5 +1,6 @@
 import { Project } from 'ts-morph';
-import { apiGeneratorOutPut, horizonwebProjectRoot, writeJsonFile } from '@aurora/utils/plugins';
+import { apiGeneratorOutPut, horizonwebProjectRoot } from '@root/scripts/paths';
+import { writeJsonFile } from '@root/scripts/writeJsonFile';
 import type {
   ApiGeneratorAnalysedComponentDetail,
   ApiGeneratorAnalysedEmitType,
@@ -17,7 +18,7 @@ import componentsData from '../../../dist/components-dependencies.json';
 function analysisComponents(
   componentInfo: ApiGeneratorExportedComponent,
 ): ApiGeneratorAnalysedComponentDetail {
-  const componentNameWithoutPrefix = componentInfo.name.replace(/^N/, '');
+  const componentNameWithoutPrefix = componentInfo.name.replace(/^H/, '');
 
   const project = new Project({
     compilerOptions: {

@@ -12,8 +12,8 @@ import { useSwitchProps } from './composables/useProps';
 import type { SwitchEmits } from './composables/useEmits';
 import { useSwitchEmits } from './composables/useEmits';
 import {
-  NFormDisabledInjectedKey,
-  NFormItemTriggerInjectedKey,
+  HFormDisabledInjectedKey,
+  HFormItemTriggerInjectedKey,
 } from '~/components/Form/src/utils/injectedKeys';
 import useSize from '~/utils/useSize';
 import useLocaleLang from '~/utils/useLocaleLang';
@@ -40,10 +40,10 @@ export default defineComponent({
     const sizeRef = useSize(size, 'medium', { normal: 'medium' });
 
     /** formItemTrigger **/
-    const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
+    const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
 
     // form disabled inject
-    const formDisabled = inject(NFormDisabledInjectedKey, undefined);
+    const formDisabled = inject(HFormDisabledInjectedKey, undefined);
     const isDisabled = computed(() => disabledRef?.value ?? formDisabled?.value ?? false);
 
     const onChange = async () => {

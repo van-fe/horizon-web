@@ -3,11 +3,11 @@ import { createInstance } from './tree-helper';
 import { nextTick, ref } from 'vue';
 import unselectableOptions from './modifiedOptions/unselectable-options.json';
 import type {
-  NTreeData,
-  NTreeDynamicLoadNode,
-  NTreeNodeData,
+  HTreeData,
+  HTreeDynamicLoadNode,
+  HTreeNodeData,
 } from '~/components/Tree/src/utils/types';
-import NTreeItem from '~/components/Tree/src/components/TreeItem';
+import HTreeItem from '~/components/Tree/src/components/TreeItem';
 import { sleep } from '~/utils/tools';
 
 describe('Tree.tsx special', () => {
@@ -79,7 +79,7 @@ describe('Tree.tsx special', () => {
   });
 
   test('dynamic-load on only has one level on init and the padding is correct', async () => {
-    const treeData = ref<NTreeData[]>([
+    const treeData = ref<HTreeData[]>([
       {
         value: 'guide',
         label: 'Guide',
@@ -98,7 +98,7 @@ describe('Tree.tsx special', () => {
 
     const padding = [8, 32];
 
-    wrapper.findAllComponents(NTreeItem).forEach((item, index) => {
+    wrapper.findAllComponents(HTreeItem).forEach((item, index) => {
       expect(item.attributes('style')).toContain(`padding-left: ${padding[index]}px`);
     });
   });
@@ -112,26 +112,26 @@ describe('Tree.tsx special', () => {
       filterToHideChildren: false,
     });
 
-    expect(wrapper.findAllComponents(NTreeItem).length).toBe(9);
+    expect(wrapper.findAllComponents(HTreeItem).length).toBe(9);
 
     domRef.value?.setCollapseStatusByValue(['disciplines'], false);
 
     await nextTick();
 
-    expect(wrapper.findAllComponents(NTreeItem).length).toBe(5);
+    expect(wrapper.findAllComponents(HTreeItem).length).toBe(5);
 
     filterInputValue.value = 'gui';
 
     await nextTick();
 
-    expect(wrapper.findAllComponents(NTreeItem).length).toBe(9);
+    expect(wrapper.findAllComponents(HTreeItem).length).toBe(9);
   });
 
   test('dynamic set tree-data', async () => {
-    const treeData = ref<NTreeNodeData[]>();
+    const treeData = ref<HTreeNodeData[]>();
 
-    function dynamicLoad(data: NTreeDynamicLoadNode) {
-      return new Promise<NTreeNodeData[]>((resolve, reject) => {
+    function dynamicLoad(data: HTreeDynamicLoadNode) {
+      return new Promise<HTreeNodeData[]>((resolve, reject) => {
         if (!data.node) return reject();
 
         setTimeout(
@@ -205,6 +205,6 @@ describe('Tree.tsx special', () => {
 
     await sleep(2000);
 
-    expect(element.findAllComponents(NTreeItem).length).eq(7);
+    expect(element.findAllComponents(HTreeItem).length).eq(7);
   });
 });

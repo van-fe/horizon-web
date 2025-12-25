@@ -1,4 +1,4 @@
-import { computed, defineComponent, inject, nextTick, ref, toRefs, watch } from 'vue';
+import { computed, defineComponent, inject, nextTick, ref, toRef, watch } from 'vue';
 import { useInputNumberProps } from './composables/useProps';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import {
@@ -13,21 +13,21 @@ import type { InputNumberEmits } from './composables/useEmits';
 import { useInputNumberEmits } from './composables/useEmits';
 import ValueHandler from './utils/setValue';
 import {
-  NFormDisabledInjectedKey,
-  NFormItemErrorInjectedKey,
-  NFormItemTriggerInjectedKey,
+  HFormDisabledInjectedKey,
+  HFormItemErrorInjectedKey,
+  HFormItemTriggerInjectedKey,
 } from '~/components/Form/src/utils/injectedKeys';
 import type { InputNumberSlots } from './composables/useSlots';
 import { useInputNumberSlots } from './composables/useSlots';
 import type { InputNumberExposes } from './composables/useExposes';
 import { useInputNumberExposes } from './composables/useExposes';
-import { defaultLocale, localeInjectKey } from '~/provides';
 import useSize from '~/utils/useSize';
 import { Decimal } from 'decimal.js';
 import useCursor from './utils/useCursor';
 import { IconAdd, IconArrowDown, IconArrowUp, IconCloseFilled, IconReduce } from '@aurora/icon';
 import { renderIcon } from '~/utils/useIcon';
 import { formatInputForNumber, sanitizeInput } from './utils/inputHelper';
+import useLocaleLang from 'src/utils/useLocaleLang';
 
 export default defineComponent({
   name: `${useNamespace()}InputNumber`,
@@ -55,15 +55,6 @@ export default defineComponent({
     const inputDomRef = ref<HTMLInputElement | null>(null);
     const isFocused = ref(false);
 
-    const {
-      size,
-      formatter: formatterProp,
-      parser: parserProp,
-      inputStyle: inputStyleProp,
-      stringMode: stringModeProp,
-      modelValue: modelValueProp,
-    } = toRefs(props);
-
     const displayValue = computed(() => {
       if (userInput.value !== null) {
         return userInput.value;
@@ -76,15 +67,15 @@ export default defineComponent({
 
       if (isDefined(props.precision)) {
         const res = new Decimal(currentValue).toFixed(props.precision);
-        return stringModeProp.value ? res : Number(res);
+        return props.stringMode ? res : Number(res);
       }
 
       return currentValue.toString();
     });
 
     const formattedValue = computed(() =>
-      formatterProp?.value
-        ? formatterProp.value(displayValue.value, {
+      props.formatter
+        ? props.formatter(displayValue.value, {
             userTyping: userInput.value !== null,
             input: userInput.value !== null ? userInput.value.toString() : undefined,
           })
@@ -94,25 +85,23 @@ export default defineComponent({
     const { recordCursor, restoreCursor } = useCursor(inputDomRef, isFocused);
 
     watch(formattedValue, val => {
-      if (formatterProp?.value) {
+      if (props.formatter) {
         restoreCursor(val.toString());
       }
     });
 
     // global size
-    const sizeRef = useSize(size, 'medium');
-
-    const locale = inject(localeInjectKey, defaultLocale);
+    const sizeRef = useSize(toRef(props, 'size'), 'medium');
 
     // form-item validate trigger
-    const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
+    const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
 
     // form disabled inject
-    const formDisabled = inject(NFormDisabledInjectedKey, undefined);
+    const formDisabled = inject(HFormDisabledInjectedKey, undefined);
     const isDisabled = computed(() => props.disabled ?? formDisabled?.value ?? false);
 
     watch(
-      modelValueProp,
+      () => props.modelValue,
       value => {
         // do not modify beforeChangeValue value when modelValue triggered from inputNumber inside
         const verifiedValue = valueHandlerInstance.verifyValue(value);
@@ -153,7 +142,7 @@ export default defineComponent({
           ? value.toString()
           : Decimal.isDecimal(value)
             ? value.toNumber()
-            : value;
+            : value as string | number;
     }
 
     function setCurrentValue(value: Decimal.Value | null | undefined) {
@@ -178,7 +167,7 @@ export default defineComponent({
       const target = safelyGetEventTarget(evt) as HTMLInputElement;
       const rawNumberValue = sanitizeInput(target.value);
 
-      const originValue = parserProp?.value ? parserProp.value(rawNumberValue) : rawNumberValue;
+      const originValue = props.parser ? props.parser(rawNumberValue) : rawNumberValue;
       userInput.value = originValue;
       const formattedNumberString = formatInputForNumber(originValue);
       const transformValue = formattedNumberString ? new Decimal(formattedNumberString) : null;
@@ -209,8 +198,8 @@ export default defineComponent({
     }
 
     function updateLocalValue() {
-      if (localValue.value !== modelValueProp?.value) {
-        beforeChangeValue.value = localValue.value = modelValueProp.value;
+      if (localValue.value !== props.modelValue) {
+        beforeChangeValue.value = localValue.value = props.modelValue;
       }
     }
 
@@ -221,8 +210,8 @@ export default defineComponent({
         const rawNumberValue = inputDomRef.value.value
           ?.replace(/[^\d.-]+/g, '')
           .replace(/^[-+](?!\d)/, '');
-        const originValue = parserProp?.value
-          ? parserProp.value(rawNumberValue ?? '')
+        const originValue = props.parser
+          ? props.parser(rawNumberValue ?? '')
           : rawNumberValue;
 
         let value: Decimal | null =
@@ -441,7 +430,7 @@ export default defineComponent({
       blur: () => inputDomRef.value?.blur(),
     });
 
-    const nFormError = inject(NFormItemErrorInjectedKey, ref(''));
+    const nFormError = inject(HFormItemErrorInjectedKey, ref(''));
 
     return () => {
       return (
@@ -449,7 +438,7 @@ export default defineComponent({
           class={cls(
             classHelper.block,
             classHelper.m(sizeRef.value),
-            classHelper.m(inputStyleProp.value),
+            classHelper.m(props.inputStyle),
             classHelper.is('disabled', isDisabled.value),
             classHelper.is('no-controls', !props.controls || props.readonly),
             classHelper.is('right-controls', props.controlsPosition === 'right'),
@@ -515,7 +504,7 @@ export default defineComponent({
                 {...attrs}
                 placeholder={
                   props.placeholder ??
-                  locale.value?.langService?.td()?.horizon-web?.inputNumber.placeholder
+                  useLocaleLang('inputNumber.placeholder').value as string
                 }
                 disabled={isDisabled.value}
                 readonly={props.readonly}

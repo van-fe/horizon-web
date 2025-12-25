@@ -1,11 +1,11 @@
 import type { TableProps } from '../composables/useProps';
 import { isFunction, isObject } from '@aurora/utils';
-import type { NTableColumnData, NTableTransformedRowDataType } from '../utils/types';
+import type { HTableColumnData, HTableTransformedRowDataType } from '../utils/types';
 
 export default function useSpan(tableProps: TableProps) {
   function spanMethod(
-    row: NTableTransformedRowDataType,
-    column: NTableColumnData,
+    row: HTableTransformedRowDataType,
+    column: HTableColumnData,
     rowIndex: number,
     columnIndex: number,
   ) {

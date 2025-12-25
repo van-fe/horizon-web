@@ -3,7 +3,7 @@ import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import type { PopContentSlots } from './composables/useSlots';
 import { usePopContentSlots } from './composables/useSlots';
-import { NPickerPopoverPropsInjectKey } from './utils/injectKeys';
+import { HPickerPopoverPropsInjectKey } from './utils/injectKeys';
 import { usePopContentProps } from './composables/useProps';
 
 export default defineComponent({
@@ -13,7 +13,7 @@ export default defineComponent({
   setup(props, { slots }: HorizonWebSetupContext<{}, PopContentSlots>) {
     const classHelper = new ComponentClassBlock('popover');
 
-    const parentProps = inject(NPickerPopoverPropsInjectKey, undefined);
+    const parentProps = inject(HPickerPopoverPropsInjectKey, undefined);
 
     return () => (
       <div

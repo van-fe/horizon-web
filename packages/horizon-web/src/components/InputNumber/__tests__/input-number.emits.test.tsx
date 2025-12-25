@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import NInputNumber from '../src/InputNumber';
+import HInputNumber from '../src/InputNumber';
 import { describe, expect, test, vi } from 'vitest';
 import { ref } from 'vue';
 import type { InputNumberExposes } from '../src/composables/useExposes';
@@ -8,7 +8,7 @@ describe('InputNumber.tsx emits', () => {
   test('input', async () => {
     const modelValue = ref();
     const onInput = vi.fn();
-    const wrapper = mount(() => <NInputNumber v-model={modelValue.value} onInput={onInput} />);
+    const wrapper = mount(() => <HInputNumber v-model={modelValue.value} onInput={onInput} />);
     const input = wrapper.find('input');
 
     await input.trigger('input');
@@ -18,7 +18,7 @@ describe('InputNumber.tsx emits', () => {
   test('change & blur', async () => {
     const modelValue = ref();
     const onChange = vi.fn();
-    const wrapper = mount(() => <NInputNumber v-model={modelValue.value} onChange={onChange} />);
+    const wrapper = mount(() => <HInputNumber v-model={modelValue.value} onChange={onChange} />);
     const input = wrapper.find('input');
 
     await input.setValue('12');
@@ -30,7 +30,7 @@ describe('InputNumber.tsx emits', () => {
 
   test('focus', async () => {
     const onFocus = vi.fn();
-    const wrapper = mount(() => <NInputNumber onFocus={onFocus} />);
+    const wrapper = mount(() => <HInputNumber onFocus={onFocus} />);
     const input = wrapper.find('input');
 
     await input.trigger('focus');
@@ -42,7 +42,7 @@ describe('InputNumber.tsx emits', () => {
     const modelValue = ref(12);
     const onClear = vi.fn();
     const wrapper = mount(() => (
-      <NInputNumber v-model={modelValue.value} clearable={true} onClear={onClear} />
+      <HInputNumber v-model={modelValue.value} clearable={true} onClear={onClear} />
     ));
 
     const clear = wrapper.find('.n-input-number__clear');
@@ -59,7 +59,7 @@ describe('InputNumber.tsx emits', () => {
     const onKeyUp = vi.fn();
 
     const wrapper = mount(() => (
-      <NInputNumber onKeydown={onKeyDown} onKeypress={onKeyPress} onKeyup={onKeyUp} />
+      <HInputNumber onKeydown={onKeyDown} onKeypress={onKeyPress} onKeyup={onKeyUp} />
     ));
 
     const input = wrapper.find('input');
@@ -86,7 +86,7 @@ describe('InputNumber.tsx emits', () => {
   test('wheel', async () => {
     const onWheel = vi.fn();
 
-    const wrapper = mount(() => <NInputNumber onWheel={onWheel} />);
+    const wrapper = mount(() => <HInputNumber onWheel={onWheel} />);
 
     const input = wrapper.find('input');
 
@@ -101,7 +101,7 @@ describe('InputNumber.tsx emits', () => {
     const domRef = ref<(HTMLElement & InputNumberExposes) | null>(null);
 
     const wrapper = mount(() => (
-      <NInputNumber
+      <HInputNumber
         ref={domRef}
         v-model={value.value}
         // @ts-ignore

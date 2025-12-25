@@ -12,7 +12,7 @@ import {
 } from '@aurora/utils';
 import type { PanelsSlots } from './composables/useSlots';
 import { usePanelsSlots } from './composables/useSlots';
-import NTransition from '~/components/Transition/src/Transition';
+import HTransition from '~/components/Transition/src/Transition';
 import type { TransitionProps } from '~/components/Transition/src/composables/useProps';
 
 export default defineComponent({
@@ -40,7 +40,7 @@ export default defineComponent({
         }
 
         return (
-          (panel.type as ComponentOptions).name === 'NPanel' &&
+          (panel.type as ComponentOptions).name === 'HPanel' &&
           props.name &&
           !getBooleanProp(props.disabled)
         );
@@ -67,7 +67,7 @@ export default defineComponent({
         </div>
       );
       if (animatedRef.value) {
-        panel = <NTransition name={transitionNameRef.value}>{panel}</NTransition>;
+        panel = <HTransition name={transitionNameRef.value}>{panel}</HTransition>;
       }
       return panel;
     };

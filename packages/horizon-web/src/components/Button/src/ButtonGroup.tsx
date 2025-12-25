@@ -5,7 +5,7 @@ import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import type { ButtonGroupSlots } from './composables/useSlots';
 import { useButtonGroupSlots } from './composables/useSlots';
-import { NButtonGroupPropsInjectKey, NButtonGroupSizeInjectKey } from './utils/injectKeys';
+import { HButtonGroupPropsInjectKey, HButtonGroupSizeInjectKey } from './utils/injectKeys';
 import useSize from '~/utils/useSize';
 
 export default defineComponent({
@@ -19,8 +19,8 @@ export default defineComponent({
 
     const sizeRef = useSize(size, 'medium');
 
-    provide(NButtonGroupPropsInjectKey, props);
-    provide(NButtonGroupSizeInjectKey, sizeRef);
+    provide(HButtonGroupPropsInjectKey, props);
+    provide(HButtonGroupSizeInjectKey, sizeRef);
 
     return () => <div class={classHelper.block}>{slots.default?.()}</div>;
   },

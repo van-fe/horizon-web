@@ -27,17 +27,17 @@ import { useTableSlots } from './composables/useSlots';
 import type { TableExposes } from './composables/useExposes';
 import { useTableExposes } from './composables/useExposes';
 import {
-  NTableColumnAnalysisInjectKey,
-  NTableEmitsInjectKey,
-  NTableFieldMapFormattedInjectKey,
-  NTableFlattenDataInjectKey,
-  NTableFooterRowHeightInjectKey,
-  NTablePropsInjectKey,
-  NTableSlotsInjectKey,
+  HTableColumnAnalysisInjectKey,
+  HTableEmitsInjectKey,
+  HTableFieldMapFormattedInjectKey,
+  HTableFlattenDataInjectKey,
+  HTableFooterRowHeightInjectKey,
+  HTablePropsInjectKey,
+  HTableSlotsInjectKey,
 } from './utils/injectKeys';
 import useColumn from './hooks/useColumn';
 import TableHeader from './components/TableHeader';
-import NScrollbar from '~/components/Scrollbar/src/Scrollbar';
+import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
 import useSize from '~/utils/useSize';
 import TableBody from './components/TableBody';
 import useBorder from './hooks/useBorder';
@@ -49,11 +49,11 @@ import useSortable from './hooks/useSortable';
 import loading from '~/directives/v-loading/src';
 import tooltip from '~/directives/v-tooltip/src';
 import useLocaleLang from '~/utils/useLocaleLang';
-import NEmpty from '~/components/Empty/src/Empty';
+import HEmpty from '~/components/Empty/src/Empty';
 import { formatTreeFieldMap } from './hooks/useTree';
 import TableFooter from './components/TableFooter';
 import useHeaderSticky from './hooks/useHeaderSticky';
-import { NTableColumnContextKey } from './utils/types';
+import { HTableColumnContextKey } from './utils/types';
 import useHeaderDraggable from './hooks/useHeaderDraggable';
 import useHeaderResizer from './hooks/useHeaderResizer';
 import useColumnManager from './hooks/useColumnManager';
@@ -149,13 +149,13 @@ export default defineComponent({
       },
     );
 
-    provide(NTablePropsInjectKey, props);
-    provide(NTableEmitsInjectKey, emit);
-    provide(NTableSlotsInjectKey, slots);
-    provide(NTableColumnAnalysisInjectKey, analysisColumns);
-    provide(NTableFlattenDataInjectKey, flattenData);
-    provide(NTableFieldMapFormattedInjectKey, fieldMapFormatted);
-    provide(NTableFooterRowHeightInjectKey, footerRowHeight);
+    provide(HTablePropsInjectKey, props);
+    provide(HTableEmitsInjectKey, emit);
+    provide(HTableSlotsInjectKey, slots);
+    provide(HTableColumnAnalysisInjectKey, analysisColumns);
+    provide(HTableFlattenDataInjectKey, flattenData);
+    provide(HTableFieldMapFormattedInjectKey, fieldMapFormatted);
+    provide(HTableFooterRowHeightInjectKey, footerRowHeight);
 
     expose({
       reloadData,
@@ -207,7 +207,7 @@ export default defineComponent({
         }}
       >
         <div class={cls(classHelper.e('hidden-columns'))}>{slots.default?.()}</div>
-        <NScrollbar
+        <HScrollbar
           ref={scrollbarDomRef}
           always={props.scrollbarAlwaysOn}
           height={props.height}
@@ -230,10 +230,10 @@ export default defineComponent({
                   return (
                     <col
                       style={
-                        info.column[NTableColumnContextKey].resizeWidth === -1
+                        info.column[HTableColumnContextKey].resizeWidth === -1
                           ? info.style
                           : {
-                              width: `${info.column[NTableColumnContextKey].resizeWidth}px`,
+                              width: `${info.column[HTableColumnContextKey].resizeWidth}px`,
                             }
                       }
                     />
@@ -262,7 +262,7 @@ export default defineComponent({
           {flattenData.value.length === 0 && (
             <div class={classHelper.em('table', 'empty')}>
               {slots.empty?.() ?? (
-                <NEmpty
+                <HEmpty
                   description={
                     props.emptyText ?? (useLocaleLang('table.emptyText').value as string)
                   }
@@ -271,7 +271,7 @@ export default defineComponent({
             </div>
           )}
           {props.useColumnManager && columnManagerRender()}
-        </NScrollbar>
+        </HScrollbar>
         <div class={classHelper.e('resizing-cursor-line')} style={cursorLineStyle.value} />
         {slots.append ? (
           <div class={classHelper.e('table-append')}>{slots.append()}</div>

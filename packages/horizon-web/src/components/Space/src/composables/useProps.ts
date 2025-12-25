@@ -1,9 +1,9 @@
 import { declarePropType } from '@aurora/utils';
 import type { ExtractPropTypes, PropType, StyleValue } from 'vue';
-import { type NApplicationSizeType } from '~/components/Application/src/composables/useProps';
+import { type HApplicationSizeType } from '~/components/Application/src/composables/useProps';
 
-export type NSpaceSize =
-  | NApplicationSizeType
+export type HSpaceSize =
+  | HApplicationSizeType
   | number
   | string
   | [number, number]
@@ -28,7 +28,7 @@ export const useSpaceProps = declarePropType({
    * 间距大小
    */
   size: {
-    type: [String, Number, Array] as PropType<NSpaceSize>,
+    type: [String, Number, Array] as PropType<HSpaceSize>,
     default: 'medium',
   },
 

@@ -1,4 +1,4 @@
-import { AIconSVG } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import {
@@ -12,14 +12,14 @@ import {
   toRefs,
   watch,
 } from 'vue';
-import { type NApplicationSizeType } from '~/components/Application/src/composables/useProps';
+import { type HApplicationSizeType } from '~/components/Application/src/composables/useProps';
 import { GlobalSizeInjectedKey } from '~/components/Application/src/utils/injectedKeys';
-import { NFormItemTriggerInjectedKey } from '~/injectedKeys';
+import { HFormItemTriggerInjectedKey } from '~/injectedKeys';
 import type { SegmentedEmits } from './composables/useEmits';
 import { useSegmentedEmits } from './composables/useEmits';
 import type { SegmentedExposes } from './composables/useExposes';
 import { useSegmentedExposes } from './composables/useExposes';
-import type { NSegmentedSize, NSegmentedValue } from './composables/useProps';
+import type { HSegmentedSize, HSegmentedValue } from './composables/useProps';
 import { useSegmentedProps } from './composables/useProps';
 import type { SegmentedSlots } from './composables/useSlots';
 import { useSegmentedSlots } from './composables/useSlots';
@@ -40,8 +40,8 @@ export default defineComponent({
   ) {
     const cls = new ComponentClassBlock('segmented');
 
-    const globalSize = inject<Ref<NSegmentedSize>>(GlobalSizeInjectedKey, ref('medium'));
-    const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
+    const globalSize = inject<Ref<HSegmentedSize>>(GlobalSizeInjectedKey, ref('medium'));
+    const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
 
     const rootDomRef = ref<HTMLElement>();
     const wrapperDomRef = ref<HTMLElement>();
@@ -50,7 +50,7 @@ export default defineComponent({
 
     const size = computed(() => {
       return props.size || globalSize.value;
-    }) as ComputedRef<NApplicationSizeType>;
+    }) as ComputedRef<HApplicationSizeType>;
     const showSpace = computed(() => !!props.arrow && scrollable.value);
     const showNextBlur = computed(() => !lastViewport.value && scrollable.value);
 
@@ -74,7 +74,7 @@ export default defineComponent({
     const onArrowLeft = () => move('left');
     const onArrowRight = () => move('right');
 
-    const updateTabValue = (key: NSegmentedValue, fromProps = false) => {
+    const updateTabValue = (key: HSegmentedValue, fromProps = false) => {
       if (activeKey.value === key) return;
 
       activeKey.value = key;
@@ -85,7 +85,7 @@ export default defineComponent({
       if (props.form) formItemTrigger?.('change');
     };
 
-    const onTabClick = async (tabKey: NSegmentedValue) => {
+    const onTabClick = async (tabKey: HSegmentedValue) => {
       if (activeKey.value === tabKey) return;
 
       return updateTabValue(tabKey);
@@ -143,7 +143,7 @@ export default defineComponent({
                     onClick={onArrowLeft}
                     test-id="left-btn"
                   >
-                    <AIconSVG name="arrow_left" class={cls.e('icon')} />
+                    <AIcon name="arrow_left" class={cls.e('icon')} />
                   </div>
                   <div
                     class={[
@@ -153,7 +153,7 @@ export default defineComponent({
                     onClick={onArrowRight}
                     test-id="right-btn"
                   >
-                    <AIconSVG name="arrow_right" class={cls.e('icon')} />
+                    <AIcon name="arrow_right" class={cls.e('icon')} />
                   </div>
                 </div>
               )}

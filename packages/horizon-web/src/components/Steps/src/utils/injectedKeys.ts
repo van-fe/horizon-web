@@ -1,7 +1,7 @@
 import { generatorInjectedKeyName } from '@aurora/utils';
 import type { ComputedRef, InjectionKey, Ref } from 'vue';
 import type { StepProps, StepsProps } from '../composables/useProps';
-import type { NApplicationSizeType } from '~/components/Application/src/composables/useProps';
+import type { HApplicationSizeType } from '~/components/Application/src/composables/useProps';
 
 export interface StepInstance {
   /**
@@ -23,19 +23,19 @@ export interface StepInstance {
   getIndex: () => number;
 }
 
-export const NStepsPropsInjectKey = Symbol(
+export const HStepsPropsInjectKey = Symbol(
   generatorInjectedKeyName('steps', 'props'),
 ) as InjectionKey<StepsProps>;
 
-export const NStepsSizeInjectKey = Symbol(
+export const HStepsSizeInjectKey = Symbol(
   generatorInjectedKeyName('steps', 'size'),
-) as InjectionKey<ComputedRef<NApplicationSizeType>>;
+) as InjectionKey<ComputedRef<HApplicationSizeType>>;
 
-export const NStepsItemsInjectKey = Symbol(
+export const HStepsItemsInjectKey = Symbol(
   generatorInjectedKeyName('steps', 'items'),
 ) as InjectionKey<Ref<StepInstance[]>>;
 
-export const NStepsCollectInjectKey = Symbol(
+export const HStepsCollectInjectKey = Symbol(
   generatorInjectedKeyName('steps', 'collect step item'),
 ) as InjectionKey<
   (
@@ -46,14 +46,14 @@ export const NStepsCollectInjectKey = Symbol(
   ) => void
 >;
 
-export const NStepsRemoveInjectKey = Symbol(
+export const HStepsRemoveInjectKey = Symbol(
   generatorInjectedKeyName('steps', 'remove step item'),
 ) as InjectionKey<(props: StepProps, uuid: string) => void>;
 
-export const NStepsActiveIndexInjectKey = Symbol(
+export const HStepsActiveIndexInjectKey = Symbol(
   generatorInjectedKeyName('steps', 'active index'),
 ) as InjectionKey<Ref<number>>;
 
-export const NStepsOnClickStepInjectKey = Symbol(
+export const HStepsOnClickStepInjectKey = Symbol(
   generatorInjectedKeyName('steps', 'on click step'),
 ) as InjectionKey<(index: number) => void>;

@@ -2,7 +2,7 @@ import { defineComponent, ref, toRefs, watch } from 'vue';
 import { useTooltipProps } from '~/components/Tooltip/src/composables/useProps';
 import { ComponentClassBlock, useZIndex } from '@aurora/utils';
 import useSize from '~/utils/useSize';
-import NTransition from '~/components/Transition/src/Transition';
+import HTransition from '~/components/Transition/src/Transition';
 
 const zIndexHandler = useZIndex();
 export default defineComponent({
@@ -27,7 +27,7 @@ export default defineComponent({
     return () =>
       visibleProp.value &&
       contentProp.value && (
-        <NTransition appear name="tooltip">
+        <HTransition appear name="tooltip">
           <div
             class={[
               classHelper.block,
@@ -42,7 +42,7 @@ export default defineComponent({
             <div class={classHelper.e('content')}>{contentProp.value}</div>
             {arrowProp.value && <div class={[classHelper.e('arrow')]} data-popper-arrow></div>}
           </div>
-        </NTransition>
+        </HTransition>
       );
   },
 });

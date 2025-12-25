@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
-import NVPopconfirm from '../index';
-import { NVClickOutside } from '../../v-click-outside';
+import HVPopconfirm from '../index';
+import { HVClickOutside } from '../../v-click-outside';
 import { describe, expect, test } from 'vitest';
 import { nextTick } from 'vue';
 
@@ -12,8 +12,8 @@ describe('v-popconfirm.tsx', () => {
         attachTo: document.body,
         global: {
           directives: {
-            [NVPopconfirm.name]: NVPopconfirm,
-            [NVClickOutside.name]: NVClickOutside,
+            [HVPopconfirm.name]: HVPopconfirm,
+            [HVClickOutside.name]: HVClickOutside,
           },
         },
       },

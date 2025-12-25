@@ -27,29 +27,29 @@ import type { MenuSlots } from './composables/useSlots';
 import type { MenuExposes } from './composables/useExposes';
 import type { Router } from 'vue-router';
 import {
-  NMenuExpandedMenuInjectKey,
-  NMenuAddExpandMenuInjectKey,
-  NMenuAppendChildInjectKey,
-  NMenuEmitInjectKey,
-  NMenuPropsInjectKey,
-  NMenuRemoveExpandMenuInjectKey,
-  NMenuRemoveChildInjectKey,
-  NMenuActivatedMenusInjectKey,
-  NMenuSetActivatedMenuInjectKey,
-  NMenuMenuTreeInjectKey,
-  NMenuTreeLevelInjectKey,
-  NMenuParentHasIconAmountInjectKey,
-  NMenuIsCollapsedInjectKey,
-  NMenuScrollTopTopInjectKey,
-  NMenuRefInjectKey,
-  NMenuActiveTopMenuUuidInjectKey,
-  NMenuSwitchFullViewMenuVisibleInjectKey,
+  HMenuExpandedMenuInjectKey,
+  HMenuAddExpandMenuInjectKey,
+  HMenuAppendChildInjectKey,
+  HMenuEmitInjectKey,
+  HMenuPropsInjectKey,
+  HMenuRemoveExpandMenuInjectKey,
+  HMenuRemoveChildInjectKey,
+  HMenuActivatedMenusInjectKey,
+  HMenuSetActivatedMenuInjectKey,
+  HMenuMenuTreeInjectKey,
+  HMenuTreeLevelInjectKey,
+  HMenuParentHasIconAmountInjectKey,
+  HMenuIsCollapsedInjectKey,
+  HMenuScrollTopTopInjectKey,
+  HMenuRefInjectKey,
+  HMenuActiveTopMenuUuidInjectKey,
+  HMenuSwitchFullViewMenuVisibleInjectKey,
 } from './util/injectKeys';
 import CollapseButton from './components/CollapseButton';
 import FullViewMenu from './components/FullViewMenu';
-import NTransition from '~/components/Transition/src/Transition';
-import type { NMenuTreeData } from './util/types';
-import NScrollbar from '~/components/Scrollbar/src/Scrollbar';
+import HTransition from '~/components/Transition/src/Transition';
+import type { HMenuTreeData } from './util/types';
+import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
 import { getMapTreePath, getMapTreePathByValue } from './util/treeHelper';
 import useResizer from './util/useResizer';
 import { warn } from '~/utils/useLog';
@@ -61,8 +61,8 @@ export default defineComponent({
   components: {
     CollapseButton,
     FullViewMenu,
-    NTransition,
-    NScrollbar,
+    HTransition,
+    HScrollbar,
   },
   props: useMenuProps,
   emits: useMenuEmits,
@@ -77,7 +77,7 @@ export default defineComponent({
     const classHelper = new ComponentClassBlock('menu');
 
     const menuRef = ref<HTMLElement | null>(null);
-    const scrollbarRef = ref<HorizonWebComponentInstance<typeof NScrollbar, ScrollbarExposes> | null>(
+    const scrollbarRef = ref<HorizonWebComponentInstance<typeof HScrollbar, ScrollbarExposes> | null>(
       null,
     );
     const resizerDomRef = ref<HTMLElement | null>(null);
@@ -88,7 +88,7 @@ export default defineComponent({
     const isDoingCollapse = ref(false);
     let prevExpandedMenu: string[] = [];
     const expandedMenu = ref(new Set<string>());
-    const menuTree = ref(new Map<string, NMenuTreeData<'subMenu' | 'menuItem'>>());
+    const menuTree = ref(new Map<string, HMenuTreeData<'subMenu' | 'menuItem'>>());
 
     let prevScrollTop: number | null = null;
     let scrollTop = 0;
@@ -166,7 +166,7 @@ export default defineComponent({
     );
 
     const flattenMenus = computed(() => {
-      const flatten = (list: Map<string, NMenuTreeData<'subMenu' | 'menuItem'>>) => {
+      const flatten = (list: Map<string, HMenuTreeData<'subMenu' | 'menuItem'>>) => {
         const res = Array.from(list.values());
 
         res.forEach(item => {
@@ -192,7 +192,7 @@ export default defineComponent({
 
     const activatedMenus = computed(() => getMapTreePath(menuTree.value, activeMenuUuid.value));
 
-    function appendChild(item: NMenuTreeData<'subMenu' | 'menuItem'>) {
+    function appendChild(item: HMenuTreeData<'subMenu' | 'menuItem'>) {
       menuTree.value.set(item.uuid, item);
     }
 
@@ -356,26 +356,26 @@ export default defineComponent({
       }
     });
 
-    provide(NMenuRefInjectKey, menuRef);
-    provide(NMenuPropsInjectKey, props);
-    provide(NMenuEmitInjectKey, emit);
-    provide(NMenuMenuTreeInjectKey, menuTree);
-    provide(NMenuActivatedMenusInjectKey, activatedMenus);
-    provide(NMenuSetActivatedMenuInjectKey, setActivatedMenu);
-    provide(NMenuAppendChildInjectKey, appendChild);
-    provide(NMenuRemoveChildInjectKey, removeChild);
-    provide(NMenuExpandedMenuInjectKey, expandedMenu);
-    provide(NMenuAddExpandMenuInjectKey, addExpandMenu);
-    provide(NMenuRemoveExpandMenuInjectKey, removeExpandMenu);
-    provide(NMenuTreeLevelInjectKey, 0);
+    provide(HMenuRefInjectKey, menuRef);
+    provide(HMenuPropsInjectKey, props);
+    provide(HMenuEmitInjectKey, emit);
+    provide(HMenuMenuTreeInjectKey, menuTree);
+    provide(HMenuActivatedMenusInjectKey, activatedMenus);
+    provide(HMenuSetActivatedMenuInjectKey, setActivatedMenu);
+    provide(HMenuAppendChildInjectKey, appendChild);
+    provide(HMenuRemoveChildInjectKey, removeChild);
+    provide(HMenuExpandedMenuInjectKey, expandedMenu);
+    provide(HMenuAddExpandMenuInjectKey, addExpandMenu);
+    provide(HMenuRemoveExpandMenuInjectKey, removeExpandMenu);
+    provide(HMenuTreeLevelInjectKey, 0);
     provide(
-      NMenuParentHasIconAmountInjectKey,
+      HMenuParentHasIconAmountInjectKey,
       computed(() => 0),
     );
-    provide(NMenuIsCollapsedInjectKey, isCollapse);
-    provide(NMenuScrollTopTopInjectKey, scrollToTop);
-    provide(NMenuActiveTopMenuUuidInjectKey, activeTopMenuUuid);
-    provide(NMenuSwitchFullViewMenuVisibleInjectKey, () => {
+    provide(HMenuIsCollapsedInjectKey, isCollapse);
+    provide(HMenuScrollTopTopInjectKey, scrollToTop);
+    provide(HMenuActiveTopMenuUuidInjectKey, activeTopMenuUuid);
+    provide(HMenuSwitchFullViewMenuVisibleInjectKey, () => {
       if (fullViewMenuVisible.value) {
         onMouseLeaveContainer();
       } else {
@@ -459,9 +459,9 @@ export default defineComponent({
             <div class={cls(classHelper.e('prepend'))}>{slots.prepend(isCollapse)}</div>
           )}
           <div class={cls(classHelper.e('inner'))}>
-            <NScrollbar ref={scrollbarRef} size="small" onScroll={onScroll}>
+            <HScrollbar ref={scrollbarRef} size="small" onScroll={onScroll}>
               {slots.default?.()}
-            </NScrollbar>
+            </HScrollbar>
           </div>
 
           {((props.collapseButton && props.mode === 'vertical') || slots.append) &&
@@ -473,11 +473,11 @@ export default defineComponent({
                   </div>
                 )}
                 {slots.append && (
-                  <NTransition name="collapse-horizontal">
+                  <HTransition name="collapse-horizontal">
                     <div v-show={!isCollapse.value} class={cls(classHelper.em('append', 'inner'))}>
                       {slots.append?.(isCollapse)}
                     </div>
-                  </NTransition>
+                  </HTransition>
                 )}
               </div>
             )}
@@ -490,7 +490,7 @@ export default defineComponent({
         </div>
 
         {props.submenuExpandType === 'full' && (
-          <NTransition name="collapse">
+          <HTransition name="collapse">
             <FullViewMenu
               v-show={fullViewMenuVisible.value}
               menuTree={menuTree.value}
@@ -498,7 +498,7 @@ export default defineComponent({
               onMouseEnter={onMouseEnterContainer}
               onMouseLeave={onMouseLeaveContainer}
             />
-          </NTransition>
+          </HTransition>
         )}
       </div>
     );

@@ -3,20 +3,20 @@ import type { MaybeRef, Capitalize, HorizonWebComponentInstance } from '@aurora/
 import { Fragment, nextTick, ref, unref } from 'vue';
 import type { VueWrapper } from '@vue/test-utils';
 import { mount } from '@vue/test-utils';
-import NCascader from '~/components/Cascader/src/Cascader';
+import HCascader from '~/components/Cascader/src/Cascader';
 import CascaderPanel from '~/components/Cascader/src/components/CascaderPanel';
 import CascaderPanels from '~/components/Cascader/src/components/CascaderPanels';
 import CascaderItem from '~/components/Cascader/src/components/CascaderItem';
-import NPopover from '../../Popover';
+import HPopover from '../../Popover';
 import { sleep } from '~/utils/tools';
-import NPickerInput from '~/components/Picker/src/components/NPickerInput';
+import HPickerInput from '~/components/Picker/src/components/PickerInput';
 import options from './options.json';
 import disabledOptions from './disabled-options.json';
 import unselectableOptions from './unselectable-options.json';
-import NPicker from '~/components/Picker/src/Picker';
+import HPicker from '~/components/Picker/src/Picker';
 import type { CascaderEmits } from '~/components/Cascader/src/composables/useEmits';
 import type { Mock } from 'vitest';
-import NButton from '~/components/Button/src/Button';
+import HButton from '~/components/Button/src/Button';
 import type { CascaderExposes } from '~/components/Cascader/src/composables/useExposes';
 import type { ModelValueSingleType } from '~/components/Cascader/src/utils/types';
 
@@ -29,11 +29,11 @@ export function createInstance<
   optionsType: 'default' | 'disabled' | 'unselectable' = 'default',
 ) {
   const modelValue = ref<ModelValueSingleType | ModelValueSingleType[]>();
-  const cascaderDomRef = ref<HorizonWebComponentInstance<typeof NCascader, CascaderExposes>>();
+  const cascaderDomRef = ref<HorizonWebComponentInstance<typeof HCascader, CascaderExposes>>();
   const wrapper = mount(
     () => (
       <Fragment>
-        <NCascader
+        <HCascader
           ref={cascaderDomRef}
           v-model={modelValue.value}
           options={
@@ -56,8 +56,8 @@ export function createInstance<
     },
   );
 
-  const element = wrapper.findComponent(NCascader);
-  const pickerInput = wrapper.findComponent(NPickerInput);
+  const element = wrapper.findComponent(HCascader);
+  const pickerInput = wrapper.findComponent(HPickerInput);
 
   return {
     modelValue,
@@ -122,7 +122,7 @@ export async function triggerOptionByOrderWithLimit(
 export async function clickConfirmCancelBtn(wrapper: VueWrapper<any, any>, confirm = true) {
   const confirmWrapper = wrapper.find('.n-picker__pop-content--confirm-wrapper');
 
-  const [cancelBtn, confirmBtn] = confirmWrapper.findAllComponents(NButton);
+  const [cancelBtn, confirmBtn] = confirmWrapper.findAllComponents(HButton);
 
   if (confirm) {
     confirmBtn.trigger('click');
@@ -139,9 +139,9 @@ export async function openCascader(
   let element: ReturnType<typeof wrapper.findComponent>;
 
   if (trigger === 'click') {
-    element = wrapper.findComponent(NPicker);
+    element = wrapper.findComponent(HPicker);
   } else {
-    element = wrapper.findComponent(NPopover);
+    element = wrapper.findComponent(HPopover);
   }
 
   await element.trigger(trigger === 'hover' ? 'mouseenter' : trigger);
@@ -160,7 +160,7 @@ export async function closeCascader(wrapper: VueWrapper<any, any>) {
 }
 
 export async function maskClearIconVisible(wrapper: VueWrapper<any, any>) {
-  await wrapper.findComponent(NPickerInput).trigger('mouseenter');
+  await wrapper.findComponent(HPickerInput).trigger('mouseenter');
 }
 
 export async function checkAllItems(wrapper: VueWrapper<any, any>) {

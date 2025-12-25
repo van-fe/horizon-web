@@ -1,11 +1,11 @@
 import { default as TimePicker } from './src/TimePicker';
 import { withInstall } from '@aurora/utils';
 
-export const NTimePicker = withInstall(TimePicker);
-export default NTimePicker;
+export const HTimePicker = withInstall(TimePicker);
+export default HTimePicker;
 
 export type {
-  NTimePickerDisabledTimeMethodType,
-  NTimePickerPanelOptionType,
-  NTimePickerShowTimeTooltipType,
+  HTimePickerDisabledTimeMethodType,
+  HTimePickerPanelOptionType,
+  HTimePickerShowTimeTooltipType,
 } from './src/utils/types';

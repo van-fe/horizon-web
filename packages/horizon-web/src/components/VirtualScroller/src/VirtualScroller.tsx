@@ -13,7 +13,7 @@ import {
 // import { ComponentClassBlock } from '@aurora/utils';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { EventEmitter, useNamespace } from '@aurora/utils';
-import type { NRecycleScrollerInstance } from './composables/useProps';
+import type { HRecycleScrollerInstance } from './composables/useProps';
 import { useVirtualScrollerProps } from './composables/useProps';
 import { useVirtualScrollerEmits } from './composables/useEmits';
 import { useVirtualScrollerSlots } from './composables/useSlots';
@@ -21,7 +21,7 @@ import { useVirtualScrollerExposes } from './composables/useExposes';
 import type { VirtualScrollerEmits } from './composables/useEmits';
 import type { VirtualScrollerSlots } from './composables/useSlots';
 import type { VirtualScrollerExposes } from './composables/useExposes';
-import NRecycleScroller from './RecycleScroller';
+import HRecycleScroller from './RecycleScroller';
 import type { ItemsWithSize, VScrollData } from './utils/types';
 // import type { EventType } from 'mitt';
 // import mitt from 'mitt';
@@ -32,7 +32,7 @@ export default defineComponent({
   name: `${useNamespace()}VirtualScroller`,
   desc: '虚拟滚动组件, 实现有限的Dom节点渲染无限的数据',
   components: {
-    NRecycleScroller,
+    HRecycleScroller,
   },
   inheritAttrs: false,
   props: useVirtualScrollerProps,
@@ -50,7 +50,7 @@ export default defineComponent({
   ) {
     // refs
     const elRef = ref<HTMLDivElement | null | undefined>(null);
-    const scroller = ref<NRecycleScrollerInstance | null>(null);
+    const scroller = ref<HRecycleScrollerInstance | null>(null);
     const $_undefinedMap = ref<Record<number | string, boolean>>({});
     const $_undefinedSizes = ref<number>(0);
     const $_resizeObserver = ref<ResizeObserver>();
@@ -259,7 +259,7 @@ export default defineComponent({
     }
 
     return () => (
-      <NRecycleScroller
+      <HRecycleScroller
         ref={scroller}
         {...props}
         {...attrs}

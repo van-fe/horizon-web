@@ -15,7 +15,7 @@ import type { Arrayable, HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, isNil, useNamespace } from '@aurora/utils';
 import type { FormEmits } from './composables/useEmits';
 import { useFormEmits } from './composables/useEmits';
-import { NFormDisabledInjectedKey, NFormInjectedKey } from './utils/injectedKeys';
+import { HFormDisabledInjectedKey, HFormInjectedKey } from './utils/injectedKeys';
 import { GlobalSizeInjectedKey } from '~/components/Application/src/utils/injectedKeys';
 import type { FormSlots } from './composables/useSlots';
 import { useFormSlots } from './composables/useSlots';
@@ -62,7 +62,7 @@ export default defineComponent({
     const sizeRef = useSize(size, 'medium');
 
     provide(GlobalSizeInjectedKey, sizeRef);
-    provide(NFormDisabledInjectedKey, disabledRef);
+    provide(HFormDisabledInjectedKey, disabledRef);
 
     watch(
       rulesRef,
@@ -223,7 +223,7 @@ export default defineComponent({
       emit,
     });
 
-    provide(NFormInjectedKey, nForm);
+    provide(HFormInjectedKey, nForm);
 
     function onSubmit(e: Event) {
       if (props.preventSubmitDefault) {

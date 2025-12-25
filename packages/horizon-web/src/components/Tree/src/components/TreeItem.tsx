@@ -11,31 +11,31 @@ import {
   toRefs,
 } from 'vue';
 import { useTreeItemProps } from '../composables/useProps';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
 import {
-  NTreeDragFromNodeInjectKey,
-  NTreeDragToNodeUuidInjectKey,
-  NTreeEmitsInjectKey,
-  NTreeExpandedNodesUuidInjectKey,
-  NTreeFilterInputValueInjectKey,
-  NTreeFullCheckedValuesInjectKey,
-  NTreeHalfCheckedValuesInjectKey,
-  NTreeHelperInjectKey,
-  NTreeHighlightMethodInjectKey,
-  NTreeIsDraggingInjectKey,
-  NTreeLoadingNodesInjectKey,
-  NTreeOnDragStartInjectKey,
-  NTreePropsInjectKey,
-  NTreeSizeInjectKey,
-  NTreeSlotsInjectKey,
-  NTreeSwitchNodeExpandStatusInjectKey,
-  NTreeSwitchNodeSelectedStatusInjectKey,
-  NTreeVNodeCollectionInjectKey,
+  HTreeDragFromNodeInjectKey,
+  HTreeDragToNodeUuidInjectKey,
+  HTreeEmitsInjectKey,
+  HTreeExpandedNodesUuidInjectKey,
+  HTreeFilterInputValueInjectKey,
+  HTreeFullCheckedValuesInjectKey,
+  HTreeHalfCheckedValuesInjectKey,
+  HTreeHelperInjectKey,
+  HTreeHighlightMethodInjectKey,
+  HTreeIsDraggingInjectKey,
+  HTreeLoadingNodesInjectKey,
+  HTreeOnDragStartInjectKey,
+  HTreePropsInjectKey,
+  HTreeSizeInjectKey,
+  HTreeSlotsInjectKey,
+  HTreeSwitchNodeExpandStatusInjectKey,
+  HTreeSwitchNodeSelectedStatusInjectKey,
+  HTreeVNodeCollectionInjectKey,
 } from '../utils/injectKeys';
 import { renderIcon } from '~/utils/useIcon';
 import { iconSizeMapping } from '../utils/config';
-import NCheckbox from '~/components/Checkbox/src/Checkbox';
-import NRadio from '~/components/Radio/src/Radio';
+import HCheckbox from '~/components/Checkbox/src/Checkbox';
+import HRadio from '~/components/Radio/src/Radio';
 import { IconLoadingLine } from '@aurora/icon';
 import SafeHtml from '~/directives/v-safe-html/src';
 import usePadding from '../hooks/usePadding';
@@ -58,24 +58,24 @@ export default defineComponent({
 
     const { value: valueProp, shadow: shadowProp, indent: indentProp } = toRefs(props);
 
-    const treeHelper = inject(NTreeHelperInjectKey)!;
-    const parentProps = inject(NTreePropsInjectKey)!;
-    const parentEmit = inject(NTreeEmitsInjectKey)!;
-    const parentSlots = inject(NTreeSlotsInjectKey)!;
-    const size = inject(NTreeSizeInjectKey)!;
-    const filterInputValue = inject(NTreeFilterInputValueInjectKey)!;
-    const expandedNodesUuid = inject(NTreeExpandedNodesUuidInjectKey)!;
-    const switchExpandStatus = inject(NTreeSwitchNodeExpandStatusInjectKey)!;
-    const switchCheckedStatus = inject(NTreeSwitchNodeSelectedStatusInjectKey)!;
-    const highlightMethod = inject(NTreeHighlightMethodInjectKey)!;
-    const loadingNodes = inject(NTreeLoadingNodesInjectKey)!;
-    const vNodeCollection = inject(NTreeVNodeCollectionInjectKey)!;
-    const fullCheckedValues = inject(NTreeFullCheckedValuesInjectKey)!;
-    const halfCheckedValues = inject(NTreeHalfCheckedValuesInjectKey)!;
-    const onDragStart = inject(NTreeOnDragStartInjectKey)!;
-    const isDragging = inject(NTreeIsDraggingInjectKey)!;
-    const dragToNodeUuid = inject(NTreeDragToNodeUuidInjectKey)!;
-    const dragFromNode = inject(NTreeDragFromNodeInjectKey)!;
+    const treeHelper = inject(HTreeHelperInjectKey)!;
+    const parentProps = inject(HTreePropsInjectKey)!;
+    const parentEmit = inject(HTreeEmitsInjectKey)!;
+    const parentSlots = inject(HTreeSlotsInjectKey)!;
+    const size = inject(HTreeSizeInjectKey)!;
+    const filterInputValue = inject(HTreeFilterInputValueInjectKey)!;
+    const expandedNodesUuid = inject(HTreeExpandedNodesUuidInjectKey)!;
+    const switchExpandStatus = inject(HTreeSwitchNodeExpandStatusInjectKey)!;
+    const switchCheckedStatus = inject(HTreeSwitchNodeSelectedStatusInjectKey)!;
+    const highlightMethod = inject(HTreeHighlightMethodInjectKey)!;
+    const loadingNodes = inject(HTreeLoadingNodesInjectKey)!;
+    const vNodeCollection = inject(HTreeVNodeCollectionInjectKey)!;
+    const fullCheckedValues = inject(HTreeFullCheckedValuesInjectKey)!;
+    const halfCheckedValues = inject(HTreeHalfCheckedValuesInjectKey)!;
+    const onDragStart = inject(HTreeOnDragStartInjectKey)!;
+    const isDragging = inject(HTreeIsDraggingInjectKey)!;
+    const dragToNodeUuid = inject(HTreeDragToNodeUuidInjectKey)!;
+    const dragFromNode = inject(HTreeDragFromNodeInjectKey)!;
 
     const isLoading = computed(() =>
       loadingNodes.value.some(curr => curr._uuid === valueProp.value._uuid),
@@ -355,7 +355,7 @@ export default defineComponent({
                   onClick={onClickCheckbox}
                   onMousedown={evt => evt.stopPropagation()}
                 >
-                  <NCheckbox
+                  <HCheckbox
                     modelValue={isChecked.value}
                     indeterminate={isIndeterminate.value}
                     disabled={isDisabled.value || valueProp.value.selectable === false}
@@ -371,7 +371,7 @@ export default defineComponent({
                   onClick={onClickCheckbox}
                   onMousedown={evt => evt.stopPropagation()}
                 >
-                  <NRadio
+                  <HRadio
                     modelValue={isChecked.value}
                     value={true}
                     disabled={isDisabled.value || valueProp.value.selectable === false}
@@ -381,7 +381,7 @@ export default defineComponent({
           <div class={cls(classHelper.em('content', 'wrapper'))}>
             {typeof treeHelper.getOptionValue(valueProp.value, 'label') === 'function' ||
             !parentSlots.treeNodeRender ? (
-              <NTooltip
+              <HTooltip
                 overflow={true}
                 showAfter={parentProps.tooltipShowAfter}
                 hideAfter={parentProps.tooltipHideAfter}
@@ -400,7 +400,7 @@ export default defineComponent({
                     </div>
                   ),
                 }}
-              </NTooltip>
+              </HTooltip>
             ) : (
               parentSlots.treeNodeRender?.({
                 data: valueProp.value,

@@ -1,18 +1,18 @@
 import { defineComponent, ref, watch } from 'vue';
-import { NButton } from '../../../../components/Button';
+import { HButton } from '../../../../components/Button';
 import { ComponentClassBlock, cssVariable, isNil, useNamespace, useZIndex } from '@aurora/utils';
 import { usePopconfirmProps } from '../composables/useProps';
 import clickOutside from '~/directives/v-click-outside';
 import { AIcon } from '@aurora/icon';
-import NTransition from '~/components/Transition/src/Transition';
+import HTransition from '~/components/Transition/src/Transition';
 import useLocaleLang from '~/utils/useLocaleLang';
 
 export default defineComponent({
   name: `${useNamespace()}PopConfirm`,
   components: {
-    NButton,
+    HButton,
     AIcon,
-    NTransition,
+    HTransition,
   },
   directives: {
     clickOutside,
@@ -84,7 +84,7 @@ export default defineComponent({
     );
 
     return () => (
-      <NTransition>
+      <HTransition>
         <div
           v-click-outside={() => emit('cancel')}
           class={classHelper.block}
@@ -107,7 +107,7 @@ export default defineComponent({
             </div>
           </div>
           <div class={classHelper.e('footer')}>
-            <NButton
+            <HButton
               plain={true}
               size="small"
               forceNewestSize={true}
@@ -115,8 +115,8 @@ export default defineComponent({
               onClick={(evt: MouseEvent) => emit('cancel', evt)}
             >
               {props.cancelText || useLocaleLang('global.cancel').value}
-            </NButton>
-            <NButton
+            </HButton>
+            <HButton
               size="small"
               forceNewestSize={true}
               {...props.okButtonProps}
@@ -124,11 +124,11 @@ export default defineComponent({
               style="margin-left: 12px"
             >
               {props.okText || useLocaleLang('global.confirm').value}
-            </NButton>
+            </HButton>
           </div>
           <div class={classHelper.e('arrow')} data-popper-arrow="" />
         </div>
-      </NTransition>
+      </HTransition>
     );
   },
 });

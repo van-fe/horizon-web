@@ -1,5 +1,5 @@
 import type { TreeProps } from '../composables/useProps';
-import type { NTreeExtendsData, NTreeData } from './types';
+import type { HTreeExtendsData, HTreeData } from './types';
 import { isNumber, isString } from '@aurora/utils';
 import type Tree from '~/utils/useTree/index';
 
@@ -18,8 +18,8 @@ export const iconSizeMapping: Record<Exclude<TreeProps['size'], undefined>, numb
 };
 
 export const transformUuid = (
-  option: NTreeExtendsData,
-  instance: Tree<NTreeData, NTreeExtendsData>,
+  option: HTreeExtendsData,
+  instance: Tree<HTreeData, HTreeExtendsData>,
 ) => {
   return instance.getOptionValue(option, 'value');
 };

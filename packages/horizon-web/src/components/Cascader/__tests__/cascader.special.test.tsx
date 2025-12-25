@@ -8,14 +8,14 @@ import {
   openCascader,
 } from './cascader-helper';
 import type {
-  NCascaderDynamicLoadNode,
+  HCascaderDynamicLoadNode,
   ModelValueSingleType,
 } from '~/components/Cascader/src/utils/types';
 import type { BaseTreeData } from '~/utils/useTree/types';
 import { sleep } from '~/utils/tools';
-import NCascaderPanel from '~/components/Cascader/src/components/CascaderPanel';
-import NCascaderItem from '~/components/Cascader/src/components/CascaderItem';
-import NRadio from '~/components/Radio/src/Radio';
+import HCascaderPanel from '~/components/Cascader/src/components/CascaderPanel';
+import HCascaderItem from '~/components/Cascader/src/components/CascaderItem';
+import HRadio from '~/components/Radio/src/Radio';
 import treeDataLevelNotEqual from './tree-data-level-not-equal.json';
 
 describe('Cascader.tsx special', () => {
@@ -55,7 +55,7 @@ describe('Cascader.tsx special', () => {
           isLeaf: false,
         },
       ],
-      dynamicLoad(node: NCascaderDynamicLoadNode) {
+      dynamicLoad(node: HCascaderDynamicLoadNode) {
         triggerLoad(node);
         return new Promise(resolve => {
           resolve([] as BaseTreeData[]);
@@ -69,7 +69,7 @@ describe('Cascader.tsx special', () => {
     await clickOptionByOrder(wrapper);
     await sleep(2000);
 
-    const panels = wrapper.findAllComponents(NCascaderPanel);
+    const panels = wrapper.findAllComponents(HCascaderPanel);
     expect(triggerLoad).toHaveBeenCalledOnce();
     expect(panels.length).toBe(2);
     expect(panels.at(-1)?.find('.n-cascader-panel__empty').exists()).toBeTruthy();
@@ -176,7 +176,7 @@ describe('Cascader.tsx special', () => {
 
     expect(modelValue.value).toBeUndefined();
 
-    await wrapper.findComponent(NCascaderItem).findComponent(NRadio).trigger('click');
+    await wrapper.findComponent(HCascaderItem).findComponent(HRadio).trigger('click');
 
     expect(modelValue.value).toStrictEqual(['guide']);
   });
@@ -207,12 +207,12 @@ describe('Cascader.tsx special', () => {
 
     await openCascader(wrapper);
     expect(
-      wrapper.findAllComponents(NCascaderItem).filter(item => item.classes('is-focus')).length,
+      wrapper.findAllComponents(HCascaderItem).filter(item => item.classes('is-focus')).length,
     ).toBe(1);
 
     await clickOptionByOrderWithLimit(wrapper, 1, 1);
     expect(
-      wrapper.findAllComponents(NCascaderItem).filter(item => item.classes('is-focus')).length,
+      wrapper.findAllComponents(HCascaderItem).filter(item => item.classes('is-focus')).length,
     ).toBe(1);
     expect(modelValue.value).toStrictEqual(['component']);
   });

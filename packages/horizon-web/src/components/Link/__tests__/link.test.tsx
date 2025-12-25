@@ -1,13 +1,13 @@
 import { mount, shallowMount } from '@vue/test-utils';
-import NLink from '..';
+import HLink from '..';
 import { describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
 import type { LinkProps } from '../src/composables/useProps';
 
 describe('Link.tsx', () => {
   test('basic', async () => {
-    const wrapper = shallowMount(() => <NLink>Default</NLink>);
-    const element = wrapper.findComponent(NLink);
+    const wrapper = shallowMount(() => <HLink>Default</HLink>);
+    const element = wrapper.findComponent(HLink);
 
     expect(element.exists()).toBe(true);
   });
@@ -15,8 +15,8 @@ describe('Link.tsx', () => {
   describe('props', () => {
     test('type', async () => {
       const type = ref<LinkProps['type']>();
-      const wrapper = mount(() => <NLink type={type.value}>Default</NLink>);
-      const element = wrapper.findComponent(NLink);
+      const wrapper = mount(() => <HLink type={type.value}>Default</HLink>);
+      const element = wrapper.findComponent(HLink);
 
       expect(element.classes('n-link--positive')).toBe(true);
 
@@ -31,8 +31,8 @@ describe('Link.tsx', () => {
 
     test('size', async () => {
       const size = ref<LinkProps['size']>();
-      const wrapper = mount(() => <NLink size={size.value}>Default</NLink>);
-      const element = wrapper.findComponent(NLink);
+      const wrapper = mount(() => <HLink size={size.value}>Default</HLink>);
+      const element = wrapper.findComponent(HLink);
 
       expect(element.classes('n-link--medium')).toBe(true);
 
@@ -46,8 +46,8 @@ describe('Link.tsx', () => {
     });
 
     test('underline', async () => {
-      const wrapper = mount(() => <NLink underline>Default</NLink>);
-      const element = wrapper.findComponent(NLink);
+      const wrapper = mount(() => <HLink underline>Default</HLink>);
+      const element = wrapper.findComponent(HLink);
 
       expect(element.classes('has-underline')).toBe(true);
     });
@@ -55,11 +55,11 @@ describe('Link.tsx', () => {
     test('disabled', async () => {
       const onClick = vi.fn();
       const wrapper = mount(() => (
-        <NLink disabled onClick={onClick}>
+        <HLink disabled onClick={onClick}>
           Default
-        </NLink>
+        </HLink>
       ));
-      const element = wrapper.findComponent(NLink);
+      const element = wrapper.findComponent(HLink);
 
       await element.trigger('click');
 
@@ -68,15 +68,15 @@ describe('Link.tsx', () => {
     });
 
     test('attribute', async () => {
-      const wrapper = mount(() => <NLink attribute>Default</NLink>);
-      const element = wrapper.findComponent(NLink);
+      const wrapper = mount(() => <HLink attribute>Default</HLink>);
+      const element = wrapper.findComponent(HLink);
 
       expect(element.classes('has-attribute')).toBe(true);
     });
 
     test('anchor', async () => {
-      const wrapper = mount(() => <NLink anchor="id">Default</NLink>);
-      const element = wrapper.findComponent(NLink);
+      const wrapper = mount(() => <HLink anchor="id">Default</HLink>);
+      const element = wrapper.findComponent(HLink);
 
       expect(element.classes('has-anchor')).toBe(true);
       expect(wrapper.find('.n-link__anchor').exists()).toBe(true);
@@ -84,9 +84,9 @@ describe('Link.tsx', () => {
 
     test('icon', async () => {
       const wrapper = mount(() => (
-        <NLink icon="close" iconSize={20}>
+        <HLink icon="close" iconSize={20}>
           Default
-        </NLink>
+        </HLink>
       ));
       const icon = wrapper.find('.a-icon');
 
@@ -97,7 +97,7 @@ describe('Link.tsx', () => {
 
     test('loading', async () => {
       const isLoading = ref(false);
-      const wrapper = mount(() => <NLink loading={isLoading.value}>Default</NLink>);
+      const wrapper = mount(() => <HLink loading={isLoading.value}>Default</HLink>);
 
       let icon = wrapper.find('.a-icon');
 

@@ -8,21 +8,21 @@ import {
 } from '@aurora/utils';
 import { defineComponent, inject, ref, watch } from 'vue';
 import {
-  NPickerDomRefInjectKey,
-  NPickerEmitsInjectKey,
-  NPickerPopContentDomRefInjectKey,
-  NPickerPopperVisibleInjectKey,
-  NPickerPropsInjectKey,
-  NPickerSlotsInjectKey,
-  NPickerStatusInjectKey,
+  HPickerDomRefInjectKey,
+  HPickerEmitsInjectKey,
+  HPickerPopContentDomRefInjectKey,
+  HPickerPopperVisibleInjectKey,
+  HPickerPropsInjectKey,
+  HPickerSlotsInjectKey,
+  HPickerStatusInjectKey,
 } from '../utils/InjectKeys';
-import NPopContent from '~/components/Popover/src/PopContent';
+import HPopContent from '~/components/Popover/src/PopContent';
 import { IconLoadingLine, IconSearch } from '@aurora/icon';
 import ClickOutside from '~/directives/v-click-outside';
 import Loading from '~/directives/v-loading';
 import useLocaleLang from '~/utils/useLocaleLang';
-import NButton from '~/components/Button/src/Button';
-import NInput from '~/components/Input/src/Input';
+import HButton from '~/components/Button/src/Button';
+import HInput from '~/components/Input/src/Input';
 import { unrefElement } from '@vueuse/core';
 
 export default defineComponent({
@@ -32,10 +32,10 @@ export default defineComponent({
     Loading,
   },
   components: {
-    NPopContent,
+    HPopContent,
     IconLoadingLine,
-    NInput,
-    NButton,
+    HInput,
+    HButton,
   },
   emits: {
     /**
@@ -52,18 +52,18 @@ export default defineComponent({
   setup(props, { emit }) {
     const classHelper = new ComponentClassBlock('picker');
 
-    const buildInInputDomRef = ref<null | typeof NInput>(null);
+    const buildInInputDomRef = ref<null | typeof HInput>(null);
 
     const inputValue = ref('');
     const isInputFocus = ref(false);
 
-    const parentProps = inject(NPickerPropsInjectKey)!;
-    const parentEmits = inject(NPickerEmitsInjectKey)!;
-    const parentSlots = inject(NPickerSlotsInjectKey)!;
-    const popperVisible = inject(NPickerPopperVisibleInjectKey)!;
-    const pickerStatus = inject(NPickerStatusInjectKey)!;
-    const pickerDomRef = inject(NPickerDomRefInjectKey)!;
-    const popContentDomRef = inject(NPickerPopContentDomRefInjectKey)!;
+    const parentProps = inject(HPickerPropsInjectKey)!;
+    const parentEmits = inject(HPickerEmitsInjectKey)!;
+    const parentSlots = inject(HPickerSlotsInjectKey)!;
+    const popperVisible = inject(HPickerPopperVisibleInjectKey)!;
+    const pickerStatus = inject(HPickerStatusInjectKey)!;
+    const pickerDomRef = inject(HPickerDomRefInjectKey)!;
+    const popContentDomRef = inject(HPickerPopContentDomRefInjectKey)!;
 
     watch(inputValue, val => {
       parentEmits('update:modelValue', val);
@@ -140,7 +140,7 @@ export default defineComponent({
         onKeydown={evt => parentEmits('keydown', evt)}
       >
         {parentSlots.panel?.(parentProps.modelValue, pickerStatus.value) ?? (
-          <NPopContent
+          <HPopContent
             v-loading={{
               isShow: parentProps.panelStatus === 'loading' || parentProps.loading,
               text: parentProps.loadingText,
@@ -171,7 +171,7 @@ export default defineComponent({
                     }
                   }}
                 >
-                  <NInput
+                  <HInput
                     ref={buildInInputDomRef}
                     v-model={inputValue.value}
                     placeholder={parentProps.panelInputPlaceholder}
@@ -183,7 +183,7 @@ export default defineComponent({
                     {{
                       prefix: () => <IconSearch />,
                     }}
-                  </NInput>
+                  </HInput>
                 </div>
               )}
               <div
@@ -236,20 +236,20 @@ export default defineComponent({
                   >
                     {parentSlots.panelConfirmLeft?.() ??
                       (parentProps.confirmNeedClear ? (
-                        <NButton
+                        <HButton
                           size="small"
                           link={true}
                           onClick={evt => parentEmits('clear', evt)}
                         >
                           {parentProps.clearBtnText ?? useLocaleLang('global.clear').value}
-                        </NButton>
+                        </HButton>
                       ) : (
                         <i />
                       ))}
                     {parentProps.needConfirm && (
                       <div class={classHelper.em('pop-content', 'confirm-wrapper-buttons')}>
                         {parentProps.confirmNeedCancel && (
-                          <NButton
+                          <HButton
                             size="small"
                             plain={true}
                             type="normal"
@@ -260,10 +260,10 @@ export default defineComponent({
                             {parentProps.cancelButtonText ??
                               parentProps.cancelBtnText ??
                               useLocaleLang('global.cancel').value}
-                          </NButton>
+                          </HButton>
                         )}
                         {parentProps.confirmNeedConfirm && (
-                          <NButton
+                          <HButton
                             size="small"
                             disabled={parentProps.confirmDisabled}
                             {...(parentProps.confirmButtonProps ?? {})}
@@ -272,7 +272,7 @@ export default defineComponent({
                             {parentProps.confirmButtonText ??
                               parentProps.confirmBtnText ??
                               useLocaleLang('global.confirm').value}
-                          </NButton>
+                          </HButton>
                         )}
                       </div>
                     )}
@@ -284,7 +284,7 @@ export default defineComponent({
                 {parentSlots.panelRightSide()}
               </div>
             ) : undefined}
-          </NPopContent>
+          </HPopContent>
         )}
       </div>
     );

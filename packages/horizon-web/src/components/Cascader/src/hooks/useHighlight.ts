@@ -2,8 +2,8 @@ import type { CascaderItemProps } from '../composables/useProps';
 import type { Ref, WatchStopHandle } from 'vue';
 import { ref, provide, watch, inject } from 'vue';
 import {
-  NCascaderHighlightRangesInjectKey,
-  NCascaderInputStringInjectKey,
+  HCascaderHighlightRangesInjectKey,
+  HCascaderInputStringInjectKey,
 } from '../utils/injectKeys';
 
 export default function useHighlight() {
@@ -28,7 +28,7 @@ export default function useHighlight() {
     },
   );
 
-  provide(NCascaderHighlightRangesInjectKey, highlightRanges);
+  provide(HCascaderHighlightRangesInjectKey, highlightRanges);
 }
 
 export function useHighlightCascaderItem(
@@ -37,8 +37,8 @@ export function useHighlightCascaderItem(
     contentDomRef: Ref<HTMLElement | undefined>;
   },
 ) {
-  const highlightRanges = inject(NCascaderHighlightRangesInjectKey)!;
-  const filterInputValue = inject(NCascaderInputStringInjectKey)!;
+  const highlightRanges = inject(HCascaderHighlightRangesInjectKey)!;
+  const filterInputValue = inject(HCascaderInputStringInjectKey)!;
 
   let watchStopHandle: WatchStopHandle;
 

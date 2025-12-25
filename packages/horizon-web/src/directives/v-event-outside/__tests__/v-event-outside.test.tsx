@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { NVEventOutside } from '../index';
+import { HVEventOutside } from '../index';
 import { describe, expect, test, vi } from 'vitest';
 
 describe('v-event-outside.tsx', () => {
@@ -24,7 +24,7 @@ describe('v-event-outside.tsx', () => {
         attachTo: document.body,
         global: {
           directives: {
-            [NVEventOutside.name]: NVEventOutside,
+            [HVEventOutside.name]: HVEventOutside,
           },
         },
       },

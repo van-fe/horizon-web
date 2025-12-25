@@ -1,1 +1,1 @@
-export * from './OnlyChild';
+export * from './ChildOnly';

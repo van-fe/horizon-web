@@ -1,7 +1,7 @@
 import type { ToRefs } from 'vue';
 import { watch } from 'vue';
 import type { TreeProps } from '../composables/useProps';
-import type { NTreeData, NTreeExtendsData } from '../utils/types';
+import type { HTreeData, HTreeExtendsData } from '../utils/types';
 import type { TopBaseTreeData } from '~/utils/useTree/types';
 import type Tree from '~/utils/useTree/index';
 import type { HorizonWebSetupContext } from '@aurora/utils';
@@ -11,7 +11,7 @@ import type { TreeEmits } from '~/components/Tree/src/composables/useEmits';
 export default function (
   props: ToRefs<TreeProps>,
   emit: HorizonWebSetupContext<TreeEmits>['emit'],
-  treeHelper: Tree<NTreeData, NTreeExtendsData>,
+  treeHelper: Tree<HTreeData, HTreeExtendsData>,
 ) {
   watch(
     props.treeData,
@@ -27,8 +27,8 @@ export default function (
     emit('update:treeData', treeHelper.originTreeData);
   }
 
-  function deleteNode(value?: string | number, emitUpdate: boolean = true): NTreeData[] {
-    let res: NTreeData[] = [];
+  function deleteNode(value?: string | number, emitUpdate: boolean = true): HTreeData[] {
+    let res: HTreeData[] = [];
 
     if (isUndefined(value)) {
       treeHelper.originTreeData = [];
@@ -41,7 +41,7 @@ export default function (
     return res;
   }
 
-  function setNode(data: TopBaseTreeData & Partial<NTreeData>, value?: string | number) {
+  function setNode(data: TopBaseTreeData & Partial<HTreeData>, value?: string | number) {
     if (isUndefined(value)) {
       treeHelper.originTreeData.push(data);
     } else {
@@ -56,7 +56,7 @@ export default function (
    * @param value to set root array should give null
    * @param children the list of tree-data of this level
    */
-  function setNodeChildren(value: string | number | null, children: NTreeData[]) {
+  function setNodeChildren(value: string | number | null, children: HTreeData[]) {
     if (value === null) {
       treeHelper.originTreeData = children;
     } else {
@@ -71,7 +71,7 @@ export default function (
   }
 
   function addNodeChildren(
-    arr: Array<TopBaseTreeData & Partial<NTreeData>>,
+    arr: Array<TopBaseTreeData & Partial<HTreeData>>,
     value?: string | number,
     append = true,
   ) {

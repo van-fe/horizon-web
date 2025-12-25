@@ -1,4 +1,4 @@
-import type { ModelValueType, NCascaderExtendOption, NCascaderOption } from '../utils/types';
+import type { ModelValueType, HCascaderExtendOption, HCascaderOption } from '../utils/types';
 import { isBoolean, isDefined, isNil, isObject, isString, isUndefined } from '@aurora/utils';
 
 export const useCascaderEmits = {
@@ -37,7 +37,7 @@ export const useCascaderEmits = {
    * 更新 `options`，一般是异步获取时会更改 `options`
    * @param options
    */
-  'update:options': (options: NCascaderOption[]) => Array.isArray(options),
+  'update:options': (options: HCascaderOption[]) => Array.isArray(options),
   /**
    * 搜索输入框改变时通知
    * @param searchValue 搜索的文字
@@ -48,7 +48,7 @@ export const useCascaderEmits = {
    * @param selectOrDeselect `true` 表示选中 `false` 表示取消选中，如果是 `undefined` 则代表是由用户传入更改的
    * @param option 被选中的 option 内容，如果 option === undefined，则代表选择的数据并非是 options 中已有的
    */
-  change: (selectOrDeselect?: boolean, option?: NCascaderExtendOption) =>
+  change: (selectOrDeselect?: boolean, option?: HCascaderExtendOption) =>
     (isBoolean(selectOrDeselect) || isUndefined(selectOrDeselect)) &&
     (isObject(option) || isUndefined(option)),
   /**
@@ -61,14 +61,14 @@ export const useCascaderEmits = {
    * @param option `cascader.options` 任一子元素
    * @version 2.4.6
    */
-  select: (valuePath?: Array<string | number>, option?: NCascaderExtendOption) =>
+  select: (valuePath?: Array<string | number>, option?: HCascaderExtendOption) =>
     (Array.isArray(valuePath) || isNil(valuePath)) && (isDefined(option) || isNil(option)),
   /**
    * 多选模式下，选中取消项时触发
    * @param valuePath 从父节点的 `cascader.options.*.value` 到当前选项的路径
    * @param option `cascader.options` 任一子元素
    */
-  deselect: (valuePath?: Array<string | number>, option?: NCascaderExtendOption) =>
+  deselect: (valuePath?: Array<string | number>, option?: HCascaderExtendOption) =>
     (Array.isArray(valuePath) || isNil(valuePath)) && (isDefined(option) || isNil(option)),
   /**
    * 当选中的 `option` 发生变更时触发
@@ -80,7 +80,7 @@ export const useCascaderEmits = {
   modify: (
     modelValue: ModelValueType,
     selectOrDeselect?: boolean,
-    option?: NCascaderExtendOption,
+    option?: HCascaderExtendOption,
   ) =>
     (Array.isArray(modelValue) || isNil(modelValue)) &&
     (isUndefined(selectOrDeselect) || isBoolean(selectOrDeselect)) &&
@@ -115,7 +115,7 @@ export const useCascaderEmits = {
    * @param parent 当前触底滚动面板的所属父级，如果为 nil 则为根节点
    * @version 2.12.13
    */
-  panelReachBottom: (evt: Event | undefined, parent: NCascaderOption | null | undefined) =>
+  panelReachBottom: (evt: Event | undefined, parent: HCascaderOption | null | undefined) =>
     (evt instanceof Event || isNil(evt)) && (isObject(parent) || isNil(parent)),
   /**
    * 点击时触发

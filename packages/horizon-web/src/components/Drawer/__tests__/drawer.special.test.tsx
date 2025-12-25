@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import DrawerHelper from './DrawerHelper';
 import { nextTick, ref } from 'vue';
-import NDrawer from '~/components/Drawer/src/Drawer';
+import HDrawer from '~/components/Drawer/src/Drawer';
 import { sleep } from '~/utils/tools';
 
 describe('Drawer.tsx special', () => {
@@ -23,7 +23,7 @@ describe('Drawer.tsx special', () => {
     const visible = ref(false);
 
     const instance = new DrawerHelper(undefined, undefined, true, () => (
-      <NDrawer v-model:visible={visible.value}></NDrawer>
+      <HDrawer v-model:visible={visible.value}></HDrawer>
     ));
 
     await instance.open();

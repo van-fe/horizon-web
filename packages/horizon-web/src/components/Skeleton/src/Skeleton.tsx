@@ -5,7 +5,7 @@ import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
 import SkeletonItem from './SkeletonItem';
 import type { SkeletonSlots } from './composables/useSlots';
 import { useSkeletonSlots } from './composables/useSlots';
-import NTransition from '~/components/Transition/src/Transition';
+import HTransition from '~/components/Transition/src/Transition';
 
 export default defineComponent({
   name: `${useNamespace()}Skeleton`,
@@ -16,14 +16,14 @@ export default defineComponent({
     '2.大段文本 \n' +
     '3.列表和表格',
   components: {
-    NTransition,
+    HTransition,
   },
   props: useSkeletonProps,
   slots: useSkeletonSlots,
   setup(props, { slots }: HorizonWebSetupContext<{}, SkeletonSlots>) {
     const classHelper = new ComponentClassBlock('skeleton');
     return () => (
-      <NTransition name="fade-in">
+      <HTransition name="fade-in">
         {props.loading ? (
           <div class={classHelper.block}>
             <div
@@ -47,7 +47,7 @@ export default defineComponent({
             <div class={classHelper.e('content')}>{slots?.default?.()}</div>
           </div>
         )}
-      </NTransition>
+      </HTransition>
     );
   },
 });

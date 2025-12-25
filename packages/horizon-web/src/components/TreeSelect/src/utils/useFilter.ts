@@ -2,25 +2,25 @@ import type { Ref, ToRefs, VNode } from 'vue';
 import { computed, inject, nextTick, ref, watch } from 'vue';
 import type { TreeSelectProps } from '../composables/useProps';
 import debounce from 'lodash/debounce';
-import type { NTreeSelectContext, NTreeSelectDomRefs } from './types';
-import { NFormItemTriggerInjectedKey } from '~/components/Form/src/utils/injectedKeys';
+import type { HTreeSelectContext, HTreeSelectDomRefs } from './types';
+import { HFormItemTriggerInjectedKey } from '~/components/Form/src/utils/injectedKeys';
 import type {
-  NTreeUuidType,
-  NTreeData,
-  NTreeExtendsData,
-  NTreeNodeData,
+  HTreeUuidType,
+  HTreeData,
+  HTreeExtendsData,
+  HTreeNodeData,
 } from '~/components/Tree/src/utils/types';
 import type Tree from '~/utils/useTree/index';
 import { JSX } from 'vue/jsx-runtime';
 
 export default function (
   props: ToRefs<TreeSelectProps>,
-  context: NTreeSelectContext,
-  domRefs: NTreeSelectDomRefs,
-  modelValueSet: Ref<Set<NTreeUuidType>>,
-  presetModelValueSet: Ref<Set<NTreeUuidType>>,
+  context: HTreeSelectContext,
+  domRefs: HTreeSelectDomRefs,
+  modelValueSet: Ref<Set<HTreeUuidType>>,
+  presetModelValueSet: Ref<Set<HTreeUuidType>>,
   renderedModelValueTags: Ref<Array<VNode | JSX.Element>>,
-  treeHelper: Tree<NTreeData, NTreeExtendsData>,
+  treeHelper: Tree<HTreeData, HTreeExtendsData>,
   popperVisible: Ref<boolean>,
   emitChange: () => void,
   controlVisible: (visible: boolean) => void,
@@ -31,7 +31,7 @@ export default function (
   const isInputFocusing = ref(false);
 
   /** injects **/
-  const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
+  const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
 
   /** computed **/
   const isDuringFilter = computed(() => !!filterValue.value);
@@ -195,7 +195,7 @@ export default function (
     value: string | number,
     e: {
       checked: boolean;
-      node: NTreeNodeData;
+      node: HTreeNodeData;
       allCheckedValues: (string | number)[];
       halfCheckedValues: (string | number)[];
       vnode?: VNode;

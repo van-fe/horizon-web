@@ -1,7 +1,7 @@
 import type { Awaitable, Data } from '@aurora/utils';
-import type { NUploadFileType } from '../utils/fileDefines';
+import type { HUploadFileType } from '../utils/fileDefines';
 
-export interface NUploadChunk {
+export interface HUploadChunk {
   /**
    * 分片下表
    */
@@ -20,7 +20,7 @@ export interface NUploadChunk {
   status: 'pending' | 'uploading' | 'success' | 'fail';
 }
 
-export interface NUploadMultipartSetting {
+export interface HUploadMultipartSetting {
   /**
    * 同时最多上传数量
    * @default 5
@@ -32,7 +32,7 @@ export interface NUploadMultipartSetting {
    * 返回的数据会追加到请求体中
    * @param file 待上传文件
    */
-  initUpload?: (file: NUploadFileType) => Awaitable<Data>;
+  initUpload?: (file: HUploadFileType) => Awaitable<Data>;
   /**
    * 分片文件名处理
    * @param fileRawName 文件原名
@@ -46,11 +46,11 @@ export interface NUploadMultipartSetting {
    * @param index 分片下标
    * @param part 当前正在上传的文件片段
    */
-  beforePartUpload?: (file: NUploadFileType, index: number, part: Blob) => Data;
+  beforePartUpload?: (file: HUploadFileType, index: number, part: Blob) => Data;
   /**
    * 处理合并文件，在所有part都上传完后会回调
    * @param file 上传的文件
    * @param chunks 所有已上传的分片的文件
    */
-  handleMerge: (file: NUploadFileType, chunks: NUploadChunk[]) => Promise<void>;
+  handleMerge: (file: HUploadFileType, chunks: HUploadChunk[]) => Promise<void>;
 }

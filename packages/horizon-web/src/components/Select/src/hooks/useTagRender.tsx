@@ -6,13 +6,13 @@ import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { SelectEmits } from '../composables/useEmits';
 import type { SelectSlots } from '../composables/useSlots';
 import type { SelectExposes } from '../composables/useExposes';
-import NTag, { NTagGroup } from '~/components/Tag';
+import HTag, { HTagGroup } from '~/components/Tag';
 import type { SelectCollectedOptionData } from '../utils/injectKeys';
 import type { ModelValueSingleType, SelectDomRefs } from '../utils/types';
 import useLocaleLang from '~/utils/useLocaleLang';
-import NPopover, { NPopContent } from '~/components/Popover';
+import HPopover, { HPopContent } from '~/components/Popover';
 import type { PopoverProps } from '~/components/Popover/src/composables/useProps';
-import NScrollbar from '~/components/Scrollbar';
+import HScrollbar from '~/components/Scrollbar';
 
 export default function useTagRender(
   props: SelectProps,
@@ -73,12 +73,12 @@ export default function useTagRender(
     popoverProps: Partial<PopoverProps> = {},
   ) {
     return (
-      <NPopover {...popoverProps}>
+      <HPopover {...popoverProps}>
         {{
           popper: () => (
-            <NPopContent style={{ maxWidth: '320px' }}>
-              <NScrollbar maxHeight={152} size="small">
-                <NTagGroup
+            <HPopContent style={{ maxWidth: '320px' }}>
+              <HScrollbar maxHeight={152} size="small">
+                <HTagGroup
                   ref={options.domRefs.tagGroupDomRef}
                   collapse={false}
                   tooltipRenderType="full"
@@ -92,13 +92,13 @@ export default function useTagRender(
                   }}
                 >
                   {getShouldRenderedTags()}
-                </NTagGroup>
-              </NScrollbar>
-            </NPopContent>
+                </HTagGroup>
+              </HScrollbar>
+            </HPopContent>
           ),
           reference: () => reference,
         }}
-      </NPopover>
+      </HPopover>
     );
   }
 
@@ -109,14 +109,14 @@ export default function useTagRender(
     ) {
       options.renderedModelValueTags.value = [
         getSelectedOptionsPopoverRender(
-          <NTag
+          <HTag
             clickable={false}
             closable={true}
             disabled={options.isDisabled.value}
             onClose={options.handleClear}
           >
             {props.checkAllSummaryText ?? useLocaleLang('select.all').value}
-          </NTag>,
+          </HTag>,
           {
             disabled: !props.collapseTagsTooltip,
           },
@@ -149,14 +149,14 @@ export default function useTagRender(
               ? (context.slots.tagRender?.({
                   value: optValue,
                 } as OptionProps & Record<string, unknown>) ?? (
-                  <NTag
+                  <HTag
                     clickable={false}
                     closable={true}
                     disabled={options.isDisabled.value}
                     onClose={evt => options.pickOption(optValue, true, true, evt, true)}
                   >
                     {optValue}
-                  </NTag>
+                  </HTag>
                 ))
               : undefined)
           );
@@ -166,7 +166,7 @@ export default function useTagRender(
           ...option.props,
           ...option.attrs,
         }) ?? (
-          <NTag
+          <HTag
             clickable={false}
             closable={!option?.props.disabled}
             disabled={option?.props.disabled || options.isDisabled.value}
@@ -183,7 +183,7 @@ export default function useTagRender(
                 ...option?.attrs,
                 active: option?.active.value ?? false,
               })}
-          </NTag>
+          </HTag>
         );
 
         prevRenderedModelValueTags.set(optValue, res as VNode | JSX.Element);

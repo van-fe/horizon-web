@@ -1,19 +1,19 @@
 import { default as Form } from './src/Form';
 import { default as FormItem } from './src/FormItem';
 import { withInstall, withNoopInstall } from '@aurora/utils';
-import type { NFormInstance, NFormRule, NFormItemHelper } from './src/composables/useProps';
+import type { HFormInstance, HFormRule, HFormItemHelper } from './src/composables/useProps';
 export {
-  NFormItemErrorInjectedKey,
-  NFormInjectedKey,
-  NFormItemTriggerInjectedKey,
-  NFormDisabledInjectedKey,
-  NFormItemPropsInjectedKey,
-  NFormItemSlotsInjectedKey,
+  HFormItemErrorInjectedKey,
+  HFormInjectedKey,
+  HFormItemTriggerInjectedKey,
+  HFormDisabledInjectedKey,
+  HFormItemPropsInjectedKey,
+  HFormItemSlotsInjectedKey,
 } from './src/utils/injectedKeys';
 
-export const NForm = withInstall(Form, { FormItem });
-export const NFormItem = withNoopInstall(FormItem);
+export const HForm = withInstall(Form, { FormItem });
+export const HFormItem = withNoopInstall(FormItem);
 
-export default NForm;
+export default HForm;
 
-export type { NFormInstance, NFormRule, NFormItemHelper };
+export type { HFormInstance, HFormRule, HFormItemHelper };

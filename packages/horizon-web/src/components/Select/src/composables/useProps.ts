@@ -12,9 +12,9 @@ import type {
 import type {
   ModelValueType,
   ModelValueFormattedType,
-  NSelectFilterFunction,
+  HSelectFilterFunction,
 } from '../utils/types';
-import { NSelectInitialValueUndefined } from '../utils/types';
+import { HSelectInitialValueUndefined } from '../utils/types';
 
 export const useSelectProps = declarePropType({
   /**
@@ -258,7 +258,7 @@ export const useSelectProps = declarePropType({
    * @version 2.1.0
    */
   filterMethod: {
-    type: Function as PropType<NSelectFilterFunction>,
+    type: Function as PropType<HSelectFilterFunction>,
   },
   /**
    * 默认过滤方法中，是否同时对 `option.description` 也过滤判断
@@ -277,7 +277,7 @@ export const useSelectProps = declarePropType({
    * @deprecated filterable / filterMethod
    */
   filterOption: {
-    type: [Boolean, Function] as PropType<boolean | NSelectFilterFunction>,
+    type: [Boolean, Function] as PropType<boolean | HSelectFilterFunction>,
     default: undefined,
   },
   /**
@@ -287,7 +287,7 @@ export const useSelectProps = declarePropType({
    * 函数: input 是输入内容，option 标识每一项的参数（构成为 props & attrs)
    */
   panelFilterOption: {
-    type: [Boolean, Function] as PropType<boolean | NSelectFilterFunction>,
+    type: [Boolean, Function] as PropType<boolean | HSelectFilterFunction>,
     default: false,
   },
   /**
@@ -592,7 +592,7 @@ export const useSelectProps = declarePropType({
     type: [Object, String, Number, Array, Boolean, null, Symbol] as PropType<
       object | string | number | Array<any> | boolean | null | symbol
     >,
-    default: NSelectInitialValueUndefined,
+    default: HSelectInitialValueUndefined,
   },
   /**
    * 是否使用多选统计

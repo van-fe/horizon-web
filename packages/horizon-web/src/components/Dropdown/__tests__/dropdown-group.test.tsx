@@ -1,11 +1,11 @@
 import { mount } from '@vue/test-utils';
-import NDropdown from '../src/Dropdown';
+import HDropdown from '../src/Dropdown';
 import { describe, expect, test } from 'vitest';
-import NButton from '../../Button';
-import { NDropdownGroup, NDropdownItem, NDropdownMenu } from '../index';
+import HButton from '../../Button';
+import { HDropdownGroup, HDropdownItem, HDropdownMenu } from '../index';
 import { sleep } from '../../../utils/tools';
-import NPopover from '../../Popover';
-import NTooltip from '../../Tooltip';
+import HPopover from '../../Popover';
+import HTooltip from '../../Tooltip';
 import { Fragment } from 'vue';
 
 describe('DropdownGroup.tsx', () => {
@@ -13,20 +13,20 @@ describe('DropdownGroup.tsx', () => {
     const wrapper = mount(
       () => (
         <Fragment>
-          <NDropdown toBody={false}>
+          <HDropdown toBody={false}>
             {{
-              default: () => <NButton>Trigger</NButton>,
+              default: () => <HButton>Trigger</HButton>,
               dropdown: () => (
-                <NDropdownMenu>
-                  <NDropdownGroup title="Group">
-                    <NDropdownItem>1</NDropdownItem>
-                    <NDropdownItem>2</NDropdownItem>
-                    <NDropdownItem>3</NDropdownItem>
-                  </NDropdownGroup>
-                </NDropdownMenu>
+                <HDropdownMenu>
+                  <HDropdownGroup title="Group">
+                    <HDropdownItem>1</HDropdownItem>
+                    <HDropdownItem>2</HDropdownItem>
+                    <HDropdownItem>3</HDropdownItem>
+                  </HDropdownGroup>
+                </HDropdownMenu>
               ),
             }}
-          </NDropdown>
+          </HDropdown>
         </Fragment>
       ),
       {
@@ -34,7 +34,7 @@ describe('DropdownGroup.tsx', () => {
       },
     );
 
-    const triggerEle = wrapper.findComponent(NPopover);
+    const triggerEle = wrapper.findComponent(HPopover);
 
     await triggerEle.trigger('mouseenter');
 
@@ -48,23 +48,23 @@ describe('DropdownGroup.tsx', () => {
       const wrapper = mount(
         () => (
           <>
-            <NDropdown toBody={false}>
+            <HDropdown toBody={false}>
               {{
-                default: () => <NButton>Trigger</NButton>,
+                default: () => <HButton>Trigger</HButton>,
                 dropdown: () => (
-                  <NDropdownMenu>
-                    <NDropdownGroup
+                  <HDropdownMenu>
+                    <HDropdownGroup
                       title="Group"
                       titleTooltipOptions={{ size: 'small', visible: true, arrow: false }}
                     >
-                      <NDropdownItem>1</NDropdownItem>
-                      <NDropdownItem>2</NDropdownItem>
-                      <NDropdownItem>3</NDropdownItem>
-                    </NDropdownGroup>
-                  </NDropdownMenu>
+                      <HDropdownItem>1</HDropdownItem>
+                      <HDropdownItem>2</HDropdownItem>
+                      <HDropdownItem>3</HDropdownItem>
+                    </HDropdownGroup>
+                  </HDropdownMenu>
                 ),
               }}
-            </NDropdown>
+            </HDropdown>
           </>
         ),
         {
@@ -72,13 +72,13 @@ describe('DropdownGroup.tsx', () => {
         },
       );
 
-      const triggerEle = wrapper.findComponent(NPopover);
+      const triggerEle = wrapper.findComponent(HPopover);
 
       await triggerEle.trigger('mouseenter');
 
       await sleep(200);
 
-      const tooltip = wrapper.findComponent(NTooltip);
+      const tooltip = wrapper.findComponent(HTooltip);
 
       await expect(tooltip.exists()).toBeTruthy();
 

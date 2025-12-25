@@ -10,40 +10,40 @@ import {
   watch,
 } from 'vue';
 import { useCascaderItemProp } from '../composables/useProps';
-import NCheckbox from '~/components/Checkbox/src/Checkbox';
-import NRadio from '~/components/Radio/src/Radio';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
+import HCheckbox from '~/components/Checkbox/src/Checkbox';
+import HRadio from '~/components/Radio/src/Radio';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
 import useIconRender from '~/utils/useIconRender';
 import {
-  NCascaderActiveOptionInPanelInjectKey,
-  NCascaderChosenOptionListInjectKey,
-  NCascaderExpandNodeInjectKey,
-  NCascaderFocusedOptionInjectKey,
-  NCascaderFocusedOptionsStackInjectKey,
-  NCascaderInputStringInjectKey,
-  NCascaderIsOutOfLimitInjectKey,
-  NCascaderLoadingNodesInjectKey,
-  NCascaderMouseOverOptionInjectKey,
-  NCascaderOnClickNodeInjectKey,
-  NCascaderPropsInjectKey,
-  NCascaderRegisterVNodeGetterInjectKey,
-  NCascaderSlotsInjectKey,
-  NCascaderTreeHelperInjectKey,
+  HCascaderActiveOptionInPanelInjectKey,
+  HCascaderChosenOptionListInjectKey,
+  HCascaderExpandNodeInjectKey,
+  HCascaderFocusedOptionInjectKey,
+  HCascaderFocusedOptionsStackInjectKey,
+  HCascaderInputStringInjectKey,
+  HCascaderIsOutOfLimitInjectKey,
+  HCascaderLoadingNodesInjectKey,
+  HCascaderMouseOverOptionInjectKey,
+  HCascaderOnClickNodeInjectKey,
+  HCascaderPropsInjectKey,
+  HCascaderRegisterVNodeGetterInjectKey,
+  HCascaderSlotsInjectKey,
+  HCascaderTreeHelperInjectKey,
 } from '../utils/injectKeys';
 import { IconArrowRight, IconCheck, AIcon } from '@aurora/icon';
-import NTransition from '~/components/Transition/src/Transition';
-import type { NCascaderUuidType } from '../utils/types';
+import HTransition from '~/components/Transition/src/Transition';
+import type { HCascaderUuidType } from '../utils/types';
 import { useHighlightCascaderItem } from '../hooks/useHighlight';
 
 export default defineComponent({
   name: `${useNamespace()}CascaderItem`,
   components: {
-    NCheckbox,
-    NRadio,
-    NTooltip,
+    HCheckbox,
+    HRadio,
+    HTooltip,
     IconArrowRight,
     IconCheck,
-    NTransition,
+    HTransition,
   },
   props: useCascaderItemProp,
   setup(props) {
@@ -51,20 +51,20 @@ export default defineComponent({
 
     const instance = getCurrentInstance();
 
-    const chosenOptionList = inject(NCascaderChosenOptionListInjectKey)!;
-    const parentProps = inject(NCascaderPropsInjectKey)!;
-    const parentSlots = inject(NCascaderSlotsInjectKey)!;
-    const onClickNode = inject(NCascaderOnClickNodeInjectKey)!;
-    const expandNode = inject(NCascaderExpandNodeInjectKey)!;
-    const inputString = inject(NCascaderInputStringInjectKey)!;
-    const focusedOption = inject(NCascaderFocusedOptionInjectKey)!;
-    const activeItemsStack = inject(NCascaderFocusedOptionsStackInjectKey)!;
-    const registerVNodeGetter = inject(NCascaderRegisterVNodeGetterInjectKey)!;
-    const loadingOptions = inject(NCascaderLoadingNodesInjectKey)!;
-    const onMouseOverOption = inject(NCascaderMouseOverOptionInjectKey)!;
-    const activeOption = inject(NCascaderActiveOptionInPanelInjectKey, ref(undefined));
-    const treeHelper = inject(NCascaderTreeHelperInjectKey)!;
-    const isOutOfLimit = inject(NCascaderIsOutOfLimitInjectKey)!;
+    const chosenOptionList = inject(HCascaderChosenOptionListInjectKey)!;
+    const parentProps = inject(HCascaderPropsInjectKey)!;
+    const parentSlots = inject(HCascaderSlotsInjectKey)!;
+    const onClickNode = inject(HCascaderOnClickNodeInjectKey)!;
+    const expandNode = inject(HCascaderExpandNodeInjectKey)!;
+    const inputString = inject(HCascaderInputStringInjectKey)!;
+    const focusedOption = inject(HCascaderFocusedOptionInjectKey)!;
+    const activeItemsStack = inject(HCascaderFocusedOptionsStackInjectKey)!;
+    const registerVNodeGetter = inject(HCascaderRegisterVNodeGetterInjectKey)!;
+    const loadingOptions = inject(HCascaderLoadingNodesInjectKey)!;
+    const onMouseOverOption = inject(HCascaderMouseOverOptionInjectKey)!;
+    const activeOption = inject(HCascaderActiveOptionInPanelInjectKey, ref(undefined));
+    const treeHelper = inject(HCascaderTreeHelperInjectKey)!;
+    const isOutOfLimit = inject(HCascaderIsOutOfLimitInjectKey)!;
 
     const itemDomRef = ref<HTMLElement | null>(null);
     const contentDomRef = ref<HTMLElement>();
@@ -159,12 +159,12 @@ export default defineComponent({
       }
 
       if (props.duringFilter && !isDisabled.value) {
-        onMouseOverOption(props.extendsOption._uuid as NCascaderUuidType);
+        onMouseOverOption(props.extendsOption._uuid as HCascaderUuidType);
       }
     }
 
     onMounted(() => {
-      registerVNodeGetter(props.extendsOption._uuid as NCascaderUuidType, () => instance?.vnode);
+      registerVNodeGetter(props.extendsOption._uuid as HCascaderUuidType, () => instance?.vnode);
 
       setTimeout(() => {
         startWatch();
@@ -220,7 +220,7 @@ export default defineComponent({
           <div class={classHelper.e('inner')}>
             {parentProps.multiple ? (
               <div class={classHelper.e('checkbox')} onClick={onClickCheckboxOrRadio}>
-                <NCheckbox
+                <HCheckbox
                   true-label={true}
                   false-label={false}
                   indeterminate={isIndeterminate.value}
@@ -235,7 +235,7 @@ export default defineComponent({
             ) : parentProps.showRadio ? (
               (parentProps.checkStrictly || props.isLeaf) && (
                 <div class={classHelper.e('radio')} onClick={onClickCheckboxOrRadio}>
-                  <NRadio
+                  <HRadio
                     value={true}
                     modelValue={isChecked.value}
                     disabled={isDisabled.value || props.extendsOption.selectable === false}
@@ -244,7 +244,7 @@ export default defineComponent({
               )
             ) : undefined}
             <div class={classHelper.e('content-wrapper')}>
-              <NTooltip
+              <HTooltip
                 overflow={true}
                 showAfter={parentProps.tooltipShowAfter}
                 hideAfter={parentProps.tooltipHideAfter}
@@ -261,7 +261,7 @@ export default defineComponent({
                       <div class={classHelper.e('content')}>{content}</div>
                     ),
                 }}
-              </NTooltip>
+              </HTooltip>
             </div>
             {props.isLeaf
               ? isChecked.value &&
@@ -277,7 +277,7 @@ export default defineComponent({
                   <div class={classHelper.e('icon')}>
                     {useIconRender(
                       isLoading.value ? (
-                        <AIcon name="loading" spin="cw"></AIcon>
+                        <AIcon name="loading" spin="cw" />
                       ) : (
                         parentProps.expandIcon ?? IconArrowRight
                       ),

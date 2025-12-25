@@ -3,17 +3,17 @@ import dayjs from '~/utils/useDayJs';
 import type { Dayjs } from 'dayjs';
 import type { ComputedRef, Ref, ToRefs } from 'vue';
 import { inject } from 'vue';
-import type { NTimePickerDomRefs } from '../utils/types';
+import type { HTimePickerDomRefs } from '../utils/types';
 import type { TimePickerProps } from '../composables/useProps';
 import type { TimePickerEmits } from '../composables/useEmits';
 import type { TimePickerSlots } from '../composables/useSlots';
 import type { TimePickerExposes } from '../composables/useExposes';
-import { NFormItemTriggerInjectedKey } from '~/components/Form/src/utils/injectedKeys';
+import { HFormItemTriggerInjectedKey } from '~/components/Form/src/utils/injectedKeys';
 
 export default function useEvent(
   propRefs: ToRefs<TimePickerProps>,
   context: HorizonWebSetupContext<TimePickerEmits, TimePickerSlots, TimePickerExposes>,
-  domRefs: NTimePickerDomRefs,
+  domRefs: HTimePickerDomRefs,
   options: {
     dayjsFormat: ComputedRef<string>;
     startTime: Ref<Dayjs | undefined>;
@@ -22,7 +22,7 @@ export default function useEvent(
   },
 ) {
   /** injects **/
-  const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
+  const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
 
   function onKeydown(evt: KeyboardEvent) {
     if (evt.code.toLowerCase() === 'enter') {

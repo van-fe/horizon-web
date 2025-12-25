@@ -3,7 +3,7 @@ import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { DropdownItemEmits, DropdownSubmenuEmits } from '../composables/useEmits';
 import type { DropdownItemSlots, DropdownSubmenuSlots } from '../composables/useSlots';
 
-export interface NDropdownTreeData {
+export interface HDropdownTreeData {
   uuid: string;
   type: 'submenu' | 'item';
   props: DropdownSubmenuProps | DropdownItemProps;
@@ -13,5 +13,5 @@ export interface NDropdownTreeData {
   slots:
     | HorizonWebSetupContext<{}, DropdownSubmenuSlots>['slots']
     | HorizonWebSetupContext<{}, DropdownItemSlots>['slots'];
-  children: Map<string, NDropdownTreeData> | null;
+  children: Map<string, HDropdownTreeData> | null;
 }

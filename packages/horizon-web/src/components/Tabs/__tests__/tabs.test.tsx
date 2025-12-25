@@ -1,22 +1,22 @@
-import { AIconSVG } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 import { mount } from '@vue/test-utils';
 import { describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
-import NTab from '../src/Tab';
-import NTabs from '../src/Tabs';
-import type { NTabType, NTabValue } from '../src/composables/useProps';
+import HTab from '../src/Tab';
+import HTabs from '../src/Tabs';
+import type { HTabType, HTabValue } from '../src/composables/useProps';
 
 describe('Tabs.tsx', () => {
   test('render', async () => {
     const activeKey = ref('');
     const wrapper = mount(() => (
-      <NTabs activeKey={activeKey.value}>
-        <NTab key="1" label="Tab1" />
-        <NTab key="2" label="Tab1" />
-      </NTabs>
+      <HTabs activeKey={activeKey.value}>
+        <HTab key="1" label="Tab1" />
+        <HTab key="2" label="Tab1" />
+      </HTabs>
     ));
-    const element = wrapper.findComponent(NTabs);
-    const tabList = wrapper.findAllComponents(NTab);
+    const element = wrapper.findComponent(HTabs);
+    const tabList = wrapper.findAllComponents(HTab);
 
     expect(element.exists()).toBe(true);
     expect(tabList).toHaveLength(2);
@@ -65,12 +65,12 @@ describe('Tabs.tsx', () => {
   describe('props', () => {
     test('type', async () => {
       const types = ['line', 'card', 'segmented', 'page'];
-      const type = ref<NTabType>('line');
+      const type = ref<HTabType>('line');
       const wrapper = mount(() => (
-        <NTabs type={type.value} arrow={false}>
-          <NTab key="tab1" label="tab1" />
-          <NTab key="tab2" label="tab2" />
-        </NTabs>
+        <HTabs type={type.value} arrow={false}>
+          <HTab key="tab1" label="tab1" />
+          <HTab key="tab2" label="tab2" />
+        </HTabs>
       ));
 
       expect(wrapper.html()).toMatchInlineSnapshot(`
@@ -105,7 +105,7 @@ describe('Tabs.tsx', () => {
         </div>"
       `);
 
-      const checkType = async (next: any, t: NTabType) => {
+      const checkType = async (next: any, t: HTabType) => {
         await next();
         type.value = t;
         await nextTick();
@@ -123,15 +123,15 @@ describe('Tabs.tsx', () => {
 
     test('tab with icon #render', async () => {
       const wrapper = mount(() => (
-        <NTabs arrow={false}>
-          <NTab key="tab1" label="tab1" icon="star" />
-          <NTab key="tab2" label="tab2" icon="star" />
-        </NTabs>
+        <HTabs arrow={false}>
+          <HTab key="tab1" label="tab1" icon="star" />
+          <HTab key="tab2" label="tab2" icon="star" />
+        </HTabs>
       ));
 
-      const tabs = wrapper.findComponent(NTabs);
+      const tabs = wrapper.findComponent(HTabs);
       expect(tabs.exists()).toBe(true);
-      expect(wrapper.findAllComponents(AIconSVG)).toHaveLength(2);
+      expect(wrapper.findAllComponents(AIcon)).toHaveLength(2);
     });
 
     test('closable and addable #render', async () => {
@@ -141,16 +141,16 @@ describe('Tabs.tsx', () => {
         items.value.push(`new tab ${items.value.length + 1}`);
       });
 
-      const onClose = vi.fn((key: NTabValue) => {
+      const onClose = vi.fn((key: HTabValue) => {
         items.value = items.value.filter(t => t !== key);
       });
 
       const wrapper = mount(() => (
-        <NTabs editable onAdd={onAdd} arrow={false}>
+        <HTabs editable onAdd={onAdd} arrow={false}>
           {items.value.map(item => (
-            <NTab test-id={item} key={item} label={item} closable onClose={onClose} />
+            <HTab test-id={item} key={item} label={item} closable onClose={onClose} />
           ))}
-        </NTabs>
+        </HTabs>
       ));
 
       expect(wrapper.html()).toMatchInlineSnapshot(`
@@ -189,7 +189,7 @@ describe('Tabs.tsx', () => {
         </div>"
       `);
 
-      const tabs = wrapper.findComponent(NTabs);
+      const tabs = wrapper.findComponent(HTabs);
       expect(tabs.exists()).toBe(true);
 
       await wrapper.find('[test-id="tab1"] .n-tabs__close').trigger('click');
@@ -217,17 +217,17 @@ describe('Tabs.tsx', () => {
         .map((_, i) => i);
       const tabs = mount(() => (
         <div style="width: 300px">
-          <NTabs activeKey={current.value}>
+          <HTabs activeKey={current.value}>
             {tabList.map(tab => (
-              <NTab key={tab} name={`tab${tab}`} label={`tab${tab}`} />
+              <HTab key={tab} name={`tab${tab}`} label={`tab${tab}`} />
             ))}
-          </NTabs>
+          </HTabs>
         </div>
       ));
 
-      const tabsRoot = tabs.findComponent(NTabs);
+      const tabsRoot = tabs.findComponent(HTabs);
       expect(tabsRoot.exists()).toBeTruthy();
-      const childList = tabs.findAllComponents(NTab);
+      const childList = tabs.findAllComponents(HTab);
       expect(childList).toHaveLength(tabList.length);
       const rootEl = tabsRoot.get('div[role=tablist]>div>div').element as HTMLDivElement;
       const targetEl = tabsRoot.get('div[data-name=tab15]').element as HTMLDivElement;

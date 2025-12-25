@@ -1,5 +1,5 @@
 import type { SlotsType } from 'vue';
-import type { NUploadFileType } from '../utils/fileDefines';
+import type { HUploadFileType } from '../utils/fileDefines';
 
 export const useUploadSlots = Object as SlotsType<{
   /**
@@ -28,12 +28,12 @@ export const useUploadSlots = Object as SlotsType<{
    * 已上传列表，可以自定义列表的整体展示
    * @param files 已上传的文件对象数组
    */
-  uploadedFiles?: NUploadFileType[];
+  uploadedFiles?: HUploadFileType[];
   /**
    * 单个已上传文件的自定义展示
    * @param file 对应的文件对象
    */
-  file?: NUploadFileType;
+  file?: HUploadFileType;
 }>;
 
 export type UploadSlots = typeof useUploadSlots;

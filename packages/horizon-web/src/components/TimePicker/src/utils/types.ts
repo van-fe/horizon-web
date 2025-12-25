@@ -3,12 +3,12 @@ import type { Ref } from 'vue';
 import type { HorizonWebComponentInstance } from '@aurora/utils';
 import type TimePanel from '../components/TimePanel';
 import type { TimePickerTimePanelExposes } from '../composables/useExposes';
-import type NPicker from '~/components/Picker/src/Picker';
+import type HPicker from '~/components/Picker/src/Picker';
 import type {
   PickerExposes,
   PickerPureInputExposes,
 } from '~/components/Picker/src/composables/useExposes';
-import type NPickerPureInput from '~/components/Picker/src/components/NPickerPureInput';
+import type HPickerPureInput from '~/components/Picker/src/components/PickerPureInput';
 
 export type SingleOrArrayPickerDataType<T> = T | [T, T];
 
@@ -18,12 +18,12 @@ export type SingleOrArrayPickerDataType<T> = T | [T, T];
  * @param type Only given when selecting a time range, representing the start and end times respectively.
  * @return boolean Whether to disabled current time
  */
-export type NTimePickerDisabledTimeMethodType = (time: Dayjs, type?: 'start' | 'end') => boolean;
+export type HTimePickerDisabledTimeMethodType = (time: Dayjs, type?: 'start' | 'end') => boolean;
 
 /**
  * The array list which give to TimeColumnPanel to show
  */
-export interface NTimePickerPanelOptionType {
+export interface HTimePickerPanelOptionType {
   label: string;
   value: Dayjs;
   disabled: boolean;
@@ -32,7 +32,7 @@ export interface NTimePickerPanelOptionType {
 /**
  * Show tooltip type
  */
-export type NTimePickerShowTimeTooltipType = (
+export type HTimePickerShowTimeTooltipType = (
   time: Dayjs,
   timeType: 'time' | 'hour' | 'minute' | 'second',
 ) => {
@@ -40,18 +40,18 @@ export type NTimePickerShowTimeTooltipType = (
   content?: string;
 };
 
-export interface NTimePickerDomRefs {
+export interface HTimePickerDomRefs {
   startTimePanelDomRef: Ref<
     HorizonWebComponentInstance<typeof TimePanel, TimePickerTimePanelExposes> | undefined
   >;
   endTimePanelDomRef: Ref<
     HorizonWebComponentInstance<typeof TimePanel, TimePickerTimePanelExposes> | undefined
   >;
-  pickerDomRef: Ref<HorizonWebComponentInstance<typeof NPicker, PickerExposes> | undefined>;
+  pickerDomRef: Ref<HorizonWebComponentInstance<typeof HPicker, PickerExposes> | undefined>;
   startInputDomRef: Ref<
-    HorizonWebComponentInstance<typeof NPickerPureInput, PickerPureInputExposes> | undefined
+    HorizonWebComponentInstance<typeof HPickerPureInput, PickerPureInputExposes> | undefined
   >;
   endInputDomRef: Ref<
-    HorizonWebComponentInstance<typeof NPickerPureInput, PickerPureInputExposes> | undefined
+    HorizonWebComponentInstance<typeof HPickerPureInput, PickerPureInputExposes> | undefined
   >;
 }

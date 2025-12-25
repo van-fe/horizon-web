@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import NVInfiniteScroll from '../index';
+import HVInfiniteScroll from '../index';
 import { describe, test, vi } from 'vitest';
 import { ref } from 'vue';
 
@@ -28,7 +28,7 @@ describe('v-infinite-scroll.tsx', () => {
         attachTo: document.body,
         global: {
           directives: {
-            [NVInfiniteScroll.name]: NVInfiniteScroll,
+            [HVInfiniteScroll.name]: HVInfiniteScroll,
           },
         },
       },

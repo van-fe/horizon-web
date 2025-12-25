@@ -2,9 +2,9 @@ import type { SelectProps, OptionProps } from '../composables/useProps';
 import type { Ref, WatchStopHandle } from 'vue';
 import { ref, provide, watch, inject } from 'vue';
 import {
-  NSelectHighlightContentRangesInjectKey,
-  NSelectHighlightDescriptionRangesInjectKey,
-  NSelectFilterInputValueInjectKey,
+  HSelectHighlightContentRangesInjectKey,
+  HSelectHighlightDescriptionRangesInjectKey,
+  HSelectFilterInputValueInjectKey,
 } from '../utils/injectKeys';
 
 export default function useHighlight() {
@@ -33,8 +33,8 @@ export default function useHighlight() {
     },
   );
 
-  provide(NSelectHighlightContentRangesInjectKey, highlightContentRanges);
-  provide(NSelectHighlightDescriptionRangesInjectKey, highlightDescriptionRanges);
+  provide(HSelectHighlightContentRangesInjectKey, highlightContentRanges);
+  provide(HSelectHighlightDescriptionRangesInjectKey, highlightDescriptionRanges);
 }
 
 export function useHighlightOption(
@@ -45,9 +45,9 @@ export function useHighlightOption(
     descriptionDomRef: Ref<HTMLElement | undefined>;
   },
 ) {
-  const highlightContentRanges = inject(NSelectHighlightContentRangesInjectKey)!;
-  const highlightDescriptionRanges = inject(NSelectHighlightDescriptionRangesInjectKey)!;
-  const filterInputValue = inject(NSelectFilterInputValueInjectKey)!;
+  const highlightContentRanges = inject(HSelectHighlightContentRangesInjectKey)!;
+  const highlightDescriptionRanges = inject(HSelectHighlightDescriptionRangesInjectKey)!;
+  const filterInputValue = inject(HSelectFilterInputValueInjectKey)!;
 
   let watchStopHandle: WatchStopHandle;
 

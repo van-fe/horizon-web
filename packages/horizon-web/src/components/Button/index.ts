@@ -2,7 +2,7 @@ import Button from './src/Button';
 import ButtonGroup from './src/ButtonGroup';
 import { withInstall } from '@aurora/utils';
 
-export const NButton = withInstall(Button);
-export const NButtonGroup = withInstall(ButtonGroup);
+export const HButton = withInstall(Button);
+export const HButtonGroup = withInstall(ButtonGroup);
 
-export default NButton;
+export default HButton;

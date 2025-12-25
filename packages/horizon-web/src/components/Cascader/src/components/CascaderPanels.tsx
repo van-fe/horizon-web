@@ -11,28 +11,28 @@ import {
 import { ComponentClassBlock, isBoolean, useNamespace } from '@aurora/utils';
 import CascaderPanel from './CascaderPanel';
 import {
-  NCascaderActivatedChildNodeInjectKey,
-  NCascaderEmitsInjectKey,
-  NCascaderExpandNodeInjectKey,
-  NCascaderFocusedOptionInjectKey,
-  NCascaderFocusedOptionsStackInjectKey,
-  NCascaderLoadingNodesInjectKey,
-  NCascaderModelValueInjectKey,
-  NCascaderModifyOptionChildrenListInjectKey,
-  NCascaderMouseOverOptionInjectKey,
-  NCascaderOnClickNodeInjectKey,
-  NCascaderOptionListInjectKey,
-  NCascaderOptionListMapInjectKey,
-  NCascaderPickOptionInjectKey,
-  NCascaderPopperVisibleInjectKey,
-  NCascaderPresetModelValueInjectKey,
-  NCascaderPropsInjectKey,
-  NCascaderTreeHelperInjectKey,
-  NCascaderVisibleOptionsInjectKey,
+  HCascaderActivatedChildNodeInjectKey,
+  HCascaderEmitsInjectKey,
+  HCascaderExpandNodeInjectKey,
+  HCascaderFocusedOptionInjectKey,
+  HCascaderFocusedOptionsStackInjectKey,
+  HCascaderLoadingNodesInjectKey,
+  HCascaderModelValueInjectKey,
+  HCascaderModifyOptionChildrenListInjectKey,
+  HCascaderMouseOverOptionInjectKey,
+  HCascaderOnClickNodeInjectKey,
+  HCascaderOptionListInjectKey,
+  HCascaderOptionListMapInjectKey,
+  HCascaderPickOptionInjectKey,
+  HCascaderPopperVisibleInjectKey,
+  HCascaderPresetModelValueInjectKey,
+  HCascaderPropsInjectKey,
+  HCascaderTreeHelperInjectKey,
+  HCascaderVisibleOptionsInjectKey,
 } from '../utils/injectKeys';
 import type {
-  NCascaderExtendOption,
-  NCascaderUuidType,
+  HCascaderExtendOption,
+  HCascaderUuidType,
   ModelValueSingleType,
 } from '../utils/types';
 import CascaderSearchPanel from './CascaderSearchPanel';
@@ -75,22 +75,22 @@ export default defineComponent({
   setup(props, { emit, expose }) {
     const classHelper = new ComponentClassBlock('cascader-panels');
 
-    const parentProps = inject(NCascaderPropsInjectKey)!;
-    const parentEmits = inject(NCascaderEmitsInjectKey)!;
-    const optionList = inject(NCascaderOptionListInjectKey)!;
-    const optionListMap = inject(NCascaderOptionListMapInjectKey)!;
-    const pickOption = inject(NCascaderPickOptionInjectKey)!;
-    const popperVisible = inject(NCascaderPopperVisibleInjectKey)!;
-    const presetModelValueSet = inject(NCascaderPresetModelValueInjectKey)!;
-    const modelValueSet = inject(NCascaderModelValueInjectKey)!;
-    const modifyChildrenList = inject(NCascaderModifyOptionChildrenListInjectKey)!;
-    const visibleOptions = inject(NCascaderVisibleOptionsInjectKey)!;
-    const treeHelper = inject(NCascaderTreeHelperInjectKey)!;
+    const parentProps = inject(HCascaderPropsInjectKey)!;
+    const parentEmits = inject(HCascaderEmitsInjectKey)!;
+    const optionList = inject(HCascaderOptionListInjectKey)!;
+    const optionListMap = inject(HCascaderOptionListMapInjectKey)!;
+    const pickOption = inject(HCascaderPickOptionInjectKey)!;
+    const popperVisible = inject(HCascaderPopperVisibleInjectKey)!;
+    const presetModelValueSet = inject(HCascaderPresetModelValueInjectKey)!;
+    const modelValueSet = inject(HCascaderModelValueInjectKey)!;
+    const modifyChildrenList = inject(HCascaderModifyOptionChildrenListInjectKey)!;
+    const visibleOptions = inject(HCascaderVisibleOptionsInjectKey)!;
+    const treeHelper = inject(HCascaderTreeHelperInjectKey)!;
 
     const wrapperDomRef = ref<HTMLDivElement | null>(null);
 
-    const activatedChildNode = ref<NCascaderExtendOption>();
-    const loadingNodes = ref(new Set<NCascaderExtendOption>());
+    const activatedChildNode = ref<HCascaderExtendOption>();
+    const loadingNodes = ref(new Set<HCascaderExtendOption>());
 
     watch(popperVisible, val => {
       if (val) {
@@ -118,7 +118,7 @@ export default defineComponent({
     });
 
     const defaultRenderPanels = computed(() => {
-      const panels: NCascaderExtendOption[][] = [];
+      const panels: HCascaderExtendOption[][] = [];
 
       if (optionListMap.value.size > 0) {
         panels.push(optionList.value.filter(curr => curr.level === 0));
@@ -127,13 +127,13 @@ export default defineComponent({
       return panels;
     });
 
-    const customRenderPanels = ref<NCascaderExtendOption[][]>([]);
+    const customRenderPanels = ref<HCascaderExtendOption[][]>([]);
     const renderPanels = computed(() => defaultRenderPanels.value.concat(customRenderPanels.value));
 
-    let currentExpandNode: NCascaderExtendOption | null | undefined = null;
+    let currentExpandNode: HCascaderExtendOption | null | undefined = null;
 
-    function expandPanel(currentNode?: NCascaderExtendOption | null) {
-      const panels: NCascaderExtendOption[][] = [];
+    function expandPanel(currentNode?: HCascaderExtendOption | null) {
+      const panels: HCascaderExtendOption[][] = [];
 
       if (currentNode) {
         const uuidPath = currentNode.uuidPath.concat();
@@ -157,7 +157,7 @@ export default defineComponent({
       }
     }
 
-    function shouldAsyncGetChildren(option: NCascaderExtendOption) {
+    function shouldAsyncGetChildren(option: HCascaderExtendOption) {
       if (!option.isLeaf && option.transformedChildren.length === 0 && parentProps.dynamicLoad) {
         loadingNodes.value.add(option);
 
@@ -192,7 +192,7 @@ export default defineComponent({
     }
 
     function expandChildren(
-      currentNode: NCascaderExtendOption,
+      currentNode: HCascaderExtendOption,
       onRadioOrCheckbox = false,
       forceExpandChildren = false,
     ) {
@@ -222,7 +222,7 @@ export default defineComponent({
     }
 
     function getChildrenCheckedStatus(
-      childrenList: NCascaderExtendOption[],
+      childrenList: HCascaderExtendOption[],
     ): 'all' | 'none' | 'ind' {
       const checkedAmount: number = childrenList.reduce((prev, curr) => {
         if (!curr.isLeaf && Array.isArray(curr.transformedChildren)) {
@@ -236,7 +236,7 @@ export default defineComponent({
       return checkedAmount === childrenList.length ? 'all' : checkedAmount === 0 ? 'none' : 'ind';
     }
 
-    function pickAllLeafChildren(node: NCascaderExtendOption, positive: boolean) {
+    function pickAllLeafChildren(node: HCascaderExtendOption, positive: boolean) {
       if (node.disabled || node.selectable === false) return;
 
       if (node.isLeaf) {
@@ -252,7 +252,7 @@ export default defineComponent({
     }
 
     function onClickChildNode(
-      childNodeOption: NCascaderExtendOption,
+      childNodeOption: HCascaderExtendOption,
       onRadioOrCheckbox = false,
       forceExpandChildren = false,
     ) {
@@ -323,7 +323,7 @@ export default defineComponent({
     /*** keyboard events ***/
     const activePanelIndex = ref(0);
     const activeItemIndex = ref(-1);
-    const focusedFilterOption = ref<NCascaderExtendOption>();
+    const focusedFilterOption = ref<HCascaderExtendOption>();
     const activePanelChildren = computed(() =>
       renderPanels.value
         ?.at(activePanelIndex.value)
@@ -340,7 +340,7 @@ export default defineComponent({
           ? activePanelChildren.value?.at(activeItemIndex.value)
           : undefined),
     );
-    const activeItemsStack = ref<NCascaderExtendOption[]>([]);
+    const activeItemsStack = ref<HCascaderExtendOption[]>([]);
 
     function resetActiveIndex() {
       activePanelIndex.value = 0;
@@ -359,11 +359,11 @@ export default defineComponent({
     );
 
     /*** in filter mode***/
-    function focusOptionWhileFilter(uuid: NCascaderUuidType) {
+    function focusOptionWhileFilter(uuid: HCascaderUuidType) {
       focusedFilterOption.value = optionListMap.value.get(uuid);
     }
 
-    provide(NCascaderMouseOverOptionInjectKey, focusOptionWhileFilter);
+    provide(HCascaderMouseOverOptionInjectKey, focusOptionWhileFilter);
 
     const onArrowUpOrDownOnSearchingResults = throttle((evt: KeyboardEvent) => {
       let index = -1;
@@ -397,7 +397,7 @@ export default defineComponent({
       }
     }
 
-    function focusOption(uuid: NCascaderUuidType) {
+    function focusOption(uuid: HCascaderUuidType) {
       activeItemsStack.value = [];
 
       const currentActiveNode = optionListMap.value.get(uuid) || null;
@@ -514,12 +514,12 @@ export default defineComponent({
       },
     });
 
-    provide(NCascaderLoadingNodesInjectKey, loadingNodes);
-    provide(NCascaderOnClickNodeInjectKey, onClickChildNode);
-    provide(NCascaderExpandNodeInjectKey, expandChildren);
-    provide(NCascaderActivatedChildNodeInjectKey, activatedChildNode);
-    provide(NCascaderFocusedOptionInjectKey, activeItemOption);
-    provide(NCascaderFocusedOptionsStackInjectKey, activeItemsStack);
+    provide(HCascaderLoadingNodesInjectKey, loadingNodes);
+    provide(HCascaderOnClickNodeInjectKey, onClickChildNode);
+    provide(HCascaderExpandNodeInjectKey, expandChildren);
+    provide(HCascaderActivatedChildNodeInjectKey, activatedChildNode);
+    provide(HCascaderFocusedOptionInjectKey, activeItemOption);
+    provide(HCascaderFocusedOptionsStackInjectKey, activeItemsStack);
 
     return () =>
       props.duringInput ? (

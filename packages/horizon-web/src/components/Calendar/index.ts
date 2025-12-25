@@ -1,7 +1,7 @@
 import { default as Calendar } from './src/Calendar';
 import { withInstall } from '@aurora/utils';
 
-export const NCalendar = withInstall(Calendar);
-export default NCalendar;
+export const HCalendar = withInstall(Calendar);
+export default HCalendar;
 
-export type { NCalendarPinFlag } from './src/utils/types';
+export type { HCalendarPinFlag } from './src/utils/types';

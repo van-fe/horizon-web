@@ -1,46 +1,46 @@
 import { mount } from '@vue/test-utils';
-import NPageHeader from '../src/PageHeader';
+import HPageHeader from '../src/PageHeader';
 import { describe, expect, test, vi } from 'vitest';
 import { IconArrowLeft, AIcon } from '@aurora/icon';
 import { nextTick, ref } from 'vue';
-import NButton from '../../Button';
+import HButton from '../../Button';
 
 describe('PageHeader.tsx', () => {
   test('basic', async () => {
-    const wrapper = mount(() => <NPageHeader />);
-    const element = wrapper.findComponent(NPageHeader);
+    const wrapper = mount(() => <HPageHeader />);
+    const element = wrapper.findComponent(HPageHeader);
 
     expect(element.exists()).toBe(true);
   });
 
   describe('props', () => {
     test('icon svg', async () => {
-      const wrapper = mount(() => <NPageHeader icon={IconArrowLeft} />);
+      const wrapper = mount(() => <HPageHeader icon={IconArrowLeft} />);
 
       expect(wrapper.findComponent(IconArrowLeft).exists()).toBeTruthy();
     });
 
     test('icon name', async () => {
-      const wrapper = mount(() => <NPageHeader icon="arrow_left" />);
+      const wrapper = mount(() => <HPageHeader icon="arrow_left" />);
 
       expect(wrapper.findComponent(AIcon).exists()).toBeTruthy();
     });
 
     test('title', async () => {
-      const wrapper = mount(() => <NPageHeader title="TITLE" />);
+      const wrapper = mount(() => <HPageHeader title="TITLE" />);
 
       expect(wrapper.text()).toBe('TITLE');
     });
 
     test('content', async () => {
-      const wrapper = mount(() => <NPageHeader title="TITLE" />);
+      const wrapper = mount(() => <HPageHeader title="TITLE" />);
 
       expect(wrapper.text()).toBe('TITLE');
     });
 
     test('use-divider', async () => {
       const useDivider = ref(false);
-      const wrapper = mount(() => <NPageHeader useDivider={useDivider.value} />);
+      const wrapper = mount(() => <HPageHeader useDivider={useDivider.value} />);
 
       expect(wrapper.classes('has-divider')).toBeFalsy();
 
@@ -55,8 +55,8 @@ describe('PageHeader.tsx', () => {
   describe('emits', () => {
     test('back', async () => {
       const onBack = vi.fn();
-      const wrapper = mount(() => <NPageHeader onBack={onBack} />);
-      const backBtn = wrapper.findComponent(NButton);
+      const wrapper = mount(() => <HPageHeader onBack={onBack} />);
+      const backBtn = wrapper.findComponent(HButton);
 
       await backBtn.trigger('click');
 
@@ -67,11 +67,11 @@ describe('PageHeader.tsx', () => {
   describe('slots', () => {
     test('default', () => {
       const wrapper = mount(() => (
-        <NPageHeader>
+        <HPageHeader>
           {{
             default: () => `DEFAULT`,
           }}
-        </NPageHeader>
+        </HPageHeader>
       ));
 
       expect(wrapper.find('.n-page-header__default').exists()).toBeTruthy();
@@ -79,11 +79,11 @@ describe('PageHeader.tsx', () => {
 
     test('icon', () => {
       const wrapper = mount(() => (
-        <NPageHeader>
+        <HPageHeader>
           {{
             icon: () => `ICON`,
           }}
-        </NPageHeader>
+        </HPageHeader>
       ));
 
       expect(wrapper.find('.n-button__icon').text()).toBe('ICON');
@@ -91,11 +91,11 @@ describe('PageHeader.tsx', () => {
 
     test('title', () => {
       const wrapper = mount(() => (
-        <NPageHeader>
+        <HPageHeader>
           {{
             title: () => `TITLE`,
           }}
-        </NPageHeader>
+        </HPageHeader>
       ));
 
       expect(wrapper.find('.n-page-header__header--title').text()).toBe('TITLE');
@@ -103,11 +103,11 @@ describe('PageHeader.tsx', () => {
 
     test('tags', () => {
       const wrapper = mount(() => (
-        <NPageHeader>
+        <HPageHeader>
           {{
             tags: () => `TAGS`,
           }}
-        </NPageHeader>
+        </HPageHeader>
       ));
 
       expect(wrapper.find('.n-page-header__header--tags').text()).toBe('TAGS');
@@ -115,23 +115,23 @@ describe('PageHeader.tsx', () => {
 
     test('content', () => {
       const wrapper = mount(() => (
-        <NPageHeader>
+        <HPageHeader>
           {{
-            content: () => `CONTENT`,
+            content: () => `COHTEHT`,
           }}
-        </NPageHeader>
+        </HPageHeader>
       ));
 
-      expect(wrapper.find('.n-page-header__inner--content').text()).toBe('CONTENT');
+      expect(wrapper.find('.n-page-header__inner--content').text()).toBe('COHTEHT');
     });
 
     test('extra', () => {
       const wrapper = mount(() => (
-        <NPageHeader>
+        <HPageHeader>
           {{
             extra: () => `EXTRA`,
           }}
-        </NPageHeader>
+        </HPageHeader>
       ));
 
       expect(wrapper.find('.n-page-header__extra').text()).toBe('EXTRA');
@@ -139,11 +139,11 @@ describe('PageHeader.tsx', () => {
 
     test('breadcrumb', () => {
       const wrapper = mount(() => (
-        <NPageHeader>
+        <HPageHeader>
           {{
             breadcrumb: () => `BREADCRUMB`,
           }}
-        </NPageHeader>
+        </HPageHeader>
       ));
 
       expect(wrapper.find('.n-page-header__breadcrumb').text()).toBe('BREADCRUMB');

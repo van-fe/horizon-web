@@ -1,6 +1,6 @@
-import type { NDropdownTreeData } from './types';
+import type { HDropdownTreeData } from './types';
 
-export function getTreeLevels(tree: Map<string, NDropdownTreeData>, level = 0) {
+export function getTreeLevels(tree: Map<string, HDropdownTreeData>, level = 0) {
   let res = level;
 
   for (const value of tree.values()) {

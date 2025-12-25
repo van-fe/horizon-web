@@ -1,37 +1,37 @@
 import BaseMultipartUploadHelper from './BaseMultipartUploadHelper';
 import type { Data } from '@aurora/utils';
 import type {
-  NUploadMultipartSetting,
-  NUploadChunk,
+  HUploadMultipartSetting,
+  HUploadChunk,
 } from '../../composables/useMultipartUpload';
 import type { ToRefs } from 'vue';
 import type { UploadProps } from '../../composables/useProps';
-import type { NUploadFileType, NUploadHttpRequestInstanceMethods } from '../fileDefines';
+import type { HUploadFileType, HUploadHttpRequestInstanceMethods } from '../fileDefines';
 
 export default class CustomMultipleUploader extends BaseMultipartUploadHelper {
   private _data: Data = {};
 
   constructor(
-    file: NUploadFileType,
-    instanceMethods: NUploadHttpRequestInstanceMethods,
+    file: HUploadFileType,
+    instanceMethods: HUploadHttpRequestInstanceMethods,
     props?: ToRefs<Partial<UploadProps>>,
   ) {
     super(file, instanceMethods, props);
   }
 
   private get setting() {
-    return this.multipart as NUploadMultipartSetting;
+    return this.multipart as HUploadMultipartSetting;
   }
 
   protected appendData(formData: FormData, data?: Data) {
     super.appendData(formData, { ...data, ...this._data });
   }
 
-  async initUpload(file: NUploadFileType): Promise<void> {
+  async initUpload(file: HUploadFileType): Promise<void> {
     this._data = (await this.setting.initUpload?.(file)) || {};
   }
 
-  beforeFilePartUpload(file: NUploadFileType, index: number, part: Blob): Data {
+  beforeFilePartUpload(file: HUploadFileType, index: number, part: Blob): Data {
     return this.setting.beforePartUpload?.(file, index, part) || {};
   }
 
@@ -39,7 +39,7 @@ export default class CustomMultipleUploader extends BaseMultipartUploadHelper {
     return this.setting.filenameModify?.(fileRawName, index, part) || fileRawName;
   }
 
-  mergeFiles(file: NUploadFileType, chunks: NUploadChunk[]): Promise<void> {
+  mergeFiles(file: HUploadFileType, chunks: HUploadChunk[]): Promise<void> {
     return this.setting.handleMerge?.(file, chunks);
   }
 

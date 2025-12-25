@@ -5,33 +5,33 @@ export type ModelValueSingleType = (string | number)[];
 
 export type ModelValueType = ModelValueSingleType | ModelValueSingleType[] | undefined | null;
 
-export type NCascaderModelValueType = ModelValueType;
+export type HCascaderModelValueType = ModelValueType;
 
-export type NCascaderUuidType = string | number;
+export type HCascaderUuidType = string | number;
 
-export type NCascaderOption = BaseTreeData;
+export type HCascaderOption = BaseTreeData;
 
-export type NCascaderExtendOption = ExtendTreeData<NCascaderOption>;
+export type HCascaderExtendOption = ExtendTreeData<HCascaderOption>;
 
-export interface NCascaderFilterPathData {
+export interface HCascaderFilterPathData {
   label: string;
   value: string | number;
-  option: NCascaderExtendOption;
+  option: HCascaderExtendOption;
 }
 
-export type NCascaderFilterFunction = (input: string, paths: NCascaderFilterPathData[]) => boolean;
+export type HCascaderFilterFunction = (input: string, paths: HCascaderFilterPathData[]) => boolean;
 
-export type NCascaderFilterSortFunction = (
-  a: NCascaderExtendOption,
-  b: NCascaderExtendOption,
+export type HCascaderFilterSortFunction = (
+  a: HCascaderExtendOption,
+  b: HCascaderExtendOption,
   inputValue: string,
 ) => ReturnType<Exclude<Parameters<typeof Array.prototype.sort>[0], undefined>>;
 
-export interface NCascaderSearchParams {
+export interface HCascaderSearchParams {
   /**
    * 自定义搜索过滤方法
    */
-  filter: NCascaderFilterFunction;
+  filter: HCascaderFilterFunction;
 
   /**
    * 限制最大展示数量
@@ -46,13 +46,13 @@ export interface NCascaderSearchParams {
   /**
    * 搜索结果排序
    */
-  sort?: NCascaderFilterSortFunction;
+  sort?: HCascaderFilterSortFunction;
 }
 
 /**
  * 动态加载时，当前触发加载的选项
  */
-export interface NCascaderDynamicLoadNode {
+export interface HCascaderDynamicLoadNode {
   /**
    * 当前节点层级
    */
@@ -61,7 +61,7 @@ export interface NCascaderDynamicLoadNode {
   /**
    * 当前节点直到根节点的路径
    */
-  options: (NCascaderOption | null)[];
+  options: (HCascaderOption | null)[];
 
   /**
    * 当前节点 vNode

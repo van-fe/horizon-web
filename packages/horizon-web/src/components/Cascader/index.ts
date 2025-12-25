@@ -1,14 +1,14 @@
 import Cascader from './src/Cascader';
 import { withInstall } from '@aurora/utils';
 
-export const NCascader = withInstall(Cascader);
-export default NCascader;
+export const HCascader = withInstall(Cascader);
+export default HCascader;
 
 export type {
-  NCascaderOption,
-  NCascaderExtendOption,
-  NCascaderSearchParams,
-  NCascaderFilterFunction,
-  NCascaderDynamicLoadNode,
-  NCascaderModelValueType,
+  HCascaderOption,
+  HCascaderExtendOption,
+  HCascaderSearchParams,
+  HCascaderFilterFunction,
+  HCascaderDynamicLoadNode,
+  HCascaderModelValueType,
 } from './src/utils/types';

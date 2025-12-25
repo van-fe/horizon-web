@@ -1,5 +1,5 @@
 import { default as Mask } from './src/Mask';
 import { withInstall } from '@aurora/utils';
 
-export const NMask = withInstall(Mask);
-export default NMask;
+export const HMask = withInstall(Mask);
+export default HMask;

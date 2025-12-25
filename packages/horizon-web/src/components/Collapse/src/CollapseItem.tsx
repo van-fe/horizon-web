@@ -8,7 +8,7 @@ import type { CollapseProvidesData } from './Collapse';
 import { injectedKey } from './Collapse';
 import type { CollapseItemSlots } from './composables/useSlots';
 import { useCollapseItemSlots } from './composables/useSlots';
-import NTransition from '~/components/Transition/src/Transition';
+import HTransition from '~/components/Transition/src/Transition';
 
 export default defineComponent({
   name: `${useNamespace()}CollapseItem`,
@@ -79,7 +79,7 @@ export default defineComponent({
               )}
             </div>
           </div>
-          <NTransition name="collapse">
+          <HTransition name="collapse">
             {directiveProp.value === 'show' ? (
               <div class={[`${classHelper.e('body')}`]} v-show={isActiveName}>
                 <div
@@ -99,7 +99,7 @@ export default defineComponent({
                 </div>
               )
             )}
-          </NTransition>
+          </HTransition>
         </div>
       );
     };

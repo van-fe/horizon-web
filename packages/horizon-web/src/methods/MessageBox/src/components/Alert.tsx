@@ -1,12 +1,12 @@
 import { defineComponent, onMounted, ref } from 'vue';
 import { useMsgBoxAlertProps } from '../composables/useProps';
-import NDialog from '~/components/Dialog/src/Dialog';
+import HDialog from '~/components/Dialog/src/Dialog';
 import { ComponentClassBlock } from '@aurora/utils';
 
 export default defineComponent({
   name: 'MessageBoxAlert',
   components: {
-    NDialog,
+    HDialog,
   },
   props: useMsgBoxAlertProps,
   emits: ['close', 'confirmClick'],
@@ -72,7 +72,7 @@ export default defineComponent({
 
     return () => {
       return (
-        <NDialog
+        <HDialog
           class={[classHelper.block, classHelper.e('pure', !props.title)]}
           classNames={{ body: classHelper.e('alert-body') }}
           visible={visibleRef.value}
@@ -95,7 +95,7 @@ export default defineComponent({
           zIndex={props.zIndex}
         >
           {props.content}
-        </NDialog>
+        </HDialog>
       );
     };
   },

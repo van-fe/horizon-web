@@ -1,7 +1,7 @@
 import type { VNode } from 'vue';
 import type { Dayjs } from 'dayjs';
 
-export interface NCalendarPinFlag {
+export interface HCalendarPinFlag {
   /**
    * 唯一识别 ID
    * @invisible

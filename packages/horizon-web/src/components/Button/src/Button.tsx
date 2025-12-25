@@ -21,9 +21,9 @@ import type { ButtonExposes } from './composables/useExposes';
 import useSize from '~/utils/useSize';
 import { iconSizeMapping, onlyIconSizeMapping } from './utils/config';
 import { IconLoadingLine, AIcon } from '@aurora/icon';
-import { NButtonGroupPropsInjectKey, NButtonGroupSizeInjectKey } from './utils/injectKeys';
+import { HButtonGroupPropsInjectKey, HButtonGroupSizeInjectKey } from './utils/injectKeys';
 import type { Router } from 'vue-router';
-import { NApplicationCompatibilityInjectedKey } from '~/components/Application/src/utils/injectedKeys';
+import { HApplicationCompatibilityInjectedKey } from '~/components/Application/src/utils/injectedKeys';
 import { getCssVariableByStatus } from '~/utils/useColorful';
 import { builtinColorMapping } from '~/styles';
 import { tinyColor } from '@aurora/colors';
@@ -45,9 +45,9 @@ export default defineComponent({
     const instance = getCurrentInstance();
     const router = instance?.appContext.config.globalProperties.$router as Router | undefined;
 
-    const parentProps = inject(NButtonGroupPropsInjectKey, undefined);
-    const groupSizeRef = inject(NButtonGroupSizeInjectKey, undefined);
-    const compatibility = inject(NApplicationCompatibilityInjectedKey, undefined);
+    const parentProps = inject(HButtonGroupPropsInjectKey, undefined);
+    const groupSizeRef = inject(HButtonGroupSizeInjectKey, undefined);
+    const compatibility = inject(HApplicationCompatibilityInjectedKey, undefined);
 
     const isOnlyIcon = computed(
       () => !!(props.icon || slots.icon || props.loading) && !slots.default && !slots.suffix,

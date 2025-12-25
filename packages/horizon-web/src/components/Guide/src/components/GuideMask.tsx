@@ -1,16 +1,16 @@
 import type { PropType } from 'vue';
 import { computed, defineComponent, inject, onMounted, shallowRef, watch } from 'vue';
 import { ComponentClassBlock, useNamespace, getElement, cls, cssVariable } from '@aurora/utils';
-import type { NGuideCollectedItems } from '../utils/injectedKeys';
+import type { HGuideCollectedItems } from '../utils/injectedKeys';
 import type { UseElementBoundingReturn } from '@vueuse/core';
 import { useElementBounding, useWindowSize } from '@vueuse/core';
-import { NGuidePropsInjectKey } from '../utils/injectedKeys';
+import { HGuidePropsInjectKey } from '../utils/injectedKeys';
 
 export default defineComponent({
   name: `${useNamespace()}GuideMask`,
   props: {
     currentItem: {
-      type: Object as PropType<NGuideCollectedItems>,
+      type: Object as PropType<HGuideCollectedItems>,
     },
   },
   setup(props) {
@@ -18,7 +18,7 @@ export default defineComponent({
 
     const { width: windowWidth, height: windowHeight } = useWindowSize();
 
-    const parentProps = inject(NGuidePropsInjectKey);
+    const parentProps = inject(HGuidePropsInjectKey);
 
     const currentTarget = shallowRef<UseElementBoundingReturn | null>(null);
 

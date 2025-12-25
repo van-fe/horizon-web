@@ -3,11 +3,11 @@ import Option from './src/Option';
 import OptionGroup from './src/OptionGroup';
 import { withInstall, withNoopInstall } from '@aurora/utils';
 
-export const NSelect = withInstall(Select, {
+export const HSelect = withInstall(Select, {
   Option,
   OptionGroup,
 });
-export const NOption = withNoopInstall(Option);
-export const NOptionGroup = withNoopInstall(OptionGroup);
+export const HOption = withNoopInstall(Option);
+export const HOptionGroup = withNoopInstall(OptionGroup);
 
-export default NSelect;
+export default HSelect;

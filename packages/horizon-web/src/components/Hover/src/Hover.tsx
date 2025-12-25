@@ -4,11 +4,11 @@ import { useHoverEmits } from './composables/useEmits';
 import type { HoverEmits } from './composables/useEmits';
 import type { HoverSlots } from './composables/useSlots';
 import { useHoverSlots } from './composables/useSlots';
-import { NOnlyChild, useNamespace } from '@aurora/utils';
+import { HChildOnly, useNamespace } from '@aurora/utils';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { HoverExposes } from './composables/useExposes';
 import { useHoverExposes } from './composables/useExposes';
-import { NHoverSwitchVisibleInjectKey } from '~/components/Hover/src/utils/injectKeys';
+import { HHoverSwitchVisibleInjectKey } from '~/components/Hover/src/utils/injectKeys';
 
 export default defineComponent({
   name: `${useNamespace()}Hover`,
@@ -18,7 +18,7 @@ export default defineComponent({
   slots: useHoverSlots,
   exposes: useHoverExposes,
   setup(props, { emit, slots, expose }: HorizonWebSetupContext<HoverEmits, HoverSlots, HoverExposes>) {
-    const targetRef = ref<(typeof NOnlyChild & { el: HTMLElement }) | null>(null);
+    const targetRef = ref<(typeof HChildOnly & { el: HTMLElement }) | null>(null);
     const hoverVisible = ref<boolean>(false);
     const openHoverTimer = ref<ReturnType<typeof setTimeout> | undefined>();
     const closeHoverTimer = ref<ReturnType<typeof setTimeout> | undefined>();
@@ -50,7 +50,7 @@ export default defineComponent({
       emit('mouseLeave', evt);
     };
 
-    provide(NHoverSwitchVisibleInjectKey, switchVisible);
+    provide(HHoverSwitchVisibleInjectKey, switchVisible);
 
     expose({
       show: () => {
@@ -64,14 +64,14 @@ export default defineComponent({
     return () => {
       const reference = slots?.default?.({ hover: hoverVisible.value });
       return (
-        <NOnlyChild ref={targetRef}>
+        <HChildOnly ref={targetRef}>
           {reference &&
             cloneVNode(Array.isArray(reference) ? reference[0] : reference, {
               onMouseenter: onMouseEnter,
               onMousemove: (evt: MouseEvent) => emit('mouseMove', evt),
               onMouseleave: onMouseLeave,
             })}
-        </NOnlyChild>
+        </HChildOnly>
       );
     };
   },

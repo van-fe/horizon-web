@@ -29,32 +29,32 @@ import type { DropdownEmits } from './composables/useEmits';
 import type { DropdownSlots } from './composables/useSlots';
 import type { DropdownExposes } from './composables/useExposes';
 import {
-  NDropdownAppendChildInjectKey,
-  NDropdownCommandFnInjectKey,
-  NDropdownPropsInjectKey,
-  NDropdownRemoveChildInjectKey,
-  NDropdownSizeInjectKey,
-  NDropdownTreeInjectKey,
-  NDropdownTreeLevelInjectKey,
+  HDropdownAppendChildInjectKey,
+  HDropdownCommandFnInjectKey,
+  HDropdownPropsInjectKey,
+  HDropdownRemoveChildInjectKey,
+  HDropdownSizeInjectKey,
+  HDropdownTreeInjectKey,
+  HDropdownTreeLevelInjectKey,
 } from './utils/InjectedKeys';
-import NPopover from '~/components/Popover/src/Popover';
-import NPopContent from '~/components/Popover/src/PopContent';
+import HPopover from '~/components/Popover/src/Popover';
+import HPopContent from '~/components/Popover/src/PopContent';
 import pickDropdownMenu from './utils/useDropdown';
-import NTransition from '~/components/Transition/src/Transition';
-import type { NDropdownTreeData } from './utils/types';
-import NScrollbar from '~/components/Scrollbar/src/Scrollbar';
+import HTransition from '~/components/Transition/src/Transition';
+import type { HDropdownTreeData } from './utils/types';
+import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
 import { nanoid } from 'nanoid';
 import { useSessionStorage } from '@vueuse/core';
 import type { PopoverExposes } from '~/components/Popover/src/composables/useExposes';
 import useSize from '~/utils/useSize';
-import { NScrollbarUpdateDelayInjectKey } from '~/components/Scrollbar/src/utils/injectKeys';
+import { HScrollbarUpdateDelayInjectKey } from '~/components/Scrollbar/src/utils/injectKeys';
 
 export default defineComponent({
   name: `${useNamespace()}Dropdown`,
   desc: '下拉菜单是轻量级的快捷菜单，用于页面内部的内容导航和相关操作。主要用于导航、工具菜单以及部分操作集合，通过下拉菜单将某功能下面的子系统、功能集合等统一放在一起。',
   components: {
-    NPopover,
-    NScrollbar,
+    HPopover,
+    HScrollbar,
   },
   props: useDropdownProps,
   emits: useDropdownEmits,
@@ -73,10 +73,10 @@ export default defineComponent({
     const visible = ref(props.visible);
 
     const wrapperDomRef = ref<HTMLElement | null>(null);
-    const popoverRef = ref<HorizonWebComponentInstance<typeof NPopover, PopoverExposes> | null>(null);
-    const popContentDomRef = ref<HorizonWebComponentInstance<typeof NPopContent> | null>(null);
+    const popoverRef = ref<HorizonWebComponentInstance<typeof HPopover, PopoverExposes> | null>(null);
+    const popContentDomRef = ref<HorizonWebComponentInstance<typeof HPopContent> | null>(null);
 
-    const dropdownTree = reactive(new Map<string, NDropdownTreeData>());
+    const dropdownTree = reactive(new Map<string, HDropdownTreeData>());
     const isDropdownTreeHasThirdLevel = ref(false);
     const zIndex = useZIndex(props.zIndex);
 
@@ -182,7 +182,7 @@ export default defineComponent({
       });
     }
 
-    function appendChild(item: NDropdownTreeData) {
+    function appendChild(item: HDropdownTreeData) {
       dropdownTree.set(item.uuid, item);
     }
 
@@ -208,14 +208,14 @@ export default defineComponent({
       handleClose,
     });
 
-    provide(NDropdownTreeLevelInjectKey, 0);
-    provide(NDropdownPropsInjectKey, props);
-    provide(NDropdownSizeInjectKey, size);
-    provide(NDropdownCommandFnInjectKey, command);
-    provide(NDropdownTreeInjectKey, dropdownTree);
-    provide(NDropdownAppendChildInjectKey, appendChild);
-    provide(NDropdownRemoveChildInjectKey, removeChild);
-    provide(NScrollbarUpdateDelayInjectKey, 400);
+    provide(HDropdownTreeLevelInjectKey, 0);
+    provide(HDropdownPropsInjectKey, props);
+    provide(HDropdownSizeInjectKey, size);
+    provide(HDropdownCommandFnInjectKey, command);
+    provide(HDropdownTreeInjectKey, dropdownTree);
+    provide(HDropdownAppendChildInjectKey, appendChild);
+    provide(HDropdownRemoveChildInjectKey, removeChild);
+    provide(HScrollbarUpdateDelayInjectKey, 400);
 
     return () => {
       const slotVNodes: VNode[] = slots?.default?.({ popperVisible: visible.value }) ?? [];
@@ -229,8 +229,8 @@ export default defineComponent({
           <div class={cls(classHelper.block, classHelper.m(props.theme))}>
             <span onContextmenu={onContextMenu}>{reference}</span>
             <Teleport to={props.teleportTo} disabled={!props.toBody}>
-              <NTransition appear name="dropdown" speed="slow">
-                <NPopContent
+              <HTransition appear name="dropdown" speed="slow">
+                <HPopContent
                   v-click-outside={handleClose}
                   v-show={visible.value}
                   class={cls(classHelper.e('inner'), classHelper.em('inner', props.theme))}
@@ -240,14 +240,14 @@ export default defineComponent({
                   }}
                 >
                   {!isDropdownTreeHasThirdLevel.value ? (
-                    <NScrollbar maxHeight={296} size="small">
+                    <HScrollbar maxHeight={296} size="small">
                       {popper}
-                    </NScrollbar>
+                    </HScrollbar>
                   ) : (
                     popper
                   )}
-                </NPopContent>
-              </NTransition>
+                </HPopContent>
+              </HTransition>
             </Teleport>
           </div>
         );
@@ -259,7 +259,7 @@ export default defineComponent({
           class={cls(classHelper.block, classHelper.m(props.theme), classHelper.m(size.value))}
           data-placement={placement.value}
         >
-          <NPopover
+          <HPopover
             ref={popoverRef}
             hideEventType={props.hideEventType}
             trigger={trigger.value}
@@ -284,7 +284,7 @@ export default defineComponent({
             {{
               reference: () => reference,
               popper: () => (
-                <NPopContent
+                <HPopContent
                   ref={popContentDomRef}
                   style={
                     props.popperWidth
@@ -298,16 +298,16 @@ export default defineComponent({
                   )}
                 >
                   {!isDropdownTreeHasThirdLevel.value ? (
-                    <NScrollbar maxHeight={296} size="small">
+                    <HScrollbar maxHeight={296} size="small">
                       {popper}
-                    </NScrollbar>
+                    </HScrollbar>
                   ) : (
                     <Fragment>{popper}</Fragment>
                   )}
-                </NPopContent>
+                </HPopContent>
               ),
             }}
-          </NPopover>
+          </HPopover>
         </div>
       );
     };

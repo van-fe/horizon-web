@@ -2,9 +2,9 @@ import { default as Row } from './src/Row';
 import { default as Column } from './src/Column';
 import { withInstall, withNoopInstall } from '@aurora/utils';
 
-export const NRow = withInstall(Row, {
+export const HRow = withInstall(Row, {
   Column,
 });
-export const NCol = withNoopInstall(Column);
+export const HCol = withNoopInstall(Column);
 
-export default NRow;
+export default HRow;

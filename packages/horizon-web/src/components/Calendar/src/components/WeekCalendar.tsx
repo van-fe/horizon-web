@@ -2,13 +2,13 @@ import { computed, defineComponent, inject, onMounted, ref } from 'vue';
 import { cls, ComponentClassBlock, cssVariable, useNamespace } from '@aurora/utils';
 import { defaultLocale, localeInjectKey } from '~/provides';
 import {
-  NCalendarHelperInjectKey,
-  NCalendarPropsInjectKey,
-  NCalendarCurrentDateInjectKey,
-  NCalendarPinFlagsInjectKey,
-  NCalendarSlotsInjectKey,
-  NCalendarEmitInjectKey,
-  NCalendarCurrentTimeInjectKey,
+  HCalendarHelperInjectKey,
+  HCalendarPropsInjectKey,
+  HCalendarCurrentDateInjectKey,
+  HCalendarPinFlagsInjectKey,
+  HCalendarSlotsInjectKey,
+  HCalendarEmitInjectKey,
+  HCalendarCurrentTimeInjectKey,
 } from '../utils/injectKeys';
 import dayjs from 'dayjs';
 import {
@@ -20,24 +20,24 @@ import {
   getOneHourHeightPx,
   isDatesAreCrossDay,
 } from '../utils/timeHelper';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
 import DragToCreateFlag from '../utils/DragToCreateFlag';
-import NScrollbar from '~/components/Scrollbar/src/Scrollbar';
+import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
 
 export default defineComponent({
   name: `${useNamespace()}WeekCalendar`,
   setup() {
     const classHelper = new ComponentClassBlock('calendar-week');
     const bodyRef = ref<HTMLElement | null>(null);
-    const scrollbarRef = ref<typeof NScrollbar | null>(null);
-    const currentDate = inject(NCalendarCurrentDateInjectKey)!;
+    const scrollbarRef = ref<typeof HScrollbar | null>(null);
+    const currentDate = inject(HCalendarCurrentDateInjectKey)!;
     const locale = inject(localeInjectKey, defaultLocale);
-    const props = inject(NCalendarPropsInjectKey)!;
-    const parentSlots = inject(NCalendarSlotsInjectKey)!;
-    const parentEmit = inject(NCalendarEmitInjectKey)!;
-    const currentTime = inject(NCalendarCurrentTimeInjectKey)!;
-    const calendarHelper = inject(NCalendarHelperInjectKey)!;
-    const pinFlags = inject(NCalendarPinFlagsInjectKey)!;
+    const props = inject(HCalendarPropsInjectKey)!;
+    const parentSlots = inject(HCalendarSlotsInjectKey)!;
+    const parentEmit = inject(HCalendarEmitInjectKey)!;
+    const currentTime = inject(HCalendarCurrentTimeInjectKey)!;
+    const calendarHelper = inject(HCalendarHelperInjectKey)!;
+    const pinFlags = inject(HCalendarPinFlagsInjectKey)!;
     const timezone = new Date().getTimezoneOffset() / 60;
     const currentTimeTop = computed(() =>
       getHeightCssRaw(currentTime.value.diff(currentTime.value.startOf('day'), 'seconds')),
@@ -95,7 +95,7 @@ export default defineComponent({
             ))}
           </div>
         </div>
-        <NScrollbar ref={scrollbarRef} zIndex={3}>
+        <HScrollbar ref={scrollbarRef} zIndex={3}>
           <div ref={bodyRef} class={classHelper.e('body')}>
             <div class={classHelper.em('body', 'time-scroll')}>
               {Array.from(Array(23).keys()).map(hour => (
@@ -189,7 +189,7 @@ export default defineComponent({
                         );
 
                         return (
-                          <NTooltip
+                          <HTooltip
                             disabled={!flag?.tooltip}
                             v-slots={{
                               content: () =>
@@ -233,7 +233,7 @@ export default defineComponent({
                                 </span>
                               </div>
                             </div>
-                          </NTooltip>
+                          </HTooltip>
                         );
                       })
                     }
@@ -290,7 +290,7 @@ export default defineComponent({
               ) : undefined}
             </div>
           </div>
-        </NScrollbar>
+        </HScrollbar>
       </div>
     );
   },

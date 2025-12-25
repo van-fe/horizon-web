@@ -1,8 +1,8 @@
 import type { Ref } from 'vue';
 import { provide, ref } from 'vue';
-import { NDatePickerPanelVisibleInjectKey } from '../utils/injectKeys';
+import { HDatePickerPanelVisibleInjectKey } from '../utils/injectKeys';
 import type { HorizonWebComponentInstance, HorizonWebSetupContext } from '@aurora/utils';
-import type NPicker from '~/components/Picker/src/Picker';
+import type HPicker from '~/components/Picker/src/Picker';
 import type { PickerExposes } from '~/components/Picker/src/composables/useExposes';
 import type { DatePickerEmits } from '../composables/useEmits';
 import type { DatePickerSlots } from '../composables/useSlots';
@@ -10,11 +10,11 @@ import type { DatePickerExposes } from '../composables/useExposes';
 
 export default function useVisible(
   context: HorizonWebSetupContext<DatePickerEmits, DatePickerSlots, DatePickerExposes>,
-  pickerDomRef: Ref<HorizonWebComponentInstance<typeof NPicker, PickerExposes> | undefined>,
+  pickerDomRef: Ref<HorizonWebComponentInstance<typeof HPicker, PickerExposes> | undefined>,
 ) {
   const visible = ref(false);
 
-  provide(NDatePickerPanelVisibleInjectKey, visible);
+  provide(HDatePickerPanelVisibleInjectKey, visible);
 
   function modifyPanelVisible(visible: boolean) {
     if (visible) {

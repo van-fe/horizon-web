@@ -19,30 +19,30 @@ import { useDropdownSubmenuEmits } from './composables/useEmits';
 import type { DropdownSubmenuSlots } from './composables/useSlots';
 import { useDropdownSubmenuSlots } from './composables/useSlots';
 import type { DropdownSubmenuEmits } from './composables/useEmits';
-import NPopover from '~/components/Popover/src/Popover';
-import NPopContent from '~/components/Popover/src/PopContent';
+import HPopover from '~/components/Popover/src/Popover';
+import HPopContent from '~/components/Popover/src/PopContent';
 import { IconArrowRight } from '@aurora/icon';
 import { renderIcon } from '~/utils/useIcon';
 import {
-  NDropdownActivatedChildInjectKey,
-  NDropdownAppendChildInjectKey,
-  NDropdownPropsInjectKey,
-  NDropdownRemoveChildInjectKey,
-  NDropdownTreeLevelInjectKey,
+  HDropdownActivatedChildInjectKey,
+  HDropdownAppendChildInjectKey,
+  HDropdownPropsInjectKey,
+  HDropdownRemoveChildInjectKey,
+  HDropdownTreeLevelInjectKey,
 } from './utils/InjectedKeys';
-import type { NDropdownTreeData } from './utils/types';
+import type { HDropdownTreeData } from './utils/types';
 import { nanoid } from 'nanoid';
-import NScrollbar from '~/components/Scrollbar/src/Scrollbar';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
+import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
 import type { PopoverExposes } from '~/components/Popover/src/composables/useExposes';
 
 export default defineComponent({
   name: `${useNamespace()}DropdownSubmenu`,
   components: {
-    NPopover,
-    NPopContent,
-    NScrollbar,
-    NTooltip,
+    HPopover,
+    HPopContent,
+    HScrollbar,
+    HTooltip,
   },
   props: useDropdownSubmenuProps,
   emits: useDropdownSubmenuEmits,
@@ -54,16 +54,16 @@ export default defineComponent({
     const uuid = nanoid();
     const classHelper = new ComponentClassBlock('dropdown-submenu');
 
-    const popoverDomRef = ref<HorizonWebComponentInstance<typeof NPopover, PopoverExposes> | null>(null);
+    const popoverDomRef = ref<HorizonWebComponentInstance<typeof HPopover, PopoverExposes> | null>(null);
     const dropdownItemDomRef = ref<HTMLElement | null>(null);
 
     const popoverVisible = ref(false);
 
-    const parentProps = inject(NDropdownPropsInjectKey, undefined);
-    const treeLevel = inject(NDropdownTreeLevelInjectKey, 0);
-    const appendChild = inject(NDropdownAppendChildInjectKey, undefined);
-    const removeChild = inject(NDropdownRemoveChildInjectKey, undefined);
-    const parentActivatedChildUuid = inject(NDropdownActivatedChildInjectKey, undefined);
+    const parentProps = inject(HDropdownPropsInjectKey, undefined);
+    const treeLevel = inject(HDropdownTreeLevelInjectKey, 0);
+    const appendChild = inject(HDropdownAppendChildInjectKey, undefined);
+    const removeChild = inject(HDropdownRemoveChildInjectKey, undefined);
+    const parentActivatedChildUuid = inject(HDropdownActivatedChildInjectKey, undefined);
 
     const activeChildUuid = ref<string>();
 
@@ -77,7 +77,7 @@ export default defineComponent({
       },
     );
 
-    const dropdownTree = reactive(new Map<string, NDropdownTreeData>());
+    const dropdownTree = reactive(new Map<string, HDropdownTreeData>());
     const isDropdownTreeHasThirdLevel = ref(false);
 
     const trigger = computed(() => {
@@ -101,7 +101,7 @@ export default defineComponent({
       },
     );
 
-    function selfAppendChild(item: NDropdownTreeData) {
+    function selfAppendChild(item: HDropdownTreeData) {
       dropdownTree.set(item.uuid, item);
     }
 
@@ -120,10 +120,10 @@ export default defineComponent({
       }
     }
 
-    provide(NDropdownTreeLevelInjectKey, treeLevel + 1);
-    provide(NDropdownAppendChildInjectKey, selfAppendChild);
-    provide(NDropdownRemoveChildInjectKey, selfRemoveChild);
-    provide(NDropdownActivatedChildInjectKey, activeChildUuid);
+    provide(HDropdownTreeLevelInjectKey, treeLevel + 1);
+    provide(HDropdownAppendChildInjectKey, selfAppendChild);
+    provide(HDropdownRemoveChildInjectKey, selfRemoveChild);
+    provide(HDropdownActivatedChildInjectKey, activeChildUuid);
 
     function handleKeyUp(evt: KeyboardEvent) {
       onClick(evt);
@@ -161,7 +161,7 @@ export default defineComponent({
           classHelper.is('focusable', !props.disabled),
         )}
       >
-        <NPopover
+        <HPopover
           ref={popoverDomRef}
           trigger={trigger.value}
           placement={parentProps?.submenuLeft ? 'left-start' : 'right-start'}
@@ -198,7 +198,7 @@ export default defineComponent({
                         })}
                       </div>
                     )}
-                    <NTooltip overflow={true}>
+                    <HTooltip overflow={true}>
                       {{
                         content: () => slots.title?.() ?? props.title,
                         default: () => (
@@ -207,7 +207,7 @@ export default defineComponent({
                           </div>
                         ),
                       }}
-                    </NTooltip>
+                    </HTooltip>
                   </div>
                   <div class={cls(classHelper.em('item', 'arrow'))}>
                     <IconArrowRight size={12} />
@@ -216,18 +216,18 @@ export default defineComponent({
               </div>
             ),
             popper: () => (
-              <NPopContent class={cls(classHelper.e('inner'))}>
+              <HPopContent class={cls(classHelper.e('inner'))}>
                 {!isDropdownTreeHasThirdLevel.value ? (
-                  <NScrollbar maxHeight={296} size="small">
+                  <HScrollbar maxHeight={296} size="small">
                     {slots.default?.()}
-                  </NScrollbar>
+                  </HScrollbar>
                 ) : (
                   slots.default?.()
                 )}
-              </NPopContent>
+              </HPopContent>
             ),
           }}
-        </NPopover>
+        </HPopover>
       </div>
     );
   },

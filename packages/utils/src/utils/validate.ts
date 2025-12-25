@@ -8,6 +8,10 @@ export function isString(val: unknown): val is string {
   return typeof val === 'string';
 }
 
+export function isBigInt(val: unknown): val is bigint {
+  return typeof val === 'bigint';
+}
+
 export function isBoolean(val: unknown): val is boolean {
   return typeof val === 'boolean';
 }

@@ -1,7 +1,7 @@
 import type { ExtractPropTypes, PropType } from 'vue';
 import { declarePropType } from '@aurora/utils';
 import type { Dayjs } from 'dayjs';
-import type { NCalendarPinFlag } from '../utils/types';
+import type { HCalendarPinFlag } from '../utils/types';
 
 export const useCalendarProps = declarePropType({
   /**
@@ -117,7 +117,7 @@ export const useCalendarProps = declarePropType({
     type: Function as PropType<
       (date: Dayjs) => {
         title?: string;
-        type?: NCalendarPinFlag['type'];
+        type?: HCalendarPinFlag['type'];
       }
     >,
     required: false,
@@ -126,10 +126,10 @@ export const useCalendarProps = declarePropType({
    * 创建 Flag 的回调:
    * `false` 会删除 `Flag`
    * `true` 会保留临时创建的 `Flag`
-   * `NCalendarPinFlag` 对象，会根据回调对象修改临时创建 `Flag` 的对象
+   * `HCalendarPinFlag` 对象，会根据回调对象修改临时创建 `Flag` 的对象
    */
   creatFinishFlagCallback: {
-    type: Function as PropType<(flag: NCalendarPinFlag) => Promise<boolean | NCalendarPinFlag>>,
+    type: Function as PropType<(flag: HCalendarPinFlag) => Promise<boolean | HCalendarPinFlag>>,
     required: false,
   },
   /**
@@ -146,7 +146,7 @@ export const useCalendarProps = declarePropType({
    * 会自动根据开始时间和结束时间排序
    */
   pinFlags: {
-    type: Array as PropType<NCalendarPinFlag[]>,
+    type: Array as PropType<HCalendarPinFlag[]>,
     default: () => [],
   },
   /**

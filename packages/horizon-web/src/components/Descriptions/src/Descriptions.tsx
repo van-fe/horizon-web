@@ -22,7 +22,7 @@ import {
   getSymbolNodeChildren,
 } from '@aurora/utils';
 import { GlobalSizeInjectedKey } from '~/components/Application/src/utils/injectedKeys';
-import type { NApplicationSizeType } from '~/components/Application/src/composables/useProps';
+import type { HApplicationSizeType } from '~/components/Application/src/composables/useProps';
 import { useElementSize, useDebounceFn } from '@vueuse/core';
 
 export default defineComponent({
@@ -86,7 +86,7 @@ export default defineComponent({
       provideObj.labelClass = labelClassProp.value;
       provideObj.valueClass = valueClassProp.value;
     });
-    provide('NDescriptions', provideObj);
+    provide('HDescriptions', provideObj);
 
     const getNeedRenderedItems = (defaultSlots: any) => {
       const result = defaultSlots
@@ -107,7 +107,7 @@ export default defineComponent({
         sizeAdapter(props.size, {
           middle: 'medium',
         }) || globalSize.value,
-    ) as ComputedRef<NApplicationSizeType>;
+    ) as ComputedRef<HApplicationSizeType>;
 
     // 响应式
     const descriptionsRef = ref<HTMLElement | null>(null);

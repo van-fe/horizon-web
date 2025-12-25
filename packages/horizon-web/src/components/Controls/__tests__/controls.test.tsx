@@ -1,18 +1,18 @@
 import { mount } from '@vue/test-utils';
-import NControls from '../src/Controls';
+import HControls from '../src/Controls';
 import { describe, expect, test } from 'vitest';
-import { NControl } from '../index';
+import { HControl } from '../index';
 import { IconAdd, IconEdit } from '@aurora/icon';
 import { ref } from 'vue';
 
 describe('Controls.tsx', () => {
   test('basic', async () => {
     const wrapper = mount(() => (
-      <NControls>
-        <NControl icon={IconAdd} text="Add" label="add" />
-      </NControls>
+      <HControls>
+        <HControl icon={IconAdd} text="Add" label="add" />
+      </HControls>
     ));
-    const element = wrapper.findComponent(NControls);
+    const element = wrapper.findComponent(HControls);
 
     expect(element.exists()).toBe(true);
   });
@@ -23,13 +23,13 @@ describe('Controls.tsx', () => {
       const accessList = ref(['edit']);
 
       const wrapper = mount(() => (
-        <NControls accessList={accessList.value}>
-          <NControl icon={IconAdd} text="Add" label="add" />
-          <NControl icon={IconEdit} text="Edit" label="edit" />
-        </NControls>
+        <HControls accessList={accessList.value}>
+          <HControl icon={IconAdd} text="Add" label="add" />
+          <HControl icon={IconEdit} text="Edit" label="edit" />
+        </HControls>
       ));
 
-      const elements = wrapper.findAllComponents(NControl);
+      const elements = wrapper.findAllComponents(HControl);
 
       expect(elements.length).eq(1);
     });

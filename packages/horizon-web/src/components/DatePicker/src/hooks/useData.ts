@@ -9,11 +9,11 @@ import { isFunction, isNil, isDefined, isString } from '@aurora/utils';
 import type { DatePickerSlots } from '../composables/useSlots';
 import type { DatePickerExposes } from '../composables/useExposes';
 import {
-  NFormDisabledInjectedKey,
-  NFormItemErrorInjectedKey,
-  NFormItemTriggerInjectedKey,
+  HFormDisabledInjectedKey,
+  HFormItemErrorInjectedKey,
+  HFormItemTriggerInjectedKey,
 } from '~/components/Form/src/utils/injectedKeys';
-import type { NDatePickerDomRefs, NDatePickerBaseSupportType } from '../utils/types';
+import type { HDatePickerDomRefs, HDatePickerBaseSupportType } from '../utils/types';
 import { getCurrentLocale } from '~/utils/useLocaleLang';
 import { warn } from '~/utils/useLog';
 import { mergeDateTime, onlyCloneTime, tryToAnalysisDate } from '../utils/useDayjs';
@@ -55,9 +55,9 @@ export function useTime() {
 export default function useData(
   propRefs: ToRefs<DatePickerProps>,
   context: HorizonWebSetupContext<DatePickerEmits, DatePickerSlots, DatePickerExposes>,
-  domRefs: NDatePickerDomRefs,
+  domRefs: HDatePickerDomRefs,
   options: {
-    pickerType: ComputedRef<NDatePickerBaseSupportType>;
+    pickerType: ComputedRef<HDatePickerBaseSupportType>;
     startDate: Ref<Dayjs | undefined | null>;
     endDate: Ref<Dayjs | undefined | null>;
     previewDate: Ref<Dayjs | undefined>;
@@ -80,9 +80,9 @@ export default function useData(
     | null = undefined;
 
   /** injects **/
-  const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
-  const formDisabled = inject(NFormDisabledInjectedKey, undefined);
-  const formItemError = inject(NFormItemErrorInjectedKey, undefined);
+  const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
+  const formDisabled = inject(HFormDisabledInjectedKey, undefined);
+  const formItemError = inject(HFormItemErrorInjectedKey, undefined);
   const currentLocale = getCurrentLocale();
 
   /** computed **/

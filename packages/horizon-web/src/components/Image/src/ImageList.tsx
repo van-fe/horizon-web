@@ -1,8 +1,8 @@
 import type { ComponentOptions, VNode } from 'vue';
 import { defineComponent, ref, provide } from 'vue';
 import { useImageListProps } from './composables/useProps';
-import NViewer from '~/components/Viewer/src/Viewer';
-import type { NViewerSource } from '~/components/Viewer/src/composables/useProps';
+import HViewer from '~/components/Viewer/src/Viewer';
+import type { HViewerSource } from '~/components/Viewer/src/composables/useProps';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import {
   ComponentClassBlock,
@@ -17,7 +17,7 @@ import { useImageListSlots } from './composables/useSlots';
 export default defineComponent({
   name: `${useNamespace()}ImageList`,
   components: {
-    NViewer,
+    HViewer,
   },
   props: useImageListProps,
   slots: useImageListSlots,
@@ -28,11 +28,11 @@ export default defineComponent({
     let images: VNode[] = [];
     let overflowNum = 0;
     const viewerShown = ref(false);
-    let viewerSources: NViewerSource[] = [];
+    let viewerSources: HViewerSource[] = [];
     const getImages = () => {
       const vnodes = slotVNodes(slots.default);
       const allImgs = flattenVNodes(vnodes).filter(
-        t => (t.type as ComponentOptions).name === 'NImage',
+        t => (t.type as ComponentOptions).name === 'HImage',
       );
       viewerSources = allImgs.map(({ props }) => {
         return {
@@ -89,7 +89,7 @@ export default defineComponent({
               ))}
             </ul>
             {viewerSources.length > 0 && (
-              <NViewer
+              <HViewer
                 v-model={viewerShown.value}
                 sources={viewerSources}
                 initIndex={viewerIndex.value}

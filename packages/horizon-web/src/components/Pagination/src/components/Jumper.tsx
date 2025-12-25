@@ -1,8 +1,8 @@
 import { defineComponent, inject, nextTick, PropType, ref, withKeys } from 'vue';
 import { ComponentClassBlock, isNumber, useNamespace } from '@aurora/utils';
 import { defaultLocale, localeInjectKey } from '~/provides';
-import { NPaginationEmitInjectKey, NPaginationPropsInjectKey } from '../utils/injectKeys';
-import NInputNumber from '~/components/InputNumber/src/InputNumber';
+import { HPaginationEmitInjectKey, HPaginationPropsInjectKey } from '../utils/injectKeys';
+import HInputNumber from '~/components/InputNumber/src/InputNumber';
 
 export default defineComponent({
   name: `${useNamespace()}PaginationJumper`,
@@ -24,10 +24,10 @@ export default defineComponent({
   setup(props, { emit }) {
     const classHelper = new ComponentClassBlock('pagination');
     const locale = inject(localeInjectKey, defaultLocale);
-    const parentProps = inject(NPaginationPropsInjectKey)!;
-    const parentEmits = inject(NPaginationEmitInjectKey)!;
+    const parentProps = inject(HPaginationPropsInjectKey)!;
+    const parentEmits = inject(HPaginationEmitInjectKey)!;
 
-    const inputNumberRef = ref<null | typeof NInputNumber>(null);
+    const inputNumberRef = ref<null | typeof HInputNumber>(null);
 
     const jumpTo = ref();
 
@@ -52,7 +52,7 @@ export default defineComponent({
         {parentProps.label?.jumpPrefixText ??
           parentProps.label?.jump_prefix_text ??
           locale.value?.langService.td().horizonWeb.pagination.goto}
-        <NInputNumber
+        <HInputNumber
           ref={inputNumberRef}
           v-model={jumpTo.value}
           size={props.size}

@@ -8,12 +8,12 @@ import { useRadioEmits } from './composables/useEmits';
 import type { RadioSlots } from './composables/useSlots';
 import { useRadioSlots } from './composables/useSlots';
 import {
-  NFormDisabledInjectedKey,
-  NFormItemTriggerInjectedKey,
+  HFormDisabledInjectedKey,
+  HFormItemTriggerInjectedKey,
 } from '~/components/Form/src/utils/injectedKeys';
-import { NRadioGroupInjectedKey } from './utils/injectedKeys';
+import { HRadioGroupInjectedKey } from './utils/injectedKeys';
 import useSize from '~/utils/useSize';
-import { NApplicationCompatibilityInjectedKey } from '~/components/Application/src/utils/injectedKeys';
+import { HApplicationCompatibilityInjectedKey } from '~/components/Application/src/utils/injectedKeys';
 
 export default defineComponent({
   name: `${useNamespace()}RadioGroup`,
@@ -29,7 +29,7 @@ export default defineComponent({
       name: propName,
     } = toRefs(props);
 
-    const compatibility = inject(NApplicationCompatibilityInjectedKey, undefined);
+    const compatibility = inject(HApplicationCompatibilityInjectedKey, undefined);
 
     // global size
     const oldStandardSizeRef = useSize(size, 'medium', {
@@ -55,10 +55,10 @@ export default defineComponent({
     });
 
     // form-item validate trigger
-    const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
+    const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
 
     // form disabled inject
-    const formDisabled = inject(NFormDisabledInjectedKey, undefined);
+    const formDisabled = inject(HFormDisabledInjectedKey, undefined);
     const isDisabled = computed(() => propDisabled?.value ?? formDisabled?.value);
 
     const classHelper = new ComponentClassBlock('radio-group');
@@ -74,7 +74,7 @@ export default defineComponent({
     }
 
     provide(
-      NRadioGroupInjectedKey,
+      HRadioGroupInjectedKey,
       reactive<RadioGroupPropsProvideType>({
         value: computed(() => propModelValue.value),
         changeEvent: handleChange,

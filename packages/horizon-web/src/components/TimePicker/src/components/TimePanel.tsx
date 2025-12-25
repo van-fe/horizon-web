@@ -5,7 +5,7 @@ import type { TimePickerTimePanelProps } from '../composables/useProps';
 import { useTimePickerTimePanelProps } from '../composables/useProps';
 import TimeColumnPanel from './TimeColumnPanel';
 import dayjs from '~/utils/useDayJs';
-import type { NTimePickerPanelOptionType } from '../utils/types';
+import type { HTimePickerPanelOptionType } from '../utils/types';
 import type { TimePickerTimePanelEmits } from '../composables/useEmits';
 import { useTimePickerTimePanelEmit } from '../composables/useEmits';
 import type {
@@ -14,7 +14,7 @@ import type {
 } from '../composables/useExposes';
 import { useTimePickerTimePanelExposes } from '../composables/useExposes';
 import type { Dayjs } from 'dayjs';
-import { NTimePickerEmitsInjectKey } from '../utils/injectKeys';
+import { HTimePickerEmitsInjectKey } from '../utils/injectKeys';
 
 export default defineComponent({
   name: 'TimePanel',
@@ -30,7 +30,7 @@ export default defineComponent({
   ) {
     const classHelper = new ComponentClassBlock('time-picker');
 
-    const parentEmit = inject(NTimePickerEmitsInjectKey, undefined);
+    const parentEmit = inject(HTimePickerEmitsInjectKey, undefined);
 
     const timePanelDomRef =
       ref<HorizonWebComponentInstance<typeof TimeColumnPanel, TimePickerTimeColumnPanelExposes>>();
@@ -66,7 +66,7 @@ export default defineComponent({
     });
 
     const times = computed(() => {
-      const res: Array<NTimePickerPanelOptionType> = [];
+      const res: Array<HTimePickerPanelOptionType> = [];
       if (props.dateType !== 'time') return res;
 
       const timeStep = Math.max(1, props.timeStep);
@@ -93,7 +93,7 @@ export default defineComponent({
     });
 
     const hours = computed(() => {
-      const res: Array<NTimePickerPanelOptionType> = [];
+      const res: Array<HTimePickerPanelOptionType> = [];
       if (props.dateType === 'time') return res;
 
       const hourStep = Math.max(1, props.hourStep);
@@ -121,7 +121,7 @@ export default defineComponent({
     });
 
     const minutes = computed(() => {
-      const res: Array<NTimePickerPanelOptionType> = [];
+      const res: Array<HTimePickerPanelOptionType> = [];
       if (props.dateType === 'time') return res;
 
       const minuteStep = Math.max(1, props.minuteStep);
@@ -148,7 +148,7 @@ export default defineComponent({
     });
 
     const seconds = computed(() => {
-      const res: Array<NTimePickerPanelOptionType> = [];
+      const res: Array<HTimePickerPanelOptionType> = [];
       if (props.dateType !== 'seconds') return res;
 
       const secondStep = Math.max(1, props.secondStep);

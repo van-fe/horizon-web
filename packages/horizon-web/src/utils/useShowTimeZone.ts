@@ -1,12 +1,12 @@
 import type { ApplicationProps } from '~/components/Application/src/composables/useProps';
 import { isBoolean } from '@aurora/utils';
-import { NApplicationShowTimeZoneInjectedKey } from '~/components/Application/src/utils/injectedKeys';
+import { HApplicationShowTimeZoneInjectedKey } from '~/components/Application/src/utils/injectedKeys';
 import { computed, inject } from 'vue';
 
 export default function useShowTimeZone(
   component: Exclude<ApplicationProps['showTimeZone'], boolean>[number],
 ) {
-  const showTimeZoneInject = inject(NApplicationShowTimeZoneInjectedKey, undefined);
+  const showTimeZoneInject = inject(HApplicationShowTimeZoneInjectedKey, undefined);
 
   return computed<boolean>(() => {
     if (isBoolean(showTimeZoneInject?.value)) {

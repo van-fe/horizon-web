@@ -1,12 +1,12 @@
 import { default as Drawer } from './src/Drawer';
 import { withInstall } from '@aurora/utils';
 import type {
-  DrawerSize as NDrawerSize,
-  DrawerPlacement as NDrawerPlacement,
-  DrawerProps as NDrawerProps,
+  DrawerSize as HDrawerSize,
+  DrawerPlacement as HDrawerPlacement,
+  DrawerProps as HDrawerProps,
 } from './src/composables/useProps';
 
-export const NDrawer = withInstall(Drawer);
-export default NDrawer;
+export const HDrawer = withInstall(Drawer);
+export default HDrawer;
 
-export type { NDrawerSize, NDrawerPlacement, NDrawerProps };
+export type { HDrawerSize, HDrawerPlacement, HDrawerProps };

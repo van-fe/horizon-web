@@ -1,31 +1,31 @@
 import type { ToRefs, Ref } from 'vue';
 import { computed, inject, nextTick, ref, watch } from 'vue';
 import type { TreeSelectProps } from '../composables/useProps';
-import type { NTreeSelectModelValueType, NTreeSelectContext, NTreeSelectDomRefs } from './types';
-import type { NTreeUuidType, NTreeExtendsData, NTreeData } from '~/components/Tree/src/utils/types';
+import type { HTreeSelectModelValueType, HTreeSelectContext, HTreeSelectDomRefs } from './types';
+import type { HTreeUuidType, HTreeExtendsData, HTreeData } from '~/components/Tree/src/utils/types';
 import { isEmpty, isEqualLoose } from '~/components/Select/src/utils/utils';
 import {
-  NFormDisabledInjectedKey,
-  NFormItemTriggerInjectedKey,
+  HFormDisabledInjectedKey,
+  HFormItemTriggerInjectedKey,
 } from '~/components/Form/src/utils/injectedKeys';
 import { isNil } from '@aurora/utils';
 import type TreeHelper from '~/utils/useTree/index';
 
 export default function useData(
   props: ToRefs<TreeSelectProps>,
-  context: NTreeSelectContext,
-  domRefs: NTreeSelectDomRefs,
-  treeHelper: TreeHelper<NTreeData, NTreeExtendsData>,
+  context: HTreeSelectContext,
+  domRefs: HTreeSelectDomRefs,
+  treeHelper: TreeHelper<HTreeData, HTreeExtendsData>,
   emitChange: () => void,
 ) {
-  const modelValue = ref<NTreeSelectModelValueType>();
-  const modelValueSet = ref(new Set<NTreeUuidType>());
-  const presetModelValueSet = ref(new Set<NTreeUuidType>());
-  const visibleNodes = ref<NTreeExtendsData[]>([]);
+  const modelValue = ref<HTreeSelectModelValueType>();
+  const modelValueSet = ref(new Set<HTreeUuidType>());
+  const presetModelValueSet = ref(new Set<HTreeUuidType>());
+  const visibleNodes = ref<HTreeExtendsData[]>([]);
 
   /** injects **/
-  const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
-  const formDisabled = inject(NFormDisabledInjectedKey, undefined);
+  const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
+  const formDisabled = inject(HFormDisabledInjectedKey, undefined);
 
   /** computed **/
   const isDisabled = computed(() => props.disabled?.value ?? formDisabled?.value ?? false);
@@ -149,7 +149,7 @@ export default function useData(
     updateModelValue();
   }
 
-  function setModelValue(uuids: NTreeUuidType[], confirm = true) {
+  function setModelValue(uuids: HTreeUuidType[], confirm = true) {
     presetModelValueSet.value = new Set(uuids);
 
     if (confirm) {
@@ -158,7 +158,7 @@ export default function useData(
   }
 
   return {
-    visibleNodes: visibleNodes as Ref<NTreeExtendsData[]>,
+    visibleNodes: visibleNodes as Ref<HTreeExtendsData[]>,
     modelValue,
     modelValueSet,
     presetModelValueSet,

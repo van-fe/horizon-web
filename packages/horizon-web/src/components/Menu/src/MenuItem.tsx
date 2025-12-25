@@ -20,20 +20,20 @@ import type { MenuItemEmits } from './composables/useEmits';
 import type { MenuItemSlots } from './composables/useSlots';
 import type { MenuExposes } from './composables/useExposes';
 import {
-  NMenuAddExpandMenuInjectKey,
-  NMenuAppendChildInjectKey,
-  NMenuRemoveChildInjectKey,
-  NMenuActivatedMenusInjectKey,
-  NMenuSetActivatedMenuInjectKey,
-  NMenuTreeLevelInjectKey,
-  NMenuParentHasIconAmountInjectKey,
-  NMenuIsCollapsedInjectKey,
-  NMenuScrollTopTopInjectKey,
-  NMenuPropsInjectKey,
-  NMenuEmitInjectKey,
+  HMenuAddExpandMenuInjectKey,
+  HMenuAppendChildInjectKey,
+  HMenuRemoveChildInjectKey,
+  HMenuActivatedMenusInjectKey,
+  HMenuSetActivatedMenuInjectKey,
+  HMenuTreeLevelInjectKey,
+  HMenuParentHasIconAmountInjectKey,
+  HMenuIsCollapsedInjectKey,
+  HMenuScrollTopTopInjectKey,
+  HMenuPropsInjectKey,
+  HMenuEmitInjectKey,
 } from './util/injectKeys';
 import { nanoid } from 'nanoid';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
 import useIconRender from '~/utils/useIconRender';
 import useTooltip from './util/useTooltip';
 
@@ -60,17 +60,17 @@ export default defineComponent({
       }),
     );
 
-    const parentProps = inject(NMenuPropsInjectKey)!;
-    const parentEmits = inject(NMenuEmitInjectKey)!;
-    const treeLevel = inject(NMenuTreeLevelInjectKey, 0);
-    const parentHasIconAmount = inject(NMenuParentHasIconAmountInjectKey, ref(0));
-    const appendChild = inject(NMenuAppendChildInjectKey);
-    const removeChild = inject(NMenuRemoveChildInjectKey);
-    const addExpandMenu = inject(NMenuAddExpandMenuInjectKey);
-    const activatedMenus = inject(NMenuActivatedMenusInjectKey);
-    const setActivatedMenu = inject(NMenuSetActivatedMenuInjectKey);
-    const isCollapsed = inject(NMenuIsCollapsedInjectKey);
-    const scrollToTop = inject(NMenuScrollTopTopInjectKey);
+    const parentProps = inject(HMenuPropsInjectKey)!;
+    const parentEmits = inject(HMenuEmitInjectKey)!;
+    const treeLevel = inject(HMenuTreeLevelInjectKey, 0);
+    const parentHasIconAmount = inject(HMenuParentHasIconAmountInjectKey, ref(0));
+    const appendChild = inject(HMenuAppendChildInjectKey);
+    const removeChild = inject(HMenuRemoveChildInjectKey);
+    const addExpandMenu = inject(HMenuAddExpandMenuInjectKey);
+    const activatedMenus = inject(HMenuActivatedMenusInjectKey);
+    const setActivatedMenu = inject(HMenuSetActivatedMenuInjectKey);
+    const isCollapsed = inject(HMenuIsCollapsedInjectKey);
+    const scrollToTop = inject(HMenuScrollTopTopInjectKey);
 
     function onMouseEnter() {
       if (textRef.value) {
@@ -168,7 +168,7 @@ export default defineComponent({
         }}
         data-tree-level={treeLevel}
       >
-        <NTooltip
+        <HTooltip
           trigger="manual"
           distance={8}
           visible={tooltipVisible.value}
@@ -221,7 +221,7 @@ export default defineComponent({
               </Fragment>
             ),
           }}
-        </NTooltip>
+        </HTooltip>
       </parentProps.tag>
     );
   },

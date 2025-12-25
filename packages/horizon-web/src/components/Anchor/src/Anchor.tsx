@@ -22,8 +22,8 @@ import { customScrollTo, getCustomOffset, getOffsetTop, getScrollTop } from './u
 import { deepSearch, genListByDomList } from './utils/extra';
 import type { AnchorListItem } from './utils/extra';
 import AnchorLink from './AnchorLink';
-import NScrollbar from '~/components/Scrollbar/src/Scrollbar';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
+import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
 import type { AnchorExposes } from './composables/useExposes';
 import { useAnchorExposes } from './composables/useExposes';
 import useSize from '~/utils/useSize';
@@ -50,7 +50,7 @@ export default defineComponent({
   name: `${useNamespace()}Anchor`,
   desc: '电梯导航用来展示当前页面中，有哪些具体内容，并可以快速定位',
   components: {
-    NScrollbar,
+    HScrollbar,
   },
   props: useAnchorProps,
   emits: useAnchorEmits,
@@ -307,7 +307,7 @@ export default defineComponent({
             onClick={collapseBtnHandle}
           >
             <AIcon name={isCollapsed.value ? 'toggle_left' : 'toggle_right'} size={12} />
-            <NTooltip
+            <HTooltip
               content={tooltipContent.value}
               disabled={tooltipDisabled.value}
               placement="bottom"
@@ -317,10 +317,10 @@ export default defineComponent({
               <span class={classHelper.e('collapse-btn-txt')}>
                 {props.collapseText ?? useLocaleLang('anchor.navigator').value}
               </span>
-            </NTooltip>
+            </HTooltip>
           </div>
         )}
-        <NScrollbar size="small" maxHeight={props.maxHeight}>
+        <HScrollbar size="small" maxHeight={props.maxHeight}>
           <div class={classHelper.e('wrap')} v-show={showWrap.value}>
             <div v-show={props.showLine} class={`${classHelper.e('line')}`}>
               <div
@@ -331,7 +331,7 @@ export default defineComponent({
             </div>
             {props.autoRender ? renderLinks(anchorList.value) : slots?.default?.()}
           </div>
-        </NScrollbar>
+        </HScrollbar>
       </div>
     );
   },

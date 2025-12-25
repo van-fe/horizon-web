@@ -1,11 +1,11 @@
 import { default as Dialog } from './src/Dialog';
 import { withInstall } from '@aurora/utils';
 import type {
-  DialogProps as NDialogProps,
-  DialogSize as NDialogSize,
+  DialogProps as HDialogProps,
+  DialogSize as HDialogSize,
 } from './src/composables/useProps';
 
-export const NDialog = withInstall(Dialog);
-export default NDialog;
+export const HDialog = withInstall(Dialog);
+export default HDialog;
 
-export type { NDialogProps, NDialogSize };
+export type { HDialogProps, HDialogSize };

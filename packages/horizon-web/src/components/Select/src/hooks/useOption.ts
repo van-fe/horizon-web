@@ -1,11 +1,11 @@
 import type { ComputedRef, Ref, Reactive } from 'vue';
 import { computed, nextTick, provide, ref, unref, watch, reactive } from 'vue';
 import {
-  NSelectAddOptionInjectKey,
-  NSelectFocusedOptionValueInjectKey,
-  NSelectPickOptionInjectKey,
-  NSelectRemoveOptionInjectKey,
-  NSelectVisibleOptionsInjectKey,
+  HSelectAddOptionInjectKey,
+  HSelectFocusedOptionValueInjectKey,
+  HSelectPickOptionInjectKey,
+  HSelectRemoveOptionInjectKey,
+  HSelectVisibleOptionsInjectKey,
   type SelectCollectedOptionData,
 } from '../utils/injectKeys';
 import type { OptionProps, SelectProps } from '../composables/useProps';
@@ -23,7 +23,7 @@ import { unwrapValueFormattedValue, isEqualIgnoreCtx } from '../utils/valueForma
 import type {
   ModelValueType,
   ModelValueSingleType,
-  NSelectFilterFunction,
+  HSelectFilterFunction,
   SelectDomRefs,
 } from '../utils/types';
 import { transformOptionList } from './useVirtualList';
@@ -37,7 +37,7 @@ export default function useOption(
     focusedOptionValue: Ref<OptionProps['value'] | undefined>;
     prevOptionValue: ModelValueType;
     isFilterable: ComputedRef<boolean>;
-    filterMethod: ComputedRef<NSelectFilterFunction>;
+    filterMethod: ComputedRef<HSelectFilterFunction>;
     filterInputValue: Ref<string>;
     inputValue: Ref<string>;
     modelValueSet: Ref<Set<OptionProps['value']>>;
@@ -295,11 +295,11 @@ export default function useOption(
       });
   }
 
-  provide(NSelectAddOptionInjectKey, addOption);
-  provide(NSelectRemoveOptionInjectKey, removeOption);
-  provide(NSelectFocusedOptionValueInjectKey, options.focusedOptionValue);
-  provide(NSelectVisibleOptionsInjectKey, visibleOptions);
-  provide(NSelectPickOptionInjectKey, pickOption);
+  provide(HSelectAddOptionInjectKey, addOption);
+  provide(HSelectRemoveOptionInjectKey, removeOption);
+  provide(HSelectFocusedOptionValueInjectKey, options.focusedOptionValue);
+  provide(HSelectVisibleOptionsInjectKey, visibleOptions);
+  provide(HSelectPickOptionInjectKey, pickOption);
 
   return {
     visibleOptions,

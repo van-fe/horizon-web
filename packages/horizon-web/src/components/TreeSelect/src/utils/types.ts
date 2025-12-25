@@ -3,32 +3,32 @@ import type { HorizonWebSetupContext, HorizonWebComponentInstance } from '@auror
 import type { TreeSelectEmits } from '~/components/TreeSelect/src/composables/useEmits';
 import type { TreeSelectSlots } from '~/components/TreeSelect/src/composables/useSlots';
 import type { TreeSelectExposes } from '~/components/TreeSelect/src/composables/useExposes';
-import type NPicker from '~/components/Picker/src/Picker';
-import type NTagGroup from '~/components/Tag/src/TagGroup';
-import type NTree from '~/components/Tree/src/Tree';
+import type HPicker from '~/components/Picker/src/Picker';
+import type HTagGroup from '~/components/Tag/src/TagGroup';
+import type HTree from '~/components/Tree/src/Tree';
 import type {
   PickerExposes,
   PickerFitContentInputExposes,
 } from '~/components/Picker/src/composables/useExposes';
-import type NPickerFitContentInput from '~/components/Picker/src/components/NPickerFitContentInput';
+import type HPickerFitContentInput from '~/components/Picker/src/components/PickerFitContentInput';
 import type { TagGroupExposes } from '~/components/Tag/src/composables/useExposes';
 import type { TreeExposes } from '~/components/Tree/src/composables/useExposes';
 
-export type NTreeSelectModelValueType = Array<string | number> | string | number | null | undefined;
-export type NTreeSelectModelValueSetType = Array<string | number>;
+export type HTreeSelectModelValueType = Array<string | number> | string | number | null | undefined;
+export type HTreeSelectModelValueSetType = Array<string | number>;
 
-export type NTreeSelectContext = HorizonWebSetupContext<
+export type HTreeSelectContext = HorizonWebSetupContext<
   TreeSelectEmits,
   TreeSelectSlots,
   TreeSelectExposes
 >;
 
-export interface NTreeSelectDomRefs {
-  picker: Ref<HorizonWebComponentInstance<typeof NPicker, PickerExposes> | null>;
+export interface HTreeSelectDomRefs {
+  picker: Ref<HorizonWebComponentInstance<typeof HPicker, PickerExposes> | null>;
   filterInput: Ref<HorizonWebComponentInstance<
-    typeof NPickerFitContentInput,
+    typeof HPickerFitContentInput,
     PickerFitContentInputExposes
   > | null>;
-  tagGroup: Ref<HorizonWebComponentInstance<typeof NTagGroup, TagGroupExposes> | null>;
-  tree: Ref<HorizonWebComponentInstance<typeof NTree, TreeExposes> | null>;
+  tagGroup: Ref<HorizonWebComponentInstance<typeof HTagGroup, TagGroupExposes> | null>;
+  tree: Ref<HorizonWebComponentInstance<typeof HTree, TreeExposes> | null>;
 }

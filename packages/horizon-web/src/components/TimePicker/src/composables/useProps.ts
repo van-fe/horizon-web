@@ -5,8 +5,8 @@ import type { PopoverProps } from '~/components/Popover/src/composables/useProps
 import { IconMaybeFalsyPropType, IconPropType } from '~/utils/useIcon';
 import { IconClose, IconSwapRight } from '@aurora/icon';
 import type {
-  NTimePickerDisabledTimeMethodType,
-  NTimePickerShowTimeTooltipType,
+  HTimePickerDisabledTimeMethodType,
+  HTimePickerShowTimeTooltipType,
 } from '../utils/types';
 import type { ConfigType, Dayjs } from 'dayjs';
 
@@ -270,7 +270,7 @@ export const useTimePickerProps = declarePropType({
    * 详见类型定义
    */
   disabledTime: {
-    type: Function as PropType<NTimePickerDisabledTimeMethodType>,
+    type: Function as PropType<HTimePickerDisabledTimeMethodType>,
   },
   /**
    * 弹出层样式
@@ -300,7 +300,7 @@ export const useTimePickerProps = declarePropType({
    * 时间单元格是否展示tooltip，参数为当前时间 `Dayjs` 对象，返回对象：show是否展示，content展示内容
    */
   showTimeTooltip: {
-    type: Function as PropType<NTimePickerShowTimeTooltipType>,
+    type: Function as PropType<HTimePickerShowTimeTooltipType>,
   },
   /**
    * 前缀图标
@@ -599,7 +599,7 @@ export const useTimePickerTimePanelProps = declarePropType({
    * 详见类型定义
    */
   disabledTime: {
-    type: Function as PropType<NTimePickerDisabledTimeMethodType>,
+    type: Function as PropType<HTimePickerDisabledTimeMethodType>,
   },
   /**
    * 面板是否可见
@@ -612,7 +612,7 @@ export const useTimePickerTimePanelProps = declarePropType({
    * 显示时间提示文字方法
    */
   showTimeTooltip: {
-    type: Function as PropType<NTimePickerShowTimeTooltipType>,
+    type: Function as PropType<HTimePickerShowTimeTooltipType>,
   },
   /**
    * 预览时间

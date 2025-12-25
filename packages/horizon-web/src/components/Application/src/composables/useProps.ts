@@ -2,7 +2,7 @@ import type { ExtractPropTypes, PropType } from 'vue';
 import { declarePropType } from '@aurora/utils';
 import type { LocaleSupportLang } from '@aurora/locale';
 
-export type NApplicationSizeType = 'large' | 'medium' | 'small';
+export type HApplicationSizeType = 'large' | 'medium' | 'small';
 
 export const useApplicationProps = declarePropType({
   /**
@@ -16,7 +16,7 @@ export const useApplicationProps = declarePropType({
    * 组件大小
    */
   size: {
-    type: String as PropType<NApplicationSizeType>,
+    type: String as PropType<HApplicationSizeType>,
     default: 'medium',
   },
   /**

@@ -9,16 +9,16 @@ import type { FloatButtonProps } from './composables/useProps';
 import type { FloatButtonEmits } from './composables/useEmits';
 import type { FloatButtonSlots } from './composables/useSlots';
 import type { FloatButtonExposes } from './composables/useExposes';
-import NTransition from '~/components/Transition/src/Transition';
-import { NFloatButtonGroupProps, NFloatButtonPassiveVisibleProps } from './utils/InjectedKeys';
+import HTransition from '~/components/Transition/src/Transition';
+import { HFloatButtonGroupProps, HFloatButtonPassiveVisibleProps } from './utils/InjectedKeys';
 import { nanoid } from 'nanoid';
 import { mountedStack, mountedStackInfo } from './utils/mountedStack';
 import { renderIcon } from '~/utils/useIcon';
-import NBadge from '~/components/Badge/src/Badge';
+import HBadge from '~/components/Badge/src/Badge';
 import { getBadgeDefaultOption } from './utils/badgeOptions';
 import type { Position } from '@vueuse/core';
 import useDrag from './utils/useDrag';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
 import type { TooltipProps } from '~/components/Tooltip/src/composables/useProps';
 
 export default defineComponent({
@@ -26,8 +26,8 @@ export default defineComponent({
   desc: '悬浮按钮大多会独立出现在界面之上，提升整体的导航，拓展页面的功能，使应用的操作更加便捷',
   version: '2.7.0',
   components: {
-    NTransition,
-    NBadge,
+    HTransition,
+    HBadge,
   },
   inheritAttrs: false,
   props: useFloatButtonProps,
@@ -63,8 +63,8 @@ export default defineComponent({
     const targetDomRef = ref<HTMLElement | null>(null);
     const hasDragged = ref(false);
 
-    const groupProps = inject(NFloatButtonGroupProps, undefined);
-    const passiveVisible = inject(NFloatButtonPassiveVisibleProps, undefined);
+    const groupProps = inject(HFloatButtonGroupProps, undefined);
+    const passiveVisible = inject(HFloatButtonPassiveVisibleProps, undefined);
 
     const stackIndex = computed(() => mountedStack.value.indexOf(uuid));
     const stackInfoIndex = computed(() => {
@@ -193,7 +193,7 @@ export default defineComponent({
     });
 
     return () => (
-      <NTransition appear>
+      <HTransition appear>
         <div
           ref={targetDomRef}
           v-show={isVisible.value}
@@ -223,8 +223,8 @@ export default defineComponent({
           {...attrs}
           onClick={evt => emit('click', evt)}
         >
-          <NBadge {...badgeProps.value}>
-            <NTooltip
+          <HBadge {...badgeProps.value}>
+            <HTooltip
               placement="left"
               popperReferenceHidden={false}
               size="small"
@@ -250,10 +250,10 @@ export default defineComponent({
                   </div>
                 )}
               </div>
-            </NTooltip>
-          </NBadge>
+            </HTooltip>
+          </HBadge>
         </div>
-      </NTransition>
+      </HTransition>
     );
   },
 });

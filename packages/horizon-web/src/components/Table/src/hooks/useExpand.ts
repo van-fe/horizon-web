@@ -1,8 +1,8 @@
-import type { NTableTransformedRowDataType } from '../utils/types';
+import type { HTableTransformedRowDataType } from '../utils/types';
 import { ref, watch } from 'vue';
 
-export default function useExpand(rowsData: NTableTransformedRowDataType[]) {
-  const expandRows = ref(new Map<NTableTransformedRowDataType, boolean>());
+export default function useExpand(rowsData: HTableTransformedRowDataType[]) {
+  const expandRows = ref(new Map<HTableTransformedRowDataType, boolean>());
 
   watch(rowsData, val => {
     val.forEach(row => {
@@ -10,7 +10,7 @@ export default function useExpand(rowsData: NTableTransformedRowDataType[]) {
     });
   });
 
-  function toggleExpandRows(rowData: NTableTransformedRowDataType) {
+  function toggleExpandRows(rowData: HTableTransformedRowDataType) {
     expandRows.value.set(rowData, !expandRows.value.get(rowData));
   }
 

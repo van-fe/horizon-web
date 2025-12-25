@@ -2,7 +2,7 @@ import type { TreeProps } from '~/components/Tree/src/composables/useProps';
 import type { MaybeRef, HorizonWebComponentInstance } from '@aurora/utils';
 import { nextTick, ref, SetupContext, unref } from 'vue';
 import { mount } from '@vue/test-utils';
-import NTree from '~/components/Tree/src/Tree';
+import HTree from '~/components/Tree/src/Tree';
 import TreeData from './options.json';
 import DisabledTreeData from './modifiedOptions/disabled-options.json';
 import type Tree from '~/components/Tree/src/Tree';
@@ -26,7 +26,7 @@ export async function createInstance<
 
   const wrapper = mount(
     () => (
-      <NTree
+      <HTree
         ref={domRef}
         v-model:selectedValues={selectedValues.value}
         v-model:expandValues={expandedValues.value}
@@ -36,7 +36,7 @@ export async function createInstance<
         )}
       >
         {slots}
-      </NTree>
+      </HTree>
     ),
     {
       attachTo: document.body,
@@ -45,7 +45,7 @@ export async function createInstance<
 
   await nextTick();
 
-  const element = wrapper.findComponent(NTree);
+  const element = wrapper.findComponent(HTree);
 
   return {
     domRef,

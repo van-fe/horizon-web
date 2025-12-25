@@ -1,34 +1,34 @@
-import type { NTableColumnData } from '../utils/types';
-import { NTableColumnContextKey } from '../utils/types';
+import type { HTableColumnData } from '../utils/types';
+import { HTableColumnContextKey } from '../utils/types';
 import { cls, ComponentClassBlock, cssVariableKey } from '@aurora/utils';
 import type { StyleValue } from 'vue';
 import { inject, provide, ref } from 'vue';
 import {
-  NTableRefreshLayoutInjectKey,
-  NTableUseHeaderResizerPluginInjectKey,
+  HTableRefreshLayoutInjectKey,
+  HTableUseHeaderResizerPluginInjectKey,
 } from '../utils/injectKeys';
 
 export default function useHeaderResizerCursorLine() {
   const cursorLineStyle = ref<StyleValue>();
 
-  function useHeaderResizerPlugin(column: NTableColumnData, showDivider: boolean) {
+  function useHeaderResizerPlugin(column: HTableColumnData, showDivider: boolean) {
     const classHelper = new ComponentClassBlock('table-v3');
 
-    const refreshLayout = inject(NTableRefreshLayoutInjectKey)!;
+    const refreshLayout = inject(HTableRefreshLayoutInjectKey)!;
 
     let startX = 0;
     let startWidth = 0;
 
     function setCursorLineStyle() {
-      if (column[NTableColumnContextKey].isResizing) {
+      if (column[HTableColumnContextKey].isResizing) {
         const elementRect =
-          column[NTableColumnContextKey].selfElement.value!.getBoundingClientRect();
+          column[HTableColumnContextKey].selfElement.value!.getBoundingClientRect();
 
         cursorLineStyle.value = {
           display: 'block',
           transform: `translate(${elementRect.right - 1}px, ${elementRect.top}px)`,
           [cssVariableKey('table', 'column', 'height')]: `${
-            elementRect.height + column[NTableColumnContextKey].childrenEachRowColumnsHeightSum
+            elementRect.height + column[HTableColumnContextKey].childrenEachRowColumnsHeightSum
           }px`,
         };
       } else {
@@ -40,7 +40,7 @@ export default function useHeaderResizerCursorLine() {
 
     function handleMouseMove(evt: MouseEvent) {
       if (column.props.resizable) {
-        column[NTableColumnContextKey].resizeWidth = startWidth + evt.clientX - startX;
+        column[HTableColumnContextKey].resizeWidth = startWidth + evt.clientX - startX;
         setCursorLineStyle();
 
         requestAnimationFrame(() => {
@@ -52,7 +52,7 @@ export default function useHeaderResizerCursorLine() {
     function handleMouseUp() {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
-      column[NTableColumnContextKey].isResizing = false;
+      column[HTableColumnContextKey].isResizing = false;
       setCursorLineStyle();
     }
 
@@ -60,10 +60,10 @@ export default function useHeaderResizerCursorLine() {
       startX = evt.clientX;
 
       if (column.props.resizable) {
-        column[NTableColumnContextKey].isResizing = true;
-        startWidth = column[NTableColumnContextKey].selfElement.value?.clientWidth || 0;
+        column[HTableColumnContextKey].isResizing = true;
+        startWidth = column[HTableColumnContextKey].selfElement.value?.clientWidth || 0;
 
-        column[NTableColumnContextKey].resizeWidth = startWidth;
+        column[HTableColumnContextKey].resizeWidth = startWidth;
 
         document.addEventListener('mousemove', handleMouseMove);
         document.addEventListener('mouseup', handleMouseUp);
@@ -84,7 +84,7 @@ export default function useHeaderResizerCursorLine() {
     );
   }
 
-  provide(NTableUseHeaderResizerPluginInjectKey, useHeaderResizerPlugin);
+  provide(HTableUseHeaderResizerPluginInjectKey, useHeaderResizerPlugin);
 
   return {
     useHeaderResizerPlugin,

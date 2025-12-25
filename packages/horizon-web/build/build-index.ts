@@ -248,14 +248,14 @@ function buildMethodIndex() {
 
   // export variables
   methodDependencies.forEach(method => {
-    content += `export const $${camelCase(method.name.replace(/^N/, ''))} = ${method.name};\n`;
+    content += `export const $${camelCase(method.name.replace(/^H/, ''))} = ${method.name};\n`;
   });
 
   // make install
   content += '\nexport default function (app: App) {\n';
 
   methodDependencies.forEach(method => {
-    content += `  app.config.globalProperties.$${camelCase(method.name.replace(/^N/, ''))} = ${
+    content += `  app.config.globalProperties.$${camelCase(method.name.replace(/^H/, ''))} = ${
       method.name
     };\n`;
     content += `  ${method.name}._context = app._context;\n\n`;
@@ -268,7 +268,7 @@ function buildMethodIndex() {
   interface ComponentCustomProperties {\n`;
 
   methodDependencies.forEach(method => {
-    content += `    $${camelCase(method.name.replace(/^N/, ''))}: typeof ${method.name};\n`;
+    content += `    $${camelCase(method.name.replace(/^H/, ''))}: typeof ${method.name};\n`;
   });
 
   content += `  }

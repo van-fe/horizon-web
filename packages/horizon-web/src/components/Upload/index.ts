@@ -5,23 +5,23 @@ import {
   destroyBackgroundUploadInstance,
 } from './src/utils/uploadBackgroundHelper';
 
-export const NUpload = withInstall(Upload, {
+export const HUpload = withInstall(Upload, {
   createBackgroundUploadInstance,
   destroyBackgroundUploadInstance,
 });
 
-export default NUpload;
+export default HUpload;
 
 export {
-  NUploadFileStatusEnum,
-  NUploadFileTypeEnum,
+  HUploadFileStatusEnum,
+  HUploadFileTypeEnum,
   fileTypeMapping,
   fileTypeIconMapping,
 } from './src/utils/fileDefines';
 
 export type {
-  NUploadFileType,
-  NUploadUserFile,
-  NUploadRawFileType,
-  NUploadHttpRequestInstanceMethods,
+  HUploadFileType,
+  HUploadUserFile,
+  HUploadRawFileType,
+  HUploadHttpRequestInstanceMethods,
 } from './src/utils/fileDefines';

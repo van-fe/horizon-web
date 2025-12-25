@@ -5,11 +5,11 @@ import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import type { BreadcrumbItemSlots } from './composables/useSlots';
 import { useBreadcrumbItemSlots } from './composables/useSlots';
 import useSize from '~/utils/useSize';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
 import {
-  NBreadcrumbItemClickInjectKey,
-  NBreadcrumbProps,
-  NBreadcrumbSlots,
+  HBreadcrumbItemClickInjectKey,
+  HBreadcrumbProps,
+  HBreadcrumbSlots,
 } from './utils/injectedKeys';
 import { onClickBreadcrumbItem } from './utils/helpers';
 import type { BreadcrumbItemEmits } from './composables/useEmits';
@@ -27,14 +27,14 @@ export default defineComponent({
     // global size
     const sizeRef = useSize(size, 'medium');
 
-    const parentProps = inject(NBreadcrumbProps, undefined);
-    const parentSlots = inject(NBreadcrumbSlots, undefined);
+    const parentProps = inject(HBreadcrumbProps, undefined);
+    const parentSlots = inject(HBreadcrumbSlots, undefined);
     const instance = getCurrentInstance();
     const router = instance?.appContext.config.globalProperties.$router;
 
     const clickable = computed(() => !!props.to || props.clickable);
 
-    const parentItemClick = inject(NBreadcrumbItemClickInjectKey, undefined);
+    const parentItemClick = inject(HBreadcrumbItemClickInjectKey, undefined);
 
     const onClick = (evt: MouseEvent) => {
       if (clickable.value) {
@@ -46,7 +46,7 @@ export default defineComponent({
 
     return () => (
       <span class={cls(classHelper.block)}>
-        <NTooltip overflow={true}>
+        <HTooltip overflow={true}>
           {{
             default: () => (
               <div
@@ -63,7 +63,7 @@ export default defineComponent({
             ),
             content: () => slots.default?.() ?? '',
           }}
-        </NTooltip>
+        </HTooltip>
         <span class={classHelper.e('suffix')}>
           {slots.separator?.() ??
             parentSlots?.separator?.() ??

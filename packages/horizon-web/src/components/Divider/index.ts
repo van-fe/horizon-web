@@ -1,6 +1,6 @@
 import { default as Divider } from './src/Divider';
 import { withInstall } from '@aurora/utils';
 
-export const NDivider = withInstall(Divider);
+export const HDivider = withInstall(Divider);
 
-export default NDivider;
+export default HDivider;

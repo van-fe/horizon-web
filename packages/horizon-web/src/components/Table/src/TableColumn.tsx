@@ -12,13 +12,13 @@ import { useTableColumnExposes } from './composables/useExposes';
 import useColumn from './hooks/useColumn';
 import { nanoid } from 'nanoid';
 import {
-  NTableColumnAnalysisInjectKey,
-  NTableEmitsInjectKey,
-  NTableFlattenDataInjectKey,
+  HTableColumnAnalysisInjectKey,
+  HTableEmitsInjectKey,
+  HTableFlattenDataInjectKey,
 } from './utils/injectKeys';
 import { formatFixed } from './hooks/useLayout';
-import type { NTableRowKeyType } from './utils/types';
-import { NTableColumnSelectionKey } from './utils/types';
+import type { HTableRowKeyType } from './utils/types';
+import { HTableColumnSelectionKey } from './utils/types';
 
 export default defineComponent({
   name: `${useNamespace()}TableColumnV3`,
@@ -37,9 +37,9 @@ export default defineComponent({
     const uuid = nanoid();
     const classHelper = new ComponentClassBlock('table-column-v3');
 
-    const parentEmit = inject(NTableEmitsInjectKey)!;
-    const analysisColumns = inject(NTableColumnAnalysisInjectKey)!;
-    const flattenData = inject(NTableFlattenDataInjectKey)!;
+    const parentEmit = inject(HTableEmitsInjectKey)!;
+    const analysisColumns = inject(HTableColumnAnalysisInjectKey)!;
+    const flattenData = inject(HTableFlattenDataInjectKey)!;
 
     const { columns, increaseChild, decreaseChild } = useColumn(flattenData, parentEmit);
 
@@ -47,21 +47,21 @@ export default defineComponent({
       clearSelection: (ignoreSelectable: boolean = false) => {
         analysisColumns?.value.flattenColumns
           ?.find(column => column.uuid === uuid)
-          ?.[NTableColumnSelectionKey].handleClear(ignoreSelectable);
+          ?.[HTableColumnSelectionKey].handleClear(ignoreSelectable);
       },
       getSelectionRows: () => {
         return analysisColumns?.value.flattenColumns
           ?.find(column => column.uuid === uuid)
-          ?.[NTableColumnSelectionKey].getSelectionRows();
+          ?.[HTableColumnSelectionKey].getSelectionRows();
       },
       toggleRowSelection: (
-        rowKey: NTableRowKeyType | NTableRowKeyType[],
+        rowKey: HTableRowKeyType | HTableRowKeyType[],
         selected?: boolean,
         ignoreSelectable: boolean = false,
       ) => {
         analysisColumns?.value.flattenColumns
           ?.find(column => column.uuid === uuid)
-          ?.[NTableColumnSelectionKey].toggleRowSelection(rowKey, selected, ignoreSelectable);
+          ?.[HTableColumnSelectionKey].toggleRowSelection(rowKey, selected, ignoreSelectable);
       },
     });
 

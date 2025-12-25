@@ -2,9 +2,9 @@ import { computed, defineComponent, inject, Fragment, ref } from 'vue';
 import type { HorizonWebComponentInstance, HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock } from '@aurora/utils';
 import {
-  NDatePickerDateSwitcherShowFormatMappingMappingInjectKey,
-  NDatePickerFormatInjectKey,
-  NDatePickerPropsInjectKey,
+  HDatePickerDateSwitcherShowFormatMappingMappingInjectKey,
+  HDatePickerFormatInjectKey,
+  HDatePickerPropsInjectKey,
 } from '../utils/injectKeys';
 import DatetimeTriggerHeader from './DatetimeTriggerHeader';
 import { IconArrowLeft, IconArrowRight, IconToggleLeft, IconToggleRight } from '@aurora/icon';
@@ -36,11 +36,11 @@ export default defineComponent({
         HorizonWebComponentInstance<typeof DatetimeTriggerHeader, DatePickerDatePanelHeaderExposes>
       >();
 
-    const parentProps = inject(NDatePickerPropsInjectKey)!;
+    const parentProps = inject(HDatePickerPropsInjectKey)!;
     const switcherShowFormatMapping = inject(
-      NDatePickerDateSwitcherShowFormatMappingMappingInjectKey,
+      HDatePickerDateSwitcherShowFormatMappingMappingInjectKey,
     )!;
-    const pickerType = inject(NDatePickerFormatInjectKey)!;
+    const pickerType = inject(HDatePickerFormatInjectKey)!;
 
     const currentShowDate = computed(() =>
       props.type === 'end' ? props.endPanelShowDate : props.startPanelShowDate,

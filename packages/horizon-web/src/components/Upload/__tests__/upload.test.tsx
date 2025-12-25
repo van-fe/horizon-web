@@ -1,14 +1,14 @@
 import { mount } from '@vue/test-utils';
-import type { NUploadUserFile } from '..';
-import { NUpload } from '..';
+import type { HUploadUserFile } from '..';
+import { HUpload } from '..';
 import { describe, expect, test } from 'vitest';
 import { ref } from 'vue';
 
 describe('Upload.tsx', () => {
   test('basic', async () => {
-    const modelValue = ref<NUploadUserFile>();
-    const wrapper = mount(() => <NUpload v-model={modelValue.value} action="" />);
-    const element = wrapper.findComponent(NUpload);
+    const modelValue = ref<HUploadUserFile>();
+    const wrapper = mount(() => <HUpload v-model={modelValue.value} action="" />);
+    const element = wrapper.findComponent(HUpload);
 
     expect(element.exists()).toBe(true);
   });

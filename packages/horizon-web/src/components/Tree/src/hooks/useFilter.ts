@@ -3,14 +3,14 @@ import { computed, ref, watch } from 'vue';
 import type { TreeProps } from '../composables/useProps';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { isObject } from '@aurora/utils';
-import type { NTreeExtendsData, NTreeData } from '../utils/types';
+import type { HTreeExtendsData, HTreeData } from '../utils/types';
 import type Tree from '~/utils/useTree/index';
 import type { TreeEmits } from '../composables/useEmits';
 
 export default function (
   props: ToRefs<TreeProps>,
   emit: HorizonWebSetupContext<TreeEmits>['emit'],
-  tree: Tree<NTreeData, NTreeExtendsData>,
+  tree: Tree<HTreeData, HTreeExtendsData>,
   expandedNodesUuid: UnwrapNestedRefs<Set<string | number>>,
 ) {
   const filterValue = ref<string | undefined>(props.filterValue?.value);
@@ -32,7 +32,7 @@ export default function (
   );
 
   const filterMethod = computed(() => {
-    const defaultFilterMethod = (input: string, node: NTreeExtendsData) => {
+    const defaultFilterMethod = (input: string, node: HTreeExtendsData) => {
       return (
         (props.filterToHideChildren.value ? node.stringLabel : node.fullPathLabel)
           ?.toLowerCase()
@@ -59,11 +59,11 @@ export default function (
    */
   let prevFilterValue = '';
 
-  const visibleItems = computed<NTreeExtendsData[]>(() => {
+  const visibleItems = computed<HTreeExtendsData[]>(() => {
     let tempVisibleOptions = tree.flattenTreeData.value.concat();
 
     if (isUsingFilter.value && isDuringFilter.value) {
-      const flattenFilterResults: NTreeExtendsData[] = [];
+      const flattenFilterResults: HTreeExtendsData[] = [];
       tree.flattenTreeData.value
         .filter(option =>
           filterMethod.value(

@@ -1,7 +1,7 @@
 import { describe, expect, test, vi } from 'vitest';
 import { createInstance } from './tree-helper';
-import NTreeItem from '../src/components/TreeItem';
-import type { NTreeUuidType } from '../src/utils/types';
+import HTreeItem from '../src/components/TreeItem';
+import type { HTreeUuidType } from '../src/utils/types';
 import { nextTick, ref } from 'vue';
 import options from './options.json';
 import resetOptions from './modifiedOptions/reset-options.json';
@@ -11,7 +11,7 @@ import cloneDeep from 'lodash/cloneDeep';
 
 describe('Tree.tsx exposes', () => {
   test('get-selected-nodes & get-part-selected-nodes & get-un-selected-nodes', async () => {
-    const selectedValues = ref<NTreeUuidType[]>([]);
+    const selectedValues = ref<HTreeUuidType[]>([]);
 
     const { domRef } = await createInstance({
       multiple: true,
@@ -43,13 +43,13 @@ describe('Tree.tsx exposes', () => {
   });
 
   test('set-selected-status', async () => {
-    const selectedValues = ref<NTreeUuidType[]>([]);
+    const selectedValues = ref<HTreeUuidType[]>([]);
     const onUpdate = vi.fn();
 
     const { domRef } = await createInstance({
       multiple: true,
       selectedValues,
-      'onUpdate:selectedValues': (val: NTreeUuidType[]) => {
+      'onUpdate:selectedValues': (val: HTreeUuidType[]) => {
         selectedValues.value = val;
         onUpdate();
       },
@@ -78,13 +78,13 @@ describe('Tree.tsx exposes', () => {
   });
 
   test('clear-selected-values', async () => {
-    const selectedValues = ref<NTreeUuidType[]>(['top nav', 'side nav']);
+    const selectedValues = ref<HTreeUuidType[]>(['top nav', 'side nav']);
     const onUpdate = vi.fn();
 
     const { domRef } = await createInstance({
       multiple: true,
       selectedValues,
-      'onUpdate:selectedValues': (val: NTreeUuidType[]) => {
+      'onUpdate:selectedValues': (val: HTreeUuidType[]) => {
         selectedValues.value = val;
         onUpdate();
       },
@@ -101,18 +101,18 @@ describe('Tree.tsx exposes', () => {
   });
 
   test('get-expand-nodes & set-collapse-status-by-value', async () => {
-    const expandValues = ref<NTreeUuidType[]>([]);
+    const expandValues = ref<HTreeUuidType[]>([]);
     const onExpand = vi.fn();
 
     const { domRef, element } = await createInstance({
       expandValues,
-      'onUpdate:expandValues': (val: NTreeUuidType[]) => (expandValues.value = val),
+      'onUpdate:expandValues': (val: HTreeUuidType[]) => (expandValues.value = val),
       onExpand,
     });
 
     expect(
       element
-        .findAllComponents(NTreeItem)
+        .findAllComponents(HTreeItem)
         .find(curr => curr.element.getAttribute('data-uuid') === 'top nav')
         ?.exists(),
     ).toBeFalsy();
@@ -135,7 +135,7 @@ describe('Tree.tsx exposes', () => {
     domRef.value?.setCollapseStatusByValue(['navigation'], true);
     expect(
       element
-        .findAllComponents(NTreeItem)
+        .findAllComponents(HTreeItem)
         .find(curr => curr.element.getAttribute('data-uuid') === 'top nav')
         ?.exists(),
     ).toBeTruthy();
@@ -154,11 +154,11 @@ describe('Tree.tsx exposes', () => {
   });
 
   test('set-all-collapse-status', async () => {
-    const expandValues = ref<NTreeUuidType[]>([]);
+    const expandValues = ref<HTreeUuidType[]>([]);
 
     const { domRef, element } = await createInstance({
       expandValues,
-      'onUpdate:expandValues': (val: NTreeUuidType[]) => (expandValues.value = val),
+      'onUpdate:expandValues': (val: HTreeUuidType[]) => (expandValues.value = val),
     });
 
     domRef.value?.setAllCollapseStatus(true);
@@ -167,7 +167,7 @@ describe('Tree.tsx exposes', () => {
 
     expect(
       element
-        .findAllComponents(NTreeItem)
+        .findAllComponents(HTreeItem)
         .find(curr => curr.element.getAttribute('data-uuid') === 'top nav')
         ?.exists(),
     ).toBeTruthy();

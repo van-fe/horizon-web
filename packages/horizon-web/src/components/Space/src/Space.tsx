@@ -2,14 +2,14 @@ import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, getUnitString, isVNodeEmpty, useNamespace } from '@aurora/utils';
 import type { CSSProperties, Ref, VNode } from 'vue';
 import { Fragment, computed, defineComponent, inject, ref } from 'vue';
-import { type NApplicationSizeType } from '~/components/Application/src/composables/useProps';
+import { type HApplicationSizeType } from '~/components/Application/src/composables/useProps';
 import { GlobalSizeInjectedKey } from '~/components/Application/src/utils/injectedKeys';
 import Divider from '~/components/Divider/src/Divider';
 import type { SpaceEmits } from './composables/useEmits';
 import { useSpaceEmits } from './composables/useEmits';
 import type { SpaceExposes } from './composables/useExposes';
 import { useSpaceExposes } from './composables/useExposes';
-import type { NSpaceSize, SpaceProps } from './composables/useProps';
+import type { HSpaceSize, SpaceProps } from './composables/useProps';
 import { useSpaceProps } from './composables/useProps';
 import type { SpaceSlots } from './composables/useSlots';
 import { useSpaceSlots } from './composables/useSlots';
@@ -29,9 +29,9 @@ export default defineComponent({
   ) {
     const classHelper = new ComponentClassBlock('space');
 
-    const globalSize = inject<Ref<NApplicationSizeType>>(GlobalSizeInjectedKey, ref('small'));
+    const globalSize = inject<Ref<HApplicationSizeType>>(GlobalSizeInjectedKey, ref('small'));
 
-    const size = computed<NSpaceSize>(() =>
+    const size = computed<HSpaceSize>(() =>
       Array.isArray(props.size)
         ? (props.size.slice(0, 2) as [number, number])
         : (getUnitString(props.size || globalSize.value) as string),

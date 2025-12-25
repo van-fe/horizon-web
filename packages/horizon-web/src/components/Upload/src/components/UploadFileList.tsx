@@ -2,14 +2,14 @@ import type { PropType } from 'vue';
 import { computed, defineComponent, inject, ref } from 'vue';
 import { cls, ComponentClassBlock } from '@aurora/utils';
 import {
-  NUploadPropsInjectKey,
-  NUploadSizeInjectKey,
-  NUploadSlotsInjectKey,
+  HUploadPropsInjectKey,
+  HUploadSizeInjectKey,
+  HUploadSlotsInjectKey,
 } from '../utils/injectKeys';
 import UploadFileItem from './UploadFileItem';
 import type { UploadProps } from '../composables/useProps';
-import type { NUploadMultipartSetting } from '../composables/useMultipartUpload';
-import type { NUploadFileType } from '../utils/fileDefines';
+import type { HUploadMultipartSetting } from '../composables/useMultipartUpload';
+import type { HUploadFileType } from '../utils/fileDefines';
 
 export default defineComponent({
   name: 'UploadFileList',
@@ -18,11 +18,11 @@ export default defineComponent({
   },
   props: {
     fileList: {
-      type: Object as PropType<Set<NUploadFileType>>,
+      type: Object as PropType<Set<HUploadFileType>>,
       required: true,
     },
     multipart: {
-      type: [Boolean, Object] as PropType<false | NUploadMultipartSetting>,
+      type: [Boolean, Object] as PropType<false | HUploadMultipartSetting>,
       required: true,
     },
     controls: {
@@ -42,9 +42,9 @@ export default defineComponent({
     const classHelper = new ComponentClassBlock('upload--file-list');
     const fileListRef = ref<HTMLElement | null>(null);
 
-    const sizeRef = inject(NUploadSizeInjectKey, undefined);
-    const parentProps = inject(NUploadPropsInjectKey, undefined);
-    const parentSlots = inject(NUploadSlotsInjectKey, undefined);
+    const sizeRef = inject(HUploadSizeInjectKey, undefined);
+    const parentProps = inject(HUploadPropsInjectKey, undefined);
+    const parentSlots = inject(HUploadSlotsInjectKey, undefined);
 
     const fileItemSize = computed(() => parentProps?.fileItemSize ?? sizeRef?.value ?? 'medium');
 

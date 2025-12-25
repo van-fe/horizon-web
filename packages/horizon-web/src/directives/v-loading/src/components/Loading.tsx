@@ -3,12 +3,12 @@ import { computed, defineComponent } from 'vue';
 import type { LoadingProps } from '../composables/useProps';
 import { useLoadingProps } from '../composables/useProps';
 import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
-import NTransition from '~/components/Transition/src/Transition';
+import HTransition from '~/components/Transition/src/Transition';
 
 export default defineComponent({
   name: `${useNamespace()}Loading`,
   components: {
-    NTransition,
+    HTransition,
   },
   props: useLoadingProps,
   setup(props: LoadingProps) {
@@ -22,7 +22,7 @@ export default defineComponent({
     });
 
     return () => (
-      <NTransition name="fade-in">
+      <HTransition name="fade-in">
         <div class={cls(classHelper.block)} style={styles.value}>
           <section
             class={cls(
@@ -70,7 +70,7 @@ export default defineComponent({
             </div>
           </section>
         </div>
-      </NTransition>
+      </HTransition>
     );
   },
 });

@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import NVSafeHtml from '../index';
+import HVSafeHtml from '../index';
 import { describe, expect, test } from 'vitest';
 
 describe('v-safe-html.tsx', () => {
@@ -12,7 +12,7 @@ describe('v-safe-html.tsx', () => {
     // const wrapper = mount(() => <div class="wrapper" v-safe-html={xss} />, {
     //   global: {
     //     directives: {
-    //       [NVSafeHtml.name]: NVSafeHtml,
+    //       [HVSafeHtml.name]: HVSafeHtml,
     //     },
     //   },
     // });

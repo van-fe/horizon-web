@@ -7,7 +7,7 @@ import {
   horizonwebProjectRoot,
   apiGeneratorOutPut,
   methodsRoot,
-} from '@aurora/utils/plugins';
+} from '@root/scripts/paths';
 import type {
   ApiGeneratorExportedPluginType,
   ApiGeneratorExportedComponent,

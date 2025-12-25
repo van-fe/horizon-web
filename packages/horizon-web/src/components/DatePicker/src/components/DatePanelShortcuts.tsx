@@ -2,16 +2,16 @@ import type { PropType, Ref } from 'vue';
 import { computed, defineComponent, inject, ref } from 'vue';
 import { cls, ComponentClassBlock, isUndefined } from '@aurora/utils';
 import {
-  NDatePickerEmitsInjectKey,
-  NDatePickerFormatInjectKey,
-  NDatePickerPropsInjectKey,
+  HDatePickerEmitsInjectKey,
+  HDatePickerFormatInjectKey,
+  HDatePickerPropsInjectKey,
 } from '../utils/injectKeys';
-import type { GetableType, NDatePickerShortcutsType } from '../utils/types';
-import NRadio from '~/components/Radio/src/Radio';
+import type { GetableType, HDatePickerShortcutsType } from '../utils/types';
+import HRadio from '~/components/Radio/src/Radio';
 import type { Dayjs } from 'dayjs';
 import { isDayjs } from 'dayjs';
 import { getDayjsUnitByType } from '../hooks/usePanel';
-import NScrollbar from '~/components/Scrollbar/src/Scrollbar';
+import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
 import type { MaybeElement } from '@vueuse/core';
 import { useResizeObserver } from '@vueuse/core';
 
@@ -50,9 +50,9 @@ export default defineComponent({
   setup(props, { emit }) {
     const classHelper = new ComponentClassBlock('date-picker');
 
-    const parentProps = inject(NDatePickerPropsInjectKey)!;
-    const parentEmits = inject(NDatePickerEmitsInjectKey)!;
-    const pickerType = inject(NDatePickerFormatInjectKey)!;
+    const parentProps = inject(HDatePickerPropsInjectKey)!;
+    const parentEmits = inject(HDatePickerEmitsInjectKey)!;
+    const pickerType = inject(HDatePickerFormatInjectKey)!;
 
     const maxHeight = ref(290);
 
@@ -99,7 +99,7 @@ export default defineComponent({
       }
     });
 
-    function handleClick(shortcut: NDatePickerShortcutsType) {
+    function handleClick(shortcut: HDatePickerShortcutsType) {
       const value = typeof shortcut.value === 'function' ? shortcut.value() : shortcut.value;
 
       parentEmits('shortcutClick', shortcut);
@@ -109,15 +109,15 @@ export default defineComponent({
 
     return () => (
       <div class={cls(classHelper.e('shortcuts'))}>
-        <NScrollbar size="small" maxHeight={maxHeight.value} viewStyle={{ padding: '16px' }}>
+        <HScrollbar size="small" maxHeight={maxHeight.value} viewStyle={{ padding: '16px' }}>
           {parentProps.shortcuts?.map((shortcut, idx) => (
             <div class={classHelper.e('shortcuts-item')} onClick={() => handleClick(shortcut)}>
-              <NRadio modelValue={currentPicked.value} value={idx}>
+              <HRadio modelValue={currentPicked.value} value={idx}>
                 {shortcut.label}
-              </NRadio>
+              </HRadio>
             </div>
           ))}
-        </NScrollbar>
+        </HScrollbar>
       </div>
     );
   },

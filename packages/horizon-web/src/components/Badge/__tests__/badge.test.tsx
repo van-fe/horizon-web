@@ -1,15 +1,15 @@
 import { mount } from '@vue/test-utils';
-import NBadge from '../src/Badge';
+import HBadge from '../src/Badge';
 import { describe, expect, test } from 'vitest';
 
 describe('Badge.tsx', () => {
   test('basic', async () => {
     const wrapper = mount(() => (
-      <NBadge>
+      <HBadge>
         <div style="background: gray; width: 50px; height: 50px;"></div>
-      </NBadge>
+      </HBadge>
     ));
-    const element = wrapper.findComponent(NBadge);
+    const element = wrapper.findComponent(HBadge);
 
     expect(element.exists()).toBe(true);
   });

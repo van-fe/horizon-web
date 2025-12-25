@@ -2,7 +2,7 @@ import type { ExtractPropTypes, PropType, Ref, VNode } from 'vue';
 import type { RuleItem } from 'async-validator';
 import { declarePropType } from '@aurora/utils';
 
-export interface NFormItemHelper {
+export interface HFormItemHelper {
   /**
    * 帮助标题
    */
@@ -264,7 +264,7 @@ export const useFormItemProps = declarePropType({
    * @verison latest 可以传入 `string`，默认为 `'content'` 字段数据
    */
   helper: {
-    type: [Object, String] as PropType<NFormItemHelper | string>,
+    type: [Object, String] as PropType<HFormItemHelper | string>,
     required: false,
   },
   /**
@@ -379,11 +379,11 @@ export interface BindComponent {
   clearValidate: () => void;
 }
 
-export interface NFormInstance {
+export interface HFormInstance {
   validate: () => Promise<null | Record<string, any>>;
   validateField: (props?: string[]) => Promise<null | Record<string, any>>;
   resetFields: (props?: string[]) => void;
   scrollToField: (prop: string) => void;
   clearValidate: (props?: string[]) => void;
 }
-export type NFormRule = RuleItem;
+export type HFormRule = RuleItem;

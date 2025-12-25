@@ -1,28 +1,28 @@
 import type { Ref, SetupContext } from 'vue';
 import { nextTick, ref, computed } from 'vue';
-import type { NTableFixedValue, NTableInsertedColumnData } from '../utils/types';
+import type { HTableFixedValue, HTableInsertedColumnData } from '../utils/types';
 import type { TableColumnProps } from '../composables/useProps';
-import type { NTreeData, NTreeNodeDataWithLevel } from '~/components/Tree/src/utils/types';
+import type { HTreeData, HTreeNodeDataWithLevel } from '~/components/Tree/src/utils/types';
 import type { HorizonWebComponentInstance } from '@aurora/utils';
 import { ComponentClassBlock, cls, upperFirst } from '@aurora/utils';
-import NButton from '~/components/Button/src/Button';
-import NTreeSelect from '~/components/TreeSelect/src/TreeSelect';
+import HButton from '~/components/Button/src/Button';
+import HTreeSelect from '~/components/TreeSelect/src/TreeSelect';
 import { IconLock, IconPin, IconPinned, IconSetting } from '@aurora/icon';
-import NDropdown from '~/components/Dropdown/src/Dropdown';
-import NDropdownItem from '~/components/Dropdown/src/DropdownItem';
-import NDropdownMenu from '~/components/Dropdown/src/DropdownMenu';
+import HDropdown from '~/components/Dropdown/src/Dropdown';
+import HDropdownItem from '~/components/Dropdown/src/DropdownItem';
+import HDropdownMenu from '~/components/Dropdown/src/DropdownMenu';
 import useLocaleLang from '~/utils/useLocaleLang';
 import type { DropdownSlots } from '~/components/Dropdown/src/composables/useSlots';
 import type { TreeSelectExposes } from '~/components/TreeSelect/src/composables/useExposes';
 import type { TreeSelectSlots } from '~/components/TreeSelect/src/composables/useSlots';
 
 export default function useColumnManager(options: {
-  columns: Ref<NTableInsertedColumnData[]>;
-  fixedStore: Ref<Map<string, NTableFixedValue>>;
+  columns: Ref<HTableInsertedColumnData[]>;
+  fixedStore: Ref<Map<string, HTableFixedValue>>;
   getFixedState: (
     columnUuid: string,
-    checkStore?: Map<string, NTableFixedValue>,
-  ) => NTableFixedValue;
+    checkStore?: Map<string, HTableFixedValue>,
+  ) => HTableFixedValue;
   resetFixedState: () => void;
   visibleStore: Ref<Map<string, boolean>>;
   getVisibleState: (columnUuid: string, checkStore?: Map<string, boolean>) => boolean;
@@ -30,14 +30,14 @@ export default function useColumnManager(options: {
 }) {
   const classHelper = new ComponentClassBlock('table-v3');
 
-  const treeSelectDomRef = ref<HorizonWebComponentInstance<typeof NTreeSelect, TreeSelectExposes>>();
+  const treeSelectDomRef = ref<HorizonWebComponentInstance<typeof HTreeSelect, TreeSelectExposes>>();
 
   const visibleColumnsTemp = ref<string[]>([]);
-  const fixedStoreTemp = ref(new Map<string, NTableFixedValue>());
+  const fixedStoreTemp = ref(new Map<string, HTableFixedValue>());
 
   const treeData = computed(() => gatherTreeData(options.columns.value));
 
-  function sortColumnsMethod(a: NTreeData, b: NTreeData) {
+  function sortColumnsMethod(a: HTreeData, b: HTreeData) {
     switch (options.getFixedState(a.value as string)) {
       case 'left':
         switch (options.getFixedState(b.value as string)) {
@@ -64,11 +64,11 @@ export default function useColumnManager(options: {
     }
   }
 
-  function gatherTreeData(tree: NTableInsertedColumnData[]) {
-    const res: NTreeData[] = [];
+  function gatherTreeData(tree: HTableInsertedColumnData[]) {
+    const res: HTreeData[] = [];
 
     tree.forEach(item => {
-      let children: NTreeData[] = [];
+      let children: HTreeData[] = [];
 
       if (item.children && item.children.length) {
         children = gatherTreeData(item.children);
@@ -108,7 +108,7 @@ export default function useColumnManager(options: {
     fixedStoreTemp.value.set(columnUuid, undefined);
   }
 
-  function setPin(evt: Event, columnUuid: string, fixed: NTableFixedValue) {
+  function setPin(evt: Event, columnUuid: string, fixed: HTableFixedValue) {
     evt.stopPropagation();
     fixedStoreTemp.value.set(columnUuid, fixed);
   }
@@ -137,7 +137,7 @@ export default function useColumnManager(options: {
   function handleUpdateTreeData() {}
 
   return () => (
-    <NTreeSelect
+    <HTreeSelect
       ref={treeSelectDomRef}
       v-model={visibleColumnsTemp.value}
       class={cls(classHelper.e('column-manager'))}
@@ -162,7 +162,7 @@ export default function useColumnManager(options: {
     >
       {{
         default: ({ visible }: NonNullable<Parameters<NonNullable<SetupContext<{}, TreeSelectSlots>['slots']['default']>>[0]>) => (
-          <NButton
+          <HButton
             icon={IconSetting}
             iconSize={16}
             size="small"
@@ -171,7 +171,7 @@ export default function useColumnManager(options: {
             class={classHelper.is('hover', visible.value)}
           />
         ),
-        treeNodeRender: (value: { data: NTreeNodeDataWithLevel }) => (
+        treeNodeRender: (value: { data: HTreeNodeDataWithLevel }) => (
           <div class={cls(classHelper.em('column-manager', 'item'))}>
             <div
               class={cls(
@@ -184,7 +184,7 @@ export default function useColumnManager(options: {
             <div class={classHelper.em('column-manager', 'item-action')}>
               {value.data.level === 0 &&
                 (options.getFixedState(value.data.value as string, fixedStoreTemp.value) ? (
-                  <NButton
+                  <HButton
                     v-tooltip={
                       (value.data.props as TableColumnProps).lockFixed
                         ? useLocaleLang('table.lockPin').value
@@ -203,10 +203,10 @@ export default function useColumnManager(options: {
                     onClick={evt => cancelPinned(evt, value.data.value as string)}
                   />
                 ) : (
-                  <NDropdown toBody={false}>
+                  <HDropdown toBody={false}>
                     {{
                       default: ({ popperVisible }: Parameters<SetupContext<{}, DropdownSlots>['slots']['default']>[0]) => (
-                        <NButton
+                        <HButton
                           size="small"
                           type="normal"
                           text
@@ -220,26 +220,26 @@ export default function useColumnManager(options: {
                         />
                       ),
                       dropdown: () => (
-                        <NDropdownMenu>
-                          <NDropdownItem
+                        <HDropdownMenu>
+                          <HDropdownItem
                             onClick={evt => setPin(evt, value.data.value as string, 'left')}
                           >
                             {useLocaleLang('table.pinToLeft').value}
-                          </NDropdownItem>
-                          <NDropdownItem
+                          </HDropdownItem>
+                          <HDropdownItem
                             onClick={evt => setPin(evt, value.data.value as string, 'right')}
                           >
                             {useLocaleLang('table.pinToRight').value}
-                          </NDropdownItem>
-                        </NDropdownMenu>
+                          </HDropdownItem>
+                        </HDropdownMenu>
                       ),
                     }}
-                  </NDropdown>
+                  </HDropdown>
                 ))}
             </div>
           </div>
         ),
       }}
-    </NTreeSelect>
+    </HTreeSelect>
   );
 }

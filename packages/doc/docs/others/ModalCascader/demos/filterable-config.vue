@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import type { NCascaderExtendOption } from '@aurora/horizon-web';
+import type { HCascaderExtendOption } from '@aurora/horizon-web';
 import { ref } from 'vue';
 
 const currentVal1 = ref<string[]>([]);
@@ -44,13 +44,13 @@ fetch(
   });
 });
 
-function sortFn(a: NCascaderExtendOption, b: NCascaderExtendOption) {
+function sortFn(a: HCascaderExtendOption, b: HCascaderExtendOption) {
   return b.paths.at(-1).label.length - a.paths.at(-1).label.length;
 }
 
 function filterFn(
   inputValue: string,
-  paths: { value: string | number; label: string; option: NCascaderExtendOption }[],
+  paths: { value: string | number; label: string; option: HCascaderExtendOption }[],
 ) {
   return paths.every(path => path.label.includes(inputValue));
 }

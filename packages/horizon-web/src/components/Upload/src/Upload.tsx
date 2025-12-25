@@ -12,23 +12,23 @@ import type { UploadSlots } from './composables/useSlots';
 import type { UploadExposes, UploadBackgroundExposes } from './composables/useExposes';
 import UploadFileHelper from './utils/UploadFileHelper';
 import {
-  NUploadEmitsInjectKey,
-  NUploadOpenViewerInjectKey,
-  NUploadPropsInjectKey,
-  NUploadSizeInjectKey,
-  NUploadSlotsInjectKey,
-  NUploadUploadFileHelperInjectKey,
+  HUploadEmitsInjectKey,
+  HUploadOpenViewerInjectKey,
+  HUploadPropsInjectKey,
+  HUploadSizeInjectKey,
+  HUploadSlotsInjectKey,
+  HUploadUploadFileHelperInjectKey,
 } from './utils/injectKeys';
 import {
-  NFormDisabledInjectedKey,
-  NFormItemErrorInjectedKey,
-  NFormItemTriggerInjectedKey,
+  HFormDisabledInjectedKey,
+  HFormItemErrorInjectedKey,
+  HFormItemTriggerInjectedKey,
 } from '~/components/Form/src/utils/injectedKeys';
 import UploadButton from './components/UploadButton';
 import UploadGallery from './components/UploadGallery';
 import UploadDropArea from './components/UploadDropArea';
-import type { NUploadFileType, NUploadRawFileType } from './utils/fileDefines';
-import { NUploadFileTypeEnum, NUploadFileStatusEnum } from './utils/fileDefines';
+import type { HUploadFileType, HUploadRawFileType } from './utils/fileDefines';
+import { HUploadFileTypeEnum, HUploadFileStatusEnum } from './utils/fileDefines';
 import UploadGalleryList from './components/UploadGalleryList';
 import UploadFileList from './components/UploadFileList';
 import useSize from '~/utils/useSize';
@@ -36,7 +36,7 @@ import {
   createBackgroundUploadInstance,
   destroyBackgroundUploadInstance,
 } from './utils/uploadBackgroundHelper';
-import NViewer from '~/components/Viewer/src/Viewer';
+import HViewer from '~/components/Viewer/src/Viewer';
 import { useClipboard } from './utils/useClipboard';
 import UploadGalleryMixedList from '~/components/Upload/src/components/UploadGalleryMixedList';
 
@@ -60,9 +60,9 @@ export default defineComponent({
     const sizeRef = useSize(propsRef.size, 'medium');
 
     // form-item injects
-    const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
-    const formDisabled = inject(NFormDisabledInjectedKey, undefined);
-    const nFormError = inject(NFormItemErrorInjectedKey, ref(''));
+    const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
+    const formDisabled = inject(HFormDisabledInjectedKey, undefined);
+    const nFormError = inject(HFormItemErrorInjectedKey, ref(''));
 
     const isDisabled = computed(() => props.disabled ?? formDisabled?.value ?? false);
 
@@ -71,19 +71,19 @@ export default defineComponent({
     const canViewerFiles = computed(() =>
       Array.from(uploadFileHelper.fileList.value.values())
         .filter(file =>
-          [NUploadFileTypeEnum.Image, NUploadFileTypeEnum.Video].includes(file.type),
+          [HUploadFileTypeEnum.Image, HUploadFileTypeEnum.Video].includes(file.type),
         )
         .filter(file => propsRef.beforeViewerPreview?.value?.(file) ?? true),
     );
 
     useClipboard(propsRef, uploadFileHelper, isDisabled);
 
-    provide(NUploadPropsInjectKey, props);
-    provide(NUploadEmitsInjectKey, emit);
-    provide(NUploadSlotsInjectKey, slots);
-    provide(NUploadSizeInjectKey, sizeRef);
-    provide(NUploadUploadFileHelperInjectKey, uploadFileHelper);
-    provide(NUploadOpenViewerInjectKey, file => {
+    provide(HUploadPropsInjectKey, props);
+    provide(HUploadEmitsInjectKey, emit);
+    provide(HUploadSlotsInjectKey, slots);
+    provide(HUploadSizeInjectKey, sizeRef);
+    provide(HUploadUploadFileHelperInjectKey, uploadFileHelper);
+    provide(HUploadOpenViewerInjectKey, file => {
       viewerIndex.value = canViewerFiles.value.indexOf(file);
       if (viewerIndex.value !== -1) {
         viewerVisible.value = true;
@@ -120,7 +120,7 @@ export default defineComponent({
     > | null = null;
     let backgroundUploaderInstanceIndex: number | null = null;
 
-    function emitChange(file: NUploadFileType, response?: Data | undefined) {
+    function emitChange(file: HUploadFileType, response?: Data | undefined) {
       emit('update:modelValue', Array.from(uploadFileHelper.fileList.value.values()));
       emit('change', file, response);
       formItemTrigger?.('change');
@@ -128,15 +128,15 @@ export default defineComponent({
     }
 
     uploadFileHelper.eventEmitter.on('change', (file, response) => {
-      if (file.status === NUploadFileStatusEnum.New) {
+      if (file.status === HUploadFileStatusEnum.New) {
         backgroundUploader?.addFile?.(file);
       }
 
       if (
         [
-          NUploadFileStatusEnum.New,
-          NUploadFileStatusEnum.Success,
-          NUploadFileStatusEnum.Fail,
+          HUploadFileStatusEnum.New,
+          HUploadFileStatusEnum.Success,
+          HUploadFileStatusEnum.Fail,
         ].includes(file.status)
       ) {
         emitChange(file, response);
@@ -217,19 +217,19 @@ export default defineComponent({
     );
 
     expose({
-      async upload(files?: NUploadFileType[]) {
+      async upload(files?: HUploadFileType[]) {
         if (files?.length) {
           await uploadFileHelper.addFiles(files);
         }
 
         await uploadFileHelper.uploadFiles();
       },
-      async abort(files?: NUploadFileType[]) {
+      async abort(files?: HUploadFileType[]) {
         if (files?.length) {
           await uploadFileHelper.abortFiles(files);
         }
       },
-      clearFiles(status?: NUploadFileStatusEnum[]) {
+      clearFiles(status?: HUploadFileStatusEnum[]) {
         if (status?.length) {
           const readyToClearFiles = Array.from(uploadFileHelper.fileList.value).filter(curr =>
             status.includes(curr.status),
@@ -243,7 +243,7 @@ export default defineComponent({
       handleSelect() {
         uploadFileHelper.clickInput();
       },
-      handleRemove(rawFiles?: NUploadRawFileType[]) {
+      handleRemove(rawFiles?: HUploadRawFileType[]) {
         if (rawFiles?.length) {
           void uploadFileHelper.removeFile(rawFiles, false);
         } else if (isNil(rawFiles)) {
@@ -310,7 +310,7 @@ export default defineComponent({
           )}
         >
           {shouldShowFileList.value ? getFileListNode() : uploadTriggerElement}
-          <NViewer
+          <HViewer
             v-model={viewerVisible.value}
             initIndex={viewerIndex.value}
             sources={canViewerFiles.value.map(file => ({
@@ -318,7 +318,7 @@ export default defineComponent({
               cover: (file.posterUrl || file.url || file.blobUrl)!,
               title: file.name,
               videoSources:
-                file.type === NUploadFileTypeEnum.Video
+                file.type === HUploadFileTypeEnum.Video
                   ? [
                       {
                         src: (file.url || file.blobUrl)!,

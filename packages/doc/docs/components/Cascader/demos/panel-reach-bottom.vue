@@ -16,17 +16,17 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { CascaderExposes, NCascader, type NCascaderOption , NCascaderExtendOption } from '@aurora/horizon-web';
+import { CascaderExposes, HCascader, type HCascaderOption , HCascaderExtendOption } from '@aurora/horizon-web';
 import { HorizonWebComponentInstance } from '@aurora/utils';
 import { faker } from '@faker-js/faker';
 
-const cascaderDomRef1 = ref<HorizonWebComponentInstance<typeof NCascader, CascaderExposes>>();
+const cascaderDomRef1 = ref<HorizonWebComponentInstance<typeof HCascader, CascaderExposes>>();
 
 const currentVal = ref<string[]>([]);
-const baseData = ref<NCascaderOption[]>(createList(5, 20));
+const baseData = ref<HCascaderOption[]>(createList(5, 20));
 const panelsLoading = ref(false);
 
-function onReachBottom(evt: Event | undefined, parent: NCascaderExtendOption | null | unknown) {
+function onReachBottom(evt: Event | undefined, parent: HCascaderExtendOption | null | unknown) {
   console.info(evt, parent);
 
   if (parent) {
@@ -48,7 +48,7 @@ function onReachBottom(evt: Event | undefined, parent: NCascaderExtendOption | n
   }
 }
 
-function createList(amount: number, childrenAmount = 0): NCascaderOption[] {
+function createList(amount: number, childrenAmount = 0): HCascaderOption[] {
   return new Array(amount).fill(0).map(() => ({
     label: faker.word.noun(),
     value: faker.datatype.uuid(),

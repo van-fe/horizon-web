@@ -1,15 +1,15 @@
 import type { ToRefs, Ref } from 'vue';
 import { computed } from 'vue';
 import type { TreeSelectProps } from '../composables/useProps';
-import type { NTreeSelectContext, NTreeSelectDomRefs } from './types';
-import type { NTreeUuidType } from '~/components/Tree/src/utils/types';
+import type { HTreeSelectContext, HTreeSelectDomRefs } from './types';
+import type { HTreeUuidType } from '~/components/Tree/src/utils/types';
 
 export default function (
   props: ToRefs<TreeSelectProps>,
-  context: NTreeSelectContext,
-  domRefs: NTreeSelectDomRefs,
-  modelValueSet: Ref<Set<NTreeUuidType>>,
-  presetModelValueSet: Ref<Set<NTreeUuidType>>,
+  context: HTreeSelectContext,
+  domRefs: HTreeSelectDomRefs,
+  modelValueSet: Ref<Set<HTreeUuidType>>,
+  presetModelValueSet: Ref<Set<HTreeUuidType>>,
   controlPopperVisible: (status: boolean) => void,
   whetherInputCanFocus: () => void,
   updatePresetToFormal: () => void,

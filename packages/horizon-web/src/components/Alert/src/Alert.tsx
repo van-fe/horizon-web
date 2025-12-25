@@ -3,7 +3,7 @@ import { useAlertProps, typeMap } from './composables/useProps';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { AIcon } from '@aurora/icon';
-import NLink from '../../Link';
+import HLink from '../../Link';
 import type { AlertEmits } from './composables/useEmits';
 import { useAlertEmits } from './composables/useEmits';
 import type { AlertSlots } from './composables/useSlots';
@@ -120,14 +120,14 @@ export default defineComponent({
               )}
             >
               {props.primaryButtonText && (
-                <NLink onClick={() => props.onPrimary?.(_close)} underline={false}>
+                <HLink onClick={() => props.onPrimary?.(_close)} underline={false}>
                   {props.primaryButtonText}
-                </NLink>
+                </HLink>
               )}
               {props.defaultButtonText && (
-                <NLink onClick={() => props.onDefault?.(_close)} underline={false}>
+                <HLink onClick={() => props.onDefault?.(_close)} underline={false}>
                   {props.defaultButtonText}
-                </NLink>
+                </HLink>
               )}
             </div>
           )}

@@ -9,9 +9,9 @@ import type { FloatButtonGroupSlots } from './composables/useSlots';
 import { useFloatButtonGroupSlots } from './composables/useSlots';
 import { useFloatButtonExposes } from './composables/useExposes';
 import type { FloatButtonExposes } from './composables/useExposes';
-import { NFloatButtonGroupProps, NFloatButtonPassiveVisibleProps } from './utils/InjectedKeys';
-import NFloatButton from './FloatButton';
-import NPopover from '~/components/Popover/src/Popover';
+import { HFloatButtonGroupProps, HFloatButtonPassiveVisibleProps } from './utils/InjectedKeys';
+import HFloatButton from './FloatButton';
+import HPopover from '~/components/Popover/src/Popover';
 import type { PopoverExposes } from '~/components/Popover/src/composables/useExposes';
 import { getBadgeDefaultOption } from '~/components/FloatButton/src/utils/badgeOptions';
 
@@ -31,7 +31,7 @@ export default defineComponent({
   ) {
     const classHelper = new ComponentClassBlock('float-button-group');
 
-    const popoverDomRef = ref<HorizonWebComponentInstance<typeof NPopover, PopoverExposes> | null>(null);
+    const popoverDomRef = ref<HorizonWebComponentInstance<typeof HPopover, PopoverExposes> | null>(null);
 
     const zIndexHandler = useZIndex();
     const zIndex = ref(zIndexHandler.current);
@@ -58,8 +58,8 @@ export default defineComponent({
         : undefined,
     );
 
-    provide(NFloatButtonGroupProps, props);
-    provide(NFloatButtonPassiveVisibleProps, isExpanded);
+    provide(HFloatButtonGroupProps, props);
+    provide(HFloatButtonPassiveVisibleProps, isExpanded);
 
     function handleShow() {
       zIndex.value = zIndexHandler.next();
@@ -94,7 +94,7 @@ export default defineComponent({
     return () => (
       <div class={cls(classHelper.block)}>
         {useCollapseProp.value ? (
-          <NPopover
+          <HPopover
             ref={popoverDomRef}
             trigger={triggerProp.value === 'click' ? 'manual' : triggerProp.value}
             transitionName="collapse"
@@ -109,7 +109,7 @@ export default defineComponent({
           >
             {{
               reference: () => (
-                <NFloatButton
+                <HFloatButton
                   class={cls(
                     classHelper.e('collapse-button'),
                     classHelper.is('expanded', isExpanded.value),
@@ -145,7 +145,7 @@ export default defineComponent({
                 </div>
               ),
             }}
-          </NPopover>
+          </HPopover>
         ) : (
           slots.default?.()
         )}

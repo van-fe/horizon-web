@@ -1,15 +1,15 @@
 import type { PropType, VNode } from 'vue';
 import { computed, defineComponent, Fragment, inject, ref, toRefs, watch } from 'vue';
 import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
 import {
-  NAutoCompleteFocusedOptionValueInjectKey,
-  NAutoCompleteMouseOverOptionInjectKey,
-  NAutoCompletePickOptionInjectKey,
-  NAutoCompletePropsInjectKey,
-  NAutoCompleteVirtualScrollListIsScrollingInjectKey,
+  HAutoCompleteFocusedOptionValueInjectKey,
+  HAutoCompleteMouseOverOptionInjectKey,
+  HAutoCompletePickOptionInjectKey,
+  HAutoCompletePropsInjectKey,
+  HAutoCompleteVirtualScrollListIsScrollingInjectKey,
 } from '../utils/injectKeys';
-import type { NAutoCompleteOptionWithUuid } from '../utils/typed';
+import type { HAutoCompleteOptionWithUuid } from '../utils/typed';
 
 export default defineComponent({
   name: `${useNamespace()}SimpleOption`,
@@ -44,7 +44,7 @@ export default defineComponent({
      * 子数据
      */
     item: {
-      type: Object as PropType<NAutoCompleteOptionWithUuid>,
+      type: Object as PropType<HAutoCompleteOptionWithUuid>,
       required: true,
     },
   },
@@ -55,11 +55,11 @@ export default defineComponent({
 
     const optionDomProp = ref<HTMLDivElement | null>(null);
 
-    const parentProps = inject(NAutoCompletePropsInjectKey)!;
-    const pickOption = inject(NAutoCompletePickOptionInjectKey)!;
-    const focusedOptionValue = inject(NAutoCompleteFocusedOptionValueInjectKey)!;
-    const scrollListIsScrolling = inject(NAutoCompleteVirtualScrollListIsScrollingInjectKey)!;
-    const onMouseOverOption = inject(NAutoCompleteMouseOverOptionInjectKey)!;
+    const parentProps = inject(HAutoCompletePropsInjectKey)!;
+    const pickOption = inject(HAutoCompletePickOptionInjectKey)!;
+    const focusedOptionValue = inject(HAutoCompleteFocusedOptionValueInjectKey)!;
+    const scrollListIsScrolling = inject(HAutoCompleteVirtualScrollListIsScrollingInjectKey)!;
+    const onMouseOverOption = inject(HAutoCompleteMouseOverOptionInjectKey)!;
 
     const isFocused = computed(() => focusedOptionValue.value === labelProp.value);
 
@@ -87,7 +87,7 @@ export default defineComponent({
         <div class={classHelper.e('inner')}>
           <div class={classHelper.e('content-wrapper')}>
             <Fragment>
-              <NTooltip
+              <HTooltip
                 overflow={true}
                 showAfter={parentProps.tooltipShowAfter}
                 hideAfter={parentProps.tooltipHideAfter}
@@ -96,9 +96,9 @@ export default defineComponent({
                   content: () => labelProp.value,
                   default: () => <div class={classHelper.e('content')}>{labelProp.value}</div>,
                 }}
-              </NTooltip>
+              </HTooltip>
               {props.description && (
-                <NTooltip
+                <HTooltip
                   overflow={true}
                   showAfter={parentProps.tooltipShowAfter}
                   hideAfter={parentProps.tooltipHideAfter}
@@ -109,7 +109,7 @@ export default defineComponent({
                       <div class={classHelper.e('description')}>{props.description}</div>
                     ),
                   }}
-                </NTooltip>
+                </HTooltip>
               )}
             </Fragment>
           </div>

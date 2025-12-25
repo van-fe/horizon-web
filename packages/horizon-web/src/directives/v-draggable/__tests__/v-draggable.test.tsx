@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import NVDraggable from '../src';
+import HVDraggable from '../src';
 import { describe, expect, test } from 'vitest';
 
 describe('v-draggable.tsx', () => {
@@ -16,7 +16,7 @@ describe('v-draggable.tsx', () => {
         attachTo: document.body,
         global: {
           directives: {
-            [NVDraggable.name]: NVDraggable,
+            [HVDraggable.name]: HVDraggable,
           },
         },
       },

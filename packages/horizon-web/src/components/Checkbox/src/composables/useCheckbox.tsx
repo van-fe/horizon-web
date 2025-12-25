@@ -1,12 +1,12 @@
 import { defineComponent, toRefs, inject } from 'vue';
 import { useCheckboxProps, isChecked } from './useProps';
 import { ComponentClassBlock } from '@aurora/utils';
-import { IconCheckboxHalf, IconCheckboxAll } from '@aurora/icon';
+import { IconCheckboxHalfFilled, IconCheckboxFilled } from '@aurora/icon';
 import { nanoid } from 'nanoid';
 
 export default defineComponent({
   name: 'Checkbox',
-  components: { IconCheckboxHalf, IconCheckboxAll },
+  components: { IconCheckboxHalfFilled, IconCheckboxFilled },
   props: useCheckboxProps,
   emits: {
     changeInput: () => true,
@@ -56,9 +56,9 @@ export default defineComponent({
         <label for={uuid}>
           {type === 'checkbox' &&
             (propIndeterminate.value ? (
-              <IconCheckboxHalf color={['$primary']} class={classHelper.e('icon')} />
+              <IconCheckboxHalfFilled color={['$primary']} class={classHelper.e('icon')} />
             ) : isChecked(propModelValue.value, propLabel.value, propTrueLabel.value) ? (
-              <IconCheckboxAll color={['$primary']} class={classHelper.e('icon')} />
+              <IconCheckboxFilled color={['$primary']} class={classHelper.e('icon')} />
             ) : (
               <i class={classHelper.e('icon')}></i>
             ))}

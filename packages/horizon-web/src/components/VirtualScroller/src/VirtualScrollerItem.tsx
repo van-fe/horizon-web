@@ -44,7 +44,7 @@ export default defineComponent({
     const parentData = inject<VirtualScrollerContext>(VirtualScrollerInjectKey)!;
 
     // if (!parentData) {
-    //   throw new Error('NVirtualScrollerItem component can only be used with NVirtualScroller');
+    //   throw new Error('HVirtualScrollerItem component can only be used with HVirtualScroller');
     // }
 
     const elRef = ref<HTMLElement>() as Ref<HTMLElement>;

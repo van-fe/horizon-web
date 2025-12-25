@@ -10,8 +10,8 @@ import type { TimePickerProps } from './composables/useProps';
 import type { TimePickerEmits } from './composables/useEmits';
 import type { TimePickerSlots } from './composables/useSlots';
 import type { TimePickerExposes, TimePickerTimePanelExposes } from './composables/useExposes';
-import NPicker from '~/components/Picker/src/Picker';
-import { NTimePickerEmitsInjectKey, NTimePickerPropsInjectKey } from './utils/injectKeys';
+import HPicker from '~/components/Picker/src/Picker';
+import { HTimePickerEmitsInjectKey, HTimePickerPropsInjectKey } from './utils/injectKeys';
 import useSize from '~/utils/useSize';
 import TimePanel from './components/TimePanel';
 import useData from './hooks/useData';
@@ -22,10 +22,10 @@ import type {
 } from '~/components/Picker/src/composables/useExposes';
 import { IconTime } from '@aurora/icon';
 import useLocaleLang from '~/utils/useLocaleLang';
-import NPickerPureInput from '~/components/Picker/src/components/NPickerPureInput';
+import HPickerPureInput from '~/components/Picker/src/components/PickerPureInput';
 import { renderIcon } from '~/utils/useIcon';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
-import NButton from '~/components/Button/src/Button';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
+import HButton from '~/components/Button/src/Button';
 import useEvent from './hooks/useEvent';
 import type {
   ModelValueType,
@@ -46,11 +46,11 @@ export default defineComponent({
     context: HorizonWebSetupContext<TimePickerEmits, TimePickerSlots, TimePickerExposes>,
   ) {
     const classHelper = new ComponentClassBlock('time-picker');
-    const pickerDomRef = ref<HorizonWebComponentInstance<typeof NPicker, PickerExposes>>();
+    const pickerDomRef = ref<HorizonWebComponentInstance<typeof HPicker, PickerExposes>>();
     const startInputDomRef =
-      ref<HorizonWebComponentInstance<typeof NPickerPureInput, PickerPureInputExposes>>();
+      ref<HorizonWebComponentInstance<typeof HPickerPureInput, PickerPureInputExposes>>();
     const endInputDomRef =
-      ref<HorizonWebComponentInstance<typeof NPickerPureInput, PickerPureInputExposes>>();
+      ref<HorizonWebComponentInstance<typeof HPickerPureInput, PickerPureInputExposes>>();
     const startTimePanelDomRef =
       ref<HorizonWebComponentInstance<typeof TimePanel, TimePickerTimePanelExposes>>();
     const endTimePanelDomRef =
@@ -119,8 +119,8 @@ export default defineComponent({
         : renderIcon(separatorProp, separatorSlot);
     }
 
-    provide(NTimePickerPropsInjectKey, props);
-    provide(NTimePickerEmitsInjectKey, context.emit);
+    provide(HTimePickerPropsInjectKey, props);
+    provide(HTimePickerEmitsInjectKey, context.emit);
 
     context.expose({
       clickTimeCell: (
@@ -148,7 +148,7 @@ export default defineComponent({
     });
 
     return () => (
-      <NPicker
+      <HPicker
         ref={pickerDomRef}
         modelValue={
           Array.isArray(showValue.value)
@@ -304,9 +304,9 @@ export default defineComponent({
             ? {
                 panelConfirmLeft: () =>
                   context.slots.showNow?.() ?? (
-                    <NButton size="small" link={true} onClick={onClickNow}>
+                    <HButton size="small" link={true} onClick={onClickNow}>
                       {useLocaleLang('datePicker.now').value}
-                    </NButton>
+                    </HButton>
                   ),
               }
             : {}),
@@ -320,8 +320,8 @@ export default defineComponent({
                   onInputBlur: (evt: FocusEvent) => void,
                 ) => (
                   <div class={classHelper.e('input-wrapper')}>
-                    <NTooltip content={showValue.value?.[0]} overflow={true}>
-                      <NPickerPureInput
+                    <HTooltip content={showValue.value?.[0]} overflow={true}>
+                      <HPickerPureInput
                         ref={startInputDomRef}
                         modelValue={showValue.value?.[0]}
                         placeholder={
@@ -333,15 +333,15 @@ export default defineComponent({
                         onFocus={onInputFocus}
                         onBlur={onInputBlur}
                       />
-                    </NTooltip>
+                    </HTooltip>
                     <div class={classHelper.em('input-wrapper', 'separator')}>
                       {renderSeparator(
                         propRefs.rangeSeparator?.value,
                         context.slots.rangeSeparator,
                       )}
                     </div>
-                    <NTooltip content={showValue.value?.[1]} overflow={true}>
-                      <NPickerPureInput
+                    <HTooltip content={showValue.value?.[1]} overflow={true}>
+                      <HPickerPureInput
                         ref={endInputDomRef}
                         modelValue={showValue.value?.[1]}
                         placeholder={
@@ -353,13 +353,13 @@ export default defineComponent({
                         onFocus={onInputFocus}
                         onBlur={onInputBlur}
                       />
-                    </NTooltip>
+                    </HTooltip>
                   </div>
                 ),
               }
             : {}),
         }}
-      </NPicker>
+      </HPicker>
     );
   },
 });

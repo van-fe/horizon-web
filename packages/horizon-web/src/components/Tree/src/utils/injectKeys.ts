@@ -4,91 +4,91 @@ import type { ComputedRef, InjectionKey, Ref, UnwrapNestedRefs, VNode } from 'vu
 import type { TreeItemProps, TreeProps } from '../composables/useProps';
 import type { TreeEmits } from '../composables/useEmits';
 import type { TreeSlots } from '../composables/useSlots';
-import type { NTreeExtendsData, NTreeData, NTreeHighlightMethod, NTreeUuidType } from './types';
+import type { HTreeExtendsData, HTreeData, HTreeHighlightMethod, HTreeUuidType } from './types';
 import type Tree from '~/utils/useTree/index';
 
-export const NTreePropsInjectKey = Symbol(
+export const HTreePropsInjectKey = Symbol(
   generatorInjectedKeyName('tree', 'props'),
 ) as InjectionKey<TreeProps>;
 
-export const NTreeEmitsInjectKey = Symbol(
+export const HTreeEmitsInjectKey = Symbol(
   generatorInjectedKeyName('tree', 'emits'),
 ) as InjectionKey<HorizonWebSetupContext<TreeEmits>['emit']>;
 
-export const NTreeSlotsInjectKey = Symbol(
+export const HTreeSlotsInjectKey = Symbol(
   generatorInjectedKeyName('tree', 'slots'),
 ) as InjectionKey<HorizonWebSetupContext<{}, TreeSlots>['slots']>;
 
-export const NTreeFilterInputValueInjectKey = Symbol(
+export const HTreeFilterInputValueInjectKey = Symbol(
   generatorInjectedKeyName('tree', 'filter-input-value'),
 ) as InjectionKey<ComputedRef<string | undefined>>;
 
-export const NTreeSizeInjectKey = Symbol.for(
+export const HTreeSizeInjectKey = Symbol.for(
   generatorInjectedKeyName('tree', 'size'),
 ) as InjectionKey<ComputedRef<Exclude<TreeProps['size'], undefined>>>;
 
-export const NTreeExpandedNodesUuidInjectKey = Symbol(
+export const HTreeExpandedNodesUuidInjectKey = Symbol(
   generatorInjectedKeyName('tree', 'expanded-nodes-uuid'),
 ) as InjectionKey<UnwrapNestedRefs<Set<string | number>>>;
 
-export const NTreeSwitchNodeExpandStatusInjectKey = Symbol(
+export const HTreeSwitchNodeExpandStatusInjectKey = Symbol(
   generatorInjectedKeyName('tree', 'switch-node-expand-status'),
-) as InjectionKey<(node: NTreeExtendsData, evt: Event, vNode?: VNode) => void>;
+) as InjectionKey<(node: HTreeExtendsData, evt: Event, vNode?: VNode) => void>;
 
-export const NTreeSelectedNodesUuidInjectKey = Symbol(
+export const HTreeSelectedNodesUuidInjectKey = Symbol(
   generatorInjectedKeyName('tree', 'selected-nodes-uuid'),
 ) as InjectionKey<UnwrapNestedRefs<Set<string | number>>>;
 
-export const NTreeSwitchNodeSelectedStatusInjectKey = Symbol(
+export const HTreeSwitchNodeSelectedStatusInjectKey = Symbol(
   generatorInjectedKeyName('tree', 'selected-node-expand-status'),
 ) as InjectionKey<(nodeUuid: string | number, check: boolean, evt: Event, vNode?: VNode) => void>;
 
-export const NTreeHelperInjectKey = Symbol(
+export const HTreeHelperInjectKey = Symbol(
   generatorInjectedKeyName('tree', 'helper'),
-) as InjectionKey<Tree<NTreeData, NTreeExtendsData>>;
+) as InjectionKey<Tree<HTreeData, HTreeExtendsData>>;
 
-export const NTreeHighlightMethodInjectKey = Symbol(
+export const HTreeHighlightMethodInjectKey = Symbol(
   generatorInjectedKeyName('tree', 'highlight-method'),
-) as InjectionKey<ComputedRef<NTreeHighlightMethod | undefined>>;
+) as InjectionKey<ComputedRef<HTreeHighlightMethod | undefined>>;
 
-export const NTreeLoadingNodesInjectKey = Symbol(
+export const HTreeLoadingNodesInjectKey = Symbol(
   generatorInjectedKeyName('tree', 'loading-nodes'),
-) as InjectionKey<Ref<NTreeExtendsData[]>>;
+) as InjectionKey<Ref<HTreeExtendsData[]>>;
 
-export const NTreeVNodeCollectionInjectKey = Symbol(
+export const HTreeVNodeCollectionInjectKey = Symbol(
   generatorInjectedKeyName('tree', 'v-node-collection'),
 ) as InjectionKey<(uuid: string | number, vNode?: VNode) => void>;
 
-export const NTreeFullCheckedValuesInjectKey = Symbol(
+export const HTreeFullCheckedValuesInjectKey = Symbol(
   generatorInjectedKeyName('tree', 'full-checked-values'),
 ) as InjectionKey<ComputedRef<Array<string | number>>>;
 
-export const NTreeHalfCheckedValuesInjectKey = Symbol(
+export const HTreeHalfCheckedValuesInjectKey = Symbol(
   generatorInjectedKeyName('tree', 'half-checked-values'),
 ) as InjectionKey<ComputedRef<Array<string | number>>>;
 
-export const NTreeOnDragStartInjectKey = Symbol(
+export const HTreeOnDragStartInjectKey = Symbol(
   generatorInjectedKeyName('tree', 'on-drag-start'),
 ) as InjectionKey<
-  (domRef: Ref<HTMLElement | null>, node: NTreeExtendsData, evt: MouseEvent) => void
+  (domRef: Ref<HTMLElement | null>, node: HTreeExtendsData, evt: MouseEvent) => void
 >;
 
-export const NTreeDragFromNodeInjectKey = Symbol(
+export const HTreeDragFromNodeInjectKey = Symbol(
   generatorInjectedKeyName('tree', 'drag-from-node-uuid'),
-) as InjectionKey<Ref<NTreeExtendsData | undefined>>;
+) as InjectionKey<Ref<HTreeExtendsData | undefined>>;
 
-export const NTreeIsDraggingInjectKey = Symbol(
+export const HTreeIsDraggingInjectKey = Symbol(
   generatorInjectedKeyName('tree', 'is-dragging'),
 ) as InjectionKey<Ref<boolean>>;
 
-export const NTreeDragToNodeUuidInjectKey = Symbol(
+export const HTreeDragToNodeUuidInjectKey = Symbol(
   generatorInjectedKeyName('tree', 'drag-to-node-uuid'),
-) as InjectionKey<Ref<NTreeUuidType | undefined>>;
+) as InjectionKey<Ref<HTreeUuidType | undefined>>;
 
-export const NTreeIsCheckComponentVisibleInjectKey = Symbol(
+export const HTreeIsCheckComponentVisibleInjectKey = Symbol(
   generatorInjectedKeyName('tree', 'is-check-component-visible'),
 ) as InjectionKey<Ref<boolean>>;
 
-export const NTreeHighlightRangesInjectKey = Symbol(
+export const HTreeHighlightRangesInjectKey = Symbol(
   generatorInjectedKeyName('tree', 'highlight-ranges'),
 ) as InjectionKey<Ref<Map<TreeItemProps['value'], Range>>>;

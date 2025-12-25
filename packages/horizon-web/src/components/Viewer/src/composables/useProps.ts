@@ -2,7 +2,7 @@ import type { ExtractPropTypes, PropType } from 'vue';
 import type { VideoJsPlayerOptions } from 'video.js';
 import { declarePropType } from '@aurora/utils';
 
-export interface NViewerLegend {
+export interface HViewerLegend {
   /** 图注相对原始图片左上角的横轴位置 */
   x: number;
   /** 图注相对原始图片左上角的纵轴位置 */
@@ -22,7 +22,7 @@ export interface Source {
   /** 视频类型，如 `video/mp4` */
   type?: string;
 }
-export interface NViewerSource {
+export interface HViewerSource {
   /** 资源的类型，图片或视频 */
   type: 'image' | 'video';
   /** 对于图片类型，表示大图地址；对于视频类型，表示视频的封面图片地址 */
@@ -32,14 +32,14 @@ export interface NViewerSource {
   /** 标题 */
   title?: string;
   /** 图注集合，仅对图片类型有效 */
-  legends?: NViewerLegend[];
+  legends?: HViewerLegend[];
   /** 视频资源，是一个数组，如果传入多个会自动选择，仅对视频类型有效 */
   videoSources?: Source[];
   /** videojs 的参数对象，仅对视频类型有效 */
   videoOptions?: VideoJsPlayerOptions;
 }
 
-export interface NViewerCustomToolItem {
+export interface HViewerCustomToolItem {
   /** 图标名称 */
   iconName: string;
   /** 图标大小 */
@@ -60,7 +60,7 @@ export const useViewerProps = declarePropType({
   },
   /** 资源列表 */
   sources: {
-    type: Array as PropType<NViewerSource[]>,
+    type: Array as PropType<HViewerSource[]>,
     required: true,
     default: () => [],
   },
@@ -116,7 +116,7 @@ export const useViewerProps = declarePropType({
         | 'legend'
         | 'download'
         | 'split'
-        | NViewerCustomToolItem
+        | HViewerCustomToolItem
       )[]
     >,
     required: false,

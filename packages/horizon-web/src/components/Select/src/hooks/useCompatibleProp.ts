@@ -1,6 +1,6 @@
 import { computed, inject } from 'vue';
 import type { SelectProps } from '../composables/useProps';
-import { NFormDisabledInjectedKey } from '~/components/Form/src/utils/injectedKeys';
+import { HFormDisabledInjectedKey } from '~/components/Form/src/utils/injectedKeys';
 
 export default function compatibleProp(props: SelectProps) {
   const needConfirm = computed(() => props.needDropdownConfirm ?? props.needConfirm);
@@ -39,7 +39,7 @@ export default function compatibleProp(props: SelectProps) {
   );
 
   // form disabled inject
-  const formDisabled = inject(NFormDisabledInjectedKey, undefined);
+  const formDisabled = inject(HFormDisabledInjectedKey, undefined);
   const isDisabled = computed(() => props.disabled ?? formDisabled?.value ?? false);
 
   return {

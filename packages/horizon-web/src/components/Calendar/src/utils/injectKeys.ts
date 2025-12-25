@@ -7,34 +7,34 @@ import { generatorInjectedKeyName } from '@aurora/utils';
 import type CalendarHelper from './CalendarHelper';
 import type { CalendarSlots } from '../composables/useSlots';
 
-export const NCalendarPropsInjectKey = Symbol(
+export const HCalendarPropsInjectKey = Symbol(
   generatorInjectedKeyName('calendar', 'props'),
 ) as InjectionKey<CalendarProps>;
 
-export const NCalendarEmitInjectKey = Symbol(
+export const HCalendarEmitInjectKey = Symbol(
   generatorInjectedKeyName('calendar', 'emit'),
 ) as InjectionKey<SetupContext<CalendarEmits>['emit']>;
 
-export const NCalendarSlotsInjectKey = Symbol(
+export const HCalendarSlotsInjectKey = Symbol(
   generatorInjectedKeyName('calendar', 'slots'),
 ) as InjectionKey<Partial<SetupContext<{}, CalendarSlots>['slots']>>;
 
-export const NCalendarPinFlagsInjectKey = Symbol(
+export const HCalendarPinFlagsInjectKey = Symbol(
   generatorInjectedKeyName('calendar', 'pin-flags'),
 ) as InjectionKey<PinFlagsHelper>;
 
-export const NCalendarCurrentDateInjectKey = Symbol(
+export const HCalendarCurrentDateInjectKey = Symbol(
   generatorInjectedKeyName('calendar', 'current-date'),
 ) as InjectionKey<Ref<Dayjs>>;
 
-export const NCalendarCurrentFormatDateInjectKey = Symbol(
+export const HCalendarCurrentFormatDateInjectKey = Symbol(
   generatorInjectedKeyName('calendar', 'current-format-date'),
 ) as InjectionKey<WritableComputedRef<string>>;
 
-export const NCalendarHelperInjectKey = Symbol(
+export const HCalendarHelperInjectKey = Symbol(
   generatorInjectedKeyName('calendar', 'helper'),
 ) as InjectionKey<CalendarHelper>;
 
-export const NCalendarCurrentTimeInjectKey = Symbol(
+export const HCalendarCurrentTimeInjectKey = Symbol(
   generatorInjectedKeyName('calendar', 'current-time'),
 ) as InjectionKey<Ref<Dayjs>>;

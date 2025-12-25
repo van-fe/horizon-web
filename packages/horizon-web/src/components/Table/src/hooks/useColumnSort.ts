@@ -1,14 +1,14 @@
 import type { Ref } from 'vue';
 import { watch, ref } from 'vue';
-import type { NTableFixedValue, NTableInsertedColumnData } from '../utils/types';
+import type { HTableFixedValue, HTableInsertedColumnData } from '../utils/types';
 
 export function sortColumnsMethod(
   getFixedState: (
     columnUuid: string,
-    checkStore?: Map<string, NTableFixedValue>,
-  ) => NTableFixedValue,
+    checkStore?: Map<string, HTableFixedValue>,
+  ) => HTableFixedValue,
 ) {
-  return (a: NTableInsertedColumnData, b: NTableInsertedColumnData) => {
+  return (a: HTableInsertedColumnData, b: HTableInsertedColumnData) => {
     switch (getFixedState(a.uuid)) {
       case 'left':
         switch (getFixedState(b.uuid)) {
@@ -36,7 +36,7 @@ export function sortColumnsMethod(
   };
 }
 
-export default function useColumnSort(columns: Ref<NTableInsertedColumnData[]>) {
+export default function useColumnSort(columns: Ref<HTableInsertedColumnData[]>) {
   const sortStore = ref(new Map<string, number>());
   const sortStoreBack = ref(sortStore.value);
 
@@ -51,7 +51,7 @@ export default function useColumnSort(columns: Ref<NTableInsertedColumnData[]>) 
     },
   );
 
-  function collectSortColumns(columns: NTableInsertedColumnData[]) {
+  function collectSortColumns(columns: HTableInsertedColumnData[]) {
     const currentColumns = columns;
 
     currentColumns.map(column => {

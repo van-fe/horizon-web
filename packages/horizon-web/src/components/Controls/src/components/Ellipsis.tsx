@@ -8,17 +8,17 @@ import {
 } from '@aurora/utils';
 import type { ControlProps } from '../composables/useProps';
 import { useControlSlots } from '../composables/useSlots';
-import { NControlsEmitInjectKey, NControlsPropsInjectKey } from '../utils/injectKeys';
-import NDropdown from '~/components/Dropdown/src/Dropdown';
-import NDropdownItem from '~/components/Dropdown/src/DropdownItem';
-import NDropdownMenu from '~/components/Dropdown/src/DropdownMenu';
+import { HControlsEmitInjectKey, HControlsPropsInjectKey } from '../utils/injectKeys';
+import HDropdown from '~/components/Dropdown/src/Dropdown';
+import HDropdownItem from '~/components/Dropdown/src/DropdownItem';
+import HDropdownMenu from '~/components/Dropdown/src/DropdownMenu';
 import { IconMoreTwo } from '@aurora/icon';
 import { renderIcon } from '~/utils/useIcon';
 
 export default defineComponent({
   name: `${useNamespace()}Ellipsis`,
   components: {
-    NDropdown,
+    HDropdown,
   },
   props: {
     items: {
@@ -36,8 +36,8 @@ export default defineComponent({
   setup(props, { emit }) {
     const classHelper = new ComponentClassBlock('control');
 
-    const parentProps = inject(NControlsPropsInjectKey)!;
-    const parentEmits = inject(NControlsEmitInjectKey)!;
+    const parentProps = inject(HControlsPropsInjectKey)!;
+    const parentEmits = inject(HControlsEmitInjectKey)!;
 
     function onClick(item: VNode<RendererNode, RendererElement, ControlProps>, evt: Event) {
       parentEmits('command', item.props!.label, evt);
@@ -45,7 +45,7 @@ export default defineComponent({
     }
 
     return () => (
-      <NDropdown disabled={parentProps.disabled} toBody={false}>
+      <HDropdown disabled={parentProps.disabled} toBody={false}>
         {{
           default: () => (
             <div class={cls(classHelper.block, classHelper.is('ellipsis'))}>
@@ -53,19 +53,19 @@ export default defineComponent({
             </div>
           ),
           dropdown: () => (
-            <NDropdownMenu>
+            <HDropdownMenu>
               {props.items.map(item => (
-                <NDropdownItem onClick={evt => onClick(item, evt)}>
+                <HDropdownItem onClick={evt => onClick(item, evt)}>
                   {renderIcon(item.props?.icon)}
                   {isRawSlotsForVNodeNormalizedChildren(item.children)
                     ? item.children.text?.()
                     : item.props?.text}
-                </NDropdownItem>
+                </HDropdownItem>
               ))}
-            </NDropdownMenu>
+            </HDropdownMenu>
           )
         }}
-      </NDropdown>
+      </HDropdown>
     );
   },
 });

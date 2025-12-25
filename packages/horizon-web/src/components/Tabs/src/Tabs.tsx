@@ -1,15 +1,15 @@
-import { AIconSVG } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, useNamespace, cls } from '@aurora/utils';
 import type { ComputedRef, Ref } from 'vue';
 import { computed, defineComponent, inject, provide, reactive, ref, toRefs, watch } from 'vue';
-import type { NApplicationSizeType } from '~/components/Application/src/composables/useProps';
+import type { HApplicationSizeType } from '~/components/Application/src/composables/useProps';
 import { GlobalSizeInjectedKey } from '~/components/Application/src/utils/injectedKeys';
-import { NFormItemTriggerInjectedKey } from '~/components/Form/src/utils/injectedKeys';
+import { HFormItemTriggerInjectedKey } from '~/components/Form/src/utils/injectedKeys';
 import { useDnd } from './composables/useDnd';
 import type { TabsEmits } from './composables/useEmits';
 import { useTabsEmits } from './composables/useEmits';
-import type { NTabSize, NTabValue } from './composables/useProps';
+import type { HTabSize, HTabValue } from './composables/useProps';
 import { useTabsProps } from './composables/useProps';
 import useResponsive from './composables/useResponsive';
 import type { TabsSlots } from './composables/useSlots';
@@ -20,7 +20,7 @@ import { useTabsPropsLogWarnProperty } from './composables/useWarning';
 export default defineComponent({
   name: `${useNamespace()}Tabs`,
   desc: '页签通常用来快速切换不同的选项',
-  components: { AIconSVG },
+  components: { AIcon },
   inheritAttrs: false,
   props: useTabsProps,
   emits: useTabsEmits,
@@ -30,12 +30,12 @@ export default defineComponent({
     const classHelper = new ComponentClassBlock('tabs');
     const { slots, emit, attrs } = context;
 
-    const globalSize = inject<Ref<NTabSize>>(
+    const globalSize = inject<Ref<HTabSize>>(
       GlobalSizeInjectedKey,
       props.v2 ? ref('small') : ref('medium'),
     );
     // FIXME: 下一个版本移除页签和form耦合
-    const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
+    const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
 
     const rootDomRef = ref<HTMLElement>();
     const wrapperDomRef = ref<HTMLElement>();
@@ -44,7 +44,7 @@ export default defineComponent({
 
     const size = computed(() => {
       return props.size || globalSize.value;
-    }) as ComputedRef<NApplicationSizeType>;
+    }) as ComputedRef<HApplicationSizeType>;
     const editable = computed(() => props.showAdd ?? props.editable ?? false);
     const underline = computed(
       () => props.type === 'line' && (props.showUnderline ?? props.underline),
@@ -100,7 +100,7 @@ export default defineComponent({
       context,
     );
 
-    const updateTabValue = (key: NTabValue, fromProps = false) => {
+    const updateTabValue = (key: HTabValue, fromProps = false) => {
       if (activeKey.value === key) return;
 
       activeKey.value = key;
@@ -123,7 +123,7 @@ export default defineComponent({
       formItemTrigger?.('blur');
     };
 
-    const onTabClick = async (tabKey: NTabValue) => {
+    const onTabClick = async (tabKey: HTabValue) => {
       if (activeKey.value === tabKey) return;
 
       if (!props.v2 || !props.beforeChange) {
@@ -139,7 +139,7 @@ export default defineComponent({
       return updateTabValue(tabKey);
     };
 
-    const onTabClose = (tabKey: NTabValue) => {
+    const onTabClose = (tabKey: HTabValue) => {
       if (!props.v2) return emit('close', tabKey);
 
       const iter = items.value.keys();
@@ -182,7 +182,7 @@ export default defineComponent({
           )}
           onClick={() => onAdd()}
         >
-          <AIconSVG name="add" class={classHelper.e('icon')} />
+          <AIcon name="add" class={classHelper.e('icon')} />
         </div>
       );
 
@@ -237,7 +237,7 @@ export default defineComponent({
                       ]}
                       onClick={onArrowLeft}
                     >
-                      <AIconSVG name="arrow_left" class={classHelper.e('icon')} />
+                      <AIcon name="arrow_left" class={classHelper.e('icon')} />
                     </div>
                     <div
                       class={[
@@ -246,7 +246,7 @@ export default defineComponent({
                       ]}
                       onClick={onArrowRight}
                     >
-                      <AIconSVG name="arrow_right" class={classHelper.e('icon')} />
+                      <AIcon name="arrow_right" class={classHelper.e('icon')} />
                     </div>
                   </div>
                 )}

@@ -1,15 +1,15 @@
 import { arrayableToArray, getRemoteUrlFileHeader, isObject } from '@aurora/utils';
 import type { Arrayable } from '@aurora/utils';
-import type { NUploadFileType, NUploadRawFileType, NUploadUserFile } from './fileDefines';
-import { NUploadFileStatusEnum, fileTypeMapping, NUploadFileTypeEnum } from './fileDefines';
+import type { HUploadFileType, HUploadRawFileType, HUploadUserFile } from './fileDefines';
+import { HUploadFileStatusEnum, fileTypeMapping, HUploadFileTypeEnum } from './fileDefines';
 import { nanoid } from 'nanoid';
 import { warn } from '~/utils/useLog';
 
-export function isUploadUserFile(data: unknown): data is NUploadUserFile {
+export function isUploadUserFile(data: unknown): data is HUploadUserFile {
   return isObject(data) && 'name' in data && 'url' in data;
 }
 
-export function isUploadFile(data: unknown): data is NUploadFileType {
+export function isUploadFile(data: unknown): data is HUploadFileType {
   return isUploadUserFile(data) && 'uuid' in data;
 }
 
@@ -25,14 +25,14 @@ export function getBaseExtName(fullName: string): [string, string] {
   }
 }
 
-export function getFileTypeByExt(ext: string): NUploadFileTypeEnum {
+export function getFileTypeByExt(ext: string): HUploadFileTypeEnum {
   ext = ext.replace(/^\./, '').toLowerCase();
 
   const type = Object.keys(fileTypeMapping).find(curr =>
-    fileTypeMapping[curr as NUploadFileTypeEnum].includes(ext),
-  ) as NUploadFileTypeEnum | undefined;
+    fileTypeMapping[curr as HUploadFileTypeEnum].includes(ext),
+  ) as HUploadFileTypeEnum | undefined;
 
-  return type ?? NUploadFileTypeEnum.Unknown;
+  return type ?? HUploadFileTypeEnum.Unknown;
 }
 
 export function getFileType(fileName: string) {
@@ -41,7 +41,7 @@ export function getFileType(fileName: string) {
   return getFileTypeByExt(ext);
 }
 
-export function isFileSame(rawFile: NUploadRawFileType, file: NUploadFileType) {
+export function isFileSame(rawFile: HUploadRawFileType, file: HUploadFileType) {
   if (isUploadFile(rawFile)) {
     return rawFile.uuid === file.uuid;
   }
@@ -55,7 +55,7 @@ export function isFileSame(rawFile: NUploadRawFileType, file: NUploadFileType) {
 
 const comparedFields = ['name', 'url'] as const;
 
-export function uploadFileTransformToBasicType(file: NUploadRawFileType): NUploadUserFile {
+export function uploadFileTransformToBasicType(file: HUploadRawFileType): HUploadUserFile {
   if (isUploadFile(file)) {
     return file;
   }
@@ -74,8 +74,8 @@ export function uploadFileTransformToBasicType(file: NUploadRawFileType): NUploa
 }
 
 export function updateFileList(
-  newFiles: Arrayable<NUploadRawFileType>,
-  oldFiles: Arrayable<NUploadRawFileType> | undefined | null,
+  newFiles: Arrayable<HUploadRawFileType>,
+  oldFiles: Arrayable<HUploadRawFileType> | undefined | null,
 ) {
   newFiles = arrayableToArray(newFiles);
   oldFiles = oldFiles ? arrayableToArray(oldFiles) : [];
@@ -149,7 +149,7 @@ export function durationFormat(time: number | undefined) {
   }
 }
 
-export async function getAndSetFileSize(file: NUploadUserFile) {
+export async function getAndSetFileSize(file: HUploadUserFile) {
   try {
     file.size = await getRemoteUrlFileHeader(file.url);
   } catch (e) {
@@ -157,7 +157,7 @@ export async function getAndSetFileSize(file: NUploadUserFile) {
   }
 }
 
-export function transformSingleRawFileTypeToUploadFileType(target: NUploadRawFileType) {
+export function transformSingleRawFileTypeToUploadFileType(target: HUploadRawFileType) {
   if (isUploadFile(target)) {
     return target;
   } else if (isUploadUserFile(target)) {
@@ -172,7 +172,7 @@ export function transformSingleRawFileTypeToUploadFileType(target: NUploadRawFil
       type: getFileType(target.name),
       uuid: nanoid(),
       size,
-      status: target.url ? NUploadFileStatusEnum.Success : NUploadFileStatusEnum.New,
+      status: target.url ? HUploadFileStatusEnum.Success : HUploadFileStatusEnum.New,
     };
   } else {
     return {
@@ -180,7 +180,7 @@ export function transformSingleRawFileTypeToUploadFileType(target: NUploadRawFil
       type: getFileType(target.name),
       uuid: nanoid(),
       size: target.size,
-      status: NUploadFileStatusEnum.New,
+      status: HUploadFileStatusEnum.New,
       percentage: 0,
       url: '',
       blobUrl: URL.createObjectURL(target),

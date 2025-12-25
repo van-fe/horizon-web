@@ -1,15 +1,15 @@
 import { defineComponent, inject, provide, ref } from 'vue';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
-import type { NRecycleScrollerInstance } from '~/components/VirtualScroller/src/composables/useProps';
-import NVirtualScroller from '~/components/VirtualScroller/src/VirtualScroller';
-import NVirtualScrollerItem from '~/components/VirtualScroller/src//VirtualScrollerItem';
+import type { HRecycleScrollerInstance } from '~/components/VirtualScroller/src/composables/useProps';
+import HVirtualScroller from '~/components/VirtualScroller/src/VirtualScroller';
+import HVirtualScrollerItem from '~/components/VirtualScroller/src//VirtualScrollerItem';
 import {
-  NAutoCompletePropsInjectKey,
-  NAutoCompleteVirtualScrollListIsScrollingInjectKey,
-  NAutoCompleteVisibleOptionsInjectKey,
+  HAutoCompletePropsInjectKey,
+  HAutoCompleteVirtualScrollListIsScrollingInjectKey,
+  HAutoCompleteVisibleOptionsInjectKey,
 } from '../utils/injectKeys';
 import SimpleOption from './SimpleOption';
-import type { NAutoCompleteOptionWithUuid } from '../utils/typed';
+import type { HAutoCompleteOptionWithUuid } from '../utils/typed';
 
 export default defineComponent({
   name: `${useNamespace()}VirtualScrollList`,
@@ -18,16 +18,16 @@ export default defineComponent({
   },
   setup() {
     const classHelper = new ComponentClassBlock('auto-complete');
-    const parentProps = inject(NAutoCompletePropsInjectKey)!;
-    const visibleOptions = inject(NAutoCompleteVisibleOptionsInjectKey)!;
+    const parentProps = inject(HAutoCompletePropsInjectKey)!;
+    const visibleOptions = inject(HAutoCompleteVisibleOptionsInjectKey)!;
 
-    const scrollerDomRef = ref<(NRecycleScrollerInstance & HTMLElement) | null>(null);
+    const scrollerDomRef = ref<(HRecycleScrollerInstance & HTMLElement) | null>(null);
     const isScrolling = ref(false);
 
-    provide(NAutoCompleteVirtualScrollListIsScrollingInjectKey, isScrolling);
+    provide(HAutoCompleteVirtualScrollListIsScrollingInjectKey, isScrolling);
 
     return () => (
-      <NVirtualScroller
+      <HVirtualScroller
         ref={scrollerDomRef}
         scrollerMaxHeight={parseFloat(parentProps.optionListMaxHeight.toString())}
         items={visibleOptions.value}
@@ -38,8 +38,8 @@ export default defineComponent({
         size="small"
       >
         {{
-          default: (row: { item: NAutoCompleteOptionWithUuid; index: number; active: boolean }) => (
-            <NVirtualScrollerItem item={row.item} active={row.active} index={row.index}>
+          default: (row: { item: HAutoCompleteOptionWithUuid; index: number; active: boolean }) => (
+            <HVirtualScrollerItem item={row.item} active={row.active} index={row.index}>
               <SimpleOption
                 uuid={row.item.uuid}
                 key={row.item.uuid}
@@ -48,10 +48,10 @@ export default defineComponent({
                 value={row.item.value}
                 description={row.item.description}
               />
-            </NVirtualScrollerItem>
+            </HVirtualScrollerItem>
           ),
         }}
-      </NVirtualScroller>
+      </HVirtualScroller>
     );
   },
 });

@@ -1,6 +1,6 @@
 import { createApp } from 'vue';
 import type { App } from 'vue';
-import NLoadingComponent from './components/Loading';
+import HLoadingComponent from './components/Loading';
 import type { Data, ExtractDirectiveOptionTypes } from '@aurora/utils';
 import { useZIndex } from '@aurora/utils';
 import type { LoadingOptions, useLoadingOptions } from './composables/useOptions';
@@ -8,7 +8,7 @@ import type { LoadingElement } from './index';
 import { LoadingIsShow } from './utils/utils';
 
 export const LoadingService = function (el: LoadingElement, options: Partial<LoadingOptions>) {
-  let app: App<Element> | null = createApp(NLoadingComponent, options as Data);
+  let app: App<Element> | null = createApp(HLoadingComponent, options as Data);
   const root = document.createElement('div');
   const elPosition = window.getComputedStyle(el, null).getPropertyValue('position');
   if (!elPosition || elPosition === 'static') {

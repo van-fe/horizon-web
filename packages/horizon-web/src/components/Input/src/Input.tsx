@@ -15,9 +15,9 @@ import { AIcon } from '@aurora/icon';
 import type { InputEmits } from './composables/useEmits';
 import { useInputEmits } from './composables/useEmits';
 import {
-  NFormDisabledInjectedKey,
-  NFormItemErrorInjectedKey,
-  NFormItemTriggerInjectedKey,
+  HFormDisabledInjectedKey,
+  HFormItemErrorInjectedKey,
+  HFormItemTriggerInjectedKey,
 } from '~/components/Form/src/utils/injectedKeys';
 import type { InputSlots } from './composables/useSlots';
 import { useInputSlots } from './composables/useSlots';
@@ -28,6 +28,7 @@ import useSize from '~/utils/useSize';
 import useIconRender from '~/utils/useIconRender';
 import { useAutoSizeStyle } from './composables/useAutoSizeStyle';
 import { useLimitStyle } from './composables/useLimitStyle';
+import useLocaleLang from 'src/utils/useLocaleLang';
 
 export default defineComponent({
   name: `${useNamespace()}Input`,
@@ -88,13 +89,13 @@ export default defineComponent({
     const locale = inject(localeInjectKey, defaultLocale);
 
     // form disabled inject
-    const formDisabled = inject(NFormDisabledInjectedKey, undefined);
+    const formDisabled = inject(HFormDisabledInjectedKey, undefined);
     const isDisabled = computed(() => props.disabled ?? formDisabled?.value ?? false);
 
     let preValue = localValue.value;
 
     // form-item validate trigger
-    const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
+    const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
     const { modelValue, autoSize } = toRefs(props);
     const autoSizeStyle = useAutoSizeStyle(textareaRef, modelValue, autoSize);
     const limitCountStyle = useLimitStyle(textareaRef, modelValue);
@@ -288,7 +289,7 @@ export default defineComponent({
 
       const isPassword = props.type === 'password';
 
-      const nFormError = inject(NFormItemErrorInjectedKey, ref(''));
+      const nFormError = inject(HFormItemErrorInjectedKey, ref(''));
 
       if (props.type === 'textarea') {
         return (
@@ -316,7 +317,7 @@ export default defineComponent({
               {...originalAttrs}
               v-model={localValue.value}
               placeholder={
-                props.placeholder || locale.value?.langService?.td()?.horizon-web?.input.placeholder
+                props.placeholder || useLocaleLang('input.placeholder').value as string
               }
               readonly={props.readonly}
               rows={props.autoSize ? undefined : props.rows}
@@ -390,7 +391,7 @@ export default defineComponent({
                 type={isPassword && showPassword.value ? 'text' : checkedType.value}
                 v-model={localValue.value}
                 placeholder={
-                  props.placeholder || locale.value?.langService?.td()?.horizon-web?.input.placeholder
+                  props.placeholder || useLocaleLang('input.placeholder').value as string
                 }
                 readonly={props.readonly}
                 maxlength={props.enableOutOfExceeded ? undefined : props.maxlength}

@@ -1,6 +1,6 @@
 import { defineComponent, inject, ref, watch } from 'vue';
 import { cls, ComponentClassBlock, isDefined, useNamespace } from '@aurora/utils';
-import { NPickerPopperVisibleInjectKey } from '../utils/InjectKeys';
+import { HPickerPopperVisibleInjectKey } from '../utils/InjectKeys';
 import { usePickerPureInputExpose } from '../composables/useExposes';
 import { usePickerPureInputProps } from '../composables/useProps';
 import { usePickerPureInputEmits } from '../composables/useEmits';
@@ -17,7 +17,7 @@ export default defineComponent({
     const inputString = ref(props.modelValue);
     const compositionString = ref('');
 
-    const popperVisible = inject(NPickerPopperVisibleInjectKey)!;
+    const popperVisible = inject(HPickerPopperVisibleInjectKey)!;
 
     watch(
       () => props.modelValue,

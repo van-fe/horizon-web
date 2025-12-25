@@ -1,15 +1,15 @@
 import { mount } from '@vue/test-utils';
-import NTransition from '../src/Transition';
+import HTransition from '../src/Transition';
 import { describe, expect, test } from 'vitest';
 
 describe('Transition.tsx', () => {
   test('basic', async () => {
     const wrapper = mount(() => (
-      <NTransition>
+      <HTransition>
         <div>BOX</div>
-      </NTransition>
+      </HTransition>
     ));
-    const element = wrapper.findComponent(NTransition);
+    const element = wrapper.findComponent(HTransition);
 
     expect(element.exists()).toBe(true);
   });

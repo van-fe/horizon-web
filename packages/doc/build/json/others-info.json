@@ -26,7 +26,7 @@
   },
   {
     "name": "ModalCascader",
-    "desc": "`ModalCascader` 组件用于在移动端展示 `NCascader` 组件",
+    "desc": "`ModalCascader` 组件用于在移动端展示 `HCascader` 组件",
     "dirName": "ModalCascader"
   },
   {

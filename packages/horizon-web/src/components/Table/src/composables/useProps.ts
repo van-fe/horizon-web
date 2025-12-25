@@ -2,16 +2,16 @@ import type { ExtractPropTypes, PropType, StyleValue, VNode, Ref } from 'vue';
 import { declarePropType } from '@aurora/utils';
 import { sizeProp } from '~/utils/useSize';
 import type {
-  NTableDynamicLoadMethodType,
-  NTableRowDataType,
-  NTableTransformedRowDataType,
-  NTableRowKeyType,
-  NTableSortType,
-  NTableSpanMethodType,
-  NTableSummaryMethodType,
-  NTableTreeRowDataType,
+  HTableDynamicLoadMethodType,
+  HTableRowDataType,
+  HTableTransformedRowDataType,
+  HTableRowKeyType,
+  HTableSortType,
+  HTableSpanMethodType,
+  HTableSummaryMethodType,
+  HTableTreeRowDataType,
 } from '../utils/types';
-import { NTableAlignEnum, NTableSortOrderEnum } from '../utils/types';
+import { HTableAlignEnum, HTableSortOrderEnum } from '../utils/types';
 import type { TooltipProps } from '~/components/Tooltip/src/composables/useProps';
 import type { LoadingProps } from '~/directives/v-loading/src/composables/useProps';
 import type { PopoverProps } from '~/components/Popover/src/composables/useProps';
@@ -28,13 +28,13 @@ export const useTableProps = declarePropType({
    * 行数据的 `key`，用来优化数据展示
    */
   rowKey: {
-    type: [String, Number] as PropType<NTableRowKeyType>,
+    type: [String, Number] as PropType<HTableRowKeyType>,
   },
   /**
    * 表格数据
    */
   data: {
-    type: Array as PropType<NTableRowDataType[]>,
+    type: Array as PropType<HTableRowDataType[]>,
     default: () => [],
   },
   /**
@@ -132,7 +132,7 @@ export const useTableProps = declarePropType({
    */
   rowClassName: {
     type: [String, Function] as PropType<
-      string | ((row: NTableTransformedRowDataType, index: number) => string)
+      string | ((row: HTableTransformedRowDataType, index: number) => string)
     >,
   },
   /**
@@ -140,7 +140,7 @@ export const useTableProps = declarePropType({
    */
   rowStyle: {
     type: [String, Array, Object, Function] as PropType<
-      StyleValue | ((row: NTableTransformedRowDataType, index: number) => StyleValue)
+      StyleValue | ((row: HTableTransformedRowDataType, index: number) => StyleValue)
     >,
   },
   /**
@@ -154,7 +154,7 @@ export const useTableProps = declarePropType({
    */
   cellStyle: {
     type: [String, Array, Object, Function] as PropType<
-      StyleValue | ((row: NTableTransformedRowDataType) => StyleValue)
+      StyleValue | ((row: HTableTransformedRowDataType) => StyleValue)
     >,
   },
   /**
@@ -168,7 +168,7 @@ export const useTableProps = declarePropType({
    */
   headerRowStyle: {
     type: [String, Array, Object, Function] as PropType<
-      StyleValue | ((row: NTableTransformedRowDataType) => StyleValue)
+      StyleValue | ((row: HTableTransformedRowDataType) => StyleValue)
     >,
   },
   /**
@@ -182,21 +182,21 @@ export const useTableProps = declarePropType({
    */
   headerCellStyle: {
     type: [String, Array, Object, Function] as PropType<
-      StyleValue | ((row: NTableTransformedRowDataType) => StyleValue)
+      StyleValue | ((row: HTableTransformedRowDataType) => StyleValue)
     >,
   },
   /**
    * 每个表尾行的 `class`
    */
   footerRowClassName: {
-    type: [String, Function] as PropType<string | ((row: NTableTransformedRowDataType) => string)>,
+    type: [String, Function] as PropType<string | ((row: HTableTransformedRowDataType) => string)>,
   },
   /**
    * 每个表尾行的 `style`
    */
   footerRowStyle: {
     type: [String, Array, Object, Function] as PropType<
-      StyleValue | ((row: NTableTransformedRowDataType) => StyleValue)
+      StyleValue | ((row: HTableTransformedRowDataType) => StyleValue)
     >,
   },
   /**
@@ -210,7 +210,7 @@ export const useTableProps = declarePropType({
    */
   footerCellStyle: {
     type: [String, Array, Object, Function] as PropType<
-      StyleValue | ((row: NTableTransformedRowDataType) => StyleValue)
+      StyleValue | ((row: HTableTransformedRowDataType) => StyleValue)
     >,
   },
   /**
@@ -234,7 +234,7 @@ export const useTableProps = declarePropType({
    * 可以使用 `v-model:expandRowKeys` 做双向绑定
    */
   expandRowKeys: {
-    type: Array as PropType<Array<NTableRowKeyType>>,
+    type: Array as PropType<Array<HTableRowKeyType>>,
   },
   /**
    * 是否对展开行做粘性定位处理
@@ -247,7 +247,7 @@ export const useTableProps = declarePropType({
    * 默认的排序方式
    */
   defaultSort: {
-    type: Array as PropType<NTableSortType[]>,
+    type: Array as PropType<HTableSortType[]>,
     default: () => [],
   },
   /**
@@ -289,13 +289,13 @@ export const useTableProps = declarePropType({
    * 总结显示的计算方法
    */
   summaryMethod: {
-    type: Function as PropType<NTableSummaryMethodType>,
+    type: Function as PropType<HTableSummaryMethodType>,
   },
   /**
    * 合并行或列的计算方法
    */
   spanMethod: {
-    type: Function as PropType<NTableSpanMethodType>,
+    type: Function as PropType<HTableSpanMethodType>,
   },
   /**
    * 展示树形结构时，缩进距离
@@ -309,13 +309,13 @@ export const useTableProps = declarePropType({
    * 如果树结构中 `children` 或设置了 `isLeaf` = false，则会调用此方法获取子数据
    */
   dynamicLoad: {
-    type: Function as PropType<NTableDynamicLoadMethodType>,
+    type: Function as PropType<HTableDynamicLoadMethodType>,
   },
   /**
    * 树形表格的字段对应关系
    */
   fieldMap: {
-    type: Object as PropType<Partial<Record<keyof NTableTreeRowDataType, string>>>,
+    type: Object as PropType<Partial<Record<keyof HTableTreeRowDataType, string>>>,
     default: () => ({
       children: 'children',
       isLeaf: 'isLeaf',
@@ -391,7 +391,7 @@ export const useTableColumnProps = declarePropType({
    */
   index: {
     type: [Number, Function] as PropType<
-      number | ((index: number, row: NTableTransformedRowDataType) => number)
+      number | ((index: number, row: HTableTransformedRowDataType) => number)
     >,
   },
   /**
@@ -511,8 +511,8 @@ export const useTableColumnProps = declarePropType({
    * 当 `sort-separate = false` 时，点击排序按钮的轮训顺序
    */
   sortOrders: {
-    type: Array as PropType<Array<NTableSortOrderEnum | null>>,
-    default: () => [NTableSortOrderEnum.ASC, NTableSortOrderEnum.DESC, null],
+    type: Array as PropType<Array<HTableSortOrderEnum | null>>,
+    default: () => [HTableSortOrderEnum.ASC, HTableSortOrderEnum.DESC, null],
   },
   /**
    * 是否禁用排序
@@ -528,8 +528,8 @@ export const useTableColumnProps = declarePropType({
   sortMethod: {
     type: Function as PropType<
       (
-        sortOrder: NTableSortOrderEnum,
-      ) => (a: NTableTransformedRowDataType, b: NTableTransformedRowDataType) => number
+        sortOrder: HTableSortOrderEnum,
+      ) => (a: HTableTransformedRowDataType, b: HTableTransformedRowDataType) => number
     >,
   },
   /**
@@ -602,7 +602,7 @@ export const useTableColumnProps = declarePropType({
    */
   align: {
     type: String as PropType<'left' | 'right' | 'center'>,
-    default: NTableAlignEnum.LEFT,
+    default: HTableAlignEnum.LEFT,
   },
   /**
    * 表头文本排列方式
@@ -610,7 +610,7 @@ export const useTableColumnProps = declarePropType({
    */
   headerAlign: {
     type: String as PropType<'left' | 'right' | 'center'>,
-    default: NTableAlignEnum.LEFT,
+    default: HTableAlignEnum.LEFT,
   },
   /**
    * 表尾文本排列方式
@@ -618,7 +618,7 @@ export const useTableColumnProps = declarePropType({
    */
   footerAlign: {
     type: String as PropType<'left' | 'right' | 'center'>,
-    default: NTableAlignEnum.LEFT,
+    default: HTableAlignEnum.LEFT,
   },
   /**
    * 列的 `class`

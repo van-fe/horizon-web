@@ -2,8 +2,8 @@ import type { PropType } from 'vue';
 import { ref, watch, defineComponent } from 'vue';
 import type { HorizonWebComponentInstance, HorizonWebSetupContext } from '@aurora/utils';
 import { isDefined, cls, ComponentClassBlock } from '@aurora/utils';
-import NScrollbar from '~/components/Scrollbar/src/Scrollbar';
-import type { NTimePickerPanelOptionType, NTimePickerShowTimeTooltipType } from '../utils/types';
+import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
+import type { HTimePickerPanelOptionType, HTimePickerShowTimeTooltipType } from '../utils/types';
 import type { ScrollbarExposes } from '~/components/Scrollbar/src/composables/useExposes';
 import { unrefElement } from '@vueuse/core';
 import type { TimePickerTimeColumnPanelExposes } from '../composables/useExposes';
@@ -23,7 +23,7 @@ export default defineComponent({
       type: Object as PropType<Dayjs | null>,
     },
     options: {
-      type: Array as PropType<Array<NTimePickerPanelOptionType>>,
+      type: Array as PropType<Array<HTimePickerPanelOptionType>>,
       required: true,
     },
     unit: {
@@ -41,7 +41,7 @@ export default defineComponent({
       required: true,
     },
     showTimeTooltip: {
-      type: Function as PropType<NTimePickerShowTimeTooltipType>,
+      type: Function as PropType<HTimePickerShowTimeTooltipType>,
     },
     previewTime: {
       type: Object as PropType<Dayjs>,
@@ -66,7 +66,7 @@ export default defineComponent({
   ) {
     const classHelper = new ComponentClassBlock('time-picker');
 
-    const scrollbarDomRefs = ref<HorizonWebComponentInstance<typeof NScrollbar, ScrollbarExposes>>();
+    const scrollbarDomRefs = ref<HorizonWebComponentInstance<typeof HScrollbar, ScrollbarExposes>>();
 
     watch(
       () => [props.panelVisible, props.modelValue],
@@ -96,7 +96,7 @@ export default defineComponent({
     }
 
     function handleClick(
-      option: NTimePickerPanelOptionType,
+      option: HTimePickerPanelOptionType,
       triggerType: 'click' | 'input' | 'confirmable-input' = 'click',
     ) {
       if (!option.disabled) {
@@ -123,7 +123,7 @@ export default defineComponent({
     });
 
     return () => (
-      <NScrollbar
+      <HScrollbar
         ref={scrollbarDomRefs}
         class={cls(classHelper.e('time-column-panel'))}
         maxHeight={props.optionListMaxHeight}
@@ -152,7 +152,7 @@ export default defineComponent({
             </div>
           );
         })}
-      </NScrollbar>
+      </HScrollbar>
     );
   },
 });

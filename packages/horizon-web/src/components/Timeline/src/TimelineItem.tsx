@@ -62,7 +62,7 @@ export default defineComponent({
       show: (val: object) => void;
       hide: (val: object) => void;
       v2: boolean;
-    }>('NTimeline');
+    }>('HTimeline');
     const timelineItemElRef = ref<HTMLElement | null>(null);
     const isHidden = ref(false);
     const onClickDot = () => {

@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import NInputNumber from '../src/InputNumber';
+import HInputNumber from '../src/InputNumber';
 import { describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
 import type { InputNumberProps } from '../src/composables/useProps';
@@ -8,14 +8,14 @@ import { IconClose, IconSearch } from '@aurora/icon';
 
 describe('InputNumber.tsx props', () => {
   test('status.error', () => {
-    const wrapper = mount(() => <NInputNumber status="error" />);
+    const wrapper = mount(() => <HInputNumber status="error" />);
 
     expect(wrapper.classes()).toContain('is-error');
   });
 
   test('model-value', async () => {
     const modelValue = ref();
-    const wrapper = mount(() => <NInputNumber v-model={modelValue.value} />);
+    const wrapper = mount(() => <HInputNumber v-model={modelValue.value} />);
     const input = wrapper.find('input');
 
     await input.setValue('12');
@@ -25,7 +25,7 @@ describe('InputNumber.tsx props', () => {
 
   test('min & max', async () => {
     const modelValue = ref();
-    const wrapper = mount(() => <NInputNumber v-model={modelValue.value} min={0} max={10} />);
+    const wrapper = mount(() => <HInputNumber v-model={modelValue.value} min={0} max={10} />);
     const input = wrapper.find('input');
 
     await input.setValue('-10');
@@ -39,7 +39,7 @@ describe('InputNumber.tsx props', () => {
 
   test('min & max is string', async () => {
     const modelValue = ref();
-    const wrapper = mount(() => <NInputNumber v-model={modelValue.value} min="0" max="10" />);
+    const wrapper = mount(() => <HInputNumber v-model={modelValue.value} min="0" max="10" />);
     const input = wrapper.find('input');
 
     await input.setValue('-10');
@@ -53,8 +53,8 @@ describe('InputNumber.tsx props', () => {
 
   test('step', async () => {
     const modelValue = ref();
-    const wrapper = mount(() => <NInputNumber v-model={modelValue.value} step={5} />);
-    const element = wrapper.findComponent(NInputNumber);
+    const wrapper = mount(() => <HInputNumber v-model={modelValue.value} step={5} />);
+    const element = wrapper.findComponent(HInputNumber);
 
     const stepUp = element.find('.n-input-number__step-up');
     const stepDown = element.find('.n-input-number__step-down');
@@ -71,7 +71,7 @@ describe('InputNumber.tsx props', () => {
   test('stepStrictly', async () => {
     const modelValue = ref();
     const wrapper = mount(() => (
-      <NInputNumber v-model={modelValue.value} stepStrictly={true} step={5} />
+      <HInputNumber v-model={modelValue.value} stepStrictly={true} step={5} />
     ));
     const input = wrapper.find('input');
 
@@ -86,7 +86,7 @@ describe('InputNumber.tsx props', () => {
 
   test('precision', async () => {
     const modelValue = ref();
-    const wrapper = mount(() => <NInputNumber v-model={modelValue.value} precision={1} />);
+    const wrapper = mount(() => <HInputNumber v-model={modelValue.value} precision={1} />);
     const input = wrapper.find('input');
 
     await input.setValue('12.33');
@@ -96,7 +96,7 @@ describe('InputNumber.tsx props', () => {
 
   test('precisionType', async () => {
     const modelValue = ref(1.255);
-    mount(() => <NInputNumber v-model={modelValue.value} precision={2} />);
+    mount(() => <HInputNumber v-model={modelValue.value} precision={2} />);
 
     await nextTick();
 
@@ -109,7 +109,7 @@ describe('InputNumber.tsx props', () => {
     const onFocus = vi.fn();
 
     const wrapper = mount(() => (
-      <NInputNumber v-model={modelValue.value} disabled={disabled.value} onFocus={onFocus} />
+      <HInputNumber v-model={modelValue.value} disabled={disabled.value} onFocus={onFocus} />
     ));
     const input = wrapper.find('input');
 
@@ -129,7 +129,7 @@ describe('InputNumber.tsx props', () => {
 
   test('controls', async () => {
     const controls = ref(true);
-    const wrapper = mount(() => <NInputNumber controls={controls.value} />);
+    const wrapper = mount(() => <HInputNumber controls={controls.value} />);
 
     expect(wrapper.find('.n-input-number__step-wrapper').exists()).toBeTruthy();
 
@@ -144,7 +144,7 @@ describe('InputNumber.tsx props', () => {
     const modelValue = ref();
     const controlsPosition = ref<InputNumberProps['controlsPosition']>('right');
     const wrapper = mount(() => (
-      <NInputNumber v-model={modelValue.value} controlsPosition={controlsPosition.value} />
+      <HInputNumber v-model={modelValue.value} controlsPosition={controlsPosition.value} />
     ));
 
     expect(wrapper.find('.n-input-number__step-up').exists()).toBeTruthy();
@@ -170,13 +170,13 @@ describe('InputNumber.tsx props', () => {
   });
 
   test('name', async () => {
-    const wrapper = mount(() => <NInputNumber name="test" />);
+    const wrapper = mount(() => <HInputNumber name="test" />);
 
     expect(wrapper.find('input').attributes('name')).eq('test');
   });
 
   test('placeholder', async () => {
-    const wrapper = mount(() => <NInputNumber placeholder="test" />);
+    const wrapper = mount(() => <HInputNumber placeholder="test" />);
 
     expect(wrapper.find('input').attributes('placeholder')).eq('test');
   });
@@ -185,7 +185,7 @@ describe('InputNumber.tsx props', () => {
     const modelValue = ref(12);
     const clearable = ref(false);
     const wrapper = mount(() => (
-      <NInputNumber v-model={modelValue.value} clearable={clearable.value} />
+      <HInputNumber v-model={modelValue.value} clearable={clearable.value} />
     ));
 
     expect(wrapper.find('.n-input-number__clear').exists()).not.toBeTruthy();
@@ -207,7 +207,7 @@ describe('InputNumber.tsx props', () => {
     const modelValue = ref(12);
     const readonly = ref(false);
     const wrapper = mount(() => (
-      <NInputNumber v-model={modelValue.value} readonly={readonly.value} />
+      <HInputNumber v-model={modelValue.value} readonly={readonly.value} />
     ));
 
     await wrapper.find('input').setValue('13');
@@ -228,7 +228,7 @@ describe('InputNumber.tsx props', () => {
     const modelValue = ref(1);
     const langPressFrequency = ref(200);
     const wrapper = mount(() => (
-      <NInputNumber
+      <HInputNumber
         v-model={modelValue.value}
         enableLangPress={true}
         langPressFrequency={langPressFrequency.value}
@@ -262,12 +262,12 @@ describe('InputNumber.tsx props', () => {
   });
 
   test('icon', async () => {
-    const wrapper = mount(() => <NInputNumber prefixIcon="clear" suffixIcon="point" />);
+    const wrapper = mount(() => <HInputNumber prefixIcon="clear" suffixIcon="point" />);
 
     expect(wrapper.find('.n-input-number__prefix').find('.n-icon_clear').exists()).toBeTruthy();
     expect(wrapper.find('.n-input-number__suffix').find('.n-icon_point').exists()).toBeTruthy();
 
-    const wrapper2 = mount(() => <NInputNumber prefixIcon={IconClose} suffixIcon={IconSearch} />);
+    const wrapper2 = mount(() => <HInputNumber prefixIcon={IconClose} suffixIcon={IconSearch} />);
 
     expect(wrapper2.find('.n-input-number__prefix').findComponent(IconClose).exists()).toBeTruthy();
     expect(

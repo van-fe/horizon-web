@@ -1,7 +1,7 @@
-import type { NTreeNodeData, NTreeNodeDataWithLevel } from '~/components/Tree/src/utils/types';
+import type { HTreeNodeData, HTreeNodeDataWithLevel } from '~/components/Tree/src/utils/types';
 import type { VNode } from 'vue';
 import { isBoolean, isObject, isString, isNumber, isUndefined } from '@aurora/utils';
-import type { NTreeSelectModelValueType } from '../utils/types';
+import type { HTreeSelectModelValueType } from '../utils/types';
 import { isTreeModelValue } from '~/components/Tree/src/utils/config';
 import { isVNode } from 'vue';
 
@@ -9,7 +9,7 @@ export const useTreeSelectEmits = {
   /**
    *  更新 `modelValue`
    */
-  'update:modelValue': (values: NTreeSelectModelValueType | undefined | null) =>
+  'update:modelValue': (values: HTreeSelectModelValueType | undefined | null) =>
     Array.isArray(values) || isString(values) || isUndefined(values),
   /**
    * 更新变化节点时触发
@@ -20,11 +20,11 @@ export const useTreeSelectEmits = {
    * 动态加载改变时会通知
    * @param data `tree-data` 数据
    */
-  'update:treeData': (data: NTreeNodeData[]) => Array.isArray(data),
+  'update:treeData': (data: HTreeNodeData[]) => Array.isArray(data),
   /**
    *  变化时触发
    */
-  change: (value: NTreeSelectModelValueType | undefined) =>
+  change: (value: HTreeSelectModelValueType | undefined) =>
     Array.isArray(value) || isString(value) || isNumber(value) || isUndefined(value),
   /**
    * panel 面板展开或者收起时触发
@@ -59,7 +59,7 @@ export const useTreeSelectEmits = {
     value: string | number,
     e: {
       checked: boolean;
-      node: NTreeNodeData;
+      node: HTreeNodeData;
       allCheckedValues: (string | number)[];
       halfCheckedValues: (string | number)[];
       vnode?: VNode;
@@ -77,7 +77,7 @@ export const useTreeSelectEmits = {
     value: string | number,
     e: {
       expanded: boolean;
-      node: NTreeNodeDataWithLevel;
+      node: HTreeNodeDataWithLevel;
       nativeEvent?: Event;
       vnode?: VNode;
     },
@@ -89,7 +89,7 @@ export const useTreeSelectEmits = {
    * @param node 当前操作的 Tree Item 对应的数据信息
    * @param vnode 当前操作的 Tree Item 对应的 VNode 节点信息
    */
-  click: (evt: MouseEvent, value: string | number, node: NTreeNodeData, vnode?: VNode) =>
+  click: (evt: MouseEvent, value: string | number, node: HTreeNodeData, vnode?: VNode) =>
     evt instanceof MouseEvent &&
     isTreeModelValue(value) &&
     isObject(node) &&
@@ -102,7 +102,7 @@ export const useTreeSelectEmits = {
    * @param node 当前操作的 Tree Item 对应的数据信息
    * @param vnode 当前操作的 Tree Item 对应的 VNode 节点信息
    */
-  contextmenu: (evt: MouseEvent, value: string | number, node: NTreeNodeData, vnode?: VNode) =>
+  contextmenu: (evt: MouseEvent, value: string | number, node: HTreeNodeData, vnode?: VNode) =>
     evt instanceof MouseEvent &&
     isTreeModelValue(value) &&
     isObject(node) &&

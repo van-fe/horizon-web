@@ -16,13 +16,13 @@ import { useSliderEmits } from './composables/useEmits';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import {
-  NFormDisabledInjectedKey,
-  NFormItemTriggerInjectedKey,
+  HFormDisabledInjectedKey,
+  HFormItemTriggerInjectedKey,
 } from '~/components/Form/src/utils/injectedKeys';
 import { getCorrectedValue, transformValue } from './utils/valueMethods';
 import SliderCursor from './components/SliderCursor';
-import { NSliderGetTrackSizeInjectedKey, NSliderPropsInjectedKey } from './utils/injectedKeys';
-import NInputNumber from '~/components/InputNumber/src/InputNumber';
+import { HSliderGetTrackSizeInjectedKey, HSliderPropsInjectedKey } from './utils/injectedKeys';
+import HInputNumber from '~/components/InputNumber/src/InputNumber';
 import useSize from '~/utils/useSize';
 
 export default defineComponent({
@@ -37,7 +37,7 @@ export default defineComponent({
     const classHelper = new ComponentClassBlock('slider');
     const { disabled, modelValue, max, min, step, type, color, range } = toRefs(props);
 
-    provide(NSliderPropsInjectedKey, props);
+    provide(HSliderPropsInjectedKey, props);
 
     const containerRef = ref<HTMLElement | null>(null);
     const trackRef = ref<HTMLElement | null>(null);
@@ -46,12 +46,12 @@ export default defineComponent({
     const secondCursorRef = ref<typeof SliderCursor | null>(null);
 
     // form-item-trigger
-    const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
+    const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
     // slider use other form element
-    provide(NFormItemTriggerInjectedKey, undefined);
+    provide(HFormItemTriggerInjectedKey, undefined);
 
     // form disabled inject
-    const formDisabled = inject(NFormDisabledInjectedKey, undefined);
+    const formDisabled = inject(HFormDisabledInjectedKey, undefined);
     const isDisabled = computed(() => formDisabled?.value || disabled.value);
 
     const firstValue = ref(0);
@@ -117,7 +117,7 @@ export default defineComponent({
       };
     }
 
-    provide(NSliderGetTrackSizeInjectedKey, getTrackSize);
+    provide(HSliderGetTrackSizeInjectedKey, getTrackSize);
 
     watch(
       () => [props.min, props.max],
@@ -255,7 +255,7 @@ export default defineComponent({
         </div>
         {props.inputEnable && !props.range && (
           <div class={classHelper.e('input')}>
-            <NInputNumber
+            <HInputNumber
               modelValue={firstValue.value}
               size={sizeRef.value}
               min={min.value}

@@ -1,15 +1,15 @@
 import { describe, expect, test, vi } from 'vitest';
 import { createInstance, TreeSelectHelper } from './treeSelectHelper';
 import { nextTick, ref } from 'vue';
-import NTag from '~/components/Tag/src/Tag';
+import HTag from '~/components/Tag/src/Tag';
 import type {
-  NTreeDynamicLoadNode,
-  NTreeNodeData,
-  NTreeUuidType,
+  HTreeDynamicLoadNode,
+  HTreeNodeData,
+  HTreeUuidType,
 } from '~/components/Tree/src/utils/types';
 import { sleep } from '~/utils/tools';
-import NTreeItem from '~/components/Tree/src/components/TreeItem';
-import NPickerPopper from '~/components/Picker/src/components/NPickerPopper';
+import HTreeItem from '~/components/Tree/src/components/TreeItem';
+import HPickerPopper from '~/components/Picker/src/components/PickerPopper';
 
 describe('TreeSelect.tsx special', () => {
   test('default-value in multiple', async () => {
@@ -24,7 +24,7 @@ describe('TreeSelect.tsx special', () => {
 
     await instance.mount();
 
-    const tags = instance.element?.findAllComponents(NTag);
+    const tags = instance.element?.findAllComponents(HTag);
 
     expect(onChange).toHaveBeenCalledTimes(0);
     expect(tags?.[0].text()).toBe('Feedback');
@@ -34,7 +34,7 @@ describe('TreeSelect.tsx special', () => {
 
     await nextTick();
 
-    const tags2 = instance.element?.findAllComponents(NTag);
+    const tags2 = instance.element?.findAllComponents(HTag);
 
     expect(onChange).toHaveBeenCalledTimes(0);
     expect(tags2?.[0].text()).toBe('Tag');
@@ -83,10 +83,10 @@ describe('TreeSelect.tsx special', () => {
   });
 
   test('dynamic set tree-data', async () => {
-    const treeData = ref<NTreeNodeData[]>([]);
+    const treeData = ref<HTreeNodeData[]>([]);
 
-    function dynamicLoad(data: NTreeDynamicLoadNode) {
-      return new Promise<NTreeNodeData[]>((resolve, reject) => {
+    function dynamicLoad(data: HTreeDynamicLoadNode) {
+      return new Promise<HTreeNodeData[]>((resolve, reject) => {
         if (!data.node) return reject();
 
         setTimeout(
@@ -160,12 +160,12 @@ describe('TreeSelect.tsx special', () => {
 
     await sleep(2000);
 
-    expect(instance.pickerPopper?.findAllComponents(NTreeItem).length).eq(7);
+    expect(instance.pickerPopper?.findAllComponents(HTreeItem).length).eq(7);
   });
 
   test('when update tree-data, should not modify already selected modalValue which are not in the newest tree-data', async () => {
-    const modelValue = ref<NTreeUuidType[]>(['efficiency', 'controllability']);
-    const treeData = ref<NTreeNodeData[]>([
+    const modelValue = ref<HTreeUuidType[]>(['efficiency', 'controllability']);
+    const treeData = ref<HTreeNodeData[]>([
       {
         value: 'guide',
         label: 'Guide',
@@ -197,13 +197,13 @@ describe('TreeSelect.tsx special', () => {
     const instance = new TreeSelectHelper({
       modelValue,
       treeData,
-      'onUpdate:modelValue': (val: NTreeUuidType[]) => (modelValue.value = val),
+      'onUpdate:modelValue': (val: HTreeUuidType[]) => (modelValue.value = val),
       multiple: true,
     });
 
     await instance.mount(false);
 
-    expect(instance.pickerInput?.findAllComponents(NTag).length).eq(2);
+    expect(instance.pickerInput?.findAllComponents(HTag).length).eq(2);
 
     treeData.value = [
       {
@@ -237,7 +237,7 @@ describe('TreeSelect.tsx special', () => {
     await sleep();
     await instance.picker?.trigger('click');
 
-    expect(instance.pickerInput?.findAllComponents(NTag).length).eq(2);
+    expect(instance.pickerInput?.findAllComponents(HTag).length).eq(2);
   });
 
   test('change model-value after the tree-select mounted, should close on click outside after open it', async () => {
@@ -261,12 +261,12 @@ describe('TreeSelect.tsx special', () => {
 
     await sleep(200);
 
-    expect(wrapper.findComponent(NPickerPopper)?.isVisible()).toBeTruthy();
+    expect(wrapper.findComponent(HPickerPopper)?.isVisible()).toBeTruthy();
 
     await outer.trigger('mousedown');
 
     await sleep(200);
 
-    expect(wrapper.findComponent(NPickerPopper)?.isVisible()).toBeFalsy();
+    expect(wrapper.findComponent(HPickerPopper)?.isVisible()).toBeFalsy();
   });
 });

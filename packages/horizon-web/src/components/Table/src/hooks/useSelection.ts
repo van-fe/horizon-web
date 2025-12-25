@@ -3,14 +3,14 @@ import { computed, ref, watch } from 'vue';
 import { isBoolean, isDefined } from '@aurora/utils';
 import { warn } from '~/utils/useLog';
 import type {
-  NTableInsertedColumnData,
-  NTableTransformedRowDataType,
-  NTableRowKeyType,
+  HTableInsertedColumnData,
+  HTableTransformedRowDataType,
+  HTableRowKeyType,
 } from '../utils/types';
 import type { TableEmits } from '../composables/useEmits';
 
 export default function useSelection(
-  column: NTableInsertedColumnData,
+  column: HTableInsertedColumnData,
   emit: SetupContext<TableEmits>['emit'],
 ) {
   const selectedKeys = ref(column.props.selectedKeys);
@@ -27,12 +27,12 @@ export default function useSelection(
   );
 
   const isSelectable = computed(
-    () => (rowData: NTableTransformedRowDataType, rowIndex: number) =>
+    () => (rowData: HTableTransformedRowDataType, rowIndex: number) =>
       column.props.selectable === true ||
       (typeof column.props.selectable === 'function' && column.props.selectable(rowData, rowIndex)),
   );
 
-  const isCheckedAll = computed(() => (rowsData: NTableTransformedRowDataType[]) => {
+  const isCheckedAll = computed(() => (rowsData: HTableTransformedRowDataType[]) => {
     return (
       rowsData.length > 0 &&
       rowsData.every(
@@ -43,7 +43,7 @@ export default function useSelection(
     );
   });
 
-  const isIndeterminate = computed(() => (rowsData: NTableTransformedRowDataType[]) => {
+  const isIndeterminate = computed(() => (rowsData: HTableTransformedRowDataType[]) => {
     return (
       !isCheckedAll.value(rowsData) &&
       rowsData.length > 0 &&
@@ -70,7 +70,7 @@ export default function useSelection(
     );
   }
 
-  function handleSelect(rowData: NTableTransformedRowDataType, rowIndex: number) {
+  function handleSelect(rowData: HTableTransformedRowDataType, rowIndex: number) {
     if (!isDefined(column.props.columnKey) || column.props.columnKey === '') {
       warn('table', `Column hasn't set columnKey.`);
       return;
@@ -96,7 +96,7 @@ export default function useSelection(
     }
   }
 
-  function handleSelectAll(rowsData: NTableTransformedRowDataType[]) {
+  function handleSelectAll(rowsData: HTableTransformedRowDataType[]) {
     if (!isDefined(column.props.columnKey) || column.props.columnKey === '') {
       warn('table', `Column hasn't set columnKey.`);
       return;
@@ -133,7 +133,7 @@ export default function useSelection(
     }
   }
 
-  function handleClear(rowsData: NTableTransformedRowDataType[], ignoreSelectable = false) {
+  function handleClear(rowsData: HTableTransformedRowDataType[], ignoreSelectable = false) {
     if (ignoreSelectable) {
       emitUpdate([]);
     } else {
@@ -157,7 +157,7 @@ export default function useSelection(
     }
   }
 
-  function getSelectionRows(rowsData: NTableTransformedRowDataType[]) {
+  function getSelectionRows(rowsData: HTableTransformedRowDataType[]) {
     if (!isDefined(column.props.columnKey) || column.props.columnKey === '') {
       warn('table', `Column hasn't set columnKey.`);
       return [];
@@ -171,8 +171,8 @@ export default function useSelection(
   }
 
   function toggleRowSelection(
-    rowsData: NTableTransformedRowDataType[],
-    rowKey: NTableRowKeyType | NTableRowKeyType[],
+    rowsData: HTableTransformedRowDataType[],
+    rowKey: HTableRowKeyType | HTableRowKeyType[],
     selected?: boolean,
     ignoreSelectable: boolean = false,
   ) {
@@ -189,7 +189,7 @@ export default function useSelection(
         const checkValue = row[column.props.columnKey] as string | number;
 
         if (
-          !(rowKey as Array<NTableRowKeyType>).includes(checkValue) ||
+          !(rowKey as Array<HTableRowKeyType>).includes(checkValue) ||
           (!ignoreSelectable && !isSelectable.value(row, i))
         )
           continue;

@@ -6,19 +6,19 @@ import type {
   KebabCaseToLowerCase,
 } from '@aurora/utils';
 import type { DatePickerDatePanelExposes } from '../composables/useExposes';
-import type NPicker from '~/components/Picker/src/Picker';
+import type HPicker from '~/components/Picker/src/Picker';
 import type {
   PickerExposes,
   PickerPureInputExposes,
 } from '~/components/Picker/src/composables/useExposes';
-import type NPickerPureInput from '~/components/Picker/src/components/NPickerPureInput';
+import type HPickerPureInput from '~/components/Picker/src/components/PickerPureInput';
 import type DatePanel from '../components/DatePanel';
 
 export type GetableType<T> = T | (() => T);
 
 export type SingleOrArrayPickerDataType<T> = T | [T, T];
 
-export type NDatePickerBaseSupportType =
+export type HDatePickerBaseSupportType =
   | 'year'
   | 'month'
   | 'week'
@@ -33,15 +33,15 @@ export type NDatePickerBaseSupportType =
   | 'date-minutes-range'
   | 'date-seconds-range';
 
-export type NDatePickerTypeFormat<T extends string> =
+export type HDatePickerTypeFormat<T extends string> =
   | T
   | KebabCaseToCamelCase<T>
   | KebabCaseToLowerCase<T>;
 
 /**
- * date-picker support the NDatePickerBaseSupportType, and its lowercase and camelcase.
+ * date-picker support the HDatePickerBaseSupportType, and its lowercase and camelcase.
  */
-export type NDatePickerSupportType = NDatePickerTypeFormat<NDatePickerBaseSupportType>;
+export type HDatePickerSupportType = HDatePickerTypeFormat<HDatePickerBaseSupportType>;
 
 /**
  * Accept date(time) type
@@ -50,21 +50,21 @@ export type NDatePickerSupportType = NDatePickerTypeFormat<NDatePickerBaseSuppor
  * - objectSupport(@import('dayjs/plugin/objectSupport'))
  * - arraySupport(@import('dayjs/plugin/arraySupport'))
  */
-export type NDatePickerAccessDatetimeType = ConfigType;
+export type HDatePickerAccessDatetimeType = ConfigType;
 
 /**
  * Disable date judgment method
  * @param date Current date
  * @return boolean Whether to disabled current date
  */
-export type NDatePickerDisabledDateMethodType = (date: Dayjs) => boolean;
+export type HDatePickerDisabledDateMethodType = (date: Dayjs) => boolean;
 
 /**
  * Disable time judgment method
  * @param time Current time
  * @return boolean Whether to disabled current time
  */
-export type NDatePickerDisabledTimeMethodType = (time: Dayjs) => boolean;
+export type HDatePickerDisabledTimeMethodType = (time: Dayjs) => boolean;
 
 /**
  * Whether to show dot under the date number
@@ -72,7 +72,7 @@ export type NDatePickerDisabledTimeMethodType = (time: Dayjs) => boolean;
  * @param panelType The type of current show panel
  * @return boolean Whether to have a dot under the date number
  */
-export type NDatePickerShowDotType = (
+export type HDatePickerShowDotType = (
   date: Dayjs,
   panelType: 'year' | 'month' | 'day',
 ) => boolean;
@@ -80,7 +80,7 @@ export type NDatePickerShowDotType = (
 /**
  * Shortcuts config
  */
-export interface NDatePickerShortcutsType {
+export interface HDatePickerShortcutsType {
   /**
    * The label of shortcuts
    */
@@ -94,16 +94,16 @@ export interface NDatePickerShortcutsType {
 /**
  * Whether to show tooltip on date cell and its tooltip content
  */
-export type NDatePickerShowDateTooltipType = (date: Dayjs) => {
+export type HDatePickerShowDateTooltipType = (date: Dayjs) => {
   show: boolean;
   content?: string;
 };
 
 /**
  * Whether to show tooltip on time cell and its tooltip content.
- * It's as same as NTimePicker's show-time-tooltip.
+ * It's as same as HTimePicker's show-time-tooltip.
  */
-export type NDatePickerShowTimeTooltipType = (
+export type HDatePickerShowTimeTooltipType = (
   time: Dayjs,
   timeType: 'time' | 'hour' | 'minute' | 'second',
 ) => {
@@ -114,7 +114,7 @@ export type NDatePickerShowTimeTooltipType = (
 /**
  * Custom render date cell's grid type
  */
-export interface NDatePickerDateCellType {
+export interface HDatePickerDateCellType {
   /**
    * current dayjs object
    */
@@ -176,18 +176,18 @@ export interface NDatePickerDateCellType {
   };
 }
 
-export interface NDatePickerDomRefs {
+export interface HDatePickerDomRefs {
   startDatePanelsDomRef: Ref<
     HorizonWebComponentInstance<typeof DatePanel, DatePickerDatePanelExposes> | undefined
   >;
   endDatePanelsDomRef: Ref<
     HorizonWebComponentInstance<typeof DatePanel, DatePickerDatePanelExposes> | undefined
   >;
-  pickerDomRef: Ref<HorizonWebComponentInstance<typeof NPicker, PickerExposes> | undefined>;
+  pickerDomRef: Ref<HorizonWebComponentInstance<typeof HPicker, PickerExposes> | undefined>;
   startInputDomRef: Ref<
-    HorizonWebComponentInstance<typeof NPickerPureInput, PickerPureInputExposes> | undefined
+    HorizonWebComponentInstance<typeof HPickerPureInput, PickerPureInputExposes> | undefined
   >;
   endInputDomRef: Ref<
-    HorizonWebComponentInstance<typeof NPickerPureInput, PickerPureInputExposes> | undefined
+    HorizonWebComponentInstance<typeof HPickerPureInput, PickerPureInputExposes> | undefined
   >;
 }

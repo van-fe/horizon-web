@@ -1,10 +1,10 @@
 import type { Ref } from 'vue';
-import type { NTableColumnData } from '../utils/types';
+import type { HTableColumnData } from '../utils/types';
 
 export default function useHeaderDraggable(
   columnAnalysis: Ref<{
-    columnGroups: NTableColumnData[][];
-    flattenColumns: NTableColumnData[];
+    columnGroups: HTableColumnData[][];
+    flattenColumns: HTableColumnData[];
   }>,
 ) {
   return {

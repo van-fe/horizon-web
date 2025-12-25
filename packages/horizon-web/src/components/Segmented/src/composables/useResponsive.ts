@@ -1,6 +1,6 @@
 import type { CSSProperties, Ref, ToRefs } from 'vue';
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
-import type { NSegmentedValue, SegmentedProps } from './useProps';
+import type { HSegmentedValue, SegmentedProps } from './useProps';
 import { useResize } from './useResize';
 import { cssVariable } from '@aurora/utils';
 
@@ -16,12 +16,12 @@ export default function useResponsive(options: ToRefs<IndicatorOptions>) {
   >;
 
   const indicatorStyle = ref<any>({});
-  const items = ref<Map<NSegmentedValue, HTMLElement>>(new Map());
+  const items = ref<Map<HSegmentedValue, HTMLElement>>(new Map());
   const scrollable = ref(options.arrow.value);
   const keys = computed({
     get: () => Array.from(items.value.keys()),
     set: sorted => {
-      const map = new Map<NSegmentedValue, HTMLElement>();
+      const map = new Map<HSegmentedValue, HTMLElement>();
       sorted.forEach(key => {
         const el = items.value.get(key);
         if (el) map.set(key, el);
@@ -117,7 +117,7 @@ export default function useResponsive(options: ToRefs<IndicatorOptions>) {
     containerEl.style.transition = `transform ${cssVariable('segmented-transition-time')} ease`;
   };
 
-  const createTab = (key: NSegmentedValue) => {
+  const createTab = (key: HSegmentedValue) => {
     return function addTab(el: Element | null) {
       if (el) {
         // 2024-04-25 更新：社区ui库调研后，当不存在 activeKey 时，默认不做选中，下次更新移除

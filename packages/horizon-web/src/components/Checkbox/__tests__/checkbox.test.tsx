@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { NCheckbox, NCheckboxGroup, NCheckboxButton } from '..';
+import { HCheckbox, HCheckboxGroup, HCheckboxButton } from '..';
 import { describe, expect, test } from 'vitest';
 import { ref, nextTick } from 'vue';
 
@@ -8,12 +8,12 @@ describe('Checkbox.tsx', () => {
     const modelValue = ref();
     const wrapper = mount(() => (
       <div>
-        <NCheckbox modelValue={modelValue.value} label="1" />
-        <NCheckbox modelValue={modelValue.value} label="2" />
+        <HCheckbox modelValue={modelValue.value} label="1" />
+        <HCheckbox modelValue={modelValue.value} label="2" />
       </div>
     ));
 
-    const elements = wrapper.findAllComponents(NCheckbox);
+    const elements = wrapper.findAllComponents(HCheckbox);
 
     expect(elements.length).toBe(2);
   });
@@ -22,11 +22,11 @@ describe('Checkbox.tsx', () => {
 test('sizeBorder', async () => {
   const size = ref<'small' | 'medium' | 'large'>('small');
 
-  const wrapperBorder = mount(() => <NCheckbox size={size.value} border={true} />);
-  const wrapperNoneBorder = mount(() => <NCheckbox size={size.value} border={false} />);
+  const wrapperBorder = mount(() => <HCheckbox size={size.value} border={true} />);
+  const wrapperNoneBorder = mount(() => <HCheckbox size={size.value} border={false} />);
 
-  const checkboxBorder = wrapperBorder.findComponent(NCheckbox);
-  const checkboxNoneBorder = wrapperNoneBorder.findComponent(NCheckbox);
+  const checkboxBorder = wrapperBorder.findComponent(HCheckbox);
+  const checkboxNoneBorder = wrapperNoneBorder.findComponent(HCheckbox);
 
   expect(checkboxBorder.classes()).toContain('n-checkbox--medium');
   expect(checkboxNoneBorder.classes()).not.toContain('n-checkbox--medium');
@@ -44,9 +44,9 @@ test('sizeBorder', async () => {
 
 test('sizeButton', async () => {
   const size = ref<'small' | 'medium' | 'large'>('small');
-  const wrapper = mount(() => <NCheckboxButton size={size.value} />);
+  const wrapper = mount(() => <HCheckboxButton size={size.value} />);
 
-  const checkboxButton = wrapper.findComponent(NCheckboxButton);
+  const checkboxButton = wrapper.findComponent(HCheckboxButton);
 
   expect(checkboxButton.classes()).toContain('n-checkbox-button--medium');
 
@@ -63,24 +63,24 @@ test('sizeGroup', async () => {
   const size = ref<'small' | 'medium' | 'large'>('small');
   const modelValue = ref([]);
   const wrapperBorder = mount(() => (
-    <NCheckboxGroup modelValue={modelValue.value} size={size.value}>
-      <NCheckbox border={true} />
-    </NCheckboxGroup>
+    <HCheckboxGroup modelValue={modelValue.value} size={size.value}>
+      <HCheckbox border={true} />
+    </HCheckboxGroup>
   ));
   const wrapperNoneBorder = mount(() => (
-    <NCheckboxGroup modelValue={modelValue.value} size={size.value}>
-      <NCheckbox border={false} />
-    </NCheckboxGroup>
+    <HCheckboxGroup modelValue={modelValue.value} size={size.value}>
+      <HCheckbox border={false} />
+    </HCheckboxGroup>
   ));
   const wrapperButton = mount(() => (
-    <NCheckboxGroup modelValue={modelValue.value} size={size.value}>
-      <NCheckboxButton />
-    </NCheckboxGroup>
+    <HCheckboxGroup modelValue={modelValue.value} size={size.value}>
+      <HCheckboxButton />
+    </HCheckboxGroup>
   ));
 
-  const elementCheckboxBorder = wrapperBorder.findComponent(NCheckbox);
-  const elementCheckboxNoneBorder = wrapperNoneBorder.findComponent(NCheckbox);
-  const elementCheckboxButton = wrapperButton.findComponent(NCheckboxButton);
+  const elementCheckboxBorder = wrapperBorder.findComponent(HCheckbox);
+  const elementCheckboxNoneBorder = wrapperNoneBorder.findComponent(HCheckbox);
+  const elementCheckboxButton = wrapperButton.findComponent(HCheckboxButton);
 
   expect(elementCheckboxBorder.exists()).toBe(true);
   expect(elementCheckboxNoneBorder.exists()).toBe(true);
@@ -109,24 +109,24 @@ test('true-label/false-label', async () => {
   const checkboxGroupModelValue = ref<string[]>([]);
 
   const wrapper = mount(() => (
-    <NCheckbox
+    <HCheckbox
       modelValue={checkboxModelValue.value}
       true-label="true-label"
       false-label="false-label"
     />
   ));
   const wrapper1 = mount(() => (
-    <NCheckboxButton
+    <HCheckboxButton
       modelValue={checkboxButtonModelValue.value}
       true-label="true-label"
       false-label="false-label"
     />
   ));
   const wrapper2 = mount(() => (
-    <NCheckboxGroup modelValue={checkboxGroupModelValue.value}>
-      <NCheckboxButton true-label="true-label" false-label="false-label" />
-      <NCheckboxButton true-label="true-label1" false-label="false-label" />
-    </NCheckboxGroup>
+    <HCheckboxGroup modelValue={checkboxGroupModelValue.value}>
+      <HCheckboxButton true-label="true-label" false-label="false-label" />
+      <HCheckboxButton true-label="true-label1" false-label="false-label" />
+    </HCheckboxGroup>
   ));
 
   checkboxModelValue.value = 'true-label';
@@ -144,13 +144,13 @@ test('checked', async () => {
   const checkboxModelValue = ref(true);
   const checkboxGroupModelValue = ref(['hh']);
 
-  const wrapper = mount(() => <NCheckboxButton modelValue={checkboxModelValue.value} label="hh" />);
-  const wrapper1 = mount(() => <NCheckbox modelValue={checkboxModelValue.value} label="hh" />);
+  const wrapper = mount(() => <HCheckboxButton modelValue={checkboxModelValue.value} label="hh" />);
+  const wrapper1 = mount(() => <HCheckbox modelValue={checkboxModelValue.value} label="hh" />);
   const wrapper2 = mount(() => (
-    <NCheckboxGroup modelValue={checkboxGroupModelValue.value}>
-      <NCheckboxButton label="hh" />
-      <NCheckboxButton label="jj" />
-    </NCheckboxGroup>
+    <HCheckboxGroup modelValue={checkboxGroupModelValue.value}>
+      <HCheckboxButton label="hh" />
+      <HCheckboxButton label="jj" />
+    </HCheckboxGroup>
   ));
 
   expect(wrapper.classes()).toContain('n-checkbox-button--checked');
@@ -164,29 +164,29 @@ test('checkboxGroup', async () => {
   const checkboxModelValue = ref(true);
 
   const wrapper1 = mount(() => (
-    <NCheckboxGroup modelValue={checkboxGroupModelValue.value}>
-      <NCheckbox label="hh" />
-      <NCheckbox label="jj" />
-    </NCheckboxGroup>
+    <HCheckboxGroup modelValue={checkboxGroupModelValue.value}>
+      <HCheckbox label="hh" />
+      <HCheckbox label="jj" />
+    </HCheckboxGroup>
   ));
 
   const wrapper11 = mount(() => (
-    <NCheckboxGroup>
-      <NCheckbox modelValue={checkboxModelValue.value} label="hh" />
-      <NCheckbox modelValue={checkboxModelValue.value} label="jj" />
-    </NCheckboxGroup>
+    <HCheckboxGroup>
+      <HCheckbox modelValue={checkboxModelValue.value} label="hh" />
+      <HCheckbox modelValue={checkboxModelValue.value} label="jj" />
+    </HCheckboxGroup>
   ));
   const wrapper2 = mount(() => (
-    <NCheckboxGroup modelValue={checkboxGroupModelValue.value}>
-      <NCheckboxButton label="hh" />
-      <NCheckboxButton label="jj" />
-    </NCheckboxGroup>
+    <HCheckboxGroup modelValue={checkboxGroupModelValue.value}>
+      <HCheckboxButton label="hh" />
+      <HCheckboxButton label="jj" />
+    </HCheckboxGroup>
   ));
   const wrapper22 = mount(() => (
-    <NCheckboxGroup>
-      <NCheckboxButton modelValue={checkboxModelValue.value} label="hh" />
-      <NCheckboxButton modelValue={checkboxModelValue.value} label="jj" />
-    </NCheckboxGroup>
+    <HCheckboxGroup>
+      <HCheckboxButton modelValue={checkboxModelValue.value} label="hh" />
+      <HCheckboxButton modelValue={checkboxModelValue.value} label="jj" />
+    </HCheckboxGroup>
   ));
 
   const checkedElArr = wrapper1.findAll('.n-checkbox--checked');

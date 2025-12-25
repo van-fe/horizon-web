@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils';
-import NCalendar from '..';
+import HCalendar from '..';
 import { describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
 import type { CalendarProps } from '../src/composables/useProps';
-import type { NCalendarPinFlag } from '../src/utils/types';
+import type { HCalendarPinFlag } from '../src/utils/types';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import YearCalendar from '../src/components/YearCalendar';
@@ -14,28 +14,28 @@ import WeekCalendar from '../src/components/WeekCalendar';
 describe('Calendar.tsx', () => {
   describe('base', () => {
     test('basic', async () => {
-      const wrapper = mount(() => <NCalendar />);
-      const element = wrapper.findComponent(NCalendar);
+      const wrapper = mount(() => <HCalendar />);
+      const element = wrapper.findComponent(HCalendar);
 
       expect(element.exists()).toBe(true);
     });
 
     test('year', async () => {
-      const wrapper = mount(() => <NCalendar mode="year" />);
+      const wrapper = mount(() => <HCalendar mode="year" />);
       const element = wrapper.findComponent(YearCalendar);
 
       expect(element.exists()).toBe(true);
     });
 
     test('week', async () => {
-      const wrapper = mount(() => <NCalendar mode="week" />);
+      const wrapper = mount(() => <HCalendar mode="week" />);
       const element = wrapper.findComponent(WeekCalendar);
 
       expect(element.exists()).toBe(true);
     });
 
     test('day', async () => {
-      const wrapper = mount(() => <NCalendar mode="day" modeSwitchableList={['day']} />);
+      const wrapper = mount(() => <HCalendar mode="day" modeSwitchableList={['day']} />);
       const element = wrapper.findComponent(DayCalendar);
 
       expect(element.exists()).toBe(true);
@@ -46,7 +46,7 @@ describe('Calendar.tsx', () => {
     test('switch mode', async () => {
       const mode = ref<'year' | 'month'>('month');
 
-      const wrapper = mount(() => <NCalendar mode={mode.value} />);
+      const wrapper = mount(() => <HCalendar mode={mode.value} />);
 
       expect(wrapper.findComponent(MonthCalendar).exists()).toBe(true);
 
@@ -58,14 +58,14 @@ describe('Calendar.tsx', () => {
 
     test('switch list default mode', async () => {
       const modeSwitchableList = ref<CalendarProps['modeSwitchableList']>(['year', 'month', 'day']);
-      const wrapper = mount(() => <NCalendar modeSwitchableList={modeSwitchableList.value} />);
+      const wrapper = mount(() => <HCalendar modeSwitchableList={modeSwitchableList.value} />);
 
       expect(wrapper.find('.n-calendar-month').exists()).eq(true);
     });
 
     test('switch list default mode if mode is not in modeSwitchableList', async () => {
       const modeSwitchableList = ref<CalendarProps['modeSwitchableList']>(['year', 'day']);
-      const wrapper = mount(() => <NCalendar modeSwitchableList={modeSwitchableList.value} />);
+      const wrapper = mount(() => <HCalendar modeSwitchableList={modeSwitchableList.value} />);
 
       expect(wrapper.find('.n-calendar-year').exists()).eq(true);
     });
@@ -74,7 +74,7 @@ describe('Calendar.tsx', () => {
       const mode = ref<CalendarProps['mode']>('month');
       const onDateClick = vi.fn();
       const wrapper = mount(() => (
-        <NCalendar
+        <HCalendar
           modelValue="2022-10-01"
           format="YYYY-MM"
           mode={mode.value}
@@ -105,7 +105,7 @@ describe('Calendar.tsx', () => {
       const dateType = ref<CalendarProps['dateType']>('full');
       const onDateClick = vi.fn();
       const wrapper = mount(() => (
-        <NCalendar
+        <HCalendar
           modelValue="2022-10-01"
           format="YYYY-MM"
           mode={mode.value}
@@ -166,7 +166,7 @@ describe('Calendar.tsx', () => {
       const onClick = vi.fn();
 
       const wrapper = mount(() => (
-        <NCalendar
+        <HCalendar
           modelValue="2022-10-01"
           mode={mode.value}
           disableDate={disableDate}
@@ -197,7 +197,7 @@ describe('Calendar.tsx', () => {
       const onClick = vi.fn();
 
       const wrapper = mount(() => (
-        <NCalendar mode={mode.value} pickable={pickable.value} onDateClick={onClick} />
+        <HCalendar mode={mode.value} pickable={pickable.value} onDateClick={onClick} />
       ));
 
       const monthDay = wrapper.find('.n-calendar-month__day');
@@ -237,18 +237,18 @@ describe('Calendar.tsx', () => {
   describe('emits', function () {
     test('update:modelValue', async () => {
       const modelValue = ref();
-      mount(() => <NCalendar v-model={modelValue.value} />);
+      mount(() => <HCalendar v-model={modelValue.value} />);
 
       expect(modelValue.value).toBe(dayjs().format('YYYY-MM-DD'));
     });
 
     test('update:pinFlags', async () => {
-      const pinFlags = ref<NCalendarPinFlag[]>([]);
+      const pinFlags = ref<HCalendarPinFlag[]>([]);
       let reserveType: 1 | 2 | 3 = 1;
 
       function onCreatFinishFlagCallback(
-        flag: NCalendarPinFlag,
-      ): Promise<boolean | NCalendarPinFlag> {
+        flag: HCalendarPinFlag,
+      ): Promise<boolean | HCalendarPinFlag> {
         return new Promise(resolve => {
           switch (reserveType) {
             case 1:
@@ -262,7 +262,7 @@ describe('Calendar.tsx', () => {
       }
 
       const wrapper = mount(() => (
-        <NCalendar
+        <HCalendar
           v-model:pinFlags={pinFlags.value}
           pickable={true}
           enableCreatePinFlags={true}
@@ -318,7 +318,7 @@ describe('Calendar.tsx', () => {
   describe('interaction', function () {
     test('today', async () => {
       const date = ref('2022-11-20');
-      const wrapper = mount(() => <NCalendar v-model={date.value} />);
+      const wrapper = mount(() => <HCalendar v-model={date.value} />);
       const todayBtn = wrapper.find('.n-calendar__header--today');
 
       await todayBtn.trigger('click');
@@ -331,7 +331,7 @@ describe('Calendar.tsx', () => {
       const onPrevClick = vi.fn();
       const onNextClick = vi.fn();
       const wrapper = mount(() => (
-        <NCalendar v-model={date.value} onPrevClick={onPrevClick} onNextClick={onNextClick} />
+        <HCalendar v-model={date.value} onPrevClick={onPrevClick} onNextClick={onNextClick} />
       ));
 
       const todayBtn = wrapper.find('.n-calendar__header--today');

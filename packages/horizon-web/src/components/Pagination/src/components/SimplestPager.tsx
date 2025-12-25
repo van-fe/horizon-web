@@ -2,16 +2,16 @@ import { computed, defineComponent, inject, PropType, withKeys } from 'vue';
 import { cls, ComponentClassBlock, isNumber, useNamespace } from '@aurora/utils';
 import { IconArrowLeft, IconArrowRight } from '@aurora/icon';
 import {
-  NPaginationEmitInjectKey,
-  NPaginationPropsInjectKey,
-  NPaginationSlotsInjectKey,
+  HPaginationEmitInjectKey,
+  HPaginationPropsInjectKey,
+  HPaginationSlotsInjectKey,
 } from '../utils/injectKeys';
-import NInputNumber from '~/components/InputNumber/src/InputNumber';
+import HInputNumber from '~/components/InputNumber/src/InputNumber';
 
 export default defineComponent({
   name: `${useNamespace()}PaginationSimplestPager`,
   components: {
-    NInputNumber,
+    HInputNumber,
   },
   props: {
     currentPage: {
@@ -30,9 +30,9 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const classHelper = new ComponentClassBlock('pagination');
-    const parentProps = inject(NPaginationPropsInjectKey)!;
-    const parentEmits = inject(NPaginationEmitInjectKey)!;
-    const parentSlots = inject(NPaginationSlotsInjectKey)!;
+    const parentProps = inject(HPaginationPropsInjectKey)!;
+    const parentEmits = inject(HPaginationEmitInjectKey)!;
+    const parentSlots = inject(HPaginationSlotsInjectKey)!;
 
     const currentPage = computed(() => props.currentPage!);
 
@@ -75,7 +75,7 @@ export default defineComponent({
           {parentSlots.prev?.() ?? <IconArrowLeft size={12} />}
         </div>
         <div class={cls(classHelper.em('simplest-pager', 'item'))}>
-          <NInputNumber
+          <HInputNumber
             modelValue={currentPage.value}
             controls={false}
             size={props.size}

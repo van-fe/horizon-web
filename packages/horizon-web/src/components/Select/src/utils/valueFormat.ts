@@ -2,7 +2,7 @@ import type { OptionProps } from '../composables/useProps';
 import { isObject } from '@aurora/utils';
 import isEqual from 'lodash/isEqual';
 import type { ModelValueSingleType, ModelValueFormattedType } from './types';
-import { NSelectValueFormatSymbol } from './types';
+import { HSelectValueFormatSymbol } from './types';
 
 export type ObjectWithCtx = Record<string & '_ctx', unknown>;
 export type ObjectWithoutCtx = Omit<ObjectWithCtx, '_ctx'>;
@@ -13,7 +13,7 @@ export function isEqualIgnoreCtx(val1: unknown, val2: unknown) {
 }
 
 export function isValueFormatWrapped(val: unknown): val is Required<ModelValueFormattedType> {
-  return isObject(val) && NSelectValueFormatSymbol in val;
+  return isObject(val) && HSelectValueFormatSymbol in val;
 }
 
 export function isValueHasCtx(val: unknown): val is ObjectWithCtx {
@@ -34,7 +34,7 @@ export function removeObjectCtx<T = any>(
 
 export function unwrapValueFormattedValue(val: ModelValueSingleType | undefined | null) {
   if (isValueFormatWrapped(val)) {
-    return val[NSelectValueFormatSymbol];
+    return val[HSelectValueFormatSymbol];
   } else {
     return val;
   }

@@ -3,19 +3,19 @@ import { safelyGetEventTarget } from '@aurora/utils';
 import dayjs from '~/utils/useDayJs';
 import type { ComputedRef, ToRefs, Ref } from 'vue';
 import { nextTick, inject } from 'vue';
-import type { NDatePickerDomRefs } from '../utils/types';
+import type { HDatePickerDomRefs } from '../utils/types';
 import type { DatePickerProps } from '../composables/useProps';
 import type { DatePickerEmits } from '../composables/useEmits';
 import type { DatePickerSlots } from '../composables/useSlots';
 import type { DatePickerExposes } from '../composables/useExposes';
-import { NFormItemTriggerInjectedKey } from '~/components/Form/src/utils/injectedKeys';
+import { HFormItemTriggerInjectedKey } from '~/components/Form/src/utils/injectedKeys';
 import { mergeDateTime, onlyCloneTime } from '../utils/useDayjs';
 import type { Dayjs } from 'dayjs';
 
 export default function useEvent(
   propRefs: ToRefs<DatePickerProps>,
   context: HorizonWebSetupContext<DatePickerEmits, DatePickerSlots, DatePickerExposes>,
-  domRefs: NDatePickerDomRefs,
+  domRefs: HDatePickerDomRefs,
   options: {
     format: ComputedRef<string>;
     startDate: Ref<Dayjs | undefined | null>;
@@ -29,7 +29,7 @@ export default function useEvent(
     isRange: ComputedRef<boolean>;
   },
 ) {
-  const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
+  const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
 
   function onKeydown(evt: KeyboardEvent) {
     if (evt.code.toLowerCase() === 'enter') {

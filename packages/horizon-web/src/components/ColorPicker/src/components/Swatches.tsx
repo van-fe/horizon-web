@@ -1,8 +1,8 @@
 import { defineComponent, inject } from 'vue';
 import { cls, ComponentClassBlock } from '@aurora/utils';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
 import { ColorPickerCurrentValue, ColorPickerProps } from '../utils/InjectedKeys';
-import NScrollbar from '~/components/Scrollbar/src/Scrollbar';
+import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
 
 export default defineComponent({
   name: 'Swatches',
@@ -16,7 +16,7 @@ export default defineComponent({
     }
 
     return () => (
-      <NScrollbar maxHeight={82} size="small">
+      <HScrollbar maxHeight={82} size="small">
         <div class={classHelper.em('swatches', 'wrapper')}>
           <div class={classHelper.e('swatches')}>
             {parentProps?.swatches?.map(item => {
@@ -28,7 +28,7 @@ export default defineComponent({
                     }
                   : item;
               return (
-                <NTooltip content={obj.name} disabled={!obj.name} showAfter={200}>
+                <HTooltip content={obj.name} disabled={!obj.name} showAfter={200}>
                   <div
                     class={cls(classHelper.em('swatches', 'item'))}
                     onClick={() => onSwitchColor(obj.value)}
@@ -36,12 +36,12 @@ export default defineComponent({
                     <div class="color-picker-swatch-bg" style={{ background: obj.value }} />
                     <div class="color-picker-swatch-alpha" />
                   </div>
-                </NTooltip>
+                </HTooltip>
               );
             })}
           </div>
         </div>
-      </NScrollbar>
+      </HScrollbar>
     );
   },
 });

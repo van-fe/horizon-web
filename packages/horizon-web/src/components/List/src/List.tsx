@@ -4,7 +4,7 @@ import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { ListSlots } from './composables/useSlots';
 import { useListSlots } from './composables/useSlots';
-import NScrollbar from '~/components/Scrollbar/src/Scrollbar';
+import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
 import useSize from '~/utils/useSize';
 
 export default defineComponent({
@@ -30,7 +30,7 @@ export default defineComponent({
     };
 
     return () => (
-      <NScrollbar maxHeight={props.maxHeight > 0 ? props.maxHeight : undefined}>
+      <HScrollbar maxHeight={props.maxHeight > 0 ? props.maxHeight : undefined}>
         <div
           class={cls(
             classHelper.block,
@@ -45,7 +45,7 @@ export default defineComponent({
           {renderItems()}
           {slots.footer && <div class={classHelper.e('footer')}>{slots.footer()}</div>}
         </div>
-      </NScrollbar>
+      </HScrollbar>
     );
   },
 });

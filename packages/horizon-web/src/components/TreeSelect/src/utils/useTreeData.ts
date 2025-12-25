@@ -1,17 +1,17 @@
 import type { ToRefs } from 'vue';
 import { computed, watch } from 'vue';
 import type { TreeSelectProps } from '../composables/useProps';
-import type { NTreeSelectContext, NTreeSelectDomRefs } from './types';
-import type { NTreeData, NTreeExtendsData } from '~/components/Tree/src/utils/types';
+import type { HTreeSelectContext, HTreeSelectDomRefs } from './types';
+import type { HTreeData, HTreeExtendsData } from '~/components/Tree/src/utils/types';
 import TreeHelper from '~/utils/useTree/index';
 import { transformUuid } from '~/components/Tree/src/utils/config';
 
 export default function (
   props: ToRefs<TreeSelectProps>,
-  context: NTreeSelectContext,
-  domRefs: NTreeSelectDomRefs,
+  context: HTreeSelectContext,
+  domRefs: HTreeSelectDomRefs,
 ) {
-  const treeHelper = new TreeHelper<NTreeData, NTreeExtendsData>(
+  const treeHelper = new TreeHelper<HTreeData, HTreeExtendsData>(
     props.treeData.value,
     props.fieldMap?.value ?? {},
     transformUuid,

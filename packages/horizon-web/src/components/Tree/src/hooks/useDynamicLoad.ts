@@ -1,15 +1,15 @@
 import type { ToRefs, VNode, Ref } from 'vue';
 import { ref } from 'vue';
 import type { TreeProps } from '../composables/useProps';
-import type { NTreeExtendsData, NTreeNodeData, NTreeData } from '../utils/types';
+import type { HTreeExtendsData, HTreeNodeData, HTreeData } from '../utils/types';
 
 export default function useDynamicLoad(
   props: ToRefs<TreeProps>,
-  setNodeChildren: (value: number | string, children: NTreeData[]) => void,
+  setNodeChildren: (value: number | string, children: HTreeData[]) => void,
 ) {
-  const loadingNodes = ref<NTreeExtendsData[]>([]);
+  const loadingNodes = ref<HTreeExtendsData[]>([]);
 
-  function dynamicLoad(currentNode: NTreeExtendsData, vNode?: VNode) {
+  function dynamicLoad(currentNode: HTreeExtendsData, vNode?: VNode) {
     if (
       loadingNodes.value.some(curr => curr._uuid === currentNode._uuid) ||
       (!props.dynamicLoadData?.value && !props.dynamicLoad?.value)
@@ -33,7 +33,7 @@ export default function useDynamicLoad(
           vNode,
         }),
     )
-      .then((res: NTreeNodeData[] | undefined) => {
+      .then((res: HTreeNodeData[] | undefined) => {
         if (Array.isArray(res) && res.length > 0) {
           setNodeChildren(currentNode.value, res);
         }
@@ -48,7 +48,7 @@ export default function useDynamicLoad(
   }
 
   return {
-    loadingNodes: loadingNodes as Ref<NTreeExtendsData[]>,
+    loadingNodes: loadingNodes as Ref<HTreeExtendsData[]>,
     dynamicLoad,
   };
 }

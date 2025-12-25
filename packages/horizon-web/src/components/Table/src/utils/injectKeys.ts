@@ -5,105 +5,105 @@ import type { TableProps } from '../composables/useProps';
 import type { TableEmits } from '../composables/useEmits';
 import type { TableSlots } from '../composables/useSlots';
 import type {
-  NTableColumnData,
-  NTableFixedValue,
-  NTableInsertedColumnData,
-  NTableRowDataType,
-  NTableSortOrderEnum,
-  NTableTransformedRowDataType,
+  HTableColumnData,
+  HTableFixedValue,
+  HTableInsertedColumnData,
+  HTableRowDataType,
+  HTableSortOrderEnum,
+  HTableTransformedRowDataType,
 } from './types';
 import type { JSX } from 'vue/jsx-runtime';
 
-export const NTablePropsInjectKey = Symbol(
+export const HTablePropsInjectKey = Symbol(
   generatorInjectedKeyName('table', 'props'),
 ) as InjectionKey<TableProps>;
 
-export const NTableEmitsInjectKey = Symbol(
+export const HTableEmitsInjectKey = Symbol(
   generatorInjectedKeyName('table', 'emits'),
 ) as InjectionKey<HorizonWebSetupContext<TableEmits>['emit']>;
 
-export const NTableSlotsInjectKey = Symbol(
+export const HTableSlotsInjectKey = Symbol(
   generatorInjectedKeyName('table', 'slots'),
 ) as InjectionKey<HorizonWebSetupContext<{}, TableSlots>['slots']>;
 
-export const NTableSizeInjectKey = Symbol(
+export const HTableSizeInjectKey = Symbol(
   generatorInjectedKeyName('table', 'size'),
 ) as InjectionKey<ComputedRef<Exclude<TableProps['size'], undefined>>>;
 
-export const NTableExpandedNodesUuidInjectKey = Symbol(
+export const HTableExpandedNodesUuidInjectKey = Symbol(
   generatorInjectedKeyName('table', 'expanded-nodes-uuid'),
 ) as InjectionKey<UnwrapNestedRefs<Set<string | number>>>;
 
-export const NTableColumnIncreaseCollectionInjectKey = Symbol(
+export const HTableColumnIncreaseCollectionInjectKey = Symbol(
   generatorInjectedKeyName('table', 'column-increase-collection'),
-) as InjectionKey<(column: NTableInsertedColumnData) => void>;
+) as InjectionKey<(column: HTableInsertedColumnData) => void>;
 
-export const NTableColumnDecreaseCollectionInjectKey = Symbol(
+export const HTableColumnDecreaseCollectionInjectKey = Symbol(
   generatorInjectedKeyName('table', 'column-decrease-collection'),
 ) as InjectionKey<(uuid: string) => void>;
 
-export const NTableColumnAnalysisInjectKey = Symbol(
+export const HTableColumnAnalysisInjectKey = Symbol(
   generatorInjectedKeyName('table', 'column-analysis'),
-) as InjectionKey<Ref<{ columnGroups: NTableColumnData[][]; flattenColumns: NTableColumnData[] }>>;
+) as InjectionKey<Ref<{ columnGroups: HTableColumnData[][]; flattenColumns: HTableColumnData[] }>>;
 
-export const NTableFlattenDataInjectKey = Symbol.for(
+export const HTableFlattenDataInjectKey = Symbol.for(
   generatorInjectedKeyName('table', 'flatten-data'),
-) as InjectionKey<Ref<NTableTransformedRowDataType[]>>;
+) as InjectionKey<Ref<HTableTransformedRowDataType[]>>;
 
-export const NTableCurrentSortsInjectKey = Symbol.for(
+export const HTableCurrentSortsInjectKey = Symbol.for(
   generatorInjectedKeyName('table', 'current-sorts'),
-) as InjectionKey<Ref<Map<NTableColumnData, NTableSortOrderEnum>>>;
+) as InjectionKey<Ref<Map<HTableColumnData, HTableSortOrderEnum>>>;
 
-export const NTableSetSortInjectKey = Symbol.for(
+export const HTableSetSortInjectKey = Symbol.for(
   generatorInjectedKeyName('table', 'set-sort'),
 ) as InjectionKey<
   (
-    column: NTableColumnData,
-    sortOrder?: NTableSortOrderEnum | false,
+    column: HTableColumnData,
+    sortOrder?: HTableSortOrderEnum | false,
     multiFunctionKeyPressed?: boolean,
   ) => void
 >;
 
-export const NTableSortRowInjectKey = Symbol.for(
+export const HTableSortRowInjectKey = Symbol.for(
   generatorInjectedKeyName('table', 'sort-row'),
-) as InjectionKey<(a: NTableTransformedRowDataType, b: NTableTransformedRowDataType) => number>;
+) as InjectionKey<(a: HTableTransformedRowDataType, b: HTableTransformedRowDataType) => number>;
 
-export const NTableScrollbarTrackSpacingInjectKey = Symbol.for(
+export const HTableScrollbarTrackSpacingInjectKey = Symbol.for(
   generatorInjectedKeyName('table', 'scrollbar-track-spacing'),
 ) as InjectionKey<Ref<[[number, number], [number, number]]>>;
 
-export const NTableSetChildrenByRowKeyValueInjectKey = Symbol.for(
+export const HTableSetChildrenByRowKeyValueInjectKey = Symbol.for(
   generatorInjectedKeyName('table', 'set-children-by-row-key-value'),
-) as InjectionKey<(rowKeyValue: any, childrenData: NTableRowDataType[]) => void>;
+) as InjectionKey<(rowKeyValue: any, childrenData: HTableRowDataType[]) => void>;
 
-export const NTableFieldMapFormattedInjectKey = Symbol.for(
+export const HTableFieldMapFormattedInjectKey = Symbol.for(
   generatorInjectedKeyName('table', 'field-map-formatted'),
 ) as InjectionKey<ComputedRef<Record<'children' | 'isLeaf', string>>>;
 
-export const NTableFooterRowHeightInjectKey = Symbol.for(
+export const HTableFooterRowHeightInjectKey = Symbol.for(
   generatorInjectedKeyName('table', 'footer-row-height'),
 ) as InjectionKey<Ref<number[]>>;
 
-export const NTableRefreshLayoutInjectKey = Symbol.for(
+export const HTableRefreshLayoutInjectKey = Symbol.for(
   generatorInjectedKeyName('table', 'refresh-layout'),
 ) as InjectionKey<() => void>;
 
-export const NTableUseHeaderResizerPluginInjectKey = Symbol.for(
+export const HTableUseHeaderResizerPluginInjectKey = Symbol.for(
   generatorInjectedKeyName('table', 'use-header-resizer-plugin'),
-) as InjectionKey<(column: NTableColumnData, showDivider: boolean) => JSX.Element>;
+) as InjectionKey<(column: HTableColumnData, showDivider: boolean) => JSX.Element>;
 
-export const NTableGetLastFixedLeftColumnInjectKey = Symbol.for(
+export const HTableGetLastFixedLeftColumnInjectKey = Symbol.for(
   generatorInjectedKeyName('table', 'get-last-fixed-left-column'),
-) as InjectionKey<() => null | NTableColumnData>;
+) as InjectionKey<() => null | HTableColumnData>;
 
-export const NTableGetLastFixedRightColumnInjectKey = Symbol.for(
+export const HTableGetLastFixedRightColumnInjectKey = Symbol.for(
   generatorInjectedKeyName('table', 'get-last-fixed-right-column'),
-) as InjectionKey<() => null | NTableColumnData>;
+) as InjectionKey<() => null | HTableColumnData>;
 
-export const NTableIsColumnsHaveFixedInjectKey = Symbol.for(
+export const HTableIsColumnsHaveFixedInjectKey = Symbol.for(
   generatorInjectedKeyName('table', 'is-columns-have-fixed'),
 ) as InjectionKey<ComputedRef<boolean>>;
 
-export const NTableGetColumnFixedStateInjectKey = Symbol.for(
+export const HTableGetColumnFixedStateInjectKey = Symbol.for(
   generatorInjectedKeyName('table', 'get-column-fixed-state'),
-) as InjectionKey<(uuid: string, checkStore?: Map<string, NTableFixedValue>) => NTableFixedValue>;
+) as InjectionKey<(uuid: string, checkStore?: Map<string, HTableFixedValue>) => HTableFixedValue>;

@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils';
-import NVideoPlayer from '../src/VideoPlayer';
+import HVideoPlayer from '../src/VideoPlayer';
 import { describe, expect, test } from 'vitest';
 import { ref } from 'vue';
 
@@ -10,8 +10,8 @@ describe('VideoPlayer.tsx', () => {
       type: 'video/mp4',
     });
 
-    const wrapper = shallowMount(() => <NVideoPlayer sources={[videoSource.value]} />);
-    const element = wrapper.findComponent(NVideoPlayer);
+    const wrapper = shallowMount(() => <HVideoPlayer sources={[videoSource.value]} />);
+    const element = wrapper.findComponent(HVideoPlayer);
 
     expect(element.exists()).toBe(true);
   });

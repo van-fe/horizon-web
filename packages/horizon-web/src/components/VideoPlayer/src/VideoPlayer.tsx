@@ -7,7 +7,7 @@ import { IconVideoError } from '@aurora/icon';
 import videojs from 'video.js';
 import './qualityLevels/plugin.js';
 import './qualitySelector/plugin.js';
-import NButton from '~/components/Button/src/Button';
+import HButton from '~/components/Button/src/Button';
 import type { VideoPlayerEmits } from './composables/useEmits';
 import { useVideoPlayerEmits } from './composables/useEmits';
 import { defaultLocale, localeInjectKey } from '~/provides/localable';
@@ -156,9 +156,9 @@ export default defineComponent({
               <div class={classHelper.e('error-content')}>
                 <IconVideoError size={40} color={['#8B8E94', '#8B8E94', '#8B8E94']} />
                 <p>{locale.value?.langService.td().horizonWeb.videoPlayer.error}</p>
-                <NButton forceNewestSize={true} onClick={reload}>
+                <HButton forceNewestSize={true} onClick={reload}>
                   {locale.value?.langService.td().horizonWeb.global.refresh}
-                </NButton>
+                </HButton>
               </div>
             </div>
           )}

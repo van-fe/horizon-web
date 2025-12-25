@@ -2,22 +2,22 @@ import type { ToRefs, Ref, VNode, ComputedRef } from 'vue';
 import { watch, ref } from 'vue';
 import type { TreeProps } from '../composables/useProps';
 import type Tree from '~/utils/useTree/index';
-import type { NTreeData, NTreeExtendsData } from '../utils/types';
+import type { HTreeData, HTreeExtendsData } from '../utils/types';
 import { warn } from '~/utils/useLog';
 import type { HorizonWebComponentInstance } from '@aurora/utils';
 import { ComponentClassBlock } from '@aurora/utils';
 import type { VirtualScrollerExposes } from '~/components/VirtualScroller/src/composables/useExposes';
 import { sleep } from '~/utils/tools';
-import type { NVirtualScroller } from '~/components/VirtualScroller';
+import type { HVirtualScroller } from '~/components/VirtualScroller';
 
 export default function useScroll(
   props: ToRefs<TreeProps>,
-  tree: Tree<NTreeData, NTreeExtendsData>,
+  tree: Tree<HTreeData, HTreeExtendsData>,
   scrollerDomRef: Ref<HorizonWebComponentInstance<
-    typeof NVirtualScroller,
+    typeof HVirtualScroller,
     VirtualScrollerExposes
   > | null>,
-  visibleItems: ComputedRef<NTreeExtendsData[]>,
+  visibleItems: ComputedRef<HTreeExtendsData[]>,
   vNodesMapping: Map<string | number, VNode | undefined>,
   setCollapseStatusByValue: (values: Array<string | number>, isExpand: boolean) => void,
 ) {

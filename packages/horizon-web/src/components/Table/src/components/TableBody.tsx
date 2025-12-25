@@ -9,23 +9,23 @@ import {
   safelyGetEventTarget,
 } from '@aurora/utils';
 import {
-  NTableEmitsInjectKey,
-  NTableFlattenDataInjectKey,
-  NTableGetColumnFixedStateInjectKey,
-  NTablePropsInjectKey,
-  NTableSortRowInjectKey,
+  HTableEmitsInjectKey,
+  HTableFlattenDataInjectKey,
+  HTableGetColumnFixedStateInjectKey,
+  HTablePropsInjectKey,
+  HTableSortRowInjectKey,
 } from '../utils/injectKeys';
 import get from 'lodash/get';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
 import { getBodyStyle, getFixedStyle, isLastFixedColumn } from '../hooks/useLayout';
-import NCheckbox from '~/components/Checkbox/src/Checkbox';
-import NRadio from '~/components/Radio/src/Radio';
+import HCheckbox from '~/components/Checkbox/src/Checkbox';
+import HRadio from '~/components/Radio/src/Radio';
 import { warn } from '~/utils/useLog';
-import type { NTableColumnData, NTableTransformedRowDataType } from '../utils/types';
+import type { HTableColumnData, HTableTransformedRowDataType } from '../utils/types';
 import {
-  NTableColumnContextKey,
-  NTableColumnSelectionKey,
-  NTableTransformedRowContextKey,
+  HTableColumnContextKey,
+  HTableColumnSelectionKey,
+  HTableTransformedRowContextKey,
 } from '../utils/types';
 import { IconLoadingLine, IconTriangleRightFilled } from '@aurora/icon';
 import useExpand from '../hooks/useExpand';
@@ -37,18 +37,18 @@ export default defineComponent({
   name: 'TableBody',
   props: {
     columns: {
-      type: Array as PropType<NTableColumnData[]>,
+      type: Array as PropType<HTableColumnData[]>,
       required: true,
     },
   },
   setup(props) {
     const classHelper = new ComponentClassBlock('table-v3');
 
-    const parentProps = inject(NTablePropsInjectKey)!;
-    const parentEmits = inject(NTableEmitsInjectKey)!;
-    const flattenTableData = inject(NTableFlattenDataInjectKey)!;
-    const sortRow = inject(NTableSortRowInjectKey)!;
-    const getFixedState = inject(NTableGetColumnFixedStateInjectKey)!;
+    const parentProps = inject(HTablePropsInjectKey)!;
+    const parentEmits = inject(HTableEmitsInjectKey)!;
+    const flattenTableData = inject(HTableFlattenDataInjectKey)!;
+    const sortRow = inject(HTableSortRowInjectKey)!;
+    const getFixedState = inject(HTableGetColumnFixedStateInjectKey)!;
 
     const { expandRows, toggleExpandRows } = useExpand(flattenTableData.value);
     const {
@@ -71,10 +71,10 @@ export default defineComponent({
 
     return () => {
       const rowRender = (
-        rowData: NTableTransformedRowDataType,
-        column: NTableColumnData,
+        rowData: HTableTransformedRowDataType,
+        column: HTableColumnData,
         rowIndex: number,
-        filteredRows: NTableTransformedRowDataType[],
+        filteredRows: HTableTransformedRowDataType[],
       ): JSX.Element | JSX.Element[] => {
         const spanStatus = spanMethod(rowData, column, rowIndex, column.index);
 
@@ -92,8 +92,8 @@ export default defineComponent({
           case 'index':
             cellContent.push(
               isFunction(column.props.index)
-                ? column.props.index(rowData[NTableTransformedRowContextKey].index + 1, rowData)
-                : (column.props.index ?? rowData[NTableTransformedRowContextKey].index + 1),
+                ? column.props.index(rowData[HTableTransformedRowContextKey].index + 1, rowData)
+                : (column.props.index ?? rowData[HTableTransformedRowContextKey].index + 1),
             );
             break;
           case 'selection':
@@ -110,19 +110,19 @@ export default defineComponent({
                   classHelper.e('selection'),
                   classHelper.is('hidden', !shouldSelectionBeVisible(rowData, column)),
                 )}
-                onClick={() => column[NTableColumnSelectionKey].handleSelect(rowData, rowIndex)}
+                onClick={() => column[HTableColumnSelectionKey].handleSelect(rowData, rowIndex)}
               >
                 {column.props.multiple ? (
-                  <NCheckbox
-                    modelValue={column[NTableColumnSelectionKey].checkedRows.has(value)}
-                    disabled={!column[NTableColumnSelectionKey].isSelectable.value(rowIndex)}
+                  <HCheckbox
+                    modelValue={column[HTableColumnSelectionKey].checkedRows.has(value)}
+                    disabled={!column[HTableColumnSelectionKey].isSelectable.value(rowIndex)}
                   />
                 ) : (
-                  <NRadio
+                  <HRadio
                     name={column.uuid}
-                    modelValue={column[NTableColumnSelectionKey].checkedRows.has(value)}
+                    modelValue={column[HTableColumnSelectionKey].checkedRows.has(value)}
                     value={true}
-                    disabled={!column[NTableColumnSelectionKey].isSelectable.value(rowIndex)}
+                    disabled={!column[HTableColumnSelectionKey].isSelectable.value(rowIndex)}
                   />
                 )}
               </span>,
@@ -153,9 +153,9 @@ export default defineComponent({
               ? parentProps.rowKey === column.props.field
               : column.index === 0)
         ) {
-          marginLeft = rowData[NTableTransformedRowContextKey].level * parentProps.indent;
+          marginLeft = rowData[HTableTransformedRowContextKey].level * parentProps.indent;
 
-          if (syncLoadingRows.value.has(rowData[NTableTransformedRowContextKey].uuid)) {
+          if (syncLoadingRows.value.has(rowData[HTableTransformedRowContextKey].uuid)) {
             cellPrepend.push(
               <div
                 class={cls(classHelper.e('expand-icon'), classHelper.em('expand-icon', 'loading'))}
@@ -171,7 +171,7 @@ export default defineComponent({
                   classHelper.e('expand-icon'),
                   classHelper.is(
                     'active',
-                    treeExpandRows.value.has(rowData[NTableTransformedRowContextKey].uuid),
+                    treeExpandRows.value.has(rowData[HTableTransformedRowContextKey].uuid),
                   ),
                 )}
                 style={{ marginLeft: `${marginLeft}px` }}
@@ -216,12 +216,12 @@ export default defineComponent({
             {inner.length > 0 &&
               (column.props.showOverflowTooltip &&
               ['default', 'index'].includes(column.props.type) ? (
-                <NTooltip overflow {...(column.props.tooltipOptions || {})}>
+                <HTooltip overflow {...(column.props.tooltipOptions || {})}>
                   {{
                     default: () => <div class={classHelper.e('cell-inner')}>{inner}</div>,
                     content: () => inner,
                   }}
-                </NTooltip>
+                </HTooltip>
               ) : (
                 <div class={classHelper.e('cell-inner')}>{inner}</div>
               ))}
@@ -306,8 +306,8 @@ export default defineComponent({
               class={classHelper.e('cell-wrap')}
               style={
                 column.props.showOverflowTooltip &&
-                column[NTableColumnContextKey].resizeWidth <= 0
-                  ? column[NTableColumnContextKey].overflowStyle
+                column[HTableColumnContextKey].resizeWidth <= 0
+                  ? column[HTableColumnContextKey].overflowStyle
                   : ''
               }
             >
@@ -317,7 +317,7 @@ export default defineComponent({
         );
       };
 
-      const expandRender = (rowData: NTableTransformedRowDataType, rowIndex: number) => {
+      const expandRender = (rowData: HTableTransformedRowDataType, rowIndex: number) => {
         const column = props.columns.find(column => column.props.type === 'expand');
 
         if (column) {
@@ -363,19 +363,19 @@ export default defineComponent({
         <tbody class={cls(classHelper.e('table-body'))}>
           {flattenTableData.value
             .filter(row =>
-              Object.values(row[NTableTransformedRowContextKey].visible).every(curr => !!curr),
+              Object.values(row[HTableTransformedRowContextKey].visible).every(curr => !!curr),
             )
             .filter(row =>
-              row[NTableTransformedRowContextKey].parentUuid
-                ? treeExpandRows.value.has(row[NTableTransformedRowContextKey].parentUuid)
+              row[HTableTransformedRowContextKey].parentUuid
+                ? treeExpandRows.value.has(row[HTableTransformedRowContextKey].parentUuid)
                 : true,
             )
             .toSorted(sortRow)
             .map(
               (
-                rowData: NTableTransformedRowDataType,
+                rowData: HTableTransformedRowDataType,
                 index: number,
-                filteredRows: NTableTransformedRowDataType[],
+                filteredRows: HTableTransformedRowDataType[],
               ) => {
                 if (parentProps.expandRowSticky && (expandRows.value.get(rowData) ?? false)) {
                   hasExpandedRow = true;
@@ -396,7 +396,7 @@ export default defineComponent({
                           props.columns.some(
                             column =>
                               column.props.columnKey &&
-                              column[NTableColumnSelectionKey].checkedRows.has(
+                              column[HTableColumnSelectionKey].checkedRows.has(
                                 rowData[column.props.columnKey],
                               ),
                           ),

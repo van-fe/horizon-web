@@ -1,20 +1,20 @@
 import { mount } from '@vue/test-utils';
-import { NDescriptions, NDescriptionItem } from '../index';
+import { HDescriptions, HDescriptionItem } from '../index';
 import { describe, expect, test } from 'vitest';
 
 describe('Descriptions.tsx', () => {
   test('basic', async () => {
     const wrapper = mount(() => (
-      <NDescriptions title="User Info">
-        <NDescriptionItem label="Name:" value="bingkun Zhou" />
-        <NDescriptionItem label="Telephone:" value="0924-250492" />
-        <NDescriptionItem label="Residence:" value="Norway" />
-        <NDescriptionItem label="City:" value="Oslo" />
-        <NDescriptionItem label="Address:" value="Leg.Kiropraktor Iréne Johnson" />
-      </NDescriptions>
+      <HDescriptions title="User Info">
+        <HDescriptionItem label="Name:" value="bingkun Zhou" />
+        <HDescriptionItem label="Telephone:" value="0924-250492" />
+        <HDescriptionItem label="Residence:" value="Norway" />
+        <HDescriptionItem label="City:" value="Oslo" />
+        <HDescriptionItem label="Address:" value="Leg.Kiropraktor Iréne Johnson" />
+      </HDescriptions>
     ));
-    const element = wrapper.findComponent(NDescriptions);
-    const itemElements = wrapper.findAllComponents(NDescriptionItem);
+    const element = wrapper.findComponent(HDescriptions);
+    const itemElements = wrapper.findAllComponents(HDescriptionItem);
 
     expect(element.exists()).toBe(true);
     expect(itemElements.length).toBe(5);

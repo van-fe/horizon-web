@@ -25,10 +25,10 @@ import {
   Transition,
   provide,
 } from 'vue';
-import NTransition from '~/components/Transition/src/Transition';
+import HTransition from '~/components/Transition/src/Transition';
 import useLocaleLang from '~/utils/useLocaleLang';
 import useSize from '~/utils/useSize';
-import { NButton } from '../../Button';
+import { HButton } from '../../Button';
 import { useDraggable } from './composables/useDraggable';
 import type { DialogEmits } from './composables/useEmits';
 import { useDialogEmits } from './composables/useEmits';
@@ -37,16 +37,16 @@ import { useDialogExposes } from './composables/useExposes';
 import { useDialogProps } from './composables/useProps';
 import type { DialogSlots } from './composables/useSlots';
 import { useDialogSlots } from './composables/useSlots';
-import { NScrollbarUpdateDelayInjectKey } from '~/components/Scrollbar/src/utils/injectKeys';
+import { HScrollbarUpdateDelayInjectKey } from '~/components/Scrollbar/src/utils/injectKeys';
 
 export default defineComponent({
   name: `${useNamespace()}Dialog`,
   desc: '对话框是一种模态窗口，干扰性比较强。通常用来展示用户当前需要的或用户必须关注的信息或操作，其他情况不建议使用弹出框，可考虑 Message 等其他非模态窗口',
   components: {
-    NButton,
+    HButton,
     AIcon,
     IconClose,
-    NTransition,
+    HTransition,
   },
   inheritAttrs: false,
   props: useDialogProps,
@@ -189,7 +189,7 @@ export default defineComponent({
       emit('closed');
     };
 
-    provide(NScrollbarUpdateDelayInjectKey, 400);
+    provide(HScrollbarUpdateDelayInjectKey, 400);
 
     return () => {
       const titleSlots = slotVNodes(slots.title);
@@ -235,7 +235,7 @@ export default defineComponent({
                     <div class={classHelper.e('default-title')}>
                       <div class={classHelper.em('default-title', 'text')}>{titleRef.value}</div>
                       {closeButtonRef.value && (
-                        <NButton
+                        <HButton
                           class={classHelper.e('header-close')}
                           icon={IconClose}
                           text={true}
@@ -257,7 +257,7 @@ export default defineComponent({
                     ((okButton.value || cancelButton.value) && (
                       <div class={classHelper.e('default-footer')}>
                         {cancelButton.value && (
-                          <NButton
+                          <HButton
                             {...cancelButtonProps.value}
                             onDebounceFinished={() => emit('cancelDebounceFinished')}
                             type="normal"
@@ -274,10 +274,10 @@ export default defineComponent({
                             }}
                           >
                             {cancelText.value || useLocaleLang('global.cancel').value}
-                          </NButton>
+                          </HButton>
                         )}
                         {okButton.value && (
-                          <NButton
+                          <HButton
                             style="margin-left: 16px;"
                             {...okButtonProps.value}
                             onDebounceFinished={() => emit('confirmDebounceFinished')}
@@ -292,7 +292,7 @@ export default defineComponent({
                             }}
                           >
                             {okText.value || useLocaleLang('global.ok').value}
-                          </NButton>
+                          </HButton>
                         )}
                       </div>
                     ))}
@@ -338,7 +338,7 @@ export default defineComponent({
           style={{ zIndex: zIndex.value }}
           {...attrs}
         >
-          <NTransition appear name="fade-in">
+          <HTransition appear name="fade-in">
             {maskRef.value && visible.value && (
               <div
                 class={[`${classHelper.e('mask')}`, props.classNames?.mask]}
@@ -348,7 +348,7 @@ export default defineComponent({
                 onClick={maskClick}
               ></div>
             )}
-          </NTransition>
+          </HTransition>
           <Transition
             name={top.value || hasMoved.value ? classHelper.e('normal') : classHelper.e('move')}
             appear

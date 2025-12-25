@@ -1,12 +1,12 @@
 import { defineComponent, onMounted, ref } from 'vue';
 import { useMsgBoxConfirmProps } from '../composables/useProps';
-import NDialog from '~/components/Dialog/src/Dialog';
+import HDialog from '~/components/Dialog/src/Dialog';
 import { ComponentClassBlock } from '@aurora/utils';
 
 export default defineComponent({
   name: 'MessageBoxConfirm',
   components: {
-    NDialog,
+    HDialog,
   },
   props: useMsgBoxConfirmProps,
   emits: ['close', 'confirmClick'],
@@ -68,7 +68,7 @@ export default defineComponent({
     expose({ open });
 
     return () => (
-      <NDialog
+      <HDialog
         class={[classHelper.block, classHelper.e('pure', !props.title)]}
         classNames={{ body: classHelper.e('confirm-body') }}
         visible={visibleRef.value}
@@ -93,7 +93,7 @@ export default defineComponent({
         onUpdate:visible={val => (visibleRef.value = val)}
       >
         {props.content}
-      </NDialog>
+      </HDialog>
     );
   },
 });

@@ -1,5 +1,5 @@
 import type { SlotsType } from 'vue';
-import type { NTabSize, NTabValue } from './useProps';
+import type { HTabSize, HTabValue } from './useProps';
 
 export const useTabsSlots = Object as SlotsType<{
   /**
@@ -11,7 +11,7 @@ export const useTabsSlots = Object as SlotsType<{
    * 额外操作按钮
    * @version 2.0.16
    **/
-  extra?: { size: NTabSize };
+  extra?: { size: HTabSize };
 }>;
 
 export type TabsSlots = typeof useTabsSlots;
@@ -21,7 +21,7 @@ export const useTabSlots = Object as SlotsType<{
    * 自定义选项卡，新增当前激活状态
    * @version 2.7.0
    */
-  default?: { state: boolean; activeKey: NTabValue };
+  default?: { state: boolean; activeKey: HTabValue };
 
   /**
    * 自定义 icon

@@ -6,10 +6,10 @@ export const GlobalSizeInjectedKey = Symbol(
   generatorInjectedKeyName('global', 'size'),
 ) as InjectionKey<Ref<'small' | 'medium' | 'large'>>;
 
-export const NApplicationCompatibilityInjectedKey = Symbol(
+export const HApplicationCompatibilityInjectedKey = Symbol(
   generatorInjectedKeyName('application', 'compatibility'),
 ) as InjectionKey<Ref<string | undefined>>;
 
-export const NApplicationShowTimeZoneInjectedKey = Symbol.for(
+export const HApplicationShowTimeZoneInjectedKey = Symbol.for(
   generatorInjectedKeyName('application', 'time-zone'),
 ) as InjectionKey<Ref<ApplicationProps['showTimeZone']>>;

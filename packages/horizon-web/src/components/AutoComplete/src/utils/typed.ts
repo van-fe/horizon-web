@@ -1,6 +1,6 @@
 import type { VNode } from 'vue';
 
-export interface NAutoCompleteOption {
+export interface HAutoCompleteOption {
   /**
    * 选项的展示内容
    */
@@ -15,6 +15,6 @@ export interface NAutoCompleteOption {
   description?: string | VNode;
 }
 
-export interface NAutoCompleteOptionWithUuid extends NAutoCompleteOption {
+export interface HAutoCompleteOptionWithUuid extends HAutoCompleteOption {
   uuid: string;
 }

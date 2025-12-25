@@ -1,15 +1,15 @@
 import type { ToRefs, VNode } from 'vue';
 import { computed, reactive, watch } from 'vue';
 import type { TreeProps } from '../composables/useProps';
-import type { NTreeData, NTreeExtendsData } from '../utils/types';
+import type { HTreeData, HTreeExtendsData } from '../utils/types';
 import type Tree from '~/utils/useTree/index';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { TreeEmits } from '../composables/useEmits';
 
 export default function (
   props: ToRefs<TreeProps>,
-  tree: Tree<NTreeData, NTreeExtendsData>,
-  dynamicLoad: (currentNode: NTreeExtendsData, vNode?: VNode) => void,
+  tree: Tree<HTreeData, HTreeExtendsData>,
+  dynamicLoad: (currentNode: HTreeExtendsData, vNode?: VNode) => void,
   emit: HorizonWebSetupContext<TreeEmits>['emit'],
 ) {
   const expandedNodesUuid = reactive(new Set<string | number>(props.expandValues?.value));
@@ -64,7 +64,7 @@ export default function (
     }
   }
 
-  function switchNodeExpandStatus(node: NTreeExtendsData, evt: Event, vNode?: VNode) {
+  function switchNodeExpandStatus(node: HTreeExtendsData, evt: Event, vNode?: VNode) {
     if (expandedNodesUuid.has(node._uuid)) {
       setNodeExpandStatus(node, false, evt, vNode);
     } else {
@@ -73,7 +73,7 @@ export default function (
   }
 
   function setNodeExpandStatus(
-    node: NTreeExtendsData,
+    node: HTreeExtendsData,
     expand: boolean,
     evt?: Event,
     vNode?: VNode,

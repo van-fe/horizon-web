@@ -1,4 +1,4 @@
-import { AIconSVG } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, getBooleanProp, useNamespace, isVNodeEmpty } from '@aurora/utils';
 import {
@@ -12,14 +12,14 @@ import {
 } from 'vue';
 import type { SegmentedItemEmits } from './composables/useEmits';
 import { useSegmentedItemEmits } from './composables/useEmits';
-import type { NSegmentedValue } from './composables/useProps';
+import type { HSegmentedValue } from './composables/useProps';
 import { useSegmentedItemProps } from './composables/useProps';
 import { useSegmentedItemSlots, type SegmentedItemSlots } from './composables/useSlots';
 import { contextKey } from './constants';
 
 export default defineComponent({
   name: `${useNamespace()}SegmentedItem`,
-  components: { AIconSVG },
+  components: { AIcon },
   props: useSegmentedItemProps,
   slots: useSegmentedItemSlots,
   emits: useSegmentedItemEmits,
@@ -31,7 +31,7 @@ export default defineComponent({
 
     const instance = getCurrentInstance();
 
-    const key = computed(() => instance?.vnode.key as NSegmentedValue);
+    const key = computed(() => instance?.vnode.key as HSegmentedValue);
 
     const onClick = () => {
       if (getBooleanProp(props.disabled)) return;
@@ -68,7 +68,7 @@ export default defineComponent({
             {slots.icon
               ? cloneVNode(slots.icon()[0], { class: cls.e('icon') })
               : props.icon && (
-                  <AIconSVG class={cls.e('icon')} name={props.icon} size={props.iconSize} />
+                  <AIcon class={cls.e('icon')} name={props.icon} size={props.iconSize} />
                 )}
 
             {isVNodeEmpty(slotDefaults)

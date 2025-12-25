@@ -12,9 +12,9 @@ import {
 } from '@aurora/icon';
 import type { Data, DefinedComponent, PartialInclude } from '@aurora/utils';
 
-export type NUploadRawFileType = NUploadUserFile | File | NUploadFileType;
+export type HUploadRawFileType = HUploadUserFile | File | HUploadFileType;
 
-export enum NUploadFileTypeEnum {
+export enum HUploadFileTypeEnum {
   Unknown = 'unknown',
   Pdf = 'pdf',
   Word = 'word',
@@ -27,33 +27,33 @@ export enum NUploadFileTypeEnum {
   Link = 'link',
 }
 
-export const fileTypeMapping: Record<NUploadFileTypeEnum, string[]> = {
-  [NUploadFileTypeEnum.Image]: ['jpeg', 'jpg', 'png', 'gif', 'bmp', 'webp', 'svg'],
-  [NUploadFileTypeEnum.Word]: ['doc', 'docx'],
-  [NUploadFileTypeEnum.Excel]: ['xls', 'xlsx'],
-  [NUploadFileTypeEnum.Ppt]: ['ppt', 'pptx'],
-  [NUploadFileTypeEnum.Pdf]: ['pdf'],
-  [NUploadFileTypeEnum.Audio]: ['mp3', 'wav', 'wma'],
-  [NUploadFileTypeEnum.Video]: ['mp4', 'wam', 'webm', 'mov'],
-  [NUploadFileTypeEnum.Zip]: ['zip', 'rar', '7z'],
-  [NUploadFileTypeEnum.Link]: ['lnk', 'url', 'uri'],
-  [NUploadFileTypeEnum.Unknown]: [],
+export const fileTypeMapping: Record<HUploadFileTypeEnum, string[]> = {
+  [HUploadFileTypeEnum.Image]: ['jpeg', 'jpg', 'png', 'gif', 'bmp', 'webp', 'svg'],
+  [HUploadFileTypeEnum.Word]: ['doc', 'docx'],
+  [HUploadFileTypeEnum.Excel]: ['xls', 'xlsx'],
+  [HUploadFileTypeEnum.Ppt]: ['ppt', 'pptx'],
+  [HUploadFileTypeEnum.Pdf]: ['pdf'],
+  [HUploadFileTypeEnum.Audio]: ['mp3', 'wav', 'wma'],
+  [HUploadFileTypeEnum.Video]: ['mp4', 'wam', 'webm', 'mov'],
+  [HUploadFileTypeEnum.Zip]: ['zip', 'rar', '7z'],
+  [HUploadFileTypeEnum.Link]: ['lnk', 'url', 'uri'],
+  [HUploadFileTypeEnum.Unknown]: [],
 };
 
-export const fileTypeIconMapping: Record<NUploadFileTypeEnum, DefinedComponent> = {
-  [NUploadFileTypeEnum.Image]: IconPictureFilledLight,
-  [NUploadFileTypeEnum.Word]: IconWordFilledLight,
-  [NUploadFileTypeEnum.Excel]: IconExcelFilledLight,
-  [NUploadFileTypeEnum.Ppt]: IconPptFilledLight,
-  [NUploadFileTypeEnum.Pdf]: IconPdfFilledLight,
-  [NUploadFileTypeEnum.Audio]: IconMp3FilledLight,
-  [NUploadFileTypeEnum.Video]: IconVideoFilledLight,
-  [NUploadFileTypeEnum.Zip]: IconZipFilledLight,
-  [NUploadFileTypeEnum.Link]: IconLinkFilledLight,
-  [NUploadFileTypeEnum.Unknown]: IconUnknownFilledLight,
+export const fileTypeIconMapping: Record<HUploadFileTypeEnum, DefinedComponent> = {
+  [HUploadFileTypeEnum.Image]: IconPictureFilledLight,
+  [HUploadFileTypeEnum.Word]: IconWordFilledLight,
+  [HUploadFileTypeEnum.Excel]: IconExcelFilledLight,
+  [HUploadFileTypeEnum.Ppt]: IconPptFilledLight,
+  [HUploadFileTypeEnum.Pdf]: IconPdfFilledLight,
+  [HUploadFileTypeEnum.Audio]: IconMp3FilledLight,
+  [HUploadFileTypeEnum.Video]: IconVideoFilledLight,
+  [HUploadFileTypeEnum.Zip]: IconZipFilledLight,
+  [HUploadFileTypeEnum.Link]: IconLinkFilledLight,
+  [HUploadFileTypeEnum.Unknown]: IconUnknownFilledLight,
 };
 
-export enum NUploadFileStatusEnum {
+export enum HUploadFileStatusEnum {
   New = 'new',
   Pending = 'pending',
   Uploading = 'uploading',
@@ -65,7 +65,7 @@ export enum NUploadFileStatusEnum {
   Retrying = 'retrying',
 }
 
-export interface NUploadFileType {
+export interface HUploadFileType {
   /**
    * 文件名
    */
@@ -77,11 +77,11 @@ export interface NUploadFileType {
   /**
    * 文件状态
    */
-  status: NUploadFileStatusEnum;
+  status: HUploadFileStatusEnum;
   /**
    * 文件类型
    */
-  type: NUploadFileTypeEnum;
+  type: HUploadFileTypeEnum;
   /**
    * 文件大小
    */
@@ -116,65 +116,65 @@ export interface NUploadFileType {
   raw?: File;
 }
 
-export type NUploadUserFile = PartialInclude<
-  NUploadFileType,
+export type HUploadUserFile = PartialInclude<
+  HUploadFileType,
   'status' | 'uuid' | 'type' | 'blobUrl'
 >;
 
-export interface NUploadSetStatusOptionsMapping {
-  [NUploadFileStatusEnum.Success]: {
+export interface HUploadSetStatusOptionsMapping {
+  [HUploadFileStatusEnum.Success]: {
     response: Data | undefined;
     uploadUrl: string | undefined;
   };
-  [NUploadFileStatusEnum.Fail]: {
+  [HUploadFileStatusEnum.Fail]: {
     reason: string;
     response: Data | undefined;
   };
-  [NUploadFileStatusEnum.New]: undefined;
-  [NUploadFileStatusEnum.Pending]: undefined;
-  [NUploadFileStatusEnum.Uploading]: {
+  [HUploadFileStatusEnum.New]: undefined;
+  [HUploadFileStatusEnum.Pending]: undefined;
+  [HUploadFileStatusEnum.Uploading]: {
     progress: number;
     response: Data | undefined;
   };
-  [NUploadFileStatusEnum.Canceling]: undefined;
-  [NUploadFileStatusEnum.Canceled]: undefined;
-  [NUploadFileStatusEnum.Pause]: undefined;
-  [NUploadFileStatusEnum.Retrying]: undefined;
+  [HUploadFileStatusEnum.Canceling]: undefined;
+  [HUploadFileStatusEnum.Canceled]: undefined;
+  [HUploadFileStatusEnum.Pause]: undefined;
+  [HUploadFileStatusEnum.Retrying]: undefined;
 }
 
-export interface NUploadHttpRequestInstanceMethods {
+export interface HUploadHttpRequestInstanceMethods {
   /**
    * 设置当前文件状态，可以通过这个方法设置文件的各种状态，包括上传进度
    * @param file 当前文件
    * @param status 状态
    * @param args 参数
    */
-  setStatus: <T extends NUploadFileStatusEnum = NUploadFileStatusEnum>(
-    file: NUploadFileType,
+  setStatus: <T extends HUploadFileStatusEnum = HUploadFileStatusEnum>(
+    file: HUploadFileType,
     status: T,
-    args?: NUploadSetStatusOptionsMapping[T],
+    args?: HUploadSetStatusOptionsMapping[T],
   ) => void;
   /**
    * 当文件上传成功后调用，会自动修改文件状态，调用后会自动从队列中拿取下一个上传的文件
    * @param file 当前文件
    */
-  onUploadSuccess: (file: NUploadFileType, response: string) => void;
+  onUploadSuccess: (file: HUploadFileType, response: string) => void;
   /**
    * 当文件上传失败时调用，会自动修改文件状态，调用后会自动从队列中拿取下一个上传的文件
    * @param file 当前文件
    * @param responseText
    * @param response
    */
-  onUploadFail: (file: NUploadFileType, responseText: string, response: string) => void;
+  onUploadFail: (file: HUploadFileType, responseText: string, response: string) => void;
   /**
    * 上传结束后调用，不处理文件状态，调用后会自动从队列中拿取下一个上传的文件
    * @param file 当前文件
    */
-  onUploadFinished: (file: NUploadFileType) => void;
+  onUploadFinished: (file: HUploadFileType) => void;
   /**
    * 在上传开始前调用，会将文件加到上传队列
    * @param file 当前文件
    * @param requestInstance 请求时的实例，可以是 xhr 也可以是 fetch 返回的对象
    */
-  addUploadingQueue: (file: NUploadFileType, requestInstance: unknown) => void;
+  addUploadingQueue: (file: HUploadFileType, requestInstance: unknown) => void;
 }

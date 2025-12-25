@@ -20,11 +20,11 @@ import draggable from '~/directives/v-draggable';
 import useZoom from './composables/useZoom';
 import useNavigation from './composables/useNavigation';
 import useHideTools from './composables/useHideTools';
-import NVideoPlayer from '../../VideoPlayer';
+import HVideoPlayer from '../../VideoPlayer';
 import type { ViewerEmits } from './composables/useEmits';
 import { useViewerEmits } from './composables/useEmits';
 import { defaultLocale, localeInjectKey } from '~/provides/localable';
-import NTransition from '~/components/Transition/src/Transition';
+import HTransition from '~/components/Transition/src/Transition';
 
 export default defineComponent({
   name: `${useNamespace()}Viewer`,
@@ -33,8 +33,8 @@ export default defineComponent({
     AIcon,
     IconLoadingLine,
     IconPlayFilled,
-    NVideoPlayer,
-    NTransition,
+    HVideoPlayer,
+    HTransition,
   },
   directives: {
     tooltip,
@@ -283,7 +283,7 @@ export default defineComponent({
           sourceUrl = currentSource.value.videoSources[0].src;
         } else {
           // eslint-disable-next-line no-console
-          console.warn('[HORIZONWEB] Viewer Error: videoSources[0].src is required!');
+          console.warn('[HORIZOHWEB] Viewer Error: videoSources[0].src is required!');
           return;
         }
       } else {
@@ -389,7 +389,7 @@ export default defineComponent({
     const classHelper = new ComponentClassBlock('viewer');
     return () => (
       <Teleport to="body">
-        <NTransition name="fade-in">
+        <HTransition name="fade-in">
           {modelValueRef.value && (
             <div
               {...attrs}
@@ -411,7 +411,7 @@ export default defineComponent({
                   size={28}
                   class={`${classHelper.e('loading')}`}
                 />
-                <NTransition name="fade-in">
+                <HTransition name="fade-in">
                   <div v-show={!loadingPreviewRef.value} onClick={e => e.stopPropagation()}>
                     {currentSource.value.type === 'image' ? (
                       <div
@@ -470,7 +470,7 @@ export default defineComponent({
                           height: videoSizeRef.value.height,
                         }}
                       >
-                        <NVideoPlayer
+                        <HVideoPlayer
                           poster={currentSource.value.cover}
                           sources={currentSource.value.videoSources!}
                           rotate={videoDegree.value}
@@ -484,9 +484,9 @@ export default defineComponent({
                       </div>
                     )}
                   </div>
-                </NTransition>
+                </HTransition>
               </div>
-              <NTransition name="fade-in">
+              <HTransition name="fade-in">
                 <div
                   v-show={showThumbnailRef.value}
                   class={`${classHelper.e('navbar')}`}
@@ -512,8 +512,8 @@ export default defineComponent({
                     ))}
                   </ul>
                 </div>
-              </NTransition>
-              <NTransition name="fade-in">
+              </HTransition>
+              <HTransition name="fade-in">
                 <div
                   v-show={showToolsRef.value}
                   class={`${classHelper.e('toolbar')}`}
@@ -673,7 +673,7 @@ export default defineComponent({
                       }
                     })}
                 </div>
-              </NTransition>
+              </HTransition>
               <div class={`${classHelper.e('header')}`} onClick={e => e.stopPropagation()}>
                 <span>{currentSource.value.title}</span>
                 <button
@@ -686,7 +686,7 @@ export default defineComponent({
               </div>
             </div>
           )}
-        </NTransition>
+        </HTransition>
       </Teleport>
     );
   },

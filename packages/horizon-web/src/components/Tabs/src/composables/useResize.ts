@@ -1,10 +1,10 @@
 import { onMounted, shallowRef, onBeforeUnmount, type ToRefs } from 'vue';
-import { type NTabType } from './useProps';
+import { type HTabType } from './useProps';
 
 export interface IndicatorOptions {
   container: HTMLElement | undefined;
   root: HTMLElement | undefined;
-  type: NTabType;
+  type: HTabType;
 }
 
 export function useResize(opts: ToRefs<IndicatorOptions>, resize: () => void) {

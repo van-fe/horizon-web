@@ -3,13 +3,13 @@ import type { HorizonWebComponentInstance, HorizonWebSetupContext } from '@auror
 import { cls, ComponentClassBlock } from '@aurora/utils';
 import type { DatePickerDatetimeTriggerHeaderProps } from '../composables/useProps';
 import { useDatePickerDatetimeTriggerHeaderProps } from '../composables/useProps';
-import NInput from '~/components/Input/src/Input';
-import NTimePicker from '~/components/TimePicker/src/TimePicker';
+import HInput from '~/components/Input/src/Input';
+import HTimePicker from '~/components/TimePicker/src/TimePicker';
 import { getTimePanelTypeByType } from '../hooks/usePanel';
 import {
-  NDatePickerFormatInjectKey,
-  NDatePickerPropsInjectKey,
-  NDatePickerValueFormatMappingInjectKey,
+  HDatePickerFormatInjectKey,
+  HDatePickerPropsInjectKey,
+  HDatePickerValueFormatMappingInjectKey,
 } from '../utils/injectKeys';
 import type { Dayjs } from 'dayjs';
 import type { DatePickerDatePanelHeaderExposes } from '../composables/useExposes';
@@ -37,11 +37,11 @@ export default defineComponent({
     const classHelper = new ComponentClassBlock('date-picker-panel-header');
 
     const timePickerDomRef =
-      ref<HorizonWebComponentInstance<typeof NTimePicker, TimePickerExposes>>();
+      ref<HorizonWebComponentInstance<typeof HTimePicker, TimePickerExposes>>();
 
-    const parentProps = inject(NDatePickerPropsInjectKey)!;
-    const valueFormatMapping = inject(NDatePickerValueFormatMappingInjectKey)!;
-    const pickerType = inject(NDatePickerFormatInjectKey)!;
+    const parentProps = inject(HDatePickerPropsInjectKey)!;
+    const valueFormatMapping = inject(HDatePickerValueFormatMappingInjectKey)!;
+    const pickerType = inject(HDatePickerFormatInjectKey)!;
 
     expose({
       clickTimeCell: (
@@ -54,12 +54,12 @@ export default defineComponent({
 
     return () => (
       <div class={cls(classHelper.e('datetime-trigger'))}>
-        <NInput
+        <HInput
           modelValue={props.date?.format(valueFormatMapping.value.date)}
           readonly
           placeholder={props.datePlaceholder}
         />
-        <NTimePicker
+        <HTimePicker
           ref={timePickerDomRef}
           previewTime={props.previewTime}
           prefixIcon={false}

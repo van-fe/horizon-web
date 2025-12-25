@@ -72,12 +72,12 @@
 
 <script setup lang="ts">
 import { ExtractPropTypes, onMounted, ref } from 'vue';
-import { CascaderExposes, NCascader, useCascaderProps } from '@aurora/horizon-web';
-import type { NCascaderExtendOption, NCascaderModelValueType } from '@aurora/horizon-web';
+import { CascaderExposes, HCascader, useCascaderProps } from '@aurora/horizon-web';
+import type { HCascaderExtendOption, HCascaderModelValueType } from '@aurora/horizon-web';
 import { HorizonWebComponentInstance } from '@aurora/utils';
 
-const cascaderDomRef1 = ref<HorizonWebComponentInstance<typeof NCascader, CascaderExposes>>();
-const cascaderDomRef2 = ref<HorizonWebComponentInstance<typeof NCascader, CascaderExposes>>();
+const cascaderDomRef1 = ref<HorizonWebComponentInstance<typeof HCascader, CascaderExposes>>();
+const cascaderDomRef2 = ref<HorizonWebComponentInstance<typeof HCascader, CascaderExposes>>();
 
 const currentVal1 = ref<string[]>(["guide", "navigation", "side nav"]);
 const currentVal2 = ref<string[][]>([]);
@@ -88,7 +88,7 @@ const inputStyle = ref<Required<ExtractPropTypes<typeof useCascaderProps>['input
 const disabled = ref(false);
 const checkStrictly = ref(false);
 
-const changeHandle = (value: NCascaderModelValueType, option: NCascaderExtendOption) => {
+const changeHandle = (value: HCascaderModelValueType, option: HCascaderExtendOption) => {
   console.info('change: ', value, option);
 };
 
@@ -96,7 +96,7 @@ const inputHandle = (value: string) => {
   console.info('input: ', value);
 };
 
-const updateHandle = (value: NCascaderModelValueType) => {
+const updateHandle = (value: HCascaderModelValueType) => {
   console.info('update: ', value);
 };
 

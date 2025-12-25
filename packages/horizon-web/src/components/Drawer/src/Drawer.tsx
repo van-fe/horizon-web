@@ -23,8 +23,8 @@ import {
   Fragment,
   provide,
 } from 'vue';
-import NButton from '~/components/Button/src/Button';
-import NTransition from '~/components/Transition/src/Transition';
+import HButton from '~/components/Button/src/Button';
+import HTransition from '~/components/Transition/src/Transition';
 import { defaultLocale, localeInjectKey } from '~/provides/localable';
 import type { DrawerEmits } from './composables/useEmits';
 import { useDrawerEmits } from './composables/useEmits';
@@ -32,7 +32,7 @@ import { useDrawerProps } from './composables/useProps';
 import { useResponsiveSize } from './composables/useResponsiveSize';
 import type { DrawerSlots } from './composables/useSlots';
 import { useDrawerSlots } from './composables/useSlots';
-import { NScrollbarUpdateDelayInjectKey } from '~/components/Scrollbar/src/utils/injectKeys';
+import { HScrollbarUpdateDelayInjectKey } from '~/components/Scrollbar/src/utils/injectKeys';
 
 const instances = shallowRef<ComponentInternalInstance[]>([]);
 
@@ -229,7 +229,7 @@ export default defineComponent({
       if (!escClosable.value || !visible.value) return;
 
       if (instances.value.slice(-1)[0] === instance) {
-        // NOTE: 在嵌套n-drawer写法时候，onKeyStroke 触发事件的时机异常
+        // HOTE: 在嵌套n-drawer写法时候，onKeyStroke 触发事件的时机异常
         setTimeout(() => onClose(), 0);
       }
     };
@@ -286,7 +286,7 @@ export default defineComponent({
       emit('opened');
     };
 
-    provide(NScrollbarUpdateDelayInjectKey, 400);
+    provide(HScrollbarUpdateDelayInjectKey, 400);
 
     onBeforeUnmount(() => {
       if (shouldLockScroll.value) {
@@ -296,7 +296,7 @@ export default defineComponent({
 
     return () => {
       const closeButton = (
-        <NButton
+        <HButton
           class={classHelper.e('closable')}
           size="small"
           type="normal"
@@ -347,7 +347,7 @@ export default defineComponent({
                 {slots.footer?.() ?? (
                   <div class={classHelper.e('default-footer')}>
                     {cancelButton.value && (
-                      <NButton
+                      <HButton
                         type="normal"
                         plain
                         size="medium"
@@ -355,10 +355,10 @@ export default defineComponent({
                         {...cancelButtonProps.value}
                       >
                         {cancelButtonText.value}
-                      </NButton>
+                      </HButton>
                     )}
                     {okButton.value && (
-                      <NButton
+                      <HButton
                         type="primary"
                         size="medium"
                         onClick={onDefaultOk}
@@ -366,7 +366,7 @@ export default defineComponent({
                         {...okButtonProps.value}
                       >
                         {okButtonText.value}
-                      </NButton>
+                      </HButton>
                     )}
                   </div>
                 )}
@@ -391,7 +391,7 @@ export default defineComponent({
             {...attrs}
           >
             {props.mask && (
-              <NTransition name="fade-in" appear>
+              <HTransition name="fade-in" appear>
                 {visible.value && (
                   <div
                     class={classHelper.e('mask')}
@@ -403,7 +403,7 @@ export default defineComponent({
                     onClick={onMaskClick}
                   />
                 )}
-              </NTransition>
+              </HTransition>
             )}
 
             <Transition

@@ -6,23 +6,23 @@ import { useTreeSelectProps } from './composables/useProps';
 import { useTreeSelectEmits } from './composables/useEmits';
 import { useTreeSelectSlots } from './composables/useSlots';
 import { useTreeSelectExposes } from './composables/useExposes';
-import NPicker from '~/components/Picker/src/Picker';
+import HPicker from '~/components/Picker/src/Picker';
 import {
-  NTreeSelectEmitsInjectKey,
-  NTreeSelectInputStringInjectKey,
-  NTreeSelectPopperVisibleInjectKey,
-  NTreeSelectPropsInjectKey,
-  NTreeSelectSlotsInjectKey,
+  HTreeSelectEmitsInjectKey,
+  HTreeSelectInputStringInjectKey,
+  HTreeSelectPopperVisibleInjectKey,
+  HTreeSelectPropsInjectKey,
+  HTreeSelectSlotsInjectKey,
 } from './utils/injectKeys';
-import NTagGroup from '~/components/Tag/src/TagGroup';
+import HTagGroup from '~/components/Tag/src/TagGroup';
 import useSize from '~/utils/useSize';
-import NPickerFitContentInput from '~/components/Picker/src/components/NPickerFitContentInput';
+import HPickerFitContentInput from '~/components/Picker/src/components/PickerFitContentInput';
 import useLocaleLang from '~/utils/useLocaleLang';
-import { NFormItemErrorInjectedKey } from '~/components/Form/src/utils/injectedKeys';
-import NTree from '~/components/Tree/src/Tree';
-import type { NTreeData, NTreeUuidType } from '~/components/Tree/src/utils/types';
+import { HFormItemErrorInjectedKey } from '~/components/Form/src/utils/injectedKeys';
+import HTree from '~/components/Tree/src/Tree';
+import type { HTreeData, HTreeUuidType } from '~/components/Tree/src/utils/types';
 import useFilter from './utils/useFilter';
-import type { NTreeSelectContext, NTreeSelectDomRefs } from './utils/types';
+import type { HTreeSelectContext, HTreeSelectDomRefs } from './utils/types';
 import useConfirm from './utils/useConfirm';
 import usePopper from './utils/usePopper';
 import useData from './utils/useData';
@@ -46,7 +46,7 @@ export default defineComponent({
   emits: useTreeSelectEmits,
   slots: useTreeSelectSlots,
   exposes: useTreeSelectExposes,
-  setup(props: TreeSelectProps, context: NTreeSelectContext) {
+  setup(props: TreeSelectProps, context: HTreeSelectContext) {
     const { emit, slots, expose } = context;
 
     const classHelper = new ComponentClassBlock('tree-select');
@@ -93,14 +93,14 @@ export default defineComponent({
     /**
      * dom ref
      */
-    const domRefs: NTreeSelectDomRefs = {
-      picker: ref<HorizonWebComponentInstance<typeof NPicker, PickerExposes> | null>(null),
+    const domRefs: HTreeSelectDomRefs = {
+      picker: ref<HorizonWebComponentInstance<typeof HPicker, PickerExposes> | null>(null),
       filterInput: ref<HorizonWebComponentInstance<
-        typeof NPickerFitContentInput,
+        typeof HPickerFitContentInput,
         PickerFitContentInputExposes
       > | null>(null),
-      tagGroup: ref<HorizonWebComponentInstance<typeof NTagGroup, TagGroupExposes> | null>(null),
-      tree: ref<HorizonWebComponentInstance<typeof NTree, TreeExposes> | null>(null),
+      tagGroup: ref<HorizonWebComponentInstance<typeof HTagGroup, TagGroupExposes> | null>(null),
+      tree: ref<HorizonWebComponentInstance<typeof HTree, TreeExposes> | null>(null),
     };
 
     /**
@@ -110,10 +110,10 @@ export default defineComponent({
     const useCollapse = computed(() => collapseProp?.value ?? collapseTagsProp.value);
     const renderedModelValueTags = ref<Array<VNode | JSX.Element>>([]);
     // To prevent optionList changes that cause already selected options to fail to render
-    const prevRenderedModelValueTags = new Map<NTreeUuidType, VNode | JSX.Element>();
+    const prevRenderedModelValueTags = new Map<HTreeUuidType, VNode | JSX.Element>();
 
     // form-item validate trigger
-    const nFormError = inject(NFormItemErrorInjectedKey, ref(''));
+    const nFormError = inject(HFormItemErrorInjectedKey, ref(''));
 
     const { treeHelper, treeDataMapping } = useTreeData(refProps, context, domRefs);
 
@@ -193,9 +193,9 @@ export default defineComponent({
       visibleNodes,
     );
 
-    provide(NTreeSelectInputStringInjectKey, inputValueMerged);
+    provide(HTreeSelectInputStringInjectKey, inputValueMerged);
 
-    provide(NTreeSelectPopperVisibleInjectKey, popperVisible);
+    provide(HTreeSelectPopperVisibleInjectKey, popperVisible);
 
     function emitChange() {
       emit('change', modelValue.value);
@@ -205,7 +205,7 @@ export default defineComponent({
       whetherInputCanFocus();
     }
 
-    function onSelectedValuesChanged(selectedValues: NTreeUuidType[]) {
+    function onSelectedValuesChanged(selectedValues: HTreeUuidType[]) {
       if (!isEqual(selectedValues, Array.from(modelValueSet.value.values()))) {
         setModelValue(selectedValues, !needConfirm.value);
 
@@ -218,7 +218,7 @@ export default defineComponent({
     }
 
     // in order to prevent optionList changed after the showValue is empty
-    let prevSelectedValue: NTreeUuidType | null = null;
+    let prevSelectedValue: HTreeUuidType | null = null;
     let prevSelectedLabel: string = '';
 
     const showValue = computed<string | undefined>(() => {
@@ -238,7 +238,7 @@ export default defineComponent({
         if (isFilterable.value && filterValue.value && modelValueSet.value.size === 0) {
           return filterValue.value;
         } else {
-          const value = modelValueSet.value.values().next().value as NTreeUuidType;
+          const value = modelValueSet.value.values().next().value as HTreeUuidType;
           const option = treeDataMapping.value.get(value);
 
           if (!option) {
@@ -258,9 +258,9 @@ export default defineComponent({
     /**
      * normal provide
      */
-    provide(NTreeSelectPropsInjectKey, props);
-    provide(NTreeSelectEmitsInjectKey, emit);
-    provide(NTreeSelectSlotsInjectKey, slots);
+    provide(HTreeSelectPropsInjectKey, props);
+    provide(HTreeSelectEmitsInjectKey, emit);
+    provide(HTreeSelectSlotsInjectKey, slots);
 
     expose({
       confirmHandle,
@@ -279,11 +279,11 @@ export default defineComponent({
         domRefs.tree.value?.setAllCollapseStatus(isExpand),
       getNodeByValues: (values: Array<string | number>) =>
         domRefs.tree.value?.getNodeByValues(values),
-      setNodeByValue: (treeData: TopBaseTreeData & Partial<NTreeData>, value?: string | number) =>
+      setNodeByValue: (treeData: TopBaseTreeData & Partial<HTreeData>, value?: string | number) =>
         domRefs.tree.value?.setNodeByValue(treeData, value),
       delNodeByValue: (value?: string | number) => domRefs.tree.value?.delNodeByValue(value),
       addNodeChildrenByValue: (
-        treeDataArray: Array<TopBaseTreeData & Partial<NTreeData>>,
+        treeDataArray: Array<TopBaseTreeData & Partial<HTreeData>>,
         value?: string | number,
       ) => domRefs.tree.value?.addNodeChildrenByValue(treeDataArray, value),
       getVisibleItems: () => domRefs.tree.value?.getVisibleItems(),
@@ -291,7 +291,7 @@ export default defineComponent({
     });
 
     return () => (
-      <NPicker
+      <HPicker
         ref={domRefs.picker}
         size={sizeRef.value}
         modelValue={showValue.value}
@@ -367,7 +367,7 @@ export default defineComponent({
               if (modelValueSet.value.size > 0) {
                 return (
                   !useStatisticProp.value && (
-                    <NTagGroup
+                    <HTagGroup
                       ref={domRefs.tagGroup}
                       class={classHelper.em('tag-group', 'normal', !!slots.tagRender)}
                       collapse={useCollapse.value}
@@ -387,7 +387,7 @@ export default defineComponent({
                       {{
                         default: () => renderedModelValueTags.value,
                         suffix: () => (
-                          <NPickerFitContentInput
+                          <HPickerFitContentInput
                             ref={domRefs.filterInput}
                             v-show={
                               multipleProp.value &&
@@ -414,7 +414,7 @@ export default defineComponent({
                           />
                         ),
                       }}
-                    </NTagGroup>
+                    </HTagGroup>
                   )
                 );
               }
@@ -433,7 +433,7 @@ export default defineComponent({
             return undefined;
           },
           default: () => (
-            <NTree
+            <HTree
               ref={domRefs.tree}
               treeHelper={treeHelper}
               size={treeSizeProp?.value ?? itemSizeProp?.value}
@@ -499,10 +499,10 @@ export default defineComponent({
                 empty: slots.empty,
                 treeNodeRender: slots.treeNodeRender,
               }}
-            </NTree>
+            </HTree>
           ),
         }}
-      </NPicker>
+      </HPicker>
     );
   },
 });

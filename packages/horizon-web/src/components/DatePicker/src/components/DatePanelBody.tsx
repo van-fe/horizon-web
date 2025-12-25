@@ -10,10 +10,10 @@ import MonthPanel from './DatePanelComponents/MonthPanel';
 import DayPanel from './DatePanelComponents/DayPanel';
 import type { Dayjs } from 'dayjs';
 import {
-  NDatePickerEmitsInjectKey,
-  NDatePickerFormatInjectKey,
-  NDatePickerPanelVisibleInjectKey,
-  NDatePickerPropsInjectKey,
+  HDatePickerEmitsInjectKey,
+  HDatePickerFormatInjectKey,
+  HDatePickerPanelVisibleInjectKey,
+  HDatePickerPropsInjectKey,
 } from '../utils/injectKeys';
 import TimePanel from '~/components/TimePicker/src/components/TimePanel';
 import { getTimePanelTypeByType } from '../hooks/usePanel';
@@ -48,10 +48,10 @@ export default defineComponent({
     const timePanelDomRef =
       ref<HorizonWebComponentInstance<typeof TimePanel, TimePickerTimePanelExposes>>();
 
-    const parentProps = inject(NDatePickerPropsInjectKey)!;
-    const parentEmits = inject(NDatePickerEmitsInjectKey)!;
-    const panelVisible = inject(NDatePickerPanelVisibleInjectKey)!;
-    const pickerType = inject(NDatePickerFormatInjectKey)!;
+    const parentProps = inject(HDatePickerPropsInjectKey)!;
+    const parentEmits = inject(HDatePickerEmitsInjectKey)!;
+    const panelVisible = inject(HDatePickerPanelVisibleInjectKey)!;
+    const pickerType = inject(HDatePickerFormatInjectKey)!;
 
     const currentShowDate = computed(() =>
       props.type === 'end' ? props.endPanelShowDate : props.startPanelShowDate,

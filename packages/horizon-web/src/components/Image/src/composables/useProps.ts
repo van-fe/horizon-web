@@ -1,7 +1,7 @@
 import type { ExtractPropTypes, PropType } from 'vue';
 import { declarePropType } from '@aurora/utils';
 
-export interface NImageAction {
+export interface HImageAction {
   /** 图标名称 */
   icon: string;
   /** 标题 */
@@ -108,7 +108,7 @@ export const useImageProps = declarePropType({
   },
   /** 操作按钮列表 */
   actionsList: {
-    type: Array as PropType<NImageAction[]>,
+    type: Array as PropType<HImageAction[]>,
     default: () => [],
   },
   /**

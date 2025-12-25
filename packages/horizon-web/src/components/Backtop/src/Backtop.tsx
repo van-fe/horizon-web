@@ -8,13 +8,13 @@ import type { BacktopEmits } from './composables/useEmits';
 import { useBacktopEmits } from './composables/useEmits';
 import type { BacktopSlots } from './composables/useSlots';
 import { useBacktopSlots } from './composables/useSlots';
-import NTransition from '~/components/Transition/src/Transition';
+import HTransition from '~/components/Transition/src/Transition';
 import { error } from '~/utils/useLog';
 
 export default defineComponent({
   name: `${useNamespace()}Backtop`,
   desc: '返回页面顶部按钮',
-  components: { AIcon, NTransition },
+  components: { AIcon, HTransition },
   props: useBacktopProps,
   emits: useBacktopEmits,
   slots: useBacktopSlots,
@@ -71,7 +71,7 @@ export default defineComponent({
     });
 
     return () => (
-      <NTransition name="fade-in">
+      <HTransition name="fade-in">
         {visible.value ? (
           <div
             style={{ bottom: styleBottom.value, right: styleRight.value }}
@@ -81,7 +81,7 @@ export default defineComponent({
             {slots.default?.() ?? <AIcon class="n-backtop__icon" name="top" size="16" />}
           </div>
         ) : undefined}
-      </NTransition>
+      </HTransition>
     );
   },
 });

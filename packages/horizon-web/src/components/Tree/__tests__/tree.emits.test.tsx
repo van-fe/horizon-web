@@ -1,23 +1,23 @@
 import { describe, expect, test, vi } from 'vitest';
 import { createInstance } from './tree-helper';
-import NTreeItem from '../src/components/TreeItem';
-import type { NTreeUuidType } from '../src/utils/types';
+import HTreeItem from '../src/components/TreeItem';
+import type { HTreeUuidType } from '../src/utils/types';
 import { nextTick, ref } from 'vue';
 
 describe('Tree.tsx emits', () => {
   test('update:expand-values', async () => {
-    const expandValues = ref<NTreeUuidType[]>([]);
+    const expandValues = ref<HTreeUuidType[]>([]);
     const onUpdateExpandValues = vi.fn();
 
     const { element } = await createInstance({
       expandValues,
-      'onUpdate:expandValues': (val: NTreeUuidType[]) => {
+      'onUpdate:expandValues': (val: HTreeUuidType[]) => {
         expandValues.value = val;
         onUpdateExpandValues();
       },
     });
 
-    const guide = element.findComponent(NTreeItem);
+    const guide = element.findComponent(HTreeItem);
 
     await guide.trigger('click');
 
@@ -32,7 +32,7 @@ describe('Tree.tsx emits', () => {
 
   test('update:selected-values on multiple', async () => {
     const multiple = ref(true);
-    const selectedValues = ref<NTreeUuidType[]>([]);
+    const selectedValues = ref<HTreeUuidType[]>([]);
     const onUpdateSelectedValues = vi.fn();
 
     const { element } = await createInstance({
@@ -41,14 +41,14 @@ describe('Tree.tsx emits', () => {
       checkOnClickNode: true,
       expandOnClickNode: false,
       multiple,
-      'onUpdate:selectedValues': (val: NTreeUuidType[]) => {
+      'onUpdate:selectedValues': (val: HTreeUuidType[]) => {
         selectedValues.value = val;
         onUpdateSelectedValues();
       },
     });
 
     const feedback = element
-      .findAllComponents(NTreeItem)
+      .findAllComponents(HTreeItem)
       .find(curr => curr.element.getAttribute('data-uuid') === 'feedback');
 
     await feedback?.trigger('click');
@@ -83,7 +83,7 @@ describe('Tree.tsx emits', () => {
       onExpand,
     });
 
-    const guide = element.findComponent(NTreeItem);
+    const guide = element.findComponent(HTreeItem);
 
     await guide.trigger('click');
 
@@ -105,7 +105,7 @@ describe('Tree.tsx emits', () => {
     });
 
     const feedback = element
-      .findAllComponents(NTreeItem)
+      .findAllComponents(HTreeItem)
       .find(curr => curr.element.getAttribute('data-uuid') === 'feedback');
 
     await feedback?.trigger('click');
@@ -131,7 +131,7 @@ describe('Tree.tsx emits', () => {
     });
 
     const feedback = element
-      .findAllComponents(NTreeItem)
+      .findAllComponents(HTreeItem)
       .find(curr => curr.element.getAttribute('data-uuid') === 'feedback');
 
     await feedback?.trigger('click');
@@ -154,7 +154,7 @@ describe('Tree.tsx emits', () => {
     });
 
     const feedback = element
-      .findAllComponents(NTreeItem)
+      .findAllComponents(HTreeItem)
       .find(curr => curr.element.getAttribute('data-uuid') === 'feedback');
 
     await feedback?.trigger('contextmenu');

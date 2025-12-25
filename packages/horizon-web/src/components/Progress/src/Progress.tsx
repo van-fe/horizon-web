@@ -3,7 +3,7 @@ import type { CSSProperties } from 'vue';
 import { useProgressProps } from './composables/useProps';
 import { ComponentClassBlock, cssVariable, useNamespace } from '@aurora/utils';
 import { AIcon } from '@aurora/icon';
-import type { NApplicationSizeType } from '~/components/Application/src/composables/useProps';
+import type { HApplicationSizeType } from '~/components/Application/src/composables/useProps';
 import useSize from '~/utils/useSize';
 export default defineComponent({
   name: `${useNamespace()}Progress`,
@@ -31,7 +31,7 @@ export default defineComponent({
       },
     };
 
-    const sizeMap: Record<NApplicationSizeType | 'mini', string> = {
+    const sizeMap: Record<HApplicationSizeType | 'mini', string> = {
       mini: '2px',
       small: '4px',
       medium: '6px',

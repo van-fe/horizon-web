@@ -12,7 +12,7 @@ import {
   onMounted,
   Fragment,
 } from 'vue';
-import type { NFormRule, NFormItemHelper } from './composables/useProps';
+import type { HFormRule, HFormItemHelper } from './composables/useProps';
 import { useFormItemProps } from './composables/useProps';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import {
@@ -28,18 +28,18 @@ import {
   cssVariableKey,
 } from '@aurora/utils';
 import Schema from 'async-validator';
-import type { NFormItemTriggerType } from './utils/injectedKeys';
+import type { HFormItemTriggerType } from './utils/injectedKeys';
 import {
-  NFormInjectedKey,
-  NFormItemErrorInjectedKey,
-  NFormItemPropsInjectedKey,
-  NFormItemSlotsInjectedKey,
-  NFormItemTriggerInjectedKey,
+  HFormInjectedKey,
+  HFormItemErrorInjectedKey,
+  HFormItemPropsInjectedKey,
+  HFormItemSlotsInjectedKey,
+  HFormItemTriggerInjectedKey,
 } from './utils/injectedKeys';
 import { getProp } from './utils/helper';
 import { IconHelp } from '@aurora/icon';
-import NPopover from '~/components/Popover/src/Popover';
-import NPopContent from '~/components/Popover/src/PopContent';
+import HPopover from '~/components/Popover/src/Popover';
+import HPopContent from '~/components/Popover/src/PopContent';
 import type { FormItemSlots } from './composables/useSlots';
 import { useFormItemSlots } from './composables/useSlots';
 import type { FormItemExposes } from './composables/useExposes';
@@ -50,8 +50,8 @@ import useLocaleLang from '~/utils/useLocaleLang';
 export default defineComponent({
   name: `${useNamespace()}FormItem`,
   components: {
-    NPopover,
-    NPopContent,
+    HPopover,
+    HPopContent,
     IconHelp,
   },
   props: useFormItemProps,
@@ -62,13 +62,13 @@ export default defineComponent({
     const blockRef = ref<HTMLElement | null>(null);
     const uid = getCurrentInstance()?.uid;
     const error = ref<string | undefined>();
-    const nForm = inject(NFormInjectedKey)!;
+    const nForm = inject(HFormInjectedKey)!;
     const errorRef = toRef(props, 'error');
     const onlyRenderRef = toRef(nForm, 'onlyRender');
     let initialValue: any = undefined;
 
-    provide(NFormItemPropsInjectedKey, props);
-    provide(NFormItemSlotsInjectedKey, slots);
+    provide(HFormItemPropsInjectedKey, props);
+    provide(HFormItemSlotsInjectedKey, slots);
 
     const currentValidateTriggers = computed(() => {
       let validateTrigger: Array<'change' | 'blur'> = [];
@@ -126,7 +126,7 @@ export default defineComponent({
         return Promise.resolve(null);
       }
 
-      let rule: NFormRule | NFormRule[] | undefined =
+      let rule: HFormRule | HFormRule[] | undefined =
         props.rules || (nForm.rules && getProp(nForm.rules, props.prop).value);
 
       if (!rule) {
@@ -171,7 +171,7 @@ export default defineComponent({
       });
     };
 
-    provide(NFormItemErrorInjectedKey, error);
+    provide(HFormItemErrorInjectedKey, error);
 
     const showMark = computed(() => {
       if (!nForm.showRequireMark) {
@@ -258,18 +258,18 @@ export default defineComponent({
     /**
      * validate trigger
      */
-    const onFormChildItemNotice: NFormItemTriggerType = type => {
+    const onFormChildItemNotice: HFormItemTriggerType = type => {
       if (currentValidateTriggers.value.includes(type)) {
         validate();
       }
     };
 
-    provide(NFormItemTriggerInjectedKey, onFormChildItemNotice);
+    provide(HFormItemTriggerInjectedKey, onFormChildItemNotice);
 
     const helperPlacement = computed(() => props.helperPlacement || nForm.helperPlacement);
 
-    const helperOptions = computed<NFormItemHelper>(() => {
-      let defOpts: NFormItemHelper = {
+    const helperOptions = computed<HFormItemHelper>(() => {
+      let defOpts: HFormItemHelper = {
         title: undefined,
         content: '',
         placement: 'top',
@@ -294,7 +294,7 @@ export default defineComponent({
 
     const helperRender = () =>
       (props.helper || slots.helper || slots.helperTitle || slots.helperContent) && (
-        <NPopover
+        <HPopover
           trigger={helperOptions.value.trigger}
           toBody={helperOptions.value.toBody}
           placement={helperOptions.value.placement}
@@ -305,7 +305,7 @@ export default defineComponent({
           {{
             reference: () => <IconHelp size={16} />,
             popper: () => (
-              <NPopContent
+              <HPopContent
                 theme={helperTheme.value}
                 class={cls(classHelper.e('helper'))}
                 style={`${cssVariableKey('popover-padding--content')}: ${sizeUnitTransform(helperOptions.value.padding)}`}
@@ -328,10 +328,10 @@ export default defineComponent({
                     </div>
                   </Fragment>
                 )}
-              </NPopContent>
+              </HPopContent>
             ),
           }}
-        </NPopover>
+        </HPopover>
       );
 
     return () => (

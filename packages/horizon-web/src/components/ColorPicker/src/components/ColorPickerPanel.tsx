@@ -15,7 +15,7 @@ import {
   recordCustomStoredColor,
   removeCustomStoredColor,
 } from '../utils/useStorageColor';
-import NButton from '~/components/Button/src/Button';
+import HButton from '~/components/Button/src/Button';
 
 export default defineComponent({
   name: 'ColorPickerPanel',
@@ -63,7 +63,7 @@ export default defineComponent({
             <div class={classHelper.em('block', 'title')}>
               {useLocaleLang('colorPicker.customDefaultColors').value}
               <div class={classHelper.em('block', 'button-group')}>
-                <NButton
+                <HButton
                   icon={IconAdd}
                   iconSize={12}
                   type="normal"
@@ -73,7 +73,7 @@ export default defineComponent({
                   style={{ [cssVariableKey('button-height--small')]: '16px' }}
                   onClick={addCustomColor}
                 />
-                <NButton
+                <HButton
                   v-show={focusedColor.value !== null}
                   icon={IconRubbish}
                   iconSize={12}

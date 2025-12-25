@@ -9,17 +9,17 @@ import { generatorInjectedKeyName } from '@aurora/utils';
 import type { FormEmits } from '../composables/useEmits';
 import type { FormItemSlots } from '../composables/useSlots';
 
-export type NFormItemTriggerType = (type: 'change' | 'blur') => void;
+export type HFormItemTriggerType = (type: 'change' | 'blur') => void;
 
-export const NFormItemErrorInjectedKey = Symbol.for('form-item-error') as InjectionKey<
+export const HFormItemErrorInjectedKey = Symbol.for('form-item-error') as InjectionKey<
   Ref<string | undefined>
 >;
 
-export const NFormItemTriggerInjectedKey = Symbol.for(
+export const HFormItemTriggerInjectedKey = Symbol.for(
   generatorInjectedKeyName('form-item', 'validate-trigger'),
-) as InjectionKey<NFormItemTriggerType | undefined>;
+) as InjectionKey<HFormItemTriggerType | undefined>;
 
-export const NFormInjectedKey = Symbol.for('form') as InjectionKey<
+export const HFormInjectedKey = Symbol.for('form') as InjectionKey<
   FormProps & {
     bindValidate: (component: BindComponent) => void;
     unbindValidate: (uid?: number) => void;
@@ -29,14 +29,14 @@ export const NFormInjectedKey = Symbol.for('form') as InjectionKey<
   }
 >;
 
-export const NFormDisabledInjectedKey = Symbol.for(
+export const HFormDisabledInjectedKey = Symbol.for(
   generatorInjectedKeyName('form-item', 'disabled'),
 ) as InjectionKey<Ref<boolean | undefined>>;
 
-export const NFormItemPropsInjectedKey = Symbol.for(
+export const HFormItemPropsInjectedKey = Symbol.for(
   generatorInjectedKeyName('form-item', 'props'),
 ) as InjectionKey<FormItemProps>;
 
-export const NFormItemSlotsInjectedKey = Symbol.for(
+export const HFormItemSlotsInjectedKey = Symbol.for(
   generatorInjectedKeyName('form-item', 'slots'),
 ) as InjectionKey<HorizonWebSetupContext<{}, FormItemSlots>['slots']>;

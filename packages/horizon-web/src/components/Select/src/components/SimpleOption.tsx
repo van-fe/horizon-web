@@ -10,16 +10,16 @@ import {
   onBeforeUnmount,
 } from 'vue';
 import { cls, ComponentClassBlock, cssVariableKey, useNamespace } from '@aurora/utils';
-import NCheckbox from '~/components/Checkbox/src/Checkbox';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
+import HCheckbox from '~/components/Checkbox/src/Checkbox';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
 import useIconRender from '~/utils/useIconRender';
 import {
-  NSelectFocusedOptionValueInjectKey,
-  NSelectMouseOverOptionInjectKey,
-  NSelectPickOptionInjectKey,
-  NSelectPresetModelValueInjectKey,
-  NSelectPropsInjectKey,
-  NSelectVirtualScrollListIsScrollingInjectKey,
+  HSelectFocusedOptionValueInjectKey,
+  HSelectMouseOverOptionInjectKey,
+  HSelectPickOptionInjectKey,
+  HSelectPresetModelValueInjectKey,
+  HSelectPropsInjectKey,
+  HSelectVirtualScrollListIsScrollingInjectKey,
 } from '../utils/injectKeys';
 import { isOptionChecked } from '../utils/valueFormat';
 import { useHighlightOption } from '../hooks/useHighlight';
@@ -63,12 +63,12 @@ export default defineComponent({
     const contentDomRef = ref<HTMLDivElement>();
     const descriptionDomRef = ref<HTMLDivElement>();
 
-    const presetModelValue = inject(NSelectPresetModelValueInjectKey)!;
-    const parentProps = inject(NSelectPropsInjectKey)!;
-    const pickOption = inject(NSelectPickOptionInjectKey)!;
-    const focusedOptionValue = inject(NSelectFocusedOptionValueInjectKey)!;
-    const scrollListIsScrolling = inject(NSelectVirtualScrollListIsScrollingInjectKey)!;
-    const onMouseOverOption = inject(NSelectMouseOverOptionInjectKey)!;
+    const presetModelValue = inject(HSelectPresetModelValueInjectKey)!;
+    const parentProps = inject(HSelectPropsInjectKey)!;
+    const pickOption = inject(HSelectPickOptionInjectKey)!;
+    const focusedOptionValue = inject(HSelectFocusedOptionValueInjectKey)!;
+    const scrollListIsScrolling = inject(HSelectVirtualScrollListIsScrollingInjectKey)!;
+    const onMouseOverOption = inject(HSelectMouseOverOptionInjectKey)!;
 
     const isMouseEnter = ref(false);
     const isChecked = computed(() => isOptionChecked(presetModelValue.value, valueRef.value));
@@ -143,7 +143,7 @@ export default defineComponent({
         <div class={classHelper.e('inner')}>
           {parentProps.multiple && (
             <div class={classHelper.e('checkbox')}>
-              <NCheckbox
+              <HCheckbox
                 true-label={true}
                 false-label={false}
                 modelValue={isChecked.value}
@@ -152,7 +152,7 @@ export default defineComponent({
             </div>
           )}
           <div class={classHelper.e('content-wrapper')}>
-            <NTooltip
+            <HTooltip
               overflow={true}
               showAfter={parentProps.tooltipShowAfter}
               hideAfter={parentProps.tooltipHideAfter}
@@ -165,9 +165,9 @@ export default defineComponent({
                   </div>
                 ),
               }}
-            </NTooltip>
+            </HTooltip>
             {props.description && (
-              <NTooltip
+              <HTooltip
                 overflow={true}
                 showAfter={parentProps.tooltipShowAfter}
                 hideAfter={parentProps.tooltipHideAfter}
@@ -180,7 +180,7 @@ export default defineComponent({
                     </div>
                   ),
                 }}
-              </NTooltip>
+              </HTooltip>
             )}
           </div>
           {parentProps.showSelectedIcon && isChecked.value && (

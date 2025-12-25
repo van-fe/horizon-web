@@ -1,8 +1,8 @@
 import type { SlotsType } from 'vue';
 import type {
-  NTableCellScopeSlots,
-  NTableFooterCellScopeSlots,
-  NTableHeaderCellScopeSlots,
+  HTableCellScopeSlots,
+  HTableFooterCellScopeSlots,
+  HTableHeaderCellScopeSlots,
 } from '../utils/types';
 
 export const useTableSlots = Object as SlotsType<{
@@ -31,22 +31,22 @@ export const useTableColumnSlots = Object as SlotsType<{
    * 默认展示内容
    * @param params 插槽参数
    */
-  default?: NTableCellScopeSlots;
+  default?: HTableCellScopeSlots;
   /**
    * 表头单元格插槽
    * @param params 插槽参数
    */
-  header?: NTableHeaderCellScopeSlots;
+  header?: HTableHeaderCellScopeSlots;
   /**
    * 表尾统计单元格插槽，必须开启 `show-summary` 才有效
    * @param params 插槽参数
    */
-  summaryFooter?: NTableFooterCellScopeSlots;
+  summaryFooter?: HTableFooterCellScopeSlots;
   /**
    * 展开行内容
    * @param params 插槽参数
    */
-  expand?: NTableCellScopeSlots;
+  expand?: HTableCellScopeSlots;
 }>;
 
 export type TableSlots = typeof useTableSlots;

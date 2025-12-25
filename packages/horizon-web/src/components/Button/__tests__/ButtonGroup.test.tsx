@@ -1,14 +1,14 @@
 import { mount } from '@vue/test-utils';
-import NButtonGroup from '../src/ButtonGroup';
-import NButton from '../src/Button';
+import HButtonGroup from '../src/ButtonGroup';
+import HButton from '../src/Button';
 import { describe, expect, test } from 'vitest';
 import { nextTick, ref } from 'vue';
 import type { ButtonGroupProps } from '../src/composables/useProps';
 
 describe('ButtonGroup.tsx', () => {
   test('basic', async () => {
-    const wrapper = mount(() => <NButtonGroup>OK</NButtonGroup>);
-    const element = wrapper.findComponent(NButtonGroup);
+    const wrapper = mount(() => <HButtonGroup>OK</HButtonGroup>);
+    const element = wrapper.findComponent(HButtonGroup);
 
     expect(element.exists()).toBe(true);
   });
@@ -17,11 +17,11 @@ describe('ButtonGroup.tsx', () => {
     test('type', async () => {
       const type = ref<ButtonGroupProps['type']>();
       const wrapper = mount(() => (
-        <NButtonGroup type={type.value}>
-          <NButton>1</NButton>
-        </NButtonGroup>
+        <HButtonGroup type={type.value}>
+          <HButton>1</HButton>
+        </HButtonGroup>
       ));
-      const element = wrapper.findComponent(NButton);
+      const element = wrapper.findComponent(HButton);
 
       expect(element.classes('n-button--primary')).toBe(true);
 
@@ -35,11 +35,11 @@ describe('ButtonGroup.tsx', () => {
     test('size', async () => {
       const size = ref<ButtonGroupProps['size']>();
       const wrapper = mount(() => (
-        <NButtonGroup size={size.value}>
-          <NButton>1</NButton>
-        </NButtonGroup>
+        <HButtonGroup size={size.value}>
+          <HButton>1</HButton>
+        </HButtonGroup>
       ));
-      const element = wrapper.findComponent(NButton);
+      const element = wrapper.findComponent(HButton);
 
       expect(element.classes('n-button--medium')).toBe(true);
 

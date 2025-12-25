@@ -7,10 +7,10 @@ import { useRateEmits } from './composables/useEmits';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { AIcon } from '@aurora/icon';
 import { GlobalSizeInjectedKey } from '~/components/Application/src/utils/injectedKeys';
-import type { NApplicationSizeType } from '~/components/Application/src/composables/useProps';
+import type { HApplicationSizeType } from '~/components/Application/src/composables/useProps';
 import {
-  NFormDisabledInjectedKey,
-  NFormItemTriggerInjectedKey,
+  HFormDisabledInjectedKey,
+  HFormItemTriggerInjectedKey,
 } from '~/components/Form/src/utils/injectedKeys';
 import type { RateSlots } from './composables/useSlots';
 import { useRateSlots } from './composables/useSlots';
@@ -65,14 +65,14 @@ export default defineComponent({
     // global size
     const globalSize = inject(GlobalSizeInjectedKey, ref('medium'));
     const sizeRef = computed(() => props.size || globalSize.value) as ComputedRef<
-      NApplicationSizeType | number
+      HApplicationSizeType | number
     >;
 
     /** formItemTrigger **/
-    const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
+    const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
 
     // form disabled inject
-    const formDisabled = inject(NFormDisabledInjectedKey, undefined);
+    const formDisabled = inject(HFormDisabledInjectedKey, undefined);
     const isDisabled = computed(() => formDisabled?.value || disabledRef.value);
 
     const tooltipText = computed<any[]>(() => {

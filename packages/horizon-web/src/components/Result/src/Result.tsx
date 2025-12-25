@@ -13,7 +13,7 @@ import {
   IconWarningFilledLight,
   IconErrorFilledLight,
 } from '@aurora/icon';
-import NButton from '~/components/Button/src/Button';
+import HButton from '~/components/Button/src/Button';
 import { defaultLocale, localeInjectKey } from '~/provides';
 import useSize from '~/utils/useSize';
 import notAllowed from './source/not-allowed.svg';
@@ -24,7 +24,7 @@ export default defineComponent({
   name: `${useNamespace()}Result`,
   desc: '用于对用户的操作结果或者异常状态做反馈',
   components: {
-    NButton,
+    HButton,
     IconSuccessFilledLight,
     IconInfoFilledLight,
     IconWarningFilledLight,
@@ -93,7 +93,7 @@ export default defineComponent({
           {slots.extra?.() ?? (
             <div class={classHelper.em('extra', 'buttons')}>
               {props.secondaryButton ? (
-                <NButton
+                <HButton
                   plain={true}
                   size={sizeRef.value}
                   forceNewestSize={true}
@@ -102,10 +102,10 @@ export default defineComponent({
                 >
                   {props.secondaryButtonText ??
                     locale.value?.langService.td().horizonWeb.result.secondaryButtonText}
-                </NButton>
+                </HButton>
               ) : undefined}
               {props.primaryButton ? (
-                <NButton
+                <HButton
                   size={sizeRef.value}
                   forceNewestSize={true}
                   {...props.primaryButtonProps}
@@ -113,7 +113,7 @@ export default defineComponent({
                 >
                   {props.primaryButtonText ??
                     locale.value?.langService.td().horizonWeb.result.primaryButtonText}
-                </NButton>
+                </HButton>
               ) : undefined}
             </div>
           )}

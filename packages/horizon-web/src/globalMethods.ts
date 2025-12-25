@@ -9,18 +9,18 @@ export {
 export { LoadingService } from './directives/v-loading';
 
 export {
-  NUploadFileStatusEnum,
-  NUploadFileTypeEnum,
+  HUploadFileStatusEnum,
+  HUploadFileTypeEnum,
   fileTypeMapping,
   fileTypeIconMapping,
 } from './components/Upload';
 
 export {
-  NTableAlignEnum,
-  NTableSortOrderEnum,
-  NTableColumnContextKey,
-  NTableColumnSelectionKey,
-  NTableColumnFilterKey,
+  HTableAlignEnum,
+  HTableSortOrderEnum,
+  HTableColumnContextKey,
+  HTableColumnSelectionKey,
+  HTableColumnFilterKey,
 } from './components/Table';
 
 export { default as dayjs } from './utils/useDayJs';

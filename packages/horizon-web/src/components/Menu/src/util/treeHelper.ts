@@ -1,10 +1,10 @@
-import type { NMenuTreeData } from './types';
+import type { HMenuTreeData } from './types';
 
 export function getMapTreePath(
-  tree: Map<string, NMenuTreeData<'subMenu' | 'menuItem'>>,
+  tree: Map<string, HMenuTreeData<'subMenu' | 'menuItem'>>,
   uuid: string,
 ) {
-  const res: NMenuTreeData<'subMenu' | 'menuItem'>[] = [];
+  const res: HMenuTreeData<'subMenu' | 'menuItem'>[] = [];
 
   for (const leaf of tree.values()) {
     if (leaf.uuid === uuid) {
@@ -24,10 +24,10 @@ export function getMapTreePath(
 }
 
 export function getMapTreePathByValue(
-  tree: Map<string, NMenuTreeData<'subMenu' | 'menuItem'>>,
+  tree: Map<string, HMenuTreeData<'subMenu' | 'menuItem'>>,
   value: string,
 ) {
-  const res: NMenuTreeData<'subMenu' | 'menuItem'>[] = [];
+  const res: HMenuTreeData<'subMenu' | 'menuItem'>[] = [];
 
   for (const leaf of tree.values()) {
     if (leaf.props.value === value) {

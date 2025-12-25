@@ -12,7 +12,6 @@
   },
   "web-types": "json/web-types.json",
   "keywords": [
-    "@aurora/horizon-web",
     "ui",
     "components",
     "vue3",
@@ -31,7 +30,7 @@
     "test": "vitest",
     "lint": "bunx oxlint && eslint --fix --ext .jsx,.js,.ts,.tsx ./src"
   },
-  "license": "ISC",
+  "license": "MIT",
   "files": [
     "dist",
     "lib",

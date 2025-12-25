@@ -1,5 +1,5 @@
 import { shallowMount, mount } from '@vue/test-utils';
-import NTime from '../src/Time';
+import HTime from '../src/Time';
 import { describe, expect, test } from 'vitest';
 import { nextTick } from 'vue';
 
@@ -7,14 +7,14 @@ const delay = (time: number) => new Promise((resolve) => setTimeout(resolve, tim
 
 describe('Time.tsx', () => {
   test('basic', async () => {
-    const wrapper = shallowMount(() => <NTime />);
-    const element = wrapper.findComponent(NTime);
+    const wrapper = shallowMount(() => <HTime />);
+    const element = wrapper.findComponent(HTime);
 
     expect(element.exists()).toBe(true);
   });
 
   test('calculative time', async() => {
-    const wrapper = mount(NTime, {
+    const wrapper = mount(HTime, {
       props: {
         endTime: +new Date('2023-02-27 16:27:30'),
         time: +new Date('2023-02-27 16:27:35'),
@@ -26,7 +26,7 @@ describe('Time.tsx', () => {
   })
 
   test('time', async() => {
-    const wrapper = mount(NTime)
+    const wrapper = mount(HTime)
     await delay(1000)
     await nextTick();
     expect(wrapper.find('.n-time').text()).toBe('00:00:09')

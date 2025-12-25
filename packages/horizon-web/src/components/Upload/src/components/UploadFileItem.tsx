@@ -2,34 +2,34 @@ import type { PropType } from 'vue';
 import { inject, computed, defineComponent, ref, toRef, Fragment } from 'vue';
 import { cls, ComponentClassBlock, cssVariable, sizeUnitTransform } from '@aurora/utils';
 import { IconRemind, IconComplete, IconStart } from '@aurora/icon';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
-import NViewer from '~/components/Viewer/src/Viewer';
-import NProgress from '~/components/Progress/src/Progress';
-import type { NUploadFileType } from '../utils/fileDefines';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
+import HViewer from '~/components/Viewer/src/Viewer';
+import HProgress from '~/components/Progress/src/Progress';
+import type { HUploadFileType } from '../utils/fileDefines';
 import {
   fileTypeIconMapping,
-  NUploadFileStatusEnum,
-  NUploadFileTypeEnum,
+  HUploadFileStatusEnum,
+  HUploadFileTypeEnum,
 } from '../utils/fileDefines';
 import UploadItemControls from './UploadItemControls';
 import type { UploadProps } from '../composables/useProps';
-import type { NUploadMultipartSetting } from '../composables/useMultipartUpload';
+import type { HUploadMultipartSetting } from '../composables/useMultipartUpload';
 import { getBaseExtName, suitSizeValue } from '../utils/helper';
 import {
-  NUploadOpenViewerInjectKey,
-  NUploadUploadFileHelperInjectKey,
+  HUploadOpenViewerInjectKey,
+  HUploadUploadFileHelperInjectKey,
 } from '../utils/injectKeys';
 
 export default defineComponent({
   name: 'UploadFileItem',
   components: {
-    NTooltip,
-    NViewer,
-    NProgress,
+    HTooltip,
+    HViewer,
+    HProgress,
   },
   props: {
     file: {
-      type: Object as PropType<NUploadFileType>,
+      type: Object as PropType<HUploadFileType>,
       required: true,
     },
     size: {
@@ -40,7 +40,7 @@ export default defineComponent({
       type: [Number, String],
     },
     multipart: {
-      type: [Boolean, Object] as PropType<false | NUploadMultipartSetting>,
+      type: [Boolean, Object] as PropType<false | HUploadMultipartSetting>,
       required: true,
     },
     controls: {
@@ -71,11 +71,11 @@ export default defineComponent({
     const classHelper = new ComponentClassBlock('upload--file-item');
     const itemRef = ref<HTMLElement | null>(null);
 
-    const uploadFileHelper = inject(NUploadUploadFileHelperInjectKey)!;
-    const openViewer = inject(NUploadOpenViewerInjectKey)!;
+    const uploadFileHelper = inject(HUploadUploadFileHelperInjectKey)!;
+    const openViewer = inject(HUploadOpenViewerInjectKey)!;
 
     const shouldShowProgress = computed(() => {
-      return [NUploadFileStatusEnum.Uploading, NUploadFileStatusEnum.Pause].includes(
+      return [HUploadFileStatusEnum.Uploading, HUploadFileStatusEnum.Pause].includes(
         file.value.status,
       );
     });
@@ -83,7 +83,7 @@ export default defineComponent({
     const shouldShowThumbnail = computed(
       () =>
         props.showFileThumbnail &&
-        [NUploadFileTypeEnum.Image, NUploadFileTypeEnum.Video].includes(file.value.type),
+        [HUploadFileTypeEnum.Image, HUploadFileTypeEnum.Video].includes(file.value.type),
     );
 
     const iconSize = computed(() => {
@@ -102,15 +102,15 @@ export default defineComponent({
       }
     });
 
-    const getStatus = (status: NUploadFileStatusEnum) => {
-      return [NUploadFileStatusEnum.Success, NUploadFileStatusEnum.Fail].includes(status) ? (
+    const getStatus = (status: HUploadFileStatusEnum) => {
+      return [HUploadFileStatusEnum.Success, HUploadFileStatusEnum.Fail].includes(status) ? (
         <div class={classHelper.em('details', 'file-status')}>
-          {status === NUploadFileStatusEnum.Success ? (
+          {status === HUploadFileStatusEnum.Success ? (
             <IconComplete
               size={16}
               color={cssVariable('upload', 'color', 'file-list-item', 'success')}
             />
-          ) : status === NUploadFileStatusEnum.Fail ? (
+          ) : status === HUploadFileStatusEnum.Fail ? (
             <IconRemind
               size={16}
               color={cssVariable('upload', 'color', 'file-list-item', 'fail')}
@@ -166,7 +166,7 @@ export default defineComponent({
                 onClick={previewFile}
               >
                 {shouldShowThumbnail.value ? (
-                  file.value.type === NUploadFileTypeEnum.Image ? (
+                  file.value.type === HUploadFileTypeEnum.Image ? (
                     <img src={file.value.url || file.value.blobUrl} alt="file thumbnail" />
                   ) : (
                     <Fragment>
@@ -187,9 +187,9 @@ export default defineComponent({
             </div>
             <div class={classHelper.e('details')}>
               <div class={classHelper.em('details', 'file-name')}>
-                <NTooltip overflow={true} content={file.value.name} enterable={true}>
+                <HTooltip overflow={true} content={file.value.name} enterable={true}>
                   <span class={classHelper.em('details', 'file-base-name')}>{baseName}</span>
-                </NTooltip>
+                </HTooltip>
                 <span class={classHelper.em('details', 'file-ext-name')}>
                   {ext ? `.${ext}` : ''}
                 </span>
@@ -203,7 +203,7 @@ export default defineComponent({
               )}
               {shouldShowProgress.value && (
                 <div class={classHelper.em('details', 'progress')}>
-                  <NProgress
+                  <HProgress
                     percentage={file.value.percentage}
                     size={props.size === 'small' ? 'mini' : 'small'}
                     showText={props.size !== 'small'}

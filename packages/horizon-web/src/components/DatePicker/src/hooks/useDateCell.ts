@@ -4,9 +4,9 @@ import type { Dayjs } from 'dayjs';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock } from '@aurora/utils';
 import {
-  NDatePickerEmitsInjectKey,
-  NDatePickerFormatInjectKey,
-  NDatePickerPropsInjectKey,
+  HDatePickerEmitsInjectKey,
+  HDatePickerFormatInjectKey,
+  HDatePickerPropsInjectKey,
 } from '../utils/injectKeys';
 import dayjs from '~/utils/useDayJs';
 import type { DatePickerTimePanelComponentsEmits } from '../composables/useEmits';
@@ -24,8 +24,8 @@ export default function useDateCell(
 ) {
   const classHelper = new ComponentClassBlock('date-picker-panel-body');
 
-  const parentProps = inject(NDatePickerPropsInjectKey)!;
-  const pickerType = inject(NDatePickerFormatInjectKey)!;
+  const parentProps = inject(HDatePickerPropsInjectKey)!;
+  const pickerType = inject(HDatePickerFormatInjectKey)!;
 
   const dayjsUnit = computed(() => (panelType === 'day' ? 'date' : panelType));
 

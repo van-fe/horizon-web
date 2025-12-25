@@ -1,13 +1,13 @@
 import { shallowMount } from '@vue/test-utils';
-import NTimeline from '../src/Timeline';
+import HTimeline from '../src/Timeline';
 import { describe, expect, test } from 'vitest';
 
 import { useDateFormative } from '../src/composables/useDateFormat';
 
 describe('Timeline.tsx', () => {
   test('basic', async () => {
-    const wrapper = shallowMount(() => <NTimeline />);
-    const element = wrapper.findComponent(NTimeline);
+    const wrapper = shallowMount(() => <HTimeline />);
+    const element = wrapper.findComponent(HTimeline);
 
     expect(element.exists()).toBe(true);
   });

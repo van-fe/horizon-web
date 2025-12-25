@@ -1,13 +1,13 @@
 import type { Ref, ToRefs } from 'vue';
 import { computed } from 'vue';
 import type { TableProps } from '../composables/useProps';
-import type { NTableColumnData } from '../utils/types';
+import type { HTableColumnData } from '../utils/types';
 
 export default function useBorder(
   refs: ToRefs<TableProps>,
   columnAnalysis: Ref<{
-    columnGroups: NTableColumnData[][];
-    flattenColumns: NTableColumnData[];
+    columnGroups: HTableColumnData[][];
+    flattenColumns: HTableColumnData[];
   }>,
 ) {
   return {

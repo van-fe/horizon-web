@@ -386,7 +386,7 @@ export const useVirtualScrollerItemProps = declarePropType({
 export type VirtualScrollerProps = ExtractPropTypes<typeof useVirtualScrollerProps>;
 export type VirtualScrollerItemProps = ExtractPropTypes<typeof useVirtualScrollerItemProps>;
 export type RecycleScrollerProps = ExtractPropTypes<typeof useRecycleScrollerProps>;
-export interface NRecycleScrollerInstance {
+export interface HRecycleScrollerInstance {
   scrollToItem: (index: number) => void;
   getRootEl: () => HTMLDivElement | null;
 }

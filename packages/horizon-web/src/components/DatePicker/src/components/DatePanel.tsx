@@ -13,7 +13,7 @@ import type {
 } from '../composables/useExposes';
 import { useDatePickerDatePanelExposes } from '../composables/useExposes';
 import type { Dayjs } from 'dayjs';
-import { NDatePickerPropsInjectKey } from '../utils/injectKeys';
+import { HDatePickerPropsInjectKey } from '../utils/injectKeys';
 
 export default defineComponent({
   name: 'DatePanel',
@@ -29,7 +29,7 @@ export default defineComponent({
   ) {
     const classHelper = new ComponentClassBlock('date-picker');
 
-    const parentProps = inject(NDatePickerPropsInjectKey)!;
+    const parentProps = inject(HDatePickerPropsInjectKey)!;
 
     const datePanelHeaderDomRef =
       ref<HorizonWebComponentInstance<typeof DatePanelHeader, DatePickerDatePanelHeaderExposes>>();

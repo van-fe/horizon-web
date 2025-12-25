@@ -1,8 +1,8 @@
 import type { Ref } from 'vue';
 import { watch, ref } from 'vue';
-import type { NTableInsertedColumnData } from '../utils/types';
+import type { HTableInsertedColumnData } from '../utils/types';
 
-export default function useColumnVisible(columns: Ref<NTableInsertedColumnData[]>) {
+export default function useColumnVisible(columns: Ref<HTableInsertedColumnData[]>) {
   const visibleStore = ref(new Map<string, boolean>());
   const visibleStoreBack = ref(visibleStore.value);
 
@@ -17,7 +17,7 @@ export default function useColumnVisible(columns: Ref<NTableInsertedColumnData[]
     },
   );
 
-  function collectVisibleColumns(columns: NTableInsertedColumnData[]) {
+  function collectVisibleColumns(columns: HTableInsertedColumnData[]) {
     columns.forEach(column => {
       if (!visibleStore.value.has(column.uuid))
         visibleStore.value.set(column.uuid, column.props.visible);

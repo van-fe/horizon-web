@@ -32,7 +32,7 @@ import type { RecycleScrollerExposes } from './composables/useExposes';
 import { useElementVisibility, useResizeObserver } from '@vueuse/core';
 import type { Sizes, ViewItem } from './utils/types';
 import { getScrollParent } from './utils/scrollParent';
-import NScrollbar from '~/components/Scrollbar/src/Scrollbar';
+import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
 import useSize from '~/utils/useSize';
 import set from 'lodash/set';
 import get from 'lodash/get';
@@ -44,7 +44,7 @@ let uid = 0;
 export default defineComponent({
   name: `${useNamespace()}RecycleScroller`,
   components: {
-    NScrollbar,
+    HScrollbar,
   },
   props: useRecycleScrollerProps,
   emits: useRecycleScrollerEmits,
@@ -81,7 +81,7 @@ export default defineComponent({
     const cls = new ComponentClassBlock('recycle-scroller');
 
     // dom ref(s) ---------------------------------------
-    const scrollbar = ref<HorizonWebComponentInstance<typeof NScrollbar, ScrollbarExposes>>();
+    const scrollbar = ref<HorizonWebComponentInstance<typeof HScrollbar, ScrollbarExposes>>();
     const wrapperRef = ref<HTMLElement | null | undefined>();
     const wiewRef = ref<HTMLElement | null | undefined>();
     const beforeRef = ref<HTMLElement | null | undefined>();
@@ -821,7 +821,7 @@ export default defineComponent({
 
     return () => (
       // 主容器
-      <NScrollbar
+      <HScrollbar
         ref={scrollbar}
         class={multiCls(
           cls.block,
@@ -854,7 +854,7 @@ export default defineComponent({
             {slots.after()}
           </div>
         )}
-      </NScrollbar>
+      </HScrollbar>
     );
   },
 });

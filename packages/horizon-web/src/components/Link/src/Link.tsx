@@ -12,13 +12,13 @@ import { useLinkProps } from './composables/useProps';
 import type { Router } from 'vue-router';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { IconLoadingLine } from '@aurora/icon';
-import { cls, ComponentClassBlock, NOnlyChild, useNamespace } from '@aurora/utils';
+import { cls, ComponentClassBlock, HChildOnly, useNamespace } from '@aurora/utils';
 import type { LinkEmits } from './composables/useEmits';
 import { useLinkEmits } from './composables/useEmits';
 import type { LinkSlots } from './composables/useSlots';
 import { useLinkSlots } from './composables/useSlots';
 import { GlobalSizeInjectedKey } from '~/components/Application/src/utils/injectedKeys';
-import type { NApplicationSizeType } from '~/components/Application/src/composables/useProps';
+import type { HApplicationSizeType } from '~/components/Application/src/composables/useProps';
 import { defaultLocale, localeInjectKey } from '~/provides';
 import { renderIcon } from '~/utils/useIcon';
 
@@ -50,7 +50,7 @@ export default defineComponent({
     const globalSize = inject(GlobalSizeInjectedKey, ref('medium'));
     const sizeRef = computed(
       () => props.size || globalSize.value,
-    ) as ComputedRef<NApplicationSizeType>;
+    ) as ComputedRef<HApplicationSizeType>;
 
     // locale
     const locale = inject(localeInjectKey, defaultLocale);
@@ -117,7 +117,7 @@ export default defineComponent({
     });
 
     const contentRender = () => (
-      <NOnlyChild>
+      <HChildOnly>
         {slots.prefix ? <span class={classHelper.e('prefix')}>{slots.prefix?.()}</span> : ''}
         <span class={classHelper.e('inner')}>{slots.default?.()}</span>
         {slots.suffix ? <span class={classHelper.e('suffix')}>{slots.suffix?.()}</span> : ''}
@@ -138,7 +138,7 @@ export default defineComponent({
             #
           </a>
         )}
-      </NOnlyChild>
+      </HChildOnly>
     );
 
     const wrapperElement = computed(() => (props.anchor ? 'span' : 'a'));
@@ -161,10 +161,10 @@ export default defineComponent({
         onClick={onClick}
       >
         {props.loading ? (
-          <NOnlyChild>
+          <HChildOnly>
             <IconLoadingLine spin="cw" size={loadingSvgSizeMapping[sizeRef.value]} />
             {locale.value?.langService.td().horizonWeb.link.loading}
-          </NOnlyChild>
+          </HChildOnly>
         ) : (
           contentRender()
         )}

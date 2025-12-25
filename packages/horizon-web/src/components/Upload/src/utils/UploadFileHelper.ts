@@ -7,8 +7,8 @@ import type { Arrayable } from '@aurora/utils';
 import { getVideoFirstFrame, isFileList, getVideoDuration, isNumber } from '@aurora/utils';
 import UploadHelper from './UploadHelper';
 import { isFileSame, transformSingleRawFileTypeToUploadFileType } from './helper';
-import type { NUploadFileType, NUploadRawFileType } from './fileDefines';
-import { NUploadFileTypeEnum, NUploadFileStatusEnum } from './fileDefines';
+import type { HUploadFileType, HUploadRawFileType } from './fileDefines';
+import { HUploadFileTypeEnum, HUploadFileStatusEnum } from './fileDefines';
 
 export default class UploadFileHelper extends UploadHelper {
   private containerEl: HTMLElement | undefined;
@@ -45,7 +45,7 @@ export default class UploadFileHelper extends UploadHelper {
       this._fileList,
       val => {
         Array.from(val).forEach(file => {
-          if (file.type === NUploadFileTypeEnum.Video && !file.duration) {
+          if (file.type === HUploadFileTypeEnum.Video && !file.duration) {
             getVideoDuration(file.blobUrl || file.url, duration => {
               file.duration = duration;
             });
@@ -165,9 +165,9 @@ export default class UploadFileHelper extends UploadHelper {
   }
 
   public transformRawFileTypeToUploadFileType(
-    target: Arrayable<NUploadRawFileType> | FileList | undefined,
+    target: Arrayable<HUploadRawFileType> | FileList | undefined,
   ) {
-    const files: NUploadFileType[] = [];
+    const files: HUploadFileType[] = [];
 
     if (target === undefined) {
       return files;
@@ -182,7 +182,7 @@ export default class UploadFileHelper extends UploadHelper {
     return files;
   }
 
-  public isValidFile(file: NUploadFileType) {
+  public isValidFile(file: HUploadFileType) {
     const acceptList = this.accept.value?.split(',') ?? [];
 
     if (acceptList) {
@@ -197,7 +197,7 @@ export default class UploadFileHelper extends UploadHelper {
     } else return true;
   }
 
-  public async addFiles(fileList: Arrayable<NUploadRawFileType> | FileList, fromUser = true) {
+  public async addFiles(fileList: Arrayable<HUploadRawFileType> | FileList, fromUser = true) {
     let files = this.transformRawFileTypeToUploadFileType(fileList);
 
     if (fromUser) {
@@ -272,8 +272,8 @@ export default class UploadFileHelper extends UploadHelper {
     }
   }
 
-  public async removeFile(files: NUploadRawFileType[], check = true) {
-    const doRemove = (file: NUploadFileType) => {
+  public async removeFile(files: HUploadRawFileType[], check = true) {
+    const doRemove = (file: HUploadFileType) => {
       this.pauseUpload(file);
       this.removeFromUploadingQueue(file);
       unref(this._fileList).delete(file);
@@ -305,7 +305,7 @@ export default class UploadFileHelper extends UploadHelper {
   }
 
   public async abortFiles(
-    files: NUploadFileType[] = Array.from(this.fileList.value.values()),
+    files: HUploadFileType[] = Array.from(this.fileList.value.values()),
     check = true,
   ) {
     const handler = this.beforeAbort;
@@ -315,14 +315,14 @@ export default class UploadFileHelper extends UploadHelper {
         try {
           const callback = await handler(file);
           if (callback) {
-            this.setStatus(file, NUploadFileStatusEnum.Pause);
+            this.setStatus(file, HUploadFileStatusEnum.Pause);
           }
         } catch (e) {
           // do nothing
         }
       }
     } else {
-      files.forEach(file => this.setStatus(file, NUploadFileStatusEnum.Pause));
+      files.forEach(file => this.setStatus(file, HUploadFileStatusEnum.Pause));
     }
   }
 

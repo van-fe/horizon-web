@@ -1,10 +1,10 @@
 import { mount } from '@vue/test-utils';
-import NDropdown from '../src/Dropdown';
+import HDropdown from '../src/Dropdown';
 import { describe, expect, test } from 'vitest';
-import NButton from '../../Button';
-import { NDropdownItem, NDropdownMenu, NDropdownSubmenu } from '../index';
+import HButton from '../../Button';
+import { HDropdownItem, HDropdownMenu, HDropdownSubmenu } from '../index';
 import { sleep } from '../../../utils/tools';
-import NPopover from '../../Popover';
+import HPopover from '../../Popover';
 import { Fragment, nextTick } from 'vue';
 
 describe('DropdownSubmenu.tsx', () => {
@@ -12,20 +12,20 @@ describe('DropdownSubmenu.tsx', () => {
     const wrapper = mount(
       () => (
         <Fragment>
-          <NDropdown toBody={false}>
+          <HDropdown toBody={false}>
             {{
-              default: () => <NButton>Trigger</NButton>,
+              default: () => <HButton>Trigger</HButton>,
               dropdown: () => (
-                <NDropdownMenu>
-                  <NDropdownSubmenu title="Submenu">
-                    <NDropdownItem>1</NDropdownItem>
-                    <NDropdownItem>2</NDropdownItem>
-                    <NDropdownItem>3</NDropdownItem>
-                  </NDropdownSubmenu>
-                </NDropdownMenu>
+                <HDropdownMenu>
+                  <HDropdownSubmenu title="Submenu">
+                    <HDropdownItem>1</HDropdownItem>
+                    <HDropdownItem>2</HDropdownItem>
+                    <HDropdownItem>3</HDropdownItem>
+                  </HDropdownSubmenu>
+                </HDropdownMenu>
               ),
             }}
-          </NDropdown>
+          </HDropdown>
         </Fragment>
       ),
       {
@@ -33,14 +33,14 @@ describe('DropdownSubmenu.tsx', () => {
       },
     );
 
-    const triggerEle = wrapper.findComponent(NPopover);
+    const triggerEle = wrapper.findComponent(HPopover);
 
     await triggerEle.trigger('mouseenter');
 
     await sleep(200);
 
-    expect(wrapper.findComponent(NDropdownSubmenu).exists()).toBeTruthy();
-    expect(wrapper.findComponent(NDropdownSubmenu).text()).eq('Submenu123');
+    expect(wrapper.findComponent(HDropdownSubmenu).exists()).toBeTruthy();
+    expect(wrapper.findComponent(HDropdownSubmenu).text()).eq('Submenu123');
   });
 
   describe('props', () => {
@@ -48,20 +48,20 @@ describe('DropdownSubmenu.tsx', () => {
       const wrapper = mount(
         () => (
           <>
-            <NDropdown toBody={false}>
+            <HDropdown toBody={false}>
               {{
-                default: () => <NButton>Trigger</NButton>,
+                default: () => <HButton>Trigger</HButton>,
                 dropdown: () => (
-                  <NDropdownMenu>
-                    <NDropdownSubmenu disabled={true}>
-                      <NDropdownItem>1</NDropdownItem>
-                      <NDropdownItem>2</NDropdownItem>
-                      <NDropdownItem>3</NDropdownItem>
-                    </NDropdownSubmenu>
-                  </NDropdownMenu>
+                  <HDropdownMenu>
+                    <HDropdownSubmenu disabled={true}>
+                      <HDropdownItem>1</HDropdownItem>
+                      <HDropdownItem>2</HDropdownItem>
+                      <HDropdownItem>3</HDropdownItem>
+                    </HDropdownSubmenu>
+                  </HDropdownMenu>
                 ),
               }}
-            </NDropdown>
+            </HDropdown>
           </>
         ),
         {
@@ -69,33 +69,33 @@ describe('DropdownSubmenu.tsx', () => {
         },
       );
 
-      const triggerEle = wrapper.findComponent(NPopover);
+      const triggerEle = wrapper.findComponent(HPopover);
 
       await triggerEle.trigger('mouseenter');
 
       await sleep(200);
 
-      await expect(wrapper.findComponent(NDropdownSubmenu).classes('is-disabled')).toBeTruthy();
+      await expect(wrapper.findComponent(HDropdownSubmenu).classes('is-disabled')).toBeTruthy();
     });
 
     test('icon', async () => {
       const wrapper = mount(
         () => (
           <>
-            <NDropdown toBody={false}>
+            <HDropdown toBody={false}>
               {{
-                default: () => <NButton>Trigger</NButton>,
+                default: () => <HButton>Trigger</HButton>,
                 dropdown: () => (
-                  <NDropdownMenu>
-                    <NDropdownSubmenu title="Submenu" icon="eye">
-                      <NDropdownItem>1</NDropdownItem>
-                      <NDropdownItem>2</NDropdownItem>
-                      <NDropdownItem>3</NDropdownItem>
-                    </NDropdownSubmenu>
-                  </NDropdownMenu>
+                  <HDropdownMenu>
+                    <HDropdownSubmenu title="Submenu" icon="eye">
+                      <HDropdownItem>1</HDropdownItem>
+                      <HDropdownItem>2</HDropdownItem>
+                      <HDropdownItem>3</HDropdownItem>
+                    </HDropdownSubmenu>
+                  </HDropdownMenu>
                 ),
               }}
-            </NDropdown>
+            </HDropdown>
           </>
         ),
         {
@@ -103,33 +103,33 @@ describe('DropdownSubmenu.tsx', () => {
         },
       );
 
-      const triggerEle = wrapper.findComponent(NPopover);
+      const triggerEle = wrapper.findComponent(HPopover);
 
       await triggerEle.trigger('mouseenter');
 
       await sleep(200);
 
-      await expect(wrapper.findComponent(NDropdownSubmenu).find('.a-icon').exists()).toBeTruthy();
+      await expect(wrapper.findComponent(HDropdownSubmenu).find('.a-icon').exists()).toBeTruthy();
     });
 
     test('active', async () => {
       const wrapper = mount(
         () => (
           <>
-            <NDropdown toBody={false}>
+            <HDropdown toBody={false}>
               {{
-                default: () => <NButton>Trigger</NButton>,
+                default: () => <HButton>Trigger</HButton>,
                 dropdown: () => (
-                  <NDropdownMenu>
-                    <NDropdownSubmenu title="Submenu" active={true}>
-                      <NDropdownItem>1</NDropdownItem>
-                      <NDropdownItem>2</NDropdownItem>
-                      <NDropdownItem>3</NDropdownItem>
-                    </NDropdownSubmenu>
-                  </NDropdownMenu>
+                  <HDropdownMenu>
+                    <HDropdownSubmenu title="Submenu" active={true}>
+                      <HDropdownItem>1</HDropdownItem>
+                      <HDropdownItem>2</HDropdownItem>
+                      <HDropdownItem>3</HDropdownItem>
+                    </HDropdownSubmenu>
+                  </HDropdownMenu>
                 ),
               }}
-            </NDropdown>
+            </HDropdown>
           </>
         ),
         {
@@ -137,38 +137,38 @@ describe('DropdownSubmenu.tsx', () => {
         },
       );
 
-      const triggerEle = wrapper.findComponent(NPopover);
+      const triggerEle = wrapper.findComponent(HPopover);
 
       await triggerEle.trigger('mouseenter');
 
       await sleep(200);
 
-      await expect(wrapper.findComponent(NDropdownSubmenu).classes('is-active')).toBeTruthy();
+      await expect(wrapper.findComponent(HDropdownSubmenu).classes('is-active')).toBeTruthy();
     });
 
     test('trigger', async () => {
       const wrapper = mount(
         () => (
           <>
-            <NDropdown trigger="click" toBody={false}>
+            <HDropdown trigger="click" toBody={false}>
               {{
-                default: () => <NButton>Trigger</NButton>,
+                default: () => <HButton>Trigger</HButton>,
                 dropdown: () => (
-                  <NDropdownMenu>
-                    <NDropdownSubmenu trigger="click" title="Submenu">
-                      <NDropdownItem>1</NDropdownItem>
-                      <NDropdownItem>2</NDropdownItem>
-                      <NDropdownItem>3</NDropdownItem>
-                    </NDropdownSubmenu>
-                    <NDropdownSubmenu trigger="click" title="Submenu2">
-                      <NDropdownItem>4</NDropdownItem>
-                      <NDropdownItem>5</NDropdownItem>
-                      <NDropdownItem>6</NDropdownItem>
-                    </NDropdownSubmenu>
-                  </NDropdownMenu>
+                  <HDropdownMenu>
+                    <HDropdownSubmenu trigger="click" title="Submenu">
+                      <HDropdownItem>1</HDropdownItem>
+                      <HDropdownItem>2</HDropdownItem>
+                      <HDropdownItem>3</HDropdownItem>
+                    </HDropdownSubmenu>
+                    <HDropdownSubmenu trigger="click" title="Submenu2">
+                      <HDropdownItem>4</HDropdownItem>
+                      <HDropdownItem>5</HDropdownItem>
+                      <HDropdownItem>6</HDropdownItem>
+                    </HDropdownSubmenu>
+                  </HDropdownMenu>
                 ),
               }}
-            </NDropdown>
+            </HDropdown>
           </>
         ),
         {
@@ -176,19 +176,19 @@ describe('DropdownSubmenu.tsx', () => {
         },
       );
 
-      const triggerEle = wrapper.findComponent(NButton);
+      const triggerEle = wrapper.findComponent(HButton);
 
       await triggerEle.trigger('mouseenter');
 
       await sleep(200);
 
-      await expect(wrapper.findComponent(NDropdownMenu).exists()).toBeFalsy();
+      await expect(wrapper.findComponent(HDropdownMenu).exists()).toBeFalsy();
 
       await triggerEle.trigger('click');
 
       await nextTick();
 
-      await expect(wrapper.findComponent(NDropdownMenu).exists()).toBeTruthy();
+      await expect(wrapper.findComponent(HDropdownMenu).exists()).toBeTruthy();
     });
   });
 });

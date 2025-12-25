@@ -1,11 +1,11 @@
 import { shallowMount } from '@vue/test-utils';
-import { NRow, NCol } from '../index';
+import { HRow, HCol } from '../index';
 import { describe, expect, test } from 'vitest';
 
 describe('Row.tsx', () => {
   test('basic', async () => {
-    const wrapper = shallowMount(() => <NRow />);
-    const element = wrapper.findComponent(NRow);
+    const wrapper = shallowMount(() => <HRow />);
+    const element = wrapper.findComponent(HRow);
 
     expect(element.exists()).toBe(true);
   });
@@ -13,8 +13,8 @@ describe('Row.tsx', () => {
 
 describe('Col.tsx', () => {
   test('basic', async () => {
-    const wrapper = shallowMount(() => <NCol />);
-    const element = wrapper.findComponent(NCol);
+    const wrapper = shallowMount(() => <HCol />);
+    const element = wrapper.findComponent(HCol);
 
     expect(element.exists()).toBe(true);
   });

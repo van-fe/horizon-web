@@ -1,11 +1,11 @@
 import { type Ref, nextTick, ref, watch } from 'vue';
 import { useResizeObserver } from '@vueuse/core';
-import type { NTableColumnData } from '../utils/types';
+import type { HTableColumnData } from '../utils/types';
 
 export default function useResizeListener(
   analysisColumns: Ref<{
-    columnGroups: NTableColumnData[][];
-    flattenColumns: NTableColumnData[];
+    columnGroups: HTableColumnData[][];
+    flattenColumns: HTableColumnData[];
   }>,
   hooks: Array<Function>,
 ) {

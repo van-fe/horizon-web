@@ -1,8 +1,8 @@
 import type { Ref } from 'vue';
 import { computed, ref } from 'vue';
-import type { NViewerSource } from './useProps';
+import type { HViewerSource } from './useProps';
 
-export default function useNavigation(imagesRef: Ref<NViewerSource[]>, loopRef: Ref<boolean>) {
+export default function useNavigation(imagesRef: Ref<HViewerSource[]>, loopRef: Ref<boolean>) {
   const currentIndexRef = ref(0);
   const loadingPreviewRef = ref(true);
 

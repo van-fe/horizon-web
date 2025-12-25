@@ -1,16 +1,16 @@
-import { AIconSVG } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 import { mount } from '@vue/test-utils';
 import { describe, expect, test, vi } from 'vitest';
 import { nextTick, reactive, ref } from 'vue';
-import { NForm, NFormItem, type NFormInstance } from '../../Form';
-import NSegmented from '../src/Segmented';
-import NSegmentedItem from '../src/SegmentedItem';
-import type { NSegmentedValue } from '../src/composables/useProps';
+import { HForm, HFormItem, type HFormInstance } from '../../Form';
+import HSegmented from '../src/Segmented';
+import HSegmentedItem from '../src/SegmentedItem';
+import type { HSegmentedValue } from '../src/composables/useProps';
 
 describe('Segmented.tsx', () => {
   test('test basic #render', () => {
-    const wrapper = mount(() => <NSegmented />);
-    const element = wrapper.findComponent(NSegmented);
+    const wrapper = mount(() => <HSegmented />);
+    const element = wrapper.findComponent(HSegmented);
 
     expect(element.html()).toMatchInlineSnapshot('""');
 
@@ -21,12 +21,12 @@ describe('Segmented.tsx', () => {
     const defaultActiveKey = ref('1');
 
     const wrapper = mount(() => (
-      <NSegmented defaultActiveKey={defaultActiveKey.value}>
-        <NSegmentedItem key="1">1</NSegmentedItem>
-        <NSegmentedItem key="2">2</NSegmentedItem>
-      </NSegmented>
+      <HSegmented defaultActiveKey={defaultActiveKey.value}>
+        <HSegmentedItem key="1">1</HSegmentedItem>
+        <HSegmentedItem key="2">2</HSegmentedItem>
+      </HSegmented>
     ));
-    const element = wrapper.findComponent(NSegmented);
+    const element = wrapper.findComponent(HSegmented);
     expect(element.html()).toMatchInlineSnapshot(`
       "<div role="tablist" class="n-segmented n-segmented--medium" tabindex="0">
         <div class="n-segmented__nav">
@@ -55,18 +55,18 @@ describe('Segmented.tsx', () => {
     const max = 100;
     const wrapper = mount(() => (
       <div style={{ width: '400px' }}>
-        <NSegmented arrow>
+        <HSegmented arrow>
           {Array(max)
             .fill(0)
             .map((_, index) => (
-              <NSegmentedItem key={index} label={`Label ${index}`} />
+              <HSegmentedItem key={index} label={`Label ${index}`} />
             ))}
-        </NSegmented>
+        </HSegmented>
       </div>
     ));
 
-    const sgm = wrapper.findComponent(NSegmented);
-    const items = wrapper.findAllComponents(NSegmentedItem);
+    const sgm = wrapper.findComponent(HSegmented);
+    const items = wrapper.findAllComponents(HSegmentedItem);
     expect(items).toHaveLength(max);
     const leftBtn = sgm.find('[test-id="left-btn"]');
     const rightBtn = sgm.find('[test-id="right-btn"]');
@@ -82,10 +82,10 @@ describe('Segmented.tsx', () => {
     const bw = 100;
     const wrapper = mount(() => (
       <div style={{ width: `${bw}px`, display: 'block' }}>
-        <NSegmented block>
-          <NSegmentedItem key="1">1</NSegmentedItem>
-          <NSegmentedItem key="2">2</NSegmentedItem>
-        </NSegmented>
+        <HSegmented block>
+          <HSegmentedItem key="1">1</HSegmentedItem>
+          <HSegmentedItem key="2">2</HSegmentedItem>
+        </HSegmented>
       </div>
     ));
 
@@ -112,7 +112,7 @@ describe('Segmented.tsx', () => {
       </div>"
     `);
 
-    const sgm = wrapper.findComponent(NSegmented);
+    const sgm = wrapper.findComponent(HSegmented);
     expect(sgm.exists()).toBe(true);
     expect(sgm.classes().join(' ')).toContain('block');
   });
@@ -120,12 +120,12 @@ describe('Segmented.tsx', () => {
   test('test disabled #render', () => {
     const fn = vi.fn();
     const wrapper = mount(() => (
-      <NSegmented defaultActiveKey="2" onChange={fn}>
-        <NSegmentedItem key="1" disabled>
+      <HSegmented defaultActiveKey="2" onChange={fn}>
+        <HSegmentedItem key="1" disabled>
           1
-        </NSegmentedItem>
-        <NSegmentedItem key="2">2</NSegmentedItem>
-      </NSegmented>
+        </HSegmentedItem>
+        <HSegmentedItem key="2">2</HSegmentedItem>
+      </HSegmented>
     ));
 
     expect(wrapper.html()).toMatchInlineSnapshot(`
@@ -149,7 +149,7 @@ describe('Segmented.tsx', () => {
       </div>"
     `);
 
-    const sgm = wrapper.findComponent(NSegmented);
+    const sgm = wrapper.findComponent(HSegmented);
     expect(sgm.exists()).toBe(true);
     const disabled = wrapper.find('.n-segmented__item--disabled');
     expect(disabled.exists()).toBe(true);
@@ -158,18 +158,18 @@ describe('Segmented.tsx', () => {
   });
 
   test('test controller mode #render', async () => {
-    const activeKey = ref<NSegmentedValue>('1');
-    const fn = vi.fn((v: NSegmentedValue) => {
+    const activeKey = ref<HSegmentedValue>('1');
+    const fn = vi.fn((v: HSegmentedValue) => {
       activeKey.value = v;
     });
     const wrapper = mount(() => (
-      <NSegmented activeKey={activeKey.value} onChange={fn}>
-        <NSegmentedItem key="1">1</NSegmentedItem>
-        <NSegmentedItem key="2">2</NSegmentedItem>
-      </NSegmented>
+      <HSegmented activeKey={activeKey.value} onChange={fn}>
+        <HSegmentedItem key="1">1</HSegmentedItem>
+        <HSegmentedItem key="2">2</HSegmentedItem>
+      </HSegmented>
     ));
 
-    const sgm = wrapper.findComponent(NSegmented);
+    const sgm = wrapper.findComponent(HSegmented);
     expect(sgm.vm.activeKey).toBe('1');
     activeKey.value = '2';
     await nextTick();
@@ -184,13 +184,13 @@ describe('Segmented.tsx', () => {
   test('test size #render', async () => {
     const size = ref();
     const wrapper = mount(() => (
-      <NSegmented size={size.value}>
-        <NSegmentedItem key="1">1</NSegmentedItem>
-        <NSegmentedItem key="2">2</NSegmentedItem>
-      </NSegmented>
+      <HSegmented size={size.value}>
+        <HSegmentedItem key="1">1</HSegmentedItem>
+        <HSegmentedItem key="2">2</HSegmentedItem>
+      </HSegmented>
     ));
 
-    const sgm = wrapper.findComponent(NSegmented);
+    const sgm = wrapper.findComponent(HSegmented);
     expect(sgm.exists()).toBe(true);
     expect(sgm.classes().join(' ')).contains('medium');
 
@@ -204,43 +204,43 @@ describe('Segmented.tsx', () => {
   });
 
   test('test dynamic load #render', async () => {
-    const activeKey = ref<NSegmentedValue>('1');
-    const fn = vi.fn((v: NSegmentedValue) => {
+    const activeKey = ref<HSegmentedValue>('1');
+    const fn = vi.fn((v: HSegmentedValue) => {
       activeKey.value = v;
     });
-    const items = ref<NSegmentedValue[]>(['1', '2']);
+    const items = ref<HSegmentedValue[]>(['1', '2']);
     const wrapper = mount(() => (
-      <NSegmented activeKey={activeKey.value} onChange={fn}>
+      <HSegmented activeKey={activeKey.value} onChange={fn}>
         {items.value.map(item => (
-          <NSegmentedItem key={item} label={`Label ${item}`} />
+          <HSegmentedItem key={item} label={`Label ${item}`} />
         ))}
-      </NSegmented>
+      </HSegmented>
     ));
 
-    const sgm = wrapper.findComponent(NSegmented);
+    const sgm = wrapper.findComponent(HSegmented);
     expect(sgm.exists()).toBe(true);
 
     items.value.push('3');
     await nextTick();
-    const components = wrapper.findAllComponents(NSegmentedItem);
+    const components = wrapper.findAllComponents(HSegmentedItem);
     expect(components).toHaveLength(items.value.length);
   });
 
   test('test custom item #render', () => {
-    const activeKey = ref<NSegmentedValue>('1');
-    const fn = vi.fn((v: NSegmentedValue) => {
+    const activeKey = ref<HSegmentedValue>('1');
+    const fn = vi.fn((v: HSegmentedValue) => {
       activeKey.value = v;
     });
     const wrapper = mount(() => (
-      <NSegmented activeKey={activeKey.value} onChange={fn}>
-        <NSegmentedItem key="1" label="1" />
-        <NSegmentedItem key="2">
+      <HSegmented activeKey={activeKey.value} onChange={fn}>
+        <HSegmentedItem key="1" label="1" />
+        <HSegmentedItem key="2">
           <div test-id="custom">2</div>
-        </NSegmentedItem>
-      </NSegmented>
+        </HSegmentedItem>
+      </HSegmented>
     ));
 
-    const sgm = wrapper.findComponent(NSegmented);
+    const sgm = wrapper.findComponent(HSegmented);
     expect(sgm.exists()).toBe(true);
     const custom = wrapper.find('[test-id="custom"]');
     expect(custom.exists()).toBe(true);
@@ -248,10 +248,10 @@ describe('Segmented.tsx', () => {
 
   test('test custom icon #render', async () => {
     const wrapper = mount(() => (
-      <NSegmented>
-        <NSegmentedItem key="1" label="1" icon="layout" />
-        <NSegmentedItem key="2" label="2" icon="list" />
-      </NSegmented>
+      <HSegmented>
+        <HSegmentedItem key="1" label="1" icon="layout" />
+        <HSegmentedItem key="2" label="2" icon="list" />
+      </HSegmented>
     ));
 
     expect(wrapper.html()).toMatchInlineSnapshot(`
@@ -283,30 +283,30 @@ describe('Segmented.tsx', () => {
       </div>"
     `);
 
-    const sgm = wrapper.findComponent(NSegmented);
+    const sgm = wrapper.findComponent(HSegmented);
     expect(sgm.exists()).toBe(true);
-    const icons = wrapper.findAllComponents(AIconSVG);
+    const icons = wrapper.findAllComponents(AIcon);
     expect(icons).toHaveLength(2);
   });
 
   test('test usable with form #render', async () => {
     const formValue = reactive({ category: undefined as any });
-    const fn = vi.fn((v: NSegmentedValue) => {
+    const fn = vi.fn((v: HSegmentedValue) => {
       formValue.category = v;
     });
-    const formInst = ref<NFormInstance>();
+    const formInst = ref<HFormInstance>();
     const onValidate = vi.fn();
 
     const wrapper = mount(() => (
       <div>
-        <NForm model={formValue} validateTrigger="change" ref={formInst} onValidate={onValidate}>
-          <NFormItem prop="category" required>
-            <NSegmented form activeKey={formValue.category} onChange={fn}>
-              <NSegmentedItem key="1" label="1" />
-              <NSegmentedItem key="2" label="2" />
-            </NSegmented>
-          </NFormItem>
-        </NForm>
+        <HForm model={formValue} validateTrigger="change" ref={formInst} onValidate={onValidate}>
+          <HFormItem prop="category" required>
+            <HSegmented form activeKey={formValue.category} onChange={fn}>
+              <HSegmentedItem key="1" label="1" />
+              <HSegmentedItem key="2" label="2" />
+            </HSegmented>
+          </HFormItem>
+        </HForm>
       </div>
     ));
 
@@ -351,7 +351,7 @@ describe('Segmented.tsx', () => {
       </div>"
     `);
 
-    const sgm = wrapper.findComponent(NSegmented);
+    const sgm = wrapper.findComponent(HSegmented);
     expect(sgm.exists()).toBe(true);
 
     expect(formInst.value).toBeTruthy();

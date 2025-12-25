@@ -1,10 +1,10 @@
 import { defineComponent, Fragment, inject, nextTick, ref, watch } from 'vue';
 import { cls, ComponentClassBlock, isNumber } from '@aurora/utils';
-import NInput from '~/components/Input/src/Input';
-import NInputNumber from '~/components/InputNumber/src/InputNumber';
+import HInput from '~/components/Input/src/Input';
+import HInputNumber from '~/components/InputNumber/src/InputNumber';
 import { ColorPickerCurrentValue, ColorPickerEmit, ColorPickerProps } from '../utils/InjectedKeys';
-import NSelect from '~/components/Select/src/Select';
-import NOption from '~/components/Select/src/Option';
+import HSelect from '~/components/Select/src/Select';
+import HOption from '~/components/Select/src/Option';
 
 export default defineComponent({
   name: 'ColorEditForm',
@@ -143,15 +143,15 @@ export default defineComponent({
     return () => (
       <div class={classHelper.block}>
         <div class={classHelper.e('type-picker')}>
-          <NSelect v-model={currentFormat.value} size="small" toBody={false}>
+          <HSelect v-model={currentFormat.value} size="small" toBody={false}>
             {['hex', ...(parentProps?.editableModes ?? [])]?.map(mode => (
-              <NOption value={mode} label={mode.toUpperCase()} />
+              <HOption value={mode} label={mode.toUpperCase()} />
             ))}
-          </NSelect>
+          </HSelect>
         </div>
         <div class={cls(classHelper.e('combine-input'), classHelper.is(currentFormat.value))}>
           {currentFormat.value === 'hex' ? (
-            <NInput
+            <HInput
               modelValue={hex.value}
               class={cls(classHelper.e('input'), classHelper.em('input', 'hex'))}
               size="small"
@@ -162,10 +162,10 @@ export default defineComponent({
               {{
                 prefix: () => <span class={classHelper.e('hex-prefix')}>#</span>,
               }}
-            </NInput>
+            </HInput>
           ) : (
             <Fragment>
-              <NInputNumber
+              <HInputNumber
                 v-model={input1.value}
                 class={classHelper.e('input')}
                 size="small"
@@ -177,7 +177,7 @@ export default defineComponent({
                 onBlur={onThreeValuesChange}
                 onKeydown={onThreeValuesChange}
               />
-              <NInputNumber
+              <HInputNumber
                 v-model={input2.value}
                 class={classHelper.e('input')}
                 size="small"
@@ -189,7 +189,7 @@ export default defineComponent({
                 onBlur={onThreeValuesChange}
                 onKeydown={onThreeValuesChange}
               />
-              <NInputNumber
+              <HInputNumber
                 v-model={input3.value}
                 class={classHelper.e('input')}
                 size="small"
@@ -204,7 +204,7 @@ export default defineComponent({
             </Fragment>
           )}
           {parentProps?.alpha && (
-            <NInputNumber
+            <HInputNumber
               v-model={alpha.value}
               class={cls(classHelper.e('input'), classHelper.em('input', 'alpha'))}
               size="small"

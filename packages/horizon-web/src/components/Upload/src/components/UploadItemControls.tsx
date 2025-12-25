@@ -1,22 +1,22 @@
 import type { PropType } from 'vue';
 import { inject, computed, defineComponent, toRef, Fragment } from 'vue';
-import type { NUploadFileType } from '../utils/fileDefines';
-import { NUploadFileStatusEnum, NUploadFileTypeEnum } from '../utils/fileDefines';
-import NControls from '~/components/Controls/src/Controls';
-import NControl from '~/components/Controls/src/Control';
+import type { HUploadFileType } from '../utils/fileDefines';
+import { HUploadFileStatusEnum, HUploadFileTypeEnum } from '../utils/fileDefines';
+import HControls from '~/components/Controls/src/Controls';
+import HControl from '~/components/Controls/src/Control';
 import { IconEnd, IconPause, IconPlay, IconRefresh, IconRubbish, IconScaleBig } from '@aurora/icon';
 import { ComponentClassBlock } from '@aurora/utils';
 import useLocaleLang from '~/utils/useLocaleLang';
 import type { UploadProps } from '../composables/useProps';
-import type { NUploadMultipartSetting } from '../composables/useMultipartUpload';
+import type { HUploadMultipartSetting } from '../composables/useMultipartUpload';
 import type UploadFileHelper from '../utils/UploadFileHelper';
-import { NUploadOpenViewerInjectKey } from '../utils/injectKeys';
+import { HUploadOpenViewerInjectKey } from '../utils/injectKeys';
 
 export default defineComponent({
   name: 'UploadItemControls',
   props: {
     file: {
-      type: Object as PropType<NUploadFileType>,
+      type: Object as PropType<HUploadFileType>,
       required: true,
     },
     theme: {
@@ -24,7 +24,7 @@ export default defineComponent({
       required: true,
     },
     multipart: {
-      type: [Boolean, Object] as PropType<false | NUploadMultipartSetting>,
+      type: [Boolean, Object] as PropType<false | HUploadMultipartSetting>,
       required: true,
     },
     controls: {
@@ -43,10 +43,10 @@ export default defineComponent({
     const classHelper = new ComponentClassBlock('upload');
     const file = toRef(props, 'file');
 
-    const openViewer = inject(NUploadOpenViewerInjectKey)!;
+    const openViewer = inject(HUploadOpenViewerInjectKey)!;
 
     const canUseViewerComponent = computed(() =>
-      [NUploadFileTypeEnum.Image, NUploadFileTypeEnum.Video].includes(file.value.type),
+      [HUploadFileTypeEnum.Image, HUploadFileTypeEnum.Video].includes(file.value.type),
     );
 
     const accessList = computed(() => {
@@ -55,27 +55,27 @@ export default defineComponent({
 
         if (controls.includes('upload')) {
           switch (file.value.status) {
-            case NUploadFileStatusEnum.Fail:
-            case NUploadFileStatusEnum.Canceling:
-            case NUploadFileStatusEnum.Canceled:
+            case HUploadFileStatusEnum.Fail:
+            case HUploadFileStatusEnum.Canceling:
+            case HUploadFileStatusEnum.Canceled:
               res.push('retry');
               break;
-            case NUploadFileStatusEnum.New:
-            case NUploadFileStatusEnum.Pending:
+            case HUploadFileStatusEnum.New:
+            case HUploadFileStatusEnum.Pending:
               res.push('start');
               break;
-            case NUploadFileStatusEnum.Pause:
+            case HUploadFileStatusEnum.Pause:
               res.push('continue');
               break;
-            case NUploadFileStatusEnum.Retrying:
-            case NUploadFileStatusEnum.Uploading:
+            case HUploadFileStatusEnum.Retrying:
+            case HUploadFileStatusEnum.Uploading:
               if (!props.multipart) {
                 res.push('stop');
               } else {
                 res.push('pause');
               }
               break;
-            case NUploadFileStatusEnum.Success:
+            case HUploadFileStatusEnum.Success:
             // do nothing
           }
         }
@@ -126,48 +126,48 @@ export default defineComponent({
 
     return () => (
       <Fragment>
-        <NControls
+        <HControls
           accessList={accessList.value}
           class={classHelper.e('controls')}
           theme={props.theme}
           onCommand={onCommand}
         >
-          <NControl
+          <HControl
             label="view"
             icon={IconScaleBig}
             text={useLocaleLang('upload.preview').value as string}
           />
-          <NControl
+          <HControl
             label="start"
             icon={IconPlay}
             text={useLocaleLang('upload.start').value as string}
           />
-          <NControl
+          <HControl
             label="continue"
             icon={IconPlay}
             text={useLocaleLang('upload.continue').value as string}
           />
-          <NControl
+          <HControl
             label="stop"
             icon={IconEnd}
             text={useLocaleLang('upload.stop').value as string}
           />
-          <NControl
+          <HControl
             label="pause"
             icon={IconPause}
             text={useLocaleLang('upload.pause').value as string}
           />
-          <NControl
+          <HControl
             label="retry"
             icon={IconRefresh}
             text={useLocaleLang('upload.retry').value as string}
           />
-          <NControl
+          <HControl
             label="delete"
             icon={IconRubbish}
             text={useLocaleLang('upload.delete').value as string}
           />
-        </NControls>
+        </HControls>
       </Fragment>
     );
   },

@@ -2,8 +2,8 @@ import type { SelectProps, OptionProps } from '~/components/Select/src/composabl
 import type { SelectEmits } from '~/components/Select/src/composables/useEmits';
 import type { HorizonWebComponentInstance, MaybeRef, PartialExclude } from '@aurora/utils';
 import { isObject } from '@aurora/utils';
-import NSelect from '~/components/Select/src/Select';
-import NOption from '~/components/Select/src/Option';
+import HSelect from '~/components/Select/src/Select';
+import HOption from '~/components/Select/src/Option';
 import type { Mock } from 'vitest';
 import type { SetupContext } from 'vue';
 import { Fragment, ref, unref } from 'vue';
@@ -12,9 +12,9 @@ import { mount } from '@vue/test-utils';
 import { sleep } from '~/utils/tools';
 import type { SelectExposes } from '~/components/Select/src/composables/useExposes';
 import type { SelectSlots } from '~/components/Select/src/composables/useSlots';
-import NPickerPopper from '~/components/Picker/src/components/NPickerPopper';
-import NButton from '~/components/Button/src/Button';
-import NPickerInput from '~/components/Picker/src/components/NPickerInput';
+import HPickerPopper from '~/components/Picker/src/components/PickerPopper';
+import HButton from '~/components/Button/src/Button';
+import HPickerInput from '~/components/Picker/src/components/PickerInput';
 import type { PickerInputExposes } from '~/components/Picker/src/composables/useExposes';
 
 export default class SelectHelper<
@@ -26,12 +26,12 @@ export default class SelectHelper<
   };
   public options = ref<PartialExclude<OptionProps, 'value' | 'label'>[]>([]);
   public slots?: Partial<SetupContext<{}, SelectSlots>['slots']>;
-  public domRef = ref<HorizonWebComponentInstance<typeof NSelect, SelectExposes>>();
+  public domRef = ref<HorizonWebComponentInstance<typeof HSelect, SelectExposes>>();
   public outer!: DOMWrapper<Element>;
   public wrapper!: VueWrapper<any, any>;
-  public element!: VueWrapper<HorizonWebComponentInstance<typeof NSelect, SelectExposes>>;
-  public popover!: VueWrapper<HorizonWebComponentInstance<typeof NPickerPopper>>;
-  public mainInput?: VueWrapper<HorizonWebComponentInstance<typeof NPickerInput, PickerInputExposes>>;
+  public element!: VueWrapper<HorizonWebComponentInstance<typeof HSelect, SelectExposes>>;
+  public popover!: VueWrapper<HorizonWebComponentInstance<typeof HPickerPopper>>;
+  public mainInput?: VueWrapper<HorizonWebComponentInstance<typeof HPickerInput, PickerInputExposes>>;
   public confirmWrapper?: DOMWrapper<Element>;
 
   constructor(
@@ -51,7 +51,7 @@ export default class SelectHelper<
     this.wrapper = mount(
       () => (
         <Fragment>
-          <NSelect
+          <HSelect
             ref={this.domRef}
             v-model={this.modelValue.value}
             toBody={false}
@@ -61,9 +61,9 @@ export default class SelectHelper<
             v-slots={this.slots}
           >
             {this.options.value.map(opt => (
-              <NOption {...opt} />
+              <HOption {...opt} />
             ))}
-          </NSelect>
+          </HSelect>
           <div id="outer" />
         </Fragment>
       ),
@@ -75,15 +75,15 @@ export default class SelectHelper<
 
   private mountComponent() {
     this.mountDirectly();
-    this.element = this.wrapper.findComponent(NSelect) as VueWrapper<
-      HorizonWebComponentInstance<typeof NSelect, SelectExposes>
+    this.element = this.wrapper.findComponent(HSelect) as VueWrapper<
+      HorizonWebComponentInstance<typeof HSelect, SelectExposes>
     >;
-    this.popover = this.wrapper.findComponent(NPickerPopper) as VueWrapper<
-      HorizonWebComponentInstance<typeof NPickerPopper>
+    this.popover = this.wrapper.findComponent(HPickerPopper) as VueWrapper<
+      HorizonWebComponentInstance<typeof HPickerPopper>
     >;
     this.outer = this.wrapper.find('#outer');
-    this.mainInput = this.wrapper.findComponent(NPickerInput) as VueWrapper<
-      HorizonWebComponentInstance<typeof NPickerInput, PickerInputExposes>
+    this.mainInput = this.wrapper.findComponent(HPickerInput) as VueWrapper<
+      HorizonWebComponentInstance<typeof HPickerInput, PickerInputExposes>
     >;
   }
 
@@ -112,17 +112,17 @@ export default class SelectHelper<
   }
 
   public async confirm(waitTime = 300) {
-    await this.confirmWrapper?.findAllComponents(NButton)[1].trigger('click');
+    await this.confirmWrapper?.findAllComponents(HButton)[1].trigger('click');
     await sleep(waitTime);
   }
 
   public async cancel(waitTime = 300) {
-    await this.confirmWrapper?.findAllComponents(NButton)[0].trigger('click');
+    await this.confirmWrapper?.findAllComponents(HButton)[0].trigger('click');
     await sleep(waitTime);
   }
 
   public async pickOption(index = 0, waitTime = 300) {
-    await this.wrapper.findAllComponents(NOption).at(index)?.trigger('click');
+    await this.wrapper.findAllComponents(HOption).at(index)?.trigger('click');
     await sleep(waitTime);
   }
 

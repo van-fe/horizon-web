@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { NRecycleScroller } from '..';
+import { HRecycleScroller } from '..';
 import { describe, expect, test } from 'vitest';
 import { nextTick, ref } from 'vue';
 
@@ -30,9 +30,9 @@ describe('VirtualScroller.tsx', () => {
     const items = ref<Item[]>(getData());
 
     const wrapper = mount(() => (
-      <NRecycleScroller items={items.value} itemSize={50} sizeField="height" />
+      <HRecycleScroller items={items.value} itemSize={50} sizeField="height" />
     ));
-    const element = wrapper.findComponent(NRecycleScroller);
+    const element = wrapper.findComponent(HRecycleScroller);
 
     expect(element.exists()).toBe(true);
   });
@@ -44,7 +44,7 @@ describe('VirtualScroller.tsx', () => {
     const items = ref<Item[]>(getData());
 
     const wrapper = mount(() => (
-      <NRecycleScroller
+      <HRecycleScroller
         items={items.value}
         itemSize={50}
         scrollerHeight={500}
@@ -53,7 +53,7 @@ describe('VirtualScroller.tsx', () => {
         }}
       />
     ));
-    const element = wrapper.findComponent(NRecycleScroller);
+    const element = wrapper.findComponent(HRecycleScroller);
     await nextTick();
 
     const viewNodes = element.find('.n-recycle-scroller__item-wrapper');

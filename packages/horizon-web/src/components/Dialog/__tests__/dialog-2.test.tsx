@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import NDialog from '../src/Dialog';
+import HDialog from '../src/Dialog';
 import { describe, expect, test } from 'vitest';
 import { ref, nextTick } from 'vue';
 import { sleep } from '../../../utils/tools';
@@ -22,7 +22,7 @@ describe('Dialog.tsx 2nd', () => {
       mount(
         () => (
           <div>
-            <NDialog
+            <HDialog
               modelValue={visible1.value}
               class="dialog-1"
               primaryText="Confirm"
@@ -31,7 +31,7 @@ describe('Dialog.tsx 2nd', () => {
               onPrimary-click={onPrimaryClick}
               onUpdate:modelValue={val => (visible1.value = val)}
             />
-            <NDialog
+            <HDialog
               modelValue={visible2.value}
               class="dialog-2"
               primaryText="Confirm"

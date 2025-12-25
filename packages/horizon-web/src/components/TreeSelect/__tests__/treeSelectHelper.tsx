@@ -2,20 +2,20 @@ import type { MaybeRef, HorizonWebComponentInstance, Arrayable } from '@aurora/u
 import { Fragment, nextTick, ref, SetupContext, unref } from 'vue';
 import type { DOMWrapper, VueWrapper } from '@vue/test-utils';
 import { mount } from '@vue/test-utils';
-import NTreeSelect from '~/components/TreeSelect/src/TreeSelect';
+import HTreeSelect from '~/components/TreeSelect/src/TreeSelect';
 import TreeData from './options.json';
 import DisabledTreeData from './modifiedOptions/disabled-options.json';
 import type { TreeSelectExposes } from '~/components/TreeSelect/src/composables/useExposes';
 import type { TreeSelectSlots } from '~/components/TreeSelect/src/composables/useSlots';
 import type { TreeSelectProps } from '~/components/TreeSelect/src/composables/useProps';
-import NPicker from '~/components/Picker/src/Picker';
-import NTree from '~/components/Tree/src/Tree';
-import NTreeItem from '~/components/Tree/src/components/TreeItem';
-import NPickerInput from '~/components/Picker/src/components/NPickerInput';
-import NPickerPopper from '~/components/Picker/src/components/NPickerPopper';
+import HPicker from '~/components/Picker/src/Picker';
+import HTree from '~/components/Tree/src/Tree';
+import HTreeItem from '~/components/Tree/src/components/TreeItem';
+import HPickerInput from '~/components/Picker/src/components/PickerInput';
+import HPickerPopper from '~/components/Picker/src/components/PickerPopper';
 import type { Mock } from 'vitest';
 import type { TreeSelectEmits } from '~/components/TreeSelect/src/composables/useEmits';
-import type { NTreeUuidType } from '~/components/Tree/src/utils/types';
+import type { HTreeUuidType } from '~/components/Tree/src/utils/types';
 
 export class TreeSelectHelper<
   T extends `on${Capitalize<keyof TreeSelectEmits>}` | keyof TreeSelectProps,
@@ -25,18 +25,18 @@ export class TreeSelectHelper<
   };
   private readonly slots: SetupContext<{}, TreeSelectSlots>['slots'];
 
-  public modelValue = ref<NTreeUuidType | NTreeUuidType[]>();
+  public modelValue = ref<HTreeUuidType | HTreeUuidType[]>();
   public selectedValues = ref();
   public expandedValues = ref();
-  public domRef = ref<HorizonWebComponentInstance<typeof NTreeSelect, TreeSelectExposes> | null>(null);
+  public domRef = ref<HorizonWebComponentInstance<typeof HTreeSelect, TreeSelectExposes> | null>(null);
 
   public wrapper?: VueWrapper<any, any>;
-  public element?: VueWrapper<typeof NTreeSelect, any>;
+  public element?: VueWrapper<typeof HTreeSelect, any>;
   public outer?: DOMWrapper<HTMLDivElement>;
-  public picker?: VueWrapper<typeof NPicker, any>;
-  public pickerInput?: VueWrapper<typeof NPickerInput, any>;
-  public tree?: VueWrapper<typeof NTree, any>;
-  public pickerPopper?: VueWrapper<typeof NPickerPopper, any>;
+  public picker?: VueWrapper<typeof HPicker, any>;
+  public pickerInput?: VueWrapper<typeof HPickerInput, any>;
+  public tree?: VueWrapper<typeof HTree, any>;
+  public pickerPopper?: VueWrapper<typeof HPickerPopper, any>;
 
   constructor(
     propsOrEmits: {
@@ -52,7 +52,7 @@ export class TreeSelectHelper<
     this.wrapper = mount(
       () => (
         <Fragment>
-          <NTreeSelect
+          <HTreeSelect
             ref={this.domRef}
             v-model={this.modelValue.value}
             v-model:selectedValues={this.selectedValues.value}
@@ -75,10 +75,10 @@ export class TreeSelectHelper<
 
     await nextTick();
 
-    this.element = this.wrapper.findComponent(NTreeSelect);
+    this.element = this.wrapper.findComponent(HTreeSelect);
     this.outer = this.wrapper.find('#outer');
-    this.picker = this.wrapper.findComponent(NPicker);
-    this.pickerInput = this.wrapper.findComponent(NPickerInput);
+    this.picker = this.wrapper.findComponent(HPicker);
+    this.pickerInput = this.wrapper.findComponent(HPickerInput);
   }
 
   public async open(isDefaultExpandAll = true, useDisabledOptions = false) {
@@ -90,8 +90,8 @@ export class TreeSelectHelper<
 
     await nextTick();
 
-    this.tree = this.wrapper?.findComponent(NTree);
-    this.pickerPopper = this.wrapper?.findComponent(NPickerPopper);
+    this.tree = this.wrapper?.findComponent(HTree);
+    this.pickerPopper = this.wrapper?.findComponent(HPickerPopper);
   }
 
   public async clickOption(values: Arrayable<string>) {
@@ -103,7 +103,7 @@ export class TreeSelectHelper<
       values = [values];
     }
 
-    const treeItems = this.pickerPopper.findAllComponents(NTreeItem);
+    const treeItems = this.pickerPopper.findAllComponents(HTreeItem);
 
     for (const value of values) {
       await treeItems.find(curr => curr.attributes('data-uuid') === value)?.trigger('click');
@@ -123,12 +123,12 @@ export async function createInstance<T extends string | keyof TreeSelectProps>(
 ) {
   const selectedValues = ref();
   const expandedValues = ref();
-  const domRef = ref<HorizonWebComponentInstance<typeof NTreeSelect, TreeSelectExposes> | null>(null);
+  const domRef = ref<HorizonWebComponentInstance<typeof HTreeSelect, TreeSelectExposes> | null>(null);
 
   const wrapper = mount(
     () => (
       <>
-        <NTreeSelect
+        <HTreeSelect
           ref={domRef}
           v-model:selectedValues={selectedValues.value}
           v-model:expandValues={expandedValues.value}
@@ -139,7 +139,7 @@ export async function createInstance<T extends string | keyof TreeSelectProps>(
           )}
         >
           {slots}
-        </NTreeSelect>
+        </HTreeSelect>
         <div id="outer"></div>
       </>
     ),
@@ -150,18 +150,18 @@ export async function createInstance<T extends string | keyof TreeSelectProps>(
 
   await nextTick();
 
-  const element = wrapper.findComponent(NTreeSelect);
+  const element = wrapper.findComponent(HTreeSelect);
   const outer = wrapper.find('#outer');
-  const picker = wrapper.findComponent(NPicker);
-  const pickerInput = wrapper.findComponent(NPickerInput);
+  const picker = wrapper.findComponent(HPicker);
+  const pickerInput = wrapper.findComponent(HPickerInput);
 
-  let tree: VueWrapper<(typeof NTree)['props']> | undefined = undefined;
+  let tree: VueWrapper<(typeof HTree)['props']> | undefined = undefined;
   let pickerPopper: VueWrapper | undefined = undefined;
 
   if (open) {
     await picker.trigger('click');
-    tree = wrapper.findComponent(NTree);
-    pickerPopper = wrapper.findComponent(NPickerPopper);
+    tree = wrapper.findComponent(HTree);
+    pickerPopper = wrapper.findComponent(HPickerPopper);
   }
 
   return {

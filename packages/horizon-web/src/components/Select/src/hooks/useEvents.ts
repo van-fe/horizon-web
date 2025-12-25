@@ -3,13 +3,13 @@ import { isDefined, safelyGetEventTarget } from '@aurora/utils';
 import type { SelectEmits } from '../composables/useEmits';
 import type { SelectSlots } from '../composables/useSlots';
 import type { SelectExposes } from '../composables/useExposes';
-import { NFormItemTriggerInjectedKey } from '~/components/Form/src/utils/injectedKeys';
+import { HFormItemTriggerInjectedKey } from '~/components/Form/src/utils/injectedKeys';
 import type { Ref, Reactive } from 'vue';
 import { ref, nextTick, inject, provide, onBeforeUnmount, watch } from 'vue';
 import type { OptionProps, SelectProps } from '../composables/useProps';
 import type { SelectDomRefs, ModelValueType } from '../utils/types';
 import {
-  NSelectMouseOverOptionInjectKey,
+  HSelectMouseOverOptionInjectKey,
   type SelectCollectedOptionData,
 } from '../utils/injectKeys';
 import throttle from 'lodash/throttle';
@@ -62,7 +62,7 @@ export default function useEvents(
   const isSelectWillBeActivated = ref(false);
   const isDuringComposition = ref(false);
 
-  const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
+  const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
 
   watch(isSelectFocus, val => {
     if (val) {
@@ -282,7 +282,7 @@ export default function useEvents(
     window.removeEventListener('keydown', handleKeydown);
   });
 
-  provide(NSelectMouseOverOptionInjectKey, onMouseOverOption);
+  provide(HSelectMouseOverOptionInjectKey, onMouseOverOption);
 
   return {
     isInputFocus,

@@ -1,9 +1,9 @@
 import Message from './src';
 
-export const NMessage = Message;
+export const HMessage = Message;
 
-export type { IMessageInstance as NMessageInstance } from './src';
+export type { IMessageInstance as HMessageInstance } from './src';
 export type {
-  MessageOptions as NMessageOptions,
-  MessageType as NMessageType,
+  MessageOptions as HMessageOptions,
+  MessageType as HMessageType,
 } from './src/composables/useProps';

@@ -1,18 +1,18 @@
 import type { SetupContext } from 'vue';
 import { computed, watch, provide, ref } from 'vue';
-import type { NTableColumnData, NTableTransformedRowDataType } from '../utils/types';
-import { NTableSortOrderEnum } from '../utils/types';
+import type { HTableColumnData, HTableTransformedRowDataType } from '../utils/types';
+import { HTableSortOrderEnum } from '../utils/types';
 import type { TableEmits } from '../composables/useEmits';
 import {
-  NTableCurrentSortsInjectKey,
-  NTableSetSortInjectKey,
-  NTableSortRowInjectKey,
+  HTableCurrentSortsInjectKey,
+  HTableSetSortInjectKey,
+  HTableSortRowInjectKey,
 } from '../utils/injectKeys';
 import get from 'lodash/get';
 import { warn } from '~/utils/useLog';
 
 export default function useSortable(emit: SetupContext<TableEmits>['emit']) {
-  const currentSorts = ref(new Map<NTableColumnData, NTableSortOrderEnum>());
+  const currentSorts = ref(new Map<HTableColumnData, HTableSortOrderEnum>());
 
   const currentSortsArr = computed(() => Array.from(currentSorts.value.entries()));
 
@@ -44,7 +44,7 @@ export default function useSortable(emit: SetupContext<TableEmits>['emit']) {
     },
   );
 
-  function setColumnSort(column: NTableColumnData, sortOrder?: NTableSortOrderEnum) {
+  function setColumnSort(column: HTableColumnData, sortOrder?: HTableSortOrderEnum) {
     if (sortOrder) {
       if (currentSorts.value.get(column) === sortOrder) {
         currentSorts.value.delete(column);
@@ -56,20 +56,20 @@ export default function useSortable(emit: SetupContext<TableEmits>['emit']) {
 
     switch (currentSorts.value.get(column)) {
       default:
-        currentSorts.value.set(column, NTableSortOrderEnum.ASC);
+        currentSorts.value.set(column, HTableSortOrderEnum.ASC);
         break;
-      case NTableSortOrderEnum.ASC:
-        currentSorts.value.set(column, NTableSortOrderEnum.DESC);
+      case HTableSortOrderEnum.ASC:
+        currentSorts.value.set(column, HTableSortOrderEnum.DESC);
         break;
-      case NTableSortOrderEnum.DESC:
+      case HTableSortOrderEnum.DESC:
         currentSorts.value.delete(column);
         break;
     }
   }
 
   function setSort(
-    column: NTableColumnData,
-    sortOrder?: NTableSortOrderEnum | false,
+    column: HTableColumnData,
+    sortOrder?: HTableSortOrderEnum | false,
     multiFunctionKeyPressed: boolean = false,
   ) {
     if (sortOrder === false) {
@@ -88,7 +88,7 @@ export default function useSortable(emit: SetupContext<TableEmits>['emit']) {
     setColumnSort(column, sortOrder);
   }
 
-  function sortRow(a: NTableTransformedRowDataType, b: NTableTransformedRowDataType) {
+  function sortRow(a: HTableTransformedRowDataType, b: HTableTransformedRowDataType) {
     for (const [column, order] of currentSorts.value) {
       let sortRes: number;
       if (!column.props.useBuiltInSort) {
@@ -103,7 +103,7 @@ export default function useSortable(emit: SetupContext<TableEmits>['emit']) {
           continue;
         }
 
-        if (order === NTableSortOrderEnum.ASC) {
+        if (order === HTableSortOrderEnum.ASC) {
           sortRes = get(a, field)?.toString().localeCompare(get(b, field));
         } else {
           sortRes = get(b, field)?.toString().localeCompare(get(a, field));
@@ -118,9 +118,9 @@ export default function useSortable(emit: SetupContext<TableEmits>['emit']) {
     return 0;
   }
 
-  provide(NTableCurrentSortsInjectKey, currentSorts);
-  provide(NTableSetSortInjectKey, setSort);
-  provide(NTableSortRowInjectKey, sortRow);
+  provide(HTableCurrentSortsInjectKey, currentSorts);
+  provide(HTableSetSortInjectKey, setSort);
+  provide(HTableSortRowInjectKey, sortRow);
 
   return {
     currentSorts,

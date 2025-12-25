@@ -1,5 +1,5 @@
 import type { HorizonWebSetupContext } from '@aurora/utils';
-import { ComponentClassBlock, NOnlyChild, cls, useNamespace, useZIndex } from '@aurora/utils';
+import { ComponentClassBlock, HChildOnly, cls, useNamespace, useZIndex } from '@aurora/utils';
 import { useClipboard, useMutationObserver, useResizeObserver } from '@vueuse/core';
 import type { ComputedRef } from 'vue';
 import {
@@ -13,7 +13,7 @@ import {
   watch,
   watchEffect,
 } from 'vue';
-import NTransition from '~/components/Transition/src/Transition';
+import HTransition from '~/components/Transition/src/Transition';
 import { $message } from '~/methods';
 import type { PopperInstance } from '~/utils/popper';
 import { usePopper } from '~/utils/popper';
@@ -31,7 +31,7 @@ import { useTooltipSlots } from './composables/useSlots';
 export default defineComponent({
   name: `${useNamespace()}Tooltip`,
   desc: 'Tooltip 是浮动标签，主要用于简要说明界面元素的功能。',
-  components: { NOnlyChild, NTransition },
+  components: { HChildOnly, HTransition },
   props: useTooltipProps,
   emits: useTooltipEmits,
   slots: useTooltipSlots,
@@ -347,8 +347,8 @@ export default defineComponent({
     return () => {
       const reference = slots?.default?.();
       return (
-        <NOnlyChild>
-          <NOnlyChild ref={referenceRef}>
+        <HChildOnly>
+          <HChildOnly ref={referenceRef}>
             {reference &&
               cloneVNode(reference[0], {
                 onMouseenter: (event: MouseEvent) => onMouseenter(event),
@@ -358,9 +358,9 @@ export default defineComponent({
                 onClick: (event: MouseEvent) => onHandleClick(event),
                 onContextmenu: (event: MouseEvent) => onHandleContextmenu(event),
               })}
-          </NOnlyChild>
+          </HChildOnly>
           <Teleport to={teleportToProp.value} disabled={!toBodyProp.value}>
-            <NTransition appear name="tooltip" onAfterLeave={onAfterLeave}>
+            <HTransition appear name="tooltip" onAfterLeave={onAfterLeave}>
               {tooltipVisible.value && !tooltipDisabled.value && (
                 <div
                   ref={tooltipRef}
@@ -394,9 +394,9 @@ export default defineComponent({
                   )}
                 </div>
               )}
-            </NTransition>
+            </HTransition>
           </Teleport>
-        </NOnlyChild>
+        </HChildOnly>
       );
     };
   },

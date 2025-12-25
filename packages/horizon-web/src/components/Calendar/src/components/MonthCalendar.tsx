@@ -1,13 +1,13 @@
 import { computed, defineComponent, Fragment, inject, nextTick, ref, toRef, watch } from 'vue';
 import {
-  NCalendarCurrentDateInjectKey,
-  NCalendarCurrentFormatDateInjectKey,
-  NCalendarCurrentTimeInjectKey,
-  NCalendarEmitInjectKey,
-  NCalendarHelperInjectKey,
-  NCalendarPinFlagsInjectKey,
-  NCalendarPropsInjectKey,
-  NCalendarSlotsInjectKey,
+  HCalendarCurrentDateInjectKey,
+  HCalendarCurrentFormatDateInjectKey,
+  HCalendarCurrentTimeInjectKey,
+  HCalendarEmitInjectKey,
+  HCalendarHelperInjectKey,
+  HCalendarPinFlagsInjectKey,
+  HCalendarPropsInjectKey,
+  HCalendarSlotsInjectKey,
 } from '../utils/injectKeys';
 import { cls, ComponentClassBlock, cssVariable, isObject, useNamespace } from '@aurora/utils';
 import { defaultLocale, localeInjectKey } from '~/provides';
@@ -15,12 +15,12 @@ import type { Dayjs } from 'dayjs';
 import dayjs, { isDayjs } from 'dayjs';
 import chunk from 'lodash/chunk';
 import cloneDeep from 'lodash/cloneDeep';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import { useElementBounding } from '@vueuse/core';
 import MonthDayHelper from '../utils/MonthDayHelper';
-import type { NCalendarPinFlag } from '~/components/Calendar/src/utils/types';
+import type { HCalendarPinFlag } from '~/components/Calendar/src/utils/types';
 import {
   getDatesRangeExcludeParts,
   getMaxDate,
@@ -39,18 +39,18 @@ export default defineComponent({
   },
   setup(_, { emit }) {
     const classHelper = new ComponentClassBlock('calendar-month');
-    const props = inject(NCalendarPropsInjectKey)!;
-    const parentEmit = inject(NCalendarEmitInjectKey)!;
-    const parentSlots = inject(NCalendarSlotsInjectKey)!;
-    const currentDate = inject(NCalendarCurrentDateInjectKey)!;
-    const currentFormatDate = inject(NCalendarCurrentFormatDateInjectKey)!;
-    const calendarHelper = inject(NCalendarHelperInjectKey)!;
+    const props = inject(HCalendarPropsInjectKey)!;
+    const parentEmit = inject(HCalendarEmitInjectKey)!;
+    const parentSlots = inject(HCalendarSlotsInjectKey)!;
+    const currentDate = inject(HCalendarCurrentDateInjectKey)!;
+    const currentFormatDate = inject(HCalendarCurrentFormatDateInjectKey)!;
+    const calendarHelper = inject(HCalendarHelperInjectKey)!;
     const locale = inject(localeInjectKey, defaultLocale);
-    const currentTime = inject(NCalendarCurrentTimeInjectKey)!;
+    const currentTime = inject(HCalendarCurrentTimeInjectKey)!;
 
     const currentMonth = computed(() => currentDate?.value.format('YYYY-MM'));
 
-    const pinFlags = inject(NCalendarPinFlagsInjectKey)!;
+    const pinFlags = inject(HCalendarPinFlagsInjectKey)!;
 
     const monthDayHelper = new MonthDayHelper(currentDate, toRef(props, 'dateType'));
 
@@ -80,7 +80,7 @@ export default defineComponent({
     let isDragging = false;
     const newPinFlagStartAt = ref<Dayjs | null>(null);
     const newPinFlagEndAt = ref<Dayjs | null>(null);
-    const tempPinFlag = ref<NCalendarPinFlag | null>(null);
+    const tempPinFlag = ref<HCalendarPinFlag | null>(null);
     const onMousedown = (date: Dayjs) => {
       if (props.enableCreatePinFlags && tempPinFlag.value === null) {
         isDragging = true;
@@ -249,7 +249,7 @@ export default defineComponent({
                     );
 
                     return (
-                      <NTooltip
+                      <HTooltip
                         disabled={!flag?.tooltip}
                         v-slots={{
                           content: () =>
@@ -307,7 +307,7 @@ export default defineComponent({
                             </span>
                           </div>
                         </div>
-                      </NTooltip>
+                      </HTooltip>
                     );
                   })}
                 </div>

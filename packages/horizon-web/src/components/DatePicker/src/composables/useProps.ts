@@ -5,14 +5,14 @@ import type { PopoverProps } from '~/components/Popover/src/composables/useProps
 import { IconMaybeFalsyPropType, IconPropType } from '~/utils/useIcon';
 import { IconClose, IconSwapRight } from '@aurora/icon';
 import type {
-  NDatePickerAccessDatetimeType,
-  NDatePickerDisabledDateMethodType,
-  NDatePickerDisabledTimeMethodType,
-  NDatePickerShortcutsType,
-  NDatePickerShowDateTooltipType,
-  NDatePickerShowTimeTooltipType,
-  NDatePickerShowDotType,
-  NDatePickerSupportType,
+  HDatePickerAccessDatetimeType,
+  HDatePickerDisabledDateMethodType,
+  HDatePickerDisabledTimeMethodType,
+  HDatePickerShortcutsType,
+  HDatePickerShowDateTooltipType,
+  HDatePickerShowTimeTooltipType,
+  HDatePickerShowDotType,
+  HDatePickerSupportType,
 } from '../utils/types';
 import type { Dayjs } from 'dayjs';
 
@@ -22,8 +22,8 @@ export const useDatePickerProps = declarePropType({
    */
   modelValue: {
     type: [Date, String, Number, Object, Array] as PropType<
-      | NDatePickerAccessDatetimeType
-      | [NDatePickerAccessDatetimeType, NDatePickerAccessDatetimeType]
+      | HDatePickerAccessDatetimeType
+      | [HDatePickerAccessDatetimeType, HDatePickerAccessDatetimeType]
     >,
   },
   /**
@@ -33,7 +33,7 @@ export const useDatePickerProps = declarePropType({
    * @enum default 'year' | 'month' | 'week' | 'date' | 'datetime' | 'date-minutes' | 'date-seconds' | 'date-range' | 'month-range' | 'year-range' | 'datetime-range' | 'date-minutes-range' | 'date-seconds-range' ｜ 'dateminutes' | 'dateMinutes' | 'dateseconds' | 'dateSeconds' | 'daterange' | 'dateRange' | 'monthrange' | 'monthRange' | 'yearrange' | 'yearRange' | datetimerange' | 'datetimeRange' | 'dateminutesrange' | 'dateMinutesRange' | 'datesecondsrange' | 'dateSecondsRange'
    */
   type: {
-    type: String as PropType<NDatePickerSupportType>,
+    type: String as PropType<HDatePickerSupportType>,
     default: 'date',
   },
   /**
@@ -288,26 +288,26 @@ export const useDatePickerProps = declarePropType({
    * 详见类型定义
    */
   disabledDate: {
-    type: Function as PropType<NDatePickerDisabledDateMethodType>,
+    type: Function as PropType<HDatePickerDisabledDateMethodType>,
   },
   /**
    * 设置禁选时间
    * 详见类型定义
    */
   disabledTime: {
-    type: Function as PropType<NDatePickerDisabledTimeMethodType>,
+    type: Function as PropType<HDatePickerDisabledTimeMethodType>,
   },
   /**
    * 在时间范围选择时，设置开始的禁选时间
    */
   beginDisabledTime: {
-    type: Function as PropType<NDatePickerDisabledTimeMethodType>,
+    type: Function as PropType<HDatePickerDisabledTimeMethodType>,
   },
   /**
    * 在时间范围选择时，设置结束的禁选时间
    */
   endDisabledTime: {
-    type: Function as PropType<NDatePickerDisabledTimeMethodType>,
+    type: Function as PropType<HDatePickerDisabledTimeMethodType>,
   },
   /**
    * 弹出层样式
@@ -495,7 +495,7 @@ export const useDatePickerProps = declarePropType({
    * 快捷选项
    */
   shortcuts: {
-    type: Array as PropType<NDatePickerShortcutsType[]>,
+    type: Array as PropType<HDatePickerShortcutsType[]>,
   },
   /**
    * 是否固定显示6行日期
@@ -515,25 +515,25 @@ export const useDatePickerProps = declarePropType({
    * 日期格子显示提示文字的方法
    */
   showDateTooltip: {
-    type: Function as PropType<NDatePickerShowDateTooltipType>,
+    type: Function as PropType<HDatePickerShowDateTooltipType>,
   },
   /**
    * 月格子显示提示文字的方法
    */
   showMonthTooltip: {
-    type: Function as PropType<NDatePickerShowDateTooltipType>,
+    type: Function as PropType<HDatePickerShowDateTooltipType>,
   },
   /**
    * 年格子显示提示文字的方法
    */
   showYearTooltip: {
-    type: Function as PropType<NDatePickerShowDateTooltipType>,
+    type: Function as PropType<HDatePickerShowDateTooltipType>,
   },
   /**
    * 时间格子显示提示文字的方法
    */
   showTimeTooltip: {
-    type: Function as PropType<NDatePickerShowTimeTooltipType>,
+    type: Function as PropType<HDatePickerShowTimeTooltipType>,
   },
   /**
    * 面板展示的日期，默认为当前日期
@@ -542,8 +542,8 @@ export const useDatePickerProps = declarePropType({
    */
   panelShowDate: {
     type: [String, Number, Object, Array] as PropType<
-      | NDatePickerAccessDatetimeType
-      | [NDatePickerAccessDatetimeType, NDatePickerAccessDatetimeType]
+      | HDatePickerAccessDatetimeType
+      | [HDatePickerAccessDatetimeType, HDatePickerAccessDatetimeType]
     >,
   },
   /**
@@ -552,15 +552,15 @@ export const useDatePickerProps = declarePropType({
    */
   defaultTime: {
     type: [String, Number, Object, Array] as PropType<
-      | NDatePickerAccessDatetimeType
-      | [NDatePickerAccessDatetimeType, NDatePickerAccessDatetimeType]
+      | HDatePickerAccessDatetimeType
+      | [HDatePickerAccessDatetimeType, HDatePickerAccessDatetimeType]
     >,
   },
   /**
    * 是否在日期格子下显示圆点标识
    */
   showDot: {
-    type: Function as PropType<NDatePickerShowDotType>,
+    type: Function as PropType<HDatePickerShowDotType>,
   },
   /**
    * 弹窗最小宽度

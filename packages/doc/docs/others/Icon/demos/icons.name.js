@@ -221,8 +221,8 @@ export const cover_icon_str = ref([
   'IconUserFilled',
   'IconVolumeOffFilled',
   'IconVolumeOnFilled',
-  'IconCheckboxAll',
-  'IconCheckboxHalf',
+  'IconCheckboxFilled',
+  'IconCheckboxHalfFilled',
 ]);
 export const line_icon_str = ref([
   'IconTimer',

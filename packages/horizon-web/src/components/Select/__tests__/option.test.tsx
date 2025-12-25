@@ -1,10 +1,10 @@
 import { mount } from '@vue/test-utils';
-import NSelect from '../src/Select';
-import NOption from '../src/Option';
+import HSelect from '../src/Select';
+import HOption from '../src/Option';
 import { describe, expect, test, vi } from 'vitest';
 import { nextTick, ref, shallowRef } from 'vue';
 import { IconCloseFilled } from '@aurora/icon';
-import NPickerInput from '../../Picker/src/components/NPickerInput';
+import HPickerInput from '../../Picker/src/components/PickerInput';
 
 describe('Option.tsx', () => {
   describe('props', () => {
@@ -18,18 +18,18 @@ describe('Option.tsx', () => {
       ];
 
       const wrapper = mount(() => (
-        <NSelect v-model={value.value} multiple={true} clearable toBody={false}>
+        <HSelect v-model={value.value} multiple={true} clearable toBody={false}>
           {optionList.map(option => (
-            <NOption
+            <HOption
               label={option.label}
               value={option.value}
               disabled={option?.disabled ?? false}
             />
           ))}
-        </NSelect>
+        </HSelect>
       ));
 
-      const trigger = wrapper.findComponent(NPickerInput);
+      const trigger = wrapper.findComponent(HPickerInput);
 
       await trigger.trigger('click');
 
@@ -61,18 +61,18 @@ describe('Option.tsx', () => {
     test('max-lines', async () => {
       const wrapper = mount(
         () => (
-          <NSelect toBody={false}>
-            <NOption value={1} label="A" maxLines={3} />
-            <NOption value={2} label="B" />
-            <NOption value={3} label="C" />
-          </NSelect>
+          <HSelect toBody={false}>
+            <HOption value={1} label="A" maxLines={3} />
+            <HOption value={2} label="B" />
+            <HOption value={3} label="C" />
+          </HSelect>
         ),
         {
           attachTo: document.body,
         },
       );
 
-      await wrapper.findComponent(NSelect).trigger('click');
+      await wrapper.findComponent(HSelect).trigger('click');
 
       const [opt1, opt2, opt3] = wrapper.findAll('.n-select-option');
 
@@ -86,20 +86,20 @@ describe('Option.tsx', () => {
 
       const wrapper = mount(
         () => (
-          <NSelect v-model={modelValue.value} toBody={false}>
-            <NOption value={{ value: 1 }} label="A" />
-            <NOption value={{ value: 2 }} label="B" />
-            <NOption value={{ value: 3 }} label="C" />
-          </NSelect>
+          <HSelect v-model={modelValue.value} toBody={false}>
+            <HOption value={{ value: 1 }} label="A" />
+            <HOption value={{ value: 2 }} label="B" />
+            <HOption value={{ value: 3 }} label="C" />
+          </HSelect>
         ),
         {
           attachTo: document.body,
         },
       );
 
-      await wrapper.findComponent(NSelect).trigger('click');
+      await wrapper.findComponent(HSelect).trigger('click');
 
-      const [opt1, opt2, opt3] = wrapper.findAllComponents(NOption);
+      const [opt1, opt2, opt3] = wrapper.findAllComponents(HOption);
 
       expect(opt1.classes('is-active')).toBeTruthy();
       expect(opt2.classes('is-active')).toBeFalsy();
@@ -113,19 +113,19 @@ describe('Option.tsx', () => {
 
       const wrapper = mount(
         () => (
-          <NSelect v-model={modelValue.value} toBody={false} onChange={onChange}>
-            <NOption value={true} label="TRUE" />
-            <NOption value={false} label="FALSE" />
-          </NSelect>
+          <HSelect v-model={modelValue.value} toBody={false} onChange={onChange}>
+            <HOption value={true} label="TRUE" />
+            <HOption value={false} label="FALSE" />
+          </HSelect>
         ),
         {
           attachTo: document.body,
         },
       );
 
-      await wrapper.findComponent(NSelect).trigger('click');
+      await wrapper.findComponent(HSelect).trigger('click');
 
-      const [opt1, opt2] = wrapper.findAllComponents(NOption);
+      const [opt1, opt2] = wrapper.findAllComponents(HOption);
 
       expect(modelValue.value).toBeUndefined();
       expect(onChange).toHaveBeenCalledTimes(0);

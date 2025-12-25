@@ -32,17 +32,17 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import type { NCascaderExtendOption, NCascaderModelValueType } from '@aurora/horizon-web';
+import type { HCascaderExtendOption, HCascaderModelValueType } from '@aurora/horizon-web';
 
 const currentVal1 = ref<string[]>([]);
 const currentVal2 = ref<string[][]>([]);
 const baseData = ref([]);
 
-const changeHandle = (value: NCascaderModelValueType, option: NCascaderExtendOption) => {
+const changeHandle = (value: HCascaderModelValueType, option: HCascaderExtendOption) => {
   console.info('change: ', value, option);
 };
 
-const updateHandle = (value: NCascaderModelValueType) => {
+const updateHandle = (value: HCascaderModelValueType) => {
   console.info('update: ', value);
 };
 

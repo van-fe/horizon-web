@@ -1,28 +1,28 @@
 import { mount, shallowMount } from '@vue/test-utils';
-import type { NFormInstance, NFormRule } from '../index';
-import { NForm, NFormItem } from '../index';
+import type { HFormInstance, HFormRule } from '../index';
+import { HForm, HFormItem } from '../index';
 import {
-  NInput,
-  NInputNumber,
-  NDatePicker,
-  NTimePicker,
-  NColorPicker,
-  NSelect,
-  NOption,
-  NCascader,
-  NTreeSelect,
-  NTag,
+  HInput,
+  HInputNumber,
+  HDatePicker,
+  HTimePicker,
+  HColorPicker,
+  HSelect,
+  HOption,
+  HCascader,
+  HTreeSelect,
+  HTag,
 } from '../../index';
 import { describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
-import NPickerInput from '../../Picker/src/components/NPickerInput';
+import HPickerInput from '../../Picker/src/components/PickerInput';
 import baseTreeData from '../../Cascader/__tests__/options.json';
 import type { FormProps } from '../src/composables/useProps';
 
 describe('Form.tsx', () => {
   test('basic', async () => {
-    const wrapper = shallowMount(() => <NForm />);
-    const element = wrapper.findComponent(NForm);
+    const wrapper = shallowMount(() => <HForm />);
+    const element = wrapper.findComponent(HForm);
 
     await expect(element.exists()).toBeTruthy();
   });
@@ -30,8 +30,8 @@ describe('Form.tsx', () => {
   describe('props', () => {
     test('size', async () => {
       const size = ref<'small' | 'medium' | 'large'>('medium');
-      const wrapper = mount(() => <NForm size={size.value} />);
-      const element = wrapper.findComponent(NForm);
+      const wrapper = mount(() => <HForm size={size.value} />);
+      const element = wrapper.findComponent(HForm);
 
       await expect(element.classes(`n-form--${size.value}`)).toBeTruthy();
       size.value = 'large';
@@ -44,13 +44,13 @@ describe('Form.tsx', () => {
     test('check form.size whether can affect inside components.size', async () => {
       const size = ref<'small' | 'medium' | 'large'>('small');
       const wrapper = mount(() => (
-        <NForm size={size.value}>
-          <NFormItem>
-            <NInput />
-          </NFormItem>
-        </NForm>
+        <HForm size={size.value}>
+          <HFormItem>
+            <HInput />
+          </HFormItem>
+        </HForm>
       ));
-      const element = wrapper.findComponent(NInput);
+      const element = wrapper.findComponent(HInput);
 
       await expect(element.classes(`n-input--${size.value}`)).toBeTruthy();
     });
@@ -60,7 +60,7 @@ describe('Form.tsx', () => {
         name: '',
       });
 
-      const rules: Record<keyof (typeof form)['value'], NFormRule | NFormRule[]> = {
+      const rules: Record<keyof (typeof form)['value'], HFormRule | HFormRule[]> = {
         name: {
           required: true,
           message: 'Required',
@@ -70,14 +70,14 @@ describe('Form.tsx', () => {
       const onValidate = vi.fn();
 
       const wrapper = mount(() => (
-        <NForm model={form.value} rules={rules} validateTrigger="blur" onValidate={onValidate}>
-          <NFormItem prop="name">
-            <NInput v-model={form.value.name} />
-          </NFormItem>
-        </NForm>
+        <HForm model={form.value} rules={rules} validateTrigger="blur" onValidate={onValidate}>
+          <HFormItem prop="name">
+            <HInput v-model={form.value.name} />
+          </HFormItem>
+        </HForm>
       ));
 
-      const input = wrapper.findComponent(NInput).find('input');
+      const input = wrapper.findComponent(HInput).find('input');
 
       await input.trigger('focus');
       await input.trigger('blur');
@@ -90,7 +90,7 @@ describe('Form.tsx', () => {
         name: '',
       });
 
-      const rules: Record<keyof (typeof form)['value'], NFormRule | NFormRule[]> = {
+      const rules: Record<keyof (typeof form)['value'], HFormRule | HFormRule[]> = {
         name: [
           {
             required: true,
@@ -106,19 +106,19 @@ describe('Form.tsx', () => {
       const onValidate = vi.fn();
 
       const wrapper = mount(() => (
-        <NForm
+        <HForm
           model={form.value}
           rules={rules}
           validateTrigger={['blur', 'change']}
           onValidate={onValidate}
         >
-          <NFormItem prop="name">
-            <NInput v-model={form.value.name} />
-          </NFormItem>
-        </NForm>
+          <HFormItem prop="name">
+            <HInput v-model={form.value.name} />
+          </HFormItem>
+        </HForm>
       ));
 
-      const input = wrapper.findComponent(NInput).find('input');
+      const input = wrapper.findComponent(HInput).find('input');
 
       await input.trigger('focus');
       await input.trigger('blur');
@@ -135,7 +135,7 @@ describe('Form.tsx', () => {
         name: '',
       });
 
-      const rules: Record<keyof (typeof form)['value'], NFormRule | NFormRule[]> = {
+      const rules: Record<keyof (typeof form)['value'], HFormRule | HFormRule[]> = {
         name: [
           {
             required: true,
@@ -149,23 +149,23 @@ describe('Form.tsx', () => {
       };
 
       const onValidate = vi.fn();
-      const formRef = ref<null | NFormInstance>(null);
+      const formRef = ref<null | HFormInstance>(null);
 
       const wrapper = mount(() => (
-        <NForm
+        <HForm
           ref={formRef}
           model={form.value}
           rules={rules}
           validateTrigger={false}
           onValidate={onValidate}
         >
-          <NFormItem prop="name">
-            <NInput v-model={form.value.name} />
-          </NFormItem>
-        </NForm>
+          <HFormItem prop="name">
+            <HInput v-model={form.value.name} />
+          </HFormItem>
+        </HForm>
       ));
 
-      const input = wrapper.findComponent(NInput).find('input');
+      const input = wrapper.findComponent(HInput).find('input');
 
       await input.trigger('focus');
       await input.trigger('blur');
@@ -198,74 +198,74 @@ describe('Form.tsx', () => {
         treeSelect: '',
       });
 
-      const formRef = ref<NFormInstance | null>(null);
+      const formRef = ref<HFormInstance | null>(null);
 
       const disabled = ref(true);
 
       const wrapper = mount(() => (
-        <NForm ref={formRef} model={formData.value} disabled={disabled.value}>
-          <NFormItem prop="username" required={true}>
-            <NInput v-model={formData.value.username} />
-          </NFormItem>
-          <NFormItem prop="age" required={true}>
-            <NInputNumber v-model={formData.value.age} />
-          </NFormItem>
-          <NFormItem prop="date" required={true}>
-            <NDatePicker v-model={formData.value.date} />
-          </NFormItem>
-          <NFormItem prop="time" required={true}>
-            <NTimePicker v-model={formData.value.time} />
-          </NFormItem>
-          <NFormItem prop="color" required={true}>
-            <NColorPicker modelValue={formData.value.color as string} />
-          </NFormItem>
-          <NFormItem prop="color" required={true}>
-            <NColorPicker modelValue={formData.value.color as string} trigger-type="square" />
-          </NFormItem>
-          <NFormItem prop="select" required={true}>
-            <NSelect modelValue={formData.value.color as string} trigger-type="square">
-              <NOption value={1} label={1} />
-            </NSelect>
-          </NFormItem>
-          <NFormItem prop="cascader" required={true}>
-            <NCascader
+        <HForm ref={formRef} model={formData.value} disabled={disabled.value}>
+          <HFormItem prop="username" required={true}>
+            <HInput v-model={formData.value.username} />
+          </HFormItem>
+          <HFormItem prop="age" required={true}>
+            <HInputNumber v-model={formData.value.age} />
+          </HFormItem>
+          <HFormItem prop="date" required={true}>
+            <HDatePicker v-model={formData.value.date} />
+          </HFormItem>
+          <HFormItem prop="time" required={true}>
+            <HTimePicker v-model={formData.value.time} />
+          </HFormItem>
+          <HFormItem prop="color" required={true}>
+            <HColorPicker modelValue={formData.value.color as string} />
+          </HFormItem>
+          <HFormItem prop="color" required={true}>
+            <HColorPicker modelValue={formData.value.color as string} trigger-type="square" />
+          </HFormItem>
+          <HFormItem prop="select" required={true}>
+            <HSelect modelValue={formData.value.color as string} trigger-type="square">
+              <HOption value={1} label={1} />
+            </HSelect>
+          </HFormItem>
+          <HFormItem prop="cascader" required={true}>
+            <HCascader
               modelValue={formData.value.cascader as string[]}
               options={[{ value: 'guide', label: 'Guide', children: [] }]}
             />
-          </NFormItem>
-          <NFormItem prop="treeSelect" required={true}>
-            <NTreeSelect v-model={formData.value.treeSelect} treeData={baseTreeData} />
-          </NFormItem>
-        </NForm>
+          </HFormItem>
+          <HFormItem prop="treeSelect" required={true}>
+            <HTreeSelect v-model={formData.value.treeSelect} treeData={baseTreeData} />
+          </HFormItem>
+        </HForm>
       ));
 
-      expect(wrapper.findComponent(NInput).html()).contains('disabled');
-      expect(wrapper.findComponent(NInputNumber).html()).contains('disabled');
-      expect(wrapper.findComponent(NDatePicker).html()).contains('disabled');
-      expect(wrapper.findComponent(NTimePicker).html()).contains('disabled');
-      expect(wrapper.findComponent(NColorPicker).html()).contains('disabled');
-      expect(wrapper.findComponent(NSelect).html()).contains('disabled');
-      expect(wrapper.findComponent(NSelect).html()).contains('disabled');
-      expect(wrapper.findComponent(NTreeSelect).html()).contains('disabled');
+      expect(wrapper.findComponent(HInput).html()).contains('disabled');
+      expect(wrapper.findComponent(HInputNumber).html()).contains('disabled');
+      expect(wrapper.findComponent(HDatePicker).html()).contains('disabled');
+      expect(wrapper.findComponent(HTimePicker).html()).contains('disabled');
+      expect(wrapper.findComponent(HColorPicker).html()).contains('disabled');
+      expect(wrapper.findComponent(HSelect).html()).contains('disabled');
+      expect(wrapper.findComponent(HSelect).html()).contains('disabled');
+      expect(wrapper.findComponent(HTreeSelect).html()).contains('disabled');
 
       disabled.value = false;
 
       await nextTick();
 
-      expect(wrapper.findComponent(NInput).html()).not.contains('disabled');
-      expect(wrapper.findComponent(NInputNumber).html()).not.contains('disabled');
-      expect(wrapper.findComponent(NDatePicker).html()).not.contains('disabled');
-      expect(wrapper.findComponent(NTimePicker).html()).not.contains('disabled');
-      expect(wrapper.findComponent(NColorPicker).html()).not.contains('disabled');
-      expect(wrapper.findComponent(NSelect).html()).not.contains('disabled');
-      expect(wrapper.findComponent(NSelect).html()).not.contains('disabled');
-      expect(wrapper.findComponent(NTreeSelect).html()).not.contains('--disabled');
+      expect(wrapper.findComponent(HInput).html()).not.contains('disabled');
+      expect(wrapper.findComponent(HInputNumber).html()).not.contains('disabled');
+      expect(wrapper.findComponent(HDatePicker).html()).not.contains('disabled');
+      expect(wrapper.findComponent(HTimePicker).html()).not.contains('disabled');
+      expect(wrapper.findComponent(HColorPicker).html()).not.contains('disabled');
+      expect(wrapper.findComponent(HSelect).html()).not.contains('disabled');
+      expect(wrapper.findComponent(HSelect).html()).not.contains('disabled');
+      expect(wrapper.findComponent(HTreeSelect).html()).not.contains('--disabled');
     });
 
     test('compact', async () => {
       const compact = ref(false);
 
-      const wrapper = mount(() => <NForm compact={compact.value}></NForm>);
+      const wrapper = mount(() => <HForm compact={compact.value}></HForm>);
 
       expect(wrapper.classes('is-spacing-compact')).toBeFalsy();
       compact.value = true;
@@ -276,7 +276,7 @@ describe('Form.tsx', () => {
     test('spacing', async () => {
       const spacing = ref<FormProps['spacing']>('default');
 
-      const wrapper = mount(() => <NForm spacing={spacing.value}></NForm>);
+      const wrapper = mount(() => <HForm spacing={spacing.value}></HForm>);
 
       expect(wrapper.classes(`is-spacing-${spacing.value}`)).toBeTruthy();
 
@@ -300,7 +300,7 @@ describe('Form.tsx', () => {
         age: null,
       });
 
-      const rules: Record<keyof (typeof formData)['value'], NFormRule | NFormRule[]> = {
+      const rules: Record<keyof (typeof formData)['value'], HFormRule | HFormRule[]> = {
         username: {
           required: true,
           message: 'error',
@@ -319,17 +319,17 @@ describe('Form.tsx', () => {
         ],
       };
 
-      const formRef = ref<NFormInstance | null>(null);
+      const formRef = ref<HFormInstance | null>(null);
 
       mount(() => (
-        <NForm ref={formRef} model={formData.value} rules={rules}>
-          <NFormItem prop="username">
-            <NInput v-model={formData.value.username} />
-          </NFormItem>
-          <NFormItem prop="age">
-            <NInputNumber v-model={formData.value.age} />
-          </NFormItem>
-        </NForm>
+        <HForm ref={formRef} model={formData.value} rules={rules}>
+          <HFormItem prop="username">
+            <HInput v-model={formData.value.username} />
+          </HFormItem>
+          <HFormItem prop="age">
+            <HInputNumber v-model={formData.value.age} />
+          </HFormItem>
+        </HForm>
       ));
 
       await nextTick();
@@ -344,17 +344,17 @@ describe('Form.tsx', () => {
         name: 'abc',
       });
 
-      const formRef = ref<null | NFormInstance>(null);
+      const formRef = ref<null | HFormInstance>(null);
 
       const wrapper = mount(() => (
-        <NForm ref={formRef} model={form.value}>
-          <NFormItem prop="name">
-            <NInput v-model={form.value.name} />
-          </NFormItem>
-        </NForm>
+        <HForm ref={formRef} model={form.value}>
+          <HFormItem prop="name">
+            <HInput v-model={form.value.name} />
+          </HFormItem>
+        </HForm>
       ));
 
-      const input = wrapper.findComponent(NInput).find('input');
+      const input = wrapper.findComponent(HInput).find('input');
 
       await input.setValue('bcd');
 
@@ -382,67 +382,67 @@ describe('Form.tsx', () => {
         treeSelect: '',
       });
 
-      const formRef = ref<NFormInstance | null>(null);
+      const formRef = ref<HFormInstance | null>(null);
 
       const wrapper = mount(() => (
-        <NForm ref={formRef} model={formData.value} disabled={disabled.value}>
-          <NFormItem prop="username" required={true}>
-            <NInput v-model={formData.value.username} />
-          </NFormItem>
-          <NFormItem prop="age" required={true}>
-            <NInputNumber v-model={formData.value.age} />
-          </NFormItem>
-          <NFormItem prop="date" required={true}>
-            <NDatePicker v-model={formData.value.date} />
-          </NFormItem>
-          <NFormItem prop="dateRange" required={true}>
-            <NDatePicker v-model={formData.value.dateRange} type="daterange" class="range-picker" />
-          </NFormItem>
-          <NFormItem prop="time" required={true}>
-            <NTimePicker v-model={formData.value.time} />
-          </NFormItem>
-          <NFormItem prop="color" required={true}>
-            <NColorPicker modelValue={formData.value.color as string} />
-          </NFormItem>
-          <NFormItem prop="color" required={true}>
-            <NColorPicker modelValue={formData.value.color as string} trigger-type="square" />
-          </NFormItem>
-          <NFormItem prop="select" required={true}>
-            <NSelect modelValue={formData.value.color as string} trigger-type="square">
-              <NOption value={1} label={1} />
-            </NSelect>
-          </NFormItem>
-          <NFormItem prop="cascader" required={true}>
-            <NCascader
+        <HForm ref={formRef} model={formData.value} disabled={disabled.value}>
+          <HFormItem prop="username" required={true}>
+            <HInput v-model={formData.value.username} />
+          </HFormItem>
+          <HFormItem prop="age" required={true}>
+            <HInputNumber v-model={formData.value.age} />
+          </HFormItem>
+          <HFormItem prop="date" required={true}>
+            <HDatePicker v-model={formData.value.date} />
+          </HFormItem>
+          <HFormItem prop="dateRange" required={true}>
+            <HDatePicker v-model={formData.value.dateRange} type="daterange" class="range-picker" />
+          </HFormItem>
+          <HFormItem prop="time" required={true}>
+            <HTimePicker v-model={formData.value.time} />
+          </HFormItem>
+          <HFormItem prop="color" required={true}>
+            <HColorPicker modelValue={formData.value.color as string} />
+          </HFormItem>
+          <HFormItem prop="color" required={true}>
+            <HColorPicker modelValue={formData.value.color as string} trigger-type="square" />
+          </HFormItem>
+          <HFormItem prop="select" required={true}>
+            <HSelect modelValue={formData.value.color as string} trigger-type="square">
+              <HOption value={1} label={1} />
+            </HSelect>
+          </HFormItem>
+          <HFormItem prop="cascader" required={true}>
+            <HCascader
               modelValue={formData.value.cascader as string[]}
               options={[{ value: 'guide', label: 'Guide', children: [] }]}
             />
-          </NFormItem>
-          <NFormItem prop="treeSelect" required={true}>
-            <NTreeSelect v-model={formData.value.treeSelect as string} treeData={baseTreeData} />
-          </NFormItem>
-        </NForm>
+          </HFormItem>
+          <HFormItem prop="treeSelect" required={true}>
+            <HTreeSelect v-model={formData.value.treeSelect as string} treeData={baseTreeData} />
+          </HFormItem>
+        </HForm>
       ));
 
       expect(
-        wrapper.findComponent(NInput).find('input').attributes('disabled'),
+        wrapper.findComponent(HInput).find('input').attributes('disabled'),
       ).not.toBeUndefined();
-      expect(wrapper.findComponent(NInputNumber).classes('is-disabled')).toBeTruthy();
+      expect(wrapper.findComponent(HInputNumber).classes('is-disabled')).toBeTruthy();
       expect(
-        wrapper.findComponent(NSelect).findComponent(NPickerInput).classes('is-disabled'),
+        wrapper.findComponent(HSelect).findComponent(HPickerInput).classes('is-disabled'),
       ).toBeTruthy();
       expect(
-        wrapper.findComponent(NTimePicker).find('input').attributes('disabled'),
+        wrapper.findComponent(HTimePicker).find('input').attributes('disabled'),
       ).not.toBeUndefined();
       expect(
-        wrapper.findComponent(NCascader).findComponent(NPickerInput).classes('is-disabled'),
+        wrapper.findComponent(HCascader).findComponent(HPickerInput).classes('is-disabled'),
       ).toBeTruthy();
       expect(
-        wrapper.findComponent(NTreeSelect).findComponent(NPickerInput).classes('is-disabled'),
+        wrapper.findComponent(HTreeSelect).findComponent(HPickerInput).classes('is-disabled'),
       ).toBeTruthy();
 
       // two kind of date-picker
-      const datePickers = wrapper.findAllComponents(NDatePicker);
+      const datePickers = wrapper.findAllComponents(HDatePicker);
       const datePicker = datePickers.find(curr => !curr.classes('range-picker'));
       const dateRangePicker = datePickers.find(curr => curr.classes('range-picker'));
 
@@ -453,28 +453,28 @@ describe('Form.tsx', () => {
       expect(dateRangePicker?.find('input').attributes('disabled')).not.toBeUndefined();
 
       // two kind of color-picker
-      const colorPickers = wrapper.findAllComponents(NColorPicker);
+      const colorPickers = wrapper.findAllComponents(HColorPicker);
 
-      expect(colorPickers[0].findComponent(NPickerInput).classes('is-disabled')).toBeTruthy();
-      expect(colorPickers[1].findComponent(NPickerInput).classes('is-disabled')).toBeTruthy();
+      expect(colorPickers[0].findComponent(HPickerInput).classes('is-disabled')).toBeTruthy();
+      expect(colorPickers[1].findComponent(HPickerInput).classes('is-disabled')).toBeTruthy();
 
       disabled.value = false;
 
       await nextTick();
 
-      expect(wrapper.findComponent(NInput).find('input').attributes('disabled')).toBeUndefined();
-      expect(wrapper.findComponent(NInputNumber).classes('is-disabled')).toBeFalsy();
+      expect(wrapper.findComponent(HInput).find('input').attributes('disabled')).toBeUndefined();
+      expect(wrapper.findComponent(HInputNumber).classes('is-disabled')).toBeFalsy();
       expect(
-        wrapper.findComponent(NSelect).findComponent(NPickerInput).classes('is-disabled'),
+        wrapper.findComponent(HSelect).findComponent(HPickerInput).classes('is-disabled'),
       ).toBeFalsy();
       expect(
-        wrapper.findComponent(NTimePicker).find('input').attributes('disabled'),
+        wrapper.findComponent(HTimePicker).find('input').attributes('disabled'),
       ).toBeUndefined();
       expect(
-        wrapper.findComponent(NCascader).findComponent(NPickerInput).classes('is-disabled'),
+        wrapper.findComponent(HCascader).findComponent(HPickerInput).classes('is-disabled'),
       ).toBeFalsy();
       expect(
-        wrapper.findComponent(NTreeSelect).findComponent(NPickerInput).classes('is-disabled'),
+        wrapper.findComponent(HTreeSelect).findComponent(HPickerInput).classes('is-disabled'),
       ).toBeFalsy();
 
       // two kind of date-picker
@@ -482,8 +482,8 @@ describe('Form.tsx', () => {
       expect(dateRangePicker?.find('input').attributes('disabled')).toBeUndefined();
 
       // two kind of color-picker
-      expect(colorPickers[0].findComponent(NPickerInput).classes('is-disabled')).toBeFalsy();
-      expect(colorPickers[1].findComponent(NPickerInput).classes('is-disabled')).toBeFalsy();
+      expect(colorPickers[0].findComponent(HPickerInput).classes('is-disabled')).toBeFalsy();
+      expect(colorPickers[1].findComponent(HPickerInput).classes('is-disabled')).toBeFalsy();
     });
 
     test('disabled set form-component inside', async () => {
@@ -505,169 +505,169 @@ describe('Form.tsx', () => {
         treeSelectMultiple: ['feedback'],
       });
 
-      const formRef = ref<NFormInstance | null>(null);
+      const formRef = ref<HFormInstance | null>(null);
 
       const wrapper = mount(() => (
-        <NForm ref={formRef} model={formData.value} disabled={formDisabled.value}>
-          <NFormItem prop="username" required={true}>
-            <NInput v-model={formData.value.username} disabled={disabled.value} />
-          </NFormItem>
-          <NFormItem prop="age" required={true}>
-            <NInputNumber v-model={formData.value.age} disabled={disabled.value} />
-          </NFormItem>
-          <NFormItem prop="date" required={true}>
-            <NDatePicker v-model={formData.value.date} disabled={disabled.value} />
-          </NFormItem>
-          <NFormItem prop="dateRange" required={true}>
-            <NDatePicker
+        <HForm ref={formRef} model={formData.value} disabled={formDisabled.value}>
+          <HFormItem prop="username" required={true}>
+            <HInput v-model={formData.value.username} disabled={disabled.value} />
+          </HFormItem>
+          <HFormItem prop="age" required={true}>
+            <HInputNumber v-model={formData.value.age} disabled={disabled.value} />
+          </HFormItem>
+          <HFormItem prop="date" required={true}>
+            <HDatePicker v-model={formData.value.date} disabled={disabled.value} />
+          </HFormItem>
+          <HFormItem prop="dateRange" required={true}>
+            <HDatePicker
               v-model={formData.value.dateRange}
               type="daterange"
               class="range-picker"
               disabled={disabled.value}
             />
-          </NFormItem>
-          <NFormItem prop="time" required={true}>
-            <NTimePicker v-model={formData.value.time} disabled={disabled.value} />
-          </NFormItem>
-          <NFormItem prop="color" required={true}>
-            <NColorPicker v-model={formData.value.color} disabled={disabled.value} />
-          </NFormItem>
-          <NFormItem prop="color" required={true}>
-            <NColorPicker
+          </HFormItem>
+          <HFormItem prop="time" required={true}>
+            <HTimePicker v-model={formData.value.time} disabled={disabled.value} />
+          </HFormItem>
+          <HFormItem prop="color" required={true}>
+            <HColorPicker v-model={formData.value.color} disabled={disabled.value} />
+          </HFormItem>
+          <HFormItem prop="color" required={true}>
+            <HColorPicker
               v-model={formData.value.color}
               trigger-type="square"
               disabled={disabled.value}
             />
-          </NFormItem>
-          <NFormItem prop="select" required={true}>
-            <NSelect v-model={formData.value.select} disabled={disabled.value}>
-              <NOption value={1} label={1} />
-            </NSelect>
-          </NFormItem>
-          <NFormItem prop="selectMultiple" required={true}>
-            <NSelect
+          </HFormItem>
+          <HFormItem prop="select" required={true}>
+            <HSelect v-model={formData.value.select} disabled={disabled.value}>
+              <HOption value={1} label={1} />
+            </HSelect>
+          </HFormItem>
+          <HFormItem prop="selectMultiple" required={true}>
+            <HSelect
               v-model={formData.value.selectMultiple}
               multiple={true}
               disabled={disabled.value}
             >
-              <NOption value={1} label="1" />
-            </NSelect>
-          </NFormItem>
-          <NFormItem prop="cascader" required={true}>
-            <NCascader
+              <HOption value={1} label="1" />
+            </HSelect>
+          </HFormItem>
+          <HFormItem prop="cascader" required={true}>
+            <HCascader
               v-model={formData.value.cascader}
               options={baseTreeData}
               disabled={disabled.value}
             />
-          </NFormItem>
-          <NFormItem prop="cascaderMultiple" required={true}>
-            <NCascader
+          </HFormItem>
+          <HFormItem prop="cascaderMultiple" required={true}>
+            <HCascader
               v-model={formData.value.cascaderMultiple}
               options={baseTreeData}
               multiple={true}
               disabled={disabled.value}
             />
-          </NFormItem>
-          <NFormItem prop="treeSelect" required={true}>
-            <NTreeSelect
+          </HFormItem>
+          <HFormItem prop="treeSelect" required={true}>
+            <HTreeSelect
               v-model={formData.value.treeSelect}
               disabled={disabled.value}
               treeData={baseTreeData}
             />
-          </NFormItem>
-          <NFormItem prop="treeSelectMultiple" required={true}>
-            <NTreeSelect
+          </HFormItem>
+          <HFormItem prop="treeSelectMultiple" required={true}>
+            <HTreeSelect
               v-model={formData.value.treeSelectMultiple}
               treeData={baseTreeData}
               multiple={true}
               disabled={disabled.value}
             />
-          </NFormItem>
-        </NForm>
+          </HFormItem>
+        </HForm>
       ));
 
       await nextTick();
 
       // two kind of date-picker
-      const datePickers = wrapper.findAllComponents(NDatePicker);
+      const datePickers = wrapper.findAllComponents(HDatePicker);
       const datePicker = datePickers.find(curr => !curr.classes('range-picker'));
       const dateRangePicker = datePickers.find(curr => curr.classes('range-picker'));
 
       // two kind of color-picker
-      const colorPickers = wrapper.findAllComponents(NColorPicker);
+      const colorPickers = wrapper.findAllComponents(HColorPicker);
 
       function checkAllDisabled() {
         expect(
-          wrapper.findComponent(NInput).find('input').attributes('disabled'),
+          wrapper.findComponent(HInput).find('input').attributes('disabled'),
         ).not.toBeUndefined();
-        expect(wrapper.findComponent(NInputNumber).classes('is-disabled')).toBeTruthy();
+        expect(wrapper.findComponent(HInputNumber).classes('is-disabled')).toBeTruthy();
         expect(
-          wrapper.findAllComponents(NSelect)[0].findComponent(NPickerInput).classes('is-disabled'),
+          wrapper.findAllComponents(HSelect)[0].findComponent(HPickerInput).classes('is-disabled'),
         ).toBeTruthy();
         expect(
-          wrapper.findAllComponents(NSelect)[1].findComponent(NPickerInput).classes('is-disabled'),
+          wrapper.findAllComponents(HSelect)[1].findComponent(HPickerInput).classes('is-disabled'),
         ).toBeTruthy();
         expect(
-          wrapper.findAllComponents(NSelect)[1].findComponent(NTag).classes('is-disabled'),
+          wrapper.findAllComponents(HSelect)[1].findComponent(HTag).classes('is-disabled'),
         ).toBeTruthy();
         expect(
           wrapper
-            .findAllComponents(NCascader)[0]
-            .findComponent(NPickerInput)
+            .findAllComponents(HCascader)[0]
+            .findComponent(HPickerInput)
             .classes('is-disabled'),
         ).toBeTruthy();
         expect(
           wrapper
-            .findAllComponents(NCascader)[1]
-            .findComponent(NPickerInput)
+            .findAllComponents(HCascader)[1]
+            .findComponent(HPickerInput)
             .classes('is-disabled'),
         ).toBeTruthy();
         expect(
-          wrapper.findAllComponents(NCascader)[1].findComponent(NTag).classes('is-disabled'),
+          wrapper.findAllComponents(HCascader)[1].findComponent(HTag).classes('is-disabled'),
         ).toBeTruthy();
         expect(
           wrapper
-            .findAllComponents(NTreeSelect)[0]
-            .findComponent(NPickerInput)
+            .findAllComponents(HTreeSelect)[0]
+            .findComponent(HPickerInput)
             .classes('is-disabled'),
         ).toBeTruthy();
         expect(
           wrapper
-            .findAllComponents(NTreeSelect)[1]
-            .findComponent(NPickerInput)
+            .findAllComponents(HTreeSelect)[1]
+            .findComponent(HPickerInput)
             .classes('is-disabled'),
         ).toBeTruthy();
         expect(
-          wrapper.findAllComponents(NTreeSelect)[1].findComponent(NTag).classes('is-disabled'),
+          wrapper.findAllComponents(HTreeSelect)[1].findComponent(HTag).classes('is-disabled'),
         ).toBeTruthy();
 
         expect(datePicker?.exists()).toBeTruthy();
         expect(dateRangePicker?.exists()).toBeTruthy();
 
         expect(
-          wrapper.findComponent(NTimePicker).find('input').attributes('disabled'),
+          wrapper.findComponent(HTimePicker).find('input').attributes('disabled'),
         ).not.toBeUndefined();
         expect(datePicker?.find('input').attributes('disabled')).not.toBeUndefined();
         expect(dateRangePicker?.find('input').attributes('disabled')).not.toBeUndefined();
 
-        expect(colorPickers[0].findComponent(NPickerInput).classes('is-disabled')).toBeTruthy();
-        expect(colorPickers[1].findComponent(NPickerInput).classes('is-disabled')).toBeTruthy();
+        expect(colorPickers[0].findComponent(HPickerInput).classes('is-disabled')).toBeTruthy();
+        expect(colorPickers[1].findComponent(HPickerInput).classes('is-disabled')).toBeTruthy();
       }
 
       function checkAllNotDisabled() {
-        expect(wrapper.findComponent(NInput).find('input').attributes('disabled')).toBeUndefined();
-        expect(wrapper.findComponent(NInputNumber).classes('is-disabled')).toBeFalsy();
+        expect(wrapper.findComponent(HInput).find('input').attributes('disabled')).toBeUndefined();
+        expect(wrapper.findComponent(HInputNumber).classes('is-disabled')).toBeFalsy();
         expect(
-          wrapper.findComponent(NSelect).findComponent(NPickerInput).classes('is-disabled'),
+          wrapper.findComponent(HSelect).findComponent(HPickerInput).classes('is-disabled'),
         ).toBeFalsy();
         expect(
-          wrapper.findComponent(NTimePicker).find('input').attributes('disabled'),
+          wrapper.findComponent(HTimePicker).find('input').attributes('disabled'),
         ).toBeUndefined();
         expect(
-          wrapper.findComponent(NCascader).findComponent(NPickerInput).classes('is-disabled'),
+          wrapper.findComponent(HCascader).findComponent(HPickerInput).classes('is-disabled'),
         ).toBeFalsy();
         expect(
-          wrapper.findComponent(NTreeSelect).findComponent(NPickerInput).classes('is-disabled'),
+          wrapper.findComponent(HTreeSelect).findComponent(HPickerInput).classes('is-disabled'),
         ).toBeFalsy();
 
         // two kind of date-picker
@@ -675,8 +675,8 @@ describe('Form.tsx', () => {
         expect(dateRangePicker?.find('input').attributes('disabled')).toBeUndefined();
 
         // two kind of color-picker
-        expect(colorPickers[0].findComponent(NPickerInput).classes('is-disabled')).toBeFalsy();
-        expect(colorPickers[1].findComponent(NPickerInput).classes('is-disabled')).toBeFalsy();
+        expect(colorPickers[0].findComponent(HPickerInput).classes('is-disabled')).toBeFalsy();
+        expect(colorPickers[1].findComponent(HPickerInput).classes('is-disabled')).toBeFalsy();
       }
 
       checkAllDisabled();
@@ -710,7 +710,7 @@ describe('Form.tsx', () => {
         name: '',
       });
 
-      const rules: Record<keyof (typeof form)['value'], NFormRule | NFormRule[]> = {
+      const rules: Record<keyof (typeof form)['value'], HFormRule | HFormRule[]> = {
         name: [
           {
             required: true,
@@ -726,14 +726,14 @@ describe('Form.tsx', () => {
       const onValidate = vi.fn();
 
       const wrapper = mount(() => (
-        <NForm model={form.value} rules={rules} onValidate={onValidate}>
-          <NFormItem prop="name">
-            <NInput v-model={form.value.name} />
-          </NFormItem>
-        </NForm>
+        <HForm model={form.value} rules={rules} onValidate={onValidate}>
+          <HFormItem prop="name">
+            <HInput v-model={form.value.name} />
+          </HFormItem>
+        </HForm>
       ));
 
-      const input = wrapper.findComponent(NInput).find('input');
+      const input = wrapper.findComponent(HInput).find('input');
 
       await input.setValue('a char name');
 

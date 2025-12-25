@@ -1,13 +1,13 @@
 import { computed, defineComponent, inject, ref, shallowRef, toRef, watch } from 'vue';
 import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
 import {
-  NCalendarCurrentDateInjectKey,
-  NCalendarEmitInjectKey,
-  NCalendarPinFlagsInjectKey,
-  NCalendarPropsInjectKey,
-  NCalendarSlotsInjectKey,
-  NCalendarCurrentTimeInjectKey,
-  NCalendarHelperInjectKey,
+  HCalendarCurrentDateInjectKey,
+  HCalendarEmitInjectKey,
+  HCalendarPinFlagsInjectKey,
+  HCalendarPropsInjectKey,
+  HCalendarSlotsInjectKey,
+  HCalendarCurrentTimeInjectKey,
+  HCalendarHelperInjectKey,
 } from '../utils/injectKeys';
 import { defaultLocale, localeInjectKey } from '~/provides';
 import type { Dayjs } from 'dayjs';
@@ -20,13 +20,13 @@ export default defineComponent({
   setup() {
     const classHelper = new ComponentClassBlock('calendar-year');
     const calendarRef = ref<null | HTMLElement>(null);
-    const props = inject(NCalendarPropsInjectKey)!;
-    const parentEmit = inject(NCalendarEmitInjectKey)!;
-    const parentSlots = inject(NCalendarSlotsInjectKey)!;
-    const currentDate = inject(NCalendarCurrentDateInjectKey)!;
+    const props = inject(HCalendarPropsInjectKey)!;
+    const parentEmit = inject(HCalendarEmitInjectKey)!;
+    const parentSlots = inject(HCalendarSlotsInjectKey)!;
+    const currentDate = inject(HCalendarCurrentDateInjectKey)!;
     const locale = inject(localeInjectKey, defaultLocale);
-    const currentTime = inject(NCalendarCurrentTimeInjectKey)!;
-    const calendarHelper = inject(NCalendarHelperInjectKey)!;
+    const currentTime = inject(HCalendarCurrentTimeInjectKey)!;
+    const calendarHelper = inject(HCalendarHelperInjectKey)!;
 
     const weeksText = computed(() =>
       new Array(7)
@@ -57,7 +57,7 @@ export default defineComponent({
       },
     );
 
-    const pinFlags = inject(NCalendarPinFlagsInjectKey, new PinFlagsHelper([], props));
+    const pinFlags = inject(HCalendarPinFlagsInjectKey, new PinFlagsHelper([], props));
 
     return () => (
       <div

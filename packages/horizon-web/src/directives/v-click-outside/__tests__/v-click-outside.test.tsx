@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import NVClickOutside from '../index';
+import HVClickOutside from '../index';
 import { describe, expect, test, vi } from 'vitest';
 
 describe('v-click-outside.tsx', () => {
@@ -18,7 +18,7 @@ describe('v-click-outside.tsx', () => {
         attachTo: document.body,
         global: {
           directives: {
-            [NVClickOutside.name]: NVClickOutside,
+            [HVClickOutside.name]: HVClickOutside,
           },
         },
       },

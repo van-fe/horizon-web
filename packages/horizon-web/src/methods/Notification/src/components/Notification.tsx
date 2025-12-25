@@ -4,7 +4,7 @@ import { ComponentClassBlock, cls, useNamespace, usePopupContainerGetter } from 
 import { useTimeoutFn } from '@vueuse/core';
 import type { CSSProperties } from 'vue';
 import { Teleport, Transition, computed, defineComponent, onMounted, ref, toRefs } from 'vue';
-import NButton from '~/components/Button/src/Button';
+import HButton from '~/components/Button/src/Button';
 import useLocaleLang from '~/utils/useLocaleLang';
 import useSize from '~/utils/useSize';
 import type { NotificationEmits } from '../composables/useEmits';
@@ -19,7 +19,7 @@ export default defineComponent({
   desc: '全局展示通知提醒，悬浮出现在页面角落，将信息及时有效的传达给用户。更偏向系统本身的通知，大多数与用户操作无关',
   components: {
     AIcon,
-    NButton,
+    HButton,
   },
   props: useNotificationProps,
   emits: useNotificationEmits,
@@ -201,7 +201,7 @@ export default defineComponent({
               v-show={showFooter.value}
               class={cls([classHelper.e('footer'), classHelper.m(align.value)])}
             >
-              <NButton
+              <HButton
                 v-show={showCancelButton.value}
                 class={cls(classHelper.e('cancel'))}
                 forceNewestSize={true}
@@ -209,8 +209,8 @@ export default defineComponent({
                 onClick={cancel}
               >
                 {cancelButtonText.value || useLocaleLang('global.cancel').value}
-              </NButton>
-              <NButton
+              </HButton>
+              <HButton
                 v-show={showConfirmButton.value}
                 class={cls(classHelper.e('confirm'))}
                 forceNewestSize={true}
@@ -218,7 +218,7 @@ export default defineComponent({
                 onClick={confirm}
               >
                 {confirmButtonText.value || useLocaleLang('global.ok').value}
-              </NButton>
+              </HButton>
             </div>
           </div>
         </Transition>

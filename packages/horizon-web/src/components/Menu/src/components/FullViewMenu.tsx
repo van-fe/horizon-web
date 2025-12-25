@@ -1,28 +1,28 @@
 import type { PropType } from 'vue';
 import { withKeys, withModifiers, computed, defineComponent, inject, nextTick } from 'vue';
-import type { NMenuTreeData, NMenuTreePickedValuesData } from '../util/types';
+import type { HMenuTreeData, HMenuTreePickedValuesData } from '../util/types';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, sizeUnitTransform } from '@aurora/utils';
 import {
-  NMenuActivatedMenusInjectKey,
-  NMenuAddExpandMenuInjectKey,
-  NMenuEmitInjectKey,
-  NMenuPropsInjectKey,
-  NMenuSetActivatedMenuInjectKey,
+  HMenuActivatedMenusInjectKey,
+  HMenuAddExpandMenuInjectKey,
+  HMenuEmitInjectKey,
+  HMenuPropsInjectKey,
+  HMenuSetActivatedMenuInjectKey,
 } from '../util/injectKeys';
 import type { MenuItemEmits, SubMenuEmits } from '../composables/useEmits';
 import type { MenuItemProps, SubMenuProps } from '../composables/useProps';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
 import useIconRender from '~/utils/useIconRender';
 
 export default defineComponent({
   name: 'FullViewMenu',
   components: {
-    NTooltip,
+    HTooltip,
   },
   props: {
     menuTree: {
-      type: Object as PropType<Map<string, NMenuTreeData<'subMenu' | 'menuItem'>>>,
+      type: Object as PropType<Map<string, HMenuTreeData<'subMenu' | 'menuItem'>>>,
       required: true,
     },
     activeTopMenuUuid: {
@@ -37,17 +37,17 @@ export default defineComponent({
   setup(props, { emit }) {
     const classHelper = new ComponentClassBlock('menu--full-view');
 
-    const parentProps = inject(NMenuPropsInjectKey, undefined);
-    const parentEmits = inject(NMenuEmitInjectKey, undefined);
-    const activatedMenus = inject(NMenuActivatedMenusInjectKey);
-    const addExpandMenu = inject(NMenuAddExpandMenuInjectKey);
-    const setActivatedMenu = inject(NMenuSetActivatedMenuInjectKey);
+    const parentProps = inject(HMenuPropsInjectKey, undefined);
+    const parentEmits = inject(HMenuEmitInjectKey, undefined);
+    const activatedMenus = inject(HMenuActivatedMenusInjectKey);
+    const addExpandMenu = inject(HMenuAddExpandMenuInjectKey);
+    const setActivatedMenu = inject(HMenuSetActivatedMenuInjectKey);
 
     const currentChildren = computed(() => {
       const pickMapValues = (
-        mapData: Map<string, NMenuTreeData<'menuItem' | 'subMenu'>> | null,
-      ): Array<NMenuTreePickedValuesData<'menuItem' | 'subMenu'>> => {
-        const res: NMenuTreePickedValuesData<'menuItem' | 'subMenu'>[] = [];
+        mapData: Map<string, HMenuTreeData<'menuItem' | 'subMenu'>> | null,
+      ): Array<HMenuTreePickedValuesData<'menuItem' | 'subMenu'>> => {
+        const res: HMenuTreePickedValuesData<'menuItem' | 'subMenu'>[] = [];
 
         Array.from(mapData?.values() ?? []).forEach(curr => {
           res.push({
@@ -64,7 +64,7 @@ export default defineComponent({
       return found ? pickMapValues(found.children) : [];
     });
 
-    function onClickMenuItem(target: NMenuTreePickedValuesData) {
+    function onClickMenuItem(target: HMenuTreePickedValuesData) {
       if (target.props.disabled) return;
 
       addExpandMenu?.(target.uuid);
@@ -101,7 +101,7 @@ export default defineComponent({
       });
     }
 
-    function onClickSubMenu(target: NMenuTreePickedValuesData<'subMenu'>) {
+    function onClickSubMenu(target: HMenuTreePickedValuesData<'subMenu'>) {
       if (target.props.disabled) return;
 
       addExpandMenu?.(target.uuid);
@@ -133,10 +133,10 @@ export default defineComponent({
       }
     }
 
-    function isSelectable(group: NMenuTreePickedValuesData<'menuItem' | 'subMenu'>) {
+    function isSelectable(group: HMenuTreePickedValuesData<'menuItem' | 'subMenu'>) {
       return group.type === 'subMenu'
-        ? (group as NMenuTreePickedValuesData<'subMenu'>).props.selectable &&
-            !(group as NMenuTreePickedValuesData<'subMenu'>).props.disabled
+        ? (group as HMenuTreePickedValuesData<'subMenu'>).props.selectable &&
+            !(group as HMenuTreePickedValuesData<'subMenu'>).props.disabled
         : !group.props.disabled;
     }
 
@@ -162,8 +162,8 @@ export default defineComponent({
                 )}
                 onClick={
                   group.type === 'menuItem'
-                    ? () => onClickMenuItem(group as NMenuTreePickedValuesData)
-                    : () => onClickSubMenu(group as NMenuTreePickedValuesData<'subMenu'>)
+                    ? () => onClickMenuItem(group as HMenuTreePickedValuesData)
+                    : () => onClickSubMenu(group as HMenuTreePickedValuesData<'subMenu'>)
                 }
               >
                 <div
@@ -172,8 +172,8 @@ export default defineComponent({
                   onKeyup={withModifiers(
                     withKeys(
                       group.type === 'menuItem'
-                        ? () => onClickMenuItem(group as NMenuTreePickedValuesData)
-                        : () => onClickSubMenu(group as NMenuTreePickedValuesData<'subMenu'>),
+                        ? () => onClickMenuItem(group as HMenuTreePickedValuesData)
+                        : () => onClickSubMenu(group as HMenuTreePickedValuesData<'subMenu'>),
                       ['enter'],
                     ),
                     ['self'],
@@ -200,9 +200,9 @@ export default defineComponent({
                       classHelper.is('disabled', item.props.disabled),
                     )}
                     tabindex={isSelectable(item) ? 0 : -1}
-                    onClick={() => onClickMenuItem(item as NMenuTreePickedValuesData)}
+                    onClick={() => onClickMenuItem(item as HMenuTreePickedValuesData)}
                     onKeyup={withModifiers(
-                      withKeys(() => onClickMenuItem(item as NMenuTreePickedValuesData), ['enter']),
+                      withKeys(() => onClickMenuItem(item as HMenuTreePickedValuesData), ['enter']),
                       ['self'],
                     )}
                   >
@@ -213,7 +213,7 @@ export default defineComponent({
                         })}
                       </div>
                     )}
-                    <NTooltip overflow={true} size="small" arrow={false}>
+                    <HTooltip overflow={true} size="small" arrow={false}>
                       {{
                         content: () =>
                           item.type === 'menuItem'
@@ -233,7 +233,7 @@ export default defineComponent({
                           </div>
                         ),
                       }}
-                    </NTooltip>
+                    </HTooltip>
                   </div>
                 ))}
               </div>

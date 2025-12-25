@@ -1,12 +1,12 @@
 import { default as Viewer } from './src/Viewer';
 import type {
-  NViewerSource,
-  NViewerCustomToolItem,
-  NViewerLegend,
+  HViewerSource,
+  HViewerCustomToolItem,
+  HViewerLegend,
 } from './src/composables/useProps';
 import { withInstall } from '@aurora/utils';
 
-export const NViewer = withInstall(Viewer);
-export default NViewer;
+export const HViewer = withInstall(Viewer);
+export default HViewer;
 
-export type { NViewerSource, NViewerCustomToolItem, NViewerLegend };
+export type { HViewerSource, HViewerCustomToolItem, HViewerLegend };

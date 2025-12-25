@@ -2,16 +2,16 @@ import type { VNodeArrayChildren } from 'vue';
 import { inject, defineComponent } from 'vue';
 import { cls, ComponentClassBlock } from '@aurora/utils';
 import { getFixedStyle, getFooterStyle, isLastFixedColumn } from '../hooks/useLayout';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
 import {
-  NTableColumnAnalysisInjectKey,
-  NTableFlattenDataInjectKey,
-  NTableFooterRowHeightInjectKey,
-  NTableGetColumnFixedStateInjectKey,
-  NTablePropsInjectKey,
+  HTableColumnAnalysisInjectKey,
+  HTableFlattenDataInjectKey,
+  HTableFooterRowHeightInjectKey,
+  HTableGetColumnFixedStateInjectKey,
+  HTablePropsInjectKey,
 } from '../utils/injectKeys';
-import type { NTableColumnData } from '../utils/types';
-import { NTableColumnContextKey } from '../utils/types';
+import type { HTableColumnData } from '../utils/types';
+import { HTableColumnContextKey } from '../utils/types';
 import useLocaleLang from '~/utils/useLocaleLang';
 import { Decimal } from 'decimal.js';
 import get from 'lodash/get';
@@ -22,11 +22,11 @@ export default defineComponent({
   setup() {
     const classHelper = new ComponentClassBlock('table-v3');
 
-    const parentProps = inject(NTablePropsInjectKey)!;
-    const flattenData = inject(NTableFlattenDataInjectKey)!;
-    const columns = inject(NTableColumnAnalysisInjectKey)!;
-    const footerRowHeight = inject(NTableFooterRowHeightInjectKey)!;
-    const getFixedState = inject(NTableGetColumnFixedStateInjectKey)!;
+    const parentProps = inject(HTablePropsInjectKey)!;
+    const flattenData = inject(HTableFlattenDataInjectKey)!;
+    const columns = inject(HTableColumnAnalysisInjectKey)!;
+    const footerRowHeight = inject(HTableFooterRowHeightInjectKey)!;
+    const getFixedState = inject(HTableGetColumnFixedStateInjectKey)!;
 
     return () => {
       const summaryMethodCallback = parentProps.summaryMethod?.({
@@ -36,7 +36,7 @@ export default defineComponent({
       });
 
       const summaryRender = (
-        column: NTableColumnData,
+        column: HTableColumnData,
         columnIndex: number,
         rowIndex: number,
       ): JSX.Element => {
@@ -69,12 +69,12 @@ export default defineComponent({
 
         const contentRender = (content: VNodeArrayChildren) => {
           return column.props.showFooterOverflowTooltip ? (
-            <NTooltip overflow {...(column.props.headerTooltipOptions || {})}>
+            <HTooltip overflow {...(column.props.headerTooltipOptions || {})}>
               {{
                 default: () => <div class={classHelper.e('cell-inner')}>{content}</div>,
                 content: () => content,
               }}
-            </NTooltip>
+            </HTooltip>
           ) : (
             <div class={classHelper.e('cell-inner')}>{cellContent}</div>
           );
@@ -103,7 +103,7 @@ export default defineComponent({
               class={classHelper.e('cell-wrap')}
               style={
                 column.props.showFooterOverflowTooltip
-                  ? column[NTableColumnContextKey].overflowStyle
+                  ? column[HTableColumnContextKey].overflowStyle
                   : ''
               }
             >
@@ -124,7 +124,7 @@ export default defineComponent({
         <tfoot v-show={parentProps.showSummary} class={cls(classHelper.e('table-foot'))}>
           {new Array(parentProps.summaryRowAmount).fill(0).map((_, rowIndex) => (
             <tr class={cls(classHelper.e('row'), classHelper.em('row', 'footer'))}>
-              {columns.value.flattenColumns.map((column: NTableColumnData, columnIndex) =>
+              {columns.value.flattenColumns.map((column: HTableColumnData, columnIndex) =>
                 summaryRender(column, columnIndex, rowIndex),
               )}
             </tr>

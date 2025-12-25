@@ -1,35 +1,35 @@
 import type { Ref, VNode } from 'vue';
 import { inject } from 'vue';
-import type { NTreeData, NTreeExtendsData } from '../utils/types';
+import type { HTreeData, HTreeExtendsData } from '../utils/types';
 import type { TreeProps } from '../composables/useProps';
 import type Tree from '~/utils/useTree/index';
 import { cls, ComponentClassBlock } from '@aurora/utils';
-import { NTreeSizeInjectKey } from '../utils/injectKeys';
+import { HTreeSizeInjectKey } from '../utils/injectKeys';
 
 export default function useLine(
   treeProps: TreeProps,
   options: {
-    treeItem: Ref<NTreeExtendsData>;
+    treeItem: Ref<HTreeExtendsData>;
     getPadding: (level: number) => number;
-    treeHelper: Tree<NTreeData, NTreeExtendsData>;
+    treeHelper: Tree<HTreeData, HTreeExtendsData>;
     expandedNodesUuid: Set<string | number>;
   },
 ) {
   const classHelper = new ComponentClassBlock('tree-item');
 
-  const size = inject(NTreeSizeInjectKey)!;
+  const size = inject(HTreeSizeInjectKey)!;
 
   function getLinePosition(level: number) {
     return options.getPadding(level) + (size.value === 'huge' ? 10 : 8);
   }
 
-  function getTheLatestNode(node: NTreeExtendsData): NTreeExtendsData {
+  function getTheLatestNode(node: HTreeExtendsData): HTreeExtendsData {
     return node.transformedChildren.at(-1) && options.expandedNodesUuid.has(node._uuid)
       ? getTheLatestNode(node.transformedChildren.at(-1)!)
       : node;
   }
 
-  function shouldStopInMiddle(node: NTreeExtendsData) {
+  function shouldStopInMiddle(node: HTreeExtendsData) {
     if (!!node.__context.next) {
       if (node.__context.next.isLeaf) {
         return getTheLatestNode(node) === options.treeItem.value;

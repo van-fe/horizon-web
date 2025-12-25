@@ -1,3 +1,3 @@
 import LoadingBar from './src';
 
-export const NLoadingBar = LoadingBar;
+export const HLoadingBar = LoadingBar;

@@ -1,15 +1,15 @@
 import { computed, defineComponent, inject, onMounted, ref } from 'vue';
 import { ComponentClassBlock, cssVariable } from '@aurora/utils';
-import NButton from '~/components/Button/src/Button';
+import HButton from '~/components/Button/src/Button';
 import {
-  NUploadPropsInjectKey,
-  NUploadSizeInjectKey,
-  NUploadSlotsInjectKey,
-  NUploadUploadFileHelperInjectKey,
+  HUploadPropsInjectKey,
+  HUploadSizeInjectKey,
+  HUploadSlotsInjectKey,
+  HUploadUploadFileHelperInjectKey,
 } from '../utils/injectKeys';
 import { IconUpload } from '@aurora/icon';
 import useLocaleLang from '~/utils/useLocaleLang';
-import { NFormDisabledInjectedKey } from '~/components/Form/src/utils/injectedKeys';
+import { HFormDisabledInjectedKey } from '~/components/Form/src/utils/injectedKeys';
 
 export default defineComponent({
   name: 'UploadButton',
@@ -18,13 +18,13 @@ export default defineComponent({
 
     const buttonRef = ref<HTMLElement | null>(null);
 
-    const props = inject(NUploadPropsInjectKey)!;
-    const slots = inject(NUploadSlotsInjectKey)!;
-    const sizeRef = inject(NUploadSizeInjectKey)!;
-    const uploadFileHelper = inject(NUploadUploadFileHelperInjectKey)!;
+    const props = inject(HUploadPropsInjectKey)!;
+    const slots = inject(HUploadSlotsInjectKey)!;
+    const sizeRef = inject(HUploadSizeInjectKey)!;
+    const uploadFileHelper = inject(HUploadUploadFileHelperInjectKey)!;
 
     // form disabled inject
-    const formDisabled = inject(NFormDisabledInjectedKey, undefined);
+    const formDisabled = inject(HFormDisabledInjectedKey, undefined);
     const isDisabled = computed(() => props.disabled ?? formDisabled?.value ?? false);
 
     const size = computed<'small' | 'medium' | 'large'>(() =>
@@ -41,7 +41,7 @@ export default defineComponent({
 
     return () => (
       <div class={classHelper.block}>
-        <NButton
+        <HButton
           ref={buttonRef}
           size={size.value}
           {...(props.buttonProps || {})}
@@ -58,7 +58,7 @@ export default defineComponent({
               {props.buttonText ?? slots.text?.() ?? useLocaleLang('upload.upload').value}
             </div>
           )}
-        </NButton>
+        </HButton>
       </div>
     );
   },

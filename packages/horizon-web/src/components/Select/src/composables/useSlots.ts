@@ -2,7 +2,7 @@ import type { SlotsType, VNode } from 'vue';
 import type { OptionProps } from './useProps';
 import type { Arrayable } from '@aurora/utils';
 
-export type NSelectOptionValue = OptionProps & Record<string, unknown> & { active: boolean };
+export type HSelectOptionValue = OptionProps & Record<string, unknown> & { active: boolean };
 
 export const useSelectSlots = Object as SlotsType<{
   /**
@@ -46,12 +46,12 @@ export const useSelectSlots = Object as SlotsType<{
    * @param value 由 option.props option.attrs active 组成
    * @deprecated optionRender
    */
-  dropdownRender?: (value: NSelectOptionValue) => Arrayable<VNode>;
+  dropdownRender?: (value: HSelectOptionValue) => Arrayable<VNode>;
   /**
    * 自定义 `option` 的渲染
    * @param value 由 option.props option.attrs active 组成
    */
-  optionRender?: (value: NSelectOptionValue) => Arrayable<VNode>;
+  optionRender?: (value: HSelectOptionValue) => Arrayable<VNode>;
   /**
    * 自定义选择器渲染
    * @version 2.2.5
@@ -79,37 +79,37 @@ export const useOptionSlots = Object as SlotsType<{
    * 默认展示的内容
    * @param value 由 option.props option.attrs active 组成
    */
-  default?: NSelectOptionValue;
+  default?: HSelectOptionValue;
   /**
    * 自定义下拉面板中下拉选择项的内部内容，作用主要是替换原来的纯文本，可以保留文本之外的样式
    * @param value 由 option.props option.attrs active 组成
    * @deprecated label
    */
-  innerRender?: NSelectOptionValue;
+  innerRender?: HSelectOptionValue;
   /**
    * 文本展示前缀
    * @param value 由 option.props option.attrs active 组成
    * @version 2.1.0
    */
-  labelPrefix?: NSelectOptionValue;
+  labelPrefix?: HSelectOptionValue;
   /**
    * 文本展示前缀
    * @param value 由 option.props option.attrs active 组成
    * @version 2.1.0
    */
-  labelSuffix?: NSelectOptionValue;
+  labelSuffix?: HSelectOptionValue;
   /**
    * 文本展示插槽
    * @param value 由 option.props option.attrs active 组成
    * @version 2.1.0
    */
-  label?: NSelectOptionValue;
+  label?: HSelectOptionValue;
   /**
    * 描述插槽
    * @param value 由 option.props option.attrs active 组成
    * @version 2.1.0
    */
-  description?: NSelectOptionValue;
+  description?: HSelectOptionValue;
 }>;
 
 export const useOptionGroupSlots = Object as SlotsType<{

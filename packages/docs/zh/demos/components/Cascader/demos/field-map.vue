@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, h } from 'vue';
-import type { NCascaderOption } from '@aurora/horizon-web';
+import type { HCascaderOption } from '@aurora/horizon-web';
 
 export default defineComponent({
   setup() {
@@ -31,7 +31,7 @@ export default defineComponent({
           children: [
             {
               id: 'a-a',
-              tag: (option: NCascaderOption) =>
+              tag: (option: HCascaderOption) =>
                 h(
                   'div',
                   {

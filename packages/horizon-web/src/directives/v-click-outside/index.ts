@@ -1,6 +1,6 @@
 import clickOutside from './src';
 import { withDirectiveInstall } from '@aurora/utils';
 
-export const NVClickOutside = withDirectiveInstall(clickOutside);
+export const HVClickOutside = withDirectiveInstall(clickOutside);
 
-export default NVClickOutside;
+export default HVClickOutside;

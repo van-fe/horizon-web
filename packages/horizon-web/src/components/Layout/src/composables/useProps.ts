@@ -1,7 +1,7 @@
 import type { ExtractPropTypes, PropType } from 'vue';
 import { declarePropType } from '@aurora/utils';
 
-export type NColumnResponsiveSetting = {
+export type HColumnResponsiveSetting = {
   /**
    * 栅格占据列数
    */
@@ -62,7 +62,7 @@ export const useColProps = declarePropType({
    * @version 2.0.5
    */
   xs: {
-    type: [Number, Object] as PropType<number | NColumnResponsiveSetting>,
+    type: [Number, Object] as PropType<number | HColumnResponsiveSetting>,
     required: false,
   },
   /**
@@ -70,7 +70,7 @@ export const useColProps = declarePropType({
    * @version 2.0.5
    */
   sm: {
-    type: [Number, Object] as PropType<number | NColumnResponsiveSetting>,
+    type: [Number, Object] as PropType<number | HColumnResponsiveSetting>,
     required: false,
   },
   /**
@@ -78,7 +78,7 @@ export const useColProps = declarePropType({
    * @version 2.0.5
    */
   md: {
-    type: [Number, Object] as PropType<number | NColumnResponsiveSetting>,
+    type: [Number, Object] as PropType<number | HColumnResponsiveSetting>,
     required: false,
   },
   /**
@@ -86,7 +86,7 @@ export const useColProps = declarePropType({
    * @version 2.0.5
    */
   lg: {
-    type: [Number, Object] as PropType<number | NColumnResponsiveSetting>,
+    type: [Number, Object] as PropType<number | HColumnResponsiveSetting>,
     required: false,
   },
   /**
@@ -94,7 +94,7 @@ export const useColProps = declarePropType({
    * @version 2.0.5
    */
   xl: {
-    type: [Number, Object] as PropType<number | NColumnResponsiveSetting>,
+    type: [Number, Object] as PropType<number | HColumnResponsiveSetting>,
     required: false,
   },
   /**
@@ -102,7 +102,7 @@ export const useColProps = declarePropType({
    * @version 2.0.5
    */
   xxl: {
-    type: [Number, Object] as PropType<number | NColumnResponsiveSetting>,
+    type: [Number, Object] as PropType<number | HColumnResponsiveSetting>,
     required: false,
   },
 });

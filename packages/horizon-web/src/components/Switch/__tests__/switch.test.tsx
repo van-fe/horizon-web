@@ -1,21 +1,21 @@
 import { mount, shallowMount } from '@vue/test-utils';
-import NSwitch from '../src/Switch';
-import { describe, expect, test, vi } from 'vitest';
+import HSwitch from '../src/Switch';
+import { describe, expect, test, vi, Mock } from 'vitest';
 import { nextTick, ref } from 'vue';
 import type { Awaitable } from '@aurora/utils';
 
 describe('Switch.tsx', () => {
   test('basic', async () => {
     const modelValue = ref();
-    const wrapper = shallowMount(() => <NSwitch modelValue={modelValue.value} />);
-    const element = wrapper.findComponent(NSwitch);
+    const wrapper = shallowMount(() => <HSwitch modelValue={modelValue.value} />);
+    const element = wrapper.findComponent(HSwitch);
 
     expect(element.exists()).toBe(true);
   });
 
   describe('props', () => {
     test('disabled', () => {
-      const wrapper = mount(() => <NSwitch modelValue={true} disabled={true} />);
+      const wrapper = mount(() => <HSwitch modelValue={true} disabled={true} />);
 
       const core = wrapper.find('.n-switch__core');
 
@@ -25,9 +25,9 @@ describe('Switch.tsx', () => {
 
     test('before-change', async () => {
       const modelValue = ref(false);
-      const beforeChange = ref<boolean | ((newValue: boolean) => Awaitable<boolean>)>(false);
+      const beforeChange = ref<boolean | Mock<((newValue: boolean) => Awaitable<boolean>)> | ((newValue: boolean) => Awaitable<boolean>)>(false);
       const wrapper = mount(() => (
-        <NSwitch
+        <HSwitch
           modelValue={modelValue.value}
           beforeChange={beforeChange.value}
           onUpdate:modelValue={val => (modelValue.value = val)}

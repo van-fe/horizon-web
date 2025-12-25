@@ -1,6 +1,6 @@
 import * as path from 'path';
 import fs from 'fs';
-import { horizonwebSourceRoot } from '@aurora/utils/plugins';
+import { horizonwebSourceRoot } from '@root/scripts/paths';
 
 function completeFilePath(filePath: string): undefined | string {
   const basename = path.basename(filePath);

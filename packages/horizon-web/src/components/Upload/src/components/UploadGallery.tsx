@@ -1,26 +1,26 @@
 import { computed, defineComponent, inject, onMounted } from 'vue';
 import { cls, ComponentClassBlock } from '@aurora/utils';
 import {
-  NUploadPropsInjectKey,
-  NUploadSizeInjectKey,
-  NUploadSlotsInjectKey,
-  NUploadUploadFileHelperInjectKey,
+  HUploadPropsInjectKey,
+  HUploadSizeInjectKey,
+  HUploadSlotsInjectKey,
+  HUploadUploadFileHelperInjectKey,
 } from '../utils/injectKeys';
 import { IconAdd } from '@aurora/icon';
-import { NFormDisabledInjectedKey } from '~/components/Form/src/utils/injectedKeys';
+import { HFormDisabledInjectedKey } from '~/components/Form/src/utils/injectedKeys';
 
 export default defineComponent({
   name: 'UploadGallery',
   setup() {
     const classHelper = new ComponentClassBlock('upload--gallery');
 
-    const props = inject(NUploadPropsInjectKey)!;
-    const slots = inject(NUploadSlotsInjectKey)!;
-    const sizeRef = inject(NUploadSizeInjectKey)!;
-    const uploadFileHelper = inject(NUploadUploadFileHelperInjectKey)!;
+    const props = inject(HUploadPropsInjectKey)!;
+    const slots = inject(HUploadSlotsInjectKey)!;
+    const sizeRef = inject(HUploadSizeInjectKey)!;
+    const uploadFileHelper = inject(HUploadUploadFileHelperInjectKey)!;
 
     // form disabled inject
-    const formDisabled = inject(NFormDisabledInjectedKey, undefined);
+    const formDisabled = inject(HFormDisabledInjectedKey, undefined);
     const isDisabled = computed(() => props.disabled ?? formDisabled?.value ?? false);
 
     const shouldShowAddFile = computed(() => {

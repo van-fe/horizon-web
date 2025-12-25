@@ -1,5 +1,5 @@
 import type { CalendarProps } from '../composables/useProps';
-import type { NCalendarPinFlag } from './types';
+import type { HCalendarPinFlag } from './types';
 import dayjs, { type Dayjs } from 'dayjs';
 import { ref, unref } from 'vue';
 import { nanoid } from 'nanoid';
@@ -17,25 +17,25 @@ import {
   minDayjs,
 } from './timeHelper';
 
-export interface NCalendarMergedPinFlags {
+export interface HCalendarMergedPinFlags {
   startAt: Dayjs;
   endAt: Dayjs;
-  pinFlags: NCalendarPinFlag[];
+  pinFlags: HCalendarPinFlag[];
 }
 
 export default class PinFlagsHelper {
-  public pinFlags = ref<NCalendarPinFlag[]>([]);
-  private _pinFlags = ref<NCalendarPinFlag[]>([]);
-  public flagsInWeekdays = ref(new Map<number, NCalendarPinFlag[][]>());
-  public flagsInDays = ref(new Map<number, NCalendarPinFlag[][]>());
-  public mergedFlags = ref<NCalendarMergedPinFlags[]>([]);
+  public pinFlags = ref<HCalendarPinFlag[]>([]);
+  private _pinFlags = ref<HCalendarPinFlag[]>([]);
+  public flagsInWeekdays = ref(new Map<number, HCalendarPinFlag[][]>());
+  public flagsInDays = ref(new Map<number, HCalendarPinFlag[][]>());
+  public mergedFlags = ref<HCalendarMergedPinFlags[]>([]);
   public groupedMergedFlags = ref(
     new Map<
       string,
       {
         isStart: boolean;
         isEnd: boolean;
-        mergedFlags: NCalendarMergedPinFlags;
+        mergedFlags: HCalendarMergedPinFlags;
       }
     >(),
   );
@@ -43,7 +43,7 @@ export default class PinFlagsHelper {
   private _props: CalendarProps;
   private _eventEmitter = new EventEmitter();
 
-  constructor(pinFlags: NCalendarPinFlag[], props: CalendarProps) {
+  constructor(pinFlags: HCalendarPinFlag[], props: CalendarProps) {
     this._props = props;
     this.updateData(pinFlags);
   }
@@ -73,7 +73,7 @@ export default class PinFlagsHelper {
     }
   }
 
-  public updateData(pinFlags: NCalendarPinFlag[]) {
+  public updateData(pinFlags: HCalendarPinFlag[]) {
     this.pinFlags.value = pinFlags;
     this._pinFlags.value = cloneDeep(pinFlags)
       .map(flag => ({
@@ -109,7 +109,7 @@ export default class PinFlagsHelper {
 
     for (let i = minDate; i.isBefore(maxDate); i = i.add(7, 'days')) {
       const lastDate = i.day(6).endOf('day');
-      const flags: NCalendarPinFlag[][] = [];
+      const flags: HCalendarPinFlag[][] = [];
       this._pinFlags.value
         .filter(flag => isDatesRangeAreOverlap([flag._startAt!, flag._endAt!], [i, lastDate]))
         .forEach(flag => {
@@ -145,7 +145,7 @@ export default class PinFlagsHelper {
 
     for (let i = minDate; i.isBefore(maxDate); i = i.add(1, 'days')) {
       const lastTime = i.endOf('day');
-      const flags: NCalendarPinFlag[][] = [];
+      const flags: HCalendarPinFlag[][] = [];
       this._pinFlags.value
         .filter(flag => isDatesRangeAreOverlap([flag._startAt!, flag._endAt!], [i, lastTime]))
         .forEach(flag => {
@@ -186,7 +186,7 @@ export default class PinFlagsHelper {
           pinFlags: [flag],
         });
       } else {
-        const insertTarget: NCalendarMergedPinFlags = {
+        const insertTarget: HCalendarMergedPinFlags = {
           startAt: dayjs(minDayjs(flag._startAt!, ...foundMergedFlags.map(flag => flag.startAt))),
           endAt: dayjs(maxDayjs(flag._endAt!, ...foundMergedFlags.map(flag => flag.endAt))),
           pinFlags: [flag].concat(...foundMergedFlags.map(flag => flag.pinFlags)),
@@ -228,7 +228,7 @@ export default class PinFlagsHelper {
     this.emitEvent('groupedMergedFlags');
   }
 
-  public getFlagIndexInWeekdays(flag: NCalendarPinFlag, weekStart: Dayjs) {
+  public getFlagIndexInWeekdays(flag: HCalendarPinFlag, weekStart: Dayjs) {
     const flagsArr = this.flagsInWeekdays.value.get(weekStart.unix());
 
     if (!flagsArr?.length) {
@@ -239,7 +239,7 @@ export default class PinFlagsHelper {
   }
 
   public getFlagsInWeek(weekStart: Dayjs, currentMonth?: Dayjs) {
-    const res: NCalendarPinFlag[] = [];
+    const res: HCalendarPinFlag[] = [];
 
     this.flagsInWeekdays.value.get(weekStart.day(0).unix())?.forEach(row => {
       row.forEach(item => {
@@ -262,14 +262,14 @@ export default class PinFlagsHelper {
   }
 
   public getFlagsInDay(dayStart: Dayjs) {
-    const res: NCalendarPinFlag[] = [];
+    const res: HCalendarPinFlag[] = [];
 
     this.flagsInDays.value.get(dayStart.unix())?.forEach(row => res.push(...row));
 
     return res;
   }
 
-  public getFlagIndexInDay(flag: NCalendarPinFlag, day: Dayjs) {
+  public getFlagIndexInDay(flag: HCalendarPinFlag, day: Dayjs) {
     const flagsArr = this.flagsInDays.value.get(day.unix());
 
     if (!flagsArr?.length) {
@@ -279,7 +279,7 @@ export default class PinFlagsHelper {
     return flagsArr.findIndex(arr => arr.some(curr => curr === flag));
   }
 
-  public isFlagBorderingOnInDay(flag: NCalendarPinFlag, day: Dayjs, check: 'start' | 'end') {
+  public isFlagBorderingOnInDay(flag: HCalendarPinFlag, day: Dayjs, check: 'start' | 'end') {
     const flags =
       this.flagsInDays.value
         .get(day.unix())
@@ -330,7 +330,7 @@ export default class PinFlagsHelper {
     startAt: Dayjs,
     endAt: Dayjs,
     title?: string,
-    type?: NCalendarPinFlag['type'],
+    type?: HCalendarPinFlag['type'],
   ) {
     const newPinFlag = {
       title: title ?? '',
@@ -351,7 +351,7 @@ export default class PinFlagsHelper {
     return newPinFlag;
   }
 
-  public updateTempPinFlag(pinFlag: NCalendarPinFlag, removeTempTag = true, finished = false) {
+  public updateTempPinFlag(pinFlag: HCalendarPinFlag, removeTempTag = true, finished = false) {
     const index = this._pinFlags.value.findIndex(curr => curr._uuid === pinFlag._uuid);
 
     pinFlag.startAt = pinFlag._startAt!;
@@ -373,7 +373,7 @@ export default class PinFlagsHelper {
     this.calculateMergedFlags();
   }
 
-  public updateTempPinFlagDate(pinFlag: NCalendarPinFlag, finished = false) {
+  public updateTempPinFlagDate(pinFlag: HCalendarPinFlag, finished = false) {
     const target = this._pinFlags.value.find(curr => curr._uuid === pinFlag._uuid);
     if (target) {
       let hasChanged = false;
@@ -402,7 +402,7 @@ export default class PinFlagsHelper {
     }
   }
 
-  public removeTempPinFlag(pinFlag: NCalendarPinFlag) {
+  public removeTempPinFlag(pinFlag: HCalendarPinFlag) {
     const index = this._pinFlags.value.findIndex(item => item._uuid === pinFlag._uuid);
     this._pinFlags.value.splice(index, 1);
 

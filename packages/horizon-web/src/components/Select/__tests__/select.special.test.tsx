@@ -1,18 +1,18 @@
 import type { DOMWrapper } from '@vue/test-utils';
 import { mount } from '@vue/test-utils';
-import NSelect from '../src/Select';
-import NOption from '../src/Option';
+import HSelect from '../src/Select';
+import HOption from '../src/Option';
 import { describe, expect, test, vi } from 'vitest';
 import { Fragment, nextTick, ref } from 'vue';
-import NPickerInput from '../../Picker/src/components/NPickerInput';
-import NTag from '../../Tag';
+import HPickerInput from '../../Picker/src/components/PickerInput';
+import HTag from '../../Tag';
 import type { PartialExclude } from '@aurora/utils';
 import { isNumber } from '@aurora/utils';
 import { sleep } from '~/utils/tools';
-import NPickerPopper from '../../Picker/src/components/NPickerPopper';
-import { NOptionGroup } from '../index';
+import HPickerPopper from '../../Picker/src/components/PickerPopper';
+import { HOptionGroup } from '../index';
 import type { OptionProps } from '../src/composables/useProps';
-import NPicker from '../../Picker';
+import HPicker from '../../Picker';
 import SimpleOption from '../src/components/SimpleOption';
 import SelectHelper from '~/components/Select/__tests__/SelectHelper';
 
@@ -21,13 +21,13 @@ describe('Select.tsx', () => {
     const modelValue = ref();
     const onUpdate = vi.fn();
     const wrapper = mount(() => (
-      <NSelect modelValue={modelValue.value} onUpdate:modelValue={onUpdate}>
-        <NOption value={1} label={1} />
-        <NOption value={2} label={2} />
-      </NSelect>
+      <HSelect modelValue={modelValue.value} onUpdate:modelValue={onUpdate}>
+        <HOption value={1} label={1} />
+        <HOption value={2} label={2} />
+      </HSelect>
     ));
 
-    const options = wrapper.findAllComponents(NOption);
+    const options = wrapper.findAllComponents(HOption);
 
     expect(onUpdate).toHaveBeenCalledTimes(0);
 
@@ -41,13 +41,13 @@ describe('Select.tsx', () => {
     const modelValue = ref();
     const onChange = vi.fn();
     const wrapper = mount(() => (
-      <NSelect v-model={modelValue.value} onChange={onChange}>
-        <NOption value={1} label={1} />
-        <NOption value={2} label={2} />
-      </NSelect>
+      <HSelect v-model={modelValue.value} onChange={onChange}>
+        <HOption value={1} label={1} />
+        <HOption value={2} label={2} />
+      </HSelect>
     ));
 
-    const options = wrapper.findAllComponents(NOption);
+    const options = wrapper.findAllComponents(HOption);
 
     expect(onChange).toHaveBeenCalledTimes(0);
 
@@ -66,15 +66,15 @@ describe('Select.tsx', () => {
       () => (
         <Fragment>
           <span id="outside"></span>
-          <NSelect
+          <HSelect
             v-model={modelValue.value}
             multiple
             onChange={onChange}
             onUpdate:modelValue={onUpdate}
           >
-            <NOption value={1} label={1} />
-            <NOption value={2} label={2} />
-          </NSelect>
+            <HOption value={1} label={1} />
+            <HOption value={2} label={2} />
+          </HSelect>
         </Fragment>
       ),
       {
@@ -82,7 +82,7 @@ describe('Select.tsx', () => {
       },
     );
 
-    const options = wrapper.findAllComponents(NOption);
+    const options = wrapper.findAllComponents(HOption);
 
     expect(onChange).toHaveBeenCalledTimes(0);
     expect(onUpdate).toHaveBeenCalledTimes(0);
@@ -95,22 +95,22 @@ describe('Select.tsx', () => {
 
     expect(onUpdate).toHaveBeenCalledOnce();
     expect(onUpdate).toHaveBeenCalledWith([1]);
-    expect(wrapper.findComponent(NPickerPopper).isVisible()).toBeFalsy();
+    expect(wrapper.findComponent(HPickerPopper).isVisible()).toBeFalsy();
   });
 
   test('multiple switch', async () => {
     const modelValue = ref();
     const multiple = ref(true);
     const wrapper = mount(() => (
-      <NSelect v-model={modelValue.value} multiple={multiple.value}>
-        <NOption value={1} label={1} />
-        <NOption value={2} label={2} />
-      </NSelect>
+      <HSelect v-model={modelValue.value} multiple={multiple.value}>
+        <HOption value={1} label={1} />
+        <HOption value={2} label={2} />
+      </HSelect>
     ));
 
     expect(Array.isArray(modelValue.value)).toBeFalsy();
 
-    const options = wrapper.findAllComponents(NOption);
+    const options = wrapper.findAllComponents(HOption);
 
     await options[0].trigger('click');
     await options[1].trigger('click');
@@ -143,10 +143,10 @@ describe('Select.tsx', () => {
 
   test('unMatch.success', async () => {
     const modelValue = ref([1, 2, 333]);
-    const wrapper = mount(() => <NSelect modelValue={modelValue.value} multiple={true}></NSelect>);
+    const wrapper = mount(() => <HSelect modelValue={modelValue.value} multiple={true}></HSelect>);
 
     await nextTick();
-    const htmlList = wrapper.findAllComponents(NTag).map(item => item.html());
+    const htmlList = wrapper.findAllComponents(HTag).map(item => item.html());
 
     expect(
       htmlList.length > 0 && htmlList.every(html => html.includes('<div class="n-tag__content">')),
@@ -156,27 +156,27 @@ describe('Select.tsx', () => {
   test('unMatch.empty', () => {
     const modelValue = ref([1, 2, 333]);
     const wrapper = mount(() => (
-      <NSelect modelValue={modelValue.value} multiple={true} showValueUnMatch={false}></NSelect>
+      <HSelect modelValue={modelValue.value} multiple={true} showValueUnMatch={false}></HSelect>
     ));
-    expect(wrapper.findAllComponents(NTag).length).toBe(0);
+    expect(wrapper.findAllComponents(HTag).length).toBe(0);
   });
 
   test('model-value set null while in multiple enabled', async () => {
     const modelValue = ref<null | number[]>(null);
     const wrapper = mount(
       () => (
-        <NSelect v-model={modelValue.value} multiple={true} toBody={false}>
-          <NOption label="1" value={1} />
-          <NOption label="2" value={2} />
-          <NOption label="3" value={3} />
-        </NSelect>
+        <HSelect v-model={modelValue.value} multiple={true} toBody={false}>
+          <HOption label="1" value={1} />
+          <HOption label="2" value={2} />
+          <HOption label="3" value={3} />
+        </HSelect>
       ),
       {
         attachTo: document.body,
       },
     );
 
-    const trigger = wrapper.findComponent(NPickerInput);
+    const trigger = wrapper.findComponent(HPickerInput);
 
     await trigger.trigger('click');
 
@@ -198,23 +198,23 @@ describe('Select.tsx', () => {
 
     const wrapper = mount(
       () => (
-        <NSelect
+        <HSelect
           modelValue={modelValue.value}
           toBody={false}
           onUpdate:modelValue={onUpdateModelValue}
           onChange={onChange}
         >
-          <NOption label="1" value={1} />
-          <NOption label="2" value={2} />
-          <NOption label="3" value={3} />
-        </NSelect>
+          <HOption label="1" value={1} />
+          <HOption label="2" value={2} />
+          <HOption label="3" value={3} />
+        </HSelect>
       ),
       {
         attachTo: document.body,
       },
     );
 
-    const trigger = wrapper.findComponent(NPickerInput);
+    const trigger = wrapper.findComponent(HPickerInput);
 
     await trigger.trigger('click');
 
@@ -237,11 +237,11 @@ describe('Select.tsx', () => {
 
     const wrapper = mount(
       () => (
-        <NSelect v-model={modelValue.value} toBody={false} useCheckAll={useCheckAll.value}>
-          <NOption value={1} label="A" />
-          <NOption value={2} label="B" />
-          <NOption value={3} label="C" />
-        </NSelect>
+        <HSelect v-model={modelValue.value} toBody={false} useCheckAll={useCheckAll.value}>
+          <HOption value={1} label="A" />
+          <HOption value={2} label="B" />
+          <HOption value={3} label="C" />
+        </HSelect>
       ),
       {
         attachTo: document.body,
@@ -258,18 +258,18 @@ describe('Select.tsx', () => {
 
     const wrapper = mount(
       () => (
-        <NSelect v-model={modelValue.value} toBody={false} filterable onChange={onChange}>
-          <NOption value={1} label="A" />
-          <NOption value={2} label="B" />
-          <NOption value={3} label="C" />
-        </NSelect>
+        <HSelect v-model={modelValue.value} toBody={false} filterable onChange={onChange}>
+          <HOption value={1} label="A" />
+          <HOption value={2} label="B" />
+          <HOption value={3} label="C" />
+        </HSelect>
       ),
       {
         attachTo: document.body,
       },
     );
 
-    await wrapper.findComponent(NSelect).trigger('click');
+    await wrapper.findComponent(HSelect).trigger('click');
 
     const input = wrapper.find('input.n-picker__input--inner') as DOMWrapper<HTMLInputElement>;
 
@@ -279,11 +279,11 @@ describe('Select.tsx', () => {
     expect(onChange).toHaveBeenCalledOnce();
     expect(onChange).toHaveBeenCalledWith('A', undefined);
 
-    await wrapper.findAllComponents(NOption)[0].trigger('click');
+    await wrapper.findAllComponents(HOption)[0].trigger('click');
 
     expect(onChange).toHaveBeenCalledTimes(2);
     expect(onChange).toHaveBeenCalledWith(null, 1);
-    expect(wrapper.findComponent(NPickerPopper).isVisible()).toBeFalsy();
+    expect(wrapper.findComponent(HPickerPopper).isVisible()).toBeFalsy();
   });
 
   test('change event only trigger once when pick one option in multiple', async () => {
@@ -295,17 +295,17 @@ describe('Select.tsx', () => {
       () => (
         <>
           <span id="outside"></span>
-          <NSelect
+          <HSelect
             v-model={modelValue.value}
             multiple
             toBody={false}
             filterable
             onChange={onChange}
           >
-            <NOption value={1} label="A" />
-            <NOption value={2} label="B" />
-            <NOption value={3} label="C" />
-          </NSelect>
+            <HOption value={1} label="A" />
+            <HOption value={2} label="B" />
+            <HOption value={3} label="C" />
+          </HSelect>
         </>
       ),
       {
@@ -313,7 +313,7 @@ describe('Select.tsx', () => {
       },
     );
 
-    await wrapper.findComponent(NSelect).trigger('click');
+    await wrapper.findComponent(HSelect).trigger('click');
 
     const input = wrapper.find('input.n-picker__input--inner') as DOMWrapper<HTMLInputElement>;
 
@@ -323,11 +323,11 @@ describe('Select.tsx', () => {
     expect(onChange).toHaveBeenCalledOnce();
     expect(onChange).toHaveBeenCalledWith('A', undefined);
 
-    await wrapper.findAllComponents(NOption)[0].trigger('click');
+    await wrapper.findAllComponents(HOption)[0].trigger('click');
 
     expect(onChange).toHaveBeenCalledTimes(2);
     expect(onChange).toHaveBeenCalledWith(null, [1]);
-    expect(wrapper.findComponent(NPickerPopper).isVisible()).toBeTruthy();
+    expect(wrapper.findComponent(HPickerPopper).isVisible()).toBeTruthy();
 
     expect(
       (wrapper.find('input:not([type="checkbox"])') as DOMWrapper<HTMLInputElement>).element.value,
@@ -336,17 +336,17 @@ describe('Select.tsx', () => {
     await wrapper.find('#outside').trigger('mousedown');
 
     expect(onChange).toHaveBeenCalledTimes(2);
-    expect(wrapper.findComponent(NPickerPopper).isVisible()).toBeFalsy();
+    expect(wrapper.findComponent(HPickerPopper).isVisible()).toBeFalsy();
   });
 
   test('the create option should be visible when no options with creatable', async () => {
     const modelValue = ref();
 
-    const wrapper = mount(() => <NSelect v-model={modelValue.value} toBody={false} allowCreate />, {
+    const wrapper = mount(() => <HSelect v-model={modelValue.value} toBody={false} allowCreate />, {
       attachTo: document.body,
     });
 
-    await wrapper.findComponent(NPicker).trigger('click');
+    await wrapper.findComponent(HPicker).trigger('click');
     await sleep(0);
 
     expect(wrapper.find('.n-select__create-option').isVisible()).toBeTruthy();
@@ -368,11 +368,11 @@ describe('Select.tsx', () => {
       () => (
         <>
           <span id="outside"></span>
-          <NSelect v-model={modelValue.value} toBody={false} showSearch onSearch={onSearch}>
+          <HSelect v-model={modelValue.value} toBody={false} showSearch onSearch={onSearch}>
             {options.value.map(opt => (
-              <NOption value={opt} label={opt} />
+              <HOption value={opt} label={opt} />
             ))}
-          </NSelect>
+          </HSelect>
         </>
       ),
       {
@@ -380,7 +380,7 @@ describe('Select.tsx', () => {
       },
     );
 
-    await wrapper.findComponent(NSelect).trigger('click');
+    await wrapper.findComponent(HSelect).trigger('click');
 
     const input = wrapper.find('input.n-picker__input--inner') as DOMWrapper<HTMLInputElement>;
 
@@ -392,14 +392,14 @@ describe('Select.tsx', () => {
     expect(onSearchTrigger).toHaveBeenCalledOnce();
     expect(onSearchTrigger).toHaveBeenCalledWith('A');
 
-    await wrapper.findAllComponents(NOption)[0].trigger('click');
+    await wrapper.findAllComponents(HOption)[0].trigger('click');
 
     expect(modelValue.value).toEqual(0);
 
     await wrapper.find('#outside').trigger('click');
 
     expect(onSearchTrigger).toHaveBeenCalledOnce();
-    expect(wrapper.findComponent(NPickerPopper).isVisible()).toBeFalsy();
+    expect(wrapper.findComponent(HPickerPopper).isVisible()).toBeFalsy();
   });
 
   test('search event only trigger once when pick one option in multiple', async () => {
@@ -418,7 +418,7 @@ describe('Select.tsx', () => {
       () => (
         <>
           <span id="outside"></span>
-          <NSelect
+          <HSelect
             v-model={modelValue.value}
             toBody={false}
             multiple
@@ -426,9 +426,9 @@ describe('Select.tsx', () => {
             onSearch={onSearch}
           >
             {options.value.map(opt => (
-              <NOption value={opt} label={opt} />
+              <HOption value={opt} label={opt} />
             ))}
-          </NSelect>
+          </HSelect>
         </>
       ),
       {
@@ -436,7 +436,7 @@ describe('Select.tsx', () => {
       },
     );
 
-    await wrapper.findComponent(NSelect).trigger('click');
+    await wrapper.findComponent(HSelect).trigger('click');
 
     const input = wrapper.find('input.n-picker__input--inner') as DOMWrapper<HTMLInputElement>;
 
@@ -448,7 +448,7 @@ describe('Select.tsx', () => {
     expect(onSearchTrigger).toHaveBeenCalledOnce();
     expect(onSearchTrigger).toHaveBeenCalledWith('A');
 
-    await wrapper.findAllComponents(NOption)[0].trigger('click');
+    await wrapper.findAllComponents(HOption)[0].trigger('click');
 
     expect(modelValue.value).toEqual([0]);
 
@@ -459,7 +459,7 @@ describe('Select.tsx', () => {
     await wrapper.find('#outside').trigger('mousedown');
 
     expect(onSearchTrigger).toHaveBeenCalledOnce();
-    expect(wrapper.findComponent(NPickerPopper).isVisible()).toBeFalsy();
+    expect(wrapper.findComponent(HPickerPopper).isVisible()).toBeFalsy();
   });
 
   test("custom render tag when pick one option and clear, the input won't show again", async () => {
@@ -467,43 +467,43 @@ describe('Select.tsx', () => {
 
     const wrapper = mount(
       () => (
-        <NSelect v-model={modelValue.value} clearable={true} toBody={false}>
+        <HSelect v-model={modelValue.value} clearable={true} toBody={false}>
           {{
             default: () => (
               <>
-                <NOption value={1} label="A">
+                <HOption value={1} label="A">
                   {{
-                    label: () => <NTag>A</NTag>,
+                    label: () => <HTag>A</HTag>,
                   }}
-                </NOption>
-                <NOption value={2} label="B">
+                </HOption>
+                <HOption value={2} label="B">
                   {{
-                    label: () => <NTag>B</NTag>,
+                    label: () => <HTag>B</HTag>,
                   }}
-                </NOption>
-                <NOption value={3} label="C">
+                </HOption>
+                <HOption value={3} label="C">
                   {{
-                    label: () => <NTag>C</NTag>,
+                    label: () => <HTag>C</HTag>,
                   }}
-                </NOption>
+                </HOption>
               </>
             ),
-            tagRender: (props: OptionProps & Record<string, unknown>) => <NTag>{props.value}</NTag>,
+            tagRender: (props: OptionProps & Record<string, unknown>) => <HTag>{props.value}</HTag>,
           }}
-        </NSelect>
+        </HSelect>
       ),
       {
         attachTo: document.body,
       },
     );
 
-    await wrapper.findComponent(NSelect).trigger('click');
+    await wrapper.findComponent(HSelect).trigger('click');
 
-    await wrapper.findComponent(NOption).trigger('click');
+    await wrapper.findComponent(HOption).trigger('click');
 
     expect(modelValue.value).toEqual(1);
 
-    await wrapper.findComponent(NPickerInput).trigger('mouseenter');
+    await wrapper.findComponent(HPickerInput).trigger('mouseenter');
 
     const clearBtn = wrapper.find('.n-picker__input--icon.is-clear');
 
@@ -515,18 +515,18 @@ describe('Select.tsx', () => {
   test('focus correct when keyboard press up or down and allowCreate', async () => {
     const wrapper = mount(
       () => (
-        <NSelect toBody={false} allowCreate>
-          <NOption value={1} label="AAA" />
-          <NOption value={2} label="BBB" />
-          <NOption value={3} label="CCC" />
-        </NSelect>
+        <HSelect toBody={false} allowCreate>
+          <HOption value={1} label="AAA" />
+          <HOption value={2} label="BBB" />
+          <HOption value={3} label="CCC" />
+        </HSelect>
       ),
       {
         attachTo: document.body,
       },
     );
 
-    const pickerInput = wrapper.findComponent(NPickerInput);
+    const pickerInput = wrapper.findComponent(HPickerInput);
     const input = wrapper.find('input');
 
     await pickerInput.trigger('click');
@@ -535,7 +535,7 @@ describe('Select.tsx', () => {
 
     expect(wrapper.find('.n-select__create-option').exists()).toBeTruthy();
 
-    const [opt1, opt2, opt3] = wrapper.findAllComponents(NOption);
+    const [opt1, opt2, opt3] = wrapper.findAllComponents(HOption);
     expect(opt1.classes('is-hide')).toBeFalsy();
     expect(opt2.classes('is-hide')).toBeTruthy();
     expect(opt3.classes('is-hide')).toBeTruthy();
@@ -560,11 +560,11 @@ describe('Select.tsx', () => {
     const wrapper = mount(
       () => (
         <div onClick={onClick}>
-          <NSelect v-model={modelValue.value} multiple toBody={false}>
-            <NOption value={1} label="A" />
-            <NOption value={2} label="B" />
-            <NOption value={3} label="C" />
-          </NSelect>
+          <HSelect v-model={modelValue.value} multiple toBody={false}>
+            <HOption value={1} label="A" />
+            <HOption value={2} label="B" />
+            <HOption value={3} label="C" />
+          </HSelect>
           <span id="outside"></span>
         </div>
       ),
@@ -573,17 +573,17 @@ describe('Select.tsx', () => {
       },
     );
 
-    await wrapper.findComponent(NSelect).trigger('click');
+    await wrapper.findComponent(HSelect).trigger('click');
 
     await sleep(500);
 
-    expect(wrapper.findComponent(NPickerPopper).isVisible()).toBeTruthy();
+    expect(wrapper.findComponent(HPickerPopper).isVisible()).toBeTruthy();
 
     await wrapper.find('#outside').trigger('click');
 
     await sleep(500);
 
-    expect(wrapper.findComponent(NPickerPopper).isVisible()).toBeTruthy();
+    expect(wrapper.findComponent(HPickerPopper).isVisible()).toBeTruthy();
   });
 
   test('jsx mode with Array.map to render options should mount on dom', async () => {
@@ -593,11 +593,11 @@ describe('Select.tsx', () => {
 
     const wrapper = mount(
       () => (
-        <NSelect v-model={modelValue.value} toBody={false}>
+        <HSelect v-model={modelValue.value} toBody={false}>
           {options.value.map(opt => (
-            <NOption value={opt.value} label={opt.label} />
+            <HOption value={opt.value} label={opt.label} />
           ))}
-        </NSelect>
+        </HSelect>
       ),
       {
         attachTo: document.body,
@@ -621,7 +621,7 @@ describe('Select.tsx', () => {
     const wrapper = mount(
       () => (
         <>
-          <NSelect
+          <HSelect
             toBody={false}
             showSearch={true}
             onSearch={onSearch}
@@ -636,7 +636,7 @@ describe('Select.tsx', () => {
       },
     );
 
-    const picker = wrapper.findComponent(NPicker);
+    const picker = wrapper.findComponent(HPicker);
     const outer = wrapper.find('#outer');
 
     await picker.trigger('click');
@@ -664,7 +664,7 @@ describe('Select.tsx', () => {
     const wrapper = mount(
       () => (
         <>
-          <NSelect
+          <HSelect
             toBody={false}
             showSearch={true}
             hidePanelWhenShowSearchAndEmptyList={false}
@@ -680,7 +680,7 @@ describe('Select.tsx', () => {
       },
     );
 
-    const select = wrapper.findComponent(NSelect);
+    const select = wrapper.findComponent(HSelect);
     // const outer = wrapper.find('#outer');
 
     await select.trigger('click');
@@ -703,27 +703,27 @@ describe('Select.tsx', () => {
 
     const wrapper = mount(
       () => (
-        <NSelect v-model={modelValue.value} clearable={true} toBody={false}>
-          <NOption value={1} label="A" />
-          <NOption value={2} label="B" />
-          <NOption value={3} label="C" />
-        </NSelect>
+        <HSelect v-model={modelValue.value} clearable={true} toBody={false}>
+          <HOption value={1} label="A" />
+          <HOption value={2} label="B" />
+          <HOption value={3} label="C" />
+        </HSelect>
       ),
       {
         attachTo: document.body,
       },
     );
 
-    await wrapper.findComponent(NPicker).trigger('click');
+    await wrapper.findComponent(HPicker).trigger('click');
     await sleep(0);
 
-    expect(wrapper.findComponent(NOption).isVisible()).toBeTruthy();
+    expect(wrapper.findComponent(HOption).isVisible()).toBeTruthy();
 
-    await wrapper.findComponent(NOption).trigger('click');
+    await wrapper.findComponent(HOption).trigger('click');
 
     expect(modelValue.value).toEqual(1);
 
-    await wrapper.findComponent(NPickerInput).trigger('mouseenter');
+    await wrapper.findComponent(HPickerInput).trigger('mouseenter');
 
     const clearBtn = wrapper.find('.n-picker__input--icon.is-clear');
 
@@ -731,16 +731,16 @@ describe('Select.tsx', () => {
 
     expect(modelValue.value).toEqual(undefined);
 
-    expect(wrapper.findComponent(NPickerPopper).isVisible()).toBeFalsy();
+    expect(wrapper.findComponent(HPickerPopper).isVisible()).toBeFalsy();
 
     modelValue.value = 1;
 
     await nextTick();
 
-    await wrapper.findComponent(NPicker).trigger('click');
+    await wrapper.findComponent(HPicker).trigger('click');
     await sleep(0);
 
-    await wrapper.findComponent(NPickerInput).trigger('mouseenter');
+    await wrapper.findComponent(HPickerInput).trigger('mouseenter');
 
     const clearBtn2 = wrapper.find('.n-picker__input--icon.is-clear');
 
@@ -748,24 +748,24 @@ describe('Select.tsx', () => {
 
     expect(modelValue.value).toEqual(undefined);
 
-    expect(wrapper.findComponent(NPickerPopper).isVisible()).toBeTruthy();
+    expect(wrapper.findComponent(HPickerPopper).isVisible()).toBeTruthy();
   });
 
   test('set selected-option-order-to-top should focus correct when keyboard press up or down', async () => {
     const wrapper = mount(
       () => (
-        <NSelect modelValue={3} toBody={false} selectedOptionOrderToTop={true}>
-          <NOption value={1} label="A" />
-          <NOption value={2} label="B" />
-          <NOption value={3} label="C" />
-        </NSelect>
+        <HSelect modelValue={3} toBody={false} selectedOptionOrderToTop={true}>
+          <HOption value={1} label="A" />
+          <HOption value={2} label="B" />
+          <HOption value={3} label="C" />
+        </HSelect>
       ),
       {
         attachTo: document.body,
       },
     );
 
-    const pickerInput = wrapper.findComponent(NPickerInput);
+    const pickerInput = wrapper.findComponent(HPickerInput);
 
     await pickerInput.trigger('click');
 
@@ -793,24 +793,24 @@ describe('Select.tsx', () => {
   test('set selected-option-order-to-top with group should focus correct when keyboard press up or down', async () => {
     const wrapper = mount(
       () => (
-        <NSelect modelValue={4} toBody={false} selectedOptionOrderToTop={true}>
-          <NOptionGroup>
-            <NOption value={1} label="A" />
-            <NOption value={2} label="B" />
-          </NOptionGroup>
-          <NOption value={3} label="C" />
-          <NOptionGroup>
-            <NOption value={4} label="D" />
-            <NOption value={5} label="E" />
-          </NOptionGroup>
-        </NSelect>
+        <HSelect modelValue={4} toBody={false} selectedOptionOrderToTop={true}>
+          <HOptionGroup>
+            <HOption value={1} label="A" />
+            <HOption value={2} label="B" />
+          </HOptionGroup>
+          <HOption value={3} label="C" />
+          <HOptionGroup>
+            <HOption value={4} label="D" />
+            <HOption value={5} label="E" />
+          </HOptionGroup>
+        </HSelect>
       ),
       {
         attachTo: document.body,
       },
     );
 
-    const pickerInput = wrapper.findComponent(NPickerInput);
+    const pickerInput = wrapper.findComponent(HPickerInput);
 
     await pickerInput.trigger('click');
 
@@ -845,11 +845,11 @@ describe('Select.tsx', () => {
 
     const wrapper = mount(
       () => (
-        <NSelect v-model={modelValue.value} multiple={true} clearable={true} toBody={false}>
-          <NOption label="1" value={1} />
-          <NOption label="2" value={2} />
-          <NOption label="3" value={3} />
-        </NSelect>
+        <HSelect v-model={modelValue.value} multiple={true} clearable={true} toBody={false}>
+          <HOption label="1" value={1} />
+          <HOption label="2" value={2} />
+          <HOption label="3" value={3} />
+        </HSelect>
       ),
       {
         attachTo: document.body,
@@ -860,7 +860,7 @@ describe('Select.tsx', () => {
 
     await nextTick();
 
-    await wrapper.findComponent(NPickerInput).trigger('mouseenter');
+    await wrapper.findComponent(HPickerInput).trigger('mouseenter');
 
     const clearBtn = wrapper.find('.n-picker__input--icon.is-clear');
 
@@ -873,16 +873,16 @@ describe('Select.tsx', () => {
     const wrapper = mount(
       () => (
         <>
-          <NSelect
+          <HSelect
             multiple={true}
             reserveKeyword="reserve-special"
             filterable={true}
             toBody={false}
           >
-            <NOption label="1" value={1} />
-            <NOption label="2" value={2} />
-            <NOption label="3" value={3} />
-          </NSelect>
+            <HOption label="1" value={1} />
+            <HOption label="2" value={2} />
+            <HOption label="3" value={3} />
+          </HSelect>
           <div id="outer"></div>
         </>
       ),
@@ -898,14 +898,14 @@ describe('Select.tsx', () => {
 
       await sleep(200);
 
-      await wrapper.findAllComponents(NOption)[index].trigger('click');
+      await wrapper.findAllComponents(HOption)[index].trigger('click');
 
       await sleep(200);
 
       await nextTick();
     }
 
-    await wrapper.findComponent(NSelect).trigger('click');
+    await wrapper.findComponent(HSelect).trigger('click');
 
     await filterAndPick('1', 0);
 
@@ -917,7 +917,7 @@ describe('Select.tsx', () => {
       ).element.value,
     ).toEqual('');
 
-    const options = wrapper.findAllComponents(NOption);
+    const options = wrapper.findAllComponents(HOption);
     expect(options[0].classes('is-hide')).toBeFalsy();
     expect(options[1].classes('is-hide')).toBeTruthy();
     expect(options[2].classes('is-hide')).toBeTruthy();
@@ -937,7 +937,7 @@ describe('Select.tsx', () => {
     expect(options[2].classes('is-hide')).toBeTruthy();
 
     await wrapper.find('#outer').trigger('mousedown');
-    await wrapper.findComponent(NSelect).trigger('click');
+    await wrapper.findComponent(HSelect).trigger('click');
 
     expect(
       (
@@ -972,7 +972,7 @@ describe('Select.tsx', () => {
       instance.wrapper.find('.n-picker-fit-content-input__wrapper.is-main').isVisible(),
     ).toBeFalsy();
 
-    await instance.wrapper.findComponent(NPicker).trigger('click');
+    await instance.wrapper.findComponent(HPicker).trigger('click');
     await sleep(200);
 
     expect(
@@ -1005,14 +1005,14 @@ describe('Select.tsx', () => {
       },
       [],
       {
-        default: () => values.value.map(val => <NOption label={val} value={val} />),
+        default: () => values.value.map(val => <HOption label={val} value={val} />),
       },
     );
 
-    await instance.wrapper.findComponent(NPicker).trigger('click');
+    await instance.wrapper.findComponent(HPicker).trigger('click');
     await instance.wrapper.find('input').setValue('A');
     await sleep(200);
-    await instance.wrapper.findComponent(NOption).trigger('click');
+    await instance.wrapper.findComponent(HOption).trigger('click');
     expect(onBlur).toHaveBeenCalledTimes(0);
 
     await nextTick();
@@ -1035,7 +1035,7 @@ describe('Select.tsx', () => {
     expect(onSearch).toHaveBeenCalledTimes(2);
     expect(onBlur).toHaveBeenCalledTimes(1);
 
-    await instance.wrapper.findComponent(NPicker).trigger('click');
+    await instance.wrapper.findComponent(HPicker).trigger('click');
     await sleep(0);
   });
 
@@ -1047,17 +1047,17 @@ describe('Select.tsx', () => {
     const wrapper = mount(
       () => (
         <>
-          <NSelect
+          <HSelect
             v-model={modelValue.value}
             filterable={filterable.value}
             clearable
             toBody={false}
             onChange={onChange}
           >
-            <NOption label="1" value={1} />
-            <NOption label="2" value={2} />
-            <NOption label="3" value={3} />
-          </NSelect>
+            <HOption label="1" value={1} />
+            <HOption label="2" value={2} />
+            <HOption label="3" value={3} />
+          </HSelect>
           <div id="outer"></div>
         </>
       ),
@@ -1066,7 +1066,7 @@ describe('Select.tsx', () => {
       },
     );
 
-    const input = wrapper.findComponent(NPickerInput);
+    const input = wrapper.findComponent(HPickerInput);
 
     await input.trigger('mouseenter');
 
@@ -1083,7 +1083,7 @@ describe('Select.tsx', () => {
 
     await nextTick();
 
-    await wrapper.findComponent(NOption).trigger('click');
+    await wrapper.findComponent(HOption).trigger('click');
 
     expect(onChange).toHaveBeenLastCalledWith(null, 1);
 
@@ -1109,7 +1109,7 @@ describe('Select.tsx', () => {
     const wrapper = mount(
       () => (
         <>
-          <NSelect
+          <HSelect
             v-model={modelValue.value}
             filterable={filterable.value}
             multiple
@@ -1117,10 +1117,10 @@ describe('Select.tsx', () => {
             toBody={false}
             onChange={onChange}
           >
-            <NOption label="1" value={1} />
-            <NOption label="2" value={2} />
-            <NOption label="3" value={3} />
-          </NSelect>
+            <HOption label="1" value={1} />
+            <HOption label="2" value={2} />
+            <HOption label="3" value={3} />
+          </HSelect>
           <div id="outer"></div>
         </>
       ),
@@ -1129,7 +1129,7 @@ describe('Select.tsx', () => {
       },
     );
 
-    const input = wrapper.findComponent(NPickerInput);
+    const input = wrapper.findComponent(HPickerInput);
 
     await input.trigger('mouseenter');
 
@@ -1146,7 +1146,7 @@ describe('Select.tsx', () => {
 
     await nextTick();
 
-    await wrapper.findComponent(NOption).trigger('click');
+    await wrapper.findComponent(HOption).trigger('click');
 
     expect(onChange).toHaveBeenLastCalledWith(null, [1]);
 
@@ -1172,7 +1172,7 @@ describe('Select.tsx', () => {
     const wrapper = mount(
       () => (
         <>
-          <NSelect
+          <HSelect
             v-model={modelValue.value}
             filterable={filterable.value}
             multiple
@@ -1180,10 +1180,10 @@ describe('Select.tsx', () => {
             toBody={false}
             onChange={onChange}
           >
-            <NOption label="1" value={1} disabled />
-            <NOption label="2" value={2} />
-            <NOption label="3" value={3} />
-          </NSelect>
+            <HOption label="1" value={1} disabled />
+            <HOption label="2" value={2} />
+            <HOption label="3" value={3} />
+          </HSelect>
           <div id="outer"></div>
         </>
       ),
@@ -1192,7 +1192,7 @@ describe('Select.tsx', () => {
       },
     );
 
-    const input = wrapper.findComponent(NPickerInput);
+    const input = wrapper.findComponent(HPickerInput);
 
     await input.trigger('mouseenter');
 
@@ -1210,7 +1210,7 @@ describe('Select.tsx', () => {
 
     debugger;
 
-    await wrapper.findAllComponents(NOption).at(-1)?.trigger('click');
+    await wrapper.findAllComponents(HOption).at(-1)?.trigger('click');
 
     expect(onChange).toHaveBeenLastCalledWith(null, [1, 3]);
 
@@ -1238,7 +1238,7 @@ describe('Select.tsx', () => {
     const wrapper = mount(
       () => (
         <>
-          <NSelect multiple clearable toBody={false} options={options} />
+          <HSelect multiple clearable toBody={false} options={options} />
           <div id="outer"></div>
         </>
       ),
@@ -1247,7 +1247,7 @@ describe('Select.tsx', () => {
       },
     );
 
-    await wrapper.findComponent(NPicker).trigger('click');
+    await wrapper.findComponent(HPicker).trigger('click');
 
     wrapper.findAllComponents(SimpleOption).forEach(option => {
       expect(option.classes('is-disabled')).toBeTruthy();
@@ -1267,24 +1267,24 @@ describe('Select.tsx', () => {
 
     const wrapper = mount(
       () => (
-        <NSelect v-model={modelValue.value} toBody={false} showSearch onSearch={doSearch}>
+        <HSelect v-model={modelValue.value} toBody={false} showSearch onSearch={doSearch}>
           {options.value.map(opt => (
-            <NOption label={opt} value={opt} key={opt} />
+            <HOption label={opt} value={opt} key={opt} />
           ))}
-        </NSelect>
+        </HSelect>
       ),
       {
         attachTo: document.body,
       },
     );
 
-    await wrapper.findComponent(NPickerInput).trigger('click');
+    await wrapper.findComponent(HPickerInput).trigger('click');
 
     await wrapper.find('input').setValue('1');
     await sleep(200);
     await sleep();
 
-    await wrapper.findComponent(NPickerInput).trigger('keydown', {
+    await wrapper.findComponent(HPickerInput).trigger('keydown', {
       key: 'ArrowDown',
     });
 
@@ -1292,7 +1292,7 @@ describe('Select.tsx', () => {
 
     expect(wrapper.find('.is-focus').attributes('data-value')).toBe('1');
 
-    await wrapper.findComponent(NPickerInput).trigger('keydown', {
+    await wrapper.findComponent(HPickerInput).trigger('keydown', {
       key: 'ArrowDown',
     });
 
@@ -1307,7 +1307,7 @@ describe('Select.tsx', () => {
     expect(onSearch).toHaveBeenCalledTimes(2);
     expect(wrapper.find('.is-focus').exists()).toBeFalsy();
 
-    await wrapper.findComponent(NPickerInput).trigger('keydown', {
+    await wrapper.findComponent(HPickerInput).trigger('keydown', {
       key: 'Enter',
     });
 
@@ -1322,13 +1322,13 @@ describe('Select.tsx', () => {
     const onFocus = vi.fn();
 
     const wrapper = mount(
-      () => <NSelect v-model={modelValue.value} toBody={false} showSearch onFocus={onFocus} />,
+      () => <HSelect v-model={modelValue.value} toBody={false} showSearch onFocus={onFocus} />,
       {
         attachTo: document.body,
       },
     );
 
-    await wrapper.findComponent(NPickerInput).trigger('click');
+    await wrapper.findComponent(HPickerInput).trigger('click');
     await sleep();
 
     expect(onFocus).toHaveBeenCalledOnce();
@@ -1344,7 +1344,7 @@ describe('Select.tsx', () => {
 
     const wrapper = mount(
       () => (
-        <NSelect v-model={modelValue.value} toBody={false} multiple showSearch onFocus={onFocus} />
+        <HSelect v-model={modelValue.value} toBody={false} multiple showSearch onFocus={onFocus} />
       ),
       {
         attachTo: document.body,
@@ -1352,7 +1352,7 @@ describe('Select.tsx', () => {
     );
 
     await sleep();
-    await wrapper.findComponent(NPickerInput).trigger('click');
+    await wrapper.findComponent(HPickerInput).trigger('click');
     await sleep();
 
     expect(onFocus).toHaveBeenCalledOnce();
@@ -1395,8 +1395,8 @@ describe('Select.tsx', () => {
       [],
     );
 
-    expect(instance.wrapper.findAllComponents(NOption).length).toBe(100);
-    instance.wrapper.findAllComponents(NOption).forEach(opt => {
+    expect(instance.wrapper.findAllComponents(HOption).length).toBe(100);
+    instance.wrapper.findAllComponents(HOption).forEach(opt => {
       expect(opt.classes('is-hide')).toBeFalsy();
     });
 
@@ -1404,8 +1404,8 @@ describe('Select.tsx', () => {
 
     await sleep();
 
-    expect(instance.wrapper.findAllComponents(NOption).length).toBe(10);
-    instance.wrapper.findAllComponents(NOption).forEach(opt => {
+    expect(instance.wrapper.findAllComponents(HOption).length).toBe(10);
+    instance.wrapper.findAllComponents(HOption).forEach(opt => {
       expect(opt.classes('is-hide')).toBeFalsy();
     });
   });
@@ -1444,7 +1444,7 @@ describe('Select.tsx', () => {
       {
         default() {
           return options.value.map(opt => (
-            <NOption key={opt.value} value={opt.value} label={opt.label} />
+            <HOption key={opt.value} value={opt.value} label={opt.label} />
           ));
         },
         tagRender(data) {
@@ -1468,7 +1468,7 @@ describe('Select.tsx', () => {
     expect(instance.mainInput?.find('.custom-tag-render')?.text()).eq('a-A');
     expect(
       instance.wrapper
-        .findAllComponents(NOption)
+        .findAllComponents(HOption)
         .some(opt => opt.attributes('data-value') === 'a-A'),
     ).toBeFalsy();
     expect(onBlur).toHaveBeenCalledOnce();
@@ -1515,7 +1515,7 @@ describe('Select.tsx', () => {
     await instance.setInputValue('1');
 
     expect(
-      instance.wrapper.findAllComponents(NOption).filter(curr => !curr.classes('is-hide')).length,
+      instance.wrapper.findAllComponents(HOption).filter(curr => !curr.classes('is-hide')).length,
     ).toBe(3);
 
     await checkAll.trigger('click');

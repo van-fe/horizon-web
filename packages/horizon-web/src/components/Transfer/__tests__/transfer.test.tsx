@@ -1,7 +1,7 @@
 import type { VueWrapper } from '@vue/test-utils';
 import { shallowMount, mount } from '@vue/test-utils';
-import NTransfer from '..';
-import NTransferPanel from '../src/TransferPanel';
+import HTransfer from '..';
+import HTransferPanel from '../src/TransferPanel';
 import { localeInjectKey } from '~/provides';
 import VueLocaleService, { LocaleSupportLang } from '@aurora/locale-vue';
 import { dictionaries } from '~/locales';
@@ -22,14 +22,14 @@ describe('Transfer.tsx', () => {
   };
 
   test('basic', async () => {
-    const wrapper = shallowMount(() => <NTransfer data={getTestData()} />);
-    expect(wrapper.findComponent(NTransfer)).toBeTruthy();
+    const wrapper = shallowMount(() => <HTransfer data={getTestData()} />);
+    expect(wrapper.findComponent(HTransfer)).toBeTruthy();
   });
 
   test('default target list', () => {
     const value = ref([1, 4]);
-    const wrapper = mount(() => <NTransfer v-model={value.value} data={getTestData()} />);
-    const panelELE = wrapper.findComponent(NTransferPanel);
+    const wrapper = mount(() => <HTransfer v-model={value.value} data={getTestData()} />);
+    const panelELE = wrapper.findComponent(HTransferPanel);
     expect(panelELE.vm.checkedArr.length).toBe(2);
   });
 
@@ -37,9 +37,9 @@ describe('Transfer.tsx', () => {
     const value = ref([]);
 
     const wrapper = mount(() => (
-      <NTransfer v-model={value.value} filterable data={getTestData()} />
+      <HTransfer v-model={value.value} filterable data={getTestData()} />
     ));
-    const panelELE = wrapper.findComponent(NTransferPanel);
+    const panelELE = wrapper.findComponent(HTransferPanel);
     const inputELE = panelELE.find('.n-input__inner');
     await inputELE.setValue('10');
     const checkboxELEArr = wrapper.findAll('.n-transfer-panel__item > .n-checkbox');
@@ -48,7 +48,7 @@ describe('Transfer.tsx', () => {
 
   test('transfer', async () => {
     const value = ref([1, 4]);
-    const wrapper = mount(() => <NTransfer v-model={value.value} data={getTestData()} />);
+    const wrapper = mount(() => <HTransfer v-model={value.value} data={getTestData()} />);
     expect((wrapper.findComponent('.n-transfer--right') as VueWrapper<any>).vm.data.length).toBe(
       value.value.length,
     );
@@ -72,7 +72,7 @@ describe('Transfer.tsx', () => {
       titles: ['表1', '表2'],
     });
     const wrapper = mount(() => (
-      <NTransfer
+      <HTransfer
         v-model={state.value}
         titles={state.titles as [string, string]}
         data={getTestData()}
@@ -88,14 +88,14 @@ describe('Transfer.tsx', () => {
       value: [],
     });
     const wrapper = mount(() => (
-      <NTransfer
+      <HTransfer
         v-model={state.value}
         filterable={true}
         data={getTestData()}
         placeholder="hhhh"
       />
     ));
-    const transferELE = wrapper.findComponent(NTransfer);
+    const transferELE = wrapper.findComponent(HTransfer);
     expect(transferELE.find('.n-input__inner').attributes('placeholder')).eq('hhhh');
   });
 
@@ -110,7 +110,7 @@ describe('Transfer.tsx', () => {
       },
     });
     const wrapper = mount(
-      () => <NTransfer v-model={state.value} filterable={true} data={getTestData()} />,
+      () => <HTransfer v-model={state.value} filterable={true} data={getTestData()} />,
       {
         global: {
           provide: {
@@ -119,7 +119,7 @@ describe('Transfer.tsx', () => {
         },
       },
     );
-    const transferELE = wrapper.findComponent(NTransfer);
+    const transferELE = wrapper.findComponent(HTransfer);
     expect(transferELE.find('.n-input__inner').attributes('placeholder')).eq('Please Input');
 
     localeService.current = LocaleSupportLang.ZhCN;
@@ -131,7 +131,7 @@ describe('Transfer.tsx', () => {
     const value = ref([1, 4]);
     const disabled = ref(false);
     const wrapper = mount(() => (
-      <NTransfer data={getTestData()} v-model={value.value} disabled={disabled.value} />
+      <HTransfer data={getTestData()} v-model={value.value} disabled={disabled.value} />
     ));
     const checkboxELEArr = wrapper.findAll('.n-checkbox');
     const checkboxDisabledELEArr = wrapper.findAll('.n-checkbox--disabled');

@@ -1,34 +1,34 @@
 import type { ComputedRef, ToRefs } from 'vue';
 import { computed, inject, ref } from 'vue';
 import type {
-  NTableColumnData,
-  NTableTransformedRowDataType,
-  NTableTreeRowDataType,
+  HTableColumnData,
+  HTableTransformedRowDataType,
+  HTableTreeRowDataType,
 } from '../utils/types';
-import { NTableTransformedRowContextKey } from '../utils/types';
+import { HTableTransformedRowContextKey } from '../utils/types';
 import type { TableProps } from '../composables/useProps';
 import { isFunction, isNil } from '@aurora/utils';
 import { warn } from '~/utils/useLog';
 import {
-  NTableFieldMapFormattedInjectKey,
-  NTableSetChildrenByRowKeyValueInjectKey,
+  HTableFieldMapFormattedInjectKey,
+  HTableSetChildrenByRowKeyValueInjectKey,
 } from '../utils/injectKeys';
 
 export function formatTreeFieldMap(
   tableProps: ToRefs<TableProps>,
-): ComputedRef<Record<keyof NTableTreeRowDataType, string>> {
+): ComputedRef<Record<keyof HTableTreeRowDataType, string>> {
   return computed(() => ({
     children: tableProps.fieldMap.value?.children || 'children',
     isLeaf: tableProps.fieldMap.value?.isLeaf || 'children',
   }));
 }
 
-export default function (tableProps: TableProps, rowsData: NTableTransformedRowDataType[]) {
+export default function (tableProps: TableProps, rowsData: HTableTransformedRowDataType[]) {
   const treeExpandRows = ref(new Set<string>());
   const syncLoadingRows = ref(new Set<string>());
 
-  const setChildrenByRowKey = inject(NTableSetChildrenByRowKeyValueInjectKey)!;
-  const fieldMapFormatted = inject(NTableFieldMapFormattedInjectKey)!;
+  const setChildrenByRowKey = inject(HTableSetChildrenByRowKeyValueInjectKey)!;
+  const fieldMapFormatted = inject(HTableFieldMapFormattedInjectKey)!;
 
   const isTreeData = computed(() =>
     rowsData.some(
@@ -36,24 +36,24 @@ export default function (tableProps: TableProps, rowsData: NTableTransformedRowD
     ),
   );
 
-  async function toggleTreeExpandRows(rowData: NTableTransformedRowDataType) {
-    if (treeExpandRows.value.has(rowData[NTableTransformedRowContextKey].uuid)) {
+  async function toggleTreeExpandRows(rowData: HTableTransformedRowDataType) {
+    if (treeExpandRows.value.has(rowData[HTableTransformedRowContextKey].uuid)) {
       collapseRow(rowData);
     } else {
       await expandRow(rowData);
     }
   }
 
-  function collapseRow(rowData: NTableTransformedRowDataType) {
-    const currentUuid = rowData[NTableTransformedRowContextKey].uuid;
+  function collapseRow(rowData: HTableTransformedRowDataType) {
+    const currentUuid = rowData[HTableTransformedRowContextKey].uuid;
 
     treeExpandRows.value.delete(currentUuid);
 
     const recursionSetChildrenToggleUp = (parentUuid: string) => {
       rowsData
-        .filter(row => row[NTableTransformedRowContextKey].parentUuid === parentUuid)
+        .filter(row => row[HTableTransformedRowContextKey].parentUuid === parentUuid)
         .forEach(row => {
-          const thisUuid = row[NTableTransformedRowContextKey].uuid;
+          const thisUuid = row[HTableTransformedRowContextKey].uuid;
           recursionSetChildrenToggleUp(thisUuid);
           treeExpandRows.value.delete(thisUuid);
         });
@@ -62,8 +62,8 @@ export default function (tableProps: TableProps, rowsData: NTableTransformedRowD
     recursionSetChildrenToggleUp(currentUuid);
   }
 
-  async function expandRow(rowData: NTableTransformedRowDataType) {
-    const currentUuid = rowData[NTableTransformedRowContextKey].uuid;
+  async function expandRow(rowData: HTableTransformedRowDataType) {
+    const currentUuid = rowData[HTableTransformedRowContextKey].uuid;
 
     if (
       rowData[fieldMapFormatted.value.isLeaf] === false &&
@@ -78,7 +78,7 @@ export default function (tableProps: TableProps, rowsData: NTableTransformedRowD
     }
   }
 
-  async function dynamicLoad(rowData: NTableTransformedRowDataType) {
+  async function dynamicLoad(rowData: HTableTransformedRowDataType) {
     if (!isFunction(tableProps.dynamicLoad) || isNil(tableProps.rowKey)) {
       warn('table', `You haven't set dynamicLoad. So it will expand directly.`);
       return;
@@ -99,7 +99,7 @@ export default function (tableProps: TableProps, rowsData: NTableTransformedRowD
     treeExpandRows.value.clear();
   }
 
-  function isRowCanBeExpand(rowData: NTableTransformedRowDataType) {
+  function isRowCanBeExpand(rowData: HTableTransformedRowDataType) {
     return (
       (Array.isArray(rowData[fieldMapFormatted.value.children]) &&
         rowData[fieldMapFormatted.value.children].length > 0) ||
@@ -108,8 +108,8 @@ export default function (tableProps: TableProps, rowsData: NTableTransformedRowD
   }
 
   function shouldSelectionBeVisible(
-    rowData: NTableTransformedRowDataType,
-    column: NTableColumnData,
+    rowData: HTableTransformedRowDataType,
+    column: HTableColumnData,
   ) {
     return isRowCanBeExpand(rowData) ? column.props.checkStrictly || column.props.multiple : true;
   }

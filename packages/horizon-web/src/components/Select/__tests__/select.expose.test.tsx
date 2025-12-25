@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils';
-import NSelect from '../src/Select';
-import NOption from '../src/Option';
+import HSelect from '../src/Select';
+import HOption from '../src/Option';
 import { describe, expect, test, vi } from 'vitest';
 import { sleep } from '~/utils/tools';
-import NPicker from '../../Picker';
+import HPicker from '../../Picker';
 import SelectHelper from './SelectHelper';
 import { Fragment } from 'vue';
 
@@ -31,11 +31,11 @@ describe('Select.tsx', () => {
     const wrapper = mount(
       () => (
         <Fragment>
-          <NSelect toBody={false} onFocus={onFocus} onBlur={onBlur}>
-            <NOption label="1" value={1} />
-            <NOption label="2" value={2} />
-            <NOption label="3" value={3} />
-          </NSelect>
+          <HSelect toBody={false} onFocus={onFocus} onBlur={onBlur}>
+            <HOption label="1" value={1} />
+            <HOption label="2" value={2} />
+            <HOption label="3" value={3} />
+          </HSelect>
           <div id="outer"></div>
         </Fragment>
       ),
@@ -44,7 +44,7 @@ describe('Select.tsx', () => {
       },
     );
 
-    await wrapper.findComponent(NPicker).trigger('click');
+    await wrapper.findComponent(HPicker).trigger('click');
 
     expect(onFocus).toHaveBeenCalledOnce();
 

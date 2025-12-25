@@ -1,31 +1,31 @@
 import { mount } from '@vue/test-utils';
-import { NCollapse, NCollapseItem } from '../index';
+import { HCollapse, HCollapseItem } from '../index';
 import { describe, expect, test, vi } from 'vitest';
 import { ref, nextTick } from 'vue';
 
 describe('Collapse.tsx', () => {
   test('basic', async () => {
     const wrapper = mount(() => (
-      <NCollapse active-key="activeKey" style="width: 500px">
-        <NCollapseItem title="This is a panel header." name="1">
+      <HCollapse active-key="activeKey" style="width: 500px">
+        <HCollapseItem title="This is a panel header." name="1">
           <div>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</div>
           <div>Velit officia consequat duis enim velit mollit. Exercitation veniam consequat</div>
           <div>sunt nostrud amet.Amet minim mollit.</div>
-        </NCollapseItem>
-        <NCollapseItem title="Why can i not submit a higher price?" name="2">
+        </HCollapseItem>
+        <HCollapseItem title="Why can i not submit a higher price?" name="2">
           <div>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. </div>
           <div>Velit officia consequat duis enim velit mollit. </div>
-        </NCollapseItem>
-        <NCollapseItem title="How are you？" name="3">
+        </HCollapseItem>
+        <HCollapseItem title="How are you？" name="3">
           How are you？
-        </NCollapseItem>
-        <NCollapseItem title="What are Promotion Products?" name="4">
+        </HCollapseItem>
+        <HCollapseItem title="What are Promotion Products?" name="4">
           What are Promotion Products?
-        </NCollapseItem>
-      </NCollapse>
+        </HCollapseItem>
+      </HCollapse>
     ));
-    const element = wrapper.findComponent(NCollapse);
-    const itemElements = wrapper.findAllComponents(NCollapseItem);
+    const element = wrapper.findComponent(HCollapse);
+    const itemElements = wrapper.findAllComponents(HCollapseItem);
 
     expect(element.exists()).toBe(true);
     expect(itemElements.length).toBe(4);
@@ -35,12 +35,12 @@ describe('Collapse.tsx', () => {
     test('activeKey', async () => {
       const activeKeyModel = ref(['1', '2']);
       const wrapper = mount(() => (
-        <NCollapse activeKey={activeKeyModel.value}>
-          <NCollapseItem name="1" title="1"></NCollapseItem>
-          <NCollapseItem name="2" title="2"></NCollapseItem>
-          <NCollapseItem name="3" title="3"></NCollapseItem>
-          <NCollapseItem name="4" title="4"></NCollapseItem>
-        </NCollapse>
+        <HCollapse activeKey={activeKeyModel.value}>
+          <HCollapseItem name="1" title="1"></HCollapseItem>
+          <HCollapseItem name="2" title="2"></HCollapseItem>
+          <HCollapseItem name="3" title="3"></HCollapseItem>
+          <HCollapseItem name="4" title="4"></HCollapseItem>
+        </HCollapse>
       ));
 
       const expanded = wrapper.findAll('.n-collapse-item--expand');
@@ -64,10 +64,10 @@ describe('Collapse.tsx', () => {
       const activeKeyModel = ref<(string | number)[]>([]);
       const expandedModel = ref(true);
       const wrapper = mount(() => (
-        <NCollapse activeKey={activeKeyModel.value} expandAll={expandedModel.value}>
-          <NCollapseItem name={1} title="123"></NCollapseItem>
-          <NCollapseItem name="2" title="1234"></NCollapseItem>
-        </NCollapse>
+        <HCollapse activeKey={activeKeyModel.value} expandAll={expandedModel.value}>
+          <HCollapseItem name={1} title="123"></HCollapseItem>
+          <HCollapseItem name="2" title="1234"></HCollapseItem>
+        </HCollapse>
       ));
 
       await nextTick();
@@ -85,15 +85,15 @@ describe('Collapse.tsx', () => {
     test('update:activeKey', async () => {
       const activeKeyModel = ref('1');
       const wrapper = mount(() => (
-        <NCollapse v-model:activeKey={activeKeyModel.value} accordion={true}>
-          <NCollapseItem name="1" title="1"></NCollapseItem>
-          <NCollapseItem name="2" title="2"></NCollapseItem>
-          <NCollapseItem name="3" title="3"></NCollapseItem>
-          <NCollapseItem name="4" title="4"></NCollapseItem>
-        </NCollapse>
+        <HCollapse v-model:activeKey={activeKeyModel.value} accordion={true}>
+          <HCollapseItem name="1" title="1"></HCollapseItem>
+          <HCollapseItem name="2" title="2"></HCollapseItem>
+          <HCollapseItem name="3" title="3"></HCollapseItem>
+          <HCollapseItem name="4" title="4"></HCollapseItem>
+        </HCollapse>
       ));
 
-      const lastItem = wrapper.findAllComponents(NCollapseItem).at(-1);
+      const lastItem = wrapper.findAllComponents(HCollapseItem).at(-1);
 
       await lastItem!.find('.n-collapse-item__header').trigger('click');
 
@@ -104,15 +104,15 @@ describe('Collapse.tsx', () => {
       const activeKeyModel = ref('1');
       const onChange = vi.fn();
       const wrapper = mount(() => (
-        <NCollapse activeKey={activeKeyModel.value} accordion={true} onChange={onChange}>
-          <NCollapseItem name="1" title="1"></NCollapseItem>
-          <NCollapseItem name="2" title="2"></NCollapseItem>
-          <NCollapseItem name="3" title="3"></NCollapseItem>
-          <NCollapseItem name="4" title="4"></NCollapseItem>
-        </NCollapse>
+        <HCollapse activeKey={activeKeyModel.value} accordion={true} onChange={onChange}>
+          <HCollapseItem name="1" title="1"></HCollapseItem>
+          <HCollapseItem name="2" title="2"></HCollapseItem>
+          <HCollapseItem name="3" title="3"></HCollapseItem>
+          <HCollapseItem name="4" title="4"></HCollapseItem>
+        </HCollapse>
       ));
 
-      const lastItem = wrapper.findAllComponents(NCollapseItem).at(-1);
+      const lastItem = wrapper.findAllComponents(HCollapseItem).at(-1);
 
       await lastItem!.find('.n-collapse-item__header').trigger('click');
 
@@ -124,10 +124,10 @@ describe('Collapse.tsx', () => {
     test('expand', async () => {
       const activeKeyModel = ref([1, '2']);
       const wrapper = mount(() => (
-        <NCollapse activeKey={activeKeyModel.value}>
-          <NCollapseItem name={1} title="123"></NCollapseItem>
-          <NCollapseItem name="2" title="1234"></NCollapseItem>
-        </NCollapse>
+        <HCollapse activeKey={activeKeyModel.value}>
+          <HCollapseItem name={1} title="123"></HCollapseItem>
+          <HCollapseItem name="2" title="1234"></HCollapseItem>
+        </HCollapse>
       ));
 
       const expandArr = wrapper.findAll('.n-collapse-item--expand');

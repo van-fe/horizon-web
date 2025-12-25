@@ -1,11 +1,11 @@
 import { mount } from '@vue/test-utils';
-import NFloatButton from '../src/FloatButton';
+import HFloatButton from '../src/FloatButton';
 import { describe, expect, test } from 'vitest';
 
 describe('FloatButton.tsx', () => {
   test('basic', async () => {
-    const wrapper = mount(() => <NFloatButton />);
-    const element = wrapper.findComponent(NFloatButton);
+    const wrapper = mount(() => <HFloatButton />);
+    const element = wrapper.findComponent(HFloatButton);
 
     expect(element.exists()).toBe(true);
   });

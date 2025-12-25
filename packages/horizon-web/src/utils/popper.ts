@@ -37,7 +37,7 @@ export type PopperOptions = {
   sameWidth?: boolean;
   sameHeight?: boolean;
   setMinWidth?: boolean;
-  // 是否需要寻找子节点，NPopover组件对reference和popper进行了包裹
+  // 是否需要寻找子节点，HPopover组件对reference和popper进行了包裹
   findChild?: boolean;
   fallbackPlacements?: Placement[];
   onApplyArrowHide?: (arg0: ModifierArguments<Options>) => any; // 箭头变更

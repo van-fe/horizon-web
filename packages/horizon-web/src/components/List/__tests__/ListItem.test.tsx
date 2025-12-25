@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { NList, NListItem } from '..';
+import { HList, HListItem } from '..';
 import { describe, expect, test } from 'vitest';
 import { nextTick, ref } from 'vue';
 import type { ListItemProps } from '../src/composables/useProps';
@@ -17,10 +17,10 @@ describe('ListItem.tsx', () => {
     test('titleSize', async () => {
       const titleSize = ref<ListItemProps['titleSize']>('small');
       const wrapper = mount(() => (
-        <NList data={templateData}>
+        <HList data={templateData}>
           {{
             item: ({ item }: { item: (typeof templateData)[number] }) => (
-              <NListItem
+              <HListItem
                 title={item.title}
                 subtitle={item.subtitle}
                 describe={item.describe}
@@ -28,7 +28,7 @@ describe('ListItem.tsx', () => {
               />
             ),
           }}
-        </NList>
+        </HList>
       ));
 
       const listItemElm = wrapper.find('.n-list-item__main--title');
@@ -45,10 +45,10 @@ describe('ListItem.tsx', () => {
     test('titleBold', async () => {
       const titleBold = ref(false);
       const wrapper = mount(() => (
-        <NList data={templateData}>
+        <HList data={templateData}>
           {{
             item: ({ item }: { item: (typeof templateData)[number] }) => (
-              <NListItem
+              <HListItem
                 title={item.title}
                 subtitle={item.subtitle}
                 describe={item.describe}
@@ -56,7 +56,7 @@ describe('ListItem.tsx', () => {
               />
             ),
           }}
-        </NList>
+        </HList>
       ));
 
       const listItemElm = wrapper.find('.n-list-item__main--title-wrapper');
@@ -74,17 +74,17 @@ describe('ListItem.tsx', () => {
   describe('slots', () => {
     test('default', () => {
       const wrapper = mount(() => (
-        <NList data={templateData}>
+        <HList data={templateData}>
           {{
             item: () => (
-              <NListItem>
+              <HListItem>
                 {{
                   default: () => <div>DEFAULT</div>,
                 }}
-              </NListItem>
+              </HListItem>
             ),
           }}
-        </NList>
+        </HList>
       ));
 
       expect(wrapper.find('.n-list-item__main--default').text()).eq('DEFAULT');
@@ -92,17 +92,17 @@ describe('ListItem.tsx', () => {
 
     test('title', () => {
       const wrapper = mount(() => (
-        <NList data={templateData}>
+        <HList data={templateData}>
           {{
             item: () => (
-              <NListItem>
+              <HListItem>
                 {{
                   title: () => <div>TITLE</div>,
                 }}
-              </NListItem>
+              </HListItem>
             ),
           }}
-        </NList>
+        </HList>
       ));
 
       expect(wrapper.find('.n-list-item__main--content').text()).eq('TITLE');
@@ -110,17 +110,17 @@ describe('ListItem.tsx', () => {
 
     test('sider', () => {
       const wrapper = mount(() => (
-        <NList data={templateData}>
+        <HList data={templateData}>
           {{
             item: () => (
-              <NListItem>
+              <HListItem>
                 {{
                   sider: () => <div>SIDER</div>,
                 }}
-              </NListItem>
+              </HListItem>
             ),
           }}
-        </NList>
+        </HList>
       ));
 
       expect(wrapper.find('.n-list-item__main--sider').text()).eq('SIDER');
@@ -128,17 +128,17 @@ describe('ListItem.tsx', () => {
 
     test('describe', () => {
       const wrapper = mount(() => (
-        <NList data={templateData}>
+        <HList data={templateData}>
           {{
             item: () => (
-              <NListItem>
+              <HListItem>
                 {{
                   describe: () => <div>DESCRIBE</div>,
                 }}
-              </NListItem>
+              </HListItem>
             ),
           }}
-        </NList>
+        </HList>
       ));
 
       expect(wrapper.find('.n-list-item__main--content').text()).eq('DESCRIBE');
@@ -146,17 +146,17 @@ describe('ListItem.tsx', () => {
 
     test('right', () => {
       const wrapper = mount(() => (
-        <NList data={templateData}>
+        <HList data={templateData}>
           {{
             item: () => (
-              <NListItem>
+              <HListItem>
                 {{
                   right: () => <div>RIGHT</div>,
                 }}
-              </NListItem>
+              </HListItem>
             ),
           }}
-        </NList>
+        </HList>
       ));
 
       expect(wrapper.find('.n-list-item__right').text()).eq('RIGHT');

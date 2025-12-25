@@ -2,10 +2,10 @@ import type { ToRefs } from 'vue';
 import { computed, provide } from 'vue';
 import type { ScrollbarProps } from '../composables/useProps';
 import {
-  NScrollbarThumbBottomInjectKey,
-  NScrollbarThumbLeftInjectKey,
-  NScrollbarThumbRightInjectKey,
-  NScrollbarThumbTopInjectKey,
+  HScrollbarThumbBottomInjectKey,
+  HScrollbarThumbLeftInjectKey,
+  HScrollbarThumbRightInjectKey,
+  HScrollbarThumbTopInjectKey,
 } from '../utils/injectKeys';
 
 export default function useBeginEndSpacing(propsRef: ToRefs<ScrollbarProps>) {
@@ -23,10 +23,10 @@ export default function useBeginEndSpacing(propsRef: ToRefs<ScrollbarProps>) {
   const thumbLeftMax = computed(() => trackBeginEndSpacing.value[1][0]);
   const thumbRightMax = computed(() => trackBeginEndSpacing.value[1][1]);
 
-  provide(NScrollbarThumbTopInjectKey, thumbTopMax);
-  provide(NScrollbarThumbBottomInjectKey, thumbBottomMax);
-  provide(NScrollbarThumbLeftInjectKey, thumbLeftMax);
-  provide(NScrollbarThumbRightInjectKey, thumbRightMax);
+  provide(HScrollbarThumbTopInjectKey, thumbTopMax);
+  provide(HScrollbarThumbBottomInjectKey, thumbBottomMax);
+  provide(HScrollbarThumbLeftInjectKey, thumbLeftMax);
+  provide(HScrollbarThumbRightInjectKey, thumbRightMax);
 
   return {
     trackBeginEndSpacing,

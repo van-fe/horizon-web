@@ -1,7 +1,7 @@
 import type { Dayjs } from 'dayjs';
 import { isDayjs } from 'dayjs';
 import { isBoolean, isNil, isObject, isString, isUndefined } from '@aurora/utils';
-import type { NDatePickerShortcutsType } from '../utils/types';
+import type { HDatePickerShortcutsType } from '../utils/types';
 
 export const useDatePickerEmits = {
   /**
@@ -79,7 +79,7 @@ export const useDatePickerEmits = {
    * 快捷选择点击时触发
    * @param shortcut 当前点击的快捷选项
    */
-  shortcutClick: (shortcut: NDatePickerShortcutsType) => isObject(shortcut),
+  shortcutClick: (shortcut: HDatePickerShortcutsType) => isObject(shortcut),
 };
 
 export const useDatePickerDatePanelEmit = {

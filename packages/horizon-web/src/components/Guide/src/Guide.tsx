@@ -18,26 +18,26 @@ import type { GuideProps } from './composables/useProps';
 import type { GuideEmits } from './composables/useEmits';
 import type { GuideSlots } from './composables/useSlots';
 import type { GuideExposes } from './composables/useExposes';
-import type { NGuideCollectedItems } from './utils/injectedKeys';
+import type { HGuideCollectedItems } from './utils/injectedKeys';
 import {
-  NGuideCollectItemInjectKey,
-  NGuideCurrentIndexInjectKey,
-  NGuideIsStartedInjectKey,
-  NGuideItemsInjectKey,
-  NGuideOnCloseInjectKey,
-  NGuideOnFinishInjectKey,
-  NGuidePropsInjectKey,
-  NGuideRemoveItemInjectKey,
+  HGuideCollectItemInjectKey,
+  HGuideCurrentIndexInjectKey,
+  HGuideIsStartedInjectKey,
+  HGuideItemsInjectKey,
+  HGuideOnCloseInjectKey,
+  HGuideOnFinishInjectKey,
+  HGuidePropsInjectKey,
+  HGuideRemoveItemInjectKey,
 } from './utils/injectedKeys';
 import GuideMask from './components/GuideMask';
-import NGuideItem from './GuideItem';
+import HGuideItem from './GuideItem';
 
 export default defineComponent({
   name: `${useNamespace()}Guide`,
   desc: '产品中的新手引导是可以让用户在短时间内快速了解产品的特色以及产品的使用方式，轻松上手去体验产品的功能，完成自己的目标。大部分的新手引导都会出现在用户首次打开产品时，让用户对产品功能或操作有个初步了解。',
   components: {
     GuideMask,
-    NGuideItem,
+    HGuideItem,
   },
   props: useGuideProps,
   emits: useGuideEmits,
@@ -51,7 +51,7 @@ export default defineComponent({
 
     const visible = ref(props.visible);
     const currentIndex = ref(props.modelValue);
-    const guideItems = reactive<NGuideCollectedItems[]>([]);
+    const guideItems = reactive<HGuideCollectedItems[]>([]);
 
     const zIndexHandler = useZIndex(props.zIndex);
     const zIndex = ref(zIndexHandler.current);
@@ -115,7 +115,7 @@ export default defineComponent({
       },
     );
 
-    const collectItem = (item: NGuideCollectedItems) => {
+    const collectItem = (item: HGuideCollectedItems) => {
       guideItems.push(item);
     };
 
@@ -137,14 +137,14 @@ export default defineComponent({
       currentIndex.value = -1;
     }
 
-    provide(NGuidePropsInjectKey, props);
-    provide(NGuideCollectItemInjectKey, collectItem);
-    provide(NGuideRemoveItemInjectKey, removeItem);
-    provide(NGuideItemsInjectKey, guideItems);
-    provide(NGuideCurrentIndexInjectKey, currentIndex);
-    provide(NGuideOnCloseInjectKey, onClose);
-    provide(NGuideOnFinishInjectKey, onFinish);
-    provide(NGuideIsStartedInjectKey, visible);
+    provide(HGuidePropsInjectKey, props);
+    provide(HGuideCollectItemInjectKey, collectItem);
+    provide(HGuideRemoveItemInjectKey, removeItem);
+    provide(HGuideItemsInjectKey, guideItems);
+    provide(HGuideCurrentIndexInjectKey, currentIndex);
+    provide(HGuideOnCloseInjectKey, onClose);
+    provide(HGuideOnFinishInjectKey, onFinish);
+    provide(HGuideIsStartedInjectKey, visible);
 
     function renderItems() {
       if (slots.default) {
@@ -153,7 +153,7 @@ export default defineComponent({
         return (
           <Fragment>
             {props.itemList.map(item => (
-              <NGuideItem {...(item || {})} />
+              <HGuideItem {...(item || {})} />
             ))}
           </Fragment>
         );

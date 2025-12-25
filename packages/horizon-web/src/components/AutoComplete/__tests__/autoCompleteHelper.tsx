@@ -7,8 +7,8 @@ import { mount } from '@vue/test-utils';
 import { sleep } from '~/utils/tools';
 import type { AutoCompleteProps } from '~/components/AutoComplete/src/composables/useProps';
 import type { AutoCompleteEmits } from '~/components/AutoComplete/src/composables/useEmits';
-import NAutoComplete from '~/components/AutoComplete/src/AutoComplete';
-import NPicker from '~/components/Picker/src/Picker';
+import HAutoComplete from '~/components/AutoComplete/src/AutoComplete';
+import HPicker from '~/components/Picker/src/Picker';
 import type { AutoCompleteExposes } from '~/components/AutoComplete/src/composables/useExposes';
 import type { PickerExposes } from '~/components/Picker/src/composables/useExposes';
 import type { AutoCompleteSlots } from '~/components/AutoComplete/src/composables/useSlots';
@@ -25,8 +25,8 @@ export default class AutoCompleteHelper<
   }>;
   public slots?: Partial<SetupContext<{}, AutoCompleteSlots>['slots']>;
   public wrapper!: VueWrapper<any, any>;
-  public element!: VueWrapper<HorizonWebComponentInstance<typeof NAutoComplete, AutoCompleteExposes>>;
-  public picker!: VueWrapper<HorizonWebComponentInstance<typeof NPicker, PickerExposes>>;
+  public element!: VueWrapper<HorizonWebComponentInstance<typeof HAutoComplete, AutoCompleteExposes>>;
+  public picker!: VueWrapper<HorizonWebComponentInstance<typeof HPicker, PickerExposes>>;
 
   constructor(
     propsOrEmits?: Partial<{
@@ -45,7 +45,7 @@ export default class AutoCompleteHelper<
     this.wrapper = mount(
       () => (
         <Fragment>
-          <NAutoComplete
+          <HAutoComplete
             v-model={this.modelValue.value}
             optionListMaxHeight={10000}
             {...Object.fromEntries(
@@ -62,11 +62,11 @@ export default class AutoCompleteHelper<
       },
     );
 
-    this.element = this.wrapper.findComponent(NAutoComplete) as VueWrapper<
-      HorizonWebComponentInstance<typeof NAutoComplete, AutoCompleteExposes>
+    this.element = this.wrapper.findComponent(HAutoComplete) as VueWrapper<
+      HorizonWebComponentInstance<typeof HAutoComplete, AutoCompleteExposes>
     >;
-    this.picker = this.element.findComponent(NPicker) as VueWrapper<
-      HorizonWebComponentInstance<typeof NPicker, PickerExposes>
+    this.picker = this.element.findComponent(HPicker) as VueWrapper<
+      HorizonWebComponentInstance<typeof HPicker, PickerExposes>
     >;
   }
 

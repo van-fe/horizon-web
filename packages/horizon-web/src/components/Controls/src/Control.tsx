@@ -7,13 +7,13 @@ import { useControlEmits } from './composables/useEmits';
 import { useControlSlots } from './composables/useSlots';
 import type { ControlEmits } from './composables/useEmits';
 import type { ControlSlots } from './composables/useSlots';
-import NTooltip from '~/components/Tooltip/src/Tooltip';
-import { NControlsEmitInjectKey, NControlsPropsInjectKey } from './utils/injectKeys';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
+import { HControlsEmitInjectKey, HControlsPropsInjectKey } from './utils/injectKeys';
 
 export default defineComponent({
   name: `${useNamespace()}Control`,
   components: {
-    NTooltip,
+    HTooltip,
   },
   props: useControlProps,
   emits: useControlEmits,
@@ -22,8 +22,8 @@ export default defineComponent({
     const classHelper = new ComponentClassBlock('control');
     const index = ref(-1);
 
-    const parentProps = inject(NControlsPropsInjectKey)!;
-    const parentEmits = inject(NControlsEmitInjectKey)!;
+    const parentProps = inject(HControlsPropsInjectKey)!;
+    const parentEmits = inject(HControlsEmitInjectKey)!;
 
     const isDisabled = computed(() => parentProps.disabled || props.disabled);
 
@@ -34,7 +34,7 @@ export default defineComponent({
     }
 
     return () => (
-      <NTooltip disabled={!parentProps.useTooltip}>
+      <HTooltip disabled={!parentProps.useTooltip}>
         {{
           content: () => slots.text?.() ?? props.text,
           default: () => (
@@ -53,7 +53,7 @@ export default defineComponent({
             </div>
           ),
         }}
-      </NTooltip>
+      </HTooltip>
     );
   },
 });

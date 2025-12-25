@@ -15,12 +15,12 @@ import { useCheckboxEmits } from './composables/useEmits';
 import type { CheckboxButtonSlots } from './composables/useSlots';
 import { useCheckboxButtonSlots } from './composables/useSlots';
 import {
-  NFormDisabledInjectedKey,
-  NFormItemTriggerInjectedKey,
+  HFormDisabledInjectedKey,
+  HFormItemTriggerInjectedKey,
 } from '~/components/Form/src/utils/injectedKeys';
-import { NCheckboxGroupInjectedKey } from './utils/injectedKeys';
+import { HCheckboxGroupInjectedKey } from './utils/injectedKeys';
 import useSize from '~/utils/useSize';
-import { NApplicationCompatibilityInjectedKey } from '~/components/Application/src/utils/injectedKeys';
+import { HApplicationCompatibilityInjectedKey } from '~/components/Application/src/utils/injectedKeys';
 
 export default defineComponent({
   name: `${useNamespace()}CheckboxButton`,
@@ -41,16 +41,16 @@ export default defineComponent({
     } = toRefs(props);
     const classHelper = new ComponentClassBlock('checkbox-button');
 
-    const NCheckboxGroup = inject(NCheckboxGroupInjectedKey, undefined);
+    const HCheckboxGroup = inject(HCheckboxGroupInjectedKey, undefined);
 
     provide('type', 'checkbox-button');
-    const isGroup = computed(() => !!NCheckboxGroup);
+    const isGroup = computed(() => !!HCheckboxGroup);
     const viewable = computed(() =>
-      isGroup.value ? NCheckboxGroup!.viewable : propViewable.value,
+      isGroup.value ? HCheckboxGroup!.viewable : propViewable.value,
     );
-    const size = computed(() => (isGroup.value ? NCheckboxGroup!.size : propSize.value));
+    const size = computed(() => (isGroup.value ? HCheckboxGroup!.size : propSize.value));
 
-    const compatibility = inject(NApplicationCompatibilityInjectedKey, undefined);
+    const compatibility = inject(HApplicationCompatibilityInjectedKey, undefined);
 
     // global size
 
@@ -77,27 +77,27 @@ export default defineComponent({
     });
 
     const modelValue = computed(() =>
-      isGroup.value && NCheckboxGroup!.value !== false
-        ? NCheckboxGroup!.value
+      isGroup.value && HCheckboxGroup!.value !== false
+        ? HCheckboxGroup!.value
         : propModelValue.value,
     );
     const color = computed(() => useColors(propFill.value));
 
     // form disabled inject
-    const formDisabled = inject(NFormDisabledInjectedKey, undefined);
+    const formDisabled = inject(HFormDisabledInjectedKey, undefined);
     const isDisabled = computed(
-      () => NCheckboxGroup?.disabled ?? propDisabled.value ?? formDisabled?.value ?? false,
+      () => HCheckboxGroup?.disabled ?? propDisabled.value ?? formDisabled?.value ?? false,
     );
 
     /** formItemTrigger **/
-    const formItemTrigger = inject(NFormItemTriggerInjectedKey, undefined);
+    const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
 
     const changeCheckboxButton = () => {
       handleChange(
         modelValue.value,
         propLabel.value,
         emit,
-        NCheckboxGroup,
+        HCheckboxGroup,
         formItemTrigger,
         propTrueLabel.value,
         propFalseLabel.value,
@@ -105,7 +105,7 @@ export default defineComponent({
     };
 
     const onBlur = (evt: FocusEvent) => {
-      handleBlur(evt, emit, NCheckboxGroup, formItemTrigger);
+      handleBlur(evt, emit, HCheckboxGroup, formItemTrigger);
     };
 
     return () => (

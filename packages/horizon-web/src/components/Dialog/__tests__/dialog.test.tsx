@@ -2,10 +2,10 @@ import { flushPromises, mount } from '@vue/test-utils';
 import { describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
 import { resetPopupContainerGetter } from '@aurora/utils';
-import { NApplication } from '../../Application';
-import { NButton } from '../../Button/index';
+import { HApplication } from '../../Application';
+import { HButton } from '../../Button/index';
 import type { DialogProps } from '../src/composables/useProps';
-import NDialog from '../src/Dialog';
+import HDialog from '../src/Dialog';
 
 const createUglinessDebounce = () => {
   let resolve: () => void;
@@ -25,8 +25,8 @@ const createUglinessDebounce = () => {
 describe('Dialog.tsx', () => {
   test('basic', async () => {
     const visible = ref(true);
-    const wrapper = mount(() => <NDialog visible={visible.value} to={null} />);
-    const element = wrapper.findComponent(NDialog);
+    const wrapper = mount(() => <HDialog visible={visible.value} to={null} />);
+    const element = wrapper.findComponent(HDialog);
 
     expect(element.exists()).toBe(true);
     expect(wrapper.html()).toMatchInlineSnapshot(
@@ -69,8 +69,8 @@ describe('Dialog.tsx', () => {
   });
 
   test('direct render', async () => {
-    const wrapper = mount(() => <NDialog title="Title" to={null} visible={true} />);
-    const element = wrapper.findComponent(NDialog);
+    const wrapper = mount(() => <HDialog title="Title" to={null} visible={true} />);
+    const element = wrapper.findComponent(HDialog);
 
     expect(element.exists()).toBe(true);
     expect(wrapper.find('.n-dialog__header').text()).toBe('Title');
@@ -123,7 +123,7 @@ describe('Dialog.tsx', () => {
 
   describe('props', () => {
     test('lockScroll', () => {
-      mount(() => <NDialog visible={true} />, {
+      mount(() => <HDialog visible={true} />, {
         attachTo: document.body,
       });
 
@@ -132,7 +132,7 @@ describe('Dialog.tsx', () => {
 
     test('top', async () => {
       const top = 200;
-      const wrapper = mount(() => <NDialog top={top} visible={false} to={null} />, {
+      const wrapper = mount(() => <HDialog top={top} visible={false} to={null} />, {
         attachTo: document.body,
       });
 
@@ -176,7 +176,7 @@ describe('Dialog.tsx', () => {
 
     test('size', async () => {
       const size = ref<DialogProps['size']>('medium');
-      const wrapper = mount(() => <NDialog visible={false} to={null} size={size.value} />, {
+      const wrapper = mount(() => <HDialog visible={false} to={null} size={size.value} />, {
         attachTo: document.body,
       });
 
@@ -199,7 +199,7 @@ describe('Dialog.tsx', () => {
       const destroyOnClose = ref(false);
       const visible = ref(false);
       const wrapper = mount(
-        () => <NDialog visible={visible.value} to={null} destroyOnClose={destroyOnClose.value} />,
+        () => <HDialog visible={visible.value} to={null} destroyOnClose={destroyOnClose.value} />,
         { attachTo: document.body },
       );
 
@@ -267,7 +267,7 @@ describe('Dialog.tsx', () => {
     });
 
     test('draggable', async () => {
-      const wrapper = mount(() => <NDialog visible={true} title="Title" to={null} draggable />);
+      const wrapper = mount(() => <HDialog visible={true} title="Title" to={null} draggable />);
 
       expect(wrapper.find('.n-dialog__header--draggable').exists()).eq(true);
       expect(wrapper.html()).toMatchInlineSnapshot(`
@@ -323,18 +323,18 @@ describe('Dialog.tsx', () => {
 
       const getPopupContainer = vi.fn(() => el);
       const wrapper = mount(() => (
-        <NApplication getPopupContainer={getPopupContainer}>
-          <NDialog visible={true} to={el}>
+        <HApplication getPopupContainer={getPopupContainer}>
+          <HDialog visible={true} to={el}>
             <div>Hello World</div>
-          </NDialog>
-        </NApplication>
+          </HDialog>
+        </HApplication>
       ));
 
       expect(document.body.innerHTML).toMatchInlineSnapshot(
         `"<div data-v-app=""><!--teleport start--><!--teleport end--></div><div class="n-dialog" style="z-index: 2003;"><transition-stub name="n-fade-in-normal" duration="300" appear="true" persisted="false" css="true"><div class="n-dialog__mask" style="z-index: 2003;"></div></transition-stub><transition-stub name="n-dialog__move" appear="true" persisted="true" css="true"><div class="n-dialog__container n-dialog--medium n-dialog--center" style="z-index: 2004;"><div class="n-dialog__inner"><!----><div class="n-dialog__main"><!----><div class="n-dialog__body"></div><div class="n-dialog__footer"><div class="n-dialog__default-footer"><button class="n-button n-button--normal n-button--medium n-button--plain is-solid" type="button" tabindex="0" autofocus="false"><!----><div class="n-button__content"><!----></div><!----></button><button class="n-button n-button--primary n-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;"><!----><div class="n-button__content"><!----></div><!----></button></div></div></div></div></div></transition-stub></div><div data-v-app=""><!--teleport start--><div class="n-dialog" style="z-index: 2003;"><transition-stub name="n-fade-in-normal" duration="300" appear="true" persisted="false" css="true"><!----></transition-stub><transition-stub name="n-dialog__normal" appear="true" persisted="true" css="true"><div class="n-dialog__container n-dialog--medium n-dialog--center" style="z-index: 2004; top: 200px; transform: translateY(0); display: none;"><div class="n-dialog__inner"><!----><div class="n-dialog__main"><!----><div class="n-dialog__body"></div><div class="n-dialog__footer"><div class="n-dialog__default-footer"><button class="n-button n-button--normal n-button--medium n-button--plain is-solid" type="button" tabindex="0" autofocus="false"><!----><div class="n-button__content"><!----></div><!----></button><button class="n-button n-button--primary n-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;"><!----><div class="n-button__content"><!----></div><!----></button></div></div></div></div></div></transition-stub></div><!--teleport end--></div><div data-v-app=""><!--teleport start--><div class="n-dialog" style="z-index: 2003;"><transition-stub name="n-fade-in-normal" duration="300" appear="true" persisted="false" css="true"><!----></transition-stub><transition-stub name="n-dialog__move" appear="true" persisted="true" css="true"><div class="n-dialog__container n-dialog--center" style="z-index: 2004; display: none; width: 416px;"><div class="n-dialog__inner"><!----><div class="n-dialog__main"><!----><div class="n-dialog__body"></div><div class="n-dialog__footer"><div class="n-dialog__default-footer"><button class="n-button n-button--normal n-button--medium n-button--plain is-solid" type="button" tabindex="0" autofocus="false"><!----><div class="n-button__content"><!----></div><!----></button><button class="n-button n-button--primary n-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;"><!----><div class="n-button__content"><!----></div><!----></button></div></div></div></div></div></transition-stub></div><!--teleport end--></div><div data-v-app=""><!--teleport start--><div class="n-dialog" style="z-index: 2004;"><transition-stub name="n-fade-in-normal" duration="300" appear="true" persisted="false" css="true"><!----></transition-stub><transition-stub name="n-dialog__move" appear="true" persisted="false" css="true"><!----></transition-stub></div><!--teleport end--></div><div><div class="n-dialog" style="z-index: 2006;"><transition-stub name="n-fade-in-normal" duration="300" appear="true" persisted="false" css="true"><div class="n-dialog__mask" style="z-index: 2006;"></div></transition-stub><transition-stub name="n-dialog__move" appear="true" persisted="true" css="true"><div class="n-dialog__container n-dialog--medium n-dialog--center" style="z-index: 2007;"><div class="n-dialog__inner"><!----><div class="n-dialog__main"><!----><div class="n-dialog__body"><div>Hello World</div></div><div class="n-dialog__footer"><div class="n-dialog__default-footer"><button class="n-button n-button--normal n-button--medium n-button--plain is-solid" type="button" tabindex="0" autofocus="false"><!----><div class="n-button__content"><!----></div><!----></button><button class="n-button n-button--primary n-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;"><!----><div class="n-button__content"><!----></div><!----></button></div></div></div></div></div></transition-stub></div></div>"`,
       );
 
-      expect(wrapper.findComponent(NDialog).exists()).toBe(true);
+      expect(wrapper.findComponent(HDialog).exists()).toBe(true);
       expect(el.querySelector('.n-dialog')).not.toBeNull();
 
       document.body.innerHTML = '';
@@ -350,7 +350,7 @@ describe('Dialog.tsx', () => {
 
       const wrapper = mount(
         () => (
-          <NDialog
+          <HDialog
             title="Title"
             to={null}
             visible={true}
@@ -408,10 +408,10 @@ describe('Dialog.tsx', () => {
         <!--teleport end-->"
       `);
 
-      const dialog = wrapper.findComponent(NDialog);
+      const dialog = wrapper.findComponent(HDialog);
       expect(onOk).not.toHaveBeenCalled();
       expect(onCancel).not.toHaveBeenCalled();
-      const buttons = wrapper.findAllComponents(NButton);
+      const buttons = wrapper.findAllComponents(HButton);
       expect(buttons.length).toBe(3);
       await buttons[0].trigger('click');
       expect(onIconClose).toBeCalledTimes(1);
@@ -430,9 +430,9 @@ describe('Dialog.tsx', () => {
 
     test('lifecycle', async () => {
       const visible = ref(false);
-      const wrapper = mount(() => <NDialog title="Title" visible={visible.value} to={null} />);
+      const wrapper = mount(() => <HDialog title="Title" visible={visible.value} to={null} />);
 
-      const dialog = wrapper.findComponent(NDialog);
+      const dialog = wrapper.findComponent(HDialog);
 
       expect(dialog.emitted()).not.toHaveProperty('open');
       expect(dialog.emitted()).not.toHaveProperty('opened');
@@ -504,7 +504,7 @@ describe('Dialog.tsx', () => {
       const confirmDebounceFinished = vi.fn();
       const cancelDebounceFinished = vi.fn();
       const wrapper = mount(() => (
-        <NDialog
+        <HDialog
           title="Title"
           visible={true}
           to={null}
@@ -560,7 +560,7 @@ describe('Dialog.tsx', () => {
         </div>
         <!--teleport end-->"
       `);
-      const dialog = wrapper.findComponent(NDialog);
+      const dialog = wrapper.findComponent(HDialog);
 
       expect(dialog.emitted()).not.toHaveProperty('maskClick');
       expect(dialog.emitted()).not.toHaveProperty('confirmDebounceFinished');
@@ -598,16 +598,16 @@ describe('Dialog.tsx', () => {
       const customizeBody = 'Body';
 
       const wrapper = mount(() => (
-        <NDialog title="Title" to={null} visible={true}>
+        <HDialog title="Title" to={null} visible={true}>
           {{
             title: () => <div class="c-title">{customizeTitle}</div>,
             default: () => <div class="c-body">{customizeBody}</div>,
             footer: () => <div class="c-footer">{customizeFooter}</div>,
           }}
-        </NDialog>
+        </HDialog>
       ));
 
-      const dialog = wrapper.findComponent(NDialog);
+      const dialog = wrapper.findComponent(HDialog);
 
       expect(dialog.find('.c-title').exists()).eq(true);
       expect(dialog.find('.c-body').exists()).eq(true);

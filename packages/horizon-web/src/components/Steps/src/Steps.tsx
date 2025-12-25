@@ -8,13 +8,13 @@ import type { StepsSlots } from './composables/useSlots';
 import { useStepsSlots } from './composables/useSlots';
 import type { StepInstance } from './utils/injectedKeys';
 import {
-  NStepsActiveIndexInjectKey,
-  NStepsCollectInjectKey,
-  NStepsItemsInjectKey,
-  NStepsOnClickStepInjectKey,
-  NStepsPropsInjectKey,
-  NStepsRemoveInjectKey,
-  NStepsSizeInjectKey,
+  HStepsActiveIndexInjectKey,
+  HStepsCollectInjectKey,
+  HStepsItemsInjectKey,
+  HStepsOnClickStepInjectKey,
+  HStepsPropsInjectKey,
+  HStepsRemoveInjectKey,
+  HStepsSizeInjectKey,
 } from './utils/injectedKeys';
 import useSize from '~/utils/useSize';
 
@@ -64,10 +64,10 @@ export default defineComponent({
       });
     });
 
-    provide(NStepsPropsInjectKey, props);
-    provide(NStepsItemsInjectKey, stepItems);
+    provide(HStepsPropsInjectKey, props);
+    provide(HStepsItemsInjectKey, stepItems);
 
-    provide(NStepsCollectInjectKey, (props, uuid, setIndex, getIndex) => {
+    provide(HStepsCollectInjectKey, (props, uuid, setIndex, getIndex) => {
       stepItems.value.push({
         uuid,
         props,
@@ -76,16 +76,16 @@ export default defineComponent({
       });
     });
 
-    provide(NStepsRemoveInjectKey, (step, uuid) => {
+    provide(HStepsRemoveInjectKey, (step, uuid) => {
       const index = stepItems.value.findIndex(curr => curr.uuid === uuid);
       if (index >= 0) {
         stepItems.value.splice(index, 1);
       }
     });
 
-    provide(NStepsActiveIndexInjectKey, activeIndex);
+    provide(HStepsActiveIndexInjectKey, activeIndex);
 
-    provide(NStepsOnClickStepInjectKey, (index: number) => {
+    provide(HStepsOnClickStepInjectKey, (index: number) => {
       if (props.controllable) {
         if (props.beforeChange) {
           Promise.resolve(
@@ -112,7 +112,7 @@ export default defineComponent({
 
     // global size
     const sizeRef = useSize(size, 'medium', { default: 'medium' });
-    provide(NStepsSizeInjectKey, sizeRef);
+    provide(HStepsSizeInjectKey, sizeRef);
 
     return () => {
       return (

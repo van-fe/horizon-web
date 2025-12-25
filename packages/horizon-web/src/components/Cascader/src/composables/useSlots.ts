@@ -1,5 +1,5 @@
 import type { Ref, SlotsType } from 'vue';
-import type { NCascaderExtendOption, NCascaderFilterPathData } from '../utils/types';
+import type { HCascaderExtendOption, HCascaderFilterPathData } from '../utils/types';
 
 export const useCascaderSlots = Object as SlotsType<{
   /**
@@ -11,7 +11,7 @@ export const useCascaderSlots = Object as SlotsType<{
    * 自定义 `select` 中被选中的项目
    * @param value 每个选项的经转义后的对象
    */
-  tagRender?: NCascaderExtendOption;
+  tagRender?: HCascaderExtendOption;
   /**
    * 自定义 完整 `select` 渲染内容
    */
@@ -20,12 +20,12 @@ export const useCascaderSlots = Object as SlotsType<{
    * 自定义 `cascaderPanel` 选项渲染内容
    * @param props 当前子元素
    */
-  itemRender?: NCascaderExtendOption;
+  itemRender?: HCascaderExtendOption;
   /**
    * 自定义 `cascaderPanel` 中搜索场景下渲染内容
    * @param data 当前渲染的子选项
    */
-  searchPanelRender: { paths: NCascaderFilterPathData[]; inputValue: string };
+  searchPanelRender: { paths: HCascaderFilterPathData[]; inputValue: string };
   /**
    * 自定义 `cascaderPanel` 空列表渲染内容
    * @deprecated empty
