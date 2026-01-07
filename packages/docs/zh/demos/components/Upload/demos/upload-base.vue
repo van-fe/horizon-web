@@ -1,7 +1,7 @@
 <template>
   <div>
     <strong>文件单选</strong>
-    <n-upload
+    <h-upload
       class="mb-2"
       :limit="3"
       :upload-options="uploadObjOptions"
@@ -13,7 +13,7 @@
     <div>
       此例中还展示了选择文件后通过change事件获取选中的文件，以及超过上传数量限制的文件，通过overLimited事件进行打印的场景
     </div>
-    <n-upload
+    <h-upload
       class="mb-2"
       multiple
       :limit="3"
@@ -23,19 +23,19 @@
     />
 
     <strong>禁用</strong>
-    <n-upload class="mb-2" :upload-options="uploadObjOptions" disabled />
+    <h-upload class="mb-2" :upload-options="uploadObjOptions" disabled />
 
     <strong>限制类型，此例只允许上传图片</strong>
-    <n-upload class="mb-2" accept="image/*" :limit="3" :upload-options="uploadObjOptions" />
+    <h-upload class="mb-2" accept="image/*" :limit="3" :upload-options="uploadObjOptions" />
 
     <strong>uploadOptions使用函数形式</strong>
     <div>
       uploadOptions是对UploadHelper的RequestOptions参数和CustomRequest参数的封装，其中NUpload实现了CustomRequest的onChange函数，具体可参考UploadHelper的文档
     </div>
-    <n-upload class="mb-2" :limit="3" :upload-options="uploadFuncOptions" />
+    <h-upload class="mb-2" :limit="3" :upload-options="uploadFuncOptions" />
 
     <strong>v-model传入预置文件列表</strong>
-    <n-upload
+    <h-upload
       v-model="fileList1"
       class="mb-2"
       :limit="3"

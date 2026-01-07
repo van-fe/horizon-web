@@ -49,7 +49,7 @@ describe('Select.tsx', () => {
 
     await nextTick();
 
-    const clearBtn = instance.wrapper.find('.n-picker__input--icon.is-clear');
+    const clearBtn = instance.wrapper.find('.h-picker__input--icon.is-clear');
 
     expect(clearBtn.exists()).toBeTruthy();
 
@@ -104,7 +104,7 @@ describe('Select.tsx', () => {
 
     await instance.open();
 
-    const popper = instance.wrapper.find('.n-popover__popper');
+    const popper = instance.wrapper.find('.h-popover__popper');
 
     await sleep(220);
 
@@ -239,7 +239,7 @@ describe('Select.tsx', () => {
 
     await nextTick();
 
-    expect(instance.wrapper.find('.n-picker__pop-content--confirm-wrapper').exists()).toBeFalsy();
+    expect(instance.wrapper.find('.h-picker__pop-content--confirm-wrapper').exists()).toBeFalsy();
 
     await instance.pickOption(1);
 
@@ -258,9 +258,9 @@ describe('Select.tsx', () => {
 
     await select.trigger('click');
 
-    expect(wrapper.find('.n-picker__pop-content--confirm-wrapper').exists()).toBeTruthy();
+    expect(wrapper.find('.h-picker__pop-content--confirm-wrapper').exists()).toBeTruthy();
 
-    const buttons = wrapper.findAll('.n-picker__pop-content--confirm-wrapper .n-button');
+    const buttons = wrapper.findAll('.h-picker__pop-content--confirm-wrapper .h-button');
 
     expect(buttons[0].text()).eq('CAHCEL');
     expect(buttons[1].text()).eq('COHFIRM');
@@ -278,7 +278,7 @@ describe('Select.tsx', () => {
     await wrapper.findComponent(HSelect).trigger('click');
 
     expect(wrapper.find('.panel-class').exists()).toBeTruthy();
-    expect(wrapper.find('.n-popover__popcontent').attributes('style')).eq('display: block;');
+    expect(wrapper.find('.h-popover__popcontent').attributes('style')).eq('display: block;');
   });
 
   test('empty-text', async () => {
@@ -294,7 +294,7 @@ describe('Select.tsx', () => {
 
     await wrapper.findComponent(HSelect).trigger('click');
 
-    expect(wrapper.find('.n-popover__popper').attributes('style')).contain('z-index: 10000');
+    expect(wrapper.find('.h-popover__popper').attributes('style')).contain('z-index: 10000');
   });
 
   test('hover-show-delay', async () => {
@@ -427,7 +427,7 @@ describe('Select.tsx', () => {
 
     const input = instance.mainInput?.find('input');
 
-    expect(instance.wrapper.findAll('input.n-picker-fit-content-input__input').length).toBe(1);
+    expect(instance.wrapper.findAll('input.h-picker-fit-content-input__input').length).toBe(1);
 
     expect(input?.attributes('readonly')).not.toBeUndefined();
     expect(input?.classes('is-hide')).toBeFalsy();
@@ -458,7 +458,7 @@ describe('Select.tsx', () => {
     expect(instance.modelValue.value).toEqual([0]);
 
     const tagAppendInput = instance.wrapper.find(
-      'input.n-picker-fit-content-input__input:not(.is-main)',
+      'input.h-picker-fit-content-input__input:not(.is-main)',
     ) as DOMWrapper<HTMLInputElement>;
     await tagAppendInput.trigger('focus');
 
@@ -699,7 +699,7 @@ describe('Select.tsx', () => {
 
     await sleep(200);
 
-    expect(wrapper.find('.n-select__create-option').exists()).toBeFalsy();
+    expect(wrapper.find('.h-select__create-option').exists()).toBeFalsy();
 
     const options = wrapper.findAllComponents(HOption);
 
@@ -714,7 +714,7 @@ describe('Select.tsx', () => {
 
     await nextTick();
 
-    expect(wrapper.find('.n-select__create-option').exists()).toBeFalsy();
+    expect(wrapper.find('.h-select__create-option').exists()).toBeFalsy();
 
     await input.setValue('4');
 
@@ -727,7 +727,7 @@ describe('Select.tsx', () => {
     expect(onInput).toHaveBeenCalledTimes(2);
     expect(onInput).toHaveBeenCalledWith('4');
 
-    const createOption = wrapper.find('.n-select__create-option');
+    const createOption = wrapper.find('.h-select__create-option');
     expect(createOption.exists()).toBeTruthy();
 
     await createOption.trigger('click');
@@ -765,7 +765,7 @@ describe('Select.tsx', () => {
     );
 
     const select = wrapper.findComponent(HSelect);
-    const input = wrapper.find('input.n-picker__input--inner') as DOMWrapper<HTMLInputElement>;
+    const input = wrapper.find('input.h-picker__input--inner') as DOMWrapper<HTMLInputElement>;
 
     await select.trigger('click');
 
@@ -775,19 +775,19 @@ describe('Select.tsx', () => {
 
     expect(onInput).toHaveBeenCalledOnce();
     expect(onInput).toHaveBeenCalledWith('5');
-    expect(wrapper.find('.n-select__create-option').exists()).toBeFalsy();
+    expect(wrapper.find('.h-select__create-option').exists()).toBeFalsy();
 
     allowCreate.value = true;
 
     await nextTick();
 
-    const createOption = wrapper.find('.n-select__create-option');
+    const createOption = wrapper.find('.h-select__create-option');
     expect(createOption.exists()).toBeTruthy();
 
     await createOption.trigger('click');
 
     const tagAppendInput = wrapper.find(
-      'input.n-picker-fit-content-input__input',
+      'input.h-picker-fit-content-input__input',
     ) as DOMWrapper<HTMLInputElement>;
 
     wrapper.findAllComponents(HOption).forEach(curr => expect(curr.classes('is-hide')).toBeFalsy());
@@ -799,7 +799,7 @@ describe('Select.tsx', () => {
     await tagAppendInput.setValue('6');
     await sleep(200);
 
-    const createOption2 = wrapper.find('.n-select__create-option');
+    const createOption2 = wrapper.find('.h-select__create-option');
     expect(createOption2.exists()).toBeTruthy();
 
     await createOption2.trigger('click');
@@ -851,7 +851,7 @@ describe('Select.tsx', () => {
     expect(onInput).toHaveBeenCalledOnce();
     expect(onInput).toHaveBeenCalledWith('4');
 
-    const createOption = wrapper.find('.n-select__create-option');
+    const createOption = wrapper.find('.h-select__create-option');
     expect(createOption.exists()).toBeTruthy();
 
     await createOption.trigger('click');
@@ -865,7 +865,7 @@ describe('Select.tsx', () => {
     expect(onInput).toHaveBeenCalledTimes(2);
     expect(onInput).toHaveBeenCalledWith('5');
 
-    const createOption2 = wrapper.find('.n-select__create-option');
+    const createOption2 = wrapper.find('.h-select__create-option');
     expect(createOption2.exists()).toBeTruthy();
 
     await createOption2.trigger('click');
@@ -1035,13 +1035,13 @@ describe('Select.tsx', () => {
       },
     );
 
-    expect(wrapper.find('.n-select__check-all').exists()).toBeFalsy();
+    expect(wrapper.find('.h-select__check-all').exists()).toBeFalsy();
 
     useCheckAll.value = true;
 
     await nextTick();
 
-    const checkAll = wrapper.find('.n-select__check-all');
+    const checkAll = wrapper.find('.h-select__check-all');
     expect(checkAll.exists()).toBeTruthy();
 
     await checkAll.trigger('click');
@@ -1075,7 +1075,7 @@ describe('Select.tsx', () => {
 
     await nextTick();
 
-    const checkAll = wrapper.find('.n-select__check-all');
+    const checkAll = wrapper.find('.h-select__check-all');
     expect(checkAll.exists()).toBeTruthy();
 
     await checkAll.trigger('click');
@@ -1119,7 +1119,7 @@ describe('Select.tsx', () => {
 
     await nextTick();
 
-    const checkAll = wrapper.find('.n-select__check-all');
+    const checkAll = wrapper.find('.h-select__check-all');
     expect(checkAll.exists()).toBeTruthy();
 
     await checkAll.trigger('click');
@@ -1161,7 +1161,7 @@ describe('Select.tsx', () => {
 
     await nextTick();
 
-    const statisticElement = wrapper.find('.n-picker__input--static-text');
+    const statisticElement = wrapper.find('.h-picker__input--static-text');
     expect(statisticElement.exists()).toBeTruthy();
     expect(statisticElement.text()).toEqual('Options (2)');
   });
@@ -1266,13 +1266,13 @@ describe('Select.tsx', () => {
       },
     );
 
-    expect(wrapper.find('.n-picker__input--icon.is-dropdown > svg').exists()).toBeTruthy();
+    expect(wrapper.find('.h-picker__input--icon.is-dropdown > svg').exists()).toBeTruthy();
 
     dropdownIcon.value = false;
 
     await nextTick();
 
-    expect(wrapper.find('.n-picker__input--icon.is-dropdown > svg').exists()).toBeFalsy();
+    expect(wrapper.find('.h-picker__input--icon.is-dropdown > svg').exists()).toBeFalsy();
 
     dropdownIcon.value = IconArrowDown;
 
@@ -1303,11 +1303,11 @@ describe('Select.tsx', () => {
 
     expect(wrapper.findComponent(HSelect).attributes('style')).contain('display: flex;');
     expect(wrapper.findComponent(HSelect).classes('external-select-class')).toBeTruthy();
-    expect(wrapper.find('.n-picker__pop-content').attributes('style')).contain(
+    expect(wrapper.find('.h-picker__pop-content').attributes('style')).contain(
       'transition: all .2s;',
     );
     expect(
-      wrapper.find('.n-picker__pop-content--wrapper').classes('external-panel-class'),
+      wrapper.find('.h-picker__pop-content--wrapper').classes('external-panel-class'),
     ).toBeTruthy();
   });
 
@@ -1388,13 +1388,13 @@ describe('Select.tsx', () => {
 
     await wrapper.findComponent(HSelect).trigger('click');
 
-    expect(wrapper.find('.n-icon__loading_line').exists()).toBeFalsy();
+    expect(wrapper.find('.h-icon__loading_line').exists()).toBeFalsy();
 
     loading.value = true;
 
     await nextTick();
 
-    expect(wrapper.find('.n-icon__loading_line').exists()).toBeTruthy();
+    expect(wrapper.find('.h-icon__loading_line').exists()).toBeTruthy();
   });
 
   test('option-loading-text', async () => {
@@ -1411,7 +1411,7 @@ describe('Select.tsx', () => {
 
     await nextTick();
 
-    expect(instance.popover.find('.n-loading').text()).toBe('LOADIHG TEXT');
+    expect(instance.popover.find('.h-loading').text()).toBe('LOADIHG TEXT');
   });
 
   test('option-max-lines', async () => {
@@ -1431,8 +1431,8 @@ describe('Select.tsx', () => {
     await wrapper.findComponent(HSelect).trigger('click');
 
     wrapper
-      .findAll('.n-select-option')
-      .forEach(opt => expect(opt.attributes('style')).contains('--n-select-max-line--option: 3;'));
+      .findAll('.h-select-option')
+      .forEach(opt => expect(opt.attributes('style')).contains('--h-select-max-line--option: 3;'));
   });
 
   test('input-status', () => {
@@ -1499,7 +1499,7 @@ describe('Select.tsx', () => {
 
     const checkOrderNotChanged = (value: number) => {
       const selectedOptionsDom = instance.wrapper.findAll(
-        `.n-select-option[data-value="${value}"]`,
+        `.h-select-option[data-value="${value}"]`,
       );
       for (const dom of selectedOptionsDom) {
         expect(dom.attributes('style')).contain('order: 1;');
@@ -1507,20 +1507,20 @@ describe('Select.tsx', () => {
     };
 
     const checkOrder = () => {
-      const selectedOptionsDom = instance.wrapper.findAll('.n-select-option.is-active');
+      const selectedOptionsDom = instance.wrapper.findAll('.h-select-option.is-active');
       for (const dom of selectedOptionsDom) {
         expect(dom.attributes('style')).contain('order: 0;');
       }
 
-      const notSelectedOptionsDom = instance.wrapper.findAll('.n-select-option:not(.is-active)');
+      const notSelectedOptionsDom = instance.wrapper.findAll('.h-select-option:not(.is-active)');
       for (const dom of notSelectedOptionsDom) {
         expect(dom.attributes('style')).contain('order: 1;');
       }
     };
 
-    const option1 = instance.wrapper.find('.n-select-option[data-value="1"]');
+    const option1 = instance.wrapper.find('.h-select-option[data-value="1"]');
 
-    const option2 = instance.wrapper.find('.n-select-option[data-value="2"]');
+    const option2 = instance.wrapper.find('.h-select-option[data-value="2"]');
 
     await instance.open();
 
@@ -1566,7 +1566,7 @@ describe('Select.tsx', () => {
 
     const trigger = wrapper.findComponent(HPickerInput);
 
-    const option1 = wrapper.find('.n-select-option');
+    const option1 = wrapper.find('.h-select-option');
 
     await trigger.trigger('click');
 
@@ -1576,11 +1576,11 @@ describe('Select.tsx', () => {
 
     await nextTick();
 
-    const selectedOptionDom = wrapper.find('.n-select-option[data-value="1"]');
+    const selectedOptionDom = wrapper.find('.h-select-option[data-value="1"]');
 
-    const notSelectOptionDom1 = wrapper.find('.n-select-option[data-value="2"]');
+    const notSelectOptionDom1 = wrapper.find('.h-select-option[data-value="2"]');
 
-    const notSelectOptionDom2 = wrapper.find('.n-select-option[data-value="3"]');
+    const notSelectOptionDom2 = wrapper.find('.h-select-option[data-value="3"]');
 
     expect(selectedOptionDom.attributes('style')).contain('order: 0;');
     expect(notSelectOptionDom1.attributes('style')).contain('order: 1;');
@@ -1610,7 +1610,7 @@ describe('Select.tsx', () => {
 
     await wrapper.findComponent(HPickerInput).trigger('mouseenter');
 
-    const clearBtn = wrapper.find('.n-picker__input--icon.is-clear');
+    const clearBtn = wrapper.find('.h-picker__input--icon.is-clear');
 
     await clearBtn.trigger('click');
 
@@ -1647,7 +1647,7 @@ describe('Select.tsx', () => {
 
     await wrapper.findComponent(HPickerInput).trigger('mouseenter');
 
-    const clearBtn = wrapper.find('.n-picker__input--icon.is-clear');
+    const clearBtn = wrapper.find('.h-picker__input--icon.is-clear');
 
     await clearBtn.trigger('click');
 
@@ -1684,7 +1684,7 @@ describe('Select.tsx', () => {
 
     await wrapper.findComponent(HPickerInput).trigger('mouseenter');
 
-    const clearBtn = wrapper.find('.n-picker__input--icon.is-clear');
+    const clearBtn = wrapper.find('.h-picker__input--icon.is-clear');
 
     await clearBtn.trigger('click');
 
@@ -1749,7 +1749,7 @@ describe('Select.tsx', () => {
     expect(
       (
         wrapper.find(
-          '.n-picker-fit-content-input__input:not(.is-main)',
+          '.h-picker-fit-content-input__input:not(.is-main)',
         ) as DOMWrapper<HTMLInputElement>
       ).element.value,
     ).toEqual('1');
@@ -1757,7 +1757,7 @@ describe('Select.tsx', () => {
     await filterAndPick();
 
     expect(
-      (wrapper.find('.n-picker-fit-content-input__input.is-main') as DOMWrapper<HTMLInputElement>)
+      (wrapper.find('.h-picker-fit-content-input__input.is-main') as DOMWrapper<HTMLInputElement>)
         .element.value,
     ).toEqual('1');
 
@@ -1772,7 +1772,7 @@ describe('Select.tsx', () => {
     expect(
       (
         wrapper.find(
-          '.n-picker-fit-content-input__input:not(.is-main)',
+          '.h-picker-fit-content-input__input:not(.is-main)',
         ) as DOMWrapper<HTMLInputElement>
       ).element.value,
     ).toEqual('');
@@ -1782,7 +1782,7 @@ describe('Select.tsx', () => {
     await nextTick();
 
     expect(
-      (wrapper.find('.n-picker-fit-content-input__input.is-main') as DOMWrapper<HTMLInputElement>)
+      (wrapper.find('.h-picker-fit-content-input__input.is-main') as DOMWrapper<HTMLInputElement>)
         .element.value,
     ).toEqual('');
 
@@ -1795,7 +1795,7 @@ describe('Select.tsx', () => {
     expect(
       (
         wrapper.find(
-          '.n-picker-fit-content-input__input:not(.is-main)',
+          '.h-picker-fit-content-input__input:not(.is-main)',
         ) as DOMWrapper<HTMLInputElement>
       ).element.value,
     ).toEqual('');
@@ -1803,7 +1803,7 @@ describe('Select.tsx', () => {
     await filterAndPick();
 
     expect(
-      (wrapper.find('.n-picker-fit-content-input__input.is-main') as DOMWrapper<HTMLInputElement>)
+      (wrapper.find('.h-picker-fit-content-input__input.is-main') as DOMWrapper<HTMLInputElement>)
         .element.value,
     ).toEqual('1');
 

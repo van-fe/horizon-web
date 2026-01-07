@@ -1,15 +1,15 @@
 <template>
-  <n-space direction="vertical">
-    <n-segmented default-active-key="Q1">
-      <n-segmented-item v-for="(v, i) in quarter" :key="v" :disabled="i % 2 === 0" :label="v" />
-    </n-segmented>
-    <n-space>
-      <n-segmented default-active-key="Sun">
-        <n-segmented-item v-for="v in week" :key="v" :disabled="disabled" :label="v" />
-      </n-segmented>
-      <n-checkbox v-model="disabled">全部禁用</n-checkbox>
-    </n-space>
-  </n-space>
+  <h-space direction="vertical">
+    <h-segmented default-active-key="Q1">
+      <h-segmented-item v-for="(v, i) in quarter" :key="v" :disabled="i % 2 === 0" :label="v" />
+    </h-segmented>
+    <h-space>
+      <h-segmented default-active-key="Sun">
+        <h-segmented-item v-for="v in week" :key="v" :disabled="disabled" :label="v" />
+      </h-segmented>
+      <h-checkbox v-model="disabled">全部禁用</h-checkbox>
+    </h-space>
+  </h-space>
 </template>
 
 <script setup lang="ts">

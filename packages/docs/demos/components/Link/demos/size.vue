@@ -1,19 +1,19 @@
 <template>
   <div>
-    <n-row>
-      <n-col>
-        <n-link size="small">Small</n-link>
-        <n-link size="medium">Medium</n-link>
-        <n-link size="large">Large</n-link>
-      </n-col>
-    </n-row>
-    <n-row>
-      <n-col>
-        <n-link size="small" :loading="true">Small</n-link>
-        <n-link size="medium" :loading="true">Medium</n-link>
-        <n-link size="large" :loading="true">Large</n-link>
-      </n-col>
-    </n-row>
+    <h-row>
+      <h-col>
+        <h-link size="small">Small</h-link>
+        <h-link size="medium">Medium</h-link>
+        <h-link size="large">Large</h-link>
+      </h-col>
+    </h-row>
+    <h-row>
+      <h-col>
+        <h-link size="small" :loading="true">Small</h-link>
+        <h-link size="medium" :loading="true">Medium</h-link>
+        <h-link size="large" :loading="true">Large</h-link>
+      </h-col>
+    </h-row>
   </div>
 </template>
 

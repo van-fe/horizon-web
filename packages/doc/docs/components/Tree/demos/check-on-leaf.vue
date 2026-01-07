@@ -1,30 +1,30 @@
 <template>
-  <n-form label-position="left" label-vertical-align="middle">
-    <n-form-item label="显示单选框">
-      <n-switch v-model="showRadio" :status="true" />
-    </n-form-item>
-    <n-form-item label="点击叶子节点勾选">
-      <n-switch v-model="expandOnClickLeaf" :status="true" />
-    </n-form-item>
-  </n-form>
-  <n-row>
-    <n-col :span="12">
+  <h-form label-position="left" label-vertical-align="middle">
+    <h-form-item label="显示单选框">
+      <h-switch v-model="showRadio" :status="true" />
+    </h-form-item>
+    <h-form-item label="点击叶子节点勾选">
+      <h-switch v-model="expandOnClickLeaf" :status="true" />
+    </h-form-item>
+  </h-form>
+  <h-row>
+    <h-col :span="12">
       <div class="demo-title">单选</div>
-      <n-tree
+      <h-tree
         :tree-data="baseTreeData"
-        :check-on-click-leaf="expandOnClickLeaf"
+        :check-oh-click-leaf="expandOnClickLeaf"
         :show-radio="showRadio"
       />
-    </n-col>
-    <n-col :span="12">
+    </h-col>
+    <h-col :span="12">
       <div class="demo-title">多选</div>
-      <n-tree
+      <h-tree
         :tree-data="baseTreeData"
-        :check-on-click-leaf="expandOnClickLeaf"
+        :check-oh-click-leaf="expandOnClickLeaf"
         :multiple="true"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

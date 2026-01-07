@@ -24,7 +24,7 @@
 ### 节点自定义前缀图标
 
 如果不同节点有不同的前缀图标，则可以在 `tree-data` 的数据中每个节点设置 `prefix-icon` 即可，接收 `VNode` `Component` `string(icon name)` 类型
-:::demo ./demos/prefix-icon-in-node.vue :::
+:::demo ./demos/prefix-icoh-ih-node.vue :::
 
 ### 父子关联
 
@@ -36,13 +36,13 @@
 
 ### 展开、选择控制
 
-通过 `expand-on-click-node` 配置，可以控制是否允许在点击节点整行时，展开子节点（默认为 `true`）
+通过 `expand-oh-click-node` 配置，可以控制是否允许在点击节点整行时，展开子节点（默认为 `true`）
 
-`check-on-click-node` 则控制是否允许在点击节点整行时，选中子节点（默认为 `false`）
+`check-oh-click-node` 则控制是否允许在点击节点整行时，选中子节点（默认为 `false`）
 
-**`check-on-click-node` 仅对多选有效**
+**`check-oh-click-node` 仅对多选有效**
 
-**但如果单选配置了 `check-strictly = true`，还请注意配置 `expand-on-click-node` `check-on-click-node` 优化点选操作**
+**但如果单选配置了 `check-strictly = true`，还请注意配置 `expand-oh-click-node` `check-oh-click-node` 优化点选操作**
 
 :::demo ./demos/expand-and-check.vue :::
 
@@ -50,11 +50,11 @@
 
 自 `2.3.5` 开始，默认在点击叶子节点时，自动勾选节点
 
-如果仍希望控制叶子节点只有在点击 `checkbox` 才进行选中，则可以设置 `check-on-click-leaf = false`
+如果仍希望控制叶子节点只有在点击 `checkbox` 才进行选中，则可以设置 `check-oh-click-leaf = false`
 
-对于单选，则只有 `show-radio = true` 时，`check-on-click-leaf` 才有效，否则无论如何都会点击选中
+对于单选，则只有 `show-radio = true` 时，`check-oh-click-leaf` 才有效，否则无论如何都会点击选中
 
-:::demo ./demos/check-on-leaf.vue :::
+:::demo ./demos/check-oh-leaf.vue :::
 
 ### 控制展开
 
@@ -84,7 +84,7 @@
 
 在 `tree-data` 数据中，某项设置`disabled = true`，可以对其项禁用
 
-但如果希望整棵树禁用，则直接给予 `disabled = true` 给 `n-tree` 即可
+但如果希望整棵树禁用，则直接给予 `disabled = true` 给 `h-tree` 即可
 
 但无论哪种禁用方式，都不会影响展开功能
 
@@ -175,7 +175,7 @@ declare module '@aurora/horizon-web' {
 
 设置 `draggable = true`，即可开启拖拽排序
 
-默认只能在鼠标按在拖拽图标上才可以拖拽，可以配置 `drag-on-handler = false`，整行都可以拖拽
+默认只能在鼠标按在拖拽图标上才可以拖拽，可以配置 `drag-oh-handler = false`，整行都可以拖拽
 
 如果希望拖拽时不将当前节点拖拽到叶子节点下，并生成子节点，则需要设置 `dragToLeaf = false`
 

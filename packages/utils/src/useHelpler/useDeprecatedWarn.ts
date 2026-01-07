@@ -2,7 +2,7 @@ import { type Ref, unref, watch } from 'vue';
 
 function warnPropertyLog(propertyName: string, replacePropertyName: string) {
   console.warn(
-    `[HORIZONWEB] '${propertyName}' is deprecated, please use '${replacePropertyName}' instead.`,
+    `[Horizon Web] '${propertyName}' is deprecated, please use '${replacePropertyName}' instead.`,
   );
 }
 

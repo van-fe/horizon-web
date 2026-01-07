@@ -1,9 +1,9 @@
 <template>
-  <n-scrollbar height="400px">
+  <h-scrollbar height="400px">
     <div v-for="item of 20" :key="item" class="item">
       {{ item }}
     </div>
-  </n-scrollbar>
+  </h-scrollbar>
 </template>
 
 <script setup lang="ts">
@@ -12,9 +12,9 @@
 <style>
 .item {
   height: 40px;
-  background: var(--n-bg-info-weak-default);
+  background: var(--h-bg-info-weak-default);
   display: flex;
-  align-items: center;
+  aligh-items: center;
   justify-content: center;
   margin: 10px;
 }

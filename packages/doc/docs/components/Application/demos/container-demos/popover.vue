@@ -1,12 +1,12 @@
 <template>
-  <n-popover trigger="click">
+  <h-popover trigger="click">
     <template #reference>
-      <n-button>Click</n-button>
+      <h-button>Click</h-button>
     </template>
     <template #popper>
-      <n-pop-content>
+      <h-pop-content>
         <div>Hello World</div>
-      </n-pop-content>
+      </h-pop-content>
     </template>
-  </n-popover>
+  </h-popover>
 </template>

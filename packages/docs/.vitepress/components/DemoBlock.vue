@@ -1,7 +1,11 @@
 <script setup lang="ts">
-import { ref, useSlots, watch } from 'vue';
-import { $message } from '@aurora/horizon-web';
+import { ref, useSlots, watch, createApp, onMounted, defineComponent } from 'vue';
+import compileVueString from './compileVueString';
+import { $message, default as HorizonWeb } from '@aurora/horizon-web';
 import CodeEditor from './CodeEditor.vue';
+import { customAlphabet } from 'nanoid';
+
+const componentId = customAlphabet('abcdefghijklmnopqrstuvwxyz', 10)();
 
 const props = defineProps({
   source: {
@@ -9,6 +13,10 @@ const props = defineProps({
     required: true,
   }
 });
+
+const previewRef = ref<HTMLDivElement>(null);
+
+let appInstance: App | null = null;
 
 const code = ref(props.source);
 
@@ -19,10 +27,6 @@ watch(() => props.source, val => {
 const visible = ref(false);
 
 const slots = useSlots();
-
-function playground() {
-
-}
 
 function copyCode() {
   navigator.clipboard.writeText(unescape(props.source));
@@ -36,19 +40,20 @@ function toggleCode() {
 
 <template>
   <div class="demo-block">
-    <div class="preview"></div>
-    <div class="tools">
-      <n-space :size="8">
-        <n-button v-tooltip="'演练场'" size="mini" icon="applets" :icon-size="14" :text="true" type="normal" @click="playground" />
-        <n-button v-tooltip="'复制代码'" size="mini" icon="copy" :icon-size="14" :text="true" type="normal" @click="copyCode" />
-        <n-button v-tooltip="'查看/编辑代码'" size="mini" icon="record" :icon-size="14" :text="true" type="normal" @click="toggleCode" />
-      </n-space>
+    <div :id="componentId" class="preview">
+      <demo-render :content="code" />
     </div>
-    <n-transition name="collapse">
+    <div class="tools">
+      <h-space :size="8">
+        <h-button v-tooltip="'复制代码'" size="mini" icon="copy" :icon-size="14" :text="true" type="normal" @click="copyCode" />
+        <h-button v-tooltip="'查看/编辑代码'" size="mini" icon="record" :icon-size="14" :text="true" type="normal" @click="toggleCode" />
+      </h-space>
+    </div>
+    <h-transition name="collapse">
       <div v-if="visible">
         <code-editor v-model:code="code" />
       </div>
-    </n-transition>
+    </h-transition>
   </div>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <n-switch v-model="enabled" label="允许移动" label-position="right" />
+  <h-switch v-model="enabled" label="允许移动" label-position="right" />
   <div class="drag-container">
     <div v-draggable="{ enabled }"></div>
   </div>

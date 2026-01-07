@@ -38,7 +38,7 @@
 :::demo ./demos/lazyload.vue :::
 
 ### 图片查看器
-传入 `show-viewer` 即可启用图片查看器 `<n-viewer />`。
+传入 `show-viewer` 即可启用图片查看器 `<h-viewer />`。
 :::demo ./demos/viewer.vue :::
 
 ### 操作项

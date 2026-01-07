@@ -1,14 +1,14 @@
 <template>
-  <n-row :gutter="12">
-    <n-col :span="8">
+  <h-row :gutter="12">
+    <h-col :span="8">
       <div class="demo-title">默认</div>
-      <n-input-number v-model="value" enable-lang-press />
-    </n-col>
-    <n-col :span="8">
+      <h-input-number v-model="value" enable-lang-press />
+    </h-col>
+    <h-col :span="8">
       <div class="demo-title">两侧（设置了步长）</div>
-      <n-input-number v-model="value" enable-lang-press controls-position="between" :step="5" />
-    </n-col>
-  </n-row>
+      <h-input-number v-model="value" enable-lang-press controls-position="between" :step="5" />
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

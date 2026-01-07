@@ -13,13 +13,13 @@ describe('Cascader.tsx exposes', () => {
 
     const { panelList } = await openCascader(wrapper);
 
-    expect(panelList.at(-1)?.find('.n-cascader-item.is-focus').text()).toEqual('Feedback');
+    expect(panelList.at(-1)?.find('.h-cascader-item.is-focus').text()).toEqual('Feedback');
 
     cascaderDomRef.value?.focusOption(['component', 'form', 'input']);
 
     await nextTick();
 
-    expect(panelList.at(-1)?.find('.n-cascader-item.is-focus').text()).toEqual('Input');
+    expect(panelList.at(-1)?.find('.h-cascader-item.is-focus').text()).toEqual('Input');
   });
 
   test('inputChange', async () => {
@@ -33,13 +33,13 @@ describe('Cascader.tsx exposes', () => {
 
     await nextTick();
 
-    expect(wrapper.find('.n-cascader-item__content').text()).toBe('Component / Form / Input');
+    expect(wrapper.find('.h-cascader-item__content').text()).toBe('Component / Form / Input');
 
     cascaderDomRef.value?.inputChange('InputNumber');
 
     await nextTick();
 
-    expect(wrapper.find('.n-cascader-item__content').text()).toBe('Component / Form / InputNumber');
+    expect(wrapper.find('.h-cascader-item__content').text()).toBe('Component / Form / InputNumber');
 
     cascaderDomRef.value?.inputChange(null);
 

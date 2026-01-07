@@ -1,9 +1,9 @@
 <template>
-  <n-button :plain="true" class="btn-common" @click="start">开始</n-button>
-  <n-button :plain="true" class="btn-common" @click="finish">结束</n-button>
-  <n-button :plain="true" class="btn-common" type="danger" @click="error">错误</n-button>
-  <n-button :plain="true" class="btn-common" @click="update">更新指定进度</n-button>
-  <n-button :plain="true" class="btn-common" type="danger" @click="destroy">销毁</n-button>
+  <h-button :plain="true" class="bth-common" @click="start">开始</h-button>
+  <h-button :plain="true" class="bth-common" @click="finish">结束</h-button>
+  <h-button :plain="true" class="bth-common" type="danger" @click="error">错误</h-button>
+  <h-button :plain="true" class="bth-common" @click="update">更新指定进度</h-button>
+  <h-button :plain="true" class="bth-common" type="danger" @click="destroy">销毁</h-button>
 </template>
 
 <script lang="ts" setup>
@@ -31,7 +31,7 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.btn-common {
-  margin-right: 16px;
+.bth-common {
+  margih-right: 16px;
 }
 </style>

@@ -1,12 +1,12 @@
 <template>
-  <n-steps v-model="current">
-    <n-step v-for="item in steps" :key="item.title" :title="item.title" />
-  </n-steps>
+  <h-steps v-model="current">
+    <h-step v-for="item in steps" :key="item.title" :title="item.title" />
+  </h-steps>
   <div class="steps-action">
-    <n-button :disabled="current === 0" @click="prev">上一步</n-button>
-    <n-button :disabled="current === steps.length" type="primary" @click="next">
+    <h-button :disabled="current === 0" @click="prev">上一步</h-button>
+    <h-button :disabled="current === steps.length" type="primary" @click="next">
       {{ current === steps.length - 1 ? '全部完成' : '下一步' }}
-    </n-button>
+    </h-button>
   </div>
 </template>
 
@@ -51,7 +51,7 @@ const prev = () => {
   margin-top: 24px;
 }
 
-.steps-action .n-button + .n-button {
+.steps-action .h-button + .h-button {
   margin-left: 8px;
 }
 </style>

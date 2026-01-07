@@ -1,45 +1,45 @@
 <template>
-  <n-row>
-    <n-col :span="24">
-      <n-button style="width: 80px" @click="handle">{{ visible ? 'Hide' : 'Show' }}</n-button>
-      <n-dropdown
+  <h-row>
+    <h-col :span="24">
+      <h-button style="width: 80px" @click="handle">{{ visible ? 'Hide' : 'Show' }}</h-button>
+      <h-dropdown
         ref="dropdown"
         trigger="manual"
         align="center"
         :exclusive="false"
         popper-width="108"
       >
-        <n-button :text="true">Dropdown Menu</n-button>
+        <h-button :text="true">Dropdown Menu</h-button>
         <template #dropdown>
-          <n-dropdown-menu>
-            <n-dropdown-item>北京</n-dropdown-item>
-            <n-dropdown-item>上海</n-dropdown-item>
-            <n-dropdown-item>深圳</n-dropdown-item>
-            <n-dropdown-item>杭州</n-dropdown-item>
-            <n-dropdown-item>重庆</n-dropdown-item>
-          </n-dropdown-menu>
+          <h-dropdowh-menu>
+            <h-dropdowh-item>北京</h-dropdowh-item>
+            <h-dropdowh-item>上海</h-dropdowh-item>
+            <h-dropdowh-item>深圳</h-dropdowh-item>
+            <h-dropdowh-item>杭州</h-dropdowh-item>
+            <h-dropdowh-item>重庆</h-dropdowh-item>
+          </h-dropdowh-menu>
         </template>
-      </n-dropdown>
-      <n-dropdown
+      </h-dropdown>
+      <h-dropdown
         trigger="manual"
         align="center"
         :visible="visible"
         :exclusive="false"
         popper-width="108"
       >
-        <n-button :text="true">Dropdown Menu (visible prop control)</n-button>
+        <h-button :text="true">Dropdown Menu (visible prop control)</h-button>
         <template #dropdown>
-          <n-dropdown-menu>
-            <n-dropdown-item>北京</n-dropdown-item>
-            <n-dropdown-item>上海</n-dropdown-item>
-            <n-dropdown-item>深圳</n-dropdown-item>
-            <n-dropdown-item>杭州</n-dropdown-item>
-            <n-dropdown-item>重庆</n-dropdown-item>
-          </n-dropdown-menu>
+          <h-dropdowh-menu>
+            <h-dropdowh-item>北京</h-dropdowh-item>
+            <h-dropdowh-item>上海</h-dropdowh-item>
+            <h-dropdowh-item>深圳</h-dropdowh-item>
+            <h-dropdowh-item>杭州</h-dropdowh-item>
+            <h-dropdowh-item>重庆</h-dropdowh-item>
+          </h-dropdowh-menu>
         </template>
-      </n-dropdown>
-    </n-col>
-  </n-row>
+      </h-dropdown>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">
@@ -56,11 +56,11 @@ function handle() {
 </script>
 
 <style scoped>
-.n-dropdown {
+.h-dropdown {
   display: inline-flex;
 }
 
-.n-button + .n-dropdown {
-  margin-left: 12px;
+.h-button + .h-dropdown {
+  margih-left: 12px;
 }
 </style>

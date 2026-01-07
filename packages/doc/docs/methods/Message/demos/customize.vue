@@ -1,5 +1,5 @@
 <template>
-  <n-button type="normal" @click="openHTML">自定义消息体</n-button>
+  <h-button type="normal" @click="openHTML">自定义消息体</h-button>
 </template>
 
 <script lang="ts" setup>

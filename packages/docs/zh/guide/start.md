@@ -24,18 +24,14 @@ $ bun add @aurora/horizon-web
 ```
 :::
 
-::: tip :bulb: 提示
-遇到安装失败？可以看这里 [FAQ 源设置问题](./FAQ#registry)
-:::
-
 ---
 ### 浏览器直接引入
 
-通过 `script` `link` 标签，可以直接使用 `HORIZONWEB` 组件。
+通过 `script` `link` 标签，可以直接使用 `Horizon Web` 组件。
 
 - **样式文件**
 ```html
-<link rel="stylesheet" href="https://static.nio.com/fx-static/horizon-web/latest/dist/horizon-web-style@latest.css" />
+<link rel="stylesheet" href="//unpack.com/@aurora/horizon-web/es/styles/index.css" />
 ```
 
 - **脚本文件**
@@ -44,18 +40,18 @@ $ bun add @aurora/horizon-web
 <!-- Import Vue 3 -->
 <script src="//cdn.jsdelivr.net/npm/vue@3"></script>
 <!-- Import component library -->
-<script src="https://static.nio.com/fx-static/horizon-web/latest/dist/horizon-web-browser@latest.js"></script>
+<script src="//unpack.com/@aurora/horizon-web/dist/horizon-web-browser.iife.js"></script>
 ```
 ```html [UMD]
 <!-- Import Vue 3 -->
 <script src="//cdn.jsdelivr.net/npm/vue@3"></script>
 <!-- Import component library -->
-<script src="https://static.nio.com/fx-static/horizon-web/latest/dist/horizon-web@latest.umd.js"></script>
+<script src="//unpack.com/@aurora/horizon-web/dist/horizon-web-browser.umd.js"></script>
 ```
 :::
 
 ::: tip :bulb: 提示
-其中 `latest` 可以替换为版本号 (`2.9.0、2.8.2`) 或标签 (`beta、v2-8`)
+可以在最后增加 `@1.1.0` 使用固定版本号
 :::
 
 ## 使用
@@ -66,7 +62,8 @@ $ bun add @aurora/horizon-web
 import { createApp } from 'vue';
 import App from './App.vue';
 import HorizonWeb from '@aurora/horizon-web';
-import '@aurora/horizon-web/es/index.css';
+import '@aurora/horizon-web/es/styles/index.css';
+// import '@aurora/horizon-web/es/styles/index.scss'; // for scss
 
 createApp(App)
   .use(HorizonWeb)
@@ -81,22 +78,22 @@ createApp(App)
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <link rel="stylesheet" href="https://static.nio.com/fx-static/horizon-web/latest/dist/horizon-web-style@latest.css" />
+    <link rel="stylesheet" href="//unpack.com/@aurora/horizon-web/es/styles/index.css" />
     <!-- Import Vue 3 -->
     <script src="//cdn.jsdelivr.net/npm/vue@3"></script>
     <!-- Import component library -->
-    <script src="https://static.nio.com/fx-static/horizon-web/latest/dist/horizon-web-browser@latest.js"></script>
-    <title>HORIZONWEB demo</title>
+    <script src="//unpack.com/@aurora/horizon-web/dist/horizon-web-browser.iife.js"></script>
+    <title>Horizon Web demo</title>
   </head>
   <body>
       <div id="app">
-        <n-button>{{ text }}</n-button>
+        <h-button>{{ text }}</h-button>
       </div>
       <script>
         const App = {
           data() {
             return {
-              text: 'Hello HORIZONWEB'
+              text: 'Hello Horizon Web'
             }
           }
         };
@@ -112,4 +109,4 @@ createApp(App)
 ## 下一步
 - 如果需要按需引入，请参照 [按需引入](./on-demand-import)
 - 如果需要自定义命名空间防止冲突，请参照 [命名空间](./namespace)
-- 需要配置 `HORIZONWEB`，请参照 [HorizonWeb Usage](./config-horizon-web-usage.md)
+- 需要配置 `Horizon Web`，请参照 [HorizonWeb Usage](./config-horizon-web-usage.md)

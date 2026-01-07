@@ -1,33 +1,33 @@
 <template>
-  <n-row :gutter="10">
-    <n-col :span="24">
+  <h-row :gutter="10">
+    <h-col :span="24">
       <div class="demo-title">
         设置了 <code>index</code> 值
       </div>
-      <n-steps v-model="current" :initial="initial">
-        <n-step title="Start" :index="initial" />
-        <n-step v-for="(item, index) in steps" :key="item.title" :title="item.title" :index="index + initial + 1" />
-        <n-step title="End" :index="steps.length + initial + 1" />
-      </n-steps>
-    </n-col>
-  </n-row>
-  <n-row :gutter="10">
-    <n-col :span="24">
+      <h-steps v-model="current" :initial="initial">
+        <h-step title="Start" :index="initial" />
+        <h-step v-for="(item, index) in steps" :key="item.title" :title="item.title" :index="index + initial + 1" />
+        <h-step title="End" :index="steps.length + initial + 1" />
+      </h-steps>
+    </h-col>
+  </h-row>
+  <h-row :gutter="10">
+    <h-col :span="24">
       <div class="demo-title">
         未设置 <code>index</code> 值
       </div>
-      <n-steps v-model="current" :initial="initial">
-        <n-step title="Start" />
-        <n-step v-for="item in steps" :key="item.title" :title="item.title" />
-        <n-step title="End" />
-      </n-steps>
-    </n-col>
-  </n-row>
+      <h-steps v-model="current" :initial="initial">
+        <h-step title="Start" />
+        <h-step v-for="item in steps" :key="item.title" :title="item.title" />
+        <h-step title="End" />
+      </h-steps>
+    </h-col>
+  </h-row>
   <div class="steps-action">
-    <n-button :disabled="current === initial" @click="prev">上一步</n-button>
-    <n-button :disabled="current === steps.length + initial + 2" type="primary" @click="next">
+    <h-button :disabled="current === initial" @click="prev">上一步</h-button>
+    <h-button :disabled="current === steps.length + initial + 2" type="primary" @click="next">
       {{ current === steps.length + initial + 2 ? '全部完成' : '下一步' }}
-    </n-button>
+    </h-button>
   </div>
 </template>
 
@@ -71,10 +71,10 @@ onMounted(() => {
 
 <style scoped>
 .steps-action {
-  margin-top: 24px;
+  margih-top: 24px;
 }
 
-.steps-action .n-button + .n-button {
-  margin-left: 8px;
+.steps-action .h-button + .h-button {
+  margih-left: 8px;
 }
 </style>

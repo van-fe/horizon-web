@@ -2,7 +2,7 @@
   <div class="recycle-scroller-demo">
     <!-- 测试条件 -->
     <section>
-      <n-alert
+      <h-alert
         type="warning"
         title="注意: 必需为该组件提供item的高度信息!"
         description="可以通过设置itemSize, itemSecondarySize, minItemSize为item设置高度. 或者在数据中提供高度字段, 但需要sizeField配合"
@@ -11,65 +11,65 @@
         round
         :closable="false"
       />
-      <n-row :gutter="14" style="margin-top: 20px">
-        <n-col :span="12">
-          <n-row>
-            <n-col :span="5" class="align-center">生成数据</n-col>
-            <n-col :span="11">
-              <n-input-number v-model="inputCount" @input="inputCountInput"></n-input-number>
-            </n-col>
-            <n-col :span="8">
-              <n-button circle type="primary" size="medium" @click="addItem">+1</n-button>
-            </n-col>
-          </n-row>
-        </n-col>
-        <n-col :span="12">
-          <n-row>
-            <n-col :span="8" class="align-center">从数据中获得高度</n-col>
-            <n-col :span="16"><n-checkbox v-model="enableLetters"></n-checkbox></n-col>
-          </n-row>
-        </n-col>
-        <!-- <n-col :span="8">
-          <n-row>
-            <n-col :span="7" class="align-center">
+      <h-row :gutter="14" style="margih-top: 20px">
+        <h-col :span="12">
+          <h-row>
+            <h-col :span="5" class="aligh-center">生成数据</h-col>
+            <h-col :span="11">
+              <h-input-number v-model="inputCount" @input="inputCountInput"></h-input-number>
+            </h-col>
+            <h-col :span="8">
+              <h-button circle type="primary" size="medium" @click="addItem">+1</h-button>
+            </h-col>
+          </h-row>
+        </h-col>
+        <h-col :span="12">
+          <h-row>
+            <h-col :span="8" class="aligh-center">从数据中获得高度</h-col>
+            <h-col :span="16"><h-checkbox v-model="enableLetters"></h-checkbox></h-col>
+          </h-row>
+        </h-col>
+        <!-- <h-col :span="8">
+          <h-row>
+            <h-col :span="7" class="aligh-center">
               页面模式
               <div>(pageMode属性)</div>
-            </n-col>
-            <n-col :span="15" style="color: #999">
+            </h-col>
+            <h-col :span="15" style="color: #999">
               开启页面模式会取消组件自己的滚动属性, 找到组件的父滚动容器作为'根'计算虚拟滚动
-            </n-col>
-          </n-row>
-        </n-col> -->
-      </n-row>
-      <n-row :gutter="14">
-        <n-col :span="12">
-          <n-row>
-            <n-col :span="5" class="align-center">缓存值设置</n-col>
-            <n-col :span="11">
-              <n-input-number v-model="buffer" :max="1000" :min="1"></n-input-number>
-            </n-col>
-            <n-col :span="8"></n-col>
-          </n-row>
-        </n-col>
-        <n-col :span="12">
-          <n-row>
-            <n-col :span="5" class="align-center">滚动至</n-col>
-            <n-col :span="11"><n-input-number v-model="scrollTo"></n-input-number></n-col>
-            <n-col :span="8">
-              <n-button circle type="primary" size="medium" @click="doScrollTo">执行</n-button>
-            </n-col>
-          </n-row>
-        </n-col>
-      </n-row>
-      <n-row style="padding-bottom: 24px; border-bottom: 1px solid #ccc">
-        <n-col :span="3" class="align-center">滚动状态</n-col>
-        <n-col :span="21" class="align-center">
+            </h-col>
+          </h-row>
+        </h-col> -->
+      </h-row>
+      <h-row :gutter="14">
+        <h-col :span="12">
+          <h-row>
+            <h-col :span="5" class="aligh-center">缓存值设置</h-col>
+            <h-col :span="11">
+              <h-input-number v-model="buffer" :max="1000" :min="1"></h-input-number>
+            </h-col>
+            <h-col :span="8"></h-col>
+          </h-row>
+        </h-col>
+        <h-col :span="12">
+          <h-row>
+            <h-col :span="5" class="aligh-center">滚动至</h-col>
+            <h-col :span="11"><h-input-number v-model="scrollTo"></h-input-number></h-col>
+            <h-col :span="8">
+              <h-button circle type="primary" size="medium" @click="doScrollTo">执行</h-button>
+            </h-col>
+          </h-row>
+        </h-col>
+      </h-row>
+      <h-row style="padding-bottom: 24px; border-bottom: 1px solid #ccc">
+        <h-col :span="3" class="aligh-center">滚动状态</h-col>
+        <h-col :span="21" class="aligh-center">
           ({{ updateParts.viewStartIdx }} - [{{ updateParts.visibleStartIdx }} -
           {{ updateParts.visibleEndIdx }}] - {{ updateParts.viewEndIdx }})
           <br />
           (元素索引开始于 - [可见元素开始于 - 可见元素结束于] - 元素索引结束于)
-        </n-col>
-      </n-row>
+        </h-col>
+      </h-row>
     </section>
 
     <!-- 组件 -->
@@ -89,7 +89,7 @@
     >
       <!-- before 插槽 -->
       <template #before>
-        <n-alert title="我是before插槽" type="success" round :closeable="false"></n-alert>
+        <h-alert title="我是before插槽" type="success" round :closeable="false"></h-alert>
       </template>
 
       <template #default="props">
@@ -199,7 +199,7 @@ export default defineComponent({
       return {
         name: faker.name.fullName(),
         // avatar: faker.internet.avatar(),
-        avatar: 'https://www.nio.cn/cdn-static/mynio/nextjs/images/home/nioApp/nio-app-logo.png',
+        avatar: 'https://www.nio.cn/cdh-static/mynio/nextjs/images/home/nioApp/nio-app-logo.png',
       };
     }
 
@@ -318,13 +318,13 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
 
-  .n-alert {
-    :deep(.n-alert__mul-close) {
+  .h-alert {
+    :deep(.h-alert__mul-close) {
       display: none;
     }
   }
 }
-.align-center {
+.aligh-center {
   line-height: 2.3;
   white-space: nowrap;
 }
@@ -337,19 +337,19 @@ export default defineComponent({
   color: grey;
   font-weight: bold;
 }
-.n-recycle-scroller__item-view {
+.h-recycle-scroller__item-view {
   cursor: pointer;
 }
-:deep(.n-recycle-scroller__item-view) {
+:deep(.h-recycle-scroller__item-view) {
   cursor: pointer;
   &.is-hover {
     background-color: #4fc08d;
   }
 }
 
-.n-recycle-scroller__item-view .tr {
+.h-recycle-scroller__item-view .tr {
   display: flex;
-  align-items: center;
+  aligh-items: center;
 }
 
 .letter .td {
@@ -377,7 +377,7 @@ export default defineComponent({
 
 .person .info {
   display: flex;
-  align-items: center;
+  aligh-items: center;
   height: 48px;
 }
 
@@ -386,7 +386,7 @@ export default defineComponent({
   height: 50px;
   margin: 2px 12px 2px 0;
   display: flex;
-  align-items: center;
+  aligh-items: center;
   justify-content: center;
 }
 .avatar img {

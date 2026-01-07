@@ -2,29 +2,29 @@
   <div class="demo-wrapper">
     <div class="box">
       <span>单月模式</span>
-      <n-date-picker v-model="time1" type="date" :show-footer="true"></n-date-picker>
+      <h-date-picker v-model="time1" type="date" :show-footer="true"></h-date-picker>
     </div>
     <div class="box">
       <span>单月+时间 默认footer</span>
-      <n-date-picker v-model="time2" type="datetime"></n-date-picker>
+      <h-date-picker v-model="time2" type="datetime"></h-date-picker>
     </div>
     <div class="box">
       <span>自定义footer</span>
-      <n-date-picker ref="datePickerRef" v-model="time3" type="dateseconds" @pick="onPick">
+      <h-date-picker ref="datePickerRef" v-model="time3" type="dateseconds" @pick="onPick">
         <template #footer="{ disabled }">
           <div>
-            <n-button :text="true" size="small" plain @click="handleTime">
+            <h-button :text="true" size="small" plain @click="handleTime">
               Five minutes later
-            </n-button>
+            </h-button>
           </div>
           <div>
-            <n-button :plain="true" size="small" @click="onCancel">Cancel</n-button>
-            <n-button type="primary" size="small" :disabled="disabled" @click="onConfirm">
+            <h-button :plain="true" size="small" @click="onCancel">Cancel</h-button>
+            <h-button type="primary" size="small" :disabled="disabled" @click="onConfirm">
               Confirm
-            </n-button>
+            </h-button>
           </div>
         </template>
-      </n-date-picker>
+      </h-date-picker>
     </div>
   </div>
 </template>

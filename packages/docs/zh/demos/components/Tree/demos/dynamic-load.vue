@@ -1,17 +1,17 @@
 <template>
-  <n-row>
-    <n-col :span="24">
+  <h-row>
+    <h-col :span="24">
       {{ dynamicTreeData }}
-    </n-col>
-    <n-col :span="12">
+    </h-col>
+    <h-col :span="12">
       <div class="demo-title">单选</div>
-      <n-tree v-model:tree-data="dynamicTreeData" :dynamic-load-data="dynLoad" />
-    </n-col>
-    <n-col :span="12">
+      <h-tree v-model:tree-data="dynamicTreeData" :dynamic-load-data="dynLoad" />
+    </h-col>
+    <h-col :span="12">
       <div class="demo-title">多选</div>
-      <n-tree v-model:tree-data="dynamicTreeData" :dynamic-load-data="dynLoad" :multiple="true" />
-    </n-col>
-  </n-row>
+      <h-tree v-model:tree-data="dynamicTreeData" :dynamic-load-data="dynLoad" :multiple="true" />
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

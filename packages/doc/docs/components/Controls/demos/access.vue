@@ -28,26 +28,26 @@ function onCommand(type: 'edit' | 'del') {
 </script>
 
 <template>
-  <n-form label-position="left" label-vertical-align="middle" label-width="120px">
-    <n-form-item label="edit access">
-      <n-switch v-model="editAccess" />
-    </n-form-item>
-    <n-form-item label="delete access">
-      <n-switch v-model="deleteAccess" />
-    </n-form-item>
-  </n-form>
+  <h-form label-position="left" label-vertical-align="middle" label-width="120px">
+    <h-form-item label="edit access">
+      <h-switch v-model="editAccess" />
+    </h-form-item>
+    <h-form-item label="delete access">
+      <h-switch v-model="deleteAccess" />
+    </h-form-item>
+  </h-form>
 
-  <n-hover v-slot="{ hover }">
+  <h-hover v-slot="{ hover }">
     <div class="square">
       Mouse move here
-      <n-mask :absolute="true" :value="hover" :content-full-size="true">
-        <n-controls theme="light" :access-list="accessList" @command="onCommand">
-          <n-control :icon="IconEdit" text="编辑" label="edit" />
-          <n-control :icon="IconRubbish" text="删除" label="del" />
-        </n-controls>
-      </n-mask>
+      <h-mask :absolute="true" :value="hover" :content-full-size="true">
+        <h-controls theme="light" :access-list="accessList" @command="onCommand">
+          <h-control :icon="IconEdit" text="编辑" label="edit" />
+          <h-control :icon="IconRubbish" text="删除" label="del" />
+        </h-controls>
+      </h-mask>
     </div>
-  </n-hover>
+  </h-hover>
 </template>
 
 <style scoped>
@@ -55,11 +55,11 @@ function onCommand(type: 'edit' | 'del') {
   position: relative;
   width: 150px;
   height: 150px;
-  border: 1px solid var(--n-border-default);
-  border-radius: var(--n-radius);
+  border: 1px solid var(--h-border-default);
+  border-radius: var(--h-radius);
   display: flex;
-  align-items: center;
+  aligh-items: center;
   justify-content: center;
-  color: var(--n-text-secondary);
+  color: var(--h-text-secondary);
 }
 </style>

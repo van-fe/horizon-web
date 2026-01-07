@@ -13,7 +13,7 @@
       :key="item"
       class="mb-2"
     >
-      <n-upload-preview-file-item :file="item" />
+      <h-upload-preview-file-item :file="item" />
     </div>
     <div>图片形式</div>
     <div class="mb-4" style="display: flex; flex-wrap: wrap">
@@ -29,13 +29,13 @@
         class="mb-2"
         style="margin-right: 10px"
       >
-        <n-upload-preview-img-item :file="item" />
+        <h-upload-preview-img-item :file="item" />
       </div>
     </div>
 
     <strong>自定义图标</strong>
     <div>列表形式</div>
-    <n-upload-preview-file-item
+    <h-upload-preview-file-item
       :file="{
         helpName: 'abcd',
         name: 'abcd.pdf',
@@ -51,7 +51,7 @@
       }"
     />
     <div>此例展示了specialFileType的使用</div>
-    <n-upload-preview-file-item
+    <h-upload-preview-file-item
       class="mb-4"
       :file="{
         helpName: 'abcd',
@@ -69,7 +69,7 @@
       }"
     />
     <div>图片形式</div>
-    <n-upload-preview-img-item
+    <h-upload-preview-img-item
       :file="{
         helpName: 'abcd',
         name: 'abcd.pdf',
@@ -85,7 +85,7 @@
       }"
     />
     <div>此例展示了specialFileType的使用</div>
-    <n-upload-preview-img-item
+    <h-upload-preview-img-item
       :file="{
         helpName: 'abcd',
         name: 'abcd.pdf',

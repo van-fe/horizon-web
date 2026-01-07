@@ -1,12 +1,12 @@
 <template>
-  <n-row>
-    <n-col :span="6">
-      <n-modal-time-picker v-model="value" type="time" />
-    </n-col>
-    <n-col :span="6">
-      <n-modal-time-picker v-model="rangeValue" type="time" is-range />
-    </n-col>
-  </n-row>
+  <h-row>
+    <h-col :span="6">
+      <h-modal-time-picker v-model="value" type="time" />
+    </h-col>
+    <h-col :span="6">
+      <h-modal-time-picker v-model="rangeValue" type="time" is-range />
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

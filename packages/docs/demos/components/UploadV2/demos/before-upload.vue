@@ -1,14 +1,14 @@
 <template>
-  <n-form>
-    <n-form-item label="是否严格拦截上传文件">
-      <n-switch v-model="acceptStrict" :status="true" />
-    </n-form-item>
-    <n-form-item label="多选">
-      <n-switch v-model="multiple" :status="true" />
-    </n-form-item>
-  </n-form>
-  <n-space>
-    <n-upload
+  <h-form>
+    <h-form-item label="是否严格拦截上传文件">
+      <h-switch v-model="acceptStrict" :status="true" />
+    </h-form-item>
+    <h-form-item label="多选">
+      <h-switch v-model="multiple" :status="true" />
+    </h-form-item>
+  </h-form>
+  <h-space>
+    <h-upload
       v-model="modelValue"
       action="https://horizon-web-inspector.nioint.com/upload-mock"
       method="POST"
@@ -18,7 +18,7 @@
       :before-upload="onBeforeUpload"
       @accept-error="onAcceptError"
     />
-  </n-space>
+  </h-space>
 </template>
 
 <script lang="ts" setup>

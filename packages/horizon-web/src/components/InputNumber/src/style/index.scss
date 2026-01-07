@@ -1,6 +1,6 @@
 @use '../../../../styles/mixins';
-@import 'group';
-@import 'themes';
+@use 'group';
+@use 'themes';
 
 @include mixins.b('input-number') {
   display: inline-flex;

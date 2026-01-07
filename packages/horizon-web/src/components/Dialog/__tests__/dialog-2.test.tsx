@@ -55,7 +55,7 @@ describe('Dialog.tsx 2nd', () => {
 
       const dialog1 = document.body.querySelector('.dialog-1')!;
       const dialog1Buttons = dialog1.querySelectorAll(
-        '.n-button--primary',
+        '.h-button--primary',
       ) as NodeListOf<HTMLButtonElement>;
       const dialog1ConfirmButton = Array.from(dialog1Buttons.values()).find(
         curr => curr.innerText !== 'Cancel',
@@ -67,7 +67,7 @@ describe('Dialog.tsx 2nd', () => {
 
       const dialog2 = document.body.querySelector('.dialog-2')!;
       const dialog2Buttons = dialog2.querySelectorAll(
-        '.n-button--primary',
+        '.h-button--primary',
       ) as NodeListOf<HTMLButtonElement>;
       const dialog2ConfirmButton = Array.from(dialog2Buttons.values()).find(
         curr => curr.innerText !== 'Cancel',

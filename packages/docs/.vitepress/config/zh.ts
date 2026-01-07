@@ -9,13 +9,13 @@ export default defineConfig({
     nav: [
       { text: '指南', link: '/guide/why-choose-horizon-web', activeMatch: '/guide/' },
       { text: 'API 及示例', link: '/demos/index', activeMatch: '/demos/' },
-      { text: version.horizon-web, items: [
+      { text: version['horizon-web'], items: [
           {
             text: '更新日志',
-            link: 'https://nio.feishu.cn/docs/doccnmqUM4iuP2kN5AGxAMM0Rkc',
+            link: 'https://github.com/van-fe/horizon-web/releases',
           }, {
             text: '反馈问题',
-            link: 'https://applink.feishu.cn/client/chat/chatter/add_by_link?link_token=320le63a-d4d6-4561-947a-f85716e5f345'
+            link: 'https://github.com/van-fe/horizon-web/issues'
           }
         ]
       },
@@ -29,7 +29,7 @@ export default defineConfig({
             collapsed: false,
             items: [
               {
-                text: '为什么选用 HORIZONWEB ?', link: 'why-choose-horizon-web'
+                text: '为什么选用 Horizon Web ?', link: 'why-choose-horizon-web'
               },{
                 text: '快速开始', link: 'start'
               },{

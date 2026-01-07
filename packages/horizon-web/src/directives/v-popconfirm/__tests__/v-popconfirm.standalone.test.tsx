@@ -43,7 +43,7 @@ describe('v-popconfirm.tsx', () => {
     console.warn(document.body.innerHTML);
 
     const buttons = document.body.querySelectorAll(
-      '.n-popconfirm .n-button',
+      '.h-popconfirm .h-button',
     ) as NodeListOf<HTMLButtonElement>;
 
     const confirmButton = buttons[1];
@@ -59,7 +59,7 @@ describe('v-popconfirm.tsx', () => {
     await button.trigger('click');
 
     const buttons2 = document.body.querySelectorAll(
-      '.n-popconfirm .n-button',
+      '.h-popconfirm .h-button',
     ) as NodeListOf<HTMLButtonElement>;
 
     const confirmButton2 = buttons2[1];

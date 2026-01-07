@@ -1,6 +1,6 @@
 <template>
-  <n-button @click="visible = true">点我</n-button>
-  <n-dialog
+  <h-button @click="visible = true">点我</h-button>
+  <h-dialog
     v-model="visible"
     title="标题"
     @primaryClick="onPrimary"
@@ -8,9 +8,9 @@
   >
     <div>点击 OK 会打开第二个 Dialog</div>
     <div>点击 Cancel 会关闭当前 Dialog</div>
-  </n-dialog>
+  </h-dialog>
 
-  <n-dialog
+  <h-dialog
     v-model="visible2"
     title="标题"
     @primaryClick="onPrimary2"
@@ -18,7 +18,7 @@
   >
     <div>点击 OK 会关闭当前 Dialog</div>
     <div>点击 Cancel 会关闭所有 Dialog</div>
-  </n-dialog>
+  </h-dialog>
 </template>
 
 <script lang="ts">

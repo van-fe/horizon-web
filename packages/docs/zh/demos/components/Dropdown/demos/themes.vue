@@ -1,31 +1,31 @@
 <template>
-  <n-row>
-    <n-col :span="24">
-      <n-form label-position="left" label-vertical-align="middle" :inline="true">
-        <n-form-item label="theme:">
-          <n-radio-group v-model="theme">
-            <n-radio label="default">default</n-radio>
-            <n-radio label="gray">gray</n-radio>
-            <n-radio label="midnight">midnight</n-radio>
-          </n-radio-group>
-        </n-form-item>
-      </n-form>
-      <n-dropdown :theme="theme" @command="onCommand">
-        <n-button>Grade</n-button>
+  <h-row>
+    <h-col :span="24">
+      <h-form label-position="left" label-vertical-align="middle" :inline="true">
+        <h-form-item label="theme:">
+          <h-radio-group v-model="theme">
+            <h-radio label="default">default</h-radio>
+            <h-radio label="gray">gray</h-radio>
+            <h-radio label="midnight">midnight</h-radio>
+          </h-radio-group>
+        </h-form-item>
+      </h-form>
+      <h-dropdown :theme="theme" @command="onCommand">
+        <h-button>Grade</h-button>
         <template #dropdown>
-          <n-dropdown-menu>
-            <n-dropdown-submenu v-for="item of list" :key="item.label" :title="item.label" :disabled="item.disabled ?? false">
-              <n-dropdown-submenu v-for="subItem of item.children" :key="subItem.label" :title="subItem.label" :disabled="subItem.disabled ?? false">
-                <n-dropdown-item v-for="child of subItem.children" :key="child.label" :command="subItem.label + child.label" :disabled="child.disabled ?? false">
+          <h-dropdown-menu>
+            <h-dropdown-submenu v-for="item of list" :key="item.label" :title="item.label" :disabled="item.disabled ?? false">
+              <h-dropdown-submenu v-for="subItem of item.children" :key="subItem.label" :title="subItem.label" :disabled="subItem.disabled ?? false">
+                <h-dropdown-item v-for="child of subItem.children" :key="child.label" :command="subItem.label + child.label" :disabled="child.disabled ?? false">
                   {{ child.label }}
-                </n-dropdown-item>
-              </n-dropdown-submenu>
-            </n-dropdown-submenu>
-          </n-dropdown-menu>
+                </h-dropdown-item>
+              </h-dropdown-submenu>
+            </h-dropdown-submenu>
+          </h-dropdown-menu>
         </template>
-      </n-dropdown>
-    </n-col>
-  </n-row>
+      </h-dropdown>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">
@@ -338,11 +338,11 @@ function onCommand(val: string) {
 </script>
 
 <style scoped>
-.n-dropdown {
+.h-dropdown {
   display: inline-flex;
 }
 
-.n-dropdown + .n-dropdown {
+.h-dropdown + .h-dropdown {
   margin-left: 12px;
 }
 </style>

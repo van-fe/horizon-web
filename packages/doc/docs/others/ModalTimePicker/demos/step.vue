@@ -1,31 +1,31 @@
 <template>
-  <n-row align="middle">
-    <n-col :span="2">Time:</n-col>
-    <n-col :span="6">
-      <n-modal-time-picker v-model="value" type="time" :time-step="60" />
-    </n-col>
-    <n-col :span="6">
-      <n-modal-time-picker v-model="rangeValue" type="time" :time-step="60" is-range />
-    </n-col>
-  </n-row>
-  <n-row align="middle">
-    <n-col :span="2">Minute:</n-col>
-    <n-col :span="6">
-      <n-modal-time-picker v-model="value2" type="minutes" :hour-step="3" :minute-step="5" />
-    </n-col>
-    <n-col :span="6">
-      <n-modal-time-picker v-model="rangeValue2" type="minutes" :hour-step="3" :minute-step="5" is-range />
-    </n-col>
-  </n-row>
-  <n-row align="middle">
-    <n-col :span="2">Second:</n-col>
-    <n-col :span="6">
-      <n-modal-time-picker v-model="value3" type="seconds" :hour-step="3" :minute-step="5" :second-step="10" />
-    </n-col>
-    <n-col :span="6">
-      <n-modal-time-picker v-model="rangeValue3" type="seconds" :hour-step="3" :minute-step="5" :second-step="10" is-range />
-    </n-col>
-  </n-row>
+  <h-row align="middle">
+    <h-col :span="2">Time:</h-col>
+    <h-col :span="6">
+      <h-modal-time-picker v-model="value" type="time" :time-step="60" />
+    </h-col>
+    <h-col :span="6">
+      <h-modal-time-picker v-model="rangeValue" type="time" :time-step="60" is-range />
+    </h-col>
+  </h-row>
+  <h-row align="middle">
+    <h-col :span="2">Minute:</h-col>
+    <h-col :span="6">
+      <h-modal-time-picker v-model="value2" type="minutes" :hour-step="3" :minute-step="5" />
+    </h-col>
+    <h-col :span="6">
+      <h-modal-time-picker v-model="rangeValue2" type="minutes" :hour-step="3" :minute-step="5" is-range />
+    </h-col>
+  </h-row>
+  <h-row align="middle">
+    <h-col :span="2">Second:</h-col>
+    <h-col :span="6">
+      <h-modal-time-picker v-model="value3" type="seconds" :hour-step="3" :minute-step="5" :second-step="10" />
+    </h-col>
+    <h-col :span="6">
+      <h-modal-time-picker v-model="rangeValue3" type="seconds" :hour-step="3" :minute-step="5" :second-step="10" is-range />
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

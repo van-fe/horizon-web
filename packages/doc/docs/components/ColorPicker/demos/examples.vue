@@ -1,7 +1,7 @@
 <template>
-  <n-form label-position="left" label-width="160px" label-vertical-align="middle" class="grid-form">
-    <n-form-item label="带渐变设置">
-      <n-color-picker
+  <h-form label-position="left" label-width="160px" label-vertical-align="middle" class="grid-form">
+    <h-form-item label="带渐变设置">
+      <h-color-picker
         v-model="value1"
         trigger-type="square"
         :enable-gradient="true"
@@ -10,9 +10,9 @@
         :need-confirm="false"
         :clearable="false"
       />
-    </n-form-item>
-    <n-form-item label="只有一种渐变">
-      <n-color-picker
+    </h-form-item>
+    <h-form-item label="只有一种渐变">
+      <h-color-picker
         v-model="value2"
         trigger-type="square"
         :enable-gradient="true"
@@ -20,33 +20,33 @@
         :editable="true"
         :alpha="true"
       />
-    </n-form-item>
-    <n-form-item label="带系统预设颜色">
-      <n-color-picker v-model="value3" trigger-type="square" editable alpha show-swatch :swatches="swatches" :need-confirm="false" :clearable="false" />
-    </n-form-item>
-    <n-form-item label="带取消/确认按钮">
-      <n-color-picker v-model="value4" trigger-type="square" editable alpha :clearable="false" />
-    </n-form-item>
-    <n-form-item label="带最近使用颜色">
-      <n-color-picker v-model="value5" trigger-type="square" editable alpha recently-colors :need-confirm="false" :clearable="false" />
-    </n-form-item>
-    <n-form-item label="带清空按钮">
-      <n-color-picker v-model="value6" trigger-type="square" editable alpha :need-confirm="false" />
-    </n-form-item>
-    <n-form-item label="带自定义预设颜色">
-      <n-color-picker v-model="value7" trigger-type="square" editable alpha :need-confirm="false" :clearable="false" :custom-colors="true" />
-    </n-form-item>
-    <n-form-item label="带取消/确认+清空按钮">
-      <n-color-picker v-model="value8" trigger-type="square" editable alpha  />
-    </n-form-item>
-    <n-form-item label="带网页取色">
-      <n-color-picker v-model="value9" trigger-type="square" :enable-eye-dropper="true" editable alpha />
-    </n-form-item>
-    <n-form-item label="默认显示 RGB">
-      <n-color-picker v-model="value10" v-model:edit-mode="editMode" trigger-type="square" :enable-eye-dropper="true" editable alpha />
-    </n-form-item>
-    <n-form-item label="联合使用">
-      <n-color-picker
+    </h-form-item>
+    <h-form-item label="带系统预设颜色">
+      <h-color-picker v-model="value3" trigger-type="square" editable alpha show-swatch :swatches="swatches" :need-confirm="false" :clearable="false" />
+    </h-form-item>
+    <h-form-item label="带取消/确认按钮">
+      <h-color-picker v-model="value4" trigger-type="square" editable alpha :clearable="false" />
+    </h-form-item>
+    <h-form-item label="带最近使用颜色">
+      <h-color-picker v-model="value5" trigger-type="square" editable alpha recently-colors :need-confirm="false" :clearable="false" />
+    </h-form-item>
+    <h-form-item label="带清空按钮">
+      <h-color-picker v-model="value6" trigger-type="square" editable alpha :need-confirm="false" />
+    </h-form-item>
+    <h-form-item label="带自定义预设颜色">
+      <h-color-picker v-model="value7" trigger-type="square" editable alpha :need-confirm="false" :clearable="false" :custom-colors="true" />
+    </h-form-item>
+    <h-form-item label="带取消/确认+清空按钮">
+      <h-color-picker v-model="value8" trigger-type="square" editable alpha  />
+    </h-form-item>
+    <h-form-item label="带网页取色">
+      <h-color-picker v-model="value9" trigger-type="square" :enable-eye-dropper="true" editable alpha />
+    </h-form-item>
+    <h-form-item label="默认显示 RGB">
+      <h-color-picker v-model="value10" v-model:edit-mode="editMode" trigger-type="square" :enable-eye-dropper="true" editable alpha />
+    </h-form-item>
+    <h-form-item label="联合使用">
+      <h-color-picker
         v-model="value11"
         trigger-type="square"
         :enable-gradient="true"
@@ -57,8 +57,8 @@
         :recently-colors="true"
         :custom-colors="true"
       />
-    </n-form-item>
-  </n-form>
+    </h-form-item>
+  </h-form>
 </template>
 
 <script setup lang="ts">
@@ -95,7 +95,7 @@ const editMode = ref('rgb');
 <style scoped>
 .grid-form {
   display: grid;
-  grid-template-columns: repeat(2, min-content);
+  grid-template-columns: repeat(2, mih-content);
   grid-column-gap: 80px;
 }
 </style>

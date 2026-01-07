@@ -2,20 +2,20 @@
   <div class="demo-wrapper">
     <div class="box">
       <span>单月 + 单列时间</span>
-      <n-date-picker
+      <h-date-picker
         v-model="time1"
         type="datetime"
         :show-date-tooltip="showDateTooltip"
-      ></n-date-picker>
+      ></h-date-picker>
     </div>
     <div class="box">
       <span>单月 + 双列时间</span>
-      <n-date-picker
+      <h-date-picker
         v-model="time2"
         type="dateminutes"
         :show-date-tooltip="showDateTooltip"
         :show-time-tooltip="showTimeTooltip"
-      ></n-date-picker>
+      ></h-date-picker>
     </div>
   </div>
 </template>

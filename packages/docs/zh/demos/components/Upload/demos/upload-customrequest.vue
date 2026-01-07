@@ -1,6 +1,6 @@
 <template>
   <div>
-    <n-upload
+    <h-upload
       v-model="fileList"
       :multiple="true"
       :limit="5"
@@ -11,10 +11,10 @@
       @download="onDownload"
       @update:modelValue="onUpdate"
     />
-    <n-button class="mr-2 mt-4" @click="getFileList">get fileList</n-button>
-    <n-button @click="clear">clear</n-button>
+    <h-button class="mr-2 mt-4" @click="getFileList">get fileList</h-button>
+    <h-button @click="clear">clear</h-button>
     <!--  -->
-    <n-viewer v-model="visibleRef" :sources="imagesRef" />
+    <h-viewer v-model="visibleRef" :sources="imagesRef" />
   </div>
 </template>
 

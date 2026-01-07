@@ -1,13 +1,13 @@
 <template>
-  <n-link :href="randomHref" :underline="false" icon="share" icon-suffix="2xs">
+  <h-link :href="randomHref" :underline="false" icon="share" icoh-suffix="2xs">
     Open New Link
-  </n-link>
-  <n-link :href="currentHref" :underline="false" icon="share" icon-suffix="2xs">
+  </h-link>
+  <h-link :href="currentHref" :underline="false" icon="share" icoh-suffix="2xs">
     Open Visited Link
-  </n-link>
-  <n-link :href="randomHref" :underline="false" icon="share" icon-suffix="2xs" disabled>
+  </h-link>
+  <h-link :href="randomHref" :underline="false" icon="share" icoh-suffix="2xs" disabled>
     Disable Open Link
-  </n-link>
+  </h-link>
 </template>
 
 <script>

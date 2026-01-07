@@ -1,27 +1,27 @@
 <template>
-  <n-row>
-    <n-col :span="24">
+  <h-row>
+    <h-col :span="24">
       <div class="demo-title">medium(default)</div>
-      <n-radio-group v-model="modelValue" size="medium">
-        <n-radio-button
+      <h-radio-group v-model="modelValue" size="medium">
+        <h-radio-button
           v-for="(item, index) in radioGroupOptions"
           :key="index"
           :value="item.label"
         />
-      </n-radio-group>
-    </n-col>
+      </h-radio-group>
+    </h-col>
 
-    <n-col :span="24">
+    <h-col :span="24">
       <div class="demo-title">large</div>
-      <n-radio-group v-model="modelValue" size="large" :disabled="true">
-        <n-radio-button
+      <h-radio-group v-model="modelValue" size="large" :disabled="true">
+        <h-radio-button
           v-for="(item, index) in radioGroupOptions"
           :key="index"
           :value="item.label"
         />
-      </n-radio-group>
-    </n-col>
-  </n-row>
+      </h-radio-group>
+    </h-col>
+  </h-row>
 </template>
 
 <script lang="ts" setup>

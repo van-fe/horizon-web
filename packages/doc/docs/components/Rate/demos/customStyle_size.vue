@@ -1,10 +1,10 @@
 <template>
   <div class="">
-    <n-rate v-model="currentScore" size="small" />
-    <n-rate v-model="currentScore" size="medium" />
-    <n-rate v-model="currentScore" size="large" />
-    <n-rate v-model="currentScore" size="32" />
-    <n-rate v-model="currentScore" size="36" />
+    <h-rate v-model="currentScore" size="small" />
+    <h-rate v-model="currentScore" size="medium" />
+    <h-rate v-model="currentScore" size="large" />
+    <h-rate v-model="currentScore" size="32" />
+    <h-rate v-model="currentScore" size="36" />
   </div>
 </template>
 

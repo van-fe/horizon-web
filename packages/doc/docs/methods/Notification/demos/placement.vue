@@ -1,10 +1,10 @@
 <template>
-  <n-space>
-    <n-button type="normal" @click="open1">topRight</n-button>
-    <n-button type="normal" @click="open2">bottomRight</n-button>
-    <n-button type="normal" @click="open3">bottomLeft</n-button>
-    <n-button type="normal" @click="open4">topLeft</n-button>
-  </n-space>
+  <h-space>
+    <h-button type="normal" @click="open1">topRight</h-button>
+    <h-button type="normal" @click="open2">bottomRight</h-button>
+    <h-button type="normal" @click="open3">bottomLeft</h-button>
+    <h-button type="normal" @click="open4">topLeft</h-button>
+  </h-space>
 </template>
 
 <script lang="ts">

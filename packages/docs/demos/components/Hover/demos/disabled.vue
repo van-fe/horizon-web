@@ -2,7 +2,7 @@
   <NHover v-slot="{ hover }" :disabled="true">
     <div class="container">
       <span>容器</span>
-      <n-button v-if="hover" size="medium">删除</n-button>
+      <h-button v-if="hover" size="medium">删除</h-button>
     </div>
   </NHover>
 </template>

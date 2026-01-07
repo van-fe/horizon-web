@@ -2,25 +2,25 @@
   <div>
     <strong>各种尺寸和比例</strong>
     <div class="flex-box">
-      <n-select v-model="size" class="mr-2">
-        <n-option
+      <h-select v-model="size" class="mr-2">
+        <h-option
           v-for="item in ['large', 'medium', 'small']"
           :key="item"
           :value="item"
           :label="item"
-        ></n-option>
-      </n-select>
-      <n-select v-model="proportion">
-        <n-option
+        ></h-option>
+      </h-select>
+      <h-select v-model="proportion">
+        <h-option
           v-for="item in ['square', 'rectangle']"
           :key="item"
           :value="item"
           :label="item"
-        ></n-option>
-      </n-select>
+        ></h-option>
+      </h-select>
     </div>
     <div>带展示列表和上传按钮</div>
-    <n-upload-img
+    <h-upload-img
       class="mb-4"
       :upload-file-list="uploadFileList"
       :size="size"
@@ -29,7 +29,7 @@
       @change="onChange"
     />
     <div>通过readonly属性设置，只展示列表，不展示上传按钮</div>
-    <n-upload-img
+    <h-upload-img
       :upload-file-list="uploadFileList"
       :size="size"
       :proportion="proportion"

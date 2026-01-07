@@ -20,20 +20,20 @@ const onSubmit = () => {
 </script>
 
 <template>
-  <n-form ref="formDomRef" :model="formData" :scroll-to-error="true" @submit="onSubmit">
-    <n-form-item label="Username" prop="username" :required="true">
-      <n-input v-model="formData.username" />
-    </n-form-item>
-    <n-form-item label="Email" prop="email" :required="true">
-      <n-input v-model="formData.email" />
-    </n-form-item>
-    <n-form-item label="Notes" prop="notes">
-      <n-input v-model="formData.notes" type="textarea" />
-    </n-form-item>
-    <n-form-item>
-      <n-button native-type="submit">Submit</n-button>
-    </n-form-item>
-  </n-form>
+  <h-form ref="formDomRef" :model="formData" :scroll-to-error="true" @submit="onSubmit">
+    <h-form-item label="Username" prop="username" :required="true">
+      <h-input v-model="formData.username" />
+    </h-form-item>
+    <h-form-item label="Email" prop="email" :required="true">
+      <h-input v-model="formData.email" />
+    </h-form-item>
+    <h-form-item label="Notes" prop="notes">
+      <h-input v-model="formData.notes" type="textarea" />
+    </h-form-item>
+    <h-form-item>
+      <h-button native-type="submit">Submit</h-button>
+    </h-form-item>
+  </h-form>
 </template>
 
 <style scoped>

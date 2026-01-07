@@ -1,9 +1,9 @@
 <template>
-  <n-slider v-model="valueRef" />
-  <n-slider v-model="valueRef" color="red" />
-  <n-slider v-model="valueRef" color="purple" />
-  <n-slider v-model="valueRef" color="orange" />
-  <n-slider v-model="valueRef" color="skyblue" />
+  <h-slider v-model="valueRef" />
+  <h-slider v-model="valueRef" color="red" />
+  <h-slider v-model="valueRef" color="purple" />
+  <h-slider v-model="valueRef" color="orange" />
+  <h-slider v-model="valueRef" color="skyblue" />
 </template>
 
 <script lang="ts">

@@ -34,19 +34,3 @@
 
 如果你使用的是 `<x-button>...</x-button>` 的形式，则需要设置此值。
 
-## useRestStyle
-- 类型: `Boolean`
-- 默认: `true`
-
-是否使用 [rest.css](https://github.com/filipelinhares/ress) 来消除浏览器不一致性
-
-## usePresetStyle
-- 类型: `Boolean`
-- 默认: `true`
-
-是否引入预制的样式
-
-例如会预制类似于 [TailwindCss](https://www.tailwindcss.com) 基础样式，比如 `.text-center` 等
-
-如果你在使用 `TailwindCss`，则可以将此项设置为 `false`
-

@@ -1,5 +1,5 @@
 <template>
-  <n-link>with underline</n-link>
-  <n-link :underline="false">without underline</n-link>
-  <n-link underline="always">Always Show</n-link>
+  <h-link>with underline</h-link>
+  <h-link :underline="false">without underline</h-link>
+  <h-link underline="always">Always Show</h-link>
 </template>

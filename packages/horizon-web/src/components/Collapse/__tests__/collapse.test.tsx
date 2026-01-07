@@ -43,7 +43,7 @@ describe('Collapse.tsx', () => {
         </HCollapse>
       ));
 
-      const expanded = wrapper.findAll('.n-collapse-item--expand');
+      const expanded = wrapper.findAll('.h-collapse-item--expand');
 
       const expandedText = expanded.map(expandedEl => expandedEl.text()).join(',');
 
@@ -53,7 +53,7 @@ describe('Collapse.tsx', () => {
 
       await nextTick();
 
-      const expanded2 = wrapper.findAll('.n-collapse-item--expand');
+      const expanded2 = wrapper.findAll('.h-collapse-item--expand');
 
       const expanded2Text = expanded2.map(expandedEl => expandedEl.text()).join(',');
 
@@ -71,12 +71,12 @@ describe('Collapse.tsx', () => {
       ));
 
       await nextTick();
-      const expandArr = wrapper.findAll('.n-collapse-item--expand');
+      const expandArr = wrapper.findAll('.h-collapse-item--expand');
       expect(expandArr.length).toBe(2);
 
       activeKeyModel.value = [1];
       await nextTick();
-      const expandArr1 = wrapper.findAll('.n-collapse-item--expand');
+      const expandArr1 = wrapper.findAll('.h-collapse-item--expand');
       expect(expandArr1.length).toBe(1);
     });
   });
@@ -95,7 +95,7 @@ describe('Collapse.tsx', () => {
 
       const lastItem = wrapper.findAllComponents(HCollapseItem).at(-1);
 
-      await lastItem!.find('.n-collapse-item__header').trigger('click');
+      await lastItem!.find('.h-collapse-item__header').trigger('click');
 
       expect(activeKeyModel.value).eq('4');
     });
@@ -114,7 +114,7 @@ describe('Collapse.tsx', () => {
 
       const lastItem = wrapper.findAllComponents(HCollapseItem).at(-1);
 
-      await lastItem!.find('.n-collapse-item__header').trigger('click');
+      await lastItem!.find('.h-collapse-item__header').trigger('click');
 
       expect(onChange).toHaveBeenCalledWith('4');
     });
@@ -130,12 +130,12 @@ describe('Collapse.tsx', () => {
         </HCollapse>
       ));
 
-      const expandArr = wrapper.findAll('.n-collapse-item--expand');
+      const expandArr = wrapper.findAll('.h-collapse-item--expand');
       expect(expandArr.length).toBe(2);
 
-      const headerEl = wrapper.find('.n-collapse-item__header');
+      const headerEl = wrapper.find('.h-collapse-item__header');
       await headerEl.trigger('click');
-      const expandArr1 = wrapper.findAll('.n-collapse-item--expand');
+      const expandArr1 = wrapper.findAll('.h-collapse-item--expand');
       expect(expandArr1.length).toBe(1);
     });
   });

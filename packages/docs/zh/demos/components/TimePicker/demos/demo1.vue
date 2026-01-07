@@ -2,19 +2,19 @@
   <div class="demo-wrapper">
     <div class="box">
       <span>单列</span>
-      <n-time-picker v-model="time1" type="time" />
+      <h-time-picker v-model="time1" type="time" />
     </div>
     <div class="box">
       <span>单列+按钮</span>
-      <n-time-picker v-model="time4" type="time" :show-footer="true" />
+      <h-time-picker v-model="time4" type="time" :show-footer="true" />
     </div>
     <div class="box">
       <span>两列</span>
-      <n-time-picker v-model="time2" type="minutes" />
+      <h-time-picker v-model="time2" type="minutes" />
     </div>
     <div class="box">
       <span>三列</span>
-      <n-time-picker v-model="time3" type="seconds" />
+      <h-time-picker v-model="time3" type="seconds" />
     </div>
   </div>
 </template>

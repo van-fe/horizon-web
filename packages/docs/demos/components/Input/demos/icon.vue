@@ -4,28 +4,28 @@
  * @Description: file content
 -->
 <template>
-  <n-row>
-    <n-col :span="12">
-      <n-input v-model="val1" suffix-icon="check" />
-    </n-col>
-    <n-col :span="12">
-      <n-input v-model="val2">
+  <h-row>
+    <h-col :span="12">
+      <h-input v-model="val1" suffix-icon="check" />
+    </h-col>
+    <h-col :span="12">
+      <h-input v-model="val2">
         <template #prefix>¥</template>
         <template #suffix>RMB</template>
-      </n-input>
-    </n-col>
-  </n-row>
-  <n-row>
-    <n-col>
-      <n-input v-model="val3">
+      </h-input>
+    </h-col>
+  </h-row>
+  <h-row>
+    <h-col>
+      <h-input v-model="val3">
         <template #suffix>
-          <n-tooltip placement="top" content="show location detail">
+          <h-tooltip placement="top" content="show location detail">
             <a-icon name="location" />
-          </n-tooltip>
+          </h-tooltip>
         </template>
-      </n-input>
-    </n-col>
-  </n-row>
+      </h-input>
+    </h-col>
+  </h-row>
 </template>
 
 <script lang="ts">

@@ -1,10 +1,10 @@
 @use '../../../../styles/mixins';
-@import './themes';
-@import './size';
+@use 'themes';
+@use 'size';
 
 @include mixins.b('dropdown') {
   @include mixins.e('inner') {
-    width: var(--n-dropdown-width); // 这里用变量定义宽度，因为直接用style的width，初始化失败
+    width: var(--h-dropdown-width); // 这里用变量定义宽度，因为直接用style的width，初始化失败
     min-width: mixins.css-variable('dropdown-min-width');
     max-width: mixins.css-variable('dropdown-max-width');
     padding: 0 !important;

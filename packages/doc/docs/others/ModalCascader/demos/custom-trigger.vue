@@ -1,7 +1,7 @@
 <template>
-  <n-row :gutter="10">
-    <n-col :span="6">
-      <n-modal-cascader
+  <h-row :gutter="10">
+    <h-col :span="6">
+      <h-modal-cascader
           ref="cascaderFilterRef"
           v-model="currentVal1"
           :options="options"
@@ -13,12 +13,12 @@
           <div @click="() => (panelVisible.value = true)">
             完全自定义的内容，可以点击我：
             <p v-if="currentVal1.length > 0">{{ currentVal1 }}</p>
-            <n-input v-model="selectRenderInputValue" />
+            <h-input v-model="selectRenderInputValue" />
           </div>
         </template>
-      </n-modal-cascader>
-    </n-col>
-  </n-row>
+      </h-modal-cascader>
+    </h-col>
+  </h-row>
 </template>
 
 <script lang="ts">

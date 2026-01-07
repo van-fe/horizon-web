@@ -1,6 +1,6 @@
 <template>
-  <n-button @click="showViewer">点我浏览精彩图集</n-button>
-  <n-viewer v-model="visibleRef" :sources="imagesRef" />
+  <h-button @click="showViewer">点我浏览精彩图集</h-button>
+  <h-viewer v-model="visibleRef" :sources="imagesRef" />
 </template>
 
 <script lang="ts">

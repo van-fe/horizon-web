@@ -270,7 +270,7 @@ describe('Button.tsx', () => {
       const wrapper = mount(() => <HButton>{{ suffix: () => 'SUFFIX' }}</HButton>);
       const element = wrapper.findComponent(HButton);
 
-      expect(element.find('.n-button__suffix').text()).toEqual('SUFFIX');
+      expect(element.find('.h-button__suffix').text()).toEqual('SUFFIX');
     });
   });
 });

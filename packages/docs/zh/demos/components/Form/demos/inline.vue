@@ -1,16 +1,16 @@
 <template>
-  <n-form inline>
-    <n-form-item label="User name">
-      <n-input v-model="formData.username" />
-    </n-form-item>
-    <n-form-item label="Email">
-      <n-input v-model="formData.email" />
-    </n-form-item>
-    <n-form-item>
+  <h-form inline>
+    <h-form-item label="User name">
+      <h-input v-model="formData.username" />
+    </h-form-item>
+    <h-form-item label="Email">
+      <h-input v-model="formData.email" />
+    </h-form-item>
+    <h-form-item>
       <template #label>&nbsp;</template>
-      <n-button size="medium" @click="submit">Submit</n-button>
-    </n-form-item>
-  </n-form>
+      <h-button size="medium" @click="submit">Submit</h-button>
+    </h-form-item>
+  </h-form>
 </template>
 
 <script lang="ts">

@@ -1,3 +1,5 @@
+@use "utils";
+
 @use '../../../../styles/mixins';
 
 @include mixins.b('color-picker-panel') {
@@ -37,7 +39,7 @@
       border-radius: mixins.css-variable('radius-circle');
 
       .alpha {
-        @include absolute-full;
+        @include utils.absolute-full;
         @include mixins.with-alpha(2px);
       }
 
@@ -96,7 +98,7 @@
         border-radius: mixins.css-variable('color-picker-border-radius--track');
 
         .cursor {
-          @include cursor;
+          @include utils.cursor;
 
           top: 50%;
           transform: translateY(-50%);
@@ -112,13 +114,13 @@
         @include mixins.with-alpha(2px);
 
         .alpha-color-bg {
-          @include absolute-full;
+          @include utils.absolute-full;
 
           border-radius: mixins.css-variable('color-picker-border-radius--track');
         }
 
         .cursor {
-          @include cursor;
+          @include utils.cursor;
 
           top: 50%;
           transform: translateY(-50%);

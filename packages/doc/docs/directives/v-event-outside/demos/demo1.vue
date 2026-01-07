@@ -1,6 +1,6 @@
 <template>
   <div>
-    <n-button @click="visible = true">Show Modal</n-button>
+    <h-button @click="visible = true">Show Modal</h-button>
     <div
       v-if="visible"
       v-event-outside="{

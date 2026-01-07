@@ -1,11 +1,11 @@
 <template>
   <div class="block">
-    <n-button v-tooltip="hoverMsg">hover top</n-button>
-    <n-button v-tooltip.click.left="clickMsg">click left</n-button>
-    <n-button v-tooltip.right.focus="focusMsg">focus right</n-button>
-    <n-button v-tooltip.manual="contextmenuMsg">manual top</n-button>
-    <n-button v-tooltip.disabled>disabled</n-button>
-    <n-button v-tooltip.visible="'visible'">visible</n-button>
+    <h-button v-tooltip="hoverMsg">hover top</h-button>
+    <h-button v-tooltip.click.left="clickMsg">click left</h-button>
+    <h-button v-tooltip.right.focus="focusMsg">focus right</h-button>
+    <h-button v-tooltip.manual="contextmenuMsg">manual top</h-button>
+    <h-button v-tooltip.disabled>disabled</h-button>
+    <h-button v-tooltip.visible="'visible'">visible</h-button>
   </div>
 </template>
 
@@ -32,7 +32,7 @@ export default defineComponent({
   display: flex;
 }
 
-.block .n-button {
+.block .h-button {
   margin-left: 20px;
 }
 </style>

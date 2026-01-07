@@ -1,42 +1,42 @@
 <template>
-  <n-row>
-    <n-col :span="6">
+  <h-row>
+    <h-col :span="6">
       <div class="demo-title">单选</div>
-      <n-tree-select
+      <h-tree-select
         :tree-data="baseTreeData"
         :fold-icon="customIcon"
         :to-body="false"
       />
-    </n-col>
-    <n-col :span="6">
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">多选</div>
-      <n-tree-select
+      <h-tree-select
         :tree-data="baseTreeData"
         :fold-icon="customIcon"
         :multiple="true"
         :to-body="false"
       />
-    </n-col>
-    <n-col :span="6">
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">单选-加减符号</div>
-      <n-tree-select
+      <h-tree-select
         :tree-data="baseTreeData"
         :expand-icon="customIconExpand"
         :fold-icon="customIconFold"
         :to-body="false"
       />
-    </n-col>
-    <n-col :span="6">
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">多选-加减符号</div>
-      <n-tree-select
+      <h-tree-select
         :tree-data="baseTreeData"
         :expand-icon="customIconExpand"
         :fold-icon="customIconFold"
         :multiple="true"
         :to-body="false"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

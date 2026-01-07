@@ -1,7 +1,6 @@
 import * as Vue from 'vue';
 import { createApp } from 'vue';
 import { AIcon } from '@aurora/icon';
-import '@aurora/horizon-web-table/dist/style.css';
 import App from './App.vue';
 import { router } from './routes';
 import './styles/index.scss';

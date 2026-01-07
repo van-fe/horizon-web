@@ -1,27 +1,27 @@
 <template>
-  <n-input v-model="val1">
+  <h-input v-model="val1">
     <template #prepend>https://</template>
     <template #append>.com</template>
-  </n-input>
+  </h-input>
   <br />
   <br />
-  <n-input v-model="val2" style="--n-input-bg--prepend-append: transparent">
+  <h-input v-model="val2" style="--h-input-bg--prepend-append: transparent">
     <template #prepend>
-      <n-select v-model="select1" placeholder="Please Select" size="medium" style="width: 200px">
-        <n-option key="1" label="选项1" value="1"></n-option>
-        <n-option key="2" label="选项2" value="2"></n-option>
-      </n-select>
+      <h-select v-model="select1" placeholder="Please Select" size="medium" style="width: 200px">
+        <h-option key="1" label="选项1" value="1"></h-option>
+        <h-option key="2" label="选项2" value="2"></h-option>
+      </h-select>
     </template>
-  </n-input>
+  </h-input>
   <br />
   <br />
-  <n-input v-model="val3" style="--n-input-bg--prepend-append: transparent">
+  <h-input v-model="val3" style="--h-input-bg--prepend-append: transparent">
     <template #append>
-      <n-select v-model="select2" placeholder="Please Select" size="medium">
-        <n-option key="1" label="选项1" value="1"></n-option>
-      </n-select>
+      <h-select v-model="select2" placeholder="Please Select" size="medium">
+        <h-option key="1" label="选项1" value="1"></h-option>
+      </h-select>
     </template>
-  </n-input>
+  </h-input>
 </template>
 
 <script lang="ts">

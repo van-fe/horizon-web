@@ -1,5 +1,5 @@
 @use '../../../../styles/mixins';
-@import './option';
+@use 'option';
 
 @include mixins.b('auto-complete') {
   @include mixins.e('scrollbar') {

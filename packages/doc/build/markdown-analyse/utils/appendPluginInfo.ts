@@ -31,11 +31,11 @@ export default function (
       break;
   }
 
-  return `<n-link anchor="${
+  return `<h-link anchor="${
     currMode?.name
-  }" anchor-position="left" type="text" class="no-underline h1">${showName}</n-link>
+  }" anchor-position="left" type="text" class="no-underline h1">${showName}</h-link>
 <div class="description">${currMode?.desc}</div>`
     .replace(/\\n\s*/g, '<br>')
     .replace(/`(.*?)`/g, '<code>$1</code>')
-    .replace(/\[(.*?)]\((.*?)\)/g, '<n-link href="$2" target="_blank">$1</n-link>');
+    .replace(/\[(.*?)]\((.*?)\)/g, '<h-link href="$2" target="_blank">$1</h-link>');
 }

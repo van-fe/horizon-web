@@ -1,6 +1,6 @@
 @use '../../../../styles/mixins';
-@import './simplest';
-@import './size';
+@use 'simplest';
+@use 'size';
 
 @include mixins.b('pagination') {
   display: flex;

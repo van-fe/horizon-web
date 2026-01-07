@@ -1,23 +1,23 @@
 <template>
   <div>
-    <n-button type="normal" class="mb-2" @click="visible = !visible">Change</n-button>
-    <n-row :gutter="10" style="height: 80px;">
-      <n-col :span="6">
-        <n-transition name="float">
+    <h-button type="normal" class="mb-2" @click="visible = !visible">Change</h-button>
+    <h-row :gutter="10" style="height: 80px;">
+      <h-col :span="6">
+        <h-transition name="float">
           <div v-show="visible" class="animate-box">float</div>
-        </n-transition>
-      </n-col>
-      <n-col :span="6">
-        <n-transition name="dropdown">
+        </h-transition>
+      </h-col>
+      <h-col :span="6">
+        <h-transition name="dropdown">
           <div v-show="visible" class="animate-box">dropdown</div>
-        </n-transition>
-      </n-col>
-      <n-col :span="6">
-        <n-transition name="tooltip">
+        </h-transition>
+      </h-col>
+      <h-col :span="6">
+        <h-transition name="tooltip">
           <div v-show="visible" class="animate-box">tooltip</div>
-        </n-transition>
-      </n-col>
-    </n-row>
+        </h-transition>
+      </h-col>
+    </h-row>
   </div>
 </template>
 
@@ -36,11 +36,11 @@ export default defineComponent({
 .animate-box {
     width: 200px;
     height: 80px;
-    background: var(--n-bg-brand-default);
-    border-radius: var(--n-radius);
+    background: var(--h-bg-brand-default);
+    border-radius: var(--h-radius);
     display: flex;
-    align-items: center;
+    aligh-items: center;
     justify-content: center;
-    color: var(--n-text-inverse);
+    color: var(--h-text-inverse);
 }
 </style>

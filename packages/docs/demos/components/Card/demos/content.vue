@@ -1,13 +1,13 @@
 <template>
   <div class="content">
-    <n-card title="标题">
+    <h-card title="标题">
       <img
           class="content-img"
           src="https://static.nio.com/fx-static/card-component/clbu60ecm0000072w2izw1wsp/img.png"
           alt=""
       />
-    </n-card>
-    <n-card>
+    </h-card>
+    <h-card>
       <ul class="list">
         <li :key="item" v-for="item in 3">
           <h4>标题</h4>
@@ -16,19 +16,19 @@
           </p>
         </li>
       </ul>
-    </n-card>
-    <n-card>
+    </h-card>
+    <h-card>
       <template #header>
-        <n-tabs size="medium" v-model="tab">
-          <n-tab label="标签一" name="label1"></n-tab>
-          <n-tab label="标签二" name="label2"></n-tab>
-          <n-tab label="标签三" name="label3"></n-tab>
-        </n-tabs>
+        <h-tabs size="medium" v-model="tab">
+          <h-tab label="标签一" name="label1"></h-tab>
+          <h-tab label="标签二" name="label2"></h-tab>
+          <h-tab label="标签三" name="label3"></h-tab>
+        </h-tabs>
       </template>
       <p>
         这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很的内容文案这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很的内容文案这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很的内容文案这是一段长很长很长很长很长很长很的内容文案
       </p>
-    </n-card>
+    </h-card>
   </div>
 </template>
 

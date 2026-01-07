@@ -1,9 +1,9 @@
 <template>
   <div class="">
     只读
-    <n-rate v-model="currentScore" readonly />
+    <h-rate v-model="currentScore" readonly />
     禁用
-    <n-rate v-model="currentScore" disabled />
+    <h-rate v-model="currentScore" disabled />
   </div>
 </template>
 

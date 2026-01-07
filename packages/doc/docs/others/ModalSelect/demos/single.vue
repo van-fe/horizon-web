@@ -1,24 +1,24 @@
 <template>
-  <n-row>
-    <n-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
+  <h-row>
+    <h-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
       <div class="demo-title">默认单选</div>
-      <n-modal-select v-model="value1" :to-body="false">
-        <n-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
-      </n-modal-select>
-    </n-col>
-    <n-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
+      <h-modal-select v-model="value1" :to-body="false">
+        <h-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
+      </h-modal-select>
+    </h-col>
+    <h-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
       <div class="demo-title">有选中标识</div>
-      <n-modal-select v-model="value2" :show-selected-icon="true" :to-body="false">
-        <n-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
-      </n-modal-select>
-    </n-col>
-    <n-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
+      <h-modal-select v-model="value2" :show-selected-icon="true" :to-body="false">
+        <h-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
+      </h-modal-select>
+    </h-col>
+    <h-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
       <div class="demo-title">自定义选中标识</div>
-      <n-modal-select v-model="value3" :show-selected-icon="true" :selected-icon="IconPin" :to-body="false">
-        <n-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
-      </n-modal-select>
-    </n-col>
-  </n-row>
+      <h-modal-select v-model="value3" :show-selected-icon="true" :selected-icon="IconPin" :to-body="false">
+        <h-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
+      </h-modal-select>
+    </h-col>
+  </h-row>
 
 </template>
 

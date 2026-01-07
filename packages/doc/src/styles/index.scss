@@ -1,7 +1,11 @@
 @use '@aurora/horizon-web/es/styles/mixins/config.scss';
 @use '@aurora/horizon-web/es/styles/mixins';
-@import './codeThemes/one-light';
-@import './codeThemes/vs-dark';
+@use './codeThemes/one-light';
+@use './codeThemes/vs-dark';
+
+* {
+  box-sizing: border-box;
+}
 
 // presets
 html,
@@ -79,12 +83,12 @@ p {
   display: flex;
   height: 100vh;
 
-  &.n-container {
-    > .n-header {
+  &.h-container {
+    > .h-header {
       border-bottom: 1px solid mixins.css-variable('border-default');
     }
 
-    > .n-container > .n-aside {
+    > .h-container > .h-aside {
       border-right: 1px solid mixins.css-variable('border-default');
     }
   }
@@ -117,8 +121,8 @@ pre {
   overflow-y: auto;
   color: #333;
 
-  --n-anchor--margin: 0;
-  --n-anchor-width: 100%;
+  --h-anchor--margin: 0;
+  --h-anchor-width: 100%;
 
   .right-menu-item {
     display: block;
@@ -193,7 +197,7 @@ kbd {
   }
 }
 
-.n-link {
+.h-link {
   &.no-underline {
     text-decoration: none !important;
   }

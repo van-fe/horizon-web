@@ -5,20 +5,20 @@
       style="width: 220px; display: flex; align-items: center; justify-content: space-between"
     >
       背景主题色:
-      <n-select v-model="bgColorValue">
-        <n-option v-for="color in teals" :key="color" :value="color" :label="color"></n-option>
-      </n-select>
+      <h-select v-model="bgColorValue">
+        <h-option v-for="color in teals" :key="color" :value="color" :label="color"></h-option>
+      </h-select>
     </div>
     <div
       class="mb-2"
       style="width: 220px; display: flex; align-items: center; justify-content: space-between"
     >
       文字主题色:
-      <n-select v-model="textColorValue">
-        <n-option v-for="color in blues" :key="color" :value="color" :label="color"></n-option>
-      </n-select>
+      <h-select v-model="textColorValue">
+        <h-option v-for="color in blues" :key="color" :value="color" :label="color"></h-option>
+      </h-select>
     </div>
-    <n-cascader v-model="currentVal" :options="options" />
+    <h-cascader v-model="currentVal" :options="options" />
   </div>
 </template>
 

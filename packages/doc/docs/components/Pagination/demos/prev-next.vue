@@ -1,12 +1,12 @@
 <template>
-  <n-pagination :total="50" >
+  <h-pagination :total="50" >
     <template #prev>
       <IconTriangleLeftFilled />
     </template>
     <template #next>
       <IconTriangleRightFilled />
     </template>
-  </n-pagination>
+  </h-pagination>
 </template>
 <script setup lang="ts">
 import {IconTriangleLeftFilled, IconTriangleRightFilled} from '@aurora/icon';

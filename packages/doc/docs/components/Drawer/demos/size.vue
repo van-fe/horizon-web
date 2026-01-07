@@ -1,18 +1,18 @@
 <template>
-  <n-radio-group v-model="size" style="margin-bottom: 20px">
-    <n-radio label="small">小 - small</n-radio>
-    <n-radio label="medium">中(默认) - medium</n-radio>
-    <n-radio label="large">大 - large</n-radio>
-    <n-radio label="500px">固定像素 - 500px</n-radio>
-    <n-radio label="75%">固定尺寸 - 75%</n-radio>
-  </n-radio-group>
-  <n-button type="normal" @click="onOpen()">打开抽屉 ({{ size }})</n-button>
-  <n-drawer v-model:visible="visible" title="Title" :size="size" @ok="ok" @cancel="cancel">
+  <h-radio-group v-model="size" style="margih-bottom: 20px">
+    <h-radio label="small">小 - small</h-radio>
+    <h-radio label="medium">中(默认) - medium</h-radio>
+    <h-radio label="large">大 - large</h-radio>
+    <h-radio label="500px">固定像素 - 500px</h-radio>
+    <h-radio label="75%">固定尺寸 - 75%</h-radio>
+  </h-radio-group>
+  <h-button type="normal" @click="onOpen()">打开抽屉 ({{ size }})</h-button>
+  <h-drawer v-model:visible="visible" title="Title" :size="size" @ok="ok" @cancel="cancel">
     <div>
       You can customize modal body text by the current situation. This modal will be closed
       immediately once you press the OK button.
     </div>
-  </n-drawer>
+  </h-drawer>
 </template>
 
 <script lang="ts" setup>

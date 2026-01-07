@@ -1,7 +1,7 @@
 <template>
-  <n-button @click="visible = true">Open Drawer</n-button>
-  <n-drawer v-model:visible="visible" title="Title" placement="right" @ok="onOk" @cancel="onCancel">
-    <n-select
+  <h-button @click="visible = true">Open Drawer</h-button>
+  <h-drawer v-model:visible="visible" title="Title" placement="right" @ok="onOk" @cancel="onCancel">
+    <h-select
       v-model="value1"
       show-search
       clearable
@@ -14,14 +14,14 @@
       @focus="onFocus"
       @blur="onBlur"
     >
-      <n-option
+      <h-option
         v-for="item in options"
         :key="item.value"
         :value="item.value"
         :label="item.text"
       />
-    </n-select>
-  </n-drawer>
+    </h-select>
+  </h-drawer>
 </template>
 
 <script lang="ts" setup>

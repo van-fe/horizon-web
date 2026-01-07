@@ -23,19 +23,19 @@ function onCommand(type: 'star' | 'call' | 'msn') {
 <template>
   <div class="container">
     <div class="content">
-      <n-avatar size="small" />
+      <h-avatar size="small" />
       <div class="name">
         William Li
       </div>
     </div>
     <div class="controls">
-      <n-controls theme="dark" @command="onCommand">
-        <n-control :icon="isStared ? IconStarFilled : IconStar" text="关注" label="star" :icon-color="isStared ? ['gold'] : undefined" />
-        <n-control :icon="IconPhone" label="call">
+      <h-controls theme="dark" @command="onCommand">
+        <h-control :icon="isStared ? IconStarFilled : IconStar" text="关注" label="star" :icoh-color="isStared ? ['gold'] : undefined" />
+        <h-control :icon="IconPhone" label="call">
           <template #text>沟通</template>
-        </n-control>
-        <n-control :icon="IconMessage" text="发送信息" label="msn" />
-      </n-controls>
+        </h-control>
+        <h-control :icon="IconMessage" text="发送信息" label="msn" />
+      </h-controls>
     </div>
   </div>
 </template>
@@ -45,23 +45,23 @@ function onCommand(type: 'star' | 'call' | 'msn') {
   position: relative;
   width: 300px;
   height: 50px;
-  border: 1px solid var(--n-border-default);
-  border-radius: var(--n-radius);
+  border: 1px solid var(--h-border-default);
+  border-radius: var(--h-radius);
   display: flex;
-  align-items: center;
+  aligh-items: center;
   justify-content: center;
-  color: var(--n-text-secondary);
+  color: var(--h-text-secondary);
 }
 
 .container .content {
     flex: 1;
     padding: 8px;
     display: flex;
-    align-items: center;
+    aligh-items: center;
 }
 
 .container .content .name {
-    margin-left: 8px;
+    margih-left: 8px;
 }
 
 .container .controls {

@@ -26,12 +26,12 @@ describe('Form.tsx slots', () => {
       },
     );
 
-    expect(wrapper.find('.n-form-item__label-append').exists()).toBeTruthy();
+    expect(wrapper.find('.h-form-item__label-append').exists()).toBeTruthy();
 
     labelPosition.value = 'left';
 
     await nextTick();
 
-    expect(wrapper.find('.n-form-item__label-append').exists()).toBeFalsy();
+    expect(wrapper.find('.h-form-item__label-append').exists()).toBeFalsy();
   });
 });

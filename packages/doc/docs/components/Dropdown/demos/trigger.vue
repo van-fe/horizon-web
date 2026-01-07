@@ -1,58 +1,58 @@
 <template>
-  <n-row>
-    <n-col :span="24">
-      <n-dropdown popper-width="108" @visible-change="v => (visible1 = v)">
-        <n-button>
+  <h-row>
+    <h-col :span="24">
+      <h-dropdown popper-width="108" @visible-change="v => (visible1 = v)">
+        <h-button>
           Hover(default)
           <template #suffix>
-            <IconArrowDown size="14" :rotate="visible1 ? 180 : 0" class="dropdown-icon" />
+            <IconArrowDown size="14" :rotate="visible1 ? 180 : 0" class="dropdowh-icon" />
           </template>
-        </n-button>
+        </h-button>
         <template #dropdown>
-          <n-dropdown-menu>
-            <n-dropdown-item>北京</n-dropdown-item>
-            <n-dropdown-item>上海</n-dropdown-item>
-            <n-dropdown-item>深圳</n-dropdown-item>
-            <n-dropdown-item>杭州</n-dropdown-item>
-            <n-dropdown-item>重庆</n-dropdown-item>
-          </n-dropdown-menu>
+          <h-dropdowh-menu>
+            <h-dropdowh-item>北京</h-dropdowh-item>
+            <h-dropdowh-item>上海</h-dropdowh-item>
+            <h-dropdowh-item>深圳</h-dropdowh-item>
+            <h-dropdowh-item>杭州</h-dropdowh-item>
+            <h-dropdowh-item>重庆</h-dropdowh-item>
+          </h-dropdowh-menu>
         </template>
-      </n-dropdown>
-      <n-dropdown
+      </h-dropdown>
+      <h-dropdown
         trigger="click"
         :popover-options="{ sameWidth: true }"
         @visible-change="v => (visible2 = v)"
       >
-        <n-button>
+        <h-button>
           Click
           <template #suffix>
-            <IconArrowDown size="14" :rotate="visible2 ? 180 : 0" class="dropdown-icon" />
+            <IconArrowDown size="14" :rotate="visible2 ? 180 : 0" class="dropdowh-icon" />
           </template>
-        </n-button>
+        </h-button>
         <template #dropdown>
-          <n-dropdown-menu>
-            <n-dropdown-item>北京</n-dropdown-item>
-            <n-dropdown-item>上海</n-dropdown-item>
-            <n-dropdown-item>深圳</n-dropdown-item>
-            <n-dropdown-item>杭州</n-dropdown-item>
-            <n-dropdown-item>重庆</n-dropdown-item>
-          </n-dropdown-menu>
+          <h-dropdowh-menu>
+            <h-dropdowh-item>北京</h-dropdowh-item>
+            <h-dropdowh-item>上海</h-dropdowh-item>
+            <h-dropdowh-item>深圳</h-dropdowh-item>
+            <h-dropdowh-item>杭州</h-dropdowh-item>
+            <h-dropdowh-item>重庆</h-dropdowh-item>
+          </h-dropdowh-menu>
         </template>
-      </n-dropdown>
-      <n-dropdown trigger="context-menu" popper-width="108" @command="onCommand">
+      </h-dropdown>
+      <h-dropdown trigger="context-menu" popper-width="108" @command="onCommand">
         <div class="context-menu-area">context-menu</div>
         <template #dropdown>
-          <n-dropdown-menu>
-            <n-dropdown-item command="1">北京</n-dropdown-item>
-            <n-dropdown-item command="2">上海</n-dropdown-item>
-            <n-dropdown-item command="3">深圳</n-dropdown-item>
-            <n-dropdown-item command="4">杭州</n-dropdown-item>
-            <n-dropdown-item command="5">重庆</n-dropdown-item>
-          </n-dropdown-menu>
+          <h-dropdowh-menu>
+            <h-dropdowh-item command="1">北京</h-dropdowh-item>
+            <h-dropdowh-item command="2">上海</h-dropdowh-item>
+            <h-dropdowh-item command="3">深圳</h-dropdowh-item>
+            <h-dropdowh-item command="4">杭州</h-dropdowh-item>
+            <h-dropdowh-item command="5">重庆</h-dropdowh-item>
+          </h-dropdowh-menu>
         </template>
-      </n-dropdown>
-    </n-col>
-  </n-row>
+      </h-dropdown>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">
@@ -69,32 +69,32 @@ function onCommand(val: unknown) {
 </script>
 
 <style scoped>
-.n-dropdown {
+.h-dropdown {
   display: inline-flex;
   vertical-align: top;
 
-  :deep(.n-button__suffix) {
+  :deep(.h-button__suffix) {
     display: inline-flex;
-    align-items: center;
+    aligh-items: center;
   }
 }
 
-.n-dropdown + .n-dropdown {
-  margin-left: 12px;
+.h-dropdown + .h-dropdown {
+  margih-left: 12px;
 }
 
-.dropdown-icon {
+.dropdowh-icon {
   transition: transform .2s;
-  margin-left: 6px;
+  margih-left: 6px;
 }
 
 .context-menu-area {
   width: 300px;
   height: 200px;
-  background: var(--n-bg-info-weak-default);
+  background: var(--h-bg-info-weak-default);
   border-radius: 4px;
   display: flex;
-  align-items: center;
+  aligh-items: center;
   justify-content: center;
 }
 </style>

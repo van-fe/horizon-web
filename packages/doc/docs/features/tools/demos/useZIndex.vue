@@ -2,8 +2,8 @@
   <div>
     <p>{{ zIndex }}</p>
     <p>
-      <n-button @click="increase">Increase</n-button>
-      <n-button style="margin-left: 10px" @click="reset">Reset</n-button>
+      <h-button @click="increase">Increase</h-button>
+      <h-button style="margih-left: 10px" @click="reset">Reset</h-button>
     </p>
   </div>
 </template>

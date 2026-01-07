@@ -33,20 +33,9 @@ export interface HorizonWebResolverOption extends HorizonWebBaseResolverOption {
   directives?: boolean;
   /**
    * Namespace. Do not set it at will
-   * @default 'N'
+   * @default 'H'
    */
   namespace?: string;
-  /**
-   * Whether to use reset style
-   * @default true
-   */
-  useResetStyle?: boolean;
-  /**
-   * Whether to use preset style
-   * The font family preset will import in any case.
-   * @default true
-   */
-  usePresetStyle?: boolean;
 }
 
 const resolveComponents = (name: string, options: HorizonWebResolverOption) => {
@@ -106,14 +95,6 @@ const resolveComponents = (name: string, options: HorizonWebResolverOption) => {
           styleExt === 'scss' ? 'unplugin.scss' : 'css'
         }`,
       );
-
-      if (options.useResetStyle !== false) {
-        sideEffects.push(`@aurora/horizon-web/${dirType}/styles/presets/reset.${styleExt}`);
-      }
-
-      if (options.usePresetStyle !== false) {
-        sideEffects.push(`@aurora/horizon-web/${dirType}/styles/presets/index.${styleExt}`);
-      }
     }
 
     return {
@@ -146,10 +127,6 @@ const resolveDirectives = (name: string, options: HorizonWebResolverOption) => {
       `@aurora/horizon-web/${dirType}/styles/global-variables.${styleExt}`,
     );
 
-    if (options.useResetStyle === true || options.useResetStyle === undefined) {
-      sideEffects.push(`@aurora/horizon-web/${dirType}/styles/presets/reset.${styleExt}`);
-    }
-
     if (directive.hasStyle) {
       sideEffects.push(
         `@aurora/horizon-web/${dirType}/directives/${directive.from}/src/style/index.${
@@ -170,8 +147,7 @@ export function HorizonWebPluginResolvers(options: HorizonWebResolverOption = {}
   options = {
     directives: true,
     importStyle: 'css',
-    useResetStyle: true,
-    namespace: 'N',
+    namespace: 'H',
     ...options,
   };
 

@@ -2,7 +2,7 @@
 layout: home
 
 hero:
-  name: "HORIZONWEB"
+  name: "Horizon Web"
   text: "A Vue3 Modern Components"
   tagline: To better improve your efficiency
   actions:

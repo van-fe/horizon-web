@@ -1,20 +1,20 @@
 <template>
-  <n-popover class="mr-4" popper-class="content_popper">
+  <h-popover class="mr-4" popper-class="content_popper">
     <template #reference>
-      <n-button :plain="true">使用PopContent组件包裹内容</n-button>
+      <h-button :plain="true">使用PopContent组件包裹内容</h-button>
     </template>
     <template #popper>
-      <n-pop-content>
+      <h-pop-content>
         <div class="popper">
           <div class="header">内容标题</div>
           <div class="content">我是气泡卡片文本描述内容, 我是气泡卡片文字链接...</div>
         </div>
-      </n-pop-content>
+      </h-pop-content>
     </template>
-  </n-popover>
-  <n-popover popper-class="content_popper">
+  </h-popover>
+  <h-popover popper-class="content_popper">
     <template #reference>
-      <n-button :plain="true">不使用PopContent组件包裹内容</n-button>
+      <h-button :plain="true">不使用PopContent组件包裹内容</h-button>
     </template>
     <template #popper>
       <div class="nocontent-wrap popper">
@@ -22,7 +22,7 @@
         <div class="content">我是气泡卡片文本描述内容, 我是气泡卡片文字链接...</div>
       </div>
     </template>
-  </n-popover>
+  </h-popover>
 </template>
 
 <style>

@@ -1,5 +1,5 @@
 <template>
-  <n-button v-popconfirm @click="del">Delete</n-button>
+  <h-button v-popconfirm @click="del">Delete</h-button>
 </template>
 
 <script lang="ts">

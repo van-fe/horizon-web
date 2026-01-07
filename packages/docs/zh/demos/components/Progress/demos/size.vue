@@ -1,9 +1,9 @@
 <template>
   <div class="demo-progress">
-    <n-progress :percentage="100" size="xs" />
-    <n-progress :percentage="100" :format="format" size="s" />
-    <n-progress :percentage="50" />
-    <n-progress :percentage="100" size="l" />
+    <h-progress :percentage="100" size="xs" />
+    <h-progress :percentage="100" :format="format" size="s" />
+    <h-progress :percentage="50" />
+    <h-progress :percentage="100" size="l" />
   </div>
 </template>
 
@@ -20,7 +20,7 @@ export default defineComponent({
 </script>
 
 <style>
-.demo-progress .n-progress-container {
+.demo-progress .h-progress-container {
   margin-bottom: 15px;
   width: 350px;
 }

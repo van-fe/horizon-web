@@ -1,22 +1,22 @@
 <template>
-  <n-form>
-    <n-form-item label="尺寸">
-      <n-radio-group v-model="size">
-        <n-radio label="small" />
-        <n-radio label="medium" />
-        <n-radio label="large" />
-        <n-radio label="huge" />
-      </n-radio-group>
-    </n-form-item>
-    <n-form-item label="形状">
-      <n-radio-group v-model="galleryShape">
-        <n-radio label="square" />
-        <n-radio label="rectangle" />
-      </n-radio-group>
-    </n-form-item>
-  </n-form>
-  <n-button class="mb-2" @click="change">修改原始 modelValue</n-button>
-  <n-upload
+  <h-form>
+    <h-form-item label="尺寸">
+      <h-radio-group v-model="size">
+        <h-radio label="small" />
+        <h-radio label="medium" />
+        <h-radio label="large" />
+        <h-radio label="huge" />
+      </h-radio-group>
+    </h-form-item>
+    <h-form-item label="形状">
+      <h-radio-group v-model="galleryShape">
+        <h-radio label="square" />
+        <h-radio label="rectangle" />
+      </h-radio-group>
+    </h-form-item>
+  </h-form>
+  <h-button class="mb-2" @click="change">修改原始 modelValue</h-button>
+  <h-upload
     v-model="modelValue"
     action="https://horizon-web-inspector.nioint.com/upload-mock"
     type="gallery"

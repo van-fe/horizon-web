@@ -1,6 +1,5 @@
 import type { VNode } from 'vue';
-import { computed, defineComponent, inject, nextTick, ref, toRefs, watch } from 'vue';
-import type { InputProps } from './composables/useProps';
+import { computed, defineComponent, inject, nextTick, ref, toRef, toRefs, watch } from 'vue';
 import { useInputProps } from './composables/useProps';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import {
@@ -23,12 +22,12 @@ import type { InputSlots } from './composables/useSlots';
 import { useInputSlots } from './composables/useSlots';
 import type { InputExposes } from './composables/useExposes';
 import { useInputExposes } from './composables/useExposes';
-import { defaultLocale, localeInjectKey } from '~/provides';
 import useSize from '~/utils/useSize';
 import useIconRender from '~/utils/useIconRender';
 import { useAutoSizeStyle } from './composables/useAutoSizeStyle';
 import { useLimitStyle } from './composables/useLimitStyle';
-import useLocaleLang from 'src/utils/useLocaleLang';
+import useLocaleLang from '~/utils/useLocaleLang';
+import { warn } from '~/utils/useLog';
 
 export default defineComponent({
   name: `${useNamespace()}Input`,
@@ -38,7 +37,7 @@ export default defineComponent({
   slots: useInputSlots,
   exposes: useInputExposes,
   setup(
-    props: InputProps,
+    props,
     { slots, attrs, emit, expose }: HorizonWebSetupContext<InputEmits, InputSlots, InputExposes>,
   ) {
     const cHelper = new ComponentClassBlock('input');
@@ -75,18 +74,12 @@ export default defineComponent({
       if (['text', 'textarea', 'password'].includes(props.type)) {
         return props.type;
       }
-      console.warn(
-        '[HorizonWeb input warn] Please use one of these values as the input prop "type": "text"/"textarea"/"password". Or it will be converted to "text".',
-      );
+      warn('input', 'Please use one of these values as the input prop "type": "text"/"textarea"/"password". Or it will be converted to "text".');
       return 'text';
     });
 
-    const { size } = toRefs(props);
-
     // global size
-    const sizeRef = useSize(size, 'medium');
-
-    const locale = inject(localeInjectKey, defaultLocale);
+    const sizeRef = useSize(toRef(props, 'size'), 'medium');
 
     // form disabled inject
     const formDisabled = inject(HFormDisabledInjectedKey, undefined);
@@ -366,7 +359,7 @@ export default defineComponent({
           class={cls(
             cHelper.block,
             cHelper.m(sizeRef.value, !!sizeRef.value),
-            cHelper.m('filled', props.filled || props.inputStyle === 'emphasize'),
+            cHelper.m('filled', props.inputStyle === 'emphasize'),
             cHelper.m('no-border', props.inputStyle === 'no-border'),
             cHelper.m('with-prepend', !!slots.prepend),
             cHelper.m('with-append', !!slots.append),

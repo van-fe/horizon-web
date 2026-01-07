@@ -1,9 +1,9 @@
 <template>
   <div class="demo-block">
-    <n-tooltip placement="top">
-      <n-button type="normal" plain>Hover</n-button>
+    <h-tooltip placement="top">
+      <h-button type="normal" plain>Hover</h-button>
       <template #content>Dark</template>
-    </n-tooltip>
+    </h-tooltip>
   </div>
 </template>
 
@@ -12,12 +12,12 @@
 <style scoped>
 .demo-block {
   display: flex;
-  align-items: center;
+  aligh-items: center;
 }
 
-.demo-block .n-popover__reference {
-  margin-bottom: 20px;
-  margin-left: 0;
-  margin-right: 20px;
+.demo-block .h-popover__reference {
+  margih-bottom: 20px;
+  margih-left: 0;
+  margih-right: 20px;
 }
 </style>

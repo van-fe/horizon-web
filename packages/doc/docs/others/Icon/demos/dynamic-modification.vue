@@ -3,7 +3,7 @@
     <a-icon :name="value === 1 ? 'close' : 'check'" />
   </p>
 
-  <n-button @click="value = value === 1 ? 2 : 1">修改</n-button>
+  <h-button @click="value = value === 1 ? 2 : 1">修改</h-button>
 </template>
 
 <script setup lang="ts">

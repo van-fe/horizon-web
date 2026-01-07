@@ -1,29 +1,29 @@
 <template>
-  <n-page-header>
+  <h-page-header>
     <template #title>
       This is an extremely long header that may exceed the maximum width limit
     </template>
     <template #tags>
-      <n-tag size="small" class="ml-2" :clickable="false">标签</n-tag>
+      <h-tag size="small" class="ml-2" :clickable="false">标签</h-tag>
     </template>
     <template #content>
       ID: 0012138
       <copy-btn text="0012138" />
-      <n-divider direction="vertical" />
+      <h-divider direction="vertical" />
       所有者:
-      <n-tag avatar="https://source.niohome.com/UserPicture/default.jpg" :round="true" class="ml-2">Unknown</n-tag>
-      <n-divider direction="vertical" />
+      <h-tag avatar="https://source.niohome.com/UserPicture/default.jpg" :round="true" class="ml-2">Unknown</h-tag>
+      <h-divider direction="vertical" />
       所属空间:
-      <n-link :link="true" size="small" type="neutral" class="ml-2">
+      <h-link :link="true" size="small" type="neutral" class="ml-2">
         <IconEdit />
         DD
-      </n-link>
+      </h-link>
     </template>
     <template #extra>
-      <n-button :plain="true">副按钮</n-button>
-      <n-button>主按钮</n-button>
+      <h-button :plain="true">副按钮</h-button>
+      <h-button>主按钮</h-button>
     </template>
-  </n-page-header>
+  </h-page-header>
 </template>
 
 <script setup lang="ts">
@@ -31,7 +31,7 @@ import { IconEdit } from '@aurora/icon';
 </script>
 
 <style scoped>
-.n-link :deep(.n-link__inner){
+.h-link :deep(.h-link__inner){
   display: flex;
   align-items: center;
 }

@@ -3,11 +3,11 @@
     <section class="toolbar">
       <div class="tip">每行网格数:</div>
       <div class="slider-wrap">
-        <n-slider
+        <h-slider
           v-model="gridItems"
           :min="2"
           :max="10"
-        ></n-slider>
+        ></h-slider>
       </div>
       <div class="grid-num">{{ gridItems }}</div>
     </section>
@@ -59,10 +59,10 @@ onMounted(() => {
 
   .toolbar {
     display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+    aligh-items: center;
+    margih-bottom: 10px;
     .tip {
-      margin-right: 10px;
+      margih-right: 10px;
       width: 100px;
     }
     .slider-wrap {
@@ -70,7 +70,7 @@ onMounted(() => {
     }
     .grid-num {
       background-color: rgb(196, 196, 196);
-      margin-left: 10px;
+      margih-left: 10px;
       border-radius: 4px;
       padding: 0 10px;
     }

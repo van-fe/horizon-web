@@ -1,5 +1,5 @@
 <template>
-  <n-badge
+  <h-badge
     v-for="(item, index) in listRef"
     :key="index"
     type="icon"
@@ -14,7 +14,7 @@
       :style="{ width: item.containerWidth + 'px', height: item.containerWidth + 'px' }"
       style="background: gray; border-radius: 50%"
     ></div>
-  </n-badge>
+  </h-badge>
 </template>
 
 <script lang="ts">

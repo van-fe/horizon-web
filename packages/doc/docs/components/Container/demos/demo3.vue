@@ -1,40 +1,40 @@
 <template>
-  <n-container class="common-container">
-    <n-aside>Aside</n-aside>
-    <n-main>Main</n-main>
-  </n-container>
+  <h-container class="commoh-container">
+    <h-aside>Aside</h-aside>
+    <h-main>Main</h-main>
+  </h-container>
 </template>
 
 <style scoped>
-.common-container {
+.commoh-container {
   text-align: center;
 }
-.common-container .n-header {
-  background: var(--n-bg-info-weak-default);
+.commoh-container .h-header {
+  background: var(--h-bg-info-weak-default);
   display: flex;
-  align-items: center;
+  aligh-items: center;
   justify-content: center;
 }
 
-.common-container .n-main {
+.commoh-container .h-main {
   height: 200px;
-  background: var(--n-bg-warning-weak-default);
+  background: var(--h-bg-warning-weak-default);
   display: flex;
-  align-items: center;
+  aligh-items: center;
   justify-content: center;
 }
 
-.common-container .n-footer {
-  background: var(--n-bg-error-weak-default);
+.commoh-container .h-footer {
+  background: var(--h-bg-error-weak-default);
   display: flex;
-  align-items: center;
+  aligh-items: center;
   justify-content: center;
 }
 
-.common-container .n-aside {
-  background: var(--n-bg-success-weak-default);
+.commoh-container .h-aside {
+  background: var(--h-bg-success-weak-default);
   display: flex;
-  align-items: center;
+  aligh-items: center;
   justify-content: center;
 }
 </style>

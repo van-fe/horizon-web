@@ -1,12 +1,5 @@
 import type { ExtractPropTypes, PropType } from 'vue';
-import type { VideoJsPlayerOptions } from 'video.js';
 import { declarePropType } from '@aurora/utils';
-
-declare module 'video.js' {
-  interface VideoJsPlayerOptions {
-    hotkeys?: boolean;
-  }
-}
 
 export interface Source {
   /** 视频地址 */
@@ -31,12 +24,6 @@ export const useVideoPlayerProps = declarePropType({
   rotate: {
     type: Number as PropType<0 | 90 | 180 | 270>,
     default: 0,
-  },
-  /** video.js 的参数对象 */
-  options: {
-    type: Object as PropType<VideoJsPlayerOptions>,
-    default: () => {},
-    required: false,
   },
 });
 export type VideoPlayerProps = ExtractPropTypes<typeof useVideoPlayerProps>;

@@ -1,18 +1,18 @@
 <template>
-  <n-form ref="instance" :model="values">
-    <n-form-item label="Name" prop="name" style="width: 300px" required>
-      <n-input v-model="values.name" />
-    </n-form-item>
-    <n-form-item label="Category" prop="category" required>
-      <n-segmented v-model:active-key="values.category" form>
-        <n-segmented-item v-for="v in options" :key="v" :label="v" />
-      </n-segmented>
-    </n-form-item>
-    <n-space>
-      <n-button @click="onSubmit">Submit</n-button>
-      <n-button type="danger" @click="instance?.validate()">Validate</n-button>
-    </n-space>
-  </n-form>
+  <h-form ref="instance" :model="values">
+    <h-form-item label="Name" prop="name" style="width: 300px" required>
+      <h-input v-model="values.name" />
+    </h-form-item>
+    <h-form-item label="Category" prop="category" required>
+      <h-segmented v-model:active-key="values.category" form>
+        <h-segmented-item v-for="v in options" :key="v" :label="v" />
+      </h-segmented>
+    </h-form-item>
+    <h-space>
+      <h-button @click="onSubmit">Submit</h-button>
+      <h-button type="danger" @click="instance?.validate()">Validate</h-button>
+    </h-space>
+  </h-form>
 </template>
 
 <script setup lang="ts">

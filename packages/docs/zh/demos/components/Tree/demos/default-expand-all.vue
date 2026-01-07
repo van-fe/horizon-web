@@ -1,25 +1,25 @@
 <template>
-  <n-row>
-    <n-col :span="12">
+  <h-row>
+    <h-col :span="12">
       <div class="demo-title">单选</div>
-      <n-tree
+      <h-tree
         v-if="baseTreeData.length"
         :tree-data="baseTreeData"
         :is-default-expand-all="true"
         :max-height="300"
       />
-    </n-col>
-    <n-col :span="12">
+    </h-col>
+    <h-col :span="12">
       <div class="demo-title">多选</div>
-      <n-tree
+      <h-tree
         v-if="baseTreeData.length"
         :tree-data="baseTreeData"
         :is-default-expand-all="true"
         :max-height="300"
         :multiple="true"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

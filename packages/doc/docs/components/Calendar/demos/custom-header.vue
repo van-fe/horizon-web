@@ -1,9 +1,9 @@
 <template>
-  <n-calendar>
+  <h-calendar>
     <template #header>
-      <n-input v-model="searchWord" placeholder="搜索" size="large" suffix-icon="search" />
+      <h-input v-model="searchWord" placeholder="搜索" size="large" suffix-icon="search" />
     </template>
-  </n-calendar>
+  </h-calendar>
 </template>
 
 <script lang="ts">

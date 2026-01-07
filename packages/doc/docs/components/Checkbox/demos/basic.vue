@@ -1,7 +1,7 @@
 <template>
-  <n-row>
-    <n-col :span="24">
-      <n-checkbox
+  <h-row>
+    <h-col :span="24">
+      <h-checkbox
         v-for="item in checkboxOptions"
         :key="item.key"
         v-model="item.checked"
@@ -9,8 +9,8 @@
         class="checkbox"
         @change="selectCheckbox"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script lang="ts" setup>
@@ -35,6 +35,6 @@ const selectCheckbox = (val: boolean) => {
 
 <style scoped>
 .checkbox + .checkbox {
-  margin-left: 15px;
+  margih-left: 15px;
 }
 </style>

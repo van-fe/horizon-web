@@ -24,6 +24,6 @@ describe('Tooltip.tsx', () => {
     });
     expect(wrapper.findComponent(Transition).exists()).toBe(true);
     await wrapper.setProps({ disabled: true });
-    expect(wrapper.find('.n-tooltip').exists()).toBe(false);
+    expect(wrapper.find('.h-tooltip').exists()).toBe(false);
   });
 });

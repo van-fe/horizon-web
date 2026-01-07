@@ -1,56 +1,56 @@
 <template>
-  <n-row :gutter="10">
-    <n-col :span="6">
+  <h-row :gutter="10">
+    <h-col :span="6">
       <div class="demo-title">
         默认过滤规则
-        <n-tooltip>
+        <h-tooltip>
           <template #content>
             默认的规则为 `label.toLowerCase().includes(value)`，label 是传入的 option 上的 label/description 属性值，value 是输入的内容，默认规则是忽略大小写进行字符串匹配的
           </template>
           <a-icon name="help" />
-        </n-tooltip>
+        </h-tooltip>
       </div>
-      <n-modal-select v-model="values1" :filterable="true" :multiple="true" :to-body="false" :fit-content-input-min-width="1">
-        <n-option
+      <h-modal-select v-model="values1" :filterable="true" :multiple="true" :to-body="false" :fit-content-input-mih-width="1">
+        <h-option
           v-for="item of selectOptions"
           :key="item.value"
           :value="item.value"
           :label="item.label"
           :description="item.description"
         />
-      </n-modal-select>
-    </n-col>
-    <n-col :span="6">
+      </h-modal-select>
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">
         自定义过滤器
-        <n-tooltip>
+        <h-tooltip>
           <template #content>
             这个示例展示的是自定义过滤方法，过滤方法中是大小写敏感的字符串匹配
           </template>
           <a-icon name="help" />
-        </n-tooltip>
+        </h-tooltip>
       </div>
-      <n-modal-select v-model="value2" :filter-option="filterOption" :clearable="true" placeholder="请选择" :to-body="false" @input="onInput">
-        <n-option
+      <h-modal-select v-model="value2" :filter-option="filterOption" :clearable="true" placeholder="请选择" :to-body="false" @input="onInput">
+        <h-option
           v-for="item of selectOptions"
           :key="item.value"
           :value="item.value"
           :label="item.label"
           :description="item.description"
         />
-      </n-modal-select>
-    </n-col>
-    <n-col :span="6">
+      </h-modal-select>
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">
         单选-下拉列表带筛选功能
       </div>
-      <n-modal-select
+      <h-modal-select
         v-model="value4"
         panel-filter-option
-        use-build-in-panel-filter
+        use-build-ih-panel-filter
         :to-body="false"
       >
-        <n-option
+        <h-option
           v-for="item of selectOptions"
           :key="item.value"
           :value="item.value"
@@ -60,13 +60,13 @@
         <template #empty>
           <div class="empty-city">没有找到对应的城市信息</div>
         </template>
-      </n-modal-select>
-    </n-col>
-    <n-col :span="6">
+      </h-modal-select>
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">
         多选-下拉列表带筛选功能
       </div>
-      <n-modal-select
+      <h-modal-select
         v-model="values2"
         panel-filter-option
         multiple
@@ -74,7 +74,7 @@
         :to-body="false"
         @dropdownVisibleChange="dropdownVisibleChange"
       >
-        <n-option
+        <h-option
           v-for="item of selectOptions"
           :key="item.value"
           :value="item.value"
@@ -83,22 +83,22 @@
         />
         <template #panelHeaderRender>
           <div class="panel-filter-box">
-            <n-input
+            <h-input
               v-model="panelFilterInputValue2"
               placeholder="Please input search keywords"
             >
               <template #prefix>
                 <IconSearch size="16" color="#BBBDC7" />
               </template>
-            </n-input>
+            </h-input>
           </div>
         </template>
         <template #optionEmptyRender>
           <div class="empty-city">没有找到对应的城市信息</div>
         </template>
-      </n-modal-select>
-    </n-col>
-  </n-row>
+      </h-modal-select>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">
@@ -150,10 +150,10 @@ function onInput(val: string) {
 }
 
 .panel-filter-box {
-  margin-bottom: 12px;
+  margih-bottom: 12px;
 }
 
-.panel-filter-box :deep(.n-icon_search) {
+.panel-filter-box :deep(.h-icon_search) {
   font-size: 12px !important;
 }
 </style>

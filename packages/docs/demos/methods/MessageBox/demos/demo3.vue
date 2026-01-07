@@ -1,7 +1,7 @@
 <template>
-  <n-button class="mr-2" @click="showAlert">Alert</n-button>
-  <n-button class="mr-2" @click="showConfirm">Confirm</n-button>
-  <n-button class="mr-2" @click="showNoClose">No Close</n-button>
+  <h-button class="mr-2" @click="showAlert">Alert</h-button>
+  <h-button class="mr-2" @click="showConfirm">Confirm</h-button>
+  <h-button class="mr-2" @click="showNoClose">No Close</h-button>
 </template>
 
 <script lang="ts">

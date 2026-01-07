@@ -1,6 +1,6 @@
 <template>
-  <n-button @click="visible = !visible">Basic</n-button>
-  <n-alert :closable="visible" description="Info Text" type="info" />
+  <h-button @click="visible = !visible">Basic</h-button>
+  <h-alert :closable="visible" description="Info Text" type="info" />
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue';

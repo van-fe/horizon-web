@@ -1,15 +1,15 @@
 <template>
   <p>
-    <n-link>
+    <h-link>
       <template #suffix>...</template>
       And So on
-    </n-link>
+    </h-link>
   </p>
   <p>
-    <n-link icon="el-icon-edit" :underline="false">
+    <h-link icon="el-icon-edit" :underline="false">
       {{ new Date().toLocaleString() }}
       <template #prefix><a-icon name="time" suffix="2xs" /></template>
-    </n-link>
+    </h-link>
   </p>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <n-input
+  <h-input
     ref="input"
     v-model="val"
     clearable

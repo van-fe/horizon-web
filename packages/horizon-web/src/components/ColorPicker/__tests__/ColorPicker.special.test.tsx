@@ -19,12 +19,12 @@ describe('ColorPicker.tsx special', () => {
     await nextTick();
 
     expect(
-      (panel.find('.n-color-picker-edit-form__input input') as DOMWrapper<HTMLInputElement>).element
+      (panel.find('.h-color-picker-edit-form__input input') as DOMWrapper<HTMLInputElement>).element
         .value,
     ).toBe('000000');
 
     expect(
-      (panel.find('.n-color-picker-edit-form__input--alpha input') as DOMWrapper<HTMLInputElement>)
+      (panel.find('.h-color-picker-edit-form__input--alpha input') as DOMWrapper<HTMLInputElement>)
         .element.value,
     ).toBe('100%');
 
@@ -33,12 +33,12 @@ describe('ColorPicker.tsx special', () => {
     await nextTick();
 
     expect(
-      (panel.find('.n-color-picker-edit-form__input input') as DOMWrapper<HTMLInputElement>).element
+      (panel.find('.h-color-picker-edit-form__input input') as DOMWrapper<HTMLInputElement>).element
         .value,
     ).toBe('FFFFFF');
 
     expect(
-      (panel.find('.n-color-picker-edit-form__input--alpha input') as DOMWrapper<HTMLInputElement>)
+      (panel.find('.h-color-picker-edit-form__input--alpha input') as DOMWrapper<HTMLInputElement>)
         .element.value,
     ).toBe('0%');
   });

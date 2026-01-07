@@ -120,7 +120,7 @@ export async function triggerOptionByOrderWithLimit(
 }
 
 export async function clickConfirmCancelBtn(wrapper: VueWrapper<any, any>, confirm = true) {
-  const confirmWrapper = wrapper.find('.n-picker__pop-content--confirm-wrapper');
+  const confirmWrapper = wrapper.find('.h-picker__pop-content--confirm-wrapper');
 
   const [cancelBtn, confirmBtn] = confirmWrapper.findAllComponents(HButton);
 
@@ -167,6 +167,6 @@ export async function checkAllItems(wrapper: VueWrapper<any, any>) {
   const panel = wrapper.findComponent(CascaderPanel);
 
   for (const item of panel.findAllComponents(CascaderItem)) {
-    await item.find('.n-cascader-item__checkbox').trigger('click');
+    await item.find('.h-cascader-item__checkbox').trigger('click');
   }
 }

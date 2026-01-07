@@ -1,5 +1,4 @@
 import EMPTY_DEFAULT from '../assets/empty_default.svg';
-import EMPTY_MEETING from '../assets/empty_metting.svg';
 import EMPTY_MESSAGE from '../assets/empty_message.svg';
 import EMPTY_LIST from '../assets/empty_list.svg';
 import EMPTY_IMAGE from '../assets/empty_image.svg';
@@ -20,7 +19,6 @@ import FAIL_CHARGING from '../assets/charge_failed.svg';
 
 export const PRESENTED_IMAGES = {
   EMPTY_DEFAULT,
-  EMPTY_MEETING,
   EMPTY_MESSAGE,
   EMPTY_LIST,
   EMPTY_IMAGE,

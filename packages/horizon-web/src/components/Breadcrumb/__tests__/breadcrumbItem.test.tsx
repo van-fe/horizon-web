@@ -17,7 +17,7 @@ describe('BreadcrumbItem.tsx', () => {
         </HBreadcrumb>
       ));
 
-      await wrapper.find('.n-breadcrumb-item__text').trigger('click');
+      await wrapper.find('.h-breadcrumb-item__text').trigger('click');
 
       expect(onClick).toHaveBeenCalledTimes(0);
 
@@ -25,7 +25,7 @@ describe('BreadcrumbItem.tsx', () => {
 
       await nextTick();
 
-      await wrapper.find('.n-breadcrumb-item__text').trigger('click');
+      await wrapper.find('.h-breadcrumb-item__text').trigger('click');
 
       expect(onClick).toHaveBeenCalledOnce();
     });
@@ -46,7 +46,7 @@ describe('BreadcrumbItem.tsx', () => {
         />
       ));
 
-      await wrapper.find('.n-breadcrumb-item__text').trigger('click');
+      await wrapper.find('.h-breadcrumb-item__text').trigger('click');
 
       expect(onClick).toHaveBeenCalledTimes(0);
 
@@ -54,7 +54,7 @@ describe('BreadcrumbItem.tsx', () => {
 
       await nextTick();
 
-      await wrapper.find('.n-breadcrumb-item__text').trigger('click');
+      await wrapper.find('.h-breadcrumb-item__text').trigger('click');
 
       expect(onClick).toHaveBeenCalledOnce();
     });

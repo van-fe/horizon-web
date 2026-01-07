@@ -8,7 +8,7 @@ export default () => ({
       }
 
       if (/(import\s*[^"']*["'])~/.test(code)) {
-        code = code.replace(/(import\s*[^'"]*["'])~/g, '$1horizonweb-package/src');
+        code = code.replace(/(import\s*[^'"]*["'])~/g, '$1horizon-web-package/src');
         return code;
       }
     }

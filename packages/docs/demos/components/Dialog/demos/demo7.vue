@@ -1,6 +1,6 @@
 <template>
-  <n-button @click="visible = true">点我</n-button>
-  <n-dialog
+  <h-button @click="visible = true">点我</h-button>
+  <h-dialog
     class="my-dialog"
     v-model="visible"
     header-margin="0"
@@ -17,7 +17,7 @@
     @secondaryClick="onSecondary"
   >
     <p>完全自定义</p>
-  </n-dialog>
+  </h-dialog>
 </template>
 
 <script setup lang="ts">

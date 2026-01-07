@@ -1,28 +1,28 @@
 <template>
-  <n-row>
-    <n-col :span="12">
+  <h-row>
+    <h-col :span="12">
       <div class="demo-title">普通渲染</div>
       <p>
-        <n-button @click="scroll(1)">滚动</n-button>
-        <n-button @click="expandAll(1)">全部展开</n-button>
-        <n-button @click="collapseAll(1)">全部收起</n-button>
+        <h-button @click="scroll(1)">滚动</h-button>
+        <h-button @click="expandAll(1)">全部展开</h-button>
+        <h-button @click="collapseAll(1)">全部收起</h-button>
       </p>
-      <n-tree
+      <h-tree
         ref="treeDomRef1"
         :tree-data="baseTreeData"
         :max-height="300"
         :multiple="true"
         :tooltip="false"
       />
-    </n-col>
-    <n-col :span="12">
+    </h-col>
+    <h-col :span="12">
       <div class="demo-title">虚拟滚动</div>
       <p>
-        <n-button @click="scroll(2)">滚动</n-button>
-        <n-button @click="expandAll(2)">全部展开</n-button>
-        <n-button @click="collapseAll(2)">全部收起</n-button>
+        <h-button @click="scroll(2)">滚动</h-button>
+        <h-button @click="expandAll(2)">全部展开</h-button>
+        <h-button @click="collapseAll(2)">全部收起</h-button>
       </p>
-      <n-tree
+      <h-tree
         ref="treeDomRef2"
         :tree-data="baseTreeData"
         :use-virtual-scroll="true"
@@ -31,8 +31,8 @@
         :tooltip="false"
         :expand-wrapper-by-children="true"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

@@ -41,12 +41,12 @@ describe('Drawer.tsx v2', () => {
     visible.value = true;
     await nextTick();
     expect(ctx.teleportEl.innerHTML).toMatchInlineSnapshot(
-      `"<div class="n-drawer" style="position: absolute; z-index: 2002;"><transition-stub name="n-fade-in-normal" duration="300" appear="true" persisted="false" css="true"><div class="n-drawer__mask" style="z-index: inherit; position: absolute;"></div></transition-stub><transition-stub name="n-drawer-slide-right" appear="true" persisted="false" css="true"><div class="n-drawer__container n-drawer--right" style="z-index: 2003; width: 418.666667px; height: 100%; position: absolute;"><div class="n-drawer__main"><div class="n-drawer__header n-drawer__header--customize"><div class="n-drawer__default-title">drawer title</div><button class="n-button n-button--normal n-button--small n-button--text n-button--equally is-solid is-with-icon n-drawer__closable n-drawer__closable" type="button" tabindex="0" autofocus="false"><div class="n-button__icon is-custom-size"><i class="a-icon n-icon__v2_11_24 n-icon_close" style="font-size: 16px; transform: rotate(undefineddeg);"></i></div><!----><!----></button></div><div class="n-drawer__body"><div>drawer content</div></div><div class="n-drawer__footer"><div class="n-drawer__default-footer"><button class="n-button n-button--normal n-button--medium n-button--plain is-solid" type="button" tabindex="0" autofocus="false"><!----><div class="n-button__content"><!----></div><!----></button><button class="n-button n-button--primary n-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: var(--n-spacing-5);"><!----><div class="n-button__content"><!----></div><!----></button></div></div><!----></div></div></transition-stub></div>"`,
+      `"<div class="n-drawer" style="position: absolute; z-index: 2002;"><transition-stub name="n-fade-in-normal" duration="300" appear="true" persisted="false" css="true"><div class="n-drawer__mask" style="z-index: inherit; position: absolute;"></div></transition-stub><transition-stub name="n-drawer-slide-right" appear="true" persisted="false" css="true"><div class="n-drawer__container n-drawer--right" style="z-index: 2003; width: 418.666667px; height: 100%; position: absolute;"><div class="n-drawer__main"><div class="n-drawer__header n-drawer__header--customize"><div class="n-drawer__default-title">drawer title</div><button class="n-button n-button--normal n-button--small n-button--text n-button--equally is-solid is-with-icon n-drawer__closable n-drawer__closable" type="button" tabindex="0" autofocus="false"><div class="n-button__icon is-custom-size"><i class="a-icon n-icon__v2_11_24 n-icon_close" style="font-size: 16px; transform: rotate(undefineddeg);"></i></div><!----><!----></button></div><div class="n-drawer__body"><div>drawer content</div></div><div class="n-drawer__footer"><div class="n-drawer__default-footer"><button class="n-button n-button--normal n-button--medium n-button--plain is-solid" type="button" tabindex="0" autofocus="false"><!----><div class="n-button__content"><!----></div><!----></button><button class="n-button n-button--primary n-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: var(--h-spacing-5);"><!----><div class="n-button__content"><!----></div><!----></button></div></div><!----></div></div></transition-stub></div>"`,
     );
 
-    expect(ctx.teleportEl.querySelector('.n-drawer__header')?.textContent).toBe(dTitle);
-    expect(ctx.teleportEl.querySelector('.n-drawer__body')?.textContent).toBe(dContent);
-    expect(ctx.teleportEl.querySelectorAll('.n-button').length).toBe(3);
+    expect(ctx.teleportEl.querySelector('.h-drawer__header')?.textContent).toBe(dTitle);
+    expect(ctx.teleportEl.querySelector('.h-drawer__body')?.textContent).toBe(dContent);
+    expect(ctx.teleportEl.querySelectorAll('.h-button').length).toBe(3);
   });
 
   test('Drawer open #emits', async () => {
@@ -93,7 +93,7 @@ describe('Drawer.tsx v2', () => {
     );
     expect(wrapper.findComponent(Drawer).exists()).toBe(true);
 
-    await wrapper.find('.n-button--plain').trigger('click');
+    await wrapper.find('.h-button--plain').trigger('click');
     await nextTick();
     expect(close).toBeCalledTimes(1);
     expect(visible.value).toBe(false);
@@ -118,10 +118,10 @@ describe('Drawer.tsx v2', () => {
     ));
     expect(wrapper.findComponent(Drawer).exists()).toBe(true);
 
-    await wrapper.find('.n-button--primary').trigger('click');
+    await wrapper.find('.h-button--primary').trigger('click');
     expect(ok).toBeCalledTimes(1);
 
-    await wrapper.find('.n-button--plain').trigger('click');
+    await wrapper.find('.h-button--plain').trigger('click');
     expect(cancel).toBeCalledTimes(1);
     expect(visible.value).toBe(false);
   });
@@ -227,7 +227,7 @@ describe('Drawer.tsx v2', () => {
                       <!---->
                     </div>
                     <!---->
-                  </button><button class="n-button n-button--primary n-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: var(--n-spacing-5);">
+                  </button><button class="n-button n-button--primary n-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: var(--h-spacing-5);">
                     <!---->
                     <div class="n-button__content">
                       <!---->
@@ -262,10 +262,10 @@ describe('Drawer.tsx v2', () => {
   //   ));
   //   expect(wrapper.findComponent(Drawer).exists()).toBe(true);
 
-  //   await wrapper.find('.n-drawer__mask').trigger('click');
+  //   await wrapper.find('.h-drawer__mask').trigger('click');
   //   expect(maskClick).toBeCalledTimes(1);
 
-  //   await wrapper.find('.n-drawer__closable').trigger('click');
+  //   await wrapper.find('.h-drawer__closable').trigger('click');
   //   expect(iconClick).toBeCalledTimes(1);
   // });
 });

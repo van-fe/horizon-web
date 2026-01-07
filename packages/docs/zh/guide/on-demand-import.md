@@ -1,18 +1,18 @@
 # 按需引入
-如果对于打包后产物的体积有要求，则请使用按需引入的方式使用 `HORIZONWEB`.
+如果对于打包后产物的体积有要求，则请使用按需引入的方式使用 `Horizon Web`.
 
 ## 安装
 需要安装一些包来启用按需引入:
 
 ::: code-group
 ```sh [npm]
-$ npm install unplugin-vue-components @aurora/unplugin-resolver -D
+$ npm install unplugin-vue-components @aurora/horizon-web-unplugin-resolver -D
 ```
 ```sh [yarn]
-$ yarn add unplugin-vue-components @aurora/unplugin-resolver -D
+$ yarn add unplugin-vue-components @aurora/horizon-web-unplugin-resolver -D
 ```
 ```sh [bun]
-$ bun add unplugin-vue-components @aurora/unplugin-resolver -D
+$ bun add unplugin-vue-components @aurora/horizon-web-unplugin-resolver -D
 ```
 :::
 
@@ -36,7 +36,7 @@ createApp(App)
 ```ts [Vite]
 import { defineConfig } from 'vite';
 import Components from 'unplugin-vue-components/vite';
-import { HorizonWebPluginResolvers } from '@aurora/unplugin-resolver';
+import { HorizonWebPluginResolvers } from '@aurora/horizon-web-unplugin-resolver';
 
 export default defineConfig({
   plugins: [
@@ -52,7 +52,7 @@ export default defineConfig({
 ```
 ```ts [VueCli]
 const { default: Components } = require('unplugin-vue-components/webpack');
-const { HorizonWebPluginResolvers } = require('@aurora/unplugin-resolver');
+const { HorizonWebPluginResolvers } = require('@aurora/horizon-web-unplugin-resolver');
 
 module.exports = {
   configureWebpack: {
@@ -70,7 +70,7 @@ module.exports = {
 ```
 ```ts [Webpack]
 const { default: Components } = require('unplugin-vue-components/webpack');
-const { HorizonWebPluginResolvers } = require('@aurora/unplugin-resolver');
+const { HorizonWebPluginResolvers } = require('@aurora/horizon-web-unplugin-resolver');
 
 module.exports = {
   plugins: [

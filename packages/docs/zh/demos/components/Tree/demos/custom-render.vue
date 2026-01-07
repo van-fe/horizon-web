@@ -1,33 +1,33 @@
 <template>
-  <n-row>
-    <n-col :span="12">
+  <h-row>
+    <h-col :span="12">
       <div class="demo-title">自定义渲染全部节点</div>
 
-      <n-tree :tree-data="baseTreeData" :multiple="true">
+      <h-tree :tree-data="baseTreeData" :multiple="true">
         <template #treeNodeRender="{ data }">
           <div class="tree-item">
             {{ data.label }} ({{ data.value }})
-            <n-dropdown @command="action">
-              <n-button icon="ellipsis" type="normal" size="small" :text="true" @click.stop />
-              <n-dropdown-menu>
-                <n-dropdown-item command="view" icon="eye">查看</n-dropdown-item>
-                <n-dropdown-item command="edit" icon="edit">修改</n-dropdown-item>
-              </n-dropdown-menu>
-            </n-dropdown>
+            <h-dropdown @command="action">
+              <h-button icon="ellipsis" type="normal" size="small" :text="true" @click.stop />
+              <h-dropdown-menu>
+                <h-dropdown-item command="view" icon="eye">查看</h-dropdown-item>
+                <h-dropdown-item command="edit" icon="edit">修改</h-dropdown-item>
+              </h-dropdown-menu>
+            </h-dropdown>
           </div>
         </template>
-      </n-tree>
-    </n-col>
-    <n-col :span="12">
+      </h-tree>
+    </h-col>
+    <h-col :span="12">
       <div class="demo-title">自定义渲染指定节点</div>
 
-      <n-tree :tree-data="renderTreeData" :multiple="true">
+      <h-tree :tree-data="renderTreeData" :multiple="true">
         <template #treeNodeRender="{ data }">
           <div>{{ data.label }} ({{ data.value }})</div>
         </template>
-      </n-tree>
-    </n-col>
-  </n-row>
+      </h-tree>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

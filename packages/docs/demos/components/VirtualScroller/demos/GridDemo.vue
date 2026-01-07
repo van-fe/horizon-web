@@ -3,11 +3,11 @@
     <section class="toolbar">
       <div class="tip">每行网格数:</div>
       <div class="slider-wrap">
-        <n-slider
+        <h-slider
           v-model="gridItems"
           :min="2"
           :max="10"
-        ></n-slider>
+        ></h-slider>
       </div>
       <div class="grid-num">{{ gridItems }}</div>
     </section>

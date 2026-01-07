@@ -10,10 +10,10 @@ const onTabChanged = (tab: NTabValue) => {
 </script>
 
 <template>
-  <n-tabs v-model:active-key="activeKey" @change="onTabChanged">
-    <n-tab key="1" label="Tab1" />
-    <n-tab key="2" label="Tab2" />
-    <n-tab key="3" label="Tab3" />
-    <n-tab key="4" label="Tab4" />
-  </n-tabs>
+  <h-tabs v-model:active-key="activeKey" @change="onTabChanged">
+    <h-tab key="1" label="Tab1" />
+    <h-tab key="2" label="Tab2" />
+    <h-tab key="3" label="Tab3" />
+    <h-tab key="4" label="Tab4" />
+  </h-tabs>
 </template>

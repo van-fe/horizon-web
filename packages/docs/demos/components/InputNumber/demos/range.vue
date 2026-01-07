@@ -15,18 +15,18 @@ function onUpdate(val: number) {
 </script>
 
 <template>
-  <n-row :gutter="12">
-    <n-col :span="8">
+  <h-row :gutter="12">
+    <h-col :span="8">
       <div class="demo-title">步长默认</div>
-      <n-input-number v-model="value1" :min="5" :max="10" @change="onChange" />
-    </n-col>
-    <n-col :span="8">
+      <h-input-number v-model="value1" :min="5" :max="10" @change="onChange" />
+    </h-col>
+    <h-col :span="8">
       <div class="demo-title">步长为0.5</div>
-      <n-input-number v-model="value2" :min="5" :max="10" :step="0.5" :precision="1" />
-    </n-col>
-    <n-col :span="8">
+      <h-input-number v-model="value2" :min="5" :max="10" :step="0.5" :precision="1" />
+    </h-col>
+    <h-col :span="8">
       <div class="demo-title">数值必须是步长的倍数，步长为3</div>
-      <n-input-number v-model="value3" :min="0" :max="10" :step="3" :step-strictly="true" @update:modelValue="onUpdate" @change="onChange" />
-    </n-col>
-  </n-row>
+      <h-input-number v-model="value3" :min="0" :max="10" :step="3" :step-strictly="true" @update:modelValue="onUpdate" @change="onChange" />
+    </h-col>
+  </h-row>
 </template>

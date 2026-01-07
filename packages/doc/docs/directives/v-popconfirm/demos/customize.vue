@@ -1,5 +1,5 @@
 <template>
-  <n-button v-popconfirm="optionsRef" type="normal" @click="del">自定义确认气泡</n-button>
+  <h-button v-popconfirm="optionsRef" type="normal" @click="del">自定义确认气泡</h-button>
 </template>
 
 <script lang="ts">

@@ -56,8 +56,8 @@ describe('InputNumber.tsx props', () => {
     const wrapper = mount(() => <HInputNumber v-model={modelValue.value} step={5} />);
     const element = wrapper.findComponent(HInputNumber);
 
-    const stepUp = element.find('.n-input-number__step-up');
-    const stepDown = element.find('.n-input-number__step-down');
+    const stepUp = element.find('.h-input-number__step-up');
+    const stepDown = element.find('.h-input-number__step-down');
 
     await stepUp.trigger('click');
 
@@ -131,13 +131,13 @@ describe('InputNumber.tsx props', () => {
     const controls = ref(true);
     const wrapper = mount(() => <HInputNumber controls={controls.value} />);
 
-    expect(wrapper.find('.n-input-number__step-wrapper').exists()).toBeTruthy();
+    expect(wrapper.find('.h-input-number__step-wrapper').exists()).toBeTruthy();
 
     controls.value = false;
 
     await nextTick();
 
-    expect(wrapper.find('.n-input-number__step-wrapper').exists()).not.toBeTruthy();
+    expect(wrapper.find('.h-input-number__step-wrapper').exists()).not.toBeTruthy();
   });
 
   test('controlsPosition', async () => {
@@ -147,25 +147,25 @@ describe('InputNumber.tsx props', () => {
       <HInputNumber v-model={modelValue.value} controlsPosition={controlsPosition.value} />
     ));
 
-    expect(wrapper.find('.n-input-number__step-up').exists()).toBeTruthy();
-    expect(wrapper.find('.n-input-number__step-down').exists()).toBeTruthy();
+    expect(wrapper.find('.h-input-number__step-up').exists()).toBeTruthy();
+    expect(wrapper.find('.h-input-number__step-down').exists()).toBeTruthy();
 
-    await wrapper.find('.n-input-number__step-up').trigger('click');
+    await wrapper.find('.h-input-number__step-up').trigger('click');
     expect(modelValue.value).eq(1);
 
-    await wrapper.find('.n-input-number__step-down').trigger('click');
+    await wrapper.find('.h-input-number__step-down').trigger('click');
     expect(modelValue.value).eq(0);
 
     controlsPosition.value = 'between';
 
     await nextTick();
 
-    expect(wrapper.find('.n-input-number__step-minus').exists()).toBeTruthy();
+    expect(wrapper.find('.h-input-number__step-minus').exists()).toBeTruthy();
 
-    await wrapper.find('.n-input-number__step-minus').trigger('click');
+    await wrapper.find('.h-input-number__step-minus').trigger('click');
     expect(modelValue.value).eq(-1);
 
-    await wrapper.find('.n-input-number__step-up').trigger('click');
+    await wrapper.find('.h-input-number__step-up').trigger('click');
     expect(modelValue.value).eq(0);
   });
 
@@ -188,13 +188,13 @@ describe('InputNumber.tsx props', () => {
       <HInputNumber v-model={modelValue.value} clearable={clearable.value} />
     ));
 
-    expect(wrapper.find('.n-input-number__clear').exists()).not.toBeTruthy();
+    expect(wrapper.find('.h-input-number__clear').exists()).not.toBeTruthy();
 
     clearable.value = true;
 
     await nextTick();
 
-    const clear = wrapper.find('.n-input-number__clear');
+    const clear = wrapper.find('.h-input-number__clear');
 
     expect(clear.exists()).toBeTruthy();
 
@@ -221,7 +221,7 @@ describe('InputNumber.tsx props', () => {
     await wrapper.find('input').setValue('14');
 
     expect(modelValue.value).eq(14);
-    expect(wrapper.find('.n-input-number__step-wrapper').exists()).toBeFalsy();
+    expect(wrapper.find('.h-input-number__step-wrapper').exists()).toBeFalsy();
   });
 
   test('lang press', async () => {
@@ -235,8 +235,8 @@ describe('InputNumber.tsx props', () => {
       />
     ));
 
-    const increaseBtn = wrapper.find('.n-input-number__step-up');
-    const decreaseBtn = wrapper.find('.n-input-number__step-down');
+    const increaseBtn = wrapper.find('.h-input-number__step-up');
+    const decreaseBtn = wrapper.find('.h-input-number__step-down');
 
     await increaseBtn.trigger('mousedown');
     await sleep(1200);
@@ -264,14 +264,14 @@ describe('InputNumber.tsx props', () => {
   test('icon', async () => {
     const wrapper = mount(() => <HInputNumber prefixIcon="clear" suffixIcon="point" />);
 
-    expect(wrapper.find('.n-input-number__prefix').find('.n-icon_clear').exists()).toBeTruthy();
-    expect(wrapper.find('.n-input-number__suffix').find('.n-icon_point').exists()).toBeTruthy();
+    expect(wrapper.find('.h-input-number__prefix').find('.h-icon_clear').exists()).toBeTruthy();
+    expect(wrapper.find('.h-input-number__suffix').find('.h-icon_point').exists()).toBeTruthy();
 
     const wrapper2 = mount(() => <HInputNumber prefixIcon={IconClose} suffixIcon={IconSearch} />);
 
-    expect(wrapper2.find('.n-input-number__prefix').findComponent(IconClose).exists()).toBeTruthy();
+    expect(wrapper2.find('.h-input-number__prefix').findComponent(IconClose).exists()).toBeTruthy();
     expect(
-      wrapper2.find('.n-input-number__suffix').findComponent(IconSearch).exists(),
+      wrapper2.find('.h-input-number__suffix').findComponent(IconSearch).exists(),
     ).toBeTruthy();
   });
 });

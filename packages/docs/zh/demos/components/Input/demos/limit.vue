@@ -1,20 +1,20 @@
 <template>
-  <n-switch v-model="disabled" label="禁用" status />
-  <n-form :model="formModel" :rules="rules">
-    <n-form-item label="Input" prop="val1">
-      <n-input v-model="formModel.val1" :disabled="disabled" :maxlength="10" show-limit />
-    </n-form-item>
-    <n-form-item label="Input enable out of exceeded" prop="val2">
-      <n-input
+  <h-switch v-model="disabled" label="禁用" status />
+  <h-form :model="formModel" :rules="rules">
+    <h-form-item label="Input" prop="val1">
+      <h-input v-model="formModel.val1" :disabled="disabled" :maxlength="10" show-limit />
+    </h-form-item>
+    <h-form-item label="Input enable out of exceeded" prop="val2">
+      <h-input
         v-model="formModel.val2"
         :disabled="disabled"
         :maxlength="10"
         show-limit
         enable-out-of-exceeded
       />
-    </n-form-item>
-    <n-form-item label="Textarea" prop="val3">
-      <n-input
+    </h-form-item>
+    <h-form-item label="Textarea" prop="val3">
+      <h-input
         v-model="formModel.val3"
         :disabled="disabled"
         type="textarea"
@@ -22,9 +22,9 @@
         :rows="3"
         show-limit
       />
-    </n-form-item>
-    <n-form-item label="Textarea enable out of exceeded" prop="val4">
-      <n-input
+    </h-form-item>
+    <h-form-item label="Textarea enable out of exceeded" prop="val4">
+      <h-input
         v-model="formModel.val4"
         :disabled="disabled"
         type="textarea"
@@ -33,8 +33,8 @@
         show-limit
         enable-out-of-exceeded
       />
-    </n-form-item>
-  </n-form>
+    </h-form-item>
+  </h-form>
 </template>
 
 <script lang="ts">

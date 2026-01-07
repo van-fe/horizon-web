@@ -1,5 +1,5 @@
 <template>
-  <n-date-picker
+  <h-date-picker
     v-model="pickerTime"
     popper-class="demo-date-picker"
     format="YYYY年MM月DD日"
@@ -11,7 +11,7 @@
         <span v-if="isShow(grid)" class="desc">休</span>
       </div>
     </template>
-  </n-date-picker>
+  </h-date-picker>
 </template>
 
 <script lang="ts">
@@ -35,7 +35,7 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-.n-date-picker-panel-table__inner-grid {
+.h-date-picker-panel-table__inner-grid {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -43,11 +43,11 @@ export default defineComponent({
   height: 48px !important;
 }
 
-.n-date-picker-panel-table__inner-grid.holiday {
+.h-date-picker-panel-table__inner-grid.holiday {
   border: 1px solid #ccc;
 }
 
-.n-date-picker-panel-table__inner-grid .desc {
+.h-date-picker-panel-table__inner-grid .desc {
   position: absolute;
   top: 2px;
   left: 2px;

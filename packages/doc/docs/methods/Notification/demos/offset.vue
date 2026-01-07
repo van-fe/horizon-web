@@ -1,8 +1,8 @@
 <template>
-  <n-space>
-    <n-button type="normal" @click="open1">设置偏移</n-button>
-    <n-button type="normal" @click="open2">设置间距</n-button>
-  </n-space>
+  <h-space>
+    <h-button type="normal" @click="open1">设置偏移</h-button>
+    <h-button type="normal" @click="open2">设置间距</h-button>
+  </h-space>
 </template>
 
 <script lang="ts">

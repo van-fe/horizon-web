@@ -1,18 +1,18 @@
 <template>
-  <n-row :gutter="10" align="middle">
-    <n-col :span="6">
+  <h-row :gutter="10" align="middle">
+    <h-col :span="6">
       <div class="demo-title">Simple</div>
-    </n-col>
-    <n-col :span="18">
-      <n-pagination :total="100" type="simple" />
-    </n-col>
-  </n-row>
-  <n-row :gutter="10" align="middle">
-    <n-col :span="6">
+    </h-col>
+    <h-col :span="18">
+      <h-pagination :total="100" type="simple" />
+    </h-col>
+  </h-row>
+  <h-row :gutter="10" align="middle">
+    <h-col :span="6">
       <div class="demo-title">Simplest</div>
-    </n-col>
-    <n-col :span="18">
-      <n-pagination :total="100" type="simplest" />
-    </n-col>
-  </n-row>
+    </h-col>
+    <h-col :span="18">
+      <h-pagination :total="100" type="simplest" />
+    </h-col>
+  </h-row>
 </template>

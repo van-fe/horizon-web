@@ -33,25 +33,25 @@ Flex 为块级元素提供间距，其本身不会添加包裹元素。适用于
 :::demo ./demos/wrap.vue :::
 
 ### 自定义元素
-使用 `n-space-item` 组件可直接操控包裹元素
+使用 `h-space-item` 组件可直接操控包裹元素
 :::demo ./demos/customize-item.vue :::
 
 ### 使用分隔符
-直接启用 `separator`，使用 `n-divider` 填充。或者自定义 `slots.separator` 插槽 
+直接启用 `separator`，使用 `h-divider` 填充。或者自定义 `slots.separator` 插槽 
 :::demo ./demos/separator.vue :::
 
 ### Design Token
 | 变量 | 默认值 | 描述 |
 | --- | --- | --- |
-| --n-space--small | var(--n-spacing-3) | small尺寸间距  |
-| --n-space--medium | var(--n-spacing-5) | medium尺寸间距  |
-| --n-space--large | var(--n-spacing-7) | large尺寸间距  |
-| --n-space--horizontal--small | var(--n-space--small) |  横向small间距  |
-| --n-space--horizontal--medium | var(--n-space--medium) | 横向medium间距  |
-| --n-space--horizontal--large | var(--n-space--large) | 横向large间距  |
-| --n-space--vertical--small | var(--n-space--small) | 纵向small间距  |
-| --n-space--vertical--medium | var(--n-space--medium) | 纵向medium间距  |
-| --n-space--vertical--large | var(--n-space--large) | 纵向large间距 |
-| --n-space--wrap--small | var(--n-space--vertical--small) var(--n-space--vertical--small) |  换行时候上下左右small间距  |
-|  --n-space--wrap--medium | var(--n-space--vertical--medium) var(--n-space--vertical--medium) |  换行时候上下左右medium间距 |
-|  --n-space--wrap--large | var(--n-space--vertical--large) var(--n-space--vertical--large) |  换行时候上下左右large间距 |
+| --h-space--small | var(--h-spacing-3) | small尺寸间距  |
+| --h-space--medium | var(--h-spacing-5) | medium尺寸间距  |
+| --h-space--large | var(--h-spacing-7) | large尺寸间距  |
+| --h-space--horizontal--small | var(--h-space--small) |  横向small间距  |
+| --h-space--horizontal--medium | var(--h-space--medium) | 横向medium间距  |
+| --h-space--horizontal--large | var(--h-space--large) | 横向large间距  |
+| --h-space--vertical--small | var(--h-space--small) | 纵向small间距  |
+| --h-space--vertical--medium | var(--h-space--medium) | 纵向medium间距  |
+| --h-space--vertical--large | var(--h-space--large) | 纵向large间距 |
+| --h-space--wrap--small | var(--h-space--vertical--small) var(--h-space--vertical--small) |  换行时候上下左右small间距  |
+|  --h-space--wrap--medium | var(--h-space--vertical--medium) var(--h-space--vertical--medium) |  换行时候上下左右medium间距 |
+|  --h-space--wrap--large | var(--h-space--vertical--large) var(--h-space--vertical--large) |  换行时候上下左右large间距 |

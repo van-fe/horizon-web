@@ -1,5 +1,5 @@
 @use '../../../../styles/mixins';
-@import 'mixin';
+@use 'mixin';
 
 @include mixins.b('input') {
   position: relative;
@@ -34,7 +34,7 @@
   }
 
   @include mixins.e('inner-wrap') {
-    @include input;
+    @include mixin.input;
 
     height: mixins.css-variable('input-height--default');
     transition: all 0.2s;
@@ -44,19 +44,19 @@
     }
 
     @include mixins.m('focused') {
-      @include active;
+      @include mixin.active;
     }
 
     &:focus {
-      @include active;
+      @include mixin.active;
     }
 
     @include mixins.m('disabled') {
-      @include disabled;
+      @include mixin.disabled;
     }
   }
   @include mixins.e('textarea--no-border'){
-    @include input;
+    @include mixin.input;
 
     padding: 0;
     border: mixins.css-variable('input-border--transparent');
@@ -68,11 +68,11 @@
       }
     }
     @include mixins.m('focused') {
-      @include active;
+      @include mixin.active;
     }
 
     &:focus {
-      @include active;
+      @include mixin.active;
     }
 
     @include mixins.m('disabled') {
@@ -85,7 +85,7 @@
 
   }
   @include mixins.e('textarea--normal') {
-    @include input;
+    @include mixin.input;
 
     padding: 0;
 
@@ -94,23 +94,23 @@
     }
 
     @include mixins.m('focused') {
-      @include active;
+      @include mixin.active;
     }
 
     &:focus {
-      @include active;
+      @include mixin.active;
     }
 
     @include mixins.m('disabled') {
-      @include disabled;
+      @include mixin.disabled;
     }
 
     @include mixins.is('error') {
-      @include error;
+      @include mixin.error;
     }
   }
   @include mixins.e('textarea--emphasize'){
-    @include input;
+    @include mixin.input;
 
     padding: 0;
     border: mixins.css-variable('input-border--transparent');
@@ -123,11 +123,11 @@
     }
 
     @include mixins.m('focused') {
-      @include active;
+      @include mixin.active;
     }
 
     &:focus {
-      @include active;
+      @include mixin.active;
     }
 
     @include mixins.m('disabled') {
@@ -207,11 +207,11 @@
       }
 
       @include mixins.m('focused') {
-        @include active;
+        @include mixin.active;
       }
 
       &:focus {
-        @include active;
+        @include mixin.active;
       }
       @include mixins.m('disabled') {
         background-color: mixins.css-variable('input-bg--inner-wrap--no-border--disabled');
@@ -235,11 +235,11 @@
       }
 
       @include mixins.m('focused') {
-        @include active;
+        @include mixin.active;
       }
 
       &:focus {
-        @include active;
+        @include mixin.active;
       }
 
       @include mixins.m('disabled') {
@@ -257,7 +257,7 @@
   // 验证错误
   @include mixins.em('error','normal') {
     @include mixins.e('inner-wrap') {
-      @include error;
+      @include mixin.error;
     }
   }
   @include mixins.em('error','no-border') {
@@ -403,11 +403,11 @@
   }
 
   @include mixins.e('prepend') {
-    @include mixed(prepend);
+    @include mixin.mixed(prepend);
   }
 
   @include mixins.e('append') {
-    @include mixed(append);
+    @include mixin.mixed(append);
   }
 
   @include mixins.is('out-of-exceeded') {

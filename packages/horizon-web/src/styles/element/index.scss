@@ -6,7 +6,6 @@
 @use './shadow';
 @use './spacing';
 @use './transition';
-@use './adapter';
 
 $values: function.map-merge-multi(
   function.flatten-variables(colors.$values),
@@ -14,6 +13,5 @@ $values: function.map-merge-multi(
   function.flatten-variables(radius.$values, 'radius'),
   function.flatten-variables(shadow.$values, 'shadow'),
   function.flatten-variables(spacing.$values, 'spacing'),
-  function.flatten-variables(transition.$values, 'transition'),
-  function.flatten-variables(adapter.$values),
+  function.flatten-variables(transition.$values, 'transition')
 );

@@ -255,7 +255,7 @@ export const useDrawerProps = declarePropType({
    * @version `2.0.4`
    **/
   to: {
-    type: [String, HTMLElement] as PropType<string | TeleportProps['to']>,
+    type: [String, Object] as PropType<string | TeleportProps['to'] | HTMLElement>,
     default: 'body',
   },
   /**

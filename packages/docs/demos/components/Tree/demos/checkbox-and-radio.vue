@@ -1,29 +1,29 @@
 <template>
-  <n-form label-position="left" label-vertical-align="middle">
-    <n-form-item label="单选显示单选框">
-      <n-switch v-model="showRadio" :status="true" />
-    </n-form-item>
-    <n-form-item label="多选显示多选框">
-      <n-switch v-model="showCheckbox" :status="true" />
-    </n-form-item>
-  </n-form>
-  <n-row>
-    <n-col :span="12">
+  <h-form label-position="left" label-vertical-align="middle">
+    <h-form-item label="单选显示单选框">
+      <h-switch v-model="showRadio" :status="true" />
+    </h-form-item>
+    <h-form-item label="多选显示多选框">
+      <h-switch v-model="showCheckbox" :status="true" />
+    </h-form-item>
+  </h-form>
+  <h-row>
+    <h-col :span="12">
       <div class="demo-title">单选 </div>
-      <n-tree
+      <h-tree
         :tree-data="baseTreeData"
         :show-radio="showRadio"
       />
-    </n-col>
-    <n-col :span="12">
+    </h-col>
+    <h-col :span="12">
       <div class="demo-title">多选</div>
-      <n-tree
+      <h-tree
         :tree-data="baseTreeData"
         :show-checkbox="showCheckbox"
         :multiple="true"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

@@ -34,7 +34,7 @@ export async function createInstance(
   await nextTick();
 
   function getLoadingDom() {
-    return wrapper.find('.n-loading') as DOMWrapper<HTMLElement>;
+    return wrapper.find('.h-loading') as DOMWrapper<HTMLElement>;
   }
 
   return {

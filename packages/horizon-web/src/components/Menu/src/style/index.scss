@@ -1,9 +1,9 @@
 @use '../../../../styles/mixins';
-@import './vertical';
-@import './horizontal';
-@import './collapseButton';
-@import './themes';
-@import './fullViewMenu';
+@use 'vertical';
+@use 'horizontal';
+@use 'collapseButton';
+@use 'themes';
+@use 'fullViewMenu';
 
 @include mixins.b('menu') {
   display: flex;

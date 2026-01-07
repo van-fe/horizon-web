@@ -1,5 +1,5 @@
 <template>
-  <n-tag-group
+  <h-tag-group
     :use-create="true"
     :editable="true"
     :before-create="onBeforeCreate"
@@ -10,8 +10,8 @@
     @edited="onEdited"
     @closed="onClosed"
   >
-    <n-tag v-for="(item, index) of tagList" :id="index" :key="index" :closable="true" :clickable="false">{{ item }}</n-tag>
-  </n-tag-group>
+    <h-tag v-for="(item, index) of tagList" :id="index" :key="index" :closable="true" :clickable="false">{{ item }}</h-tag>
+  </h-tag-group>
 </template>
 
 <script setup lang="ts">

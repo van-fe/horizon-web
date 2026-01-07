@@ -1,20 +1,20 @@
 <template>
-  <n-row>
-    <n-col :span="24">
-      <n-checkbox v-model="checkAll" :indeterminate="indeterminate" @change="onCheckAllChanged">Check All</n-checkbox>
-    </n-col>
+  <h-row>
+    <h-col :span="24">
+      <h-checkbox v-model="checkAll" :indeterminate="indeterminate" @change="onCheckAllChanged">Check All</h-checkbox>
+    </h-col>
 
-    <n-col :span="24">
-      <n-checkbox-group v-model="checked" @change="selectCheckbox">
-        <n-checkbox label="1" class="checkbox">
+    <h-col :span="24">
+      <h-checkbox-group v-model="checked" @change="selectCheckbox">
+        <h-checkbox label="1" class="checkbox">
           option 1
-        </n-checkbox>
-        <n-checkbox label="2" class="checkbox">
+        </h-checkbox>
+        <h-checkbox label="2" class="checkbox">
           option 2
-        </n-checkbox>
-      </n-checkbox-group>
-    </n-col>
-  </n-row>
+        </h-checkbox>
+      </h-checkbox-group>
+    </h-col>
+  </h-row>
 </template>
 
 <script lang="ts" setup>
@@ -41,6 +41,6 @@ function onCheckAllChanged(val: boolean) {
 
 <style scoped>
 .checkbox + .checkbox {
-  margin-left: 15px;
+  margih-left: 15px;
 }
 </style>

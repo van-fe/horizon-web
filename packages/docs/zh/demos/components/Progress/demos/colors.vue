@@ -1,12 +1,12 @@
 <template>
   <div class="demo-progress">
-    <n-progress :percentage="percentage" :color="customColor" />
-    <n-progress :percentage="percentage" :color="customColorMethod" />
-    <n-progress :percentage="percentage" :color="customColors" />
-    <n-progress :percentage="percentage" :color="customColors" />
+    <h-progress :percentage="percentage" :color="customColor" />
+    <h-progress :percentage="percentage" :color="customColorMethod" />
+    <h-progress :percentage="percentage" :color="customColors" />
+    <h-progress :percentage="percentage" :color="customColors" />
     <div>
-      <n-button class="mr-2" @click="decrease">decrease</n-button>
-      <n-button @click="increase">add</n-button>
+      <h-button class="mr-2" @click="decrease">decrease</h-button>
+      <h-button @click="increase">add</h-button>
     </div>
   </div>
 </template>
@@ -48,7 +48,7 @@ const decrease = () => {
 </script>
 
 <style scoped>
-.demo-progress .n-progress--line {
+.demo-progress .h-progress--line {
   margin-bottom: 15px;
   width: 350px;
 }

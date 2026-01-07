@@ -1,14 +1,14 @@
 <script setup lang="ts"></script>
 
 <template>
-  <n-popover placement="auto">
+  <h-popover placement="auto">
     <template #reference>
-      <n-button>Hover me</n-button>
+      <h-button>Hover me</h-button>
     </template>
     <template #popper>
-      <n-pop-content>
+      <h-pop-content>
         <div>Hello World</div>
-      </n-pop-content>
+      </h-pop-content>
     </template>
-  </n-popover>
+  </h-popover>
 </template>

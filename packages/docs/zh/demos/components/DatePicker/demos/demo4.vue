@@ -2,7 +2,7 @@
   <div class="demo-wrapper">
     <div class="box">
       <span>自定义触发器</span>
-      <n-date-picker
+      <h-date-picker
         v-model="time1"
         value-format="YYYY/MM/DD"
         type="date"
@@ -10,15 +10,15 @@
       >
         <template #reference="{ reference }">
           <div class="reference-container">
-            <n-button plain>自定义触发器{{ reference }}</n-button>
+            <h-button plain>自定义触发器{{ reference }}</h-button>
           </div>
         </template>
-      </n-date-picker>
+      </h-date-picker>
     </div>
     <div class="box">
       <span>日期面板嵌入页面（非浮层样式）</span>
       <div class="trigger-box">
-        <n-button class="trigger-button" plain @click="onShow">日期面板嵌入</n-button>
+        <h-button class="trigger-button" plain @click="onShow">日期面板嵌入</h-button>
         <div v-if="visible" class="arrow-box">
           <a-icon name="toggle_left" @click="onChangeYear(-1)" />
           <a-icon name="arrow_left" @click="onChangeMonth(-1)" />
@@ -26,7 +26,7 @@
           <a-icon name="toggle_right" @click="onChangeYear(1)" />
         </div>
       </div>
-      <n-date-picker
+      <h-date-picker
         v-if="visible"
         ref="datePickerPanelRef"
         v-model="time2"
@@ -39,9 +39,9 @@
     <div class="box">
       <span>日期面板嵌入页面（show-embed）</span>
       <div class="trigger-box">
-        <n-button class="trigger-button" plain @click="onShow1">show-embed</n-button>
+        <h-button class="trigger-button" plain @click="onShow1">show-embed</h-button>
       </div>
-      <n-date-picker
+      <h-date-picker
         v-if="visible1"
         ref="panelContentRef"
         v-model="time3"

@@ -1,8 +1,8 @@
 <template>
-  <n-slider v-model="valueRef1" :step="10" />
-  <n-slider v-model="valueRef1" :step="10" show-separator />
-  <n-slider v-model="valueRef2" :max="40.8" :min="36.1" :step="0.2" />
-  <n-slider v-model="valueRef2" :max="40.8" :min="36.1" :step="0.2" show-separator />
+  <h-slider v-model="valueRef1" :step="10" />
+  <h-slider v-model="valueRef1" :step="10" show-separator />
+  <h-slider v-model="valueRef2" :max="40.8" :min="36.1" :step="0.2" />
+  <h-slider v-model="valueRef2" :max="40.8" :min="36.1" :step="0.2" show-separator />
 </template>
 
 <script lang="ts">

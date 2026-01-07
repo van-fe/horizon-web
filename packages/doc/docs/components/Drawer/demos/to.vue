@@ -1,9 +1,9 @@
 <template>
   <div ref="innerEl" class="customize">
-    <n-button type="normal" @click="openDrawer(innerEl)">灰色区块挂载抽屉</n-button>
-    <n-button type="normal" class="ml-2" @click="openDrawer()">Body 上挂载抽屉</n-button>
+    <h-button type="normal" @click="openDrawer(innerEl)">灰色区块挂载抽屉</h-button>
+    <h-button type="normal" class="ml-2" @click="openDrawer()">Body 上挂载抽屉</h-button>
   </div>
-  <n-drawer
+  <h-drawer
     v-model:visible="visible"
     v2
     :to="to"
@@ -17,7 +17,7 @@
       You can customize modal body text by the current situation. This modal will be closed
       immediately once you press the OK button.
     </div>
-  </n-drawer>
+  </h-drawer>
 </template>
 
 <script lang="ts" setup>
@@ -50,7 +50,7 @@ const onCancel = () => {
   height: 500px;
   background-color: #efefef;
   display: flex;
-  align-items: center;
+  aligh-items: center;
   justify-content: center;
 }
 </style>

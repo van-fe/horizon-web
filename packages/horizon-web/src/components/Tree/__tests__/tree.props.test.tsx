@@ -225,7 +225,7 @@ describe('Tree.tsx props', () => {
       height: 320,
     });
 
-    expect(element.find('.n-scrollbar__wrap').element.getAttribute('style')).toContain(
+    expect(element.find('.h-scrollbar__wrap').element.getAttribute('style')).toContain(
       'height: 320px',
     );
   });
@@ -235,7 +235,7 @@ describe('Tree.tsx props', () => {
       maxHeight: 320,
     });
 
-    expect(element.find('.n-scrollbar__wrap').element.getAttribute('style')).toContain(
+    expect(element.find('.h-scrollbar__wrap').element.getAttribute('style')).toContain(
       'max-height: 320px',
     );
   });
@@ -248,13 +248,13 @@ describe('Tree.tsx props', () => {
       maxHeight: 300,
     });
 
-    expect(element.find('.n-recycle-scroller__item-wrapper').exists()).toBeFalsy();
+    expect(element.find('.h-recycle-scroller__item-wrapper').exists()).toBeFalsy();
 
     useVirtualScroll.value = true;
 
     await nextTick();
 
-    expect(element.find('.n-recycle-scroller__item-wrapper').exists()).toBeTruthy();
+    expect(element.find('.h-recycle-scroller__item-wrapper').exists()).toBeTruthy();
   });
 
   test.skip('tooltip-show-after & tooltip-hide-after', async () => {

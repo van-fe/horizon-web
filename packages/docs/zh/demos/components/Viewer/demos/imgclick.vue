@@ -8,7 +8,7 @@
     class="mr-3"
     @click="showViewer(item.cover)"
   />
-  <n-viewer v-model="visibleRef" :sources="imagesRef" :init-index="initIndexRef" />
+  <h-viewer v-model="visibleRef" :sources="imagesRef" :init-index="initIndexRef" />
 </template>
 
 <script lang="ts">

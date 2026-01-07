@@ -1,13 +1,13 @@
 <template>
-  <n-row :gutter="10">
-    <n-col :span="6">
-      <n-cascader v-model="currentVal1" :options="options" multiple :to-body="false">
+  <h-row :gutter="10">
+    <h-col :span="6">
+      <h-cascader v-model="currentVal1" :options="options" multiple :to-body="false">
         <template #tagRender="slotProps">
-          <n-tag :key="slotProps.value" is-pure><span class="multiple-tag">{{ `${slotProps.label}` ?? '' }}</span></n-tag>
+          <h-tag :key="slotProps.value" is-pure><span class="multiple-tag">{{ `${slotProps.label}` ?? '' }}</span></h-tag>
         </template>
-      </n-cascader>
-    </n-col>
-  </n-row>
+      </h-cascader>
+    </h-col>
+  </h-row>
 </template>
 
 <script lang="ts">

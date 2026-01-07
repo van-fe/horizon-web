@@ -1,5 +1,5 @@
 <template>
-  <n-button
+  <h-button
     class="mr-2"
     @click="
       primaryButton = true;
@@ -8,8 +8,8 @@
     "
   >
     默认显示全部按钮
-  </n-button>
-  <n-button
+  </h-button>
+  <h-button
     class="mr-2"
     @click="
       primaryButton = true;
@@ -18,8 +18,8 @@
     "
   >
     只显示主要按钮
-  </n-button>
-  <n-button
+  </h-button>
+  <h-button
     class="mr-2"
     @click="
       primaryButton = false;
@@ -28,27 +28,27 @@
     "
   >
     不显示按钮
-  </n-button>
-  <n-button class="mr-2" @click="visible2 = true">自定义底部区域</n-button>
-  <n-dialog
+  </h-button>
+  <h-button class="mr-2" @click="visible2 = true">自定义底部区域</h-button>
+  <h-dialog
     v-model="visible1"
     title="标题"
     :primary-button="primaryButton"
     :secondary-button="secondaryButton"
   >
     <div>随便写点什么</div>
-  </n-dialog>
-  <n-dialog v-model="visible2" title="标题">
+  </h-dialog>
+  <h-dialog v-model="visible2" title="标题">
     <div>随便写点什么</div>
     <template #footer>
       <div class="flex">
-        <n-button type="normal" class="ml-auto">辅助按钮</n-button>
-        <n-button :plain="true" >次要按钮</n-button>
-        <n-button>主要按钮</n-button>
+        <h-button type="normal" class="ml-auto">辅助按钮</h-button>
+        <h-button :plain="true" >次要按钮</h-button>
+        <h-button>主要按钮</h-button>
       </div>
     </template>
-  </n-dialog>
-  <n-dialog
+  </h-dialog>
+  <h-dialog
     v-model="visible3"
     title="标题"
     :primary-button-props="{
@@ -61,7 +61,7 @@
     }"
   >
     <div>随便写点什么</div>
-  </n-dialog>
+  </h-dialog>
 </template>
 
 <script lang="ts">

@@ -1,19 +1,19 @@
 <template>
-  <n-form label-position="left">
-    <n-form-item label="size">
-      <n-radio-group v-model="size">
-        <n-radio label="mini"></n-radio>
-        <n-radio label="small"></n-radio>
-        <n-radio label="medium"></n-radio>
-        <n-radio label="large"></n-radio>
-      </n-radio-group>
-    </n-form-item>
-  </n-form>
-  <n-table-v3 :data="data" :size="size">
-    <n-table-column-v3 title="Name" field="name" />
-    <n-table-column-v3 title="Age" field="age" />
-    <n-table-column-v3 title="Address" field="address" />
-  </n-table-v3>
+  <h-form label-position="left">
+    <h-form-item label="size">
+      <h-radio-group v-model="size">
+        <h-radio label="mini"></h-radio>
+        <h-radio label="small"></h-radio>
+        <h-radio label="medium"></h-radio>
+        <h-radio label="large"></h-radio>
+      </h-radio-group>
+    </h-form-item>
+  </h-form>
+  <h-table-v3 :data="data" :size="size">
+    <h-table-column-v3 title="Name" field="name" />
+    <h-table-column-v3 title="Age" field="age" />
+    <h-table-column-v3 title="Address" field="address" />
+  </h-table-v3>
 </template>
 
 <script setup lang="ts">

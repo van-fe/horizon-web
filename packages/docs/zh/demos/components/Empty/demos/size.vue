@@ -1,13 +1,13 @@
 <template>
-  <n-empty :size="emptySizeRef" description="No task for now, take a coffee break" />
-  <n-radio-group v-model="sizeRef">
-    <n-radio label="small" />
-    <n-radio label="medium" />
-    <n-radio label="large" />
-    <n-radio label="number">
-      <n-input-number v-model="sizeNumberRef" :step="10" />
-    </n-radio>
-  </n-radio-group>
+  <h-empty :size="emptySizeRef" description="No task for now, take a coffee break" />
+  <h-radio-group v-model="sizeRef">
+    <h-radio label="small" />
+    <h-radio label="medium" />
+    <h-radio label="large" />
+    <h-radio label="number">
+      <h-input-number v-model="sizeNumberRef" :step="10" />
+    </h-radio>
+  </h-radio-group>
 </template>
 
 <script setup lang="ts">

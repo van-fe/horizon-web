@@ -1,9 +1,9 @@
 <template>
-  <n-table-v3 :data="data" :stripe="true">
-    <n-table-column-v3 title="Name" field="name" />
-    <n-table-column-v3 title="Age" field="age" />
-    <n-table-column-v3 title="Address" field="address" />
-  </n-table-v3>
+  <h-table-v3 :data="data" :stripe="true">
+    <h-table-column-v3 title="Name" field="name" />
+    <h-table-column-v3 title="Age" field="age" />
+    <h-table-column-v3 title="Address" field="address" />
+  </h-table-v3>
 </template>
 
 <script setup lang="ts">

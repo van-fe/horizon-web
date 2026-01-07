@@ -73,7 +73,7 @@ describe('Dialog.tsx', () => {
     const element = wrapper.findComponent(HDialog);
 
     expect(element.exists()).toBe(true);
-    expect(wrapper.find('.n-dialog__header').text()).toBe('Title');
+    expect(wrapper.find('.h-dialog__header').text()).toBe('Title');
     expect(wrapper.html()).toMatchInlineSnapshot(`
       "<!--teleport start-->
       <div class="n-dialog" style="z-index: 2002;">
@@ -136,7 +136,7 @@ describe('Dialog.tsx', () => {
         attachTo: document.body,
       });
 
-      expect(wrapper.find('.n-dialog__container').attributes('style')).toContain(`top: ${top}px`);
+      expect(wrapper.find('.h-dialog__container').attributes('style')).toContain(`top: ${top}px`);
       expect(wrapper.html()).toMatchInlineSnapshot(`
         "<!--teleport start-->
         <div class="n-dialog" style="z-index: 2003;">
@@ -180,19 +180,19 @@ describe('Dialog.tsx', () => {
         attachTo: document.body,
       });
 
-      expect(wrapper.find('.n-dialog__container').classes('n-dialog--medium')).eq(true);
+      expect(wrapper.find('.h-dialog__container').classes('n-dialog--medium')).eq(true);
 
       size.value = 'huge';
 
       await nextTick();
 
-      expect(wrapper.find('.n-dialog__container').classes('n-dialog--huge')).eq(true);
+      expect(wrapper.find('.h-dialog__container').classes('n-dialog--huge')).eq(true);
 
       size.value = 416;
 
       await nextTick();
 
-      expect(wrapper.find('.n-dialog__container').attributes('style')).contain('width: 416px');
+      expect(wrapper.find('.h-dialog__container').attributes('style')).contain('width: 416px');
     });
 
     test('destroyOnClose', async () => {
@@ -205,9 +205,9 @@ describe('Dialog.tsx', () => {
 
       visible.value = true;
       await nextTick();
-      expect(wrapper.find('.n-dialog__container').exists()).eq(true);
+      expect(wrapper.find('.h-dialog__container').exists()).eq(true);
       visible.value = false;
-      expect(wrapper.find('.n-dialog__container').exists()).eq(true);
+      expect(wrapper.find('.h-dialog__container').exists()).eq(true);
 
       expect(wrapper.html()).toMatchInlineSnapshot(`
         "<!--teleport start-->
@@ -248,10 +248,10 @@ describe('Dialog.tsx', () => {
       destroyOnClose.value = true;
       visible.value = true;
       await nextTick();
-      expect(wrapper.find('.n-dialog__container').exists()).eq(true);
+      expect(wrapper.find('.h-dialog__container').exists()).eq(true);
       visible.value = false;
       await nextTick();
-      expect(wrapper.find('.n-dialog__container').exists()).eq(false);
+      expect(wrapper.find('.h-dialog__container').exists()).eq(false);
       expect(wrapper.html()).toMatchInlineSnapshot(`
         "<!--teleport start-->
         <div class="n-dialog" style="z-index: 2004;">
@@ -269,7 +269,7 @@ describe('Dialog.tsx', () => {
     test('draggable', async () => {
       const wrapper = mount(() => <HDialog visible={true} title="Title" to={null} draggable />);
 
-      expect(wrapper.find('.n-dialog__header--draggable').exists()).eq(true);
+      expect(wrapper.find('.h-dialog__header--draggable').exists()).eq(true);
       expect(wrapper.html()).toMatchInlineSnapshot(`
         "<!--teleport start-->
         <div class="n-dialog" style="z-index: 2005;">
@@ -335,7 +335,7 @@ describe('Dialog.tsx', () => {
       );
 
       expect(wrapper.findComponent(HDialog).exists()).toBe(true);
-      expect(el.querySelector('.n-dialog')).not.toBeNull();
+      expect(el.querySelector('.h-dialog')).not.toBeNull();
 
       document.body.innerHTML = '';
       resetPopupContainerGetter();
@@ -566,11 +566,11 @@ describe('Dialog.tsx', () => {
       expect(dialog.emitted()).not.toHaveProperty('confirmDebounceFinished');
       expect(dialog.emitted()).not.toHaveProperty('cancelDebounceFinished');
 
-      await wrapper.find('.n-dialog__mask').trigger('click');
+      await wrapper.find('.h-dialog__mask').trigger('click');
       expect(dialog.emitted()).toHaveProperty('maskClick');
 
-      const okButton = wrapper.find('.n-dialog__footer .n-button--primary');
-      const cancelButton = wrapper.find('.n-dialog__footer .n-button--normal');
+      const okButton = wrapper.find('.h-dialog__footer .h-button--primary');
+      const cancelButton = wrapper.find('.h-dialog__footer .h-button--normal');
       const cc = 10;
       await Promise.all([
         ...Array(cc)

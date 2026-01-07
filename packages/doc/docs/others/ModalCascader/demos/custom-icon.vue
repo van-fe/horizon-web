@@ -1,24 +1,24 @@
 <template>
-  <n-row :gutter="10">
-    <n-col :span="6">
+  <h-row :gutter="10">
+    <h-col :span="6">
       <div class="demo-title">
         自定义级联面板展开图标
       </div>
-      <n-modal-cascader
+      <h-modal-cascader
           v-model="currentVal1"
           :options="options"
           expand-trigger="click"
           expand-icon="spread_right"
           :to-body="false"
       />
-    </n-col>
-    <n-col :span="6">
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">
         自定义单选选中项图标
       </div>
-      <n-modal-cascader v-model="currentVal2" :options="options" selected-icon="tag" :to-body="false" />
-    </n-col>
-  </n-row>
+      <h-modal-cascader v-model="currentVal2" :options="options" selected-icon="tag" :to-body="false" />
+    </h-col>
+  </h-row>
 </template>
 
 <script lang="ts">

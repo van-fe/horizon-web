@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-wrap">
     <div v-for="name in presentedImageNameList" :key="name">
-      <n-empty :image="NEmpty.PRESENTED_IMAGES[name]" :description="name" />
+      <h-empty :image="NEmpty.PRESENTED_IMAGES[name]" :description="name" />
     </div>
   </div>
 </template>

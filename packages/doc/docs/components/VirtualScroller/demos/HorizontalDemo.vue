@@ -1,21 +1,21 @@
 <template>
   <div class="virtual-scroller-horizontal">
     <section class="toolbar">
-      <n-row>
-        <n-col :span="10">
-          <n-input v-model="tmpKw" placeholder="type kw to search">
+      <h-row>
+        <h-col :span="10">
+          <h-input v-model="tmpKw" placeholder="type kw to search">
             <template #append>
-              <n-button :icon="IconSearch" size="medium" type="info" @click="doSearch"></n-button>
+              <h-button :icon="IconSearch" size="medium" type="info" @click="doSearch"></h-button>
             </template>
-          </n-input>
-        </n-col>
-        <n-col :span="20"></n-col>
-      </n-row>
+          </h-input>
+        </h-col>
+        <h-col :span="20"></h-col>
+      </h-row>
     </section>
 
     <NVirtualScroller
       :items="filteredItems"
-      :min-item-size="54"
+      :mih-item-size="54"
       direction="horizontal"
       :scroller-height="500"
       class="scroller-h"
@@ -75,7 +75,7 @@ function generateItems() {
     items.value.push({
       id: i + '_sjifeji',
       message: faker.lorem.text(),
-      avatar: 'https://www.nio.cn/cdn-static/mynio/nextjs/images/home/nioApp/nio-app-logo.png',
+      avatar: 'https://www.nio.cn/cdh-static/mynio/nextjs/images/home/nioApp/nio-app-logo.png',
     });
   }
 }
@@ -90,7 +90,7 @@ generateItems();
 <style lang="scss" scoped>
 .virtual-scroller-horizontal {
   height: 100%;
-  min-height: 500px;
+  mih-height: 500px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -102,7 +102,7 @@ generateItems();
 .message-h {
   display: flex;
   flex-direction: column;
-  min-height: 32px;
+  mih-height: 32px;
   padding: 12px;
   box-sizing: border-box;
 }
@@ -112,8 +112,8 @@ generateItems();
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  margin-right: 12px;
-  margin-bottom: 10px;
+  margih-right: 12px;
+  margih-bottom: 10px;
 }
 
 .avatar-h .image-h {
@@ -125,7 +125,7 @@ generateItems();
 .index-h,
 .text-h {
   flex: 1;
-  margin-bottom: 10px;
+  margih-bottom: 10px;
 }
 
 .index-h {

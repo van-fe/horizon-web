@@ -1,30 +1,30 @@
 <template>
-  <n-row :gutter="10">
-    <n-col :span="6">
+  <h-row :gutter="10">
+    <h-col :span="6">
       <div class="demo-title">
         单选
       </div>
-      <n-cascader
+      <h-cascader
           v-model="currentVal1"
           :options="options"
           show-checked-strategy="leaf"
           :to-body="false"
       />
-    </n-col>
-    <n-col :span="6">
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">
         多选
       </div>
-      <n-cascader
+      <h-cascader
           v-model="currentVal2"
           :options="options"
           show-checked-strategy="leaf"
           multiple
           clearable
           :to-body="false"
-      ></n-cascader>
-    </n-col>
-  </n-row>
+      ></h-cascader>
+    </h-col>
+  </h-row>
 </template>
 
 <script lang="ts">

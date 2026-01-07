@@ -1,5 +1,5 @@
 <template>
-  <n-video-player
+  <h-video-player
     :sources="[
       {
         src: 'https://www.nio.cn/cdn-static/mynio/nextjs/images/et5/et5-hero-video.mp4',

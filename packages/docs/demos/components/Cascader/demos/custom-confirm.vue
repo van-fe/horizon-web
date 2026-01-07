@@ -1,11 +1,11 @@
 <template>
   <div>
-    <n-row :gutter="10">
-      <n-col :span="6">
+    <h-row :gutter="10">
+      <h-col :span="6">
         <div class="demo-title">
           自定义按钮文案
         </div>
-        <n-cascader
+        <h-cascader
           v-model="currentVal1"
           :options="options"
           :need-confirm="true"
@@ -13,37 +13,37 @@
           cancel-btn-text="取消"
           :to-body="false"
         />
-      </n-col>
-      <n-col :span="6">
+      </h-col>
+      <h-col :span="6">
         <div class="demo-title">
           自定义 confirm render
-          <n-tooltip content="使用自定义 render 时请确保 confirm 参数不是 false 或者 undefined">
+          <h-tooltip content="使用自定义 render 时请确保 confirm 参数不是 false 或者 undefined">
             <a-icon name="help" />
-          </n-tooltip>
+          </h-tooltip>
         </div>
-        <n-cascader v-model="currentVal2" :options="options" :need-confirm="true" multiple :to-body="false">
+        <h-cascader v-model="currentVal2" :options="options" :need-confirm="true" multiple :to-body="false">
           <template #confirmRender="slotProps">
             <div class="confirm-buttons">
               <span @click="slotProps.cancelHandle">取消</span>
               <span @click="slotProps.confirmHandle">确认</span>
             </div>
           </template>
-        </n-cascader>
-      </n-col>
-      <n-col :span="6">
+        </h-cascader>
+      </h-col>
+      <h-col :span="6">
         <div class="demo-title">
           通过 template ref 去获取组件暴露出来的事件
         </div>
-        <n-cascader ref="cascaderRef" v-model="currentVal3" :options="options" :need-confirm="true" multiple :to-body="false">
+        <h-cascader ref="cascaderRef" v-model="currentVal3" :options="options" :need-confirm="true" multiple :to-body="false">
           <template #confirmRender>
             <div class="confirm-buttons">
               <span @click="confirmCancelHandle">取消</span>
               <span @click="confirmEnterHandle">确认</span>
             </div>
           </template>
-        </n-cascader>
-      </n-col>
-    </n-row>
+        </h-cascader>
+      </h-col>
+    </h-row>
   </div>
 </template>
 

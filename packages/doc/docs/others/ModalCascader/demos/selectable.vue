@@ -1,8 +1,8 @@
 <template>
-  <n-row :gutter="10">
-    <n-col :span="6">
+  <h-row :gutter="10">
+    <h-col :span="6">
       <div class="demo-title">单选</div>
-      <n-modal-cascader
+      <h-modal-cascader
         v-model="currentVal1"
         :clearable="true"
         :to-body="false"
@@ -11,10 +11,10 @@
         @update:modelValue="updateHandle"
         @change="changeHandle"
       />
-    </n-col>
-    <n-col :span="6">
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">多选</div>
-      <n-modal-cascader
+      <h-modal-cascader
         v-model="currentVal2"
         :clearable="true"
         :options="baseData"
@@ -26,8 +26,8 @@
         @update:modelValue="updateHandle"
         @change="changeHandle"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

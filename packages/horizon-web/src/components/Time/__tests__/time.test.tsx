@@ -22,13 +22,13 @@ describe('Time.tsx', () => {
       }
     })
     await nextTick()
-    expect(wrapper.find('.n-time').text()).toBe('00:00:05')
+    expect(wrapper.find('.h-time').text()).toBe('00:00:05')
   })
 
   test('time', async() => {
     const wrapper = mount(HTime)
     await delay(1000)
     await nextTick();
-    expect(wrapper.find('.n-time').text()).toBe('00:00:09')
+    expect(wrapper.find('.h-time').text()).toBe('00:00:09')
   })
 });

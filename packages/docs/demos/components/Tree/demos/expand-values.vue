@@ -1,41 +1,41 @@
 <template>
-  <n-row>
-    <n-col :span="12">
+  <h-row>
+    <h-col :span="12">
       <div class="demo-title">单选</div>
-      <div class="demo-description"><n-button :plain="true" size="small" @click="change(0)">修改</n-button> {{ expandValues[0].value }}</div>
-      <n-tree
+      <div class="demo-description"><h-button :plain="true" size="small" @click="change(0)">修改</h-button> {{ expandValues[0].value }}</div>
+      <h-tree
         v-if="baseTreeData.length"
         v-model:expand-values="expandValues[0].value"
         :tree-data="baseTreeData"
         :max-height="300"
       />
-    </n-col>
-    <n-col :span="12">
+    </h-col>
+    <h-col :span="12">
       <div class="demo-title">多选</div>
-      <div class="demo-description"><n-button :plain="true" size="small" @click="change(1)">修改</n-button> {{ expandValues[1].value }}</div>
-      <n-tree
+      <div class="demo-description"><h-button :plain="true" size="small" @click="change(1)">修改</h-button> {{ expandValues[1].value }}</div>
+      <h-tree
         v-if="baseTreeData.length"
         v-model:expand-values="expandValues[1].value"
         :tree-data="baseTreeData"
         :max-height="300"
         :multiple="true"
       />
-    </n-col>
-    <n-col :span="12">
+    </h-col>
+    <h-col :span="12">
       <div class="demo-title">单选 - 父级不默认展开</div>
-      <div class="demo-description"><n-button :plain="true" size="small" @click="change(2)">修改</n-button> {{ expandValues[2].value }}</div>
-      <n-tree
+      <div class="demo-description"><h-button :plain="true" size="small" @click="change(2)">修改</h-button> {{ expandValues[2].value }}</div>
+      <h-tree
         v-if="baseTreeData.length"
         v-model:expand-values="expandValues[2].value"
         :tree-data="baseTreeData"
         :max-height="300"
         :is-default-expand-parent="false"
       />
-    </n-col>
-    <n-col :span="12">
+    </h-col>
+    <h-col :span="12">
       <div class="demo-title">多选 - 父级不默认展开</div>
-      <div class="demo-description"><n-button :plain="true" size="small" @click="change(3)">修改</n-button> {{ expandValues[3].value }}</div>
-      <n-tree
+      <div class="demo-description"><h-button :plain="true" size="small" @click="change(3)">修改</h-button> {{ expandValues[3].value }}</div>
+      <h-tree
         v-if="baseTreeData.length"
         v-model:expand-values="expandValues[3].value"
         :tree-data="baseTreeData"
@@ -43,8 +43,8 @@
         :is-default-expand-parent="false"
         :multiple="true"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

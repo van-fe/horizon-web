@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-    <n-card
+    <h-card
       draggable="true"
       :class="[
         'drag',
@@ -14,8 +14,8 @@
       @dragend="handleDragEnd"
     >
       {{ text }}
-    </n-card>
-    <n-card
+    </h-card>
+    <h-card
         draggable="true"
         class='hover'
         title="悬浮阴影"
@@ -23,7 +23,7 @@
         @dragend="handleDragEnd"
     >
       {{ text }}
-    </n-card>
+    </h-card>
   </div>
 </template>
 

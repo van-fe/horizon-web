@@ -39,7 +39,7 @@
       }
 
       @include mixins.b('input-number', false) {
-        width: var(--n-pagination-width--input-number);
+        width: var(--h-pagination-width--input-number);
         min-width: auto;
       }
 

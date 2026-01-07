@@ -1,9 +1,9 @@
 <template>
   <div class="box">
-    <n-button @click="open">打开</n-button>
-    <n-mask :value="show" :z-index="999">
-      <n-button @click="close">关闭</n-button>
-    </n-mask>
+    <h-button @click="open">打开</h-button>
+    <h-mask :value="show" :z-index="999">
+      <h-button @click="close">关闭</h-button>
+    </h-mask>
   </div>
 </template>
 

@@ -1,39 +1,39 @@
 <template>
-  <n-row>
-    <n-col :span="24">
-      <n-form
+  <h-row>
+    <h-col :span="24">
+      <h-form
         label-position="left"
         label-vertical-align="middle"
         label-justify-align="right"
         :inline="true"
       >
-        <n-form-item label="theme:">
-          <n-radio-group v-model="theme">
-            <n-radio label="midnight">midnight</n-radio>
-            <n-radio label="default">default</n-radio>
-            <n-radio label="gray">gray</n-radio>
-          </n-radio-group>
-        </n-form-item>
-        <!-- <n-form-item label="activeType:">
-          <n-radio-group v-model="activeType">
-            <n-radio label="button">button</n-radio>
-            <n-radio label="link">link</n-radio>
-          </n-radio-group>
-        </n-form-item> -->
-        <!-- <n-form-item label="submenuExpandType:">
-          <n-radio-group v-model="submenuExpandType">
-            <n-radio label="single">single</n-radio>
-            <n-radio label="full">full</n-radio>
-          </n-radio-group>
-        </n-form-item> -->
-      </n-form>
-    </n-col>
-  </n-row>
-  <n-row>
-    <n-col :span="24">
-      <n-container>
-        <n-header height="auto" style="padding: 0">
-          <n-menu
+        <h-form-item label="theme:">
+          <h-radio-group v-model="theme">
+            <h-radio label="midnight">midnight</h-radio>
+            <h-radio label="default">default</h-radio>
+            <h-radio label="gray">gray</h-radio>
+          </h-radio-group>
+        </h-form-item>
+        <!-- <h-form-item label="activeType:">
+          <h-radio-group v-model="activeType">
+            <h-radio label="button">button</h-radio>
+            <h-radio label="link">link</h-radio>
+          </h-radio-group>
+        </h-form-item> -->
+        <!-- <h-form-item label="submenuExpandType:">
+          <h-radio-group v-model="submenuExpandType">
+            <h-radio label="single">single</h-radio>
+            <h-radio label="full">full</h-radio>
+          </h-radio-group>
+        </h-form-item> -->
+      </h-form>
+    </h-col>
+  </h-row>
+  <h-row>
+    <h-col :span="24">
+      <h-container>
+        <h-header height="auto" style="padding: 0">
+          <h-menu
             ref="menuRef"
             mode="horizontal"
             :selected-value="selectedValue"
@@ -63,100 +63,100 @@
               </div>
             </template>
             <template #append>
-              <n-button v-tooltip="'提醒'" type="normal" :text="true">
+              <h-button v-tooltip="'提醒'" type="normal" :text="true">
                 <template #icon>
                   <a-icon
                     name="notice"
                     size="20"
                     :color="
-                      theme === 'midnight' ? 'var(--n-text-inverse)' : 'var(--n-text-primary)'
+                      theme === 'midnight' ? 'var(--h-text-inverse)' : 'var(--h-text-primary)'
                     "
                   ></a-icon>
                 </template>
-              </n-button>
-              <n-popover class="avatar-popover" placement="bottom-end">
+              </h-button>
+              <h-popover class="avatar-popover" placement="bottom-end">
                 <template #reference>
-                  <n-avatar size="small" style="align-self: center" />
+                  <h-avatar size="small" style="aligh-self: center" />
                 </template>
                 <template #popper>
-                  <n-pop-content>
-                    <div class="text-body-2 text-center mb-3" style="color: var(--n-text-tertiary)">
+                  <h-pop-content>
+                    <div class="text-body-2 text-center mb-3" style="color: var(--h-text-tertiary)">
                       Dear NIOer, Welcome
                     </div>
-                    <n-button type="normal" size="large" text block class="mb-2">修改密码</n-button>
-                    <n-button type="normal" size="large" text block>退出登录</n-button>
-                  </n-pop-content>
+                    <h-button type="normal" size="large" text block class="mb-2">修改密码</h-button>
+                    <h-button type="normal" size="large" text block>退出登录</h-button>
+                  </h-pop-content>
                 </template>
-              </n-popover>
+              </h-popover>
             </template>
-            <n-menu-item value="1">
+            <h-menu-item value="1">
               <template #title>一级菜单 1</template>
-            </n-menu-item>
-            <n-sub-menu value="2">
+            </h-menu-item>
+            <h-sub-menu value="2">
               <template #title>一级菜单 2</template>
-              <n-sub-menu value="2-1">
+              <h-sub-menu value="2-1">
                 <template #title>二级菜单 1</template>
-                <n-menu-item value="2-1-1">三级菜单 1</n-menu-item>
-                <n-menu-item value="2-1-2">三级菜单 2</n-menu-item>
-                <n-menu-item value="2-1-3">三级菜单 3</n-menu-item>
-                <n-menu-item value="2-1-4">三级菜单 4</n-menu-item>
-              </n-sub-menu>
-              <n-sub-menu value="2-2">
+                <h-menu-item value="2-1-1">三级菜单 1</h-menu-item>
+                <h-menu-item value="2-1-2">三级菜单 2</h-menu-item>
+                <h-menu-item value="2-1-3">三级菜单 3</h-menu-item>
+                <h-menu-item value="2-1-4">三级菜单 4</h-menu-item>
+              </h-sub-menu>
+              <h-sub-menu value="2-2">
                 <template #title>二级菜单 2</template>
-                <n-menu-item value="2-2-1">三级菜单 1</n-menu-item>
-                <n-menu-item value="2-2-2">三级菜单 2</n-menu-item>
-                <n-menu-item value="2-2-3">三级菜单 3</n-menu-item>
-                <n-menu-item value="2-2-4">
+                <h-menu-item value="2-2-1">三级菜单 1</h-menu-item>
+                <h-menu-item value="2-2-2">三级菜单 2</h-menu-item>
+                <h-menu-item value="2-2-3">三级菜单 3</h-menu-item>
+                <h-menu-item value="2-2-4">
                   三级菜单 4三级菜单 4三级菜单 4三级菜单 4三级菜单 4
-                </n-menu-item>
-              </n-sub-menu>
-            </n-sub-menu>
-            <n-sub-menu value="3" :selectable="true">
+                </h-menu-item>
+              </h-sub-menu>
+            </h-sub-menu>
+            <h-sub-menu value="3" :selectable="true">
               <template #title>
                 一级菜单 3 的名字超级长，可以看到 tooltip
                 的显示，如果没有显示，还需要增加更多更多内容
               </template>
-              <n-sub-menu value="3-1">
+              <h-sub-menu value="3-1">
                 <template #title>二级菜单 1</template>
-                <n-menu-item value="3-1-1" disabled icon="calendar">三级菜单 1</n-menu-item>
-                <n-menu-item value="3-1-2">三级菜单 2</n-menu-item>
-                <n-menu-item value="3-1-3">三级菜单 3</n-menu-item>
-                <n-menu-item value="3-1-4">三级菜单 4</n-menu-item>
-              </n-sub-menu>
-              <n-sub-menu value="3-2">
+                <h-menu-item value="3-1-1" disabled icon="calendar">三级菜单 1</h-menu-item>
+                <h-menu-item value="3-1-2">三级菜单 2</h-menu-item>
+                <h-menu-item value="3-1-3">三级菜单 3</h-menu-item>
+                <h-menu-item value="3-1-4">三级菜单 4</h-menu-item>
+              </h-sub-menu>
+              <h-sub-menu value="3-2">
                 <template #title>二级菜单 2</template>
-                <n-menu-item value="3-2-1">
+                <h-menu-item value="3-2-1">
                   三级菜单 1三级菜单 1三级菜单 1三级菜单 1三级菜单 1
-                </n-menu-item>
-                <n-menu-item value="3-2-2">三级菜单 2</n-menu-item>
-                <n-menu-item value="3-2-3">三级菜单 3</n-menu-item>
-                <n-menu-item value="3-2-4">三级菜单 4</n-menu-item>
-              </n-sub-menu>
-              <n-sub-menu value="3-3" :selectable="true">
+                </h-menu-item>
+                <h-menu-item value="3-2-2">三级菜单 2</h-menu-item>
+                <h-menu-item value="3-2-3">三级菜单 3</h-menu-item>
+                <h-menu-item value="3-2-4">三级菜单 4</h-menu-item>
+              </h-sub-menu>
+              <h-sub-menu value="3-3" :selectable="true">
                 <template #title>二级菜单 3</template>
-                <n-menu-item value="3-3-1">三级菜单 1</n-menu-item>
-                <n-sub-menu value="3-3-2">
+                <h-menu-item value="3-3-1">三级菜单 1</h-menu-item>
+                <h-sub-menu value="3-3-2">
                   <template #title>三级菜单 2</template>
-                  <n-menu-item value="3-3-2-1">四级菜单 1</n-menu-item>
-                  <n-menu-item value="3-3-2-2">四级菜单 2</n-menu-item>
-                </n-sub-menu>
-              </n-sub-menu>
-            </n-sub-menu>
-            <n-menu-item value="4">
+                  <h-menu-item value="3-3-2-1">四级菜单 1</h-menu-item>
+                  <h-menu-item value="3-3-2-2">四级菜单 2</h-menu-item>
+                </h-sub-menu>
+              </h-sub-menu>
+            </h-sub-menu>
+            <h-menu-item value="4">
               <template #title>一级菜单 4</template>
-            </n-menu-item>
-            <n-menu-item value="5">
+            </h-menu-item>
+            <h-menu-item value="5">
               <template #title>一级菜单 5</template>
-            </n-menu-item>
-            <n-menu-item value="6">
+            </h-menu-item>
+            <h-menu-item value="6">
               <template #title>一级菜单 6</template>
-            </n-menu-item>
-          </n-menu>
-        </n-header>
-        <n-main style="background: var(--n-bg-info-weak-hover); min-height: 500px"></n-main>
-      </n-container>
-    </n-col>
-  </n-row>
+            </h-menu-item>
+          </h-menu>
+        </h-header>
+        <h-main style="background: var(--h-bg-info-weak-hover); mih-height: 500px"></h-main>
+      </h-container>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">
@@ -184,13 +184,13 @@ const onSelected = (value: string, values: (menuItemPropType | subMenuPropType)[
 .logo {
   display: flex;
   grid-column-gap: 12px;
-  align-items: center;
+  aligh-items: center;
 }
 
 .logo .img {
   flex: 0 0 36px;
   display: flex;
-  align-items: center;
+  aligh-items: center;
 }
 
 .logo .text {
@@ -199,17 +199,17 @@ const onSelected = (value: string, values: (menuItemPropType | subMenuPropType)[
   line-height: 1;
 }
 
-.n-avatar {
+.h-avatar {
   width: 28px;
   height: 28px;
 }
 
 .avatar-popover {
   display: flex;
-  align-items: center;
+  aligh-items: center;
 }
 
-.avatar-popover :deep(.n-popover__reference) {
+.avatar-popover :deep(.h-popover__reference) {
   display: flex;
 }
 </style>

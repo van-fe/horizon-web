@@ -2,51 +2,51 @@
   <div class="demo-block">
     <div class="item"></div>
     <div class="item">
-      <n-button v-tooltip.top-start="'top-start'" type="normal" plain>topStart</n-button>
+      <h-button v-tooltip.top-start="'top-start'" type="normal" plain>topStart</h-button>
     </div>
     <div class="item">
-      <n-button v-tooltip.top="'top'" type="normal" plain>top</n-button>
+      <h-button v-tooltip.top="'top'" type="normal" plain>top</h-button>
     </div>
     <div class="item">
-      <n-button v-tooltip.top-end.child="'top-end'" type="normal" plain>topEnd</n-button>
-    </div>
-    <div class="item"></div>
-    <div class="item">
-      <n-button v-tooltip.left-start="'left-start'" type="normal" plain>leftStart</n-button>
+      <h-button v-tooltip.top-end.child="'top-end'" type="normal" plain>topEnd</h-button>
     </div>
     <div class="item"></div>
-    <div class="item"></div>
-    <div class="item"></div>
     <div class="item">
-      <n-button v-tooltip.right-start="'right-start'" type="normal" plain>rightStart</n-button>
-    </div>
-    <div class="item">
-      <n-button v-tooltip.left="'left'" type="normal" plain>left</n-button>
+      <h-button v-tooltip.left-start="'left-start'" type="normal" plain>leftStart</h-button>
     </div>
     <div class="item"></div>
     <div class="item"></div>
     <div class="item"></div>
     <div class="item">
-      <n-button v-tooltip.right="'right'" type="normal" plain>right</n-button>
+      <h-button v-tooltip.right-start="'right-start'" type="normal" plain>rightStart</h-button>
     </div>
     <div class="item">
-      <n-button v-tooltip.left-end="'left-end'" type="normal" plain>leftEnd</n-button>
+      <h-button v-tooltip.left="'left'" type="normal" plain>left</h-button>
+    </div>
+    <div class="item"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+    <div class="item">
+      <h-button v-tooltip.right="'right'" type="normal" plain>right</h-button>
+    </div>
+    <div class="item">
+      <h-button v-tooltip.left-end="'left-end'" type="normal" plain>leftEnd</h-button>
     </div>
     <div class="item"></div>
     <div class="item"></div>
     <div class="item"></div>
     <div class="item">
-      <n-button v-tooltip.right-end="'right-end'" type="normal" plain>rightEnd</n-button>
+      <h-button v-tooltip.right-end="'right-end'" type="normal" plain>rightEnd</h-button>
     </div>
     <div class="item"></div>
     <div class="item">
-      <n-button v-tooltip.bottom-start="'bottom-start'" type="normal" plain>bottomStart</n-button>
+      <h-button v-tooltip.bottom-start="'bottom-start'" type="normal" plain>bottomStart</h-button>
     </div>
     <div class="item">
-      <n-button v-tooltip.bottom="'bottom'" type="normal" plain>bottom</n-button>
+      <h-button v-tooltip.bottom="'bottom'" type="normal" plain>bottom</h-button>
     </div>
     <div class="item">
-      <n-button v-tooltip.bottom-end="'bottom-start'" type="normal" plain>bottomStart</n-button>
+      <h-button v-tooltip.bottom-end="'bottom-start'" type="normal" plain>bottomStart</h-button>
     </div>
     <div class="item"></div>
   </div>

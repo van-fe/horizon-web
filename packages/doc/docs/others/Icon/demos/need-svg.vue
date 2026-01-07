@@ -73,11 +73,11 @@ export default defineComponent({
 }
 
 .container .block .title {
-  margin-right: 20px;
+  margih-right: 20px;
   display: inline-block;
 }
 
 .container .block .a-icon {
-  margin-right: 20px;
+  margih-right: 20px;
 }
 </style>

@@ -2,7 +2,6 @@
 import { PropType, ref, watch } from 'vue';
 import { RouteRecordRaw, useRoute } from 'vue-router';
 import AsideMenu from './AsideMenu.vue';
-import { getRouterBase } from '@nio-wad/fx-web';
 
 defineProps({
   menus: {
@@ -11,7 +10,7 @@ defineProps({
   },
 });
 
-const selectedValue = ref(location.pathname.replace(getRouterBase(), '/') ?? '');
+const selectedValue = ref(location.pathname.replace('/', '') ?? '');
 const route = useRoute();
 
 watch(route, val => {
@@ -20,7 +19,7 @@ watch(route, val => {
 </script>
 
 <template>
-  <n-menu :selected-value="selectedValue" :exclusive-expand="true" :router="true">
+  <h-menu :selected-value="selectedValue" :exclusive-expand="true" :router="true">
     <AsideMenu :info="menus" />
-  </n-menu>
+  </h-menu>
 </template>

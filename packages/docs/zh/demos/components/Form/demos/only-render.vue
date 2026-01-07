@@ -1,18 +1,18 @@
 <template>
-  <n-form ref="formRef" validate-trigger="blur" :only-render="true">
-    <n-form-item label="Username" prop="username" :required="true" :error="errorInfo['username']">
-      <n-input v-model="formData.username" />
-    </n-form-item>
-    <n-form-item label="Email" prop="email" :required="true" :error="errorInfo['email']">
-      <n-input v-model="formData.email" />
-    </n-form-item>
-    <n-form-item label="Notes" prop="notes" :required="true" :error="errorInfo['notes']">
-      <n-input v-model="formData.notes" type="textarea" />
-    </n-form-item>
+  <h-form ref="formRef" validate-trigger="blur" :only-render="true">
+    <h-form-item label="Username" prop="username" :required="true" :error="errorInfo['username']">
+      <h-input v-model="formData.username" />
+    </h-form-item>
+    <h-form-item label="Email" prop="email" :required="true" :error="errorInfo['email']">
+      <h-input v-model="formData.email" />
+    </h-form-item>
+    <h-form-item label="Notes" prop="notes" :required="true" :error="errorInfo['notes']">
+      <h-input v-model="formData.notes" type="textarea" />
+    </h-form-item>
     <div>
-      <n-button @click="submit">Submit</n-button>
+      <h-button @click="submit">Submit</h-button>
     </div>
-  </n-form>
+  </h-form>
 </template>
 
 <script lang="ts">

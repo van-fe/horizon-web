@@ -1,6 +1,6 @@
 <template>
-  <n-button @click="visible = true">点我</n-button>
-  <n-dialog
+  <h-button @click="visible = true">点我</h-button>
+  <h-dialog
     v-model="visible"
     title="标题"
     @primaryClick="onPrimary"
@@ -1177,7 +1177,7 @@
         </p>
       </div>
     </div>
-  </n-dialog>
+  </h-dialog>
 </template>
 
 <script lang="ts">

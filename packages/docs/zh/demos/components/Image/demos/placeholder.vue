@@ -1,15 +1,15 @@
 <template>
   <div>
-    <n-button class="mb-2" @click="generateImage">reload</n-button>
+    <h-button class="mb-2" @click="generateImage">reload</h-button>
     <div class="flex">
-      <n-image :src="imgSrc" class="mr-2" :width="70" :height="70" />
-      <n-image :src="imgSrc" class="mr-2" :width="100" :height="100" />
-      <n-image :src="imgSrc" class="mr-2" :width="150" :height="150" />
-      <n-image :src="imgSrc" :width="150" :height="150">
+      <h-image :src="imgSrc" class="mr-2" :width="70" :height="70" />
+      <h-image :src="imgSrc" class="mr-2" :width="100" :height="100" />
+      <h-image :src="imgSrc" class="mr-2" :width="150" :height="150" />
+      <h-image :src="imgSrc" :width="150" :height="150">
         <template #placeholder>
           <div class="flex justify-center align-center" style="height: 100%">Loading...</div>
         </template>
-      </n-image>
+      </h-image>
     </div>
   </div>
 </template>

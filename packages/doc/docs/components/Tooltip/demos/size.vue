@@ -1,17 +1,17 @@
 <template>
   <div class="demo-block">
-    <n-tooltip placement="top">
-      <n-button type="normal" plain>Medium(default)</n-button>
+    <h-tooltip placement="top">
+      <h-button type="normal" plain>Medium(default)</h-button>
       <template #content>Medium</template>
-    </n-tooltip>
-    <n-tooltip placement="top" size="small">
-      <n-button type="normal" plain>Small</n-button>
+    </h-tooltip>
+    <h-tooltip placement="top" size="small">
+      <h-button type="normal" plain>Small</h-button>
       <template #content>Small</template>
-    </n-tooltip>
-    <n-tooltip placement="top" size="small" :arrow="false" :distance="4">
-      <n-button type="normal" plain>No arrow</n-button>
+    </h-tooltip>
+    <h-tooltip placement="top" size="small" :arrow="false" :distance="4">
+      <h-button type="normal" plain>No arrow</h-button>
       <template #content>No arrow</template>
-    </n-tooltip>
+    </h-tooltip>
   </div>
 </template>
 
@@ -20,12 +20,12 @@
 <style scoped>
 .demo-block {
   display: flex;
-  align-items: center;
+  aligh-items: center;
 }
 
-.demo-block .n-popover__reference {
-  margin-bottom: 20px;
-  margin-left: 0;
-  margin-right: 20px;
+.demo-block .h-popover__reference {
+  margih-bottom: 20px;
+  margih-left: 0;
+  margih-right: 20px;
 }
 </style>

@@ -1,17 +1,17 @@
 <template>
   <div>
     <div class="mb-2">
-      <n-select v-model="itemSize">
-        <n-option
+      <h-select v-model="itemSize">
+        <h-option
           v-for="item in ['large', 'medium', 'small']"
           :key="item"
           :value="item"
           :label="item"
         />
-      </n-select>
+      </h-select>
     </div>
     <div v-for="item in lists" :key="item.id" class="mb-2">
-      <n-upload-preview-file-item
+      <h-upload-preview-file-item
         :id="item.id"
         :file-type="item.fileType"
         :size="itemSize"
@@ -23,7 +23,7 @@
     </div>
 
     <div v-for="item in lists" :key="item.id" class="mb-2">
-      <n-upload-preview-img-item
+      <h-upload-preview-img-item
         :id="item.id"
         :file-type="item.fileType"
         :size="itemSize"

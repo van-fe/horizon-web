@@ -1,18 +1,18 @@
 <template>
   <div style="width: 600px">
-    <n-switch
+    <h-switch
       v-model="currentRef"
       label="This is a Label Text  and their names. This is a Label Text  and their names. This is a Label Text  and their names."
       label-position="top"
       style="margin-bottom: 20px"
     />
-    <n-switch
+    <h-switch
       v-model="currentRef"
       label="This is a Label Text  and their names. This is a Label Text  and their names. This is a Label Text  and their names."
       label-position="left"
       style="margin-bottom: 20px"
     />
-    <n-switch
+    <h-switch
       v-model="currentRef"
       label="This is a Label Text  and their names. This is a Label Text  and their names. This is a Label Text  and their names."
       label-position="right"

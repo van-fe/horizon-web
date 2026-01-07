@@ -1,13 +1,13 @@
 <template>
-  <n-form :inline="true" label-position="top">
-    <n-form-item label="可选任意节点">
-      <n-switch v-model="checkStrictly" status />
-    </n-form-item>
-  </n-form>
-  <n-row :gutter="10">
-    <n-col :span="6">
+  <h-form :inline="true" label-position="top">
+    <h-form-item label="可选任意节点">
+      <h-switch v-model="checkStrictly" status />
+    </h-form-item>
+  </h-form>
+  <h-row :gutter="10">
+    <h-col :span="6">
       <div class="demo-title">无Radio（默认）</div>
-      <n-cascader
+      <h-cascader
         v-model="currentVal1"
         :show-radio="false"
         :check-strictly="checkStrictly"
@@ -16,10 +16,10 @@
         :options="baseData"
         @change="handleChange"
       />
-    </n-col>
-    <n-col :span="6">
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">有Radio</div>
-      <n-cascader
+      <h-cascader
         v-model="currentVal2"
         :show-radio="true"
         :check-strictly="checkStrictly"
@@ -28,8 +28,8 @@
         :options="baseData"
         @change="handleChange"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

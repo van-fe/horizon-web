@@ -1,11 +1,11 @@
 <template>
-  <n-scrollbar size="small" max-height="400px">
+  <h-scrollbar size="small" max-height="400px">
     <div class="wrap">
       <div v-for="item of 50" :key="item" class="item">
         {{ item }}
       </div>
     </div>
-  </n-scrollbar>
+  </h-scrollbar>
 </template>
 
 <script setup lang="ts">

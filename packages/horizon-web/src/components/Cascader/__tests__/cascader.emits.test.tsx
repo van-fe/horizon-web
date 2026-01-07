@@ -116,7 +116,7 @@ describe('Cascader.tsx emits', () => {
 
     expect(modelValue.value?.length).toEqual(6);
 
-    await pickerInput.findComponent(HTag).find('.n-tag__close').trigger('click');
+    await pickerInput.findComponent(HTag).find('.h-tag__close').trigger('click');
 
     expect(onChange).toHaveBeenCalledTimes(2);
     expect(onChange).toHaveBeenLastCalledWith(

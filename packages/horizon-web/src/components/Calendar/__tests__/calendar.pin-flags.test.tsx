@@ -35,7 +35,7 @@ describe('calendar.pin-flags', function () {
       />
     ));
 
-    const dayCell = wrapper.find('.n-calendar-month__day');
+    const dayCell = wrapper.find('.h-calendar-month__day');
 
     await dayCell.trigger('mousedown');
     await dayCell.trigger('mouseup');
@@ -121,7 +121,7 @@ describe('calendar.pin-flags', function () {
       <HCalendar modelValue="2022-10-01" v-model:pinFlags={pinFlags.value} mode="year" />
     ));
 
-    const octoberCell = wrapper.findAll('.n-calendar-year__month')[9];
+    const octoberCell = wrapper.findAll('.h-calendar-year__month')[9];
 
     const flagStarts = octoberCell.findAll('.has-flag.is-flag-start');
     const flagEnds = octoberCell.findAll('.has-flag.is-flag-end');
@@ -175,7 +175,7 @@ describe('calendar.pin-flags', function () {
       />
     ));
 
-    const dayCell = wrapper.find('.n-calendar-month__day');
+    const dayCell = wrapper.find('.h-calendar-month__day');
 
     await dayCell.trigger('mousedown');
     await dayCell.trigger('mouseup');
@@ -196,7 +196,7 @@ describe('calendar.pin-flags', function () {
       />
     ));
 
-    const dayColumn = wrapper.find('.n-calendar-week__body--date-grid-column');
+    const dayColumn = wrapper.find('.h-calendar-week__body--date-grid-column');
 
     await dayColumn.trigger('mousedown');
     await dayColumn.trigger('mouseup');

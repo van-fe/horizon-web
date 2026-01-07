@@ -18,7 +18,7 @@ describe('Empty.tsx', () => {
       const element = wrapper.findComponent(HEmpty);
 
       await nextTick();
-      expect(element.find('.n-empty__description').text()).toEqual('No Data.');
+      expect(element.find('.h-empty__description').text()).toEqual('No Data.');
     });
 
     test('image', async () => {
@@ -26,7 +26,7 @@ describe('Empty.tsx', () => {
       const element = wrapper.findComponent(HEmpty);
 
       await nextTick();
-      expect(element.find('.n-empty__image').html()).toEqual(
+      expect(element.find('.h-empty__image').html()).toEqual(
         expect.stringMatching(/src=".*48efb02f7b3d.svg"/),
       );
     });
@@ -52,7 +52,7 @@ describe('Empty.tsx', () => {
 
       size.value = 160;
       await nextTick();
-      expect(element.find('.n-empty__image').attributes('style')).toContain('width: 160px');
+      expect(element.find('.h-empty__image').attributes('style')).toContain('width: 160px');
     });
   });
 });

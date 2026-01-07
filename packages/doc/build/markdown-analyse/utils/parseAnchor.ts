@@ -18,37 +18,37 @@ function getApiAnchor(
   switch (type) {
     case 'components':
       if ('props' in pluginInfo && pluginInfo.props?.length) {
-        content += `<n-anchor-link title="${pluginInfo.name} Props" href="#${pluginInfo.name} Props"></n-anchor-link>`;
+        content += `<h-anchor-link title="${pluginInfo.name} Props" href="#${pluginInfo.name} Props"></h-anchor-link>`;
       }
 
       if ('emits' in pluginInfo && pluginInfo.emits.length) {
-        content += `<n-anchor-link title="${pluginInfo.name} Emits" href="#${pluginInfo.name} Emits"></n-anchor-link>`;
+        content += `<h-anchor-link title="${pluginInfo.name} Emits" href="#${pluginInfo.name} Emits"></h-anchor-link>`;
       }
 
       if ('slots' in pluginInfo && pluginInfo.slots.length) {
-        content += `<n-anchor-link title="${pluginInfo.name} Slots" href="#${pluginInfo.name} Slots"></n-anchor-link>`;
+        content += `<h-anchor-link title="${pluginInfo.name} Slots" href="#${pluginInfo.name} Slots"></h-anchor-link>`;
       }
 
       if ('exposes' in pluginInfo && pluginInfo.exposes.length) {
-        content += `<n-anchor-link title="${pluginInfo.name} Exposes" href="#${pluginInfo.name} Exposes"></n-anchor-link>`;
+        content += `<h-anchor-link title="${pluginInfo.name} Exposes" href="#${pluginInfo.name} Exposes"></h-anchor-link>`;
       }
       break;
     case 'directives':
       if ('options' in pluginInfo && pluginInfo.options.length) {
-        content += `<n-anchor-link title="${pluginInfo.name} Options" href="#${pluginInfo.name} Options"></n-anchor-link>`;
+        content += `<h-anchor-link title="${pluginInfo.name} Options" href="#${pluginInfo.name} Options"></h-anchor-link>`;
       }
       break;
     case 'methods':
       if ('options' in pluginInfo && pluginInfo.options.length) {
-        content += `<n-anchor-link title="${pluginInfo.name} Options" href="#${pluginInfo.name} Options"></n-anchor-link>`;
+        content += `<h-anchor-link title="${pluginInfo.name} Options" href="#${pluginInfo.name} Options"></h-anchor-link>`;
       }
       if ('methods' in pluginInfo && pluginInfo.methods.length) {
-        content += `<n-anchor-link title="${pluginInfo.name} Methods" href="#${pluginInfo.name} Methods"></n-anchor-link>`;
+        content += `<h-anchor-link title="${pluginInfo.name} Methods" href="#${pluginInfo.name} Methods"></h-anchor-link>`;
       }
   }
 
   return renderMainAnchor
-    ? `<n-anchor-link title="${pluginInfo.name} Api" href="#${pluginInfo.name} Api">${content}</n-anchor-link>`
+    ? `<h-anchor-link title="${pluginInfo.name} Api" href="#${pluginInfo.name} Api">${content}</h-anchor-link>`
     : content;
 }
 
@@ -71,14 +71,14 @@ export default function (
   return {
     output: `${getHeadingContent('Demos')}${content}${getHeadingContent('Api')}`,
     rightMenu: `<div class="right-menu">
-    <n-anchor scroll-container=".scroller-view" size="medium" style="margin: 0;">
-      <n-anchor-link title="Demos" href="#Demos">
-        ${rightMenus.map(curr => `<n-anchor-link href="#${curr}" title="${curr}" />`).join('\n')}
-      </n-anchor-link>
+    <h-anchor scroll-container=".scroller-view" size="medium" style="margin: 0;">
+      <h-anchor-link title="Demos" href="#Demos">
+        ${rightMenus.map(curr => `<h-anchor-link href="#${curr}" title="${curr}" />`).join('\n')}
+      </h-anchor-link>
       ${dependencePlugins
         .map(curr => getApiAnchor(curr, dependencePlugins.length > 1, pluginType))
         .join('')}
-    </n-anchor>
+    </h-anchor>
   </div>`,
   };
 }
@@ -96,11 +96,11 @@ export function parseNormalAnchor(content: string, withTopHeading = true) {
   return {
     output: `${withTopHeading ? getHeadingContent('Demos') : ''}${content}`,
     rightMenu: `<div class="right-menu">
-    <n-anchor scroll-container=".scroller-view" size="medium" style="margin: 0;">
-      <n-anchor-link title="Demos" href="#Demos">
-        ${rightMenus.map(curr => `<n-anchor-link href="#${curr}" title="${curr}" />`).join('\n')}
-      </n-anchor-link>
-    </n-anchor>
+    <h-anchor scroll-container=".scroller-view" size="medium" style="margin: 0;">
+      <h-anchor-link title="Demos" href="#Demos">
+        ${rightMenus.map(curr => `<h-anchor-link href="#${curr}" title="${curr}" />`).join('\n')}
+      </h-anchor-link>
+    </h-anchor>
   </div>`,
   };
 }

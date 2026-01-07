@@ -1,63 +1,63 @@
 <template>
   <div>
-    <n-row :gutter="12">
-      <n-col :span="8">
+    <h-row :gutter="12">
+      <h-col :span="8">
         <div class="demo-title">前缀-默认状态</div>
-        <n-input-number :min="0" prefix-icon="points" />
-      </n-col>
-      <n-col :span="8">
+        <h-input-number :min="0" prefix-icon="points" />
+      </h-col>
+      <h-col :span="8">
         <div class="demo-title">前缀-控制器位于两侧</div>
-        <n-input-number controls-position="between" :min="0" prefix-icon="points" />
-      </n-col>
-      <n-col :span="8">
+        <h-input-number controls-position="between" :min="0" prefix-icon="points" />
+      </h-col>
+      <h-col :span="8">
         <div class="demo-title">前缀-控制器隐藏</div>
-        <n-input-number :controls="false" :min="0" prefix-icon="points" />
-      </n-col>
-    </n-row>
-    <n-row :gutter="12">
-      <n-col :span="8">
+        <h-input-number :controls="false" :min="0" prefix-icon="points" />
+      </h-col>
+    </h-row>
+    <h-row :gutter="12">
+      <h-col :span="8">
         <div class="demo-title">后缀-默认状态</div>
-        <n-input-number :min="0" suffix-icon="points" :clearable="true" />
-      </n-col>
-      <n-col :span="8">
+        <h-input-number :min="0" suffix-icon="points" :clearable="true" />
+      </h-col>
+      <h-col :span="8">
         <div class="demo-title">后缀-控制器位于两侧</div>
-        <n-input-number controls-position="between" :min="0" :clearable="true">
+        <h-input-number controls-position="between" :min="0" :clearable="true">
           <template #suffix>RMB</template>
-        </n-input-number>
-      </n-col>
-      <n-col :span="8">
+        </h-input-number>
+      </h-col>
+      <h-col :span="8">
         <div class="demo-title">后缀-控制器隐藏</div>
-        <n-input-number :controls="false" :min="0" suffix-icon="points" :clearable="true">
+        <h-input-number :controls="false" :min="0" suffix-icon="points" :clearable="true">
           <template #suffix>RMB</template>
-        </n-input-number>
-      </n-col>
-    </n-row>
-    <n-row :gutter="12">
-      <n-col :span="8">
+        </h-input-number>
+      </h-col>
+    </h-row>
+    <h-row :gutter="12">
+      <h-col :span="8">
         <div class="demo-title">前后缀-默认状态</div>
-        <n-input-number :min="0" suffix-icon="points">
+        <h-input-number :min="0" suffix-icon="points">
           <template #prefix>
             <a-icon v-tooltip="`请注意，这里是积分`" name="remind" size="12" />
           </template>
-        </n-input-number>
-      </n-col>
-      <n-col :span="8">
+        </h-input-number>
+      </h-col>
+      <h-col :span="8">
         <div class="demo-title">前后缀-控制器位于两侧</div>
-        <n-input-number controls-position="between" :min="0" suffix-icon="points">
+        <h-input-number controls-position="between" :min="0" suffix-icon="points">
           <template #prefix>
             <a-icon v-tooltip="`请注意，这里是积分`" name="remind" size="12" />
           </template>
-        </n-input-number>
-      </n-col>
-      <n-col :span="8">
+        </h-input-number>
+      </h-col>
+      <h-col :span="8">
         <div class="demo-title">前后缀-控制器隐藏</div>
-        <n-input-number :controls="false" :min="0" suffix-icon="points">
+        <h-input-number :controls="false" :min="0" suffix-icon="points">
           <template #prefix>
             <a-icon v-tooltip="`请注意，这里是积分`" name="remind" size="12" />
           </template>
-        </n-input-number>
-      </n-col>
-    </n-row>
+        </h-input-number>
+      </h-col>
+    </h-row>
   </div>
 </template>
 

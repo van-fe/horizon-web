@@ -1,7 +1,7 @@
 <template>
-  <n-row :gutter="10">
-    <n-col :span="6">
-      <n-cascader
+  <h-row :gutter="10">
+    <h-col :span="6">
+      <h-cascader
         ref="cascaderDomRef1"
         v-model="currentVal"
         :clearable="true"
@@ -10,8 +10,8 @@
         :panels-loading="panelsLoading"
         @panelReachBottom="onReachBottom"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

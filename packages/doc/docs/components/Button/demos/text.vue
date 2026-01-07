@@ -1,13 +1,13 @@
 <script setup lang="ts"></script>
 
 <template>
-  <n-button type="normal" text>Normal Text Button</n-button>
-  <n-button text>Primary Text Button</n-button>
-  <n-button type="danger" text>Danger Text Button</n-button>
+  <h-button type="normal" text>Normal Text Button</h-button>
+  <h-button text>Primary Text Button</h-button>
+  <h-button type="danger" text>Danger Text Button</h-button>
 </template>
 
 <style scoped>
-.n-button + .n-button {
-  margin-left: 10px;
+.h-button + .h-button {
+  margih-left: 10px;
 }
 </style>

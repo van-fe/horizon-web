@@ -8,39 +8,39 @@ const clearable = ref(false);
 </script>
 
 <template>
-  <n-form label-position="left" label-vertical-align="middle">
-    <n-form-item label="style">
-      <n-radio-group v-model="style">
-        <n-radio label="normal" />
-        <n-radio label="emphasize" />
-        <n-radio label="no-border" />
-      </n-radio-group>
-    </n-form-item>
-    <n-form-item label="disabled">
-      <n-radio-group v-model="disabled">
-        <n-radio :label="true">True</n-radio>
-        <n-radio :label="false">False</n-radio>
-      </n-radio-group>
-    </n-form-item>
-    <n-form-item label="clearable">
-      <n-radio-group v-model="clearable">
-        <n-radio :label="true">True</n-radio>
-        <n-radio :label="false">False</n-radio>
-      </n-radio-group>
-    </n-form-item>
-  </n-form>
-  <n-row :gutter="12">
-    <n-col :span="8">
+  <h-form label-position="left" label-vertical-align="middle">
+    <h-form-item label="style">
+      <h-radio-group v-model="style">
+        <h-radio label="normal" />
+        <h-radio label="emphasize" />
+        <h-radio label="no-border" />
+      </h-radio-group>
+    </h-form-item>
+    <h-form-item label="disabled">
+      <h-radio-group v-model="disabled">
+        <h-radio :label="true">True</h-radio>
+        <h-radio :label="false">False</h-radio>
+      </h-radio-group>
+    </h-form-item>
+    <h-form-item label="clearable">
+      <h-radio-group v-model="clearable">
+        <h-radio :label="true">True</h-radio>
+        <h-radio :label="false">False</h-radio>
+      </h-radio-group>
+    </h-form-item>
+  </h-form>
+  <h-row :gutter="12">
+    <h-col :span="8">
       <div class="demo-title">large</div>
-      <n-input-number v-model="value" :input-style="style" :disabled="disabled" :clearable="clearable" size="large" />
-    </n-col>
-    <n-col :span="8">
+      <h-input-number v-model="value" :input-style="style" :disabled="disabled" :clearable="clearable" size="large" />
+    </h-col>
+    <h-col :span="8">
       <div class="demo-title">medium (default)</div>
-      <n-input-number v-model="value" :input-style="style" :disabled="disabled" :clearable="clearable" />
-    </n-col>
-    <n-col :span="8">
+      <h-input-number v-model="value" :input-style="style" :disabled="disabled" :clearable="clearable" />
+    </h-col>
+    <h-col :span="8">
       <div class="demo-title">small</div>
-      <n-input-number v-model="value" :input-style="style" :disabled="disabled" :clearable="clearable" size="small" />
-    </n-col>
-  </n-row>
+      <h-input-number v-model="value" :input-style="style" :disabled="disabled" :clearable="clearable" size="small" />
+    </h-col>
+  </h-row>
 </template>

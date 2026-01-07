@@ -1,17 +1,17 @@
 <template>
-  <n-steps v-model="current" :clickable="true" @change="onChange">
-    <n-step title="Step 1" description="Here is a paragraph." @click="onClickStep1" />
-    <n-step title="Step 2" description="Cannot click" :clickable="false" />
-    <n-step title="Step 3" description="Here is a paragraph." />
-    <n-step title="Step 3" description="Here is a paragraph." />
-  </n-steps>
+  <h-steps v-model="current" :clickable="true" @change="onChange">
+    <h-step title="Step 1" description="Here is a paragraph." @click="onClickStep1" />
+    <h-step title="Step 2" description="Cannot click" :clickable="false" />
+    <h-step title="Step 3" description="Here is a paragraph." />
+    <h-step title="Step 3" description="Here is a paragraph." />
+  </h-steps>
   <br />
-  <n-steps v-model="current" :clickable="true" direction="vertical" @change="onChange">
-    <n-step title="Step 1" description="Here is a paragraph." />
-    <n-step title="Step 2" description="Cannot click" :clickable="false" />
-    <n-step title="Step 3" description="Here is a paragraph." />
-    <n-step title="Step 3" description="Here is a paragraph." />
-  </n-steps>
+  <h-steps v-model="current" :clickable="true" direction="vertical" @change="onChange">
+    <h-step title="Step 1" description="Here is a paragraph." />
+    <h-step title="Step 2" description="Cannot click" :clickable="false" />
+    <h-step title="Step 3" description="Here is a paragraph." />
+    <h-step title="Step 3" description="Here is a paragraph." />
+  </h-steps>
 </template>
 
 <script lang="ts">

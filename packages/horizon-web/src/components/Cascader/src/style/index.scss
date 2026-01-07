@@ -1,6 +1,6 @@
 @use '../../../../styles/mixins';
-@import './panel';
-@import './item';
+@use 'panel';
+@use 'item';
 
 @include mixins.b('cascader') {
   #{mixins.css-variable-name('tag-max-width')}: #{mixins.css-variable('cascader-max-width--tag')};

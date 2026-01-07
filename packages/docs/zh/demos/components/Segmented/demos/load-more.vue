@@ -1,10 +1,10 @@
 <template>
-  <n-space direction="vertical" block>
-    <n-segmented default-active-key="Default Option1">
-      <n-segmented-item v-for="v in options" :key="v" :label="v" />
-    </n-segmented>
-    <n-button type="normal" :loading="loading" :disabled="loaded" @click="onLoad">Load</n-button>
-  </n-space>
+  <h-space direction="vertical" block>
+    <h-segmented default-active-key="Default Option1">
+      <h-segmented-item v-for="v in options" :key="v" :label="v" />
+    </h-segmented>
+    <h-button type="normal" :loading="loading" :disabled="loaded" @click="onLoad">Load</h-button>
+  </h-space>
 </template>
 
 <script setup lang="ts">

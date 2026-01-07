@@ -30,7 +30,7 @@ export default (md: MarkdownIt) => {
         .replace(/`(.*?)`/g, '<code>$1</code>');
 
       if (m) {
-        return `<n-alert type="info" style="margin: 20px 0;" :closable="${false}" show-icon>${m}</n-alert>`;
+        return `<h-alert type="info" style="margin: 20px 0;" :closable="${false}" show-icon>${m}</h-alert>`;
       } else {
         return '';
       }
@@ -47,7 +47,7 @@ export default (md: MarkdownIt) => {
         .replace(/`(.*?)`/g, '<code>$1</code>');
 
       if (m) {
-        return `<n-alert type="info" style="margin: 20px 0;" :closable="${false}" show-icon>${m}</n-alert>`;
+        return `<h-alert type="info" style="margin: 20px 0;" :closable="${false}" show-icon>${m}</h-alert>`;
       } else {
         return '';
       }
@@ -64,7 +64,7 @@ export default (md: MarkdownIt) => {
         .replace(/`(.*?)`/g, '<code>$1</code>');
 
       if (m) {
-        return `<n-alert type="warning" style="margin: 20px 0;" :closable="${false}" show-icon>${m}</n-alert>`;
+        return `<h-alert type="warning" style="margin: 20px 0;" :closable="${false}" show-icon>${m}</h-alert>`;
       } else {
         return '';
       }
@@ -81,7 +81,7 @@ export default (md: MarkdownIt) => {
         .replace(/`(.*?)`/g, '<code>$1</code>');
 
       if (m) {
-        return `<n-alert type="success" style="margin: 20px 0;" :closable="${false}" show-icon>${m}</n-alert>`;
+        return `<h-alert type="success" style="margin: 20px 0;" :closable="${false}" show-icon>${m}</h-alert>`;
       } else {
         return '';
       }
@@ -98,7 +98,7 @@ export default (md: MarkdownIt) => {
         .replace(/`(.*?)`/g, '<code>$1</code>');
 
       if (m) {
-        return `<n-alert type="error" style="margin: 20px 0;" :closable="${false}" show-icon>${m}</n-alert>`;
+        return `<h-alert type="error" style="margin: 20px 0;" :closable="${false}" show-icon>${m}</h-alert>`;
       } else {
         return '';
       }

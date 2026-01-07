@@ -3,8 +3,8 @@
     current picked index: {{ checkedRow }}
   </p>
 
-  <n-table-v3 :data="data" height="300px">
-    <n-table-column-v3
+  <h-table-v3 :data="data" height="300px">
+    <h-table-column-v3
       ref="selectionColumnDomRef"
       v-model:selected-keys="checkedRow"
       type="selection"
@@ -13,23 +13,23 @@
       column-key="id"
       :selectable="isSelectable"
     />
-    <n-table-column-v3 title="Index" field="id" width="80" />
-    <n-table-column-v3 title="Name" field="name" />
-    <n-table-column-v3 title="Birthday" field="birthday" />
-    <n-table-column-v3 title="Address" field="address" />
-  </n-table-v3>
+    <h-table-column-v3 title="Index" field="id" width="80" />
+    <h-table-column-v3 title="Name" field="name" />
+    <h-table-column-v3 title="Birthday" field="birthday" />
+    <h-table-column-v3 title="Address" field="address" />
+  </h-table-v3>
 
   <div class="my-4">
     <p>
-      <n-button plain @click="() => setSelected(true)">toggle index = 4 ignore selectable</n-button>
-      <n-button plain @click="() => setSelected()">toggle index = 4 consider selectable</n-button>
+      <h-button plain @click="() => setSelected(true)">toggle index = 4 ignore selectable</h-button>
+      <h-button plain @click="() => setSelected()">toggle index = 4 consider selectable</h-button>
     </p>
     <p>
-      <n-button plain @click="getSelected">get selected</n-button>
+      <h-button plain @click="getSelected">get selected</h-button>
     </p>
     <p>
-      <n-button plain @click="() => clearSelection(true)">clear selection ignore selectable</n-button>
-      <n-button plain @click="() => clearSelection()">clear selection consider selectable</n-button>
+      <h-button plain @click="() => clearSelection(true)">clear selection ignore selectable</h-button>
+      <h-button plain @click="() => clearSelection()">clear selection consider selectable</h-button>
     </p>
   </div>
 </template>

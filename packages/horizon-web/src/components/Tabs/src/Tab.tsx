@@ -37,7 +37,7 @@ export default defineComponent({
     useTabPropsLogWarnProperty(toRefs(props));
 
     const ctx = inject(tabsContextKey);
-    if (!ctx) throw new Error('Please using <n-tab> in the <n-tabs>');
+    if (!ctx) throw new Error('Please using <h-tab> in the <h-tabs>');
 
     const cls = new ComponentClassBlock('tabs');
 

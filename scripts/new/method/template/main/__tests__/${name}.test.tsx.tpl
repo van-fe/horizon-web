@@ -5,6 +5,6 @@ describe('${capitalName}.tsx', () => {
   test('basic', async () => {
     ${namespaceName}({});
 
-    expect(document.body.querySelector('.n-${kebabName}')).not.eq(undefined);
+    expect(document.body.querySelector('.h-${kebabName}')).not.eq(undefined);
   });
 });

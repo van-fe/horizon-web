@@ -1,11 +1,11 @@
 <template>
 	<div class="flex justify-center">
-		<n-empty description="No data found.">
-			<n-button size="small">Refresh</n-button>
-		</n-empty>
-		<n-empty description="No data found.">
-			<n-button plain size="small">Back</n-button>
-			<n-button size="small">Refresh</n-button>
-		</n-empty>
+		<h-empty description="No data found.">
+			<h-button size="small">Refresh</h-button>
+		</h-empty>
+		<h-empty description="No data found.">
+			<h-button plain size="small">Back</h-button>
+			<h-button size="small">Refresh</h-button>
+		</h-empty>
 	</div>
 </template>

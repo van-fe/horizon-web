@@ -1,44 +1,44 @@
 <template>
   <div class="mb-4">
-    <n-popover class="mr-4" popper-class="flip_popover" trigger="click" placement="top">
+    <h-popover class="mr-4" popper-class="flip_popover" trigger="click" placement="top">
       <template #reference>
-        <n-button :plain="true">flip top bottom</n-button>
+        <h-button :plain="true">flip top bottom</h-button>
       </template>
       <template #popper>
         <demo-content></demo-content>
       </template>
-    </n-popover>
+    </h-popover>
   </div>
   <!--  -->
   <div class="mb-4">
-    <n-popover
+    <h-popover
       class="mr-4"
       trigger="click"
       popper-class="flip_popover"
       :fallback-placements="['top', 'bottom', 'left', 'right']"
     >
       <template #reference>
-        <n-button :plain="true">fallbackPlacements left right</n-button>
+        <h-button :plain="true">fallbackPlacements left right</h-button>
       </template>
       <template #popper>
         <demo-content></demo-content>
       </template>
-    </n-popover>
+    </h-popover>
   </div>
   <div class="mb-4">
-    <n-popover
+    <h-popover
       class="mr-4"
       trigger="click"
       popper-class="flip_popover"
       prevent-overflow
     >
       <template #reference>
-        <n-button :plain="true">preventOverflow enabled</n-button>
+        <h-button :plain="true">preventOverflow enabled</h-button>
       </template>
       <template #popper>
         <demo-content></demo-content>
       </template>
-    </n-popover>
+    </h-popover>
   </div>
 </template>
 

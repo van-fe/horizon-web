@@ -1,10 +1,10 @@
 <template>
   <div class="demo-wrapper">
     <div class="box"><span>正常显示</span>
-      <n-time-picker v-model="time1" type="time" is-range></n-time-picker>
+      <h-time-picker v-model="time1" type="time" is-range></h-time-picker>
     </div>
     <div class="box"><span>preventOverflow</span>
-      <n-time-picker v-model="time2" type="time" is-range prevent-overflow></n-time-picker>
+      <h-time-picker v-model="time2" type="time" is-range prevent-overflow></h-time-picker>
     </div>
   </div>
 </template>

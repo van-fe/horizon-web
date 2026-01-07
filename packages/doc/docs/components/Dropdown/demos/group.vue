@@ -1,48 +1,48 @@
 <template>
-  <n-row>
-    <n-col :span="24">
-      <n-dropdown :popover-options="{ sameWidth: true }" @visible-change="v => (visible1 = v)">
-        <n-button>
+  <h-row>
+    <h-col :span="24">
+      <h-dropdown :popover-options="{ sameWidth: true }" @visible-change="v => (visible1 = v)">
+        <h-button>
           no title
           <template #suffix>
-            <IconArrowDown size="14" :rotate="visible1 ? 180 : 0" class="dropdown-icon" />
+            <IconArrowDown size="14" :rotate="visible1 ? 180 : 0" class="dropdowh-icon" />
           </template>
-        </n-button>
+        </h-button>
         <template #dropdown>
-          <n-dropdown-menu>
-            <n-dropdown-group>
-              <n-dropdown-item>北京</n-dropdown-item>
-              <n-dropdown-item>上海</n-dropdown-item>
-              <n-dropdown-item>重庆</n-dropdown-item>
-            </n-dropdown-group>
-            <n-dropdown-item>深圳</n-dropdown-item>
-            <n-dropdown-item>杭州</n-dropdown-item>
-          </n-dropdown-menu>
+          <h-dropdowh-menu>
+            <h-dropdowh-group>
+              <h-dropdowh-item>北京</h-dropdowh-item>
+              <h-dropdowh-item>上海</h-dropdowh-item>
+              <h-dropdowh-item>重庆</h-dropdowh-item>
+            </h-dropdowh-group>
+            <h-dropdowh-item>深圳</h-dropdowh-item>
+            <h-dropdowh-item>杭州</h-dropdowh-item>
+          </h-dropdowh-menu>
         </template>
-      </n-dropdown>
-      <n-dropdown :popover-options="{ sameWidth: true }" @visible-change="v => (visible2 = v)">
-        <n-button>
+      </h-dropdown>
+      <h-dropdown :popover-options="{ sameWidth: true }" @visible-change="v => (visible2 = v)">
+        <h-button>
           with title
           <template #suffix>
-            <IconArrowDown size="14" :rotate="visible2 ? 180 : 0" class="dropdown-icon" />
+            <IconArrowDown size="14" :rotate="visible2 ? 180 : 0" class="dropdowh-icon" />
           </template>
-        </n-button>
-        <n-dropdown-menu>
-          <n-dropdown-group>
+        </h-button>
+        <h-dropdowh-menu>
+          <h-dropdowh-group>
             <template #title>直辖市</template>
-            <n-dropdown-item>北京</n-dropdown-item>
-            <n-dropdown-item>上海</n-dropdown-item>
-            <n-dropdown-item>重庆</n-dropdown-item>
-          </n-dropdown-group>
-          <n-dropdown-group>
+            <h-dropdowh-item>北京</h-dropdowh-item>
+            <h-dropdowh-item>上海</h-dropdowh-item>
+            <h-dropdowh-item>重庆</h-dropdowh-item>
+          </h-dropdowh-group>
+          <h-dropdowh-group>
             <template #title>其他城市</template>
-            <n-dropdown-item>深圳</n-dropdown-item>
-            <n-dropdown-item>杭州</n-dropdown-item>
-          </n-dropdown-group>
-        </n-dropdown-menu>
-      </n-dropdown>
-    </n-col>
-  </n-row>
+            <h-dropdowh-item>深圳</h-dropdowh-item>
+            <h-dropdowh-item>杭州</h-dropdowh-item>
+          </h-dropdowh-group>
+        </h-dropdowh-menu>
+      </h-dropdown>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">
@@ -54,22 +54,22 @@ const visible2 = ref(false);
 </script>
 
 <style scoped>
-.n-dropdown {
+.h-dropdown {
   display: inline-flex;
 
 
-  :deep(.n-button__suffix) {
+  :deep(.h-button__suffix) {
     display: inline-flex;
-    align-items: center;
+    aligh-items: center;
   }
 }
 
-.n-dropdown + .n-dropdown {
-  margin-left: 12px;
+.h-dropdown + .h-dropdown {
+  margih-left: 12px;
 }
 
-.dropdown-icon {
+.dropdowh-icon {
   transition: transform .2s;
-  margin-left: 6px;
+  margih-left: 6px;
 }
 </style>

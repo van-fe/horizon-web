@@ -1,6 +1,6 @@
 <template>
   <p class="my-4">center-point，按中心点对齐</p>
-  <n-badge
+  <h-badge
     v-for="(item, index) in listRef"
     :key="index"
     type="num"
@@ -9,9 +9,9 @@
     style="margin-right: 20px"
   >
     <div style="background: gray; width: 50px; height: 50px"></div>
-  </n-badge>
+  </h-badge>
   <p class="my-4">inner，内部对齐</p>
-  <n-badge
+  <h-badge
     v-for="(item, index) in listRef"
     :key="index"
     type="num"
@@ -21,9 +21,9 @@
     style="margin-right: 20px"
   >
     <div style="background: gray; width: 50px; height: 50px"></div>
-  </n-badge>
+  </h-badge>
   <p class="my-4">outer，外部对齐</p>
-  <n-badge
+  <h-badge
     v-for="(item, index) in listRef"
     :key="index"
     type="num"
@@ -33,9 +33,9 @@
     style="margin-right: 20px"
   >
     <div style="background: gray; width: 50px; height: 50px"></div>
-  </n-badge>
+  </h-badge>
   <p class="my-4">fix-left，固定左边边距，长度向右延伸</p>
-  <n-badge
+  <h-badge
     v-for="(item, index) in listRef"
     :key="index"
     type="num"
@@ -45,9 +45,9 @@
     style="margin-right: 20px"
   >
     <div style="background: gray; width: 50px; height: 50px"></div>
-  </n-badge>
+  </h-badge>
   <p class="my-4">自定义偏移量</p>
-  <n-badge
+  <h-badge
     v-for="(item, index) in listRef"
     :key="index"
     type="num"
@@ -58,7 +58,7 @@
     style="margin-right: 20px"
   >
     <div style="background: gray; width: 50px; height: 50px"></div>
-  </n-badge>
+  </h-badge>
 </template>
 
 <script lang="ts">

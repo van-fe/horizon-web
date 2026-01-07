@@ -1,5 +1,5 @@
 <template>
-  <n-input v-model="val" clearable type="password" show-password />
+  <h-input v-model="val" clearable type="password" show-password />
 </template>
 
 <script lang="ts">

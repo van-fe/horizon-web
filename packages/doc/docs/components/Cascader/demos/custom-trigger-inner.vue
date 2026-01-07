@@ -1,11 +1,11 @@
 <template>
-  <n-row :gutter="10">
-    <n-col :span="6">
-      <n-cascader v-model="currentVal1" :options="options" expand-trigger="click" :to-body="false">
+  <h-row :gutter="10">
+    <h-col :span="6">
+      <h-cascader v-model="currentVal1" :options="options" expand-trigger="click" :to-body="false">
         <template #selectRender>你的选择是：{{ currentVal1.join('+') }}</template>
-      </n-cascader>
-    </n-col>
-  </n-row>
+      </h-cascader>
+    </h-col>
+  </h-row>
 </template>
 
 <script lang="ts">

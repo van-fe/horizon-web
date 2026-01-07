@@ -1,11 +1,11 @@
 @use '../../../../styles/mixins';
-@import './fade';
-@import './zoom';
-@import './collapse';
-@import './slide';
-@import './special';
-@import './dropdown';
-@import './tooltip';
+@use 'fade';
+@use 'zoom';
+@use 'collapse';
+@use 'slide';
+@use 'special';
+@use 'dropdown';
+@use 'tooltip';
 
 @include mixins.b('opacity-transition') {
   transition: opacity mixins.css-variable('transition-time')

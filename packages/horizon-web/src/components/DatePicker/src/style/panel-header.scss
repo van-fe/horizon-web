@@ -88,7 +88,7 @@
     }
 
     @include mixins.nested('picker') {
-      --n-picker-width--append-icon: 0;
+      --h-picker-width--append-icon: 0;
       flex: 1;
     }
   }

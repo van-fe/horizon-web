@@ -1,5 +1,5 @@
 <template>
-  <n-empty :size="120">
+  <h-empty :size="120">
     <template #image>
       <div class="my-img">
         <img
@@ -8,7 +8,7 @@
         />
       </div>
     </template>
-  </n-empty>
+  </h-empty>
 </template>
 
 <style lang="scss">

@@ -18,15 +18,15 @@ describe('Link.tsx', () => {
       const wrapper = mount(() => <HLink type={type.value}>Default</HLink>);
       const element = wrapper.findComponent(HLink);
 
-      expect(element.classes('n-link--positive')).toBe(true);
+      expect(element.classes('h-link--positive')).toBe(true);
 
       type.value = 'neutral';
       await nextTick();
-      expect(element.classes('n-link--neutral')).toBe(true);
+      expect(element.classes('h-link--neutral')).toBe(true);
 
       type.value = 'negative';
       await nextTick();
-      expect(element.classes('n-link--negative')).toBe(true);
+      expect(element.classes('h-link--negative')).toBe(true);
     });
 
     test('size', async () => {
@@ -34,15 +34,15 @@ describe('Link.tsx', () => {
       const wrapper = mount(() => <HLink size={size.value}>Default</HLink>);
       const element = wrapper.findComponent(HLink);
 
-      expect(element.classes('n-link--medium')).toBe(true);
+      expect(element.classes('h-link--medium')).toBe(true);
 
       size.value = 'small';
       await nextTick();
-      expect(element.classes('n-link--small')).toBe(true);
+      expect(element.classes('h-link--small')).toBe(true);
 
       size.value = 'large';
       await nextTick();
-      expect(element.classes('n-link--large')).toBe(true);
+      expect(element.classes('h-link--large')).toBe(true);
     });
 
     test('underline', async () => {
@@ -79,7 +79,7 @@ describe('Link.tsx', () => {
       const element = wrapper.findComponent(HLink);
 
       expect(element.classes('has-anchor')).toBe(true);
-      expect(wrapper.find('.n-link__anchor').exists()).toBe(true);
+      expect(wrapper.find('.h-link__anchor').exists()).toBe(true);
     });
 
     test('icon', async () => {

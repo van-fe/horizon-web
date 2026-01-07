@@ -1,7 +1,7 @@
 <template>
   <div class="">
-    <n-rate v-model="currentScore" :gutter="10" />
-    <n-rate v-model="currentScore" :gutter="30" />
+    <h-rate v-model="currentScore" :gutter="10" />
+    <h-rate v-model="currentScore" :gutter="30" />
   </div>
 </template>
 

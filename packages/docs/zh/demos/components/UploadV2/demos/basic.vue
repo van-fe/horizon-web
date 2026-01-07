@@ -1,28 +1,28 @@
 <template>
-  <n-form>
-    <n-form-item label="尺寸">
-      <n-radio-group v-model="size">
-        <n-radio label="small"></n-radio>
-        <n-radio label="medium"></n-radio>
-        <n-radio label="large"></n-radio>
-      </n-radio-group>
-    </n-form-item>
-    <n-form-item label="文件元素尺寸">
-      <n-radio-group v-model="fileItemSize">
-        <n-radio label="small"></n-radio>
-        <n-radio label="medium"></n-radio>
-        <n-radio label="large"></n-radio>
-      </n-radio-group>
-    </n-form-item>
-    <n-form-item label="展示上传按钮">
-      <n-radio-group v-model="showUploader">
-        <n-radio :label="true">True</n-radio>
-        <n-radio :label="false">False</n-radio>
-      </n-radio-group>
-    </n-form-item>
-  </n-form>
-  <n-space>
-    <n-upload
+  <h-form>
+    <h-form-item label="尺寸">
+      <h-radio-group v-model="size">
+        <h-radio label="small"></h-radio>
+        <h-radio label="medium"></h-radio>
+        <h-radio label="large"></h-radio>
+      </h-radio-group>
+    </h-form-item>
+    <h-form-item label="文件元素尺寸">
+      <h-radio-group v-model="fileItemSize">
+        <h-radio label="small"></h-radio>
+        <h-radio label="medium"></h-radio>
+        <h-radio label="large"></h-radio>
+      </h-radio-group>
+    </h-form-item>
+    <h-form-item label="展示上传按钮">
+      <h-radio-group v-model="showUploader">
+        <h-radio :label="true">True</h-radio>
+        <h-radio :label="false">False</h-radio>
+      </h-radio-group>
+    </h-form-item>
+  </h-form>
+  <h-space>
+    <h-upload
       v-model="modelValue"
       action="https://horizon-web-inspector.nioint.com/upload-mock"
       method="POST"
@@ -40,7 +40,7 @@
       @retry="onRetryFile"
       @fail="onFailFile"
     />
-  </n-space>
+  </h-space>
 </template>
 
 <script lang="ts" setup>

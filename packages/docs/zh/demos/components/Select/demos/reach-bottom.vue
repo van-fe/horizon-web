@@ -36,13 +36,13 @@ generateRandomOptions();
 </script>
 
 <template>
-  <n-row :gutter="10">
-    <n-col :span="6">
-      <n-select v-model="value" :clearable="true" :to-body="false" :loading="loading" @optionListReachBottom="onOptionListReachBottom">
-        <n-option v-for="item of list" :key="item.value" :label="item.label" :value="item.value" />
-      </n-select>
-    </n-col>
-  </n-row>
+  <h-row :gutter="10">
+    <h-col :span="6">
+      <h-select v-model="value" :clearable="true" :to-body="false" :loading="loading" @optionListReachBottom="onOptionListReachBottom">
+        <h-option v-for="item of list" :key="item.value" :label="item.label" :value="item.value" />
+      </h-select>
+    </h-col>
+  </h-row>
 </template>
 
 <style scoped>

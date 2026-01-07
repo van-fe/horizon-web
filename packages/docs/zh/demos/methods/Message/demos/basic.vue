@@ -1,5 +1,5 @@
 <template>
-  <n-button @click="open">Default Message</n-button>
+  <h-button @click="open">Default Message</h-button>
 </template>
 
 <script lang="ts" setup>

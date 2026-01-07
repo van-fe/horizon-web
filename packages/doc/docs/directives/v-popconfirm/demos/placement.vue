@@ -1,60 +1,60 @@
 <template>
   <div class="placement">
     <div>
-      <n-button v-popconfirm="{ placement: 'top-start' }" type="normal" @click="del">
+      <h-button v-popconfirm="{ placement: 'top-start' }" type="normal" @click="del">
         topStart
-      </n-button>
-      <n-button v-popconfirm="{ placement: 'top' }" type="normal" @click="del">top</n-button>
-      <n-button v-popconfirm="{ placement: 'top-end' }" type="normal" @click="del">topEnd</n-button>
+      </h-button>
+      <h-button v-popconfirm="{ placement: 'top' }" type="normal" @click="del">top</h-button>
+      <h-button v-popconfirm="{ placement: 'top-end' }" type="normal" @click="del">topEnd</h-button>
     </div>
     <div>
-      <n-space block direction="vertical">
-        <n-button v-popconfirm="{ placement: 'left-start' }" type="normal" @click="del">
+      <h-space block direction="vertical">
+        <h-button v-popconfirm="{ placement: 'left-start' }" type="normal" @click="del">
           leftStart
-        </n-button>
-        <n-button v-popconfirm="{ placement: 'left' }" type="normal" @click="del">left</n-button>
-        <n-button v-popconfirm="{ placement: 'left-end' }" type="normal" @click="del">
+        </h-button>
+        <h-button v-popconfirm="{ placement: 'left' }" type="normal" @click="del">left</h-button>
+        <h-button v-popconfirm="{ placement: 'left-end' }" type="normal" @click="del">
           leftEnd
-        </n-button>
-      </n-space>
+        </h-button>
+      </h-space>
     </div>
     <div>
-      <n-button
+      <h-button
         v-popconfirm="{ placement: 'bottom-start' }"
         type="normal"
         class="mr-2"
         @click="del"
       >
         bottomStart
-      </n-button>
-      <n-button v-popconfirm="{ placement: 'bottom' }" type="normal" class="mr-2" @click="del">
+      </h-button>
+      <h-button v-popconfirm="{ placement: 'bottom' }" type="normal" class="mr-2" @click="del">
         bottom
-      </n-button>
-      <n-button v-popconfirm="{ placement: 'bottom-end' }" type="normal" class="mr-2" @click="del">
+      </h-button>
+      <h-button v-popconfirm="{ placement: 'bottom-end' }" type="normal" class="mr-2" @click="del">
         bottomEnd
-      </n-button>
+      </h-button>
     </div>
     <div>
-      <n-space block direction="vertical" align="end">
-        <n-button v-popconfirm="{ placement: 'right-start' }" type="normal" @click="del">
+      <h-space block direction="vertical" align="end">
+        <h-button v-popconfirm="{ placement: 'right-start' }" type="normal" @click="del">
           rightStart
-        </n-button>
-        <n-button v-popconfirm="{ placement: 'right' }" type="normal" @click="del">right</n-button>
-        <n-button v-popconfirm="{ placement: 'right-end' }" type="normal" @click="del">
+        </h-button>
+        <h-button v-popconfirm="{ placement: 'right' }" type="normal" @click="del">right</h-button>
+        <h-button v-popconfirm="{ placement: 'right-end' }" type="normal" @click="del">
           rightEnd
-        </n-button>
-      </n-space>
+        </h-button>
+      </h-space>
     </div>
     <div>
-      <n-button v-popconfirm="{ placement: 'auto-start' }" type="normal" class="mr-2" @click="del">
+      <h-button v-popconfirm="{ placement: 'auto-start' }" type="normal" class="mr-2" @click="del">
         autoStart
-      </n-button>
-      <n-button v-popconfirm="{ placement: 'auto' }" type="normal" class="mr-2" @click="del">
+      </h-button>
+      <h-button v-popconfirm="{ placement: 'auto' }" type="normal" class="mr-2" @click="del">
         auto
-      </n-button>
-      <n-button v-popconfirm="{ placement: 'auto-end' }" type="normal" class="mr-2" @click="del">
+      </h-button>
+      <h-button v-popconfirm="{ placement: 'auto-end' }" type="normal" class="mr-2" @click="del">
         autoEnd
-      </n-button>
+      </h-button>
     </div>
   </div>
 </template>
@@ -86,7 +86,7 @@ export default defineComponent({
   height: 400px;
   width: 600px;
   justify-content: center;
-  align-items: center;
+  aligh-items: center;
 }
 
 .placement > div {

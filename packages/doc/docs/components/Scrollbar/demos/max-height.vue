@@ -1,14 +1,14 @@
 <template>
   <div>
-    <n-button @click="add">增加条目</n-button>
-    <n-button :disabled="items.length <= 3" @click="del">减少条目</n-button>
-    <n-scrollbar max-height="400px" class="mt-4">
+    <h-button @click="add">增加条目</h-button>
+    <h-button :disabled="items.length <= 3" @click="del">减少条目</h-button>
+    <h-scrollbar max-height="400px" class="mt-4">
       <div class="wrap">
         <div v-for="item of items" :key="item" class="item">
           {{ item }}
         </div>
       </div>
-    </n-scrollbar>
+    </h-scrollbar>
   </div>
 </template>
 
@@ -35,13 +35,13 @@ function del() {
 
 .item {
   height: 40px;
-  background: var(--n-bg-info-weak-default);
+  background: var(--h-bg-info-weak-default);
   display: flex;
-  align-items: center;
+  aligh-items: center;
   justify-content: center;
 }
 
-.n-button + .n-button {
-  margin-left: 10px;
+.h-button + .h-button {
+  margih-left: 10px;
 }
 </style>

@@ -1,16 +1,16 @@
 <template>
-  <n-space block direction="vertical" size="small">
-    <n-tabs v-model="currentRef">
-      <n-tab name="panel1" label="Option1" />
-      <n-tab name="panel2" label="Option2" />
-      <n-tab name="panel3" label="Option3" />
-    </n-tabs>
-    <n-panels v-model="currentRef" animated>
-      <n-panel name="panel1">Panel1 Content</n-panel>
-      <n-panel name="panel2">Panel2 Content</n-panel>
-      <n-panel name="panel3">Panel3 Content</n-panel>
-    </n-panels>
-  </n-space>
+  <h-space block direction="vertical" size="small">
+    <h-tabs v-model="currentRef">
+      <h-tab name="panel1" label="Option1" />
+      <h-tab name="panel2" label="Option2" />
+      <h-tab name="panel3" label="Option3" />
+    </h-tabs>
+    <h-panels v-model="currentRef" animated>
+      <h-panel name="panel1">Panel1 Content</h-panel>
+      <h-panel name="panel2">Panel2 Content</h-panel>
+      <h-panel name="panel3">Panel3 Content</h-panel>
+    </h-panels>
+  </h-space>
 </template>
 
 <script lang="ts">

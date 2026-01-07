@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-    <n-image
+    <h-image
       v-for="rounded in roundedList"
       :key="rounded"
       class="mr-3"

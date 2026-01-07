@@ -28,4 +28,4 @@
 
 ### 最小尺寸
 设置 `minSize` ，可以保证在滚动内容非常多时，滚动条依旧可以被容易点击到
-:::demo ./demos/min-size.vue :::
+:::demo ./demos/mih-size.vue :::

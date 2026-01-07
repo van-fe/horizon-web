@@ -20,7 +20,7 @@
 
 
 ### 关闭和增加
-通过设置 `n-tabs (editable)`、`n-tab (closable)` 属性可以开启动态增减选项卡。仅在 `line | card | page` 生效；关闭和新增的逻辑由业务实现。 `v2 = true`，删除如果是当前选项卡，则默认选中第一个选项卡
+通过设置 `h-tabs (editable)`、`h-tab (closable)` 属性可以开启动态增减选项卡。仅在 `line | card | page` 生效；关闭和新增的逻辑由业务实现。 `v2 = true`，删除如果是当前选项卡，则默认选中第一个选项卡
 :::demo ./demos/editable.vue :::
 
 ### 右侧附加操作区域
@@ -35,7 +35,7 @@
 如果需要对选项卡进行排序操作，可通过设置 `draggable` 启用。
 :::demo ./demos/draggable.vue :::
 
-### 结合 `n-panel` 使用
+### 结合 `h-panel` 使用
 使用面板组件，开发选项卡应用
 :::demo ./demos/with-panel.vue :::
 
@@ -60,4 +60,4 @@
 
 
 ### Design Token
-:::code ./demos/design-token.scss :::
+:::code ./demos/desigh-token.scss :::

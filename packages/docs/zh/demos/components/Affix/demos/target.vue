@@ -1,9 +1,9 @@
 <template>
   <div id="scroll" class="target-wrapper">
     <div class="target-container">
-      <n-affix target=".target-wrapper">
-        <n-button>Affix in container</n-button>
-      </n-affix>
+      <h-affix target=".target-wrapper">
+        <h-button>Affix in container</h-button>
+      </h-affix>
     </div>
   </div>
 </template>

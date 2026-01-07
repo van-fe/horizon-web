@@ -1,6 +1,6 @@
 @use 'sass:list';
 @use '../../../../styles/mixins';
-@import './themes';
+@use 'themes';
 
 @include mixins.b('picker') {
   #{mixins.css-variable-name('tag-color--default--disabled')}: #{mixins.css-variable('picker-color--tag--disabled')};

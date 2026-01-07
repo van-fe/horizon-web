@@ -1,34 +1,34 @@
 <template>
   <div style="display: flex">
     <div class="box">
-      <n-button @click="open">打开(default)</n-button>
-      <n-mask :value="show" type="default">
-        <n-button @click="close">关闭</n-button>
-      </n-mask>
+      <h-button @click="open">打开(default)</h-button>
+      <h-mask :value="show" type="default">
+        <h-button @click="close">关闭</h-button>
+      </h-mask>
     </div>
     <div class="box">
-      <n-button @click="open01">打开(weak)</n-button>
-      <n-mask :value="show01" type="weak">
-        <n-button @click="close01">关闭</n-button>
-      </n-mask>
+      <h-button @click="open01">打开(weak)</h-button>
+      <h-mask :value="show01" type="weak">
+        <h-button @click="close01">关闭</h-button>
+      </h-mask>
     </div>
     <div class="box">
-      <n-button @click="open02">打开(strong)</n-button>
-      <n-mask :value="show02" type="strong">
-        <n-button @click="close02">关闭</n-button>
-      </n-mask>
+      <h-button @click="open02">打开(strong)</h-button>
+      <h-mask :value="show02" type="strong">
+        <h-button @click="close02">关闭</h-button>
+      </h-mask>
     </div>
     <div class="box">
-      <n-button @click="open03">打开(inverse)</n-button>
-      <n-mask :value="show03" type="inverse">
-        <n-button @click="close03">关闭</n-button>
-      </n-mask>
+      <h-button @click="open03">打开(inverse)</h-button>
+      <h-mask :value="show03" type="inverse">
+        <h-button @click="close03">关闭</h-button>
+      </h-mask>
     </div>
     <div class="box">
-      <n-button @click="open04">打开(transparent)</n-button>
-      <n-mask :value="show04" type="transparent">
-        <n-button @click="close04">关闭</n-button>
-      </n-mask>
+      <h-button @click="open04">打开(transparent)</h-button>
+      <h-mask :value="show04" type="transparent">
+        <h-button @click="close04">关闭</h-button>
+      </h-mask>
     </div>
   </div>
 </template>

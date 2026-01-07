@@ -19,7 +19,7 @@ describe('Tag.tsx', () => {
     test('modelValue', async () => {
       const modelValue = ref(false);
       const wrapper = mount(() => <HTag v-model={modelValue.value} />);
-      const element = wrapper.find('.n-tag');
+      const element = wrapper.find('.h-tag');
 
       expect(element.classes('is-clickable')).eq(true);
 
@@ -31,7 +31,7 @@ describe('Tag.tsx', () => {
     test('type', async () => {
       const type = ref<TagProps['type']>('success');
       const wrapper = mount(() => <HTag type={type.value} />);
-      const element = wrapper.find('.n-tag');
+      const element = wrapper.find('.h-tag');
 
       expect(element.classes('n-tag--success')).eq(true);
 
@@ -45,7 +45,7 @@ describe('Tag.tsx', () => {
     test('size', async () => {
       const size = ref<TagProps['size']>('medium');
       const wrapper = mount(() => <HTag size={size.value} />);
-      const element = wrapper.find('.n-tag');
+      const element = wrapper.find('.h-tag');
 
       expect(element.classes('n-tag--medium')).eq(true);
 
@@ -59,7 +59,7 @@ describe('Tag.tsx', () => {
     test('bold', async () => {
       const bold = ref<TagProps['bold']>(false);
       const wrapper = mount(() => <HTag bold={bold.value} />);
-      const element = wrapper.find('.n-tag');
+      const element = wrapper.find('.h-tag');
 
       expect(element.classes('n-tag--bold')).eq(false);
 
@@ -73,7 +73,7 @@ describe('Tag.tsx', () => {
     test('clickable', async () => {
       const clickable = ref<TagProps['clickable']>(false);
       const wrapper = mount(() => <HTag clickable={clickable.value} />);
-      const element = wrapper.find('.n-tag');
+      const element = wrapper.find('.h-tag');
 
       expect(element.classes('is-clickable')).eq(false);
 
@@ -87,7 +87,7 @@ describe('Tag.tsx', () => {
     test('closable', async () => {
       const closable = ref<TagProps['closable']>(false);
       const wrapper = mount(() => <HTag closable={closable.value} />);
-      const element = wrapper.find('.n-tag');
+      const element = wrapper.find('.h-tag');
 
       expect(element.classes('is-closable')).eq(false);
 
@@ -96,13 +96,13 @@ describe('Tag.tsx', () => {
       await nextTick();
 
       expect(element.classes('is-closable')).eq(true);
-      expect(wrapper.find('.n-tag__close').exists()).eq(true);
+      expect(wrapper.find('.h-tag__close').exists()).eq(true);
     });
 
     test('disabled', async () => {
       const disabled = ref<TagProps['disabled']>(false);
       const wrapper = mount(() => <HTag disabled={disabled.value} />);
-      const element = wrapper.find('.n-tag');
+      const element = wrapper.find('.h-tag');
 
       expect(element.classes('is-disabled')).eq(false);
 
@@ -116,7 +116,7 @@ describe('Tag.tsx', () => {
     test('plain', async () => {
       const plain = ref<TagProps['plain']>(false);
       const wrapper = mount(() => <HTag plain={plain.value} />);
-      const element = wrapper.find('.n-tag');
+      const element = wrapper.find('.h-tag');
 
       expect(element.classes('is-plain')).eq(false);
 
@@ -130,7 +130,7 @@ describe('Tag.tsx', () => {
     test('round', async () => {
       const round = ref<TagProps['round']>(false);
       const wrapper = mount(() => <HTag round={round.value} />);
-      const element = wrapper.find('.n-tag');
+      const element = wrapper.find('.h-tag');
 
       expect(element.classes('n-tag--round')).eq(false);
 
@@ -144,7 +144,7 @@ describe('Tag.tsx', () => {
     test('avatar', async () => {
       const size = ref<TagProps['size']>('medium');
       const wrapper = mount(() => <HTag size={size.value} avatar="1" />);
-      const element = wrapper.find('.n-tag');
+      const element = wrapper.find('.h-tag');
       const avatar = element.findComponent(HAvatar);
 
       expect(avatar.find('img').exists()).eq(true);
@@ -162,7 +162,7 @@ describe('Tag.tsx', () => {
     test('icon', async () => {
       const size = ref<TagProps['size']>('medium');
       const wrapper = mount(() => <HTag size={size.value} icon={IconEye} />);
-      const element = wrapper.find('.n-tag');
+      const element = wrapper.find('.h-tag');
       const icon = element.findComponent(IconEye);
 
       expect(icon.exists()).eq(true);
@@ -171,7 +171,7 @@ describe('Tag.tsx', () => {
     test('equally', async () => {
       const equally = ref<TagProps['equally']>(false);
       const wrapper = mount(() => <HTag equally={equally.value} />);
-      const element = wrapper.find('.n-tag');
+      const element = wrapper.find('.h-tag');
 
       expect(element.classes('n-tag--equally')).eq(false);
 
@@ -188,13 +188,13 @@ describe('Tag.tsx', () => {
           普
         </HTag>
       ));
-      const element = wrapper.find('.n-tag');
+      const element = wrapper.find('.h-tag');
 
       await element.trigger('mouseenter');
       await sleep(1000);
       await nextTick();
 
-      expect(element.find('.n-tag__close').exists()).eq(true);
+      expect(element.find('.h-tag__close').exists()).eq(true);
 
       await element.trigger('mouseleave');
       await element.trigger('mouseenter');
@@ -202,27 +202,27 @@ describe('Tag.tsx', () => {
       await sleep(1000);
       await nextTick();
 
-      expect(element.find('.n-tag__close').exists()).eq(false);
+      expect(element.find('.h-tag__close').exists()).eq(false);
     });
 
     test('loading', async () => {
       const loading = ref<TagProps['loading']>(true);
       const wrapper = mount(() => <HTag loading={loading.value}>普</HTag>);
-      const element = wrapper.find('.n-tag');
+      const element = wrapper.find('.h-tag');
 
-      expect(element.find('.n-tag__loading').exists()).eq(true);
+      expect(element.find('.h-tag__loading').exists()).eq(true);
 
       loading.value = false;
 
       await nextTick();
 
-      expect(element.find('.n-tag__loading').exists()).eq(false);
+      expect(element.find('.h-tag__loading').exists()).eq(false);
     });
 
     test('disable-transitions', async () => {
       const disableTransitions = ref<TagProps['disableTransitions']>(false);
       const wrapper = mount(() => <HTag disableTransitions={disableTransitions.value} />);
-      const element = wrapper.find('.n-tag');
+      const element = wrapper.find('.h-tag');
 
       expect(element.classes('is-disable-transitions')).eq(false);
 
@@ -238,7 +238,7 @@ describe('Tag.tsx', () => {
     test('click', async () => {
       const onClick = vi.fn();
       const wrapper = mount(() => <HTag clickable={true} onClick={onClick} />);
-      const element = wrapper.find('.n-tag');
+      const element = wrapper.find('.h-tag');
 
       await element.trigger('click');
 
@@ -248,8 +248,8 @@ describe('Tag.tsx', () => {
     test('close', async () => {
       const onClose = vi.fn();
       const wrapper = mount(() => <HTag closable={true} onClose={onClose} />);
-      const element = wrapper.find('.n-tag');
-      const closeIcon = element.find('.n-tag__close');
+      const element = wrapper.find('.h-tag');
+      const closeIcon = element.find('.h-tag__close');
 
       await closeIcon.trigger('click');
 

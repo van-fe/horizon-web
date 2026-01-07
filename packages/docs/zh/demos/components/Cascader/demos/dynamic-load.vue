@@ -1,26 +1,26 @@
 <template>
   <div>
-    <n-row :gutter="10">
-      <n-col :span="6">
+    <h-row :gutter="10">
+      <h-col :span="6">
         <div class="demo-title">单选</div>
-        <n-cascader
+        <h-cascader
             v-model="currentVal1"
             v-model:options="refDynOptions1"
             :dynamic-load="dynamicLoad"
             :to-body="false"
         />
-      </n-col>
-      <n-col :span="6">
+      </h-col>
+      <h-col :span="6">
         <div class="demo-title">多选</div>
-        <n-cascader
+        <h-cascader
             v-model="currentVal2"
             v-model:options="refDynOptions2"
             multiple
             :dynamic-load="dynamicLoad"
             :to-body="false"
         />
-      </n-col>
-    </n-row>
+      </h-col>
+    </h-row>
   </div>
 </template>
 

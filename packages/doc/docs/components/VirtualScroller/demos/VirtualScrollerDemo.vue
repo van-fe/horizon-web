@@ -1,18 +1,18 @@
 <template>
   <div class="virtual-scroller-demo">
     <section class="toolbar">
-      <n-row>
-        <n-col :span="10">
-          <n-input v-model="tmpKw" placeholder="type kw to search">
+      <h-row>
+        <h-col :span="10">
+          <h-input v-model="tmpKw" placeholder="type kw to search">
             <template #append>
-              <n-button :icon="IconSearch" size="medium" type="info" @click="doSearch"></n-button>
+              <h-button :icon="IconSearch" size="medium" type="info" @click="doSearch"></h-button>
             </template>
-          </n-input>
-        </n-col>
-        <n-col :span="20"></n-col>
-      </n-row>
+          </h-input>
+        </h-col>
+        <h-col :span="20"></h-col>
+      </h-row>
     </section>
-    <NVirtualScroller class="scroller" :items="filteredItems" :min-item-size="54">
+    <NVirtualScroller class="scroller" :items="filteredItems" :mih-item-size="54">
       <template #before>
         <div class="notice">这是一个消息列表, 我们并不清楚任意一个消息元素的高度~</div>
       </template>
@@ -68,7 +68,7 @@ export default defineComponent({
 
     function generateMessage() {
       return {
-        avatar: 'https://www.nio.cn/cdn-static/mynio/nextjs/images/home/nioApp/nio-app-logo.png',
+        avatar: 'https://www.nio.cn/cdh-static/mynio/nextjs/images/home/nioApp/nio-app-logo.png',
         message: faker.lorem.text(),
       };
     }
@@ -134,7 +134,7 @@ export default defineComponent({
 
 .message {
   display: flex;
-  min-height: 32px;
+  mih-height: 32px;
   padding: 12px;
   box-sizing: border-box;
 }
@@ -144,7 +144,7 @@ export default defineComponent({
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  margin-right: 12px;
+  margih-right: 12px;
 }
 
 .avatar .image {

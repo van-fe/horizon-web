@@ -1,7 +1,7 @@
 @use '../../../../styles/mixins';
-@import './panel-header';
-@import './panel-body';
-@import './shortcuts';
+@use 'panel-header';
+@use 'panel-body';
+@use 'shortcuts';
 
 @include mixins.b('date-picker') {
   @include mixins.e('input-wrapper') {
@@ -40,7 +40,7 @@
   }
 
   @include mixins.is('clearable') {
-    --n-picker-width--append-icon: 32px;
+    --h-picker-width--append-icon: 32px;
   }
 
   @include mixins.e('range-panel-separator') {

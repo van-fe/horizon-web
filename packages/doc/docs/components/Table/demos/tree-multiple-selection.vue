@@ -1,8 +1,8 @@
 <template>
-  <n-switch v-model="checkStrictly" status status-on-text="check strictly" status-off-text="not check strictly" class="mb-4" />
+  <h-switch v-model="checkStrictly" status status-oh-text="check strictly" status-off-text="not check strictly" class="mb-4" />
 
-  <n-table-v3 :data="data" height="500" row-key="id">
-    <n-table-column-v3
+  <h-table-v3 :data="data" height="500" row-key="id">
+    <h-table-column-v3
       v-model:selected-keys="checkedRows"
       title="ID"
       field="id"
@@ -11,11 +11,11 @@
       :multiple="true"
       :check-strictly="checkStrictly"
     />
-    <n-table-column-v3 title="Name" field="name" />
-    <n-table-column-v3 title="Gender" field="gender" />
-    <n-table-column-v3 title="Birthday" field="birthday" />
-    <n-table-column-v3 title="Address" field="address" />
-  </n-table-v3>
+    <h-table-column-v3 title="Name" field="name" />
+    <h-table-column-v3 title="Gender" field="gender" />
+    <h-table-column-v3 title="Birthday" field="birthday" />
+    <h-table-column-v3 title="Address" field="address" />
+  </h-table-v3>
 </template>
 
 <script setup lang="ts">

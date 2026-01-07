@@ -1,6 +1,6 @@
 <template>
-  <n-button plain type="normal" @click="visible = true">点击打开Dialog</n-button>
-  <n-dialog v-model="visible" title="用户协议（示例）" @ok="onOk" @cancel="onCancel">
+  <h-button plain type="normal" @click="visible = true">点击打开Dialog</h-button>
+  <h-dialog v-model="visible" title="用户协议（示例）" @ok="onOk" @cancel="onCancel">
     <div class="privacy_content__3rZRW">
       <p>更新及生效日期： 2022年3月31日</p>
       <p>
@@ -358,7 +358,7 @@
         ），这些权限只有经过您的明示授权才会开启，并且仅在相关功能或服务需要时才会收集您的个人信息。如果您关闭相关权限，我们可能无法为您提供这些授权所对应的功能。您可根据实际需要在系统中对相关权限进行管理。蔚来App的权限使用情况
         <b>
           请查看此处
-          <a href="/privacy-policy/nio-app-system-permission-usage">《蔚来App系统权限使用情况》</a>
+          <a href="/privacy-policy/nio-app-system-permissioh-usage">《蔚来App系统权限使用情况》</a>
           。
         </b>
       </p>
@@ -1156,7 +1156,7 @@
         一般情况下，我们将在十五（15）天内完成身份核查和处理响应。如果您请求删除您的敏感个人信息，我们将在十（10）个工作日内回复处理意见或结果。
       </p>
     </div>
-  </n-dialog>
+  </h-dialog>
 </template>
 
 <script lang="ts" setup>

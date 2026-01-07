@@ -1,9 +1,9 @@
 <template>
-  <n-table-v3 :data="data" :row-class-name="rowClassNameSet">
-    <n-table-column-v3 title="Name" field="name" />
-    <n-table-column-v3 title="Age" field="age" />
-    <n-table-column-v3 title="Address" field="address" />
-  </n-table-v3>
+  <h-table-v3 :data="data" :row-class-name="rowClassNameSet">
+    <h-table-column-v3 title="Name" field="name" />
+    <h-table-column-v3 title="Age" field="age" />
+    <h-table-column-v3 title="Address" field="address" />
+  </h-table-v3>
 </template>
 
 <script setup lang="ts">
@@ -35,10 +35,10 @@ function rowClassNameSet(row: TableData) {
 
 <style>
 .bg-weak-success {
-  background: var(--n-bg-success-weak-activated);
+  background: var(--h-bg-success-weak-activated);
 }
 
 .bg-weak-error {
-  background: var(--n-bg-error-weak-activated);
+  background: var(--h-bg-error-weak-activated);
 }
 </style>

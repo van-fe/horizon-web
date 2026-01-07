@@ -22,7 +22,7 @@ describe('alert.tsx', () => {
     });
 
     const confirmButton = document.body.querySelector(
-      '.n-button--primary_positive',
+      '.h-button--primary_positive',
     ) as HTMLButtonElement | null;
 
     confirmButton?.click();
@@ -31,7 +31,7 @@ describe('alert.tsx', () => {
 
     await sleep(200);
 
-    const dialogContainer = document.body.querySelector('.n-dialog__container')!;
+    const dialogContainer = document.body.querySelector('.h-dialog__container')!;
 
     const style = window.getComputedStyle(dialogContainer);
 

@@ -79,7 +79,7 @@ export function getIconName() {
       reader.onload = function () {
         if (!reader.result) return;
         const result_str = reader.result;
-        const regex = /\.n-icon_(.+?)\:/g;
+        const regex = /\.h-icon_(.+?)\:/g;
         let result;
         while ((result = regex.exec(result_str)) !== null) {
           const full_name = result[1];

@@ -15,5 +15,5 @@ export default function (
   return `<div class="description">${currMode.desc}</div>`
     .replace(/\\n\s*/g, '<br>')
     .replace(/`(.*?)`/g, '<code>$1</code>')
-    .replace(/\[(.*?)]\((.*?)\)/g, '<n-link href="$2" target="_blank">$1</n-link>');
+    .replace(/\[(.*?)]\((.*?)\)/g, '<h-link href="$2" target="_blank">$1</h-link>');
 }

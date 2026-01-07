@@ -1,16 +1,16 @@
 <template>
-  <n-row :gutter="10">
-    <n-col :span="6">
-      <n-cascader v-model="currentVal1" :options="optionsWithRender" :to-body="false">
+  <h-row :gutter="10">
+    <h-col :span="6">
+      <h-cascader v-model="currentVal1" :options="optionsWithRender" :to-body="false">
         <template #itemRender="slotProps">
           <div style="width: 200px">
             👼🏻
             {{ slotProps.label }}
           </div>
         </template>
-      </n-cascader>
-    </n-col>
-  </n-row>
+      </h-cascader>
+    </h-col>
+  </h-row>
 </template>
 
 <script lang="ts">

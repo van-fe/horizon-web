@@ -1,5 +1,5 @@
 <template>
-  <n-slider v-model="valueRef" />
+  <h-slider v-model="valueRef" />
 </template>
 
 <script lang="ts">

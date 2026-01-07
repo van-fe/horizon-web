@@ -12,11 +12,11 @@
 
 ### 自定义 `dropdown icon`
 
-可以通过配置 `dropdown-icon` 来控制 `dropdown icon`
+可以通过配置 `dropdowh-icon` 来控制 `dropdown icon`
 
 如果传入 `false` 则可以置空
 
-:::demo ./demos/icon-style.vue:::
+:::demo ./demos/icoh-style.vue:::
 
 ### 多选
 
@@ -56,16 +56,16 @@
 
 ### 分组
 
-可以使用 `n-option-group` 来分组，具有具名分组和不具名分组
+可以使用 `h-option-group` 来分组，具有具名分组和不具名分组
 :::demo ./demos/group.vue :::
 
 ### 禁用
 
-设置 `disabled = true` 即可禁用 `n-select`
+设置 `disabled = true` 即可禁用 `h-select`
 
-给 `n-option` 设置 `disabled = true`，即可禁用当前选项
+给 `h-option` 设置 `disabled = true`，即可禁用当前选项
 
-给 `n-option-group` 设置 `disabled = true`，即可禁用当前组下的所有选项
+给 `h-option-group` 设置 `disabled = true`，即可禁用当前组下的所有选项
 
 :::demo ./demos/disabled.vue :::
 
@@ -77,7 +77,7 @@
 
 ### 辅助说明文字
 
-给 `n-option.description` 设置内容，用来辅助说明 `label`
+给 `h-option.description` 设置内容，用来辅助说明 `label`
 :::demo ./demos/description.vue :::
 
 ### 过滤
@@ -86,7 +86,7 @@
 
 如果需要自定义过滤方法，则传输 `filter-method` 即可
 
-如果需要下拉面板上有 `input` ，则可以配置 `use-build-in-panel-filter`，启用内置的面板上的 `input`
+如果需要下拉面板上有 `input` ，则可以配置 `use-build-ih-panel-filter`，启用内置的面板上的 `input`
 
 原本使用插槽自行实现的仍可使用
 
@@ -116,7 +116,7 @@
 
 使用 `value-format`，传入一个函数，则可以对 `modelValue` 转化
 
-请注意，仍然不建议使用 `value-format`，自 2.3.0 开始，`n-option.value` 已支持 `object` 类型
+请注意，仍然不建议使用 `value-format`，自 2.3.0 开始，`h-option.value` 已支持 `object` 类型
 
 此方法会在 `3.x` 剔除
 
@@ -147,7 +147,7 @@
 
 或者通过给 `search-method` 传入异步方法，可以控制
 
-如果希望在没有任何结果时也显示面板，则设置 `hide-panel-when-show-search-and-empty-list = false` 即可
+如果希望在没有任何结果时也显示面板，则设置 `hide-panel-wheh-show-search-and-empty-list = false` 即可
 :::demo ./demos/remote-search.vue :::
 
 ### 允许创建
@@ -168,7 +168,7 @@
 
 通过 `select.tagRender` 插槽可以自定义选择后的选项在输入框中的渲染表现
 
-使用 `option.label` 插槽，可以自定义 `n-option` 中文本的展示形式
+使用 `option.label` 插槽，可以自定义 `h-option` 中文本的展示形式
 
 :::demo ./demos/custom-tag-render.vue :::
 

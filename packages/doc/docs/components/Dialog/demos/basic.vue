@@ -1,12 +1,12 @@
 <template>
-  <n-button plain type="normal" @click="visible = true">点击打开Dialog</n-button>
-  <n-dialog v-model:visible="visible" title="Title" @ok="onOk" @cancel="onCancel">
+  <h-button plain type="normal" @click="visible = true">点击打开Dialog</h-button>
+  <h-dialog v-model:visible="visible" title="Title" @ok="onOk" @cancel="onCancel">
     <div>
       Quisquam ut non quae numquam quaerat voluptatem odio autem. Magnam distinctio et sint et eos
       nesciunt quidem. Molestias numquam labore rerum doloremque iusto. Omnis modi ducimus odio
       laudantium qui eius ut ea rem.
     </div>
-  </n-dialog>
+  </h-dialog>
 </template>
 
 <script lang="ts" setup>

@@ -1,8 +1,8 @@
 <template>
-  <n-row>
-    <n-col :span="6">
+  <h-row>
+    <h-col :span="6">
       <div class="demo-title">单选</div>
-      <n-tree-select
+      <h-tree-select
         :tree-data="baseTreeData"
         :filterable="true"
         :max-height="300"
@@ -11,10 +11,10 @@
         @focus="onFocus"
         @blur="onBlur"
       />
-    </n-col>
-    <n-col :span="6">
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">多选</div>
-      <n-tree-select
+      <h-tree-select
         :tree-data="baseTreeData"
         :filterable="true"
         :max-height="300"
@@ -24,8 +24,8 @@
         @focus="onFocus"
         @blur="onBlur"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

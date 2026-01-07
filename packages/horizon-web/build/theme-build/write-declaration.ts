@@ -13,13 +13,13 @@ export default function (
 
   Object.entries(variablesParted).forEach(([name, value]) => {
     results[snakeCase(name)] = Object.fromEntries(
-      Object.entries(value).map(([key, value]) => [snakeCase(key.replace(/^--n-/, '')), value]),
+      Object.entries(value).map(([key, value]) => [snakeCase(key.replace(/^--h-/, '')), value]),
     );
   });
 
   Object.entries(sumVariables).forEach(([key, value]) => {
-    sumResults[snakeCase(key.replace(/^--n-/, ''))] = value;
-    mapping[snakeCase(key.replace(/^--n-/, ''))] = key;
+    sumResults[snakeCase(key.replace(/^--h-/, ''))] = value;
+    mapping[snakeCase(key.replace(/^--h-/, ''))] = key;
   });
 
   try {

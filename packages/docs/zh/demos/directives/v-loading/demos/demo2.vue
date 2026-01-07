@@ -1,8 +1,8 @@
 <template>
   <div class="loading-container">
-    <n-button size="large" type="primary" @click="show">显示</n-button>
-    <n-button size="large" type="primary" @click="hide">隐藏</n-button>
-    <n-button
+    <h-button size="large" type="primary" @click="show">显示</h-button>
+    <h-button size="large" type="primary" @click="hide">隐藏</h-button>
+    <h-button
       v-loading="{
         isShow: isFullscreenShow,
         loadingType: 'circle',
@@ -19,9 +19,9 @@
       @click="fullscreen"
     >
       全屏
-    </n-button>
+    </h-button>
   </div>
-  <n-checkbox
+  <h-checkbox
     v-model="checkbox"
     v-loading="{
       isShow,

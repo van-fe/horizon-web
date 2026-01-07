@@ -7,7 +7,7 @@
 :::demo ./demos/border.vue :::
 
 ### 按钮样式
-只需要把`n-checkbox`元素换成`n-checkbox-button`元素即可，同时提供`size`属性控制大小
+只需要把`h-checkbox`元素换成`h-checkbox-button`元素即可，同时提供`size`属性控制大小
 :::demo ./demos/button.vue :::
 
 ### 半选模式
@@ -15,7 +15,7 @@
 :::demo ./demos/indeterminate.vue :::
 
 ### 多选框组
-结合`n-checkbox-group`和`n-checkbox`或者`n-checkbox-button`可以实现复选框组
+结合`h-checkbox-group`和`h-checkbox`或者`h-checkbox-button`可以实现复选框组
 :::demo ./demos/group.vue :::
 
 ### 禁用状态

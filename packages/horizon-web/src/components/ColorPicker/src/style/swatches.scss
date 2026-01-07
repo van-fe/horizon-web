@@ -1,5 +1,5 @@
 @use '../../../../styles/mixins';
-@import './utils';
+@use 'utils';
 
 @include mixins.b('color-picker-panel') {
   @include mixins.e('swatches') {

@@ -19,56 +19,56 @@ export default defineComponent({
 </script>
 
 <template>
-  <n-row :gutter="20">
-    <n-col :span="6">
+  <h-row :gutter="20">
+    <h-col :span="6">
       <div class="demo-title">普通单选</div>
-      <n-modal-select v-model="value1" clearable :selected-option-order-to-top="true" :to-body="false">
-        <n-option label="上海" :value="1" />
-        <n-option :value="2" label="北京" />
-        <n-option :value="3" label="合肥" name="hefei" />
-        <n-option label="杭州" :value="4" />
-        <n-option :value="5" label="成都" />
-        <n-option :value="6" label="重庆" name="hefei" />
-      </n-modal-select>
-    </n-col>
-    <n-col :span="6">
+      <h-modal-select v-model="value1" clearable :selected-option-order-to-top="true" :to-body="false">
+        <h-option label="上海" :value="1" />
+        <h-option :value="2" label="北京" />
+        <h-option :value="3" label="合肥" name="hefei" />
+        <h-option label="杭州" :value="4" />
+        <h-option :value="5" label="成都" />
+        <h-option :value="6" label="重庆" name="hefei" />
+      </h-modal-select>
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">普通多选</div>
-      <n-modal-select v-model="values1" :multiple="true" clearable :to-body="false" :selected-option-order-to-top="true">
-        <n-option label="上海" :value="1" />
-        <n-option :value="2" label="北京" />
-        <n-option :value="3" label="合肥" name="hefei" />
-        <n-option label="杭州" :value="4" />
-        <n-option :value="5" label="成都" />
-        <n-option :value="6" label="重庆" name="hefei" />
-      </n-modal-select>
-    </n-col>
-    <n-col :span="6">
+      <h-modal-select v-model="values1" :multiple="true" clearable :to-body="false" :selected-option-order-to-top="true">
+        <h-option label="上海" :value="1" />
+        <h-option :value="2" label="北京" />
+        <h-option :value="3" label="合肥" name="hefei" />
+        <h-option label="杭州" :value="4" />
+        <h-option :value="5" label="成都" />
+        <h-option :value="6" label="重庆" name="hefei" />
+      </h-modal-select>
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">单选 - 不具名分组</div>
-      <n-modal-select v-model="value2" clearable :selected-option-order-to-top="true" :to-body="false">
-        <n-option-group>
-          <n-option label="上海" :value="1" />
-          <n-option :value="2" label="北京" />
-          <n-option :value="3" label="合肥" name="hefei" />
-        </n-option-group>
-        <n-option label="杭州" :value="4" />
-        <n-option :value="5" label="成都" />
-        <n-option :value="6" label="重庆" name="hefei" />
-      </n-modal-select>
-    </n-col>
-    <n-col :span="6">
+      <h-modal-select v-model="value2" clearable :selected-option-order-to-top="true" :to-body="false">
+        <h-option-group>
+          <h-option label="上海" :value="1" />
+          <h-option :value="2" label="北京" />
+          <h-option :value="3" label="合肥" name="hefei" />
+        </h-option-group>
+        <h-option label="杭州" :value="4" />
+        <h-option :value="5" label="成都" />
+        <h-option :value="6" label="重庆" name="hefei" />
+      </h-modal-select>
+    </h-col>
+    <h-col :span="6">
         <div class="demo-title">多选 - 具名分组</div>
-        <n-modal-select v-model="values2" clearable multiple :selected-option-order-to-top="true" :to-body="false">
-          <n-option-group label="一线">
-            <n-option label="上海" :value="1" />
-            <n-option :value="2" label="北京" />
-            <n-option :value="3" label="广州" name="hefei" />
-          </n-option-group>
-          <n-option-group label="二线">
-            <n-option label="杭州" :value="4" />
-            <n-option :value="5" label="成都" />
-            <n-option :value="6" label="重庆" name="hefei" />
-          </n-option-group>
-        </n-modal-select>
-    </n-col>
-  </n-row>
+        <h-modal-select v-model="values2" clearable multiple :selected-option-order-to-top="true" :to-body="false">
+          <h-option-group label="一线">
+            <h-option label="上海" :value="1" />
+            <h-option :value="2" label="北京" />
+            <h-option :value="3" label="广州" name="hefei" />
+          </h-option-group>
+          <h-option-group label="二线">
+            <h-option label="杭州" :value="4" />
+            <h-option :value="5" label="成都" />
+            <h-option :value="6" label="重庆" name="hefei" />
+          </h-option-group>
+        </h-modal-select>
+    </h-col>
+  </h-row>
 </template>

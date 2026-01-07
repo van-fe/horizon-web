@@ -1,6 +1,6 @@
 import compile from './build-scss';
 import type { Plugin } from 'vite';
-import { horizonwebEsmOutput, horizonwebLibOutput } from '../../../../scripts/paths';
+import { horizonwebEsmOutput, horizonwebLibOutput } from '@root/scripts/paths';
 
 function definePlugin(plugin: (opts?: { excludes?: string[]; outputDirs?: string[] }) => Plugin) {
   return plugin;
@@ -18,7 +18,7 @@ export type PluginDependencies = {
 };
 
 const filterImports = (imports: string[]) => {
-  return imports.filter(
+  return (imports || []).filter(
     (filePath: string) =>
       /^(components|directives|methods)\//.test(filePath) &&
       !/composables/.test(filePath) &&

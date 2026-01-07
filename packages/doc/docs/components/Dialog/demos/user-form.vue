@@ -19,13 +19,13 @@ export type UserExpose = typeof exposeMethods;
 </script>
 
 <template>
-  <n-form ref="formInstance" :model="formData" class="mt-4">
-    <n-form-item
+  <h-form ref="formInstance" :model="formData" class="mt-4">
+    <h-form-item
       label="User name"
       prop="username"
       :rules="[{ required: true, message: 'User name is required!' }]"
     >
-      <n-input v-model="formData.username" />
-    </n-form-item>
-  </n-form>
+      <h-input v-model="formData.username" />
+    </h-form-item>
+  </h-form>
 </template>

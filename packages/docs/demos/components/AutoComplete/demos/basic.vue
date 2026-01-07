@@ -1,25 +1,25 @@
 <template>
-  <n-form :inline="true" label-position="top">
-    <n-form-item label="尺寸">
-      <n-select v-model="sizeValue" :to-body="false">
-        <n-option value="large" label="large" />
-        <n-option value="medium" label="medium" />
-        <n-option value="small" label="small" />
-      </n-select>
-    </n-form-item>
-    <n-form-item label="样式">
-      <n-select v-model="inputStyle" :to-body="false">
-        <n-option value="normal" label="normal" />
-        <n-option value="emphasize" label="emphasize" />
-        <n-option value="no-border" label="no-border" />
-      </n-select>
-    </n-form-item>
-  </n-form>
-  <n-row>
-    <n-col :span="6">
-      <n-auto-complete :options="options" :size="sizeValue" :input-style="inputStyle" @search="onSearch" @select="onSelect" @update:model-value="onUpdate" />
-    </n-col>
-  </n-row>
+  <h-form :inline="true" label-position="top">
+    <h-form-item label="尺寸">
+      <h-select v-model="sizeValue" :to-body="false">
+        <h-option value="large" label="large" />
+        <h-option value="medium" label="medium" />
+        <h-option value="small" label="small" />
+      </h-select>
+    </h-form-item>
+    <h-form-item label="样式">
+      <h-select v-model="inputStyle" :to-body="false">
+        <h-option value="normal" label="normal" />
+        <h-option value="emphasize" label="emphasize" />
+        <h-option value="no-border" label="no-border" />
+      </h-select>
+    </h-form-item>
+  </h-form>
+  <h-row>
+    <h-col :span="6">
+      <h-auto-complete :options="options" :size="sizeValue" :input-style="inputStyle" @search="onSearch" @select="onSelect" @update:model-value="onUpdate" />
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

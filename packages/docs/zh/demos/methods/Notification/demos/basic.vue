@@ -1,7 +1,7 @@
 <template>
   <div class="demo-wrapper">
-    <n-button size="medium" type="primary" plain @click="open1">自动关闭</n-button>
-    <n-button size="medium" type="primary" plain @click="open2">不自动关闭</n-button>
+    <h-button size="medium" type="primary" plain @click="open1">自动关闭</h-button>
+    <h-button size="medium" type="primary" plain @click="open2">不自动关闭</h-button>
   </div>
 </template>
 
@@ -35,7 +35,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.demo-wrapper .n-button {
+.demo-wrapper .h-button {
   margin-right: 40px;
 }
 </style>

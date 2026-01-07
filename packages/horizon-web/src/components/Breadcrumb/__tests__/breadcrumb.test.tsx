@@ -44,7 +44,7 @@ describe('Breadcrumb.tsx', () => {
       ));
 
       expect(wrapper.classes('n-breadcrumb--medium')).eq(true);
-      expect(wrapper.findAll('.n-breadcrumb-item__text')[2].classes('n-breadcrumb-item--small')).eq(
+      expect(wrapper.findAll('.h-breadcrumb-item__text')[2].classes('n-breadcrumb-item--small')).eq(
         true,
       );
     });

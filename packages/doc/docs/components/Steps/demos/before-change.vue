@@ -1,15 +1,15 @@
 <template>
   <div>
-    <n-steps v-model="modelValue" :clickable="true" :before-change="onBeforeChange">
-      <n-step>
+    <h-steps v-model="modelValue" :clickable="true" :before-change="onBeforeChange">
+      <h-step>
         <template #title>Succeeded</template>
         <template #subtitle>
           <span>This is a description.</span>
         </template>
-      </n-step>
-      <n-step title="Processing" subtitle="This is a description." description="03/23/2021" />
-      <n-step title="Future step" subtitle="This is a description." />
-    </n-steps>
+      </h-step>
+      <h-step title="Processing" subtitle="This is a description." description="03/23/2021" />
+      <h-step title="Future step" subtitle="This is a description." />
+    </h-steps>
   </div>
 </template>
 

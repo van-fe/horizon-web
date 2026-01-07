@@ -1,7 +1,7 @@
 <template>
   <div class="placement-wrap">
     <div>
-      <n-button
+      <h-button
         v-popconfirm="{ placement: 'top-start' }"
         size="medium"
         :plain="true"
@@ -9,8 +9,8 @@
         @click="del"
       >
         top-start
-      </n-button>
-      <n-button
+      </h-button>
+      <h-button
         v-popconfirm="{ placement: 'top' }"
         size="medium"
         :plain="true"
@@ -18,8 +18,8 @@
         @click="del"
       >
         top
-      </n-button>
-      <n-button
+      </h-button>
+      <h-button
         v-popconfirm="{ placement: 'top-end' }"
         size="medium"
         :plain="true"
@@ -27,21 +27,21 @@
         @click="del"
       >
         top-end
-      </n-button>
+      </h-button>
     </div>
     <div>
-      <n-button v-popconfirm="{ placement: 'left-start' }" size="medium" :plain="true" @click="del">
+      <h-button v-popconfirm="{ placement: 'left-start' }" size="medium" :plain="true" @click="del">
         left-start
-      </n-button>
-      <n-button v-popconfirm="{ placement: 'left' }" size="medium" :plain="true" @click="del">
+      </h-button>
+      <h-button v-popconfirm="{ placement: 'left' }" size="medium" :plain="true" @click="del">
         left
-      </n-button>
-      <n-button v-popconfirm="{ placement: 'left-end' }" size="medium" :plain="true" @click="del">
+      </h-button>
+      <h-button v-popconfirm="{ placement: 'left-end' }" size="medium" :plain="true" @click="del">
         left-end
-      </n-button>
+      </h-button>
     </div>
     <div>
-      <n-button
+      <h-button
         v-popconfirm="{ placement: 'bottom-start' }"
         size="medium"
         :plain="true"
@@ -49,8 +49,8 @@
         @click="del"
       >
         bottom-start
-      </n-button>
-      <n-button
+      </h-button>
+      <h-button
         v-popconfirm="{ placement: 'bottom' }"
         size="medium"
         :plain="true"
@@ -58,8 +58,8 @@
         @click="del"
       >
         bottom
-      </n-button>
-      <n-button
+      </h-button>
+      <h-button
         v-popconfirm="{ placement: 'bottom-end' }"
         size="medium"
         :plain="true"
@@ -67,26 +67,26 @@
         @click="del"
       >
         bottom-end
-      </n-button>
+      </h-button>
     </div>
     <div>
-      <n-button
+      <h-button
         v-popconfirm="{ placement: 'right-start' }"
         size="medium"
         :plain="true"
         @click="del"
       >
         right-start
-      </n-button>
-      <n-button v-popconfirm="{ placement: 'right' }" size="medium" :plain="true" @click="del">
+      </h-button>
+      <h-button v-popconfirm="{ placement: 'right' }" size="medium" :plain="true" @click="del">
         right
-      </n-button>
-      <n-button v-popconfirm="{ placement: 'right-end' }" size="medium" :plain="true" @click="del">
+      </h-button>
+      <h-button v-popconfirm="{ placement: 'right-end' }" size="medium" :plain="true" @click="del">
         right-end
-      </n-button>
+      </h-button>
     </div>
     <div>
-      <n-button
+      <h-button
         v-popconfirm="{ placement: 'auto-start' }"
         size="medium"
         :plain="true"
@@ -94,8 +94,8 @@
         @click="del"
       >
         auto-start
-      </n-button>
-      <n-button
+      </h-button>
+      <h-button
         v-popconfirm="{ placement: 'auto' }"
         size="medium"
         :plain="true"
@@ -103,8 +103,8 @@
         @click="del"
       >
         auto
-      </n-button>
-      <n-button
+      </h-button>
+      <h-button
         v-popconfirm="{ placement: 'auto-end' }"
         size="medium"
         :plain="true"
@@ -112,7 +112,7 @@
         @click="del"
       >
         auto-end
-      </n-button>
+      </h-button>
     </div>
   </div>
 </template>

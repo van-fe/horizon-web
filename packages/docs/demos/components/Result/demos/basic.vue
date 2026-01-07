@@ -10,7 +10,7 @@ function onSecondaryClick() {
 </script>
 
 <template>
-  <n-result
+  <h-result
     title="这是一条成功信息"
     subtitle="这是一段相关的描述文案"
     @primaryClick="onPrimaryClick"

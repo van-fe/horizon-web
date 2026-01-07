@@ -1,7 +1,7 @@
 @use '../../../../styles/mixins';
-@import './option';
-@import './option-group';
-@import './input';
+@use 'option';
+@use 'option-group';
+@use 'input';
 
 @include mixins.b('select') {
   @include mixins.e('check-all') {

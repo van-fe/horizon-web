@@ -1,14 +1,14 @@
 <template>
-  <n-form label-position="left" label-vertical-disabled="middle">
-    <n-form-item label="disabled">
-      <n-switch v-model="disabled" status />
-    </n-form-item>
-  </n-form>
-  <n-row :gutter="10" disabled="middle">
-    <n-col :span="24">
-      <n-pagination :total="50" :disabled="disabled" align="right" />
-    </n-col>
-  </n-row>
+  <h-form label-position="left" label-vertical-disabled="middle">
+    <h-form-item label="disabled">
+      <h-switch v-model="disabled" status />
+    </h-form-item>
+  </h-form>
+  <h-row :gutter="10" disabled="middle">
+    <h-col :span="24">
+      <h-pagination :total="50" :disabled="disabled" align="right" />
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

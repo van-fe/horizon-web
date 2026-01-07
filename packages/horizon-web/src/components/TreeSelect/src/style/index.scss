@@ -1,6 +1,6 @@
 @use '../../../../styles/mixins';
-@import './panel';
-@import './item';
+@use 'panel';
+@use 'item';
 
 @include mixins.b('tree-select') {
   #{mixins.css-variable-name('tag-max-width')}: #{mixins.css-variable('tree-select-max-width--tag')};

@@ -1,18 +1,18 @@
 <template>
-  <n-row :gutter="10">
-    <n-col :span="6">
+  <h-row :gutter="10">
+    <h-col :span="6">
       <div class="demo-title">
         点击
       </div>
-      <n-modal-cascader v-model="currentVal1" :options="options" expand-trigger="click" :to-body="false" />
-    </n-col>
-    <n-col :span="6">
+      <h-modal-cascader v-model="currentVal1" :options="options" expand-trigger="click" :to-body="false" />
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">
         悬浮
       </div>
-      <n-modal-cascader v-model="currentVal2" :options="options" expand-trigger="hover" :to-body="false" />
-    </n-col>
-  </n-row>
+      <h-modal-cascader v-model="currentVal2" :options="options" expand-trigger="hover" :to-body="false" />
+    </h-col>
+  </h-row>
 </template>
 
 <script lang="ts">

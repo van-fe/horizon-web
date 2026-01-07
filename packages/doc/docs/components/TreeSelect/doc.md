@@ -16,7 +16,7 @@
 :::demo ./demos/single.vue :::
 
 ### 多选
-与 `select` 一样，多选的标签使用了 `n-tag` 和 `n-tag-group` 组件结合
+与 `select` 一样，多选的标签使用了 `h-tag` 和 `h-tag-group` 组件结合
 
 默认情况下，不会折叠选中项。可以配置 `collapse-tags = true` 折叠已选项
 
@@ -41,24 +41,24 @@
 :::demo ./demos/check-strictly.vue :::
 
 ### 展开、选择控制
-通过 `expand-on-click-node` 配置，可以控制是否允许在点击节点整行时，展开子节点（默认为 `true`）
+通过 `expand-oh-click-node` 配置，可以控制是否允许在点击节点整行时，展开子节点（默认为 `true`）
 
-`check-on-click-node` 则控制是否允许在点击节点整行时，选中子节点（默认为 `false`）
+`check-oh-click-node` 则控制是否允许在点击节点整行时，选中子节点（默认为 `false`）
 
-**`check-on-click-node` 仅对多选有效**
+**`check-oh-click-node` 仅对多选有效**
 
-**但如果单选配置了 `check-strictly = true`，还请注意配置 `expand-on-click-node` `check-on-click-node` 优化点选操作**
+**但如果单选配置了 `check-strictly = true`，还请注意配置 `expand-oh-click-node` `check-oh-click-node` 优化点选操作**
 
 :::demo ./demos/expand-and-check.vue :::
 
 ### 优化选择操作
 自 `2.3.5` 开始，默认在点击叶子节点时，自动勾选节点
 
-如果仍希望控制叶子节点只有在点击 `checkbox` 才进行选中，则可以设置 `check-on-click-leaf = false`
+如果仍希望控制叶子节点只有在点击 `checkbox` 才进行选中，则可以设置 `check-oh-click-leaf = false`
 
-对于单选，则只有 `show-radio = true` 时，`check-on-click-leaf` 才有效，否则无论如何都会点击选中
+对于单选，则只有 `show-radio = true` 时，`check-oh-click-leaf` 才有效，否则无论如何都会点击选中
 
-:::demo ./demos/check-on-leaf.vue :::
+:::demo ./demos/check-oh-leaf.vue :::
 
 ### 控制展开
 通过 `expand-values`，可以控制展开的字段，也可以使用双向绑定获取展开的值
@@ -81,7 +81,7 @@
 ### 禁用
 在 `tree-data` 数据中，某项设置`disabled = true`，可以对其项禁用
 
-但如果希望整棵树禁用，则直接给予 `disabled = true` 给 `n-tree` 即可
+但如果希望整棵树禁用，则直接给予 `disabled = true` 给 `h-tree` 即可
 
 但无论哪种禁用方式，都不会影响展开功能
 
@@ -127,10 +127,10 @@
 ### 面板中的过滤
 如果不希望直接在触发器中进行过滤输入，`TreeSelect` 提供了两种方式（都需要先开启 `panel-filterable`)：
 
-1. 内置的输入面板：开启 `use-build-in-panel-filter` 即可
+1. 内置的输入面板：开启 `use-build-ih-panel-filter` 即可
 2. 使用自定义插槽：通过 `slots.panelHeaderRender` 插槽放置你的输入框，然后通过 `panel-filter-input-value` 传入过滤的内容
 
-:::demo ./demos/filter-in-panel.vue :::
+:::demo ./demos/filter-ih-panel.vue :::
 
 ### 过滤并处理高亮
 默认高亮色为品牌色，如果希望对搜索结果处理，则可以通过 `highlightMethod` 来处理

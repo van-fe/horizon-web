@@ -1,12 +1,12 @@
 <template>
-  <n-row>
-    <n-col :span="6">
-      <n-modal-time-picker v-model="value" clearable />
-    </n-col>
-    <n-col :span="6">
-      <n-modal-time-picker v-model="value2" is-range clearable />
-    </n-col>
-  </n-row>
+  <h-row>
+    <h-col :span="6">
+      <h-modal-time-picker v-model="value" clearable />
+    </h-col>
+    <h-col :span="6">
+      <h-modal-time-picker v-model="value2" is-range clearable />
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

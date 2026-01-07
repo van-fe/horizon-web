@@ -1,11 +1,11 @@
 <template>
   <div>
     <strong>只选择文件</strong>
-    <n-upload-area class="mb-4" text="请上传文件" @change="changeHandle1" />
+    <h-upload-area class="mb-4" text="请上传文件" @change="changeHandle1" />
 
     <strong>组合n-upload-area和n-upload-preview-file-item来实现一个上传</strong>
     <div class="mb-2">
-      <n-upload-area
+      <h-upload-area
         text="请上传文件"
         accept="image/*"
         multiple
@@ -14,7 +14,7 @@
       />
     </div>
     <div v-for="item in uploadFileList" :key="item.helpName" class="mb-2">
-      <n-upload-preview-file-item
+      <h-upload-preview-file-item
         :file="item"
         :operators="['status', 'delete']"
         @delete="delHandle"

@@ -1,7 +1,7 @@
 <template>
   <div class="box">
     <img src="./1.png" alt="" />
-    <n-mask absolute :is-fuzzification="true"></n-mask>
+    <h-mask absolute :is-fuzzification="true"></h-mask>
   </div>
 </template>
 

@@ -6,9 +6,9 @@
       <div class="inner"></div>
     </div>
 
-    <n-backtop target=".scroll-box" :bottom="300" :visibility-height="10" @click="onClick">
+    <h-backtop target=".scroll-box" :bottom="300" :visibility-height="10" @click="onClick">
       👆
-    </n-backtop>
+    </h-backtop>
   </div>
 </template>
 

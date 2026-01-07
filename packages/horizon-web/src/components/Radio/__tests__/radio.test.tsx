@@ -76,9 +76,9 @@ test('sizeGroup', async () => {
       <HRadioButton />
     </HRadioGroup>
   ));
-  const elementRadioBorder = wrapperRadioBorder.find('.n-radio');
-  const elementRadioNoneBorder = wrapperRadioNoneBorder.find('.n-radio');
-  const elementRadioButton = wrapperRadioButton.find('.n-radio-button');
+  const elementRadioBorder = wrapperRadioBorder.find('.h-radio');
+  const elementRadioNoneBorder = wrapperRadioNoneBorder.find('.h-radio');
+  const elementRadioButton = wrapperRadioButton.find('.h-radio-button');
 
   expect(elementRadioBorder.exists()).toBe(true);
   expect(elementRadioNoneBorder.exists()).toBe(true);

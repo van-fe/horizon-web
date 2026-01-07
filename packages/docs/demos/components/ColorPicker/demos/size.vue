@@ -1,43 +1,43 @@
 <template>
   <ul class="color-picker-demo__size">
     <li>
-      <n-color-picker v-model="value1" trigger-type="square" size="small" alpha />
+      <h-color-picker v-model="value1" trigger-type="square" size="small" alpha />
     </li>
     <li>
-      <n-color-picker v-model="value1" trigger-type="square" square-text size="small" alpha />
+      <h-color-picker v-model="value1" trigger-type="square" square-text size="small" alpha />
     </li>
     <li>
-      <n-color-picker v-model="value1" trigger-type="square" square-text size="small" alpha>
+      <h-color-picker v-model="value1" trigger-type="square" square-text size="small" alpha>
         <template #squareText>
           自定义文本
         </template>
-      </n-color-picker>
+      </h-color-picker>
     </li>
     <li>
-      <n-color-picker v-model="value1" trigger-type="square" size="medium" alpha />
+      <h-color-picker v-model="value1" trigger-type="square" size="medium" alpha />
     </li>
     <li>
-      <n-color-picker v-model="value1" trigger-type="square" square-text size="medium" alpha />
+      <h-color-picker v-model="value1" trigger-type="square" square-text size="medium" alpha />
     </li>
     <li>
-      <n-color-picker v-model="value1" trigger-type="square" square-text size="medium" alpha>
+      <h-color-picker v-model="value1" trigger-type="square" square-text size="medium" alpha>
         <template #squareText>
           自定义文本
         </template>
-      </n-color-picker>
+      </h-color-picker>
     </li>
     <li>
-      <n-color-picker v-model="value1" trigger-type="square" size="large" alpha />
+      <h-color-picker v-model="value1" trigger-type="square" size="large" alpha />
     </li>
     <li>
-      <n-color-picker v-model="value1" trigger-type="square" square-text size="large" alpha />
+      <h-color-picker v-model="value1" trigger-type="square" square-text size="large" alpha />
     </li>
     <li>
-      <n-color-picker v-model="value1" trigger-type="square" square-text size="large" alpha>
+      <h-color-picker v-model="value1" trigger-type="square" square-text size="large" alpha>
         <template #squareText>
           自定义文本
         </template>
-      </n-color-picker>
+      </h-color-picker>
     </li>
   </ul>
 </template>

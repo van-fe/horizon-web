@@ -1,11 +1,11 @@
 <template>
-  <n-space>
-    <n-button type="normal" @click="open1">默认</n-button>
-    <n-button type="normal" @click="open2">通知</n-button>
-    <n-button type="normal" @click="open3">成功</n-button>
-    <n-button type="normal" @click="open4">警告</n-button>
-    <n-button type="normal" @click="open5">错误</n-button>
-  </n-space>
+  <h-space>
+    <h-button type="normal" @click="open1">默认</h-button>
+    <h-button type="normal" @click="open2">通知</h-button>
+    <h-button type="normal" @click="open3">成功</h-button>
+    <h-button type="normal" @click="open4">警告</h-button>
+    <h-button type="normal" @click="open5">错误</h-button>
+  </h-space>
 </template>
 
 <script lang="ts">

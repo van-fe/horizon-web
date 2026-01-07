@@ -1,6 +1,6 @@
 <template>
   <div class="demo-wrapper">
-    <n-button size="medium" type="primary" plain @click="open">隐藏关闭按钮</n-button>
+    <h-button size="medium" type="primary" plain @click="open">隐藏关闭按钮</h-button>
   </div>
 </template>
 
@@ -26,7 +26,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.demo-wrapper .n-button {
+.demo-wrapper .h-button {
   margin-right: 40px;
 }
 </style>

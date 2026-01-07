@@ -1,8 +1,8 @@
 <template>
   <div class="demo-wrapper">
-    <n-link>Positive</n-link>
-    <n-link type="neutral">Neutral</n-link>
-    <n-link type="negative">Negative</n-link>
+    <h-link>Positive</h-link>
+    <h-link type="neutral">Neutral</h-link>
+    <h-link type="negative">Negative</h-link>
   </div>
 </template>
 

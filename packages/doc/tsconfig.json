@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
     "target": "ES2022",
     "useDefineForClassFields": true,
     "module": "ES2022",
@@ -19,14 +18,20 @@
       "vite/client"
     ],
     "paths": {
+      "*": [
+        "./*"
+      ],
       "~/*": [
-        "src/*"
+        "./src/*"
       ],
       "@aurora/horizon-web-pad": [
         "../horizon-web-pad/src/index.ts"
       ],
       "@aurora/horizon-web-pad/*": [
         "../horizon-web-pad/src/*"
+      ],
+      "@root/*": [
+        "../../*",
       ]
     }
   },

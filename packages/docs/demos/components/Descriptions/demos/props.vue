@@ -1,26 +1,26 @@
 <template>
   <div class="container">
     <div style="display: flex; align-items: center">
-      <n-checkbox-button v-model="checked" @change="setTitle">Set Title</n-checkbox-button>
-      <n-checkbox-button v-model="border">Border</n-checkbox-button>
+      <h-checkbox-button v-model="checked" @change="setTitle">Set Title</h-checkbox-button>
+      <h-checkbox-button v-model="border">Border</h-checkbox-button>
       <div>Type：</div>
-      <n-radio-group v-model="type">
-        <n-radio-button v-for="(label, index) in typeOptions" :key="index" :label="label" />
-      </n-radio-group>
+      <h-radio-group v-model="type">
+        <h-radio-button v-for="(label, index) in typeOptions" :key="index" :label="label" />
+      </h-radio-group>
       <div>Size：</div>
-      <n-radio-group v-model="size">
-        <n-radio-button v-for="(label, index) in sizeOptions" :key="index" :label="label" />
-      </n-radio-group>
+      <h-radio-group v-model="size">
+        <h-radio-button v-for="(label, index) in sizeOptions" :key="index" :label="label" />
+      </h-radio-group>
       <div>LabelPosition：</div>
-      <n-radio-group v-model="LabelPosition">
-        <n-radio-button v-for="(label, index) in ['left', 'top']" :key="index" :label="label" />
-      </n-radio-group>
+      <h-radio-group v-model="LabelPosition">
+        <h-radio-button v-for="(label, index) in ['left', 'top']" :key="index" :label="label" />
+      </h-radio-group>
       <div>Column：</div>
-      <n-radio-group v-model="column">
-        <n-radio-button v-for="(label, index) in [1, 2]" :key="index" :label="label" />
-      </n-radio-group>
+      <h-radio-group v-model="column">
+        <h-radio-button v-for="(label, index) in [1, 2]" :key="index" :label="label" />
+      </h-radio-group>
     </div>
-    <n-descriptions
+    <h-descriptions
       :title="title"
       :border="border"
       :type="type"
@@ -28,14 +28,14 @@
       :label-position="LabelPosition"
       :column="column"
     >
-      <n-description-item
+      <h-description-item
         v-for="(item, index) in data"
         :key="index"
         :label="item.label"
         :value="item.value"
         :span-col="index === data.length - 1 ? column : 1"
       />
-    </n-descriptions>
+    </h-descriptions>
   </div>
 </template>
 
@@ -80,12 +80,12 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.n-descriptions {
+.h-descriptions {
   padding: 32px 24px 16px;
 }
 
-.container .n-checkbox-button,
-.container .n-radio-group {
+.container .h-checkbox-button,
+.container .h-radio-group {
   margin-right: 20px;
 }
 </style>

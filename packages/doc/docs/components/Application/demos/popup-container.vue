@@ -1,9 +1,9 @@
 <template>
-  <n-application :get-popup-container="getPopupContainer">
-    <n-space block direction="vertical">
-      <n-radio-group v-model="componentType">
-        <n-radio v-for="k in Object.keys(overlays)" :value="k">{{ k }}</n-radio>
-      </n-radio-group>
+  <h-application :get-popup-container="getPopupContainer">
+    <h-space block direction="vertical">
+      <h-radio-group v-model="componentType">
+        <h-radio v-for="k in Object.keys(overlays)" :value="k">{{ k }}</h-radio>
+      </h-radio-group>
 
       <component :is="currentOverlay" />
       <div id="appoint">
@@ -13,8 +13,8 @@
           节点挂载
         </div>
       </div>
-    </n-space>
-  </n-application>
+    </h-space>
+  </h-application>
 </template>
 
 <script lang="ts" setup>

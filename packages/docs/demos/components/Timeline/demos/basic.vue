@@ -2,8 +2,8 @@
   <div class="container">
     <div class="container__block">
       <div class="container__title">small大小</div>
-      <n-timeline>
-        <n-timeline-item
+      <h-timeline>
+        <h-timeline-item
           v-for="(item, index) in timelineData"
           :key="index"
           :name="item.name"
@@ -11,24 +11,24 @@
           :timestamp="item.time"
           size="small"
         />
-      </n-timeline>
+      </h-timeline>
     </div>
     <div class="container__block">
       <div class="container__title">默认大小(medium)</div>
-      <n-timeline>
-        <n-timeline-item
+      <h-timeline>
+        <h-timeline-item
           v-for="(item, index) in timelineData"
           :key="index"
           :name="item.name"
           :tail="item.tail"
           :timestamp="item.time"
         />
-      </n-timeline>
+      </h-timeline>
     </div>
     <div class="container__block">
       <div class="container__title">large大小</div>
-      <n-timeline>
-        <n-timeline-item
+      <h-timeline>
+        <h-timeline-item
           v-for="(item, index) in timelineData"
           :key="index"
           :name="item.name"
@@ -36,7 +36,7 @@
           :timestamp="item.time"
           size="large"
         />
-      </n-timeline>
+      </h-timeline>
     </div>
   </div>
 </template>

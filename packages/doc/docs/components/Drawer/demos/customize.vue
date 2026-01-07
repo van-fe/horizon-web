@@ -1,17 +1,17 @@
 <template>
-  <n-space direction="vertical" block>
-    <n-radio-group v-model="mode" class="example">
-      <n-radio :label="0">默认</n-radio>
-      <n-radio :label="1">自定义顶部</n-radio>
-      <n-radio :label="2">自定义标题</n-radio>
-      <n-radio :label="3">自定义底部</n-radio>
-      <n-radio :label="4">隐藏标题</n-radio>
-      <n-radio :label="5">隐藏顶部和底部</n-radio>
-      <n-radio :label="6">隐藏蒙层</n-radio>
-    </n-radio-group>
-    <n-button type="normal" @click="visible = true">打开抽屉</n-button>
-  </n-space>
-  <n-drawer
+  <h-space direction="vertical" block>
+    <h-radio-group v-model="mode" class="example">
+      <h-radio :label="0">默认</h-radio>
+      <h-radio :label="1">自定义顶部</h-radio>
+      <h-radio :label="2">自定义标题</h-radio>
+      <h-radio :label="3">自定义底部</h-radio>
+      <h-radio :label="4">隐藏标题</h-radio>
+      <h-radio :label="5">隐藏顶部和底部</h-radio>
+      <h-radio :label="6">隐藏蒙层</h-radio>
+    </h-radio-group>
+    <h-button type="normal" @click="visible = true">打开抽屉</h-button>
+  </h-space>
+  <h-drawer
     v-model:visible="visible"
     v2
     :title="mode !== 4 ? 'Default Title' : ''"
@@ -21,13 +21,13 @@
     position="right"
   >
     <template v-if="mode === 1" #header>
-      <n-space size="4" block direction="vertical">
-        <n-space size="4">
+      <h-space size="4" block direction="vertical">
+        <h-space size="4">
           <div class="text-subtitle-1">Great declaration</div>
-          <n-tag :clickable="false">NIO</n-tag>
-        </n-space>
+          <h-tag :clickable="false">NIO</h-tag>
+        </h-space>
         <div class="text-caption-1">Make NIO great again</div>
-      </n-space>
+      </h-space>
     </template>
 
     <template v-if="mode === 2" #title>Customize Title</template>
@@ -36,10 +36,10 @@
       immediately once you press the OK button.
     </div>
     <template v-if="mode === 3" #footer>
-      <n-button type="danger" style="margin-right: 8px" @click="onOk">Confirm Delete</n-button>
-      <n-button type="secondary" @click="onCancel">Close</n-button>
+      <h-button type="danger" style="margih-right: 8px" @click="onOk">Confirm Delete</h-button>
+      <h-button type="secondary" @click="onCancel">Close</h-button>
     </template>
-  </n-drawer>
+  </h-drawer>
 </template>
 
 <script lang="ts" setup>

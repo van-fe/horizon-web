@@ -1,13 +1,13 @@
 <template>
   <div>
-    <n-button type="normal" class="mb-2" @click="visible = !visible">Change</n-button>
-    <n-row :gutter="10" style="height: 80px;">
-      <n-col :span="6">
-        <n-transition name="float">
+    <h-button type="normal" class="mb-2" @click="visible = !visible">Change</h-button>
+    <h-row :gutter="10" style="height: 80px;">
+      <h-col :span="6">
+        <h-transition name="float">
           <div v-show="visible" class="animate-box">float</div>
-        </n-transition>
-      </n-col>
-    </n-row>
+        </h-transition>
+      </h-col>
+    </h-row>
   </div>
 </template>
 

@@ -1,58 +1,58 @@
 <template>
-  <n-row>
+  <h-row>
     <!-- 自定义 tag -->
-    <n-col :span="6">
+    <h-col :span="6">
       <div class="demo-title">
         自定义 tag
-        <n-tooltip>
+        <h-tooltip>
           <template #content>
             你可以在 tagRender 这个 slot 中接受到传递到每一个选项上的所有参数
           </template>
           <a-icon name="help" />
-        </n-tooltip>
+        </h-tooltip>
       </div>
-      <n-modal-select v-model="values1" multiple collapse :to-body="false">
-        <n-option label="中国" :value="1" en_name="China" />
-        <n-option :value="2" label="美国" en_name="America" />
-        <n-option :value="3" label="日本" en_name="Japan" />
+      <h-modal-select v-model="values1" multiple collapse :to-body="false">
+        <h-option label="中国" :value="1" en_name="China" />
+        <h-option :value="2" label="美国" en_name="America" />
+        <h-option :value="3" label="日本" en_name="Japan" />
         <template #tagRender="slotProps">
-          <n-tag type="info" :clickable="false">{{ `${slotProps.label}(${slotProps.en_name})` ?? '' }}</n-tag>
+          <h-tag type="info" :clickable="false">{{ `${slotProps.label}(${slotProps.en_name})` ?? '' }}</h-tag>
         </template>
-      </n-modal-select>
-    </n-col>
+      </h-modal-select>
+    </h-col>
 
-    <n-col :span="6">
+    <h-col :span="6">
       <div class="demo-title">
         允许创建选项
-        <n-tooltip>
+        <h-tooltip>
           <template #content>
             你可以在 tagRender 这个 slot 中接受到传递到每一个选项上的所有参数
           </template>
           <a-icon name="help" />
-        </n-tooltip>
+        </h-tooltip>
       </div>
-      <n-modal-select v-model="values2" multiple allow-create collapse :to-body="false">
-        <n-option label="中国" :value="1" en_name="Chinaaaaa" />
-        <n-option :value="3" label="日本" en_name="Japanaaaa" />
-        <n-option :value="2" label="美国" en_name="Afsdffdsa" />
+      <h-modal-select v-model="values2" multiple allow-create collapse :to-body="false">
+        <h-option label="中国" :value="1" en_name="Chinaaaaa" />
+        <h-option :value="3" label="日本" en_name="Japanaaaa" />
+        <h-option :value="2" label="美国" en_name="Afsdffdsa" />
         <template #tagRender="slotProps">
-          <n-tag type="success" :clickable="false">{{ `${slotProps.label}(${slotProps.en_name})` ?? '' }}</n-tag>
+          <h-tag type="success" :clickable="false">{{ `${slotProps.label}(${slotProps.en_name})` ?? '' }}</h-tag>
         </template>
-      </n-modal-select>
-    </n-col>
+      </h-modal-select>
+    </h-col>
 
-    <n-col :span="6">
+    <h-col :span="6">
       <div class="demo-title">自定义 完整 select</div>
-      <n-modal-select v-model="values3" :multiple="true" :value-format="valueFormat" :to-body="false">
-        <n-option label="上海" :value="1" />
-        <n-option :value="2" label="北京" />
-        <n-option :value="3" label="合肥" name="hefei" />
+      <h-modal-select v-model="values3" :multiple="true" :value-format="valueFormat" :to-body="false">
+        <h-option label="上海" :value="1" />
+        <h-option :value="2" label="北京" />
+        <h-option :value="3" label="合肥" name="hefei" />
         <template #selectRender>
           你的选择是：{{ values3.map(v => v.label).join('+') }}
         </template>
-      </n-modal-select>
-    </n-col>
-  </n-row>
+      </h-modal-select>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">
@@ -73,7 +73,7 @@ function valueFormat(originValue: any) {
 .multiple-tag {
   display: inline-flex;
   justify-content: center;
-  align-items: center;
+  aligh-items: center;
   border: 1px solid #14798f;
   font-size: 12px;
   padding: 0 3px;

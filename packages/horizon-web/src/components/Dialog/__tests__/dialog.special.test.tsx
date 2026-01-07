@@ -22,7 +22,7 @@ describe('Dialog.tsx special problem', () => {
     );
     const element = wrapper.findComponent(HDialog);
 
-    expect(element.find('.n-dialog__container').attributes('style')).contains('z-index: 2002');
+    expect(element.find('.h-dialog__container').attributes('style')).contains('z-index: 2002');
     expect(document.body.dataset['popupParentHidden']).not.toBeUndefined();
 
     const cancelButton = element.findAllComponents(HButton)[0];

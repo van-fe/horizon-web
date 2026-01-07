@@ -25,6 +25,6 @@ describe('v-popconfirm.tsx', () => {
 
     await nextTick();
 
-    expect(document.body.querySelector('.n-popconfirm')).not.eq(null);
+    expect(document.body.querySelector('.h-popconfirm')).not.eq(null);
   });
 });

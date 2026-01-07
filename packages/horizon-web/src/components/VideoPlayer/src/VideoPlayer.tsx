@@ -1,12 +1,9 @@
-import { defineComponent, ref, onMounted, onUnmounted, watch, nextTick, inject } from 'vue';
+import { defineComponent, ref, onMounted, onUnmounted, watch, computed, inject } from 'vue';
 import { useResizeObserver } from '@vueuse/core';
 import { useVideoPlayerProps } from './composables/useProps';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { IconVideoError } from '@aurora/icon';
-import videojs from 'video.js';
-import './qualityLevels/plugin.js';
-import './qualitySelector/plugin.js';
 import HButton from '~/components/Button/src/Button';
 import type { VideoPlayerEmits } from './composables/useEmits';
 import { useVideoPlayerEmits } from './composables/useEmits';
@@ -18,94 +15,26 @@ import { useVideoPlayerExposes } from './composables/useExposes';
 
 export default defineComponent({
   name: `${useNamespace()}VideoPlayer`,
-  desc: '视频播放器组件，封装了 [videoJs](https://videojs.com/)',
+  desc: '视频播放器组件',
   props: useVideoPlayerProps,
   emits: useVideoPlayerEmits,
   slots: useVideoPlayerSlots,
   exposes: useVideoPlayerExposes,
   setup(props, { emit }: HorizonWebSetupContext<VideoPlayerEmits, VideoPlayerSlots, VideoPlayerExposes>) {
     const classHelper = new ComponentClassBlock('video-player');
-    const playerIns = ref();
     const wrapRef = ref<HTMLElement | null>(null);
     const videoPlayerRef = ref<HTMLVideoElement | null>(null);
     const showError = ref(false);
-    const initialize = () => {
-      if (videoPlayerRef.value) {
-        playerIns.value = videojs(
-          videoPlayerRef.value,
-          {
-            autoplay: false,
-            controls: true,
-            fluid: true,
-            controlBar: {
-              volumePanel: {
-                inline: false,
-              },
-              fullscreenToggle: true,
-              currentTimeDisplay: true,
-              durationDisplay: true,
-              remainingTimeDisplay: false,
-              pictureInPictureToggle: false,
-            },
-            // inactivityTimeout: 0,
-            userActions: {
-              hotkeys: true,
-            },
-            ...props.options,
-            sources: props.sources,
-            poster: props.poster,
-          },
-          () => {
-            if (videoPlayerRef.value) {
-              videoPlayerRef.value.style.transform = `rotate(0deg)`;
-              videoPlayerRef.value.style.width = '100%';
-            }
-            if (playerIns.value.hlsQualitySelector) {
-              playerIns.value.hlsQualitySelector({
-                displayCurrentQuality: true,
-              });
-            }
-            emit('ready', playerIns.value);
-          },
-        );
-        playerIns.value.on('error', () => {
-          showError.value = true;
-        });
+    const isReady = ref(false);
+
+    // 选择第一个可用的视频源
+    const currentSource = computed(() => {
+      if (props.sources && props.sources.length > 0) {
+        return props.sources[0];
       }
-    };
-    const reseted = ref(true);
-    const dispose = (callback?: () => void) => {
-      if (playerIns.value && playerIns.value.dispose) {
-        if (playerIns.value.techName_ !== 'Flash') {
-          playerIns.value.pause && playerIns.value.pause();
-        }
-        playerIns.value.dispose();
-        playerIns.value = null;
-        nextTick(() => {
-          reseted.value = false;
-          nextTick(() => {
-            reseted.value = true;
-            nextTick(() => {
-              callback && callback();
-            });
-          });
-        });
-      }
-    };
-    const reload = () => {
-      showError.value = false;
-      dispose(() => {
-        initialize();
-      });
-    };
-    watch(
-      () => props.sources,
-      (current, prev) => {
-        if (JSON.stringify(current) !== JSON.stringify(prev)) {
-          reload();
-        }
-      },
-    );
+      return null;
+    });
+
     const getVideoWidth = () => {
       if (!videoPlayerRef.value) {
         return '100%';
@@ -116,53 +45,107 @@ export default defineComponent({
       }
       return '100%';
     };
+
+    const updateVideoStyle = () => {
+      const videoEl = videoPlayerRef.value;
+      if (!videoEl) {
+        return;
+      }
+      videoEl.style.transform = `rotate(${props.rotate}deg)`;
+      videoEl.style.width = getVideoWidth();
+    };
+
+    const handleLoadedMetadata = () => {
+      if (videoPlayerRef.value && !isReady.value) {
+        isReady.value = true;
+        updateVideoStyle();
+        emit('ready', videoPlayerRef.value);
+      }
+    };
+
+    const handleError = () => {
+      showError.value = true;
+    };
+
+    const reload = () => {
+      showError.value = false;
+      if (videoPlayerRef.value) {
+        videoPlayerRef.value.load();
+      }
+    };
+
+    // 监听 sources 变化
+    watch(
+      () => currentSource.value,
+      (newSource) => {
+        if (videoPlayerRef.value && newSource) {
+          showError.value = false;
+          isReady.value = false;
+          const sourceElement = videoPlayerRef.value.querySelector('source');
+          if (sourceElement) {
+            sourceElement.src = newSource.src;
+            sourceElement.type = newSource.type || 'video/mp4';
+          }
+          videoPlayerRef.value.load();
+        }
+      },
+    );
+
+    // 监听 rotate 变化
     watch(
       () => props.rotate,
-      current => {
-        const videoEl = videoPlayerRef.value;
-        if (!videoEl) {
-          return;
-        }
-        videoEl.style.transform = `rotate(${current}deg)`;
-        videoEl.style.width = getVideoWidth();
+      () => {
+        updateVideoStyle();
       },
     );
 
     const locale = inject(localeInjectKey, defaultLocale);
 
     onMounted(() => {
-      if (!playerIns.value) {
-        initialize();
+      if (videoPlayerRef.value) {
+        videoPlayerRef.value.addEventListener('loadedmetadata', handleLoadedMetadata);
+        videoPlayerRef.value.addEventListener('error', handleError);
+        updateVideoStyle();
+
         useResizeObserver(wrapRef, () => {
-          const videoEl = videoPlayerRef.value;
-          if (!videoEl) {
-            return;
-          }
-          videoEl.style.width = getVideoWidth();
+          updateVideoStyle();
         });
       }
     });
+
     onUnmounted(() => {
-      if (playerIns.value) {
-        dispose();
+      if (videoPlayerRef.value) {
+        videoPlayerRef.value.removeEventListener('loadedmetadata', handleLoadedMetadata);
+        videoPlayerRef.value.removeEventListener('error', handleError);
       }
     });
-    return () =>
-      reseted.value && (
-        <div class={classHelper.block} ref={wrapRef}>
-          <video ref={videoPlayerRef} class="video-js"></video>
-          {showError.value && (
-            <div class={classHelper.e('error')}>
-              <div class={classHelper.e('error-content')}>
-                <IconVideoError size={40} color={['#8B8E94', '#8B8E94', '#8B8E94']} />
-                <p>{locale.value?.langService.td().horizonWeb.videoPlayer.error}</p>
-                <HButton forceNewestSize={true} onClick={reload}>
-                  {locale.value?.langService.td().horizonWeb.global.refresh}
-                </HButton>
-              </div>
+
+    return () => (
+      <div class={classHelper.block} ref={wrapRef}>
+        {currentSource.value && (
+          <video
+            ref={videoPlayerRef}
+            class={classHelper.e('video')}
+            controls
+            poster={props.poster || undefined}
+            preload="metadata"
+          >
+            <source src={currentSource.value.src} type={currentSource.value.type || 'video/mp4'} />
+            您的浏览器不支持 video 标签。
+          </video>
+        )}
+        {showError.value && (
+          <div class={classHelper.e('error')}>
+            <div class={classHelper.e('error-content')}>
+              <IconVideoError size={40} color={['#8B8E94', '#8B8E94', '#8B8E94']} />
+              <p>{locale.value?.langService.td().horizonWeb.videoPlayer.error}</p>
+              <HButton forceNewestSize={true} onClick={reload}>
+                {locale.value?.langService.td().horizonWeb.global.refresh}
+              </HButton>
             </div>
-          )}
-        </div>
-      );
+          </div>
+        )}
+      </div>
+    );
   },
 });

@@ -1,28 +1,28 @@
 <template>
   <div>
-    <n-button type="normal" class="mb-2" @click="visible = !visible">Change</n-button>
-    <n-row :gutter="10" style="height: 80px;">
-      <n-col :span="6">
-        <n-transition name="zoom-in-center">
+    <h-button type="normal" class="mb-2" @click="visible = !visible">Change</h-button>
+    <h-row :gutter="10" style="height: 80px;">
+      <h-col :span="6">
+        <h-transition name="zoom-in-center">
           <div v-show="visible" class="animate-box">zoom-in-center</div>
-        </n-transition>
-      </n-col>
-      <n-col :span="6">
-        <n-transition name="zoom-in-top">
+        </h-transition>
+      </h-col>
+      <h-col :span="6">
+        <h-transition name="zoom-in-top">
           <div v-show="visible" class="animate-box">zoom-in-top</div>
-        </n-transition>
-      </n-col>
-      <n-col :span="6">
-        <n-transition name="zoom-in-bottom">
+        </h-transition>
+      </h-col>
+      <h-col :span="6">
+        <h-transition name="zoom-in-bottom">
           <div v-show="visible" class="animate-box">zoom-in-bottom</div>
-        </n-transition>
-      </n-col>
-      <n-col :span="6">
-        <n-transition name="zoom-in-left">
+        </h-transition>
+      </h-col>
+      <h-col :span="6">
+        <h-transition name="zoom-in-left">
           <div v-show="visible" class="animate-box">zoom-in-left</div>
-        </n-transition>
-      </n-col>
-    </n-row>
+        </h-transition>
+      </h-col>
+    </h-row>
   </div>
 </template>
 

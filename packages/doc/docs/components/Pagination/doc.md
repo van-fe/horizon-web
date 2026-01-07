@@ -10,8 +10,8 @@
 :::demo ./demos/show-range.vue :::
 
 ### 仅一页时隐藏分页
-可以设置 `hide-on-single-page`，在只有一页时隐藏分页
-:::demo ./demos/hide-on-single-page.vue :::
+可以设置 `hide-oh-single-page`，在只有一页时隐藏分页
+:::demo ./demos/hide-oh-single-page.vue :::
 
 ### 控制分页子元素
 设置 `layout`，可以配置展示的元素

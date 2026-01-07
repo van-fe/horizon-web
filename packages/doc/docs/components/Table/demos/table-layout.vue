@@ -1,16 +1,16 @@
 <template>
-  <n-radio-group v-model="tableLayout" class="mb-4">
-    <n-radio-button label="auto" />
-    <n-radio-button label="fixed" />
-  </n-radio-group>
+  <h-radio-group v-model="tableLayout" class="mb-4">
+    <h-radio-button label="auto" />
+    <h-radio-button label="fixed" />
+  </h-radio-group>
 
-  <n-table-v3 :data="data" :table-layout="tableLayout" cell-class-name="custom-cell">
-    <n-table-column-v3 title="ID" field="id" width="80" />
-    <n-table-column-v3 title="Name" field="name" />
-    <n-table-column-v3 title="Gender" field="gender" />
-    <n-table-column-v3 title="Birthday" field="birthday" width="120" />
-    <n-table-column-v3 title="Message" field="message" width="120" />
-  </n-table-v3>
+  <h-table-v3 :data="data" :table-layout="tableLayout" cell-class-name="custom-cell">
+    <h-table-column-v3 title="ID" field="id" width="80" />
+    <h-table-column-v3 title="Name" field="name" />
+    <h-table-column-v3 title="Gender" field="gender" />
+    <h-table-column-v3 title="Birthday" field="birthday" width="120" />
+    <h-table-column-v3 title="Message" field="message" width="120" />
+  </h-table-v3>
 </template>
 
 <script setup lang="ts">
@@ -41,7 +41,7 @@ const data = ref<TableData[]>(new Array(10).fill(0).map((_, index) => ({
 
 <style>
 td.custom-cell {
-  .n-table-v3__cell-inner {
+  .h-table-v3__cell-inner {
     white-space: nowrap;
   }
 }

@@ -1,12 +1,12 @@
 <template>
-  <n-button :class="{ 'is-visible': visible, 'not-content': !$slots.default }">
+  <h-button :class="{ 'is-visible': visible, 'not-content': !$slots.default }">
     <slot />
     <template #suffix>
-      <div class="n-button__icon">
+      <div class="h-button__icon">
         <IconArrowDown />
       </div>
     </template>
-  </n-button>
+  </h-button>
 </template>
 
 <script setup lang="ts">
@@ -18,7 +18,7 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-.n-button__icon {
+.h-button__icon {
   transition: 0.3s;
 
   .is-visible & {
@@ -29,7 +29,7 @@ defineProps({
 .not-content {
   width: 32px !important;
 
-  :deep(.n-button__content) {
+  :deep(.h-button__content) {
     display: none;
   }
 }

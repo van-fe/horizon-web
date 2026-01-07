@@ -1,11 +1,11 @@
 <template>
   <div>
-    <n-row>
-      <n-col :span="6">
+    <h-row>
+      <h-col :span="6">
         <div class="demo-title">
           单选: 整体禁用
         </div>
-        <n-modal-select
+        <h-modal-select
             v-model="value1"
             :clearable="true"
             placeholder="请选择"
@@ -13,69 +13,69 @@
             :to-body="false"
             @change="changeHandle"
         >
-          <n-option
+          <h-option
               v-for="item in selectOptions"
               :key="item.value"
               :label="item.label"
               :value="item.value"
               :disabled="item.value === 2"
           />
-        </n-modal-select>
-      </n-col>
-      <n-col :span="6">
+        </h-modal-select>
+      </h-col>
+      <h-col :span="6">
         <div class="demo-title">
           单选: 选项禁用
         </div>
-        <n-modal-select
+        <h-modal-select
             v-model="value2"
             :clearable="true"
             placeholder="请选择"
             :to-body="false"
             @change="changeHandle"
         >
-          <n-option
+          <h-option
               v-for="item in selectOptionsHasDisabled"
               :key="item.value"
               :label="item.label"
               :value="item.value"
               :disabled="item.disabled"
           />
-        </n-modal-select>
-      </n-col>
-      <n-col :span="6">
+        </h-modal-select>
+      </h-col>
+      <h-col :span="6">
         <div class="demo-title">
           单选: 选项组禁用
         </div>
-        <n-modal-select
+        <h-modal-select
             v-model="value3"
             :clearable="true"
             placeholder="请选择"
             :to-body="false"
             @change="changeHandle"
         >
-          <n-option-group
+          <h-option-group
             v-for="(group, index) in selectOptionGroupsHasDisabled"
             :key="index"
             :label="group.label"
             :disabled="group.disabled"
           >
-            <n-option
+            <h-option
               v-for="item in group.children"
               :key="item.value"
               :label="item.label"
               :value="item.value"
               :disabled="item.disabled"
             />
-          </n-option-group>
-        </n-modal-select>
-      </n-col>
-    </n-row>
-    <n-row>
-      <n-col :span="6">
+          </h-option-group>
+        </h-modal-select>
+      </h-col>
+    </h-row>
+    <h-row>
+      <h-col :span="6">
         <div class="demo-title">
           多选: 整体禁用
         </div>
-        <n-modal-select
+        <h-modal-select
             v-model="values1"
             :multiple="true"
             :clearable="true"
@@ -85,19 +85,19 @@
             :to-body="false"
             @change="changeHandle"
         >
-          <n-option
+          <h-option
               v-for="item in selectOptions"
               :key="item.value"
               :label="item.label"
               :value="item.value"
           />
-        </n-modal-select>
-      </n-col>
-      <n-col :span="6">
+        </h-modal-select>
+      </h-col>
+      <h-col :span="6">
         <div class="demo-title">
           多选: 选项禁用
         </div>
-        <n-modal-select
+        <h-modal-select
             v-model="values2"
             :multiple="true"
             :clearable="true"
@@ -106,20 +106,20 @@
             :to-body="false"
             @change="changeHandle"
         >
-          <n-option
+          <h-option
               v-for="item in selectOptionsHasDisabled"
               :key="item.value"
               :label="item.label"
               :value="item.value"
               :disabled="item.disabled"
           />
-        </n-modal-select>
-      </n-col>
-      <n-col :span="6">
+        </h-modal-select>
+      </h-col>
+      <h-col :span="6">
         <div class="demo-title">
           多选: 选项组禁用
         </div>
-        <n-modal-select
+        <h-modal-select
             v-model="values3"
             :multiple="true"
             :clearable="true"
@@ -128,23 +128,23 @@
             :to-body="false"
             @change="changeHandle"
         >
-          <n-option-group
+          <h-option-group
               v-for="(group, index) in selectOptionGroupsHasDisabled"
               :key="index"
               :label="group.label"
               :disabled="group.disabled"
           >
-            <n-option
+            <h-option
               v-for="item in group.children"
               :key="item.value"
               :label="item.label"
               :value="item.value"
               :disabled="item.disabled"
             />
-          </n-option-group>
-        </n-modal-select>
-      </n-col>
-    </n-row>
+          </h-option-group>
+        </h-modal-select>
+      </h-col>
+    </h-row>
   </div>
 </template>
 

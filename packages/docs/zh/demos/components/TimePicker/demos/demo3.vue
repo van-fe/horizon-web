@@ -2,19 +2,19 @@
   <div class="demo-wrapper">
     <div class="box">
       <span>两列（间隔连续）</span>
-      <n-time-picker v-model="time1" type="minutes" :picker-options="pickerOptions1" />
+      <h-time-picker v-model="time1" type="minutes" :picker-options="pickerOptions1" />
     </div>
     <div class="box">
       <span>三列（间隔连续）</span>
-      <n-time-picker v-model="time2" type="seconds" :picker-options="pickerOptions2" />
+      <h-time-picker v-model="time2" type="seconds" :picker-options="pickerOptions2" />
     </div>
     <div class="box">
       <span>两列（间隔不连续）</span>
-      <n-time-picker v-model="time3" type="minutes" :picker-options="pickerOptions3" />
+      <h-time-picker v-model="time3" type="minutes" :picker-options="pickerOptions3" />
     </div>
     <div class="box">
       <span>三列（间隔不连续）</span>
-      <n-time-picker v-model="time4" type="seconds" :picker-options="pickerOptions3" />
+      <h-time-picker v-model="time4" type="seconds" :picker-options="pickerOptions3" />
     </div>
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
-  <n-button type="normal" @click="visible = true">打开抽屉</n-button>
-  <n-drawer
+  <h-button type="normal" @click="visible = true">打开抽屉</h-button>
+  <h-drawer
     v-model:visible="visible"
     v2
     title="Title"
@@ -13,7 +13,7 @@
       You can customize modal body text by the current situation. This modal will be closed
       immediately once you press the OK button.
     </div>
-  </n-drawer>
+  </h-drawer>
 </template>
 
 <script lang="ts" setup>

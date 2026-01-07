@@ -1,18 +1,18 @@
 <template>
-  <n-row :gutter="10">
-    <n-col :span="6">
+  <h-row :gutter="10">
+    <h-col :span="6">
       <div class="demo-title">单选</div>
-      <n-cascader
+      <h-cascader
         v-model="currentVal1"
         :clearable="true"
         :filterable="true"
         :options="baseData"
         :use-virtual-scroll="true"
       />
-    </n-col>
-    <n-col :span="6">
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">多选</div>
-      <n-cascader
+      <h-cascader
         v-model="currentVal2"
         :clearable="true"
         :filterable="true"
@@ -21,8 +21,8 @@
         :collapse-tags="true"
         :use-virtual-scroll="true"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

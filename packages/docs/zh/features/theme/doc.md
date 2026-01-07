@@ -1,6 +1,6 @@
 # 主题色
 
-HORIZONWEB 提供了可以动态修改主题色的方式，效果参考如下 DEMO
+Horizon Web 提供了可以动态修改主题色的方式，效果参考如下 DEMO
 
 ### 注意事项
 
@@ -8,7 +8,7 @@ HORIZONWEB 提供了可以动态修改主题色的方式，效果参考如下 DE
 
 ### 使用方式
 
-HORIZONWEB 内部提供了主题切换工具，在 `ESModule` 中你可以通过如下的方式导入该工具：
+Horizon Web 内部提供了主题切换工具，在 `ESModule` 中你可以通过如下的方式导入该工具：
 
 ```typescript
 import { $themes } from '@aurora/horizon-web';

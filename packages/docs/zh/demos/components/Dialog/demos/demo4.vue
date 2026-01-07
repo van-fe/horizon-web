@@ -1,5 +1,5 @@
 <template>
-  <n-button
+  <h-button
     class="mr-2"
     @click="
       size = 'small';
@@ -7,8 +7,8 @@
     "
   >
     小对话框
-  </n-button>
-  <n-button
+  </h-button>
+  <h-button
     class="mr-2"
     @click="
       size = 'medium';
@@ -16,8 +16,8 @@
     "
   >
     普通对话框
-  </n-button>
-  <n-button
+  </h-button>
+  <h-button
     class="mr-2"
     @click="
       size = 'large';
@@ -25,8 +25,8 @@
     "
   >
     大对话框
-  </n-button>
-  <n-button
+  </h-button>
+  <h-button
     class="mr-2"
     @click="
       size = 'huge';
@@ -34,10 +34,10 @@
     "
   >
     超大对话框
-  </n-button>
-  <n-dialog v-model="visible" title="标题" :size="size" @primaryClick="onPrimary">
+  </h-button>
+  <h-dialog v-model="visible" title="标题" :size="size" @primaryClick="onPrimary">
     <div>随便写点什么</div>
-  </n-dialog>
+  </h-dialog>
 </template>
 
 <script lang="ts">

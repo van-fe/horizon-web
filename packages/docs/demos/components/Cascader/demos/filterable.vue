@@ -1,13 +1,13 @@
 <template>
-  <n-form :inline="true" label-position="top">
-    <n-form-item label="可选任意节点">
-      <n-switch v-model="checkStrictly" status />
-    </n-form-item>
-  </n-form>
-  <n-row>
-    <n-col :span="6">
+  <h-form :inline="true" label-position="top">
+    <h-form-item label="可选任意节点">
+      <h-switch v-model="checkStrictly" status />
+    </h-form-item>
+  </h-form>
+  <h-row>
+    <h-col :span="6">
       <div class="demo-title">单选</div>
-      <n-cascader
+      <h-cascader
         v-model="currentVal1"
         :filterable="true"
         :check-strictly="checkStrictly"
@@ -18,10 +18,10 @@
         @focus="onFocus"
         @blur="onBlur"
       />
-    </n-col>
-    <n-col :span="6">
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">多选</div>
-      <n-cascader
+      <h-cascader
         v-model="currentVal2"
         :filterable="true"
         :options="options"
@@ -34,15 +34,15 @@
         @focus="onFocus"
         @blur="onBlur"
       />
-    </n-col>
-    <n-col :span="6">
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">
         单选-下拉列表带筛选功能
-        <n-tooltip content="内置 input">
+        <h-tooltip content="内置 input">
           <a-icon name="question" />
-        </n-tooltip>
+        </h-tooltip>
       </div>
-      <n-cascader
+      <h-cascader
         v-model="currentVal3"
         :check-strictly="checkStrictly"
         :panel-filter-option="true"
@@ -56,11 +56,11 @@
         <template #optionEmptyRender>
           <div class="empty-city">没有找到对应的城市信息</div>
         </template>
-      </n-cascader>
-    </n-col>
-    <n-col :span="6">
+      </h-cascader>
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">多选-下拉列表带筛选功能</div>
-      <n-cascader
+      <h-cascader
         v-model="currentVal4"
         :multiple="true"
         :check-strictly="checkStrictly"
@@ -74,15 +74,15 @@
       >
         <template #panelHeaderRender>
           <div class="panel-filter-box">
-            <n-input v-model="panelFilterInputValue2" prefix-icon="search" placeholder="请搜索" />
+            <h-input v-model="panelFilterInputValue2" prefix-icon="search" placeholder="请搜索" />
           </div>
         </template>
         <template #optionEmptyRender>
           <div class="empty-city">没有找到对应的城市信息</div>
         </template>
-      </n-cascader>
-    </n-col>
-  </n-row>
+      </h-cascader>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

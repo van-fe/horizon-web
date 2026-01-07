@@ -2,19 +2,19 @@
   <div class="demo-wrapper">
     <div class="box">
       <span>默认日期</span>
-      <n-date-picker v-model="time1" type="date" />
+      <h-date-picker v-model="time1" type="date" />
     </div>
     <div class="box">
       <span>快捷选择日期</span>
-      <n-date-picker v-model="time2" type="date" :shortcuts="shortcuts" />
+      <h-date-picker v-model="time2" type="date" :shortcuts="shortcuts" />
     </div>
     <div class="box">
       <span>隐藏年份按钮</span>
-      <n-date-picker v-model="time3" type="date" :show-year-button="false" />
+      <h-date-picker v-model="time3" type="date" :show-year-button="false" />
     </div>
     <div class="box">
       <span>自定义周一到周日排序</span>
-      <n-date-picker v-model="time4" type="date" :first-day-of-week="1" />
+      <h-date-picker v-model="time4" type="date" :first-day-of-week="1" />
     </div>
   </div>
 </template>

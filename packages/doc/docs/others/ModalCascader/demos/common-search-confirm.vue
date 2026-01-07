@@ -1,18 +1,18 @@
 <template>
-  <n-row>
-    <n-col :span="6">
+  <h-row>
+    <h-col :span="6">
       <div class="demo-title">
         单选
       </div>
-      <n-modal-cascader v-model="currentVal1" :filterable="true" :options="options" need-confirm :to-body="false" />
-    </n-col>
-    <n-col :span="6">
+      <h-modal-cascader v-model="currentVal1" :filterable="true" :options="options" need-confirm :to-body="false" />
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">
         多选
       </div>
-      <n-modal-cascader v-model="currentVal2" :filterable="true" :options="options" multiple need-confirm :to-body="false" />
-    </n-col>
-  </n-row>
+      <h-modal-cascader v-model="currentVal2" :filterable="true" :options="options" multiple need-confirm :to-body="false" />
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

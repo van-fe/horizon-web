@@ -1,14 +1,14 @@
 <template>
-  <n-row>
-    <n-col :span="6">
+  <h-row>
+    <h-col :span="6">
       <div class="demo-title">单选</div>
-      <n-tree-select v-model="value" :tree-data="baseTreeData" :clearable="true" :to-body="false" />
-    </n-col>
-    <n-col :span="6">
+      <h-tree-select v-model="value" :tree-data="baseTreeData" :clearable="true" :to-body="false" />
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">多选</div>
-      <n-tree-select v-model="values" :tree-data="baseTreeData" :clearable="true" :multiple="true" :to-body="false" />
-    </n-col>
-  </n-row>
+      <h-tree-select v-model="values" :tree-data="baseTreeData" :clearable="true" :multiple="true" :to-body="false" />
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

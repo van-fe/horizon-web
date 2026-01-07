@@ -85,8 +85,8 @@
       测试
     </div>
   </section>
-  <n-button size="large" type="primary" @click="show">显示</n-button>
-  <n-button size="large" type="primary" @click="hide">隐藏</n-button>
+  <h-button size="large" type="primary" @click="show">显示</h-button>
+  <h-button size="large" type="primary" @click="hide">隐藏</h-button>
 </template>
 
 <script lang="ts" setup>
@@ -108,6 +108,6 @@ const hide = () => {
 .loadingContainer1 {
   height: 240px;
   width: 240px;
-  margin-bottom: 20px;
+  margih-bottom: 20px;
 }
 </style>

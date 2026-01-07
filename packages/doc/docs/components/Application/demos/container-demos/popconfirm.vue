@@ -6,5 +6,5 @@ const onClick = () => {
 };
 </script>
 <template>
-  <n-button v-popconfirm @click="onClick">Click</n-button>
+  <h-button v-popconfirm @click="onClick">Click</h-button>
 </template>

@@ -1,14 +1,14 @@
 @use 'sass:map';
 @use '../../../../styles/mixins';
-@import 'var';
+@use 'var';
 
 @mixin dots-size($size) {
   &#{mixins.$modifier-separator}#{$size} {
-    $width: map.get($dot-sizes, $size, 'width');
-    $height: map.get($dot-sizes, $size, 'height');
-    $gap: map.get($dot-sizes, $size, 'gap');
-    $dots-translate-x: map.get($dot-sizes, $size, 'dots-translate-x');
-    $dots-right-left: map.get($dot-sizes, $size, 'dots-right-left');
+    $width: map.get(var.$dot-sizes, $size, 'width');
+    $height: map.get(var.$dot-sizes, $size, 'height');
+    $gap: map.get(var.$dot-sizes, $size, 'gap');
+    $dots-translate-x: map.get(var.$dot-sizes, $size, 'dots-translate-x');
+    $dots-right-left: map.get(var.$dot-sizes, $size, 'dots-right-left');
 
     display: flex;
     align-items: center;
@@ -65,8 +65,8 @@
 
 @mixin circle-size($size) {
   &#{mixins.$modifier-separator}#{$size} {
-    $width: map.get($circle-sizes, $size, 'width');
-    $height: map.get($circle-sizes, $size, 'height');
+    $width: map.get(var.$circle-sizes, $size, 'width');
+    $height: map.get(var.$circle-sizes, $size, 'height');
 
     display: flex;
     align-items: center;
@@ -114,8 +114,8 @@
 
 @mixin dots-text-row-gap($size) {
   &#{mixins.$modifier-separator}#{$size} {
-    margin-right: map.get($dot-sizes, $size, 'dots-translate-x');
-    margin-left: map.get($dot-sizes, $size, 'text-row-gap');
+    margin-right: map.get(var.$dot-sizes, $size, 'dots-translate-x');
+    margin-left: map.get(var.$dot-sizes, $size, 'text-row-gap');
     color: mixins.css-variable('v-loading-color--text');
     font-weight: 420;
     font-size: mixins.css-variable('v-loading-font-size');
@@ -126,7 +126,7 @@
 
 @mixin dots-text-column-gap($size) {
   &#{mixins.$modifier-separator}#{$size} {
-    margin-top: map.get($dot-sizes, $size, 'text-column-gap');
+    margin-top: map.get(var.$dot-sizes, $size, 'text-column-gap');
     color: mixins.css-variable('v-loading-color--text');
     font-weight: 420;
     font-size: mixins.css-variable('v-loading-font-size');
@@ -137,7 +137,7 @@
 
 @mixin circle-text-row-gap($size) {
   &#{mixins.$modifier-separator}#{$size} {
-    margin-left: map.get($circle-sizes, $size, 'text-row-gap');
+    margin-left: map.get(var.$circle-sizes, $size, 'text-row-gap');
     color: mixins.css-variable('v-loading-color--text');
     font-weight: 420;
     font-size: mixins.css-variable('v-loading-font-size');
@@ -148,7 +148,7 @@
 
 @mixin circle-text-column-gap($size) {
   &#{mixins.$modifier-separator}#{$size} {
-    margin-top: map.get($circle-sizes, $size, 'text-column-gap');
+    margin-top: map.get(var.$circle-sizes, $size, 'text-column-gap');
     color: mixins.css-variable('v-loading-color--text');
     font-weight: 420;
     font-size: mixins.css-variable('v-loading-font-size');

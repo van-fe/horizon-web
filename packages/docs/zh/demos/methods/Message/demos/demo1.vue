@@ -1,7 +1,7 @@
 <template>
-  <n-button @click="open">打开消息提示</n-button>
-  <n-button @click="openVn">VNode</n-button>
-  <n-button @click="closeAll">关闭所有消息提示</n-button>
+  <h-button @click="open">打开消息提示</h-button>
+  <h-button @click="openVn">VNode</h-button>
+  <h-button @click="closeAll">关闭所有消息提示</h-button>
 </template>
 
 <script lang="ts" setup>
@@ -31,7 +31,7 @@ const closeAll = () => {
 </script>
 
 <style scoped>
-.n-button + .n-button {
+.h-button + .h-button {
   margin-left: 10px;
 }
 </style>

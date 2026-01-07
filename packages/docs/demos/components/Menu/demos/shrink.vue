@@ -1,22 +1,22 @@
 <template>
-  <n-row>
-    <n-col :span="24">
-      <n-form label-position="left" label-vertical-align="middle" :inline="true">
-        <n-form-item label="theme:">
-          <n-radio-group v-model="theme">
-            <n-radio label="default">default</n-radio>
-            <n-radio label="gray">gray</n-radio>
-            <n-radio label="midnight">midnight</n-radio>
-          </n-radio-group>
-        </n-form-item>
-      </n-form>
-    </n-col>
-  </n-row>
-  <n-row>
-    <n-col :span="24">
-      <n-container>
-        <n-aside width="auto">
-          <n-menu
+  <h-row>
+    <h-col :span="24">
+      <h-form label-position="left" label-vertical-align="middle" :inline="true">
+        <h-form-item label="theme:">
+          <h-radio-group v-model="theme">
+            <h-radio label="default">default</h-radio>
+            <h-radio label="gray">gray</h-radio>
+            <h-radio label="midnight">midnight</h-radio>
+          </h-radio-group>
+        </h-form-item>
+      </h-form>
+    </h-col>
+  </h-row>
+  <h-row>
+    <h-col :span="24">
+      <h-container>
+        <h-aside width="auto">
+          <h-menu
             ref="menuRef"
             v-model:collapse="collapse"
             :collapse-button="true"
@@ -44,30 +44,30 @@
                     />
                   </svg>
                 </div>
-                <n-transition name="collapse-horizontal">
+                <h-transition name="collapse-horizontal">
                   <div v-show="!isCollapse.value" class="text">Aurora</div>
-                </n-transition>
+                </h-transition>
               </div>
             </template>
-            <n-sub-menu value="1" icon="material" disabled :selectable="true">
+            <h-sub-menu value="1" icon="material" disabled :selectable="true">
               <template #title>总览</template>
-            </n-sub-menu>
-            <n-sub-menu value="2" icon="settings_two" name="设置" :selectable="true" />
-            <n-sub-menu value="3" icon="friend" :selectable="true">
+            </h-sub-menu>
+            <h-sub-menu value="2" icon="settings_two" name="设置" :selectable="true" />
+            <h-sub-menu value="3" icon="friend" :selectable="true">
               <template #title>伙伴</template>
-            </n-sub-menu>
-            <n-sub-menu value="5" icon="operation_mgmt" :selectable="true">
+            </h-sub-menu>
+            <h-sub-menu value="5" icon="operation_mgmt" :selectable="true">
               <template #title>分析</template>
-            </n-sub-menu>
-            <n-sub-menu value="6" icon="tires" :selectable="true">
+            </h-sub-menu>
+            <h-sub-menu value="6" icon="tires" :selectable="true">
               <template #title>保养</template>
-            </n-sub-menu>
-          </n-menu>
-        </n-aside>
-        <n-main style="background: var(--n-bg-info-weak-hover)"></n-main>
-      </n-container>
-    </n-col>
-  </n-row>
+            </h-sub-menu>
+          </h-menu>
+        </h-aside>
+        <h-main style="background: var(--n-bg-info-weak-hover)"></h-main>
+      </h-container>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

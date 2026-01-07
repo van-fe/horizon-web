@@ -1,29 +1,29 @@
 <template>
-  <n-form label-position="left" label-vertical-align="middle" label-width="150px">
-    <n-form-item label="整体是否禁用">
-      <n-switch v-model="disabled" :status="true" />
-    </n-form-item>
-    <n-form-item label="是否忽视父子关系">
-      <n-switch v-model="checkStrictly" :status="true" status-off-text="否" status-on-text="是" />
-    </n-form-item>
-    <n-form-item label="父节点点选是否能更改禁用的子节点的状态">
-      <n-switch v-model="parentEffectDisabledChild" :status="true" status-off-text="否" status-on-text="是" />
-    </n-form-item>
-  </n-form>
-  <n-row>
-    <n-col :span="6">
+  <h-form label-position="left" label-vertical-align="middle" label-width="150px">
+    <h-form-item label="整体是否禁用">
+      <h-switch v-model="disabled" :status="true" />
+    </h-form-item>
+    <h-form-item label="是否忽视父子关系">
+      <h-switch v-model="checkStrictly" :status="true" status-off-text="否" status-on-text="是" />
+    </h-form-item>
+    <h-form-item label="父节点点选是否能更改禁用的子节点的状态">
+      <h-switch v-model="parentEffectDisabledChild" :status="true" status-off-text="否" status-on-text="是" />
+    </h-form-item>
+  </h-form>
+  <h-row>
+    <h-col :span="6">
       <div class="demo-title">单选</div>
-      <n-tree-select
+      <h-tree-select
         :tree-data="baseTreeData"
         :disabled="disabled"
         :check-strictly="checkStrictly"
         :parent-effect-disabled-child="parentEffectDisabledChild"
         :to-body="false"
       />
-    </n-col>
-    <n-col :span="6">
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">多选</div>
-      <n-tree-select
+      <h-tree-select
         :tree-data="baseTreeData"
         :disabled="disabled"
         :check-strictly="checkStrictly"
@@ -31,8 +31,8 @@
         :multiple="true"
         :to-body="false"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

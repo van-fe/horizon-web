@@ -1,17 +1,17 @@
 <template>
   <p>↓ solid(default)</p>
-  <n-row>
-    <n-col :span="12"><n-divider /></n-col>
-    <n-col :span="12"><n-divider direction="vertical" /></n-col>
-  </n-row>
+  <h-row>
+    <h-col :span="12"><h-divider /></h-col>
+    <h-col :span="12"><h-divider direction="vertical" /></h-col>
+  </h-row>
   <p>↓ dashed</p>
-  <n-row>
-    <n-col :span="12"><n-divider line-style="dashed" /></n-col>
-    <n-col :span="12"><n-divider line-style="dashed" direction="vertical" /></n-col>
-  </n-row>
+  <h-row>
+    <h-col :span="12"><h-divider line-style="dashed" /></h-col>
+    <h-col :span="12"><h-divider line-style="dashed" direction="vertical" /></h-col>
+  </h-row>
   <p>↓ dotted</p>
-  <n-row>
-    <n-col :span="12"><n-divider line-style="dotted" /></n-col>
-    <n-col :span="12"><n-divider line-style="dotted" direction="vertical" /></n-col>
-  </n-row>
+  <h-row>
+    <h-col :span="12"><h-divider line-style="dotted" /></h-col>
+    <h-col :span="12"><h-divider line-style="dotted" direction="vertical" /></h-col>
+  </h-row>
 </template>

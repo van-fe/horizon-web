@@ -7,18 +7,18 @@ const value3 = ref(12);
 </script>
 
 <template>
-  <n-row :gutter="12">
-    <n-col :span="8">
+  <h-row :gutter="12">
+    <h-col :span="8">
       <div class="demo-title">默认（居右）</div>
-      <n-input-number v-model="value" disabled />
-    </n-col>
-    <n-col :span="8">
+      <h-input-number v-model="value" disabled />
+    </h-col>
+    <h-col :span="8">
       <div class="demo-title">两侧</div>
-      <n-input-number v-model="value2" controls-position="between" disabled />
-    </n-col>
-    <n-col :span="8">
+      <h-input-number v-model="value2" controls-position="between" disabled />
+    </h-col>
+    <h-col :span="8">
       <div class="demo-title">隐藏</div>
-      <n-input-number v-model="value3" :controls="false" disabled />
-    </n-col>
-  </n-row>
+      <h-input-number v-model="value3" :controls="false" disabled />
+    </h-col>
+  </h-row>
 </template>

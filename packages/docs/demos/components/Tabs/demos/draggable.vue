@@ -25,20 +25,20 @@ const onSort = (current: number, target: number, sortedKeys: number[]) => {
 <template>
   <div class="mb-4 flex align-center">
     <span class="mr-4">类型</span>
-    <n-radio-group v-model="cardType">
-      <n-radio label="line">line(Default)</n-radio>
-      <n-radio label="card">card</n-radio>
-      <n-radio label="segment">segment</n-radio>
-      <n-radio label="page">page(不支持尺寸调整)</n-radio>
-    </n-radio-group>
+    <h-radio-group v-model="cardType">
+      <h-radio label="line">line(Default)</h-radio>
+      <h-radio label="card">card</h-radio>
+      <h-radio label="segment">segment</h-radio>
+      <h-radio label="page">page(不支持尺寸调整)</h-radio>
+    </h-radio-group>
   </div>
   <div class="mb-8 flex align-center">
     <span class="mr-4">其他</span>
     <div class="flex align-center" style="column-gap: 10px">
-      <n-checkbox v-model="disabled" label="设置第三项不可拖拽" />
+      <h-checkbox v-model="disabled" label="设置第三项不可拖拽" />
     </div>
   </div>
-  <n-tabs
+  <h-tabs
     :default-active-key="activeKey"
     draggable
     :type="cardType"
@@ -46,14 +46,14 @@ const onSort = (current: number, target: number, sortedKeys: number[]) => {
     @sort="onSort"
   >
     <transition-group name="fade">
-      <n-tab
+      <h-tab
         v-for="(tab, i) in tabs"
         :key="tab.key"
         :label="tab.title"
         :draggable="disabled ? !(i === 2) : true"
       />
     </transition-group>
-  </n-tabs>
+  </h-tabs>
 </template>
 
 <style scoped>

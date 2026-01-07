@@ -1,9 +1,9 @@
 <template>
-  <n-space>
-    <n-input v-model="val" status="error" />
-    <n-input v-model="val" input-style="emphasize" status="error" />
-    <n-input v-model="val" input-style="no-border" status="error" />
-  </n-space>
+  <h-space>
+    <h-input v-model="val" status="error" />
+    <h-input v-model="val" input-style="emphasize" status="error" />
+    <h-input v-model="val" input-style="no-border" status="error" />
+  </h-space>
 </template>
 
 <script lang="ts">

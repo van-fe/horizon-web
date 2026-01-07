@@ -5,13 +5,13 @@ const disabled = ref(false);
 </script>
 
 <template>
-  <n-space>
-    <n-checkbox v-model="disabled">禁用按钮</n-checkbox>
+  <h-space>
+    <h-checkbox v-model="disabled">禁用按钮</h-checkbox>
     <div>Space</div>
-    <n-button :disabled="disabled">Created</n-button>
-    <n-button :disabled="disabled" type="normal">Refresh</n-button>
-    <n-button :disabled="disabled" type="normal" icon="full_screen" />
-  </n-space>
+    <h-button :disabled="disabled">Created</h-button>
+    <h-button :disabled="disabled" type="normal">Refresh</h-button>
+    <h-button :disabled="disabled" type="normal" icon="full_screen" />
+  </h-space>
 </template>
 
 <style scoped></style>

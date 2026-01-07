@@ -1,33 +1,33 @@
 <template>
-  <n-form label-position="left" label-vertical-align="middle">
-    <n-form-item label="尺寸">
-      <n-radio-group v-model="size">
-        <n-radio label="small" />
-        <n-radio label="medium" />
-        <n-radio label="large" />
-        <n-radio label="huge" />
-      </n-radio-group>
-    </n-form-item>
-  </n-form>
-  <n-row>
-    <n-col :span="12">
+  <h-form label-position="left" label-vertical-align="middle">
+    <h-form-item label="尺寸">
+      <h-radio-group v-model="size">
+        <h-radio label="small" />
+        <h-radio label="medium" />
+        <h-radio label="large" />
+        <h-radio label="huge" />
+      </h-radio-group>
+    </h-form-item>
+  </h-form>
+  <h-row>
+    <h-col :span="12">
       <div class="demo-title">单选</div>
-      <n-tree
+      <h-tree
         :tree-data="baseTreeData"
         :size="size"
         :show-line="true"
       />
-    </n-col>
-    <n-col :span="12">
+    </h-col>
+    <h-col :span="12">
       <div class="demo-title">多选</div>
-      <n-tree
+      <h-tree
         :tree-data="baseTreeData"
         :size="size"
         :multiple="true"
         :show-line="true"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

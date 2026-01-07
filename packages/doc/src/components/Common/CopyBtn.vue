@@ -1,5 +1,5 @@
 <template>
-  <n-button v-tooltip="tooltip" :icon="copyIcon" size="small" type="normal" :text="true" @click="copy" />
+  <h-button v-tooltip="tooltip" :icon="copyIcon" size="small" type="normal" :text="true" @click="copy" />
 </template>
 
 <script lang="tsx">
@@ -25,7 +25,7 @@ export default defineComponent({
   },
   setup(props) {
     return {
-      copyIcon: <IconCopy color={[props.dark ? '#FFF' : 'var(--n-text-primary)']} size="14" />,
+      copyIcon: <IconCopy color={[props.dark ? '#FFF' : 'var(--h-text-primary)']} size="14" />,
       copy: () => {
         if (props.text) {
           navigator.clipboard.writeText(props.text);

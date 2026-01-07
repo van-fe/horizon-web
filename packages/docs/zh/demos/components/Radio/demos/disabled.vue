@@ -1,22 +1,22 @@
 <template>
   <div class="grid">
     <div>
-      <n-radio :disabled="true" :value="1">禁用</n-radio>
+      <h-radio :disabled="true" :value="1">禁用</h-radio>
     </div>
     <div>
-      <n-radio v-model="modelValue1" :disabled="true" :value="2">已选禁用</n-radio>
+      <h-radio v-model="modelValue1" :disabled="true" :value="2">已选禁用</h-radio>
     </div>
     <div>
-      <n-radio v-model="modelValue2" :value="3">非禁用</n-radio>
+      <h-radio v-model="modelValue2" :value="3">非禁用</h-radio>
     </div>
     <div>
-      <n-radio :disabled="true" :value="1" :border="true">禁用</n-radio>
+      <h-radio :disabled="true" :value="1" :border="true">禁用</h-radio>
     </div>
     <div>
-      <n-radio v-model="modelValue1" :disabled="true" :value="2" :border="true">已选禁用</n-radio>
+      <h-radio v-model="modelValue1" :disabled="true" :value="2" :border="true">已选禁用</h-radio>
     </div>
     <div>
-      <n-radio v-model="modelValue2" :value="3" :border="true">非禁用</n-radio>
+      <h-radio v-model="modelValue2" :value="3" :border="true">非禁用</h-radio>
     </div>
   </div>
 </template>

@@ -15,6 +15,7 @@ export default defineConfig({
     },
     cssCodeSplit: true,
     minify: false,
+    sourcemap: true,
     rollupOptions: {
       external: [
         'vue',

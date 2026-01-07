@@ -27,13 +27,13 @@ describe('Slider.tsx', () => {
 
       const wrapper = mount(() => <HSlider v-model={modelValue.value} size={sizeRef.value} />);
 
-      expect(wrapper.find('.n-slider--small').exists()).toBe(true);
+      expect(wrapper.find('.h-slider--small').exists()).toBe(true);
 
       sizeRef.value = 'medium';
 
       await nextTick();
 
-      expect(wrapper.find('.n-slider--medium').exists()).toBe(true);
+      expect(wrapper.find('.h-slider--medium').exists()).toBe(true);
     });
 
     test('should not exceed min and max', async () => {
@@ -63,7 +63,7 @@ describe('Slider.tsx', () => {
         },
       );
 
-      const track = wrapper.find('.n-slider__track');
+      const track = wrapper.find('.h-slider__track');
 
       const clickEvent = new MouseEvent('click', {
         clientX: 100,

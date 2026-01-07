@@ -2,19 +2,19 @@
   <div class="n-demo">
     <div class="n-demo__container">
       <div class="n-demo__title">通过加载图片失败默认处理</div>
-      <n-avatar size="large" :src="src1" @error="errorHandler1" />
+      <h-avatar size="large" :src="src1" @error="errorHandler1" />
     </div>
     <div class="n-demo__container">
       <div class="n-demo__title">通过 error 方法自定义处理加载图片失败情况</div>
-      <n-avatar size="large" :src="src" @error="errorHandler" />
+      <h-avatar size="large" :src="src" @error="errorHandler" />
     </div>
     <div class="n-demo__container">
       <div class="n-demo__title">通过插槽自定义加载图片失败情况</div>
-      <n-avatar size="large" :src="src2">
+      <h-avatar size="large" :src="src2">
         <template #error>
           <div>失败了</div>
         </template>
-      </n-avatar>
+      </h-avatar>
     </div>
   </div>
 </template>
@@ -44,7 +44,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.n-avatar {
+.h-avatar {
   margin-right: 20px;
   &--error {
     background-color: #000;
@@ -52,13 +52,13 @@ export default defineComponent({
   }
 }
 
-.n-demo__container {
+.h-demo__container {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
 }
 
-.n-demo__title {
+.h-demo__title {
   margin-right: 20px;
 }
 </style>

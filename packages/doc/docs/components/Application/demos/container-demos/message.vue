@@ -6,5 +6,5 @@ const onClick = () => {
 };
 </script>
 <template>
-  <n-button @click="onClick">Click</n-button>
+  <h-button @click="onClick">Click</h-button>
 </template>

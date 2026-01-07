@@ -20,22 +20,22 @@ const isSplit = ref(true);
 </script>
 
 <template>
-  <n-form label-position="left">
-    <n-form-item label="size">
-      <n-radio-group v-model="size">
-        <n-radio label="medium">Medium</n-radio>
-        <n-radio label="small">Small</n-radio>
-      </n-radio-group>
-    </n-form-item>
-    <n-form-item label="title bold">
-      <n-radio-group v-model="titleBold">
-        <n-radio :label="true">True</n-radio>
-        <n-radio :label="false">False</n-radio>
-      </n-radio-group>
-    </n-form-item>
-  </n-form>
-  <n-list :max-height="300" :zebra="isZebra" :is-border="isBorder" :split="isSplit" :size="size">
-    <n-list-item
+  <h-form label-position="left">
+    <h-form-item label="size">
+      <h-radio-group v-model="size">
+        <h-radio label="medium">Medium</h-radio>
+        <h-radio label="small">Small</h-radio>
+      </h-radio-group>
+    </h-form-item>
+    <h-form-item label="title bold">
+      <h-radio-group v-model="titleBold">
+        <h-radio :label="true">True</h-radio>
+        <h-radio :label="false">False</h-radio>
+      </h-radio-group>
+    </h-form-item>
+  </h-form>
+  <h-list :max-height="300" :zebra="isZebra" :is-border="isBorder" :split="isSplit" :size="size">
+    <h-list-item
       v-for="(item, index) in list"
       :key="index"
       :title-bold="titleBold"
@@ -43,11 +43,11 @@ const isSplit = ref(true);
       :subtitle="item.subtitle"
       :describe="item.describe"
     />
-  </n-list>
+  </h-list>
 </template>
 
 <style scoped>
-.n-button + .n-button {
+.h-button + .h-button {
   margin-left: 10px;
 }
 </style>

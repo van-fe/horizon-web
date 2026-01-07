@@ -1,13 +1,13 @@
 <template>
   <div class="container">
     <div>
-      <n-descriptions title="User Info" type="vertical" border :column="3">
-        <n-description-item label="Name" value="bingkun Zhou"></n-description-item>
-        <n-description-item label="Telephone" value="0924-250492" />
-        <n-description-item label="Residence" value="Norway" />
-        <n-description-item label="City" value="Oslo" />
-        <n-description-item label="Address" value="Leg.Kiropraktor Iréne Johnson" :span-col="2" />
-      </n-descriptions>
+      <h-descriptions title="User Info" type="vertical" border :column="3">
+        <h-description-item label="Name" value="bingkun Zhou"></h-description-item>
+        <h-description-item label="Telephone" value="0924-250492" />
+        <h-description-item label="Residence" value="Norway" />
+        <h-description-item label="City" value="Oslo" />
+        <h-description-item label="Address" value="Leg.Kiropraktor Iréne Johnson" :spah-col="2" />
+      </h-descriptions>
     </div>
   </div>
 </template>

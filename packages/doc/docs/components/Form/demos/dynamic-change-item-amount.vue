@@ -1,11 +1,11 @@
 <template>
-  <n-form ref="formRef" :model="formData" :rules="rules" validate-trigger="blur" style="padding: 20px;" @submit="submit">
-    <n-form-item label="操作域" prop="domain">
-      <n-input v-model="formData.domain" placeholder="Please input domain">
+  <h-form ref="formRef" :model="formData" :rules="rules" validate-trigger="blur" style="padding: 20px;" @submit="submit">
+    <h-form-item label="操作域" prop="domain">
+      <h-input v-model="formData.domain" placeholder="Please input domain">
         <template #append>.com</template>
-      </n-input>
-    </n-form-item>
-    <n-form-item
+      </h-input>
+    </h-form-item>
+    <h-form-item
       v-for="(_, index) of formData.users"
       :label="`用户 ${index + 1}`"
       :prop="`users[${index}].value`"
@@ -15,24 +15,24 @@
         }"
       validate-trigger="change"
     >
-      <n-row :gutter="0">
-        <n-col :span="18">
-          <n-input v-model="formData.users[index].value" />
-        </n-col>
-        <n-col :span="6" class="text-right">
-          <n-space>
-            <n-button v-show="index === formData.users.length - 1" icon="add" @click="addUser">增加</n-button>
-            <n-button icon="rubbish" type="danger" @click="del(index)">删除</n-button>
-          </n-space>
-        </n-col>
-      </n-row>
-    </n-form-item>
+      <h-row :gutter="0">
+        <h-col :span="18">
+          <h-input v-model="formData.users[index].value" />
+        </h-col>
+        <h-col :span="6" class="text-right">
+          <h-space>
+            <h-button v-show="index === formData.users.length - 1" icon="add" @click="addUser">增加</h-button>
+            <h-button icon="rubbish" type="danger" @click="del(index)">删除</h-button>
+          </h-space>
+        </h-col>
+      </h-row>
+    </h-form-item>
     <div>
-      <n-space>
-        <n-button icon="check" native-type="submit">提交</n-button>
-      </n-space>
+      <h-space>
+        <h-button icon="check" native-type="submit">提交</h-button>
+      </h-space>
     </div>
-  </n-form>
+  </h-form>
 </template>
 
 <script setup lang="ts">

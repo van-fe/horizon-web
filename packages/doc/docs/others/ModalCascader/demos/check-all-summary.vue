@@ -1,14 +1,14 @@
 <template>
-  <n-row>
-    <n-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
+  <h-row>
+    <h-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
       <div class="demo-title">全选后标记为“全部”</div>
-      <n-modal-cascader v-model="values1" :multiple="true" :use-check-all-summary="true" :to-body="false" :collapse-tags="true" :options="baseData" />
-    </n-col>
-    <n-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
+      <h-modal-cascader v-model="values1" :multiple="true" :use-check-all-summary="true" :to-body="false" :collapse-tags="true" :options="baseData" />
+    </h-col>
+    <h-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
       <div class="demo-title">全选后自定义标记为“全部选择”</div>
-      <n-modal-cascader v-model="values2" :multiple="true" :use-check-all-summary="true" check-all-summary-text="全部选择" :to-body="false" :collapse-tags="true" :options="baseData" />
-    </n-col>
-  </n-row>
+      <h-modal-cascader v-model="values2" :multiple="true" :use-check-all-summary="true" check-all-summary-text="全部选择" :to-body="false" :collapse-tags="true" :options="baseData" />
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

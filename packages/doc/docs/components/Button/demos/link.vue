@@ -1,19 +1,19 @@
 <script setup lang="ts"></script>
 
 <template>
-  <n-row>
-    <n-col :span="24">
-      <n-button type="normal" :link="true">Normal Link Button</n-button>
-      <n-button type="primary" :link="true">Primary Link Button</n-button>
-      <n-button type="danger" :link="true">Danger Link Button</n-button>
-      <n-button type="normal" :link="true" href="/">href 跳到首页</n-button>
-      <n-button type="normal" :link="true" to="/">router 跳到首页</n-button>
-    </n-col>
-  </n-row>
+  <h-row>
+    <h-col :span="24">
+      <h-button type="normal" :link="true">Normal Link Button</h-button>
+      <h-button type="primary" :link="true">Primary Link Button</h-button>
+      <h-button type="danger" :link="true">Danger Link Button</h-button>
+      <h-button type="normal" :link="true" href="/">href 跳到首页</h-button>
+      <h-button type="normal" :link="true" to="/">router 跳到首页</h-button>
+    </h-col>
+  </h-row>
 </template>
 
 <style scoped>
-.n-button + .n-button {
-  margin-left: 10px;
+.h-button + .h-button {
+  margih-left: 10px;
 }
 </style>

@@ -1,7 +1,7 @@
-:::warning 为了防止和 `@aurora/horizon-web-table`、`@aurora/horizon-web-table` 的组件名称冲突，所以命名为 `n-table-v3` `n-table-column-v3`, `horizon-web@3.x` 时将会移除 `v3` 字符:::
+:::warning 为了防止和 `@aurora/horizon-web-table`、`@aurora/horizon-web-table` 的组件名称冲突，所以命名为 `h-table-v3` `h-table-column-v3`, `horizon-web@3.x` 时将会移除 `v3` 字符:::
 
 ### 基本用法
-与传统 `vue` 表格组件一致，给 `n-table-v3` 传入 `data` 即表格数据；给 `n-table-column-v3` 传入 `title` 作为标题，`field` 作为表格数据中每行摘取的数据
+与传统 `vue` 表格组件一致，给 `h-table-v3` 传入 `data` 即表格数据；给 `h-table-column-v3` 传入 `title` 作为标题，`field` 作为表格数据中每行摘取的数据
 :::demo ./demos/basic.vue :::
 
 ### 尺寸
@@ -36,7 +36,7 @@
 :::demo ./demos/header-sticky.vue :::
 
 ### 固定列
-为 `n-table-column-v3` 设置 `fixed` 即可
+为 `h-table-column-v3` 设置 `fixed` 即可
 
 可选参数是 `true` `'left'` `'right'`
 
@@ -51,7 +51,7 @@
 :::demo ./demos/max-height.vue :::
 
 ### 多级表头
-在 `n-table-column-v3` 组件中套入 `n-table-column-v3`，即可将子项纳入父级，实现多级表头
+在 `h-table-column-v3` 组件中套入 `h-table-column-v3`，即可将子项纳入父级，实现多级表头
 
 使用多级表头时，自动启用全边框样式，且无法更改
 
@@ -64,7 +64,7 @@
 :::demo ./demos/use-column-manager.vue :::
 
 ### 单选
-为 `n-table-column-v3` 设置 `type = "selection"` 即可开启单选列
+为 `h-table-column-v3` 设置 `type = "selection"` 即可开启单选列
 
 为了方便设置和理解，请将每一列理解为一个独立的表单元素
 
@@ -73,7 +73,7 @@
 :::demo ./demos/single.vue :::
 
 ### 多选
-为 `n-table-column-v3` 设置 `type = "selection"` `multiple = true` 即可开启多选列
+为 `h-table-column-v3` 设置 `type = "selection"` `multiple = true` 即可开启多选列
 
 为了方便设置和理解，请将每一列理解为一个独立的表单元素
 
@@ -82,7 +82,7 @@
 :::demo ./demos/multiple.vue :::
 
 ### 列提示
-如果需要对列提示，则给予 `n-table-column-v3` 设置 `tip` 即可
+如果需要对列提示，则给予 `h-table-column-v3` 设置 `tip` 即可
 :::demo ./demos/tip.vue :::
 
 ### 排序
@@ -107,7 +107,7 @@
 
 <br>
 
-如果希望由接口过滤，则传入 `:use-built-in-filter="false"`，并对 `column` 监听 `filter-change` 事件
+如果希望由接口过滤，则传入 `:use-built-ih-filter="false"`，并对 `column` 监听 `filter-change` 事件
 
 :::demo ./demos/filter.vue :::
 
@@ -184,11 +184,11 @@
 :::demo ./demos/summary.vue :::
 
 ### 合并行、列
-合并列和行可以传入 `span-method`，允许返回 `[number, number]` `{ rowSpan?: number; colSpan?: number }` `void(默认，不合并)`
+合并列和行可以传入 `spah-method`，允许返回 `[number, number]` `{ rowSpan?: number; colSpan?: number }` `void(默认，不合并)`
 
 当 `rowSpan` 或 `colSpan` 为 `0` 时，单元格会被隐藏
 
-:::demo ./demos/span-method.vue :::
+:::demo ./demos/spah-method.vue :::
 
 ### 自定义索引
 在设置列的 `type="index"` 后，如果对于索引有特殊设定，可以给 `index` 传入具体数值，或者传入一个函数用来计算
@@ -200,7 +200,7 @@
 ### 表格布局
 可以配置 `fixed` `auto`，默认 `fixed`
 
-参考 [table-layout](https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout)
+参考 [table-layout](https://developer.mozilla.org/eh-US/docs/Web/CSS/table-layout)
 :::demo ./demos/table-layout.vue :::
 
 ### 类型定义

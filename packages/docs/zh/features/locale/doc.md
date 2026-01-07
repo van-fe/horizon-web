@@ -111,7 +111,7 @@ export default defineComponent({
     const locale = inject(localeInjectKey, defaultLocale);
 
     return () => (
-      { locale?.value.langService.td().horizon-web.colorPicker.clear }
+      { locale?.value.langService.td()['horizon-web'].colorPicker.clear }
     )
   }
 })

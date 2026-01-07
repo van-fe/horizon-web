@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <n-calendar
+    <h-calendar
       v-model="value"
       v-model:mode="mode"
       :class="['week', 'day'].includes(mode) ? 'limit' : ''"

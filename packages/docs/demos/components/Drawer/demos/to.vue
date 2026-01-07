@@ -1,9 +1,9 @@
 <template>
   <div ref="innerEl" class="customize">
-    <n-button @click="openDrawer(innerEl)">Open Drawer on Inner</n-button>
-    <n-button class="ml-2" @click="openDrawer()">Open Drawer on Body</n-button>
+    <h-button @click="openDrawer(innerEl)">Open Drawer on Inner</h-button>
+    <h-button class="ml-2" @click="openDrawer()">Open Drawer on Body</h-button>
   </div>
-  <n-drawer
+  <h-drawer
     v-model:visible="visible"
     v2
     :to="to"
@@ -17,7 +17,7 @@
       You can customize modal body text by the current situation. This modal will be closed
       immediately once you press the OK button.
     </div>
-  </n-drawer>
+  </h-drawer>
 </template>
 
 <script lang="ts" setup>

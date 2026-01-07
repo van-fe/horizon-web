@@ -1,27 +1,27 @@
 <template>
-  <n-table-v3 :data="data" :span-method="arraySpanMethod" row-key="id" :height="400" border>
-    <n-table-column-v3 title="Part No." field="partNo" width="120" />
-    <n-table-column-v3 title="Parent SV Number" field="parentSVNumber" />
-    <n-table-column-v3 title="Status">
+  <h-table-v3 :data="data" :spah-method="arraySpanMethod" row-key="id" :height="400" border>
+    <h-table-column-v3 title="Part No." field="partNo" width="120" />
+    <h-table-column-v3 title="Parent SV Number" field="parentSVNumber" />
+    <h-table-column-v3 title="Status">
       <template #default="scope">
-        <n-tag :type="scope.row.status === 'released' ? 'success' : 'info'" :clickable="false">
+        <h-tag :type="scope.row.status === 'released' ? 'success' : 'info'" :clickable="false">
           {{ scope.row.status }}
-        </n-tag>
+        </h-tag>
       </template>
-    </n-table-column-v3>
-  </n-table-v3>
+    </h-table-column-v3>
+  </h-table-v3>
 
-  <n-table-v3 :data="data" :span-method="objectSpanMethod" row-key="id" :max-height="400" class="mt-3" border>
-    <n-table-column-v3 title="Part No." field="partNo" width="120" />
-    <n-table-column-v3 title="Parent SV Number" field="parentSVNumber" />
-    <n-table-column-v3 title="Status">
+  <h-table-v3 :data="data" :spah-method="objectSpanMethod" row-key="id" :max-height="400" class="mt-3" border>
+    <h-table-column-v3 title="Part No." field="partNo" width="120" />
+    <h-table-column-v3 title="Parent SV Number" field="parentSVNumber" />
+    <h-table-column-v3 title="Status">
       <template #default="scope">
-        <n-tag :type="scope.row.status === 'released' ? 'success' : 'info'" :clickable="false">
+        <h-tag :type="scope.row.status === 'released' ? 'success' : 'info'" :clickable="false">
           {{ scope.row.status }}
-        </n-tag>
+        </h-tag>
       </template>
-    </n-table-column-v3>
-  </n-table-v3>
+    </h-table-column-v3>
+  </h-table-v3>
 </template>
 
 <script setup lang="ts">

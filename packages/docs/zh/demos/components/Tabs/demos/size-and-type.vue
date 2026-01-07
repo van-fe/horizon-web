@@ -22,37 +22,37 @@ const onTabChanged = (tab: NTabValue) => {
 <template>
   <div class="mb-4 flex align-center">
     <span class="mr-4">类型</span>
-    <n-radio-group v-model="cardType">
-      <n-radio label="line">line(Default)</n-radio>
-      <n-radio label="card">card</n-radio>
-      <n-radio label="segment">segment</n-radio>
-      <n-radio label="page">page(不支持尺寸调整)</n-radio>
-    </n-radio-group>
+    <h-radio-group v-model="cardType">
+      <h-radio label="line">line(Default)</h-radio>
+      <h-radio label="card">card</h-radio>
+      <h-radio label="segment">segment</h-radio>
+      <h-radio label="page">page(不支持尺寸调整)</h-radio>
+    </h-radio-group>
   </div>
   <div class="mb-4 flex align-center">
     <span class="mr-4">尺寸</span>
-    <n-radio-group v-model="size" :disabled="cardType === 'page'">
-      <n-radio label="mini">mini</n-radio>
-      <n-radio label="small">small</n-radio>
-      <n-radio label="medium">medium(Default)</n-radio>
-      <n-radio label="large">large</n-radio>
-    </n-radio-group>
+    <h-radio-group v-model="size" :disabled="cardType === 'page'">
+      <h-radio label="mini">mini</h-radio>
+      <h-radio label="small">small</h-radio>
+      <h-radio label="medium">medium(Default)</h-radio>
+      <h-radio label="large">large</h-radio>
+    </h-radio-group>
   </div>
   <div class="mb-8 flex align-center">
     <span class="mr-4">其他</span>
     <div class="flex align-center" style="column-gap: 10px">
-      <n-checkbox v-model="showIcon" label="展示图标" />
-      <n-checkbox
+      <h-checkbox v-model="showIcon" label="展示图标" />
+      <h-checkbox
         v-model="underline"
         :disabled="cardType !== 'line'"
         label="展示分割线(only line)"
       />
-      <n-checkbox
+      <h-checkbox
         v-model="customizeUnderline"
         :disabled="cardType !== 'line'"
         label="自定义分割线(only line)"
       />
-      <n-checkbox
+      <h-checkbox
         v-model="customizeSpace"
         :disabled="cardType !== 'card'"
         label="移除首段间距(only card)"
@@ -64,15 +64,15 @@ const onTabChanged = (tab: NTabValue) => {
     style="height: 80px"
     :class="{ 'customize-underline': customizeUnderline, 'customize-space': customizeSpace }"
   >
-    <n-tabs
+    <h-tabs
       v-model:active-key="activeKey"
       :underline="underline"
       :type="cardType"
       :size="size"
       @change="onTabChanged"
     >
-      <n-tab v-for="(tab, i) in tabs" :key="i" :icon="showIcon ? icons[i] : null" :label="tab" />
-    </n-tabs>
+      <h-tab v-for="(tab, i) in tabs" :key="i" :icon="showIcon ? icons[i] : null" :label="tab" />
+    </h-tabs>
   </div>
 </template>
 

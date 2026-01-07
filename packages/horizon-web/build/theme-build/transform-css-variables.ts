@@ -15,7 +15,7 @@ fastGlob(`${horizonwebSourceRoot}/**/*.scss`).then(res => {
     let fileContent = fs.readFileSync(item, 'utf-8');
 
     fileContent = fileContent.replaceAll(
-      new RegExp(`var\\(--n-([\\w-]+)\\)`, 'gi'),
+      new RegExp(`var\\(--h-([\\w-]+)\\)`, 'gi'),
       `mixins.css-variable('$1')`,
     );
 

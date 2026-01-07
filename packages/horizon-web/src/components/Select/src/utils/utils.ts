@@ -74,7 +74,7 @@ export function isEqualLoose(value1: ModelValueType, value2: ModelValueType): bo
 }
 
 /**
- * <n-option v-for="item in list">...</n-option>
+ * <h-option v-for="item in list">...</h-option>
  *  In this way, it will be compiled into a VNode with root node of type Symbol, So need take out children properties from root node.
  */
 export const getSymbolNodeChildren = (slots: Slots, slotName: string) => {

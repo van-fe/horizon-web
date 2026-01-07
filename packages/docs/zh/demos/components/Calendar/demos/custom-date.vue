@@ -32,7 +32,7 @@ const actionList = [
 </script>
 
 <template>
-  <n-calendar>
+  <h-calendar>
     <template #dateCellAppend="dateFormat">
       <div v-if="today === dateFormat" class="wrap">
         <div v-for="item of actionList.slice(0, 3)" :key="item.time" class="row">
@@ -40,14 +40,14 @@ const actionList = [
           {{ item.time }} {{item.text}}
         </div>
         <template v-if="actionList.length > 3">
-          <n-popover placement="bottom-start" :arrow="false" :distance="0">
+          <h-popover placement="bottom-start" :arrow="false" :distance="0">
             <template #reference>
               <div class="row desc">
                 还有{{ actionList.length - 3 }}个日程
               </div>
             </template>
             <template #popper>
-              <n-pop-content class="pop-content">
+              <h-pop-content class="pop-content">
                 <div class="title">{{ dayjs().format('MM.DD dddd') }}</div>
                 <div class="content">
                   <div v-for="item of actionList.slice(3)" :key="item.time" class="row">
@@ -55,13 +55,13 @@ const actionList = [
                     {{ item.time }} {{item.text}}
                   </div>
                 </div>
-              </n-pop-content>
+              </h-pop-content>
             </template>
-          </n-popover>
+          </h-popover>
         </template>
       </div>
     </template>
-  </n-calendar>
+  </h-calendar>
 </template>
 
 <style>

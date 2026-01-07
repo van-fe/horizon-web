@@ -1,36 +1,36 @@
 <template>
-  <n-row>
-    <n-col>
-      <n-radio-group v-model="size">
-        <n-radio label="small" />
-        <n-radio label="medium" />
-        <n-radio label="large" />
-      </n-radio-group>
-    </n-col>
-  </n-row>
-  <n-row>
-    <n-col>
-      <n-application :size="size">
-        <n-form label-position="left" label-justify-align="right" label-vertical-align="middle">
-          <n-form-item label="avatar">
-            <n-avatar icon="friend" type="work" />
-          </n-form-item>
-          <n-form-item label="button">
-            <n-button>Confirm</n-button>
-          </n-form-item>
-          <n-form-item label="select">
-            <n-select></n-select>
-          </n-form-item>
-          <n-form-item label="checkbox">
-            <n-space :size="size">
-              <n-checkbox v-model="value2" class="mr-5">Confirm</n-checkbox>
-              <n-checkbox-button v-model="value2">Confirm</n-checkbox-button>
-            </n-space>
-          </n-form-item>
-        </n-form>
-      </n-application>
-    </n-col>
-  </n-row>
+  <h-row>
+    <h-col>
+      <h-radio-group v-model="size">
+        <h-radio label="small" />
+        <h-radio label="medium" />
+        <h-radio label="large" />
+      </h-radio-group>
+    </h-col>
+  </h-row>
+  <h-row>
+    <h-col>
+      <h-application :size="size">
+        <h-form label-position="left" label-justify-align="right" label-vertical-align="middle">
+          <h-form-item label="avatar">
+            <h-avatar icon="friend" type="work" />
+          </h-form-item>
+          <h-form-item label="button">
+            <h-button>Confirm</h-button>
+          </h-form-item>
+          <h-form-item label="select">
+            <h-select></h-select>
+          </h-form-item>
+          <h-form-item label="checkbox">
+            <h-space :size="size">
+              <h-checkbox v-model="value2" class="mr-5">Confirm</h-checkbox>
+              <h-checkbox-button v-model="value2">Confirm</h-checkbox-button>
+            </h-space>
+          </h-form-item>
+        </h-form>
+      </h-application>
+    </h-col>
+  </h-row>
 </template>
 
 <script lang="ts">

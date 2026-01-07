@@ -1,13 +1,13 @@
 <template>
-  <n-space direction="vertical" block>
-    <n-space>
+  <h-space direction="vertical" block>
+    <h-space>
       <div>hide event type</div>
-      <n-radio v-model="hideEventType" label="click">click</n-radio>
-      <n-radio v-model="hideEventType" label="mousedown">mousedown</n-radio>
-      <n-radio v-model="hideEventType" label="mouseup">mouseup</n-radio>
-    </n-space>
-    <n-space>
-      <n-popover
+      <h-radio v-model="hideEventType" label="click">click</h-radio>
+      <h-radio v-model="hideEventType" label="mousedown">mousedown</h-radio>
+      <h-radio v-model="hideEventType" label="mouseup">mouseup</h-radio>
+    </h-space>
+    <h-space>
+      <h-popover
         trigger="click"
         :hide-event-type="hideEventType"
         popper-class="arrow_popover"
@@ -15,39 +15,39 @@
         @onHide="onHide"
       >
         <template #reference>
-          <n-button :plain="true">点击打开Popover，通过全局 {{ hideEventType }} 事件关闭</n-button>
+          <h-button :plain="true">点击打开Popover，通过全局 {{ hideEventType }} 事件关闭</h-button>
         </template>
         <template #popper>
-          <n-pop-content>
+          <h-pop-content>
             <div class="popper">
               <div class="header">内容标题</div>
               <div class="content">我是气泡卡片文本描述内容, 我是气泡卡片文字链接...</div>
             </div>
-          </n-pop-content>
+          </h-pop-content>
         </template>
-      </n-popover>
-    </n-space>
-    <n-space>
+      </h-popover>
+    </h-space>
+    <h-space>
       <div class="block-card c1" @click.stop>
-        <n-space block direction="vertical" size="4">
+        <h-space block direction="vertical" size="4">
           <div>阻止 click 事件的冒泡</div>
           <strong v-if="show && hideEventType === 'click'">点击不能关闭</strong>
-        </n-space>
+        </h-space>
       </div>
       <div class="block-card c2" @mousedown.stop>
-        <n-space block direction="vertical" size="4">
+        <h-space block direction="vertical" size="4">
           <div>阻止 mousedown 事件的冒泡</div>
           <strong v-if="show && hideEventType === 'mousedown'">点击不能关闭</strong>
-        </n-space>
+        </h-space>
       </div>
       <div class="block-card c3" @mouseup.stop>
-        <n-space block direction="vertical" size="4">
+        <h-space block direction="vertical" size="4">
           <div>阻止 mouseup 事件的冒泡</div>
           <strong v-if="show && hideEventType === 'mouseup'">点击不能关闭</strong>
-        </n-space>
+        </h-space>
       </div>
-    </n-space>
-  </n-space>
+    </h-space>
+  </h-space>
 </template>
 
 <script setup lang="ts">

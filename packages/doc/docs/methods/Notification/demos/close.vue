@@ -1,5 +1,5 @@
 <template>
-  <n-button type="normal" @click="open">隐藏关闭按钮</n-button>
+  <h-button type="normal" @click="open">隐藏关闭按钮</h-button>
 </template>
 
 <script lang="ts">

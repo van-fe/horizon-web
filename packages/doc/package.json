@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^10.1.0",
-    "@aurora/unplugin-resolver": "workspace:*",
+    "@aurora/horizon-web-unplugin-resolver": "workspace:*",
     "@types/prismjs": "^1.26.4",
     "@types/qs": "^6.9.16",
     "@vitejs/plugin-basic-ssl": "^1.1.0",

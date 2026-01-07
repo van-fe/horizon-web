@@ -23,19 +23,19 @@ function onCommand(type: 'star' | 'call' | 'msn') {
 <template>
   <div class="container">
     <div class="content">
-      <n-avatar size="small" />
+      <h-avatar size="small" />
       <div class="name">
         William Li
       </div>
     </div>
     <div class="controls">
-      <n-controls theme="dark" @command="onCommand">
-        <n-control :icon="isStared ? IconStarFilled : IconStar" text="关注" label="star" :icon-color="isStared ? ['gold'] : undefined" />
-        <n-control :icon="IconPhone" label="call">
+      <h-controls theme="dark" @command="onCommand">
+        <h-control :icon="isStared ? IconStarFilled : IconStar" text="关注" label="star" :icon-color="isStared ? ['gold'] : undefined" />
+        <h-control :icon="IconPhone" label="call">
           <template #text>沟通</template>
-        </n-control>
-        <n-control :icon="IconMessage" text="发送信息" label="msn" />
-      </n-controls>
+        </h-control>
+        <h-control :icon="IconMessage" text="发送信息" label="msn" />
+      </h-controls>
     </div>
   </div>
 </template>

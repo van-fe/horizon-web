@@ -1,4 +1,4 @@
-import { styleRoot } from '../../../../scripts/paths';
+import { styleRoot } from '@root/scripts/paths';
 import * as fs from 'fs';
 import { resolve } from 'path';
 import { groupBy } from 'lodash';
@@ -35,18 +35,18 @@ export default function (colorsToken: Record<string, string>) {
 
   const group = groupBy(
     Object.entries(colorsToken),
-    ([key]) => key.match(/^--n-((\d{1,2}-\d{1,2}-)*color-\d+)-/)![1],
+    ([key]) => key.match(/^--h-((\d{1,2}-\d{1,2}-)*color-\d+)-/)![1],
   );
 
   Object.keys(group).forEach(key => {
     const tokenMapping = Object.fromEntries(group[key]);
-    let name = tokenMapping[`--n-${key}-name`];
+    let name = tokenMapping[`--h-${key}-name`];
 
     if (name.includes('-')) {
       name = `'${name}'`;
     }
 
-    delete tokenMapping[`--n-${key}-name`];
+    delete tokenMapping[`--h-${key}-name`];
 
     content += `  ${name}: [\n`;
     Object.values(tokenMapping).forEach(color => {

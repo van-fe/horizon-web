@@ -21,15 +21,15 @@ const sortList = computed(() => props.level === 0 ? props.info : props.info?.sor
 
 <template>
   <template v-for="item of sortList">
-    <n-sub-menu v-if="item.children?.length" :key="item.path" :index="item.path" :value="item.path">
+    <h-sub-menu v-if="item.children?.length" :key="item.path" :index="item.path" :value="item.path">
       <template #title>{{ item?.name }}</template>
       <AsideMenu :info="item.children" :parent="item.path" :level="level + 1" />
-    </n-sub-menu>
-    <n-menu-item
+    </h-sub-menu>
+    <h-menu-item
       v-else
       :value="parent ? `${parent}/${item.path}` : item.path"
     >
       {{ item?.name }}
-    </n-menu-item>
+    </h-menu-item>
   </template>
 </template>

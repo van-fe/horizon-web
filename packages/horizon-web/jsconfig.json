@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"],
+      "@/*": ["./node_modules/*"],
+      "@root/*": ["../../*"]
+    }
+  },
+  "include": [
+    "src/**/*.scss",
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "es",
+    "lib"
+  ]
+}
+

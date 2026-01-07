@@ -1,31 +1,31 @@
 <template>
-  <n-row>
-    <n-col :span="18">
+  <h-row>
+    <h-col :span="18">
       <div class="demo-title">容器中使用 <code>medium</code></div>
-      <n-scrollbar height="400px">
+      <h-scrollbar height="400px">
         <div v-for="item of 20" :key="item" class="item">
           {{ item }}
         </div>
-      </n-scrollbar>
-    </n-col>
-    <n-col :span="6">
+      </h-scrollbar>
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">弹窗中使用 <code>small</code></div>
-      <n-popover placement="bottom" :to-body="false">
+      <h-popover placement="bottom" :to-body="false">
         <template #popper>
-          <n-pop-content>
-            <n-scrollbar size="small" height="400px">
+          <h-pop-content>
+            <h-scrollbar size="small" height="400px">
               <div v-for="item of 20" :key="item" class="item" style="width: 300px;">
                 {{ item }}
               </div>
-            </n-scrollbar>
-          </n-pop-content>
+            </h-scrollbar>
+          </h-pop-content>
         </template>
         <template #reference>
-          <n-button>Hover Me</n-button>
+          <h-button>Hover Me</h-button>
         </template>
-      </n-popover>
-    </n-col>
-  </n-row>
+      </h-popover>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

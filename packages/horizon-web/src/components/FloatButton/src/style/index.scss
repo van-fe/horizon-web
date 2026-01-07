@@ -1,7 +1,7 @@
 @use '../../../../styles/mixins';
-@import 'shape';
-@import 'type';
-@import 'group';
+@use 'shape';
+@use 'type';
+@use 'group';
 
 @include mixins.b('float-button') {
   position: fixed;

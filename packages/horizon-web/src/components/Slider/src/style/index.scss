@@ -1,6 +1,6 @@
 @use '../../../../styles/mixins';
-@import './type';
-@import './size';
+@use 'type';
+@use 'size';
 
 @include mixins.b('slider') {
   display: flex;

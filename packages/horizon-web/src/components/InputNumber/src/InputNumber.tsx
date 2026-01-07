@@ -27,7 +27,7 @@ import useCursor from './utils/useCursor';
 import { IconAdd, IconArrowDown, IconArrowUp, IconCloseFilled, IconReduce } from '@aurora/icon';
 import { renderIcon } from '~/utils/useIcon';
 import { formatInputForNumber, sanitizeInput } from './utils/inputHelper';
-import useLocaleLang from 'src/utils/useLocaleLang';
+import useLocaleLang from '~/utils/useLocaleLang';
 
 export default defineComponent({
   name: `${useNamespace()}InputNumber`,

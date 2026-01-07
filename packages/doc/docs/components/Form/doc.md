@@ -1,11 +1,11 @@
 ### 基础表单
-在 `n-form-item` 的 `label` 属性上设置表单项的标签，默认情况下，标签展示在上方。
+在 `h-form-item` 的 `label` 属性上设置表单项的标签，默认情况下，标签展示在上方。
 :::demo ./demos/basic.vue :::
 
 ### 大小
-可以通过 `n-form` 控制组件大小
+可以通过 `h-form` 控制组件大小
 
-`size` 可以覆盖通过 `n-application` 设置的 `size`
+`size` 可以覆盖通过 `h-application` 设置的 `size`
 :::demo ./demos/size.vue :::
 
 ### 提示帮助
@@ -19,17 +19,17 @@
 :::demo ./demos/label-position.vue :::
 
 ### 行内表单
-如果表单项数量较少，且都是 `n-input` 这样高度较小的简单组件，可以通过设置 `inline` 为 `true` 启用行内表单。
+如果表单项数量较少，且都是 `h-input` 这样高度较小的简单组件，可以通过设置 `inline` 为 `true` 启用行内表单。
 :::demo ./demos/inline.vue :::
 
 ### 添加验证规则
 你可以给表单添加验证规则，以判断表单项的绑定值是否符合预期。  
-首先给 `n-form` 组件设置 `model` 属性，这是整个表单域中所有绑定字段的集合。  
-然后给需要校验的的 `n-form-item` 添加 `prop` 属性，它应该是 `model` 中的字段名，并给 `rules` 属性传入验证规则。详细用法参见 [async-validator#rules](https://github.com/yiminghe/async-validator#rules)。
+首先给 `h-form` 组件设置 `model` 属性，这是整个表单域中所有绑定字段的集合。  
+然后给需要校验的的 `h-form-item` 添加 `prop` 属性，它应该是 `model` 中的字段名，并给 `rules` 属性传入验证规则。详细用法参见 [async-validator#rules](https://github.com/yiminghe/async-validator#rules)。
 :::demo ./demos/validate.vue :::
 
 ### 验证后清空验证结果
-验证某个表单后，如果想清空验证结果，可以对 `n-form` 使用 `clearValidate` 去清空验证结果，也可以针对 `n-form-item` 使用`clearValidate` 去清空验证结果
+验证某个表单后，如果想清空验证结果，可以对 `h-form` 使用 `clearValidate` 去清空验证结果，也可以针对 `h-form-item` 使用`clearValidate` 去清空验证结果
 
 :::demo ./demos/clear-validate.vue :::
 
@@ -68,7 +68,7 @@
 :::demo ./demos/validate-trigger.vue :::
 
 ### 只做显示组件
-在结合一些表单组件使用时（例如 `formily`），有自己的验证规则，此时就不需要 `n-form` 做验证，所以可以配置 `only-render` 来设定是否只作为渲染组件
+在结合一些表单组件使用时（例如 `formily`），有自己的验证规则，此时就不需要 `h-form` 做验证，所以可以配置 `only-render` 来设定是否只作为渲染组件
 
 当设置 `form.only-render` 为 `true` 且 `form-item.error` 有变化时，会立刻根据 `form-item.error` 是否为空而标注表单元素为错误状态
 
@@ -77,7 +77,7 @@
 :::demo ./demos/only-render.vue :::
 
 ### 使用自定义表单组件
-如果使用了 `horizon-web` 外的表单组件，但也需要用到 `n-form` `n-form-item` 的验证功能，直接使用提供的 `provide` 值来做即可
+如果使用了 `horizon-web` 外的表单组件，但也需要用到 `h-form` `h-form-item` 的验证功能，直接使用提供的 `provide` 值来做即可
 
 只需要 `inject('NFormItemTriggerInjectedKey')`，在表单有 `change` 或 `blur` 事件时调用即可
 
@@ -89,7 +89,7 @@
 
 **因为国际化字符串会传给 `async-validator` 方法中，所以无法做到动态变更**
 
-:::demo ./demos/build-in-required.vue :::
+:::demo ./demos/build-ih-required.vue :::
 
 ### 全局 disabled
 配置 disabled 即可禁用 form 中的表单元素

@@ -1,7 +1,7 @@
 <template>
-  <n-space>
-    <n-button type="normal" @click="open1">自定义宽度</n-button>
-  </n-space>
+  <h-space>
+    <h-button type="normal" @click="open1">自定义宽度</h-button>
+  </h-space>
 </template>
 
 <script lang="ts">

@@ -1,7 +1,7 @@
 <template>
-  <n-slider v-model="valueRef" size="small" />
-  <n-slider v-model="valueRef" size="medium" />
-  <n-slider v-model="valueRef" size="large" />
+  <h-slider v-model="valueRef" size="small" />
+  <h-slider v-model="valueRef" size="medium" />
+  <h-slider v-model="valueRef" size="large" />
 </template>
 
 <script lang="ts">

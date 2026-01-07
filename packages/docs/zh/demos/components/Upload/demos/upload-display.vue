@@ -1,27 +1,27 @@
 <template>
   <div>
     <strong>改变大小</strong>
-    <n-select v-model="size" class="mr-2">
-      <n-option
+    <h-select v-model="size" class="mr-2">
+      <h-option
         v-for="item in ['large', 'medium', 'small']"
         :key="item"
         :value="item"
         :label="item"
-      ></n-option>
-    </n-select>
+      ></h-option>
+    </h-select>
     <strong>改变显示比例，仅对图片墙形式（NUploadImage、NUploadPreviewImgItem）生效</strong>
-    <n-select v-model="proportion" class="mb-4">
-      <n-option
+    <h-select v-model="proportion" class="mb-4">
+      <h-option
         v-for="item in ['square', 'rectangle']"
         :key="item"
         :value="item"
         :label="item"
-      ></n-option>
-    </n-select>
+      ></h-option>
+    </h-select>
     <!--  -->
     <strong>文件列表展示形式</strong>
     <div>此例中还展示了如何使用operators具名插槽来自定义操作按钮</div>
-    <n-upload
+    <h-upload
       v-model="fileList"
       class="mb-4"
       type="list"
@@ -36,10 +36,10 @@
       <template #operators="file">
         <a-icon style="margin-left: 4px" name="download" color="red" @click="onDownload(file)" />
       </template>
-    </n-upload>
+    </h-upload>
     <!--  -->
     <strong>图片墙展示形式</strong>
-    <n-upload
+    <h-upload
       v-model="fileList"
       type="img"
       :size="size"
@@ -53,7 +53,7 @@
       @update:modelValue="onUpdate"
     />
     <!--  -->
-    <n-viewer v-model="visibleRef" :sources="imagesRef" />
+    <h-viewer v-model="visibleRef" :sources="imagesRef" />
   </div>
 </template>
 

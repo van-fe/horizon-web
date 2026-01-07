@@ -1,13 +1,13 @@
 <template>
-  <n-form label-position="left" label-vertical-align="middle">
-    <n-form-item label="show total">
-      <n-radio-group v-model="showTotal">
-        <n-radio :label="true">true</n-radio>
-        <n-radio :label="false">false</n-radio>
-      </n-radio-group>
-    </n-form-item>
-  </n-form>
-  <n-pagination :total="100" :show-range="showTotal" />
+  <h-form label-position="left" label-vertical-align="middle">
+    <h-form-item label="show total">
+      <h-radio-group v-model="showTotal">
+        <h-radio :label="true">true</h-radio>
+        <h-radio :label="false">false</h-radio>
+      </h-radio-group>
+    </h-form-item>
+  </h-form>
+  <h-pagination :total="100" :show-range="showTotal" />
 </template>
 
 <script setup lang="ts">

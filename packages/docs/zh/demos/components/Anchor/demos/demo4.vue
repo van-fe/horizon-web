@@ -1,16 +1,16 @@
 <template>
   <div class="wrapper">
     <div class="anchor-wrap">
-      <n-anchor scroll-container="#specialTwo" :change-hash="false" scroll-offset="start" bounds-offset="center">
-        <n-anchor-link href="#sectionTwo1" title="sectionTwo1" />
-        <n-anchor-link href="#sectionTwo2" title="sectionTwo2">
-          <n-anchor-link href="#sectionTwo3" title="sectionTwo3" />
-          <n-anchor-link href="#sectionTwo4" title="sectionTwo4" />
-          <n-anchor-link href="#sectionTwo5" title="sectionTwo5" />
-          <n-anchor-link href="#sectionTwo6" title="多行文本 information 溢出 多行文本溢出多行文本溢出" />
-        </n-anchor-link>
-        <n-anchor-link href="#sectionTwo7" title="sectionTwo7" />
-      </n-anchor>
+      <h-anchor scroll-container="#specialTwo" :change-hash="false" scroll-offset="start" bounds-offset="center">
+        <h-anchor-link href="#sectionTwo1" title="sectionTwo1" />
+        <h-anchor-link href="#sectionTwo2" title="sectionTwo2">
+          <h-anchor-link href="#sectionTwo3" title="sectionTwo3" />
+          <h-anchor-link href="#sectionTwo4" title="sectionTwo4" />
+          <h-anchor-link href="#sectionTwo5" title="sectionTwo5" />
+          <h-anchor-link href="#sectionTwo6" title="多行文本 information 溢出 多行文本溢出多行文本溢出" />
+        </h-anchor-link>
+        <h-anchor-link href="#sectionTwo7" title="sectionTwo7" />
+      </h-anchor>
     </div>
     <div id="specialTwo" class="article-wrap">
       <section>

@@ -3,20 +3,20 @@ import { IconEdit } from '@aurora/icon';
 </script>
 
 <template>
-  <n-row>
-    <n-col :span="24">
-      <n-button size="small" :auto-fit="true">Small</n-button>
-      <n-button size="medium" :auto-fit="true">Medium</n-button>
-      <n-button size="large" :auto-fit="true">Large</n-button>
-      <n-button :auto-fit="true" :plain="true" :icon="IconEdit" size="small" />
-      <n-button :auto-fit="true" :plain="true" :icon="IconEdit" size="medium" />
-      <n-button :auto-fit="true" :plain="true" :icon="IconEdit" size="large" />
-    </n-col>
-  </n-row>
+  <h-row>
+    <h-col :span="24">
+      <h-button size="small" :auto-fit="true">Small</h-button>
+      <h-button size="medium" :auto-fit="true">Medium</h-button>
+      <h-button size="large" :auto-fit="true">Large</h-button>
+      <h-button :auto-fit="true" :plain="true" :icon="IconEdit" size="small" />
+      <h-button :auto-fit="true" :plain="true" :icon="IconEdit" size="medium" />
+      <h-button :auto-fit="true" :plain="true" :icon="IconEdit" size="large" />
+    </h-col>
+  </h-row>
 </template>
 
 <style scoped>
-.n-button + .n-button {
-  margin-left: 10px;
+.h-button + .h-button {
+  margih-left: 10px;
 }
 </style>

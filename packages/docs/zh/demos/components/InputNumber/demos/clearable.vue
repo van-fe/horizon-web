@@ -5,32 +5,32 @@ const value = ref();
 </script>
 
 <template>
-  <n-row :gutter="12">
-    <n-col :span="8">
+  <h-row :gutter="12">
+    <h-col :span="8">
       <div class="demo-title">large</div>
-      <n-input-number v-model="value" size="large" clearable />
-    </n-col>
-    <n-col :span="8">
+      <h-input-number v-model="value" size="large" clearable />
+    </h-col>
+    <h-col :span="8">
       <div class="demo-title">medium (default)</div>
-      <n-input-number v-model="value" clearable />
-    </n-col>
-    <n-col :span="8">
+      <h-input-number v-model="value" clearable />
+    </h-col>
+    <h-col :span="8">
       <div class="demo-title">small</div>
-      <n-input-number v-model="value" size="small" clearable />
-    </n-col>
-  </n-row>
-  <n-row :gutter="12">
-    <n-col :span="8">
+      <h-input-number v-model="value" size="small" clearable />
+    </h-col>
+  </h-row>
+  <h-row :gutter="12">
+    <h-col :span="8">
       <div class="demo-title">默认</div>
-      <n-input-number v-model="value" clearable />
-    </n-col>
-    <n-col :span="8">
+      <h-input-number v-model="value" clearable />
+    </h-col>
+    <h-col :span="8">
       <div class="demo-title">控制器位于两侧</div>
-      <n-input-number v-model="value" controls-position="between" clearable />
-    </n-col>
-    <n-col :span="8">
+      <h-input-number v-model="value" controls-position="between" clearable />
+    </h-col>
+    <h-col :span="8">
       <div class="demo-title">控制器隐藏</div>
-      <n-input-number v-model="value" :controls="false" clearable />
-    </n-col>
-  </n-row>
+      <h-input-number v-model="value" :controls="false" clearable />
+    </h-col>
+  </h-row>
 </template>

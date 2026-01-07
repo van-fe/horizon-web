@@ -1,35 +1,35 @@
 <template>
-  <div class="options flex align-center justify-start">
-    <n-radio
+  <div class="options flex aligh-center justify-start">
+    <h-radio
       v-model="radio"
       value="pure"
       class="radio"
       @change="selectRadio"
     >
       纯白
-    </n-radio>
-    <n-radio
+    </h-radio>
+    <h-radio
       v-model="radio"
       value="zebra"
       class="radio"
       @change="selectRadio"
     >
       斑马纹
-    </n-radio>
-    <n-radio
+    </h-radio>
+    <h-radio
       v-model="radio"
       value="split"
       class="radio"
       @change="selectRadio"
     >
       分界线
-    </n-radio>
-    <n-button size="medium" type="primary" class="switch" @click="changeTitleSize">
+    </h-radio>
+    <h-button size="medium" type="primary" class="switch" @click="changeTitleSize">
       切换标题size
-    </n-button>
+    </h-button>
   </div>
 
-  <n-list
+  <h-list
     :data="list"
     :max-height="400"
     :zebra="isZebra"
@@ -37,7 +37,7 @@
     size="small"
   >
     <template #item="{ item, index }">
-      <n-list-item
+      <h-list-item
         :key="index"
         :title="item.title"
         :describe="item.describe"
@@ -45,7 +45,7 @@
         :title-size="titleSize"
       >
         <template #sider>
-          <n-image
+          <h-image
             src="https://source.niohome.com//MyNextEv/image/cutting/672C4D53B6559FFFF2A0523B21D36B35.jpg"
             object-fit="cover"
             :width="50"
@@ -55,14 +55,14 @@
         <template #right>
           <section class="list-right">
             <section>
-              <n-button size="medium" :plain="true">撤销</n-button>
-              <n-button size="medium" type="primary">提交</n-button>
+              <h-button size="medium" :plain="true">撤销</h-button>
+              <h-button size="medium" type="primary">提交</h-button>
             </section>
           </section>
         </template>
-      </n-list-item>
+      </h-list-item>
     </template>
-  </n-list>
+  </h-list>
 </template>
 
 <script lang="ts" setup>
@@ -106,7 +106,7 @@ const selectRadio = (val: 'pure' | 'zebra' | 'split') => {
 .list-right {
   height: 100%;
   display: flex;
-  align-items: center;
+  aligh-items: center;
 }
 .options {
   gap: 16px;

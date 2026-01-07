@@ -1,8 +1,8 @@
 <template>
-  <n-row :gutter="10">
-    <n-col :span="6">
+  <h-row :gutter="10">
+    <h-col :span="6">
       <div class="demo-title">单选</div>
-      <n-select
+      <h-select
         v-model="value1"
         show-search
         clearable
@@ -13,41 +13,41 @@
         @focus="onFocus"
         @blur="onBlur"
       >
-        <n-option
+        <h-option
           v-for="item in options"
           :key="item.value"
           :value="item.value"
           :label="item.text"
         />
-      </n-select>
-    </n-col>
+      </h-select>
+    </h-col>
 
-    <n-col :span="6">
+    <h-col :span="6">
       <div class="demo-title">单选-无选项也显示面板</div>
-      <n-select
+      <h-select
         v-model="value2"
         show-search
         clearable
         :to-body="false"
         :loading="isLoading"
         loading-text="加载中"
-        :hide-panel-when-show-search-and-empty-list="false"
+        :hide-panel-wheh-show-search-and-empty-list="false"
         @search="searchHandle"
         @focus="onFocus"
         @blur="onBlur"
       >
-        <n-option
+        <h-option
           v-for="item in options"
           :key="item.value"
           :value="item.value"
           :label="item.text"
         />
-      </n-select>
-    </n-col>
+      </h-select>
+    </h-col>
 
-    <n-col :span="6">
+    <h-col :span="6">
       <div class="demo-title">多选</div>
-      <n-select
+      <h-select
         v-model="values1"
         :to-body="false"
         multiple
@@ -61,18 +61,18 @@
         @focus="onFocus"
         @blur="onBlur"
       >
-        <n-option
+        <h-option
           v-for="item in options"
           :key="item.value"
           :value="item.value"
           :label="item.text"
         />
-      </n-select>
-    </n-col>
+      </h-select>
+    </h-col>
 
-    <n-col :span="6">
+    <h-col :span="6">
       <div class="demo-title">多选-无选项也显示面板</div>
-      <n-select
+      <h-select
         v-model="values2"
         :to-body="false"
         multiple
@@ -81,21 +81,21 @@
         collapse-tags-fill-up
         collapse-tags-tooltip
         collapse-tags
-        :hide-panel-when-show-search-and-empty-list="false"
+        :hide-panel-wheh-show-search-and-empty-list="false"
         :loading="isLoading"
         @search="searchHandle"
         @focus="onFocus"
         @blur="onBlur"
       >
-        <n-option
+        <h-option
           v-for="item in options"
           :key="item.value"
           :value="item.value"
           :label="item.text"
         />
-      </n-select>
-    </n-col>
-  </n-row>
+      </h-select>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

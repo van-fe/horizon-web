@@ -1,11 +1,11 @@
 <template>
-  <n-table-v3 :data="data" height="300px" :loading="isLoading" @sort-change="onSortChange">
-    <n-table-column-v3 title="ID" field="id" width="80" sortable :sort-method="numberSort" />
-    <n-table-column-v3 title="Name" field="name" sortable />
-    <n-table-column-v3 title="Gender" field="gender" sortable />
-    <n-table-column-v3 title="Birthday" field="birthday" sortable sort-separate :sort-method="dateSort" />
-    <n-table-column-v3 title="Address" field="address" sortable :use-built-in-sort="false" @sort-change="onColumnSortChange" />
-  </n-table-v3>
+  <h-table-v3 :data="data" height="300px" :loading="isLoading" @sort-change="onSortChange">
+    <h-table-column-v3 title="ID" field="id" width="80" sortable :sort-method="numberSort" />
+    <h-table-column-v3 title="Name" field="name" sortable />
+    <h-table-column-v3 title="Gender" field="gender" sortable />
+    <h-table-column-v3 title="Birthday" field="birthday" sortable sort-separate :sort-method="dateSort" />
+    <h-table-column-v3 title="Address" field="address" sortable :use-built-ih-sort="false" @sort-change="onColumnSortChange" />
+  </h-table-v3>
 </template>
 
 <script setup lang="ts">

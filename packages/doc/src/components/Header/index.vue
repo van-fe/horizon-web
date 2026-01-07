@@ -23,28 +23,28 @@ watch(dark, val => {
 <template>
   <div class='header'>
     <div class='logo-wrapper'>
-      <img src="https://cdn-fx.nio.com/fx/horizon-web/ObrJWptCzEzZto4D0eMjS/logo.png" height="40" alt="horizon-web logo" />
+      <img src="/lego-icon.svg" height="40" alt="horizon-web logo" />
     </div>
     <div class='header-body'>
-      <n-space size="small">
-        <n-space-item style="display: flex; align-items: center; grid-column-gap: 4px;">
-          <n-switch v-model="showTimeZone" /> 显示时区
-        </n-space-item>
-        <n-space-item style="display: flex; align-items: center; grid-column-gap: 4px;">
-          <n-switch v-model="padMode" /> Pad 模式
-        </n-space-item>
-        <n-space-item style="display: flex; align-items: center; grid-column-gap: 4px;">
-          <n-switch v-model="dark" /> 暗黑模式
-        </n-space-item>
+      <h-space size="small">
+        <h-space-item style="display: flex; align-items: center; grid-column-gap: 4px;">
+          <h-switch v-model="showTimeZone" /> 显示时区
+        </h-space-item>
+        <h-space-item style="display: flex; align-items: center; grid-column-gap: 4px;">
+          <h-switch v-model="padMode" /> Pad 模式
+        </h-space-item>
+        <h-space-item style="display: flex; align-items: center; grid-column-gap: 4px;">
+          <h-switch v-model="dark" /> 暗黑模式
+        </h-space-item>
         <size />
         <locale />
-        <n-link href="https://fx.nioint.com/pages/sfc/" target="_blank">
+        <h-link href="https://fx.nioint.com/pages/sfc/" target="_blank">
           Playground
-        </n-link>
-        <n-link href="https://nio.feishu.cn/docs/doccnmqUM4iuP2kN5AGxAMM0Rkc#" target="_blank">
+        </h-link>
+        <h-link href="https://nio.feishu.cn/docs/doccnmqUM4iuP2kN5AGxAMM0Rkc#" target="_blank">
           Change Log
-        </n-link>
-      </n-space>
+        </h-link>
+      </h-space>
     </div>
   </div>
 </template>

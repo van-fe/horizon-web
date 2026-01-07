@@ -1,13 +1,13 @@
 <template>
-  <n-form :inline="true" label-position="top">
-    <n-form-item label="勾选父级是否不展开子集">
-      <n-switch v-model="expandStrictly" status />
-    </n-form-item>
-  </n-form>
-  <n-row :gutter="10">
-    <n-col :span="6">
+  <h-form :inline="true" label-position="top">
+    <h-form-item label="勾选父级是否不展开子集">
+      <h-switch v-model="expandStrictly" status />
+    </h-form-item>
+  </h-form>
+  <h-row :gutter="10">
+    <h-col :span="6">
       <div class="demo-title">单选</div>
-      <n-modal-cascader
+      <h-modal-cascader
         v-model="currentVal1"
         :check-strictly="true"
         :expand-strictly="expandStrictly"
@@ -18,10 +18,10 @@
         @input="changeHandle"
         @change="changeHandle"
       />
-    </n-col>
-    <n-col :span="6">
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">多选</div>
-      <n-modal-cascader
+      <h-modal-cascader
         v-model="currentVal2"
         :check-strictly="true"
         :expand-strictly="expandStrictly"
@@ -30,8 +30,8 @@
         :multiple="true"
         :to-body="false"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

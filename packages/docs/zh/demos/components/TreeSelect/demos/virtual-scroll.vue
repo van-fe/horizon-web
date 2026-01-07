@@ -1,8 +1,8 @@
 <template>
-  <n-row>
-    <n-col :span="6">
+  <h-row>
+    <h-col :span="6">
       <div class="demo-title">单选</div>
-      <n-tree-select
+      <h-tree-select
         v-if="baseTreeData.length"
         :tree-data="baseTreeData"
         :use-virtual-scroll="true"
@@ -10,10 +10,10 @@
         :is-default-expand-all="true"
         :to-body="false"
       />
-    </n-col>
-    <n-col :span="6">
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">多选</div>
-      <n-tree-select
+      <h-tree-select
         v-if="baseTreeData.length"
         :tree-data="baseTreeData"
         :use-virtual-scroll="true"
@@ -22,8 +22,8 @@
         :multiple="true"
         :to-body="false"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

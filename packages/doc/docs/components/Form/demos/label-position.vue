@@ -1,40 +1,40 @@
 <template>
-  <div class="flex align-center mb-6">
+  <div class="flex aligh-center mb-6">
     <div class="mr-4">标签位置</div>
-    <n-radio-group v-model="labelPosition" size="small">
-      <n-radio-button label="top" />
-      <n-radio-button label="left" />
-    </n-radio-group>
+    <h-radio-group v-model="labelPosition" size="small">
+      <h-radio-button label="top" />
+      <h-radio-button label="left" />
+    </h-radio-group>
     <div class="ml-6 mr-4">水平对齐</div>
-    <n-radio-group v-model="labelJustifyAlign" size="small">
-      <n-radio-button label="left" />
-      <n-radio-button label="right" />
-    </n-radio-group>
+    <h-radio-group v-model="labelJustifyAlign" size="small">
+      <h-radio-button label="left" />
+      <h-radio-button label="right" />
+    </h-radio-group>
     <div class="ml-6 mr-4">垂直对齐</div>
-    <n-radio-group v-model="labelVerticalAlign" size="small">
-      <n-radio-button label="top" />
-      <n-radio-button label="middle" />
-    </n-radio-group>
+    <h-radio-group v-model="labelVerticalAlign" size="small">
+      <h-radio-button label="top" />
+      <h-radio-button label="middle" />
+    </h-radio-group>
   </div>
-  <n-form
+  <h-form
     :label-position="labelPosition"
     :label-justify-align="labelJustifyAlign"
     :label-vertical-align="labelVerticalAlign"
   >
-    <n-form-item label="User name">
-      <n-input v-model="formData.username" />
-    </n-form-item>
-    <n-form-item label="Email">
-      <n-input v-model="formData.email" />
-    </n-form-item>
-    <n-form-item label="Notes">
-      <n-input v-model="formData.notes" type="textarea" />
-    </n-form-item>
-    <n-form-item>
+    <h-form-item label="User name">
+      <h-input v-model="formData.username" />
+    </h-form-item>
+    <h-form-item label="Email">
+      <h-input v-model="formData.email" />
+    </h-form-item>
+    <h-form-item label="Notes">
+      <h-input v-model="formData.notes" type="textarea" />
+    </h-form-item>
+    <h-form-item>
       <template #label></template>
-      <n-button @click="submit">Submit</n-button>
-    </n-form-item>
-  </n-form>
+      <h-button @click="submit">Submit</h-button>
+    </h-form-item>
+  </h-form>
 </template>
 
 <script lang="ts">

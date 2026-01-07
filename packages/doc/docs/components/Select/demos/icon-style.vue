@@ -1,23 +1,23 @@
 <template>
-  <n-row :gutter="10">
-    <n-col :span="6">
+  <h-row :gutter="10">
+    <h-col :span="6">
       <div class="demo-title">自定义 select icon</div>
-      <n-select v-model="value1" :dropdown-icon="IconTriangleDownFilled" :to-body="false">
-        <n-option label="中国" :value="1" />
-        <n-option :value="2" label="美国" />
-        <n-option :value="3" label="日本" />
-      </n-select>
-    </n-col>
+      <h-select v-model="value1" :dropdowh-icon="IconTriangleDownFilled" :to-body="false">
+        <h-option label="中国" :value="1" />
+        <h-option :value="2" label="美国" />
+        <h-option :value="3" label="日本" />
+      </h-select>
+    </h-col>
 
-    <n-col :span="6">
+    <h-col :span="6">
       <div class="demo-title">select icon 为空</div>
-      <n-select v-model="value2" :custom-select-icon="false" :to-body="false">
-        <n-option label="中国" :value="1" />
-        <n-option :value="2" label="美国" />
-        <n-option :value="3" label="日本" />
-      </n-select>
-    </n-col>
-  </n-row>
+      <h-select v-model="value2" :custom-select-icon="false" :to-body="false">
+        <h-option label="中国" :value="1" />
+        <h-option :value="2" label="美国" />
+        <h-option :value="3" label="日本" />
+      </h-select>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="tsx">

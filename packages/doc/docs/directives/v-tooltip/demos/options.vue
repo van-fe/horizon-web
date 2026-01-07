@@ -1,6 +1,6 @@
 <template>
   <div class="block">
-    <n-button v-tooltip="tooltipMsgOptions" type="normal" plain>设置Tooltip指令</n-button>
+    <h-button v-tooltip="tooltipMsgOptions" type="normal" plain>设置Tooltip指令</h-button>
   </div>
 </template>
 

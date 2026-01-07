@@ -1,7 +1,7 @@
 <template>
   <section class="main">
-    <n-switch v-model="isAnimating" label="是否动画" status class="skeleton-switch" />
-    <n-skeleton :loading="isLoading" :animated="isAnimating"></n-skeleton>
+    <h-switch v-model="isAnimating" label="是否动画" status class="skeleton-switch" />
+    <h-skeleton :loading="isLoading" :animated="isAnimating"></h-skeleton>
   </section>
 </template>
 

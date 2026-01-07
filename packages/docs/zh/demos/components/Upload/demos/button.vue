@@ -1,24 +1,24 @@
 <template>
   <div class="mb-4">
-    <n-upload-button icon="rubbish" text="自定义图标" @change="onChange"></n-upload-button>
+    <h-upload-button icon="rubbish" text="自定义图标" @change="onChange"></h-upload-button>
     <div>自定义渲染按钮内的部分</div>
-    <n-upload-button @change="onChange">
+    <h-upload-button @change="onChange">
       <template #default="props">
-        <n-button size="medium" type="danger" plain @click="props.onClick">上传</n-button>
+        <h-button size="medium" type="danger" plain @click="props.onClick">上传</h-button>
       </template>
-    </n-upload-button>
+    </h-upload-button>
   </div>
   <div class="custom-render-all mb-4" @click="getFile">
     通过getUploadFile函数获取文件，完全自定义渲染，点击试一下
   </div>
   <!--  -->
   <strong>用n-upload-button和UploadHelper实现一个上传组件</strong>
-  <n-upload-button
+  <h-upload-button
     multiple
     :limit="5"
     :upload-file-list="uploadFileList"
     @change="onChangeToUpload"
-  ></n-upload-button>
+  ></h-upload-button>
 </template>
 
 <script>

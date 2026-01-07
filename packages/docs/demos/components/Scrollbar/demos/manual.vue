@@ -1,12 +1,12 @@
 <template>
   <div>
-    <n-scrollbar ref="scrollbar" height="400px" @scroll="onScroll">
+    <h-scrollbar ref="scrollbar" height="400px" @scroll="onScroll">
       <div v-for="item of 20" :key="item" class="item">
         {{ item }}
       </div>
-    </n-scrollbar>
+    </h-scrollbar>
     <div class="slider mt-2">
-      <n-slider v-model="value" :min="0" :max="scrollHeight" :tooltip-enable="false" />
+      <h-slider v-model="value" :min="0" :max="scrollHeight" :tooltip-enable="false" />
     </div>
   </div>
 </template>

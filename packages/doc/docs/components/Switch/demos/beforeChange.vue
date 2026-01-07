@@ -17,7 +17,7 @@ const onBeforeChange = (newValue: boolean) => {
 </script>
 
 <template>
-  <n-switch v-model="modelValue" :before-change="onBeforeChange" />
+  <h-switch v-model="modelValue" :before-change="onBeforeChange" />
 </template>
 
 <style scoped>

@@ -1,8 +1,8 @@
 <template>
-  <n-space>
-    <n-button type="normal" @click="open">操作按钮</n-button>
-    <n-button type="normal" @click="open1">防抖按钮</n-button>
-  </n-space>
+  <h-space>
+    <h-button type="normal" @click="open">操作按钮</h-button>
+    <h-button type="normal" @click="open1">防抖按钮</h-button>
+  </h-space>
 </template>
 
 <script lang="ts">

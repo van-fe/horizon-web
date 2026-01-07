@@ -1,10 +1,10 @@
 <template>
-  <n-row :gutter="10">
-    <n-col :span="4">
+  <h-row :gutter="10">
+    <h-col :span="4">
       <div class="demo-title">
         单选
       </div>
-      <n-modal-select
+      <h-modal-select
         v-model="value1"
         clearable
         placeholder="请选择"
@@ -12,19 +12,19 @@
         :to-body="false"
         @change="changeHandle"
       >
-        <n-option
+        <h-option
           v-for="item in selectOptions"
           :key="item.value"
           :label="item.label"
           :value="item.value"
         />
-      </n-modal-select>
-    </n-col>
-    <n-col :span="4">
+      </h-modal-select>
+    </h-col>
+    <h-col :span="4">
       <div class="demo-title">
         多选
       </div>
-      <n-modal-select
+      <h-modal-select
         v-model="values1"
         multiple
         clearable
@@ -35,16 +35,16 @@
         collapse-tags-fill-up
         @change="changeHandle"
       >
-        <n-option
+        <h-option
           v-for="item in selectOptions"
           :key="item.value"
           :label="item.label"
           :value="item.value"
           :max-lines="2"
         />
-      </n-modal-select>
-    </n-col>
-  </n-row>
+      </h-modal-select>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

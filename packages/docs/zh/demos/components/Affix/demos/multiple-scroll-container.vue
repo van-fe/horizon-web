@@ -1,9 +1,9 @@
 <template>
   <div id="scroll-2" class="target-wrapper">
     <div class="target-container">
-      <n-affix ref="affixDomRef" position="top" target="#scroll-2" :offset="20">
-        <n-button>Affix in container and won't placed out of container</n-button>
-      </n-affix>
+      <h-affix ref="affixDomRef" position="top" target="#scroll-2" :offset="20">
+        <h-button>Affix in container and won't placed out of container</h-button>
+      </h-affix>
     </div>
   </div>
 </template>
@@ -18,11 +18,11 @@ function onScroll() {
 }
 
 onMounted(() => {
-  document.body.querySelector('.n-main')?.addEventListener('scroll', onScroll);
+  document.body.querySelector('.h-main')?.addEventListener('scroll', onScroll);
 });
 
 onBeforeUnmount(() => {
-  document.body.querySelector('.n-main')?.removeEventListener('scroll', onScroll);
+  document.body.querySelector('.h-main')?.removeEventListener('scroll', onScroll);
 });
 </script>
 

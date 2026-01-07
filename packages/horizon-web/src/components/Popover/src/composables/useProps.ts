@@ -136,7 +136,7 @@ export const usePopoverProps = declarePropType({
    */
   referenceOverflowRoot: {
     type: Object as PropType<HTMLElement>,
-    default: document.body,
+    default: () => document.body,
     required: false,
   },
   /**

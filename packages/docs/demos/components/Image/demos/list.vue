@@ -2,16 +2,16 @@
   <div>
     <div class="flex align-center mb-5">
       <span>间距：</span>
-      <n-select v-model="margin">
-        <n-option v-for="item in margins" :key="item" :label="item" :value="item"></n-option>
-      </n-select>
+      <h-select v-model="margin">
+        <h-option v-for="item in margins" :key="item" :label="item" :value="item"></h-option>
+      </h-select>
       <span class="ml-4">最大数量：</span>
-      <n-select v-model="limit">
-        <n-option v-for="item in limits" :key="item" :label="item" :value="item"></n-option>
-      </n-select>
+      <h-select v-model="limit">
+        <h-option v-for="item in limits" :key="item" :label="item" :value="item"></h-option>
+      </h-select>
     </div>
-    <n-image-list :margin="margin" :limit="limit">
-      <n-image
+    <h-image-list :margin="margin" :limit="limit">
+      <h-image
         v-for="img in imgs"
         :key="img.src"
         :src="img.src"
@@ -20,7 +20,7 @@
         rounded="8px"
         :show-viewer="true"
       />
-    </n-image-list>
+    </h-image-list>
   </div>
 </template>
 

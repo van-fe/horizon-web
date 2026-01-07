@@ -31,7 +31,7 @@ describe('ListItem.tsx', () => {
         </HList>
       ));
 
-      const listItemElm = wrapper.find('.n-list-item__main--title');
+      const listItemElm = wrapper.find('.h-list-item__main--title');
 
       expect(listItemElm.classes().join(',')).not.contain('medium');
 
@@ -59,7 +59,7 @@ describe('ListItem.tsx', () => {
         </HList>
       ));
 
-      const listItemElm = wrapper.find('.n-list-item__main--title-wrapper');
+      const listItemElm = wrapper.find('.h-list-item__main--title-wrapper');
 
       expect(listItemElm.classes('is-bold')).toBeFalsy();
 
@@ -87,7 +87,7 @@ describe('ListItem.tsx', () => {
         </HList>
       ));
 
-      expect(wrapper.find('.n-list-item__main--default').text()).eq('DEFAULT');
+      expect(wrapper.find('.h-list-item__main--default').text()).eq('DEFAULT');
     });
 
     test('title', () => {
@@ -105,7 +105,7 @@ describe('ListItem.tsx', () => {
         </HList>
       ));
 
-      expect(wrapper.find('.n-list-item__main--content').text()).eq('TITLE');
+      expect(wrapper.find('.h-list-item__main--content').text()).eq('TITLE');
     });
 
     test('sider', () => {
@@ -123,7 +123,7 @@ describe('ListItem.tsx', () => {
         </HList>
       ));
 
-      expect(wrapper.find('.n-list-item__main--sider').text()).eq('SIDER');
+      expect(wrapper.find('.h-list-item__main--sider').text()).eq('SIDER');
     });
 
     test('describe', () => {
@@ -141,7 +141,7 @@ describe('ListItem.tsx', () => {
         </HList>
       ));
 
-      expect(wrapper.find('.n-list-item__main--content').text()).eq('DESCRIBE');
+      expect(wrapper.find('.h-list-item__main--content').text()).eq('DESCRIBE');
     });
 
     test('right', () => {
@@ -159,7 +159,7 @@ describe('ListItem.tsx', () => {
         </HList>
       ));
 
-      expect(wrapper.find('.n-list-item__right').text()).eq('RIGHT');
+      expect(wrapper.find('.h-list-item__right').text()).eq('RIGHT');
     });
   });
 });

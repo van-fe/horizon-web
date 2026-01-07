@@ -1,6 +1,6 @@
 <template>
   <div class="block">
-    <n-button v-tooltip="tooltipMsgOptions">options message Tooltip</n-button>
+    <h-button v-tooltip="tooltipMsgOptions">options message Tooltip</h-button>
   </div>
 </template>
 

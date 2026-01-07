@@ -1,12 +1,12 @@
 @use '../../../../styles/mixins';
-@import './utils';
-@import './trigger';
-@import 'color-type';
-@import './panel';
-@import './swatches';
-@import './edit-form';
-@import './color-board';
-@import './preview';
+@use 'utils';
+@use 'trigger';
+@use 'color-type';
+@use 'panel';
+@use 'swatches';
+@use 'edit-form';
+@use 'color-board';
+@use 'preview';
 
 @include mixins.b('color-picker') {
   @include mixins.m('square') {

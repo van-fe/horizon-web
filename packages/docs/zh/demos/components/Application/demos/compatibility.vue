@@ -1,34 +1,34 @@
 <template>
-  <n-row>
-    <n-col>
-      <n-application compatibility="button.size,radio.size,checkbox.size">
-        <n-row>
-          <n-col :span="24">
-            <n-button type="normal" size="mini" :auto-fit="true">Mini</n-button>
-            <n-button type="normal" size="small" :auto-fit="true">Small</n-button>
-            <n-button type="normal" size="medium" :auto-fit="true">Medium</n-button>
-            <n-button type="normal" size="large" :auto-fit="true">Large</n-button>
-          </n-col>
-          <n-col :span="24">
-            <n-checkbox v-model="checkboxValue1" class="checkbox" border size="medium">
+  <h-row>
+    <h-col>
+      <h-application compatibility="button.size,radio.size,checkbox.size">
+        <h-row>
+          <h-col :span="24">
+            <h-button type="normal" size="mini" :auto-fit="true">Mini</h-button>
+            <h-button type="normal" size="small" :auto-fit="true">Small</h-button>
+            <h-button type="normal" size="medium" :auto-fit="true">Medium</h-button>
+            <h-button type="normal" size="large" :auto-fit="true">Large</h-button>
+          </h-col>
+          <h-col :span="24">
+            <h-checkbox v-model="checkboxValue1" class="checkbox" border size="medium">
               checked
-            </n-checkbox>
-            <n-checkbox v-model="checkboxValue2" class="checkbox" border size="medium">
+            </h-checkbox>
+            <h-checkbox v-model="checkboxValue2" class="checkbox" border size="medium">
               unChecked
-            </n-checkbox>
-          </n-col>
-          <n-col :span="24">
-            <n-radio v-model="radioValue" :label="1" class="radio" border size="medium">
+            </h-checkbox>
+          </h-col>
+          <h-col :span="24">
+            <h-radio v-model="radioValue" :label="1" class="radio" border size="medium">
               option 1
-            </n-radio>
-            <n-radio v-model="radioValue" :label="2" class="radio" border size="medium">
+            </h-radio>
+            <h-radio v-model="radioValue" :label="2" class="radio" border size="medium">
               option 2
-            </n-radio>
-          </n-col>
-        </n-row>
-      </n-application>
-    </n-col>
-  </n-row>
+            </h-radio>
+          </h-col>
+        </h-row>
+      </h-application>
+    </h-col>
+  </h-row>
 </template>
 
 <script lang="ts">

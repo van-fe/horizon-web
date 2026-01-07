@@ -1,8 +1,8 @@
 <template>
-  <n-row>
-    <n-col :span="6">
+  <h-row>
+    <h-col :span="6">
       <div class="demo-title">单选</div>
-      <n-cascader
+      <h-cascader
         v-model="currentVal1"
         :options="options"
         :filterable="true"
@@ -11,10 +11,10 @@
         :filter-result-sort="sortFn"
         :to-body="false"
       />
-    </n-col>
-    <n-col :span="6">
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">多选</div>
-      <n-cascader
+      <h-cascader
         v-model="currentVal2"
         :options="options"
         :filterable="true"
@@ -24,8 +24,8 @@
         multiple
         :to-body="false"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

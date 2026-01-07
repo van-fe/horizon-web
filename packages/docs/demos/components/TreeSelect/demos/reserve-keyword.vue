@@ -1,39 +1,39 @@
 <template>
-  <n-row :gutter="10">
-    <n-col :span="6">
+  <h-row :gutter="10">
+    <h-col :span="6">
       <div class="demo-title">
         保留关键字（默认）
       </div>
-      <n-tree-select v-model="values1" :tree-data="baseTreeData" :filterable="true" :multiple="true" :to-body="false" />
-    </n-col>
-    <n-col :span="6">
+      <h-tree-select v-model="values1" :tree-data="baseTreeData" :filterable="true" :multiple="true" :to-body="false" />
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">
         不保留关键字
       </div>
-      <n-tree-select v-model="values2" :tree-data="baseTreeData" :filterable="true" :multiple="true" :reserve-keyword="false" :to-body="false" />
-    </n-col>
-    <n-col :span="6">
+      <h-tree-select v-model="values2" :tree-data="baseTreeData" :filterable="true" :multiple="true" :reserve-keyword="false" :to-body="false" />
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">
         仅在反选时保留，正选不保留
-        <n-tooltip>
+        <h-tooltip>
           <template #content>
             考虑了过滤时反选的操作便捷性
           </template>
           <a-icon name="help" />
-        </n-tooltip>
+        </h-tooltip>
       </div>
-      <n-tree-select v-model="values3" :tree-data="baseTreeData" :filterable="true" :multiple="true" reserve-keyword="reserve-deselect" :to-body="false" />
-    </n-col>
-    <n-col :span="6">
+      <h-tree-select v-model="values3" :tree-data="baseTreeData" :filterable="true" :multiple="true" reserve-keyword="reserve-deselect" :to-body="false" />
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">
         不保留关键字，但过滤内容特殊处理
-        <n-tooltip content="用户手动清空输入文字或失焦输入框后，才会改变过滤内容">
+        <h-tooltip content="用户手动清空输入文字或失焦输入框后，才会改变过滤内容">
           <a-icon name="help" />
-        </n-tooltip>
+        </h-tooltip>
       </div>
-      <n-tree-select v-model="values4" :tree-data="baseTreeData" :filterable="true" :multiple="true" reserve-keyword="reserve-special" :to-body="false" />
-    </n-col>
-  </n-row>
+      <h-tree-select v-model="values4" :tree-data="baseTreeData" :filterable="true" :multiple="true" reserve-keyword="reserve-special" :to-body="false" />
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

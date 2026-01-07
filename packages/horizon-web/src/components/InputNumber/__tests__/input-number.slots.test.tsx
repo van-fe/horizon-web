@@ -10,8 +10,8 @@ describe('InputNumber.tsx', () => {
       </HInputNumber>
     ));
 
-    expect(wrapper.find('.n-input-number__prefix').text()).eq('PREFIX');
-    expect(wrapper.find('.n-input-number__suffix').text()).eq('SUFFIX');
+    expect(wrapper.find('.h-input-number__prefix').text()).eq('PREFIX');
+    expect(wrapper.find('.h-input-number__suffix').text()).eq('SUFFIX');
   });
 
   test('prepend & append', () => {
@@ -21,7 +21,7 @@ describe('InputNumber.tsx', () => {
       </HInputNumber>
     ));
 
-    expect(wrapper.find('.n-input-number__group--prepend').text()).eq('PREPEHD');
-    expect(wrapper.find('.n-input-number__group--append').text()).eq('APPEHD');
+    expect(wrapper.find('.h-input-number__group--prepend').text()).eq('PREPEHD');
+    expect(wrapper.find('.h-input-number__group--append').text()).eq('APPEHD');
   });
 });

@@ -5,8 +5,8 @@ const visible = ref(false);
 </script>
 
 <template>
-  <n-button @click="visible = !visible">Click</n-button>
-  <n-dialog v-model:visible="visible" size="small">
+  <h-button @click="visible = !visible">Click</h-button>
+  <h-dialog v-model:visible="visible" size="small">
     <div>Hello World</div>
-  </n-dialog>
+  </h-dialog>
 </template>

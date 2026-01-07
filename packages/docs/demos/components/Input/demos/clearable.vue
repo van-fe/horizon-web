@@ -1,9 +1,9 @@
 <template>
-  <n-form>
-    <n-form-item label="Label">
-      <n-input v-model="val" clearable />
-    </n-form-item>
-  </n-form>
+  <h-form>
+    <h-form-item label="Label">
+      <h-input v-model="val" clearable />
+    </h-form-item>
+  </h-form>
 </template>
 
 <script lang="ts">

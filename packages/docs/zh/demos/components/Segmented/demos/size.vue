@@ -1,14 +1,14 @@
 <template>
-  <n-space direction="vertical" block>
-    <n-segmented
+  <h-space direction="vertical" block>
+    <h-segmented
       v-for="s in ['mini', 'small', 'medium', 'large']"
       :key="s"
       :size="s"
       default-active-key="Daily"
     >
-      <n-segmented-item v-for="v in options" :key="v" :label="v" />
-    </n-segmented>
-  </n-space>
+      <h-segmented-item v-for="v in options" :key="v" :label="v" />
+    </h-segmented>
+  </h-space>
 </template>
 
 <script setup lang="ts">

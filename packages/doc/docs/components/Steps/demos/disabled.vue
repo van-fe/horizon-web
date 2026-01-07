@@ -1,24 +1,24 @@
 <template>
-  <n-form label-position="left">
-    <n-form-item label="size">
-      <n-radio-group v-model="size">
-        <n-radio label="small"></n-radio>
-        <n-radio label="medium"></n-radio>
-      </n-radio-group>
-    </n-form-item>
-    <n-form-item label="dot">
-      <n-radio-group v-model="dot">
-        <n-radio :label="true">True</n-radio>
-        <n-radio :label="false">False</n-radio>
-      </n-radio-group>
-    </n-form-item>
-  </n-form>
-  <n-steps v-model="value" :progress-dot="dot" clickable label-align="left" :size="size">
-    <n-step title="Succeeded" subtitle="This step is finished" />
-    <n-step title="Disabled" :disabled="true" subtitle="This step is disabled" />
-    <n-step title="Future step" subtitle="This is available" />
-    <n-step title="Future step" subtitle="This is available" />
-  </n-steps>
+  <h-form label-position="left">
+    <h-form-item label="size">
+      <h-radio-group v-model="size">
+        <h-radio label="small"></h-radio>
+        <h-radio label="medium"></h-radio>
+      </h-radio-group>
+    </h-form-item>
+    <h-form-item label="dot">
+      <h-radio-group v-model="dot">
+        <h-radio :label="true">True</h-radio>
+        <h-radio :label="false">False</h-radio>
+      </h-radio-group>
+    </h-form-item>
+  </h-form>
+  <h-steps v-model="value" :progress-dot="dot" clickable label-align="left" :size="size">
+    <h-step title="Succeeded" subtitle="This step is finished" />
+    <h-step title="Disabled" :disabled="true" subtitle="This step is disabled" />
+    <h-step title="Future step" subtitle="This is available" />
+    <h-step title="Future step" subtitle="This is available" />
+  </h-steps>
 </template>
 
 <script setup lang="ts">

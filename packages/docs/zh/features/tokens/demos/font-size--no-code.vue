@@ -108,21 +108,21 @@ const currentTabs = ref('lineHeight');
 
 <template>
   <div class="colors">
-    <n-tabs v-model="currentTabs" type="page">
-      <n-tab v-for="(group, key) of elementListTokens.font" :key="key" :name="key">
+    <h-tabs v-model="currentTabs" type="page">
+      <h-tab v-for="(group, key) of elementListTokens.font" :key="key" :name="key">
         {{ key }}
-      </n-tab>
-    </n-tabs>
-    <n-panels v-model="currentTabs" type="page">
-      <n-panel v-for="(group, key) of elementListTokens.font" :key="key" :name="key">
+      </h-tab>
+    </h-tabs>
+    <h-panels v-model="currentTabs" type="page">
+      <h-panel v-for="(group, key) of elementListTokens.font" :key="key" :name="key">
         <div v-for="token of group" :key="token.label" class="color">
           <div class="label">
             <div class="key">{{ token.refToken }} <copy-btn :text="token.refToken" /></div>
           </div>
           <div class="value">{{ token.value }}</div>
         </div>
-      </n-panel>
-    </n-panels>
+      </h-panel>
+    </h-panels>
   </div>
 </template>
 
@@ -149,7 +149,7 @@ const currentTabs = ref('lineHeight');
   }
 }
 
-.n-panels__content {
+.h-panels__content {
   padding: 10px;
 }
 </style>

@@ -8,12 +8,12 @@ defineProps({
 </script>
 
 <template>
-  <n-popover>
+  <h-popover>
     <template #reference>
-      <n-button icon="tips" type="danger" :link="true" size="small" :underline="false" />
+      <h-button icon="tips" type="danger" :link="true" size="small" :underline="false" />
     </template>
     <template #popper>
-      <n-pop-content>此字段已不推荐使用<span v-if="name">，请改用<span v-html="name"></span></span></n-pop-content>
+      <h-pop-content>此字段已不推荐使用<span v-if="name">，请改用<span v-html="name"></span></span></h-pop-content>
     </template>
-  </n-popover>
+  </h-popover>
 </template>

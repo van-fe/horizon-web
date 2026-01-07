@@ -1,36 +1,36 @@
 <template>
-  <n-form label-position="left" label-vertical-align="middle">
-    <n-form-item label="size">
-      <n-radio-group v-model="size">
-        <n-radio label="small" />
-        <n-radio label="medium" />
-        <n-radio label="large" />
-      </n-radio-group>
-    </n-form-item>
-    <n-form-item label="inputStyle">
-      <n-radio-group v-model="inputStyle">
-        <n-radio label="normal" />
-        <n-radio label="no-border" />
-      </n-radio-group>
-    </n-form-item>
-    <n-form-item label="disabled">
-      <n-radio-group v-model="disabled">
-        <n-radio :label="true">True</n-radio>
-        <n-radio :label="false">False</n-radio>
-      </n-radio-group>
-    </n-form-item>
-    <n-form-item label="filterable">
-      <n-radio-group v-model="filterable">
-        <n-radio :label="true">True</n-radio>
-        <n-radio :label="false">False</n-radio>
-      </n-radio-group>
-    </n-form-item>
-  </n-form>
+  <h-form label-position="left" label-vertical-align="middle">
+    <h-form-item label="size">
+      <h-radio-group v-model="size">
+        <h-radio label="small" />
+        <h-radio label="medium" />
+        <h-radio label="large" />
+      </h-radio-group>
+    </h-form-item>
+    <h-form-item label="inputStyle">
+      <h-radio-group v-model="inputStyle">
+        <h-radio label="normal" />
+        <h-radio label="no-border" />
+      </h-radio-group>
+    </h-form-item>
+    <h-form-item label="disabled">
+      <h-radio-group v-model="disabled">
+        <h-radio :label="true">True</h-radio>
+        <h-radio :label="false">False</h-radio>
+      </h-radio-group>
+    </h-form-item>
+    <h-form-item label="filterable">
+      <h-radio-group v-model="filterable">
+        <h-radio :label="true">True</h-radio>
+        <h-radio :label="false">False</h-radio>
+      </h-radio-group>
+    </h-form-item>
+  </h-form>
 
-  <n-row>
-    <n-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
+  <h-row>
+    <h-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
       <div class="demo-title">基础单选</div>
-      <n-select
+      <h-select
         v-model="value1"
         :size="size"
         :input-style="inputStyle"
@@ -42,12 +42,12 @@
         @focus="onFocus"
         @blur="onBlur"
       >
-        <n-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
-      </n-select>
-    </n-col>
-    <n-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
+        <h-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
+      </h-select>
+    </h-col>
+    <h-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
       <div class="demo-title">基础多选</div>
-      <n-select
+      <h-select
         v-model="value2"
         :multiple="true"
         :size="size"
@@ -61,10 +61,10 @@
         @focus="onFocus"
         @blur="onBlur"
       >
-        <n-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
-      </n-select>
-    </n-col>
-  </n-row>
+        <h-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
+      </h-select>
+    </h-col>
+  </h-row>
 
 </template>
 

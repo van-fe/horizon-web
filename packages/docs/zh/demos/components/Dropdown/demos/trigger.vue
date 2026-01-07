@@ -1,46 +1,46 @@
 <template>
-  <n-row>
-    <n-col :span="24">
-      <n-dropdown>
-        <n-button>Hover(default)</n-button>
+  <h-row>
+    <h-col :span="24">
+      <h-dropdown>
+        <h-button>Hover(default)</h-button>
         <template #dropdown>
-          <n-dropdown-menu>
-            <n-dropdown-item>北京</n-dropdown-item>
-            <n-dropdown-item>上海</n-dropdown-item>
-            <n-dropdown-item>深圳</n-dropdown-item>
-            <n-dropdown-item>杭州</n-dropdown-item>
-            <n-dropdown-item>重庆</n-dropdown-item>
-          </n-dropdown-menu>
+          <h-dropdown-menu>
+            <h-dropdown-item>北京</h-dropdown-item>
+            <h-dropdown-item>上海</h-dropdown-item>
+            <h-dropdown-item>深圳</h-dropdown-item>
+            <h-dropdown-item>杭州</h-dropdown-item>
+            <h-dropdown-item>重庆</h-dropdown-item>
+          </h-dropdown-menu>
         </template>
-      </n-dropdown>
-      <n-dropdown trigger="click">
-        <n-button>Click</n-button>
+      </h-dropdown>
+      <h-dropdown trigger="click">
+        <h-button>Click</h-button>
         <template #dropdown>
-          <n-dropdown-menu>
-            <n-dropdown-item>北京</n-dropdown-item>
-            <n-dropdown-item>上海</n-dropdown-item>
-            <n-dropdown-item>深圳</n-dropdown-item>
-            <n-dropdown-item>杭州</n-dropdown-item>
-            <n-dropdown-item>重庆</n-dropdown-item>
-          </n-dropdown-menu>
+          <h-dropdown-menu>
+            <h-dropdown-item>北京</h-dropdown-item>
+            <h-dropdown-item>上海</h-dropdown-item>
+            <h-dropdown-item>深圳</h-dropdown-item>
+            <h-dropdown-item>杭州</h-dropdown-item>
+            <h-dropdown-item>重庆</h-dropdown-item>
+          </h-dropdown-menu>
         </template>
-      </n-dropdown>
-      <n-dropdown trigger="context-menu" @command="onCommand">
+      </h-dropdown>
+      <h-dropdown trigger="context-menu" @command="onCommand">
         <div class="context-menu-area">
           context-menu
         </div>
         <template #dropdown>
-          <n-dropdown-menu>
-            <n-dropdown-item command="1">北京</n-dropdown-item>
-            <n-dropdown-item command="2">上海</n-dropdown-item>
-            <n-dropdown-item command="3">深圳</n-dropdown-item>
-            <n-dropdown-item command="4">杭州</n-dropdown-item>
-            <n-dropdown-item command="5">重庆</n-dropdown-item>
-          </n-dropdown-menu>
+          <h-dropdown-menu>
+            <h-dropdown-item command="1">北京</h-dropdown-item>
+            <h-dropdown-item command="2">上海</h-dropdown-item>
+            <h-dropdown-item command="3">深圳</h-dropdown-item>
+            <h-dropdown-item command="4">杭州</h-dropdown-item>
+            <h-dropdown-item command="5">重庆</h-dropdown-item>
+          </h-dropdown-menu>
         </template>
-      </n-dropdown>
-    </n-col>
-  </n-row>
+      </h-dropdown>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">
@@ -52,12 +52,12 @@ function onCommand(val: string) {
 </script>
 
 <style scoped>
-.n-dropdown {
+.h-dropdown {
   display: inline-flex;
   vertical-align: top;
 }
 
-.n-dropdown + .n-dropdown {
+.h-dropdown + .h-dropdown {
   margin-left: 12px;
 }
 

@@ -14,20 +14,20 @@ const onCancel = () => {
 </script>
 
 <template>
-  <n-button type="normal" @click="visible = !visible">点击打开Dialog</n-button>
-  <n-dialog v-model:visible="visible" title="Title" class="customize">
-    <n-divider />
+  <h-button type="normal" @click="visible = !visible">点击打开Dialog</h-button>
+  <h-dialog v-model:visible="visible" title="Title" class="customize">
+    <h-divider />
     <div class="grey-block">Dolor perspiciatis veniam.</div>
     <template #footer>
       <div class="customize-footer">
-        <n-divider />
-        <n-space block style="justify-content: end; padding-right: 24px">
-          <n-button type="normal" @click="onCancel">Cancel</n-button>
-          <n-button @click="onOk">Ok</n-button>
-        </n-space>
+        <h-divider />
+        <h-space block style="justify-content: end; padding-right: 24px">
+          <h-button type="normal" @click="onCancel">Cancel</h-button>
+          <h-button @click="onOk">Ok</h-button>
+        </h-space>
       </div>
     </template>
-  </n-dialog>
+  </h-dialog>
 </template>
 
 <style lang="scss">
@@ -35,20 +35,20 @@ const onCancel = () => {
   background-color: #f6f7fa;
   height: 300px;
   display: flex;
-  align-items: center;
+  aligh-items: center;
   justify-content: center;
   font-weight: 500;
   font-size: 30px;
 }
 
 .customize-footer {
-  --n-divider-margin--horizontal: 0 0 16px;
+  --h-divider-margih--horizontal: 0 0 16px;
 }
 
 .customize {
-  --n-dialog-margin--body: 0;
-  --n-dialog-padding--body: 0;
-  --n-divider-margin--horizontal: 16px 0 0;
-  --n-dialog-padding--footer: 0 0 24px;
+  --h-dialog-margih--body: 0;
+  --h-dialog-padding--body: 0;
+  --h-divider-margih--horizontal: 16px 0 0;
+  --h-dialog-padding--footer: 0 0 24px;
 }
 </style>

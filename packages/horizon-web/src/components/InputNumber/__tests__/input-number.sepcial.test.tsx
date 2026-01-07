@@ -56,7 +56,7 @@ describe('InputNumber.tsx special', () => {
       <HInputNumber v-model={modelValue.value} min={5} onChange={onChange} />
     ));
 
-    const upTrigger = wrapper.find('.n-input-number__step-up');
+    const upTrigger = wrapper.find('.h-input-number__step-up');
 
     await upTrigger.trigger('click');
 
@@ -81,7 +81,7 @@ describe('InputNumber.tsx special', () => {
     ));
 
     const element = wrapper.find('input');
-    const clearIcon = wrapper.find('.n-input-number__clear');
+    const clearIcon = wrapper.find('.h-input-number__clear');
 
     expect(clearIcon.exists()).toBe(true);
 

@@ -1,20 +1,20 @@
 <template>
-  <n-row>
-    <n-col :span="24">
-      <n-dropdown @command="onCommand">
-        <n-button>Hover</n-button>
+  <h-row>
+    <h-col :span="24">
+      <h-dropdown @command="onCommand">
+        <h-button>Hover</h-button>
         <template #dropdown>
-          <n-dropdown-menu>
-            <n-dropdown-item command="北京">北京</n-dropdown-item>
-            <n-dropdown-item @click="onCommand('上海')">上海</n-dropdown-item>
-            <n-dropdown-item command="深圳">深圳</n-dropdown-item>
-            <n-dropdown-item command="杭州" :disabled="true">杭州</n-dropdown-item>
-            <n-dropdown-item @click="onCommand('重庆')">重庆</n-dropdown-item>
-          </n-dropdown-menu>
+          <h-dropdown-menu>
+            <h-dropdown-item command="北京">北京</h-dropdown-item>
+            <h-dropdown-item @click="onCommand('上海')">上海</h-dropdown-item>
+            <h-dropdown-item command="深圳">深圳</h-dropdown-item>
+            <h-dropdown-item command="杭州" :disabled="true">杭州</h-dropdown-item>
+            <h-dropdown-item @click="onCommand('重庆')">重庆</h-dropdown-item>
+          </h-dropdown-menu>
         </template>
-      </n-dropdown>
-    </n-col>
-  </n-row>
+      </h-dropdown>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

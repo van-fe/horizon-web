@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <n-rate v-model="currentScore" :count="10" />
+    <h-rate v-model="currentScore" :count="10" />
   </div>
 </template>
 

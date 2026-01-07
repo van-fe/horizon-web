@@ -1,7 +1,7 @@
 <template>
   <div>
-    <n-button class="mb-3" @click="doRotate">Rotate</n-button>
-    <n-video-player
+    <h-button class="mb-3" @click="doRotate">Rotate</h-button>
+    <h-video-player
       :sources="[
         {
           src: 'https://media.vimejs.com/720p.mp4',

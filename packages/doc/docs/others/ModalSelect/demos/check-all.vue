@@ -1,8 +1,8 @@
 <template>
-  <n-row>
-    <n-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
+  <h-row>
+    <h-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
       <div class="demo-title">普通全选</div>
-      <n-modal-select
+      <h-modal-select
         v-model="value1"
         :multiple="true"
         :use-check-all="true"
@@ -12,12 +12,12 @@
         :collapse-tags="true"
         :collapse-tags-tooltip="true"
       >
-        <n-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
-      </n-modal-select>
-    </n-col>
-    <n-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
+        <h-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
+      </h-modal-select>
+    </h-col>
+    <h-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
       <div class="demo-title">全选后标记为“全部”</div>
-      <n-modal-select
+      <h-modal-select
         v-model="value2"
         :multiple="true"
         :use-check-all="true"
@@ -27,12 +27,12 @@
         :collapse-tags="true"
         :collapse-tags-tooltip="true"
       >
-        <n-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
-      </n-modal-select>
-    </n-col>
-    <n-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
+        <h-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
+      </h-modal-select>
+    </h-col>
+    <h-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
       <div class="demo-title">全选后自定义标记为“全部选择”</div>
-      <n-modal-select
+      <h-modal-select
         v-model="value3"
         :multiple="true"
         :use-check-all="true"
@@ -43,14 +43,14 @@
         :collapse-tags="true"
         :collapse-tags-tooltip="true"
       >
-        <n-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
-      </n-modal-select>
-    </n-col>
-  </n-row>
-  <n-row>
-    <n-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
+        <h-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
+      </h-modal-select>
+    </h-col>
+  </h-row>
+  <h-row>
+    <h-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
       <div class="demo-title">存在禁用选项的全选</div>
-      <n-modal-select
+      <h-modal-select
         v-model="value4"
         :multiple="true"
         :use-check-all="true"
@@ -60,12 +60,12 @@
         :collapse-tags="true"
         :collapse-tags-tooltip="true"
       >
-        <n-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" :disabled="item.value % 2 === 0" />
-      </n-modal-select>
-    </n-col>
-    <n-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
+        <h-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" :disabled="item.value % 2 === 0" />
+      </h-modal-select>
+    </h-col>
+    <h-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
       <div class="demo-title">统计已选择的数量</div>
-      <n-modal-select
+      <h-modal-select
         v-model="value5"
         :multiple="true"
         :use-check-all="true"
@@ -79,10 +79,10 @@
         :filterable="true"
         :options="selectOptions"
       />
-    </n-col>
-    <n-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
+    </h-col>
+    <h-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
       <div class="demo-title">统计已选择的数量（不考虑过滤）</div>
-      <n-modal-select
+      <h-modal-select
         v-model="value6"
         :multiple="true"
         :use-check-all="true"
@@ -97,8 +97,8 @@
         :filterable="true"
         :options="selectOptions"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 
 </template>
 

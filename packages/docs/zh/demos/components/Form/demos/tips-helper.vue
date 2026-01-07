@@ -1,41 +1,41 @@
 <template>
-  <n-form>
-    <n-form-item label="helper主题">
-      <n-radio-group v-model="helperTheme">
-        <n-radio label="light" />
-        <n-radio label="dark" />
-      </n-radio-group>
-    </n-form-item>
-  </n-form>
+  <h-form>
+    <h-form-item label="helper主题">
+      <h-radio-group v-model="helperTheme">
+        <h-radio label="light" />
+        <h-radio label="dark" />
+      </h-radio-group>
+    </h-form-item>
+  </h-form>
 
-  <n-form
+  <h-form
     ref="formRef"
     :model="formData"
     :rules="rules"
     :helper-theme="helperTheme"
     @submit="submit"
   >
-    <n-form-item label="input style" prop="inputStyle">
-      <n-radio-group v-model="formData.inputStyle" size="medium">
-        <n-radio v-for="item in ['normal', 'emphasize', 'no-border']" :key="item" :label="item" />
-      </n-radio-group>
-    </n-form-item>
-    <n-form-item label="Username" prop="username" :validate-trigger="['change']">
-      <n-input
+    <h-form-item label="input style" prop="inputStyle">
+      <h-radio-group v-model="formData.inputStyle" size="medium">
+        <h-radio v-for="item in ['normal', 'emphasize', 'no-border']" :key="item" :label="item" />
+      </h-radio-group>
+    </h-form-item>
+    <h-form-item label="Username" prop="username" :validate-trigger="['change']">
+      <h-input
         v-model="formData.username"
         :input-style="formData.inputStyle"
         placeholder="Please enter your username"
         :clearable="true"
       />
-    </n-form-item>
-    <n-form-item
+    </h-form-item>
+    <h-form-item
       label="Age"
       prop="age"
       helper-placement="after-label"
       :validate-trigger="['change']"
     >
       <template #helper>Age is between 0 to 120</template>
-      <n-input-number
+      <h-input-number
         v-model="formData.age"
         placeholder="Please enter your age"
         :input-style="formData.inputStyle"
@@ -45,16 +45,16 @@
         @input="onInput"
         @change="onChange"
       />
-    </n-form-item>
-    <n-form-item label="Province" prop="province">
-      <n-select v-model="formData.province" :input-style="formData.inputStyle" placeholder="Please select">
-        <n-option label="Beijing" value="beijing" />
-        <n-option label="Shanghai" value="shanghai" />
-        <n-option label="Hefei" value="hefei" />
-      </n-select>
-    </n-form-item>
-    <n-form-item label="Date" prop="date" :helper="dateHelper">
-      <n-date-picker
+    </h-form-item>
+    <h-form-item label="Province" prop="province">
+      <h-select v-model="formData.province" :input-style="formData.inputStyle" placeholder="Please select">
+        <h-option label="Beijing" value="beijing" />
+        <h-option label="Shanghai" value="shanghai" />
+        <h-option label="Hefei" value="hefei" />
+      </h-select>
+    </h-form-item>
+    <h-form-item label="Date" prop="date" :helper="dateHelper">
+      <h-date-picker
         v-model="formData.date"
         type="daterange"
         format="yyyy-MM-dd"
@@ -63,12 +63,12 @@
         end-placeholder="End date"
         :input-style="formData.inputStyle"
       />
-    </n-form-item>
-    <n-form-item label="Switch" prop="switch">
-      <n-switch v-model="formData.switch" />
-    </n-form-item>
-    <n-form-item label="Remark" tip="Hint or Error Message" prop="remark">
-      <n-input
+    </h-form-item>
+    <h-form-item label="Switch" prop="switch">
+      <h-switch v-model="formData.switch" />
+    </h-form-item>
+    <h-form-item label="Remark" tip="Hint or Error Message" prop="remark">
+      <h-input
         v-model="formData.remark"
         placeholder="Type something"
         :input-style="formData.inputStyle"
@@ -76,11 +76,11 @@
         :maxlength="100"
         type="textarea"
       />
-    </n-form-item>
-    <n-form-item>
-      <n-button native-type="submit">Submit</n-button>
-    </n-form-item>
-  </n-form>
+    </h-form-item>
+    <h-form-item>
+      <h-button native-type="submit">Submit</h-button>
+    </h-form-item>
+  </h-form>
 </template>
 
 <script setup lang="ts">

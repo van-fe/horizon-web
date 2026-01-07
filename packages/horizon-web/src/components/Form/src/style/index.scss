@@ -1,5 +1,5 @@
 @use '../../../../styles/mixins';
-@import 'spacing';
+@use 'spacing';
 
 @include mixins.b('form') {
   @include mixins.is('position-top') {

@@ -9,14 +9,14 @@
 :::demo ./demos/pickable.vue :::
 
 ### 设置横幅
-可以通过 `pin-flags` 设置展示的横幅，用来展示一些活动
-:::demo ./demos/pin-flag.vue :::
+可以通过 `pih-flags` 设置展示的横幅，用来展示一些活动
+:::demo ./demos/pih-flag.vue :::
 
 ### 设置周、日的横幅
-可以通过 `pin-flags` 设置展示的横幅，并可以精细化设置时间，用来展示一些活动
+可以通过 `pih-flags` 设置展示的横幅，并可以精细化设置时间，用来展示一些活动
 
 使用 `disableHours` 回调函数，返回给与的当天的不可用的小时区间
-:::demo ./demos/pin-flag-week-day.vue :::
+:::demo ./demos/pih-flag-week-day.vue :::
 
 ### 自定义头部
 :::demo ./demos/custom-header.vue :::

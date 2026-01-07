@@ -1,10 +1,10 @@
 <template>
-  <n-button v-popconfirm="'确定要删除吗？'" type="normal" class="mr-2" @click="del">
+  <h-button v-popconfirm="'确定要删除吗？'" type="normal" class="mr-2" @click="del">
     直接设置字符串
-  </n-button>
-  <n-button v-popconfirm="{ title: '确定要删除吗？' }" type="normal" @click="del">
+  </h-button>
+  <h-button v-popconfirm="{ title: '确定要删除吗？' }" type="normal" @click="del">
     使用对象设置气泡确认
-  </n-button>
+  </h-button>
 </template>
 
 <script lang="ts">

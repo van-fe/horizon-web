@@ -1,69 +1,69 @@
 <template>
-  <n-space>
-    <n-popover trigger="hover">
+  <h-space>
+    <h-popover trigger="hover">
       <template #reference>
-        <n-button>hover</n-button>
+        <h-button>hover</h-button>
       </template>
       <template #popper>
-        <n-pop-content>
+        <h-pop-content>
           <div>show hello</div>
-        </n-pop-content>
+        </h-pop-content>
       </template>
-    </n-popover>
-    <n-popover trigger="click">
+    </h-popover>
+    <h-popover trigger="click">
       <template #reference>
-        <n-button>click</n-button>
+        <h-button>click</h-button>
       </template>
       <template #popper>
-        <n-pop-content>
+        <h-pop-content>
           <div>show hello</div>
-        </n-pop-content>
+        </h-pop-content>
       </template>
-    </n-popover>
-    <n-popover trigger="click-remain">
+    </h-popover>
+    <h-popover trigger="click-remain">
       <template #reference>
-        <n-button>click-remain</n-button>
+        <h-button>click-remain</h-button>
       </template>
       <template #popper>
-        <n-pop-content>
+        <h-pop-content>
           <div>Hello World</div>
-        </n-pop-content>
+        </h-pop-content>
       </template>
-    </n-popover>
-    <n-popover trigger="click-hide">
+    </h-popover>
+    <h-popover trigger="click-hide">
       <template #reference>
-        <n-button>click-hide</n-button>
+        <h-button>click-hide</h-button>
       </template>
       <template #popper>
-        <n-pop-content>
+        <h-pop-content>
           <div>Hello World</div>
-        </n-pop-content>
+        </h-pop-content>
       </template>
-    </n-popover>
-    <n-popover trigger="focus">
+    </h-popover>
+    <h-popover trigger="focus">
       <template #reference>
-        <n-button>focus</n-button>
+        <h-button>focus</h-button>
       </template>
       <template #popper>
-        <n-pop-content>
+        <h-pop-content>
           <div>Hello World</div>
-        </n-pop-content>
+        </h-pop-content>
       </template>
-    </n-popover>
-    <n-popover trigger="manual" :visible="visible">
+    </h-popover>
+    <h-popover trigger="manual" :visible="visible">
       <template #reference>
-        <n-button @click="visible = true">open</n-button>
+        <h-button @click="visible = true">open</h-button>
       </template>
       <template #popper>
-        <n-pop-content>
-          <n-space>
+        <h-pop-content>
+          <h-space>
             click the btn to close!
-            <n-button type="danger" @click="visible = false">close</n-button>
-          </n-space>
-        </n-pop-content>
+            <h-button type="danger" @click="visible = false">close</h-button>
+          </h-space>
+        </h-pop-content>
       </template>
-    </n-popover>
-  </n-space>
+    </h-popover>
+  </h-space>
 </template>
 
 <script setup lang="ts">

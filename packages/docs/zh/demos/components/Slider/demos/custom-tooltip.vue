@@ -1,6 +1,6 @@
 <template>
-  <n-slider v-model="valueRef" :tooltip-formatter="tooltipFormatter" />
-  <n-slider v-model="valueRef" :tooltip-formatter="tooltipFormatter" :tooltip-enable="false" />
+  <h-slider v-model="valueRef" :tooltip-formatter="tooltipFormatter" />
+  <h-slider v-model="valueRef" :tooltip-formatter="tooltipFormatter" :tooltip-enable="false" />
 </template>
 
 <script lang="ts">

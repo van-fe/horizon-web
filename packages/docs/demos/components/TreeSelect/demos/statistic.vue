@@ -1,30 +1,30 @@
 <template>
-  <n-form label-position="left" label-vertical-align="middle">
-    <n-form-item label="size">
-      <n-radio-group v-model="size">
-        <n-radio label="small" />
-        <n-radio label="medium" />
-        <n-radio label="large" />
-      </n-radio-group>
-    </n-form-item>
-    <n-form-item label="inputStyle">
-      <n-radio-group v-model="inputStyle">
-        <n-radio label="normal" />
-        <n-radio label="emphasize" />
-        <n-radio label="no-border" />
-      </n-radio-group>
-    </n-form-item>
-  </n-form>
-  <n-row>
-    <n-col :span="6">
+  <h-form label-position="left" label-vertical-align="middle">
+    <h-form-item label="size">
+      <h-radio-group v-model="size">
+        <h-radio label="small" />
+        <h-radio label="medium" />
+        <h-radio label="large" />
+      </h-radio-group>
+    </h-form-item>
+    <h-form-item label="inputStyle">
+      <h-radio-group v-model="inputStyle">
+        <h-radio label="normal" />
+        <h-radio label="emphasize" />
+        <h-radio label="no-border" />
+      </h-radio-group>
+    </h-form-item>
+  </h-form>
+  <h-row>
+    <h-col :span="6">
       <div class="demo-title">默认国际化配置</div>
-      <n-tree-select v-model="value" :tree-data="baseTreeData" :size="size" :input-style="inputStyle" :use-statistic="true" :multiple="true" :to-body="false" />
-    </n-col>
-    <n-col :span="6">
+      <h-tree-select v-model="value" :tree-data="baseTreeData" :size="size" :input-style="inputStyle" :use-statistic="true" :multiple="true" :to-body="false" />
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">自定义为“组件”</div>
-      <n-tree-select v-model="values" :tree-data="baseTreeData" :size="size" :input-style="inputStyle" :use-statistic="true" statistic-text="组件" :multiple="true" :to-body="false" />
-    </n-col>
-  </n-row>
+      <h-tree-select v-model="values" :tree-data="baseTreeData" :size="size" :input-style="inputStyle" :use-statistic="true" statistic-text="组件" :multiple="true" :to-body="false" />
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

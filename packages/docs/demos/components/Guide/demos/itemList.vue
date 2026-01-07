@@ -1,17 +1,17 @@
 <template>
-  <n-row>
-    <n-col :span="24">
-      <n-button ref="firstRef">First</n-button>
-      <n-button class="guide-second-2">Second</n-button>
-      <n-button ref="thirdRef">Third</n-button>
-    </n-col>
-    <n-divider />
-    <n-col :span="24">
-      <n-button @click="start">Start</n-button>
-    </n-col>
-  </n-row>
+  <h-row>
+    <h-col :span="24">
+      <h-button ref="firstRef">First</h-button>
+      <h-button class="guide-second-2">Second</h-button>
+      <h-button ref="thirdRef">Third</h-button>
+    </h-col>
+    <h-divider />
+    <h-col :span="24">
+      <h-button @click="start">Start</h-button>
+    </h-col>
+  </h-row>
 
-  <n-guide v-model:visible="visible" :item-list="itemList" @close="onClose" @finish="onFinish" />
+  <h-guide v-model:visible="visible" :item-list="itemList" @close="onClose" @finish="onFinish" />
 </template>
 
 <script setup lang="ts">

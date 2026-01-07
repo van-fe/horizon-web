@@ -1,29 +1,29 @@
 <template>
-  <n-row>
-    <n-col :span="24">
+  <h-row>
+    <h-col :span="24">
       <div class="demo-title">medium(default)</div>
-      <n-checkbox-group disabled>
-        <n-checkbox-button
+      <h-checkbox-group disabled>
+        <h-checkbox-button
           v-for="(item, index) in checkboxGroupOptions"
           :key="index"
           v-model="item.checked"
           :label="item.label"
         />
-      </n-checkbox-group>
-    </n-col>
+      </h-checkbox-group>
+    </h-col>
 
-    <n-col :span="24">
+    <h-col :span="24">
       <div class="demo-title">large</div>
-      <n-checkbox-group size="large">
-        <n-checkbox-button
+      <h-checkbox-group size="large">
+        <h-checkbox-button
           v-for="(item, index) in checkboxGroupOptions"
           :key="index"
           v-model="item.checked"
           :label="item.label"
         />
-      </n-checkbox-group>
-    </n-col>
-  </n-row>
+      </h-checkbox-group>
+    </h-col>
+  </h-row>
 </template>
 
 <script lang="ts" setup>

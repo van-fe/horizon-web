@@ -1,6 +1,6 @@
 @use '../../../../styles/mixins';
-@import './item';
-@import './draggable';
+@use 'item';
+@use 'draggable';
 
 @include mixins.b('tree') {
   position: relative;

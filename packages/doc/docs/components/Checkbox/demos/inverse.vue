@@ -1,10 +1,10 @@
 <template>
-    <n-row>
-      <n-col :span="24">
-        <n-button @click="inverse">toggle</n-button>
-      </n-col>
-      <n-col :span="24">
-        <n-checkbox
+    <h-row>
+      <h-col :span="24">
+        <h-button @click="inverse">toggle</h-button>
+      </h-col>
+      <h-col :span="24">
+        <h-checkbox
           v-for="(item, index) in checkboxOptions"
           :ref="el => (myRefs[index] = el)"
           :key="item.key"
@@ -13,8 +13,8 @@
           class="checkbox"
           @change="selectCheckbox"
         />
-      </n-col>
-    </n-row>
+      </h-col>
+    </h-row>
   </template>
   
   <script lang="ts" setup>
@@ -67,6 +67,6 @@
   
   <style scoped>
   .checkbox + .checkbox {
-    margin-left: 15px;
+    margih-left: 15px;
   }
   </style>

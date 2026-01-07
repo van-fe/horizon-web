@@ -1,9 +1,9 @@
 <template>
-  <n-tag :clickable="false" :plain="true">Default</n-tag>
-  <n-tag :clickable="false" :plain="true" type="success">Success</n-tag>
-  <n-tag :clickable="false" :plain="true" type="info">Info</n-tag>
-  <n-tag :clickable="false" :plain="true" type="warning">Warning</n-tag>
-  <n-tag :clickable="false" :plain="true" type="error">Error</n-tag>
+  <h-tag :clickable="false" :plain="true">Default</h-tag>
+  <h-tag :clickable="false" :plain="true" type="success">Success</h-tag>
+  <h-tag :clickable="false" :plain="true" type="info">Info</h-tag>
+  <h-tag :clickable="false" :plain="true" type="warning">Warning</h-tag>
+  <h-tag :clickable="false" :plain="true" type="error">Error</h-tag>
 </template>
 
 <script setup lang="ts">

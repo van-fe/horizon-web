@@ -10,39 +10,39 @@ import {
 </script>
 
 <template>
-  <n-row>
-    <n-button-group type="primary">
-      <n-button :icon="IconArrowLeft">Previous Page</n-button>
-      <n-button>
+  <h-row>
+    <h-buttoh-group type="primary">
+      <h-button :icon="IconArrowLeft">Previous Page</h-button>
+      <h-button>
         Next Page
         <template #suffix>
-          <div class="n-button__icon">
+          <div class="h-button__icon">
             <IconArrowRight :size="16" />
           </div>
         </template>
-      </n-button>
-    </n-button-group>
-    <n-button-group>
-      <n-button :plain="true" :icon="IconEye" />
-      <n-button :plain="true" :icon="IconEdit" />
-      <n-button :plain="true" :icon="IconRubbish" />
-    </n-button-group>
-    <n-button-group type="primary">
-      <n-button>Confirm</n-button>
-      <n-dropdown>
-        <n-button :icon="IconArrowDown" />
-        <n-dropdown-menu>
-          <n-dropdown-item>Agree</n-dropdown-item>
-          <n-dropdown-item>Disagree</n-dropdown-item>
-          <n-dropdown-item>Cancel</n-dropdown-item>
-        </n-dropdown-menu>
-      </n-dropdown>
-    </n-button-group>
-  </n-row>
+      </h-button>
+    </h-buttoh-group>
+    <h-buttoh-group>
+      <h-button :plain="true" :icon="IconEye" />
+      <h-button :plain="true" :icon="IconEdit" />
+      <h-button :plain="true" :icon="IconRubbish" />
+    </h-buttoh-group>
+    <h-buttoh-group type="primary">
+      <h-button>Confirm</h-button>
+      <h-dropdown>
+        <h-button :icon="IconArrowDown" />
+        <h-dropdowh-menu>
+          <h-dropdowh-item>Agree</h-dropdowh-item>
+          <h-dropdowh-item>Disagree</h-dropdowh-item>
+          <h-dropdowh-item>Cancel</h-dropdowh-item>
+        </h-dropdowh-menu>
+      </h-dropdown>
+    </h-buttoh-group>
+  </h-row>
 </template>
 
 <style scoped>
-.n-button-group + .n-button-group {
-  margin-left: 10px;
+.h-buttoh-group + .h-buttoh-group {
+  margih-left: 10px;
 }
 </style>

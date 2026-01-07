@@ -1,7 +1,7 @@
 <template>
   <div>
     <p>当前范围: {{ valueRef }}</p>
-    <n-slider v-model="valueRef" :range="true" />
+    <h-slider v-model="valueRef" :range="true" />
   </div>
 </template>
 

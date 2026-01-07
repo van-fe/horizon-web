@@ -1,5 +1,5 @@
 <template>
-  <n-transfer
+  <h-transfer
     v-model="dataModel"
     :data="filterModel"
     :filterable="handleSearch"
@@ -10,14 +10,14 @@
     <template #rightHeader>
       <div class="flex flex-1 align-center justify-space-between">
         <div>{{ `已选: ${dataModel.length} 人` }}</div>
-        <n-button v-show="!!dataModel.length" size="medium" :text="true" @click="handleClear">
+        <h-button v-show="!!dataModel.length" size="medium" :text="true" @click="handleClear">
           清除
-        </n-button>
+        </h-button>
       </div>
     </template>
     <template #item="{ item }">
       <div class="flex align-center">
-        <n-avatar size="small" :src="item.avatar" />
+        <h-avatar size="small" :src="item.avatar" />
         <div class="ml-2 flex-1 flex flex-column overflow-hidden">
           <div style="text-overflow: ellipsis; overflow: hidden">{{ item.name }}</div>
           <div
@@ -29,7 +29,7 @@
         </div>
       </div>
     </template>
-  </n-transfer>
+  </h-transfer>
 </template>
 
 <script setup lang="ts">

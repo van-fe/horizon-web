@@ -16,7 +16,7 @@ function getScssImportString(pluginName: string, type: PluginType, relativeFrom 
   const importPath = getPluginStyleIndexPath(pluginName, type, relativeFrom);
 
   if (fs.pathExistsSync(path.resolve(relativeFrom, importPath))) {
-    return `@import "${importPath}"; \n`;
+    return `@forward "${importPath}"; \n`;
   } else {
     return '';
   }

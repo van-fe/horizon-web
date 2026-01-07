@@ -12,7 +12,7 @@ export default function (
     return Object.fromEntries(
       Object.entries(tree).map(([key, value]) => {
         if (typeof value === 'string') {
-          return [snakeCase(key.replace(/^--n-/, '')), value];
+          return [snakeCase(key.replace(/^--h-/, '')), value];
         } else {
           return [key, recursionTransformCssVariableKeyToJsKey(value)];
         }

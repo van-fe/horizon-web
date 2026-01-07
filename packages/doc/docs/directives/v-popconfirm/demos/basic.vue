@@ -1,5 +1,5 @@
 <template>
-  <n-button v-popconfirm type="normal" @click="del">点击确认</n-button>
+  <h-button v-popconfirm type="normal" @click="del">点击确认</h-button>
 </template>
 
 <script lang="ts">

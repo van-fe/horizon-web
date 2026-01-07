@@ -1,7 +1,7 @@
 <template>
-  <n-link :href="randomHref">Will Visit</n-link>
-  <n-link :href="currentHref">Already Visited</n-link>
-  <n-link disabled>Disabled</n-link>
+  <h-link :href="randomHref">Will Visit</h-link>
+  <h-link :href="currentHref">Already Visited</h-link>
+  <h-link disabled>Disabled</h-link>
 </template>
 
 <script lang="ts">

@@ -1,15 +1,15 @@
 <template>
-  <n-row>
-    <n-col :span="24">
+  <h-row>
+    <h-col :span="24">
       <div class="demo-title">选中了 Component、Basic、Color、Data 四个节点</div>
-      <n-tree
+      <h-tree
         v-model:expand-values="expandValues"
         v-model:selected-values="selectedValues"
         :tree-data="baseTreeData"
         :multiple="true"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

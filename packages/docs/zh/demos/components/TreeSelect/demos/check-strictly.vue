@@ -1,19 +1,19 @@
 <template>
-  <n-form label-position="left" label-vertical-align="middle" label-width="150px">
-    <n-form-item label="是否忽视父子关系">
-      <n-switch v-model="checkStrictly" :status="true" status-off-text="否" status-on-text="是" />
-    </n-form-item>
-  </n-form>
-  <n-row>
-    <n-col :span="6">
+  <h-form label-position="left" label-vertical-align="middle" label-width="150px">
+    <h-form-item label="是否忽视父子关系">
+      <h-switch v-model="checkStrictly" :status="true" status-off-text="否" status-on-text="是" />
+    </h-form-item>
+  </h-form>
+  <h-row>
+    <h-col :span="6">
       <div class="demo-title">单选</div>
-      <n-tree-select v-model="value" :tree-data="baseTreeData" :check-strictly="checkStrictly" :show-radio="true" :to-body="false" />
-    </n-col>
-    <n-col :span="6">
+      <h-tree-select v-model="value" :tree-data="baseTreeData" :check-strictly="checkStrictly" :show-radio="true" :to-body="false" />
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">多选</div>
-      <n-tree-select v-model="values" :tree-data="baseTreeData" :check-strictly="checkStrictly" :multiple="true" :to-body="false" />
-    </n-col>
-  </n-row>
+      <h-tree-select v-model="values" :tree-data="baseTreeData" :check-strictly="checkStrictly" :multiple="true" :to-body="false" />
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

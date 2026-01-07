@@ -1,11 +1,11 @@
 <template>
-  <n-space block direction="vertical">
-    <n-space>
-      <n-checkbox v-model="noPadding">对话框内容无边距</n-checkbox>
-    </n-space>
-    <n-button plain type="normal" @click="visible = true">点击打开Dialog</n-button>
-  </n-space>
-  <n-dialog
+  <h-space block direction="vertical">
+    <h-space>
+      <h-checkbox v-model="noPadding">对话框内容无边距</h-checkbox>
+    </h-space>
+    <h-button plain type="normal" @click="visible = true">点击打开Dialog</h-button>
+  </h-space>
+  <h-dialog
     v-model:visible="visible"
     title="标题"
     :class="{ 'no-padding': noPadding }"
@@ -14,7 +14,7 @@
     @cancel="onCancel"
   >
     <div class="grey-block">Dolor perspiciatis veniam.</div>
-  </n-dialog>
+  </h-dialog>
 </template>
 
 <script setup lang="ts">
@@ -37,14 +37,14 @@ const onCancel = () => {
   background-color: #f6f7fa;
   height: 300px;
   display: flex;
-  align-items: center;
+  aligh-items: center;
   justify-content: center;
   font-weight: 500;
   font-size: 30px;
 }
 
 .no-padding {
-  --n-dialog-padding--body: 0;
-  --n-dialog-margin--body: 16px 0;
+  --h-dialog-padding--body: 0;
+  --h-dialog-margih--body: 16px 0;
 }
 </style>

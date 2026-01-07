@@ -21,24 +21,24 @@ function onReachBottom() {
 </script>
 
 <template>
-  <n-form label-position="left" label-vertical-align="middle">
-    <n-form-item label="description-position">
-      <n-radio-group v-model="descriptionPosition">
-        <n-radio label="right"></n-radio>
-        <n-radio label="bottom"></n-radio>
-      </n-radio-group>
-    </n-form-item>
-  </n-form>
-  <n-row>
-    <n-col :span="6">
+  <h-form label-position="left" label-vertical-align="middle">
+    <h-form-item label="description-position">
+      <h-radio-group v-model="descriptionPosition">
+        <h-radio label="right"></h-radio>
+        <h-radio label="bottom"></h-radio>
+      </h-radio-group>
+    </h-form-item>
+  </h-form>
+  <h-row>
+    <h-col :span="6">
       <div class="demo-title">单选</div>
-      <n-select v-model="value1" :to-body="false" filterable :options="options" :description-position="descriptionPosition" @option-list-reach-bottom="onReachBottom" />
-    </n-col>
-    <n-col :span="6">
+      <h-select v-model="value1" :to-body="false" filterable :options="options" :description-position="descriptionPosition" @option-list-reach-bottom="onReachBottom" />
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">多选</div>
-      <n-select v-model="value2" :to-body="false" filterable multiple :options="options" :description-position="descriptionPosition" :collapse-tags="true" :collapse-tags-tooltip="true" @option-list-reach-bottom="onReachBottom" />
-    </n-col>
-  </n-row>
+      <h-select v-model="value2" :to-body="false" filterable multiple :options="options" :description-position="descriptionPosition" :collapse-tags="true" :collapse-tags-tooltip="true" @option-list-reach-bottom="onReachBottom" />
+    </h-col>
+  </h-row>
 </template>
 
 <style scoped>

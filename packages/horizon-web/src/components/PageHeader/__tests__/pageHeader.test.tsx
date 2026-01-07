@@ -74,7 +74,7 @@ describe('PageHeader.tsx', () => {
         </HPageHeader>
       ));
 
-      expect(wrapper.find('.n-page-header__default').exists()).toBeTruthy();
+      expect(wrapper.find('.h-page-header__default').exists()).toBeTruthy();
     });
 
     test('icon', () => {
@@ -86,7 +86,7 @@ describe('PageHeader.tsx', () => {
         </HPageHeader>
       ));
 
-      expect(wrapper.find('.n-button__icon').text()).toBe('ICON');
+      expect(wrapper.find('.h-button__icon').text()).toBe('ICON');
     });
 
     test('title', () => {
@@ -98,7 +98,7 @@ describe('PageHeader.tsx', () => {
         </HPageHeader>
       ));
 
-      expect(wrapper.find('.n-page-header__header--title').text()).toBe('TITLE');
+      expect(wrapper.find('.h-page-header__header--title').text()).toBe('TITLE');
     });
 
     test('tags', () => {
@@ -110,7 +110,7 @@ describe('PageHeader.tsx', () => {
         </HPageHeader>
       ));
 
-      expect(wrapper.find('.n-page-header__header--tags').text()).toBe('TAGS');
+      expect(wrapper.find('.h-page-header__header--tags').text()).toBe('TAGS');
     });
 
     test('content', () => {
@@ -122,7 +122,7 @@ describe('PageHeader.tsx', () => {
         </HPageHeader>
       ));
 
-      expect(wrapper.find('.n-page-header__inner--content').text()).toBe('COHTEHT');
+      expect(wrapper.find('.h-page-header__inner--content').text()).toBe('COHTEHT');
     });
 
     test('extra', () => {
@@ -134,7 +134,7 @@ describe('PageHeader.tsx', () => {
         </HPageHeader>
       ));
 
-      expect(wrapper.find('.n-page-header__extra').text()).toBe('EXTRA');
+      expect(wrapper.find('.h-page-header__extra').text()).toBe('EXTRA');
     });
 
     test('breadcrumb', () => {
@@ -146,7 +146,7 @@ describe('PageHeader.tsx', () => {
         </HPageHeader>
       ));
 
-      expect(wrapper.find('.n-page-header__breadcrumb').text()).toBe('BREADCRUMB');
+      expect(wrapper.find('.h-page-header__breadcrumb').text()).toBe('BREADCRUMB');
     });
   });
 });

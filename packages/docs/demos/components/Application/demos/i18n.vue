@@ -1,19 +1,19 @@
 <template>
-  <n-application :locale="locale.current">
-    <n-form label-position="left">
-      <n-form-item label="current language">
-        <n-select v-model="locale.current" size="small" style="width: 120px; display: inline-block">
-          <n-option v-for="item of LocaleSupportLang" :key="item" :value="item" :label="item" />
-        </n-select>
-      </n-form-item>
-    </n-form>
+  <h-application :locale="locale.current">
+    <h-form label-position="left">
+      <h-form-item label="current language">
+        <h-select v-model="locale.current" size="small" style="width: 120px; display: inline-block">
+          <h-option v-for="item of LocaleSupportLang" :key="item" :value="item" :label="item" />
+        </h-select>
+      </h-form-item>
+    </h-form>
     <p style="margin-top: 20px;">
-      {{ td().horizon-web.datePicker.now }}
+      {{ td()['horizon-web'].datePicker.now }}
     </p>
     <p>
-      {{ td().horizon-web.datePicker.today }}
+      {{ td()['horizon-web'].datePicker.today }}
     </p>
-  </n-application>
+  </h-application>
 </template>
 
 <script setup lang="ts">

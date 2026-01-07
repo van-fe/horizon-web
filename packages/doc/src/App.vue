@@ -2,7 +2,7 @@
 import Aside from './components/Aside/index.vue';
 import Main from './components/Main/index.vue';
 import Header from './components/Header/index.vue';
-import { NSuitPad } from '@aurora/horizon-web-pad';
+// import { NSuitPad } from '@aurora/horizon-web-pad';
 import { routes } from './routes';
 import { inject, provide, ref } from 'vue';
 import type { ApplicationProps } from '@aurora/horizon-web';
@@ -24,23 +24,23 @@ provide(showTimeZoneInjectedKey, showTimeZone);
 </script>
 
 <template>
-  <n-suit-pad :force="padMode">
-    <n-application :locale="locale?.current" :size="size" :use-button-spacing="true" :show-time-zone="showTimeZone">
-      <n-container class="horizon-web-doc">
-        <n-header>
+  <!-- <h-suit-pad :force="padMode"> -->
+    <h-application :locale="locale?.current" :size="size" :use-button-spacing="true" :show-time-zone="showTimeZone">
+      <h-container class="horizon-web-doc">
+        <h-header>
           <Header />
-        </n-header>
-        <n-container>
-          <n-aside width="auto">
+        </h-header>
+        <h-container>
+          <h-aside width="auto">
             <Aside :menus="routes" />
-          </n-aside>
-          <n-main class="scroller-view">
+          </h-aside>
+          <h-main class="scroller-view">
             <Main>
               <router-view />
             </Main>
-          </n-main>
-        </n-container>
-      </n-container>
-    </n-application>
-  </n-suit-pad>
+          </h-main>
+        </h-container>
+      </h-container>
+    </h-application>
+  <!-- </h-suit-pad> -->
 </template>

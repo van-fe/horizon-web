@@ -1,8 +1,8 @@
 <template>
-  <n-row :gutter="10">
-    <n-col :span="6">
+  <h-row :gutter="10">
+    <h-col :span="6">
       <div class="demo-title">事件监听</div>
-      <n-select
+      <h-select
         v-model="values2"
         multiple
         allow-create
@@ -14,15 +14,15 @@
         @deselect="deselect"
         @dropdownVisibleChange="dropdownVisibleChange"
       >
-        <n-option label="中国" :value="1" />
-        <n-option :value="2" label="美国" />
-        <n-option :value="3" label="日本" />
-      </n-select>
-    </n-col>
+        <h-option label="中国" :value="1" />
+        <h-option :value="2" label="美国" />
+        <h-option :value="3" label="日本" />
+      </h-select>
+    </h-col>
 
-    <n-col :span="6">
+    <h-col :span="6">
       <div class="demo-title">事件监听 -- 确认选项</div>
-      <n-select
+      <h-select
         v-model="values3"
         multiple
         allow-create
@@ -35,12 +35,12 @@
         @deselect="deselect"
         @dropdownVisibleChange="dropdownVisibleChange"
       >
-        <n-option label="中国" :value="1" />
-        <n-option :value="2" label="美国" />
-        <n-option :value="3" label="日本" />
-      </n-select>
-    </n-col>
-  </n-row>
+        <h-option label="中国" :value="1" />
+        <h-option :value="2" label="美国" />
+        <h-option :value="3" label="日本" />
+      </h-select>
+    </h-col>
+  </h-row>
 </template>
 
 <script lang="ts">

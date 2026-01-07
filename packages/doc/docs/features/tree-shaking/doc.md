@@ -20,7 +20,7 @@ const app = createApp(App);
 app.use(HorizonWeb);
 ```
 
-通过如上的方式注册之后就可以在任意组件中使用 HorizonWeb 提供的组件能力，例如：`<n-button>`、`<n-input>` 等 vue 组件。这种方式的优点是可以无需单独注册组件，直接就可以在自定义组件中使用，但是这种方式的问题是会将全量的组件库代码构建到项目中，增大了项目体积。
+通过如上的方式注册之后就可以在任意组件中使用 HorizonWeb 提供的组件能力，例如：`<h-button>`、`<h-input>` 等 vue 组件。这种方式的优点是可以无需单独注册组件，直接就可以在自定义组件中使用，但是这种方式的问题是会将全量的组件库代码构建到项目中，增大了项目体积。
 
 ### 手动按需引入
 
@@ -49,8 +49,8 @@ app.use(NInput);
 ```ts
 // vite.config.ts
 import { defineConfig } from 'vite'
-import Components from 'unplugin-vue-components/vite'
-import { HorizonWebPluginResolvers } from '@aurora/unplugin-resolver'
+import Components from 'unplugih-vue-components/vite'
+import { HorizonWebPluginResolvers } from '@aurora/unplugih-resolver'
 
 export default defineConfig({
   // ...
@@ -82,7 +82,7 @@ app.mount('#app');
 ```vue
 // App.vue
 <template>
-  <n-button @click="clickHandle">Click Me</n-button>
+  <h-button @click="clickHandle">Click Me</h-button>
 </template>
 
 <script>
@@ -95,4 +95,4 @@ app.mount('#app');
 无需通过任何导入就可以直接使用组件，并且不会打包没有出现的代码，但是这种方式存在如下问题：
 
 * 不适合 JSX，无法在 JSX 中识别出来使用到的 horizon-web 组件
-* 使用的组件名称必须是 `<n-xxx>`，不支持`动态组件`的按需引入，如果存在动态组件(形如：`<component :is="input" />`)，则涉及到的组件请参照 `手动按需引入` 的方式进行引入
+* 使用的组件名称必须是 `<h-xxx>`，不支持`动态组件`的按需引入，如果存在动态组件(形如：`<component :is="input" />`)，则涉及到的组件请参照 `手动按需引入` 的方式进行引入

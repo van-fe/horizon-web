@@ -1,8 +1,8 @@
 <template>
-  <n-space>
-    <n-button type="normal" @click="showAlert">Alert</n-button>
-    <n-button type="normal" @click="showConfirm">Confirm</n-button>
-  </n-space>
+  <h-space>
+    <h-button type="normal" @click="showAlert">Alert</h-button>
+    <h-button type="normal" @click="showConfirm">Confirm</h-button>
+  </h-space>
 </template>
 
 <script setup lang="ts">

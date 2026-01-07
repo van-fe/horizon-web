@@ -14,30 +14,30 @@ const onTabChanged = (tab: NTabValue) => {
 </script>
 
 <template>
-  <n-space class="box" block direction="vertical">
-    <n-space>
+  <h-space class="box" block direction="vertical">
+    <h-space>
       <span class="mr-4">尺寸</span>
-      <n-radio-group v-model="size">
-        <n-radio label="mini">mini(tag 不支持 mini)</n-radio>
-        <n-radio label="small">small</n-radio>
-        <n-radio label="medium">medium(Default)</n-radio>
-        <n-radio label="large">large</n-radio>
-      </n-radio-group>
-    </n-space>
-    <n-tabs :size="size" :underline="false" :indicator="false" @change="onTabChanged">
-      <n-tab v-for="tab in tabs" :key="tab">
+      <h-radio-group v-model="size">
+        <h-radio label="mini">mini(tag 不支持 mini)</h-radio>
+        <h-radio label="small">small</h-radio>
+        <h-radio label="medium">medium(Default)</h-radio>
+        <h-radio label="large">large</h-radio>
+      </h-radio-group>
+    </h-space>
+    <h-tabs :size="size" :underline="false" :indicator="false" @change="onTabChanged">
+      <h-tab v-for="tab in tabs" :key="tab">
         <template #default="{ state }">
-          <n-tag
+          <h-tag
             :size="size === 'mini' ? 'small' : size"
             :model-value="state"
             :clickable="false"
           >
             {{ tab }}
-          </n-tag>
+          </h-tag>
         </template>
-      </n-tab>
-    </n-tabs>
-  </n-space>
+      </h-tab>
+    </h-tabs>
+  </h-space>
 </template>
 
 <style scoped>

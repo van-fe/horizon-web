@@ -1,15 +1,15 @@
 <template>
-  <n-space direction="vertical">
-    <n-space>
+  <h-space direction="vertical">
+    <h-space>
       <div>激活</div>
-      <n-select v-model="activeKey">
-        <n-option v-for="v in week" :key="v" :label="v" :value="v" />
-      </n-select>
-    </n-space>
-    <n-segmented v-model:active-key="activeKey">
-      <n-segmented-item v-for="v in week" :key="v" :label="v" />
-    </n-segmented>
-  </n-space>
+      <h-select v-model="activeKey">
+        <h-option v-for="v in week" :key="v" :label="v" :value="v" />
+      </h-select>
+    </h-space>
+    <h-segmented v-model:active-key="activeKey">
+      <h-segmented-item v-for="v in week" :key="v" :label="v" />
+    </h-segmented>
+  </h-space>
 </template>
 
 <script setup lang="ts">

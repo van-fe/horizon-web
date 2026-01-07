@@ -1,58 +1,58 @@
 <template>
   <div class="wrapper">
-    <n-form label-position="left" label-vertical-align="middle" label-width="200px">
-      <n-form-item label="Enable Create Pin Flags">
-        <n-radio-group v-model="enableCreatePinFlags">
-          <n-radio :label="true">True</n-radio>
-          <n-radio :label="false">False</n-radio>
-        </n-radio-group>
-      </n-form-item>
-      <n-form-item label="Reserve Event">
-        <n-radio-group v-model="reserveEvent">
-          <n-radio :label="1">Don't reserve</n-radio>
-          <n-radio :label="2">Reserve original</n-radio>
-          <n-radio :label="3">Reserve and modify</n-radio>
-        </n-radio-group>
-      </n-form-item>
-      <n-form-item label="Show Spacing Between Flags">
-        <n-radio-group v-model="showSpacingBetweenFlags">
-          <n-radio :label="true">True</n-radio>
-          <n-radio :label="false">False</n-radio>
-        </n-radio-group>
-      </n-form-item>
-      <n-form-item label="Create Flag Can Though Disable Date Or Hour">
-        <n-radio-group v-model="createFlagCanThoughDisableDateOrHour">
-          <n-radio :label="true">Yes</n-radio>
-          <n-radio :label="false">No</n-radio>
-        </n-radio-group>
-      </n-form-item>
-      <n-form-item label="Hour Format">
-        <n-radio-group v-model="hourFormat">
-          <n-radio label="12">12</n-radio>
-          <n-radio label="24">24</n-radio>
-        </n-radio-group>
-      </n-form-item>
-    </n-form>
-    <n-calendar
-      v-model:pin-flags="pinFlags"
+    <h-form label-position="left" label-vertical-align="middle" label-width="200px">
+      <h-form-item label="Enable Create Pin Flags">
+        <h-radio-group v-model="enableCreatePinFlags">
+          <h-radio :label="true">True</h-radio>
+          <h-radio :label="false">False</h-radio>
+        </h-radio-group>
+      </h-form-item>
+      <h-form-item label="Reserve Event">
+        <h-radio-group v-model="reserveEvent">
+          <h-radio :label="1">Don't reserve</h-radio>
+          <h-radio :label="2">Reserve original</h-radio>
+          <h-radio :label="3">Reserve and modify</h-radio>
+        </h-radio-group>
+      </h-form-item>
+      <h-form-item label="Show Spacing Between Flags">
+        <h-radio-group v-model="showSpacingBetweenFlags">
+          <h-radio :label="true">True</h-radio>
+          <h-radio :label="false">False</h-radio>
+        </h-radio-group>
+      </h-form-item>
+      <h-form-item label="Create Flag Can Though Disable Date Or Hour">
+        <h-radio-group v-model="createFlagCanThoughDisableDateOrHour">
+          <h-radio :label="true">Yes</h-radio>
+          <h-radio :label="false">No</h-radio>
+        </h-radio-group>
+      </h-form-item>
+      <h-form-item label="Hour Format">
+        <h-radio-group v-model="hourFormat">
+          <h-radio label="12">12</h-radio>
+          <h-radio label="24">24</h-radio>
+        </h-radio-group>
+      </h-form-item>
+    </h-form>
+    <h-calendar
+      v-model:pih-flags="pinFlags"
       :pickable="true"
       mode="week"
       :mode-switchable="true"
       :mode-switchable-list="['week', 'day']"
-      :enable-create-pin-flags="enableCreatePinFlags"
-      :pin-flags-show-time="true"
+      :enable-create-pih-flags="enableCreatePinFlags"
+      :pih-flags-show-time="true"
       :hour-format="hourFormat"
-      :creating-pin-flag-callback="onCreatingPinFlagCallback"
+      :creating-pih-flag-callback="onCreatingPinFlagCallback"
       :creat-finish-flag-callback="onCreatFinishFlagCallback"
-      :create-flag-can-though-disable-date-or-hour="createFlagCanThoughDisableDateOrHour"
-      :show-spacing-between-flags="showSpacingBetweenFlags"
+      :create-flag-cah-though-disable-date-or-hour="createFlagCanThoughDisableDateOrHour"
+      :show-spacing-betweeh-flags="showSpacingBetweenFlags"
       :disable-hours="disableHours"
       @pinFlagClick="onFlagClick"
     >
       <template #dayHeader="dayStr, dayObj, isToday">
         {{ dayStr }} {{ dayObj.format('dddd') }} {{ isToday ? 'Today' : '' }}
       </template>
-    </n-calendar>
+    </h-calendar>
   </div>
 </template>
 
@@ -147,10 +147,10 @@ function disableHours(date: Dayjs) {
   max-height: 1000px;
   display: flex;
   flex-direction: column;
-  min-height: 0;
+  mih-height: 0;
 }
 
-.wrapper .n-calendar {
+.wrapper .h-calendar {
   flex: 1;
 }
 </style>

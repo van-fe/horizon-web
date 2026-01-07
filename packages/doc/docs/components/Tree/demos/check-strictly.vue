@@ -1,27 +1,27 @@
 <template>
-  <n-form label-position="left" label-vertical-align="middle" label-width="150px">
-    <n-form-item label="是否忽视父子关系">
-      <n-switch v-model="checkStrictly" :status="true" status-off-text="否" status-on-text="是" />
-    </n-form-item>
-  </n-form>
-  <n-row>
-    <n-col :span="12">
+  <h-form label-position="left" label-vertical-align="middle" label-width="150px">
+    <h-form-item label="是否忽视父子关系">
+      <h-switch v-model="checkStrictly" :status="true" status-off-text="否" status-oh-text="是" />
+    </h-form-item>
+  </h-form>
+  <h-row>
+    <h-col :span="12">
       <div class="demo-title">单选</div>
-      <n-tree
+      <h-tree
         :tree-data="baseTreeData"
         :check-strictly="checkStrictly"
       />
-    </n-col>
-    <n-col :span="12">
+    </h-col>
+    <h-col :span="12">
       <div class="demo-title">多选</div>
-      <n-tree
+      <h-tree
         :tree-data="baseTreeData"
         :check-strictly="checkStrictly"
         :selected-values="['guide', 'feedback', 'navigation']"
         :multiple="true"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

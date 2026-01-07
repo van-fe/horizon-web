@@ -1,34 +1,34 @@
 <template>
-  <n-form label-position="left" label-vertical-align="middle">
-    <n-form-item label="size">
-      <n-radio-group v-model="size">
-        <n-radio label="small" />
-        <n-radio label="medium" />
-        <n-radio label="large" />
-      </n-radio-group>
-    </n-form-item>
-    <n-form-item label="selectStyle">
-      <n-radio-group v-model="selectStyle">
-        <n-radio label="normal" />
-        <n-radio label="emphasize" />
-        <n-radio label="no-border" />
-      </n-radio-group>
-    </n-form-item>
-  </n-form>
-  <n-row>
-    <n-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
+  <h-form label-position="left" label-vertical-align="middle">
+    <h-form-item label="size">
+      <h-radio-group v-model="size">
+        <h-radio label="small" />
+        <h-radio label="medium" />
+        <h-radio label="large" />
+      </h-radio-group>
+    </h-form-item>
+    <h-form-item label="selectStyle">
+      <h-radio-group v-model="selectStyle">
+        <h-radio label="normal" />
+        <h-radio label="emphasize" />
+        <h-radio label="no-border" />
+      </h-radio-group>
+    </h-form-item>
+  </h-form>
+  <h-row>
+    <h-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
       <div class="demo-title">默认国际化配置</div>
-      <n-select v-model="value" :multiple="true" :use-statistic="true" :to-body="false" :select-style="selectStyle" :clearable="true" :size="size">
-        <n-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
-      </n-select>
-    </n-col>
-    <n-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
+      <h-select v-model="value" :multiple="true" :use-statistic="true" :to-body="false" :select-style="selectStyle" :clearable="true" :size="size">
+        <h-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
+      </h-select>
+    </h-col>
+    <h-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
       <div class="demo-title">自定义为”城市标签“</div>
-      <n-select v-model="value2" :multiple="true" :use-statistic="true" statistic-text="城市标签" :to-body="false" :select-style="selectStyle" :clearable="true" :size="size">
-        <n-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
-      </n-select>
-    </n-col>
-  </n-row>
+      <h-select v-model="value2" :multiple="true" :use-statistic="true" statistic-text="城市标签" :to-body="false" :select-style="selectStyle" :clearable="true" :size="size">
+        <h-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
+      </h-select>
+    </h-col>
+  </h-row>
 
 </template>
 

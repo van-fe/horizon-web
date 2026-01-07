@@ -1,18 +1,18 @@
 <template>
-  <n-form label-vertical-align="middle" label-position="left">
-    <n-form-item label="是否将文件传输到后台上传">
-      <n-switch v-model="useBackground" />
-    </n-form-item>
-    <n-form-item label="后台上传是否显示">
-      <n-switch v-model="backgroundVisible" />
-    </n-form-item>
-    <n-form-item label="是否显示文件列表">
-      <n-switch v-model="showFileList" />
-    </n-form-item>
-  </n-form>
-  <n-row>
-    <n-col :span="24">
-      <n-upload
+  <h-form label-vertical-align="middle" label-position="left">
+    <h-form-item label="是否将文件传输到后台上传">
+      <h-switch v-model="useBackground" />
+    </h-form-item>
+    <h-form-item label="后台上传是否显示">
+      <h-switch v-model="backgroundVisible" />
+    </h-form-item>
+    <h-form-item label="是否显示文件列表">
+      <h-switch v-model="showFileList" />
+    </h-form-item>
+  </h-form>
+  <h-row>
+    <h-col :span="24">
+      <h-upload
         id="background-uploader"
         v-model:use-background="useBackground"
         action="https://horizon-web-inspector.nioint.com/upload-mock"
@@ -20,17 +20,17 @@
         :show-file-list="showFileList"
         :auto-upload="false"
       />
-    </n-col>
-    <n-col :span="24">
-      <n-upload
+    </h-col>
+    <h-col :span="24">
+      <h-upload
         v-model:use-background="useBackground"
         action="https://horizon-web-inspector.nioint.com/upload-mock"
         button-text="多选自动上传"
         :multiple="true"
         :show-file-list="showFileList"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

@@ -1,55 +1,55 @@
 <template>
   <div class="mb-4">
-    <n-popover class="mr-4" :hover-hide-delay="100" popper-class="delay_popper">
+    <h-popover class="mr-4" :hover-hide-delay="100" popper-class="delay_popper">
       <template #reference>
-        <n-button :plain="true">hoverHideDelay: 100</n-button>
+        <h-button :plain="true">hoverHideDelay: 100</h-button>
       </template>
       <template #popper>
         <demo-content></demo-content>
       </template>
-    </n-popover>
-    <n-popover class="mr-4" :hover-hide-delay="0" popper-class="delay_popper">
+    </h-popover>
+    <h-popover class="mr-4" :hover-hide-delay="0" popper-class="delay_popper">
       <template #reference>
-        <n-button :plain="true">hoverHideDelay: 0</n-button>
+        <h-button :plain="true">hoverHideDelay: 0</h-button>
       </template>
       <template #popper>
         <demo-content></demo-content>
       </template>
-    </n-popover>
-    <n-popover class="mr-4" :hover-hide-delay="500" popper-class="delay_popper">
+    </h-popover>
+    <h-popover class="mr-4" :hover-hide-delay="500" popper-class="delay_popper">
       <template #reference>
-        <n-button :plain="true">hoverHideDelay: 500</n-button>
+        <h-button :plain="true">hoverHideDelay: 500</h-button>
       </template>
       <template #popper>
         <demo-content></demo-content>
       </template>
-    </n-popover>
+    </h-popover>
   </div>
   <div class="mb-4">
-    <n-popover class="mr-4" :hover-show-delay="0" popper-class="delay_popper">
+    <h-popover class="mr-4" :hover-show-delay="0" popper-class="delay_popper">
       <template #reference>
-        <n-button :plain="true">hoverShowDelay: 0</n-button>
+        <h-button :plain="true">hoverShowDelay: 0</h-button>
       </template>
       <template #popper>
         <demo-content></demo-content>
       </template>
-    </n-popover>
-    <n-popover class="mr-4" :hover-show-delay="100" popper-class="delay_popper">
+    </h-popover>
+    <h-popover class="mr-4" :hover-show-delay="100" popper-class="delay_popper">
       <template #reference>
-        <n-button :plain="true">hoverShowDelay: 100</n-button>
+        <h-button :plain="true">hoverShowDelay: 100</h-button>
       </template>
       <template #popper>
         <demo-content></demo-content>
       </template>
-    </n-popover>
-    <n-popover class="mr-4" :hover-show-delay="500" popper-class="delay_popper">
+    </h-popover>
+    <h-popover class="mr-4" :hover-show-delay="500" popper-class="delay_popper">
       <template #reference>
-        <n-button :plain="true">hoverShowDelay: 500</n-button>
+        <h-button :plain="true">hoverShowDelay: 500</h-button>
       </template>
       <template #popper>
         <demo-content></demo-content>
       </template>
-    </n-popover>
+    </h-popover>
   </div>
 </template>
 

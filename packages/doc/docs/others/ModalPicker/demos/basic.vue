@@ -1,7 +1,7 @@
 <template>
-  <n-form>
-    <n-form-item label="Demo">
-      <n-modal-picker :clearable="true" :need-confirm="true">111</n-modal-picker>
-    </n-form-item>
-  </n-form>
+  <h-form>
+    <h-form-item label="Demo">
+      <h-modal-picker :clearable="true" :need-confirm="true">111</h-modal-picker>
+    </h-form-item>
+  </h-form>
 </template>

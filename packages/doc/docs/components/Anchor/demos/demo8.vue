@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="anchor-wrap">
-      <n-anchor class="anchor-wrap" scroll-container="#specialThree" :change-hash="false" :show-title-suffix="true" :auto-render="true" :auto-render-rules="['h4', 'h5', 'h6']" />
+      <h-anchor class="anchor-wrap" scroll-container="#specialThree" :change-hash="false" :show-title-suffix="true" :auto-render="true" :auto-render-rules="['h4', 'h5', 'h6']" />
     </div>
     <div id="specialThree" class="article-wrap">
       <section>

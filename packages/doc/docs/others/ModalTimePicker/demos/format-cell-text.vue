@@ -1,9 +1,9 @@
 <template>
-  <n-row>
-    <n-col :span="6">
-      <n-modal-time-picker v-model="value" start-at="8" end-at="32" :format-cell-text="formatCellText" :format-trigger-text="formatTriggerText" />
-    </n-col>
-  </n-row>
+  <h-row>
+    <h-col :span="6">
+      <h-modal-time-picker v-model="value" start-at="8" end-at="32" :format-cell-text="formatCellText" :format-trigger-text="formatTriggerText" />
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

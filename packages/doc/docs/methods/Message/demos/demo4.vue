@@ -1,5 +1,5 @@
 <template>
-  <n-button type="normal" @click="openHTML">使用 HTML 字符串</n-button>
+  <h-button type="normal" @click="openHTML">使用 HTML 字符串</h-button>
 </template>
 
 <script lang="ts" setup>

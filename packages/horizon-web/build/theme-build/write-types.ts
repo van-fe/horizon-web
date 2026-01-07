@@ -7,7 +7,7 @@ export default function (sumVariables: Record<string, string>) {
   let typesContent = 'export interface ThemeType {\n';
 
   Object.entries(sumVariables).forEach(([name]) => {
-    typesContent += `  ${snakeCase(name.replace(/^--n-/, ''))}?: string;\n`;
+    typesContent += `  ${snakeCase(name.replace(/^--h-/, ''))}?: string;\n`;
   });
 
   typesContent += '}';

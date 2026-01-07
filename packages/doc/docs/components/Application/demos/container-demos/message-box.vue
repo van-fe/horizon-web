@@ -10,15 +10,15 @@ const onClick = async () => {
 };
 </script>
 <template>
-  <n-space block direction="vertical">
-    <n-space>
+  <h-space block direction="vertical">
+    <h-space>
       <div>方法</div>
-      <n-radio-group v-model="method">
-        <n-radio value="$alert">$alert</n-radio>
-        <n-radio value="$confirm">$confirm</n-radio>
-      </n-radio-group>
-    </n-space>
+      <h-radio-group v-model="method">
+        <h-radio value="$alert">$alert</h-radio>
+        <h-radio value="$confirm">$confirm</h-radio>
+      </h-radio-group>
+    </h-space>
 
-    <n-button @click="onClick">Click</n-button>
-  </n-space>
+    <h-button @click="onClick">Click</h-button>
+  </h-space>
 </template>

@@ -33,7 +33,7 @@ describe('Option.tsx', () => {
 
       await trigger.trigger('click');
 
-      const option1 = wrapper.find('.n-select-option[data-value="1"]');
+      const option1 = wrapper.find('.h-select-option[data-value="1"]');
 
       expect(option1.classes('is-disabled')).eq(true);
 
@@ -41,7 +41,7 @@ describe('Option.tsx', () => {
 
       await nextTick();
 
-      const selectedTag = wrapper.find('.n-picker__input .n-tag');
+      const selectedTag = wrapper.find('.h-picker__input .h-tag');
 
       expect(selectedTag.exists()).eq(true);
       expect(selectedTag.classes('is-show-close')).eq(false);
@@ -74,11 +74,11 @@ describe('Option.tsx', () => {
 
       await wrapper.findComponent(HSelect).trigger('click');
 
-      const [opt1, opt2, opt3] = wrapper.findAll('.n-select-option');
+      const [opt1, opt2, opt3] = wrapper.findAll('.h-select-option');
 
-      expect(opt1.attributes('style')).contains('--n-select-max-line--option: 3;');
-      expect(opt2.attributes('style')).contains('--n-select-max-line--option: 1;');
-      expect(opt3.attributes('style')).contains('--n-select-max-line--option: 1;');
+      expect(opt1.attributes('style')).contains('--h-select-max-line--option: 3;');
+      expect(opt2.attributes('style')).contains('--h-select-max-line--option: 1;');
+      expect(opt3.attributes('style')).contains('--h-select-max-line--option: 1;');
     });
 
     test('value set object', async () => {

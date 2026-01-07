@@ -40,12 +40,12 @@ describe('ColorPicker.tsx props', () => {
 
     const board = await instance.open();
 
-    expect(board.find('.n-color-picker-edit-form__combine-input').classes('is-rgb')).toBeTruthy();
+    expect(board.find('.h-color-picker-edit-form__combine-input').classes('is-rgb')).toBeTruthy();
 
     editMode.value = 'hsl';
 
     await sleep(10);
 
-    expect(board.find('.n-color-picker-edit-form__combine-input').classes('is-hsl')).toBeTruthy();
+    expect(board.find('.h-color-picker-edit-form__combine-input').classes('is-hsl')).toBeTruthy();
   });
 });

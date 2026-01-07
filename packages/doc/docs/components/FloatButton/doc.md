@@ -27,6 +27,6 @@
 :::demo ./demos/draggable.vue :::
 
 ### 按钮组
-使用 `n-float-button-group` 可以开启按钮组
+使用 `h-float-buttoh-group` 可以开启按钮组
 
 :::demo ./demos/group.vue :::

@@ -29,7 +29,7 @@ describe('Pagination.tsx', () => {
         <HPagination total={100} v-model:currentPage={currentPage.value} onChange={onChange} />
       ));
 
-      const pageItem = wrapper.findAll('.n-pagination__pager--item:not(.is-active)');
+      const pageItem = wrapper.findAll('.h-pagination__pager--item:not(.is-active)');
 
       await pageItem[1].trigger('click');
 
@@ -42,19 +42,19 @@ describe('Pagination.tsx', () => {
 
       const wrapper = mount(() => <HPagination total={total.value} />);
 
-      expect(wrapper.findAll('.n-pagination__pager--item').length).eq(9);
+      expect(wrapper.findAll('.h-pagination__pager--item').length).eq(9);
 
       total.value = 200;
 
       await nextTick();
 
-      expect(wrapper.findAll('.n-pagination__pager--item').length).eq(9);
+      expect(wrapper.findAll('.h-pagination__pager--item').length).eq(9);
 
       total.value = 10;
 
       await nextTick();
 
-      expect(wrapper.findAll('.n-pagination__pager--item').length).eq(3);
+      expect(wrapper.findAll('.h-pagination__pager--item').length).eq(3);
     });
 
     test('pageSizes & pageSize', async () => {
@@ -81,7 +81,7 @@ describe('Pagination.tsx', () => {
 
       await sizes.trigger('click');
 
-      const sizesItems = wrapper.findAll('.n-pagination__sizes-item');
+      const sizesItems = wrapper.findAll('.h-pagination__sizes-item');
 
       expect(sizesItems.length).eq(3);
 
@@ -97,7 +97,7 @@ describe('Pagination.tsx', () => {
       await sizes.trigger('click');
       await sizes.trigger('click');
 
-      const sizesItems2 = wrapper.findAll('.n-pagination__sizes-item');
+      const sizesItems2 = wrapper.findAll('.h-pagination__sizes-item');
 
       expect(sizesItems2.length).eq(4);
 
@@ -112,13 +112,13 @@ describe('Pagination.tsx', () => {
 
       const wrapper = mount(() => <HPagination total={100} pagerCount={pagerCount.value} />);
 
-      expect(wrapper.findAll('.n-pagination__pager--item').length).eq(9);
+      expect(wrapper.findAll('.h-pagination__pager--item').length).eq(9);
 
       pagerCount.value = 9;
 
       await nextTick();
 
-      expect(wrapper.findAll('.n-pagination__pager--item').length).eq(11);
+      expect(wrapper.findAll('.h-pagination__pager--item').length).eq(11);
     });
 
     test('layout', async () => {
@@ -239,7 +239,7 @@ describe('Pagination.tsx', () => {
       ).toBeTruthy();
 
       expect(
-        wrapper.findComponent(Sizes).find('.n-pagination__sizes').classes('is-disabled'),
+        wrapper.findComponent(Sizes).find('.h-pagination__sizes').classes('is-disabled'),
       ).toBeTruthy();
     });
 
@@ -302,7 +302,7 @@ describe('Pagination.tsx', () => {
       expect(currentPage.value).eq(5);
       expect(onClickNextPage).toHaveBeenCalledOnce();
 
-      await wrapper.find('.n-pagination__pager--item[data-num="5"]').trigger('click');
+      await wrapper.find('.h-pagination__pager--item[data-num="5"]').trigger('click');
 
       expect(currentPage.value).eq(5);
       expect(onClickCurrentPage).toHaveBeenCalledOnce();
@@ -356,7 +356,7 @@ describe('Pagination.tsx', () => {
       await sizes.trigger('click');
 
       await sizes
-        .findAll('.n-pagination__sizes-item')
+        .findAll('.h-pagination__sizes-item')
         .find(curr => curr.text() === '50')
         ?.trigger('click');
 

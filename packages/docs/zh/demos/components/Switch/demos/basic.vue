@@ -1,5 +1,5 @@
 <template>
-  <n-switch v-model="currentRef" label="Some text" status />
+  <h-switch v-model="currentRef" label="Some text" status />
 </template>
 
 <script lang="ts">

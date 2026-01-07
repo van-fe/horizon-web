@@ -15,35 +15,35 @@ const tabs = ref<number[]>(
 </script>
 
 <template>
-  <div class="mb-4 flex align-center">
+  <div class="mb-4 flex aligh-center">
     <span class="mr-4">类型</span>
-    <n-radio-group v-model="cardType">
-      <n-radio label="line">line(Default)</n-radio>
-      <n-radio label="card">card</n-radio>
-      <n-radio label="segment" disabled>segment（请使用 NSegmented 替代）</n-radio>
-      <n-radio label="page">page(不支持尺寸调整)</n-radio>
-    </n-radio-group>
+    <h-radio-group v-model="cardType">
+      <h-radio label="line">line(Default)</h-radio>
+      <h-radio label="card">card</h-radio>
+      <h-radio label="segment" disabled>segment（请使用 NSegmented 替代）</h-radio>
+      <h-radio label="page">page(不支持尺寸调整)</h-radio>
+    </h-radio-group>
   </div>
-  <div class="mb-4 flex align-center">
+  <div class="mb-4 flex aligh-center">
     <span class="mr-4">尺寸</span>
-    <n-radio-group v-model="size" :disabled="cardType === 'page'">
-      <n-radio label="mini">mini</n-radio>
-      <n-radio label="small">small</n-radio>
-      <n-radio label="medium">medium(Default)</n-radio>
-      <n-radio label="large">large</n-radio>
-    </n-radio-group>
+    <h-radio-group v-model="size" :disabled="cardType === 'page'">
+      <h-radio label="mini">mini</h-radio>
+      <h-radio label="small">small</h-radio>
+      <h-radio label="medium">medium(Default)</h-radio>
+      <h-radio label="large">large</h-radio>
+    </h-radio-group>
   </div>
-  <div class="mb-8 flex align-center">
+  <div class="mb-8 flex aligh-center">
     <span class="mr-4">其他</span>
-    <div class="flex align-center" style="column-gap: 10px">
-      <n-checkbox v-model="scrollable" label="标签可滑动" />
-      <n-checkbox v-model="focusable" label="自动滑动到激活元素" />
-      <n-checkbox v-model="arrow" label="超长页签使用箭头" />
+    <div class="flex aligh-center" style="column-gap: 10px">
+      <h-checkbox v-model="scrollable" label="标签可滑动" />
+      <h-checkbox v-model="focusable" label="自动滑动到激活元素" />
+      <h-checkbox v-model="arrow" label="超长页签使用箭头" />
     </div>
   </div>
   <div class="flex">
     <div class="box">
-      <n-tabs
+      <h-tabs
         v-model:active-key="activeKey"
         :default-active-key="1"
         :type="cardType"
@@ -52,8 +52,8 @@ const tabs = ref<number[]>(
         :focusable="focusable"
         :scrollable="scrollable"
       >
-        <n-tab v-for="key in tabs" :key="key" :label="`Tab${key}`" />
-      </n-tabs>
+        <h-tab v-for="key in tabs" :key="key" :label="`Tab${key}`" />
+      </h-tabs>
     </div>
   </div>
 </template>

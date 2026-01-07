@@ -1,15 +1,15 @@
 <template>
-  <n-color-picker v-model="modelValue">
+  <h-color-picker v-model="modelValue">
     <template #trigger="color">
-      <n-button icon="edit" :link="true" :style="{ color: color.resultsValue.value }" />
+      <h-button icon="edit" :link="true" :style="{ color: color.resultsValue.value }" />
     </template>
-  </n-color-picker>
+  </h-color-picker>
 
-  <n-color-picker v-model="modelValue2">
+  <h-color-picker v-model="modelValue2">
     <template #trigger="color">
-      <n-button :plain="true">Pick Color {{ color.resultsValue.value ? `: ${color.resultsValue.value}` : '' }}</n-button>
+      <h-button :plain="true">Pick Color {{ color.resultsValue.value ? `: ${color.resultsValue.value}` : '' }}</h-button>
     </template>
-  </n-color-picker>
+  </h-color-picker>
 </template>
 
 <script setup lang="ts">
@@ -20,7 +20,7 @@ const modelValue2 = ref();
 </script>
 
 <style>
-.n-color-picker--square + .n-color-picker--square {
-  margin-left: 16px;
+.h-color-picker--square + .h-color-picker--square {
+  margih-left: 16px;
 }
 </style>

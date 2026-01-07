@@ -25,7 +25,7 @@ export default defineComponent({
   emits: useSegmentedItemEmits,
   setup(props, { slots, emit }: HorizonWebSetupContext<SegmentedItemEmits, SegmentedItemSlots>) {
     const ctx = inject(contextKey);
-    if (!ctx) throw new Error('Please using <n-segmented-item /> in the <n-segmented />');
+    if (!ctx) throw new Error('Please using <h-segmented-item /> in the <h-segmented />');
 
     const cls = new ComponentClassBlock('segmented');
 

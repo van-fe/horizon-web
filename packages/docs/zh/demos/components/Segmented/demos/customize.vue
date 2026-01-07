@@ -1,67 +1,67 @@
 <template>
-  <n-space direction="vertical">
-    <n-segmented default-active-key="user">
-      <n-segmented-item key="user">
+  <h-space direction="vertical">
+    <h-segmented default-active-key="user">
+      <h-segmented-item key="user">
         <template #default>
-          <n-space size="small" direction="vertical" align="center">
-            <n-avatar size="small" />
-            <n-tag type="info" :clickable="false">User</n-tag>
-          </n-space>
+          <h-space size="small" direction="vertical" align="center">
+            <h-avatar size="small" />
+            <h-tag type="info" :clickable="false">User</h-tag>
+          </h-space>
         </template>
-      </n-segmented-item>
-      <n-segmented-item key="employee">
+      </h-segmented-item>
+      <h-segmented-item key="employee">
         <template #default>
-          <n-space size="small" direction="vertical" align="center">
-            <n-avatar size="small" />
-            <n-tag :clickable="false">Emp</n-tag>
-          </n-space>
+          <h-space size="small" direction="vertical" align="center">
+            <h-avatar size="small" />
+            <h-tag :clickable="false">Emp</h-tag>
+          </h-space>
         </template>
-      </n-segmented-item>
-      <n-segmented-item key="lv">
+      </h-segmented-item>
+      <h-segmented-item key="lv">
         <template #default>
-          <n-space size="small" direction="vertical" align="center">
-            <n-avatar size="small" />
-            <n-tag type="success" :clickable="false">LV</n-tag>
-          </n-space>
+          <h-space size="small" direction="vertical" align="center">
+            <h-avatar size="small" />
+            <h-tag type="success" :clickable="false">LV</h-tag>
+          </h-space>
         </template>
-      </n-segmented-item>
-    </n-segmented>
+      </h-segmented-item>
+    </h-segmented>
 
-    <n-segmented default-active-key="spring">
-      <n-segmented-item key="spring">
+    <h-segmented default-active-key="spring">
+      <h-segmented-item key="spring">
         <template #default>
-          <n-space size="small" direction="vertical" align="center">
+          <h-space size="small" direction="vertical" align="center">
             <div>Spring</div>
             <div>Jan-Mar</div>
-          </n-space>
+          </h-space>
         </template>
-      </n-segmented-item>
-      <n-segmented-item key="summer">
+      </h-segmented-item>
+      <h-segmented-item key="summer">
         <template #default>
-          <n-space size="small" direction="vertical" align="center">
+          <h-space size="small" direction="vertical" align="center">
             <div>Summer</div>
             <div>Apr-Jun</div>
-          </n-space>
+          </h-space>
         </template>
-      </n-segmented-item>
-      <n-segmented-item key="fall">
+      </h-segmented-item>
+      <h-segmented-item key="fall">
         <template #default>
-          <n-space size="small" direction="vertical" align="center">
+          <h-space size="small" direction="vertical" align="center">
             <div>Fall</div>
             <div>Jul-Sep</div>
-          </n-space>
+          </h-space>
         </template>
-      </n-segmented-item>
-      <n-segmented-item key="winter">
+      </h-segmented-item>
+      <h-segmented-item key="winter">
         <template #default>
-          <n-space size="small" direction="vertical" align="center">
+          <h-space size="small" direction="vertical" align="center">
             <div>Winter</div>
             <div>Oct-Dec</div>
-          </n-space>
+          </h-space>
         </template>
-      </n-segmented-item>
-    </n-segmented>
-  </n-space>
+      </h-segmented-item>
+    </h-segmented>
+  </h-space>
 </template>
 
 <script setup lang="ts"></script>

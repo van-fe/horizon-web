@@ -1,5 +1,4 @@
 import * as VueRouter from 'vue-router';
-import { getRouterBase } from '@nio-wad/fx-web';
 import ComponentsPage from '../pages/components';
 import routerJson from './router.json';
 import type { RouteRecordRaw } from 'vue-router';
@@ -50,12 +49,6 @@ const routes: RouteRecordRaw[] = [
     children: generateRoutes({ dir: 'features', multi: true }),
   },
   {
-    path: '/style-animation',
-    name: 'Styles & Animations',
-    component: ComponentsPage,
-    children: generateRoutes({ dir: 'style-animation' }),
-  },
-  {
     path: '/components',
     name: 'Components',
     component: ComponentsPage,
@@ -83,7 +76,7 @@ const routes: RouteRecordRaw[] = [
 ];
 
 const router = VueRouter.createRouter({
-  history: VueRouter.createWebHistory(getRouterBase()),
+  history: VueRouter.createWebHistory(),
   routes,
 });
 

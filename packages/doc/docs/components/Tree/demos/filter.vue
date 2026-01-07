@@ -1,23 +1,23 @@
 <template>
-  <n-form>
-    <n-form-item label="whether to hide children">
-      <n-switch v-model="filterToHideChildren" status />
-    </n-form-item>
-  </n-form>
-  <n-row>
-    <n-col :span="12">
+  <h-form>
+    <h-form-item label="whether to hide children">
+      <h-switch v-model="filterToHideChildren" status />
+    </h-form-item>
+  </h-form>
+  <h-row>
+    <h-col :span="12">
       <div class="demo-title">Single</div>
-      <n-tree
+      <h-tree
         :tree-data="baseTreeData"
         :filterable="true"
         :max-height="300"
         :filter-to-hide-children="filterToHideChildren"
         @update:filter-value="handleFilterValue"
       />
-    </n-col>
-    <n-col :span="12">
+    </h-col>
+    <h-col :span="12">
       <div class="demo-title">Multiple</div>
-      <n-tree
+      <h-tree
         :tree-data="baseTreeData"
         :filterable="true"
         :max-height="300"
@@ -25,8 +25,8 @@
         :filter-to-hide-children="filterToHideChildren"
         @update:filter-value="handleFilterValue"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

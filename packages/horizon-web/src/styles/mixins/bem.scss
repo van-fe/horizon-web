@@ -4,6 +4,10 @@
 @use './config';
 @use './function';
 
+$-nest: null;
+$-block: null;
+$-element: null;
+
 // BEM https://juejin.cn/post/6844903672162304013
 @mixin b($block, $at-root: true) {
   $-block: function.block($block) !global;
@@ -36,7 +40,7 @@
         }
       }
     }
-  } @else if $-nest != null and str-length($-nest) > 0 {
+  } @else if $-nest != null and string.length($-nest) > 0 {
     @at-root {
       .#{$-nest} {
         #{$current-selector} {
@@ -60,7 +64,7 @@
 /**
  * 修饰语，允许多个
  * 使用: @include mixins.m('line', 'underline')
- * 编译: .n-tabs--line, .n-tabs--underline
+ * 编译: .h-tabs--line, .h-tabs--underline
  */
 @mixin m($modifier...) {
   $selector: &;
@@ -80,7 +84,7 @@
 /**
  * 并行的 modifier
  * 使用: @include mixins.parallel-modifier('line', 'underline')
- * 编译: .n-tabs--line.n-tabs--underline
+ * 编译: .h-tabs--line.h-tabs--underline
  */
 @mixin parallel-modifier($modifier...) {
   $selector: &;
@@ -104,7 +108,7 @@
  *    // ...
  *  }
  * }
- * 编译: .n-calendar--c .n-calendar--d
+ * 编译: .h-calendar--c .h-calendar--d
  */
 @mixin standalone-modifier($modifier) {
   @at-root {
@@ -230,7 +234,7 @@
 /**
  * 带前缀的修饰语
  * 使用: @include mixins.prev-modifier('>', 'line', 'underline')
- * 编译: .n-tabs > .n-tabs--line, .n-tabs > .n-tabs--underline
+ * 编译: .h-tabs > .h-tabs--line, .h-tabs > .h-tabs--underline
  */
 @mixin prev-modifier($prev, $modifier...) {
   @at-root {

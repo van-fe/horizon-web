@@ -1,6 +1,6 @@
 <template>
-  <n-space>
-    <n-upload
+  <h-space>
+    <h-upload
       v-model="fileList"
       action="https://horizon-web-inspector.nioint.com/upload-mock"
       :multiple="true"
@@ -17,7 +17,7 @@
       @fail="onFailFile"
       @exceed="onExceed"
     />
-  </n-space>
+  </h-space>
 </template>
 
 <script lang="ts" setup>

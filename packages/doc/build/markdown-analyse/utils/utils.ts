@@ -59,8 +59,8 @@ export function getHeadingContent(content: string, type: 'h2' | 'h3' = 'h2') {
   }
 
   return `<div>
-<n-link id="${content}" anchor="${content}" anchor-position="left" type="text" class="${className.join(
+<h-link id="${content}" anchor="${content}" anchor-position="left" type="text" class="${className.join(
     ' ',
-  )}">${content}</n-link>
+  )}">${content}</h-link>
 </div>`;
 }

@@ -55,19 +55,19 @@ describe('Input.tsx', () => {
     const icon = ref('time');
 
     const wrapper = mount(() => <HInput prefix-icon={icon.value} />);
-    const timeIcon = wrapper.find('.n-icon_time');
+    const timeIcon = wrapper.find('.h-icon_time');
 
     expect(timeIcon.exists()).toBe(true);
 
     icon.value = 'close';
     await nextTick();
 
-    expect(wrapper.find('.n-icon_close').exists()).toBe(true);
+    expect(wrapper.find('.h-icon_close').exists()).toBe(true);
   });
 
   test('suffix', () => {
     const wrapper = mount(() => <HInput suffix-icon="time" />);
-    const suffixIcon = wrapper.find('.n-icon_time');
+    const suffixIcon = wrapper.find('.h-icon_time');
 
     expect(suffixIcon.exists()).toBe(true);
   });
@@ -115,7 +115,7 @@ describe('Input.tsx', () => {
       />
     ));
 
-    expect(wrapper.find('.n-input__limit').exists()).toBe(true);
+    expect(wrapper.find('.h-input__limit').exists()).toBe(true);
     expect(wrapper.classes('is-out-of-exceeded')).toBe(true);
   });
 
@@ -131,7 +131,7 @@ describe('Input.tsx', () => {
       />
     ));
 
-    expect(wrapper.find('.n-input__textarea-limit').exists()).toBe(true);
+    expect(wrapper.find('.h-input__textarea-limit').exists()).toBe(true);
     expect(wrapper.classes('is-out-of-exceeded')).toBe(true);
   });
 
@@ -192,7 +192,7 @@ describe('Input.tsx', () => {
         />
       ));
       const element = wrapper.find('input');
-      const clearIcon = wrapper.find('.n-input--clear-action');
+      const clearIcon = wrapper.find('.h-input--clear-action');
 
       expect(clearIcon.exists()).toBe(true);
 

@@ -2,19 +2,19 @@
   <div class="n-demo">
     <div class="n-demo__container">
       <div class="n-demo__title">默认随机图片头像</div>
-      <n-avatar />
+      <h-avatar />
     </div>
     <div class="n-demo__container">
       <div class="n-demo__title">群拼接头像(1个人)</div>
-      <n-avatar :src="src_url_1" />
+      <h-avatar :src="src_url_1" />
     </div>
     <div class="n-demo__container">
       <div class="n-demo__title">群拼接头像(2个人)</div>
-      <n-avatar :src="src_url_2" />
+      <h-avatar :src="src_url_2" />
     </div>
     <div class="n-demo__container">
       <div class="n-demo__title">群拼接头像(3个及以上)</div>
-      <n-avatar :src="src_url_3" />
+      <h-avatar :src="src_url_3" />
     </div>
   </div>
 </template>
@@ -44,13 +44,13 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-.n-demo__container {
+.h-demo__container {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
 }
 
-.n-demo__title {
+.h-demo__title {
   margin-right: 20px;
 }
 </style>

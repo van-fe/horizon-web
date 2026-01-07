@@ -60,14 +60,14 @@ describe('Calendar.tsx', () => {
       const modeSwitchableList = ref<CalendarProps['modeSwitchableList']>(['year', 'month', 'day']);
       const wrapper = mount(() => <HCalendar modeSwitchableList={modeSwitchableList.value} />);
 
-      expect(wrapper.find('.n-calendar-month').exists()).eq(true);
+      expect(wrapper.find('.h-calendar-month').exists()).eq(true);
     });
 
     test('switch list default mode if mode is not in modeSwitchableList', async () => {
       const modeSwitchableList = ref<CalendarProps['modeSwitchableList']>(['year', 'day']);
       const wrapper = mount(() => <HCalendar modeSwitchableList={modeSwitchableList.value} />);
 
-      expect(wrapper.find('.n-calendar-year').exists()).eq(true);
+      expect(wrapper.find('.h-calendar-year').exists()).eq(true);
     });
 
     test('format', async () => {
@@ -83,7 +83,7 @@ describe('Calendar.tsx', () => {
         />
       ));
       const element = wrapper.findComponent(MonthCalendar);
-      const cell = element.find('.n-calendar-month__day');
+      const cell = element.find('.h-calendar-month__day');
 
       await cell.trigger('click');
 
@@ -93,7 +93,7 @@ describe('Calendar.tsx', () => {
       await nextTick();
 
       const yearElement = wrapper.findComponent(YearCalendar);
-      const day = yearElement.find('.n-calendar-year__month--day');
+      const day = yearElement.find('.h-calendar-year__month--day');
 
       await day.trigger('click');
 
@@ -117,7 +117,7 @@ describe('Calendar.tsx', () => {
 
       // month + full
       const monthElement = wrapper.findComponent(MonthCalendar);
-      const cell = monthElement.find('.n-calendar-month__day');
+      const cell = monthElement.find('.h-calendar-month__day');
 
       await cell.trigger('click');
 
@@ -128,7 +128,7 @@ describe('Calendar.tsx', () => {
       await nextTick();
 
       const yearElement = wrapper.findComponent(YearCalendar);
-      const cell2 = yearElement.find('.n-calendar-year__month--day');
+      const cell2 = yearElement.find('.h-calendar-year__month--day');
 
       await cell2.trigger('click');
 
@@ -139,7 +139,7 @@ describe('Calendar.tsx', () => {
       await nextTick();
 
       const yearElement2 = wrapper.findComponent(YearCalendar);
-      const cell3 = yearElement2.find('.n-calendar-year__month--day:not(.is-invisible)');
+      const cell3 = yearElement2.find('.h-calendar-year__month--day:not(.is-invisible)');
 
       await cell3.trigger('click');
 
@@ -150,7 +150,7 @@ describe('Calendar.tsx', () => {
       await nextTick();
 
       const monthElement2 = wrapper.findComponent(MonthCalendar);
-      const cell4 = monthElement2.find('.n-calendar-month__day');
+      const cell4 = monthElement2.find('.h-calendar-month__day');
 
       await cell4.trigger('click');
 
@@ -174,7 +174,7 @@ describe('Calendar.tsx', () => {
         />
       ));
 
-      const monthDay = wrapper.find('.n-calendar-month__day');
+      const monthDay = wrapper.find('.h-calendar-month__day');
 
       await monthDay.trigger('click');
 
@@ -183,7 +183,7 @@ describe('Calendar.tsx', () => {
       mode.value = 'year';
       await nextTick();
 
-      const yearDay = wrapper.find('.n-calendar-year__month--day');
+      const yearDay = wrapper.find('.h-calendar-year__month--day');
 
       await yearDay.trigger('click');
 
@@ -200,7 +200,7 @@ describe('Calendar.tsx', () => {
         <HCalendar mode={mode.value} pickable={pickable.value} onDateClick={onClick} />
       ));
 
-      const monthDay = wrapper.find('.n-calendar-month__day');
+      const monthDay = wrapper.find('.h-calendar-month__day');
 
       await monthDay.trigger('click');
 
@@ -216,7 +216,7 @@ describe('Calendar.tsx', () => {
       mode.value = 'year';
       await nextTick();
 
-      const yearDay = wrapper.find('.n-calendar-year__month--day');
+      const yearDay = wrapper.find('.h-calendar-year__month--day');
 
       await yearDay.trigger('click');
 
@@ -270,7 +270,7 @@ describe('Calendar.tsx', () => {
         />
       ));
 
-      const dayCell = wrapper.find('.n-calendar-month__day');
+      const dayCell = wrapper.find('.h-calendar-month__day');
 
       // do not reserve
       await dayCell.trigger('mousedown');
@@ -319,7 +319,7 @@ describe('Calendar.tsx', () => {
     test('today', async () => {
       const date = ref('2022-11-20');
       const wrapper = mount(() => <HCalendar v-model={date.value} />);
-      const todayBtn = wrapper.find('.n-calendar__header--today');
+      const todayBtn = wrapper.find('.h-calendar__header--today');
 
       await todayBtn.trigger('click');
 
@@ -334,9 +334,9 @@ describe('Calendar.tsx', () => {
         <HCalendar v-model={date.value} onPrevClick={onPrevClick} onNextClick={onNextClick} />
       ));
 
-      const todayBtn = wrapper.find('.n-calendar__header--today');
-      const prevBtn = wrapper.find('.n-calendar__header--switcher-item.is-prev');
-      const nextBtn = wrapper.find('.n-calendar__header--switcher-item.is-next');
+      const todayBtn = wrapper.find('.h-calendar__header--today');
+      const prevBtn = wrapper.find('.h-calendar__header--switcher-item.is-prev');
+      const nextBtn = wrapper.find('.h-calendar__header--switcher-item.is-next');
 
       await todayBtn.trigger('click');
       await prevBtn.trigger('click');

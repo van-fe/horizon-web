@@ -1,13 +1,13 @@
 <template>
-  <n-form :inline="true" label-position="top">
-    <n-form-item label="可选任意节点">
-      <n-switch v-model="checkStrictly" status />
-    </n-form-item>
-  </n-form>
-  <n-row>
-    <n-col :span="6">
+  <h-form :inline="true" label-position="top">
+    <h-form-item label="可选任意节点">
+      <h-switch v-model="checkStrictly" status />
+    </h-form-item>
+  </h-form>
+  <h-row>
+    <h-col :span="6">
       <div class="demo-title">单选</div>
-      <n-cascader
+      <h-cascader
         v-model="currentVal1"
         :filterable="true"
         :check-strictly="checkStrictly"
@@ -18,10 +18,10 @@
         @focus="onFocus"
         @blur="onBlur"
       />
-    </n-col>
-    <n-col :span="6">
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">多选</div>
-      <n-cascader
+      <h-cascader
         v-model="currentVal2"
         :filterable="true"
         :options="options"
@@ -34,8 +34,8 @@
         @focus="onFocus"
         @blur="onBlur"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">
@@ -67,6 +67,6 @@ onMounted(async()=>{
 <style scoped>
 .panel-filter-box {
   padding: 12px;
-  border-bottom: 1px solid var(--n-divider-default);
+  border-bottom: 1px solid var(--h-divider-default);
 }
 </style>

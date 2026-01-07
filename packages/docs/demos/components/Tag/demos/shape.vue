@@ -1,38 +1,38 @@
 <template>
-  <n-row :gutter="10">
-    <n-col :span="12">
+  <h-row :gutter="10">
+    <h-col :span="12">
       <div class="demo-title">胶囊形</div>
-      <n-tag :clickable="false" :round="true">Default</n-tag>
-      <n-tag :clickable="false" :round="true" type="success">Success</n-tag>
-      <n-tag :clickable="false" :round="true" type="info">Info</n-tag>
-      <n-tag :clickable="false" :round="true" type="warning">Warning</n-tag>
-      <n-tag :clickable="false" :round="true" type="error">Error</n-tag>
-    </n-col>
-    <n-col :span="12">
+      <h-tag :clickable="false" :round="true">Default</h-tag>
+      <h-tag :clickable="false" :round="true" type="success">Success</h-tag>
+      <h-tag :clickable="false" :round="true" type="info">Info</h-tag>
+      <h-tag :clickable="false" :round="true" type="warning">Warning</h-tag>
+      <h-tag :clickable="false" :round="true" type="error">Error</h-tag>
+    </h-col>
+    <h-col :span="12">
       <div class="demo-title">正方形</div>
-      <n-tag :clickable="false" :equally="true">普</n-tag>
-      <n-tag :clickable="false" :equally="true" type="success">成</n-tag>
-      <n-tag :clickable="false" :equally="true" type="info">进</n-tag>
-      <n-tag :clickable="false" :equally="true" type="warning">警</n-tag>
-      <n-tag :clickable="false" :equally="true" type="error">错</n-tag>
-    </n-col>
-  </n-row>
-  <n-row :gutter="10">
-    <n-col :span="12">
-      <n-tag :clickable="false" :plain="true" :round="true">Default</n-tag>
-      <n-tag :clickable="false" :plain="true" :round="true" type="success">Success</n-tag>
-      <n-tag :clickable="false" :plain="true" :round="true" type="info">Info</n-tag>
-      <n-tag :clickable="false" :plain="true" :round="true" type="warning">Warning</n-tag>
-      <n-tag :clickable="false" :plain="true" :round="true" type="error">Error</n-tag>
-    </n-col>
-    <n-col :span="12">
-      <n-tag :clickable="false" :plain="true" :equally="true">普</n-tag>
-      <n-tag :clickable="false" :plain="true" :equally="true" type="success">成</n-tag>
-      <n-tag :clickable="false" :plain="true" :equally="true" type="info">进</n-tag>
-      <n-tag :clickable="false" :plain="true" :equally="true" type="warning">警</n-tag>
-      <n-tag :clickable="false" :plain="true" :equally="true" type="error">错</n-tag>
-    </n-col>
-  </n-row>
+      <h-tag :clickable="false" :equally="true">普</h-tag>
+      <h-tag :clickable="false" :equally="true" type="success">成</h-tag>
+      <h-tag :clickable="false" :equally="true" type="info">进</h-tag>
+      <h-tag :clickable="false" :equally="true" type="warning">警</h-tag>
+      <h-tag :clickable="false" :equally="true" type="error">错</h-tag>
+    </h-col>
+  </h-row>
+  <h-row :gutter="10">
+    <h-col :span="12">
+      <h-tag :clickable="false" :plain="true" :round="true">Default</h-tag>
+      <h-tag :clickable="false" :plain="true" :round="true" type="success">Success</h-tag>
+      <h-tag :clickable="false" :plain="true" :round="true" type="info">Info</h-tag>
+      <h-tag :clickable="false" :plain="true" :round="true" type="warning">Warning</h-tag>
+      <h-tag :clickable="false" :plain="true" :round="true" type="error">Error</h-tag>
+    </h-col>
+    <h-col :span="12">
+      <h-tag :clickable="false" :plain="true" :equally="true">普</h-tag>
+      <h-tag :clickable="false" :plain="true" :equally="true" type="success">成</h-tag>
+      <h-tag :clickable="false" :plain="true" :equally="true" type="info">进</h-tag>
+      <h-tag :clickable="false" :plain="true" :equally="true" type="warning">警</h-tag>
+      <h-tag :clickable="false" :plain="true" :equally="true" type="error">错</h-tag>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

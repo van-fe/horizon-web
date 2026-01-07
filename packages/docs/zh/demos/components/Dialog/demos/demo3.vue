@@ -1,5 +1,5 @@
 <template>
-  <n-button
+  <h-button
     class="mr-2"
     @click="
       title = '标题';
@@ -8,8 +8,8 @@
     "
   >
     有图标时
-  </n-button>
-  <n-button
+  </h-button>
+  <h-button
     class="mr-2"
     @click="
       title = '标题';
@@ -18,8 +18,8 @@
     "
   >
     无图标时
-  </n-button>
-  <n-dialog
+  </h-button>
+  <h-dialog
     v-model="visible"
     :title="title"
     @primaryClick="onPrimary"
@@ -27,7 +27,7 @@
     icon-color="orange"
   >
     <div class="content">随便写点什么</div>
-  </n-dialog>
+  </h-dialog>
 </template>
 
 <script lang="ts">

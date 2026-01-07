@@ -1,5 +1,5 @@
 <template>
-  <n-upload
+  <h-upload
     action="https://horizon-web-inspector.nioint.com/upload-mock"
     type="drop"
     :multiple="true"
@@ -8,7 +8,7 @@
     :handle-success="handleSuccess"
     @accept-error="onAcceptError"
   />
-  <n-button class="mt-5" @click="change">修改 accept 为 .png,.jpg</n-button>
+  <h-button class="mt-5" @click="change">修改 accept 为 .png,.jpg</h-button>
 </template>
 
 <script lang="ts" setup>

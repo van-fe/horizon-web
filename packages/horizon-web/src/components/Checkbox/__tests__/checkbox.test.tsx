@@ -136,7 +136,7 @@ test('true-label/false-label', async () => {
   expect(wrapper.classes()).toContain('n-checkbox--checked');
   expect(wrapper1.classes()).toContain('n-checkbox-button--checked');
 
-  const checkedButtonElArr = wrapper2.findAll('.n-checkbox-button--checked');
+  const checkedButtonElArr = wrapper2.findAll('.h-checkbox-button--checked');
   expect(checkedButtonElArr.length).toBe(2);
 });
 
@@ -155,7 +155,7 @@ test('checked', async () => {
 
   expect(wrapper.classes()).toContain('n-checkbox-button--checked');
   expect(wrapper1.classes()).toContain('n-checkbox--checked');
-  const checkedButtonElArr = wrapper2.findAll('.n-checkbox-button--checked');
+  const checkedButtonElArr = wrapper2.findAll('.h-checkbox-button--checked');
   expect(checkedButtonElArr.length).toBe(1);
 });
 
@@ -189,13 +189,13 @@ test('checkboxGroup', async () => {
     </HCheckboxGroup>
   ));
 
-  const checkedElArr = wrapper1.findAll('.n-checkbox--checked');
+  const checkedElArr = wrapper1.findAll('.h-checkbox--checked');
   expect(checkedElArr.length).toBe(1);
-  const checkedCheckboxElArr = wrapper11.findAll('.n-checkbox--checked');
+  const checkedCheckboxElArr = wrapper11.findAll('.h-checkbox--checked');
   expect(checkedCheckboxElArr.length).toBe(2);
 
-  const checkedButtonElArr = wrapper2.findAll('.n-checkbox-button--checked');
+  const checkedButtonElArr = wrapper2.findAll('.h-checkbox-button--checked');
   expect(checkedButtonElArr.length).toBe(1);
-  const checkedCheckboxButtonElArr = wrapper22.findAll('.n-checkbox-button--checked');
+  const checkedCheckboxButtonElArr = wrapper22.findAll('.h-checkbox-button--checked');
   expect(checkedCheckboxButtonElArr.length).toBe(2);
 });

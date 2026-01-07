@@ -25,9 +25,9 @@
     >
       没有延迟
     </div>
-    <n-button v-if="!isShow" @click="isShow = true">开始加载</n-button>
-    <n-button v-if="!isShow" @click="delayShow">开始加载并在1000ms内结束</n-button>
-    <n-button v-if="isShow" @click="isShow = false">结束加载</n-button>
+    <h-button v-if="!isShow" @click="isShow = true">开始加载</h-button>
+    <h-button v-if="!isShow" @click="delayShow">开始加载并在1000ms内结束</h-button>
+    <h-button v-if="isShow" @click="isShow = false">结束加载</h-button>
   </div>
 </template>
 
@@ -45,7 +45,7 @@ function delayShow() {
 </script>
 
 <style scoped>
-.n-button + .n-button {
+.h-button + .h-button {
   margin-left: 20px;
 }
 

@@ -3,32 +3,32 @@
     <div class="block">
       <span class="title">设置 name 选择图标 :</span>
       <NIconSVG name="success_filled" />
-      <a-icon-SVG name="time" />
-      <a-icon-SVG name="nio" @click="test" />
+      <a-icoh-SVG name="time" />
+      <a-icoh-SVG name="nio" @click="test" />
     </div>
     <div class="block">
       <span class="title">设置 size 控制大小 :</span>
       <NIconSVG name="time" size="16" />
-      <a-icon-SVG name="time" />
-      <a-icon-SVG name="time" size="32" />
+      <a-icoh-SVG name="time" />
+      <a-icoh-SVG name="time" size="32" />
     </div>
     <div class="block">
       <span class="title">设置 color 控制颜色 :</span>
       <NIconSVG name="time" color="red" />
-      <a-icon-SVG name="time" color="#f6d110" />
-      <a-icon-SVG name="time" color="rgb(36, 235, 32)" />
+      <a-icoh-SVG name="time" color="#f6d110" />
+      <a-icoh-SVG name="time" color="rgb(36, 235, 32)" />
     </div>
     <div class="block">
       <span class="title">设置 spin 开启动画 :</span>
       <NIconSVG name="time" spin="cw" />
-      <a-icon-SVG name="time" spin="ccw" />
-      <a-icon-SVG name="loading" spin="cw" />
+      <a-icoh-SVG name="time" spin="ccw" />
+      <a-icoh-SVG name="loading" spin="cw" />
     </div>
     <div class="block">
       <span class="title">设置 rotate 转动方向 :</span>
       <NIconSVG name="time" :rotate="45" />
-      <a-icon-SVG name="time" :rotate="90" />
-      <a-icon-SVG name="time" :rotate="180" />
+      <a-icoh-SVG name="time" :rotate="90" />
+      <a-icoh-SVG name="time" :rotate="180" />
     </div>
   </div>
 </template>
@@ -58,11 +58,11 @@ export default defineComponent({
 }
 
 .container .block .title {
-  margin-right: 20px;
+  margih-right: 20px;
   display: inline-block;
 }
 
 .container .block .a-icon {
-  margin-right: 20px;
+  margih-right: 20px;
 }
 </style>

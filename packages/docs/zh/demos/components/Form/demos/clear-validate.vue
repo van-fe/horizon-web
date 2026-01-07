@@ -1,14 +1,14 @@
 <template>
-  <n-row>
-    <n-col>
+  <h-row>
+    <h-col>
       <div class="mr-4">必填星号位置</div>
-      <n-radio-group v-model="requireMarkPosition" size="small">
-        <n-radio-button label="left" />
-        <n-radio-button label="right" />
-      </n-radio-group>
-    </n-col>
-  </n-row>
-  <n-form
+      <h-radio-group v-model="requireMarkPosition" size="small">
+        <h-radio-button label="left" />
+        <h-radio-button label="right" />
+      </h-radio-group>
+    </h-col>
+  </h-row>
+  <h-form
     ref="formRef"
     :model="formData"
     :rules="rules"
@@ -16,28 +16,28 @@
     scroll-to-error
     @submit="submit()"
   >
-    <n-form-item label="User name" prop="username">
-      <n-input v-model="formData.username" />
-    </n-form-item>
-    <n-form-item label="Email" prop="email">
-      <n-input v-model="formData.email" />
-    </n-form-item>
-    <n-form-item label="Province" prop="province">
-      <n-select v-model="formData.province" placeholder="Please select">
-        <n-option label="Beijing" value="beijing" />
-        <n-option label="Shanghai" value="shanghai" />
-        <n-option label="Hefei" value="hefei" />
-      </n-select>
-    </n-form-item>
-    <n-form-item label="Notes" prop="notes">
-      <n-input v-model="formData.notes" type="textarea" />
-    </n-form-item>
+    <h-form-item label="User name" prop="username">
+      <h-input v-model="formData.username" />
+    </h-form-item>
+    <h-form-item label="Email" prop="email">
+      <h-input v-model="formData.email" />
+    </h-form-item>
+    <h-form-item label="Province" prop="province">
+      <h-select v-model="formData.province" placeholder="Please select">
+        <h-option label="Beijing" value="beijing" />
+        <h-option label="Shanghai" value="shanghai" />
+        <h-option label="Hefei" value="hefei" />
+      </h-select>
+    </h-form-item>
+    <h-form-item label="Notes" prop="notes">
+      <h-input v-model="formData.notes" type="textarea" />
+    </h-form-item>
     <div>
-      <n-button native-type="submit">Submit</n-button>
-      <n-button :plain="true" @click="clearValidate">Clear Validate</n-button>
-      <n-button :plain="true" @click="resetFields">Reset Fields</n-button>
+      <h-button native-type="submit">Submit</h-button>
+      <h-button :plain="true" @click="clearValidate">Clear Validate</h-button>
+      <h-button :plain="true" @click="resetFields">Reset Fields</h-button>
     </div>
-  </n-form>
+  </h-form>
 </template>
 
 <script lang="ts">
@@ -124,7 +124,7 @@ export default defineComponent({
 </script>
 
 <style>
-.n-button + .n-button {
+.h-button + .h-button {
   margin-left: 10px;
 }
 </style>

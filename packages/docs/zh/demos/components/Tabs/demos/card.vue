@@ -1,9 +1,9 @@
 <template>
-  <n-tabs v-model="currentRef" type="card">
-    <n-tab label="Tab1" name="tab1" />
-    <n-tab label="Tab2" name="tab2" />
-    <n-tab label="Tab3" name="tab3" />
-  </n-tabs>
+  <h-tabs v-model="currentRef" type="card">
+    <h-tab label="Tab1" name="tab1" />
+    <h-tab label="Tab2" name="tab2" />
+    <h-tab label="Tab3" name="tab3" />
+  </h-tabs>
 </template>
 
 <script lang="ts">

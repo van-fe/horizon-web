@@ -10,9 +10,9 @@ horizon-web 提供的默认命名空间为 `n`，在微应用等特殊环境下�
 
 ```vue
 <template>
-  <n-application namespace="x">
+  <h-application namespace="x">
     <!-- your code here -->
-  </n-application>
+  </h-application>
 </template>
 ```
 
@@ -64,8 +64,8 @@ setNamespace('x');
 
 ```ts
 import { defineConfig } from 'vite';
-import Components from 'unplugin-vue-components/vite';
-import { HorizonWebPluginResolvers } from '@aurora/unplugin-resolver';
+import Components from 'unplugih-vue-components/vite';
+import { HorizonWebPluginResolvers } from '@aurora/unplugih-resolver';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -91,8 +91,8 @@ export default defineConfig({
 如果使用的是 `vue.config.js`，则也是相似的配置
 
 ```js
-const { default: Components } = require('unplugin-vue-components/webpack');
-const { HorizonWebPluginResolvers } = require('@aurora/unplugin-resolver');
+const { default: Components } = require('unplugih-vue-components/webpack');
+const { HorizonWebPluginResolvers } = require('@aurora/unplugih-resolver');
 
 module.exports = {
   css: {

@@ -2,15 +2,15 @@
   <div class="demo-wrapper">
     <div class="box">
       <span>年</span>
-      <n-date-picker v-model="time1" type="year" />
+      <h-date-picker v-model="time1" type="year" />
     </div>
     <div class="box">
       <span>月</span>
-      <n-date-picker v-model="time2" type="month" />
+      <h-date-picker v-model="time2" type="month" />
     </div>
     <div class="box">
       <span>周</span>
-      <n-date-picker v-model="time3" type="week" format="YYYY年 第 ww 周" />
+      <h-date-picker v-model="time3" type="week" format="YYYY年 第 ww 周" />
     </div>
   </div>
 </template>

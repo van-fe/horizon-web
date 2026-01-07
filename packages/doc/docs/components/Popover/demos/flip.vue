@@ -1,44 +1,44 @@
 <template>
   <div class="mb-4">
-    <n-popover class="mr-4" popper-class="flip_popover" trigger="click" placement="top">
+    <h-popover class="mr-4" popper-class="flip_popover" trigger="click" placement="top">
       <template #reference>
-        <n-button type="normal">flip top bottom</n-button>
+        <h-button type="normal">flip top bottom</h-button>
       </template>
       <template #popper>
         <demo-content></demo-content>
       </template>
-    </n-popover>
+    </h-popover>
   </div>
   <!--  -->
   <div class="mb-4">
-    <n-popover
+    <h-popover
       class="mr-4"
       trigger="click"
       popper-class="flip_popover"
       :fallback-placements="['top', 'bottom', 'left', 'right']"
     >
       <template #reference>
-        <n-button type="normal">fallbackPlacements left right</n-button>
+        <h-button type="normal">fallbackPlacements left right</h-button>
       </template>
       <template #popper>
         <demo-content></demo-content>
       </template>
-    </n-popover>
+    </h-popover>
   </div>
   <div class="mb-4">
-    <n-popover
+    <h-popover
       class="mr-4"
       trigger="click"
       popper-class="flip_popover"
       prevent-overflow
     >
       <template #reference>
-        <n-button type="normal">preventOverflow enabled</n-button>
+        <h-button type="normal">preventOverflow enabled</h-button>
       </template>
       <template #popper>
         <demo-content></demo-content>
       </template>
-    </n-popover>
+    </h-popover>
   </div>
 </template>
 
@@ -95,7 +95,7 @@ export default defineComponent({
   font-weight: 700;
   font-size: 14px;
   line-height: 22px;
-  margin-bottom: 4px;
+  margih-bottom: 4px;
 }
 
 .flip_popover .content {

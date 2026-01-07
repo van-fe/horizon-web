@@ -1,23 +1,23 @@
 <template>
   <div class="demo">
-    <n-row>
-      <n-col><div class="grid-content">span unset</div></n-col>
-    </n-row>
-    <n-row>
-      <n-col><div class="grid-content">span unset</div></n-col>
-      <n-col :span="4"><div class="grid-content">span 4</div></n-col>
-      <n-col><div class="grid-content">span unset</div></n-col>
-    </n-row>
-    <n-row>
-      <n-col :span="4"><div class="grid-content">span 4</div></n-col>
-      <n-col :span="8"><div class="grid-content">span 8</div></n-col>
-      <n-col :span="12"><div class="grid-content">span 12</div></n-col>
-    </n-row>
-    <n-row>
-      <n-col><div class="grid-content">span unset</div></n-col>
-      <n-col :offset="3"><div class="grid-content">span unset, offset 3</div></n-col>
-      <n-col :offset="3"><div class="grid-content">span unset, offset 3</div></n-col>
-    </n-row>
+    <h-row>
+      <h-col><div class="grid-content">span unset</div></h-col>
+    </h-row>
+    <h-row>
+      <h-col><div class="grid-content">span unset</div></h-col>
+      <h-col :span="4"><div class="grid-content">span 4</div></h-col>
+      <h-col><div class="grid-content">span unset</div></h-col>
+    </h-row>
+    <h-row>
+      <h-col :span="4"><div class="grid-content">span 4</div></h-col>
+      <h-col :span="8"><div class="grid-content">span 8</div></h-col>
+      <h-col :span="12"><div class="grid-content">span 12</div></h-col>
+    </h-row>
+    <h-row>
+      <h-col><div class="grid-content">span unset</div></h-col>
+      <h-col :offset="3"><div class="grid-content">span unset, offset 3</div></h-col>
+      <h-col :offset="3"><div class="grid-content">span unset, offset 3</div></h-col>
+    </h-row>
   </div>
 </template>
 
@@ -28,15 +28,15 @@
   text-align: center;
 }
 
-.demo .n-col {
+.demo .h-col {
   background-clip: content-box;
 }
 
-.demo .n-col:nth-child(odd) {
+.demo .h-col:nth-child(odd) {
   background-color: #00bcbc;
 }
 
-.demo .n-col:nth-child(even) {
+.demo .h-col:nth-child(even) {
   background-color: #b7e8ea;
 }
 </style>

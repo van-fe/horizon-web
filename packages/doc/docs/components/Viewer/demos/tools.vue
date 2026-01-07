@@ -1,6 +1,6 @@
 <template>
-  <n-button @click="showViewer">查看自定义按钮的示例</n-button>
-  <n-viewer v-model="visibleRef" :sources="imagesRef" :tools="tools" />
+  <h-button @click="showViewer">查看自定义按钮的示例</h-button>
+  <h-viewer v-model="visibleRef" :sources="imagesRef" :tools="tools" />
 </template>
 
 <script lang="ts">

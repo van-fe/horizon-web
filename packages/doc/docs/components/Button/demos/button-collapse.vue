@@ -3,18 +3,18 @@ import { IconArrowDown } from '@aurora/icon';
 </script>
 
 <template>
-  <n-button-group>
-    <n-button>button-group 折叠按钮</n-button>
-    <n-dropdown>
-      <n-button :icon="IconArrowDown" />
-      <n-dropdown-menu>
-        <n-dropdown-item>新增</n-dropdown-item>
-        <n-dropdown-item>编辑</n-dropdown-item>
-        <n-dropdown-item>修改</n-dropdown-item>
-        <n-dropdown-item>删除</n-dropdown-item>
-      </n-dropdown-menu>
-    </n-dropdown>
-  </n-button-group>
+  <h-buttoh-group>
+    <h-button>buttoh-group 折叠按钮</h-button>
+    <h-dropdown>
+      <h-button :icon="IconArrowDown" />
+      <h-dropdowh-menu>
+        <h-dropdowh-item>新增</h-dropdowh-item>
+        <h-dropdowh-item>编辑</h-dropdowh-item>
+        <h-dropdowh-item>修改</h-dropdowh-item>
+        <h-dropdowh-item>删除</h-dropdowh-item>
+      </h-dropdowh-menu>
+    </h-dropdown>
+  </h-buttoh-group>
 </template>
 
 <style scoped>

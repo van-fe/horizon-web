@@ -45,7 +45,7 @@ describe('InputNumber.tsx emits', () => {
       <HInputNumber v-model={modelValue.value} clearable={true} onClear={onClear} />
     ));
 
-    const clear = wrapper.find('.n-input-number__clear');
+    const clear = wrapper.find('.h-input-number__clear');
 
     await clear.trigger('click');
 

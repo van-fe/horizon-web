@@ -1,9 +1,9 @@
 <template>
-  <n-button class="mr-2" @click="showAlert()">Alert</n-button>
-  <n-button class="mr-2" @click="showAlert('info')">Info</n-button>
-  <n-button class="mr-2" @click="showAlert('success')">Success</n-button>
-  <n-button class="mr-2" @click="showAlert('warning')">Warning</n-button>
-  <n-button class="mr-2" @click="showAlert('error')">Error</n-button>
+  <h-button class="mr-2" @click="showAlert()">Alert</h-button>
+  <h-button class="mr-2" @click="showAlert('info')">Info</h-button>
+  <h-button class="mr-2" @click="showAlert('success')">Success</h-button>
+  <h-button class="mr-2" @click="showAlert('warning')">Warning</h-button>
+  <h-button class="mr-2" @click="showAlert('error')">Error</h-button>
 </template>
 
 <script lang="ts">

@@ -17,14 +17,14 @@ setColor();
 </script>
 
 <template>
-  <n-row>
-    <n-col :span="6">
-      <n-color-picker v-model="inputColor" editable />
-    </n-col>
-    <n-col :span="6">
-      <n-button size="medium" @click="setColor">生成</n-button>
-    </n-col>
-    <n-col :span="24">
+  <h-row>
+    <h-col :span="6">
+      <h-color-picker v-model="inputColor" editable />
+    </h-col>
+    <h-col :span="6">
+      <h-button size="medium" @click="setColor">生成</h-button>
+    </h-col>
+    <h-col :span="24">
       <div class="color-palettes">
         <div
           v-for="(item, index) of color"
@@ -35,8 +35,8 @@ setColor();
           {{ item.toUpperCase() }}
         </div>
       </div>
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <style scoped>

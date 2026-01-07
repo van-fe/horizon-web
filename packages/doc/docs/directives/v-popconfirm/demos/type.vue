@@ -1,6 +1,6 @@
 <template>
-  <n-space>
-    <n-button
+  <h-space>
+    <h-button
       v-for="item in types"
       :key="item.type"
       v-popconfirm="{ type: item.type }"
@@ -8,8 +8,8 @@
       @click="del"
     >
       {{ item.text }}
-    </n-button>
-  </n-space>
+    </h-button>
+  </h-space>
 </template>
 
 <script lang="ts">

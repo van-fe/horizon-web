@@ -40,7 +40,7 @@ describe('Anchor.tsx', () => {
       ));
       const anchor = wrapper.findComponent(HAnchor);
 
-      const lineElem = anchor.find('.n-anchor__line');
+      const lineElem = anchor.find('.h-anchor__line');
       expect(lineElem.exists()).toBe(true);
 
       showLine.value = false;
@@ -62,7 +62,7 @@ describe('Anchor.tsx', () => {
       ));
       const anchor = wrapper.findComponent(HAnchor);
 
-      const links = anchor.findAll('.n-anchor__link-title-txt');
+      const links = anchor.findAll('.h-anchor__link-title-txt');
       const lastLink = links[links.length - 1];
 
       await lastLink.trigger('click');

@@ -3,38 +3,38 @@ import { IconArrowDown, IconAdd } from '@aurora/icon';
 </script>
 
 <template>
-  <n-dropdown>
-    <n-button>dropdown 下拉菜单触发按钮
+  <h-dropdown>
+    <h-button>dropdown 下拉菜单触发按钮
       <template #suffix>
-        <div class="n-button__icon">
+        <div class="h-button__icon">
           <IconArrowDown />
         </div>
       </template>
-    </n-button>
+    </h-button>
     <template #dropdown>
-      <n-dropdown-menu>
-        <n-dropdown-item>北京</n-dropdown-item>
-        <n-dropdown-item>上海</n-dropdown-item>
-        <n-dropdown-item>深圳</n-dropdown-item>
-        <n-dropdown-item>杭州</n-dropdown-item>
-        <n-dropdown-item>重庆</n-dropdown-item>
-      </n-dropdown-menu>
+      <h-dropdowh-menu>
+        <h-dropdowh-item>北京</h-dropdowh-item>
+        <h-dropdowh-item>上海</h-dropdowh-item>
+        <h-dropdowh-item>深圳</h-dropdowh-item>
+        <h-dropdowh-item>杭州</h-dropdowh-item>
+        <h-dropdowh-item>重庆</h-dropdowh-item>
+      </h-dropdowh-menu>
     </template>
-  </n-dropdown>
+  </h-dropdown>
 
   <div class="mt-2">
-    <n-dropdown trigger="click" >
-      <n-button :icon="IconAdd" :auto-fit="true">
+    <h-dropdown trigger="click" >
+      <h-button :icon="IconAdd" :auto-fit="true">
         <template #suffix>
           <IconArrowDown size="14" />
         </template>
-      </n-button>
+      </h-button>
       <template #dropdown>
-        <n-dropdown-menu>
-          <n-dropdown-item value="upload">新建文件夹</n-dropdown-item>
-        </n-dropdown-menu>
+        <h-dropdowh-menu>
+          <h-dropdowh-item value="upload">新建文件夹</h-dropdowh-item>
+        </h-dropdowh-menu>
       </template>
-    </n-dropdown>
+    </h-dropdown>
   </div>
 
 </template>

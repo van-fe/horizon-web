@@ -1,8 +1,8 @@
 <template>
   <div class="block">
-    <n-button v-tooltip.small="'Small'">Small</n-button>
-    <n-button v-tooltip.light="'Light'">Light</n-button>
-    <n-button v-tooltip.small.light="'Small + Light'">Small + Light</n-button>
+    <h-button v-tooltip.small="'Small'">Small</h-button>
+    <h-button v-tooltip.light="'Light'">Light</h-button>
+    <h-button v-tooltip.small.light="'Small + Light'">Small + Light</h-button>
   </div>
 </template>
 
@@ -13,7 +13,7 @@
   display: flex;
 }
 
-.block .n-button {
+.block .h-button {
   margin-left: 20px;
 }
 </style>

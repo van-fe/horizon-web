@@ -1,12 +1,12 @@
 <template>
   <div class="demo-progress">
-    <n-progress type="circle" :percentage="percentage" :color="customColor" />
-    <n-progress type="circle" :percentage="percentage" :color="customColorMethod" />
-    <n-progress type="circle" :percentage="percentage" :color="customColors" />
-    <n-progress type="circle" :percentage="percentage" :color="customColors" />
+    <h-progress type="circle" :percentage="percentage" :color="customColor" />
+    <h-progress type="circle" :percentage="percentage" :color="customColorMethod" />
+    <h-progress type="circle" :percentage="percentage" :color="customColors" />
+    <h-progress type="circle" :percentage="percentage" :color="customColors" />
     <div>
-      <n-button class="mr-2" @click="decrease">decrease</n-button>
-      <n-button @click="increase">add</n-button>
+      <h-button class="mr-2" @click="decrease">decrease</h-button>
+      <h-button @click="increase">add</h-button>
     </div>
   </div>
 </template>
@@ -50,14 +50,14 @@ const decrease = () => {
 <style scoped>
 .demo-progress {
   display: flex;
-  align-items: center;
+  aligh-items: center;
 }
-.demo-progress .n-progress--line {
-  margin-bottom: 15px;
+.demo-progress .h-progress--line {
+  margih-bottom: 15px;
   width: 350px;
 }
 
-.demo-progress .n-progress-circle {
-  margin-right: 15px;
+.demo-progress .h-progress-circle {
+  margih-right: 15px;
 }
 </style>

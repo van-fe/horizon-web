@@ -1,5 +1,5 @@
 <template>
-  <n-button
+  <h-button
     v-for="typeName in types"
     :key="typeName"
     v-popconfirm="{ type: typeName }"
@@ -7,7 +7,7 @@
     @click="del"
   >
     {{ typeName }}
-  </n-button>
+  </h-button>
 </template>
 
 <script lang="ts">

@@ -1,9 +1,9 @@
 <template>
-  <n-scrollbar height="400px">
+  <h-scrollbar height="400px">
     <div v-for="item of 1000" :key="item" class="item">
       {{ item }}
     </div>
-  </n-scrollbar>
+  </h-scrollbar>
 </template>
 
 <script setup lang="ts">

@@ -101,8 +101,6 @@ function buildStyleIndex() {
     .filter(dir => dir.isDirectory());
 
   content += `@forward './mixins';
-@forward './presets/index';
-@forward './presets/reset';
 @forward './global-variables';
 
 // components
@@ -126,32 +124,6 @@ function buildStyleIndex() {
   writeImport(methods, 'methods', methodsRoot);
 
   fs.writeFileSync(styleRoot + '/index.scss', content, 'utf-8');
-  fs.writeFileSync(
-    styleRoot + '/index-no-reset.scss',
-    content.replace(/@forward '\.\/presets\/reset';/g, ''),
-    'utf-8',
-  );
-  fs.writeFileSync(
-    styleRoot + '/index-basic.scss',
-    content
-      .replace(/@forward '\.\/presets\/reset';\n/g, '')
-      .replace(/@forward '\.\/presets\/index';/g, "@forward './presets/font';"),
-    'utf-8',
-  );
-  fs.writeFileSync(
-    styleRoot + '/index-no-font.scss',
-    content.replace(/@forward '\.\/presets\/index';/g, "@forward './presets/index-no-font';"),
-
-    'utf-8',
-  );
-  fs.writeFileSync(
-    styleRoot + '/index-basic-no-font.scss',
-    content
-      .replace(/@forward '\.\/presets\/reset';\n/g, '')
-      .replace(/@forward '\.\/presets\/index';\n/g, ''),
-
-    'utf-8',
-  );
 }
 
 function buildGlobalVariables() {

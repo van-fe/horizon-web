@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { nextTick, ref, useSlots } from 'vue';
 import { version } from '@aurora/horizon-web';
-import { IconApplets, IconCopy, IconFullscreen, IconJump, IconMinimize, IconRefresh } from '@aurora/icon';
+import { IconApplets, IconCopy, IconFullScreen, IconJump, IconMinimize, IconRefresh } from '@aurora/icon';
 import { cls, ComponentClassBlock } from '@aurora/utils';
 import Prism from 'prismjs';
 
@@ -71,79 +71,79 @@ function reload() {
 </script>
 
 <template>
-  <n-card :class="cls(classHelper.block)" :top-divider="true" :bottom-divider="!!rawCode">
+  <h-card :class="cls(classHelper.block)" :top-divider="true" :bottom-divider="!!rawCode">
     <div v-if="loadCode" :class="cls(classHelper.e('preview'), classHelper.is('dark', darkBackground))">
       <slot name="source" />
     </div>
 
     <template v-if="rawCode" #footer>
-      <n-space class="flex justify-end pr-4" size="small">
-        <n-button
+      <h-space class="flex justify-end pr-4" size="small">
+        <h-button
           v-tooltip="`Reload`"
           type="normal"
           :text="true"
           :icon="IconRefresh"
           @click="reload"
         />
-        <n-button
+        <h-button
           v-tooltip="`Try in playground`"
           type="normal"
           :text="true"
           :icon="IconApplets"
           @click="tryInPlayground"
         />
-        <n-button
+        <h-button
           v-tooltip="`View in Gitlab`"
           type="normal"
           :icon="IconJump"
           :text="true"
           @click="jumpToGitlab(slots.gitUrl?.()[0].children as string)"
         />
-        <n-button
+        <h-button
           v-tooltip="`Copy`"
           type="normal"
           :text="true"
           :icon="IconCopy"
           @click="copy(rawCode)"
         />
-        <n-button
+        <h-button
           v-tooltip="`Toggle source`"
           type="normal"
-          :icon="expandRef ? IconMinimize : IconFullscreen"
+          :icon="expandRef ? IconMinimize : IconFullScreen"
           :text="true"
           @click="expandRef = !expandRef"
         />
-      </n-space>
+      </h-space>
       <template v-if="rawCode">
         <div ref="codeDomRef" :class="classHelper.e('codes')">
-          <n-transition name="collapse">
+          <h-transition name="collapse">
             <div v-if="expandRef" style="padding: 0 20px">
-              <n-tabs v-model:active-key="currentRef">
-                <n-tab v-if="templateCode" label="Template" name="template" />
-                <n-tab v-if="scriptCode" label="Script" name="script" />
-                <n-tab v-if="styleCode" label="Style" name="style" />
-                <n-tab label="All" name="all" />
-              </n-tabs>
-              <n-panels v-model="currentRef" class="code-area">
-                <n-panel v-if="templateCode" name="template" style="padding: 0">
+              <h-tabs v-model:active-key="currentRef">
+                <h-tab v-if="templateCode" label="Template" name="template" />
+                <h-tab v-if="scriptCode" label="Script" name="script" />
+                <h-tab v-if="styleCode" label="Style" name="style" />
+                <h-tab label="All" name="all" />
+              </h-tabs>
+              <h-panels v-model="currentRef" class="code-area">
+                <h-panel v-if="templateCode" name="template" style="padding: 0">
                   <pre><code v-html="templateCode"></code></pre>
-                </n-panel>
-                <n-panel v-if="scriptCode" name="script" style="padding: 0">
+                </h-panel>
+                <h-panel v-if="scriptCode" name="script" style="padding: 0">
                   <pre><code v-html="scriptCode"></code></pre>
-                </n-panel>
-                <n-panel v-if="styleCode" name="style" style="padding: 0">
+                </h-panel>
+                <h-panel v-if="styleCode" name="style" style="padding: 0">
                   <pre><code v-html="styleCode"></code></pre>
-                </n-panel>
-                <n-panel name="all" style="padding: 0">
+                </h-panel>
+                <h-panel name="all" style="padding: 0">
                   <pre><code v-html="summaryCode"></code></pre>
-                </n-panel>
-              </n-panels>
+                </h-panel>
+              </h-panels>
             </div>
-          </n-transition>
+          </h-transition>
         </div>
       </template>
     </template>
-  </n-card>
+  </h-card>
 </template>
 
 <style lang="scss">
@@ -163,7 +163,7 @@ function reload() {
 
   @include mixins.e('codes') {
     overflow: hidden;
-    .n-tabs__header {
+    .h-tabs__header {
       padding-left: 1em;
     }
     pre {

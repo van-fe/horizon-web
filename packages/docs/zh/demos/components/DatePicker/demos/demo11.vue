@@ -2,20 +2,20 @@
   <div class="demo-wrapper">
     <div class="box">
       <span>default picker value</span>
-      <n-date-picker
+      <h-date-picker
         v-model="time1"
         type="date"
         :default-picker-value="defaultPickerValue"
-      ></n-date-picker>
+      ></h-date-picker>
     </div>
     <div class="box">
       <span>default time</span>
-      <n-date-picker v-model="time2" type="dateseconds" :default-time="defaultTime"></n-date-picker>
+      <h-date-picker v-model="time2" type="dateseconds" :default-time="defaultTime"></h-date-picker>
     </div>
     <div class="box">
       <span>default time (type = daterange)</span>
       <span>value: {{ time3 }}</span>
-      <n-date-picker v-model="time3" type="daterange" value-format="YYYY-MM-DD HH:mm:ss" :default-time="defaultTime1"></n-date-picker>
+      <h-date-picker v-model="time3" type="daterange" value-format="YYYY-MM-DD HH:mm:ss" :default-time="defaultTime1"></h-date-picker>
     </div>
   </div>
 </template>

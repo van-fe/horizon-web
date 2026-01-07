@@ -67,7 +67,7 @@
       "ModalCascader": {
         "doc.md": {}
       },
-      "Table": {
+      "TableV2": {
         "doc.md": {}
       },
       "ModalPicker": {
@@ -147,9 +147,6 @@
       "Progress": {
         "doc.md": {}
       },
-      "TimePicker": {
-        "doc.md": {}
-      },
       "Picker": {
         "doc.md": {}
       },
@@ -171,9 +168,6 @@
       "Segmented": {
         "doc.md": {}
       },
-      "Upload": {
-        "doc.md": {}
-      },
       "DatePicker": {
         "doc.md": {}
       },
@@ -192,9 +186,6 @@
       "Transfer": {
         "doc.md": {}
       },
-      "DatePicker": {
-        "doc.md": {}
-      },
       "Descriptions": {
         "doc.md": {}
       },
@@ -208,9 +199,6 @@
         "doc.md": {}
       },
       "InputNumber": {
-        "doc.md": {}
-      },
-      "Transfer": {
         "doc.md": {}
       },
       "Image": {
@@ -312,38 +300,6 @@
     },
     "getting-started": {
       "start.md": {}
-    },
-    "style-animation": {
-      "position": {
-        "doc.md": {}
-      },
-      "center": {
-        "doc.md": {}
-      },
-      "shadow": {
-        "doc.md": {}
-      },
-      "overflow": {
-        "doc.md": {}
-      },
-      "colors": {
-        "doc.md": {}
-      },
-      "spacing": {
-        "doc.md": {}
-      },
-      "typography": {
-        "doc.md": {}
-      },
-      "display": {
-        "doc.md": {}
-      },
-      "flex": {
-        "doc.md": {}
-      },
-      "border-radius": {
-        "doc.md": {}
-      }
     }
   },
   ".vue": {
@@ -755,15 +711,24 @@
       },
       "TimePicker": {
         "demos": {
-          "demo1.vue": {},
-          "demo2.vue": {},
-          "demo3.vue": {},
-          "demo7.vue": {},
-          "demo6.vue": {},
-          "demo4.vue": {},
-          "demo5.vue": {},
-          "demo8.vue": {},
-          "demo9.vue": {}
+          "time.vue": {},
+          "show-popover-content-only.vue": {},
+          "seconds.vue": {},
+          "single-trigger.vue": {},
+          "show-now.vue": {},
+          "confirm-type.vue": {},
+          "format-cell-text.vue": {},
+          "clearable.vue": {},
+          "show-time-tooltip.vue": {},
+          "step.vue": {},
+          "readonly.vue": {},
+          "disabled-time.vue": {},
+          "start-end-range.vue": {},
+          "multiple.vue": {},
+          "basic.vue": {},
+          "inputable.vue": {},
+          "initial-value.vue": {},
+          "is-range.vue": {}
         }
       },
       "Form": {
@@ -874,28 +839,6 @@
           "line.vue": {}
         }
       },
-      "TimePicker": {
-        "demos": {
-          "time.vue": {},
-          "show-popover-content-only.vue": {},
-          "seconds.vue": {},
-          "single-trigger.vue": {},
-          "show-now.vue": {},
-          "confirm-type.vue": {},
-          "format-cell-text.vue": {},
-          "clearable.vue": {},
-          "show-time-tooltip.vue": {},
-          "step.vue": {},
-          "readonly.vue": {},
-          "disabled-time.vue": {},
-          "start-end-range.vue": {},
-          "multiple.vue": {},
-          "basic.vue": {},
-          "inputable.vue": {},
-          "initial-value.vue": {},
-          "is-range.vue": {}
-        }
-      },
       "Picker": {
         "demos": {
           "basic.vue": {}
@@ -965,43 +908,39 @@
           "form.vue": {}
         }
       },
-      "Upload": {
-        "demos": {
-          "show-file-thumbnail.vue": {},
-          "gallery.vue": {},
-          "before-preview.vue": {},
-          "clipboard.vue": {},
-          "background.vue": {},
-          "controls-always-visible.vue": {},
-          "http-request.vue": {},
-          "multiple.vue": {},
-          "avatar.vue": {},
-          "disabled.vue": {},
-          "drop.vue": {},
-          "before-upload.vue": {},
-          "gallery-mixed.vue": {},
-          "basic.vue": {},
-          "file-size-exceed.vue": {}
-        }
-      },
       "DatePicker": {
         "demos": {
-          "demo1.vue": {},
-          "demo2.vue": {},
-          "demo3.vue": {},
-          "demo7.vue": {},
-          "demo6.vue": {},
-          "demo4.vue": {},
-          "demo5.vue": {},
-          "demo15.vue": {},
-          "demo14.vue": {},
-          "demo16.vue": {},
-          "demo17.vue": {},
-          "demo13.vue": {},
-          "demo10.vue": {},
-          "demo11.vue": {},
-          "demo8.vue": {},
-          "demo9.vue": {}
+          "show-popover-content-only.vue": {},
+          "show-tooltip.vue": {},
+          "datetime.vue": {},
+          "default-slot.vue": {},
+          "single-trigger.vue": {},
+          "custom-trigger.vue": {},
+          "week.vue": {},
+          "show-now.vue": {},
+          "need-confirm.vue": {},
+          "confirm-type.vue": {},
+          "clearable.vue": {},
+          "hover-to-display-value.vue": {},
+          "default-time.vue": {},
+          "custom-icon.vue": {},
+          "date-display.vue": {},
+          "disabled-date-and-time.vue": {},
+          "step.vue": {},
+          "year-month.vue": {},
+          "readonly.vue": {},
+          "show-year-button.vue": {},
+          "value-format.vue": {},
+          "multiple.vue": {},
+          "basic.vue": {},
+          "format-trigger-text.vue": {},
+          "format.vue": {},
+          "panel-show-date.vue": {},
+          "inputable.vue": {},
+          "initial-value.vue": {},
+          "first-day-of-week.vue": {},
+          "show-dot.vue": {},
+          "shortcuts.vue": {}
         }
       },
       "Panels": {
@@ -1068,48 +1007,17 @@
       },
       "Transfer": {
         "demos": {
+          "custom.vue": {},
           "group.vue": {},
+          "order.vue": {},
           "radio.vue": {},
           "drag.vue": {},
           "tree.vue": {},
+          "filter.vue": {},
+          "field-map.vue": {},
           "basic.vue": {},
           "table.vue": {},
           "people.vue": {}
-        }
-      },
-      "DatePicker": {
-        "demos": {
-          "show-popover-content-only.vue": {},
-          "show-tooltip.vue": {},
-          "datetime.vue": {},
-          "default-slot.vue": {},
-          "single-trigger.vue": {},
-          "custom-trigger.vue": {},
-          "week.vue": {},
-          "show-now.vue": {},
-          "need-confirm.vue": {},
-          "confirm-type.vue": {},
-          "clearable.vue": {},
-          "hover-to-display-value.vue": {},
-          "default-time.vue": {},
-          "custom-icon.vue": {},
-          "date-display.vue": {},
-          "disabled-date-and-time.vue": {},
-          "step.vue": {},
-          "year-month.vue": {},
-          "readonly.vue": {},
-          "show-year-button.vue": {},
-          "value-format.vue": {},
-          "multiple.vue": {},
-          "basic.vue": {},
-          "format-trigger-text.vue": {},
-          "format.vue": {},
-          "panel-show-date.vue": {},
-          "inputable.vue": {},
-          "initial-value.vue": {},
-          "first-day-of-week.vue": {},
-          "show-dot.vue": {},
-          "shortcuts.vue": {}
         }
       },
       "Descriptions": {
@@ -1170,21 +1078,6 @@
           "style.vue": {},
           "prefix-suffix.vue": {},
           "range.vue": {}
-        }
-      },
-      "Transfer": {
-        "demos": {
-          "custom.vue": {},
-          "group.vue": {},
-          "order.vue": {},
-          "radio.vue": {},
-          "drag.vue": {},
-          "tree.vue": {},
-          "filter.vue": {},
-          "field-map.vue": {},
-          "basic.vue": {},
-          "table.vue": {},
-          "people.vue": {}
         }
       },
       "Image": {
@@ -1570,15 +1463,21 @@
       },
       "Upload": {
         "demos": {
-          "area.vue": {},
-          "icon.vue": {},
-          "preview.vue": {},
-          "upload-base.vue": {},
-          "upload-customrequest.vue": {},
-          "button.vue": {},
-          "image.vue": {},
-          "upload-complete.vue": {},
-          "upload-display.vue": {}
+          "show-file-thumbnail.vue": {},
+          "gallery.vue": {},
+          "before-preview.vue": {},
+          "clipboard.vue": {},
+          "background.vue": {},
+          "controls-always-visible.vue": {},
+          "http-request.vue": {},
+          "multiple.vue": {},
+          "avatar.vue": {},
+          "disabled.vue": {},
+          "drop.vue": {},
+          "before-upload.vue": {},
+          "gallery-mixed.vue": {},
+          "basic.vue": {},
+          "file-size-exceed.vue": {}
         }
       },
       "Backtop": {
@@ -1596,68 +1495,6 @@
           "color.vue": {},
           "basic.vue": {},
           "num.vue": {}
-        }
-      }
-    },
-    "style-animation": {
-      "position": {
-        "demos": {
-          "demo1.vue": {}
-        }
-      },
-      "center": {
-        "demos": {
-          "position.vue": {},
-          "textcenter.vue": {},
-          "flex.vue": {},
-          "margin.vue": {}
-        }
-      },
-      "shadow": {
-        "demos": {
-          "demo1.vue": {}
-        }
-      },
-      "overflow": {
-        "demos": {
-          "demo1.vue": {}
-        }
-      },
-      "colors": {
-        "demos": {
-          "demo1.vue": {},
-          "demo2.vue": {},
-          "index--no-code.vue": {},
-          "generator.vue": {}
-        }
-      },
-      "spacing": {
-        "demos": {
-          "demo1.vue": {}
-        }
-      },
-      "typography": {
-        "demos": {
-          "fontweight.vue": {},
-          "align.vue": {},
-          "ellipsis.vue": {},
-          "fontsize.vue": {},
-          "fonts.vue": {}
-        }
-      },
-      "display": {
-        "demos": {
-          "demo1.vue": {}
-        }
-      },
-      "flex": {
-        "demos": {
-          "demo1.vue": {}
-        }
-      },
-      "border-radius": {
-        "demos": {
-          "demo1.vue": {}
         }
       }
     }
@@ -1692,13 +1529,17 @@
       }
     }
   },
+  ".png": {
+    "components": {
+      "Mask": {
+        "demos": {
+          "1.png": {}
+        }
+      }
+    }
+  },
   ".ts": {
     "components": {
-      "Upload": {
-        "demos": {
-          "type-defined.ts": {}
-        }
-      },
       "Application": {
         "demos": {
           "container-demos": {
@@ -1708,16 +1549,7 @@
       },
       "Upload": {
         "demos": {
-          "mock-server.ts": {}
-        }
-      }
-    }
-  },
-  ".png": {
-    "components": {
-      "Mask": {
-        "demos": {
-          "1.png": {}
+          "type-defined.ts": {}
         }
       }
     }

@@ -1,20 +1,20 @@
 <template>
   <div class="example">
-    <n-button @click="visible0 = true">Open Drawer no header</n-button>
-    <n-button @click="visible1 = true">Open Drawer no footer</n-button>
-    <n-button @click="visible3 = true">Open Drawer v1</n-button>
-    <n-button @click="visible4 = true">Open Drawer v1 custom title</n-button>
-    <n-button @click="visible2 = true">Open Drawer v2</n-button>
+    <h-button @click="visible0 = true">Open Drawer no header</h-button>
+    <h-button @click="visible1 = true">Open Drawer no footer</h-button>
+    <h-button @click="visible3 = true">Open Drawer v1</h-button>
+    <h-button @click="visible4 = true">Open Drawer v1 custom title</h-button>
+    <h-button @click="visible2 = true">Open Drawer v2</h-button>
   </div>
 
-  <n-drawer v-model:visible="visible0" position="right" @ok="visible0 = false">
+  <h-drawer v-model:visible="visible0" position="right" @ok="visible0 = false">
     <div>
       You can customize modal body text by the current situation. This modal will be closed
       immediately once you press the OK button.
     </div>
-  </n-drawer>
+  </h-drawer>
 
-  <n-drawer
+  <h-drawer
     v-model:visible="visible1"
     title="Title"
     :closable="false"
@@ -27,16 +27,16 @@
       immediately once you press the OK button.
     </div>
     <template #footer></template>
-  </n-drawer>
+  </h-drawer>
 
-  <n-drawer v-model:visible="visible2" v2 placement="right" :header="false" :footer="false">
+  <h-drawer v-model:visible="visible2" v2 placement="right" :header="false" :footer="false">
     <div>
       You can customize modal body text by the current situation. This modal will be closed
       immediately once you press the OK button.
     </div>
-  </n-drawer>
+  </h-drawer>
 
-  <n-drawer
+  <h-drawer
     v-model="visible3"
     position="left"
     primary-text="Primary Text"
@@ -47,9 +47,9 @@
       You can customize modal body text by the current situation. This modal will be closed
       immediately once you press the OK button.
     </div>
-  </n-drawer>
+  </h-drawer>
 
-  <n-drawer
+  <h-drawer
     v-model="visible4"
     position="right"
     primary-text="Primary Text"
@@ -58,7 +58,7 @@
   >
     <template #title>
       <div class="flex align-center" style="column-gap: 10px">
-        <n-button icon="close" text size="small" @click="visible4 = false" />
+        <h-button icon="close" text size="small" @click="visible4 = false" />
         <div>This Version 1 Title</div>
       </div>
     </template>
@@ -66,7 +66,7 @@
       You can customize modal body text by the current situation. This modal will be closed
       immediately once you press the OK button.
     </div>
-  </n-drawer>
+  </h-drawer>
 </template>
 
 <script lang="ts" setup>
@@ -86,7 +86,7 @@ const visible4 = ref(false);
   gap: 10px;
 }
 
-:deep(.n-button + .n-button:not(.n-button--block)) {
+:deep(.h-button + .h-button:not(.h-button--block)) {
   margin-left: 0;
 }
 </style>

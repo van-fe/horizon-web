@@ -15,17 +15,17 @@ function onCommand(type: 'edit' | 'del') {
 </script>
 
 <template>
-  <n-hover v-slot="{ hover }">
+  <h-hover v-slot="{ hover }">
     <div class="square">
       Mouse move here
-      <n-mask :absolute="true" :value="hover" :content-full-size="true">
-        <n-controls theme="light" @command="onCommand">
-          <n-control label="edit" :icon="IconEdit" text="编辑" />
-          <n-control label="del" :icon="IconRubbish" text="删除" />
-        </n-controls>
-      </n-mask>
+      <h-mask :absolute="true" :value="hover" :content-full-size="true">
+        <h-controls theme="light" @command="onCommand">
+          <h-control label="edit" :icon="IconEdit" text="编辑" />
+          <h-control label="del" :icon="IconRubbish" text="删除" />
+        </h-controls>
+      </h-mask>
     </div>
-  </n-hover>
+  </h-hover>
 </template>
 
 <style scoped>
@@ -33,11 +33,11 @@ function onCommand(type: 'edit' | 'del') {
   position: relative;
   width: 150px;
   height: 150px;
-  border: 1px solid var(--n-border-default);
-  border-radius: var(--n-radius);
+  border: 1px solid var(--h-border-default);
+  border-radius: var(--h-radius);
   display: flex;
-  align-items: center;
+  aligh-items: center;
   justify-content: center;
-  color: var(--n-text-secondary);
+  color: var(--h-text-secondary);
 }
 </style>

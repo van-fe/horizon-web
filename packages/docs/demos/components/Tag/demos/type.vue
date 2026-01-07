@@ -1,13 +1,13 @@
 <template>
-  <n-row>
-    <n-col>
-      <n-tag :clickable="false">Default</n-tag>
-      <n-tag :clickable="false" type="success">Success</n-tag>
-      <n-tag :clickable="false" type="info">Info</n-tag>
-      <n-tag :clickable="false" type="warning">Warning</n-tag>
-      <n-tag :clickable="false" type="error">Error</n-tag>
-    </n-col>
-  </n-row>
+  <h-row>
+    <h-col>
+      <h-tag :clickable="false">Default</h-tag>
+      <h-tag :clickable="false" type="success">Success</h-tag>
+      <h-tag :clickable="false" type="info">Info</h-tag>
+      <h-tag :clickable="false" type="warning">Warning</h-tag>
+      <h-tag :clickable="false" type="error">Error</h-tag>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

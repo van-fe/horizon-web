@@ -1,5 +1,5 @@
 <template>
-  <n-transfer v-model="dataModel" :data="data" draggable style="width: 500px"></n-transfer>
+  <h-transfer v-model="dataModel" :data="data" draggable style="width: 500px"></h-transfer>
 </template>
 
 <script lang="ts">

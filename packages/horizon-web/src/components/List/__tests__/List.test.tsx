@@ -32,7 +32,7 @@ describe('List.tsx', () => {
         </HList>
       ));
 
-      const listElm = wrapper.find('.n-list');
+      const listElm = wrapper.find('.h-list');
 
       expect(listElm.classes('is-zebra')).toBeFalsy();
 
@@ -55,7 +55,7 @@ describe('List.tsx', () => {
         </HList>
       ));
 
-      const listElm = wrapper.find('.n-list');
+      const listElm = wrapper.find('.h-list');
 
       expect(listElm.classes('is-border')).toBeFalsy();
 
@@ -78,7 +78,7 @@ describe('List.tsx', () => {
         </HList>
       ));
 
-      const listElm = wrapper.find('.n-list');
+      const listElm = wrapper.find('.h-list');
 
       expect(listElm.classes('is-split')).toBeFalsy();
 
@@ -112,7 +112,7 @@ describe('List.tsx', () => {
         </HList>
       ));
 
-      expect(wrapper.find('.n-list__header').text()).contain('HEADER');
+      expect(wrapper.find('.h-list__header').text()).contain('HEADER');
     });
 
     test('footer', () => {
@@ -124,7 +124,7 @@ describe('List.tsx', () => {
         </HList>
       ));
 
-      expect(wrapper.find('.n-list__footer').text()).contain('FOOTER');
+      expect(wrapper.find('.h-list__footer').text()).contain('FOOTER');
     });
   });
 });

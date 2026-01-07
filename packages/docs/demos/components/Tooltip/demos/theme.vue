@@ -1,13 +1,13 @@
 <template>
   <div class="demo-block">
-    <n-tooltip placement="top">
-      <n-button>Theme(default)</n-button>
+    <h-tooltip placement="top">
+      <h-button>Theme(default)</h-button>
       <template #content>Dark</template>
-    </n-tooltip>
-    <n-tooltip placement="top" theme="light">
-      <n-button>Light</n-button>
+    </h-tooltip>
+    <h-tooltip placement="top" theme="light">
+      <h-button>Light</h-button>
       <template #content>Light</template>
-    </n-tooltip>
+    </h-tooltip>
   </div>
 </template>
 
@@ -19,7 +19,7 @@
   align-items: center;
 }
 
-.demo-block .n-popover__reference {
+.demo-block .h-popover__reference {
   margin-bottom: 20px;
   margin-left: 0;
   margin-right: 20px;

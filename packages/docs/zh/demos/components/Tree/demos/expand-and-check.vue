@@ -1,40 +1,40 @@
 <template>
-  <n-form label-position="left" label-vertical-align="middle">
-    <n-form-item label="点击整行折叠">
-      <n-switch v-model="expandOnClickNode" :status="true" />
-    </n-form-item>
-    <n-form-item label="点击整行选中">
-      <n-switch v-model="checkOnClickNode" :status="true" />
-    </n-form-item>
-    <n-form-item label="是否忽略父子级关系">
-      <n-switch v-model="checkStrictly" :status="true" />
-    </n-form-item>
-    <n-form-item label="是否显示 Radio">
-      <n-switch v-model="showRadio" :status="true" />
-    </n-form-item>
-  </n-form>
-  <n-row>
-    <n-col :span="12">
+  <h-form label-position="left" label-vertical-align="middle">
+    <h-form-item label="点击整行折叠">
+      <h-switch v-model="expandOnClickNode" :status="true" />
+    </h-form-item>
+    <h-form-item label="点击整行选中">
+      <h-switch v-model="checkOnClickNode" :status="true" />
+    </h-form-item>
+    <h-form-item label="是否忽略父子级关系">
+      <h-switch v-model="checkStrictly" :status="true" />
+    </h-form-item>
+    <h-form-item label="是否显示 Radio">
+      <h-switch v-model="showRadio" :status="true" />
+    </h-form-item>
+  </h-form>
+  <h-row>
+    <h-col :span="12">
       <div class="demo-title">单选</div>
-      <n-tree
+      <h-tree
         :tree-data="baseTreeData"
         :expand-on-click-node="expandOnClickNode"
         :check-on-click-node="checkOnClickNode"
         :check-strictly="checkStrictly"
         :show-radio="showRadio"
       />
-    </n-col>
-    <n-col :span="12">
+    </h-col>
+    <h-col :span="12">
       <div class="demo-title">多选</div>
-      <n-tree
+      <h-tree
         :tree-data="baseTreeData"
         :expand-on-click-node="expandOnClickNode"
         :check-on-click-node="checkOnClickNode"
         :check-strictly="checkStrictly"
         :multiple="true"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

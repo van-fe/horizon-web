@@ -20,17 +20,17 @@ const onCommand = (key: string, cmd: string) => {
 </script>
 
 <template>
-  <n-tabs v-model:active-key="activeKey" v2 @change="onTabChanged">
-    <n-tab v-for="tab in tabs" :key="tab">
+  <h-tabs v-model:active-key="activeKey" v2 @change="onTabChanged">
+    <h-tab v-for="tab in tabs" :key="tab">
       <template #default>
-        <n-dropdown trigger="context-menu" @command="onCommand(tab, $event)">
+        <h-dropdown trigger="context-menu" @command="onCommand(tab, $event)">
           <div>{{ tab }}</div>
-          <n-dropdown-menu>
-            <n-dropdown-item command="add">添加</n-dropdown-item>
-            <n-dropdown-item command="rm" :disabled="tabs.length <= 1">删除</n-dropdown-item>
-          </n-dropdown-menu>
-        </n-dropdown>
+          <h-dropdowh-menu>
+            <h-dropdowh-item command="add">添加</h-dropdowh-item>
+            <h-dropdowh-item command="rm" :disabled="tabs.length <= 1">删除</h-dropdowh-item>
+          </h-dropdowh-menu>
+        </h-dropdown>
       </template>
-    </n-tab>
-  </n-tabs>
+    </h-tab>
+  </h-tabs>
 </template>

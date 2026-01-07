@@ -1,41 +1,41 @@
 <template>
-  <n-row>
-    <n-col :span="6">
+  <h-row>
+    <h-col :span="6">
       <div class="demo-title">描述文字在右侧</div>
-      <n-modal-select
+      <h-modal-select
         v-model="value1"
         :clearable="true"
         placeholder="请选择"
         :to-body="false"
       >
-        <n-option
+        <h-option
           v-for="item in selectOptions"
           :key="item.value"
           :label="item.label"
           :value="item.value"
           :description="item.description"
         />
-      </n-modal-select>
-    </n-col>
-    <n-col :span="6">
+      </h-modal-select>
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">描述文字在下方</div>
-      <n-modal-select
+      <h-modal-select
         v-model="value2"
         :clearable="true"
         placeholder="请选择"
         :to-body="false"
         description-position="bottom"
       >
-        <n-option
+        <h-option
           v-for="item in selectOptions"
           :key="item.value"
           :label="item.label"
           :value="item.value"
           :description="item.description"
         />
-      </n-modal-select>
-    </n-col>
-  </n-row>
+      </h-modal-select>
+    </h-col>
+  </h-row>
 </template>
 
 <script lang="ts" setup>

@@ -21,7 +21,7 @@ interface TokenRealValueData {
 }
 
 function cssVariableNameToJsName(cssVariableName: string) {
-  return snakeCase(cssVariableName.replace(/^--n-/, ''));
+  return snakeCase(cssVariableName.replace(/^--h-/, ''));
 }
 
 const formatTokenName = (token: string) =>
@@ -76,7 +76,7 @@ function getElementTokenRealValue(
           subTree[key] = {
             label: formatTokenName(key),
             value: currentValue,
-            refToken: `--n-${key.replace(/_/g, '-')}`,
+            refToken: `--h-${key.replace(/_/g, '-')}`,
             rawLabel: key,
             rawValue: value,
             path: `element.${parentKey.concat(key).join('.')}`,
@@ -85,7 +85,7 @@ function getElementTokenRealValue(
           subTree[key] = {
             label: formatTokenName(key),
             value,
-            refToken: `--n-${key.replace(/_/g, '-')}`,
+            refToken: `--h-${key.replace(/_/g, '-')}`,
             rawLabel: key,
             rawValue: value,
             path: `element.${parentKey.concat(key).join('.')}`,
@@ -118,27 +118,27 @@ const elementListTokens = getElementTokenRealValue(tokens.element, basicFontList
 <style lang="scss" scoped>
 .color {
   display: flex;
-  align-items: center;
+  aligh-items: center;
   height: 40px;
-  border: 1px solid var(--n-border-default);
+  border: 1px solid var(--h-border-default);
   padding: 5px 10px;
-  color: var(--n-text-primary);
-  border-radius: var(--n-radius);
+  color: var(--h-text-primary);
+  border-radius: var(--h-radius);
   justify-content: space-between;
 
   .label {
     display: flex;
-    align-items: center;
-    margin-right: 20px;
+    aligh-items: center;
+    margih-right: 20px;
     white-space: nowrap;
   }
 
   & + & {
-    margin-top: 10px;
+    margih-top: 10px;
   }
 }
 
-.n-panels__content {
+.h-panels__content {
   padding: 10px;
 }
 </style>

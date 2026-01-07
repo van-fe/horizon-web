@@ -13,12 +13,12 @@ const onTabChanged = (tab: NTabValue) => {
 <template>
   <div style="width: 280px;">
 
-  <n-tabs v-model:active-key="activeKey" @change="onTabChanged">
-    <n-tab key="1" label="1.t ratione aut ea. Voluptates praesentium u ratione aut ea. Voluptates praesentium " />
-    <n-tab key="2" label="2.Consectetur aut ratione aut ea. Voluptates praesentium ut impedit sed non a. Ut autem illum est. Omnis et qui pariatur." />
-    <n-tab key="3" label="3.Consectetur aut ratione aut ea. Voluptates praesentium ut impedit sed non a. Ut autem illum est. Omnis et qui pariatur." />
-    <n-tab key="4" label="4.ut ratione aut ea. Voluptates praesentium ut impedit sed non a. Ut autem illum est. Omnis et qui par" />
-  </n-tabs>
+  <h-tabs v-model:active-key="activeKey" @change="onTabChanged">
+    <h-tab key="1" label="1.t ratione aut ea. Voluptates praesentium u ratione aut ea. Voluptates praesentium " />
+    <h-tab key="2" label="2.Consectetur aut ratione aut ea. Voluptates praesentium ut impedit sed non a. Ut autem illum est. Omnis et qui pariatur." />
+    <h-tab key="3" label="3.Consectetur aut ratione aut ea. Voluptates praesentium ut impedit sed non a. Ut autem illum est. Omnis et qui pariatur." />
+    <h-tab key="4" label="4.ut ratione aut ea. Voluptates praesentium ut impedit sed non a. Ut autem illum est. Omnis et qui par" />
+  </h-tabs>
 
   </div>
 </template>

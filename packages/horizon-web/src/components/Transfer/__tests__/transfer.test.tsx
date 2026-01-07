@@ -40,28 +40,28 @@ describe('Transfer.tsx', () => {
       <HTransfer v-model={value.value} filterable data={getTestData()} />
     ));
     const panelELE = wrapper.findComponent(HTransferPanel);
-    const inputELE = panelELE.find('.n-input__inner');
+    const inputELE = panelELE.find('.h-input__inner');
     await inputELE.setValue('10');
-    const checkboxELEArr = wrapper.findAll('.n-transfer-panel__item > .n-checkbox');
+    const checkboxELEArr = wrapper.findAll('.h-transfer-panel__item > .h-checkbox');
     expect(checkboxELEArr.length).toBe(1);
   });
 
   test('transfer', async () => {
     const value = ref([1, 4]);
     const wrapper = mount(() => <HTransfer v-model={value.value} data={getTestData()} />);
-    expect((wrapper.findComponent('.n-transfer--right') as VueWrapper<any>).vm.data.length).toBe(
+    expect((wrapper.findComponent('.h-transfer--right') as VueWrapper<any>).vm.data.length).toBe(
       value.value.length,
     );
     value.value = [1, 2, 4];
     await nextTick();
-    expect((wrapper.findComponent('.n-transfer--right') as VueWrapper<any>).vm.data.length).toBe(
+    expect((wrapper.findComponent('.h-transfer--right') as VueWrapper<any>).vm.data.length).toBe(
       value.value.length,
     );
 
-    const clearButton = wrapper.find('.n-transfer__header--clear');
+    const clearButton = wrapper.find('.h-transfer__header--clear');
     await clearButton.trigger('click');
     expect(value.value.length).toBe(1);
-    expect((wrapper.findComponent('.n-transfer--right') as VueWrapper<any>).vm.data.length).toBe(
+    expect((wrapper.findComponent('.h-transfer--right') as VueWrapper<any>).vm.data.length).toBe(
       value.value.length,
     );
   });
@@ -79,7 +79,7 @@ describe('Transfer.tsx', () => {
       />
     ));
 
-    const label = wrapper.find('.n-transfer__header .n-checkbox__label');
+    const label = wrapper.find('.h-transfer__header .h-checkbox__label');
     expect(label.text().includes('表1')).toBeTruthy();
   });
 
@@ -96,7 +96,7 @@ describe('Transfer.tsx', () => {
       />
     ));
     const transferELE = wrapper.findComponent(HTransfer);
-    expect(transferELE.find('.n-input__inner').attributes('placeholder')).eq('hhhh');
+    expect(transferELE.find('.h-input__inner').attributes('placeholder')).eq('hhhh');
   });
 
   test('internal', async () => {
@@ -120,11 +120,11 @@ describe('Transfer.tsx', () => {
       },
     );
     const transferELE = wrapper.findComponent(HTransfer);
-    expect(transferELE.find('.n-input__inner').attributes('placeholder')).eq('Please Input');
+    expect(transferELE.find('.h-input__inner').attributes('placeholder')).eq('Please Input');
 
     localeService.current = LocaleSupportLang.ZhCN;
     await nextTick();
-    expect(transferELE.find('.n-input__inner').attributes('placeholder')).eq('请输入');
+    expect(transferELE.find('.h-input__inner').attributes('placeholder')).eq('请输入');
   });
 
   test('disabled', async () => {
@@ -133,19 +133,19 @@ describe('Transfer.tsx', () => {
     const wrapper = mount(() => (
       <HTransfer data={getTestData()} v-model={value.value} disabled={disabled.value} />
     ));
-    const checkboxELEArr = wrapper.findAll('.n-checkbox');
-    const checkboxDisabledELEArr = wrapper.findAll('.n-checkbox--disabled');
+    const checkboxELEArr = wrapper.findAll('.h-checkbox');
+    const checkboxDisabledELEArr = wrapper.findAll('.h-checkbox--disabled');
     expect(checkboxELEArr.length !== checkboxDisabledELEArr.length).toBeTruthy();
 
-    const clearButtonELE = wrapper.find('.n-transfer__header--clear');
+    const clearButtonELE = wrapper.find('.h-transfer__header--clear');
     expect(clearButtonELE.element.hasAttribute('disabled')).toBeFalsy();
 
     disabled.value = true;
     await nextTick();
-    const checkboxELENewArr = wrapper.findAll('.n-checkbox');
-    const checkboxDisabledELENewArr = wrapper.findAll('.n-checkbox--disabled');
+    const checkboxELENewArr = wrapper.findAll('.h-checkbox');
+    const checkboxDisabledELENewArr = wrapper.findAll('.h-checkbox--disabled');
     expect(checkboxELENewArr.length === checkboxDisabledELENewArr.length).toBeTruthy();
-    const clearButtonELENew = wrapper.find('.n-transfer__header--clear');
+    const clearButtonELENew = wrapper.find('.h-transfer__header--clear');
     expect(clearButtonELENew.element.hasAttribute('disabled')).toBeTruthy();
   });
 });

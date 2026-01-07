@@ -38,7 +38,7 @@
 :::demo ./demos/lazyload.vue :::
 
 ### 图片查看器
-传入 `show-viewer` 即可启用图片查看器 `<n-viewer />`。
+传入 `show-viewer` 即可启用图片查看器 `<h-viewer />`。
 :::demo ./demos/viewer.vue :::
 
 ### 操作项
@@ -52,7 +52,7 @@
 :::demo ./demos/slot.vue :::
 
 ### 图片列表
-为了更方便的展示一系列图片，我们还提供了 `n-image-list` 组件，你可以控制每张图片的间距，以及最多展示的图片数量。
+为了更方便的展示一系列图片，我们还提供了 `h-image-list` 组件，你可以控制每张图片的间距，以及最多展示的图片数量。
 :::demo ./demos/list.vue :::
 
 ### 自定义溢出

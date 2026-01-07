@@ -72,7 +72,7 @@ describe('Cascader.tsx special', () => {
     const panels = wrapper.findAllComponents(HCascaderPanel);
     expect(triggerLoad).toHaveBeenCalledOnce();
     expect(panels.length).toBe(2);
-    expect(panels.at(-1)?.find('.n-cascader-panel__empty').exists()).toBeTruthy();
+    expect(panels.at(-1)?.find('.h-cascader-panel__empty').exists()).toBeTruthy();
   });
 
   test('unselectable', async () => {
@@ -124,7 +124,7 @@ describe('Cascader.tsx special', () => {
     await pickerInput.find('input').setValue('g');
     await sleep(200);
 
-    const checkAll = wrapper.find('.n-cascader-search-panel__check-all');
+    const checkAll = wrapper.find('.h-cascader-search-panel__check-all');
 
     expect(checkAll.exists()).toBeTruthy();
     await checkAll.trigger('click');
@@ -151,7 +151,7 @@ describe('Cascader.tsx special', () => {
     await pickerInput.find('input').setValue('g');
     await sleep(200);
 
-    const checkAll = wrapper.find('.n-cascader-search-panel__check-all');
+    const checkAll = wrapper.find('.h-cascader-search-panel__check-all');
 
     expect(checkAll.exists()).toBeTruthy();
     await checkAll.trigger('click');

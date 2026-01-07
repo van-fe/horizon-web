@@ -1,6 +1,6 @@
 @use '../../../../styles/mixins';
-@import 'var';
-@import 'mixin';
+@use 'var';
+@use 'mixin';
 
 @include mixins.b('loading') {
   position: absolute;
@@ -20,13 +20,13 @@
 
     @include mixins.m('dots-text-row') {
       @each $size in (large, medium, small, ) {
-        @include dots-text-row-gap($size);
+        @include mixin.dots-text-row-gap($size);
       }
     }
 
     @include mixins.m('circle-text-row') {
       @each $size in (large, medium, small, ) {
-        @include circle-text-row-gap($size);
+        @include mixin.circle-text-row-gap($size);
       }
     }
   }
@@ -38,13 +38,13 @@
 
     @include mixins.m('dots-text-column') {
       @each $size in (large, medium, small, ) {
-        @include dots-text-column-gap($size);
+        @include mixin.dots-text-column-gap($size);
       }
     }
 
     @include mixins.m('circle-text-column') {
       @each $size in (large, medium, small, ) {
-        @include circle-text-column-gap($size);
+        @include mixin.circle-text-column-gap($size);
       }
     }
   }
@@ -52,13 +52,13 @@
   @include mixins.e('container') {
     @include mixins.m('animation-circle') {
       @each $size in (large, medium, small, ) {
-        @include circle-size($size);
+        @include mixin.circle-size($size);
       }
     }
 
     @include mixins.m('animation-dots') {
       @each $size in (large, medium, small, ) {
-        @include dots-size($size);
+        @include mixin.dots-size($size);
       }
     }
   }

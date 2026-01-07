@@ -103,7 +103,7 @@ export default class SelectHelper<
   public async open(trigger: SelectProps['trigger'] = 'click', waitTime = 300) {
     await this.element.trigger(trigger);
     await sleep(waitTime);
-    this.confirmWrapper = this.wrapper.find('.n-picker__pop-content--confirm-wrapper');
+    this.confirmWrapper = this.wrapper.find('.h-picker__pop-content--confirm-wrapper');
   }
 
   public async close(waitTime = 300) {

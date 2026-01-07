@@ -12,7 +12,7 @@ $values: (
   'height--step-item--small': 11px,
   'width--step-item--controls-between': 34px,
   'font-size': #{function.css-variable('text-base')},
-  'font-size--large': #{function.css-variable('text-lg')},
+  'font-size--large': #{function.css-variable('text-base')},
   'font-size--small': #{function.css-variable('text-sm')},
   'line-height': 30px,
   'line-height--inner': 1,

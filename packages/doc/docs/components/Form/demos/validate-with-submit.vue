@@ -1,6 +1,6 @@
 <template>
-  <n-form ref="formRef" :model="formData" validate-trigger="change" @validate="onValidateChange">
-    <n-form-item
+  <h-form ref="formRef" :model="formData" validate-trigger="change" @validate="onValidateChange">
+    <h-form-item
       label="User name"
       prop="username"
       :rules="[
@@ -15,18 +15,18 @@
         },
       ]"
     >
-      <n-input v-model="formData.username" />
-    </n-form-item>
-    <n-form-item label="Email" prop="email" :rules="emailRules">
-      <n-input v-model="formData.email" />
-    </n-form-item>
-    <n-form-item label="Notes" prop="notes">
-      <n-input v-model="formData.notes" type="textarea" />
-    </n-form-item>
+      <h-input v-model="formData.username" />
+    </h-form-item>
+    <h-form-item label="Email" prop="email" :rules="emailRules">
+      <h-input v-model="formData.email" />
+    </h-form-item>
+    <h-form-item label="Notes" prop="notes">
+      <h-input v-model="formData.notes" type="textarea" />
+    </h-form-item>
     <div>
-      <n-button :disabled="!canSubmit" @click="submit">Submit</n-button>
+      <h-button :disabled="!canSubmit" @click="submit">Submit</h-button>
     </div>
-  </n-form>
+  </h-form>
 </template>
 
 <script lang="ts">

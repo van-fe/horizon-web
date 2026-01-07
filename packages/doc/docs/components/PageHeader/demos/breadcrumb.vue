@@ -1,15 +1,15 @@
 <template>
-  <n-page-header :icon="null" title="页面标题">
+  <h-page-header :icon="null" title="页面标题">
     <template #breadcrumb>
-      <n-breadcrumb :separator="IconArrowRight">
-        <n-breadcrumb-item>首页</n-breadcrumb-item>
-        <n-breadcrumb-item>子页面1</n-breadcrumb-item>
-        <n-breadcrumb-item>子页面2</n-breadcrumb-item>
-        <n-breadcrumb-item>子页面3</n-breadcrumb-item>
-        <n-breadcrumb-item>当前页面</n-breadcrumb-item>
-      </n-breadcrumb>
+      <h-breadcrumb :separator="IconArrowRight">
+        <h-breadcrumb-item>首页</h-breadcrumb-item>
+        <h-breadcrumb-item>子页面1</h-breadcrumb-item>
+        <h-breadcrumb-item>子页面2</h-breadcrumb-item>
+        <h-breadcrumb-item>子页面3</h-breadcrumb-item>
+        <h-breadcrumb-item>当前页面</h-breadcrumb-item>
+      </h-breadcrumb>
     </template>
-  </n-page-header>
+  </h-page-header>
 </template>
 
 <script setup lang="ts">

@@ -1,5 +1,5 @@
 <template>
-  <n-alert
+  <h-alert
     title="标题"
     type="info"
     description="这是一条提示消息"
@@ -7,7 +7,7 @@
     primary-button-text="按钮"
     default-button-text="按钮"
   />
-  <n-alert
+  <h-alert
     title="标题"
     type="info"
     :description="contentLong"
@@ -18,11 +18,11 @@
 </template>
 
 <style scoped>
-.n-alert {
+.h-alert {
   margin: 20px 0 0;
 }
 
-.n-alert:first-child {
+.h-alert:first-child {
   margin: 0;
 }
 </style>

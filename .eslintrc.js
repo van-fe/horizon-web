@@ -105,4 +105,19 @@ module.exports = {
     h: true,
     NodeJs: true,
   },
+  ignores: [
+    'packages/**/dist/**/*',
+    'packages/**/lib/**/*',
+    'packages/**/es/**/*',
+    '*.md',
+    '*.d.ts',
+    '*.cjs.js',
+    '*.es.js',
+    'node_modules',
+    'coverage',
+    'packages/docs/**/*.ts',
+    'packages/doc/docs/**/*.ts',
+    'packages/doc/docs/**/*.scss',
+    'packages/docs',
+  ]
 };

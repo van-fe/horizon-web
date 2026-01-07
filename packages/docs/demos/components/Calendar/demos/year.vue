@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <n-calendar
+    <h-calendar
       v-model="value"
       mode="year"
       date-type="only-current"

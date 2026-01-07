@@ -1,14 +1,14 @@
 <template>
-  <n-tabs v-model:active-key="activeKey" v2 type="card" :before-change="beforeChange">
-    <n-tab key="tab1" label="普通Tab" />
-    <n-tab key="tab2" label="2s延迟">
+  <h-tabs v-model:active-key="activeKey" v2 type="card" :before-change="beforeChange">
+    <h-tab key="tab1" label="普通Tab" />
+    <h-tab key="tab2" label="2s延迟">
       <template v-if="loading" #icon>
         <a-icon spin="ccw" name="loading" />
       </template>
-    </n-tab>
-    <n-tab key="tab3" label="不可访问" />
-    <n-tab key="tab4" label="普通Tab 2" />
-  </n-tabs>
+    </h-tab>
+    <h-tab key="tab3" label="不可访问" />
+    <h-tab key="tab4" label="普通Tab 2" />
+  </h-tabs>
 </template>
 
 <script lang="ts" setup>

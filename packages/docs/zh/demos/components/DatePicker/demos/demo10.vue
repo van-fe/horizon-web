@@ -2,19 +2,19 @@
   <div class="demo-wrapper">
     <div class="box">
       <span>设置前缀、后缀图标</span>
-      <n-date-picker
+      <h-date-picker
         v-model="time1"
         type="date"
         prefix-icon="setting"
         suffix-icon="close"
-      ></n-date-picker>
+      ></h-date-picker>
     </div>
     <div class="box">
       <span>设置前缀、后缀图标（插槽）</span>
-      <n-date-picker v-model="time2" type="date">
+      <h-date-picker v-model="time2" type="date">
         <template #prefix>pre</template>
         <template #suffix>suf</template>
-      </n-date-picker>
+      </h-date-picker>
     </div>
   </div>
 </template>

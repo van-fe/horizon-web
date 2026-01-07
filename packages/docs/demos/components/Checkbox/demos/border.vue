@@ -1,8 +1,8 @@
 <template>
-  <n-row>
-    <n-col :span="8">
+  <h-row>
+    <h-col :span="8">
       <div class="demo-title">medium(default)</div>
-      <n-checkbox
+      <h-checkbox
         v-for="item in checkboxOptions"
         :key="item.key"
         v-model="item.checked"
@@ -11,10 +11,10 @@
         class="checkbox"
         @change="selectCheckbox"
       />
-    </n-col>
-    <n-col :span="10">
+    </h-col>
+    <h-col :span="10">
       <div class="demo-title">large</div>
-      <n-checkbox
+      <h-checkbox
         v-for="item in checkboxOptions"
         :key="item.key"
         v-model="item.checked"
@@ -24,8 +24,8 @@
         size="large"
         @change="selectCheckbox"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script lang="ts" setup>

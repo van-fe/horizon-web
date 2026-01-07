@@ -1,37 +1,37 @@
 <template>
-  <n-row :gutter="10">
-    <n-col :span="6">
+  <h-row :gutter="10">
+    <h-col :span="6">
       <div class="demo-title">单选</div>
-      <n-cascader
+      <h-cascader
         v-model="currentVal1"
         :clearable="true"
         :to-body="false"
         :options="baseData"
       />
-    </n-col>
-    <n-col :span="6">
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">多选</div>
-      <n-cascader
+      <h-cascader
         v-model="currentVal2"
         :clearable="true"
         :options="baseData"
         :multiple="true"
         :to-body="false"
       />
-    </n-col>
-    <n-col :span="6">
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">单选-仅展示叶子节点</div>
-      <n-cascader
+      <h-cascader
         v-model="currentVal3"
         :clearable="true"
         :options="baseData"
         show-checked-strategy="leaf"
         :to-body="false"
       />
-    </n-col>
-    <n-col :span="6">
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">多选-仅展示叶子节点</div>
-      <n-cascader
+      <h-cascader
         v-model="currentVal4"
         :clearable="true"
         :options="baseData"
@@ -39,8 +39,8 @@
         :multiple="true"
         :to-body="false"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

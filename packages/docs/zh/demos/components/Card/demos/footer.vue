@@ -1,6 +1,6 @@
 <template>
   <h3>带状态</h3>
-  <n-card bottom-divider>
+  <h-card bottom-divider>
     <p>
       内容区域的卡片形式。卡片内容区域可以是文字、图片、表单、表格等形式信息内容。可使用大中小不同的卡片尺寸，按业务需求进行呈现。
     </p>
@@ -51,16 +51,16 @@
         <span>2919</span>
       </footer>
     </template>
-  </n-card>
+  </h-card>
   <h3 style="marginTop:2em">带输入</h3>
-  <n-card bottom-divider>
+  <h-card bottom-divider>
     这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很的内容文案这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很的内容文案这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很的内容文案
     <template #footer>
       <footer class="footer-2">
-        <n-input type="textarea" placeholder="请输入" />
+        <h-input type="textarea" placeholder="请输入" />
       </footer>
     </template>
-  </n-card>
+  </h-card>
 </template>
 
 <script setup lang="ts"></script>

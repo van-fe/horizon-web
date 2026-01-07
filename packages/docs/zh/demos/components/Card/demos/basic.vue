@@ -1,22 +1,22 @@
 <template>
   <ul>
     <li>
-      <n-input size="small" v-model="title" placeholder="请输入"></n-input>
+      <h-input size="small" v-model="title" placeholder="请输入"></h-input>
     </li>
-    <li><n-checkbox v-model="topDivider" label="上分割线" /></li>
-    <li><n-checkbox v-model="bottomDivider" label="下分割线" /></li>
-    <li><n-checkbox v-model="border" label="边框" /></li>
+    <li><h-checkbox v-model="topDivider" label="上分割线" /></li>
+    <li><h-checkbox v-model="bottomDivider" label="下分割线" /></li>
+    <li><h-checkbox v-model="border" label="边框" /></li>
     <li class="flex">
       <span>圆角：</span>
-      <n-radio-group v-if="border" v-model="radius">
-        <n-radio label="none" v-model="radius">none</n-radio>
-        <n-radio label="small" v-model="radius">small</n-radio>
-        <n-radio label="medium" v-model="radius">medium</n-radio>
-        <n-radio label="large" v-model="radius">large</n-radio>
-      </n-radio-group>
+      <h-radio-group v-if="border" v-model="radius">
+        <h-radio label="none" v-model="radius">none</h-radio>
+        <h-radio label="small" v-model="radius">small</h-radio>
+        <h-radio label="medium" v-model="radius">medium</h-radio>
+        <h-radio label="large" v-model="radius">large</h-radio>
+      </h-radio-group>
     </li>
   </ul>
-  <n-card
+  <h-card
       :title="title"
       :top-divider="topDivider"
       :bottom-divider="bottomDivider"
@@ -26,11 +26,11 @@
     {{ text }}
     <template #footer>
       <div class="custom-footer">
-        <n-button type="normal" size="small">Default</n-button>
-        <n-button size="small">Default</n-button>
+        <h-button type="normal" size="small">Default</h-button>
+        <h-button size="small">Default</h-button>
       </div>
     </template>
-  </n-card>
+  </h-card>
 </template>
 
 <script setup lang="ts">

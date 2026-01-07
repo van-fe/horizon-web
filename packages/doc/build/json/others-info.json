@@ -11,7 +11,7 @@
   },
   {
     "name": "Table",
-    "desc": "Table 使用了 `ag-grid`，具体文档请点 [这里](https://www.ag-grid.com/vue-data-grid/)\n用于展示多条结构类似的数据，也可以展示树状结构，可对数据进行排序、筛选、对比或其他自定义操作。\n因为借助了强大的第三方工具 `ag-grid`，所以 `n-table` 在对树形数据处理上的性能完胜 `n-table`",
+    "desc": "Table 使用了 `ag-grid`，具体文档请点 [这里](https://www.ag-grid.com/vue-data-grid/)\n用于展示多条结构类似的数据，也可以展示树状结构，可对数据进行排序、筛选、对比或其他自定义操作。\n因为借助了强大的第三方工具 `ag-grid`，所以 `h-table` 在对树形数据处理上的性能完胜 `h-table`",
     "dirName": "Table"
   },
   {

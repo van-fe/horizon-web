@@ -1,7 +1,7 @@
 <template>
   <div class="">
-    <n-rate v-model="currentScore" color="pink" void-color="blue" />
-    <n-rate v-model="currentScore" disabled disabled-color="green" />
+    <h-rate v-model="currentScore" color="pink" void-color="blue" />
+    <h-rate v-model="currentScore" disabled disabled-color="green" />
   </div>
 </template>
 

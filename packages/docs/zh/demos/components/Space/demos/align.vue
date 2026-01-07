@@ -6,29 +6,29 @@ const direction = ref('horizontal');
 </script>
 
 <template>
-  <n-space block direction="vertical">
-    <n-space>
+  <h-space block direction="vertical">
+    <h-space>
       Direction
-      <n-radio v-model="direction" label="horizontal">horizontal</n-radio>
-      <n-radio v-model="direction" label="vertical">vertical</n-radio>
-    </n-space>
-    <n-space>
+      <h-radio v-model="direction" label="horizontal">horizontal</h-radio>
+      <h-radio v-model="direction" label="vertical">vertical</h-radio>
+    </h-space>
+    <h-space>
       Align
-      <n-radio v-model="align" label="start">start</n-radio>
-      <n-radio v-model="align" label="center">center</n-radio>
-      <n-radio v-model="align" label="end">end</n-radio>
-      <n-radio v-model="align" label="baseline">baseline</n-radio>
-    </n-space>
-    <n-space
+      <h-radio v-model="align" label="start">start</h-radio>
+      <h-radio v-model="align" label="center">center</h-radio>
+      <h-radio v-model="align" label="end">end</h-radio>
+      <h-radio v-model="align" label="baseline">baseline</h-radio>
+    </h-space>
+    <h-space
       :direction="direction"
       :align="align"
       style="border: 1px solid var(--n-bg-brand-default)"
     >
       Space
-      <n-button>Button</n-button>
+      <h-button>Button</h-button>
       <div style="height: 100px; background: #f1f2f3; padding: 10px">block</div>
-    </n-space>
-  </n-space>
+    </h-space>
+  </h-space>
 </template>
 
 <style scoped></style>

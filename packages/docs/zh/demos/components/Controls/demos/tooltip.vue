@@ -19,22 +19,22 @@ function onCommand(type: 'edit' | 'del') {
 
 <template>
   <div>
-    <n-form label-position="left" label-vertical-align="middle" label-width="120px">
-      <n-form-item label="use tooltip">
-        <n-switch v-model="useTooltip" />
-      </n-form-item>
-    </n-form>
-    <n-hover v-slot="{ hover }">
+    <h-form label-position="left" label-vertical-align="middle" label-width="120px">
+      <h-form-item label="use tooltip">
+        <h-switch v-model="useTooltip" />
+      </h-form-item>
+    </h-form>
+    <h-hover v-slot="{ hover }">
       <div class="square">
         Mouse move here
-        <n-mask :absolute="true" :value="hover" :content-full-size="true">
-          <n-controls theme="light" :use-tooltip="useTooltip" @command="onCommand">
-            <n-control :icon="IconEdit" text="编辑" label="edit" />
-            <n-control :icon="IconRubbish" text="删除" label="del" />
-          </n-controls>
-        </n-mask>
+        <h-mask :absolute="true" :value="hover" :content-full-size="true">
+          <h-controls theme="light" :use-tooltip="useTooltip" @command="onCommand">
+            <h-control :icon="IconEdit" text="编辑" label="edit" />
+            <h-control :icon="IconRubbish" text="删除" label="del" />
+          </h-controls>
+        </h-mask>
       </div>
-    </n-hover>
+    </h-hover>
   </div>
 </template>
 

@@ -11,29 +11,29 @@ const onChecked = (checked: boolean) => {
 </script>
 
 <template>
-  <n-space direction="vertical" size="large">
-    <n-space block size="medium">
-      <n-space align="start" size="small">
+  <h-space direction="vertical" size="large">
+    <h-space block size="medium">
+      <h-space align="start" size="small">
         Size
-        <n-radio v-model="size" :disabled="customized" label="small">small</n-radio>
-        <n-radio v-model="size" :disabled="customized" label="medium">medium</n-radio>
-        <n-radio v-model="size" :disabled="customized" label="large">large</n-radio>
-      </n-space>
-      <n-space>
+        <h-radio v-model="size" :disabled="customized" label="small">small</h-radio>
+        <h-radio v-model="size" :disabled="customized" label="medium">medium</h-radio>
+        <h-radio v-model="size" :disabled="customized" label="large">large</h-radio>
+      </h-space>
+      <h-space>
         Other Setting:
-        <n-checkbox v-model="customized" @change="onChecked">Customize</n-checkbox>
+        <h-checkbox v-model="customized" @change="onChecked">Customize</h-checkbox>
         {{ customized ? `size: ${size}px` : '' }}
-      </n-space>
-    </n-space>
+      </h-space>
+    </h-space>
 
-    <n-slider v-if="customized" v-model="size" :min="8" :max="100" :step="1" />
+    <h-slider v-if="customized" v-model="size" :min="8" :max="100" :step="1" />
 
-    <n-space :size="size">
-      <n-button>Created</n-button>
-      <n-button type="normal">Refresh</n-button>
-      <n-button type="normal" icon="full_screen" />
-    </n-space>
-  </n-space>
+    <h-space :size="size">
+      <h-button>Created</h-button>
+      <h-button type="normal">Refresh</h-button>
+      <h-button type="normal" icon="full_screen" />
+    </h-space>
+  </h-space>
 </template>
 
 <style scoped></style>

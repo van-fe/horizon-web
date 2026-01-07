@@ -1,12 +1,12 @@
 <template>
-  <n-table-v3 :data="data" max-height="500" row-key="id" border="full" :show-summary="true">
-    <n-table-column-v3 title="ID" field="id" />
-    <n-table-column-v3 title="Name" field="name" />
-    <n-table-column-v3 title="Price 1" field="prices[0]" align="right" footer-align="right" header-align="right" />
-    <n-table-column-v3 title="Price 2" field="prices[1]" align="right" footer-align="right" header-align="right" />
-    <n-table-column-v3 title="Price 3" field="prices[2]" align="right" footer-align="right" header-align="right" />
-  </n-table-v3>
-  <n-table-v3
+  <h-table-v3 :data="data" max-height="500" row-key="id" border="full" :show-summary="true">
+    <h-table-column-v3 title="ID" field="id" />
+    <h-table-column-v3 title="Name" field="name" />
+    <h-table-column-v3 title="Price 1" field="prices[0]" align="right" footer-align="right" header-align="right" />
+    <h-table-column-v3 title="Price 2" field="prices[1]" align="right" footer-align="right" header-align="right" />
+    <h-table-column-v3 title="Price 3" field="prices[2]" align="right" footer-align="right" header-align="right" />
+  </h-table-v3>
+  <h-table-v3
     :data="data"
     max-height="500"
     row-key="id"
@@ -17,12 +17,12 @@
     class="mt-3"
     table-layout="fixed"
   >
-    <n-table-column-v3 title="ID" field="id" />
-    <n-table-column-v3 title="Name" field="name" />
-    <n-table-column-v3 title="Price 1" field="prices[0]" align="right" footer-align="right" header-align="right" />
-    <n-table-column-v3 title="Price 2" field="prices[1]" align="right" footer-align="right" header-align="right" />
-    <n-table-column-v3 title="Price 3" field="prices[2]" align="right" footer-align="right" header-align="right" />
-  </n-table-v3>
+    <h-table-column-v3 title="ID" field="id" />
+    <h-table-column-v3 title="Name" field="name" />
+    <h-table-column-v3 title="Price 1" field="prices[0]" align="right" footer-align="right" header-align="right" />
+    <h-table-column-v3 title="Price 2" field="prices[1]" align="right" footer-align="right" header-align="right" />
+    <h-table-column-v3 title="Price 3" field="prices[2]" align="right" footer-align="right" header-align="right" />
+  </h-table-v3>
 </template>
 
 <script setup lang="ts">

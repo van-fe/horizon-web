@@ -1,5 +1,5 @@
 @use '../../../../styles/mixins';
-@import './item';
+@use 'item';
 
 @include mixins.b('list') {
   overflow: auto;

@@ -1,18 +1,18 @@
 <template>
-  <n-button class="mb-2" @click="insertData()">Increase Data</n-button>
-  <n-table-v3 :data="data" :max-height="300">
-    <n-table-column-v3 title="Seq" type="index" :fixed="true" />
-    <n-table-column-v3 title="Name" field="name" fixed />
-    <n-table-column-v3 title="Birthday" field="birthday" min-width="200px" />
-    <n-table-column-v3 title="Address" field="address" min-width="500px" />
-    <n-table-column-v3 title="Message" field="message" show-overflow-tooltip width="800px" />
-    <n-table-column-v3 title="Operations" fixed="right" min-width="120px" align="center" header-align="center">
+  <h-button class="mb-2" @click="insertData()">Increase Data</h-button>
+  <h-table-v3 :data="data" :max-height="300">
+    <h-table-column-v3 title="Seq" type="index" :fixed="true" />
+    <h-table-column-v3 title="Name" field="name" fixed />
+    <h-table-column-v3 title="Birthday" field="birthday" mih-width="200px" />
+    <h-table-column-v3 title="Address" field="address" mih-width="500px" />
+    <h-table-column-v3 title="Message" field="message" show-overflow-tooltip width="800px" />
+    <h-table-column-v3 title="Operations" fixed="right" mih-width="120px" align="center" header-align="center">
       <template #default="scope">
-        <n-button link size="small" @click="view(scope.row)">View</n-button>
-        <n-button link size="small" @click="edit(scope.row)">Edit</n-button>
+        <h-button link size="small" @click="view(scope.row)">View</h-button>
+        <h-button link size="small" @click="edit(scope.row)">Edit</h-button>
       </template>
-    </n-table-column-v3>
-  </n-table-v3>
+    </h-table-column-v3>
+  </h-table-v3>
 </template>
 
 <script setup lang="ts">

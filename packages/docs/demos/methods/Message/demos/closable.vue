@@ -1,8 +1,8 @@
 <template>
-  <n-button type="normal" plain @click="open2">成功</n-button>
-  <n-button type="normal" plain @click="open3">警告</n-button>
-  <n-button type="normal" plain @click="open1">消息</n-button>
-  <n-button type="normal" plain @click="open4">错误</n-button>
+  <h-button type="normal" plain @click="open2">成功</h-button>
+  <h-button type="normal" plain @click="open3">警告</h-button>
+  <h-button type="normal" plain @click="open1">消息</h-button>
+  <h-button type="normal" plain @click="open4">错误</h-button>
 </template>
 
 <script lang="ts" setup>
@@ -37,7 +37,7 @@ const open4 = () => {
 </script>
 
 <style scoped>
-.n-button + .n-button {
+.h-button + .h-button {
   margin-left: 10px;
 }
 </style>

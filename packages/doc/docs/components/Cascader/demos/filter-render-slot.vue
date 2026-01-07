@@ -1,24 +1,24 @@
 <template>
-  <n-row>
-    <n-col :span="6">
+  <h-row>
+    <h-col :span="6">
       <div class="demo-title">单选</div>
-      <n-cascader v-model="currentVal1" :options="options" filter :to-body="false">
+      <h-cascader v-model="currentVal1" :options="options" filter :to-body="false">
         <template #searchPanelRender="slotProps">
           🐂
           {{ slotProps.paths.map(path => path.label).join('～') }}
         </template>
-      </n-cascader>
-    </n-col>
-    <n-col :span="6">
+      </h-cascader>
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">多选</div>
-      <n-cascader v-model="currentVal2" :options="options" filter multiple :to-body="false">
+      <h-cascader v-model="currentVal2" :options="options" filter multiple :to-body="false">
         <template #searchPanelRender="slotProps">
           🐂
           {{ slotProps.paths.map(path => path.label).join('～') }}
         </template>
-      </n-cascader>
-    </n-col>
-  </n-row>
+      </h-cascader>
+    </h-col>
+  </h-row>
 </template>
 
 <script lang="ts">

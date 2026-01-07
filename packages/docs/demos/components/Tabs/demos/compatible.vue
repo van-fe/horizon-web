@@ -38,10 +38,10 @@ const onTabClose = (tabKey: string) => {
   <div class="mb-8 flex align-center">
     <span class="mr-4">其他</span>
     <div class="flex align-center" style="column-gap: 10px">
-      <n-checkbox v-model="v2" label="v2" />
+      <h-checkbox v-model="v2" label="v2" />
     </div>
   </div>
-  <n-tabs
+  <h-tabs
     v-if="v2"
     v-model:active-key="activeKey"
     editable
@@ -51,12 +51,12 @@ const onTabClose = (tabKey: string) => {
     @change="onTabChanged"
     @close="onTabClose"
   >
-    <n-tab name="1" label="Tab 1" />
-    <n-tab name="2" label="延迟访问Tab 2" />
-    <n-tab name="3" label="Tab 3" show-close />
-    <n-tab key="4" label="Tab long title" />
-  </n-tabs>
-  <n-tabs
+    <h-tab name="1" label="Tab 1" />
+    <h-tab name="2" label="延迟访问Tab 2" />
+    <h-tab name="3" label="Tab 3" show-close />
+    <h-tab key="4" label="Tab long title" />
+  </h-tabs>
+  <h-tabs
     v-else
     v-model="activeKey"
     show-add
@@ -65,9 +65,9 @@ const onTabClose = (tabKey: string) => {
     @change="onTabChanged"
     @close="onTabClose"
   >
-    <n-tab name="1" label="Tab 1" />
-    <n-tab name="2" label="延迟访问Tab 2" />
-    <n-tab name="3" label="Tab 3" show-close />
-    <n-tab key="4" label="Tab long title" />
-  </n-tabs>
+    <h-tab name="1" label="Tab 1" />
+    <h-tab name="2" label="延迟访问Tab 2" />
+    <h-tab name="3" label="Tab 3" show-close />
+    <h-tab key="4" label="Tab long title" />
+  </h-tabs>
 </template>

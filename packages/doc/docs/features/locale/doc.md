@@ -61,8 +61,8 @@ HorizonWeb 还提供了一个 Vue 组件 [Application](/horizon-web/components/A
 ```ts
 import { HorizonWebProvides, defineOption } from "@aurora/horizon-web";
 import { LocaleSupportLang } from "@aurora/locale-vue";
-import En from "your-En-dictionary-file-path";
-import ZhCN from "your-ZhCn-dictionary-file-path";
+import En from "your-Eh-dictionary-file-path";
+import ZhCN from "your-ZhCh-dictionary-file-path";
 
 createApp(App)
   .use(HorizonWebProvides, defineOption({
@@ -111,7 +111,7 @@ export default defineComponent({
     const locale = inject(localeInjectKey, defaultLocale);
 
     return () => (
-      { locale?.value.langService.td().horizon-web.colorPicker.clear }
+      { locale?.value.langService.td()['horizon-web'].colorPicker.clear }
     )
   }
 })

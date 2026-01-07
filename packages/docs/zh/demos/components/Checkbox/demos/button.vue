@@ -1,19 +1,19 @@
 <template>
-  <n-row>
-    <n-col :span="8">
+  <h-row>
+    <h-col :span="8">
       <div class="demo-title">medium(default)</div>
-      <n-checkbox-button
+      <h-checkbox-button
         v-for="item in checkBoxOptions"
         :key="item.key"
         v-model="item.checked"
         class="checkbox"
         :label="item.label"
       />
-    </n-col>
+    </h-col>
 
-    <n-col :span="8">
+    <h-col :span="8">
       <div class="demo-title">large</div>
-      <n-checkbox-button
+      <h-checkbox-button
         v-for="item in checkBoxOptions"
         :key="item.key"
         v-model="item.checked"
@@ -21,8 +21,8 @@
         class="checkbox"
         size="large"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script lang="ts" setup>

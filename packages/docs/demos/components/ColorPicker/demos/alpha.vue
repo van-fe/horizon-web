@@ -1,8 +1,8 @@
 <template>
-  <n-switch v-model="alpha" label="透明度调节" label-position="right" />
+  <h-switch v-model="alpha" label="透明度调节" label-position="right" />
 
   <p>
-    <n-color-picker v-model="value1" trigger-type="square" :alpha="alpha" :need-confirm="false" :clearable="false" />
+    <h-color-picker v-model="value1" trigger-type="square" :alpha="alpha" :need-confirm="false" :clearable="false" />
   </p>
 </template>
 

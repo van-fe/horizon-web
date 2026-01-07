@@ -1,24 +1,24 @@
 <template>
-  <n-row>
-    <n-col :span="24">
-      <n-radio
+  <h-row>
+    <h-col :span="24">
+      <h-radio
         v-model="radio"
         :value="1"
         class="radio"
         @change="selectRadio"
       >
         Option 1
-      </n-radio>
-      <n-radio
+      </h-radio>
+      <h-radio
         v-model="radio"
         :value="2"
         class="radio"
         @change="selectRadio"
       >
         Option 2
-      </n-radio>
-    </n-col>
-  </n-row>
+      </h-radio>
+    </h-col>
+  </h-row>
 </template>
 
 <script lang="ts" setup>
@@ -33,6 +33,6 @@ const selectRadio = (val: boolean) => {
 
 <style scoped>
 .radio + .radio {
-  margin-left: 15px;
+  margih-left: 15px;
 }
 </style>

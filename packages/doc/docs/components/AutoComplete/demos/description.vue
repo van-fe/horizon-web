@@ -1,17 +1,17 @@
 <template>
-  <n-form label-position="left" label-vertical-align="middle">
-    <n-form-item label="position">
-      <n-radio-group v-model="position">
-        <n-radio label="right" />
-        <n-radio label="bottom" />
-      </n-radio-group>
-    </n-form-item>
-  </n-form>
-  <n-row>
-    <n-col :span="6">
-      <n-auto-complete :options="options" :description-position="position" @search="onSearch" />
-    </n-col>
-  </n-row>
+  <h-form label-position="left" label-vertical-align="middle">
+    <h-form-item label="position">
+      <h-radio-group v-model="position">
+        <h-radio label="right" />
+        <h-radio label="bottom" />
+      </h-radio-group>
+    </h-form-item>
+  </h-form>
+  <h-row>
+    <h-col :span="6">
+      <h-auto-complete :options="options" :description-position="position" @search="onSearch" />
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

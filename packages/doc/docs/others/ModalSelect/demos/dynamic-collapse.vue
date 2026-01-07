@@ -1,7 +1,7 @@
 <template>
-  <n-row :gutter="10">
-    <n-col :span="6">
-      <n-modal-select
+  <h-row :gutter="10">
+    <h-col :span="6">
+      <h-modal-select
         v-model="values1"
         placeholder="请选择"
         :collapse="collapse"
@@ -10,10 +10,10 @@
         @focus="focusHandle"
         @blur="blurHandle"
       >
-        <n-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
-      </n-modal-select>
-    </n-col>
-  </n-row>
+        <h-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
+      </h-modal-select>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

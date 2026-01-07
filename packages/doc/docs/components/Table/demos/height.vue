@@ -1,10 +1,10 @@
 <template>
-  <n-table-v3 :data="data" height="300px">
-    <n-table-column-v3 title="Name" field="name" />
-    <n-table-column-v3 title="Birthday" field="birthday" />
-    <n-table-column-v3 title="Address" field="address" />
-    <n-table-column-v3 title="Message" field="message" show-overflow-tooltip max-width="300" />
-  </n-table-v3>
+  <h-table-v3 :data="data" height="300px">
+    <h-table-column-v3 title="Name" field="name" />
+    <h-table-column-v3 title="Birthday" field="birthday" />
+    <h-table-column-v3 title="Address" field="address" />
+    <h-table-column-v3 title="Message" field="message" show-overflow-tooltip max-width="300" />
+  </h-table-v3>
 </template>
 
 <script setup lang="ts">

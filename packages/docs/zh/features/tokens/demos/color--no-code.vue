@@ -181,12 +181,12 @@ const currentTabs = ref('text');
 
 <template>
   <div class="colors">
-    <n-tabs v-model="currentTabs" type="page">
-      <n-tab v-for="group of elementTokens" :key="group.label" :name="group.label">{{ group.label }}</n-tab>
-      <n-tab name="alpha">alpha</n-tab>
-    </n-tabs>
-    <n-panels :model-value="currentTabs">
-      <n-panel v-for="group of elementTokens" :key="group.label" :name="group.label">
+    <h-tabs v-model="currentTabs" type="page">
+      <h-tab v-for="group of elementTokens" :key="group.label" :name="group.label">{{ group.label }}</h-tab>
+      <h-tab name="alpha">alpha</h-tab>
+    </h-tabs>
+    <h-panels :model-value="currentTabs">
+      <h-panel v-for="group of elementTokens" :key="group.label" :name="group.label">
         <div
           v-for="color of group.children"
           :key="color.label"
@@ -198,15 +198,15 @@ const currentTabs = ref('text');
             </div>
             <div class="key">{{ color.refToken }} <copy-btn :text="color.refToken" /></div>
           </div>
-          <n-tooltip :enterable="true" :click-to-copy="true">
+          <h-tooltip :enterable="true" :click-to-copy="true">
             <template #content>
               {{ color.hex8.toUpperCase() }}, {{ color.rgba }}
             </template>
             <div class="value">#{{ color.showValue.replace(/-/g, '_') }} @ {{ color.alphaJsKey }}</div>
-          </n-tooltip>
+          </h-tooltip>
         </div>
-      </n-panel>
-      <n-panel name="alpha">
+      </h-panel>
+      <h-panel name="alpha">
         <div v-for="opacity of alphaTokens" :key="opacity.label" class="color">
           <div class="label">
             <div class="preview">
@@ -216,8 +216,8 @@ const currentTabs = ref('text');
           </div>
           <div class="value">{{ opacity.value }}</div>
         </div>
-      </n-panel>
-    </n-panels>
+      </h-panel>
+    </h-panels>
   </div>
 </template>
 
@@ -310,7 +310,7 @@ const currentTabs = ref('text');
   }
 }
 
-.n-panels__content {
+.h-panels__content {
   padding: 10px;
 }
 </style>

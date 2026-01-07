@@ -137,7 +137,7 @@ const elementListTokens = getElementTokenRealValue(tokens.element, basicFontList
   }
 }
 
-.n-panels__content {
+.h-panels__content {
   padding: 10px;
 }
 </style>

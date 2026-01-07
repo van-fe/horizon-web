@@ -34,5 +34,5 @@
 :::demo ./demos/icon.vue :::
 
 ### 和表单一起使用
-可以通过启用 `form` 属性，以适配 `n-form` 组件
+可以通过启用 `form` 属性，以适配 `h-form` 组件
 :::demo ./demos/form.vue :::

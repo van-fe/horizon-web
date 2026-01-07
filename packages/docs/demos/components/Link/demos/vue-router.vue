@@ -1,4 +1,4 @@
 <template>
-  <n-link to="/">Go to other route</n-link>
-  <n-link to="/" replace>Go to other route and replace</n-link>
+  <h-link to="/">Go to other route</h-link>
+  <h-link to="/" replace>Go to other route and replace</h-link>
 </template>

@@ -2,59 +2,59 @@
   <div class="demo-wrapper">
     <div class="box">
       <span>2022/05/21之前的时间禁选</span>
-      <n-date-picker
+      <h-date-picker
         v-model="time1"
         type="date"
         :disabled-date="disabledDate"
         :show-footer="true"
-      ></n-date-picker>
+      ></h-date-picker>
     </div>
     <div class="box">
       <span>2022/05/21之前的日期禁选，09:30-18:30范围禁选</span>
-      <n-date-picker
+      <h-date-picker
         v-model="time2"
         type="dateseconds"
         :disabled-date="disabledDate"
         :disabled-time="disabledTime"
-      ></n-date-picker>
+      ></h-date-picker>
     </div>
     <div class="box">
       <span>2022/05/21 09:30:00之前的时间禁选</span>
-      <n-date-picker
+      <h-date-picker
         v-model="time3"
         type="dateseconds"
         :disabled-date="disabledDate3"
         :disabled-time="disabledTime3"
-      ></n-date-picker>
+      ></h-date-picker>
     </div>
     <div class="box">
       <span>时间范围选择限制15天</span>
-      <n-date-picker
+      <h-date-picker
         v-model="time4"
         type="daterange"
         :disabled-date="disabledDate4"
         @pick="pick"
-      ></n-date-picker>
+      ></h-date-picker>
     </div>
     <div class="box">
       <span>2022/05/21之前的时间禁选(disabledSwitchButton模式)</span>
-      <n-date-picker
+      <h-date-picker
         v-model="time5"
         type="date"
         :disabled-date="disabledDate"
         :disabled-switch-button="true"
         @pick="pick"
-      ></n-date-picker>
+      ></h-date-picker>
     </div>
     <div class="box">
       <span>日期时间范围禁选（今天之前的日期禁选，09:30-18:30范围禁选）</span>
-      <n-date-picker
+      <h-date-picker
         v-model="time6"
         type="datesecondsrange"
         :disabled-date="disabledDate6"
         :begin-disabled-time="disabledTime6"
         :end-disabled-time="disabledTime6"
-      ></n-date-picker>
+      ></h-date-picker>
     </div>
   </div>
 </template>

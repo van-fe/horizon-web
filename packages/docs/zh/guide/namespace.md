@@ -1,12 +1,12 @@
 # 命名空间
-`HORIZONWEB` 默认的命名空间是 `n`，在以下情况下，可能需要自定义命名空间：
-- 多个版本 `HORIZONWEB` 混用
+`Horizon Web` 默认的命名空间是 `h`，在以下情况下，可能需要自定义命名空间：
+- 多个版本 `Horizon Web` 混用
 - 三方工具包
 - ...
 
 **而使用自定义命名空间的好处**：
 - 不同版本 `css` 样式可以完全隔离，互不干扰
-- 三方工具包可以稳定使用当前版本的 `HORIZONWEB`，不受最新版本的各种影响
+- 三方工具包可以稳定使用当前版本的 `Horizon Web`，不受最新版本的各种影响
 - ...
 
 ## 脚本配置
@@ -20,14 +20,14 @@ setNamespace('x');
 // then you can createApp and mount
 ```
 
-### 使用 `n-application` 配置
+### 使用 `h-application` 配置
 有些情况下，你可能不能配置自己的入口文件，则可以通过这个方式定义命名空间
 
 ```vue
 <template>
-  <n-application namespace="x">
+  <h-application namespace="x">
     <!--  ...  -->
-  </n-application>
+  </h-application>
 </template>
 ```
 
@@ -53,7 +53,7 @@ setNamespace('x');
     ```ts [Vite]
     import { defineConfig } from 'vite';
     import Components from 'unplugin-vue-components/vite';
-    import { HorizonWebPluginResolvers } from '@aurora/unplugin-resolver';
+    import { HorizonWebPluginResolvers } from '@aurora/horizon-web-unplugin-resolver';
     
     // https://vitejs.dev/config/
     export default defineConfig({
@@ -77,7 +77,7 @@ setNamespace('x');
     ```
     ```ts [VueCli]
     const { default: Components } = require('unplugin-vue-components/webpack');
-    const { HorizonWebPluginResolvers } = require('@aurora/unplugin-resolver');
+    const { HorizonWebPluginResolvers } = require('@aurora/horizon-web-unplugin-resolver');
     
     module.exports = {
       css: {

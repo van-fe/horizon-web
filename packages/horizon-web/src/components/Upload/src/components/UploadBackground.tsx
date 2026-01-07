@@ -162,7 +162,7 @@ export default defineComponent({
         return (
           <IconLoadingLine
             spin="cw"
-            color={['var(--n-text-brand-default)']}
+            color={['var(--h-text-brand-default)']}
             size={cssVariable('upload', 'size', 'background', 'icon', 'status')}
           />
         );

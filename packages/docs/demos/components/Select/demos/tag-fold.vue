@@ -1,58 +1,58 @@
 <template>
-  <n-row :gutter="10">
-    <n-col :span="6">
+  <h-row :gutter="10">
+    <h-col :span="6">
       <div class="demo-title">
         选项超长
-        <n-tooltip>
+        <h-tooltip>
           <template #content>
             由于折叠需要执行宽度计算，在选项较多时，会对性能造成影响
           </template>
           <a-icon name="help" />
-        </n-tooltip>
+        </h-tooltip>
       </div>
-      <n-select v-model="values4" collapse multiple :to-body="false">
-        <n-option label="齐齐哈尔" :value="1" />
-        <n-option :value="2" label="那然色布斯台音布拉格" />
-        <n-option label="上海" :value="3" />
-        <n-option :value="4" label="北京" />
-        <n-option :value="5" label="合肥" name="hefei" />
-        <n-option
+      <h-select v-model="values4" collapse multiple :to-body="false">
+        <h-option label="齐齐哈尔" :value="1" />
+        <h-option :value="2" label="那然色布斯台音布拉格" />
+        <h-option label="上海" :value="3" />
+        <h-option :value="4" label="北京" />
+        <h-option :value="5" label="合肥" name="hefei" />
+        <h-option
           :value="6"
           label="黄台甫马哈那坤弃他哇劳狄希阿由他亚马哈底陆浦欧叻辣塔尼布黎隆乌冬帕拉查尼卫马哈洒坦"
         />
-      </n-select>
-    </n-col>
+      </h-select>
+    </h-col>
 
-    <n-col :span="6">
+    <h-col :span="6">
       <div class="demo-title">带过滤选项长度超长</div>
-      <n-select v-model="values5" filter-option collapse multiple :max-tag-width="200" :to-body="false">
-        <n-option label="齐齐哈尔" :value="1" />
-        <n-option :value="2" label="那然色布斯台音布拉格" />
-        <n-option label="上海" :value="3" />
-        <n-option :value="4" label="北京" />
-        <n-option :value="5" label="合肥" name="hefei" />
-        <n-option
+      <h-select v-model="values5" filter-option collapse multiple :max-tag-width="200" :to-body="false">
+        <h-option label="齐齐哈尔" :value="1" />
+        <h-option :value="2" label="那然色布斯台音布拉格" />
+        <h-option label="上海" :value="3" />
+        <h-option :value="4" label="北京" />
+        <h-option :value="5" label="合肥" name="hefei" />
+        <h-option
           :value="6"
           label="黄台甫马哈那坤弃他哇劳狄希阿由他亚马哈底陆浦欧叻辣塔尼布黎隆乌冬帕拉查尼卫马哈洒坦"
         />
-      </n-select>
-    </n-col>
+      </h-select>
+    </h-col>
 
-    <n-col :span="6">
+    <h-col :span="6">
       <div class="demo-title">允许创建</div>
-      <n-select v-model="values6" allow-create collapse multiple :to-body="false">
-        <n-option label="齐齐哈尔" :value="1" />
-        <n-option :value="2" label="那然色布斯台音布拉格" />
-        <n-option label="上海" :value="3" />
-        <n-option :value="4" label="北京" />
-        <n-option :value="5" label="合肥" name="hefei" />
-        <n-option
+      <h-select v-model="values6" allow-create collapse multiple :to-body="false">
+        <h-option label="齐齐哈尔" :value="1" />
+        <h-option :value="2" label="那然色布斯台音布拉格" />
+        <h-option label="上海" :value="3" />
+        <h-option :value="4" label="北京" />
+        <h-option :value="5" label="合肥" name="hefei" />
+        <h-option
           :value="6"
           label="黄台甫马哈那坤弃他哇劳狄希阿由他亚马哈底陆浦欧叻辣塔尼布黎隆乌冬帕拉查尼卫马哈洒坦"
         />
-      </n-select>
-    </n-col>
-  </n-row>
+      </h-select>
+    </h-col>
+  </h-row>
 </template>
 
 <script lang="ts">

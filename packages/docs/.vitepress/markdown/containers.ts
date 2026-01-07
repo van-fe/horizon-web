@@ -1,5 +1,6 @@
 import mdContainer from 'markdown-it-container';
-import type { default as MarkdownIt, Token } from 'markdown-it';
+import type { default as MarkdownIt } from 'markdown-it';
+import type Token from 'markdown-it/lib/token';
 import path from 'path';
 import fs from 'fs';
 
@@ -12,7 +13,7 @@ export default (md: MarkdownIt) => {
       const m = tokens[idx].info.trim().match(/^demo\s*(.*)\s*:::$/);
 
       if (tokens[idx].nesting === 1) {
-        const content = fs.readFileSync(path.resolve(__dirname, '../../demos/', m?.[1].trim()), 'utf-8');
+        const content = fs.readFileSync(path.resolve(__dirname, '../../demos/', m?.[1]?.trim()), 'utf-8');
 
         return `<demo-block source="${md.utils.escapeHtml(content)}" />`;
       }

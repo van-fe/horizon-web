@@ -1,5 +1,5 @@
 <template>
-  <n-video-player
+  <h-video-player
     :sources="[
       {
         src: 'https://www.example.com/not-found.mp4',

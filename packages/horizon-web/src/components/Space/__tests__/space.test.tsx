@@ -24,7 +24,7 @@ describe('Space.tsx', () => {
 
       const space = wrapper.findComponent(HSpace);
       expect(space.exists()).toBe(true);
-      expect(space.findAll('.n-space--item')).toHaveLength(2);
+      expect(space.findAll('.h-space--item')).toHaveLength(2);
     });
 
     test('test vertical layout #render', async () => {
@@ -91,7 +91,7 @@ describe('Space.tsx', () => {
 
       const space = wrapper.findComponent(HSpace);
       expect(space.exists()).toBe(true);
-      expect(space.findAll('.n-divider--vertical')).toHaveLength(1);
+      expect(space.findAll('.h-divider--vertical')).toHaveLength(1);
     });
   });
 

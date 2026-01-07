@@ -40,7 +40,7 @@ describe('DropdownGroup.tsx', () => {
 
     await sleep(200);
 
-    expect(wrapper.find('.n-dropdown-group__title').text()).eq('Group');
+    expect(wrapper.find('.h-dropdown-group__title').text()).eq('Group');
   });
 
   describe('props', () => {

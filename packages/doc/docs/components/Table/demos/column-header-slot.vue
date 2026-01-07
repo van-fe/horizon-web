@@ -1,15 +1,15 @@
 <template>
-  <n-table-v3 :data="data" height="300">
-    <n-table-column-v3 title="ID" field="id" />
-    <n-table-column-v3 title="Name" field="name" />
-    <n-table-column-v3 title="Gender" field="gender" />
-    <n-table-column-v3 title="Birthday" field="birthday" />
-    <n-table-column-v3 title="Address" field="address">
+  <h-table-v3 :data="data" height="300">
+    <h-table-column-v3 title="ID" field="id" />
+    <h-table-column-v3 title="Name" field="name" />
+    <h-table-column-v3 title="Gender" field="gender" />
+    <h-table-column-v3 title="Birthday" field="birthday" />
+    <h-table-column-v3 title="Address" field="address">
       <template #header>
-        <n-input v-model="searchedAddress" placeholder="Please search" />
+        <h-input v-model="searchedAddress" placeholder="Please search" />
       </template>
-    </n-table-column-v3>
-  </n-table-v3>
+    </h-table-column-v3>
+  </h-table-v3>
 </template>
 
 <script setup lang="ts">

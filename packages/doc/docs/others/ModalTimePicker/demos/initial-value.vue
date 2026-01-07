@@ -1,14 +1,14 @@
 <template>
-  <n-row>
-    <n-col :span="6">
+  <h-row>
+    <h-col :span="6">
       {{ Object.prototype.toString.call(value) }}
-      <n-modal-time-picker v-model="value" :initial-value="null" @update:modelValue="onUpdate" @change="onChange" @pick="onPick" />
-    </n-col>
-    <n-col :span="6">
+      <h-modal-time-picker v-model="value" :initial-value="null" @update:modelValue="onUpdate" @change="onChange" @pick="onPick" />
+    </h-col>
+    <h-col :span="6">
       {{ Object.prototype.toString.call(value2) }}
-      <n-modal-time-picker v-model="value2" :is-range="true" :initial-value="null" @update:modelValue="onUpdate" @change="onChange" @pick="onPick" />
-    </n-col>
-  </n-row>
+      <h-modal-time-picker v-model="value2" :is-range="true" :initial-value="null" @update:modelValue="onUpdate" @change="onChange" @pick="onPick" />
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

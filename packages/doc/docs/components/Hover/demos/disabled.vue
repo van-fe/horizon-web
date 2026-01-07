@@ -2,7 +2,7 @@
   <NHover v-slot="{ hover }" :disabled="true">
     <div class="container">
       <span>容器</span>
-      <n-button v-if="hover" size="medium">删除</n-button>
+      <h-button v-if="hover" size="medium">删除</h-button>
     </div>
   </NHover>
 </template>
@@ -19,11 +19,11 @@ export default defineComponent({
 .container {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  aligh-items: center;
   height: 70px;
   padding: 10px;
   margin: 10px 0;
   border-radius: 4px;
-  background-color: var(--n-bg-success-weak-activated);
+  background-color: var(--h-bg-success-weak-activated);
 }
 </style>

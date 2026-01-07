@@ -1,25 +1,25 @@
 <template>
-  <n-table-v3 ref="tableDomRef" :data="data" height="500">
-    <n-table-column-v3 title="ID" field="id" type="expand" fixed>
+  <h-table-v3 ref="tableDomRef" :data="data" height="500">
+    <h-table-column-v3 title="ID" field="id" type="expand" fixed>
       <template #expand="scope">
-        <n-table-v3
+        <h-table-v3
           :data="scope.row.orders"
           border
           header-sticky
           :header-sticky-offset="92"
           :header-sticky-container="tableDomRef?.getScrollWrap()"
         >
-          <n-table-column-v3 title="No" field="no" />
-          <n-table-column-v3 title="Name" field="name" />
-          <n-table-column-v3 title="Price" field="price" />
-        </n-table-v3>
+          <h-table-column-v3 title="No" field="no" />
+          <h-table-column-v3 title="Name" field="name" />
+          <h-table-column-v3 title="Price" field="price" />
+        </h-table-v3>
       </template>
-    </n-table-column-v3>
-    <n-table-column-v3 title="Name" field="name" width="100px" />
-    <n-table-column-v3 title="Gender" field="gender" width="100px" />
-    <n-table-column-v3 title="Birthday" field="birthday" min-width="200px" />
-    <n-table-column-v3 title="Address" field="address" min-width="500px" />
-  </n-table-v3>
+    </h-table-column-v3>
+    <h-table-column-v3 title="Name" field="name" width="100px" />
+    <h-table-column-v3 title="Gender" field="gender" width="100px" />
+    <h-table-column-v3 title="Birthday" field="birthday" mih-width="200px" />
+    <h-table-column-v3 title="Address" field="address" mih-width="500px" />
+  </h-table-v3>
 </template>
 
 <script setup lang="ts">

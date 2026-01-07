@@ -1,14 +1,14 @@
 <template>
   <div class="mb-4">
-    <n-switch v-model="isZebra" label="是否斑马纹" class="switch" />
-    <n-switch v-model="isBorder" label="是否显示边框" class="switch" />
-    <n-switch v-model="isSplit" label="是否显示分界线" class="switch" />
-    <n-button size="medium" type="primary" class="switch" @click="changeTitleSize">
+    <h-switch v-model="isZebra" label="是否斑马纹" class="switch" />
+    <h-switch v-model="isBorder" label="是否显示边框" class="switch" />
+    <h-switch v-model="isSplit" label="是否显示分界线" class="switch" />
+    <h-button size="medium" type="primary" class="switch" @click="changeTitleSize">
       切换标题size
-    </n-button>
+    </h-button>
   </div>
 
-  <n-list
+  <h-list
     :data="list"
     :max-height="400"
     :zebra="isZebra"
@@ -16,7 +16,7 @@
     :split="isSplit"
   >
     <template #item="{ item, index }">
-      <n-list-item
+      <h-list-item
         :key="index"
         :title="item.title"
         :describe="item.describe"
@@ -24,7 +24,7 @@
         :title-size="titleSize"
       >
         <template #sider>
-          <n-image
+          <h-image
             src="https://source.niohome.com//MyNextEv/image/cutting/672C4D53B6559FFFF2A0523B21D36B35.jpg"
             object-fit="cover"
             :width="50"
@@ -34,14 +34,14 @@
         <template #right>
           <section class="list-right">
             <section>
-              <n-button size="medium" :plain="true" class="list-btn">撤销</n-button>
-              <n-button size="medium" type="primary">提交</n-button>
+              <h-button size="medium" :plain="true" class="list-btn">撤销</h-button>
+              <h-button size="medium" type="primary">提交</h-button>
             </section>
           </section>
         </template>
-      </n-list-item>
+      </h-list-item>
     </template>
-  </n-list>
+  </h-list>
 </template>
 
 <script lang="ts" setup>

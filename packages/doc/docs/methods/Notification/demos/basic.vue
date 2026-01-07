@@ -1,8 +1,8 @@
 <template>
-  <n-space>
-    <n-button type="normal" @click="open1">自动关闭</n-button>
-    <n-button type="normal" @click="open2">不自动关闭</n-button>
-  </n-space>
+  <h-space>
+    <h-button type="normal" @click="open1">自动关闭</h-button>
+    <h-button type="normal" @click="open2">不自动关闭</h-button>
+  </h-space>
 </template>
 
 <script lang="ts">

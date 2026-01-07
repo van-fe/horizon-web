@@ -1,54 +1,54 @@
 <template>
-  <n-form label-position="left" label-vertical-align="middle">
-    <n-form-item label="开启拖拽">
-      <n-switch v-model="draggable" :status="true" />
-    </n-form-item>
-    <n-form-item label="仅能操作拖拽图标进行拖拽">
-      <n-switch v-model="dragOnHandler" :status="true" />
-    </n-form-item>
-    <n-form-item label="可以拖拽到叶子节点下">
-      <n-switch v-model="dragToLeaf" :status="true" />
-    </n-form-item>
-    <n-form-item label="始终显示拖拽图标">
-      <n-switch v-model="draggableIconAlwaysVisible" :status="true" />
-    </n-form-item>
-    <n-form-item label="拦截确认拖拽">
-      <n-switch v-model="useBeforeDrop" :status="true" />
-    </n-form-item>
-  </n-form>
-  <n-row class="flex">
-    <n-col :span="12">
+  <h-form label-position="left" label-vertical-align="middle">
+    <h-form-item label="开启拖拽">
+      <h-switch v-model="draggable" :status="true" />
+    </h-form-item>
+    <h-form-item label="仅能操作拖拽图标进行拖拽">
+      <h-switch v-model="dragOnHandler" :status="true" />
+    </h-form-item>
+    <h-form-item label="可以拖拽到叶子节点下">
+      <h-switch v-model="dragToLeaf" :status="true" />
+    </h-form-item>
+    <h-form-item label="始终显示拖拽图标">
+      <h-switch v-model="draggableIconAlwaysVisible" :status="true" />
+    </h-form-item>
+    <h-form-item label="拦截确认拖拽">
+      <h-switch v-model="useBeforeDrop" :status="true" />
+    </h-form-item>
+  </h-form>
+  <h-row class="flex">
+    <h-col :span="12">
       <div class="demo-title">单选</div>
       <div class="tree-box">
-        <n-tree
+        <h-tree
           v-if="baseTreeData1.length"
           v-model:tree-data="baseTreeData1"
           :draggable="draggable"
-          :drag-on-handler="dragOnHandler"
+          :drag-oh-handler="dragOnHandler"
           :drag-to-leaf="dragToLeaf"
-          :draggable-icon-always-visible="draggableIconAlwaysVisible"
+          :draggable-icoh-always-visible="draggableIconAlwaysVisible"
           :before-drop="useBeforeDrop ? beforeDrop : undefined"
           @update:tree-data="onUpdate"
         />
       </div>
-    </n-col>
-    <n-col :span="12">
+    </h-col>
+    <h-col :span="12">
       <div class="demo-title">多选</div>
       <div class="tree-box">
-        <n-tree
+        <h-tree
           v-if="baseTreeData2.length"
           v-model:tree-data="baseTreeData2"
           :draggable="draggable"
-          :drag-on-handler="dragOnHandler"
+          :drag-oh-handler="dragOnHandler"
           :drag-to-leaf="dragToLeaf"
-          :draggable-icon-always-visible="draggableIconAlwaysVisible"
+          :draggable-icoh-always-visible="draggableIconAlwaysVisible"
           :before-drop="useBeforeDrop ? beforeDrop : undefined"
           :multiple="true"
           @update:tree-data="onUpdate"
         />
       </div>
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

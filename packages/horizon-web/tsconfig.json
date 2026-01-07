@@ -20,7 +20,8 @@
     "declaration": true,
     "declarationDir": "./es",
     "sourceMap": true,
-    "types": ["node", "vite/client", "vitest/globals"],
+    "types": ["node", "../../node_modules/vitest/globals", "../../node_modules/vite/client"],
+    "typeRoots": ["../../node_modules/@types", "./node_modules/@types"],
     "paths": {
       "*": ["./*"],
       "~/*": ["./src/*"],

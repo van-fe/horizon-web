@@ -1,27 +1,27 @@
 <template>
-  <n-row>
-    <n-col :span="12">
+  <h-row>
+    <h-col :span="12">
       <div class="demo-title">单选</div>
-      <div class="demo-description"><n-button :plain="true" size="small" @click="change(0)">修改</n-button> {{ selectedValues[0].value }}</div>
-      <n-tree
+      <div class="demo-description"><h-button :plain="true" size="small" @click="change(0)">修改</h-button> {{ selectedValues[0].value }}</div>
+      <h-tree
         v-if="baseTreeData.length"
         v-model:selected-values="selectedValues[0].value"
         :tree-data="baseTreeData"
         :max-height="300"
       />
-    </n-col>
-    <n-col :span="12">
+    </h-col>
+    <h-col :span="12">
       <div class="demo-title">多选</div>
-      <div class="demo-description"><n-button :plain="true" size="small" @click="change(1)">修改</n-button> {{ selectedValues[1].value }}</div>
-      <n-tree
+      <div class="demo-description"><h-button :plain="true" size="small" @click="change(1)">修改</h-button> {{ selectedValues[1].value }}</div>
+      <h-tree
         v-if="baseTreeData.length"
         v-model:selected-values="selectedValues[1].value"
         :tree-data="baseTreeData"
         :max-height="300"
         :multiple="true"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

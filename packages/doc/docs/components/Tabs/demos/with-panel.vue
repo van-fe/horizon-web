@@ -1,12 +1,12 @@
 <template>
-  <n-tabs v-model:active-key="activeKey">
-    <n-tab v-for="tab in tabs" :key="tab.name" :label="tab.label" :name="tab.name" />
-  </n-tabs>
-  <n-panels v-model="activeKey" class="p-1 pt-2">
-    <n-panel v-for="panel in tabs" :key="panel.name" :name="panel.name">
+  <h-tabs v-model:active-key="activeKey">
+    <h-tab v-for="tab in tabs" :key="tab.name" :label="tab.label" :name="tab.name" />
+  </h-tabs>
+  <h-panels v-model="activeKey" class="p-1 pt-2">
+    <h-panel v-for="panel in tabs" :key="panel.name" :name="panel.name">
       {{ panel.content }}
-    </n-panel>
-  </n-panels>
+    </h-panel>
+  </h-panels>
 </template>
 
 <script lang="ts" setup>

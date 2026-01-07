@@ -1,5 +1,5 @@
 <template>
-  <n-transfer
+  <h-transfer
     v-model="dataModel"
     :data="data"
     :titles="['']"
@@ -8,24 +8,24 @@
   >
     <template #leftFilter>
       <div class="transfer-radio__filter">
-        <n-input v-model="searchInput"></n-input>
-        <n-tabs v-model:active-key="tabActiveKey" class="transfer-radio__tab" size="small">
-          <n-tab key="colleague" label="同事联系人" />
-          <n-tab key="user" label="用户联系人" />
-        </n-tabs>
+        <h-input v-model="searchInput"></h-input>
+        <h-tabs v-model:active-key="tabActiveKey" class="transfer-radio__tab" size="small">
+          <h-tab key="colleague" label="同事联系人" />
+          <h-tab key="user" label="用户联系人" />
+        </h-tabs>
       </div>
     </template>
     <template #leftBody="{ data }">
       <div class="transfer-radio__left">
         <div v-for="item in data" :key="item.key" class="transfer-radio__item">
-          <n-radio
+          <h-radio
             v-model="radioModelValue"
             :value="item.key"
             :disabled="item.disabled"
             @change="changeSelect"
           >
             <div class="flex align-center">
-              <n-avatar size="small" :src="item.avatar" />
+              <h-avatar size="small" :src="item.avatar" />
               <div class="ml-2 flex-1 flex flex-column overflow-hidden">
                 <div style="text-overflow: ellipsis; overflow: hidden">{{ item.name }}</div>
                 <div
@@ -36,13 +36,13 @@
                 </div>
               </div>
             </div>
-          </n-radio>
+          </h-radio>
         </div>
       </div>
     </template>
     <template #item="{ item }">
       <div class="flex align-center">
-        <n-avatar size="small" :src="item.avatar" />
+        <h-avatar size="small" :src="item.avatar" />
         <div class="ml-2 flex-1 flex flex-column overflow-hidden">
           <div style="text-overflow: ellipsis; overflow: hidden">{{ item.name }}</div>
           <div
@@ -57,7 +57,7 @@
     <template #rightHeader>
       <div class="flex flex-1 align-center justify-space-between">
         <div>{{ `已选: ${dataModel.length} 人` }}</div>
-        <n-button
+        <h-button
           v-show="!!dataModel.length"
           size="medium"
           :link="true"
@@ -65,10 +65,10 @@
           @click="() => (dataModel = [])"
         >
           清除
-        </n-button>
+        </h-button>
       </div>
     </template>
-  </n-transfer>
+  </h-transfer>
 </template>
 
 <script lang="ts" setup>
@@ -186,11 +186,11 @@ const changeSelect = v => {
     &:first-child {
       padding-top: 0;
     }
-    :deep(.n-radio) {
+    :deep(.h-radio) {
       width: 100%;
       overflow: hidden;
     }
-    :deep(.n-radio__label) {
+    :deep(.h-radio__label) {
       overflow: hidden;
       text-overflow: ellipsis;
     }

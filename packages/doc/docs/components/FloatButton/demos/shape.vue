@@ -1,23 +1,23 @@
 <template>
-  <n-form label-position="left" label-vertical-align="middle" label-width="80px" style="width: 400px">
-    <n-form-item label="是否显示">
-      <n-switch v-model="visible" :status="true" status-on-text="显示" status-off-text="隐藏" />
-    </n-form-item>
-    <n-form-item label="类型">
-      <n-radio-group v-model="type">
-        <n-radio label="normal"></n-radio>
-        <n-radio label="primary"></n-radio>
-      </n-radio-group>
-    </n-form-item>
-    <n-form-item label="形状">
-      <n-radio-group v-model="shape">
-        <n-radio label="circle"></n-radio>
-      </n-radio-group>
-    </n-form-item>
-  </n-form>
-  <n-float-button :visible="visible" :type="type" :shape="shape" icon="filter" />
-  <n-float-button :visible="visible" :type="type" :shape="shape" description="消息" />
-  <n-float-button :visible="visible" :type="type" :shape="shape" icon="message" description="消息" />
+  <h-form label-position="left" label-vertical-align="middle" label-width="80px" style="width: 400px">
+    <h-form-item label="是否显示">
+      <h-switch v-model="visible" :status="true" status-oh-text="显示" status-off-text="隐藏" />
+    </h-form-item>
+    <h-form-item label="类型">
+      <h-radio-group v-model="type">
+        <h-radio label="normal"></h-radio>
+        <h-radio label="primary"></h-radio>
+      </h-radio-group>
+    </h-form-item>
+    <h-form-item label="形状">
+      <h-radio-group v-model="shape">
+        <h-radio label="circle"></h-radio>
+      </h-radio-group>
+    </h-form-item>
+  </h-form>
+  <h-float-button :visible="visible" :type="type" :shape="shape" icon="filter" />
+  <h-float-button :visible="visible" :type="type" :shape="shape" description="消息" />
+  <h-float-button :visible="visible" :type="type" :shape="shape" icon="message" description="消息" />
 </template>
 
 <script setup lang="ts">

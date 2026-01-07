@@ -65,7 +65,7 @@ describe('DropdownItem.tsx', () => {
 
       await expect(items[0].find('.a-icon').exists()).toBeTruthy();
 
-      await expect(items[0].find('.n-icon_eye').classes()).toBeTruthy();
+      await expect(items[0].find('.h-icon_eye').classes()).toBeTruthy();
     });
 
     test('active', async () => {

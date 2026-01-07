@@ -1,27 +1,27 @@
 <template>
-  <n-row>
-    <n-col>
-      <n-radio-group v-model="size">
-        <n-radio label="small" />
-        <n-radio label="medium" />
-        <n-radio label="large" />
-      </n-radio-group>
-    </n-col>
-  </n-row>
-  <n-form :size="size">
-    <n-form-item label="User name">
-      <n-input v-model="formData.username" />
-    </n-form-item>
-    <n-form-item label="Email">
-      <n-input v-model="formData.email" />
-    </n-form-item>
-    <n-form-item label="Notes">
-      <n-input v-model="formData.notes" type="textarea" />
-    </n-form-item>
-    <n-form-item>
-      <n-button @click="submit">Submit</n-button>
-    </n-form-item>
-  </n-form>
+  <h-row>
+    <h-col>
+      <h-radio-group v-model="size">
+        <h-radio label="small" />
+        <h-radio label="medium" />
+        <h-radio label="large" />
+      </h-radio-group>
+    </h-col>
+  </h-row>
+  <h-form :size="size">
+    <h-form-item label="User name">
+      <h-input v-model="formData.username" />
+    </h-form-item>
+    <h-form-item label="Email">
+      <h-input v-model="formData.email" />
+    </h-form-item>
+    <h-form-item label="Notes">
+      <h-input v-model="formData.notes" type="textarea" />
+    </h-form-item>
+    <h-form-item>
+      <h-button @click="submit">Submit</h-button>
+    </h-form-item>
+  </h-form>
 </template>
 
 <script lang="ts">

@@ -1,42 +1,42 @@
 <template>
-  <n-form label-position="left" label-vertical-align="middle" label-justify-align="right">
-    <n-form-item label="size">
-      <n-radio-group v-model="selectSize">
-        <n-radio
+  <h-form label-position="left" label-vertical-align="middle" label-justify-align="right">
+    <h-form-item label="size">
+      <h-radio-group v-model="selectSize">
+        <h-radio
           v-for="(label, index) in ['small', 'medium', 'large']"
           :key="index"
           :label="label"
           size="small"
         />
-      </n-radio-group>
-    </n-form-item>
-    <n-form-item label="style">
-      <n-radio-group v-model="selectStyle">
-        <n-radio
+      </h-radio-group>
+    </h-form-item>
+    <h-form-item label="style">
+      <h-radio-group v-model="selectStyle">
+        <h-radio
           v-for="(label, index) in ['normal', 'noborder', 'emphasize']"
           :key="index"
           :label="label"
           size="small"
         />
-      </n-radio-group>
-    </n-form-item>
-    <n-form-item label="disabled">
-      <n-radio-group v-model="selectDisabled">
-        <n-radio
+      </h-radio-group>
+    </h-form-item>
+    <h-form-item label="disabled">
+      <h-radio-group v-model="selectDisabled">
+        <h-radio
           v-for="(label, index) in ['disabled', 'useable']"
           :key="index"
           :label="label"
           size="small"
         />
-      </n-radio-group>
-    </n-form-item>
-  </n-form>
-  <n-row :gutter="10">
-    <n-col :span="6">
+      </h-radio-group>
+    </h-form-item>
+  </h-form>
+  <h-row :gutter="10">
+    <h-col :span="6">
       <div class="demo-title">
         单选
       </div>
-      <n-select
+      <h-select
         :model-value="value1"
         class="curGroup"
         :size="selectSize"
@@ -48,20 +48,20 @@
         @change="changeHandle"
         @update:modelValue="onUpdateModelValue"
       >
-        <n-option
+        <h-option
           v-for="item in selectOptions"
           :key="item.value"
           :label="item.label"
           :value="item.value"
           :disabled="item.value === 2"
         />
-      </n-select>
-    </n-col>
-    <n-col :span="6">
+      </h-select>
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">
         多选
       </div>
-      <n-select
+      <h-select
         :model-value="values1"
         class="curGroup"
         multiple
@@ -76,15 +76,15 @@
         @change="changeHandle"
         @update:modelValue="onUpdateMultipleModelValue"
       >
-        <n-option
+        <h-option
           v-for="item in selectOptions"
           :key="item.value"
           :label="item.label"
           :value="item.value"
         />
-      </n-select>
-    </n-col>
-  </n-row>
+      </h-select>
+    </h-col>
+  </h-row>
 </template>
 
 <script lang="ts">

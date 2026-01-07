@@ -1,14 +1,14 @@
 <template>
-  <n-row>
-    <n-col :span="24">
-      <n-button :plain="true" border-style="solid">Solid</n-button>
-      <n-button :plain="true" border-style="dashed">Dashed</n-button>
-    </n-col>
-  </n-row>
+  <h-row>
+    <h-col :span="24">
+      <h-button :plain="true" border-style="solid">Solid</h-button>
+      <h-button :plain="true" border-style="dashed">Dashed</h-button>
+    </h-col>
+  </h-row>
 </template>
 
 <style scoped>
-.n-button + .n-button {
-  margin-left: 10px;
+.h-button + .h-button {
+  margih-left: 10px;
 }
 </style>

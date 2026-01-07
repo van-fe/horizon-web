@@ -8,7 +8,7 @@ describe('Calendar slots.tsx', () => {
       <HCalendar>{{ header: () => <div>Here is header slot</div> }}</HCalendar>
     ));
 
-    expect(wrapper.find('.n-calendar__header--suffix').text()).eq('Here is header slot');
+    expect(wrapper.find('.h-calendar__header--suffix').text()).eq('Here is header slot');
   });
 
   test('switchDate', () => {
@@ -16,14 +16,14 @@ describe('Calendar slots.tsx', () => {
       <HCalendar>{{ switchDate: () => <div>Here is switchDate slot</div> }}</HCalendar>
     ));
 
-    expect(wrapper.find('.n-calendar__header').text()).eq('Here is switchDate slot');
+    expect(wrapper.find('.h-calendar__header').text()).eq('Here is switchDate slot');
   });
 
   test('dateCell', async () => {
     const wrapper = mount(() => (
       <HCalendar>{{ dateCell: () => <div>Here is dateCell slot</div> }}</HCalendar>
     ));
-    const dates = wrapper.findAll('.n-calendar-month__day');
+    const dates = wrapper.findAll('.h-calendar-month__day');
 
     expect(dates[0].text()).eq('Here is dateCell slot');
   });
@@ -33,7 +33,7 @@ describe('Calendar slots.tsx', () => {
       <HCalendar>{{ dateCellTitle: () => <div>Here is dateCellTitle slot</div> }}</HCalendar>
     ));
 
-    expect(wrapper.find('.n-calendar-month__day').text()).eq('Here is dateCellTitle slot');
+    expect(wrapper.find('.h-calendar-month__day').text()).eq('Here is dateCellTitle slot');
   });
 
   test('dateCellAppend', async () => {
@@ -41,7 +41,7 @@ describe('Calendar slots.tsx', () => {
       <HCalendar>{{ dateCellAppend: () => <div>Here is dateCellAppend slot</div> }}</HCalendar>
     ));
 
-    expect(wrapper.find('.n-calendar-month__day--cell-append').text()).eq(
+    expect(wrapper.find('.h-calendar-month__day--cell-append').text()).eq(
       'Here is dateCellAppend slot',
     );
   });
@@ -53,7 +53,7 @@ describe('Calendar slots.tsx', () => {
       </HCalendar>
     ));
 
-    expect(wrapper.find('.n-calendar-year__month--header-suffix').text()).eq(
+    expect(wrapper.find('.h-calendar-year__month--header-suffix').text()).eq(
       'Here is monthHeader slot',
     );
   });
@@ -65,7 +65,7 @@ describe('Calendar slots.tsx', () => {
       </HCalendar>
     ));
 
-    expect(wrapper.find('.n-calendar-week__header--date').text()).eq('Here is weekDayHeader slot');
+    expect(wrapper.find('.h-calendar-week__header--date').text()).eq('Here is weekDayHeader slot');
   });
 
   test('dayHeader', async () => {
@@ -75,7 +75,7 @@ describe('Calendar slots.tsx', () => {
       </HCalendar>
     ));
 
-    expect(wrapper.find('.n-calendar-day__header--date').text()).eq('Here is dayHeader slot');
+    expect(wrapper.find('.h-calendar-day__header--date').text()).eq('Here is dayHeader slot');
   });
 
   test('timezone: week', async () => {
@@ -83,7 +83,7 @@ describe('Calendar slots.tsx', () => {
       <HCalendar mode="week">{{ timezone: () => <div>Here is timezone slot</div> }}</HCalendar>
     ));
 
-    expect(wrapper.find('.n-calendar-week__header--time-zone').text()).eq('Here is timezone slot');
+    expect(wrapper.find('.h-calendar-week__header--time-zone').text()).eq('Here is timezone slot');
   });
 
   test('timezone: day', async () => {
@@ -93,6 +93,6 @@ describe('Calendar slots.tsx', () => {
       </HCalendar>
     ));
 
-    expect(wrapper.find('.n-calendar-day__header--time-zone').text()).eq('Here is timezone slot');
+    expect(wrapper.find('.h-calendar-day__header--time-zone').text()).eq('Here is timezone slot');
   });
 });

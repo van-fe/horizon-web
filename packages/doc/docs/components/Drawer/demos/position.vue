@@ -1,12 +1,12 @@
 <template>
-  <n-radio-group v-model="placement" style="margin-bottom: 20px">
-    <n-radio label="right">右 - right（默认）</n-radio>
-    <n-radio label="bottom">下 - bottom</n-radio>
-    <n-radio label="left">左 - left</n-radio>
-    <n-radio label="top">上 - top</n-radio>
-  </n-radio-group>
-  <n-button type="normal" @click="visible = true">打开抽屉 ({{ placement }})</n-button>
-  <n-drawer
+  <h-radio-group v-model="placement" style="margih-bottom: 20px">
+    <h-radio label="right">右 - right（默认）</h-radio>
+    <h-radio label="bottom">下 - bottom</h-radio>
+    <h-radio label="left">左 - left</h-radio>
+    <h-radio label="top">上 - top</h-radio>
+  </h-radio-group>
+  <h-button type="normal" @click="visible = true">打开抽屉 ({{ placement }})</h-button>
+  <h-drawer
     v-model:visible="visible"
     v2
     title="Title"
@@ -18,7 +18,7 @@
       You can customize modal body text by the current situation. This modal will be closed
       immediately once you press the OK button.
     </div>
-  </n-drawer>
+  </h-drawer>
 </template>
 
 <script lang="ts" setup>

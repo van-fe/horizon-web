@@ -382,7 +382,7 @@ export default function (
     .replace(/\\n\s*/g, '<br>')
     .replace(/\\{/g, '{')
     .replace(/\\}/g, '}')
-    .replace(/<hr>/g, `<n-divider />`)
+    .replace(/<hr>/g, `<h-divider />`)
     .replace(/`(.*?)`/g, '<code>$1</code>')
-    .replace(/\[(.*?)]\((.*?)\)/g, '<n-link href="$2">$1</n-link>');
+    .replace(/\[(.*?)]\((.*?)\)/g, '<h-link href="$2">$1</h-link>');
 }

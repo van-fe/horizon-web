@@ -1,7 +1,7 @@
 <template>
-  <n-space>
-    <n-button type="normal" @click="open">overload</n-button>
-  </n-space>
+  <h-space>
+    <h-button type="normal" @click="open">overload</h-button>
+  </h-space>
 </template>
 
 <script lang="ts">

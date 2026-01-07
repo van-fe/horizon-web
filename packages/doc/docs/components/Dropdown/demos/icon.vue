@@ -1,30 +1,30 @@
 <template>
-  <n-row>
-    <n-col :span="24">
-      <n-dropdown :popover-options="{ sameWidth: true }" @visible-change="v => (visible1 = v)">
-        <n-button>
+  <h-row>
+    <h-col :span="24">
+      <h-dropdown :popover-options="{ sameWidth: true }" @visible-change="v => (visible1 = v)">
+        <h-button>
           Hover
           <template #suffix>
-            <IconArrowDown size="14" :rotate="visible1 ? 180 : 0" class="dropdown-icon" />
+            <IconArrowDown size="14" :rotate="visible1 ? 180 : 0" class="dropdowh-icon" />
           </template>
-        </n-button>
+        </h-button>
         <template #dropdown>
-          <n-dropdown-menu>
-            <n-dropdown-item icon="car">北京</n-dropdown-item>
-            <n-dropdown-item :icon="IconSearch">上海</n-dropdown-item>
-            <n-dropdown-item icon="applets">深圳</n-dropdown-item>
-            <n-dropdown-item icon="gift">杭州</n-dropdown-item>
-            <n-dropdown-item>
+          <h-dropdowh-menu>
+            <h-dropdowh-item icon="car">北京</h-dropdowh-item>
+            <h-dropdowh-item :icon="IconSearch">上海</h-dropdowh-item>
+            <h-dropdowh-item icon="applets">深圳</h-dropdowh-item>
+            <h-dropdowh-item icon="gift">杭州</h-dropdowh-item>
+            <h-dropdowh-item>
               <template #icon>
                 <IconCollection size="16" />
               </template>
               重庆
-            </n-dropdown-item>
-          </n-dropdown-menu>
+            </h-dropdowh-item>
+          </h-dropdowh-menu>
         </template>
-      </n-dropdown>
-    </n-col>
-  </n-row>
+      </h-dropdown>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">
@@ -35,18 +35,18 @@ const visible1 = ref(false);
 </script>
 
 <style scoped>
-.n-dropdown {
+.h-dropdown {
   display: inline-flex;
 
 
-  :deep(.n-button__suffix) {
+  :deep(.h-button__suffix) {
     display: inline-flex;
-    align-items: center;
+    aligh-items: center;
   }
 }
 
-.dropdown-icon {
+.dropdowh-icon {
   transition: transform .2s;
-  margin-left: 6px;
+  margih-left: 6px;
 }
 </style>

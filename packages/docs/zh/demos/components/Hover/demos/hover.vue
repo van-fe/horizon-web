@@ -1,10 +1,10 @@
 <template>
-  <n-hover v-slot="{ hover }">
+  <h-hover v-slot="{ hover }">
     <div class="container">
       <span>容器</span>
-      <n-button v-if="hover" size="medium">删除</n-button>
+      <h-button v-if="hover" size="medium">删除</h-button>
     </div>
-  </n-hover>
+  </h-hover>
 </template>
 
 <style lang="scss" scoped>

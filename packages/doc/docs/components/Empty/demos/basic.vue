@@ -1,3 +1,3 @@
 <template>
-  <n-empty />
+  <h-empty />
 </template>

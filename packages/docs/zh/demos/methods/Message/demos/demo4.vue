@@ -1,5 +1,5 @@
 <template>
-  <n-button :plain="true" @click="openHTML">Use HTML String</n-button>
+  <h-button :plain="true" @click="openHTML">Use HTML String</h-button>
 </template>
 
 <script lang="ts" setup>

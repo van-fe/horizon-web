@@ -1,6 +1,6 @@
 <template>
-  <n-button v-popconfirm="'确定要删除吗？'" class="mr-2" @click="del">Delete</n-button>
-  <n-button v-popconfirm="{ title: '确定要删除吗？' }" @click="del">Delete</n-button>
+  <h-button v-popconfirm="'确定要删除吗？'" class="mr-2" @click="del">Delete</h-button>
+  <h-button v-popconfirm="{ title: '确定要删除吗？' }" @click="del">Delete</h-button>
 </template>
 
 <script lang="ts">

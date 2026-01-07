@@ -1,5 +1,5 @@
 <template>
-  <n-upload
+  <h-upload
     v-model="modelValue"
     action="https://horizon-web-inspector.nioint.com/upload-mock"
     type="gallery"

@@ -1,29 +1,29 @@
 <template>
-  <n-switch
+  <h-switch
     v-model="useColumnManager"
     class="mb-2"
     :status="true"
-    status-on-text="Enabled Column Manager"
+    status-oh-text="Enabled Column Manager"
     status-off-text="Disabled Column Manager"
   />
 
-  <n-table-v3 :data="data" max-height="300" :use-column-manager="useColumnManager">
-    <n-table-column-v3 title="Name" field="name" fixed lock-position lock-visible lock-fixed />
-    <n-table-column-v3 title="Birthday" field="birthday" min-width="150" align="center" />
-    <n-table-column-v3 title="Address" field="address" fixed lock-visible>
-      <n-table-column-v3 title="Country" field="address[0]" :show-overflow-tooltip="true" width="120px" />
-      <n-table-column-v3 title="State" field="address[1]" :show-overflow-tooltip="true" width="120px" />
-      <n-table-column-v3 title="City" field="address[2]" :show-overflow-tooltip="true" width="120px" />
-    </n-table-column-v3>
-    <n-table-column-v3 title="sign">
-      <n-table-column-v3 v-for="day of 30" :key="day" :title="day" header-align="center" width="40px">
+  <h-table-v3 :data="data" max-height="300" :use-column-manager="useColumnManager">
+    <h-table-column-v3 title="Name" field="name" fixed lock-position lock-visible lock-fixed />
+    <h-table-column-v3 title="Birthday" field="birthday" mih-width="150" align="center" />
+    <h-table-column-v3 title="Address" field="address" fixed lock-visible>
+      <h-table-column-v3 title="Country" field="address[0]" :show-overflow-tooltip="true" width="120px" />
+      <h-table-column-v3 title="State" field="address[1]" :show-overflow-tooltip="true" width="120px" />
+      <h-table-column-v3 title="City" field="address[2]" :show-overflow-tooltip="true" width="120px" />
+    </h-table-column-v3>
+    <h-table-column-v3 title="sign">
+      <h-table-column-v3 v-for="day of 30" :key="day" :title="day" header-align="center" width="40px">
         <template #default="scope">
           <IconCheck v-if="scope.row.sign?.[day - 1]" />
           <IconClose v-else />
         </template>
-      </n-table-column-v3>
-    </n-table-column-v3>
-  </n-table-v3>
+      </h-table-column-v3>
+    </h-table-column-v3>
+  </h-table-v3>
 </template>
 
 <script setup lang="ts">

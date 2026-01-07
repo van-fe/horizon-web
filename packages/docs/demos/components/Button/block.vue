@@ -2,10 +2,10 @@
 
 <template>
   <div class="block-buttons">
-    <n-button :block="true">Primary Button</n-button>
-    <n-button :block="true" type="danger">Danger Button</n-button>
-    <n-button :block="true" :plain="true">Primary Plain Button</n-button>
-    <n-button :block="true" :plain="true" type="danger">Danger Plain Button</n-button>
+    <h-button :block="true">Primary Button</h-button>
+    <h-button :block="true" type="danger">Danger Button</h-button>
+    <h-button :block="true" :plain="true">Primary Plain Button</h-button>
+    <h-button :block="true" :plain="true" type="danger">Danger Plain Button</h-button>
   </div>
 </template>
 

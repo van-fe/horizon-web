@@ -1,12 +1,12 @@
 <script setup lang="ts"></script>
 
 <template>
-  <n-space block direction="vertical">
-    <n-card title="Card Title">Content</n-card>
-    <n-card title="Card Title">Content</n-card>
-    <n-card title="Card Title">Content</n-card>
-    <n-card title="Card Title">Content</n-card>
-  </n-space>
+  <h-space block direction="vertical">
+    <h-card title="Card Title">Content</h-card>
+    <h-card title="Card Title">Content</h-card>
+    <h-card title="Card Title">Content</h-card>
+    <h-card title="Card Title">Content</h-card>
+  </h-space>
 </template>
 
 <style scoped></style>

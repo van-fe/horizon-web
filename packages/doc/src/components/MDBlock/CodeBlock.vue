@@ -53,11 +53,11 @@ const highlightedCode = Prism.highlight(decode(slots.highlight?.()[0].children a
 </script>
 
 <template>
-  <n-collapse :filled="true" size="small" style="margin-bottom: 16px;">
-    <n-collapse-item name="main" title="展开查看" class="code-area">
+  <h-collapse :filled="true" size="small" style="margin-bottom: 16px;">
+    <h-collapse-item name="main" title="展开查看" class="code-area">
       <pre><code v-html="highlightedCode" /></pre>
-    </n-collapse-item>
-  </n-collapse>
+    </h-collapse-item>
+  </h-collapse>
 </template>
 
 <style lang="scss" scoped>

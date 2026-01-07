@@ -30,34 +30,34 @@ function onDeselect(collection: string[], value: string) {
 </script>
 
 <template>
-  <n-form label-position="left" label-vertical-align="middle">
-    <n-form-item label="尺寸">
-      <n-radio-group v-model="size">
-        <n-radio label="small" />
-        <n-radio label="medium" />
-        <n-radio label="large" />
-      </n-radio-group>
-    </n-form-item>
-    <n-form-item label="是否可过滤">
-      <n-switch v-model="filterable" status />
-    </n-form-item>
-    <n-form-item label="是否是纯粹标签">
-      <n-switch v-model="pure" status />
-    </n-form-item>
-  </n-form>
-  <n-row>
-    <n-col :span="6">
+  <h-form label-position="left" label-vertical-align="middle">
+    <h-form-item label="尺寸">
+      <h-radio-group v-model="size">
+        <h-radio label="small" />
+        <h-radio label="medium" />
+        <h-radio label="large" />
+      </h-radio-group>
+    </h-form-item>
+    <h-form-item label="是否可过滤">
+      <h-switch v-model="filterable" status />
+    </h-form-item>
+    <h-form-item label="是否是纯粹标签">
+      <h-switch v-model="pure" status />
+    </h-form-item>
+  </h-form>
+  <h-row>
+    <h-col :span="6">
       <div class="demo-title">单选</div>
-      <n-select v-model="value" :to-body="false" :filterable="filterable" clearable :size="size">
-        <n-option v-for="item of optionList" :key="item.label" :label="item.label" :value="item.label">
+      <h-select v-model="value" :to-body="false" :filterable="filterable" clearable :size="size">
+        <h-option v-for="item of optionList" :key="item.label" :label="item.label" :value="item.label">
           <template #label>
-            <n-tag :type="item.type" :clickable="false" :color="item.color" :auto-color="!!item.color">
+            <h-tag :type="item.type" :clickable="false" :color="item.color" :auto-color="!!item.color">
               {{ item.label }}
-            </n-tag>
+            </h-tag>
           </template>
-        </n-option>
+        </h-option>
         <template #tagRender="props">
-          <n-tag
+          <h-tag
             :key="props.value"
             :type="getOptionByValue(value)?.type"
             :clickable="false"
@@ -67,13 +67,13 @@ function onDeselect(collection: string[], value: string) {
             :is-pure="pure"
           >
             {{ value }}
-          </n-tag>
+          </h-tag>
         </template>
-      </n-select>
-    </n-col>
-    <n-col :span="6">
+      </h-select>
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">多选</div>
-      <n-select
+      <h-select
         v-model="values"
         :multiple="true"
         :collapse="true"
@@ -83,20 +83,20 @@ function onDeselect(collection: string[], value: string) {
         clearable
         :size="size"
       >
-        <n-option
+        <h-option
           v-for="item of optionList"
           :key="item.label"
           :label="item.label"
           :value="item.label"
         >
           <template #label>
-            <n-tag :type="item.type" :clickable="false" :color="item.color" :auto-color="!!item.color">
+            <h-tag :type="item.type" :clickable="false" :color="item.color" :auto-color="!!item.color">
               {{ item.label }}
-            </n-tag>
+            </h-tag>
           </template>
-        </n-option>
+        </h-option>
         <template #tagRender="props">
-          <n-tag
+          <h-tag
             :key="props.value"
             :type="getOptionByValue(props.value).type"
             :clickable="false"
@@ -108,35 +108,35 @@ function onDeselect(collection: string[], value: string) {
             @close="onDeselect(values, props.value)"
           >
             {{ getOptionByValue(props.value).label }}
-          </n-tag>
+          </h-tag>
         </template>
-      </n-select>
-    </n-col>
-    <n-col :span="6">
+      </h-select>
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">完全自定</div>
-      <n-select v-model="values2" :multiple="true" :to-body="false" :filterable="filterable" :size="size">
-        <n-option v-for="item of optionList" :key="item.label" :label="item.label" :value="item.label">
+      <h-select v-model="values2" :multiple="true" :to-body="false" :filterable="filterable" :size="size">
+        <h-option v-for="item of optionList" :key="item.label" :label="item.label" :value="item.label">
           <template #label>
-            <n-tag :type="item.type" :clickable="false" :color="item.color" :auto-color="!!item.color">
+            <h-tag :type="item.type" :clickable="false" :color="item.color" :auto-color="!!item.color">
               {{ item.label }}
-            </n-tag>
+            </h-tag>
           </template>
-        </n-option>
+        </h-option>
         <template #selectRender>
-          <n-tag-group collapse collapse-use-tooltip tooltip-render-type="full">
+          <h-tag-group collapse collapse-use-tooltip tooltip-render-type="full">
             <template #prefix><div style="align-self: center;">你的选择是：</div></template>
-            <n-tag
+            <h-tag
               v-for="item of values2"
               :key="item"
               :closable="true"
               :size="size"
               @close="onDeselect(values2, item)"
-            >{{item}}</n-tag>
-          </n-tag-group>
+            >{{item}}</h-tag>
+          </h-tag-group>
         </template>
-      </n-select>
-    </n-col>
-  </n-row>
+      </h-select>
+    </h-col>
+  </h-row>
 </template>
 
 <style scoped>

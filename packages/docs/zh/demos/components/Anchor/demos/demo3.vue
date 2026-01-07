@@ -1,16 +1,16 @@
 <template>
   <div class="wrapper">
     <div class="anchor-wrap">
-      <n-anchor scroll-container="#specialOne" :change-hash="false" :show-title-suffix="true">
-        <n-anchor-link href="#sectionOne1" title="sectionOne1" />
-        <n-anchor-link href="#sectionOne2" title="sectionOne2 section section section">
-          <n-anchor-link href="#sectionOne3" title="sectionOne3" />
-          <n-anchor-link href="#sectionOne4" title="sectionOne4" />
-          <n-anchor-link href="#sectionOne5" title="sectionOne5" />
-          <n-anchor-link href="#sectionOne6" title="多行文本溢出多行文本溢出多行文本溢出" />
-        </n-anchor-link>
-        <n-anchor-link href="#sectionOne7" title="sectionOne7" />
-      </n-anchor>
+      <h-anchor scroll-container="#specialOne" :change-hash="false" :show-title-suffix="true">
+        <h-anchor-link href="#sectionOne1" title="sectionOne1" />
+        <h-anchor-link href="#sectionOne2" title="sectionOne2 section section section">
+          <h-anchor-link href="#sectionOne3" title="sectionOne3" />
+          <h-anchor-link href="#sectionOne4" title="sectionOne4" />
+          <h-anchor-link href="#sectionOne5" title="sectionOne5" />
+          <h-anchor-link href="#sectionOne6" title="多行文本溢出多行文本溢出多行文本溢出" />
+        </h-anchor-link>
+        <h-anchor-link href="#sectionOne7" title="sectionOne7" />
+      </h-anchor>
     </div>
     <div id="specialOne" class="article-wrap">
       <section>

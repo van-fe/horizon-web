@@ -2,7 +2,7 @@
   <ul>
     <li>
       <p>带操作</p>
-      <n-card top-divider>
+      <h-card top-divider>
         <template #header>
           <div class="header">
             卡片标题
@@ -10,36 +10,36 @@
           </div>
         </template>
         {{ content }}
-      </n-card>
+      </h-card>
     </li>
     <li>
       <p>checkbox</p>
-      <n-card top-divider>
+      <h-card top-divider>
         <template #header>
           <div class="header2">
-            <n-checkbox v-model="checkbox">卡片标题</n-checkbox>
+            <h-checkbox v-model="checkbox">卡片标题</h-checkbox>
           </div>
         </template>
         {{ content }}
-      </n-card>
+      </h-card>
     </li>
     <li>
       <p>带标签</p>
-      <n-card top-divider>
+      <h-card top-divider>
         <template #header>
           <div class="header3">
             <div>
-              <n-tag size="medium">标签</n-tag>
+              <h-tag size="medium">标签</h-tag>
             </div>
             <span class="title">卡片标题</span>
           </div>
         </template>
         {{ content }}
-      </n-card>
+      </h-card>
     </li>
     <li>
       <p>带图标</p>
-      <n-card top-divider>
+      <h-card top-divider>
         <template #header>
           <div class="header4">
             <svg
@@ -68,7 +68,7 @@
           </div>
         </template>
         {{ content }}
-      </n-card>
+      </h-card>
     </li>
   </ul>
 </template>

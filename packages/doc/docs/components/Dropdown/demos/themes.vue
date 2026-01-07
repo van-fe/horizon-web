@@ -1,56 +1,56 @@
 <template>
-  <n-row>
-    <n-col :span="24">
-      <n-form label-position="left" label-vertical-align="middle" :inline="true">
-        <n-form-item label="theme:">
-          <n-radio-group v-model="theme">
-            <n-radio label="default">default</n-radio>
-            <n-radio label="gray">gray</n-radio>
-            <n-radio label="midnight">midnight</n-radio>
-          </n-radio-group>
-        </n-form-item>
-      </n-form>
-      <n-dropdown
+  <h-row>
+    <h-col :span="24">
+      <h-form label-position="left" label-vertical-align="middle" :inline="true">
+        <h-form-item label="theme:">
+          <h-radio-group v-model="theme">
+            <h-radio label="default">default</h-radio>
+            <h-radio label="gray">gray</h-radio>
+            <h-radio label="midnight">midnight</h-radio>
+          </h-radio-group>
+        </h-form-item>
+      </h-form>
+      <h-dropdown
         :theme="theme"
         :popover-options="{ sameWidth: true }"
         @visible-change="v => (visible1 = v)"
         @command="onCommand"
       >
-        <n-button>
+        <h-button>
           Grade
           <template #suffix>
-            <IconArrowDown size="14" :rotate="visible1 ? 180 : 0" class="dropdown-icon" />
+            <IconArrowDown size="14" :rotate="visible1 ? 180 : 0" class="dropdowh-icon" />
           </template>
-        </n-button>
+        </h-button>
         <template #dropdown>
-          <n-dropdown-menu>
-            <n-dropdown-submenu
+          <h-dropdowh-menu>
+            <h-dropdowh-submenu
               v-for="item of list"
               :key="item.label"
               :title="item.label"
               :disabled="item.disabled ?? false"
             >
-              <n-dropdown-submenu
+              <h-dropdowh-submenu
                 v-for="subItem of item.children"
                 :key="subItem.label"
                 :title="subItem.label"
                 :disabled="subItem.disabled ?? false"
               >
-                <n-dropdown-item
+                <h-dropdowh-item
                   v-for="child of subItem.children"
                   :key="child.label"
                   :command="subItem.label + child.label"
                   :disabled="child.disabled ?? false"
                 >
                   {{ child.label }}
-                </n-dropdown-item>
-              </n-dropdown-submenu>
-            </n-dropdown-submenu>
-          </n-dropdown-menu>
+                </h-dropdowh-item>
+              </h-dropdowh-submenu>
+            </h-dropdowh-submenu>
+          </h-dropdowh-menu>
         </template>
-      </n-dropdown>
-    </n-col>
-  </n-row>
+      </h-dropdown>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">
@@ -370,22 +370,22 @@ function onCommand(val: unknown) {
 </script>
 
 <style scoped>
-.n-dropdown {
+.h-dropdown {
   display: inline-flex;
 
 
-  :deep(.n-button__suffix) {
+  :deep(.h-button__suffix) {
     display: inline-flex;
-    align-items: center;
+    aligh-items: center;
   }
 }
 
-.n-dropdown + .n-dropdown {
-  margin-left: 12px;
+.h-dropdown + .h-dropdown {
+  margih-left: 12px;
 }
 
-.dropdown-icon {
+.dropdowh-icon {
   transition: transform .2s;
-  margin-left: 6px;
+  margih-left: 6px;
 }
 </style>

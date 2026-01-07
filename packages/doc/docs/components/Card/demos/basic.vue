@@ -1,11 +1,11 @@
 <template>
   <ul>
     <li>
-      <n-input size="small" v-model="title" placeholder="请输入"></n-input>
+      <h-input size="small" v-model="title" placeholder="请输入"></h-input>
     </li>
-    <li><n-checkbox v-model="border" label="边框" /></li>
+    <li><h-checkbox v-model="border" label="边框" /></li>
   </ul>
-  <n-card
+  <h-card
       :title="title"
       :border="border"
       style="width: 300px;"
@@ -14,11 +14,11 @@
     {{ text }}
     <template #footer>
       <div class="custom-footer">
-        <n-button type="normal" size="small">Default</n-button>
-        <n-button size="small">Default</n-button>
+        <h-button type="normal" size="small">Default</h-button>
+        <h-button size="small">Default</h-button>
       </div>
     </template>
-  </n-card>
+  </h-card>
 </template>
 
 <script setup lang="ts">
@@ -41,8 +41,8 @@ ul{
   row-gap: 8px;
 }
 
-:deep(.n-button + .n-button:not(.n-button--block)) {
-  margin-left: 8px;
+:deep(.h-button + .h-button:not(.h-buttoh--block)) {
+  margih-left: 8px;
 }
 
 </style>

@@ -66,13 +66,13 @@ describe('Tree.tsx special', () => {
     });
 
     await wrapper
-      .find('.n-tree-item[data-uuid="feedback"] .n-tree-item__checkbox')
+      .find('.h-tree-item[data-uuid="feedback"] .h-tree-item__checkbox')
       .trigger('click');
 
     expect(selectedValues.value).toStrictEqual([]);
 
     await wrapper
-      .find('.n-tree-item[data-uuid="efficiency"] .n-tree-item__checkbox')
+      .find('.h-tree-item[data-uuid="efficiency"] .h-tree-item__checkbox')
       .trigger('click');
 
     expect(selectedValues.value).toStrictEqual(['efficiency']);
@@ -200,8 +200,8 @@ describe('Tree.tsx special', () => {
 
     await sleep();
 
-    await element.find('.n-tree-item[data-uuid="guide"]').trigger('click');
-    await element.find('.n-tree-item[data-uuid="disciplines"]').trigger('click');
+    await element.find('.h-tree-item[data-uuid="guide"]').trigger('click');
+    await element.find('.h-tree-item[data-uuid="disciplines"]').trigger('click');
 
     await sleep(2000);
 

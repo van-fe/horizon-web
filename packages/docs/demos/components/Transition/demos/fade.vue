@@ -1,18 +1,18 @@
 <template>
   <div>
-    <n-button type="normal" class="mb-2" @click="visible = !visible">Change</n-button>
-    <n-row :gutter="10" style="height: 80px;">
-      <n-col :span="6">
-        <n-transition name="fade-in-linear">
+    <h-button type="normal" class="mb-2" @click="visible = !visible">Change</h-button>
+    <h-row :gutter="10" style="height: 80px;">
+      <h-col :span="6">
+        <h-transition name="fade-in-linear">
           <div v-show="visible" class="animate-box">fade-in-linear</div>
-        </n-transition>
-      </n-col>
-      <n-col :span="6">
-        <n-transition name="fade-in">
+        </h-transition>
+      </h-col>
+      <h-col :span="6">
+        <h-transition name="fade-in">
           <div v-show="visible" class="animate-box">fade-in</div>
-        </n-transition>
-      </n-col>
-    </n-row>
+        </h-transition>
+      </h-col>
+    </h-row>
   </div>
 </template>
 

@@ -1,28 +1,28 @@
 <template>
   <div class="grid">
     <div>
-      <n-checkbox :model-value="false" :disabled="true">禁用</n-checkbox>
+      <h-checkbox :model-value="false" :disabled="true">禁用</h-checkbox>
     </div>
     <div>
-      <n-checkbox :model-value="false" indeterminate :disabled="true">半选禁用</n-checkbox>
+      <h-checkbox :model-value="false" indeterminate :disabled="true">半选禁用</h-checkbox>
     </div>
     <div>
-      <n-checkbox v-model="modelValue1" :disabled="true">已选禁用</n-checkbox>
+      <h-checkbox v-model="modelValue1" :disabled="true">已选禁用</h-checkbox>
     </div>
     <div>
-      <n-checkbox v-model="modelValue2">非禁用</n-checkbox>
+      <h-checkbox v-model="modelValue2">非禁用</h-checkbox>
     </div>
     <div>
-      <n-checkbox :model-value="false" :disabled="true" :border="true">禁用</n-checkbox>
+      <h-checkbox :model-value="false" :disabled="true" :border="true">禁用</h-checkbox>
     </div>
     <div>
-      <n-checkbox :model-value="false" indeterminate :disabled="true" :border="true">半选禁用</n-checkbox>
+      <h-checkbox :model-value="false" indeterminate :disabled="true" :border="true">半选禁用</h-checkbox>
     </div>
     <div>
-      <n-checkbox v-model="modelValue1" :disabled="true" :border="true">已选禁用</n-checkbox>
+      <h-checkbox v-model="modelValue1" :disabled="true" :border="true">已选禁用</h-checkbox>
     </div>
     <div>
-      <n-checkbox v-model="modelValue2" :border="true">非禁用</n-checkbox>
+      <h-checkbox v-model="modelValue2" :border="true">非禁用</h-checkbox>
     </div>
   </div>
 </template>

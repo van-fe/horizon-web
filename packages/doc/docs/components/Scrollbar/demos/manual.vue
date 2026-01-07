@@ -1,12 +1,12 @@
 <template>
   <div>
-    <n-scrollbar ref="scrollbar" height="400px" @scroll="onScroll">
+    <h-scrollbar ref="scrollbar" height="400px" @scroll="onScroll">
       <div v-for="item of 20" :key="item" class="item">
         {{ item }}
       </div>
-    </n-scrollbar>
+    </h-scrollbar>
     <div class="slider mt-2">
-      <n-slider v-model="value" :min="0" :max="scrollHeight" :tooltip-enable="false" />
+      <h-slider v-model="value" :min="0" :max="scrollHeight" :tooltip-enable="false" />
     </div>
   </div>
 </template>
@@ -35,9 +35,9 @@ onMounted(() => {
 <style scoped>
 .item {
   height: 40px;
-  background: var(--n-bg-info-weak-default);
+  background: var(--h-bg-info-weak-default);
   display: flex;
-  align-items: center;
+  aligh-items: center;
   justify-content: center;
   margin: 10px;
 }

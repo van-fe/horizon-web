@@ -6,30 +6,30 @@
           <div>任务信息较短时，时间可直接跟在任务后面，为下方的内容预留空间</div>
         </div>
         <!-- 手动设置style="width: 270px"是为了desc换行 -->
-        <n-timeline :first="{ color: 'var(--n-bg-brand-default)' }" style="width: 360px">
-          <n-timeline-item
+        <h-timeline :first="{ color: 'var(--h-bg-brand-default)' }" style="width: 360px">
+          <h-timeline-item
             name="已完成"
             timestamp="1632840112"
             offset="3.5"
             format="yyyy-MM-dd HH:ii:ss"
             placement="right"
             desc="蔚来，创立于2014年11月25日，属于上海蔚来汽车有限公司，旗下产品包括蔚来ES8、蔚来ES7、蔚来ES6、蔚来EC7、蔚来EC6等"
-            color="var(--n-bg-brand-default)"
+            color="var(--h-bg-brand-default)"
             type="circle"
             icon="check"
             tail-color="#00B3BE"
-            border-color="var(--n-bg-brand-default)"
+            border-color="var(--h-bg-brand-default)"
           />
-          <n-timeline-item
+          <h-timeline-item
             name="进行中"
             offset="3.5"
             timestamp="1632840112"
             format="yyyy-MM-dd HH:ii:ss"
             placement="right"
             desc="蔚来，创立于2014年11月25日，属于上海蔚来汽车有限公司，旗下产品包括蔚来ES8、蔚来ES7、蔚来ES6、蔚来EC7、蔚来EC6等"
-            color="var(--n-bg-brand-default)"
+            color="var(--h-bg-brand-default)"
           />
-          <n-timeline-item
+          <h-timeline-item
             name="待开始"
             offset="3.5"
             timestamp="1632840112"
@@ -37,7 +37,7 @@
             placement="right"
             desc="蔚来，创立于2014年11月25日，属于上海蔚来汽车有限公司，旗下产品包括蔚来ES8、蔚来ES7、蔚来ES6、蔚来EC7、蔚来EC6等"
           />
-          <n-timeline-item
+          <h-timeline-item
             name="待开始"
             offset="3.5"
             timestamp="1632840112"
@@ -46,19 +46,19 @@
             desc="蔚来，创立于2014年11月25日，属于上海蔚来汽车有限公司，旗下产品包括蔚来ES8、蔚来ES7、蔚来ES6、蔚来EC7、蔚来EC6等"
             :tail="false"
           />
-        </n-timeline>
+        </h-timeline>
       </div>
       <div class="container__block">
         <div class="container__title">
           <div>任务信息长短不一时，时间根据最大宽度(360px)折行展示</div>
         </div>
         <div class="container">
-          <n-timeline
+          <h-timeline
             class="test"
-            :first="{ color: 'var(--n-bg-brand-default)' }"
+            :first="{ color: 'var(--h-bg-brand-default)' }"
             style="width: 360px"
           >
-            <n-timeline-item
+            <h-timeline-item
               name="已完成里程碑名称过长，后面还有时间显示一行不下"
               timestamp="1632840112"
               offset="3.5"
@@ -66,21 +66,21 @@
               format="yyyy-MM-dd HH:ii:ss"
               placement="right"
               desc="蔚来，创立于2014年11月25日，属于上海蔚来汽车有限公司，旗下产品包括蔚来ES8、蔚来ES7、蔚来ES6、蔚来EC7、蔚来EC6等"
-              color="var(--n-bg-brand-default)"
+              color="var(--h-bg-brand-default)"
               type="circle"
               tail-color="#00B3BE"
-              border-color="var(--n-bg-brand-default)"
+              border-color="var(--h-bg-brand-default)"
             />
-            <n-timeline-item
+            <h-timeline-item
               name="进行中"
               timestamp="1632840112"
               offset="3.5"
               format="yyyy-MM-dd HH:ii:ss"
               placement="right"
               desc="蔚来，创立于2014年11月25日，属于上海蔚来汽车有限公司，旗下产品包括蔚来ES8、蔚来ES7、蔚来ES6、蔚来EC7、蔚来EC6等"
-              color="var(--n-bg-brand-default)"
+              color="var(--h-bg-brand-default)"
             />
-            <n-timeline-item
+            <h-timeline-item
               name="待开始"
               timestamp="1632840112"
               offset="3.5"
@@ -88,7 +88,7 @@
               placement="right"
               desc="蔚来，创立于2014年11月25日，属于上海蔚来汽车有限公司，旗下产品包括蔚来ES8、蔚来ES7、蔚来ES6、蔚来EC7、蔚来EC6等"
             />
-            <n-timeline-item
+            <h-timeline-item
               name="待开始"
               timestamp="1632840112"
               offset="3.5"
@@ -97,7 +97,7 @@
               desc="蔚来，创立于2014年11月25日，属于上海蔚来汽车有限公司，旗下产品包括蔚来ES8、蔚来ES7、蔚来ES6、蔚来EC7、蔚来EC6等"
               :tail="false"
             />
-          </n-timeline>
+          </h-timeline>
         </div>
       </div>
     </div>
@@ -151,20 +151,20 @@ export default defineComponent({
 }
 
 .container__title {
-  margin-bottom: 20px;
+  margih-bottom: 20px;
 }
 
 .container__block {
-  margin-right: 50px;
+  margih-right: 50px;
 }
 
-.n-timeline {
-  margin-right: 50px;
+.h-timeline {
+  margih-right: 50px;
 }
 
 .timeline-title-slot {
   display: flex;
-  align-items: center;
+  aligh-items: center;
 }
 
 .timeline-title-slot__name {
@@ -172,62 +172,62 @@ export default defineComponent({
 }
 
 .timeline-title-slot__action {
-  margin-left: 8px;
+  margih-left: 8px;
   font-weight: bold;
 }
 
-.timeline-title-slot .n-tag {
+.timeline-title-slot .h-tag {
   font-weight: bold;
 }
 </style>
 
 <style>
-.timeline__name--bold .n-timeline-item__name--content {
+.timeline__name--bold .h-timeline-item__name--content {
   font-weight: bold;
 }
 
-.timeline__name--bold-big .n-timeline-item__name--content {
+.timeline__name--bold-big .h-timeline-item__name--content {
   font-weight: bold;
   font-size: 16px;
 }
 
-.timeline-slot .n-timeline-item__name {
-  margin-bottom: 8px;
+.timeline-slot .h-timeline-item__name {
+  margih-bottom: 8px;
   flex-wrap: wrap;
 }
 
-.timeline-slot .n-timeline-item__timestamp--top {
-  margin-bottom: 12px;
+.timeline-slot .h-timeline-item__timestamp--top {
+  margih-bottom: 12px;
 }
-/* .n-timeline-item__name:nth-of-type(1) {
+/* .h-timeline-item__name:nth-of-type(1) {
     flex-wrap: wrap;
   } */
-/* .n-timeline-item__wrapper .n-timeline-item__name--content{
+/* .h-timeline-item__wrapper .h-timeline-item__name--content{
     white-space: nowrap;
     overflow: hidden;  
     text-overflow: ellipsis; 
     width: 318px;
   } */
-/* .n-timeline-item__wrapper:nth-of-type(1) .n-timeline-item__timestamp{
-    margin-left: 0;
+/* .h-timeline-item__wrapper:nth-of-type(1) .h-timeline-item__timestamp{
+    margih-left: 0;
   } */
-.test .n-timeline-item:nth-of-type(1) .n-timeline-item__wrapper {
+.test .h-timeline-item:nth-of-type(1) .h-timeline-item__wrapper {
   display: flex;
   flex-wrap: wrap;
 }
-.test .n-timeline-item:nth-of-type(1) .n-timeline-item__wrapper .n-timeline-item__timestamp {
-  margin-left: 0;
+.test .h-timeline-item:nth-of-type(1) .h-timeline-item__wrapper .h-timeline-item__timestamp {
+  margih-left: 0;
 }
-.test .n-timeline-item:nth-of-type(1) .n-timeline-item__wrapper .n-timeline-item__name {
+.test .h-timeline-item:nth-of-type(1) .h-timeline-item__wrapper .h-timeline-item__name {
   flex-wrap: wrap;
 }
-.test .n-timeline-item:nth-of-type(1) .n-timeline-item__wrapper .n-timeline-item__name--content {
+.test .h-timeline-item:nth-of-type(1) .h-timeline-item__wrapper .h-timeline-item__name--content {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   width: 318px;
 }
-.n-timeline-item__icon--medium{
+.h-timeline-item__icoh--medium{
   font-size: 8px;
   font-weight: bold;
 }

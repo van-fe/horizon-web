@@ -1,6 +1,6 @@
 <template>
   <section class="main">
-    <n-skeleton :loading="isLoading">
+    <h-skeleton :loading="isLoading">
       <template #loadingTemplate>
         <NSkeletonItem shape="text" style="width: 30%"></NSkeletonItem>
         <NSkeletonItem shape="text" style="width: 20%"></NSkeletonItem>
@@ -11,7 +11,7 @@
         <div>骨架屏</div>
         <div>骨架屏测试骨架屏测试骨架屏测试</div>
       </template>
-    </n-skeleton>
+    </h-skeleton>
   </section>
 </template>
 

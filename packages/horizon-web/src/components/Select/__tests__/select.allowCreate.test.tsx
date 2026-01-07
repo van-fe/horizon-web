@@ -41,13 +41,13 @@ describe('allowCreate works same as search', () => {
     const InputComponent = wrapper.findComponent(HPickerInput);
     const OptionPanelComponent = wrapper.findComponent(HPickerPopper);
 
-    const inpEl = InputComponent.find('.n-picker__input input');
+    const inpEl = InputComponent.find('.h-picker__input input');
 
     await inpEl.setValue('上海');
 
     await sleep(300);
 
-    const optionList = OptionPanelComponent.findAll('.n-select-option').filter(
+    const optionList = OptionPanelComponent.findAll('.h-select-option').filter(
       item => !item.classes('is-hide'),
     );
 
@@ -66,13 +66,13 @@ describe('auto selected when enter fire', () => {
 
     const InputComponent = wrapper.findComponent(HPickerInput);
     const OptionPanelComponent = wrapper.findComponent(HPickerPopper);
-    const inpEl = InputComponent.find('.n-picker__input input');
+    const inpEl = InputComponent.find('.h-picker__input input');
 
     await inpEl.trigger('focus');
     await inpEl.setValue(value);
     await sleep(300);
 
-    const addItem = OptionPanelComponent.find('.n-select__create-option');
+    const addItem = OptionPanelComponent.find('.h-select__create-option');
     await addItem.trigger('click');
 
     return {

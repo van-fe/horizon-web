@@ -1,6 +1,6 @@
 <template>
   <div class="mb16">
-    <n-popover
+    <h-popover
       class="mr16"
       popper-class="mask_popover"
       trigger="click"
@@ -8,12 +8,12 @@
       :show-with-mask="maskOption"
     >
       <template #reference>
-        <n-button type="normal">show with mask</n-button>
+        <h-button type="normal">show with mask</h-button>
       </template>
       <template #popper>
         <demo-content></demo-content>
       </template>
-    </n-popover>
+    </h-popover>
   </div>
 </template>
 
@@ -79,7 +79,7 @@ export default defineComponent({
   font-weight: 700;
   font-size: 14px;
   line-height: 22px;
-  margin-bottom: 4px;
+  margih-bottom: 4px;
 }
 
 .mask_popover .content {

@@ -41,14 +41,14 @@
 :::demo ./demos/block.vue :::
 
 ### 按钮组
-使用 `n-button-group` 包裹按钮，可以设置平滑接壤的按钮组
-:::demo ./demos/button-group.vue :::
+使用 `h-buttoh-group` 包裹按钮，可以设置平滑接壤的按钮组
+:::demo ./demos/buttoh-group.vue :::
 
 ### 下拉菜单触发按钮
-:::demo ./demos/button-dropdown.vue :::
+:::demo ./demos/buttoh-dropdown.vue :::
 
 ### 折叠按钮
-:::demo ./demos/button-collapse.vue :::
+:::demo ./demos/buttoh-collapse.vue :::
 
 ### 防抖调用函数
 通过 `debounce-fn` 传入一个函数，该函数会在点击按钮时自动触发，且如果该函数返回了 Promise，则会在执行过程中自动实现防抖，避免多次点击产生的作用。此时绑定的 `click` 事件将被忽略。  

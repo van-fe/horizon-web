@@ -1,16 +1,16 @@
 <template>
   <p>
-    <n-link anchor="anchor" type="text" :underline="false" scroll-target=".n-main">Anchor</n-link>
+    <h-link anchor="anchor" type="text" :underline="false" scroll-target=".h-main">Anchor</h-link>
   </p>
   <p>
-    <n-link
+    <h-link
       anchor="anchor2"
       :anchor-offset="200"
       type="text"
       :underline="false"
-      scroll-target=".n-main"
+      scroll-target=".h-main"
     >
       Anchor2 Set Offset 200
-    </n-link>
+    </h-link>
   </p>
 </template>

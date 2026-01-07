@@ -1,24 +1,24 @@
 <template>
-  <n-row :gutter="10">
-    <n-col :span="6">
+  <h-row :gutter="10">
+    <h-col :span="6">
       <div class="demo-title">单选</div>
-      <n-modal-select v-model="value1" :value-format="valueFormat" :to-body="false">
-        <n-option :value="1" label="中国" />
-        <n-option :value="2" label="美国" />
-        <n-option :value="3" label="日本" />
-      </n-modal-select>
+      <h-modal-select v-model="value1" :value-format="valueFormat" :to-body="false">
+        <h-option :value="1" label="中国" />
+        <h-option :value="2" label="美国" />
+        <h-option :value="3" label="日本" />
+      </h-modal-select>
       <div class="mb-2">你选中的值是 {{ value1 }}</div>
-    </n-col>
-    <n-col :span="6">
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">多选</div>
-      <n-modal-select v-model="value2" :value-format="valueFormat" multiple :to-body="false">
-        <n-option :value="1" label="中国" />
-        <n-option :value="2" label="美国" />
-        <n-option :value="3" label="日本" />
-      </n-modal-select>
+      <h-modal-select v-model="value2" :value-format="valueFormat" multiple :to-body="false">
+        <h-option :value="1" label="中国" />
+        <h-option :value="2" label="美国" />
+        <h-option :value="3" label="日本" />
+      </h-modal-select>
       <div class="mb-2">你选中的值是 {{ value2 }}</div>
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

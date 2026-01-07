@@ -1,8 +1,8 @@
 <template>
-  <n-button class="mr-2" @click="showViewer">单张图片</n-button>
-  <n-button class="mr-2" @click="showViewer2">单个视频</n-button>
-  <n-button class="mr-2" @click="showViewer3">图片和视频集合</n-button>
-  <n-viewer v-model="visibleRef" :sources="imagesRef" />
+  <h-button class="mr-2" @click="showViewer">单张图片</h-button>
+  <h-button class="mr-2" @click="showViewer2">单个视频</h-button>
+  <h-button class="mr-2" @click="showViewer3">图片和视频集合</h-button>
+  <h-viewer v-model="visibleRef" :sources="imagesRef" />
 </template>
 
 <script lang="ts">
@@ -27,11 +27,11 @@ export default defineComponent({
     const visibleRef = ref(false);
     const video1 = {
       type: 'video',
-      cover: 'https://www.nio.cn/cdn-static/mynio/nextjs/images/et5/top-hero-desktop.jpg',
-      thumbnail: 'https://www.nio.cn/cdn-static/mynio/nextjs/images/et5/top-hero-desktop.jpg',
+      cover: 'https://www.nio.cn/cdh-static/mynio/nextjs/images/et5/top-hero-desktop.jpg',
+      thumbnail: 'https://www.nio.cn/cdh-static/mynio/nextjs/images/et5/top-hero-desktop.jpg',
       videoSources: [
         {
-          src: 'https://www.nio.cn/cdn-static/mynio/nextjs/images/et5/et5-hero-video.mp4',
+          src: 'https://www.nio.cn/cdh-static/mynio/nextjs/images/et5/et5-hero-video.mp4',
           type: 'video/mp4',
         },
       ],

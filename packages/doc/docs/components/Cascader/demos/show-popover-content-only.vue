@@ -1,8 +1,8 @@
 <template>
-  <n-row :gutter="10">
-    <n-col :span="24">
+  <h-row :gutter="10">
+    <h-col :span="24">
       <div class="demo-title">单选</div>
-      <n-cascader
+      <h-cascader
         ref="cascaderDomRef1"
         v-model="currentVal1"
         :options="baseData"
@@ -10,10 +10,10 @@
         @update:modelValue="updateHandle"
         @change="changeHandle"
       />
-    </n-col>
-    <n-col :span="24">
+    </h-col>
+    <h-col :span="24">
       <div class="demo-title">多选</div>
-      <n-cascader
+      <h-cascader
         ref="cascaderDomRef2"
         v-model="currentVal2"
         :options="baseData"
@@ -22,8 +22,8 @@
         @update:modelValue="updateHandle"
         @change="changeHandle"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

@@ -1,37 +1,37 @@
 <template>
   <div>
     <div class="mb-8">
-      <n-popover trigger="click-remain">
+      <h-popover trigger="click-remain">
         <template #reference>
-          <n-button type="secondary" class="mr-4">
+          <h-button type="secondary" class="mr-4">
             click-remain 模式，点击 popper 里面的内容，浮层会消失
-          </n-button>
+          </h-button>
         </template>
         <template #popper>
-          <n-pop-content>
-            <n-select clearable :collapse="true" :to-body="false" v-model="categoryCode">
-              <n-option v-for="el in list" :key="el" :label="el" :value="el"></n-option>
-            </n-select>
-          </n-pop-content>
+          <h-pop-content>
+            <h-select clearable :collapse="true" :to-body="false" v-model="categoryCode">
+              <h-option v-for="el in list" :key="el" :label="el" :value="el"></h-option>
+            </h-select>
+          </h-pop-content>
         </template>
-      </n-popover>
+      </h-popover>
     </div>
 
     <div>
-      <n-popover trigger="click-remain" hide-event-type="mousedown">
+      <h-popover trigger="click-remain" hide-event-type="mousedown">
         <template #reference>
-          <n-button type="secondary" class="mr-4">
+          <h-button type="secondary" class="mr-4">
             设置了hide-event-type="mousedown"，浮层会保留
-          </n-button>
+          </h-button>
         </template>
         <template #popper>
-          <n-pop-content>
-            <n-select clearable :collapse="true" :to-body="false" v-model="categoryCode">
-              <n-option v-for="el in list" :key="el" :label="el" :value="el"></n-option>
-            </n-select>
-          </n-pop-content>
+          <h-pop-content>
+            <h-select clearable :collapse="true" :to-body="false" v-model="categoryCode">
+              <h-option v-for="el in list" :key="el" :label="el" :value="el"></h-option>
+            </h-select>
+          </h-pop-content>
         </template>
-      </n-popover>
+      </h-popover>
     </div>
   </div>
 </template>

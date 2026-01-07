@@ -1,18 +1,18 @@
 <template>
-  <n-space>
-    <n-button type="normal" @click="visible = true">打开抽屉</n-button>
-    <n-checkbox v-model="destroyOnClose">关闭销毁</n-checkbox>
-  </n-space>
-  <n-drawer
+  <h-space>
+    <h-button type="normal" @click="visible = true">打开抽屉</h-button>
+    <h-checkbox v-model="destroyOnClose">关闭销毁</h-checkbox>
+  </h-space>
+  <h-drawer
     v-model:visible="visible"
-    :destroy-on-close="destroyOnClose"
+    :destroy-oh-close="destroyOnClose"
     v2
     title="User Information"
     placement="right"
     @ok="onOk"
   >
     <UserForm ref="inst" />
-  </n-drawer>
+  </h-drawer>
 </template>
 
 <script lang="tsx" setup>

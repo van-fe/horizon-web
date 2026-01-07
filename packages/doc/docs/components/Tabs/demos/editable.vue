@@ -36,24 +36,24 @@ const onTabClose = (key: NTabValue) => {
 </script>
 
 <template>
-  <div class="mb-4 flex align-center">
+  <div class="mb-4 flex aligh-center">
     <span class="mr-4">类型</span>
-    <n-radio-group v-model="cardType">
-      <n-radio label="line">line(Default)</n-radio>
-      <n-radio label="card">card</n-radio>
-      <n-radio label="page">page(不支持尺寸调整)</n-radio>
-    </n-radio-group>
+    <h-radio-group v-model="cardType">
+      <h-radio label="line">line(Default)</h-radio>
+      <h-radio label="card">card</h-radio>
+      <h-radio label="page">page(不支持尺寸调整)</h-radio>
+    </h-radio-group>
   </div>
-  <div class="mb-4 flex align-center">
+  <div class="mb-4 flex aligh-center">
     <span class="mr-4">尺寸</span>
-    <n-radio-group v-model="size" :disabled="cardType === 'page'">
-      <n-radio label="mini">mini</n-radio>
-      <n-radio label="small">small</n-radio>
-      <n-radio label="medium">medium(Default)</n-radio>
-      <n-radio label="large">large</n-radio>
-    </n-radio-group>
+    <h-radio-group v-model="size" :disabled="cardType === 'page'">
+      <h-radio label="mini">mini</h-radio>
+      <h-radio label="small">small</h-radio>
+      <h-radio label="medium">medium(Default)</h-radio>
+      <h-radio label="large">large</h-radio>
+    </h-radio-group>
   </div>
-  <n-tabs
+  <h-tabs
     v-model:active-key="activeKey"
     v2
     editable
@@ -63,7 +63,7 @@ const onTabClose = (key: NTabValue) => {
     @add="onTabAdd"
     @close="onTabClose"
   >
-    <n-tab v-if="firstTab.show" :key="firstTab.uid" :label="firstTab.label" />
-    <n-tab v-for="item in items" :key="item.uid" :label="item.label" closable />
-  </n-tabs>
+    <h-tab v-if="firstTab.show" :key="firstTab.uid" :label="firstTab.label" />
+    <h-tab v-for="item in items" :key="item.uid" :label="item.label" closable />
+  </h-tabs>
 </template>

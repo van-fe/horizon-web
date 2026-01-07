@@ -20,6 +20,6 @@ describe('v-loading.tsx', () => {
 
     await target.trigger('mouseenter');
 
-    expect(document.body.querySelector('.n-tooltip')).not.toBeUndefined();
+    expect(document.body.querySelector('.h-tooltip')).not.toBeUndefined();
   });
 });

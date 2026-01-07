@@ -2,51 +2,51 @@
   <div class="demo-block">
     <div class="item"></div>
     <div class="item">
-      <n-button v-tooltip.top-start="'top-start'">top-start</n-button>
+      <h-button v-tooltip.top-start="'top-start'">top-start</h-button>
     </div>
     <div class="item">
-      <n-button v-tooltip.top="'top'">top</n-button>
+      <h-button v-tooltip.top="'top'">top</h-button>
     </div>
     <div class="item">
-      <n-button v-tooltip.top-end.child="'top-end'">top-end</n-button>
-    </div>
-    <div class="item"></div>
-    <div class="item">
-      <n-button v-tooltip.left-start="'left-start'">left-start</n-button>
+      <h-button v-tooltip.top-end.child="'top-end'">top-end</h-button>
     </div>
     <div class="item"></div>
-    <div class="item"></div>
-    <div class="item"></div>
     <div class="item">
-      <n-button v-tooltip.right-start="'right-start'">right-start</n-button>
-    </div>
-    <div class="item">
-      <n-button v-tooltip.left="'left'">left</n-button>
+      <h-button v-tooltip.left-start="'left-start'">left-start</h-button>
     </div>
     <div class="item"></div>
     <div class="item"></div>
     <div class="item"></div>
     <div class="item">
-      <n-button v-tooltip.right="'right'">right</n-button>
+      <h-button v-tooltip.right-start="'right-start'">right-start</h-button>
     </div>
     <div class="item">
-      <n-button v-tooltip.left-end="'left-end'">left-end</n-button>
+      <h-button v-tooltip.left="'left'">left</h-button>
+    </div>
+    <div class="item"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+    <div class="item">
+      <h-button v-tooltip.right="'right'">right</h-button>
+    </div>
+    <div class="item">
+      <h-button v-tooltip.left-end="'left-end'">left-end</h-button>
     </div>
     <div class="item"></div>
     <div class="item"></div>
     <div class="item"></div>
     <div class="item">
-      <n-button v-tooltip.right-end="'right-end'">right-end</n-button>
+      <h-button v-tooltip.right-end="'right-end'">right-end</h-button>
     </div>
     <div class="item"></div>
     <div class="item">
-      <n-button v-tooltip.bottom-start="'bottom-start'">bottom-start</n-button>
+      <h-button v-tooltip.bottom-start="'bottom-start'">bottom-start</h-button>
     </div>
     <div class="item">
-      <n-button v-tooltip.bottom="'bottom'">bottom</n-button>
+      <h-button v-tooltip.bottom="'bottom'">bottom</h-button>
     </div>
     <div class="item">
-      <n-button v-tooltip.bottom-end="'bottom-start'">bottom-start</n-button>
+      <h-button v-tooltip.bottom-end="'bottom-start'">bottom-start</h-button>
     </div>
     <div class="item"></div>
   </div>

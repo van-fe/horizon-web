@@ -108,7 +108,7 @@ export default class DrawerHelper<
   }
 
   public async close(maskClose = true, waitTime = 300) {
-    await this.wrapper.find(maskClose ? '.n-drawer__mask' : '.n-drawer__closable').trigger('click');
+    await this.wrapper.find(maskClose ? '.h-drawer__mask' : '.h-drawer__closable').trigger('click');
     await sleep(waitTime);
   }
 }

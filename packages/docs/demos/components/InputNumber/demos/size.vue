@@ -13,18 +13,18 @@ function onChange(value: number) {
 </script>
 
 <template>
-  <n-row :gutter="12">
-    <n-col :span="8">
+  <h-row :gutter="12">
+    <h-col :span="8">
       <div class="demo-title">large</div>
-      <n-input-number v-model="value" size="large" @input="onInput" @change="onChange" />
-    </n-col>
-    <n-col :span="8">
+      <h-input-number v-model="value" size="large" @input="onInput" @change="onChange" />
+    </h-col>
+    <h-col :span="8">
       <div class="demo-title">medium (default)</div>
-      <n-input-number v-model="value" @input="onInput" @change="onChange" />
-    </n-col>
-    <n-col :span="8">
+      <h-input-number v-model="value" @input="onInput" @change="onChange" />
+    </h-col>
+    <h-col :span="8">
       <div class="demo-title">small</div>
-      <n-input-number v-model="value" size="small" @input="onInput" @change="onChange" />
-    </n-col>
-  </n-row>
+      <h-input-number v-model="value" size="small" @input="onInput" @change="onChange" />
+    </h-col>
+  </h-row>
 </template>

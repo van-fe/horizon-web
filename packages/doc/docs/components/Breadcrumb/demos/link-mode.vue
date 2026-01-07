@@ -1,5 +1,5 @@
 <template>
-  <n-breadcrumb
+  <h-breadcrumb
     :separator="IconArrowRight"
     :texts="[
       { text: 'Home' },

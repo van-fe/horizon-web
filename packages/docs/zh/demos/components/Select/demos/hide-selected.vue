@@ -1,23 +1,23 @@
 <template>
-  <n-row :gutter="10">
-    <n-col :span="6">
+  <h-row :gutter="10">
+    <h-col :span="6">
       <div class="demo-title">单选: 隐藏选中项</div>
-      <n-select v-model="value3" :selected-visible="false" clearable :to-body="false">
-        <n-option label="上海" :value="1" />
-        <n-option :value="2" label="北京" />
-        <n-option :value="3" label="合肥" name="hefei" />
-      </n-select>
-    </n-col>
+      <h-select v-model="value3" :selected-visible="false" clearable :to-body="false">
+        <h-option label="上海" :value="1" />
+        <h-option :value="2" label="北京" />
+        <h-option :value="3" label="合肥" name="hefei" />
+      </h-select>
+    </h-col>
 
-    <n-col :span="6">
+    <h-col :span="6">
       <div class="demo-title">多选: 隐藏选中项</div>
-      <n-select v-model="values4" :selected-visible="false" clearable multiple :to-body="false">
-        <n-option label="上海" :value="1" />
-        <n-option :value="2" label="北京" />
-        <n-option :value="3" label="合肥" name="hefei" />
-      </n-select>
-    </n-col>
-  </n-row>
+      <h-select v-model="values4" :selected-visible="false" clearable multiple :to-body="false">
+        <h-option label="上海" :value="1" />
+        <h-option :value="2" label="北京" />
+        <h-option :value="3" label="合肥" name="hefei" />
+      </h-select>
+    </h-col>
+  </h-row>
 </template>
 
 <script lang="ts">

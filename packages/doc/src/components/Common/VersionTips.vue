@@ -8,14 +8,14 @@ defineProps({
 </script>
 
 <template>
-  <n-popover>
+  <h-popover>
     <template #reference>
-      <n-button icon="star" type="normal" :link="true" size="small" :underline="false" />
+      <h-button icon="star" type="normal" :link="true" size="small" :underline="false" />
     </template>
     <template #popper>
-      <n-pop-content>
+      <h-pop-content>
         <span v-html="desc" />
-      </n-pop-content>
+      </h-pop-content>
     </template>
-  </n-popover>
+  </h-popover>
 </template>

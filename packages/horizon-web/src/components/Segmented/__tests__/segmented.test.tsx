@@ -151,7 +151,7 @@ describe('Segmented.tsx', () => {
 
     const sgm = wrapper.findComponent(HSegmented);
     expect(sgm.exists()).toBe(true);
-    const disabled = wrapper.find('.n-segmented__item--disabled');
+    const disabled = wrapper.find('.h-segmented__item--disabled');
     expect(disabled.exists()).toBe(true);
     disabled.trigger('click');
     expect(fn).not.toBeCalled();

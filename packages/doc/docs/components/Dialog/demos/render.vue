@@ -1,16 +1,16 @@
 <template>
-  <n-space block>
-    <n-button plain type="normal" @click="visible = true">点击打开Dialog</n-button>
-    <n-checkbox v-model="destroyOnClose">关闭后销毁</n-checkbox>
-  </n-space>
-  <n-dialog
+  <h-space block>
+    <h-button plain type="normal" @click="visible = true">点击打开Dialog</h-button>
+    <h-checkbox v-model="destroyOnClose">关闭后销毁</h-checkbox>
+  </h-space>
+  <h-dialog
     v-model:visible="visible"
     title="用户信息表单（示例）"
-    :destroy-on-close="destroyOnClose"
+    :destroy-oh-close="destroyOnClose"
     @ok="onOk"
   >
     <UserForm ref="uFormInstance" />
-  </n-dialog>
+  </h-dialog>
 </template>
 
 <script lang="ts" setup>

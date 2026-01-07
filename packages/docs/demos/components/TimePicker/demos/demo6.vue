@@ -2,7 +2,7 @@
   <div class="demo-wrapper">
     <div class="box">
       <span>自定义文案（显示次日）</span>
-      <n-time-picker
+      <h-time-picker
         v-model="time1"
         type="minutes"
         :format-trigger-text="formatTriggerText"

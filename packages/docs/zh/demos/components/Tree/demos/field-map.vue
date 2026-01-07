@@ -1,25 +1,25 @@
 <template>
-  <n-row>
-    <n-col :span="12">
+  <h-row>
+    <h-col :span="12">
       <div class="demo-title">单选</div>
-      <n-tree
+      <h-tree
         :tree-data="baseTreeData"
         :field-map="{value: 'key', label: 'text', children: 'items'}"
       >
         <template #treeNodeRender="{data}">
           {{ data.label }}
         </template>
-      </n-tree>
-    </n-col>
-    <n-col :span="12">
+      </h-tree>
+    </h-col>
+    <h-col :span="12">
       <div class="demo-title">多选</div>
-      <n-tree
+      <h-tree
         :tree-data="baseTreeData"
         :field-map="{value: 'key', label: 'text', children: 'items'}"
         :multiple="true"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

@@ -1,16 +1,16 @@
 <template>
-  <n-form label-position="left" label-vertical-align="middle">
-    <n-form-item label="hide on single page">
-      <n-radio-group v-model="hideOnSinglePage">
-        <n-radio :label="true">true</n-radio>
-        <n-radio :label="false">false</n-radio>
-      </n-radio-group>
-    </n-form-item>
-    <n-form-item label="total">
-      <n-input-number v-model="total" :min="0" :step="10" :enable-lang-press="true" style="max-width: 150px" />
-    </n-form-item>
-  </n-form>
-  <n-pagination :total="total" :hide-on-single-page="hideOnSinglePage" />
+  <h-form label-position="left" label-vertical-align="middle">
+    <h-form-item label="hide on single page">
+      <h-radio-group v-model="hideOnSinglePage">
+        <h-radio :label="true">true</h-radio>
+        <h-radio :label="false">false</h-radio>
+      </h-radio-group>
+    </h-form-item>
+    <h-form-item label="total">
+      <h-input-number v-model="total" :min="0" :step="10" :enable-lang-press="true" style="max-width: 150px" />
+    </h-form-item>
+  </h-form>
+  <h-pagination :total="total" :hide-oh-single-page="hideOnSinglePage" />
 </template>
 
 <script setup lang="ts">

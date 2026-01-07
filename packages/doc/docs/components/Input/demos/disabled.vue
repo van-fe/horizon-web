@@ -1,5 +1,5 @@
 <template>
-  <n-input v-model="val" disabled />
+  <h-input v-model="val" disabled />
 </template>
 
 <script lang="ts">

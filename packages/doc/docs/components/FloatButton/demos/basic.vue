@@ -1,8 +1,8 @@
 <template>
   <div>
-    <n-switch v-model="visible" :status="true" status-on-text="显示" status-off-text="隐藏" />
-    <n-float-button :visible="visible" icon="message" />
-    <n-float-button :visible="visible" description="按钮" />
+    <h-switch v-model="visible" :status="true" status-oh-text="显示" status-off-text="隐藏" />
+    <h-float-button :visible="visible" icon="message" />
+    <h-float-button :visible="visible" description="按钮" />
   </div>
 </template>
 

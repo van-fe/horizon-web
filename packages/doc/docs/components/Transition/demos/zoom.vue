@@ -1,28 +1,28 @@
 <template>
   <div>
-    <n-button type="normal" class="mb-2" @click="visible = !visible">Change</n-button>
-    <n-row :gutter="10" style="height: 80px;">
-      <n-col :span="6">
-        <n-transition name="zoom-in-center">
-          <div v-show="visible" class="animate-box">zoom-in-center</div>
-        </n-transition>
-      </n-col>
-      <n-col :span="6">
-        <n-transition name="zoom-in-top">
-          <div v-show="visible" class="animate-box">zoom-in-top</div>
-        </n-transition>
-      </n-col>
-      <n-col :span="6">
-        <n-transition name="zoom-in-bottom">
-          <div v-show="visible" class="animate-box">zoom-in-bottom</div>
-        </n-transition>
-      </n-col>
-      <n-col :span="6">
-        <n-transition name="zoom-in-left">
-          <div v-show="visible" class="animate-box">zoom-in-left</div>
-        </n-transition>
-      </n-col>
-    </n-row>
+    <h-button type="normal" class="mb-2" @click="visible = !visible">Change</h-button>
+    <h-row :gutter="10" style="height: 80px;">
+      <h-col :span="6">
+        <h-transition name="zoom-ih-center">
+          <div v-show="visible" class="animate-box">zoom-ih-center</div>
+        </h-transition>
+      </h-col>
+      <h-col :span="6">
+        <h-transition name="zoom-ih-top">
+          <div v-show="visible" class="animate-box">zoom-ih-top</div>
+        </h-transition>
+      </h-col>
+      <h-col :span="6">
+        <h-transition name="zoom-ih-bottom">
+          <div v-show="visible" class="animate-box">zoom-ih-bottom</div>
+        </h-transition>
+      </h-col>
+      <h-col :span="6">
+        <h-transition name="zoom-ih-left">
+          <div v-show="visible" class="animate-box">zoom-ih-left</div>
+        </h-transition>
+      </h-col>
+    </h-row>
   </div>
 </template>
 
@@ -41,11 +41,11 @@ export default defineComponent({
 .animate-box {
     width: 200px;
     height: 80px;
-    background: var(--n-bg-brand-default);
-    border-radius: var(--n-radius);
+    background: var(--h-bg-brand-default);
+    border-radius: var(--h-radius);
     display: flex;
-    align-items: center;
+    aligh-items: center;
     justify-content: center;
-    color: var(--n-text-inverse);
+    color: var(--h-text-inverse);
 }
 </style>

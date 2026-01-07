@@ -1,16 +1,16 @@
 <template>
-  <n-row>
-    <n-col :span="6">
-      <n-auto-complete :options="options" :fit-input-width="false" placeholder="You like..." @search="onSearch">
+  <h-row>
+    <h-col :span="6">
+      <h-auto-complete :options="options" :fit-input-width="false" placeholder="You like..." @search="onSearch">
         <template #default="item">
           <div class="item-wrap">
             <div class="title">{{ item.label }}</div>
-            <div class="title"><n-tag :clickable="false">{{ item.description }}</n-tag></div>
+            <div class="title"><h-tag :clickable="false">{{ item.description }}</h-tag></div>
           </div>
         </template>
-      </n-auto-complete>
-    </n-col>
-  </n-row>
+      </h-auto-complete>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

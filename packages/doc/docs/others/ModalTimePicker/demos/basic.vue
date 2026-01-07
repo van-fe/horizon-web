@@ -1,29 +1,29 @@
 <template>
-  <n-form>
-    <n-form-item label="size">
-      <n-radio-group v-model="size">
-        <n-radio value="small" />
-        <n-radio value="medium" />
-      </n-radio-group>
-    </n-form-item>
-    <n-form-item label="style">
-      <n-radio-group v-model="inputStyle">
-        <n-radio value="normal" />
-        <n-radio value="no-border" />
-      </n-radio-group>
-    </n-form-item>
-    <n-form-item label="disabled">
-      <n-radio-group v-model="disabled">
-        <n-radio :value="true">True</n-radio>
-        <n-radio :value="false">False</n-radio>
-      </n-radio-group>
-    </n-form-item>
-  </n-form>
-  <n-row>
-    <n-col :span="6">
-      <n-modal-time-picker v-model="value" :size="size" :input-style="inputStyle" :disabled="disabled" />
-    </n-col>
-  </n-row>
+  <h-form>
+    <h-form-item label="size">
+      <h-radio-group v-model="size">
+        <h-radio value="small" />
+        <h-radio value="medium" />
+      </h-radio-group>
+    </h-form-item>
+    <h-form-item label="style">
+      <h-radio-group v-model="inputStyle">
+        <h-radio value="normal" />
+        <h-radio value="no-border" />
+      </h-radio-group>
+    </h-form-item>
+    <h-form-item label="disabled">
+      <h-radio-group v-model="disabled">
+        <h-radio :value="true">True</h-radio>
+        <h-radio :value="false">False</h-radio>
+      </h-radio-group>
+    </h-form-item>
+  </h-form>
+  <h-row>
+    <h-col :span="6">
+      <h-modal-time-picker v-model="value" :size="size" :input-style="inputStyle" :disabled="disabled" />
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

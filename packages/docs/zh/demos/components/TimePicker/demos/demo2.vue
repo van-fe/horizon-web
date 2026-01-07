@@ -2,7 +2,7 @@
   <div class="demo-wrapper">
     <div class="box">
       <span>两列禁选范围09:30-12:30</span>
-      <n-time-picker
+      <h-time-picker
         v-model="time1"
         type="minutes"
         value-format="HH:mm"
@@ -11,7 +11,7 @@
     </div>
     <div class="box">
       <span>三列禁选范围08:30:30-18:30:30</span>
-      <n-time-picker
+      <h-time-picker
         v-model="time2"
         type="seconds"
         value-format="HH:mm:ss"
@@ -20,7 +20,7 @@
     </div>
     <div class="box">
       <span>时间范围禁选（08:30:30以前和21:30:30以后）</span>
-      <n-time-picker
+      <h-time-picker
         v-model="time3"
         type="seconds"
         value-format="HH:mm:ss"

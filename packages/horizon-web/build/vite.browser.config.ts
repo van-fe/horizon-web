@@ -7,6 +7,7 @@ import vue from '@vitejs/plugin-vue';
 export default defineConfig({
   css: { preprocessorOptions: { scss: { charset: false } } },
   build: {
+    sourcemap: true,
     lib: {
       entry: path.resolve(__dirname, '../src/index.ts'),
       formats: ['iife', 'es', 'umd'],
@@ -30,15 +31,14 @@ export default defineConfig({
         globals: {
           vue: 'Vue',
           '@aurora/locale-vue': 'localeVue',
-          '@aurora/utils': 'shared',
+          '@aurora/utils': 'utils',
         },
         minifyInternalExports: false,
         externalLiveBindings: false,
         exports: 'named',
         dynamicImportInCjs: false,
         inlineDynamicImports: true,
-        dir: path.resolve(__dirname, '../dist'),
-        sourcemap: true,
+        dir: path.resolve(__dirname, '../dist')
       },
     },
   },

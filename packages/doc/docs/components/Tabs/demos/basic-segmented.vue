@@ -23,10 +23,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <n-tabs :default-active-key="0" type="segment" @change="onTabChanged">
-    <!-- <n-tab key="1" :label="tabLabel" />
-    <n-tab key="2" :label="tabLabel2" />
-    <n-tab key="3" :label="tabLabel3" /> -->
-    <n-tab v-for="(t, i) in tabs" :key="i" :label="t" />
-  </n-tabs>
+  <h-tabs :default-active-key="0" type="segment" @change="onTabChanged">
+    <!-- <h-tab key="1" :label="tabLabel" />
+    <h-tab key="2" :label="tabLabel2" />
+    <h-tab key="3" :label="tabLabel3" /> -->
+    <h-tab v-for="(t, i) in tabs" :key="i" :label="t" />
+  </h-tabs>
 </template>

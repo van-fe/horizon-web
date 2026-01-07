@@ -13,18 +13,18 @@ export default defineComponent({
 </script>
 
 <template>
-  <n-row :gutter="12">
-    <n-col :span="8">
+  <h-row :gutter="12">
+    <h-col :span="8">
       <div class="demo-title">默认（居右）</div>
-      <n-input-number v-model="value" :min="0" />
-    </n-col>
-    <n-col :span="8">
+      <h-input-number v-model="value" :min="0" />
+    </h-col>
+    <h-col :span="8">
       <div class="demo-title">两侧</div>
-      <n-input-number v-model="value" controls-position="between" :min="0" />
-    </n-col>
-    <n-col :span="8">
+      <h-input-number v-model="value" controls-position="between" :min="0" />
+    </h-col>
+    <h-col :span="8">
       <div class="demo-title">隐藏</div>
-      <n-input-number v-model="value" :controls="false" :min="0" />
-    </n-col>
-  </n-row>
+      <h-input-number v-model="value" :controls="false" :min="0" />
+    </h-col>
+  </h-row>
 </template>

@@ -1,38 +1,38 @@
 <template>
-  <n-space direction="vertical" block>
-    <n-space>
+  <h-space direction="vertical" block>
+    <h-space>
       <div>使用 separator 属性</div>
-      <n-space separator size="2">
-        <n-button text :icon="IconRefresh" type="normal" />
-        <n-button text :icon="IconCollect" type="normal" />
-        <n-button text :icon="IconDownload" type="normal" />
-      </n-space>
-    </n-space>
+      <h-space separator size="2">
+        <h-button text :icon="IconRefresh" type="normal" />
+        <h-button text :icon="IconCollect" type="normal" />
+        <h-button text :icon="IconDownload" type="normal" />
+      </h-space>
+    </h-space>
 
-    <n-space>
+    <h-space>
       <div>使用自定义分隔符</div>
-      <n-space size="small">
+      <h-space size="small">
         <template #separator>
           <div>🤣</div>
         </template>
-        <n-button :icon="IconRefresh" type="normal">刷新</n-button>
-        <n-button :icon="IconCollect" type="normal">收藏</n-button>
-        <n-button :icon="IconDownload" type="normal">下载</n-button>
-      </n-space>
-    </n-space>
+        <h-button :icon="IconRefresh" type="normal">刷新</h-button>
+        <h-button :icon="IconCollect" type="normal">收藏</h-button>
+        <h-button :icon="IconDownload" type="normal">下载</h-button>
+      </h-space>
+    </h-space>
 
-    <n-space>
-      <div>自定义 n-divider</div>
-      <n-space size="0">
+    <h-space>
+      <div>自定义 h-divider</div>
+      <h-space size="0">
         <template #separator>
-          <n-divider vertical-margin="20" direction="vertical" />
+          <h-divider vertical-margin="20" direction="vertical" />
         </template>
-        <n-button :icon="IconRefresh" type="normal">刷新</n-button>
-        <n-button :icon="IconCollect" type="normal">收藏</n-button>
-        <n-button :icon="IconDownload" type="normal">下载</n-button>
-      </n-space>
-    </n-space>
-  </n-space>
+        <h-button :icon="IconRefresh" type="normal">刷新</h-button>
+        <h-button :icon="IconCollect" type="normal">收藏</h-button>
+        <h-button :icon="IconDownload" type="normal">下载</h-button>
+      </h-space>
+    </h-space>
+  </h-space>
 </template>
 
 <script setup>

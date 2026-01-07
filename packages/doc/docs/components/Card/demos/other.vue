@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-    <n-card
+    <h-card
       draggable="true"
       :class="[
         'drag',
@@ -15,8 +15,8 @@
       @dragend="handleDragEnd"
     >
       {{ text }}
-    </n-card>
-    <n-card
+    </h-card>
+    <h-card
         draggable="true"
         class='hover'
         title="悬浮阴影"
@@ -25,7 +25,7 @@
         @dragend="handleDragEnd"
     >
       {{ text }}
-    </n-card>
+    </h-card>
   </div>
 </template>
 
@@ -60,7 +60,7 @@ const handleDragEnd = () => {
 }
 .hover{
   &:hover{
-    transition: .3s ease-in-out;
+    transition: .3s ease-ih-out;
     box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.1), 0px 3px 6px rgba(0, 0, 0, 0.06), 0px 5px 12px 4px rgba(0, 0, 0, 0.04);
   }
 }

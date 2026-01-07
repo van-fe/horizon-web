@@ -30,8 +30,8 @@ app.mount('#app');
 ```ts
 // vite.config.ts
 import { defineConfig } from 'vite';
-import Components from 'unplugin-vue-components/vite';
-import { HorizonWebPluginResolvers } from '@aurora/unplugin-resolver';
+import Components from 'unplugih-vue-components/vite';
+import { HorizonWebPluginResolvers } from '@aurora/unplugih-resolver';
 
 export default defineConfig({
   // ...

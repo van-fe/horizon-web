@@ -1,35 +1,35 @@
 <template>
-  <n-form label-position="left" label-width="fit-content">
-    <n-form-item label="size">
-      <n-radio-group v-model="sizeValue">
-        <n-radio value="small" label="small" />
-        <n-radio value="medium" label="medium" />
-        <n-radio value="large" label="large" />
-      </n-radio-group>
-    </n-form-item>
-    <n-form-item label="input style">
-      <n-radio-group v-model="inputStyle">
-        <n-radio value="normal" label="normal" />
-        <n-radio value="no-border" label="no-border" />
-      </n-radio-group>
-    </n-form-item>
-    <n-form-item label="disabled">
-      <n-radio-group v-model="disabled">
-        <n-radio :label="true">True</n-radio>
-        <n-radio :label="false">False</n-radio>
-      </n-radio-group>
-    </n-form-item>
-    <n-form-item label="check-strictly">
-      <n-radio-group v-model="checkStrictly">
-        <n-radio :label="true">True</n-radio>
-        <n-radio :label="false">False</n-radio>
-      </n-radio-group>
-    </n-form-item>
-  </n-form>
-  <n-row :gutter="10">
-    <n-col :span="6">
+  <h-form label-position="left" label-width="fit-content">
+    <h-form-item label="size">
+      <h-radio-group v-model="sizeValue">
+        <h-radio value="small" label="small" />
+        <h-radio value="medium" label="medium" />
+        <h-radio value="large" label="large" />
+      </h-radio-group>
+    </h-form-item>
+    <h-form-item label="input style">
+      <h-radio-group v-model="inputStyle">
+        <h-radio value="normal" label="normal" />
+        <h-radio value="no-border" label="no-border" />
+      </h-radio-group>
+    </h-form-item>
+    <h-form-item label="disabled">
+      <h-radio-group v-model="disabled">
+        <h-radio :label="true">True</h-radio>
+        <h-radio :label="false">False</h-radio>
+      </h-radio-group>
+    </h-form-item>
+    <h-form-item label="check-strictly">
+      <h-radio-group v-model="checkStrictly">
+        <h-radio :label="true">True</h-radio>
+        <h-radio :label="false">False</h-radio>
+      </h-radio-group>
+    </h-form-item>
+  </h-form>
+  <h-row :gutter="10">
+    <h-col :span="6">
       <div class="demo-title">单选</div>
-      <n-modal-cascader
+      <h-modal-cascader
         ref="cascaderDomRef1"
         v-model="currentVal1"
         :clearable="true"
@@ -45,10 +45,10 @@
         @focus="onFocus"
         @blur="onBlur"
       />
-    </n-col>
-    <n-col :span="6">
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">多选</div>
-      <n-modal-cascader
+      <h-modal-cascader
         ref="cascaderDomRef2"
         v-model="currentVal2"
         :clearable="true"
@@ -65,8 +65,8 @@
         @focus="onFocus"
         @blur="onBlur"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

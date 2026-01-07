@@ -19,47 +19,47 @@
     <div class="control-box">
       <strong>全局模式</strong>
       <div class="control-item">
-        <n-switch v-model="global" />
+        <h-switch v-model="global" />
       </div>
       <strong>文本内容</strong>
       <div class="control-item">
-        <n-input v-model="content" />
+        <h-input v-model="content" />
       </div>
       <strong>是否显示图片内容</strong>
       <div class="control-item">
-        <n-switch v-model="showImage" />
+        <h-switch v-model="showImage" />
       </div>
       <template v-if="showImage">
         <strong>图片内容</strong>
         <div class="control-item">
-          <n-input v-model="image" />
+          <h-input v-model="image" />
         </div>
       </template>
       <strong>旋转角度</strong>
       <div class="control-item">
-        <n-input-number v-model="rotate" />
+        <h-input-number v-model="rotate" />
       </div>
       <strong>zIndex层级</strong>
       <div class="control-item">
-        <n-input-number v-model="zIndex" />
+        <h-input-number v-model="zIndex" />
       </div>
       <strong>多行文本垂直方向的间距</strong>
       <div class="control-item">
-        <n-input-number v-model="lineGap" />
+        <h-input-number v-model="lineGap" />
       </div>
       <strong>水平及垂直间距（gapX、gapY）</strong>
       <div class="control-item">
-        <n-input-number v-model="gapX" />
-        <n-input-number v-model="gapY" />
+        <h-input-number v-model="gapX" />
+        <h-input-number v-model="gapY" />
       </div>
       <strong>水平及垂直偏移量（offsetX、offsetY）</strong>
       <div class="control-item">
-        <n-input-number v-model="offsetX" />
-        <n-input-number v-model="offsetY" />
+        <h-input-number v-model="offsetX" />
+        <h-input-number v-model="offsetY" />
       </div>
       <strong>不透明度</strong>
       <div class="control-item">
-        <n-input-number v-model="opacity" :min="0" :max="1" :step="0.1" />
+        <h-input-number v-model="opacity" :min="0" :max="1" :step="0.1" />
       </div>
     </div>
   </div>

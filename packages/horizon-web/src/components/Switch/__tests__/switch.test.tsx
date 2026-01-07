@@ -17,7 +17,7 @@ describe('Switch.tsx', () => {
     test('disabled', () => {
       const wrapper = mount(() => <HSwitch modelValue={true} disabled={true} />);
 
-      const core = wrapper.find('.n-switch__core');
+      const core = wrapper.find('.h-switch__core');
 
       expect(core.classes('is-disabled')).eq(true);
       expect(core.classes('is-active')).eq(true);
@@ -33,7 +33,7 @@ describe('Switch.tsx', () => {
           onUpdate:modelValue={val => (modelValue.value = val)}
         />
       ));
-      const core = wrapper.find('.n-switch__core');
+      const core = wrapper.find('.h-switch__core');
 
       await core.trigger('click');
       expect(modelValue.value).toBeFalsy();

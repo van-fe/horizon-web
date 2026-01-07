@@ -1,7 +1,7 @@
 <template>
   <div class="">
-    <n-rate v-model="currentScore" show-tooltip />
-    <n-rate v-model="currentScore" show-tooltip :tooltip="tooltipText" />
+    <h-rate v-model="currentScore" show-tooltip />
+    <h-rate v-model="currentScore" show-tooltip :tooltip="tooltipText" />
   </div>
 </template>
 

@@ -14,18 +14,18 @@ const onTabChanged = (tab: NTabValue) => {
 </script>
 
 <template>
-  <div class="mb-8 flex align-center">
+  <div class="mb-8 flex aligh-center">
     <span class="mr-4">类型</span>
-    <n-radio-group v-model="cardType">
-      <n-radio label="line">line(Default)</n-radio>
-      <n-radio label="card">card</n-radio>
-      <n-radio label="page">page(不支持尺寸调整)</n-radio>
-    </n-radio-group>
+    <h-radio-group v-model="cardType">
+      <h-radio label="line">line(Default)</h-radio>
+      <h-radio label="card">card</h-radio>
+      <h-radio label="page">page(不支持尺寸调整)</h-radio>
+    </h-radio-group>
   </div>
 
   <div style="height: 50px">
-    <n-tabs :default-active-key="0" :type="cardType" @change="onTabChanged">
-      <n-tab v-for="(tab, i) in tabs" :key="i" :icon="icons[i]" :label="tab" />
-    </n-tabs>
+    <h-tabs :default-active-key="0" :type="cardType" @change="onTabChanged">
+      <h-tab v-for="(tab, i) in tabs" :key="i" :icon="icons[i]" :label="tab" />
+    </h-tabs>
   </div>
 </template>

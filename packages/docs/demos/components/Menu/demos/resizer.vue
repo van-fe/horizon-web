@@ -1,28 +1,28 @@
 <template>
-  <n-row>
-    <n-col :span="24">
-      <n-form label-position="left" label-vertical-align="middle" :inline="true">
-        <n-form-item label="theme:">
-          <n-radio-group v-model="theme">
-            <n-radio label="default">default</n-radio>
-            <n-radio label="gray">gray</n-radio>
-            <n-radio label="midnight">midnight</n-radio>
-          </n-radio-group>
-        </n-form-item>
-        <n-form-item label="resize-to-collapse:">
-          <n-radio-group v-model="resizeToCollapse">
-            <n-radio :label="true">True</n-radio>
-            <n-radio :label="false">False</n-radio>
-          </n-radio-group>
-        </n-form-item>
-      </n-form>
-    </n-col>
-  </n-row>
-  <n-row>
-    <n-col :span="24">
-      <n-container>
-        <n-aside width="auto">
-          <n-menu
+  <h-row>
+    <h-col :span="24">
+      <h-form label-position="left" label-vertical-align="middle" :inline="true">
+        <h-form-item label="theme:">
+          <h-radio-group v-model="theme">
+            <h-radio label="default">default</h-radio>
+            <h-radio label="gray">gray</h-radio>
+            <h-radio label="midnight">midnight</h-radio>
+          </h-radio-group>
+        </h-form-item>
+        <h-form-item label="resize-to-collapse:">
+          <h-radio-group v-model="resizeToCollapse">
+            <h-radio :label="true">True</h-radio>
+            <h-radio :label="false">False</h-radio>
+          </h-radio-group>
+        </h-form-item>
+      </h-form>
+    </h-col>
+  </h-row>
+  <h-row>
+    <h-col :span="24">
+      <h-container>
+        <h-aside width="auto">
+          <h-menu
             ref="menuRef"
             v-model:collapse="collapse"
             :collapse-button="true"
@@ -48,76 +48,76 @@
                     />
                   </svg>
                 </div>
-                <n-transition name="collapse-horizontal">
+                <h-transition name="collapse-horizontal">
                   <div v-show="!isCollapse.value" class="text">Aurora</div>
-                </n-transition>
+                </h-transition>
               </div>
             </template>
-            <n-menu-item value="1" icon="matestore_filled">
+            <h-menu-item value="1" icon="matestore_filled">
               <template #title>一级菜单 1</template>
-            </n-menu-item>
-            <n-sub-menu value="2" icon="matestore_filled">
+            </h-menu-item>
+            <h-sub-menu value="2" icon="matestore_filled">
               <template #title>一级菜单 2</template>
-              <n-menu-item value="2-1" name="二级菜单 1" />
-              <n-menu-item value="2-2" name="二级菜单 2" />
-            </n-sub-menu>
-            <n-sub-menu value="3" icon="matestore_filled">
+              <h-menu-item value="2-1" name="二级菜单 1" />
+              <h-menu-item value="2-2" name="二级菜单 2" />
+            </h-sub-menu>
+            <h-sub-menu value="3" icon="matestore_filled">
               <template #title>一级菜单 3 的名字超级长，可以看到 tooltip 的显示，如果没有显示，还需要增加更多更多内容</template>
-              <n-sub-menu value="3-1">
+              <h-sub-menu value="3-1">
                 <template #title>二级菜单 1</template>
-                <n-menu-item value="3-1-1" :disabled="true">三级菜单 1</n-menu-item>
-                <n-menu-item value="3-1-2">三级菜单 2</n-menu-item>
-                <n-menu-item value="3-1-3">三级菜单 3</n-menu-item>
-                <n-menu-item value="3-1-4">三级菜单 4</n-menu-item>
-              </n-sub-menu>
-              <n-sub-menu value="3-2">
+                <h-menu-item value="3-1-1" :disabled="true">三级菜单 1</h-menu-item>
+                <h-menu-item value="3-1-2">三级菜单 2</h-menu-item>
+                <h-menu-item value="3-1-3">三级菜单 3</h-menu-item>
+                <h-menu-item value="3-1-4">三级菜单 4</h-menu-item>
+              </h-sub-menu>
+              <h-sub-menu value="3-2">
                 <template #title>二级菜单 2</template>
-                <n-menu-item value="3-2-1">三级菜单 1</n-menu-item>
-                <n-menu-item value="3-2-2">三级菜单 2</n-menu-item>
-                <n-menu-item value="3-2-3">三级菜单 3</n-menu-item>
-                <n-menu-item value="3-2-4">三级菜单 4</n-menu-item>
-              </n-sub-menu>
-              <n-sub-menu value="3-3">
+                <h-menu-item value="3-2-1">三级菜单 1</h-menu-item>
+                <h-menu-item value="3-2-2">三级菜单 2</h-menu-item>
+                <h-menu-item value="3-2-3">三级菜单 3</h-menu-item>
+                <h-menu-item value="3-2-4">三级菜单 4</h-menu-item>
+              </h-sub-menu>
+              <h-sub-menu value="3-3">
                 <template #title>二级菜单 3</template>
-                <n-menu-item value="3-3-1">三级菜单 1</n-menu-item>
-                <n-sub-menu value="3-3-2">
+                <h-menu-item value="3-3-1">三级菜单 1</h-menu-item>
+                <h-sub-menu value="3-3-2">
                   <template #title>三级菜单 2</template>
-                  <n-menu-item value="3-3-2-1">四级菜单 1</n-menu-item>
-                  <n-menu-item value="3-3-2-2">四级菜单 2</n-menu-item>
-                </n-sub-menu>
-              </n-sub-menu>
-            </n-sub-menu>
-            <n-menu-item value="4">
+                  <h-menu-item value="3-3-2-1">四级菜单 1</h-menu-item>
+                  <h-menu-item value="3-3-2-2">四级菜单 2</h-menu-item>
+                </h-sub-menu>
+              </h-sub-menu>
+            </h-sub-menu>
+            <h-menu-item value="4">
               <template #icon>
                 <a-icon size="20" name="matestore_filled" />
               </template>
               <template #title>一级菜单 4</template>
-            </n-menu-item>
-            <n-sub-menu value="5" icon="matestore_filled" :disabled="true">
+            </h-menu-item>
+            <h-sub-menu value="5" icon="matestore_filled" :disabled="true">
               <template #title>一级菜单 5</template>
-              <n-sub-menu value="5-1">
+              <h-sub-menu value="5-1">
                 <template #title>二级菜单 1</template>
-                <n-menu-item value="5-1-1">三级菜单 1</n-menu-item>
-                <n-menu-item value="5-1-2">三级菜单 2</n-menu-item>
-              </n-sub-menu>
-            </n-sub-menu>
-            <n-sub-menu value="6" :selectable="true">
+                <h-menu-item value="5-1-1">三级菜单 1</h-menu-item>
+                <h-menu-item value="5-1-2">三级菜单 2</h-menu-item>
+              </h-sub-menu>
+            </h-sub-menu>
+            <h-sub-menu value="6" :selectable="true">
               <template #icon>
                 <a-icon name="matestore_filled" size="20"></a-icon>
               </template>
               <template #title>一级菜单 6</template>
-              <n-sub-menu value="6-1" :selectable="true">
+              <h-sub-menu value="6-1" :selectable="true">
                 <template #title>二级菜单 1</template>
-                <n-menu-item value="6-1-1">三级菜单 1</n-menu-item>
-                <n-menu-item value="6-1-2">三级菜单 2</n-menu-item>
-              </n-sub-menu>
-            </n-sub-menu>
-          </n-menu>
-        </n-aside>
-        <n-main style="background: var(--n-bg-info-weak-hover)"></n-main>
-      </n-container>
-    </n-col>
-  </n-row>
+                <h-menu-item value="6-1-1">三级菜单 1</h-menu-item>
+                <h-menu-item value="6-1-2">三级菜单 2</h-menu-item>
+              </h-sub-menu>
+            </h-sub-menu>
+          </h-menu>
+        </h-aside>
+        <h-main style="background: var(--n-bg-info-weak-hover)"></h-main>
+      </h-container>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

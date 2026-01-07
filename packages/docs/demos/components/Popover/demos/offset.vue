@@ -4,84 +4,84 @@
     distance 的效果
   </div>
   <div class="mb-4">
-    <n-popover class="mr-4" :arrow="false" :distance="0" popper-class="offset_popover">
+    <h-popover class="mr-4" :arrow="false" :distance="0" popper-class="offset_popover">
       <template #reference>
-        <n-button :plain="true">distance 0</n-button>
+        <h-button :plain="true">distance 0</h-button>
       </template>
       <template #popper>
         <demo-content></demo-content>
       </template>
-    </n-popover>
-    <n-popover class="mr-4" :arrow="false" :distance="10" popper-class="offset_popover">
+    </h-popover>
+    <h-popover class="mr-4" :arrow="false" :distance="10" popper-class="offset_popover">
       <template #reference>
-        <n-button :plain="true">distance 10</n-button>
+        <h-button :plain="true">distance 10</h-button>
       </template>
       <template #popper>
         <demo-content></demo-content>
       </template>
-    </n-popover>
-    <n-popover class="mr-4" :arrow="false" :distance="-10" popper-class="offset_popover">
+    </h-popover>
+    <h-popover class="mr-4" :arrow="false" :distance="-10" popper-class="offset_popover">
       <template #reference>
-        <n-button :plain="true">distance -10</n-button>
+        <h-button :plain="true">distance -10</h-button>
       </template>
       <template #popper>
         <demo-content></demo-content>
       </template>
-    </n-popover>
+    </h-popover>
   </div>
   <!--  -->
   <div class="mb-4">调整popper在辅助方向上的偏移</div>
   <div class="mb-4">
-    <n-popover class="mr-4" :skidding="0" placement="top" popper-class="offset_popover">
+    <h-popover class="mr-4" :skidding="0" placement="top" popper-class="offset_popover">
       <template #reference>
-        <n-button>placement top: skidding 0</n-button>
+        <h-button>placement top: skidding 0</h-button>
       </template>
       <template #popper>
         <demo-content></demo-content>
       </template>
-    </n-popover>
-    <n-popover class="mr-4" :skidding="30" placement="top" popper-class="offset_popover">
+    </h-popover>
+    <h-popover class="mr-4" :skidding="30" placement="top" popper-class="offset_popover">
       <template #reference>
-        <n-button>placement top: skidding 30</n-button>
+        <h-button>placement top: skidding 30</h-button>
       </template>
       <template #popper>
         <demo-content></demo-content>
       </template>
-    </n-popover>
-    <n-popover class="mr-4" :skidding="-30" placement="top" popper-class="offset_popover">
+    </h-popover>
+    <h-popover class="mr-4" :skidding="-30" placement="top" popper-class="offset_popover">
       <template #reference>
-        <n-button>placement top: skidding -30</n-button>
+        <h-button>placement top: skidding -30</h-button>
       </template>
       <template #popper>
         <demo-content></demo-content>
       </template>
-    </n-popover>
+    </h-popover>
   </div>
   <div class="mb-4">
-    <n-popover class="mr-4" :skidding="0" placement="left" popper-class="offset_popover">
+    <h-popover class="mr-4" :skidding="0" placement="left" popper-class="offset_popover">
       <template #reference>
-        <n-button>placement left: skidding 0</n-button>
+        <h-button>placement left: skidding 0</h-button>
       </template>
       <template #popper>
         <demo-content></demo-content>
       </template>
-    </n-popover>
-    <n-popover class="mr-4" :skidding="30" placement="left" popper-class="offset_popover">
+    </h-popover>
+    <h-popover class="mr-4" :skidding="30" placement="left" popper-class="offset_popover">
       <template #reference>
-        <n-button>placement left: skidding 30</n-button>
+        <h-button>placement left: skidding 30</h-button>
       </template>
       <template #popper>
         <demo-content></demo-content>
       </template>
-    </n-popover>
-    <n-popover class="mr-4" :skidding="-30" placement="left" popper-class="offset_popover">
+    </h-popover>
+    <h-popover class="mr-4" :skidding="-30" placement="left" popper-class="offset_popover">
       <template #reference>
-        <n-button>placement left: skidding -30</n-button>
+        <h-button>placement left: skidding -30</h-button>
       </template>
       <template #popper>
         <demo-content></demo-content>
       </template>
-    </n-popover>
+    </h-popover>
   </div>
 </template>
 

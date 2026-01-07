@@ -47,30 +47,30 @@ watch(() => all.value, showAllAction, { immediate: true });
 <template>
   <div class="mb-4 flex align-center">
     <span class="mr-4">类型</span>
-    <n-radio-group v-model="cardType">
-      <n-radio label="line">line(Default)</n-radio>
-      <n-radio label="card">card</n-radio>
-      <n-radio label="page">page(不支持尺寸调整)</n-radio>
-    </n-radio-group>
+    <h-radio-group v-model="cardType">
+      <h-radio label="line">line(Default)</h-radio>
+      <h-radio label="card">card</h-radio>
+      <h-radio label="page">page(不支持尺寸调整)</h-radio>
+    </h-radio-group>
   </div>
   <div class="mb-4 flex align-center">
     <span class="mr-4">尺寸</span>
-    <n-radio-group v-model="size" :disabled="cardType === 'page'">
-      <n-radio label="mini">mini</n-radio>
-      <n-radio label="small">small</n-radio>
-      <n-radio label="medium">medium(Default)</n-radio>
-      <n-radio label="large">large</n-radio>
-    </n-radio-group>
+    <h-radio-group v-model="size" :disabled="cardType === 'page'">
+      <h-radio label="mini">mini</h-radio>
+      <h-radio label="small">small</h-radio>
+      <h-radio label="medium">medium(Default)</h-radio>
+      <h-radio label="large">large</h-radio>
+    </h-radio-group>
   </div>
   <div class="mb-8 flex align-center">
     <span class="mr-4">其他</span>
     <div class="flex align-center" style="column-gap: 10px">
-      <n-checkbox v-model="all" label="全部所有操作" />
+      <h-checkbox v-model="all" label="全部所有操作" />
     </div>
   </div>
 
   <div style="width: 80%">
-    <n-tabs
+    <h-tabs
       v-model:active-key="activeKey"
       editable
       v2
@@ -80,15 +80,15 @@ watch(() => all.value, showAllAction, { immediate: true });
       @add="onTabAdd"
       @close="onTabClose"
     >
-      <n-tab v-for="t in tabs" :key="t" :label="t" closable />
+      <h-tab v-for="t in tabs" :key="t" :label="t" closable />
       <template #extra="{ size: sm }">
         <div>
-          <n-space>
-            <n-button :size="sm" @click="onClick">刷新</n-button>
-            <n-button :size="sm" type="normal" @click="onClick">重置</n-button>
-          </n-space>
+          <h-space>
+            <h-button :size="sm" @click="onClick">刷新</h-button>
+            <h-button :size="sm" type="normal" @click="onClick">重置</h-button>
+          </h-space>
         </div>
       </template>
-    </n-tabs>
+    </h-tabs>
   </div>
 </template>

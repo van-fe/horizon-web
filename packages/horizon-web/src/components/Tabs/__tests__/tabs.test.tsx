@@ -192,11 +192,11 @@ describe('Tabs.tsx', () => {
       const tabs = wrapper.findComponent(HTabs);
       expect(tabs.exists()).toBe(true);
 
-      await wrapper.find('[test-id="tab1"] .n-tabs__close').trigger('click');
+      await wrapper.find('[test-id="tab1"] .h-tabs__close').trigger('click');
       expect(items.value).toEqual(['tab2']);
       expect(onClose).toHaveBeenCalled();
 
-      await wrapper.find('.n-tabs__icon-outer--add').trigger('click');
+      await wrapper.find('.h-tabs__icon-outer--add').trigger('click');
       expect(items.value).toEqual(['tab2', 'new tab 2']);
       expect(onAdd).toHaveBeenCalled();
     });

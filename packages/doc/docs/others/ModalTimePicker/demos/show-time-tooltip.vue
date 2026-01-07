@@ -1,9 +1,9 @@
 <template>
-  <n-row>
-    <n-col :span="6">
-      <n-modal-time-picker v-model="value" type="time" :show-time-tooltip="showTimeTooltip" />
-    </n-col>
-  </n-row>
+  <h-row>
+    <h-col :span="6">
+      <h-modal-time-picker v-model="value" type="time" :show-time-tooltip="showTimeTooltip" />
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

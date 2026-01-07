@@ -7,16 +7,16 @@
           <div>可根据节点内容，自定义节点文本内容；</div>
         </div>
         <!-- 手动设置style="width: 270px"是为了desc换行 -->
-        <n-timeline :first="{ color: 'var(--n-bg-brand-default)' }" style="width: 270px">
-          <n-timeline-item
+        <h-timeline :first="{ color: 'var(--n-bg-brand-default)' }" style="width: 270px">
+          <h-timeline-item
             name="Current milestone"
             timestamp="03/02/2021"
             desc="NIO installed its 700th battery swap station in China, hitting its annual target ahead of schedule."
           />
-          <n-timeline-item name="The third milestone" timestamp="03/02/2021" />
-          <n-timeline-item name="The second milestone" timestamp="03/02/2021" />
-          <n-timeline-item name="The first milestone" timestamp="03/02/2021" :tail="false" />
-        </n-timeline>
+          <h-timeline-item name="The third milestone" timestamp="03/02/2021" />
+          <h-timeline-item name="The second milestone" timestamp="03/02/2021" />
+          <h-timeline-item name="The first milestone" timestamp="03/02/2021" :tail="false" />
+        </h-timeline>
       </div>
       <div class="container__block">
         <div class="container__title">
@@ -28,26 +28,26 @@
           </div>
         </div>
         <div class="container">
-          <n-timeline>
-            <n-timeline-item
+          <h-timeline>
+            <h-timeline-item
               name="The third milestone"
               timestamp="03/02/2021 14:32"
               placement="top"
             />
-            <n-timeline-item name="The second milestone" timestamp="03/02/2021 14:32" />
-            <n-timeline-item
+            <h-timeline-item name="The second milestone" timestamp="03/02/2021 14:32" />
+            <h-timeline-item
               name="The first milestone"
               timestamp="03/02/2021 14:32"
               placement="right"
             />
-            <n-timeline-item
+            <h-timeline-item
               name="The first milestone"
               timestamp="03/02/2021 14:32"
               placement="right"
               format="mm/dd/yyyy h:i"
               :tail="false"
             />
-          </n-timeline>
+          </h-timeline>
         </div>
       </div>
       <div class="container__block">
@@ -56,28 +56,28 @@
           <div>可以按照时间顺序/逆序展示</div>
         </div>
         <div class="container">
-          <n-timeline sort="order" :first="{ color: 'var(--n-bg-brand-default)' }">
-            <n-timeline-item
+          <h-timeline sort="order" :first="{ color: 'var(--n-bg-brand-default)' }">
+            <h-timeline-item
               name="Current milestone"
               timestamp="03/05/2021"
               placement="top"
               :tail="false"
             />
-            <n-timeline-item name="The first milestone" timestamp="03/02/2021" placement="top" />
-            <n-timeline-item name="The second milestone" timestamp="03/03/2021" placement="top" />
-            <n-timeline-item name="The third milestone" timestamp="03/04/2021" placement="top" />
-          </n-timeline>
-          <n-timeline sort="reverse" :first="{ color: 'var(--n-bg-brand-default)' }">
-            <n-timeline-item name="Current milestone" timestamp="03/05/2021" placement="top" />
-            <n-timeline-item
+            <h-timeline-item name="The first milestone" timestamp="03/02/2021" placement="top" />
+            <h-timeline-item name="The second milestone" timestamp="03/03/2021" placement="top" />
+            <h-timeline-item name="The third milestone" timestamp="03/04/2021" placement="top" />
+          </h-timeline>
+          <h-timeline sort="reverse" :first="{ color: 'var(--n-bg-brand-default)' }">
+            <h-timeline-item name="Current milestone" timestamp="03/05/2021" placement="top" />
+            <h-timeline-item
               name="The first milestone"
               timestamp="03/02/2021"
               placement="top"
               :tail="false"
             />
-            <n-timeline-item name="The second milestone" timestamp="03/03/2021" placement="top" />
-            <n-timeline-item name="The third milestone" timestamp="03/04/2021" placement="top" />
-          </n-timeline>
+            <h-timeline-item name="The second milestone" timestamp="03/03/2021" placement="top" />
+            <h-timeline-item name="The third milestone" timestamp="03/04/2021" placement="top" />
+          </h-timeline>
         </div>
       </div>
     </div>
@@ -88,40 +88,40 @@
           <div>可根据实际业务情况，自定义节点内容，如错误、预警、成功签收等状态；</div>
         </div>
         <div class="container">
-          <n-timeline>
-            <n-timeline-item
+          <h-timeline>
+            <h-timeline-item
               name="Current milestone"
               timestamp="03/02/2021"
               placement="top"
               color="var(--n-bg-brand-default)"
             />
-            <n-timeline-item
+            <h-timeline-item
               name="An unknown error has occurred"
               timestamp="03/02/2021"
               placement="top"
               color="var(--n-bg-error-default)"
             />
-            <n-timeline-item
+            <h-timeline-item
               name="The second milestone"
               timestamp="03/02/2021"
               placement="top"
               color="var(--n-bg-warning-default)"
             />
-            <n-timeline-item
+            <h-timeline-item
               name="The second milestone"
               timestamp="03/02/2021"
               placement="top"
               color="var(--n-bg-success-default)"
             />
-            <n-timeline-item
+            <h-timeline-item
               name="The first milestone"
               timestamp="03/02/2021"
               placement="top"
               :tail="false"
             />
-          </n-timeline>
-          <n-timeline>
-            <n-timeline-item
+          </h-timeline>
+          <h-timeline>
+            <h-timeline-item
               name="Current milestone"
               size="large"
               timestamp="03/02/2021"
@@ -130,7 +130,7 @@
               icon="email"
               offset="8"
             />
-            <n-timeline-item
+            <h-timeline-item
               name="Current milestone"
               size="large"
               timestamp="03/02/2021"
@@ -139,7 +139,7 @@
               icon="close"
               offset="8"
             />
-            <n-timeline-item
+            <h-timeline-item
               name="Current milestone"
               size="large"
               timestamp="03/02/2021"
@@ -148,7 +148,7 @@
               icon="light_on"
               offset="8"
             />
-            <n-timeline-item
+            <h-timeline-item
               name="Current milestone"
               size="large"
               timestamp="03/02/2021"
@@ -157,7 +157,7 @@
               icon="check"
               offset="8"
             />
-            <n-timeline-item
+            <h-timeline-item
               name="Current milestone"
               size="large"
               timestamp="03/02/2021"
@@ -168,7 +168,7 @@
               offset="8"
               :tail="false"
             />
-          </n-timeline>
+          </h-timeline>
         </div>
       </div>
       <div class="container__block">
@@ -176,13 +176,13 @@
           自定义节点内容
           <div>可根据实际业务情况，自定义节点内容，如内文、图片、回复等；</div>
         </div>
-        <n-timeline class="timeline-slot">
-          <n-timeline-item placement="top" timestamp="03/02/2021" color="var(--n-bg-brand-default)">
+        <h-timeline class="timeline-slot">
+          <h-timeline-item placement="top" timestamp="03/02/2021" color="var(--n-bg-brand-default)">
             <template #name>
               <div class="timeline-title-slot">
-                <n-avatar size="mini" />
+                <h-avatar size="mini" />
                 <div class="timeline-title-slot__name">Wanqi peng</div>
-                <n-tag type="hollow" color="#242629" major size="small">Fellow</n-tag>
+                <h-tag type="hollow" color="#242629" major size="small">Fellow</h-tag>
               </div>
             </template>
             <template #desc>
@@ -192,19 +192,19 @@
                 hitting its annual target ahead of schedule.
               </div>
               <div style="display: flex">
-                <n-image
+                <h-image
                   :src="`https://picsum.photos/id/${Math.floor(Math.random() * 60) + 10}/1366/768`"
                   class="mr-1 mt-2"
                   :width="40"
                   :height="40"
                 />
-                <n-image
+                <h-image
                   :src="`https://picsum.photos/id/${Math.floor(Math.random() * 60) + 10}/1366/768`"
                   class="mr-1 mt-2"
                   :width="40"
                   :height="40"
                 />
-                <n-image
+                <h-image
                   :src="`https://picsum.photos/id/${Math.floor(Math.random() * 60) + 10}/1366/768`"
                   class="mr-1 mt-2"
                   :width="40"
@@ -212,13 +212,13 @@
                 />
               </div>
             </template>
-          </n-timeline-item>
-          <n-timeline-item placement="top" timestamp="03/02/2021">
+          </h-timeline-item>
+          <h-timeline-item placement="top" timestamp="03/02/2021">
             <template #name>
               <div class="timeline-title-slot">
-                <n-avatar size="mini" />
+                <h-avatar size="mini" />
                 <div class="timeline-title-slot__name">Wanqi peng</div>
-                <n-tag type="hollow" color="#242629" major size="small">Fellow</n-tag>
+                <h-tag type="hollow" color="#242629" major size="small">Fellow</h-tag>
               </div>
             </template>
             <template #desc>
@@ -228,8 +228,8 @@
                 hitting its annual target ahead of schedule.
               </div>
             </template>
-          </n-timeline-item>
-          <n-timeline-item
+          </h-timeline-item>
+          <h-timeline-item
             placement="right"
             timestamp="03/02/2021"
             color="var(--n-bg-brand-default)"
@@ -237,9 +237,9 @@
           >
             <template #name>
               <div class="timeline-title-slot">
-                <n-avatar size="mini" />
+                <h-avatar size="mini" />
                 <div class="timeline-title-slot__name">Wanqi peng</div>
-                <n-tag type="hollow" color="#242629" major size="small">Fellow</n-tag>
+                <h-tag type="hollow" color="#242629" major size="small">Fellow</h-tag>
                 <div class="timeline-title-slot__action">Add follow-up note</div>
               </div>
             </template>
@@ -250,8 +250,8 @@
                 hitting its annual target ahead of schedule.
               </div>
             </template>
-          </n-timeline-item>
-        </n-timeline>
+          </h-timeline-item>
+        </h-timeline>
       </div>
       <div class="container__block">
         <div class="container__title">
@@ -260,8 +260,8 @@
             实线显示已发生的时间节点，虚线显示未发生的时间节点。一般已经发生的步骤再上，步骤过多，可折叠。
           </div>
         </div>
-        <n-timeline>
-          <n-timeline-item
+        <h-timeline>
+          <h-timeline-item
             name="Current milestone"
             size="large"
             timestamp="03/02/2021"
@@ -272,7 +272,7 @@
             desc="you can fold the dot"
             :fold-config="foldConfig"
           />
-          <n-timeline-item
+          <h-timeline-item
             name="Current milestone"
             size="large"
             timestamp="03/02/2021"
@@ -282,7 +282,7 @@
             icon="check"
             type="circle"
           />
-          <n-timeline-item
+          <h-timeline-item
             name="Current milestone"
             size="large"
             timestamp="03/02/2021"
@@ -292,7 +292,7 @@
             icon="check"
             type="circle"
           />
-          <n-timeline-item
+          <h-timeline-item
             name="Current milestone"
             size="large"
             timestamp="03/02/2021"
@@ -301,28 +301,28 @@
             dashed
             offset="0"
           />
-          <n-timeline-item
+          <h-timeline-item
             name="Current milestone"
             timestamp="03/02/2021"
             placement="top"
             dashed
             offset="0"
           />
-          <n-timeline-item
+          <h-timeline-item
             name="Current milestone"
             timestamp="03/02/2021"
             placement="top"
             dashed
             offset="0"
           />
-          <n-timeline-item
+          <h-timeline-item
             name="Current milestone"
             timestamp="03/02/2021"
             placement="top"
             dashed
             offset="0"
           />
-        </n-timeline>
+        </h-timeline>
       </div>
     </div>
   </div>
@@ -382,7 +382,7 @@ export default defineComponent({
   margin-right: 50px;
 }
 
-.n-timeline {
+.h-timeline {
   margin-right: 50px;
 }
 
@@ -400,26 +400,26 @@ export default defineComponent({
   font-weight: bold;
 }
 
-.timeline-title-slot .n-tag {
+.timeline-title-slot .h-tag {
   font-weight: bold;
 }
 </style>
 
 <style>
-.timeline__name--bold .n-timeline-item__name--content {
+.timeline__name--bold .h-timeline-item__name--content {
   font-weight: bold;
 }
 
-.timeline__name--bold-big .n-timeline-item__name--content {
+.timeline__name--bold-big .h-timeline-item__name--content {
   font-weight: bold;
   font-size: 16px;
 }
 
-.timeline-slot .n-timeline-item__name {
+.timeline-slot .h-timeline-item__name {
   margin-bottom: 8px;
 }
 
-.timeline-slot .n-timeline-item__timestamp--top {
+.timeline-slot .h-timeline-item__timestamp--top {
   margin-bottom: 12px;
 }
 </style>

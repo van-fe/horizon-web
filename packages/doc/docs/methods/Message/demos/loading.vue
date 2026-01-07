@@ -1,5 +1,5 @@
 <template>
-  <n-button type="normal" @click="open">加载</n-button>
+  <h-button type="normal" @click="open">加载</h-button>
 </template>
 
 <script lang="ts" setup>

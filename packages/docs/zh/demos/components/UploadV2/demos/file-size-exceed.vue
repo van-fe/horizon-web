@@ -1,14 +1,14 @@
 <template>
-  <n-form>
-    <n-form-item label="是否直接拦截超过 2MB 的文件">
-      <n-switch v-model="enableFileSizeLimit" :status="true" />
-    </n-form-item>
-    <n-form-item label="多选">
-      <n-switch v-model="multiple" :status="true" />
-    </n-form-item>
-  </n-form>
-  <n-space>
-    <n-upload
+  <h-form>
+    <h-form-item label="是否直接拦截超过 2MB 的文件">
+      <h-switch v-model="enableFileSizeLimit" :status="true" />
+    </h-form-item>
+    <h-form-item label="多选">
+      <h-switch v-model="multiple" :status="true" />
+    </h-form-item>
+  </h-form>
+  <h-space>
+    <h-upload
       v-model="modelValue"
       action="https://horizon-web-inspector.nioint.com/upload-mock"
       method="POST"
@@ -17,7 +17,7 @@
       :before-upload="onBeforeUpload"
       @file-size-exceed="onFileSizeExceed"
     />
-  </n-space>
+  </h-space>
 </template>
 
 <script lang="ts" setup>

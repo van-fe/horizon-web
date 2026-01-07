@@ -3,36 +3,36 @@
     <div class="box">
       <span>默认情况</span>
       <span>value: {{ time1 }}</span>
-      <n-date-picker v-model="time1" type="date"></n-date-picker>
+      <h-date-picker v-model="time1" type="date"></h-date-picker>
     </div>
     <div class="box">
       <span>使用 valueFormat</span>
       <span>value: {{ time2 }}</span>
-      <n-date-picker
+      <h-date-picker
         v-model="time2"
         type="date"
         format="YYYY年MM月DD日"
         value-format="YYYY/MM/DD"
-      ></n-date-picker>
+      ></h-date-picker>
     </div>
     <div class="box">
       <span>使用 valueFormat(毫秒)</span>
       <span>value: {{ time3 }}</span>
-      <n-date-picker
+      <h-date-picker
         v-model="time3"
         type="dateseconds"
         format="YYYY年MM月DD日 HH时mm分ss秒"
         value-format="timestamp"
-      ></n-date-picker>
+      ></h-date-picker>
     </div>
     <div class="box">
       <span>使用 valueFormat(秒)</span>
       <span>value: {{ time4 }}</span>
-      <n-date-picker
+      <h-date-picker
         v-model="time4"
         type="dateseconds"
         value-format="X"
-      ></n-date-picker>
+      ></h-date-picker>
     </div>
   </div>
 </template>

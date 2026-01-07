@@ -24,11 +24,11 @@ function action(baseRoot: string) {
 
     cssTree.walk(ast, node => {
       if (node.type === 'Declaration' && 'value' in node.value) {
-        const key = node.property.trim().replace(`--n-${componentName}-`, '');
+        const key = node.property.trim().replace(`--h-${componentName}-`, '');
         let value = node.value.value.trim();
 
         if (/var\(/g.test(value)) {
-          value = value.replace(/var\(--n-([\w-]+)\)/g, "#{function.css-variable('$1')}");
+          value = value.replace(/var\(--h-([\w-]+)\)/g, "#{function.css-variable('$1')}");
         }
 
         properties.set(key, `${value.includes(',') ? `#{${value}}` : value},\n`);

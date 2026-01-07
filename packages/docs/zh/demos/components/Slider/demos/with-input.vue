@@ -1,14 +1,14 @@
 <template>
-  <n-row>
-    <n-col :span="24">
-      <n-slider v-model="valueRef" :input-enable="true" :step="5" />
-    </n-col>
-  </n-row>
-  <n-row>
-    <n-col :span="24">
-      <n-slider v-model="valueRef" :input-enable="true" disabled />
-    </n-col>
-  </n-row>
+  <h-row>
+    <h-col :span="24">
+      <h-slider v-model="valueRef" :input-enable="true" :step="5" />
+    </h-col>
+  </h-row>
+  <h-row>
+    <h-col :span="24">
+      <h-slider v-model="valueRef" :input-enable="true" disabled />
+    </h-col>
+  </h-row>
 </template>
 
 <script lang="ts">

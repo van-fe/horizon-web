@@ -1,18 +1,18 @@
 <template>
-  <n-form>
-    <n-form-item label="User name">
-      <n-input v-model="formData.username" />
-    </n-form-item>
-    <n-form-item label="Email">
-      <n-input v-model="formData.email" />
-    </n-form-item>
-    <n-form-item label="Notes">
-      <n-input v-model="formData.notes" type="textarea" />
-    </n-form-item>
-    <n-form-item>
-      <n-button @click="submit">Submit</n-button>
-    </n-form-item>
-  </n-form>
+  <h-form>
+    <h-form-item label="User name">
+      <h-input v-model="formData.username" />
+    </h-form-item>
+    <h-form-item label="Email">
+      <h-input v-model="formData.email" />
+    </h-form-item>
+    <h-form-item label="Notes">
+      <h-input v-model="formData.notes" type="textarea" />
+    </h-form-item>
+    <h-form-item>
+      <h-button @click="submit">Submit</h-button>
+    </h-form-item>
+  </h-form>
 </template>
 
 <script lang="ts">

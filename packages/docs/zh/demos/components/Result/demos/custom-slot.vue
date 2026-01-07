@@ -8,7 +8,7 @@ function submit() {
 </script>
 
 <template>
-  <n-result>
+  <h-result>
     <template #icon>
       <IconLogo size="56" :color="['var(--n-text-default)']" />
     </template>
@@ -19,7 +19,7 @@ function submit() {
       本次换电已结束，感谢您的使用
     </template>
     <template #extra>
-      <n-button @click="submit">确定</n-button>
+      <h-button @click="submit">确定</h-button>
     </template>
-  </n-result>
+  </h-result>
 </template>

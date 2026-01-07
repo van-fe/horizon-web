@@ -12,7 +12,7 @@
 :::demo ./demos/single.vue :::
 
 ### 多选
-与 `select` 一样，多选的标签使用了 `n-tag` 和 `n-tag-group` 组件结合
+与 `select` 一样，多选的标签使用了 `h-tag` 和 `h-tag-group` 组件结合
 
 默认情况下，不会折叠选中项。可以配置 `collapse-tags = true` 折叠已选项
 
@@ -76,7 +76,7 @@
 :::demo ./demos/confirm.vue :::
 
 ### 确认选择自定义内容
-通过 `confirm-btn-text` `cancel-btn-text` 可以控制确认、取消按钮文字
+通过 `confirm-bth-text` `cancel-bth-text` 可以控制确认、取消按钮文字
 
 `confirmRender` 插槽也对外暴露了 `cancelHandle` `confirmHandle` 两个方法，用于自定义尾部时使用
 
@@ -120,7 +120,7 @@
 
 ### 过滤并确认
 `filterable` 与 `need-confirm` 结合展示
-:::demo ./demos/common-search-confirm.vue :::
+:::demo ./demos/commoh-search-confirm.vue :::
 
 ### 关键字保留
 使用 `reserve-keyword` 配置，可以控制在勾选选项后是否保留关键字

@@ -16,7 +16,7 @@ describe('Result.tsx', () => {
     test('title', () => {
       const wrapper = mount(() => <HResult title="Here is TITLE" />);
 
-      const title = wrapper.find('.n-result__title');
+      const title = wrapper.find('.h-result__title');
 
       expect(title.text()).eq('Here is TITLE');
     });
@@ -24,7 +24,7 @@ describe('Result.tsx', () => {
     test('subtitle', () => {
       const wrapper = mount(() => <HResult subtitle="Here is SUBTITLE" />);
 
-      const subtitle = wrapper.find('.n-result__subtitle');
+      const subtitle = wrapper.find('.h-result__subtitle');
 
       expect(subtitle.text()).eq('Here is SUBTITLE');
     });

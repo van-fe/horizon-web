@@ -1,24 +1,24 @@
 <template>
   <div style="height: 200px">
-    <n-button type="normal" class="mb-2" @click="visible = !visible">Change</n-button>
-    <n-row :gutter="10">
-      <n-col :span="6">
-        <n-transition name="collapse">
+    <h-button type="normal" class="mb-2" @click="visible = !visible">Change</h-button>
+    <h-row :gutter="10">
+      <h-col :span="6">
+        <h-transition name="collapse">
           <div v-show="visible">
             <div class="animate-box">collapse</div>
             <div class="animate-box" style="margin-top: 10px">collapse</div>
           </div>
-        </n-transition>
-      </n-col>
-      <n-col :span="12">
-        <n-transition name="collapse-horizontal">
+        </h-transition>
+      </h-col>
+      <h-col :span="12">
+        <h-transition name="collapse-horizontal">
           <div v-show="visible" style="white-space: nowrap">
             <div class="animate-box-horizontal">collapse-horizontal</div>
             <div class="animate-box-horizontal" style="margin-left: 10px">collapse-horizontal</div>
           </div>
-        </n-transition>
-      </n-col>
-    </n-row>
+        </h-transition>
+      </h-col>
+    </h-row>
   </div>
 </template>
 

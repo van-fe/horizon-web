@@ -1,9 +1,9 @@
 <template>
-  <n-slider v-model="valueRef" />
-  <n-slider v-model="valueRef" type="info" />
-  <n-slider v-model="valueRef" type="success" />
-  <n-slider v-model="valueRef" type="warning" />
-  <n-slider v-model="valueRef" type="error" />
+  <h-slider v-model="valueRef" />
+  <h-slider v-model="valueRef" type="info" />
+  <h-slider v-model="valueRef" type="success" />
+  <h-slider v-model="valueRef" type="warning" />
+  <h-slider v-model="valueRef" type="error" />
 </template>
 
 <script lang="ts">

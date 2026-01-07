@@ -1,5 +1,5 @@
 <template>
-  <n-button :plain="true" @click="start">配置高度</n-button>
+  <h-button :plain="true" @click="start">配置高度</h-button>
 </template>
 
 <script lang="ts" setup>

@@ -1,17 +1,17 @@
 <template>
   <div class="container">
-    <n-descriptions title="User Info" type="vertical">
-      <n-description-item label="Name" value="bingkun Zhou"></n-description-item>
-      <n-description-item label="Telephone" value="0924-250492" />
-      <n-description-item label="Residence" value="Norway" />
-      <n-description-item label="City" value="Oslo" />
-      <n-description-item label="Address" value="Leg.Kiropraktor Iréne Johnson" />
-    </n-descriptions>
+    <h-descriptions title="User Info" type="vertical">
+      <h-description-item label="Name" value="bingkun Zhou"></h-description-item>
+      <h-description-item label="Telephone" value="0924-250492" />
+      <h-description-item label="Residence" value="Norway" />
+      <h-description-item label="City" value="Oslo" />
+      <h-description-item label="Address" value="Leg.Kiropraktor Iréne Johnson" />
+    </h-descriptions>
   </div>
 </template>
 
 <style scoped>
-.n-descriptions {
+.h-descriptions {
   padding: 32px 24px 16px;
 }
 .container {

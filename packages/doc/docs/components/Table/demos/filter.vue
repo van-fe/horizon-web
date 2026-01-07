@@ -1,8 +1,8 @@
 <template>
-  <n-table-v3 :data="data" height="300px" :loading="isLoading">
-    <n-table-column-v3 title="Seq" type="index" width="80" fixed />
-    <n-table-column-v3 title="Name" field="name" :filterable="true" />
-    <n-table-column-v3
+  <h-table-v3 :data="data" height="300px" :loading="isLoading">
+    <h-table-column-v3 title="Seq" type="index" width="80" fixed />
+    <h-table-column-v3 title="Name" field="name" :filterable="true" />
+    <h-table-column-v3
       title="Register Date"
       field="registerDate"
       :filterable="true"
@@ -10,7 +10,7 @@
       tip="This column's data can be all formats that Dayjs can parse. If you have special format, you can set 'value-format' in 'filter-options'."
       :filter-options="{type: 'date-range', showNow: true}"
     />
-    <n-table-column-v3
+    <h-table-column-v3
       title="Register Time"
       field="registerTime"
       :filterable="true"
@@ -18,7 +18,7 @@
       tip="If you want to use time-picker component, you should give this column's data with HH:mm or HH:mm:ss format string"
       :filter-options="{type: 'time', isRange: true, showNow: true, panelMinWidth: 250, fitInputWidth: 'fit-content'}"
     />
-    <n-table-column-v3
+    <h-table-column-v3
       title="Country"
       field="country"
       :filterable="true"
@@ -27,8 +27,8 @@
       width="200px"
       tip="Select filter will auto collect column's data to filter in multiple. If you have special options, you should give 'options' in 'filter-options'."
     />
-    <n-table-column-v3 title="Address" field="address" :filterable="true" min-width="400" :use-built-in-filter="false" @filter-change="onFilterChange" />
-  </n-table-v3>
+    <h-table-column-v3 title="Address" field="address" :filterable="true" mih-width="400" :use-built-ih-filter="false" @filter-change="onFilterChange" />
+  </h-table-v3>
 </template>
 
 <script setup lang="ts">

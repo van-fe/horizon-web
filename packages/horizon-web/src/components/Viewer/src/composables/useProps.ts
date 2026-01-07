@@ -1,5 +1,4 @@
 import type { ExtractPropTypes, PropType } from 'vue';
-import type { VideoJsPlayerOptions } from 'video.js';
 import { declarePropType } from '@aurora/utils';
 
 export interface HViewerLegend {
@@ -35,8 +34,6 @@ export interface HViewerSource {
   legends?: HViewerLegend[];
   /** 视频资源，是一个数组，如果传入多个会自动选择，仅对视频类型有效 */
   videoSources?: Source[];
-  /** videojs 的参数对象，仅对视频类型有效 */
-  videoOptions?: VideoJsPlayerOptions;
 }
 
 export interface HViewerCustomToolItem {

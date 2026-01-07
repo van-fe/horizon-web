@@ -1,22 +1,22 @@
 <template>
-  <n-form ref="formRef" :model="formData" :required-use-label="true">
-    <n-form-item
+  <h-form ref="formRef" :model="formData" :required-use-label="true">
+    <h-form-item
       label="User name"
       prop="username"
       :required="true"
     >
-      <n-input v-model="formData.username" />
-    </n-form-item>
-    <n-form-item label="Email" prop="email" :required="true">
-      <n-input v-model="formData.email" />
-    </n-form-item>
-    <n-form-item label="Notes" prop="notes" :required="true">
-      <n-input v-model="formData.notes" type="textarea" />
-    </n-form-item>
+      <h-input v-model="formData.username" />
+    </h-form-item>
+    <h-form-item label="Email" prop="email" :required="true">
+      <h-input v-model="formData.email" />
+    </h-form-item>
+    <h-form-item label="Notes" prop="notes" :required="true">
+      <h-input v-model="formData.notes" type="textarea" />
+    </h-form-item>
     <div>
-      <n-button @click="submit">Submit</n-button>
+      <h-button @click="submit">Submit</h-button>
     </div>
-  </n-form>
+  </h-form>
 </template>
 
 <script lang="ts" setup>

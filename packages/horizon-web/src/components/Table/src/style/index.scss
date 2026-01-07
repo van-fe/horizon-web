@@ -1,9 +1,9 @@
 @use '../../../../styles/mixins';
-@import './cell';
-@import './header';
-@import './border';
-@import './footer';
-@import './column-manager';
+@use 'cell';
+@use 'header';
+@use 'border';
+@use 'footer';
+@use 'column-manager';
 
 @include mixins.b('table-v3') {
   width: 100%;

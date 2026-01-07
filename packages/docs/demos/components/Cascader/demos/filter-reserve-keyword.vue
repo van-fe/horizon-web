@@ -1,8 +1,8 @@
 <template>
-  <n-row>
-    <n-col :span="6">
+  <h-row>
+    <h-col :span="6">
       <div class="demo-title">保留关键字（默认）</div>
-      <n-cascader
+      <h-cascader
         v-model="currentVal1"
         :filterable="true"
         :options="options"
@@ -13,10 +13,10 @@
         :to-body="false"
         @change="changeHandle"
       />
-    </n-col>
-    <n-col :span="6">
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">不保留关键字</div>
-      <n-cascader
+      <h-cascader
         v-model="currentVal2"
         :filterable="true"
         :options="options"
@@ -27,10 +27,10 @@
         :to-body="false"
         @change="changeHandle"
       />
-    </n-col>
-    <n-col :span="6">
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">在反选时保留，正选不保留</div>
-      <n-cascader
+      <h-cascader
         v-model="currentVal3"
         :filterable="true"
         :options="options"
@@ -41,8 +41,8 @@
         :to-body="false"
         @change="changeHandle"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

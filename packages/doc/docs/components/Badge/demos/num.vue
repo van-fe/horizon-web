@@ -1,14 +1,14 @@
 <template>
-  <n-badge
+  <h-badge
     v-for="(item, index) in listRef"
     :key="index"
     type="num"
     :content="item"
     :num-max="99"
-    style="margin-right: 20px"
+    style="margih-right: 20px"
   >
     <div style="background: gray; width: 50px; height: 50px"></div>
-  </n-badge>
+  </h-badge>
 </template>
 
 <script lang="ts">

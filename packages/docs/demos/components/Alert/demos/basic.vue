@@ -1,3 +1,3 @@
 <template>
-  <n-alert description="Info Text" type="info" />
+  <h-alert description="Info Text" type="info" />
 </template>

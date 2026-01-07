@@ -1,7 +1,7 @@
 <template>
-  <n-row>
-    <n-col :span="6">
-      <n-modal-cascader
+  <h-row>
+    <h-col :span="6">
+      <h-modal-cascader
         v-model="currentVal1"
         :field-map="{
           value: 'id',
@@ -11,8 +11,8 @@
         :options="options1"
         :to-body="false"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script lang="ts">

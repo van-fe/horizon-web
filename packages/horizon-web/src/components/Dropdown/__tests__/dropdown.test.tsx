@@ -70,7 +70,7 @@ describe.skip('Dropdown.tsx', () => {
 
       await triggerFn('mouseenter');
 
-      expect(wrapper.find('.n-popover__popper').exists()).toBeTruthy();
+      expect(wrapper.find('.h-popover__popper').exists()).toBeTruthy();
 
       await triggerEle.trigger('mouseleave');
 
@@ -80,11 +80,11 @@ describe.skip('Dropdown.tsx', () => {
 
       await triggerFn('mouseenter');
 
-      expect(wrapper.find('.n-popover__popper').exists()).toBeFalsy();
+      expect(wrapper.find('.h-popover__popper').exists()).toBeFalsy();
 
       await triggerFn('click');
 
-      expect(wrapper.find('.n-popover__popper').exists()).toBeTruthy();
+      expect(wrapper.find('.h-popover__popper').exists()).toBeTruthy();
 
       await wrapper.find('.outer-btn').trigger('click');
 
@@ -92,23 +92,23 @@ describe.skip('Dropdown.tsx', () => {
 
       await triggerFn('mouseenter');
 
-      expect(wrapper.find('.n-popover__popper').exists()).toBeFalsy();
+      expect(wrapper.find('.h-popover__popper').exists()).toBeFalsy();
 
       await triggerFn('click');
 
-      expect(wrapper.find('.n-popover__popper').exists()).toBeFalsy();
+      expect(wrapper.find('.h-popover__popper').exists()).toBeFalsy();
 
       visible.value = true;
 
       await nextTick();
 
-      expect(wrapper.find('.n-popover__popper').exists()).toBeTruthy();
+      expect(wrapper.find('.h-popover__popper').exists()).toBeTruthy();
 
       visible.value = false;
 
       await sleep(200);
 
-      expect(wrapper.find('.n-popover__popper').exists()).toBeFalsy();
+      expect(wrapper.find('.h-popover__popper').exists()).toBeFalsy();
     });
 
     test('disabled', async () => {
@@ -134,7 +134,7 @@ describe.skip('Dropdown.tsx', () => {
 
       await sleep(200);
 
-      expect(wrapper.find('.n-popover__popper').exists()).toBeTruthy();
+      expect(wrapper.find('.h-popover__popper').exists()).toBeTruthy();
 
       await triggerEle.trigger('mouseleave');
 
@@ -146,7 +146,7 @@ describe.skip('Dropdown.tsx', () => {
 
       await sleep(200);
 
-      expect(wrapper.find('.n-popover__popper').exists()).toBeFalsy();
+      expect(wrapper.find('.h-popover__popper').exists()).toBeFalsy();
     });
 
     test('align', async () => {
@@ -172,7 +172,7 @@ describe.skip('Dropdown.tsx', () => {
 
       await sleep(620);
 
-      expect(wrapper.find('.n-popover__popper').attributes('data-popper-placement')).eq(
+      expect(wrapper.find('.h-popover__popper').attributes('data-popper-placement')).eq(
         'bottom-start',
       );
 
@@ -180,13 +180,13 @@ describe.skip('Dropdown.tsx', () => {
 
       await nextTick();
 
-      expect(wrapper.find('.n-popover__popper').attributes('data-popper-placement')).eq('bottom');
+      expect(wrapper.find('.h-popover__popper').attributes('data-popper-placement')).eq('bottom');
 
       align.value = 'right';
 
       await nextTick();
 
-      expect(wrapper.find('.n-popover__popper').attributes('data-popper-placement')).eq(
+      expect(wrapper.find('.h-popover__popper').attributes('data-popper-placement')).eq(
         'bottom-end',
       );
     });
@@ -214,13 +214,13 @@ describe.skip('Dropdown.tsx', () => {
 
       await sleep(620);
 
-      expect(wrapper.find('.n-popover__popper').attributes('data-popper-placement')).eq('top');
+      expect(wrapper.find('.h-popover__popper').attributes('data-popper-placement')).eq('top');
 
       placement.value = 'left';
 
       await nextTick();
 
-      expect(wrapper.find('.n-popover__popper').attributes('data-popper-placement')).eq('left');
+      expect(wrapper.find('.h-popover__popper').attributes('data-popper-placement')).eq('left');
     });
 
     test('menu', async () => {
@@ -267,7 +267,7 @@ describe.skip('Dropdown.tsx', () => {
 
       await sleep(200);
 
-      expect(wrapper.find('.n-popover__popper').classes('custom-popper-class')).toBeTruthy();
+      expect(wrapper.find('.h-popover__popper').classes('custom-popper-class')).toBeTruthy();
     });
 
     test('to-body', async () => {
@@ -298,7 +298,7 @@ describe.skip('Dropdown.tsx', () => {
 
       await sleep(200);
 
-      expect(wrapper.find('.n-popover__popper').exists()).toBeTruthy();
+      expect(wrapper.find('.h-popover__popper').exists()).toBeTruthy();
 
       await triggerEle.trigger('mouseleave');
 
@@ -312,9 +312,9 @@ describe.skip('Dropdown.tsx', () => {
 
       await sleep(200);
 
-      expect(wrapper.find('.n-popover__popper').exists()).toBeFalsy();
+      expect(wrapper.find('.h-popover__popper').exists()).toBeFalsy();
 
-      expect(document.body.querySelector('.n-popover__popper')).not.toBeUndefined();
+      expect(document.body.querySelector('.h-popover__popper')).not.toBeUndefined();
     });
 
     test('show-after', async () => {
@@ -339,11 +339,11 @@ describe.skip('Dropdown.tsx', () => {
 
       await sleep(200);
 
-      expect(wrapper.find('.n-popover__popper').exists()).toBeFalsy();
+      expect(wrapper.find('.h-popover__popper').exists()).toBeFalsy();
 
       await sleep(100);
 
-      expect(wrapper.find('.n-popover__popper').exists()).toBeTruthy();
+      expect(wrapper.find('.h-popover__popper').exists()).toBeTruthy();
     });
 
     test('hide-after', async () => {
@@ -370,15 +370,15 @@ describe.skip('Dropdown.tsx', () => {
 
       await triggerEle.trigger('mouseleave');
 
-      expect(wrapper.find('.n-popover__popper').exists()).toBeTruthy();
+      expect(wrapper.find('.h-popover__popper').exists()).toBeTruthy();
 
       await sleep(100);
 
-      expect(wrapper.find('.n-popover__popper').exists()).toBeTruthy();
+      expect(wrapper.find('.h-popover__popper').exists()).toBeTruthy();
 
       await sleep(100);
 
-      expect(wrapper.find('.n-popover__popper').exists()).toBeFalsy();
+      expect(wrapper.find('.h-popover__popper').exists()).toBeFalsy();
     });
 
     test('z-index', async () => {
@@ -403,7 +403,7 @@ describe.skip('Dropdown.tsx', () => {
 
       await sleep(620);
 
-      expect(wrapper.find('.n-popover__popper').attributes('style')).toContain('z-index: 2013;');
+      expect(wrapper.find('.h-popover__popper').attributes('style')).toContain('z-index: 2013;');
     });
   });
 
@@ -502,14 +502,14 @@ describe.skip('Dropdown.tsx', () => {
 
       await nextTick();
 
-      await expect(wrapper.find('.n-popover__popper').exists()).toBeTruthy();
+      await expect(wrapper.find('.h-popover__popper').exists()).toBeTruthy();
 
       dropdownRef.value?.handleClose();
 
       await nextTick();
       await nextTick();
 
-      expect(wrapper.find('.n-popover__popper').exists()).toBeFalsy();
+      expect(wrapper.find('.h-popover__popper').exists()).toBeFalsy();
     });
   });
 

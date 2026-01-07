@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3 class="m-4">组织架构</h3>
-    <n-transfer
+    <h-transfer
       v-model="dataModel"
       :titles="['']"
       :data="data"
@@ -12,7 +12,7 @@
     >
       <template #item="{ item, type }">
         <div class="flex align-center overflow-hidden">
-          <n-avatar size="small" :src="item.avatar" />
+          <h-avatar size="small" :src="item.avatar" />
           <div class="ml-2 flex-1 flex flex-column overflow-hidden">
             <div style="text-overflow: ellipsis; overflow: hidden">{{ item.label }}</div>
             <div
@@ -24,12 +24,12 @@
           </div>
         </div>
       </template>
-    </n-transfer>
+    </h-transfer>
     <h3 class="m-4">操作控件</h3>
-    <n-transfer v-model="dataModel" :data="data" draggable type="work" style="width: 600px">
+    <h-transfer v-model="dataModel" :data="data" draggable type="work" style="width: 600px">
       <template #item="{ item, type }">
         <div v-if="type === 'left'" class="flex align-center overflow-hidden">
-          <n-avatar size="small" :src="item.avatar" />
+          <h-avatar size="small" :src="item.avatar" />
           <div class="ml-2 flex-1 flex flex-column overflow-hidden">
             <div style="text-overflow: ellipsis; overflow: hidden">{{ item.label }}</div>
             <div
@@ -41,7 +41,7 @@
           </div>
         </div>
         <div v-if="type === 'right'" class="flex align-center overflow-hidden">
-          <n-avatar size="small" :src="item.avatar" />
+          <h-avatar size="small" :src="item.avatar" />
           <div class="ml-2 flex-1 flex flex-column overflow-hidden">
             <div style="text-overflow: ellipsis; overflow: hidden">{{ item.label }}</div>
             <div
@@ -51,10 +51,10 @@
               {{ item.department }}
             </div>
           </div>
-          <n-button type="normal" icon="exclusive_group" text></n-button>
+          <h-button type="normal" icon="exclusive_group" text></h-button>
         </div>
       </template>
-    </n-transfer>
+    </h-transfer>
   </div>
 </template>
 

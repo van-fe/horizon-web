@@ -1,12 +1,12 @@
 <template>
   <div class="mb-2">
-    <n-radio-group v-model="displayType">
-      <n-radio label="show">show</n-radio>
-      <n-radio label="if">if</n-radio>
-    </n-radio-group>
+    <h-radio-group v-model="displayType">
+      <h-radio label="show">show</h-radio>
+      <h-radio label="if">if</h-radio>
+    </h-radio-group>
   </div>
-  <n-button @click="visible = true">点我</n-button>
-  <n-dialog
+  <h-button @click="visible = true">点我</h-button>
+  <h-dialog
     v-model="visible"
     title="标题"
     :display-type="displayType"
@@ -14,14 +14,14 @@
     @secondaryClick="onSecondary"
   >
     <div>
-      <n-tabs v-model="currentTab">
-        <n-tab name="tab1" label="Tab1" />
-        <n-tab name="tab2" label="Tab2" />
-      </n-tabs>
-      <n-panels v-model="currentTab">
-        <n-panel name="tab1">
-          <n-form ref="formRef" :model="formData">
-            <n-form-item
+      <h-tabs v-model="currentTab">
+        <h-tab name="tab1" label="Tab1" />
+        <h-tab name="tab2" label="Tab2" />
+      </h-tabs>
+      <h-panels v-model="currentTab">
+        <h-panel name="tab1">
+          <h-form ref="formRef" :model="formData">
+            <h-form-item
               label="User name"
               prop="username"
               :rules="[
@@ -36,26 +36,26 @@
                 },
               ]"
             >
-              <n-input v-model="formData.username" />
-            </n-form-item>
-            <n-form-item label="Email" prop="email" :rules="emailRules">
-              <n-input v-model="formData.email" />
-            </n-form-item>
-            <n-form-item label="Gender" prop="gender" required>
-              <n-select v-model="formData.gender">
-                <n-option label="Male" :value="1" />
-                <n-option label="Female" :value="2" />
-              </n-select>
-            </n-form-item>
-            <n-form-item label="Notes" prop="notes">
-              <n-input v-model="formData.notes" type="textarea" :rows="20" />
-            </n-form-item>
-          </n-form>
-        </n-panel>
-        <n-panel name="tab2">Tab2 Content</n-panel>
-      </n-panels>
+              <h-input v-model="formData.username" />
+            </h-form-item>
+            <h-form-item label="Email" prop="email" :rules="emailRules">
+              <h-input v-model="formData.email" />
+            </h-form-item>
+            <h-form-item label="Gender" prop="gender" required>
+              <h-select v-model="formData.gender">
+                <h-option label="Male" :value="1" />
+                <h-option label="Female" :value="2" />
+              </h-select>
+            </h-form-item>
+            <h-form-item label="Notes" prop="notes">
+              <h-input v-model="formData.notes" type="textarea" :rows="20" />
+            </h-form-item>
+          </h-form>
+        </h-panel>
+        <h-panel name="tab2">Tab2 Content</h-panel>
+      </h-panels>
     </div>
-  </n-dialog>
+  </h-dialog>
 </template>
 
 <script lang="ts">

@@ -474,11 +474,6 @@ export default defineComponent({
                           poster={currentSource.value.cover}
                           sources={currentSource.value.videoSources!}
                           rotate={videoDegree.value}
-                          options={{
-                            hotkeys: false,
-                            fluid: false,
-                            ...currentSource.value.videoOptions,
-                          }}
                           onReady={() => (loadingPreviewRef.value = false)}
                         />
                       </div>

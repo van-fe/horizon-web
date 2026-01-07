@@ -1,8 +1,8 @@
 <template>
   <div class="demo-wrapper">
-    <n-button size="medium" type="primary" plain @click="open1">Use HTML</n-button>
-    <n-button size="medium" type="primary" plain @click="open2">VNode</n-button>
-    <n-button size="medium" type="primary" plain @click="open3">动态更新content</n-button>
+    <h-button size="medium" type="primary" plain @click="open1">Use HTML</h-button>
+    <h-button size="medium" type="primary" plain @click="open2">VNode</h-button>
+    <h-button size="medium" type="primary" plain @click="open3">动态更新content</h-button>
   </div>
 </template>
 
@@ -55,7 +55,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.demo-wrapper .n-button {
+.demo-wrapper .h-button {
   margin-right: 40px;
 }
 </style>

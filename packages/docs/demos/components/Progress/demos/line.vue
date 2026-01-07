@@ -1,10 +1,10 @@
 <template>
   <div class="demo-progress">
-    <n-progress :percentage="50" />
-    <n-progress :percentage="100" :format="format" />
-    <n-progress :percentage="100" status="success" />
-    <n-progress :percentage="100" status="warning" />
-    <n-progress :percentage="50" status="exception" />
+    <h-progress :percentage="50" />
+    <h-progress :percentage="100" :format="format" />
+    <h-progress :percentage="100" status="success" />
+    <h-progress :percentage="100" status="warning" />
+    <h-progress :percentage="50" status="exception" />
   </div>
 </template>
 
@@ -21,7 +21,7 @@ export default defineComponent({
 </script>
 
 <style>
-.demo-progress .n-progress-line {
+.demo-progress .h-progress-line {
   margin-bottom: 15px;
   width: 350px;
 }

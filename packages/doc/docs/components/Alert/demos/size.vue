@@ -1,5 +1,5 @@
 <template>
-  <n-alert
+  <h-alert
     show-icon
     :closable="true"
     size="small"
@@ -7,11 +7,11 @@
     description="Info Text"
     type="info"
   />
-  <n-alert
+  <h-alert
     show-icon
     :closable="true"
-    primary-button-text="确定"
-    default-button-text="取消"
+    primary-buttoh-text="确定"
+    default-buttoh-text="取消"
     size="medium"
     title="medium"
     description="Info Text"
@@ -20,11 +20,11 @@
 </template>
 
 <style scoped>
-.n-alert {
+.h-alert {
   margin: 20px 0 0;
 }
 
-.n-alert:first-child {
+.h-alert:first-child {
   margin: 0;
 }
 </style>

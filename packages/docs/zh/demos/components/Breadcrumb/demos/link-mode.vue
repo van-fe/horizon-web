@@ -1,5 +1,5 @@
 <template>
-  <n-breadcrumb
+  <h-breadcrumb
     :texts="[
       { text: 'Home' },
       { text: 'Components', to: '../Components' },

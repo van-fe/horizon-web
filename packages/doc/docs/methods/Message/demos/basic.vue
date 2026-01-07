@@ -1,5 +1,5 @@
 <template>
-  <n-button type="normal" @click="open">默认消息</n-button>
+  <h-button type="normal" @click="open">默认消息</h-button>
 </template>
 
 <script lang="ts" setup>

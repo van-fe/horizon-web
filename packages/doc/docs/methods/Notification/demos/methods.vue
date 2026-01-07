@@ -1,9 +1,9 @@
 <template>
-  <n-space>
-    <n-button type="normal" @click="open">打开通知</n-button>
-    <n-button type="normal" @click="close1">关闭当前通知</n-button>
-    <n-button type="normal" @click="close2">关闭所有通知</n-button>
-  </n-space>
+  <h-space>
+    <h-button type="normal" @click="open">打开通知</h-button>
+    <h-button type="normal" @click="close1">关闭当前通知</h-button>
+    <h-button type="normal" @click="close2">关闭所有通知</h-button>
+  </h-space>
 </template>
 
 <script lang="ts">

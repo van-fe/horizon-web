@@ -1,16 +1,16 @@
 <template>
-  <n-space block direction="vertical" size="small">
-    <n-radio-group v-model="currentRef">
-      <n-radio label="panel1">Option1</n-radio>
-      <n-radio label="panel2">Option2</n-radio>
-      <n-radio label="panel3">Option3</n-radio>
-    </n-radio-group>
-    <n-panels v-model="currentRef" vertical animated>
-      <n-panel name="panel1">Panel1 Content</n-panel>
-      <n-panel name="panel2">Panel2 Content</n-panel>
-      <n-panel name="panel3">Panel3 Content</n-panel>
-    </n-panels>
-  </n-space>
+  <h-space block direction="vertical" size="small">
+    <h-radio-group v-model="currentRef">
+      <h-radio label="panel1">Option1</h-radio>
+      <h-radio label="panel2">Option2</h-radio>
+      <h-radio label="panel3">Option3</h-radio>
+    </h-radio-group>
+    <h-panels v-model="currentRef" vertical animated>
+      <h-panel name="panel1">Panel1 Content</h-panel>
+      <h-panel name="panel2">Panel2 Content</h-panel>
+      <h-panel name="panel3">Panel3 Content</h-panel>
+    </h-panels>
+  </h-space>
 </template>
 
 <script lang="ts">

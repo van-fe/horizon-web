@@ -1,35 +1,35 @@
 <template>
-  <n-form>
-    <n-row>
-      <n-form-item label="style">
-      <n-radio-group v-model="inputStyle">
-        <n-radio
+  <h-form>
+    <h-row>
+      <h-form-item label="style">
+      <h-radio-group v-model="inputStyle">
+        <h-radio
           v-for="(label, index) in ['normal', 'no-border', 'emphasize']"
           :key="index"
           :label="label"
           size="small"
         />
-      </n-radio-group>
-    </n-form-item>
-    </n-row>
-    <n-row>
-      <n-col :span="8">
-        <n-form-item label="Large">
-          <n-input v-model="val1" size="large" :input-style = 'inputStyle'/>
-        </n-form-item>
-      </n-col>
-      <n-col :span="8">
-        <n-form-item label="Medium">
-          <n-input v-model="val2" size="medium" :input-style = 'inputStyle'/>
-        </n-form-item>
-      </n-col>
-      <n-col :span="8">
-        <n-form-item label="Small">
-          <n-input v-model="val3" size="small" :input-style = 'inputStyle'/>
-        </n-form-item>
-      </n-col>
-    </n-row>
-  </n-form>
+      </h-radio-group>
+    </h-form-item>
+    </h-row>
+    <h-row>
+      <h-col :span="8">
+        <h-form-item label="Large">
+          <h-input v-model="val1" size="large" :input-style = 'inputStyle'/>
+        </h-form-item>
+      </h-col>
+      <h-col :span="8">
+        <h-form-item label="Medium">
+          <h-input v-model="val2" size="medium" :input-style = 'inputStyle'/>
+        </h-form-item>
+      </h-col>
+      <h-col :span="8">
+        <h-form-item label="Small">
+          <h-input v-model="val3" size="small" :input-style = 'inputStyle'/>
+        </h-form-item>
+      </h-col>
+    </h-row>
+  </h-form>
 </template>
 
 <script lang="ts">

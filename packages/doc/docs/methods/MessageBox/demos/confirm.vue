@@ -1,14 +1,14 @@
 <template>
-  <n-space block direction="vertical">
-    <n-radio-group v-model="type">
-      <n-radio>default</n-radio>
-      <n-radio value="info">info</n-radio>
-      <n-radio value="warning">warning</n-radio>
-      <n-radio value="success">info</n-radio>
-      <n-radio value="error">error</n-radio>
-    </n-radio-group>
-    <n-button type="normal" @click="showConfirm">打开 Confirm</n-button>
-  </n-space>
+  <h-space block direction="vertical">
+    <h-radio-group v-model="type">
+      <h-radio>default</h-radio>
+      <h-radio value="info">info</h-radio>
+      <h-radio value="warning">warning</h-radio>
+      <h-radio value="success">info</h-radio>
+      <h-radio value="error">error</h-radio>
+    </h-radio-group>
+    <h-button type="normal" @click="showConfirm">打开 Confirm</h-button>
+  </h-space>
 </template>
 
 <script lang="ts" setup>

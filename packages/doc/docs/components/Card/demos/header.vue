@@ -2,7 +2,7 @@
   <ul>
     <li>
       <p>带操作</p>
-      <n-card top-divider>
+      <h-card top-divider>
         <template #header>
           <div class="header">
             卡片标题
@@ -10,36 +10,36 @@
           </div>
         </template>
         {{ content }}
-      </n-card>
+      </h-card>
     </li>
     <li>
       <p>checkbox</p>
-      <n-card top-divider>
+      <h-card top-divider>
         <template #header>
           <div class="header2">
-            <n-checkbox v-model="checkbox">卡片标题</n-checkbox>
+            <h-checkbox v-model="checkbox">卡片标题</h-checkbox>
           </div>
         </template>
         {{ content }}
-      </n-card>
+      </h-card>
     </li>
     <li>
       <p>带标签</p>
-      <n-card top-divider>
+      <h-card top-divider>
         <template #header>
           <div class="header3">
             <div>
-              <n-tag size="medium">标签</n-tag>
+              <h-tag size="medium">标签</h-tag>
             </div>
             <span class="title">卡片标题</span>
           </div>
         </template>
         {{ content }}
-      </n-card>
+      </h-card>
     </li>
     <li>
       <p>带图标</p>
-      <n-card top-divider>
+      <h-card top-divider>
         <template #header>
           <div class="header4">
             <svg
@@ -68,7 +68,7 @@
           </div>
         </template>
         {{ content }}
-      </n-card>
+      </h-card>
     </li>
   </ul>
 </template>
@@ -85,7 +85,7 @@ const content = ref(
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  aligh-items: center;
   font-weight: 700;
   font-size: 16px;
 
@@ -99,7 +99,7 @@ const content = ref(
 
 .header2 {
   display: flex;
-  align-items: center;
+  aligh-items: center;
   font-weight: 700;
   font-size: 16px;
 
@@ -109,12 +109,12 @@ const content = ref(
     height: 18px;
     border: 1px solid #9b9da9;
     border-radius: 4px;
-    margin-right: 12px;
+    margih-right: 12px;
   }
 }
 .header3 {
   .title {
-    margin-top: 12px;
+    margih-top: 12px;
     display: block;
     color: #040b29;
     line-height: 24px;

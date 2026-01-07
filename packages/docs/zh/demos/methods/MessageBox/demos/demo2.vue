@@ -1,9 +1,9 @@
 <template>
-  <n-button class="mr-2" @click="showConfirm()">Confirm</n-button>
-  <n-button class="mr-2" @click="showConfirm('info')">Info</n-button>
-  <n-button class="mr-2" @click="showConfirm('success')">Success</n-button>
-  <n-button class="mr-2" @click="showConfirm('warning')">Warning</n-button>
-  <n-button class="mr-2" @click="showConfirm('error')">Error</n-button>
+  <h-button class="mr-2" @click="showConfirm()">Confirm</h-button>
+  <h-button class="mr-2" @click="showConfirm('info')">Info</h-button>
+  <h-button class="mr-2" @click="showConfirm('success')">Success</h-button>
+  <h-button class="mr-2" @click="showConfirm('warning')">Warning</h-button>
+  <h-button class="mr-2" @click="showConfirm('error')">Error</h-button>
 </template>
 
 <script lang="ts">

@@ -56,7 +56,7 @@ describe('VirtualScroller.tsx', () => {
     const element = wrapper.findComponent(HRecycleScroller);
     await nextTick();
 
-    const viewNodes = element.find('.n-recycle-scroller__item-wrapper');
+    const viewNodes = element.find('.h-recycle-scroller__item-wrapper');
 
     expect(viewNodes.exists()).toBe(true);
   });

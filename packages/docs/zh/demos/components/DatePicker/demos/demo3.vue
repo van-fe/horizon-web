@@ -2,15 +2,15 @@
   <div class="demo-wrapper">
     <div class="box">
       <span>默认不显示前后月日期</span>
-      <n-date-picker v-model="time1" type="date"></n-date-picker>
+      <h-date-picker v-model="time1" type="date"></h-date-picker>
     </div>
     <div class="box">
       <span>显示前后月日期</span>
-      <n-date-picker v-model="time2" type="date" :show-before-after-date="true"></n-date-picker>
+      <h-date-picker v-model="time2" type="date" :show-before-after-date="true"></h-date-picker>
     </div>
     <div class="box">
       <span>固定显示6行日期（默认不固定行数）</span>
-      <n-date-picker v-model="time3" type="date" :fixed-six-rows="true"></n-date-picker>
+      <h-date-picker v-model="time3" type="date" :fixed-six-rows="true"></h-date-picker>
     </div>
   </div>
 </template>

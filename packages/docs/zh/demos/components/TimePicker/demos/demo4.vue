@@ -2,19 +2,19 @@
   <div class="demo-wrapper">
     <div class="box">
       <span>设置前缀、后缀图标</span>
-      <n-time-picker
+      <h-time-picker
         v-model="time1"
         type="minutes"
         prefix-icon="setting"
         suffix-icon="close"
-      ></n-time-picker>
+      ></h-time-picker>
     </div>
     <div class="box">
       <span>设置前缀、后缀图标（插槽）</span>
-      <n-time-picker v-model="time2" type="minutes">
+      <h-time-picker v-model="time2" type="minutes">
         <template #prefix>pre</template>
         <template #suffix>suf</template>
-      </n-time-picker>
+      </h-time-picker>
     </div>
   </div>
 </template>

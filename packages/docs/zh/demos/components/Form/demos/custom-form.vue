@@ -1,6 +1,6 @@
 <template>
-  <n-form ref="formRef" :model="formData" validate-trigger="blur">
-    <n-form-item
+  <h-form ref="formRef" :model="formData" validate-trigger="blur">
+    <h-form-item
       label="User name"
       prop="username"
       :rules="[
@@ -17,17 +17,17 @@
       validate-trigger="change"
     >
       <custom-input v-model="formData.username" />
-    </n-form-item>
-    <n-form-item label="Email" prop="email" :rules="emailRules">
+    </h-form-item>
+    <h-form-item label="Email" prop="email" :rules="emailRules">
       <custom-input v-model="formData.email" />
-    </n-form-item>
-    <n-form-item label="Notes" prop="notes">
-      <n-input v-model="formData.notes" type="textarea" />
-    </n-form-item>
+    </h-form-item>
+    <h-form-item label="Notes" prop="notes">
+      <h-input v-model="formData.notes" type="textarea" />
+    </h-form-item>
     <div>
-      <n-button @click="submit">Submit</n-button>
+      <h-button @click="submit">Submit</h-button>
     </div>
-  </n-form>
+  </h-form>
 </template>
 
 <script lang="ts">

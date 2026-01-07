@@ -1,45 +1,45 @@
 <template>
   <div>
-    <n-row :gutter="12">
-      <n-col :span="12">
-        <n-input-number :min="0">
+    <h-row :gutter="12">
+      <h-col :span="12">
+        <h-input-number :min="0">
           <template #prepend>
             Age:
           </template>
-        </n-input-number>
-      </n-col>
-      <n-col :span="12">
-        <n-input-number controls-position="between" :min="0">
+        </h-input-number>
+      </h-col>
+      <h-col :span="12">
+        <h-input-number controls-position="between" :min="0">
           <template #append>
             Points
           </template>
-        </n-input-number>
-      </n-col>
-    </n-row>
-    <n-row :gutter="12">
-      <n-col :span="24">
-        <n-input-number :min="0" :clearable="true" placeholder="The Age...">
+        </h-input-number>
+      </h-col>
+    </h-row>
+    <h-row :gutter="12">
+      <h-col :span="24">
+        <h-input-number :min="0" :clearable="true" placeholder="The Age...">
           <template #prepend>
-            <n-select v-model="ageType" placeholder="Solar or Lunar" clearable>
-              <n-option label="Solar Age" value="1"></n-option>
-              <n-option label="Lunar Age" value="2"></n-option>
-            </n-select>
+            <h-select v-model="ageType" placeholder="Solar or Lunar" clearable>
+              <h-option label="Solar Age" value="1"></h-option>
+              <h-option label="Lunar Age" value="2"></h-option>
+            </h-select>
           </template>
-        </n-input-number>
-      </n-col>
-    </n-row>
-    <n-row :gutter="12">
-      <n-col :span="24">
-        <n-input-number :min="0" :clearable="true" placeholder="The Weight...">
+        </h-input-number>
+      </h-col>
+    </h-row>
+    <h-row :gutter="12">
+      <h-col :span="24">
+        <h-input-number :min="0" :clearable="true" placeholder="The Weight...">
           <template #append>
-            <n-select v-model="weightUnit" placeholder="Kg or g" clearable>
-              <n-option label="Kg" value="1"></n-option>
-              <n-option label="g" value="2"></n-option>
-            </n-select>
+            <h-select v-model="weightUnit" placeholder="Kg or g" clearable>
+              <h-option label="Kg" value="1"></h-option>
+              <h-option label="g" value="2"></h-option>
+            </h-select>
           </template>
-        </n-input-number>
-      </n-col>
-    </n-row>
+        </h-input-number>
+      </h-col>
+    </h-row>
   </div>
 </template>
 

@@ -5,7 +5,7 @@
         {{ item }}
         <span v-if="item === 'cover'">(default)</span>
       </p>
-      <n-image
+      <h-image
         src="https://www.nio.cn/cdn-static/mynio/nextjs/images/4124399E5BB45E85CBAFDE6307297F4A045845F4/home/es7-homepage-hero-desktop.jpg"
         :object-fit="item"
         class="mr-2 img"

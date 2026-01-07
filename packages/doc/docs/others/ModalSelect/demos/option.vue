@@ -1,38 +1,38 @@
 <template>
-  <n-row :gutter="10">
-    <n-col :span="6">
+  <h-row :gutter="10">
+    <h-col :span="6">
       <div class="demo-title">自定义 option</div>
-      <n-modal-select v-model="value1" :to-body="false">
-        <n-option label="中国" :value="1">
+      <h-modal-select v-model="value1" :to-body="false">
+        <h-option label="中国" :value="1">
           <template #default="slotProps">
             <div class="select-custom-item china" :class="slotProps.active ? 'active' : ''">
               {{ slotProps.label }}
             </div>
           </template>
-        </n-option>
-        <n-option :value="2" label="美国" />
-        <n-option :value="3" label="日本" />
+        </h-option>
+        <h-option :value="2" label="美国" />
+        <h-option :value="3" label="日本" />
         <template #optionRender="slotProps">
           <div class="select-custom-item" :class="slotProps.active ? 'active' : ''">
             {{ slotProps.label }}
           </div>
         </template>
-      </n-modal-select>
-    </n-col>
+      </h-modal-select>
+    </h-col>
 
-    <n-col :span="6">
+    <h-col :span="6">
       <div class="demo-title">自定义 Option 面板样式</div>
-      <n-modal-select
+      <h-modal-select
         v-model="value2"
         :external-panel-style="{ width: '100px', border: '1px solid #f00' }"
         :to-body="false"
       >
-        <n-option label="中国" :value="1" />
-        <n-option :value="2" label="美国" />
-        <n-option :value="3" label="日本" />
-      </n-modal-select>
-    </n-col>
-  </n-row>
+        <h-option label="中国" :value="1" />
+        <h-option :value="2" label="美国" />
+        <h-option :value="3" label="日本" />
+      </h-modal-select>
+    </h-col>
+  </h-row>
 </template>
 
 <script lang="ts">

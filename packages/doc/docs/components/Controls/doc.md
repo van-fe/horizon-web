@@ -1,5 +1,5 @@
 ### 基础使用
-和 `n-hover`、`n-mask` 联合使用，可以做到蒙层 `hover` 后显示控制器
+和 `h-hover`、`h-mask` 联合使用，可以做到蒙层 `hover` 后显示控制器
 :::demo ./demos/basic.vue :::
 
 ### 主题

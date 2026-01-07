@@ -93,7 +93,7 @@ describe('Cascader.tsx props', () => {
 
     expect(wrapper.findComponent(IconCloseFilled).exists()).toBeTruthy();
 
-    const clearBtn = wrapper.find('.n-picker__input--icon.is-clear');
+    const clearBtn = wrapper.find('.h-picker__input--icon.is-clear');
 
     await clearBtn.trigger('click');
 
@@ -187,12 +187,12 @@ describe('Cascader.tsx props', () => {
     await pickerInput.find('input').setValue('feedback');
     await sleep(200);
 
-    expect(wrapper.find('.n-cascader-search-panel__check-all').exists()).toBeFalsy();
+    expect(wrapper.find('.h-cascader-search-panel__check-all').exists()).toBeFalsy();
 
     useFilterCheckAll.value = true;
     await nextTick();
 
-    const checkAll = wrapper.find('.n-cascader-search-panel__check-all');
+    const checkAll = wrapper.find('.h-cascader-search-panel__check-all');
 
     expect(checkAll.exists()).toBeTruthy();
     await checkAll.trigger('click');
@@ -226,14 +226,14 @@ describe('Cascader.tsx props', () => {
     await pickerInput.find('input').setValue('e');
     await sleep(200);
 
-    const checkAll = wrapper.find('.n-cascader-search-panel__check-all');
+    const checkAll = wrapper.find('.h-cascader-search-panel__check-all');
     expect(checkAll.exists()).toBeTruthy();
-    expect(checkAll.find('.n-checkbox--checked').exists()).toBeTruthy();
+    expect(checkAll.find('.h-checkbox--checked').exists()).toBeTruthy();
 
     await wrapper.findComponent(HCascaderItem).trigger('click');
 
-    expect(checkAll.find('.n-checkbox--checked').exists()).toBeFalsy();
-    expect(checkAll.find('.n-checkbox--indeterminate').exists()).toBeTruthy();
+    expect(checkAll.find('.h-checkbox--checked').exists()).toBeFalsy();
+    expect(checkAll.find('.h-checkbox--indeterminate').exists()).toBeTruthy();
 
     await checkAll.trigger('click');
 

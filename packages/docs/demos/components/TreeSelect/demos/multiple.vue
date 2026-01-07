@@ -1,22 +1,22 @@
 <template>
-  <n-row>
-    <n-col :span="6">
+  <h-row>
+    <h-col :span="6">
       <div class="demo-title">普通多选</div>
-      <n-tree-select v-model="values1" :tree-data="baseTreeData" :multiple="true" :to-body="false" />
-    </n-col>
-    <n-col :span="6">
+      <h-tree-select v-model="values1" :tree-data="baseTreeData" :multiple="true" :to-body="false" />
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">折叠多选</div>
-      <n-tree-select v-model="values2" :tree-data="baseTreeData" :multiple="true" :collapse="true" :to-body="false" />
-    </n-col>
-    <n-col :span="6">
+      <h-tree-select v-model="values2" :tree-data="baseTreeData" :multiple="true" :collapse="true" :to-body="false" />
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">+N 显示其余已选项</div>
-      <n-tree-select v-model="values3" :tree-data="baseTreeData" :multiple="true" :collapse="true" :collapse-tags-tooltip="true" :to-body="false" />
-    </n-col>
-    <n-col :span="6">
+      <h-tree-select v-model="values3" :tree-data="baseTreeData" :multiple="true" :collapse="true" :collapse-tags-tooltip="true" :to-body="false" />
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">强制显示3个已选项，其余折叠</div>
-      <n-tree-select v-model="values4" :tree-data="baseTreeData" :multiple="true" :collapse="true" :collapse-tags-tooltip="true" :max-collapse-tags="3" :to-body="false" />
-    </n-col>
-  </n-row>
+      <h-tree-select v-model="values4" :tree-data="baseTreeData" :multiple="true" :collapse="true" :collapse-tags-tooltip="true" :max-collapse-tags="3" :to-body="false" />
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

@@ -1,10 +1,10 @@
 <template>
   <div class="demo-wrapper">
-    <n-button size="medium" type="primary" plain @click="open1">normal</n-button>
-    <n-button size="medium" type="primary" plain @click="open2">info</n-button>
-    <n-button size="medium" type="primary" plain @click="open3">success</n-button>
-    <n-button size="medium" type="primary" plain @click="open4">warning</n-button>
-    <n-button size="medium" type="primary" plain @click="open5">error</n-button>
+    <h-button size="medium" type="primary" plain @click="open1">normal</h-button>
+    <h-button size="medium" type="primary" plain @click="open2">info</h-button>
+    <h-button size="medium" type="primary" plain @click="open3">success</h-button>
+    <h-button size="medium" type="primary" plain @click="open4">warning</h-button>
+    <h-button size="medium" type="primary" plain @click="open5">error</h-button>
   </div>
 </template>
 
@@ -72,7 +72,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.demo-wrapper .n-button {
+.demo-wrapper .h-button {
   margin-right: 40px;
 }
 </style>

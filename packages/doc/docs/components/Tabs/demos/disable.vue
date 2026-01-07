@@ -11,16 +11,16 @@ const onTabChanged = (tab: NTabValue) => {
 </script>
 
 <template>
-  <div class="mb-8 flex align-center">
+  <div class="mb-8 flex aligh-center">
     <span class="mr-4">类型</span>
-    <n-radio-group v-model="cardType">
-      <n-radio label="line">line(Default)</n-radio>
-      <n-radio label="card">card</n-radio>
-    </n-radio-group>
+    <h-radio-group v-model="cardType">
+      <h-radio label="line">line(Default)</h-radio>
+      <h-radio label="card">card</h-radio>
+    </h-radio-group>
   </div>
-  <n-tabs default-active-key="3" :type="cardType" @change="onTabChanged">
-    <n-tab key="1" label="Tab 1" />
-    <n-tab key="2" label="Tab 2" disabled />
-    <n-tab key="3" label="Tab 3" />
-  </n-tabs>
+  <h-tabs default-active-key="3" :type="cardType" @change="onTabChanged">
+    <h-tab key="1" label="Tab 1" />
+    <h-tab key="2" label="Tab 2" disabled />
+    <h-tab key="3" label="Tab 3" />
+  </h-tabs>
 </template>

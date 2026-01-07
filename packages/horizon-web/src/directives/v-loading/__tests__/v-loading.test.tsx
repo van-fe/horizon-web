@@ -45,7 +45,7 @@ describe('v-loading.tsx', () => {
 
     const loadingDom = getLoadingDom();
 
-    const messageDom = document.body.querySelector('.n-message') as HTMLElement;
+    const messageDom = document.body.querySelector('.h-message') as HTMLElement;
 
     expect(Number(loadingDom.element.style.zIndex)).toBeLessThan(Number(messageDom.style.zIndex));
   });
@@ -64,7 +64,7 @@ describe('v-loading.tsx', () => {
 
       const loadingDom = getLoadingDom();
 
-      const messageDom = document.body.querySelector('.n-message') as HTMLElement;
+      const messageDom = document.body.querySelector('.h-message') as HTMLElement;
 
       expect(Number(loadingDom.element.style.zIndex)).toBeGreaterThan(
         Number(messageDom.style.zIndex),

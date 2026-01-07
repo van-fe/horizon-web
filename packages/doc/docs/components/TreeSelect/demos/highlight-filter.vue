@@ -1,18 +1,18 @@
 <template>
-  <n-row>
-    <n-col :span="6">
+  <h-row>
+    <h-col :span="6">
       <div class="demo-title">单选</div>
-      <n-tree-select
+      <h-tree-select
         :tree-data="baseTreeData"
         :filterable="true"
         :highlight-method="highlightMethod"
         :max-height="300"
         :to-body="false"
       />
-    </n-col>
-    <n-col :span="6">
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">多选</div>
-      <n-tree-select
+      <h-tree-select
         :tree-data="baseTreeData"
         :filterable="true"
         :highlight-method="highlightMethod"
@@ -20,8 +20,8 @@
         :multiple="true"
         :to-body="false"
       />
-    </n-col>
-  </n-row>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">
@@ -54,6 +54,6 @@ onMounted(() => {
 
 <style>
 .kw {
-  color: var(--n-text-error-default);
+  color: var(--h-text-error-default);
 }
 </style>

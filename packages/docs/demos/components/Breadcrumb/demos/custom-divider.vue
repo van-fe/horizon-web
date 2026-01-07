@@ -1,12 +1,12 @@
 <template>
-  <n-breadcrumb
+  <h-breadcrumb
     class="mb-2"
     :texts="[{ text: 'Home' }, { text: 'Sub Page1' }, { text: 'Sub Page2' }]"
     separator="*"
   />
-  <n-breadcrumb :texts="[{ text: 'Home' }, { text: 'Sub Page1' }, { text: 'Sub Page2' }]">
+  <h-breadcrumb :texts="[{ text: 'Home' }, { text: 'Sub Page1' }, { text: 'Sub Page2' }]">
     <template #separator><a-icon name="gift" size="12" /></template>
-  </n-breadcrumb>
+  </h-breadcrumb>
 </template>
 
 <script lang="ts">

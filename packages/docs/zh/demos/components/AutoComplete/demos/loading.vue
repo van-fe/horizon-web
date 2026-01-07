@@ -1,14 +1,14 @@
 <template>
-  <n-row>
-    <n-col :span="6">
+  <h-row>
+    <h-col :span="6">
       <div class="demo-title">默认样式</div>
-      <n-auto-complete :options="options1" :loading="loading1" @search="(val: string) => onSearch(val, 1)" />
-    </n-col>
-    <n-col :span="6">
+      <h-auto-complete :options="options1" :loading="loading1" @search="(val: string) => onSearch(val, 1)" />
+    </h-col>
+    <h-col :span="6">
       <div class="demo-title">显示搜索文字</div>
-      <n-auto-complete :options="options2" :loading="loading2" loading-text="搜索中" @search="(val: string) => onSearch(val, 2)" />
-    </n-col>
-  </n-row>
+      <h-auto-complete :options="options2" :loading="loading2" loading-text="搜索中" @search="(val: string) => onSearch(val, 2)" />
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

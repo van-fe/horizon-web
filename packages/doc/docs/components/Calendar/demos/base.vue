@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <n-calendar v-model="value" :auto-fit="true" />
+    <h-calendar v-model="value" :auto-fit="true" />
   </div>
 </template>
 

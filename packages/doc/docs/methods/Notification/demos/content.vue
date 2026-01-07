@@ -1,9 +1,9 @@
 <template>
-  <n-space>
-    <n-button type="normal" @click="open1">使用 HTML</n-button>
-    <n-button type="normal" @click="open2">使用 VNode</n-button>
-    <n-button type="normal" @click="open3">动态更新内容</n-button>
-  </n-space>
+  <h-space>
+    <h-button type="normal" @click="open1">使用 HTML</h-button>
+    <h-button type="normal" @click="open2">使用 VNode</h-button>
+    <h-button type="normal" @click="open3">动态更新内容</h-button>
+  </h-space>
 </template>
 
 <script lang="ts">

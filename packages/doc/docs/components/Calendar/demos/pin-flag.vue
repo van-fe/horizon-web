@@ -1,45 +1,45 @@
 <template>
   <div class="wrapper">
-    <n-form label-position="left" label-vertical-align="middle" label-width="150px">
-      <n-form-item label="Reserve Event">
-        <n-radio-group v-model="reserveEvent">
-          <n-radio :label="1">Don't reserve</n-radio>
-          <n-radio :label="2">Reserve original</n-radio>
-          <n-radio :label="3">Reserve and modify</n-radio>
-        </n-radio-group>
-      </n-form-item>
-      <n-form-item label="Date Type">
-        <n-radio-group v-model="dateType">
-          <n-radio label="full">Full</n-radio>
-          <n-radio label="only-current">Only Current</n-radio>
-        </n-radio-group>
-      </n-form-item>
-      <n-form-item label="Pin Flags Show Time">
-        <n-radio-group v-model="showTime">
-          <n-radio :label="true">Yes</n-radio>
-          <n-radio :label="false">No</n-radio>
-        </n-radio-group>
-      </n-form-item>
-      <n-form-item label="Create Flag Can Though Disable Date Or Hour">
-        <n-radio-group v-model="createFlagCanThoughDisableDateOrHour">
-          <n-radio :label="true">Yes</n-radio>
-          <n-radio :label="false">No</n-radio>
-        </n-radio-group>
-      </n-form-item>
-    </n-form>
-    <n-calendar
-      v-model:pin-flags="pinFlags"
+    <h-form label-position="left" label-vertical-align="middle" label-width="150px">
+      <h-form-item label="Reserve Event">
+        <h-radio-group v-model="reserveEvent">
+          <h-radio :label="1">Don't reserve</h-radio>
+          <h-radio :label="2">Reserve original</h-radio>
+          <h-radio :label="3">Reserve and modify</h-radio>
+        </h-radio-group>
+      </h-form-item>
+      <h-form-item label="Date Type">
+        <h-radio-group v-model="dateType">
+          <h-radio label="full">Full</h-radio>
+          <h-radio label="only-current">Only Current</h-radio>
+        </h-radio-group>
+      </h-form-item>
+      <h-form-item label="Pin Flags Show Time">
+        <h-radio-group v-model="showTime">
+          <h-radio :label="true">Yes</h-radio>
+          <h-radio :label="false">No</h-radio>
+        </h-radio-group>
+      </h-form-item>
+      <h-form-item label="Create Flag Can Though Disable Date Or Hour">
+        <h-radio-group v-model="createFlagCanThoughDisableDateOrHour">
+          <h-radio :label="true">Yes</h-radio>
+          <h-radio :label="false">No</h-radio>
+        </h-radio-group>
+      </h-form-item>
+    </h-form>
+    <h-calendar
+      v-model:pih-flags="pinFlags"
       model-value="2022-10-10"
       :date-type="dateType"
       :pickable="true"
       mode="month"
-      :pin-flags-show-time="showTime"
+      :pih-flags-show-time="showTime"
       :mode-switchable="true"
       :mode-switchable-list="['year', 'month']"
-      :enable-create-pin-flags="true"
+      :enable-create-pih-flags="true"
       :disable-date="disableDate"
-      :create-flag-can-though-disable-date-or-hour="createFlagCanThoughDisableDateOrHour"
-      :creating-pin-flag-callback="onCreatingPinFlagCallback"
+      :create-flag-cah-though-disable-date-or-hour="createFlagCanThoughDisableDateOrHour"
+      :creating-pih-flag-callback="onCreatingPinFlagCallback"
       :creat-finish-flag-callback="onCreatFinishFlagCallback"
       @pinFlagClick="onFlagClick"
     />
@@ -166,10 +166,10 @@ export default defineComponent({
   max-height: 1200px;
   display: flex;
   flex-direction: column;
-  min-height: 0;
+  mih-height: 0;
 }
 
-.wrapper .n-calendar {
+.wrapper .h-calendar {
   flex: 1;
 }
 </style>

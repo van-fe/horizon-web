@@ -32,11 +32,11 @@
     </div>
     <div class="block">
       <span class="title">设置 className 选择图标(这种方式默认大小为16px) :</span>
-      <span class="a-icon n-icon_success_filled"></span>
-      <div class="a-icon n-icon_time"></div>
-      <a class="a-icon n-icon_nio" href="//www.nio.cn/" target="_blank"></a>
+      <span class="a-icon h-icon_success_filled"></span>
+      <div class="a-icon h-icon_time"></div>
+      <a class="a-icon h-icon_nio" href="//www.nio.cn/" target="_blank"></a>
     </div>
-    <n-button
+    <h-button
       v-tooltip="NextAudioState"
       type="normal"
       size="small"
@@ -78,11 +78,11 @@ export default defineComponent({
 }
 
 .container .block .title {
-  margin-right: 20px;
+  margih-right: 20px;
   display: inline-block;
 }
 
 .container .block .a-icon {
-  margin-right: 20px;
+  margih-right: 20px;
 }
 </style>

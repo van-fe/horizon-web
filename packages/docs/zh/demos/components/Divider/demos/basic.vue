@@ -1,18 +1,18 @@
 <template>
-  <n-row :gutter="10" align="middle">
-    <n-col :span="4">
+  <h-row :gutter="10" align="middle">
+    <h-col :span="4">
       Default
-    </n-col>
-    <n-col :span="20">
-      <n-divider />
-    </n-col>
-  </n-row>
-  <n-row :gutter="10" align="middle">
-    <n-col :span="4">
+    </h-col>
+    <h-col :span="20">
+      <h-divider />
+    </h-col>
+  </h-row>
+  <h-row :gutter="10" align="middle">
+    <h-col :span="4">
       Strong
-    </n-col>
-    <n-col :span="20">
-      <n-divider type="strong" />
-    </n-col>
-  </n-row>
+    </h-col>
+    <h-col :span="20">
+      <h-divider type="strong" />
+    </h-col>
+  </h-row>
 </template>

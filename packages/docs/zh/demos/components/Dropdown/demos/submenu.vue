@@ -1,52 +1,52 @@
 <template>
-  <n-row>
-    <n-col :span="24" @click="onClick">
-      <n-dropdown @command="onCommand">
-        <n-button>Grade (hover)</n-button>
+  <h-row>
+    <h-col :span="24" @click="onClick">
+      <h-dropdown @command="onCommand">
+        <h-button>Grade (hover)</h-button>
         <template #dropdown>
-          <n-dropdown-menu>
-            <n-dropdown-submenu v-for="item of list" :key="item.label" :title="item.label">
-              <n-dropdown-submenu v-for="subItem of item.children" :key="subItem.label" :title="subItem.label">
-                <n-dropdown-item v-for="child of subItem.children" :key="child.label" :command="subItem.label + child.label">
+          <h-dropdown-menu>
+            <h-dropdown-submenu v-for="item of list" :key="item.label" :title="item.label">
+              <h-dropdown-submenu v-for="subItem of item.children" :key="subItem.label" :title="subItem.label">
+                <h-dropdown-item v-for="child of subItem.children" :key="child.label" :command="subItem.label + child.label">
                   {{ child.label }}
-                </n-dropdown-item>
-              </n-dropdown-submenu>
-            </n-dropdown-submenu>
-          </n-dropdown-menu>
+                </h-dropdown-item>
+              </h-dropdown-submenu>
+            </h-dropdown-submenu>
+          </h-dropdown-menu>
         </template>
-      </n-dropdown>
+      </h-dropdown>
 
-      <n-dropdown trigger="click" @command="onCommand">
-        <n-button>Grade (click)</n-button>
+      <h-dropdown trigger="click" @command="onCommand">
+        <h-button>Grade (click)</h-button>
         <template #dropdown>
-          <n-dropdown-menu>
-            <n-dropdown-submenu v-for="item of list" :key="item.label" :title="item.label" trigger="click">
-              <n-dropdown-submenu v-for="subItem of item.children" :key="subItem.label" :title="subItem.label" trigger="click">
-                <n-dropdown-item v-for="child of subItem.children" :key="child.label" :command="subItem.label + child.label">
+          <h-dropdown-menu>
+            <h-dropdown-submenu v-for="item of list" :key="item.label" :title="item.label" trigger="click">
+              <h-dropdown-submenu v-for="subItem of item.children" :key="subItem.label" :title="subItem.label" trigger="click">
+                <h-dropdown-item v-for="child of subItem.children" :key="child.label" :command="subItem.label + child.label">
                   {{ child.label }}
-                </n-dropdown-item>
-              </n-dropdown-submenu>
-            </n-dropdown-submenu>
-          </n-dropdown-menu>
+                </h-dropdown-item>
+              </h-dropdown-submenu>
+            </h-dropdown-submenu>
+          </h-dropdown-menu>
         </template>
-      </n-dropdown>
+      </h-dropdown>
 
-      <n-dropdown trigger="click" @command="onCommand">
-        <n-button>Grade (click)</n-button>
+      <h-dropdown trigger="click" @command="onCommand">
+        <h-button>Grade (click)</h-button>
         <template #dropdown>
-          <n-dropdown-menu>
-            <n-dropdown-submenu v-for="item of list" :key="item.label" :title="item.label" trigger="click">
-              <n-dropdown-submenu v-for="subItem of item.children" :key="subItem.label" :title="subItem.label" trigger="click">
-                <n-dropdown-item v-for="child of subItem.children" :key="child.label" :command="subItem.label + child.label">
+          <h-dropdown-menu>
+            <h-dropdown-submenu v-for="item of list" :key="item.label" :title="item.label" trigger="click">
+              <h-dropdown-submenu v-for="subItem of item.children" :key="subItem.label" :title="subItem.label" trigger="click">
+                <h-dropdown-item v-for="child of subItem.children" :key="child.label" :command="subItem.label + child.label">
                   {{ child.label }}
-                </n-dropdown-item>
-              </n-dropdown-submenu>
-            </n-dropdown-submenu>
-          </n-dropdown-menu>
+                </h-dropdown-item>
+              </h-dropdown-submenu>
+            </h-dropdown-submenu>
+          </h-dropdown-menu>
         </template>
-      </n-dropdown>
-    </n-col>
-  </n-row>
+      </h-dropdown>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">
@@ -352,11 +352,11 @@ function onClick() {
 </script>
 
 <style scoped>
-.n-dropdown {
+.h-dropdown {
   display: inline-flex;
 }
 
-.n-dropdown + .n-dropdown {
+.h-dropdown + .h-dropdown {
   margin-left: 12px;
 }
 </style>

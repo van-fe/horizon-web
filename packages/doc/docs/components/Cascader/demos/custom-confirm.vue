@@ -1,49 +1,49 @@
 <template>
   <div>
-    <n-row :gutter="10">
-      <n-col :span="6">
+    <h-row :gutter="10">
+      <h-col :span="6">
         <div class="demo-title">
           自定义按钮文案
         </div>
-        <n-cascader
+        <h-cascader
           v-model="currentVal1"
           :options="options"
           :need-confirm="true"
-          confirm-btn-text="确定"
-          cancel-btn-text="取消"
+          confirm-bth-text="确定"
+          cancel-bth-text="取消"
           :to-body="false"
         />
-      </n-col>
-      <n-col :span="6">
+      </h-col>
+      <h-col :span="6">
         <div class="demo-title">
           自定义 confirm render
-          <n-tooltip content="使用自定义 render 时请确保 confirm 参数不是 false 或者 undefined">
+          <h-tooltip content="使用自定义 render 时请确保 confirm 参数不是 false 或者 undefined">
             <a-icon name="help" />
-          </n-tooltip>
+          </h-tooltip>
         </div>
-        <n-cascader v-model="currentVal2" :options="options" :need-confirm="true" multiple :to-body="false">
+        <h-cascader v-model="currentVal2" :options="options" :need-confirm="true" multiple :to-body="false">
           <template #confirmRender="slotProps">
             <div class="confirm-buttons">
               <span @click="slotProps.cancelHandle">取消</span>
               <span @click="slotProps.confirmHandle">确认</span>
             </div>
           </template>
-        </n-cascader>
-      </n-col>
-      <n-col :span="6">
+        </h-cascader>
+      </h-col>
+      <h-col :span="6">
         <div class="demo-title">
           通过 template ref 去获取组件暴露出来的事件
         </div>
-        <n-cascader ref="cascaderRef" v-model="currentVal3" :options="options" :need-confirm="true" multiple :to-body="false">
+        <h-cascader ref="cascaderRef" v-model="currentVal3" :options="options" :need-confirm="true" multiple :to-body="false">
           <template #confirmRender>
             <div class="confirm-buttons">
               <span @click="confirmCancelHandle">取消</span>
               <span @click="confirmEnterHandle">确认</span>
             </div>
           </template>
-        </n-cascader>
-      </n-col>
-    </n-row>
+        </h-cascader>
+      </h-col>
+    </h-row>
   </div>
 </template>
 
@@ -80,20 +80,20 @@ const confirmEnterHandle = () => {
     line-height: 30px;
     justify-content: center;
     padding: 10px;
-    border-top: 1px solid var(--n-divider-default);
+    border-top: 1px solid var(--h-divider-default);
 }
 
 .confirm-buttons > span {
     margin: 0 10px;
     cursor: pointer;
-    font-weight: var(--n-weight-strong);
+    font-weight: var(--h-weight-strong);
 }
 
 .confirm-buttons > span:first-of-type {
-    color: var(--n-text-secondary)
+    color: var(--h-text-secondary)
 }
 
 .confirm-buttons > span:last-of-type {
-    color: var(--n-text-brand-default)
+    color: var(--h-text-brand-default)
 }
 </style>

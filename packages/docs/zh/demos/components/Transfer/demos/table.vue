@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3 class="m-4">搜索Address</h3>
-    <n-transfer
+    <h-transfer
       v-model="dataModel"
       :props="{ key: 'id', label: 'address' }"
       :data="sourceData"
@@ -12,7 +12,7 @@
         <div>标题（{{ leftCheckedData.size }}/{{ sourceData.length }}）</div>
       </template>
       <template #leftBody="{ data }">
-        <n-table
+        <h-table
           ref="leftTableRef"
           height="100%"
           :data="data"
@@ -21,21 +21,21 @@
           @checkbox-change="(checkedObj: any) => handleCheckboxChange(checkedObj, 'left')"
           @checkbox-all="handleCheckboxAll(data, 'left')"
         >
-          <n-table-column type="checkbox" width="60" align="center" header-align="center" />
-          <n-table-column field="sex" title="Sex" />
-          <n-table-column field="age" title="Age" />
-          <n-table-column field="address" title="Address" show-overflow />
-        </n-table>
+          <h-table-column type="checkbox" width="60" align="center" header-align="center" />
+          <h-table-column field="sex" title="Sex" />
+          <h-table-column field="age" title="Age" />
+          <h-table-column field="address" title="Address" show-overflow />
+        </h-table>
       </template>
       <template #control>
-        <n-button
+        <h-button
           type="normal"
           :plain="true"
           :disabled="!rightCheckedData.size"
           icon="arrow_left"
           @click="transferToLeft"
         />
-        <n-button
+        <h-button
           type="normal"
           style="margin-left: 0"
           :disabled="!leftCheckedData.size"
@@ -48,7 +48,7 @@
         <div>标题（{{ rightCheckedData.size }}/{{ dataModel.length }}）</div>
       </template>
       <template #rightBody="{ data }">
-        <n-table
+        <h-table
           ref="rightTableRef"
           :data="data"
           height="100%"
@@ -57,17 +57,17 @@
           @checkbox-all="handleCheckboxAll(data, 'right')"
           @checkbox-change="(checkedObj: any) => handleCheckboxChange(checkedObj, 'right')"
         >
-          <n-table-column type="checkbox" width="60" align="center" header-align="center" />
-          <n-table-column field="sex" title="Sex" />
-          <n-table-column field="age" title="Age" />
-          <n-table-column field="role" title="Role" />
-          <n-table-column field="address" title="Address" show-overflow />
-        </n-table>
+          <h-table-column type="checkbox" width="60" align="center" header-align="center" />
+          <h-table-column field="sex" title="Sex" />
+          <h-table-column field="age" title="Age" />
+          <h-table-column field="role" title="Role" />
+          <h-table-column field="address" title="Address" show-overflow />
+        </h-table>
       </template>
       <template #leftFooter>
-        <n-pagination :total="sourceData.length" type="simplest" />
+        <h-pagination :total="sourceData.length" type="simplest" />
       </template>
-    </n-transfer>
+    </h-transfer>
   </div>
 </template>
 

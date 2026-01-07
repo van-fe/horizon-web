@@ -1,11 +1,11 @@
 <template>
-  <n-table-v3 :data="data" height="500" row-key="uuid">
-    <n-table-column-v3 title="Seq" type="index" :index="(oriIndex) => oriIndex * 2" />
-    <n-table-column-v3 title="Name" field="name" />
-    <n-table-column-v3 title="Gender" field="gender" />
-    <n-table-column-v3 title="Birthday" field="birthday" />
-    <n-table-column-v3 title="Address" field="address" />
-  </n-table-v3>
+  <h-table-v3 :data="data" height="500" row-key="uuid">
+    <h-table-column-v3 title="Seq" type="index" :index="(oriIndex) => oriIndex * 2" />
+    <h-table-column-v3 title="Name" field="name" />
+    <h-table-column-v3 title="Gender" field="gender" />
+    <h-table-column-v3 title="Birthday" field="birthday" />
+    <h-table-column-v3 title="Address" field="address" />
+  </h-table-v3>
 </template>
 
 <script setup lang="ts">

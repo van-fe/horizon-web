@@ -1,11 +1,11 @@
 <template>
-  <n-upload action="https://horizon-web-inspector.nioint.com/upload-mock" :disabled="true" />
-  <n-upload
+  <h-upload action="https://horizon-web-inspector.nioint.com/upload-mock" :disabled="true" />
+  <h-upload
     action="https://horizon-web-inspector.nioint.com/upload-mock"
     type="gallery"
     :disabled="true"
   />
-  <n-upload action="https://horizon-web-inspector.nioint.com/upload-mock" type="drop" :disabled="true" accept="image/*" />
+  <h-upload action="https://horizon-web-inspector.nioint.com/upload-mock" type="drop" :disabled="true" accept="image/*" />
 </template>
 
 <script lang="ts">
@@ -18,7 +18,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.n-upload + .n-upload {
+.h-upload + .h-upload {
   margin-top: 10px;
 }
 </style>

@@ -236,7 +236,7 @@ export default defineComponent({
                   class={cls(classHelper.e('inner'), classHelper.em('inner', props.theme))}
                   style={{
                     ...contextMenuStyle.value,
-                    ...(props.popperWidth && { '--n-dropdown-width': props.popperWidth + 'px' }),
+                    ...(props.popperWidth && { '--h-dropdown-width': props.popperWidth + 'px' }),
                   }}
                 >
                   {!isDropdownTreeHasThirdLevel.value ? (
@@ -288,7 +288,7 @@ export default defineComponent({
                   ref={popContentDomRef}
                   style={
                     props.popperWidth
-                      ? { '--n-dropdown-width': props.popperWidth + 'px' }
+                      ? { '--h-dropdown-width': props.popperWidth + 'px' }
                       : undefined
                   }
                   class={cls(

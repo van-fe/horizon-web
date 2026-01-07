@@ -2,11 +2,11 @@
   <div class="demo-wrapper">
     <div class="box">
       <span>默认底部按钮</span>
-      <n-time-picker v-model="time1" type="minutes"></n-time-picker>
+      <h-time-picker v-model="time1" type="minutes"></h-time-picker>
     </div>
     <div class="box">
       <span>自定义底部按钮（插槽）</span>
-      <n-time-picker
+      <h-time-picker
         ref="NTimePickerRef"
         v-model="time2"
         type="minutes"
@@ -14,13 +14,13 @@
       >
         <template #footer="{ disabled }">
           <div class="demo-n-time-picker-footer">
-            <n-button :plain="true" size="small" @click="onHandleNow">Now</n-button>
-            <n-button type="primary" size="small" :disabled="disabled" @click="onConfirm">
+            <h-button :plain="true" size="small" @click="onHandleNow">Now</h-button>
+            <h-button type="primary" size="small" :disabled="disabled" @click="onConfirm">
               Confirm
-            </n-button>
+            </h-button>
           </div>
         </template>
-      </n-time-picker>
+      </h-time-picker>
     </div>
   </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <n-image-list margin="8px" :limit="3" :limit-text-size="20">
-      <n-image
+    <h-image-list margin="8px" :limit="3" :limit-text-size="20">
+      <h-image
         v-for="img in imgs"
         :key="img.src"
         :src="img.src"
@@ -13,7 +13,7 @@
       <template #limit>
         <span class="font-bold">More {{ imgs.length - 3 }}</span>
       </template>
-    </n-image-list>
+    </h-image-list>
   </div>
 </template>
 

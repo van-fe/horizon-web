@@ -4,6 +4,6 @@
 :::demo ./demos/demo1.vue :::
 
 ### 自定义配置
-你也可以完全自定义安全规则，放行或阻止指定的标签或属性。详细介绍请参见 [DOMPurify](https://github.com/cure53/DOMPurify#can-i-configure-dompurify)。  
+你也可以完全自定义安全规则，放行或阻止指定的标签或属性。详细介绍请参见 [DOMPurify](https://github.com/cure53/DOMPurify#cah-i-configure-dompurify)。  
 如下示例中，只允许 `span` 和 `p` 标签以及 `style` 属性，其它内容将全部被过滤掉。
 :::demo ./demos/demo2.vue :::

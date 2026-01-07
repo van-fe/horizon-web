@@ -1,7 +1,7 @@
 {
-  "name": "@aurora/unplugin-resolver",
+  "name": "@aurora/horizon-web-unplugin-resolver",
   "version": "1.0.0",
-  "description": "auto load on demand for unplugin-vue-component",
+  "description": "auto load on demand for horizon-web",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {

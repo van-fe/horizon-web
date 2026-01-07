@@ -1,9 +1,9 @@
 @use '../../../../styles/mixins';
-@import './month';
-@import './year';
-@import './week';
-@import './day';
-@import './auto-fit';
+@use 'month';
+@use 'year';
+@use 'week';
+@use 'day';
+@use 'auto-fit';
 
 @include mixins.b('calendar') {
   display: flex;

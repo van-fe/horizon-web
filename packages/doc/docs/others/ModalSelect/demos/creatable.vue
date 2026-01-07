@@ -1,38 +1,38 @@
 <template>
-  <n-row>
-    <n-col :span="6">
-      <div class="demo-title">单选-允许创建 <n-tooltip content="拦截创建【南京】"><IconHelp /></n-tooltip></div>
-      <n-modal-select v-model="value1" allow-create :before-create="beforeCreate" :to-body="false" @input="onInput">
-        <n-option value="1" label="上海" />
-        <n-option value="2" label="北京" />
-        <n-option value="3" label="合肥" name="hefei" />
-      </n-modal-select>
-    </n-col>
+  <h-row>
+    <h-col :span="6">
+      <div class="demo-title">单选-允许创建 <h-tooltip content="拦截创建【南京】"><IconHelp /></h-tooltip></div>
+      <h-modal-select v-model="value1" allow-create :before-create="beforeCreate" :to-body="false" @input="onInput">
+        <h-option value="1" label="上海" />
+        <h-option value="2" label="北京" />
+        <h-option value="3" label="合肥" name="hefei" />
+      </h-modal-select>
+    </h-col>
 
-    <n-col :span="6">
+    <h-col :span="6">
       <div class="demo-title">多选-允许创建</div>
-      <n-modal-select v-model="values1" allow-create multiple :to-body="false">
-        <n-option label="上海" :value="1" />
-        <n-option :value="2" label="北京" />
-        <n-option :value="3" label="合肥" name="hefei" />
-      </n-modal-select>
-    </n-col>
+      <h-modal-select v-model="values1" allow-create multiple :to-body="false">
+        <h-option label="上海" :value="1" />
+        <h-option :value="2" label="北京" />
+        <h-option :value="3" label="合肥" name="hefei" />
+      </h-modal-select>
+    </h-col>
 
-    <n-col :span="6">
+    <h-col :span="6">
       <div class="demo-title">多选-带创建选项长度超长</div>
-      <n-modal-select v-model="values2" allow-create multiple :to-body="false">
-        <n-option label="齐齐哈尔" :value="1" />
-        <n-option :value="2" label="那然色布斯台音布拉格" />
-        <n-option label="上海" :value="3" />
-        <n-option :value="4" label="北京" />
-        <n-option :value="5" label="合肥" name="hefei" />
-        <n-option
+      <h-modal-select v-model="values2" allow-create multiple :to-body="false">
+        <h-option label="齐齐哈尔" :value="1" />
+        <h-option :value="2" label="那然色布斯台音布拉格" />
+        <h-option label="上海" :value="3" />
+        <h-option :value="4" label="北京" />
+        <h-option :value="5" label="合肥" name="hefei" />
+        <h-option
           :value="6"
           label="黄台甫马哈那坤弃他哇劳狄希阿由他亚马哈底陆浦欧叻辣塔尼布黎隆乌冬帕拉查尼卫马哈洒坦"
         />
-      </n-modal-select>
-    </n-col>
-  </n-row>
+      </h-modal-select>
+    </h-col>
+  </h-row>
 </template>
 
 <script setup lang="ts">

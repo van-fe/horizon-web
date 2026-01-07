@@ -1,7 +1,7 @@
 <template>
-  <n-segmented default-active-key="Daily" block>
-    <n-segmented-item v-for="v in options" :key="v" :label="v" />
-  </n-segmented>
+  <h-segmented default-active-key="Daily" block>
+    <h-segmented-item v-for="v in options" :key="v" :label="v" />
+  </h-segmented>
 </template>
 
 <script setup lang="ts">
