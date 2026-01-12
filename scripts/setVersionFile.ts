@@ -30,6 +30,12 @@ function setHorizonWebVersion() {
     JSON.stringify(content, null, 2),
     'utf-8',
   );
+
+  fs.writeFileSync(
+    path.resolve(__dirname, '../packages/docs/.vitepress/config/version.json'),
+    JSON.stringify(content, null, 2),
+    'utf-8',
+  );
 }
 
 setHorizonWebVersion();

@@ -13,9 +13,16 @@ export default (md: MarkdownIt) => {
       const m = tokens[idx].info.trim().match(/^demo\s*(.*)\s*:::$/);
 
       if (tokens[idx].nesting === 1) {
-        const content = fs.readFileSync(path.resolve(__dirname, '../../demos/', m?.[1]?.trim()), 'utf-8');
+        const demoPath = m?.[1]?.trim() || '';
+        const fullPath = path.resolve(__dirname, '../../demos/', demoPath);
+        const content = fs.readFileSync(fullPath, 'utf-8');
+        
+        // 计算相对于 packages/docs 的路径，用于动态导入
+        // VitePress 会从项目根目录解析，所以需要相对于 packages/docs
+        const docsRoot = path.resolve(__dirname, '../../');
+        const relativePath = path.relative(docsRoot, fullPath).replace(/\\/g, '/');
 
-        return `<demo-block source="${md.utils.escapeHtml(content)}" />`;
+        return `<demo-block source="${md.utils.escapeHtml(content)}" path="${relativePath}" />`;
       }
       return '';
     },

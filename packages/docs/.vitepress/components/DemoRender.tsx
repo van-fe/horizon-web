@@ -1,9 +1,190 @@
-import { defineCustomElement, defineComponent, createApp, ref, watch, onMounted, onUnmounted, getCurrentInstance, type App } from "vue";
-import compileVueString from './compileVueString';
+import { defineCustomElement, defineComponent, createApp, ref, watch, onMounted, onUnmounted, getCurrentInstance, type App, type ComponentOptions } from "vue";
+import * as Vue from 'vue';
 import { default as HorizonWeb } from '@aurora/horizon-web';
 import { customAlphabet } from 'nanoid';
 import horizonWebStyles from '@aurora/horizon-web/src/styles/index.scss?inline';
-import { parse } from '@vue/compiler-sfc';
+import { parse, compileScript, compileTemplate, compileStyle, type SFCScriptBlock, type SFCScriptCompileOptions } from '@vue/compiler-sfc';
+
+// 编译 Vue 文件字符串的内部函数
+function compileVueString(
+  vueFileContent: string, 
+  componentId: string, 
+  options: Omit<SFCScriptCompileOptions, 'id'> = {},
+  moduleResolver?: (moduleName: string, moduleSource: string) => any
+) {
+  // 1. 解析 SFC
+  const { descriptor } = parse(vueFileContent);
+
+  let scriptResult: SFCScriptBlock | null = null;
+
+  // 2. 编译 script
+  if (descriptor?.script || descriptor?.scriptSetup) {
+    scriptResult = compileScript(descriptor, {
+      id: componentId,
+      ...options
+    });
+  }
+
+  // 3. 编译 style
+  const styles = descriptor?.styles || [];
+  const styleResults = styles.map((style) => {
+    return compileStyle({
+      source: style.content,
+      filename: 'example.vue',
+      id: componentId,
+      scoped: false
+    });
+  });
+
+  // 4. 编译 template
+  const templateResult = compileTemplate({
+    source: descriptor?.template?.content || '',
+    filename: 'example.vue',
+    id: componentId,
+  });
+
+  // 5. 组合组件选项
+  let componentOptions: ComponentOptions = {};
+  
+  try {
+    // 构建完整的组件代码
+    const scriptCode = scriptResult?.content || '';
+    const templateCode = templateResult.code || '';
+
+    console.log({scriptResult});
+    
+    // 提取 render 函数（从 template 编译结果）
+    let render: any = null;
+    if (templateCode) {
+      try {
+        // 移除可能的 import 语句
+        let processedTemplateCode = templateCode;
+        processedTemplateCode = processedTemplateCode.replace(/import\s+.*?\s+from\s+['"][^'"]+['"];?\s*/g, '');
+        processedTemplateCode = processedTemplateCode.replace(/export\s+/g, '');
+        processedTemplateCode = processedTemplateCode.replace(/\n\s*\n\s*\n+/g, '\n\n');
+        
+        // 使用 IIFE 包装整个代码
+        const wrappedCode = `
+          (function() {
+            ${processedTemplateCode}
+            return typeof render !== 'undefined' ? render : null;
+          })
+        `;
+        
+        const templateModule = new Function('helpers', wrappedCode);
+        render = templateModule();
+      } catch (err) {
+        console.warn('Failed to execute template code:', err);
+        render = null;
+      }
+    }
+    
+    // 处理 script 代码
+    if (scriptCode) {
+      try {
+        // 创建模块映射
+        const moduleMap: Record<string, any> = {};
+        
+        // 处理每个导入
+        for (const [moduleName, importBinding] of Object.entries(scriptResult?.imports || {})) {
+          try {
+            let module: any = null;
+            debugger;
+            if (moduleResolver) {
+              module = moduleResolver(importBinding.source);
+            } else {
+              module = require(importBinding.source);
+            }
+            
+            moduleMap[moduleName] = module[moduleName] || {};
+          } catch {
+            console.warn(`Failed to resolve module: ${moduleName} from ${importBinding.source}`);
+            moduleMap[moduleName] = {};
+          }
+        }
+
+        console.log({moduleMap});
+
+        let processedScriptCode = '';
+
+        for (const [key, value] of Object.entries(moduleMap)) {
+          processedScriptCode += `const ${key} = ${JSON.stringify(value)};\n`;
+        }
+
+        console.log({processedScriptCode});
+
+        // 执行 script 代码
+        const scriptModule = new Function(
+          '__modules__',
+          'defineComponent',
+          `
+          ${processedScriptCode}
+          
+          // 尝试获取导出的组件
+          if (typeof __sfc__ !== 'undefined') {
+            return __sfc__;
+          }
+          if (typeof default !== 'undefined') {
+            return default;
+          }
+          return {};
+          `
+        );
+        
+        // 提供必要的依赖
+        const { defineComponent: dc } = require('vue');
+        const componentFromScript = scriptModule(moduleMap, dc);
+        
+        // 合并组件选项
+        if (componentFromScript) {
+          if (typeof componentFromScript === 'function') {
+            componentOptions = componentFromScript;
+          } else if (typeof componentFromScript === 'object') {
+            componentOptions = { ...componentOptions, ...componentFromScript };
+          }
+        }
+      } catch (error) {
+        console.warn('Error executing script code:', error);
+        if (scriptResult?.bindings) {
+          componentOptions = { ...componentOptions, ...scriptResult.bindings };
+        }
+      }
+    }
+    
+    // 添加 render 函数
+    if (render && typeof render === 'function') {
+      componentOptions.render = render;
+    } else if (templateCode && !render) {
+      componentOptions.template = descriptor?.template?.content || '';
+    }
+    
+    // 如果 componentOptions 仍然是空对象，创建一个基本组件
+    if (Object.keys(componentOptions).length === 0) {
+      if (render && typeof render === 'function') {
+        componentOptions = defineComponent({
+          render
+        });
+      } else if (descriptor?.template?.content) {
+        componentOptions = defineComponent({
+          template: descriptor.template.content
+        });
+      }
+    }
+  } catch (error) {
+    console.error('Error creating component:', error);
+    componentOptions = defineComponent({
+      template: descriptor?.template?.content || '<div>Component compilation failed</div>'
+    });
+  }
+
+  return {
+    descriptor,
+    scriptResult,
+    templateResult,
+    styleResults,
+    componentOptions
+  };
+}
 
 // 定义 Vue 组件
 const DemoRenderComponent = defineComponent({
@@ -213,7 +394,7 @@ const DemoRenderComponent = defineComponent({
         const moduleResolver = (modulePath: string) => {
           if (modulePath === 'vue' || modulePath.startsWith('@vue/')) {
             try {
-              return require('vue');
+              return Vue;
             } catch {
               return (globalThis as any).Vue || {};
             }

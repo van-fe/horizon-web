@@ -1,0 +1,145 @@
+import md from './markdown';
+import appendPluginInfo from './utils/appendPluginInfo';
+import parseDemo from './utils/parseDemo';
+import parseCode from './utils/parseCode';
+import parseAnchor, { parseNormalAnchor } from './utils/parseAnchor';
+import appendApi from './utils/appendApi';
+import componentsJson from '../../../doc/build/json/components-analysis.json';
+import directivesJson from '../../../doc/build/json/directives-analysis.json';
+import methodsJson from '../../../doc/build/json/methods-analysis.json';
+import othersJson from '../../../doc/build/json/others-info.json';
+import type {
+  ApiGeneratorAnalysedComponentDetail,
+  ApiGeneratorAnalysedDirectiveDetail,
+  ApiGeneratorAnalysedMethodDetail,
+} from '@aurora/utils';
+import { pascalize } from '@aurora/utils';
+
+const componentsAnalysis = componentsJson as unknown as ApiGeneratorAnalysedComponentDetail[];
+const directivesAnalysis = directivesJson as unknown as ApiGeneratorAnalysedDirectiveDetail[];
+const methodsAnalysis = methodsJson as unknown as ApiGeneratorAnalysedMethodDetail[];
+const othersInfo = othersJson as unknown as OtherInfo[];
+
+export interface OtherInfo {
+  name: string;
+  desc: string;
+  dirName: string;
+}
+
+function renderOthers(dirName: string, source: string, filePath: string, root: string) {
+  let content = md.render(source);
+
+  const currMode = othersInfo.find(curr => curr.name.toLowerCase() === dirName.toLowerCase())!;
+
+  const pluginInfo = appendPluginInfo(currMode, 'others');
+
+  const { output: demoOutput, importScripts: demoImports } = parseDemo(content, filePath, root);
+  const { output: finalOutput, importScripts: codeImports } = parseCode(demoOutput, filePath, root);
+
+  content = finalOutput;
+
+  const { output: anchorOutput, rightMenu } = parseNormalAnchor(content);
+
+  content = anchorOutput;
+
+  return `<template>
+        <section class="content">
+          ${pluginInfo}
+          ${content}
+          ${rightMenu}
+        </section>
+      </template>
+      <script setup>${demoImports.join('\n')}${codeImports.join('\n')}</script>`;
+}
+
+function renderNormal(source: string, filePath: string, root: string) {
+  let content = md.render(source);
+
+  const { output: demoOutput, importScripts: demoImports } = parseDemo(content, filePath, root);
+  const { output, importScripts: codeImports } = parseCode(demoOutput, filePath, root);
+
+  const { output: anchorOutput, rightMenu } = parseNormalAnchor(output, false);
+  content = anchorOutput;
+
+  return `<template>
+        <section class="content">
+          ${content}
+          ${rightMenu}
+        </section>
+      </template>
+      <script setup>${demoImports.join('\n')}${codeImports.join('\n')}</script>`;
+}
+
+export default function (source: string, filePath: string, root: string) {
+  const dirName = pascalize(filePath.split('/').at(-2)!.replace(/^v-/, ''));
+  const dirType = filePath.split('/').at(-3)! as 'components' | 'directives' | 'methods' | 'others';
+
+  let currMode:
+    | ApiGeneratorAnalysedComponentDetail
+    | ApiGeneratorAnalysedDirectiveDetail
+    | ApiGeneratorAnalysedMethodDetail
+    | undefined;
+  const relatedModes: Array<
+    | ApiGeneratorAnalysedComponentDetail
+    | ApiGeneratorAnalysedDirectiveDetail
+    | ApiGeneratorAnalysedMethodDetail
+  > = [];
+  switch (dirType) {
+    case 'components':
+      currMode = componentsAnalysis.find(curr => curr.name.toLowerCase() === dirName.toLowerCase());
+      relatedModes.push(
+        ...componentsAnalysis.filter(
+          curr => curr.parentComponentName.toLowerCase() === dirName.toLowerCase(),
+        ),
+      );
+      break;
+    case 'directives':
+      currMode = directivesAnalysis.find(curr => curr.name === dirName);
+      relatedModes.push(currMode!);
+      break;
+    case 'methods':
+      currMode = methodsAnalysis.find(curr => curr.dirName.toLowerCase() === dirName.toLowerCase());
+      relatedModes.push(
+        ...methodsAnalysis.filter(curr => curr.dirName.toLowerCase() === dirName.toLowerCase()),
+      );
+      break;
+    case 'others':
+      return renderOthers(dirName, source, filePath, root);
+    default:
+      return renderNormal(source, filePath, root);
+  }
+
+  if (!currMode && relatedModes.length) {
+    currMode = relatedModes[0];
+  }
+
+  let content = md.render(source);
+  const pluginInfo = appendPluginInfo(currMode!, dirType);
+
+  const { output: demoOutput, importScripts: demoImports } = parseDemo(content, filePath, root);
+  const { output: finalOutput, importScripts: codeImports } = parseCode(demoOutput, filePath, root);
+
+  content = finalOutput;
+
+  const apiContent = relatedModes
+    .map(mode => {
+      return appendApi(mode, relatedModes.length > 1, dirType);
+    })
+    .join('');
+
+  const { output: anchorOutput, rightMenu } = parseAnchor(content, relatedModes, dirType);
+
+  content = anchorOutput;
+
+  return `
+   <template>
+      <section class="content">
+        ${pluginInfo}
+        ${content}
+        ${apiContent}
+        ${rightMenu}
+      </section>
+    </template>
+    <script setup>${demoImports.join('\n')}${codeImports.join('\n')}</script>
+  `;
+}

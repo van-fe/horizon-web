@@ -40,6 +40,7 @@
     "@aurora/eslint-plugin-horizon-web": "workspace:*",
     "@aurora/utils": "workspace:*",
     "@aurora/horizon-web": "workspace:*",
+    "@aurora/icon": "workspace:*",
     "@oxlint/migrate": "^1.33.0",
     "@rollup/plugin-alias": "^6.0.0",
     "@rollup/plugin-babel": "^6.0.3",

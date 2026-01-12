@@ -18,6 +18,7 @@
 <script setup lang="ts"></script>
 <style scoped>
 .grid {
+  display: grid;
   width: fit-content;
   grid-template-rows: repeat(3, 1fr);
   grid-template-columns: repeat(3, 1fr);

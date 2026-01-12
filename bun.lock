@@ -10,6 +10,7 @@
       "devDependencies": {
         "@aurora/eslint-plugin-horizon-web": "workspace:*",
         "@aurora/horizon-web": "workspace:*",
+        "@aurora/icon": "workspace:*",
         "@aurora/utils": "workspace:*",
         "@babel/core": "^7.26.0",
         "@babel/eslint-parser": "^7.26.0",
@@ -174,7 +175,7 @@
         "unplugin-vue-components": "^30.0.0",
       },
     },
-    "packages/eslint-plugin-lego": {
+    "packages/eslint-plugin-horizon-web": {
       "name": "@aurora/eslint-plugin-horizon-web",
       "version": "1.0.0",
     },
@@ -329,7 +330,7 @@
 
     "@aurora/doc": ["@aurora/doc@workspace:packages/doc"],
 
-    "@aurora/eslint-plugin-horizon-web": ["@aurora/eslint-plugin-horizon-web@workspace:packages/eslint-plugin-lego"],
+    "@aurora/eslint-plugin-horizon-web": ["@aurora/eslint-plugin-horizon-web@workspace:packages/eslint-plugin-horizon-web"],
 
     "@aurora/horizon-web": ["@aurora/horizon-web@workspace:packages/horizon-web"],
 

@@ -8,7 +8,6 @@ export default (md: MarkdownIt) => {
 
   md.renderer.rules.fence = (tokens, idx, options, env, self) => {
     const token = tokens[idx];
-    console.info(token);
     // 判断该 fence 是否在 :::demo 内
     const prevToken = tokens[idx - 1];
     const isInDemoContainer =
