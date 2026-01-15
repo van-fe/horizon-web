@@ -18,24 +18,24 @@ function onScroll() {
 }
 
 onMounted(() => {
-  document.body.querySelector('.h-main')?.addEventListener('scroll', onScroll);
+  window.addEventListener('scroll', onScroll);
 });
 
 onBeforeUnmount(() => {
-  document.body.querySelector('.h-main')?.removeEventListener('scroll', onScroll);
+  window.removeEventListener('scroll', onScroll);
 });
 </script>
 
 <style scoped>
 .target-wrapper {
   height: 200px;
-  border: 1px solid var(--n-border-default);
+  border: 1px solid var(--h-border-default);
   overflow: auto;
 }
 
 .target-container {
   height: 1000px;
-  background: var(--n-bg-weak-activated);
+  background: var(--h-bg-weak-activated);
   padding-top: 20px;
 }
 </style>

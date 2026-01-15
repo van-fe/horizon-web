@@ -34,7 +34,7 @@ setNamespace('x');
 
 ## 设置 scss 变量
 
-### 全量引用
+## 全量引用
 在你的项目中创建一个 `scss` 文件: `例如：(styles/horizon-web.scss)`:
 
 ```scss
@@ -58,7 +58,7 @@ setNamespace('x');
 
 <br>
 
-### 按需引用
+## 按需引用
 
 因为只有 `horizon-web` 拥有按需引用的能力，所以只能创建一个只有 `horizon-web` 的 `forward` 文件 (例如：`styles/horizon-web.scss`)
 
@@ -127,7 +127,7 @@ module.exports = {
 }
 ```
 
-### 按需引入 + SCSS变量
+## 按需引入 + SCSS变量
 
 按需引入只有 `@aurora/horizon-web` 支持。`@aurora/horizon-web-table` 和 `@aurora/icon` 都是全量引入
 

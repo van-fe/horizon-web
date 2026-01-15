@@ -1,5 +1,5 @@
 <template>
-  <h-table-v3 :data="data" height="300px" header-sticky header-sticky-container=".h-main">
+  <h-table-v3 :data="data" height="300px" header-sticky header-sticky-container=".VPDoc">
     <h-table-column-v3 title="Name" field="name" />
     <h-table-column-v3 title="Birthday" field="birthday" />
     <h-table-column-v3 title="Address" field="address" />

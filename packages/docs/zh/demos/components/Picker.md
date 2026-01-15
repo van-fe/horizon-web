@@ -1,2 +1,2 @@
-### 基本用法
+## 基本用法
 :::demo components/Picker/basic.vue :::

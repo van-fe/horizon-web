@@ -9,7 +9,7 @@ import {
   nextTick,
   onDeactivated,
   ref,
-  toRefs,
+  toRef,
   watch,
   watchEffect,
 } from 'vue';
@@ -42,65 +42,42 @@ export default defineComponent({
   ) {
     let instance: PopperInstance | null = null;
 
-    const {
-      trigger: triggerProp,
-      placement: placementProp,
-      distance: distanceProp,
-      popperClass: popperClassProp,
-      visible: visibleProp,
-      skidding: skiddingProp,
-      arrow: arrowProp,
-      disabled: disabledProp,
-      content: contentProp,
-      overflow: overflowProp,
-      toBody: toBodyProp,
-      // singleton: singletonProp,
-      flip: flipProp,
-      fallbackPlacements: fallbackPlacementsProp,
-      size,
-      copySuccessText: copySuccessTextProp,
-      copyFailText: copyFailTextProp,
-      referenceHiddenObserve: referenceHiddenObserveProp,
-      teleportTo: teleportToProp,
-      popperReferenceHidden: popperReferenceHiddenProp,
-      theme: themeProp,
-      referenceScale: referenceScaleProp,
-      strategy: strategyProp,
-    } = toRefs(props);
-
     const classHelper = new ComponentClassBlock('tooltip');
     const tooltipRef = ref<HTMLElement | null>(null);
     const arrowRef = ref<HTMLElement | null>(null);
     const contentRef = ref<HTMLElement | null>(null);
-    const tooltipVisible = ref(visibleProp.value);
-    const tooltipDisabled = ref(disabledProp.value);
+    const tooltipVisible = ref(props.visible);
+    const tooltipDisabled = ref(props.disabled);
 
     let isEnteredInTooltip = false;
     let mouseEnterTimer: ReturnType<typeof setTimeout> | null = null;
     let mouseLeaveTimer: ReturnType<typeof setTimeout> | null = null;
     const referenceRef = ref<any>(null);
 
-    const sizeRef = useSize(size, 'medium');
+    const sizeRef = useSize(toRef(props, 'size'), 'medium');
 
     const zIndexHandler = useZIndex(props.zIndex);
     const zIndex = ref(zIndexHandler.current);
 
     watch(
-      () => disabledProp.value,
+      () => props.disabled,
       val => {
         tooltipDisabled.value = val;
       },
     );
 
-    watch(visibleProp, val => {
-      if (triggerProp.value === 'manual') {
-        tooltipVisible.value = val;
+    watch(
+      () => props.visible,
+      val => {
+        if (props.trigger === 'manual') {
+          tooltipVisible.value = val;
 
-        if (val) {
-          zIndex.value = zIndexHandler.next();
+          if (val) {
+            zIndex.value = zIndexHandler.next();
+          }
         }
-      }
-    });
+      },
+    );
 
     watch(tooltipVisible, val => {
       if (val) {
@@ -148,41 +125,41 @@ export default defineComponent({
       if (!target) {
         tooltipDisabled.value = true;
       } else {
-        const isOverflow = useOverflow(target, referenceScaleProp.value);
+        const isOverflow = useOverflow(target, props.referenceScale);
 
-        if (!isOverflow && overflowProp.value) {
+        if (!isOverflow && props.overflow) {
           tooltipDisabled.value = true;
         } else {
-          tooltipDisabled.value = disabledProp.value;
+          tooltipDisabled.value = props.disabled;
         }
       }
     }
 
     const onMouseenter = (event: MouseEvent) => {
-      if (disabledProp.value || triggerProp.value !== 'hover') return;
+      if (props.disabled || props.trigger !== 'hover') return;
       isEnteredInTooltip = false;
       useTooltipObserver(event.target as HTMLElement);
       showTooltip();
     };
 
     const onMouseleave = () => {
-      if (tooltipDisabled.value || triggerProp.value !== 'hover' || isEnteredInTooltip) return;
+      if (tooltipDisabled.value || props.trigger !== 'hover' || isEnteredInTooltip) return;
       hideTooltip();
     };
 
     const onMousedown = (event: MouseEvent) => {
-      if (disabledProp.value || triggerProp.value !== 'focus') return;
+      if (props.disabled || props.trigger !== 'focus') return;
       useTooltipObserver(event.target as HTMLElement);
       showTooltip();
     };
 
     const onMouseup = () => {
-      if (tooltipDisabled.value || triggerProp.value !== 'focus') return;
+      if (tooltipDisabled.value || props.trigger !== 'focus') return;
       hideTooltip();
     };
 
     const onHandleClick = (event: MouseEvent) => {
-      if (disabledProp.value || triggerProp.value !== 'click') return;
+      if (props.disabled || props.trigger !== 'click') return;
       if (tooltipVisible.value) {
         hideTooltip();
       } else {
@@ -193,7 +170,7 @@ export default defineComponent({
 
     const onHandleContextmenu = (event: MouseEvent) => {
       event.preventDefault();
-      if (disabledProp.value || triggerProp.value !== 'contextmenu') return;
+      if (props.disabled || props.trigger !== 'contextmenu') return;
       if (tooltipVisible.value) {
         hideTooltip();
       } else {
@@ -227,10 +204,10 @@ export default defineComponent({
       return referenceRef.value && referenceRef.value.el && referenceRef.value.el.nodeType === 1;
     }
 
-    const copySuccessText = (copySuccessTextProp.value ??
+    const copySuccessText = (props.copySuccessText ??
       useLocaleLang('tooltip.copySuccess', 'Successful replication')) as ComputedRef<string>;
 
-    const copyFailText = (copyFailTextProp.value ??
+    const copyFailText = (props.copyFailText ??
       useLocaleLang('tooltip.copyFail', 'Replication failure')) as ComputedRef<string>;
 
     function onClickContent() {
@@ -275,17 +252,17 @@ export default defineComponent({
           nextTick(() => {
             if (!instance && isElementNode()) {
               instance = usePopper(referenceRef.value.el, tooltipRef.value as HTMLElement, {
-                placement: placementProp.value,
-                skidding: skiddingProp.value,
-                distance: distanceProp.value,
-                arrow: arrowProp.value,
-                flip: flipProp.value,
-                fallbackPlacements: fallbackPlacementsProp.value,
-                referenceOverflowObserve: referenceHiddenObserveProp.value,
+                placement: props.placement,
+                skidding: props.skidding,
+                distance: props.distance,
+                arrow: props.arrow,
+                flip: props.flip,
+                fallbackPlacements: props.fallbackPlacements,
+                referenceOverflowObserve: props.referenceHiddenObserve,
                 referenceOverflowCallback: overflow => overflow && (tooltipVisible.value = false),
                 arrowOption: { padding: 3 },
                 preventOverflow: props.preventOverflow,
-                strategy: strategyProp.value,
+                strategy: props.strategy,
                 // onApplyArrowHide,
               });
             } else {
@@ -315,7 +292,7 @@ export default defineComponent({
 
     let stopResizeObserver: (() => void) | undefined = undefined;
     watchEffect(() => {
-      if (isElementNode() && visibleProp.value && overflowProp.value) {
+      if (isElementNode() && props.visible && props.overflow) {
         const { stop } = useResizeObserver(referenceRef.value.el, entries => {
           const targetEl = entries[0].target;
           useTooltipObserver(targetEl as HTMLElement);
@@ -324,7 +301,7 @@ export default defineComponent({
         stopResizeObserver = stop;
       } else {
         stopResizeObserver?.();
-        tooltipDisabled.value = disabledProp.value;
+        tooltipDisabled.value = props.disabled;
       }
     });
 
@@ -359,21 +336,24 @@ export default defineComponent({
                 onContextmenu: (event: MouseEvent) => onHandleContextmenu(event),
               })}
           </HChildOnly>
-          <Teleport to={teleportToProp.value} disabled={!toBodyProp.value}>
+          <Teleport to={props.teleportTo} disabled={!props.toBody}>
             <HTransition appear name="tooltip" onAfterLeave={onAfterLeave}>
               {tooltipVisible.value && !tooltipDisabled.value && (
                 <div
                   ref={tooltipRef}
-                  class={cls(
-                    classHelper.block,
-                    popperClassProp.value,
-                    classHelper.m('hidden', !tooltipVisible.value),
-                    classHelper.m('lock', arrowLock.value),
-                    classHelper.m(sizeRef.value),
-                    classHelper.m(themeProp.value),
-                    classHelper.has('reference-hidden-observer', referenceHiddenObserveProp.value),
-                    classHelper.is('popper-reference-hidden', popperReferenceHiddenProp.value),
-                  )}
+                    class={cls(
+                      classHelper.block,
+                      props.popperClass,
+                      classHelper.m('hidden', !tooltipVisible.value),
+                      classHelper.m('lock', arrowLock.value),
+                      classHelper.m(sizeRef.value),
+                      classHelper.m(props.theme),
+                      classHelper.has(
+                        'reference-hidden-observer',
+                        props.referenceHiddenObserve,
+                      ),
+                      classHelper.is('popper-reference-hidden', props.popperReferenceHidden),
+                    )}
                   style={{ zIndex: zIndex.value }}
                   onMouseenter={onMouseEnterTooltip}
                   onMouseleave={onMouseLeaveTooltip}
@@ -387,9 +367,9 @@ export default defineComponent({
                       classHelper.is('clickable', props.clickToCopy),
                     )}
                   >
-                    {slots.content?.() ?? contentProp.value}
+                    {slots.content?.() ?? props.content}
                   </div>
-                  {arrowProp.value && (
+                  {props.arrow && (
                     <div ref={arrowRef} class={[classHelper.e('arrow')]} data-popper-arrow></div>
                   )}
                 </div>

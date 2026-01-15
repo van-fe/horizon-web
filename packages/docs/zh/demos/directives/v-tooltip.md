@@ -1,16 +1,16 @@
-### 位置
+## 位置
 依据 `top` `right` `bottom` `left` `top-start` `top-end` `bottom-start` `bottom-end` 修饰符控制显示方向
 :::demo directives/v-tooltip/placement.vue :::
 
-### 状态
+## 状态
 依据 `disabled` 修饰符控制能否触发显示，依据 `visible` 修饰符控制是否显示，根据 `hover` `click` `focus` `manual` 修饰符控制触发条件
 :::demo directives/v-tooltip/trigger.vue :::
 
-### 样式
+## 样式
 自 `2.7.0` 开始， 依据 `medium` `small` 修饰符控制显示尺寸，依据 `dark` `light` 修饰符控制显示主题
 :::demo directives/v-tooltip/style.vue :::
 
-### 配置方式
+## 配置方式
 可以传入 `object` 来控制 `v-tooltip` 显示
 :::demo directives/v-tooltip/options.vue :::
 

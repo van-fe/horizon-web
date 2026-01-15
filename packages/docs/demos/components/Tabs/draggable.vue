@@ -60,6 +60,6 @@ const onSort = (current: number, target: number, sortedKeys: number[]) => {
 .fade-move,
 .fade-enter-active,
 .fade-leave-active {
-  transition: all var(--n-tabs-transition-time) var(--n-tabs-transition-fn);
+  transition: all var(--h-tabs-transition-time) var(--h-tabs-transition-fn);
 }
 </style>

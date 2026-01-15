@@ -12,5 +12,5 @@
 |grid|display: grid;|
 |inline-grid|display: inline-grid;|
 
-### Demo
+## Demo
 :::demo ./demos/demo1.vue :::

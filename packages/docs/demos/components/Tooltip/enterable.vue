@@ -9,6 +9,10 @@
         <h-button>允许移入复制</h-button>
         <template #content>可以复制这里的内容</template>
       </h-tooltip>
+    </h-col>
+  </h-row>
+  <h-row>
+    <h-col>
       <h-tooltip placement="top" :enterable="true" :click-to-copy="true">
         <h-button>允许移入点击后复制</h-button>
         <template #content>点击后这串文字将会出现在剪切板里</template>

@@ -28,7 +28,7 @@ import { onMounted, ref } from 'vue';
 const baseTreeData = ref([]);
 
 onMounted(() => {
-  fetch('https://static.nio.com/fx-static/horizon-web/clronbwg5000i09be0nxgaxh8/field-map-options.json')
+  fetch(new URL('/field-map-options.json', import.meta.url).href)
     .then(res => res.json())
     .then(res => {
       baseTreeData.value = res;

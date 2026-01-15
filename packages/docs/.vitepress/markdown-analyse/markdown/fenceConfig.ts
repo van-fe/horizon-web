@@ -13,8 +13,6 @@ export default (md: MarkdownIt) => {
     const isInDemoContainer =
       prevToken && prevToken.nesting === 1 && prevToken.info.trim().match(/^demo\s*(.*)$/);
 
-      console.log({isInDemoContainer});
-
     if (token.info === 'html' && isInDemoContainer) {
       return `<template v-slot:highlight><pre v-pre><code class="html">${md.utils.escapeHtml(
         token.content,

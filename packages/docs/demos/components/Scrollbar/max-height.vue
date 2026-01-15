@@ -35,7 +35,7 @@ function del() {
 
 .item {
   height: 40px;
-  background: var(--n-bg-info-weak-default);
+  background: var(--h-bg-info-weak-default);
   display: flex;
   align-items: center;
   justify-content: center;

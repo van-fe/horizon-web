@@ -28,6 +28,7 @@
       background: mixins.css-variable('date-picker', 'background', 'panel', 'body', 'grid-item');
       border-radius: mixins.css-variable('date-picker', 'border-radius');
       transition: mixins.css-variable('date-picker', 'transition', 'color-behavior');
+      font-size: mixins.css-variable('date-picker', 'font', 'size', 'panel', 'body', 'grid-item');
     }
 
     @include mixins.has('dot') {

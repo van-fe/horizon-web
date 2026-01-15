@@ -34,7 +34,7 @@ const showRadio = ref(false);
 const showCheckbox = ref(true);
 
 onMounted(() => {
-  fetch('https://static.nio.com/fx-static/horizon-web/clrk8znpi000109bebmtiggbz/tree-data.json')
+  fetch(new URL('/tree-data.json', import.meta.url).href)
     .then(res => res.json())
     .then(res => {
       baseTreeData.value = res;

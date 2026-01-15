@@ -11,7 +11,7 @@
 
 ## 脚本配置
 
-### 入口文件配置
+## 入口文件配置
 ```ts
 import { setNamespace } from '@aurora/horizon-web';
 
@@ -20,7 +20,7 @@ setNamespace('x');
 // then you can createApp and mount
 ```
 
-### 使用 `h-application` 配置
+## 使用 `h-application` 配置
 有些情况下，你可能不能配置自己的入口文件，则可以通过这个方式定义命名空间
 
 ```vue
@@ -33,7 +33,7 @@ setNamespace('x');
 
 ## 样式配置
 
-### 全量使用
+## 全量使用
 新建一个 `scss` 文件，然后引入这个文件即可：
 ```scss
 @forward '@aurora/horizon-web/es/styles/index.scss' with (
@@ -41,7 +41,7 @@ setNamespace('x');
 );
 ```
 
-### 按需使用
+## 按需使用
 1. 新建一个 `scss` 文件 （假定路径是 `./src/assets/horizon-web.scss`）:
     ```scss
     @forward '@aurora/horizon-web/es/styles/mixins/config.scss' with (

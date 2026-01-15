@@ -112,9 +112,14 @@
 @include mixins.b('image-list') {
   @include mixins.e('items') {
     display: flex;
+    margin: 0 !important;
+    padding: 0 !important;
 
     @include mixins.e('item') {
       position: relative;
+      list-style: none;
+      margin: 0 mixins.css-variable('image-list-items', 'margin') 0 0 !important;
+      padding: 0;
 
       @include mixins.e('overflow') {
         position: absolute;

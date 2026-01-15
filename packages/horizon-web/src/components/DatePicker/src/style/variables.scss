@@ -97,7 +97,8 @@ $values: (
     size: (
       panel: (
         body: (
-          week: mixins.css-variable('text', 'sm')
+          week: mixins.css-variable('text', 'sm'),
+          grid-item: mixins.css-variable('text', 'base')
         )
       )
     )

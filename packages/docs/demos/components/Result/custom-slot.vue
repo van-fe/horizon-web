@@ -10,7 +10,7 @@ function submit() {
 <template>
   <h-result>
     <template #icon>
-      <IconLogo size="56" :color="['var(--n-text-default)']" />
+      <IconLogo size="56" :color="['var(--h-text-default)']" />
     </template>
     <template #title>
       尊贵的蔚来车主

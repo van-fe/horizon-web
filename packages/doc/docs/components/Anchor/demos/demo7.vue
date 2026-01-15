@@ -42,7 +42,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 
-const scrollContainer = top?.document.querySelector('main.h-main');
+const scrollContainer = top?.document.querySelector('main.VPDoc');
 const curSize = ref<'medium' | 'small'>('medium');
 const sizeOptions = ref([
   { label: 'medium', value: 'medium' },

@@ -22,7 +22,7 @@ const direction = ref('horizontal');
     <h-space
       :direction="direction"
       :align="align"
-      style="border: 1px solid var(--n-bg-brand-default)"
+      style="border: 1px solid var(--h-bg-brand-default)"
     >
       Space
       <h-button>Button</h-button>

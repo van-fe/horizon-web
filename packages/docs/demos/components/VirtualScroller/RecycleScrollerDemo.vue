@@ -73,7 +73,7 @@
     </section>
 
     <!-- 组件 -->
-    <NRecycleScroller
+    <h-recycle-scroller
       ref="scrollerRef"
       class="scroller"
       :scroller-height="500"
@@ -113,13 +113,13 @@
       <!-- <template #after>
         i'm after slot
       </template> -->
-    </NRecycleScroller>
+    </h-recycle-scroller>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, onMounted, nextTick, watch, computed } from 'vue';
-import { NRecycleScrollerInstance } from '@aurora/horizon-web';
+import { HRecycleScrollerInstance } from '@aurora/horizon-web';
 import { faker } from '@faker-js/faker';
 
 type Value = {
@@ -138,7 +138,7 @@ export default defineComponent({
   setup() {
     let uid = 0;
 
-    const scrollerRef = ref<NRecycleScrollerInstance | null>(null);
+    const scrollerRef = ref<HRecycleScrollerInstance | null>(null);
 
     const items = ref<Item[]>([]);
     const count = ref<number>(10000);
@@ -197,7 +197,7 @@ export default defineComponent({
 
     function _generateItem() {
       return {
-        name: faker.name.fullName(),
+        name: faker.person.fullName(),
         // avatar: faker.internet.avatar(),
         avatar: 'https://www.nio.cn/cdn-static/mynio/nextjs/images/home/nioApp/nio-app-logo.png',
       };

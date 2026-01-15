@@ -1,7 +1,7 @@
 <template>
   <h-input v-model="val" clearable placeholder="Please input search keywords" @keyup.enter="handleSearch">
     <template #prefix>
-      <a-icon name="search" style="color: var(--n-text-disabled)" />
+      <a-icon name="search" style="color: var(--h-text-disabled)" />
     </template>
   </h-input>
 </template>

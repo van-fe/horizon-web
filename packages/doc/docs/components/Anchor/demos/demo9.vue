@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const scrollContainer = top?.document.querySelector('main.h-main');
+const scrollContainer = top?.document.querySelector('main.VPDoc');
 
 const collapseUpdateHandle = (collapse: boolean) => {
   console.info('是否处于折叠状态: ', collapse);

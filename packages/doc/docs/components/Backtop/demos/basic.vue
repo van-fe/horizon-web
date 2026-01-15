@@ -1,7 +1,7 @@
 <template>
   <div>
     滚动页面可见
-    <h-backtop target="main.h-main" @click="onClick" />
+    <h-backtop target="main.VPDoc" @click="onClick" />
   </div>
 </template>
 

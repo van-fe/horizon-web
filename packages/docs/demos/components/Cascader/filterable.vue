@@ -110,13 +110,13 @@ function onBlur() {
 }
 
 onMounted(async()=>{
-  options.value = await fetch(`https://static.nio.com/fx-static/51/fixed/cascader-tree-data.prod.json?t=${Date.now()}`).then(r => r.json());
+  options.value = await fetch(new URL('/cascader-tree-data.json', import.meta.url).href).then(r => r.json());
 });
 </script>
 
 <style scoped>
 .panel-filter-box {
   padding: 12px;
-  border-bottom: 1px solid var(--n-divider-default);
+  border-bottom: 1px solid var(--h-divider-default);
 }
 </style>

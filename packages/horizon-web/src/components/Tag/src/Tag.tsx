@@ -469,7 +469,7 @@ export default defineComponent({
                         >
                           <IconClose
                             size={iconSizeMapping[sizeRef.value]}
-                            color={[style.value?.color || '']}
+                            color={style.value?.color || ''}
                           />
                         </div>
                       )}

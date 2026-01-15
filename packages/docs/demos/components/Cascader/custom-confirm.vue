@@ -57,7 +57,7 @@ const currentVal3 = ref<string[][]>([]);
 
 const options = ref([]);
 fetch(
-  'https://static.nio.com/fx-static/horizon-web/clhoirqpc0000088sgljrau3o/cascader-options.json',
+  new URL('/cascader-options.json', import.meta.url).href,
 ).then(res => {
   res.json().then(value => {
     options.value = value;
@@ -80,20 +80,20 @@ const confirmEnterHandle = () => {
     line-height: 30px;
     justify-content: center;
     padding: 10px;
-    border-top: 1px solid var(--n-divider-default);
+    border-top: 1px solid var(--h-divider-default);
 }
 
 .confirm-buttons > span {
     margin: 0 10px;
     cursor: pointer;
-    font-weight: var(--n-weight-strong);
+    font-weight: var(--h-weight-strong);
 }
 
 .confirm-buttons > span:first-of-type {
-    color: var(--n-text-secondary)
+    color: var(--h-text-secondary)
 }
 
 .confirm-buttons > span:last-of-type {
-    color: var(--n-text-brand-default)
+    color: var(--h-text-brand-default)
 }
 </style>

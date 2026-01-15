@@ -1,4 +1,4 @@
-### 基础用法
+## 基础用法
 
 | 分辨率(px) | 大小 | 列数 | 间隔gutters,hspace,vspace(px) |
 | -------- | ------- | ------- |-----------------------------|
@@ -11,7 +11,7 @@
 
 :::demo components/Layout/demo1.vue :::
 
-### 列元素间距
+## 列元素间距
 
 通过 `gutter` 属性设置行列元素之间的间距
 
@@ -21,9 +21,9 @@
 
 :::demo components/Layout/demo2.vue :::
 
-### 对齐方式
+## 对齐方式
 :::demo components/Layout/demo3.vue :::
 
-### 响应式
+## 响应式
 通过配置 `xs` `sm` `md` `lg` `xl` `xxl` 属性，可以调配在不同分辨率下所占范围
 :::demo components/Layout/responsive.vue :::

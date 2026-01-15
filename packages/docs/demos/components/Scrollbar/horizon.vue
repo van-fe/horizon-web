@@ -21,7 +21,7 @@
 .item {
   flex: 0 0 80px;
   height: 40px;
-  background: var(--n-bg-warning-weak-default);
+  background: var(--h-bg-warning-weak-default);
   display: inline-flex;
   align-items: center;
   justify-content: center;

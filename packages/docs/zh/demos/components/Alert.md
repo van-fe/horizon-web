@@ -1,17 +1,17 @@
-### 基本用法
+## 基本用法
 最简单的用法，适用于简短的警告提示。
 :::demo components/Alert/basic.vue :::
-### 大小
+## 大小
 :::demo components/Alert/size.vue :::
-### 四种样式
+## 四种样式
 共有四种样式 success、info、warning、error。
 :::demo components/Alert/demo1.vue :::
-### 拓展样式
+## 拓展样式
 
 
 :::demo components/Alert/demo2.vue :::
 
-### 不同布局
+## 不同布局
 - 水平布局：描述文案内容较少时使用
 - 垂直布局：描述文字内容较多时使用
 - 辅助性文字只能存放单行文本，会自动换行显示。

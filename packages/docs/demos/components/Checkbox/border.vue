@@ -1,7 +1,9 @@
 <template>
-  <h-row>
-    <h-col :span="8">
+  <h-row align="middle">
+    <h-col :span="6">
       <div class="demo-title">medium(default)</div>
+    </h-col>
+    <h-col :span="18">
       <h-checkbox
         v-for="item in checkboxOptions"
         :key="item.key"
@@ -12,8 +14,10 @@
         @change="selectCheckbox"
       />
     </h-col>
-    <h-col :span="10">
+    <h-col :span="6">
       <div class="demo-title">large</div>
+    </h-col>
+    <h-col :span="18">
       <h-checkbox
         v-for="item in checkboxOptions"
         :key="item.key"

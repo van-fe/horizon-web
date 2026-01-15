@@ -51,7 +51,7 @@ function generateComponent(componentName: string, viewBox: string, content: stri
   // 将 SVG 内容转义为 JavaScript 字符串字面量
   const escapedContent = JSON.stringify(content)
   
-  return `import { defineComponent, h, PropType } from 'vue'
+  return `import { defineComponent, h, PropType, computed } from 'vue'
 
 export default defineComponent({
   name: '${componentName}',
@@ -77,7 +77,20 @@ export default defineComponent({
     click: (evt: MouseEvent) => evt instanceof MouseEvent,
   },
   setup(props, { emit }) {
-    const sizeValue = typeof props.size === 'number' ? \`\${props.size}px\` : props.size
+    const sizeValue = computed(() => {
+      if (typeof props.size === 'number') {
+        return [props.size + 'px', props.size + 'px'];
+      }
+      if (Array.isArray(props.size)) {
+        return props.size.map(s => typeof s === 'number' ? s + 'px' : s);
+      }
+
+      return [props.size, props.size];
+    })
+
+    const width = computed(() => sizeValue.value[0])
+
+    const height = computed(() => sizeValue.value[1])
     
     const processMultiColor = (content: string, colors: string[]): string => {
       if (!content || colors.length === 0) return content
@@ -151,13 +164,13 @@ export default defineComponent({
       }
       
       return h('svg', {
-        width: sizeValue,
-        height: sizeValue,
         viewBox: '${viewBox}',
         fill: fill,
         style: {
+          width: width.value,
+          height: height.value,
           display: 'inline-block',
-          verticalAlign: 'middle',
+          verticalAlign: 'inherit',
           transform: props.rotate ? \`rotate(\${props.rotate}deg)\` : undefined,
         },
         innerHTML: svgContent

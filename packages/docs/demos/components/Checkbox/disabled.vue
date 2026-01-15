@@ -36,6 +36,7 @@ const modelValue2 = ref(true);
 
 <style scoped>
 .grid {
+  display: grid;
   max-width: 600px;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 10px;

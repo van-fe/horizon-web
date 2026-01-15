@@ -1,30 +1,30 @@
-### 基本用法
+## 基本用法
 按照 `NTreeData` 的结构，传给 `tree-data` 即可生成树结构
 
 **注意：`tree-data` 中的 `value` 必须整棵树唯一**
 
 :::demo components/Tree/basic.vue :::
 
-### 强调色
+## 强调色
 可以设置 `stress = true`，使已选项的字体颜色和背景设置为品牌色，更加醒目
 :::demo components/Tree/stress.vue :::
 
-### 单选框与多选框
+## 单选框与多选框
 配置 `show-checkbox`（默认开启）和 `shwo-radio`（默认关闭），可以控制显示选项前的选择组件
 :::demo components/Tree/checkbox-and-radio.vue :::
 
-### 前缀图标
+## 前缀图标
 设置 `prefix-icon`，可以设定前缀图标
 :::demo components/Tree/prefix-icon.vue :::
 
-### 父子关联
+## 父子关联
 设定 `check-strictly`，可以控制是否在层级上关联勾选
 
 对于单选，如果设置 `check-strictly = true`，则也可以选择非叶子节点
 
 :::demo components/Tree/check-strictly.vue :::
 
-### 展开、选择控制
+## 展开、选择控制
 通过 `expand-on-click-node` 配置，可以控制是否允许在点击节点整行时，展开子节点（默认为 `true`）
 
 `check-on-click-node` 则控制是否允许在点击节点整行时，选中子节点（默认为 `false`）
@@ -35,7 +35,7 @@
 
 :::demo components/Tree/expand-and-check.vue :::
 
-### 优化选择操作
+## 优化选择操作
 自 `2.3.5` 开始，默认在点击叶子节点时，自动勾选节点
 
 如果仍希望控制叶子节点只有在点击 `checkbox` 才进行选中，则可以设置 `check-on-click-leaf = false`
@@ -44,13 +44,13 @@
 
 :::demo components/Tree/check-on-leaf.vue :::
 
-### 控制展开
+## 控制展开
 通过 `expand-values`，可以控制展开的字段，也可以使用双向绑定获取展开的值
 
 如果不希望自动将父级展开，则需要设置 `is-default-expand-parent = false`
 :::demo components/Tree/expand-values.vue :::
 
-### 默认全部展开
+## 默认全部展开
 设置 `is-default-expand-all = true`，将所有数据全部展开
 
 但请注意，如果数据是异步获取的，需要在取到数据后再渲染
@@ -61,11 +61,11 @@
 
 :::demo components/Tree/default-expand-all.vue :::
 
-### 控制勾选
+## 控制勾选
 通过 `selected-values`，可以控制勾选的项目，也可以使用双向绑定获取勾选的值
 :::demo components/Tree/selected-values.vue :::
 
-### 禁用
+## 禁用
 在 `tree-data` 数据中，某项设置`disabled = true`，可以对其项禁用
 
 但如果希望整棵树禁用，则直接给予 `disabled = true` 给 `n-tree` 即可
@@ -78,7 +78,7 @@
 
 :::demo components/Tree/disabled.vue :::
 
-### 自定义展开图标
+## 自定义展开图标
 可以配置 `fold-icon` 自定义展开图标
 
 如果需要在展开状态切换过程中使用顺时针旋转 `90°`，则 `expand-icon` 留空即可
@@ -87,30 +87,30 @@
 
 :::demo components/Tree/expand-icon.vue :::
 
-### 过滤
+## 过滤
 `Tree` 组件内置了过滤能力，设置 `filterable = true` 即可开启过滤功能
 :::demo components/Tree/filter.vue :::
 
-### 过滤并处理高亮
+## 过滤并处理高亮
 默认高亮色为品牌色，如果希望对搜索结果处理，则可以通过 `highlightMethod` 来处理
 :::demo components/Tree/highlight-filter.vue :::
 
-### 动态加载
+## 动态加载
 如果某个节点的子节点需要使用动态加载时，需要给该节点的 `isLeaf` 属性设置成 `false`
 :::demo components/Tree/dynamic-load.vue :::
 
-### 多选限制
+## 多选限制
 如果希望在多选时，限制用户选择的个数，则配置 `multiple-limit` 即可
 :::demo components/Tree/multiple-limit.vue :::
 
-### 自定义节点
+## 自定义节点
 可以通过 `treeNodeRender` 插槽自定义节点渲染
 
 也可以在传入 `tree-data` 时，`label` 设置为 `((option: NTreeData) => VNode)` 类型用来自定义某个固定节点，此时优先级高于 `treeNodeRender` 插槽
 
 :::demo components/Tree/custom-render.vue :::
 
-### 字段映射
+## 字段映射
 使用 `field-map` 来自定义映射的字段
 
 在此示例中，`label` 使用 `text`，`value` 使用 `key`，`children` 使用 `items`
@@ -133,11 +133,11 @@ declare module '@aurora/horizon-web' {
 
 :::demo components/Tree/field-map.vue :::
 
-### 受控模式
+## 受控模式
 组件提供了非常丰富的方法，可以使用这些方法来操作树组件
 :::demo components/Tree/controls.vue :::
 
-### 虚拟滚动
+## 虚拟滚动
 在大数据量的情况下，节点过多会导致性能变差，所以可以使用虚拟滚动的能力
 
 需配置 `use-virtual-scroll = true`， 且 `height` 或 `max-height` 任意一个即可启用虚拟滚动
@@ -146,7 +146,7 @@ declare module '@aurora/horizon-web' {
 
 :::demo components/Tree/virtual-scroll.vue :::
 
-### 拖拽排序
+## 拖拽排序
 设置 `draggable = true`，即可开启拖拽排序
 
 默认只能在鼠标按在拖拽图标上才可以拖拽，可以配置 `drag-on-handler = false`，整行都可以拖拽
@@ -157,7 +157,7 @@ declare module '@aurora/horizon-web' {
 
 :::demo components/Tree/draggable.vue :::
 
-### 优化 selected-values 数据处理
+## 优化 selected-values 数据处理
 在 `2.3.4(含)` 版本之前，多选情况下，如果同时给 `selected-values` 传入【非叶子节点】和其子级的【叶子节点】，则只会勾选【叶子节点】，但 `2.3.5` 的重构版没有对这个 `BUG` 进行逻辑适配
 
 在 `2.4.6` 开始，会对之前此 `BUG` 进行逻辑适配：
@@ -167,7 +167,7 @@ declare module '@aurora/horizon-web' {
 
 :::demo components/Tree/optimize-selected-values.vue :::
 
-### 不可选择
+## 不可选择
 传入 `options` 时，可以设定 `selectable = false`，即可不允许选择该项（但展开不受限）
 
 **下面是与 disabled 的对比表格（级联选择和树选择器同理）：**

@@ -5,14 +5,14 @@
         <h-col :span="10">
           <h-input v-model="tmpKw" placeholder="type kw to search">
             <template #append>
-              <h-button :icon="IconSearch" size="medium" type="info" @click="doSearch"></h-button>
+              <h-button :icon="IconSearch" size="medium" @click="doSearch"></h-button>
             </template>
           </h-input>
         </h-col>
         <h-col :span="20"></h-col>
       </h-row>
     </section>
-    <NVirtualScroller class="scroller" :items="filteredItems" :min-item-size="54">
+    <h-virtual-scroller class="scroller" :items="filteredItems" :min-item-size="54">
       <template #before>
         <div class="notice">这是一个消息列表, 我们并不清楚任意一个消息元素的高度~</div>
       </template>
@@ -22,7 +22,7 @@
       <template #empty>no data yet~!</template>
 
       <template #default="{ item, active, index }">
-        <NVirtualScrollerItem
+        <h-virtual-scroller-item
           :item="item"
           :active="active"
           :data-active="active"
@@ -41,10 +41,10 @@
             <span>{{ item.id }} (id)</span>
             <span>{{ index }} (index)</span>
           </div>
-        </NVirtualScrollerItem>
+        </h-virtual-scroller-item>
         <!-- <div class="">{{ JSON.stringify(props) }}</div> -->
       </template>
-    </NVirtualScroller>
+    </h-virtual-scroller>
   </div>
 </template>
 

@@ -109,7 +109,7 @@ function onBlur() {
 }
 
 onMounted(async()=>{
-  baseData.value = await fetch(`https://static.nio.com/fx-static/51/fixed/cascader-tree-data.prod.json?t=${Date.now()}`).then(r => r.json());
+  baseData.value = await fetch(new URL('/cascader-options.json', import.meta.url).href).then(r => r.json());
   currentVal2.value.push(["guide", "navigation", "side nav"]);
 
   console.info(cascaderDomRef1.value, cascaderDomRef2.value);

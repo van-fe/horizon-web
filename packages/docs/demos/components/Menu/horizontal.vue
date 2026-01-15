@@ -60,7 +60,7 @@
             <template #append>
               <h-button v-tooltip="'提醒'" type="normal" :text="true">
                 <template #icon>
-                  <a-icon name="notice" size="20" :color="theme === 'midnight' ? 'var(--n-text-inverse)' : 'var(--n-text-primary)'"></a-icon>
+                  <a-icon name="notice" size="20" :color="theme === 'midnight' ? 'var(--h-text-inverse)' : 'var(--h-text-primary)'"></a-icon>
                 </template>
               </h-button>
               <h-popover class="avatar-popover" placement="bottom-end">
@@ -69,7 +69,7 @@
                 </template>
                 <template #popper>
                   <h-pop-content>
-                    <div class="text-body-2 text-center mb-3" style="color: var(--n-text-tertiary)">
+                    <div class="text-body-2 text-center mb-3" style="color: var(--h-text-tertiary)">
                       Dear NIOer, Welcome
                     </div>
                     <h-button type="normal" size="large" text block class="mb-2">修改密码</h-button>
@@ -135,7 +135,7 @@
             </h-menu-item>
           </h-menu>
         </h-header>
-        <h-main style="background: var(--n-bg-info-weak-hover); min-height: 500px;"></h-main>
+        <h-main style="background: var(--h-bg-info-weak-hover); min-height: 500px;"></h-main>
       </h-container>
     </h-col>
   </h-row>

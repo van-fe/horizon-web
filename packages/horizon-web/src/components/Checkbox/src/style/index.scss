@@ -1,13 +1,13 @@
 @use '../../../../styles/mixins';
 
 @mixin checkbox-checked {
-  color: mixins.css-variable('checkbox-color--checked');
-  border-color: mixins.css-variable('checkbox-border-color--checked') !important;
+  color: mixins.css-variable('checkbox', 'color', 'checked');
+  border-color: mixins.css-variable('checkbox', 'border-color', 'checked') !important;
 
   @include mixins.be('checkbox', 'icon', false) {
-    margin-right: mixins.css-variable('checkbox-margin--icon');
-    font-size: mixins.css-variable('checkbox-font-size--icon') !important;
-    background-color: mixins.css-variable('checkbox-bg--icon--checked') !important;
+    margin-right: mixins.css-variable('checkbox', 'spacing', 'icon', 'margin');
+    font-size: mixins.css-variable('checkbox', 'font-size', 'icon') !important;
+    background-color: mixins.css-variable('checkbox', 'background', 'icon', 'checked') !important;
     border: none;
     opacity: 1;
 
@@ -21,8 +21,8 @@
   display: inline-flex;
   align-items: center;
   overflow: hidden;
-  color: mixins.css-variable('checkbox-color--default');
-  font-size: mixins.css-variable('checkbox-font-size--default');
+  color: mixins.css-variable('checkbox', 'color');
+  font-size: mixins.css-variable('checkbox', 'font-size');
   vertical-align: bottom;
   cursor: pointer;
 
@@ -35,13 +35,13 @@
 
   @include mixins.e('icon') {
     flex-shrink: 0;
-    width: mixins.css-variable('checkbox-width--default');
-    height: mixins.css-variable('checkbox-height--default');
-    margin-right: mixins.css-variable('checkbox-margin--icon');
-    font-size: mixins.css-variable('checkbox-font-size--icon') !important;
-    background-color: mixins.css-variable('checkbox-bg');
-    border: mixins.css-variable('checkbox-border--default');
-    border-radius: mixins.css-variable('checkbox-border-radius');
+    width: mixins.css-variable('checkbox', 'size', 'icon', 'width');
+    height: mixins.css-variable('checkbox', 'size', 'icon', 'height');
+    margin-right: mixins.css-variable('checkbox', 'spacing', 'icon', 'margin');
+    font-size: mixins.css-variable('checkbox', 'font-size', 'icon') !important;
+    background-color: mixins.css-variable('checkbox', 'background');
+    border: mixins.css-variable('checkbox', 'border');
+    border-radius: mixins.css-variable('checkbox', 'border-radius');
 
     &::before {
       opacity: 0;
@@ -49,11 +49,11 @@
   }
 
   @include mixins.m('checked') {
-    color: mixins.css-variable('checkbox-color--checked');
-    border-color: mixins.css-variable('checkbox-border-color--checked') !important;
+    color: mixins.css-variable('checkbox', 'color', 'checked');
+    border-color: mixins.css-variable('checkbox', 'border-color', 'checked') !important;
 
     @include mixins.e('icon') {
-      background-color: mixins.css-variable('checkbox-bg') !important;
+      background-color: mixins.css-variable('checkbox', 'background') !important;
       border: none;
       opacity: 1;
 
@@ -63,13 +63,13 @@
     }
 
     @include mixins.e('label') {
-      color: mixins.css-variable('checkbox-color--label--checked');
+      color: mixins.css-variable('checkbox', 'color', 'label', 'checked');
     }
   }
 
   &:hover {
     @include mixins.e('icon') {
-      border-color: mixins.css-variable('checkbox-border-color--hover');
+      border-color: mixins.css-variable('checkbox', 'border-color', 'hover');
     }
   }
 
@@ -77,46 +77,46 @@
     @include checkbox-checked;
 
     @include mixins.be('checkbox', 'label') {
-      color: mixins.css-variable('checkbox-color--checkbox--indeterminate');
+      color: mixins.css-variable('checkbox', 'color', 'checkbox', 'indeterminate');
       user-select: none;
     }
   }
 
   @include mixins.m('disabled') {
-    color: mixins.css-variable('checkbox-color--disabled');
+    color: mixins.css-variable('checkbox', 'color', 'disabled');
     cursor: not-allowed;
 
     @include mixins.e('icon') {
-      background-color: mixins.css-variable('checkbox-bg--disabled');
-      border-color: mixins.css-variable('checkbox-border-color--disabled') !important;
+      background-color: mixins.css-variable('checkbox', 'background', 'disabled');
+      border-color: mixins.css-variable('checkbox', 'border-color', 'disabled') !important;
     }
 
     &:hover {
       @include mixins.e('icon') {
-        border-color: mixins.css-variable('checkbox-border-color--disabled');
+        border-color: mixins.css-variable('checkbox', 'border-color', 'disabled');
       }
     }
   }
 
   @include mixins.m('border') {
-    padding: mixins.css-variable('checkbox-padding--border');
-    border: mixins.css-variable('checkbox-border--border');
-    border-radius: mixins.css-variable('checkbox-border-radius--border');
+    padding: mixins.css-variable('checkbox', 'spacing', 'padding', 'border');
+    border: mixins.css-variable('checkbox', 'border', 'border');
+    border-radius: mixins.css-variable('checkbox', 'border-radius', 'border');
 
     &:hover {
-      border-color: mixins.css-variable('checkbox-border-color--hover');
+      border-color: mixins.css-variable('checkbox', 'border-color', 'hover');
     }
 
     @include mixins.e('icon') {
-      border-color: mixins.css-variable('checkbox-border-color--border-icon');
+      border-color: mixins.css-variable('checkbox', 'border-color', 'border-icon');
     }
   }
 
   @include mixins.m('viewable') {
     height: auto;
-    margin-right: mixins.css-variable('checkbox-margin-right--viewable');
+    margin-right: mixins.css-variable('checkbox', 'spacing', 'margin-right', 'viewable');
     padding: 0 !important;
-    color: mixins.css-variable('checkbox-color--viewable') !important;
+    color: mixins.css-variable('checkbox', 'color', 'viewable') !important;
     background-color: transparent !important;
     border: 0 !important;
     border-radius: 0 !important;
@@ -124,23 +124,23 @@
     cursor: default !important;
 
     &:hover {
-      color: mixins.css-variable('checkbox-color--viewable--hover') !important;
+      color: mixins.css-variable('checkbox', 'color', 'viewable', 'hover') !important;
     }
   }
 
   @include mixins.parallel-modifier('border', 'medium') {
-    height: mixins.css-variable('checkbox-height--medium');
+    height: mixins.css-variable('checkbox', 'size', 'border', 'height', 'medium');
   }
 
   @include mixins.parallel-modifier('border', 'large') {
-    height: mixins.css-variable('checkbox-height--large');
-    font-size: mixins.css-variable('checkbox-font-size--large');
+    height: mixins.css-variable('checkbox', 'size', 'border', 'height', 'large');
+    font-size: mixins.css-variable('checkbox', 'font-size', 'large');
   }
 
   @include mixins.parallel-modifier('border', 'disabled') {
-    color: mixins.css-variable('checkbox-color--disabled');
-    background-color: mixins.css-variable('checkbox-bg--disabled');
-    border-color: mixins.css-variable('checkbox-border-color--disabled') !important;
+    color: mixins.css-variable('checkbox', 'color', 'disabled');
+    background-color: mixins.css-variable('checkbox', 'background', 'disabled');
+    border-color: mixins.css-variable('checkbox', 'border-color', 'disabled') !important;
     cursor: not-allowed;
   }
 }
@@ -148,18 +148,18 @@
 @include mixins.b('checkbox-button') {
   display: inline-flex;
   align-items: center;
-  padding: mixins.css-variable('checkbox-padding--button');
+  padding: mixins.css-variable('checkbox', 'spacing', 'padding', 'button');
   overflow: hidden;
-  color: mixins.css-variable('checkbox-color--button');
-  font-size: mixins.css-variable('checkbox-font-size--button');
-  background-color: mixins.css-variable('checkbox-bg--button');
-  border: mixins.css-variable('checkbox-border--button');
-  border-radius: mixins.css-variable('checkbox-border-radius--button');
+  color: mixins.css-variable('checkbox', 'color', 'button');
+  font-size: mixins.css-variable('checkbox', 'font-size', 'button');
+  background-color: mixins.css-variable('checkbox', 'background', 'button');
+  border: mixins.css-variable('checkbox', 'border', 'button');
+  border-radius: mixins.css-variable('checkbox', 'border-radius', 'button');
   cursor: pointer;
   user-select: none;
 
   &:hover {
-    color: mixins.css-variable('checkbox-color--button--hover');
+    color: mixins.css-variable('checkbox', 'color', 'button', 'hover');
   }
 
   @include mixins.e('original') {
@@ -169,40 +169,40 @@
   }
 
   @include mixins.m('medium') {
-    height: mixins.css-variable('checkbox-height--medium');
+    height: mixins.css-variable('checkbox', 'size', 'border', 'height', 'medium');
   }
 
   @include mixins.m('large') {
-    height: mixins.css-variable('checkbox-height--large');
-    font-size: mixins.css-variable('checkbox-font-size--button--large');
+    height: mixins.css-variable('checkbox', 'size', 'border', 'height', 'large');
+    font-size: mixins.css-variable('checkbox', 'font-size', 'button-large');
   }
 
   @include mixins.m('checked') {
-    color: mixins.css-variable('checkbox-color--button--checked');
-    background-color: mixins.css-variable('checkbox-bg--button--checked');
-    border-color: mixins.css-variable('checkbox-border-color--button-checked') !important;
+    color: mixins.css-variable('checkbox', 'color', 'button', 'checked');
+    background-color: mixins.css-variable('checkbox', 'background', 'button', 'checked');
+    border-color: mixins.css-variable('checkbox', 'border-color', 'button-checked') !important;
 
     &:hover {
-      color: mixins.css-variable('checkbox-color--button--checked--hover');
+      color: mixins.css-variable('checkbox', 'color', 'button', 'checked-hover');
     }
   }
 
   @include mixins.m('disabled') {
-    color: mixins.css-variable('checkbox-color--button--disabled');
+    color: mixins.css-variable('checkbox', 'color', 'button', 'disabled');
     cursor: not-allowed;
 
     &:hover {
-      color: mixins.css-variable('checkbox-color--button--disabled--hover');
+      color: mixins.css-variable('checkbox', 'color', 'button', 'disabled-hover');
     }
   }
 
   @include mixins.m('checked-disabled') {
-    color: mixins.css-variable('checkbox-color--button--checked--disabled');
-    background-color: mixins.css-variable('checkbox-bg--button--checked--disabled');
+    color: mixins.css-variable('checkbox', 'color', 'button', 'checked-disabled');
+    background-color: mixins.css-variable('checkbox', 'background', 'button', 'checked-disabled');
     cursor: not-allowed;
 
     &:hover {
-      color: mixins.css-variable('checkbox-color--button--checked--disabled--hover');
+      color: mixins.css-variable('checkbox', 'color', 'button', 'checked-disabled-hover');
     }
   }
 }
@@ -213,61 +213,75 @@
 
   @include mixins.b('checkbox-group__border') {
     width: mixins.size(1);
-    background-color: mixins.css-variable('checkbox-bg--group-border');
+    background-color: mixins.css-variable('checkbox', 'background', 'group-border');
 
     @include mixins.m('medium') {
-      height: mixins.css-variable('checkbox-height--medium');
+      height: mixins.css-variable('checkbox', 'size', 'border', 'height', 'medium');
     }
 
     @include mixins.m('large') {
-      height: mixins.css-variable('checkbox-height--large');
+      height: mixins.css-variable('checkbox', 'size', 'border', 'height', 'large');
     }
 
     @include mixins.m('checked') {
-      background-color: mixins.css-variable('checkbox-bg--group-border--checked');
+      background-color: mixins.css-variable('checkbox', 'background', 'group-border', 'checked');
     }
 
     @include mixins.m('disabled') {
-      background-color: mixins.css-variable('checkbox-bg--group-border--disabled');
+      background-color: mixins.css-variable('checkbox', 'background', 'group-border', 'disabled');
     }
 
     @include mixins.m('divider') {
-      background-color: mixins.css-variable('checkbox-bg--group-border--divider');
+      background-color: mixins.css-variable('checkbox', 'background', 'group-border', 'divider');
     }
   }
 
   @include mixins.b('checkbox-button') {
     position: relative;
-    border-color: mixins.css-variable('checkbox-border-color--border');
+    border-color: mixins.css-variable('checkbox', 'border-color', 'border');
     border-left: none;
-    border-radius: mixins.css-variable('checkbox-border-radius--group-button');
+    border-radius: mixins.css-variable('checkbox', 'border-radius', 'group-button');
 
     &:first-child {
-      border-left: mixins.css-variable('checkbox-border--border');
-      border-top-left-radius: mixins.css-variable('checkbox-border-radius--border');
-      border-bottom-left-radius: mixins.css-variable('checkbox-border-radius--border');
+      border-left: mixins.css-variable('checkbox', 'border', 'border');
+      border-top-left-radius: mixins.css-variable('checkbox', 'border-radius', 'border');
+      border-bottom-left-radius: mixins.css-variable('checkbox', 'border-radius', 'border');
     }
 
     &:last-child {
-      border-right: mixins.css-variable('checkbox-border--border');
-      border-top-right-radius: mixins.css-variable('checkbox-border-radius--border');
-      border-bottom-right-radius: mixins.css-variable('checkbox-border-radius--border');
+      border-right: mixins.css-variable('checkbox', 'border', 'border');
+      border-top-right-radius: mixins.css-variable('checkbox', 'border-radius', 'border');
+      border-bottom-right-radius: mixins.css-variable('checkbox', 'border-radius', 'border');
     }
 
     @include mixins.m('checked') {
-      box-shadow: mixins.css-variable('checkbox-box-shadow--button--checked');
+      box-shadow: mixins.css-variable('checkbox', 'box-shadow', 'button', 'checked');
 
       & + & {
-        box-shadow: mixins.css-variable('checkbox-box-shadow--button--checked-siblings');
+        box-shadow: mixins.css-variable('checkbox', 'box-shadow', 'button', 'checked-siblings');
       }
     }
   }
 
   @include mixins.b('checkbox') {
-    margin-right: mixins.css-variable('checkbox-margin-right--group-checkbox');
+    margin-right: mixins.css-variable('checkbox', 'spacing', 'margin-right', 'group-checkbox');
 
     &:last-child {
       margin-right: 0;
     }
+  }
+}
+
+@include mixins.siblings-block('checkbox') {
+  margin-left: mixins.css-variable('checkbox', 'spacing', 'margin-left', 'siblings');
+}
+
+@include mixins.siblings-block('checkbox-button') {
+  margin-left: mixins.css-variable('checkbox', 'spacing', 'margin-left', 'siblings');
+}
+
+@include mixins.b('checkbox-group') {
+  @include mixins.siblings-block('checkbox-button') {
+    margin-left: 0 !important;
   }
 }

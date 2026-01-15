@@ -18,7 +18,7 @@ $ bun add unplugin-vue-components @aurora/horizon-web-unplugin-resolver -D
 
 ## 配置
 
-### `main.ts` 入口文件
+## `main.ts` 入口文件
 
 ```ts {3,4,7}
 import { createApp } from 'vue';
@@ -31,7 +31,7 @@ createApp(App)
   .mount('#app');
 ```
 
-### 构建器配置
+## 构建器配置
 ::: code-group
 ```ts [Vite]
 import { defineConfig } from 'vite';

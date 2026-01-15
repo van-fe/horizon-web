@@ -79,7 +79,7 @@ export type LocaleLangDictionaries = Record<LocaleSupportLang, LocaleLangDiction
 export type PartialLocaleLangFileType = Partial<LocaleLangDictionaries>;
 ```
 
-### 举例
+## 举例
 ```ts
 app.use(HorizonWeb, {
   locale: {

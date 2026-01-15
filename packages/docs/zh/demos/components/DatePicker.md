@@ -1,157 +1,182 @@
-### 输入框样式
+## 基本用法
+默认情况下，是日期选择器
+:::demo components/DatePicker/basic.vue :::
 
-基本的日期选择控件，可以通过设置 `inputStyle` 属性来配置输入框样式。
+## 确认方式
+默认情况下，用户在输入日期结束后，需要按下回车确认
 
-:::demo components/DatePicker/demo16.vue :::
+也可以通过设置 `confirm-type="blur"` 控制在失焦或按下回车时都确认
 
-### 基本用法
+:::demo components/DatePicker/confirm-type.vue :::
 
-基本的日期选择控件，可以通过设置 `shortcuts` 属性来配置快捷选项，通过设置`show-year-button`属性来配置显示或者隐藏年份按钮，默认显示，通过`first-day-of-week`自定义周一到周日的排序。
+## 可清空
+设置 `clearable`，默认开启，在有值时可以点击清空图标清空数据
+:::demo components/DatePicker/clearable.vue :::
 
-:::demo components/DatePicker/demo1.vue :::
+## 单个触发器、面板的范围选择
+当触发器父容器空间有限，可以设置 `single-trigger`，即可只渲染单个触发器
 
-### 其他日期单位
+另外，在默认情况下，切换面板的年、月会自动显示一前一后，如果希望不联动，需要设置 `is-link-panels = false`
 
-通过扩展基础组件可以通过设置 `type` 属性来配置年、月选择。
+如果屏幕尺寸较小，无法容纳两个面板，则可以设置 `single-panel` 启用单面板 (仅限 `year-range` `month-range` `date-range`)
 
-:::demo components/DatePicker/demo13.vue :::
+:::info 单个触发器时，连字符只能是 <code>-</code> :::
 
-### 日期时间
+:::demo components/DatePicker/single-trigger.vue :::
 
-可以通过设置 `type` 属性来设置3种类型的模式，分别为：`datetime、dateminutes、dateseconds`。
+## 显示日期的方式
+默认情况下，只会显示当前月的日期，如果希望显示前后日期，可以设置 `show-before-after-date = true`
 
-`pickerOptions`属性可以设置日期时间的开始、结束和间隔，仅`type`为`datetime、dateminutes、dateseconds`有效。
+如果希望始终显示 6 行日期格子，则设置 `fixed-six-rows = true`
 
-:::demo components/DatePicker/demo2.vue :::
+:::demo components/DatePicker/date-display.vue :::
 
-### 日期范围
+## 年、月选择器
+设置 `type = 'year' | 'year-range' | 'month' | 'month-range'` 即可开启年、年范围、月、月范围选择器
 
-可以通过设置 `type` 属性来设置3种类型的模式，分别为：`daterange、monthrange、yearrange`。
+:::demo components/DatePicker/year-month.vue :::
 
-日期范围也可以使用单月模式进行选择，只需设置`type=daterange,panelNumber=1`即可。
+## 周选择器
+周选择器会强制显示当前月前后的日期格子
 
-选择月份范围时，默认两个面板前后联动，通过设置`unlink-panels=true`解除两个面板联动
+另外 `dayjs` 不会解析周的格式化输入，所以手动更改周的字符串是无效的
 
-:::demo components/DatePicker/demo14.vue :::
+:::demo components/DatePicker/week.vue :::
 
-### 日期时间范围
+## 一周开始的星期
+默认情况下，一周会以周日为开始星期，如果希望以其他星期开始，则设置 `first-day-of-week = 0 | 1 | 2 | 3 | 4 | 5 | 6`
 
-可以通过设置 `type` 属性来设置3种类型的模式，分别为：`datetimerange、dateminutesrange、datesecondsrange`。
-通过`defaultTime`可以设置日期的默认开始时刻和结束时刻，不设置，默认选择00:00:00。
+需要注意的是，在修改开始星期时，对于周选择器会更改其值
 
-:::demo components/DatePicker/demo15.vue :::
+:::demo components/DatePicker/first-day-of-week.vue :::
 
-### 自定义日期面板显示
+## 禁止切换年
+如果不希望用户在日选择时左右切换年份，则设置 `show-year-button = false`
+:::demo components/DatePicker/show-year-button.vue :::
 
-可以通过设置 `showBeforeAfterDate` 和 `fixedSixRows` 属性来设置是否显示前后月和是否固定6行显示。
+## 快捷选择
+通过配置 `shortcuts` 配置快捷选择日期功能
+:::demo components/DatePicker/shortcuts.vue :::
 
-默认情况下，不显示前后月日期，不固定日期行数。
+## 日期+时间选择器
+设置 `type = 'datetime' | 'datetimeRange` 即可开启日期+时间的选择器
 
-:::demo components/DatePicker/demo3.vue :::
+时间列也可以精确到分和秒，即 `type = 'date-minutes' | 'date-minutes-range' | 'date-seconds' | 'date-seconds-range'`
 
-### 自定义类型组件
+:::demo components/DatePicker/datetime.vue :::
 
-触发器默认为输入框，为其他类型时，可通过插槽`reference`自行组合。
+## 格式化
+`date-picker` 内置使用 `dayjs` 作为数据处理，所以支持所有 `dayjs` 支持的格式化方案
 
-可通过设置`show-embed=true`和type结合将不同类型日期面板嵌入页面使用；`showHeader`属性可以设置是否显示年月切换操作按钮；默认展示，通过调用组件的`changeYear`和`changeMonth`方法切换日期年月。注意：低版本`type='panel'`后期大版本将会废弃，不建议再使用。
+另外也支持插件 `AdvancedFormat` 所支持的格式
 
-:::demo components/DatePicker/demo4.vue :::
+如果默认不填写，则会根据 `type` 和国际化配置进行自动约束
 
-### 自定义单元格
+详见 [格式化格式](#格式化格式)
 
-可通过默认插槽`default`自定义当前单元格的展示。
+:::info 在动态切换国际化时，只会影响 format 的格式，而对于一些带有国际化的关键字（例如: MMM）暂时不会做翻译转换。因为实测做转换后，旧的 DatePicker 组件会有意外的数据处理行为，所以也<b>不要给全局导出的 <code>dayjs</code> 对象设置国际化</b> :::
+:::demo components/DatePicker/format.vue :::
 
-:::demo components/DatePicker/demo5.vue :::
-插槽值类型如下
+## 值的转化
+`format` 可以控制展示的格式，而如果希望 `model-value` 的格式是另一种格式，可以填入 `value-format`。如果不填写，则会返回 `Dayjs` 格式
 
-```ts
-interface DateGridType {
-  $date: Dayjs;
-  date: Date;
-  text: number|string|undefined;
-  isToday: boolean;
-  isNotCurrent?: boolean;
-  isCurrent: boolean;
-  isSelected: boolean;
-  isDisabled: boolean;
-  isBegin?: boolean;
-  isEnd?: boolean;
-  isRange?: boolean;
-  isCurrentLastDate?: boolean;
-  isDot?: boolean;
-}
-```
+`value-format` 不仅会作用于读入 `model-value` 时格式的设置，也会影响用户选择日期时间后的值的返回格式
 
-### 日期时间禁选
+如果不填写 `value-format`，`model-value` 的读入格式会根据选择器的 `type` 和国际化选择的区域有关，详见 [格式化格式](#格式化格式)
 
-可以通过设置 `disabledDate`和`disabledTime` 属性来设置日期和时间的禁选。`disabledSwitchButton`可以和`disabledDate`配合使用，设置是否隐藏已设置禁用的日期，即，不可点击月年按钮切换，去选择禁用的月份。注意:`pick`事件以及`type="datetime/dateminutes/dateseconds"`时` disabledTime`方法，新增三个参数 `years, months, date`，旧参数`year,month,day`继续保留，后期大版本会废弃，强烈建议使用`years, months, date`
+:::error 注意！<code>Dayjs</code> 对象直接打印时，时区默认是格林威治时间（GMT+0)，<b>在做转化时才会根据系统所在地理位置处理时区</b>:::
 
+:::demo components/DatePicker/value-format.vue :::
 
-:::demo components/DatePicker/demo6.vue :::
+## 悬浮预览日期
+如果希望在鼠标悬浮时，就将悬浮的日期提前显示到输入框中，则可以设置 `hover-to-display-value = true`
+:::demo components/DatePicker/hover-to-display-value.vue :::
 
-### 日期时间Tooltip
+## 设置禁选
+可以通过传入 `disabled-date` `disabled-time` 来控制日期或时间是否不可被选择
 
-可以通过设置 `showDateTooltip`和`showTimeTooltip` 属性来设置日期和时间的tooltip。
+需要注意一点：**`disabled-time`给予的 date 是当前日期，所以需要忽略年月日，只考虑时分秒的禁用**
+:::demo components/DatePicker/disabled-date-and-time.vue :::
 
-:::demo components/DatePicker/demo7.vue :::
+## 快捷选择此刻
+设置 `show-now`，即可在面板中显示【此刻】按钮
 
-### 底部扩展区
+如果希望此刻是另外的功能，则传入 `showNow` 插槽来自定义
 
-组件默认提供今天/此刻、取消、确认4种功能按钮。可通过插槽`footer`自定义按钮数量和功能。
+如果额外设置了 `default-time`，则优先使用 `default-time` 所设置的值
 
-通过属性`footerButton`设置底部操作区是否显示，含有时间选择的控件默认显示。
+:::demo components/DatePicker/show-now.vue :::
 
-:::demo components/DatePicker/demo8.vue :::
+## 默认面板日期
+设置 `panel-show-date` 即可将面板的默认展示日期锁定
+:::demo components/DatePicker/panel-show-date.vue :::
 
-### 日期格式
+## 时间步长
+设置 `time-step` `hour-step` `minute-step` `second-step`，可以控制相应时间的步长
+:::demo components/DatePicker/step.vue :::
 
-通过`format`可以设置输入框的显示格式，通过`value-format`设置绑定值的格式，默认情况下，组件接受并返回Date对象。
+## 不可输入
+默认配置下，允许用户手动修改输入框中的数值来进行时间的切换。如果不希望用户手动输入，则可以配置 `inputable = false`
+:::demo components/DatePicker/inputable.vue :::
 
-:::demo components/DatePicker/demo9.vue :::
+## 只读
+不允许修改已选值的情况下，可以设置 `readonly`
+:::demo components/DatePicker/readonly.vue :::
 
-### 自定义前缀、后缀内容
+## 显示文字提示
+如果对日期、时间格子在悬浮时需要显示提示文字，则传入 `show-date-tooltip`、`show-month-tooltip`、`show-year-tooltip` 或 `show-time-tooltip`
+:::demo components/DatePicker/show-tooltip.vue :::
 
-通过`prefixIcon`、`suffixIcon`可以输入框的图标，也可以通过插槽`prefix`、`suffix`设置前缀、后缀内容。
+## 标定圆点
+设置 `show-dot`，可以配置格子是否有原点标注，通常可以和 `show-date-tooltip` 结合使用
+:::demo components/DatePicker/show-dot.vue :::
 
-:::demo components/DatePicker/demo10.vue :::
+## 默认时间
+在选择日期时，如果有对时间期望，则可以给定一个默认的时间，减少用户手动选择的复杂，提升交互效率
+:::demo components/DatePicker/default-time.vue :::
 
-### 默认面板日期、默认时刻
+## 需要确认
+如果需要用户在选择之后不是立刻生效，则可以设置 `need-confirm` 拦截
+:::demo components/DatePicker/need-confirm.vue :::
 
-通过`defaultPickerValue`可以设置选择器打开时默认面板日期；通过`defaultTime`设置选择器选中日期后的默认具体时刻，不设置，默认时刻从00:00:00开始。
+## 自定义触发器
+使用 `pickerOuter` 插槽，可以自定义触发器
+:::demo components/datepicker/custom-trigger.vue :::
 
-:::demo components/DatePicker/demo11.vue :::
+## 自定义触发器文案
+使用 `format-trigger-text` 可以自定义触发器中展示的文案
 
-### 空间不够
-当显示位置的空间不够时，当所有方向没法满足时候可以通过 `preventOverflow` 阻止popover被切断
+对于单个触发器，可以使用此方法自定义展示分隔符
 
-可以通过设置fallbackPlacements来调整flip的位置，比如上下位置都不够展示，希望能够展示到左边，可以设置fallbackPlacements为 ['top', 'bottom', 'left']
+使用了 `format-trigger-text` 时，如果输入的值和 `value-format` 不一致的话，是无法通过修改输入框内容改变选值
 
-:::demo components/DatePicker/demo17.vue :::
+且对于单个触发器，如果分隔符不是 `-`，也不会对用户输入行为进行解析
 
-### DatePicker 支持日期格式
-默认情况下，组件接受并返回Date对象。以下为可用的格式化字串，也可参考[Dayjs](https://day.js.org/docs/en/display/format#list-of-all-available-formats)，注意：`Format` 符号：年份`Y`和`y`均支持，日`D`和`d`均支持，后期大版本会废弃`y`和`d`，强烈建议使用 `dayjs` 格式
-以 UTC 2014年08月07日 06:07:08 为例：
+:::demo components/datepicker/format-trigger-text.vue :::
 
-| 格式        | 类型  | 说明           | 举例            |
-|-----------|-----|--------------|---------------|
-| YYYY      | 年   |              | 2014          |
-| M         | 月   | 不补0          | 8             |
-| MM        | 月   |              | 08            |
-| D         | 日   | 不补0          | 7             |
-| DD        | 日   |              | 07            |
-| H         | 小时  | 24小时制；不补0    | 6             |
-| HH        | 小时  | 24小时制        | 06            |
-| m         | 分钟  | 不补0          | 7             |
-| mm        | 分钟  |              | 07            |
-| s         | 秒   | 不补0          | 8             |
-| ss        | 秒   |              | 08            |
-| timestamp | 时间戳(毫秒) | 格式化为number类型 | 1407362828000 |
-| X | 时间戳(秒) | 格式化为number类型 | 1407362828 |
+## 自定义日期格子内容
+使用 `default` 插槽，可以自定义日期格子的内容
+:::demo components/datepicker/default-slot.vue :::
 
-### DatePicker 默认的转化格式
+## 自定义图标
+使用 `prefix-icon` `suffix-icon` 设置前后缀图标
+:::demo components/datepicker/custom-icon.vue :::
 
-| 类型                    | 默认值                   |
-|-----------------------|-----------------------|
-| date/daterange        | 'YYYY/MM/DD'          |
-| datetime/dateminutes  | 'YYYY/MM/DD HH:mm'    |
-| dateseconds           | 'YYYY/MM/DD HH:mm:ss' |
+## 清空后默认值
+可以配置 `:initial-value="null"` 用于在清空后给 `model-value` 附默认值
+:::demo components/datepicker/initial-value.vue :::
+
+## 只展示面板内容
+如果不希望显示触发器，直接渲染面板，可以设置 `show-popover-content-only = true`
+:::demo components/datepicker/show-popover-content-only.vue :::
+
+## Dayjs 基础配置
+组件内置使用 `dayjs`，以下是基础配置（全局通用）：
+:::code ../../../../horizon-web/src/utils/useDayJs.ts:::
+
+## 类型定义
+:::code ../../../../horizon-web/src/components/DatePicker/src/utils/types.ts :::
+
+## 格式化格式
+根据当前的国际化配置，会有相应不同的日期格式展示形式
+:::code ../../../../horizon-web/src/locales/dateFormat.json :::

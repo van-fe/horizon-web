@@ -1,22 +1,22 @@
-### 何时使用
+## 何时使用
 1. 折叠面板可以使信息处理和发现更加有效。对复杂区域进行分组和隐藏，保持页面的整洁。
 2. 如果用户可能会阅读所有内容，则不要使用折叠面板，因为它会增加额外点击的负担；而是使用带有普通标题的完整滚动页面。
 
-### 基础用法
+## 基础用法
 默认可以同时展开多个面板，可以设置默认展开第几个。
 :::demo components/Collapse/basic.vue :::
 
-### 属性
+## 属性
 默认大小是 medium。
 :::demo components/Collapse/size.vue :::
 
-### 手风琴
+## 手风琴
 设置`accordion`,每次只能打开一个面板。
 :::demo components/Collapse/accordion.vue :::
 
-### 面板嵌套
+## 面板嵌套
 嵌套折叠面板。
 :::demo components/Collapse/nest.vue :::
 
-### 其他
+## 其他
 :::demo components/Collapse/other.vue :::

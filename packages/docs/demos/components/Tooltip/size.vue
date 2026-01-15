@@ -1,5 +1,9 @@
 <template>
   <div class="demo-block">
+    <h-tooltip placement="top" size="large">
+      <h-button>Large</h-button>
+      <template #content>Large</template>
+    </h-tooltip>
     <h-tooltip placement="top">
       <h-button>Medium(default)</h-button>
       <template #content>Medium</template>

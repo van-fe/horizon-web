@@ -3,18 +3,18 @@ layout: home
 
 hero:
   name: "Horizon Web"
-  text: "A Vue3 Modern Components"
-  tagline: To better improve your efficiency
+  text: "Modern Vue3 Component Library"
+  tagline: Committed to improving your work efficiency
   actions:
     - theme: brand
-      text: 
-      link: /markdown-examples
-    - theme: brand
-      text: Directives
-      link: /markdown-examples
-    - theme: brand
-      text: Methods
-      link: /api-examples
+      text: Why Choose Horizon Web?
+      link: /guide/why-choose-horizon-web
+    - theme: alt
+      text: Quick Start
+      link: /guide/start
+    - theme: alt
+      text: API & Examples
+      link: /demos
 
 features:
   - title: Feature A

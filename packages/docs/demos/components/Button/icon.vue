@@ -45,6 +45,7 @@ import { IconEye, IconEdit, IconRubbish } from '@aurora/icon';
 
 <style scoped>
 .grid {
+  display: grid;
   width: fit-content;
   grid-template-rows: repeat(3, 1fr);
   grid-template-columns: repeat(3, 1fr);

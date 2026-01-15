@@ -46,6 +46,6 @@ function handleChange(selectOrDeselect?: boolean | undefined, option?: HCascader
 }
 
 onMounted(async()=>{
-  baseData.value = await fetch(`https://static.nio.com/fx-static/51/fixed/cascader-tree-data.prod.json?t=${Date.now()}`).then(r => r.json());
+  baseData.value = await fetch(new URL('/cascader-tree-data.json', import.meta.url).href).then(r => r.json());
 });
 </script>

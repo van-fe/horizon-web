@@ -1,4 +1,4 @@
-### Basic
+## Basic
 
 可以通过设置 `title` 和 `content` 属性来设置通知的标题和正文内容。
 
@@ -6,7 +6,7 @@
 
 :::demo methods/Notification/basic.vue :::
 
-### Content
+## Content
 
 `content` 支持传入 HTML 字符串来作为正文内容。 将 `useHTML` 属性设置为 true，`content` 属性就会被当作 HTML 片段处理。
 
@@ -14,33 +14,33 @@
 
 :::demo methods/Notification/content.vue :::
 
-### Types
+## Types
 我们提供了五种不同类型的提醒框：normal、success、warning、info 和error。
 
 使用 `type` 属性设置其类型， 支持五个选项：`normal`、`success`、`warning`、`info` 和 `error`， 默认为 `normal`。
 
 :::demo methods/Notification/different-types.vue :::
 
-### Placement
+## Placement
 Notification 可以从屏幕四角中的任意一角弹出
 
 使用 `placement` 属性设置其弹出位置， 支持四个选项：`top-right`、`top-left`、`bottom-right` 和 `bottom-left`， 默认为 `top-right`。
 
 :::demo methods/Notification/placement.vue :::
 
-### Offset
+## Offset
 
 使用 `offset` 设置偏移量，相对屏幕顶部或底部的偏移量，使用 `gap` 设置相邻Notification实例之间的间距。
 
 :::demo methods/Notification/offset.vue :::
 
-### Width
+## Width
 
 使用 `width` 设置自定义宽度。
 
 :::demo methods/Notification/width.vue :::
 
-### Buttons
+## Buttons
 
 操作按钮可以为用户提供处理通知的按钮
 
@@ -48,19 +48,19 @@ Notification 可以从屏幕四角中的任意一角弹出
 
 :::demo methods/Notification/operation.vue :::
 
-### Show close
+## Show close
 
 通过`show-close`属性可以设置关闭按钮是否显示。
 
 :::demo methods/Notification/close.vue :::
 
-### Close/CloseAll
+## Close/CloseAll
 
 异步调用 `$notify` 会返回当前 Notification 的实例。如果需要手动关闭实例，可以调用它的 `close` 方法，也可调用 `closeAll` 方法关闭所有实例。
 
 :::demo methods/Notification/methods.vue :::
 
-### $notify 重载
+## $notify 重载
 `$notify` 包含 5 个重载方法，`resolve、reject` 会传入操作类型。
 ```ts
 function $notify (content: string): Promise<string>;

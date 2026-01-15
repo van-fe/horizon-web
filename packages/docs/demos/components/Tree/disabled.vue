@@ -49,7 +49,7 @@ const stress = ref(false);
 const baseTreeData = ref([]);
 
 onMounted(() => {
-  fetch('https://static.nio.com/fx-static/horizon-web/clrk9smqz0000096weuvw7ojx/tree-data-disabled.json')
+  fetch(new URL('/tree-data-disabled.json', import.meta.url).href)
     .then(res => res.json())
     .then(res => {
       baseTreeData.value = res;

@@ -50,7 +50,7 @@ const renderTreeData = ref<NTreeNodeData[]>([
           h(
             'div',
             {
-              style: 'color: var(--n-text-warning-default)',
+              style: 'color: var(--h-text-warning-default)',
             },
             ['😂 ', data.value],
           ),
@@ -75,7 +75,7 @@ function action(command: unknown) {
 const baseTreeData = ref([]);
 
 onMounted(() => {
-  fetch('https://static.nio.com/fx-static/horizon-web/clrk8znpi000109bebmtiggbz/tree-data.json')
+  fetch(new URL('/tree-data.json', import.meta.url).href)
     .then(res => res.json())
     .then(res => {
       baseTreeData.value = res;

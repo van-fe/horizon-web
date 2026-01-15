@@ -16,6 +16,6 @@
   padding: 10px;
   margin: 10px 0;
   border-radius: 4px;
-  background-color: var(--n-bg-success-weak-activated);
+  background-color: var(--h-bg-success-weak-activated);
 }
 </style>

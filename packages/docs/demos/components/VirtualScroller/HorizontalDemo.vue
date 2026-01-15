@@ -13,7 +13,7 @@
       </h-row>
     </section>
 
-    <NVirtualScroller
+    <h-virtual-scroller
       :items="filteredItems"
       :min-item-size="54"
       direction="horizontal"
@@ -21,7 +21,7 @@
       class="scroller-h"
     >
       <template #default="{ item, index, active }">
-        <NVirtualScrollerItem
+        <h-virtual-scroller-item
           :item="item"
           :active="active"
           :title="`Click to change message ${index}`"
@@ -40,14 +40,13 @@
             <span>{{ item.id }} (id)</span>
             <span>{{ index }} (index)</span>
           </div>
-        </NVirtualScrollerItem>
+        </h-virtual-scroller-item>
       </template>
-    </NVirtualScroller>
+    </h-virtual-scroller>
   </div>
 </template>
 
 <script setup lang="ts">
-import { NVirtualScroller } from '@aurora/horizon-web';
 import { ref, computed } from 'vue';
 import { faker } from '@faker-js/faker';
 import { IconSearch } from '@aurora/icon';

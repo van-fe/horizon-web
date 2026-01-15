@@ -14,13 +14,13 @@
 <style scoped>
 .target-wrapper {
   height: 200px;
-  border: 1px solid var(--n-border-default);
+  border: 1px solid var(--h-border-default);
   overflow: auto;
 }
 
 .target-container {
   height: 1000px;
-  background: var(--n-bg-weak-activated);
+  background: var(--h-bg-weak-activated);
   padding-top: 50px;
 }
 </style>

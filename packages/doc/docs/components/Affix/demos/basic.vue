@@ -1,5 +1,5 @@
 <template>
-  <h-affix target=".h-main" style="display: inline-block">
+  <h-affix target=".VPDoc" style="display: inline-block">
     <h-button>Affix top</h-button>
   </h-affix>
 </template>

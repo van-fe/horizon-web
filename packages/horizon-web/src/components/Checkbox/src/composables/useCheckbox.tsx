@@ -56,9 +56,9 @@ export default defineComponent({
         <label for={uuid}>
           {type === 'checkbox' &&
             (propIndeterminate.value ? (
-              <IconCheckboxHalfFilled color={['$primary']} class={classHelper.e('icon')} />
+              <IconCheckboxHalfFilled color={classHelper.color('text-brand-default')} class={classHelper.e('icon')} />
             ) : isChecked(propModelValue.value, propLabel.value, propTrueLabel.value) ? (
-              <IconCheckboxFilled color={['$primary']} class={classHelper.e('icon')} />
+              <IconCheckboxFilled color={classHelper.color('text-brand-default')} class={classHelper.e('icon')} />
             ) : (
               <i class={classHelper.e('icon')}></i>
             ))}

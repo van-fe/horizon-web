@@ -1,7 +1,7 @@
 <template>
   <div>
     自定义内容
-    <h-backtop target="main.h-main" :right="24" :bottom="170">up</h-backtop>
+    <h-backtop target="main.VPDoc" :right="24" :bottom="170">up</h-backtop>
   </div>
 </template>
 

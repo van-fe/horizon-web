@@ -7,5 +7,5 @@
 |shadow|box-shadow: 0px 3px 6px -4px rgba(0, 0, 0, 0.1), 0px 6px 16px rgba(0, 0, 0, 0.06), 0px 9px 28px 8px rgba(0, 0, 0, 0.03);|
 |shadow-lg|box-shadow: 0px 6px 16px -8px rgba(0, 0, 0, 0.08), 0px 9px 28px rgba(0, 0, 0, 0.05), 0px 12px 48px 16px rgba(0, 0, 0, 0.03);|
 
-### Demo
+## Demo
 :::demo ./demos/demo1.vue :::

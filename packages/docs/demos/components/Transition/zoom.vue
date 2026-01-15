@@ -37,15 +37,15 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 .animate-box {
-    width: 200px;
+    width: 150px;
     height: 80px;
-    background: var(--n-bg-brand-default);
-    border-radius: var(--n-radius);
+    background: var(--h-bg-brand-default);
+    border-radius: var(--h-radius);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--n-text-inverse);
+    color: var(--h-text-inverse);
 }
 </style>

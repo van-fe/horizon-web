@@ -5,7 +5,7 @@
   <div class="grid">
     <div><h-button :disabled="true">Primary Button</h-button></div>
     <div><h-button type="danger" :disabled="true">Danger Button</h-button></div>
-    <div></div>
+    <div><h-button type="normal" :disabled="true">Normal Button</h-button></div>
     <div><h-button :plain="true" :disabled="true">Primary Plain Button</h-button></div>
     <div><h-button type="danger" :plain="true" :disabled="true">Danger Plain Button</h-button></div>
     <div><h-button type="normal" :plain="true" :disabled="true">Normal Plain Button</h-button></div>
@@ -23,6 +23,7 @@
 
 <style scoped>
 .grid {
+  display: grid;
   width: fit-content;
   grid-template-rows: repeat(3, 1fr);
   grid-template-columns: repeat(3, 1fr);

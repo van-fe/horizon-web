@@ -1,40 +1,72 @@
-### 输入框样式
+## 基本用法
+默认情况下，是 **时+分** 的选择器
+:::demo components/timepicker/basic.vue :::
 
-基本的时间选择控件，可以通过设置 `inputStyle` 属性来配置输入框样式。
+## 范围选择
+设置 `is-range`，可以开启范围选择器
+:::demo components/timepicker/is-range.vue :::
 
-:::demo components/TimePicker/demo8.vue :::
+## 可清空
+设置 `clearable`，默认开启，在有值时可以点击清空图标清空数据
+:::demo components/timepicker/clearable.vue :::
 
-### 单列、双列和三列模式
-可以通过设置 `type` 属性来设置时间选择的模式，例如：`time`、`minutes`和`seconds`分别设置单列、双列和三列模式。
-:::demo components/TimePicker/demo1.vue :::
+## 单个触发器的范围选择
+当触发器父容器空间有限，可以设置 `single-trigger`，即可只渲染单个触发器
 
-### 时间范围
-通过设置 `is-range` 属性来设置时间范围选择。
-:::demo components/TimePicker/demo7.vue :::
+另外，在默认情况下，如果选择了开始或结束时间，则时间选择器中会自动将开始或结束时间之前或之后的时间禁用，如果需要解除联动，则设置 `is-link-panels = false`
 
-### 时间禁选
-通过设置 `disabledTime` 属性来设置时间控件的禁选。
-:::demo components/TimePicker/demo2.vue :::
+:::demo components/timepicker/single-trigger.vue :::
 
-### 自定义时间间隔
-`pickerOptions`属性可以自定义设置时间控件的开始、结束和间隔，注：自定义时间单元格不支持重复。
-:::demo components/TimePicker/demo3.vue :::
+## 简单使用
+设置 `type = 'time'` 即可开启简单时间选择器
+:::demo components/timepicker/time.vue :::
 
-### 自定义前缀、后缀内容
-通过`prefixIcon`、`suffixIcon`可以输入框的图标，也可以通过插槽`prefix`、`suffix`设置前缀、后缀内容。
-:::demo components/TimePicker/demo4.vue :::
+## 设置秒
+设置 `type = 'seconds'` 即可开启精确到秒的选择器
+:::demo components/timepicker/seconds.vue :::
 
-### 底部扩展区
-组件默认提供取消、确认2种功能按钮。可通过插槽`footer`自定义按钮数量和功能。
-:::demo components/TimePicker/demo5.vue :::
+## 确认方式
+默认情况下，用户在输入时间结束后，需要按下回车确认
 
-### 自定义时间元素文案
-通过属性`formatTriggerText`自定义触发器中显示文案，通过属性`formatCellText`自定义时间元素每一项文案。
-:::demo components/TimePicker/demo6.vue :::
+也可以通过设置 `confirm-type="blur"` 控制在失焦或按下回车时都确认
 
-### 空间不够
-当显示位置的空间不够时，当所有方向没法满足时候可以通过 `preventOverflow` 阻止popover被切断
+:::demo components/timepicker/confirm-type.vue :::
 
-可以通过设置fallbackPlacements来调整flip的位置，比如上下位置都不够展示，希望能够展示到左边，可以设置fallbackPlacements为 ['top', 'bottom', 'left']
+## 设置禁选
+可以通过传入 `disabled-time` 来控制时间是否不可被选择
+:::demo components/timepicker/disabled-time.vue :::
 
-:::demo components/TimePicker/demo9.vue :::
+## 快捷选择此刻
+设置 `show-now`，即可在面板中显示【此刻】按钮
+:::demo components/timepicker/show-now.vue :::
+
+## 时间步长
+设置 `time-step` `hour-step` `minute-step` `second-step`，可以控制相应时间的步长
+:::demo components/timepicker/step.vue :::
+
+## 不可输入
+默认配置下，允许用户手动修改输入框中的数值来进行时间的切换。如果不希望用户手动输入，则可以配置 `inputable = false`
+:::demo components/timepicker/inputable.vue :::
+
+## 只读
+不允许修改已选值的情况下，可以设置 `readonly`
+:::demo components/timepicker/readonly.vue :::
+
+## 限定的开始和结束时间
+默认配置中，时间开始结束是 `[0 ~ 24)` (左开右闭区间)，如果需要扩增或缩减时间范围，需要设置 `start-at` 和 `end-at`
+:::demo components/timepicker/start-end-range.vue :::
+
+## 自定义文案
+如果需要对每个日期格子自定义文案，可以设置 `format-cell-text` 和
+:::demo components/timepicker/format-cell-text.vue :::
+
+## 显示文字提示
+如果对时间格子在悬浮时需要显示提示文字，则传入 `show-time-tooltip`
+:::demo components/timepicker/show-time-tooltip.vue :::
+
+## 清空后默认值
+可以配置 `:initial-value="null"` 用于在清空后给 `model-value` 附默认值
+:::demo components/timepicker/initial-value.vue :::
+
+## 类型定义
+:::code ../../../../horizon-web/src/components/TimePicker/src/utils/types.ts :::

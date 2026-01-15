@@ -142,7 +142,7 @@ function onDeselect(collection: string[], value: string) {
 <style scoped>
 .custom-tag {
   display: flex;
-  height: var(--n-select-height--option);
+  height: var(--h-select-height--option);
   align-items: center;
   padding-left: 12px;
 }

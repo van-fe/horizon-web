@@ -21,7 +21,6 @@ declare global {
 export default defineComponent({
   name: `${useNamespace()}Affix`,
   desc: '将页面元素固定在特定可视区域',
-  version: '2.3.0',
   inheritAttrs: false,
   props: useAffixProps,
   emits: useAffixEmits,

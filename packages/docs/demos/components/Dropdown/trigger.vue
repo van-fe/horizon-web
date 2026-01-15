@@ -64,7 +64,7 @@ function onCommand(val: string) {
 .context-menu-area {
   width: 300px;
   height: 200px;
-  background: var(--n-bg-info-weak-default);
+  background: var(--h-bg-info-weak-default);
   border-radius: 4px;
   display: flex;
   align-items: center;

@@ -12,6 +12,3 @@ import { ref } from 'vue';
 const visible = ref(true);
 
 </script>
-
-<style scoped>
-</style>

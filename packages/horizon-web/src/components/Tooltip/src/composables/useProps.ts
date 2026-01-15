@@ -5,11 +5,9 @@ export type TooltipSize = 'medium' | 'small';
 export const useTooltipProps = declarePropType({
   /**
    * 尺寸
-   * @version 2.0.5
-   * @deprecated 不再支持调整尺寸。只有默认尺寸
    */
   size: {
-    type: String as PropType<TooltipSize>,
+    type: String as PropType<'large' | 'medium' | 'small'>,
     default: 'medium',
   },
   /**
@@ -22,7 +20,6 @@ export const useTooltipProps = declarePropType({
   },
   /**
    * tooltip弹出方向
-   * @version 2.0.5 支持 right-start right-end left-start left-end
    */
   placement: {
     type: String as PropType<

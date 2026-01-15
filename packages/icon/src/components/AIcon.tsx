@@ -9,7 +9,7 @@ export default defineComponent({
       required: true
     },
     size: {
-      type: [String, Number],
+      type: [String, Number, Array],
       default: '1em'
     },
     color: {
@@ -35,10 +35,18 @@ export default defineComponent({
 
     const sizeValue = computed(() => {
       if (typeof props.size === 'number') {
-        return `${props.size}px`
+        return [`${props.size}px`, `${props.size}px`];
       }
-      return props.size
+      if (Array.isArray(props.size)) {
+        return props.size.map(s => typeof s === 'number' ? `${s}px` : s);
+      }
+
+      return [props.size, props.size];
     })
+
+    const width = computed(() => sizeValue.value[0])
+
+    const height = computed(() => sizeValue.value[1])
 
     const processMultiColor = (content: string, colors: string[]): string => {
       if (!content || colors.length === 0) return content
@@ -144,13 +152,13 @@ export default defineComponent({
 
     return () => {
       return h('svg', {
-        width: sizeValue.value,
-        height: sizeValue.value,
         viewBox: viewBox.value,
         fill: fill.value,
         style: {
+          width: width.value,
+          height: height.value,
           display: 'inline-block',
-          verticalAlign: 'middle',
+          verticalAlign: 'inherit',
           transform: props.rotate ? `rotate(${props.rotate}deg)` : undefined,
         },
         innerHTML: svgContent.value

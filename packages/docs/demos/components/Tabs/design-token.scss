@@ -7,25 +7,25 @@
   --n-tabs-min-width--tab--page--activated: 40px;
 
   // font-size
-  --n-tabs-font-size--tab--page: var(--n-text-base);
+  --n-tabs-font-size--tab--page: var(--h-text-base);
 
   // -- line
-  --n-tabs-font-size--tab--line--mini: var(--n-text-sm);
-  --n-tabs-font-size--tab--line--small: var(--n-text-base);
-  --n-tabs-font-size--tab--line--medium: var(--n-text-lg);
-  --n-tabs-font-size--tab--line--large: var(--n-text-xl);
+  --n-tabs-font-size--tab--line--mini: var(--h-text-sm);
+  --n-tabs-font-size--tab--line--small: var(--h-text-base);
+  --n-tabs-font-size--tab--line--medium: var(--h-text-lg);
+  --n-tabs-font-size--tab--line--large: var(--h-text-xl);
 
   // -- card
-  --n-tabs-font-size--tab--card--mini: var(--n-text-sm);
-  --n-tabs-font-size--tab--card--small: var(--n-text-base);
-  --n-tabs-font-size--tab--card--medium: var(--n-text-base);
-  --n-tabs-font-size--tab--card--large: var(--n-text-lg);
+  --n-tabs-font-size--tab--card--mini: var(--h-text-sm);
+  --n-tabs-font-size--tab--card--small: var(--h-text-base);
+  --n-tabs-font-size--tab--card--medium: var(--h-text-base);
+  --n-tabs-font-size--tab--card--large: var(--h-text-lg);
 
   // -- segment
-  --n-tabs-font-size--tab--segment--mini: var(--n-text-sm);
-  --n-tabs-font-size--tab--segment--small: var(--n-text-base);
-  --n-tabs-font-size--tab--segment--medium: var(--n-text-base);
-  --n-tabs-font-size--tab--segment--large: var(--n-text-lg);
+  --n-tabs-font-size--tab--segment--mini: var(--h-text-sm);
+  --n-tabs-font-size--tab--segment--small: var(--h-text-base);
+  --n-tabs-font-size--tab--segment--medium: var(--h-text-base);
+  --n-tabs-font-size--tab--segment--large: var(--h-text-lg);
 
   // line-height
   // -- page
@@ -50,71 +50,71 @@
   --n-tabs-line-height--tab--segment--large: 24px;
 
   // color
-  --n-tabs-color--tab: var(--n-text-secondary);
-  --n-tabs-color--tab--hover: var(--n-text-brand-hover);
-  --n-tabs-color--tab--press: var(--n-text-brand-press);
+  --n-tabs-color--tab: var(--h-text-secondary);
+  --n-tabs-color--tab--hover: var(--h-text-brand-hover);
+  --n-tabs-color--tab--press: var(--h-text-brand-press);
 
   // icon color
   --n-tabs-color--icon: #868a9a;
   --n-tabs-color--icon--hover: #040b29;
 
   // -- line
-  --n-tabs-color--tab--line--activated: var(--n-text-brand-default);
-  --n-tabs-color--tab--line--activated--hover: var(--n-text-brand-default);
+  --n-tabs-color--tab--line--activated: var(--h-text-brand-default);
+  --n-tabs-color--tab--line--activated--hover: var(--h-text-brand-default);
 
   // -- card
-  --n-tabs-color--tab--card--activated: var(--n-text-brand-default);
-  --n-tabs-color--add--card: var(--n-tabs-color--tab--card);
-  --n-tabs-color--add--card--hover: var(--n-tabs-color--tab--card--hover);
+  --n-tabs-color--tab--card--activated: var(--h-text-brand-default);
+  --n-tabs-color--add--card: var(--h-tabs-color--tab--card);
+  --n-tabs-color--add--card--hover: var(--h-tabs-color--tab--card--hover);
 
   // -- segment
-  --n-tabs-color--tab--segment--activated: var(--n-text-brand-default);
+  --n-tabs-color--tab--segment--activated: var(--h-text-brand-default);
 
   // -- page
-  --n-tabs-color--tab--page--activated: var(--n-text-brand-default);
-  --n-tabs-color--add--page--hover: var(--n-text-brand-hover);
+  --n-tabs-color--tab--page--activated: var(--h-text-brand-default);
+  --n-tabs-color--add--page--hover: var(--h-text-brand-hover);
 
   // border-color
-  --n-tabs-border-color--header--line--underline: var(--n-divider-default);
-  --n-tabs-border-color--indicator--line: var(--n-border-brand-default);
-  --n-tabs-border-color--header--card: var(--n-divider-default);
-  --n-tabs-border-color--tab--card: var(--n-tabs-border-color--header--card);
-  --n-tabs-border-color--add--card: var(--n-tabs-border-color--header--card);
+  --n-tabs-border-color--header--line--underline: var(--h-divider-default);
+  --n-tabs-border-color--indicator--line: var(--h-border-brand-default);
+  --n-tabs-border-color--header--card: var(--h-divider-default);
+  --n-tabs-border-color--tab--card: var(--h-tabs-border-color--header--card);
+  --n-tabs-border-color--add--card: var(--h-tabs-border-color--header--card);
 
   // border
-  --n-tabs-border--tab--card: 1px solid var(--n-tabs-border-color--tab--card);
-  --n-tabs-border--add--card: 1px solid var(--n-tabs-border-color--add--card);
+  --n-tabs-border--tab--card: 1px solid var(--h-tabs-border-color--tab--card);
+  --n-tabs-border--add--card: 1px solid var(--h-tabs-border-color--add--card);
 
   // border-radius
-  --n-tabs-border-radius--indicator--line: var(--n-radius-m) var(--n-radius-m) 0 0;
-  --n-tabs-border-radius--tab--card: var(--n-radius-m) var(--n-radius-m) 0 0;
-  --n-tabs-border-radius--segment: var(--n-radius-m);
-  --n-tabs-border-radius--indicator--segment: var(--n-radius-s);
+  --n-tabs-border-radius--indicator--line: var(--h-radius-m) var(--h-radius-m) 0 0;
+  --n-tabs-border-radius--tab--card: var(--h-radius-m) var(--h-radius-m) 0 0;
+  --n-tabs-border-radius--segment: var(--h-radius-m);
+  --n-tabs-border-radius--indicator--segment: var(--h-radius-s);
 
   // -- page
-  --n-tabs-border-radius--tab--page: var(--n-radius-l) var(--n-radius-l) 0 0;
+  --n-tabs-border-radius--tab--page: var(--h-radius-l) var(--h-radius-l) 0 0;
 
   // background
-  --n-tabs-bg--tab--card: var(--n-bg-secondary);
-  --n-tabs-bg--tab--card--activated: var(--n-bg-default);
-  --n-tabs-bg--add--card: var(--n-tabs-bg--tab--card);
-  --n-tabs-bg--segment: var(--n-bg-secondary);
+  --n-tabs-bg--tab--card: var(--h-bg-secondary);
+  --n-tabs-bg--tab--card--activated: var(--h-bg-default);
+  --n-tabs-bg--add--card: var(--h-tabs-bg--tab--card);
+  --n-tabs-bg--segment: var(--h-bg-secondary);
 
   // -- page
-  --n-tabs-bg--page: var(--n-bg-secondary);
-  --n-tabs-bg--tab--page: var(--n-bg-transparent);
-  --n-tabs-bg--tab--page--hover: var(--n-bg-hover);
-  --n-tabs-bg--tab--page--activated: var(--n-bg-default);
-  --n-tabs-bg--tab--page--activated--hover: var(--n-tabs-bg--tab--page--activated);
-  --n-tabs-bg--indicator--segment: var(--n-bg-default);
+  --n-tabs-bg--page: var(--h-bg-secondary);
+  --n-tabs-bg--tab--page: var(--h-bg-transparent);
+  --n-tabs-bg--tab--page--hover: var(--h-bg-hover);
+  --n-tabs-bg--tab--page--activated: var(--h-bg-default);
+  --n-tabs-bg--tab--page--activated--hover: var(--h-tabs-bg--tab--page--activated);
+  --n-tabs-bg--indicator--segment: var(--h-bg-default);
 
   // box-shadow
   --n-tabs-box-shadow--indicator--segment: 0 5px 12px 4px rgba(0, 0, 0, 4%),
     0 3px 6px 0 rgba(0, 0, 0, 6%), 0 1px 2px -2px rgba(0, 0, 0, 10%);
 
   // margin
-  --n-tabs-space-right--tab--card: var(--n-spacing-3);
-  --n-tabs-margin-left--tab--segment: var(--n-spacing-2);
+  --n-tabs-space-right--tab--card: var(--h-spacing-3);
+  --n-tabs-margin-left--tab--segment: var(--h-spacing-2);
   --n-tabs-margin-left--close--page: 6px;
 
   // -- line
@@ -125,13 +125,13 @@
 
   // padding
   --n-tabs-padding--arrow-wrap: 0 20px;
-  --n-tabs-padding-bottom--nav-list--line: var(--n-spacing-3);
-  --n-tabs-padding--nav-wrap--card: var(--n-spacing-7);
-  --n-tabs-padding--tab--line: 0 var(--n-spacing-2);
+  --n-tabs-padding-bottom--nav-list--line: var(--h-spacing-3);
+  --n-tabs-padding--nav-wrap--card: var(--h-spacing-7);
+  --n-tabs-padding--tab--line: 0 var(--h-spacing-2);
 
   // -- page
-  --n-tabs-padding--page: 10px var(--n-spacing-5) 0 var(--n-spacing-5);
-  --n-tabs-padding--nav-list--page: 0 0 0 var(--n-spacing-4);
+  --n-tabs-padding--page: 10px var(--h-spacing-5) 0 var(--h-spacing-5);
+  --n-tabs-padding--nav-list--page: 0 0 0 var(--h-spacing-4);
 
   // -- segment
   --n-tabs-padding--nav--segment--mini: 2px;
@@ -140,10 +140,10 @@
   --n-tabs-padding--nav--segment--large: 4px;
 
   // -- card
-  --n-tabs-padding--tab--card--mini: 2px var(--n-spacing-3);
-  --n-tabs-padding--tab--card--small: 4px var(--n-spacing-4);
-  --n-tabs-padding--tab--card--medium: 8px var(--n-spacing-5);
-  --n-tabs-padding--tab--card--large: 11px var(--n-spacing-6);
+  --n-tabs-padding--tab--card--mini: 2px var(--h-spacing-3);
+  --n-tabs-padding--tab--card--small: 4px var(--h-spacing-4);
+  --n-tabs-padding--tab--card--medium: 8px var(--h-spacing-5);
+  --n-tabs-padding--tab--card--large: 11px var(--h-spacing-6);
 
   // -- segment
   --n-tabs-padding--tab--segment--mini: 1px 8px;
@@ -152,6 +152,6 @@
   --n-tabs-padding--tab--segment--large: 8px 20px;
 
   // transition
-  --n-tabs-transition-time: var(--n-transition-time);
+  --n-tabs-transition-time: var(--h-transition-time);
   --n-tabs-transition-fn: cubic-bezier(0.205, 0, 0.25, 1.01);
 }

@@ -28,7 +28,7 @@ export default defineComponent({
       console.info(link, prevLink);
     };
 
-    const scrollContainer = top?.document.querySelector('main.h-main');
+    const scrollContainer = top?.document.querySelector('main.VPDoc');
 
     return {
       scrollContainer,

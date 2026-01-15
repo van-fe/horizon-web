@@ -90,7 +90,7 @@ export default defineComponent({
     // vueuse(s)
     const isWrapperVisible = useElementVisibility(wrapperRef, {
       // TODO: 必须正确指定滚动容器, 否则 useElementVisibility 不生效;
-      // scrollTarget: document.querySelector('.h-main'),
+      // scrollTarget: document.querySelector('.VPDoc'),
     });
 
     useResizeObserver(wrapperRef, handleResize);

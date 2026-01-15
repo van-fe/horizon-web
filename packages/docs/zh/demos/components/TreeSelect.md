@@ -1,4 +1,4 @@
-### 基本用法
+## 基本用法
 结合了 `Picker` 和 `Tree` 组件，所以 `Tree` 组件的大部分配置都可以直接传入
 
 **考虑到操作便捷性，`TreeSelect` 暂时不允许拖拽排序**
@@ -7,15 +7,15 @@
 
 :::demo components/TreeSelect/basic.vue :::
 
-### 可清空
+## 可清空
 设置 `clearable = true`，即可在有值的时候清空已选项
 :::demo components/TreeSelect/clearable.vue :::
 
-### 单选
+## 单选
 可以开启 `show-radio`，让叶子节点前面出现 `Radio` 组件
 :::demo components/TreeSelect/single.vue :::
 
-### 多选
+## 多选
 与 `select` 一样，多选的标签使用了 `n-tag` 和 `n-tag-group` 组件结合
 
 默认情况下，不会折叠选中项。可以配置 `collapse-tags = true` 折叠已选项
@@ -26,11 +26,11 @@
 
 :::demo components/TreeSelect/multiple.vue :::
 
-### 多选限制
+## 多选限制
 如果希望在多选时，限制用户选择的个数，则配置 `multiple-limit` 即可
 :::demo components/TreeSelect/multiple-limit.vue :::
 
-### 父子节点严格模式
+## 父子节点严格模式
 
 可以通过设置 `check-strictly` 来控制是否父子节点是否严格控制
 
@@ -40,7 +40,7 @@
 
 :::demo components/TreeSelect/check-strictly.vue :::
 
-### 展开、选择控制
+## 展开、选择控制
 通过 `expand-on-click-node` 配置，可以控制是否允许在点击节点整行时，展开子节点（默认为 `true`）
 
 `check-on-click-node` 则控制是否允许在点击节点整行时，选中子节点（默认为 `false`）
@@ -51,7 +51,7 @@
 
 :::demo components/TreeSelect/expand-and-check.vue :::
 
-### 优化选择操作
+## 优化选择操作
 自 `2.3.5` 开始，默认在点击叶子节点时，自动勾选节点
 
 如果仍希望控制叶子节点只有在点击 `checkbox` 才进行选中，则可以设置 `check-on-click-leaf = false`
@@ -60,14 +60,14 @@
 
 :::demo components/TreeSelect/check-on-leaf.vue :::
 
-### 控制展开
+## 控制展开
 通过 `expand-values`，可以控制展开的字段，也可以使用双向绑定获取展开的值
 
 如果不希望自动将父级展开，则需要设置 `is-default-expand-parent = false`
 
 :::demo components/TreeSelect/expand-values.vue :::
 
-### 默认全部展开
+## 默认全部展开
 设置 `is-default-expand-all = true`，将所有数据全部展开
 
 但请注意，如果数据是异步获取的，需要在取到数据后再渲染
@@ -78,7 +78,7 @@
 
 :::demo components/TreeSelect/default-expand-all.vue :::
 
-### 禁用
+## 禁用
 在 `tree-data` 数据中，某项设置`disabled = true`，可以对其项禁用
 
 但如果希望整棵树禁用，则直接给予 `disabled = true` 给 `n-tree` 即可
@@ -91,7 +91,7 @@
 
 :::demo components/TreeSelect/disabled.vue :::
 
-### 自定义展开图标
+## 自定义展开图标
 可以配置 `fold-icon` 自定义展开图标
 
 如果需要在展开状态切换过程中使用顺时针旋转 `90°`，则 `expand-icon` 留空即可
@@ -100,18 +100,18 @@
 
 :::demo components/TreeSelect/expand-icon.vue :::
 
-### 选项统计
+## 选项统计
 传入 `use-statistic = true`，即可对多选项进行统计
 
 可以设置 `statistic-text` 来指定统计文字
 
 :::demo components/TreeSelect/statistic.vue :::
 
-### 过滤
+## 过滤
 设置 `filterable = true` 即可开启过滤功能
 :::demo components/TreeSelect/filter.vue :::
 
-### 过滤保留关键字
+## 过滤保留关键字
 在过滤+多选的情况下，设置 `reserve-keyword` 可以设置三种保留关键字的模式
 
 `true`: 保留关键字
@@ -124,7 +124,7 @@
 
 :::demo components/TreeSelect/reserve-keyword.vue :::
 
-### 面板中的过滤
+## 面板中的过滤
 如果不希望直接在触发器中进行过滤输入，`TreeSelect` 提供了两种方式（都需要先开启 `panel-filterable`)：
 
 1. 内置的输入面板：开启 `use-build-in-panel-filter` 即可
@@ -132,22 +132,22 @@
 
 :::demo components/TreeSelect/filter-in-panel.vue :::
 
-### 过滤并处理高亮
+## 过滤并处理高亮
 默认高亮色为品牌色，如果希望对搜索结果处理，则可以通过 `highlightMethod` 来处理
 :::demo components/TreeSelect/highlight-filter.vue :::
 
-### 动态加载
+## 动态加载
 如果某个节点的子节点需要使用动态加载时，需要给该节点的 `isLeaf` 属性设置成 `false`
 :::demo components/TreeSelect/dynamic-load.vue :::
 
-### 自定义节点
+## 自定义节点
 可以通过 `treeNodeRender` 插槽自定义节点渲染
 
 也可以在传入 `tree-data` 时，`label` 设置为 `((option: NTreeData) => VNode)` 类型用来自定义某个固定节点，此时优先级高于 `treeNodeRender` 插槽
 
 :::demo components/TreeSelect/custom-render.vue :::
 
-### 字段映射
+## 字段映射
 使用 `field-map` 来自定义映射的字段
 
 在此示例中，`label` 使用 `text`，`value` 使用 `key`，`children` 使用 `items`
@@ -170,14 +170,14 @@ declare module '@aurora/horizon-web' {
 
 :::demo components/TreeSelect/field-map.vue :::
 
-### 虚拟滚动
+## 虚拟滚动
 在大数据量的情况下，节点过多会导致性能变差，所以可以使用虚拟滚动的能力
 
 需配置 `use-virtual-scroll = true`， 且 `height` 或 `max-height` 任意一个即可启用虚拟滚动
 
 :::demo components/TreeSelect/virtual-scroll.vue :::
 
-### 不可选择
+## 不可选择
 传入 `options` 时，可以设定 `selectable = false`，即可不允许选择该项（但展开不受限）
 
 和 `disabled` 不同的是，该配置只会影响自身与用户的交互，且会受父子级的勾选状态影响从而展示不同状态

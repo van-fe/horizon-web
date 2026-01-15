@@ -22,7 +22,7 @@
   justify-content: center;
 }
 
-.commoh-container .h-main {
+.commoh-container .VPDoc {
   height: 200px;
   background: var(--h-bg-warning-weak-default);
   display: flex;

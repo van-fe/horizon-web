@@ -41,7 +41,7 @@ const onSecondary = () => {
     padding: 0;
   }
   .my-header {
-    padding: var(--n-spacing-7) var(--n-spacing-7) 16px;
+    padding: var(--h-spacing-7) var(--h-spacing-7) 16px;
     border-bottom: 1px solid #000;
   }
   .my-body {
@@ -51,7 +51,7 @@ const onSecondary = () => {
   .my-footer {
     margin-top: 0;
     border-top: 1px solid #000;
-    padding: 16px var(--n-spacing-7) var(--n-spacing-7);
+    padding: 16px var(--h-spacing-7) var(--h-spacing-7);
   }
   .my-mask {
     background-color: rgba(0, 0, 0, 0.1);

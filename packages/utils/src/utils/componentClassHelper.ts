@@ -5,8 +5,11 @@ const realVal = (val: boolean | (() => boolean)) => {
 };
 
 export class ComponentClassBlock {
-  block: string;
+  private namespace: string;
+  public block: string;
+
   constructor(block: string, n = useNamespace().toLowerCase()) {
+    this.namespace = n;
     this.block = `${n}-${block}`;
   }
   e(element: string | undefined, judge = true) {
@@ -32,6 +35,9 @@ export class ComponentClassBlock {
   }
   has(status: string | undefined, judge = true) {
     return this.status(status, judge, 'has');
+  }
+  color(color: string, withVarWrap = true) {
+    return withVarWrap ? `var(--${this.namespace}-${color})` : `--${this.namespace}-${color}`;
   }
 }
 

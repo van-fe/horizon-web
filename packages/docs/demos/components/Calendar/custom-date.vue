@@ -77,7 +77,7 @@ const actionList = [
 }
 
 .row.desc {
-  color: var(--n-text-disabled);
+  color: var(--h-text-disabled);
   cursor: pointer;
 }
 
@@ -92,7 +92,7 @@ const actionList = [
   align-items: center;
   font-weight: bold;
   font-size: 16px;
-  border-bottom: 1px solid var(--n-divider-default);
+  border-bottom: 1px solid var(--h-divider-default);
   padding-bottom: 17px;
   margin-bottom: 15px;
 }
@@ -100,7 +100,7 @@ const actionList = [
 .dot {
   width: 8px;
   height: 8px;
-  background: var(--n-bg-brand-default);
+  background: var(--h-bg-brand-default);
   margin-right: 4px;
 }
 </style>

@@ -1,35 +1,35 @@
-### 基本用法
+## 基本用法
 抽屉支持从屏幕的任意一侧滑出，默认位置是从右边，默认尺寸 `medium`。
 :::demo components/Drawer/basic.vue :::
 
-### 抽屉位置
+## 抽屉位置
 自定义位置，点击触发按钮抽屉从相应的位置滑出。
 :::demo components/Drawer/position.vue :::
 
 
-### 抽屉尺寸
+## 抽屉尺寸
 通过 `size` 可以自由控制抽屉的尺寸，支持预定义的枚举: `small`/`medium`/`large`，也支持类似数字百分比，如 `300`, `500px`, `75%`。
 :::demo components/Drawer/size.vue :::
 
 
-### 自定义节点
+## 自定义节点
 你可以设置模块是否显示或通过插槽完全自定义底部。请注意这里设置 `v2` 采用新版本逻辑
 :::demo components/Drawer/customize.vue :::
 
-### 嵌套抽屉
+## 嵌套抽屉
 在抽屉内打开新的抽屉
 :::demo components/Drawer/nest.vue :::
 
-### 关闭确认
+## 关闭确认
 在抽屉关闭时候，返回 `Promise<false>` 来阻止关闭抽屉
 :::demo components/Drawer/confirm.vue :::
 
 
-### 挂载位置
+## 挂载位置
 通过 `to` 可以设置弹出层节点的挂载位置
 :::demo components/Drawer/to.vue :::
 
-### v1.x 兼容性逻辑
+## v1.x 兼容性逻辑
 为了业务更顺滑迁移，针对 `v1.x` 版本做了部分兼容，通过 `v2` 可以设置使用 `v2.x` 逻辑。<br />
 1.抽屉顶部展示逻辑。默认采用 `v1.x` 逻辑，`title` 或者 `slot.title` 设置为 `Falsy`，抽屉不展示顶部内容<br />
 2.抽屉底部展示逻辑。默认采用 `v1.x` 逻辑，`slot.footer` 或者 `primaryButton(deprecated) | secondaryButton(deprecated)` 为 `Falsy`，不展示底部的值。<br />
@@ -38,7 +38,7 @@
 当 `v2=true` 时候，抽屉顶部和底部逻辑分别被 `header` 和 `footer` 控制。
 :::demo components/Drawer/compatible.vue :::
 
-### Design Token
+## Design Token
 ```scss
 :root {
   // font-size

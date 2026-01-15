@@ -12,7 +12,7 @@
       <div class="grid-num">{{ gridItems }}</div>
     </section>
 
-    <NRecycleScroller
+    <h-recycle-scroller
       class="scroller"
       :item-size="128"
       :items="items"
@@ -24,13 +24,12 @@
           <div class="name">{{ item.name }}</div>
         </div>
       </template>
-    </NRecycleScroller>
+    </h-recycle-scroller>
   </div>
 </template>
 
 <script setup lang='ts'>
 import { ref, onMounted } from 'vue';
-import { NRecycleScroller } from '@aurora/horizon-web';
 import { faker } from '@faker-js/faker';
 
 type Item = {
@@ -45,7 +44,7 @@ onMounted(() => {
   for (let i = 0; i < 5000; i++) {
     items.value.push({
       id: i,
-      name: faker.name.fullName(),
+      name: faker.person.fullName(),
     });
   }
 });

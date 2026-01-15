@@ -50,7 +50,7 @@ function toggleCode() {
     <div class="tools">
       <h-space :size="8">
         <h-button v-tooltip="'复制代码'" size="mini" icon="copy" :icon-size="14" :text="true" type="normal" @click="copyCode" />
-        <h-button v-tooltip="'查看/编辑代码'" size="mini" icon="record" :icon-size="14" :text="true" type="normal" @click="toggleCode" />
+        <h-button v-tooltip="'查看/编辑代码'" size="mini" icon="code" :icon-size="14" :text="true" type="normal" @click="toggleCode" />
       </h-space>
     </div>
     <h-transition name="collapse">
@@ -68,9 +68,11 @@ function toggleCode() {
   border: 1px solid mixins.css-variable('border-default');
   padding: mixins.css-variable('spacing-3');
   border-radius: mixins.css-variable('radius-m');
+  margin: mixins.css-variable('spacing-5') 0;
 
   .tools {
     text-align: right;
+    margin-top: mixins.css-variable('spacing-3');
   }
 }
 </style>

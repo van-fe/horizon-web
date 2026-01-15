@@ -12,19 +12,10 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-
-export default defineComponent({
-  setup() {
-    const onClick = () => {
-      console.info('----点击事件触发----');
-    };
-    return {
-      onClick,
-    };
-  },
-});
+<script setup lang="ts">
+function onClick() {
+  console.info('----点击事件触发----');
+}
 </script>
 
 <style scoped>

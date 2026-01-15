@@ -42,7 +42,7 @@ const highlightMethod: NTreeHighlightMethod = (inputValue, node) => {
 };
 
 onMounted(() => {
-  fetch('https://static.nio.com/fx-static/horizon-web/clrk8znpi000109bebmtiggbz/tree-data.json')
+  fetch(new URL('/tree-data.json', import.meta.url).href)
     .then(res => res.json())
     .then(res => {
       baseTreeData.value = res;
@@ -52,6 +52,6 @@ onMounted(() => {
 
 <style>
 .kw {
-  color: var(--n-text-error-default);
+  color: var(--h-text-error-default);
 }
 </style>

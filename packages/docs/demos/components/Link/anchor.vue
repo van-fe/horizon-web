@@ -1,6 +1,6 @@
 <template>
   <p>
-    <h-link anchor="anchor" type="text" :underline="false" scroll-target=".h-main">Anchor</h-link>
+    <h-link anchor="anchor" type="text" :underline="false" scroll-target=".VPDoc">Anchor</h-link>
   </p>
   <p>
     <h-link
@@ -8,7 +8,7 @@
       :anchor-offset="200"
       type="text"
       :underline="false"
-      scroll-target=".h-main"
+      scroll-target=".VPDoc"
     >
       Anchor2 Set Offset 200
     </h-link>

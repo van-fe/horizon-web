@@ -42,11 +42,11 @@ function onCommand(type: 'edit' | 'del') {
   position: relative;
   width: 150px;
   height: 150px;
-  border: 1px solid var(--n-border-default);
-  border-radius: var(--n-radius);
+  border: 1px solid var(--h-border-default);
+  border-radius: var(--h-radius);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--n-text-secondary);
+  color: var(--h-text-secondary);
 }
 </style>

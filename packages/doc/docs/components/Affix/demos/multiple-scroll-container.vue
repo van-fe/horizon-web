@@ -18,11 +18,11 @@ function onScroll() {
 }
 
 onMounted(() => {
-  document.body.querySelector('.h-main')?.addEventListener('scroll', onScroll);
+  document.body.querySelector('.VPDoc')?.addEventListener('scroll', onScroll);
 });
 
 onBeforeUnmount(() => {
-  document.body.querySelector('.h-main')?.removeEventListener('scroll', onScroll);
+  document.body.querySelector('.VPDoc')?.removeEventListener('scroll', onScroll);
 });
 </script>
 

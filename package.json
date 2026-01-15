@@ -30,17 +30,21 @@
     "docs:preview": "vitepress preview packages/docs"
   },
   "devDependencies": {
+    "@aurora/eslint-plugin-horizon-web": "workspace:*",
+    "@aurora/horizon-web": "workspace:*",
+    "@aurora/icon": "workspace:*",
+    "@aurora/locale": "workspace:*",
+    "@aurora/locale-vue": "workspace:*",
+    "@aurora/utils": "workspace:*",
     "@babel/core": "^7.26.0",
+    "@babel/eslint-parser": "^7.26.0",
     "@babel/plugin-transform-runtime": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "@codemirror/lang-html": "^6.4.9",
     "@codemirror/lang-javascript": "^6.2.2",
     "@commitlint/cli": "^20.2.0",
     "@commitlint/config-conventional": "^20.2.0",
-    "@aurora/eslint-plugin-horizon-web": "workspace:*",
-    "@aurora/utils": "workspace:*",
-    "@aurora/horizon-web": "workspace:*",
-    "@aurora/icon": "workspace:*",
+    "@faker-js/faker": "^10.2.0",
     "@oxlint/migrate": "^1.33.0",
     "@rollup/plugin-alias": "^6.0.0",
     "@rollup/plugin-babel": "^6.0.3",
@@ -70,7 +74,7 @@
     "@vue/runtime-core": "^3.5.26",
     "@vue/runtime-dom": "^3.5.26",
     "@vue/test-utils": "^2.4.6",
-    "@babel/eslint-parser": "^7.26.0",
+    "autoprefixer": "^10.4.20",
     "chalk": "^5.6.2",
     "codemirror": "^6.0.1",
     "cpy": "^12.1.0",
@@ -85,6 +89,7 @@
     "eslint-plugin-oxlint": "^1.33.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-vue": "^10.6.2",
+    "fetch-jsonp": "^1.3.0",
     "fs-extra": "^11.3.3",
     "happy-dom": "^20.0.11",
     "husky": "^9.1.7",
@@ -93,11 +98,13 @@
     "lodash": "^4.17.21",
     "markdown-it-container": "^4.0.0",
     "markdown-it-multimd-table": "^4.1.1",
+    "nanoid": "^5.1.6",
     "oxlint": "^1.34.0",
     "playwright": "^1.51.0",
     "postcss": "^8.4.49",
     "prettier": "^3.4.2",
     "pretty-quick": "^4.2.2",
+    "qs": "^6.14.1",
     "resize-observer-polyfill": "^1.5.1",
     "rollup": "^4.53.5",
     "rollup-plugin-banner": "^0.2.1",
@@ -119,6 +126,7 @@
     "stylelint-order": "^7.0.0",
     "stylelint-scss": "^6.13.0",
     "sucrase": "^3.35.0",
+    "tailwindcss": "^3.4.0",
     "transliteration": "^2.3.5",
     "ts-morph": "^27.0.2",
     "ts-node": "^10.9.2",
@@ -163,7 +171,5 @@
       "stylelint --fix"
     ]
   },
-  "dependencies": {
-    "nanoid": "^5.1.6"
-  }
+  "dependencies": {}
 }

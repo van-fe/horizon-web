@@ -58,7 +58,7 @@ const currentVal1 = ref<string[][]>([]);
 const currentVal2 = ref<string[][]>([]);
 
 onMounted(async()=>{
-  baseData.value = await fetch(`https://static.nio.com/fx-static/51/fixed/cascader-tree-data.prod.json?t=${Date.now()}`).then(r => r.json());
+  baseData.value = await fetch(new URL('/cascader-tree-data.json', import.meta.url).href).then(r => r.json());
 });
 </script>
 

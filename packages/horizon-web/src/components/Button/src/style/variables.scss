@@ -264,5 +264,6 @@ $values: (
   'x-spacing--large': #{function.css-variable('spacing-7')},
   'x-spacing--huge': #{function.css-variable('spacing-7')},
   'siblings-gap': #{function.css-variable('spacing-2')},
+  'margin-left--siblings': #{function.css-variable('spacing-4')},
   'transition-time': #{function.css-variable('transition-time')},
 );

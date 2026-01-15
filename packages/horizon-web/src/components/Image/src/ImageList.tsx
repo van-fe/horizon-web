@@ -10,6 +10,7 @@ import {
   flattenVNodes,
   getUnitString,
   useNamespace,
+  cssVariableKey
 } from '@aurora/utils';
 import type { ImageListSlots } from './composables/useSlots';
 import { useImageListSlots } from './composables/useSlots';
@@ -69,7 +70,7 @@ export default defineComponent({
                 <li
                   class={classHelper.e('item')}
                   style={{
-                    marginRight: index === images.length - 1 ? 0 : getUnitString(props.margin),
+                    [cssVariableKey('image-list-items', 'margin')]: getUnitString(props.margin),
                   }}
                   onClick={() => onClick(img.props)}
                 >

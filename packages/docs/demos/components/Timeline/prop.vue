@@ -7,7 +7,7 @@
           <div>可根据节点内容，自定义节点文本内容；</div>
         </div>
         <!-- 手动设置style="width: 270px"是为了desc换行 -->
-        <h-timeline :first="{ color: 'var(--n-bg-brand-default)' }" style="width: 270px">
+        <h-timeline :first="{ color: 'var(--h-bg-brand-default)' }" style="width: 270px">
           <h-timeline-item
             name="Current milestone"
             timestamp="03/02/2021"
@@ -56,7 +56,7 @@
           <div>可以按照时间顺序/逆序展示</div>
         </div>
         <div class="container">
-          <h-timeline sort="order" :first="{ color: 'var(--n-bg-brand-default)' }">
+          <h-timeline sort="order" :first="{ color: 'var(--h-bg-brand-default)' }">
             <h-timeline-item
               name="Current milestone"
               timestamp="03/05/2021"
@@ -67,7 +67,7 @@
             <h-timeline-item name="The second milestone" timestamp="03/03/2021" placement="top" />
             <h-timeline-item name="The third milestone" timestamp="03/04/2021" placement="top" />
           </h-timeline>
-          <h-timeline sort="reverse" :first="{ color: 'var(--n-bg-brand-default)' }">
+          <h-timeline sort="reverse" :first="{ color: 'var(--h-bg-brand-default)' }">
             <h-timeline-item name="Current milestone" timestamp="03/05/2021" placement="top" />
             <h-timeline-item
               name="The first milestone"
@@ -93,25 +93,25 @@
               name="Current milestone"
               timestamp="03/02/2021"
               placement="top"
-              color="var(--n-bg-brand-default)"
+              color="var(--h-bg-brand-default)"
             />
             <h-timeline-item
               name="An unknown error has occurred"
               timestamp="03/02/2021"
               placement="top"
-              color="var(--n-bg-error-default)"
+              color="var(--h-bg-error-default)"
             />
             <h-timeline-item
               name="The second milestone"
               timestamp="03/02/2021"
               placement="top"
-              color="var(--n-bg-warning-default)"
+              color="var(--h-bg-warning-default)"
             />
             <h-timeline-item
               name="The second milestone"
               timestamp="03/02/2021"
               placement="top"
-              color="var(--n-bg-success-default)"
+              color="var(--h-bg-success-default)"
             />
             <h-timeline-item
               name="The first milestone"
@@ -126,7 +126,7 @@
               size="large"
               timestamp="03/02/2021"
               placement="top"
-              color="var(--n-bg-brand-default)"
+              color="var(--h-bg-brand-default)"
               icon="email"
               offset="8"
             />
@@ -135,7 +135,7 @@
               size="large"
               timestamp="03/02/2021"
               placement="top"
-              color="var(--n-bg-error-default)"
+              color="var(--h-bg-error-default)"
               icon="close"
               offset="8"
             />
@@ -144,7 +144,7 @@
               size="large"
               timestamp="03/02/2021"
               placement="top"
-              color="var(--n-bg-warning-default)"
+              color="var(--h-bg-warning-default)"
               icon="light_on"
               offset="8"
             />
@@ -153,7 +153,7 @@
               size="large"
               timestamp="03/02/2021"
               placement="top"
-              color="var(--n-bg-success-default)"
+              color="var(--h-bg-success-default)"
               icon="check"
               offset="8"
             />
@@ -177,7 +177,7 @@
           <div>可根据实际业务情况，自定义节点内容，如内文、图片、回复等；</div>
         </div>
         <h-timeline class="timeline-slot">
-          <h-timeline-item placement="top" timestamp="03/02/2021" color="var(--n-bg-brand-default)">
+          <h-timeline-item placement="top" timestamp="03/02/2021" color="var(--h-bg-brand-default)">
             <template #name>
               <div class="timeline-title-slot">
                 <h-avatar size="mini" />
@@ -232,7 +232,7 @@
           <h-timeline-item
             placement="right"
             timestamp="03/02/2021"
-            color="var(--n-bg-brand-default)"
+            color="var(--h-bg-brand-default)"
             :tail="false"
           >
             <template #name>
@@ -265,8 +265,8 @@
             name="Current milestone"
             size="large"
             timestamp="03/02/2021"
-            color="var(--n-bg-brand-default)"
-            border-color="var(--n-bg-brand-default)"
+            color="var(--h-bg-brand-default)"
+            border-color="var(--h-bg-brand-default)"
             icon="check"
             type="circle"
             desc="you can fold the dot"
@@ -277,8 +277,8 @@
             size="large"
             timestamp="03/02/2021"
             placement="top"
-            color="var(--n-bg-brand-default)"
-            border-color="var(--n-bg-brand-default)"
+            color="var(--h-bg-brand-default)"
+            border-color="var(--h-bg-brand-default)"
             icon="check"
             type="circle"
           />
@@ -287,8 +287,8 @@
             size="large"
             timestamp="03/02/2021"
             placement="top"
-            color="var(--n-bg-brand-default)"
-            border-color="var(--n-bg-brand-default)"
+            color="var(--h-bg-brand-default)"
+            border-color="var(--h-bg-brand-default)"
             icon="check"
             type="circle"
           />
@@ -297,7 +297,7 @@
             size="large"
             timestamp="03/02/2021"
             placement="top"
-            color="var(--n-bg-brand-default)"
+            color="var(--h-bg-brand-default)"
             dashed
             offset="0"
           />

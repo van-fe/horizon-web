@@ -16,5 +16,5 @@
 |position-y-center|top: 50%;<br>transform: translateY(-50%);|
 |position-center|top: 50%;<br>left: 50%;<br>transform: translate(-50%, -50%);|
 
-### Demo
+## Demo
 :::demo ./demos/demo1.vue :::

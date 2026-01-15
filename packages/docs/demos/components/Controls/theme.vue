@@ -45,12 +45,12 @@ function onCommand(type: 'star' | 'call' | 'msn') {
   position: relative;
   width: 300px;
   height: 50px;
-  border: 1px solid var(--n-border-default);
-  border-radius: var(--n-radius);
+  border: 1px solid var(--h-border-default);
+  border-radius: var(--h-radius);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--n-text-secondary);
+  color: var(--h-text-secondary);
 }
 
 .container .content {

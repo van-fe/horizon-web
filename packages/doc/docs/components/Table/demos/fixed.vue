@@ -1,5 +1,5 @@
 <template>
-  <h-table-v3 :data="data" header-sticky header-sticky-container=".h-main">
+  <h-table-v3 :data="data" header-sticky header-sticky-container=".VPDoc">
     <h-table-column-v3 title="Seq" type="index" :fixed="true" />
     <h-table-column-v3 title="Name" field="name" fixed />
     <h-table-column-v3 title="Birthday" field="birthday" mih-width="200px" />

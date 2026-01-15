@@ -102,7 +102,7 @@ const formData = ref({
 });
 
 onMounted(async () => {
-  cascaderData.value = await fetch(`https://static.nio.com/fx-static/51/fixed/cascader-tree-data.prod.json?t=${Date.now()}`).then(r => r.json());
+  cascaderData.value = await fetch(new URL('/cascader-tree-data.json', import.meta.url).href).then(r => r.json());
 });
 
 function onInput() {

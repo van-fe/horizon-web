@@ -103,7 +103,7 @@
             </h-sub-menu>
           </h-menu>
         </h-aside>
-        <h-main style="background: var(--n-bg-info-weak-hover)"></h-main>
+        <h-main style="background: var(--h-bg-info-weak-hover)"></h-main>
       </h-container>
     </h-col>
   </h-row>

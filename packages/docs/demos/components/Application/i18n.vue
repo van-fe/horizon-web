@@ -8,10 +8,10 @@
       </h-form-item>
     </h-form>
     <p style="margin-top: 20px;">
-      {{ td()['horizon-web'].datePicker.now }}
+      {{ td().horizonWeb.datePicker.now }}
     </p>
     <p>
-      {{ td()['horizon-web'].datePicker.today }}
+      {{ td().horizonWeb.datePicker.today }}
     </p>
   </h-application>
 </template>

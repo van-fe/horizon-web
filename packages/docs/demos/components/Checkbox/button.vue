@@ -1,7 +1,9 @@
 <template>
-  <h-row>
-    <h-col :span="8">
+  <h-row align="middle">
+    <h-col :span="6">
       <div class="demo-title">medium(default)</div>
+    </h-col>
+    <h-col :span="18">
       <h-checkbox-button
         v-for="item in checkBoxOptions"
         :key="item.key"
@@ -10,9 +12,12 @@
         :label="item.label"
       />
     </h-col>
-
-    <h-col :span="8">
+  </h-row>
+  <h-row align="middle">
+    <h-col :span="6">
       <div class="demo-title">large</div>
+    </h-col>
+    <h-col :span="18">
       <h-checkbox-button
         v-for="item in checkBoxOptions"
         :key="item.key"
@@ -40,9 +45,3 @@ const checkBoxOptions = ref([
   },
 ]);
 </script>
-
-<style scoped>
-.checkbox + .checkbox {
-  margin-left: 12px;
-}
-</style>

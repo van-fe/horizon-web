@@ -189,8 +189,8 @@ function buildDirectiveIndex() {
     directives[directive.dirName].push(directive.name);
   });
 
-  Object.entries(directives).forEach(([fileName, directive]) => {
-    content += `export { ${directive.join(', ')}, default as ${camelCase(
+  Object.entries(directives).forEach(([fileName]) => {
+    content += `export { default as ${camelCase(
       fileName.replace(/^v-/, ''),
     )} } from './${fileName}';\n`;
   });

@@ -37,7 +37,7 @@ const currentVal2 = ref<string[][]>([]);
 
 const options = ref([]);
 fetch(
-  'https://static.nio.com/fx-static/horizon-web/clhoirqpc0000088sgljrau3o/cascader-options.json',
+  new URL('/cascader-options.json', import.meta.url).href,
 ).then(res => {
   res.json().then(value => {
     options.value = value;

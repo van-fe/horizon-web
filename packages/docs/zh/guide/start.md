@@ -1,14 +1,14 @@
 # 快速开始
 ## 安装
 
-### 前置准备
+## 前置准备
 - [Node.js](https://nodejs.org/) 16+
 - [Vue](https://cn.vuejs.org/) 3.2.30+
 - [Vite](https://vitejs.dev/) or [CreateVue](https://github.com/vuejs/create-vue) ([VueCli](https://cli.vuejs.org/) 已不推荐使用)
 
 ---
 
-### 包管理器安装
+## 包管理器安装
 
 可以通过以下方法安装它：
 
@@ -25,7 +25,7 @@ $ bun add @aurora/horizon-web
 :::
 
 ---
-### 浏览器直接引入
+## 浏览器直接引入
 
 通过 `script` `link` 标签，可以直接使用 `Horizon Web` 组件。
 
@@ -56,7 +56,7 @@ $ bun add @aurora/horizon-web
 
 ## 使用
 
-### 通过包管理器安装
+## 通过包管理器安装
 
 ```ts
 import { createApp } from 'vue';
@@ -71,7 +71,7 @@ createApp(App)
 
 ```
 
-### 浏览器直接引入
+## 浏览器直接引入
 
 ```html
 <html>

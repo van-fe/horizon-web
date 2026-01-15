@@ -33,8 +33,3 @@ const selectCheckbox = (val: boolean) => {
 };
 </script>
 
-<style scoped>
-.checkbox + .checkbox {
-  margin-left: 15px;
-}
-</style>
