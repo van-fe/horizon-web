@@ -5,7 +5,7 @@
 @use 'footer';
 @use 'column-manager';
 
-@include mixins.b('table-v3') {
+@include mixins.b('table') {
   width: 100%;
   #{mixins.css-variable-name('table', 'row', 'hover', 'background')}: mixins.css-variable('table', 'background', 'row-hover');
 
@@ -13,9 +13,11 @@
     display: none;
   }
 
-  @include mixins.e('table') {
+  @include mixins.e('table', false) {
+    display: table;
     width: max-content;
     min-width: 100%;
+    margin: 0;
 
     @include mixins.is('layout-fixed') {
       table-layout: fixed;
@@ -32,7 +34,7 @@
     @include mixins.m('expand') {
       background: mixins.css-variable('table', 'background', 'body', 'expand');
 
-      @include mixins.be('table-v3', 'cell', false) {
+      @include mixins.be('table', 'cell', false) {
         &-wrap {
           #{mixins.css-variable-name('table-z-index-temp')}: mixins.css-variable('table-z-index-default');
           width: 100%;
@@ -73,15 +75,15 @@
   }
 
   @include mixins.is('hoverable') {
-    #{mixins.e('table-v3', 'table-body')}, #{mixins.e('table-v3', 'table-foot')}{
-      @include mixins.be('table-v3', 'cell', false) {
+    #{mixins.e('table', 'table-body')}, #{mixins.e('table', 'table-foot')}{
+      @include mixins.be('table', 'cell', false) {
         transition: mixins.css-variable('table', 'transition', 'color-behavior');
       }
 
-      @include mixins.be('table-v3', 'row', false) {
-        &:not(#{mixins.modifier-name('expand', 'row', #{mixins.block('table-v3')})}) {
+      @include mixins.be('table', 'row', false) {
+        &:not(#{mixins.modifier-name('expand', 'row', #{mixins.block('table')})}) {
           &:hover {
-            @include mixins.be('table-v3', 'cell', false) {
+            @include mixins.be('table', 'cell', false) {
               @include mixins.is-not('row-span-cell') {
                 background: mixins.css-variable('table', 'row', 'hover', 'background');
               }
@@ -112,9 +114,9 @@
   }
 
   @include mixins.has('column-manager') {
-    #{mixins.e('table-v3', 'table-head')} {
+    #{mixins.e('table', 'table-head')} {
       tr:nth-of-type(1) {
-        #{mixins.e('table-v3', 'cell')} {
+        #{mixins.e('table', 'cell')} {
           @include mixins.is('last-column') {
             padding-right: calc(#{mixins.css-variable('table', 'spacing', 'padding', 'cell', 'x')} + 24px + 16px);
           }
@@ -125,7 +127,7 @@
 }
 
 :root.#{mixins.$dark-mode-class-name} {
-  @include mixins.b('table-v3', false) {
+  @include mixins.b('table', false) {
     #{mixins.css-variable-name('table', 'row', 'hover', 'background')}: mixins.css-variable('table', 'background', 'row-hover', 'dark');
   }
 }

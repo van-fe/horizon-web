@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { faker } from '@faker-js/faker';
-import type { NTableTransformedRowDataType } from '@aurora/horizon-web';
+import type { HTableTransformedRowDataType } from '@aurora/horizon-web';
 
 interface TableData {
   uuid: string;
@@ -24,18 +24,18 @@ interface TableData {
 }
 
 const createData = (amount: number, childAmount: number, level = 0): TableData[] => new Array(amount).fill(0).map(() => ({
-  uuid: faker.datatype.uuid(),
-  name: faker.name.firstName(),
+  uuid: faker.string.uuid(),
+  name: faker.person.fullName(),
   birthday: faker.date.birthdate({ min: 22, max: 50, mode: 'age' }).toDateString(),
   gender: faker.helpers.arrayElement(['male', 'female']),
-  address: faker.address.streetAddress(true),
+  address: faker.location.streetAddress(),
   children: childAmount > 0 && level < 4 ? createData(childAmount, childAmount - 2, level + 1) : [],
   isLeaf: childAmount <= 0 ? (level >= 4 ? true : faker.datatype.boolean()) : undefined,
 }));
 
 const data = ref<TableData[]>(createData(20, 6));
 
-function dynamicLoad(rowData: NTableTransformedRowDataType) {
+function dynamicLoad(rowData: HTableTransformedRowDataType) {
   console.info(rowData);
 
   return new Promise<TableData[]>(resolve => {

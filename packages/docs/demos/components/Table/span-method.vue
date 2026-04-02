@@ -27,7 +27,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { faker } from '@faker-js/faker';
-import { type NTableSpanMethodType } from '@aurora/horizon-web';
+import { type HTableSpanMethodType } from '@aurora/horizon-web';
 
 interface TableData {
   id: string;
@@ -41,7 +41,7 @@ let partNo = '';
 function createPartNo() {
   if (count === 2) {
     count = 0;
-    partNo = `P${faker.datatype.number({min: 1000000, max: 9999999})}`;
+    partNo = `P${faker.helpers.rangeToNumber({min: 1000000, max: 9999999})}`;
   } else {
     count++;
   }
@@ -50,13 +50,13 @@ function createPartNo() {
 }
 
 const data = ref<TableData[]>((new Array(20)).fill(0).map(() => ({
-  id: faker.datatype.uuid(),
+  id: faker.string.uuid(),
   partNo: createPartNo(),
-  parentSVNumber: `P${faker.datatype.number({min: 1000000, max: 9999999})}`,
+  parentSVNumber: `P${faker.helpers.rangeToNumber({min: 1000000, max: 9999999})}`,
   status: faker.helpers.arrayElement(['released', 'working']),
 })));
 
-const arraySpanMethod: NTableSpanMethodType = (data) => {
+const arraySpanMethod: HTableSpanMethodType = (data) => {
   if (data.columnIndex === 0) {
     if (data.rowIndex % 3 === 0) {
       return [3, 1];
@@ -66,7 +66,7 @@ const arraySpanMethod: NTableSpanMethodType = (data) => {
   }
 };
 
-const objectSpanMethod: NTableSpanMethodType = (data) => {
+const objectSpanMethod: HTableSpanMethodType = (data) => {
   if (data.rowIndex % 2 === 0) {
     if (data.columnIndex === 0) {
       return [1, 2];

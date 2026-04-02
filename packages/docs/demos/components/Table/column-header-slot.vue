@@ -28,10 +28,10 @@ interface TableData {
 
 const originData: TableData[] = new Array(20).fill(0).map((_, index) => ({
   id: index + 1,
-  name: faker.name.firstName(),
+  name: faker.person.fullName(),
   birthday: faker.date.birthdate({ min: 22, max: 50, mode: 'age' }).toDateString(),
   gender: faker.helpers.arrayElement(['male', 'female']),
-  address: faker.address.streetAddress(true),
+  address: faker.location.streetAddress(),
 }));
 
 const data = ref<TableData[]>(originData);

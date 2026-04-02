@@ -9,7 +9,7 @@ export default function useScroll() {
   const scrollbarDomRef = ref<HorizonWebComponentInstance<typeof HScrollbar, ScrollbarExposes>>();
   const scrollLeft = ref(0);
   const scrollRight = ref(0);
-  const classHelper = new ComponentClassBlock('table-v3');
+  const classHelper = new ComponentClassBlock('table');
 
   function initialScrollState() {
     handleScroll({

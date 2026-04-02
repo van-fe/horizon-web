@@ -49,11 +49,11 @@ const isLoading = ref(false);
 
 const originData: TableData[] = new Array(100).fill(0).map((_, index) => ({
   id: index,
-  name: faker.name.firstName(),
+  name: faker.person.fullName(),
   registerDate: faker.date.recent(180).toDateString(),
   registerTime: dayjs(faker.date.recent()).format('HH:mm:ss'),
-  country: faker.address.country(),
-  address: faker.address.streetAddress(true),
+  country: faker.location.country(),
+  address: faker.location.streetAddress(),
 }));
 
 const data = ref<TableData[]>(originData);

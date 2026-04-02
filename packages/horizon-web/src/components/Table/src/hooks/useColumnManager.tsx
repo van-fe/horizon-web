@@ -28,7 +28,7 @@ export default function useColumnManager(options: {
   getVisibleState: (columnUuid: string, checkStore?: Map<string, boolean>) => boolean;
   resetVisibleState: () => void;
 }) {
-  const classHelper = new ComponentClassBlock('table-v3');
+  const classHelper = new ComponentClassBlock('table');
 
   const treeSelectDomRef = ref<HorizonWebComponentInstance<typeof HTreeSelect, TreeSelectExposes>>();
 

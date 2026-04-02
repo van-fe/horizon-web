@@ -21,7 +21,7 @@ import type { HTableRowKeyType } from './utils/types';
 import { HTableColumnSelectionKey } from './utils/types';
 
 export default defineComponent({
-  name: `${useNamespace()}TableColumnV3`,
+  name: `${useNamespace()}TableColumn`,
   props: useTableColumnProps,
   emits: useTableColumnEmits,
   slots: useTableColumnSlots,
@@ -35,7 +35,7 @@ export default defineComponent({
     }: HorizonWebSetupContext<TableColumnEmits, TableColumnSlots, TableColumnExposes>,
   ) {
     const uuid = nanoid();
-    const classHelper = new ComponentClassBlock('table-column-v3');
+    const classHelper = new ComponentClassBlock('table-column');
 
     const parentEmit = inject(HTableEmitsInjectKey)!;
     const analysisColumns = inject(HTableColumnAnalysisInjectKey)!;

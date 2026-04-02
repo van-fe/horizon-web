@@ -1,6 +1,6 @@
 @use '../../../../styles/mixins';
 
-@include mixins.b('table-v3') {
+@include mixins.b('table') {
   @include mixins.e('column-manager') {
     position: absolute;
     top: 0;

@@ -42,7 +42,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const classHelper = new ComponentClassBlock('table-v3');
+    const classHelper = new ComponentClassBlock('table');
 
     const parentProps = inject(HTablePropsInjectKey)!;
     const parentEmits = inject(HTableEmitsInjectKey)!;

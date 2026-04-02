@@ -20,7 +20,6 @@ import {
 } from '~/components/Form/src/utils/injectedKeys';
 import { HCheckboxGroupInjectedKey } from './utils/injectedKeys';
 import useSize from '~/utils/useSize';
-import { HApplicationCompatibilityInjectedKey } from '~/components/Application/src/utils/injectedKeys';
 
 export default defineComponent({
   name: `${useNamespace()}CheckboxButton`,
@@ -50,30 +49,10 @@ export default defineComponent({
     );
     const size = computed(() => (isGroup.value ? HCheckboxGroup!.size : propSize.value));
 
-    const compatibility = inject(HApplicationCompatibilityInjectedKey, undefined);
-
     // global size
-
-    const oldStandardSizeRef = useSize(size, 'medium', {
-      small: 'medium',
-      medium: 'large',
-      middle: 'medium',
-    });
-
-    const newStandardSizeRef = useSize(size, 'medium', {
+    const sizeRef = useSize(size, 'medium', {
       small: 'medium',
       middle: 'medium',
-    });
-
-    const sizeRef = computed(() => {
-      if (
-        compatibility?.value?.split(',').includes('checkbox.size') &&
-        props.forceNewestSize === false
-      ) {
-        return oldStandardSizeRef.value;
-      } else {
-        return newStandardSizeRef.value;
-      }
     });
 
     const modelValue = computed(() =>

@@ -12,7 +12,7 @@ export default function useHeaderResizerCursorLine() {
   const cursorLineStyle = ref<StyleValue>();
 
   function useHeaderResizerPlugin(column: HTableColumnData, showDivider: boolean) {
-    const classHelper = new ComponentClassBlock('table-v3');
+    const classHelper = new ComponentClassBlock('table');
 
     const refreshLayout = inject(HTableRefreshLayoutInjectKey)!;
 

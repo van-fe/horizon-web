@@ -1,6 +1,6 @@
 @use '../../../../styles/mixins';
 
-@include mixins.b('table-v3') {
+@include mixins.b('table') {
   @include mixins.e('table') {
     border-collapse: separate;
     border-spacing: 0;
@@ -72,15 +72,15 @@
   }
 
   @include mixins.has('footer') {
-    @include mixins.be('table-v3', 'table-body', false) {
-      @include mixins.be('table-v3', 'row', false) {
+    @include mixins.be('table', 'table-body', false) {
+      @include mixins.be('table', 'row', false) {
         &:last-child {
-          @include mixins.be('table-v3', 'cell', false) {
+          @include mixins.be('table', 'cell', false) {
             border-bottom: none;
           }
         }
 
-        @include mixins.be('table-v3', 'cell', false) {
+        @include mixins.be('table', 'cell', false) {
           @include mixins.is('last-row-span-cell') {
             border-bottom: none;
           }

@@ -37,8 +37,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { faker } from '@faker-js/faker';
-import { NTableColumnV3, NTableRowDataType, type TableColumnExposes } from '@aurora/horizon-web';
-import { HorizonWebComponentInstance } from '@aurora/utils';
+import { HTableColumn, HTableRowDataType, type TableColumnExposes } from '@aurora/horizon-web';
+import type { HorizonWebComponentInstance } from '@aurora/utils';
 
 interface TableData {
   id: number;
@@ -47,17 +47,17 @@ interface TableData {
   address: string;
 }
 
-const selectionColumnDomRef = ref<HorizonWebComponentInstance<typeof NTableColumnV3, TableColumnExposes>>();
+const selectionColumnDomRef = ref<HorizonWebComponentInstance<typeof HTableColumn, TableColumnExposes>>();
 const checkedRow = ref();
 
 const data = ref<TableData[]>(new Array(20).fill(0).map((_, index) => ({
   id: index,
-  name: faker.name.firstName(),
+  name: faker.person.fullName(),
   birthday: faker.date.birthdate({ min: 22, max: 50, mode: 'age' }).toDateString(),
-  address: faker.address.streetAddress(true),
+  address: faker.location.streetAddress(),
 })));
 
-function isSelectable(rowData: NTableRowDataType, rowIndex: number) {
+function isSelectable(rowData: HTableRowDataType, rowIndex: number) {
   return ![3, 4].includes(rowIndex);
 }
 

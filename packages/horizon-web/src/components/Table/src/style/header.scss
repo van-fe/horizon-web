@@ -1,11 +1,11 @@
 @use '../../../../styles/mixins';
 
-@include mixins.be('table-v3', 'table-head') {
-  @include mixins.be('table-v3', 'row', false) {
+@include mixins.be('table', 'table-head') {
+  @include mixins.be('table', 'row', false) {
     background: mixins.css-variable('table', 'background', 'header');
   }
 
-  @include mixins.be('table-v3', 'cell', false) {
+  @include mixins.be('table', 'cell', false) {
     position: sticky;
     z-index: calc(#{mixins.css-variable('table', 'z-index', 'default')} + 1);
     vertical-align: middle;
@@ -138,7 +138,7 @@
     }
   }
 
-  @include mixins.be('table-v3', 'cell', false) {
+  @include mixins.be('table', 'cell', false) {
     @include mixins.is('last-column') {
       @include mixins.em('header', 'divider', false) {
         @include mixins.is('resizable') {

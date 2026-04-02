@@ -20,7 +20,7 @@ import type { JSX } from 'vue/jsx-runtime';
 export default defineComponent({
   name: 'TableFooter',
   setup() {
-    const classHelper = new ComponentClassBlock('table-v3');
+    const classHelper = new ComponentClassBlock('table');
 
     const parentProps = inject(HTablePropsInjectKey)!;
     const flattenData = inject(HTableFlattenDataInjectKey)!;

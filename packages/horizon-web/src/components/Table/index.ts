@@ -2,13 +2,13 @@ import { default as Table } from './src/Table';
 import { default as TableColumn } from './src/TableColumn';
 import { withInstall, withNoopInstall } from '@aurora/utils';
 
-export const HTableV3 = withInstall(Table, {
+export const HTable = withInstall(Table, {
   TableColumn,
 });
 
-export const HTableColumnV3 = withNoopInstall(TableColumn);
+export const HTableColumn = withNoopInstall(TableColumn);
 
-export default HTableV3;
+export default HTable;
 
 export {
   HTableSortOrderEnum,

@@ -1,4 +1,3 @@
-import type { StyleValue } from 'vue';
 import {
   computed,
   createVNode,
@@ -23,7 +22,6 @@ import { iconSizeMapping, onlyIconSizeMapping } from './utils/config';
 import { IconLoadingLine, AIcon } from '@aurora/icon';
 import { HButtonGroupPropsInjectKey, HButtonGroupSizeInjectKey } from './utils/injectKeys';
 import type { Router } from 'vue-router';
-import { HApplicationCompatibilityInjectedKey } from '~/components/Application/src/utils/injectedKeys';
 import { getCssVariableByStatus } from '~/utils/useColorful';
 import { builtinColorMapping } from '~/styles';
 import { tinyColor } from '@aurora/colors';
@@ -47,44 +45,18 @@ export default defineComponent({
 
     const parentProps = inject(HButtonGroupPropsInjectKey, undefined);
     const groupSizeRef = inject(HButtonGroupSizeInjectKey, undefined);
-    const compatibility = inject(HApplicationCompatibilityInjectedKey, undefined);
 
     const isOnlyIcon = computed(
       () => !!(props.icon || slots.icon || props.loading) && !slots.default && !slots.suffix,
     );
 
-    const isOldStandard = computed(
-      () =>
-        !!compatibility?.value?.split(',').includes('button.size') &&
-        props.forceNewestSize === false,
-    );
-
-    const oldStandardSizeRef = useSize(
-      computed(() => size?.value ?? groupSizeRef?.value),
-      'medium',
-      {
-        mini: 'small',
-        small: 'medium',
-        medium: 'large',
-        large: 'huge',
-      },
-    );
-
-    const newStandardSizeRef = useSize(
+    const sizeRef = useSize(
       computed(() => size?.value ?? groupSizeRef?.value),
       'medium',
       {
         mini: 'small',
       },
     );
-
-    const sizeRef = computed(() => {
-      if (isOldStandard.value) {
-        return oldStandardSizeRef.value;
-      } else {
-        return newStandardSizeRef.value;
-      }
-    });
 
     const type = computed(() => {
       if (['normal', 'primary', 'danger'].includes(props.type)) {
@@ -204,7 +176,6 @@ export default defineComponent({
           classHelper.is('with-icon', !!(props.icon || slots.icon || props.loading)),
           classHelper.is('auto-fit', props.autoFit),
           classHelper.is('activated', props.type === 'tertiary' || props.active),
-          classHelper.is('old-standard', isOldStandard.value),
           classHelper.is('ghost', props.ghost),
         )}
         type={props.nativeType}

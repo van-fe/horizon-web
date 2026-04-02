@@ -42,10 +42,10 @@ const checkedRow = ref();
 
 const createData = (amount: number, childAmount: number): TableData[] => new Array(amount).fill(0).map(() => ({
   id: id++,
-  name: faker.name.firstName(),
+  name: faker.person.fullName(),
   birthday: faker.date.birthdate({ min: 22, max: 50, mode: 'age' }).toDateString(),
   gender: faker.helpers.arrayElement(['male', 'female']),
-  address: faker.address.streetAddress(true),
+  address: faker.location.streetAddress(),
   children: childAmount > 0 ? createData(childAmount, childAmount - 2) : [],
 }));
 

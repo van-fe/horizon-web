@@ -1,17 +1,17 @@
 @use '../../../../styles/mixins';
 
-@include mixins.be('table-v3', 'table-foot') {
-  @include mixins.be('table-v3', 'row', false) {
+@include mixins.be('table', 'table-foot') {
+  @include mixins.be('table', 'row', false) {
     background: mixins.css-variable('table', 'background', 'footer');
 
     &:first-child {
-      @include mixins.be('table-v3', 'cell', false) {
+      @include mixins.be('table', 'cell', false) {
         border-top: mixins.css-variable('table', 'border', 'default');
       }
     }
   }
 
-  @include mixins.be('table-v3', 'cell', false) {
+  @include mixins.be('table', 'cell', false) {
     position: sticky;
     z-index: calc(#{mixins.css-variable('table', 'z-index', 'default')} + 1);
     vertical-align: middle;

@@ -41,9 +41,9 @@ interface TableData {
 const useColumnManager = ref(true);
 
 const data = ref<TableData[]>(new Array(20).fill(0).map(() => ({
-  name: faker.name.firstName(),
+  name: faker.person.fullName(),
   birthday: faker.date.birthdate({ min: 22, max: 50, mode: 'age' }).toDateString(),
-  address: [faker.address.country(), faker.address.state(), faker.address.city()],
+  address: [faker.location.country(), faker.location.state(), faker.location.city()],
   sign: (new Array(30).fill(0).map(() => faker.datatype.boolean())),
 })));
 </script>

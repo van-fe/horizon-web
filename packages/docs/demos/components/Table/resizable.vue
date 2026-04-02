@@ -36,9 +36,9 @@ interface TableData {
 const showHeaderDivider = ref(true);
 
 const data = ref<TableData[]>(new Array(5).fill(0).map(_ => ({
-  name: faker.name.firstName(),
+  name: faker.person.fullName(),
   birthday: faker.date.birthdate({ min: 22, max: 50, mode: 'age' }).toDateString(),
-  address: faker.address.streetAddress(true),
+  address: faker.location.streetAddress(),
   message: faker.hacker.phrase(),
 })));
 

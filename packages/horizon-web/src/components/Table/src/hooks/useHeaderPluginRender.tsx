@@ -33,7 +33,7 @@ export function useSortPlugin(column: HTableColumnData) {
     return [];
   }
 
-  const classHelper = new ComponentClassBlock('table-v3');
+  const classHelper = new ComponentClassBlock('table');
 
   const currentSorts = inject(HTableCurrentSortsInjectKey, undefined);
   const setSort = inject(HTableSetSortInjectKey, undefined);
@@ -90,7 +90,7 @@ export function useFilterPlugin(
   column: HTableColumnData,
   flattenData: Ref<HTableTransformedRowDataType[]>,
 ) {
-  const classHelper = new ComponentClassBlock('table-v3');
+  const classHelper = new ComponentClassBlock('table');
   let RenderComponent: DefinedComponent = HSelect;
   let triggerIcon: DefinedComponent = IconFilter;
   let specialOptions: TableColumnProps['filterOptions'] = {};
@@ -184,7 +184,7 @@ export function useFilterPlugin(
 }
 
 export function useSearchPlugin(column: HTableColumnData) {
-  const classHelper = new ComponentClassBlock('table-v3');
+  const classHelper = new ComponentClassBlock('table');
 
   const pickerDomRef = ref<HorizonWebComponentInstance<typeof HPicker, PickerExposes>>();
   const value = ref(column[HTableColumnFilterKey].currentFilterValue.value);
@@ -256,7 +256,7 @@ export function useSearchPlugin(column: HTableColumnData) {
 }
 
 export function useTipPlugin(column: HTableColumnData) {
-  const classHelper = new ComponentClassBlock('table-v3');
+  const classHelper = new ComponentClassBlock('table');
 
   return (
     <HTooltip enterable={true}>

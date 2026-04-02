@@ -60,7 +60,7 @@ import useColumnManager from './hooks/useColumnManager';
 import useColumnSort from './hooks/useColumnSort';
 
 export default defineComponent({
-  name: `${useNamespace()}TableV3`,
+  name: `${useNamespace()}Table`,
   desc: '用行与列的形式，展示结构化数据展示的组件；常和按钮、搜索、筛选、分页等其他界面组件一起协同',
   directives: {
     loading,
@@ -74,7 +74,7 @@ export default defineComponent({
     props: TableProps,
     { emit, slots, expose }: HorizonWebSetupContext<TableEmits, TableSlots, TableExposes>,
   ) {
-    const classHelper = new ComponentClassBlock('table-v3');
+    const classHelper = new ComponentClassBlock('table');
 
     const propsRef = toRefs(props);
     const tableDomRef = ref<HTMLTableElement>();

@@ -1,6 +1,6 @@
 @use '../../../../styles/mixins';
 
-@include mixins.b('table-v3') {
+@include mixins.b('table') {
   @include mixins.e('cell') {
     position: relative;
     box-sizing: border-box;
@@ -124,7 +124,7 @@
     }
 
     @include mixins.has('tooltip') {
-      @include mixins.be('table-v3', 'cell-inner', false) {
+      @include mixins.be('table', 'cell-inner', false) {
         white-space: nowrap;
       }
     }
