@@ -7,6 +7,7 @@ import type { PopoverProps } from '~/components/Popover/src/composables/useProps
 export const useDropdownProps = declarePropType({
   /**
    * 主题
+    * @en Configuration for theme.
    */
   theme: {
     type: String as PropType<'default' | 'gray' | 'midnight'>,
@@ -14,7 +15,7 @@ export const useDropdownProps = declarePropType({
   },
   /**
    * 触发方式
-   * @version 2.0.5 支持 manual
+    * @en Configuration for trigger.
    */
   trigger: {
     type: String as PropType<'hover' | 'click' | 'contextMenu' | 'context-menu' | 'manual'>,
@@ -23,14 +24,14 @@ export const useDropdownProps = declarePropType({
   },
   /**
    * 尺寸
-   * @version 2.10.0
+    * @en Configuration for size.
    */
   size: {
     type: String as PropType<'small' | 'medium'>,
   },
   /**
    * 控制是否显示，仅在 `manual` 时有效
-   * @version 2.0.5
+    * @en Configuration for visible.
    */
   visible: {
     type: Boolean,
@@ -39,6 +40,7 @@ export const useDropdownProps = declarePropType({
 
   /**
    * 是否禁用 dropdown menu
+    * @en Configuration for disabled.
    */
   disabled: {
     type: Boolean,
@@ -48,6 +50,7 @@ export const useDropdownProps = declarePropType({
 
   /**
    * dropdown menu 与 button 的对齐方式
+    * @en Configuration for align.
    */
   align: {
     type: String as PropType<'left' | 'right' | 'center'>,
@@ -57,7 +60,7 @@ export const useDropdownProps = declarePropType({
 
   /**
    * 触发器位置，设置后会覆盖 `align` 配置
-   * @version 2.0.5
+    * @en Configuration for placement.
    */
   placement: {
     type: String as PropType<
@@ -80,6 +83,7 @@ export const useDropdownProps = declarePropType({
   },
   /**
    * dropdown 菜单内容
+    * @en Configuration for menu.
    */
   menu: {
     type: Object as PropType<VNode>,
@@ -88,6 +92,7 @@ export const useDropdownProps = declarePropType({
 
   /**
    * 弹出层的层级
+    * @en Configuration for z index.
    */
   zIndex: {
     type: Number,
@@ -96,6 +101,7 @@ export const useDropdownProps = declarePropType({
 
   /**
    * 弹出层自定义类名
+    * @en Configuration for popper class.
    */
   popperClass: {
     type: String,
@@ -103,7 +109,7 @@ export const useDropdownProps = declarePropType({
 
   /**
    * 弹出层自定义宽度
-   * @version 2.12.0
+    * @en Configuration for popper width.
    */
   popperWidth: {
     type: [Number, String],
@@ -111,6 +117,7 @@ export const useDropdownProps = declarePropType({
 
   /**
    * 有 `submenu` 时的子菜单弹出方向是否朝左边
+    * @en Configuration for submenu left.
    */
   submenuLeft: {
     type: Boolean,
@@ -118,7 +125,7 @@ export const useDropdownProps = declarePropType({
   },
   /**
    * 是否将元素发送到 `Body` 上
-   * @version 1.5.7
+    * @en Configuration for to body.
    */
   toBody: {
     type: Boolean,
@@ -127,7 +134,7 @@ export const useDropdownProps = declarePropType({
   /**
    * 延迟显示的事件，单位ms
    * 仅在 `trigger = 'hover'` 时有效
-   * @version 2.0.5
+    * @en Configuration for show after.
    */
   showAfter: {
     type: Number,
@@ -136,7 +143,7 @@ export const useDropdownProps = declarePropType({
   /**
    * 延迟显示的事件，单位ms
    * 仅在 `trigger = 'hover'` 时有效
-   * @version 2.0.5
+    * @en Configuration for hide after.
    */
   hideAfter: {
     type: Number,
@@ -145,6 +152,7 @@ export const useDropdownProps = declarePropType({
   /**
    * 触发器与弹出层距离
    * 不适用于 `trigger = 'context-menu'` 的情况
+    * @en Configuration for distance.
    */
   distance: {
     type: Number,
@@ -152,7 +160,7 @@ export const useDropdownProps = declarePropType({
   },
   /**
    * 是否与其他 `dropdown` 显示互斥
-   * @version 2.0.18
+    * @en Configuration for exclusive.
    */
   exclusive: {
     type: Boolean,
@@ -160,7 +168,7 @@ export const useDropdownProps = declarePropType({
   },
   /**
    * 挂载的位置，默认是 `body`
-   * @version 2.3.3
+    * @en Configuration for teleport to.
    */
   teleportTo: {
     type: [String, Object] as PropType<TeleportProps['to']>,
@@ -168,7 +176,7 @@ export const useDropdownProps = declarePropType({
   },
   /**
    * 继承 `popover` 的 `hideEventType` 属性
-   * @version 2.5.0
+    * @en Configuration for hide event type.
    */
   hideEventType: {
     type: String as PropType<'click' | 'mousedown' | 'mouseup'>,
@@ -176,7 +184,7 @@ export const useDropdownProps = declarePropType({
   },
   /**
    * `popover` 的额外参数
-   * @version 2.4.9
+    * @en Configuration for popover options.
    */
   popoverOptions: {
     type: Object as PropType<Partial<PopoverProps>>,
@@ -186,6 +194,7 @@ export const useDropdownProps = declarePropType({
 export const useDropdownGroupProps = declarePropType({
   /**
    * 分组标题
+    * @en Configuration for title.
    */
   title: {
     type: String,
@@ -193,7 +202,7 @@ export const useDropdownGroupProps = declarePropType({
   },
   /**
    * 标题的 tooltip 配置
-   * @version 2.0.5
+    * @en Configuration for title tooltip options.
    */
   titleTooltipOptions: {
     type: Object as PropType<Partial<TooltipProps>>,
@@ -204,6 +213,7 @@ export const useDropdownGroupProps = declarePropType({
 export const useDropdownItemProps = declarePropType({
   /**
    * 是否禁用 menu item
+    * @en Configuration for disabled.
    */
   disabled: {
     type: Boolean,
@@ -212,7 +222,7 @@ export const useDropdownItemProps = declarePropType({
 
   /**
    * icon
-   * @version 2.0.5 可以传入 Icon 对象
+    * @en Configuration for icon.
    */
   icon: {
     type: IconPropType,
@@ -221,6 +231,7 @@ export const useDropdownItemProps = declarePropType({
 
   /**
    * 是否激活
+    * @en Configuration for active.
    */
   active: {
     type: Boolean,
@@ -229,6 +240,7 @@ export const useDropdownItemProps = declarePropType({
 
   /**
    * 是否不禁用事件冒泡
+    * @en Configuration for forbid evt stop.
    */
   forbidEvtStop: {
     type: Boolean,
@@ -236,13 +248,14 @@ export const useDropdownItemProps = declarePropType({
   },
   /**
    * 派发到 `n-dropdown-menu` 的 `command` 事件的参数
+    * @en Configuration for command.
    */
   command: {
     type: [String, Number, Object],
   },
   /**
    * 是否显示分隔符
-   * @version 2.0.5
+    * @en Configuration for divided.
    */
   divided: {
     type: Boolean,
@@ -250,7 +263,7 @@ export const useDropdownItemProps = declarePropType({
   },
   /**
    * 内容文字的 tooltip 配置
-   * @version 2.0.5
+    * @en Configuration for tooltip options.
    */
   tooltipOptions: {
     type: Object as PropType<Partial<TooltipProps>>,
@@ -261,6 +274,7 @@ export const useDropdownItemProps = declarePropType({
 export const useDropdownSubmenuProps = declarePropType({
   /**
    * 是否禁用当前子菜单
+    * @en Configuration for disabled.
    */
   disabled: {
     type: Boolean,
@@ -269,6 +283,7 @@ export const useDropdownSubmenuProps = declarePropType({
 
   /**
    * 当前子菜单展示的内容
+    * @en Configuration for title.
    */
   title: {
     type: String,
@@ -277,7 +292,7 @@ export const useDropdownSubmenuProps = declarePropType({
 
   /**
    * icon
-   * @version 2.0.5 可以传入 Icon 对象
+    * @en Configuration for icon.
    */
   icon: {
     type: IconPropType,
@@ -285,7 +300,7 @@ export const useDropdownSubmenuProps = declarePropType({
   },
   /**
    * 是否处于激活态
-   * @version 2.0.5
+    * @en Configuration for active.
    */
   active: {
     type: Boolean,
@@ -294,6 +309,7 @@ export const useDropdownSubmenuProps = declarePropType({
 
   /**
    * 触发方式
+    * @en Configuration for trigger.
    */
   trigger: {
     type: String as PropType<'hover' | 'click'>,
@@ -302,7 +318,7 @@ export const useDropdownSubmenuProps = declarePropType({
   },
   /**
    * 是否已选择
-   * @version 2.0.16
+    * @en Configuration for selected.
    */
   selected: {
     type: Boolean,
@@ -310,7 +326,7 @@ export const useDropdownSubmenuProps = declarePropType({
   },
   /**
    * `popover` 的额外参数
-   * @version 2.9.1
+    * @en Configuration for popover options.
    */
   popoverOptions: {
     type: Object as PropType<Partial<PopoverProps>>,

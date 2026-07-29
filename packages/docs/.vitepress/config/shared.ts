@@ -9,9 +9,6 @@ import path from 'path';
 export default defineConfig({
   title: "Horizon Web",
   cleanUrls: true,
-  rewrites: {
-    'zh/:rest*': ':rest*'
-  },
   locales: {
     root: {
       label: '中文',
@@ -24,6 +21,7 @@ export default defineConfig({
     }
   },
   themeConfig: {
+    appearance: true,
     logo: './logo.svg',
     nav: [
       { text: 'Home', link: '/' },
@@ -46,16 +44,36 @@ export default defineConfig({
     resolve: {
       alias: [
         {
-          find: 'vue',
+          // Only replace the Vue package root. A string alias also rewrites
+          // `vue/dist/...` imports used by VitePress SSR into invalid paths.
+          find: /^vue$/,
           replacement: 'vue/dist/vue.esm-bundler.js',
         },
         {
           find: /^@aurora\/horizon-web$/,
           replacement: path.join(__dirname, '../../../../node_modules/@aurora/horizon-web/src/'),
         },
+        ...['colors', 'utils', 'icon', 'locale-vue', 'locale'].map(name => ({
+          find: new RegExp(`^@aurora\\/${name}$`),
+          replacement: path.join(__dirname, `../../../../packages/${name}/src`),
+        })),
         {
           find: /^horizon-web-package\//,
           replacement: path.join(__dirname, '../../../../node_modules/@aurora/horizon-web/'),
+        },
+        {
+          // Demos are compiled from the docs workspace, while these runtime
+          // dependencies are declared by the component package.
+          find: /^dayjs$/,
+          replacement: path.join(__dirname, '../../../../packages/horizon-web/node_modules/dayjs'),
+        },
+        {
+          find: /^decimal\.js$/,
+          replacement: path.join(__dirname, '../../../../packages/horizon-web/node_modules/decimal.js'),
+        },
+        {
+          find: /^lodash\/(.*)$/,
+          replacement: path.join(__dirname, '../../../../packages/horizon-web/node_modules/lodash/$1'),
         },
       ]
     },
@@ -68,7 +86,13 @@ export default defineConfig({
     server: {
       watch: {
         // 确保配置文件目录和 demos 目录被监听（使用 ! 前缀表示不忽略）
-        ignored: ['!**/demos/**', '!**/zh/**', '!**/en/**'],
+        ignored: [
+          '**/.vitepress/dist/**',
+          '**/.vitepress/cache/**',
+          '!**/demos/**',
+          '!**/zh/**',
+          '!**/en/**',
+        ],
       },
     },
   }

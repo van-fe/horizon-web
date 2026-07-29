@@ -285,7 +285,7 @@ ${method.params
     return `${param.field}: <code>${escapeHtml(param.value)}</code>`;
   })
   .join(', ')}
-) => <code>${escapeHtml(method.return)}</code></td>
+) => <code>${escapeHtml(method.return || '')}</code></td>
 ${
   method.params.length > 0
     ? method.params

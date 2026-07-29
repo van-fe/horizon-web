@@ -56,6 +56,7 @@ import useHighlight from './hooks/useHighlight';
 export default defineComponent({
   name: `${useNamespace()}Tree`,
   desc: '对于文件夹、分类目录、组织架构等层级较多的内容，树可以清楚显示他们的层级关系，并具有展开、收起、选择等交互功能',
+  descLocales: { en: 'Displays hierarchical data such as folders, categories, and organizations with expand, collapse, and selection interactions.' },
   directives: {
     loading,
   },

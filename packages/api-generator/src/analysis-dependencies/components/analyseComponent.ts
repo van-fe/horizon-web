@@ -95,6 +95,16 @@ export function analyseComponent(componentInfo: ApiGeneratorExportedComponent, p
                         .trim()
                         .replace(/(^'|'$)/g, '') || '';
                     break;
+                  case 'descLocales': {
+                    const locales = curr.getLastChildByKind(ts.SyntaxKind.ObjectLiteralExpression);
+                    componentInfo.descLocales = {};
+                    locales?.getProperties().forEach(property => {
+                      const key = property.getName().replace(/['"]/g, '');
+                      const value = property.getLastChild()?.getText().replace(/^['"]|['"]$/g, '');
+                      if (value) componentInfo.descLocales![key] = value;
+                    });
+                    break;
+                  }
                   case 'props':
                     const propsRes = analysisComponentDefinedVariable(
                       curr,

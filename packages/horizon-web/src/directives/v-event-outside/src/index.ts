@@ -13,6 +13,7 @@ export default defineDirective<EventOutsideElement, typeof useEventOutsideOption
   name: 'event-outside',
   options: useEventOutsideOptions,
   desc: '事件于目标元素外部区域时调用指定的函数，相比较于 click-outside 可处理更多其他事件',
+  descLocales: { en: 'Calls a function for events outside the target element and supports more event types than click-outside.' },
   mounted(el, binding) {
     el[eventOutsideEventKey] = (event: Event) => {
       if (!(el == event.target || el.contains(event.target as Node))) {

@@ -29,6 +29,7 @@ import { tinyColor } from '@aurora/colors';
 export default defineComponent({
   name: `${useNamespace()}Button`,
   desc: '按钮用于开始一个即时操作',
+  descLocales: { en: 'Button component for triggering actions.' },
   props: useButtonProps,
   emits: useButtonEmits,
   slots: useButtonSlots,

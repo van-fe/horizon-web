@@ -17,6 +17,7 @@ function analysePropertyAssignment(
 
   const res: ApiGeneratorAnalysedExposeType = {
     desc: jsDoc.comment,
+    descLocales: jsDoc.locales,
     name: property.getName(),
     type: '',
     nativeType: ApiGeneratorAnalysedBaseType.Unknown,

@@ -7,6 +7,7 @@ import AlertComponent from './components/Alert';
 
 const Alert = defineMethod({
   name: 'alert',
+  descLocales: { en: 'Display an alert dialog for information or confirmation.' },
   desc: '用于信息提示或确认，会中断用户当前的任务流程。想避免对用户的干扰，可考虑 `Message` 等组件；如果想要更强的定制能力，请使用 `Dialog` 组件',
   options: useMsgBoxAlertProps,
   default(...args: Array<string | VNode | Partial<MsgBoxAlertProps>>) {

@@ -199,7 +199,7 @@ export default defineComponent({
       return {
         name: faker.person.fullName(),
         // avatar: faker.internet.avatar(),
-        avatar: 'https://www.nio.cn/cdn-static/mynio/nextjs/images/home/nioApp/nio-app-logo.png',
+        avatar: 'https://www.example.com/cdn-static/mydemo/nextjs/images/home/demoApp/demo-app-logo.png',
       };
     }
 

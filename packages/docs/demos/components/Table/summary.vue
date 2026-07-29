@@ -29,7 +29,7 @@
 import { ref, h } from 'vue';
 import type { VNode } from 'vue';
 import { faker } from '@faker-js/faker';
-import { NTableSummaryMethodType } from '@aurora/horizon-web';
+import { HTableSummaryMethodType } from '@aurora/horizon-web';
 import { Decimal } from 'decimal.js';
 import get from 'lodash/get';
 
@@ -51,7 +51,7 @@ const createData = (amount: number, childAmount: number): TableData[] => new Arr
 
 const data = ref<TableData[]>(createData(20, 6));
 
-const summaryMethod: NTableSummaryMethodType = ({columns, data, flattenData}) => {
+const summaryMethod: HTableSummaryMethodType = ({columns, data, flattenData}) => {
   const average: Array<string | VNode> = [];
   const summary: Array<string | VNode> = [];
 

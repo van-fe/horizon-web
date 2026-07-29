@@ -40,11 +40,11 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { NTree, useTreeExposes } from '@aurora/horizon-web';
+import { HTree, useTreeExposes } from '@aurora/horizon-web';
 import { ExtractExposeTypes } from '@aurora/utils';
 
 const baseTreeData = ref([]);
-const treeDomRef = ref<InstanceType<typeof NTree> & ExtractExposeTypes<typeof useTreeExposes>>();
+const treeDomRef = ref<InstanceType<typeof HTree> & ExtractExposeTypes<typeof useTreeExposes>>();
 
 function getExpand() {
   console.info(treeDomRef.value?.getExpandNodes());

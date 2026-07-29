@@ -1,0 +1,4 @@
+const parallel_bar_chart_filled = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 22C3.22386 22 3 21.7761 3 21.5V2C3.82843 2 4.5 2.67157 4.5 3.5V20.5H19.5C20.3284 20.5 21 21.1716 21 22H3.5Z" fill="currentColor"/><path d="M16.5 19C16.7761 19 17 18.7761 17 18.5V15.5C17 15.2239 16.7761 15 16.5 15H6.5C6.22386 15 6 15.2239 6 15.5V18.5C6 18.7761 6.22386 19 6.5 19H16.5Z" fill="currentColor"/><path d="M11.5 7C11.7761 7 12 6.77614 12 6.5V3.5C12 3.22386 11.7761 3 11.5 3H6.5C6.22386 3 6 3.22386 6 3.5V6.5C6 6.77614 6.22386 7 6.5 7H11.5Z" fill="currentColor"/><path d="M21 12.5C21 12.7761 20.7761 13 20.5 13H6.5C6.22386 13 6 12.7761 6 12.5V9.5C6 9.22386 6.22386 9 6.5 9H20.5C20.7761 9 21 9.22386 21 9.5V12.5Z" fill="currentColor"/></svg>';
+export {
+  parallel_bar_chart_filled as default
+};

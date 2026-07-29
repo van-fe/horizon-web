@@ -4,6 +4,7 @@ import { declarePropType } from '@aurora/utils';
 export const useAffixProps = declarePropType({
   /**
    * 偏移距离
+    * @en Configuration for offset.
    */
   offset: {
     type: Number,
@@ -11,6 +12,7 @@ export const useAffixProps = declarePropType({
   },
   /**
    * 固钉位置
+    * @en Configuration for position.
    */
   position: {
     type: String as PropType<'top' | 'bottom'>,
@@ -18,13 +20,14 @@ export const useAffixProps = declarePropType({
   },
   /**
    * 判断偏移的容器
-   * @version 2.5.2 默认改为 window 对象
+    * @en Configuration for target.
    */
   target: {
     type: [String, Object] as PropType<string | HTMLElement>,
   },
   /**
    * 层级
+    * @en Configuration for z index.
    */
   zIndex: {
     type: Number,

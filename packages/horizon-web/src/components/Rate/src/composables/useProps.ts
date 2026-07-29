@@ -4,6 +4,7 @@ import { cssVariable, declarePropType } from '@aurora/utils';
 export const useRateProps = declarePropType({
   /**
    * 绑定值
+    * @en Configuration for model value.
    */
   modelValue: {
     type: Number,
@@ -11,6 +12,7 @@ export const useRateProps = declarePropType({
   },
   /**
    * icon数量
+    * @en Configuration for count.
    */
   count: {
     type: Number,
@@ -18,6 +20,7 @@ export const useRateProps = declarePropType({
   },
   /**
    * 允许半星
+    * @en Configuration for half.
    */
   half: {
     type: Boolean,
@@ -25,6 +28,7 @@ export const useRateProps = declarePropType({
   },
   /**
    * 是否显示提示文字
+    * @en Configuration for show tooltip.
    */
   showTooltip: {
     type: Boolean,
@@ -32,6 +36,7 @@ export const useRateProps = declarePropType({
   },
   /**
    * 提示文字文本
+    * @en Configuration for tooltip.
    */
   tooltip: {
     type: Array,
@@ -39,6 +44,7 @@ export const useRateProps = declarePropType({
   },
   /**
    * 是否只读
+    * @en Configuration for readonly.
    */
   readonly: {
     type: Boolean,
@@ -46,6 +52,7 @@ export const useRateProps = declarePropType({
   },
   /**
    * 是否禁用
+    * @en Configuration for disabled.
    */
   disabled: {
     type: Boolean,
@@ -53,12 +60,14 @@ export const useRateProps = declarePropType({
   },
   /**
    * 图标大小
+    * @en Configuration for size.
    */
   size: {
     type: [String, Number] as PropType<'large' | 'medium' | 'small' | number>,
   },
   /**
    * 自定义图标种类
+    * @en Configuration for icon.
    */
   icon: {
     type: String,
@@ -66,6 +75,7 @@ export const useRateProps = declarePropType({
   },
   /**
    * 自定义图标active颜色
+    * @en Configuration for color.
    */
   color: {
     type: String,
@@ -73,6 +83,7 @@ export const useRateProps = declarePropType({
   },
   /**
    * 图标空时的颜色
+    * @en Configuration for void color.
    */
   voidColor: {
     type: String,
@@ -80,6 +91,7 @@ export const useRateProps = declarePropType({
   },
   /**
    * 图标禁用时的颜色
+    * @en Configuration for disabled color.
    */
   disabledColor: {
     type: String,
@@ -87,6 +99,7 @@ export const useRateProps = declarePropType({
   },
   /**
    * icon间距
+    * @en Configuration for gutter.
    */
   gutter: {
     type: Number,

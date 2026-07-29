@@ -48,6 +48,7 @@ function clearTimer() {
 const LoadingMethods = {
   /**
    * 开始从 `0` 显示进度条，并自动加载进度
+   * @en Start the progress bar from 0 and automatically advance progress
    */
   start() {
     if (timer) return;
@@ -76,7 +77,9 @@ const LoadingMethods = {
   },
   /**
    * 精确加载到指定的进度
+   * @en Advance the progress bar to the specified percentage
    * @param percent 进度，满值 `100`
+   * @paramEn percent Description: 进度, 满值 100
    */
   update(percent = 0) {
     clearTimer();
@@ -89,6 +92,7 @@ const LoadingMethods = {
   },
   /**
    * 结束进度条，自动补全剩余进度
+   * @en Finish the progress bar and automatically complete the remaining progress
    */
   finish() {
     clearTimer();
@@ -102,6 +106,7 @@ const LoadingMethods = {
   },
   /**
    * 以错误的类型结束进度条，自动补全剩余进度
+   * @en Description
    */
   error() {
     clearTimer();
@@ -115,7 +120,9 @@ const LoadingMethods = {
   },
   /**
    * 配置 `LoadingBar`
+   * @en Configure LoadingBar
    * @param options height: `LoadingBar` 的高度
+   * @paramEn options Height: LoadingBar 的height
    */
   config(options: { height: number }) {
     if (options.height) {
@@ -124,6 +131,7 @@ const LoadingMethods = {
   },
   /**
    * 销毁LoadingBar实例
+   * @en Destroy LoadingBarinstance
    */
   destroy() {
     clearTimer();

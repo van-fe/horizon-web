@@ -44,12 +44,12 @@
 
 <script>
 import { defineComponent, h } from 'vue';
-import { NPopContent } from '@aurora/horizon-web';
+import { HPopContent } from '@aurora/horizon-web';
 
 const DemoContent = defineComponent({
   render: () =>
     h(
-      NPopContent,
+      HPopContent,
       {},
       {
         default: () =>

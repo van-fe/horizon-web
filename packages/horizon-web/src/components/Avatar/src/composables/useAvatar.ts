@@ -1,10 +1,10 @@
 import { colors } from '~/globalMethods';
 // 默认随机头像的cdn链接
 export const randomAvatar = [
-  'https://cdn-app.nio.com/user/2022/3/1/a72ad7d3-5c45-48dc-a4cc-9f90277e4c00.jpg',
-  'https://cdn-app.nio.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
-  'https://cdn-app.nio.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg',
-  'https://cdn-app.nio.com/user/2022/3/1/a1475205-b165-4c0c-9545-6256ef712325.jpg',
+  'https://cdn-app.example.com/user/2022/3/1/a72ad7d3-5c45-48dc-a4cc-9f90277e4c00.jpg',
+  'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+  'https://cdn-app.example.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg',
+  'https://cdn-app.example.com/user/2022/3/1/a1475205-b165-4c0c-9545-6256ef712325.jpg',
 ];
 
 // 拼接图片

@@ -4,12 +4,13 @@ import type { HTabSize, HTabValue } from './useProps';
 export const useTabsSlots = Object as SlotsType<{
   /**
    * 选项卡容器，使用 `n-tab` 填充
+    * @en Custom content for the default slot.
    **/
   default?: {};
 
   /**
    * 额外操作按钮
-   * @version 2.0.16
+    * @en Custom content for the extra slot.
    **/
   extra?: { size: HTabSize };
 }>;
@@ -19,13 +20,13 @@ export type TabsSlots = typeof useTabsSlots;
 export const useTabSlots = Object as SlotsType<{
   /**
    * 自定义选项卡，新增当前激活状态
-   * @version 2.7.0
+    * @en Custom content for the default slot.
    */
   default?: { state: boolean; activeKey: HTabValue };
 
   /**
    * 自定义 icon
-   * @version 2.0.16
+    * @en Custom content for the icon slot.
    **/
   icon?: {};
 }>;

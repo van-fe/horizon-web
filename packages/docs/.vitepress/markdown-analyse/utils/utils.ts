@@ -49,18 +49,17 @@ export function traverseContent({
   return output.join('');
 }
 
+export function getHeadingId(content: string) {
+  return content
+    .trim()
+    .toLowerCase()
+    .replace(/[`'"<>]/g, '')
+    .replace(/[^\p{L}\p{N}\s-]/gu, '')
+    .replace(/[\s-]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
 export function getHeadingContent(content: string, type: 'h2' | 'h3' = 'h2') {
-  const className = ['no-underline'];
-
-  if (type === 'h2') {
-    className.push('h2');
-  } else {
-    className.push('h3');
-  }
-
-  return `<div>
-<h-link id="${content}" anchor="${content}" anchor-position="left" type="text" class="${className.join(
-    ' ',
-  )}">${content}</h-link>
-</div>`;
+  const id = getHeadingId(content);
+  return `<${type} id="${id}" class="no-underline ${type}"><a href="#${id}" class="!no-underline">${content}</a></${type}>`;
 }

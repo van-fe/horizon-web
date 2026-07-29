@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { $message, type NTabValue } from '@aurora/horizon-web';
+import { $message, type HTabValue } from '@aurora/horizon-web';
 import { ref, watch } from 'vue';
 
 const activeKey = ref('Tab 1');
@@ -8,7 +8,7 @@ const size = ref('medium');
 const cardType = ref('line');
 const all = ref(true);
 
-const onTabChanged = (tab: NTabValue) => {
+const onTabChanged = (tab: HTabValue) => {
   console.info('tab changed', tab);
 };
 
@@ -30,7 +30,7 @@ const onTabAdd = () => {
   activeKey.value = newTab;
 };
 
-const onTabClose = (key: NTabValue) => {
+const onTabClose = (key: HTabValue) => {
   $message({ type: 'success', message: `Close tab ${key}` });
 
   tabs.value = tabs.value.filter(t => t !== key);

@@ -4,12 +4,14 @@ import { declarePropType } from '@aurora/utils';
 export const useControlsProps = declarePropType({
   /**
    * 总的权限数组，在 `n-control` 内传入的 `label` 可以过滤是否显示
+    * @en Configuration for access list.
    */
   accessList: {
     type: Array as PropType<string[]>,
   },
   /**
    * 是否启用 `tooltip`
+    * @en Configuration for use tooltip.
    */
   useTooltip: {
     type: Boolean,
@@ -17,6 +19,7 @@ export const useControlsProps = declarePropType({
   },
   /**
    * 主题
+    * @en Configuration for theme.
    */
   theme: {
     type: String as PropType<'light' | 'dark'>,
@@ -24,12 +27,14 @@ export const useControlsProps = declarePropType({
   },
   /**
    * 子元素中 `icon` 的颜色
+    * @en Configuration for icon color.
    */
   iconColor: {
     type: Array as PropType<string[]>,
   },
   /**
    * 是否禁止
+    * @en Configuration for disabled.
    */
   disabled: {
     type: Boolean,
@@ -40,6 +45,7 @@ export const useControlsProps = declarePropType({
 export const useControlProps = declarePropType({
   /**
    * 唯一标识，如果宽度过窄会省略到下拉菜单中，点击后触发会告知是哪个 `control` 被点击
+    * @en Configuration for label.
    */
   label: {
     type: String,
@@ -47,6 +53,7 @@ export const useControlProps = declarePropType({
   },
   /**
    * 是否显示
+    * @en Configuration for visible.
    */
   visible: {
     type: Boolean,
@@ -55,18 +62,21 @@ export const useControlProps = declarePropType({
   /**
    * 按钮 `icon` 对象
    * 需要注意不是传入 `icon.name`，而是 `icon` 对象
+    * @en Configuration for icon.
    */
   icon: {
     type: Object as PropType<Component>,
   },
   /**
    * `icon` 的颜色
+    * @en Configuration for icon color.
    */
   iconColor: {
     type: Array as PropType<string[]>,
   },
   /**
    * 控制器文字
+    * @en Configuration for text.
    */
   text: {
     type: String,
@@ -74,6 +84,7 @@ export const useControlProps = declarePropType({
   },
   /**
    * 是否禁止
+    * @en Configuration for disabled.
    */
   disabled: {
     type: Boolean,

@@ -42,12 +42,12 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import type { NFormInstance, NFormRule } from '@aurora/horizon-web';
+import type { HFormInstance, HFormRule } from '@aurora/horizon-web';
 import { $message } from '@aurora/horizon-web';
 
 export default defineComponent({
   setup() {
-    const formRef = ref<NFormInstance | null>(null);
+    const formRef = ref<HFormInstance | null>(null);
     const formData = ref({
       username: '',
       email: '',
@@ -57,7 +57,7 @@ export default defineComponent({
 
     const requireMarkPosition = ref('right');
 
-    const rules = ref<Partial<Record<keyof typeof formData.value, NFormRule | NFormRule[]>>>({
+    const rules = ref<Partial<Record<keyof typeof formData.value, HFormRule | HFormRule[]>>>({
       username: [
         {
           required: true,

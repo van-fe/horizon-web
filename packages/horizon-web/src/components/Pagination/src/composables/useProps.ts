@@ -39,13 +39,14 @@ export interface PaginationLabelType {
 export const usePaginationProps = declarePropType({
   /**
    * 尺寸
-   * @version 2.12.13
+    * @en Configuration for size.
    */
   size: {
     type: String as PropType<'medium' | 'large'>,
   },
   /**
    * 当前页数
+    * @en Configuration for current page.
    */
   currentPage: {
     type: Number,
@@ -53,6 +54,7 @@ export const usePaginationProps = declarePropType({
   },
   /**
    * 数据总数
+    * @en Configuration for total.
    */
   total: {
     type: Number,
@@ -61,6 +63,7 @@ export const usePaginationProps = declarePropType({
   },
   /**
    * 指定每页可显示多少条
+    * @en Configuration for page sizes.
    */
   pageSizes: {
     type: Array as PropType<number[]>,
@@ -68,6 +71,7 @@ export const usePaginationProps = declarePropType({
   },
   /**
    * 每页条数
+    * @en Configuration for page size.
    */
   pageSize: {
     type: Number,
@@ -75,7 +79,7 @@ export const usePaginationProps = declarePropType({
   },
   /**
    * 最大页面按钮数，超出此数量的按钮会被折叠
-   * @version 2.0.0-beta.4
+    * @en Configuration for pager count.
    */
   pagerCount: {
     type: Number,
@@ -84,6 +88,7 @@ export const usePaginationProps = declarePropType({
   /**
    * 所需子组件的布局
    * 2.0.0-beta.4 支持字符串形式，每个子组件需要用逗号分隔开
+    * @en Configuration for layout.
    */
   layout: {
     type: [Array, String] as PropType<string | Array<'pager' | 'sizes' | 'jumper' | 'total'>>,
@@ -91,6 +96,7 @@ export const usePaginationProps = declarePropType({
   },
   /**
    * 模式选择，可以选择简要或极简
+    * @en Configuration for type.
    */
   type: {
     type: String as PropType<'default' | 'simple' | 'simplest'>,
@@ -99,13 +105,14 @@ export const usePaginationProps = declarePropType({
   /**
    * 替换文字
    * 2.0.0-beta.4 开始使用国际化，所以可以不用设置此项
+    * @en Configuration for label.
    */
   label: {
     type: Object as PropType<PaginationLabelType>,
   },
   /**
    * 在仅有一页时，是否不显示 `pagination`
-   * @version 2.0.0-beta.4
+    * @en Configuration for hide on single page.
    */
   hideOnSinglePage: {
     type: Boolean,
@@ -113,7 +120,7 @@ export const usePaginationProps = declarePropType({
   },
   /**
    * 是否展示显示范围
-   * @version 2.0.0-beta.4
+    * @en Configuration for show range.
    */
   showRange: {
     type: Boolean,
@@ -121,7 +128,7 @@ export const usePaginationProps = declarePropType({
   },
   /**
    * 布局方向
-   * @version 2.0.0-beta.4
+    * @en Configuration for align.
    */
   align: {
     type: String as PropType<'left' | 'center' | 'right'>,
@@ -130,7 +137,7 @@ export const usePaginationProps = declarePropType({
   /**
    * 是否禁用
    * 在分页获取数据时，可以设置禁用，防止此时用户点击而错误地请求
-   * @version 2.5.0
+    * @en Configuration for disabled.
    */
   disabled: {
     type: Boolean,
@@ -138,7 +145,7 @@ export const usePaginationProps = declarePropType({
   },
   /**
    * 是否将选择每页多少的弹窗传送到 `body` 节点
-   * @version 2.5.0
+    * @en Configuration for page sizes to body.
    */
   pageSizesToBody: {
     type: Boolean,

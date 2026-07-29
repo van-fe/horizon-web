@@ -1,6 +1,6 @@
 <template>
   <h-upload
-    action="https://horizon-web-inspector.nioint.com/upload-mock"
+    action="https://horizon-web-inspector.demoint.com/upload-mock"
     type="drop"
     :multiple="true"
     :limit="5"
@@ -13,20 +13,20 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { $message, NUploadFileType } from '@aurora/horizon-web';
+import { $message, HUploadFileType } from '@aurora/horizon-web';
 const accept = ref('.png');
 
 function change() {
   accept.value = '.png,.jpg';
 }
 
-function onAcceptError(files: NUploadFileType[]) {
+function onAcceptError(files: HUploadFileType[]) {
   console.info(files);
 
   $message.error(`自动拦截：您选择的 ${files.map(file => file.name).join('、')} 不是 ${accept.value} 文件`);
 }
 
-function handleSuccess(res: any, file: NUploadFileType) {
+function handleSuccess(res: any, file: HUploadFileType) {
   // 因为接口是模拟返回，所以不处理 res 数据
   // 直接把 blobUrl 假定为上传接口返回的预览地址
   return file.blobUrl;

@@ -8,6 +8,7 @@ import { type SpaceSlots, useSpaceItemSlots } from './composables/useSlots';
 export default defineComponent({
   name: `${useNamespace()}SpaceItem`,
   desc: '设置元素之间的间距',
+  descLocales: { en: 'Space and space-item layout helpers.' },
   inheritAttrs: false,
   props: useSpaceItemProps,
   slots: useSpaceItemSlots,

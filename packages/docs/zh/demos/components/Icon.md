@@ -3,14 +3,14 @@
 `Horizon Web` 组件库使用了 `@aurora/icon` 图标库，如需使用图标请先安装 `@aurora/icon`。
 
 ::: code-group
-```sh [npm]
-$ npm install @aurora/icon
+```sh [bun]
+$ bun add @aurora/icon
 ```
 ```sh [yarn]
 $ yarn add @aurora/icon
 ```
-```sh [pnpm]
-$ pnpm add @aurora/icon
+```sh [bun]
+$ bun add @aurora/icon
 ```
 ```sh [bun]
 $ bun add @aurora/icon

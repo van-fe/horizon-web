@@ -3,7 +3,7 @@
     <div v-for="ratio in ratios" :key="ratio" class="mr-3" style="width: 20%">
             <p class="text-center">{{ ratio.replace('/', ':') }}</p>
       <h-image
-        src="https://www.nio.cn/cdn-static/mynio/nextjs/images/4124399E5BB45E85CBAFDE6307297F4A045845F4/home/es7-homepage-hero-desktop.jpg"
+        src="https://www.example.com/cdn-static/mydemo/nextjs/images/4124399E5BB45E85CBAFDE6307297F4A045845F4/home/es7-homepage-hero-desktop.jpg"
         width="100%"
         :aspect-ratio="ratio"
       />

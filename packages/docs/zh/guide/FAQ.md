@@ -11,7 +11,7 @@
 
   1. 安装 `babel @vue/cli-plugin-babel` 包
   ```shell
-  $ npm install babel-loader @vue/cli-plugin-babel -D
+  $ bun add babel-loader @vue/cli-plugin-babel -D
   ```
   2. 在 `vue.config.js` 中，增加以下语句，使 `babel-loader` 也转译 `@aurora/xx` 的包
   ```ts

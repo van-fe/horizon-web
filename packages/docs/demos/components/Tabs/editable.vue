@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { $message, type NTabValue } from '@aurora/horizon-web';
+import { $message, type HTabValue } from '@aurora/horizon-web';
 import { ref, reactive } from 'vue';
 
 const randomUid = () => Math.random().toString(36).slice(2);
@@ -15,7 +15,7 @@ const items = ref([
 
 const firstTab = reactive({ label: 'FirstTab', uid: randomUid(), show: true });
 
-const onTabChanged = (tab: NTabValue) => {
+const onTabChanged = (tab: HTabValue) => {
   console.info('tab changed', tab);
 };
 
@@ -27,7 +27,7 @@ const onTabAdd = () => {
   activeKey.value = newTab.uid;
 };
 
-const onTabClose = (key: NTabValue) => {
+const onTabClose = (key: HTabValue) => {
   $message({ type: 'success', message: `Close tab ${key}` });
 
   items.value = items.value.filter(t => t.uid !== key);

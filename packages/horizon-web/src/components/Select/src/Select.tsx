@@ -62,6 +62,7 @@ import useHighlight from './hooks/useHighlight';
 export default defineComponent({
   name: `${useNamespace()}Select`,
   desc: '当用户需要从一组同类数据中选择一个或多个时，可以使用下拉选择器，点击后选择对应项',
+  descLocales: { en: 'Select and option components for choosing values.' },
   props: useSelectProps,
   emits: useSelectEmits,
   slots: useSelectSlots,

@@ -16,14 +16,14 @@
 </template>
 
 <script setup lang="ts">
-import { NFormInstance, $message } from '@aurora/horizon-web';
+import { HFormInstance, $message } from '@aurora/horizon-web';
 import { ref } from 'vue';
 
 const values = ref({
   name: '',
   category: undefined,
 });
-const instance = ref<NFormInstance>();
+const instance = ref<HFormInstance>();
 const options = ['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly'];
 
 const onSubmit = async () => {

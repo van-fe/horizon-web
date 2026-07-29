@@ -49,7 +49,7 @@ onMounted(() => {
       title: '第二步',
       content: '第二步就是第二步',
       placement: 'top-start',
-      image: 'https://static.nio.com/fx-static/design-system/clgkp3u9z0002082h1dfr888x/indexbg.jpg?imageView2/2/w/300',
+      image: 'https://static.example.com/fx-static/design-system/clgkp3u9z0002082h1dfr888x/indexbg.jpg?imageView2/2/w/300',
     },
     {
       target: thirdRef,

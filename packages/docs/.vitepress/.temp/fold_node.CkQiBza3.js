@@ -1,0 +1,4 @@
+const fold_node = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 18C3 18.8284 3.67157 19.5 4.5 19.5H19.5C20.3284 19.5 21 18.8284 21 18H3Z" fill="currentColor"/><path d="M12 6C12 6.82843 12.6716 7.5 13.5 7.5H19.5C20.3284 7.5 21 6.82843 21 6H12Z" fill="currentColor"/><path d="M3 12C3 12.8284 3.67157 13.5 4.5 13.5H19.5C20.3284 13.5 21 12.8284 21 12H3Z" fill="currentColor"/><path d="M6.18053 4.73273C6.49598 4.42242 7.00402 4.42242 7.31947 4.73273L10.2583 7.62358C10.7723 8.12922 10.4121 9 9.68884 9H3.81117C3.08793 9 2.72766 8.12922 3.24169 7.62358L6.18053 4.73273Z" fill="currentColor"/></svg>';
+export {
+  fold_node as default
+};

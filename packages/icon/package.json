@@ -10,9 +10,9 @@
   ],
   "scripts": {
     "generate": "rm -rf src/components/icons && bun run scripts/generate-icon-components.ts",
-    "build": "npm run generate && vite build",
+    "build": "bun run generate && bunx --bun vite build",
     "dev": "vite",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "bun run build"
   },
   "keywords": [
     "vue",
@@ -34,4 +34,3 @@
     "vue": "^3.5.26"
   }
 }
-

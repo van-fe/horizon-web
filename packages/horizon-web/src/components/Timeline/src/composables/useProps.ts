@@ -2,11 +2,17 @@ import type { ExtractPropTypes, PropType } from 'vue';
 import { declarePropType } from '@aurora/utils';
 
 export interface FoldConfig {
-  /** 可折叠数 */
+  /** 可折叠数
+   * @en Configuration for number.
+ */
   number: number;
-  /** 折叠后显示文案 */
+  /** 折叠后显示文案
+   * @en Configuration for content.
+ */
   content: string;
-  /** 折叠后节点图标属性 */
+  /** 折叠后节点图标属性
+   * @en Configuration for dot.
+ */
   dot: TimelineItemDotType;
 }
 export interface TimelineItemDotType {
@@ -34,6 +40,7 @@ export interface TimelineItemDotType {
 export const useTimelineProps = declarePropType({
   /**
    * 指定节点排序方向
+    * @en Configuration for sort.
    */
   sort: {
     type: String as PropType<'order' | 'reverse'>,
@@ -42,6 +49,7 @@ export const useTimelineProps = declarePropType({
   },
   /**
    * 第一个节点属性
+    * @en Configuration for first.
    */
   first: {
     type: Object as PropType<TimelineItemDotType>,
@@ -49,6 +57,7 @@ export const useTimelineProps = declarePropType({
   },
   /**
    * 最后一个节点属性
+    * @en Configuration for last.
    */
   last: {
     type: Object as PropType<TimelineItemDotType>,
@@ -56,7 +65,7 @@ export const useTimelineProps = declarePropType({
   },
   /**
    * 是否使用day.js格式化方式
-   * @version 2.12.0
+    * @en Configuration for v2.
    */
   v2: {
     type: Boolean,
@@ -68,6 +77,7 @@ export const useTimelineProps = declarePropType({
 export const useTimelineItemProps = declarePropType({
   /**
    * 时间戳
+    * @en Configuration for timestamp.
    */
   timestamp: {
     type: [String, Number],
@@ -76,6 +86,7 @@ export const useTimelineItemProps = declarePropType({
   },
   /**
    * 时间戳格式
+    * @en Configuration for format.
    */
   format: {
     type: String,
@@ -83,6 +94,7 @@ export const useTimelineItemProps = declarePropType({
   },
   /**
    * 时间戳位置
+    * @en Configuration for placement.
    */
   placement: {
     type: String as PropType<'top' | 'bottom' | 'right'>,
@@ -91,6 +103,7 @@ export const useTimelineItemProps = declarePropType({
   },
   /**
    * 时间线偏移
+    * @en Configuration for offset.
    */
   offset: {
     type: [String, Number],
@@ -99,6 +112,7 @@ export const useTimelineItemProps = declarePropType({
   },
   /**
    * 节点类型
+    * @en Configuration for type.
    */
   type: {
     type: String as PropType<'disc' | 'circle'>,
@@ -107,6 +121,7 @@ export const useTimelineItemProps = declarePropType({
   },
   /**
    * 节点颜色
+    * @en Configuration for color.
    */
   color: {
     type: String,
@@ -114,6 +129,7 @@ export const useTimelineItemProps = declarePropType({
   },
   /**
    * 节点边框颜色
+    * @en Configuration for border color.
    */
   borderColor: {
     type: String,
@@ -121,7 +137,7 @@ export const useTimelineItemProps = declarePropType({
   },
   /**
    * 线条颜色
-   * @version 2.12.0
+    * @en Configuration for tail color.
    */
   tailColor: {
     type: String,
@@ -129,6 +145,7 @@ export const useTimelineItemProps = declarePropType({
   },
   /**
    * 节点尺寸
+    * @en Configuration for size.
    */
   size: {
     type: String as PropType<'small' | 'medium' | 'large'>,
@@ -136,6 +153,7 @@ export const useTimelineItemProps = declarePropType({
   },
   /**
    * 节点图标
+    * @en Configuration for icon.
    */
   icon: {
     type: String,
@@ -143,6 +161,7 @@ export const useTimelineItemProps = declarePropType({
   },
   /**
    * 名称
+    * @en Configuration for name.
    */
   name: {
     type: String,
@@ -150,6 +169,7 @@ export const useTimelineItemProps = declarePropType({
   },
   /**
    * 描述
+    * @en Configuration for desc.
    */
   desc: {
     type: String,
@@ -157,6 +177,7 @@ export const useTimelineItemProps = declarePropType({
   },
   /**
    * 使用虚拟线
+    * @en Configuration for dashed.
    */
   dashed: {
     type: Boolean,
@@ -165,6 +186,7 @@ export const useTimelineItemProps = declarePropType({
   },
   /**
    * 折叠节点配置
+    * @en Configuration for fold config.
    */
   foldConfig: {
     type: Object as PropType<FoldConfig>,
@@ -172,6 +194,7 @@ export const useTimelineItemProps = declarePropType({
   },
   /**
    * 使用线条
+    * @en Configuration for tail.
    */
   tail: {
     type: Boolean,

@@ -29,9 +29,9 @@
 
 <script setup lang="ts">
 import { ref, shallowRef } from 'vue';
-import { $alert, $message, NGuide } from '@aurora/horizon-web';
+import { $alert, $message, HGuide } from '@aurora/horizon-web';
 
-const guideRef = shallowRef<typeof NGuide | null>(null);
+const guideRef = shallowRef<typeof HGuide | null>(null);
 const inputRef = shallowRef<HTMLElement | null>(null);
 const inputNumberRef = shallowRef<HTMLElement | null>(null);
 const confirmBtnRef = shallowRef<HTMLElement | null>(null);

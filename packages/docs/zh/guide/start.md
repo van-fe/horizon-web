@@ -13,8 +13,8 @@
 可以通过以下方法安装它：
 
 ::: code-group
-```sh [npm]
-$ npm install @aurora/horizon-web
+```sh [bun]
+$ bun add @aurora/horizon-web
 ```
 ```sh [yarn]
 $ yarn add @aurora/horizon-web
@@ -109,4 +109,4 @@ createApp(App)
 ## 下一步
 - 如果需要按需引入，请参照 [按需引入](./on-demand-import)
 - 如果需要自定义命名空间防止冲突，请参照 [命名空间](./namespace)
-- 需要配置 `Horizon Web`，请参照 [HorizonWeb Usage](./config-horizon-web-usage.md)
+- 需要配置 `Horizon Web`，请参照 [HorizonWeb Usage](./config-horizon-web)

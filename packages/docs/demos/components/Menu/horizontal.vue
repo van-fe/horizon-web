@@ -70,7 +70,7 @@
                 <template #popper>
                   <h-pop-content>
                     <div class="text-body-2 text-center mb-3" style="color: var(--h-text-tertiary)">
-                      Dear NIOer, Welcome
+                      Dear Demoer, Welcome
                     </div>
                     <h-button type="normal" size="large" text block class="mb-2">修改密码</h-button>
                     <h-button type="normal" size="large" text block>退出登录</h-button>
@@ -144,13 +144,13 @@
 <script setup lang="ts">
 import { ExtractPropTypes, ref } from 'vue';
 import { AIcon } from '@aurora/icon';
-import { NMenu , useMenuItemProps, useMenuProps, useSubMenuProps } from '@aurora/horizon-web';
+import { HMenu , useMenuItemProps, useMenuProps, useSubMenuProps } from '@aurora/horizon-web';
 
 type menuPropType = ExtractPropTypes<typeof useMenuProps>;
 type menuItemPropType = ExtractPropTypes<typeof useMenuItemProps>;
 type subMenuPropType = ExtractPropTypes<typeof useSubMenuProps>;
 
-const menuRef = ref<typeof NMenu | null>(null);
+const menuRef = ref<typeof HMenu | null>(null);
 const theme = ref<menuPropType['theme']>('default');
 const activeType = ref<menuPropType['activeType']>('link');
 const submenuExpandType = ref<menuPropType['submenuExpandType']>('full');

@@ -19,13 +19,13 @@
           <img
             class="container"
             style="width: 200px; height: 200px"
-            src="https://www.nio.cn/cdn-static/mynio/images/nio-day-2021/nio-day-2021-playback-desktop.jpg"
+            src="https://www.example.com/cdn-static/mydemo/images/demo-day-2021/demo-day-2021-playback-desktop.jpg"
           />
         </div>
         <div class="container">
           <img
             class="container"
-            src="https://www.nio.cn/cdn-static/mynio/images/nio-day-2021/nio-day-2021-playback-desktop.jpg"
+            src="https://www.example.com/cdn-static/mydemo/images/demo-day-2021/demo-day-2021-playback-desktop.jpg"
           />
         </div>
       </template>

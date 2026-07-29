@@ -26,22 +26,22 @@ In some scenarios, long pressing the controller is allowed to increase/decrease 
 
 ## Clear
 inputNumber allows clearing
-::: demo ./demos/clearable.vue :::
+:::demo components/InputNumber/clearable.vue :::
 
 ## Placeholder Text
-::: demo ./demos/placeholder.vue :::
+:::demo components/InputNumber/placeholder.vue :::
 
 ## Readonly
 After setting `readonly`, `controls` will not be displayed
-::: demo ./demos/readonly.vue :::
+:::demo components/InputNumber/readonly.vue :::
 
 ## Prefix/Suffix
 You can configure prefix and suffix
-::: demo ./demos/prefix-suffix.vue :::
+:::demo components/InputNumber/prefix-suffix.vue :::
 
 ## Combined Input Box
 You can set prepend and append slots through `slots.prepend` `slots.append`
-::: demo ./demos/prepend-append.vue :::
+:::demo components/InputNumber/prepend-append.vue :::
 
 ## Number Conversion
 Convert numbers to the format you need through `formatter`, and then convert the formatted string to processable numbers through `parser`

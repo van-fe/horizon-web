@@ -1,5 +1,5 @@
 import { defineComponent, ref } from 'vue';
-import { NRecycleScroller } from '@aurora/horizon-web';
+import { HRecycleScroller } from '@aurora/horizon-web';
 import { faker } from '@faker-js/faker';
 
 type Item = {
@@ -28,7 +28,7 @@ export default defineComponent({
     items.value = getData();
 
     return () => (
-      <NRecycleScroller
+      <HRecycleScroller
         items={items.value}
         itemSize={50}
         scrollerHeight={500}

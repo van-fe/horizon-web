@@ -31,12 +31,12 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue';
-import type { NFormInstance } from '@aurora/horizon-web';
+import type { HFormInstance } from '@aurora/horizon-web';
 import { $message } from '@aurora/horizon-web';
 
 export default defineComponent({
   setup() {
-    const formRef = ref<NFormInstance | null>(null);
+    const formRef = ref<HFormInstance | null>(null);
     const formData = ref({
       username: '',
       email: '',

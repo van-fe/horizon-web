@@ -4,18 +4,22 @@ import type { HUploadFileType } from '../utils/fileDefines';
 export interface HUploadChunk {
   /**
    * 分片下表
+    * @en Description for index.
    */
   index: number;
   /**
    * 分片大小
+    * @en Description for size.
    */
   size: number;
   /**
    * 分片文件内容
+    * @en Description for part.
    */
   part: Blob;
   /**
    * 分片上传状态
+    * @en Description for status.
    */
   status: 'pending' | 'uploading' | 'success' | 'fail';
 }
@@ -31,26 +35,36 @@ export interface HUploadMultipartSetting {
    * 一般类似于'七牛'等服务上传前都会要求初始化请求，并获取唯一上传id
    * 返回的数据会追加到请求体中
    * @param file 待上传文件
+   * @paramEn file The file value.
    */
   initUpload?: (file: HUploadFileType) => Awaitable<Data>;
   /**
    * 分片文件名处理
    * @param fileRawName 文件原名
+   * @paramEn fileRawName The file raw name value.
    * @param index 当前分片下标
+   * @paramEn index The index value.
    * @param part 当前正在上传的文件片段
+   * @paramEn part The part value.
    */
   filenameModify?: (fileRawName: string, index: number, part: Blob) => string;
   /**
    * 分片上传前请求处理，返回的数据会追加到当前上传的 `body` 中
    * @param file 正在上传的文件对象
+   * @paramEn file The file value.
    * @param index 分片下标
+   * @paramEn index The index value.
    * @param part 当前正在上传的文件片段
+   * @paramEn part The part value.
    */
   beforePartUpload?: (file: HUploadFileType, index: number, part: Blob) => Data;
   /**
    * 处理合并文件，在所有part都上传完后会回调
    * @param file 上传的文件
+   * @paramEn file The file value.
    * @param chunks 所有已上传的分片的文件
+   * @paramEn chunks The chunks value.
+    * @en Description for handle merge.
    */
   handleMerge: (file: HUploadFileType, chunks: HUploadChunk[]) => Promise<void>;
 }

@@ -5,6 +5,7 @@ import type { InputNumberProps } from '~/components/InputNumber/src/composables/
 export const useSliderProps = declarePropType({
   /**
    * 绑定值
+    * @en Configuration for model value.
    */
   modelValue: {
     type: [Number, Array] as PropType<number | [number, number]>,
@@ -12,6 +13,7 @@ export const useSliderProps = declarePropType({
   },
   /**
    * 是否禁用
+    * @en Configuration for disabled.
    */
   disabled: {
     type: Boolean,
@@ -20,6 +22,7 @@ export const useSliderProps = declarePropType({
 
   /**
    * 尺寸
+    * @en Configuration for size.
    */
   size: {
     type: String as PropType<'small' | 'medium' | 'large'>,
@@ -27,6 +30,7 @@ export const useSliderProps = declarePropType({
   },
   /**
    * 最大值
+    * @en Configuration for max.
    */
   max: {
     type: Number,
@@ -34,6 +38,7 @@ export const useSliderProps = declarePropType({
   },
   /**
    * 最小值
+    * @en Configuration for min.
    */
   min: {
     type: Number,
@@ -41,6 +46,7 @@ export const useSliderProps = declarePropType({
   },
   /**
    * 步长
+    * @en Configuration for step.
    */
   step: {
     type: Number,
@@ -48,6 +54,7 @@ export const useSliderProps = declarePropType({
   },
   /**
    * 是否显示分割符，在设定了大于 `1` 的 `step` 时有效
+    * @en Configuration for show separator.
    */
   showSeparator: {
     type: Boolean,
@@ -55,6 +62,7 @@ export const useSliderProps = declarePropType({
   },
   /**
    * 进度条类型
+    * @en Configuration for type.
    */
   type: {
     type: String as PropType<'primary' | 'info' | 'success' | 'warning' | 'danger'>,
@@ -62,6 +70,7 @@ export const useSliderProps = declarePropType({
   },
   /**
    * 进度条颜色
+    * @en Configuration for color.
    */
   color: {
     type: String,
@@ -69,6 +78,7 @@ export const useSliderProps = declarePropType({
   },
   /**
    * 是否启用范围选择模式
+    * @en Configuration for range.
    */
   range: {
     type: Boolean,
@@ -76,6 +86,7 @@ export const useSliderProps = declarePropType({
   },
   /**
    * 轨道是否可以点击
+    * @en Configuration for track clickable.
    */
   trackClickable: {
     type: Boolean,
@@ -83,6 +94,7 @@ export const useSliderProps = declarePropType({
   },
   /**
    * 是否显示 `input` 输入框
+    * @en Configuration for input enable.
    */
   inputEnable: {
     type: Boolean,
@@ -90,6 +102,7 @@ export const useSliderProps = declarePropType({
   },
   /**
    * 传给 input-number 的 `props`
+    * @en Configuration for input props.
    */
   inputProps: {
     type: Object as PropType<Partial<InputNumberProps>>,
@@ -97,6 +110,7 @@ export const useSliderProps = declarePropType({
   },
   /**
    * 是否允许键盘控制游标
+    * @en Configuration for keyboard enable.
    */
   keyboardEnable: {
     type: Boolean,
@@ -104,6 +118,7 @@ export const useSliderProps = declarePropType({
   },
   /**
    * 是否启用 `tooltip`
+    * @en Configuration for tooltip enable.
    */
   tooltipEnable: {
     type: Boolean,
@@ -111,6 +126,7 @@ export const useSliderProps = declarePropType({
   },
   /**
    * `tooltip` 的位置
+    * @en Configuration for tooltip placement.
    */
   tooltipPlacement: {
     type: String as PropType<
@@ -121,6 +137,7 @@ export const useSliderProps = declarePropType({
   /**
    * 自定义提示
    * 传入的是当前滑块的数字，返回一个处理后的字符串即可
+    * @en Configuration for tooltip formatter.
    */
   tooltipFormatter: {
     type: Function as PropType<(value: number) => string>,

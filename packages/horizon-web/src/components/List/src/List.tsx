@@ -10,6 +10,7 @@ import useSize from '~/utils/useSize';
 export default defineComponent({
   name: `${useNamespace()}List`,
   desc: '可承载文字、列表、图片、段落或复杂的图文组合，用一个连续的列来显示多行元素； 常用于具有相同构成及内容的模块批量展示',
+  descLocales: { en: 'List and list-item components for displaying collections.' },
   props: useListProps,
   slots: useListSlots,
   setup(props, { slots }: HorizonWebSetupContext<{}, ListSlots>) {

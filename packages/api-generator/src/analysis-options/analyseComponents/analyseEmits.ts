@@ -26,6 +26,7 @@ function analysisPropertyAssignment(
 
   const res: ApiGeneratorAnalysedEmitType = {
     desc: jsDoc.comment,
+    descLocales: jsDoc.locales,
     name: emitName,
     params: [],
     deprecated: jsDoc.tags.deprecated?.default,
@@ -46,6 +47,9 @@ function analysisPropertyAssignment(
         field: paramFieldName,
         value: parameter.getLastChild()?.getText() || '',
         desc,
+        descLocales: jsDoc.tags.paramEn?.[paramFieldName]
+          ? { en: jsDoc.tags.paramEn[paramFieldName] }
+          : undefined,
       });
     }
   }

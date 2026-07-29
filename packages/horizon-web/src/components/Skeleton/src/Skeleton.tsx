@@ -15,6 +15,7 @@ export default defineComponent({
     '1.当页面内呈现重复性内容较多时 \n' +
     '2.大段文本 \n' +
     '3.列表和表格',
+  descLocales: { en: 'Loading placeholders for content.' },
   components: {
     HTransition,
   },

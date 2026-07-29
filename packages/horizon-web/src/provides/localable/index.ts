@@ -6,6 +6,7 @@ import type { LocalOptionType } from '@aurora/locale-vue';
 import { LocaleSupportLang, VueLocaleService } from '@aurora/locale-vue';
 import { dictionaries } from '~/locales';
 import deepMerge from 'deepmerge';
+import syncDayjsLocale from './dayjsLocale';
 
 export const localeInjectKey = Symbol.for('[horizon-web]: locale') as InjectionKey<
   ComputedRef<VueLocaleService>
@@ -36,6 +37,10 @@ export default function localableProvide(app: App, options?: HorizonWebOption): 
   const locale = computed(() => VueLocaleService.currInstance as VueLocaleService);
 
   app.provide(localeInjectKey, locale);
+  // The locale package registers its Arabic dayjs locale as a bootstrap
+  // default. Keep dayjs in sync with the reactive Horizon Web locale so date
+  // components do not inherit that default on English/Chinese pages.
+  syncDayjsLocale(locale);
 
   return app;
 }

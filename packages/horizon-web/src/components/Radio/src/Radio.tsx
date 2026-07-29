@@ -17,6 +17,7 @@ import useSize from '~/utils/useSize';
 export default defineComponent({
   name: `${useNamespace()}Radio`,
   desc: 'Radio 用来在一组备选项中进行单选',
+  descLocales: { en: 'Radio controls for selecting one option.' },
   components: { Radio },
   props: useRadioProps,
   emits: useRadioEmits,

@@ -5,8 +5,8 @@
 需要安装一些包来启用按需引入:
 
 ::: code-group
-```sh [npm]
-$ npm install unplugin-vue-components @aurora/horizon-web-unplugin-resolver -D
+```sh [bun]
+$ bun add unplugin-vue-components @aurora/horizon-web-unplugin-resolver -D
 ```
 ```sh [yarn]
 $ yarn add unplugin-vue-components @aurora/horizon-web-unplugin-resolver -D

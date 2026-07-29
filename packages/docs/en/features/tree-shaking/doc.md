@@ -28,7 +28,7 @@ Based on the tree-shaking capability of es module, you can easily achieve on-dem
 
 ```javascript
 import { createApp } from 'vue';
-import { NButton, NInput } from 'packages/horizon-web/src/index';
+import { HButton, HInput } from 'packages/horizon-web/src/index';
 import 'packages/horizon-web/es/components/Button/src/style/index.css';
 import 'packages/horizon-web/es/components/Input/src/style/index.css';
 
@@ -36,8 +36,8 @@ import App from './App.vue';
 
 const app = createApp(App);
 
-app.use(NButton);
-app.use(NInput);
+app.use(HButton);
+app.use(HInput);
 ```
 
 Through the above method, you can achieve on-demand import of components without worrying about generating redundant code. But it is slightly cumbersome, requiring separate import of each component and then registering them.

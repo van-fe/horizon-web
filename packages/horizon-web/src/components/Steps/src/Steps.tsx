@@ -21,6 +21,7 @@ import useSize from '~/utils/useSize';
 export default defineComponent({
   name: `${useNamespace()}Steps`,
   desc: '引导用户按照流程完成任务的分步导航条，可根据实际应用场景设定步骤，步骤不得少于 2 步',
+  descLocales: { en: 'Steps and step components for progress indicators.' },
   props: useStepsProps,
   slots: useStepsSlots,
   emits: useStepsEmits,

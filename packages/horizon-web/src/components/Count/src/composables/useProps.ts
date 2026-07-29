@@ -4,6 +4,7 @@ import { declarePropType } from '@aurora/utils';
 export const useCountProps = declarePropType({
   /**
    * 开始值
+    * @en Configuration for start value.
    */
   startValue: {
     type: Number,
@@ -12,6 +13,7 @@ export const useCountProps = declarePropType({
   },
   /**
    * 结束值
+    * @en Configuration for end value.
    */
   endValue: {
     type: Number,
@@ -20,6 +22,7 @@ export const useCountProps = declarePropType({
   },
   /**
    * 小数位数
+    * @en Configuration for decimal.
    */
   decimal: {
     type: Number,
@@ -28,6 +31,7 @@ export const useCountProps = declarePropType({
   },
   /**
    * 递增步长(10的幂指数)
+    * @en Configuration for step.
    */
   step: {
     type: Number,
@@ -36,6 +40,7 @@ export const useCountProps = declarePropType({
   },
   /**
    * 自动播放
+    * @en Configuration for auto play.
    */
   autoPlay: {
     type: Boolean,
@@ -44,6 +49,7 @@ export const useCountProps = declarePropType({
   },
   /**
    * setTimeout每次延迟的毫秒数(>=4)
+    * @en Configuration for delay.
    */
   delay: {
     type: Number,
@@ -52,6 +58,7 @@ export const useCountProps = declarePropType({
   },
   /**
    * 分隔符
+    * @en Configuration for separator.
    */
   separator: {
     type: String,
@@ -60,6 +67,7 @@ export const useCountProps = declarePropType({
   },
   /**
    * 分隔长度
+    * @en Configuration for extent.
    */
   extent: {
     type: Number,
@@ -68,6 +76,7 @@ export const useCountProps = declarePropType({
   },
   /**
    * 前缀
+    * @en Configuration for prefix.
    */
   prefix: {
     type: String,
@@ -75,6 +84,7 @@ export const useCountProps = declarePropType({
   },
   /**
    * 后缀
+    * @en Configuration for suffix.
    */
   suffix: {
     type: String,

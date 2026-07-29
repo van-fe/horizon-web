@@ -21,6 +21,7 @@ function analysisPropertyAssignment(
   const res: ApiGeneratorAnalysedPropType = {
     default: '',
     desc: jsDoc.comment,
+    descLocales: jsDoc.locales,
     name: property.getName(),
     required: false,
     deprecated: jsDoc.tags.deprecated?.default,
@@ -139,7 +140,25 @@ function analysisPropertyAssignment(
     });
   } catch (e) {
     console.error(e);
-    
+  }
+
+  // Keep the source type when a newer/complex TS node is not handled by the
+  // specialised branches above (e.g. `PropType<boolean | null>`).  An empty
+  // type is much harder for consumers to diagnose than a lossless fallback.
+  if (!res.type) {
+    const typeEntry = property
+      .getChildrenOfKind(ts.SyntaxKind.ObjectLiteralExpression)?.[0]
+      ?.getProperties()
+      .find(curr => curr.getName() === 'type');
+    const statement = typeEntry?.getLastChild();
+    if (statement) {
+      res.type = statement.getText();
+      res.baseType = lowerFirst(
+        statement.getKind() === ts.SyntaxKind.AsExpression
+          ? statement.getFirstChild()?.getText() || 'unknown'
+          : statement.getText(),
+      );
+    }
   }
 
   return res;

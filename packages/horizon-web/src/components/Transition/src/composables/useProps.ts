@@ -4,7 +4,7 @@ import { declarePropType } from '@aurora/utils';
 export const useTransitionProps = declarePropType({
   /**
    * 动画名称
-   * @version 2.0.5 支持 collapse-horizontal zoom-in-left; \n 2.5.4 支持 slide-*; \n 2.12.3 支持 dropdown
+    * @en Configuration for name.
    */
   name: {
     type: String as PropType<
@@ -29,6 +29,7 @@ export const useTransitionProps = declarePropType({
   },
   /**
    * 是否是群组动画
+    * @en Configuration for group.
    */
   group: {
     type: Boolean,
@@ -37,7 +38,7 @@ export const useTransitionProps = declarePropType({
   /**
    * 动画速度
    * `dropdown` 有自带速度控制，无法自定义
-   * @version 2.0.5
+    * @en Configuration for speed.
    */
   speed: {
     type: String as PropType<'normal' | 'fast' | 'slow' | 'extra-fast'>,
@@ -45,12 +46,14 @@ export const useTransitionProps = declarePropType({
   },
   /**
    * 出现时过渡
+    * @en Configuration for appear.
    */
   appear: {
     type: Boolean,
   },
   /**
    * 是否显式地向 `Vue` 表明可以跳过对 `CSS` 过渡的自动探测
+    * @en Configuration for css.
    */
   css: {
     type: Boolean,
@@ -58,14 +61,14 @@ export const useTransitionProps = declarePropType({
   /**
    * 模式
    * `group = true` 下无效
-   * @version 2.5.4
+    * @en Configuration for mode.
    */
   mode: {
     type: String as PropType<BaseTransitionProps['mode']>,
   },
   /**
    * 持久化
-   * @version 2.5.4
+    * @en Configuration for persisted.
    */
   persisted: {
     type: Boolean as PropType<BaseTransitionProps['persisted']>,

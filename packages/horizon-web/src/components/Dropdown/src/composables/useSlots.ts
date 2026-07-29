@@ -4,10 +4,12 @@ export const useDropdownSlots = Object as SlotsType<{
   /**
    * 触发器插槽
    * @param popperVisible: 下拉菜单是否显示
+    * @en Content slot for default.
    */
   default: { popperVisible: boolean };
   /**
    * 下拉菜单的插槽
+    * @en Custom content for the dropdown slot.
    */
   dropdown?: {};
 }>;
@@ -15,11 +17,12 @@ export const useDropdownSlots = Object as SlotsType<{
 export const useDropdownGroupSlots = Object as SlotsType<{
   /**
    * 默认展示的内容
+    * @en Custom content for the default slot.
    */
   default?: {};
   /**
    * 标题
-   * @version 2.0.5
+    * @en Custom content for the title slot.
    */
   title?: {};
 }>;
@@ -27,11 +30,12 @@ export const useDropdownGroupSlots = Object as SlotsType<{
 export const useDropdownItemSlots = Object as SlotsType<{
   /**
    * 默认展示的内容
+    * @en Custom content for the default slot.
    */
   default?: {};
   /**
    * 前置图标
-   * @version 2.0.5
+    * @en Custom content for the icon slot.
    */
   icon?: {};
 }>;
@@ -39,6 +43,7 @@ export const useDropdownItemSlots = Object as SlotsType<{
 export const useDropdownMenuSlots = Object as SlotsType<{
   /**
    * 默认展示的内容
+    * @en Custom content for the default slot.
    */
   default?: {};
 }>;
@@ -46,15 +51,17 @@ export const useDropdownMenuSlots = Object as SlotsType<{
 export const useDropdownSubmenuSlots = Object as SlotsType<{
   /**
    * 默认展示的内容
+    * @en Custom content for the default slot.
    */
   default?: {};
   /**
    * 标题
+    * @en Custom content for the title slot.
    */
   title?: {};
   /**
    前置图标
-   @version 2.0.5
+    * @en Custom content for the icon slot.
    */
   icon?: {};
 }>;

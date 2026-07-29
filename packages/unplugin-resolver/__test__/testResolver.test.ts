@@ -44,14 +44,14 @@ describe('unplugin-resolver', () => {
   test('exclude', () => {
     expect(
       HorizonWebPluginResolvers({
-        exclude: /NButton/,
-      })[0].resolve('NButton'),
+        exclude: /HButton/,
+      })[0].resolve('HButton'),
     ).toBeUndefined();
 
     expect(
       HorizonWebPluginResolvers({
-        exclude: /NButton/,
-      })[0].resolve('NInput'),
+        exclude: /HButton/,
+      })[0].resolve('HInput'),
     ).not.toBeUndefined();
 
     expect(
@@ -71,13 +71,13 @@ describe('unplugin-resolver', () => {
     expect(
       HorizonWebPluginResolvers({
         ssr: false,
-      })[0].resolve('NButton')?.sideEffects,
+      })[0].resolve('HButton')?.sideEffects,
     ).toEqual(expect.arrayContaining([expect.stringMatching('/es/')]));
 
     expect(
       HorizonWebPluginResolvers({
         ssr: true,
-      })[0].resolve('NButton')?.sideEffects,
+      })[0].resolve('HButton')?.sideEffects,
     ).toEqual(expect.arrayContaining([expect.stringMatching('/lib/')]));
   });
 
@@ -85,13 +85,13 @@ describe('unplugin-resolver', () => {
     expect(
       HorizonWebPluginResolvers({
         importStyle: 'css',
-      })[0].resolve('NButton')?.sideEffects,
+      })[0].resolve('HButton')?.sideEffects,
     ).toEqual(expect.arrayContaining([expect.stringMatching(/\.css$/)]));
 
     expect(
       HorizonWebPluginResolvers({
         importStyle: 'scss',
-      })[0].resolve('NButton')?.sideEffects,
+      })[0].resolve('HButton')?.sideEffects,
     ).toEqual(expect.arrayContaining([expect.stringMatching(/\.scss$/)]));
 
     expect(
@@ -111,13 +111,13 @@ describe('unplugin-resolver', () => {
     expect(
       HorizonWebPluginResolvers({
         useResetStyle: true,
-      })[0].resolve('NButton')?.sideEffects,
+      })[0].resolve('HButton')?.sideEffects,
     ).toEqual(expect.arrayContaining([expect.stringMatching(/reset\.css$/)]));
 
     expect(
       HorizonWebPluginResolvers({
         useResetStyle: false,
-      })[0].resolve('NButton')?.sideEffects,
+      })[0].resolve('HButton')?.sideEffects,
     ).not.toEqual(expect.arrayContaining([expect.stringMatching(/reset\.scss$/)]));
 
     expect(

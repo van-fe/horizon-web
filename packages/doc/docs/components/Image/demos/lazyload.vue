@@ -1,9 +1,0 @@
-<template>
-  <div>
-    <h-image
-      src="https://www.nio.cn/cdh-static/mynio/nextjs/images/4124399E5BB45E85CBAFDE6307297F4A045845F4/home/es7-homepage-hero-desktop.jpg"
-      lazyload
-      :width="500"
-    />
-  </div>
-</template>

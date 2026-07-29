@@ -5,8 +5,8 @@ If you have requirements for the size of the built product, please use the on-de
 You need to install some packages to enable on-demand import:
 
 ::: code-group
-```sh [npm]
-$ npm install unplugin-vue-components @aurora/horizon-web-unplugin-resolver -D
+```sh [bun]
+$ bun add unplugin-vue-components @aurora/horizon-web-unplugin-resolver -D
 ```
 ```sh [yarn]
 $ yarn add unplugin-vue-components @aurora/horizon-web-unplugin-resolver -D

@@ -4,6 +4,7 @@ import { declareDirectiveOptionType } from '@aurora/utils';
 export const useTooltipOptions = declareDirectiveOptionType({
   /**
    * 触发tooltip提示框的行为
+   * @en Trigger tooltipmessage框的behavior
    */
   trigger: {
     type: String as DirectiveOptionType<'hover' | 'click' | 'focus' | 'manual'>,
@@ -12,6 +13,7 @@ export const useTooltipOptions = declareDirectiveOptionType({
   },
   /**
    * tooltip弹出方向
+   * @en Tooltip弹出direction
    */
   placement: {
     type: String as DirectiveOptionType<
@@ -33,6 +35,7 @@ export const useTooltipOptions = declareDirectiveOptionType({
   },
   /**
    * tooltip距离目标元素偏移距离
+   * @en Tooltipdistancetargetelementoffsetdistance
    */
   distance: {
     type: Number,
@@ -41,6 +44,7 @@ export const useTooltipOptions = declareDirectiveOptionType({
   },
   /**
    * 自定义tooltip类名
+   * @en Custom tooltipclass name
    */
   popperClass: {
     type: String,
@@ -49,6 +53,7 @@ export const useTooltipOptions = declareDirectiveOptionType({
   },
   /**
    * 是否显示 `tooltip`，只有在 `trigger` 为 `manual` 时生效
+   * @en Whether Display tooltip, 只有在 trigger 为 manual 时effective
    */
   visible: {
     type: Boolean,
@@ -57,6 +62,7 @@ export const useTooltipOptions = declareDirectiveOptionType({
   },
   /**
    * tooltip的位置偏移
+   * @en Tooltip的positionoffset
    */
   skidding: {
     type: Number,
@@ -65,6 +71,7 @@ export const useTooltipOptions = declareDirectiveOptionType({
   },
   /**
    * 是否显示tooltip的箭头
+   * @en Whether Display tooltip的箭头
    */
   arrow: {
     type: Boolean,
@@ -73,6 +80,7 @@ export const useTooltipOptions = declareDirectiveOptionType({
   },
   /**
    * 是否禁用tooltip
+   * @en Whether Disable tooltip
    */
   disabled: {
     type: Boolean,
@@ -81,6 +89,7 @@ export const useTooltipOptions = declareDirectiveOptionType({
   },
   /**
    * tooltip内容，权重较slot低
+   * @en Tooltipcontent, 权重较slot低
    */
   content: {
     type: String,
@@ -89,6 +98,7 @@ export const useTooltipOptions = declareDirectiveOptionType({
   },
   /**
    * 是否溢出才显示
+   * @en Whether overflow才Display
    */
   overflow: {
     type: Boolean,
@@ -97,6 +107,7 @@ export const useTooltipOptions = declareDirectiveOptionType({
   },
   /**
    * 附带样式
+   * @en Additional style
    */
   style: {
     type: Object as DirectiveOptionType<Partial<CSSStyleDeclaration>>,
@@ -104,6 +115,7 @@ export const useTooltipOptions = declareDirectiveOptionType({
   },
   /**
    * 挂载节点
+   * @en Mountnode
    */
   reference: {
     type: Object as DirectiveOptionType<HTMLElement>,
@@ -111,7 +123,7 @@ export const useTooltipOptions = declareDirectiveOptionType({
   },
   /**
    * 尺寸
-   * @version 2.7.0
+   * @en Size
    * @deprecated 此设置已无效
    */
   size: {
@@ -120,7 +132,7 @@ export const useTooltipOptions = declareDirectiveOptionType({
   },
   /**
    * 主题
-   * @version 2.7.0
+   * @en Theme
    * @deprecated `light` 已过时，请改成 `dark`
    */
   theme: {
@@ -129,6 +141,7 @@ export const useTooltipOptions = declareDirectiveOptionType({
   },
   /**
    * 在鼠标悬浮后多少毫秒展示
+   * @en Description
    */
   showAfter: {
     type: Number,
@@ -136,6 +149,7 @@ export const useTooltipOptions = declareDirectiveOptionType({
   },
   /**
    * 在鼠标离开后多少毫秒消失
+   * @en Description
    */
   hideAfter: {
     type: Number,

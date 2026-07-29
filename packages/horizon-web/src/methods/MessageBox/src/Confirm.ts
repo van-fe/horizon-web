@@ -7,6 +7,7 @@ import { useMsgBoxConfirmProps } from './composables/useProps';
 
 const Confirm = defineMethod({
   name: 'confirm',
+  descLocales: { en: 'Display a confirmation dialog that interrupts the current task flow.' },
   desc: '用于信息提示或确认，会中断用户当前的任务流程。想避免对用户的干扰，可考虑 `Message` 等组件；如果想要更强的定制能力，请使用 `Dialog` 组件',
   options: useMsgBoxConfirmProps,
   default: (...args: Array<string | VNode | Partial<MsgBoxConfirmProps>>): Promise<() => void> => {

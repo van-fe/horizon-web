@@ -16,26 +16,26 @@
       <div class="n-demo__title">通过 fit 设置适应容器,同原生 object-fit</div>
       <h-avatar
         class="avatar"
-        src="https://cdn-app.nio.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg"
+        src="https://cdn-app.example.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg"
         fit="contain"
       />
       <h-avatar
         class="avatar"
-        src="https://cdn-app.nio.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg"
+        src="https://cdn-app.example.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg"
       />
       <h-avatar
         class="avatar"
-        src="https://cdn-app.nio.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg"
+        src="https://cdn-app.example.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg"
         fit="cover"
       />
       <h-avatar
         class="avatar"
-        src="https://cdn-app.nio.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg"
+        src="https://cdn-app.example.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg"
         fit="none"
       />
       <h-avatar
         class="avatar"
-        src="https://cdn-app.nio.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg"
+        src="https://cdn-app.example.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg"
         fit="scale-down"
       />
     </div>

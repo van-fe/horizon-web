@@ -5,7 +5,7 @@ import { tinycolor } from '@aurora/colors';
 export const useMaskProps = declarePropType({
   /**
    * 默认值：default
-   * @version 2.2.0
+    * @en Configuration for type.
    */
   type: {
     type: String as PropType<
@@ -23,6 +23,7 @@ export const useMaskProps = declarePropType({
   },
   /**
    * 是否展示遮罩层
+    * @en Configuration for value.
    */
   value: {
     type: Boolean,
@@ -31,6 +32,7 @@ export const useMaskProps = declarePropType({
   },
   /**
    * 设置遮罩层为绝对定位
+    * @en Configuration for absolute.
    */
   absolute: {
     type: Boolean,
@@ -39,7 +41,7 @@ export const useMaskProps = declarePropType({
   },
   /**
    * 设置透明度
-   * @version 2.2.0 之后 默认值从 0.5 变为 1
+    * @en Configuration for opacity.
    */
   opacity: {
     type: [Number, String],
@@ -47,6 +49,7 @@ export const useMaskProps = declarePropType({
   },
   /**
    * 遮罩层颜色
+    * @en Configuration for color.
    */
   color: {
     type: String as PropType<'rgba(-,-,-,-)' | 'rgb(-,-,-)'>,
@@ -56,6 +59,7 @@ export const useMaskProps = declarePropType({
   },
   /**
    * 层级
+    * @en Configuration for z index.
    */
   zIndex: {
     type: Number,
@@ -63,20 +67,21 @@ export const useMaskProps = declarePropType({
   },
   /**
    * 设置遮罩层的class
-   * @version 2.2.0 之后由 Object 类型变为 String
+    * @en Configuration for scrim class.
    */
   scrimClass: {
     type: String,
   },
   /**
    * 设置遮罩层的style
-   * @version 2.2.0
+    * @en Configuration for scrim style.
    */
   scrimStyle: {
     type: Object as PropType<CSSProperties>,
   },
   /**
    * 是否触发高斯模糊，若进行高斯模糊，必定会打开遮罩层
+    * @en Configuration for is fuzzification.
    */
   isFuzzification: {
     type: Boolean,
@@ -84,7 +89,7 @@ export const useMaskProps = declarePropType({
   },
   /**
    * 是否使内部容器占满父容器
-   * @version 1.6.5
+    * @en Configuration for content full size.
    */
   contentFullSize: {
     type: Boolean,

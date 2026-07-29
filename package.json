@@ -11,8 +11,8 @@
   "scripts": {
     "prepare": "husky install && ts-patch install -s",
     "build": "bun run setVersion && bun --filter '*' build",
-    "build:theme": "bun --filter horizon-web build:theme",
-    "dev": "bun --filter @aurora-doc dev",
+    "build:theme": "bun --filter @aurora/horizon-web build:theme",
+    "dev": "bun run docs:dev",
     "new": "bun run scripts/new/index.ts",
     "lint": "bunx oxlint && bun eslint --fix --ext .ts,.tsx ./packages",
     "preinstall": "bun run scripts/init.ts",
@@ -20,13 +20,15 @@
     "modify:version": "bun run scripts/modifyVersion.ts",
     "pub": "bun run scripts/publish.ts",
     "setVersion": "bun run scripts/setVersionFile.ts",
+    "ts:probe:ts7": "bunx --bun typescript@7.0.2 --project packages/api-generator/tsconfig.json --noEmit --pretty false",
     "vitest:all": "bun run vitest:horizon-web && bun run vitest:unplugin-resolver && bun run vitest:colors",
     "vitest:horizon-web": "vitest run --dir ./packages/horizon-web/src --config ./packages/horizon-web/vitest.config.ts",
     "vitest:unplugin-resolver": "vitest run --dir ./packages/unplugin-resolver --config ./packages/unplugin-resolver/vitest.config.ts",
     "vitest:colors": "vitest run --dir ./packages/colors/src --config ./packages/colors/vite.config.ts",
     "git:prune": "git remote prune origin && git branch -vv | grep 'origin/.*: gone]' | awk '{print $1}' | xargs git branch -d",
-    "docs:dev": "vitepress dev packages/docs",
-    "docs:build": "vitepress build packages/docs",
+    "docs:prepare": "bun --filter @aurora/api-generator build",
+    "docs:dev": "bun run docs:prepare && vitepress dev packages/docs",
+    "docs:build": "bun run docs:prepare && vitepress build packages/docs",
     "docs:preview": "vitepress preview packages/docs"
   },
   "devDependencies": {

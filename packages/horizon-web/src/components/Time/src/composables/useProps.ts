@@ -4,6 +4,7 @@ import { declarePropType } from '@aurora/utils';
 export const useTimeProps = declarePropType({
   /**
    * 时间（秒/毫秒级时间戳）
+    * @en Configuration for time.
    */
   time: {
     type: [Date, Number, String],
@@ -12,6 +13,7 @@ export const useTimeProps = declarePropType({
   },
   /**
    * 到期时间（秒/毫秒级时间戳）
+    * @en Configuration for end time.
    */
   endTime: {
     type: [Date, Number, String],
@@ -20,6 +22,7 @@ export const useTimeProps = declarePropType({
   },
   /**
    * 是否正向计时
+    * @en Configuration for forward.
    */
   forward: {
     type: Boolean,
@@ -28,6 +31,7 @@ export const useTimeProps = declarePropType({
   },
   /**
    * 是否计算time和endTime的差值
+    * @en Configuration for calculative.
    */
   calculative: {
     type: Boolean,

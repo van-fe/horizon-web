@@ -54,7 +54,9 @@ export default function (
   /**
    * set node children
    * @param value to set root array should give null
+   * @paramEn value The value value.
    * @param children the list of tree-data of this level
+   * @paramEn children The children value.
    */
   function setNodeChildren(value: string | number | null, children: HTreeData[]) {
     if (value === null) {

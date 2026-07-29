@@ -10,6 +10,7 @@ import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 export default defineComponent({
   name: `${useNamespace()}Time`,
   desc: '可以用来做倒计时',
+  descLocales: { en: 'Displays time values and countdowns.' },
   props: useTimeProps,
   emits: useTimeEmits,
   slots: useTimeSlots,

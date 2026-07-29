@@ -9,5 +9,5 @@
 :::demo components/Panels/vertical.vue :::
 
 ## 附加样式
-为提高灵活度，面板尽可能不自带无关样式，你可以通过 [Styles & Animation](/horizon-web/style-animation) 中的工具类或 `style` 来附加想要的样式。
+为提高灵活度，面板尽可能不自带无关样式，你可以通过 [Styles & Animation](../../style-animation/center/doc) 中的工具类或 `style` 来附加想要的样式。
 :::demo components/Panels/style.vue :::

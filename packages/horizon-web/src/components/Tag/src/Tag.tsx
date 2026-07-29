@@ -48,6 +48,7 @@ import useOverflow from '~/utils/useOverflow';
 export default defineComponent({
   name: `${useNamespace()}Tag`,
   desc: '用于标记特定对象的类别、状态或属性',
+  descLocales: { en: 'Tag and tag-group components for labels.' },
   components: {
     InputTag,
   },

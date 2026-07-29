@@ -24,13 +24,13 @@
 
 <script setup lang="ts">
 import { ExtractPropTypes, ref } from 'vue';
-import type { NAutoCompleteOptionProps } from '@aurora/horizon-web';
+import type { HAutoCompleteOptionProps } from '@aurora/horizon-web';
 import { useAutoCompleteProps } from '@aurora/horizon-web';
 
 const sizeValue = ref<Required<ExtractPropTypes<typeof useAutoCompleteProps>['size']>>('medium');
 const inputStyle = ref<Required<ExtractPropTypes<typeof useAutoCompleteProps>['inputStyle']>>('normal');
 
-const options = ref<Partial<NAutoCompleteOptionProps>[]>([]);
+const options = ref<Partial<HAutoCompleteOptionProps>[]>([]);
 
 function onSearch(val: string) {
   options.value = [];

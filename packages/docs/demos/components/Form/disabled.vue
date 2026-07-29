@@ -82,11 +82,11 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import type { NFormInstance } from '@aurora/horizon-web';
+import type { HFormInstance } from '@aurora/horizon-web';
 
 const disabled = ref(true);
 const cascaderData = ref([]);
-const formRef = ref<NFormInstance | null>(null);
+const formRef = ref<HFormInstance | null>(null);
 const formData = ref({
   input: '',
   number: null,

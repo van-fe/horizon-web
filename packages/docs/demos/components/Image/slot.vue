@@ -1,7 +1,7 @@
 <template>
   <div class="flex">
     <h-image
-      src="https://www.nio.cn/cdn-static/mynio/nextjs/images/4124399E5BB45E85CBAFDE6307297F4A045845F4/home/es7-homepage-hero-desktop.jpg"
+      src="https://www.example.com/cdn-static/mydemo/nextjs/images/4124399E5BB45E85CBAFDE6307297F4A045845F4/home/es7-homepage-hero-desktop.jpg"
       width="300px"
       height="300px"
       class="mr-2"
@@ -14,12 +14,12 @@
           background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 100%);
         "
       >
-        <div class="white text-body-1">NIO ES7</div>
+        <div class="white text-body-1">Demo ES7</div>
         <span class="white">FAR BEYOND</span>
       </div>
     </h-image>
     <h-image
-      src="https://www.nio.cn/cdn-static/mynio/nextjs/images/4124399E5BB45E85CBAFDE6307297F4A045845F4/home/es7-homepage-hero-desktop.jpg"
+      src="https://www.example.com/cdn-static/mydemo/nextjs/images/4124399E5BB45E85CBAFDE6307297F4A045845F4/home/es7-homepage-hero-desktop.jpg"
       width="300px"
       height="300px"
     >
@@ -32,7 +32,7 @@
             background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 100%);
           "
         >
-          <div class="white text-body-1">NIO ES7</div>
+          <div class="white text-body-1">Demo ES7</div>
           <span class="white">FAR BEYOND</span>
         </div>
       </template>

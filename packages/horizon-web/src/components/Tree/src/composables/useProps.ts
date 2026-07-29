@@ -19,12 +19,14 @@ export const useTreeProps = declarePropType({
   /**
    * @invisible
    * 可能由 tree-select 传入
+    * @en Configuration for tree helper.
    */
   treeHelper: {
     type: Object as PropType<Tree<HTreeData, HTreeExtendsData>>,
   },
   /**
    * 树结构数据，具备响应式，在使用中如果你改变了整个变量的引用，将会导致组件的重新渲染
+    * @en Configuration for tree data.
    */
   treeData: {
     type: Array as PropType<HTreeData[]>,
@@ -33,19 +35,21 @@ export const useTreeProps = declarePropType({
   /**
    * 尺寸大小
    * @deprecated size
+    * @en Configuration for item size.
    */
   itemSize: {
     type: String as PropType<'small' | 'medium' | 'large' | 'huge'>,
   },
   /**
    * 大小
-   * @version 2.3.5
+    * @en Configuration for size.
    */
   size: {
     type: String as PropType<'small' | 'medium' | 'large' | 'huge'>,
   },
   /**
    * 是否将整棵树禁用
+    * @en Configuration for disabled.
    */
   disabled: {
     type: Boolean,
@@ -54,20 +58,21 @@ export const useTreeProps = declarePropType({
   /**
    * 是否开启过滤，并进行设置
    * @deprecated filterable / filterMethod / highlightMethod / expandFilteredTree
+    * @en Configuration for filter.
    */
   filter: {
     type: [Boolean, Object] as PropType<boolean | HTreeFilterType>,
   },
   /**
    * 是否开启过滤
-   * @version 2.3.5
+    * @en Configuration for filterable.
    */
   filterable: {
     type: Boolean,
   },
   /**
    * 过滤时是否隐藏子节点
-   * @version 2.10.0
+    * @en Configuration for filter to hide children.
    */
   filterToHideChildren: {
     type: Boolean,
@@ -75,14 +80,14 @@ export const useTreeProps = declarePropType({
   },
   /**
    * 过滤方法
-   * @version 2.3.5
+    * @en Configuration for filter method.
    */
   filterMethod: {
     type: Function as PropType<HTreeFilterMethodType>,
   },
   /**
    * 内置输入框过滤的值，可以双向绑定
-   * @version 2.12.15-alpha.3
+    * @en Configuration for filter value.
    */
   filterValue: {
     type: String,
@@ -90,28 +95,28 @@ export const useTreeProps = declarePropType({
   /**
    * 高亮处理方法
    * 需要注意的是，高亮处理方法仅对 treeData 中数据的 `label` 为字符串时处理；如果是一个渲染函数，则直接渲染此函数而不做任何处理
-   * @version 2.3.5
+    * @en Configuration for highlight method.
    */
   highlightMethod: {
     type: Function as PropType<HTreeHighlightMethod>,
   },
   /**
    * 过滤的输入框的传参
-   * @version 2.3.5
+    * @en Configuration for filter input props.
    */
   filterInputProps: {
     type: Object as PropType<Partial<InputProps>>,
   },
   /**
    * 过滤输入的文字，用于自定义搜索框时使用
-   * @version 2.3.5
+    * @en Configuration for filter input value.
    */
   filterInputValue: {
     type: String,
   },
   /**
    * 是否在启用过滤时，隐藏过滤的输入框
-   * @version 2.3.5
+    * @en Configuration for hide filter input.
    */
   hideFilterInput: {
     type: Boolean,
@@ -119,7 +124,7 @@ export const useTreeProps = declarePropType({
   },
   /**
    * 是否自动展开搜索子树
-   * @version 2.3.5
+    * @en Configuration for expand filtered tree.
    */
   expandFilteredTree: {
     type: Boolean,
@@ -128,27 +133,28 @@ export const useTreeProps = declarePropType({
   /**
    * 字段映射
    * 不支持动态修改
+    * @en Configuration for field map.
    */
   fieldMap: {
     type: Object as PropType<Partial<Record<keyof BaseTreeData, keyof BaseTreeData | string>>>,
   },
   /**
    * 树组件的高度
-   * @version 2.3.5; 2.7.0 支持 string
+    * @en Configuration for height.
    */
   height: {
     type: [Number, String],
   },
   /**
    * 树组件的最大高度
-   * @version 2.3.5; 2.7.0 支持 string
+    * @en Configuration for max height.
    */
   maxHeight: {
     type: [Number, String],
   },
   /**
    * 是否启用虚拟滚动，需同时配置 `height` 或 `maxHeight`
-   * @version 2.3.5
+    * @en Configuration for use virtual scroll.
    */
   useVirtualScroll: {
     type: Boolean,
@@ -157,14 +163,14 @@ export const useTreeProps = declarePropType({
   /**
    * 同 `n-virtual-scroller` 的 `buffer`
    * 如果 `maxHeight` 设置了 `calc` 或 `var` 或带百分比的字符串，需要特别指定这个值
-   * @version 2.7.0
+    * @en Configuration for virtual scroll buffer.
    */
   virtualScrollBuffer: {
     type: Number,
   },
   /**
    * 所有有 `tooltip` 的地方，在悬浮后延迟多少毫秒显示 `tooltip`
-   * @version 2.3.5
+    * @en Configuration for tooltip show after.
    */
   tooltipShowAfter: {
     type: Number,
@@ -172,7 +178,7 @@ export const useTreeProps = declarePropType({
   },
   /**
    * 所有有 `tooltip` 的地方，在显示后延迟多少毫秒移除 `tooltip`
-   * @version 2.3.5
+    * @en Configuration for tooltip hide after.
    */
   tooltipHideAfter: {
     type: Number,
@@ -180,12 +186,14 @@ export const useTreeProps = declarePropType({
   },
   /**
    * 展开的节点
+    * @en Configuration for expand values.
    */
   expandValues: {
     type: Array as PropType<Array<string | number>>,
   },
   /**
    * 折叠时 `icon`
+    * @en Configuration for fold icon.
    */
   foldIcon: {
     type: IconPropType,
@@ -194,12 +202,14 @@ export const useTreeProps = declarePropType({
   /**
    * 展开时 `icon`
    * 如果希望在切换展开折叠时，使用动画顺时针旋转 `90°`，则此处留空即可
+    * @en Configuration for expand icon.
    */
   expandIcon: {
     type: IconPropType,
   },
   /**
    * 是否在点击节点的时候展开或者收缩节点，为 false 时，则只有点箭头图标的时候才会展开或者收缩节点
+    * @en Configuration for expand on click node.
    */
   expandOnClickNode: {
     type: Boolean,
@@ -207,13 +217,14 @@ export const useTreeProps = declarePropType({
   },
   /**
    * 前缀 `icon`
-   * @version 2.3.5 增加 `svg icon` 对象支持
+    * @en Configuration for prefix icon.
    */
   prefixIcon: {
     type: IconNullablePropType,
   },
   /**
    * 是否严格的遵循父子不互相关联的做法
+    * @en Configuration for check strictly.
    */
   checkStrictly: {
     type: Boolean,
@@ -221,6 +232,7 @@ export const useTreeProps = declarePropType({
   },
   /**
    * 是否是多选
+    * @en Configuration for multiple.
    */
   multiple: {
     type: Boolean,
@@ -228,6 +240,7 @@ export const useTreeProps = declarePropType({
   },
   /**
    * 多选上限
+    * @en Configuration for multiple limit.
    */
   multipleLimit: {
     type: Number,
@@ -235,6 +248,7 @@ export const useTreeProps = declarePropType({
   },
   /**
    * 选中的树节点
+    * @en Configuration for selected values.
    */
   selectedValues: {
     type: Array as PropType<Array<string | number>>,
@@ -242,6 +256,7 @@ export const useTreeProps = declarePropType({
   /**
    * 是否在点击节点时选中节点
    * 此配置仅影响多选——只有在点击复选框时才会选中节点
+    * @en Configuration for check on click node.
    */
   checkOnClickNode: {
     type: Boolean,
@@ -250,7 +265,7 @@ export const useTreeProps = declarePropType({
   /**
    * 对于多选：是否在点击叶子节点时进行选择，任意有子级的节点点击仍受 `checkOnClickNode` 控制
    * 对于单选：只有在 `showRadio = true` 时，此配置才有效，否则无论如何都会点击选中
-   * @version 2.3.5
+    * @en Configuration for check on click leaf.
    */
   checkOnClickLeaf: {
     type: Boolean,
@@ -258,7 +273,7 @@ export const useTreeProps = declarePropType({
   },
   /**
    * 选中强调样式
-   * @version 2.0.5
+    * @en Configuration for stress.
    */
   stress: {
     type: Boolean,
@@ -267,7 +282,7 @@ export const useTreeProps = declarePropType({
   /**
    * 在过滤结果为空时，展示的文字
    * 默认使用国际化
-   * @version 2.3.5
+    * @en Configuration for empty text.
    */
   emptyText: {
     type: String,
@@ -275,19 +290,21 @@ export const useTreeProps = declarePropType({
   /**
    * 动态加载数据方法
    * @deprecated dynamicLoad
+    * @en Configuration for dynamic load data.
    */
   dynamicLoadData: {
     type: Function as PropType<HTreeDynamicLoadMethod>,
   },
   /**
    * 动态加载数据方法
-   * @version 2.3.5
+    * @en Configuration for dynamic load.
    */
   dynamicLoad: {
     type: Function as PropType<HTreeDynamicLoadMethod>,
   },
   /**
    * 是否默认展开全部
+    * @en Configuration for is default expand all.
    */
   isDefaultExpandAll: {
     type: Boolean,
@@ -295,6 +312,7 @@ export const useTreeProps = declarePropType({
   },
   /**
    * 展开子节点的时候是否默认展开父节点
+    * @en Configuration for is default expand parent.
    */
   isDefaultExpandParent: {
     type: Boolean,
@@ -302,24 +320,28 @@ export const useTreeProps = declarePropType({
   },
   /**
    * 根节点 `class` 类名
+    * @en Configuration for root class name.
    */
   rootClassName: {
     type: String,
   },
   /**
    * 根节点 `style` 对象
+    * @en Configuration for root style.
    */
   rootStyle: {
     type: Object as PropType<CSSProperties>,
   },
   /**
    * 过滤输入框 `placeholder`
+    * @en Configuration for search input placeholder.
    */
   searchInputPlaceholder: {
     type: String,
   },
   /**
    * 相邻级节点间的水平缩进，单位为像素
+    * @en Configuration for indent.
    */
   indent: {
     type: Number,
@@ -327,6 +349,7 @@ export const useTreeProps = declarePropType({
   },
   /**
    * 是否显示 tooltip
+    * @en Configuration for tooltip.
    */
   tooltip: {
     type: Boolean,
@@ -334,6 +357,7 @@ export const useTreeProps = declarePropType({
   },
   /**
    * 禁用状态下是否可以通过父节点的选中改变禁用节点，默认状态下不受父节点影响
+    * @en Configuration for parent effect disabled child.
    */
   parentEffectDisabledChild: {
     type: Boolean,
@@ -342,6 +366,7 @@ export const useTreeProps = declarePropType({
   /**
    * 节点前是否添加 `Checkbox` 复选框，单选场景下默认没有，多选场景下默认添加
    * @deprecated showCheckbox/showRadio
+    * @en Configuration for checkable.
    */
   checkable: {
     type: Boolean,
@@ -349,7 +374,7 @@ export const useTreeProps = declarePropType({
   },
   /**
    * 多选时是否使用 `checkbox` 组件
-   * @version 2.3.5
+    * @en Configuration for show checkbox.
    */
   showCheckbox: {
     type: Boolean,
@@ -357,7 +382,7 @@ export const useTreeProps = declarePropType({
   },
   /**
    * 单选时是否使用 `radio` 组件
-   * @version 2.3.5
+    * @en Configuration for show radio.
    */
   showRadio: {
     type: Boolean,
@@ -365,7 +390,7 @@ export const useTreeProps = declarePropType({
   },
   /**
    * 是否允许拖拽排序
-   * @version 2.3.5
+    * @en Configuration for draggable.
    */
   draggable: {
     type: Boolean,
@@ -374,7 +399,7 @@ export const useTreeProps = declarePropType({
   /**
    * 拖拽的 `icon`
    * 如果不需要则设置 `false`
-   * @version 2.3.5
+    * @en Configuration for draggable icon.
    */
   draggableIcon: {
     type: IconMaybeFalsyPropType,
@@ -383,7 +408,7 @@ export const useTreeProps = declarePropType({
   /**
    * 不允许拖拽的 `icon`
    * 在树数据里设置了 `draggable: false` 时会显示此图标
-   * @version latest
+    * @en Configuration for undraggable icon.
    */
   undraggableIcon: {
     type: IconMaybeFalsyPropType,
@@ -392,7 +417,7 @@ export const useTreeProps = declarePropType({
   /**
    * 拖拽图标是否始终显示
    * 默认只有在鼠标悬浮在节点上时显示
-   * @version 2.12.10
+    * @en Configuration for draggable icon always visible.
    */
   draggableIconAlwaysVisible: {
     type: Boolean,
@@ -400,7 +425,7 @@ export const useTreeProps = declarePropType({
   },
   /**
    * 是否只能在拖拽图标上拖拽
-   * @version 2.3.5
+    * @en Configuration for drag on handler.
    */
   dragOnHandler: {
     type: Boolean,
@@ -408,7 +433,7 @@ export const useTreeProps = declarePropType({
   },
   /**
    * 是否允许拖拽到叶子节点上并创建子级
-   * @version 2.3.5
+    * @en Configuration for drag to leaf.
    */
   dragToLeaf: {
     type: Boolean,
@@ -417,7 +442,6 @@ export const useTreeProps = declarePropType({
   // /**
   //  * 是否允许更改拖拽节点的父节点
   //  * 即指允许在该节点的父节点下进行排序
-  //  * @version 2.12.10
   //  */
   // dragToDifferentParent: {
   //   type: Boolean,
@@ -429,7 +453,7 @@ export const useTreeProps = declarePropType({
    * `current`: 代表当前移动的节点
    * `target`: 代表移动目标，确认后会移动到目标子级下。如果为 `null` ，则代表根节点
    * `prev`: 在确认后，会移动到该节点之后。如果为 `null`，则代表会移动到 `target` 下的第一个节点
-   * @version 2.3.5
+    * @en Configuration for before drop.
    */
   beforeDrop: {
     type: Function as PropType<
@@ -442,7 +466,7 @@ export const useTreeProps = declarePropType({
   },
   /**
    * 是否显示连线
-   * @version 2.12.4
+    * @en Configuration for show line.
    */
   showLine: {
     type: Boolean,
@@ -450,7 +474,7 @@ export const useTreeProps = declarePropType({
   },
   /**
    * 是否在开启虚拟滚动时，允许子元素撑开容器
-   * @version 2.12.5
+    * @en Configuration for expand wrapper by children.
    */
   expandWrapperByChildren: {
     type: Boolean,
@@ -461,6 +485,7 @@ export const useTreeProps = declarePropType({
 export const useTreeItemProps = declarePropType({
   /**
    * 子节点数据
+    * @en Configuration for value.
    */
   value: {
     type: Object as PropType<HTreeExtendsData>,
@@ -468,6 +493,7 @@ export const useTreeItemProps = declarePropType({
   },
   /**
    * 相邻级节点间的水平缩进
+    * @en Configuration for indent.
    */
   indent: {
     type: Number,
@@ -477,6 +503,7 @@ export const useTreeItemProps = declarePropType({
    * @invisible
    * 是否是影子节点
    * 用于拖拽
+    * @en Configuration for shadow.
    */
   shadow: {
     type: Boolean,

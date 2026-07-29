@@ -18,6 +18,7 @@ import SpaceItem from './SpaceItem';
 export default defineComponent({
   name: `${useNamespace()}Space`,
   desc: '设置元素之间的间距',
+  descLocales: { en: 'Space and space-item layout helpers.' },
   inheritAttrs: false,
   props: useSpaceProps,
   emits: useSpaceEmits,

@@ -39,6 +39,7 @@ export default defineDirective<HTMLElement, typeof useInfiniteScrollOptions>({
   name: 'infinite-scroll',
   options: useInfiniteScrollOptions,
   desc: '用于处理元素在滚动到底部后的执行动作和执行时机',
+  descLocales: { en: 'Handle actions triggered when an element is scrolled to the bottom.' },
   mounted: scrollMethod,
   updated: scrollMethod,
   deep: true, //监听对象内部的属性变化

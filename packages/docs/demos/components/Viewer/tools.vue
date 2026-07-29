@@ -5,12 +5,12 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import type { NViewerSource, NViewerCustomToolItem } from '@aurora/horizon-web';
+import type { HViewerSource, HViewerCustomToolItem } from '@aurora/horizon-web';
 export default defineComponent({
   setup() {
-    const imagesRef = ref<NViewerSource[]>([]);
+    const imagesRef = ref<HViewerSource[]>([]);
     const generateImages = (count: number) => {
-      const list = [] as NViewerSource[];
+      const list = [] as HViewerSource[];
       const base = Math.floor(Math.random() * 60) + 10;
       for (let i = 0; i < count; i++) {
         list.push({
@@ -44,7 +44,7 @@ export default defineComponent({
         handler(url: string) {
           console.info('Click info button', url);
         },
-      } as NViewerCustomToolItem,
+      } as HViewerCustomToolItem,
     ];
     return {
       visibleRef,

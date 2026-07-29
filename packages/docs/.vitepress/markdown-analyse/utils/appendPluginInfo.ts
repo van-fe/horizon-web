@@ -31,10 +31,8 @@ export default function (
       break;
   }
 
-  return `<h-link anchor="${
-    currMode?.name
-  }" anchor-position="left" type="text" class="no-underline h1">${showName}</h-link>
-<div class="description">${currMode?.desc}</div>`
+  return `<h1>${showName}</h1>
+<p class="description">${currMode?.desc}</p>`
     .replace(/\\n\s*/g, '<br>')
     .replace(/`(.*?)`/g, '<code>$1</code>')
     .replace(/\[(.*?)]\((.*?)\)/g, '<h-link href="$2" target="_blank">$1</h-link>');

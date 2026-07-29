@@ -29,7 +29,9 @@ export default function (
     context.emit('visibleChange', val);
   });
 
-  /** provides **/
+  /** provides *
+   * @en Description for provide.
+ */
   provide(HTreeSelectPopperVisibleInjectKey, popperVisible);
 
   return {

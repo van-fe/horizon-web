@@ -24,9 +24,9 @@
       <h-space size="4" block direction="vertical">
         <h-space size="4">
           <div class="text-subtitle-1">Great declaration</div>
-          <h-tag :clickable="false">NIO</h-tag>
+          <h-tag :clickable="false">Demo</h-tag>
         </h-space>
-        <div class="text-caption-1">Make NIO great again</div>
+        <div class="text-caption-1">Make Demo great again</div>
       </h-space>
     </template>
 

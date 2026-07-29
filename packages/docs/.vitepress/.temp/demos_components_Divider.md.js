@@ -1,0 +1,40 @@
+import { resolveComponent, useSSRContext } from "vue/dist/vue.esm-bundler.js";
+import { ssrRenderAttrs, ssrRenderComponent, ssrRenderStyle } from "vue/server-renderer";
+import { _ as _export_sfc } from "./plugin-vue_export-helper.1tPrXgE0.js";
+const __pageData = JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"demos/components/Divider.md","filePath":"zh/demos/components/Divider.md"}');
+const _sfc_main = { name: "demos/components/Divider.md" };
+function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  const _component_demo_block = resolveComponent("demo-block");
+  _push(`<div${ssrRenderAttrs(_attrs)}><h1>Divider</h1><p class="description">分割线用于分割内容<br>有两种颜色的分割线，通常使用常规分割线，特殊情况下，如分割内部的元素或区块，可使用辅助分割线（次要分割线）</p><h2 id="基础用法" tabindex="-1">基础用法 <a class="header-anchor" href="#基础用法" aria-label="Permalink to &quot;基础用法&quot;">​</a></h2>`);
+  _push(ssrRenderComponent(_component_demo_block, {
+    source: '<template>\n  <h-row :gutter="10" align="middle">\n    <h-col :span="4">\n      Default\n    </h-col>\n    <h-col :span="20">\n      <h-divider />\n    </h-col>\n  </h-row>\n  <h-row :gutter="10" align="middle">\n    <h-col :span="4">\n      Strong\n    </h-col>\n    <h-col :span="20">\n      <h-divider type="strong" />\n    </h-col>\n  </h-row>\n</template>\n',
+    path: "demos/components/Divider/basic.vue"
+  }, null, _parent));
+  _push(`<h2 id="垂直分割线" tabindex="-1">垂直分割线 <a class="header-anchor" href="#垂直分割线" aria-label="Permalink to &quot;垂直分割线&quot;">​</a></h2>`);
+  _push(ssrRenderComponent(_component_demo_block, {
+    source: '<template>\n  <div>\n    <span>Add</span>\n    <h-divider direction="vertical" />\n    <span>Edit</span>\n    <h-divider direction="vertical" />\n    <span>Delete</span>\n  </div>\n</template>\n',
+    path: "demos/components/Divider/vertical.vue"
+  }, null, _parent));
+  _push(`<h2 id="线的样式" tabindex="-1">线的样式 <a class="header-anchor" href="#线的样式" aria-label="Permalink to &quot;线的样式&quot;">​</a></h2><p>通过配置 <code>line-style</code>，可以改变线的类型</p>`);
+  _push(ssrRenderComponent(_component_demo_block, {
+    source: '<template>\n  <p>↓ solid(default)</p>\n  <h-row>\n    <h-col :span="12"><h-divider /></h-col>\n    <h-col :span="12"><h-divider direction="vertical" /></h-col>\n  </h-row>\n  <p>↓ dashed</p>\n  <h-row>\n    <h-col :span="12"><h-divider line-style="dashed" /></h-col>\n    <h-col :span="12"><h-divider line-style="dashed" direction="vertical" /></h-col>\n  </h-row>\n  <p>↓ dotted</p>\n  <h-row>\n    <h-col :span="12"><h-divider line-style="dotted" /></h-col>\n    <h-col :span="12"><h-divider line-style="dotted" direction="vertical" /></h-col>\n  </h-row>\n</template>\n',
+    path: "demos/components/Divider/line-style.vue"
+  }, null, _parent));
+  _push(`<h2 id="插入文字" tabindex="-1">插入文字 <a class="header-anchor" href="#插入文字" aria-label="Permalink to &quot;插入文字&quot;">​</a></h2><p>使用 <code>slots.default</code> ，可以调配文字插槽。配合 <code>props.titlePlacement</code>，控制文字位置</p>`);
+  _push(ssrRenderComponent(_component_demo_block, {
+    source: '<template>\n  <h-divider title-placement="left">\n    Left Title\n  </h-divider>\n  <p>\n    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis augue nunc, pharetra in eleifend tincidunt, fermentum eu dui. Integer ornare arcu non laoreet rhoncus. Vestibulum mattis fringilla porta. Donec nisl lectus, sagittis ac nisi in, varius fringilla ante. Nulla non interdum velit. Maecenas scelerisque iaculis justo quis dignissim. Fusce cursus, augue ac ultricies euismod, tellus eros posuere libero, a cursus ante dui vitae risus. Quisque ornare turpis eget mi lacinia, vitae tempor felis pulvinar. Mauris lorem dolor, rhoncus vitae dapibus eget, finibus nec turpis. Vestibulum a neque ac felis congue pharetra. Praesent ornare ut augue eget lobortis. Duis elementum lobortis dolor ut gravida. Nunc at justo sed massa aliquam tempor nec et justo. Suspendisse efficitur dictum nibh, sed pharetra tellus fermentum sed.\n  </p>\n  <h-divider>\n    Center Title\n  </h-divider>\n  <p>\n    Fusce imperdiet nisl eget sodales ullamcorper. Duis accumsan diam et dignissim gravida. Donec molestie mauris mi, non rhoncus sem feugiat nec. Aliquam maximus ut metus a dictum. Etiam commodo vel orci sit amet luctus. Etiam vitae volutpat lacus. Curabitur euismod venenatis erat sollicitudin vulputate. Donec tellus enim, rutrum ac nibh sed, ullamcorper vehicula odio. Vivamus luctus magna ac metus tempor rhoncus. Maecenas a lorem sed elit faucibus bibendum sed a neque. In quis nibh sed sapien condimentum faucibus vel vel dolor. Aliquam id facilisis turpis. Sed at ex a arcu dictum congue sit amet eu nisi. Donec felis ligula, egestas sed mi non, sagittis hendrerit tellus. Proin a ultricies sapien, non viverra est. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.\n  </p>\n  <h-divider title-placement="right">\n    Right Title\n  </h-divider>\n  <p>\n    Donec in sapien mollis, tincidunt lectus ut, ultrices neque. Maecenas vestibulum facilisis sagittis. Sed vehicula laoreet lectus. Ut tempus convallis urna, non pharetra nisi pulvinar a. Aliquam cursus consequat maximus. Aenean tempus metus vulputate tortor lacinia auctor. Mauris malesuada magna nec mauris condimentum, sit amet bibendum mi venenatis. Cras magna sem, dictum vitae est et, dapibus imperdiet odio. Donec aliquam libero vitae consectetur commodo. In eu lorem eu dui tincidunt bibendum id in lacus. Ut non placerat ex, ut dictum massa. Morbi sed lorem augue. Nunc et pulvinar odio, nec maximus nisl. Aenean dapibus malesuada massa quis vestibulum. Donec eleifend vestibulum posuere. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.\n  </p>\n</template>\n',
+    path: "demos/components/Divider/slots.vue"
+  }, null, _parent));
+  _push(`<h2>Divider Api</h2><h3>Divider Props</h3><table class="md-table"><thead><tr><th>属性</th><th>说明</th><th>类型</th><th style="${ssrRenderStyle({ "min-width": "50px" })}" class="text-center">必填</th><th>默认值</th></tr></thead><tbody><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">type</td><td>分割线类型<br><code>primary</code> 与 <code>default</code> 相同<br><code>secondary</code> 与 <code>strong</code> 相同</td><td><code>&#39;default&#39; | &#39;strong&#39; | &#39;primary&#39; | &#39;secondary&#39;</code></td><td class="text-center">否</td><td>&#39;default&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">direction</td><td>分割线方向<br>在插入文字时，<code>vertical</code> 值会被忽视</td><td><code>&#39;horizontal&#39; | &#39;vertical&#39;</code></td><td class="text-center">否</td><td>&#39;horizontal&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">line-style</td><td>线的类型</td><td><code>&#39;solid&#39; | &#39;dashed&#39; | &#39;dotted&#39;</code></td><td class="text-center">否</td><td>&#39;solid&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">title-placement</td><td>标题位置</td><td><code>&#39;left&#39; | &#39;center&#39; | &#39;right&#39;</code></td><td class="text-center">否</td><td>&#39;center&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">vertical-margin</td><td>上下间距</td><td><code>string | number</code></td><td class="text-center">否</td><td>cssVariable(&#39;divider-margin--vertical&#39;)</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">horizontal-margin</td><td>左右间距</td><td><code>string | number</code></td><td class="text-center">否</td><td>cssVariable(&#39;divider-margin--horizontal&#39;)</td></tr></tbody></table></div>`);
+}
+const _sfc_setup = _sfc_main.setup;
+_sfc_main.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("zh/demos/components/Divider.md");
+  return _sfc_setup ? _sfc_setup(props, ctx) : void 0;
+};
+const Divider = /* @__PURE__ */ _export_sfc(_sfc_main, [["ssrRender", _sfc_ssrRender]]);
+export {
+  __pageData,
+  Divider as default
+};

@@ -112,10 +112,10 @@
 <script setup lang="ts">
 import {  ref } from 'vue';
 import { AIcon } from '@aurora/icon';
-import { $confirm, NMenu } from '@aurora/horizon-web';
+import { $confirm, HMenu } from '@aurora/horizon-web';
 import type { MenuItemProps, SubMenuProps } from '@aurora/horizon-web';
 
-const menuRef = ref<typeof NMenu | null>(null);
+const menuRef = ref<typeof HMenu | null>(null);
 const collapse = ref(false);
 const selectedValue = ref('3-1-1');
 const onSelected = (value: string, values: Array<MenuItemProps | SubMenuProps>, current: MenuItemProps | SubMenuProps) => {

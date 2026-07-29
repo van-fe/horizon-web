@@ -1,0 +1,4 @@
+const vertical_aliquot_filled = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 3C21 3.82842 20.3284 4.49999 19.5 4.49999L4.49999 4.5C3.67157 4.5 3 3.82843 3 3.00001L21 3Z" fill="currentColor"/><path d="M21 21L3 21C3 20.1716 3.67157 19.5 4.49999 19.5L19.5 19.5C20.3284 19.5 21 20.1716 21 21Z" fill="currentColor"/><path d="M6 10.75L6 13.25C6 13.6642 6.33579 14 6.75 14L17.25 14C17.6642 14 18 13.6642 18 13.25V10.75C18 10.3358 17.6642 10 17.25 10L6.75 10C6.33579 10 6 10.3358 6 10.75Z" fill="currentColor"/></svg>';
+export {
+  vertical_aliquot_filled as default
+};

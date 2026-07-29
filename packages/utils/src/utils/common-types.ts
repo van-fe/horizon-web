@@ -2,6 +2,7 @@ export interface ApiGeneratorExportedComponent {
   dirName: string;
   name: string;
   desc: string;
+  descLocales?: Record<string, string>;
   mainExportComponentName: string;
   entranceFilePath: string;
   componentDefinedFilePath: string;
@@ -47,6 +48,7 @@ export enum ApiGeneratorAnalysedBaseType {
   Object = 'object',
   String = 'string',
   Number = 'number',
+  Boolean = 'boolean',
   Array = 'array',
   Unknown = 'unknown',
 }
@@ -55,6 +57,7 @@ export interface ApiGeneratorAnalysedComponentDetail {
   name: string; // without prefix
   parentComponentName: string;
   desc: string;
+  descLocales?: Record<string, string>;
   propsVariableName: string;
   props: ApiGeneratorAnalysedPropType[];
   emitsVariableName: string;
@@ -68,6 +71,7 @@ export interface ApiGeneratorAnalysedComponentDetail {
 export interface ApiGeneratorAnalysedPropType {
   name: string;
   desc: string;
+  descLocales?: Record<string, string>;
   type: string;
   baseType: string;
   options: (string | number)[];
@@ -81,12 +85,14 @@ export interface ApiGeneratorAnalysedEmitParamType {
   field: string;
   value: string;
   desc: string;
+  descLocales?: Record<string, string>;
 }
 
 export interface ApiGeneratorAnalysedEmitType {
   name: string;
   params: ApiGeneratorAnalysedEmitParamType[];
   desc: string;
+  descLocales?: Record<string, string>;
   deprecated?: string;
 }
 
@@ -94,12 +100,14 @@ export interface ApiGeneratorAnalysedSlotParamType {
   field: string;
   value: string;
   desc: string;
+  descLocales?: Record<string, string>;
 }
 
 export interface ApiGeneratorAnalysedSlotType {
   name: string;
   type: string;
   desc: string;
+  descLocales?: Record<string, string>;
   deprecated?: string;
   params: ApiGeneratorAnalysedSlotParamType[];
 }
@@ -108,6 +116,7 @@ export interface ApiGeneratorAnalysedExposeParamType {
   field: string;
   value: string;
   desc: string;
+  descLocales?: Record<string, string>;
   nativeType: ApiGeneratorAnalysedBaseType;
   params: ApiGeneratorAnalysedExposeParamType[];
   returns: ApiGeneratorAnalysedExposeReturnType[];
@@ -119,6 +128,7 @@ export interface ApiGeneratorAnalysedExposeReturnType {
   field: string;
   value: string;
   desc: string;
+  descLocales?: Record<string, string>;
   nativeType: ApiGeneratorAnalysedBaseType;
   params: ApiGeneratorAnalysedExposeParamType[];
 }
@@ -126,6 +136,7 @@ export interface ApiGeneratorAnalysedExposeReturnType {
 export interface ApiGeneratorAnalysedExposeType {
   name: string;
   desc: string;
+  descLocales?: Record<string, string>;
   type: string;
   nativeType: ApiGeneratorAnalysedBaseType;
   deprecated?: string;
@@ -138,6 +149,7 @@ export interface ApiGeneratorAnalysedExposeType {
 export interface ApiGeneratorAnalysedDirectiveDetail {
   name: string; // without prefix
   desc: string;
+  descLocales?: Record<string, string>;
   optionsVariableName: string;
   options: ApiGeneratorAnalysedOptionType[];
 }
@@ -149,6 +161,7 @@ export interface ApiGeneratorAnalysedOptionParamType extends ApiGeneratorAnalyse
 export interface ApiGeneratorAnalysedOptionType {
   name: string;
   desc: string;
+  descLocales?: Record<string, string>;
   type: string;
   baseType: string;
   options: (string | number)[];
@@ -179,6 +192,7 @@ export interface ApiGeneratorAnalysedMethodType extends ApiGeneratorAnalysedExpo
 export interface ApiGeneratorAnalysedMethodDetail {
   name: string;
   desc: string;
+  descLocales?: Record<string, string>;
   dirName: string;
   optionsVariableName: string;
   methodsVariableName: string;

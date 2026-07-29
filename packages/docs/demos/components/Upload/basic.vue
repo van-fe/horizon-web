@@ -45,7 +45,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import type { NUploadRawFileType, UploadProps, NUploadFileType } from '@aurora/horizon-web';
+import type { HUploadRawFileType, UploadProps, HUploadFileType } from '@aurora/horizon-web';
 import type { Data } from '@aurora/utils';
 
 const actionURL = new URL('/upload-mock.json', import.meta.url).href;
@@ -54,48 +54,48 @@ const size = ref<Exclude<UploadProps['size'], undefined>>('medium');
 const fileItemSize = ref<Exclude<UploadProps['fileItemSize'], undefined>>('medium');
 const showUploader = ref(true);
 
-const modelValue = ref<NUploadRawFileType>({
+const modelValue = ref<HUploadRawFileType>({
   name: 'background.jpg',
-  url: 'https://cdn-public-dev.nio.com/aurora-resource/5cBiDhad9L9aZ3nAml1m8/23244a6b-69c3-4465-bbd6-5db4b476abf4.jpg?imageView2/0/h/198/ignore-error/1',
+  url: 'https://cdn-public-dev.example.com/aurora-resource/5cBiDhad9L9aZ3nAml1m8/23244a6b-69c3-4465-bbd6-5db4b476abf4.jpg?imageView2/0/h/198/ignore-error/1',
 });
 
-function handleChange(file: NUploadFileType, response: Data) {
+function handleChange(file: HUploadFileType, response: Data) {
   console.info('change:', file, response);
 }
 
-function onAddFile(file: NUploadFileType) {
+function onAddFile(file: HUploadFileType) {
   console.info('Add File: ', file);
 }
 
-function onUploadFile(file: NUploadFileType) {
+function onUploadFile(file: HUploadFileType) {
   console.info('Upload File: ', file);
 }
 
-function onRemoveFile(file: NUploadFileType) {
+function onRemoveFile(file: HUploadFileType) {
   console.info('Remove File: ', file);
 }
 
-function onUploadingFile(file: NUploadFileType, process: number, response: Data) {
+function onUploadingFile(file: HUploadFileType, process: number, response: Data) {
   console.info('Uploading File: ', file, process, response);
 }
 
-function onUploadedFile(file: NUploadFileType, response: Data) {
+function onUploadedFile(file: HUploadFileType, response: Data) {
   console.info('Uploaded File: ', file, response);
 }
 
-function onPauseFile(file: NUploadFileType) {
+function onPauseFile(file: HUploadFileType) {
   console.info('Pause File: ', file);
 }
 
-function onContinueFile(file: NUploadFileType) {
+function onContinueFile(file: HUploadFileType) {
   console.info('Continue File: ', file);
 }
 
-function onRetryFile(file: NUploadFileType) {
+function onRetryFile(file: HUploadFileType) {
   console.info('Retry File: ', file);
 }
 
-function onFailFile(file: NUploadFileType, reason: string, response: Data) {
+function onFailFile(file: HUploadFileType, reason: string, response: Data) {
   console.info('Fail File: ', file, reason, response);
 }
 </script>

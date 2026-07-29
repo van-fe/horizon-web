@@ -3,7 +3,7 @@
     <h-image
       v-for="size in sizes"
       :key="size"
-      src="https://www.nio.cn/cdn-static/mynio/nextjs/images/4124399E5BB45E85CBAFDE6307297F4A045845F4/home/es7-homepage-hero-desktop.jpg"
+      src="https://www.example.com/cdn-static/mydemo/nextjs/images/4124399E5BB45E85CBAFDE6307297F4A045845F4/home/es7-homepage-hero-desktop.jpg"
       :show-actions="true"
       :actions-list="actions"
       class="mr-2"
@@ -17,11 +17,11 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import type { NImageAction } from '@aurora/horizon-web';
+import type { HImageAction } from '@aurora/horizon-web';
 export default defineComponent({
   setup() {
     const sizes = [150, 80, 40];
-    const actions = ref<NImageAction[]>([]);
+    const actions = ref<HImageAction[]>([]);
     const imgLoad = () => {
       actions.value = [
         {

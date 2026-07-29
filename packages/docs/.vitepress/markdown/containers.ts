@@ -9,17 +9,40 @@ export default (md: MarkdownIt) => {
     validate(params: string) {
       return params.trim().match(/^demo\s*(.*)$/);
     },
-    render(tokens: Token[], idx: number) {
+    render(tokens: Token[], idx: number, _options: unknown, env: Record<string, unknown> = {}) {
       const m = tokens[idx].info.trim().match(/^demo\s*(.*)\s*:::$/);
 
       if (tokens[idx].nesting === 1) {
         const demoPath = m?.[1]?.trim() || '';
-        const fullPath = path.resolve(__dirname, '../../demos/', demoPath);
+        const docsRoot = path.resolve(__dirname, '../../');
+        const markdownPath = typeof env.path === 'string' ? env.path : '';
+        const localPath = markdownPath
+          ? path.resolve(path.dirname(markdownPath), demoPath)
+          : '';
+        let fullPath = demoPath.startsWith('./') || demoPath.startsWith('../')
+          ? localPath
+          : path.resolve(docsRoot, 'demos', demoPath);
+
+        // VitePress may expose `env.path` without the locale directory. Try
+        // the localized source trees when the first relative resolution fails.
+        if (!fs.existsSync(fullPath) && localPath) {
+          const relativePath = path.relative(docsRoot, localPath);
+          for (const locale of ['zh', 'en']) {
+            const localizedPath = path.resolve(docsRoot, locale, relativePath);
+            if (fs.existsSync(localizedPath)) {
+              fullPath = localizedPath;
+              break;
+            }
+          }
+        }
+
+        if (!fullPath || !fs.existsSync(fullPath)) {
+          throw new Error(`Demo file not found: ${demoPath} (from ${markdownPath || 'docs root'})`);
+        }
+
         const content = fs.readFileSync(fullPath, 'utf-8');
         
         // 计算相对于 packages/docs 的路径，用于动态导入
-        // VitePress 会从项目根目录解析，所以需要相对于 packages/docs
-        const docsRoot = path.resolve(__dirname, '../../');
         const relativePath = path.relative(docsRoot, fullPath).replace(/\\/g, '/');
 
         return `<demo-block source="${md.utils.escapeHtml(content)}" path="${relativePath}" />`;

@@ -18,6 +18,7 @@ import HTransition from '~/components/Transition/src/Transition';
 export default defineComponent({
   name: `${useNamespace()}Image`,
   desc: '功能强大的图片组件，应该能满足你对图片的一切需求',
+  descLocales: { en: 'Image display and preview component.' },
   components: {
     IconLogo,
     IconPictureError,

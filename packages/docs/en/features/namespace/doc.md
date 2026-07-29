@@ -4,9 +4,9 @@ The default namespace provided by horizon-web is `n`. In special environments su
 
 :::tip This feature has been supported since 2.0.0 :::
 
-## Modify Using NApplication
+## Modify Using HApplication
 
-You can use `NApplication`'s `props.namespace` to modify the namespace
+You can use `HApplication`'s `props.namespace` to modify the namespace
 
 ```vue
 <template>
@@ -18,7 +18,7 @@ You can use `NApplication`'s `props.namespace` to modify the namespace
 
 ## Modify Using setNamespace
 
-If you don't use `NApplication`, you can use the `setNamespace` method to modify.
+If you don't use `HApplication`, you can use the `setNamespace` method to modify.
 
 You need to ensure that `setNamespace` runs before calling `createApp`.
 

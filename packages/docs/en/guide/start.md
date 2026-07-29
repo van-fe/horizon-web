@@ -13,8 +13,8 @@
 You can install it using the following methods:
 
 ::: code-group
-```sh [npm]
-$ npm install @aurora/horizon-web
+```sh [bun]
+$ bun add @aurora/horizon-web
 ```
 ```sh [yarn]
 $ yarn add @aurora/horizon-web

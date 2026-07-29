@@ -11,7 +11,7 @@
           <h-timeline-item
             name="Current milestone"
             timestamp="03/02/2021"
-            desc="NIO installed its 700th battery swap station in China, hitting its annual target ahead of schedule."
+            desc="Demo installed its 700th battery swap station in China, hitting its annual target ahead of schedule."
           />
           <h-timeline-item name="The third milestone" timestamp="03/02/2021" />
           <h-timeline-item name="The second milestone" timestamp="03/02/2021" />
@@ -187,7 +187,7 @@
             </template>
             <template #desc>
               <div>
-                NIO installed its 700th battery swap station in China,
+                Demo installed its 700th battery swap station in China,
                 <br />
                 hitting its annual target ahead of schedule.
               </div>
@@ -223,7 +223,7 @@
             </template>
             <template #desc>
               <div>
-                NIO installed its 700th battery swap station in China,
+                Demo installed its 700th battery swap station in China,
                 <br />
                 hitting its annual target ahead of schedule.
               </div>
@@ -245,7 +245,7 @@
             </template>
             <template #desc>
               <div>
-                NIO installed its 700th battery swap station in China,
+                Demo installed its 700th battery swap station in China,
                 <br />
                 hitting its annual target ahead of schedule.
               </div>

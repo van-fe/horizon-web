@@ -14,6 +14,7 @@ function analysisPropertyAssignment(
 
   const res: ApiGeneratorAnalysedSlotType = {
     desc: jsDoc.comment,
+    descLocales: jsDoc.locales,
     name: property.getName(),
     type: '',
     params: [],
@@ -31,6 +32,9 @@ function analysisPropertyAssignment(
           field: paramFieldName,
           value: parameter.getLastChild()!.getText(),
           desc: (jsDoc.tags.param || jsDoc.tags.params)?.[paramFieldName] || '',
+          descLocales: jsDoc.tags.paramEn?.[paramFieldName]
+            ? { en: jsDoc.tags.paramEn[paramFieldName] }
+            : undefined,
         });
       }
     });

@@ -12,6 +12,7 @@ export type HSpaceSize =
 export const useSpaceProps = declarePropType({
   /**
    * 将宽度调整为父元素宽度
+    * @en Configuration for block.
    */
   block: {
     type: Boolean,
@@ -19,6 +20,7 @@ export const useSpaceProps = declarePropType({
 
   /**
    * 对齐方式
+    * @en Configuration for align.
    */
   align: {
     type: String as PropType<'start' | 'end' | 'center' | 'baseline'>,
@@ -26,6 +28,7 @@ export const useSpaceProps = declarePropType({
 
   /**
    * 间距大小
+    * @en Configuration for size.
    */
   size: {
     type: [String, Number, Array] as PropType<HSpaceSize>,
@@ -34,6 +37,7 @@ export const useSpaceProps = declarePropType({
 
   /**
    * 间距方向
+    * @en Configuration for direction.
    */
   direction: {
     type: String as PropType<'horizontal' | 'vertical'>,
@@ -42,6 +46,7 @@ export const useSpaceProps = declarePropType({
 
   /**
    * 是否换行，仅在 `type=horizontal` 时有效
+    * @en Configuration for wrap.
    */
   wrap: {
     type: Boolean,
@@ -49,7 +54,7 @@ export const useSpaceProps = declarePropType({
 
   /**
    * 是否转化 Fragment 节点列表
-   * @version 2.7.0
+    * @en Configuration for fragment.
    */
   fragment: {
     type: Boolean,
@@ -58,7 +63,7 @@ export const useSpaceProps = declarePropType({
 
   /**
    * 启用分隔符
-   * @version 2.12.11
+    * @en Configuration for separator.
    */
   separator: {
     type: Boolean,

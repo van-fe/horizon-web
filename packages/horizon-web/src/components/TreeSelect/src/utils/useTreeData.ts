@@ -22,7 +22,9 @@ export default function (
     () => new Map(treeHelper.flattenTreeData.value.map(val => [val._uuid, val])),
   );
 
-  /** watches**/
+  /** watches*
+   * @en Description for watch.
+ */
   watch(
     props.treeData,
     val => {

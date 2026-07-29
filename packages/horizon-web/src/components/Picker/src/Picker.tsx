@@ -32,6 +32,7 @@ import { HScrollbarUpdateDelayInjectKey } from '~/components/Scrollbar/src/utils
 export default defineComponent({
   name: `${useNamespace()}Picker`,
   desc: '所有选择器的公用组件，也可以以此为基础做自定义选择器',
+  descLocales: { en: 'A shared base component for selectors and custom picker implementations.' },
   components: {
     HPopover,
     HPopContent,

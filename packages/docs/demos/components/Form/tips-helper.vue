@@ -85,11 +85,11 @@
 
 <script setup lang="ts">
 import { ref, h } from 'vue';
-import { $message, NFormRule, NFormItemHelper, NFormInstance } from '@aurora/horizon-web';
+import { $message, HFormRule, HFormItemHelper, HFormInstance } from '@aurora/horizon-web';
 
 const helperTheme = ref('light');
 
-const formRef = ref<(HTMLElement & NFormInstance) | null>(null);
+const formRef = ref<(HTMLElement & HFormInstance) | null>(null);
 const formData = ref({
   inputStyle: 'normal',
   username: '',
@@ -112,7 +112,7 @@ const submit = () => {
     });
 };
 
-const rules: Partial<Record<keyof (typeof formData)['value'], NFormRule | NFormRule[]>> = {
+const rules: Partial<Record<keyof (typeof formData)['value'], HFormRule | HFormRule[]>> = {
   username: {
     required: true,
     message: 'Please enter your username',
@@ -139,7 +139,7 @@ const rules: Partial<Record<keyof (typeof formData)['value'], NFormRule | NFormR
   },
 };
 
-const dateHelper: NFormItemHelper = {
+const dateHelper: HFormItemHelper = {
   title: 'Tips',
   content: () => h('div', 'Please pick your wish time which you will be free'),
 };

@@ -19,8 +19,11 @@ const GAP = 32;
 export const NotifyFunctions = {
   /**
    * 关闭当前 `Notification`
+   * @en CloseCurrent Notification
    * @param id 给定的 `Notification.id`
+   * @paramEn id Description: 给定的 Notification.id
    * @param placement
+   * @paramEn placement Notification placement
    */
   close: (id: string, placement: PlacementType): void => {
     const placementInstances = instances[placement];
@@ -49,6 +52,7 @@ export const NotifyFunctions = {
   },
   /**
    * 关闭所有 `Notification`
+   * @en Closeall Notification
    */
   closeAll() {
     for (const list of Object.values(instances)) {

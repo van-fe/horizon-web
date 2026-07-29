@@ -1,5 +1,5 @@
 ## Basic Usage
-Pass to `tree-data` according to the structure of `NTreeData` to generate a tree structure
+Pass to `tree-data` according to the structure of `HTreeData` to generate a tree structure
 
 **Note: `value` in `tree-data` must be unique throughout the entire tree**
 
@@ -106,7 +106,7 @@ If you want to limit the number of user selections in multiple selection, config
 ## Custom Node
 You can customize node rendering through the `treeNodeRender` slot
 
-You can also set `label` to `((option: NTreeData) => VNode)` type when passing in `tree-data` to customize a fixed node. At this time, the priority is higher than the `treeNodeRender` slot
+You can also set `label` to `((option: HTreeData) => VNode)` type when passing in `tree-data` to customize a fixed node. At this time, the priority is higher than the `treeNodeRender` slot
 
 :::demo components/Tree/custom-render.vue :::
 
@@ -117,16 +117,16 @@ In this example, `label` uses `text`, `value` uses `key`, `children` uses `items
 
 **Note: It is forbidden to override fields with original meanings in the new mapping definition. For example, you cannot use `value` as the field mapping of `label`, otherwise it will cause errors**
 
-For `ts` type error issues, you can solve it by declaring the `NTreeExtendsData` type globally (using the fields in the following `demo` as an example):
+For `ts` type error issues, you can solve it by declaring the `HTreeExtendsData` type globally (using the fields in the following `demo` as an example):
 
 ```ts
-import type { NTreeExtendsData } from '@aurora/horizon-web';
+import type { HTreeExtendsData } from '@aurora/horizon-web';
 
 declare module '@aurora/horizon-web' {
-  interface NTreeExtendsData {
+  interface HTreeExtendsData {
     key?: string;
     text?: string;
-    items?: NTreeExtendsData[];
+    items?: HTreeExtendsData[];
   }
 }
 ```

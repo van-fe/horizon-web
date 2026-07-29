@@ -4,6 +4,7 @@ import { declarePropType } from '@aurora/utils';
 export const useInputNumberProps = declarePropType({
   /**
    * 选中项绑定值
+    * @en Configuration for model value.
    */
   modelValue: {
     type: [Number, String, null] as PropType<number | string | null | undefined>,
@@ -11,7 +12,7 @@ export const useInputNumberProps = declarePropType({
   },
   /**
    * 输入框样式
-   * @version 2.4.0
+    * @en Configuration for input style.
    */
   inputStyle: {
     type: String as PropType<'normal' | 'emphasize' | 'no-border'>,
@@ -19,7 +20,7 @@ export const useInputNumberProps = declarePropType({
   },
   /**
    * 最小值
-   * @version 2.0.12 支持 string 类型
+    * @en Configuration for min.
    */
   min: {
     type: [Number, String],
@@ -27,7 +28,7 @@ export const useInputNumberProps = declarePropType({
   },
   /**
    * 最大值
-   * @version 2.0.12 支持 string 类型
+    * @en Configuration for max.
    */
   max: {
     type: [Number, String],
@@ -35,6 +36,7 @@ export const useInputNumberProps = declarePropType({
   },
   /**
    * 步长
+    * @en Configuration for step.
    */
   step: {
     type: Number,
@@ -42,6 +44,7 @@ export const useInputNumberProps = declarePropType({
   },
   /**
    * 是否仅允许输入步长的倍数
+    * @en Configuration for step strictly.
    */
   stepStrictly: {
     type: Boolean,
@@ -49,6 +52,7 @@ export const useInputNumberProps = declarePropType({
   },
   /**
    * 数值精度的位数
+    * @en Configuration for precision.
    */
   precision: {
     type: Number,
@@ -56,6 +60,7 @@ export const useInputNumberProps = declarePropType({
   },
   /**
    * 是否禁用
+    * @en Configuration for disabled.
    */
   disabled: {
     type: Boolean,
@@ -63,6 +68,7 @@ export const useInputNumberProps = declarePropType({
   },
   /**
    * 尺寸
+    * @en Configuration for size.
    */
   size: {
     type: String as PropType<'small' | 'medium' | 'large'>,
@@ -70,6 +76,7 @@ export const useInputNumberProps = declarePropType({
   },
   /**
    * 是否使用控制按钮
+    * @en Configuration for controls.
    */
   controls: {
     type: Boolean,
@@ -77,6 +84,7 @@ export const useInputNumberProps = declarePropType({
   },
   /**
    * 控制按钮的位置
+    * @en Configuration for controls position.
    */
   controlsPosition: {
     type: String as PropType<'between' | 'right'>,
@@ -84,6 +92,7 @@ export const useInputNumberProps = declarePropType({
   },
   /**
    * 原生 `name` 属性
+    * @en Configuration for name.
    */
   name: {
     type: String,
@@ -91,12 +100,14 @@ export const useInputNumberProps = declarePropType({
   },
   /**
    * 输入框 `placeholder`
+    * @en Configuration for placeholder.
    */
   placeholder: {
     type: String,
   },
   /**
    * 是否允许清空
+    * @en Configuration for clearable.
    */
   clearable: {
     type: Boolean,
@@ -105,6 +116,7 @@ export const useInputNumberProps = declarePropType({
   /**
    * 是否只读，原生属性
    * 如果设置为 `true` 则也不会显示 `controls`
+    * @en Configuration for readonly.
    */
   readonly: {
     type: Boolean,
@@ -112,6 +124,7 @@ export const useInputNumberProps = declarePropType({
   },
   /**
    * 是否允许长按
+    * @en Configuration for enable lang press.
    */
   enableLangPress: {
     type: Boolean,
@@ -119,6 +132,7 @@ export const useInputNumberProps = declarePropType({
   },
   /**
    * 长按触发频率，单位ms
+    * @en Configuration for lang press frequency.
    */
   langPressFrequency: {
     type: Number,
@@ -126,7 +140,7 @@ export const useInputNumberProps = declarePropType({
   },
   /**
    * 前缀 Icon name 或 iconSvg 对象
-   * @version 2.0.0 支持 `object` 类型
+    * @en Configuration for prefix icon.
    */
   prefixIcon: {
     type: [String, Object] as PropType<string | Component>,
@@ -134,20 +148,22 @@ export const useInputNumberProps = declarePropType({
   },
   /**
    * 后缀 Icon name 或 iconSvg 对象
-   * @version 2.0.0 支持 `object` 类型
+    * @en Configuration for suffix icon.
    */
   suffixIcon: {
     type: [String, Object] as PropType<string | Component>,
     required: false,
   },
-  /** 输入框状态 */
+  /** 输入框状态
+   * @en Configuration for status.
+ */
   status: {
     type: String as PropType<'error'>,
     required: false,
   },
   /**
    * 是否是字符串模式
-   * @version 2.2.5
+    * @en Configuration for string mode.
    */
   stringMode: {
     type: Boolean,
@@ -155,7 +171,7 @@ export const useInputNumberProps = declarePropType({
   },
   /**
    * 是否允许鼠标滚动改变数值
-   * @version 2.3.2
+    * @en Configuration for wheel to change.
    */
   wheelToChange: {
     type: Boolean,
@@ -164,8 +180,10 @@ export const useInputNumberProps = declarePropType({
   /**
    * 指定输入框展示值的格式
    * @param val 当前的数字
+   * @paramEn val The val value.
    * @param info userTyping 是否是用户输入 \n input: 如果是用户输入，此处是用户输入的内容
-   * @version 2.3.5
+   * @paramEn info The info value.
+    * @en Configuration for formatter.
    */
   formatter: {
     type: Function as PropType<
@@ -180,7 +198,7 @@ export const useInputNumberProps = declarePropType({
   },
   /**
    * 从 `formatter` 里转换回数字的方法，必须和 `formatter` 搭配使用
-   * @version 2.3.5
+    * @en Configuration for parser.
    */
   parser: {
     type: Function as PropType<(val: string) => number | string>,

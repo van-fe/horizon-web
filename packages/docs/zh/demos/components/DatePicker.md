@@ -141,7 +141,7 @@
 
 ## 自定义触发器
 使用 `pickerOuter` 插槽，可以自定义触发器
-:::demo components/datepicker/custom-trigger.vue :::
+:::demo components/DatePicker/custom-trigger.vue :::
 
 ## 自定义触发器文案
 使用 `format-trigger-text` 可以自定义触发器中展示的文案
@@ -152,23 +152,23 @@
 
 且对于单个触发器，如果分隔符不是 `-`，也不会对用户输入行为进行解析
 
-:::demo components/datepicker/format-trigger-text.vue :::
+:::demo components/DatePicker/format-trigger-text.vue :::
 
 ## 自定义日期格子内容
 使用 `default` 插槽，可以自定义日期格子的内容
-:::demo components/datepicker/default-slot.vue :::
+:::demo components/DatePicker/default-slot.vue :::
 
 ## 自定义图标
 使用 `prefix-icon` `suffix-icon` 设置前后缀图标
-:::demo components/datepicker/custom-icon.vue :::
+:::demo components/DatePicker/custom-icon.vue :::
 
 ## 清空后默认值
 可以配置 `:initial-value="null"` 用于在清空后给 `model-value` 附默认值
-:::demo components/datepicker/initial-value.vue :::
+:::demo components/DatePicker/initial-value.vue :::
 
 ## 只展示面板内容
 如果不希望显示触发器，直接渲染面板，可以设置 `show-popover-content-only = true`
-:::demo components/datepicker/show-popover-content-only.vue :::
+:::demo components/DatePicker/show-popover-content-only.vue :::
 
 ## Dayjs 基础配置
 组件内置使用 `dayjs`，以下是基础配置（全局通用）：

@@ -35,6 +35,7 @@ import HGuideItem from './GuideItem';
 export default defineComponent({
   name: `${useNamespace()}Guide`,
   desc: '产品中的新手引导是可以让用户在短时间内快速了解产品的特色以及产品的使用方式，轻松上手去体验产品的功能，完成自己的目标。大部分的新手引导都会出现在用户首次打开产品时，让用户对产品功能或操作有个初步了解。',
+  descLocales: { en: 'Step-by-step product guidance overlay.' },
   components: {
     GuideMask,
     HGuideItem,

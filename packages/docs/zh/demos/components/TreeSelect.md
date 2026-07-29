@@ -143,7 +143,7 @@
 ## 自定义节点
 可以通过 `treeNodeRender` 插槽自定义节点渲染
 
-也可以在传入 `tree-data` 时，`label` 设置为 `((option: NTreeData) => VNode)` 类型用来自定义某个固定节点，此时优先级高于 `treeNodeRender` 插槽
+也可以在传入 `tree-data` 时，`label` 设置为 `((option: HTreeData) => VNode)` 类型用来自定义某个固定节点，此时优先级高于 `treeNodeRender` 插槽
 
 :::demo components/TreeSelect/custom-render.vue :::
 
@@ -154,16 +154,16 @@
 
 **注意：禁止新定义的映射覆盖原有含义的字段，例如不可以把 `value` 作为 `label` 的字段映射，否则会出错**
 
-对于 `ts` 类型报错的问题，可以在全局 `declare NTreeExtendsData` 类型解决（以下方 `demo` 中使用字段为例）：
+对于 `ts` 类型报错的问题，可以在全局 `declare HTreeExtendsData` 类型解决（以下方 `demo` 中使用字段为例）：
 
 ```ts
-import type { NTreeExtendsData } from '@aurora/horizon-web';
+import type { HTreeExtendsData } from '@aurora/horizon-web';
 
 declare module '@aurora/horizon-web' {
-  interface NTreeExtendsData {
+  interface HTreeExtendsData {
     key?: string;
     text?: string;
-    items?: NTreeExtendsData[];
+    items?: HTreeExtendsData[];
   }
 }
 ```

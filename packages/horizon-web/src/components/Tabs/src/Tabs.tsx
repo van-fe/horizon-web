@@ -20,6 +20,7 @@ import { useTabsPropsLogWarnProperty } from './composables/useWarning';
 export default defineComponent({
   name: `${useNamespace()}Tabs`,
   desc: '页签通常用来快速切换不同的选项',
+  descLocales: { en: 'Tabs let users switch quickly between related views or options.' },
   components: { AIcon },
   inheritAttrs: false,
   props: useTabsProps,

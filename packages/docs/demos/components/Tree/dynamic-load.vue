@@ -16,9 +16,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { NTreeDynamicLoadNode, NTreeNodeData } from '@aurora/horizon-web';
+import type { HTreeDynamicLoadNode, HTreeNodeData } from '@aurora/horizon-web';
 
-const dynamicTreeData = ref<NTreeNodeData[]>([
+const dynamicTreeData = ref<HTreeNodeData[]>([
   {
     value: 'guide',
     label: 'Guide',
@@ -39,10 +39,10 @@ const dynamicTreeData = ref<NTreeNodeData[]>([
   },
 ]);
 
-const dynLoad = (data: NTreeDynamicLoadNode) => {
+const dynLoad = (data: HTreeDynamicLoadNode) => {
   console.info(data, data.node);
 
-  return new Promise<NTreeNodeData[]>((resolve, reject) => {
+  return new Promise<HTreeNodeData[]>((resolve, reject) => {
     if (!data.node) return reject();
 
     setTimeout(

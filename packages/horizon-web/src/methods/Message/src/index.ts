@@ -172,10 +172,12 @@ export interface IMessageInstance {
 /**
  * success/warning/error/info 方法虽然可以提成一个公共方法
  * 但因为 api-generator 分析没有必要做到这么细致，所以需要铺开写出来
+ * @en Success, warning, error, and info methods could share one implementation, but they are expanded for API documentation clarity
  */
 const methods = {
   /**
    * 关闭所有消息
+   * @en Closeallmessage
    */
   closeAll(): void {
     const len = instances.length;
@@ -189,7 +191,10 @@ const methods = {
 
   /**
    * 成功消息
+   * @en Successmessage
    * @param options 提示的消息文字，或者 `MessageOriginOption` 选项
+   * @paramEn options Message text or a MessageOriginOption object
+   * @paramEn options Message的消息文字, 或者 MessageOriginOption 选项
    */
   success: (
     options: Partial<ExtractMethodOptions<string | MessageOriginOption>>,
@@ -208,7 +213,9 @@ const methods = {
 
   /**
    * 警告消息
+   * @en Warningmessage
    * @param options 提示的消息文字，或者 `MessageOriginOption` 选项
+   * @paramEn options Message text or a MessageOriginOption object
    */
   warning: (
     options: Partial<ExtractMethodOptions<string | MessageOriginOption>>,
@@ -227,7 +234,9 @@ const methods = {
 
   /**
    * 错误消息
+   * @en Errormessage
    * @param options 提示的消息文字，或者 `MessageOriginOption` 选项
+   * @paramEn options Message text or a MessageOriginOption object
    */
   error: (
     options: Partial<ExtractMethodOptions<string | MessageOriginOption>>,
@@ -246,7 +255,9 @@ const methods = {
 
   /**
    * 提示消息
+   * @en Messagemessage
    * @param options 提示的消息文字，或者 `MessageOriginOption` 选项
+   * @paramEn options Message text or a MessageOriginOption object
    */
   info: (
     options: Partial<ExtractMethodOptions<string | MessageOriginOption>>,
@@ -265,8 +276,8 @@ const methods = {
 
   /**
    * 等待消息，可异步关闭
+   * @en Show a pending message that can be closed asynchronously
    * @param options 提示的消息文字，或者 `MessageOriginOption` 选项
-   * @version 2.7.0
    */
   loading: (
     options: Partial<ExtractMethodOptions<string | MessageOriginOption>>,
@@ -300,6 +311,9 @@ const methods = {
 
   /**
    * 全局配置，可设置最大显示数
+   * @en Configure global settings, including the maximum number of displayed messages
+   * @param options Global message configuration
+   * @paramEn options Global message configuration
    */
   config: (options: Partial<ExtractMethodOptions<{ maxCount: number; duration: number }>>) => {
     messageOptions.maxCount = options.maxCount ?? Number.MAX_SAFE_INTEGER;

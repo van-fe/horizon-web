@@ -25,6 +25,7 @@ export const injectedKey = Symbol(
 export default defineComponent({
   name: `${useNamespace()}Collapse`,
   desc: '通过折叠面板收纳内容区域',
+  descLocales: { en: 'Collapsible panels for showing and hiding content.' },
   props: useCollapseProps,
   emits: useCollapseEmits,
   slots: useCollapseSlots,

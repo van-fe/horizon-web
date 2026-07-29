@@ -58,6 +58,7 @@ import type { ScrollbarExposes } from '~/components/Scrollbar/src/composables/us
 export default defineComponent({
   name: `${useNamespace()}Menu`,
   desc: '多用于信息层级多、对导航效率有一定要求的后台系统页面',
+  descLocales: { en: 'Navigation menu and menu-item components.' },
   components: {
     CollapseButton,
     FullViewMenu,

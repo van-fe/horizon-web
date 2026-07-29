@@ -13,6 +13,7 @@ export default defineDirective<ClickOutsideElement, typeof useClickOutsideOption
   name: 'click-outside',
   options: useClickOutsideOptions,
   desc: '点击目标元素外部区域时调用指定的函数',
+  descLocales: { en: 'Invoke the specified function when clicking outside the target element.' },
   mounted(el, binding) {
     el[clickOutsideEventKey] = (event: Event) => {
       if (!(el == event.target || el.contains(event.target as Node))) {

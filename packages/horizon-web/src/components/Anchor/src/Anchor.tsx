@@ -49,6 +49,7 @@ const highLightLineDefaultStyle = {
 export default defineComponent({
   name: `${useNamespace()}Anchor`,
   desc: '电梯导航用来展示当前页面中，有哪些具体内容，并可以快速定位',
+  descLocales: { en: 'Anchor navigation lists the sections on the current page and lets users jump to them quickly.' },
   components: {
     HScrollbar,
   },

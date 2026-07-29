@@ -20,7 +20,7 @@ import directives from '../../dist/directives-analysis.json';
 
 export default async function createWebTypesJson() {
   const getDocUrl = (cmp: string, heading?: string, type = 'components') =>
-    `https://aurora-design.nio.com/horizon-web/dev-component/vue/base/component/${cmp.toLowerCase()}${
+    `https://aurora-design.example.com/horizon-web/dev-component/vue/base/component/${cmp.toLowerCase()}${
       heading ? `#${capitalize(cmp)}${heading}` : ''
     }`;
 

@@ -25,7 +25,7 @@
       >
         <template #sider>
           <h-image
-            src="https://source.niohome.com//MyNextEv/image/cutting/672C4D53B6559FFFF2A0523B21D36B35.jpg"
+            src="https://source.demohome.com//MyNextEv/image/cutting/672C4D53B6559FFFF2A0523B21D36B35.jpg"
             object-fit="cover"
             :width="50"
             :height="50"
@@ -45,7 +45,7 @@
 </template>
 
 <script lang="ts" setup>
-import { NListItem } from '@aurora/horizon-web';
+import { HListItem } from '@aurora/horizon-web';
 import { reactive, ref } from 'vue';
 const list = reactive(
   Array(10)

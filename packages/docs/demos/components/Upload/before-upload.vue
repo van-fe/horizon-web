@@ -10,7 +10,7 @@
   <h-space>
     <h-upload
       v-model="modelValue"
-      action="https://horizon-web-inspector.nioint.com/upload-mock"
+      action="https://horizon-web-inspector.demoint.com/upload-mock"
       method="POST"
       accept=".png"
       :multiple="multiple"
@@ -32,7 +32,7 @@ const modelValue = ref<HUploadRawFileType>();
 
 function onBeforeUpload(file: HUploadFileType) {
   console.info('before-upload:', file);
-  if (!(file.type === NUploadFileTypeEnum.Image && file.raw?.type === 'image/png')) {
+  if (!(file.type === HUploadFileTypeEnum.Image && file.raw?.type === 'image/png')) {
     $message.error('手动拦截：您选择的不是 PNG 文件');
     return false;
   } else return true;

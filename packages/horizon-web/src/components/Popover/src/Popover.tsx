@@ -31,6 +31,7 @@ import { HPickerPopoverPropsInjectKey } from './utils/injectKeys';
 export default defineComponent({
   name: `${useNamespace()}Popover`,
   desc: '点击目标元素，唤起白底气泡卡片浮层',
+  descLocales: { en: 'Popover and pop-content components for contextual overlays.' },
   props: usePopoverProps,
   emits: usePopoverEmits,
   slots: usePopoverSlots,

@@ -38,6 +38,7 @@ export default function (
 
   /**
    * to default expand all nodes
+    * @en Description for if.
    */
   if (props.isDefaultExpandAll.value) {
     tree.flattenTreeData.value.forEach(item => {

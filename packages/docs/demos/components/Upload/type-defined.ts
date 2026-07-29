@@ -1,6 +1,6 @@
-export type NUploadRawFileType = NUploadUserFile | File | NUploadFileType;
+export type HUploadRawFileType = HUploadUserFile | File | HUploadFileType;
 
-export enum NUploadFileTypeEnum {
+export enum HUploadFileTypeEnum {
   Unknown = 'unknown',
   Pdf = 'pdf',
   Word = 'word',
@@ -13,20 +13,20 @@ export enum NUploadFileTypeEnum {
   Link = 'link',
 }
 
-export const fileTypeMapping: Record<NUploadFileTypeEnum, string[]> = {
-  [NUploadFileTypeEnum.Image]: ['jpeg', 'jpg', 'png', 'gif', 'bmp', 'webp', 'svg'],
-  [NUploadFileTypeEnum.Word]: ['doc', 'docx'],
-  [NUploadFileTypeEnum.Excel]: ['xls', 'xlsx'],
-  [NUploadFileTypeEnum.Ppt]: ['ppt', 'pptx'],
-  [NUploadFileTypeEnum.Pdf]: ['pdf'],
-  [NUploadFileTypeEnum.Audio]: ['mp3', 'wav', 'wma'],
-  [NUploadFileTypeEnum.Video]: ['mp4', 'wam', 'webm'],
-  [NUploadFileTypeEnum.Zip]: ['zip', 'rar', '7z'],
-  [NUploadFileTypeEnum.Link]: ['lnk', 'url', 'uri'],
-  [NUploadFileTypeEnum.Unknown]: [],
+export const fileTypeMapping: Record<HUploadFileTypeEnum, string[]> = {
+  [HUploadFileTypeEnum.Image]: ['jpeg', 'jpg', 'png', 'gif', 'bmp', 'webp', 'svg'],
+  [HUploadFileTypeEnum.Word]: ['doc', 'docx'],
+  [HUploadFileTypeEnum.Excel]: ['xls', 'xlsx'],
+  [HUploadFileTypeEnum.Ppt]: ['ppt', 'pptx'],
+  [HUploadFileTypeEnum.Pdf]: ['pdf'],
+  [HUploadFileTypeEnum.Audio]: ['mp3', 'wav', 'wma'],
+  [HUploadFileTypeEnum.Video]: ['mp4', 'wam', 'webm'],
+  [HUploadFileTypeEnum.Zip]: ['zip', 'rar', '7z'],
+  [HUploadFileTypeEnum.Link]: ['lnk', 'url', 'uri'],
+  [HUploadFileTypeEnum.Unknown]: [],
 };
 
-export enum NUploadFileStatusEnum {
+export enum HUploadFileStatusEnum {
   New = 'new',
   Pending = 'pending',
   Uploading = 'uploading',
@@ -38,7 +38,7 @@ export enum NUploadFileStatusEnum {
   Retrying = 'retrying',
 }
 
-export interface NUploadFileType {
+export interface HUploadFileType {
   /**
    * 文件名
    */
@@ -50,11 +50,11 @@ export interface NUploadFileType {
   /**
    * 文件状态
    */
-  status: NUploadFileStatusEnum;
+  status: HUploadFileStatusEnum;
   /**
    * 文件类型
    */
-  type: NUploadFileTypeEnum;
+  type: HUploadFileTypeEnum;
   /**
    * 文件大小
    */
@@ -95,7 +95,7 @@ type PartialInclude<T, K extends keyof T = keyof T> = {
   [Key in keyof T as Key extends K ? never : Key]: T[Key];
 }
 
-export type NUploadUserFile = PartialInclude<
-  NUploadFileType,
+export type HUploadUserFile = PartialInclude<
+  HUploadFileType,
   'status' | 'uuid' | 'type' | 'blobUrl'
 >;

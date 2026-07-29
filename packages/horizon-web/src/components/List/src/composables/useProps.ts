@@ -4,6 +4,7 @@ import { declarePropType } from '@aurora/utils';
 export const useListProps = declarePropType({
   /**
    * 列表数据，需要和 `item` 插槽同时使用，或者结合 `ListItem` 组件
+    * @en Configuration for data.
    */
   data: {
     type: Array as PropType<any[]>,
@@ -11,6 +12,7 @@ export const useListProps = declarePropType({
   },
   /**
    * 是否以斑马纹的形式显示
+    * @en Configuration for zebra.
    */
   zebra: {
     type: Boolean,
@@ -19,6 +21,7 @@ export const useListProps = declarePropType({
   /**
    * 是否带边框
    * @deprecated 请改用 `props.border`
+    * @en Configuration for is border.
    */
   isBorder: {
     type: Boolean,
@@ -26,7 +29,7 @@ export const useListProps = declarePropType({
   },
   /**
    * 是否带边框
-   * @version 2.0.0-beta.7 与 `isBorder` 相同
+    * @en Configuration for border.
    */
   border: {
     type: Boolean,
@@ -34,6 +37,7 @@ export const useListProps = declarePropType({
   },
   /**
    * 是否显示分割线
+    * @en Configuration for split.
    */
   split: {
     type: Boolean,
@@ -41,6 +45,7 @@ export const useListProps = declarePropType({
   },
   /**
    * 列表的最大高度
+    * @en Configuration for max height.
    */
   maxHeight: {
     type: Number,
@@ -48,6 +53,7 @@ export const useListProps = declarePropType({
   },
   /**
    * 列表Item的大小
+    * @en Configuration for size.
    */
   size: {
     type: String as PropType<'medium' | 'small'>,
@@ -58,6 +64,7 @@ export const useListProps = declarePropType({
 export const useListItemProps = declarePropType({
   /**
    * 列表项的标题
+    * @en Configuration for title.
    */
   title: {
     type: String,
@@ -65,6 +72,7 @@ export const useListItemProps = declarePropType({
   },
   /**
    * 列表项的标题大小
+    * @en Configuration for title size.
    */
   titleSize: {
     type: String as PropType<'medium' | 'small'>,
@@ -72,6 +80,7 @@ export const useListItemProps = declarePropType({
   },
   /**
    * 列表项的副标题
+    * @en Configuration for subtitle.
    */
   subtitle: {
     type: String,
@@ -79,7 +88,7 @@ export const useListItemProps = declarePropType({
   },
   /**
    * 标题是否加粗
-   * @version 2.0.0-beta.7
+    * @en Configuration for title bold.
    */
   titleBold: {
     type: Boolean,
@@ -87,6 +96,7 @@ export const useListItemProps = declarePropType({
   },
   /**
    * 列表项的内容
+    * @en Configuration for describe.
    */
   describe: {
     type: String,

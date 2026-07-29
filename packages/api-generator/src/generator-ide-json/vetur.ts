@@ -28,7 +28,7 @@ export default async function createVeturJson() {
   components.forEach(component => {
     tags[`n-${kebabCase(component.name)}`] = {
       attributes: component.props.map(prop => kebabCase(prop.name)),
-      description: `[Docs](https://aurora-design.nio.com/horizon-web/dev-component/vue/base/component/${component.parentComponentName.toLowerCase()})`,
+      description: `[Docs](https://aurora-design.example.com/horizon-web/dev-component/vue/base/component/${component.parentComponentName.toLowerCase()})`,
     };
 
     component.props.forEach(prop => {
@@ -37,7 +37,7 @@ export default async function createVeturJson() {
         options: prop.options,
         description: `${
           prop.desc
-        }\n\n[Docs](https://aurora-design.nio.com/horizon-web/dev-component/vue/base/component/${component.parentComponentName.toLowerCase()}#${
+        }\n\n[Docs](https://aurora-design.example.com/horizon-web/dev-component/vue/base/component/${component.parentComponentName.toLowerCase()}#${
           component.name
         } Props)`,
       };

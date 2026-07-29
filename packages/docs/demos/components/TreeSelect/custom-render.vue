@@ -32,10 +32,10 @@
 
 <script setup lang="ts">
 import { h, onMounted, ref } from 'vue';
-import type { NTreeNodeData } from '@aurora/horizon-web';
+import type { HTreeNodeData } from '@aurora/horizon-web';
 import { $message } from '@aurora/horizon-web';
 
-const renderTreeData = ref<NTreeNodeData[]>([
+const renderTreeData = ref<HTreeNodeData[]>([
   {
     value: 'guide',
     label: 'Guide',

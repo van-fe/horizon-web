@@ -20,6 +20,7 @@ import useSize from '~/utils/useSize';
 export default defineComponent({
   name: `${useNamespace()}Checkbox`,
   desc: '一组备选项中进行多选',
+  descLocales: { en: 'Checkbox controls for selecting one or more options.' },
   components: { Checkbox },
   props: useCheckboxProps,
   emits: useCheckboxEmits,

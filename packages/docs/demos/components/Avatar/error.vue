@@ -23,11 +23,11 @@
 import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
-    let src = ref('https://cdn-app.nio.com/us/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg');
-    let src2 = ref('https://cdn-app.nio.com/us/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg');
-    let src1 = ref('https://cdn-app.nio.com/us/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg');
+    let src = ref('https://cdn-app.example.com/us/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg');
+    let src2 = ref('https://cdn-app.example.com/us/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg');
+    let src1 = ref('https://cdn-app.example.com/us/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg');
     const errorHandler = () => {
-      src.value = 'https://cdn-app.nio.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg';
+      src.value = 'https://cdn-app.example.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg';
     };
     const errorHandler1 = () => {
       console.info('图片加载失败了');

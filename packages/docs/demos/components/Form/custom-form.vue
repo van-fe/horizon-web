@@ -32,8 +32,8 @@
 
 <script lang="ts">
 import { defineComponent, ref, h, watch, inject } from 'vue';
-import type { NFormInstance } from '@aurora/horizon-web';
-import { $message, NFormItemTriggerInjectedKey, NFormItemErrorInjectedKey } from '@aurora/horizon-web';
+import type { HFormInstance } from '@aurora/horizon-web';
+import { $message, HFormItemTriggerInjectedKey, HFormItemErrorInjectedKey } from '@aurora/horizon-web';
 import { isString, isUndefined } from '@aurora/utils';
 
 const CustomInput = defineComponent({
@@ -51,8 +51,8 @@ const CustomInput = defineComponent({
     const value = ref(props.modelValue);
 
     // form-item validate trigger
-    const formItemTrigger = inject(NFormItemTriggerInjectedKey);
-    const formItemError = inject(NFormItemErrorInjectedKey);
+    const formItemTrigger = inject(HFormItemTriggerInjectedKey);
+    const formItemError = inject(HFormItemErrorInjectedKey);
 
     watch(value, val => {
       emit('update:modelValue', val);
@@ -79,7 +79,7 @@ export default defineComponent({
     CustomInput,
   },
   setup() {
-    const formRef = ref<NFormInstance | null>(null);
+    const formRef = ref<HFormInstance | null>(null);
     const formData = ref({
       username: '',
       email: '',

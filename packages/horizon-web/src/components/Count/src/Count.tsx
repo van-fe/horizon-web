@@ -11,6 +11,7 @@ import { useCountSlots } from './composables/useSlots';
 export default defineComponent({
   name: `${useNamespace()}Count`,
   desc: '用于计数，并且可以提供格式化显示数字的能力',
+  descLocales: { en: 'Displays a count with optional number formatting.' },
   props: useCountProps,
   emits: useCountEmits,
   slots: useCountSlots,

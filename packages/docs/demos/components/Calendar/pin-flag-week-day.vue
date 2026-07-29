@@ -51,7 +51,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { NCalendarPinFlag } from '@aurora/horizon-web';
+import { HCalendarPinFlag } from '@aurora/horizon-web';
 import dayjs, { Dayjs } from 'dayjs';
 
 export default defineComponent({
@@ -62,7 +62,7 @@ export default defineComponent({
     const createFlagCanThoughDisableDateOrHour = ref(true);
     const weekStart = dayjs().startOf('week');
 
-    const pinFlags = ref<NCalendarPinFlag[]>([
+    const pinFlags = ref<HCalendarPinFlag[]>([
       {
         startAt: weekStart.day(1).hour(8),
         endAt: weekStart.day(1).hour(9),
@@ -93,7 +93,7 @@ export default defineComponent({
       },
     ]);
 
-    function onFlagClick(flag: NCalendarPinFlag) {
+    function onFlagClick(flag: HCalendarPinFlag) {
       console.info(flag);
     }
 
@@ -106,7 +106,7 @@ export default defineComponent({
       };
     }
 
-    function onCreatFinishFlagCallback(flag: NCalendarPinFlag) {
+    function onCreatFinishFlagCallback(flag: HCalendarPinFlag) {
       return new Promise(resolve => {
         console.info(flag);
 

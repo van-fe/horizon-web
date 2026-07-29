@@ -7,12 +7,12 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import type { NViewerSource } from '@aurora/horizon-web';
+import type { HViewerSource } from '@aurora/horizon-web';
 export default defineComponent({
   setup() {
-    const imagesRef = ref<NViewerSource[]>([]);
+    const imagesRef = ref<HViewerSource[]>([]);
     const generateImages = (count: number) => {
-      const list = [] as NViewerSource[];
+      const list = [] as HViewerSource[];
       const base = Math.floor(Math.random() * 60) + 10;
       for (let i = 0; i < count; i++) {
         list.push({
@@ -27,16 +27,16 @@ export default defineComponent({
     const visibleRef = ref(false);
     const video1 = {
       type: 'video',
-      cover: 'https://www.nio.cn/cdn-static/mynio/nextjs/images/et5/top-hero-desktop.jpg',
-      thumbnail: 'https://www.nio.cn/cdn-static/mynio/nextjs/images/et5/top-hero-desktop.jpg',
+      cover: 'https://www.example.com/cdn-static/mydemo/nextjs/images/et5/top-hero-desktop.jpg',
+      thumbnail: 'https://www.example.com/cdn-static/mydemo/nextjs/images/et5/top-hero-desktop.jpg',
       videoSources: [
         {
-          src: 'https://www.nio.cn/cdn-static/mynio/nextjs/images/et5/et5-hero-video.mp4',
+          src: 'https://www.example.com/cdn-static/mydemo/nextjs/images/et5/et5-hero-video.mp4',
           type: 'video/mp4',
         },
       ],
       title: 'vimejs video',
-    } as NViewerSource;
+    } as HViewerSource;
     const video2 = {
       type: 'video',
       cover: 'https://vjs.zencdn.net/v/oceans.png',
@@ -48,7 +48,7 @@ export default defineComponent({
         },
       ],
       title: 'oceans video',
-    } as NViewerSource;
+    } as HViewerSource;
     const showViewer = () => {
       imagesRef.value = generateImages(1);
       visibleRef.value = true;

@@ -13,7 +13,7 @@ function submit() {
       <IconLogo size="56" :color="['var(--h-text-default)']" />
     </template>
     <template #title>
-      尊贵的蔚来车主
+      尊贵的示例车主
     </template>
     <template #subtitle>
       本次换电已结束，感谢您的使用

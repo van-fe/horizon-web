@@ -11,7 +11,7 @@ When using `vue-cli` to build a project, it generally does not support ES7 synta
 
   1. Install `babel @vue/cli-plugin-babel` packages
   ```shell
-  $ npm install babel-loader @vue/cli-plugin-babel -D
+  $ bun add babel-loader @vue/cli-plugin-babel -D
   ```
   2. In `vue.config.js`, add the following statement to make `babel-loader` also transpile `@aurora/xx` packages
   ```ts

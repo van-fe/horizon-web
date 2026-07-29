@@ -123,9 +123,9 @@
 <script setup lang="ts">
 import { ExtractPropTypes, ref } from 'vue';
 import { AIcon } from '@aurora/icon';
-import { NMenu, useMenuProps } from '@aurora/horizon-web';
+import { HMenu, useMenuProps } from '@aurora/horizon-web';
 
-const menuRef = ref<typeof NMenu | null>(null);
+const menuRef = ref<typeof HMenu | null>(null);
 const collapse = ref(false);
 const theme = ref<ExtractPropTypes<typeof useMenuProps>['theme']>('default');
 const resizeToCollapse = ref<boolean>(true);

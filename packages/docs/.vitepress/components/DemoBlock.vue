@@ -18,13 +18,20 @@ const code = ref(props.source);
 const visible = ref(false);
 const slots = useSlots();
 
+// Keep demo imports inside Vite's module graph. Using a runtime absolute URL
+// (`import('/demos/...')`) works in dev but cannot be resolved during SSR.
+const demoModules = import.meta.glob('../../**/*.vue');
+
 // 动态导入组件
 const DemoComponent = shallowRef<any>(null);
 
 if (props.path) {
-  // 使用动态导入，路径已经包含了 demos/ 前缀
-  // VitePress 会自动处理这些导入
-  DemoComponent.value = defineAsyncComponent(() => import(/* @vite-ignore */ `/${props.path}`));
+  const moduleKey = `../../${props.path}`;
+  const loader = demoModules[moduleKey];
+  if (!loader) {
+    throw new Error(`Demo module not found: ${props.path}`);
+  }
+  DemoComponent.value = defineAsyncComponent(loader as any);
 }
 
 watch(() => props.source, val => {
@@ -62,7 +69,7 @@ function toggleCode() {
 </template>
 
 <style lang="scss" scoped>
-@use "@aurora/horizon-web/es/styles/mixins";
+@use "../../../horizon-web/src/styles/mixins";
 
 .demo-block {
   border: 1px solid mixins.css-variable('border-default');

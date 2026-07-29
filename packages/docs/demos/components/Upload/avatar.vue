@@ -19,7 +19,7 @@ const actionURL = new URL('/upload-mock.json', import.meta.url).href;
 
 const modelValue = ref<HUploadUserFile>({
   name: 'background.jpg',
-  url: 'https://cdn-public-dev.nio.com/aurora-resource/5cBiDhad9L9aZ3nAml1m8/23244a6b-69c3-4465-bbd6-5db4b476abf4.jpg?imageView2/0/h/198/ignore-error/1',
+  url: 'https://cdn-public-dev.example.com/aurora-resource/5cBiDhad9L9aZ3nAml1m8/23244a6b-69c3-4465-bbd6-5db4b476abf4.jpg?imageView2/0/h/198/ignore-error/1',
 });
 
 function handleSuccess(res: any, file: HUploadFile) {

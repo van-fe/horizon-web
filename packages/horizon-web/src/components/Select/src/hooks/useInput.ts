@@ -114,6 +114,7 @@ export default function useInput(
 
   /**
    * watch
+    * @en Description for watch.
    */
   watch(options.inputValue, val => {
     if (props.allowCreate) {

@@ -46,5 +46,6 @@ export function rotateCanvas(
 
 /** 获取当前设备dpr值（最小值默认为“2”，用以提高水印的清晰度） */
 export function getDpr() {
+  if (typeof window === 'undefined') return 2;
   return window.devicePixelRatio > 2 ? window.devicePixelRatio : 2;
 }

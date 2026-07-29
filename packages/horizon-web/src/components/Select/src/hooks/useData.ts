@@ -129,7 +129,9 @@ export default function useData(
   /**
    * emit change event
    * @param emptyInputValue boolean
+   * @paramEn emptyInputValue The empty input value value.
    * @param inputVal inputValue.value
+   * @paramEn inputVal The input val value.
    */
   function emitChange(emptyInputValue = false, inputVal = '') {
     if (props.compatibility) {

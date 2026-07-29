@@ -82,6 +82,7 @@ export default function (
 
   /**
    * in order to remove child/root node when checkStrictly set false
+    * @en Description for watch.
    */
   watch(props.checkStrictly, val => {
     if (!val) {

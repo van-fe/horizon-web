@@ -28,7 +28,7 @@ app.use(HorizonWeb);
 
 ```javascript
 import { createApp } from 'vue';
-import { NButton, NInput } from 'packages/horizon-web/src/index';
+import { HButton, HInput } from 'packages/horizon-web/src/index';
 import 'packages/horizon-web/es/components/Button/src/style/index.css';
 import 'packages/horizon-web/es/components/Input/src/style/index.css';
 
@@ -36,8 +36,8 @@ import App from './App.vue';
 
 const app = createApp(App);
 
-app.use(NButton);
-app.use(NInput);
+app.use(HButton);
+app.use(HInput);
 ```
 
 通过如上的方式就可以实现 组件的按需引入，无需担心会产生多余的代码。但是略显繁琐，需要单独导入每一个组件然后注册它们。

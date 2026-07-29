@@ -3,12 +3,12 @@ import type { ExposeType, ExtractExposeTypes } from '@aurora/utils';
 export const useDropdownExposes = {
   /**
    * 打开下拉菜单
-   * @version 2.0.5
+    * @en Controls handle open.
    */
   handleOpen: Function as ExposeType<() => void>,
   /**
    * 关闭下拉菜单
-   * @version 2.0.5
+    * @en Controls handle close.
    */
   handleClose: Function as ExposeType<() => void>,
 };

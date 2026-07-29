@@ -5,6 +5,7 @@ import type { ButtonProps } from '~/components/Button/src/composables/useProps';
 export const usePopConfirmOptions = declareDirectiveOptionType({
   /**
    * 弹窗中的提示文本，会根据当前 locale 显示默认文本
+   * @en Description
    */
   title: {
     type: String,
@@ -12,6 +13,7 @@ export const usePopConfirmOptions = declareDirectiveOptionType({
   },
   /**
    * 图标类型，`none` 表示不显示图标
+   * @en Description
    */
   type: {
     type: String as DirectiveOptionType<'none' | 'info' | 'success' | 'warning' | 'error'>,
@@ -20,6 +22,7 @@ export const usePopConfirmOptions = declareDirectiveOptionType({
   },
   /**
    * 自定义图标名称
+   * @en Custom 图标名称
    */
   iconName: {
     type: String,
@@ -27,6 +30,7 @@ export const usePopConfirmOptions = declareDirectiveOptionType({
   },
   /**
    * 自定义图标大小
+   * @en Custom 图标size
    */
   iconSize: {
     type: String,
@@ -34,6 +38,7 @@ export const usePopConfirmOptions = declareDirectiveOptionType({
   },
   /**
    * 自定义图标颜色
+   * @en Custom 图标color
    */
   iconColor: {
     type: String,
@@ -41,6 +46,7 @@ export const usePopConfirmOptions = declareDirectiveOptionType({
   },
   /**
    * 弹窗的位置
+   * @en Description
    */
   placement: {
     type: String as DirectiveOptionType<
@@ -65,6 +71,7 @@ export const usePopConfirmOptions = declareDirectiveOptionType({
   },
   /**
    * 确定按钮文本，会根据当前 `locale` 显示默认文本
+   * @en Description
    */
   okText: {
     type: String,
@@ -72,6 +79,7 @@ export const usePopConfirmOptions = declareDirectiveOptionType({
   },
   /**
    * 确定按钮的 `props`，传入一个对象，详见 [Button Props](/pages/horizon-web/horizon-web/components/button#Api)
+   * @en Description
    */
   okButtonProps: {
     type: Object as DirectiveOptionType<Partial<ButtonProps>>,
@@ -79,6 +87,7 @@ export const usePopConfirmOptions = declareDirectiveOptionType({
   },
   /**
    * 取消按钮文本，会根据当前 `locale` 显示默认文本
+   * @en Cancelbuttontext, 会根据Current locale Display defaulttext
    */
   cancelText: {
     type: String,
@@ -86,6 +95,7 @@ export const usePopConfirmOptions = declareDirectiveOptionType({
   },
   /**
    * 取消按钮的 `props`，传入一个对象，详见 [Button Props](/pages/horizon-web/horizon-web/components/button#Api)
+   * @en Cancelbutton的 props, Pass 一个对象, 详见 [Button Props](/pages/horizon-web/horizon-web/components/button#Api)
    */
   cancelButtonProps: {
     type: Object as DirectiveOptionType<Partial<ButtonProps>>,
@@ -93,6 +103,7 @@ export const usePopConfirmOptions = declareDirectiveOptionType({
   },
   /**
    * 弹窗的 CSS 层级
+   * @en Description
    */
   zIndex: {
     type: Number,
@@ -101,7 +112,7 @@ export const usePopConfirmOptions = declareDirectiveOptionType({
   },
   /**
    * 是否将元素发送到 body 节点
-   * @version 2.0.9-alpha.1
+   * @en Whether 将element发送到 body node
    */
   toBody: {
     type: Boolean,

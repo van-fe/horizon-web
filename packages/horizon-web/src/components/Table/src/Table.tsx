@@ -62,6 +62,7 @@ import useColumnSort from './hooks/useColumnSort';
 export default defineComponent({
   name: `${useNamespace()}Table`,
   desc: '用行与列的形式，展示结构化数据展示的组件；常和按钮、搜索、筛选、分页等其他界面组件一起协同',
+  descLocales: { en: 'Displays structured data in rows and columns and works well with actions, search, filters, and pagination.' },
   directives: {
     loading,
     tooltip,

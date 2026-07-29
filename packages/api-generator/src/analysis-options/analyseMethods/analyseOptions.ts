@@ -21,6 +21,8 @@ function analysisPropertyAssignment(
   const res: ApiGeneratorAnalysedOptionType = {
     default: '',
     desc: jsDoc.comment,
+    descLocales: jsDoc.locales,
+    descLocales: jsDoc.locales,
     name: property.getName(),
     required: false,
     type: '',
@@ -31,7 +33,7 @@ function analysisPropertyAssignment(
   };
 
   try {
-    property.getChildrenOfKind(ts.SyntaxKind.ObjectLiteralExpression)[0].forEachChild(object => {
+    property.getChildrenOfKind(ts.SyntaxKind.ObjectLiteralExpression)?.[0]?.forEachChild(object => {
       switch (object.getChildrenOfKind(ts.SyntaxKind.Identifier)[0].getText()) {
         case 'default':
           const lastChild = object.getLastChild();
@@ -131,7 +133,18 @@ function analysisPropertyAssignment(
     });
   } catch (e) {
     console.error(e);
-    debugger;
+  }
+
+  if (!res.type) {
+    const typeEntry = property
+      .getChildrenOfKind(ts.SyntaxKind.ObjectLiteralExpression)?.[0]
+      ?.getProperties()
+      .find(curr => curr.getName() === 'type');
+    const statement = typeEntry?.getLastChild();
+    if (statement) {
+      res.type = statement.getText();
+      res.baseType = statement.getText().toLowerCase();
+    }
   }
 
   return res;

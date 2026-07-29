@@ -41,6 +41,7 @@ import { useBreadcrumbEmits } from './composables/useEmits';
 export default defineComponent({
   name: `${useNamespace()}Breadcrumb`,
   desc: '面包屑导航主要用来呈现系统页面的架构层级，帮助用户快速定位和了解网站内容和组织方式，从而形成很好的位置感，知晓当前所处位置，以及页面的往返路径。同时提供快速的跳转操作，快速返回各个层级的页面',
+  descLocales: { en: 'Breadcrumb navigation showing the current hierarchy.' },
   directives: { tooltip },
   components: {
     HBreadcrumbItem,

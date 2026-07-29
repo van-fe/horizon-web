@@ -8,24 +8,28 @@ import { IconClose, IconMoreTwo } from '@aurora/icon';
 export const useFloatButtonProps = declarePropType({
   /**
    * 自定义图标
+    * @en Configuration for icon.
    */
   icon: {
     type: IconPropType,
   },
   /**
    * 描述文字，可以是 `VNode` 节点
+    * @en Configuration for description.
    */
   description: {
     type: [String, Object] as PropType<string | VNode>,
   },
   /**
    * 气泡卡片内容
+    * @en Configuration for tooltip.
    */
   tooltip: {
     type: [String, Object] as PropType<string | Partial<TooltipProps>>,
   },
   /**
    * 类型
+    * @en Configuration for type.
    */
   type: {
     type: String as PropType<'primary' | 'normal'>,
@@ -33,6 +37,7 @@ export const useFloatButtonProps = declarePropType({
   },
   /**
    * 形状
+    * @en Configuration for shape.
    */
   shape: {
     type: String as PropType<'circle' | 'square'>,
@@ -40,6 +45,7 @@ export const useFloatButtonProps = declarePropType({
   },
   /**
    * 跳转链接
+    * @en Configuration for href.
    */
   href: {
     type: String,
@@ -47,6 +53,7 @@ export const useFloatButtonProps = declarePropType({
   /**
    * 跳转时的目标窗口
    * 类同 `<a />` 的 `target` 属性
+    * @en Configuration for target.
    */
   target: {
     type: String as PropType<'_blank' | '_self' | '_parent' | '_top'>,
@@ -55,6 +62,7 @@ export const useFloatButtonProps = declarePropType({
   /**
    * 徽标配置
    * `true`: `type="dot"`
+    * @en Configuration for badge.
    */
   badge: {
     type: [Boolean, Object] as PropType<boolean | Partial<BadgeProps>>,
@@ -62,6 +70,7 @@ export const useFloatButtonProps = declarePropType({
   },
   /**
    * 是否可拖拽
+    * @en Configuration for draggable.
    */
   draggable: {
     type: Boolean,
@@ -69,6 +78,7 @@ export const useFloatButtonProps = declarePropType({
   },
   /**
    * 是否吸附在底部
+    * @en Configuration for adsorb bottom.
    */
   adsorbBottom: {
     type: Boolean,
@@ -76,6 +86,7 @@ export const useFloatButtonProps = declarePropType({
   },
   /**
    * 是否显示
+    * @en Configuration for visible.
    */
   visible: {
     type: Boolean,
@@ -84,6 +95,7 @@ export const useFloatButtonProps = declarePropType({
   /**
    * 是否是折叠按钮，内部变量
    * @invisible
+    * @en Configuration for collapse button.
    */
   collapseButton: {
     type: Boolean,
@@ -94,18 +106,21 @@ export const useFloatButtonProps = declarePropType({
 export const useFloatButtonGroupProps = declarePropType({
   /**
    * 类型，会覆盖内部 `float-button` 的 `type`
+    * @en Configuration for type.
    */
   type: {
     type: String as PropType<'primary' | 'normal'>,
   },
   /**
    * 形状，会覆盖内部 `float-button` 的 `shape`
+    * @en Configuration for shape.
    */
   shape: {
     type: String as PropType<'circle' | 'square'>,
   },
   /**
    * 是否启用展开折叠功能
+    * @en Configuration for use collapse.
    */
   useCollapse: {
     type: Boolean,
@@ -113,6 +128,7 @@ export const useFloatButtonGroupProps = declarePropType({
   },
   /**
    * 触发方式
+    * @en Configuration for trigger.
    */
   trigger: {
     type: String as PropType<'click' | 'hover'>,
@@ -120,6 +136,7 @@ export const useFloatButtonGroupProps = declarePropType({
   },
   /**
    * 展开按钮
+    * @en Configuration for expand icon.
    */
   expandIcon: {
     type: IconPropType,
@@ -127,6 +144,7 @@ export const useFloatButtonGroupProps = declarePropType({
   },
   /**
    * 折叠按钮
+    * @en Configuration for fold icon.
    */
   foldIcon: {
     type: IconPropType,
@@ -134,24 +152,28 @@ export const useFloatButtonGroupProps = declarePropType({
   },
   /**
    * 展开按钮气泡卡片内容
+    * @en Configuration for expand tooltip.
    */
   expandTooltip: {
     type: [String, Object] as PropType<string | Partial<TooltipProps>>,
   },
   /**
    * 折叠按钮气泡卡片内容
+    * @en Configuration for fold tooltip.
    */
   foldTooltip: {
     type: [String, Object] as PropType<string | Partial<TooltipProps>>,
   },
   /**
    * 打开按钮的徽标配置
+    * @en Configuration for badge.
    */
   badge: {
     type: Object as PropType<Partial<BadgeProps>>,
   },
   /**
    * 是否可拖拽
+    * @en Configuration for draggable.
    */
   draggable: {
     type: Boolean,
@@ -159,6 +181,7 @@ export const useFloatButtonGroupProps = declarePropType({
   },
   /**
    * 是否吸附在底部
+    * @en Configuration for adsorb bottom.
    */
   adsorbBottom: {
     type: Boolean,
@@ -166,6 +189,7 @@ export const useFloatButtonGroupProps = declarePropType({
   },
   /**
    * 是否显示
+    * @en Configuration for visible.
    */
   visible: {
     type: Boolean,

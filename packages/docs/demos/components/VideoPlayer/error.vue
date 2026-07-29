@@ -6,6 +6,6 @@
         type: 'video/mp4',
       },
     ]"
-    poster="https://www.nio.cn/cdn-static/mynio/nextjs/images/et5/top-hero-desktop.jpg"
+    poster="https://www.example.com/cdn-static/mydemo/nextjs/images/et5/top-hero-desktop.jpg"
   />
 </template>

@@ -15,6 +15,7 @@ export const usePopconfirmProps = {
   },
   /**
    * 自定义图标名称
+   * @en Custom 图标名称
    */
   iconName: {
     type: String,
@@ -22,6 +23,7 @@ export const usePopconfirmProps = {
   },
   /**
    * 自定义图标大小
+   * @en Custom 图标size
    */
   iconSize: {
     type: String,
@@ -29,6 +31,7 @@ export const usePopconfirmProps = {
   },
   /**
    * 自定义图标颜色
+   * @en Custom 图标color
    */
   iconColor: {
     type: String,

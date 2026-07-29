@@ -10,7 +10,7 @@
           <a-icon name="help" />
         </h-tooltip>
       </div>
-      <h-select v-model="value1" :to-body="false" :to-body="false">
+      <h-select v-model="value1" :to-body="false">
         <h-option label="中国" :value="1" en_name="China" />
         <h-option :value="2" label="美国" en_name="America" />
         <h-option :value="3" label="日本" en_name="Japan" />

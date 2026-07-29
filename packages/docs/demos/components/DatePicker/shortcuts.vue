@@ -12,12 +12,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { dayjs } from '@aurora/horizon-web';
-import type { NDatePickerShortcutsType } from '@aurora/horizon-web';
+import type { HDatePickerShortcutsType } from '@aurora/horizon-web';
 
 const value = ref();
 const value2 = ref();
 
-const shortcuts = ref<NDatePickerShortcutsType[]>([
+const shortcuts = ref<HDatePickerShortcutsType[]>([
   {
     label: 'Last 7 days',
     value: dayjs().subtract(7, 'day'),
@@ -33,7 +33,7 @@ const shortcuts = ref<NDatePickerShortcutsType[]>([
   },
 ]);
 
-const shortcutRange = ref<NDatePickerShortcutsType[]>([
+const shortcutRange = ref<HDatePickerShortcutsType[]>([
   {
     label: 'Last Year',
     value: [dayjs().subtract(1, 'year'), dayjs()],

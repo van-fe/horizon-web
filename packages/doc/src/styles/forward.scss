@@ -1,7 +1,0 @@
-@forward '@aurora/horizon-web/src/styles/mixins/config' with (
-  $css-variable-with-version: false,
-);
-
-@forward '@aurora/horizon-web/src/styles/index.scss';
-
-// @forward '@aurora/icon/dist/index.scss';

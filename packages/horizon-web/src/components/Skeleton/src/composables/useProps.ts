@@ -2,13 +2,17 @@ import type { ExtractPropTypes, PropType } from 'vue';
 import { declarePropType } from '@aurora/utils';
 
 export const useSkeletonProps = declarePropType({
-  /** 骨架屏是否显示 */
+  /** 骨架屏是否显示
+   * @en Configuration for loading.
+ */
   loading: {
     type: Boolean,
     required: false,
     default: true,
   },
-  /** 骨架屏是否以动画形式显示 */
+  /** 骨架屏是否以动画形式显示
+   * @en Configuration for animated.
+ */
   animated: {
     type: Boolean,
     required: false,
@@ -17,7 +21,9 @@ export const useSkeletonProps = declarePropType({
 });
 
 export const useSkeletonItemProps = declarePropType({
-  /** 原子骨架屏形状 */
+  /** 原子骨架屏形状
+   * @en Configuration for shape.
+ */
   shape: {
     type: String as PropType<'avatar' | 'text' | 'operate' | 'image' | 'picture'>,
     required: true,

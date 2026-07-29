@@ -44,16 +44,16 @@ createApp(App)
 
 ## Application
 
-HorizonWeb 还提供了一个 Vue 组件 [Application](/horizon-web/components/Application) 用于全局配置国际化的设置
+HorizonWeb 还提供了一个 Vue 组件 [Application](../../demos/components/Application) 用于全局配置国际化的设置
 如果更改 `locale`，可以动态修改语言
 
-:::demo ../../components/Application/demos/i18n.vue:::
+:::demo components/Application/i18n.vue :::
 
 ## 动态修改语言
 
 如果需要动态修改语言，除了使用 `Application`，也可以使用 `inject(localeInjectKey)` 的值，即 `locale` 来更改
 
-:::demo demos/demo1.vue:::
+:::demo ./demos/demo1.vue :::
 
 ## 增加自定义语言包
 如果业务中有需要使用自定义的语言包，可以配置如下：

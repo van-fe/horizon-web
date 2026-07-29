@@ -1,11 +1,11 @@
 <template>
-  <h-upload action="https://horizon-web-inspector.nioint.com/upload-mock" :disabled="true" />
+  <h-upload action="https://horizon-web-inspector.demoint.com/upload-mock" :disabled="true" />
   <h-upload
-    action="https://horizon-web-inspector.nioint.com/upload-mock"
+    action="https://horizon-web-inspector.demoint.com/upload-mock"
     type="gallery"
     :disabled="true"
   />
-  <h-upload action="https://horizon-web-inspector.nioint.com/upload-mock" type="drop" :disabled="true" accept="image/*" />
+  <h-upload action="https://horizon-web-inspector.demoint.com/upload-mock" type="drop" :disabled="true" accept="image/*" />
 </template>
 
 <script lang="ts">

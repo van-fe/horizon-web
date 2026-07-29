@@ -9,6 +9,7 @@ export const useDrawerProps = declarePropType({
   /**
    * 抽屉状态
    * @deprecated `visible`
+    * @en Configuration for model value.
    **/
   modelValue: {
     type: Boolean,
@@ -18,7 +19,7 @@ export const useDrawerProps = declarePropType({
 
   /**
    * 抽屉的展示状态(v-model:visible)
-   * @version `2.0.4`
+    * @en Configuration for visible.
    **/
   visible: {
     type: Boolean,
@@ -31,6 +32,7 @@ export const useDrawerProps = declarePropType({
    * - v2 = false: slots.title 会被整体渲染到抽屉头部
    * - v2 = true: slots.title 会被渲染到 slots.header 中，有层次关系
    * 请注意：如果设置 `v2=false`，同时设置新增属性header、footer、以及新增slots.header，依旧会按照新版本的逻辑处理
+    * @en Configuration for v2.
    **/
   v2: {
     type: Boolean,
@@ -41,6 +43,7 @@ export const useDrawerProps = declarePropType({
   /**
    * 抽屉位置
    * @deprecated `placement`
+    * @en Configuration for position.
    **/
   position: {
     type: String as PropType<DrawerPlacement>,
@@ -50,7 +53,7 @@ export const useDrawerProps = declarePropType({
 
   /**
    * 抽屉位置
-   * @version `2.0.4`
+    * @en Configuration for placement.
    **/
   placement: {
     type: String as PropType<DrawerPlacement>,
@@ -58,20 +61,26 @@ export const useDrawerProps = declarePropType({
     default: 'right',
   },
 
-  /** 抽屉标题 */
+  /** 抽屉标题
+   * @en Configuration for title.
+ */
   title: {
     type: String,
     required: false,
   },
 
-  /** 抽屉尺寸，如果是数值会自动加上 `px`，也可以是字符串如 `40%` */
+  /** 抽屉尺寸，如果是数值会自动加上 `px`，也可以是字符串如 `40%`
+   * @en Configuration for size.
+ */
   size: {
     type: [Number, String] as PropType<DrawerSize>,
     required: false,
     default: 'medium',
   },
 
-  /** 是否显示蒙层 */
+  /** 是否显示蒙层
+   * @en Configuration for mask.
+ */
   mask: {
     type: Boolean,
     default: true,
@@ -81,6 +90,7 @@ export const useDrawerProps = declarePropType({
   /**
    * 点击蒙层是否关闭抽屉
    * @deprecated `maskClosable`
+    * @en Configuration for mask close.
    **/
   maskClose: {
     type: Boolean,
@@ -88,7 +98,9 @@ export const useDrawerProps = declarePropType({
     required: false,
   },
 
-  /** 点击蒙层是否关闭抽屉，使用 `maskClosable` 替代 */
+  /** 点击蒙层是否关闭抽屉，使用 `maskClosable` 替代
+   * @en Configuration for mask closable.
+ */
   maskClosable: {
     type: Boolean,
     default: true,
@@ -98,6 +110,7 @@ export const useDrawerProps = declarePropType({
   /**
    * 按下 ESC 键是否关闭抽屉
    * @deprecated ，使用 `escClosable` 替代
+    * @en Configuration for esc close.
    **/
   escClose: {
     type: Boolean,
@@ -107,7 +120,7 @@ export const useDrawerProps = declarePropType({
 
   /**
    * 按下 ESC 键是否关闭抽屉
-   * @version `2.0.4`
+    * @en Configuration for esc closable.
    **/
   escClosable: {
     type: Boolean,
@@ -118,6 +131,7 @@ export const useDrawerProps = declarePropType({
   /**
    * 是否显示右上角关闭按钮，只有设置了 `header=true` 才会生效
    * @deprecated `closable`
+    * @en Configuration for close button.
    **/
   closeButton: {
     type: Boolean,
@@ -127,7 +141,7 @@ export const useDrawerProps = declarePropType({
 
   /**
    * 是否显示右上角关闭按钮
-   * @version `2.0.4`
+    * @en Configuration for closable.
    **/
   closable: {
     type: Boolean,
@@ -137,7 +151,7 @@ export const useDrawerProps = declarePropType({
 
   /**
    * 是否展示底部内容，当 `v2=true` 设置时候，忽略其他条件，仅判断 `footer`
-   * @version `2.0.4`
+    * @en Configuration for footer.
    **/
   footer: {
     type: Boolean,
@@ -146,7 +160,7 @@ export const useDrawerProps = declarePropType({
 
   /**
    * 是否展示头部内容，当 `v2=true` 设置时候，忽略其他条件，仅判断 `footer`
-   * @version `2.0.4`
+    * @en Configuration for header.
    **/
   header: {
     type: Boolean,
@@ -156,6 +170,7 @@ export const useDrawerProps = declarePropType({
   /**
    * 是否显示主要按钮
    * @deprecated `okButton`
+    * @en Configuration for primary button.
    **/
   primaryButton: {
     type: Boolean,
@@ -165,7 +180,7 @@ export const useDrawerProps = declarePropType({
 
   /**
    * 是否显示主要按钮
-   * @version `2.0.4`
+    * @en Configuration for ok button.
    **/
   okButton: {
     type: [Boolean, Object] as PropType<boolean | ButtonProps>,
@@ -176,6 +191,7 @@ export const useDrawerProps = declarePropType({
   /**
    * 主要按钮的文本
    * @deprecated `okButtonText`
+    * @en Configuration for primary text.
    **/
   primaryText: {
     type: String,
@@ -184,7 +200,7 @@ export const useDrawerProps = declarePropType({
 
   /**
    * 主要按钮的文本
-   * @version `2.0.4`
+    * @en Configuration for ok button text.
    **/
   okButtonText: {
     type: String,
@@ -194,6 +210,7 @@ export const useDrawerProps = declarePropType({
   /**
    * 是否显示次要按钮
    * @deprecated `cancelButton`
+    * @en Configuration for secondary button.
    **/
   secondaryButton: {
     type: Boolean,
@@ -203,7 +220,7 @@ export const useDrawerProps = declarePropType({
 
   /**
    * 是否显示次要按钮
-   * @version `2.0.4`
+    * @en Configuration for cancel button.
    **/
   cancelButton: {
     type: [Boolean, Object] as PropType<boolean | ButtonProps>,
@@ -214,6 +231,7 @@ export const useDrawerProps = declarePropType({
   /**
    * 次要按钮的文本
    * @deprecated `cancelButtonText`
+    * @en Configuration for secondary text.
    **/
   secondaryText: {
     type: String,
@@ -222,7 +240,7 @@ export const useDrawerProps = declarePropType({
 
   /**
    * 次要按钮的文本
-   * @version `2.0.4`
+    * @en Configuration for cancel button text.
    **/
   cancelButtonText: {
     type: String,
@@ -233,6 +251,7 @@ export const useDrawerProps = declarePropType({
    * 关闭之前的回调，返回false 或者 Promise.resolve(false) 会停止关闭抽屉。
    * 传入close方法已过时，下个版本移除
    * PS：请注意默认close动作，都会在 beforeClose 后执行，等待 beforeClose 执行完成后触发
+    * @en Configuration for before close.
    **/
   beforeClose: {
     type: Function as PropType<
@@ -244,6 +263,7 @@ export const useDrawerProps = declarePropType({
   /**
    * 是否将 `drawer` 挂载在 `body` 上
    * @deprecated `to`
+    * @en Configuration for to body.
    **/
   toBody: {
     type: Boolean,
@@ -252,7 +272,7 @@ export const useDrawerProps = declarePropType({
 
   /**
    * 弹出框的挂载容器，和 `<teleport>` 保持一致，启用请使用启用 `v2` 属性
-   * @version `2.0.4`
+    * @en Configuration for to.
    **/
   to: {
     type: [String, Object] as PropType<string | TeleportProps['to'] | HTMLElement>,
@@ -261,7 +281,7 @@ export const useDrawerProps = declarePropType({
   /**
    * 是否在 `Drawer` 出现时将 `body` 滚动锁定
    * 如果没有设置，则在 `mask = true` 时自动开启
-   * @version 2.7.0
+    * @en Configuration for lock scroll.
    */
   lockScroll: {
     type: Boolean,
@@ -270,7 +290,7 @@ export const useDrawerProps = declarePropType({
 
   /**
    * 启用则可以使用鼠标拖拽抽屉尺寸
-   * @version 2.10.0
+    * @en Configuration for size draggable.
    */
   sizeDraggable: {
     type: Boolean,
@@ -279,8 +299,8 @@ export const useDrawerProps = declarePropType({
 
   /**
    * 启用抽屉推动行为，当启用时保持多个抽屉位置不变（**不推荐使用**）
-   * @version 2.10.0
    * @deprecated 不推荐使用
+    * @en Configuration for push.
    */
   push: {
     type: [Boolean],
@@ -289,7 +309,6 @@ export const useDrawerProps = declarePropType({
 
   /*
    * 设置抽屉的加载状态
-   * @version 2.8.2
    */
   loading: {
     type: Boolean,
@@ -298,7 +317,7 @@ export const useDrawerProps = declarePropType({
 
   /**
    * 关闭后是否销毁抽屉
-   * @version 2.11.6
+    * @en Configuration for destroy on close.
    */
   destroyOnClose: {
     type: Boolean,

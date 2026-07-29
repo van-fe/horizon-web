@@ -38,5 +38,4 @@ You can also configure `tooltip-enable = false` to control not displaying `toolt
 You can set `input-enable` to enable the input box
 
 But note that if `range` is enabled, the input box will not be enabled
-:::demo components/Slider/with-input.vue ::
-
+:::demo components/Slider/with-input.vue :::

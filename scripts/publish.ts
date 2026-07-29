@@ -122,7 +122,7 @@ async function ensureVersion() {
 function publish() {
   Object.keys(packageJsonModified).forEach(pkgName => {
     shell.cd(resolve(__dirname, '../packages', pkgName));
-    shell.exec(`npm publish --registry https://registry.npmmirror.com/ ${tag ? `--tag ${tag}` : ''}`);
+    shell.exec(`bun publish --registry https://registry.npmmirror.com/ ${tag ? `--tag ${tag}` : ''}`);
   });
 }
 
@@ -147,9 +147,7 @@ function checkPublishedVersion() {
   }> = [];
   Object.entries(versions).forEach(([pkgName, version]) => {
     const npmMirrorVersion = shell.exec(
-      `npm view @aurora/${pkgName} version ${
-        tag ? `--tag ${tag}` : ''
-      } --registry https://registry.npmmirror.com/`,
+      `curl -fsSL https://registry.npmmirror.com/@aurora%2F${pkgName} | sed -n 's/.*"latest":{"version":"\([^"]*\)".*/\1/p'`,
       { silent: true },
     );
 

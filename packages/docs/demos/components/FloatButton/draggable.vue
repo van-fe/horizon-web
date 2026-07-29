@@ -12,7 +12,7 @@
       </h-form-item>
     </h-form>
 
-    <h-float-button :visible="visible" :adsorb-bottom="adsorbBottom" :draggable="draggable" icon="nomi" />
+    <h-float-button :visible="visible" :adsorb-bottom="adsorbBottom" :draggable="draggable" icon="assistant" />
   </div>
 </template>
 

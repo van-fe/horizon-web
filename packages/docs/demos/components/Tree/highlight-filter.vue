@@ -24,11 +24,11 @@
 
 <script setup lang="ts">
 import { onMounted, ref, h } from 'vue';
-import type { NTreeHighlightMethod, NExtendTreeNodeData } from '@aurora/horizon-web';
+import type { HTreeHighlightMethod, HExtendTreeNodeData } from '@aurora/horizon-web';
 
 const baseTreeData = ref([]);
 
-const highlightMethod: NTreeHighlightMethod = (inputValue, node) => {
+const highlightMethod: HTreeHighlightMethod = (inputValue, node) => {
   if (!node) return '';
 
   if (inputValue) {

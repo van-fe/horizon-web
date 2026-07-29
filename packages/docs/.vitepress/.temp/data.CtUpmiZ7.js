@@ -1,0 +1,4 @@
+const data = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 17C7.82843 17 8.5 16.3284 8.5 15.5L8.5 10.5C8.5 9.67157 7.82843 9 7 9L7 17Z" fill="currentColor"/><path d="M13 15.5C13 16.3284 12.3284 17 11.5 17L11.5 7C12.3284 7 13 7.67157 13 8.5L13 15.5Z" fill="currentColor"/><path d="M16 17C16.8284 17 17.5 16.3284 17.5 15.5L17.5 12.5C17.5 11.6716 16.8284 11 16 11L16 17Z" fill="currentColor"/><path d="M21.25 3C21.6642 3 22 3.33579 22 3.75V20.25C22 20.6642 21.6642 21 21.25 21H2.75C2.33579 21 2 20.6642 2 20.25V3.75C2 3.33579 2.33579 3 2.75 3H21.25ZM3.5 4.5L3.5 19.5H20.5V4.5L3.5 4.5Z" fill="currentColor"/></svg>';
+export {
+  data as default
+};

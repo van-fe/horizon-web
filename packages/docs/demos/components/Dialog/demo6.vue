@@ -61,12 +61,12 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { $message } from '@aurora/horizon-web';
-import type { NFormInstance } from '@aurora/horizon-web';
+import type { HFormInstance } from '@aurora/horizon-web';
 
 export default defineComponent({
   setup() {
     const displayType = ref('show');
-    const formRef = ref<NFormInstance | null>(null);
+    const formRef = ref<HFormInstance | null>(null);
     const formData = ref({
       username: '',
       email: '',

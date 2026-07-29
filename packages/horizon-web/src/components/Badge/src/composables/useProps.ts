@@ -18,6 +18,7 @@ export const useBadgeProps = declarePropType({
    * dot: 圆点
    * num: 数字
    * icon: 图标
+    * @en Configuration for type.
    */
   type: {
     type: String as PropType<'dot' | 'num' | 'icon'>,
@@ -27,46 +28,63 @@ export const useBadgeProps = declarePropType({
    * 内容
    * 当 type 是 num 时，表示数字
    * 当 type 是 icon 时，表示图标名称
+    * @en Configuration for content.
    */
   content: {
     type: [String, Number],
     default: '',
   },
-  /** 是否隐藏 */
+  /** 是否隐藏
+   * @en Configuration for hidden.
+ */
   hidden: {
     type: Boolean,
     default: false,
   },
-  /** 最大的数字，当大于该值时显示 ${numMax}+ */
+  /** 最大的数字，当大于该值时显示 ${numMax}+
+   * @en Configuration for num max.
+ */
   numMax: {
     type: Number,
     default: Infinity,
   },
-  /** 标记的颜色，仅对 type 为 dot 和 num 生效 */
+  /** 标记的颜色，仅对 type 为 dot 和 num 生效
+   * @en Configuration for color.
+ */
   color: {
     type: String,
     default: cssVariable('bg-error-default'),
   },
-  /** 图标大小 */
+  /** 图标大小
+   * @en Configuration for icon size.
+ */
   iconSize: {
     type: Number,
     default: 16,
   },
-  /** 图标颜色 */
+  /** 图标颜色
+   * @en Configuration for icon color.
+ */
   iconColor: {
     type: String,
   },
-  /** 是否显示在右下角 */
+  /** 是否显示在右下角
+   * @en Configuration for bottom.
+ */
   bottom: {
     type: Boolean,
     default: false,
   },
-  /** 位置 */
+  /** 位置
+   * @en Configuration for align.
+ */
   align: {
     type: String as PropType<'center-point' | 'inner' | 'outer' | 'fix-left'>,
     default: 'center-point',
   },
-  /** 偏移量 */
+  /** 偏移量
+   * @en Configuration for offset.
+ */
   offset: {
     type: Object as PropType<Offset>,
     default: null,

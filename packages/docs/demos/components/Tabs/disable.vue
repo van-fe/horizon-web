@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { $message, type NTabValue } from '@aurora/horizon-web';
+import { $message, type HTabValue } from '@aurora/horizon-web';
 import { ref } from 'vue';
 
 const cardType = ref('line');
 
-const onTabChanged = (tab: NTabValue) => {
+const onTabChanged = (tab: HTabValue) => {
   console.info('tab changed', tab);
   $message({ type: 'success', message: `Tab ${tab} is clicked` });
 };

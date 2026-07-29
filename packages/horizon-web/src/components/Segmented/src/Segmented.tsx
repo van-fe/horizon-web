@@ -29,6 +29,7 @@ import { contextKey } from './constants';
 export default defineComponent({
   name: `${useNamespace()}Segmented`,
   desc: '分段控制器',
+  descLocales: { en: 'Segmented control with selectable items.' },
   inheritAttrs: false,
   props: useSegmentedProps,
   emits: useSegmentedEmits,

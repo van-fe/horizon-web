@@ -23,6 +23,7 @@ export type HColumnResponsiveSetting = {
 export const useColProps = declarePropType({
   /**
    * 标签
+    * @en Configuration for tag.
    */
   tag: {
     type: String,
@@ -30,12 +31,14 @@ export const useColProps = declarePropType({
   },
   /**
    * 栅格占据列数
+    * @en Configuration for span.
    */
   span: {
     type: Number,
   },
   /**
    * 栅格左侧偏移间隔数
+    * @en Configuration for offset.
    */
   offset: {
     type: Number,
@@ -43,7 +46,7 @@ export const useColProps = declarePropType({
   },
   /**
    * 向左移动格数
-   * @version 2.0.5
+    * @en Configuration for pull.
    */
   pull: {
     type: Number,
@@ -51,7 +54,7 @@ export const useColProps = declarePropType({
   },
   /**
    * 向右移动格数
-   * @version 2.0.5
+    * @en Configuration for push.
    */
   push: {
     type: Number,
@@ -59,7 +62,7 @@ export const useColProps = declarePropType({
   },
   /**
    * <480px 响应式栅格数或者栅格属性对象
-   * @version 2.0.5
+    * @en Configuration for xs.
    */
   xs: {
     type: [Number, Object] as PropType<number | HColumnResponsiveSetting>,
@@ -67,7 +70,7 @@ export const useColProps = declarePropType({
   },
   /**
    * ≥480px 响应式栅格数或者栅格属性对象
-   * @version 2.0.5
+    * @en Configuration for sm.
    */
   sm: {
     type: [Number, Object] as PropType<number | HColumnResponsiveSetting>,
@@ -75,7 +78,7 @@ export const useColProps = declarePropType({
   },
   /**
    * ≥1024px 响应式栅格数或者栅格属性对象
-   * @version 2.0.5
+    * @en Configuration for md.
    */
   md: {
     type: [Number, Object] as PropType<number | HColumnResponsiveSetting>,
@@ -83,7 +86,7 @@ export const useColProps = declarePropType({
   },
   /**
    * ≥1440px 响应式栅格数或者栅格属性对象
-   * @version 2.0.5
+    * @en Configuration for lg.
    */
   lg: {
     type: [Number, Object] as PropType<number | HColumnResponsiveSetting>,
@@ -91,7 +94,7 @@ export const useColProps = declarePropType({
   },
   /**
    * ≥1920px 响应式栅格数或者栅格属性对象
-   * @version 2.0.5
+    * @en Configuration for xl.
    */
   xl: {
     type: [Number, Object] as PropType<number | HColumnResponsiveSetting>,
@@ -99,7 +102,7 @@ export const useColProps = declarePropType({
   },
   /**
    * ≥2880px 响应式栅格数或者栅格属性对象
-   * @version 2.0.5
+    * @en Configuration for xxl.
    */
   xxl: {
     type: [Number, Object] as PropType<number | HColumnResponsiveSetting>,
@@ -108,36 +111,44 @@ export const useColProps = declarePropType({
 });
 
 export const useRowProps = declarePropType({
-  /** 标签 */
+  /** 标签
+   * @en Configuration for tag.
+ */
   tag: {
     type: String,
     default: 'div',
   },
-  /** 栅格间，包括水平和垂直间隔 */
+  /** 栅格间，包括水平和垂直间隔
+   * @en Configuration for gutter.
+ */
   gutter: {
     type: Number,
   },
   /**
    * 水平间隔
-   * @version 2.0.5
+    * @en Configuration for hspace.
    */
   hspace: {
     type: Number,
   },
   /**
    * 垂直间隔
-   * @version 2.0.5
+    * @en Configuration for vspace.
    */
   vspace: {
     type: Number,
   },
-  /** flex 布局下的水平排列方式 */
+  /** flex 布局下的水平排列方式
+   * @en Configuration for justify.
+ */
   justify: {
     type: String as PropType<
       'start' | 'center' | 'end' | 'space-around' | 'space-between' | 'space-evenly'
     >,
   },
-  /** flex 布局下的垂直排列方式 */
+  /** flex 布局下的垂直排列方式
+   * @en Configuration for align.
+ */
   align: {
     type: String as PropType<'top' | 'middle' | 'bottom'>,
   },

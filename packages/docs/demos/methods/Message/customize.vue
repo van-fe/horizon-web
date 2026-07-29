@@ -3,17 +3,17 @@
 </template>
 
 <script lang="ts" setup>
-import { $message, NButton, NSpace } from '@aurora/horizon-web';
+import { $message, HButton, HSpace } from '@aurora/horizon-web';
 import { defineComponent, h } from 'vue';
 
 const ButtonGroup = defineComponent({
   name: 'ButtonGroup',
   // eslint-disable-next-line vue/no-unused-components
   setup() {
-    return () => h(NSpace, [
-      h(NButton, { size: 'small', plain: true, onClick: () => $message.success('nice~') }, 'one'),
-      h(NButton, { size: 'small', plain: true, type: 'danger', onClick: () => $message.warning('danger!!!') }, 'two'),
-      h(NButton, { size: 'small', plain: true, type: 'tertiary', onClick: () => $message.error('terrible') }, 'three'),
+    return () => h(HSpace, [
+      h(HButton, { size: 'small', plain: true, onClick: () => $message.success('nice~') }, 'one'),
+      h(HButton, { size: 'small', plain: true, type: 'danger', onClick: () => $message.warning('danger!!!') }, 'two'),
+      h(HButton, { size: 'small', plain: true, type: 'tertiary', onClick: () => $message.error('terrible') }, 'three'),
     ]);
   },
 });

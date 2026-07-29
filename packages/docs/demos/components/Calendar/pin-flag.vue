@@ -48,7 +48,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, h } from 'vue';
-import { NCalendarPinFlag } from '@aurora/horizon-web';
+import { HCalendarPinFlag } from '@aurora/horizon-web';
 import { Dayjs } from 'dayjs';
 
 export default defineComponent({
@@ -58,12 +58,12 @@ export default defineComponent({
     const showTime = ref(true);
     const createFlagCanThoughDisableDateOrHour = ref(true);
 
-    const pinFlags = ref<NCalendarPinFlag[]>([
+    const pinFlags = ref<HCalendarPinFlag[]>([
       {
-        title: 'NIO车展',
+        title: 'Demo车展',
         startAt: '2022-10-14',
         endAt: '2022-10-20 23:59:59',
-        tooltip: 'NIO车展，千万不要错过',
+        tooltip: 'Demo车展，千万不要错过',
         clickable: true,
       },
       {
@@ -112,7 +112,7 @@ export default defineComponent({
       },
     ]);
 
-    function onFlagClick(flag: NCalendarPinFlag) {
+    function onFlagClick(flag: HCalendarPinFlag) {
       console.info(flag);
     }
 
@@ -125,7 +125,7 @@ export default defineComponent({
       };
     }
 
-    function onCreatFinishFlagCallback(flag: NCalendarPinFlag) {
+    function onCreatFinishFlagCallback(flag: HCalendarPinFlag) {
       return new Promise(resolve => {
         console.info(flag);
 

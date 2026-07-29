@@ -15,7 +15,7 @@
       <h-upload
         id="background-uploader"
         v-model:use-background="useBackground"
-        action="https://horizon-web-inspector.nioint.com/upload-mock"
+        action="https://horizon-web-inspector.demoint.com/upload-mock"
         button-text="单选手动上传"
         :show-file-list="showFileList"
         :auto-upload="false"
@@ -24,7 +24,7 @@
     <h-col :span="24">
       <h-upload
         v-model:use-background="useBackground"
-        action="https://horizon-web-inspector.nioint.com/upload-mock"
+        action="https://horizon-web-inspector.demoint.com/upload-mock"
         button-text="多选自动上传"
         :multiple="true"
         :show-file-list="showFileList"

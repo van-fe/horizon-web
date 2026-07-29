@@ -6,7 +6,7 @@ import { ref } from 'vue';
 describe('VideoPlayer.tsx', () => {
   test('basic', async () => {
     const videoSource = ref({
-      src: 'https://www.nio.cn/cdn-static/mynio/nextjs/images/et5/et5-hero-video.mp4',
+      src: 'https://www.example.com/cdn-static/mydemo/nextjs/images/et5/et5-hero-video.mp4',
       type: 'video/mp4',
     });
 

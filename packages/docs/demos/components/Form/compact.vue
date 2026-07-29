@@ -22,9 +22,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { $message, NFormInstance } from '@aurora/horizon-web';
+import { $message, HFormInstance } from '@aurora/horizon-web';
 
-const formRef = ref<NFormInstance>(null);
+const formRef = ref<HFormInstance>(null);
 const compact = ref(true);
 const formData = ref({
   username: '',

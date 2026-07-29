@@ -2,7 +2,7 @@
 Element centering is a very common requirement in actual development. Here are summarized related utility classes for use.
 
 ## Text Center
-Use the `text-center` utility class in [Typography](./typography) to achieve horizontal centering, and set `line-height` to achieve vertical centering.
+Use the `text-center` utility class in [Typography](../typography/doc) to achieve horizontal centering, and set `line-height` to achieve vertical centering.
 |Class|Properties|
 |-|-|
 |text-center|text-align: center;|
@@ -11,7 +11,7 @@ Use the `text-center` utility class in [Typography](./typography) to achieve hor
 :::demo ./demos/textcenter.vue :::
 
 ## Auto Margin Center
-If the element has a fixed `width`, you can use the `mx-auto` utility class in [Spacing](./spacing) to achieve horizontal centering.
+If the element has a fixed `width`, you can use the `mx-auto` utility class in [Spacing](../spacing/doc) to achieve horizontal centering.
 |Class|Properties|
 |-|-|
 |mx-auto|margin-left: auto;<br>margin-right: auto;|
@@ -20,7 +20,7 @@ If the element has a fixed `width`, you can use the `mx-auto` utility class in [
 :::demo ./demos/margin.vue :::
 
 ## Position Center
-If the element is `absolute` or `fixed` positioned, you can use utility classes in [Position](./position) to achieve horizontal or vertical centering.
+If the element is `absolute` or `fixed` positioned, you can use utility classes in [Position](../position/doc) to achieve horizontal or vertical centering.
 |Class|Properties|
 |-|-|
 |position-x-center|left: 50%;<br>transform: translateX(-50%);|
@@ -31,7 +31,7 @@ If the element is `absolute` or `fixed` positioned, you can use utility classes 
 :::demo ./demos/position.vue :::
 
 ## Flex Center
-If the element is `flex` or `inline-flex` model, you can use utility classes in [Flex](./flex) to achieve horizontal or vertical centering.
+If the element is `flex` or `inline-flex` model, you can use utility classes in [Flex](../flex/doc) to achieve horizontal or vertical centering.
 |Class|Properties|
 |-|-|
 |justify-center|justify-content: center;|

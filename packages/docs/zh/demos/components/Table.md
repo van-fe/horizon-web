@@ -112,13 +112,13 @@
 ## 自定义列模板
 可以通过 `column` 默认插槽自定义列内容
 
-可以在 [类型定义](#类型定义) 查看 `NTableCellScopeSlots` 类型
+可以在 [类型定义](#类型定义) 查看 `HTableCellScopeSlots` 类型
 :::demo components/Table/column-default-slot.vue :::
 
 ## 自定义表头
 可以通过 `column.header` 插槽自定义表头
 
-可以在 [类型定义](#类型定义) 查看 `NTableHeaderCellScopeSlots` 类型
+可以在 [类型定义](#类型定义) 查看 `HTableHeaderCellScopeSlots` 类型
 :::demo components/Table/column-header-slot.vue :::
 
 ## 空状态
@@ -191,7 +191,7 @@
 ## 自定义索引
 在设置列的 `type="index"` 后，如果对于索引有特殊设定，可以给 `index` 传入具体数值，或者传入一个函数用来计算
 
-`index` 的类型是 `number | ((index: number, row: NTableTransformedRowDataType) => number)`
+`index` 的类型是 `number | ((index: number, row: HTableTransformedRowDataType) => number)`
 
 :::demo components/Table/index.vue :::
 

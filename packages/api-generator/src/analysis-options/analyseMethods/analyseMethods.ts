@@ -18,6 +18,7 @@ function analysePropertyAssignment(
     returnText: '',
     returns: [],
     desc: jsDoc.comment,
+    descLocales: jsDoc.locales,
     name: property.getName(),
     type: '',
     nativeType: ApiGeneratorAnalysedBaseType.Function,
@@ -38,7 +39,8 @@ function analysePropertyAssignment(
       switch (child.getKind()) {
         case ts.SyntaxKind.Parameter:
           const field = child.getFirstChildByKind(ts.SyntaxKind.Identifier)?.getText() ?? '';
-          const value = child.getLastChild()?.getText() ?? '';
+          const parameterType = child.getTypeNode();
+          const value = parameterType?.getText() || child.getType().getText() || 'unknown';
           if (field && value) {
             res.params.push({
               returnText: '',
@@ -46,7 +48,12 @@ function analysePropertyAssignment(
               field,
               value,
               desc: (jsDoc.tags.params || jsDoc.tags.param)?.[field] ?? '',
-              nativeType: formatTsTypeToUnitType(child.getLastChild()!, fileElements),
+              descLocales: jsDoc.tags.paramEn?.[field]
+                ? { en: jsDoc.tags.paramEn[field] }
+                : undefined,
+              nativeType: parameterType
+                ? formatTsTypeToUnitType(parameterType, fileElements)
+                : ApiGeneratorAnalysedBaseType.Unknown,
               params: [],
             });
           }

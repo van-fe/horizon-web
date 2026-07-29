@@ -72,9 +72,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { NMenu } from '@aurora/horizon-web';
+import { HMenu } from '@aurora/horizon-web';
 
-const menuRef = ref<typeof NMenu | null>(null);
+const menuRef = ref<typeof HMenu | null>(null);
 const collapse = ref(false);
 const theme = ref('default');
 const selectedValue = ref('1');

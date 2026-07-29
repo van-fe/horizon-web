@@ -40,6 +40,9 @@ export function analyseObjectExpression(
             currentJsDoc.tags.return?.default ||
             currentJsDoc.comment ||
             '',
+          descLocales: currentJsDoc.tags.paramEn?.[field]
+            ? { en: currentJsDoc.tags.paramEn[field] }
+            : undefined,
           nativeType,
           params: [],
         };

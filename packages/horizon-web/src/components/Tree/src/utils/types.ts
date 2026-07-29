@@ -7,12 +7,10 @@ export type HTreeUuidType = string | number;
 export interface HTreeData extends BaseTreeData {
   /**
    * 前置自定义 icon
-   * @version 2.12.10
    */
   prefixIcon?: Component | VNode | string | null;
   /**
    * 是否允许此节点拖拽
-   * @version 2.12.10
    */
   draggable?: boolean;
   /**

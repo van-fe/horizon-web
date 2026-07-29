@@ -7,6 +7,7 @@ import type { CheckboxGroupPropsProvideType, CheckboxUnionType } from '../utils/
 export const useCheckboxProps = declarePropType({
   /**
    * 选中项绑定值
+    * @en Configuration for model value.
    */
   modelValue: {
     type: [Array, String, Number, Boolean] as PropType<
@@ -17,6 +18,7 @@ export const useCheckboxProps = declarePropType({
   },
   /**
    * 多选框对应的值（只有在checkbox-group或者modelValue类型为array时有效）
+    * @en Configuration for label.
    */
   label: {
     type: [String, Number, Boolean],
@@ -25,6 +27,7 @@ export const useCheckboxProps = declarePropType({
   },
   /**
    * 选中时的值
+    * @en Configuration for true label.
    */
   trueLabel: {
     type: [String, Number, Boolean],
@@ -33,6 +36,7 @@ export const useCheckboxProps = declarePropType({
   },
   /**
    * 未选中时的值
+    * @en Configuration for false label.
    */
   falseLabel: {
     type: [String, Number, Boolean],
@@ -41,6 +45,7 @@ export const useCheckboxProps = declarePropType({
   },
   /**
    * 是否禁用多选框
+    * @en Configuration for disabled.
    */
   disabled: {
     type: Boolean,
@@ -48,6 +53,7 @@ export const useCheckboxProps = declarePropType({
   },
   /**
    * 是否显示边框
+    * @en Configuration for border.
    */
   border: {
     type: Boolean,
@@ -56,6 +62,7 @@ export const useCheckboxProps = declarePropType({
   /**
    * 中间状态，用以表示 checkbox 的不确定,仅控制样式
    * 一般用以显示全选效果
+    * @en Configuration for indeterminate.
    */
   indeterminate: {
     type: Boolean,
@@ -64,6 +71,7 @@ export const useCheckboxProps = declarePropType({
   },
   /**
    * 开启只读模式
+    * @en Configuration for viewable.
    */
   viewable: {
     type: Boolean,
@@ -72,6 +80,7 @@ export const useCheckboxProps = declarePropType({
   },
   /**
    *  多选框对应尺寸，仅在开启border有效
+    * @en Configuration for size.
    */
   size: {
     type: String as PropType<'small' | 'medium' | 'large'>,
@@ -79,7 +88,7 @@ export const useCheckboxProps = declarePropType({
   },
   /**
    * 是否强制使用最新尺寸规则
-   * @version 2.0.2
+    * @en Configuration for force newest size.
    */
   forceNewestSize: {
     type: Boolean,
@@ -90,6 +99,7 @@ export const useCheckboxProps = declarePropType({
 export const useCheckboxButtonProps = declarePropType({
   /**
    * 选中项绑定值
+    * @en Configuration for model value.
    */
   modelValue: {
     type: [Array, String, Number, Boolean] as PropType<
@@ -100,6 +110,7 @@ export const useCheckboxButtonProps = declarePropType({
   },
   /**
    * 多选框按钮对应的值（只有在checkbox-group或者modelValue类型为array时有效）
+    * @en Configuration for label.
    */
   label: {
     type: [String, Number, Boolean],
@@ -108,6 +119,7 @@ export const useCheckboxButtonProps = declarePropType({
   },
   /**
    * 选中时的值
+    * @en Configuration for true label.
    */
   trueLabel: {
     type: [String, Number, Boolean],
@@ -116,6 +128,7 @@ export const useCheckboxButtonProps = declarePropType({
   },
   /**
    * 未选中时的值
+    * @en Configuration for false label.
    */
   falseLabel: {
     type: [String, Number, Boolean],
@@ -124,6 +137,7 @@ export const useCheckboxButtonProps = declarePropType({
   },
   /**
    * 是否禁用多选框按钮
+    * @en Configuration for disabled.
    */
   disabled: {
     type: Boolean,
@@ -131,6 +145,7 @@ export const useCheckboxButtonProps = declarePropType({
   },
   /**
    *  多选框按钮对应尺寸
+    * @en Configuration for size.
    */
   size: {
     type: String as PropType<'small' | 'medium' | 'large'>,
@@ -138,7 +153,7 @@ export const useCheckboxButtonProps = declarePropType({
   },
   /**
    * 是否强制使用最新尺寸规则
-   * @version 2.0.2
+    * @en Configuration for force newest size.
    */
   forceNewestSize: {
     type: Boolean,
@@ -146,6 +161,7 @@ export const useCheckboxButtonProps = declarePropType({
   },
   /**
    * 开启只读模式
+    * @en Configuration for viewable.
    */
   viewable: {
     type: Boolean,
@@ -154,6 +170,7 @@ export const useCheckboxButtonProps = declarePropType({
   },
   /**
    * 填充色
+    * @en Configuration for fill.
    */
   fill: {
     type: String,
@@ -165,6 +182,7 @@ export const useCheckboxButtonProps = declarePropType({
 export const useCheckboxGroupProps = declarePropType({
   /**
    * 选中项绑定值数组
+    * @en Configuration for model value.
    */
   modelValue: {
     type: Array as PropType<Array<string | boolean | number>>,
@@ -172,6 +190,7 @@ export const useCheckboxGroupProps = declarePropType({
   },
   /**
    * 是否禁用多选框(按钮)组
+    * @en Configuration for disabled.
    */
   disabled: {
     type: Boolean,
@@ -180,6 +199,7 @@ export const useCheckboxGroupProps = declarePropType({
   /**
    *  多选框按钮组对应尺寸
    *  对Checkbox无作用
+    * @en Configuration for size.
    */
   size: {
     type: String as PropType<'large' | 'small' | 'medium'>,
@@ -187,7 +207,7 @@ export const useCheckboxGroupProps = declarePropType({
   },
   /**
    * 是否强制使用最新尺寸规则
-   * @version 2.0.2
+    * @en Configuration for force newest size.
    */
   forceNewestSize: {
     type: Boolean,
@@ -195,6 +215,7 @@ export const useCheckboxGroupProps = declarePropType({
   },
   /**
    * 开启只读模式
+    * @en Configuration for viewable.
    */
   viewable: {
     type: Boolean,

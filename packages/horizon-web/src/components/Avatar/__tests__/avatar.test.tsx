@@ -3,7 +3,7 @@ import HAvatar from '..';
 import { describe, expect, test } from 'vitest';
 import { nextTick, ref } from 'vue';
 
-const errorImageUrl = 'https://cdn-app.nio.com/us/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg';
+const errorImageUrl = 'https://cdn-app.example.com/us/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg';
 
 describe('Avatar.tsx', () => {
   test('basic', async () => {
@@ -20,6 +20,6 @@ describe('Avatar.tsx', () => {
 
     await nextTick()
     
-    expect(wrapper.find('img').attributes('src')).toEqual('https://cdn-app.nio.com/horizon-web/defaultAvatar.jpg')
+    expect(wrapper.find('img').attributes('src')).toEqual('https://cdn-app.example.com/horizon-web/defaultAvatar.jpg')
   })
 });

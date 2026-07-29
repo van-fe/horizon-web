@@ -3,7 +3,7 @@
     <h-card title="标题">
       <img
           class="content-img"
-          src="https://static.nio.com/fx-static/card-component/clbu60ecm0000072w2izw1wsp/img.png"
+          src="https://static.example.com/fx-static/card-component/clbu60ecm0000072w2izw1wsp/img.png"
           alt=""
       />
     </h-card>

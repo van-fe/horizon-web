@@ -11,7 +11,7 @@ VirtualScroller doesn't care whether the elements wrapped by the scroll containe
 :::demo components/VirtualScroller/VirtualScrollerDemo.vue :::
 
 ## VirtualScroller Horizontal Scroll
-VirtualScroller doesn't care whether the elements wrapped by the scroll container have specified widths. In the Demo, setting random width for NVirtualScrollerItem is to make the text wrap
+VirtualScroller doesn't care whether the elements wrapped by the scroll container have specified widths. In the Demo, setting random width for HVirtualScrollerItem is to make the text wrap
 :::demo components/VirtualScroller/HorizontalDemo.vue :::
 
 <!-- ## VirtualScroller Implement Chat Dialog -->

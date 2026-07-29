@@ -4,6 +4,7 @@ import { declareDirectiveOptionType } from '@aurora/utils';
 export const useInfiniteScrollOptions = declareDirectiveOptionType({
   /**
    * 允许触发回调
+   * @en Allow Trigger callback
    */
   block: {
     type: Boolean as DirectiveOptionType<boolean>,
@@ -11,6 +12,7 @@ export const useInfiniteScrollOptions = declareDirectiveOptionType({
   },
   /**
    * 触底回调函数。
+   * @en Bottom reachedcallback,
    */
   onReachBottom: {
     type: Function as DirectiveOptionType<() => void>,
@@ -18,6 +20,7 @@ export const useInfiniteScrollOptions = declareDirectiveOptionType({
   },
   /**
    * 触顶回调函数。
+   * @en Top reachedcallback,
    */
   onReachTop: {
     type: Function as DirectiveOptionType<() => void>,
@@ -25,6 +28,7 @@ export const useInfiniteScrollOptions = declareDirectiveOptionType({
   },
   /**
    * 距离底部的高度
+   * @en Distance from the bottom edge in pixels
    */
   distance: {
     type: Number,
@@ -32,6 +36,7 @@ export const useInfiniteScrollOptions = declareDirectiveOptionType({
   },
   /**
    * 防抖时间（毫秒）
+   * @en Debouncetime（milliseconds）
    */
   interval: {
     type: Number,

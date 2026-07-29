@@ -2,7 +2,7 @@
   <h-space>
     <h-upload
       v-model="fileList"
-      action="https://horizon-web-inspector.nioint.com/upload-mock"
+      action="https://horizon-web-inspector.demoint.com/upload-mock"
       :multiple="true"
       :limit="3"
       @change="handleChange"
@@ -21,53 +21,53 @@
 </template>
 
 <script lang="ts" setup>
-import type { NUploadFileType } from '@aurora/horizon-web';
+import type { HUploadFileType } from '@aurora/horizon-web';
 import type { Data } from '@aurora/utils';
 import { ref } from 'vue';
 
 const fileList = ref([]);
 
-function handleChange(file: NUploadFileType, response: Data) {
+function handleChange(file: HUploadFileType, response: Data) {
   console.info('change:', file, response);
 }
 
-function onAddFile(file: NUploadFileType) {
+function onAddFile(file: HUploadFileType) {
   console.info('Add File: ', file);
 }
 
-function onUploadFile(file: NUploadFileType) {
+function onUploadFile(file: HUploadFileType) {
   console.info('Upload File: ', file);
 }
 
-function onRemoveFile(file: NUploadFileType) {
+function onRemoveFile(file: HUploadFileType) {
   console.info('Remove File: ', file);
 }
 
-function onUploadingFile(file: NUploadFileType, process: number, response: Data) {
+function onUploadingFile(file: HUploadFileType, process: number, response: Data) {
   console.info('Uploading File: ', file, process, response);
 }
 
-function onUploadedFile(file: NUploadFileType, response: Data) {
+function onUploadedFile(file: HUploadFileType, response: Data) {
   console.info('Uploaded File: ', file, response);
 }
 
-function onPauseFile(file: NUploadFileType) {
+function onPauseFile(file: HUploadFileType) {
   console.info('Pause File: ', file);
 }
 
-function onContinueFile(file: NUploadFileType) {
+function onContinueFile(file: HUploadFileType) {
   console.info('Continue File: ', file);
 }
 
-function onRetryFile(file: NUploadFileType) {
+function onRetryFile(file: HUploadFileType) {
   console.info('Retry File: ', file);
 }
 
-function onFailFile(file: NUploadFileType, reason: string, response: Data) {
+function onFailFile(file: HUploadFileType, reason: string, response: Data) {
   console.info('Fail File: ', file, reason, response);
 }
 
-function onExceed(pickedFiles: NUploadFileType[], existedFiles: NUploadFileType[]) {
+function onExceed(pickedFiles: HUploadFileType[], existedFiles: HUploadFileType[]) {
   console.info('Exceed Files: ', pickedFiles, existedFiles);
 }
 </script>

@@ -74,7 +74,7 @@ function generateItems() {
     items.value.push({
       id: i + '_sjifeji',
       message: faker.lorem.text(),
-      avatar: 'https://www.nio.cn/cdn-static/mynio/nextjs/images/home/nioApp/nio-app-logo.png',
+      avatar: 'https://www.example.com/cdn-static/mydemo/nextjs/images/home/demoApp/demo-app-logo.png',
     });
   }
 }

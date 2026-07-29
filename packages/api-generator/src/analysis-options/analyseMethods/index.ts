@@ -10,6 +10,16 @@ import type {
 import analyseOptions from './analyseOptions';
 import analyseMethods from './analyseMethods';
 import methodsData from '../../../dist/methods-dependencies.json';
+import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { monorepoRoot } from '@root/scripts/paths';
+
+function getEnglishDescription(type: 'methods' | 'directives', name: string) {
+  const file = resolve(monorepoRoot, 'packages/docs/en/demos', type, `${name}.md`);
+  if (!existsSync(file)) return undefined;
+  return readFileSync(file, 'utf8').split(/\r?\n/).map(line => line.trim())
+    .find(line => line && !line.startsWith('#') && !line.startsWith(':::'));
+}
 
 function analyseMethod(methodInfo: ApiGeneratorExportedMethod): ApiGeneratorAnalysedMethodDetail {
   const methodNameWithoutPrefix = methodInfo.name.replace(/^H/, '');
@@ -30,6 +40,7 @@ function analyseMethod(methodInfo: ApiGeneratorExportedMethod): ApiGeneratorAnal
   return {
     name: methodNameWithoutPrefix,
     desc: methodInfo.desc,
+    descLocales: (() => { const en = getEnglishDescription('methods', methodNameWithoutPrefix); return en ? { en } : undefined; })(),
     dirName: methodInfo.dirName,
     optionsVariableName: methodInfo.optionsVariableName,
     options,

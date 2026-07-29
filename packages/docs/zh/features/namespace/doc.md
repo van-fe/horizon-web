@@ -4,9 +4,9 @@ horizon-web 提供的默认命名空间为 `n`，在微应用等特殊环境下�
 
 :::tip 此功能自 2.0.0 开始支持 :::
 
-## 使用 NApplication 修改
+## 使用 HApplication 修改
 
-可以使用 `NApplication` 的 `props.namespace` 修改命名空间
+可以使用 `HApplication` 的 `props.namespace` 修改命名空间
 
 ```vue
 <template>
@@ -18,7 +18,7 @@ horizon-web 提供的默认命名空间为 `n`，在微应用等特殊环境下�
 
 ## 使用 setNamespace 修改
 
-如果不使用 `NApplication`，则可以使用 `setNamespace` 方法来修改。
+如果不使用 `HApplication`，则可以使用 `setNamespace` 方法来修改。
 
 需要保证 `setNamespace` 在调用 `createApp` 前运行。
 

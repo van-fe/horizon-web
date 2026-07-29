@@ -31,10 +31,10 @@
 </template>
 
 <script setup lang="ts">
-import { NDropdown } from '@aurora/horizon-web';
+import { HDropdown } from '@aurora/horizon-web';
 import { ref } from 'vue';
 
-const dropdown = ref<typeof NDropdown | null>(null);
+const dropdown = ref<typeof HDropdown | null>(null);
 const visible = ref(false);
 
 function handle() {

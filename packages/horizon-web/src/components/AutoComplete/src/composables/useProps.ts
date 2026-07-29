@@ -13,6 +13,7 @@ export type ModelValueType = string | undefined | null;
 export const useAutoCompleteProps = declarePropType({
   /**
    * value 值
+    * @en Configuration for model value.
    */
   modelValue: {
     type: [String, Object] as PropType<ModelValueType>,
@@ -20,6 +21,7 @@ export const useAutoCompleteProps = declarePropType({
   },
   /**
    * 是否禁用
+    * @en Configuration for disabled.
    */
   disabled: {
     type: Boolean,
@@ -27,6 +29,7 @@ export const useAutoCompleteProps = declarePropType({
   },
   /**
    * 是否可清空输入框
+    * @en Configuration for clearable.
    */
   clearable: {
     type: Boolean,
@@ -34,6 +37,7 @@ export const useAutoCompleteProps = declarePropType({
   },
   /**
    * 触发方式
+    * @en Configuration for trigger.
    */
   trigger: {
     type: String as PropType<'hover' | 'click'>,
@@ -41,6 +45,7 @@ export const useAutoCompleteProps = declarePropType({
   },
   /**
    * 放置位置
+    * @en Configuration for placement.
    */
   placement: {
     type: String as PropType<
@@ -64,6 +69,7 @@ export const useAutoCompleteProps = declarePropType({
   },
   /**
    * 是否发送到 body 节点
+    * @en Configuration for to body.
    */
   toBody: {
     type: Boolean,
@@ -74,6 +80,7 @@ export const useAutoCompleteProps = declarePropType({
    * `normal`: 基础样式
    * `emphasize`: 面性样式
    * `no-border`: 无边框样式
+    * @en Configuration for input style.
    */
   inputStyle: {
     type: String as PropType<PickerInputStyleType>,
@@ -82,24 +89,28 @@ export const useAutoCompleteProps = declarePropType({
   /**
    * 尺寸
    * @default 'medium'
+    * @en Configuration for size.
    */
   size: {
     type: String as PropType<'small' | 'medium' | 'large'>,
   },
   /**
    * 占位符，默认使用国际化配置
+    * @en Configuration for placeholder.
    */
   placeholder: {
     type: String,
   },
   /**
    * 空时显示文字，默认使用国际化配置
+    * @en Configuration for empty text.
    */
   emptyText: {
     type: [String, Object] as PropType<string | VNode>,
   },
   /**
    * 在隐藏后是否销毁面板
+    * @en Configuration for destroy on hide.
    */
   destroyOnHide: {
     type: Boolean,
@@ -107,13 +118,14 @@ export const useAutoCompleteProps = declarePropType({
   },
   /**
    * 给 popover 的额外参数
+    * @en Configuration for popover options.
    */
   popoverOptions: {
     type: Object as PropType<Partial<PopoverProps>>,
   },
   /**
    * 下拉框宽度是否与输入框相同
-   * @version 2.12.10 支持 fit-content
+    * @en Configuration for fit input width.
    */
   fitInputWidth: {
     type: [Boolean, String] as PropType<boolean | 'fit-content'>,
@@ -122,6 +134,7 @@ export const useAutoCompleteProps = declarePropType({
   /**
    * 鼠标悬浮后多久显示 `popper`
    * 仅在 `trigger = hover` 时有效
+    * @en Configuration for hover show delay.
    */
   hoverShowDelay: {
     type: Number,
@@ -130,6 +143,7 @@ export const useAutoCompleteProps = declarePropType({
   /**
    * 鼠标移出后后多久隐藏 `popper`
    * 仅在 `trigger = hover` 时有效
+    * @en Configuration for hover hide delay.
    */
   hoverHideDelay: {
     type: Number,
@@ -139,6 +153,7 @@ export const useAutoCompleteProps = declarePropType({
    * 自定义下拉按钮
    * 可以传入 `a-icon` 的 `name`，也可以直接是 `svg`
    * 如果传入 `false`，即不展示图标
+    * @en Configuration for dropdown icon.
    */
   dropdownIcon: {
     type: IconMaybeFalsyPropType,
@@ -146,12 +161,14 @@ export const useAutoCompleteProps = declarePropType({
   },
   /**
    * 自定义样式
+    * @en Configuration for external style.
    */
   externalStyle: {
     type: [String, Object, Array] as PropType<StyleValue>,
   },
   /**
    * 自定义 class
+    * @en Configuration for external class.
    */
   externalClass: {
     type: String,
@@ -159,12 +176,14 @@ export const useAutoCompleteProps = declarePropType({
   },
   /**
    * 自定义面板样式
+    * @en Configuration for external panel style.
    */
   externalPanelStyle: {
     type: Object as PropType<CSSProperties>,
   },
   /**
    * 自定义面板 class
+    * @en Configuration for external panel class.
    */
   externalPanelClass: {
     type: String,
@@ -172,6 +191,7 @@ export const useAutoCompleteProps = declarePropType({
   },
   /**
    * 是否在无选项时，默认隐藏面板
+    * @en Configuration for hide panel when empty list.
    */
   hidePanelWhenEmptyList: {
     type: Boolean,
@@ -179,6 +199,7 @@ export const useAutoCompleteProps = declarePropType({
   },
   /**
    * 面板是否处于加载中
+    * @en Configuration for loading.
    */
   loading: {
     type: Boolean,
@@ -186,6 +207,7 @@ export const useAutoCompleteProps = declarePropType({
   },
   /**
    * 加载时自定义文案，默认为空
+    * @en Configuration for loading text.
    */
   loadingText: {
     type: [String, Object] as PropType<string | VNode>,
@@ -193,6 +215,7 @@ export const useAutoCompleteProps = declarePropType({
   /**
    * 是否将已选择的选项置顶
    * 只有在重新打开面板时才会排序
+    * @en Configuration for selected option order to top.
    */
   selectedOptionOrderToTop: {
     type: Boolean,
@@ -200,6 +223,7 @@ export const useAutoCompleteProps = declarePropType({
   },
   /**
    * 输入框的状态
+    * @en Configuration for input status.
    */
   inputStatus: {
     type: String as PropType<PickerInputStatusType>,
@@ -207,6 +231,7 @@ export const useAutoCompleteProps = declarePropType({
   },
   /**
    * 选项列表最大高度
+    * @en Configuration for option list max height.
    */
   optionListMaxHeight: {
     type: [String, Number],
@@ -214,6 +239,7 @@ export const useAutoCompleteProps = declarePropType({
   },
   /**
    * `n-option` 中 `description` 的位置
+    * @en Configuration for description position.
    */
   descriptionPosition: {
     type: String as PropType<'right' | 'bottom'>,
@@ -222,6 +248,7 @@ export const useAutoCompleteProps = declarePropType({
   /**
    * 输入触发事件的频率
    * 请谨慎设置，防止触发过快或过慢导致非预期的问题
+    * @en Configuration for input emit frequency.
    */
   inputEmitFrequency: {
     type: Number,
@@ -230,6 +257,7 @@ export const useAutoCompleteProps = declarePropType({
   /**
    * 搜索 `icon`
    * 如果不需要搜索 `icon`，则设置为 `false`
+    * @en Configuration for search icon.
    */
   searchIcon: {
     type: IconMaybeFalsyPropType,
@@ -237,6 +265,7 @@ export const useAutoCompleteProps = declarePropType({
   },
   /**
    * 所有有 `tooltip` 的地方，在悬浮后延迟多少毫秒显示 `tooltip`
+    * @en Configuration for tooltip show after.
    */
   tooltipShowAfter: {
     type: Number,
@@ -244,6 +273,7 @@ export const useAutoCompleteProps = declarePropType({
   },
   /**
    * 所有有 `tooltip` 的地方，在显示后延迟多少毫秒移除 `tooltip`
+    * @en Configuration for tooltip hide after.
    */
   tooltipHideAfter: {
     type: Number,
@@ -251,6 +281,7 @@ export const useAutoCompleteProps = declarePropType({
   },
   /**
    * 展示的选项
+    * @en Configuration for options.
    */
   options: {
     type: Array as PropType<HAutoCompleteOption[]>,
@@ -258,7 +289,7 @@ export const useAutoCompleteProps = declarePropType({
   },
   /**
    * 是否在开启虚拟滚动时，允许 `option` 撑开面板
-   * @version 2.12.10
+    * @en Configuration for expand panel by children.
    */
   expandPanelByChildren: {
     type: Boolean,

@@ -79,7 +79,7 @@ Note that `emit.validateChange` will not be triggered at this time
 ## Use Custom Form Components
 If you use form components outside of `horizon-web`, but also need to use the validation function of `n-form` `n-form-item`, just use the provided `provide` value
 
-You only need to `inject('NFormItemTriggerInjectedKey')` and call it when the form has `change` or `blur` events
+You only need to `inject('HFormItemTriggerInjectedKey')` and call it when the form has `change` or `blur` events
 
 :::demo components/Form/custom-form.vue :::
 

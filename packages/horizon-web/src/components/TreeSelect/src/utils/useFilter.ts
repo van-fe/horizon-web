@@ -65,7 +65,9 @@ export default function (
     return false;
   });
 
-  /** watches **/
+  /** watches *
+   * @en Description for watch.
+ */
   watch(inputValue, val => {
     context.emit('input', val);
   });

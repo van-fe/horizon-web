@@ -42,6 +42,7 @@ import { JSX } from 'vue/jsx-runtime';
 export default defineComponent({
   name: `${useNamespace()}TreeSelect`,
   desc: '含有下拉菜单的树形选择器，结合了 `Tree` 和 `Picker` 两个组件的功能',
+  descLocales: { en: 'A dropdown tree selector combining the features of `Tree` and `Picker`.' },
   props: useTreeSelectProps,
   emits: useTreeSelectEmits,
   slots: useTreeSelectSlots,

@@ -143,7 +143,7 @@ If a node's child nodes need to use dynamic loading, you need to set the node's 
 ## Custom Node
 You can customize node rendering through the `treeNodeRender` slot
 
-You can also set `label` to `((option: NTreeData) => VNode)` type when passing in `tree-data` to customize a fixed node. At this time, the priority is higher than the `treeNodeRender` slot
+You can also set `label` to `((option: HTreeData) => VNode)` type when passing in `tree-data` to customize a fixed node. At this time, the priority is higher than the `treeNodeRender` slot
 
 :::demo components/TreeSelect/custom-render.vue :::
 
@@ -154,16 +154,16 @@ In this example, `label` uses `text`, `value` uses `key`, `children` uses `items
 
 **Note: It is forbidden to override fields with original meanings in the new mapping definition. For example, you cannot use `value` as the field mapping of `label`, otherwise it will cause errors**
 
-For `ts` type error issues, you can solve it by declaring the `NTreeExtendsData` type globally (using the fields in the following `demo` as an example):
+For `ts` type error issues, you can solve it by declaring the `HTreeExtendsData` type globally (using the fields in the following `demo` as an example):
 
 ```ts
-import type { NTreeExtendsData } from '@aurora/horizon-web';
+import type { HTreeExtendsData } from '@aurora/horizon-web';
 
 declare module '@aurora/horizon-web' {
-  interface NTreeExtendsData {
+  interface HTreeExtendsData {
     key?: string;
     text?: string;
-    items?: NTreeExtendsData[];
+    items?: HTreeExtendsData[];
   }
 }
 ```
@@ -183,5 +183,4 @@ When passing in `options`, you can set `selectable = false` to disallow selectio
 Unlike `disabled`, this configuration only affects the interaction between itself and the user, and will be affected by the selection state of parent and child levels to display different states
 
 If single selection is enabled, it is best to use it with `show-radio = true`, otherwise the display form cannot see the difference
-:::demo components/TreeSelect/selectable.vue ::
-
+:::demo components/TreeSelect/selectable.vue :::

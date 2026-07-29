@@ -6,13 +6,14 @@ import { warn } from '~/utils/useLog';
 export const useMenuProps = declarePropType({
   /**
    * 选中菜单值
+    * @en Configuration for selected value.
    */
   selectedValue: {
     type: String,
   },
   /**
    * 菜单展示形式
-   * @version 2.0.1
+    * @en Configuration for mode.
    */
   mode: {
     type: String as PropType<'horizontal' | 'vertical'>,
@@ -20,7 +21,7 @@ export const useMenuProps = declarePropType({
   },
   /**
    * 主题
-   * @version 2.0.1
+    * @en Configuration for theme.
    */
   theme: {
     type: String as PropType<'default' | 'gray' | 'midnight'>,
@@ -28,6 +29,7 @@ export const useMenuProps = declarePropType({
   },
   /**
    * 菜单是否折叠，只在 `mode = 'vertical'` 时可用
+    * @en Configuration for collapse.
    */
   collapse: {
     type: Boolean,
@@ -35,6 +37,7 @@ export const useMenuProps = declarePropType({
   },
   /**
    * 是否省略多余的子项，只有在 `mode = 'horizontal'` 时可用
+    * @en Configuration for ellipsis.
    */
   ellipsis: {
     type: Boolean,
@@ -42,6 +45,7 @@ export const useMenuProps = declarePropType({
   },
   /**
    * 是否显示折叠按钮，只在 `mode = 'vertical'` 时可用
+    * @en Configuration for collapse button.
    */
   collapseButton: {
     type: Boolean,
@@ -49,6 +53,7 @@ export const useMenuProps = declarePropType({
   },
   /**
    * 一级菜单带标题的永久折叠
+    * @en Configuration for collapse forever.
    */
   collapseForever: {
     type: Boolean,
@@ -56,7 +61,7 @@ export const useMenuProps = declarePropType({
   },
   /**
    * 折叠显示标题
-   * @version 2.12.0
+    * @en Configuration for collapse show title.
    */
   collapseShowTitle: {
     type: Boolean,
@@ -64,6 +69,7 @@ export const useMenuProps = declarePropType({
   },
   /**
    * 菜单展开是否互斥
+    * @en Configuration for exclusive expand.
    */
   exclusiveExpand: {
     type: Boolean,
@@ -71,6 +77,7 @@ export const useMenuProps = declarePropType({
   },
   /**
    * 子菜单打开的方式，只有在 `mode = 'horizontal'` 时可用
+    * @en Configuration for menu trigger.
    */
   menuTrigger: {
     type: String as PropType<'hover' | 'click'>,
@@ -79,6 +86,7 @@ export const useMenuProps = declarePropType({
   /**
    * 是否使用 `vue-router` 模式导航。
    * 启用后会根据子菜单的 `value` 或 `index` 作为路由 `path` 跳转
+    * @en Configuration for router.
    */
   router: {
     type: Boolean,
@@ -86,7 +94,7 @@ export const useMenuProps = declarePropType({
   },
   /**
    * 是否启用折叠动画
-   * @version 2.0.5
+    * @en Configuration for collapse transition.
    */
   collapseTransition: {
     type: Boolean,
@@ -95,6 +103,7 @@ export const useMenuProps = declarePropType({
   /**
    * 高度，如果是 Number，会自动加上单位 px
    * `mode = 'vertical'` 时默认 `100%`
+    * @en Configuration for height.
    */
   height: {
     type: [Number, String],
@@ -104,13 +113,14 @@ export const useMenuProps = declarePropType({
    * `mode = 'vertical'` 只提供 `button` 样式
    * `mode = 'horizontal'` 默认 `link` 样式
    *
-   * @version 2.0.5
+    * @en Configuration for active type.
    */
   activeType: {
     type: String as PropType<'button' | 'link'>,
   },
   /**
    * 容器的最大宽度，只对 `mode = 'horizontal'` 有效
+    * @en Configuration for max width.
    */
   maxWidth: {
     type: [String, Number],
@@ -121,7 +131,7 @@ export const useMenuProps = declarePropType({
    * `single`: 只会对当前鼠标悬浮的菜单弹出弹窗
    * `full`: 只要悬浮在菜单任意位置，会把所有子菜单都展示出来
    *
-   * @version 2.0.5
+    * @en Configuration for submenu expand type.
    */
   submenuExpandType: {
     type: String as PropType<'single' | 'full'>,
@@ -131,7 +141,7 @@ export const useMenuProps = declarePropType({
    * 宽度
    * 需要设置在 160 - 240 之间
    * 仅在 `mode = vertical` 时有效
-   * @version 2.3.0
+    * @en Configuration for width.
    */
   width: {
     type: [String, Number],
@@ -147,7 +157,7 @@ export const useMenuProps = declarePropType({
   },
   /**
    * 是否可以拖拽调整大小
-   * @version 2.3.0
+    * @en Configuration for resizable.
    */
   resizable: {
     type: Boolean,
@@ -155,7 +165,7 @@ export const useMenuProps = declarePropType({
   },
   /**
    * 是否允许在拖拽到一定程度后收起菜单栏
-   * @version 2.3.0
+    * @en Configuration for resize to collapse.
    */
   resizeToCollapse: {
     type: Boolean,
@@ -163,7 +173,7 @@ export const useMenuProps = declarePropType({
   },
   /**
    * 使用哪种原生标签渲染
-   * @version 2.6.1
+    * @en Configuration for tag.
    */
   tag: {
     type: String as PropType<'div' | 'a'>,
@@ -172,7 +182,7 @@ export const useMenuProps = declarePropType({
   /**
    * 选择前函数钩子
    * 如果希望控制用户是否可以选择该菜单，可以传入函数判断，并返回一个 `boolean` 值告知是否可选择
-   * @version 2.9.1
+    * @en Configuration for before select.
    */
   beforeSelect: {
     type: Function as PropType<
@@ -181,7 +191,7 @@ export const useMenuProps = declarePropType({
   },
   /**
    * 在第几层级后开始使用 `dropdown` 展示子层级 （从 `0` 开始计数）
-   * @version 2.9.4
+    * @en Configuration for use dropdown level.
    */
   useDropdownLevel: {
     type: Number,
@@ -190,7 +200,7 @@ export const useMenuProps = declarePropType({
   /**
    * 是否默认展开全部
    * 只有在第一次挂载时有效，后期层级有变动请使用 `expandAll` 方法
-   * @version 2.10.0
+    * @en Configuration for is default expand all.
    */
   isDefaultExpandAll: {
     type: Boolean,
@@ -201,25 +211,28 @@ export const useMenuProps = declarePropType({
 export const useSubMenuProps = declarePropType({
   /**
    * 字体图标名称或对象
-   * @version 2.0.1 支持传入组件
+    * @en Configuration for icon.
    */
   icon: {
     type: [String, Object] as PropType<string | Component>,
   },
   /**
    * 唯一标识，可以作为 `vue-router` 模式下的路由导航的 `path`
+    * @en Configuration for value.
    */
   value: {
     type: String,
   },
   /**
    * 名称，与 `slots.title` 相同，优先级比 `slots.title` 低
+    * @en Configuration for name.
    */
   name: {
     type: String,
   },
   /**
    * 是否禁用
+    * @en Configuration for disabled.
    */
   disabled: {
     type: Boolean,
@@ -227,6 +240,7 @@ export const useSubMenuProps = declarePropType({
   },
   /**
    * 是否可选中
+    * @en Configuration for selectable.
    */
   selectable: {
     type: Boolean,
@@ -234,6 +248,7 @@ export const useSubMenuProps = declarePropType({
   },
   /**
    * 是否将 `dropdown` 元素发送到 `body` 上
+    * @en Configuration for to body.
    */
   toBody: {
     type: Boolean,
@@ -241,6 +256,7 @@ export const useSubMenuProps = declarePropType({
   },
   /**
    * `popper` 的偏移量
+    * @en Configuration for popper offset.
    */
   popperOffset: {
     type: Number,
@@ -251,25 +267,28 @@ export const useSubMenuProps = declarePropType({
 export const useMenuItemProps = declarePropType({
   /**
    * 字体图标名称或对象
-   * @version 2.0.1 支持传入组件
+    * @en Configuration for icon.
    */
   icon: {
     type: [String, Object] as PropType<string | Component>,
   },
   /**
    * 菜单名称
+    * @en Configuration for name.
    */
   name: {
     type: String,
   },
   /**
    * 组件值，可以在 `menu.router` 开启后作为 `path`
+    * @en Configuration for value.
    */
   value: {
     type: String,
   },
   /**
    * 是否激活
+    * @en Configuration for active.
    */
   active: {
     type: Boolean,
@@ -277,6 +296,7 @@ export const useMenuItemProps = declarePropType({
   },
   /**
    * 是否禁用
+    * @en Configuration for disabled.
    */
   disabled: {
     type: Boolean,

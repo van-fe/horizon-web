@@ -5,12 +5,14 @@ import { declarePropType } from '@aurora/utils';
 export const useColorPickerProps = declarePropType({
   /**
    * 颜色色值，可以是 `rgb(a)`、`hsl(a)`、`hex(a)`、`hsv(a)` 色值形式
+    * @en Configuration for model value.
    */
   modelValue: {
     type: String,
   },
   /**
    * 选择器大小，不会影响颜色选择器弹出框的面板及内容大小
+    * @en Configuration for size.
    */
   size: {
     type: String as PropType<'small' | 'medium' | 'large'>,
@@ -18,6 +20,7 @@ export const useColorPickerProps = declarePropType({
   },
   /**
    * 允许使用透明度
+    * @en Configuration for alpha.
    */
   alpha: {
     type: Boolean,
@@ -25,6 +28,7 @@ export const useColorPickerProps = declarePropType({
   },
   /**
    * 触发器类型
+    * @en Configuration for trigger type.
    */
   triggerType: {
     type: String as PropType<'square' | 'input'>,
@@ -32,7 +36,7 @@ export const useColorPickerProps = declarePropType({
   },
   /**
    * 方块形状后是否有颜色文字
-   * @version 2.3.0
+    * @en Configuration for square text.
    */
   squareText: {
     type: Boolean,
@@ -40,6 +44,7 @@ export const useColorPickerProps = declarePropType({
   },
   /**
    * 是否禁用
+    * @en Configuration for disabled.
    */
   disabled: {
     type: Boolean,
@@ -47,6 +52,7 @@ export const useColorPickerProps = declarePropType({
   },
   /**
    * 是否允许清空色值
+    * @en Configuration for clearable.
    */
   clearable: {
     type: Boolean,
@@ -54,6 +60,7 @@ export const useColorPickerProps = declarePropType({
   },
   /**
    * 是否允许使用编辑框
+    * @en Configuration for editable.
    */
   editable: {
     type: Boolean,
@@ -61,7 +68,7 @@ export const useColorPickerProps = declarePropType({
   },
   /**
    * 编辑色值类型
-   * @version 2.10.0
+    * @en Configuration for edit mode.
    */
   editMode: {
     type: String as PropType<'hex' | 'rgb' | 'hsl' | 'hsv'>,
@@ -69,6 +76,7 @@ export const useColorPickerProps = declarePropType({
   },
   /**
    * 使用编辑框时，允许使用的色值格式
+    * @en Configuration for editable modes.
    */
   editableModes: {
     type: Array as PropType<Array<'rgb' | 'hsl' | 'hsv'>>,
@@ -76,6 +84,7 @@ export const useColorPickerProps = declarePropType({
   },
   /**
    * 是否显示色板
+    * @en Configuration for show swatch.
    */
   showSwatch: {
     type: Boolean,
@@ -83,6 +92,7 @@ export const useColorPickerProps = declarePropType({
   },
   /**
    * 色板数据
+    * @en Configuration for swatches.
    */
   swatches: {
     type: Array as PropType<Array<{ name: string; value: string } | string>>,
@@ -91,7 +101,7 @@ export const useColorPickerProps = declarePropType({
   /**
    * 是否启用最近使用的颜色
    * 这个数据只会存储在本地
-   * @version 2.3.0
+    * @en Configuration for recently colors.
    */
   recentlyColors: {
     type: Boolean,
@@ -100,7 +110,7 @@ export const useColorPickerProps = declarePropType({
   /**
    * 是否允许用户保存自定义颜色
    * 这个数据只会存储在本地
-   * @version 2.3.0
+    * @en Configuration for custom colors.
    */
   customColors: {
     type: Boolean,
@@ -108,6 +118,7 @@ export const useColorPickerProps = declarePropType({
   },
   /**
    * 色值最终转换格式
+    * @en Configuration for format.
    */
   format: {
     type: String as PropType<'rgb' | 'hsl' | 'hsv' | 'hex'>,
@@ -115,6 +126,7 @@ export const useColorPickerProps = declarePropType({
   },
   /**
    * 是否需要确认，如果为否，则在画板上的实时操作会及时通知更新
+    * @en Configuration for need confirm.
    */
   needConfirm: {
     type: Boolean,
@@ -122,6 +134,7 @@ export const useColorPickerProps = declarePropType({
   },
   /**
    * 弹出的 `popover` 的 `props`
+    * @en Configuration for popover props.
    */
   popoverProps: {
     type: Object as PropType<Partial<PopoverProps>>,
@@ -129,6 +142,7 @@ export const useColorPickerProps = declarePropType({
   },
   /**
    * 是否允许使用 [EyeDropper](https://developer.mozilla.org/en-US/docs/Web/API/EyeDropper)，启用前请检查浏览器支持性
+    * @en Configuration for enable eye dropper.
    */
   enableEyeDropper: {
     type: Boolean,
@@ -136,6 +150,7 @@ export const useColorPickerProps = declarePropType({
   },
   /**
    * 是否开启设置渐变色
+    * @en Configuration for enable gradient.
    */
   enableGradient: {
     type: Boolean,
@@ -143,7 +158,7 @@ export const useColorPickerProps = declarePropType({
   },
   /**
    * 渐变色允许范围
-   * @version 2.3.0
+    * @en Configuration for gradient list.
    */
   gradientList: {
     type: Array as PropType<Array<'linear' | 'radial' | 'conic'>>,
@@ -151,6 +166,7 @@ export const useColorPickerProps = declarePropType({
   },
   /**
    * 是否在开启了 `editable` 后，输入框内输入的时候会直接更新颜色
+    * @en Configuration for update on input.
    */
   updateOnInput: {
     type: Boolean,
@@ -158,7 +174,7 @@ export const useColorPickerProps = declarePropType({
   },
   /**
    * 是否传送到 `body` 节点
-   * @version 2.3.0
+    * @en Configuration for to body.
    */
   toBody: {
     type: Boolean,

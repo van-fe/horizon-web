@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { $message, type NTabValue } from '@aurora/horizon-web';
+import { $message, type HTabValue } from '@aurora/horizon-web';
 import { ref } from 'vue';
 
 const activeKey = ref(1);
@@ -11,7 +11,7 @@ const tabs = ref(
     .map((_, i) => ({ title: `Tab ${i + 1}`, key: i })),
 );
 
-const onTabChanged = (tab: NTabValue) => {
+const onTabChanged = (tab: HTabValue) => {
   console.info('tab changed', tab);
   $message({ type: 'success', message: `Tab ${tab} is clicked` });
 };

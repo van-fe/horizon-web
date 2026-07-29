@@ -1,0 +1,264 @@
+[
+    {
+      "key": "guide",
+      "text": "Guide",
+      "items": [
+        {
+          "key": "disciplines",
+          "text": "Disciplines",
+          "items": [
+            {
+              "key": "consistency",
+              "text": "Consistency Consistency Consistency Consistency Consistency Consistency Consistency Consistency Consistency Consistency Consistency"
+            },
+            {
+              "key": "feedback",
+              "text": "Feedback"
+            },
+            {
+              "key": "efficiency",
+              "text": "Efficiency"
+            },
+            {
+              "key": "controllability",
+              "text": "Controllability"
+            }
+          ]
+        },
+        {
+          "key": "navigation",
+          "text": "Navigation",
+          "items": [
+            {
+              "key": "side nav",
+              "text": "Side Navigation"
+            },
+            {
+              "key": "top nav",
+              "text": "Top Navigation"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "component",
+      "text": "Component",
+      "items": [
+        {
+          "key": "basic",
+          "text": "Basic",
+          "items": [
+            {
+              "key": "layout",
+              "text": "Layout"
+            },
+            {
+              "key": "color",
+              "text": "Color"
+            },
+            {
+              "key": "typography",
+              "text": "Typography"
+            },
+            {
+              "key": "icon",
+              "text": "Icon"
+            },
+            {
+              "key": "button",
+              "text": "Button"
+            }
+          ]
+        },
+        {
+          "key": "form",
+          "text": "Form",
+          "items": [
+            {
+              "key": "radio",
+              "text": "Radio"
+            },
+            {
+              "key": "checkbox",
+              "text": "Checkbox"
+            },
+            {
+              "key": "input",
+              "text": "Input"
+            },
+            {
+              "key": "input-number",
+              "text": "InputNumber"
+            },
+            {
+              "key": "select",
+              "text": "Select"
+            },
+            {
+              "key": "cascader",
+              "text": "Cascader"
+            },
+            {
+              "key": "switch",
+              "text": "Switch"
+            },
+            {
+              "key": "slider",
+              "text": "Slider"
+            },
+            {
+              "key": "time-picker",
+              "text": "TimePicker"
+            },
+            {
+              "key": "date-picker",
+              "text": "DatePicker"
+            },
+            {
+              "key": "datetime-picker",
+              "text": "DateTimePicker"
+            },
+            {
+              "key": "upload",
+              "text": "Upload"
+            },
+            {
+              "key": "rate",
+              "text": "Rate"
+            }
+          ]
+        },
+        {
+          "key": "data",
+          "text": "Data",
+          "items": [
+            {
+              "key": "table",
+              "text": "Table"
+            },
+            {
+              "key": "tag",
+              "text": "Tag"
+            },
+            {
+              "key": "progress",
+              "text": "Progress"
+            },
+            {
+              "key": "tree",
+              "text": "Tree"
+            },
+            {
+              "key": "pagination",
+              "text": "Pagination"
+            },
+            {
+              "key": "badge",
+              "text": "Badge"
+            }
+          ]
+        },
+        {
+          "key": "notice",
+          "text": "Notice",
+          "items": [
+            {
+              "key": "alert",
+              "text": "Alert"
+            },
+            {
+              "key": "loading",
+              "text": "Loading"
+            },
+            {
+              "key": "message",
+              "text": "Message"
+            },
+            {
+              "key": "message-box",
+              "text": "MessageBox"
+            },
+            {
+              "key": "notification",
+              "text": "Notification"
+            }
+          ]
+        },
+        {
+          "key": "cnavigation",
+          "text": "Navigation",
+          "items": [
+            {
+              "key": "menu",
+              "text": "Menu"
+            },
+            {
+              "key": "tabs",
+              "text": "Tabs"
+            },
+            {
+              "key": "breadcrumb",
+              "text": "Breadcrumb"
+            },
+            {
+              "key": "dropdown",
+              "text": "Dropdown"
+            },
+            {
+              "key": "steps",
+              "text": "Steps"
+            }
+          ]
+        },
+        {
+          "key": "others",
+          "text": "Others",
+          "items": [
+            {
+              "key": "dialog",
+              "text": "Dialog"
+            },
+            {
+              "key": "tooltip",
+              "text": "Tooltip"
+            },
+            {
+              "key": "popover",
+              "text": "Popover"
+            },
+            {
+              "key": "card",
+              "text": "Card"
+            },
+            {
+              "key": "carousel",
+              "text": "Carousel"
+            },
+            {
+              "key": "collapse",
+              "text": "Collapse"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "resource",
+      "text": "Resource",
+      "items": [
+        {
+          "key": "axure",
+          "text": "Axure Components"
+        },
+        {
+          "key": "sketch",
+          "text": "Sketch Templates"
+        },
+        {
+          "key": "docs",
+          "text": "Design Documentation"
+        }
+      ]
+    }
+  ]

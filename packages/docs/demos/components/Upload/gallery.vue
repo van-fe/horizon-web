@@ -18,7 +18,7 @@
   <h-button class="mb-2" @click="change">修改原始 modelValue</h-button>
   <h-upload
     v-model="modelValue"
-    action="https://horizon-web-inspector.nioint.com/upload-mock"
+    action="https://horizon-web-inspector.demoint.com/upload-mock"
     type="gallery"
     :multiple="true"
     :size="size"
@@ -33,17 +33,17 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import type { NUploadUserFile, UploadProps, NUploadFileType } from '@aurora/horizon-web';
+import type { HUploadUserFile, UploadProps, HUploadFileType } from '@aurora/horizon-web';
 import type { Data } from '@aurora/utils';
 
 const size = ref<UploadProps['size']>('medium');
 const galleryShape = ref<UploadProps['galleryShape']>('rectangle');
 
-const modelValue = ref<NUploadUserFile[]>(
+const modelValue = ref<HUploadUserFile[]>(
   [
     {
       name: 'background.jpg',
-      url: 'https://cdn-public-dev.nio.com/aurora-resource/5cBiDhad9L9aZ3nAml1m8/23244a6b-69c3-4465-bbd6-5db4b476abf4.jpg?imageView2/0/h/198/ignore-error/1',
+      url: 'https://cdn-public-dev.example.com/aurora-resource/5cBiDhad9L9aZ3nAml1m8/23244a6b-69c3-4465-bbd6-5db4b476abf4.jpg?imageView2/0/h/198/ignore-error/1',
     },
     {
       name: 'preview.mp4',
@@ -52,11 +52,11 @@ const modelValue = ref<NUploadUserFile[]>(
   ],
 );
 
-function onUploading(file: NUploadFileType, process: number, response: Data | undefined) {
+function onUploading(file: HUploadFileType, process: number, response: Data | undefined) {
   console.info(file, process, response);
 }
 
-function handleSuccess(res: any, file: NUploadFileType) {
+function handleSuccess(res: any, file: HUploadFileType) {
   // 因为接口是模拟返回，所以不处理 res 数据
   // 直接把 blobUrl 假定为上传接口返回的预览地址
   return file.url || file.blobUrl;
@@ -65,11 +65,11 @@ function handleSuccess(res: any, file: NUploadFileType) {
 function change() {
   modelValue.value = [{
     name: 'preview.mp4',
-    url: 'https://static.nio.com/wad_basement/vt/51_KMQfG7_2cQXhf9yMIRiUS_skyline-min.mp4.mp4',
+    url: 'https://static.example.com/wad_basement/vt/51_KMQfG7_2cQXhf9yMIRiUS_skyline-min.mp4.mp4',
   }];
 }
 
-function onUpdateModelValue(modelValue: NUploadFileType[]) {
+function onUpdateModelValue(modelValue: HUploadFileType[]) {
   console.info('update: ', modelValue);
 }
 </script>

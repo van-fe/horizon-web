@@ -13,10 +13,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { NAutoCompleteOptionProps } from '@aurora/horizon-web';
+import type { HAutoCompleteOptionProps } from '@aurora/horizon-web';
 
-const options1 = ref<Partial<NAutoCompleteOptionProps>[]>([]);
-const options2 = ref<Partial<NAutoCompleteOptionProps>[]>([]);
+const options1 = ref<Partial<HAutoCompleteOptionProps>[]>([]);
+const options2 = ref<Partial<HAutoCompleteOptionProps>[]>([]);
 
 const loading1 = ref(false);
 const loading2 = ref(false);

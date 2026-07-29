@@ -39,7 +39,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { NFormRule } from '@aurora/horizon-web';
+import { HFormRule } from '@aurora/horizon-web';
 
 export default defineComponent({
   setup() {
@@ -51,7 +51,7 @@ export default defineComponent({
       val4: '',
     });
 
-    const rules = ref<Record<string, NFormRule | NFormRule[]>>({
+    const rules = ref<Record<string, HFormRule | HFormRule[]>>({
       val1: {
         max: 10,
         message: 'Please enter less than 10 characters',

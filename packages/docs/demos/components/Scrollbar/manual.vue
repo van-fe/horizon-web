@@ -13,9 +13,9 @@
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
-import { NScrollbar } from '@aurora/horizon-web';
+import { HScrollbar } from '@aurora/horizon-web';
 
-const scrollbar = ref<typeof NScrollbar | null>(null);
+const scrollbar = ref<typeof HScrollbar | null>(null);
 const scrollHeight = ref(0);
 const value = ref(0);
 

@@ -44,16 +44,16 @@ createApp(App)
 
 ## Application
 
-HorizonWeb also provides a Vue component [Application](/horizon-web/components/Application) for global configuration of internationalization settings
+HorizonWeb also provides a Vue component [Application](../../demos/components/Application) for global configuration of internationalization settings
 If you change `locale`, you can dynamically modify the language
 
-:::demo ../../components/Application/demos/i18n.vue:::
+:::demo components/Application/i18n.vue :::
 
 ## Dynamic Language Modification
 
 If you need to dynamically modify the language, in addition to using `Application`, you can also use the value of `inject(localeInjectKey)`, that is, `locale` to change
 
-:::demo demos/demo1.vue:::
+:::demo ./demos/demo1.vue :::
 
 ## Add Custom Language Pack
 If your business needs to use custom language packs, you can configure as follows:

@@ -13,6 +13,7 @@ import type { CardExposes } from './composables/useExposes';
 export default defineComponent({
   name: `${useNamespace()}Card`,
   desc: '卡片组件',
+  descLocales: { en: 'A container for presenting related content in a card.' },
   props: useCardProps,
   emits: useCardEmits,
   slots: useCardSlots,

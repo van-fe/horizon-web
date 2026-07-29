@@ -18,6 +18,7 @@ export type HPopoverShowWithMask = {
 export const usePopoverProps = declarePropType({
   /**
    * 触发方式
+    * @en Configuration for trigger.
    */
   trigger: {
     type: String as PropType<
@@ -27,6 +28,7 @@ export const usePopoverProps = declarePropType({
   },
   /**
    * `popper` 是否可见，`trigger` 为 'manual' 时生效
+    * @en Configuration for visible.
    */
   visible: {
     type: Boolean,
@@ -34,6 +36,7 @@ export const usePopoverProps = declarePropType({
   },
   /**
    * 弹出位置
+    * @en Configuration for placement.
    */
   placement: {
     type: String as PropType<
@@ -57,18 +60,22 @@ export const usePopoverProps = declarePropType({
   },
   /**
    * `popper` 在辅助方向上的的偏移，正值表示 `popper` 向 `end` 方向偏移 ，负值表示 `popper` 向 `start` 方向偏移
+    * @en Configuration for skidding.
    */
   skidding: { type: Number, default: 0 },
   /**
    * `popper` 在主方向上的偏移，正值表示 `popper` 远离 `reference`，负值表示 `popper` 靠近 `reference`
+    * @en Configuration for distance.
    */
   distance: { type: Number, default: 8 },
   /**
    * 当原本的显示位置空间不够时，是否允许 `popper` 显示到对面的位置
+    * @en Configuration for flip.
    */
   flip: { type: Boolean, default: true },
   /**
    * 是否带小箭头
+    * @en Configuration for arrow.
    */
   arrow: {
     type: Boolean,
@@ -76,6 +83,7 @@ export const usePopoverProps = declarePropType({
   },
   /**
    * 小箭头的参数
+    * @en Configuration for arrow options.
    */
   arrowOptions: {
     type: Object,
@@ -85,18 +93,21 @@ export const usePopoverProps = declarePropType({
   },
   /**
    * `popper` 部分 的 `class`
+    * @en Configuration for popper class.
    */
   popperClass: {
     type: String,
   },
   /**
    * `popper` 部分 的 `style`
+    * @en Configuration for popper style.
    */
   popperStyle: {
     type: Object as PropType<Partial<CSSProperties>>,
   },
   /**
    * 是否在 `popper` 隐藏后销毁 `popper` 的内容
+    * @en Configuration for destroy on hide.
    */
   destroyOnHide: {
     type: Boolean,
@@ -104,6 +115,7 @@ export const usePopoverProps = declarePropType({
   },
   /**
    * 是否将 `popper` 渲染到 `body` 上
+    * @en Configuration for to body.
    */
   toBody: {
     type: Boolean,
@@ -111,6 +123,7 @@ export const usePopoverProps = declarePropType({
   },
   /**
    * `popper` 的渲染目标，参考 Teleport 的 to 取值
+    * @en Configuration for to.
    */
   to: {
     type: [String, Object] as PropType<TeleportProps['to']>,
@@ -118,6 +131,7 @@ export const usePopoverProps = declarePropType({
   },
   /**
    * 是否监听 `reference` 和 `popper` 的大小以更新位置
+    * @en Configuration for resize observe.
    */
   resizeObserve: {
     type: Boolean,
@@ -125,6 +139,7 @@ export const usePopoverProps = declarePropType({
   },
   /**
    * 是否监听 `reference` 的溢出
+    * @en Configuration for reference overflow observe.
    */
   referenceOverflowObserve: {
     type: Boolean,
@@ -133,6 +148,7 @@ export const usePopoverProps = declarePropType({
   },
   /**
    * 监听 `reference` 溢出的root节点
+    * @en Configuration for reference overflow root.
    */
   referenceOverflowRoot: {
     type: Object as PropType<HTMLElement>,
@@ -141,6 +157,7 @@ export const usePopoverProps = declarePropType({
   },
   /**
    * 是否保持 `popper` 和 `reference` 宽度相等
+    * @en Configuration for same width.
    */
   sameWidth: {
     type: Boolean,
@@ -148,6 +165,7 @@ export const usePopoverProps = declarePropType({
   },
   /**
    * 在开启 `sameWidth` 时，是否使用 `minWidth` 去设置 `popper`
+    * @en Configuration for set min width.
    */
   setMinWidth: {
     type: Boolean,
@@ -155,6 +173,7 @@ export const usePopoverProps = declarePropType({
   },
   /**
    * 是否保持 `popper` 和 `reference` 高度相等
+    * @en Configuration for same height.
    */
   sameHeight: {
     type: Boolean,
@@ -162,6 +181,7 @@ export const usePopoverProps = declarePropType({
   },
   /**
    * 鼠标进入 `reference` 后，`popper` 延迟出现的时长
+    * @en Configuration for hover show delay.
    */
   hoverShowDelay: {
     type: Number,
@@ -169,6 +189,7 @@ export const usePopoverProps = declarePropType({
   },
   /**
    * 鼠标离开 `reference` 后，`popper` 延迟隐藏的时长，会影响鼠标从 `reference` 移动到 `popper` 的过程中 `popper` 是否会隐藏
+    * @en Configuration for hover hide delay.
    */
   hoverHideDelay: {
     type: Number,
@@ -176,6 +197,7 @@ export const usePopoverProps = declarePropType({
   },
   /**
    * 附加给 `popover-reference` 的 `class`
+    * @en Configuration for reference class.
    */
   referenceClass: {
     type: String,
@@ -183,6 +205,7 @@ export const usePopoverProps = declarePropType({
   },
   /**
    * 与 `flip` 配合使用，如果对面与当前位置都不够，还希望能调整到其他位置时，可以设置该属性
+    * @en Configuration for fallback placements.
    */
   fallbackPlacements: {
     type: Array as PropType<
@@ -208,6 +231,7 @@ export const usePopoverProps = declarePropType({
   },
   /**
    * 层级，会被 `popperStyle` 的 `z-index` 覆盖
+    * @en Configuration for z index.
    */
   zIndex: {
     type: Number,
@@ -215,6 +239,7 @@ export const usePopoverProps = declarePropType({
   },
   /**
    * 自定义隐藏事件
+    * @en Configuration for hide event type.
    */
   hideEventType: {
     type: String as PropType<'click' | 'mousedown' | 'mouseup'>,
@@ -223,7 +248,7 @@ export const usePopoverProps = declarePropType({
   },
   /**
    * 是否禁用
-   * @version 1.5.7
+    * @en Configuration for disabled.
    */
   disabled: {
     type: Boolean,
@@ -231,7 +256,7 @@ export const usePopoverProps = declarePropType({
   },
   /**
    * 渐变动画名称
-   * @version 2.0.3
+    * @en Configuration for transition name.
    */
   transitionName: {
     type: String as PropType<TransitionProps['name'] | 'none'>,
@@ -239,7 +264,7 @@ export const usePopoverProps = declarePropType({
   },
   /**
    * 渐变动画速度
-   * @version 2.0.3
+    * @en Configuration for transition speed.
    */
   transitionSpeed: {
     type: String as PropType<TransitionProps['speed']>,
@@ -247,6 +272,7 @@ export const usePopoverProps = declarePropType({
   },
   /**
    * popper显示时是否带mask
+    * @en Configuration for show with mask.
    */
   showWithMask: {
     type: Object as PropType<HPopoverShowWithMask>,
@@ -254,7 +280,7 @@ export const usePopoverProps = declarePropType({
   },
   /**
    * 是否在 trigger 为 `click` `click-remain` `click-hide` 时拦截冒泡
-   * @version 2.0.9-alpha.0
+    * @en Configuration for stop propagation.
    */
   stopPropagation: {
     type: Boolean,
@@ -262,7 +288,7 @@ export const usePopoverProps = declarePropType({
   },
   /**
    * 主题
-   * @version 2.5.0
+    * @en Configuration for theme.
    */
   theme: {
     type: String as PropType<'light' | 'dark'>,
@@ -272,7 +298,7 @@ export const usePopoverProps = declarePropType({
    * 是否阻止 `popper` 超出边界，即 `popper.js` 检查副轴遮挡
    * 通常情况下，不会检查副轴的遮挡
    * 但对于空间较小的情况下，需要设置为 true，防止被屏幕裁剪
-   * @version 2.7.2
+    * @en Configuration for prevent overflow.
    */
   preventOverflow: {
     type: Boolean,
@@ -283,6 +309,7 @@ export const usePopoverProps = declarePropType({
    * 对于 top/bottom，检查 x轴是否有遮挡
    * 对于 left/right，检查 y轴是否有遮挡
    * @verison latest
+    * @en Configuration for main axis check.
    */
   mainAxisCheck: {
     type: Boolean,
@@ -290,7 +317,7 @@ export const usePopoverProps = declarePropType({
   },
   /**
    * 定位方式
-   * @version 2.12.3
+    * @en Configuration for strategy.
    */
   strategy: {
     type: String as PropType<'fixed' | 'absolute'>,
@@ -301,7 +328,7 @@ export const usePopoverProps = declarePropType({
 export const usePopContentProps = declarePropType({
   /**
    * 主题
-   * @version 2.5.0
+    * @en Configuration for theme.
    */
   theme: {
     type: String as PropType<'light' | 'dark'>,

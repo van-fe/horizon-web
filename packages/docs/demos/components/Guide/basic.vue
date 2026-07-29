@@ -13,7 +13,7 @@
 
   <h-guide v-model="current" v-model:visible="visible" type="primary" @close="onClose" @finish="onFinish">
     <h-guide-item :target="firstRef" title="第一步" content="第一步就是第一步" />
-    <h-guide-item target=".guide-second" title="第二步" content="第二步就是第二步" placement="top-start" image="https://static.nio.com/fx-static/design-system/clgkp3u9z0002082h1dfr888x/indexbg.jpg?imageView2/2/w/300" />
+    <h-guide-item target=".guide-second" title="第二步" content="第二步就是第二步" placement="top-start" image="https://static.example.com/fx-static/design-system/clgkp3u9z0002082h1dfr888x/indexbg.jpg?imageView2/2/w/300" />
     <h-guide-item :target="thirdRef" title="第三步" content="第三步就是第三步" placement="right-start" />
     <h-guide-item title="第四步" content="第四步全局居中了" />
   </h-guide>

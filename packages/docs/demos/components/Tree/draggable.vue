@@ -46,7 +46,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { $confirm, $message, NTreeNodeDataWithLevel } from '@aurora/horizon-web';
+import { $confirm, $message, HTreeNodeDataWithLevel } from '@aurora/horizon-web';
 
 const draggable = ref(true);
 const dragOnHandler = ref(true);
@@ -55,7 +55,7 @@ const useBeforeDrop = ref(false);
 const baseTreeData1 = ref([]);
 const baseTreeData2 = ref([]);
 
-function beforeDrop(from: NTreeNodeDataWithLevel, to: NTreeNodeDataWithLevel | null, prev: NTreeNodeDataWithLevel | null) {
+function beforeDrop(from: HTreeNodeDataWithLevel, to: HTreeNodeDataWithLevel | null, prev: HTreeNodeDataWithLevel | null) {
   return new Promise((resolve) => {
     $confirm(`是否确定将 ${from.label} 移动到 ${to?.label ?? '根节点'} 下，且${prev?.label ? `在 ${prev.label} 之后` : '放在其第一位'}`, '提示').then((close) => {
       resolve(true);

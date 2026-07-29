@@ -1,0 +1,4 @@
+const conditional_format_filled = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 4C3 3.44772 3.44772 3 4 3H20C20.5523 3 21 3.44772 21 4V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4ZM4.5 19.5H8V4.5H4.5V19.5ZM9.5 19.5H14.5V15.7141L9.5 18.6009V19.5ZM16 19.5H19.5V4.5H16V19.5ZM14.5 4.5H9.5V8.78581L14.5 5.89906V4.5ZM14.5 13.9821V11.6726L9.5 14.5594V16.8688L14.5 13.9821ZM14.5 9.94057V7.63111L9.5 10.5179V12.8273L14.5 9.94057Z" fill="currentColor"/></svg>';
+export {
+  conditional_format_filled as default
+};

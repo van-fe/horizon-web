@@ -145,9 +145,9 @@ function fetch(value: string, callback: Function) {
   timeout = setTimeout(fake, 300);
 }
 
-const value1 = ref('NIO Phone');
+const value1 = ref('Demo Phone');
 const value2 = ref();
-const values1 = ref(['nio phone', 'nio phone 手机']);
+const values1 = ref(['demo phone', 'demo phone 手机']);
 const values2 = ref([]);
 
 const options = ref<{value: string; text: string}[]>([]);

@@ -35,19 +35,26 @@ export function analyseFunctionExpression(
   const params: ApiGeneratorAnalysedExposeParamType[] = [];
 
   funcNode?.getParameters()?.forEach(parameter => {
-    const field = parameter.forEachChildAsArray()[0]!.getText();
-    const typeNode = parameter.forEachChildAsArray().at(-1)!;
-    const nativeType = formatTsTypeToUnitType(typeNode, fileElements);
+    // The last child is not necessarily the type (`foo = 1` ends in an
+    // initializer). Use ts-morph's semantic accessors so optional/default
+    // parameters and rest parameters are parsed consistently.
+    const field = parameter.getName();
+    const typeNode = parameter.getTypeNode();
+    const value = typeNode?.getText() || parameter.getType().getText() || 'unknown';
+    const nativeType = typeNode
+      ? formatTsTypeToUnitType(typeNode, fileElements)
+      : ApiGeneratorAnalysedBaseType.Unknown;
 
     const temp: ApiGeneratorAnalysedExposeParamType = {
       desc: (jsDoc.tags.param || jsDoc.tags.params)?.[field] ?? '',
+      descLocales: jsDoc.tags.paramEn?.[field] ? { en: jsDoc.tags.paramEn[field] } : undefined,
       field,
       nativeType,
       params: [],
       returns: [],
       returnText: '',
       returnType: '',
-      value: typeNode.getText(),
+      value,
     };
 
     switch (nativeType) {
@@ -55,11 +62,13 @@ export function analyseFunctionExpression(
         temp.params = analyseObjectExpression(typeNode, jsDoc, fileElements);
         break;
       case ApiGeneratorAnalysedBaseType.Function:
-        ({
-          params: temp.params,
-          returns: temp.returns,
-          returnText: temp.returnText,
-        } = analyseFunctionExpression(typeNode, jsDoc, fileElements));
+        if (typeNode) {
+          ({
+            params: temp.params,
+            returns: temp.returns,
+            returnText: temp.returnText,
+          } = analyseFunctionExpression(typeNode, jsDoc, fileElements));
+        }
         break;
     }
 

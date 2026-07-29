@@ -1,0 +1,4 @@
+const pause = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.75 21V3C7.57843 3 8.25 3.67157 8.25 4.5V19.5C8.25 20.3284 7.57843 21 6.75 21Z" fill="currentColor"/><path d="M15.75 21V3C16.5784 3 17.25 3.67157 17.25 4.5V19.5C17.25 20.3284 16.5784 21 15.75 21Z" fill="currentColor"/></svg>';
+export {
+  pause as default
+};

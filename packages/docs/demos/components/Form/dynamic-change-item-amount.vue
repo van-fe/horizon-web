@@ -37,11 +37,11 @@
 
 <script setup lang="ts">
 import { ref, Ref } from 'vue';
-import type { NFormInstance, NFormRule } from '@aurora/horizon-web';
+import type { HFormInstance, HFormRule } from '@aurora/horizon-web';
 import { $message } from '@aurora/horizon-web';
 import { Arrayable } from '@aurora/utils';
 
-const formRef = ref<NFormInstance | null>(null);
+const formRef = ref<HFormInstance | null>(null);
 const formData = ref({
   domain: '',
   users: [{
@@ -49,7 +49,7 @@ const formData = ref({
   }],
 });
 
-const rules: Ref<Partial<Record<keyof typeof formData.value, Arrayable<NFormRule>>>> = ref({
+const rules: Ref<Partial<Record<keyof typeof formData.value, Arrayable<HFormRule>>>> = ref({
   domain: {
     required: true,
     message: 'Domain is required!',
