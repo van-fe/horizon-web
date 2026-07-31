@@ -1,11 +1,5 @@
 import { computed, defineComponent, inject, nextTick, provide, ref, toRefs, watch } from 'vue';
-import {
-  ComponentClassBlock,
-  cls,
-  useNamespace,
-  isNil,
-  safelyGetEventTarget,
-} from '@aurora/utils';
+import { ComponentClassBlock, cls, useNamespace, isNil, safelyGetEventTarget } from '@aurora/utils';
 import type { HorizonWebSetupContext, HorizonWebComponentInstance } from '@aurora/utils';
 import { useAutoCompleteProps } from './composables/useProps';
 import { useAutoCompleteEmits } from './composables/useEmits';
@@ -98,7 +92,9 @@ export default defineComponent({
     /**
      * dom ref
      */
-    const pickerDomRef = ref<null | HorizonWebComponentInstance<typeof HPicker, PickerExposes>>(null);
+    const pickerDomRef = ref<null | HorizonWebComponentInstance<typeof HPicker, PickerExposes>>(
+      null,
+    );
     const virtualScrollListDomRef = ref<null | typeof VirtualScrollList>(null);
 
     /**
@@ -152,9 +148,9 @@ export default defineComponent({
 
     function manualControlPopperVisible(visible: boolean) {
       if (visible) {
-        pickerDomRef.value?.show();
+        pickerDomRef.value?.showPopover();
       } else {
-        pickerDomRef.value?.hide();
+        pickerDomRef.value?.hidePopover();
       }
     }
 
@@ -329,7 +325,13 @@ export default defineComponent({
 
         if (popperVisible.value && !isDuringComposition.value) {
           if (focusedOptionValue.value) {
-            pickOption(focusedOptionValue.value);
+            const focusedOption = visibleOptions.value.find(
+              option => option.label === focusedOptionValue.value,
+            );
+
+            if (focusedOption) {
+              pickOption(focusedOption.value ?? focusedOption.label);
+            }
           }
         } else {
           manualControlPopperVisible(true);

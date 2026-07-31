@@ -35,4 +35,21 @@ describe('AutoComplete.tsx emits', () => {
     expect(onSelect).toHaveBeenCalledWith('2');
     expect(instance.modelValue.value).toEqual('2');
   });
+
+  test('keyboard selection uses option value before label', async () => {
+    const onSelect = vi.fn();
+    const instance = new AutoCompleteHelper({
+      options: [{ label: 'Displayed label', value: 'submitted-value' }],
+      onSelect,
+    });
+
+    await instance.open();
+    const input = instance.picker.find('input');
+    await input.trigger('keydown', { key: 'ArrowDown' });
+    await input.trigger('keydown', { key: 'Enter' });
+
+    expect(onSelect).toHaveBeenCalledOnce();
+    expect(onSelect).toHaveBeenCalledWith('submitted-value');
+    expect(instance.modelValue.value).toBe('submitted-value');
+  });
 });
