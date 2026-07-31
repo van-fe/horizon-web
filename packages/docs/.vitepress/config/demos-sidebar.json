@@ -63,6 +63,7 @@
       { "link": "components/Input", "zh": "Input 输入框", "en": "Input" },
       { "link": "components/InputOtp", "zh": "InputOtp 验证码输入框", "en": "InputOtp" },
       { "link": "components/InputNumber", "zh": "InputNumber 数字输入框", "en": "InputNumber" },
+      { "link": "components/Mentions", "zh": "Mentions 提及", "en": "Mentions" },
       { "link": "components/LicensePlateInput", "zh": "LicensePlateInput 车牌号输入", "en": "LicensePlateInput" },
       { "link": "components/Picker", "zh": "Picker 选择器", "en": "Picker" },
       { "link": "components/Progress", "zh": "Progress 进度条", "en": "Progress" },
@@ -86,6 +87,7 @@
       { "link": "components/Drawer", "zh": "Drawer 抽屉", "en": "Drawer" },
       { "link": "components/Guide", "zh": "Guide 引导", "en": "Guide" },
       { "link": "components/Popover", "zh": "Popover 气泡卡片", "en": "Popover" },
+      { "link": "components/Popconfirm", "zh": "Popconfirm 气泡确认", "en": "Popconfirm" },
       { "link": "components/Tooltip", "zh": "Tooltip 文字提示", "en": "Tooltip" }
     ]
   },
@@ -98,6 +100,7 @@
       { "link": "components/Card", "zh": "Card 卡片", "en": "Card" },
       { "link": "components/Collapse", "zh": "Collapse 折叠面板", "en": "Collapse" },
       { "link": "components/Descriptions", "zh": "Descriptions 描述列表", "en": "Descriptions" },
+      { "link": "components/QRCode", "zh": "QRCode 二维码", "en": "QRCode" },
       { "link": "components/List", "zh": "List 列表", "en": "List" },
       { "link": "components/Panels", "zh": "Panels 面板", "en": "Panels" },
       { "link": "components/Statistic", "zh": "Statistic 统计数值", "en": "Statistic" },
@@ -114,6 +117,7 @@
     "en": "Media Components",
     "items": [
       { "link": "components/AudioPlayer", "zh": "AudioPlayer 音频播放器", "en": "AudioPlayer" },
+      { "link": "components/ImageCropper", "zh": "ImageCropper 图片裁剪", "en": "ImageCropper" },
       { "link": "components/VideoPlayer", "zh": "VideoPlayer 视频播放器", "en": "VideoPlayer" },
       { "link": "components/Viewer", "zh": "Viewer 查看器", "en": "Viewer" }
     ]
@@ -125,6 +129,7 @@
       { "link": "components/Anchor", "zh": "Anchor 锚点", "en": "Anchor" },
       { "link": "components/Breadcrumb", "zh": "Breadcrumb 面包屑", "en": "Breadcrumb" },
       { "link": "components/Controls", "zh": "Controls 控制器", "en": "Controls" },
+      { "link": "components/CommandPalette", "zh": "CommandPalette 命令面板", "en": "CommandPalette" },
       { "link": "components/Dropdown", "zh": "Dropdown 下拉菜单", "en": "Dropdown" },
       { "link": "components/Menu", "zh": "Menu 菜单", "en": "Menu" },
       { "link": "components/PageHeader", "zh": "PageHeader 页头", "en": "PageHeader" },

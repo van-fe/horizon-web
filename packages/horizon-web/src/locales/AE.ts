@@ -256,6 +256,9 @@ export const AE = {
       increase: 'ارتفع',
       decrease: 'انخفض',
     },
+    qrCode: { expired: 'انتهت صلاحية رمز QR', refresh: 'تحديث' },
+    commandPalette: { placeholder: 'اكتب أمراً…', empty: 'لم يتم العثور على أوامر' },
+    imageCropper: { rotate: 'تدوير', reset: 'إعادة تعيين', crop: 'اقتصاص' },
     viewer: {
       closeThumbnail: 'إغلاق الصورة المصغرة',
       thumbnail: 'صورة مصغرة',

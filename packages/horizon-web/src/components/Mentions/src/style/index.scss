@@ -1,0 +1,61 @@
+@use '../../../../styles/mixins' as mixins;
+
+@include mixins.b('mentions') {
+  position: relative;
+  width: 100%;
+
+  @include mixins.e('input') {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 88px;
+    padding: 8px 12px;
+    color: mixins.css-variable('text-primary');
+    resize: vertical;
+    outline: none;
+    background: mixins.css-variable('bg-white');
+    border: 1px solid mixins.css-variable('border-default');
+    border-radius: mixins.css-variable('border-radius-medium');
+
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+    &:focus {
+      border-color: mixins.css-variable('brand-primary');
+    }
+  }
+
+  @include mixins.e('dropdown') {
+    position: absolute;
+    right: 0;
+    left: 0;
+    z-index: 10;
+    padding: 4px;
+    overflow: auto;
+    background: mixins.css-variable('bg-white');
+    border-radius: mixins.css-variable('border-radius-medium');
+    box-shadow: mixins.css-variable('shadow-3');
+  }
+
+  @include mixins.e('option') {
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: mixins.css-variable('border-radius-small');
+
+    @include mixins.is('active') {
+      background: mixins.css-variable('bg-hover');
+    }
+
+    @include mixins.is('disabled') {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
+
+  @include mixins.e('empty') {
+    padding: 12px;
+    color: mixins.css-variable('text-secondary');
+    text-align: center;
+  }
+
+  @include mixins.is('disabled') {
+    opacity: 0.6;
+  }
+}

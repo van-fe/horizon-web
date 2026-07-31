@@ -256,6 +256,9 @@ export const ZhCN = {
       increase: '上升',
       decrease: '下降',
     },
+    qrCode: { expired: '二维码已失效', refresh: '刷新' },
+    commandPalette: { placeholder: '输入命令…', empty: '没有匹配的命令' },
+    imageCropper: { rotate: '旋转', reset: '重置', crop: '裁剪' },
     viewer: {
       closeThumbnail: '隐藏缩略图',
       thumbnail: '显示缩略图',

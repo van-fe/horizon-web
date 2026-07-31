@@ -246,6 +246,9 @@ export const DE = {
       increase: 'Gestiegen',
       decrease: 'Gesunken',
     },
+    qrCode: { expired: 'QR-Code abgelaufen', refresh: 'Aktualisieren' },
+    commandPalette: { placeholder: 'Befehl eingeben…', empty: 'Keine Befehle gefunden' },
+    imageCropper: { rotate: 'Drehen', reset: 'Zurücksetzen', crop: 'Zuschneiden' },
     viewer: {
       closeThumbnail: 'Schließen der Miniaturansicht',
       thumbnail: 'Miniaturansicht',

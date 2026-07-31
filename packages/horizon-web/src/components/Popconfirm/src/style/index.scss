@@ -1,0 +1,34 @@
+@use '../../../../styles/mixins' as mixins;
+
+@include mixins.b('popconfirm') {
+  min-width: 220px;
+  max-width: 360px;
+  padding: 16px;
+  color: mixins.css-variable('text-primary');
+  background: mixins.css-variable('bg-white');
+  border-radius: mixins.css-variable('border-radius-medium');
+  box-shadow: mixins.css-variable('shadow-3');
+
+  @include mixins.e('body') {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  @include mixins.e('icon') {
+    flex: none;
+    color: mixins.css-variable('text-warning-default');
+  }
+
+  @include mixins.e('content') {
+    line-height: 20px;
+    overflow-wrap: anywhere;
+  }
+
+  @include mixins.e('footer') {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-top: 16px;
+  }
+}

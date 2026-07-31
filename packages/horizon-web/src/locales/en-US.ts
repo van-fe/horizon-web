@@ -243,6 +243,9 @@ export const EnUS = {
       increase: 'Increased',
       decrease: 'Decreased',
     },
+    qrCode: { expired: 'QR code expired', refresh: 'Refresh' },
+    commandPalette: { placeholder: 'Type a command…', empty: 'No commands found' },
+    imageCropper: { rotate: 'Rotate', reset: 'Reset', crop: 'Crop' },
     viewer: {
       closeThumbnail: 'Close thumbnail',
       thumbnail: 'Thumbnail',

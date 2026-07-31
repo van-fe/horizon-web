@@ -244,6 +244,9 @@ export const SvSE = {
       increase: 'Ökat',
       decrease: 'Minskat',
     },
+    qrCode: { expired: 'QR-koden har upphört att gälla', refresh: 'Uppdatera' },
+    commandPalette: { placeholder: 'Skriv ett kommando…', empty: 'Inga kommandon hittades' },
+    imageCropper: { rotate: 'Rotera', reset: 'Återställ', crop: 'Beskär' },
     result: {
       primaryButtonText: 'Ja',
       secondaryButtonText: 'Nej',

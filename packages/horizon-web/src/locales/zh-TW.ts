@@ -256,6 +256,9 @@ export const ZhTW = {
       increase: '上升',
       decrease: '下降',
     },
+    qrCode: { expired: 'QR Code 已失效', refresh: '重新整理' },
+    commandPalette: { placeholder: '輸入命令…', empty: '沒有符合的命令' },
+    imageCropper: { rotate: '旋轉', reset: '重設', crop: '裁剪' },
     result: {
       primaryButtonText: '確認',
       secondaryButtonText: '取消',
