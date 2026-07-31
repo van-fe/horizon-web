@@ -32,6 +32,7 @@
   "Icon": "^AIcon$",
   "Image": "^(HImage|HImageList)$",
   "Input": "^HInput$",
+  "InputOtp": "^HInputOtp$",
   "InputNumber": "^HInputNumber$",
   "Layout": "^(HRow|HCol)$",
   "Link": "^HLink$",

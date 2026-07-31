@@ -1,0 +1,22 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  'cell-size--small': 32px,
+  'cell-size--medium': 40px,
+  'cell-size--large': 48px,
+  'gap': #{function.css-variable('spacing-3')},
+  'font-size--small': #{function.css-variable('text-base')},
+  'font-size--medium': #{function.css-variable('text-lg')},
+  'font-size--large': 20px,
+  'color': #{function.css-variable('text-primary')},
+  'color--disabled': #{function.css-variable('text-secondary')},
+  'bg': #{function.css-variable('bg-default')},
+  'bg--disabled': #{function.css-variable('bg-disabled')},
+  'border-color': #{function.css-variable('border-default')},
+  'border-color--hover': #{function.css-variable('border-brand-hover')},
+  'border-color--focus': #{function.css-variable('border-brand-default')},
+  'border-color--disabled': #{function.css-variable('border-disabled')},
+  'border-color--error': #{function.css-variable('border-error-default')},
+  'border-radius': #{function.css-variable('radius-m')},
+  'transition-time': #{function.css-variable('transition-time')},
+);

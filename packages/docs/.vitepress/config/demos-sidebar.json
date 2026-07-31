@@ -57,6 +57,7 @@
       { "link": "components/DatePicker", "zh": "DatePicker 日期选择器", "en": "DatePicker" },
       { "link": "components/Form", "zh": "Form 表单", "en": "Form" },
       { "link": "components/Input", "zh": "Input 输入框", "en": "Input" },
+      { "link": "components/InputOtp", "zh": "InputOtp 验证码输入框", "en": "InputOtp" },
       { "link": "components/InputNumber", "zh": "InputNumber 数字输入框", "en": "InputNumber" },
       { "link": "components/Picker", "zh": "Picker 选择器", "en": "Picker" },
       { "link": "components/Progress", "zh": "Progress 进度条", "en": "Progress" },
