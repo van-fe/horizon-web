@@ -66,6 +66,7 @@
       { "link": "components/Slider", "zh": "Slider 滑块", "en": "Slider" },
       { "link": "components/Switch", "zh": "Switch 开关", "en": "Switch" },
       { "link": "components/TimePicker", "zh": "TimePicker 时间选择器", "en": "TimePicker" },
+      { "link": "components/TimeSelect", "zh": "TimeSelect 时间选择", "en": "TimeSelect" },
       { "link": "components/Timeline", "zh": "Timeline 时间轴", "en": "Timeline" },
       { "link": "components/TreeSelect", "zh": "TreeSelect 树形选择器", "en": "TreeSelect" },
       { "link": "components/Upload", "zh": "Upload 上传", "en": "Upload" }

@@ -61,6 +61,7 @@
   "Time": "^HTime$",
   "Timeline": "^(HTimeline|HTimelineItem)$",
   "TimePicker": "^HTimePicker$",
+  "TimeSelect": "^HTimeSelect$",
   "Tooltip": "^HTooltip$",
   "Transfer": "^HTransfer$",
   "Transition": "^HTransition$",
