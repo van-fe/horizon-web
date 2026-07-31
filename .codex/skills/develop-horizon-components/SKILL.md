@@ -22,6 +22,14 @@ Build components as native members of Horizon Web rather than isolated widgets. 
 - Do not reproduce an existing component's disabled, focus, keyboard, loading, sizing, or theme behavior with local CSS and event handlers.
 - Add a test that verifies important reused controls remain library components when regression to native controls would be harmful.
 
+## Split capabilities into hooks
+
+- During feature development, extract behavior and reusable capabilities into focused hooks/composables instead of accumulating them in Vue component files.
+- Keep component files responsible primarily for rendering, layout, prop/emit wiring, and composing hooks. Move state machines, async workflows, event coordination, derived state, observers, and reusable interaction logic into hooks.
+- Give each hook one cohesive responsibility with an explicit typed input and return contract. Compose small hooks when a feature spans multiple concerns so implementation details remain decoupled.
+- Avoid creating pass-through hooks that only relocate trivial code. Keep truly view-local, one-off presentation logic in the component when extraction would add indirection without improving separation.
+- Add focused tests for non-trivial hook behavior independently from component rendering, then cover the component-to-hook integration where it forms part of the public contract.
+
 ### Use component APIs flexibly
 
 - Read the reused component's props, emits, slots, exposes, docs, and implementation before configuring it.
@@ -80,6 +88,7 @@ Run focused unit tests, TypeScript checks, lint/format checks, and style compila
 
 Before handing off, confirm:
 
+- feature capabilities and non-trivial behavior are split into cohesive, independently testable hooks, with components kept focused on presentation and composition;
 - existing components were reused wherever appropriate;
 - reused components are configured through the APIs that control the actual layout and behavior;
 - pointer, keyboard, focus, responsive, async, loading, empty, error, and disabled interactions are optimized as applicable;
