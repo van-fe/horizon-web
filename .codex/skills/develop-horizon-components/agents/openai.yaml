@@ -1,0 +1,4 @@
+interface:
+  display_name: "Horizon Component Development"
+  short_description: "Build consistent, documented Horizon Web components"
+  default_prompt: "Use $develop-horizon-components to implement or update a Horizon Web component consistently."
