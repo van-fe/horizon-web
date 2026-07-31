@@ -1,4 +1,4 @@
-import type { Project, PropertyAssignment, AsExpression, Node } from 'ts-morph';
+import type { Project, PropertyAssignment, Node } from 'ts-morph';
 import type { ApiGeneratorAnalysedPropType, ApiGeneratorExportedComponent } from '@aurora/utils';
 import { ts } from 'ts-morph';
 import type { FileElements } from '../../utils/analyseFileElements';
@@ -149,7 +149,7 @@ function analysisPropertyAssignment(
     const typeEntry = property
       .getChildrenOfKind(ts.SyntaxKind.ObjectLiteralExpression)?.[0]
       ?.getProperties()
-      .find(curr => curr.getName() === 'type');
+      .find(curr => curr.asKind(ts.SyntaxKind.PropertyAssignment)?.getName() === 'type');
     const statement = typeEntry?.getLastChild();
     if (statement) {
       res.type = statement.getText();

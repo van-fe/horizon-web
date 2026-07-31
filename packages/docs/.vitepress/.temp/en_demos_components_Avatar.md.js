@@ -8,21 +8,21 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
   _push(`<div${ssrRenderAttrs(_attrs)}><h1>Avatar</h1><p class="description">Fallback behavior when the image fails to load when the display type is image</p><h2 id="default-image-avatar" tabindex="-1">Default Image Avatar <a class="header-anchor" href="#default-image-avatar" aria-label="Permalink to &quot;Default Image Avatar&quot;">​</a></h2>`);
   _push(ssrRenderComponent(_component_demo_block, {
     source: `<template>
-  <div class="n-demo">
-    <div class="n-demo__container">
-      <div class="n-demo__title">默认随机图片头像</div>
+  <div class="h-demo">
+    <div class="h-demo__container">
+      <div class="h-demo__title">默认随机图片头像</div>
       <h-avatar />
     </div>
-    <div class="n-demo__container">
-      <div class="n-demo__title">群拼接头像(1个人)</div>
+    <div class="h-demo__container">
+      <div class="h-demo__title">群拼接头像(1个人)</div>
       <h-avatar :src="src_url_1" />
     </div>
-    <div class="n-demo__container">
-      <div class="n-demo__title">群拼接头像(2个人)</div>
+    <div class="h-demo__container">
+      <div class="h-demo__title">群拼接头像(2个人)</div>
       <h-avatar :src="src_url_2" />
     </div>
-    <div class="n-demo__container">
-      <div class="n-demo__title">群拼接头像(3个及以上)</div>
+    <div class="h-demo__container">
+      <div class="h-demo__title">群拼接头像(3个及以上)</div>
       <h-avatar :src="src_url_3" />
     </div>
   </div>
@@ -33,16 +33,16 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   setup() {
     const src_url_1 = [
-      'https://cdn-app.example.com/user/2022/3/1/a72ad7d3-5c45-48dc-a4cc-9f90277e4c00.jpg',
+      '/demo-assets/avatar-coral.svg',
     ];
     const src_url_2 = [
-      'https://cdn-app.example.com/user/2022/3/1/a72ad7d3-5c45-48dc-a4cc-9f90277e4c00.jpg',
-      'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+      '/demo-assets/avatar-coral.svg',
+      '/demo-assets/avatar-indigo.svg',
     ];
     const src_url_3 = [
-      'https://cdn-app.example.com/user/2022/3/1/a72ad7d3-5c45-48dc-a4cc-9f90277e4c00.jpg',
-      'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
-      'https://cdn-app.example.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg',
+      '/demo-assets/avatar-coral.svg',
+      '/demo-assets/avatar-indigo.svg',
+      '/demo-assets/avatar-cyan.svg',
     ];
     return {
       src_url_1,
@@ -68,28 +68,28 @@ export default defineComponent({
   }, null, _parent));
   _push(`<h2 id="attribute-settings" tabindex="-1">Attribute Settings <a class="header-anchor" href="#attribute-settings" aria-label="Permalink to &quot;Attribute Settings&quot;">​</a></h2>`);
   _push(ssrRenderComponent(_component_demo_block, {
-    source: '<template>\n  <div class="n-demo">\n    <div class="n-demo__container">\n      <div class="n-demo__title">通过 size 设置形状</div>\n      <h-avatar class="avatar" size="mini" />\n      <h-avatar class="avatar" size="small" />\n      <h-avatar class="avatar" size="smedium" />\n      <h-avatar class="avatar" />\n      <h-avatar class="avatar" size="large" />\n    </div>\n    <div class="n-demo__container">\n      <div class="n-demo__title">通过 src 自定义头像资源</div>\n      <h-avatar class="avatar" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" />\n    </div>\n    <div class="n-demo__container">\n      <div class="n-demo__title">通过 fit 设置适应容器,同原生 object-fit</div>\n      <h-avatar\n        class="avatar"\n        src="https://cdn-app.example.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg"\n        fit="contain"\n      />\n      <h-avatar\n        class="avatar"\n        src="https://cdn-app.example.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg"\n      />\n      <h-avatar\n        class="avatar"\n        src="https://cdn-app.example.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg"\n        fit="cover"\n      />\n      <h-avatar\n        class="avatar"\n        src="https://cdn-app.example.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg"\n        fit="none"\n      />\n      <h-avatar\n        class="avatar"\n        src="https://cdn-app.example.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg"\n        fit="scale-down"\n      />\n    </div>\n  </div>\n</template>\n\n<style scoped>\n.avatar + .avatar {\n  margin-left: 20px;\n}\n\n.h-demo__container {\n  display: flex;\n  align-items: center;\n  margin-bottom: 20px;\n}\n\n.h-demo__title {\n  margin-right: 20px;\n}\n</style>\n',
+    source: '<template>\n  <div class="h-demo">\n    <div class="h-demo__container">\n      <div class="h-demo__title">通过 size 设置形状</div>\n      <h-avatar class="avatar" size="mini" />\n      <h-avatar class="avatar" size="small" />\n      <h-avatar class="avatar" size="smedium" />\n      <h-avatar class="avatar" />\n      <h-avatar class="avatar" size="large" />\n    </div>\n    <div class="h-demo__container">\n      <div class="h-demo__title">通过 src 自定义头像资源</div>\n      <h-avatar class="avatar" src="/demo-assets/avatar-coral.svg" />\n    </div>\n    <div class="h-demo__container">\n      <div class="h-demo__title">通过 fit 设置适应容器,同原生 object-fit</div>\n      <h-avatar\n        class="avatar"\n        src="/demo-assets/avatar-cyan.svg"\n        fit="contain"\n      />\n      <h-avatar\n        class="avatar"\n        src="/demo-assets/avatar-cyan.svg"\n      />\n      <h-avatar\n        class="avatar"\n        src="/demo-assets/avatar-cyan.svg"\n        fit="cover"\n      />\n      <h-avatar\n        class="avatar"\n        src="/demo-assets/avatar-cyan.svg"\n        fit="none"\n      />\n      <h-avatar\n        class="avatar"\n        src="/demo-assets/avatar-cyan.svg"\n        fit="scale-down"\n      />\n    </div>\n  </div>\n</template>\n\n<style scoped>\n.avatar + .avatar {\n  margin-left: 20px;\n}\n\n.h-demo__container {\n  display: flex;\n  align-items: center;\n  margin-bottom: 20px;\n}\n\n.h-demo__title {\n  margin-right: 20px;\n}\n</style>\n',
     path: "demos/components/Avatar/type.vue"
   }, null, _parent));
   _push(`<h2 id="text-avatar" tabindex="-1">Text Avatar <a class="header-anchor" href="#text-avatar" aria-label="Permalink to &quot;Text Avatar&quot;">​</a></h2>`);
   _push(ssrRenderComponent(_component_demo_block, {
-    source: '<template>\n  <div class="n-demo">\n    <div class="n-demo__container">\n      <div class="n-demo__title">通过 type 设置类型</div>\n      <h-avatar class="avatar" icon="friend" type="work" size="mini" />\n      <h-avatar class="avatar" icon="friend" type="work" size="small" />\n      <h-avatar class="avatar" icon="friend" type="work" size="smedium" />\n      <h-avatar class="avatar" icon="friend" type="work" />\n      <h-avatar class="avatar" icon="friend" type="work" size="large" />\n    </div>\n    <div class="n-demo__container">\n      <div class="n-demo__title">自定义颜色</div>\n      <h-avatar class="avatar" icon="friend" type="work" style="color: #178ca6; border-color: #178ca6" />\n      <h-avatar class="avatar" icon="friend" type="work" style="color: #0ba1d6; border-color: #0ba1d6" />\n      <h-avatar class="avatar" icon="friend" type="work" style="color: #00bebe; border-color: #00bebe" />\n      <h-avatar class="avatar" icon="friend" type="work" style="color: #e56c25; border-color: #e56c25" />\n    </div>\n    <div class="n-demo__container">\n      <div class="n-demo__title">通过 src 设置文字</div>\n      <h-avatar class="avatar" src="Design" type="work" size="mini" />\n      <h-avatar class="avatar" src="Design" type="work" size="small" />\n      <h-avatar class="avatar" src="Design" type="work" size="smedium" />\n      <h-avatar class="avatar" src="Design" type="work" />\n      <h-avatar class="avatar" src="Design" type="work" size="large" />\n      <h-avatar class="avatar" src="平台设计" type="work" size="mini" />\n      <h-avatar class="avatar" src="平台设计" type="work" size="small" />\n      <h-avatar class="avatar" src="平台设计" type="work" size="smedium" />\n      <h-avatar class="avatar" src="平台设计" type="work" />\n      <h-avatar class="avatar" src="平台设计" type="work" size="large" />\n    </div>\n  </div>\n</template>\n\n<style scoped>\n.avatar + .avatar {\n  margin-left: 20px;\n}\n\n.h-demo__container {\n  display: flex;\n  align-items: center;\n  margin-bottom: 20px;\n}\n\n.h-demo__title {\n  margin-right: 20px;\n}\n</style>\n',
+    source: '<template>\n  <div class="h-demo">\n    <div class="h-demo__container">\n      <div class="h-demo__title">通过 type 设置类型</div>\n      <h-avatar class="avatar" icon="friend" type="work" size="mini" />\n      <h-avatar class="avatar" icon="friend" type="work" size="small" />\n      <h-avatar class="avatar" icon="friend" type="work" size="smedium" />\n      <h-avatar class="avatar" icon="friend" type="work" />\n      <h-avatar class="avatar" icon="friend" type="work" size="large" />\n    </div>\n    <div class="h-demo__container">\n      <div class="h-demo__title">自定义颜色</div>\n      <h-avatar class="avatar" icon="friend" type="work" style="color: #178ca6; border-color: #178ca6" />\n      <h-avatar class="avatar" icon="friend" type="work" style="color: #0ba1d6; border-color: #0ba1d6" />\n      <h-avatar class="avatar" icon="friend" type="work" style="color: #00bebe; border-color: #00bebe" />\n      <h-avatar class="avatar" icon="friend" type="work" style="color: #e56c25; border-color: #e56c25" />\n    </div>\n    <div class="h-demo__container">\n      <div class="h-demo__title">通过 src 设置文字</div>\n      <h-avatar class="avatar" src="Design" type="work" size="mini" />\n      <h-avatar class="avatar" src="Design" type="work" size="small" />\n      <h-avatar class="avatar" src="Design" type="work" size="smedium" />\n      <h-avatar class="avatar" src="Design" type="work" />\n      <h-avatar class="avatar" src="Design" type="work" size="large" />\n      <h-avatar class="avatar" src="平台设计" type="work" size="mini" />\n      <h-avatar class="avatar" src="平台设计" type="work" size="small" />\n      <h-avatar class="avatar" src="平台设计" type="work" size="smedium" />\n      <h-avatar class="avatar" src="平台设计" type="work" />\n      <h-avatar class="avatar" src="平台设计" type="work" size="large" />\n    </div>\n  </div>\n</template>\n\n<style scoped>\n.avatar + .avatar {\n  margin-left: 20px;\n}\n\n.h-demo__container {\n  display: flex;\n  align-items: center;\n  margin-bottom: 20px;\n}\n\n.h-demo__title {\n  margin-right: 20px;\n}\n</style>\n',
     path: "demos/components/Avatar/work.vue"
   }, null, _parent));
   _push(`<h2 id="fallback" tabindex="-1">Fallback <a class="header-anchor" href="#fallback" aria-label="Permalink to &quot;Fallback&quot;">​</a></h2><p>Fallback behavior when the image fails to load when the display type is image</p>`);
   _push(ssrRenderComponent(_component_demo_block, {
     source: `<template>
-  <div class="n-demo">
-    <div class="n-demo__container">
-      <div class="n-demo__title">通过加载图片失败默认处理</div>
+  <div class="h-demo">
+    <div class="h-demo__container">
+      <div class="h-demo__title">通过加载图片失败默认处理</div>
       <h-avatar size="large" :src="src1" @error="errorHandler1" />
     </div>
-    <div class="n-demo__container">
-      <div class="n-demo__title">通过 error 方法自定义处理加载图片失败情况</div>
+    <div class="h-demo__container">
+      <div class="h-demo__title">通过 error 方法自定义处理加载图片失败情况</div>
       <h-avatar size="large" :src="src" @error="errorHandler" />
     </div>
-    <div class="n-demo__container">
-      <div class="n-demo__title">通过插槽自定义加载图片失败情况</div>
+    <div class="h-demo__container">
+      <div class="h-demo__title">通过插槽自定义加载图片失败情况</div>
       <h-avatar size="large" :src="src2">
         <template #error>
           <div>失败了</div>
@@ -107,7 +107,7 @@ export default defineComponent({
     let src2 = ref('https://cdn-app.example.com/us/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg');
     let src1 = ref('https://cdn-app.example.com/us/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg');
     const errorHandler = () => {
-      src.value = 'https://cdn-app.example.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg';
+      src.value = '/demo-assets/avatar-cyan.svg';
     };
     const errorHandler1 = () => {
       console.info('图片加载失败了');
@@ -145,7 +145,7 @@ export default defineComponent({
 `,
     path: "demos/components/Avatar/error.vue"
   }, null, _parent));
-  _push(`<h2>Avatar Api</h2><h3>Avatar Props</h3><table class="md-table"><thead><tr><th>Name</th><th>Description</th><th>Type</th><th style="${ssrRenderStyle({ "min-width": "50px" })}" class="text-center">Required</th><th>Default</th></tr></thead><tbody><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">size</td><td>设置头像的大小</td><td><code>&#39;mini&#39; | &#39;small&#39; | &#39;smedium&#39; | &#39;medium&#39; | &#39;large&#39; | number</code></td><td class="text-center">No</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">icon</td><td>设置头像的图标Type，参考 Icon 组件</td><td><code>string</code></td><td class="text-center">No</td><td>&#39;&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">src</td><td>图片头像资源<br>当type是work时，为文字头像内容</td><td><code>string | string[]</code></td><td class="text-center">No</td><td>&#39;&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">fit</td><td>当展示Type为图片的时候，设置图片如何适应容器框<br>object-fitName值</td><td><code>&#39;fill&#39; | &#39;contain&#39; | &#39;cover&#39; | &#39;none&#39; | &#39;scale-down&#39;</code></td><td class="text-center">No</td><td>&#39;fill&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">type</td><td>头像Type</td><td><code>&#39;normal&#39; | &#39;work&#39;</code></td><td class="text-center">No</td><td>&#39;normal&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">random-src</td><td>未设置src时，随机头像组</td><td><code>string[]</code></td><td class="text-center">No</td><td>() =&gt; []</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">default</td><td>兜底默认头像</td><td><code>string</code></td><td class="text-center">No</td><td>&#39;https://cdn-app.example.com/horizon-web/defaultAvatar.jpg&#39;</td></tr></tbody></table><h3>Avatar Emits</h3><table class="md-table"><thead><tr><th>Name</th><th>Description</th><th>Type</th><th>Parameter</th><th>Parameter Type</th><th>Parameter Description</th></tr></thead><tbody><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">error</td><td rowspan="1">图片类头像加载失败的回调， 返回 false 会关闭组件默认的 fallback 行为</td><td rowspan="1">( evt: <code>Event</code> ) =&gt; <code>void</code></td><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">evt</td><td><code>Event</code></td><td>Img标签 onError 原生事件</td></tr></tbody></table></div>`);
+  _push(`<h2 id="avatar-api" class="no-underline h2"><a href="#avatar-api" class="!no-underline">Avatar Api</a></h2><h3 id="avatar-props" class="no-underline h3"><a href="#avatar-props" class="!no-underline">Avatar Props</a></h3><table class="md-table"><thead><tr><th>Name</th><th>Description</th><th>Type</th><th style="${ssrRenderStyle({ "min-width": "50px" })}" class="text-center">Required</th><th>Default</th></tr></thead><tbody><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">size</td><td>Configuration for size.</td><td><code>&#39;mini&#39; | &#39;small&#39; | &#39;smedium&#39; | &#39;medium&#39; | &#39;large&#39; | number</code></td><td class="text-center">No</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">icon</td><td>Configuration for icon.</td><td><code>string</code></td><td class="text-center">No</td><td>&#39;&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">src</td><td>Configuration for src.</td><td><code>string | string[]</code></td><td class="text-center">No</td><td>&#39;&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">fit</td><td>Configuration for fit.</td><td><code>&#39;fill&#39; | &#39;contain&#39; | &#39;cover&#39; | &#39;none&#39; | &#39;scale-down&#39;</code></td><td class="text-center">No</td><td>&#39;fill&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">type</td><td>Configuration for type.</td><td><code>&#39;normal&#39; | &#39;work&#39;</code></td><td class="text-center">No</td><td>&#39;normal&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">random-src</td><td>Configuration for random src.</td><td><code>string[]</code></td><td class="text-center">No</td><td>() =&gt; []</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">default</td><td>Configuration for default.</td><td><code>string</code></td><td class="text-center">No</td><td>&#39;https://cdn-app.example.com/horizon-web/defaultAvatar.jpg&#39;</td></tr></tbody></table><h3 id="avatar-emits" class="no-underline h3"><a href="#avatar-emits" class="!no-underline">Avatar Emits</a></h3><table class="md-table"><thead><tr><th>Name</th><th>Description</th><th>Type</th><th>Parameter</th><th>Parameter Type</th><th>Parameter Description</th></tr></thead><tbody><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">error</td><td rowspan="1">Emitted when error changes.</td><td rowspan="1">( evt: <code>Event</code> ) =&gt; <code>void</code></td><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">evt</td><td><code>Event</code></td><td>The evt value.</td></tr></tbody></table></div>`);
 }
 const _sfc_setup = _sfc_main.setup;
 _sfc_main.setup = (props, ctx) => {

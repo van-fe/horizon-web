@@ -191,7 +191,7 @@ export default function useEvents(
         options.setPopperVisible(true);
       }
 
-      if ((props.multiple || props.needDropdownConfirm) ?? props.needConfirm ?? props.needConfirm) {
+      if (props.multiple || props.needConfirm) {
         options.judgeWhetherInputCanFocus();
       }
     }

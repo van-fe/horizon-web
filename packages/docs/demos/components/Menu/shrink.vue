@@ -1,6 +1,6 @@
 <template>
-  <h-row>
-    <h-col :span="24">
+  <h-grid :gap="12">
+    <h-grid-item :span="24">
       <h-form label-position="left" label-vertical-align="middle" :inline="true">
         <h-form-item label="theme:">
           <h-radio-group v-model="theme">
@@ -10,10 +10,10 @@
           </h-radio-group>
         </h-form-item>
       </h-form>
-    </h-col>
-  </h-row>
-  <h-row>
-    <h-col :span="24">
+    </h-grid-item>
+  </h-grid>
+  <h-grid :gap="12">
+    <h-grid-item :span="24">
       <h-container>
         <h-aside width="auto">
           <h-menu
@@ -66,8 +66,8 @@
         </h-aside>
         <h-main style="background: var(--h-bg-info-weak-hover)"></h-main>
       </h-container>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

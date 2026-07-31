@@ -39,19 +39,19 @@ describe('Cascader.tsx props', () => {
     const inputStyle = ref<CascaderProps['inputStyle']>('normal');
     const { wrapper } = createInstance({ inputStyle });
 
-    expect(wrapper.findComponent(HPickerInput).classes('n-picker__input--normal')).toBeTruthy();
+    expect(wrapper.findComponent(HPickerInput).classes('h-picker__input--normal')).toBeTruthy();
 
     inputStyle.value = 'emphasize';
 
     await nextTick();
 
-    expect(wrapper.findComponent(HPickerInput).classes('n-picker__input--emphasize')).toBeTruthy();
+    expect(wrapper.findComponent(HPickerInput).classes('h-picker__input--emphasize')).toBeTruthy();
 
     inputStyle.value = 'no-border';
 
     await nextTick();
 
-    expect(wrapper.findComponent(HPickerInput).classes('n-picker__input--no-border')).toBeTruthy();
+    expect(wrapper.findComponent(HPickerInput).classes('h-picker__input--no-border')).toBeTruthy();
   });
 
   test('trigger', async () => {

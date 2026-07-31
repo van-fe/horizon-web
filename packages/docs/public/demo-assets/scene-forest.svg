@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1366 768" role="img" aria-labelledby="title">
+  <title id="title">Layered green forest</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#d6f4dc"/><stop offset="1" stop-color="#5dbb91"/>
+    </linearGradient>
+  </defs>
+  <rect width="1366" height="768" fill="url(#bg)"/>
+  <circle cx="1110" cy="148" r="70" fill="#fff7ca"/>
+  <path d="M0 463c176-99 329-110 492-28 175 88 332 52 482-39 127-76 258-70 392 18v354H0Z" fill="#4ca47f"/>
+  <path d="M0 555c175-96 342-94 500-4 155 89 320 89 496 5 128-61 251-58 370 10v202H0Z" fill="#24765e"/>
+  <g fill="#15523f">
+    <path d="m84 616 70-190 70 190h-38v152h-64V616zm181 34 60-165 60 165h-32v118h-56V650zm786-2 65-176 65 176h-35v120h-60V648zm145 11 51-141 51 141h-28v109h-48V659z"/>
+  </g>
+</svg>

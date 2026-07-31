@@ -84,7 +84,7 @@ describe('Form.tsx special', () => {
 
     await nextTick();
 
-    expect(wrapper.findComponent(HInput).classes('n-input__error--normal')).toBeTruthy();
+    expect(wrapper.findComponent(HInput).classes('h-input__error--normal')).toBeTruthy();
     expect(wrapper.findComponent(HInputNumber).classes('is-error')).toBeTruthy();
     expect(
       wrapper.findComponent(HSelect).findComponent(HPickerInput).classes('is-error'),

@@ -195,20 +195,27 @@ export default defineComponent({
       }
     });
 
-    return () => (
-      <componentName.value
-        name={transitionName.value}
-        duration={duration.value}
-        onBeforeEnter={onBeforeEnter}
-        onEnter={onEnter}
-        onAfterEnter={onAfterEnter}
-        onBeforeLeave={onBeforeLeave}
-        onLeave={onLeave}
-        onAfterLeave={onAfterLeave}
-        {...appendAttrs.value}
-      >
-        {slots.default?.()}
-      </componentName.value>
-    );
+    return () => {
+      // Evaluate the wrapper slot while HTransition is rendering. Leaving the
+      // call inside the native Transition child slot defers it to
+      // BaseTransition's render context and Vue cannot track its dependencies.
+      const defaultSlotContent = slots.default?.();
+
+      return (
+        <componentName.value
+          name={transitionName.value}
+          duration={duration.value}
+          onBeforeEnter={onBeforeEnter}
+          onEnter={onEnter}
+          onAfterEnter={onAfterEnter}
+          onBeforeLeave={onBeforeLeave}
+          onLeave={onLeave}
+          onAfterLeave={onAfterLeave}
+          {...appendAttrs.value}
+        >
+          {defaultSlotContent}
+        </componentName.value>
+      );
+    };
   },
 });

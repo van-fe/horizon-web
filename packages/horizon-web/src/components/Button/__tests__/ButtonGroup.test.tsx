@@ -23,13 +23,13 @@ describe('ButtonGroup.tsx', () => {
       ));
       const element = wrapper.findComponent(HButton);
 
-      expect(element.classes('n-button--primary')).toBe(true);
+      expect(element.classes('h-button--primary')).toBe(true);
 
       type.value = 'normal';
 
       await nextTick();
 
-      expect(element.classes('n-button--normal')).toBe(true);
+      expect(element.classes('h-button--normal')).toBe(true);
     });
 
     test('size', async () => {
@@ -41,13 +41,13 @@ describe('ButtonGroup.tsx', () => {
       ));
       const element = wrapper.findComponent(HButton);
 
-      expect(element.classes('n-button--medium')).toBe(true);
+      expect(element.classes('h-button--medium')).toBe(true);
 
       size.value = 'huge';
 
       await nextTick();
 
-      expect(element.classes('n-button--huge')).toBe(true);
+      expect(element.classes('h-button--huge')).toBe(true);
     });
   });
 });

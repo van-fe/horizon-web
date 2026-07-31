@@ -8,6 +8,7 @@ import {
   nextTick,
   onMounted,
   onBeforeUnmount,
+  unref,
 } from 'vue';
 import type { Ref, WatchStopHandle } from 'vue';
 import type { HorizonWebSetupContext } from '@aurora/utils';
@@ -22,6 +23,7 @@ import type { VirtualScrollerItemExposes } from './composables/useExposes';
 import type { VirtualScrollerContext } from './utils/types';
 import { VirtualScrollerInjectKey } from './utils/injectionKey';
 import get from 'lodash/get';
+import { normalizeScrollerKey } from './composables/useRecycleScrollerLayout';
 
 export default defineComponent({
   name: `${useNamespace()}VirtualScrollerItem`,
@@ -48,16 +50,16 @@ export default defineComponent({
     // }
 
     const elRef = ref<HTMLElement>() as Ref<HTMLElement>;
-    const $_forceNextVScrollUpdate = ref<number | null>(null);
-    const $_pendingSizeUpdate = ref<number | null>(null);
-    const $_pendingVScrollUpdate = ref<number | null>(null);
+    const $_forceNextVScrollUpdate = ref<any>(null);
+    const $_pendingSizeUpdate = ref<any>(null);
+    const $_pendingVScrollUpdate = ref<any>(null);
     const $_sizeObserved = ref<boolean>(false);
     const $_watchData = ref<WatchStopHandle | null>(null);
 
     // computed(s)
-    const id = computed((): number => {
+    const id = computed((): any => {
       if (parentData.vscrollData.simpleArray) return props.index || 0;
-      const res = get(props.item, parentData.vscrollData.keyField);
+      const res = normalizeScrollerKey(get(props.item, parentData.vscrollData.keyField));
       if (!isDefined(res)) {
         throw new Error(
           `keyField '${parentData?.vscrollData.keyField}' not found in your item. You should set a valid keyField prop on your Scroller`,
@@ -68,7 +70,7 @@ export default defineComponent({
     });
 
     const size = computed(() => {
-      return parentData.vscrollData.sizes[id.value] || 0;
+      return parentData.vscrollData.sizes.get(id.value) || 0;
     });
 
     const finalActive = computed(() => {
@@ -84,14 +86,21 @@ export default defineComponent({
     watch(
       () => id.value,
       (value, oldValue) => {
-        elRef.value.$_vs_id = id.value;
+        clearUndefinedSize(oldValue);
+        if (elRef.value) {
+          elRef.value.$_vs_id = value;
+        }
+
+        if (finalActive.value && !size.value) {
+          markUndefinedSize(value);
+        }
         if (!size.value) {
           onDataUpdate();
         }
 
         if ($_sizeObserved.value) {
-          const oldSize = parentData.vscrollData.sizes[oldValue];
-          const _size = parentData.vscrollData.sizes[value];
+          const oldSize = parentData.vscrollData.sizes.get(oldValue);
+          const _size = parentData.vscrollData.sizes.get(value);
           if (oldSize != null && oldSize !== _size) {
             applySize(oldSize);
           }
@@ -104,15 +113,9 @@ export default defineComponent({
       value => {
         if (!size.value) {
           if (value) {
-            if (!parentData.$_undefinedMap.value[id.value]) {
-              parentData.$_undefinedSizes.value++;
-              parentData.$_undefinedMap.value[id.value] = true;
-            }
+            markUndefinedSize(id.value);
           } else {
-            if (parentData.$_undefinedMap.value[id.value]) {
-              parentData.$_undefinedSizes.value--;
-              parentData.$_undefinedMap.value[id.value] = false;
-            }
+            clearUndefinedSize(id.value);
           }
         }
 
@@ -133,6 +136,9 @@ export default defineComponent({
     // hook(s)
     onMounted(() => {
       if (finalActive.value) {
+        if (!size.value) {
+          markUndefinedSize(id.value);
+        }
         updateSize();
         observeSize();
       }
@@ -140,8 +146,23 @@ export default defineComponent({
 
     onBeforeUnmount(() => {
       parentData.$_events.off('vscroll:update', onVscrollUpdate);
+      clearUndefinedSize(id.value);
       unobserveSize();
     });
+
+    function markUndefinedSize(_id: any) {
+      if (parentData.$_undefinedMap.value.get(_id)) return;
+
+      parentData.$_undefinedMap.value.set(_id, true);
+      parentData.$_undefinedSizes.value++;
+    }
+
+    function clearUndefinedSize(_id: any) {
+      if (!parentData.$_undefinedMap.value.get(_id)) return;
+
+      parentData.$_undefinedMap.value.delete(_id);
+      parentData.$_undefinedSizes.value = Math.max(0, parentData.$_undefinedSizes.value - 1);
+    }
 
     function onDataUpdate() {
       updateSize();
@@ -160,9 +181,9 @@ export default defineComponent({
       }
     }
 
-    function computeSize(_id: number) {
+    function computeSize(_id: any) {
       nextTick(() => {
-        if (id.value === _id) {
+        if (id.value === _id && elRef.value) {
           const width = elRef.value.offsetWidth;
           const height = elRef.value.offsetHeight;
           applyWidthHeight(width, height);
@@ -172,19 +193,16 @@ export default defineComponent({
     }
 
     function applyWidthHeight(width: number, height: number) {
-      const _size = ~~(parentData.direction === 'vertical' ? height : width);
+      const _size = Math.floor(unref(parentData.direction) === 'vertical' ? height : width);
       if (_size && size.value !== _size) {
         applySize(_size);
       }
     }
 
     function applySize(size: number) {
-      if (parentData.$_undefinedMap.value[id.value]) {
-        parentData.$_undefinedSizes.value--;
-        parentData.$_undefinedMap.value[id.value] = undefined;
-      }
+      clearUndefinedSize(id.value);
 
-      parentData.vscrollData.sizes[id.value] = size;
+      parentData.vscrollData.sizes.set(id.value, size);
       if (props.emitResize) {
         emit('resize', id.value);
       }
@@ -193,6 +211,7 @@ export default defineComponent({
     function observeSize() {
       if (!parentData.vscrollResizeObserver) return;
       if ($_sizeObserved.value) return;
+      if (!elRef.value) return;
 
       parentData.vscrollResizeObserver.observe(elRef.value);
       elRef.value.$_vs_id = id.value;
@@ -203,13 +222,14 @@ export default defineComponent({
     function unobserveSize() {
       if (!parentData.vscrollResizeObserver) return;
       if (!$_sizeObserved.value) return;
+      if (!elRef.value) return;
 
       parentData.vscrollResizeObserver.unobserve(elRef.value);
       elRef.value.$_vs_onResize = undefined;
       $_sizeObserved.value = false;
     }
 
-    function onResize(_id: number, width: number, height: number) {
+    function onResize(_id: any, width: number, height: number) {
       if (id.value === _id) {
         applyWidthHeight(width, height);
       }
@@ -252,9 +272,8 @@ export default defineComponent({
           },
         );
       }
-
-      parentData.$_events.on('vscroll:update', onVscrollUpdate);
     }
+    parentData.$_events.on('vscroll:update', onVscrollUpdate);
 
     return () =>
       h(

@@ -1,6 +1,6 @@
 <template>
-  <h-row :gutter="10">
-    <h-col :span="6">
+  <h-grid :gap="10">
+    <h-grid-item :span="6">
       <div class="demo-title">自定义 option</div>
       <h-select v-model="value1" :to-body="false">
         <h-option label="中国" :value="1">
@@ -18,9 +18,9 @@
           </div>
         </template>
       </h-select>
-    </h-col>
+    </h-grid-item>
 
-    <h-col :span="6">
+    <h-grid-item :span="6">
       <div class="demo-title">自定义 Option 面板样式</div>
       <h-select
         v-model="value2"
@@ -31,8 +31,8 @@
         <h-option :value="2" label="美国" />
         <h-option :value="3" label="日本" />
       </h-select>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script lang="ts">

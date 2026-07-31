@@ -1,7 +1,8 @@
-import { defineComponent, onMounted, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { useMsgBoxAlertProps } from '../composables/useProps';
 import HDialog from '~/components/Dialog/src/Dialog';
 import { ComponentClassBlock } from '@aurora/utils';
+import useLocaleLang from '~/utils/useLocaleLang';
 
 export default defineComponent({
   name: 'MessageBoxAlert',
@@ -13,6 +14,7 @@ export default defineComponent({
   setup(props, { emit, expose }) {
     const visibleRef = ref(false);
     const classHelper = new ComponentClassBlock('messagebox');
+    const defaultOkText = useLocaleLang('global.ok', 'OK');
 
     const open = () => {
       visibleRef.value = true;
@@ -85,7 +87,7 @@ export default defineComponent({
           iconSize={getIcon()?.size}
           escClose={props.escClose}
           maskClose={props.maskClose}
-          okText={props.okText}
+          okText={props.okText || (defaultOkText.value as string)}
           okButtonProps={props.okButtonProps}
           cancelButtonProps={false}
           onOk={close}

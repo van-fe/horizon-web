@@ -33,9 +33,9 @@ Only supports `label-placement="vertical"` or `:progress-dot="true"` situations
 :::demo components/Steps/label-align.vue :::
 
 ## Async Load
-Because the `steps` component determines the index of each step only when `n-step` is mounted, if there are fixed front and back steps but the middle steps are loaded asynchronously, it will cause the final order to be incorrect
+Because the `steps` component determines the index of each step only when `h-step` is mounted, if there are fixed front and back steps but the middle steps are loaded asynchronously, it will cause the final order to be incorrect
 
-Therefore, you need to set `index` for `n-step` to ensure the order meets expectations
+Therefore, you need to set `index` for `h-step` to ensure the order meets expectations
 :::demo components/Steps/async-load.vue :::
 
 ## Intercept Switch

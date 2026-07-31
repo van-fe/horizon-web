@@ -1,11 +1,12 @@
-import { resolveComponent, useSSRContext } from "vue/dist/vue.esm-bundler.js";
-import { ssrRenderAttrs, ssrRenderComponent } from "vue/server-renderer";
+import { resolveComponent, withCtx, createTextVNode, useSSRContext } from "vue/dist/vue.esm-bundler.js";
+import { ssrRenderAttrs, ssrRenderComponent, ssrRenderStyle } from "vue/server-renderer";
 import { _ as _export_sfc } from "./plugin-vue_export-helper.1tPrXgE0.js";
 const __pageData = JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"demos/directives/v-popconfirm.md","filePath":"zh/demos/directives/v-popconfirm.md"}');
 const _sfc_main = { name: "demos/directives/v-popconfirm.md" };
 function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_demo_block = resolveComponent("demo-block");
-  _push(`<div${ssrRenderAttrs(_attrs)}><h2 id="组件说明" tabindex="-1">组件说明 <a class="header-anchor" href="#组件说明" aria-label="Permalink to &quot;组件说明&quot;">​</a></h2><p>和其它所有组件库都不同，我们提供的是指令而非组件的方式来实现这一效果。这样做的好处是，你无需修改元素的结构，也无需手动将目标元素上的 <code>click</code> 事件移到气泡弹窗上 —— 这一切都是自动的。</p><h2 id="基础示例" tabindex="-1">基础示例 <a class="header-anchor" href="#基础示例" aria-label="Permalink to &quot;基础示例&quot;">​</a></h2><p>给需要二次确认的操作元素加上 <code>v-popconfirm</code> 即可，它会自动将元素的 <code>click</code> 事件转移到弹窗中。</p>`);
+  const _component_h_link = resolveComponent("h-link");
+  _push(`<div${ssrRenderAttrs(_attrs)}><h1>v-popconfirm</h1><p class="description">用于二次确认场景，会在点击元素上弹出浮层进行提示确认</p><h2 id="组件说明" tabindex="-1">组件说明 <a class="header-anchor" href="#组件说明" aria-label="Permalink to &quot;组件说明&quot;">​</a></h2><p>和其它所有组件库都不同，我们提供的是指令而非组件的方式来实现这一效果。这样做的好处是，你无需修改元素的结构，也无需手动将目标元素上的 <code>click</code> 事件移到气泡弹窗上 —— 这一切都是自动的。</p><h2 id="基础示例" tabindex="-1">基础示例 <a class="header-anchor" href="#基础示例" aria-label="Permalink to &quot;基础示例&quot;">​</a></h2><p>给需要二次确认的操作元素加上 <code>v-popconfirm</code> 即可，它会自动将元素的 <code>click</code> 事件转移到弹窗中。</p>`);
   _push(ssrRenderComponent(_component_demo_block, {
     source: `<template>
   <h-button v-popconfirm @click="del">Delete</h-button>
@@ -295,7 +296,33 @@ export default defineComponent({
 `,
     path: "demos/directives/v-popconfirm/demo3.vue"
   }, null, _parent));
-  _push(`</div>`);
+  _push(`<h2 id="popconfirm-api" class="no-underline h2"><a href="#popconfirm-api" class="!no-underline">Popconfirm Api</a></h2><h3 id="popconfirm-options" class="no-underline h3"><a href="#popconfirm-options" class="!no-underline">Popconfirm Options</a></h3><table class="md-table"><thead><tr><th>属性</th><th>说明</th><th>是否必填</th><th>默认值</th><th>类型</th><th>参数名</th><th>参数类型</th><th>参数说明</th></tr></thead><tbody><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">title</td><td rowspan="1">弹窗中的提示文本，会根据当前 locale 显示默认文本</td><td rowspan="1">否</td><td rowspan="1">-</td><td rowspan="1"><code> string</code></td><td>-</td><td>-</td><td>-</td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">type</td><td rowspan="1">图标类型，<code>none</code> 表示不显示图标</td><td rowspan="1">否</td><td rowspan="1">&#39;warning&#39;</td><td rowspan="1"><code> &#39;none&#39; | &#39;info&#39; | &#39;success&#39; | &#39;warning&#39; | &#39;error&#39;</code></td><td>-</td><td>-</td><td>-</td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">iconName</td><td rowspan="1">自定义图标名称</td><td rowspan="1">否</td><td rowspan="1">-</td><td rowspan="1"><code> string</code></td><td>-</td><td>-</td><td>-</td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">iconSize</td><td rowspan="1">自定义图标大小</td><td rowspan="1">否</td><td rowspan="1">-</td><td rowspan="1"><code> string</code></td><td>-</td><td>-</td><td>-</td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">iconColor</td><td rowspan="1">自定义图标颜色</td><td rowspan="1">否</td><td rowspan="1">-</td><td rowspan="1"><code> string</code></td><td>-</td><td>-</td><td>-</td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">placement</td><td rowspan="1">弹窗的位置</td><td rowspan="1">否</td><td rowspan="1">&#39;top&#39;</td><td rowspan="1"><code> &#39;auto&#39; | &#39;auto-start&#39; | &#39;auto-end&#39; | &#39;top&#39; | &#39;top-start&#39; | &#39;top-end&#39; | &#39;bottom&#39; | &#39;bottom-start&#39; | &#39;bottom-end&#39; | &#39;right&#39; | &#39;right-start&#39; | &#39;right-end&#39; | &#39;left&#39; | &#39;left-start&#39; | &#39;left-end&#39;</code></td><td>-</td><td>-</td><td>-</td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">okText</td><td rowspan="1">确定按钮文本，会根据当前 <code>locale</code> 显示默认文本</td><td rowspan="1">否</td><td rowspan="1">-</td><td rowspan="1"><code> string</code></td><td>-</td><td>-</td><td>-</td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">okButtonProps</td><td rowspan="1">确定按钮的 <code>props</code>，传入一个对象，详见 `);
+  _push(ssrRenderComponent(_component_h_link, { href: "/pages/horizon-web/horizon-web/components/button#Api" }, {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(`Button Props`);
+      } else {
+        return [
+          createTextVNode("Button Props")
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+  _push(`</td><td rowspan="1">否</td><td rowspan="1">-</td><td rowspan="1"><code> Object as DirectiveOptionType&lt;Partial&lt;ButtonProps&gt;&gt;</code></td><td>-</td><td>-</td><td>-</td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">cancelText</td><td rowspan="1">取消按钮文本，会根据当前 <code>locale</code> 显示默认文本</td><td rowspan="1">否</td><td rowspan="1">-</td><td rowspan="1"><code> string</code></td><td>-</td><td>-</td><td>-</td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">cancelButtonProps</td><td rowspan="1">取消按钮的 <code>props</code>，传入一个对象，详见 `);
+  _push(ssrRenderComponent(_component_h_link, { href: "/pages/horizon-web/horizon-web/components/button#Api" }, {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(`Button Props`);
+      } else {
+        return [
+          createTextVNode("Button Props")
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+  _push(`</td><td rowspan="1">否</td><td rowspan="1">-</td><td rowspan="1"><code> Object as DirectiveOptionType&lt;Partial&lt;ButtonProps&gt;&gt;</code></td><td>-</td><td>-</td><td>-</td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">zIndex</td><td rowspan="1">弹窗的 CSS 层级</td><td rowspan="1">否</td><td rowspan="1">1000</td><td rowspan="1"><code> number</code></td><td>-</td><td>-</td><td>-</td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">toBody</td><td rowspan="1">是否将元素发送到 body 节点</td><td rowspan="1">否</td><td rowspan="1">true</td><td rowspan="1"><code> boolean</code></td><td>-</td><td>-</td><td>-</td></tr></tbody></table></div>`);
 }
 const _sfc_setup = _sfc_main.setup;
 _sfc_main.setup = (props, ctx) => {

@@ -63,11 +63,11 @@
 :::demo components/Tag/colorful.vue :::
 
 ## 新建、修改标签
-通过 `n-tag-group` 的 `props.useCreate` 快速创建一个允许输入创建的标签
+通过 `h-tag-group` 的 `props.useCreate` 快速创建一个允许输入创建的标签
 
 配合 `max-tags`，可以在标签数量达到一定值后不显示创建标签
 
-给 `n-tag` 或 `n-tag-group` 设置 `editable = true` ，则允许标签进行编辑
+给 `h-tag` 或 `h-tag-group` 设置 `editable = true` ，则允许标签进行编辑
 :::demo components/Tag/create-update.vue :::
 
 ## 标签折叠

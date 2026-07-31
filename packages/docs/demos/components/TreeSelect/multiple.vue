@@ -1,22 +1,22 @@
 <template>
-  <h-row>
-    <h-col :span="6">
+  <h-grid :gap="12">
+    <h-grid-item :span="6">
       <div class="demo-title">普通多选</div>
       <h-tree-select v-model="values1" :tree-data="baseTreeData" :multiple="true" :to-body="false" />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">折叠多选</div>
       <h-tree-select v-model="values2" :tree-data="baseTreeData" :multiple="true" :collapse="true" :to-body="false" />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">+N 显示其余已选项</div>
       <h-tree-select v-model="values3" :tree-data="baseTreeData" :multiple="true" :collapse="true" :collapse-tags-tooltip="true" :to-body="false" />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">强制显示3个已选项，其余折叠</div>
       <h-tree-select v-model="values4" :tree-data="baseTreeData" :multiple="true" :collapse="true" :collapse-tags-tooltip="true" :max-collapse-tags="3" :to-body="false" />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

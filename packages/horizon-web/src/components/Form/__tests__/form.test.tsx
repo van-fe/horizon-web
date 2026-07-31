@@ -33,12 +33,12 @@ describe('Form.tsx', () => {
       const wrapper = mount(() => <HForm size={size.value} />);
       const element = wrapper.findComponent(HForm);
 
-      await expect(element.classes(`n-form--${size.value}`)).toBeTruthy();
+      await expect(element.classes(`h-form--${size.value}`)).toBeTruthy();
       size.value = 'large';
 
       await nextTick();
 
-      await expect(element.classes(`n-form--${size.value}`)).toBeTruthy();
+      await expect(element.classes(`h-form--${size.value}`)).toBeTruthy();
     });
 
     test('check form.size whether can affect inside components.size', async () => {
@@ -52,7 +52,7 @@ describe('Form.tsx', () => {
       ));
       const element = wrapper.findComponent(HInput);
 
-      await expect(element.classes(`n-input--${size.value}`)).toBeTruthy();
+      await expect(element.classes(`h-input--${size.value}`)).toBeTruthy();
     });
 
     test('validateTrigger', async () => {

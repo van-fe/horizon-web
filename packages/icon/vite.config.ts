@@ -9,7 +9,8 @@ export default defineConfig({
     vue(),
     vueJsx(),
     dts({
-      insertTypesEntry: true,
+      entryRoot: resolve(__dirname, 'src'),
+      outDir: resolve(__dirname, 'dist'),
       include: ['src/**/*']
     })
   ],
@@ -47,4 +48,3 @@ export default defineConfig({
     }
   }
 })
-

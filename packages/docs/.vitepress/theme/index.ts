@@ -4,9 +4,12 @@ import { HorizonWebProvides, defaultLocale } from '@aurora/horizon-web';
 import { LocaleSupportLang } from '@aurora/locale';
 import * as components from '../../../horizon-web/src/components';
 import * as directives from '../../../horizon-web/src/directives';
+import methodsRegister from '../../../horizon-web/src/methods';
 import '../../../horizon-web/src/styles/index.scss';
 import './tailwind.css';
 import DemoBlock from '../components/DemoBlock.vue';
+import DeprecatedTips from '../components/DeprecatedTips.vue';
+import VersionTips from '../components/VersionTips.vue';
 
 export default {
   extends: DefaultTheme,
@@ -33,6 +36,7 @@ export default {
     // Initialize the service with the route locale. This prevents a stale
     // locale from another demo/session from being visible during first render.
     app.use(HorizonWebProvides, { locale: { current: getLocale() } });
+    app.use(methodsRegister);
 
     // Keep Horizon Web's reactive locale in sync with VitePress's URL locale.
     const syncLocale = (path?: string) => {
@@ -54,5 +58,7 @@ export default {
     });
 
     app.component('DemoBlock', DemoBlock);
+    app.component('DeprecatedTips', DeprecatedTips);
+    app.component('VersionTips', VersionTips);
   },
 } satisfies Theme;

@@ -1,7 +1,13 @@
 import defaults from './defaults';
 import './components/globalComponents';
 import versions from './version.json';
-export default defaults.install;
+import type { App } from 'vue';
+import type { HorizonWebOption } from './makeInstaller';
+
+const install = (app: App, options?: HorizonWebOption) =>
+  defaults.install(app, options);
+
+export default install;
 export const version = versions.version;
 
 export * from './components';

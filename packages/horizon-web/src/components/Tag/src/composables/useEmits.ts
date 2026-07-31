@@ -66,7 +66,7 @@ export const useTagGroupEmits = {
    */
   toggled: (isExpanded: boolean) => isBoolean(isExpanded),
   /**
-   * 如果 `n-tag` 溢出时触发
+   * 如果 `h-tag` 溢出时触发
     * @en Emitted when exceeded changes.
    */
   exceeded: () => true,

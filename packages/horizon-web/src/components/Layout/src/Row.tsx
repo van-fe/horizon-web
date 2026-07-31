@@ -16,7 +16,7 @@ export const ROW_KEY: InjectionKey<RowProvide> = Symbol(`HorizonWeb-row`);
 
 export default defineComponent({
   name: `${useNamespace()}Row`,
-  desc: 'Layout 提供了 n-row 和 n-col 两个组件来进行行列布局，在不同分辨率下有所区别',
+  desc: 'Layout 提供了 h-row 和 h-col 两个组件来进行行列布局，在不同分辨率下有所区别',
   descLocales: { en: 'Responsive row and column layout components.' },
   props: useRowProps,
   slots: useRowSlots,

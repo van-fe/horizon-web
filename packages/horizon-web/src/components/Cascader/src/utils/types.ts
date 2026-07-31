@@ -1,5 +1,16 @@
-import type { VNode } from 'vue';
+import type { Ref, VNode } from 'vue';
+import type { HorizonWebComponentInstance } from '@aurora/utils';
 import type { BaseTreeData, ExtendTreeData } from '~/utils/useTree/types';
+import type HPicker from '~/components/Picker/src/Picker';
+import type {
+  PickerExposes,
+  PickerFitContentInputExposes,
+} from '~/components/Picker/src/composables/useExposes';
+import type HPickerFitContentInput from '~/components/Picker/src/components/PickerFitContentInput';
+import type HTagGroup from '~/components/Tag/src/TagGroup';
+import type { TagGroupExposes } from '~/components/Tag/src/composables/useExposes';
+import type CascaderPanels from '../components/CascaderPanels';
+import type { CascaderPanelsExposes } from '../composables/useExposes';
 
 export type ModelValueSingleType = (string | number)[];
 
@@ -12,6 +23,18 @@ export type HCascaderUuidType = string | number;
 export type HCascaderOption = BaseTreeData;
 
 export type HCascaderExtendOption = ExtendTreeData<HCascaderOption>;
+
+export interface CascaderDomRefs {
+  pickerDomRef: Ref<HorizonWebComponentInstance<typeof HPicker, PickerExposes> | undefined>;
+  filterInputDomRef: Ref<
+    | HorizonWebComponentInstance<typeof HPickerFitContentInput, PickerFitContentInputExposes>
+    | undefined
+  >;
+  tagGroupDomRef: Ref<HorizonWebComponentInstance<typeof HTagGroup, TagGroupExposes> | undefined>;
+  cascaderPanelsDomRef: Ref<
+    HorizonWebComponentInstance<typeof CascaderPanels, CascaderPanelsExposes> | undefined
+  >;
+}
 
 export interface HCascaderFilterPathData {
   label: string;

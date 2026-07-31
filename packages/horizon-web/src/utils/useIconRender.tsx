@@ -10,7 +10,7 @@ export default function (
   return (isDefined(icon) && icon !== false) || isDefined(iconSlot)
     ? (iconSlot?.() ??
         (isString(icon) ? (
-          <AIcon name={(icon as string).replace(/^n-icon_/, '')} {...(iconProps || {})} />
+          <AIcon name={(icon as string).replace(/^h-icon_/, '')} {...(iconProps || {})} />
         ) : (
           <icon {...(iconProps || {})} />
         )))

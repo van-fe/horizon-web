@@ -16,7 +16,7 @@
 
 `ellipsis`: 省略展示，超出父级宽度，则将从第二个开始的元素开始收起，直到不超出父级宽度
 
-**要注意的是，使用 `ellipsis` 显示模式，且使用 `n-breadcrumb-item` 渲染时，一定要给每一个 `n-breadcrumb-item` 设置一个唯一的 `key`，否则渲染内容可能会出现错误**
+**要注意的是，使用 `ellipsis` 显示模式，且使用 `h-breadcrumb-item` 渲染时，一定要给每一个 `h-breadcrumb-item` 设置一个唯一的 `key`，否则渲染内容可能会出现错误**
 :::demo components/Breadcrumb/collapse.vue :::
 
 ## 特殊样式

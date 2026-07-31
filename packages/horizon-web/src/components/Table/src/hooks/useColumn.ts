@@ -139,6 +139,8 @@ export default function useColumn(
           const {
             checkedRows,
             isSelectable,
+            isRowChecked,
+            isRowIndeterminate,
             isCheckedAll,
             isIndeterminate,
             handleSelect,
@@ -146,7 +148,7 @@ export default function useColumn(
             handleClear,
             getSelectionRows,
             toggleRowSelection,
-          } = useSelection(column, emit);
+          } = useSelection(column, emit, flattenData);
 
           const { currentFilterValue } = useFilter(column, emit, flattenData);
 
@@ -175,6 +177,8 @@ export default function useColumn(
             [HTableColumnSelectionKey]: {
               checkedRows: checkedRows.value,
               isSelectable,
+              isRowChecked,
+              isRowIndeterminate,
               isCheckedAll,
               isIndeterminate,
               handleSelect,

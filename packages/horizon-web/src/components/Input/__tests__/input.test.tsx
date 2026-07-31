@@ -48,7 +48,7 @@ describe('Input.tsx', () => {
   test('status.error', () => {
     const wrapper = mount(() => <HInput status="error" />);
 
-    expect(wrapper.classes()).toContain('n-input__error--normal');
+    expect(wrapper.classes()).toContain('h-input__error--normal');
   });
 
   test('prefix', async () => {
@@ -76,12 +76,12 @@ describe('Input.tsx', () => {
     const size = ref<'small' | 'large'>('small');
 
     const wrapper = mount(() => <HInput size={size.value} />);
-    expect(wrapper.classes()).toContain('n-input--small');
+    expect(wrapper.classes()).toContain('h-input--small');
 
     size.value = 'large';
     await nextTick();
 
-    expect(wrapper.classes()).toContain('n-input--large');
+    expect(wrapper.classes()).toContain('h-input--large');
   });
 
   test('type', async () => {

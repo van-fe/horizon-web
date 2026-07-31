@@ -1,4 +1,0 @@
-const center_vertically_filled = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.25 3C13.6642 3 14 3.33579 14 3.75V11.25L21 11.25C21 12.0784 20.3284 12.75 19.5 12.75L14 12.75V20.25C14 20.6642 13.6642 21 13.25 21H10.75C10.3358 21 10 20.6642 10 20.25V12.75L4.49999 12.75C3.67157 12.75 3 12.0784 3 11.25L10 11.25V3.75C10 3.33579 10.3358 3 10.75 3H13.25Z" fill="currentColor"/></svg>';
-export {
-  center_vertically_filled as default
-};

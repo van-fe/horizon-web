@@ -1,6 +1,6 @@
 <template>
-  <h-row>
-    <h-col :span="24">
+  <h-grid :gap="12">
+    <h-grid-item :span="24">
       <h-date-picker
         v-model="value"
         type="date"
@@ -9,8 +9,8 @@
         @change="onChange"
         @pick="onPick"
       />
-    </h-col>
-    <h-col :span="24">
+    </h-grid-item>
+    <h-grid-item :span="24">
       <h-date-picker
         v-model="value2"
         type="date-range"
@@ -19,8 +19,8 @@
         @change="onChange"
         @pick="onPick"
       />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

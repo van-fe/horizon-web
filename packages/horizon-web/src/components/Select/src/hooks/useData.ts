@@ -134,13 +134,7 @@ export default function useData(
    * @paramEn inputVal The input val value.
    */
   function emitChange(emptyInputValue = false, inputVal = '') {
-    if (props.compatibility) {
-      if (changeIsAddValue.value) {
-        context.emit('change', emptyInputValue ? null : (inputVal ?? null), prevOptionValue);
-      }
-    } else {
-      context.emit('change', emptyInputValue ? null : inputVal, props.modelValue);
-    }
+    context.emit('change', emptyInputValue ? null : inputVal, props.modelValue);
   }
 
   provide(HSelectModelValueInjectKey, modelValueSet);

@@ -1,33 +1,27 @@
 <template>
-  <h-row :gutter="10">
-    <h-col :span="6">
-      <div class="demo-title">
-        默认
-      </div>
+  <h-grid :gap="10">
+    <h-grid-item :span="6">
+      <div class="demo-title">默认</div>
       <h-cascader v-model="currentVal1" :options="optionsWithEmpty" :to-body="false" />
-    </h-col>
-    <h-col :span="6">
-      <div class="demo-title">
-        自定义空列表文案内容
-      </div>
+    </h-grid-item>
+    <h-grid-item :span="6">
+      <div class="demo-title">自定义空列表文案内容</div>
       <h-cascader
-          v-model="currentVal1"
-          :options="optionsWithEmpty"
-          empty-content="没有对应的内容"
-          :to-body="false"
+        v-model="currentVal1"
+        :options="optionsWithEmpty"
+        empty-text="没有对应的内容"
+        :to-body="false"
       />
-    </h-col>
-    <h-col :span="6">
-      <div class="demo-title">
-        自定义空列表展示
-      </div>
+    </h-grid-item>
+    <h-grid-item :span="6">
+      <div class="demo-title">自定义空列表展示</div>
       <h-cascader v-model="currentVal1" :options="optionsWithEmpty" :to-body="false">
-        <template #emptyRender>
+        <template #empty>
           <h-empty description="没有对应的内容" />
         </template>
       </h-cascader>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

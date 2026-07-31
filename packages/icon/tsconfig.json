@@ -6,6 +6,8 @@
     "lib": ["ES2020", "ES2017", "ES2015", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
     "moduleResolution": "bundler",
+    "stableTypeOrdering": true,
+    "rootDir": "./src",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -20,4 +22,3 @@
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
-

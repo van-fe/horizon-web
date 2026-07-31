@@ -1,6 +1,6 @@
 <template>
-  <h-row :gutter="10">
-    <h-col :span="24">
+  <h-grid :gap="10">
+    <h-grid-item :span="24">
       <h-form label-width="150px" label-position="left" label-vertical-align="middle" helper-placement="after-label">
         <h-form-item label="Toggle" helper="展开/收起">
           <h-button size="small" @click="toggle">Toggle</h-button>
@@ -59,8 +59,8 @@
           <h-slider v-model="minDisplayed" :min="1" :max="renderedAmount" :input-enable="true" />
         </h-form-item>
       </h-form>
-    </h-col>
-    <h-col>
+    </h-grid-item>
+    <h-grid-item :span="24">
       <h-tag-group
         ref="tagGroup"
         :collapse="true"
@@ -76,8 +76,8 @@
       >
         <h-tag v-for="(item, index) of renderedItems" :id="index" :key="index" :clickable="false" :closable="closable">{{ item }}</h-tag>
       </h-tag-group>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

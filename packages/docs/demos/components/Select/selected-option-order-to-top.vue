@@ -19,8 +19,8 @@ export default defineComponent({
 </script>
 
 <template>
-  <h-row :gutter="20">
-    <h-col :span="6">
+  <h-grid :gap="20">
+    <h-grid-item :span="6">
       <div class="demo-title">普通单选</div>
       <h-select v-model="value1" clearable :selected-option-order-to-top="true" :to-body="false">
         <h-option label="上海" :value="1" />
@@ -30,8 +30,8 @@ export default defineComponent({
         <h-option :value="5" label="成都" />
         <h-option :value="6" label="重庆" name="hefei" />
       </h-select>
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">普通多选</div>
       <h-select v-model="values1" :multiple="true" clearable :to-body="false" :selected-option-order-to-top="true">
         <h-option label="上海" :value="1" />
@@ -41,8 +41,8 @@ export default defineComponent({
         <h-option :value="5" label="成都" />
         <h-option :value="6" label="重庆" name="hefei" />
       </h-select>
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">单选 - 不具名分组</div>
       <h-select v-model="value2" clearable :selected-option-order-to-top="true" :to-body="false">
         <h-option-group>
@@ -54,8 +54,8 @@ export default defineComponent({
         <h-option :value="5" label="成都" />
         <h-option :value="6" label="重庆" name="hefei" />
       </h-select>
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
         <div class="demo-title">多选 - 具名分组</div>
         <h-select v-model="values2" clearable multiple :selected-option-order-to-top="true" :to-body="false">
           <h-option-group label="一线">
@@ -69,6 +69,6 @@ export default defineComponent({
             <h-option :value="6" label="重庆" name="hefei" />
           </h-option-group>
         </h-select>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>

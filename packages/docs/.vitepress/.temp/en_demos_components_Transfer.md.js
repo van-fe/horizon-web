@@ -142,35 +142,35 @@ const dataMap = reactive({
     {
       key: 10,
       name: 'Arooklyn Simmons 用户',
-      avatar: 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+      avatar: '/demo-assets/avatar-indigo.svg',
       department:
         'Product Design & Development-Digital Development-Web Application Development Department',
     },
     {
       key: 11,
       name: 'Brooklyn Simmons 用户2',
-      avatar: 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+      avatar: '/demo-assets/avatar-indigo.svg',
       department:
         'Product Design & Development-Digital Development-Web Application Development Department',
     },
     {
       key: 12,
       name: 'Crooklyn Simmons 用户3',
-      avatar: 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+      avatar: '/demo-assets/avatar-indigo.svg',
       department:
         'Product Design & Development-Digital Development-Web Application Development Department',
     },
     {
       key: 13,
       name: 'Drooklyn Simmons 用户4',
-      avatar: 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+      avatar: '/demo-assets/avatar-indigo.svg',
       department:
         'Product Design & Development-Digital Development-Web Application Development Department',
     },
     {
       key: 14,
       name: 'Erooklyn Simmons 用户5',
-      avatar: 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+      avatar: '/demo-assets/avatar-indigo.svg',
       department:
         'Product Design & Development-Digital Development-Web Application Development Department',
     },
@@ -179,35 +179,35 @@ const dataMap = reactive({
     {
       key: 101,
       name: 'Arooklyn Simmons 王磊',
-      avatar: 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+      avatar: '/demo-assets/avatar-indigo.svg',
       department:
         'Product Design & Development-Digital Development-Web Application Development Department',
     },
     {
       key: 1,
       name: 'Brooklyn Simmons 王磊2',
-      avatar: 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+      avatar: '/demo-assets/avatar-indigo.svg',
       department:
         'Product Design & Development-Digital Development-Web Application Development Department',
     },
     {
       key: 2,
       name: 'Crooklyn Simmons 王磊3',
-      avatar: 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+      avatar: '/demo-assets/avatar-indigo.svg',
       department:
         'Product Design & Development-Digital Development-Web Application Development Department',
     },
     {
       key: 3,
       name: 'Drooklyn Simmons 王磊4',
-      avatar: 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+      avatar: '/demo-assets/avatar-indigo.svg',
       department:
         'Product Design & Development-Digital Development-Web Application Development Department',
     },
     {
       key: 4,
       name: 'Erooklyn Simmons 王磊5',
-      avatar: 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+      avatar: '/demo-assets/avatar-indigo.svg',
       department:
         'Product Design & Development-Digital Development-Web Application Development Department',
     },
@@ -306,35 +306,35 @@ const originData = [
   {
     key: 0,
     name: 'Arooklyn Simmons 王磊',
-    avatar: 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+    avatar: '/demo-assets/avatar-indigo.svg',
     department:
       'Product Design & Development-Digital Development-Web Application Development Department',
   },
   {
     key: 1,
     name: 'Brooklyn Simmons 王磊2',
-    avatar: 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+    avatar: '/demo-assets/avatar-indigo.svg',
     department:
       'Product Design & Development-Digital Development-Web Application Development Department',
   },
   {
     key: 2,
     name: 'Crooklyn Simmons 王磊3',
-    avatar: 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+    avatar: '/demo-assets/avatar-indigo.svg',
     department:
       'Product Design & Development-Digital Development-Web Application Development Department',
   },
   {
     key: 3,
     name: 'Drooklyn Simmons 王磊4',
-    avatar: 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+    avatar: '/demo-assets/avatar-indigo.svg',
     department:
       'Product Design & Development-Digital Development-Web Application Development Department',
   },
   {
     key: 4,
     name: 'Erooklyn Simmons 王磊5',
-    avatar: 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+    avatar: '/demo-assets/avatar-indigo.svg',
     department:
       'Product Design & Development-Digital Development-Web Application Development Department',
   },
@@ -450,18 +450,18 @@ const originData = [
   {
     key: 0,
     label: '某某集团',
-    avatar: 'https://cdn-app.example.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg',
+    avatar: '/demo-assets/avatar-cyan.svg',
     children: [
       {
         key: '0-1',
         label: '某某公司',
-        avatar: 'https://cdn-app.example.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg',
+        avatar: '/demo-assets/avatar-cyan.svg',
         children: [
           {
             key: '0-1-1',
             label: 'Brooklyn Simmons 王磊',
             avatar:
-              'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+              '/demo-assets/avatar-indigo.svg',
             department:
               'Product Design & Development-Digital Development-Web Application Development Department',
           },
@@ -469,7 +469,7 @@ const originData = [
             key: 1,
             label: '产品事业部',
             avatar:
-              'https://cdn-app.example.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg',
+              '/demo-assets/avatar-cyan.svg',
             department:
               'Product Design & Development-Digital Development-Web Application Development Department',
             children: [
@@ -477,7 +477,7 @@ const originData = [
                 key: '1-1',
                 label: '产品事业部1-1',
                 avatar:
-                  'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+                  '/demo-assets/avatar-indigo.svg',
                 department:
                   'Product Design & Development-Digital Development-Web Application Development Department',
                 children: [
@@ -485,7 +485,7 @@ const originData = [
                     key: '1-2',
                     label: '产品事业部1-2',
                     avatar:
-                      'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+                      '/demo-assets/avatar-indigo.svg',
                     department:
                       'Product Design & Development-Digital Development-Web Application Development Department',
                     children: [
@@ -493,7 +493,7 @@ const originData = [
                         key: '1-3',
                         label: '产品事业部1-3',
                         avatar:
-                          'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+                          '/demo-assets/avatar-indigo.svg',
                         department:
                           'Product Design & Development-Digital Development-Web Application Development Department',
                         children: [
@@ -501,7 +501,7 @@ const originData = [
                             key: '1-4',
                             label: '产品事业部1-4',
                             avatar:
-                              'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+                              '/demo-assets/avatar-indigo.svg',
                             department:
                               'Product Design & Development-Digital Development-Web Application Development Department',
                             children: [
@@ -509,7 +509,7 @@ const originData = [
                                 key: '1-5',
                                 label: '产品事业部1-5',
                                 avatar:
-                                  'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+                                  '/demo-assets/avatar-indigo.svg',
                                 department:
                                   'Product Design & Development-Digital Development-Web Application Development Department',
                                 children: [
@@ -517,7 +517,7 @@ const originData = [
                                     key: '1-6',
                                     label: '产品事业部1-6',
                                     avatar:
-                                      'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+                                      '/demo-assets/avatar-indigo.svg',
                                     department:
                                       'Product Design & Development-Digital Development-Web Application Development Department',
                                     children: [
@@ -525,7 +525,7 @@ const originData = [
                                         key: '1-7',
                                         label: '产品事业部1-7',
                                         avatar:
-                                          'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+                                          '/demo-assets/avatar-indigo.svg',
                                         department:
                                           'Product Design & Development-Digital Development-Web Application Development Department',
                                         children: [
@@ -533,7 +533,7 @@ const originData = [
                                             key: '1-8',
                                             label: '产品事业部1-8',
                                             avatar:
-                                              'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+                                              '/demo-assets/avatar-indigo.svg',
                                             department:
                                               'Product Design & Development-Digital Development-Web Application Development Department',
                                             children: [],
@@ -558,7 +558,7 @@ const originData = [
             key: 2,
             label: 'UED设计部',
             avatar:
-              'https://cdn-app.example.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg',
+              '/demo-assets/avatar-cyan.svg',
             department:
               'Product Design & Development-Digital Development-Web Application Development Department',
             children: [
@@ -566,7 +566,7 @@ const originData = [
                 key: '2-1',
                 label: 'Brooklyn Simmons 王磊2-1',
                 avatar:
-                  'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+                  '/demo-assets/avatar-indigo.svg',
                 department:
                   'Product Design & Development-Digital Development-Web Application Development Department',
               },
@@ -576,7 +576,7 @@ const originData = [
             key: 3,
             label: '研发部门',
             avatar:
-              'https://cdn-app.example.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg',
+              '/demo-assets/avatar-cyan.svg',
             department:
               'Product Design & Development-Digital Development-Web Application Development Department',
             children: [
@@ -584,7 +584,7 @@ const originData = [
                 key: '3-1',
                 label: 'Brooklyn Simmons 王磊3-1',
                 avatar:
-                  'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+                  '/demo-assets/avatar-indigo.svg',
                 department:
                   'Product Design & Development-Digital Development-Web Application Development Department',
               },
@@ -594,7 +594,7 @@ const originData = [
             key: 222222,
             label: '研发部门1',
             avatar:
-              'https://cdn-app.example.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg',
+              '/demo-assets/avatar-cyan.svg',
             department:
               'Product Design & Development-Digital Development-Web Application Development Department',
             children: [],
@@ -603,7 +603,7 @@ const originData = [
             key: 3111,
             label: '研发部门222',
             avatar:
-              'https://cdn-app.example.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg',
+              '/demo-assets/avatar-cyan.svg',
             department:
               'Product Design & Development-Digital Development-Web Application Development Department',
             children: [],
@@ -672,11 +672,11 @@ export default defineComponent({
     source: '<template>\n  <h-transfer v-model="dataModel" :data="data" draggable style="width: 500px"></h-transfer>\n</template>\n\n<script lang="ts">\nimport { defineComponent, ref } from \'vue\';\nexport default defineComponent({\n  setup() {\n    const data = ref([]);\n    for (let i = 1; i <= 5; i++) {\n      data.value.push({\n        key: i,\n        label: `选项名称 ${i}`,\n      });\n    }\n    const dataModel = ref([]);\n    return {\n      data,\n      dataModel,\n    };\n  },\n});\n<\/script>\n',
     path: "demos/components/Transfer/drag.vue"
   }, null, _parent));
-  _push(`<h2>Transfer Api</h2><h3>Transfer Props</h3><table class="md-table"><thead><tr><th>Name</th><th>Description</th><th>Type</th><th style="${ssrRenderStyle({ "min-width": "50px" })}" class="text-center">Required</th><th>Default</th></tr></thead><tbody><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">data</td><td>Transfer 的数据源</td><td><code>TransferDataProps[]</code></td><td class="text-center">Yes</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">v-model</td><td>绑定的key值</td><td><code>CheckboxUnionType[]</code></td><td class="text-center">No</td><td>() =&gt; []</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">disabled</td><td>是否禁用</td><td><code>boolean</code></td><td class="text-center">No</td><td>false</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">type`);
+  _push(`<h2 id="transfer-api" class="no-underline h2"><a href="#transfer-api" class="!no-underline">Transfer Api</a></h2><h3 id="transfer-props" class="no-underline h3"><a href="#transfer-props" class="!no-underline">Transfer Props</a></h3><table class="md-table"><thead><tr><th>Name</th><th>Description</th><th>Type</th><th style="${ssrRenderStyle({ "min-width": "50px" })}" class="text-center">Required</th><th>Default</th></tr></thead><tbody><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">data</td><td>Configuration for data.</td><td><code>TransferDataProps[]</code></td><td class="text-center">Yes</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">v-model</td><td>Configuration for model value.</td><td><code>CheckboxUnionType[]</code></td><td class="text-center">No</td><td>() =&gt; []</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">disabled</td><td>Configuration for disabled.</td><td><code>boolean</code></td><td class="text-center">No</td><td>false</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">type`);
   _push(ssrRenderComponent(_component_deprecated_tips, { name: "" }, null, _parent));
-  _push(`</td><td>Type</td><td><code>&#39;normal&#39; | &#39;work&#39; | &#39;table&#39;</code></td><td class="text-center">No</td><td>&#39;normal&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">titles</td><td>自定义列表标题</td><td><code>string[]</code></td><td class="text-center">No</td><td>() =&gt; [&#39;全选&#39;, &#39;&#39;]</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">filterable</td><td>展示搜索框</td><td><code>boolean | ((value: string, item: TransferDataProps) =&gt; boolean)</code></td><td class="text-center">No</td><td>false</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">placeholder</td><td>搜索框占位符</td><td><code>string</code></td><td class="text-center">No</td><td>&#39;&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">filter-method</td><td>自定义搜索方法</td><td><code>(inputValue: string, item: TransferDataProps) =&gt; boolean</code></td><td class="text-center">No</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">props</td><td>数据源的字段别名</td><td><code>Partial&lt;Record&lt;keyof TransferDataProps, keyof TransferDataProps | string&gt;&gt;</code></td><td class="text-center">No</td><td>() =&gt; {<br>      return {<br>        key: &#39;key&#39;,<br>        label: &#39;label&#39;,<br>        disabled: &#39;disabled&#39;,<br>        checked: &#39;checked&#39;,<br>        children: &#39;children&#39;,<br>        isGroup: &#39;isGroup&#39;,<br>      };<br>    }</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">empty-txt</td><td>空数据文本</td><td><code>string[]</code></td><td class="text-center">No</td><td>[&#39;暂无数据&#39;, &#39;暂无数据&#39;]</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">breadcrumb</td><td>面包屑默认标题</td><td><code>string</code></td><td class="text-center">No</td><td>&#39;HIO&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">target-order</td><td>右侧列表元素的排序策略: 若为 original，则保持与数据源相同的顺序； 若为 push，则新加入的元素排在最后； 若为 unshift，则新加入的元素排在最前</td><td><code>&#39;original&#39; | &#39;push&#39; | &#39;unshift&#39;</code></td><td class="text-center">No</td><td>&#39;push&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">field-map</td><td>options 字段映射，给定一个字段映射规则以达到在 option 中覆盖默认指定字段名称的目的</td><td><code>Partial&lt;Record&lt;keyof TransferDataProps, keyof TransferDataProps | string&gt;&gt;</code></td><td class="text-center">No</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">draggable</td><td>是否可拖拽</td><td><code>boolean</code></td><td class="text-center">No</td><td>false</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">on-drag-over</td><td>节点被拖拽至可释放目标上时的回调</td><td><code>(e: DragEvent, item: TransferDataProps) =&gt; void</code></td><td class="text-center">No</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">on-drag-start</td><td>节点开始拖拽的回调</td><td><code>(e: DragEvent, item: TransferDataProps) =&gt; void</code></td><td class="text-center">No</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">on-drag-end</td><td>节点结束拖拽的回调</td><td><code>(e: DragEvent, item: TransferDataProps) =&gt; void</code></td><td class="text-center">No</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">on-drag-leave</td><td>节点离开可释放目标上时的回调</td><td><code>(e: DragEvent, item: TransferDataProps) =&gt; void</code></td><td class="text-center">No</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">on-drop</td><td>节点在可释放目标上释放时的回调</td><td><code>(e: DragEvent, dropItem: TransferDataProps, dragItem: TransferDataProps) =&gt; void</code></td><td class="text-center">No</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">work-input-fn`);
+  _push(`</td><td>Configuration for type.</td><td><code>&#39;normal&#39; | &#39;work&#39; | &#39;table&#39;</code></td><td class="text-center">No</td><td>&#39;normal&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">titles</td><td>Configuration for titles.</td><td><code>string[]</code></td><td class="text-center">No</td><td>() =&gt; [&#39;全选&#39;, &#39;&#39;]</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">filterable</td><td>Configuration for filterable.</td><td><code>boolean | ((value: string, item: TransferDataProps) =&gt; boolean)</code></td><td class="text-center">No</td><td>false</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">placeholder</td><td>Configuration for placeholder.</td><td><code>string</code></td><td class="text-center">No</td><td>&#39;&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">filter-method</td><td>Configuration for filter method.</td><td><code>(inputValue: string, item: TransferDataProps) =&gt; boolean</code></td><td class="text-center">No</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">props</td><td>Configuration for props.</td><td><code>Partial&lt;Record&lt;keyof TransferDataProps, keyof TransferDataProps | string&gt;&gt;</code></td><td class="text-center">No</td><td>() =&gt; {<br>      return {<br>        key: &#39;key&#39;,<br>        label: &#39;label&#39;,<br>        disabled: &#39;disabled&#39;,<br>        checked: &#39;checked&#39;,<br>        children: &#39;children&#39;,<br>        isGroup: &#39;isGroup&#39;,<br>      };<br>    }</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">empty-txt</td><td>Configuration for empty txt.</td><td><code>string[]</code></td><td class="text-center">No</td><td>[&#39;暂无数据&#39;, &#39;暂无数据&#39;]</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">breadcrumb</td><td>Configuration for breadcrumb.</td><td><code>string</code></td><td class="text-center">No</td><td>&#39;HIO&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">target-order</td><td>Configuration for target order.</td><td><code>&#39;original&#39; | &#39;push&#39; | &#39;unshift&#39;</code></td><td class="text-center">No</td><td>&#39;push&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">field-map</td><td>Configuration for field map.</td><td><code>Partial&lt;Record&lt;keyof TransferDataProps, keyof TransferDataProps | string&gt;&gt;</code></td><td class="text-center">No</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">draggable</td><td>Configuration for draggable.</td><td><code>boolean</code></td><td class="text-center">No</td><td>false</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">on-drag-over</td><td>Configuration for on drag over.</td><td><code>(e: DragEvent, item: TransferDataProps) =&gt; void</code></td><td class="text-center">No</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">on-drag-start</td><td>Configuration for on drag start.</td><td><code>(e: DragEvent, item: TransferDataProps) =&gt; void</code></td><td class="text-center">No</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">on-drag-end</td><td>Configuration for on drag end.</td><td><code>(e: DragEvent, item: TransferDataProps) =&gt; void</code></td><td class="text-center">No</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">on-drag-leave</td><td>Configuration for on drag leave.</td><td><code>(e: DragEvent, item: TransferDataProps) =&gt; void</code></td><td class="text-center">No</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">on-drop</td><td>Configuration for on drop.</td><td><code>(e: DragEvent, dropItem: TransferDataProps, dragItem: TransferDataProps) =&gt; void</code></td><td class="text-center">No</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">work-input-fn`);
   _push(ssrRenderComponent(_component_deprecated_tips, { name: "<code>filterable</code>" }, null, _parent));
-  _push(`</td><td>workType输入回调，具有过滤功能</td><td><code>(item: any, input: string) =&gt; boolean</code></td><td class="text-center">No</td><td></td></tr></tbody></table><h3>Transfer Emits</h3><table class="md-table"><thead><tr><th>Name</th><th>Description</th><th>Type</th><th>Parameter</th><th>Parameter Type</th><th>Parameter Description</th></tr></thead><tbody><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">blur</td><td rowspan="1">失焦时触发</td><td rowspan="1">( evt: <code>FocusEvent</code> ) =&gt; <code>void</code></td><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">evt</td><td><code>FocusEvent</code></td><td>失焦事件</td></tr><tr><td rowspan="3" style="${ssrRenderStyle({ "word-break": "keep-all" })}">change</td><td rowspan="3">选项在两栏之间转移时触发</td><td rowspan="3">( targetKeys: <code>CheckboxUnionType[]</code>, direction: <code>&#39;left&#39; | &#39;right&#39;</code>, moveKeys: <code>CheckboxUnionType[]</code> ) =&gt; <code>void</code></td><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">targetKeys</td><td><code>CheckboxUnionType[]</code></td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">direction</td><td><code>&#39;left&#39; | &#39;right&#39;</code></td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">moveKeys</td><td><code>CheckboxUnionType[]</code></td><td></td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">left-check-change</td><td rowspan="1">left栏选中项发生变化时触发</td><td rowspan="1">( value: <code>CheckboxUnionType[]</code> ) =&gt; <code>void</code></td><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">value</td><td><code>CheckboxUnionType[]</code></td><td>选中key值</td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">right-check-change</td><td rowspan="1">right栏选中项发生变化时触发</td><td rowspan="1">( value: <code>CheckboxUnionType[]</code> ) =&gt; <code>void</code></td><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">value</td><td><code>CheckboxUnionType[]</code></td><td>选中key值</td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">search</td><td rowspan="1">搜索框内容时改变时触发</td><td rowspan="1">( value: <code>string</code> ) =&gt; <code>void</code></td><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">value</td><td><code>string</code></td><td>搜索框内容</td></tr></tbody></table></div>`);
+  _push(`</td><td>Configuration for work input fn.</td><td><code>(item: any, input: string) =&gt; boolean</code></td><td class="text-center">No</td><td></td></tr></tbody></table><h3 id="transfer-emits" class="no-underline h3"><a href="#transfer-emits" class="!no-underline">Transfer Emits</a></h3><table class="md-table"><thead><tr><th>Name</th><th>Description</th><th>Type</th><th>Parameter</th><th>Parameter Type</th><th>Parameter Description</th></tr></thead><tbody><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">blur</td><td rowspan="1">Emitted when blur changes.</td><td rowspan="1">( evt: <code>FocusEvent</code> ) =&gt; <code>void</code></td><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">evt</td><td><code>FocusEvent</code></td><td>The evt value.</td></tr><tr><td rowspan="3" style="${ssrRenderStyle({ "word-break": "keep-all" })}">change</td><td rowspan="3">Emitted when change changes.</td><td rowspan="3">( targetKeys: <code>CheckboxUnionType[]</code>, direction: <code>&#39;left&#39; | &#39;right&#39;</code>, moveKeys: <code>CheckboxUnionType[]</code> ) =&gt; <code>void</code></td><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">targetKeys</td><td><code>CheckboxUnionType[]</code></td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">direction</td><td><code>&#39;left&#39; | &#39;right&#39;</code></td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">moveKeys</td><td><code>CheckboxUnionType[]</code></td><td></td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">left-check-change</td><td rowspan="1">Emitted when left check change changes.</td><td rowspan="1">( value: <code>CheckboxUnionType[]</code> ) =&gt; <code>void</code></td><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">value</td><td><code>CheckboxUnionType[]</code></td><td>The value value.</td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">right-check-change</td><td rowspan="1">Emitted when right check change changes.</td><td rowspan="1">( value: <code>CheckboxUnionType[]</code> ) =&gt; <code>void</code></td><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">value</td><td><code>CheckboxUnionType[]</code></td><td>The value value.</td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">search</td><td rowspan="1">Emitted when search changes.</td><td rowspan="1">( value: <code>string</code> ) =&gt; <code>void</code></td><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">value</td><td><code>string</code></td><td>The value value.</td></tr></tbody></table></div>`);
 }
 const _sfc_setup = _sfc_main.setup;
 _sfc_main.setup = (props, ctx) => {

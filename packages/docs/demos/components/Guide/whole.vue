@@ -1,9 +1,9 @@
 <template>
-  <h-row>
-    <h-col :span="24">
+  <h-grid :gap="12">
+    <h-grid-item :span="24">
       <h-button @click="start">Start</h-button>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 
   <h-dialog v-model="dialogVisible" title="信息填写" @close="onCloseDialog" @opened="onOpened">
     <h-form>

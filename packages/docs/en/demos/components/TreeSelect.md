@@ -16,7 +16,7 @@ You can enable `show-radio` to make `Radio` components appear before leaf nodes
 :::demo components/TreeSelect/single.vue :::
 
 ## Multiple Selection
-Like `select`, the tags for multiple selection use `n-tag` and `n-tag-group` components combined
+Like `select`, the tags for multiple selection use `h-tag` and `h-tag-group` components combined
 
 By default, selected items are not collapsed. You can configure `collapse-tags = true` to collapse selected items
 
@@ -81,7 +81,7 @@ And it is only effective during initialization. Later changes to `tree-data` wil
 ## Disabled
 In the `tree-data` data, setting `disabled = true` for an item can disable that item
 
-But if you want to disable the entire tree, you can directly give `disabled = true` to `n-tree`
+But if you want to disable the entire tree, you can directly give `disabled = true` to `h-tree`
 
 But regardless of the disable method, it will not affect the expand function
 

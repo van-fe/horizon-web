@@ -99,9 +99,12 @@ export function analyseComponent(componentInfo: ApiGeneratorExportedComponent, p
                     const locales = curr.getLastChildByKind(ts.SyntaxKind.ObjectLiteralExpression);
                     componentInfo.descLocales = {};
                     locales?.getProperties().forEach(property => {
-                      const key = property.getName().replace(/['"]/g, '');
+                      const key = property
+                        .asKind(ts.SyntaxKind.PropertyAssignment)
+                        ?.getName()
+                        .replace(/['"]/g, '');
                       const value = property.getLastChild()?.getText().replace(/^['"]|['"]$/g, '');
-                      if (value) componentInfo.descLocales![key] = value;
+                      if (key && value) componentInfo.descLocales![key] = value;
                     });
                     break;
                   }

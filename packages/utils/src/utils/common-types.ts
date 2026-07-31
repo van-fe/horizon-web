@@ -94,6 +94,7 @@ export interface ApiGeneratorAnalysedEmitType {
   desc: string;
   descLocales?: Record<string, string>;
   deprecated?: string;
+  version?: string;
 }
 
 export interface ApiGeneratorAnalysedSlotParamType {
@@ -109,6 +110,7 @@ export interface ApiGeneratorAnalysedSlotType {
   desc: string;
   descLocales?: Record<string, string>;
   deprecated?: string;
+  version?: string;
   params: ApiGeneratorAnalysedSlotParamType[];
 }
 

@@ -67,6 +67,7 @@ const Alert = defineMethod({
         },
         ...options,
       });
+      vNode.appContext = Alert._context ?? null;
 
       render(vNode, container);
       vNode.component?.exposed?.open();

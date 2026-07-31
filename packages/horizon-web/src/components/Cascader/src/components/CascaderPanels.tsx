@@ -139,7 +139,7 @@ export default defineComponent({
         const uuidPath = currentNode.uuidPath.concat();
 
         uuidPath.forEach(uuid => {
-          const target = optionListMap.value.get(uuid as string);
+          const target = optionListMap.value.get(uuid);
           const childrenList = target?.transformedChildren;
           if ((Array.isArray(childrenList) && childrenList.length > 0) || !target?.isLeaf) {
             panels.push(childrenList || []);
@@ -229,7 +229,7 @@ export default defineComponent({
           const status = getChildrenCheckedStatus(curr.transformedChildren);
           return prev + (status === 'all' ? 1 : 0);
         } else {
-          return prev + (presetModelValueSet.value.has(curr._uuid as string) ? 1 : 0);
+          return prev + (presetModelValueSet.value.has(curr._uuid) ? 1 : 0);
         }
       }, 0);
 
@@ -241,10 +241,10 @@ export default defineComponent({
 
       if (node.isLeaf) {
         if (
-          (positive && !presetModelValueSet.value.has(node._uuid as string)) ||
-          (!positive && presetModelValueSet.value.has(node._uuid as string))
+          (positive && !presetModelValueSet.value.has(node._uuid)) ||
+          (!positive && presetModelValueSet.value.has(node._uuid))
         ) {
-          pickOption(node._uuid as string, true, false, false);
+          pickOption(node._uuid, true, false, false);
         }
       } else {
         node.transformedChildren.forEach(item => pickAllLeafChildren(item, positive));
@@ -265,16 +265,13 @@ export default defineComponent({
       if (childNodeOption.selectable === false) return;
 
       if (onRadioOrCheckbox) {
-        if (
-          !parentProps.multiple &&
-          presetModelValueSet.value.has(childNodeOption._uuid as string)
-        ) {
+        if (!parentProps.multiple && presetModelValueSet.value.has(childNodeOption._uuid)) {
           return;
         }
 
         if (!childNodeOption.isLeaf) {
           if (parentProps.checkStrictly) {
-            pickOption(childNodeOption._uuid as string);
+            pickOption(childNodeOption._uuid);
           } else if (
             !childNodeOption.disabled &&
             !parentProps.checkStrictly &&
@@ -302,22 +299,19 @@ export default defineComponent({
           }
         } else {
           // 叶子结点
-          pickOption(childNodeOption._uuid as string);
+          pickOption(childNodeOption._uuid);
         }
       } else if (
         childNodeOption.isLeaf ||
         (parentProps.checkStrictly && !parentProps.multiple && !parentProps.showRadio)
       ) {
-        if (
-          !parentProps.multiple &&
-          presetModelValueSet.value.has(childNodeOption._uuid as string)
-        ) {
+        if (!parentProps.multiple && presetModelValueSet.value.has(childNodeOption._uuid)) {
           return;
         }
-        pickOption(childNodeOption._uuid as string, false);
+        pickOption(childNodeOption._uuid, false);
       }
 
-      focusOption(childNodeOption._uuid as string);
+      focusOption(childNodeOption._uuid);
     }
 
     /*** keyboard events ***/
@@ -388,7 +382,7 @@ export default defineComponent({
 
       resetActiveIndex();
 
-      if (uuid) {
+      if (uuid !== undefined) {
         if (props.duringInput) {
           focusOptionWhileFilter(uuid);
         } else {
@@ -507,10 +501,13 @@ export default defineComponent({
 
     expose({
       keyboardEventDeal: onKeyboard,
-      focusOption: (valuePath: ModelValueSingleType[]) => {
-        const uuid = valuePath.join(' / ');
-        expandPanel(treeHelper.flattenTreeDataMapping.value.get(uuid));
-        focusOption(uuid);
+      focusOption: (valuePath: ModelValueSingleType) => {
+        const target = treeHelper.getInfoByPath(valuePath);
+
+        if (target) {
+          expandPanel(target);
+          focusOption(target._uuid);
+        }
       },
     });
 

@@ -3,12 +3,12 @@ import { isNumber } from '@aurora/utils';
 export const useVirtualScrollerEmits = {
   /**
    * 滚动视口尺寸发生改变时的事件
-    * @en Emitted when resize changes.
+   * @en Emitted when resize changes.
    */
   resize: () => true,
   /**
    * 组件visible值发生改变时的事件
-    * @en Emitted when visible changes.
+   * @en Emitted when visible changes.
    */
   visible: () => true,
   /**
@@ -21,7 +21,7 @@ export const useVirtualScrollerEmits = {
    * @paramEn visibleStartIndex The visible start index value.
    * @param visibleEndIndex 进入视口的结束元素索引值
    * @paramEn visibleEndIndex The visible end index value.
-    * @en Emitted when update changes.
+   * @en Emitted when update changes.
    */
   update: (
     startIndex: number,
@@ -37,34 +37,34 @@ export const useVirtualScrollerEmits = {
    * 鼠标移入
    * @param e 鼠标事件
    * @paramEn e The e value.
-    * @en Emitted when mouse enter changes.
+   * @en Emitted when mouse enter changes.
    */
   mouseEnter: (e: MouseEvent) => e instanceof MouseEvent,
   /**
    * 鼠标移出
    * @param e 鼠标事件
    * @paramEn e The e value.
-    * @en Emitted when mouse leave changes.
+   * @en Emitted when mouse leave changes.
    */
   mouseLeave: (e: MouseEvent) => e instanceof MouseEvent,
   /**
    * 组件滚动到末尾触发的事件
-    * @en Emitted when scroll end changes.
+   * @en Emitted when scroll end changes.
    */
   scrollEnd: () => true,
   /**
    * 组件滚动到起始位置时触发的事件
-    * @en Emitted when scroll start changes.
+   * @en Emitted when scroll start changes.
    */
   scrollStart: () => true,
   /**
    * 滚动开始时触发通知
-    * @en Emitted when scroll begin changes.
+   * @en Emitted when scroll begin changes.
    */
   scrollBegin: () => true,
   /**
    * 滚动结束后触发通知
-    * @en Emitted when scroll stop changes.
+   * @en Emitted when scroll stop changes.
    */
   scrollStop: () => true,
 };
@@ -72,17 +72,17 @@ export const useVirtualScrollerEmits = {
 export const useRecycleScrollerEmits = {
   /**
    * 组件visible值发生改变时的事件
-    * @en Emitted when visible changes.
+   * @en Emitted when visible changes.
    */
   visible: () => true,
   /**
    * 组件隐藏时的事件
-    * @en Emitted when hidden changes.
+   * @en Emitted when hidden changes.
    */
   hidden: () => true,
   /**
    * 滚动视口尺寸发生改变时的事件
-    * @en Emitted when resize changes.
+   * @en Emitted when resize changes.
    */
   resize: () => true,
   /**
@@ -95,7 +95,7 @@ export const useRecycleScrollerEmits = {
    * @paramEn visibleStartIndex The visible start index value.
    * @param visibleEndIndex 进入视口的结束元素索引值
    * @paramEn visibleEndIndex The visible end index value.
-    * @en Emitted when update changes.
+   * @en Emitted when update changes.
    */
   update: (
     startIndex: number,
@@ -109,36 +109,36 @@ export const useRecycleScrollerEmits = {
     isNumber(visibleEndIndex),
   /**
    * 组件滚动到末尾触发的事件
-    * @en Emitted when scroll end changes.
+   * @en Emitted when scroll end changes.
    */
   scrollEnd: () => true,
   /**
    * 组件滚动到起始位置时触发的事件
-    * @en Emitted when scroll start changes.
+   * @en Emitted when scroll start changes.
    */
   scrollStart: () => true,
   /**
    * 鼠标移入
    * @param e 鼠标事件
    * @paramEn e The e value.
-    * @en Emitted when mouse enter changes.
+   * @en Emitted when mouse enter changes.
    */
   mouseEnter: (e: MouseEvent) => e instanceof MouseEvent,
   /**
    * 鼠标移出
    * @param e 鼠标事件
    * @paramEn e The e value.
-    * @en Emitted when mouse leave changes.
+   * @en Emitted when mouse leave changes.
    */
   mouseLeave: (e: MouseEvent) => e instanceof MouseEvent,
   /**
    * 滚动开始时触发通知
-    * @en Emitted when scroll begin changes.
+   * @en Emitted when scroll begin changes.
    */
   scrollBegin: () => true,
   /**
    * 滚动结束后触发通知
-    * @en Emitted when scroll stop changes.
+   * @en Emitted when scroll stop changes.
    */
   scrollStop: () => true,
 };
@@ -148,9 +148,9 @@ export const useVirtualScrollerItemEmits = {
    * 元素被监听到尺寸变化时的事件
    * @param id 发生变化的Item的id
    * @paramEn id The id value.
-    * @en Emitted when resize changes.
+   * @en Emitted when resize changes.
    */
-  resize: (id: number) => isNumber(id),
+  resize: (_id: any) => true,
 };
 
 export type VirtualScrollerEmits = typeof useVirtualScrollerEmits;

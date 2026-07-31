@@ -71,7 +71,9 @@ export default function formatTsTypeToUnitType(
     }
 
     case ts.SyntaxKind.TypeReference: {
-      const typeName = typeNode.getTypeName?.().getText() || typeNode.getText();
+      const typeReference = typeNode.asKind(ts.SyntaxKind.TypeReference);
+      if (!typeReference) return ApiGeneratorAnalysedBaseType.Unknown;
+      const typeName = typeReference.getTypeName().getText();
       const normalized = typeName.replace(/^globalThis\./, '');
       switch (normalized) {
         case 'Function':
@@ -113,13 +115,20 @@ export default function formatTsTypeToUnitType(
       return ApiGeneratorAnalysedBaseType.Unknown;
     }
 
-    case ts.SyntaxKind.PropertySignature:
-      return typeNode.getTypeNode()
-        ? formatTsTypeToUnitType(typeNode.getTypeNode()!, fileElements, resolving)
+    case ts.SyntaxKind.PropertySignature: {
+      const propertySignature = typeNode.asKind(ts.SyntaxKind.PropertySignature);
+      const propertyType = propertySignature?.getTypeNode();
+      return propertyType
+        ? formatTsTypeToUnitType(propertyType, fileElements, resolving)
         : ApiGeneratorAnalysedBaseType.Unknown;
+    }
 
-    case ts.SyntaxKind.ParenthesizedType:
-      return formatTsTypeToUnitType(typeNode.getTypeNode()!, fileElements, resolving);
+    case ts.SyntaxKind.ParenthesizedType: {
+      const parenthesizedType = typeNode.asKind(ts.SyntaxKind.ParenthesizedType);
+      return parenthesizedType
+        ? formatTsTypeToUnitType(parenthesizedType.getTypeNode(), fileElements, resolving)
+        : ApiGeneratorAnalysedBaseType.Unknown;
+    }
     case ts.SyntaxKind.TypeOperator:
     case ts.SyntaxKind.IndexedAccessType:
     case ts.SyntaxKind.ConditionalType:

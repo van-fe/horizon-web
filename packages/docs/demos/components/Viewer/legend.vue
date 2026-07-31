@@ -6,20 +6,12 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import type { HViewerSource } from '@aurora/horizon-web';
+import { createDemoViewerSources } from '../../demo-assets';
 export default defineComponent({
   setup() {
     const imagesRef = ref<HViewerSource[]>([]);
     const generateImages = (count: number) => {
-      const list = [] as HViewerSource[];
-      const base = Math.floor(Math.random() * 60) + 10;
-      for (let i = 0; i < count; i++) {
-        list.push({
-          type: 'image',
-          thumbnail: `https://picsum.photos/id/${base + i}/80/80`,
-          cover: `https://picsum.photos/id/${base + i}/1366/768`,
-          title: `Image: ${base + i}`,
-        });
-      }
+      const list = createDemoViewerSources(count);
       list[0].legends = [
         {
           x: 100,

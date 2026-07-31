@@ -1,8 +1,9 @@
-import { defineComponent, inject, provide, ref } from 'vue';
-import { HorizonWebSetupContext, useNamespace } from '@aurora/utils';
-import type { HRecycleScrollerInstance } from '~/components/VirtualScroller/src/composables/useProps';
+import { defineComponent, inject, onBeforeUnmount, provide, ref } from 'vue';
+import { useNamespace } from '@aurora/utils';
+import type { HorizonWebComponentInstance, HorizonWebSetupContext } from '@aurora/utils';
 import HVirtualScroller from '~/components/VirtualScroller/src/VirtualScroller';
 import HVirtualScrollerItem from '~/components/VirtualScroller/src/VirtualScrollerItem';
+import type { VirtualScrollerExposes } from '~/components/VirtualScroller/src/composables/useExposes';
 import type { SelectCollectedOptionData } from '../utils/injectKeys';
 import {
   HSelectModelValueInjectKey,
@@ -11,35 +12,54 @@ import {
   HSelectVisibleOptionsInjectKey,
 } from '../utils/injectKeys';
 import SimpleOption from './SimpleOption';
-import { SelectVirtualScrollListExposes, useSelectVirtualScrollListExposes } from '../composables/useExposes';
+import {
+  SelectVirtualScrollListExposes,
+  useSelectVirtualScrollListExposes,
+} from '../composables/useExposes';
 import { useVirtualScrollListEmits, VirtualScrollListEmits } from '../composables/useEmits';
 
 export default defineComponent({
   name: `${useNamespace()}VirtualScrollList`,
   emits: useVirtualScrollListEmits,
   exposes: useSelectVirtualScrollListExposes,
-  setup(_, { emit, expose }: HorizonWebSetupContext<VirtualScrollListEmits, {}, SelectVirtualScrollListExposes>) {
+  setup(
+    _,
+    {
+      emit,
+      expose,
+    }: HorizonWebSetupContext<VirtualScrollListEmits, {}, SelectVirtualScrollListExposes>,
+  ) {
     const parentProps = inject(HSelectPropsInjectKey)!;
     const visibleOptions = inject(HSelectVisibleOptionsInjectKey)!;
     const modelValueSet = inject(HSelectModelValueInjectKey)!;
 
-    const scrollerDomRef = ref<(HRecycleScrollerInstance & HTMLElement) | null>(null);
+    const scrollerDomRef = ref<HorizonWebComponentInstance<
+      typeof HVirtualScroller,
+      VirtualScrollerExposes
+    > | null>(null);
     const isScrolling = ref(false);
 
     provide(HSelectVirtualScrollListIsScrollingInjectKey, isScrolling);
 
     let startIndex = 0;
     let endIndex = 0;
+    let scrollTimer: ReturnType<typeof setTimeout> | undefined;
 
-    function onUpdate(startIdx: number, endIdx: number) {
-      startIndex = startIdx;
-      endIndex = endIdx;
+    function onUpdate(
+      _startIdx: number,
+      _endIdx: number,
+      visibleStartIdx: number,
+      visibleEndIdx: number,
+    ) {
+      startIndex = visibleStartIdx;
+      endIndex = visibleEndIdx;
     }
 
     function doScrollToIndex(index: number) {
       isScrolling.value = true;
 
-      setTimeout(() => {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(() => {
         scrollerDomRef.value?.scrollToItem(index);
         isScrolling.value = false;
       });
@@ -52,7 +72,7 @@ export default defineComponent({
      */
     function scrollToIndex(index: number, checkInViewport = false) {
       if (checkInViewport) {
-        if (index < startIndex || endIndex < index) {
+        if (index < startIndex || index >= endIndex) {
           doScrollToIndex(index);
         }
       } else {
@@ -65,12 +85,16 @@ export default defineComponent({
 
       let index = 0;
 
-      if (modelValue) {
+      if (typeof modelValue !== 'undefined') {
         index = visibleOptions.value.findIndex(value => value.props.value === modelValue);
       }
 
-      scrollToIndex(index ?? 0);
+      scrollToIndex(index >= 0 ? index : 0);
     }
+
+    onBeforeUnmount(() => {
+      clearTimeout(scrollTimer);
+    });
 
     expose({
       scrollToIndex,
@@ -92,6 +116,8 @@ export default defineComponent({
         onMouseLeave={evt => emit('mouseLeave', evt)}
         onUpdate={onUpdate}
         onScrollEnd={() => emit('reachBottom')}
+        onScrollBegin={() => (isScrolling.value = true)}
+        onScrollStop={() => (isScrolling.value = false)}
       >
         {{
           default: (row: {

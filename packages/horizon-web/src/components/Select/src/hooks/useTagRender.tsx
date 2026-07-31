@@ -6,13 +6,15 @@ import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { SelectEmits } from '../composables/useEmits';
 import type { SelectSlots } from '../composables/useSlots';
 import type { SelectExposes } from '../composables/useExposes';
-import HTag, { HTagGroup } from '~/components/Tag';
+import HTag from '~/components/Tag/src/Tag';
+import HTagGroup from '~/components/Tag/src/TagGroup';
 import type { SelectCollectedOptionData } from '../utils/injectKeys';
 import type { ModelValueSingleType, SelectDomRefs } from '../utils/types';
 import useLocaleLang from '~/utils/useLocaleLang';
-import HPopover, { HPopContent } from '~/components/Popover';
+import HPopover from '~/components/Popover/src/Popover';
+import HPopContent from '~/components/Popover/src/PopContent';
 import type { PopoverProps } from '~/components/Popover/src/composables/useProps';
-import HScrollbar from '~/components/Scrollbar';
+import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
 
 export default function useTagRender(
   props: SelectProps,
@@ -173,11 +175,6 @@ export default function useTagRender(
             onClose={() => options.pickOption(optValue, true, true, undefined, true)}
           >
             {option?.props.label ??
-              option?.slots.innerRender?.({
-                ...option?.props,
-                ...option?.attrs,
-                active: option?.active.value ?? false,
-              }) ??
               option?.slots.label?.({
                 ...option?.props,
                 ...option?.attrs,

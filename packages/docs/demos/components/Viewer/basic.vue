@@ -8,30 +8,18 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import type { HViewerSource } from '@aurora/horizon-web';
+import { createDemoViewerSources } from '../../demo-assets';
 export default defineComponent({
   setup() {
     const imagesRef = ref<HViewerSource[]>([]);
-    const generateImages = (count: number) => {
-      const list = [] as HViewerSource[];
-      const base = Math.floor(Math.random() * 60) + 10;
-      for (let i = 0; i < count; i++) {
-        list.push({
-          type: 'image',
-          thumbnail: `https://picsum.photos/id/${base + i}/80/80`,
-          cover: `https://picsum.photos/id/${base + i}/1366/768`,
-          title: `Image: ${base + i}`,
-        });
-      }
-      return list;
-    };
     const visibleRef = ref(false);
     const video1 = {
       type: 'video',
-      cover: 'https://www.example.com/cdn-static/mydemo/nextjs/images/et5/top-hero-desktop.jpg',
-      thumbnail: 'https://www.example.com/cdn-static/mydemo/nextjs/images/et5/top-hero-desktop.jpg',
+      cover: '/demo-assets/scene-summit.svg',
+      thumbnail: '/demo-assets/scene-summit.svg',
       videoSources: [
         {
-          src: 'https://www.example.com/cdn-static/mydemo/nextjs/images/et5/et5-hero-video.mp4',
+          src: '/aurora-background.mp4',
           type: 'video/mp4',
         },
       ],
@@ -39,18 +27,18 @@ export default defineComponent({
     } as HViewerSource;
     const video2 = {
       type: 'video',
-      cover: 'https://vjs.zencdn.net/v/oceans.png',
-      thumbnail: 'https://vjs.zencdn.net/v/oceans.png',
+      cover: '/demo-assets/video-poster.svg',
+      thumbnail: '/demo-assets/video-poster.svg',
       videoSources: [
         {
-          src: 'https://vjs.zencdn.net/v/oceans.mp4',
+          src: '/aurora-background.mp4',
           type: 'video/mp4',
         },
       ],
       title: 'oceans video',
     } as HViewerSource;
     const showViewer = () => {
-      imagesRef.value = generateImages(1);
+      imagesRef.value = createDemoViewerSources(1);
       visibleRef.value = true;
     };
     const showViewer2 = () => {
@@ -58,7 +46,7 @@ export default defineComponent({
       visibleRef.value = true;
     };
     const showViewer3 = () => {
-      imagesRef.value = [video1, video2, ...generateImages(10)];
+      imagesRef.value = [video1, video2, ...createDemoViewerSources(10)];
       visibleRef.value = true;
     };
     return {

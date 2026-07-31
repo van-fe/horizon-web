@@ -1,6 +1,6 @@
 <template>
-  <h-row>
-    <h-col :span="6">
+  <h-grid :gap="12">
+    <h-grid-item :span="6">
       <h-date-picker
         v-model="value"
         type="datetime"
@@ -9,8 +9,8 @@
         :show-year-tooltip="showYearTooltip"
         :show-time-tooltip="showTimeTooltip"
       />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

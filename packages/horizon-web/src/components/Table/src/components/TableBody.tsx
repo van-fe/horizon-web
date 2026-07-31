@@ -119,7 +119,7 @@ export default defineComponent({
       ) => {
         const columnKey = column.props.columnKey;
 
-        if (columnKey && !column[HTableColumnSelectionKey].checkedRows.has(rowData[columnKey])) {
+        if (columnKey && !column[HTableColumnSelectionKey].isRowChecked.value(rowData)) {
           const exclusionFields = new Set(column.props.exclusionFields ?? []);
 
           props.columns.forEach(otherColumn => {
@@ -132,7 +132,7 @@ export default defineComponent({
               otherColumnKey &&
               otherField &&
               exclusionFields.has(otherField) &&
-              otherColumn[HTableColumnSelectionKey].checkedRows.has(rowData[otherColumnKey])
+              otherColumn[HTableColumnSelectionKey].isRowChecked.value(rowData)
             ) {
               otherColumn[HTableColumnSelectionKey].toggleRowSelection(
                 rowData[otherColumnKey],
@@ -193,7 +193,10 @@ export default defineComponent({
               >
                 {column.props.multiple ? (
                   <HCheckbox
-                    modelValue={column[HTableColumnSelectionKey].checkedRows.has(value)}
+                    modelValue={column[HTableColumnSelectionKey].isRowChecked.value(rowData)}
+                    indeterminate={column[HTableColumnSelectionKey].isRowIndeterminate.value(
+                      rowData,
+                    )}
                     disabled={
                       !column[HTableColumnSelectionKey].isSelectable.value(rowData, rowIndex)
                     }
@@ -522,9 +525,7 @@ export default defineComponent({
                         props.columns.some(
                           column =>
                             column.props.columnKey &&
-                            column[HTableColumnSelectionKey].checkedRows.has(
-                              rowData[column.props.columnKey],
-                            ),
+                            column[HTableColumnSelectionKey].isRowChecked.value(rowData),
                         ),
                       ),
                       getRowDraggableClass(rowData),

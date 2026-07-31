@@ -33,9 +33,9 @@
 :::demo components/Steps/label-align.vue :::
 
 ## 异步加载
-因为 `steps` 组件是在 `n-step` 挂载时才会确定每个步骤的下标，所以如果存在前后步骤固定，但中间步骤是异步加载的，会导致最终顺序不正确
+因为 `steps` 组件是在 `h-step` 挂载时才会确定每个步骤的下标，所以如果存在前后步骤固定，但中间步骤是异步加载的，会导致最终顺序不正确
 
-因此需要给 `n-step` 设置 `index`，确保顺序是符合预期的
+因此需要给 `h-step` 设置 `index`，确保顺序是符合预期的
 :::demo components/Steps/async-load.vue :::
 
 ## 拦截切换

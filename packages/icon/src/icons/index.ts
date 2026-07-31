@@ -1,31 +1,41 @@
-// 图标注册表
-interface IconInfo {
+/// <reference types="vite/client" />
+
+export interface IconInfo {
   content: string
   viewBox?: string
   fill?: string
 }
 
-// 图标存储
 const iconRegistry: Map<string, IconInfo> = new Map<string, IconInfo>()
 
-// 动态导入所有 SVG 图标
-// 使用 eager: false 以便按需加载，但在打包后路径会被 vite 处理
-// as: 'raw' 时，返回的是字符串，不是对象
-const iconModules = import.meta.glob<string>('../assets/icons/*.svg', {
-  eager: false,
-  as: 'raw'
-})
+// AIcon 必须在首次渲染和 SSR 时就拿到 SVG 内容，因此内置图标使用同步原始文本。
+const iconModules = import.meta.glob('../assets/icons/*.svg', {
+  eager: true,
+  query: '?raw',
+  import: 'default'
+}) as Record<string, string>
 
-// 创建文件名到路径的映射，用于在打包后也能正确匹配
-// import.meta.glob 的键是相对于当前文件的路径，如 '../assets/icons/home.svg'
-// 我们需要提取文件名（不含路径和扩展名）来匹配
-const iconPathMap = new Map<string, string>()
-for (const path in iconModules) {
-  // 从路径中提取文件名，例如 '../assets/icons/home.svg' -> 'home'
+const builtInIcons = new Map<string, string>()
+for (const [path, content] of Object.entries(iconModules)) {
   const match = path.match(/\/([^/]+)\.svg$/)
   if (match) {
-    const iconName = match[1]
-    iconPathMap.set(iconName, path)
+    builtInIcons.set(match[1], content)
+  }
+}
+
+function parseIcon(content: string): IconInfo {
+  const svgTagMatch = content.match(/<svg\b([^>]*)>/i)
+  const svgAttributes = svgTagMatch?.[1] || ''
+  const viewBoxMatch = svgAttributes.match(/\bviewBox=(["'])([^"']*)\1/i)
+  const fillMatch = svgAttributes.match(/\bfill=(["'])([^"']*)\1/i)
+
+  return {
+    content: content
+      .replace(/<svg\b[^>]*>/i, '')
+      .replace(/<\/svg>\s*$/i, '')
+      .trim(),
+    viewBox: viewBoxMatch?.[2] || '0 0 24 24',
+    fill: fillMatch?.[2] || 'currentColor'
   }
 }
 
@@ -47,45 +57,29 @@ export function registerIcons(icons: Record<string, IconInfo>) {
 }
 
 /**
- * 获取图标
+ * 同步获取图标，确保首次渲染和 SSR 不会产生空 SVG。
+ */
+export function getIconSync(name: string): IconInfo | null {
+  const registeredIcon = iconRegistry.get(name)
+  if (registeredIcon) {
+    return registeredIcon
+  }
+
+  const content = builtInIcons.get(name)
+  if (!content) {
+    return null
+  }
+
+  const iconInfo = parseIcon(content)
+  iconRegistry.set(name, iconInfo)
+  return iconInfo
+}
+
+/**
+ * 保留原有异步 API，现由同步实现直接返回结果。
  */
 export async function getIcon(name: string): Promise<IconInfo | null> {
-  // 先从注册表中查找
-  if (iconRegistry.has(name)) {
-    return iconRegistry.get(name)!
-  }
-  
-  // 尝试从文件系统加载
-  // 使用预构建的路径映射，而不是动态拼接路径
-  // 这样在 vite 打包后也能正常工作
-  const iconPath = iconPathMap.get(name)
-  if (iconPath && iconModules[iconPath]) {
-    try {
-      const content = await iconModules[iconPath]()
-      // 解析 SVG 内容，提取 viewBox
-      const viewBoxMatch = content.match(/viewBox="([^"]*)"/)
-      const viewBox = viewBoxMatch ? viewBoxMatch[1] : '0 0 24 24'
-      
-      // 移除 SVG 标签，只保留内容
-      const svgContent = content
-        .replace(/<svg[^>]*>/, '')
-        .replace(/<\/svg>/, '')
-        .trim()
-      
-      const iconInfo: IconInfo = {
-        content: svgContent,
-        viewBox
-      }
-      
-      iconRegistry.set(name, iconInfo)
-      return iconInfo
-    } catch (error) {
-      console.error(`Failed to load icon file: ${name}`, error)
-      return null
-    }
-  }
-  
-  return null
+  return getIconSync(name)
 }
 
 /**
@@ -94,4 +88,3 @@ export async function getIcon(name: string): Promise<IconInfo | null> {
 export function getRegisteredIconNames(): string[] {
   return Array.from(iconRegistry.keys())
 }
-

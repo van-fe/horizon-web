@@ -15,17 +15,17 @@
         }"
       validate-trigger="change"
     >
-      <h-row :gutter="0">
-        <h-col :span="18">
+      <h-grid :gap="0">
+        <h-grid-item :span="18">
           <h-input v-model="formData.users[index].value" />
-        </h-col>
-        <h-col :span="6" class="text-right">
+        </h-grid-item>
+        <h-grid-item :span="6" class="text-right">
           <h-space>
             <h-button v-show="index === formData.users.length - 1" icon="add" @click="addUser">增加</h-button>
             <h-button icon="rubbish" type="danger" @click="del(index)">删除</h-button>
           </h-space>
-        </h-col>
-      </h-row>
+        </h-grid-item>
+      </h-grid>
     </h-form-item>
     <div>
       <h-space>

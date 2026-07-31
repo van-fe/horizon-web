@@ -34,5 +34,5 @@ Use `icon` to set option icon
 :::demo components/Segmented/icon.vue :::
 
 ## Use with Form
-You can enable the `form` attribute to adapt to the `n-form` component
+You can enable the `form` attribute to adapt to the `h-form` component
 :::demo components/Segmented/form.vue :::

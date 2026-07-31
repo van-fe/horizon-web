@@ -43,11 +43,11 @@ const modelValue = ref<HUploadUserFile[]>(
   [
     {
       name: 'background.jpg',
-      url: 'https://cdn-public-dev.example.com/aurora-resource/5cBiDhad9L9aZ3nAml1m8/23244a6b-69c3-4465-bbd6-5db4b476abf4.jpg?imageView2/0/h/198/ignore-error/1',
+      url: '/demo-assets/scene-coast.svg',
     },
     {
       name: 'preview.mp4',
-      url: new URL('/aurora-background.mp4', import.meta.url).href,
+      url: '/aurora-background.mp4',
     },
   ],
 );
@@ -65,7 +65,7 @@ function handleSuccess(res: any, file: HUploadFileType) {
 function change() {
   modelValue.value = [{
     name: 'preview.mp4',
-    url: 'https://static.example.com/wad_basement/vt/51_KMQfG7_2cQXhf9yMIRiUS_skyline-min.mp4.mp4',
+    url: '/aurora-background.mp4',
   }];
 }
 

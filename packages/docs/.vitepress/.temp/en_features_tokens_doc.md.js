@@ -77,12 +77,12 @@ const formatTokenName = (token: string) =>
 const getHexValue = (rgb: string) => \`#\${tinyColor(\`rgb(\${rgb})\`).toHex(false)}\`;
 
 const getInstanceValue = (basicToken: string, colors: ThemeType) => {
-  const basicKey = snakeCase(basicToken.replace('--n-', '')) as keyof ThemeType;
+  const basicKey = snakeCase(basicToken.replace('--h-', '')) as keyof ThemeType;
   return getHexValue(colors[basicKey]!);
 };
 
 const getAlphaInstanceValue = (alphaToken: string, opacity: ThemeType) => {
-  const basicKey = snakeCase(alphaToken.replace('--n-', '')) as keyof ThemeType;
+  const basicKey = snakeCase(alphaToken.replace('--h-', '')) as keyof ThemeType;
   return Number(opacity[basicKey]);
 };
 
@@ -96,7 +96,7 @@ function getOpacityList(
   return Object.entries(opacityTokens || {}).map(([key, value]) => {
     return {
       label: key,
-      refToken: \`--n-\${key.replace(/_/g, '-')}\`,
+      refToken: \`--h-\${key.replace(/_/g, '-')}\`,
       rawLabel: key,
       value: parseFloat(value),
       isDark: parseFloat(value) >= 0.4,
@@ -147,7 +147,7 @@ function getGroupedElementColorToken(
       children: Object.entries(data).map(([key, value]) => {
         const currentIsColor = isColor(value);
         const basicToken = getBasicToken(value);
-        const basicTokenFormatted = basicToken.replace(/^--n-/, '');
+        const basicTokenFormatted = basicToken.replace(/^--h-/, '');
         const basicTokenShowRawName = basicTokenFormatted.match(/^(color-\\d+)-/)?.[1] ?? '';
         const basicTokenShowGroupName =
           groupedBasicTokens.find(
@@ -157,7 +157,7 @@ function getGroupedElementColorToken(
           basicTokenShowRawName,
           basicTokenShowGroupName,
         );
-        const alphaToken = getAlphaValue(value) || '--n-opacity-10';
+        const alphaToken = getAlphaValue(value) || '--h-opacity-10';
         const alphaValue = getAlphaInstanceValue(alphaToken, opacity);
 
         const color = tinyColor(getInstanceValue(basicToken, colors)).setAlpha(alphaValue);
@@ -165,11 +165,11 @@ function getGroupedElementColorToken(
         return {
           label: formatTokenName(key),
           basicToken,
-          basicJsToken: snakeCase(basicToken.replace('--n-', '')),
-          refToken: \`--n-\${key.replace(/_/g, '-')}\`,
+          basicJsToken: snakeCase(basicToken.replace('--h-', '')),
+          refToken: \`--h-\${key.replace(/_/g, '-')}\`,
           showValue: basicTokenShowName,
           alphaToken,
-          alphaJsKey: snakeCase(alphaToken.replace('--n-', '')),
+          alphaJsKey: snakeCase(alphaToken.replace('--h-', '')),
           alphaValue,
           hex: currentIsColor ? color.toHexString() : '',
           hex8: color.toHex8String(),
@@ -235,10 +235,10 @@ const currentTabs = ref('text');
   display: flex;
   align-items: center;
   height: 40px;
-  border: 1px solid var(--n-border-default);
+  border: 1px solid var(--h-border-default);
   padding: 5px 10px;
-  color: var(--n-text-primary);
-  border-radius: var(--n-radius);
+  color: var(--h-text-primary);
+  border-radius: var(--h-radius);
   justify-content: space-between;
 
   .label {
@@ -251,7 +251,7 @@ const currentTabs = ref('text');
       width: 30px;
       height: 30px;
       border-radius: 100%;
-      border: 1px solid var(--n-border-default);
+      border: 1px solid var(--h-border-default);
       margin-right: 10px;
       overflow: hidden;
       position: relative;
@@ -278,23 +278,23 @@ const currentTabs = ref('text');
         background-image:
           linear-gradient(
               45deg,
-              var(--n-text-disabled) 25%,
-              var(--n-bg-transparent) 25%
+              var(--h-text-disabled) 25%,
+              var(--h-bg-transparent) 25%
           ),
           linear-gradient(
               135deg,
-              var(--n-text-disabled) 25%,
-              var(--n-bg-transparent) 25%
+              var(--h-text-disabled) 25%,
+              var(--h-bg-transparent) 25%
           ),
           linear-gradient(
               45deg,
-              var(--n-bg-transparent) 75%,
-              var(--n-text-disabled) 75%
+              var(--h-bg-transparent) 75%,
+              var(--h-text-disabled) 75%
           ),
           linear-gradient(
               135deg,
-              var(--n-bg-transparent) 75%,
-              var(--n-text-disabled) 75%
+              var(--h-bg-transparent) 75%,
+              var(--h-text-disabled) 75%
           );
         background-repeat: repeat;
         background-position: 0 0, 3px 0, 3px -3px, 0 3px;
@@ -304,7 +304,7 @@ const currentTabs = ref('text');
   }
 
   &.inverse {
-    color: var(--n-text-inverse);
+    color: var(--h-text-inverse);
     background: rgba(69, 69, 69, 1);
 
     .label {
@@ -351,7 +351,7 @@ interface TokenRealValueData {
 }
 
 function cssVariableNameToJsName(cssVariableName: string) {
-  return snakeCase(cssVariableName.replace(/^--n-/, ''));
+  return snakeCase(cssVariableName.replace(/^--h-/, ''));
 }
 
 const formatTokenName = (token: string) =>
@@ -406,7 +406,7 @@ function getElementTokenRealValue(
           subTree[key] = {
             label: formatTokenName(key),
             value: currentValue,
-            refToken: \`--n-\${key.replace(/_/g, '-')}\`,
+            refToken: \`--h-\${key.replace(/_/g, '-')}\`,
             rawLabel: key,
             rawValue: value,
             path: \`element.\${parentKey.concat(key).join('.')}\`,
@@ -415,7 +415,7 @@ function getElementTokenRealValue(
           subTree[key] = {
             label: formatTokenName(key),
             value,
-            refToken: \`--n-\${key.replace(/_/g, '-')}\`,
+            refToken: \`--h-\${key.replace(/_/g, '-')}\`,
             rawLabel: key,
             rawValue: value,
             path: \`element.\${parentKey.concat(key).join('.')}\`,
@@ -461,10 +461,10 @@ const currentTabs = ref('lineHeight');
   display: flex;
   align-items: center;
   height: 40px;
-  border: 1px solid var(--n-border-default);
+  border: 1px solid var(--h-border-default);
   padding: 5px 10px;
-  color: var(--n-text-primary);
-  border-radius: var(--n-radius);
+  color: var(--h-text-primary);
+  border-radius: var(--h-radius);
   justify-content: space-between;
 
   .label {
@@ -510,7 +510,7 @@ interface TokenRealValueData {
 }
 
 function cssVariableNameToJsName(cssVariableName: string) {
-  return snakeCase(cssVariableName.replace(/^--n-/, ''));
+  return snakeCase(cssVariableName.replace(/^--h-/, ''));
 }
 
 const formatTokenName = (token: string) =>
@@ -565,7 +565,7 @@ function getElementTokenRealValue(
           subTree[key] = {
             label: formatTokenName(key),
             value: currentValue,
-            refToken: \`--n-\${key.replace(/_/g, '-')}\`,
+            refToken: \`--h-\${key.replace(/_/g, '-')}\`,
             rawLabel: key,
             rawValue: value,
             path: \`element.\${parentKey.concat(key).join('.')}\`,
@@ -574,7 +574,7 @@ function getElementTokenRealValue(
           subTree[key] = {
             label: formatTokenName(key),
             value,
-            refToken: \`--n-\${key.replace(/_/g, '-')}\`,
+            refToken: \`--h-\${key.replace(/_/g, '-')}\`,
             rawLabel: key,
             rawValue: value,
             path: \`element.\${parentKey.concat(key).join('.')}\`,
@@ -609,10 +609,10 @@ const elementListTokens = getElementTokenRealValue(tokens.element, basicFontList
   display: flex;
   align-items: center;
   height: 40px;
-  border: 1px solid var(--n-border-default);
+  border: 1px solid var(--h-border-default);
   padding: 5px 10px;
-  color: var(--n-text-primary);
-  border-radius: var(--n-radius);
+  color: var(--h-text-primary);
+  border-radius: var(--h-radius);
   justify-content: space-between;
 
   .label {
@@ -659,7 +659,7 @@ interface TokenRealValueData {
 }
 
 function cssVariableNameToJsName(cssVariableName: string) {
-  return snakeCase(cssVariableName.replace(/^--n-/, ''));
+  return snakeCase(cssVariableName.replace(/^--h-/, ''));
 }
 
 const formatTokenName = (token: string) =>
@@ -714,7 +714,7 @@ function getElementTokenRealValue(
           subTree[key] = {
             label: formatTokenName(key),
             value: currentValue,
-            refToken: \`--n-\${key.replace(/_/g, '-')}\`,
+            refToken: \`--h-\${key.replace(/_/g, '-')}\`,
             rawLabel: key,
             rawValue: value,
             path: \`element.\${parentKey.concat(key).join('.')}\`,
@@ -723,7 +723,7 @@ function getElementTokenRealValue(
           subTree[key] = {
             label: formatTokenName(key),
             value,
-            refToken: \`--n-\${key.replace(/_/g, '-')}\`,
+            refToken: \`--h-\${key.replace(/_/g, '-')}\`,
             rawLabel: key,
             rawValue: value,
             path: \`element.\${parentKey.concat(key).join('.')}\`,
@@ -758,10 +758,10 @@ const elementListTokens = getElementTokenRealValue(tokens.element, basicFontList
   display: flex;
   align-items: center;
   height: 40px;
-  border: 1px solid var(--n-border-default);
+  border: 1px solid var(--h-border-default);
   padding: 5px 10px;
-  color: var(--n-text-primary);
-  border-radius: var(--n-radius);
+  color: var(--h-text-primary);
+  border-radius: var(--h-radius);
   justify-content: space-between;
 
   .label {
@@ -808,7 +808,7 @@ interface TokenRealValueData {
 }
 
 function cssVariableNameToJsName(cssVariableName: string) {
-  return snakeCase(cssVariableName.replace(/^--n-/, ''));
+  return snakeCase(cssVariableName.replace(/^--h-/, ''));
 }
 
 const formatTokenName = (token: string) =>
@@ -863,7 +863,7 @@ function getElementTokenRealValue(
           subTree[key] = {
             label: formatTokenName(key),
             value: currentValue,
-            refToken: \`--n-\${key.replace(/_/g, '-')}\`,
+            refToken: \`--h-\${key.replace(/_/g, '-')}\`,
             rawLabel: key,
             rawValue: value,
             path: \`element.\${parentKey.concat(key).join('.')}\`,
@@ -872,7 +872,7 @@ function getElementTokenRealValue(
           subTree[key] = {
             label: formatTokenName(key),
             value,
-            refToken: \`--n-\${key.replace(/_/g, '-')}\`,
+            refToken: \`--h-\${key.replace(/_/g, '-')}\`,
             rawLabel: key,
             rawValue: value,
             path: \`element.\${parentKey.concat(key).join('.')}\`,
@@ -907,10 +907,10 @@ const elementListTokens = getElementTokenRealValue(tokens.element, basicFontList
   display: flex;
   align-items: center;
   height: 40px;
-  border: 1px solid var(--n-border-default);
+  border: 1px solid var(--h-border-default);
   padding: 5px 10px;
-  color: var(--n-text-primary);
-  border-radius: var(--n-radius);
+  color: var(--h-text-primary);
+  border-radius: var(--h-radius);
   justify-content: space-between;
 
   .label {
@@ -957,7 +957,7 @@ interface TokenRealValueData {
 }
 
 function cssVariableNameToJsName(cssVariableName: string) {
-  return snakeCase(cssVariableName.replace(/^--n-/, ''));
+  return snakeCase(cssVariableName.replace(/^--h-/, ''));
 }
 
 const formatTokenName = (token: string) =>
@@ -1012,7 +1012,7 @@ function getElementTokenRealValue(
           subTree[key] = {
             label: formatTokenName(key),
             value: currentValue,
-            refToken: \`--n-\${key.replace(/_/g, '-')}\`,
+            refToken: \`--h-\${key.replace(/_/g, '-')}\`,
             rawLabel: key,
             rawValue: value,
             path: \`element.\${parentKey.concat(key).join('.')}\`,
@@ -1021,7 +1021,7 @@ function getElementTokenRealValue(
           subTree[key] = {
             label: formatTokenName(key),
             value,
-            refToken: \`--n-\${key.replace(/_/g, '-')}\`,
+            refToken: \`--h-\${key.replace(/_/g, '-')}\`,
             rawLabel: key,
             rawValue: value,
             path: \`element.\${parentKey.concat(key).join('.')}\`,
@@ -1056,10 +1056,10 @@ const elementListTokens = getElementTokenRealValue(tokens.element, basicFontList
   display: flex;
   align-items: center;
   height: 40px;
-  border: 1px solid var(--n-border-default);
+  border: 1px solid var(--h-border-default);
   padding: 5px 10px;
-  color: var(--n-text-primary);
-  border-radius: var(--n-radius);
+  color: var(--h-text-primary);
+  border-radius: var(--h-radius);
   justify-content: space-between;
 
   .label {

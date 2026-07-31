@@ -1,6 +1,6 @@
 <template>
-  <h-row>
-    <h-col :span="6">
+  <h-grid :gap="12">
+    <h-grid-item :span="6">
       <h-auto-complete :options="options" :fit-input-width="false" placeholder="You like..." @search="onSearch">
         <template #default="item">
           <div class="item-wrap">
@@ -9,8 +9,8 @@
           </div>
         </template>
       </h-auto-complete>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

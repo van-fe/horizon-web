@@ -1,11 +1,12 @@
 <template>
-  <h-row :gutter="10">
-    <h-col :span="6">
+  <h-grid :gap="10">
+    <h-grid-item :span="6">
       <div class="demo-title">
         自定义 tag
         <h-tooltip>
           <template #content>
-            你可以在 tagRender 这个 slot 中接受到传递到每一个选项上的所有参数。自定义 tag 不支持在可以输入（例如：filterOption、allowCreate）中生效
+            你可以在 tagRender 这个 slot 中接受到传递到每一个选项上的所有参数。自定义 tag
+            不支持在可以输入（例如：filterable、allowCreate）中生效
           </template>
           <a-icon name="help" />
         </h-tooltip>
@@ -20,9 +21,9 @@
           </div>
         </template>
       </h-select>
-    </h-col>
+    </h-grid-item>
 
-    <h-col :span="6">
+    <h-grid-item :span="6">
       <div class="demo-title">自定义 完整 select</div>
       <h-select v-model="value2" :value-format="valueFormat" :to-body="false">
         <h-option label="上海" :value="1" />
@@ -34,8 +35,8 @@
           </div>
         </template>
       </h-select>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script lang="ts">
@@ -59,5 +60,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

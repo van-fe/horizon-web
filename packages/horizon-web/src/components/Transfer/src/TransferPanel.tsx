@@ -229,15 +229,24 @@ export default defineComponent({
             {(dataProp.value.length && typeProp.value === 'right') ||
             (filterDataComputed.value.length && typeProp.value === 'left') ? (
               typeProp.value === 'left' ? (
-                slots?.body?.({
+                (slots?.body?.({
                   data: filterDataComputed.value,
                 }) ?? (
-                  <HVirtualScroller items={filterDataComputed.value} minItemSize={38}>
+                  <HVirtualScroller
+                    items={filterDataComputed.value}
+                    minItemSize={38}
+                    keyField={propsProp.value.key as string}
+                  >
                     {{
-                      default: ({ item, index }: VirtualScrollerDefaultSlotRowType) => {
+                      default: ({ item, index, active }: VirtualScrollerDefaultSlotRowType) => {
                         if (item[propsProp.value.isGroup as string]) {
                           return (
-                            <HVirtualScrollerItem item={item} data-index={index}>
+                            <HVirtualScrollerItem
+                              item={item}
+                              active={active}
+                              index={index}
+                              data-index={index}
+                            >
                               <HTooltip overflow content={item[propsProp.value.label as string]}>
                                 <div
                                   class={[classHelper.e('item-label'), classHelper.e('item-group')]}
@@ -253,8 +262,9 @@ export default defineComponent({
                           return (
                             <HVirtualScrollerItem
                               class={[classHelper.e('item')]}
-                              key={index}
                               item={item}
+                              active={active}
+                              index={index}
                               data-index={index}
                             >
                               <HCheckbox
@@ -292,16 +302,25 @@ export default defineComponent({
                       },
                     }}
                   </HVirtualScroller>
-                )
+                ))
               ) : (
-                slots?.body?.({
+                (slots?.body?.({
                   data: dataProp.value,
                 }) ?? (
-                  <HVirtualScroller items={dataProp.value} minItemSize={38}>
+                  <HVirtualScroller
+                    items={dataProp.value}
+                    minItemSize={38}
+                    keyField={propsProp.value.key as string}
+                  >
                     {{
-                      default: ({ item, index }: VirtualScrollerDefaultSlotRowType) => {
+                      default: ({ item, index, active }: VirtualScrollerDefaultSlotRowType) => {
                         return (
-                          <HVirtualScrollerItem item={item} data-index={index}>
+                          <HVirtualScrollerItem
+                            item={item}
+                            active={active}
+                            index={index}
+                            data-index={index}
+                          >
                             <div
                               class={cls(
                                 classHelper.e('item'),
@@ -378,7 +397,7 @@ export default defineComponent({
                       },
                     }}
                   </HVirtualScroller>
-                )
+                ))
               )
             ) : (
               <div class={classHelper.e('body--empty')}>

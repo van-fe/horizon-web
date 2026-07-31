@@ -3,7 +3,8 @@
     "target": "esnext",
     "useDefineForClassFields": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
+    "stableTypeOrdering": true,
     "strict": true,
     "jsx": "preserve",
     "jsxImportSource": "vue",
@@ -14,7 +15,6 @@
     "skipLibCheck": true,
     "declaration": true,
     "rootDir": "./src",
-    "baseUrl": "./",
     "declarationDir": "./es",
     "plugins": [
       { "transform": "typescript-transform-paths", "afterDeclarations": true }

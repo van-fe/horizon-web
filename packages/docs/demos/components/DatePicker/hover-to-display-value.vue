@@ -7,22 +7,22 @@
       </h-radio-group>
     </h-form-item>
   </h-form>
-  <h-row>
-    <h-col :span="6">
+  <h-grid :gap="12">
+    <h-grid-item :span="6">
       <h-date-picker v-model="value" type="date" :hover-to-display-value="hoverToDisplayValue" />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <h-date-picker v-model="values" type="dateRange" :hover-to-display-value="hoverToDisplayValue" />
-    </h-col>
-  </h-row>
-  <h-row>
-    <h-col :span="6">
+    </h-grid-item>
+  </h-grid>
+  <h-grid :gap="12">
+    <h-grid-item :span="6">
       <h-date-picker v-model="value2" type="dateMinutes" :hover-to-display-value="hoverToDisplayValue" />
-    </h-col>
-    <h-col :span="12">
+    </h-grid-item>
+    <h-grid-item :span="12">
       <h-date-picker v-model="values2" type="dateMinutesRange" :hover-to-display-value="hoverToDisplayValue" />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

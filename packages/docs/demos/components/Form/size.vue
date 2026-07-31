@@ -1,13 +1,13 @@
 <template>
-  <h-row>
-    <h-col>
+  <h-grid :gap="12">
+    <h-grid-item :span="24">
       <h-radio-group v-model="size">
         <h-radio label="small" />
         <h-radio label="medium" />
         <h-radio label="large" />
       </h-radio-group>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
   <h-form :size="size">
     <h-form-item label="User name">
       <h-input v-model="formData.username" />

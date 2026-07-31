@@ -1,6 +1,6 @@
 <template>
-  <h-row>
-    <h-col :span="12">
+  <h-grid :gap="12">
+    <h-grid-item :span="12">
       <div class="demo-title">单选</div>
       <div class="demo-description"><h-button :plain="true" size="small" @click="change(0)">修改</h-button> {{ selectedValues[0].value }}</div>
       <h-tree
@@ -9,8 +9,8 @@
         :tree-data="baseTreeData"
         :max-height="300"
       />
-    </h-col>
-    <h-col :span="12">
+    </h-grid-item>
+    <h-grid-item :span="12">
       <div class="demo-title">多选</div>
       <div class="demo-description"><h-button :plain="true" size="small" @click="change(1)">修改</h-button> {{ selectedValues[1].value }}</div>
       <h-tree
@@ -20,8 +20,8 @@
         :max-height="300"
         :multiple="true"
       />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

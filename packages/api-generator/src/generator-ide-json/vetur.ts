@@ -26,13 +26,13 @@ export default async function createVeturJson() {
   const attributes: Record<string, VeturAttributeType> = {};
 
   components.forEach(component => {
-    tags[`n-${kebabCase(component.name)}`] = {
+    tags[`h-${kebabCase(component.name)}`] = {
       attributes: component.props.map(prop => kebabCase(prop.name)),
       description: `[Docs](https://aurora-design.example.com/horizon-web/dev-component/vue/base/component/${component.parentComponentName.toLowerCase()})`,
     };
 
     component.props.forEach(prop => {
-      attributes[`n-${kebabCase(component.name)}/${kebabCase(prop.name)}`] = {
+      attributes[`h-${kebabCase(component.name)}/${kebabCase(prop.name)}`] = {
         type: prop.baseType,
         options: prop.options,
         description: `${

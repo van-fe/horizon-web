@@ -1,14 +1,14 @@
 <template>
-  <h-row>
-    <h-col :span="12">
+  <h-grid :gap="12">
+    <h-grid-item :span="12">
       <div class="demo-title">单选</div>
       <h-tree
         :tree-data="baseTreeData"
         :stress="true"
         :to-body="false"
       />
-    </h-col>
-    <h-col :span="12">
+    </h-grid-item>
+    <h-grid-item :span="12">
       <div class="demo-title">多选</div>
       <h-tree
         :tree-data="baseTreeData"
@@ -16,8 +16,8 @@
         :multiple="true"
         :to-body="false"
       />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

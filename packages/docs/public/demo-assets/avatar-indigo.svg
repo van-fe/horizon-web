@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title">
+  <title id="title">Indigo illustrated avatar</title>
+  <rect width="256" height="256" rx="48" fill="#dfe5ff"/>
+  <circle cx="128" cy="103" r="51" fill="#f1b995"/>
+  <path d="M77 102c0-48 25-70 58-70 40 0 59 31 52 77-17-6-30-21-35-42-12 20-39 34-75 35Z" fill="#303968"/>
+  <path d="M45 256c4-63 35-93 83-93s79 30 83 93Z" fill="#5669d8"/>
+  <circle cx="109" cy="108" r="4" fill="#29314e"/><circle cx="149" cy="108" r="4" fill="#29314e"/>
+  <path d="M112 133c10 8 22 8 32 0" fill="none" stroke="#a75f56" stroke-width="4" stroke-linecap="round"/>
+</svg>

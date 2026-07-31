@@ -1,82 +1,88 @@
 <template>
-  <div class="demo">
-    <h-row :hspace="0">
-      <h-col><div class="grid-content">unset</div></h-col>
-      <h-col><div class="grid-content">unset</div></h-col>
-      <h-col><div class="grid-content">unset</div></h-col>
-    </h-row>
-    <h-row :hspace="0" align="top">
-      <h-col><div class="grid-content">align top</div></h-col>
-      <h-col><div class="grid-content">align top</div></h-col>
-      <h-col><div class="grid-content">align top</div></h-col>
-    </h-row>
-    <h-row :hspace="0" align="middle">
-      <h-col><div class="grid-content">align middle</div></h-col>
-      <h-col><div class="grid-content">align middle</div></h-col>
-      <h-col><div class="grid-content">align middle</div></h-col>
-    </h-row>
-    <h-row :hspace="0" align="bottom">
-      <h-col><div class="grid-content">align bottom</div></h-col>
-      <h-col><div class="grid-content">align bottom</div></h-col>
-      <h-col><div class="grid-content">align bottom</div></h-col>
-    </h-row>
-    <h-row :hspace="0" class="auto_height" justify="start">
-      <h-col :span="4"><div class="grid-content">justify start</div></h-col>
-      <h-col :span="4"><div class="grid-content">justify start</div></h-col>
-      <h-col :span="4"><div class="grid-content">justify start</div></h-col>
-    </h-row>
-    <h-row :hspace="0" class="auto_height" justify="center">
-      <h-col :span="4"><div class="grid-content">justify center</div></h-col>
-      <h-col :span="4"><div class="grid-content">justify center</div></h-col>
-      <h-col :span="4"><div class="grid-content">justify center</div></h-col>
-    </h-row>
-    <h-row :hspace="0" class="auto_height" justify="end">
-      <h-col :span="4"><div class="grid-content">justify end</div></h-col>
-      <h-col :span="4"><div class="grid-content">justify end</div></h-col>
-      <h-col :span="4"><div class="grid-content">justify end</div></h-col>
-    </h-row>
-    <h-row :hspace="0" class="auto_height" justify="space-between">
-      <h-col :span="4"><div class="grid-content">justify space-between</div></h-col>
-      <h-col :span="4"><div class="grid-content">justify space-between</div></h-col>
-      <h-col :span="4"><div class="grid-content">justify space-between</div></h-col>
-    </h-row>
-    <h-row :hspace="0" class="auto_height" justify="space-around">
-      <h-col :span="4"><div class="grid-content">justify space-around</div></h-col>
-      <h-col :span="4"><div class="grid-content">justify space-around</div></h-col>
-      <h-col :span="4"><div class="grid-content">justify space-around</div></h-col>
-    </h-row>
-    <h-row :hspace="0" class="auto_height" justify="space-evenly">
-      <h-col :span="4"><div class="grid-content">justify space-evenly</div></h-col>
-      <h-col :span="4"><div class="grid-content">justify space-evenly</div></h-col>
-      <h-col :span="4"><div class="grid-content">justify space-evenly</div></h-col>
-    </h-row>
-  </div>
+  <h-grid class="alignment-demo" :cols="{ xs: 1, sm: 3 }" :gap="12">
+    <h-grid-item>
+      <section class="alignment-card">
+        <header>
+          <strong>Start</strong>
+          <code>align="start"</code>
+        </header>
+        <h-grid class="alignment-stage" :cols="1" align="start" justify="center">
+          <h-grid-item><span>Item</span></h-grid-item>
+        </h-grid>
+      </section>
+    </h-grid-item>
+
+    <h-grid-item>
+      <section class="alignment-card">
+        <header>
+          <strong>Center</strong>
+          <code>align="center"</code>
+        </header>
+        <h-grid class="alignment-stage" :cols="1" align="center" justify="center">
+          <h-grid-item><span>Item</span></h-grid-item>
+        </h-grid>
+      </section>
+    </h-grid-item>
+
+    <h-grid-item>
+      <section class="alignment-card">
+        <header>
+          <strong>End</strong>
+          <code>align="end"</code>
+        </header>
+        <h-grid class="alignment-stage" :cols="1" align="end" justify="center">
+          <h-grid-item><span>Item</span></h-grid-item>
+        </h-grid>
+      </section>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <style scoped>
-.demo .grid-content {
-  text-align: center;
-  background-color: #b7e8ea;
-  line-height: 32px;
+.alignment-card {
+  overflow: hidden;
+  border: 1px solid var(--h-border-default);
+  border-radius: 12px;
+  background: var(--h-bg-default);
 }
 
-.demo .h-row {
-  background-color: #00bcbc;
-  background-clip: content-box;
-  min-height: 60px;
+.alignment-card header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--h-border-default);
+  background: var(--h-bg-secondary);
 }
 
-.demo .h-row.auto_height {
-  min-height: auto;
+.alignment-card strong {
+  color: var(--h-text-primary);
+  font-size: 13px;
 }
 
-.demo .h-col {
-  background-clip: content-box;
+.alignment-card code {
+  color: var(--h-text-secondary);
+  font-size: 11px;
 }
 
-.demo .h-col:nth-child(odd) {
-  background-color: #b9d9eb;
+.alignment-stage {
+  height: 132px;
+  background:
+    linear-gradient(var(--h-border-default) 1px, transparent 1px),
+    linear-gradient(90deg, var(--h-border-default) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+.alignment-stage span {
+  display: inline-grid;
+  place-items: center;
+  width: 64px;
+  height: 36px;
+  border-radius: 7px;
+  color: var(--h-text-inverse);
+  background: var(--h-bg-brand-default);
+  font-size: 12px;
+  font-weight: 600;
 }
 </style>
-<script setup lang="ts">
-</script>

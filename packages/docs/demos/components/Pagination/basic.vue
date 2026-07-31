@@ -8,22 +8,22 @@
       </h-radio-group>
     </h-form-item>
   </h-form>
-  <h-row :gutter="10" align="middle">
-    <h-col :span="6">
+  <h-grid :gap="10" align="center">
+    <h-grid-item :span="6">
       <div class="demo-title">当你页数不超过7页时</div>
-    </h-col>
-    <h-col :span="18">
+    </h-grid-item>
+    <h-grid-item :span="18">
       <h-pagination :total="50" :align="align" @modify="onModify" @currentChange="onCurrentChange" @sizeChange="onSizeChange" />
-    </h-col>
-  </h-row>
-  <h-row :gutter="10" align="middle">
-    <h-col :span="6">
+    </h-grid-item>
+  </h-grid>
+  <h-grid :gap="10" align="center">
+    <h-grid-item :span="6">
       <div class="demo-title">当你页数超过7页时</div>
-    </h-col>
-    <h-col :span="18">
+    </h-grid-item>
+    <h-grid-item :span="18">
       <h-pagination :total="100" :align="align" />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

@@ -20,13 +20,13 @@ describe('Button.tsx', () => {
       const wrapper = mount(() => <HButton type={type.value}>OK</HButton>);
       const element = wrapper.findComponent(HButton);
 
-      expect(element.classes('n-button--primary')).toBe(true);
+      expect(element.classes('h-button--primary')).toBe(true);
 
       type.value = 'normal';
 
       await nextTick();
 
-      expect(element.classes('n-button--normal')).toBe(true);
+      expect(element.classes('h-button--normal')).toBe(true);
     });
 
     test('size', async () => {
@@ -34,13 +34,13 @@ describe('Button.tsx', () => {
       const wrapper = mount(() => <HButton size={size.value}>OK</HButton>);
       const element = wrapper.findComponent(HButton);
 
-      expect(element.classes('n-button--medium')).toBe(true);
+      expect(element.classes('h-button--medium')).toBe(true);
 
       size.value = 'huge';
 
       await nextTick();
 
-      expect(element.classes('n-button--huge')).toBe(true);
+      expect(element.classes('h-button--huge')).toBe(true);
     });
 
     test('round', async () => {
@@ -48,13 +48,13 @@ describe('Button.tsx', () => {
       const wrapper = mount(() => <HButton round={round.value}>OK</HButton>);
       const element = wrapper.findComponent(HButton);
 
-      expect(element.classes('n-button--round')).toBe(false);
+      expect(element.classes('h-button--round')).toBe(false);
 
       round.value = true;
 
       await nextTick();
 
-      expect(element.classes('n-button--round')).toBe(true);
+      expect(element.classes('h-button--round')).toBe(true);
     });
 
     test('text', async () => {
@@ -62,13 +62,13 @@ describe('Button.tsx', () => {
       const wrapper = mount(() => <HButton text={text.value}>OK</HButton>);
       const element = wrapper.findComponent(HButton);
 
-      expect(element.classes('n-button--text')).toBe(false);
+      expect(element.classes('h-button--text')).toBe(false);
 
       text.value = true;
 
       await nextTick();
 
-      expect(element.classes('n-button--text')).toBe(true);
+      expect(element.classes('h-button--text')).toBe(true);
     });
 
     test('link', async () => {
@@ -76,13 +76,13 @@ describe('Button.tsx', () => {
       const wrapper = mount(() => <HButton link={link.value}>OK</HButton>);
       const element = wrapper.findComponent(HButton);
 
-      expect(element.classes('n-button--link')).toBe(false);
+      expect(element.classes('h-button--link')).toBe(false);
 
       link.value = true;
 
       await nextTick();
 
-      expect(element.classes('n-button--link')).toBe(true);
+      expect(element.classes('h-button--link')).toBe(true);
     });
 
     test('block', async () => {
@@ -90,13 +90,13 @@ describe('Button.tsx', () => {
       const wrapper = mount(() => <HButton block={block.value}>OK</HButton>);
       const element = wrapper.findComponent(HButton);
 
-      expect(element.classes('n-button--block')).toBe(false);
+      expect(element.classes('h-button--block')).toBe(false);
 
       block.value = true;
 
       await nextTick();
 
-      expect(element.classes('n-button--block')).toBe(true);
+      expect(element.classes('h-button--block')).toBe(true);
     });
 
     test('plain', async () => {
@@ -104,13 +104,13 @@ describe('Button.tsx', () => {
       const wrapper = mount(() => <HButton plain={plain.value}>OK</HButton>);
       const element = wrapper.findComponent(HButton);
 
-      expect(element.classes('n-button--plain')).toBe(false);
+      expect(element.classes('h-button--plain')).toBe(false);
 
       plain.value = true;
 
       await nextTick();
 
-      expect(element.classes('n-button--plain')).toBe(true);
+      expect(element.classes('h-button--plain')).toBe(true);
     });
 
     test('plain ghost', async () => {
@@ -135,7 +135,7 @@ describe('Button.tsx', () => {
       const wrapper = mount(() => <HButton type="secondary">OK</HButton>);
       const element = wrapper.findComponent(HButton);
 
-      expect(element.classes('n-button--plain')).toBe(true);
+      expect(element.classes('h-button--plain')).toBe(true);
     });
 
     test('loading', async () => {
@@ -172,7 +172,7 @@ describe('Button.tsx', () => {
       const wrapper = mount(() => <HButton icon={IconEye} iconSize={iconSize.value}></HButton>);
       const element = wrapper.findComponent(HButton);
 
-      expect(element.classes('n-button--equally')).toBe(true);
+      expect(element.classes('h-button--equally')).toBe(true);
       expect(wrapper.findComponent(IconEye).exists()).toBeTruthy();
 
       // icon-size can't be displayed

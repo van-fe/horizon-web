@@ -1,13 +1,13 @@
 <template>
-  <h-row>
-    <h-col>
+  <h-grid :gap="12">
+    <h-grid-item :span="24">
       <div class="mr-4">必填星号位置</div>
       <h-radio-group v-model="requireMarkPosition" size="small">
         <h-radio-button label="left" />
         <h-radio-button label="right" />
       </h-radio-group>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
   <h-form
     ref="formRef"
     :model="formData"

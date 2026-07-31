@@ -1,6 +1,6 @@
 <template>
-  <h-row>
-    <h-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
+  <h-grid :gap="12">
+    <h-grid-item :span="{ xs: 12, md: 8, lg: 6, xl: 6, xxl: 6 }">
       <div class="demo-title">默认值为 null</div>
       <div class="demo-description">
         modelValue: {{ Object.prototype.toString.call(value1) }} {{ value1 }}
@@ -8,8 +8,8 @@
       <h-select v-model="value1" :initial-value="null" :clearable="true" :to-body="false">
         <h-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
       </h-select>
-    </h-col>
-    <h-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
+    </h-grid-item>
+    <h-grid-item :span="{ xs: 12, md: 8, lg: 6, xl: 6, xxl: 6 }">
       <div class="demo-title">默认值为 []</div>
       <div class="demo-description">
         modelValue: {{ Object.prototype.toString.call(value2) }} {{ value2 }}
@@ -17,8 +17,8 @@
       <h-select v-model="value2" :multiple="true" :initial-value="[]" :to-body="false" :clearable="true">
         <h-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
       </h-select>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 
 </template>
 

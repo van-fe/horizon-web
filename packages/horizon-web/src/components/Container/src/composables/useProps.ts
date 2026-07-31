@@ -14,7 +14,7 @@ export const useAsideProps = declarePropType({
 
 export const useContainerProps = declarePropType({
   /**
-   * 子元素排列方向。如果没有设置此值，且子元素中存在`n-header`或`n-footer`时为`vertical`，否则为`horizontal`
+   * 子元素排列方向。如果没有设置此值，且子元素中存在`h-header`或`h-footer`时为`vertical`，否则为`horizontal`
     * @en Configuration for direction.
    */
   direction: {

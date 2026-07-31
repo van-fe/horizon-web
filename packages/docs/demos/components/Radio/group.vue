@@ -1,6 +1,6 @@
 <template>
-  <h-row>
-    <h-col :span="24">
+  <h-grid :gap="12">
+    <h-grid-item :span="24">
       <div class="demo-title">medium(default)</div>
       <h-radio-group v-model="modelValue" size="medium">
         <h-radio-button
@@ -9,9 +9,9 @@
           :value="item.label"
         />
       </h-radio-group>
-    </h-col>
+    </h-grid-item>
 
-    <h-col :span="24">
+    <h-grid-item :span="24">
       <div class="demo-title">large</div>
       <h-radio-group v-model="modelValue" size="large" :disabled="true">
         <h-radio-button
@@ -20,8 +20,8 @@
           :value="item.label"
         />
       </h-radio-group>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script lang="ts" setup>

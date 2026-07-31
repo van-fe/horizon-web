@@ -1,10 +1,10 @@
 <template>
-  <h-row>
-    <h-col :span="24">
+  <h-grid :gap="12">
+    <h-grid-item :span="24">
       <h-dropdown>
         <h-button>使用 #suffix 插槽放置箭头
           <template #suffix>
-            <div class="n-button__icon">
+            <div class="h-button__icon">
               <IconArrowDown />
             </div>
           </template>
@@ -32,8 +32,8 @@
             </h-dropdown-menu>
           </h-dropdown>
       </h-button-group>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

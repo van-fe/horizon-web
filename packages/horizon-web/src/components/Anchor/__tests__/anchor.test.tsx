@@ -10,7 +10,7 @@ describe('Anchor.tsx', () => {
     const element = wrapper.findComponent(HAnchor);
 
     expect(element.exists()).toBe(true);
-    expect(element.classes()).toContain('n-anchor');
+    expect(element.classes()).toContain('h-anchor');
   });
 
   describe('props', () => {
@@ -23,11 +23,11 @@ describe('Anchor.tsx', () => {
         </HAnchor>
       ));
       const anchor = wrapper.findComponent(HAnchor);
-      expect(anchor.classes()).toContain('n-anchor--medium');
+      expect(anchor.classes()).toContain('h-anchor--medium');
 
       size.value = 'small';
       await nextTick();
-      expect(anchor.classes()).toContain('n-anchor--small');
+      expect(anchor.classes()).toContain('h-anchor--small');
     });
 
     test('showLine', async () => {

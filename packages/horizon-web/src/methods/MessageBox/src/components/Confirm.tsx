@@ -1,7 +1,8 @@
-import { defineComponent, onMounted, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { useMsgBoxConfirmProps } from '../composables/useProps';
 import HDialog from '~/components/Dialog/src/Dialog';
 import { ComponentClassBlock } from '@aurora/utils';
+import useLocaleLang from '~/utils/useLocaleLang';
 
 export default defineComponent({
   name: 'MessageBoxConfirm',
@@ -14,6 +15,8 @@ export default defineComponent({
     const classHelper = new ComponentClassBlock('messagebox');
 
     const visibleRef = ref(false);
+    const defaultOkText = useLocaleLang('global.ok', 'OK');
+    const defaultCancelText = useLocaleLang('global.cancel', 'Cancel');
     const open = () => {
       visibleRef.value = true;
       const activeElement = document.activeElement;
@@ -80,9 +83,9 @@ export default defineComponent({
         iconSize={getIcon()?.size}
         escClose={props.escClose}
         maskClose={props.maskClose}
-        okText={props.okText}
+        okText={props.okText || (defaultOkText.value as string)}
         okButtonProps={props.okButtonProps}
-        cancelText={props.cancelText}
+        cancelText={props.cancelText || (defaultCancelText.value as string)}
         cancelButtonProps={props.cancelButtonProps}
         onOk={() => emit('confirmClick', close)}
         onCancel={close}

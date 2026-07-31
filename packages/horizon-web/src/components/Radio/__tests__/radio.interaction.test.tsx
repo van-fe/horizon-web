@@ -26,7 +26,7 @@ describe('Radio interaction', () => {
 
     expect(modelValue.value).toBe(1);
     expect(onChange).toHaveBeenCalledWith(1);
-    expect(input.element.checked).toBe(true);
+    expect((input.element as HTMLInputElement).checked).toBe(true);
   });
 
   test('does not update when disabled', async () => {

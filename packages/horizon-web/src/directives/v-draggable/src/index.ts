@@ -84,7 +84,6 @@ export default defineDirective<HTMLElement, typeof useDraggableOptions>({
   options: useDraggableOptions,
   desc: '允许自由移动元素',
   descLocales: { en: 'Allows an element to be moved freely.' },
-  descLocales: { en: 'Allow an element to be moved freely.' },
   mounted: draggableMethod,
   updated: draggableMethod,
 });

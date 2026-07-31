@@ -1,6 +1,6 @@
 <template>
-  <h-row>
-    <h-col :span="6">
+  <h-grid :gap="12">
+    <h-grid-item :span="6">
       <div class="demo-title">保留关键字（默认）</div>
       <h-cascader
         v-model="currentVal1"
@@ -13,8 +13,8 @@
         :to-body="false"
         @change="changeHandle"
       />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">不保留关键字</div>
       <h-cascader
         v-model="currentVal2"
@@ -27,8 +27,8 @@
         :to-body="false"
         @change="changeHandle"
       />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">在反选时保留，正选不保留</div>
       <h-cascader
         v-model="currentVal3"
@@ -41,8 +41,8 @@
         :to-body="false"
         @change="changeHandle"
       />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

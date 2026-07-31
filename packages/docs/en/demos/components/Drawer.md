@@ -42,35 +42,35 @@ When `v2=true`, the drawer top and bottom logic are controlled by `header` and `
 ```scss
 :root {
   // font-size
-  --n-drawer-font-size--title: var(--n-text-lg);
+  --h-drawer-font-size--title: var(--h-text-lg);
 
   // font-weight
-  --n-drawer-font-weight--title: var(--n-weight-strong);
+  --h-drawer-font-weight--title: var(--h-weight-strong);
 
   // line-height
-  --n-drawer-line-height--title: 24px;
+  --h-drawer-line-height--title: 24px;
 
   // background
-  --n-drawer-bg--container: var(--n-bg-default);
-  --n-drawer-bg--mask: var(--n-bg-overlay-default);
+  --h-drawer-bg--container: var(--h-bg-default);
+  --h-drawer-bg--mask: var(--h-bg-overlay-default);
 
   // @deprecated: NOTE: Removed in next version, effective in this version
   // border-radius
-  --n-drawer-border-radius--container: 0;
-  --n-drawer-border-radius--left: 0 var(--n-drawer-border-radius--container) var(--n-drawer-border-radius--container) 0;
-  --n-drawer-border-radius--right: var(--n-drawer-border-radius--container) 0 0 var(--n-drawer-border-radius--container);
-  --n-drawer-border-radius--top: 0 0 var(--n-drawer-border-radius--container) var(--n-drawer-border-radius--container);
-  --n-drawer-border-radius--bottom: var(--n-drawer-border-radius--container) var(--n-drawer-border-radius--container) 0 0;
+  --h-drawer-border-radius--container: 0;
+  --h-drawer-border-radius--left: 0 var(--h-drawer-border-radius--container) var(--h-drawer-border-radius--container) 0;
+  --h-drawer-border-radius--right: var(--h-drawer-border-radius--container) 0 0 var(--h-drawer-border-radius--container);
+  --h-drawer-border-radius--top: 0 0 var(--h-drawer-border-radius--container) var(--h-drawer-border-radius--container);
+  --h-drawer-border-radius--bottom: var(--h-drawer-border-radius--container) var(--h-drawer-border-radius--container) 0 0;
 
   // padding
-  --n-drawer-top-padding--container: var(--n-spacing-7) var(--n-spacing-7) var(--n-spacing-5);
-  --n-drawer-bottom-padding--container: var(--n-spacing-5) var(--n-spacing-7) var(--n-spacing-7);
-  --n-drawer-padding--body: var(--n-spacing-7);
+  --h-drawer-top-padding--container: var(--h-spacing-7) var(--h-spacing-7) var(--h-spacing-5);
+  --h-drawer-bottom-padding--container: var(--h-spacing-5) var(--h-spacing-7) var(--h-spacing-7);
+  --h-drawer-padding--body: var(--h-spacing-7);
 
   // margin
-  --n-drawer-margin-right--icon: var(--n-spacing-5);
+  --h-drawer-margin-right--icon: var(--h-spacing-5);
 
   // divider line color
-  --n-drawer-divider-color: var(--n-divider-default, #E6E7EC);
+  --h-drawer-divider-color: var(--h-divider-default, #E6E7EC);
 }
 ```

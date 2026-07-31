@@ -48,10 +48,6 @@ setNamespace('x');
     $table-namespace: 'x-table'
 );
 
-// if you use @aurora/icon at the same time, you should set namespace too.
-@forward '@aurora/icon/dist/index.scss' with (
-  $icon-namespace: 'x',
-);
 ```
 
 在你的入口文件 `main.ts` 中引用此文件即可
@@ -62,7 +58,9 @@ setNamespace('x');
 
 因为只有 `horizon-web` 拥有按需引用的能力，所以只能创建一个只有 `horizon-web` 的 `forward` 文件 (例如：`styles/horizon-web.scss`)
 
-:::tip 如果你还同时使用 `table` `icon`，则按照上方的 `全量引用` 中，只保留 `table` `icon` 的配置并在入口文件引用即可）:::
+:::tip
+如果你还同时使用 `table`，则按照上方的 `全量引用`，保留 `table` 的配置并在入口文件引用即可。
+:::
 
 
 ```scss
@@ -129,7 +127,7 @@ module.exports = {
 
 ## 按需引入 + SCSS变量
 
-按需引入只有 `@aurora/horizon-web` 支持。`@aurora/horizon-web-table` 和 `@aurora/icon` 都是全量引入
+按需引入只有 `@aurora/horizon-web` 支持。`@aurora/horizon-web-table` 的样式需要全量引入。
 
 和上面的 **设置 SCSS 变量** 区别在于，`styles/horizon-web.scss` 的内容改为：
 
@@ -144,10 +142,6 @@ module.exports = {
     $table-namespace: 'x-table'
 );
 
-// if you use @aurora/icon at the same time, you should set namespace too.
-@forward '@aurora/icon/dist/index.scss' with (
-  $icon-namespace: 'x',
-);
 ```
 
 其余的配置都是一致的

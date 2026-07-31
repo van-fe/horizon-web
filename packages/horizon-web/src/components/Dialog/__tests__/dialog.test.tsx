@@ -32,27 +32,27 @@ describe('Dialog.tsx', () => {
     expect(wrapper.html()).toMatchInlineSnapshot(
       `
       "<!--teleport start-->
-      <div class="n-dialog" style="z-index: 2001;">
-        <transition-stub name="n-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
-          <div class="n-dialog__mask" style="z-index: 2001;"></div>
+      <div class="h-dialog" style="z-index: 2001;">
+        <transition-stub name="h-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
+          <div class="h-dialog__mask" style="z-index: 2001;"></div>
         </transition-stub>
-        <transition-stub name="n-dialog__move" appear="true" persisted="true" css="true">
-          <div class="n-dialog__container n-dialog--medium n-dialog--center" style="z-index: 2002;">
-            <div class="n-dialog__inner">
+        <transition-stub name="h-dialog__move" appear="true" persisted="true" css="true">
+          <div class="h-dialog__container h-dialog--medium h-dialog--center" style="z-index: 2002;">
+            <div class="h-dialog__inner">
               <!---->
-              <div class="n-dialog__main">
+              <div class="h-dialog__main">
                 <!---->
-                <div class="n-dialog__body"></div>
-                <div class="n-dialog__footer">
-                  <div class="n-dialog__default-footer"><button class="n-button n-button--normal n-button--medium n-button--plain is-solid" type="button" tabindex="0" autofocus="false">
+                <div class="h-dialog__body"></div>
+                <div class="h-dialog__footer">
+                  <div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0" autofocus="false">
                       <!---->
-                      <div class="n-button__content">
+                      <div class="h-button__content">
                         <!---->
                       </div>
                       <!---->
-                    </button><button class="n-button n-button--primary n-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;">
+                    </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;">
                       <!---->
-                      <div class="n-button__content">
+                      <div class="h-button__content">
                         <!---->
                       </div>
                       <!---->
@@ -76,37 +76,37 @@ describe('Dialog.tsx', () => {
     expect(wrapper.find('.h-dialog__header').text()).toBe('Title');
     expect(wrapper.html()).toMatchInlineSnapshot(`
       "<!--teleport start-->
-      <div class="n-dialog" style="z-index: 2002;">
-        <transition-stub name="n-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
-          <div class="n-dialog__mask" style="z-index: 2002;"></div>
+      <div class="h-dialog" style="z-index: 2002;">
+        <transition-stub name="h-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
+          <div class="h-dialog__mask" style="z-index: 2002;"></div>
         </transition-stub>
-        <transition-stub name="n-dialog__move" appear="true" persisted="true" css="true">
-          <div class="n-dialog__container n-dialog--medium n-dialog--center" style="z-index: 2003;">
-            <div class="n-dialog__inner">
+        <transition-stub name="h-dialog__move" appear="true" persisted="true" css="true">
+          <div class="h-dialog__container h-dialog--medium h-dialog--center" style="z-index: 2003;">
+            <div class="h-dialog__inner">
               <!---->
-              <div class="n-dialog__main">
-                <div class="n-dialog__header">
-                  <div class="n-dialog__default-title">
-                    <div class="n-dialog__default-title--text">Title</div><button class="n-button n-button--normal n-button--small n-button--text n-button--equally is-solid is-with-icon n-dialog__header-close n-dialog__header-close" type="button" tabindex="0" autofocus="false">
-                      <div class="n-button__icon is-custom-size"><svg fill="none" viewBox="0 0 24 24" width="1em" height="1em" class="a-icon n-icon__v2_11_24 n-icon__close" style="transform: rotate(undefineddeg);">
-                          <path fill="currentColor" d="M12 10.95L19.94 3a1.5 1.5 0 010 2.12L13.06 12 21 19.96a1.5 1.5 0 01-2.11 0L12 13.06l-6.89 6.9a1.5 1.5 0 01-2.11 0l7.94-7.95-6.88-6.9a1.5 1.5 0 010-2.11L12 10.95z"></path>
+              <div class="h-dialog__main">
+                <div class="h-dialog__header">
+                  <div class="h-dialog__default-title">
+                    <div class="h-dialog__default-title--text">Title</div><button class="h-button h-button--normal h-button--small h-button--text h-button--equally is-solid is-with-icon h-dialog__header-close h-dialog__header-close" type="button" tabindex="0" autofocus="false">
+                      <div class="h-button__icon is-custom-size"><svg class="a-icon h-icon_close h-icon__close" viewBox="0 0 24 24" fill="none" style="width: 16px; height: 16px; font-size: 16px; display: inline-block; vertical-align: inherit;">
+                          <path d="M11.9999 10.9517L19.9429 3C20.5267 3.58446 20.5267 4.53206 19.9429 5.11652L13.057 12.01L21 19.9617C20.4162 20.5461 19.4696 20.5461 18.8858 19.9617L11.9999 13.0682L5.11419 19.9615C4.53038 20.546 3.58382 20.546 3 19.9615L10.9428 12.01L4.0571 5.11664C3.47328 4.53217 3.47328 3.58458 4.0571 3.00011L11.9999 10.9517Z" fill="currentColor"></path>
                         </svg></div>
                       <!---->
                       <!---->
                     </button>
                   </div>
                 </div>
-                <div class="n-dialog__body"></div>
-                <div class="n-dialog__footer">
-                  <div class="n-dialog__default-footer"><button class="n-button n-button--normal n-button--medium n-button--plain is-solid" type="button" tabindex="0" autofocus="false">
+                <div class="h-dialog__body"></div>
+                <div class="h-dialog__footer">
+                  <div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0" autofocus="false">
                       <!---->
-                      <div class="n-button__content">
+                      <div class="h-button__content">
                         <!---->
                       </div>
                       <!---->
-                    </button><button class="n-button n-button--primary n-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;">
+                    </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;">
                       <!---->
-                      <div class="n-button__content">
+                      <div class="h-button__content">
                         <!---->
                       </div>
                       <!---->
@@ -139,27 +139,27 @@ describe('Dialog.tsx', () => {
       expect(wrapper.find('.h-dialog__container').attributes('style')).toContain(`top: ${top}px`);
       expect(wrapper.html()).toMatchInlineSnapshot(`
         "<!--teleport start-->
-        <div class="n-dialog" style="z-index: 2003;">
-          <transition-stub name="n-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
+        <div class="h-dialog" style="z-index: 2003;">
+          <transition-stub name="h-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
             <!---->
           </transition-stub>
-          <transition-stub name="n-dialog__normal" appear="true" persisted="true" css="true">
-            <div class="n-dialog__container n-dialog--medium n-dialog--center" style="z-index: 2004; top: 200px; transform: translateY(0); display: none;">
-              <div class="n-dialog__inner">
+          <transition-stub name="h-dialog__normal" appear="true" persisted="true" css="true">
+            <div class="h-dialog__container h-dialog--medium h-dialog--center" style="z-index: 2004; top: 200px; transform: translateY(0); display: none;">
+              <div class="h-dialog__inner">
                 <!---->
-                <div class="n-dialog__main">
+                <div class="h-dialog__main">
                   <!---->
-                  <div class="n-dialog__body"></div>
-                  <div class="n-dialog__footer">
-                    <div class="n-dialog__default-footer"><button class="n-button n-button--normal n-button--medium n-button--plain is-solid" type="button" tabindex="0" autofocus="false">
+                  <div class="h-dialog__body"></div>
+                  <div class="h-dialog__footer">
+                    <div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0" autofocus="false">
                         <!---->
-                        <div class="n-button__content">
+                        <div class="h-button__content">
                           <!---->
                         </div>
                         <!---->
-                      </button><button class="n-button n-button--primary n-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;">
+                      </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;">
                         <!---->
-                        <div class="n-button__content">
+                        <div class="h-button__content">
                           <!---->
                         </div>
                         <!---->
@@ -180,13 +180,13 @@ describe('Dialog.tsx', () => {
         attachTo: document.body,
       });
 
-      expect(wrapper.find('.h-dialog__container').classes('n-dialog--medium')).eq(true);
+      expect(wrapper.find('.h-dialog__container').classes('h-dialog--medium')).eq(true);
 
       size.value = 'huge';
 
       await nextTick();
 
-      expect(wrapper.find('.h-dialog__container').classes('n-dialog--huge')).eq(true);
+      expect(wrapper.find('.h-dialog__container').classes('h-dialog--huge')).eq(true);
 
       size.value = 416;
 
@@ -211,27 +211,27 @@ describe('Dialog.tsx', () => {
 
       expect(wrapper.html()).toMatchInlineSnapshot(`
         "<!--teleport start-->
-        <div class="n-dialog" style="z-index: 2004;">
-          <transition-stub name="n-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
-            <div class="n-dialog__mask" style="z-index: 2004;"></div>
+        <div class="h-dialog" style="z-index: 2004;">
+          <transition-stub name="h-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
+            <div class="h-dialog__mask" style="z-index: 2004;"></div>
           </transition-stub>
-          <transition-stub name="n-dialog__move" appear="true" persisted="true" css="true">
-            <div class="n-dialog__container n-dialog--medium n-dialog--center" style="z-index: 2005;">
-              <div class="n-dialog__inner">
+          <transition-stub name="h-dialog__move" appear="true" persisted="true" css="true">
+            <div class="h-dialog__container h-dialog--medium h-dialog--center" style="z-index: 2005;">
+              <div class="h-dialog__inner">
                 <!---->
-                <div class="n-dialog__main">
+                <div class="h-dialog__main">
                   <!---->
-                  <div class="n-dialog__body"></div>
-                  <div class="n-dialog__footer">
-                    <div class="n-dialog__default-footer"><button class="n-button n-button--normal n-button--medium n-button--plain is-solid" type="button" tabindex="0" autofocus="false">
+                  <div class="h-dialog__body"></div>
+                  <div class="h-dialog__footer">
+                    <div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0" autofocus="false">
                         <!---->
-                        <div class="n-button__content">
+                        <div class="h-button__content">
                           <!---->
                         </div>
                         <!---->
-                      </button><button class="n-button n-button--primary n-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;">
+                      </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;">
                         <!---->
-                        <div class="n-button__content">
+                        <div class="h-button__content">
                           <!---->
                         </div>
                         <!---->
@@ -254,11 +254,11 @@ describe('Dialog.tsx', () => {
       expect(wrapper.find('.h-dialog__container').exists()).eq(false);
       expect(wrapper.html()).toMatchInlineSnapshot(`
         "<!--teleport start-->
-        <div class="n-dialog" style="z-index: 2004;">
-          <transition-stub name="n-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
+        <div class="h-dialog" style="z-index: 2004;">
+          <transition-stub name="h-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
             <!---->
           </transition-stub>
-          <transition-stub name="n-dialog__move" appear="true" persisted="false" css="true">
+          <transition-stub name="h-dialog__move" appear="true" persisted="false" css="true">
             <!---->
           </transition-stub>
         </div>
@@ -272,37 +272,37 @@ describe('Dialog.tsx', () => {
       expect(wrapper.find('.h-dialog__header--draggable').exists()).eq(true);
       expect(wrapper.html()).toMatchInlineSnapshot(`
         "<!--teleport start-->
-        <div class="n-dialog" style="z-index: 2005;">
-          <transition-stub name="n-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
-            <div class="n-dialog__mask" style="z-index: 2005;"></div>
+        <div class="h-dialog" style="z-index: 2005;">
+          <transition-stub name="h-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
+            <div class="h-dialog__mask" style="z-index: 2005;"></div>
           </transition-stub>
-          <transition-stub name="n-dialog__move" appear="true" persisted="true" css="true">
-            <div class="n-dialog__container n-dialog--medium n-dialog--center" style="z-index: 2006;">
-              <div class="n-dialog__inner">
+          <transition-stub name="h-dialog__move" appear="true" persisted="true" css="true">
+            <div class="h-dialog__container h-dialog--medium h-dialog--center" style="z-index: 2006;">
+              <div class="h-dialog__inner">
                 <!---->
-                <div class="n-dialog__main">
-                  <div class="n-dialog__header n-dialog__header--draggable">
-                    <div class="n-dialog__default-title">
-                      <div class="n-dialog__default-title--text">Title</div><button class="n-button n-button--normal n-button--small n-button--text n-button--equally is-solid is-with-icon n-dialog__header-close n-dialog__header-close" type="button" tabindex="0" autofocus="false">
-                        <div class="n-button__icon is-custom-size"><svg fill="none" viewBox="0 0 24 24" width="1em" height="1em" class="a-icon n-icon__v2_11_24 n-icon__close" style="transform: rotate(undefineddeg);">
-                            <path fill="currentColor" d="M12 10.95L19.94 3a1.5 1.5 0 010 2.12L13.06 12 21 19.96a1.5 1.5 0 01-2.11 0L12 13.06l-6.89 6.9a1.5 1.5 0 01-2.11 0l7.94-7.95-6.88-6.9a1.5 1.5 0 010-2.11L12 10.95z"></path>
+                <div class="h-dialog__main">
+                  <div class="h-dialog__header h-dialog__header--draggable">
+                    <div class="h-dialog__default-title">
+                      <div class="h-dialog__default-title--text">Title</div><button class="h-button h-button--normal h-button--small h-button--text h-button--equally is-solid is-with-icon h-dialog__header-close h-dialog__header-close" type="button" tabindex="0" autofocus="false">
+                        <div class="h-button__icon is-custom-size"><svg class="a-icon h-icon_close h-icon__close" viewBox="0 0 24 24" fill="none" style="width: 16px; height: 16px; font-size: 16px; display: inline-block; vertical-align: inherit;">
+                            <path d="M11.9999 10.9517L19.9429 3C20.5267 3.58446 20.5267 4.53206 19.9429 5.11652L13.057 12.01L21 19.9617C20.4162 20.5461 19.4696 20.5461 18.8858 19.9617L11.9999 13.0682L5.11419 19.9615C4.53038 20.546 3.58382 20.546 3 19.9615L10.9428 12.01L4.0571 5.11664C3.47328 4.53217 3.47328 3.58458 4.0571 3.00011L11.9999 10.9517Z" fill="currentColor"></path>
                           </svg></div>
                         <!---->
                         <!---->
                       </button>
                     </div>
                   </div>
-                  <div class="n-dialog__body"></div>
-                  <div class="n-dialog__footer">
-                    <div class="n-dialog__default-footer"><button class="n-button n-button--normal n-button--medium n-button--plain is-solid" type="button" tabindex="0" autofocus="false">
+                  <div class="h-dialog__body"></div>
+                  <div class="h-dialog__footer">
+                    <div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0" autofocus="false">
                         <!---->
-                        <div class="n-button__content">
+                        <div class="h-button__content">
                           <!---->
                         </div>
                         <!---->
-                      </button><button class="n-button n-button--primary n-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;">
+                      </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;">
                         <!---->
-                        <div class="n-button__content">
+                        <div class="h-button__content">
                           <!---->
                         </div>
                         <!---->
@@ -331,7 +331,7 @@ describe('Dialog.tsx', () => {
       ));
 
       expect(document.body.innerHTML).toMatchInlineSnapshot(
-        `"<div data-v-app=""><!--teleport start--><!--teleport end--></div><div class="n-dialog" style="z-index: 2003;"><transition-stub name="n-fade-in-normal" duration="300" appear="true" persisted="false" css="true"><div class="n-dialog__mask" style="z-index: 2003;"></div></transition-stub><transition-stub name="n-dialog__move" appear="true" persisted="true" css="true"><div class="n-dialog__container n-dialog--medium n-dialog--center" style="z-index: 2004;"><div class="n-dialog__inner"><!----><div class="n-dialog__main"><!----><div class="n-dialog__body"></div><div class="n-dialog__footer"><div class="n-dialog__default-footer"><button class="n-button n-button--normal n-button--medium n-button--plain is-solid" type="button" tabindex="0" autofocus="false"><!----><div class="n-button__content"><!----></div><!----></button><button class="n-button n-button--primary n-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;"><!----><div class="n-button__content"><!----></div><!----></button></div></div></div></div></div></transition-stub></div><div data-v-app=""><!--teleport start--><div class="n-dialog" style="z-index: 2003;"><transition-stub name="n-fade-in-normal" duration="300" appear="true" persisted="false" css="true"><!----></transition-stub><transition-stub name="n-dialog__normal" appear="true" persisted="true" css="true"><div class="n-dialog__container n-dialog--medium n-dialog--center" style="z-index: 2004; top: 200px; transform: translateY(0); display: none;"><div class="n-dialog__inner"><!----><div class="n-dialog__main"><!----><div class="n-dialog__body"></div><div class="n-dialog__footer"><div class="n-dialog__default-footer"><button class="n-button n-button--normal n-button--medium n-button--plain is-solid" type="button" tabindex="0" autofocus="false"><!----><div class="n-button__content"><!----></div><!----></button><button class="n-button n-button--primary n-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;"><!----><div class="n-button__content"><!----></div><!----></button></div></div></div></div></div></transition-stub></div><!--teleport end--></div><div data-v-app=""><!--teleport start--><div class="n-dialog" style="z-index: 2003;"><transition-stub name="n-fade-in-normal" duration="300" appear="true" persisted="false" css="true"><!----></transition-stub><transition-stub name="n-dialog__move" appear="true" persisted="true" css="true"><div class="n-dialog__container n-dialog--center" style="z-index: 2004; display: none; width: 416px;"><div class="n-dialog__inner"><!----><div class="n-dialog__main"><!----><div class="n-dialog__body"></div><div class="n-dialog__footer"><div class="n-dialog__default-footer"><button class="n-button n-button--normal n-button--medium n-button--plain is-solid" type="button" tabindex="0" autofocus="false"><!----><div class="n-button__content"><!----></div><!----></button><button class="n-button n-button--primary n-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;"><!----><div class="n-button__content"><!----></div><!----></button></div></div></div></div></div></transition-stub></div><!--teleport end--></div><div data-v-app=""><!--teleport start--><div class="n-dialog" style="z-index: 2004;"><transition-stub name="n-fade-in-normal" duration="300" appear="true" persisted="false" css="true"><!----></transition-stub><transition-stub name="n-dialog__move" appear="true" persisted="false" css="true"><!----></transition-stub></div><!--teleport end--></div><div><div class="n-dialog" style="z-index: 2006;"><transition-stub name="n-fade-in-normal" duration="300" appear="true" persisted="false" css="true"><div class="n-dialog__mask" style="z-index: 2006;"></div></transition-stub><transition-stub name="n-dialog__move" appear="true" persisted="true" css="true"><div class="n-dialog__container n-dialog--medium n-dialog--center" style="z-index: 2007;"><div class="n-dialog__inner"><!----><div class="n-dialog__main"><!----><div class="n-dialog__body"><div>Hello World</div></div><div class="n-dialog__footer"><div class="n-dialog__default-footer"><button class="n-button n-button--normal n-button--medium n-button--plain is-solid" type="button" tabindex="0" autofocus="false"><!----><div class="n-button__content"><!----></div><!----></button><button class="n-button n-button--primary n-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;"><!----><div class="n-button__content"><!----></div><!----></button></div></div></div></div></div></transition-stub></div></div>"`,
+        `"<div data-v-app=""><!--teleport start--><!--teleport end--></div><div class="h-dialog" style="z-index: 2003;"><transition-stub name="h-fade-in-normal" duration="300" appear="true" persisted="false" css="true"><div class="h-dialog__mask" style="z-index: 2003;"></div></transition-stub><transition-stub name="h-dialog__move" appear="true" persisted="true" css="true"><div class="h-dialog__container h-dialog--medium h-dialog--center" style="z-index: 2004;"><div class="h-dialog__inner"><!----><div class="h-dialog__main"><!----><div class="h-dialog__body"></div><div class="h-dialog__footer"><div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0" autofocus="false"><!----><div class="h-button__content"><!----></div><!----></button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;"><!----><div class="h-button__content"><!----></div><!----></button></div></div></div></div></div></transition-stub></div><div data-v-app=""><!--teleport start--><div class="h-dialog" style="z-index: 2003;"><transition-stub name="h-fade-in-normal" duration="300" appear="true" persisted="false" css="true"><!----></transition-stub><transition-stub name="h-dialog__normal" appear="true" persisted="true" css="true"><div class="h-dialog__container h-dialog--medium h-dialog--center" style="z-index: 2004; top: 200px; transform: translateY(0); display: none;"><div class="h-dialog__inner"><!----><div class="h-dialog__main"><!----><div class="h-dialog__body"></div><div class="h-dialog__footer"><div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0" autofocus="false"><!----><div class="h-button__content"><!----></div><!----></button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;"><!----><div class="h-button__content"><!----></div><!----></button></div></div></div></div></div></transition-stub></div><!--teleport end--></div><div data-v-app=""><!--teleport start--><div class="h-dialog" style="z-index: 2003;"><transition-stub name="h-fade-in-normal" duration="300" appear="true" persisted="false" css="true"><!----></transition-stub><transition-stub name="h-dialog__move" appear="true" persisted="true" css="true"><div class="h-dialog__container h-dialog--center" style="z-index: 2004; display: none; width: 416px;"><div class="h-dialog__inner"><!----><div class="h-dialog__main"><!----><div class="h-dialog__body"></div><div class="h-dialog__footer"><div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0" autofocus="false"><!----><div class="h-button__content"><!----></div><!----></button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;"><!----><div class="h-button__content"><!----></div><!----></button></div></div></div></div></div></transition-stub></div><!--teleport end--></div><div data-v-app=""><!--teleport start--><div class="h-dialog" style="z-index: 2004;"><transition-stub name="h-fade-in-normal" duration="300" appear="true" persisted="false" css="true"><!----></transition-stub><transition-stub name="h-dialog__move" appear="true" persisted="false" css="true"><!----></transition-stub></div><!--teleport end--></div><div><div class="h-dialog" style="z-index: 2006;"><transition-stub name="h-fade-in-normal" duration="300" appear="true" persisted="false" css="true"><div class="h-dialog__mask" style="z-index: 2006;"></div></transition-stub><transition-stub name="h-dialog__move" appear="true" persisted="true" css="true"><div class="h-dialog__container h-dialog--medium h-dialog--center" style="z-index: 2007;"><div class="h-dialog__inner"><!----><div class="h-dialog__main"><!----><div class="h-dialog__body"><div>Hello World</div></div><div class="h-dialog__footer"><div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0" autofocus="false"><!----><div class="h-button__content"><!----></div><!----></button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;"><!----><div class="h-button__content"><!----></div><!----></button></div></div></div></div></div></transition-stub></div></div>"`,
       );
 
       expect(wrapper.findComponent(HDialog).exists()).toBe(true);
@@ -364,37 +364,37 @@ describe('Dialog.tsx', () => {
 
       expect(wrapper.html()).toMatchInlineSnapshot(`
         "<!--teleport start-->
-        <div class="n-dialog" style="z-index: 2007;">
-          <transition-stub name="n-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
-            <div class="n-dialog__mask" style="z-index: 2007;"></div>
+        <div class="h-dialog" style="z-index: 2007;">
+          <transition-stub name="h-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
+            <div class="h-dialog__mask" style="z-index: 2007;"></div>
           </transition-stub>
-          <transition-stub name="n-dialog__move" appear="true" persisted="true" css="true">
-            <div class="n-dialog__container n-dialog--medium n-dialog--center" style="z-index: 2008;">
-              <div class="n-dialog__inner">
+          <transition-stub name="h-dialog__move" appear="true" persisted="true" css="true">
+            <div class="h-dialog__container h-dialog--medium h-dialog--center" style="z-index: 2008;">
+              <div class="h-dialog__inner">
                 <!---->
-                <div class="n-dialog__main">
-                  <div class="n-dialog__header">
-                    <div class="n-dialog__default-title">
-                      <div class="n-dialog__default-title--text">Title</div><button class="n-button n-button--normal n-button--small n-button--text n-button--equally is-solid is-with-icon n-dialog__header-close n-dialog__header-close" type="button" tabindex="0" autofocus="false">
-                        <div class="n-button__icon is-custom-size"><svg fill="none" viewBox="0 0 24 24" width="1em" height="1em" class="a-icon n-icon__v2_11_24 n-icon__close" style="transform: rotate(undefineddeg);">
-                            <path fill="currentColor" d="M12 10.95L19.94 3a1.5 1.5 0 010 2.12L13.06 12 21 19.96a1.5 1.5 0 01-2.11 0L12 13.06l-6.89 6.9a1.5 1.5 0 01-2.11 0l7.94-7.95-6.88-6.9a1.5 1.5 0 010-2.11L12 10.95z"></path>
+                <div class="h-dialog__main">
+                  <div class="h-dialog__header">
+                    <div class="h-dialog__default-title">
+                      <div class="h-dialog__default-title--text">Title</div><button class="h-button h-button--normal h-button--small h-button--text h-button--equally is-solid is-with-icon h-dialog__header-close h-dialog__header-close" type="button" tabindex="0" autofocus="false">
+                        <div class="h-button__icon is-custom-size"><svg class="a-icon h-icon_close h-icon__close" viewBox="0 0 24 24" fill="none" style="width: 16px; height: 16px; font-size: 16px; display: inline-block; vertical-align: inherit;">
+                            <path d="M11.9999 10.9517L19.9429 3C20.5267 3.58446 20.5267 4.53206 19.9429 5.11652L13.057 12.01L21 19.9617C20.4162 20.5461 19.4696 20.5461 18.8858 19.9617L11.9999 13.0682L5.11419 19.9615C4.53038 20.546 3.58382 20.546 3 19.9615L10.9428 12.01L4.0571 5.11664C3.47328 4.53217 3.47328 3.58458 4.0571 3.00011L11.9999 10.9517Z" fill="currentColor"></path>
                           </svg></div>
                         <!---->
                         <!---->
                       </button>
                     </div>
                   </div>
-                  <div class="n-dialog__body"></div>
-                  <div class="n-dialog__footer">
-                    <div class="n-dialog__default-footer"><button class="n-button n-button--normal n-button--medium n-button--plain is-solid" type="button" tabindex="0" autofocus="false">
+                  <div class="h-dialog__body"></div>
+                  <div class="h-dialog__footer">
+                    <div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0" autofocus="false">
                         <!---->
-                        <div class="n-button__content">
+                        <div class="h-button__content">
                           <!---->
                         </div>
                         <!---->
-                      </button><button class="n-button n-button--primary n-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;">
+                      </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;">
                         <!---->
-                        <div class="n-button__content">
+                        <div class="h-button__content">
                           <!---->
                         </div>
                         <!---->
@@ -448,37 +448,37 @@ describe('Dialog.tsx', () => {
 
       expect(wrapper.html()).toMatchInlineSnapshot(`
         "<!--teleport start-->
-        <div class="n-dialog" style="z-index: 2008;">
-          <transition-stub name="n-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
-            <div class="n-dialog__mask" style="z-index: 2008;"></div>
+        <div class="h-dialog" style="z-index: 2008;">
+          <transition-stub name="h-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
+            <div class="h-dialog__mask" style="z-index: 2008;"></div>
           </transition-stub>
-          <transition-stub name="n-dialog__move" appear="true" persisted="true" css="true">
-            <div class="n-dialog__container n-dialog--medium n-dialog--center" style="z-index: 2009;">
-              <div class="n-dialog__inner">
+          <transition-stub name="h-dialog__move" appear="true" persisted="true" css="true">
+            <div class="h-dialog__container h-dialog--medium h-dialog--center" style="z-index: 2009;">
+              <div class="h-dialog__inner">
                 <!---->
-                <div class="n-dialog__main">
-                  <div class="n-dialog__header">
-                    <div class="n-dialog__default-title">
-                      <div class="n-dialog__default-title--text">Title</div><button class="n-button n-button--normal n-button--small n-button--text n-button--equally is-solid is-with-icon n-dialog__header-close n-dialog__header-close" type="button" tabindex="0" autofocus="false">
-                        <div class="n-button__icon is-custom-size"><svg fill="none" viewBox="0 0 24 24" width="1em" height="1em" class="a-icon n-icon__v2_11_24 n-icon__close" style="transform: rotate(undefineddeg);">
-                            <path fill="currentColor" d="M12 10.95L19.94 3a1.5 1.5 0 010 2.12L13.06 12 21 19.96a1.5 1.5 0 01-2.11 0L12 13.06l-6.89 6.9a1.5 1.5 0 01-2.11 0l7.94-7.95-6.88-6.9a1.5 1.5 0 010-2.11L12 10.95z"></path>
+                <div class="h-dialog__main">
+                  <div class="h-dialog__header">
+                    <div class="h-dialog__default-title">
+                      <div class="h-dialog__default-title--text">Title</div><button class="h-button h-button--normal h-button--small h-button--text h-button--equally is-solid is-with-icon h-dialog__header-close h-dialog__header-close" type="button" tabindex="0" autofocus="false">
+                        <div class="h-button__icon is-custom-size"><svg class="a-icon h-icon_close h-icon__close" viewBox="0 0 24 24" fill="none" style="width: 16px; height: 16px; font-size: 16px; display: inline-block; vertical-align: inherit;">
+                            <path d="M11.9999 10.9517L19.9429 3C20.5267 3.58446 20.5267 4.53206 19.9429 5.11652L13.057 12.01L21 19.9617C20.4162 20.5461 19.4696 20.5461 18.8858 19.9617L11.9999 13.0682L5.11419 19.9615C4.53038 20.546 3.58382 20.546 3 19.9615L10.9428 12.01L4.0571 5.11664C3.47328 4.53217 3.47328 3.58458 4.0571 3.00011L11.9999 10.9517Z" fill="currentColor"></path>
                           </svg></div>
                         <!---->
                         <!---->
                       </button>
                     </div>
                   </div>
-                  <div class="n-dialog__body"></div>
-                  <div class="n-dialog__footer">
-                    <div class="n-dialog__default-footer"><button class="n-button n-button--normal n-button--medium n-button--plain is-solid" type="button" tabindex="0" autofocus="false">
+                  <div class="h-dialog__body"></div>
+                  <div class="h-dialog__footer">
+                    <div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0" autofocus="false">
                         <!---->
-                        <div class="n-button__content">
+                        <div class="h-button__content">
                           <!---->
                         </div>
                         <!---->
-                      </button><button class="n-button n-button--primary n-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;">
+                      </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;">
                         <!---->
-                        <div class="n-button__content">
+                        <div class="h-button__content">
                           <!---->
                         </div>
                         <!---->
@@ -517,37 +517,37 @@ describe('Dialog.tsx', () => {
 
       expect(wrapper.html()).toMatchInlineSnapshot(`
         "<!--teleport start-->
-        <div class="n-dialog" style="z-index: 2009;">
-          <transition-stub name="n-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
-            <div class="n-dialog__mask" style="z-index: 2009;"></div>
+        <div class="h-dialog" style="z-index: 2009;">
+          <transition-stub name="h-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
+            <div class="h-dialog__mask" style="z-index: 2009;"></div>
           </transition-stub>
-          <transition-stub name="n-dialog__move" appear="true" persisted="true" css="true">
-            <div class="n-dialog__container n-dialog--medium n-dialog--center" style="z-index: 2010;">
-              <div class="n-dialog__inner">
+          <transition-stub name="h-dialog__move" appear="true" persisted="true" css="true">
+            <div class="h-dialog__container h-dialog--medium h-dialog--center" style="z-index: 2010;">
+              <div class="h-dialog__inner">
                 <!---->
-                <div class="n-dialog__main">
-                  <div class="n-dialog__header">
-                    <div class="n-dialog__default-title">
-                      <div class="n-dialog__default-title--text">Title</div><button class="n-button n-button--normal n-button--small n-button--text n-button--equally is-solid is-with-icon n-dialog__header-close n-dialog__header-close" type="button" tabindex="0" autofocus="false">
-                        <div class="n-button__icon is-custom-size"><svg fill="none" viewBox="0 0 24 24" width="1em" height="1em" class="a-icon n-icon__v2_11_24 n-icon__close" style="transform: rotate(undefineddeg);">
-                            <path fill="currentColor" d="M12 10.95L19.94 3a1.5 1.5 0 010 2.12L13.06 12 21 19.96a1.5 1.5 0 01-2.11 0L12 13.06l-6.89 6.9a1.5 1.5 0 01-2.11 0l7.94-7.95-6.88-6.9a1.5 1.5 0 010-2.11L12 10.95z"></path>
+                <div class="h-dialog__main">
+                  <div class="h-dialog__header">
+                    <div class="h-dialog__default-title">
+                      <div class="h-dialog__default-title--text">Title</div><button class="h-button h-button--normal h-button--small h-button--text h-button--equally is-solid is-with-icon h-dialog__header-close h-dialog__header-close" type="button" tabindex="0" autofocus="false">
+                        <div class="h-button__icon is-custom-size"><svg class="a-icon h-icon_close h-icon__close" viewBox="0 0 24 24" fill="none" style="width: 16px; height: 16px; font-size: 16px; display: inline-block; vertical-align: inherit;">
+                            <path d="M11.9999 10.9517L19.9429 3C20.5267 3.58446 20.5267 4.53206 19.9429 5.11652L13.057 12.01L21 19.9617C20.4162 20.5461 19.4696 20.5461 18.8858 19.9617L11.9999 13.0682L5.11419 19.9615C4.53038 20.546 3.58382 20.546 3 19.9615L10.9428 12.01L4.0571 5.11664C3.47328 4.53217 3.47328 3.58458 4.0571 3.00011L11.9999 10.9517Z" fill="currentColor"></path>
                           </svg></div>
                         <!---->
                         <!---->
                       </button>
                     </div>
                   </div>
-                  <div class="n-dialog__body"></div>
-                  <div class="n-dialog__footer">
-                    <div class="n-dialog__default-footer"><button class="n-button n-button--normal n-button--medium n-button--plain is-solid" type="button" tabindex="0" autofocus="false">
+                  <div class="h-dialog__body"></div>
+                  <div class="h-dialog__footer">
+                    <div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0" autofocus="false">
                         <!---->
-                        <div class="n-button__content">
+                        <div class="h-button__content">
                           <!---->
                         </div>
                         <!---->
-                      </button><button class="n-button n-button--primary n-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;">
+                      </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;">
                         <!---->
-                        <div class="n-button__content">
+                        <div class="h-button__content">
                           <!---->
                         </div>
                         <!---->
@@ -618,22 +618,22 @@ describe('Dialog.tsx', () => {
 
       expect(wrapper.html()).toMatchInlineSnapshot(`
         "<!--teleport start-->
-        <div class="n-dialog" style="z-index: 2010;">
-          <transition-stub name="n-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
-            <div class="n-dialog__mask" style="z-index: 2010;"></div>
+        <div class="h-dialog" style="z-index: 2010;">
+          <transition-stub name="h-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
+            <div class="h-dialog__mask" style="z-index: 2010;"></div>
           </transition-stub>
-          <transition-stub name="n-dialog__move" appear="true" persisted="true" css="true">
-            <div class="n-dialog__container n-dialog--medium n-dialog--center" style="z-index: 2011;">
-              <div class="n-dialog__inner">
+          <transition-stub name="h-dialog__move" appear="true" persisted="true" css="true">
+            <div class="h-dialog__container h-dialog--medium h-dialog--center" style="z-index: 2011;">
+              <div class="h-dialog__inner">
                 <!---->
-                <div class="n-dialog__main">
-                  <div class="n-dialog__header">
+                <div class="h-dialog__main">
+                  <div class="h-dialog__header">
                     <div class="c-title">Header</div>
                   </div>
-                  <div class="n-dialog__body">
+                  <div class="h-dialog__body">
                     <div class="c-body">Body</div>
                   </div>
-                  <div class="n-dialog__footer">
+                  <div class="h-dialog__footer">
                     <div class="c-footer">Footer</div>
                   </div>
                 </div>

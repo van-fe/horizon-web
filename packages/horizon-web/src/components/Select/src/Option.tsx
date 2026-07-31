@@ -1,6 +1,15 @@
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, cssVariableKey, useNamespace } from '@aurora/utils';
-import { computed, defineComponent, inject, onBeforeUnmount, onMounted, ref, watch, type Ref } from 'vue';
+import {
+  computed,
+  defineComponent,
+  inject,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+  watch,
+  type Ref,
+} from 'vue';
 import { useOptionProps } from './composables/useProps';
 import type { OptionSlots } from './composables/useSlots';
 import { useOptionSlots } from './composables/useSlots';
@@ -163,8 +172,7 @@ export default defineComponent({
         onMouseleave={() => (isMouseEnter.value = false)}
       >
         {slots.default?.({ ...props, ...attrs, active: isChecked.value }) ??
-          parentSlots.optionRender?.({ ...props, ...attrs, active: isChecked.value }) ??
-          parentSlots.dropdownRender?.({ ...props, ...attrs, active: isChecked.value }) ?? (
+          parentSlots.optionRender?.({ ...props, ...attrs, active: isChecked.value }) ?? (
             <div class={classHelper.e('inner')}>
               {slots.labelPrefix?.({ ...props, ...attrs, active: isChecked.value })}
               {parentProps.multiple && (
@@ -186,13 +194,10 @@ export default defineComponent({
                 >
                   {{
                     content: () =>
-                      slots.innerRender?.({ ...props, ...attrs, active: isChecked.value }) ??
-                      slots.label?.({ ...props, ...attrs, active: isChecked.value }) ??
-                      props.label,
+                      slots.label?.({ ...props, ...attrs, active: isChecked.value }) ?? props.label,
                     default: () => (
                       <div ref={contentDomRef} class={classHelper.e('content')}>
-                        {slots.innerRender?.({ ...props, ...attrs, active: isChecked.value }) ??
-                          slots.label?.({ ...props, ...attrs, active: isChecked.value }) ??
+                        {slots.label?.({ ...props, ...attrs, active: isChecked.value }) ??
                           props.label}
                       </div>
                     ),

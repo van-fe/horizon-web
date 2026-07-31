@@ -142,7 +142,7 @@ const Notify = defineMethod({
     }
 
     const { next } = useZIndex(options.zIndex);
-    const id = `n-notification_${amount++}`;
+    const id = `h-notification_${amount++}`;
 
     const watchStop = watch(
       () => notifyContent.value,

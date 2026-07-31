@@ -11,7 +11,7 @@
       <copy-btn text="0012138" />
       <h-divider direction="vertical" />
       所有者:
-      <h-tag avatar="https://source.demohome.com/UserPicture/default.jpg" :round="true" class="ml-2">Unknown</h-tag>
+      <h-tag avatar="/demo-assets/avatar-indigo.svg" :round="true" class="ml-2">Unknown</h-tag>
       <h-divider direction="vertical" />
       所属空间:
       <h-link :link="true" size="small" type="neutral" class="ml-2">

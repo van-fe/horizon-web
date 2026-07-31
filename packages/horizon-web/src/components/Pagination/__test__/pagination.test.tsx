@@ -193,7 +193,7 @@ describe('Pagination.tsx', () => {
       const wrapper = mount(() => <HPagination total={10} align={align.value} />);
 
       expect(
-        wrapper.findComponent(Pagination).classes(`n-pagination--${align.value}`),
+        wrapper.findComponent(Pagination).classes(`h-pagination--${align.value}`),
       ).toBeTruthy();
 
       align.value = 'left';
@@ -201,7 +201,7 @@ describe('Pagination.tsx', () => {
       await nextTick();
 
       expect(
-        wrapper.findComponent(Pagination).classes(`n-pagination--${align.value}`),
+        wrapper.findComponent(Pagination).classes(`h-pagination--${align.value}`),
       ).toBeTruthy();
 
       align.value = 'center';
@@ -209,7 +209,7 @@ describe('Pagination.tsx', () => {
       await nextTick();
 
       expect(
-        wrapper.findComponent(Pagination).classes(`n-pagination--${align.value}`),
+        wrapper.findComponent(Pagination).classes(`h-pagination--${align.value}`),
       ).toBeTruthy();
     });
 

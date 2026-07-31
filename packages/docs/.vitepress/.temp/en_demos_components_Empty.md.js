@@ -70,12 +70,12 @@ const presentedImageNameList = ref<PresentedImageName[]>(
   }, null, _parent));
   _push(`<h2 id="external-image" tabindex="-1">External Image <a class="header-anchor" href="#external-image" aria-label="Permalink to &quot;External Image&quot;">​</a></h2><p>Set and use external images. It is recommended to use svg images with a recommended size of 160*160.</p>`);
   _push(ssrRenderComponent(_component_demo_block, {
-    source: '<template>\n  <h-empty\n    :size="120"\n    image="https://static.example.com/fx-static/issue-management/clbn4wr6r000807742tv19ro7/img-default.svg"\n  />\n</template>\n',
+    source: '<template>\n  <h-empty\n    :size="120"\n    image="/demo-assets/empty-state.svg"\n  />\n</template>\n',
     path: "demos/components/Empty/image-external.vue"
   }, null, _parent));
   _push(`<h2 id="custom-image" tabindex="-1">Custom Image <a class="header-anchor" href="#custom-image" aria-label="Permalink to &quot;Custom Image&quot;">​</a></h2><p>Customize image through slot.</p>`);
   _push(ssrRenderComponent(_component_demo_block, {
-    source: '<template>\n  <h-empty :size="120">\n    <template #image>\n      <div class="my-img">\n        <img\n          src="https://static.example.com/fx-static/issue-management/clbn4wr6r000807742tv19ro7/img-default.svg"\n          alt="img"\n        />\n      </div>\n    </template>\n  </h-empty>\n</template>\n\n<style lang="scss">\n.my-img {\n  width: 100%;\n  border-radius: 50%;\n  overflow: hidden;\n}\n</style>\n',
+    source: '<template>\n  <h-empty :size="120">\n    <template #image>\n      <div class="my-img">\n        <img\n          src="/demo-assets/empty-state.svg"\n          alt="img"\n        />\n      </div>\n    </template>\n  </h-empty>\n</template>\n\n<style lang="scss">\n.my-img {\n  width: 100%;\n  border-radius: 50%;\n  overflow: hidden;\n}\n</style>\n',
     path: "demos/components/Empty/image-slot.vue"
   }, null, _parent));
   _push(`<h2 id="custom-description" tabindex="-1">Custom Description <a class="header-anchor" href="#custom-description" aria-label="Permalink to &quot;Custom Description&quot;">​</a></h2><p>Customize description through slot.</p>`);
@@ -88,7 +88,7 @@ const presentedImageNameList = ref<PresentedImageName[]>(
     source: '<template>\n	<div class="flex justify-center">\n		<h-empty description="No data found.">\n			<h-button size="small">Refresh</h-button>\n		</h-empty>\n		<h-empty description="No data found.">\n			<h-button plain size="small">Back</h-button>\n			<h-button size="small">Refresh</h-button>\n		</h-empty>\n	</div>\n</template>\n',
     path: "demos/components/Empty/bottom-slot.vue"
   }, null, _parent));
-  _push(`<h2>Empty Api</h2><h3>Empty Props</h3><table class="md-table"><thead><tr><th>Name</th><th>Description</th><th>Type</th><th style="${ssrRenderStyle({ "min-width": "50px" })}" class="text-center">Required</th><th>Default</th></tr></thead><tbody><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">image</td><td>图片地址<br>可使用内置图片，列表见文档<br>可使用自定义图片，建议使用 svg，尺寸 160*160<br>还可使用插槽自定义</td><td><code>string</code></td><td class="text-center">No</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">size</td><td>尺寸(图片宽度)<br>支持内置 small, medium, large 宽度和数值宽度。默认是 medium.</td><td><code>&#39;small&#39; | &#39;medium&#39; | &#39;large&#39; | number</code></td><td class="text-center">No</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">description</td><td>描述文字<br>可使用插槽自定义</td><td><code>string</code></td><td class="text-center">No</td><td></td></tr></tbody></table></div>`);
+  _push(`<h2 id="empty-api" class="no-underline h2"><a href="#empty-api" class="!no-underline">Empty Api</a></h2><h3 id="empty-props" class="no-underline h3"><a href="#empty-props" class="!no-underline">Empty Props</a></h3><table class="md-table"><thead><tr><th>Name</th><th>Description</th><th>Type</th><th style="${ssrRenderStyle({ "min-width": "50px" })}" class="text-center">Required</th><th>Default</th></tr></thead><tbody><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">image</td><td>Configuration for image.</td><td><code>string</code></td><td class="text-center">No</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">size</td><td>Configuration for size.</td><td><code>&#39;small&#39; | &#39;medium&#39; | &#39;large&#39; | number</code></td><td class="text-center">No</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">description</td><td>Configuration for description.</td><td><code>string</code></td><td class="text-center">No</td><td></td></tr></tbody></table></div>`);
 }
 const _sfc_setup = _sfc_main.setup;
 _sfc_main.setup = (props, ctx) => {

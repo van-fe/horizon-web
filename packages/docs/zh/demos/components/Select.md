@@ -49,15 +49,15 @@
 :::demo components/Select/dynamic-collapse.vue :::
 
 ## 分组
-可以使用 `n-option-group` 来分组，具有具名分组和不具名分组
+可以使用 `h-option-group` 来分组，具有具名分组和不具名分组
 :::demo components/Select/group.vue :::
 
 ## 禁用
-设置 `disabled = true` 即可禁用 `n-select`
+设置 `disabled = true` 即可禁用 `h-select`
 
-给 `n-option` 设置 `disabled = true`，即可禁用当前选项
+给 `h-option` 设置 `disabled = true`，即可禁用当前选项
 
-给 `n-option-group` 设置 `disabled = true`，即可禁用当前组下的所有选项
+给 `h-option-group` 设置 `disabled = true`，即可禁用当前组下的所有选项
 
 :::demo components/Select/disabled.vue :::
 
@@ -67,7 +67,7 @@
 :::demo components/Select/hide-selected.vue :::
 
 ## 辅助说明文字
-给 `n-option.description` 设置内容，用来辅助说明 `label`
+给 `h-option.description` 设置内容，用来辅助说明 `label`
 :::demo components/Select/description.vue :::
 
 ## 过滤
@@ -102,7 +102,7 @@
 ## 值的转化
 使用 `value-format`，传入一个函数，则可以对 `modelValue` 转化
 
-请注意，仍然不建议使用 `value-format`，自 2.3.0 开始，`n-option.value` 已支持 `object` 类型
+请注意，仍然不建议使用 `value-format`，自 2.3.0 开始，`h-option.value` 已支持 `object` 类型
 
 此方法会在 `3.x` 剔除
 
@@ -148,7 +148,7 @@
 ## 自定义选择标签
 通过 `select.tagRender` 插槽可以自定义选择后的选项在输入框中的渲染表现
 
-使用 `option.label` 插槽，可以自定义 `n-option` 中文本的展示形式
+使用 `option.label` 插槽，可以自定义 `h-option` 中文本的展示形式
 
 :::demo components/Select/custom-tag-render.vue :::
 

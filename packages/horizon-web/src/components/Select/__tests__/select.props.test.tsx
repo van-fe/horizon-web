@@ -119,34 +119,19 @@ describe('Select.tsx', () => {
     expect(popper.attributes('data-popper-placement')).eq('top-start');
   });
 
-  test('select-style', async () => {
-    const selectStyle = ref<SelectProps['selectStyle']>('normal');
-    const instance = new SelectHelper({
-      selectStyle,
-    });
-
-    expect(instance.mainInput?.classes('n-picker__input--normal')).toBeTruthy();
-
-    selectStyle.value = 'no-border';
-
-    await nextTick();
-
-    expect(instance.mainInput?.classes('n-picker__input--no-border')).toBeTruthy();
-  });
-
   test('input-style', async () => {
     const inputStyle = ref<SelectProps['inputStyle']>('normal');
     const instance = new SelectHelper({
       inputStyle,
     });
 
-    expect(instance.mainInput?.classes('n-picker__input--normal')).toBeTruthy();
+    expect(instance.mainInput?.classes('h-picker__input--normal')).toBeTruthy();
 
     inputStyle.value = 'emphasize';
 
     await nextTick();
 
-    expect(instance.mainInput?.classes('n-picker__input--emphasize')).toBeTruthy();
+    expect(instance.mainInput?.classes('h-picker__input--emphasize')).toBeTruthy();
   });
 
   test('size', async () => {
@@ -155,13 +140,13 @@ describe('Select.tsx', () => {
 
     const picker = wrapper.findComponent(HPickerInput);
 
-    expect(picker.classes('n-picker__input--medium')).toBeTruthy();
+    expect(picker.classes('h-picker__input--medium')).toBeTruthy();
 
     size.value = 'large';
 
     await nextTick();
 
-    expect(picker.classes('n-picker__input--large')).toBeTruthy();
+    expect(picker.classes('h-picker__input--large')).toBeTruthy();
   });
 
   test('value-format.single', async () => {
@@ -248,7 +233,12 @@ describe('Select.tsx', () => {
 
   test('confirm-btn-text and cancel-btn-text', async () => {
     const wrapper = mount(() => (
-      <HSelect needConfirm={true} confirmBtnText="COHFIRM" cancelBtnText="CAHCEL" toBody={false}>
+      <HSelect
+        needConfirm={true}
+        confirmButtonText="COHFIRM"
+        cancelButtonText="CAHCEL"
+        toBody={false}
+      >
         <HOption value={1} label={1} />
         <HOption value={2} label={2} />
       </HSelect>
@@ -457,6 +447,7 @@ describe('Select.tsx', () => {
 
     expect(instance.modelValue.value).toEqual([0]);
 
+    console.log(instance.wrapper.html());
     const tagAppendInput = instance.wrapper.find(
       'input.h-picker-fit-content-input__input:not(.is-main)',
     ) as DOMWrapper<HTMLInputElement>;

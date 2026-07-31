@@ -1,15 +1,15 @@
 <template>
-  <h-row>
-    <h-col :span="6">
+  <h-grid :gap="12">
+    <h-grid-item :span="6">
       <h-date-picker v-model="value" type="date" panel-show-date="2024-01-01" />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <h-date-picker v-model="value2" type="date-range" panel-show-date="2020-10-01" />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <h-date-picker v-model="value3" type="date-range" :panel-show-date="panelShowDate" :is-link-panels="false" />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

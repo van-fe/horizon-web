@@ -83,16 +83,24 @@ export default defineComponent({
               {{
                 default: (row: { item: HCascaderExtendOption; index: number; active: boolean }) => (
                   <HVirtualScrollerItem item={row.item} active={row.active} index={row.index}>
-                    <CascaderItem
-                      key={row.item._uuid}
-                      value={getOptionValue(row.item, 'value')}
-                      label={getOptionValue(row.item, 'label')}
-                      level={row.item.level}
-                      disabled={getOptionValue(row.item, 'disabled')}
-                      isLeaf={getOptionValue(row.item, 'isLeaf')}
-                      extendsOption={row.item}
-                      duringFilter={false}
-                    />
+                    {isDefined(getOptionValue(row.item, 'groupLabel')) ? (
+                      <div class={classHelper.e('group-label')}>
+                        {typeof getOptionValue(row.item, 'groupLabel') === 'function'
+                          ? (getOptionValue(row.item, 'groupLabel') as () => VNode)()
+                          : getOptionValue(row.item, 'groupLabel')}
+                      </div>
+                    ) : (
+                      <CascaderItem
+                        key={row.item._uuid}
+                        value={getOptionValue(row.item, 'value')}
+                        label={getOptionValue(row.item, 'label')}
+                        level={row.item.level}
+                        disabled={getOptionValue(row.item, 'disabled')}
+                        isLeaf={getOptionValue(row.item, 'isLeaf')}
+                        extendsOption={row.item}
+                        duringFilter={false}
+                      />
+                    )}
                   </HVirtualScrollerItem>
                 ),
               }}
@@ -133,9 +141,7 @@ export default defineComponent({
         ) : (
           <div class={classHelper.e('empty')}>
             {parentSlots.empty?.() ??
-              parentSlots.emptyRender?.() ??
-              parentSlots.optionEmptyRender?.() ??
-              parentProps.emptyContent ??
+              parentSlots.empty?.() ??
               parentProps.emptyText ??
               useLocaleLang('cascader.noData').value}
           </div>

@@ -1,6 +1,6 @@
 <template>
-  <h-row>
-    <h-col :span="6">
+  <h-grid :gap="12">
+    <h-grid-item :span="6">
       <h-cascader
         v-model="currentVal1"
         :field-map="{
@@ -11,8 +11,8 @@
         :options="options1"
         :to-body="false"
       />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script lang="ts">

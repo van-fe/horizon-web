@@ -229,7 +229,7 @@ export default defineComponent({
       if (!escClosable.value || !visible.value) return;
 
       if (instances.value.slice(-1)[0] === instance) {
-        // HOTE: 在嵌套n-drawer写法时候，onKeyStroke 触发事件的时机异常
+        // HOTE: 在嵌套h-drawer写法时候，onKeyStroke 触发事件的时机异常
         setTimeout(() => onClose(), 0);
       }
     };

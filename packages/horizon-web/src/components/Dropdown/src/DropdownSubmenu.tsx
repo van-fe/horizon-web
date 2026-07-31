@@ -5,11 +5,8 @@ import {
   onBeforeUnmount,
   onMounted,
   provide,
-  reactive,
   ref,
   watch,
-  withKeys,
-  withModifiers,
 } from 'vue';
 import { ComponentClassBlock, cls, useNamespace, isUndefined } from '@aurora/utils';
 import type { HorizonWebSetupContext, HorizonWebComponentInstance } from '@aurora/utils';
@@ -30,18 +27,16 @@ import {
   HDropdownRemoveChildInjectKey,
   HDropdownTreeLevelInjectKey,
 } from './utils/InjectedKeys';
-import type { HDropdownTreeData } from './utils/types';
 import { nanoid } from 'nanoid';
-import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
 import HTooltip from '~/components/Tooltip/src/Tooltip';
 import type { PopoverExposes } from '~/components/Popover/src/composables/useExposes';
+import useDropdownTree from './composables/useDropdownTree';
 
 export default defineComponent({
   name: `${useNamespace()}DropdownSubmenu`,
   components: {
     HPopover,
     HPopContent,
-    HScrollbar,
     HTooltip,
   },
   props: useDropdownSubmenuProps,
@@ -77,8 +72,12 @@ export default defineComponent({
       },
     );
 
-    const dropdownTree = reactive(new Map<string, HDropdownTreeData>());
-    const isDropdownTreeHasThirdLevel = ref(false);
+    const {
+      dropdownTree,
+      appendChild: selfAppendChild,
+      removeChild: selfRemoveChild,
+      renderContent,
+    } = useDropdownTree();
 
     const trigger = computed(() => {
       switch (props.trigger) {
@@ -88,26 +87,6 @@ export default defineComponent({
           return props.trigger;
       }
     });
-
-    watch(
-      dropdownTree,
-      val => {
-        isDropdownTreeHasThirdLevel.value = Array.from(val.values()).some(
-          sec => (sec.children?.size || 0) > 0,
-        );
-      },
-      {
-        deep: true,
-      },
-    );
-
-    function selfAppendChild(item: HDropdownTreeData) {
-      dropdownTree.set(item.uuid, item);
-    }
-
-    function selfRemoveChild(uuid: string) {
-      dropdownTree.delete(uuid);
-    }
 
     function onClick(evt: MouseEvent | KeyboardEvent) {
       evt.preventDefault();
@@ -217,13 +196,7 @@ export default defineComponent({
             ),
             popper: () => (
               <HPopContent class={cls(classHelper.e('inner'))}>
-                {!isDropdownTreeHasThirdLevel.value ? (
-                  <HScrollbar maxHeight={296} size="small">
-                    {slots.default?.()}
-                  </HScrollbar>
-                ) : (
-                  slots.default?.()
-                )}
+                {renderContent(slots.default?.())}
               </HPopContent>
             ),
           }}

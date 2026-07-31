@@ -1,6 +1,6 @@
 <template>
-  <h-row :gutter="10">
-    <h-col :span="6">
+  <h-grid :gap="10">
+    <h-grid-item :span="6">
       <div class="demo-title">事件监听</div>
       <h-select
         v-model="values2"
@@ -18,15 +18,15 @@
         <h-option :value="2" label="美国" />
         <h-option :value="3" label="日本" />
       </h-select>
-    </h-col>
+    </h-grid-item>
 
-    <h-col :span="6">
+    <h-grid-item :span="6">
       <div class="demo-title">事件监听 -- 确认选项</div>
       <h-select
         v-model="values3"
         multiple
         allow-create
-        need-dropdown-confirm
+        need-confirm
         :to-body="false"
         @blur="blur"
         @focus="focus"
@@ -39,8 +39,8 @@
         <h-option :value="2" label="美国" />
         <h-option :value="3" label="日本" />
       </h-select>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script lang="ts">
@@ -63,10 +63,6 @@ export default defineComponent({
           value: originValue.value,
           label: originValue.label,
         };
-      },
-      filterOption(input: string, props: any) {
-        const label = props.label;
-        return label.includes(input.toUpperCase());
       },
       blur() {
         console.info('blur');
@@ -92,5 +88,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

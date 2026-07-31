@@ -1,57 +1,51 @@
 <template>
   <div>
-    <h-row>
-      <h-col :span="6">
-        <div class="demo-title">
-          单选: 整体禁用
-        </div>
+    <h-grid :gap="12">
+      <h-grid-item :span="6">
+        <div class="demo-title">单选: 整体禁用</div>
         <h-select
-            v-model="value1"
-            :clearable="true"
-            placeholder="请选择"
-            :disabled="true"
-            :to-body="false"
-            @change="changeHandle"
+          v-model="value1"
+          :clearable="true"
+          placeholder="请选择"
+          :disabled="true"
+          :to-body="false"
+          @change="changeHandle"
         >
           <h-option
-              v-for="item in selectOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-              :disabled="item.value === 2"
+            v-for="item in selectOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+            :disabled="item.value === 2"
           />
         </h-select>
-      </h-col>
-      <h-col :span="6">
-        <div class="demo-title">
-          单选: 选项禁用
-        </div>
+      </h-grid-item>
+      <h-grid-item :span="6">
+        <div class="demo-title">单选: 选项禁用</div>
         <h-select
-            v-model="value2"
-            :clearable="true"
-            placeholder="请选择"
-            :to-body="false"
-            @change="changeHandle"
+          v-model="value2"
+          :clearable="true"
+          placeholder="请选择"
+          :to-body="false"
+          @change="changeHandle"
         >
           <h-option
-              v-for="item in selectOptionsHasDisabled"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-              :disabled="item.disabled"
+            v-for="item in selectOptionsHasDisabled"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+            :disabled="item.disabled"
           />
         </h-select>
-      </h-col>
-      <h-col :span="6">
-        <div class="demo-title">
-          单选: 选项组禁用
-        </div>
+      </h-grid-item>
+      <h-grid-item :span="6">
+        <div class="demo-title">单选: 选项组禁用</div>
         <h-select
-            v-model="value3"
-            :clearable="true"
-            placeholder="请选择"
-            :to-body="false"
-            @change="changeHandle"
+          v-model="value3"
+          :clearable="true"
+          placeholder="请选择"
+          :to-body="false"
+          @change="changeHandle"
         >
           <h-option-group
             v-for="(group, index) in selectOptionGroupsHasDisabled"
@@ -68,71 +62,65 @@
             />
           </h-option-group>
         </h-select>
-      </h-col>
-    </h-row>
-    <h-row>
-      <h-col :span="6">
-        <div class="demo-title">
-          多选: 整体禁用
-        </div>
+      </h-grid-item>
+    </h-grid>
+    <h-grid :gap="12">
+      <h-grid-item :span="6">
+        <div class="demo-title">多选: 整体禁用</div>
         <h-select
-            v-model="values1"
-            :multiple="true"
-            :clearable="true"
-            placeholder="请选择"
-            :disabled="true"
-            :collapse="true"
-            :to-body="false"
-            @change="changeHandle"
+          v-model="values1"
+          :multiple="true"
+          :clearable="true"
+          placeholder="请选择"
+          :disabled="true"
+          :collapse-tags="true"
+          :to-body="false"
+          @change="changeHandle"
         >
           <h-option
-              v-for="item in selectOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+            v-for="item in selectOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
           />
         </h-select>
-      </h-col>
-      <h-col :span="6">
-        <div class="demo-title">
-          多选: 选项禁用
-        </div>
+      </h-grid-item>
+      <h-grid-item :span="6">
+        <div class="demo-title">多选: 选项禁用</div>
         <h-select
-            v-model="values2"
-            :multiple="true"
-            :clearable="true"
-            placeholder="请选择"
-            :collapse="true"
-            :to-body="false"
-            @change="changeHandle"
+          v-model="values2"
+          :multiple="true"
+          :clearable="true"
+          placeholder="请选择"
+          :collapse-tags="true"
+          :to-body="false"
+          @change="changeHandle"
         >
           <h-option
-              v-for="item in selectOptionsHasDisabled"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-              :disabled="item.disabled"
+            v-for="item in selectOptionsHasDisabled"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+            :disabled="item.disabled"
           />
         </h-select>
-      </h-col>
-      <h-col :span="6">
-        <div class="demo-title">
-          多选: 选项组禁用
-        </div>
+      </h-grid-item>
+      <h-grid-item :span="6">
+        <div class="demo-title">多选: 选项组禁用</div>
         <h-select
-            v-model="values3"
-            :multiple="true"
-            :clearable="true"
-            placeholder="请选择"
-            :collapse="true"
-            :to-body="false"
-            @change="changeHandle"
+          v-model="values3"
+          :multiple="true"
+          :clearable="true"
+          placeholder="请选择"
+          :collapse-tags="true"
+          :to-body="false"
+          @change="changeHandle"
         >
           <h-option-group
-              v-for="(group, index) in selectOptionGroupsHasDisabled"
-              :key="index"
-              :label="group.label"
-              :disabled="group.disabled"
+            v-for="(group, index) in selectOptionGroupsHasDisabled"
+            :key="index"
+            :label="group.label"
+            :disabled="group.disabled"
           >
             <h-option
               v-for="item in group.children"
@@ -143,8 +131,8 @@
             />
           </h-option-group>
         </h-select>
-      </h-col>
-    </h-row>
+      </h-grid-item>
+    </h-grid>
   </div>
 </template>
 
@@ -185,7 +173,9 @@ const selectOptionsHasDisabled: ExtractPropTypes<useOptionProps>[] = [
   { value: 10, label: '香港' },
 ];
 
-const selectOptionGroupsHasDisabled: Array<ExtractPropTypes<useOptionGroupProps> & {children: ExtractPropTypes<useOptionProps>[]}> = [
+const selectOptionGroupsHasDisabled: Array<
+  ExtractPropTypes<useOptionGroupProps> & { children: ExtractPropTypes<useOptionProps>[] }
+> = [
   {
     disabled: true,
     children: [
@@ -194,7 +184,8 @@ const selectOptionGroupsHasDisabled: Array<ExtractPropTypes<useOptionGroupProps>
       { value: 3, label: '合肥' },
       { value: 4, label: '深圳' },
       { value: 5, label: '杭州' },
-    ]},
+    ],
+  },
   {
     disabled: false,
     children: [
@@ -203,7 +194,8 @@ const selectOptionGroupsHasDisabled: Array<ExtractPropTypes<useOptionGroupProps>
       { value: 8, label: '南京' },
       { value: 9, label: '哈尔滨' },
       { value: 10, label: '香港' },
-    ]},
+    ],
+  },
 ];
 
 const changeHandle = () => {
@@ -211,5 +203,4 @@ const changeHandle = () => {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

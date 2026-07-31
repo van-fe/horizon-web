@@ -1,14 +1,14 @@
 <template>
-  <h-row>
-    <h-col :span="24">
+  <h-grid :gap="12">
+    <h-grid-item :span="24">
       <h-slider v-model="valueRef" :input-enable="true" :step="5" />
-    </h-col>
-  </h-row>
-  <h-row>
-    <h-col :span="24">
+    </h-grid-item>
+  </h-grid>
+  <h-grid :gap="12">
+    <h-grid-item :span="24">
       <h-slider v-model="valueRef" :input-enable="true" disabled />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script lang="ts">

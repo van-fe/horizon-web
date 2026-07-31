@@ -15,21 +15,47 @@
       </h-radio-group>
     </h-form-item>
   </h-form>
-  <h-row>
-    <h-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
+  <h-grid :gap="12">
+    <h-grid-item :span="{ xs: 12, md: 8, lg: 6, xl: 6, xxl: 6 }">
       <div class="demo-title">默认国际化配置</div>
-      <h-select v-model="value" :multiple="true" :use-statistic="true" :to-body="false" :select-style="selectStyle" :clearable="true" :size="size">
-        <h-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
+      <h-select
+        v-model="value"
+        :multiple="true"
+        :use-statistic="true"
+        :to-body="false"
+        :input-style="selectStyle"
+        :clearable="true"
+        :size="size"
+      >
+        <h-option
+          v-for="item of selectOptions"
+          :key="item.value"
+          :value="item.value"
+          :label="item.label"
+        />
       </h-select>
-    </h-col>
-    <h-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
+    </h-grid-item>
+    <h-grid-item :span="{ xs: 12, md: 8, lg: 6, xl: 6, xxl: 6 }">
       <div class="demo-title">自定义为”城市标签“</div>
-      <h-select v-model="value2" :multiple="true" :use-statistic="true" statistic-text="城市标签" :to-body="false" :select-style="selectStyle" :clearable="true" :size="size">
-        <h-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
+      <h-select
+        v-model="value2"
+        :multiple="true"
+        :use-statistic="true"
+        statistic-text="城市标签"
+        :to-body="false"
+        :input-style="selectStyle"
+        :clearable="true"
+        :size="size"
+      >
+        <h-option
+          v-for="item of selectOptions"
+          :key="item.value"
+          :value="item.value"
+          :label="item.label"
+        />
       </h-select>
-    </h-col>
-  </h-row>
-
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">
@@ -55,5 +81,4 @@ const selectOptions = [
 ];
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

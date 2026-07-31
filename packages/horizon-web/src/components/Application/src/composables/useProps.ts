@@ -41,7 +41,7 @@ export const useApplicationProps = declarePropType({
    * 是否在需要显示时区的地方显示时区
    * 启用后，以下组件在不配置 `format` 时会默认显示时区：
    * 1. 日期选择器 (仅 date-picker 有效）
-   * 2. 时间轴 （仅在 n-timeline 开启了 v2 时有效）
+   * 2. 时间轴 （仅在 h-timeline 开启了 v2 时有效）
     * @en Configuration for show time zone.
    */
   showTimeZone: {

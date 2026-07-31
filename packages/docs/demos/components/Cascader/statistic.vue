@@ -15,8 +15,8 @@
       </h-radio-group>
     </h-form-item>
   </h-form>
-  <h-row>
-    <h-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
+  <h-grid :gap="12">
+    <h-grid-item :span="{ xs: 12, md: 8, lg: 6, xl: 6, xxl: 6 }">
       <div class="demo-title">默认国际化配置</div>
       <h-cascader
         v-model="currentVal1"
@@ -28,8 +28,8 @@
         :multiple="true"
         :size="size"
       />
-    </h-col>
-    <h-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
+    </h-grid-item>
+    <h-grid-item :span="{ xs: 12, md: 8, lg: 6, xl: 6, xxl: 6 }">
       <div class="demo-title">自定义为”组件“</div>
       <h-cascader
         v-model="currentVal2"
@@ -42,8 +42,8 @@
         :multiple="true"
         :size="size"
       />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 
 </template>
 

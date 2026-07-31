@@ -238,7 +238,7 @@ export const useAutoCompleteProps = declarePropType({
     default: 296,
   },
   /**
-   * `n-option` 中 `description` 的位置
+   * `h-option` 中 `description` 的位置
     * @en Configuration for description position.
    */
   descriptionPosition: {

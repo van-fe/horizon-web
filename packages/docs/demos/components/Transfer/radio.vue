@@ -78,35 +78,35 @@ const dataMap = reactive({
     {
       key: 10,
       name: 'Arooklyn Simmons 用户',
-      avatar: 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+      avatar: '/demo-assets/avatar-indigo.svg',
       department:
         'Product Design & Development-Digital Development-Web Application Development Department',
     },
     {
       key: 11,
       name: 'Brooklyn Simmons 用户2',
-      avatar: 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+      avatar: '/demo-assets/avatar-indigo.svg',
       department:
         'Product Design & Development-Digital Development-Web Application Development Department',
     },
     {
       key: 12,
       name: 'Crooklyn Simmons 用户3',
-      avatar: 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+      avatar: '/demo-assets/avatar-indigo.svg',
       department:
         'Product Design & Development-Digital Development-Web Application Development Department',
     },
     {
       key: 13,
       name: 'Drooklyn Simmons 用户4',
-      avatar: 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+      avatar: '/demo-assets/avatar-indigo.svg',
       department:
         'Product Design & Development-Digital Development-Web Application Development Department',
     },
     {
       key: 14,
       name: 'Erooklyn Simmons 用户5',
-      avatar: 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+      avatar: '/demo-assets/avatar-indigo.svg',
       department:
         'Product Design & Development-Digital Development-Web Application Development Department',
     },
@@ -115,35 +115,35 @@ const dataMap = reactive({
     {
       key: 101,
       name: 'Arooklyn Simmons 王磊',
-      avatar: 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+      avatar: '/demo-assets/avatar-indigo.svg',
       department:
         'Product Design & Development-Digital Development-Web Application Development Department',
     },
     {
       key: 1,
       name: 'Brooklyn Simmons 王磊2',
-      avatar: 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+      avatar: '/demo-assets/avatar-indigo.svg',
       department:
         'Product Design & Development-Digital Development-Web Application Development Department',
     },
     {
       key: 2,
       name: 'Crooklyn Simmons 王磊3',
-      avatar: 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+      avatar: '/demo-assets/avatar-indigo.svg',
       department:
         'Product Design & Development-Digital Development-Web Application Development Department',
     },
     {
       key: 3,
       name: 'Drooklyn Simmons 王磊4',
-      avatar: 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+      avatar: '/demo-assets/avatar-indigo.svg',
       department:
         'Product Design & Development-Digital Development-Web Application Development Department',
     },
     {
       key: 4,
       name: 'Erooklyn Simmons 王磊5',
-      avatar: 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+      avatar: '/demo-assets/avatar-indigo.svg',
       department:
         'Product Design & Development-Digital Development-Web Application Development Department',
     },

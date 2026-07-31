@@ -28,7 +28,8 @@
     "git:prune": "git remote prune origin && git branch -vv | grep 'origin/.*: gone]' | awk '{print $1}' | xargs git branch -d",
     "docs:prepare": "bun --filter @aurora/api-generator build",
     "docs:dev": "bun run docs:prepare && vitepress dev packages/docs",
-    "docs:build": "bun run docs:prepare && vitepress build packages/docs",
+    "docs:build": "bun run docs:prepare && bun run docs:check-media && vitepress build packages/docs",
+    "docs:check-media": "bun run scripts/checkDocsMedia.ts",
     "docs:preview": "vitepress preview packages/docs"
   },
   "devDependencies": {
@@ -62,8 +63,8 @@
     "@types/shelljs": "^0.10.0",
     "@types/webpack-env": "^1.18.5",
     "@types/yargs": "^17.0.33",
-    "@typescript-eslint/eslint-plugin": "^8.50.0",
-    "@typescript-eslint/parser": "^8.50.0",
+    "@typescript-eslint/eslint-plugin": "^8.65.0",
+    "@typescript-eslint/parser": "^8.65.0",
     "@vitejs/plugin-vue": "^6.0.3",
     "@vitejs/plugin-vue-jsx": "^5.1.2",
     "@vitest/browser": "^4.0.16",
@@ -134,7 +135,7 @@
     "ts-node": "^10.9.2",
     "ts-patch": "^3.2.0",
     "tsc-alias": "^1.8.10",
-    "typescript": "~5.9.3",
+    "typescript": "~6.0.3",
     "typescript-transform-paths": "^3.4.7",
     "unplugin-vue-components": "^30.0.0",
     "unplugin-vue-define-options": "^3.1.1",
@@ -160,7 +161,9 @@
     "@vue/compiler-sfc": "3.5.26",
     "@vue/reactivity": "3.5.26",
     "@vue/shared": "3.5.26",
-    "sass": "1.97.0"
+    "@typescript-eslint/utils": "8.65.0",
+    "sass": "1.97.0",
+    "typescript-eslint": "8.65.0"
   },
   "config": {
     "commitizen": {

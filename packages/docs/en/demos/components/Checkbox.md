@@ -7,7 +7,7 @@ Use `border = true` to enable border style, border mode supports `props.size`
 :::demo components/Checkbox/border.vue :::
 
 ## Button Style
-Just replace the `n-checkbox` element with the `n-checkbox-button` element, and provide the `size` attribute to control the size
+Just replace the `h-checkbox` element with the `h-checkbox-button` element, and provide the `size` attribute to control the size
 :::demo components/Checkbox/button.vue :::
 
 ## Indeterminate Mode
@@ -15,7 +15,7 @@ Set `props.indeterminate` to enable indeterminate mode
 :::demo components/Checkbox/indeterminate.vue :::
 
 ## Checkbox Group
-Combine `n-checkbox-group` with `n-checkbox` or `n-checkbox-button` to implement checkbox groups
+Combine `h-checkbox-group` with `h-checkbox` or `h-checkbox-button` to implement checkbox groups
 :::demo components/Checkbox/group.vue :::
 
 ## Disabled State

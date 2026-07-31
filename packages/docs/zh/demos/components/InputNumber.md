@@ -26,22 +26,22 @@
 
 ## 清空
 inputNumber 允许清空
-::: demo components/inputnumber/clearable.vue :::
+::: demo components/InputNumber/clearable.vue :::
 
 ## 占位文字
-::: demo components/inputnumber/placeholder.vue :::
+::: demo components/InputNumber/placeholder.vue :::
 
 ## 只读
 设置了 `readonly` 后，也不显示 `controls`
-::: demo components/inputnumber/readonly.vue :::
+::: demo components/InputNumber/readonly.vue :::
 
 ## 前后缀
 可以配置前后缀
-::: demo components/inputnumber/prefix-suffix.vue :::
+::: demo components/InputNumber/prefix-suffix.vue :::
 
 ## 组合式输入框
 可以通过 `slots.prepend` `slots.append` 设置前后组合插槽
-::: demo components/inputnumber/prepend-append.vue :::
+::: demo components/InputNumber/prepend-append.vue :::
 
 ## 数字转化
 通过 `formatter` 将数字转化为你需要的格式，然后通过 `parser` 将格式化后的字符串转化为可以处理的数字

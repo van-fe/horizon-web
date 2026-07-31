@@ -1,6 +1,6 @@
 <template>
-  <h-row>
-    <h-col :span="24">
+  <h-grid :gap="12">
+    <h-grid-item :span="24">
       <h-dropdown>
         <h-button>no title</h-button>
         <template #dropdown>
@@ -31,8 +31,8 @@
           </h-dropdown-group>
         </h-dropdown-menu>
       </h-dropdown>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

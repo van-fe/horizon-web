@@ -4,8 +4,8 @@
       <h-switch v-model="checkStrictly" status />
     </h-form-item>
   </h-form>
-  <h-row>
-    <h-col :span="6">
+  <h-grid :gap="12">
+    <h-grid-item :span="6">
       <div class="demo-title">单选</div>
       <h-cascader
         v-model="currentVal1"
@@ -18,8 +18,8 @@
         @focus="onFocus"
         @blur="onBlur"
       />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">多选</div>
       <h-cascader
         v-model="currentVal2"
@@ -34,8 +34,8 @@
         @focus="onFocus"
         @blur="onBlur"
       />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">
         单选-下拉列表带筛选功能
         <h-tooltip content="内置 input">
@@ -53,12 +53,12 @@
         @focus="onFocus"
         @blur="onBlur"
       >
-        <template #optionEmptyRender>
+        <template #empty>
           <div class="empty-city">没有找到对应的城市信息</div>
         </template>
       </h-cascader>
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">多选-下拉列表带筛选功能</div>
       <h-cascader
         v-model="currentVal4"
@@ -77,12 +77,12 @@
             <h-input v-model="panelFilterInputValue2" prefix-icon="search" placeholder="请搜索" />
           </div>
         </template>
-        <template #optionEmptyRender>
+        <template #empty>
           <div class="empty-city">没有找到对应的城市信息</div>
         </template>
       </h-cascader>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">
@@ -109,8 +109,10 @@ function onBlur() {
   console.info('blur');
 }
 
-onMounted(async()=>{
-  options.value = await fetch(new URL('/cascader-tree-data.json', import.meta.url).href).then(r => r.json());
+onMounted(async () => {
+  options.value = await fetch(new URL('/cascader-tree-data.json', import.meta.url).href).then(r =>
+    r.json(),
+  );
 });
 </script>
 

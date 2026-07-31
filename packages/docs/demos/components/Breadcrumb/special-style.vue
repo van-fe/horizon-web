@@ -1,7 +1,7 @@
 <template>
   <div class="demo-block">
-    <h-row>
-      <h-col :span="24">
+    <h-grid :gap="12">
+      <h-grid-item :span="24">
         <div class="demo-title">
           单个文本超出一定长度后
         </div>
@@ -13,8 +13,8 @@
         { text: 'Sub Page2' },
       ]"
         />
-      </h-col>
-      <h-col :span="24">
+      </h-grid-item>
+      <h-grid-item :span="24">
         <div class="demo-title">当前所在位置增加字重</div>
         <h-breadcrumb
           :title="true"
@@ -26,8 +26,8 @@
       { text: 'Sub Page4' },
     ]"
         />
-      </h-col>
-    </h-row>
+      </h-grid-item>
+    </h-grid>
   </div>
 </template>
 

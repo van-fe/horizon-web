@@ -28,18 +28,18 @@ test('sizeBorder', async () => {
   const checkboxBorder = wrapperBorder.findComponent(HCheckbox);
   const checkboxNoneBorder = wrapperNoneBorder.findComponent(HCheckbox);
 
-  expect(checkboxBorder.classes()).toContain('n-checkbox--medium');
-  expect(checkboxNoneBorder.classes()).not.toContain('n-checkbox--medium');
+  expect(checkboxBorder.classes()).toContain('h-checkbox--medium');
+  expect(checkboxNoneBorder.classes()).not.toContain('h-checkbox--medium');
 
   size.value = 'medium';
   await nextTick();
-  expect(checkboxBorder.classes()).toContain('n-checkbox--medium');
-  expect(checkboxNoneBorder.classes()).not.toContain('n-checkbox--medium');
+  expect(checkboxBorder.classes()).toContain('h-checkbox--medium');
+  expect(checkboxNoneBorder.classes()).not.toContain('h-checkbox--medium');
 
   size.value = 'large';
   await nextTick();
-  expect(checkboxBorder.classes()).toContain('n-checkbox--large');
-  expect(checkboxNoneBorder.classes()).not.toContain('n-checkbox--large');
+  expect(checkboxBorder.classes()).toContain('h-checkbox--large');
+  expect(checkboxNoneBorder.classes()).not.toContain('h-checkbox--large');
 });
 
 test('sizeButton', async () => {
@@ -48,15 +48,15 @@ test('sizeButton', async () => {
 
   const checkboxButton = wrapper.findComponent(HCheckboxButton);
 
-  expect(checkboxButton.classes()).toContain('n-checkbox-button--medium');
+  expect(checkboxButton.classes()).toContain('h-checkbox-button--medium');
 
   size.value = 'medium';
   await nextTick();
-  expect(checkboxButton.classes()).toContain('n-checkbox-button--medium');
+  expect(checkboxButton.classes()).toContain('h-checkbox-button--medium');
 
   size.value = 'large';
   await nextTick();
-  expect(checkboxButton.classes()).toContain('n-checkbox-button--large');
+  expect(checkboxButton.classes()).toContain('h-checkbox-button--large');
 });
 
 test('sizeGroup', async () => {
@@ -86,21 +86,21 @@ test('sizeGroup', async () => {
   expect(elementCheckboxNoneBorder.exists()).toBe(true);
   expect(elementCheckboxButton.exists()).toBe(true);
 
-  expect(elementCheckboxBorder.classes()).toContain('n-checkbox--medium');
-  expect(elementCheckboxNoneBorder.classes()).not.toContain('n-checkbox--medium');
-  expect(elementCheckboxButton.classes()).toContain('n-checkbox-button--medium');
+  expect(elementCheckboxBorder.classes()).toContain('h-checkbox--medium');
+  expect(elementCheckboxNoneBorder.classes()).not.toContain('h-checkbox--medium');
+  expect(elementCheckboxButton.classes()).toContain('h-checkbox-button--medium');
 
   size.value = 'medium';
   await nextTick();
-  expect(elementCheckboxBorder.classes()).toContain('n-checkbox--medium');
-  expect(elementCheckboxNoneBorder.classes()).not.toContain('n-checkbox--medium');
-  expect(elementCheckboxButton.classes()).toContain('n-checkbox-button--medium');
+  expect(elementCheckboxBorder.classes()).toContain('h-checkbox--medium');
+  expect(elementCheckboxNoneBorder.classes()).not.toContain('h-checkbox--medium');
+  expect(elementCheckboxButton.classes()).toContain('h-checkbox-button--medium');
 
   size.value = 'large';
   await nextTick();
-  expect(elementCheckboxBorder.classes()).toContain('n-checkbox--large');
-  expect(elementCheckboxNoneBorder.classes()).not.toContain('n-checkbox--large');
-  expect(elementCheckboxButton.classes()).toContain('n-checkbox-button--large');
+  expect(elementCheckboxBorder.classes()).toContain('h-checkbox--large');
+  expect(elementCheckboxNoneBorder.classes()).not.toContain('h-checkbox--large');
+  expect(elementCheckboxButton.classes()).toContain('h-checkbox-button--large');
 });
 
 test('true-label/false-label', async () => {
@@ -133,8 +133,8 @@ test('true-label/false-label', async () => {
   checkboxButtonModelValue.value = 'true-label';
   checkboxGroupModelValue.value = ['true-label', 'true-label1'];
   await nextTick();
-  expect(wrapper.classes()).toContain('n-checkbox--checked');
-  expect(wrapper1.classes()).toContain('n-checkbox-button--checked');
+  expect(wrapper.classes()).toContain('h-checkbox--checked');
+  expect(wrapper1.classes()).toContain('h-checkbox-button--checked');
 
   const checkedButtonElArr = wrapper2.findAll('.h-checkbox-button--checked');
   expect(checkedButtonElArr.length).toBe(2);
@@ -153,8 +153,8 @@ test('checked', async () => {
     </HCheckboxGroup>
   ));
 
-  expect(wrapper.classes()).toContain('n-checkbox-button--checked');
-  expect(wrapper1.classes()).toContain('n-checkbox--checked');
+  expect(wrapper.classes()).toContain('h-checkbox-button--checked');
+  expect(wrapper1.classes()).toContain('h-checkbox--checked');
   const checkedButtonElArr = wrapper2.findAll('.h-checkbox-button--checked');
   expect(checkedButtonElArr.length).toBe(1);
 });

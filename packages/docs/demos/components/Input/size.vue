@@ -1,6 +1,6 @@
 <template>
   <h-form>
-    <h-row>
+    <h-grid :gap="12">
       <h-form-item label="style">
       <h-radio-group v-model="inputStyle">
         <h-radio
@@ -11,24 +11,24 @@
         />
       </h-radio-group>
     </h-form-item>
-    </h-row>
-    <h-row>
-      <h-col :span="8">
+    </h-grid>
+    <h-grid :gap="12">
+      <h-grid-item :span="8">
         <h-form-item label="Large">
           <h-input v-model="val1" size="large" :input-style = 'inputStyle'/>
         </h-form-item>
-      </h-col>
-      <h-col :span="8">
+      </h-grid-item>
+      <h-grid-item :span="8">
         <h-form-item label="Medium">
           <h-input v-model="val2" size="medium" :input-style = 'inputStyle'/>
         </h-form-item>
-      </h-col>
-      <h-col :span="8">
+      </h-grid-item>
+      <h-grid-item :span="8">
         <h-form-item label="Small">
           <h-input v-model="val3" size="small" :input-style = 'inputStyle'/>
         </h-form-item>
-      </h-col>
-    </h-row>
+      </h-grid-item>
+    </h-grid>
   </h-form>
 </template>
 

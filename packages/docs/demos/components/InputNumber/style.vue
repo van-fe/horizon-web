@@ -29,18 +29,18 @@ const clearable = ref(false);
       </h-radio-group>
     </h-form-item>
   </h-form>
-  <h-row :gutter="12">
-    <h-col :span="8">
+  <h-grid :gap="12">
+    <h-grid-item :span="8">
       <div class="demo-title">large</div>
       <h-input-number v-model="value" :input-style="style" :disabled="disabled" :clearable="clearable" size="large" />
-    </h-col>
-    <h-col :span="8">
+    </h-grid-item>
+    <h-grid-item :span="8">
       <div class="demo-title">medium (default)</div>
       <h-input-number v-model="value" :input-style="style" :disabled="disabled" :clearable="clearable" />
-    </h-col>
-    <h-col :span="8">
+    </h-grid-item>
+    <h-grid-item :span="8">
       <div class="demo-title">small</div>
       <h-input-number v-model="value" :input-style="style" :disabled="disabled" :clearable="clearable" size="small" />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>

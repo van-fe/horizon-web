@@ -1,14 +1,14 @@
 <template>
-  <h-row>
-    <h-col :span="6">
+  <h-grid :gap="12">
+    <h-grid-item :span="6">
       <div class="demo-title">默认样式</div>
       <h-auto-complete :options="options1" :loading="loading1" @search="(val: string) => onSearch(val, 1)" />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">显示搜索文字</div>
       <h-auto-complete :options="options2" :loading="loading2" loading-text="搜索中" @search="(val: string) => onSearch(val, 2)" />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

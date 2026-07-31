@@ -193,19 +193,19 @@
               </div>
               <div style="display: flex">
                 <h-image
-                  :src="`https://picsum.photos/id/${Math.floor(Math.random() * 60) + 10}/1366/768`"
+                  src="/demo-assets/scene-aurora.svg"
                   class="mr-1 mt-2"
                   :width="40"
                   :height="40"
                 />
                 <h-image
-                  :src="`https://picsum.photos/id/${Math.floor(Math.random() * 60) + 10}/1366/768`"
+                  src="/demo-assets/scene-coast.svg"
                   class="mr-1 mt-2"
                   :width="40"
                   :height="40"
                 />
                 <h-image
-                  :src="`https://picsum.photos/id/${Math.floor(Math.random() * 60) + 10}/1366/768`"
+                  src="/demo-assets/scene-city.svg"
                   class="mr-1 mt-2"
                   :width="40"
                   :height="40"

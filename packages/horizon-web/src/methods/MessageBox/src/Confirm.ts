@@ -68,6 +68,7 @@ const Confirm = defineMethod({
         },
         ...options,
       });
+      vNode.appContext = Confirm._context ?? null;
 
       render(vNode, container);
       vNode.component?.exposed?.open();

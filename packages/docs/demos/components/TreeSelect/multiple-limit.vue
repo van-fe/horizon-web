@@ -4,8 +4,8 @@
       <h-switch v-model="checkStrictly" :status="true" status-off-text="否" status-on-text="是" />
     </h-form-item>
   </h-form>
-  <h-row>
-    <h-col :span="6">
+  <h-grid :gap="12">
+    <h-grid-item :span="6">
       <div class="demo-title">最多勾选3个</div>
       <h-tree-select
         :tree-data="baseTreeData"
@@ -14,8 +14,8 @@
         :check-strictly="checkStrictly"
         :to-body="false"
       />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

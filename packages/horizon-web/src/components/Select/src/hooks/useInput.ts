@@ -73,10 +73,6 @@ export default function useInput(
       );
     };
 
-    if (props.filterOption) {
-      return typeof props.filterOption === 'boolean' ? defaultFilterMethod : props.filterOption;
-    }
-
     if (props.filterable) {
       return props.filterMethod ? props.filterMethod : defaultFilterMethod;
     }
@@ -114,7 +110,7 @@ export default function useInput(
 
   /**
    * watch
-    * @en Description for watch.
+   * @en Description for watch.
    */
   watch(options.inputValue, val => {
     if (props.allowCreate) {
@@ -196,10 +192,7 @@ export default function useInput(
   function judgeWhetherInputCanFocus() {
     setTimeout(() => {
       if (
-        (options.isInputable.value ||
-          ((props.multiple || props.needDropdownConfirm) ??
-            props.needConfirm ??
-            props.needConfirm)) &&
+        (options.isInputable.value || props.multiple || props.needConfirm) &&
         (options.popperVisible.value || props.showSearch)
       ) {
         void nextTick(() => {

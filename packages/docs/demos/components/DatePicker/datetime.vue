@@ -1,37 +1,37 @@
 <template>
-  <h-row align="middle">
-    <h-col :span="4">
+  <h-grid align="center" :gap="12">
+    <h-grid-item :span="4">
       Datetime:
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <h-date-picker v-model="value" type="datetime" />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <h-date-picker v-model="rangeValue" type="datetime-range" />
-    </h-col>
-  </h-row>
-  <h-row align="middle">
-    <h-col :span="4">
+    </h-grid-item>
+  </h-grid>
+  <h-grid align="center" :gap="12">
+    <h-grid-item :span="4">
       DateMinutes:
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <h-date-picker v-model="value2" type="date-minutes" />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <h-date-picker v-model="rangeValue2" type="date-minutes-range" />
-    </h-col>
-  </h-row>
-  <h-row align="middle">
-    <h-col :span="4">
+    </h-grid-item>
+  </h-grid>
+  <h-grid align="center" :gap="12">
+    <h-grid-item :span="4">
       DateSeconds:
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <h-date-picker v-model="value3" type="date-seconds" />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <h-date-picker v-model="rangeValue3" type="date-seconds-range" />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

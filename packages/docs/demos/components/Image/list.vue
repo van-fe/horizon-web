@@ -34,22 +34,22 @@ export default defineComponent({
     const limit = ref(4);
     const imgs = ref([
       {
-        src: 'https://www.example.com/cdn-static/mydemo/nextjs/images/4124399E5BB45E85CBAFDE6307297F4A045845F4/home/es7-homepage-hero-desktop.jpg',
+        src: '/demo-assets/scene-aurora.svg',
       },
       {
-        src: 'https://www.example.com/cdn-static/mydemo/nextjs/images/et5/top-hero-desktop.jpg',
+        src: '/demo-assets/scene-summit.svg',
       },
       {
-        src: 'https://www.example.com/cdn-static/mydemo/nextjs/images/et7/et7-hero-desktop.jpg',
+        src: '/demo-assets/scene-city.svg',
       },
       {
-        src: 'https://www.example.com/ecs/prod/s3fs-public/ec6/hero-background-mobile.jpg',
+        src: '/demo-assets/scene-coast.svg',
       },
       {
-        src: 'https://www.example.com/cdn-static/mydemo/nextjs/images/es8/intro/ES8-EU-SE.000.jpg',
+        src: '/demo-assets/scene-forest.svg',
       },
       {
-        src: 'https://www.example.com/ecs/prod/s3fs-public/hero/es6-banner-2-pc.png',
+        src: '/demo-assets/scene-night.svg',
       },
     ]);
     return {

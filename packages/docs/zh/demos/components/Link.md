@@ -27,13 +27,13 @@
 :::demo components/Link/icon.vue :::
 
 ## 注释
-有注释效果的链接。文字链接不提供弹框，请使用 `n-popover` 包裹
+有注释效果的链接。文字链接不提供弹框，请使用 `h-popover` 包裹
 :::demo components/Link/attribute.vue :::
 
 ## 锚点
 带有锚点，也可以设置 `anchor-offset` 滚动至距顶 px
 
-因为本文档的内容放在了 `n-main` 中，所以需要设置 `scroll-target`
+因为本文档的内容放在了 `h-main` 中，所以需要设置 `scroll-target`
 
 需要注意的是:
 - 如果同时传入了 `anchor` 、 `to` 或 `href`，会忽略 `to` 与 `href`

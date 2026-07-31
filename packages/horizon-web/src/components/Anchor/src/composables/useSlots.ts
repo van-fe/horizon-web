@@ -1,7 +1,7 @@
 import type { SlotsType } from 'vue';
 export const useAnchorSlots = Object as SlotsType<{
   /**
-   * `n-anchor-link` 内容
+   * `h-anchor-link` 内容
     * @en Custom content for the default slot.
    */
   default?: {},

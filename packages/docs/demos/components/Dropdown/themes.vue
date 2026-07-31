@@ -1,6 +1,6 @@
 <template>
-  <h-row>
-    <h-col :span="24">
+  <h-grid :gap="12">
+    <h-grid-item :span="24">
       <h-form label-position="left" label-vertical-align="middle" :inline="true">
         <h-form-item label="theme:">
           <h-radio-group v-model="theme">
@@ -24,8 +24,8 @@
           </h-dropdown-menu>
         </template>
       </h-dropdown>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

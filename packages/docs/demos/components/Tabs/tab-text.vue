@@ -42,9 +42,9 @@ const onTabChanged = (tab: HTabValue) => {
 
 <style scoped>
 .box {
-  --n-tabs-space--tab--line--mini: 4px;
-  --n-tabs-space--tab--line--small: 4px;
-  --n-tabs-space--tab--line--medium: 4px;
-  --n-tabs-space--tab--line--large: 4px;
+  --h-tabs-space--tab--line--mini: 4px;
+  --h-tabs-space--tab--line--small: 4px;
+  --h-tabs-space--tab--line--medium: 4px;
+  --h-tabs-space--tab--line--large: 4px;
 }
 </style>

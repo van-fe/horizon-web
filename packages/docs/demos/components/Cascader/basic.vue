@@ -27,8 +27,8 @@
       </h-radio-group>
     </h-form-item>
   </h-form>
-  <h-row :gutter="10">
-    <h-col :span="6">
+  <h-grid :gap="10">
+    <h-grid-item :span="6">
       <div class="demo-title">单选</div>
       <h-cascader
         ref="cascaderDomRef1"
@@ -46,8 +46,8 @@
         @focus="onFocus"
         @blur="onBlur"
       />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">多选</div>
       <h-cascader
         ref="cascaderDomRef2"
@@ -66,8 +66,8 @@
         @focus="onFocus"
         @blur="onBlur"
       />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

@@ -1,18 +1,18 @@
 <template>
-  <h-row>
-    <h-col :span="6">
+  <h-grid :gap="12">
+    <h-grid-item :span="6">
       <div class="demo-title">
         单选
       </div>
       <h-cascader v-model="currentVal1" :filterable="true" :options="options" need-confirm :to-body="false" />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">
         多选
       </div>
       <h-cascader v-model="currentVal2" :filterable="true" :options="options" multiple need-confirm :to-body="false" />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

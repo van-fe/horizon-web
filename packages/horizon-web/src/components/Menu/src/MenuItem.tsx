@@ -126,7 +126,7 @@ export default defineComponent({
         ) {
           return;
         }
-      } catch (e) {
+      } catch {
         return;
       }
 

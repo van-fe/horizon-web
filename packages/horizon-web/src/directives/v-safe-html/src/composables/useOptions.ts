@@ -1,6 +1,6 @@
 import type { DirectiveOptionType, ExtractDirectiveOptionTypes } from '@aurora/utils';
 import { declareDirectiveOptionType } from '@aurora/utils';
-import type DOMPurify from 'dompurify';
+import type { Config as DOMPurifyConfig } from 'dompurify';
 
 export const useSafeHtmlOptions = declareDirectiveOptionType({
   /**
@@ -19,7 +19,7 @@ export const useSafeHtmlOptions = declareDirectiveOptionType({
    * @param target 事件目标元素
    */
   options: {
-    type: Object as DirectiveOptionType<DOMPurify.Config>,
+    type: Object as DirectiveOptionType<DOMPurifyConfig>,
     required: false,
   },
 });

@@ -1,12 +1,12 @@
 <template>
-  <h-row>
-    <h-col :span="6">
+  <h-grid :gap="12">
+    <h-grid-item :span="6">
       <h-time-picker v-model="value" start-at="08" end-at="21" placeholder="Please pick work time" />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <h-time-picker v-model="value2" start-at="00" end-at="30" placeholder="after the day" />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

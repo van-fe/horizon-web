@@ -9,7 +9,7 @@
         </template>
         <template #popper>
           <h-pop-content>
-            <h-select clearable :collapse="true" :to-body="false" v-model="categoryCode">
+            <h-select clearable :collapse-tags="true" :to-body="false" v-model="categoryCode">
               <h-option v-for="el in list" :key="el" :label="el" :value="el"></h-option>
             </h-select>
           </h-pop-content>
@@ -26,7 +26,7 @@
         </template>
         <template #popper>
           <h-pop-content>
-            <h-select clearable :collapse="true" :to-body="false" v-model="categoryCode">
+            <h-select clearable :collapse-tags="true" :to-body="false" v-model="categoryCode">
               <h-option v-for="el in list" :key="el" :label="el" :value="el"></h-option>
             </h-select>
           </h-pop-content>
@@ -50,5 +50,4 @@ export default defineComponent({
 });
 </script>
 
-<style>
-</style>
+<style></style>

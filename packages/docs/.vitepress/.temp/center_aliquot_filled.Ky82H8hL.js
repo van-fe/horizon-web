@@ -1,4 +1,0 @@
-const center_aliquot_filled = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.25 3C12.0784 3 12.75 3.67157 12.75 4.49999L12.75 19.5C12.75 20.3284 12.0784 21 11.25 21L11.25 3Z" fill="currentColor"/><path d="M6.25 6H3.75C3.33579 6 3 6.33579 3 6.75V17.25C3 17.6642 3.33579 18 3.75 18H6.25C6.66421 18 7 17.6642 7 17.25V6.75C7 6.33579 6.66421 6 6.25 6Z" fill="currentColor"/><path d="M20.25 6H17.75C17.3358 6 17 6.33579 17 6.75V17.25C17 17.6642 17.3358 18 17.75 18H20.25C20.6642 18 21 17.6642 21 17.25V6.75C21 6.33579 20.6642 6 20.25 6Z" fill="currentColor"/></svg>';
-export {
-  center_aliquot_filled as default
-};

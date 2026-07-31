@@ -37,13 +37,16 @@ function analysePropertyAssignment(
 
     for (const child of paramsAndReturn) {
       switch (child.getKind()) {
-        case ts.SyntaxKind.Parameter:
-          const field = child.getFirstChildByKind(ts.SyntaxKind.Identifier)?.getText() ?? '';
-          const parameterType = child.getTypeNode();
-          const value = parameterType?.getText() || child.getType().getText() || 'unknown';
+        case ts.SyntaxKind.Parameter: {
+          const parameter = child.asKind(ts.SyntaxKind.Parameter);
+          if (!parameter) break;
+          const field = parameter.getName();
+          const parameterType = parameter.getTypeNode();
+          const value = parameterType?.getText() || parameter.getType().getText() || 'unknown';
           if (field && value) {
             res.params.push({
               returnText: '',
+              returnType: '',
               returns: [],
               field,
               value,
@@ -58,6 +61,7 @@ function analysePropertyAssignment(
             });
           }
           break;
+        }
         default:
           if (child.getKind() !== ts.SyntaxKind.Identifier) res.return = child.getText();
           break;

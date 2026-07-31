@@ -1,8 +1,9 @@
 import { defineComponent, inject, provide, ref } from 'vue';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
-import type { HRecycleScrollerInstance } from '~/components/VirtualScroller/src/composables/useProps';
+import type { HorizonWebComponentInstance } from '@aurora/utils';
 import HVirtualScroller from '~/components/VirtualScroller/src/VirtualScroller';
-import HVirtualScrollerItem from '~/components/VirtualScroller/src//VirtualScrollerItem';
+import HVirtualScrollerItem from '~/components/VirtualScroller/src/VirtualScrollerItem';
+import type { VirtualScrollerExposes } from '~/components/VirtualScroller/src/composables/useExposes';
 import {
   HAutoCompletePropsInjectKey,
   HAutoCompleteVirtualScrollListIsScrollingInjectKey,
@@ -21,7 +22,10 @@ export default defineComponent({
     const parentProps = inject(HAutoCompletePropsInjectKey)!;
     const visibleOptions = inject(HAutoCompleteVisibleOptionsInjectKey)!;
 
-    const scrollerDomRef = ref<(HRecycleScrollerInstance & HTMLElement) | null>(null);
+    const scrollerDomRef = ref<HorizonWebComponentInstance<
+      typeof HVirtualScroller,
+      VirtualScrollerExposes
+    > | null>(null);
     const isScrolling = ref(false);
 
     provide(HAutoCompleteVirtualScrollListIsScrollingInjectKey, isScrolling);
@@ -36,6 +40,8 @@ export default defineComponent({
         expandWrapperByChildren={parentProps.expandPanelByChildren}
         keyField="uuid"
         size="small"
+        onScrollBegin={() => (isScrolling.value = true)}
+        onScrollStop={() => (isScrolling.value = false)}
       >
         {{
           default: (row: { item: HAutoCompleteOptionWithUuid; index: number; active: boolean }) => (

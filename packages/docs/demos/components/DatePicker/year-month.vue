@@ -1,26 +1,26 @@
 <template>
-  <h-row align="middle">
-    <h-col :span="4">
+  <h-grid align="center" :gap="12">
+    <h-grid-item :span="4">
       Year:
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <h-date-picker v-model="value1" type="year" />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <h-date-picker v-model="rangeValue1" type="year-range" />
-    </h-col>
-  </h-row>
-  <h-row align="middle">
-    <h-col :span="4">
+    </h-grid-item>
+  </h-grid>
+  <h-grid align="center" :gap="12">
+    <h-grid-item :span="4">
       Month:
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <h-date-picker v-model="value2" type="month" />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <h-date-picker v-model="rangeValue2" type="month-range" />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

@@ -6,52 +6,44 @@ export const useCascaderEmits = {
    * modelValue 变更通知
    * @param value modelValue值
    * @paramEn value The value value.
-    * @en Emitted when update:model value changes.
+   * @en Emitted when update:model value changes.
    */
   'update:modelValue': (value: ModelValueType) => isDefined(value) || isNil(value),
   /**
    * 下拉面板显隐切换时通知
    * @param visible 是否显示
    * @paramEn visible The visible value.
-    * @en Emitted when dropdown visible change changes.
+   * @en Emitted when dropdown visible change changes.
    */
   dropdownVisibleChange: (visible: boolean) => isBoolean(visible),
   /**
-   * @deprecated dropdownVisibleChange
-   * 下拉面板显隐切换时通知
-   * @param visible 是否显示
-   * @paramEn visible The visible value.
-    * @en Emitted when panel visible change changes.
-   */
-  panelVisibleChange: (visible: boolean) => isBoolean(visible),
-  /**
    * 聚焦时通知
-    * @en Emitted when focus changes.
+   * @en Emitted when focus changes.
    */
   focus: () => true,
   /**
    * 失焦时通知
-    * @en Emitted when blur changes.
+   * @en Emitted when blur changes.
    */
   blur: () => true,
   /**
    * 输入文字时触发
    * @param inputValue 输入的文字
    * @paramEn inputValue The input value value.
-    * @en Emitted when input changes.
+   * @en Emitted when input changes.
    */
   input: (inputValue: string) => isString(inputValue),
   /**
    * 更新 `options`，一般是异步获取时会更改 `options`
    * @param options
-    * @en Emitted when update:options changes.
+   * @en Emitted when update:options changes.
    */
   'update:options': (options: HCascaderOption[]) => Array.isArray(options),
   /**
    * 搜索输入框改变时通知
    * @param searchValue 搜索的文字
    * @paramEn searchValue The search value value.
-    * @en Emitted when search changes.
+   * @en Emitted when search changes.
    */
   search: (searchValue: string) => isString(searchValue),
   /**
@@ -60,14 +52,14 @@ export const useCascaderEmits = {
    * @paramEn selectOrDeselect The select or deselect value.
    * @param option 被选中的 option 内容，如果 option === undefined，则代表选择的数据并非是 options 中已有的
    * @paramEn option The option value.
-    * @en Emitted when change changes.
+   * @en Emitted when change changes.
    */
   change: (selectOrDeselect?: boolean, option?: HCascaderExtendOption) =>
     (isBoolean(selectOrDeselect) || isUndefined(selectOrDeselect)) &&
     (isObject(option) || isUndefined(option)),
   /**
    * 清空时触发
-    * @en Emitted when clear changes.
+   * @en Emitted when clear changes.
    */
   clear: () => true,
   /**
@@ -76,7 +68,7 @@ export const useCascaderEmits = {
    * @paramEn valuePath The value path value.
    * @param option `cascader.options` 任一子元素
    * @paramEn option The option value.
-    * @en Emitted when select changes.
+   * @en Emitted when select changes.
    */
   select: (valuePath?: Array<string | number>, option?: HCascaderExtendOption) =>
     (Array.isArray(valuePath) || isNil(valuePath)) && (isDefined(option) || isNil(option)),
@@ -86,7 +78,7 @@ export const useCascaderEmits = {
    * @paramEn valuePath The value path value.
    * @param option `cascader.options` 任一子元素
    * @paramEn option The option value.
-    * @en Emitted when deselect changes.
+   * @en Emitted when deselect changes.
    */
   deselect: (valuePath?: Array<string | number>, option?: HCascaderExtendOption) =>
     (Array.isArray(valuePath) || isNil(valuePath)) && (isDefined(option) || isNil(option)),
@@ -98,7 +90,7 @@ export const useCascaderEmits = {
    * @paramEn selectOrDeselect The select or deselect value.
    * @param option `cascader.options` 任一子元素，如果是多选+父子关联且选择了父节点，那这里只会抛出最后一个子节点的数据
    * @paramEn option The option value.
-    * @en Emitted when modify changes.
+   * @en Emitted when modify changes.
    */
   modify: (
     modelValue: ModelValueType,
@@ -112,30 +104,14 @@ export const useCascaderEmits = {
    * 点击确定时触发
    * @param modelValue modelValue 值
    * @paramEn modelValue The model value value.
-   * @deprecated confirm
-    * @en Emitted when confirm enter changes.
-   */
-  confirmEnter: (modelValue: ModelValueType) => Array.isArray(modelValue) || isNil(modelValue),
-  /**
-   * 点击确定时触发
-   * @param modelValue modelValue 值
-   * @paramEn modelValue The model value value.
-    * @en Emitted when confirm changes.
+   * @en Emitted when confirm changes.
    */
   confirm: (modelValue: ModelValueType) => Array.isArray(modelValue) || isNil(modelValue),
   /**
    * 点击取消时触发
    * @param modelValue modelValue 值
    * @paramEn modelValue The model value value.
-   * @deprecated cancel
-    * @en Emitted when confirm cancel changes.
-   */
-  confirmCancel: (modelValue: ModelValueType) => Array.isArray(modelValue) || isNil(modelValue),
-  /**
-   * 点击取消时触发
-   * @param modelValue modelValue 值
-   * @paramEn modelValue The model value value.
-    * @en Emitted when cancel changes.
+   * @en Emitted when cancel changes.
    */
   cancel: (modelValue: ModelValueType) => Array.isArray(modelValue) || isNil(modelValue),
   /**
@@ -144,7 +120,7 @@ export const useCascaderEmits = {
    * @paramEn evt The evt value.
    * @param parent 当前触底滚动面板的所属父级，如果为 nil 则为根节点
    * @paramEn parent The parent value.
-    * @en Emitted when panel reach bottom changes.
+   * @en Emitted when panel reach bottom changes.
    */
   panelReachBottom: (evt: Event | undefined, parent: HCascaderOption | null | undefined) =>
     (evt instanceof Event || isNil(evt)) && (isObject(parent) || isNil(parent)),
@@ -152,7 +128,7 @@ export const useCascaderEmits = {
    * 点击时触发
    * @param evt 点击事件
    * @paramEn evt The evt value.
-    * @en Emitted when click changes.
+   * @en Emitted when click changes.
    */
   click: (evt: MouseEvent) => evt instanceof MouseEvent,
 };
@@ -160,7 +136,7 @@ export const useCascaderEmits = {
 export const useCascaderSearchPanelEmits = {
   /**
    * 提交确认
-    * @en Emitted when confirm changes.
+   * @en Emitted when confirm changes.
    */
   confirm: () => true,
 };

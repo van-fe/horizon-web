@@ -1,4 +1,0 @@
-const column_chart_filled = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 20.5C2 20.7761 2.22386 21 2.5 21H22C22 20.1716 21.3284 19.5 20.5 19.5H3.5L3.5 4.5C3.5 3.67157 2.82843 3 2 3V20.5Z" fill="currentColor"/><path d="M5 7.5C5 7.22386 5.22386 7 5.5 7H8.5C8.77614 7 9 7.22386 9 7.5V17.5C9 17.7761 8.77614 18 8.5 18H5.5C5.22386 18 5 17.7761 5 17.5V7.5Z" fill="currentColor"/><path d="M17 12.5C17 12.2239 17.2239 12 17.5 12H20.5C20.7761 12 21 12.2239 21 12.5V17.5C21 17.7761 20.7761 18 20.5 18H17.5C17.2239 18 17 17.7761 17 17.5V12.5Z" fill="currentColor"/><path d="M11.5 3C11.2239 3 11 3.22386 11 3.5V17.5C11 17.7761 11.2239 18 11.5 18H14.5C14.7761 18 15 17.7761 15 17.5V3.5C15 3.22386 14.7761 3 14.5 3H11.5Z" fill="currentColor"/></svg>';
-export {
-  column_chart_filled as default
-};

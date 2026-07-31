@@ -7,7 +7,6 @@ import HButton from '../../Button/src/Button';
 import { HDropdownItem, HDropdownMenu } from '../index';
 import { sleep } from '~/utils/tools';
 import HPopover from '../../Popover/src/Popover';
-import type { DomEventNameWithModifier } from '@vue/test-utils/dist/constants/dom-events';
 
 describe.skip('Dropdown.tsx', () => {
   test('basic', async () => {
@@ -23,13 +22,13 @@ describe.skip('Dropdown.tsx', () => {
       const wrapper = mount(() => <HDropdown theme={theme.value} toBody={false} />);
       const element = wrapper.findComponent(HDropdown);
 
-      expect(element.classes('n-dropdown--default')).toBeTruthy();
+      expect(element.classes('h-dropdown--default')).toBeTruthy();
 
       theme.value = 'midnight';
 
       await nextTick();
 
-      expect(element.classes('n-dropdown--midnight')).toBeTruthy();
+      expect(element.classes('h-dropdown--midnight')).toBeTruthy();
     });
 
     test('trigger & visible', async () => {
@@ -60,7 +59,7 @@ describe.skip('Dropdown.tsx', () => {
 
       const triggerEle = wrapper.findComponent(HPopover);
 
-      const triggerFn = async (eventString: DomEventNameWithModifier) => {
+      const triggerFn = async (eventString: Parameters<typeof triggerEle.trigger>[0]) => {
         await nextTick();
 
         await triggerEle.trigger(eventString);

@@ -28,7 +28,7 @@ export const useTagSlots = Object as SlotsType<{
 
 export const useTagGroupSlots = Object as SlotsType<{
   /**
-   * 默认插槽，用于设置 `n-tag`
+   * 默认插槽，用于设置 `h-tag`
     * @en Custom content for the default slot.
    */
   default?: {};

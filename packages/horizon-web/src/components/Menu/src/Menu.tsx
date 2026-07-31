@@ -50,10 +50,10 @@ import FullViewMenu from './components/FullViewMenu';
 import HTransition from '~/components/Transition/src/Transition';
 import type { HMenuTreeData } from './util/types';
 import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
-import { getMapTreePath, getMapTreePathByValue } from './util/treeHelper';
 import useResizer from './util/useResizer';
 import { warn } from '~/utils/useLog';
 import type { ScrollbarExposes } from '~/components/Scrollbar/src/composables/useExposes';
+import useMapTree from '~/utils/useMapTree';
 
 export default defineComponent({
   name: `${useNamespace()}Menu`,
@@ -78,9 +78,10 @@ export default defineComponent({
     const classHelper = new ComponentClassBlock('menu');
 
     const menuRef = ref<HTMLElement | null>(null);
-    const scrollbarRef = ref<HorizonWebComponentInstance<typeof HScrollbar, ScrollbarExposes> | null>(
-      null,
-    );
+    const scrollbarRef = ref<HorizonWebComponentInstance<
+      typeof HScrollbar,
+      ScrollbarExposes
+    > | null>(null);
     const resizerDomRef = ref<HTMLElement | null>(null);
 
     const activeMenu = ref<string>(props.selectedValue || '');
@@ -89,7 +90,14 @@ export default defineComponent({
     const isDoingCollapse = ref(false);
     let prevExpandedMenu: string[] = [];
     const expandedMenu = ref(new Set<string>());
-    const menuTree = ref(new Map<string, HMenuTreeData<'subMenu' | 'menuItem'>>());
+    const {
+      tree: menuTree,
+      flattenedNodes: flattenMenus,
+      appendChild,
+      removeChild,
+      findPath,
+      getNodeByUuid,
+    } = useMapTree<HMenuTreeData<'subMenu' | 'menuItem'>>();
 
     let prevScrollTop: number | null = null;
     let scrollTop = 0;
@@ -156,7 +164,7 @@ export default defineComponent({
 
     watch(activeMenuUuid, val => {
       if (val) {
-        activeMenu.value = flattenMenus.value.find(item => item.uuid === val)?.props.value || '';
+        activeMenu.value = getNodeByUuid(val)?.props.value || '';
       }
     });
 
@@ -165,21 +173,6 @@ export default defineComponent({
         props.height ??
         (props.mode === 'vertical' ? '100%' : cssVariable('menu-height--horizontal')),
     );
-
-    const flattenMenus = computed(() => {
-      const flatten = (list: Map<string, HMenuTreeData<'subMenu' | 'menuItem'>>) => {
-        const res = Array.from(list.values());
-
-        res.forEach(item => {
-          if (item.children?.size) {
-            res.push(...flatten(item.children));
-          }
-        });
-
-        return res;
-      };
-      return flatten(menuTree.value);
-    });
 
     watch(
       menuTree,
@@ -191,15 +184,8 @@ export default defineComponent({
       },
     );
 
-    const activatedMenus = computed(() => getMapTreePath(menuTree.value, activeMenuUuid.value));
-
-    function appendChild(item: HMenuTreeData<'subMenu' | 'menuItem'>) {
-      menuTree.value.set(item.uuid, item);
-    }
-
-    function removeChild(uuid: string) {
-      menuTree.value.delete(uuid);
-    }
+    const getMenuPath = (uuid: string) => findPath(item => item.uuid === uuid);
+    const activatedMenus = computed(() => getMenuPath(activeMenuUuid.value));
 
     const router = instance?.appContext.config.globalProperties.$router as Router | undefined;
 
@@ -210,7 +196,7 @@ export default defineComponent({
         if (!router) {
           warn('menu', `You haven't import and set "vue-router"`);
         } else {
-          const target = flattenMenus.value.find(item => item.uuid === uuid);
+          const target = getNodeByUuid(uuid);
 
           if (target) {
             target.props.value && router.push(target.props.value);
@@ -228,7 +214,7 @@ export default defineComponent({
         expandedMenu.value.clear();
       }
 
-      const paths = getMapTreePath(menuTree.value, uuid);
+      const paths = getMenuPath(uuid);
 
       paths.forEach(leaf => {
         leaf.level < props.useDropdownLevel && expandedMenu.value.add(leaf.uuid);
@@ -242,7 +228,7 @@ export default defineComponent({
 
       emit(
         'open',
-        flattenMenus.value.find(curr => curr.uuid === uuid)?.props.value ?? '',
+        getNodeByUuid(uuid)?.props.value ?? '',
         paths.map(curr => curr.props as SubMenuProps) as SubMenuProps[],
       );
     }
@@ -252,15 +238,13 @@ export default defineComponent({
 
       emit(
         'close',
-        flattenMenus.value.find(curr => curr.uuid === uuid)?.props.value ?? '',
-        getMapTreePath(menuTree.value, uuid).map(
-          curr => curr.props as SubMenuProps,
-        ) as SubMenuProps[],
+        getNodeByUuid(uuid)?.props.value ?? '',
+        getMenuPath(uuid).map(curr => curr.props as SubMenuProps) as SubMenuProps[],
       );
     }
 
     function updateActiveMenuUuid(expand = false) {
-      const paths = getMapTreePathByValue(menuTree.value, activeMenu.value);
+      const paths = findPath(item => item.props.value === activeMenu.value);
       activeMenuUuid.value = paths[0]?.uuid || '';
 
       if (activeMenuUuid.value) {
@@ -270,9 +254,7 @@ export default defineComponent({
 
         if (isCollapseModelValue.value) {
           prevScrollTop = null;
-          prevExpandedMenu = getMapTreePath(menuTree.value, activeMenuUuid.value).map(
-            curr => curr.uuid,
-          );
+          prevExpandedMenu = getMenuPath(activeMenuUuid.value).map(curr => curr.uuid);
         }
       }
     }
@@ -419,9 +401,7 @@ export default defineComponent({
       },
       scrollToActive,
       expandMenus: computed(() =>
-        Array.from(expandedMenu.value.values()).map(
-          uuid => flattenMenus.value.find(curr => curr.uuid === uuid)?.props.value,
-        ),
+        Array.from(expandedMenu.value.values()).map(uuid => getNodeByUuid(uuid)?.props.value),
       ),
     });
 

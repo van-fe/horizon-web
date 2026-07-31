@@ -1,29 +1,31 @@
-## Basic Usage
+## CSS Grid Layout
 
-| Resolution(px) | Size | Columns | Spacing gutters,hspace,vspace(px) |
-| -------- | ------- | ------- |-----------------------------|
-| 0 ≤ X <480 | XSmall | 8 | 4                           |
-| 480 ≤ X <1024 | Small | 12 | 16                          |
-| 1024 ≤ X < 1440 | Medium | 24 | 16                          |
-| 1440 ≤ X < 1920 | Large | 24 | 16                          |
-| 1920 ≤ X < 2880 | XLarge | 24 | 24                          |
-| 2880 ≤ X ≤ 3840 | XXLarge | 24 | 48                          |
+Use `h-grid` and `h-grid-item` for new layouts. The container defines responsive tracks and spacing, while each item describes its placement with `span` and `offset`. The implementation uses native CSS Grid without negative margins or compensating column padding.
+
+:::demo components/Layout/grid.vue :::
+
+## Columns
+
+The grid uses 24 columns by default. Set `span` to combine equal columns or build asymmetric layouts.
 
 :::demo components/Layout/demo1.vue :::
 
-## Column Element Spacing
+## Row and Column Gaps
 
-Set the spacing between row and column elements through the `gutter` attribute
-
-Set the spacing between column elements in a row through the `hspace` attribute. `hspace` has higher priority than `gutter`
-
-Set the spacing with the next row element through the `vspace` attribute. `vspace` has higher priority than `gutter`, and the `vspace` of the last row is invalid
+Use `gap` for uniform spacing, or control each direction with `column-gap` and `row-gap`. All three properties accept responsive values.
 
 :::demo components/Layout/demo2.vue :::
 
-## Alignment
+## Item Alignment
+
+`align` and `justify` control the vertical and horizontal alignment of items inside their grid areas. Available values are `start`, `center`, `end`, and `stretch`.
+
 :::demo components/Layout/demo3.vue :::
 
-## Responsive
-By configuring `xs` `sm` `md` `lg` `xl` `xxl` attributes, you can adjust the range occupied at different resolutions
+## Responsive Layout
+
+`cols`, `gap`, `column-gap`, `row-gap`, `span`, and `offset` accept responsive objects with `xs`, `sm`, `md`, `lg`, `xl`, and `xxl` keys. Values naturally carry forward until the next breakpoint overrides them.
+
 :::demo components/Layout/responsive.vue :::
+
+The legacy `h-row` and `h-col` components remain available for gradual migration. Prefer Grid for new pages.

@@ -35,15 +35,15 @@ Set `wrap`, only effective in `horizontal`
 ## Design Token
 | Variable | Default Value | Description |
 | --- | --- | --- |
-| --n-space--small | var(--n-spacing-3) | small size spacing  |
-| --n-space--medium | var(--n-spacing-5) | medium size spacing  |
-| --n-space--large | var(--n-spacing-7) | large size spacing  |
-| --n-space--horizontal--small | var(--n-space--small) |  horizontal small spacing  |
-| --n-space--horizontal--medium | var(--n-space--medium) | horizontal medium spacing  |
-| --n-space--horizontal--large | var(--n-space--large) | horizontal large spacing  |
-| --n-space--vertical--small | var(--n-space--small) | vertical small spacing  |
-| --n-space--vertical--medium | var(--n-space--medium) | vertical medium spacing  |
-| --n-space--vertical--large | var(--n-space--large) | vertical large spacing |
-| --n-space--wrap--small | var(--n-space--vertical--small) var(--n-space--vertical--small) |  wrap small spacing up down left right  |
-|  --n-space--wrap--medium | var(--n-space--vertical--medium) var(--n-space--vertical--medium) |  wrap medium spacing up down left right |
-|  --n-space--wrap--large | var(--n-space--vertical--large) var(--n-space--vertical--large) |  wrap large spacing up down left right |
+| --h-space--small | var(--h-spacing-3) | small size spacing  |
+| --h-space--medium | var(--h-spacing-5) | medium size spacing  |
+| --h-space--large | var(--h-spacing-7) | large size spacing  |
+| --h-space--horizontal--small | var(--h-space--small) |  horizontal small spacing  |
+| --h-space--horizontal--medium | var(--h-space--medium) | horizontal medium spacing  |
+| --h-space--horizontal--large | var(--h-space--large) | horizontal large spacing  |
+| --h-space--vertical--small | var(--h-space--small) | vertical small spacing  |
+| --h-space--vertical--medium | var(--h-space--medium) | vertical medium spacing  |
+| --h-space--vertical--large | var(--h-space--large) | vertical large spacing |
+| --h-space--wrap--small | var(--h-space--vertical--small) var(--h-space--vertical--small) |  wrap small spacing up down left right  |
+|  --h-space--wrap--medium | var(--h-space--vertical--medium) var(--h-space--vertical--medium) |  wrap medium spacing up down left right |
+|  --h-space--wrap--large | var(--h-space--vertical--large) var(--h-space--vertical--large) |  wrap large spacing up down left right |

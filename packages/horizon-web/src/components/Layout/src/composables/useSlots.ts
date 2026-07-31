@@ -18,3 +18,9 @@ export const useColumnSlots = Object as SlotsType<{
 }>;
 
 export type ColumnSlots = typeof useColumnSlots;
+
+export const useGridSlots = useRowSlots;
+export type GridSlots = typeof useGridSlots;
+
+export const useGridItemSlots = useColumnSlots;
+export type GridItemSlots = typeof useGridItemSlots;

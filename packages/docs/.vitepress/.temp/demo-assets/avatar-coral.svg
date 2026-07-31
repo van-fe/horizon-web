@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title">
+  <title id="title">Coral illustrated avatar</title>
+  <rect width="256" height="256" rx="48" fill="#ffe6df"/>
+  <circle cx="128" cy="105" r="50" fill="#8b573f"/>
+  <path d="M76 108c-3-48 18-78 55-78 42 0 64 36 50 83-8-29-25-48-52-56-11 23-29 40-53 51Z" fill="#422b37"/>
+  <path d="M43 256c6-64 37-94 85-94s79 30 85 94Z" fill="#e76d68"/>
+  <circle cx="109" cy="110" r="4" fill="#291d26"/><circle cx="149" cy="110" r="4" fill="#291d26"/>
+  <path d="M112 135c10 7 22 7 32 0" fill="none" stroke="#6a3635" stroke-width="4" stroke-linecap="round"/>
+</svg>

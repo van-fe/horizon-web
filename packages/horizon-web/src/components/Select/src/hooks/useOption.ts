@@ -170,7 +170,7 @@ export default function useOption(
         }
       }
 
-      if (!(props.needDropdownConfirm ?? props.needConfirm) || forcePick) {
+      if (!props.needConfirm || forcePick) {
         options.handleConfirm(singleChooseHide, false);
       }
     } else {
@@ -193,7 +193,7 @@ export default function useOption(
         }
       }
 
-      if (!(props.needDropdownConfirm || props.needConfirm) || forcePick) {
+      if (!props.needConfirm || forcePick) {
         options.handleConfirm(false, false);
       }
     }
@@ -209,11 +209,7 @@ export default function useOption(
         options.inputValue.value = '';
         options.filterInputValue.value = '';
 
-        if (
-          (props.multiple || props.needDropdownConfirm) ??
-          props.needConfirm ??
-          props.needConfirm
-        ) {
+        if (props.multiple || props.needConfirm) {
           options.judgeWhetherInputCanFocus();
         } else {
           options.setPopperVisible(false);

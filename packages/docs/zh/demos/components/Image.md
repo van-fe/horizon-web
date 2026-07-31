@@ -52,7 +52,7 @@
 :::demo components/Image/slot.vue :::
 
 ## 图片列表
-为了更方便的展示一系列图片，我们还提供了 `n-image-list` 组件，你可以控制每张图片的间距，以及最多展示的图片数量。
+为了更方便的展示一系列图片，我们还提供了 `h-image-list` 组件，你可以控制每张图片的间距，以及最多展示的图片数量。
 :::demo components/Image/list.vue :::
 
 ## 自定义溢出

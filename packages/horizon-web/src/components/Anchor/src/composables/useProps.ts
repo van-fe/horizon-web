@@ -147,7 +147,7 @@ export const useAnchorProps = declarePropType({
     default: () => ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
   },
   /**
-   * 可以覆盖 `n-anchor-link` 的 `target`
+   * 可以覆盖 `h-anchor-link` 的 `target`
     * @en Configuration for link target.
    */
   linkTarget: {

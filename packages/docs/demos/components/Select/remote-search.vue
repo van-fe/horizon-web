@@ -1,6 +1,6 @@
 <template>
-  <h-row :gutter="10">
-    <h-col :span="6">
+  <h-grid :gap="10">
+    <h-grid-item :span="6">
       <div class="demo-title">单选</div>
       <h-select
         v-model="value1"
@@ -20,9 +20,9 @@
           :label="item.text"
         />
       </h-select>
-    </h-col>
+    </h-grid-item>
 
-    <h-col :span="6">
+    <h-grid-item :span="6">
       <div class="demo-title">单选-无选项也显示面板</div>
       <h-select
         v-model="value2"
@@ -43,9 +43,9 @@
           :label="item.text"
         />
       </h-select>
-    </h-col>
+    </h-grid-item>
 
-    <h-col :span="6">
+    <h-grid-item :span="6">
       <div class="demo-title">多选</div>
       <h-select
         v-model="values1"
@@ -68,9 +68,9 @@
           :label="item.text"
         />
       </h-select>
-    </h-col>
+    </h-grid-item>
 
-    <h-col :span="6">
+    <h-grid-item :span="6">
       <div class="demo-title">多选-无选项也显示面板</div>
       <h-select
         v-model="values2"
@@ -94,8 +94,8 @@
           :label="item.text"
         />
       </h-select>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

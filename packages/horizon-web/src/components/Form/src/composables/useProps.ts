@@ -69,7 +69,7 @@ export const useFormProps = declarePropType({
   },
   /**
    * 尺寸
-   * 会直接覆盖通过 `n-application` 设置的 `size`
+   * 会直接覆盖通过 `h-application` 设置的 `size`
     * @en Configuration for size.
    */
   size: {
@@ -180,7 +180,7 @@ export const useFormProps = declarePropType({
   },
   /**
    * 当前表单是否只做渲染
-   * 如果 `n-form-item` 有设置 `error`，则会立刻将组件标为错误状态
+   * 如果 `h-form-item` 有设置 `error`，则会立刻将组件标为错误状态
     * @en Configuration for only render.
    */
   onlyRender: {
@@ -255,7 +255,7 @@ export const useFormItemProps = declarePropType({
     required: false,
   },
   /**
-   * 表单项的绑定字段，应该是 `n-form` 上 `model` 属性的字段名，如果不需要表单验证可以不设置
+   * 表单项的绑定字段，应该是 `h-form` 上 `model` 属性的字段名，如果不需要表单验证可以不设置
     * @en Configuration for prop.
    */
   prop: {
@@ -263,7 +263,7 @@ export const useFormItemProps = declarePropType({
     required: false,
   },
   /**
-   * 验证规则，会覆盖 `n-form` 的规则，如果不需要表单验证可以不设置
+   * 验证规则，会覆盖 `h-form` 的规则，如果不需要表单验证可以不设置
     * @en Configuration for rules.
    */
   rules: {
@@ -307,7 +307,7 @@ export const useFormItemProps = declarePropType({
   },
   /**
    * 标签的水平对齐方式，仅当 `label-position` 为 `left` 时有效
-   * 会继承 `n-form` 的 `label-width`
+   * 会继承 `h-form` 的 `label-width`
     * @en Configuration for label justify align.
    */
   labelJustifyAlign: {
@@ -316,7 +316,7 @@ export const useFormItemProps = declarePropType({
   },
   /**
    * 标签的垂直对齐方式，仅当 `label-position` 为 `left` 时有效
-   * 会继承 `n-form` 的 `label-width`
+   * 会继承 `h-form` 的 `label-width`
     * @en Configuration for label vertical align.
    */
   labelVerticalAlign: {
@@ -325,7 +325,7 @@ export const useFormItemProps = declarePropType({
   },
   /**
    * 标签宽度，`auto` 表示自动设置为合适的宽度
-   * 会继承 `n-form` 的 `label-width`
+   * 会继承 `h-form` 的 `label-width`
     * @en Configuration for label width.
    */
   labelWidth: {

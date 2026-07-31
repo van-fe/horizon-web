@@ -30,10 +30,15 @@ function toComponentName(filename: string): string {
 /**
  * 解析 SVG 内容，提取 viewBox 和内部内容
  */
-function parseSVG(svgContent: string): { viewBox: string; content: string } {
+function parseSVG(svgContent: string): { viewBox: string; content: string; fill: string } {
+  const svgTagMatch = svgContent.match(/<svg\b([^>]*)>/i)
+  const svgAttributes = svgTagMatch?.[1] || ''
+
   // 提取 viewBox
-  const viewBoxMatch = svgContent.match(/viewBox="([^"]*)"/)
-  const viewBox = viewBoxMatch ? viewBoxMatch[1] : '0 0 24 24'
+  const viewBoxMatch = svgAttributes.match(/\bviewBox=(["'])([^"']*)\1/i)
+  const viewBox = viewBoxMatch ? viewBoxMatch[2] : '0 0 24 24'
+  const fillMatch = svgAttributes.match(/\bfill=(["'])([^"']*)\1/i)
+  const fill = fillMatch ? fillMatch[2] : 'currentColor'
   
   // 移除 SVG 标签，只保留内部内容
   const content = svgContent
@@ -41,143 +46,80 @@ function parseSVG(svgContent: string): { viewBox: string; content: string } {
     .replace(/<\/svg>/, '')
     .trim()
   
-  return { viewBox, content }
+  return { viewBox, content, fill }
 }
 
 /**
  * 生成 Vue 组件代码
  */
-function generateComponent(componentName: string, viewBox: string, content: string): string {
+function generateComponent(
+  componentName: string,
+  iconName: string,
+  viewBox: string,
+  content: string,
+  defaultFill: string
+): string {
   // 将 SVG 内容转义为 JavaScript 字符串字面量
   const escapedContent = JSON.stringify(content)
+  const escapedViewBox = JSON.stringify(viewBox)
+  const escapedDefaultFill = JSON.stringify(defaultFill)
+  const escapedIconName = JSON.stringify(iconName)
   
-  return `import { defineComponent, h, PropType, computed } from 'vue'
+  return `import { computed, defineComponent, h, type PropType } from 'vue'
+import {
+  applyIconColor,
+  applyIconSpin,
+  getIconClassNames,
+  normalizeIconSize,
+  type IconColor,
+  type IconSize,
+  type IconSpin
+} from '../../utils/icon'
 
 export default defineComponent({
   name: '${componentName}',
   props: {
     size: {
-      type: [String, Number] as PropType<string | number>,
+      type: [String, Number, Array] as PropType<IconSize>,
       default: '1em'
     },
     color: {
-      type: [String, Array] as PropType<string | string[] | undefined>,
+      type: [String, Array] as PropType<IconColor | undefined>,
       default: undefined
     },
     spin: {
-      type: String as PropType<'cw' | 'ccw'>,
-      default: undefined,
+      type: String as PropType<IconSpin>,
+      default: undefined
     },
     rotate: {
       type: Number,
-      default: undefined,
+      default: undefined
     }
   },
   emits: {
-    click: (evt: MouseEvent) => evt instanceof MouseEvent,
+    click: (evt: MouseEvent) => evt instanceof MouseEvent
   },
   setup(props, { emit }) {
-    const sizeValue = computed(() => {
-      if (typeof props.size === 'number') {
-        return [props.size + 'px', props.size + 'px'];
-      }
-      if (Array.isArray(props.size)) {
-        return props.size.map(s => typeof s === 'number' ? s + 'px' : s);
-      }
-
-      return [props.size, props.size];
-    })
-
-    const width = computed(() => sizeValue.value[0])
-
-    const height = computed(() => sizeValue.value[1])
-    
-    const processMultiColor = (content: string, colors: string[]): string => {
-      if (!content || colors.length === 0) return content
-      
-      const elementRegex = /<(path|circle|rect|polygon|ellipse|g)([^>]*)>/gi
-      const elements: Array<{ tag: string; attrs: string; index: number }> = []
-      let match: RegExpExecArray | null
-      
-      while ((match = elementRegex.exec(content)) !== null) {
-        elements.push({
-          tag: match[1],
-          attrs: match[2],
-          index: match.index
-        })
-      }
-      
-      if (elements.length === 0) return content
-      
-      let processedContent = content
-      for (let i = elements.length - 1; i >= 0; i--) {
-        const element = elements[i]
-        const colorIndex = i < colors.length ? i : colors.length - 1
-        const color = colors[colorIndex] || 'currentColor'
-        
-        const fillMatch = element.attrs.match(/fill="([^"]*)"/)
-        
-        if (fillMatch) {
-          const oldFill = fillMatch[1]
-          if (oldFill !== 'none') {
-            const fillIndex = element.attrs.indexOf('fill=')
-            if (fillIndex !== -1) {
-              const startPos = element.index + element.attrs.substring(0, fillIndex).length + element.tag.length + 1
-              const endPos = startPos + fillMatch[0].length
-              processedContent = processedContent.substring(0, startPos) +
-                \`fill="\${color}"\` +
-                processedContent.substring(endPos)
-            }
-          }
-        } else {
-          const insertPos = element.index + \`<\${element.tag}\`.length
-          processedContent = processedContent.substring(0, insertPos) +
-            \` fill="\${color}"\` +
-            processedContent.substring(insertPos)
-        }
-      }
-      
-      return processedContent
-    }
+    const sizeValue = computed(() => normalizeIconSize(props.size))
     
     return () => {
-      let svgContent = ${escapedContent}
-      let fill = 'currentColor'
-      
-      if (props.color) {
-        if (Array.isArray(props.color)) {
-          svgContent = processMultiColor(svgContent, props.color)
-          fill = 'none'
-        } else {
-          fill = props.color
-          svgContent = svgContent.replace(/fill="(?!none)[^"]*"/g, \`fill="\${props.color}"\`)
-          if (!svgContent.match(/fill=/)) {
-            const firstElementMatch = svgContent.match(/<(path|circle|rect|polygon|ellipse|g)/)
-            if (firstElementMatch) {
-              const insertPos = firstElementMatch.index! + firstElementMatch[0].length
-              svgContent = svgContent.substring(0, insertPos) +
-                \` fill="\${props.color}"\` +
-                svgContent.substring(insertPos)
-            }
-          }
-        }
-      }
+      const coloredIcon = applyIconColor(${escapedContent}, props.color, ${escapedDefaultFill})
+      const svgContent = applyIconSpin(coloredIcon.content, ${escapedViewBox}, props.spin)
       
       return h('svg', {
-        viewBox: '${viewBox}',
-        fill: fill,
+        class: getIconClassNames(${escapedIconName}),
+        viewBox: ${escapedViewBox},
+        fill: coloredIcon.fill,
         style: {
-          width: width.value,
-          height: height.value,
+          width: sizeValue.value[0],
+          height: sizeValue.value[1],
+          fontSize: sizeValue.value[0],
           display: 'inline-block',
           verticalAlign: 'inherit',
-          transform: props.rotate ? \`rotate(\${props.rotate}deg)\` : undefined,
+          transform: props.rotate === undefined ? undefined : \`rotate(\${props.rotate}deg)\`
         },
-        innerHTML: svgContent
-      }, {
-        on: {
-          click: (evt: MouseEvent) => emit('click', evt)
-        }
+        innerHTML: svgContent,
+        onClick: (evt: MouseEvent) => emit('click', evt)
       })
     }
   }
@@ -191,7 +133,7 @@ export default defineComponent({
 function generateIndexFile(components: Array<{ name: string; componentName: string }>): string {
   const imports = components
     .map(({ componentName }) => {
-      return `export { default as ${componentName} } from './${componentName}.tsx'`
+      return `export { default as ${componentName} } from './${componentName}'`
     })
     .join('\n')
   
@@ -226,10 +168,16 @@ function main() {
     try {
       // 读取 SVG 内容
       const svgContent = readFileSync(svgPath, 'utf-8')
-      const { viewBox, content } = parseSVG(svgContent)
+      const { viewBox, content, fill } = parseSVG(svgContent)
       
       // 生成组件代码
-      const componentCode = generateComponent(componentName, viewBox, content)
+      const componentCode = generateComponent(
+        componentName,
+        removeExtName(svgFile),
+        viewBox,
+        content,
+        fill
+      )
       
       // 写入组件文件
       const componentPath = join(COMPONENTS_DIR, `${componentName}.tsx`)
@@ -255,4 +203,3 @@ function main() {
 }
 
 main()
-

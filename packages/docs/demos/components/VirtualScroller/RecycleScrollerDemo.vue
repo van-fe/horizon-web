@@ -11,65 +11,65 @@
         round
         :closable="false"
       />
-      <h-row :gutter="14" style="margin-top: 20px">
-        <h-col :span="12">
-          <h-row>
-            <h-col :span="5" class="align-center">生成数据</h-col>
-            <h-col :span="11">
+      <h-grid :gap="14" style="margin-top: 20px">
+        <h-grid-item :span="12">
+          <h-grid :gap="12">
+            <h-grid-item :span="5" class="align-center">生成数据</h-grid-item>
+            <h-grid-item :span="11">
               <h-input-number v-model="inputCount" @input="inputCountInput"></h-input-number>
-            </h-col>
-            <h-col :span="8">
+            </h-grid-item>
+            <h-grid-item :span="8">
               <h-button circle type="primary" size="medium" @click="addItem">+1</h-button>
-            </h-col>
-          </h-row>
-        </h-col>
-        <h-col :span="12">
-          <h-row>
-            <h-col :span="8" class="align-center">从数据中获得高度</h-col>
-            <h-col :span="16"><h-checkbox v-model="enableLetters"></h-checkbox></h-col>
-          </h-row>
-        </h-col>
-        <!-- <h-col :span="8">
-          <h-row>
-            <h-col :span="7" class="align-center">
+            </h-grid-item>
+          </h-grid>
+        </h-grid-item>
+        <h-grid-item :span="12">
+          <h-grid :gap="12">
+            <h-grid-item :span="8" class="align-center">从数据中获得高度</h-grid-item>
+            <h-grid-item :span="16"><h-checkbox v-model="enableLetters"></h-checkbox></h-grid-item>
+          </h-grid>
+        </h-grid-item>
+        <!-- <h-grid-item :span="8">
+          <h-grid :gap="12">
+            <h-grid-item :span="7" class="align-center">
               页面模式
               <div>(pageMode属性)</div>
-            </h-col>
-            <h-col :span="15" style="color: #999">
+            </h-grid-item>
+            <h-grid-item :span="15" style="color: #999">
               开启页面模式会取消组件自己的滚动属性, 找到组件的父滚动容器作为'根'计算虚拟滚动
-            </h-col>
-          </h-row>
-        </h-col> -->
-      </h-row>
-      <h-row :gutter="14">
-        <h-col :span="12">
-          <h-row>
-            <h-col :span="5" class="align-center">缓存值设置</h-col>
-            <h-col :span="11">
+            </h-grid-item>
+          </h-grid>
+        </h-grid-item> -->
+      </h-grid>
+      <h-grid :gap="14">
+        <h-grid-item :span="12">
+          <h-grid :gap="12">
+            <h-grid-item :span="5" class="align-center">缓存值设置</h-grid-item>
+            <h-grid-item :span="11">
               <h-input-number v-model="buffer" :max="1000" :min="1"></h-input-number>
-            </h-col>
-            <h-col :span="8"></h-col>
-          </h-row>
-        </h-col>
-        <h-col :span="12">
-          <h-row>
-            <h-col :span="5" class="align-center">滚动至</h-col>
-            <h-col :span="11"><h-input-number v-model="scrollTo"></h-input-number></h-col>
-            <h-col :span="8">
+            </h-grid-item>
+            <h-grid-item :span="8"></h-grid-item>
+          </h-grid>
+        </h-grid-item>
+        <h-grid-item :span="12">
+          <h-grid :gap="12">
+            <h-grid-item :span="5" class="align-center">滚动至</h-grid-item>
+            <h-grid-item :span="11"><h-input-number v-model="scrollTo"></h-input-number></h-grid-item>
+            <h-grid-item :span="8">
               <h-button circle type="primary" size="medium" @click="doScrollTo">执行</h-button>
-            </h-col>
-          </h-row>
-        </h-col>
-      </h-row>
-      <h-row style="padding-bottom: 24px; border-bottom: 1px solid #ccc">
-        <h-col :span="3" class="align-center">滚动状态</h-col>
-        <h-col :span="21" class="align-center">
+            </h-grid-item>
+          </h-grid>
+        </h-grid-item>
+      </h-grid>
+      <h-grid style="padding-bottom: 24px; border-bottom: 1px solid #ccc" :gap="12">
+        <h-grid-item :span="3" class="align-center">滚动状态</h-grid-item>
+        <h-grid-item :span="21" class="align-center">
           ({{ updateParts.viewStartIdx }} - [{{ updateParts.visibleStartIdx }} -
           {{ updateParts.visibleEndIdx }}] - {{ updateParts.viewEndIdx }})
           <br />
           (元素索引开始于 - [可见元素开始于 - 可见元素结束于] - 元素索引结束于)
-        </h-col>
-      </h-row>
+        </h-grid-item>
+      </h-grid>
     </section>
 
     <!-- 组件 -->
@@ -199,7 +199,7 @@ export default defineComponent({
       return {
         name: faker.person.fullName(),
         // avatar: faker.internet.avatar(),
-        avatar: 'https://www.example.com/cdn-static/mydemo/nextjs/images/home/demoApp/demo-app-logo.png',
+        avatar: '/demo-assets/avatar-indigo.svg',
       };
     }
 

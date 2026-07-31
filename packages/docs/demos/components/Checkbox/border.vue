@@ -1,9 +1,9 @@
 <template>
-  <h-row align="middle">
-    <h-col :span="6">
+  <h-grid align="center" :gap="12">
+    <h-grid-item :span="6">
       <div class="demo-title">medium(default)</div>
-    </h-col>
-    <h-col :span="18">
+    </h-grid-item>
+    <h-grid-item :span="18">
       <h-checkbox
         v-for="item in checkboxOptions"
         :key="item.key"
@@ -13,11 +13,11 @@
         class="checkbox"
         @change="selectCheckbox"
       />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">large</div>
-    </h-col>
-    <h-col :span="18">
+    </h-grid-item>
+    <h-grid-item :span="18">
       <h-checkbox
         v-for="item in checkboxOptions"
         :key="item.key"
@@ -28,8 +28,8 @@
         size="large"
         @change="selectCheckbox"
       />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script lang="ts" setup>

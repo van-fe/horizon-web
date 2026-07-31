@@ -1,23 +1,23 @@
 <template>
   <div>
-    <h-row :gutter="12">
-      <h-col :span="12">
+    <h-grid :gap="12">
+      <h-grid-item :span="12">
         <h-input-number :min="0">
           <template #prepend>
             Age:
           </template>
         </h-input-number>
-      </h-col>
-      <h-col :span="12">
+      </h-grid-item>
+      <h-grid-item :span="12">
         <h-input-number controls-position="between" :min="0">
           <template #append>
             Points
           </template>
         </h-input-number>
-      </h-col>
-    </h-row>
-    <h-row :gutter="12">
-      <h-col :span="24">
+      </h-grid-item>
+    </h-grid>
+    <h-grid :gap="12">
+      <h-grid-item :span="24">
         <h-input-number :min="0" :clearable="true" placeholder="The Age...">
           <template #prepend>
             <h-select v-model="ageType" placeholder="Solar or Lunar" clearable>
@@ -26,10 +26,10 @@
             </h-select>
           </template>
         </h-input-number>
-      </h-col>
-    </h-row>
-    <h-row :gutter="12">
-      <h-col :span="24">
+      </h-grid-item>
+    </h-grid>
+    <h-grid :gap="12">
+      <h-grid-item :span="24">
         <h-input-number :min="0" :clearable="true" placeholder="The Weight...">
           <template #append>
             <h-select v-model="weightUnit" placeholder="Kg or g" clearable>
@@ -38,8 +38,8 @@
             </h-select>
           </template>
         </h-input-number>
-      </h-col>
-    </h-row>
+      </h-grid-item>
+    </h-grid>
   </div>
 </template>
 

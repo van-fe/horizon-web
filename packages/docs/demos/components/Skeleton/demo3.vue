@@ -10,7 +10,7 @@
         <h-skeleton-item shape="picture"></h-skeleton-item>
       </template>
       <template #default>
-        <h-avatar src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" />
+        <h-avatar src="/demo-assets/avatar-coral.svg" />
         <div>
           骨架屏测试骨架屏测试骨架屏测试骨架屏测试骨架屏测试骨架屏测试骨架屏测试骨架屏测试骨架屏测试骨架屏测试骨架屏测试骨架屏测试骨架屏测试骨架屏测试骨架屏测试骨架屏测试
         </div>
@@ -19,13 +19,13 @@
           <img
             class="container"
             style="width: 200px; height: 200px"
-            src="https://www.example.com/cdn-static/mydemo/images/demo-day-2021/demo-day-2021-playback-desktop.jpg"
+            src="/demo-assets/scene-aurora.svg"
           />
         </div>
         <div class="container">
           <img
             class="container"
-            src="https://www.example.com/cdn-static/mydemo/images/demo-day-2021/demo-day-2021-playback-desktop.jpg"
+            src="/demo-assets/scene-aurora.svg"
           />
         </div>
       </template>

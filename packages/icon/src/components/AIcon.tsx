@@ -1,5 +1,14 @@
-import { defineComponent, computed, watch, ref, onMounted, h, PropType } from 'vue'
-import { getIcon } from '../icons'
+import { computed, defineComponent, h, type PropType } from 'vue'
+import { getIconSync } from '../icons'
+import {
+  applyIconColor,
+  applyIconSpin,
+  getIconClassNames,
+  normalizeIconSize,
+  type IconColor,
+  type IconSize,
+  type IconSpin
+} from '../utils/icon'
 
 export default defineComponent({
   name: 'AIcon',
@@ -9,165 +18,62 @@ export default defineComponent({
       required: true
     },
     size: {
-      type: [String, Number, Array],
+      type: [String, Number, Array] as PropType<IconSize>,
       default: '1em'
     },
     color: {
-      type: [String, Array] as PropType<(string | string[])| undefined>,
+      type: [String, Array] as PropType<IconColor | undefined>,
       default: undefined
     },
     spin: {
-      type: String as PropType<'cw' | 'ccw'>,
-      default: undefined,
+      type: String as PropType<IconSpin>,
+      default: undefined
     },
     rotate: {
       type: Number,
-      default: undefined,
+      default: undefined
     }
   },
   emits: {
-    click: (evt: MouseEvent) => evt instanceof MouseEvent,
+    click: (evt: MouseEvent) => evt instanceof MouseEvent
   },
   setup(props, { emit }) {
-    const svgContent = ref<string>('')
-    const viewBox = ref<string>('0 0 24 24')
-    const fill = ref<string>('currentColor')
-
-    const sizeValue = computed(() => {
-      if (typeof props.size === 'number') {
-        return [`${props.size}px`, `${props.size}px`];
-      }
-      if (Array.isArray(props.size)) {
-        return props.size.map(s => typeof s === 'number' ? `${s}px` : s);
-      }
-
-      return [props.size, props.size];
-    })
-
-    const width = computed(() => sizeValue.value[0])
-
-    const height = computed(() => sizeValue.value[1])
-
-    const processMultiColor = (content: string, colors: string[]): string => {
-      if (!content || colors.length === 0) return content
-      
-      // 查找所有可填充的图形元素（path, circle, rect, polygon, ellipse, g）
-      const elementRegex = /<(path|circle|rect|polygon|ellipse|g)([^>]*)>/gi
-      const elements: Array<{ tag: string; attrs: string; index: number; fullMatch: string }> = []
-      let match: RegExpExecArray | null
-      
-      while ((match = elementRegex.exec(content)) !== null) {
-        elements.push({
-          tag: match[1],
-          attrs: match[2],
-          index: match.index,
-          fullMatch: match[0]
-        })
-      }
-      
-      if (elements.length === 0) return content
-      
-      // 从后往前替换，避免索引偏移问题
-      let processedContent = content
-      for (let i = elements.length - 1; i >= 0; i--) {
-        const element = elements[i]
-        const colorIndex = i < colors.length ? i : colors.length - 1
-        const color = colors[colorIndex] || 'currentColor'
-        
-        // 检查是否已有 fill 属性
-        const fillMatch = element.attrs.match(/fill="([^"]*)"/)
-        
-        if (fillMatch) {
-          // 替换现有的 fill 属性
-          const oldFill = fillMatch[1]
-          // 跳过 'none' 填充
-          if (oldFill !== 'none') {
-            const fillIndex = element.attrs.indexOf('fill=')
-            if (fillIndex !== -1) {
-              const startPos = element.index + element.attrs.substring(0, fillIndex).length + element.tag.length + 1
-              const endPos = startPos + fillMatch[0].length
-              processedContent = processedContent.substring(0, startPos) +
-                `fill="${color}"` +
-                processedContent.substring(endPos)
-            }
-          }
-        } else {
-          // 添加 fill 属性
-          const insertPos = element.index + `<${element.tag}`.length
-          processedContent = processedContent.substring(0, insertPos) +
-            ` fill="${color}"` +
-            processedContent.substring(insertPos)
+    const sizeValue = computed(() => normalizeIconSize(props.size))
+    const icon = computed(() => getIconSync(props.name))
+    const renderedIcon = computed(() => {
+      const iconInfo = icon.value
+      if (!iconInfo) {
+        return {
+          content: '',
+          fill: 'currentColor',
+          viewBox: '0 0 24 24'
         }
       }
-      
-      return processedContent
-    }
 
-    const loadIcon = async () => {
-      try {
-        const icon = await getIcon(props.name)
-        if (icon) {
-          let content = icon.content
-          viewBox.value = icon.viewBox || '0 0 24 24'
-          
-          // 处理颜色
-          if (props.color) {
-            if (Array.isArray(props.color)) {
-              // 多色处理
-              content = processMultiColor(content, props.color)
-              fill.value = 'none' // 多色时使用 none，让子元素控制颜色
-            } else {
-              // 单色处理
-              fill.value = props.color
-              // 替换所有 fill 属性为指定颜色（除了 none）
-              content = content.replace(/fill="(?!none)[^"]*"/g, `fill="${props.color}"`)
-              // 如果没有 fill 属性，为根元素添加
-              if (!content.match(/fill=/)) {
-                const firstElementMatch = content.match(/<(path|circle|rect|polygon|ellipse|g)/)
-                if (firstElementMatch) {
-                  const insertPos = firstElementMatch.index! + firstElementMatch[0].length
-                  content = content.substring(0, insertPos) +
-                    ` fill="${props.color}"` +
-                    content.substring(insertPos)
-                }
-              }
-            }
-          } else {
-            fill.value = icon.fill || 'currentColor'
-          }
-          
-          svgContent.value = content
-        }
-      } catch (error) {
-        console.error(`Failed to load icon: ${props.name}`, error)
+      const viewBox = iconInfo.viewBox || '0 0 24 24'
+      const coloredIcon = applyIconColor(iconInfo.content, props.color, iconInfo.fill)
+      return {
+        content: applyIconSpin(coloredIcon.content, viewBox, props.spin),
+        fill: coloredIcon.fill,
+        viewBox
       }
-    }
-
-    watch(() => props.name, loadIcon, { immediate: true })
-    watch(() => props.color, loadIcon)
-
-    onMounted(() => {
-      loadIcon()
     })
 
-    return () => {
-      return h('svg', {
-        viewBox: viewBox.value,
-        fill: fill.value,
+    return () =>
+      h('svg', {
+        class: getIconClassNames(props.name),
+        viewBox: renderedIcon.value.viewBox,
+        fill: renderedIcon.value.fill,
         style: {
-          width: width.value,
-          height: height.value,
+          width: sizeValue.value[0],
+          height: sizeValue.value[1],
+          fontSize: sizeValue.value[0],
           display: 'inline-block',
           verticalAlign: 'inherit',
-          transform: props.rotate ? `rotate(${props.rotate}deg)` : undefined,
+          transform: props.rotate === undefined ? undefined : `rotate(${props.rotate}deg)`
         },
-        innerHTML: svgContent.value
-      }, {
-        on: {
-          click: (evt: MouseEvent) => emit('click', evt)
-        }
+        innerHTML: renderedIcon.value.content,
+        onClick: (evt: MouseEvent) => emit('click', evt)
       })
-    }
   }
 })
-

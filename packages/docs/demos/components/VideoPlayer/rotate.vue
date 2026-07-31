@@ -4,11 +4,11 @@
     <h-video-player
       :sources="[
         {
-          src: 'https://media.vimejs.com/720p.mp4',
+          src: '/aurora-background.mp4',
           type: 'video/mp4',
         },
       ]"
-      poster="https://media.vimejs.com/poster.png"
+      poster="/demo-assets/video-poster.svg"
       :rotate="degree"
     />
   </div>

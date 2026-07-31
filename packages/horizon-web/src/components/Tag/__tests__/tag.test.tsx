@@ -33,13 +33,13 @@ describe('Tag.tsx', () => {
       const wrapper = mount(() => <HTag type={type.value} />);
       const element = wrapper.find('.h-tag');
 
-      expect(element.classes('n-tag--success')).eq(true);
+      expect(element.classes('h-tag--success')).eq(true);
 
       type.value = 'error';
 
       await nextTick();
 
-      expect(element.classes('n-tag--error')).eq(true);
+      expect(element.classes('h-tag--error')).eq(true);
     });
 
     test('size', async () => {
@@ -47,13 +47,13 @@ describe('Tag.tsx', () => {
       const wrapper = mount(() => <HTag size={size.value} />);
       const element = wrapper.find('.h-tag');
 
-      expect(element.classes('n-tag--medium')).eq(true);
+      expect(element.classes('h-tag--medium')).eq(true);
 
       size.value = 'large';
 
       await nextTick();
 
-      expect(element.classes('n-tag--large')).eq(true);
+      expect(element.classes('h-tag--large')).eq(true);
     });
 
     test('bold', async () => {
@@ -61,13 +61,13 @@ describe('Tag.tsx', () => {
       const wrapper = mount(() => <HTag bold={bold.value} />);
       const element = wrapper.find('.h-tag');
 
-      expect(element.classes('n-tag--bold')).eq(false);
+      expect(element.classes('h-tag--bold')).eq(false);
 
       bold.value = true;
 
       await nextTick();
 
-      expect(element.classes('n-tag--bold')).eq(true);
+      expect(element.classes('h-tag--bold')).eq(true);
     });
 
     test('clickable', async () => {
@@ -132,13 +132,13 @@ describe('Tag.tsx', () => {
       const wrapper = mount(() => <HTag round={round.value} />);
       const element = wrapper.find('.h-tag');
 
-      expect(element.classes('n-tag--round')).eq(false);
+      expect(element.classes('h-tag--round')).eq(false);
 
       round.value = true;
 
       await nextTick();
 
-      expect(element.classes('n-tag--round')).eq(true);
+      expect(element.classes('h-tag--round')).eq(true);
     });
 
     test('avatar', async () => {
@@ -173,13 +173,13 @@ describe('Tag.tsx', () => {
       const wrapper = mount(() => <HTag equally={equally.value} />);
       const element = wrapper.find('.h-tag');
 
-      expect(element.classes('n-tag--equally')).eq(false);
+      expect(element.classes('h-tag--equally')).eq(false);
 
       equally.value = true;
 
       await nextTick();
 
-      expect(element.classes('n-tag--equally')).eq(true);
+      expect(element.classes('h-tag--equally')).eq(true);
     });
 
     test('delay-show-close', async () => {

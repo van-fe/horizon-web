@@ -28,8 +28,8 @@
     </h-form-item>
   </h-form>
 
-  <h-row>
-    <h-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
+  <h-grid :gap="12">
+    <h-grid-item :span="{ xs: 12, md: 8, lg: 6, xl: 6, xxl: 6 }">
       <div class="demo-title">基础单选</div>
       <h-select
         v-model="value1"
@@ -46,8 +46,8 @@
       >
         <h-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
       </h-select>
-    </h-col>
-    <h-col :xs="12" :md="8" :lg="6" :xl="6" :xxl="6">
+    </h-grid-item>
+    <h-grid-item :span="{ xs: 12, md: 8, lg: 6, xl: 6, xxl: 6 }">
       <div class="demo-title">基础多选</div>
       <h-select
         v-model="value2"
@@ -65,8 +65,8 @@
       >
         <h-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
       </h-select>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 
 </template>
 

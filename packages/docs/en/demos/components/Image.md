@@ -52,7 +52,7 @@ The content slot will only take effect after the image has been successfully loa
 :::demo components/Image/slot.vue :::
 
 ## Image List
-To make it easier to display a series of images, we also provide the `n-image-list` component. You can control the spacing between each image and the maximum number of images to display.
+To make it easier to display a series of images, we also provide the `h-image-list` component. You can control the spacing between each image and the maximum number of images to display.
 :::demo components/Image/list.vue :::
 
 ## Custom Overflow

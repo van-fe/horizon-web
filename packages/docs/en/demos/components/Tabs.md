@@ -20,7 +20,7 @@ In tight spaces, you can scroll left and right to accommodate more tabs. The exa
 
 
 ## Close and Add
-By setting `n-tabs (editable)`, `n-tab (closable)` attributes, you can enable dynamic addition and deletion of tabs. Only effective in `line | card | page`; the logic of closing and adding is implemented by the business. `v2 = true`, if the deleted tab is the current tab, the first tab is selected by default
+By setting `h-tabs (editable)`, `h-tab (closable)` attributes, you can enable dynamic addition and deletion of tabs. Only effective in `line | card | page`; the logic of closing and adding is implemented by the business. `v2 = true`, if the deleted tab is the current tab, the first tab is selected by default
 :::demo components/Tabs/editable.vue :::
 
 ## Right Additional Operation Area
@@ -35,7 +35,7 @@ The overflow part is displayed with " ... " and a text prompt appears when the m
 If you need to sort tabs, you can enable it by setting `draggable`.
 :::demo components/Tabs/draggable.vue :::
 
-## Use with `n-panel`
+## Use with `h-panel`
 Use panel component to develop tab applications
 :::demo components/Tabs/with-panel.vue :::
 

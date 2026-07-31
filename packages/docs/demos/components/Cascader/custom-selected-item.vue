@@ -1,13 +1,13 @@
 <template>
-  <h-row :gutter="10">
-    <h-col :span="6">
+  <h-grid :gap="10">
+    <h-grid-item :span="6">
       <h-cascader v-model="currentVal1" :options="options" multiple :to-body="false">
         <template #tagRender="slotProps">
           <h-tag :key="slotProps.value" is-pure><span class="multiple-tag">{{ `${slotProps.label}` ?? '' }}</span></h-tag>
         </template>
       </h-cascader>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script lang="ts">

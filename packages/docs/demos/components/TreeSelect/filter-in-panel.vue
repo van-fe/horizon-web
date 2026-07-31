@@ -1,6 +1,6 @@
 <template>
-  <h-row>
-    <h-col :span="6">
+  <h-grid :gap="12">
+    <h-grid-item :span="6">
       <div class="demo-title">内置面板</div>
       <h-tree-select
         :tree-data="baseTreeData"
@@ -10,8 +10,8 @@
         :multiple="true"
         :to-body="false"
       />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">自定义插槽</div>
       <h-tree-select
         :tree-data="baseTreeData"
@@ -25,8 +25,8 @@
           <h-input v-model="filterValue" class="filter-input" />
         </template>
       </h-tree-select>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

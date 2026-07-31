@@ -4,11 +4,11 @@
       <h-switch v-model="disabled" status />
     </h-form-item>
   </h-form>
-  <h-row :gutter="10" disabled="middle">
-    <h-col :span="24">
+  <h-grid :gap="10">
+    <h-grid-item :span="24">
       <h-pagination :total="50" :disabled="disabled" align="right" />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

@@ -20,9 +20,14 @@ export function defineOption(option: HorizonWebOption): HorizonWebOption {
   return option;
 }
 
+export interface HorizonWebInstaller {
+  install: (app: App, options?: HorizonWebOption) => App;
+  version: string;
+}
+
 const INSTALLED_KEY = Symbol('INSTALLED_KEY');
 
-export default function makeInstaller(plugins: Plugin[] = []) {
+export default function makeInstaller(plugins: Plugin[] = []): HorizonWebInstaller {
   const install = (app: App, options?: HorizonWebOption) => {
     if (app[INSTALLED_KEY]) return app;
 

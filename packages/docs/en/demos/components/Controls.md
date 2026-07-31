@@ -1,5 +1,5 @@
 ## Basic Usage
-Used together with `n-hover` and `n-mask`, you can display controllers after hovering over the mask
+Used together with `h-hover` and `h-mask`, you can display controllers after hovering over the mask
 :::demo components/Controls/basic.vue :::
 
 ## Theme

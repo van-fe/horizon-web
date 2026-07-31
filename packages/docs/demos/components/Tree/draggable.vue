@@ -13,8 +13,8 @@
       <h-switch v-model="useBeforeDrop" :status="true" />
     </h-form-item>
   </h-form>
-  <h-row class="flex">
-    <h-col :span="12">
+  <h-grid class="tree-grid" :gap="12">
+    <h-grid-item :span="12">
       <div class="demo-title">单选</div>
       <div class="tree-box">
         <h-tree
@@ -26,8 +26,8 @@
           :before-drop="useBeforeDrop ? beforeDrop : undefined"
         />
       </div>
-    </h-col>
-    <h-col :span="12">
+    </h-grid-item>
+    <h-grid-item :span="12">
       <div class="demo-title">多选</div>
       <div class="tree-box">
         <h-tree
@@ -40,8 +40,8 @@
           :multiple="true"
         />
       </div>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

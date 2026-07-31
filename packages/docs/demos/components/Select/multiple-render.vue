@@ -1,7 +1,7 @@
 <template>
-  <h-row>
+  <h-grid :gap="12">
     <!-- 自定义 tag -->
-    <h-col :span="6">
+    <h-grid-item :span="6">
       <div class="demo-title">
         自定义 tag
         <h-tooltip>
@@ -11,17 +11,19 @@
           <a-icon name="help" />
         </h-tooltip>
       </div>
-      <h-select v-model="values1" multiple collapse :to-body="false">
+      <h-select v-model="values1" multiple collapse-tags :to-body="false">
         <h-option label="中国" :value="1" en_name="China" />
         <h-option :value="2" label="美国" en_name="America" />
         <h-option :value="3" label="日本" en_name="Japan" />
         <template #tagRender="slotProps">
-          <h-tag type="info" :clickable="false">{{ `${slotProps.label}(${slotProps.en_name})` ?? '' }}</h-tag>
+          <h-tag type="info" :clickable="false">
+            {{ `${slotProps.label}(${slotProps.en_name})` ?? '' }}
+          </h-tag>
         </template>
       </h-select>
-    </h-col>
+    </h-grid-item>
 
-    <h-col :span="6">
+    <h-grid-item :span="6">
       <div class="demo-title">
         允许创建选项
         <h-tooltip>
@@ -31,35 +33,35 @@
           <a-icon name="help" />
         </h-tooltip>
       </div>
-      <h-select v-model="values2" multiple allow-create collapse :to-body="false">
+      <h-select v-model="values2" multiple allow-create collapse-tags :to-body="false">
         <h-option label="中国" :value="1" en_name="Chinaaaaa" />
         <h-option :value="3" label="日本" en_name="Japanaaaa" />
         <h-option :value="2" label="美国" en_name="Afsdffdsa" />
         <template #tagRender="slotProps">
-          <h-tag type="success" :clickable="false">{{ `${slotProps.label}(${slotProps.en_name})` ?? '' }}</h-tag>
+          <h-tag type="success" :clickable="false">
+            {{ `${slotProps.label}(${slotProps.en_name})` ?? '' }}
+          </h-tag>
         </template>
       </h-select>
-    </h-col>
+    </h-grid-item>
 
-    <h-col :span="6">
+    <h-grid-item :span="6">
       <div class="demo-title">自定义 完整 select</div>
       <h-select v-model="values3" :multiple="true" :value-format="valueFormat" :to-body="false">
         <h-option label="上海" :value="1" />
         <h-option :value="2" label="北京" />
         <h-option :value="3" label="合肥" name="hefei" />
-        <template #selectRender>
-          你的选择是：{{ values3.map(v => v.label).join('+') }}
-        </template>
+        <template #selectRender>你的选择是：{{ values3.map(v => v.label).join('+') }}</template>
       </h-select>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 const values1 = ref([]);
 const values2 = ref([]);
-const values3 = ref<{label: string}[]>([]);
+const values3 = ref<{ label: string }[]>([]);
 
 function valueFormat(originValue: any) {
   return {

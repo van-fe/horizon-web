@@ -5,9 +5,9 @@ const value = ref(32);
 </script>
 
 <template>
-  <h-row :gutter="12">
-    <h-col :span="8">
+  <h-grid :gap="12">
+    <h-grid-item :span="8">
       <h-input-number v-model="value" readonly />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>

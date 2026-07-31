@@ -32,7 +32,7 @@ PS: 在`password`状态设置`show-password`为`true`的情况下，`suffix-icon
 
 ## 组合式输入框
 通过`prepend`和`append` `slot`可以为输入框添加一个前置或后置元素  
-`--n-input-bg--prepend-append: transparent` 为了解决图标和前后缀的背景色问题
+`--h-input-bg--prepend-append: transparent` 为了解决图标和前后缀的背景色问题
 :::demo components/Input/mixed.vue :::
 
 ## 多行输入框
@@ -44,7 +44,7 @@ PS: 在`password`状态设置`show-password`为`true`的情况下，`suffix-icon
 ## 字数限制
 通过`maxlength`和`showLimit`可显示输入框的字数限制
 
-注意: 启用了 `enable-out-of-exceeded` 后，不会限制字数，所以表单验证需要结合 `n-form` 的 `max` 设置
+注意: 启用了 `enable-out-of-exceeded` 后，不会限制字数，所以表单验证需要结合 `h-form` 的 `max` 设置
 :::demo components/Input/limit.vue :::
 
 ## 搜索输入框

@@ -73,7 +73,7 @@ export default async function createWebTypesJson() {
     };
 
     return {
-      name: `n-${kebabCase(component.name)}`,
+      name: `h-${kebabCase(component.name)}`,
       source: {
         symbol: `N${component.name}`,
       },

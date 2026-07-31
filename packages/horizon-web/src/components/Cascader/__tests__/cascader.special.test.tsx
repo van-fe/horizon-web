@@ -57,7 +57,7 @@ describe('Cascader.tsx special', () => {
       ],
       dynamicLoad(node: HCascaderDynamicLoadNode) {
         triggerLoad(node);
-        return new Promise(resolve => {
+        return new Promise<BaseTreeData[]>(resolve => {
           resolve([] as BaseTreeData[]);
         });
       },
@@ -298,7 +298,7 @@ describe('Cascader.tsx special', () => {
       ['guide', 'disciplines', 'feedback'],
       ['guide', 'disciplines', 'efficiency'],
     ]);
-    const { pickerInput, wrapper } = createInstance({
+    const { wrapper } = createInstance({
       modelValue,
       filterable: true,
       multiple: true,

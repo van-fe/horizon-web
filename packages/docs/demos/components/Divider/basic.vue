@@ -1,18 +1,18 @@
 <template>
-  <h-row :gutter="10" align="middle">
-    <h-col :span="4">
+  <h-grid :gap="10" align="center">
+    <h-grid-item :span="4">
       Default
-    </h-col>
-    <h-col :span="20">
+    </h-grid-item>
+    <h-grid-item :span="20">
       <h-divider />
-    </h-col>
-  </h-row>
-  <h-row :gutter="10" align="middle">
-    <h-col :span="4">
+    </h-grid-item>
+  </h-grid>
+  <h-grid :gap="10" align="center">
+    <h-grid-item :span="4">
       Strong
-    </h-col>
-    <h-col :span="20">
+    </h-grid-item>
+    <h-grid-item :span="20">
       <h-divider type="strong" />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>

@@ -1,7 +1,7 @@
 import type { SlotsType } from 'vue';
 export const useCollapseSlots = Object as SlotsType<{
   /**
-   * 默认插槽，用来承放 `n-collapse-item`
+   * 默认插槽，用来承放 `h-collapse-item`
     * @en Custom content for the default slot.
    */
   default?: {};

@@ -85,7 +85,7 @@ export default defineComponent({
 
     const transitionName = computed(() => {
       const direction = horizontalCls.value === 'right' ? 'left' : 'right';
-      return `n-transition--slide-${direction}`;
+      return `h-transition--slide-${direction}`;
     });
 
     const showFooter = computed(() => {

@@ -5,7 +5,7 @@ const __pageData = JSON.parse('{"title":"","description":"","frontmatter":{},"he
 const _sfc_main = { name: "en/demos/components/Card.md" };
 function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_demo_block = resolveComponent("demo-block");
-  _push(`<div${ssrRenderAttrs(_attrs)}><h1>Card</h1><p class="description">卡片组件</p><h2 id="basic-usage" tabindex="-1">Basic Usage <a class="header-anchor" href="#basic-usage" aria-label="Permalink to &quot;Basic Usage&quot;">​</a></h2>`);
+  _push(`<div${ssrRenderAttrs(_attrs)}><h1>Card</h1><p class="description">A container for presenting related content in a card.</p><h2 id="basic-usage" tabindex="-1">Basic Usage <a class="header-anchor" href="#basic-usage" aria-label="Permalink to &quot;Basic Usage&quot;">​</a></h2>`);
   _push(ssrRenderComponent(_component_demo_block, {
     source: `<template>
   <ul>
@@ -237,7 +237,7 @@ ul {
     <h-card title="标题">
       <img
           class="content-img"
-          src="https://static.example.com/fx-static/card-component/clbu60ecm0000072w2izw1wsp/img.png"
+          src="/demo-assets/scene-city.svg"
           alt=""
       />
     </h-card>
@@ -383,7 +383,7 @@ const handleDragEnd = () => {
 `,
     path: "demos/components/Card/other.vue"
   }, null, _parent));
-  _push(`<h2>Card Api</h2><h3>Card Props</h3><table class="md-table"><thead><tr><th>Name</th><th>Description</th><th>Type</th><th style="${ssrRenderStyle({ "min-width": "50px" })}" class="text-center">Required</th><th>Default</th></tr></thead><tbody><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">title</td><td>默认文字标题</td><td><code>string</code></td><td class="text-center">No</td><td>&#39;&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">top-divider</td><td>是否有上分割线</td><td><code>boolean</code></td><td class="text-center">No</td><td>false</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">bottom-divider</td><td>是否有下分割线</td><td><code>boolean</code></td><td class="text-center">No</td><td>false</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">radius</td><td>卡片圆角尺寸</td><td><code>&#39;small&#39; | &#39;medium&#39; | &#39;large&#39; | &#39;none&#39;</code></td><td class="text-center">No</td><td>&#39;medium&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">border</td><td>是否有边框</td><td><code>boolean</code></td><td class="text-center">No</td><td>true</td></tr></tbody></table></div>`);
+  _push(`<h2 id="card-api" class="no-underline h2"><a href="#card-api" class="!no-underline">Card Api</a></h2><h3 id="card-props" class="no-underline h3"><a href="#card-props" class="!no-underline">Card Props</a></h3><table class="md-table"><thead><tr><th>Name</th><th>Description</th><th>Type</th><th style="${ssrRenderStyle({ "min-width": "50px" })}" class="text-center">Required</th><th>Default</th></tr></thead><tbody><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">title</td><td>Configuration for title.</td><td><code>string</code></td><td class="text-center">No</td><td>&#39;&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">top-divider</td><td>Configuration for top divider.</td><td><code>boolean</code></td><td class="text-center">No</td><td>false</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">bottom-divider</td><td>Configuration for bottom divider.</td><td><code>boolean</code></td><td class="text-center">No</td><td>false</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">radius</td><td>Configuration for radius.</td><td><code>&#39;small&#39; | &#39;medium&#39; | &#39;large&#39; | &#39;none&#39;</code></td><td class="text-center">No</td><td>&#39;medium&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">border</td><td>Configuration for border.</td><td><code>boolean</code></td><td class="text-center">No</td><td>true</td></tr></tbody></table></div>`);
 }
 const _sfc_setup = _sfc_main.setup;
 _sfc_main.setup = (props, ctx) => {

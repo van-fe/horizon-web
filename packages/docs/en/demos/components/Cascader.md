@@ -12,7 +12,7 @@ Combined with `check-strictly`, there will be different display logic
 :::demo components/Cascader/single.vue :::
 
 ## Multiple Selection
-Like `select`, the tags for multiple selection use `n-tag` and `n-tag-group` components combined
+Like `select`, the tags for multiple selection use `h-tag` and `h-tag-group` components combined
 
 By default, selected items are not collapsed. You can configure `collapse-tags = true` to collapse selected items
 
@@ -77,7 +77,7 @@ Configure `need-confirm = true` to enable secondary confirmation after selection
 :::demo components/Cascader/confirm.vue :::
 
 ## Custom Confirm Selection Content
-You can control the text of confirm and cancel buttons through `confirm-btn-text` `cancel-btn-text`
+You can control the text of confirm and cancel buttons through `confirm-button-text` `cancel-button-text`
 
 The `confirmRender` slot also exposes two methods `cancelHandle` `confirmHandle` for use when customizing the footer
 

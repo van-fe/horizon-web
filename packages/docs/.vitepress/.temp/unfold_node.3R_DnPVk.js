@@ -1,4 +1,0 @@
-const unfold_node = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 18C3 18.8284 3.67157 19.5 4.5 19.5H19.5C20.3284 19.5 21 18.8284 21 18H3Z" fill="currentColor"/><path d="M12 6C12 6.82843 12.6716 7.5 13.5 7.5H19.5C20.3284 7.5 21 6.82843 21 6H12Z" fill="currentColor"/><path d="M3 12C3 12.8284 3.67157 13.5 4.5 13.5H19.5C20.3284 13.5 21 12.8284 21 12H3Z" fill="currentColor"/><path d="M7.31947 8.76727C7.00402 9.07758 6.49598 9.07758 6.18053 8.76727L3.24169 5.87642C2.72766 5.37078 3.08793 4.5 3.81116 4.5L9.68884 4.5C10.4121 4.5 10.7723 5.37078 10.2583 5.87642L7.31947 8.76727Z" fill="currentColor"/></svg>';
-export {
-  unfold_node as default
-};

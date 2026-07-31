@@ -4,8 +4,8 @@
       <h-switch v-model="checkStrictly" status />
     </h-form-item>
   </h-form>
-  <h-row :gutter="10">
-    <h-col :span="6">
+  <h-grid :gap="10">
+    <h-grid-item :span="6">
       <div class="demo-title">单选</div>
       <h-cascader
         v-model="currentVal1"
@@ -16,8 +16,8 @@
         @input="changeHandle"
         @change="changeHandle"
       />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">多选</div>
       <h-cascader
         v-model="currentVal2"
@@ -27,8 +27,8 @@
         :multiple="true"
         :to-body="false"
       />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

@@ -149,7 +149,7 @@ describe('Select.tsx', () => {
     const htmlList = wrapper.findAllComponents(HTag).map(item => item.html());
 
     expect(
-      htmlList.length > 0 && htmlList.every(html => html.includes('<div class="n-tag__content">')),
+      htmlList.length > 0 && htmlList.every(html => html.includes('<div class="h-tag__content">')),
     ).toBe(true);
   });
 
@@ -1520,21 +1520,21 @@ describe('Select.tsx', () => {
 
     await checkAll.trigger('click');
 
-    expect(checkAll.find('label').classes('n-checkbox--checked')).toBeTruthy();
+    expect(checkAll.find('label').classes('h-checkbox--checked')).toBeTruthy();
     expect(Array.isArray(instance.modelValue.value)).toBeTruthy();
     expect(instance.modelValue.value).toStrictEqual([0, 2, 4]);
 
     await instance.setInputValue('');
 
-    expect(checkAll.find('label').classes('n-checkbox--indeterminate')).toBeTruthy();
+    expect(checkAll.find('label').classes('h-checkbox--indeterminate')).toBeTruthy();
 
     await instance.setInputValue('2');
 
-    expect(checkAll.find('label').classes('n-checkbox--indeterminate')).toBeFalsy();
+    expect(checkAll.find('label').classes('h-checkbox--indeterminate')).toBeFalsy();
 
     await checkAll.trigger('click');
 
-    expect(checkAll.find('label').classes('n-checkbox--checked')).toBeTruthy();
+    expect(checkAll.find('label').classes('h-checkbox--checked')).toBeTruthy();
     expect(instance.modelValue.value).toStrictEqual([0, 2, 4, 1, 3]);
   });
 });

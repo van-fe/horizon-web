@@ -1,4 +1,0 @@
-const align_right_filled = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 3L21 21C20.1716 21 19.5 20.3284 19.5 19.5L19.5 4.49999C19.5 3.67157 20.1716 3 21 3Z" fill="currentColor"/><path d="M3.75 10C3.33579 10 3 10.3358 3 10.75V13.25C3 13.6642 3.33579 14 3.75 14H16.25C16.6642 14 17 13.6642 17 13.25V10.75C17 10.3358 16.6642 10 16.25 10H3.75Z" fill="currentColor"/></svg>';
-export {
-  align_right_filled as default
-};

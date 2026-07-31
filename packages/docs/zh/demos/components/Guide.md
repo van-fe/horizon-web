@@ -2,7 +2,7 @@
 :::demo components/Guide/basic.vue :::
 
 ## 直接传参使用
-某些情况下，可以不需要使用 `n-guide-item` 组件构建步骤，可以直接传入数据构建
+某些情况下，可以不需要使用 `h-guide-item` 组件构建步骤，可以直接传入数据构建
 :::demo components/Guide/itemList.vue :::
 
 ## 蒙层

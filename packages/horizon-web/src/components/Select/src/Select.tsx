@@ -51,7 +51,7 @@ import useOption from './hooks/useOption';
 import useData from './hooks/useData';
 import useTagRender from './hooks/useTagRender';
 import usePanel from './hooks/usePanel';
-import useCompatibleProp from './hooks/useCompatibleProp';
+import useConfig from './hooks/useConfig';
 import useEvents from './hooks/useEvents';
 import useDataProcess from './hooks/useDataProcess';
 import useConfirm from './hooks/useConfirm';
@@ -67,7 +67,10 @@ export default defineComponent({
   emits: useSelectEmits,
   slots: useSelectSlots,
   exposes: useSelectExposes,
-  setup(props: SelectProps, context: HorizonWebSetupContext<SelectEmits, SelectSlots, SelectExposes>) {
+  setup(
+    props: SelectProps,
+    context: HorizonWebSetupContext<SelectEmits, SelectSlots, SelectExposes>,
+  ) {
     const classHelper = new ComponentClassBlock('select');
 
     /**
@@ -77,10 +80,14 @@ export default defineComponent({
       pickerDomRef: ref<HorizonWebComponentInstance<typeof HPicker, PickerExposes>>(),
       scrollbarDomRef: ref<HorizonWebComponentInstance<typeof HScrollbar, ScrollbarExposes>>(),
       filterInputDomRef:
-        ref<HorizonWebComponentInstance<typeof HPickerFitContentInput, PickerFitContentInputExposes>>(),
+        ref<
+          HorizonWebComponentInstance<typeof HPickerFitContentInput, PickerFitContentInputExposes>
+        >(),
       tagGroupDomRef: ref<HorizonWebComponentInstance<typeof HTagGroup, TagGroupExposes>>(),
       virtualScrollListDomRef:
-        ref<HorizonWebComponentInstance<typeof VirtualScrollList, SelectVirtualScrollListExposes>>(),
+        ref<
+          HorizonWebComponentInstance<typeof VirtualScrollList, SelectVirtualScrollListExposes>
+        >(),
     };
 
     const {
@@ -97,7 +104,7 @@ export default defineComponent({
       panelStyle,
       loading,
       panelClass,
-    } = useCompatibleProp(props);
+    } = useConfig(props);
 
     const size = toRef(props, 'size');
     const sizeRef = useSize(size, 'medium');
@@ -412,7 +419,7 @@ export default defineComponent({
           onCompositionEnd={onCompositionEnd}
         >
           {{
-            panelEmpty: context.slots.empty ?? context.slots.optionEmptyRender,
+            panelEmpty: context.slots.empty,
             panelPrefix: () => (
               <Fragment>
                 {context.slots.panelHeaderRender?.()}
@@ -429,7 +436,6 @@ export default defineComponent({
             ),
             panelSuffix: context.slots.panelFooterRender,
             panelConfirm: context.slots.dropConfirmRender,
-            pickerContainer: context.slots.selectRender,
             pickerOuter: context.slots.pickerOuter,
             picker: context.slots.picker,
             panelConfirmLeft: context.slots.panelConfirmLeft,
@@ -505,7 +511,9 @@ export default defineComponent({
                     onReachBottom={onReachBottom}
                   >
                     {defaultSlotContent.value}
-                    {props.options?.map(val => <HOption {...val} />)}
+                    {props.options?.map(val => (
+                      <HOption {...val} />
+                    ))}
                     {tempCreateOptions.value.map(val => (
                       <HOption value={val} label={val} />
                     ))}

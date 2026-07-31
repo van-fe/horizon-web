@@ -1,18 +1,18 @@
 <template>
-  <h-row>
-    <h-col :span="24">
+  <h-grid :gap="12">
+    <h-grid-item :span="24">
       <h-button type="normal" plain>Normal Plain Button</h-button>
       <h-button plain>Primary Plain Button</h-button>
       <h-button type="danger" plain>Danger Plain Button</h-button>
-    </h-col>
-  </h-row>
-  <h-row class="dark-wrapper">
-    <h-col :span="24">
+    </h-grid-item>
+  </h-grid>
+  <h-grid class="dark-wrapper" :gap="12">
+    <h-grid-item :span="24">
       <h-button type="normal" ghost plain>Normal Ghost Button</h-button>
       <h-button ghost plain>Primary Ghost Button</h-button>
       <h-button type="danger" ghost plain>Danger Ghost Button</h-button>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <style scoped>

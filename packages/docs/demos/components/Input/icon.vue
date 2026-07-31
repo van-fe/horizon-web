@@ -4,19 +4,19 @@
  * @Description: file content
 -->
 <template>
-  <h-row>
-    <h-col :span="12">
+  <h-grid :gap="12">
+    <h-grid-item :span="12">
       <h-input v-model="val1" suffix-icon="check" />
-    </h-col>
-    <h-col :span="12">
+    </h-grid-item>
+    <h-grid-item :span="12">
       <h-input v-model="val2">
         <template #prefix>¥</template>
         <template #suffix>RMB</template>
       </h-input>
-    </h-col>
-  </h-row>
-  <h-row>
-    <h-col>
+    </h-grid-item>
+  </h-grid>
+  <h-grid :gap="12">
+    <h-grid-item :span="24">
       <h-input v-model="val3">
         <template #suffix>
           <h-tooltip placement="top" content="show location detail">
@@ -24,8 +24,8 @@
           </h-tooltip>
         </template>
       </h-input>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script lang="ts">

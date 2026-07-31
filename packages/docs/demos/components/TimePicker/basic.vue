@@ -19,11 +19,11 @@
       </h-radio-group>
     </h-form-item>
   </h-form>
-  <h-row>
-    <h-col :span="6">
+  <h-grid :gap="12">
+    <h-grid-item :span="6">
       <h-time-picker v-model="value" :size="size" :input-style="inputStyle" :disabled="disabled" />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

@@ -15,7 +15,7 @@ const fn: DirectiveHook<HTMLElement, unknown, Partial<SafeHtmlOptions> | string>
   } else if (typeof binding.value === 'object') {
     const { html, options } = binding.value;
     if (html) {
-      result = dompurify.sanitize(html, options || {}) as string;
+      result = String(dompurify.sanitize(html, options || {}));
     }
   }
 

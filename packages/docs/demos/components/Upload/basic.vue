@@ -56,7 +56,7 @@ const showUploader = ref(true);
 
 const modelValue = ref<HUploadRawFileType>({
   name: 'background.jpg',
-  url: 'https://cdn-public-dev.example.com/aurora-resource/5cBiDhad9L9aZ3nAml1m8/23244a6b-69c3-4465-bbd6-5db4b476abf4.jpg?imageView2/0/h/198/ignore-error/1',
+  url: '/demo-assets/scene-coast.svg',
 });
 
 function handleChange(file: HUploadFileType, response: Data) {

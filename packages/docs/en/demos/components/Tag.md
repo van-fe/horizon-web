@@ -63,11 +63,11 @@ When customizing colors, please pass in the darkest color in the color system to
 :::demo components/Tag/colorful.vue :::
 
 ## Create and Modify Tags
-Quickly create a tag that allows input creation through `n-tag-group`'s `props.useCreate`
+Quickly create a tag that allows input creation through `h-tag-group`'s `props.useCreate`
 
 With `max-tags`, you can not display the create tag after the number of tags reaches a certain value
 
-Set `editable = true` for `n-tag` or `n-tag-group` to allow tag editing
+Set `editable = true` for `h-tag` or `h-tag-group` to allow tag editing
 :::demo components/Tag/create-update.vue :::
 
 ## Tag Collapse

@@ -76,7 +76,7 @@ export default defineComponent({
     });
 
     return () => (
-      <Transition name="n-alert-fade">
+      <Transition name="h-alert-fade">
         <div
           v-show={visible.value}
           class={cls(

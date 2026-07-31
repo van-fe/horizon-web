@@ -13,7 +13,7 @@
     <h-form-item label="style">
       <h-radio-group v-model="selectStyle">
         <h-radio
-          v-for="(label, index) in ['normal', 'noborder', 'emphasize']"
+          v-for="(label, index) in ['normal', 'no-border', 'emphasize']"
           :key="index"
           :label="label"
           size="small"
@@ -31,16 +31,14 @@
       </h-radio-group>
     </h-form-item>
   </h-form>
-  <h-row :gutter="10">
-    <h-col :span="6">
-      <div class="demo-title">
-        单选
-      </div>
+  <h-grid :gap="10">
+    <h-grid-item :span="6">
+      <div class="demo-title">单选</div>
       <h-select
         :model-value="value1"
         class="curGroup"
         :size="selectSize"
-        :select-style="selectStyle"
+        :input-style="selectStyle"
         clearable
         placeholder="请选择"
         :disabled="selectDisabled === 'disabled'"
@@ -56,21 +54,19 @@
           :disabled="item.value === 2"
         />
       </h-select>
-    </h-col>
-    <h-col :span="6">
-      <div class="demo-title">
-        多选
-      </div>
+    </h-grid-item>
+    <h-grid-item :span="6">
+      <div class="demo-title">多选</div>
       <h-select
         :model-value="values1"
         class="curGroup"
         multiple
         :size="selectSize"
-        :select-style="selectStyle"
+        :input-style="selectStyle"
         clearable
         placeholder="请选择"
         :disabled="selectDisabled === 'disabled'"
-        :collapse="true"
+        :collapse-tags="true"
         :multiple-limit="2"
         :to-body="false"
         @change="changeHandle"
@@ -83,8 +79,8 @@
           :value="item.value"
         />
       </h-select>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script lang="ts">
@@ -142,5 +138,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

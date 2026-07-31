@@ -6,6 +6,6 @@
         type: 'video/mp4',
       },
     ]"
-    poster="https://www.example.com/cdn-static/mydemo/nextjs/images/et5/top-hero-desktop.jpg"
+    poster="/demo-assets/scene-summit.svg"
   />
 </template>

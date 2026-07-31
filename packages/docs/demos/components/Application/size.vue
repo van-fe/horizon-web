@@ -1,15 +1,15 @@
 <template>
-  <h-row>
-    <h-col>
+  <h-grid :gap="12">
+    <h-grid-item :span="24">
       <h-radio-group v-model="size">
         <h-radio label="small" />
         <h-radio label="medium" />
         <h-radio label="large" />
       </h-radio-group>
-    </h-col>
-  </h-row>
-  <h-row>
-    <h-col>
+    </h-grid-item>
+  </h-grid>
+  <h-grid :gap="12">
+    <h-grid-item :span="24">
       <h-application :size="size">
         <h-form label-position="left" label-justify-align="right" label-vertical-align="middle">
           <h-form-item label="avatar">
@@ -24,8 +24,8 @@
           </h-form-item>
         </h-form>
       </h-application>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script lang="ts">

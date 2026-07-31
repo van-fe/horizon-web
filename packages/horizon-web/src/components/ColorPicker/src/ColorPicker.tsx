@@ -56,7 +56,7 @@ export default defineComponent({
 
     /** formItemTrigger **/
     const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
-    // because color-picker use n-input and so no, so provide HFormItemTriggerInjectedKey as undefined
+    // because color-picker use h-input and so no, so provide HFormItemTriggerInjectedKey as undefined
     provide(HFormItemTriggerInjectedKey, undefined);
 
     const formDisabled = inject(HFormDisabledInjectedKey, undefined);

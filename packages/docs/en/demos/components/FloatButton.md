@@ -21,6 +21,6 @@ If you want to rearrange the dragged floating button, you need to toggle the `vi
 :::demo components/FloatButton/draggable.vue :::
 
 ## Button Group
-Use `n-float-button-group` to enable button group
+Use `h-float-button-group` to enable button group
 
 :::demo components/FloatButton/group.vue :::

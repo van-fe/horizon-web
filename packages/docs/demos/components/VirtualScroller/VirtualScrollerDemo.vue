@@ -1,16 +1,16 @@
 <template>
   <div class="virtual-scroller-demo">
     <section class="toolbar">
-      <h-row>
-        <h-col :span="10">
+      <h-grid :gap="12">
+        <h-grid-item :span="10">
           <h-input v-model="tmpKw" placeholder="type kw to search">
             <template #append>
               <h-button :icon="IconSearch" size="medium" @click="doSearch"></h-button>
             </template>
           </h-input>
-        </h-col>
-        <h-col :span="20"></h-col>
-      </h-row>
+        </h-grid-item>
+        <h-grid-item :span="20"></h-grid-item>
+      </h-grid>
     </section>
     <h-virtual-scroller class="scroller" :items="filteredItems" :min-item-size="54">
       <template #before>
@@ -68,7 +68,7 @@ export default defineComponent({
 
     function generateMessage() {
       return {
-        avatar: 'https://www.example.com/cdn-static/mydemo/nextjs/images/home/demoApp/demo-app-logo.png',
+        avatar: '/demo-assets/avatar-indigo.svg',
         message: faker.lorem.text(),
       };
     }

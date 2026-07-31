@@ -16,7 +16,7 @@
 :::demo components/TreeSelect/single.vue :::
 
 ## 多选
-与 `select` 一样，多选的标签使用了 `n-tag` 和 `n-tag-group` 组件结合
+与 `select` 一样，多选的标签使用了 `h-tag` 和 `h-tag-group` 组件结合
 
 默认情况下，不会折叠选中项。可以配置 `collapse-tags = true` 折叠已选项
 
@@ -81,7 +81,7 @@
 ## 禁用
 在 `tree-data` 数据中，某项设置`disabled = true`，可以对其项禁用
 
-但如果希望整棵树禁用，则直接给予 `disabled = true` 给 `n-tree` 即可
+但如果希望整棵树禁用，则直接给予 `disabled = true` 给 `h-tree` 即可
 
 但无论哪种禁用方式，都不会影响展开功能
 

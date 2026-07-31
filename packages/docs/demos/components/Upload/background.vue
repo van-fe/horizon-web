@@ -10,8 +10,8 @@
       <h-switch v-model="showFileList" />
     </h-form-item>
   </h-form>
-  <h-row>
-    <h-col :span="24">
+  <h-grid :gap="12">
+    <h-grid-item :span="24">
       <h-upload
         id="background-uploader"
         v-model:use-background="useBackground"
@@ -20,8 +20,8 @@
         :show-file-list="showFileList"
         :auto-upload="false"
       />
-    </h-col>
-    <h-col :span="24">
+    </h-grid-item>
+    <h-grid-item :span="24">
       <h-upload
         v-model:use-background="useBackground"
         action="https://horizon-web-inspector.demoint.com/upload-mock"
@@ -29,8 +29,8 @@
         :multiple="true"
         :show-file-list="showFileList"
       />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

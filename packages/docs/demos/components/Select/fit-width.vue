@@ -1,9 +1,7 @@
 <template>
-  <h-row :gutter="10">
-    <h-col :span="4">
-      <div class="demo-title">
-        单选
-      </div>
+  <h-grid :gap="10">
+    <h-grid-item :span="4">
+      <div class="demo-title">单选</div>
       <h-select
         v-model="value1"
         clearable
@@ -19,18 +17,16 @@
           :value="item.value"
         />
       </h-select>
-    </h-col>
-    <h-col :span="4">
-      <div class="demo-title">
-        多选
-      </div>
+    </h-grid-item>
+    <h-grid-item :span="4">
+      <div class="demo-title">多选</div>
       <h-select
         v-model="values1"
         multiple
         clearable
         placeholder="请选择"
         :fit-input-width="false"
-        :collapse="true"
+        :collapse-tags="true"
         :to-body="false"
         collapse-tags-fill-up
         @change="changeHandle"
@@ -43,8 +39,8 @@
           :max-lines="2"
         />
       </h-select>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

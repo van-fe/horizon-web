@@ -70,7 +70,7 @@ export const useSegmentedProps = declarePropType({
   },
 
   /**
-   * 是否启用表单模式，以适配 `n-form` 组件
+   * 是否启用表单模式，以适配 `h-form` 组件
     * @en Configuration for form.
    */
   form: {

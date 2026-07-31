@@ -20,7 +20,7 @@ export const useButtonSlots = Object as SlotsType<{
 
 export const useButtonGroupSlots = Object as SlotsType<{
   /**
-   * 默认插槽，用来放置 `n-button`
+   * 默认插槽，用来放置 `h-button`
     * @en Custom content for the default slot.
    */
   default?: {};

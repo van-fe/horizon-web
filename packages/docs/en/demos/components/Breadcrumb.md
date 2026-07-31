@@ -16,7 +16,7 @@ Configure `display-type` to control the collapse mode
 
 `ellipsis`: Ellipsis display, if it exceeds the parent width, elements starting from the second one will be collapsed until it does not exceed the parent width
 
-**Note that when using the `ellipsis` display mode and rendering with `n-breadcrumb-item`, you must set a unique `key` for each `n-breadcrumb-item`, otherwise the rendered content may be incorrect**
+**Note that when using the `ellipsis` display mode and rendering with `h-breadcrumb-item`, you must set a unique `key` for each `h-breadcrumb-item`, otherwise the rendered content may be incorrect**
 :::demo components/Breadcrumb/collapse.vue :::
 
 ## Special Style

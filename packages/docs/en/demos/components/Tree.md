@@ -68,7 +68,7 @@ Through `selected-values`, you can control the selected items, or use two-way bi
 ## Disabled
 In the `tree-data` data, setting `disabled = true` for an item can disable that item
 
-But if you want to disable the entire tree, you can directly give `disabled = true` to `n-tree`
+But if you want to disable the entire tree, you can directly give `disabled = true` to `h-tree`
 
 But regardless of the disable method, it will not affect the expand function
 

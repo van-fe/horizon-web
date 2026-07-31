@@ -1,14 +1,14 @@
 <template>
   <div class="demo-block">
-    <h-row>
-      <h-col :span="24">
+    <h-grid :gap="12">
+      <h-grid-item :span="24">
         <h-form label-position="left" label-vertical-align="middle" style="max-width: 500px">
           <h-form-item label="width">
             <h-slider v-model="width" :min="100" :max="600" :step="25" :input-enable="true" />
           </h-form-item>
         </h-form>
-      </h-col>
-      <h-col :span="24">
+      </h-grid-item>
+      <h-grid-item :span="24">
         <div class="demo-title">
           整体折行
         </div>
@@ -23,8 +23,8 @@
             <h-breadcrumb-item>Sub Page6</h-breadcrumb-item>
           </h-breadcrumb>
         </div>
-      </h-col>
-      <h-col :span="24">
+      </h-grid-item>
+      <h-grid-item :span="24">
         <div class="demo-title">超过最大尺寸后，自动收起展示</div>
         <div :style="{width: width + 'px'}">
           <h-breadcrumb display-type="ellipsis" @itemClick="onItemClick">
@@ -37,8 +37,8 @@
             <h-breadcrumb-item key="7">Sub Page6</h-breadcrumb-item>
           </h-breadcrumb>
         </div>
-      </h-col>
-    </h-row>
+      </h-grid-item>
+    </h-grid>
   </div>
 </template>
 

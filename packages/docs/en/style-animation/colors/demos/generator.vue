@@ -17,14 +17,14 @@ setColor();
 </script>
 
 <template>
-  <h-row>
-    <h-col :span="6">
+  <h-grid :gap="12" align="center">
+    <h-grid-item :span="{ xs: 24, sm: 12, md: 6 }">
       <h-color-picker v-model="inputColor" editable />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="{ xs: 24, sm: 12, md: 6 }">
       <h-button size="medium" @click="setColor">生成</h-button>
-    </h-col>
-    <h-col :span="24">
+    </h-grid-item>
+    <h-grid-item :span="24">
       <div class="color-palettes">
         <div
           v-for="(item, index) of color"
@@ -35,20 +35,24 @@ setColor();
           {{ item.toUpperCase() }}
         </div>
       </div>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <style scoped>
 .color-palettes {
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(88px, 1fr));
+  overflow: hidden;
+  border-radius: 10px;
 }
 
 .color-item {
-  height: 80px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  min-height: 64px;
+  font-size: 12px;
+  font-weight: 600;
 }
 </style>

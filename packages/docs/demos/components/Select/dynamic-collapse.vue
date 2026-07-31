@@ -1,26 +1,31 @@
 <template>
-  <h-row :gutter="10">
-    <h-col :span="6">
+  <h-grid :gap="10">
+    <h-grid-item :span="6">
       <h-select
         v-model="values1"
         placeholder="请选择"
-        :collapse="collapse"
+        :collapse-tags="collapse"
         :multiple="true"
         :to-body="false"
         @focus="focusHandle"
         @blur="blurHandle"
       >
-        <h-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
+        <h-option
+          v-for="item of selectOptions"
+          :key="item.value"
+          :value="item.value"
+          :label="item.label"
+        />
       </h-select>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 
 const values1 = ref([]);
-const collapse = ref(false);
+const collapse-tags = ref(false);
 
 const selectOptions = [
   { value: 1, label: '上海' },

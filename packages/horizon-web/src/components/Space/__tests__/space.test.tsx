@@ -16,9 +16,9 @@ describe('Space.tsx', () => {
       ));
 
       expect(wrapper.html()).toMatchInlineSnapshot(`
-        "<div class="n-space n-space--horizontal n-space--center n-space--medium">
-          <div class="n-space--item"><button>Hello</button></div>
-          <div class="n-space--item"><button>Hello</button></div>
+        "<div class="h-space h-space--horizontal h-space--center h-space--medium">
+          <div class="h-space--item"><button>Hello</button></div>
+          <div class="h-space--item"><button>Hello</button></div>
         </div>"
       `);
 
@@ -36,9 +36,9 @@ describe('Space.tsx', () => {
       ));
 
       expect(wrapper.html()).toMatchInlineSnapshot(`
-        "<div class="n-space n-space--vertical n-space--medium">
-          <div class="n-space--item"><button>Hello</button></div>
-          <div class="n-space--item"><button>Hello</button></div>
+        "<div class="h-space h-space--vertical h-space--medium">
+          <div class="h-space--item"><button>Hello</button></div>
+          <div class="h-space--item"><button>Hello</button></div>
         </div>"
       `);
 
@@ -57,9 +57,9 @@ describe('Space.tsx', () => {
       ));
 
       expect(wrapper.html()).toMatchInlineSnapshot(`
-        "<div class="n-space n-space--horizontal n-space--center" style="column-gap: 10px;">
-          <div class="n-space--item"><button>Hello</button></div>
-          <div class="n-space--item"><button>Hello</button></div>
+        "<div class="h-space h-space--horizontal h-space--center" style="column-gap: 10px;">
+          <div class="h-space--item"><button>Hello</button></div>
+          <div class="h-space--item"><button>Hello</button></div>
         </div>"
       `);
 
@@ -79,13 +79,13 @@ describe('Space.tsx', () => {
       ));
 
       expect(wrapper.html()).toMatchInlineSnapshot(`
-        "<div class="n-space n-space--horizontal n-space--center n-space--medium">
-          <div class="n-space--item"><button>Hello</button></div>
-          <div class="n-divider n-divider--vertical n-divider--default n-divider--title-center" style="margin: 0px;">
-            <div class="n-divider__line-left" style="border-right-style: solid;"></div>
+        "<div class="h-space h-space--horizontal h-space--center h-space--medium">
+          <div class="h-space--item"><button>Hello</button></div>
+          <div class="h-divider h-divider--vertical h-divider--default h-divider--title-center" style="margin: 0px;">
+            <div class="h-divider__line-left" style="border-right-style: solid;"></div>
             <!---->
           </div>
-          <div class="n-space--item"><button>World</button></div>
+          <div class="h-space--item"><button>World</button></div>
         </div>"
       `);
 
@@ -109,13 +109,13 @@ describe('Space.tsx', () => {
       ));
 
       expect(wrapper.html()).toMatchInlineSnapshot(`
-        "<div class="n-space n-space--horizontal n-space--center n-space--medium">
-          <div class="n-space--item">
+        "<div class="h-space h-space--horizontal h-space--center h-space--medium">
+          <div class="h-space--item">
             <div>Hello World</div>
           </div>
-          <div class="n-space--item"><button class="n-button n-button--primary n-button--medium is-solid" type="button" tabindex="0" autofocus="false">
+          <div class="h-space--item"><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" autofocus="false">
               <!---->
-              <div class="n-button__content">Hello World</div>
+              <div class="h-button__content">Hello World</div>
               <!---->
             </button></div>
         </div>"
@@ -145,9 +145,9 @@ describe('Space.tsx', () => {
       ));
 
       expect(wrapper.html()).toMatchInlineSnapshot(`
-        "<div class="n-space n-space--horizontal n-space--center n-space--medium">
-          <div class="n-space--item"><button>Hello</button></div><span class="custom-separator">|</span>
-          <div class="n-space--item"><button>World</button></div>
+        "<div class="h-space h-space--horizontal h-space--center h-space--medium">
+          <div class="h-space--item"><button>Hello</button></div><span class="custom-separator">|</span>
+          <div class="h-space--item"><button>World</button></div>
         </div>"
       `);
       const space = wrapper.findComponent(HSpace);

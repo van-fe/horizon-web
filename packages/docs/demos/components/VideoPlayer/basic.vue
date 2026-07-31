@@ -2,9 +2,10 @@
   <h-video-player
     :sources="[
       {
-        src: 'https://www.example.com/cdn-static/mydemo/nextjs/images/et5/et5-hero-video.mp4',
+        src: '/aurora-background.mp4',
         type: 'video/mp4',
       },
     ]"
+    poster="/demo-assets/video-poster.svg"
   />
 </template>

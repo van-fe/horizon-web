@@ -13,8 +13,8 @@
       <h-switch v-model="showRadio" :status="true" />
     </h-form-item>
   </h-form>
-  <h-row>
-    <h-col :span="12">
+  <h-grid :gap="12">
+    <h-grid-item :span="12">
       <div class="demo-title">单选</div>
       <h-tree
         :tree-data="baseTreeData"
@@ -23,8 +23,8 @@
         :check-strictly="checkStrictly"
         :show-radio="showRadio"
       />
-    </h-col>
-    <h-col :span="12">
+    </h-grid-item>
+    <h-grid-item :span="12">
       <div class="demo-title">多选</div>
       <h-tree
         :tree-data="baseTreeData"
@@ -33,8 +33,8 @@
         :check-strictly="checkStrictly"
         :multiple="true"
       />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

@@ -3,7 +3,7 @@ import { declarePropType } from '@aurora/utils';
 
 export const useControlsProps = declarePropType({
   /**
-   * 总的权限数组，在 `n-control` 内传入的 `label` 可以过滤是否显示
+   * 总的权限数组，在 `h-control` 内传入的 `label` 可以过滤是否显示
     * @en Configuration for access list.
    */
   accessList: {

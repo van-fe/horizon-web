@@ -1,6 +1,6 @@
 <template>
-  <h-row>
-    <h-col :span="6">
+  <h-grid :gap="12">
+    <h-grid-item :span="6">
       <div class="demo-title">描述文字在右侧</div>
       <h-select
         v-model="value1"
@@ -16,8 +16,8 @@
           :description="item.description"
         />
       </h-select>
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">描述文字在下方</div>
       <h-select
         v-model="value2"
@@ -34,8 +34,8 @@
           :description="item.description"
         />
       </h-select>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script lang="ts" setup>

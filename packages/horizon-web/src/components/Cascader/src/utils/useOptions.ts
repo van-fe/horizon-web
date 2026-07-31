@@ -3,25 +3,18 @@ import type {
   ModelValueType,
   HCascaderExtendOption,
   HCascaderOption,
-  HCascaderUuidType,
 } from './types';
 
 export function transformModelValue(modelValue: ModelValueType) {
   if (Array.isArray(modelValue)) {
     if (Array.isArray(modelValue[0])) {
-      return (modelValue as ModelValueSingleType[]).map(val => val.join(' / '));
+      return (modelValue as ModelValueSingleType[]).map(valuePath => valuePath.slice());
     } else if (modelValue.length > 0) {
-      return [modelValue.join(' / ')];
+      return [(modelValue as ModelValueSingleType).slice()];
     }
   }
 
   return [];
-}
-
-export function transformUuidToModelValue(uuid: HCascaderUuidType[], multiple: boolean) {
-  const values = uuid.map(item => item.toString().split(' / '));
-
-  return multiple ? values : values[0];
 }
 
 export function getTreeDataOriginData(treeDataList: HCascaderExtendOption[], level = 0) {

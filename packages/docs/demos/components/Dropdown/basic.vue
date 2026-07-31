@@ -1,6 +1,6 @@
 <template>
-  <h-row>
-    <h-col :span="24">
+  <h-grid :gap="12">
+    <h-grid-item :span="24">
       <h-dropdown>
         <h-button>使用 #dropdown 插槽</h-button>
         <template #dropdown>
@@ -23,8 +23,8 @@
           <h-dropdown-item>重庆</h-dropdown-item>
         </h-dropdown-menu>
       </h-dropdown>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

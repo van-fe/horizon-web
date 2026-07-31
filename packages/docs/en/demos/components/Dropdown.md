@@ -1,13 +1,13 @@
 ## Basic Usage
-Provides `#dropdown` slot to place `n-dropdown-menu`, or you can directly place `n-dropdown-menu` in `#default` without using named slots
+Provides `#dropdown` slot to place `h-dropdown-menu`, or you can directly place `h-dropdown-menu` in `#default` without using named slots
 :::demo components/Dropdown/basic.vue :::
 
 ## Trigger Object
-You can use the `#suffix` slot of `n-button` and use `n-button-group` to split the trigger button
+You can use the `#suffix` slot of `h-button` and use `h-button-group` to split the trigger button
 :::demo components/Dropdown/trigger-target.vue :::
 
 ## Icon
-Set `props.icon` for `n-menu-item` to add an `icon` prefix
+Set `props.icon` for `h-menu-item` to add an `icon` prefix
 :::demo components/Dropdown/icon.vue :::
 
 ## Trigger Method
@@ -15,7 +15,7 @@ Allows using `click` `hover` `contextMenu` to trigger
 :::demo components/Dropdown/trigger.vue :::
 
 ## Directive Event
-You can get the click event of `n-dropdown-item` through the `emit.command` event, or trigger the command through the `click` event mounted on `n-dropdown-item`
+You can get the click event of `h-dropdown-item` through the `emit.command` event, or trigger the command through the `click` event mounted on `h-dropdown-item`
 :::demo components/Dropdown/command.vue :::
 
 ## Manually Toggle Menu
@@ -25,11 +25,11 @@ Of course, you can set `trigger="manual"` and pass in `visible` to control wheth
 :::demo components/Dropdown/manual.vue :::
 
 ## Grouped Menu
-You can use `n-dropdown-gruop` to group
+You can use `h-dropdown-gruop` to group
 :::demo components/Dropdown/group.vue :::
 
 ## Multi-level Menu
-Use `n-dropdown-submenu` to enable multi-level menu
+Use `h-dropdown-submenu` to enable multi-level menu
 :::demo components/Dropdown/submenu.vue :::
 
 ## Theme

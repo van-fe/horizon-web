@@ -1,11 +1,11 @@
 import { resolveComponent, useSSRContext } from "vue/dist/vue.esm-bundler.js";
-import { ssrRenderAttrs, ssrRenderComponent } from "vue/server-renderer";
+import { ssrRenderAttrs, ssrRenderComponent, ssrRenderStyle } from "vue/server-renderer";
 import { _ as _export_sfc } from "./plugin-vue_export-helper.1tPrXgE0.js";
 const __pageData = JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"demos/directives/v-watermark.md","filePath":"zh/demos/directives/v-watermark.md"}');
 const _sfc_main = { name: "demos/directives/v-watermark.md" };
 function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_demo_block = resolveComponent("demo-block");
-  _push(`<div${ssrRenderAttrs(_attrs)}><h2 id="单行文本水印" tabindex="-1">单行文本水印 <a class="header-anchor" href="#单行文本水印" aria-label="Permalink to &quot;单行文本水印&quot;">​</a></h2><p>通过<code>content</code>属性可以设置：单行文本水印内容，值为字符串。</p>`);
+  _push(`<div${ssrRenderAttrs(_attrs)}><h1>v-watermark</h1><p class="description"><code>v-watermark</code> 是 <code>watermark</code> 组件的指令使用方式</p><h2 id="单行文本水印" tabindex="-1">单行文本水印 <a class="header-anchor" href="#单行文本水印" aria-label="Permalink to &quot;单行文本水印&quot;">​</a></h2><p>通过<code>content</code>属性可以设置：单行文本水印内容，值为字符串。</p>`);
   _push(ssrRenderComponent(_component_demo_block, {
     source: `<template>
   <div v-watermark="'watermark watermark'">
@@ -30,7 +30,7 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
     source: `<template>
   <div
     v-watermark="{
-      image: 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg',
+      image: '/demo-assets/watermark.svg',
       content: 'watermark watermark',
     }">
     <div style="height: 300px"></div>
@@ -142,7 +142,7 @@ const watermarkOptions = computed(() => ({
 }));
 
 watch(showImage, () => {
-  image.value = showImage.value ? 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg' : null;
+  image.value = showImage.value ? '/demo-assets/watermark.svg' : null;
 });
 <\/script>
 
@@ -178,7 +178,7 @@ watch(showImage, () => {
 `,
     path: "demos/directives/v-watermark/demo4.vue"
   }, null, _parent));
-  _push(`</div>`);
+  _push(`<h2 id="watermark-api" class="no-underline h2"><a href="#watermark-api" class="!no-underline">Watermark Api</a></h2><h3 id="watermark-options" class="no-underline h3"><a href="#watermark-options" class="!no-underline">Watermark Options</a></h3><table class="md-table"><thead><tr><th>属性</th><th>说明</th><th>是否必填</th><th>默认值</th><th>类型</th><th>参数名</th><th>参数类型</th><th>参数说明</th></tr></thead><tbody><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">global</td><td rowspan="1">全局模式（全局模式下，水印内容为“fixed”定位，且会挂在到body标签下面；非全局模式下，水印内容为“absolute”定位）</td><td rowspan="1">否</td><td rowspan="1">false</td><td rowspan="1"><code> boolean</code></td><td>-</td><td>-</td><td>-</td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">container</td><td rowspan="1">挂载水印内容的外层容器（若有设置“container”，则水印将作为子元素挂载到“container”下面；否则，将作为兄弟节点挂载到“默认插槽”内容之后）<br>PS：使用“v-watermark”指令时，若处于非全局模式，”container“的值将固定为”绑定该指令的元素“</td><td rowspan="1">否</td><td rowspan="1">-</td><td rowspan="1"><code> Object as PropType&lt;HTMLElement&gt;</code></td><td>-</td><td>-</td><td>-</td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">content</td><td rowspan="1">水印文本内容（单行文本水印内容，值为字符串；多行文本水印内容，值为字符串数组）</td><td rowspan="1">否</td><td rowspan="1">&#39;watermark&#39;</td><td rowspan="1"><code> string | string[]</code></td><td>-</td><td>-</td><td>-</td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">image</td><td rowspan="1">水印图片内容（值为图片的URL地址，优先级比<code>content</code>高，支持base64格式，建议传入&quot;2 or 3&quot;倍图）</td><td rowspan="1">否</td><td rowspan="1">-</td><td rowspan="1"><code> string</code></td><td>-</td><td>-</td><td>-</td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">width</td><td rowspan="1">单个水印内容的宽度，单位为px</td><td rowspan="1">否</td><td rowspan="1">120</td><td rowspan="1"><code> number</code></td><td>-</td><td>-</td><td>-</td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">height</td><td rowspan="1">单个水印内容的高度，单位为px</td><td rowspan="1">否</td><td rowspan="1">64</td><td rowspan="1"><code> number</code></td><td>-</td><td>-</td><td>-</td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">rotate</td><td rowspan="1">单个水印内容的旋转角度，单位为deg</td><td rowspan="1">否</td><td rowspan="1">-15</td><td rowspan="1"><code> number</code></td><td>-</td><td>-</td><td>-</td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">zIndex</td><td rowspan="1">水印整体的“z-index”层级</td><td rowspan="1">否</td><td rowspan="1">99999</td><td rowspan="1"><code> number</code></td><td>-</td><td>-</td><td>-</td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">contentStyle</td><td rowspan="1">水印文本内容的样式</td><td rowspan="1">否</td><td rowspan="1">() =&gt; ({<br>      fontStyle: &#39;normal&#39;,<br>      fontVariant: &#39;normal&#39;,<br>      fontWeight: &#39;normal&#39;,<br>      fontSize: 16,<br>      fontFamily: &#39;sans-serif&#39;,<br>      color: &#39;rgba(115, 117, 122, 1)&#39;,<br>    })</td><td rowspan="1"><code> Object as PropType&lt;WatermarkContentStyle&gt;</code></td><td>-</td><td>-</td><td>-</td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">lineGap</td><td rowspan="1">多行文本时，各行文本之间的间距，单位为px</td><td rowspan="1">否</td><td rowspan="1">5</td><td rowspan="1"><code> number</code></td><td>-</td><td>-</td><td>-</td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">gap</td><td rowspan="1">各水印内容在水平(x)和垂直方向(y)的padding（[x, y]），单位为px</td><td rowspan="1">否</td><td rowspan="1">() =&gt; [100, 60]</td><td rowspan="1"><code> Object as PropType&lt;[number, number]&gt;</code></td><td>-</td><td>-</td><td>-</td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">offset</td><td rowspan="1">水印整体距离容器左上角的偏移量，单位为px</td><td rowspan="1">否</td><td rowspan="1">() =&gt; [0, 0]</td><td rowspan="1"><code> Object as PropType&lt;[number, number]&gt;</code></td><td>-</td><td>-</td><td>-</td></tr><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">opacity</td><td rowspan="1">水印整体的不透明度，取值范围：0 ～ 1</td><td rowspan="1">否</td><td rowspan="1">0.1</td><td rowspan="1"><code> number</code></td><td>-</td><td>-</td><td>-</td></tr></tbody></table></div>`);
 }
 const _sfc_setup = _sfc_main.setup;
 _sfc_main.setup = (props, ctx) => {

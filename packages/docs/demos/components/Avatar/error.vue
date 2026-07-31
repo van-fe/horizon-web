@@ -1,15 +1,15 @@
 <template>
-  <div class="n-demo">
-    <div class="n-demo__container">
-      <div class="n-demo__title">通过加载图片失败默认处理</div>
+  <div class="h-demo">
+    <div class="h-demo__container">
+      <div class="h-demo__title">通过加载图片失败默认处理</div>
       <h-avatar size="large" :src="src1" @error="errorHandler1" />
     </div>
-    <div class="n-demo__container">
-      <div class="n-demo__title">通过 error 方法自定义处理加载图片失败情况</div>
+    <div class="h-demo__container">
+      <div class="h-demo__title">通过 error 方法自定义处理加载图片失败情况</div>
       <h-avatar size="large" :src="src" @error="errorHandler" />
     </div>
-    <div class="n-demo__container">
-      <div class="n-demo__title">通过插槽自定义加载图片失败情况</div>
+    <div class="h-demo__container">
+      <div class="h-demo__title">通过插槽自定义加载图片失败情况</div>
       <h-avatar size="large" :src="src2">
         <template #error>
           <div>失败了</div>
@@ -27,7 +27,7 @@ export default defineComponent({
     let src2 = ref('https://cdn-app.example.com/us/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg');
     let src1 = ref('https://cdn-app.example.com/us/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg');
     const errorHandler = () => {
-      src.value = 'https://cdn-app.example.com/user/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg';
+      src.value = '/demo-assets/avatar-cyan.svg';
     };
     const errorHandler1 = () => {
       console.info('图片加载失败了');

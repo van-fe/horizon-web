@@ -3,7 +3,7 @@ import type { HTabSize, HTabValue } from './useProps';
 
 export const useTabsSlots = Object as SlotsType<{
   /**
-   * 选项卡容器，使用 `n-tab` 填充
+   * 选项卡容器，使用 `h-tab` 填充
     * @en Custom content for the default slot.
    **/
   default?: {};

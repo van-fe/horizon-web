@@ -16,12 +16,14 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import { getDemoImageUrl } from '../../demo-assets';
 export default defineComponent({
   setup() {
     const imgSrc = ref('');
+    let imageIndex = 0;
     const generateImage = () => {
-      const base = Math.floor(Math.random() * 60) + 10;
-      imgSrc.value = `https://picsum.photos/id/${base}/1366/768`;
+      imgSrc.value = getDemoImageUrl(imageIndex);
+      imageIndex += 1;
     };
     generateImage();
     return {

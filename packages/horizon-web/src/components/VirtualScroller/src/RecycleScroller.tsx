@@ -2,25 +2,16 @@ import type { VNode } from 'vue';
 import {
   unref,
   h,
-  computed,
-  markRaw,
   nextTick,
   onActivated,
   onBeforeUnmount,
   onMounted,
-  shallowReactive,
   defineComponent,
   ref,
   watch,
   toRef,
 } from 'vue';
-import {
-  ComponentClassBlock,
-  cls as multiCls,
-  isNil,
-  useNamespace,
-  isDefined,
-} from '@aurora/utils';
+import { ComponentClassBlock, cls as multiCls, useNamespace, isDefined } from '@aurora/utils';
 import type { HorizonWebSetupContext, HorizonWebComponentInstance } from '@aurora/utils';
 import { useRecycleScrollerProps } from './composables/useProps';
 import { useRecycleScrollerEmits } from './composables/useEmits';
@@ -30,16 +21,14 @@ import type { RecycleScrollerEmits } from './composables/useEmits';
 import type { RecycleScrollerSlots } from './composables/useSlots';
 import type { RecycleScrollerExposes } from './composables/useExposes';
 import { useElementVisibility, useResizeObserver } from '@vueuse/core';
-import type { Sizes, ViewItem } from './utils/types';
 import { getScrollParent } from './utils/scrollParent';
 import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
 import useSize from '~/utils/useSize';
-import set from 'lodash/set';
-import get from 'lodash/get';
 import type { ScrollbarExposes } from '~/components/Scrollbar/src/composables/useExposes';
-
-// 自管理 记录的pk
-let uid = 0;
+import useRecycleScrollerLayout, {
+  normalizeScrollerSize,
+} from './composables/useRecycleScrollerLayout';
+import useRecycleScrollerPool from './composables/useRecycleScrollerPool';
 
 export default defineComponent({
   name: `${useNamespace()}RecycleScroller`,
@@ -61,21 +50,17 @@ export default defineComponent({
     // 本地变量
     let $_startIndex = 0;
     let $_endIndex = 0;
-    const $_views = new Map<String | Number, ViewItem>();
-    const $_unusedViews = new Map();
     let $_scrollDirty = false;
     let $_lastUpdateScrollPosition = 0;
-    let $_computedMinItemSize = 0;
-    let $_sortTimer: ReturnType<typeof setTimeout>;
+    let $_sortTimer: ReturnType<typeof setTimeout> | undefined;
     let $_updateTimeout: ReturnType<typeof setTimeout> | null;
-    let $_refreshTimeout: ReturnType<typeof setTimeout>;
+    let $_refreshTimeout: ReturnType<typeof setTimeout> | undefined;
 
     // var(s) ---------------------------------------
     // 组件是否完成挂载;
-    const ready = ref<Boolean>(false);
-    const totalSize = ref<Number>(0);
-    const pool = ref<ViewItem[]>([]);
-    const hoverKey = ref<String>('');
+    const ready = ref(false);
+    const totalSize = ref(0);
+    const hoverKey = ref<any>('');
     const listenerTarget = ref<Element | Window | null>();
 
     const cls = new ComponentClassBlock('recycle-scroller');
@@ -94,8 +79,22 @@ export default defineComponent({
     });
 
     useResizeObserver(wrapperRef, handleResize);
+    useResizeObserver(beforeRef, () => ready.value && updateVisibleItems(false));
+    useResizeObserver(afterRef, () => ready.value && updateVisibleItems(false));
 
     const sizeRef = useSize(toRef(props, 'size'), 'medium');
+    const {
+      computedMinItemSize,
+      getItemKey,
+      getItemPosition,
+      getItemType,
+      getRange,
+      getScrollPosition,
+      itemIndexByKey,
+      sizes,
+    } = useRecycleScrollerLayout(props);
+    const { acquireView, pool, releaseAllViews, releaseOutsideRange, releaseViewByKey, sortViews } =
+      useRecycleScrollerPool();
 
     // expose ---------------------------------------
     expose({
@@ -107,12 +106,6 @@ export default defineComponent({
     watch(isWrapperVisible, isVisible => {
       handleVisibilityChange(isVisible);
     });
-    // 数据变化时更新渲染;
-    watch(
-      () => props.items,
-      () => updateVisibleItems(true),
-    );
-
     watch(
       () => props.pageMode,
       () => {
@@ -121,60 +114,19 @@ export default defineComponent({
       },
     );
 
+    watch(itemIndexByKey, () => updateVisibleItems(true));
+    watch(sizes, () => updateVisibleItems(false), { deep: true });
     watch(
-      () => props.gridItems,
-      () => updateVisibleItems(true),
+      [
+        () => props.itemSize,
+        () => props.gridItems,
+        () => props.itemSecondarySize,
+        () => props.direction,
+        () => props.buffer,
+        () => props.expandWrapperByChildren,
+      ],
+      () => updateVisibleItems(false),
     );
-
-    watch(
-      () => props.itemSecondarySize,
-      () => updateVisibleItems(true),
-    );
-
-    // computed(s) ---------------------------------------
-    // 传入的数据是否为基础类型数组
-    const isSimpleArray = computed(() => props.items.length && typeof props.items[0] !== 'object');
-
-    // -
-    const sizes = computed((): Sizes => {
-      const ret: Sizes = {
-        '-1': { accumulator: 0 },
-      };
-
-      if (isNil(props.itemSize)) {
-        let computedMinSize = 10000;
-        let accumulator = 0;
-        let current;
-        for (let i = 0, l = props.items.length; i < l; i++) {
-          current = props.items[i][props.sizeField] || props.minItemSize;
-          if (current < computedMinSize) {
-            computedMinSize = current;
-          }
-          accumulator += current;
-          ret[i] = { accumulator, size: current };
-        }
-        $_computedMinItemSize = computedMinSize;
-      }
-      return ret;
-    });
-
-    watch(
-      () => sizes,
-      () => {
-        updateVisibleItems(false);
-      },
-      {
-        deep: true,
-      },
-    );
-
-    const itemIndexKey = computed(() => {
-      const ret: Record<string, number> = {};
-      for (let i = 0, l = props.items.length; i < l; i++) {
-        set(ret, [props.items[i], props.keyField], i);
-      }
-      return ret;
-    });
 
     // hooks ---------------------------------------
     // # created
@@ -210,6 +162,9 @@ export default defineComponent({
     // #
     onBeforeUnmount(() => {
       removeListeners();
+      clearTimeout($_sortTimer);
+      clearTimeout($_updateTimeout ?? undefined);
+      clearTimeout($_refreshTimeout);
     });
 
     /* -----------------------------------------------------------Method(s)----------------------------------------------------------------------- */
@@ -224,40 +179,6 @@ export default defineComponent({
       }
     }
 
-    function addView(_pool: ViewItem[], index: number, item: ViewItem, key: string, type: string) {
-      const nr = markRaw({
-        id: uid++,
-        index,
-        used: true,
-        key,
-        type,
-      });
-      const view = shallowReactive<ViewItem>({
-        item,
-        position: 0,
-        offset: 0,
-        nr,
-      });
-
-      _pool.push(view);
-      return view;
-    }
-
-    function unuseView(view: ViewItem, fake = false) {
-      const unusedViews = $_unusedViews;
-      const type = view.nr.type;
-      let unusedPool = unusedViews.get(type);
-      if (!unusedPool) {
-        unusedPool = [];
-        unusedViews.set(type, unusedPool);
-      }
-      unusedPool.push(view);
-      if (!fake) {
-        view.nr.used = false;
-        view.position = -9999;
-      }
-    }
-
     function getScroll(): { start: number; end: number } {
       const isVertical = props.direction === 'vertical';
       let scrollState: { start: number; end: number };
@@ -265,19 +186,29 @@ export default defineComponent({
 
       if (props.pageMode) {
         const bounds = el.getBoundingClientRect();
-        const boundsSize = isVertical ? bounds.height : bounds.width;
-        const start = -(isVertical ? bounds.top : bounds.left);
-        let size = isVertical ? window.innerHeight : window.innerWidth;
+        const scrollParent = getScrollParent(el);
+        const isDocumentScroller =
+          scrollParent === document.documentElement ||
+          scrollParent === document.body ||
+          scrollParent === document.scrollingElement;
+        const parentBounds = isDocumentScroller ? null : scrollParent?.getBoundingClientRect();
+        const viewportStart = parentBounds
+          ? isVertical
+            ? parentBounds.top
+            : parentBounds.left
+          : 0;
+        const start = viewportStart - (isVertical ? bounds.top : bounds.left);
+        const viewportSize = parentBounds
+          ? isVertical
+            ? (scrollParent as HTMLElement).clientHeight
+            : (scrollParent as HTMLElement).clientWidth
+          : isVertical
+            ? window.innerHeight
+            : window.innerWidth;
 
-        if (start < 0) {
-          size += start;
-        }
-        if (start + size > boundsSize) {
-          size = boundsSize - start;
-        }
         scrollState = {
           start,
-          end: start + size,
+          end: start + viewportSize,
         };
       } else if (isVertical) {
         scrollState = {
@@ -295,15 +226,8 @@ export default defineComponent({
     }
 
     function scrollToItem(index: number) {
-      let scroll: number;
-      const gridItems = props.gridItems || 1;
-      if (props.itemSize === null) {
-        scroll = index > 0 ? sizes.value[index - 1].accumulator : 0;
-      } else {
-        scroll = Math.floor(index / gridItems) * props.itemSize!;
-      }
-
-      scrollToPosition(scroll);
+      const beforeSize = props.items.length ? getBeforeSize() : 0;
+      scrollToPosition(beforeSize + getScrollPosition(index));
     }
 
     function scrollToPosition(position: number) {
@@ -321,16 +245,23 @@ export default defineComponent({
 
       if (props.pageMode) {
         const viewportEl = getScrollParent(wrapperRef.value!)!;
-
-        const scrollTop = viewportEl?.tagName === 'HTML' ? 0 : viewportEl[direction.scroll];
-        const bounds = viewportEl?.getBoundingClientRect();
+        const isDocumentScroller =
+          viewportEl === document.documentElement ||
+          viewportEl === document.body ||
+          viewportEl === document.scrollingElement;
+        const currentScroll = isDocumentScroller
+          ? direction.scroll === 'scrollTop'
+            ? window.scrollY
+            : window.scrollX
+          : viewportEl[direction.scroll];
+        const bounds = isDocumentScroller ? null : viewportEl.getBoundingClientRect();
 
         const scroller = wrapperRef.value!.getBoundingClientRect();
-        const scrollerPosition = scroller[direction.start] - bounds[direction.start];
+        const scrollerPosition = scroller[direction.start] - (bounds?.[direction.start] ?? 0);
 
         viewport = viewportEl as HTMLElement;
         scrollDirection = direction.scroll;
-        scrollDistance = position + scrollTop + scrollerPosition;
+        scrollDistance = position + currentScroll + scrollerPosition;
       } else {
         viewport = wrapperRef.value!;
         scrollDirection = direction.scroll;
@@ -376,6 +307,7 @@ export default defineComponent({
     }
 
     function addListeners() {
+      removeListeners();
       listenerTarget.value = getListenerTarget();
       listenerTarget.value?.addEventListener('scroll', handleScroll, false);
       listenerTarget.value?.addEventListener('resize', handleResize);
@@ -447,11 +379,21 @@ export default defineComponent({
       ready.value && updateVisibleItems(false);
     }
 
+    function getBeforeSize() {
+      if (!beforeRef.value) return 0;
+
+      return props.direction === 'vertical'
+        ? beforeRef.value.scrollHeight
+        : beforeRef.value.scrollWidth;
+    }
+
     function setWrapperSizeByChildren() {
       if (wiewRef.value) {
         const items = Array.from(
           wiewRef.value.querySelectorAll(`.${cls.e('item-view')}`) as NodeListOf<HTMLElement>,
         );
+
+        if (!items.length) return;
 
         if (props.direction === 'vertical') {
           const size = Math.max(...items.map(item => item.offsetWidth));
@@ -473,240 +415,70 @@ export default defineComponent({
      */
     function updateVisibleItems(checkItem: boolean, checkPositionDiff = false) {
       const itemSize = props.itemSize;
-      const gridItems = props.gridItems || 1;
-      const itemSecondarySize = props.itemSecondarySize || itemSize;
-      const minItemSize = $_computedMinItemSize;
-      const typeField = props.typeField;
-      const keyField = isSimpleArray.value ? null : props.keyField;
       const items = props.items;
       const count = items.length;
       const size = sizes.value;
-      const views = $_views;
-      const unusedViews = $_unusedViews;
-      const _pool = pool.value;
-      const itemIndexByKey = itemIndexKey.value;
+      const scroll = getScroll();
 
-      let startIndex: number, endIndex: number;
-      let _totalSize: number;
-      let visibleStartIndex: number, visibleEndIndex: number;
+      if (checkPositionDiff && count) {
+        const positionDiff = Math.abs(scroll.start - $_lastUpdateScrollPosition);
+        const updateThreshold =
+          itemSize === null
+            ? computedMinItemSize.value
+            : normalizeScrollerSize(itemSize, computedMinItemSize.value);
 
-      // 没有数据, 初始化所有位置信息为0
-      if (!count) {
-        startIndex = endIndex = visibleStartIndex = visibleEndIndex = _totalSize = 0;
-      } else {
-        const scroll = getScroll();
-
-        if (checkPositionDiff) {
-          let positionDiff = scroll.start - $_lastUpdateScrollPosition;
-          if (positionDiff < 0) {
-            positionDiff = -positionDiff;
-          }
-          if ((itemSize === null && positionDiff < minItemSize) || positionDiff < itemSize!) {
-            return {
-              continuous: true,
-            };
-          }
+        if (updateThreshold > 0 && positionDiff < updateThreshold) {
+          return {
+            continuous: true,
+          };
         }
-        $_lastUpdateScrollPosition = scroll.start;
-
-        const buffer = props.buffer;
-        scroll.start -= buffer;
-        scroll.end += buffer;
-
-        let beforeSize = 0;
-        if (beforeRef.value) {
-          beforeSize = beforeRef.value.scrollHeight;
-          scroll.start -= beforeSize;
-        }
-
-        if (afterRef.value) {
-          const afterSize = afterRef.value.scrollHeight;
-          scroll.end += afterSize;
-        }
-        if (itemSize === null) {
-          let h: number;
-          let a = 0;
-          let b = count - 1;
-          let i = ~~(count / 2);
-          let oldI: number;
-
-          do {
-            oldI = i;
-            h = size[i].accumulator;
-            if (h < scroll.start) {
-              a = i;
-            } else if (i < count - 1 && size[i + 1].accumulator > scroll.start) {
-              b = i;
-            }
-            i = ~~((a + b) / 2);
-          } while (i !== oldI);
-
-          i < 0 && (i = 0);
-          startIndex = i;
-
-          _totalSize = size[count - 1].accumulator;
-
-          for (
-            endIndex = i;
-            endIndex < count && size[endIndex].accumulator < scroll.end;
-            endIndex++
-          );
-          if (endIndex === -1) {
-            endIndex = items.length - 1;
-          } else {
-            endIndex++;
-            endIndex > count && (endIndex = count);
-          }
-
-          // search visible startIndex
-          for (
-            visibleStartIndex = startIndex;
-            visibleStartIndex < count &&
-            beforeSize + size[visibleStartIndex].accumulator < scroll.start;
-            visibleStartIndex++
-          );
-
-          // search visible endIndex
-          for (
-            visibleEndIndex = visibleStartIndex;
-            visibleEndIndex < count && beforeSize + size[visibleEndIndex].accumulator < scroll.end;
-            visibleEndIndex++
-          );
-        } else {
-          startIndex = ~~((scroll.start / itemSize!) * gridItems);
-          const remainer = startIndex % gridItems;
-          startIndex -= remainer;
-          endIndex = Math.ceil((scroll.end / itemSize!) * gridItems);
-          visibleStartIndex = Math.max(
-            0,
-            Math.floor(((scroll.start - beforeSize) / itemSize!) * gridItems),
-          );
-          visibleEndIndex = Math.floor(((scroll.end - beforeSize) / itemSize!) * gridItems);
-
-          startIndex < 0 && (startIndex = 0);
-          endIndex > count && (endIndex = count);
-          visibleStartIndex < 0 && (visibleStartIndex = 0);
-          visibleEndIndex > count && (visibleEndIndex = count);
-
-          _totalSize = Math.ceil(count / gridItems) * itemSize!;
-        }
-        // -
       }
+      $_lastUpdateScrollPosition = scroll.start;
+
+      const beforeSize = getBeforeSize();
+      const {
+        startIndex,
+        endIndex,
+        visibleStartIndex,
+        visibleEndIndex,
+        totalSize: nextTotalSize,
+      } = getRange(scroll.start, scroll.end, beforeSize);
+      const indexByKey = itemIndexByKey.value;
 
       if (endIndex - startIndex > 1000) {
         itemsLimitError();
       }
 
-      totalSize.value = _totalSize;
-
-      let view;
+      totalSize.value = nextTotalSize;
 
       const continuous = startIndex <= $_endIndex && endIndex >= $_startIndex;
 
-      // Unuse views that are no longer visible
       if (continuous) {
-        for (let i = 0, l = _pool.length; i < l; i++) {
-          view = _pool[i];
-          if (view.nr.used) {
-            if (checkItem) {
-              view.nr.index = itemIndexByKey[get(view.item, keyField!)];
-            }
-
-            if (
-              view.nr.index === null ||
-              view.nr.index === undefined ||
-              view.nr.index < startIndex ||
-              view.nr.index >= endIndex
-            ) {
-              unuseView(view);
-            }
-          }
-        }
+        releaseOutsideRange(startIndex, endIndex, checkItem ? indexByKey : undefined);
+      } else {
+        // A large jump must recycle all old active views before assigning the new range.
+        releaseAllViews();
       }
 
-      const unusedIndex = continuous ? null : new Map();
-
-      let item: any;
-      let type: string;
-      let v;
-
       for (let i = startIndex; i < endIndex; i++) {
-        item = items[i];
-        const key = keyField ? get(item, keyField) : item;
-        if (key === null) {
-          throw new Error(`Key is ${key} on item (keyField is '${keyField}')`);
-        }
-        view = views.get(key);
+        const item = items[i];
+        const key = getItemKey(item, i);
 
-        if (!itemSize && !size[i].size) {
-          if (view) unuseView(view);
+        if (itemSize === null && !size[i]?.size) {
+          releaseViewByKey(key);
           continue;
         }
 
-        type = item[typeField];
+        const { newlyUsed, view } = acquireView(i, item, key, getItemType(item));
 
-        let unusedPool = unusedViews.get(type);
-        let newlyUsedView = false;
-
-        if (!view) {
-          if (continuous) {
-            // reuse existing view
-            if (unusedPool && unusedPool.length) {
-              view = unusedPool.pop();
-            } else {
-              view = addView(_pool, i, item, key, type);
-            }
-          } else {
-            // Use existing view
-            // We don't care if they are already used
-            // because we are not in continous scrolling
-            v = unusedIndex?.get(type) || 0;
-
-            if (!unusedPool || v >= unusedPool.length) {
-              view = addView(_pool, i, item, key, type);
-              unuseView(view, true);
-              unusedPool = unusedViews.get(type);
-            }
-
-            view = unusedPool[v];
-            unusedIndex?.set(type, v + 1);
-          }
-
-          // assign view to item;
-          views.delete(view.nr.key);
-          view.nr.used = true;
-          view.nr.index = i;
-          view.nr.key = key;
-          view.nr.type = type;
-          views.set(key, view);
-
-          newlyUsedView = true;
-        } else {
-          if (!view.nr.used) {
-            view.nr.used = true;
-            newlyUsedView = true;
-            if (unusedPool) {
-              const index = unusedPool.indexOf(view);
-              if (index !== -1) unusedPool.splice(index, 1);
-            }
-          }
-        }
-
-        view.item = item;
-
-        if (newlyUsedView) {
+        if (newlyUsed) {
           if (i === items.length - 1) emit('scrollEnd');
           if (i === 0) emit('scrollStart');
         }
 
-        // update position
-        if (itemSize === null) {
-          view.position = size[i - 1].accumulator;
-          view.offset = 0;
-        } else {
-          view.position = Math.floor(i / gridItems) * itemSize!;
-          view.offset = (i % gridItems) * itemSecondarySize!;
-        }
+        const position = getItemPosition(i);
+        view.position = position.position;
+        view.offset = position.offset;
       }
 
       $_startIndex = startIndex;
@@ -724,10 +496,7 @@ export default defineComponent({
         });
       }
 
-      return {
-        continuous,
-      };
-      // -
+      return { continuous };
     }
 
     function itemsLimitError() {
@@ -744,10 +513,6 @@ export default defineComponent({
       throw new Error('Rendered items limit reached');
     }
 
-    function sortViews() {
-      pool.value.sort((viewA, viewB) => viewA.nr.index - viewB.nr.index);
-    }
-
     // 渲染滚动容器
     const renderWrapper = (): VNode => {
       const vnode = h(
@@ -756,7 +521,7 @@ export default defineComponent({
           style: `${props.direction === 'vertical' ? 'min-height' : 'min-width'}: ${
             totalSize.value
           }px`,
-          class: multiCls(cls.e('item-wrapper'), cls.is(props.listClass, Boolean(props.listClass))),
+          class: multiCls(cls.e('item-wrapper'), props.listClass),
         },
         renderItems(),
       );
@@ -766,7 +531,7 @@ export default defineComponent({
 
     // 渲染子元素
     const renderItems = (): VNode[] => {
-      if (pool.value && pool.value.length === 0 && slots.empty) {
+      if (props.items.length === 0 && slots.empty) {
         return slots.empty?.();
       }
 
@@ -803,7 +568,7 @@ export default defineComponent({
               : null,
             class: multiCls(
               cls.e('item-view'),
-              cls.is(props.itemClass, Boolean(props.itemClass)),
+              props.itemClass,
               cls.is('hover', !props.skipHover && hoverKey.value === view.nr.key),
             ),
             onMouseenter() {
@@ -814,7 +579,12 @@ export default defineComponent({
             },
           },
           // children
-          slots.default?.({ item: view.item, index: view.nr.index, activated: view.nr.used }),
+          slots.default?.({
+            item: view.item,
+            index: view.nr.index,
+            active: view.nr.used,
+            activated: view.nr.used,
+          }),
         );
       });
     };

@@ -230,11 +230,11 @@ function analyseOptions(options: ApiGeneratorAnalysedOptionType[]) {
           escapeHtml(option.default.toString()) || '-'
         }</td>
         <td rowspan="${option.params?.length || 1}"><code>
-        ${
+        ${escapeHtml(
           option.options.length
             ? option.options.map(curr => `'${curr}'`).join(` | `)
-            : option.type || option.baseType
-        }</code>
+            : option.type || option.baseType,
+        )}</code>
 </td>
 ${
   option.params?.length

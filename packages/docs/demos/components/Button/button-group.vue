@@ -10,13 +10,13 @@ import {
 </script>
 
 <template>
-  <h-row>
+  <h-grid :gap="12">
     <h-button-group type="primary">
       <h-button :icon="IconArrowLeft">Previous Page</h-button>
       <h-button>
         Next Page
         <template #suffix>
-          <div class="n-button__icon">
+          <div class="h-button__icon">
             <IconArrowRight :size="16" />
           </div>
         </template>
@@ -38,7 +38,7 @@ import {
         </h-dropdown-menu>
       </h-dropdown>
     </h-button-group>
-  </h-row>
+  </h-grid>
 </template>
 
 <style scoped>

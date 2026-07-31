@@ -25,7 +25,7 @@
       >
         <template #sider>
           <h-image
-            src="https://source.demohome.com//MyNextEv/image/cutting/672C4D53B6559FFFF2A0523B21D36B35.jpg"
+            src="/demo-assets/scene-city.svg"
             object-fit="cover"
             :width="50"
             :height="50"

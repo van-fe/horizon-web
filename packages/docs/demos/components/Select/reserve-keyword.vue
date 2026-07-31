@@ -1,6 +1,6 @@
 <template>
-  <h-row :gutter="10">
-    <h-col :span="6">
+  <h-grid :gap="10">
+    <h-grid-item :span="6">
       <div class="demo-title">
         保留关键字（默认）
       </div>
@@ -13,8 +13,8 @@
           :description="item.description"
         />
       </h-select>
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">
         不保留关键字
       </div>
@@ -27,8 +27,8 @@
           :description="item.description"
         />
       </h-select>
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">
         仅在反选时保留，正选不保留
         <h-tooltip>
@@ -47,8 +47,8 @@
           :description="item.description"
         />
       </h-select>
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">
         不保留关键字，但过滤内容特殊处理
         <h-tooltip content="用户手动清空输入文字或失焦输入框后，才会改变过滤内容">
@@ -64,8 +64,8 @@
           :description="item.description"
         />
       </h-select>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

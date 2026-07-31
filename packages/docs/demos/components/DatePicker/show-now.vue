@@ -1,45 +1,45 @@
 <template>
-  <h-row align="middle">
-    <h-col :span="4">
+  <h-grid align="center" :gap="12">
+    <h-grid-item :span="4">
       Date:
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <h-date-picker v-model="value" show-now default-time="00:00" />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <h-date-picker v-model="values" type="dateRange" show-now default-time="00:00" />
-    </h-col>
-  </h-row>
-  <h-row align="middle">
-    <h-col :span="4">
+    </h-grid-item>
+  </h-grid>
+  <h-grid align="center" :gap="12">
+    <h-grid-item :span="4">
       Datetime:
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <h-date-picker v-model="value2" type="dateSeconds" show-now default-time="00:00" need-confirm />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <h-date-picker v-model="values2" type="dateSecondsRange" show-now need-confirm />
-    </h-col>
-  </h-row>
-  <h-row align="middle">
-    <h-col :span="4">
+    </h-grid-item>
+  </h-grid>
+  <h-grid align="center" :gap="12">
+    <h-grid-item :span="4">
       Custom:
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <h-date-picker ref="datePickerRef" v-model="value3">
         <template #showNow>
           <h-button size="small" plain @click="setSingleDate">Tomorrow</h-button>
         </template>
       </h-date-picker>
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <h-date-picker ref="datePickerRef2" v-model="values3" type="datetimeRange">
         <template #showNow>
           <h-button size="small" plain @click="setRangeDate">Five minute later</h-button>
         </template>
       </h-date-picker>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

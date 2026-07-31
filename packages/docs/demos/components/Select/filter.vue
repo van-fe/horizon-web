@@ -1,16 +1,23 @@
 <template>
-  <h-row :gutter="10">
-    <h-col :span="6">
+  <h-grid :gap="10">
+    <h-grid-item :span="6">
       <div class="demo-title">
         默认过滤规则
         <h-tooltip>
           <template #content>
-            默认的规则为 `label.toLowerCase().includes(value)`，label 是传入的 option 上的 label/description 属性值，value 是输入的内容，默认规则是忽略大小写进行字符串匹配的
+            默认的规则为 `label.toLowerCase().includes(value)`，label 是传入的 option 上的
+            label/description 属性值，value 是输入的内容，默认规则是忽略大小写进行字符串匹配的
           </template>
           <a-icon name="help" />
         </h-tooltip>
       </div>
-      <h-select v-model="values1" :filterable="true" :multiple="true" :to-body="false" :fit-content-input-min-width="1">
+      <h-select
+        v-model="values1"
+        :filterable="true"
+        :multiple="true"
+        :to-body="false"
+        :fit-content-input-min-width="1"
+      >
         <h-option
           v-for="item of selectOptions"
           :key="item.value"
@@ -19,8 +26,8 @@
           :description="item.description"
         />
       </h-select>
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">
         自定义过滤器
         <h-tooltip>
@@ -30,7 +37,15 @@
           <a-icon name="help" />
         </h-tooltip>
       </div>
-      <h-select v-model="value2" :filter-option="filterOption" :clearable="true" placeholder="请选择" :to-body="false" @input="onInput">
+      <h-select
+        v-model="value2"
+        :filterable="true"
+        :filter-method="filterMethod"
+        :clearable="true"
+        placeholder="请选择"
+        :to-body="false"
+        @input="onInput"
+      >
         <h-option
           v-for="item of selectOptions"
           :key="item.value"
@@ -39,17 +54,10 @@
           :description="item.description"
         />
       </h-select>
-    </h-col>
-    <h-col :span="6">
-      <div class="demo-title">
-        单选-下拉列表带筛选功能
-      </div>
-      <h-select
-        v-model="value4"
-        panel-filter-option
-        use-build-in-panel-filter
-        :to-body="false"
-      >
+    </h-grid-item>
+    <h-grid-item :span="6">
+      <div class="demo-title">单选-下拉列表带筛选功能</div>
+      <h-select v-model="value4" panel-filter-option use-build-in-panel-filter :to-body="false">
         <h-option
           v-for="item of selectOptions"
           :key="item.value"
@@ -61,11 +69,9 @@
           <div class="empty-city">没有找到对应的城市信息</div>
         </template>
       </h-select>
-    </h-col>
-    <h-col :span="6">
-      <div class="demo-title">
-        多选-下拉列表带筛选功能
-      </div>
+    </h-grid-item>
+    <h-grid-item :span="6">
+      <div class="demo-title">多选-下拉列表带筛选功能</div>
       <h-select
         v-model="values2"
         panel-filter-option
@@ -83,28 +89,25 @@
         />
         <template #panelHeaderRender>
           <div class="panel-filter-box">
-            <h-input
-              v-model="panelFilterInputValue2"
-              placeholder="Please input search keywords"
-            >
+            <h-input v-model="panelFilterInputValue2" placeholder="Please input search keywords">
               <template #prefix>
                 <IconSearch size="16" color="#BBBDC7" />
               </template>
             </h-input>
           </div>
         </template>
-        <template #optionEmptyRender>
+        <template #empty>
           <div class="empty-city">没有找到对应的城市信息</div>
         </template>
       </h-select>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">
 import { ExtractPropTypes, ref } from 'vue';
 import { useOptionProps } from '@aurora/horizon-web';
-import { IconSearch } from '@aurora/icon';
+import { AIcon, IconSearch } from '@aurora/icon';
 
 const values1 = ref([1, 2]);
 const value2 = ref();
@@ -126,8 +129,12 @@ const selectOptions: ExtractPropTypes<ExtractPropTypes<typeof useOptionProps>>[]
   { value: 10, label: '香港', description: 'HongKong' },
 ];
 
-const filterOption = (input: string, props: ExtractPropTypes<typeof useOptionProps>) => {
-  return props.label?.toString().includes(input) || props.description?.toString().includes(input) || false;
+const filterMethod = (input: string, props: ExtractPropTypes<typeof useOptionProps>) => {
+  return (
+    props.label?.toString().includes(input) ||
+    props.description?.toString().includes(input) ||
+    false
+  );
 };
 
 const dropdownVisibleChange = (visible: boolean) => {

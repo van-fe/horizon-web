@@ -1,14 +1,14 @@
 <template>
-  <h-row>
-    <h-col :span="6">
+  <h-grid :gap="12">
+    <h-grid-item :span="6">
       <h-date-picker
         v-model="value"
         type="date"
         placeholder="Press Enter key to confirm"
         @update:modelValue="onUpdate"
         @change="onChange" />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <h-date-picker
         v-model="value2"
         type="date"
@@ -16,8 +16,8 @@
         placeholder="Input blur to confirm"
         @update:modelValue="onUpdate"
         @change="onChange" />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

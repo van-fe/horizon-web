@@ -1,24 +1,24 @@
 <template>
-  <h-row>
-    <h-col :span="6">
+  <h-grid :gap="12">
+    <h-grid-item :span="6">
       <div class="demo-title">单选-允许创建 <h-tooltip content="拦截创建【南京】"><IconHelp /></h-tooltip></div>
       <h-select v-model="value1" allow-create :before-create="beforeCreate" :to-body="false" @input="onInput">
         <h-option value="1" label="上海" />
         <h-option value="2" label="北京" />
         <h-option value="3" label="合肥" name="hefei" />
       </h-select>
-    </h-col>
+    </h-grid-item>
 
-    <h-col :span="6">
+    <h-grid-item :span="6">
       <div class="demo-title">多选-允许创建</div>
       <h-select v-model="values1" allow-create multiple :to-body="false">
         <h-option label="上海" :value="1" />
         <h-option :value="2" label="北京" />
         <h-option :value="3" label="合肥" name="hefei" />
       </h-select>
-    </h-col>
+    </h-grid-item>
 
-    <h-col :span="6">
+    <h-grid-item :span="6">
       <div class="demo-title">多选-带创建选项长度超长</div>
       <h-select v-model="values2" allow-create multiple :to-body="false">
         <h-option label="齐齐哈尔" :value="1" />
@@ -31,8 +31,8 @@
           label="黄台甫马哈那坤弃他哇劳狄希阿由他亚马哈底陆浦欧叻辣塔尼布黎隆乌冬帕拉查尼卫马哈洒坦"
         />
       </h-select>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

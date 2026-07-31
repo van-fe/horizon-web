@@ -1,11 +1,11 @@
 <template>
-  <h-row :gutter="10">
-    <h-col :span="6">
+  <h-grid :gap="10">
+    <h-grid-item :span="6">
       <div class="demo-title">单选：默认</div>
       <h-select
         v-model="value1"
-        filter-option
-        need-dropdown-confirm
+        filterable
+        need-confirm
         show-selected-icon
         :to-body="false"
         @change="changeHandle"
@@ -17,15 +17,15 @@
           label="黄台甫马哈那坤弃他哇劳狄希阿由他亚马哈底陆浦欧叻辣塔尼布黎隆乌冬帕拉查尼卫马哈洒坦"
         />
       </h-select>
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">单选：自定义按钮文字</div>
       <h-select
         v-model="value2"
-        filter-option
-        need-dropdown-confirm
-        dropdown-confirm-btn-text="确定"
-        dropdown-cancel-btn-text="取消"
+        filterable
+        need-confirm
+        confirm-button-text="确定"
+        cancel-button-text="取消"
         :to-body="false"
       >
         <h-option label="齐齐哈尔" :value="1" />
@@ -35,16 +35,10 @@
           label="黄台甫马哈那坤弃他哇劳狄希阿由他亚马哈底陆浦欧叻辣塔尼布黎隆乌冬帕拉查尼卫马哈洒坦"
         />
       </h-select>
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">单选：使用插槽自定义确认框</div>
-      <h-select
-        ref="confirmRef"
-        v-model="value3"
-        filter-option
-        need-dropdown-confirm
-        :to-body="false"
-      >
+      <h-select ref="confirmRef" v-model="value3" filterable need-confirm :to-body="false">
         <h-option label="齐齐哈尔" :value="1" />
         <h-option :value="2" label="那然色布斯台音布拉格" />
         <h-option
@@ -58,12 +52,12 @@
           </div>
         </template>
       </h-select>
-    </h-col>
-  </h-row>
-  <h-row :gutter="10">
-    <h-col :span="6">
+    </h-grid-item>
+  </h-grid>
+  <h-grid :gap="10">
+    <h-grid-item :span="6">
       <div class="demo-title">多选：默认</div>
-      <h-select v-model="values1" filter-option need-dropdown-confirm multiple :to-body="false">
+      <h-select v-model="values1" filterable need-confirm multiple :to-body="false">
         <h-option label="齐齐哈尔" :value="1" />
         <h-option :value="2" label="那然色布斯台音布拉格" />
         <h-option
@@ -71,16 +65,16 @@
           label="黄台甫马哈那坤弃他哇劳狄希阿由他亚马哈底陆浦欧叻辣塔尼布黎隆乌冬帕拉查尼卫马哈洒坦"
         />
       </h-select>
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">多选：自定义按钮文字</div>
       <h-select
         v-model="values2"
         multiple
-        filter-option
-        need-dropdown-confirm
-        dropdown-confirm-btn-text="确定"
-        dropdown-cancel-btn-text="取消"
+        filterable
+        need-confirm
+        confirm-button-text="确定"
+        cancel-button-text="取消"
         :to-body="false"
       >
         <h-option label="齐齐哈尔" :value="1" />
@@ -90,15 +84,15 @@
           label="黄台甫马哈那坤弃他哇劳狄希阿由他亚马哈底陆浦欧叻辣塔尼布黎隆乌冬帕拉查尼卫马哈洒坦"
         />
       </h-select>
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">多选：使用插槽自定义确认框</div>
       <h-select
         ref="confirmRef2"
         v-model="values3"
         multiple
-        filter-option
-        need-dropdown-confirm
+        filterable
+        need-confirm
         :to-body="false"
       >
         <h-option label="齐齐哈尔" :value="1" />
@@ -114,8 +108,8 @@
           </div>
         </template>
       </h-select>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script lang="ts">
@@ -167,5 +161,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

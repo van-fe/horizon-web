@@ -6,12 +6,12 @@ Used to quickly set the font size of elements.
 
 |Class|Properties|
 |-|-|
-|text-sm|font-size: var(--n-text-sm); /* 12px */|
-|text-base|font-size: var(--n-text-base); /* 14px */|
-|text-lg|font-size: var(--n-text-lg); /* 16px */|
-|text-xl|font-size: var(--n-text-xl); /* 20px */|
-|text-2xl|font-size: var(--n-text-2xl); /* 24px */|
-|text-3xl|font-size: var(--n-text-3xl); /* 32px */|
+|text-sm|font-size: var(--h-text-sm); /* 12px */|
+|text-base|font-size: var(--h-text-base); /* 14px */|
+|text-lg|font-size: var(--h-text-lg); /* 16px */|
+|text-xl|font-size: var(--h-text-xl); /* 20px */|
+|text-2xl|font-size: var(--h-text-2xl); /* 24px */|
+|text-3xl|font-size: var(--h-text-3xl); /* 32px */|
 
 ## Demo
 :::demo ./demos/fontsize.vue :::
@@ -32,16 +32,16 @@ For easier use, based on Horizon Web UI design specifications, we also provide a
 
 |Class|Properties|
 |-|-|
-|text-headline-1|font-size: var(--n-text-3xl); /* 32px */<br>font-weight: 400;|
-|text-headline-2|font-size: var(--n-text-2xl); /* 24px */<br>font-weight: 400;|
-|text-subtitle-1|font-size: var(--n-text-xl); /* 20px */<br>font-weight: 700;|
-|text-subtitle-2|font-size: var(--n-text-lg); /* 16px */<br>font-weight: 700;|
-|text-subtitle-3|font-size: var(--n-text-base); /* 14px */<br>font-weight: 700;|
-|text-body-1|font-size: var(--n-text-lg); /* 16px */<br>font-weight: 400;|
-|text-body-2|font-size: var(--n-text-base); /* 14px */<br>font-weight: 400;|
-|text-body-3|font-size: var(--n-text-sm); /* 12px */<br>font-weight: 400;|
-|text-caption-1|font-size: var(--n-text-sm); /* 12px */<br>font-weight: 400;|
-|text-caption-2|font-size: var(--n-text-sm); /* 12px */<br>font-weight: 700;|
+|text-headline-1|font-size: var(--h-text-3xl); /* 32px */<br>font-weight: 400;|
+|text-headline-2|font-size: var(--h-text-2xl); /* 24px */<br>font-weight: 400;|
+|text-subtitle-1|font-size: var(--h-text-xl); /* 20px */<br>font-weight: 700;|
+|text-subtitle-2|font-size: var(--h-text-lg); /* 16px */<br>font-weight: 700;|
+|text-subtitle-3|font-size: var(--h-text-base); /* 14px */<br>font-weight: 700;|
+|text-body-1|font-size: var(--h-text-lg); /* 16px */<br>font-weight: 400;|
+|text-body-2|font-size: var(--h-text-base); /* 14px */<br>font-weight: 400;|
+|text-body-3|font-size: var(--h-text-sm); /* 12px */<br>font-weight: 400;|
+|text-caption-1|font-size: var(--h-text-sm); /* 12px */<br>font-weight: 400;|
+|text-caption-2|font-size: var(--h-text-sm); /* 12px */<br>font-weight: 700;|
 
 ## Demo
 :::demo ./demos/fonts.vue :::

@@ -1,4 +1,0 @@
-const arrow_right = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.75542 2L16.7929 11.4826C17.069 11.7723 17.069 12.2277 16.7929 12.5174L7.75542 22C7.16155 21.3769 7.16155 20.3973 7.75543 19.7741L15.1648 12L7.75543 4.22585C7.16155 3.60274 7.16155 2.62312 7.75542 2Z" fill="currentColor"/></svg>';
-export {
-  arrow_right as default
-};

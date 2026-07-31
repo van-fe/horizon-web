@@ -50,6 +50,7 @@ import HDropdownMenu from '~/components/Dropdown/src/DropdownMenu';
 import HDropdownSubmenu from '~/components/Dropdown/src/DropdownSubmenu';
 import type { DropdownExposes } from '~/components/Dropdown/src/composables/useExposes';
 import useTooltip from './util/useTooltip';
+import useMapTree from '~/utils/useMapTree';
 
 export default defineComponent({
   name: `${useNamespace()}SubMenu`,
@@ -66,9 +67,10 @@ export default defineComponent({
     const elementRef = ref<HTMLElement | null>(null);
     const titleInnerDomRef = ref<HTMLElement | null>(null);
     const textRef = ref<HTMLElement | null>(null);
-    const dropdownDomRef = ref<HorizonWebComponentInstance<typeof HDropdown, DropdownExposes> | null>(
-      null,
-    );
+    const dropdownDomRef = ref<HorizonWebComponentInstance<
+      typeof HDropdown,
+      DropdownExposes
+    > | null>(null);
 
     const { tooltipVisible, toggleTooltip } = useTooltip();
     const dropdownVisible = ref(false);
@@ -101,14 +103,11 @@ export default defineComponent({
     const activeTopMenuUuid = inject(HMenuActiveTopMenuUuidInjectKey);
     const switchFullViewMenuVisible = inject(HMenuSwitchFullViewMenuVisibleInjectKey);
 
-    const menuTree = ref(new Map<string, HMenuTreeData<'subMenu' | 'menuItem'>>());
-    function selfAppendChild(item: HMenuTreeData<'subMenu' | 'menuItem'>) {
-      menuTree.value.set(item.uuid, item);
-    }
-
-    function selfRemoveChild(uuid: string) {
-      menuTree.value.delete(uuid);
-    }
+    const {
+      tree: menuTree,
+      appendChild: selfAppendChild,
+      removeChild: selfRemoveChild,
+    } = useMapTree<HMenuTreeData<'subMenu' | 'menuItem'>>();
 
     watch(menuTree, () => {
       updateTreeData();
@@ -199,7 +198,7 @@ export default defineComponent({
           ) {
             return;
           }
-        } catch (e) {
+        } catch {
           return;
         }
 
@@ -250,12 +249,12 @@ export default defineComponent({
         try {
           if (
             parentProps.beforeSelect &&
-            props.value &&
-            !(await parentProps.beforeSelect(props.value, props))
+            target.props.value &&
+            !(await parentProps.beforeSelect(target.props.value, target.props as SubMenuProps))
           ) {
             return;
           }
-        } catch (e) {
+        } catch {
           return;
         }
 
@@ -310,7 +309,7 @@ export default defineComponent({
         ) {
           return;
         }
-      } catch (e) {
+      } catch {
         return;
       }
 

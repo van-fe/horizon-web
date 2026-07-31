@@ -1,6 +1,6 @@
 <template>
-  <h-row>
-    <h-col :span="6">
+  <h-grid :gap="12">
+    <h-grid-item :span="6">
       <div class="demo-title">单选: 不具名分组</div>
       <h-select v-model="value1" clearable :to-body="false" filterable>
         <template v-for="(group, index) of selectOptionGroupsMixins">
@@ -26,8 +26,8 @@
           />
         </template>
       </h-select>
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">单选: 不具名分组</div>
       <h-select v-model="value2" clearable :to-body="false" filterable>
         <h-option-group
@@ -45,9 +45,9 @@
           />
         </h-option-group>
       </h-select>
-    </h-col>
+    </h-grid-item>
 
-    <h-col :span="6">
+    <h-grid-item :span="6">
       <div class="demo-title">单选: 具名分组</div>
       <h-select v-model="value3" clearable :to-body="false" filterable>
         <h-option-group
@@ -65,10 +65,10 @@
           />
         </h-option-group>
       </h-select>
-    </h-col>
-  </h-row>
-  <h-row>
-    <h-col :span="6">
+    </h-grid-item>
+  </h-grid>
+  <h-grid :gap="12">
+    <h-grid-item :span="6">
       <div class="demo-title">多选: 不具名分组</div>
       <h-select v-model="values1" clearable multiple :to-body="false" filterable>
         <template v-for="(group, index) of selectOptionGroupsMixins">
@@ -94,9 +94,9 @@
           />
         </template>
       </h-select>
-    </h-col>
+    </h-grid-item>
 
-    <h-col :span="6">
+    <h-grid-item :span="6">
       <div class="demo-title">多选: 不具名分组</div>
       <h-select v-model="values2" clearable multiple :to-body="false" filterable>
         <h-option-group
@@ -114,9 +114,9 @@
           />
         </h-option-group>
       </h-select>
-    </h-col>
+    </h-grid-item>
 
-    <h-col :span="6">
+    <h-grid-item :span="6">
       <div class="demo-title">多选: 具名分组</div>
       <h-select v-model="values3" clearable multiple :to-body="false" filterable>
         <h-option-group
@@ -134,8 +134,8 @@
           />
         </h-option-group>
       </h-select>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script lang="ts" setup>

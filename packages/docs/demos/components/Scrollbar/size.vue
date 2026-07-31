@@ -1,14 +1,14 @@
 <template>
-  <h-row>
-    <h-col :span="18">
+  <h-grid :gap="12">
+    <h-grid-item :span="18">
       <div class="demo-title">容器中使用 <code>medium</code></div>
       <h-scrollbar height="400px">
         <div v-for="item of 20" :key="item" class="item">
           {{ item }}
         </div>
       </h-scrollbar>
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">弹窗中使用 <code>small</code></div>
       <h-popover placement="bottom" :to-body="false">
         <template #popper>
@@ -24,8 +24,8 @@
           <h-button>Hover Me</h-button>
         </template>
       </h-popover>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

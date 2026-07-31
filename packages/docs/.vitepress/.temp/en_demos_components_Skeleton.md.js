@@ -80,7 +80,7 @@ onUnmounted(() => {
         <h-skeleton-item shape="picture"></h-skeleton-item>
       </template>
       <template #default>
-        <h-avatar src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" />
+        <h-avatar src="/demo-assets/avatar-coral.svg" />
         <div>
           骨架屏测试骨架屏测试骨架屏测试骨架屏测试骨架屏测试骨架屏测试骨架屏测试骨架屏测试骨架屏测试骨架屏测试骨架屏测试骨架屏测试骨架屏测试骨架屏测试骨架屏测试骨架屏测试
         </div>
@@ -89,13 +89,13 @@ onUnmounted(() => {
           <img
             class="container"
             style="width: 200px; height: 200px"
-            src="https://www.example.com/cdn-static/mydemo/images/demo-day-2021/demo-day-2021-playback-desktop.jpg"
+            src="/demo-assets/scene-aurora.svg"
           />
         </div>
         <div class="container">
           <img
             class="container"
-            src="https://www.example.com/cdn-static/mydemo/images/demo-day-2021/demo-day-2021-playback-desktop.jpg"
+            src="/demo-assets/scene-aurora.svg"
           />
         </div>
       </template>
@@ -123,7 +123,7 @@ onUnmounted(() => {
 `,
     path: "demos/components/Skeleton/demo3.vue"
   }, null, _parent));
-  _push(`<h2>Skeleton Api</h2><h3>Skeleton Props</h3><table class="md-table"><thead><tr><th>Name</th><th>Description</th><th>Type</th><th style="${ssrRenderStyle({ "min-width": "50px" })}" class="text-center">Required</th><th>Default</th></tr></thead><tbody><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">loading</td><td>骨架屏是否显示</td><td><code>boolean</code></td><td class="text-center">No</td><td>true</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">animated</td><td>骨架屏是否以动画形式显示</td><td><code>boolean</code></td><td class="text-center">No</td><td>true</td></tr></tbody></table><h2>SkeletonItem Api</h2><h3>SkeletonItem Props</h3><table class="md-table"><thead><tr><th>Name</th><th>Description</th><th>Type</th><th style="${ssrRenderStyle({ "min-width": "50px" })}" class="text-center">Required</th><th>Default</th></tr></thead><tbody><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">shape</td><td>原子骨架屏形状</td><td><code>&#39;avatar&#39; | &#39;text&#39; | &#39;operate&#39; | &#39;image&#39; | &#39;picture&#39;</code></td><td class="text-center">Yes</td><td>&#39;text&#39;</td></tr></tbody></table></div>`);
+  _push(`<h2 id="skeleton-api" class="no-underline h2"><a href="#skeleton-api" class="!no-underline">Skeleton Api</a></h2><h3 id="skeleton-props" class="no-underline h3"><a href="#skeleton-props" class="!no-underline">Skeleton Props</a></h3><table class="md-table"><thead><tr><th>Name</th><th>Description</th><th>Type</th><th style="${ssrRenderStyle({ "min-width": "50px" })}" class="text-center">Required</th><th>Default</th></tr></thead><tbody><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">loading</td><td>Configuration for loading.</td><td><code>boolean</code></td><td class="text-center">No</td><td>true</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">animated</td><td>Configuration for animated.</td><td><code>boolean</code></td><td class="text-center">No</td><td>true</td></tr></tbody></table><h2 id="skeletonitem-api" class="no-underline h2"><a href="#skeletonitem-api" class="!no-underline">SkeletonItem Api</a></h2><h3 id="skeletonitem-props" class="no-underline h3"><a href="#skeletonitem-props" class="!no-underline">SkeletonItem Props</a></h3><table class="md-table"><thead><tr><th>Name</th><th>Description</th><th>Type</th><th style="${ssrRenderStyle({ "min-width": "50px" })}" class="text-center">Required</th><th>Default</th></tr></thead><tbody><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">shape</td><td>Configuration for shape.</td><td><code>&#39;avatar&#39; | &#39;text&#39; | &#39;operate&#39; | &#39;image&#39; | &#39;picture&#39;</code></td><td class="text-center">Yes</td><td>&#39;text&#39;</td></tr></tbody></table></div>`);
 }
 const _sfc_setup = _sfc_main.setup;
 _sfc_main.setup = (props, ctx) => {

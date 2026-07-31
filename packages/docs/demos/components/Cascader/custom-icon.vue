@@ -1,6 +1,6 @@
 <template>
-  <h-row :gutter="10">
-    <h-col :span="6">
+  <h-grid :gap="10">
+    <h-grid-item :span="6">
       <div class="demo-title">
         自定义级联面板展开图标
       </div>
@@ -11,14 +11,14 @@
           expand-icon="spread_right"
           :to-body="false"
       />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">
         自定义单选选中项图标
       </div>
       <h-cascader v-model="currentVal2" :options="options" selected-icon="tag" :to-body="false" />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script lang="ts">

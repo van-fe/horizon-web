@@ -32,7 +32,7 @@ You can set prefix and suffix content through `prefix` and `suffix` `slot`, whic
 
 ## Combined Input Box
 You can add a prepend or append element to the input box through `prepend` and `append` `slot`  
-`--n-input-bg--prepend-append: transparent` is to solve the background color problem of icons and prefix/suffix
+`--h-input-bg--prepend-append: transparent` is to solve the background color problem of icons and prefix/suffix
 :::demo components/Input/mixed.vue :::
 
 ## Multi-line Input Box
@@ -44,7 +44,7 @@ You can set whether the multi-line input box is draggable through `resize`
 ## Character Limit
 You can display the character limit of the input box through `maxlength` and `showLimit`
 
-Note: After enabling `enable-out-of-exceeded`, the character count will not be limited, so form validation needs to be combined with the `max` setting of `n-form`
+Note: After enabling `enable-out-of-exceeded`, the character count will not be limited, so form validation needs to be combined with the `max` setting of `h-form`
 :::demo components/Input/limit.vue :::
 
 ## Search Input Box

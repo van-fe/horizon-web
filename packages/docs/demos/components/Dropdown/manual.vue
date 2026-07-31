@@ -1,6 +1,6 @@
 <template>
-  <h-row>
-    <h-col :span="24">
+  <h-grid :gap="12">
+    <h-grid-item :span="24">
       <h-button style="width: 80px" @click="handle">{{ visible ? 'Hide' : 'Show' }}</h-button>
       <h-dropdown ref="dropdown" trigger="manual" align="center" :exclusive="false">
         <h-button :text="true">Dropdown Menu</h-button>
@@ -26,8 +26,8 @@
           </h-dropdown-menu>
         </template>
       </h-dropdown>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

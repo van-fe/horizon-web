@@ -1,33 +1,27 @@
 <template>
-  <h-row :gutter="10">
-    <h-col :span="6">
-      <div class="demo-title">
-        默认
-      </div>
+  <h-grid :gap="10">
+    <h-grid-item :span="6">
+      <div class="demo-title">默认</div>
       <h-cascader v-model="currentVal1" :options="[]" :to-body="false" />
-    </h-col>
-    <h-col :span="6">
-      <div class="demo-title">
-        自定义文案内容
-      </div>
+    </h-grid-item>
+    <h-grid-item :span="6">
+      <div class="demo-title">自定义文案内容</div>
       <h-cascader
-          v-model="currentVal1"
-          :options="[]"
-          empty-content="没有对应的内容"
-          :to-body="false"
+        v-model="currentVal1"
+        :options="[]"
+        empty-text="没有对应的内容"
+        :to-body="false"
       />
-    </h-col>
-    <h-col :span="6">
-      <div class="demo-title">
-        emptyRender 插槽自定义
-      </div>
+    </h-grid-item>
+    <h-grid-item :span="6">
+      <div class="demo-title">empty 插槽自定义</div>
       <h-cascader v-model="currentVal1" :options="[]" :to-body="false">
-        <template #emptyRender>
+        <template #empty>
           <h-empty description="没有对应的内容" />
         </template>
       </h-cascader>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

@@ -27,15 +27,15 @@
       </h-space>
     </h-form-item>
   </h-form>
-  <h-row>
-    <h-col>
+  <h-grid :gap="12">
+    <h-grid-item :span="24">
       <h-tree
         ref="treeDomRef"
         :tree-data="baseTreeData"
         :multiple="true"
       />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

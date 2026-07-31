@@ -35,6 +35,7 @@ export interface DirectiveOption<Target, Option>
   name: string;
   options: Option;
   desc?: string;
+  descLocales?: Record<string, string>;
 }
 
 export interface DirectiveWithInstall<Target, Option> extends DirectiveOption<Target, Option> {

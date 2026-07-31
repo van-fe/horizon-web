@@ -247,7 +247,7 @@ export const useDropdownItemProps = declarePropType({
     default: false,
   },
   /**
-   * 派发到 `n-dropdown-menu` 的 `command` 事件的参数
+   * 派发到 `h-dropdown-menu` 的 `command` 事件的参数
     * @en Configuration for command.
    */
   command: {

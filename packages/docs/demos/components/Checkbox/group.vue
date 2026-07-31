@@ -1,6 +1,6 @@
 <template>
-  <h-row>
-    <h-col :span="24">
+  <h-grid :gap="12">
+    <h-grid-item :span="24">
       <div class="demo-title">medium(default)</div>
       <h-checkbox-group disabled>
         <h-checkbox-button
@@ -10,9 +10,9 @@
           :label="item.label"
         />
       </h-checkbox-group>
-    </h-col>
+    </h-grid-item>
 
-    <h-col :span="24">
+    <h-grid-item :span="24">
       <div class="demo-title">large</div>
       <h-checkbox-group size="large">
         <h-checkbox-button
@@ -22,8 +22,8 @@
           :label="item.label"
         />
       </h-checkbox-group>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script lang="ts" setup>

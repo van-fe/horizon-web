@@ -95,7 +95,7 @@ const offsetY = ref(0);
 const opacity = ref(0.1);
 
 watch(showImage, () => {
-  image.value = showImage.value ? 'https://cdn-app.example.com/user/2022/3/1/203cdf01-10d4-4a18-b12e-754686c5b175.jpg' : null;
+  image.value = showImage.value ? '/demo-assets/watermark.svg' : null;
 });
 
 const tamperedHandle = () => {

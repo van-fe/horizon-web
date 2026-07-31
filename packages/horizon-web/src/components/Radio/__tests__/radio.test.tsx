@@ -27,18 +27,18 @@ test('sizeBorder', async () => {
   const radioBorder = wrapperBorder.findComponent(HRadio);
   const radioNoneBorder = wrapperNoneBorder.findComponent(HRadio);
 
-  expect(radioBorder.classes()).toContain('n-radio--medium');
-  expect(radioNoneBorder.classes()).not.toContain('n-radio--medium');
+  expect(radioBorder.classes()).toContain('h-radio--medium');
+  expect(radioNoneBorder.classes()).not.toContain('h-radio--medium');
 
   size.value = 'medium';
   await nextTick();
-  expect(radioBorder.classes()).toContain('n-radio--medium');
-  expect(radioNoneBorder.classes()).not.toContain('n-radio--medium');
+  expect(radioBorder.classes()).toContain('h-radio--medium');
+  expect(radioNoneBorder.classes()).not.toContain('h-radio--medium');
 
   size.value = 'large';
   await nextTick();
-  expect(radioBorder.classes()).toContain('n-radio--large');
-  expect(radioNoneBorder.classes()).not.toContain('n-radio--large');
+  expect(radioBorder.classes()).toContain('h-radio--large');
+  expect(radioNoneBorder.classes()).not.toContain('h-radio--large');
 });
 
 test('sizeButton', async () => {
@@ -47,15 +47,15 @@ test('sizeButton', async () => {
 
   const radio = wrapper.findComponent(HRadioButton);
 
-  expect(radio.classes()).toContain('n-radio-button--medium');
+  expect(radio.classes()).toContain('h-radio-button--medium');
 
   size.value = 'medium';
   await nextTick();
-  expect(radio.classes()).toContain('n-radio-button--medium');
+  expect(radio.classes()).toContain('h-radio-button--medium');
 
   size.value = 'large';
   await nextTick();
-  expect(radio.classes()).toContain('n-radio-button--large');
+  expect(radio.classes()).toContain('h-radio-button--large');
 });
 
 test('sizeGroup', async () => {
@@ -84,19 +84,19 @@ test('sizeGroup', async () => {
   expect(elementRadioNoneBorder.exists()).toBe(true);
   expect(elementRadioButton.exists()).toBe(true);
 
-  expect(elementRadioBorder.classes()).toContain('n-radio--medium');
-  expect(elementRadioNoneBorder.classes()).not.toContain('n-radio--medium');
-  expect(elementRadioButton.classes()).toContain('n-radio-button--medium');
+  expect(elementRadioBorder.classes()).toContain('h-radio--medium');
+  expect(elementRadioNoneBorder.classes()).not.toContain('h-radio--medium');
+  expect(elementRadioButton.classes()).toContain('h-radio-button--medium');
 
   size.value = 'medium';
   await nextTick();
-  expect(elementRadioBorder.classes()).toContain('n-radio--medium');
-  expect(elementRadioNoneBorder.classes()).not.toContain('n-radio--medium');
-  expect(elementRadioButton.classes()).toContain('n-radio-button--medium');
+  expect(elementRadioBorder.classes()).toContain('h-radio--medium');
+  expect(elementRadioNoneBorder.classes()).not.toContain('h-radio--medium');
+  expect(elementRadioButton.classes()).toContain('h-radio-button--medium');
 
   size.value = 'large';
   await nextTick();
-  expect(elementRadioBorder.classes()).toContain('n-radio--large');
-  expect(elementRadioNoneBorder.classes()).not.toContain('n-radio--large');
-  expect(elementRadioButton.classes()).toContain('n-radio-button--large');
+  expect(elementRadioBorder.classes()).toContain('h-radio--large');
+  expect(elementRadioNoneBorder.classes()).not.toContain('h-radio--large');
+  expect(elementRadioButton.classes()).toContain('h-radio-button--large');
 });

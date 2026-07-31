@@ -2,7 +2,7 @@
 :::demo components/Guide/basic.vue :::
 
 ## Direct Parameter Passing
-In some cases, you may not need to use the `n-guide-item` component to build steps, you can directly pass in data to build
+In some cases, you may not need to use the `h-guide-item` component to build steps, you can directly pass in data to build
 :::demo components/Guide/itemList.vue :::
 
 ## Mask

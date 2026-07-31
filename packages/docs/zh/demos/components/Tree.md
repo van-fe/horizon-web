@@ -68,7 +68,7 @@
 ## 禁用
 在 `tree-data` 数据中，某项设置`disabled = true`，可以对其项禁用
 
-但如果希望整棵树禁用，则直接给予 `disabled = true` 给 `n-tree` 即可
+但如果希望整棵树禁用，则直接给予 `disabled = true` 给 `h-tree` 即可
 
 但无论哪种禁用方式，都不会影响展开功能
 

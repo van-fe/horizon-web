@@ -49,15 +49,15 @@ You can control the collapse state by toggling `collapse-tags`. When `focus`, al
 :::demo components/Select/dynamic-collapse.vue :::
 
 ## Grouping
-You can use `n-option-group` to group, with named groups and unnamed groups
+You can use `h-option-group` to group, with named groups and unnamed groups
 :::demo components/Select/group.vue :::
 
 ## Disabled
-Set `disabled = true` to disable `n-select`
+Set `disabled = true` to disable `h-select`
 
-Set `disabled = true` for `n-option` to disable the current option
+Set `disabled = true` for `h-option` to disable the current option
 
-Set `disabled = true` for `n-option-group` to disable all options under the current group
+Set `disabled = true` for `h-option-group` to disable all options under the current group
 
 :::demo components/Select/disabled.vue :::
 
@@ -67,7 +67,7 @@ Set `selected-visible = false` to not display selected options in the panel
 :::demo components/Select/hide-selected.vue :::
 
 ## Auxiliary Description Text
-Set content for `n-option.description` to assist in explaining `label`
+Set content for `h-option.description` to assist in explaining `label`
 :::demo components/Select/description.vue :::
 
 ## Filter
@@ -102,7 +102,7 @@ To enable the confirm panel, you need to enable `need-confirm = true`
 ## Value Conversion
 Use `value-format`, pass in a function, then you can convert `modelValue`
 
-Please note that it is still not recommended to use `value-format`. Since 2.3.0, `n-option.value` already supports `object` type
+Please note that it is still not recommended to use `value-format`. Since 2.3.0, `h-option.value` already supports `object` type
 
 This method will be removed in `3.x`
 
@@ -151,7 +151,7 @@ Toggling the `loading` state can change the loading state of the popup panel
 ## Custom Selection Tag
 Through the `select.tagRender` slot, you can customize the rendering performance of selected options in the input box
 
-Using the `option.label` slot, you can customize the display form of text in `n-option`
+Using the `option.label` slot, you can customize the display form of text in `h-option`
 
 :::demo components/Select/custom-tag-render.vue :::
 

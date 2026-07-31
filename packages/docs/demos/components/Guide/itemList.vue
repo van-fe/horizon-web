@@ -1,15 +1,15 @@
 <template>
-  <h-row>
-    <h-col :span="24">
+  <h-grid :gap="12">
+    <h-grid-item :span="24">
       <h-button ref="firstRef">First</h-button>
       <h-button class="guide-second-2">Second</h-button>
       <h-button ref="thirdRef">Third</h-button>
-    </h-col>
+    </h-grid-item>
     <h-divider />
-    <h-col :span="24">
+    <h-grid-item :span="24">
       <h-button @click="start">Start</h-button>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 
   <h-guide v-model:visible="visible" :item-list="itemList" @close="onClose" @finish="onFinish" />
 </template>
@@ -49,7 +49,7 @@ onMounted(() => {
       title: '第二步',
       content: '第二步就是第二步',
       placement: 'top-start',
-      image: 'https://static.example.com/fx-static/design-system/clgkp3u9z0002082h1dfr888x/indexbg.jpg?imageView2/2/w/300',
+      image: '/demo-assets/guide-card.svg',
     },
     {
       target: thirdRef,

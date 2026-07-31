@@ -27,13 +27,13 @@ You can set `icon`
 :::demo components/Link/icon.vue :::
 
 ## Annotation
-Links with annotation effect. Text links do not provide popups, please use `n-popover` to wrap
+Links with annotation effect. Text links do not provide popups, please use `h-popover` to wrap
 :::demo components/Link/attribute.vue :::
 
 ## Anchor
 With anchor, you can also set `anchor-offset` to scroll to px from the top
 
-Because the content of this document is placed in `n-main`, you need to set `scroll-target`
+Because the content of this document is placed in `h-main`, you need to set `scroll-target`
 
 Note:
 - If `anchor`, `to` or `href` are passed in at the same time, `to` and `href` will be ignored

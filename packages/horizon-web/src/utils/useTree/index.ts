@@ -129,6 +129,11 @@ const originalFieldMapping: Record<keyof BaseTreeData, keyof BaseTreeData & stri
   selectable: 'selectable',
 };
 
+export interface TreeCheckboxStatus {
+  checked: boolean;
+  indeterminate: boolean;
+}
+
 export default class Tree<T extends BaseTreeData, F extends ExtendTreeData<T>> {
   public originTreeData: T[] = [];
   public flattenTreeData = shallowRef<F[]>([]);
@@ -195,6 +200,22 @@ export default class Tree<T extends BaseTreeData, F extends ExtendTreeData<T>> {
     return this.nodeByValue.get(value);
   }
 
+  public getInfoByPath(path: Array<string | number>) {
+    if (path.length === 0) return undefined;
+
+    let siblings = this.transformedTreeData.value;
+    let current: F | undefined;
+
+    for (const value of path) {
+      current = siblings.find(node => node.value === value);
+
+      if (!current) return undefined;
+      siblings = current.transformedChildren;
+    }
+
+    return current;
+  }
+
   /**
    * Judge whether the current node is checked for checkbox status
    * @param node current node
@@ -255,6 +276,80 @@ export default class Tree<T extends BaseTreeData, F extends ExtendTreeData<T>> {
     }
 
     return false;
+  }
+
+  /**
+   * Calculate every node's checkbox status in one post-order traversal.
+   *
+   * This is preferable to calling the per-node helpers while rendering a whole tree,
+   * because parent checked and indeterminate states are shared by all consumers.
+   */
+  public getCheckboxStatus(
+    checkedNodesUuid: Iterable<string | number>,
+    checkStrictly: boolean,
+    isNodeCheckable: (node: F) => boolean = () => true,
+  ) {
+    const checkedUuidSet = new Set(checkedNodesUuid);
+    const result = new Map<string | number, TreeCheckboxStatus>();
+
+    if (checkStrictly) {
+      for (const node of this.flattenTreeData.value) {
+        result.set(node._uuid, {
+          checked: checkedUuidSet.has(node._uuid),
+          indeterminate: false,
+        });
+      }
+
+      return result;
+    }
+
+    const hasCheckableLeaf = new Map<string | number, boolean>();
+    const stack = this.transformedTreeData.value
+      .slice()
+      .reverse()
+      .map(node => ({ node, visited: false }));
+
+    while (stack.length > 0) {
+      const { node, visited } = stack.pop()!;
+
+      if (!visited && node.transformedChildren.length > 0) {
+        stack.push({ node, visited: true });
+
+        for (let i = node.transformedChildren.length - 1; i >= 0; i--) {
+          stack.push({ node: node.transformedChildren[i], visited: false });
+        }
+
+        continue;
+      }
+
+      if (node.transformedChildren.length === 0) {
+        hasCheckableLeaf.set(node._uuid, isNodeCheckable(node));
+        result.set(node._uuid, {
+          checked: checkedUuidSet.has(node._uuid),
+          indeterminate: false,
+        });
+        continue;
+      }
+
+      const checkableChildren = node.transformedChildren.filter(child =>
+        hasCheckableLeaf.get(child._uuid),
+      );
+      const checked =
+        checkedUuidSet.has(node._uuid) ||
+        (checkableChildren.length > 0 &&
+          checkableChildren.every(child => result.get(child._uuid)?.checked));
+      const indeterminate =
+        !checked &&
+        checkableChildren.some(child => {
+          const status = result.get(child._uuid);
+          return status?.checked || status?.indeterminate;
+        });
+
+      hasCheckableLeaf.set(node._uuid, checkableChildren.length > 0);
+      result.set(node._uuid, { checked, indeterminate });
+    }
+
+    return result;
   }
 
   private transformTreeData(parent: F | null = null, level = 0) {
@@ -337,11 +432,18 @@ export default class Tree<T extends BaseTreeData, F extends ExtendTreeData<T>> {
       Object.defineProperties(transformOpt, lazyPathDescriptors);
 
       transformOpt._uuid = this.uuidTransform ? this.uuidTransform(transformOpt, this) : nanoid();
+
+      if (this.nodeByUuid.has(transformOpt._uuid)) {
+        throw new Error(
+          `Tree uuidTransform must return a unique value. Received duplicate UUID: ${String(
+            transformOpt._uuid,
+          )}`,
+        );
+      }
+
       this.flattenTreeData.value.push(transformOpt);
 
-      if (!this.nodeByUuid.has(transformOpt._uuid)) {
-        this.nodeByUuid.set(transformOpt._uuid, transformOpt);
-      }
+      this.nodeByUuid.set(transformOpt._uuid, transformOpt);
       if (!this.nodeByValue.has(transformOpt.value)) {
         this.nodeByValue.set(transformOpt.value, transformOpt);
       }

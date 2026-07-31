@@ -1,18 +1,18 @@
 <template>
-  <h-row :gutter="10" align="middle">
-    <h-col :span="6">
+  <h-grid :gap="10" align="center">
+    <h-grid-item :span="6">
       <div class="demo-title">Simple</div>
-    </h-col>
-    <h-col :span="18">
+    </h-grid-item>
+    <h-grid-item :span="18">
       <h-pagination :total="100" type="simple" />
-    </h-col>
-  </h-row>
-  <h-row :gutter="10" align="middle">
-    <h-col :span="6">
+    </h-grid-item>
+  </h-grid>
+  <h-grid :gap="10" align="center">
+    <h-grid-item :span="6">
       <div class="demo-title">Simplest</div>
-    </h-col>
-    <h-col :span="18">
+    </h-grid-item>
+    <h-grid-item :span="18">
       <h-pagination :total="100" type="simplest" />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>

@@ -3,7 +3,7 @@ import type { HSegmentedValue } from './useProps';
 
 export const useSegmentedSlots = Object as SlotsType<{
   /**
-   * 容器，使用 `n-segmented-item` 填充
+   * 容器，使用 `h-segmented-item` 填充
     * @en Custom content for the default slot.
    **/
   default?: {};

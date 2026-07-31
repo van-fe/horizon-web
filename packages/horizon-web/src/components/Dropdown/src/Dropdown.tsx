@@ -2,10 +2,8 @@ import type { CSSProperties, VNode } from 'vue';
 import {
   computed,
   defineComponent,
-  Fragment,
   nextTick,
   provide,
-  reactive,
   ref,
   Teleport,
   toRef,
@@ -41,20 +39,18 @@ import HPopover from '~/components/Popover/src/Popover';
 import HPopContent from '~/components/Popover/src/PopContent';
 import pickDropdownMenu from './utils/useDropdown';
 import HTransition from '~/components/Transition/src/Transition';
-import type { HDropdownTreeData } from './utils/types';
-import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
 import { nanoid } from 'nanoid';
 import { useSessionStorage } from '@vueuse/core';
 import type { PopoverExposes } from '~/components/Popover/src/composables/useExposes';
 import useSize from '~/utils/useSize';
 import { HScrollbarUpdateDelayInjectKey } from '~/components/Scrollbar/src/utils/injectKeys';
+import useDropdownTree from './composables/useDropdownTree';
 
 export default defineComponent({
   name: `${useNamespace()}Dropdown`,
   desc: '下拉菜单是轻量级的快捷菜单，用于页面内部的内容导航和相关操作。主要用于导航、工具菜单以及部分操作集合，通过下拉菜单将某功能下面的子系统、功能集合等统一放在一起。',
   components: {
     HPopover,
-    HScrollbar,
   },
   props: useDropdownProps,
   emits: useDropdownEmits,
@@ -76,25 +72,12 @@ export default defineComponent({
     const popoverRef = ref<HorizonWebComponentInstance<typeof HPopover, PopoverExposes> | null>(null);
     const popContentDomRef = ref<HorizonWebComponentInstance<typeof HPopContent> | null>(null);
 
-    const dropdownTree = reactive(new Map<string, HDropdownTreeData>());
-    const isDropdownTreeHasThirdLevel = ref(false);
+    const { dropdownTree, appendChild, removeChild, renderContent } = useDropdownTree();
     const zIndex = useZIndex(props.zIndex);
 
     const currentOpenedDropdown = useSessionStorage<string | undefined>(
-      'n-dropdown-current-opened',
+      'h-dropdown-current-opened',
       undefined,
-    );
-
-    watch(
-      dropdownTree,
-      val => {
-        isDropdownTreeHasThirdLevel.value = Array.from(val.values()).some(
-          sec => (sec.children?.size || 0) > 0,
-        );
-      },
-      {
-        deep: true,
-      },
     );
 
     watch(currentOpenedDropdown, val => {
@@ -182,14 +165,6 @@ export default defineComponent({
       });
     }
 
-    function appendChild(item: HDropdownTreeData) {
-      dropdownTree.set(item.uuid, item);
-    }
-
-    function removeChild(uuid: string) {
-      dropdownTree.delete(uuid);
-    }
-
     function onShow() {
       visible.value = true;
       emit('update:visible', true);
@@ -239,13 +214,7 @@ export default defineComponent({
                     ...(props.popperWidth && { '--h-dropdown-width': props.popperWidth + 'px' }),
                   }}
                 >
-                  {!isDropdownTreeHasThirdLevel.value ? (
-                    <HScrollbar maxHeight={296} size="small">
-                      {popper}
-                    </HScrollbar>
-                  ) : (
-                    popper
-                  )}
+                  {renderContent(popper)}
                 </HPopContent>
               </HTransition>
             </Teleport>
@@ -297,13 +266,7 @@ export default defineComponent({
                     classHelper.em('inner', size.value),
                   )}
                 >
-                  {!isDropdownTreeHasThirdLevel.value ? (
-                    <HScrollbar maxHeight={296} size="small">
-                      {popper}
-                    </HScrollbar>
-                  ) : (
-                    <Fragment>{popper}</Fragment>
-                  )}
+                  {renderContent(popper)}
                 </HPopContent>
               ),
             }}

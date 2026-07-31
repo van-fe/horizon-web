@@ -1,10 +1,10 @@
 <template>
-  <h-row>
-    <h-col :span="24">
+  <h-grid :gap="12">
+    <h-grid-item :span="24">
       <h-checkbox v-model="checkAll" :indeterminate="indeterminate" @change="onCheckAllChanged">Check All</h-checkbox>
-    </h-col>
+    </h-grid-item>
 
-    <h-col :span="24">
+    <h-grid-item :span="24">
       <h-checkbox-group v-model="checked" @change="selectCheckbox">
         <h-checkbox label="1" class="checkbox">
           option 1
@@ -13,8 +13,8 @@
           option 2
         </h-checkbox>
       </h-checkbox-group>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script lang="ts" setup>

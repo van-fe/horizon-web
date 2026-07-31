@@ -243,7 +243,7 @@ describe('Cascader.tsx emits', () => {
     const onCancel = vi.fn();
 
     const { wrapper, modelValue } = createInstance({
-      confirm: true,
+      needConfirm: true,
       onConfirm,
       onCancel,
     });
@@ -282,7 +282,7 @@ describe('Cascader.tsx emits', () => {
     const onCancel = vi.fn();
 
     const { wrapper, modelValue } = createInstance({
-      confirm: true,
+      needConfirm: true,
       multiple: true,
       onConfirm,
       onCancel,
@@ -331,21 +331,17 @@ describe('Cascader.tsx emits', () => {
 
   test('dropdown-visible-change', async () => {
     const onDropdownVisibleChange = vi.fn();
-    const onPanelVisibleChange = vi.fn();
 
     const { wrapper } = createInstance({
       onDropdownVisibleChange,
-      onPanelVisibleChange,
     });
 
     await openCascader(wrapper);
 
-    expect(onPanelVisibleChange).toHaveBeenLastCalledWith(true);
     expect(onDropdownVisibleChange).toHaveBeenLastCalledWith(true);
 
     await closeCascader(wrapper);
 
-    expect(onPanelVisibleChange).toHaveBeenLastCalledWith(false);
     expect(onDropdownVisibleChange).toHaveBeenLastCalledWith(false);
   });
 

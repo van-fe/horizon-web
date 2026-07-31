@@ -75,6 +75,8 @@ export default defineComponent({
 
     const okText = computed(() => props.primaryText || props.okText);
     const cancelText = computed(() => props.secondaryText || props.cancelText);
+    const defaultOkText = useLocaleLang('global.ok');
+    const defaultCancelText = useLocaleLang('global.cancel');
     const okButton = computed(() => props.primaryButton && !!props.okButtonProps);
     const cancelButton = computed(() => props.secondaryButton && !!props.cancelButtonProps);
     const okButtonProps = computed(
@@ -273,7 +275,7 @@ export default defineComponent({
                               close();
                             }}
                           >
-                            {cancelText.value || useLocaleLang('global.cancel').value}
+                            {cancelText.value || defaultCancelText.value}
                           </HButton>
                         )}
                         {okButton.value && (
@@ -291,7 +293,7 @@ export default defineComponent({
                               }
                             }}
                           >
-                            {okText.value || useLocaleLang('global.ok').value}
+                            {okText.value || defaultOkText.value}
                           </HButton>
                         )}
                       </div>

@@ -55,7 +55,7 @@ describe('allowCreate works same as search', () => {
 
     const htmlContent = optionList[0].html();
 
-    expect(htmlContent).contains('<div class="n-select-option__content">上海</div>');
+    expect(htmlContent).contains('<div class="h-select-option__content">上海</div>');
   });
 });
 
@@ -88,7 +88,7 @@ describe('auto selected when enter fire', () => {
     await sleep(300);
     expect(modelValue.value).toBe('南京');
     expect(OptionPanelComponent.html()).toContain(
-      '<div class="n-select-option__content">南京</div>',
+      '<div class="h-select-option__content">南京</div>',
     );
   });
 
@@ -98,7 +98,7 @@ describe('auto selected when enter fire', () => {
     });
 
     expect(OptionPanelComponent.html()).not.toContain(
-      '<div class="n-select-option__content">南京</div>',
+      '<div class="h-select-option__content">南京</div>',
     );
   });
 });

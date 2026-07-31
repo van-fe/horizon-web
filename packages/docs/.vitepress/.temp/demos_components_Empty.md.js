@@ -70,12 +70,12 @@ const presentedImageNameList = ref<PresentedImageName[]>(
   }, null, _parent));
   _push(`<h2 id="外部图片" tabindex="-1">外部图片 <a class="header-anchor" href="#外部图片" aria-label="Permalink to &quot;外部图片&quot;">​</a></h2><p>设置和使用外部图片，建议使用 svg 图片，建议尺寸 160*160。</p>`);
   _push(ssrRenderComponent(_component_demo_block, {
-    source: '<template>\n  <h-empty\n    :size="120"\n    image="https://static.example.com/fx-static/issue-management/clbn4wr6r000807742tv19ro7/img-default.svg"\n  />\n</template>\n',
+    source: '<template>\n  <h-empty\n    :size="120"\n    image="/demo-assets/empty-state.svg"\n  />\n</template>\n',
     path: "demos/components/Empty/image-external.vue"
   }, null, _parent));
   _push(`<h2 id="自定义图片" tabindex="-1">自定义图片 <a class="header-anchor" href="#自定义图片" aria-label="Permalink to &quot;自定义图片&quot;">​</a></h2><p>通过 slot 自定义图片。</p>`);
   _push(ssrRenderComponent(_component_demo_block, {
-    source: '<template>\n  <h-empty :size="120">\n    <template #image>\n      <div class="my-img">\n        <img\n          src="https://static.example.com/fx-static/issue-management/clbn4wr6r000807742tv19ro7/img-default.svg"\n          alt="img"\n        />\n      </div>\n    </template>\n  </h-empty>\n</template>\n\n<style lang="scss">\n.my-img {\n  width: 100%;\n  border-radius: 50%;\n  overflow: hidden;\n}\n</style>\n',
+    source: '<template>\n  <h-empty :size="120">\n    <template #image>\n      <div class="my-img">\n        <img\n          src="/demo-assets/empty-state.svg"\n          alt="img"\n        />\n      </div>\n    </template>\n  </h-empty>\n</template>\n\n<style lang="scss">\n.my-img {\n  width: 100%;\n  border-radius: 50%;\n  overflow: hidden;\n}\n</style>\n',
     path: "demos/components/Empty/image-slot.vue"
   }, null, _parent));
   _push(`<h2 id="自定义描述" tabindex="-1">自定义描述 <a class="header-anchor" href="#自定义描述" aria-label="Permalink to &quot;自定义描述&quot;">​</a></h2><p>通过 slot 自定义描述。</p>`);
@@ -88,7 +88,7 @@ const presentedImageNameList = ref<PresentedImageName[]>(
     source: '<template>\n	<div class="flex justify-center">\n		<h-empty description="No data found.">\n			<h-button size="small">Refresh</h-button>\n		</h-empty>\n		<h-empty description="No data found.">\n			<h-button plain size="small">Back</h-button>\n			<h-button size="small">Refresh</h-button>\n		</h-empty>\n	</div>\n</template>\n',
     path: "demos/components/Empty/bottom-slot.vue"
   }, null, _parent));
-  _push(`<h2>Empty Api</h2><h3>Empty Props</h3><table class="md-table"><thead><tr><th>属性</th><th>说明</th><th>类型</th><th style="${ssrRenderStyle({ "min-width": "50px" })}" class="text-center">必填</th><th>默认值</th></tr></thead><tbody><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">image</td><td>图片地址<br>可使用内置图片，列表见文档<br>可使用自定义图片，建议使用 svg，尺寸 160*160<br>还可使用插槽自定义</td><td><code>string</code></td><td class="text-center">否</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">size</td><td>尺寸(图片宽度)<br>支持内置 small, medium, large 宽度和数值宽度。默认是 medium.</td><td><code>&#39;small&#39; | &#39;medium&#39; | &#39;large&#39; | number</code></td><td class="text-center">否</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">description</td><td>描述文字<br>可使用插槽自定义</td><td><code>string</code></td><td class="text-center">否</td><td></td></tr></tbody></table></div>`);
+  _push(`<h2 id="empty-api" class="no-underline h2"><a href="#empty-api" class="!no-underline">Empty Api</a></h2><h3 id="empty-props" class="no-underline h3"><a href="#empty-props" class="!no-underline">Empty Props</a></h3><table class="md-table"><thead><tr><th>属性</th><th>说明</th><th>类型</th><th style="${ssrRenderStyle({ "min-width": "50px" })}" class="text-center">必填</th><th>默认值</th></tr></thead><tbody><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">image</td><td>图片地址<br>可使用内置图片，列表见文档<br>可使用自定义图片，建议使用 svg，尺寸 160*160<br>还可使用插槽自定义</td><td><code>string</code></td><td class="text-center">否</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">size</td><td>尺寸(图片宽度)<br>支持内置 small, medium, large 宽度和数值宽度。默认是 medium.</td><td><code>&#39;small&#39; | &#39;medium&#39; | &#39;large&#39; | number</code></td><td class="text-center">否</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">description</td><td>描述文字<br>可使用插槽自定义</td><td><code>string</code></td><td class="text-center">否</td><td></td></tr></tbody></table></div>`);
 }
 const _sfc_setup = _sfc_main.setup;
 _sfc_main.setup = (props, ctx) => {

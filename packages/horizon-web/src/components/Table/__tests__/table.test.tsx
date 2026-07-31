@@ -240,6 +240,124 @@ describe('Table', () => {
     expect(wrapper.find('tbody').text()).toContain('Child');
   });
 
+  test('links tree selection and derives full and indeterminate states by hierarchy', async () => {
+    const selectedKeys = ref<Array<string | number>>([]);
+    const wrapper = mount(() => (
+      <HTable
+        data={[
+          {
+            id: 1,
+            name: 'Root',
+            children: [
+              {
+                id: 2,
+                name: 'Branch',
+                children: [
+                  { id: 3, name: 'First leaf' },
+                  { id: 4, name: 'Second leaf' },
+                ],
+              },
+              { id: 5, name: 'Root leaf' },
+            ],
+          },
+        ]}
+        rowKey="id"
+        defaultExpandAll
+      >
+        <HTableColumn
+          type="selection"
+          columnKey="id"
+          multiple
+          selectedKeys={selectedKeys.value}
+          onUpdate:selectedKeys={value => {
+            selectedKeys.value = value as Array<string | number>;
+          }}
+        />
+        <HTableColumn title="Name" field="name" />
+      </HTable>
+    ));
+
+    await settleTable();
+
+    const bodySelections = () => wrapper.findAll('tbody .h-table__selection');
+    const bodyCheckboxes = () => wrapper.findAll('tbody label.h-checkbox');
+    const headerCheckbox = () => wrapper.find('thead label.h-checkbox');
+
+    await bodySelections()[2].trigger('click');
+    await settleTable();
+
+    expect(selectedKeys.value).toEqual([3]);
+    expect(bodyCheckboxes()[0].classes()).toContain('h-checkbox--indeterminate');
+    expect(bodyCheckboxes()[1].classes()).toContain('h-checkbox--indeterminate');
+    expect(bodyCheckboxes()[2].classes()).toContain('h-checkbox--checked');
+    expect(headerCheckbox().classes()).toContain('h-checkbox--indeterminate');
+
+    await bodySelections()[3].trigger('click');
+    await settleTable();
+
+    expect(selectedKeys.value).toEqual([3, 4]);
+    expect(bodyCheckboxes()[0].classes()).toContain('h-checkbox--indeterminate');
+    expect(bodyCheckboxes()[1].classes()).toContain('h-checkbox--checked');
+
+    await bodySelections()[4].trigger('click');
+    await settleTable();
+
+    expect(selectedKeys.value).toEqual([3, 4, 5]);
+    expect(bodyCheckboxes()[0].classes()).toContain('h-checkbox--checked');
+    expect(headerCheckbox().classes()).toContain('h-checkbox--checked');
+
+    await bodySelections()[0].trigger('click');
+    await settleTable();
+
+    expect(selectedKeys.value).toEqual([]);
+
+    await bodySelections()[1].trigger('click');
+    await settleTable();
+
+    expect(selectedKeys.value).toEqual([3, 4]);
+    expect(bodyCheckboxes()[1].classes()).toContain('h-checkbox--checked');
+    expect(bodyCheckboxes()[0].classes()).toContain('h-checkbox--indeterminate');
+  });
+
+  test('keeps tree row selection independent when checkStrictly is enabled', async () => {
+    const selectedKeys = ref<Array<string | number>>([]);
+    const wrapper = mount(() => (
+      <HTable
+        data={[
+          {
+            id: 1,
+            name: 'Parent',
+            children: [{ id: 2, name: 'Child' }],
+          },
+        ]}
+        rowKey="id"
+        defaultExpandAll
+      >
+        <HTableColumn
+          type="selection"
+          columnKey="id"
+          multiple
+          checkStrictly
+          selectedKeys={selectedKeys.value}
+          onUpdate:selectedKeys={value => {
+            selectedKeys.value = value as Array<string | number>;
+          }}
+        />
+        <HTableColumn title="Name" field="name" />
+      </HTable>
+    ));
+
+    await settleTable();
+    await wrapper.findAll('tbody .h-table__selection')[0].trigger('click');
+    await settleTable();
+
+    const bodyCheckboxes = wrapper.findAll('tbody label.h-checkbox');
+    expect(selectedKeys.value).toEqual([1]);
+    expect(bodyCheckboxes[0].classes()).toContain('h-checkbox--checked');
+    expect(bodyCheckboxes[1].classes()).not.toContain('h-checkbox--checked');
+    expect(bodyCheckboxes[0].classes()).not.toContain('h-checkbox--indeterminate');
+  });
+
   test('selects and deselects a row from the whole row', async () => {
     const selectedKey = ref<string | number>();
     const onSelect = vi.fn();
@@ -306,7 +424,7 @@ describe('Table', () => {
     await settleTable();
 
     expect(selectedKey.value).toBe(2);
-    expect(radios[1].element.checked).toBe(true);
+    expect((radios[1].element as HTMLInputElement).checked).toBe(true);
   });
 
   test('clears mutually exclusive selection fields in the same row', async () => {

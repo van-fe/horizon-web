@@ -42,7 +42,7 @@
 :::demo components/Button/block.vue :::
 
 ## 按钮组
-使用 `n-button-group` 包裹按钮，可以设置平滑接壤的按钮组
+使用 `h-button-group` 包裹按钮，可以设置平滑接壤的按钮组
 :::demo components/Button/button-group.vue :::
 
 ## 防抖调用函数

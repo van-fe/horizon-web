@@ -33,25 +33,25 @@ describe('Result.tsx', () => {
       const type = ref<'info' | 'success' | 'error' | 'warning'>('info');
       const wrapper = mount(() => <HResult type={type.value} />);
 
-      expect(wrapper.find('svg').classes('n-icon__info_filled_light')).eq(true);
+      expect(wrapper.find('svg').classes('h-icon__info_filled_light')).eq(true);
 
       type.value = 'success';
 
       await nextTick();
 
-      expect(wrapper.find('svg').classes('n-icon__success_filled_light')).eq(true);
+      expect(wrapper.find('svg').classes('h-icon__success_filled_light')).eq(true);
 
       type.value = 'warning';
 
       await nextTick();
 
-      expect(wrapper.find('svg').classes('n-icon__warning_filled_light')).eq(true);
+      expect(wrapper.find('svg').classes('h-icon__warning_filled_light')).eq(true);
 
       type.value = 'error';
 
       await nextTick();
 
-      expect(wrapper.find('svg').classes('n-icon__error_filled_light')).eq(true);
+      expect(wrapper.find('svg').classes('h-icon__error_filled_light')).eq(true);
     });
 
     test('primaryButton/secondaryButton Props transmit', async () => {
@@ -70,9 +70,9 @@ describe('Result.tsx', () => {
 
       expect(wrapper.findAllComponents(HButton).length).eq(2);
       expect(wrapper.findAllComponents(HButton)[0].text()).eq('no');
-      expect(wrapper.findAllComponents(HButton)[0].classes('n-button--plain')).eq(true);
+      expect(wrapper.findAllComponents(HButton)[0].classes('h-button--plain')).eq(true);
       expect(wrapper.findAllComponents(HButton)[1].text()).eq('okay');
-      expect(wrapper.findAllComponents(HButton)[1].classes('n-button--small')).eq(true);
+      expect(wrapper.findAllComponents(HButton)[1].classes('h-button--small')).eq(true);
 
       primaryButtonVisible.value = false;
 
@@ -92,8 +92,8 @@ describe('Result.tsx', () => {
 
       const buttons = wrapper.findAllComponents(HButton);
 
-      expect(buttons[0].classes('n-button--small')).eq(true);
-      expect(buttons[1].classes('n-button--small')).eq(true);
+      expect(buttons[0].classes('h-button--small')).eq(true);
+      expect(buttons[1].classes('h-button--small')).eq(true);
     });
 
     test('403 404 500', async () => {

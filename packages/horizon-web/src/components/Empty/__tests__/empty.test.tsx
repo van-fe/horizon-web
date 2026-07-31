@@ -40,15 +40,15 @@ describe('Empty.tsx', () => {
       ));
       const element = wrapper.findComponent(HEmpty);
 
-      expect(element.classes('n-empty--medium')).toBe(true);
+      expect(element.classes('h-empty--medium')).toBe(true);
 
       size.value = 'small';
       await nextTick();
-      expect(element.classes('n-empty--small')).toBe(true);
+      expect(element.classes('h-empty--small')).toBe(true);
 
       size.value = 'large';
       await nextTick();
-      expect(element.classes('n-empty--large')).toBe(true);
+      expect(element.classes('h-empty--large')).toBe(true);
 
       size.value = 160;
       await nextTick();

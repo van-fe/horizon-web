@@ -1,29 +1,31 @@
-## 基础用法
+## CSS Grid 布局
 
-| 分辨率(px) | 大小 | 列数 | 间隔gutters,hspace,vspace(px) |
-| -------- | ------- | ------- |-----------------------------|
-| 0 ≤ X <480 | XSmall | 8 | 4                           |
-| 480 ≤ X <1024 | Small | 12 | 16                          |
-| 1024 ≤ X < 1440 | Medium | 24 | 16                          |
-| 1440 ≤ X < 1920 | Large | 24 | 16                          |
-| 1920 ≤ X < 2880 | XLarge | 24 | 24                          |
-| 2880 ≤ X ≤ 3840 | XXLarge | 24 | 48                          |
+新布局使用 `h-grid` 和 `h-grid-item`。容器负责定义响应式轨道与间距，子项通过 `span` 和 `offset` 描述占位关系；底层直接使用浏览器原生 CSS Grid，无需负边距或额外的列内边距补偿。
+
+:::demo components/Layout/grid.vue :::
+
+## 基础分栏
+
+默认使用 24 列栅格。`span` 表示子项占据的轨道数，可以自由组合等分和非对称布局。
 
 :::demo components/Layout/demo1.vue :::
 
-## 列元素间距
+## 行列间距
 
-通过 `gutter` 属性设置行列元素之间的间距
-
-通过 `hspace` 属性设置行内列元素之间的间距，`hspace` 优先级高于 `gutter`
-
-通过 `vspace` 属性设置与下一行元素之间的间距，`vspace` 优先级高于 `gutter`，最后一行的 `vspace` 无效
+使用 `gap` 同时设置行列间距，也可以通过 `column-gap` 和 `row-gap` 分别控制。三个属性都支持响应式对象。
 
 :::demo components/Layout/demo2.vue :::
 
-## 对齐方式
+## 单元格对齐
+
+`align` 和 `justify` 分别控制网格项在单元格内的垂直与水平对齐，可选值为 `start`、`center`、`end` 和 `stretch`。
+
 :::demo components/Layout/demo3.vue :::
 
-## 响应式
-通过配置 `xs` `sm` `md` `lg` `xl` `xxl` 属性，可以调配在不同分辨率下所占范围
+## 响应式布局
+
+`cols`、`gap`、`column-gap`、`row-gap`、`span` 和 `offset` 均支持 `xs`、`sm`、`md`、`lg`、`xl`、`xxl` 响应式对象。未重复声明的值会从较小断点自然延续。
+
 :::demo components/Layout/responsive.vue :::
+
+旧的 `h-row` 和 `h-col` 仍然保留，供已有项目渐进迁移；新页面建议优先采用 Grid。

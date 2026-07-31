@@ -2,8 +2,8 @@ import { isString } from '@aurora/utils';
 
 export const useControlsEmits = {
   /**
-   * 点击 `n-control` 后触发
-   * @param label `n-control` 的 `props.label`
+   * 点击 `h-control` 后触发
+   * @param label `h-control` 的 `props.label`
    * @paramEn label The label value.
    * @param evt 鼠标事件或键盘事件
    * @paramEn evt The evt value.

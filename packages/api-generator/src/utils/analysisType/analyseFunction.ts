@@ -59,7 +59,9 @@ export function analyseFunctionExpression(
 
     switch (nativeType) {
       case ApiGeneratorAnalysedBaseType.Object:
-        temp.params = analyseObjectExpression(typeNode, jsDoc, fileElements);
+        if (typeNode) {
+          temp.params = analyseObjectExpression(typeNode, jsDoc, fileElements);
+        }
         break;
       case ApiGeneratorAnalysedBaseType.Function:
         if (typeNode) {
@@ -77,7 +79,7 @@ export function analyseFunctionExpression(
 
   const returns: ApiGeneratorAnalysedExposeReturnType[] = [];
   const returnText = funcNode?.getReturnTypeNode()?.getText() || '';
-  const returnType = funcNode?.getReturnType().getText();
+  const returnType = funcNode?.getReturnType().getText() || '';
 
   const returnNode = funcNode?.getReturnTypeNode();
 

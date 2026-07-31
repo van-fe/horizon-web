@@ -83,9 +83,9 @@ export default defineComponent({
               onClick={() => column[HTableColumnSelectionKey].handleSelectAll()}
             >
               <HCheckbox
-                model-value={column[HTableColumnSelectionKey].isCheckedAll.value(parentProps.data)}
+                model-value={column[HTableColumnSelectionKey].isCheckedAll.value(flattenData.value)}
                 indeterminate={column[HTableColumnSelectionKey].isIndeterminate.value(
-                  parentProps.data,
+                  flattenData.value,
                 )}
               />
             </span>,

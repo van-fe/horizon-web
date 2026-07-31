@@ -145,7 +145,7 @@ export const useStepsProps = declarePropType({
     default: 'center',
   },
   /**
-   * 手动点击 `n-step` 切换步骤前的回调
+   * 手动点击 `h-step` 切换步骤前的回调
    * 如果返回 false 或 Promise.resolve(false) Promise.reject ，则不会进行切换步骤
     * @en Configuration for before change.
    */

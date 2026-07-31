@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1366 768" role="img" aria-labelledby="title">
+  <title id="title">Turquoise coast and islands</title>
+  <defs>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#b9eff8"/><stop offset=".46" stop-color="#2fc6d3"/><stop offset="1" stop-color="#096b8d"/>
+    </linearGradient>
+  </defs>
+  <rect width="1366" height="768" fill="url(#sea)"/>
+  <circle cx="1110" cy="130" r="72" fill="#fff4bf"/>
+  <path d="M0 431c212-72 358-5 522-75 182-77 336-44 502 5 126 37 236 19 342-18v425H0Z" fill="#22a6bb" opacity=".76"/>
+  <path d="M-50 640c168-181 304-207 456-145 128 52 214 12 312-42 158-86 284-72 420 36 76 60 169 86 278 71v208H-50Z" fill="#f3ddad"/>
+  <path d="M-50 680c196-168 312-172 450-109 111 50 213 25 329-27 182-81 344-47 485 79 55 50 123 74 202 70v75H-50Z" fill="#eabf80"/>
+  <g fill="#176f68">
+    <ellipse cx="228" cy="507" rx="54" ry="21"/><ellipse cx="1002" cy="482" rx="74" ry="25"/><ellipse cx="1168" cy="525" rx="44" ry="16"/>
+  </g>
+</svg>

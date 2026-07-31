@@ -1,6 +1,6 @@
 <template>
-  <h-row>
-    <h-col :span="6">
+  <h-grid :gap="12">
+    <h-grid-item :span="6">
       <div class="demo-title">自定义渲染全部节点</div>
 
       <h-tree-select :tree-data="baseTreeData" :multiple="true" :to-body="false">
@@ -17,8 +17,8 @@
           </div>
         </template>
       </h-tree-select>
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">自定义渲染指定节点</div>
 
       <h-tree-select :tree-data="renderTreeData" :multiple="true" :to-body="false">
@@ -26,8 +26,8 @@
           <div>{{ data.label }} ({{ data.value }})</div>
         </template>
       </h-tree-select>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

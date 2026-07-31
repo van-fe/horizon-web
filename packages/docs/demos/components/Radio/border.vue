@@ -1,6 +1,6 @@
 <template>
-  <h-row>
-    <h-col :span="8">
+  <h-grid :gap="12">
+    <h-grid-item :span="8">
       <div class="demo-title">medium(default)</div>
       <h-radio
         v-model="radio"
@@ -22,8 +22,8 @@
       >
         Option 2
       </h-radio>
-    </h-col>
-    <h-col :span="16">
+    </h-grid-item>
+    <h-grid-item :span="16">
       <div class="demo-title">large</div>
       <h-radio
         v-model="radio"
@@ -45,8 +45,8 @@
       >
         Option 2
       </h-radio>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script lang="ts" setup>

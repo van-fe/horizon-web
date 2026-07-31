@@ -42,7 +42,7 @@ Set `block = true` to make the button width fill the parent
 :::demo components/Button/block.vue :::
 
 ## Button Group
-Use `n-button-group` to wrap buttons, you can set a smooth adjacent button group
+Use `h-button-group` to wrap buttons, you can set a smooth adjacent button group
 :::demo components/Button/button-group.vue :::
 
 ## Debounce Function Call

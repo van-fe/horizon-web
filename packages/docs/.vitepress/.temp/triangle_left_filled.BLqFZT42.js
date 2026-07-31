@@ -1,4 +1,0 @@
-const triangle_left_filled = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.82257 12.6332C8.39248 12.3255 8.39248 11.6746 8.82257 11.3669L14.3101 7.44111C14.8113 7.08253 15.5 7.449 15.5 8.07428L15.5 15.9258C15.5 16.5511 14.8113 16.9176 14.3101 16.559L8.82257 12.6332Z" fill="currentColor"/></svg>';
-export {
-  triangle_left_filled as default
-};

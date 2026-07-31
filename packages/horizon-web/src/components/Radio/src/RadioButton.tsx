@@ -76,7 +76,7 @@ export default defineComponent({
               : classHelper.m('checked')
             : isDisabled.value && classHelper.m('disabled'),
           classHelper.m(sizeRef.value as string),
-          viewable.value && 'n-radio--viewable',
+          viewable.value && 'h-radio--viewable',
         ]}
         style={{
           backgroundColor: color.value,

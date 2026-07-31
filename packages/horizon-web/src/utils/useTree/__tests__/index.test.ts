@@ -54,6 +54,39 @@ describe('useTree', () => {
     expect(second.fullPathLabel).toBe('root / second');
     expect(tree.flattenTreeDataMapping.value.get('second')).toBe(second);
     expect(tree.getInfoByValue('second')).toBe(second);
+    expect(tree.getInfoByPath(['root', 'second'])).toBe(second);
+    expect(tree.getInfoByPath(['root', 'missing'])).toBeUndefined();
+  });
+
+  it('calculates full and indeterminate checkbox states for the whole tree', () => {
+    const tree = new Tree<TestTreeNode, TransformedTestTreeNode>(
+      [
+        {
+          label: 'root',
+          value: 'root',
+          children: [
+            { label: 'first', value: 'first' },
+            { label: 'second', value: 'second', disabled: true },
+          ],
+        },
+      ],
+      {},
+      option => option.value,
+    );
+
+    const partialStatus = tree.getCheckboxStatus(['first'], false);
+    expect(partialStatus.get('root')).toEqual({ checked: false, indeterminate: true });
+    expect(partialStatus.get('first')).toEqual({ checked: true, indeterminate: false });
+
+    const fullStatus = tree.getCheckboxStatus(['first', 'second'], false);
+    expect(fullStatus.get('root')).toEqual({ checked: true, indeterminate: false });
+
+    const selectableStatus = tree.getCheckboxStatus(['first'], false, node => !node.disabled);
+    expect(selectableStatus.get('root')).toEqual({ checked: true, indeterminate: false });
+
+    const strictStatus = tree.getCheckboxStatus(['root'], true);
+    expect(strictStatus.get('root')).toEqual({ checked: true, indeterminate: false });
+    expect(strictStatus.get('first')).toEqual({ checked: false, indeterminate: false });
   });
 
   it('supports deeply nested trees without recursive stack overflow', () => {
@@ -125,5 +158,19 @@ describe('useTree', () => {
     );
 
     expect(tree.flattenTreeData.value.map(node => node._uuid)).toEqual(['root', 'root / child']);
+  });
+
+  it('rejects duplicate values returned by a uuid transform', () => {
+    expect(
+      () =>
+        new Tree<TestTreeNode, TransformedTestTreeNode>(
+          [
+            { label: 'first', value: 'first' },
+            { label: 'second', value: 'second' },
+          ],
+          {},
+          () => 'duplicate',
+        ),
+    ).toThrow('Tree uuidTransform must return a unique value');
   });
 });

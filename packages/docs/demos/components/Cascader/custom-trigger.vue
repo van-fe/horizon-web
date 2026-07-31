@@ -1,6 +1,6 @@
 <template>
-  <h-row :gutter="10">
-    <h-col :span="6">
+  <h-grid :gap="10">
+    <h-grid-item :span="6">
       <h-cascader
           ref="cascaderFilterRef"
           v-model="currentVal1"
@@ -17,8 +17,8 @@
           </div>
         </template>
       </h-cascader>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script lang="ts">

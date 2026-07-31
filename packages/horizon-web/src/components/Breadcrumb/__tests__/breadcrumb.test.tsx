@@ -25,13 +25,13 @@ describe('Breadcrumb.tsx', () => {
         />
       ));
 
-      expect(wrapper.classes('n-breadcrumb--medium')).eq(true);
+      expect(wrapper.classes('h-breadcrumb--medium')).eq(true);
 
       size.value = 'small';
 
       await nextTick();
 
-      expect(wrapper.classes('n-breadcrumb--small')).eq(true);
+      expect(wrapper.classes('h-breadcrumb--small')).eq(true);
     });
 
     test('breadcrumb-item size', async () => {
@@ -43,8 +43,8 @@ describe('Breadcrumb.tsx', () => {
         </HBreadcrumb>
       ));
 
-      expect(wrapper.classes('n-breadcrumb--medium')).eq(true);
-      expect(wrapper.findAll('.h-breadcrumb-item__text')[2].classes('n-breadcrumb-item--small')).eq(
+      expect(wrapper.classes('h-breadcrumb--medium')).eq(true);
+      expect(wrapper.findAll('.h-breadcrumb-item__text')[2].classes('h-breadcrumb-item--small')).eq(
         true,
       );
     });

@@ -11,10 +11,11 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
   <h-video-player
     :sources="[
       {
-        src: 'https://www.example.com/cdn-static/mydemo/nextjs/images/et5/et5-hero-video.mp4',
+        src: '/aurora-background.mp4',
         type: 'video/mp4',
       },
     ]"
+    poster="/demo-assets/video-poster.svg"
   />
 </template>
 `,
@@ -28,11 +29,11 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
     <h-video-player
       :sources="[
         {
-          src: 'https://media.vimejs.com/720p.mp4',
+          src: '/aurora-background.mp4',
           type: 'video/mp4',
         },
       ]"
-      poster="https://media.vimejs.com/poster.png"
+      poster="/demo-assets/video-poster.svg"
       :rotate="degree"
     />
   </div>
@@ -75,9 +76,11 @@ export default defineComponent({
   <h-video-player
     :sources="[
       {
-        src: 'https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8',
+        src: '/aurora-background.mp4',
+        type: 'video/mp4',
       },
     ]"
+    poster="/demo-assets/video-poster.svg"
   />
 </template>
 `,
@@ -89,11 +92,11 @@ export default defineComponent({
   <h-video-player
     :sources="[
       {
-        src: 'https://media.vimejs.com/720p.mp4',
+        src: '/aurora-background.mp4',
         type: 'video/mp4',
       },
     ]"
-    poster="https://media.vimejs.com/poster.png"
+    poster="/demo-assets/video-poster.svg"
     @ready="ready"
   />
   <h-button class="mt-3 mr-2" @click="play">播放</h-button>
@@ -132,13 +135,13 @@ export default defineComponent({
         type: 'video/mp4',
       },
     ]"
-    poster="https://www.example.com/cdn-static/mydemo/nextjs/images/et5/top-hero-desktop.jpg"
+    poster="/demo-assets/scene-summit.svg"
   />
 </template>
 `,
     path: "demos/components/VideoPlayer/error.vue"
   }, null, _parent));
-  _push(`<h2>VideoPlayer Api</h2><h3>VideoPlayer Props</h3><table class="md-table"><thead><tr><th>属性</th><th>说明</th><th>类型</th><th style="${ssrRenderStyle({ "min-width": "50px" })}" class="text-center">必填</th><th>默认值</th></tr></thead><tbody><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">sources</td><td>视频资源，是一个数组，如果传入了超过一个资源则会自动选择</td><td><code>Source[]</code></td><td class="text-center">是</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">poster</td><td>视频的封面图片地址，一旦开始播放，图片就会消失</td><td><code>string</code></td><td class="text-center">否</td><td>&#39;&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">rotate</td><td>视频旋转角度</td><td><code>0 | 90 | 180 | 270</code></td><td class="text-center">否</td><td>0</td></tr></tbody></table><h3>VideoPlayer Emits</h3><table class="md-table"><thead><tr><th>属性</th><th>说明</th><th>类型</th><th>参数名</th><th>参数类型</th><th>参数说明</th></tr></thead><tbody><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">ready</td><td rowspan="1">视频播放器加载完成时的回调</td><td rowspan="1">( playerInstance: <code>HTMLVideoElement</code> ) =&gt; <code>void</code></td><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">playerInstance</td><td><code>HTMLVideoElement</code></td><td>HTMLVideoElement 实例</td></tr></tbody></table></div>`);
+  _push(`<h2 id="videoplayer-api" class="no-underline h2"><a href="#videoplayer-api" class="!no-underline">VideoPlayer Api</a></h2><h3 id="videoplayer-props" class="no-underline h3"><a href="#videoplayer-props" class="!no-underline">VideoPlayer Props</a></h3><table class="md-table"><thead><tr><th>属性</th><th>说明</th><th>类型</th><th style="${ssrRenderStyle({ "min-width": "50px" })}" class="text-center">必填</th><th>默认值</th></tr></thead><tbody><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">sources</td><td>视频资源，是一个数组，如果传入了超过一个资源则会自动选择</td><td><code>Source[]</code></td><td class="text-center">是</td><td></td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">poster</td><td>视频的封面图片地址，一旦开始播放，图片就会消失</td><td><code>string</code></td><td class="text-center">否</td><td>&#39;&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">rotate</td><td>视频旋转角度</td><td><code>0 | 90 | 180 | 270</code></td><td class="text-center">否</td><td>0</td></tr></tbody></table><h3 id="videoplayer-emits" class="no-underline h3"><a href="#videoplayer-emits" class="!no-underline">VideoPlayer Emits</a></h3><table class="md-table"><thead><tr><th>属性</th><th>说明</th><th>类型</th><th>参数名</th><th>参数类型</th><th>参数说明</th></tr></thead><tbody><tr><td rowspan="1" style="${ssrRenderStyle({ "word-break": "keep-all" })}">ready</td><td rowspan="1">视频播放器加载完成时的回调</td><td rowspan="1">( playerInstance: <code>HTMLVideoElement</code> ) =&gt; <code>void</code></td><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">playerInstance</td><td><code>HTMLVideoElement</code></td><td>HTMLVideoElement 实例</td></tr></tbody></table></div>`);
 }
 const _sfc_setup = _sfc_main.setup;
 _sfc_main.setup = (props, ctx) => {

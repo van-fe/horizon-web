@@ -26,7 +26,7 @@ export type ImageSlots = typeof useImageSlots;
 
 export const useImageListSlots = Object as SlotsType<{
   /**
-   * 图片列表的内容，除了 `n-image` 之外的内容会被忽略
+   * 图片列表的内容，除了 `h-image` 之外的内容会被忽略
     * @en Custom content for the default slot.
    */
   default?: {};

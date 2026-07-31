@@ -1,11 +1,11 @@
 ## Basic Form
-Set the label of the form item on the `label` attribute of `n-form-item`. By default, the label is displayed above.
+Set the label of the form item on the `label` attribute of `h-form-item`. By default, the label is displayed above.
 :::demo components/Form/basic.vue :::
 
 ## Size
-You can control the component size through `n-form`
+You can control the component size through `h-form`
 
-`size` can override the `size` set through `n-application`
+`size` can override the `size` set through `h-application`
 :::demo components/Form/size.vue :::
 
 ## Tips Helper
@@ -19,17 +19,17 @@ You can control the position of the label through `label-position`. When the lab
 :::demo components/Form/label-position.vue :::
 
 ## Inline Form
-If there are fewer form items and they are all simple components with small height like `n-input`, you can enable inline forms by setting `inline` to `true`.
+If there are fewer form items and they are all simple components with small height like `h-input`, you can enable inline forms by setting `inline` to `true`.
 :::demo components/Form/inline.vue :::
 
 ## Add Validation Rules
 You can add validation rules to the form to determine whether the bound value of the form item meets expectations.  
-First, set the `model` attribute for the `n-form` component, which is a collection of all bound fields in the entire form domain.  
-Then add the `prop` attribute to the `n-form-item` that needs validation. It should be the field name in `model`, and pass validation rules to the `rules` attribute. For detailed usage, see [async-validator#rules](https://github.com/yiminghe/async-validator#rules).
+First, set the `model` attribute for the `h-form` component, which is a collection of all bound fields in the entire form domain.
+Then add the `prop` attribute to the `h-form-item` that needs validation. It should be the field name in `model`, and pass validation rules to the `rules` attribute. For detailed usage, see [async-validator#rules](https://github.com/yiminghe/async-validator#rules).
 :::demo components/Form/validate.vue :::
 
 ## Clear Validation Results After Validation
-After validating a form, if you want to clear the validation results, you can use `clearValidate` on `n-form` to clear the validation results, or use `clearValidate` on `n-form-item` to clear the validation results
+After validating a form, if you want to clear the validation results, you can use `clearValidate` on `h-form` to clear the validation results, or use `clearValidate` on `h-form-item` to clear the validation results
 
 :::demo components/Form/clear-validate.vue :::
 
@@ -68,7 +68,7 @@ Currently supported components:
 :::demo components/Form/validate-trigger.vue :::
 
 ## Render-only Component
-When used together with some form components (such as `formily`), they have their own validation rules. At this time, `n-form` does not need to do validation, so you can configure `only-render` to set whether it is only used as a rendering component
+When used together with some form components (such as `formily`), they have their own validation rules. At this time, `h-form` does not need to do validation, so you can configure `only-render` to set whether it is only used as a rendering component
 
 When `form.only-render` is set to `true` and `form-item.error` changes, it will immediately mark the form element as an error state based on whether `form-item.error` is empty
 
@@ -77,7 +77,7 @@ Note that `emit.validateChange` will not be triggered at this time
 :::demo components/Form/only-render.vue :::
 
 ## Use Custom Form Components
-If you use form components outside of `horizon-web`, but also need to use the validation function of `n-form` `n-form-item`, just use the provided `provide` value
+If you use form components outside of `horizon-web`, but also need to use the validation function of `h-form` `h-form-item`, just use the provided `provide` value
 
 You only need to `inject('HFormItemTriggerInjectedKey')` and call it when the form has `change` or `blur` events
 

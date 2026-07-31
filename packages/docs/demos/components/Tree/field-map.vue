@@ -1,6 +1,6 @@
 <template>
-  <h-row>
-    <h-col :span="12">
+  <h-grid :gap="12">
+    <h-grid-item :span="12">
       <div class="demo-title">单选</div>
       <h-tree
         :tree-data="baseTreeData"
@@ -10,16 +10,16 @@
           {{ data.label }}
         </template>
       </h-tree>
-    </h-col>
-    <h-col :span="12">
+    </h-grid-item>
+    <h-grid-item :span="12">
       <div class="demo-title">多选</div>
       <h-tree
         :tree-data="baseTreeData"
         :field-map="{value: 'key', label: 'text', children: 'items'}"
         :multiple="true"
       />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

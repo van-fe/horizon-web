@@ -48,10 +48,6 @@ Create an `scss` file in your project: `For example: (styles/horizon-web.scss)`:
     $table-namespace: 'x-table'
 );
 
-// if you use @aurora/icon at the same time, you should set namespace too.
-@forward '@aurora/icon/dist/index.scss' with (
-  $icon-namespace: 'x',
-);
 ```
 
 Import this file in your entry file `main.ts`
@@ -62,7 +58,9 @@ Import this file in your entry file `main.ts`
 
 Because only `horizon-web` has the ability to import on-demand, you can only create a `forward` file with only `horizon-web` (for example: `styles/horizon-web.scss`)
 
-:::tip If you also use `table` `icon` at the same time, follow the `Full Import` above, only keep the `table` `icon` configuration and import it in the entry file):::
+:::tip
+If you also use `table`, follow the `Full Import` above, keep the `table` configuration and import it in the entry file.
+:::
 
 
 ```scss
@@ -129,7 +127,7 @@ module.exports = {
 
 ## On-Demand Import + SCSS Variables
 
-On-demand import is only supported by `@aurora/horizon-web`. `@aurora/horizon-web-table` and `@aurora/icon` are all full imports
+On-demand import is only supported by `@aurora/horizon-web`. `@aurora/horizon-web-table` uses a full style import.
 
 The difference from the above **Set SCSS Variables** is that the content of `styles/horizon-web.scss` is changed to:
 
@@ -144,10 +142,6 @@ The difference from the above **Set SCSS Variables** is that the content of `sty
     $table-namespace: 'x-table'
 );
 
-// if you use @aurora/icon at the same time, you should set namespace too.
-@forward '@aurora/icon/dist/index.scss' with (
-  $icon-namespace: 'x',
-);
 ```
 
 The rest of the configuration is the same

@@ -5,7 +5,7 @@
   </h-input>
   <br />
   <br />
-  <h-input v-model="val2" style="--n-input-bg--prepend-append: transparent">
+  <h-input v-model="val2" style="--h-input-bg--prepend-append: transparent">
     <template #prepend>
       <h-select v-model="select1" placeholder="Please Select" size="medium" style="width: 200px">
         <h-option key="1" label="选项1" value="1"></h-option>
@@ -15,7 +15,7 @@
   </h-input>
   <br />
   <br />
-  <h-input v-model="val3" style="--n-input-bg--prepend-append: transparent">
+  <h-input v-model="val3" style="--h-input-bg--prepend-append: transparent">
     <template #append>
       <h-select v-model="select2" placeholder="Please Select" size="medium">
         <h-option key="1" label="选项1" value="1"></h-option>

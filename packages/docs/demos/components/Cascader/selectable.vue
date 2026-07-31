@@ -1,6 +1,6 @@
 <template>
-  <h-row :gutter="10">
-    <h-col :span="6">
+  <h-grid :gap="10">
+    <h-grid-item :span="6">
       <div class="demo-title">单选</div>
       <h-cascader
         v-model="currentVal1"
@@ -11,8 +11,8 @@
         @update:modelValue="updateHandle"
         @change="changeHandle"
       />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <div class="demo-title">多选</div>
       <h-cascader
         v-model="currentVal2"
@@ -22,12 +22,12 @@
         :filterable="true"
         :use-filter-check-all="true"
         :to-body="false"
-        :collapse="true"
+        :collapse-tags="true"
         @update:modelValue="updateHandle"
         @change="changeHandle"
       />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">
@@ -46,7 +46,9 @@ const updateHandle = (value: HCascaderModelValueType) => {
   console.info('update: ', value);
 };
 
-onMounted(async()=>{
-  baseData.value = await fetch(new URL('/unselectable-options.json', import.meta.url).href).then(r => r.json());
+onMounted(async () => {
+  baseData.value = await fetch(new URL('/unselectable-options.json', import.meta.url).href).then(
+    r => r.json(),
+  );
 });
 </script>

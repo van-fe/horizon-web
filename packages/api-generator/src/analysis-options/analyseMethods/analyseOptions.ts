@@ -22,7 +22,6 @@ function analysisPropertyAssignment(
     default: '',
     desc: jsDoc.comment,
     descLocales: jsDoc.locales,
-    descLocales: jsDoc.locales,
     name: property.getName(),
     required: false,
     type: '',
@@ -139,7 +138,7 @@ function analysisPropertyAssignment(
     const typeEntry = property
       .getChildrenOfKind(ts.SyntaxKind.ObjectLiteralExpression)?.[0]
       ?.getProperties()
-      .find(curr => curr.getName() === 'type');
+      .find(curr => curr.asKind(ts.SyntaxKind.PropertyAssignment)?.getName() === 'type');
     const statement = typeEntry?.getLastChild();
     if (statement) {
       res.type = statement.getText();

@@ -237,7 +237,7 @@ ul {
     <h-card title="标题">
       <img
           class="content-img"
-          src="https://static.example.com/fx-static/card-component/clbu60ecm0000072w2izw1wsp/img.png"
+          src="/demo-assets/scene-city.svg"
           alt=""
       />
     </h-card>
@@ -383,7 +383,7 @@ const handleDragEnd = () => {
 `,
     path: "demos/components/Card/other.vue"
   }, null, _parent));
-  _push(`<h2>Card Api</h2><h3>Card Props</h3><table class="md-table"><thead><tr><th>属性</th><th>说明</th><th>类型</th><th style="${ssrRenderStyle({ "min-width": "50px" })}" class="text-center">必填</th><th>默认值</th></tr></thead><tbody><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">title</td><td>默认文字标题</td><td><code>string</code></td><td class="text-center">否</td><td>&#39;&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">top-divider</td><td>是否有上分割线</td><td><code>boolean</code></td><td class="text-center">否</td><td>false</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">bottom-divider</td><td>是否有下分割线</td><td><code>boolean</code></td><td class="text-center">否</td><td>false</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">radius</td><td>卡片圆角尺寸</td><td><code>&#39;small&#39; | &#39;medium&#39; | &#39;large&#39; | &#39;none&#39;</code></td><td class="text-center">否</td><td>&#39;medium&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">border</td><td>是否有边框</td><td><code>boolean</code></td><td class="text-center">否</td><td>true</td></tr></tbody></table></div>`);
+  _push(`<h2 id="card-api" class="no-underline h2"><a href="#card-api" class="!no-underline">Card Api</a></h2><h3 id="card-props" class="no-underline h3"><a href="#card-props" class="!no-underline">Card Props</a></h3><table class="md-table"><thead><tr><th>属性</th><th>说明</th><th>类型</th><th style="${ssrRenderStyle({ "min-width": "50px" })}" class="text-center">必填</th><th>默认值</th></tr></thead><tbody><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">title</td><td>默认文字标题</td><td><code>string</code></td><td class="text-center">否</td><td>&#39;&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">top-divider</td><td>是否有上分割线</td><td><code>boolean</code></td><td class="text-center">否</td><td>false</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">bottom-divider</td><td>是否有下分割线</td><td><code>boolean</code></td><td class="text-center">否</td><td>false</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">radius</td><td>卡片圆角尺寸</td><td><code>&#39;small&#39; | &#39;medium&#39; | &#39;large&#39; | &#39;none&#39;</code></td><td class="text-center">否</td><td>&#39;medium&#39;</td></tr><tr><td style="${ssrRenderStyle({ "word-break": "keep-all" })}">border</td><td>是否有边框</td><td><code>boolean</code></td><td class="text-center">否</td><td>true</td></tr></tbody></table></div>`);
 }
 const _sfc_setup = _sfc_main.setup;
 _sfc_main.setup = (props, ctx) => {

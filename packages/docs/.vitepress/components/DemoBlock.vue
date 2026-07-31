@@ -11,7 +11,7 @@ const props = defineProps({
   path: {
     type: String,
     default: '',
-  }
+  },
 });
 
 const code = ref(props.source);
@@ -34,9 +34,12 @@ if (props.path) {
   DemoComponent.value = defineAsyncComponent(loader as any);
 }
 
-watch(() => props.source, val => {
-  code.value = val;
-});
+watch(
+  () => props.source,
+  val => {
+    code.value = val;
+  },
+);
 
 function copyCode() {
   navigator.clipboard.writeText(unescape(props.source));
@@ -49,15 +52,31 @@ function toggleCode() {
 </script>
 
 <template>
-  <div class="demo-block">
+  <div class="component-demo">
     <div class="preview">
       <component v-if="DemoComponent" :is="DemoComponent" />
       <slot name="source" />
     </div>
     <div class="tools">
       <h-space :size="8">
-        <h-button v-tooltip="'复制代码'" size="mini" icon="copy" :icon-size="14" :text="true" type="normal" @click="copyCode" />
-        <h-button v-tooltip="'查看/编辑代码'" size="mini" icon="code" :icon-size="14" :text="true" type="normal" @click="toggleCode" />
+        <h-button
+          v-tooltip="'复制代码'"
+          size="mini"
+          icon="copy"
+          :icon-size="14"
+          :text="true"
+          type="normal"
+          @click="copyCode"
+        />
+        <h-button
+          v-tooltip="'查看/编辑代码'"
+          size="mini"
+          icon="code"
+          :icon-size="14"
+          :text="true"
+          type="normal"
+          @click="toggleCode"
+        />
       </h-space>
     </div>
     <h-transition name="collapse">
@@ -69,17 +88,36 @@ function toggleCode() {
 </template>
 
 <style lang="scss" scoped>
-@use "../../../horizon-web/src/styles/mixins";
+@use '../../../horizon-web/src/styles/mixins';
 
-.demo-block {
+.component-demo {
+  overflow: hidden;
   border: 1px solid mixins.css-variable('border-default');
-  padding: mixins.css-variable('spacing-3');
-  border-radius: mixins.css-variable('radius-m');
   margin: mixins.css-variable('spacing-5') 0;
+  border-radius: mixins.css-variable('radius-m');
+  background: mixins.css-variable('bg-default');
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    border-color: mixins.css-variable('border-hover');
+    box-shadow: mixins.css-variable('shadow-down');
+  }
+
+  .preview {
+    min-height: 96px;
+    overflow-x: auto;
+    padding: mixins.css-variable('spacing-6');
+    box-sizing: border-box;
+  }
 
   .tools {
-    text-align: right;
-    margin-top: mixins.css-variable('spacing-3');
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid mixins.css-variable('border-default');
+    padding: mixins.css-variable('spacing-2') mixins.css-variable('spacing-4');
+    background: mixins.css-variable('bg-secondary');
   }
 }
 </style>

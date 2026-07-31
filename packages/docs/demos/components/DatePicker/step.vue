@@ -1,31 +1,31 @@
 <template>
-  <h-row align="middle">
-    <h-col :span="2">Time:</h-col>
-    <h-col :span="6">
+  <h-grid align="center" :gap="12">
+    <h-grid-item :span="2">Time:</h-grid-item>
+    <h-grid-item :span="6">
       <h-date-picker v-model="value" type="datetime" :time-step="60" />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <h-date-picker v-model="rangeValue" type="datetimeRange" :time-step="60" />
-    </h-col>
-  </h-row>
-  <h-row align="middle">
-    <h-col :span="2">Minute:</h-col>
-    <h-col :span="6">
+    </h-grid-item>
+  </h-grid>
+  <h-grid align="center" :gap="12">
+    <h-grid-item :span="2">Minute:</h-grid-item>
+    <h-grid-item :span="6">
       <h-date-picker v-model="value2" type="dateMinutes" :hour-step="3" :minute-step="5" />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <h-date-picker v-model="rangeValue2" type="dateMinutesRange" :hour-step="3" :minute-step="5" />
-    </h-col>
-  </h-row>
-  <h-row align="middle">
-    <h-col :span="2">Second:</h-col>
-    <h-col :span="6">
+    </h-grid-item>
+  </h-grid>
+  <h-grid align="center" :gap="12">
+    <h-grid-item :span="2">Second:</h-grid-item>
+    <h-grid-item :span="6">
       <h-date-picker v-model="value3" type="dateSeconds" :hour-step="3" :minute-step="5" :second-step="10" />
-    </h-col>
-    <h-col :span="6">
+    </h-grid-item>
+    <h-grid-item :span="6">
       <h-date-picker v-model="rangeValue3" type="dateSecondsRange" :hour-step="3" :minute-step="5" :second-step="10" />
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">

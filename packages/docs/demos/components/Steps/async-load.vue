@@ -1,6 +1,6 @@
 <template>
-  <h-row :gutter="10">
-    <h-col :span="24">
+  <h-grid :gap="10">
+    <h-grid-item :span="24">
       <div class="demo-title">
         设置了 <code>index</code> 值
       </div>
@@ -9,10 +9,10 @@
         <h-step v-for="(item, index) in steps" :key="item.title" :title="item.title" :index="index + initial + 1" />
         <h-step title="End" :index="steps.length + initial + 1" />
       </h-steps>
-    </h-col>
-  </h-row>
-  <h-row :gutter="10">
-    <h-col :span="24">
+    </h-grid-item>
+  </h-grid>
+  <h-grid :gap="10">
+    <h-grid-item :span="24">
       <div class="demo-title">
         未设置 <code>index</code> 值
       </div>
@@ -21,8 +21,8 @@
         <h-step v-for="item in steps" :key="item.title" :title="item.title" />
         <h-step title="End" />
       </h-steps>
-    </h-col>
-  </h-row>
+    </h-grid-item>
+  </h-grid>
   <div class="steps-action">
     <h-button :disabled="current === initial" @click="prev">上一步</h-button>
     <h-button :disabled="current === steps.length + initial + 2" type="primary" @click="next">
