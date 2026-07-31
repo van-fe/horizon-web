@@ -30,4 +30,7 @@ To trigger the gallery by clicking an image that already exists on the page, a l
 <kbd>↑</kbd> Zoom in image  
 <kbd>↓</kbd> Zoom out image  
 <kbd>Double Click Mouse</kbd> Toggle between original size and adaptive size  
-<kbd>Mouse Wheel or Pinch</kbd> Zoom in or out image  
+<kbd>Mouse Wheel or Two-finger Scroll</kbd> Pan an image beyond the viewport<br>
+<kbd>Trackpad Pinch or Ctrl + Mouse Wheel</kbd> Zoom around the pointer
+
+Tall images are displayed at a readable width and start at the top of the image.

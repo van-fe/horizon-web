@@ -1,56 +1,125 @@
-export default function useZoom(viewportInfo: any, currentImgObj: any) {
-  // 将图片缩放到一个恰当大小以适应容器
-  const zoomToAdjust = () => {
-    const viewerWidth = viewportInfo.width;
-    const viewerHeight = viewportInfo.height;
+interface ViewportInfo {
+  width: number;
+  height: number;
+}
 
-    const aspectRatio = currentImgObj.naturalWidth / currentImgObj.naturalHeight;
-    let width = viewerWidth;
-    let height = viewerHeight;
+interface ImageState {
+  naturalWidth: number;
+  naturalHeight: number;
+  top: number;
+  left: number;
+  width: number;
+  height: number;
+  ratio: number;
+}
 
-    if (viewerHeight * aspectRatio > viewerWidth) {
-      height = viewerWidth / aspectRatio;
+interface ZoomPoint {
+  x: number;
+  y: number;
+}
+
+const MIN_RATIO = 0.01;
+const MAX_RATIO = 100;
+const LONG_IMAGE_ASPECT_RATIO = 2;
+
+const clamp = (value: number, min: number, max: number) => {
+  return Math.min(Math.max(value, min), max);
+};
+
+export default function useZoom(viewportInfo: ViewportInfo, currentImgObj: ImageState) {
+  const constrainPosition = () => {
+    if (currentImgObj.width <= viewportInfo.width) {
+      currentImgObj.left = (viewportInfo.width - currentImgObj.width) / 2;
     } else {
-      width = viewerHeight * aspectRatio;
+      currentImgObj.left = clamp(currentImgObj.left, viewportInfo.width - currentImgObj.width, 0);
     }
 
-    // width = Math.min(width * 0.9, currentImgObj.naturalWidth);
-    // height = Math.min(height * 0.9, currentImgObj.naturalHeight);
-    currentImgObj.width = width;
-    currentImgObj.height = height;
-    currentImgObj.ratio = width / currentImgObj.naturalWidth;
+    if (currentImgObj.height <= viewportInfo.height) {
+      currentImgObj.top = (viewportInfo.height - currentImgObj.height) / 2;
+    } else {
+      currentImgObj.top = clamp(currentImgObj.top, viewportInfo.height - currentImgObj.height, 0);
+    }
   };
 
-  // 将图片缩放到指定比例大小
-  const zoomToRatio = (ratio: number) => {
-    let newRatio = ratio;
-    // 最多放大到100倍（10000%）
-    newRatio = Math.min(newRatio, 100);
-    // 最多缩小到0.01（1%）
-    newRatio = Math.max(newRatio, 0.01);
+  // 让溢出的图片从起始边缘展示，其余方向保持居中。
+  const moveToStart = () => {
+    currentImgObj.left = 0;
+    currentImgObj.top = 0;
+    constrainPosition();
+  };
+
+  // 将图片缩放到一个恰当大小以适应容器。长图按原始宽度或容器宽度展示，避免文字被压缩到不可读。
+  const zoomToAdjust = () => {
+    if (
+      !viewportInfo.width ||
+      !viewportInfo.height ||
+      !currentImgObj.naturalWidth ||
+      !currentImgObj.naturalHeight
+    ) {
+      return;
+    }
+
+    const fitRatio = Math.min(
+      viewportInfo.width / currentImgObj.naturalWidth,
+      viewportInfo.height / currentImgObj.naturalHeight,
+    );
+    const isLongImage =
+      currentImgObj.naturalHeight / currentImgObj.naturalWidth >= LONG_IMAGE_ASPECT_RATIO;
+    const ratio = isLongImage
+      ? Math.min(viewportInfo.width / currentImgObj.naturalWidth, 1)
+      : fitRatio;
+
+    currentImgObj.width = currentImgObj.naturalWidth * ratio;
+    currentImgObj.height = currentImgObj.naturalHeight * ratio;
+    currentImgObj.ratio = ratio;
+  };
+
+  // 将图片缩放到指定比例大小，并保持焦点下的图片内容位置不变。
+  const zoomToRatio = (ratio: number, point?: ZoomPoint) => {
+    if (!currentImgObj.naturalWidth || !currentImgObj.naturalHeight) {
+      return;
+    }
+
+    const newRatio = clamp(ratio, MIN_RATIO, MAX_RATIO);
+    const focusPoint = point || {
+      x: viewportInfo.width / 2,
+      y: viewportInfo.height / 2,
+    };
+    const imageX = currentImgObj.width
+      ? (focusPoint.x - currentImgObj.left) / currentImgObj.width
+      : 0.5;
+    const imageY = currentImgObj.height
+      ? (focusPoint.y - currentImgObj.top) / currentImgObj.height
+      : 0.5;
     const width = currentImgObj.naturalWidth * newRatio;
     const height = currentImgObj.naturalHeight * newRatio;
-    // 放大或缩小时，以当前图片所处位置的中心点为基准，调整top和left
-    currentImgObj.top = currentImgObj.top + (currentImgObj.height - height) / 2;
-    currentImgObj.left = currentImgObj.left + (currentImgObj.width - width) / 2;
+
+    currentImgObj.left = focusPoint.x - imageX * width;
+    currentImgObj.top = focusPoint.y - imageY * height;
     currentImgObj.width = width;
     currentImgObj.height = height;
     currentImgObj.ratio = newRatio;
+    constrainPosition();
+  };
+
+  const panBy = (deltaX: number, deltaY: number) => {
+    currentImgObj.left -= deltaX;
+    currentImgObj.top -= deltaY;
+    constrainPosition();
   };
 
   const zoomOut = () => {
-    // 缩小时，相对当前大小减少 10%
-    const newRatio = currentImgObj.ratio * 0.9;
-    zoomToRatio(newRatio);
+    zoomToRatio(currentImgObj.ratio * 0.9);
   };
 
   const zoomIn = () => {
-    // 放大时，相对当前大小放大 10%
-    const newRatio = currentImgObj.ratio * 1.1;
-    zoomToRatio(newRatio);
+    zoomToRatio(currentImgObj.ratio * 1.1);
   };
 
   return {
+    constrainPosition,
+    moveToStart,
+    panBy,
     zoomToAdjust,
     zoomToRatio,
     zoomOut,

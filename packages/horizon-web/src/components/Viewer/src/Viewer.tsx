@@ -8,6 +8,7 @@ import {
   toRefs,
   watch,
   inject,
+  onBeforeUnmount,
   withModifiers,
 } from 'vue';
 import { useResizeObserver, onKeyStroke } from '@vueuse/core';
@@ -155,7 +156,7 @@ export default defineComponent({
               viewportInfo.width = width;
               viewportInfo.height = height;
               zoomToAdjust();
-              moveCenter();
+              moveToStart();
             });
           }
         });
@@ -197,17 +198,8 @@ export default defineComponent({
       return `${(currentImgObj.ratio * 100).toFixed()}%`;
     });
 
-    // 将图片居中展示
-    const moveCenter = () => {
-      const viewerWidth = viewportInfo.width;
-      const viewerHeight = viewportInfo.height;
-      const left = (viewerWidth - currentImgObj.width) / 2;
-      const top = (viewerHeight - currentImgObj.height) / 2;
-      currentImgObj.left = left;
-      currentImgObj.top = top;
-    };
-
-    const { zoomToAdjust, zoomToRatio, zoomIn, zoomOut } = useZoom(viewportInfo, currentImgObj);
+    const { constrainPosition, moveToStart, panBy, zoomToAdjust, zoomToRatio, zoomIn, zoomOut } =
+      useZoom(viewportInfo, currentImgObj);
 
     const originIconRef = ref(true);
     const adaptClick = () => {
@@ -217,7 +209,7 @@ export default defineComponent({
       } else {
         zoomToAdjust();
       }
-      moveCenter();
+      moveToStart();
       originIconRef.value = !originIconRef.value;
     };
 
@@ -233,7 +225,7 @@ export default defineComponent({
       currentImgObj.naturalWidth = el.naturalWidth;
       currentImgObj.rotate = 0;
       zoomToAdjust();
-      moveCenter();
+      moveToStart();
       loadingPreviewRef.value = false;
     };
 
@@ -242,9 +234,13 @@ export default defineComponent({
       currentImgObj.transition = 'none';
     };
 
-    const onMoveEnd = (top: number, left: number) => {
-      currentImgObj.top = top;
-      currentImgObj.left = left;
+    const currentImgEl = ref<HTMLElement | null>(null);
+    const onMoveEnd = () => {
+      if (currentImgEl.value) {
+        currentImgObj.top = Number.parseFloat(currentImgEl.value.style.top) || 0;
+        currentImgObj.left = Number.parseFloat(currentImgEl.value.style.left) || 0;
+        constrainPosition();
+      }
       currentImgObj.transition = 'all .3s ease';
     };
 
@@ -362,27 +358,51 @@ export default defineComponent({
       }
     });
 
-    const wheeling = ref(false);
-    // 鼠标滚动或手指缩放
-    const onWheel = (e: WheelEvent) => {
-      e.preventDefault();
+    let wheelEndTimer: ReturnType<typeof setTimeout> | undefined;
+    const stopWheelTransition = () => {
+      currentImgObj.transition = 'none';
+      clearTimeout(wheelEndTimer);
+      wheelEndTimer = setTimeout(() => {
+        currentImgObj.transition = 'all .3s ease';
+      }, 120);
+    };
 
-      // 做一点限制，防止速度太快
-      if (wheeling.value) {
+    const normalizeWheelDelta = (delta: number, deltaMode: number, viewportSize: number) => {
+      if (deltaMode === WheelEvent.DOM_DELTA_LINE) {
+        return delta * 16;
+      }
+      if (deltaMode === WheelEvent.DOM_DELTA_PAGE) {
+        return delta * viewportSize;
+      }
+      return delta;
+    };
+
+    // 普通滚轮用于浏览溢出图片；触控板捏合和 Ctrl + 滚轮用于以指针为中心缩放。
+    const onWheel = (e: WheelEvent) => {
+      if (currentSource.value.type !== 'image') {
         return;
       }
-      wheeling.value = true;
-      setTimeout(() => {
-        wheeling.value = false;
-      }, 50);
 
-      if (e.deltaY < 0) {
-        // 放大
-        zoomIn();
-      } else {
-        zoomOut();
+      e.preventDefault();
+      stopWheelTransition();
+
+      if (e.ctrlKey) {
+        const rect = previewElWrap.value?.getBoundingClientRect();
+        const point = {
+          x: e.clientX - (rect?.left || 0),
+          y: e.clientY - (rect?.top || 0),
+        };
+        const deltaY = normalizeWheelDelta(e.deltaY, e.deltaMode, viewportInfo.height);
+        zoomToRatio(currentImgObj.ratio * Math.exp(-deltaY * 0.002), point);
+        return;
       }
+
+      const deltaX = normalizeWheelDelta(e.deltaX, e.deltaMode, viewportInfo.width);
+      const deltaY = normalizeWheelDelta(e.deltaY, e.deltaMode, viewportInfo.height);
+      panBy(e.shiftKey && !deltaX ? deltaY : deltaX, e.shiftKey && !deltaX ? 0 : deltaY);
     };
+
+    onBeforeUnmount(() => clearTimeout(wheelEndTimer));
 
     const { showToolsRef } = useHideTools(modelValueRef, autoHideToolsRef);
 
@@ -415,6 +435,7 @@ export default defineComponent({
                   <div v-show={!loadingPreviewRef.value} onClick={e => e.stopPropagation()}>
                     {currentSource.value.type === 'image' ? (
                       <div
+                        ref={currentImgEl}
                         v-draggable={{
                           onMoveStart,
                           onMoveEnd,
