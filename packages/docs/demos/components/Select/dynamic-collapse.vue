@@ -25,7 +25,7 @@
 import { ref } from 'vue';
 
 const values1 = ref([]);
-const collapse-tags = ref(false);
+const collapse = ref(false);
 
 const selectOptions = [
   { value: 1, label: '上海' },
