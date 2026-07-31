@@ -9,6 +9,7 @@ import type {
   HTableFixedValue,
   HTableInsertedColumnData,
   HTableRowDataType,
+  HTableRowKeyType,
   HTableSortOrderEnum,
   HTableTransformedRowDataType,
 } from './types';
@@ -33,6 +34,10 @@ export const HTableSizeInjectKey = Symbol(
 export const HTableExpandedNodesUuidInjectKey = Symbol(
   generatorInjectedKeyName('table', 'expanded-nodes-uuid'),
 ) as InjectionKey<UnwrapNestedRefs<Set<string | number>>>;
+
+export const HTableExpandedRowsInjectKey = Symbol(
+  generatorInjectedKeyName('table', 'expanded-rows'),
+) as InjectionKey<Ref<Set<HTableRowKeyType>>>;
 
 export const HTableColumnIncreaseCollectionInjectKey = Symbol(
   generatorInjectedKeyName('table', 'column-increase-collection'),
@@ -107,3 +112,7 @@ export const HTableIsColumnsHaveFixedInjectKey = Symbol.for(
 export const HTableGetColumnFixedStateInjectKey = Symbol.for(
   generatorInjectedKeyName('table', 'get-column-fixed-state'),
 ) as InjectionKey<(uuid: string, checkStore?: Map<string, HTableFixedValue>) => HTableFixedValue>;
+
+export const HTableScrollWrapInjectKey = Symbol.for(
+  generatorInjectedKeyName('table', 'scroll-wrap'),
+) as InjectionKey<ComputedRef<HTMLElement | undefined>>;

@@ -1,5 +1,5 @@
 import type { ComputedRef, SetupContext } from 'vue';
-import { ref } from 'vue';
+import { onBeforeUnmount, ref } from 'vue';
 import { cls, ComponentClassBlock } from '@aurora/utils';
 import type { TableEmits } from '../composables/useEmits';
 import type { TableProps } from '../composables/useProps';
@@ -16,14 +16,63 @@ export default function useRowDraggable(
   tableProps: TableProps,
   emit: SetupContext<TableEmits>['emit'],
   fieldMapFormatted: ComputedRef<Record<keyof HTableTreeRowDataType, string>>,
+  scrollContainer?: ComputedRef<HTMLElement | undefined>,
 ) {
   const classHelper = new ComponentClassBlock('table');
   const draggingUuid = ref<string | number>();
   const dragOverUuid = ref<string | number>();
   const dropPosition = ref<HTableRowDropPosition>();
   let draggingRow: HTableTransformedRowDataType | undefined;
+  let autoScrollFrame: number | undefined;
+  let autoScrollSpeed = 0;
+  let lastDragOverAt = 0;
+
+  function stopAutoScroll() {
+    autoScrollSpeed = 0;
+    if (autoScrollFrame !== undefined) {
+      cancelAnimationFrame(autoScrollFrame);
+      autoScrollFrame = undefined;
+    }
+  }
+
+  function runAutoScroll() {
+    const container = scrollContainer?.value;
+    if (!container || !autoScrollSpeed || performance.now() - lastDragOverAt > 120) {
+      stopAutoScroll();
+      return;
+    }
+
+    container.scrollTop += autoScrollSpeed;
+    autoScrollFrame = requestAnimationFrame(runAutoScroll);
+  }
+
+  function updateAutoScroll(clientY: number) {
+    const container = scrollContainer?.value;
+    if (!container) return;
+
+    const rect = container.getBoundingClientRect();
+    if (rect.height <= 0) return;
+    const threshold = Math.min(56, Math.max(28, rect.height / 4));
+    const distanceToTop = clientY - rect.top;
+    const distanceToBottom = rect.bottom - clientY;
+
+    lastDragOverAt = performance.now();
+    if (distanceToTop < threshold) {
+      autoScrollSpeed = -Math.ceil(((threshold - distanceToTop) / threshold) * 18);
+    } else if (distanceToBottom < threshold) {
+      autoScrollSpeed = Math.ceil(((threshold - distanceToBottom) / threshold) * 18);
+    } else {
+      stopAutoScroll();
+      return;
+    }
+
+    if (autoScrollFrame === undefined) {
+      autoScrollFrame = requestAnimationFrame(runAutoScroll);
+    }
+  }
 
   function clearDragState() {
+    stopAutoScroll();
     draggingUuid.value = undefined;
     dragOverUuid.value = undefined;
     dropPosition.value = undefined;
@@ -175,6 +224,8 @@ export default function useRowDraggable(
   function getRowDraggableEvents(row: HTableTransformedRowDataType) {
     return {
       onDragover: (evt: DragEvent) => {
+        updateAutoScroll(evt.clientY);
+
         if (
           !draggingRow ||
           itemRowUuid(draggingRow) === itemRowUuid(row) ||
@@ -214,6 +265,8 @@ export default function useRowDraggable(
       },
     };
   }
+
+  onBeforeUnmount(stopAutoScroll);
 
   function getDragHandleProps(row: HTableTransformedRowDataType) {
     return {

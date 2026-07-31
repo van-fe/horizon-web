@@ -22,6 +22,7 @@ export default function useSortable(
     flattenColumns: HTableColumnData[];
   }>,
   defaultSort: Ref<HTableSortType[]>,
+  useBuiltInSort: () => boolean = () => true,
 ) {
   const currentSorts = ref(new Map<HTableColumnData, HTableSortOrderEnum>());
 
@@ -147,6 +148,8 @@ export default function useSortable(
   }
 
   function sortRow(a: HTableTransformedRowDataType, b: HTableTransformedRowDataType) {
+    if (!useBuiltInSort()) return 0;
+
     for (const [column, order] of currentSorts.value) {
       let sortRes: number;
       if (!column.props.useBuiltInSort || column.props.sortable === 'custom') {

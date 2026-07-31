@@ -1,16 +1,17 @@
 import type { Ref, SetupContext } from 'vue';
-import { ref, watch } from 'vue';
+import { inject, ref, watch } from 'vue';
 import type { HTableRowKeyType, HTableTransformedRowDataType } from '../utils/types';
 import { HTableTransformedRowContextKey } from '../utils/types';
 import type { TableProps } from '../composables/useProps';
 import type { TableEmits } from '../composables/useEmits';
+import { HTableExpandedRowsInjectKey } from '../utils/injectKeys';
 
 export default function useExpand(
   rowsData: Ref<HTableTransformedRowDataType[]>,
   tableProps: TableProps,
   emit: SetupContext<TableEmits>['emit'],
 ) {
-  const expandRows = ref(new Set<HTableRowKeyType>());
+  const expandRows = inject(HTableExpandedRowsInjectKey, ref(new Set<HTableRowKeyType>()));
 
   watch(
     () => tableProps.expandRowKeys,

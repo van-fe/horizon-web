@@ -2,6 +2,7 @@ import { mount } from '@vue/test-utils';
 import { HRecycleScroller, HVirtualScroller } from '..';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
+import type { VirtualScrollerRenderlessScope } from '../src/composables/useSlots';
 
 type Item = {
   id: number;
@@ -149,5 +150,67 @@ describe('VirtualScroller.tsx', () => {
 
     expect(wrapper.find('.empty').exists()).toBe(true);
     expect(wrapper.find('[data-active]').exists()).toBe(false);
+  });
+
+  test('uses an external scroll container in renderless mode', async () => {
+    vi.spyOn(window, 'requestAnimationFrame').mockImplementation(callback => {
+      callback(0);
+      return 1;
+    });
+
+    const container = ref<HTMLElement>();
+    const items = getData().slice(0, 100);
+    const wrapper = mount(() => (
+      <div ref={container} class="external-scroll">
+        <HVirtualScroller
+          items={items}
+          itemSize={20}
+          minItemSize={20}
+          buffer={0}
+          renderless
+          scrollContainer={container.value}
+          v-slots={{
+            renderless: (scope: VirtualScrollerRenderlessScope<Item>) => (
+              <div
+                class="renderless-range"
+                data-start={scope.startIndex}
+                data-end={scope.endIndex}
+                data-total={scope.totalSize}
+              >
+                {scope.views.map(view => (
+                  <span key={view.item.id}>{view.item.id}</span>
+                ))}
+              </div>
+            ),
+          }}
+        />
+      </div>
+    ));
+
+    Object.defineProperty(container.value, 'clientHeight', {
+      configurable: true,
+      value: 100,
+    });
+    await wrapper.find('.external-scroll').trigger('scroll');
+    await nextTick();
+
+    expect(wrapper.findComponent(HRecycleScroller).exists()).toBe(false);
+    expect(wrapper.find('.h-scrollbar').exists()).toBe(false);
+    expect(wrapper.find('.renderless-range').attributes()).toMatchObject({
+      'data-start': '0',
+      'data-end': '5',
+      'data-total': '2000',
+    });
+    expect(wrapper.findAll('.renderless-range span')).toHaveLength(5);
+
+    container.value!.scrollTop = 200;
+    await wrapper.find('.external-scroll').trigger('scroll');
+    await nextTick();
+
+    expect(wrapper.find('.renderless-range').attributes('data-start')).toBe('10');
+    expect(wrapper.find('.renderless-range').text()).toContain('10');
+
+    wrapper.findComponent(HVirtualScroller).getCurrentComponent().exposed?.scrollToItem(20);
+    expect(container.value!.scrollTop).toBe(400);
   });
 });

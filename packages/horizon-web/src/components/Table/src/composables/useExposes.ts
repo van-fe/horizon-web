@@ -1,5 +1,10 @@
 import type { ExposeType, ExtractExposeTypes } from '@aurora/utils';
-import type { HTableRowKeyType, HTableTransformedRowDataType } from '../utils/types';
+import type {
+  HTableRowKeyType,
+  HTableTransformedRowDataType,
+  HTableVisibleRange,
+  HTableState,
+} from '../utils/types';
 
 export const useTableExposes = {
   /**
@@ -19,6 +24,80 @@ export const useTableExposes = {
    * @en Gets the internal scroll container.
    */
   getScrollWrap: Function as ExposeType<() => HTMLElement | null | undefined>,
+  /**
+   * 滚动到排序、过滤后的指定行索引
+   * @param index 行索引
+   * @paramEn index The displayed row index.
+   * @en Scrolls to the displayed row index.
+   */
+  scrollToIndex: Function as ExposeType<(index: number) => void>,
+  /**
+   * 根据 `row-key` 滚动到指定行
+   * @param rowKey 行唯一标识
+   * @paramEn rowKey The row key.
+   * @en Scrolls to a row by row key.
+   */
+  scrollToRow: Function as ExposeType<(rowKey: HTableRowKeyType) => void>,
+  /**
+   * 获取当前虚拟滚动的渲染与可见范围。普通模式返回完整范围
+   * @en Gets the current rendered and visible range. Regular mode returns the complete range.
+   */
+  getVisibleRange: Function as ExposeType<() => HTableVisibleRange>,
+  /**
+   * 通过行和列标识进入编辑状态
+   * @param rowKey 行唯一标识
+   * @paramEn rowKey The row key.
+   * @param columnKey `column-key` 或 `field`
+   * @paramEn columnKey The column-key or field.
+   * @en Starts editing a cell by row and column key.
+   */
+  startCellEdit: Function as ExposeType<
+    (rowKey: HTableRowKeyType, columnKey: string) => Promise<boolean>
+  >,
+  /**
+   * 提交当前编辑
+   * @en Commits the current edit.
+   */
+  commitEdit: Function as ExposeType<() => Promise<boolean>>,
+  /**
+   * 取消当前编辑
+   * @en Cancels the current edit.
+   */
+  cancelEdit: Function as ExposeType<() => void>,
+  /**
+   * 获取完整表格状态
+   * @en Gets the complete table state.
+   */
+  getState: Function as ExposeType<() => HTableState>,
+  /**
+   * 合并设置表格状态
+   * @param state 部分表格状态
+   * @paramEn state Partial table state.
+   * @en Merges partial table state.
+   */
+  setState: Function as ExposeType<(state: Partial<HTableState>) => void>,
+  /**
+   * 恢复初始表格状态
+   * @en Restores the initial table state.
+   */
+  resetState: Function as ExposeType<() => void>,
+  /**
+   * 导出可序列化表格状态
+   * @en Exports serializable table state.
+   */
+  exportState: Function as ExposeType<() => HTableState>,
+  /**
+   * 恢复已导出的表格状态
+   * @param state 已导出的状态
+   * @paramEn state The exported state.
+   * @en Restores an exported table state.
+   */
+  restoreState: Function as ExposeType<(state: Partial<HTableState>) => boolean>,
+  /**
+   * 仅恢复初始列配置
+   * @en Restores only the initial column configuration.
+   */
+  resetColumnState: Function as ExposeType<() => void>,
 };
 
 export const useTableColumnExposes = {

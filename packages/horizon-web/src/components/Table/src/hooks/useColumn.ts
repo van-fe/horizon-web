@@ -85,6 +85,7 @@ function getWidthStyleForCol(columns: HTableColumnData[]) {
 export default function useColumn(
   flattenData: Ref<HTableTransformedRowDataType[]>,
   emit: SetupContext<TableEmits>['emit'],
+  useBuiltInDataOperations: () => boolean = () => true,
 ) {
   const currColumns = ref<HTableInsertedColumnData[]>([]);
   const { fixedStore, getFixedState, resetFixedState } = useColumnFixed(currColumns);
@@ -150,7 +151,12 @@ export default function useColumn(
             toggleRowSelection,
           } = useSelection(column, emit, flattenData);
 
-          const { currentFilterValue } = useFilter(column, emit, flattenData);
+          const { currentFilterValue } = useFilter(
+            column,
+            emit,
+            flattenData,
+            useBuiltInDataOperations,
+          );
 
           const currentColumn: HTableColumnData = {
             ...column,

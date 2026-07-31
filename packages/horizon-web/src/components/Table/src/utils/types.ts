@@ -8,8 +8,115 @@ export const HTableTransformedRowContextKey = Symbol('table transformed row cont
 export const HTableColumnContextKey = Symbol('table column context key');
 export const HTableColumnSelectionKey = Symbol('table column selection key');
 export const HTableColumnFilterKey = Symbol('table column filter key');
+export const HTableGroupContextKey = Symbol('table group context key');
 
 export type HTableRowKeyType = string | number;
+
+export interface HTableVirtualOptions {
+  /**
+   * 固定行高。设置后使用固定尺寸虚拟布局
+   * @en Fixed row height used by fixed-size virtual layout.
+   */
+  itemSize?: number;
+  /**
+   * 动态高度模式下的预估最小行高
+   * @en Estimated minimum row height for dynamic-size layout.
+   */
+  minItemSize?: number;
+  /**
+   * 可视区域前后预渲染的像素距离
+   * @en Pixel buffer rendered before and after the viewport.
+   */
+  buffer?: number;
+  /**
+   * 是否测量实际行高
+   * @en Whether to measure actual row heights.
+   */
+  dynamic?: boolean;
+}
+
+export interface HTableVisibleRange {
+  startIndex: number;
+  endIndex: number;
+  visibleStartIndex: number;
+  visibleEndIndex: number;
+}
+
+export type HTableEditorType =
+  | 'input'
+  | 'input-number'
+  | 'select'
+  | 'tree-select'
+  | 'cascader'
+  | 'date-picker'
+  | 'time-picker';
+
+export interface HTableCellEditContext {
+  row: HTableTransformedRowDataType;
+  rowIndex: number;
+  column: HTableColumnData;
+  value: unknown;
+  oldValue: unknown;
+}
+
+export interface HTableEditingCell {
+  rowKey: HTableRowKeyType;
+  columnKey: string;
+}
+
+export interface HTableStateSort {
+  columnKey: string;
+  field?: string;
+  order: HTableSortOrderEnum;
+}
+
+export interface HTableState {
+  version: 1;
+  sorting: HTableStateSort[];
+  filters: Record<string, unknown>;
+  selection: Record<string, HTableRowKeyType[]>;
+  expanded: HTableRowKeyType[];
+  columnOrder: string[];
+  columnVisibility: Record<string, boolean>;
+  columnFixed: Record<string, HTableFixedValue>;
+  columnWidths: Record<string, number>;
+}
+
+export interface HTableQuery {
+  sorting: HTableStateSort[];
+  filters: Record<string, unknown>;
+}
+
+export type HTableGroupBy = string | string[] | ((row: HTableTransformedRowDataType) => unknown);
+
+export type HTableAggregationType = 'sum' | 'count' | 'average' | 'min' | 'max';
+
+export type HTableAggregationMethod = (
+  values: unknown[],
+  rows: HTableTransformedRowDataType[],
+  field: string,
+) => unknown;
+
+export type HTableAggregations = Record<string, HTableAggregationType | HTableAggregationMethod>;
+
+export interface HTableGroupContext {
+  key: string;
+  value: unknown;
+  label: string;
+  field?: string;
+  level: number;
+  rows: HTableTransformedRowDataType[];
+  aggregates: Record<string, unknown>;
+  expanded: boolean;
+}
+
+export type HTableGroupRowDataType = HTableTransformedRowDataType & {
+  [HTableGroupContextKey]: HTableGroupContext;
+};
+
+export interface HTableGroupScopeSlots extends HTableGroupContext {
+  toggle: () => void;
+}
 
 export type HTableRowDataType = (any & HTableTreeRowDataType) & {};
 

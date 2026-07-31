@@ -34,6 +34,7 @@ import {
   normalizeScrollerKey,
   normalizeScrollerSize,
 } from './composables/useRecycleScrollerLayout';
+import useRenderlessVirtualScroller from './composables/useRenderlessVirtualScroller';
 
 export default defineComponent({
   name: `${useNamespace()}VirtualScroller`,
@@ -109,6 +110,8 @@ export default defineComponent({
       return result;
     });
 
+    const renderlessScroller = useRenderlessVirtualScroller(props, itemsWithSize, emit);
+
     // watch(s)
     watch(
       () => props.items.slice(),
@@ -147,11 +150,11 @@ export default defineComponent({
       (next: ItemsWithSize[], prev: ItemsWithSize[]) => {
         if ($_scrollingToBottom.value || !prev.length) return;
 
-        if (!elRef.value) {
+        if (!props.renderless && !elRef.value) {
           elRef.value = scroller.value?.getRootEl();
         }
 
-        const el = elRef.value;
+        const el = props.renderless ? props.scrollContainer : elRef.value;
         if (!el) return;
 
         const scrollPosition =
@@ -220,11 +223,21 @@ export default defineComponent({
     });
 
     function scrollToItem(index: number) {
+      if (props.renderless) {
+        renderlessScroller.scrollToItem(index);
+        return;
+      }
+
       const _scroller = scroller.value;
       _scroller && _scroller.scrollToItem(index);
     }
 
     function scrollToBottom() {
+      if (props.renderless) {
+        renderlessScroller.scrollToBottom();
+        return;
+      }
+
       if ($_scrollingToBottom.value) return;
       $_scrollingToBottom.value = true;
 
@@ -290,38 +303,42 @@ export default defineComponent({
       emit('visible');
     }
 
-    return () => (
-      <HRecycleScroller
-        ref={scroller}
-        {...props}
-        {...attrs}
-        items={itemsWithSize.value}
-        minItemSize={props.minItemSize}
-        direction={props.direction}
-        keyField="id"
-        listTag={props.listTag}
-        itemTag={props.itemTag}
-        buffer={props.buffer}
-        emitUpdate={props.emitUpdate}
-        updateInterval={props.updateInterval}
-        expandWrapperByChildren={props.expandWrapperByChildren}
-        onResize={onScrollerResize}
-        onVisible={onScrollerVisible}
-        onUpdate={(...args) => emit('update', ...args)}
-        onMouseEnter={evt => emit('mouseEnter', evt)}
-        onMouseLeave={evt => emit('mouseLeave', evt)}
-        onScrollStart={() => emit('scrollStart')}
-        onScrollEnd={() => emit('scrollEnd')}
-        onScrollBegin={() => emit('scrollBegin')}
-        onScrollStop={() => emit('scrollStop')}
-        v-slots={{
-          default: (scope: VirtualScrollerDefaultSlotRowType<ItemsWithSize>) =>
-            slots.default?.({ ...scope, item: scope.item.item }),
-          before: () => slots.before?.(),
-          after: () => slots.after?.(),
-          empty: () => slots.empty?.(),
-        }}
-      />
-    );
+    return () =>
+      props.renderless ? (
+        slots.renderless?.(renderlessScroller.scope.value)
+      ) : (
+        <HRecycleScroller
+          ref={scroller}
+          {...props}
+          {...attrs}
+          items={itemsWithSize.value}
+          minItemSize={props.minItemSize}
+          itemSize={props.itemSize}
+          direction={props.direction}
+          keyField="id"
+          listTag={props.listTag}
+          itemTag={props.itemTag}
+          buffer={props.buffer}
+          emitUpdate={props.emitUpdate}
+          updateInterval={props.updateInterval}
+          expandWrapperByChildren={props.expandWrapperByChildren}
+          onResize={onScrollerResize}
+          onVisible={onScrollerVisible}
+          onUpdate={(...args) => emit('update', ...args)}
+          onMouseEnter={evt => emit('mouseEnter', evt)}
+          onMouseLeave={evt => emit('mouseLeave', evt)}
+          onScrollStart={() => emit('scrollStart')}
+          onScrollEnd={() => emit('scrollEnd')}
+          onScrollBegin={() => emit('scrollBegin')}
+          onScrollStop={() => emit('scrollStop')}
+          v-slots={{
+            default: (scope: VirtualScrollerDefaultSlotRowType<ItemsWithSize>) =>
+              slots.default?.({ ...scope, item: scope.item.item }),
+            before: () => slots.before?.(),
+            after: () => slots.after?.(),
+            empty: () => slots.empty?.(),
+          }}
+        />
+      );
   },
 });

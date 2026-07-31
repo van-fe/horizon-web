@@ -10,6 +10,18 @@ export interface VirtualScrollerDefaultSlotRowType<T = any> {
   activated: boolean;
 }
 
+export interface VirtualScrollerRenderlessScope<T = any> {
+  views: Array<Pick<VirtualScrollerDefaultSlotRowType<T>, 'item' | 'index' | 'active'>>;
+  startIndex: number;
+  endIndex: number;
+  visibleStartIndex: number;
+  visibleEndIndex: number;
+  totalSize: number;
+  startOffset: number;
+  endOffset: number;
+  scrollToItem: (index: number) => void;
+}
+
 export const useVirtualScrollerItemSlots = Object as SlotsType<{
   /**
    * 自定义渲染
@@ -66,6 +78,13 @@ export const useVirtualScrollerSlots = Object as SlotsType<{
    * @en Custom content for the default slot.
    */
   default?: VirtualScrollerDefaultSlotRowType;
+  /**
+   * 无 DOM 模式的渲染插槽
+   * @param scope 可视视图、索引、占位尺寸与滚动方法
+   * @paramEn scope Visible views, indexes, spacer sizes, and scrolling method.
+   * @en Render slot for DOM-less mode.
+   */
+  renderless?: VirtualScrollerRenderlessScope;
 }>;
 
 export type VirtualScrollerSlots = typeof useVirtualScrollerSlots;

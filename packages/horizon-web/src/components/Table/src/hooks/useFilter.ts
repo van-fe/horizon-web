@@ -16,10 +16,11 @@ export default function useFilter(
   column: HTableInsertedColumnData,
   emit: SetupContext<TableEmits>['emit'],
   flattenData: Ref<HTableTransformedRowDataType[]>,
+  useBuiltInFilter: () => boolean = () => true,
 ) {
   const currentFilterValue = ref();
 
-  watch(currentFilterValue, val => {
+  watch([currentFilterValue, useBuiltInFilter], ([val]) => {
     if (!column.props.field) {
       warn('table', `Column should set 'field' first to filter.`);
       return;
@@ -27,7 +28,12 @@ export default function useFilter(
 
     column.emit('filterChange', val);
 
-    if (!column.props.useBuiltInFilter) {
+    if (!useBuiltInFilter() || !column.props.useBuiltInFilter) {
+      if (column.props.field) {
+        flattenData.value.forEach(row => {
+          row[HTableTransformedRowContextKey].visible[column.props.field!] = true;
+        });
+      }
       return;
     }
 

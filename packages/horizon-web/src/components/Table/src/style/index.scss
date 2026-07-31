@@ -1,3 +1,4 @@
+/* stylelint-disable nesting-selector-no-missing-scoping-root, scss/operator-no-newline-after, order/properties-order -- Legacy BEM mixins and multiline calculations use these forms. */
 @use '../../../../styles/mixins';
 @use 'cell';
 @use 'header';
@@ -62,7 +63,14 @@
   }
 
   @include mixins.e('row') {
+    outline: none;
     background: mixins.css-variable('table', 'background', 'body');
+
+    @at-root #{mixins.e('table', 'row')}:focus-visible {
+      > td {
+        box-shadow: inset 0 0 0 2px mixins.css-variable('border', 'brand', 'default');
+      }
+    }
 
     @include mixins.is('row-dragging') {
       > td {
@@ -138,18 +146,106 @@
 
   @include mixins.is('stripe') {
     @include mixins.e('table-body') {
-      tr {
-        &:nth-child(even) {
-          background: #{mixins.css-variable('table', 'background', 'row-stripe')};
+      @include mixins.is-not('virtual') {
+        tr {
+          &:nth-child(even) {
+            background: #{mixins.css-variable('table', 'background', 'row-stripe')};
 
-          @include mixins.e('cell') {
-            @include mixins.is('row-span-cell') {
-              background: mixins.css-variable('table', 'background', 'body');
+            @include mixins.e('cell') {
+              @include mixins.is('row-span-cell') {
+                background: mixins.css-variable('table', 'background', 'body');
+              }
             }
           }
         }
       }
+
+      @include mixins.is('virtual') {
+        > tr {
+          @include mixins.is('stripe-row') {
+            background: #{mixins.css-variable('table', 'background', 'row-stripe')};
+          }
+        }
+      }
     }
+  }
+
+  @include mixins.e('virtual-spacer') {
+    height: 0;
+    pointer-events: none;
+
+    > td {
+      box-sizing: border-box;
+      height: 0;
+      padding: 0;
+      border: 0;
+    }
+  }
+
+  @include mixins.em('row', 'group') {
+    > td {
+      background: mixins.css-variable('table', 'background', 'header');
+    }
+  }
+
+  @include mixins.e('group-wrap') {
+    box-sizing: border-box;
+    display: flex;
+    gap: mixins.css-variable('spacing', 2);
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100%;
+    padding: 0 mixins.css-variable('table', 'spacing', 'padding', 'cell', 'x');
+  }
+
+  @include mixins.e('group-toggle') {
+    display: inline-flex;
+    gap: mixins.css-variable('spacing', 1);
+    align-items: center;
+    min-width: 0;
+    padding: 0;
+    font: inherit;
+    font-weight: mixins.css-variable('weight-strong');
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+
+    @at-root #{mixins.e('table', 'group-toggle')}:focus-visible {
+      outline: 2px solid mixins.css-variable('border', 'brand', 'default');
+      outline-offset: 2px;
+      border-radius: mixins.css-variable('border-radius-small');
+    }
+  }
+
+  @include mixins.e('group-icon') {
+    flex: none;
+    transition: transform mixins.css-variable('table', 'transition', 'color-behavior');
+
+    @include mixins.is('active') {
+      transform: rotate(90deg);
+    }
+  }
+
+  @include mixins.e('group-label') {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @include mixins.e('group-count') {
+    flex: none;
+    font-weight: normal;
+    color: mixins.css-variable('text', 'tertiary');
+  }
+
+  @include mixins.e('group-aggregates') {
+    display: inline-flex;
+    flex: none;
+    gap: mixins.css-variable('spacing', 4);
+    font-variant-numeric: tabular-nums;
+    color: mixins.css-variable('text', 'secondary');
   }
 
   @include mixins.is('hoverable') {

@@ -16,6 +16,7 @@ export {
   HTableColumnContextKey,
   HTableColumnSelectionKey,
   HTableColumnFilterKey,
+  HTableGroupContextKey,
 } from './src/utils/types';
 
 export type {
@@ -34,4 +35,18 @@ export type {
   HTableColumnContextData,
   HTableColumnSelectionData,
   HTableColumnFilterData,
+  HTableVirtualOptions,
+  HTableVisibleRange,
+  HTableState,
+  HTableStateSort,
+  HTableQuery,
+  HTableCellEditContext,
+  HTableEditorType,
+  HTableGroupBy,
+  HTableAggregationType,
+  HTableAggregationMethod,
+  HTableAggregations,
+  HTableGroupContext,
+  HTableGroupRowDataType,
+  HTableGroupScopeSlots,
 } from './src/utils/types';

@@ -116,6 +116,23 @@
 
 :::demo components/Table/filter.vue :::
 
+## 单元格与行编辑
+给列设置 `editable` 即可启用编辑，默认双击进入。内置编辑器直接复用 Input、InputNumber、Select、TreeSelect、Cascader、DatePicker 和 TimePicker，也可以通过 `editor` 插槽自定义。
+
+`before-edit`、`before-commit` 支持异步校验；提交失败时保留编辑器和错误状态。键盘使用 Enter 提交、Escape 取消。
+
+:::demo components/Table/editable.vue :::
+
+## 统一状态与远程查询
+`getState`/`setState` 汇总排序、过滤、选择、展开以及列顺序、显隐、固定和宽度，可用 `exportState`/`restoreState` 持久化。设置 `query-mode="remote"` 后，排序过滤只更新查询状态并触发 `query-change`，不会处理本地数据。
+
+:::demo components/Table/state.vue :::
+
+## 分组与聚合
+`group-by` 支持单字段、多级字段或计算函数。`aggregations` 内置 `sum`、`count`、`average`、`min`、`max`，也可传自定义函数。分组行支持鼠标和键盘展开，并可与虚拟滚动组合。
+
+:::demo components/Table/grouping.vue :::
+
 ## 自定义列模板
 可以通过 `column` 默认插槽自定义列内容
 
@@ -207,6 +224,13 @@
 
 参考 [table-layout](https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout)
 :::demo components/Table/table-layout.vue :::
+
+## 虚拟滚动
+数据量较大时设置 `virtual`，Table 才会按需启用组件库现有的 `VirtualScroller`；未开启时仍使用普通表格渲染，不增加运行时开销。固定行高性能最好，内容可能换行时可开启 `dynamic` 测量真实行高。
+
+虚拟滚动必须同时设置 `height` 和 `row-key`。可通过 `scrollToIndex`、`scrollToRow` 和 `getVisibleRange` 控制或读取滚动位置。
+
+:::demo components/Table/virtual.vue :::
 
 ## 类型定义
 :::code ../../../../horizon-web/src/components/Table/src/utils/types.ts :::

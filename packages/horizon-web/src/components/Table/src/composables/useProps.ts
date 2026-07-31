@@ -11,7 +11,14 @@ import type {
   HTableSpanMethodType,
   HTableSummaryMethodType,
   HTableTreeRowDataType,
+  HTableVirtualOptions,
+  HTableCellEditContext,
+  HTableEditorType,
+  HTableState,
+  HTableAggregations,
+  HTableGroupBy,
 } from '../utils/types';
+import type { Promisable } from '@aurora/utils';
 import { HTableAlignEnum, HTableSortOrderEnum } from '../utils/types';
 import type { TooltipProps } from '~/components/Tooltip/src/composables/useProps';
 import type { LoadingOptions } from '~/directives/v-loading/src/composables/useOptions';
@@ -443,6 +450,90 @@ export const useTableProps = declarePropType({
     type: Boolean,
     default: true,
   },
+  /**
+   * 是否开启虚拟滚动，也可以传入虚拟滚动配置。开启时必须配置 `height` 和 `row-key`
+   * @en Whether to enable virtual scrolling. A configuration object can also be provided. Height and row-key are required.
+   */
+  virtual: {
+    type: [Boolean, Object] as PropType<boolean | HTableVirtualOptions>,
+    default: false,
+  },
+  /**
+   * 是否启用行键盘导航。使用方向键、Home、End、PageUp、PageDown 移动，空格选择，Enter 展开
+   * @en Whether to enable row keyboard navigation with arrows, Home, End, Page keys, Space, and Enter.
+   */
+  keyboardNavigation: {
+    type: Boolean,
+    default: true,
+  },
+  /**
+   * 编辑模式：单元格或整行
+   * @en Editing mode: individual cell or complete row.
+   */
+  editMode: {
+    type: String as PropType<'cell' | 'row'>,
+    default: 'cell',
+  },
+  /**
+   * 编辑器失去焦点时是否自动提交
+   * @en Whether to commit automatically when an editor loses focus.
+   */
+  commitEditOnBlur: {
+    type: Boolean,
+    default: true,
+  },
+  /**
+   * 表格统一状态，可以使用 `v-model:state` 受控
+   * @en Unified table state. Use v-model:state for controlled state.
+   */
+  state: {
+    type: Object as PropType<Partial<HTableState>>,
+  },
+  /**
+   * 表格初始状态，仅在首次列初始化后应用
+   * @en Initial table state applied once after columns are initialized.
+   */
+  defaultState: {
+    type: Object as PropType<Partial<HTableState>>,
+  },
+  /**
+   * 查询模式。本地模式执行内置排序过滤，远程模式只更新状态并通知查询
+   * @en Query mode. Local mode applies built-in operations; remote mode only updates state and emits queries.
+   */
+  queryMode: {
+    type: String as PropType<'local' | 'remote'>,
+    default: 'local',
+  },
+  /**
+   * 按字段或计算结果对当前可见数据分组。数组表示多级分组
+   * @en Groups currently visible rows by fields or a computed value. An array creates nested groups.
+   */
+  groupBy: {
+    type: [String, Array, Function] as PropType<HTableGroupBy>,
+  },
+  /**
+   * 分组聚合配置，支持 sum、count、average、min、max 或自定义函数
+   * @en Group aggregation configuration supporting sum, count, average, min, max, or custom functions.
+   */
+  aggregations: {
+    type: Object as PropType<HTableAggregations>,
+    default: () => ({}),
+  },
+  /**
+   * 分组是否默认全部展开
+   * @en Whether groups are expanded by default.
+   */
+  defaultExpandAllGroups: {
+    type: Boolean,
+    default: true,
+  },
+  /**
+   * 受控的已展开分组 key
+   * @en Controlled expanded group keys.
+   */
+  expandedGroupKeys: {
+    type: Array as PropType<string[]>,
+  },
 });
 
 export const useTableColumnProps = declarePropType({
@@ -832,6 +923,65 @@ export const useTableColumnProps = declarePropType({
   checkStrictly: {
     type: Boolean,
     default: false,
+  },
+  /**
+   * 是否允许编辑，也可以通过函数按行控制
+   * @en Whether the cell is editable. A function can control editability per row.
+   */
+  editable: {
+    type: [Boolean, Function] as PropType<
+      boolean | ((row: HTableTransformedRowDataType, rowIndex: number) => boolean)
+    >,
+    default: false,
+  },
+  /**
+   * 内置编辑器类型
+   * @en Built-in editor type.
+   */
+  editorType: {
+    type: String as PropType<HTableEditorType>,
+    default: 'input',
+  },
+  /**
+   * 传递给内置编辑器组件的配置
+   * @en Options passed to the built-in editor component.
+   */
+  editorOptions: {
+    type: Object as PropType<
+      Partial<
+        | InputProps
+        | InputNumberProps
+        | SelectProps
+        | CascaderProps
+        | TreeSelectProps
+        | DatePickerProps
+        | TimePickerProps
+      >
+    >,
+  },
+  /**
+   * 进入编辑的触发方式
+   * @en Interaction used to enter edit mode.
+   */
+  editTrigger: {
+    type: String as PropType<'click' | 'dblclick'>,
+    default: 'dblclick',
+  },
+  /**
+   * 进入编辑前的拦截方法，返回 `false` 时取消
+   * @en Guard called before editing starts. Returning false cancels editing.
+   */
+  beforeEdit: {
+    type: Function as PropType<
+      (context: Omit<HTableCellEditContext, 'oldValue'>) => Promisable<boolean | void>
+    >,
+  },
+  /**
+   * 提交编辑前的拦截方法，返回 `false` 时保留编辑状态
+   * @en Guard called before committing. Returning false keeps the editor open.
+   */
+  beforeCommit: {
+    type: Function as PropType<(context: HTableCellEditContext) => Promisable<boolean | void>>,
   },
   /**
    * 提示信息

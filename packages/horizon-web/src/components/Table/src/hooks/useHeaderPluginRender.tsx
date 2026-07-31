@@ -39,6 +39,15 @@ export function useSortPlugin(column: HTableColumnData) {
   const setSort = inject(HTableSetSortInjectKey, undefined);
 
   const currentSortState = computed(() => currentSorts?.value.get(column));
+  const canSort = computed(() => !column.props.sortDisabled);
+  const sortLabel = computed(() => String(column.props.title ?? column.props.field));
+
+  function handleKeyboardSort(evt: KeyboardEvent, order?: HTableSortOrderEnum) {
+    if (!['Enter', ' ', 'Spacebar'].includes(evt.key) || !canSort.value) return;
+    evt.preventDefault();
+    evt.stopPropagation();
+    setSort?.(column, order, evt.ctrlKey || evt.metaKey);
+  }
 
   return (
     <span
@@ -48,10 +57,17 @@ export function useSortPlugin(column: HTableColumnData) {
         classHelper.is('separated', column.props.sortSeparate),
         classHelper.is('disabled', column.props.sortDisabled),
       )}
+      role={!column.props.sortSeparate && canSort.value ? 'button' : undefined}
+      tabindex={!column.props.sortSeparate && canSort.value ? 0 : -1}
+      aria-label={!column.props.sortSeparate ? sortLabel.value : undefined}
+      aria-pressed={!column.props.sortSeparate ? !!currentSortState.value : undefined}
       onClick={(evt: MouseEvent) => {
         !column.props.sortSeparate &&
           !column.props.sortDisabled &&
           setSort?.(column, undefined, evt.ctrlKey || evt.metaKey);
+      }}
+      onKeydown={(evt: KeyboardEvent) => {
+        if (!column.props.sortSeparate) handleKeyboardSort(evt);
       }}
     >
       <div
@@ -60,11 +76,18 @@ export function useSortPlugin(column: HTableColumnData) {
           classHelper.is('asc'),
           classHelper.is('active', currentSortState.value === HTableSortOrderEnum.ASC),
         )}
+        role={column.props.sortSeparate && canSort.value ? 'button' : undefined}
+        tabindex={column.props.sortSeparate && canSort.value ? 0 : -1}
+        aria-label={column.props.sortSeparate ? `${sortLabel.value} ↑` : undefined}
+        aria-pressed={
+          column.props.sortSeparate ? currentSortState.value === HTableSortOrderEnum.ASC : undefined
+        }
         onClick={(evt: MouseEvent) => {
           column.props.sortSeparate &&
             !column.props.sortDisabled &&
             setSort?.(column, HTableSortOrderEnum.ASC, evt.ctrlKey || evt.metaKey);
         }}
+        onKeydown={(evt: KeyboardEvent) => handleKeyboardSort(evt, HTableSortOrderEnum.ASC)}
       >
         <IconArrowUp size={10} />
       </div>
@@ -74,11 +97,20 @@ export function useSortPlugin(column: HTableColumnData) {
           classHelper.is('desc'),
           classHelper.is('active', currentSortState.value === HTableSortOrderEnum.DESC),
         )}
+        role={column.props.sortSeparate && canSort.value ? 'button' : undefined}
+        tabindex={column.props.sortSeparate && canSort.value ? 0 : -1}
+        aria-label={column.props.sortSeparate ? `${sortLabel.value} ↓` : undefined}
+        aria-pressed={
+          column.props.sortSeparate
+            ? currentSortState.value === HTableSortOrderEnum.DESC
+            : undefined
+        }
         onClick={(evt: MouseEvent) => {
           column.props.sortSeparate &&
             !column.props.sortDisabled &&
             setSort?.(column, HTableSortOrderEnum.DESC, evt.ctrlKey || evt.metaKey);
         }}
+        onKeydown={(evt: KeyboardEvent) => handleKeyboardSort(evt, HTableSortOrderEnum.DESC)}
       >
         <IconArrowDown size={10} />
       </div>

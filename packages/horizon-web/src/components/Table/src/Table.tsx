@@ -32,10 +32,13 @@ import { useTableExposes } from './composables/useExposes';
 import {
   HTableColumnAnalysisInjectKey,
   HTableEmitsInjectKey,
+  HTableExpandedRowsInjectKey,
   HTableFieldMapFormattedInjectKey,
   HTableFlattenDataInjectKey,
   HTableFooterRowHeightInjectKey,
   HTablePropsInjectKey,
+  HTableScrollWrapInjectKey,
+  HTableSizeInjectKey,
   HTableSlotsInjectKey,
 } from './utils/injectKeys';
 import useColumn from './hooks/useColumn';
@@ -56,10 +59,12 @@ import HEmpty from '~/components/Empty/src/Empty';
 import { formatTreeFieldMap } from './hooks/useTree';
 import TableFooter from './components/TableFooter';
 import useHeaderSticky from './hooks/useHeaderSticky';
-import { HTableColumnContextKey } from './utils/types';
+import { HTableColumnContextKey, type HTableRowKeyType } from './utils/types';
 import useHeaderDraggable from './hooks/useHeaderDraggable';
 import useHeaderResizer from './hooks/useHeaderResizer';
 import useColumnManager from './hooks/useColumnManager';
+import type { TableBodyExposes } from './components/TableBody';
+import useState from './hooks/useState';
 
 export default defineComponent({
   name: `${useNamespace()}Table`,
@@ -84,6 +89,8 @@ export default defineComponent({
     const propsRef = toRefs(props);
     const tableDomRef = ref<HTMLTableElement>();
     const headDomRef = ref<HTMLTableSectionElement>();
+    const tableBodyRef = ref<TableBodyExposes>();
+    const expandedRows = ref(new Set<HTableRowKeyType>(props.expandRowKeys ?? []));
 
     const size = useSize(toRef(props, 'size'), 'medium');
     const isLoading = computed(() =>
@@ -100,10 +107,15 @@ export default defineComponent({
       visibleStore,
       getVisibleState,
       sortStore,
-    } = useColumn(flattenData, emit);
+    } = useColumn(flattenData, emit, () => props.queryMode !== 'remote');
 
     const { border } = useBorder(propsRef, analysisColumns);
-    const {} = useSortable(emit, analysisColumns, propsRef.defaultSort);
+    const { currentSorts } = useSortable(
+      emit,
+      analysisColumns,
+      propsRef.defaultSort,
+      () => props.queryMode !== 'remote',
+    );
     const { scrollbarDomRef, handleScroll, initialScrollState, scrollComputedClassName } =
       useScroll();
 
@@ -122,7 +134,10 @@ export default defineComponent({
       calculateColumnsLayout,
       refreshScrollbarSpacing,
     ]);
-    const scrollWrapDomRef = computed(() => unrefElement(scrollbarDomRef.value?.wrapRef));
+    const scrollWrapDomRef = computed(
+      () => unrefElement(scrollbarDomRef.value?.wrapRef) ?? undefined,
+    );
+    const effectiveTableLayout = computed(() => (props.virtual ? 'fixed' : props.tableLayout));
 
     const { scrollOffset, isNativeSticky, setScrollListener, removeScrollListener } =
       useHeaderSticky(propsRef, wrapperDomRef, headDomRef, scrollWrapDomRef);
@@ -144,6 +159,19 @@ export default defineComponent({
       getVisibleState,
     });
 
+    const tableState = useState({
+      props,
+      emit,
+      columns,
+      analysisColumns,
+      currentSorts,
+      fixedStore,
+      visibleStore,
+      sortStore,
+      expandedRows,
+      refreshLayout,
+    });
+
     watch(
       [fixedStore, visibleStore],
       () => {
@@ -163,11 +191,33 @@ export default defineComponent({
     provide(HTableFlattenDataInjectKey, flattenData);
     provide(HTableFieldMapFormattedInjectKey, fieldMapFormatted);
     provide(HTableFooterRowHeightInjectKey, footerRowHeight);
+    provide(HTableExpandedRowsInjectKey, expandedRows);
+    provide(HTableScrollWrapInjectKey, scrollWrapDomRef);
+    provide(HTableSizeInjectKey, size);
 
     expose({
       reloadData,
       refreshLayout,
       getScrollWrap: () => scrollbarDomRef.value?.wrapRef,
+      scrollToIndex: (index: number) => tableBodyRef.value?.scrollToIndex(index),
+      scrollToRow: (rowKey: HTableRowKeyType) => tableBodyRef.value?.scrollToRow(rowKey),
+      getVisibleRange: () =>
+        tableBodyRef.value?.getVisibleRange() ?? {
+          startIndex: 0,
+          endIndex: flattenData.value.length,
+          visibleStartIndex: 0,
+          visibleEndIndex: flattenData.value.length,
+        },
+      startCellEdit: (rowKey: HTableRowKeyType, columnKey: string) =>
+        tableBodyRef.value?.startCellEdit(rowKey, columnKey) ?? Promise.resolve(false),
+      commitEdit: () => tableBodyRef.value?.commitEdit() ?? Promise.resolve(true),
+      cancelEdit: () => tableBodyRef.value?.cancelEdit(),
+      getState: tableState.getState,
+      setState: tableState.setState,
+      resetState: tableState.resetState,
+      exportState: tableState.exportState,
+      restoreState: tableState.restoreState,
+      resetColumnState: tableState.resetColumnState,
     });
 
     onMounted(() => {
@@ -233,11 +283,14 @@ export default defineComponent({
         >
           <table
             ref={tableDomRef}
-            class={cls(classHelper.e('table'), classHelper.is(`layout-${props.tableLayout}`))}
-            style={{ tableLayout: props.tableLayout }}
+            class={cls(
+              classHelper.e('table'),
+              classHelper.is(`layout-${effectiveTableLayout.value}`),
+            )}
+            style={{ tableLayout: effectiveTableLayout.value }}
           >
             <colgroup>
-              {props.tableLayout === 'fixed' &&
+              {effectiveTableLayout.value === 'fixed' &&
                 analysisColumns.value.colStyle.map(info => {
                   return (
                     <col
@@ -278,7 +331,7 @@ export default defineComponent({
                 ))}
               </thead>
             )}
-            <TableBody columns={analysisColumns.value.flattenColumns} />
+            <TableBody ref={tableBodyRef} columns={analysisColumns.value.flattenColumns} />
             <TableFooter ref={tableFooterDomRef} />
           </table>
           {flattenData.value.length === 0 && !isLoading.value && (

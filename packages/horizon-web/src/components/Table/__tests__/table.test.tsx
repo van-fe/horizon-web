@@ -6,6 +6,10 @@ import HDropdown from '../../Dropdown/src/Dropdown';
 import HDropdownItem from '../../Dropdown/src/DropdownItem';
 import type { HTreeData } from '../../Tree/src/utils/types';
 import HTreeSelect from '../../TreeSelect/src/TreeSelect';
+import HVirtualScroller from '../../VirtualScroller/src/VirtualScroller';
+import HVirtualScrollerItem from '../../VirtualScroller/src/VirtualScrollerItem';
+import HInput from '../../Input/src/Input';
+import HSelect from '../../Select/src/Select';
 
 async function settleTable() {
   await nextTick();
@@ -32,6 +36,456 @@ describe('Table', () => {
     expect(wrapper.find('tbody').text()).toContain('Alice');
     expect(wrapper.find('tbody').text()).toContain('#2');
     expect(wrapper.find('table').classes()).toContain('is-layout-fixed');
+  });
+
+  test('mounts VirtualScroller only when virtual rendering is enabled', async () => {
+    const normal = mount(() => (
+      <HTable data={[{ id: 1, name: 'Normal' }]} rowKey="id">
+        <HTableColumn title="Name" field="name" />
+      </HTable>
+    ));
+    const virtual = mount(() => (
+      <HTable
+        data={Array.from({ length: 1000 }, (_, id) => ({ id, name: `Row ${id}` }))}
+        rowKey="id"
+        height={100}
+        virtual={{ itemSize: 20, buffer: 0 }}
+      >
+        <HTableColumn title="Name" field="name" />
+      </HTable>
+    ));
+
+    await settleTable();
+
+    expect(normal.findComponent(HVirtualScroller).exists()).toBe(false);
+    expect(virtual.findComponent(HVirtualScroller).exists()).toBe(true);
+  });
+
+  test('renders only the virtual range and scrolls by index', async () => {
+    vi.spyOn(window, 'requestAnimationFrame').mockImplementation(callback => {
+      callback(0);
+      return 1;
+    });
+
+    const wrapper = mount(() => (
+      <HTable
+        data={Array.from({ length: 1000 }, (_, id) => ({ id, name: `Row ${id}` }))}
+        rowKey="id"
+        height={100}
+        virtual={{ itemSize: 20, buffer: 0 }}
+      >
+        <HTableColumn title="Name" field="name" />
+      </HTable>
+    ));
+    await settleTable();
+
+    const scrollWrapper = wrapper.find<HTMLElement>('.h-scrollbar__wrap');
+    Object.defineProperty(scrollWrapper.element, 'clientHeight', {
+      configurable: true,
+      value: 100,
+    });
+    await scrollWrapper.trigger('scroll');
+    await settleTable();
+
+    expect(wrapper.find('tbody').classes()).toContain('is-virtual');
+    expect(wrapper.findAll('tbody .h-table__row')).toHaveLength(5);
+    expect(wrapper.find('tbody').text()).toContain('Row 0');
+    expect(wrapper.find('tbody').text()).not.toContain('Row 20');
+
+    scrollWrapper.element.scrollTop = 200;
+    await scrollWrapper.trigger('scroll');
+    await settleTable();
+
+    expect(wrapper.findAll('tbody .h-table__row')).toHaveLength(5);
+    expect(wrapper.find('tbody').text()).toContain('Row 10');
+    expect(wrapper.find('tbody').text()).not.toContain('Row 0');
+
+    wrapper.findComponent(HTable).getCurrentComponent().exposed?.scrollToIndex(20);
+    await settleTable();
+    expect(scrollWrapper.element.scrollTop).toBe(400);
+    expect(wrapper.findComponent(HTable).getCurrentComponent().exposed?.getVisibleRange()).toEqual({
+      startIndex: 20,
+      endIndex: 25,
+      visibleStartIndex: 20,
+      visibleEndIndex: 25,
+    });
+  });
+
+  test('measures rows through VirtualScrollerItem in dynamic virtual mode', async () => {
+    vi.spyOn(window, 'requestAnimationFrame').mockImplementation(callback => {
+      callback(0);
+      return 1;
+    });
+
+    const wrapper = mount(() => (
+      <HTable
+        data={Array.from({ length: 20 }, (_, id) => ({ id, name: `Row ${id}` }))}
+        rowKey="id"
+        height={100}
+        virtual={{ dynamic: true, minItemSize: 20, buffer: 0 }}
+      >
+        <HTableColumn title="Name" field="name" />
+      </HTable>
+    ));
+
+    await settleTable();
+    const scrollWrapper = wrapper.find<HTMLElement>('.h-scrollbar__wrap');
+    Object.defineProperty(scrollWrapper.element, 'clientHeight', {
+      configurable: true,
+      value: 100,
+    });
+    await scrollWrapper.trigger('scroll');
+    await settleTable();
+
+    expect(wrapper.findComponent(HVirtualScrollerItem).exists(), wrapper.html()).toBe(true);
+    expect(wrapper.findComponent(HVirtualScrollerItem).element.tagName).toBe('TBODY');
+    expect(wrapper.findComponent(HVirtualScrollerItem).classes()).toContain('h-table__table-body');
+  });
+
+  test('supports roving keyboard focus and row selection', async () => {
+    vi.spyOn(window, 'requestAnimationFrame').mockImplementation(callback => {
+      callback(0);
+      return 1;
+    });
+    const selectedKeys = ref<Array<number>>([]);
+    const wrapper = mount(() => (
+      <HTable data={[{ id: 1 }, { id: 2 }, { id: 3 }]} rowKey="id">
+        <HTableColumn
+          type="selection"
+          columnKey="id"
+          multiple
+          selectedKeys={selectedKeys.value}
+          onUpdate:selectedKeys={value => {
+            selectedKeys.value = value as number[];
+          }}
+        />
+        <HTableColumn title="ID" field="id" />
+      </HTable>
+    ));
+    await settleTable();
+
+    const rows = wrapper.findAll<HTMLElement>('tbody .h-table__row');
+    expect(rows.map(row => row.attributes('tabindex'))).toEqual(['0', '-1', '-1']);
+
+    await rows[0].trigger('keydown', { key: 'ArrowDown' });
+    await settleTable();
+    expect(wrapper.findAll('tbody .h-table__row')[1].attributes('tabindex')).toBe('0');
+
+    await wrapper.findAll('tbody .h-table__row')[1].trigger('keydown', { key: ' ' });
+    await settleTable();
+    expect(selectedKeys.value).toEqual([2]);
+    expect(wrapper.findAll('tbody .h-table__row')[1].attributes('aria-selected')).toBe('true');
+
+    await wrapper.findAll('tbody .h-table__row')[1].trigger('keydown', { key: 'End' });
+    await settleTable();
+    expect(wrapper.findAll('tbody .h-table__row')[2].attributes('tabindex')).toBe('0');
+  });
+
+  test('expands and collapses tree rows with horizontal arrow keys', async () => {
+    const wrapper = mount(() => (
+      <HTable data={[{ id: 1, name: 'Parent', children: [{ id: 2, name: 'Child' }] }]} rowKey="id">
+        <HTableColumn title="Name" field="name" />
+      </HTable>
+    ));
+    await settleTable();
+
+    const parent = wrapper.find('tbody .h-table__row');
+    expect(parent.attributes('aria-expanded')).toBe('false');
+
+    await parent.trigger('keydown', { key: 'ArrowRight' });
+    await settleTable();
+    expect(wrapper.findAll('tbody .h-table__row')).toHaveLength(2);
+    expect(wrapper.find('tbody .h-table__row').attributes('aria-expanded')).toBe('true');
+
+    await wrapper.find('tbody .h-table__row').trigger('keydown', { key: 'ArrowLeft' });
+    await settleTable();
+    expect(wrapper.findAll('tbody .h-table__row')).toHaveLength(1);
+  });
+
+  test('edits a cell with the built-in Input and commits with Enter', async () => {
+    const data = ref([{ id: 1, name: 'Alice' }]);
+    const onCellEditCommit = vi.fn();
+    const wrapper = mount(() => (
+      <HTable
+        data={data.value}
+        rowKey="id"
+        onUpdate:data={value => {
+          data.value = value as typeof data.value;
+        }}
+        onCellEditCommit={onCellEditCommit}
+      >
+        <HTableColumn title="Name" field="name" editable />
+      </HTable>
+    ));
+    await settleTable();
+
+    await wrapper.find('tbody td').trigger('dblclick');
+    await settleTable();
+    expect(wrapper.findComponent(HInput).exists()).toBe(true);
+
+    await wrapper.find('input').setValue('Alicia');
+    await wrapper.find('input').trigger('keydown', { key: 'Enter' });
+    await settleTable();
+
+    expect(data.value[0].name).toBe('Alicia');
+    expect(wrapper.findComponent(HInput).exists()).toBe(false);
+    expect(wrapper.find('tbody td').text()).toBe('Alicia');
+    expect(onCellEditCommit).toHaveBeenCalledWith(
+      expect.objectContaining({ value: 'Alicia', oldValue: 'Alice', rowIndex: 0 }),
+    );
+  });
+
+  test('keeps the editor open and reports async commit failures', async () => {
+    const data = ref([{ id: 1, name: 'Alice' }]);
+    const onCellEditError = vi.fn();
+    const wrapper = mount(() => (
+      <HTable
+        data={data.value}
+        rowKey="id"
+        onUpdate:data={value => {
+          data.value = value as typeof data.value;
+        }}
+        onCellEditError={onCellEditError}
+      >
+        <HTableColumn
+          title="Name"
+          field="name"
+          editable
+          beforeCommit={async () => {
+            throw new Error('Name is already used');
+          }}
+        />
+      </HTable>
+    ));
+    await settleTable();
+
+    await wrapper.find('tbody td').trigger('dblclick');
+    await wrapper.find('input').setValue('Bob');
+    await wrapper.find('input').trigger('keydown', { key: 'Enter' });
+    await settleTable();
+
+    expect(data.value[0].name).toBe('Alice');
+    expect(wrapper.findComponent(HInput).exists()).toBe(true);
+    expect(wrapper.find('.h-table__cell-editor').classes()).toContain('is-invalid');
+    expect(wrapper.find('.h-table__cell-editor').attributes('title')).toBe('Name is already used');
+    expect(onCellEditError).toHaveBeenCalledOnce();
+
+    await wrapper.find('input').trigger('keydown', { key: 'Escape' });
+    await settleTable();
+    expect(wrapper.findComponent(HInput).exists()).toBe(false);
+  });
+
+  test('edits a complete row and reuses the Horizon Select editor', async () => {
+    const data = ref([{ id: 1, name: 'Alice', role: 'admin' }]);
+    const wrapper = mount(() => (
+      <HTable
+        data={data.value}
+        rowKey="id"
+        editMode="row"
+        onUpdate:data={value => {
+          data.value = value as typeof data.value;
+        }}
+      >
+        <HTableColumn title="Name" field="name" editable />
+        <HTableColumn
+          title="Role"
+          field="role"
+          editable
+          editorType="select"
+          editorOptions={{
+            options: [
+              { label: 'Admin', value: 'admin' },
+              { label: 'User', value: 'user' },
+            ],
+          }}
+        />
+      </HTable>
+    ));
+    await settleTable();
+
+    await wrapper.findAll('tbody td')[0].trigger('dblclick');
+    await settleTable();
+    expect(wrapper.findComponent(HInput).exists()).toBe(true);
+    expect(wrapper.findComponent(HSelect).exists()).toBe(true);
+
+    await wrapper.find('input').setValue('Alicia');
+    await wrapper.findComponent(HTable).getCurrentComponent().exposed?.commitEdit();
+    await settleTable();
+
+    expect(data.value[0]).toEqual({ id: 1, name: 'Alicia', role: 'admin' });
+  });
+
+  test('exports, restores and resets unified table state', async () => {
+    const wrapper = mount(() => (
+      <HTable
+        data={[
+          { id: 1, name: 'Alice' },
+          { id: 2, name: 'Bob' },
+        ]}
+        rowKey="id"
+      >
+        <HTableColumn title="ID" field="id" sortable />
+        <HTableColumn title="Name" field="name" minWidth={100} filterable resizable />
+      </HTable>
+    ));
+    await settleTable();
+
+    const table = wrapper.findComponent(HTable).getCurrentComponent().exposed!;
+    table.setState({
+      sorting: [{ columnKey: 'id', field: 'id', order: HTableSortOrderEnum.DESC }],
+      filters: { name: 'bo' },
+      columnWidths: { name: 180 },
+    });
+    await settleTable();
+    await settleTable();
+
+    expect(wrapper.findAll('tbody .h-table__row')).toHaveLength(1);
+    expect(wrapper.find('tbody').text()).toContain('Bob');
+    expect(wrapper.findAll('col')[1].attributes('style')).toContain('width: 180px');
+
+    const exported = table.exportState();
+    expect(exported).toMatchObject({
+      version: 1,
+      sorting: [{ columnKey: 'id', field: 'id', order: HTableSortOrderEnum.DESC }],
+      filters: { name: 'bo' },
+      columnWidths: { name: 180 },
+    });
+    expect(table.restoreState({ version: 2 })).toBe(false);
+
+    table.resetState();
+    await settleTable();
+    await settleTable();
+    expect(wrapper.findAll('tbody .h-table__row')).toHaveLength(2);
+  });
+
+  test('emits remote queries without applying local sorting or filtering', async () => {
+    const onQueryChange = vi.fn();
+    const wrapper = mount(() => (
+      <HTable
+        data={[
+          { id: 1, name: 'Alice' },
+          { id: 2, name: 'Bob' },
+        ]}
+        rowKey="id"
+        queryMode="remote"
+        onQueryChange={onQueryChange}
+      >
+        <HTableColumn title="ID" field="id" sortable />
+        <HTableColumn title="Name" field="name" filterable />
+      </HTable>
+    ));
+    await settleTable();
+    onQueryChange.mockClear();
+
+    wrapper
+      .findComponent(HTable)
+      .getCurrentComponent()
+      .exposed?.setState({
+        sorting: [{ columnKey: 'id', field: 'id', order: HTableSortOrderEnum.DESC }],
+        filters: { name: 'bo' },
+      });
+    await settleTable();
+    await settleTable();
+
+    expect(wrapper.findAll('tbody .h-table__row').map(row => row.text())).toEqual([
+      '1Alice',
+      '2Bob',
+    ]);
+    expect(onQueryChange).toHaveBeenLastCalledWith({
+      sorting: [{ columnKey: 'id', field: 'id', order: HTableSortOrderEnum.DESC }],
+      filters: { name: 'bo' },
+    });
+  });
+
+  test('includes uncontrolled expanded rows in unified state and restores them', async () => {
+    const wrapper = mount(() => (
+      <HTable data={[{ id: 1, name: 'Alice' }]} rowKey="id">
+        <HTableColumn type="expand">
+          {{ expand: () => <div class="expanded-content">Details</div> }}
+        </HTableColumn>
+        <HTableColumn title="Name" field="name" />
+      </HTable>
+    ));
+    await settleTable();
+
+    const table = wrapper.findComponent(HTable).getCurrentComponent().exposed!;
+    await wrapper.find('tbody .h-table__expand-icon').trigger('click');
+    await settleTable();
+    expect(table.getState().expanded).toEqual([1]);
+    const expandedState = table.exportState();
+
+    await wrapper.find('tbody .h-table__expand-icon').trigger('click');
+    await settleTable();
+    expect(wrapper.find('.expanded-content').exists()).toBe(false);
+
+    table.restoreState(expandedState);
+    await settleTable();
+    await settleTable();
+    expect(wrapper.find('.expanded-content').exists()).toBe(true);
+  });
+
+  test('groups rows at multiple levels, aggregates values, and supports keyboard collapse', async () => {
+    const onExpandedGroups = vi.fn();
+    const wrapper = mount(() => (
+      <HTable
+        data={[
+          { id: 1, team: 'Platform', role: 'Engineer', points: 8 },
+          { id: 2, team: 'Platform', role: 'Designer', points: 5 },
+          { id: 3, team: 'Growth', role: 'Engineer', points: 3 },
+        ]}
+        rowKey="id"
+        groupBy={['team', 'role']}
+        aggregations={{ points: 'sum' }}
+        onUpdate:expandedGroupKeys={onExpandedGroups}
+      >
+        <HTableColumn title="Team" field="team" />
+        <HTableColumn title="Role" field="role" />
+        <HTableColumn title="Points" field="points" />
+      </HTable>
+    ));
+    await settleTable();
+
+    expect(wrapper.findAll('.h-table__row--group')).toHaveLength(5);
+    expect(wrapper.find('.h-table__row--group').text()).toContain('Platform');
+    expect(wrapper.find('.h-table__row--group').text()).toContain('Points: 13');
+
+    const firstGroup = wrapper.find('.h-table__row--group');
+    await firstGroup.trigger('keydown', { key: 'Enter' });
+    await settleTable();
+
+    expect(wrapper.findAll('.h-table__row--group')).toHaveLength(3);
+    expect(firstGroup.attributes('aria-expanded')).toBe('false');
+    expect(onExpandedGroups).toHaveBeenCalled();
+  });
+
+  test('collapses a virtualized group from its accessible toggle button', async () => {
+    const wrapper = mount(() => (
+      <HTable
+        data={Array.from({ length: 80 }, (_, id) => ({
+          id,
+          team: id < 40 ? 'Platform' : 'Growth',
+          points: id + 1,
+        }))}
+        rowKey="id"
+        groupBy="team"
+        height={120}
+        virtual={{ itemSize: 30, buffer: 0 }}
+      >
+        <HTableColumn title="Team" field="team" />
+        <HTableColumn title="Points" field="points" />
+      </HTable>
+    ));
+    await settleTable();
+
+    const firstGroup = wrapper.find('.h-table__row--group');
+    const toggle = firstGroup.find('.h-table__group-toggle');
+    expect(toggle.attributes('aria-expanded')).toBe('true');
+
+    await toggle.trigger('click');
+    await settleTable();
+
+    expect(wrapper.find('.h-table__row--group').attributes('aria-expanded')).toBe('false');
+    expect(wrapper.find('tbody').text()).not.toContain('Platform1');
   });
 
   test('applies table and column class/style callbacks', async () => {
@@ -490,6 +944,31 @@ describe('Table', () => {
     await settleTable();
 
     expect(wrapper.findAll('tbody tr').map(row => row.text())).toEqual(['2Two', '10Ten']);
+  });
+
+  test('sorts from the keyboard and exposes the active sort state', async () => {
+    const wrapper = mount(() => (
+      <HTable
+        data={[
+          { id: 2, name: 'Two' },
+          { id: 1, name: 'One' },
+        ]}
+      >
+        <HTableColumn title="ID" field="id" sortable />
+      </HTable>
+    ));
+    await settleTable();
+
+    const sortButton = wrapper.find('.h-table__header--sort[role="button"]');
+    expect(sortButton.attributes('tabindex')).toBe('0');
+    expect(sortButton.attributes('aria-label')).toBe('ID');
+    expect(sortButton.attributes('aria-pressed')).toBe('false');
+
+    await sortButton.trigger('keydown', { key: 'Enter' });
+    await settleTable();
+
+    expect(wrapper.findAll('tbody tr').map(row => row.text())).toEqual(['1', '2']);
+    expect(sortButton.attributes('aria-pressed')).toBe('true');
   });
 
   test('sorts tree rows within each level without separating children', async () => {
