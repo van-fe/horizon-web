@@ -211,6 +211,17 @@ export const EnGB = {
     videoPlayer: {
       error: 'Sorry, the current video failed to play. Please refresh and try again',
     },
+    audioPlayer: {
+      label: 'Audio player',
+      play: 'Play',
+      pause: 'Pause',
+      mute: 'Mute',
+      unmute: 'Unmute',
+      progress: 'Playback progress',
+      volume: 'Volume',
+      rate: 'Playback speed',
+      error: 'The audio could not be played',
+    },
     viewer: {
       closeThumbnail: 'Close thumbnail',
       thumbnail: 'Thumbnail',

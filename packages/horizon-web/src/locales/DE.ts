@@ -214,6 +214,17 @@ export const DE = {
     videoPlayer: {
       error: 'Leider ist das Video fehlgeschlagen. Bitte aktualisieren und erneut versuchen.',
     },
+    audioPlayer: {
+      label: 'Audioplayer',
+      play: 'Wiedergabe',
+      pause: 'Pause',
+      mute: 'Stummschalten',
+      unmute: 'Stummschaltung aufheben',
+      progress: 'Wiedergabefortschritt',
+      volume: 'Lautstärke',
+      rate: 'Wiedergabegeschwindigkeit',
+      error: 'Die Audiodatei konnte nicht abgespielt werden',
+    },
     viewer: {
       closeThumbnail: 'Schließen der Miniaturansicht',
       thumbnail: 'Miniaturansicht',

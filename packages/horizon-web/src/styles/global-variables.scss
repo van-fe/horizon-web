@@ -7,6 +7,7 @@
 @use './mixins/mixins';
 @use './basic';
 @use './element';
+@use '../components/AudioPlayer/src/style/variables' as audio-player;
 @use '../components/TreeSelect/src/style/variables' as tree-select;
 @use '../components/Guide/src/style/variables' as guide;
 @use '../components/Tabs/src/style/variables' as tabs;
@@ -82,6 +83,7 @@
 $values: function.map-merge-multi(
   function.flatten-variables(basic.$values),
   function.flatten-variables(element.$values),
+  function.flatten-variables(audio-player.$values, 'audio-player'),
   function.flatten-variables(tree-select.$values, 'tree-select'),
   function.flatten-variables(guide.$values, 'guide'),
   function.flatten-variables(tabs.$values, 'tabs'),

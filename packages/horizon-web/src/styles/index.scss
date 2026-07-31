@@ -7,6 +7,7 @@
 @forward './global-variables';
 
 // components
+@forward '../components/AudioPlayer/src/style/index';
 @forward '../components/TreeSelect/src/style/index';
 @forward '../components/Guide/src/style/index';
 @forward '../components/Tabs/src/style/index';

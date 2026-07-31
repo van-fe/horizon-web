@@ -224,6 +224,17 @@ export const ZhCN = {
     videoPlayer: {
       error: '很抱歉当前视频播放失败,请刷新后再次尝试',
     },
+    audioPlayer: {
+      label: '音频播放器',
+      play: '播放',
+      pause: '暂停',
+      mute: '静音',
+      unmute: '取消静音',
+      progress: '播放进度',
+      volume: '音量',
+      rate: '播放速度',
+      error: '音频无法播放',
+    },
     viewer: {
       closeThumbnail: '隐藏缩略图',
       thumbnail: '显示缩略图',

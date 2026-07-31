@@ -104,6 +104,7 @@
     "zh": "媒体组件",
     "en": "Media Components",
     "items": [
+      { "link": "components/AudioPlayer", "zh": "AudioPlayer 音频播放器", "en": "AudioPlayer" },
       { "link": "components/VideoPlayer", "zh": "VideoPlayer 视频播放器", "en": "VideoPlayer" },
       { "link": "components/Viewer", "zh": "Viewer 查看器", "en": "Viewer" }
     ]

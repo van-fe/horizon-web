@@ -224,6 +224,17 @@ export const AE = {
     videoPlayer: {
       error: 'عذرًا، فشل التشغيل الفيديو. يرجى التحديث والمحاولة مرة أخرى',
     },
+    audioPlayer: {
+      label: 'مشغل الصوت',
+      play: 'تشغيل',
+      pause: 'إيقاف مؤقت',
+      mute: 'كتم الصوت',
+      unmute: 'إلغاء كتم الصوت',
+      progress: 'تقدم التشغيل',
+      volume: 'مستوى الصوت',
+      rate: 'سرعة التشغيل',
+      error: 'تعذر تشغيل الصوت',
+    },
     viewer: {
       closeThumbnail: 'إغلاق الصورة المصغرة',
       thumbnail: 'صورة مصغرة',

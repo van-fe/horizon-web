@@ -212,6 +212,17 @@ export const SvSE = {
       error:
         'Beklager, den gjeldende videoen kunne ikke spilles av. Vennligst oppdater og prøv igjen',
     },
+    audioPlayer: {
+      label: 'Ljudspelare',
+      play: 'Spela',
+      pause: 'Paus',
+      mute: 'Stäng av ljudet',
+      unmute: 'Slå på ljudet',
+      progress: 'Uppspelningsförlopp',
+      volume: 'Volym',
+      rate: 'Uppspelningshastighet',
+      error: 'Ljudet kunde inte spelas upp',
+    },
     result: {
       primaryButtonText: 'Ja',
       secondaryButtonText: 'Nej',

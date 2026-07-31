@@ -224,6 +224,17 @@ export const ZhTW = {
     videoPlayer: {
       error: '很抱歉當前視頻播放失敗,請刷新後再次嚐試',
     },
+    audioPlayer: {
+      label: '音訊播放器',
+      play: '播放',
+      pause: '暫停',
+      mute: '靜音',
+      unmute: '取消靜音',
+      progress: '播放進度',
+      volume: '音量',
+      rate: '播放速度',
+      error: '音訊無法播放',
+    },
     result: {
       primaryButtonText: '確認',
       secondaryButtonText: '取消',
