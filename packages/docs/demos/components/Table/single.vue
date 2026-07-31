@@ -1,6 +1,8 @@
 <template>
+  <p>current picked index: {{ checkedRow }}</p>
   <p>
-    current picked index: {{ checkedRow }}
+    indexes 3 and 4 are disabled by
+    <code>selectable</code>
   </p>
 
   <h-table :data="data" height="300px">
@@ -28,7 +30,9 @@
       <h-button plain @click="getSelected">get selected</h-button>
     </p>
     <p>
-      <h-button plain @click="() => clearSelection(true)">clear selection ignore selectable</h-button>
+      <h-button plain @click="() => clearSelection(true)">
+        clear selection ignore selectable
+      </h-button>
       <h-button plain @click="() => clearSelection()">clear selection consider selectable</h-button>
     </p>
   </div>
@@ -37,7 +41,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { faker } from '@faker-js/faker';
-import { HTableColumn, HTableRowDataType, type TableColumnExposes } from '@aurora/horizon-web';
+import { HTableColumn, type TableColumnExposes } from '@aurora/horizon-web';
 import type { HorizonWebComponentInstance } from '@aurora/utils';
 
 interface TableData {
@@ -45,20 +49,25 @@ interface TableData {
   name: string;
   birthday: string;
   address: string;
+  selectable: boolean;
 }
 
-const selectionColumnDomRef = ref<HorizonWebComponentInstance<typeof HTableColumn, TableColumnExposes>>();
+const selectionColumnDomRef =
+  ref<HorizonWebComponentInstance<typeof HTableColumn, TableColumnExposes>>();
 const checkedRow = ref();
 
-const data = ref<TableData[]>(new Array(20).fill(0).map((_, index) => ({
-  id: index,
-  name: faker.person.fullName(),
-  birthday: faker.date.birthdate({ min: 22, max: 50, mode: 'age' }).toDateString(),
-  address: faker.location.streetAddress(),
-})));
+const data = ref<TableData[]>(
+  new Array(20).fill(0).map((_, index) => ({
+    id: index,
+    name: faker.person.fullName(),
+    birthday: faker.date.birthdate({ min: 22, max: 50, mode: 'age' }).toDateString(),
+    address: faker.location.streetAddress(),
+    selectable: ![3, 4].includes(index),
+  })),
+);
 
-function isSelectable(rowData: HTableRowDataType, rowIndex: number) {
-  return ![3, 4].includes(rowIndex);
+function isSelectable(rowData: TableData) {
+  return rowData.selectable;
 }
 
 function setSelected(ignoreSelectable = false) {

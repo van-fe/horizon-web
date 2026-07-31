@@ -148,7 +148,7 @@ export interface HTableColumnContextData {
 
 export interface HTableColumnSelectionData {
   checkedRows: Set<unknown>;
-  isSelectable: ComputedRef<(rowIndex: number) => boolean>;
+  isSelectable: ComputedRef<(rowData: HTableTransformedRowDataType, rowIndex: number) => boolean>;
   isCheckedAll: ComputedRef<(rowsData: HTableTransformedRowDataType[]) => boolean>;
   isIndeterminate: ComputedRef<(rowsData: HTableTransformedRowDataType[]) => boolean>;
   handleSelect: (rowData: HTableTransformedRowDataType, rowIndex: number) => void;

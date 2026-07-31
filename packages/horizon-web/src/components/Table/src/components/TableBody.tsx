@@ -194,14 +194,18 @@ export default defineComponent({
                 {column.props.multiple ? (
                   <HCheckbox
                     modelValue={column[HTableColumnSelectionKey].checkedRows.has(value)}
-                    disabled={!column[HTableColumnSelectionKey].isSelectable.value(rowIndex)}
+                    disabled={
+                      !column[HTableColumnSelectionKey].isSelectable.value(rowData, rowIndex)
+                    }
                   />
                 ) : (
                   <HRadio
                     name={column.uuid}
                     modelValue={column[HTableColumnSelectionKey].checkedRows.has(value)}
                     value={true}
-                    disabled={!column[HTableColumnSelectionKey].isSelectable.value(rowIndex)}
+                    disabled={
+                      !column[HTableColumnSelectionKey].isSelectable.value(rowData, rowIndex)
+                    }
                   />
                 )}
               </span>,

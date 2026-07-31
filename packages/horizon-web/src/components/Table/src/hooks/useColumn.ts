@@ -174,9 +174,7 @@ export default function useColumn(
             }),
             [HTableColumnSelectionKey]: {
               checkedRows: checkedRows.value,
-              isSelectable: computed(
-                () => (rowIndex: number) => isSelectable.value(flattenData.value, rowIndex),
-              ),
+              isSelectable,
               isCheckedAll,
               isIndeterminate,
               handleSelect,

@@ -274,6 +274,41 @@ describe('Table', () => {
     expect(onDeselect).toHaveBeenCalledOnce();
   });
 
+  test('passes the current row to selectable and allows clicking an enabled radio', async () => {
+    const selectedKey = ref<string | number>();
+    const data = [
+      { id: 1, name: 'Disabled', selectable: false },
+      { id: 2, name: 'Enabled', selectable: true },
+    ];
+    const wrapper = mount(() => (
+      <HTable data={data}>
+        <HTableColumn
+          type="selection"
+          columnKey="id"
+          selectedKeys={selectedKey.value}
+          selectable={row => row.selectable}
+          onUpdate:selectedKeys={value => {
+            selectedKey.value = value as string | number | undefined;
+          }}
+        />
+        <HTableColumn title="Name" field="name" />
+      </HTable>
+    ));
+
+    await settleTable();
+
+    const radios = wrapper.findAll('input[type="radio"]');
+    expect(radios).toHaveLength(2);
+    expect(radios[0].attributes('disabled')).toBeDefined();
+    expect(radios[1].attributes('disabled')).toBeUndefined();
+
+    await wrapper.findAll('.h-table__selection')[1].trigger('click');
+    await settleTable();
+
+    expect(selectedKey.value).toBe(2);
+    expect(radios[1].element.checked).toBe(true);
+  });
+
   test('clears mutually exclusive selection fields in the same row', async () => {
     const primaryKey = ref<string | number>();
     const secondaryKey = ref<string | number>();
