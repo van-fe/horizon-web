@@ -267,6 +267,11 @@ export const ZhTW = {
     form: {
       required: '{prop} 必填',
     },
+    licensePlateInput: {
+      label: '車牌號',
+      provinceLabel: '省份簡稱',
+      placeholder: '請輸入車牌號',
+    },
     switch: {
       on: '開',
       off: '關',

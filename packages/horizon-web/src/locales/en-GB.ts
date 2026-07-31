@@ -267,6 +267,11 @@ export const EnGB = {
     form: {
       required: '{prop} is required.',
     },
+    licensePlateInput: {
+      label: 'License plate',
+      provinceLabel: 'Province abbreviation',
+      placeholder: 'Enter plate number',
+    },
     switch: {
       on: 'On',
       off: 'Off',

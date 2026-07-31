@@ -1,0 +1,7 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  'width': 320px,
+  'width--province': 72px,
+  'gap': #{function.css-variable('spacing-2')},
+);

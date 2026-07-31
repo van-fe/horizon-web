@@ -255,6 +255,11 @@ export const SvSE = {
     form: {
       required: '{prop} kreves.',
     },
+    licensePlateInput: {
+      label: 'Registreringsskylt',
+      provinceLabel: 'Provinsförkortning',
+      placeholder: 'Ange registreringsnummer',
+    },
     switch: {
       on: 'På',
       off: 'Av',

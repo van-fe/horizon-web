@@ -1,0 +1,19 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('license-plate-input') {
+  display: inline-flex;
+  align-items: flex-start;
+  width: mixins.css-variable('license-plate-input-width');
+  gap: mixins.css-variable('license-plate-input-gap');
+  max-width: 100%;
+
+  @include mixins.e('province') {
+    flex: 0 0 mixins.css-variable('license-plate-input-width--province');
+    min-width: 0;
+  }
+
+  @include mixins.e('number') {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}

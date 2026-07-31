@@ -280,6 +280,11 @@ export const ZhCN = {
     form: {
       required: '{prop} 必填',
     },
+    licensePlateInput: {
+      label: '车牌号',
+      provinceLabel: '省份简称',
+      placeholder: '请输入车牌号',
+    },
     switch: {
       on: '开',
       off: '关',

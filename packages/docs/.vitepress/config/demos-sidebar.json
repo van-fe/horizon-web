@@ -59,6 +59,7 @@
       { "link": "components/Input", "zh": "Input 输入框", "en": "Input" },
       { "link": "components/InputOtp", "zh": "InputOtp 验证码输入框", "en": "InputOtp" },
       { "link": "components/InputNumber", "zh": "InputNumber 数字输入框", "en": "InputNumber" },
+      { "link": "components/LicensePlateInput", "zh": "LicensePlateInput 车牌号输入", "en": "LicensePlateInput" },
       { "link": "components/Picker", "zh": "Picker 选择器", "en": "Picker" },
       { "link": "components/Progress", "zh": "Progress 进度条", "en": "Progress" },
       { "link": "components/Radio", "zh": "Radio 单选框", "en": "Radio" },

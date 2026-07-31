@@ -270,6 +270,11 @@ export const DE = {
     form: {
       required: '{prop} ist erforderlich.',
     },
+    licensePlateInput: {
+      label: 'Kfz-Kennzeichen',
+      provinceLabel: 'Provinzkürzel',
+      placeholder: 'Kennzeichen eingeben',
+    },
     switch: {
       on: 'Ein',
       off: 'Aus',

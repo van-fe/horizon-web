@@ -34,6 +34,7 @@
   "Input": "^HInput$",
   "InputOtp": "^HInputOtp$",
   "InputNumber": "^HInputNumber$",
+  "LicensePlateInput": "^HLicensePlateInput$",
   "Layout": "^(HRow|HCol)$",
   "Link": "^HLink$",
   "List": "^(HList|HListItem)$",

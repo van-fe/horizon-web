@@ -280,6 +280,11 @@ export const AE = {
     form: {
       required: '{prop} مطلوب.',
     },
+    licensePlateInput: {
+      label: 'لوحة المركبة',
+      provinceLabel: 'اختصار المقاطعة',
+      placeholder: 'أدخل رقم اللوحة',
+    },
     switch: {
       on: 'تشغيل',
       off: 'إيقاف',

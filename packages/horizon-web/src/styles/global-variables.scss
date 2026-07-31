@@ -30,6 +30,7 @@
 @use '../components/Picker/src/style/variables' as picker;
 @use '../components/Input/src/style/variables' as input;
 @use '../components/InputOtp/src/style/variables' as input-otp;
+@use '../components/LicensePlateInput/src/style/variables' as license-plate-input;
 @use '../components/Alert/src/style/variables' as alert;
 @use '../components/Skeleton/src/style/variables' as skeleton;
 @use '../components/Layout/src/style/variables' as layout;
@@ -107,6 +108,7 @@ $values: function.map-merge-multi(
   function.flatten-variables(picker.$values, 'picker'),
   function.flatten-variables(input.$values, 'input'),
   function.flatten-variables(input-otp.$values, 'input-otp'),
+  function.flatten-variables(license-plate-input.$values, 'license-plate-input'),
   function.flatten-variables(alert.$values, 'alert'),
   function.flatten-variables(skeleton.$values, 'skeleton'),
   function.flatten-variables(layout.$values, 'layout'),
