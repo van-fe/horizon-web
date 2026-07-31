@@ -19,12 +19,24 @@
     right: 0;
     bottom: 0;
     left: 0;
+    animation: #{mixins.block('guide-mask-fade')} mixins.css-variable('transition-time')
+      mixins.css-variable('transition-func-fast-bezier');
     pointer-events: none;
 
     > path {
       transition: mixins.css-variable('guide-transition');
       pointer-events: auto;
     }
+  }
+}
+
+@keyframes #{mixins.block('guide-mask-fade')} {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }
 

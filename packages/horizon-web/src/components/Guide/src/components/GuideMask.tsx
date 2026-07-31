@@ -2,7 +2,6 @@ import type { PropType } from 'vue';
 import { computed, defineComponent, inject, onMounted, shallowRef, watch } from 'vue';
 import { ComponentClassBlock, useNamespace, getElement, cls, cssVariable } from '@aurora/utils';
 import type { HGuideCollectedItems } from '../utils/injectedKeys';
-import type { UseElementBoundingReturn } from '@vueuse/core';
 import { useElementBounding, useWindowSize } from '@vueuse/core';
 import { HGuidePropsInjectKey } from '../utils/injectedKeys';
 
@@ -20,7 +19,10 @@ export default defineComponent({
 
     const parentProps = inject(HGuidePropsInjectKey);
 
-    const currentTarget = shallowRef<UseElementBoundingReturn | null>(null);
+    const currentTargetElement = shallowRef<HTMLElement | null>(
+      getElement(props.currentItem?.props.target) ?? null,
+    );
+    const currentTarget = useElementBounding(currentTargetElement, { immediate: false });
 
     const radius = 4;
 
@@ -34,25 +36,25 @@ export default defineComponent({
     const path = computed(() => {
       let path = `M0 0H${windowWidth.value}V${windowHeight.value}H0V0Z`;
 
-      if (currentTarget.value) {
+      if (currentTargetElement.value) {
         // x0y0 左上角 x1y1 右上角 x2y2右下角 x3y3 左下角
         const x0 =
-          currentTarget.value.x.value -
+          currentTarget.x.value -
           (props.currentItem?.props.maskTriggerPadding ?? parentProps?.maskTriggerPadding ?? 0);
         const y0 =
-          currentTarget.value.y.value -
+          currentTarget.y.value -
           (props.currentItem?.props.maskTriggerPadding ?? parentProps?.maskTriggerPadding ?? 0);
 
         const x1 =
-          currentTarget.value.width.value +
-          currentTarget.value.x.value +
+          currentTarget.width.value +
+          currentTarget.x.value +
           (props.currentItem?.props.maskTriggerPadding ?? parentProps?.maskTriggerPadding ?? 0);
         const y1 = y0;
 
         const x2 = x1;
         const y2 =
-          currentTarget.value.height.value +
-          currentTarget.value.y.value +
+          currentTarget.height.value +
+          currentTarget.y.value +
           (props.currentItem?.props.maskTriggerPadding ?? parentProps?.maskTriggerPadding ?? 0);
 
         const x3 = x0;
@@ -71,9 +73,13 @@ export default defineComponent({
     });
 
     function setCurrentTarget() {
-      const target = getElement(props.currentItem?.props.target);
-      currentTarget.value = target ? useElementBounding(target) : null;
+      currentTargetElement.value = getElement(props.currentItem?.props.target) ?? null;
+      currentTarget.update();
     }
+
+    // Populate the initial path before the SVG's first render so its cutout does not
+    // transition from the viewport origin when the guide opens.
+    setCurrentTarget();
 
     onMounted(() => {
       setCurrentTarget();

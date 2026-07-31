@@ -190,7 +190,9 @@ export default defineComponent({
     return () => (
       <div v-show={visible.value} class={cls(classHelper.block)} style={{ zIndex: zIndex.value }}>
         {renderItems()}
-        {props.mask && visible.value && <GuideMask currentItem={currentItem.value} />}
+        {props.mask && visible.value && currentItem.value && (
+          <GuideMask currentItem={currentItem.value} />
+        )}
       </div>
     );
   },
