@@ -447,7 +447,6 @@ describe('Select.tsx', () => {
 
     expect(instance.modelValue.value).toEqual([0]);
 
-    console.log(instance.wrapper.html());
     const tagAppendInput = instance.wrapper.find(
       'input.h-picker-fit-content-input__input:not(.is-main)',
     ) as DOMWrapper<HTMLInputElement>;

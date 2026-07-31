@@ -342,6 +342,106 @@ export default defineComponent({
       defaultSlotContent.value = slots.default?.();
     }
 
+    function renderPickerInner() {
+      const customRender = context.slots.pickerInner?.();
+      if (customRender) return customRender;
+
+      if (props.multiple) {
+        if (modelValueSet.value.size === 0) return undefined;
+
+        if (props.useStatistic) {
+          return getSelectedOptionsPopoverRender(
+            <span class={new ComponentClassBlock('picker').em('input', 'static-text')}>
+              {inputDisplayValue.value}
+            </span>,
+            {
+              disabled: !props.statisticShowTooltip,
+              distance: 12,
+            },
+          );
+        }
+
+        return (
+          <HTagGroup
+            ref={domRefs.tagGroupDomRef}
+            collapse={useCollapse.value}
+            tooltipRenderType="full"
+            collapseUseTooltip={props.collapseTagsTooltip}
+            minDisplayed={props.maxCollapseTags}
+            fillUp={props.collapseTagsFillUp}
+            size={sizeRef.value}
+            disabled={isDisabled.value}
+            tooltipShowAfter={props.tooltipShowAfter}
+            tooltipHideAfter={props.tooltipHideAfter}
+            collapseTagProps={{
+              clickable: false,
+              ...props.collapsedTagsProps,
+            }}
+          >
+            {{
+              default: () =>
+                props.showTagsInPanel
+                  ? flattenVNodes(renderedModelValueTags.value).map(tag =>
+                      cloneVNode(tag, {
+                        closable: false,
+                      }),
+                    )
+                  : renderedModelValueTags.value,
+              suffix: () => (
+                <HPickerFitContentInput
+                  ref={domRefs.filterInputDomRef}
+                  v-show={shouldTagAppendInputExists.value}
+                  modelValue={inputValue.value}
+                  minWidth={props.fitContentInputMinWidth}
+                  onInput={handleInput}
+                  onFocus={onTagGroupSuffixInputFocus}
+                  onBlur={onTagGroupSuffixInputBlur}
+                  onCompositionStart={onCompositionStart}
+                  onCompositionEnd={onCompositionEnd}
+                />
+              ),
+            }}
+          </HTagGroup>
+        );
+      }
+
+      if (!context.slots.tagRender || modelValueSet.value.size === 0) return undefined;
+
+      const modelValue = modelValueSet.value.values().next().value;
+      const optionValue = getOptionDataByValue(modelValue) ?? savedOptions.get(modelValue!);
+
+      return (
+        <div
+          class={cls(
+            classHelper.em('tag-render', 'single'),
+            classHelper.is(
+              'inputting',
+              isInputable.value &&
+                (popperVisible.value ||
+                  (props.showSearch && (isInputFocus.value || isSelectFocus.value))),
+            ),
+          )}
+        >
+          <div v-show={!inputValue.value} class={classHelper.em('tag-render', 'instance')}>
+            {context.slots.tagRender(
+              optionValue ? { ...optionValue.props, ...optionValue.attrs } : undefined,
+            )}
+          </div>
+          {isInputable.value && (
+            <HPickerFitContentInput
+              ref={domRefs.filterInputDomRef}
+              v-model={inputValue.value}
+              onInput={handleInput}
+              onFocus={onTagGroupSuffixInputFocus}
+              onBlur={onTagGroupSuffixInputBlur}
+              onCompositionStart={onCompositionStart}
+              onCompositionEnd={onCompositionEnd}
+            />
+          )}
+        </div>
+      );
+    }
+
     return () => {
       renderDefaultSlot(context.slots);
       return (
@@ -521,107 +621,7 @@ export default defineComponent({
                 )}
               </div>
             ),
-            pickerInner:
-              context.slots.pickerInner?.() ??
-              (props.multiple
-                ? modelValueSet.value.size > 0
-                  ? props.useStatistic
-                    ? () =>
-                        getSelectedOptionsPopoverRender(
-                          <span
-                            class={new ComponentClassBlock('picker').em('input', 'static-text')}
-                          >
-                            {inputDisplayValue.value}
-                          </span>,
-                          {
-                            disabled: !props.statisticShowTooltip,
-                            distance: 12,
-                          },
-                        )
-                    : () => (
-                        <HTagGroup
-                          ref={domRefs.tagGroupDomRef}
-                          collapse={useCollapse.value}
-                          tooltipRenderType="full"
-                          collapseUseTooltip={props.collapseTagsTooltip}
-                          minDisplayed={props.maxCollapseTags}
-                          fillUp={props.collapseTagsFillUp}
-                          size={sizeRef.value}
-                          disabled={isDisabled.value}
-                          tooltipShowAfter={props.tooltipShowAfter}
-                          tooltipHideAfter={props.tooltipHideAfter}
-                          collapseTagProps={{
-                            clickable: false,
-                            ...props.collapsedTagsProps,
-                          }}
-                        >
-                          {{
-                            default: () =>
-                              props.showTagsInPanel
-                                ? flattenVNodes(renderedModelValueTags.value).map(tag =>
-                                    cloneVNode(tag, {
-                                      closable: false,
-                                    }),
-                                  )
-                                : renderedModelValueTags.value,
-                            suffix: () => (
-                              <HPickerFitContentInput
-                                ref={domRefs.filterInputDomRef}
-                                v-show={shouldTagAppendInputExists.value}
-                                modelValue={inputValue.value}
-                                minWidth={props.fitContentInputMinWidth}
-                                onInput={handleInput}
-                                onFocus={onTagGroupSuffixInputFocus}
-                                onBlur={onTagGroupSuffixInputBlur}
-                                onCompositionStart={onCompositionStart}
-                                onCompositionEnd={onCompositionEnd}
-                              />
-                            ),
-                          }}
-                        </HTagGroup>
-                      )
-                  : undefined
-                : context.slots.tagRender && modelValueSet.value.size > 0
-                  ? () => {
-                      const modelValue = modelValueSet.value.values().next().value;
-                      const optValue =
-                        getOptionDataByValue(modelValue) ?? savedOptions.get(modelValue!);
-                      return (
-                        <div
-                          class={cls(
-                            classHelper.em('tag-render', 'single'),
-                            classHelper.is(
-                              'inputting',
-                              isInputable.value &&
-                                (popperVisible.value ||
-                                  (props.showSearch &&
-                                    (isInputFocus.value || isSelectFocus.value))),
-                            ),
-                          )}
-                        >
-                          <div
-                            v-show={!inputValue.value}
-                            class={classHelper.em('tag-render', 'instance')}
-                          >
-                            {context.slots.tagRender?.(
-                              optValue ? { ...optValue.props, ...optValue.attrs } : undefined,
-                            )}
-                          </div>
-                          {isInputable.value && (
-                            <HPickerFitContentInput
-                              ref={domRefs.filterInputDomRef}
-                              v-model={inputValue.value}
-                              onInput={handleInput}
-                              onFocus={onTagGroupSuffixInputFocus}
-                              onBlur={onTagGroupSuffixInputBlur}
-                              onCompositionStart={onCompositionStart}
-                              onCompositionEnd={onCompositionEnd}
-                            />
-                          )}
-                        </div>
-                      );
-                    }
-                  : undefined),
+            pickerInner: renderPickerInner,
           }}
         </HPicker>
       );
