@@ -2,11 +2,21 @@
   <div class="h-demo">
     <div class="h-demo__container">
       <div class="h-demo__title">通过加载图片失败默认处理</div>
-      <h-avatar size="large" :src="src1" @error="errorHandler1" />
+      <h-avatar
+        size="large"
+        :src="src1"
+        default="/demo-assets/avatar-indigo.svg"
+        @error="errorHandler1"
+      />
     </div>
     <div class="h-demo__container">
       <div class="h-demo__title">通过 error 方法自定义处理加载图片失败情况</div>
-      <h-avatar size="large" :src="src" @error="errorHandler" />
+      <h-avatar
+        size="large"
+        :src="src"
+        default="/demo-assets/avatar-indigo.svg"
+        @error="errorHandler"
+      />
     </div>
     <div class="h-demo__container">
       <div class="h-demo__title">通过插槽自定义加载图片失败情况</div>

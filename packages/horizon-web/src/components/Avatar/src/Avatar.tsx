@@ -25,10 +25,23 @@ export default defineComponent({
     const { size } = toRefs(props);
     const isArray = computed(() => Array.isArray(props.src));
     const randomSrc = ref('');
-    watchEffect(() => {
-      randomSrc.value = props.randomSrc?.length
-        ? props.randomSrc[Math.floor(Math.random() * props.randomSrc.length)]
-        : randomAvatar[Math.floor(Math.random() * randomAvatar.length)];
+    watchEffect(onCleanup => {
+      let cancelled = false;
+      const sources = isArray.value ? (props.src as string[]).slice(0, 9) : [];
+
+      if (sources.length) {
+        useDrawImages(sources).then(url => {
+          if (!cancelled) randomSrc.value = url;
+        });
+      } else {
+        randomSrc.value = props.randomSrc?.length
+          ? props.randomSrc[Math.floor(Math.random() * props.randomSrc.length)]
+          : randomAvatar[Math.floor(Math.random() * randomAvatar.length)];
+      }
+
+      onCleanup(() => {
+        cancelled = true;
+      });
     });
     const error = ref(false);
 
@@ -44,11 +57,6 @@ export default defineComponent({
     });
 
     return () => {
-      if (isArray.value) {
-        useDrawImages(props.src.slice(0, 3) as string[]).then(url => {
-          randomSrc.value = url;
-        });
-      }
       let tsxStr: VNode | Array<VNode> = (
         <img
           alt="头像"

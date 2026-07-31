@@ -7,78 +7,93 @@ export const randomAvatar = [
   'https://cdn-app.example.com/user/2022/3/1/a1475205-b165-4c0c-9545-6256ef712325.jpg',
 ];
 
+const drawImageCover = (
+  context: CanvasRenderingContext2D,
+  img: HTMLImageElement,
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+) => {
+  const imageRatio = img.naturalWidth / img.naturalHeight;
+  const targetRatio = width / height;
+  let sourceX = 0;
+  let sourceY = 0;
+  let sourceWidth = img.naturalWidth;
+  let sourceHeight = img.naturalHeight;
+
+  if (imageRatio > targetRatio) {
+    sourceWidth = img.naturalHeight * targetRatio;
+    sourceX = (img.naturalWidth - sourceWidth) / 2;
+  } else {
+    sourceHeight = img.naturalWidth / targetRatio;
+    sourceY = (img.naturalHeight - sourceHeight) / 2;
+  }
+
+  context.drawImage(img, sourceX, sourceY, sourceWidth, sourceHeight, x, y, width, height);
+};
+
+const getGridLayout = (size: number) => {
+  const canvasSize = 240;
+  const gap = 6;
+
+  if (size === 1) {
+    return [{ x: 50, y: 50, width: 140, height: 140 }];
+  }
+
+  const columns = size <= 4 ? 2 : 3;
+  const rows = Math.ceil(size / columns);
+  const firstRowItems = size - columns * (rows - 1);
+  const itemSize = (canvasSize - gap * (columns + 1)) / columns;
+  const gridHeight = rows * itemSize + (rows - 1) * gap;
+  const startY = (canvasSize - gridHeight) / 2;
+
+  return Array.from({ length: size }, (_, index) => {
+    const isFirstRow = index < firstRowItems;
+    const row = isFirstRow ? 0 : Math.floor((index - firstRowItems) / columns) + 1;
+    const indexInRow = isFirstRow ? index : (index - firstRowItems) % columns;
+    const itemsInRow = isFirstRow ? firstRowItems : columns;
+    const rowWidth = itemsInRow * itemSize + (itemsInRow - 1) * gap;
+    const startX = (canvasSize - rowWidth) / 2;
+
+    return {
+      x: startX + indexInRow * (itemSize + gap),
+      y: startY + row * (itemSize + gap),
+      width: itemSize,
+      height: itemSize,
+    };
+  });
+};
+
 // 拼接图片
 export const useDrawImages = (imgs: string[]): Promise<string> => {
-  const size = imgs.length;
-  const base64List: string[] = [];
-  return new Promise(resolve => {
-    const width = 240,
-      height = 240,
-      imgWidthHeight = 117,
-      imgAlone = 140;
-    const canvas = document.createElement('canvas');
-    canvas.width = width;
-    canvas.height = height;
-    const context = canvas.getContext('2d');
-    context!.fillStyle = colors.white;
-    if (size === 1) {
-      context!.fillStyle = colors.gray[2];
-    }
-    context!.fillRect(0, 0, canvas.width, canvas.height);
-    imgs.forEach((src: string, index: number) => {
-      const img = new Image();
-      img.setAttribute('crossOrigin', 'Anonymous');
-      img.src = src;
-      img.onload = () => {
-        switch (size) {
-          case 1:
-            const radius = 70,
-              center_x = 120,
-              center_y = 120;
+  const sources = imgs.slice(0, 9);
+  const canvas = document.createElement('canvas');
+  canvas.width = 240;
+  canvas.height = 240;
+  const context = canvas.getContext('2d')!;
+  context.fillStyle = colors.gray[2];
+  context.fillRect(0, 0, canvas.width, canvas.height);
 
-            context!.arc(center_x, center_y, radius, 0, 2 * Math.PI);
-            context!.clip();
-            context!.drawImage(img, 50, 50, imgAlone, imgAlone);
-            const base64Img1 = canvas.toDataURL();
-            resolve(base64Img1);
-            break;
-          case 2:
-            let imgX = 0;
-            if (index === 1) {
-              imgX = imgWidthHeight + 6;
-            }
-            context!.drawImage(img, imgX, 0, imgWidthHeight, height);
-            const base64Img2 = canvas.toDataURL();
-            base64List.push(base64Img2);
-            if (base64List[imgs.length - 1]) {
-              // 返回新的图片
-              resolve(base64List[imgs.length - 1]);
-            }
-            break;
-          case 3:
-            if (index === 0) {
-              context!.drawImage(img, 0, 0, imgWidthHeight, height);
-            } else if (index === 1) {
-              context!.drawImage(img, 1 * imgWidthHeight + 6, 0, imgWidthHeight, imgWidthHeight);
-            } else if (index === 2) {
-              context!.drawImage(
-                img,
-                1 * imgWidthHeight + 6,
-                imgWidthHeight + 6,
-                imgWidthHeight,
-                imgWidthHeight,
-              );
-            }
-            const base64Img3 = canvas.toDataURL();
-            base64List.push(base64Img3);
-            if (base64List[imgs.length - 1]) {
-              // 返回新的图片
-              resolve(base64List[imgs.length - 1]);
-            }
-            break;
-        }
-      };
+  const imagePromises = sources.map(
+    src =>
+      new Promise<HTMLImageElement | null>(resolve => {
+        const img = new Image();
+        img.setAttribute('crossOrigin', 'Anonymous');
+        img.onload = () => resolve(img);
+        img.onerror = () => resolve(null);
+        img.src = src;
+      }),
+  );
+
+  return Promise.all(imagePromises).then(images => {
+    const layout = getGridLayout(sources.length);
+    images.forEach((img, index) => {
+      if (!img) return;
+      const item = layout[index];
+      drawImageCover(context, img, item.x, item.y, item.width, item.height);
     });
+    return canvas.toDataURL();
   });
 };
 

@@ -2,11 +2,11 @@
   <div class="h-demo">
     <div class="h-demo__container">
       <div class="h-demo__title">通过 size 设置形状</div>
-      <h-avatar class="avatar" size="mini" />
-      <h-avatar class="avatar" size="small" />
-      <h-avatar class="avatar" size="smedium" />
-      <h-avatar class="avatar" />
-      <h-avatar class="avatar" size="large" />
+      <h-avatar class="avatar" size="mini" :random-src="avatarSources" />
+      <h-avatar class="avatar" size="small" :random-src="avatarSources" />
+      <h-avatar class="avatar" size="smedium" :random-src="avatarSources" />
+      <h-avatar class="avatar" :random-src="avatarSources" />
+      <h-avatar class="avatar" size="large" :random-src="avatarSources" />
     </div>
     <div class="h-demo__container">
       <div class="h-demo__title">通过 src 自定义头像资源</div>
@@ -41,6 +41,14 @@
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+const avatarSources = [
+  '/demo-assets/avatar-coral.svg',
+  '/demo-assets/avatar-indigo.svg',
+  '/demo-assets/avatar-cyan.svg',
+];
+</script>
 
 <style scoped>
 .avatar + .avatar {

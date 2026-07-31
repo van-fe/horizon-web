@@ -37,7 +37,7 @@ export const useAvatarProps = declarePropType({
   fit: {
     type: String as PropType<'fill' | 'contain' | 'cover' | 'none' | 'scale-down'>,
     required: false,
-    default: 'fill',
+    default: 'cover',
   },
   /**
    * 头像类型
