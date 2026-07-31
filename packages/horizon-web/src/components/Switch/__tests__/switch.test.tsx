@@ -13,6 +13,30 @@ describe('Switch.tsx', () => {
     expect(element.exists()).toBe(true);
   });
 
+  test('clicking anywhere in the switch toggles it', async () => {
+    const modelValue = ref(false);
+    const onChange = vi.fn();
+    const wrapper = mount(() => (
+      <HSwitch
+        modelValue={modelValue.value}
+        label="Auto update"
+        status={true}
+        onChange={onChange}
+        onUpdate:modelValue={val => (modelValue.value = val)}
+      />
+    ));
+
+    await wrapper.find('.h-switch').trigger('click');
+    expect(modelValue.value).toBe(true);
+
+    await wrapper.find('.h-switch__label').trigger('click');
+    expect(modelValue.value).toBe(false);
+
+    await wrapper.find('.h-switch__status').trigger('click');
+    expect(modelValue.value).toBe(true);
+    expect(onChange).toHaveBeenCalledTimes(3);
+  });
+
   describe('props', () => {
     test('disabled', () => {
       const wrapper = mount(() => <HSwitch modelValue={true} disabled={true} />);

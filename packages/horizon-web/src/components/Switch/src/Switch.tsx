@@ -98,11 +98,10 @@ export default defineComponent({
           classHelper.m(sizeRef.value),
           classHelper.m('disabled', isDisabled.value),
         )}
+        onClick={() => onChange()}
       >
         {labelRef.value && (
-          <span class={classHelper.e('label')} onClick={() => onChange()}>
-            {labelRef.value}
-          </span>
+          <span class={classHelper.e('label')}>{labelRef.value}</span>
         )}
         <span class={classHelper.e('main')}>
           <span
@@ -112,7 +111,6 @@ export default defineComponent({
               classHelper.is('active', modelValueRef.value),
               classHelper.is('readonly', readonlyRef.value),
             )}
-            onClick={() => onChange()}
           >
             <input
               role="switch"
