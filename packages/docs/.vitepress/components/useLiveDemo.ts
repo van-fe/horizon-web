@@ -17,11 +17,16 @@ export function useLiveDemo(path: string, loader?: DemoLoader) {
   const demoId = `demo-${++nextDemoId}`;
   let compileSequence = 0;
   let disposed = false;
+  let styleElement: HTMLStyleElement | undefined;
 
   async function loadOriginal() {
     if (!loader) return;
     const module = (await loader()) as DemoModule;
-    if (!disposed) component.value = markRaw(module.default);
+    if (!disposed) {
+      component.value = markRaw(module.default);
+      updateStyle('');
+      error.value = '';
+    }
   }
 
   async function compile(source: string) {
@@ -30,22 +35,12 @@ export function useLiveDemo(path: string, loader?: DemoLoader) {
     error.value = '';
 
     try {
-      const response = await fetch(COMPILE_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: demoId, path, source }),
-      });
-      const contentType = response.headers.get('content-type') || '';
-      if (!contentType.includes('application/json')) {
-        throw new Error('Live compilation is available in docs:dev mode');
-      }
-
-      const result = (await response.json()) as { url?: string; error?: string };
-      if (!response.ok || !result.url) throw new Error(result.error || 'Compilation failed');
-
-      const module = (await import(/* @vite-ignore */ result.url)) as DemoModule;
+      const result = import.meta.env.DEV
+        ? await compileWithVite(source)
+        : await compileInBrowser(source);
       if (sequence !== compileSequence || disposed) return;
-      component.value = markRaw(module.default);
+      component.value = markRaw(result.component);
+      updateStyle(result.css);
       renderKey.value += 1;
     } catch (reason) {
       if (sequence === compileSequence && !disposed) {
@@ -56,6 +51,35 @@ export function useLiveDemo(path: string, loader?: DemoLoader) {
     }
   }
 
+  async function compileWithVite(source: string) {
+    const response = await fetch(COMPILE_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: demoId, path, source }),
+    });
+    const result = (await response.json()) as { url?: string; error?: string };
+    if (!response.ok || !result.url) throw new Error(result.error || 'Compilation failed');
+    const module = (await import(/* @vite-ignore */ result.url)) as DemoModule;
+    return { component: module.default, css: '' };
+  }
+
+  async function compileInBrowser(source: string) {
+    const { compileStaticDemo } = await import('./staticDemoCompiler');
+    return compileStaticDemo(source, path, demoId);
+  }
+
+  function updateStyle(css: string) {
+    if (!css) {
+      styleElement?.remove();
+      styleElement = undefined;
+      return;
+    }
+    styleElement ||= document.createElement('style');
+    styleElement.dataset.horizonLiveDemo = demoId;
+    styleElement.textContent = css;
+    if (!styleElement.isConnected) document.head.append(styleElement);
+  }
+
   function refresh() {
     renderKey.value += 1;
   }
@@ -63,6 +87,7 @@ export function useLiveDemo(path: string, loader?: DemoLoader) {
   onBeforeUnmount(() => {
     disposed = true;
     compileSequence += 1;
+    styleElement?.remove();
   });
 
   void loadOriginal().catch(reason => {
