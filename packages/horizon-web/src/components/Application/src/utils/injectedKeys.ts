@@ -2,7 +2,7 @@ import type { InjectionKey, Ref } from 'vue';
 import { generatorInjectedKeyName } from '@aurora/utils';
 import type { ApplicationProps } from '../composables/useProps';
 
-export const GlobalSizeInjectedKey = Symbol(
+export const GlobalSizeInjectedKey = Symbol.for(
   generatorInjectedKeyName('global', 'size'),
 ) as InjectionKey<Ref<'small' | 'medium' | 'large'>>;
 
