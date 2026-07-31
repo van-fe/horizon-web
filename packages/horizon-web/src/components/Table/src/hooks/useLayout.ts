@@ -207,10 +207,12 @@ export function getHeaderStyle(
   columnData: HTableColumnData,
   append?: {
     minWidth?: string;
+    topOffset?: number;
   },
 ): CSSProperties {
   return {
-    top: columnData[HTableColumnContextKey].parentColumnsHeightSum + 'px',
+    top:
+      columnData[HTableColumnContextKey].parentColumnsHeightSum + (append?.topOffset ?? 0) + 'px',
     minWidth: append?.minWidth
       ? `calc(${sizeUnitTransform(columnData.props.minWidth)} + ${append.minWidth})`
       : sizeUnitTransform(columnData.props.minWidth),

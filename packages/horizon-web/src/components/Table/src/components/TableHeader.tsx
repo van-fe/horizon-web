@@ -34,6 +34,10 @@ export default defineComponent({
       type: Number,
       required: true,
     },
+    stickyTopOffset: {
+      type: Number,
+      default: 0,
+    },
     getDraggableProps: {
       type: Function as PropType<(column: HTableColumnData) => HTableHeaderDraggableProps>,
       required: true,
@@ -166,6 +170,7 @@ export default defineComponent({
               getFixedStyle(column, getFixedState),
               getHeaderStyle(column, {
                 minWidth: isLastColumn(column) && parentProps.useColumnManager ? '36px' : undefined,
+                topOffset: props.stickyTopOffset,
               }),
               isFunction(parentProps.headerCellStyle)
                 ? parentProps.headerCellStyle(column, column.index)

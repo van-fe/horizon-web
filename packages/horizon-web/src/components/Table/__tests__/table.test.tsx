@@ -403,6 +403,44 @@ describe('Table', () => {
     expect(wrapper.findAll('tbody tr').map(row => row.text())).toEqual(['Bravo', 'Zulu', 'Alpha']);
   });
 
+  test('uses native sticky positioning when the scroll container contains the table', async () => {
+    const wrapper = mount(() => (
+      <div class="scroll-container">
+        <HTable data={[{ name: 'Alice' }]} headerSticky headerStickyOffset={24}>
+          <HTableColumn title="Name" field="name" />
+        </HTable>
+      </div>
+    ));
+
+    await settleTable();
+
+    const table = wrapper.findComponent(HTable);
+    expect(table.classes()).toContain('is-native-sticky-header');
+    expect(table.find('thead').attributes('style') ?? '').not.toContain('transform');
+    expect(table.find('thead th').attributes('style')).toContain('top: 24px');
+  });
+
+  test('keeps the scroll listener fallback for horizontally overflowing tables', async () => {
+    const wrapper = mount(() => (
+      <div class="scroll-container">
+        <HTable data={[{ name: 'Alice' }]} headerSticky>
+          <HTableColumn title="Name" field="name" />
+        </HTable>
+      </div>
+    ));
+    const scrollWrap = wrapper.find('.h-scrollbar__wrap').element;
+    Object.defineProperties(scrollWrap, {
+      clientWidth: { configurable: true, value: 100 },
+      scrollWidth: { configurable: true, value: 200 },
+    });
+
+    await settleTable();
+
+    const table = wrapper.findComponent(HTable);
+    expect(table.classes()).not.toContain('is-native-sticky-header');
+    expect(table.find('thead').attributes('style')).toContain('translateY(0px)');
+  });
+
   test('updates sticky offsets after measuring multiple fixed columns', async () => {
     const wrapper = mount(() => (
       <HTable

@@ -11,6 +11,7 @@ import {
   watch,
 } from 'vue';
 import type { HorizonWebSetupContext } from '@aurora/utils';
+import { unrefElement } from '@vueuse/core';
 import {
   cls,
   ComponentClassBlock,
@@ -121,12 +122,10 @@ export default defineComponent({
       calculateColumnsLayout,
       refreshScrollbarSpacing,
     ]);
+    const scrollWrapDomRef = computed(() => unrefElement(scrollbarDomRef.value?.wrapRef));
 
-    const { scrollOffset, setScrollListener, removeScrollListener } = useHeaderSticky(
-      propsRef,
-      wrapperDomRef,
-      headDomRef,
-    );
+    const { scrollOffset, isNativeSticky, setScrollListener, removeScrollListener } =
+      useHeaderSticky(propsRef, wrapperDomRef, headDomRef, scrollWrapDomRef);
 
     const { getDraggableProps } = useHeaderDraggable({
       columns,
@@ -205,6 +204,7 @@ export default defineComponent({
           classHelper.has('column-manager', props.useColumnManager),
           classHelper.has('height', isDefined(props.height)),
           classHelper.has('empty', flattenData.value.length === 0 && !isLoading.value),
+          classHelper.is('native-sticky-header', isNativeSticky.value),
           scrollComputedClassName.value,
         )}
         style={{
@@ -261,7 +261,10 @@ export default defineComponent({
                   classHelper.is('sticky-header', props.headerSticky),
                 )}
                 style={{
-                  transform: props.headerSticky ? `translateY(${scrollOffset.value}px)` : undefined,
+                  transform:
+                    props.headerSticky && !isNativeSticky.value
+                      ? `translateY(${scrollOffset.value}px)`
+                      : undefined,
                 }}
               >
                 {analysisColumns.value.columnGroups.map((columns, rowIndex) => (
@@ -269,6 +272,7 @@ export default defineComponent({
                     key={rowIndex}
                     columnsRow={columns}
                     rowIndex={rowIndex}
+                    stickyTopOffset={isNativeSticky.value ? (props.headerStickyOffset ?? 0) : 0}
                     getDraggableProps={getDraggableProps}
                   />
                 ))}

@@ -15,7 +15,7 @@
         </h-table>
       </template>
     </h-table-column>
-    <h-table-column title="Name" field="name" width="100px" />
+    <h-table-column title="Name" field="name" width="100px" show-overflow-tooltip />
     <h-table-column title="Gender" field="gender" width="100px" />
     <h-table-column title="Birthday" field="birthday" min-width="200px" />
     <h-table-column title="Address" field="address" min-width="500px" />

@@ -85,6 +85,15 @@
     @include mixins.m('expand') {
       background: mixins.css-variable('table', 'background', 'body', 'expand');
 
+      > #{mixins.e('table', 'cell')}
+        > #{mixins.e('table', 'cell-wrap')}
+        > #{mixins.e(
+          'table',
+          'cell-inner'
+        )} {
+        overflow: visible;
+      }
+
       @include mixins.be('table', 'cell', false) {
         &-wrap {
           #{mixins.css-variable-name('table-z-index-temp')}: mixins.css-variable(
@@ -110,9 +119,19 @@
     @include mixins.is('expanded') {
       > td {
         position: sticky;
-        top: var(--table-header-height);
+        top: mixins.css-variable('table', 'header', 'height');
         z-index: mixins.css-variable('table', 'z-index', 'default');
-        margin-top: var(--table-header-height);
+        margin-top: mixins.css-variable('table', 'header', 'height');
+      }
+    }
+  }
+
+  @include mixins.is('native-sticky-header') {
+    > #{mixins.b('scrollbar')} {
+      overflow: visible;
+
+      > #{mixins.e('scrollbar', 'wrap')} {
+        overflow: visible !important;
       }
     }
   }
