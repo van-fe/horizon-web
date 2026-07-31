@@ -33,9 +33,13 @@ export default function useSelection(
   );
 
   const isCheckedAll = computed(() => (rowsData: HTableTransformedRowDataType[]) => {
+    const selectableRows = rowsData.filter((rowData, rowIndex) =>
+      isSelectable.value(rowData, rowIndex),
+    );
+
     return (
-      rowsData.length > 0 &&
-      rowsData.every(
+      selectableRows.length > 0 &&
+      selectableRows.every(
         rowData =>
           column.props.columnKey &&
           checkedRows.value.has(rowData[column.props.columnKey] as string | number),
@@ -44,11 +48,15 @@ export default function useSelection(
   });
 
   const isIndeterminate = computed(() => (rowsData: HTableTransformedRowDataType[]) => {
+    const selectableRows = rowsData.filter((rowData, rowIndex) =>
+      isSelectable.value(rowData, rowIndex),
+    );
+
     return (
       !isCheckedAll.value(rowsData) &&
-      rowsData.length > 0 &&
+      selectableRows.length > 0 &&
       checkedRows.value.size > 0 &&
-      rowsData.some(
+      selectableRows.some(
         rowData =>
           column.props.columnKey &&
           checkedRows.value.has(rowData[column.props.columnKey] as string | number),
@@ -88,11 +96,19 @@ export default function useSelection(
         curr.delete(checkValue);
 
         emitUpdate([...curr]);
+        emit('deselect', rowData);
       } else {
         emitUpdate([...checkedRows.value, checkValue]);
+        emit('select', rowData);
       }
     } else {
-      emitUpdate([checkValue]);
+      if (checkedRows.value.has(checkValue)) {
+        emitUpdate([]);
+        emit('deselect', rowData);
+      } else {
+        emitUpdate([checkValue]);
+        emit('select', rowData);
+      }
     }
   }
 
@@ -129,7 +145,7 @@ export default function useSelection(
         emitUpdate([...checkedVals]);
       }
 
-      emit('selectAll', [...checkedVals]);
+      emit('selectAll', [...checkedVals].slice(0, column.props.multipleLimit));
     }
   }
 
@@ -182,16 +198,14 @@ export default function useSelection(
     }
 
     const checkedVals = new Set(checkedRows.value);
+    const rowKeys = new Set(Array.isArray(rowKey) ? rowKey : [rowKey]);
 
     if (column.props.multiple) {
       for (let i = 0; i < rowsData.length; i++) {
         const row = rowsData[i];
         const checkValue = row[column.props.columnKey] as string | number;
 
-        if (
-          !(rowKey as Array<HTableRowKeyType>).includes(checkValue) ||
-          (!ignoreSelectable && !isSelectable.value(row, i))
-        )
+        if (!rowKeys.has(checkValue) || (!ignoreSelectable && !isSelectable.value(row, i)))
           continue;
 
         if (isBoolean(selected)) {
@@ -209,19 +223,21 @@ export default function useSelection(
         }
       }
     } else {
-      const row = rowsData.find(
-        row => (row[column.props.columnKey!] as string | number) === rowKey,
+      const row = rowsData.find(row =>
+        rowKeys.has(row[column.props.columnKey!] as string | number),
       );
 
       if (
         row &&
         (ignoreSelectable || (!ignoreSelectable && isSelectable.value(row, rowsData.indexOf(row))))
       ) {
-        if (checkedVals.has(row[column.props.columnKey])) {
+        const checkValue = row[column.props.columnKey] as string | number;
+
+        if (selected === false || (!isBoolean(selected) && checkedVals.has(checkValue))) {
           checkedVals.clear();
         } else {
           checkedVals.clear();
-          checkedVals.add(row[column.props.columnKey]);
+          checkedVals.add(checkValue);
         }
       }
     }

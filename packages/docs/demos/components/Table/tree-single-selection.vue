@@ -1,6 +1,6 @@
 <template>
   <p>
-    <h-switch v-model="checkStrictly" status status-oh-text="check strictly" status-off-text="not check strictly" />
+    <h-switch v-model="checkStrictly" status status-on-text="check strictly" status-off-text="not check strictly" />
   </p>
   <p>
     Checked row's id: {{ checkedRow }}

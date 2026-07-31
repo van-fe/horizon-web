@@ -17,8 +17,8 @@
     </h-table-column>
     <h-table-column title="Name" field="name" width="100px" />
     <h-table-column title="Gender" field="gender" width="100px" />
-    <h-table-column title="Birthday" field="birthday" mih-width="200px" />
-    <h-table-column title="Address" field="address" mih-width="500px" />
+    <h-table-column title="Birthday" field="birthday" min-width="200px" />
+    <h-table-column title="Address" field="address" min-width="500px" />
   </h-table>
 </template>
 

@@ -1,6 +1,13 @@
 @use '../../../../styles/mixins';
 
 @include mixins.b('table') {
+  @include mixins.be('table', 'table', false) {
+    @include mixins.be('table', 'cell', false) {
+      padding: 0 mixins.css-variable('table', 'spacing', 'padding', 'cell', 'x');
+      border: 0;
+    }
+  }
+
   @include mixins.e('cell') {
     position: relative;
     box-sizing: border-box;
@@ -11,9 +18,10 @@
     background: inherit;
 
     @include mixins.e('cell-wrap') {
-      display: inline-flex;
+      display: flex;
       grid-column-gap: mixins.css-variable('table', 'spacing', 'gap', 'cell', 'wrap');
       align-items: center;
+      width: 100%;
       min-width: 0;
       max-width: 100%;
     }
@@ -40,6 +48,10 @@
     }
 
     @include mixins.e('expand-icon') {
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: center;
       width: mixins.css-variable('table', 'size', 'body', 'action-button');
       height: mixins.css-variable('table', 'size', 'body', 'action-button');
       margin-right: mixins.css-variable('table', 'spacing', 'margin', 'cell', 'expand-icon');
@@ -58,6 +70,7 @@
       }
 
       @include mixins.m('placeholder') {
+        cursor: default;
         pointer-events: none;
       }
 
@@ -86,6 +99,24 @@
       }
     }
 
+    @include mixins.e('drag-handle') {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: mixins.css-variable('text', 'tertiary');
+      line-height: initial;
+      cursor: grab;
+      user-select: none;
+
+      &:hover {
+        color: mixins.css-variable('text', 'primary');
+      }
+
+      &:active {
+        cursor: grabbing;
+      }
+    }
+
     @include mixins.is('text-left') {
       text-align: left;
     }
@@ -106,6 +137,15 @@
         #{mixins.css-variable-name('checkbox', 'margin', '-icon')}: 0;
         display: flex;
         align-items: center;
+      }
+    }
+
+    @include mixins.is('drag') {
+      padding-right: 0;
+      padding-left: 0;
+
+      @include mixins.e('cell-wrap') {
+        justify-content: center;
       }
     }
 
@@ -142,7 +182,10 @@
 
       @include mixins.is('selection') {
         @include mixins.e('cell-inner') {
-          min-height: calc(#{mixins.css-variable('table', 'font', 'line-height', 'mini')} + #{mixins.css-variable('table', 'spacing', 'padding', 'cell', 'mini')} * 2);
+          min-height: calc(
+            #{mixins.css-variable('table', 'font', 'line-height', 'mini')} +
+              #{mixins.css-variable('table', 'spacing', 'padding', 'cell', 'mini')} * 2
+          );
         }
       }
     }
@@ -159,7 +202,10 @@
 
       @include mixins.is('selection') {
         @include mixins.e('cell-inner') {
-          min-height: calc(#{mixins.css-variable('table', 'font', 'line-height', 'small')} + #{mixins.css-variable('table', 'spacing', 'padding', 'cell', 'small')} * 2);
+          min-height: calc(
+            #{mixins.css-variable('table', 'font', 'line-height', 'small')} +
+              #{mixins.css-variable('table', 'spacing', 'padding', 'cell', 'small')} * 2
+          );
         }
       }
     }
@@ -176,7 +222,10 @@
 
       @include mixins.is('selection') {
         @include mixins.e('cell-inner') {
-          min-height: calc(#{mixins.css-variable('table', 'font', 'line-height', 'medium')} + #{mixins.css-variable('table', 'spacing', 'padding', 'cell', 'medium')} * 2);
+          min-height: calc(
+            #{mixins.css-variable('table', 'font', 'line-height', 'medium')} +
+              #{mixins.css-variable('table', 'spacing', 'padding', 'cell', 'medium')} * 2
+          );
         }
       }
     }
@@ -193,7 +242,10 @@
 
       @include mixins.is('selection') {
         @include mixins.e('cell-inner') {
-          min-height: calc(#{mixins.css-variable('table', 'font', 'line-height', 'large')} + #{mixins.css-variable('table', 'spacing', 'padding', 'cell', 'large')} * 2);
+          min-height: calc(
+            #{mixins.css-variable('table', 'font', 'line-height', 'large')} +
+              #{mixins.css-variable('table', 'spacing', 'padding', 'cell', 'large')} * 2
+          );
         }
       }
     }

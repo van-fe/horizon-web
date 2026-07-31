@@ -3,13 +3,13 @@
     v-model="useColumnManager"
     class="mb-2"
     :status="true"
-    status-oh-text="Enabled Column Manager"
+    status-on-text="Enabled Column Manager"
     status-off-text="Disabled Column Manager"
   />
 
   <h-table :data="data" max-height="300" :use-column-manager="useColumnManager">
     <h-table-column title="Name" field="name" fixed lock-position lock-visible lock-fixed />
-    <h-table-column title="Birthday" field="birthday" mih-width="150" align="center" />
+    <h-table-column title="Birthday" field="birthday" min-width="150" align="center" />
     <h-table-column title="Address" field="address" fixed lock-visible>
       <h-table-column title="Country" field="address[0]" :show-overflow-tooltip="true" width="120px" />
       <h-table-column title="State" field="address[1]" :show-overflow-tooltip="true" width="120px" />

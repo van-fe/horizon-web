@@ -1,5 +1,5 @@
 import type { CSSProperties, Ref, SetupContext } from 'vue';
-import { computed, inject, provide, ref } from 'vue';
+import { computed, inject, provide, ref, shallowReactive } from 'vue';
 import {
   HTableColumnDecreaseCollectionInjectKey,
   HTableColumnIncreaseCollectionInjectKey,
@@ -24,6 +24,7 @@ import {
 import useFilter from './useFilter';
 import useColumnFixed, { sortColumnsMethod } from './useColumnFixed';
 import useColumnVisible from './useColumnVisible';
+import useColumnSort from './useColumnSort';
 
 function getColumnWidthStyle(column: HTableInsertedColumnData) {
   switch (column.props.type) {
@@ -38,7 +39,8 @@ function getColumnWidthStyle(column: HTableInsertedColumnData) {
       };
     case 'drag':
       return {
-        minWidth: '32px',
+        width: sizeUnitTransform(column.props.width ?? 40),
+        minWidth: sizeUnitTransform(column.props.minWidth ?? 40),
       };
   }
 }
@@ -87,26 +89,40 @@ export default function useColumn(
   const currColumns = ref<HTableInsertedColumnData[]>([]);
   const { fixedStore, getFixedState, resetFixedState } = useColumnFixed(currColumns);
   const { visibleStore, getVisibleState, resetVisibleState } = useColumnVisible(currColumns);
+  const { sortStore, getSortState, resetSortState } = useColumnSort(currColumns);
 
   const analysisColumns = computed(() => {
     const flattenColumns: HTableColumnData[] = [];
     const columnGroups: HTableColumnData[][] = [];
 
     let index = 0;
-    function sortColumns(columns: HTableColumnData[]) {
-      const sortedColumns = columns.toSorted(sortColumnsMethod(getFixedState));
+    function sortColumns<T extends HTableInsertedColumnData>(columns: T[]) {
+      const sourceIndexes = new Map(columns.map((column, index) => [column.uuid, index]));
+      const fixedSort = sortColumnsMethod(getFixedState);
+      return columns.toSorted((a, b) => {
+        const fixedResult = fixedSort(a, b);
 
-      sortedColumns.reduce<undefined | HTableColumnData>((prev, curr) => {
+        if (fixedResult !== 0) {
+          return fixedResult;
+        }
+
+        return (
+          (getSortState(a.uuid) ?? sourceIndexes.get(a.uuid) ?? 0) -
+          (getSortState(b.uuid) ?? sourceIndexes.get(b.uuid) ?? 0)
+        );
+      });
+    }
+
+    function linkColumns(columns: HTableColumnData[]) {
+      columns.reduce<undefined | HTableColumnData>((prev, curr) => {
         curr[HTableColumnContextKey].prevColumn = prev;
         return curr;
       }, undefined);
 
-      sortedColumns.reduceRight<undefined | HTableColumnData>((prev, curr) => {
+      columns.reduceRight<undefined | HTableColumnData>((prev, curr) => {
         curr[HTableColumnContextKey].nextColumn = prev;
         return curr;
       }, undefined);
-
-      return sortedColumns;
     }
 
     const action = (
@@ -115,111 +131,121 @@ export default function useColumn(
       level = 0,
     ) => {
       const currentRow: HTableColumnData[] = [];
-      let headerRowSpan = 1;
 
-      current.forEach((column: HTableInsertedColumnData) => {
-        const calcChildren: HTableColumnData[] = [];
+      sortColumns(current.filter(column => getVisibleState(column.uuid))).forEach(
+        (column: HTableInsertedColumnData) => {
+          const calcChildren: HTableColumnData[] = [];
 
-        if (!getVisibleState(column.uuid)) {
-          return;
-        }
-
-        const {
-          checkedRows,
-          isSelectable,
-          isCheckedAll,
-          isIndeterminate,
-          handleSelect,
-          handleSelectAll,
-          handleClear,
-          getSelectionRows,
-          toggleRowSelection,
-        } = useSelection(column, emit);
-
-        const { currentFilterValue } = useFilter(column, emit, flattenData);
-
-        const currentColumn: HTableColumnData = {
-          ...column,
-          headerColSpan: 1,
-          headerRowSpan: 1,
-          calcChildren,
-          index: -1,
-          [HTableColumnContextKey]: {
-            sizeStyle: getColumnWidthStyle(column),
-            resizeWidth: -1,
-            isResizing: false,
-            overflowStyle: getColumnOverflowTooltipStyle(column),
-            prevColumnsWidthSum: 0,
-            nextColumnsWidthSum: 0,
-            prevColumn: undefined,
-            nextColumn: undefined,
-            selfElement: ref<HTMLTableCellElement>(),
-            parentColumn: parent,
-            parentColumnsHeightSum: 0,
-            childrenEachRowColumnsHeightSum: 0,
-          },
-          [HTableColumnSelectionKey]: {
-            checkedRows: checkedRows.value,
-            isSelectable: computed(
-              () => (rowIndex: number) => isSelectable.value(flattenData.value, rowIndex),
-            ),
+          const {
+            checkedRows,
+            isSelectable,
             isCheckedAll,
             isIndeterminate,
             handleSelect,
-            handleSelectAll: () => handleSelectAll(flattenData.value),
-            handleClear: (ignoreSelectable: boolean) =>
-              handleClear(flattenData.value, ignoreSelectable),
-            getSelectionRows: () => getSelectionRows(flattenData.value),
-            toggleRowSelection: (
-              rowKey: HTableRowKeyType | HTableRowKeyType[],
-              selected?: boolean,
-              ignoreSelectable?: boolean,
-            ) => toggleRowSelection(flattenData.value, rowKey, selected, ignoreSelectable),
-          },
-          [HTableColumnFilterKey]: {
-            currentFilterValue,
-          },
-        };
+            handleSelectAll,
+            handleClear,
+            getSelectionRows,
+            toggleRowSelection,
+          } = useSelection(column, emit);
 
-        if (column.children.length > 0) {
-          calcChildren.splice(
-            0,
-            calcChildren.length,
-            ...action(column.children, currentColumn, level + 1),
-          );
+          const { currentFilterValue } = useFilter(column, emit, flattenData);
 
-          currentColumn.headerColSpan = calcChildren.reduce(
-            (prev, curr) => prev + curr.headerColSpan,
-            0,
-          );
-          headerRowSpan += Math.max(...calcChildren.map(child => child.headerRowSpan));
-        } else {
-          flattenColumns.push(currentColumn);
-          currentColumn.index = index++;
+          const currentColumn: HTableColumnData = {
+            ...column,
+            headerColSpan: 1,
+            headerRowSpan: 1,
+            calcChildren,
+            index: -1,
+            // Widths are measured after render; keep the layout context reactive so sticky
+            // offsets and resized column styles are applied without another parent render.
+            [HTableColumnContextKey]: shallowReactive({
+              sizeStyle: getColumnWidthStyle(column),
+              resizeWidth: -1,
+              isResizing: false,
+              overflowStyle: getColumnOverflowTooltipStyle(column),
+              prevColumnsWidthSum: 0,
+              nextColumnsWidthSum: 0,
+              prevColumn: undefined,
+              nextColumn: undefined,
+              selfElement: ref<HTMLTableCellElement>(),
+              parentColumn: parent,
+              parentColumnsHeightSum: 0,
+              childrenEachRowColumnsHeightSum: 0,
+            }),
+            [HTableColumnSelectionKey]: {
+              checkedRows: checkedRows.value,
+              isSelectable: computed(
+                () => (rowIndex: number) => isSelectable.value(flattenData.value, rowIndex),
+              ),
+              isCheckedAll,
+              isIndeterminate,
+              handleSelect,
+              handleSelectAll: () => handleSelectAll(flattenData.value),
+              handleClear: (ignoreSelectable: boolean) =>
+                handleClear(flattenData.value, ignoreSelectable),
+              getSelectionRows: () => getSelectionRows(flattenData.value),
+              toggleRowSelection: (
+                rowKey: HTableRowKeyType | HTableRowKeyType[],
+                selected?: boolean,
+                ignoreSelectable?: boolean,
+              ) => toggleRowSelection(flattenData.value, rowKey, selected, ignoreSelectable),
+            },
+            [HTableColumnFilterKey]: {
+              currentFilterValue,
+            },
+          };
+
+          if (column.children.length > 0) {
+            calcChildren.splice(
+              0,
+              calcChildren.length,
+              ...action(column.children, currentColumn, level + 1),
+            );
+
+            currentColumn.headerColSpan = calcChildren.reduce(
+              (prev, curr) => prev + curr.headerColSpan,
+              0,
+            );
+
+            if (calcChildren.length === 0) {
+              return;
+            }
+          } else {
+            flattenColumns.push(currentColumn);
+            currentColumn.index = index++;
+          }
+
+          currentRow.push(currentColumn);
+        },
+      );
+
+      if (currentRow.length > 0) {
+        if (!Array.isArray(columnGroups[level])) {
+          columnGroups[level] = [];
         }
 
-        currentRow.push(currentColumn);
-      });
-
-      currentRow.forEach((column: HTableColumnData) => {
-        column.headerRowSpan = column.children.length > 0 ? 1 : headerRowSpan;
-      });
-
-      if (!Array.isArray(columnGroups[level])) {
-        columnGroups[level] = [];
+        columnGroups[level].push(...currentRow);
       }
-
-      columnGroups[level].push(...currentRow);
 
       return currentRow;
     };
 
-    action(currColumns.value as any);
+    action(currColumns.value);
+
+    const headerRowAmount = columnGroups.length;
+
+    columnGroups.forEach((columns, level) => {
+      columns.forEach(column => {
+        column.headerRowSpan = column.calcChildren.length > 0 ? 1 : headerRowAmount - level;
+      });
+      linkColumns(columns);
+    });
+    linkColumns(flattenColumns);
 
     return {
-      columnGroups: columnGroups.map(sortColumns),
-      flattenColumns: [flattenColumns].map(sortColumns)[0],
-      colStyle: getWidthStyleForCol([flattenColumns].map(sortColumns)[0]),
+      columnGroups,
+      flattenColumns,
+      colStyle: getWidthStyleForCol(flattenColumns),
     };
   });
 
@@ -294,6 +320,9 @@ export default function useColumn(
     visibleStore,
     getVisibleState,
     resetVisibleState,
+    sortStore,
+    getSortState,
+    resetSortState,
     getLastFixedLeftColumn,
     getLastFixedRightColumn,
   };

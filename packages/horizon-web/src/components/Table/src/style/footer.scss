@@ -69,7 +69,7 @@
         }
 
         @include mixins.is('active') {
-          color: mixins.css-variable('table', 'color', 'header', 'sort', 'active')
+          color: mixins.css-variable('table', 'color', 'header', 'sort', 'active');
         }
       }
 

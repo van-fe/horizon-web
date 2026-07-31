@@ -1,20 +1,33 @@
 import type { HTableColumnData } from '../utils/types';
 import { HTableColumnContextKey } from '../utils/types';
 import { cls, ComponentClassBlock, cssVariableKey } from '@aurora/utils';
-import type { StyleValue } from 'vue';
-import { inject, provide, ref } from 'vue';
-import {
-  HTableRefreshLayoutInjectKey,
-  HTableUseHeaderResizerPluginInjectKey,
-} from '../utils/injectKeys';
+import type { SetupContext, StyleValue } from 'vue';
+import { onBeforeUnmount, provide, ref } from 'vue';
+import { HTableUseHeaderResizerPluginInjectKey } from '../utils/injectKeys';
+import type { TableEmits } from '../composables/useEmits';
 
-export default function useHeaderResizerCursorLine() {
+export default function useHeaderResizerCursorLine(
+  refreshLayout: () => void,
+  emit: SetupContext<TableEmits>['emit'],
+) {
   const cursorLineStyle = ref<StyleValue>();
+  let activeMouseMove: ((evt: MouseEvent) => void) | undefined;
+  let activeMouseUp: ((evt: MouseEvent) => void) | undefined;
+
+  function removeDocumentListeners() {
+    if (activeMouseMove) {
+      document.removeEventListener('mousemove', activeMouseMove);
+    }
+    if (activeMouseUp) {
+      document.removeEventListener('mouseup', activeMouseUp);
+    }
+
+    activeMouseMove = undefined;
+    activeMouseUp = undefined;
+  }
 
   function useHeaderResizerPlugin(column: HTableColumnData, showDivider: boolean) {
     const classHelper = new ComponentClassBlock('table');
-
-    const refreshLayout = inject(HTableRefreshLayoutInjectKey)!;
 
     let startX = 0;
     let startWidth = 0;
@@ -40,7 +53,13 @@ export default function useHeaderResizerCursorLine() {
 
     function handleMouseMove(evt: MouseEvent) {
       if (column.props.resizable) {
-        column[HTableColumnContextKey].resizeWidth = startWidth + evt.clientX - startX;
+        const parsedMinWidth = Number.parseFloat(column.props.minWidth?.toString() ?? '');
+        const minWidth = Number.isFinite(parsedMinWidth) ? parsedMinWidth : 40;
+
+        column[HTableColumnContextKey].resizeWidth = Math.max(
+          minWidth,
+          startWidth + evt.clientX - startX,
+        );
         setCursorLineStyle();
 
         requestAnimationFrame(() => {
@@ -49,14 +68,22 @@ export default function useHeaderResizerCursorLine() {
       }
     }
 
-    function handleMouseUp() {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
+    function handleMouseUp(evt: MouseEvent) {
+      removeDocumentListeners();
       column[HTableColumnContextKey].isResizing = false;
       setCursorLineStyle();
+
+      if (
+        column[HTableColumnContextKey].resizeWidth > 0 &&
+        column[HTableColumnContextKey].resizeWidth !== startWidth
+      ) {
+        emit('headerDragend', column[HTableColumnContextKey].resizeWidth, startWidth, column, evt);
+      }
     }
 
     function handleMouseDown(evt: MouseEvent) {
+      evt.preventDefault();
+      evt.stopPropagation();
       startX = evt.clientX;
 
       if (column.props.resizable) {
@@ -65,6 +92,9 @@ export default function useHeaderResizerCursorLine() {
 
         column[HTableColumnContextKey].resizeWidth = startWidth;
 
+        removeDocumentListeners();
+        activeMouseMove = handleMouseMove;
+        activeMouseUp = handleMouseUp;
         document.addEventListener('mousemove', handleMouseMove);
         document.addEventListener('mouseup', handleMouseUp);
       }
@@ -85,6 +115,7 @@ export default function useHeaderResizerCursorLine() {
   }
 
   provide(HTableUseHeaderResizerPluginInjectKey, useHeaderResizerPlugin);
+  onBeforeUnmount(removeDocumentListeners);
 
   return {
     useHeaderResizerPlugin,

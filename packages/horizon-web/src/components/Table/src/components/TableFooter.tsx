@@ -1,6 +1,6 @@
 import type { VNodeArrayChildren } from 'vue';
-import { inject, defineComponent } from 'vue';
-import { cls, ComponentClassBlock } from '@aurora/utils';
+import { Fragment, inject, defineComponent } from 'vue';
+import { cls, ComponentClassBlock, isFunction } from '@aurora/utils';
 import { getFixedStyle, getFooterStyle, isLastFixedColumn } from '../hooks/useLayout';
 import HTooltip from '~/components/Tooltip/src/Tooltip';
 import {
@@ -9,6 +9,7 @@ import {
   HTableFooterRowHeightInjectKey,
   HTableGetColumnFixedStateInjectKey,
   HTablePropsInjectKey,
+  HTableSlotsInjectKey,
 } from '../utils/injectKeys';
 import type { HTableColumnData } from '../utils/types';
 import { HTableColumnContextKey } from '../utils/types';
@@ -23,12 +24,21 @@ export default defineComponent({
     const classHelper = new ComponentClassBlock('table');
 
     const parentProps = inject(HTablePropsInjectKey)!;
+    const parentSlots = inject(HTableSlotsInjectKey)!;
     const flattenData = inject(HTableFlattenDataInjectKey)!;
     const columns = inject(HTableColumnAnalysisInjectKey)!;
     const footerRowHeight = inject(HTableFooterRowHeightInjectKey)!;
     const getFixedState = inject(HTableGetColumnFixedStateInjectKey)!;
 
     return () => {
+      if (!parentProps.showSummary) {
+        return null;
+      }
+
+      if (parentSlots.summary) {
+        return <tfoot class={cls(classHelper.e('table-foot'))}>{parentSlots.summary()}</tfoot>;
+      }
+
       const summaryMethodCallback = parentProps.summaryMethod?.({
         columns: columns.value.flattenColumns,
         data: parentProps.data,
@@ -53,30 +63,39 @@ export default defineComponent({
           } else {
             if (column.props.field) {
               let summary = new Decimal(0);
+              let hasValue = false;
+              let isValid = true;
 
               for (const row of flattenData.value) {
                 if (Number.isNaN(Number(get(row, column.props.field)))) {
+                  isValid = false;
                   break;
                 } else {
                   summary = summary.add(Number(get(row, column.props.field)));
+                  hasValue = true;
                 }
               }
 
-              cellContent.push(summary.eq(0) ? '' : summary.toString());
+              cellContent.push(isValid && hasValue ? summary.toString() : '');
             }
           }
         }
 
         const contentRender = (content: VNodeArrayChildren) => {
           return column.props.showFooterOverflowTooltip ? (
-            <HTooltip overflow {...(column.props.headerTooltipOptions || {})}>
+            <HTooltip
+              overflow
+              theme={parentProps.tooltipTheme}
+              {...(parentProps.tooltipOptions || {})}
+              {...(column.props.footerTooltipOptions || {})}
+            >
               {{
                 default: () => <div class={classHelper.e('cell-inner')}>{content}</div>,
                 content: () => content,
               }}
             </HTooltip>
           ) : (
-            <div class={classHelper.e('cell-inner')}>{cellContent}</div>
+            <div class={classHelper.e('cell-inner')}>{content}</div>
           );
         };
 
@@ -84,7 +103,7 @@ export default defineComponent({
           <td
             class={cls(
               classHelper.e('cell'),
-              classHelper.is(`text-${column.props.footerAlign}`),
+              classHelper.is(`text-${column.props.footerAlign ?? column.props.align}`),
               classHelper.is('footer-bold', !column.slots.summaryFooter),
               classHelper.has(
                 'tooltip',
@@ -93,11 +112,18 @@ export default defineComponent({
               classHelper.is(`fixed-${getFixedState(column.uuid)}`, !!getFixedState(column.uuid)),
               classHelper.is('last-fixed-column', isLastFixedColumn(column, getFixedState)),
               classHelper.is(column.props.type),
+              column.props.footerClassName,
+              isFunction(parentProps.footerCellClassName)
+                ? parentProps.footerCellClassName(column, columnIndex, rowIndex)
+                : parentProps.footerCellClassName,
             )}
-            style={{
-              ...getFixedStyle(column, getFixedState),
-              ...getFooterStyle(rowIndex, footerRowHeight),
-            }}
+            style={[
+              getFixedStyle(column, getFixedState),
+              getFooterStyle(rowIndex, footerRowHeight),
+              isFunction(parentProps.footerCellStyle)
+                ? parentProps.footerCellStyle(column, columnIndex, rowIndex)
+                : (parentProps.footerCellStyle ?? ''),
+            ]}
           >
             <div
               class={classHelper.e('cell-wrap')}
@@ -121,12 +147,28 @@ export default defineComponent({
       };
 
       return (
-        <tfoot v-show={parentProps.showSummary} class={cls(classHelper.e('table-foot'))}>
+        <tfoot class={cls(classHelper.e('table-foot'))}>
           {new Array(parentProps.summaryRowAmount).fill(0).map((_, rowIndex) => (
-            <tr class={cls(classHelper.e('row'), classHelper.em('row', 'footer'))}>
-              {columns.value.flattenColumns.map((column: HTableColumnData, columnIndex) =>
-                summaryRender(column, columnIndex, rowIndex),
+            <tr
+              key={rowIndex}
+              class={cls(
+                classHelper.e('row'),
+                classHelper.em('row', 'footer'),
+                isFunction(parentProps.footerRowClassName)
+                  ? parentProps.footerRowClassName(columns.value.flattenColumns, rowIndex)
+                  : parentProps.footerRowClassName,
               )}
+              style={
+                isFunction(parentProps.footerRowStyle)
+                  ? parentProps.footerRowStyle(columns.value.flattenColumns, rowIndex)
+                  : (parentProps.footerRowStyle ?? '')
+              }
+            >
+              {columns.value.flattenColumns.map((column: HTableColumnData, columnIndex) => (
+                <Fragment key={column.uuid}>
+                  {summaryRender(column, columnIndex, rowIndex)}
+                </Fragment>
+              ))}
             </tr>
           ))}
         </tfoot>

@@ -63,7 +63,7 @@ export default function (
     let tempVisibleOptions = tree.flattenTreeData.value.concat();
 
     if (isUsingFilter.value && isDuringFilter.value) {
-      const flattenFilterResults: HTreeExtendsData[] = [];
+      const flattenFilterResults = new Set<HTreeExtendsData>();
       tree.flattenTreeData.value
         .filter(option =>
           filterMethod.value(
@@ -72,7 +72,7 @@ export default function (
           ),
         )
         .forEach(item => {
-          flattenFilterResults.push(...item.paths);
+          tree.getAncestors(item).forEach(ancestor => flattenFilterResults.add(ancestor));
         });
 
       if (expandFilteredTree.value && prevFilterValue !== filterValueMerged.value) {
@@ -86,18 +86,24 @@ export default function (
         prevFilterValue = filterValueMerged.value;
       }
 
-      tempVisibleOptions = tempVisibleOptions.filter(option =>
-        flattenFilterResults.includes(option),
-      );
+      tempVisibleOptions = tempVisibleOptions.filter(option => flattenFilterResults.has(option));
     }
 
-    return tempVisibleOptions.filter(
-      item =>
-        item.level === 0 ||
-        item.uuidPath
-          .filter(curr => curr !== item._uuid)
-          .every(uuid => expandedNodesUuid.has(uuid)),
-    );
+    const visibleNodes = new Set<HTreeExtendsData>();
+
+    return tempVisibleOptions.filter(item => {
+      const visible =
+        item.isRoot ||
+        (!!item.parent &&
+          visibleNodes.has(item.parent) &&
+          expandedNodesUuid.has(item.parent._uuid));
+
+      if (visible) {
+        visibleNodes.add(item);
+      }
+
+      return visible;
+    });
   });
 
   watch(

@@ -1,5 +1,5 @@
 <template>
-  <h-switch v-model="loading" status status-oh-text="loading" status-off-text="default" />
+  <h-switch v-model="loading" status status-on-text="loading" status-off-text="default" />
   <h-table :data="data" height="300" :loading="loading" loading-text="Please wait...">
     <h-table-column title="ID" field="id" />
     <h-table-column title="Name" field="name" />

@@ -1,5 +1,5 @@
 <template>
-<h-table :data="data" height="300">
+  <h-table :data="data" height="300">
     <h-table-column title="ID" field="id" />
     <h-table-column title="Name" field="name" />
     <h-table-column title="Gender" field="gender" />

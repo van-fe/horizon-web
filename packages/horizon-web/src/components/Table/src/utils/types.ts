@@ -1,5 +1,4 @@
 import type { ComputedRef, CSSProperties, Ref, VNode } from 'vue';
-import type { TableColumnProps } from '../composables/useProps';
 import type { HorizonWebSetupContext, Promisable } from '@aurora/utils';
 import type { TableColumnEmits } from '../composables/useEmits';
 import type { TableColumnSlots } from '../composables/useSlots';
@@ -21,10 +20,11 @@ export interface HTableTreeRowDataType {
 
 export type HTableTransformedRowDataType = HTableRowDataType & {
   [HTableTransformedRowContextKey]: {
-    uuid: string;
+    uuid: HTableRowKeyType;
     index: number;
+    siblingIndex: number;
     visible: Ref<Record<string, boolean>>;
-    parentUuid: string | null;
+    parentUuid: HTableRowKeyType | null;
     level: number;
     isLeaf: boolean;
   };
@@ -93,16 +93,15 @@ export interface HTableCellScopeSlots extends HTableHeaderCellScopeSlots {
 }
 
 export interface HTableInsertedColumnData<
-  Context extends HorizonWebSetupContext<TableColumnEmits, TableColumnSlots> = HorizonWebSetupContext<
-    TableColumnEmits,
-    TableColumnSlots
-  >,
+  Context extends HorizonWebSetupContext<TableColumnEmits, TableColumnSlots> =
+    HorizonWebSetupContext<TableColumnEmits, TableColumnSlots>,
+  ColumnProps extends Record<string, any> = Record<string, any>,
 > {
   uuid: string;
-  props: TableColumnProps;
+  props: ColumnProps;
   emit: Context['emit'];
   slots: Context['slots'];
-  children: HTableInsertedColumnData<Context>[];
+  children: HTableInsertedColumnData<Context, ColumnProps>[];
 }
 
 export interface HTableColumnContextData {

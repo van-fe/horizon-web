@@ -1,7 +1,7 @@
 @use '../../../../styles/mixins';
 
 @include mixins.b('table') {
-  @include mixins.e('table') {
+  @include mixins.be('table', 'table', false) {
     border-collapse: separate;
     border-spacing: 0;
   }

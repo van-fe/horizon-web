@@ -149,7 +149,7 @@ describe('Tree.tsx props', () => {
 
     const inputElem = wrapper.findComponent(HInput);
 
-    expect(inputElem.classes()).toContain('n-input--no-border');
+    expect(inputElem.classes()).toContain('h-input--no-border');
   });
 
   test('filter-input-value & hide-filter-input', async () => {
@@ -839,6 +839,178 @@ describe('Tree.tsx props', () => {
     expect(
       element.find(`.${treeItemClassHelper.block}.${treeItemClassHelper.is('shadow')}`).exists(),
     ).toBeTruthy();
+  });
+
+  test('drag root node behind sibling without losing it', async () => {
+    const treeData = ref<HTreeData[]>([
+      {
+        value: 'root-a',
+        label: 'Root A',
+      },
+      {
+        value: 'root-b',
+        label: 'Root B',
+      },
+    ]);
+
+    const { element } = await createInstance({
+      draggable: true,
+      treeData,
+    });
+
+    const [source, target] = element.findAllComponents(HTreeItem);
+    const handler = source.find(`.${treeItemClassHelper.e('draggable-icon')}`);
+
+    await handler.trigger('mousedown');
+    await target.trigger('mousemove');
+
+    const siblingDropArea = element.find(
+      `.${treeItemClassHelper.e('drag-over-wrap')}.${treeItemClassHelper.is('sibling')}`,
+    );
+
+    expect(siblingDropArea.exists()).toBeTruthy();
+
+    await siblingDropArea.trigger('mouseup');
+    await nextTick();
+
+    expect(treeData.value.map(node => node.value)).toStrictEqual(['root-b', 'root-a']);
+    expect(element.findAllComponents(HTreeItem)).toHaveLength(2);
+  });
+
+  test('before-drop can cancel moving a node', async () => {
+    const treeData = ref<HTreeData[]>([
+      {
+        value: 'root-a',
+        label: 'Root A',
+      },
+      {
+        value: 'root-b',
+        label: 'Root B',
+      },
+    ]);
+    const beforeDrop = vi.fn().mockResolvedValue(false);
+
+    const { element } = await createInstance({
+      beforeDrop,
+      draggable: true,
+      treeData,
+    });
+
+    const [source, target] = element.findAllComponents(HTreeItem);
+    const handler = source.find(`.${treeItemClassHelper.e('draggable-icon')}`);
+
+    await handler.trigger('mousedown');
+    await target.trigger('mousemove');
+
+    const siblingDropArea = element.find(
+      `.${treeItemClassHelper.e('drag-over-wrap')}.${treeItemClassHelper.is('sibling')}`,
+    );
+
+    await siblingDropArea.trigger('mouseup');
+    await sleep();
+    await nextTick();
+
+    expect(beforeDrop).toHaveBeenCalledWith(
+      expect.objectContaining({ value: 'root-a', level: 0 }),
+      null,
+      expect.objectContaining({ value: 'root-b', level: 0 }),
+    );
+    expect(treeData.value.map(node => node.value)).toStrictEqual(['root-a', 'root-b']);
+  });
+
+  test('drag node into another node', async () => {
+    const treeData = ref<HTreeData[]>([
+      {
+        value: 'root-a',
+        label: 'Root A',
+      },
+      {
+        value: 'root-b',
+        label: 'Root B',
+      },
+    ]);
+
+    const { element } = await createInstance({
+      draggable: true,
+      treeData,
+    });
+
+    const [source, target] = element.findAllComponents(HTreeItem);
+    const handler = source.find(`.${treeItemClassHelper.e('draggable-icon')}`);
+
+    await handler.trigger('mousedown');
+    await target.trigger('mousemove');
+
+    const childDropArea = element.find(
+      `.${treeItemClassHelper.e('drag-over-wrap')}.${treeItemClassHelper.is('child')}`,
+    );
+
+    expect(childDropArea.exists()).toBeTruthy();
+
+    await childDropArea.trigger('mouseup');
+    await nextTick();
+
+    expect(treeData.value).toStrictEqual([
+      {
+        value: 'root-b',
+        label: 'Root B',
+        children: [
+          {
+            value: 'root-a',
+            label: 'Root A',
+          },
+        ],
+      },
+    ]);
+  });
+
+  test('do not move a node into its own descendant', async () => {
+    const treeData = ref<HTreeData[]>([
+      {
+        value: 'parent',
+        label: 'Parent',
+        children: [
+          {
+            value: 'child',
+            label: 'Child',
+          },
+        ],
+      },
+    ]);
+    const beforeDrop = vi.fn();
+
+    const { element } = await createInstance({
+      beforeDrop,
+      draggable: true,
+      isDefaultExpandAll: true,
+      treeData,
+    });
+
+    const [source, target] = element.findAllComponents(HTreeItem);
+    const handler = source.find(`.${treeItemClassHelper.e('draggable-icon')}`);
+    const childDropArea = document.createElement('div');
+    childDropArea.classList.add(treeItemClassHelper.is('child') as string);
+    target.element.append(childDropArea);
+
+    handler.element.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+    childDropArea.dispatchEvent(new MouseEvent('mousemove', { bubbles: true }));
+    childDropArea.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+
+    await nextTick();
+
+    expect(beforeDrop).not.toHaveBeenCalled();
+    expect(treeData.value).toStrictEqual([
+      {
+        value: 'parent',
+        label: 'Parent',
+        children: [
+          {
+            value: 'child',
+            label: 'Child',
+          },
+        ],
+      },
+    ]);
   });
 
   test('drag-on-handler', async () => {

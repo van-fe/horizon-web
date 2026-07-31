@@ -16,7 +16,12 @@ export default function useResizeListener(
     hooks.forEach(hook => hook());
   }
 
-  watch(() => analysisColumns.value.flattenColumns, callHooks);
+  watch(() => analysisColumns.value.flattenColumns, callHooks, {
+    // Column management rebuilds every column layout context. Recalculate only after
+    // Vue has mounted the replacement header cells, otherwise their measured widths
+    // are still zero and all fixed columns collapse onto the same sticky offset.
+    flush: 'post',
+  });
 
   useResizeObserver(wrapperDomRef, ([entry]) => {
     void nextTick(() => {

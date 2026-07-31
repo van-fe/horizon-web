@@ -27,27 +27,40 @@ export default function (
       return Array.from(selectedValuesUuid.values());
     } else {
       const res: Array<string | number> = Array.from(selectedValuesUuid.values());
+      const checkedStatus = new Map<HTreeExtendsData, boolean>();
+      const stack = tree.transformedTreeData.value
+        .slice()
+        .reverse()
+        .map(node => ({ node, visited: false }));
 
-      function action(node: HTreeExtendsData) {
-        if (node.isLeaf) return selectedValuesUuid.has(node._uuid);
+      while (stack.length > 0) {
+        const { node, visited } = stack.pop()!;
 
-        let count = 0;
+        if (node.isLeaf) {
+          checkedStatus.set(node, selectedValuesUuid.has(node._uuid));
+          continue;
+        }
 
-        for (const child of node.transformedChildren) {
-          if (action(child)) {
-            count++;
+        if (!visited) {
+          stack.push({ node, visited: true });
+
+          for (let i = node.transformedChildren.length - 1; i >= 0; i--) {
+            stack.push({ node: node.transformedChildren[i], visited: false });
           }
+
+          continue;
         }
 
-        if (count === node.transformedChildren.length && count > 0) {
+        const checked =
+          node.transformedChildren.length > 0 &&
+          node.transformedChildren.every(child => checkedStatus.get(child));
+
+        checkedStatus.set(node, checked);
+
+        if (checked) {
           res.push(tree.getOptionValue(node, 'value'));
-          return true;
         }
-
-        return false;
       }
-
-      tree.transformedTreeData.value.forEach(rootNode => action(rootNode));
 
       return res;
     }
@@ -58,12 +71,25 @@ export default function (
       return [];
     } else {
       const res: Array<string | number> = [];
+      const fullyCheckedUuid = new Set(fullCheckedValues.value);
+      const indeterminateUuid = new Set<string | number>();
+
+      for (const uuid of selectedValuesUuid) {
+        let current = tree.flattenTreeDataMapping.value.get(uuid);
+
+        while (current) {
+          indeterminateUuid.add(current._uuid);
+          current = current.parent ?? undefined;
+        }
+      }
 
       tree.flattenTreeData.value.forEach(node => {
-        if (!node.isLeaf && !fullCheckedValues.value.includes(node._uuid)) {
-          if (tree.isNodeIndeterminateForCheckbox(node, Array.from(selectedValuesUuid.values()))) {
-            res.push(node._uuid);
-          }
+        if (
+          !node.isLeaf &&
+          !fullyCheckedUuid.has(node._uuid) &&
+          indeterminateUuid.has(node._uuid)
+        ) {
+          res.push(node._uuid);
         }
       });
 
@@ -72,17 +98,16 @@ export default function (
   });
 
   watch(
-    () => [props.selectedValues?.value, tree.flattenTreeData.value],
+    [() => props.selectedValues?.value?.slice(), tree.flattenTreeData],
     updateSelectedStatusByProps,
     {
       immediate: true,
-      deep: true,
     },
   );
 
   /**
    * in order to remove child/root node when checkStrictly set false
-    * @en Description for watch.
+   * @en Description for watch.
    */
   watch(props.checkStrictly, val => {
     if (!val) {
@@ -147,23 +172,27 @@ export default function (
   }
 
   function switchChildrenCheckedStatus(node: HTreeExtendsData, check = true) {
-    if (
-      (!node.disabled || (node.disabled && props.parentEffectDisabledChild.value)) &&
-      node.selectable !== false
-    ) {
+    const stack = [node];
+
+    while (stack.length > 0) {
+      const current = stack.pop()!;
+
       if (
+        (!current.disabled || (current.disabled && props.parentEffectDisabledChild.value)) &&
+        current.selectable !== false &&
         !props.checkStrictly.value &&
-        (!node.passingDisabled || (node.passingDisabled && props.parentEffectDisabledChild.value))
+        (!current.passingDisabled ||
+          (current.passingDisabled && props.parentEffectDisabledChild.value))
       ) {
-        if (node.isLeaf) {
+        if (current.isLeaf) {
           check
             ? props.multipleLimit.value > selectedValuesUuid.size &&
-              selectedValuesUuid.add(node._uuid)
-            : selectedValuesUuid.delete(node._uuid);
+              selectedValuesUuid.add(current._uuid)
+            : selectedValuesUuid.delete(current._uuid);
         } else {
-          node.transformedChildren.forEach(currNode =>
-            switchChildrenCheckedStatus(currNode, check),
-          );
+          for (let i = current.transformedChildren.length - 1; i >= 0; i--) {
+            stack.push(current.transformedChildren[i]);
+          }
         }
       }
     }
@@ -186,9 +215,9 @@ export default function (
               if (
                 !tree.flattenTreeData.value.some(
                   curr =>
-                    curr.path.includes(value) &&
                     curr._uuid !== node._uuid &&
-                    values.includes(curr.value),
+                    values.includes(curr.value) &&
+                    tree.isDescendantOf(curr, node, false),
                 )
               ) {
                 switchNodeSelectedStatus(value, true, undefined, undefined, false);

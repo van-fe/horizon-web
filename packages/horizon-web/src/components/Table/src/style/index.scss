@@ -6,18 +6,28 @@
 @use 'column-manager';
 
 @include mixins.b('table') {
+  position: relative;
   width: 100%;
-  #{mixins.css-variable-name('table', 'row', 'hover', 'background')}: mixins.css-variable('table', 'background', 'row-hover');
+  color: mixins.css-variable('text', 'primary');
+  font-size: mixins.css-variable('text', 'base');
+  #{mixins.css-variable-name('table', 'row', 'hover', 'background')}: mixins.css-variable(
+    'table',
+    'background',
+    'row-hover'
+  );
 
   @include mixins.e('hidden-columns') {
     display: none;
   }
 
-  @include mixins.e('table', false) {
+  @include mixins.be('table', 'table', false) {
     display: table;
     width: max-content;
     min-width: 100%;
     margin: 0;
+    overflow: visible;
+    border-collapse: separate;
+    border-spacing: 0;
 
     @include mixins.is('layout-fixed') {
       table-layout: fixed;
@@ -26,23 +36,72 @@
     @include mixins.is('layout-auto') {
       table-layout: auto;
     }
+
+    @include mixins.be('table', 'row', false) {
+      border-top: 0;
+    }
+  }
+
+  // Keep host-page table styles from leaking into section backgrounds.
+  @include mixins.be('table', 'table-head', false) {
+    @include mixins.be('table', 'row', false) {
+      background: mixins.css-variable('table', 'background', 'header');
+    }
+  }
+
+  @include mixins.be('table', 'table-body', false) {
+    @include mixins.be('table', 'row', false) {
+      background: mixins.css-variable('table', 'background', 'body');
+    }
+  }
+
+  @include mixins.be('table', 'table-foot', false) {
+    @include mixins.be('table', 'row', false) {
+      background: mixins.css-variable('table', 'background', 'footer');
+    }
   }
 
   @include mixins.e('row') {
     background: mixins.css-variable('table', 'background', 'body');
+
+    @include mixins.is('row-dragging') {
+      > td {
+        opacity: 0.55;
+      }
+    }
+
+    @include mixins.is('row-drag-over-before') {
+      > td {
+        box-shadow: inset 0 2px mixins.css-variable('table', 'divider', 'header', 'resizing-color');
+      }
+    }
+
+    @include mixins.is('row-drag-over-after') {
+      > td {
+        box-shadow: inset 0 -2px mixins.css-variable('table', 'divider', 'header', 'resizing-color');
+      }
+    }
 
     @include mixins.m('expand') {
       background: mixins.css-variable('table', 'background', 'body', 'expand');
 
       @include mixins.be('table', 'cell', false) {
         &-wrap {
-          #{mixins.css-variable-name('table-z-index-temp')}: mixins.css-variable('table-z-index-default');
+          #{mixins.css-variable-name('table-z-index-temp')}: mixins.css-variable(
+            'table-z-index-default'
+          );
           width: 100%;
         }
 
         &-inner {
-          #{mixins.css-variable-name('table-z-index-default')}: calc(#{mixins.css-variable('table-z-index-temp')} - 2);
-          #{mixins.css-variable-name('table-background-header')}: mixins.css-variable('table', 'background', 'body');
+          #{mixins.css-variable-name('table-z-index-default')}: calc(
+            #{mixins.css-variable('table-z-index-temp')} - 2
+          );
+          #{mixins.css-variable-name('table-background-header')}: mixins.css-variable(
+            'table',
+            'background',
+            'body'
+          );
           flex: 1;
         }
       }
@@ -75,7 +134,8 @@
   }
 
   @include mixins.is('hoverable') {
-    #{mixins.e('table', 'table-body')}, #{mixins.e('table', 'table-foot')}{
+    #{mixins.e('table', 'table-body')},
+    #{mixins.e('table', 'table-foot')} {
       @include mixins.be('table', 'cell', false) {
         transition: mixins.css-variable('table', 'transition', 'color-behavior');
       }
@@ -109,8 +169,43 @@
     z-index: calc(#{mixins.css-variable('table', 'z-index', 'default')} + 5);
     display: none;
     width: 2px;
-    height: calc(#{mixins.css-variable('table', 'wrapper', 'height')} - #{mixins.css-variable('table', 'header', 'height')} + #{mixins.css-variable-with-default-value('table-column-height', '0px')});
+    height: calc(
+      #{mixins.css-variable('table', 'wrapper', 'height')} -
+        #{mixins.css-variable('table', 'header', 'height')} +
+        #{mixins.css-variable-with-default-value('table-column-height', '0px')}
+    );
     background: mixins.css-variable('table', 'divider', 'header', 'resizing-color');
+    pointer-events: none;
+  }
+
+  @include mixins.em('table', 'empty') {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: mixins.css-variable('table', 'size', 'empty', 'min-height');
+    color: mixins.css-variable('text', 'tertiary');
+    background: mixins.css-variable('table', 'background', 'body');
+  }
+
+  @include mixins.has('height') {
+    @include mixins.em('table', 'empty', false) {
+      min-height: max(
+        mixins.css-variable('table', 'size', 'empty', 'min-height'),
+        calc(
+          #{mixins.css-variable('table', 'wrapper', 'height')} -
+            #{mixins.css-variable('table', 'header', 'height')}
+        )
+      );
+    }
+  }
+
+  @include mixins.e('table-append') {
+    box-sizing: border-box;
+    width: 100%;
+    color: mixins.css-variable('text', 'secondary');
+    background: mixins.css-variable('table', 'background', 'body');
   }
 
   @include mixins.has('column-manager') {
@@ -118,7 +213,9 @@
       tr:nth-of-type(1) {
         #{mixins.e('table', 'cell')} {
           @include mixins.is('last-column') {
-            padding-right: calc(#{mixins.css-variable('table', 'spacing', 'padding', 'cell', 'x')} + 24px + 16px);
+            padding-right: calc(
+              #{mixins.css-variable('table', 'spacing', 'padding', 'cell', 'x')} + 24px + 16px
+            );
           }
         }
       }
@@ -128,6 +225,11 @@
 
 :root.#{mixins.$dark-mode-class-name} {
   @include mixins.b('table', false) {
-    #{mixins.css-variable-name('table', 'row', 'hover', 'background')}: mixins.css-variable('table', 'background', 'row-hover', 'dark');
+    #{mixins.css-variable-name('table', 'row', 'hover', 'background')}: mixins.css-variable(
+      'table',
+      'background',
+      'row-hover',
+      'dark'
+    );
   }
 }

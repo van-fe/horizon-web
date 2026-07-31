@@ -28,12 +28,13 @@ export default function useLayout(
 ) {
   const tableFooterDomRef = ref<HorizonWebComponentInstance<typeof TableFooter>>();
   const footerRowHeight = ref<number[]>([]);
+  const firstHeaderRowHeight = ref(0);
 
   function calculateColumnsLayout() {
     const calcPrev = (column: HTableColumnData) => {
       column[HTableColumnContextKey].prevColumnsWidthSum =
-        (column[HTableColumnContextKey].prevColumn?.[HTableColumnContextKey].prevColumnsWidthSum
-          || 0) +
+        (column[HTableColumnContextKey].prevColumn?.[HTableColumnContextKey].prevColumnsWidthSum ||
+          0) +
         (column[HTableColumnContextKey].prevColumn?.[
           HTableColumnContextKey
         ].selfElement.value?.getBoundingClientRect().width || 0);
@@ -41,8 +42,8 @@ export default function useLayout(
 
     const calcNext = (column: HTableColumnData) => {
       column[HTableColumnContextKey].nextColumnsWidthSum =
-        (column[HTableColumnContextKey].nextColumn?.[HTableColumnContextKey].nextColumnsWidthSum
-          || 0) +
+        (column[HTableColumnContextKey].nextColumn?.[HTableColumnContextKey].nextColumnsWidthSum ||
+          0) +
         (column[HTableColumnContextKey].nextColumn?.[
           HTableColumnContextKey
         ].selfElement.value?.getBoundingClientRect().width || 0);
@@ -92,6 +93,9 @@ export default function useLayout(
   provide(HTableScrollbarTrackSpacingInjectKey, scrollbarBeginEndSpacing);
 
   function refreshScrollbarSpacing() {
+    const firstHeaderCell = analysisColumns.value.columnGroups.at(0)?.at(0)?.[
+      HTableColumnContextKey
+    ];
     const lastHeaderCell = analysisColumns.value.columnGroups.at(-1)?.[0]?.[HTableColumnContextKey];
 
     const lastFixedLeftColumn = analysisColumns.value.flattenColumns.findLast(
@@ -101,6 +105,8 @@ export default function useLayout(
       curr => getFixedState(curr.uuid) === 'right',
     );
 
+    firstHeaderRowHeight.value =
+      firstHeaderCell?.selfElement.value?.parentElement?.clientHeight || 0;
     scrollbarBeginEndSpacing.value = [
       [
         (lastHeaderCell?.parentColumnsHeightSum || 0) +
@@ -147,6 +153,7 @@ export default function useLayout(
     refreshLayout,
     refreshScrollbarSpacing,
     scrollbarBeginEndSpacing,
+    firstHeaderRowHeight,
   };
 }
 

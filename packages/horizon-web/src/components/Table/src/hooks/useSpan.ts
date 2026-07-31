@@ -29,8 +29,8 @@ export default function useSpan(tableProps: TableProps) {
         };
       } else if (isObject(res)) {
         return {
-          rowSpan: res.rowSpan || 1,
-          colSpan: res.colSpan || 1,
+          rowSpan: res.rowSpan ?? 1,
+          colSpan: res.colSpan ?? 1,
         };
       } else {
         return {

@@ -38,7 +38,7 @@ export default function (
 
   /**
    * to default expand all nodes
-    * @en Description for if.
+   * @en Description for if.
    */
   if (props.isDefaultExpandAll.value) {
     tree.flattenTreeData.value.forEach(item => {
@@ -89,7 +89,7 @@ export default function (
       expandedNodesUuid.delete(node._uuid);
 
       tree.flattenTreeData.value.forEach(item => {
-        if (item.paths.includes(node)) {
+        if (tree.isDescendantOf(item, node)) {
           expandedNodesUuid.delete(item._uuid);
         }
       });
@@ -118,7 +118,9 @@ export default function (
         const detail = tree.getInfoByValue(value);
 
         if (detail && props.isDefaultExpandParent.value) {
-          detail.paths.forEach(node => !node.isLeaf && expandedNodesUuid.add(node.value));
+          tree
+            .getAncestors(detail)
+            .forEach(node => !node.isLeaf && expandedNodesUuid.add(node.value));
         } else {
           expandedNodesUuid.add(value);
         }

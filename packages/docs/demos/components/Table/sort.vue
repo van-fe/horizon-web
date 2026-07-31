@@ -4,7 +4,7 @@
     <h-table-column title="Name" field="name" sortable />
     <h-table-column title="Gender" field="gender" sortable />
     <h-table-column title="Birthday" field="birthday" sortable sort-separate :sort-method="dateSort" />
-    <h-table-column title="Address" field="address" sortable :use-built-ih-sort="false" @sort-change="onColumnSortChange" />
+    <h-table-column title="Address" field="address" sortable :use-built-in-sort="false" @sort-change="onColumnSortChange" />
   </h-table>
 </template>
 
@@ -37,9 +37,9 @@ function numberSort(order: HTableSortOrderEnum) {
 
 function dateSort(order: HTableSortOrderEnum) {
   return (a: TableData, b: TableData) => {
-    const res = order === HTableSortOrderEnum.ASC ? dayjs(a.birthday).isBefore(b.birthday) : dayjs(a.birthday).isAfter(b.birthday);
+    const diff = dayjs(a.birthday).valueOf() - dayjs(b.birthday).valueOf();
 
-    return res ? -1 : 1;
+    return order === HTableSortOrderEnum.ASC ? diff : -diff;
   };
 }
 

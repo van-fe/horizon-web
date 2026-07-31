@@ -1,4 +1,5 @@
 import {
+  computed,
   defineComponent,
   nextTick,
   onBeforeUnmount,
@@ -15,6 +16,7 @@ import {
   ComponentClassBlock,
   cssVariableKey,
   isBoolean,
+  isDefined,
   sizeUnitTransform,
   useNamespace,
 } from '@aurora/utils';
@@ -57,12 +59,13 @@ import { HTableColumnContextKey } from './utils/types';
 import useHeaderDraggable from './hooks/useHeaderDraggable';
 import useHeaderResizer from './hooks/useHeaderResizer';
 import useColumnManager from './hooks/useColumnManager';
-import useColumnSort from './hooks/useColumnSort';
 
 export default defineComponent({
   name: `${useNamespace()}Table`,
   desc: '用行与列的形式，展示结构化数据展示的组件；常和按钮、搜索、筛选、分页等其他界面组件一起协同',
-  descLocales: { en: 'Displays structured data in rows and columns and works well with actions, search, filters, and pagination.' },
+  descLocales: {
+    en: 'Displays structured data in rows and columns and works well with actions, search, filters, and pagination.',
+  },
   directives: {
     loading,
     tooltip,
@@ -82,6 +85,9 @@ export default defineComponent({
     const headDomRef = ref<HTMLTableSectionElement>();
 
     const size = useSize(toRef(props, 'size'), 'medium');
+    const isLoading = computed(() =>
+      isBoolean(props.loading) ? props.loading : !!props.loading?.isShow,
+    );
 
     const fieldMapFormatted = formatTreeFieldMap(propsRef);
     const { flattenData, reloadData } = useDataAnalysis(propsRef, emit, { fieldMapFormatted });
@@ -90,16 +96,13 @@ export default defineComponent({
       analysisColumns,
       fixedStore,
       getFixedState,
-      resetFixedState,
       visibleStore,
       getVisibleState,
-      resetVisibleState,
+      sortStore,
     } = useColumn(flattenData, emit);
 
-    const {} = useColumnSort(columns);
-
     const { border } = useBorder(propsRef, analysisColumns);
-    const {} = useSortable(emit);
+    const {} = useSortable(emit, analysisColumns, propsRef.defaultSort);
     const { scrollbarDomRef, handleScroll, initialScrollState, scrollComputedClassName } =
       useScroll();
 
@@ -110,6 +113,7 @@ export default defineComponent({
       calculateColumnsLayout,
       refreshScrollbarSpacing,
       refreshLayout,
+      firstHeaderRowHeight,
     } = useLayout(analysisColumns, getFixedState);
 
     const { wrapperDomRef, wrapperHeight } = useResizeListener(analysisColumns, [
@@ -124,18 +128,21 @@ export default defineComponent({
       headDomRef,
     );
 
-    const {} = useHeaderDraggable(analysisColumns);
+    const { getDraggableProps } = useHeaderDraggable({
+      columns,
+      columnAnalysis: analysisColumns,
+      sortStore,
+      getFixedState,
+    });
 
-    const { cursorLineStyle } = useHeaderResizer();
+    const { cursorLineStyle } = useHeaderResizer(refreshLayout, emit);
 
     const columnManagerRender = useColumnManager({
       columns,
       fixedStore,
       getFixedState,
-      resetFixedState,
       visibleStore,
       getVisibleState,
-      resetVisibleState,
     });
 
     watch(
@@ -196,6 +203,8 @@ export default defineComponent({
           classHelper.is('highlight-selected', props.highlightSelected),
           classHelper.has('footer', props.showSummary),
           classHelper.has('column-manager', props.useColumnManager),
+          classHelper.has('height', isDefined(props.height)),
+          classHelper.has('empty', flattenData.value.length === 0 && !isLoading.value),
           scrollComputedClassName.value,
         )}
         style={{
@@ -204,6 +213,8 @@ export default defineComponent({
           [cssVariableKey('table', 'wrapper', 'height')]: `${wrapperHeight.value}px`,
           [cssVariableKey('table', 'header', 'height')]:
             `${scrollbarBeginEndSpacing.value[0][0]}px`,
+          [cssVariableKey('table', 'header', 'row', 'height')]:
+            firstHeaderRowHeight.value > 0 ? `${firstHeaderRowHeight.value}px` : undefined,
           ['--table-border-width']: border.value === 'full' ? '1px' : '0px',
         }}
       >
@@ -222,7 +233,7 @@ export default defineComponent({
         >
           <table
             ref={tableDomRef}
-            class={cls(classHelper.e('table'))}
+            class={cls(classHelper.e('table'), classHelper.is(`layout-${props.tableLayout}`))}
             style={{ tableLayout: props.tableLayout }}
           >
             <colgroup>
@@ -230,6 +241,7 @@ export default defineComponent({
                 analysisColumns.value.colStyle.map(info => {
                   return (
                     <col
+                      key={info.column.uuid}
                       style={
                         info.column[HTableColumnContextKey].resizeWidth === -1
                           ? info.style
@@ -252,15 +264,20 @@ export default defineComponent({
                   transform: props.headerSticky ? `translateY(${scrollOffset.value}px)` : undefined,
                 }}
               >
-                {analysisColumns.value.columnGroups.map(columns => (
-                  <TableHeader columnsRow={columns} />
+                {analysisColumns.value.columnGroups.map((columns, rowIndex) => (
+                  <TableHeader
+                    key={rowIndex}
+                    columnsRow={columns}
+                    rowIndex={rowIndex}
+                    getDraggableProps={getDraggableProps}
+                  />
                 ))}
               </thead>
             )}
             <TableBody columns={analysisColumns.value.flattenColumns} />
             <TableFooter ref={tableFooterDomRef} />
           </table>
-          {flattenData.value.length === 0 && (
+          {flattenData.value.length === 0 && !isLoading.value && (
             <div class={classHelper.em('table', 'empty')}>
               {slots.empty?.() ?? (
                 <HEmpty

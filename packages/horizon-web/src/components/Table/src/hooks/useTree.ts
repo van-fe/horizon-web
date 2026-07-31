@@ -1,7 +1,8 @@
-import type { ComputedRef, ToRefs } from 'vue';
+import type { ComputedRef, Ref, ToRefs } from 'vue';
 import { computed, inject, ref } from 'vue';
 import type {
   HTableColumnData,
+  HTableRowKeyType,
   HTableTransformedRowDataType,
   HTableTreeRowDataType,
 } from '../utils/types';
@@ -19,19 +20,19 @@ export function formatTreeFieldMap(
 ): ComputedRef<Record<keyof HTableTreeRowDataType, string>> {
   return computed(() => ({
     children: tableProps.fieldMap.value?.children || 'children',
-    isLeaf: tableProps.fieldMap.value?.isLeaf || 'children',
+    isLeaf: tableProps.fieldMap.value?.isLeaf || 'isLeaf',
   }));
 }
 
-export default function (tableProps: TableProps, rowsData: HTableTransformedRowDataType[]) {
-  const treeExpandRows = ref(new Set<string>());
-  const syncLoadingRows = ref(new Set<string>());
+export default function (tableProps: TableProps, rowsData: Ref<HTableTransformedRowDataType[]>) {
+  const treeExpandRows = ref(new Set<HTableRowKeyType>());
+  const syncLoadingRows = ref(new Set<HTableRowKeyType>());
 
   const setChildrenByRowKey = inject(HTableSetChildrenByRowKeyValueInjectKey)!;
   const fieldMapFormatted = inject(HTableFieldMapFormattedInjectKey)!;
 
   const isTreeData = computed(() =>
-    rowsData.some(
+    rowsData.value.some(
       row => fieldMapFormatted.value.children in row || fieldMapFormatted.value.isLeaf in row,
     ),
   );
@@ -49,8 +50,8 @@ export default function (tableProps: TableProps, rowsData: HTableTransformedRowD
 
     treeExpandRows.value.delete(currentUuid);
 
-    const recursionSetChildrenToggleUp = (parentUuid: string) => {
-      rowsData
+    const recursionSetChildrenToggleUp = (parentUuid: HTableRowKeyType) => {
+      rowsData.value
         .filter(row => row[HTableTransformedRowContextKey].parentUuid === parentUuid)
         .forEach(row => {
           const thisUuid = row[HTableTransformedRowContextKey].uuid;
@@ -70,9 +71,12 @@ export default function (tableProps: TableProps, rowsData: HTableTransformedRowD
       !rowData[fieldMapFormatted.value.children]?.length
     ) {
       syncLoadingRows.value.add(currentUuid);
-      await dynamicLoad(rowData);
-      syncLoadingRows.value.delete(currentUuid);
-      treeExpandRows.value.add(currentUuid);
+      try {
+        await dynamicLoad(rowData);
+        treeExpandRows.value.add(currentUuid);
+      } finally {
+        syncLoadingRows.value.delete(currentUuid);
+      }
     } else {
       treeExpandRows.value.add(currentUuid);
     }
@@ -88,7 +92,7 @@ export default function (tableProps: TableProps, rowsData: HTableTransformedRowD
   }
 
   function expandAll() {
-    rowsData.forEach(row => {
+    rowsData.value.forEach(row => {
       if (isRowCanBeExpand(row)) {
         void expandRow(row);
       }
@@ -107,6 +111,23 @@ export default function (tableProps: TableProps, rowsData: HTableTransformedRowD
     );
   }
 
+  function isTreeRowVisible(rowData: HTableTransformedRowDataType) {
+    let parentUuid = rowData[HTableTransformedRowContextKey].parentUuid;
+
+    while (parentUuid !== null) {
+      if (!treeExpandRows.value.has(parentUuid)) {
+        return false;
+      }
+
+      parentUuid =
+        rowsData.value.find(row => row[HTableTransformedRowContextKey].uuid === parentUuid)?.[
+          HTableTransformedRowContextKey
+        ].parentUuid ?? null;
+    }
+
+    return true;
+  }
+
   function shouldSelectionBeVisible(
     rowData: HTableTransformedRowDataType,
     column: HTableColumnData,
@@ -122,6 +143,7 @@ export default function (tableProps: TableProps, rowsData: HTableTransformedRowD
     toggleTreeExpandRows,
     clearTreeExpandRows,
     isRowCanBeExpand,
+    isTreeRowVisible,
     shouldSelectionBeVisible,
   };
 }

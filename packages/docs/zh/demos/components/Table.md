@@ -41,8 +41,15 @@
 :::demo components/Table/fixed.vue :::
 
 ## 拖拽列宽
-默认情况下，每列都默认允许拖拽宽度，但如果需要配置某列不允许拖拽，请设置 `resizable = false` 即可
+为需要调整宽度的列设置 `resizable`，拖动表头右侧分隔线即可修改列宽
 :::demo components/Table/resizable.vue :::
+
+## 拖拽排序
+为列设置 `draggable` 可以拖动表头调整同级列顺序；添加 `type="drag"` 的列则可以拖动手柄调整同级行顺序
+
+行拖拽通过 `v-model:data` 回写数据。树形表格只允许节点在同一个父节点下排序
+
+:::demo components/Table/draggable.vue :::
 
 ## 流体高度
 当数据量是动态变化时，可以设置 `max-height`，当表格高度超出 `max-height` 后，会显示滚动条

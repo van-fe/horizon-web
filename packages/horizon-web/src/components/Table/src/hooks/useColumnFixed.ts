@@ -1,6 +1,6 @@
 import type { Ref } from 'vue';
 import { provide, watch, ref } from 'vue';
-import type { HTableColumnData, HTableFixedValue, HTableInsertedColumnData } from '../utils/types';
+import type { HTableFixedValue, HTableInsertedColumnData } from '../utils/types';
 import { formatFixed } from './useLayout';
 import { HTableGetColumnFixedStateInjectKey } from '../utils/injectKeys';
 
@@ -10,31 +10,11 @@ export function sortColumnsMethod(
     checkStore?: Map<string, HTableFixedValue>,
   ) => HTableFixedValue,
 ) {
-  return (a: HTableColumnData, b: HTableColumnData) => {
-    switch (getFixedState(a.uuid)) {
-      case 'left':
-        switch (getFixedState(b.uuid)) {
-          case 'left':
-            return 1;
-          case 'hover':
-          case 'right':
-          default:
-            return -1;
-        }
-      case 'right':
-      case 'hover':
-        return 1;
-      default:
-        switch (getFixedState(b.uuid)) {
-          case 'left':
-            return 1;
-          default:
-            return 0;
-          case 'hover':
-          case 'right':
-            return -1;
-        }
-    }
+  return (a: { uuid: string }, b: { uuid: string }) => {
+    const getRank = (state: HTableFixedValue) =>
+      state === 'left' ? 0 : state === 'right' || state === 'hover' ? 2 : 1;
+
+    return getRank(getFixedState(a.uuid)) - getRank(getFixedState(b.uuid));
   };
 }
 

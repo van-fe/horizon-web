@@ -32,48 +32,53 @@ export default function useDataAnalysis(
     },
   );
 
-  function reloadData(data: HTableTransformedRowDataType[] = tableProp.data.value) {
-    flattenData.value = [];
+  function reloadData(data: HTableRowDataType[] = tableProp.data.value) {
+    const nextFlattenData: HTableTransformedRowDataType[] = [];
 
     const transformRow = (
       row: HTableRowDataType,
       parent?: HTableTransformedRowDataType,
       level = 0,
+      siblingIndex = 0,
     ) => {
       const res: HTableTransformedRowDataType = {
         ...row,
         [HTableTransformedRowContextKey]: {
           uuid: tableProp.rowKey?.value ? row[tableProp.rowKey.value] : nanoid(),
           index: 0,
+          siblingIndex,
           visible: ref({}),
           parentUuid: parent?.[HTableTransformedRowContextKey].uuid ?? null,
           level,
+          isLeaf: row[options.fieldMapFormatted.value.isLeaf] === true,
         },
       };
 
-      flattenData.value.push(res);
+      nextFlattenData.push(res);
 
       if (
-        row[options.fieldMapFormatted.value.children] &&
-        row[options.fieldMapFormatted.value.children].length
+        Array.isArray(row[options.fieldMapFormatted.value.children]) &&
+        row[options.fieldMapFormatted.value.children].length > 0
       ) {
         if (!tableProp.rowKey?.value) {
           warn('table', `You haven't set rowKey to table, so the tree data won't deal correctly.`);
         }
 
-        row[options.fieldMapFormatted.value.children].map((curr: HTableRowDataType) =>
-          transformRow(curr, res, level + 1),
+        row[options.fieldMapFormatted.value.children].map(
+          (curr: HTableRowDataType, index: number) => transformRow(curr, res, level + 1, index),
         );
       }
 
       return res;
     };
 
-    data.map(curr => transformRow(curr));
+    data.map((curr, index) => transformRow(curr, undefined, 0, index));
 
-    flattenData.value.forEach((row, idx) => {
+    nextFlattenData.forEach((row, idx) => {
       row[HTableTransformedRowContextKey].index = idx;
     });
+
+    flattenData.value = nextFlattenData;
   }
 
   function setChildrenByRowKey(rowKeyValue: any, childrenData: HTableRowDataType[]) {
@@ -84,16 +89,22 @@ export default function useDataAnalysis(
 
     const copiedData = tableProp.data.value.concat();
 
-    const action = (data: HTableRowDataType[]) => {
+    const action = (data: HTableRowDataType[]): boolean => {
       for (const row of data) {
         if (row[tableProp.rowKey!.value!] === rowKeyValue) {
           row[options.fieldMapFormatted.value.children] = childrenData;
-        } else {
-          if (Array.isArray(row[options.fieldMapFormatted.value.children])) {
-            action(row[options.fieldMapFormatted.value.children]);
-          }
+          return true;
+        }
+
+        if (
+          Array.isArray(row[options.fieldMapFormatted.value.children]) &&
+          action(row[options.fieldMapFormatted.value.children])
+        ) {
+          return true;
         }
       }
+
+      return false;
     };
 
     action(copiedData);

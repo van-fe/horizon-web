@@ -6,14 +6,19 @@ export const useTableExposes = {
    * 在某些情况下，如果数据没有做到动态监听，则可以调用此方法重载数据
    * @param data 如果不传值，则使用 `prop.data` 的值
    * @paramEn data The data value.
-    * @en Controls reload data.
+   * @en Controls reload data.
    */
   reloadData: Function as ExposeType<(data?: HTableTransformedRowDataType[]) => void>,
   /**
    * 在一些未能正确响应表格布局，且需要对表格的布局刷新，可以调用此方法
-    * @en Controls refresh layout.
+   * @en Controls refresh layout.
    */
   refreshLayout: Function as ExposeType<() => void>,
+  /**
+   * 获取表格内部的滚动容器
+   * @en Gets the internal scroll container.
+   */
+  getScrollWrap: Function as ExposeType<() => HTMLElement | null | undefined>,
 };
 
 export const useTableColumnExposes = {
@@ -21,12 +26,12 @@ export const useTableColumnExposes = {
    * 清空已选项
    * @param ignoreSelectable 是否忽略 `selectable`，默认为 `false`
    * @paramEn ignoreSelectable The ignore selectable value.
-    * @en Controls clear selection.
+   * @en Controls clear selection.
    */
   clearSelection: Function as ExposeType<(ignoreSelectable: boolean) => void>,
   /**
    * 获取已选择的行
-    * @en Controls get selection rows.
+   * @en Controls get selection rows.
    */
   getSelectionRows: Function as ExposeType<() => HTableTransformedRowDataType[]>,
   /**
@@ -37,7 +42,7 @@ export const useTableColumnExposes = {
    * @paramEn selected The selected value.
    * @param ignoreSelectable 是否忽略 `selectable`
    * @paramEn ignoreSelectable The ignore selectable value.
-    * @en Controls toggle row selection.
+   * @en Controls toggle row selection.
    */
   toggleRowSelection: Function as ExposeType<
     (

@@ -1,5 +1,5 @@
 <template>
-  <h-switch v-model="checkStrictly" status status-oh-text="check strictly" status-off-text="not check strictly" class="mb-4" />
+  <h-switch v-model="checkStrictly" status status-on-text="check strictly" status-off-text="not check strictly" class="mb-4" />
 
   <h-table :data="data" height="500" row-key="id">
     <h-table-column

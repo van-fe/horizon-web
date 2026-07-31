@@ -1,7 +1,122 @@
-import { computed, shallowRef } from 'vue';
+import { computed, shallowRef, triggerRef } from 'vue';
 import { nanoid } from 'nanoid';
 import type { BaseTreeData, BaseTreeWithLevelData, ExtendTreeData } from './types';
 import get from 'lodash/get';
+
+const pathsCache = new WeakMap<ExtendTreeData, ExtendTreeData[]>();
+const pathCache = new WeakMap<ExtendTreeData, Array<string | number>>();
+const labelsCache = new WeakMap<ExtendTreeData, string[]>();
+const uuidPathCache = new WeakMap<ExtendTreeData, Array<string | number>>();
+const fullPathLabelCache = new WeakMap<ExtendTreeData, string>();
+
+function collectFromSelfToRoot<Data>(
+  node: ExtendTreeData,
+  transform: (current: ExtendTreeData) => Data,
+) {
+  const result: Data[] = [];
+  let current: ExtendTreeData | null = node;
+
+  while (current) {
+    result.push(transform(current));
+    current = current.parent;
+  }
+
+  result.reverse();
+  return result;
+}
+
+const lazyPathDescriptors: PropertyDescriptorMap = {
+  paths: {
+    configurable: true,
+    enumerable: true,
+    get(this: ExtendTreeData) {
+      let result = pathsCache.get(this);
+
+      if (!result) {
+        result = collectFromSelfToRoot(this, node => node);
+        pathsCache.set(this, result);
+      }
+
+      return result;
+    },
+    set(this: ExtendTreeData, value: ExtendTreeData[]) {
+      pathsCache.set(this, value);
+    },
+  },
+  path: {
+    configurable: true,
+    enumerable: true,
+    get(this: ExtendTreeData) {
+      let result = pathCache.get(this);
+
+      if (!result) {
+        result = collectFromSelfToRoot(this, node => node.value);
+        pathCache.set(this, result);
+      }
+
+      return result;
+    },
+    set(this: ExtendTreeData, value: Array<string | number>) {
+      pathCache.set(this, value);
+    },
+  },
+  labels: {
+    configurable: true,
+    enumerable: true,
+    get(this: ExtendTreeData) {
+      let result = labelsCache.get(this);
+
+      if (!result) {
+        result = collectFromSelfToRoot(this, node => node.stringLabel!);
+        labelsCache.set(this, result);
+      }
+
+      return result;
+    },
+    set(this: ExtendTreeData, value: string[]) {
+      labelsCache.set(this, value);
+    },
+  },
+  uuidPath: {
+    configurable: true,
+    enumerable: true,
+    get(this: ExtendTreeData) {
+      // `_uuid` is assigned by `uuidTransform` after the rest of the transformed
+      // node has been created. Avoid caching an incomplete path if the callback
+      // inspects this property.
+      if (this._uuid === undefined) return [];
+
+      let result = uuidPathCache.get(this);
+
+      if (!result) {
+        result = collectFromSelfToRoot(this, node => node._uuid);
+        uuidPathCache.set(this, result);
+      }
+
+      return result;
+    },
+    set(this: ExtendTreeData, value: Array<string | number>) {
+      uuidPathCache.set(this, value);
+    },
+  },
+  fullPathLabel: {
+    configurable: true,
+    enumerable: true,
+    get(this: ExtendTreeData) {
+      let result = fullPathLabelCache.get(this);
+
+      if (result === undefined) {
+        result = collectFromSelfToRoot(this, node => node.stringLabel!).join(' / ');
+        fullPathLabelCache.set(this, result);
+      }
+
+      return result;
+    },
+    set(this: ExtendTreeData, value: string) {
+      fullPathLabelCache.set(this, value);
+    },
+  },
+};
 
 const originalFieldMapping: Record<keyof BaseTreeData, keyof BaseTreeData & string> = {
   label: 'label',
@@ -18,14 +133,22 @@ export default class Tree<T extends BaseTreeData, F extends ExtendTreeData<T>> {
   public originTreeData: T[] = [];
   public flattenTreeData = shallowRef<F[]>([]);
   public transformedTreeData = shallowRef<F[]>([]);
-  public flattenTreeDataMapping = computed(
-    () => new Map<string | number, F>(this.flattenTreeData.value.map(item => [item._uuid, item])),
-  );
+  public flattenTreeDataMapping = computed(() => {
+    const result = new Map<string | number, F>();
+
+    for (const item of this.flattenTreeData.value) {
+      result.set(item._uuid, item);
+    }
+
+    return result;
+  });
 
   public fieldMapping: Partial<Record<keyof F, keyof F & string>> = {
     ...originalFieldMapping,
   } as Partial<Record<keyof F, keyof F & string>>;
   private readonly uuidTransform?: (option: F, instance: this) => string | number;
+  private readonly nodeByUuid = new Map<string | number, F>();
+  private readonly nodeByValue = new Map<string | number, F>();
 
   constructor(
     treeData: T[],
@@ -64,10 +187,12 @@ export default class Tree<T extends BaseTreeData, F extends ExtendTreeData<T>> {
   public initTransformedTreeData() {
     this.flattenTreeData.value = [];
     this.transformedTreeData.value = [];
+    this.nodeByUuid.clear();
+    this.nodeByValue.clear();
   }
 
   public getInfoByValue(value: string | number) {
-    return this.flattenTreeData.value.find(curr => curr.value === value);
+    return this.nodeByValue.get(value);
   }
 
   /**
@@ -81,26 +206,26 @@ export default class Tree<T extends BaseTreeData, F extends ExtendTreeData<T>> {
     checkedNodesUuid: Array<string | number>,
     checkStrictly: boolean,
   ) {
-    if (checkedNodesUuid.some(uuid => uuid === node._uuid)) return true;
+    const checkedUuidSet = new Set(checkedNodesUuid);
+    if (checkedUuidSet.has(node._uuid)) return true;
 
     // judge the parent and child relationship
     if (!checkStrictly) {
-      function recursionAction(curr: F) {
-        if (curr.transformedChildren.length === 0)
-          return checkedNodesUuid.some(uuid => uuid === curr._uuid);
+      const stack = [node];
 
-        let count = 0;
+      while (stack.length > 0) {
+        const current = stack.pop()!;
 
-        for (const item of curr.transformedChildren) {
-          if (recursionAction(item)) {
-            count++;
+        if (current.transformedChildren.length === 0) {
+          if (!checkedUuidSet.has(current._uuid)) return false;
+        } else {
+          for (const child of current.transformedChildren) {
+            stack.push(child);
           }
         }
-
-        return curr.transformedChildren.length === count;
       }
 
-      return recursionAction(node);
+      return true;
     }
 
     return false;
@@ -121,9 +246,11 @@ export default class Tree<T extends BaseTreeData, F extends ExtendTreeData<T>> {
     if (checkedNodesUuid.length === 0) return false;
 
     for (const uuid of checkedNodesUuid) {
-      const curr = this.flattenTreeData.value.find(item => item._uuid === uuid);
-      if (curr?.paths.some(item => item._uuid === node._uuid)) {
-        return true;
+      let current: F | null | undefined = this.nodeByUuid.get(uuid);
+
+      while (current) {
+        if (current._uuid === node._uuid) return true;
+        current = current.parent;
       }
     }
 
@@ -131,124 +258,191 @@ export default class Tree<T extends BaseTreeData, F extends ExtendTreeData<T>> {
   }
 
   private transformTreeData(parent: F | null = null, level = 0) {
-    const action = (options: T[], parent: F | null, level: number) => {
-      const res: F[] = [];
+    interface TransformFrame {
+      options: T[];
+      parent: F | null;
+      level: number;
+      result: F[];
+      position: number;
+      index: number;
+      prev: F | null;
+    }
 
-      let index = 0;
-      let prev: F | null = null;
+    const roots: F[] = [];
+    const stack: TransformFrame[] = [
+      {
+        options: this.originTreeData,
+        parent,
+        level,
+        result: roots,
+        position: 0,
+        index: 0,
+        prev: null,
+      },
+    ];
 
-      for (let i = 0; i < options.length; i++) {
-        const opt = options[i];
-        const path = (parent?.path ?? []).concat(this.getOptionValue(opt, 'value'));
-        const stringLabel =
-          typeof this.getOptionValue(opt, 'label') === 'function'
-            ? (this.getOptionValue(opt, 'stringLabel')! as string)
-            : (this.getOptionValue(opt, 'label') as string);
-        const labels = (parent?.labels ?? []).concat(stringLabel);
+    while (stack.length > 0) {
+      const frame = stack.at(-1)!;
 
-        const children = this.getOptionValue(opt, 'children') as T[];
-
-        const isLeaf =
-          this.getOptionValue(opt, 'isLeaf') ?? (!Array.isArray(children) || children.length === 0);
-
-        const transformOpt = {
-          ...opt,
-          label: this.getOptionValue(opt, 'label'),
-          value: this.getOptionValue(opt, 'value'),
-          disabled: this.getOptionValue(opt, 'disabled'),
-          children: this.getOptionValue(opt, 'children'),
-          groupLabel: this.getOptionValue(opt, 'groupLabel'),
-          originOption: {
-            ...opt,
-            label: this.getOptionValue(opt, 'label'),
-            value: this.getOptionValue(opt, 'value'),
-            disabled: this.getOptionValue(opt, 'disabled'),
-            children: this.getOptionValue(opt, 'children'),
-            groupLabel: this.getOptionValue(opt, 'groupLabel'),
-            isLeaf: this.getOptionValue(opt, 'isLeaf'),
-            stringLabel: this.getOptionValue(opt, 'stringLabel'),
-          },
-          paths: [] as F[],
-          labels,
-          stringLabel,
-          path,
-          uuidPath: [] as string[],
-          parent,
-          level,
-          transformedChildren: [] as F[],
-          isLeaf,
-          isRoot: parent === null,
-          isGroupLabel: !!this.getOptionValue(opt, 'groupLabel'),
-          passingDisabled: parent?.passingDisabled || this.getOptionValue(opt, 'disabled') || false,
-          index,
-          _index: index,
-          __context: {
-            prev,
-            next: null,
-          },
-        } as unknown as F;
-
-        transformOpt._uuid = this.uuidTransform ? this.uuidTransform(transformOpt, this) : nanoid();
-        transformOpt.uuidPath = (parent?.uuidPath ?? []).concat(transformOpt._uuid);
-        transformOpt.paths = [...(parent?.paths || []), transformOpt];
-        transformOpt.fullPathLabel = transformOpt.paths.map(node => node.stringLabel!).join(' / ');
-
-        this.flattenTreeData.value.push(transformOpt);
-
-        if (children && Array.isArray(children)) {
-          transformOpt.transformedChildren = action(children, transformOpt, level + 1);
-        }
-
-        index > 0 && (res.at(-1)!.__context.next = transformOpt);
-
-        res.push(transformOpt);
-
-        prev = transformOpt;
-
-        if (!transformOpt.isGroupLabel) {
-          index++;
-        }
+      if (frame.position >= frame.options.length) {
+        stack.pop();
+        continue;
       }
 
-      return res;
-    };
+      const opt = frame.options[frame.position++];
+      const label = this.getOptionValue(opt, 'label');
+      const value = this.getOptionValue(opt, 'value');
+      const disabled = this.getOptionValue(opt, 'disabled');
+      const children = this.getOptionValue(opt, 'children') as T[] | undefined;
+      const groupLabel = this.getOptionValue(opt, 'groupLabel');
+      const optionIsLeaf = this.getOptionValue(opt, 'isLeaf');
+      const optionStringLabel = this.getOptionValue(opt, 'stringLabel');
+      const stringLabel =
+        typeof label === 'function' ? (optionStringLabel! as string) : (label as string);
+      const isLeaf = optionIsLeaf ?? (!Array.isArray(children) || children.length === 0);
 
-    this.transformedTreeData.value = action(this.originTreeData, parent, level);
+      const transformOpt = {
+        ...opt,
+        label,
+        value,
+        disabled,
+        children,
+        groupLabel,
+        originOption: {
+          ...opt,
+          label,
+          value,
+          disabled,
+          children,
+          groupLabel,
+          isLeaf: optionIsLeaf,
+          stringLabel: optionStringLabel,
+        },
+        parent: frame.parent,
+        level: frame.level,
+        transformedChildren: [] as F[],
+        stringLabel,
+        isLeaf,
+        isRoot: frame.parent === null,
+        isGroupLabel: !!groupLabel,
+        passingDisabled: frame.parent?.passingDisabled || disabled || false,
+        index: frame.index,
+        _index: frame.index,
+        __context: {
+          prev: frame.prev,
+          next: null,
+        },
+      } as unknown as F;
+
+      Object.defineProperties(transformOpt, lazyPathDescriptors);
+
+      transformOpt._uuid = this.uuidTransform ? this.uuidTransform(transformOpt, this) : nanoid();
+      this.flattenTreeData.value.push(transformOpt);
+
+      if (!this.nodeByUuid.has(transformOpt._uuid)) {
+        this.nodeByUuid.set(transformOpt._uuid, transformOpt);
+      }
+      if (!this.nodeByValue.has(transformOpt.value)) {
+        this.nodeByValue.set(transformOpt.value, transformOpt);
+      }
+
+      if (frame.index > 0) {
+        frame.result.at(-1)!.__context.next = transformOpt;
+      }
+
+      frame.result.push(transformOpt);
+      frame.prev = transformOpt;
+
+      if (!transformOpt.isGroupLabel) {
+        frame.index++;
+      }
+
+      if (Array.isArray(children) && children.length > 0) {
+        stack.push({
+          options: children,
+          parent: transformOpt,
+          level: frame.level + 1,
+          result: transformOpt.transformedChildren,
+          position: 0,
+          index: 0,
+          prev: null,
+        });
+      }
+    }
+
+    this.transformedTreeData.value = roots;
+
+    // A custom uuid transform may read the computed mapping while construction
+    // is in progress. The array is intentionally mutated in place, so explicitly
+    // invalidate shallow-ref dependants once the complete tree is available.
+    triggerRef(this.flattenTreeData);
+  }
+
+  public getAncestors(node: F, includeSelf = true) {
+    const result: F[] = [];
+    let current: F | null = includeSelf ? node : node.parent;
+
+    while (current) {
+      result.push(current);
+      current = current.parent;
+    }
+
+    result.reverse();
+    return result;
+  }
+
+  public isDescendantOf(node: F, ancestor: F, includeSelf = true) {
+    let current: F | null = includeSelf ? node : node.parent;
+
+    while (current) {
+      if (current === ancestor) return true;
+      current = current.parent;
+    }
+
+    return false;
   }
 
   public getBaseTreeDataWithLevel(treeRoot: ExtendTreeData): BaseTreeWithLevelData {
     const childrenKey = this.fieldMapping.children as string;
+    const createNode = (node: ExtendTreeData) =>
+      ({
+        ...node.originOption,
+        level: node.level,
+        [childrenKey]: [] as BaseTreeWithLevelData[],
+      }) as BaseTreeWithLevelData;
+    const root = createNode(treeRoot);
+    const stack = [{ source: treeRoot, target: root }];
 
-    const res = {
-      ...treeRoot.originOption,
-      level: treeRoot.level,
-      [childrenKey]: [] as BaseTreeWithLevelData[],
-    };
+    while (stack.length > 0) {
+      const { source, target } = stack.pop()!;
+      const targetChildren = target[childrenKey] as BaseTreeWithLevelData[];
 
-    for (const node of this.getOptionValue(treeRoot, 'transformedChildren') ?? []) {
-      (res[childrenKey as keyof typeof res]! as BaseTreeWithLevelData[]).push(
-        this.getBaseTreeDataWithLevel(node),
-      );
+      for (const child of source.transformedChildren) {
+        const transformedChild = createNode(child);
+        targetChildren.push(transformedChild);
+        stack.push({ source: child, target: transformedChild });
+      }
     }
 
-    return res;
+    return root;
   }
 
-  public getBaseTreeTargetByValue<T extends BaseTreeData>(
-    treeRoots: T[] | undefined,
+  public getBaseTreeTargetByValue<Data extends BaseTreeData>(
+    treeRoots: Data[] | undefined,
     value: string | number,
-  ): false | T {
-    if (Array.isArray(treeRoots)) {
-      for (const node of treeRoots) {
-        if (this.getOptionValue(node, 'value') === value) return node;
+  ): false | Data {
+    if (!Array.isArray(treeRoots)) return false;
 
-        const res = this.getBaseTreeTargetByValue<T>(
-          this.getOptionValue(node, 'children') as T[] | undefined,
-          value,
-        );
+    const stack = treeRoots.slice().reverse();
 
-        if (res) {
-          return res;
+    while (stack.length > 0) {
+      const node = stack.pop()!;
+      if (this.getOptionValue(node, 'value') === value) return node;
+
+      const children = this.getOptionValue(node, 'children') as Data[] | undefined;
+      if (Array.isArray(children)) {
+        for (let i = children.length - 1; i >= 0; i--) {
+          stack.push(children[i]);
         }
       }
     }
@@ -256,35 +450,55 @@ export default class Tree<T extends BaseTreeData, F extends ExtendTreeData<T>> {
     return false;
   }
 
-  public setBaseTreeTargetByValue<T extends BaseTreeData>(
-    treeRoots: T[] | undefined,
+  public setBaseTreeTargetByValue<Data extends BaseTreeData>(
+    treeRoots: Data[] | undefined,
     value: string | number,
-    data: Partial<T>,
+    data: Partial<Data>,
   ) {
-    if (Array.isArray(treeRoots)) {
-      for (const node of treeRoots) {
-        if (this.getOptionValue(node, 'value') === value) {
-          Object.assign(node, data);
-        }
+    if (!Array.isArray(treeRoots)) return;
 
-        this.setBaseTreeTargetByValue(this.getOptionValue(node, 'children'), value, data);
+    const stack = treeRoots.slice().reverse();
+
+    while (stack.length > 0) {
+      const node = stack.pop()!;
+
+      if (this.getOptionValue(node, 'value') === value) {
+        Object.assign(node, data);
+      }
+
+      const children = this.getOptionValue(node, 'children') as Data[] | undefined;
+      if (Array.isArray(children)) {
+        for (let i = children.length - 1; i >= 0; i--) {
+          stack.push(children[i]);
+        }
       }
     }
   }
 
-  public deleteNodeByValue<T extends BaseTreeData>(
-    treeRoots: T[] | undefined,
+  public deleteNodeByValue<Data extends BaseTreeData>(
+    treeRoots: Data[] | undefined,
     value: string | number,
-  ): T[] {
-    if (Array.isArray(treeRoots)) {
-      for (let i = 0; i < treeRoots.length; i++) {
-        if (this.getOptionValue(treeRoots[i], 'value') === value) {
-          return treeRoots.splice(i, 1);
-        }
+  ): Data[] {
+    if (!Array.isArray(treeRoots)) return [];
 
-        const res = this.deleteNodeByValue(this.getOptionValue(treeRoots[i], 'children'), value);
-        if (res.length) {
-          return res as T[];
+    const stack: Array<{ siblings: Data[]; index: number }> = [];
+
+    for (let i = treeRoots.length - 1; i >= 0; i--) {
+      stack.push({ siblings: treeRoots, index: i });
+    }
+
+    while (stack.length > 0) {
+      const { siblings, index } = stack.pop()!;
+      const node = siblings[index];
+
+      if (this.getOptionValue(node, 'value') === value) {
+        return siblings.splice(index, 1);
+      }
+
+      const children = this.getOptionValue(node, 'children') as Data[] | undefined;
+      if (Array.isArray(children)) {
+        for (let i = children.length - 1; i >= 0; i--) {
+          stack.push({ siblings: children, index: i });
         }
       }
     }

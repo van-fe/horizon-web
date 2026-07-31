@@ -1,5 +1,5 @@
 import type { Ref, SetupContext } from 'vue';
-import { nextTick, ref, computed } from 'vue';
+import { nextTick, onMounted, ref } from 'vue';
 import type { HTableFixedValue, HTableInsertedColumnData } from '../utils/types';
 import type { TableColumnProps } from '../composables/useProps';
 import type { HTreeData, HTreeNodeDataWithLevel } from '~/components/Tree/src/utils/types';
@@ -23,45 +23,32 @@ export default function useColumnManager(options: {
     columnUuid: string,
     checkStore?: Map<string, HTableFixedValue>,
   ) => HTableFixedValue;
-  resetFixedState: () => void;
   visibleStore: Ref<Map<string, boolean>>;
   getVisibleState: (columnUuid: string, checkStore?: Map<string, boolean>) => boolean;
-  resetVisibleState: () => void;
 }) {
   const classHelper = new ComponentClassBlock('table');
+  const pickerClassHelper = new ComponentClassBlock('picker');
 
-  const treeSelectDomRef = ref<HorizonWebComponentInstance<typeof HTreeSelect, TreeSelectExposes>>();
+  const treeSelectDomRef =
+    ref<HorizonWebComponentInstance<typeof HTreeSelect, TreeSelectExposes>>();
 
   const visibleColumnsTemp = ref<string[]>([]);
   const fixedStoreTemp = ref(new Map<string, HTableFixedValue>());
+  const treeDataTemp = ref<HTreeData[]>([]);
 
-  const treeData = computed(() => gatherTreeData(options.columns.value));
+  let initialTreeData: HTreeData[] = [];
+  let initialFixedStore = new Map<string, HTableFixedValue>();
+  let initialVisibleStore = new Map<string, boolean>();
+  let initialColumnUuids = new Set<string>();
 
   function sortColumnsMethod(a: HTreeData, b: HTreeData) {
-    switch (options.getFixedState(a.value as string)) {
-      case 'left':
-        switch (options.getFixedState(b.value as string)) {
-          case 'left':
-            return 1;
-          case 'hover':
-          case 'right':
-          default:
-            return -1;
-        }
-      case 'right':
-      case 'hover':
-        return 1;
-      default:
-        switch (options.getFixedState(b.value as string)) {
-          case 'left':
-            return 1;
-          default:
-            return 0;
-          case 'hover':
-          case 'right':
-            return -1;
-        }
-    }
+    const getRank = (state: HTableFixedValue) =>
+      state === 'left' ? 0 : state === 'right' || state === 'hover' ? 2 : 1;
+
+    return (
+      getRank(options.getFixedState(a.value as string)) -
+      getRank(options.getFixedState(b.value as string))
+    );
   }
 
   function gatherTreeData(tree: HTableInsertedColumnData[]) {
@@ -87,18 +74,64 @@ export default function useColumnManager(options: {
     return res.toSorted(sortColumnsMethod);
   }
 
+  function cloneTreeData(tree: HTreeData[]): HTreeData[] {
+    return tree.map(item => ({
+      ...item,
+      children: Array.isArray(item.children) ? cloneTreeData(item.children as HTreeData[]) : [],
+    }));
+  }
+
+  function collectTreeUuids(tree: HTreeData[], target = new Set<string>()) {
+    tree.forEach(item => {
+      target.add(item.value as string);
+
+      if (Array.isArray(item.children)) {
+        collectTreeUuids(item.children as HTreeData[], target);
+      }
+    });
+
+    return target;
+  }
+
+  function isSameUuidSet(a: Set<string>, b: Set<string>) {
+    return a.size === b.size && [...a].every(uuid => b.has(uuid));
+  }
+
+  function captureInitialState(treeData = gatherTreeData(options.columns.value)) {
+    if (treeData.length === 0) {
+      return;
+    }
+
+    initialTreeData = cloneTreeData(treeData);
+    initialFixedStore = new Map(options.fixedStore.value);
+    initialVisibleStore = new Map(options.visibleStore.value);
+    initialColumnUuids = collectTreeUuids(treeData);
+  }
+
+  function ensureInitialState(currentTreeData: HTreeData[]) {
+    const currentColumnUuids = collectTreeUuids(currentTreeData);
+
+    if (initialTreeData.length === 0 || !isSameUuidSet(initialColumnUuids, currentColumnUuids)) {
+      captureInitialState(currentTreeData);
+    }
+  }
+
+  function getVisibleColumns(store: Map<string, boolean>) {
+    return [...store].filter(([, visible]) => visible).map(([uuid]) => uuid);
+  }
+
   function handleVisibleChange(visible: boolean) {
     if (visible) {
+      const currentTreeData = gatherTreeData(options.columns.value);
+      ensureInitialState(currentTreeData);
+
       fixedStoreTemp.value = new Map(options.fixedStore.value);
+      visibleColumnsTemp.value = getVisibleColumns(options.visibleStore.value);
+      treeDataTemp.value = cloneTreeData(currentTreeData);
 
-      visibleColumnsTemp.value = [];
-      options.visibleStore.value.forEach((visible, uuid) => {
-        if (visible) {
-          visibleColumnsTemp.value.push(uuid);
-        }
+      void nextTick(() => {
+        treeSelectDomRef.value?.setAllCollapseStatus(true);
       });
-
-      treeSelectDomRef.value?.setAllCollapseStatus(true);
     }
   }
 
@@ -114,27 +147,65 @@ export default function useColumnManager(options: {
   }
 
   function onReset() {
-    options.resetFixedState();
-    options.resetVisibleState();
+    ensureInitialState(gatherTreeData(options.columns.value));
+
+    fixedStoreTemp.value = new Map(initialFixedStore);
+    visibleColumnsTemp.value = getVisibleColumns(initialVisibleStore);
+    treeDataTemp.value = cloneTreeData(initialTreeData);
+
+    void nextTick(() => {
+      treeSelectDomRef.value?.setAllCollapseStatus(true);
+    });
+  }
+
+  function reorderColumns(target: HTableInsertedColumnData[], orderedData: HTreeData[]) {
+    const reorder = (target: HTableInsertedColumnData[], orderedData: HTreeData[]) => {
+      const columnsByUuid = new Map(target.map(column => [column.uuid, column]));
+      const nextColumns = orderedData
+        .map(item => columnsByUuid.get(item.value as string))
+        .filter((column): column is HTableInsertedColumnData => !!column);
+
+      if (nextColumns.length !== target.length) {
+        return;
+      }
+
+      target.splice(0, target.length, ...nextColumns);
+
+      orderedData.forEach(item => {
+        const column = columnsByUuid.get(item.value as string);
+
+        if (column && Array.isArray(item.children)) {
+          reorder(column.children, item.children as HTreeData[]);
+        }
+      });
+    };
+
+    reorder(target, orderedData);
   }
 
   function onConfirm() {
     void nextTick(() => {
+      reorderColumns(options.columns.value, treeDataTemp.value);
       options.fixedStore.value = new Map(fixedStoreTemp.value);
 
-      new Set(options.visibleStore.value.keys())
-        .difference(new Set(visibleColumnsTemp.value))
-        .forEach(hiddenColumn => {
-          options.visibleStore.value.set(hiddenColumn, false);
-        });
-
-      visibleColumnsTemp.value.forEach(uuid => {
-        options.visibleStore.value.set(uuid, true);
+      const visibleColumns = new Set(visibleColumnsTemp.value);
+      const nextVisibleStore = new Map(options.visibleStore.value);
+      nextVisibleStore.forEach((_, columnUuid) => {
+        nextVisibleStore.set(columnUuid, visibleColumns.has(columnUuid));
       });
+      options.visibleStore.value = nextVisibleStore;
     });
   }
 
-  function handleUpdateTreeData() {}
+  function handleUpdateTreeData(data: HTreeData[]) {
+    treeDataTemp.value = cloneTreeData(data);
+  }
+
+  onMounted(() => {
+    void nextTick(() => {
+      captureInitialState();
+    });
+  });
 
   return () => (
     <HTreeSelect
@@ -142,7 +213,7 @@ export default function useColumnManager(options: {
       v-model={visibleColumnsTemp.value}
       class={cls(classHelper.e('column-manager'))}
       popperClassName={classHelper.em('column-manager', 'popper')}
-      treeData={treeData.value}
+      treeData={treeDataTemp.value}
       checkStrictly={true}
       multiple
       draggable
@@ -154,14 +225,16 @@ export default function useColumnManager(options: {
       filterToHideChildren={false}
       needConfirm
       isDefaultExpandAll={true}
-      cancelButtonText={useLocaleLang('table.resetFilter').value as string}
       onConfirm={onConfirm}
-      onCancel={onReset}
       onVisibleChange={handleVisibleChange}
       onUpdate:treeData={handleUpdateTreeData}
     >
       {{
-        default: ({ visible }: NonNullable<Parameters<NonNullable<SetupContext<{}, TreeSelectSlots>['slots']['default']>>[0]>) => (
+        default: ({
+          visible,
+        }: NonNullable<
+          Parameters<NonNullable<SetupContext<{}, TreeSelectSlots>['slots']['default']>>[0]
+        >) => (
           <HButton
             icon={IconSetting}
             iconSize={16}
@@ -170,6 +243,19 @@ export default function useColumnManager(options: {
             text
             class={classHelper.is('hover', visible.value)}
           />
+        ),
+        confirmRender: ({ confirmHandle }: { confirmHandle: () => void }) => (
+          <div class={pickerClassHelper.em('pop-content', 'confirm-wrapper')}>
+            <i />
+            <div class={pickerClassHelper.em('pop-content', 'confirm-wrapper-buttons')}>
+              <HButton size="small" plain type="normal" onClick={onReset}>
+                {useLocaleLang('table.resetFilter').value}
+              </HButton>
+              <HButton size="small" onClick={confirmHandle}>
+                {useLocaleLang('table.confirmFilter').value}
+              </HButton>
+            </div>
+          </div>
         ),
         treeNodeRender: (value: { data: HTreeNodeDataWithLevel }) => (
           <div class={cls(classHelper.em('column-manager', 'item'))}>
@@ -205,7 +291,9 @@ export default function useColumnManager(options: {
                 ) : (
                   <HDropdown toBody={false}>
                     {{
-                      default: ({ popperVisible }: Parameters<SetupContext<{}, DropdownSlots>['slots']['default']>[0]) => (
+                      default: ({
+                        popperVisible,
+                      }: Parameters<SetupContext<{}, DropdownSlots>['slots']['default']>[0]) => (
                         <HButton
                           size="small"
                           type="normal"

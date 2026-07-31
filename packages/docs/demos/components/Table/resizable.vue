@@ -3,7 +3,7 @@
     v-model="showHeaderDivider"
     class="mb-2"
     status
-    status-oh-text="Shown Header Divider"
+    status-on-text="Shown Header Divider"
     status-off-text="Hidden Header Divider"
   />
 
@@ -11,9 +11,9 @@
     <h-table-column title="Seq" type="index" :fixed="true" :resizable="false" />
     <h-table-column title="Name" field="name" fixed resizable />
     <h-table-column title="Birthday" field="birthday" width="200px" resizable show-overflow-tooltip />
-    <h-table-column title="Address" field="address" mih-width="500px" resizable />
+    <h-table-column title="Address" field="address" min-width="500px" resizable />
     <h-table-column title="Message" field="message" show-overflow-tooltip width="800px" />
-    <h-table-column title="Operations" fixed="right" mih-width="120px" align="center" header-align="center" resizable>
+    <h-table-column title="Operations" fixed="right" min-width="120px" align="center" header-align="center" resizable>
       <template #default="scope">
         <h-button link size="small" @click="view(scope.row)">View</h-button>
         <h-button link size="small" @click="edit(scope.row)">Edit</h-button>

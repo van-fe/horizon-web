@@ -1,7 +1,7 @@
 <template>
   <h-table :data="data" max-height="300">
     <h-table-column title="Name" field="name" fixed />
-    <h-table-column title="Birthday" field="birthday" mih-width="150" align="center" />
+    <h-table-column title="Birthday" field="birthday" min-width="150" align="center" />
     <h-table-column title="Address" field="address" fixed>
       <h-table-column title="Country" field="address[0]" :show-overflow-tooltip="true" width="120px" />
       <h-table-column title="State" field="address[1]" :show-overflow-tooltip="true" width="120px" />

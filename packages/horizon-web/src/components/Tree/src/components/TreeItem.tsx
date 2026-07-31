@@ -118,7 +118,8 @@ export default defineComponent({
       () =>
         isDragging.value &&
         dragToNodeUuid.value?.toString?.() === valueProp.value._uuid.toString() &&
-        dragFromNode.value?._uuid.toString() !== valueProp.value._uuid.toString(),
+        !!dragFromNode.value &&
+        !valueProp.value.uuidPath.includes(dragFromNode.value._uuid),
     );
     //  &&
     //         (parentProps.dragToDifferentParent

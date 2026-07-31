@@ -1,6 +1,10 @@
-import type { SetupContext } from 'vue';
+import type { Ref, SetupContext } from 'vue';
 import { computed, watch, provide, ref } from 'vue';
-import type { HTableColumnData, HTableTransformedRowDataType } from '../utils/types';
+import type {
+  HTableColumnData,
+  HTableSortType,
+  HTableTransformedRowDataType,
+} from '../utils/types';
 import { HTableSortOrderEnum } from '../utils/types';
 import type { TableEmits } from '../composables/useEmits';
 import {
@@ -11,7 +15,14 @@ import {
 import get from 'lodash/get';
 import { warn } from '~/utils/useLog';
 
-export default function useSortable(emit: SetupContext<TableEmits>['emit']) {
+export default function useSortable(
+  emit: SetupContext<TableEmits>['emit'],
+  columns: Ref<{
+    columnGroups: HTableColumnData[][];
+    flattenColumns: HTableColumnData[];
+  }>,
+  defaultSort: Ref<HTableSortType[]>,
+) {
   const currentSorts = ref(new Map<HTableColumnData, HTableSortOrderEnum>());
 
   const currentSortsArr = computed(() => Array.from(currentSorts.value.entries()));
@@ -44,6 +55,54 @@ export default function useSortable(emit: SetupContext<TableEmits>['emit']) {
     },
   );
 
+  watch(
+    () => columns.value.flattenColumns,
+    val => {
+      const previousSorts = new Map(
+        Array.from(currentSorts.value.entries()).map(([column, order]) => [column.uuid, order]),
+      );
+      const nextSorts = new Map<HTableColumnData, HTableSortOrderEnum>();
+
+      val.forEach(column => {
+        const order = previousSorts.get(column.uuid);
+        if (order) {
+          nextSorts.set(column, order);
+        }
+      });
+
+      currentSorts.value = nextSorts;
+    },
+  );
+
+  watch(
+    [() => columns.value.flattenColumns, defaultSort],
+    ([availableColumns, defaults]) => {
+      if (availableColumns.length === 0) {
+        return;
+      }
+
+      const nextSorts = new Map<HTableColumnData, HTableSortOrderEnum>();
+
+      defaults.forEach(sort => {
+        const column = availableColumns.find(
+          current => current.props.field === sort.prop || current.props.columnKey === sort.prop,
+        );
+
+        if (column) {
+          nextSorts.set(column, sort.order);
+        }
+      });
+
+      if (defaults.length > 0) {
+        currentSorts.value = nextSorts;
+      }
+    },
+    {
+      immediate: true,
+      deep: true,
+    },
+  );
+
   function setColumnSort(column: HTableColumnData, sortOrder?: HTableSortOrderEnum) {
     if (sortOrder) {
       if (currentSorts.value.get(column) === sortOrder) {
@@ -54,16 +113,15 @@ export default function useSortable(emit: SetupContext<TableEmits>['emit']) {
       return;
     }
 
-    switch (currentSorts.value.get(column)) {
-      default:
-        currentSorts.value.set(column, HTableSortOrderEnum.ASC);
-        break;
-      case HTableSortOrderEnum.ASC:
-        currentSorts.value.set(column, HTableSortOrderEnum.DESC);
-        break;
-      case HTableSortOrderEnum.DESC:
-        currentSorts.value.delete(column);
-        break;
+    const sortOrders = column.props.sortOrders;
+    const currentOrder = currentSorts.value.get(column) ?? null;
+    const currentIndex = sortOrders.indexOf(currentOrder);
+    const nextOrder = sortOrders[(currentIndex + 1) % sortOrders.length];
+
+    if (nextOrder) {
+      currentSorts.value.set(column, nextOrder);
+    } else {
+      currentSorts.value.delete(column);
     }
   }
 
@@ -91,10 +149,15 @@ export default function useSortable(emit: SetupContext<TableEmits>['emit']) {
   function sortRow(a: HTableTransformedRowDataType, b: HTableTransformedRowDataType) {
     for (const [column, order] of currentSorts.value) {
       let sortRes: number;
-      if (!column.props.useBuiltInSort) {
+      if (!column.props.useBuiltInSort || column.props.sortable === 'custom') {
         continue;
       } else if (column.props.sortMethod) {
         sortRes = column.props.sortMethod(order)(a, b);
+      } else if (column.props.sortBy) {
+        sortRes = column.props.sortBy(a, b);
+        if (order === HTableSortOrderEnum.DESC) {
+          sortRes *= -1;
+        }
       } else {
         const field = column.props.field;
 
@@ -103,11 +166,16 @@ export default function useSortable(emit: SetupContext<TableEmits>['emit']) {
           continue;
         }
 
-        if (order === HTableSortOrderEnum.ASC) {
-          sortRes = get(a, field)?.toString().localeCompare(get(b, field));
-        } else {
-          sortRes = get(b, field)?.toString().localeCompare(get(a, field));
-        }
+        const aValue = get(a, field);
+        const bValue = get(b, field);
+        const baseResult =
+          typeof aValue === 'number' && typeof bValue === 'number'
+            ? aValue - bValue
+            : String(aValue ?? '').localeCompare(String(bValue ?? ''), undefined, {
+                numeric: true,
+              });
+
+        sortRes = order === HTableSortOrderEnum.ASC ? baseResult : -baseResult;
       }
 
       if (sortRes !== 0) {

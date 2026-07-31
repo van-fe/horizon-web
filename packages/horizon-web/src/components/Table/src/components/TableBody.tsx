@@ -11,6 +11,7 @@ import {
 import {
   HTableEmitsInjectKey,
   HTableFlattenDataInjectKey,
+  HTableFieldMapFormattedInjectKey,
   HTableGetColumnFixedStateInjectKey,
   HTablePropsInjectKey,
   HTableSortRowInjectKey,
@@ -21,16 +22,21 @@ import { getBodyStyle, getFixedStyle, isLastFixedColumn } from '../hooks/useLayo
 import HCheckbox from '~/components/Checkbox/src/Checkbox';
 import HRadio from '~/components/Radio/src/Radio';
 import { warn } from '~/utils/useLog';
-import type { HTableColumnData, HTableTransformedRowDataType } from '../utils/types';
+import type {
+  HTableColumnData,
+  HTableRowKeyType,
+  HTableTransformedRowDataType,
+} from '../utils/types';
 import {
   HTableColumnContextKey,
   HTableColumnSelectionKey,
   HTableTransformedRowContextKey,
 } from '../utils/types';
-import { IconLoadingLine, IconTriangleRightFilled } from '@aurora/icon';
+import { IconDragForm, IconLoadingLine, IconTriangleRightFilled } from '@aurora/icon';
 import useExpand from '../hooks/useExpand';
 import useTree from '../hooks/useTree';
 import useSpan from '../hooks/useSpan';
+import useRowDraggable from '../hooks/useRowDraggable';
 import type { JSX } from 'vue/jsx-runtime';
 
 export default defineComponent({
@@ -47,10 +53,11 @@ export default defineComponent({
     const parentProps = inject(HTablePropsInjectKey)!;
     const parentEmits = inject(HTableEmitsInjectKey)!;
     const flattenTableData = inject(HTableFlattenDataInjectKey)!;
+    const fieldMapFormatted = inject(HTableFieldMapFormattedInjectKey)!;
     const sortRow = inject(HTableSortRowInjectKey)!;
     const getFixedState = inject(HTableGetColumnFixedStateInjectKey)!;
 
-    const { expandRows, toggleExpandRows } = useExpand(flattenTableData.value);
+    const { isExpanded, toggleExpandRows } = useExpand(flattenTableData, parentProps, parentEmits);
     const {
       treeExpandRows,
       syncLoadingRows,
@@ -58,10 +65,16 @@ export default defineComponent({
       expandAll,
       toggleTreeExpandRows,
       isRowCanBeExpand,
+      isTreeRowVisible,
       shouldSelectionBeVisible,
-    } = useTree(parentProps, flattenTableData.value);
+    } = useTree(parentProps, flattenTableData);
 
     const { spanMethod } = useSpan(parentProps);
+    const { getDragHandleProps, getRowDraggableClass, getRowDraggableEvents } = useRowDraggable(
+      parentProps,
+      parentEmits,
+      fieldMapFormatted,
+    );
 
     onMounted(() => {
       if (parentProps.defaultExpandAll) {
@@ -69,7 +82,70 @@ export default defineComponent({
       }
     });
 
+    const sortRows = (rows: HTableTransformedRowDataType[]) => {
+      if (!isTreeData.value) {
+        return rows.toSorted(sortRow);
+      }
+
+      const rowsByParent = new Map<HTableRowKeyType | null, HTableTransformedRowDataType[]>();
+      const result: HTableTransformedRowDataType[] = [];
+
+      rows.forEach(row => {
+        const parentUuid = row[HTableTransformedRowContextKey].parentUuid;
+        const siblings = rowsByParent.get(parentUuid) ?? [];
+        siblings.push(row);
+        rowsByParent.set(parentUuid, siblings);
+      });
+
+      const appendRows = (parentUuid: HTableRowKeyType | null) => {
+        rowsByParent
+          .get(parentUuid)
+          ?.toSorted(sortRow)
+          .forEach(row => {
+            result.push(row);
+            appendRows(row[HTableTransformedRowContextKey].uuid);
+          });
+      };
+
+      appendRows(null);
+      return result;
+    };
+
     return () => {
+      const handleSelection = (
+        rowData: HTableTransformedRowDataType,
+        column: HTableColumnData,
+        rowIndex: number,
+      ) => {
+        const columnKey = column.props.columnKey;
+
+        if (columnKey && !column[HTableColumnSelectionKey].checkedRows.has(rowData[columnKey])) {
+          const exclusionFields = new Set(column.props.exclusionFields ?? []);
+
+          props.columns.forEach(otherColumn => {
+            const otherColumnKey = otherColumn.props.columnKey;
+            const otherField = otherColumn.props.field ?? otherColumnKey;
+
+            if (
+              otherColumn.uuid !== column.uuid &&
+              otherColumn.props.type === 'selection' &&
+              otherColumnKey &&
+              otherField &&
+              exclusionFields.has(otherField) &&
+              otherColumn[HTableColumnSelectionKey].checkedRows.has(rowData[otherColumnKey])
+            ) {
+              otherColumn[HTableColumnSelectionKey].toggleRowSelection(
+                rowData[otherColumnKey],
+                false,
+                true,
+              );
+            }
+          });
+        }
+
+        column[HTableColumnSelectionKey].handleSelect(rowData, rowIndex);
+      };
+
       const rowRender = (
         rowData: HTableTransformedRowDataType,
         column: HTableColumnData,
@@ -110,7 +186,10 @@ export default defineComponent({
                   classHelper.e('selection'),
                   classHelper.is('hidden', !shouldSelectionBeVisible(rowData, column)),
                 )}
-                onClick={() => column[HTableColumnSelectionKey].handleSelect(rowData, rowIndex)}
+                onClick={evt => {
+                  evt.stopPropagation();
+                  handleSelection(rowData, column, rowIndex);
+                }}
               >
                 {column.props.multiple ? (
                   <HCheckbox
@@ -128,6 +207,22 @@ export default defineComponent({
               </span>,
             );
             break;
+          case 'drag': {
+            const dragHandleProps = getDragHandleProps(rowData);
+
+            cellContent.push(
+              <div
+                class={classHelper.e('drag-handle')}
+                draggable={dragHandleProps.draggable}
+                onDragstart={dragHandleProps.onDragstart}
+                onDragend={dragHandleProps.onDragend}
+                onClick={evt => evt.stopPropagation()}
+              >
+                <IconDragForm size={16} />
+              </div>,
+            );
+            break;
+          }
         }
 
         if (column.props.type === 'expand') {
@@ -135,9 +230,12 @@ export default defineComponent({
             <div
               class={cls(
                 classHelper.e('expand-icon'),
-                classHelper.is('active', expandRows.value.get(rowData) ?? false),
+                classHelper.is('active', isExpanded(rowData)),
               )}
-              onClick={() => toggleExpandRows(rowData)}
+              onClick={evt => {
+                evt.stopPropagation();
+                toggleExpandRows(rowData);
+              }}
             >
               <IconTriangleRightFilled size={16} />
             </div>,
@@ -175,7 +273,10 @@ export default defineComponent({
                   ),
                 )}
                 style={{ marginLeft: `${marginLeft}px` }}
-                onClick={() => toggleTreeExpandRows(rowData)}
+                onClick={evt => {
+                  evt.stopPropagation();
+                  void toggleTreeExpandRows(rowData);
+                }}
               >
                 <IconTriangleRightFilled size={16} />
               </div>,
@@ -193,16 +294,23 @@ export default defineComponent({
           }
         }
 
-        if (column.props.field || column.slots.default) {
+        if (column.slots.default) {
           cellContent.push(
-            column.slots.default?.({
+            column.slots.default({
               column,
               columnIndex: column.index,
               rowIndex,
               row: rowData,
               fixed: getFixedState(column.uuid),
-            }) ??
-              (column.props.field && get(rowData, column.props.field)),
+            }),
+          );
+        } else if (column.props.field) {
+          const cellValue = get(rowData, column.props.field);
+
+          cellContent.push(
+            column.props.formatter
+              ? column.props.formatter(rowData, column, cellValue, rowIndex)
+              : cellValue,
           );
         }
 
@@ -216,7 +324,12 @@ export default defineComponent({
             {inner.length > 0 &&
               (column.props.showOverflowTooltip &&
               ['default', 'index'].includes(column.props.type) ? (
-                <HTooltip overflow {...(column.props.tooltipOptions || {})}>
+                <HTooltip
+                  overflow
+                  theme={parentProps.tooltipTheme}
+                  {...(parentProps.tooltipOptions || {})}
+                  {...(column.props.tooltipOptions || {})}
+                >
                   {{
                     default: () => <div class={classHelper.e('cell-inner')}>{inner}</div>,
                     content: () => inner,
@@ -244,15 +357,16 @@ export default defineComponent({
                 'last-row-span-cell',
                 spanStatus.rowSpan > 1 && spanStatus.rowSpan > filteredRows.length - rowIndex - 1,
               ),
+              column.props.className,
               isFunction(parentProps.cellClassName)
-                ? parentProps.cellClassName(rowData)
+                ? parentProps.cellClassName(rowData, column, rowIndex, column.index)
                 : parentProps.cellClassName,
             )}
             style={[
               getFixedStyle(column, getFixedState),
               getBodyStyle(column),
               isFunction(parentProps.cellStyle)
-                ? parentProps.cellStyle(rowData)
+                ? parentProps.cellStyle(rowData, column, rowIndex, column.index)
                 : (parentProps.cellStyle ?? ''),
             ]}
             {...spanStatus}
@@ -305,8 +419,7 @@ export default defineComponent({
             <div
               class={classHelper.e('cell-wrap')}
               style={
-                column.props.showOverflowTooltip &&
-                column[HTableColumnContextKey].resizeWidth <= 0
+                column.props.showOverflowTooltip && column[HTableColumnContextKey].resizeWidth <= 0
                   ? column[HTableColumnContextKey].overflowStyle
                   : ''
               }
@@ -356,68 +469,85 @@ export default defineComponent({
         }
       };
 
-      // todo
-      let hasExpandedRow = false;
+      const handleRowClick = (
+        rowData: HTableTransformedRowDataType,
+        rowIndex: number,
+        evt: MouseEvent,
+      ) => {
+        props.columns.forEach(column => {
+          if (column.props.type === 'selection' && column.props.selectOnClickRow) {
+            handleSelection(rowData, column, rowIndex);
+          }
+        });
+
+        parentEmits('rowClick', rowData, evt);
+      };
+
+      const filteredRows = sortRows(
+        flattenTableData.value
+          .filter(row =>
+            Object.values(row[HTableTransformedRowContextKey].visible).every(curr => !!curr),
+          )
+          .filter(isTreeRowVisible),
+      );
 
       return (
         <tbody class={cls(classHelper.e('table-body'))}>
-          {flattenTableData.value
-            .filter(row =>
-              Object.values(row[HTableTransformedRowContextKey].visible).every(curr => !!curr),
-            )
-            .filter(row =>
-              row[HTableTransformedRowContextKey].parentUuid
-                ? treeExpandRows.value.has(row[HTableTransformedRowContextKey].parentUuid)
-                : true,
-            )
-            .toSorted(sortRow)
-            .map(
-              (
-                rowData: HTableTransformedRowDataType,
-                index: number,
-                filteredRows: HTableTransformedRowDataType[],
-              ) => {
-                if (parentProps.expandRowSticky && (expandRows.value.get(rowData) ?? false)) {
-                  hasExpandedRow = true;
-                }
+          {filteredRows.map(
+            (
+              rowData: HTableTransformedRowDataType,
+              index: number,
+              filteredRows: HTableTransformedRowDataType[],
+            ) => {
+              const rowDraggableEvents = getRowDraggableEvents(rowData);
 
-                return (
-                  <Fragment>
-                    <tr
-                      key={parentProps.rowKey ? rowData[parentProps.rowKey] : undefined}
-                      class={cls(
-                        classHelper.e('row'),
-                        typeof parentProps.rowClassName === 'function'
-                          ? parentProps.rowClassName(rowData, index)
-                          : parentProps.rowClassName,
-                        classHelper.is('expanded', hasExpandedRow),
-                        classHelper.is(
-                          'selected',
-                          props.columns.some(
-                            column =>
-                              column.props.columnKey &&
-                              column[HTableColumnSelectionKey].checkedRows.has(
-                                rowData[column.props.columnKey],
-                              ),
-                          ),
+              return (
+                <Fragment key={rowData[HTableTransformedRowContextKey].uuid}>
+                  <tr
+                    class={cls(
+                      classHelper.e('row'),
+                      typeof parentProps.rowClassName === 'function'
+                        ? parentProps.rowClassName(rowData, index)
+                        : parentProps.rowClassName,
+                      classHelper.is(
+                        'expanded',
+                        parentProps.expandRowSticky && isExpanded(rowData),
+                      ),
+                      classHelper.is(
+                        'selected',
+                        props.columns.some(
+                          column =>
+                            column.props.columnKey &&
+                            column[HTableColumnSelectionKey].checkedRows.has(
+                              rowData[column.props.columnKey],
+                            ),
                         ),
-                      )}
-                      style={
-                        isFunction(parentProps.rowStyle)
-                          ? parentProps.rowStyle(rowData, index)
-                          : (parentProps.rowStyle ?? '')
-                      }
-                      onClick={evt => parentEmits('rowClick', rowData, evt)}
-                      onDblclick={evt => parentEmits('rowDblclick', rowData, evt)}
-                      onContextmenu={evt => parentEmits('rowContextmenu', rowData, evt)}
-                    >
-                      {props.columns.map(column => rowRender(rowData, column, index, filteredRows))}
-                    </tr>
-                    {expandRows.value.get(rowData) && expandRender(rowData, index)}
-                  </Fragment>
-                );
-              },
-            )}
+                      ),
+                      getRowDraggableClass(rowData),
+                    )}
+                    style={
+                      isFunction(parentProps.rowStyle)
+                        ? parentProps.rowStyle(rowData, index)
+                        : (parentProps.rowStyle ?? '')
+                    }
+                    onClick={evt => handleRowClick(rowData, index, evt)}
+                    onDblclick={evt => parentEmits('rowDblclick', rowData, evt)}
+                    onContextmenu={evt => parentEmits('rowContextmenu', rowData, evt)}
+                    onDragover={rowDraggableEvents.onDragover}
+                    onDragleave={rowDraggableEvents.onDragleave}
+                    onDrop={rowDraggableEvents.onDrop}
+                  >
+                    {props.columns.map(column => (
+                      <Fragment key={column.uuid}>
+                        {rowRender(rowData, column, index, filteredRows)}
+                      </Fragment>
+                    ))}
+                  </tr>
+                  {isExpanded(rowData) && expandRender(rowData, index)}
+                </Fragment>
+              );
+            },
+          )}
         </tbody>
       );
     };

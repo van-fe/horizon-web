@@ -16,6 +16,42 @@
       pointer-events: auto;
     }
 
+    @include mixins.is('draggable') {
+      cursor: grab;
+      user-select: none;
+      pointer-events: auto;
+    }
+
+    @include mixins.is('dragging') {
+      opacity: 0.55;
+      cursor: grabbing;
+    }
+
+    @include mixins.with-parallel-state('drag-over-before', 'drag-over-after') {
+      &::after {
+        position: absolute;
+        z-index: calc(#{mixins.css-variable('table', 'z-index', 'default')} + 4);
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: mixins.css-variable('table', 'divider', 'header', 'resizing-color');
+        pointer-events: none;
+        content: '';
+      }
+    }
+
+    @include mixins.is('drag-over-before') {
+      &::after {
+        left: -1px;
+      }
+    }
+
+    @include mixins.is('drag-over-after') {
+      &::after {
+        right: -1px;
+      }
+    }
+
     @include mixins.is('header-bold') {
       font-weight: mixins.css-variable('table', 'font', 'weight', 'header');
     }
@@ -74,8 +110,13 @@
         }
 
         @include mixins.is('active') {
-          color: mixins.css-variable('table', 'color', 'header', 'sort', 'active')
+          color: mixins.css-variable('table', 'color', 'header', 'sort', 'active');
         }
+      }
+
+      @include mixins.is('disabled') {
+        color: mixins.css-variable('text', 'disabled');
+        cursor: not-allowed;
       }
 
       @include mixins.is('separated') {
@@ -108,11 +149,10 @@
 
     @include mixins.m('divider') {
       position: absolute;
-      top: 50%;
+      top: 0;
       right: 0;
       width: 1px;
-      height: 1em;
-      transform: translateY(-50%);
+      height: 100%;
 
       @include mixins.is('visible') {
         background: mixins.css-variable('table', 'divider', 'header', 'column-color');

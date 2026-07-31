@@ -27,7 +27,7 @@
       width="200px"
       tip="Select filter will auto collect column's data to filter in multiple. If you have special options, you should give 'options' in 'filter-options'."
     />
-    <h-table-column title="Address" field="address" :filterable="true" mih-width="400" :use-built-ih-filter="false" @filter-change="onFilterChange" />
+    <h-table-column title="Address" field="address" :filterable="true" min-width="400" :use-built-in-filter="false" @filter-change="onFilterChange" />
   </h-table>
 </template>
 

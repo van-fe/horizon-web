@@ -8,7 +8,7 @@ import type { HorizonWebSetupContext } from '@aurora/utils';
 import { isUndefined } from '@aurora/utils';
 import type { TreeEmits } from '~/components/Tree/src/composables/useEmits';
 
-export default function (
+export default function useTreeData(
   props: ToRefs<TreeProps>,
   emit: HorizonWebSetupContext<TreeEmits>['emit'],
   treeHelper: Tree<HTreeData, HTreeExtendsData>,
@@ -60,7 +60,9 @@ export default function (
    */
   function setNodeChildren(value: string | number | null, children: HTreeData[]) {
     if (value === null) {
-      treeHelper.originTreeData = children;
+      // Keep the root array shared with `treeData`; replacing it after a drag would leave the
+      // caller's array in the intermediate state where the dragged node has only been removed.
+      treeHelper.originTreeData.splice(0, treeHelper.originTreeData.length, ...children);
     } else {
       const target = treeHelper.getBaseTreeTargetByValue(treeHelper.originTreeData, value);
 
@@ -109,3 +111,8 @@ export default function (
     addNodeChildren,
   };
 }
+
+export type TreeDataMutations = Pick<
+  ReturnType<typeof useTreeData>,
+  'deleteNode' | 'setNodeChildren' | 'addNodeChildren'
+>;

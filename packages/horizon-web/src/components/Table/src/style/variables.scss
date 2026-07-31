@@ -4,9 +4,12 @@
 $values: (
   size: (
     sort-button: 24px,
+    empty: (
+      min-height: 160px,
+    ),
     body: (
       action-button: 16px,
-    )
+    ),
   ),
   color: (
     header: (
@@ -17,8 +20,8 @@ $values: (
         not-active: mixins.css-variable('text', 'tertiary'),
         active: mixins.css-variable('text', 'primary'),
         disabled: mixins.css-variable('text', 'disabled'),
-      )
-    )
+      ),
+    ),
   ),
   font: (
     line-height: (
@@ -29,8 +32,8 @@ $values: (
     ),
     weight: (
       header: mixins.css-variable('weight-strong'),
-      footer: mixins.css-variable('weight-strong')
-    )
+      footer: mixins.css-variable('weight-strong'),
+    ),
   ),
   background: (
     header: (
@@ -47,8 +50,8 @@ $values: (
       selected: mixins.css-variable('bg', 'weak', 'activated'),
       action-button: (
         hover: mixins.css-variable('bg', 'hover'),
-        press: mixins.css-variable('bg', 'press')
-      )
+        press: mixins.css-variable('bg', 'press'),
+      ),
     ),
     row: (
       stripe: mixins.css-variable('bg', 'secondary'),
@@ -56,8 +59,7 @@ $values: (
         '': rgb(240, 241, 243),
         dark: rgb(23, 24, 26),
       ),
-
-    )
+    ),
   ),
   border-color: (
     default: mixins.css-variable('divider', 'default'),
@@ -69,7 +71,7 @@ $values: (
     header: (
       column-color: mixins.css-variable('divider', 'strong'),
       resizing-color: mixins.css-variable('border', 'brand', 'default'),
-    )
+    ),
   ),
   border-radius: (
     '': mixins.css-variable('radius', 'm'),
@@ -78,7 +80,7 @@ $values: (
     scrolling: (
       left: inset 10px 0 10px -10px rgba(15, 17, 20, 10%),
       right: inset -10px 0 10px -10px rgba(15, 17, 20, 10%),
-    )
+    ),
   ),
   spacing: (
     padding: (
@@ -93,8 +95,8 @@ $values: (
       column-manager: (
         item: (
           action: 0 mixins.css-variable('spacing-3') 0 0,
-        )
-      )
+        ),
+      ),
     ),
     margin: (
       cell: (
@@ -107,8 +109,8 @@ $values: (
       cell: (
         wrap: mixins.css-variable('spacing-3'),
         prepend-append: mixins.css-variable('spacing-1'),
-      )
-    )
+      ),
+    ),
   ),
   transition: (
     transform: mixins.css-variable('transition', 'transform'),
@@ -116,5 +118,5 @@ $values: (
   ),
   z-index: (
     default: 10,
-  )
+  ),
 );
