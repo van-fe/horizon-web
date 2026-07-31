@@ -54,6 +54,7 @@
     "en": "Form Components",
     "items": [
       { "link": "components/AutoComplete", "zh": "AutoComplete 自动完成", "en": "AutoComplete" },
+      { "link": "components/ChatBubble", "zh": "ChatBubble 对话气泡", "en": "ChatBubble" },
       { "link": "components/Cascader", "zh": "Cascader 级联选择器", "en": "Cascader" },
       { "link": "components/Checkbox", "zh": "Checkbox 复选框", "en": "Checkbox" },
       { "link": "components/ColorPicker", "zh": "ColorPicker 颜色选择器", "en": "ColorPicker" },

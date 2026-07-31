@@ -24,6 +24,7 @@
 @use '../components/Calendar/src/style/variables' as calendar;
 @use '../components/Radio/src/style/variables' as radio;
 @use '../components/Card/src/style/variables' as card;
+@use '../components/ChatBubble/src/style/variables' as chat-bubble;
 @use '../components/AutoComplete/src/style/variables' as auto-complete;
 @use '../components/Empty/src/style/variables' as empty;
 @use '../components/Progress/src/style/variables' as progress;
@@ -106,6 +107,7 @@ $values: function.map-merge-multi(
   function.flatten-variables(calendar.$values, 'calendar'),
   function.flatten-variables(radio.$values, 'radio'),
   function.flatten-variables(card.$values, 'card'),
+  function.flatten-variables(chat-bubble.$values, 'chat-bubble'),
   function.flatten-variables(auto-complete.$values, 'auto-complete'),
   function.flatten-variables(empty.$values, 'empty'),
   function.flatten-variables(progress.$values, 'progress'),

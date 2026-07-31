@@ -12,6 +12,7 @@
   "Calendar": "^HCalendar$",
   "Carousel": "^(HCarousel|HCarouselItem)$",
   "Card": "^HCard$",
+  "ChatBubble": "^(HChatBubble|HChatBubbleList)$",
   "Cascader": "^HCascader$",
   "Checkbox": "^(HCheckbox|HCheckboxButton|HCheckboxGroup)$",
   "Collapse": "^(HCollapse|HCollapseItem)$",
