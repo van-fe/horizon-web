@@ -6,7 +6,12 @@
     </h-grid-item>
     <h-grid-item :span="6">
       <div class="demo-title">有 Radio 组件</div>
-      <h-tree-select v-model="value2" :tree-data="baseTreeData" :show-radio="true" :collapse="true" :to-body="false" />
+      <h-tree-select
+        v-model="value2"
+        :tree-data="baseTreeData"
+        :show-radio="true"
+        :to-body="false"
+      />
     </h-grid-item>
   </h-grid>
 </template>
@@ -28,5 +33,4 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
