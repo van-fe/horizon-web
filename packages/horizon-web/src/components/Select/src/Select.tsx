@@ -343,12 +343,7 @@ export default defineComponent({
     }
 
     function renderPickerInner() {
-      const customRender = context.slots.pickerInner?.();
-      if (customRender) return customRender;
-
       if (props.multiple) {
-        if (modelValueSet.value.size === 0) return undefined;
-
         if (props.useStatistic) {
           return getSelectedOptionsPopoverRender(
             <span class={new ComponentClassBlock('picker').em('input', 'static-text')}>
@@ -536,6 +531,7 @@ export default defineComponent({
             ),
             panelSuffix: context.slots.panelFooterRender,
             panelConfirm: context.slots.dropConfirmRender,
+            pickerContainer: context.slots.pickerInner,
             pickerOuter: context.slots.pickerOuter,
             picker: context.slots.picker,
             panelConfirmLeft: context.slots.panelConfirmLeft,
@@ -621,7 +617,12 @@ export default defineComponent({
                 )}
               </div>
             ),
-            pickerInner: renderPickerInner,
+            pickerInner:
+              (props.multiple
+                ? modelValueSet.value.size > 0
+                : !!context.slots.tagRender && modelValueSet.value.size > 0)
+                ? renderPickerInner
+                : undefined,
           }}
         </HPicker>
       );
