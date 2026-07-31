@@ -4,6 +4,7 @@ import ResolveComponentsAlias from './resolveComponentsAlias';
 import watchDemos from './watchDemos';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import path from 'path';
+import { liveDemoPlugin } from './liveDemoPlugin';
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -78,6 +79,7 @@ export default defineConfig({
       ]
     },
     plugins: [
+      liveDemoPlugin(),
       vueJsx(),
       DefineOptions(),
       ResolveComponentsAlias(),

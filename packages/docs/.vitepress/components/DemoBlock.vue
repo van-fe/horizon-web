@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { ref, useSlots, watch, shallowRef, defineAsyncComponent } from 'vue';
+import { computed, defineAsyncComponent, onBeforeUnmount, ref, watch } from 'vue';
 import { $message } from '@aurora/horizon-web';
-import CodeEditor from './CodeEditor.vue';
+import { useLiveDemo } from './useLiveDemo';
+
+const CodeEditor = defineAsyncComponent(() => import('./CodeEditor.vue'));
 
 const props = defineProps({
   source: {
@@ -16,34 +18,51 @@ const props = defineProps({
 
 const code = ref(props.source);
 const visible = ref(false);
-const slots = useSlots();
 
 // Keep demo imports inside Vite's module graph. Using a runtime absolute URL
 // (`import('/demos/...')`) works in dev but cannot be resolved during SSR.
 const demoModules = import.meta.glob('../../**/*.vue');
 
-// 动态导入组件
-const DemoComponent = shallowRef<any>(null);
-
-if (props.path) {
-  const moduleKey = `../../${props.path}`;
-  const loader = demoModules[moduleKey];
-  if (!loader) {
-    throw new Error(`Demo module not found: ${props.path}`);
-  }
-  DemoComponent.value = defineAsyncComponent(loader as any);
-}
+const moduleKey = `../../${props.path}`;
+const loader = props.path ? demoModules[moduleKey] : undefined;
+const { component, renderKey, compiling, error, compile, refresh, loadOriginal } = useLiveDemo(
+  props.path,
+  loader,
+);
+const isEnglish = computed(
+  () => typeof location !== 'undefined' && location.pathname.startsWith('/en/'),
+);
+const labels = computed(() =>
+  isEnglish.value
+    ? {
+        copy: 'Copy code',
+        edit: 'View/edit code',
+        refresh: 'Refresh demo',
+        compiling: 'Compiling…',
+      }
+    : { copy: '复制代码', edit: '查看/编辑代码', refresh: '刷新 Demo', compiling: '编译中…' },
+);
+let compileTimer: ReturnType<typeof setTimeout> | undefined;
 
 watch(
   () => props.source,
   val => {
     code.value = val;
+    void loadOriginal();
   },
 );
 
-function copyCode() {
-  navigator.clipboard.writeText(unescape(props.source));
-  $message.success('success');
+watch(code, value => {
+  if (value === props.source) return;
+  clearTimeout(compileTimer);
+  compileTimer = setTimeout(() => void compile(value), 250);
+});
+
+onBeforeUnmount(() => clearTimeout(compileTimer));
+
+async function copyCode() {
+  await navigator.clipboard.writeText(code.value);
+  $message.success(isEnglish.value ? 'Copied' : '已复制');
 }
 
 function toggleCode() {
@@ -54,13 +73,26 @@ function toggleCode() {
 <template>
   <div class="component-demo">
     <div class="preview">
-      <component v-if="DemoComponent" :is="DemoComponent" />
+      <component v-if="component" :is="component" :key="renderKey" />
       <slot name="source" />
     </div>
+    <div v-if="error" class="compile-error" role="alert">{{ error }}</div>
     <div class="tools">
+      <span class="compile-status" aria-live="polite">{{ compiling ? labels.compiling : '' }}</span>
       <h-space :size="8">
         <h-button
-          v-tooltip="'复制代码'"
+          v-tooltip="labels.refresh"
+          :aria-label="labels.refresh"
+          size="mini"
+          icon="refresh"
+          :icon-size="14"
+          :text="true"
+          type="normal"
+          @click="refresh"
+        />
+        <h-button
+          v-tooltip="labels.copy"
+          :aria-label="labels.copy"
           size="mini"
           icon="copy"
           :icon-size="14"
@@ -69,7 +101,8 @@ function toggleCode() {
           @click="copyCode"
         />
         <h-button
-          v-tooltip="'查看/编辑代码'"
+          v-tooltip="labels.edit"
+          :aria-label="labels.edit"
           size="mini"
           icon="code"
           :icon-size="14"
@@ -114,10 +147,27 @@ function toggleCode() {
 
   .tools {
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: space-between;
     border-top: 1px solid mixins.css-variable('border-default');
     padding: mixins.css-variable('spacing-2') mixins.css-variable('spacing-4');
     background: mixins.css-variable('bg-secondary');
+  }
+
+  .compile-status {
+    min-height: 20px;
+    color: mixins.css-variable('text-secondary');
+    font-size: 12px;
+  }
+
+  .compile-error {
+    border-top: 1px solid mixins.css-variable('border-default');
+    padding: mixins.css-variable('spacing-3') mixins.css-variable('spacing-4');
+    background: mixins.css-variable('bg-secondary');
+    color: mixins.css-variable('text-error');
+    font-family: monospace;
+    font-size: 12px;
+    white-space: pre-wrap;
   }
 }
 </style>
