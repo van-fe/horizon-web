@@ -37,6 +37,29 @@ describe('Switch.tsx', () => {
     expect(onChange).toHaveBeenCalledTimes(3);
   });
 
+  test('displays status text inside the track', async () => {
+    const modelValue = ref(false);
+    const wrapper = mount(() => (
+      <HSwitch
+        modelValue={modelValue.value}
+        status={true}
+        statusPosition="inside"
+        statusOnText="ON"
+        statusOffText="OFF"
+        onUpdate:modelValue={val => (modelValue.value = val)}
+      />
+    ));
+
+    const innerText = wrapper.find('.h-switch__inner-text');
+    expect(innerText.text()).toBe('OFF');
+    expect(innerText.attributes('aria-hidden')).toBe('true');
+    expect(wrapper.find('.h-switch__status').exists()).toBe(false);
+
+    await wrapper.find('.h-switch').trigger('click');
+    expect(innerText.text()).toBe('ON');
+    expect(innerText.classes('is-active')).toBe(true);
+  });
+
   describe('props', () => {
     test('disabled', () => {
       const wrapper = mount(() => <HSwitch modelValue={true} disabled={true} />);

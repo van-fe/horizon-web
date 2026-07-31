@@ -18,6 +18,13 @@ export const useSwitchProps = declarePropType({
     type: Boolean,
     default: false,
   },
+  /** 状态文本的展示位置
+   * @en Position where the status text is displayed.
+ */
+  statusPosition: {
+    type: String as PropType<'outside' | 'inside'>,
+    default: 'outside',
+  },
   /** switch 打开时的自定义状态文本
    * @en Configuration for status on text.
  */

@@ -21,12 +21,14 @@ import useLocaleLang from '~/utils/useLocaleLang';
 export default defineComponent({
   name: `${useNamespace()}Switch`,
   desc: '开关选择器组件',
+  descLocales: { en: 'Switch control for toggling between two states.' },
   props: useSwitchProps,
   emits: useSwitchEmits,
   setup(props, { emit }: HorizonWebSetupContext<SwitchEmits>) {
     const {
       modelValue: modelValueRef,
       status: statusRef,
+      statusPosition: statusPositionRef,
       statusOnText: statusOnTextRef,
       statusOffText: statusOffTextRef,
       label: labelRef,
@@ -110,6 +112,10 @@ export default defineComponent({
               classHelper.is('disabled', isDisabled.value),
               classHelper.is('active', modelValueRef.value),
               classHelper.is('readonly', readonlyRef.value),
+              classHelper.is(
+                'with-inner-text',
+                statusRef.value && statusPositionRef.value === 'inside',
+              ),
             )}
           >
             <input
@@ -121,9 +127,22 @@ export default defineComponent({
               aria-disabled={isDisabled.value}
               onBlur={onBlur}
             />
+            {statusRef.value && statusPositionRef.value === 'inside' && (
+              <span
+                aria-hidden="true"
+                class={cls(
+                  classHelper.e('inner-text'),
+                  classHelper.is('active', modelValueRef.value),
+                )}
+              >
+                {modelValueRef.value
+                  ? statusOnTextRef.value || useLocaleLang('switch.on').value
+                  : statusOffTextRef.value || useLocaleLang('switch.off').value}
+              </span>
+            )}
             <span class={cls(classHelper.e('inner'))}></span>
           </span>
-          {statusRef.value && (
+          {statusRef.value && statusPositionRef.value === 'outside' && (
             <span class={classHelper.e('status')}>
               {modelValueRef.value
                 ? statusOnTextRef.value || useLocaleLang('switch.on').value
