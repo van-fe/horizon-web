@@ -413,9 +413,9 @@ export const useUploadProps = declarePropType({
   },
   /**
    * 是否启用分片断点上传
-   * 如需使用，需要传入相关配置
-   * @invisible
-    * @en Configuration for multipart.
+    * 传入配置对象后，组件会保留已完成分片，并支持暂停、继续和失败重试
+    * @en Whether to enable resumable multipart upload. Pass a configuration object to preserve
+    * completed chunks across pause, resume, and retry operations.
    */
   multipart: {
     type: [Boolean, Object] as PropType<false | HUploadMultipartSetting>,
@@ -431,10 +431,9 @@ export const useUploadProps = declarePropType({
     },
   },
   /**
-   * 分包大小，单位为 `MB`
+   * 分片大小，单位为 `MB`
    * 大小范围为 `1~1024 MB`
-   * @invisible
-    * @en Configuration for multipart chunk size.
+    * @en The multipart chunk size in MB, from 1 to 1024.
    */
   multipartChunkSize: {
     type: Number,
@@ -444,9 +443,8 @@ export const useUploadProps = declarePropType({
     },
   },
   /**
-   * 分包时，最大同时上传分片的大小
-   * @invisible
-    * @en Configuration for multipart max amount uploading at same time.
+   * 分片上传时的最大并发请求数
+    * @en The maximum number of chunk requests uploaded concurrently.
    */
   multipartMaxAmountUploadingAtSameTime: {
     type: Number,

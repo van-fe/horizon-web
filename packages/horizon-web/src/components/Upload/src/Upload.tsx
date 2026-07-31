@@ -225,9 +225,7 @@ export default defineComponent({
         await uploadFileHelper.uploadFiles();
       },
       async abort(files?: HUploadFileType[]) {
-        if (files?.length) {
-          await uploadFileHelper.abortFiles(files);
-        }
+        await uploadFileHelper.abortFiles(files);
       },
       clearFiles(status?: HUploadFileStatusEnum[]) {
         if (status?.length) {

@@ -8,7 +8,7 @@ import { getVideoFirstFrame, isFileList, getVideoDuration, isNumber } from '@aur
 import UploadHelper from './UploadHelper';
 import { isFileSame, transformSingleRawFileTypeToUploadFileType } from './helper';
 import type { HUploadFileType, HUploadRawFileType } from './fileDefines';
-import { HUploadFileTypeEnum, HUploadFileStatusEnum } from './fileDefines';
+import { HUploadFileTypeEnum } from './fileDefines';
 
 export default class UploadFileHelper extends UploadHelper {
   private containerEl: HTMLElement | undefined;
@@ -295,7 +295,7 @@ export default class UploadFileHelper extends UploadHelper {
           if (callback) {
             doRemove(file);
           }
-        } catch (e) {
+        } catch {
           // do nothing
         }
       }
@@ -315,14 +315,14 @@ export default class UploadFileHelper extends UploadHelper {
         try {
           const callback = await handler(file);
           if (callback) {
-            this.setStatus(file, HUploadFileStatusEnum.Pause);
+            this.pauseUpload(file);
           }
-        } catch (e) {
+        } catch {
           // do nothing
         }
       }
     } else {
-      files.forEach(file => this.setStatus(file, HUploadFileStatusEnum.Pause));
+      files.forEach(file => this.pauseUpload(file));
     }
   }
 

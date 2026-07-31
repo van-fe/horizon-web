@@ -1,9 +1,6 @@
 import BaseMultipartUploadHelper from './BaseMultipartUploadHelper';
 import type { Data } from '@aurora/utils';
-import type {
-  HUploadMultipartSetting,
-  HUploadChunk,
-} from '../../composables/useMultipartUpload';
+import type { HUploadMultipartSetting, HUploadChunk } from '../../composables/useMultipartUpload';
 import type { ToRefs } from 'vue';
 import type { UploadProps } from '../../composables/useProps';
 import type { HUploadFileType, HUploadHttpRequestInstanceMethods } from '../fileDefines';
@@ -23,12 +20,20 @@ export default class CustomMultipleUploader extends BaseMultipartUploadHelper {
     return this.multipart as HUploadMultipartSetting;
   }
 
+  protected get maxConcurrentChunks() {
+    return this.setting.maxAmountUploadingAtSameTime ?? super.maxConcurrentChunks;
+  }
+
   protected appendData(formData: FormData, data?: Data) {
     super.appendData(formData, { ...data, ...this._data });
   }
 
   async initUpload(file: HUploadFileType): Promise<void> {
     this._data = (await this.setting.initUpload?.(file)) || {};
+  }
+
+  async getUploadedChunkIndexes(file: HUploadFileType, chunks: HUploadChunk[]): Promise<number[]> {
+    return (await this.setting.getUploadedChunkIndexes?.(file, chunks, this._data)) || [];
   }
 
   beforeFilePartUpload(file: HUploadFileType, index: number, part: Blob): Data {
@@ -39,7 +44,7 @@ export default class CustomMultipleUploader extends BaseMultipartUploadHelper {
     return this.setting.filenameModify?.(fileRawName, index, part) || fileRawName;
   }
 
-  mergeFiles(file: HUploadFileType, chunks: HUploadChunk[]): Promise<void> {
+  async mergeFiles(file: HUploadFileType, chunks: HUploadChunk[]): Promise<unknown> {
     return this.setting.handleMerge?.(file, chunks);
   }
 

@@ -59,5 +59,49 @@ After enabling, copies of selected files will also be sent to background upload.
 You can also configure `background-standalone = true` to indicate that this instance is independent and does not share an upload list with other existing instances
 :::demo components/Upload/background.vue :::
 
+## Resumable Multipart Upload
+
+Pass a `multipart` configuration to split a file by `multipart-chunk-size` (MB). Upload sends at
+most `multipart-max-amount-uploading-at-same-time` chunk requests concurrently. Chunk requests use
+the regular `action`, `method`, `header`, and `data` props. Completed chunks are not uploaded again
+after pausing or retrying a failed upload.
+
+```vue
+<h-upload
+  action="/api/uploads/chunks"
+  :multipart="multipart"
+  :multipart-chunk-size="5"
+  :multipart-max-amount-uploading-at-same-time="3"
+  :controls="['upload', 'delete']"
+/>
+
+<script setup lang="ts">
+import type { HUploadMultipartSetting } from '@aurora/horizon-web';
+
+const multipart: HUploadMultipartSetting = {
+  async initUpload(file) {
+    // The server should use a stable file fingerprint to find or create an upload.
+    return { uploadId: await createUpload(file) };
+  },
+  async getUploadedChunkIndexes(file, chunks, { uploadId }) {
+    // Return zero-based indexes already stored by the server when the same file is selected again.
+    return queryUploadedChunkIndexes(uploadId);
+  },
+  beforePartUpload(file, index) {
+    return { index };
+  },
+  async handleMerge(file, chunks) {
+    return mergeUpload(file, chunks);
+  },
+};
+</script>
+```
+
+Data returned by `initUpload` is appended to every chunk request. `getUploadedChunkIndexes` enables
+recovery across component instances: every valid returned index starts in the successful state.
+Within the same instance, pause and resume preserve successful chunks automatically. The return
+value of `handleMerge` becomes the `uploaded` event response and is passed through `handle-success`.
+Set `multipart.maxAmountUploadingAtSameTime` to override concurrency for one configuration.
+
 ## Type Definition
 :::code ./demos/type-defined.ts :::

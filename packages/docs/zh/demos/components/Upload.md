@@ -59,5 +59,47 @@
 也可以通过配置 `background-standalone = true`，表示此实例独立，不和其他已存在的实例共用一个上传列表
 :::demo components/Upload/background.vue :::
 
+## 分片断点续传
+
+传入 `multipart` 配置后，Upload 会按照 `multipart-chunk-size`（MB）切分文件，并最多同时发送
+`multipart-max-amount-uploading-at-same-time` 个分片请求。每个请求仍使用 `action`、`method`、`header`
+和 `data`，成功分片在暂停或失败重试后不会重复上传。
+
+```vue
+<h-upload
+  action="/api/uploads/chunks"
+  :multipart="multipart"
+  :multipart-chunk-size="5"
+  :multipart-max-amount-uploading-at-same-time="3"
+  :controls="['upload', 'delete']"
+/>
+
+<script setup lang="ts">
+import type { HUploadMultipartSetting } from '@aurora/horizon-web';
+
+const multipart: HUploadMultipartSetting = {
+  async initUpload(file) {
+    // 后端应使用稳定的文件指纹查找或创建上传任务。
+    return { uploadId: await createUpload(file) };
+  },
+  async getUploadedChunkIndexes(file, chunks, { uploadId }) {
+    // 重新选择同一文件时，返回服务端已经保存的、从 0 开始的分片下标。
+    return queryUploadedChunkIndexes(uploadId);
+  },
+  beforePartUpload(file, index) {
+    return { index };
+  },
+  async handleMerge(file, chunks) {
+    return mergeUpload(file, chunks);
+  },
+};
+</script>
+```
+
+`initUpload` 返回的数据会附加到每个分片请求中。`getUploadedChunkIndexes` 是跨组件实例恢复上传的关键：
+返回的有效下标会直接标记为成功；页面内点击暂停/继续时，组件本身也会保留这些成功分片。
+`handleMerge` 的返回值会作为 `uploaded` 事件的响应，并继续经过 `handle-success` 处理。
+如需针对单个配置覆盖并发数，可设置 `multipart.maxAmountUploadingAtSameTime`。
+
 ## 类型定义
 :::code ./demos/type-defined.ts :::

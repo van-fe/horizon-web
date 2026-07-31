@@ -18,6 +18,7 @@ export default class UploadHelper extends UploadHelperOptions {
   public readonly eventEmitter = new EventEmitter<EmitValueCallbackToVoid<UploadEmits>>();
   protected _fileList = ref(new Set<HUploadFileType>());
   protected xhrFileMapping = new Map<string, XMLHttpRequest>();
+  private multipartUploadHelpers = new Map<string, MultipartUploadHelper>();
 
   private readyUploadFilesQueue: HUploadFileType[] = [];
   private uploadingFilesQueue: {
@@ -44,11 +45,10 @@ export default class UploadHelper extends UploadHelperOptions {
   }
 
   private async uploadFileFromQueue() {
-    if (this.uploadingFilesQueue.length < (this.maxUploadsAmountAtSameTime || Infinity)) {
+    while (this.uploadingFilesQueue.length < (this.maxUploadsAmountAtSameTime || Infinity)) {
       const file = this.readyUploadFilesQueue.shift();
-      if (file) {
-        void this.uploadFile(file);
-      }
+      if (!file) break;
+      void this.uploadFile(file);
     }
   }
 
@@ -129,6 +129,11 @@ export default class UploadHelper extends UploadHelperOptions {
       this.uploadingFilesQueue.splice(index, 1);
     }
 
+    this.xhrFileMapping.delete(file.uuid);
+    if (file.status === HUploadFileStatusEnum.Success) {
+      this.multipartUploadHelpers.delete(file.uuid);
+    }
+
     await this.uploadFileFromQueue();
   }
 
@@ -166,8 +171,7 @@ export default class UploadHelper extends UploadHelperOptions {
 
     switch (status) {
       case HUploadFileStatusEnum.Success:
-        const { uploadUrl } =
-          args as HUploadSetStatusOptionsMapping[HUploadFileStatusEnum.Success];
+        const { uploadUrl } = args as HUploadSetStatusOptionsMapping[HUploadFileStatusEnum.Success];
 
         this.eventEmitter.emit('uploaded', file, response);
 
@@ -213,7 +217,7 @@ export default class UploadHelper extends UploadHelperOptions {
         if (!(await handler(file))) {
           return false;
         }
-      } catch (e) {
+      } catch {
         return false;
       }
     }
@@ -224,17 +228,26 @@ export default class UploadHelper extends UploadHelperOptions {
     this.removeFileFromReadyUploadFilesQueue(file);
 
     if (this.multipart) {
-      new MultipartUploadHelper(
-        file,
-        {
-          setStatus: this.setStatus.bind(this),
-          onUploadFinished: this.onUploadFinished.bind(this),
-          onUploadSuccess: this.onUploadSuccess.bind(this),
-          onUploadFail: this.onUploadFail.bind(this),
-          addUploadingQueue: this.addUploadingQueue.bind(this),
-        },
-        this.props,
-      );
+      const existingHelper = this.multipartUploadHelpers.get(file.uuid);
+
+      if (existingHelper) {
+        this.setStatus(file, HUploadFileStatusEnum.Retrying);
+        void existingHelper.resume();
+      } else {
+        const helper = new MultipartUploadHelper(
+          file,
+          {
+            setStatus: this.setStatus.bind(this),
+            onUploadFinished: this.onUploadFinished.bind(this),
+            onUploadSuccess: this.onUploadSuccess.bind(this),
+            onUploadFail: this.onUploadFail.bind(this),
+            addUploadingQueue: this.addUploadingQueue.bind(this),
+          },
+          this.props,
+        );
+        this.multipartUploadHelpers.set(file.uuid, helper);
+        void helper.start();
+      }
     } else {
       if (this.httpRequest) {
         this.httpRequest(file, {
@@ -251,14 +264,23 @@ export default class UploadHelper extends UploadHelperOptions {
   }
 
   public pauseUpload(file: HUploadFileType) {
-    this.xhrFileMapping.get(file.uuid)?.abort();
+    const multipartHelper = this.multipartUploadHelpers.get(file.uuid);
+    if (multipartHelper) {
+      multipartHelper.pause();
+    } else {
+      this.xhrFileMapping.get(file.uuid)?.abort();
+    }
 
     this.setStatus(file, HUploadFileStatusEnum.Pause);
+    this.removeFromUploadingQueue(file);
+    void this.uploadFileFromQueue();
   }
 
   public continueUpload(file: HUploadFileType) {
-    if (this.multipart) {
-      // todo:: not finished
+    const multipartHelper = this.multipartUploadHelpers.get(file.uuid);
+    if (multipartHelper) {
+      this.setStatus(file, HUploadFileStatusEnum.Retrying);
+      void multipartHelper.resume();
     } else {
       this.uploadFileDirectly(file);
     }
