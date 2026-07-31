@@ -15,6 +15,7 @@
 
     @include mixins.m('original') {
       position: absolute;
+      z-index: 1;
       top: 0;
       right: 0;
       bottom: 0;
@@ -22,8 +23,10 @@
       display: block;
       width: mixins.css-variable('radio-size--original');
       height: mixins.css-variable('radio-size--original');
+      margin: 0;
       outline: none;
-      visibility: hidden;
+      cursor: inherit;
+      opacity: 0;
       appearance: none;
 
       &:checked {
