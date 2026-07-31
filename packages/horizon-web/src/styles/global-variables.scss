@@ -69,6 +69,9 @@
 @use '../components/Select/src/style/variables' as select;
 @use '../components/Breadcrumb/src/style/variables' as breadcrumb;
 @use '../components/Space/src/style/variables' as space;
+@use '../components/Spin/src/style/variables' as spin;
+@use '../components/Splitter/src/style/variables' as splitter;
+@use '../components/Statistic/src/style/variables' as statistic;
 @use '../components/Timeline/src/style/variables' as timeline;
 @use '../components/Tag/src/style/variables' as tag;
 @use '../components/Scrollbar/src/style/variables' as scrollbar;
@@ -76,6 +79,7 @@
 @use '../components/Upload/src/style/variables' as upload;
 @use '../components/Backtop/src/style/variables' as backtop;
 @use '../components/Badge/src/style/variables' as badge;
+@use '../components/Typography/src/style/variables' as typography;
 @use '../directives/v-loading/src/style/variables' as v-loading;
 @use '../directives/v-popconfirm/src/style/variables' as v-popconfirm;
 @use '../methods/Notification/src/style/variables' as notification;
@@ -147,6 +151,9 @@ $values: function.map-merge-multi(
   function.flatten-variables(select.$values, 'select'),
   function.flatten-variables(breadcrumb.$values, 'breadcrumb'),
   function.flatten-variables(space.$values, 'space'),
+  function.flatten-variables(spin.$values, 'spin'),
+  function.flatten-variables(splitter.$values, 'splitter'),
+  function.flatten-variables(statistic.$values, 'statistic'),
   function.flatten-variables(timeline.$values, 'timeline'),
   function.flatten-variables(tag.$values, 'tag'),
   function.flatten-variables(scrollbar.$values, 'scrollbar'),
@@ -154,6 +161,7 @@ $values: function.map-merge-multi(
   function.flatten-variables(upload.$values, 'upload'),
   function.flatten-variables(backtop.$values, 'backtop'),
   function.flatten-variables(badge.$values, 'badge'),
+  function.flatten-variables(typography.$values, 'typography'),
   function.flatten-variables(v-loading.$values, 'v-loading'),
   function.flatten-variables(v-popconfirm.$values, 'v-popconfirm'),
   function.flatten-variables(notification.$values, 'notification'),

@@ -74,6 +74,9 @@
 @forward '../components/Breadcrumb/src/style/index';
 @forward '../components/VirtualScroller/src/style/index';
 @forward '../components/Space/src/style/index';
+@forward '../components/Spin/src/style/index';
+@forward '../components/Splitter/src/style/index';
+@forward '../components/Statistic/src/style/index';
 @forward '../components/Timeline/src/style/index';
 @forward '../components/Tag/src/style/index';
 @forward '../components/Scrollbar/src/style/index';
@@ -81,6 +84,7 @@
 @forward '../components/Upload/src/style/index';
 @forward '../components/Backtop/src/style/index';
 @forward '../components/Badge/src/style/index';
+@forward '../components/Typography/src/style/index';
 
 // directives
 @forward '../directives/v-loading/src/style/index';

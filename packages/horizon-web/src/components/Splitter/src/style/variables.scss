@@ -1,0 +1,10 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  'separator-size': 8px,
+  'separator-color': #{function.css-variable('border-default')},
+  'separator-hover-color': #{function.css-variable('border-brand-default')},
+  'separator-focus-color': #{function.css-variable('border-focused')},
+  'handle-length': 32px,
+  'handle-thickness': 2px,
+);

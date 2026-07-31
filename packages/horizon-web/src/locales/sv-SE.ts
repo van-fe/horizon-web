@@ -233,6 +233,17 @@ export const SvSE = {
       indicator: 'Gå till bild {current}',
       item: 'bild',
     },
+    typography: {
+      copy: 'Kopiera',
+      edit: 'Redigera',
+    },
+    spin: {
+      loading: 'Laddar',
+    },
+    statistic: {
+      increase: 'Ökat',
+      decrease: 'Minskat',
+    },
     result: {
       primaryButtonText: 'Ja',
       secondaryButtonText: 'Nej',

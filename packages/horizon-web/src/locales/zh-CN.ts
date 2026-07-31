@@ -245,6 +245,17 @@ export const ZhCN = {
       indicator: '切换到第 {current} 张',
       item: '轮播项',
     },
+    typography: {
+      copy: '复制',
+      edit: '编辑',
+    },
+    spin: {
+      loading: '加载中',
+    },
+    statistic: {
+      increase: '上升',
+      decrease: '下降',
+    },
     viewer: {
       closeThumbnail: '隐藏缩略图',
       thumbnail: '显示缩略图',

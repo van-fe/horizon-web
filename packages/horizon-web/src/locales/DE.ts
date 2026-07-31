@@ -235,6 +235,17 @@ export const DE = {
       indicator: 'Zu Folie {current} wechseln',
       item: 'Folie',
     },
+    typography: {
+      copy: 'Kopieren',
+      edit: 'Bearbeiten',
+    },
+    spin: {
+      loading: 'Wird geladen',
+    },
+    statistic: {
+      increase: 'Gestiegen',
+      decrease: 'Gesunken',
+    },
     viewer: {
       closeThumbnail: 'Schließen der Miniaturansicht',
       thumbnail: 'Miniaturansicht',

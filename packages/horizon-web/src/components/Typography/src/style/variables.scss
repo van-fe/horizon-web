@@ -1,0 +1,23 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  'color': #{function.css-variable('text-primary')},
+  'color-secondary': #{function.css-variable('text-secondary')},
+  'color-success': #{function.css-variable('text-success-default')},
+  'color-warning': #{function.css-variable('text-warning-default')},
+  'color-danger': #{function.css-variable('text-error-default')},
+  'color-disabled': #{function.css-variable('text-disabled')},
+  'code-background': #{function.css-variable('bg-hover')},
+  'code-border': #{function.css-variable('border-default')},
+  'action-gap': #{function.css-variable('spacing-2')},
+  'font-size-small': #{function.css-variable('text-sm')},
+  'font-size-medium': #{function.css-variable('text-base')},
+  'font-size-large': #{function.css-variable('text-lg')},
+  'font-size-heading-1': #{function.css-variable('font-size-4')},
+  'font-size-heading-2': #{function.css-variable('font-size-6')},
+  'font-size-heading-3': #{function.css-variable('text-xl')},
+  'font-size-heading-4': #{function.css-variable('text-lg')},
+  'font-size-heading-5': #{function.css-variable('text-base')},
+  'font-size-heading-6': #{function.css-variable('text-sm')},
+  'line-height': #{function.css-variable('line-height-standard')},
+);

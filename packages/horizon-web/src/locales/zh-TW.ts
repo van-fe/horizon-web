@@ -245,6 +245,17 @@ export const ZhTW = {
       indicator: '切換到第 {current} 張',
       item: '輪播項',
     },
+    typography: {
+      copy: '複製',
+      edit: '編輯',
+    },
+    spin: {
+      loading: '載入中',
+    },
+    statistic: {
+      increase: '上升',
+      decrease: '下降',
+    },
     result: {
       primaryButtonText: '確認',
       secondaryButtonText: '取消',

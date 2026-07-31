@@ -1,0 +1,97 @@
+@use '../../../../styles/mixins';
+
+/* stylelint-disable nesting-selector-no-missing-scoping-root -- BEM mixins provide the generated selector root. */
+
+@include mixins.b('splitter') {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  @include mixins.e('separator') {
+    position: relative;
+    z-index: 1;
+    flex: 0 0 mixins.css-variable('splitter-separator-size');
+    touch-action: none;
+    outline: none;
+
+    &::before {
+      position: absolute;
+      content: '';
+      background: mixins.css-variable('splitter-separator-color');
+      transition: background-color mixins.css-variable('transition-time-fast');
+    }
+
+    &:hover::before {
+      background: mixins.css-variable('splitter-separator-hover-color');
+    }
+
+    &:focus-visible::before {
+      background: mixins.css-variable('splitter-separator-focus-color');
+    }
+  }
+
+  @include mixins.e('handle') {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: mixins.css-variable('splitter-separator-color');
+    border-radius: mixins.css-variable('radius-pill');
+    transform: translate(-50%, -50%);
+  }
+
+  @include mixins.m('horizontal') {
+    flex-direction: row;
+
+    @include mixins.e('separator') {
+      cursor: col-resize;
+
+      &::before {
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        width: 1px;
+        transform: translateX(-50%);
+      }
+    }
+
+    @include mixins.e('handle') {
+      width: mixins.css-variable('splitter-handle-thickness');
+      height: mixins.css-variable('splitter-handle-length');
+    }
+  }
+
+  @include mixins.m('vertical') {
+    flex-direction: column;
+
+    @include mixins.e('separator') {
+      cursor: row-resize;
+
+      &::before {
+        right: 0;
+        bottom: 50%;
+        left: 0;
+        height: 1px;
+        transform: translateY(50%);
+      }
+    }
+
+    @include mixins.e('handle') {
+      width: mixins.css-variable('splitter-handle-length');
+      height: mixins.css-variable('splitter-handle-thickness');
+    }
+  }
+
+  @include mixins.is('disabled') {
+    @include mixins.e('separator') {
+      cursor: not-allowed;
+      opacity: mixins.css-variable('opacity-6');
+    }
+  }
+}
+
+@include mixins.b('splitter-panel') {
+  overflow: auto;
+}
+
+/* stylelint-enable nesting-selector-no-missing-scoping-root */

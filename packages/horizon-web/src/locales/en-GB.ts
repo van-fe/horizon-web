@@ -232,6 +232,17 @@ export const EnGB = {
       indicator: 'Go to slide {current}',
       item: 'slide',
     },
+    typography: {
+      copy: 'Copy',
+      edit: 'Edit',
+    },
+    spin: {
+      loading: 'Loading',
+    },
+    statistic: {
+      increase: 'Increased',
+      decrease: 'Decreased',
+    },
     viewer: {
       closeThumbnail: 'Close thumbnail',
       thumbnail: 'Thumbnail',

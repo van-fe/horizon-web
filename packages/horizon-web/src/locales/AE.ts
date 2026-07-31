@@ -245,6 +245,17 @@ export const AE = {
       indicator: 'الانتقال إلى الشريحة {current}',
       item: 'شريحة',
     },
+    typography: {
+      copy: 'نسخ',
+      edit: 'تحرير',
+    },
+    spin: {
+      loading: 'جارٍ التحميل',
+    },
+    statistic: {
+      increase: 'ارتفع',
+      decrease: 'انخفض',
+    },
     viewer: {
       closeThumbnail: 'إغلاق الصورة المصغرة',
       thumbnail: 'صورة مصغرة',
