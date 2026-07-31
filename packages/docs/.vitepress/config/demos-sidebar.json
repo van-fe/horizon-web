@@ -90,6 +90,7 @@
     "en": "Data Display",
     "items": [
       { "link": "components/Calendar", "zh": "Calendar 日历", "en": "Calendar" },
+      { "link": "components/Carousel", "zh": "Carousel 走马灯", "en": "Carousel" },
       { "link": "components/Card", "zh": "Card 卡片", "en": "Card" },
       { "link": "components/Collapse", "zh": "Collapse 折叠面板", "en": "Collapse" },
       { "link": "components/Descriptions", "zh": "Descriptions 描述列表", "en": "Descriptions" },

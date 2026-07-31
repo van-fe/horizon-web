@@ -223,6 +223,16 @@ export const SvSE = {
       rate: 'Uppspelningshastighet',
       error: 'Ljudet kunde inte spelas upp',
     },
+    carousel: {
+      label: 'Bildspel',
+      previous: 'Föregående bild',
+      next: 'Nästa bild',
+      play: 'Starta automatiskt bildspel',
+      pause: 'Stoppa automatiskt bildspel',
+      slide: 'Bild {current} av {total}',
+      indicator: 'Gå till bild {current}',
+      item: 'bild',
+    },
     result: {
       primaryButtonText: 'Ja',
       secondaryButtonText: 'Nej',

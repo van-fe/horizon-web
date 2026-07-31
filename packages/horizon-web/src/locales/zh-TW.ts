@@ -235,6 +235,16 @@ export const ZhTW = {
       rate: '播放速度',
       error: '音訊無法播放',
     },
+    carousel: {
+      label: '走馬燈',
+      previous: '上一張',
+      next: '下一張',
+      play: '開始自動輪播',
+      pause: '停止自動輪播',
+      slide: '第 {current} 張，共 {total} 張',
+      indicator: '切換到第 {current} 張',
+      item: '輪播項',
+    },
     result: {
       primaryButtonText: '確認',
       secondaryButtonText: '取消',

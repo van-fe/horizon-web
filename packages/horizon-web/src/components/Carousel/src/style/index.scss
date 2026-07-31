@@ -1,0 +1,240 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('carousel') {
+  position: relative;
+  box-sizing: content-box;
+  width: 100%;
+  height: mixins.css-variable('carousel-height');
+  overflow: visible;
+  border-radius: mixins.css-variable('carousel-radius');
+  outline: none;
+  touch-action: pan-y;
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px mixins.css-variable('carousel-focus-color');
+  }
+
+  @include mixins.m('vertical') {
+    touch-action: pan-x;
+
+    @include mixins.nested('carousel-item') {
+      transform: translateY(calc(var(--h-carousel-item-offset) * 100%));
+    }
+
+    @include mixins.e('indicators') {
+      top: 50%;
+      right: mixins.css-variable('spacing-4');
+      bottom: auto;
+      left: auto;
+      flex-direction: column;
+      transform: translateY(-50%);
+    }
+
+    @include mixins.e('indicator') {
+      &::before {
+        width: mixins.css-variable('carousel-indicator-size');
+        height: mixins.css-variable('carousel-indicator-size');
+      }
+
+      @include mixins.is('active') {
+        &::before {
+          width: mixins.css-variable('carousel-indicator-size');
+          height: mixins.css-variable('carousel-indicator-active-width');
+        }
+      }
+    }
+
+    @include mixins.e('arrow') {
+      top: auto;
+      left: 50%;
+      transform: translateX(-50%) rotate(90deg);
+
+      @include mixins.m('previous') {
+        top: mixins.css-variable('carousel-arrow-offset');
+      }
+
+      @include mixins.m('next') {
+        right: auto;
+        bottom: mixins.css-variable('carousel-arrow-offset');
+      }
+    }
+  }
+
+  @include mixins.m('fade') {
+    @include mixins.nested('carousel-item') {
+      opacity: 0;
+      transform: none;
+
+      @include mixins.is('active') {
+        z-index: 1;
+        opacity: 1;
+      }
+    }
+  }
+
+  @include mixins.m('indicators-outside') {
+    padding-bottom: mixins.css-variable('carousel-outside-gap');
+
+    @include mixins.e('indicators') {
+      bottom: 0;
+    }
+
+    @include mixins.e('indicator') {
+      &::before {
+        background: mixins.css-variable('carousel-indicator-color');
+      }
+
+      @include mixins.is('active') {
+        &::before {
+          background: mixins.css-variable('carousel-indicator-active-color');
+        }
+      }
+    }
+  }
+
+  @include mixins.m('arrow-hover') {
+    @include mixins.e('arrow') {
+      opacity: 0;
+    }
+
+    &:hover,
+    &:focus-within {
+      @include mixins.e('arrow') {
+        opacity: 1;
+      }
+    }
+  }
+
+  @include mixins.e('viewport') {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: inherit;
+  }
+
+  @include mixins.e(('arrow', 'autoplay')) {
+    position: absolute;
+    z-index: 3;
+    width: mixins.css-variable('carousel-arrow-size');
+    min-width: mixins.css-variable('carousel-arrow-size');
+    height: mixins.css-variable('carousel-arrow-size');
+    padding: 0;
+    color: mixins.css-variable('carousel-control-color');
+    background: mixins.css-variable('carousel-control-background');
+    border-radius: mixins.css-variable('radius-circle');
+    transition:
+      opacity mixins.css-variable('transition-time-fast'),
+      background-color mixins.css-variable('transition-time-fast');
+
+    &:hover,
+    &:focus-visible {
+      color: mixins.css-variable('carousel-control-color');
+      background: mixins.css-variable('carousel-control-background-hover');
+    }
+  }
+
+  @include mixins.e('arrow') {
+    top: 50%;
+    transform: translateY(-50%);
+
+    @include mixins.m('previous') {
+      left: mixins.css-variable('carousel-arrow-offset');
+    }
+
+    @include mixins.m('next') {
+      right: mixins.css-variable('carousel-arrow-offset');
+    }
+  }
+
+  @include mixins.e('autoplay') {
+    top: mixins.css-variable('carousel-arrow-offset');
+    right: mixins.css-variable('carousel-arrow-offset');
+  }
+
+  @include mixins.e('indicators') {
+    position: absolute;
+    right: 0;
+    bottom: mixins.css-variable('spacing-4');
+    left: 0;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: mixins.css-variable('carousel-indicator-gap');
+  }
+
+  @include mixins.e('indicator') {
+    width: auto;
+    min-width: mixins.css-variable('carousel-indicator-size');
+    height: 24px;
+    padding: 0;
+    overflow: visible;
+
+    &::before {
+      display: block;
+      width: mixins.css-variable('carousel-indicator-size');
+      height: mixins.css-variable('carousel-indicator-size');
+      background: mixins.css-variable('carousel-control-color');
+      border-radius: mixins.css-variable('radius-pill');
+      opacity: mixins.css-variable('opacity-7');
+      transition:
+        width mixins.css-variable('carousel-transition-duration')
+          mixins.css-variable('carousel-transition-function'),
+        height mixins.css-variable('carousel-transition-duration')
+          mixins.css-variable('carousel-transition-function'),
+        opacity mixins.css-variable('transition-time-fast');
+      content: '';
+    }
+
+    @include mixins.is('active') {
+      &::before {
+        width: mixins.css-variable('carousel-indicator-active-width');
+        opacity: 1;
+      }
+    }
+  }
+
+  @include mixins.e('status') {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    white-space: nowrap;
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+  }
+}
+
+@include mixins.b('carousel-item') {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transform: translateX(calc(var(--h-carousel-item-offset) * 100%));
+  transition:
+    transform mixins.css-variable('carousel-transition-duration')
+      mixins.css-variable('carousel-transition-function'),
+    opacity mixins.css-variable('carousel-transition-duration')
+      mixins.css-variable('carousel-transition-function');
+  will-change: transform, opacity;
+
+  &:not(.is-active) {
+    pointer-events: none;
+  }
+
+  @include mixins.is('hidden') {
+    visibility: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @include mixins.b('carousel-item') {
+    transition-duration: 1ms;
+  }
+}

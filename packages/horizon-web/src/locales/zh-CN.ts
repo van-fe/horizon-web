@@ -235,6 +235,16 @@ export const ZhCN = {
       rate: '播放速度',
       error: '音频无法播放',
     },
+    carousel: {
+      label: '走马灯',
+      previous: '上一张',
+      next: '下一张',
+      play: '开始自动轮播',
+      pause: '停止自动轮播',
+      slide: '第 {current} 张，共 {total} 张',
+      indicator: '切换到第 {current} 张',
+      item: '轮播项',
+    },
     viewer: {
       closeThumbnail: '隐藏缩略图',
       thumbnail: '显示缩略图',

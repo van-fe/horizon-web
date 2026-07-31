@@ -225,6 +225,16 @@ export const DE = {
       rate: 'Wiedergabegeschwindigkeit',
       error: 'Die Audiodatei konnte nicht abgespielt werden',
     },
+    carousel: {
+      label: 'Karussell',
+      previous: 'Vorherige Folie',
+      next: 'Nächste Folie',
+      play: 'Automatische Wiedergabe starten',
+      pause: 'Automatische Wiedergabe stoppen',
+      slide: 'Folie {current} von {total}',
+      indicator: 'Zu Folie {current} wechseln',
+      item: 'Folie',
+    },
     viewer: {
       closeThumbnail: 'Schließen der Miniaturansicht',
       thumbnail: 'Miniaturansicht',

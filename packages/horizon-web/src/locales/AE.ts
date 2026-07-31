@@ -235,6 +235,16 @@ export const AE = {
       rate: 'سرعة التشغيل',
       error: 'تعذر تشغيل الصوت',
     },
+    carousel: {
+      label: 'عرض شرائح',
+      previous: 'الشريحة السابقة',
+      next: 'الشريحة التالية',
+      play: 'بدء عرض الشرائح التلقائي',
+      pause: 'إيقاف عرض الشرائح التلقائي',
+      slide: 'الشريحة {current} من {total}',
+      indicator: 'الانتقال إلى الشريحة {current}',
+      item: 'شريحة',
+    },
     viewer: {
       closeThumbnail: 'إغلاق الصورة المصغرة',
       thumbnail: 'صورة مصغرة',

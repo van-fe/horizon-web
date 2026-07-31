@@ -10,6 +10,7 @@
   "Breadcrumb": "^(HBreadcrumb|HBreadcrumbItem)$",
   "Button": "^(HButton|HButtonGroup)$",
   "Calendar": "^HCalendar$",
+  "Carousel": "^(HCarousel|HCarouselItem)$",
   "Card": "^HCard$",
   "Cascader": "^HCascader$",
   "Checkbox": "^(HCheckbox|HCheckboxButton|HCheckboxGroup)$",

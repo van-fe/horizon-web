@@ -222,6 +222,16 @@ export const EnGB = {
       rate: 'Playback speed',
       error: 'The audio could not be played',
     },
+    carousel: {
+      label: 'Carousel',
+      previous: 'Previous slide',
+      next: 'Next slide',
+      play: 'Start automatic slide show',
+      pause: 'Stop automatic slide show',
+      slide: 'Slide {current} of {total}',
+      indicator: 'Go to slide {current}',
+      item: 'slide',
+    },
     viewer: {
       closeThumbnail: 'Close thumbnail',
       thumbnail: 'Thumbnail',

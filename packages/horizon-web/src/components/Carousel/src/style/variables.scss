@@ -1,0 +1,19 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  'transition-duration': #{function.css-variable('transition-time')},
+  'transition-function': #{function.css-variable('transition-func-ease-in-out-bezier')},
+  'arrow-size': 36px,
+  'arrow-offset': #{function.css-variable('spacing-4')},
+  'control-color': #{function.css-variable('text-inverse')},
+  'control-background': #{function.css-variable('bg-overlay-default')},
+  'control-background-hover': #{function.css-variable('bg-overlay-strong')},
+  'indicator-color': #{function.css-variable('bg-secondary')},
+  'indicator-active-color': #{function.css-variable('bg-brand-default')},
+  'indicator-gap': #{function.css-variable('spacing-3')},
+  'indicator-size': 8px,
+  'indicator-active-width': 24px,
+  'outside-gap': 32px,
+  'focus-color': #{function.css-variable('border-brand-default')},
+  'radius': #{function.css-variable('radius-m')},
+);
