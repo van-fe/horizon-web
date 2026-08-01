@@ -66,6 +66,15 @@ most `multipart-max-amount-uploading-at-same-time` chunk requests concurrently. 
 the regular `action`, `method`, `header`, and `data` props. Completed chunks are not uploaded again
 after pausing or retrying a failed upload.
 
+The demo below simulates a slow server entirely in the browser and does not require an external
+endpoint. Pause with the control beside the file and watch the green stored chunks remain intact.
+Resume to send only unfinished chunks, or choose “重新加入同一文件” after pausing to verify that
+`getUploadedChunkIndexes` restores the server-side checkpoint.
+
+:::demo components/Upload/multipart.vue :::
+
+Use the following configuration shape when connecting a real backend:
+
 ```vue
 <h-upload
   action="/api/uploads/chunks"
@@ -102,6 +111,8 @@ recovery across component instances: every valid returned index starts in the su
 Within the same instance, pause and resume preserve successful chunks automatically. The return
 value of `handleMerge` becomes the `uploaded` event response and is passed through `handle-success`.
 Set `multipart.maxAmountUploadingAtSameTime` to override concurrency for one configuration.
+The demo uses `uploadPart` to simulate requests. Omit it to use the default `XMLHttpRequest`, or
+provide it to integrate a cloud-storage SDK.
 
 ## Type Definition
 :::code ./demos/type-defined.ts :::

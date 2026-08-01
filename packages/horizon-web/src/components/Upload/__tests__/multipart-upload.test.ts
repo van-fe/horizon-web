@@ -146,6 +146,50 @@ describe('multipart upload', () => {
     expect(MockXMLHttpRequest.instances).toHaveLength(1);
   });
 
+  test('supports a cancellable custom chunk request adapter', async () => {
+    const attempts: number[] = [];
+    const aborted: number[] = [];
+    const resolvers = new Map<number, (value: unknown) => void>();
+    const progressReporters = new Map<number, (loaded: number) => void>();
+    const requestData = new Map<number, Record<string, unknown>>();
+    const { file, uploader } = createUploader({
+      initUpload: () => ({ uploadId: 'custom-upload' }),
+      beforePartUpload: (_file, index) => ({ partIndex: index }),
+      uploadPart: (_file, chunk, { data, signal, onProgress }) =>
+        new Promise((resolve, reject) => {
+          attempts.push(chunk.index);
+          requestData.set(chunk.index, data);
+          resolvers.set(chunk.index, resolve);
+          progressReporters.set(chunk.index, onProgress);
+          signal.addEventListener(
+            'abort',
+            () => {
+              aborted.push(chunk.index);
+              reject(new DOMException('Aborted', 'AbortError'));
+            },
+            { once: true },
+          );
+        }),
+      handleMerge: vi.fn(),
+    });
+
+    await uploader.start();
+    expect(MockXMLHttpRequest.instances).toHaveLength(0);
+    expect(attempts).toEqual([0, 1]);
+    expect(requestData.get(0)).toEqual({ uploadId: 'custom-upload', partIndex: 0 });
+
+    progressReporters.get(0)?.(512 * 1024);
+    expect(file.percentage).toBeCloseTo(20, 4);
+
+    resolvers.get(0)?.({ etag: 'part-0' });
+    await flushPromises();
+    uploader.pause();
+    expect(aborted).toEqual([1, 2]);
+
+    await uploader.resume();
+    expect(attempts).toEqual([0, 1, 2, 1, 2]);
+  });
+
   test('pauses active requests and resumes from completed chunks', async () => {
     const handleMerge = vi.fn(() => ({ url: 'https://example.com/large.bin' }));
     const uploadedIndexes: number[] = [];

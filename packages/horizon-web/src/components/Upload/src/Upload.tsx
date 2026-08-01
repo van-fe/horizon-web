@@ -217,7 +217,7 @@ export default defineComponent({
     );
 
     expose({
-      async upload(files?: HUploadFileType[]) {
+      async upload(files?: HUploadRawFileType[]) {
         if (files?.length) {
           await uploadFileHelper.addFiles(files);
         }

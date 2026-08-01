@@ -29,6 +29,46 @@ export interface HUploadChunk {
   response?: unknown;
 }
 
+export interface HUploadPartRequestOptions {
+  /**
+   * 分片上传地址
+   * @en The chunk upload URL.
+   */
+  action: string;
+  /**
+   * 分片请求方式
+   * @en The chunk request method.
+   */
+  method: string;
+  /**
+   * 分片请求头
+   * @en The chunk request headers.
+   */
+  headers: Data;
+  /**
+   * 分片请求附加数据
+   * @en The extra chunk request data.
+   */
+  data: Data;
+  /**
+   * 是否携带凭证
+   * @en Whether credentials are included with the chunk request.
+   */
+  withCredentials: boolean;
+  /**
+   * 暂停上传时会触发的取消信号
+   * @en The cancellation signal aborted when the upload is paused.
+   */
+  signal: AbortSignal;
+  /**
+   * 上报当前分片已上传的字节数
+   * @param loaded 当前分片已上传的字节数
+   * @paramEn loaded The uploaded bytes of the current chunk.
+   * @en Reports the uploaded bytes of the current chunk.
+   */
+  onProgress: (loaded: number) => void;
+}
+
 export interface HUploadMultipartSetting {
   /**
    * 同时最多上传数量
@@ -84,6 +124,22 @@ export interface HUploadMultipartSetting {
    * @en Returns extra form data appended before a chunk is uploaded.
    */
   beforePartUpload?: (file: HUploadFileType, index: number, part: Blob) => Data;
+  /**
+   * 自定义单个分片的上传请求，适用于云存储 SDK 或其他非 XMLHttpRequest 上传方式
+   * 未设置时组件使用 `action`、`method`、`header` 和 `data` 发起 XMLHttpRequest
+   * @param file 正在上传的文件
+   * @paramEn file The file being uploaded.
+   * @param chunk 当前分片
+   * @paramEn chunk The current chunk.
+   * @param options 请求配置、取消信号和进度回调
+   * @paramEn options The request options, cancellation signal, and progress reporter.
+   * @en Uploads one chunk with a custom request adapter. XMLHttpRequest is used when omitted.
+   */
+  uploadPart?: (
+    file: HUploadFileType,
+    chunk: HUploadChunk,
+    options: HUploadPartRequestOptions,
+  ) => Awaitable<unknown>;
   /**
    * 处理合并文件，在所有分片都上传完后会回调；返回值会作为上传成功事件的响应
    * @param file 上传的文件

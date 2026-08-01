@@ -1,6 +1,6 @@
 import type { HUploadFileType, HUploadHttpRequestInstanceMethods } from '../fileDefines';
 import { HUploadFileStatusEnum } from '../fileDefines';
-import type { HUploadChunk } from '../../composables/useMultipartUpload';
+import type { HUploadChunk, HUploadPartRequestOptions } from '../../composables/useMultipartUpload';
 import type { Data } from '@aurora/utils';
 import UploadHelperOptions from '../UploadHelperOptions';
 import type { ToRefs } from 'vue';
@@ -11,7 +11,7 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
   protected readonly instanceMethods: HUploadHttpRequestInstanceMethods;
 
   private readonly chunks: HUploadChunk[] = [];
-  private readonly requests = new Map<number, XMLHttpRequest>();
+  private readonly requests = new Map<number, { abort: () => void }>();
   private readonly loadedBytes = new Map<number, number>();
   private initializePromise?: Promise<void>;
   private paused = false;
@@ -53,6 +53,12 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
   abstract filenameModify(fileRawName: string, index: number, part: Blob): string;
 
   abstract beforeFilePartUpload(file: HUploadFileType, index: number, part: Blob): Data;
+
+  abstract uploadFilePart(
+    file: HUploadFileType,
+    chunk: HUploadChunk,
+    options: HUploadPartRequestOptions,
+  ): Promise<unknown> | undefined;
 
   abstract uploadActionModify(chunk: HUploadChunk): string;
 
@@ -126,19 +132,83 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
     this.loadedBytes.clear();
   }
 
-  private fail(chunk: HUploadChunk, xhr: XMLHttpRequest) {
+  private fail(chunk: HUploadChunk, responseText: string, response: unknown) {
     if (this.paused || this.failed || this.completed) return;
 
     chunk.status = 'fail';
-    chunk.response = xhr.response;
+    chunk.response = response;
     this.failed = true;
     this.abortActiveRequests();
-    void this.instanceMethods.onUploadFail(this.file, xhr.responseText, xhr.response);
+    const serializedResponse =
+      typeof response === 'string' ? response : JSON.stringify({ reason: responseText });
+    void this.instanceMethods.onUploadFail(this.file, responseText, serializedResponse);
   }
 
   private uploadChunk(chunk: HUploadChunk) {
-    const xhr = new XMLHttpRequest();
     let settled = false;
+    const extraData = this.beforeFilePartUpload(this.file, chunk.index, chunk.part);
+    const abortController = new AbortController();
+    const onProgress = (loaded: number) => {
+      if (settled || this.paused) return;
+      this.loadedBytes.set(chunk.index, Math.min(Math.max(loaded, 0), chunk.size));
+      this.updateProgress();
+    };
+
+    chunk.status = 'uploading';
+
+    let customRequest: Promise<unknown> | undefined;
+    try {
+      customRequest = this.uploadFilePart(this.file, chunk, {
+        action: this.uploadActionModify(chunk),
+        method: this.uploadMethod,
+        headers: { ...this.header },
+        data: { ...this.data, ...extraData },
+        withCredentials: this.withCredentials,
+        signal: abortController.signal,
+        onProgress,
+      });
+    } catch (error) {
+      const reason = error instanceof Error ? error.message : String(error);
+      this.fail(chunk, reason, error);
+      return;
+    }
+
+    if (customRequest) {
+      const cancel = () => {
+        if (settled) return;
+        settled = true;
+        this.requests.delete(chunk.index);
+        this.loadedBytes.delete(chunk.index);
+        if (chunk.status === 'uploading') chunk.status = 'pending';
+      };
+
+      abortController.signal.addEventListener('abort', cancel, { once: true });
+      this.requests.set(chunk.index, { abort: () => abortController.abort() });
+
+      customRequest.then(
+        response => {
+          if (settled) return;
+          settled = true;
+          this.requests.delete(chunk.index);
+          this.loadedBytes.delete(chunk.index);
+          chunk.status = 'success';
+          chunk.response = response;
+          this.updateProgress();
+          void this.schedule();
+        },
+        error => {
+          if (settled) return;
+          settled = true;
+          this.requests.delete(chunk.index);
+          this.loadedBytes.delete(chunk.index);
+          const reason = error instanceof Error ? error.message : String(error);
+          this.fail(chunk, reason, error);
+        },
+      );
+      return;
+    }
+
+    const xhr = new XMLHttpRequest();
 
     xhr.open(this.uploadMethod, this.uploadActionModify(chunk), true);
     xhr.withCredentials = this.withCredentials;
@@ -146,8 +216,7 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
 
     xhr.upload.addEventListener('progress', event => {
       if (settled || this.paused) return;
-      this.loadedBytes.set(chunk.index, Math.min(event.loaded, chunk.size));
-      this.updateProgress();
+      onProgress(event.loaded);
     });
 
     xhr.onload = () => {
@@ -162,7 +231,7 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
         this.updateProgress();
         void this.schedule();
       } else {
-        this.fail(chunk, xhr);
+        this.fail(chunk, xhr.responseText, xhr.response);
       }
     };
 
@@ -171,7 +240,7 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
       settled = true;
       this.requests.delete(chunk.index);
       this.loadedBytes.delete(chunk.index);
-      this.fail(chunk, xhr);
+      this.fail(chunk, xhr.responseText, xhr.response);
     };
 
     xhr.onabort = () => {
@@ -184,9 +253,8 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
 
     const formData = new FormData();
     formData.append(this.filenameModify(this.name, chunk.index, chunk.part), chunk.part);
-    this.appendData(formData, this.beforeFilePartUpload(this.file, chunk.index, chunk.part));
+    this.appendData(formData, extraData);
 
-    chunk.status = 'uploading';
     this.requests.set(chunk.index, xhr);
     xhr.send(formData);
   }

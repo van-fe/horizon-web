@@ -1,6 +1,10 @@
 import BaseMultipartUploadHelper from './BaseMultipartUploadHelper';
 import type { Data } from '@aurora/utils';
-import type { HUploadMultipartSetting, HUploadChunk } from '../../composables/useMultipartUpload';
+import type {
+  HUploadMultipartSetting,
+  HUploadChunk,
+  HUploadPartRequestOptions,
+} from '../../composables/useMultipartUpload';
 import type { ToRefs } from 'vue';
 import type { UploadProps } from '../../composables/useProps';
 import type { HUploadFileType, HUploadHttpRequestInstanceMethods } from '../fileDefines';
@@ -38,6 +42,20 @@ export default class CustomMultipleUploader extends BaseMultipartUploadHelper {
 
   beforeFilePartUpload(file: HUploadFileType, index: number, part: Blob): Data {
     return this.setting.beforePartUpload?.(file, index, part) || {};
+  }
+
+  uploadFilePart(
+    file: HUploadFileType,
+    chunk: HUploadChunk,
+    options: HUploadPartRequestOptions,
+  ): Promise<unknown> | undefined {
+    if (!this.setting.uploadPart) return undefined;
+    return Promise.resolve(
+      this.setting.uploadPart(file, chunk, {
+        ...options,
+        data: { ...options.data, ...this._data },
+      }),
+    );
   }
 
   filenameModify(fileRawName: string, index: number, part: Blob): string {

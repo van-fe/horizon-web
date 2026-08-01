@@ -65,6 +65,14 @@
 `multipart-max-amount-uploading-at-same-time` 个分片请求。每个请求仍使用 `action`、`method`、`header`
 和 `data`，成功分片在暂停或失败重试后不会重复上传。
 
+下面的示例完全在浏览器中模拟慢速服务端，不依赖外部接口。上传时点击文件右侧的暂停按钮，观察绿色的
+“已保存”分片；继续上传时只有未完成分片会再次开始。也可以暂停后点击“重新加入同一文件”，验证
+`getUploadedChunkIndexes` 从模拟服务端恢复断点。
+
+:::demo components/Upload/multipart.vue :::
+
+实际接入服务端时，可参考下面的配置结构：
+
 ```vue
 <h-upload
   action="/api/uploads/chunks"
@@ -100,6 +108,7 @@ const multipart: HUploadMultipartSetting = {
 返回的有效下标会直接标记为成功；页面内点击暂停/继续时，组件本身也会保留这些成功分片。
 `handleMerge` 的返回值会作为 `uploaded` 事件的响应，并继续经过 `handle-success` 处理。
 如需针对单个配置覆盖并发数，可设置 `multipart.maxAmountUploadingAtSameTime`。
+示例通过 `uploadPart` 模拟请求；生产环境不设置它时，组件默认使用 `XMLHttpRequest`，也可以通过它接入云存储 SDK。
 
 ## 类型定义
 :::code ./demos/type-defined.ts :::

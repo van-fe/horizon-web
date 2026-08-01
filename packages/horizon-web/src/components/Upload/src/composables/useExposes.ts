@@ -13,7 +13,7 @@ export const useUploadExposes = {
    * @paramEn files The files value.
     * @en Controls upload.
    */
-  upload: Function as ExposeType<(files?: HUploadFileType[]) => Promise<void>>,
+  upload: Function as ExposeType<(files?: HUploadRawFileType[]) => Promise<void>>,
   /**
    * 手动取消上传
    * @param files 手动取消上传的文件列表，如果不传即全部取消

@@ -26,4 +26,8 @@ export type {
   HUploadHttpRequestInstanceMethods,
 } from './src/utils/fileDefines';
 
-export type { HUploadChunk, HUploadMultipartSetting } from './src/composables/useMultipartUpload';
+export type {
+  HUploadChunk,
+  HUploadMultipartSetting,
+  HUploadPartRequestOptions,
+} from './src/composables/useMultipartUpload';
