@@ -1,17 +1,17 @@
 @use '../../../../styles/mixins';
 
 @include mixins.b('cascader-item') {
-  color: mixins.css-variable('cascader-color--item');
-  background: mixins.css-variable('cascader', 'bg', 'item', 'default');
+  color: mixins.css-variable('cascader', 'color', 'item');
+  background: mixins.css-variable('cascader', 'background', 'item');
   cursor: pointer;
-  transition: mixins.css-variable('cascader-transition--background');
+  transition: mixins.css-variable('cascader', 'transition', 'background');
 
   @include mixins.e('inner') {
     position: relative;
     display: flex;
     align-items: center;
-    min-height: mixins.css-variable('cascader-min-height--item');
-    padding: mixins.css-variable('cascader-padding--item');
+    min-height: mixins.css-variable('cascader', 'size', 'item', 'min-height');
+    padding: mixins.css-variable('cascader', 'spacing', 'item', 'padding');
   }
 
   @include mixins.e('checkbox') {
@@ -33,7 +33,7 @@
     flex: 1;
     overflow: hidden;
     word-break: break-all;
-    -webkit-line-clamp: mixins.css-variable-with-default-value('cascader-max-line--item', 1);
+    -webkit-line-clamp: mixins.css-variable-with-default-value('cascader-size-item-max-line', 1);
     -webkit-box-orient: vertical;
 
     /* stylelint-disable-next-line selector-type-no-unknown */
@@ -45,7 +45,7 @@
   @include mixins.e('icon') {
     position: absolute;
     top: 50%;
-    right: mixins.css-variable('cascader-padding-right--item');
+    right: mixins.css-variable('cascader', 'spacing', 'item', 'padding-right');
     display: flex;
     align-items: center;
     height: fit-content;
@@ -60,22 +60,22 @@
 
   @include mixins.has('icon') {
     @include mixins.be('cascader-item', 'content-wrapper', false) {
-      padding-right: mixins.css-variable('cascader-padding-right--item--has-icon');
+      padding-right: mixins.css-variable('cascader', 'spacing', 'item', 'has-icon', 'padding-right');
     }
   }
 
   @include mixins.is-not('disabled') {
     &:hover {
-      background: mixins.css-variable('cascader', 'bg', 'item', 'hover');
+      background: mixins.css-variable('cascader', 'background', 'item', 'hover');
     }
   }
 
   @include mixins.is('focus') {
-    background: mixins.css-variable('cascader-bg--item--hover');
+    background: mixins.css-variable('cascader', 'background', 'item', 'hover');
   }
 
   @include mixins.is('disabled') {
-    color: mixins.css-variable('cascader-color--item--disabled');
+    color: mixins.css-variable('cascader', 'color', 'item', 'disabled');
     cursor: not-allowed;
   }
 }

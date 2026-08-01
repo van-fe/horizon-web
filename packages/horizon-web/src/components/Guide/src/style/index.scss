@@ -10,7 +10,7 @@
   pointer-events: none;
 
   @include mixins.e('content') {
-    color: mixins.css-variable('guide-color');
+    color: mixins.css-variable('guide', 'color');
   }
 
   @include mixins.e('mask') {
@@ -24,7 +24,7 @@
     pointer-events: none;
 
     > path {
-      transition: mixins.css-variable('guide-transition');
+      transition: mixins.css-variable('guide', 'transition');
       pointer-events: auto;
     }
   }
@@ -45,17 +45,17 @@
   z-index: 1;
   display: inline-flex;
   flex-direction: column;
-  min-width: mixins.css-variable('guide-min-width--item');
-  padding: mixins.css-variable('guide-padding');
-  border-radius: mixins.css-variable('guide-border-radius--item');
-  box-shadow: mixins.css-variable('guide-box-shadow');
+  min-width: mixins.css-variable('guide', 'size', 'item', 'min-width');
+  padding: mixins.css-variable('guide', 'spacing', 'padding');
+  border-radius: mixins.css-variable('guide', 'border-radius', 'item');
+  box-shadow: mixins.css-variable('guide', 'box-shadow');
   pointer-events: auto;
 
   @include mixins.e('header') {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: mixins.css-variable('guide-margin-bottom--item-header');
+    margin-bottom: mixins.css-variable('guide', 'spacing', 'item-header', 'margin-bottom');
 
     @include mixins.m('title') {
       font-weight: bold;
@@ -67,10 +67,10 @@
   }
 
   @include mixins.e('body') {
-    margin-bottom: mixins.css-variable('guide-margin-bottom--item-body');
+    margin-bottom: mixins.css-variable('guide', 'spacing', 'item-body', 'margin-bottom');
 
     @include mixins.m('image') {
-      margin-bottom: mixins.css-variable('guide-margin-bottom--item-body--image');
+      margin-bottom: mixins.css-variable('guide', 'spacing', 'item-body', 'image', 'margin-bottom');
     }
   }
 
@@ -80,28 +80,28 @@
     justify-content: space-between;
 
     @include mixins.m('steps') {
-      font-size: mixins.css-variable('guide-font-size--steps');
+      font-size: mixins.css-variable('guide', 'font-size', 'steps');
     }
 
     @include mixins.m('controls') {
       @include mixins.siblings-block('button') {
-        margin-left: mixins.css-variable('guide-margin-left--sibilings-button');
+        margin-left: mixins.css-variable('guide', 'spacing', 'siblings-button', 'margin-left');
       }
     }
   }
 
   @include mixins.e('arrow') {
     position: absolute;
-    width: mixins.css-variable('guide-size--arrow');
-    height: mixins.css-variable('guide-size--arrow');
+    width: mixins.css-variable('guide', 'size', 'arrow');
+    height: mixins.css-variable('guide', 'size', 'arrow');
 
     &::before {
       position: absolute;
       box-sizing: border-box;
       width: 100%;
       height: 100%;
-      border-right: mixins.css-variable('guide-border--arrow');
-      border-bottom: mixins.css-variable('guide-border--arrow');
+      border-right: mixins.css-variable('guide', 'border', 'arrow');
+      border-bottom: mixins.css-variable('guide', 'border', 'arrow');
       visibility: visible;
       content: '';
     }
@@ -109,14 +109,15 @@
 
   // reference离开可视区域
   &[data-reference-overflow-observed],
-  &[data-reference-overflow-observed] #{mixins.element-name('arrow', mixins.block('guide-item'))}::before {
+  &[data-reference-overflow-observed]
+    #{mixins.element-name('arrow', mixins.block('guide-item'))}::before {
     visibility: hidden;
     pointer-events: none;
   }
 
   // 小三角位置
   &[data-popper-placement^='top'] > #{mixins.element-name('arrow', mixins.block('guide-item'))} {
-    bottom: calc(-1 * mixins.css-variable('guide-size--arrow') / 2);
+    bottom: calc(-1 * mixins.css-variable('guide', 'size', 'arrow') / 2);
 
     &::before {
       transform: rotate(45deg);
@@ -124,7 +125,7 @@
   }
 
   &[data-popper-placement^='bottom'] > #{mixins.element-name('arrow', mixins.block('guide-item'))} {
-    top: calc(-1 * mixins.css-variable('guide-size--arrow') / 2);
+    top: calc(-1 * mixins.css-variable('guide', 'size', 'arrow') / 2);
 
     &::before {
       transform: rotate(225deg);
@@ -132,7 +133,7 @@
   }
 
   &[data-popper-placement^='left'] > #{mixins.element-name('arrow', mixins.block('guide-item'))} {
-    right: calc(-1 * mixins.css-variable('guide-size--arrow') / 2);
+    right: calc(-1 * mixins.css-variable('guide', 'size', 'arrow') / 2);
 
     &::before {
       transform: rotate(-45deg);
@@ -140,7 +141,7 @@
   }
 
   &[data-popper-placement^='right'] > #{mixins.element-name('arrow', mixins.block('guide-item'))} {
-    left: calc(-1 * mixins.css-variable('guide-size--arrow') / 2);
+    left: calc(-1 * mixins.css-variable('guide', 'size', 'arrow') / 2);
 
     &::before {
       transform: rotate(135deg);

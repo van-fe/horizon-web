@@ -12,7 +12,10 @@
       position: relative;
       display: flex;
       align-items: center;
-      min-height: calc(#{mixins.css-variable('picker-height')} - (#{mixins.css-variable('picker-padding--input--outer')} + 1px) * 2);
+      min-height: calc(
+        #{mixins.css-variable('picker', 'size', 'height')} -
+          (#{mixins.css-variable('picker', 'spacing', 'input', 'outer', 'padding')} + 1px) * 2
+      );
 
       @include mixins.em('tag-render', 'instance', false) {
         position: absolute;
@@ -33,23 +36,29 @@
   }
 
   #{mixins.element-name('container', #{mixins.block('tag-group')})} {
-    grid-gap: mixins.css-variable('select-gap-column--tags-container');
+    grid-gap: mixins.css-variable('select', 'spacing', 'tags-container', 'column-gap');
     align-items: center;
   }
 
   @include mixins.bem('picker', 'input', 'small', false) {
     #{mixins.element-name('container', mixins.block('tag-group'))} {
-      grid-gap: mixins.css-variable('select-gap-column--tags-container--small');
+      grid-gap: mixins.css-variable('select', 'spacing', 'tags-container', 'column-gap', 'small');
     }
 
     @include mixins.bem('select', 'tag-render', 'single', false) {
-      min-height: calc(#{mixins.css-variable('picker-height--small')} - (#{mixins.css-variable('picker-padding--input--outer')} + 1px) * 2);
+      min-height: calc(
+        #{mixins.css-variable('picker', 'size', 'height', 'small')} -
+          (#{mixins.css-variable('picker', 'spacing', 'input', 'outer', 'padding')} + 1px) * 2
+      );
     }
   }
 
   @include mixins.bem('picker', 'input', 'large', false) {
     @include mixins.bem('select', 'tag-render', 'single', false) {
-      min-height: calc(#{mixins.css-variable('picker-height--large')} - (#{mixins.css-variable('picker-padding--input--outer')} + 1px) * 2);
+      min-height: calc(
+        #{mixins.css-variable('picker', 'size', 'height', 'large')} -
+          (#{mixins.css-variable('picker', 'spacing', 'input', 'outer', 'padding')} + 1px) * 2
+      );
     }
   }
 
@@ -57,12 +66,12 @@
     @include mixins.m('no-border') {
       input {
         &::placeholder {
-          color: mixins.css-variable('select-color--placeholder--no-border');
+          color: mixins.css-variable('select', 'color', 'placeholder', 'no-border');
         }
 
         &:focus {
           &::placeholder {
-            color: mixins.css-variable('select-color--placeholder--no-border--focus');
+            color: mixins.css-variable('select', 'color', 'placeholder', 'no-border', 'focus');
           }
         }
       }

@@ -1,29 +1,69 @@
 @use '../../../../styles/mixins/function';
 
 $values: (
-  'min-width--item': 260px,
-  'size--arrow': 12px,
-  'font-size--steps': #{function.css-variable('text-sm')},
-  'color': #{function.css-variable('text-primary')},
-  'color--primary': #{function.css-variable('text-inverse')},
-  'color--primary--button--confirm': #{function.css-variable('text-brand-default')},
-  'color--primary--button--cancel': #{function.css-variable('text-inverse')},
-  'border-color--arrow': #{function.css-variable('divider-default')},
-  'border-color--arrow--primary': #{function.css-variable('border-brand-default')},
-  'border-color--button--cancel': #{function.css-variable('border-inverse')},
-  'border--arrow': 1px solid #{function.css-variable('popover-border-color')},
-  'bg': #{function.css-variable('bg-default')},
-  'bg--primary': #{function.css-variable('bg-brand-default')},
-  'bg--primary--button--confirm': #{function.css-variable('bg-default')},
-  'bg--primary--button--cancel': #{function.css-variable('bg-brand-default')},
-  'bg--mask': #{function.css-variable('bg-overlay-default')},
-  'box-shadow': #{function.css-variable('shadow-down')},
-  'border-radius--item': #{function.css-variable('radius')},
-  'margin-bottom--item-header': #{function.css-variable('spacing-3')},
-  'margin-bottom--item-body': #{function.css-variable('spacing-5')},
-  'margin-bottom--item-body--image': #{function.css-variable('spacing-3')},
-  'margin-left--sibilings-button': #{function.css-variable('spacing-4')},
-  'padding': #{function.css-variable('spacing-5')},
-  'gap--item-block': #{function.css-variable('spacing-3')},
-  'transition': #{function.css-variable('transition-all')},
+  size: (
+    item: (
+      min-width: 260px,
+    ),
+    arrow: 12px,
+  ),
+  font-size: (
+    steps: #{function.css-variable('text-sm')},
+  ),
+  color: (
+    '': #{function.css-variable('text-primary')},
+    primary: (
+      '': #{function.css-variable('text-inverse')},
+      button: (
+        confirm: #{function.css-variable('text-brand-default')},
+        cancel: #{function.css-variable('text-inverse')},
+      ),
+    ),
+  ),
+  border-color: (
+    arrow: (
+      '': #{function.css-variable('divider-default')},
+      primary: #{function.css-variable('border-brand-default')},
+    ),
+    button: (
+      cancel: #{function.css-variable('border-inverse')},
+    ),
+  ),
+  border: (
+    arrow: 1px solid #{function.css-variable('popover', 'border-color')},
+  ),
+  border-radius: (
+    item: #{function.css-variable('radius')},
+  ),
+  background: (
+    '': #{function.css-variable('bg-default')},
+    primary: (
+      '': #{function.css-variable('bg-brand-default')},
+      button: (
+        confirm: #{function.css-variable('bg-default')},
+        cancel: #{function.css-variable('bg-brand-default')},
+      ),
+    ),
+    mask: #{function.css-variable('bg-overlay-default')},
+  ),
+  spacing: (
+    item-header: (
+      margin-bottom: #{function.css-variable('spacing-3')},
+    ),
+    item-body: (
+      margin-bottom: #{function.css-variable('spacing-5')},
+      image: (
+        margin-bottom: #{function.css-variable('spacing-3')},
+      ),
+    ),
+    siblings-button: (
+      margin-left: #{function.css-variable('spacing-4')},
+    ),
+    padding: #{function.css-variable('spacing-5')},
+    item-block: (
+      gap: #{function.css-variable('spacing-3')},
+    ),
+  ),
+  box-shadow: #{function.css-variable('shadow-down')},
+  transition: #{function.css-variable('transition-all')},
 );

@@ -11,6 +11,16 @@ $values: (
       action-button: 16px,
     ),
   ),
+  font-weight: (
+    header: mixins.css-variable('weight-strong'),
+    footer: mixins.css-variable('weight-strong'),
+  ),
+  line-height: (
+    mini: 21px,
+    small: 21px,
+    medium: 21px,
+    large: 21px,
+  ),
   color: (
     header: (
       sort: (
@@ -23,18 +33,17 @@ $values: (
       ),
     ),
   ),
-  font: (
-    line-height: (
-      mini: 21px,
-      small: 21px,
-      medium: 21px,
-      large: 21px,
-    ),
-    weight: (
-      header: mixins.css-variable('weight-strong'),
-      footer: mixins.css-variable('weight-strong'),
+  border-color: (
+    '': mixins.css-variable('divider', 'default'),
+    header: (
+      divider: (
+        column: mixins.css-variable('divider', 'strong'),
+        resizing: mixins.css-variable('border', 'brand', 'default'),
+      ),
     ),
   ),
+  border: #{1px solid mixins.css-variable('table', 'border-color')},
+  border-radius: mixins.css-variable('radius', 'm'),
   background: (
     header: (
       '': mixins.css-variable('bg', 'secondary'),
@@ -61,20 +70,43 @@ $values: (
       ),
     ),
   ),
-  border-color: (
-    default: mixins.css-variable('divider', 'default'),
-  ),
-  border: (
-    default: #{1px solid mixins.css-variable('table', 'border-color', 'default')},
-  ),
-  divider: (
-    header: (
-      column-color: mixins.css-variable('divider', 'strong'),
-      resizing-color: mixins.css-variable('border', 'brand', 'default'),
+  spacing: (
+    cell: (
+      x: (
+        padding: mixins.css-variable('spacing-5'),
+      ),
+      padding: (
+        mini: 5px,
+        small: mixins.css-variable('spacing-3'),
+        medium: mixins.css-variable('spacing-4'),
+        large: mixins.css-variable('spacing-5'),
+      ),
+      selection: (
+        padding: 0 mixins.css-variable('spacing-4'),
+      ),
+      prepend: (
+        margin: #{0 mixins.css-variable('spacing-3') 0 0},
+      ),
+      append: (
+        margin: #{0 0 0 mixins.css-variable('spacing-3')},
+      ),
+      expand-icon: (
+        margin: #{0 mixins.css-variable('spacing-3') 0 0},
+      ),
+      wrap: (
+        gap: mixins.css-variable('spacing-3'),
+      ),
+      prepend-append: (
+        gap: mixins.css-variable('spacing-1'),
+      ),
     ),
-  ),
-  border-radius: (
-    '': mixins.css-variable('radius', 'm'),
+    column-manager: (
+      item: (
+        action: (
+          padding: 0 mixins.css-variable('spacing-3') 0 0,
+        ),
+      ),
+    ),
   ),
   box-shadow: (
     scrolling: (
@@ -82,41 +114,9 @@ $values: (
       right: inset -10px 0 10px -10px rgba(15, 17, 20, 10%),
     ),
   ),
-  spacing: (
-    padding: (
-      cell: (
-        x: mixins.css-variable('spacing-5'),
-        mini: 5px,
-        small: mixins.css-variable('spacing-3'),
-        medium: mixins.css-variable('spacing-4'),
-        large: mixins.css-variable('spacing-5'),
-        selection: 0 mixins.css-variable('spacing-4'),
-      ),
-      column-manager: (
-        item: (
-          action: 0 mixins.css-variable('spacing-3') 0 0,
-        ),
-      ),
-    ),
-    margin: (
-      cell: (
-        prepend: #{0 mixins.css-variable('spacing-3') 0 0},
-        append: #{0 0 0 mixins.css-variable('spacing-3')},
-        expand-icon: #{0 mixins.css-variable('spacing-3') 0 0},
-      ),
-    ),
-    gap: (
-      cell: (
-        wrap: mixins.css-variable('spacing-3'),
-        prepend-append: mixins.css-variable('spacing-1'),
-      ),
-    ),
-  ),
   transition: (
     transform: mixins.css-variable('transition', 'transform'),
     color-behavior: mixins.css-variable('transition-color-behavior'),
   ),
-  z-index: (
-    default: 10,
-  ),
+  z-index: 10,
 );

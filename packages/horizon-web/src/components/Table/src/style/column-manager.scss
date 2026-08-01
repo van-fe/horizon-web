@@ -4,11 +4,11 @@
   @include mixins.e('column-manager') {
     position: absolute;
     top: 0;
-    right: mixins.css-variable('table', 'spacing', 'padding', 'cell', 'x');
-    z-index: calc(#{mixins.css-variable('table', 'z-index', 'default')} + 5);
+    right: mixins.css-variable('table', 'spacing', 'cell', 'x', 'padding');
+    z-index: calc(#{mixins.css-variable('table', 'z-index')} + 5);
     display: flex;
     align-items: center;
-    height: mixins.css-variable-with-default-value('table-header-row-height', '46px');
+    height: mixins.css-variable-with-default-value('table-size-header-row-height', '46px');
 
     @include mixins.m('popper') {
       @include mixins.nested('picker__pop-content--container') {
@@ -32,14 +32,7 @@
       &-action {
         display: flex;
         align-items: center;
-        padding: mixins.css-variable(
-          'table',
-          'spacing',
-          'padding',
-          'column-manager',
-          'item',
-          'action'
-        );
+        padding: mixins.css-variable('table', 'spacing', 'column-manager', 'item', 'action', 'padding');
       }
 
       &-action-button {

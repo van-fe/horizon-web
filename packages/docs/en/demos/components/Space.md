@@ -35,15 +35,15 @@ Set `wrap`, only effective in `horizontal`
 ## Design Token
 | Variable | Default Value | Description |
 | --- | --- | --- |
-| --h-space--small | var(--h-spacing-3) | small size spacing  |
-| --h-space--medium | var(--h-spacing-5) | medium size spacing  |
-| --h-space--large | var(--h-spacing-7) | large size spacing  |
-| --h-space--horizontal--small | var(--h-space--small) |  horizontal small spacing  |
-| --h-space--horizontal--medium | var(--h-space--medium) | horizontal medium spacing  |
-| --h-space--horizontal--large | var(--h-space--large) | horizontal large spacing  |
-| --h-space--vertical--small | var(--h-space--small) | vertical small spacing  |
-| --h-space--vertical--medium | var(--h-space--medium) | vertical medium spacing  |
-| --h-space--vertical--large | var(--h-space--large) | vertical large spacing |
-| --h-space--wrap--small | var(--h-space--vertical--small) var(--h-space--vertical--small) |  wrap small spacing up down left right  |
-|  --h-space--wrap--medium | var(--h-space--vertical--medium) var(--h-space--vertical--medium) |  wrap medium spacing up down left right |
-|  --h-space--wrap--large | var(--h-space--vertical--large) var(--h-space--vertical--large) |  wrap large spacing up down left right |
+| --h-space-spacing-gap-small | var(--h-spacing-3) | small size spacing  |
+| --h-space-spacing-gap-medium | var(--h-spacing-5) | medium size spacing  |
+| --h-space-spacing-gap-large | var(--h-spacing-7) | large size spacing  |
+| --h-space-spacing-horizontal-gap-small | var(--h-space-spacing-gap-small) |  horizontal small spacing  |
+| --h-space-spacing-horizontal-gap-medium | var(--h-space-spacing-gap-medium) | horizontal medium spacing  |
+| --h-space-spacing-horizontal-gap-large | var(--h-space-spacing-gap-large) | horizontal large spacing  |
+| --h-space-spacing-vertical-gap-small | var(--h-space-spacing-gap-small) | vertical small spacing  |
+| --h-space-spacing-vertical-gap-medium | var(--h-space-spacing-gap-medium) | vertical medium spacing  |
+| --h-space-spacing-vertical-gap-large | var(--h-space-spacing-gap-large) | vertical large spacing |
+| --h-space-spacing-wrap-gap-small | var(--h-space-spacing-horizontal-gap-small) var(--h-space-spacing-vertical-gap-small) |  wrap small spacing up down left right  |
+|  --h-space-spacing-wrap-gap-medium | var(--h-space-spacing-horizontal-gap-medium) var(--h-space-spacing-vertical-gap-medium) |  wrap medium spacing up down left right |
+|  --h-space-spacing-wrap-gap-large | var(--h-space-spacing-horizontal-gap-large) var(--h-space-spacing-vertical-gap-large) |  wrap large spacing up down left right |

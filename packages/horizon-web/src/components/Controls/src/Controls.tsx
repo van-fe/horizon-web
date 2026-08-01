@@ -42,11 +42,13 @@ export default defineComponent({
       }
 
       const itemWidth = parseFloat(
-        getComputedStyle(entry.target).getPropertyValue(cssVariableKey('controls-size--control')),
+        getComputedStyle(entry.target).getPropertyValue(
+          cssVariableKey('controls', 'size', 'control'),
+        ),
       );
       const marginValue = parseFloat(
         getComputedStyle(entry.target).getPropertyValue(
-          cssVariableKey('controls-margin-x--control-siblings'),
+          cssVariableKey('controls', 'spacing', 'control-siblings', 'margin-x'),
         ),
       );
 

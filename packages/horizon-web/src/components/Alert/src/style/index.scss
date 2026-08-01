@@ -4,21 +4,21 @@
   position: relative;
   display: flex;
   flex-wrap: wrap;
-  gap: mixins.css-variable('alert-content--gap');
+  gap: mixins.css-variable('alert', 'spacing', 'content', 'gap');
   align-items: center;
   box-sizing: border-box;
   width: 100%;
-  padding: mixins.css-variable('alert-padding');
+  padding: mixins.css-variable('alert', 'spacing', 'padding');
   overflow: hidden;
-  background-color: mixins.css-variable('alert-bg--default');
+  background-color: mixins.css-variable('alert', 'background');
   opacity: 1;
   transition: opacity 0.2s;
   @include mixins.m('small') {
-    padding: mixins.css-variable('alert-padding--small');
+    padding: mixins.css-variable('alert', 'spacing', 'padding', 'small');
   }
 
   @include mixins.is('round') {
-    border-radius: mixins.css-variable('alert-radius');
+    border-radius: mixins.css-variable('alert', 'border-radius');
   }
 
   p {
@@ -26,19 +26,19 @@
   }
 
   @include mixins.m('success') {
-    background-color: mixins.css-variable('alert-bg--success');
+    background-color: mixins.css-variable('alert', 'background', 'success');
   }
 
   @include mixins.m('info') {
-    background-color: mixins.css-variable('alert-bg--info');
+    background-color: mixins.css-variable('alert', 'background', 'info');
   }
 
   @include mixins.m('warning') {
-    background-color: mixins.css-variable('alert-bg--warning');
+    background-color: mixins.css-variable('alert', 'background', 'warning');
   }
 
   @include mixins.m('error') {
-    background-color: mixins.css-variable('alert-bg--error');
+    background-color: mixins.css-variable('alert', 'background', 'error');
   }
 
   @include mixins.e('icon-box') {
@@ -62,7 +62,7 @@
   @include mixins.e('action') {
     display: flex;
     margin-left: 8px;
-    column-gap: mixins.css-variable('alert-content--action-gap');
+    column-gap: mixins.css-variable('alert', 'spacing', 'content', 'action', 'gap');
     cursor: pointer;
     @include mixins.is('bottom') {
       flex-basis: 100%;
@@ -73,32 +73,32 @@
     }
   }
   @include mixins.em('action', 'small') {
-    column-gap: mixins.css-variable('alert-content--action-gap--small');
+    column-gap: mixins.css-variable('alert', 'spacing', 'content', 'action', 'gap', 'small');
   }
   @include mixins.e('content') {
     display: flex;
     flex: 1;
     align-items: center;
-    color: mixins.css-variable('alert-color');
-    column-gap: mixins.css-variable('alert-content--gap');
+    color: mixins.css-variable('alert', 'color');
+    column-gap: mixins.css-variable('alert', 'spacing', 'content', 'gap');
 
     @include mixins.e('container') {
       display: flex;
       flex-direction: column;
-      row-gap: mixins.css-variable('alert-content--gap');
+      row-gap: mixins.css-variable('alert', 'spacing', 'content', 'gap');
       @include mixins.e('title') {
-        font-weight: mixins.css-variable('alert-font-weight--title');
-        font-size: mixins.css-variable('alert-font-size--title');
-        line-height: mixins.css-variable('alert-line-height');
+        font-weight: mixins.css-variable('alert', 'font-weight', 'title');
+        font-size: mixins.css-variable('alert', 'font-size', 'title');
+        line-height: mixins.css-variable('alert', 'line-height');
       }
 
       @include mixins.e('description') {
-        font-size: mixins.css-variable('alert-font-size--content');
-        line-height: mixins.css-variable('alert-line-height');
+        font-size: mixins.css-variable('alert', 'font-size', 'content');
+        line-height: mixins.css-variable('alert', 'line-height');
       }
     }
     @include mixins.em('container', 'small', false) {
-      row-gap: mixins.css-variable('alert-content--gap--small');
+      row-gap: mixins.css-variable('alert', 'spacing', 'content', 'gap', 'small');
     }
   }
 }

@@ -27,53 +27,53 @@
         margin-right: -1px;
       }
 
-      &:not(:first-child,:last-child) {
+      &:not(:first-child, :last-child) {
         border-radius: 0;
       }
 
       &:not(#{mixins.block-modifier-name('plain', 'button')}) {
         &#{mixins.block-modifier-name('primary', 'button')} {
           &:first-child {
-            border-right-color: mixins.css-variable('button-group-divider-color--button-siblings--primary');
+            border-right-color: mixins.css-variable('button', 'border-color', 'group-divider', 'button-siblings', 'primary');
           }
 
           &:last-child {
-            border-left-color: mixins.css-variable('button-group-divider-color--button-siblings--primary');
+            border-left-color: mixins.css-variable('button', 'border-color', 'group-divider', 'button-siblings', 'primary');
           }
 
-          &:not(:first-child,:last-child) {
-            border-right-color: mixins.css-variable('button-group-divider-color--button-siblings--primary');
-            border-left-color: mixins.css-variable('button-group-divider-color--button-siblings--primary');
+          &:not(:first-child, :last-child) {
+            border-right-color: mixins.css-variable('button', 'border-color', 'group-divider', 'button-siblings', 'primary');
+            border-left-color: mixins.css-variable('button', 'border-color', 'group-divider', 'button-siblings', 'primary');
           }
         }
 
         &#{mixins.block-modifier-name('normal', 'button')} {
           &:first-child {
-            border-right-color: mixins.css-variable('button-group-divider-color--button-siblings--normal');
+            border-right-color: mixins.css-variable('button', 'border-color', 'group-divider', 'button-siblings', 'normal');
           }
 
           &:last-child {
-            border-left-color: mixins.css-variable('button-group-divider-color--button-siblings--normal');
+            border-left-color: mixins.css-variable('button', 'border-color', 'group-divider', 'button-siblings', 'normal');
           }
 
-          &:not(:first-child,:last-child) {
-            border-right-color: mixins.css-variable('button-group-divider-color--button-siblings--normal');
-            border-left-color: mixins.css-variable('button-group-divider-color--button-siblings--normal');
+          &:not(:first-child, :last-child) {
+            border-right-color: mixins.css-variable('button', 'border-color', 'group-divider', 'button-siblings', 'normal');
+            border-left-color: mixins.css-variable('button', 'border-color', 'group-divider', 'button-siblings', 'normal');
           }
         }
 
         &#{mixins.block-modifier-name('danger', 'button')} {
           &:first-child {
-            border-right-color: mixins.css-variable('button-group-divider-color--button-siblings--danger');
+            border-right-color: mixins.css-variable('button', 'border-color', 'group-divider', 'button-siblings', 'danger');
           }
 
           &:last-child {
-            border-left-color: mixins.css-variable('button-group-divider-color--button-siblings--danger');
+            border-left-color: mixins.css-variable('button', 'border-color', 'group-divider', 'button-siblings', 'danger');
           }
 
-          &:not(:first-child,:last-child) {
-            border-right-color: mixins.css-variable('button-group-divider-color--button-siblings--danger');
-            border-left-color: mixins.css-variable('button-group-divider-color--button-siblings--danger');
+          &:not(:first-child, :last-child) {
+            border-right-color: mixins.css-variable('button', 'border-color', 'group-divider', 'button-siblings', 'danger');
+            border-left-color: mixins.css-variable('button', 'border-color', 'group-divider', 'button-siblings', 'danger');
           }
         }
       }
@@ -93,15 +93,15 @@
 
           &:not(#{mixins.block-modifier-name('plain', 'button')}) {
             &#{mixins.block-modifier-name('primary', 'button')} {
-              border-right-color: mixins.css-variable('button-group-divider-color--button-siblings--primary');
+              border-right-color: mixins.css-variable('button', 'border-color', 'group-divider', 'button-siblings', 'primary');
             }
 
             &#{mixins.block-modifier-name('normal', 'button')} {
-              border-right-color: mixins.css-variable('button-group-divider-color--button-siblings--normal');
+              border-right-color: mixins.css-variable('button', 'border-color', 'group-divider', 'button-siblings', 'normal');
             }
 
             &#{mixins.block-modifier-name('danger', 'button')} {
-              border-right-color: mixins.css-variable('button-group-divider-color--button-siblings--danger');
+              border-right-color: mixins.css-variable('button', 'border-color', 'group-divider', 'button-siblings', 'danger');
             }
           }
         }
@@ -114,15 +114,15 @@
 
           &:not(#{mixins.block-modifier-name('plain', 'button')}) {
             &#{mixins.block-modifier-name('primary', 'button')} {
-              border-left-color: mixins.css-variable('button-group-divider-color--button-siblings--primary');
+              border-left-color: mixins.css-variable('button', 'border-color', 'group-divider', 'button-siblings', 'primary');
             }
 
             &#{mixins.block-modifier-name('normal', 'button')} {
-              border-left-color: mixins.css-variable('button-group-divider-color--button-siblings--normal');
+              border-left-color: mixins.css-variable('button', 'border-color', 'group-divider', 'button-siblings', 'normal');
             }
 
             &#{mixins.block-modifier-name('danger', 'button')} {
-              border-left-color: mixins.css-variable('button-group-divider-color--button-siblings--danger');
+              border-left-color: mixins.css-variable('button', 'border-color', 'group-divider', 'button-siblings', 'danger');
             }
           }
         }
@@ -134,7 +134,7 @@
         }
       }
 
-      &:not(:first-child,:last-child) {
+      &:not(:first-child, :last-child) {
         @include mixins.b('button', false) {
           border-radius: 0;
         }
@@ -144,5 +144,5 @@
 }
 
 @include mixins.siblings-block('button-group') {
-  margin-left: mixins.css-variable('button-margin-left--siblings');
+  margin-left: mixins.css-variable('button', 'spacing', 'siblings', 'margin-left');
 }

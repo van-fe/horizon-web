@@ -6,7 +6,7 @@ $values: (
       shortcuts: (
         item: (
           height: 40px,
-        )
+        ),
       ),
       header: (
         height: 48px,
@@ -15,7 +15,7 @@ $values: (
         ),
         datetime-trigger: (
           height: 56px,
-        )
+        ),
       ),
       body: (
         grid-item: (
@@ -24,26 +24,41 @@ $values: (
         year: (
           item: (
             height: 32px,
-            width: 60px
-          )
+            width: 60px,
+          ),
         ),
         month: (
           item: (
             height: 32px,
-            width: 60px
-          )
+            width: 60px,
+          ),
         ),
         day: (
           item: (
             height: 32px,
-            width: 32px
-          )
+            width: 32px,
+          ),
         ),
         time-panel: (
           min-width: 80px,
-        )
-      )
-    )
+        ),
+      ),
+    ),
+  ),
+  font-size: (
+    panel: (
+      body: (
+        week: mixins.css-variable('text', 'sm'),
+        grid-item: mixins.css-variable('text', 'base'),
+      ),
+    ),
+  ),
+  font-weight: (
+    panel: (
+      header: (
+        date-show: mixins.css-variable('weight', 'strong'),
+      ),
+    ),
   ),
   color: (
     '': mixins.css-variable('text', 'primary'),
@@ -54,7 +69,7 @@ $values: (
         disabled: mixins.css-variable('text', 'disabled'),
         hover: mixins.css-variable('text', 'brand', 'hover'),
         press: mixins.css-variable('text', 'brand', 'press'),
-        separator: mixins.css-variable('text', 'disabled')
+        separator: mixins.css-variable('text', 'disabled'),
       ),
       body: (
         grid-item: (
@@ -66,9 +81,21 @@ $values: (
           disabled: mixins.css-variable('text', 'disabled'),
           prev-next: mixins.css-variable('text', 'disabled'),
         ),
-      )
-    )
+      ),
+    ),
   ),
+  border: (
+    divider: #{1px solid mixins.css-variable('divider', 'default')},
+    panel: (
+      body: (
+        grid-item: (
+          today: #{1px solid mixins.css-variable('border', 'default')},
+          same-start-end: #{1px solid mixins.css-variable('border', 'brand', 'default')},
+        ),
+      ),
+    ),
+  ),
+  border-radius: mixins.css-variable('radius', 'm'),
   background: (
     panel: (
       body: (
@@ -83,41 +110,8 @@ $values: (
           dot: mixins.css-variable('bg', 'brand', 'default'),
           dot-active: mixins.css-variable('bg', 'default'),
         ),
-      )
-    )
-  ),
-  font: (
-    weight: (
-      panel: (
-        header: (
-          date-show: mixins.css-variable('weight', 'strong'),
-        )
-      )
+      ),
     ),
-    size: (
-      panel: (
-        body: (
-          week: mixins.css-variable('text', 'sm'),
-          grid-item: mixins.css-variable('text', 'base')
-        )
-      )
-    )
-  ),
-  divider: (
-    '': #{1px solid mixins.css-variable('divider', 'default')}
-  ),
-  border: (
-    panel: (
-      body: (
-        grid-item: (
-          today: #{1px solid mixins.css-variable('border', 'default')},
-          same-start-end: #{1px solid mixins.css-variable('border', 'brand', 'default')}
-        )
-      )
-    )
-  ),
-  border-radius: (
-    '': mixins.css-variable('radius', 'm'),
   ),
   spacing: (
     panel: (
@@ -127,7 +121,7 @@ $values: (
         datetime-trigger: (
           padding: #{mixins.css-variable('spacing-4') mixins.css-variable('spacing-5')},
           gap: mixins.css-variable('spacing-3'),
-        )
+        ),
       ),
       body: (
         year: mixins.css-variable('spacing-5'),
@@ -135,12 +129,12 @@ $values: (
         day: mixins.css-variable('spacing-5'),
         grid-item: (
           gap: #{mixins.css-variable('spacing-3') 0},
-          padding: #{0 mixins.css-variable('spacing-2')}
+          padding: #{0 mixins.css-variable('spacing-2')},
         ),
-      )
-    )
+      ),
+    ),
   ),
   transition: (
     color-behavior: mixins.css-variable('transition', 'color-behavior'),
-  )
+  ),
 );

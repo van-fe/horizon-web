@@ -137,7 +137,7 @@ export default defineComponent({
           {...attrs}
           class={[classes, attrs.class]}
           style={[
-            lines > 1 ? { WebkitLineClamp: lines, '--h-typography-lines': lines } : undefined,
+            lines > 1 ? { WebkitLineClamp: lines, '--h-typography-size-lines': lines } : undefined,
             attrs.style,
           ]}
         >

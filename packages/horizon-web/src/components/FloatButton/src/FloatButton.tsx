@@ -86,13 +86,13 @@ export default defineComponent({
     const isVisible = computed(() =>
       canPushToStack.value
         ? visibleComputed.value
-        : passiveVisible?.value ?? (!groupProps?.useCollapse || collapseButtonProp?.value),
+        : (passiveVisible?.value ?? (!groupProps?.useCollapse || collapseButtonProp?.value)),
     );
 
     const tooltipOptions = computed<Partial<TooltipProps>>(() => {
       return typeof tooltipProp?.value === 'string'
         ? { content: tooltipProp.value }
-        : tooltipProp?.value ?? {};
+        : (tooltipProp?.value ?? {});
     });
 
     const currentPosition = ref<Position>();
@@ -214,9 +214,9 @@ export default defineComponent({
                   : ''
               : {
                   bottom: isInStack.value
-                    ? `calc(${cssVariable('float-button-spacing-bottom')} + ((${cssVariable(
+                    ? `calc(${cssVariable('float-button', 'spacing', 'bottom')} + ((${cssVariable(
                         'float-button-spacing-gap',
-                      )} + ${cssVariable('float-button-size')}) * ${stackIndex.value}) + (${cssVariable('float-button-size--large')} - ${cssVariable('float-button-size')}) * ${stackInfoIndex.value[stackIndex.value]})`
+                      )} + ${cssVariable('float-button', 'size')}) * ${stackIndex.value}) + (${cssVariable('float-button', 'size', 'large')} - ${cssVariable('float-button', 'size')}) * ${stackInfoIndex.value[stackIndex.value]})`
                     : undefined,
                 },
           ]}

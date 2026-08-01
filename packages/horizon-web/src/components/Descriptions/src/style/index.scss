@@ -1,48 +1,48 @@
 @use '../../../../styles/mixins';
 
 @include mixins.b('descriptions') {
-  font-size: mixins.css-variable('descriptions-font-size--content');
-  background-color: mixins.css-variable('descriptions-bg--default');
+  font-size: mixins.css-variable('descriptions', 'font-size', 'content');
+  background-color: mixins.css-variable('descriptions', 'background');
 
   @include mixins.e('title') {
-    color: mixins.css-variable('descriptions-color--title');
-    font-weight: mixins.css-variable('descriptions-font-weight--title');
-    font-size: mixins.css-variable('descriptions-font-size--title');
+    color: mixins.css-variable('descriptions', 'color', 'title');
+    font-weight: mixins.css-variable('descriptions', 'font-weight', 'title');
+    font-size: mixins.css-variable('descriptions', 'font-size', 'title');
   }
 
   @include mixins.e('title--small') {
-    margin-bottom: mixins.css-variable('descriptions-margin-bottom--title--small');
+    margin-bottom: mixins.css-variable('descriptions', 'spacing', 'title', 'margin-bottom', 'small');
   }
 
   @include mixins.e('title--medium') {
-    margin-bottom: mixins.css-variable('descriptions-margin-bottom--title--medium');
+    margin-bottom: mixins.css-variable('descriptions', 'spacing', 'title', 'margin-bottom', 'medium');
   }
 
   @include mixins.e('title--large') {
-    margin-bottom: mixins.css-variable('descriptions-margin-bottom--title--large');
+    margin-bottom: mixins.css-variable('descriptions', 'spacing', 'title', 'margin-bottom', 'large');
   }
 
   @include mixins.e('item') {
     display: flex;
     align-items: center;
-    padding-right: mixins.css-variable('descriptions-padding-right--item');
-    line-height: mixins.css-variable('descriptions-line-height--item');
+    padding-right: mixins.css-variable('descriptions', 'spacing', 'item', 'padding-right');
+    line-height: mixins.css-variable('descriptions', 'line-height', 'item');
 
     @include mixins.e('value') {
-      padding-left: mixins.css-variable('descriptions-padding-right--item-value');
+      padding-left: mixins.css-variable('descriptions', 'spacing', 'item-value', 'padding-right');
     }
   }
 
   @include mixins.e('label') {
     align-self: stretch;
     box-sizing: content-box;
-    color: mixins.css-variable('descriptions-color--label');
+    color: mixins.css-variable('descriptions', 'color', 'label');
   }
 
   @include mixins.e('value') {
     flex: 1;
     align-self: stretch;
-    color: mixins.css-variable('descriptions-color--value');
+    color: mixins.css-variable('descriptions', 'color', 'value');
   }
 
   @include mixins.m('horizontal') {
@@ -66,19 +66,19 @@
 
   @include mixins.m('small') {
     @include mixins.e('item') {
-      padding-bottom: mixins.css-variable('descriptions-margin-bottom--item--small');
+      padding-bottom: mixins.css-variable('descriptions', 'spacing', 'item', 'margin-bottom', 'small');
     }
   }
 
   @include mixins.m('medium') {
     @include mixins.e('item') {
-      padding-bottom: mixins.css-variable('descriptions-margin-bottom--item--medium');
+      padding-bottom: mixins.css-variable('descriptions', 'spacing', 'item', 'margin-bottom', 'medium');
     }
   }
 
   @include mixins.m('large') {
     @include mixins.e('item') {
-      padding-bottom: mixins.css-variable('descriptions-margin-bottom--item--large');
+      padding-bottom: mixins.css-variable('descriptions', 'spacing', 'item', 'margin-bottom', 'large');
     }
   }
 
@@ -86,14 +86,14 @@
     @include mixins.bm('descriptions', 'small', false) {
       @include mixins.e('item') {
         @include mixins.e('value') {
-          padding-left: mixins.css-variable('descriptions-padding-left--item-value--small--vertical');
+          padding-left: mixins.css-variable('descriptions', 'spacing', 'item-value', 'padding-left', 'small', 'vertical');
         }
       }
 
       @include mixins.bem('descriptions', 'item', 'vertical', false) {
         &#{mixins.block-name('descriptions__item--top')} {
           @include mixins.e('label') {
-            padding-bottom: mixins.css-variable('descriptions-padding-bottom--label--small--vertical');
+            padding-bottom: mixins.css-variable('descriptions', 'spacing', 'label', 'padding-bottom', 'small', 'vertical');
           }
         }
       }
@@ -102,14 +102,14 @@
     @include mixins.bm('descriptions', 'medium', false) {
       @include mixins.e('item') {
         @include mixins.e('value') {
-          padding-left: mixins.css-variable('descriptions-padding-left--item-value--medium--vertical');
+          padding-left: mixins.css-variable('descriptions', 'spacing', 'item-value', 'padding-left', 'medium', 'vertical');
         }
       }
 
       @include mixins.bem('descriptions', 'item', 'vertical', false) {
         &#{mixins.block-name('descriptions__item--top')} {
           @include mixins.e('label') {
-            padding-bottom: mixins.css-variable('descriptions-padding-bottom--label--medium--vertical');
+            padding-bottom: mixins.css-variable('descriptions', 'spacing', 'label', 'padding-bottom', 'medium', 'vertical');
           }
         }
       }
@@ -118,14 +118,14 @@
     @include mixins.bm('descriptions', 'large', false) {
       @include mixins.e('item') {
         @include mixins.e('value') {
-          padding-left: mixins.css-variable('descriptions-padding-left--item-value--large--vertical');
+          padding-left: mixins.css-variable('descriptions', 'spacing', 'item-value', 'padding-left', 'large', 'vertical');
         }
       }
 
       @include mixins.bem('descriptions', 'item', 'vertical', false) {
         &#{mixins.block-name('descriptions__item--top')} {
           @include mixins.e('label') {
-            padding-bottom: mixins.css-variable('descriptions-padding-bottom--label--large--vertical');
+            padding-bottom: mixins.css-variable('descriptions', 'spacing', 'label', 'padding-bottom', 'large', 'vertical');
           }
         }
       }
@@ -136,38 +136,37 @@
     @include mixins.bem('descriptions', 'item', 'vertical', false) {
       &#{mixins.block-name('descriptions__item--top')} {
         @include mixins.e('value') {
-          padding-left: mixins.css-variable('descriptions-padding-left--content-value--vertical');
+          padding-left: mixins.css-variable('descriptions', 'spacing', 'content-value', 'vertical', 'padding-left');
         }
       }
     }
     &#{mixins.block-name('descriptions--small')} {
       @include mixins.bem('descriptions', 'item', 'vertical', false) {
         &#{mixins.block-name('descriptions__item--top')} {
-          padding-bottom: mixins.css-variable('descriptions-padding-bottom--content--vertical-small');
+          padding-bottom: mixins.css-variable('descriptions', 'spacing', 'content', 'vertical-small', 'padding-bottom');
         }
       }
     }
     &#{mixins.block-name('descriptions--medium')} {
       @include mixins.bem('descriptions', 'item', 'vertical', false) {
         &#{mixins.block-name('descriptions__item--top')} {
-          padding-bottom: mixins.css-variable('descriptions-padding-bottom--content--vertical-medium');
+          padding-bottom: mixins.css-variable('descriptions', 'spacing', 'content', 'vertical-medium', 'padding-bottom');
         }
       }
     }
     &#{mixins.block-name('descriptions--large')} {
       @include mixins.bem('descriptions', 'item', 'vertical', false) {
         &#{mixins.block-name('descriptions__item--top')} {
-          padding-bottom: mixins.css-variable('descriptions-padding-bottom--content--vertical-large');
+          padding-bottom: mixins.css-variable('descriptions', 'spacing', 'content', 'vertical-large', 'padding-bottom');
         }
       }
     }
   }
 
-  
   @include mixins.m('border') {
     overflow: hidden;
-    border: mixins.css-variable('descriptions-border');
-    border-radius: mixins.css-variable('descriptions-border-radius');
+    border: mixins.css-variable('descriptions', 'border');
+    border-radius: mixins.css-variable('descriptions', 'border-radius');
 
     @include mixins.e('item') {
       padding-right: 0 !important;
@@ -175,8 +174,8 @@
 
       @include mixins.e('label') {
         position: relative;
-        color: mixins.css-variable('descriptions-color--label--border');
-        background-color: mixins.css-variable('descriptions-bg--item-label--border');
+        color: mixins.css-variable('descriptions', 'color', 'label', 'border');
+        background-color: mixins.css-variable('descriptions', 'background', 'item-label', 'border');
 
         &::before {
           position: absolute;
@@ -186,7 +185,7 @@
           display: block;
           width: 100%;
           height: 1px;
-          background-color: mixins.css-variable('descriptions-border-color');
+          background-color: mixins.css-variable('descriptions', 'border-color');
           content: '';
         }
 
@@ -198,7 +197,7 @@
           display: block;
           width: 1px;
           height: 100%;
-          background-color: mixins.css-variable('descriptions-border-color');
+          background-color: mixins.css-variable('descriptions', 'border-color');
           content: '';
         }
 
@@ -218,7 +217,7 @@
           display: block;
           width: 100%;
           height: 1px;
-          background-color: mixins.css-variable('descriptions-border-color');
+          background-color: mixins.css-variable('descriptions', 'border-color');
           content: '';
         }
 
@@ -230,7 +229,7 @@
           display: block;
           width: 1px;
           height: 100%;
-          background-color: mixins.css-variable('descriptions-border-color');
+          background-color: mixins.css-variable('descriptions', 'border-color');
           content: '';
         }
       }
@@ -240,21 +239,21 @@
   #{mixins.block-name('descriptions--medium')}#{mixins.block-name('descriptions--border')} {
     #{mixins.block-name('descriptions__label')},
     #{mixins.block-name('descriptions__value')} {
-      padding: mixins.css-variable('descriptions-padding--grid--medium--border') !important;
+      padding: mixins.css-variable('descriptions', 'spacing', 'grid', 'padding', 'medium', 'border') !important;
     }
   }
 
   #{mixins.block-name('descriptions--large')}#{mixins.block-name('descriptions--border')} {
     #{mixins.block-name('descriptions__label')},
     #{mixins.block-name('descriptions__value')} {
-      padding: mixins.css-variable('descriptions-padding--grid--large--border') !important;
+      padding: mixins.css-variable('descriptions', 'spacing', 'grid', 'padding', 'large', 'border') !important;
     }
   }
 
   #{mixins.block-name('descriptions--small')}#{mixins.block-name('descriptions--border')} {
     #{mixins.block-name('descriptions__label')},
     #{mixins.block-name('descriptions__value')} {
-      padding: mixins.css-variable('descriptions-padding--grid--small--border') !important;
+      padding: mixins.css-variable('descriptions', 'spacing', 'grid', 'padding', 'small', 'border') !important;
     }
   }
 }
@@ -289,17 +288,17 @@
   &#{mixins.element-name('col-1', mixins.block('descriptions'))} {
     @include mixins.standalone-modifier('small') {
       @include mixins.e('item') {
-        padding-bottom: mixins.css-variable('descriptions-padding-bottom--item--small--vertical');
+        padding-bottom: mixins.css-variable('descriptions', 'spacing', 'item', 'padding-bottom', 'small', 'vertical');
       }
     }
     @include mixins.standalone-modifier('medium') {
       @include mixins.e('item') {
-        padding-bottom: mixins.css-variable('descriptions-padding-bottom--item--medium--vertical');
+        padding-bottom: mixins.css-variable('descriptions', 'spacing', 'item', 'padding-bottom', 'medium', 'vertical');
       }
     }
     @include mixins.standalone-modifier('large') {
       @include mixins.e('item') {
-        padding-bottom: mixins.css-variable('descriptions-padding-bottom--item--large--vertical');
+        padding-bottom: mixins.css-variable('descriptions', 'spacing', 'item', 'padding-bottom', 'large', 'vertical');
       }
     }
   }

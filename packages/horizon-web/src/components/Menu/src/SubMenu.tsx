@@ -357,8 +357,8 @@ export default defineComponent({
         ref={elementRef}
         class={cls(classHelper.e('sub'))}
         style={{
-          [cssVariableKey('menu--tree-level')]: passiveTreeLevel,
-          [cssVariableKey('menu--parent-icon-amount')]: parentHasIconAmount.value,
+          [cssVariableKey('menu', 'size', 'tree-level')]: passiveTreeLevel,
+          [cssVariableKey('menu', 'size', 'parent-icon-amount')]: parentHasIconAmount.value,
         }}
         data-tree-level={passiveTreeLevel}
       >
@@ -412,9 +412,7 @@ export default defineComponent({
                         class={cls(classHelper.em('title', 'inner'))}
                         role="menuitem"
                         aria-haspopup="menu"
-                        aria-expanded={
-                          expandedMenu?.value.has(uuid) || dropdownVisible.value
-                        }
+                        aria-expanded={expandedMenu?.value.has(uuid) || dropdownVisible.value}
                         aria-disabled={props.disabled}
                         tabindex={props.disabled ? -1 : 0}
                         onClick={onClick}

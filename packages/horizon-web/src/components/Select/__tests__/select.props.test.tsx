@@ -1418,7 +1418,9 @@ describe('Select.tsx', () => {
 
     wrapper
       .findAll('.h-select-option')
-      .forEach(opt => expect(opt.attributes('style')).contains('--h-select-max-line--option: 3;'));
+      .forEach(opt =>
+        expect(opt.attributes('style')).contains('--h-select-size-option-max-line: 3;'),
+      );
   });
 
   test('input-status', () => {

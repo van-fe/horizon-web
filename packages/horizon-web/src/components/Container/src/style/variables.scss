@@ -1,10 +1,26 @@
 @use '../../../../styles/mixins/function';
 
 $values: (
-  'width--aside': 300px,
-  'height--footer': 60px,
-  'height--header': 60px,
-  'padding--footer': 0 20px,
-  'padding--header': 0 20px,
-  'padding--main': 0 20px,
+  size: (
+    aside: (
+      width: 300px,
+    ),
+    footer: (
+      height: 60px,
+    ),
+    header: (
+      height: 60px,
+    ),
+  ),
+  spacing: (
+    footer: (
+      padding: 0 20px,
+    ),
+    header: (
+      padding: 0 20px,
+    ),
+    main: (
+      padding: 0 20px,
+    ),
+  ),
 );

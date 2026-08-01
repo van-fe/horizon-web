@@ -70,7 +70,7 @@ export default defineComponent({
                   size="small"
                   class={classHelper.em('block', 'pointer-icon')}
                   text={true}
-                  style={{ [cssVariableKey('button-height--small')]: '16px' }}
+                  style={{ [cssVariableKey('button', 'size', 'height', 'small')]: '16px' }}
                   onClick={addCustomColor}
                 />
                 <HButton
@@ -81,7 +81,7 @@ export default defineComponent({
                   size="small"
                   class={classHelper.em('block', 'pointer-icon')}
                   text={true}
-                  style={{ [cssVariableKey('button-height--small')]: '16px' }}
+                  style={{ [cssVariableKey('button', 'size', 'height', 'small')]: '16px' }}
                   onClick={removeCustomColor}
                 />
               </div>

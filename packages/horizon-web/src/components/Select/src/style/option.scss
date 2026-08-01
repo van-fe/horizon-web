@@ -1,19 +1,19 @@
 @use '../../../../styles/mixins';
 
 @include mixins.b('select-option') {
-  min-height: mixins.css-variable('select-height--option');
-  color: mixins.css-variable('select-color--option');
-  font-size: mixins.css-variable('select-font-size--option');
-  background: mixins.css-variable('select-bg--option');
+  min-height: mixins.css-variable('select', 'size', 'option', 'height');
+  color: mixins.css-variable('select', 'color', 'option');
+  font-size: mixins.css-variable('select', 'font-size', 'option');
+  background: mixins.css-variable('select', 'background', 'option');
   cursor: pointer;
 
   @include mixins.e('inner') {
     position: relative;
     display: flex;
     align-items: center;
-    min-height: mixins.css-variable('select-height--option');
-    padding: mixins.css-variable('select-padding--option');
-    transition: mixins.css-variable('select-transition');
+    min-height: mixins.css-variable('select', 'size', 'option', 'height');
+    padding: mixins.css-variable('select', 'spacing', 'option', 'padding');
+    transition: mixins.css-variable('select', 'transition');
   }
 
   @include mixins.e('checkbox') {
@@ -32,7 +32,7 @@
     flex: 1;
     overflow: hidden;
     word-break: break-all;
-    -webkit-line-clamp: mixins.css-variable-with-default-value('select-max-line--option', 1);
+    -webkit-line-clamp: mixins.css-variable-with-default-value('select-size-option-max-line', 1);
     -webkit-box-orient: vertical;
 
     /* stylelint-disable-next-line selector-type-no-unknown */
@@ -44,14 +44,14 @@
   @include mixins.e('icon') {
     position: absolute;
     top: 50%;
-    right: mixins.css-variable('select-padding--option--right');
+    right: mixins.css-variable('select', 'spacing', 'option', 'right', 'padding');
     height: 1rem;
     transform: translateY(-50%);
   }
 
   @include mixins.e('description') {
     overflow: hidden;
-    color: mixins.css-variable('select-color--option--description');
+    color: mixins.css-variable('select', 'color', 'option', 'description');
     white-space: nowrap;
     text-overflow: ellipsis;
 
@@ -62,7 +62,7 @@
   }
 
   @include mixins.is('disabled') {
-    color: mixins.css-variable('select-color--optipn--disabled');
+    color: mixins.css-variable('select', 'color', 'option', 'disabled');
     cursor: not-allowed;
   }
 
@@ -73,7 +73,7 @@
 
     @include mixins.has('icon') {
       @include mixins.e('content', false) {
-        padding-right: mixins.css-variable('select-padding--option--right--has-icon');
+        padding-right: mixins.css-variable('select', 'spacing', 'option', 'right', 'has-icon', 'padding');
       }
     }
   }
@@ -85,12 +85,12 @@
   @include mixins.is-not('disabled') {
     &:hover {
       @include mixins.e('inner', false) {
-        background: mixins.css-variable('select-bg--option--hover');
+        background: mixins.css-variable('select', 'background', 'option', 'hover');
       }
     }
 
     @include mixins.is('focus') {
-      background: mixins.css-variable('select-bg--option--hover');
+      background: mixins.css-variable('select', 'background', 'option', 'hover');
     }
   }
 
@@ -105,7 +105,7 @@
 
     @include mixins.e('description', false) {
       flex-basis: 100%;
-      font-size: mixins.css-variable('select-font-size--description--bottom');
+      font-size: mixins.css-variable('select', 'font-size', 'description', 'bottom');
     }
   }
 }

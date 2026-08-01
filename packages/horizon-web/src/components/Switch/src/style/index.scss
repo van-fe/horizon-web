@@ -5,10 +5,10 @@
   flex-direction: column;
 
   @include mixins.e('label') {
-    margin-bottom: mixins.css-variable('switch-margin-bottom--label');
-    color: mixins.css-variable('switch-color--label');
-    font-size: mixins.css-variable('switch-font-size--label');
-    line-height: mixins.css-variable('switch-line-height--label');
+    margin-bottom: mixins.css-variable('switch', 'spacing', 'label', 'margin-bottom');
+    color: mixins.css-variable('switch', 'color', 'label');
+    font-size: mixins.css-variable('switch', 'font-size', 'label');
+    line-height: mixins.css-variable('switch', 'line-height', 'label');
   }
 
   @include mixins.e('main') {
@@ -19,15 +19,15 @@
   @include mixins.e('core') {
     position: relative;
     display: inline-flex;
-    width: mixins.css-variable('switch-width--core');
-    height: mixins.css-variable('switch-height--core');
-    padding: mixins.css-variable('switch-padding--core');
+    width: mixins.css-variable('switch', 'size', 'core', 'width');
+    height: mixins.css-variable('switch', 'size', 'core', 'height');
+    padding: mixins.css-variable('switch', 'spacing', 'core', 'padding');
     overflow: hidden;
-    background-color: mixins.css-variable('switch-bg--core');
-    border-radius: mixins.css-variable('switch-border-radius--core');
+    background-color: mixins.css-variable('switch', 'background', 'core');
+    border-radius: mixins.css-variable('switch', 'border-radius', 'core');
     cursor: pointer;
-    transition: background-color mixins.css-variable('switch-transition-time')
-      mixins.css-variable('switch-transition-func-cubic');
+    transition: background-color mixins.css-variable('switch', 'transition', 'duration')
+      mixins.css-variable('switch', 'transition', 'timing-function', 'cubic');
 
     input {
       position: absolute;
@@ -42,12 +42,13 @@
     position: relative;
     z-index: 1;
     flex-shrink: 0;
-    width: mixins.css-variable('switch-size--inner');
-    height: mixins.css-variable('switch-size--inner');
-    background-color: mixins.css-variable('switch-bg--inner');
-    border-radius: mixins.css-variable('switch-border-radius--inner');
+    width: mixins.css-variable('switch', 'size', 'inner');
+    height: mixins.css-variable('switch', 'size', 'inner');
+    background-color: mixins.css-variable('switch', 'background', 'inner');
+    border-radius: mixins.css-variable('switch', 'border-radius', 'inner');
     transform: translate3d(0, 0, 0);
-    transition: transform mixins.css-variable('switch-transition-time') mixins.css-variable('switch-transition-func-cubic');
+    transition: transform mixins.css-variable('switch', 'transition', 'duration')
+      mixins.css-variable('switch', 'transition', 'timing-function', 'cubic');
   }
 
   @include mixins.e('inner-text') {
@@ -61,8 +62,8 @@
     box-sizing: border-box;
     width: 50%;
     overflow: hidden;
-    color: mixins.css-variable('switch-color--inner-text');
-    font-size: mixins.css-variable('switch-font-size--inner-text');
+    color: mixins.css-variable('switch', 'color', 'inner-text');
+    font-size: mixins.css-variable('switch', 'font-size', 'inner-text');
     line-height: 1;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -77,7 +78,7 @@
 
   @include mixins.m('active') {
     @include mixins.e('core') {
-      background-color: mixins.css-variable('switch-bg--core--active');
+      background-color: mixins.css-variable('switch', 'background', 'core', 'active');
 
       @include mixins.e('inner') {
         transform: translate3d(16px, 0, 0);
@@ -86,7 +87,7 @@
       @include mixins.is('with-inner-text') {
         @include mixins.e('inner') {
           transform: translate3d(
-            mixins.css-variable('switch-translate-x--inner--with-inner-text'),
+            mixins.css-variable('switch', 'transform', 'translate-x', 'inner', 'with-inner-text'),
             0,
             0
           );
@@ -105,16 +106,16 @@
     }
 
     @include mixins.e('core') {
-      width: mixins.css-variable('switch-width--core--small');
-      height: mixins.css-variable('switch-height--core--small');
+      width: mixins.css-variable('switch', 'size', 'core', 'width', 'small');
+      height: mixins.css-variable('switch', 'size', 'core', 'height', 'small');
 
       @include mixins.is('with-inner-text') {
-        width: mixins.css-variable('switch-width--core--small--with-inner-text');
+        width: mixins.css-variable('switch', 'size', 'core', 'width', 'small', 'with-inner-text');
 
         @include mixins.is('active') {
           @include mixins.e('inner') {
             transform: translate3d(
-              mixins.css-variable('switch-translate-x--inner--small--with-inner-text'),
+              mixins.css-variable('switch', 'transform', 'translate-x', 'inner', 'small', 'with-inner-text'),
               0,
               0
             );
@@ -124,14 +125,14 @@
     }
 
     @include mixins.e('inner') {
-      width: mixins.css-variable('switch-size--inner--small');
-      height: mixins.css-variable('switch-size--inner--small');
+      width: mixins.css-variable('switch', 'size', 'inner', 'small');
+      height: mixins.css-variable('switch', 'size', 'inner', 'small');
     }
     @include mixins.e('status') {
-      height: mixins.css-variable('switch-line-height--status');
-      margin-left: mixins.css-variable('switch-margin-left--status--small');
-      font-size: mixins.css-variable('switch-font-size--status--small');
-      line-height: mixins.css-variable('switch-line-height--status');
+      height: mixins.css-variable('switch', 'line-height', 'status');
+      margin-left: mixins.css-variable('switch', 'spacing', 'status', 'margin-left', 'small');
+      font-size: mixins.css-variable('switch', 'font-size', 'status', 'small');
+      line-height: mixins.css-variable('switch', 'line-height', 'status');
     }
   }
 
@@ -145,16 +146,16 @@
     }
 
     @include mixins.e('core') {
-      width: mixins.css-variable('switch-width--core--large');
-      height: mixins.css-variable('switch-height--core--large');
+      width: mixins.css-variable('switch', 'size', 'core', 'width', 'large');
+      height: mixins.css-variable('switch', 'size', 'core', 'height', 'large');
 
       @include mixins.is('with-inner-text') {
-        width: mixins.css-variable('switch-width--core--large--with-inner-text');
+        width: mixins.css-variable('switch', 'size', 'core', 'width', 'large', 'with-inner-text');
 
         @include mixins.is('active') {
           @include mixins.e('inner') {
             transform: translate3d(
-              mixins.css-variable('switch-translate-x--inner--large--with-inner-text'),
+              mixins.css-variable('switch', 'transform', 'translate-x', 'inner', 'large', 'with-inner-text'),
               0,
               0
             );
@@ -164,27 +165,27 @@
     }
 
     @include mixins.e('inner') {
-      width: mixins.css-variable('switch-size--inner--large');
-      height: mixins.css-variable('switch-size--inner--large');
+      width: mixins.css-variable('switch', 'size', 'inner', 'large');
+      height: mixins.css-variable('switch', 'size', 'inner', 'large');
     }
     @include mixins.e('status') {
-      height: mixins.css-variable('switch-line-height--status');
-      margin-left: mixins.css-variable('switch-margin-left--status--large');
-      font-size: mixins.css-variable('switch-font-size--status--large');
-      line-height: mixins.css-variable('switch-line-height--status');
+      height: mixins.css-variable('switch', 'line-height', 'status');
+      margin-left: mixins.css-variable('switch', 'spacing', 'status', 'margin-left', 'large');
+      font-size: mixins.css-variable('switch', 'font-size', 'status', 'large');
+      line-height: mixins.css-variable('switch', 'line-height', 'status');
     }
   }
 
   @include mixins.e('status') {
-    height: mixins.css-variable('switch-line-height--status');
-    margin-left: mixins.css-variable('switch-margin-left--status');
-    font-size: mixins.css-variable('switch-font-size--status');
-    line-height: mixins.css-variable('switch-line-height--status');
+    height: mixins.css-variable('switch', 'line-height', 'status');
+    margin-left: mixins.css-variable('switch', 'spacing', 'status', 'margin-left');
+    font-size: mixins.css-variable('switch', 'font-size', 'status');
+    line-height: mixins.css-variable('switch', 'line-height', 'status');
   }
 
   @include mixins.e('core') {
     @include mixins.is('with-inner-text') {
-      width: mixins.css-variable('switch-width--core--with-inner-text');
+      width: mixins.css-variable('switch', 'size', 'core', 'with-inner-text', 'width');
     }
   }
 
@@ -195,12 +196,12 @@
     justify-content: space-between;
 
     @include mixins.e('label') {
-      margin-bottom: mixins.css-variable('switch-margin-bottom--label--left');
-      line-height: mixins.css-variable('switch-line-height--label--left');
+      margin-bottom: mixins.css-variable('switch', 'spacing', 'label', 'left', 'margin-bottom');
+      line-height: mixins.css-variable('switch', 'line-height', 'label', 'left');
     }
 
     @include mixins.e('main') {
-      margin-left: mixins.css-variable('switch-margin-left--main');
+      margin-left: mixins.css-variable('switch', 'spacing', 'main', 'margin-left');
     }
   }
 
@@ -210,19 +211,19 @@
 
     @include mixins.e('label') {
       order: 1;
-      margin-bottom: mixins.css-variable('switch-margin-bottom--label--right');
-      margin-left: mixins.css-variable('switch-margin-left--label--right');
-      line-height: mixins.css-variable('switch-line-height--label--right');
+      margin-bottom: mixins.css-variable('switch', 'spacing', 'label', 'right', 'margin-bottom');
+      margin-left: mixins.css-variable('switch', 'spacing', 'label', 'right', 'margin-left');
+      line-height: mixins.css-variable('switch', 'line-height', 'label', 'right');
     }
   }
 
   @include mixins.e('core') {
     @include mixins.with-multi-state('disabled', 'active') {
-      background-color: mixins.css-variable('switch-bg--core--disabled--active');
+      background-color: mixins.css-variable('switch', 'background', 'core', 'disabled', 'active');
     }
 
     @include mixins.is('disabled') {
-      background-color: mixins.css-variable('switch-bg--core--disabled');
+      background-color: mixins.css-variable('switch', 'background', 'core', 'disabled');
       cursor: not-allowed;
 
       input {

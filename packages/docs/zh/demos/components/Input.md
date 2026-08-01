@@ -32,7 +32,7 @@ PS: 在`password`状态设置`show-password`为`true`的情况下，`suffix-icon
 
 ## 组合式输入框
 通过`prepend`和`append` `slot`可以为输入框添加一个前置或后置元素  
-`--h-input-bg--prepend-append: transparent` 为了解决图标和前后缀的背景色问题
+`--h-input-background-prepend-append: transparent` 为了解决图标和前后缀的背景色问题
 :::demo components/Input/mixed.vue :::
 
 ## 嵌入复合组件

@@ -1,19 +1,46 @@
 @use '../../../../styles/mixins/function';
 
 $values: (
-  'max-width--title': 480px,
-  'max-width--content': 720px,
-  'min-height': 48px,
-  'min-height--content': 24px,
-  'font-size--title': #{function.css-variable('text-xl')},
-  'color': #{function.css-variable('text-primary')},
-  'color--content': #{function.css-variable('text-secondary')},
-  'border-bottom-color': #{function.css-variable('divider-default')},
-  'border-bottom': 1px solid #{function.css-variable('page-header-border-bottom-color')},
-  'padding': #{function.css-variable('spacing-3')} 0 0,
-  'padding--items': 0 #{function.css-variable('spacing-7')},
-  'padding-bottom--main': #{function.css-variable('spacing-3')},
-  'column-gap--content': #{function.css-variable('spacing-3')},
-  'row-gap--inner': #{function.css-variable('spacing-2')},
-  'row-gap--warpper': #{function.css-variable('spacing-3')},
+  size: (
+    title: (
+      max-width: 480px,
+    ),
+    content: (
+      max-width: 720px,
+      min-height: 24px,
+    ),
+    root: (
+      min-height: 48px,
+    ),
+  ),
+  font-size: (
+    title: #{function.css-variable('text-xl')},
+  ),
+  color: (
+    '': #{function.css-variable('text-primary')},
+    content: #{function.css-variable('text-secondary')},
+  ),
+  background: (
+    divider: #{function.css-variable('divider-default')},
+  ),
+  spacing: (
+    root: (
+      padding: #{function.css-variable('spacing-3')} 0 0,
+    ),
+    items: (
+      padding: 0 #{function.css-variable('spacing-7')},
+    ),
+    main: (
+      padding-bottom: #{function.css-variable('spacing-3')},
+    ),
+    content: (
+      column-gap: #{function.css-variable('spacing-3')},
+    ),
+    inner: (
+      row-gap: #{function.css-variable('spacing-2')},
+    ),
+    wrapper: (
+      row-gap: #{function.css-variable('spacing-3')},
+    ),
+  ),
 );

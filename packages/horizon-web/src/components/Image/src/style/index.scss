@@ -19,7 +19,7 @@
     justify-content: center;
     width: 100%;
     height: 100%;
-    background: mixins.css-variable('image-bg--placeholder');
+    background: mixins.css-variable('image', 'background', 'placeholder');
   }
 
   @include mixins.e('actions-container') {
@@ -29,7 +29,7 @@
     display: none;
     width: 100%;
     height: 100%;
-    background: mixins.css-variable('image-bg--actions-container');
+    background: mixins.css-variable('image', 'background', 'actions-container');
 
     &.center {
       align-items: center;
@@ -39,15 +39,15 @@
     &.bottom-right {
       align-items: flex-end;
       justify-content: flex-end;
-      padding-right: mixins.css-variable('image-padding-right--actions-container--bottom-right');
-      padding-bottom: mixins.css-variable('image-padding-bottom--actions-container--bottom-right');
+      padding-right: mixins.css-variable('image', 'spacing', 'actions-container', 'bottom-right', 'padding-right');
+      padding-bottom: mixins.css-variable('image', 'spacing', 'actions-container', 'bottom-right', 'padding-bottom');
     }
 
     @include mixins.e('actions-icon') {
-      line-height: mixins.css-variable('image-line-height--actions-container--icon');
+      line-height: mixins.css-variable('image', 'line-height', 'actions-container', 'icon');
 
       @include mixins.nested('icon') {
-        margin-right: mixins.css-variable('image-margin-right--actions-container--icon');
+        margin-right: mixins.css-variable('image', 'spacing', 'actions-container', 'icon', 'margin-right');
         cursor: pointer;
 
         &:last-child {
@@ -61,21 +61,21 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: mixins.css-variable('image-size--actions-container--dropdown-btn');
-        height: mixins.css-variable('image-size--actions-container--dropdown-btn');
-        background: mixins.css-variable('image-bg--actions-container--dropdown-btn');
-        border-radius: mixins.css-variable('image-border-radius--actions-container--dropdown-btn');
+        width: mixins.css-variable('image', 'size', 'actions-container', 'dropdown-btn');
+        height: mixins.css-variable('image', 'size', 'actions-container', 'dropdown-btn');
+        background: mixins.css-variable('image', 'background', 'actions-container', 'dropdown-btn');
+        border-radius: mixins.css-variable('image', 'border-radius', 'actions-container', 'dropdown-btn');
 
         &:hover {
-          background: mixins.css-variable('image-bg--actions-container--dropdown-btn--hover');
+          background: mixins.css-variable('image', 'background', 'actions-container', 'dropdown-btn', 'hover');
         }
       }
 
       @include mixins.e('actions-dropdown-item') {
-        color: mixins.css-variable('image-color--actions-container--dropdown-item');
+        color: mixins.css-variable('image', 'color', 'actions-container', 'dropdown-item');
 
         span {
-          margin-left: mixins.css-variable('image-margin-left--actions-container--dropdown-item--span');
+          margin-left: mixins.css-variable('image', 'spacing', 'actions-container', 'dropdown-item', 'span', 'margin-left');
         }
       }
     }
@@ -130,9 +130,9 @@
         justify-content: center;
         width: 100%;
         height: 100%;
-        color: mixins.css-variable('image-color--image-list--item--overflow');
+        color: mixins.css-variable('image', 'color', 'image-list', 'item', 'overflow');
         font-size: 14px;
-        background: mixins.css-variable('image-bg--image-list--item--overflow');
+        background: mixins.css-variable('image', 'background', 'image-list', 'item', 'overflow');
         pointer-events: none;
       }
     }

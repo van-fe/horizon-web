@@ -11,8 +11,8 @@
     display: flex;
     flex: 1;
     align-items: flex-start;
-    padding: 0 0 mixins.css-variable('color-picker-padding--color-type');
-    border-bottom: mixins.css-variable('color-picker-border--default');
+    padding: 0 0 mixins.css-variable('color-picker', 'spacing', 'color-type', 'padding');
+    border-bottom: mixins.css-variable('color-picker', 'border');
 
     @include mixins.m('wrapper') {
       display: flex;
@@ -24,12 +24,12 @@
 
   @include mixins.e('item') {
     position: relative;
-    width: mixins.css-variable('color-picker-size--color-type');
-    height: mixins.css-variable('color-picker-size--color-type');
-    margin-right: mixins.css-variable('color-picker-margin-right--color-type-item--siblings');
-    background: mixins.css-variable('color-picker-bg--color-type-item--pure');
+    width: mixins.css-variable('color-picker', 'size', 'color-type');
+    height: mixins.css-variable('color-picker', 'size', 'color-type');
+    margin-right: mixins.css-variable('color-picker', 'spacing', 'color-type-item', 'siblings', 'margin-right');
+    background: mixins.css-variable('color-picker', 'background', 'color-type-item', 'pure');
     background-size: 10px 10px;
-    border-radius: mixins.css-variable('color-picker-border-radius--color-type-item');
+    border-radius: mixins.css-variable('color-picker', 'border-radius', 'color-type-item');
     cursor: pointer;
 
     &::after {
@@ -39,40 +39,51 @@
       display: block;
       width: calc(100% + 2px);
       height: calc(100% + 2px);
-      border: mixins.css-variable('color-picker-border--transparent');
-      border-radius: mixins.css-variable('color-picker-border-radius--color-type-item');
+      border: mixins.css-variable('color-picker', 'border', 'transparent');
+      border-radius: mixins.css-variable('color-picker', 'border-radius', 'color-type-item');
       transform: translate(-50%, -50%);
-      transition: mixins.css-variable('color-picker-transition--border-color');
+      transition: mixins.css-variable('color-picker', 'transition', 'border-color');
       content: '';
     }
 
     &:hover {
       &::after {
-        border-color: mixins.css-variable('color-picker-border-color--color-type-item--hover');
+        border-color: mixins.css-variable('color-picker', 'border-color', 'color-type-item', 'hover');
       }
     }
 
     &:active {
       &::after {
-        border-color: mixins.css-variable('color-picker-border-color--color-type-item--press');
+        border-color: mixins.css-variable('color-picker', 'border-color', 'color-type-item', 'press');
       }
     }
 
     @include mixins.is('linear') {
-      background: linear-gradient(to top, mixins.css-variable('bg-default'), mixins.css-variable('color-picker-bg--color-type-item--pure'));
+      background: linear-gradient(
+        to top,
+        mixins.css-variable('bg-default'),
+        mixins.css-variable('color-picker', 'background', 'color-type-item', 'pure')
+      );
     }
 
     @include mixins.is('radial') {
-      background: radial-gradient(circle, mixins.css-variable('bg-default'), mixins.css-variable('color-picker-bg--color-type-item--pure'));
+      background: radial-gradient(
+        circle,
+        mixins.css-variable('bg-default'),
+        mixins.css-variable('color-picker', 'background', 'color-type-item', 'pure')
+      );
     }
 
     @include mixins.is('conic') {
-      background: conic-gradient(mixins.css-variable('bg-default'), mixins.css-variable('color-picker-bg--color-type-item--pure'));
+      background: conic-gradient(
+        mixins.css-variable('bg-default'),
+        mixins.css-variable('color-picker', 'background', 'color-type-item', 'pure')
+      );
     }
 
     @include mixins.is('active') {
       &::after {
-        border-color: mixins.css-variable('color-picker-border-color--color-type-item--active');
+        border-color: mixins.css-variable('color-picker', 'border-color', 'color-type-item', 'active');
       }
     }
   }
@@ -87,7 +98,7 @@
       display: flex;
       align-items: center;
       width: 100%;
-      margin-top: mixins.css-variable('color-picker-padding--color-type');
+      margin-top: mixins.css-variable('color-picker', 'spacing', 'color-type', 'padding');
     }
 
     @include mixins.m('track') {
@@ -97,14 +108,14 @@
       display: flex;
       width: 100%;
       height: mixins.size(8);
-      border-radius: mixins.css-variable('color-picker-border-radius--track');
+      border-radius: mixins.css-variable('color-picker', 'border-radius', 'track');
     }
 
     @include mixins.m('track-color') {
       @include utils.absolute-full;
 
       z-index: 0;
-      border-radius: mixins.css-variable('color-picker-border-radius--track');
+      border-radius: mixins.css-variable('color-picker', 'border-radius', 'track');
     }
 
     @include mixins.m('item') {
@@ -116,7 +127,7 @@
 
       @include mixins.is('active') {
         &::after {
-          border-color: mixins.css-variable('color-picker-border-color--color-type-item--active');
+          border-color: mixins.css-variable('color-picker', 'border-color', 'color-type-item', 'active');
         }
       }
     }
@@ -129,7 +140,7 @@
         min-width: 0;
 
         &__inner {
-          #{mixins.css-variable-name('input-number-padding--inner')}: 0 4px;
+          #{mixins.css-variable-name('input-number', 'spacing', 'inner', 'padding')}: 0 4px;
           width: 100%;
         }
 

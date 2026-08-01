@@ -1,14 +1,5 @@
 import type { CSSProperties, VNode } from 'vue';
-import {
-  computed,
-  defineComponent,
-  nextTick,
-  provide,
-  ref,
-  Teleport,
-  toRef,
-  watch,
-} from 'vue';
+import { computed, defineComponent, nextTick, provide, ref, Teleport, toRef, watch } from 'vue';
 import {
   ComponentClassBlock,
   cls,
@@ -69,7 +60,9 @@ export default defineComponent({
     const visible = ref(props.visible);
 
     const wrapperDomRef = ref<HTMLElement | null>(null);
-    const popoverRef = ref<HorizonWebComponentInstance<typeof HPopover, PopoverExposes> | null>(null);
+    const popoverRef = ref<HorizonWebComponentInstance<typeof HPopover, PopoverExposes> | null>(
+      null,
+    );
     const popContentDomRef = ref<HorizonWebComponentInstance<typeof HPopContent> | null>(null);
 
     const { dropdownTree, appendChild, removeChild, renderContent } = useDropdownTree();
@@ -181,8 +174,9 @@ export default defineComponent({
     function getEnabledMenuItems() {
       const popContent = popContentDomRef.value?.$el as HTMLElement | undefined;
       return Array.from(
-        popContent?.querySelectorAll<HTMLElement>('[role="menuitem"]:not([aria-disabled="true"])') ??
-          [],
+        popContent?.querySelectorAll<HTMLElement>(
+          '[role="menuitem"]:not([aria-disabled="true"])',
+        ) ?? [],
       );
     }
 
@@ -264,7 +258,9 @@ export default defineComponent({
                   class={cls(classHelper.e('inner'), classHelper.em('inner', props.theme))}
                   style={{
                     ...contextMenuStyle.value,
-                    ...(props.popperWidth && { '--h-dropdown-width': props.popperWidth + 'px' }),
+                    ...(props.popperWidth && {
+                      '--h-dropdown-size-container-width': props.popperWidth + 'px',
+                    }),
                   }}
                 >
                   <div onKeydown={handleKeydown}>{renderContent(popper)}</div>
@@ -312,7 +308,7 @@ export default defineComponent({
                   ref={popContentDomRef}
                   style={
                     props.popperWidth
-                      ? { '--h-dropdown-width': props.popperWidth + 'px' }
+                      ? { '--h-dropdown-size-container-width': props.popperWidth + 'px' }
                       : undefined
                   }
                   class={cls(

@@ -9,7 +9,7 @@
 
     &-time-panel {
       min-width: mixins.css-variable('date-picker', 'size', 'panel', 'body', 'time-panel', 'min-width');
-      border-left: mixins.css-variable('date-picker', 'divider');
+      border-left: mixins.css-variable('date-picker', 'border', 'divider');
     }
   }
 
@@ -28,7 +28,7 @@
       background: mixins.css-variable('date-picker', 'background', 'panel', 'body', 'grid-item');
       border-radius: mixins.css-variable('date-picker', 'border-radius');
       transition: mixins.css-variable('date-picker', 'transition', 'color-behavior');
-      font-size: mixins.css-variable('date-picker', 'font', 'size', 'panel', 'body', 'grid-item');
+      font-size: mixins.css-variable('date-picker', 'font-size', 'panel', 'body', 'grid-item');
     }
 
     @include mixins.has('dot') {
@@ -109,7 +109,14 @@
           &:nth-child(7n) {
             &::before {
               right: initial;
-              width: calc(#{mixins.css-variable('date-picker', 'size', 'panel', 'body', 'day', 'item', 'width')} + (100% - #{mixins.css-variable('date-picker', 'size', 'panel', 'body', 'day', 'item', 'width')}) / 2);
+              width: calc(
+                #{mixins.css-variable('date-picker', 'size', 'panel', 'body', 'day', 'item', 'width')} +
+                  (
+                    100% -
+                      #{mixins.css-variable('date-picker', 'size', 'panel', 'body', 'day', 'item', 'width')}
+                  ) /
+                  2
+              );
               border-top-right-radius: mixins.css-variable('date-picker', 'border-radius');
               border-bottom-right-radius: mixins.css-variable('date-picker', 'border-radius');
             }
@@ -118,7 +125,14 @@
           &:nth-child(7n + 1) {
             &::before {
               left: initial;
-              width: calc(#{mixins.css-variable('date-picker', 'size', 'panel', 'body', 'day', 'item', 'width')} + (100% - #{mixins.css-variable('date-picker', 'size', 'panel', 'body', 'day', 'item', 'width')}) / 2);
+              width: calc(
+                #{mixins.css-variable('date-picker', 'size', 'panel', 'body', 'day', 'item', 'width')} +
+                  (
+                    100% -
+                      #{mixins.css-variable('date-picker', 'size', 'panel', 'body', 'day', 'item', 'width')}
+                  ) /
+                  2
+              );
               border-top-left-radius: mixins.css-variable('date-picker', 'border-radius');
               border-bottom-left-radius: mixins.css-variable('date-picker', 'border-radius');
             }
@@ -245,7 +259,7 @@
       }
 
       &-week {
-        font-size: mixins.css-variable('date-picker', 'font', 'size', 'panel', 'body', 'week')
+        font-size: mixins.css-variable('date-picker', 'font-size', 'panel', 'body', 'week');
       }
     }
   }

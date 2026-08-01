@@ -1,28 +1,54 @@
 @use '../../../../styles/mixins/function';
 
 $values: (
-  'font-size--main-title': #{function.css-variable('text-lg')},
-  'font-size--main-subtitle': #{function.css-variable('text-base')},
-  'font-size--describe': #{function.css-variable('text-sm')},
-  'font-size--default': #{function.css-variable('text-base')},
-  'font-weight--title--bold': #{function.css-variable('weight-strong')},
-  'font-weight--describe': #{function.css-variable('weight-normal')},
-  'font-weight--default': #{function.css-variable('weight-normal')},
-  'line-height--main-title': #{function.css-variable('line-height-standard')},
-  'line-height--describe': #{function.css-variable('line-height-standard')},
-  'line-height--default': #{function.css-variable('line-height-standard')},
-  'color--main-title': #{function.css-variable('text-primary')},
-  'color--main-subtitle': #{function.css-variable('text-secondary')},
-  'color--describe': #{function.css-variable('text-secondary')},
-  'color--default': #{function.css-variable('text-primary')},
-  'border-color': #{function.css-variable('border-noninteractive')},
-  'border': 1px solid #{function.css-variable('list-border-color')},
-  'bg--default': #{function.css-variable('bg-default')},
-  'bg--even': #{function.css-variable('bg-secondary')},
-  'margin-right--main-sider': #{function.css-variable('spacing-4')},
-  'margin-bottom--main-title': #{function.css-variable('spacing-4')},
-  'margin-left--subtitle': #{function.css-variable('spacing-3')},
-  'padding-left--right': #{function.css-variable('spacing-4')},
-  'padding--list-item': #{function.css-variable('spacing-5')},
-  'padding--list-item--small': #{function.css-variable('spacing-4')} #{function.css-variable('spacing-5')},
+  font-size: (
+    '': #{function.css-variable('text-base')},
+    main-title: #{function.css-variable('text-lg')},
+    main-subtitle: #{function.css-variable('text-base')},
+    describe: #{function.css-variable('text-sm')},
+  ),
+  font-weight: (
+    '': #{function.css-variable('weight-normal')},
+    title: (
+      bold: #{function.css-variable('weight-strong')},
+    ),
+    describe: #{function.css-variable('weight-normal')},
+  ),
+  line-height: (
+    '': #{function.css-variable('line-height-standard')},
+    main-title: #{function.css-variable('line-height-standard')},
+    describe: #{function.css-variable('line-height-standard')},
+  ),
+  color: (
+    '': #{function.css-variable('text-primary')},
+    main-title: #{function.css-variable('text-primary')},
+    main-subtitle: #{function.css-variable('text-secondary')},
+    describe: #{function.css-variable('text-secondary')},
+  ),
+  border-color: #{function.css-variable('border-noninteractive')},
+  border: 1px solid #{function.css-variable('list', 'border-color')},
+  background: (
+    '': #{function.css-variable('bg-default')},
+    even: #{function.css-variable('bg-secondary')},
+  ),
+  spacing: (
+    main-sider: (
+      margin-right: #{function.css-variable('spacing-4')},
+    ),
+    main-title: (
+      margin-bottom: #{function.css-variable('spacing-4')},
+    ),
+    subtitle: (
+      margin-left: #{function.css-variable('spacing-3')},
+    ),
+    right: (
+      padding-left: #{function.css-variable('spacing-4')},
+    ),
+    list-item: (
+      padding: (
+        '': #{function.css-variable('spacing-5')},
+        small: #{function.css-variable('spacing-4')} #{function.css-variable('spacing-5')},
+      ),
+    ),
+  ),
 );

@@ -1,43 +1,144 @@
 @use '../../../../styles/mixins/function';
 
 $values: (
-  'width--item-icon--left': 16px,
-  'width--item-icon--right': #{function.css-variable('collapse-width--item-icon--left')},
-  'font-size--item-icon--left': #{function.css-variable('text-2xl')},
-  'font-size--item-icon--right': #{function.css-variable('collapse-font-size--item-icon--left')},
-  'font-size--item-header': #{function.css-variable('text-lg')},
-  'font-size--item-content': #{function.css-variable('text-base')},
-  'line-height--item-content': 21px,
-  'color--item-header': #{function.css-variable('text-primary')},
-  'color--item-content': #{function.css-variable('text-secondary')},
-  'left--item-icon--left': 0,
-  'right--item-icon--right': #{function.css-variable('collapse-left--item-icon--left')},
-  'filled-left--item-icon--left': #{function.css-variable('spacing-5')},
-  'filled-right--item-icon--right': #{function.css-variable('collapse-filled-left--item-icon--left')},
-  'bg--item-body--filled': #{function.css-variable('bg-transparent')},
-  'bg--item-header--filled': #{function.css-variable('bg-secondary')},
-  'bg--item-header--filled--hover': #{function.css-variable('bg-hover')},
-  'bg--item-header--filled--disabled--hover': #{function.css-variable('bg-secondary')},
-  'bg--item-header--filled--press': #{function.css-variable('bg-press')},
-  'border-color--item': #{function.css-variable('divider-default')},
-  'border-radius': #{function.css-variable('radius-m')},
-  'padding-left--item-header-content--left': 28px,
-  'filled-padding-left--item-header-content--left': 44px,
-  'padding--item-header--small': #{function.css-variable('spacing-3')} 0,
-  'padding--item-header--medium': #{function.css-variable('spacing-4')} 0,
-  'padding--item-header--large': #{function.css-variable('spacing-5')} 0,
-  'padding--item-content--small': 0 0 #{function.css-variable('spacing-3')},
-  'padding--item-content--medium': 0 0 #{function.css-variable('spacing-4')},
-  'padding--item-content--large': 0 0 #{function.css-variable('spacing-5')},
-  'padding-left--item-content--nest': #{function.css-variable('spacing-5')},
-  'margin-top--item--filled--medium--siblings': #{function.css-variable('spacing-3')},
-  'margin-top--item--filled--small--siblings': #{function.css-variable('spacing-2')},
-  'bg--item-header--border': #{function.css-variable('bg-secondary')},
-  'bg--item-header--border--hover': #{function.css-variable('bg-hover')},
-  'bg--item-header--border--disabled--hover': #{function.css-variable('bg-secondary')},
-  'bg--item-header--border--press': #{function.css-variable('bg-press')},
-  'padding--item-content--border': #{function.css-variable('spacing-3')} #{function.css-variable('spacing-5')},
-  'border-left--item-icon--left': #{function.css-variable('spacing-5')},
-  'border-right--item-icon--right': #{function.css-variable('collapse-filled-left--item-icon--left')},
-  'border-padding-left--item-header-content--left': 44px,
+  size: (
+    item-icon: (
+      left: (
+        width: 16px,
+      ),
+      right: (
+        width: #{function.css-variable('collapse', 'size', 'item-icon', 'left', 'width')},
+      ),
+    ),
+  ),
+  font-size: (
+    item-icon: (
+      left: #{function.css-variable('text-2xl')},
+      right: #{function.css-variable('collapse', 'font-size', 'item-icon', 'left')},
+    ),
+    item-header: #{function.css-variable('text-lg')},
+    item-content: #{function.css-variable('text-base')},
+  ),
+  line-height: (
+    item-content: 21px,
+  ),
+  color: (
+    item-header: #{function.css-variable('text-primary')},
+    item-content: #{function.css-variable('text-secondary')},
+  ),
+  border-color: (
+    item: #{function.css-variable('divider-default')},
+  ),
+  border: (
+    left: (
+      item-icon: (
+        left: #{function.css-variable('spacing-5')},
+      ),
+    ),
+    right: (
+      item-icon: (
+        right: #{function.css-variable('collapse', 'spacing', 'position', 'filled', 'left', 'item-icon', 'left')},
+      ),
+    ),
+  ),
+  border-radius: #{function.css-variable('radius-m')},
+  background: (
+    item-body: (
+      filled: #{function.css-variable('bg-transparent')},
+      border: #{function.css-variable('bg-transparent')},
+    ),
+    item-header: (
+      filled: (
+        '': #{function.css-variable('bg-secondary')},
+        hover: #{function.css-variable('bg-hover')},
+        disabled: (
+          hover: #{function.css-variable('bg-secondary')},
+        ),
+        press: #{function.css-variable('bg-press')},
+      ),
+      border: (
+        '': #{function.css-variable('bg-secondary')},
+        hover: #{function.css-variable('bg-hover')},
+        disabled: (
+          hover: #{function.css-variable('bg-secondary')},
+        ),
+        press: #{function.css-variable('bg-press')},
+      ),
+    ),
+  ),
+  spacing: (
+    item-icon: (
+      left: (
+        left: 0,
+      ),
+      right: (
+        right: #{function.css-variable('collapse', 'spacing', 'item-icon', 'left', 'left')},
+      ),
+    ),
+    position: (
+      filled: (
+        left: (
+          item-icon: (
+            left: #{function.css-variable('spacing-5')},
+          ),
+        ),
+        right: (
+          item-icon: (
+            right: #{function.css-variable('collapse', 'spacing', 'position', 'filled', 'left', 'item-icon', 'left')},
+          ),
+        ),
+      ),
+    ),
+    item-header-content: (
+      left: (
+        padding-left: 28px,
+      ),
+    ),
+    item-content: (
+      nest: (
+        padding-left: #{function.css-variable('spacing-5')},
+      ),
+      padding: (
+        small: 0 0 #{function.css-variable('spacing-3')},
+        medium: 0 0 #{function.css-variable('spacing-4')},
+        large: 0 0 #{function.css-variable('spacing-5')},
+      ),
+      border: (
+        padding: #{function.css-variable('spacing-3')} #{function.css-variable('spacing-5')},
+      ),
+    ),
+    filled: (
+      item-header-content: (
+        left: (
+          padding-left: 44px,
+        ),
+      ),
+    ),
+    item-header: (
+      padding: (
+        small: #{function.css-variable('spacing-3')} 0,
+        medium: #{function.css-variable('spacing-4')} 0,
+        large: #{function.css-variable('spacing-5')} 0,
+      ),
+    ),
+    item: (
+      filled: (
+        margin-top: (
+          medium: (
+            siblings: #{function.css-variable('spacing-3')},
+          ),
+          small: (
+            siblings: #{function.css-variable('spacing-2')},
+          ),
+        ),
+      ),
+    ),
+    border: (
+      item-header-content: (
+        left: (
+          padding-left: 44px,
+        ),
+      ),
+    ),
+  ),
 );

@@ -6,27 +6,27 @@
   align-items: center;
   width: fit-content;
   min-width: 100%;
-  min-height: mixins.css-variable('tree-height--item');
-  color: mixins.css-variable('tree-color--item');
-  font-size: mixins.css-variable('tree-font-size');
-  background: mixins.css-variable('tree-bg--item');
-  border-radius: mixins.css-variable('tree-border-radius--item');
+  min-height: mixins.css-variable('tree', 'size', 'item', 'height');
+  color: mixins.css-variable('tree', 'color', 'item');
+  font-size: mixins.css-variable('tree', 'font-size');
+  background: mixins.css-variable('tree', 'background', 'item');
+  border-radius: mixins.css-variable('tree', 'border-radius', 'item');
   cursor: pointer;
-  transition: mixins.css-variable('tree-transition--color-behavior');
+  transition: mixins.css-variable('tree', 'transition', 'color-behavior');
 
   @include mixins.e('icon') {
     position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: mixins.css-variable('tree-size--icon');
-    height: mixins.css-variable('tree-size--icon');
-    font-size: mixins.css-variable('tree-font-size--icon');
-    transition: mixins.css-variable('tree-transition--all--fast');
+    width: mixins.css-variable('tree', 'size', 'icon');
+    height: mixins.css-variable('tree', 'size', 'icon');
+    font-size: mixins.css-variable('tree', 'font-size', 'icon');
+    transition: mixins.css-variable('tree', 'transition', 'all', 'fast');
     user-select: none;
 
     > * {
-      transition: mixins.css-variable('tree-transition--all--fast');
+      transition: mixins.css-variable('tree', 'transition', 'all', 'fast');
     }
 
     @include mixins.nested('icon') {
@@ -47,13 +47,13 @@
   }
 
   @include mixins.e('loading-icon') {
-    margin-right: mixins.css-variable('tree-margin-right--expand-icon');
-    color: mixins.css-variable('tree-color--loading-icon');
+    margin-right: mixins.css-variable('tree', 'spacing', 'expand-icon', 'margin-right');
+    color: mixins.css-variable('tree', 'color', 'loading-icon');
   }
 
   @include mixins.e('expand-icon') {
-    margin-right: mixins.css-variable('tree-margin-right--expand-icon');
-    background: mixins.css-variable('tree-bg--action-icon');
+    margin-right: mixins.css-variable('tree', 'spacing', 'expand-icon', 'margin-right');
+    background: mixins.css-variable('tree', 'background', 'action-icon');
     cursor: pointer;
 
     @include mixins.is('active') {
@@ -63,22 +63,22 @@
     }
 
     &:hover {
-      background: mixins.css-variable('tree-bg--action-icon--hover');
+      background: mixins.css-variable('tree', 'background', 'action-icon', 'hover');
     }
 
     &:active {
-      background: mixins.css-variable('tree-bg--action-icon--press');
+      background: mixins.css-variable('tree', 'background', 'action-icon', 'press');
     }
   }
 
   @include mixins.e('prefix-icon') {
-    margin-right: mixins.css-variable('tree-margin-right--expand-icon');
+    margin-right: mixins.css-variable('tree', 'spacing', 'expand-icon', 'margin-right');
   }
 
   @include mixins.e('content') {
     display: -webkit-box;
     flex: 1;
-    padding-right: mixins.css-variable('tree-padding-right--item--content');
+    padding-right: mixins.css-variable('tree', 'spacing', 'item', 'content', 'padding-right');
 
     @include mixins.is('ellipsis') {
       overflow: hidden;
@@ -112,13 +112,13 @@
 
   @include mixins.is-not('disabled') {
     @include mixins.is('focus') {
-      color: mixins.css-variable('tree-color--item--hover');
-      background: mixins.css-variable('tree-bg--item--hover');
+      color: mixins.css-variable('tree', 'color', 'item', 'hover');
+      background: mixins.css-variable('tree', 'background', 'item', 'hover');
     }
 
     &:hover {
-      color: mixins.css-variable('tree-color--item--hover');
-      background: mixins.css-variable('tree-bg--item--hover');
+      color: mixins.css-variable('tree', 'color', 'item', 'hover');
+      background: mixins.css-variable('tree', 'background', 'item', 'hover');
 
       @include mixins.e('draggable-icon') {
         opacity: 1;
@@ -127,34 +127,34 @@
 
     @include mixins.is('clickable') {
       &:active {
-        color: mixins.css-variable('tree-color--item--press');
-        background: mixins.css-variable('tree-bg--item--press');
+        color: mixins.css-variable('tree', 'color', 'item', 'press');
+        background: mixins.css-variable('tree', 'background', 'item', 'press');
       }
     }
 
     @include mixins.is('checked') {
-      font-weight: mixins.css-variable('tree-font-weight--item--checked');
+      font-weight: mixins.css-variable('tree', 'font-weight', 'item', 'checked');
 
       @include mixins.is('stress') {
-        color: mixins.css-variable('tree-color--item--stress');
-        background: mixins.css-variable('tree-bg--item--stress');
+        color: mixins.css-variable('tree', 'color', 'item', 'stress');
+        background: mixins.css-variable('tree', 'background', 'item', 'stress');
       }
     }
   }
 
   @include mixins.is('disabled') {
     @include mixins.e('content') {
-      color: mixins.css-variable('tree-color--item--disabled');
+      color: mixins.css-variable('tree', 'color', 'item', 'disabled');
       cursor: not-allowed;
     }
 
     @include mixins.is('checked') {
       @include mixins.e('content') {
-        font-weight: mixins.css-variable('tree-font-weight--item--checked');
+        font-weight: mixins.css-variable('tree', 'font-weight', 'item', 'checked');
       }
 
       @include mixins.is('stress') {
-        background: mixins.css-variable('tree-bg--item--stress');
+        background: mixins.css-variable('tree', 'background', 'item', 'stress');
       }
     }
   }
@@ -170,7 +170,7 @@
     transform: translateX(-50%) translateY(-50%);
 
     @include mixins.is('stop-in-middle') {
-      top:-25%;
+      top: -25%;
       height: 75%;
       transform: translateX(-50%);
     }
@@ -180,12 +180,12 @@
 @include mixins.b('tree') {
   @include mixins.m('small') {
     @include mixins.b('tree-item', false) {
-      min-height: mixins.css-variable('tree-height--item--small');
-      font-size: mixins.css-variable('tree-font-size--small');
+      min-height: mixins.css-variable('tree', 'size', 'item', 'height', 'small');
+      font-size: mixins.css-variable('tree', 'font-size', 'small');
 
       @include mixins.e('icon') {
-        width: mixins.css-variable('tree-size--icon--small');
-        height: mixins.css-variable('tree-size--icon--small');
+        width: mixins.css-variable('tree', 'size', 'icon', 'small');
+        height: mixins.css-variable('tree', 'size', 'icon', 'small');
       }
     }
   }
@@ -194,12 +194,12 @@
 @include mixins.b('tree') {
   @include mixins.m('large') {
     @include mixins.b('tree-item', false) {
-      min-height: mixins.css-variable('tree-height--item--large');
-      font-size: mixins.css-variable('tree-font-size--large');
+      min-height: mixins.css-variable('tree', 'size', 'item', 'height', 'large');
+      font-size: mixins.css-variable('tree', 'font-size', 'large');
 
       @include mixins.e('icon') {
-        width: mixins.css-variable('tree-size--icon--large');
-        height: mixins.css-variable('tree-size--icon--large');
+        width: mixins.css-variable('tree', 'size', 'icon', 'large');
+        height: mixins.css-variable('tree', 'size', 'icon', 'large');
       }
     }
   }
@@ -208,12 +208,12 @@
 @include mixins.b('tree') {
   @include mixins.m('huge') {
     @include mixins.b('tree-item', false) {
-      min-height: mixins.css-variable('tree-height--item--huge');
-      font-size: mixins.css-variable('tree-font-size--huge');
+      min-height: mixins.css-variable('tree', 'size', 'item', 'height', 'huge');
+      font-size: mixins.css-variable('tree', 'font-size', 'huge');
 
       @include mixins.e('icon') {
-        width: mixins.css-variable('tree-size--icon--huge');
-        height: mixins.css-variable('tree-size--icon--huge');
+        width: mixins.css-variable('tree', 'size', 'icon', 'huge');
+        height: mixins.css-variable('tree', 'size', 'icon', 'huge');
       }
     }
   }
@@ -224,7 +224,7 @@
     @include mixins.b('tree-item', false) {
       @include mixins.is-not('disabled') {
         @include mixins.is('checked') {
-          color: mixins.css-variable('tree-color--item--stress');
+          color: mixins.css-variable('tree', 'color', 'item', 'stress');
         }
       }
     }

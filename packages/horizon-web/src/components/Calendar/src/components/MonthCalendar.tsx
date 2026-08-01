@@ -229,9 +229,7 @@ export default defineComponent({
                         `calc(${pinFlags.getFlagIndexInWeekdays(
                           flag,
                           firstTimeInThisWeek,
-                        )} * (${cssVariable('calendar-height--flag--month')} + ${cssVariable(
-                          'calendar-margin-bottom--flag--month',
-                        )})`,
+                        )} * (${cssVariable('calendar', 'size', 'flag', 'month', 'height')} + ${cssVariable('calendar', 'spacing', 'flag', 'month', 'margin-bottom')})`,
                     );
 
                     const width = computed(
@@ -272,12 +270,8 @@ export default defineComponent({
                             classHelper.is('temp', !!flag?.temp),
                           )}
                           style={{
-                            width: `calc(${width.value}px - ${cssVariable(
-                              'calendar-padding--day--month',
-                            )})`,
-                            left: `calc(${toLeft.value}px + ${cssVariable(
-                              'calendar-padding--day--month',
-                            )})`,
+                            width: `calc(${width.value}px - ${cssVariable('calendar', 'spacing', 'day', 'month', 'padding')})`,
+                            left: `calc(${toLeft.value}px + ${cssVariable('calendar', 'spacing', 'day', 'month', 'padding')})`,
                             top: toTop.value,
                             color: flag?.color,
                             background: flag?.background,
@@ -357,9 +351,7 @@ export default defineComponent({
                               style={{
                                 height: `calc(${pinFlags.getFlagsAmountInDay(
                                   date,
-                                )}  * (${cssVariable(
-                                  'calendar-height--flag--month',
-                                )} + ${cssVariable('calendar-margin-bottom--flag--month')}))`,
+                                )}  * (${cssVariable('calendar', 'size', 'flag', 'month', 'height')} + ${cssVariable('calendar', 'spacing', 'flag', 'month', 'margin-bottom')}))`,
                               }}
                             />
                           )}

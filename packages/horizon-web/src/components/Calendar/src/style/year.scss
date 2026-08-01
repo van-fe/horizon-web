@@ -15,14 +15,14 @@
 
     @include mixins.m('header') {
       display: flex;
-      flex: 0 0 mixins.css-variable('calendar-height--year--month-header');
+      flex: 0 0 mixins.css-variable('calendar', 'size', 'year', 'month-header', 'height');
       align-items: center;
-      padding: mixins.css-variable('calendar-padding--year--month-header');
+      padding: mixins.css-variable('calendar', 'spacing', 'year', 'month-header', 'padding');
 
       &-num {
-        color: mixins.css-variable('calendar-color--year--month-header--num');
-        font-weight: mixins.css-variable('calendar-font-weight--year--month-header--num');
-        font-size: mixins.css-variable('calendar-font-size--year--month-header--num');
+        color: mixins.css-variable('calendar', 'color', 'year', 'month-header', 'num');
+        font-weight: mixins.css-variable('calendar', 'font-weight', 'year', 'month-header', 'num');
+        font-size: mixins.css-variable('calendar', 'font-size', 'year', 'month-header', 'num');
       }
 
       &-suffix {
@@ -37,7 +37,7 @@
       flex: 1;
       flex-direction: column;
       min-height: 0;
-      padding: 0 mixins.css-variable('calendar-padding--year--month-wrapper');
+      padding: 0 mixins.css-variable('calendar', 'spacing', 'year', 'month-wrapper', 'padding');
 
       &::after {
         position: absolute;
@@ -46,7 +46,7 @@
         box-sizing: border-box;
         width: 200%;
         height: 200%;
-        border-right: mixins.css-variable('calendar-border--day-row');
+        border-right: mixins.css-variable('calendar', 'border', 'day-row');
         transform: scale(0.5, 0.5);
         transform-origin: 0 0;
         content: '';
@@ -55,13 +55,13 @@
     }
 
     @include mixins.m('week') {
-      color: mixins.css-variable('calendar-color--year--month-body--week');
-      font-size: mixins.css-variable('calendar-font-size--year--month-body--week');
+      color: mixins.css-variable('calendar', 'color', 'year', 'month-body', 'week');
+      font-size: mixins.css-variable('calendar', 'font-size', 'year', 'month-body', 'week');
       text-align: center;
 
       &-wrapper {
         display: grid;
-        flex: 0 0 mixins.css-variable('calendar-height--year--week');
+        flex: 0 0 mixins.css-variable('calendar', 'size', 'year', 'week', 'height');
         grid-template-columns: repeat(7, 1fr);
         align-items: center;
         width: 100%;
@@ -86,28 +86,28 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: mixins.css-variable('calendar-min-height--year--month-day');
-      color: mixins.css-variable('calendar-color--year--month-body--day');
-      font-size: mixins.css-variable('calendar-font-size--year--month-body--day');
+      min-height: mixins.css-variable('calendar', 'size', 'year', 'month-day', 'min-height');
+      color: mixins.css-variable('calendar', 'color', 'year', 'month-body', 'day');
+      font-size: mixins.css-variable('calendar', 'font-size', 'year', 'month-body', 'day');
 
       @include mixins.is('current-month') {
-        color: mixins.css-variable('calendar-color--year--month-body--day--current-month');
+        color: mixins.css-variable('calendar', 'color', 'year', 'month-body', 'day', 'current-month');
 
         @include mixins.is('current-day') {
-          color: mixins.css-variable('calendar-color--year--month-body--day--current-day');
+          color: mixins.css-variable('calendar', 'color', 'year', 'month-body', 'day', 'current-day');
 
           &::before {
-            background: mixins.css-variable('calendar-bg--year--month-body--day--current-day') !important;
+            background: mixins.css-variable('calendar', 'background', 'year', 'month-body', 'day', 'current-day') !important;
           }
         }
       }
 
       @include mixins.is('disabled') {
-        color: mixins.css-variable('calendar-color--year--month-body--day--disabled');
+        color: mixins.css-variable('calendar', 'color', 'year', 'month-body', 'day', 'disabled');
         cursor: not-allowed !important;
 
         &::before {
-          background: mixins.css-variable('calendar-bg--year--month-body--day--disabled') !important;
+          background: mixins.css-variable('calendar', 'background', 'year', 'month-body', 'day', 'disabled') !important;
         }
       }
 
@@ -123,7 +123,7 @@
         display: block;
         width: 26px;
         height: 26px;
-        border-radius: mixins.css-variable('calendar-border-radius');
+        border-radius: mixins.css-variable('calendar', 'border-radius');
         transform: translate(-50%, -50%);
         content: '';
       }
@@ -136,21 +136,21 @@
           z-index: 0;
           width: 100%;
           height: 100%;
-          background: mixins.css-variable('calendar-bg--year--month-body--day--has-flag');
+          background: mixins.css-variable('calendar', 'background', 'year', 'month-body', 'day', 'has-flag');
           content: '';
         }
 
         @include mixins.is('flag-start') {
           &::after {
-            border-top-left-radius: mixins.css-variable('calendar-border-radius--pill');
-            border-bottom-left-radius: mixins.css-variable('calendar-border-radius--pill');
+            border-top-left-radius: mixins.css-variable('calendar', 'border-radius', 'pill');
+            border-bottom-left-radius: mixins.css-variable('calendar', 'border-radius', 'pill');
           }
         }
 
         @include mixins.is('flag-end') {
           &::after {
-            border-top-right-radius: mixins.css-variable('calendar-border-radius--pill');
-            border-bottom-right-radius: mixins.css-variable('calendar-border-radius--pill');
+            border-top-right-radius: mixins.css-variable('calendar', 'border-radius', 'pill');
+            border-bottom-right-radius: mixins.css-variable('calendar', 'border-radius', 'pill');
           }
         }
       }
@@ -174,13 +174,13 @@
 
       &:hover {
         &::before {
-          background: mixins.css-variable('calendar-bg--year--month-body--day--current-day--hover');
+          background: mixins.css-variable('calendar', 'background', 'year', 'month-body', 'day', 'current-day', 'hover');
         }
       }
 
       &:active {
         &::before {
-          background: mixins.css-variable('calendar-bg--year--month-body--day--current-day--active');
+          background: mixins.css-variable('calendar', 'background', 'year', 'month-body', 'day', 'current-day', 'active');
         }
       }
     }

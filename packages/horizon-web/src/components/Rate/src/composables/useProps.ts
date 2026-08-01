@@ -79,7 +79,7 @@ export const useRateProps = declarePropType({
    */
   color: {
     type: String,
-    default: `rgb(${cssVariable('rate-color--content')})`,
+    default: `rgb(${cssVariable('rate', 'color', 'content')})`,
   },
   /**
    * 图标空时的颜色

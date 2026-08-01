@@ -152,8 +152,8 @@ export default defineComponent({
         ref={elementRef}
         class={cls(classHelper.e('item'))}
         style={{
-          [cssVariableKey('menu--tree-level')]: treeLevel,
-          [cssVariableKey('menu--parent-icon-amount')]: parentHasIconAmount.value,
+          [cssVariableKey('menu', 'size', 'tree-level')]: treeLevel,
+          [cssVariableKey('menu', 'size', 'parent-icon-amount')]: parentHasIconAmount.value,
         }}
         data-tree-level={treeLevel}
       >

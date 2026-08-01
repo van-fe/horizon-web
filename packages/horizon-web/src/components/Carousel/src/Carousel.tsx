@@ -233,7 +233,7 @@ export default defineComponent({
     return () => {
       const items = getItems();
       const showControls = items.length > 1;
-      const rootStyle = { '--h-carousel-height': cssHeight.value } as CSSProperties;
+      const rootStyle = { '--h-carousel-size-container-height': cssHeight.value } as CSSProperties;
       return (
         <section
           {...attrs}

@@ -3,7 +3,7 @@
 @include mixins.b('transfer') {
   display: flex;
   min-height: 300px;
-  color: mixins.css-variable('transfer-color');
+  color: mixins.css-variable('transfer', 'color');
 
   @include mixins.e('header') {
     width: 100%;
@@ -11,7 +11,7 @@
     @include mixins.m('clear') {
       min-width: max-content;
       padding: 0;
-      color: mixins.css-variable('transfer-color--clear--header');
+      color: mixins.css-variable('transfer', 'color', 'clear', 'header');
       background-color: transparent !important;
       cursor: pointer;
     }
@@ -21,10 +21,10 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: mixins.css-variable('transfer-margin--control');
+    margin: mixins.css-variable('transfer', 'spacing', 'control', 'margin');
 
     @include mixins.siblings-block('button') {
-      margin-top: mixins.css-variable('transfer-margin-top--control--button-siblings');
+      margin-top: mixins.css-variable('transfer', 'spacing', 'control', 'button-siblings', 'margin-top');
     }
   }
 
@@ -48,13 +48,13 @@
   }
 
   @include mixins.m('left') {
-    border-top-left-radius: mixins.css-variable('transfer-border-radius');
-    border-bottom-left-radius: mixins.css-variable('transfer-border-radius');
+    border-top-left-radius: mixins.css-variable('transfer', 'border-radius');
+    border-bottom-left-radius: mixins.css-variable('transfer', 'border-radius');
   }
 
   @include mixins.m('right') {
-    border-top-right-radius: mixins.css-variable('transfer-border-radius');
-    border-bottom-right-radius: mixins.css-variable('transfer-border-radius');
+    border-top-right-radius: mixins.css-variable('transfer', 'border-radius');
+    border-bottom-right-radius: mixins.css-variable('transfer', 'border-radius');
   }
 }
 
@@ -64,8 +64,8 @@
   flex-direction: column;
   padding-bottom: 16px;
   overflow: hidden;
-  background-color: mixins.css-variable('transfer-bg--panel');
-  border: mixins.css-variable('transfer-border--panel');
+  background-color: mixins.css-variable('transfer', 'background', 'panel');
+  border: mixins.css-variable('transfer', 'border', 'panel');
 
   & + & {
     border-left: none;
@@ -76,7 +76,7 @@
     align-items: center;
     justify-content: space-between;
     height: 48px;
-    padding: mixins.css-variable('transfer-padding--panel-header');
+    padding: mixins.css-variable('transfer', 'spacing', 'panel-header', 'padding');
   }
 
   @include mixins.em('header', 'empty') {
@@ -89,13 +89,13 @@
     top: 0;
     left: 0;
     z-index: 2;
-    padding: mixins.css-variable('transfer-padding--panel-input');
-    background-color: mixins.css-variable('transfer-bg--panel-input');
+    padding: mixins.css-variable('transfer', 'spacing', 'panel-input', 'padding');
+    background-color: mixins.css-variable('transfer', 'background', 'panel-input');
   }
 
   @include mixins.e('breadcrumb') {
     max-height: 88px;
-    padding: mixins.css-variable('transfer-padding--panel-breadcrumb');
+    padding: mixins.css-variable('transfer', 'spacing', 'panel-breadcrumb', 'padding');
     overflow-y: scroll;
   }
 
@@ -103,8 +103,8 @@
     position: relative;
     flex: 1;
     box-sizing: content-box;
-    max-height: mixins.css-variable('transfer-height--panel-body');
-    padding: mixins.css-variable('transfer-padding--panel-body');
+    max-height: mixins.css-variable('transfer', 'size', 'panel-body', 'height');
+    padding: mixins.css-variable('transfer', 'spacing', 'panel-body', 'padding');
     overflow: auto;
 
     @include mixins.nested('breadcrumb') {
@@ -130,14 +130,14 @@
     justify-content: space-between;
     box-sizing: border-box;
     width: 100%;
-    padding: mixins.css-variable('transfer-padding--panel-item');
+    padding: mixins.css-variable('transfer', 'spacing', 'panel-item', 'padding');
     line-height: 22px;
-    border-radius: mixins.css-variable('transfer-border-radius--item');
+    border-radius: mixins.css-variable('transfer', 'border-radius', 'item');
     cursor: pointer;
 
     @include mixins.is('draggable') {
       &:hover {
-        background: mixins.css-variable('transfer-bg--panel-item--hover');
+        background: mixins.css-variable('transfer', 'background', 'panel-item', 'hover');
       }
     }
 
@@ -149,8 +149,8 @@
     }
 
     &-group {
-      padding: mixins.css-variable('transfer-padding--panel-item--group');
-      color: mixins.css-variable('transfer-color--panel-item--group');
+      padding: mixins.css-variable('transfer', 'spacing', 'panel-item', 'group', 'padding');
+      color: mixins.css-variable('transfer', 'color', 'panel-item', 'group');
       font-size: 12px;
     }
 
@@ -195,7 +195,7 @@
       &::before {
         top: 0;
         display: block;
-        background-color: mixins.css-variable('transfer-bg--panel-item--gap-top');
+        background-color: mixins.css-variable('transfer', 'background', 'panel-item', 'gap-top');
       }
     }
 
@@ -203,7 +203,7 @@
       &::before {
         bottom: 0;
         display: block;
-        background-color: mixins.css-variable('transfer-bg--panel-item--gap-bottom');
+        background-color: mixins.css-variable('transfer', 'background', 'panel-item', 'gap-bottom');
       }
     }
 
@@ -219,18 +219,21 @@
     right: 0;
     z-index: 1;
     height: 100%;
-    background-color: mixins.css-variable('transfer-bg--item--drag-over');
+    background-color: mixins.css-variable('transfer', 'background', 'item', 'drag-over');
 
     @include mixins.is('sibling') {
       width: 100%;
     }
     @include mixins.e('item-drag-over-cursor') {
       position: absolute;
-      right: calc(#{mixins.css-variable('transfer-size--drag-over-cursor-arrow')} + #{mixins.css-variable('transfer-height--drag-over-cursor')} * 2);
+      right: calc(
+        #{mixins.css-variable('transfer', 'size', 'drag-over-cursor-arrow')} +
+          #{mixins.css-variable('transfer', 'size', 'drag-over-cursor', 'height')} * 2
+      );
       bottom: 0;
       width: 100%;
-      height: mixins.css-variable('transfer-height--drag-over-cursor');
-      background: mixins.css-variable('transfer-bg--drag-over-cursor');
+      height: mixins.css-variable('transfer', 'size', 'drag-over-cursor', 'height');
+      background: mixins.css-variable('transfer', 'background', 'drag-over-cursor');
       opacity: 1;
       @include mixins.is('top') {
         top: 0;
@@ -238,25 +241,38 @@
       @include mixins.is('bottom') {
         bottom: 0;
       }
-    
-      &::before, &::after {
+
+      &::before,
+      &::after {
         position: absolute;
         top: 50%;
         display: block;
-        width: mixins.css-variable('transfer-size--drag-over-cursor-arrow');
-        height: mixins.css-variable('transfer-size--drag-over-cursor-arrow');
-        border: mixins.css-variable('transfer-border--drag-over-cursor-arrow');
-        border-radius: mixins.css-variable('transfer-border-radius--drag-over-cursor-arrow');
+        width: mixins.css-variable('transfer', 'size', 'drag-over-cursor-arrow');
+        height: mixins.css-variable('transfer', 'size', 'drag-over-cursor-arrow');
+        border: mixins.css-variable('transfer', 'border', 'drag-over-cursor-arrow');
+        border-radius: mixins.css-variable('transfer', 'border-radius', 'drag-over-cursor-arrow');
         transform: translateY(-50%);
         content: '';
       }
-    
+
       &::before {
-        left: calc((#{mixins.css-variable('transfer-size--drag-over-cursor-arrow')} + #{mixins.css-variable('transfer-height--drag-over-cursor')} * 2) * -1);
+        left: calc(
+          (
+              #{mixins.css-variable('transfer', 'size', 'drag-over-cursor-arrow')} +
+                #{mixins.css-variable('transfer', 'size', 'drag-over-cursor', 'height')} * 2
+            ) *
+            -1
+        );
       }
-    
+
       &::after {
-        right: calc((#{mixins.css-variable('transfer-size--drag-over-cursor-arrow')} + #{mixins.css-variable('transfer-height--drag-over-cursor')}) * -1);
+        right: calc(
+          (
+              #{mixins.css-variable('transfer', 'size', 'drag-over-cursor-arrow')} +
+                #{mixins.css-variable('transfer', 'size', 'drag-over-cursor', 'height')}
+            ) *
+            -1
+        );
       }
     }
   }
@@ -265,7 +281,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    padding: mixins.css-variable('transfer-padding--panel-footer');
+    padding: mixins.css-variable('transfer', 'spacing', 'panel-footer', 'padding');
   }
 
   @include mixins.m('empty') {
@@ -273,7 +289,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding-bottom: mixins.css-variable('transfer-padding-bottom--panel-body--empty');
+      padding-bottom: mixins.css-variable('transfer', 'spacing', 'panel-body', 'empty', 'padding-bottom');
     }
 
     @include mixins.bem('transfer-panel', 'body', 'empty', false) {
@@ -282,7 +298,7 @@
       justify-content: center;
       width: 100%;
       height: 100%;
-      color: mixins.css-variable('transfer-color--panel-body--empty');
+      color: mixins.css-variable('transfer', 'color', 'panel-body', 'empty');
     }
   }
 }

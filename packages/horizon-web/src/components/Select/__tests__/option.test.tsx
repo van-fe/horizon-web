@@ -76,9 +76,9 @@ describe('Option.tsx', () => {
 
       const [opt1, opt2, opt3] = wrapper.findAll('.h-select-option');
 
-      expect(opt1.attributes('style')).contains('--h-select-max-line--option: 3;');
-      expect(opt2.attributes('style')).contains('--h-select-max-line--option: 1;');
-      expect(opt3.attributes('style')).contains('--h-select-max-line--option: 1;');
+      expect(opt1.attributes('style')).contains('--h-select-size-option-max-line: 3;');
+      expect(opt2.attributes('style')).contains('--h-select-size-option-max-line: 1;');
+      expect(opt3.attributes('style')).contains('--h-select-size-option-max-line: 1;');
     });
 
     test('value set object', async () => {

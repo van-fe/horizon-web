@@ -11,18 +11,18 @@
     text-decoration: none;
     text-underline-offset: auto;
     cursor: pointer;
-    transition: mixins.css-variable('link-transition--all');
+    transition: mixins.css-variable('link', 'transition', 'all');
 
     + * {
-      margin-left: mixins.css-variable('link-margin-left--siblings');
+      margin-left: mixins.css-variable('link', 'spacing', 'siblings', 'margin-left');
     }
 
     @include mixins.e('prefix') {
-      margin-right: mixins.css-variable('link-margin-left--prefix');
+      margin-right: mixins.css-variable('link', 'spacing', 'prefix', 'margin-right');
     }
 
     @include mixins.e('suffix') {
-      margin-left: mixins.css-variable('link-margin-left--suffix');
+      margin-left: mixins.css-variable('link', 'spacing', 'suffix', 'margin-left');
     }
 
     @include mixins.has('underline') {
@@ -37,7 +37,7 @@
 
     @include mixins.has('anchor') {
       @include mixins.e('anchor') {
-        margin-left: mixins.css-variable('link-margin-left--anchor');
+        margin-left: mixins.css-variable('link', 'spacing', 'anchor', 'gap');
         visibility: hidden;
         cursor: pointer;
       }
@@ -47,7 +47,7 @@
           position: absolute;
           left: 0;
           margin-left: 0;
-          padding-right: mixins.css-variable('link-margin-left--anchor');
+          padding-right: mixins.css-variable('link', 'spacing', 'anchor', 'gap');
           transform: translateX(-100%);
         }
       }
@@ -64,7 +64,7 @@
     }
 
     svg {
-      margin-right: mixins.css-variable('link-margin-right--loading-svg');
+      margin-right: mixins.css-variable('link', 'spacing', 'loading-icon', 'margin-right');
     }
   }
 }

@@ -17,8 +17,8 @@
 
   @include mixins.e('title') {
     width: 100%;
-    height: mixins.css-variable('menu-height--menu-item');
-    padding: mixins.css-variable('menu-padding--title');
+    height: mixins.css-variable('menu', 'size', 'menu-item', 'height');
+    padding: mixins.css-variable('menu', 'spacing', 'title', 'padding');
 
     @include mixins.m('inner') {
       display: flex;
@@ -27,14 +27,16 @@
       width: 100%;
       min-width: 0;
       height: 100%;
-      padding: mixins.css-variable('menu-padding--item--title--inner');
+      padding: mixins.css-variable('menu', 'spacing', 'item', 'title', 'inner', 'padding');
       padding-left: calc(
-        #{mixins.css-variable('menu-padding-left--item--title--inner--base')}
-        + #{mixins.css-variable-with-default-value('menu--tree-level', 0)} * #{mixins.css-variable('menu-padding-left--item--title--inner--level')}
-        + #{mixins.css-variable-with-default-value('menu--parent-icon-amount', 0)} * #{mixins.css-variable('menu-padding-left--item--title--inner--icon')}
+        #{mixins.css-variable('menu', 'spacing', 'item', 'title', 'inner', 'base', 'padding-left')} +
+          #{mixins.css-variable-with-default-value('menu-size-tree-level', 0)} *
+          #{mixins.css-variable('menu', 'spacing', 'item', 'title', 'inner', 'level', 'padding-left')} +
+          #{mixins.css-variable-with-default-value('menu-size-parent-icon-amount', 0)} *
+          #{mixins.css-variable('menu', 'spacing', 'item', 'title', 'inner', 'icon', 'padding-left')}
       );
-      border-radius: mixins.css-variable('menu-border-radius--item');
-      transition: mixins.css-variable('menu-transiton--all');
+      border-radius: mixins.css-variable('menu', 'border-radius', 'item');
+      transition: mixins.css-variable('menu', 'transition', 'all');
     }
 
     @include mixins.m('content') {
@@ -52,8 +54,8 @@
 
     @include mixins.m('icon') {
       height: 20px;
-      margin-right: mixins.css-variable('menu-margin-right--item--icon');
-      transition: mixins.css-variable('menu-transiton--all');
+      margin-right: mixins.css-variable('menu', 'spacing', 'item', 'icon', 'margin-right');
+      transition: mixins.css-variable('menu', 'transition', 'all');
     }
 
     @include mixins.m('text') {
@@ -66,10 +68,10 @@
     @include mixins.m('arrow') {
       display: flex;
       align-items: center;
-      margin-left: mixins.css-variable('menu-margin-left--arrow');
+      margin-left: mixins.css-variable('menu', 'spacing', 'arrow', 'margin-left');
 
       #{mixins.block-name('icon')} {
-        transition: all .3s;
+        transition: all 0.3s;
       }
     }
 
@@ -99,9 +101,9 @@
 
   @include mixins.is('active-type-link') {
     @include mixins.e('title', false) {
-      height: mixins.css-variable('menu-height--menu-item--horizontal--link-type');
-      border-bottom: mixins.css-variable('menu-border--title');
-      transition: mixins.css-variable('menu-transiton--all');
+      height: mixins.css-variable('menu', 'size', 'menu-item', 'horizontal', 'link-type', 'height');
+      border-bottom: mixins.css-variable('menu', 'border', 'title');
+      transition: mixins.css-variable('menu', 'transition', 'all');
     }
   }
 
@@ -122,7 +124,7 @@
     height: 100%;
     background: transparent;
     cursor: ew-resize;
-    transition: all .2s;
+    transition: all 0.2s;
 
     &::before {
       position: absolute;
@@ -160,22 +162,22 @@
   }
 
   @include mixins.is('collapsing') {
-    transition: mixins.css-variable('menu-transiton--all');
+    transition: mixins.css-variable('menu', 'transition', 'all');
   }
 }
 
 @include mixins.b('menu') {
   @include mixins.e('popper') {
     @include mixins.bem('dropdown-submenu', 'item', 'inner', false) {
-      margin: mixins.css-variable('menu-margin--dropdown-item--inner');
-      padding: mixins.css-variable('menu-padding--dropdown-item');
-      border-radius: mixins.css-variable('menu-border-radius--item');
+      margin: mixins.css-variable('menu', 'spacing', 'dropdown-item', 'inner', 'margin');
+      padding: mixins.css-variable('menu', 'spacing', 'dropdown-item', 'padding');
+      border-radius: mixins.css-variable('menu', 'border-radius', 'item');
     }
 
     @include mixins.be('dropdown-item', 'inner', false) {
-      margin: mixins.css-variable('menu-margin--dropdown-item--inner');
-      padding: mixins.css-variable('menu-padding--dropdown-item');
-      border-radius: mixins.css-variable('menu-border-radius--item');
+      margin: mixins.css-variable('menu', 'spacing', 'dropdown-item', 'inner', 'margin');
+      padding: mixins.css-variable('menu', 'spacing', 'dropdown-item', 'padding');
+      border-radius: mixins.css-variable('menu', 'border-radius', 'item');
     }
   }
 }

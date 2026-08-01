@@ -3,13 +3,27 @@
 @include mixins.b('upload--file-item') {
   @include mixins.is-not('controls-always-visible') {
     @include mixins.nested('upload__controls') {
-      #{mixins.css-variable-name('controls', 'margin')}: mixins.css-variable('upload', 'spacing', 'file-list', 'item', 'controls', 'margin');
+      #{mixins.css-variable-name('controls', 'spacing', 'margin')}: mixins.css-variable(
+        'upload',
+        'spacing',
+        'file-list',
+        'item',
+        'controls',
+        'margin'
+      );
       position: absolute;
       right: 8px;
       justify-content: flex-end;
       width: 100%;
-      max-width: min(#{mixins.css-variable('upload', 'size', 'file-list', 'control', 'max-width')}, 50%);
-      background: linear-gradient(to right, transparent 0, #{mixins.css-variable('upload', 'background', 'controls', 'hover')} 25%);
+      max-width: min(
+        #{mixins.css-variable('upload', 'size', 'file-list', 'control', 'max-width')},
+        50%
+      );
+      background: linear-gradient(
+        to right,
+        transparent 0,
+        #{mixins.css-variable('upload', 'background', 'controls', 'hover')} 25%
+      );
       opacity: 0;
       transition: mixins.css-variable('upload', 'transition', 'background-opacity');
     }
@@ -24,7 +38,10 @@
   @include mixins.is('controls-always-visible') {
     @include mixins.be('upload', 'controls', false) {
       justify-content: flex-end;
-      max-width: min(#{mixins.css-variable('upload', 'size', 'file-list', 'control', 'max-width')}, 50%);
+      max-width: min(
+        #{mixins.css-variable('upload', 'size', 'file-list', 'control', 'max-width')},
+        50%
+      );
       margin: mixins.css-variable('upload', 'spacing', 'file-list', 'item', 'controls', 'margin');
       background: mixins.css-variable('upload', 'background', 'controls');
     }

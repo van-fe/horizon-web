@@ -20,39 +20,39 @@
   }
 
   @include mixins.parallel-modifier('horizontal', 'wrap', 'small') {
-    gap: mixins.css-variable('space-spacing--wrap--small');
+    gap: mixins.css-variable('space', 'spacing', 'wrap', 'gap', 'small');
   }
 
   @include mixins.parallel-modifier('horizontal', 'wrap', 'medium') {
-    gap: mixins.css-variable('space-spacing--wrap--medium');
+    gap: mixins.css-variable('space', 'spacing', 'wrap', 'gap', 'medium');
   }
 
   @include mixins.parallel-modifier('horizontal', 'wrap', 'large') {
-    gap: mixins.css-variable('space-spacing--wrap--large');
+    gap: mixins.css-variable('space', 'spacing', 'wrap', 'gap', 'large');
   }
 
   @include mixins.parallel-modifier('horizontal', 'small') {
-    column-gap: mixins.css-variable('space-spacing--horizontal--small');
+    column-gap: mixins.css-variable('space', 'spacing', 'horizontal', 'gap', 'small');
   }
 
   @include mixins.parallel-modifier('horizontal', 'medium') {
-    column-gap: mixins.css-variable('space-spacing--horizontal--medium');
+    column-gap: mixins.css-variable('space', 'spacing', 'horizontal', 'gap', 'medium');
   }
 
   @include mixins.parallel-modifier('horizontal', 'large') {
-    column-gap: mixins.css-variable('space-spacing--horizontal--large');
+    column-gap: mixins.css-variable('space', 'spacing', 'horizontal', 'gap', 'large');
   }
 
   @include mixins.parallel-modifier('vertical', 'small') {
-    row-gap: mixins.css-variable('space-spacing--vertical--small');
+    row-gap: mixins.css-variable('space', 'spacing', 'vertical', 'gap', 'small');
   }
 
   @include mixins.parallel-modifier('vertical', 'medium') {
-    row-gap: mixins.css-variable('space-spacing--vertical--medium');
+    row-gap: mixins.css-variable('space', 'spacing', 'vertical', 'gap', 'medium');
   }
 
   @include mixins.parallel-modifier('vertical', 'large') {
-    row-gap: mixins.css-variable('space-spacing--vertical--large');
+    row-gap: mixins.css-variable('space', 'spacing', 'vertical', 'gap', 'large');
   }
 
   @include mixins.m('center') {

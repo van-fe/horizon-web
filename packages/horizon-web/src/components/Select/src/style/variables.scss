@@ -1,54 +1,116 @@
 @use '../../../../styles/mixins';
 
 $values: (
-  'height--option': 40px,
-  'height--check-all': 40px,
   size: (
+    option: (
+      height: 40px,
+    ),
+    check-all: (
+      height: 40px,
+    ),
     panel-tags: (
       max-height: 104px,
-    )
+    ),
   ),
-  'font-size--option-group--title': #{mixins.css-variable('text-sm')},
-  'font-size--create-option': #{mixins.css-variable('text-base')},
-  'font-size--description--bottom': #{mixins.css-variable('text-sm')},
-  'font-size--option': #{mixins.css-variable('text-base')},
+  font-size: (
+    option-group: (
+      title: #{mixins.css-variable('text-sm')},
+    ),
+    create-option: #{mixins.css-variable('text-base')},
+    description: (
+      bottom: #{mixins.css-variable('text-sm')},
+    ),
+    option: #{mixins.css-variable('text-base')},
+  ),
   font-weight: (
     active: mixins.css-variable('weight-strong'),
   ),
-  'color--option': #{mixins.css-variable('text-primary')},
-  'color--optipn--disabled': #{mixins.css-variable('text-disabled')},
-  'color--option-group--title': #{mixins.css-variable('text-tertiary')},
-  'color--option--description': #{mixins.css-variable('text-disabled')},
-  'color--create-option--prefix': #{mixins.css-variable('text-tertiary')},
-  'color--placeholder--no-border': #{mixins.css-variable('text-primary')},
-  'color--placeholder--no-border--focus': #{mixins.css-variable('text-disabled')},
-  'color--option--keyword': #{mixins.css-variable('text-brand-default')},
-  'border-color--option-group--divider': #{mixins.css-variable('border-noninteractive')},
-  'bg--option': #{mixins.css-variable('bg-default')},
-  'bg--option--hover': #{mixins.css-variable('bg-secondary')},
-  'padding--option': 9px #{mixins.css-variable('spacing-4')},
-  'padding--option--right': #{mixins.css-variable('spacing-4')},
-  'padding--option--right--has-icon': calc(#{mixins.css-variable('spacing-5')} + #{mixins.css-variable('spacing-4')}),
-  'padding--option-group--title': #{mixins.css-variable('spacing-2')} #{mixins.css-variable('spacing-4')},
-  'padding--check-all': 0 #{mixins.css-variable('spacing-4')},
-  'margin--option-group--divider': #{mixins.css-variable('spacing-3')} #{mixins.css-variable('spacing-4')},
-  'margin-bottom--option-group--title': #{mixins.css-variable('spacing-3')},
-  'margin-right--create-option--prefix': #{mixins.css-variable('spacing-4')},
-  margin: (
-    statistic-text: (
-      left: mixins.css-variable('spacing-3'),
+  color: (
+    option: (
+      '': #{mixins.css-variable('text-primary')},
+      description: #{mixins.css-variable('text-disabled')},
+      keyword: #{mixins.css-variable('text-brand-default')},
+      disabled: #{mixins.css-variable('text-disabled')},
     ),
-    check-all-count: (
-      left: mixins.css-variable('spacing-2'),
+    option-group: (
+      title: #{mixins.css-variable('text-tertiary')},
     ),
-    panel-tags: (
-      bottom: mixins.css-variable('spacing-3'),
+    create-option: (
+      prefix: #{mixins.css-variable('text-tertiary')},
+    ),
+    placeholder: (
+      no-border: (
+        '': #{mixins.css-variable('text-primary')},
+        focus: #{mixins.css-variable('text-disabled')},
+      ),
     ),
   ),
-  'margin-y--scrollbar': #{mixins.css-variable('spacing-3')},
-  'margin-left--statistic-text': #{mixins.css-variable('spacing-3')},
-  'margin-left--statistic-text--small': calc(#{mixins.css-variable('spacing-2')} + #{mixins.css-variable('spacing-1')}),
-  'gap-column--tags-container': #{mixins.css-variable('spacing-2')},
-  'gap-column--tags-container--small': #{mixins.css-variable('spacing-1')},
-  'transition': #{mixins.css-variable('transition-all--fast')},
+  border-color: (
+    option-group: (
+      divider: #{mixins.css-variable('border-noninteractive')},
+    ),
+  ),
+  background: (
+    option: (
+      '': #{mixins.css-variable('bg-default')},
+      hover: #{mixins.css-variable('bg-secondary')},
+    ),
+  ),
+  spacing: (
+    option: (
+      padding: 9px #{mixins.css-variable('spacing-4')},
+      right: (
+        padding: #{mixins.css-variable('spacing-4')},
+        has-icon: (
+          padding: calc(#{mixins.css-variable('spacing-5')} + #{mixins.css-variable('spacing-4')}),
+        ),
+      ),
+    ),
+    option-group: (
+      title: (
+        padding: #{mixins.css-variable('spacing-2')} #{mixins.css-variable('spacing-4')},
+        margin-bottom: #{mixins.css-variable('spacing-3')},
+      ),
+      divider: (
+        margin: #{mixins.css-variable('spacing-3')} #{mixins.css-variable('spacing-4')},
+      ),
+    ),
+    check-all: (
+      padding: 0 #{mixins.css-variable('spacing-4')},
+    ),
+    statistic-text: (
+      left: (
+        margin: mixins.css-variable('spacing-3'),
+      ),
+      margin-left: (
+        '': #{mixins.css-variable('spacing-3')},
+        small: calc(#{mixins.css-variable('spacing-2')} + #{mixins.css-variable('spacing-1')}),
+      ),
+    ),
+    check-all-count: (
+      left: (
+        margin: mixins.css-variable('spacing-2'),
+      ),
+    ),
+    panel-tags: (
+      bottom: (
+        margin: mixins.css-variable('spacing-3'),
+      ),
+    ),
+    create-option: (
+      prefix: (
+        margin-right: #{mixins.css-variable('spacing-4')},
+      ),
+    ),
+    scrollbar: (
+      margin-y: #{mixins.css-variable('spacing-3')},
+    ),
+    tags-container: (
+      column-gap: (
+        '': #{mixins.css-variable('spacing-2')},
+        small: #{mixins.css-variable('spacing-1')},
+      ),
+    ),
+  ),
+  transition: #{mixins.css-variable('transition-all--fast')},
 );

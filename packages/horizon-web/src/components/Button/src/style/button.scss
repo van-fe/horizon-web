@@ -2,35 +2,35 @@
 
 @include mixins.b('button') {
   display: inline-flex;
-  grid-column-gap: mixins.css-variable('button-siblings-gap');
+  grid-column-gap: mixins.css-variable('button', 'spacing', 'siblings', 'gap');
   align-items: center;
   justify-content: center;
-  height: mixins.css-variable('button-height');
-  padding: 0 mixins.css-variable('button-x-spacing');
+  height: mixins.css-variable('button', 'size', 'height');
+  padding: 0 mixins.css-variable('button', 'spacing', 'padding-x');
   color: mixins.css-variable('button-color');
-  font-size: mixins.css-variable('button-font-size');
-  line-height: mixins.css-variable('button-line-height');
+  font-size: mixins.css-variable('button', 'font-size');
+  line-height: mixins.css-variable('button', 'line-height');
   white-space: nowrap;
   vertical-align: middle;
-  border: mixins.css-variable('button-border');
-  border-radius: mixins.css-variable('button-radius');
+  border: mixins.css-variable('button', 'border');
+  border-radius: mixins.css-variable('button', 'border-radius');
   cursor: pointer;
-  transition: all mixins.css-variable('button-transition-time');
+  transition: all mixins.css-variable('button', 'transition', 'duration');
 
   @include mixins.m('block') {
     width: 100%;
   }
 
   @include mixins.is('auto-fit') {
-    min-width: mixins.css-variable('button-min-width');
+    min-width: mixins.css-variable('button', 'size', 'min-width');
 
     @include mixins.is('with-icon') {
-      min-width: mixins.css-variable('button-min-width--with-icon');
+      min-width: mixins.css-variable('button', 'size', 'with-icon', 'min-width');
     }
   }
 
   @include mixins.m('equally') {
-    width: mixins.css-variable('button-height');
+    width: mixins.css-variable('button', 'size', 'height');
     min-width: initial !important;
     padding: 0;
 
@@ -41,89 +41,89 @@
   }
 
   @include mixins.e('icon') {
-    line-height: mixins.css-variable('button-line-height--icon');
-    transition: color mixins.css-variable('button-transition-time');
+    line-height: mixins.css-variable('button', 'line-height', 'icon');
+    transition: color mixins.css-variable('button', 'transition', 'duration');
 
     @include mixins.is-not('custom-size') {
-      height: mixins.css-variable('button-size--icon');
+      height: mixins.css-variable('button', 'size', 'icon');
     }
   }
 
   @include mixins.m('small') {
-    height: mixins.css-variable('button-height--small');
-    padding: 0 mixins.css-variable('button-x-spacing--small');
-    font-size: mixins.css-variable('button-font-size--small');
-    border-radius: mixins.css-variable('button-radius--small');
+    height: mixins.css-variable('button', 'size', 'height', 'small');
+    padding: 0 mixins.css-variable('button', 'spacing', 'padding-x', 'small');
+    font-size: mixins.css-variable('button', 'font-size', 'small');
+    border-radius: mixins.css-variable('button', 'border-radius', 'small');
 
     @include mixins.e('icon', false) {
       @include mixins.is-not('custom-size') {
-        height: mixins.css-variable('button-size--icon--small');
+        height: mixins.css-variable('button', 'size', 'icon', 'small');
       }
     }
 
     @include mixins.is('auto-fit') {
-      min-width: mixins.css-variable('button-min-width--small');
+      min-width: mixins.css-variable('button', 'size', 'min-width', 'small');
 
       @include mixins.is('with-icon') {
-        min-width: mixins.css-variable('button-min-width--with-icon--small');
+        min-width: mixins.css-variable('button', 'size', 'with-icon', 'min-width', 'small');
       }
     }
   }
 
   @include mixins.m('large') {
-    height: mixins.css-variable('button-height--large');
-    padding: 0 mixins.css-variable('button-x-spacing--large');
-    font-size: mixins.css-variable('button-font-size--large');
-    border-radius: mixins.css-variable('button-radius--large');
+    height: mixins.css-variable('button', 'size', 'height', 'large');
+    padding: 0 mixins.css-variable('button', 'spacing', 'padding-x', 'large');
+    font-size: mixins.css-variable('button', 'font-size', 'large');
+    border-radius: mixins.css-variable('button', 'border-radius', 'large');
 
     @include mixins.e('icon', false) {
       @include mixins.is-not('custom-size') {
-        height: mixins.css-variable('button-size--icon--large');
+        height: mixins.css-variable('button', 'size', 'icon', 'large');
       }
     }
 
     @include mixins.is('auto-fit') {
-      min-width: mixins.css-variable('button-min-width--large');
+      min-width: mixins.css-variable('button', 'size', 'min-width', 'large');
 
       @include mixins.is('with-icon') {
-        min-width: mixins.css-variable('button-min-width--with-icon--large');
+        min-width: mixins.css-variable('button', 'size', 'with-icon', 'min-width', 'large');
       }
     }
   }
 
   @include mixins.m('huge') {
-    height: mixins.css-variable('button-height--huge');
-    padding: 0 mixins.css-variable('button-x-spacing--huge');
-    font-size: mixins.css-variable('button-font-size--huge');
-    border-radius: mixins.css-variable('button-radius--huge');
+    height: mixins.css-variable('button', 'size', 'height', 'huge');
+    padding: 0 mixins.css-variable('button', 'spacing', 'padding-x', 'huge');
+    font-size: mixins.css-variable('button', 'font-size', 'huge');
+    border-radius: mixins.css-variable('button', 'border-radius', 'huge');
 
     @include mixins.e('icon', false) {
       @include mixins.is-not('custom-size') {
-        height: mixins.css-variable('button-size--icon--huge');
+        height: mixins.css-variable('button', 'size', 'icon', 'huge');
       }
     }
 
     @include mixins.is('auto-fit') {
-      min-width: mixins.css-variable('button-min-width--huge');
+      min-width: mixins.css-variable('button', 'size', 'min-width', 'huge');
 
       @include mixins.is('with-icon') {
-        min-width: mixins.css-variable('button-min-width--with-icon--huge');
+        min-width: mixins.css-variable('button', 'size', 'with-icon', 'min-width', 'huge');
       }
     }
   }
 
   @include mixins.parallel-modifier('small', 'equally') {
-    width: mixins.css-variable('button-height--small');
+    width: mixins.css-variable('button', 'size', 'height', 'small');
     padding: 0;
   }
 
   @include mixins.parallel-modifier('large', 'equally') {
-    width: mixins.css-variable('button-height--large');
+    width: mixins.css-variable('button', 'size', 'height', 'large');
     padding: 0;
   }
 
   @include mixins.parallel-modifier('huge', 'equally') {
-    width: mixins.css-variable('button-height--huge');
+    width: mixins.css-variable('button', 'size', 'height', 'huge');
     padding: 0;
   }
 
@@ -132,7 +132,7 @@
   }
 
   @include mixins.m('round') {
-    border-radius: mixins.css-variable('button-radius--round');
+    border-radius: mixins.css-variable('button', 'border-radius', 'round');
   }
 
   @include mixins.is('dashed') {
@@ -145,5 +145,5 @@
 }
 
 @include mixins.siblings-block('button') {
-  margin-left: mixins.css-variable('button-margin-left--siblings');
+  margin-left: mixins.css-variable('button', 'spacing', 'siblings', 'margin-left');
 }

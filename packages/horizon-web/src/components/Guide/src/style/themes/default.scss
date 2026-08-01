@@ -2,19 +2,19 @@
 
 @include mixins.b('guide-item') {
   @include mixins.m('default') {
-    color: mixins.css-variable('guide-color');
-    background: mixins.css-variable('guide-bg');
+    color: mixins.css-variable('guide', 'color');
+    background: mixins.css-variable('guide', 'background');
 
     @include mixins.e('arrow', false) {
       &::before {
-        background-color: mixins.css-variable('guide-bg');
+        background-color: mixins.css-variable('guide', 'background');
       }
     }
 
     @include mixins.e('header', false) {
       @include mixins.m('close') {
         @include mixins.b('button') {
-          color: mixins.css-variable('guide-color');
+          color: mixins.css-variable('guide', 'color');
         }
       }
     }

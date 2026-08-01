@@ -2,10 +2,10 @@
 
 $values: (
   spacing: (
-    margin: (
-      panel: (
-        scrollbar: #{mixins.css-variable('spacing-3') 0}
-      )
-    )
-  )
+    panel: (
+      scrollbar: (
+        margin: #{mixins.css-variable('spacing-3') 0},
+      ),
+    ),
+  ),
 );

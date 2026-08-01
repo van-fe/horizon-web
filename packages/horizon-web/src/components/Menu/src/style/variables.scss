@@ -1,145 +1,351 @@
 @use '../../../../styles/mixins/function';
 
 $values: (
-  'width--vertical': 240px,
-  'width--vertical--collapsed': 72px,
-  'height--horizontal': 48px,
-  'height--prepend--vertical': 56px,
-  'height--append--vertical': 64px,
-  'height--menu-item': 42px,
-  'height--menu-item--horizontal': 30px,
-  'height--menu-item--horizontal--link-type': 40px,
-  'height--title--collapsed': 58px,
-  'max-width--item-text--horizontal': 80px,
-  'width--full-view--group': 265px,
-  'height--full-view--group--item': 32px,
-  'font-size--menu': #{function.css-variable('text-base')},
-  'font-size--title-span--collapsed': #{function.css-variable('text-sm')},
-  'font-size--pop': #{function.css-variable('text-lg')},
-  'line-height--title': 56px,
-  'font-weight--title--active': #{function.css-variable('weight-strong')},
-  'color': #{function.css-variable('text-secondary')},
-  'color--title': #{function.css-variable('text-primary')},
-  'color--title--disabled': #{function.css-variable('text-disabled')},
-  'color--title--icon': #{function.css-variable('text-tertiary')},
-  'color--title--collapsed': #{function.css-variable('text-secondary')},
-  'color--title--hover': #{function.css-variable('text-brand-hover')},
-  'color--title--hover--full-view': #{function.css-variable('text-brand-hover')},
-  'color--title--active': #{function.css-variable('text-brand-default')},
-  'color--title--active--disabled': #{function.css-variable('text-brand-disabled')},
-  'color--title--active--full-view': #{function.css-variable('text-brand-activated')},
-  'color--title--active--disabled--full-view': #{function.css-variable('text-brand-disabled')},
-  'color--title--gray': #{function.css-variable('text-primary')},
-  'color--title--gray--hover': #{function.css-variable('text-brand-hover')},
-  'color--title--gray--hover--full-view': #{function.css-variable('text-brand-hover')},
-  'color--title--gray--disabled': #{function.css-variable('text-disabled')},
-  'color--title--gray--icon': #{function.css-variable('text-tertiary')},
-  'color--title--gray--collapsed': #{function.css-variable('text-secondary')},
-  'color--title--gray--active': #{function.css-variable('text-brand-default')},
-  'color--title--gray--active--full-view': #{function.css-variable('text-brand-default')},
-  'color--title--gray--active--disabled': #{function.css-variable('text-brand-disabled')},
-  'color--title--gray--active--disabled--full-view': #{function.css-variable('text-brand-disabled')},
-  'color--title--midnight': rgba(255, 255, 255, 70%),
-  'color--title--midnight--disabled': rgba(255, 255, 255, 50%),
-  'color--title--midnight--prepend-append': rgba(255, 255, 255, 100%),
-  'color--title--midnight--hover': rgba(255, 255, 255, 100%),
-  'color--title--midnight--hover--full-view': rgba(255, 255, 255, 100%),
-  'color--title--midnight--hover--link-type': rgba(33, 201, 204, 100%),
-  'color--title--midnight--collapsed': rgba(255, 255, 255, 70%),
-  'color--title--midnight--collapsed--hover': rgba(255, 255, 255, 100%),
-  'color--title--midnight--active': rgba(33, 201, 204, 100%),
-  'color--title--midnight--active--full-view': rgba(255, 255, 255, 100%),
-  'color--title--midnight--active--disabled': rgba(33, 201, 204, 50%),
-  'color--title--midnight--active--disabled--full-view': rgba(255, 255, 255, 50%),
-  'color--title--midnight--active--collapsed': rgba(255, 255, 255, 100%),
-  'color--title--midnight--active--disabled--collapsed': rgba(255, 255, 255, 50%),
-  'color--title--midnight--selected': rgba(255, 255, 255, 100%),
-  'color--title--midnight--selected--link-type': rgba(33, 201, 204, 100%),
-  'color--title--midnight--selected--disabled': rgba(255, 255, 255, 50%),
-  'color--title--midnight--selected--disabled--link-type': rgba(33, 201, 204, 50%),
-  'border-radius--item': #{function.css-variable('radius-m')},
-  'border-radius--toggle-button': #{function.css-variable('radius-m')},
-  'border-color': #{function.css-variable('divider-default')},
-  'border-color--title--active': #{function.css-variable('border-brand-default')},
-  'border-color--title--active--disabled': #{function.css-variable('border-brand-disabled')},
-  'divider-color--full-view--group--title': #{function.css-variable('divider-default')},
-  'border': 1px solid #{function.css-variable('menu-border-color')},
-  'border--placeholder': 1px solid #{function.css-variable('border-transparent')},
-  'border--title': 2px solid #{function.css-variable('border-transparent')},
-  'border--title--active': 2px solid #{function.css-variable('menu-border-color--title--active')},
-  'border--title--active--disabled': 2px solid #{function.css-variable(
-    'menu-border-color--title--active--disabled'
-  )},
-  'outline-color': function.css-variable('border-focused'),
-  'bg': #{function.css-variable('bg-default')},
-  'bg--gray': #{function.css-variable('bg-navigator')},
-  'bg--midnight': #00263c,
-  'bg--item': #{function.css-variable('bg-default')},
-  'bg--item--hover': #{function.css-variable('bg-hover')},
-  'bg--item--hover--full-view': #{function.css-variable('bg-hover')},
-  'bg--item--active': #{function.css-variable('bg-weak-activated')},
-  'bg--item--active--disabled': #{function.css-variable('bg-weak-disabled')},
-  'bg--title--active--full-view': #{function.css-variable('bg-weak-activated')},
-  'bg--title--active--disabled--full-view': #{function.css-variable('bg-weak-disabled')},
-  'bg--item--gray': #{function.css-variable('bg-navigator')},
-  'bg--item--gray--hover': #{function.css-variable('bg-hover')},
-  'bg--item--gray--active': #{function.css-variable('bg-weak-activated')},
-  'bg--item--gray--active--disabled': #{function.css-variable('bg-weak-disabled')},
-  'bg--title--gray--active--full-view': #{function.css-variable('bg-weak-activated')},
-  'bg--title--gray--active--disabled--full-view': #{function.css-variable('bg-weak-disabled')},
-  'bg--item--midnight': #00263c,
-  'bg--item--midnight--hover': rgba(33, 201, 204, 20%),
-  'bg--item--midnight--press': rgba(0, 140, 153, 50%),
-  'bg--item--midnight--disabled': rgba(0, 140, 153, 50%),
-  'bg--item--midnight--active': rgba(33, 201, 204, 70%),
-  'bg--item--midnight--active--disabled': rgba(33, 201, 204, 50%),
-  'bg--title--midnight--active--full-view': rgba(33, 201, 204, 50%),
-  'bg--title--midnight--active--disabled--full-view': rgba(33, 201, 204, 50%),
-  'bg--item--midnight--scrollbar': rgba(255, 255, 255, 20%),
-  'bg--item--midnight--scrollbar--hover': rgba(255, 255, 255, 60%),
-  'box-shadow--horizontal': #{function.css-variable('shadow-base')},
-  'margin-right--item--icon': #{function.css-variable('spacing-3')},
-  'margin-left--arrow': #{function.css-variable('spacing-3')},
-  'margin-top--title-text--collapsed': #{function.css-variable('spacing-2')},
-  'margin--full-view--group--title--divider': #{function.css-variable('spacing-3')},
-  'margin--dropdown-item--inner': #{function.css-variable('spacing-1')} #{function.css-variable(
-    'spacing-3'
-  )},
-  'margin-right--title-icon--full-view': #{function.css-variable('spacing-3')},
-  'padding--prepend--vertical': #{function.css-variable('spacing-4')} #{function.css-variable(
-    'spacing-5'
-  )},
-  'padding--prepend--horizontal': #{function.css-variable('spacing-3')} #{function.css-variable(
-    'spacing-9'
-  )} #{function.css-variable('spacing-3')} #{function.css-variable('spacing-7')},
-  'padding--append--vertical': #{function.css-variable('spacing-4')} #{function.css-variable(
-    'spacing-5'
-  )},
-  'padding--append--horizontal': #{function.css-variable('spacing-3')} #{function.css-variable(
-    'spacing-7'
-  )} #{function.css-variable('spacing-3')} #{function.css-variable('spacing-9')},
-  'padding--title': #{function.css-variable('spacing-1')} #{function.css-variable('spacing-3')},
-  'padding--title-inner--collapsed': #{function.css-variable('spacing-3')} #{function.css-variable(
-    'spacing-2'
-  )} #{function.css-variable('spacing-2')},
-  'padding--item--title--inner': #{function.css-variable('spacing-3')} #{function.css-variable(
-    'spacing-3'
-  )} #{function.css-variable('spacing-3')} 0,
-  'padding--item--title--inner--horizontal': #{function.css-variable('spacing-2')} #{function.css-variable(
-    'spacing-4'
-  )},
-  'padding--item--title--inner--horizontal--link-type': #{function.css-variable('spacing-4')},
-  'padding-left--item--title--inner--base': #{function.css-variable('spacing-5')},
-  'padding-left--item--title--inner--level': #{function.css-variable('spacing-3')},
-  'padding-left--item--title--inner--icon': #{function.css-variable('spacing-6')},
-  'padding--full-view': #{function.css-variable('spacing-7')} 0,
-  'padding--full-view--group': #{function.css-variable('spacing-2')} 0,
-  'padding--full-view--item': 0 #{function.css-variable('spacing-3')},
-  'padding--dropdown-item': #{function.css-variable('spacing-3')},
-  'column-gap--append--vertical': #{function.css-variable('spacing-5')},
-  'column-gap--item--horizontal': #{function.css-variable('spacing-7')},
-  'column-gap--full-view--group': #{function.css-variable('spacing-8')},
-  'column-gap-columns--full-view--group--item': #{function.css-variable('spacing-5')},
-  'column-gap-rows--full-view--group--item': #{function.css-variable('spacing-2')},
-  'transiton--all': all #{function.css-variable('transition-time')},
+  size: (
+    vertical: (
+      width: 240px,
+      collapsed: (
+        width: 72px,
+      ),
+    ),
+    full-view: (
+      group: (
+        width: 265px,
+        item: (
+          height: 32px,
+        ),
+      ),
+    ),
+    horizontal: (
+      height: 48px,
+    ),
+    prepend: (
+      vertical: (
+        height: 56px,
+      ),
+    ),
+    append: (
+      vertical: (
+        height: 64px,
+      ),
+    ),
+    menu-item: (
+      height: 42px,
+      horizontal: (
+        height: 30px,
+        link-type: (
+          height: 40px,
+        ),
+      ),
+    ),
+    title: (
+      collapsed: (
+        height: 58px,
+      ),
+    ),
+    item-text: (
+      horizontal: (
+        max-width: 80px,
+      ),
+    ),
+  ),
+  font-size: (
+    menu: #{function.css-variable('text-base')},
+    title-span: (
+      collapsed: #{function.css-variable('text-sm')},
+    ),
+    pop: #{function.css-variable('text-lg')},
+  ),
+  font-weight: (
+    title: (
+      active: #{function.css-variable('weight-strong')},
+    ),
+  ),
+  line-height: (
+    title: 56px,
+  ),
+  color: (
+    '': #{function.css-variable('text-secondary')},
+    title: (
+      '': #{function.css-variable('text-primary')},
+      disabled: #{function.css-variable('text-disabled')},
+      icon: #{function.css-variable('text-tertiary')},
+      collapsed: #{function.css-variable('text-secondary')},
+      hover: (
+        '': #{function.css-variable('text-brand-hover')},
+        full-view: #{function.css-variable('text-brand-hover')},
+      ),
+      active: (
+        '': #{function.css-variable('text-brand-default')},
+        disabled: (
+          '': #{function.css-variable('text-brand-disabled')},
+          full-view: #{function.css-variable('text-brand-disabled')},
+        ),
+        full-view: #{function.css-variable('text-brand-activated')},
+      ),
+      gray: (
+        '': #{function.css-variable('text-primary')},
+        hover: (
+          '': #{function.css-variable('text-brand-hover')},
+          full-view: #{function.css-variable('text-brand-hover')},
+        ),
+        disabled: #{function.css-variable('text-disabled')},
+        icon: #{function.css-variable('text-tertiary')},
+        collapsed: #{function.css-variable('text-secondary')},
+        active: (
+          '': #{function.css-variable('text-brand-default')},
+          full-view: #{function.css-variable('text-brand-default')},
+          disabled: (
+            '': #{function.css-variable('text-brand-disabled')},
+            full-view: #{function.css-variable('text-brand-disabled')},
+          ),
+        ),
+      ),
+      midnight: (
+        '': rgba(255, 255, 255, 70%),
+        disabled: rgba(255, 255, 255, 50%),
+        prepend-append: rgba(255, 255, 255, 100%),
+        hover: (
+          '': rgba(255, 255, 255, 100%),
+          full-view: rgba(255, 255, 255, 100%),
+          link-type: rgba(33, 201, 204, 100%),
+        ),
+        collapsed: (
+          '': rgba(255, 255, 255, 70%),
+          hover: rgba(255, 255, 255, 100%),
+        ),
+        active: (
+          '': rgba(33, 201, 204, 100%),
+          full-view: rgba(255, 255, 255, 100%),
+          disabled: (
+            '': rgba(33, 201, 204, 50%),
+            full-view: rgba(255, 255, 255, 50%),
+            collapsed: rgba(255, 255, 255, 50%),
+          ),
+          collapsed: rgba(255, 255, 255, 100%),
+        ),
+        selected: (
+          '': rgba(255, 255, 255, 100%),
+          link-type: rgba(33, 201, 204, 100%),
+          disabled: (
+            '': rgba(255, 255, 255, 50%),
+            link-type: rgba(33, 201, 204, 50%),
+          ),
+        ),
+      ),
+    ),
+  ),
+  border-color: (
+    '': #{function.css-variable('divider-default')},
+    title: (
+      active: (
+        '': #{function.css-variable('border-brand-default')},
+        disabled: #{function.css-variable('border-brand-disabled')},
+      ),
+    ),
+    divider: (
+      full-view: (
+        group: (
+          title: #{function.css-variable('divider-default')},
+        ),
+      ),
+    ),
+    outline: function.css-variable('border-focused'),
+  ),
+  border: (
+    '': 1px solid #{function.css-variable('menu', 'border-color')},
+    outline: 1px solid #{function.css-variable('menu', 'border-color', 'outline')},
+    placeholder: 1px solid #{function.css-variable('border-transparent')},
+    title: (
+      '': 2px solid #{function.css-variable('border-transparent')},
+      active: (
+        '': 2px solid #{function.css-variable('menu', 'border-color', 'title', 'active')},
+        disabled: 2px solid
+          #{function.css-variable('menu', 'border-color', 'title', 'active', 'disabled')},
+      ),
+    ),
+  ),
+  border-radius: (
+    item: #{function.css-variable('radius-m')},
+    toggle-button: #{function.css-variable('radius-m')},
+  ),
+  background: (
+    '': #{function.css-variable('bg-default')},
+    gray: #{function.css-variable('bg-navigator')},
+    midnight: #00263c,
+    item: (
+      '': #{function.css-variable('bg-default')},
+      hover: (
+        '': #{function.css-variable('bg-hover')},
+        full-view: #{function.css-variable('bg-hover')},
+      ),
+      active: (
+        '': #{function.css-variable('bg-weak-activated')},
+        disabled: #{function.css-variable('bg-weak-disabled')},
+      ),
+      gray: (
+        '': #{function.css-variable('bg-navigator')},
+        hover: #{function.css-variable('bg-hover')},
+        active: (
+          '': #{function.css-variable('bg-weak-activated')},
+          disabled: #{function.css-variable('bg-weak-disabled')},
+        ),
+      ),
+      midnight: (
+        '': #00263c,
+        hover: rgba(33, 201, 204, 20%),
+        press: rgba(0, 140, 153, 50%),
+        disabled: rgba(0, 140, 153, 50%),
+        active: (
+          '': rgba(33, 201, 204, 70%),
+          disabled: rgba(33, 201, 204, 50%),
+        ),
+        scrollbar: (
+          '': rgba(255, 255, 255, 20%),
+          hover: rgba(255, 255, 255, 60%),
+        ),
+      ),
+    ),
+    title: (
+      active: (
+        full-view: #{function.css-variable('bg-weak-activated')},
+        disabled: (
+          full-view: #{function.css-variable('bg-weak-disabled')},
+        ),
+      ),
+      gray: (
+        active: (
+          full-view: #{function.css-variable('bg-weak-activated')},
+          disabled: (
+            full-view: #{function.css-variable('bg-weak-disabled')},
+          ),
+        ),
+      ),
+      midnight: (
+        active: (
+          full-view: rgba(33, 201, 204, 50%),
+          disabled: (
+            full-view: rgba(33, 201, 204, 50%),
+          ),
+        ),
+      ),
+    ),
+  ),
+  spacing: (
+    item: (
+      icon: (
+        margin-right: #{function.css-variable('spacing-3')},
+      ),
+      title: (
+        inner: (
+          padding: #{function.css-variable('spacing-3')} #{function.css-variable('spacing-3')}
+            #{function.css-variable('spacing-3')} 0,
+          horizontal: (
+            padding: #{function.css-variable('spacing-2')} #{function.css-variable('spacing-4')},
+            link-type: (
+              padding: #{function.css-variable('spacing-4')},
+            ),
+          ),
+          base: (
+            padding-left: #{function.css-variable('spacing-5')},
+          ),
+          level: (
+            padding-left: #{function.css-variable('spacing-3')},
+          ),
+          icon: (
+            padding-left: #{function.css-variable('spacing-6')},
+          ),
+        ),
+      ),
+      horizontal: (
+        column-gap: #{function.css-variable('spacing-7')},
+      ),
+    ),
+    title-icon: (
+      full-view: (
+        margin-right: #{function.css-variable('spacing-3')},
+      ),
+    ),
+    arrow: (
+      margin-left: #{function.css-variable('spacing-3')},
+    ),
+    title-text: (
+      collapsed: (
+        margin-top: #{function.css-variable('spacing-2')},
+      ),
+    ),
+    full-view: (
+      group: (
+        title: (
+          divider: (
+            margin: #{function.css-variable('spacing-3')},
+          ),
+        ),
+        padding: #{function.css-variable('spacing-2')} 0,
+        column-gap: #{function.css-variable('spacing-8')},
+      ),
+      padding: #{function.css-variable('spacing-7')} 0,
+      item: (
+        padding: 0 #{function.css-variable('spacing-3')},
+      ),
+    ),
+    dropdown-item: (
+      inner: (
+        margin: #{function.css-variable('spacing-1')} #{function.css-variable('spacing-3')},
+      ),
+      padding: #{function.css-variable('spacing-3')},
+    ),
+    prepend: (
+      vertical: (
+        padding: #{function.css-variable('spacing-4')} #{function.css-variable('spacing-5')},
+      ),
+      horizontal: (
+        padding: #{function.css-variable('spacing-3')} #{function.css-variable('spacing-9')}
+          #{function.css-variable('spacing-3')} #{function.css-variable('spacing-7')},
+      ),
+    ),
+    append: (
+      vertical: (
+        padding: #{function.css-variable('spacing-4')} #{function.css-variable('spacing-5')},
+        column-gap: #{function.css-variable('spacing-5')},
+      ),
+      horizontal: (
+        padding: #{function.css-variable('spacing-3')} #{function.css-variable('spacing-7')}
+          #{function.css-variable('spacing-3')} #{function.css-variable('spacing-9')},
+      ),
+    ),
+    title: (
+      padding: #{function.css-variable('spacing-1')} #{function.css-variable('spacing-3')},
+    ),
+    title-inner: (
+      collapsed: (
+        padding: #{function.css-variable('spacing-3')} #{function.css-variable('spacing-2')}
+          #{function.css-variable('spacing-2')},
+      ),
+    ),
+    columns: (
+      full-view: (
+        group: (
+          item: (
+            column-gap: #{function.css-variable('spacing-5')},
+          ),
+        ),
+      ),
+    ),
+    rows: (
+      full-view: (
+        group: (
+          item: (
+            column-gap: #{function.css-variable('spacing-2')},
+          ),
+        ),
+      ),
+    ),
+  ),
+  box-shadow: (
+    horizontal: #{function.css-variable('shadow-base')},
+  ),
+  transition: (
+    all: all #{function.css-variable('transition-time')},
+  ),
 );

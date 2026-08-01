@@ -8,7 +8,7 @@
     display: flex;
     align-items: center;
 
-    @include mixins.m('separator'){
+    @include mixins.m('separator') {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -29,7 +29,7 @@
 
       &:first-child:not(:last-child) {
         @include mixins.nested('date-picker-panel-body') {
-          border-right: mixins.css-variable('date-picker', 'divider');
+          border-right: mixins.css-variable('date-picker', 'border', 'divider');
         }
       }
     }
@@ -40,7 +40,7 @@
   }
 
   @include mixins.is('clearable') {
-    --h-picker-width--append-icon: 32px;
+    --h-picker-size-append-icon-width: 32px;
   }
 
   @include mixins.e('range-panel-separator') {
@@ -50,7 +50,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: mixins.css-variable('date-picker', 'size', 'panel', 'header', 'datetime', 'trigger', 'height');
+    height: mixins.css-variable('date-picker', 'size', 'panel', 'header', 'datetime-trigger', 'height');
     margin: 0 auto;
     color: mixins.css-variable('date-picker', 'color', 'range-panel-separator');
     pointer-events: none;

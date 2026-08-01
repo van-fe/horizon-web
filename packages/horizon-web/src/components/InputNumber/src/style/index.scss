@@ -6,17 +6,17 @@
   display: inline-flex;
   width: 100%;
   min-width: 76px;
-  font-size: mixins.css-variable('input-number-font-size');
-  line-height: mixins.css-variable('input-number-line-height');
+  font-size: mixins.css-variable('input-number', 'font-size');
+  line-height: mixins.css-variable('input-number', 'line-height');
 
   @include mixins.e('inner') {
     display: inline-block;
     flex: 1;
     box-sizing: border-box;
     min-width: 0;
-    height: mixins.css-variable('input-number-line-height');
+    height: mixins.css-variable('input-number', 'line-height');
     font-size: inherit;
-    line-height: mixins.css-variable('input-number-line-height--inner');
+    line-height: mixins.css-variable('input-number', 'line-height', 'inner');
     background-image: none;
     border: none;
     outline: none;
@@ -47,7 +47,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: mixins.css-variable('input-number-padding--clear');
+    padding: mixins.css-variable('input-number', 'spacing', 'clear', 'padding');
     visibility: hidden;
 
     @include mixins.clear-icon;
@@ -74,18 +74,20 @@
     display: block;
     height: 100%;
     overflow: hidden;
-    transition: opacity 0.2s, border-color 0.2s;
+    transition:
+      opacity 0.2s,
+      border-color 0.2s;
     user-select: none;
 
     @include mixins.e('step-item') {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: mixins.css-variable('input-number-width--step-item');
-      height: mixins.css-variable('input-number-height--step-item');
-      color: mixins.css-variable('input-number-color--step-item');
+      width: mixins.css-variable('input-number', 'size', 'step-item', 'width');
+      height: mixins.css-variable('input-number', 'size', 'step-item', 'height');
+      color: mixins.css-variable('input-number', 'color', 'step-item');
       cursor: pointer;
-      transition: mixins.css-variable('input-number-transition--color');
+      transition: mixins.css-variable('input-number', 'transition', 'color');
 
       i {
         display: flex;
@@ -101,22 +103,22 @@
 
       @include mixins.is-not('disabled') {
         &:active {
-          color: mixins.css-variable('input-number-color--step-item--active');
-          background: mixins.css-variable('input-number-bg--step-item--active');
+          color: mixins.css-variable('input-number', 'color', 'step-item', 'active');
+          background: mixins.css-variable('input-number', 'background', 'step-item', 'active');
         }
       }
 
       &:hover {
-        color: mixins.css-variable('input-number-color--step-item--hover');
+        color: mixins.css-variable('input-number', 'color', 'step-item', 'hover');
       }
     }
 
     @include mixins.e('step-up') {
-      border-radius: mixins.css-variable('input-number-border-radius--step-up');
+      border-radius: mixins.css-variable('input-number', 'border-radius', 'step-up');
     }
 
     @include mixins.e('step-down') {
-      border-radius: mixins.css-variable('input-number-border-radius--step-down');
+      border-radius: mixins.css-variable('input-number', 'border-radius', 'step-down');
     }
   }
 
@@ -124,8 +126,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-left: mixins.css-variable('input-number-padding-side--prefix-suffix');
-    color: mixins.css-variable('input-number-color--prefix-suffix');
+    padding-left: mixins.css-variable('input-number', 'spacing', 'prefix-suffix', 'padding-inline');
+    color: mixins.css-variable('input-number', 'color', 'prefix-suffix');
 
     @include mixins.m('wrapper') {
       position: relative;
@@ -138,8 +140,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-right: mixins.css-variable('input-number-padding-side--prefix-suffix');
-    color: mixins.css-variable('input-number-color--prefix-suffix');
+    padding-right: mixins.css-variable('input-number', 'spacing', 'prefix-suffix', 'padding-inline');
+    color: mixins.css-variable('input-number', 'color', 'prefix-suffix');
 
     @include mixins.m('wrapper') {
       position: relative;
@@ -150,12 +152,12 @@
 
   @include mixins.is('between-controls') {
     @include mixins.e('inner') {
-      padding: mixins.css-variable('input-number-padding--inner');
+      padding: mixins.css-variable('input-number', 'spacing', 'inner', 'padding');
       text-align: center;
     }
 
     @include mixins.e('step-item') {
-      width: mixins.css-variable('input-number-width--step-item--controls-between');
+      width: mixins.css-variable('input-number', 'size', 'step-item', 'controls-between', 'width');
       height: 100%;
       border-bottom: none;
     }
@@ -167,13 +169,13 @@
         border-left: none;
 
         @include mixins.e('step-item') {
-          border-radius: mixins.css-variable('input-number-border-radius--controls-between--step-down');
+          border-radius: mixins.css-variable('input-number', 'border-radius', 'controls-between', 'step-down');
         }
       }
 
       @include mixins.is('right') {
         @include mixins.e('step-item') {
-          border-radius: mixins.css-variable('input-number-border-radius--controls-between--step-up');
+          border-radius: mixins.css-variable('input-number', 'border-radius', 'controls-between', 'step-up');
         }
       }
     }
@@ -181,77 +183,77 @@
 
   @include mixins.be('input-number', 'step-wrapper', false) {
     @include mixins.is('left') {
-      border-right: mixins.css-variable('input-number-border');
+      border-right: mixins.css-variable('input-number', 'border');
     }
 
     @include mixins.is('right') {
-      border-left: mixins.css-variable('input-number-border');
+      border-left: mixins.css-variable('input-number', 'border');
     }
 
     @include mixins.e('step-down') {
-      border-top: mixins.css-variable('input-number-border');
+      border-top: mixins.css-variable('input-number', 'border');
     }
 
     @include mixins.e('step-item') {
       @include mixins.is('disabled') {
-        color: mixins.css-variable('input-number-color--step-item--disabled');
+        color: mixins.css-variable('input-number', 'color', 'step-item', 'disabled');
       }
     }
   }
 
   @include mixins.m('large') {
-    font-size: mixins.css-variable('input-number-font-size--large');
-    line-height: mixins.css-variable('input-number-line-height--large');
+    font-size: mixins.css-variable('input-number', 'font-size', 'large');
+    line-height: mixins.css-variable('input-number', 'line-height', 'large');
 
     @include mixins.e('inner') {
-      height: mixins.css-variable('input-number-line-height--large');
+      height: mixins.css-variable('input-number', 'line-height', 'large');
     }
 
     @include mixins.e('step-wrapper') {
       flex: 0 0 26px;
 
       @include mixins.e('step-item') {
-        width: mixins.css-variable('input-number-width--step-item--large');
-        height: mixins.css-variable('input-number-height--step-item--large');
+        width: mixins.css-variable('input-number', 'size', 'step-item', 'width', 'large');
+        height: mixins.css-variable('input-number', 'size', 'step-item', 'height', 'large');
       }
     }
   }
 
   @include mixins.m('small') {
-    font-size: mixins.css-variable('input-number-font-size--small');
-    line-height: mixins.css-variable('input-number-line-height--small');
+    font-size: mixins.css-variable('input-number', 'font-size', 'small');
+    line-height: mixins.css-variable('input-number', 'line-height', 'small');
 
     @include mixins.e('inner') {
-      height: mixins.css-variable('input-number-line-height--small');
+      height: mixins.css-variable('input-number', 'line-height', 'small');
     }
 
     @include mixins.e('step-wrapper') {
       @include mixins.e('step-item') {
-        width: mixins.css-variable('input-number-width--step-item--small');
-        height: mixins.css-variable('input-number-height--step-item--small');
+        width: mixins.css-variable('input-number', 'size', 'step-item', 'width', 'small');
+        height: mixins.css-variable('input-number', 'size', 'step-item', 'height', 'small');
       }
     }
 
     @include mixins.em('group', 'inner', false) {
-      border-radius: mixins.css-variable('input-number-border-radius--small');
+      border-radius: mixins.css-variable('input-number', 'border-radius', 'small');
     }
   }
 
   @include mixins.is('disabled') {
     @include mixins.e('step-wrapper') {
-      border-left-color: mixins.css-variable('input-number-border-color--disabled');
+      border-left-color: mixins.css-variable('input-number', 'border-color', 'disabled');
 
       @include mixins.is('left') {
-        border-right-color: mixins.css-variable('input-number-border-color--disabled');
+        border-right-color: mixins.css-variable('input-number', 'border-color', 'disabled');
       }
     }
 
     @include mixins.e('step-up') {
-      border-bottom-color: mixins.css-variable('input-number-border-color--disabled');
+      border-bottom-color: mixins.css-variable('input-number', 'border-color', 'disabled');
     }
 
     @include mixins.e('step-item') {
-      color: mixins.css-variable('input-number-color--disabled');
+      color: mixins.css-variable('input-number', 'color', 'disabled');
       background: transparent;
       cursor: not-allowed;
     }
@@ -259,11 +261,11 @@
 
   @include mixins.is('no-controls') {
     @include mixins.e('inner') {
-      padding: mixins.css-variable('input-number-padding--inner');
+      padding: mixins.css-variable('input-number', 'spacing', 'inner', 'padding');
     }
 
     @include mixins.e('clear') {
-      padding: mixins.css-variable('input-number-padding--clear--no-controls');
+      padding: mixins.css-variable('input-number', 'spacing', 'clear', 'no-controls', 'padding');
     }
 
     @include mixins.e('step-wrapper') {

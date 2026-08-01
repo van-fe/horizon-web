@@ -64,7 +64,7 @@ export default function useResponsive(options: ToRefs<IndicatorOptions>) {
       // fix note: 初始化时候无需动画，直接移动对应位置
       transition: mounted
         ? 'none'
-        : `transform ${cssVariable('tabs-transition-time')} ${cssVariable('tabs-transition-fn')}`,
+        : `transform ${cssVariable('tabs', 'transition', 'duration')} ${cssVariable('tabs', 'transition', 'timing-function')}`,
     };
     indicatorStyle.value = style;
   };
@@ -114,7 +114,7 @@ export default function useResponsive(options: ToRefs<IndicatorOptions>) {
       // 这里等待一次dom更新，然后再添加动画
       await nextTick();
     }
-    containerEl.style.transition = `transform ${cssVariable('tabs-transition-time')} ease`;
+    containerEl.style.transition = `transform ${cssVariable('tabs', 'transition', 'duration')} ease`;
   };
 
   const createTab = (key: HTabValue) => {

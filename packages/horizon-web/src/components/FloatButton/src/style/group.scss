@@ -3,16 +3,16 @@
 @include mixins.b('float-button-group') {
   @include mixins.e('container') {
     overflow: hidden;
-    box-shadow: mixins.css-variable('float-button-box-shadow');
+    box-shadow: mixins.css-variable('float-button', 'box-shadow');
 
     @include mixins.m('circle') {
-      border-top-left-radius: mixins.css-variable('float-button-border-radius');
-      border-top-right-radius: mixins.css-variable('float-button-border-radius');
+      border-top-left-radius: mixins.css-variable('float-button', 'border-radius');
+      border-top-right-radius: mixins.css-variable('float-button', 'border-radius');
     }
 
     @include mixins.m('square') {
-      border-top-left-radius: mixins.css-variable('float-button-border-radius--square');
-      border-top-right-radius: mixins.css-variable('float-button-border-radius--square');
+      border-top-left-radius: mixins.css-variable('float-button', 'border-radius', 'square');
+      border-top-right-radius: mixins.css-variable('float-button', 'border-radius', 'square');
     }
 
     @include mixins.nested('float-button') {

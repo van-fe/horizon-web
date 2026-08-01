@@ -11,27 +11,27 @@
     position: relative;
     flex: 1;
     width: 100%;
-    height: mixins.css-variable('slider-height--container');
+    height: mixins.css-variable('slider', 'size', 'container', 'height');
 
     &::before {
       display: block;
       width: 100%;
-      height: mixins.css-variable('slider-height--container--placeholder');
+      height: mixins.css-variable('slider', 'size', 'container', 'placeholder', 'height');
       content: '';
     }
   }
 
   @include mixins.e('input') {
-    max-width: mixins.css-variable('slider-width--input');
-    margin-left: mixins.css-variable('slider-margin-left--input');
+    max-width: mixins.css-variable('slider', 'size', 'input', 'width');
+    margin-left: mixins.css-variable('slider', 'spacing', 'input', 'margin-left');
   }
 
   @include mixins.e('track') {
     position: absolute;
     width: 100%;
     height: 30%;
-    background: mixins.css-variable('slider-bg--track');
-    border-radius: mixins.css-variable('slider-border-radius--progress');
+    background: mixins.css-variable('slider', 'background', 'track');
+    border-radius: mixins.css-variable('slider', 'border-radius', 'progress');
   }
 
   @include mixins.e('progress') {
@@ -41,7 +41,7 @@
     width: 0;
     height: 100%;
     margin: auto 0;
-    border-radius: mixins.css-variable('slider-border-radius--progress');
+    border-radius: mixins.css-variable('slider', 'border-radius', 'progress');
   }
 
   @include mixins.e('separator') {
@@ -68,14 +68,14 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    width: mixins.css-variable('slider-size--cursor');
-    height: mixins.css-variable('slider-size--cursor');
+    width: mixins.css-variable('slider', 'size', 'cursor');
+    height: mixins.css-variable('slider', 'size', 'cursor');
     margin: auto 0;
-    background: mixins.css-variable('slider-bg--cursor');
-    border: mixins.css-variable('slider-border--cursor');
-    border-radius: mixins.css-variable('slider-border-radius--cursor');
+    background: mixins.css-variable('slider', 'background', 'cursor');
+    border: mixins.css-variable('slider', 'border', 'cursor');
+    border-radius: mixins.css-variable('slider', 'border-radius', 'cursor');
     transform-origin: 50% 50%;
-    transition: transform mixins.css-variable('slider-transition-time');
+    transition: transform mixins.css-variable('slider', 'transition', 'duration');
   }
 
   @include mixins.is-not('disabled') {
@@ -86,7 +86,7 @@
       }
 
       &:focus {
-        border-color: mixins.css-variable('slider-border-color--cursor--focus');
+        border-color: mixins.css-variable('slider', 'border-color', 'cursor', 'focus');
       }
     }
   }

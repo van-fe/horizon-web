@@ -4,26 +4,26 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: mixins.css-variable('page-header-min-height');
-  padding: mixins.css-variable('page-header-padding');
+  min-height: mixins.css-variable('page-header', 'size', 'root', 'min-height');
+  padding: mixins.css-variable('page-header', 'spacing', 'root', 'padding');
 
   @include mixins.e('breadcrumb') {
-    margin-bottom: mixins.css-variable('page-header-row-gap--warpper');
-    padding: mixins.css-variable('page-header-padding--items');
+    margin-bottom: mixins.css-variable('page-header', 'spacing', 'wrapper', 'row-gap');
+    padding: mixins.css-variable('page-header', 'spacing', 'items', 'padding');
   }
 
   @include mixins.e('main') {
     position: relative;
     display: flex;
-    grid-column-gap: mixins.css-variable('page-header-column-gap--content');
+    grid-column-gap: mixins.css-variable('page-header', 'spacing', 'content', 'column-gap');
     align-items: center;
-    padding: mixins.css-variable('page-header-padding--items');
-    padding-bottom: mixins.css-variable('page-header-padding-bottom--main');
+    padding: mixins.css-variable('page-header', 'spacing', 'items', 'padding');
+    padding-bottom: mixins.css-variable('page-header', 'spacing', 'main', 'padding-bottom');
   }
 
   @include mixins.e('default') {
-    margin-top: mixins.css-variable('page-header-row-gap--warpper');
-    padding: mixins.css-variable('page-header-padding--items');
+    margin-top: mixins.css-variable('page-header', 'spacing', 'wrapper', 'row-gap');
+    padding: mixins.css-variable('page-header', 'spacing', 'items', 'padding');
   }
 
   @include mixins.e('back') {
@@ -34,7 +34,7 @@
     display: flex;
     flex: 1;
     flex-direction: column;
-    grid-row-gap: mixins.css-variable('page-header-row-gap--inner');
+    grid-row-gap: mixins.css-variable('page-header', 'spacing', 'inner', 'row-gap');
     justify-content: center;
     min-width: 0;
 
@@ -42,9 +42,9 @@
       display: flex;
       flex: 1;
       align-items: center;
-      max-width: mixins.css-variable('page-header-max-width--content');
-      min-height: mixins.css-variable('page-header-min-height--content');
-      color: mixins.css-variable('page-header-color--content');
+      max-width: mixins.css-variable('page-header', 'size', 'content', 'max-width');
+      min-height: mixins.css-variable('page-header', 'size', 'content', 'min-height');
+      color: mixins.css-variable('page-header', 'color', 'content');
     }
   }
 
@@ -53,10 +53,10 @@
     align-items: center;
 
     @include mixins.m('title') {
-      max-width: mixins.css-variable('page-header-max-width--title');
+      max-width: mixins.css-variable('page-header', 'size', 'title', 'max-width');
       overflow: hidden;
-      color: mixins.css-variable('page-header-color');
-      font-size: mixins.css-variable('page-header-font-size--title');
+      color: mixins.css-variable('page-header', 'color');
+      font-size: mixins.css-variable('page-header', 'font-size', 'title');
       white-space: nowrap;
       text-overflow: ellipsis;
     }
@@ -77,8 +77,8 @@
         display: block;
         width: 100%;
         height: 1px;
-        background: mixins.css-variable('page-header-border-bottom-color');
-        content: ''
+        background: mixins.css-variable('page-header', 'background', 'divider');
+        content: '';
       }
     }
   }

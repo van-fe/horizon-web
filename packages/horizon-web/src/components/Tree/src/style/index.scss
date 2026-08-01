@@ -8,15 +8,15 @@
   @include mixins.e('filter') {
     position: sticky;
     top: 0;
-    margin-bottom: mixins.css-variable('tree-margin-bottom--filter');
+    margin-bottom: mixins.css-variable('tree', 'spacing', 'filter', 'margin-bottom');
   }
 
   @include mixins.e('empty') {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: mixins.css-variable('tree-height--empty');
-    color: mixins.css-variable('tree-color--empty');
+    height: mixins.css-variable('tree', 'size', 'empty', 'height');
+    color: mixins.css-variable('tree', 'color', 'empty');
   }
 
   @include mixins.is('dragging') {
@@ -28,7 +28,7 @@
     top: 0;
     right: 0;
     left: 0;
-    height: mixins.css-variable('tree-height--item');
+    height: mixins.css-variable('tree', 'size', 'item', 'height');
     transform: translateY(-50%);
   }
 }

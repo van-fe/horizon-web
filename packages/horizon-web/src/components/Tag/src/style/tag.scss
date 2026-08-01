@@ -1,26 +1,26 @@
 @use '../../../../styles/mixins';
 
 @include mixins.siblings-block('tag') {
-  margin-left: mixins.css-variable('tag-spacing-siblings');
+  margin-left: mixins.css-variable('tag', 'spacing', 'siblings');
 }
 
 @include mixins.b('tag') {
   display: inline-flex;
   align-items: center;
-  max-width: min(#{mixins.css-variable('tag-max-width')}, 100%);
-  height: mixins.css-variable('tag-size');
-  padding: 0 mixins.css-variable('tag-padding-x');
-  color: mixins.css-variable('tag-color');
+  max-width: min(#{mixins.css-variable('tag', 'size', 'max-width')}, 100%);
+  height: mixins.css-variable('tag', 'size');
+  padding: 0 mixins.css-variable('tag', 'spacing', 'padding-x');
+  color: mixins.css-variable('tag', 'color');
   font-weight: mixins.css-variable('tag-font-weight');
-  font-size: mixins.css-variable('tag-font-size');
-  line-height: mixins.css-variable('tag-line-height');
-  border: mixins.css-variable('tag-border');
-  border-radius: mixins.css-variable('tag-border-radius');
-  transition: all mixins.css-variable('tag-transition-time');
+  font-size: mixins.css-variable('tag', 'font-size');
+  line-height: mixins.css-variable('tag', 'line-height');
+  border: mixins.css-variable('tag', 'border');
+  border-radius: mixins.css-variable('tag', 'border-radius');
+  transition: all mixins.css-variable('tag', 'transition', 'duration');
 
   @include mixins.e('inner') {
     display: inline-flex;
-    grid-column-gap: mixins.css-variable('tag-gap--inner');
+    grid-column-gap: mixins.css-variable('tag', 'spacing', 'inner', 'gap');
     align-items: center;
     justify-content: center;
     width: 100%;
@@ -31,20 +31,23 @@
   }
 
   @include mixins.e('content') {
-    max-width: calc(#{mixins.css-variable('tag-max-width')} - #{mixins.css-variable('tag-padding-x')} * 2);
-    height: mixins.css-variable('tag-height--content');
+    max-width: calc(
+      #{mixins.css-variable('tag', 'size', 'max-width')} -
+        #{mixins.css-variable('tag', 'spacing', 'padding-x')} * 2
+    );
+    height: mixins.css-variable('tag', 'size', 'content', 'height');
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
 
   @include mixins.e('icon') {
-    width: mixins.css-variable('tag-size--icon');
-    height: mixins.css-variable('tag-size--icon');
-    line-height: mixins.css-variable('tag-line-height--icon');
+    width: mixins.css-variable('tag', 'size', 'icon');
+    height: mixins.css-variable('tag', 'size', 'icon');
+    line-height: mixins.css-variable('tag', 'line-height', 'icon');
 
     path {
-      transition: color mixins.css-variable('tag-transition-time');
+      transition: color mixins.css-variable('tag', 'transition', 'duration');
     }
 
     #{mixins.block-name('icon')} {
@@ -53,30 +56,30 @@
   }
 
   @include mixins.e('avatar') {
-    flex: 0 0 mixins.css-variable('tag-size--avatar');
-    height: mixins.css-variable('tag-size--avatar');
-    margin-right: mixins.css-variable('tag-margin-right--avatar');
-    margin-left: calc(#{mixins.css-variable('tag-padding-x')} / 2 * -1);
+    flex: 0 0 mixins.css-variable('tag', 'size', 'avatar');
+    height: mixins.css-variable('tag', 'size', 'avatar');
+    margin-right: mixins.css-variable('tag', 'spacing', 'avatar', 'margin-right');
+    margin-left: calc(#{mixins.css-variable('tag', 'spacing', 'padding-x')} / 2 * -1);
     line-height: initial;
   }
 
   @include mixins.e('loading') {
-    width: mixins.css-variable('tag-size--icon');
-    height: mixins.css-variable('tag-size--icon');
-    line-height: mixins.css-variable('tag-line-height--icon');
+    width: mixins.css-variable('tag', 'size', 'icon');
+    height: mixins.css-variable('tag', 'size', 'icon');
+    line-height: mixins.css-variable('tag', 'line-height', 'icon');
 
     #{mixins.block-name('icon')} {
-      color: mixins.css-variable('tag-color--icon--loading');
+      color: mixins.css-variable('tag', 'color', 'icon', 'loading');
       vertical-align: bottom;
     }
   }
 
   @include mixins.e('close') {
-    width: mixins.css-variable('tag-size--icon');
-    height: mixins.css-variable('tag-size--icon');
-    line-height: mixins.css-variable('tag-line-height--icon');
+    width: mixins.css-variable('tag', 'size', 'icon');
+    height: mixins.css-variable('tag', 'size', 'icon');
+    line-height: mixins.css-variable('tag', 'line-height', 'icon');
     cursor: pointer;
-    transition: opacity mixins.css-variable('tag-transition-time');
+    transition: opacity mixins.css-variable('tag', 'transition', 'duration');
   }
 
   @include mixins.e('input-wrapper') {
@@ -86,7 +89,10 @@
 
   @include mixins.e('input-opacity-content') {
     display: inline-block;
-    min-width: calc(#{mixins.css-variable('tag-min-width--input')} - #{mixins.css-variable('tag-padding-x')});
+    min-width: calc(
+      #{mixins.css-variable('tag', 'size', 'input', 'min-width')} -
+        #{mixins.css-variable('tag', 'spacing', 'padding-x')}
+    );
     opacity: 0;
   }
 
@@ -96,7 +102,7 @@
     left: 0;
     align-self: baseline;
     width: 100%;
-    height: mixins.css-variable('tag-height--content');
+    height: mixins.css-variable('tag', 'size', 'content', 'height');
     color: inherit;
     border: none;
     outline: none;
@@ -104,7 +110,7 @@
   }
 
   @include mixins.e('close', false) {
-    color: mixins.css-variable('tag-color--icon--close');
+    color: mixins.css-variable('tag', 'color', 'icon', 'close');
   }
 
   @include mixins.m('bold') {
@@ -114,86 +120,100 @@
   }
 
   @include mixins.m('small') {
-    max-width: mixins.css-variable('tag-max-width--small');
-    height: mixins.css-variable('tag-size--small');
-    padding: 0 mixins.css-variable('tag-padding-x--small');
-    font-size: mixins.css-variable('tag-font-size--small');
-    border-radius: mixins.css-variable('tag-border-radius--small');
+    max-width: mixins.css-variable('tag', 'size', 'max-width', 'small');
+    height: mixins.css-variable('tag', 'size', 'small');
+    padding: 0 mixins.css-variable('tag', 'spacing', 'padding-x', 'small');
+    font-size: mixins.css-variable('tag', 'font-size', 'small');
+    border-radius: mixins.css-variable('tag', 'border-radius', 'small');
 
     & + & {
-      margin-left: mixins.css-variable('tag-spacing-siblings--small');
+      margin-left: mixins.css-variable('tag', 'spacing', 'siblings', 'small');
     }
 
     @include mixins.e('avatar', false) {
-      width: mixins.css-variable('tag-size--avatar--small');
-      height: mixins.css-variable('tag-size--avatar--small');
-      margin-right: mixins.css-variable('tag-margin-right--avatar--small');
-      margin-left: calc(#{mixins.css-variable('tag-padding-x--small')} / 2 * -1);
+      width: mixins.css-variable('tag', 'size', 'avatar', 'small');
+      height: mixins.css-variable('tag', 'size', 'avatar', 'small');
+      margin-right: mixins.css-variable('tag', 'spacing', 'avatar', 'margin-right', 'small');
+      margin-left: calc(#{mixins.css-variable('tag', 'spacing', 'padding-x', 'small')} / 2 * -1);
     }
 
     @include mixins.e('content', false) {
-      max-width: calc(#{mixins.css-variable('tag-max-width--small')} - #{mixins.css-variable('tag-padding-x--small')} * 2);
-      height: mixins.css-variable('tag-height--content--small');
+      max-width: calc(
+        #{mixins.css-variable('tag', 'size', 'max-width', 'small')} -
+          #{mixins.css-variable('tag', 'spacing', 'padding-x', 'small')} * 2
+      );
+      height: mixins.css-variable('tag', 'size', 'content', 'height', 'small');
     }
 
     @include mixins.e('input', false) {
-      height: mixins.css-variable('tag-height--content--small');
+      height: mixins.css-variable('tag', 'size', 'content', 'height', 'small');
     }
 
     @include mixins.e('loading', false) {
-      width: mixins.css-variable('tag-size--icon--small');
-      height: mixins.css-variable('tag-size--icon--small');
+      width: mixins.css-variable('tag', 'size', 'icon', 'small');
+      height: mixins.css-variable('tag', 'size', 'icon', 'small');
     }
 
     @include mixins.e('icon', false) {
-      width: mixins.css-variable('tag-size--icon--small');
-      height: mixins.css-variable('tag-size--icon--small');
+      width: mixins.css-variable('tag', 'size', 'icon', 'small');
+      height: mixins.css-variable('tag', 'size', 'icon', 'small');
     }
 
     @include mixins.e('input-opacity-content', false) {
-      min-width: calc(#{mixins.css-variable('tag-min-width--input--small')} - #{mixins.css-variable('tag-padding-x--small')});
+      min-width: calc(
+        #{mixins.css-variable('tag', 'size', 'input', 'min-width', 'small')} -
+          #{mixins.css-variable('tag', 'spacing', 'padding-x', 'small')}
+      );
     }
   }
 
   @include mixins.m('large') {
-    max-width: mixins.css-variable('tag-max-width--large');
-    height: mixins.css-variable('tag-size--large');
-    padding: 0 mixins.css-variable('tag-padding-x--large');
-    font-size: mixins.css-variable('tag-font-size--large');
-    border-radius: mixins.css-variable('tag-border-radius--large');
+    max-width: mixins.css-variable('tag', 'size', 'max-width', 'large');
+    height: mixins.css-variable('tag', 'size', 'large');
+    padding: 0 mixins.css-variable('tag', 'spacing', 'padding-x', 'large');
+    font-size: mixins.css-variable('tag', 'font-size', 'large');
+    border-radius: mixins.css-variable('tag', 'border-radius', 'large');
 
     & + & {
-      margin-left: mixins.css-variable('tag-spacing-siblings--large');
+      margin-left: mixins.css-variable('tag', 'spacing', 'siblings', 'large');
     }
 
     @include mixins.e('avatar', false) {
-      width: mixins.css-variable('tag-size--avatar--large');
-      height: mixins.css-variable('tag-size--avatar--large');
-      margin-right: mixins.css-variable('tag-margin-right--avatar--large');
-      margin-left: calc(#{mixins.css-variable('tag-padding-x--large')} / 2 * -1 - 1px);
+      width: mixins.css-variable('tag', 'size', 'avatar', 'large');
+      height: mixins.css-variable('tag', 'size', 'avatar', 'large');
+      margin-right: mixins.css-variable('tag', 'spacing', 'avatar', 'margin-right', 'large');
+      margin-left: calc(
+        #{mixins.css-variable('tag', 'spacing', 'padding-x', 'large')} / 2 * -1 - 1px
+      );
     }
 
     @include mixins.e('content', false) {
-      max-width: calc(#{mixins.css-variable('tag-max-width--large')} - #{mixins.css-variable('tag-padding-x--large')} * 2);
-      height: mixins.css-variable('tag-height--content--large');
+      max-width: calc(
+        #{mixins.css-variable('tag', 'size', 'max-width', 'large')} -
+          #{mixins.css-variable('tag', 'spacing', 'padding-x', 'large')} * 2
+      );
+      height: mixins.css-variable('tag', 'size', 'content', 'height', 'large');
     }
 
     @include mixins.e('input', false) {
-      height: mixins.css-variable('tag-height--content--large');
+      height: mixins.css-variable('tag', 'size', 'content', 'height', 'large');
     }
 
     @include mixins.e('loading', false) {
-      width: mixins.css-variable('tag-size--icon--large');
-      height: mixins.css-variable('tag-size--icon--large');
+      width: mixins.css-variable('tag', 'size', 'icon', 'large');
+      height: mixins.css-variable('tag', 'size', 'icon', 'large');
     }
 
     @include mixins.e('icon', false) {
-      width: mixins.css-variable('tag-size--icon--large');
-      height: mixins.css-variable('tag-size--icon--large');
+      width: mixins.css-variable('tag', 'size', 'icon', 'large');
+      height: mixins.css-variable('tag', 'size', 'icon', 'large');
     }
 
     @include mixins.e('input-opacity-content', false) {
-      min-width: calc(#{mixins.css-variable('tag-min-width--input--large')} - #{mixins.css-variable('tag-padding-x--large')});
+      min-width: calc(
+        #{mixins.css-variable('tag', 'size', 'input', 'min-width', 'large')} -
+          #{mixins.css-variable('tag', 'spacing', 'padding-x', 'large')}
+      );
     }
   }
 
@@ -221,7 +241,7 @@
 
   @include mixins.is('editing') {
     max-width: initial;
-    color: mixins.css-variable('tag-color--plain--default') !important;
+    color: mixins.css-variable('tag', 'color', 'plain') !important;
     border-style: solid;
   }
 

@@ -1,11 +1,13 @@
 @use '../../../../styles/mixins/function';
 
 $values: (
-  'font-size': #{function.css-variable('text-lg')},
-  'color': #{function.css-variable('text-brand-default')},
-  'color--hover': #{function.css-variable('text-brand-hover')},
-  'color--active': #{function.css-variable('text-brand-press')},
-  'bg': #{function.css-variable('bg-default')},
-  'border-radius': #{function.css-variable('radius-circle')},
-  'box-shadow': #{function.css-variable('shadow-down')},
+  font-size: #{function.css-variable('text-lg')},
+  color: (
+    '': #{function.css-variable('text-brand-default')},
+    hover: #{function.css-variable('text-brand-hover')},
+    active: #{function.css-variable('text-brand-press')},
+  ),
+  border-radius: #{function.css-variable('radius-circle')},
+  background: #{function.css-variable('bg-default')},
+  box-shadow: #{function.css-variable('shadow-down')},
 );

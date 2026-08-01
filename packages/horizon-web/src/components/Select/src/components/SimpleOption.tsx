@@ -133,7 +133,7 @@ export default defineComponent({
           classHelper.has('icon', parentProps.showSelectedIcon ?? false),
         )}
         style={{
-          [cssVariableKey('select-max-line--option')]: parentProps.optionMaxLines,
+          [cssVariableKey('select', 'size', 'option', 'max-line')]: parentProps.optionMaxLines,
         }}
         data-value={props.value}
         onClick={onClick}

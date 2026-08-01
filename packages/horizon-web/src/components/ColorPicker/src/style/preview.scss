@@ -1,4 +1,4 @@
-@use "utils";
+@use 'utils';
 
 @use '../../../../styles/mixins';
 
@@ -8,34 +8,37 @@
     align-items: center;
     width: 100%;
     height: mixins.size(36);
-    margin-bottom: calc(#{mixins.css-variable('color-picker-margin-top--edit-form')} - #{mixins.css-variable('color-picker-row-gap--panel-block')});
+    margin-bottom: calc(
+      #{mixins.css-variable('color-picker', 'spacing', 'edit-form', 'margin-top')} -
+        #{mixins.css-variable('color-picker', 'spacing', 'panel-block', 'row-gap')}
+    );
 
     @include mixins.m('picker') {
       display: flex;
-      flex: 0 mixins.css-variable('color-picker-size--picker');
+      flex: 0 mixins.css-variable('color-picker', 'size', 'picker');
       align-items: center;
       justify-content: center;
-      height: mixins.css-variable('color-picker-size--picker');
-      margin-right: mixins.css-variable('color-picker-margin-right--picker');
-      border-radius: mixins.css-variable('color-picker-border-radius--picker');
+      height: mixins.css-variable('color-picker', 'size', 'picker');
+      margin-right: mixins.css-variable('color-picker', 'spacing', 'picker', 'margin-right');
+      border-radius: mixins.css-variable('color-picker', 'border-radius', 'picker');
       cursor: pointer;
 
       svg path {
-        fill: mixins.css-variable('color-picker-color--trigger--picker');
+        fill: mixins.css-variable('color-picker', 'color', 'trigger', 'picker');
       }
 
       &:hover {
-        background: mixins.css-variable('color-picker-bg--picker-item--hover');
+        background: mixins.css-variable('color-picker', 'background', 'picker-item', 'hover');
       }
     }
 
     @include mixins.m('dot') {
       position: relative;
-      flex: 0 mixins.css-variable('color-picker-size--current-color');
-      height: mixins.css-variable('color-picker-size--current-color');
-      margin-left: mixins.css-variable('color-picker-margin-left--current-color');
+      flex: 0 mixins.css-variable('color-picker', 'size', 'current-color');
+      height: mixins.css-variable('color-picker', 'size', 'current-color');
+      margin-left: mixins.css-variable('color-picker', 'spacing', 'current-color', 'margin-left');
       overflow: hidden;
-      border: mixins.css-variable('color-picker-border--dot');
+      border: mixins.css-variable('color-picker', 'border', 'dot');
       border-radius: mixins.css-variable('radius-circle');
 
       .alpha {
@@ -45,8 +48,8 @@
 
       .current-color {
         position: absolute;
-        width: calc(#{mixins.css-variable('color-picker-size--current-color')} - 2px);
-        height: calc(#{mixins.css-variable('color-picker-size--current-color')} - 2px);
+        width: calc(#{mixins.css-variable('color-picker', 'size', 'current-color')} - 2px);
+        height: calc(#{mixins.css-variable('color-picker', 'size', 'current-color')} - 2px);
 
         @include mixins.is('eye-dropper') {
           cursor: pointer;
@@ -84,18 +87,17 @@
         position: relative;
         width: 100%;
         height: mixins.size(8);
-        background:
-          linear-gradient(
-            to right,
-            #f00 0%,
-            #ff0 16.66%,
-            #0f0 33.33%,
-            #0ff 50%,
-            #00f 66.66%,
-            #f0f 83.33%,
-            #f00 100%
-          );
-        border-radius: mixins.css-variable('color-picker-border-radius--track');
+        background: linear-gradient(
+          to right,
+          #f00 0%,
+          #ff0 16.66%,
+          #0f0 33.33%,
+          #0ff 50%,
+          #00f 66.66%,
+          #f0f 83.33%,
+          #f00 100%
+        );
+        border-radius: mixins.css-variable('color-picker', 'border-radius', 'track');
 
         .cursor {
           @include utils.cursor;
@@ -116,7 +118,7 @@
         .alpha-color-bg {
           @include utils.absolute-full;
 
-          border-radius: mixins.css-variable('color-picker-border-radius--track');
+          border-radius: mixins.css-variable('color-picker', 'border-radius', 'track');
         }
 
         .cursor {

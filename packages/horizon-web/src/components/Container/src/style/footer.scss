@@ -3,6 +3,6 @@
 @include mixins.b('footer') {
   flex-shrink: 0;
   box-sizing: border-box;
-  height: mixins.css-variable('container-height--footer');
-  padding: mixins.css-variable('container-padding--footer');
+  height: mixins.css-variable('container', 'size', 'footer', 'height');
+  padding: mixins.css-variable('container', 'spacing', 'footer', 'padding');
 }

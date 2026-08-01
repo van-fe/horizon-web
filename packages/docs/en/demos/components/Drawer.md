@@ -33,34 +33,34 @@ You can set the mount position of the popup layer node through `to`
 ```scss
 :root {
   // font-size
-  --h-drawer-font-size--title: var(--h-text-lg);
+  --h-drawer-font-size-title: var(--h-text-lg);
 
   // font-weight
-  --h-drawer-font-weight--title: var(--h-weight-strong);
+  --h-drawer-font-weight-title: var(--h-weight-strong);
 
   // line-height
-  --h-drawer-line-height--title: 24px;
+  --h-drawer-line-height-title: 24px;
 
   // background
-  --h-drawer-bg--container: var(--h-bg-default);
-  --h-drawer-bg--mask: var(--h-bg-overlay-default);
+  --h-drawer-background-container: var(--h-bg-default);
+  --h-drawer-background-mask: var(--h-bg-overlay-default);
 
   // border-radius
-  --h-drawer-border-radius--container: 0;
-  --h-drawer-border-radius--left: 0 var(--h-drawer-border-radius--container) var(--h-drawer-border-radius--container) 0;
-  --h-drawer-border-radius--right: var(--h-drawer-border-radius--container) 0 0 var(--h-drawer-border-radius--container);
-  --h-drawer-border-radius--top: 0 0 var(--h-drawer-border-radius--container) var(--h-drawer-border-radius--container);
-  --h-drawer-border-radius--bottom: var(--h-drawer-border-radius--container) var(--h-drawer-border-radius--container) 0 0;
+  --h-drawer-border-radius-container: 0;
+  --h-drawer-border-radius-left: 0 var(--h-drawer-border-radius-container) var(--h-drawer-border-radius-container) 0;
+  --h-drawer-border-radius-right: var(--h-drawer-border-radius-container) 0 0 var(--h-drawer-border-radius-container);
+  --h-drawer-border-radius-top: 0 0 var(--h-drawer-border-radius-container) var(--h-drawer-border-radius-container);
+  --h-drawer-border-radius-bottom: var(--h-drawer-border-radius-container) var(--h-drawer-border-radius-container) 0 0;
 
   // padding
-  --h-drawer-top-padding--container: var(--h-spacing-7) var(--h-spacing-7) var(--h-spacing-5);
-  --h-drawer-bottom-padding--container: var(--h-spacing-5) var(--h-spacing-7) var(--h-spacing-7);
-  --h-drawer-padding--body: var(--h-spacing-7);
+  --h-drawer-spacing-container-padding-top: var(--h-spacing-7) var(--h-spacing-7) var(--h-spacing-5);
+  --h-drawer-spacing-container-padding-bottom: var(--h-spacing-5) var(--h-spacing-7) var(--h-spacing-7);
+  --h-drawer-spacing-body-padding: var(--h-spacing-7);
 
   // margin
-  --h-drawer-margin-right--icon: var(--h-spacing-5);
+  --h-drawer-spacing-icon-margin-right: var(--h-spacing-5);
 
   // divider line color
-  --h-drawer-divider-color: var(--h-divider-default, #E6E7EC);
+  --h-drawer-border-color-divider: var(--h-divider-default, #E6E7EC);
 }
 ```

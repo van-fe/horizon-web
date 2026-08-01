@@ -1,22 +1,39 @@
 @use '../../../../styles/mixins/function';
 
 $values: (
-  'bg--default': #{function.css-variable('bg-default')},
-  'bg--info': #{function.css-variable('bg-info-weak-hover')},
-  'bg--success': #{function.css-variable('bg-success-weak-hover')},
-  'bg--warning': #{function.css-variable('bg-warning-weak-hover')},
-  'bg--error': #{function.css-variable('bg-error-weak-hover')},
-  'color': #{function.css-variable('text-primary')},
-  'line-height': #{function.css-variable('line-height-standard')},
-  'font-size--title': #{function.css-variable('text-lg')},
-  'font-size--content': #{function.css-variable('text-base')},
-  'font-weight--title': #{function.css-variable('weight-strong')},
-  'padding': #{function.css-variable('spacing-5')},
-  'padding--small': #{function.css-variable('spacing-3')},
-  'radius': #{function.css-variable('radius-m')},
-  'content--gap--small': #{function.css-variable('spacing-2')},
-  'content--gap': #{function.css-variable('spacing-3')},
-  'content--action-gap--small': #{function.css-variable('spacing-5')},
-  'content--action-gap': #{function.css-variable('spacing-7')},
-  'title-weight': #{function.css-variable('weight-3')},
+  font-size: (
+    title: #{function.css-variable('text-lg')},
+    content: #{function.css-variable('text-base')},
+  ),
+  font-weight: (
+    title: #{function.css-variable('weight-strong')},
+  ),
+  line-height: #{function.css-variable('line-height-standard')},
+  color: #{function.css-variable('text-primary')},
+  border-radius: #{function.css-variable('radius-m')},
+  background: (
+    '': #{function.css-variable('bg-default')},
+    info: #{function.css-variable('bg-info-weak-hover')},
+    success: #{function.css-variable('bg-success-weak-hover')},
+    warning: #{function.css-variable('bg-warning-weak-hover')},
+    error: #{function.css-variable('bg-error-weak-hover')},
+  ),
+  spacing: (
+    padding: (
+      '': #{function.css-variable('spacing-5')},
+      small: #{function.css-variable('spacing-3')},
+    ),
+    content: (
+      gap: (
+        '': #{function.css-variable('spacing-3')},
+        small: #{function.css-variable('spacing-2')},
+      ),
+      action: (
+        gap: (
+          '': #{function.css-variable('spacing-7')},
+          small: #{function.css-variable('spacing-5')},
+        ),
+      ),
+    ),
+  ),
 );

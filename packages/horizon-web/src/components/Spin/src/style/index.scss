@@ -4,7 +4,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: mixins.css-variable('spin-color');
+  color: mixins.css-variable('spin', 'color', 'indicator');
 
   @include mixins.e('indicator') {
     display: inline-flex;
@@ -14,9 +14,9 @@
   }
 
   @include mixins.e('tip') {
-    margin-top: mixins.css-variable('spin-tip-gap');
+    margin-top: mixins.css-variable('spin', 'spacing', 'tip', 'margin-top');
     font-size: mixins.css-variable('text-sm');
-    color: mixins.css-variable('spin-tip-color');
+    color: mixins.css-variable('spin', 'color', 'tip');
   }
 
   @include mixins.e('content') {
@@ -35,19 +35,19 @@
 
   @include mixins.m('small') {
     @include mixins.e('indicator') {
-      font-size: mixins.css-variable('spin-size-small');
+      font-size: mixins.css-variable('spin', 'font-size', 'indicator', 'small');
     }
   }
 
   @include mixins.m('medium') {
     @include mixins.e('indicator') {
-      font-size: mixins.css-variable('spin-size-medium');
+      font-size: mixins.css-variable('spin', 'font-size', 'indicator', 'medium');
     }
   }
 
   @include mixins.m('large') {
     @include mixins.e('indicator') {
-      font-size: mixins.css-variable('spin-size-large');
+      font-size: mixins.css-variable('spin', 'font-size', 'indicator', 'large');
     }
   }
 
@@ -59,7 +59,7 @@
 
   @include mixins.is('masked') {
     @include mixins.e('overlay') {
-      background: mixins.css-variable('spin-mask-background');
+      background: mixins.css-variable('spin', 'background', 'mask');
     }
   }
 
@@ -69,6 +69,6 @@
     z-index: 2000;
     width: 100vw;
     height: 100vh;
-    background: mixins.css-variable('spin-mask-background');
+    background: mixins.css-variable('spin', 'background', 'mask');
   }
 }

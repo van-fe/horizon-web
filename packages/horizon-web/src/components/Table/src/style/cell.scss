@@ -4,7 +4,7 @@
 @include mixins.b('table') {
   @include mixins.be('table', 'table', false) {
     @include mixins.be('table', 'cell', false) {
-      padding: 0 mixins.css-variable('table', 'spacing', 'padding', 'cell', 'x');
+      padding: 0 mixins.css-variable('table', 'spacing', 'cell', 'x', 'padding');
       border: 0;
     }
   }
@@ -13,14 +13,14 @@
     position: relative;
     box-sizing: border-box;
     min-width: 0;
-    padding-right: mixins.css-variable('table', 'spacing', 'padding', 'cell', 'x');
-    padding-left: mixins.css-variable('table', 'spacing', 'padding', 'cell', 'x');
+    padding-right: mixins.css-variable('table', 'spacing', 'cell', 'x', 'padding');
+    padding-left: mixins.css-variable('table', 'spacing', 'cell', 'x', 'padding');
     text-overflow: ellipsis;
     background: inherit;
 
     @include mixins.e('cell-wrap') {
       display: flex;
-      grid-column-gap: mixins.css-variable('table', 'spacing', 'gap', 'cell', 'wrap');
+      grid-column-gap: mixins.css-variable('table', 'spacing', 'cell', 'wrap', 'gap');
       align-items: center;
       width: 100%;
       min-width: 0;
@@ -38,13 +38,13 @@
 
     @include mixins.e('cell-prepend') {
       display: inline-flex;
-      grid-column-gap: mixins.css-variable('table', 'spacing', 'gap', 'cell', 'prepend-append');
+      grid-column-gap: mixins.css-variable('table', 'spacing', 'cell', 'prepend-append', 'gap');
       vertical-align: top;
     }
 
     @include mixins.e('cell-append') {
       display: inline-flex;
-      grid-column-gap: mixins.css-variable('table', 'spacing', 'gap', 'cell', 'prepend-append');
+      grid-column-gap: mixins.css-variable('table', 'spacing', 'cell', 'prepend-append', 'gap');
       vertical-align: top;
     }
 
@@ -55,7 +55,7 @@
       justify-content: center;
       width: mixins.css-variable('table', 'size', 'body', 'action-button');
       height: mixins.css-variable('table', 'size', 'body', 'action-button');
-      margin-right: mixins.css-variable('table', 'spacing', 'margin', 'cell', 'expand-icon');
+      margin-right: mixins.css-variable('table', 'spacing', 'cell', 'expand-icon', 'margin');
       line-height: initial;
       border-radius: mixins.css-variable('table', 'border-radius');
       cursor: pointer;
@@ -131,11 +131,11 @@
     }
 
     @include mixins.is('selection') {
-      padding: mixins.css-variable('table', 'spacing', 'padding', 'cell', 'selection');
+      padding: mixins.css-variable('table', 'spacing', 'cell', 'selection', 'padding');
 
       @include mixins.e('cell-inner') {
-        #{mixins.css-variable-name('radio', 'margin-right', '-original')}: 0;
-        #{mixins.css-variable-name('checkbox', 'margin', '-icon')}: 0;
+        #{mixins.css-variable-name('radio', 'spacing', 'indicator', 'margin-right')}: 0;
+        #{mixins.css-variable-name('checkbox', 'spacing', 'icon', 'margin')}: 0;
         display: flex;
         align-items: center;
       }
@@ -175,7 +175,7 @@
     }
 
     @include mixins.is('editing') {
-      z-index: calc(#{mixins.css-variable('table', 'z-index', 'default')} + 1);
+      z-index: calc(#{mixins.css-variable('table', 'z-index')} + 1);
 
       @include mixins.e('cell-inner') {
         width: 100%;
@@ -203,88 +203,88 @@
 
     @include mixins.with-parallel-state('fixed-left', 'fixed-right') {
       position: sticky;
-      z-index: mixins.css-variable('table', 'z-index', 'default');
+      z-index: mixins.css-variable('table', 'z-index');
       background: inherit;
     }
   }
 
   @include mixins.is('mini') {
     @include mixins.e('cell') {
-      line-height: mixins.css-variable('table', 'font', 'line-height', 'mini');
+      line-height: mixins.css-variable('table', 'line-height', 'mini');
 
       @include mixins.is('selection') {
         @include mixins.e('cell-inner') {
           min-height: calc(
-            #{mixins.css-variable('table', 'font', 'line-height', 'mini')} +
-              #{mixins.css-variable('table', 'spacing', 'padding', 'cell', 'mini')} * 2
+            #{mixins.css-variable('table', 'line-height', 'mini')} +
+              #{mixins.css-variable('table', 'spacing', 'cell', 'padding', 'mini')} * 2
           );
         }
       }
     }
 
     @include mixins.e('cell-inner') {
-      padding-top: mixins.css-variable('table', 'spacing', 'padding', 'cell', 'mini');
-      padding-bottom: mixins.css-variable('table', 'spacing', 'padding', 'cell', 'mini');
+      padding-top: mixins.css-variable('table', 'spacing', 'cell', 'padding', 'mini');
+      padding-bottom: mixins.css-variable('table', 'spacing', 'cell', 'padding', 'mini');
     }
   }
 
   @include mixins.is('small') {
     @include mixins.e('cell') {
-      line-height: mixins.css-variable('table', 'font', 'line-height', 'small');
+      line-height: mixins.css-variable('table', 'line-height', 'small');
 
       @include mixins.is('selection') {
         @include mixins.e('cell-inner') {
           min-height: calc(
-            #{mixins.css-variable('table', 'font', 'line-height', 'small')} +
-              #{mixins.css-variable('table', 'spacing', 'padding', 'cell', 'small')} * 2
+            #{mixins.css-variable('table', 'line-height', 'small')} +
+              #{mixins.css-variable('table', 'spacing', 'cell', 'padding', 'small')} * 2
           );
         }
       }
     }
 
     @include mixins.e('cell-inner') {
-      padding-top: mixins.css-variable('table', 'spacing', 'padding', 'cell', 'small');
-      padding-bottom: mixins.css-variable('table', 'spacing', 'padding', 'cell', 'small');
+      padding-top: mixins.css-variable('table', 'spacing', 'cell', 'padding', 'small');
+      padding-bottom: mixins.css-variable('table', 'spacing', 'cell', 'padding', 'small');
     }
   }
 
   @include mixins.is('medium') {
     @include mixins.e('cell') {
-      line-height: mixins.css-variable('table', 'font', 'line-height', 'medium');
+      line-height: mixins.css-variable('table', 'line-height', 'medium');
 
       @include mixins.is('selection') {
         @include mixins.e('cell-inner') {
           min-height: calc(
-            #{mixins.css-variable('table', 'font', 'line-height', 'medium')} +
-              #{mixins.css-variable('table', 'spacing', 'padding', 'cell', 'medium')} * 2
+            #{mixins.css-variable('table', 'line-height', 'medium')} +
+              #{mixins.css-variable('table', 'spacing', 'cell', 'padding', 'medium')} * 2
           );
         }
       }
     }
 
     @include mixins.e('cell-inner') {
-      padding-top: mixins.css-variable('table', 'spacing', 'padding', 'cell', 'medium');
-      padding-bottom: mixins.css-variable('table', 'spacing', 'padding', 'cell', 'medium');
+      padding-top: mixins.css-variable('table', 'spacing', 'cell', 'padding', 'medium');
+      padding-bottom: mixins.css-variable('table', 'spacing', 'cell', 'padding', 'medium');
     }
   }
 
   @include mixins.is('large') {
     @include mixins.e('cell') {
-      line-height: mixins.css-variable('table', 'font', 'line-height', 'large');
+      line-height: mixins.css-variable('table', 'line-height', 'large');
 
       @include mixins.is('selection') {
         @include mixins.e('cell-inner') {
           min-height: calc(
-            #{mixins.css-variable('table', 'font', 'line-height', 'large')} +
-              #{mixins.css-variable('table', 'spacing', 'padding', 'cell', 'large')} * 2
+            #{mixins.css-variable('table', 'line-height', 'large')} +
+              #{mixins.css-variable('table', 'spacing', 'cell', 'padding', 'large')} * 2
           );
         }
       }
     }
 
     @include mixins.e('cell-inner') {
-      padding-top: mixins.css-variable('table', 'spacing', 'padding', 'cell', 'large');
-      padding-bottom: mixins.css-variable('table', 'spacing', 'padding', 'cell', 'large');
+      padding-top: mixins.css-variable('table', 'spacing', 'cell', 'padding', 'large');
+      padding-bottom: mixins.css-variable('table', 'spacing', 'cell', 'padding', 'large');
     }
   }
 

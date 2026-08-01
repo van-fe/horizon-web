@@ -1,14 +1,23 @@
 @use '../../../../styles/mixins/function';
 
 $values: (
-  'color': #{function.css-variable('text-brand-default')},
-  'tip-color': #{function.css-variable('text-secondary')},
-  'mask-background': rgba(
-      #{function.css-variable('color-1-1')},
-      #{function.css-variable('opacity-8')}
+  font-size: (
+    indicator: (
+      small: 16px,
+      medium: 24px,
+      large: 36px,
     ),
-  'size-small': 16px,
-  'size-medium': 24px,
-  'size-large': 36px,
-  'tip-gap': #{function.css-variable('spacing-2')},
+  ),
+  color: (
+    indicator: #{function.css-variable('text-brand-default')},
+    tip: #{function.css-variable('text-secondary')},
+  ),
+  background: (
+    mask: rgba(#{function.css-variable('color-1-1')}, #{function.css-variable('opacity-8')}),
+  ),
+  spacing: (
+    tip: (
+      margin-top: #{function.css-variable('spacing-2')},
+    ),
+  ),
 );

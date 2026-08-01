@@ -36,13 +36,13 @@
 
   @include mixins.parallel-modifier('mini', 'line') {
     @include mixins.e('tab') {
-      font-size: mixins.css-variable('tabs-font-size--tab--line--mini');
+      font-size: mixins.css-variable('tabs', 'font-size', 'tab', 'line', 'mini');
 
-      // line-height: mixins.css-variable('tabs-line-height--tab--line--mini');
+      // line-height: mixins.css-variable('tabs', 'line-height', 'tab', 'line', 'mini');
     }
 
     @include mixins.siblings-element('tab') {
-      margin-left: mixins.css-variable('tabs-space--tab--line--mini');
+      margin-left: mixins.css-variable('tabs', 'spacing', 'tab', 'line', 'gap', 'mini');
     }
 
     @include mixins.e('icon-outer') {
@@ -57,40 +57,40 @@
 
   @include mixins.parallel-modifier('small', 'line') {
     @include mixins.e('tab') {
-      font-size: mixins.css-variable('tabs-font-size--tab--line--small');
+      font-size: mixins.css-variable('tabs', 'font-size', 'tab', 'line', 'small');
     }
 
     @include mixins.siblings-element('tab') {
-      margin-left: mixins.css-variable('tabs-space--tab--line--small');
+      margin-left: mixins.css-variable('tabs', 'spacing', 'tab', 'line', 'gap', 'small');
     }
   }
 
   @include mixins.parallel-modifier('medium', 'line') {
     @include mixins.e('tab') {
-      font-size: mixins.css-variable('tabs-font-size--tab--line--medium');
+      font-size: mixins.css-variable('tabs', 'font-size', 'tab', 'line', 'medium');
     }
 
     @include mixins.siblings-element('tab') {
-      margin-left: mixins.css-variable('tabs-space--tab--line--medium');
+      margin-left: mixins.css-variable('tabs', 'spacing', 'tab', 'line', 'gap', 'medium');
     }
   }
 
   @include mixins.parallel-modifier('large', 'line') {
     @include mixins.e('tab') {
-      font-size: mixins.css-variable('tabs-font-size--tab--line--large');
+      font-size: mixins.css-variable('tabs', 'font-size', 'tab', 'line', 'large');
     }
 
     @include mixins.siblings-element('tab') {
-      margin-left: mixins.css-variable('tabs-space--tab--line--large');
+      margin-left: mixins.css-variable('tabs', 'spacing', 'tab', 'line', 'gap', 'large');
     }
   }
 
   // card 尺寸
   @include mixins.parallel-modifier('mini', 'card') {
     @include mixins.e('tab') {
-      padding: mixins.css-variable('tabs-padding--tab--card--mini');
-      font-size: mixins.css-variable('tabs-font-size--tab--card--mini');
-      line-height: mixins.css-variable('tabs-line-height--tab--card--mini');
+      padding: mixins.css-variable('tabs', 'spacing', 'tab', 'card', 'padding', 'mini');
+      font-size: mixins.css-variable('tabs', 'font-size', 'tab', 'card', 'mini');
+      line-height: mixins.css-variable('tabs', 'line-height', 'tab', 'card', 'mini');
     }
     @include mixins.e('icon-outer') {
       @include mixins.m('add') {
@@ -101,9 +101,9 @@
 
   @include mixins.parallel-modifier('small', 'card') {
     @include mixins.e('tab') {
-      padding: mixins.css-variable('tabs-padding--tab--card--small');
-      font-size: mixins.css-variable('tabs-font-size--tab--card--small');
-      line-height: mixins.css-variable('tabs-line-height--tab--card--small');
+      padding: mixins.css-variable('tabs', 'spacing', 'tab', 'card', 'padding', 'small');
+      font-size: mixins.css-variable('tabs', 'font-size', 'tab', 'card', 'small');
+      line-height: mixins.css-variable('tabs', 'line-height', 'tab', 'card', 'small');
     }
 
     @include mixins.e('icon-outer') {
@@ -115,9 +115,9 @@
 
   @include mixins.parallel-modifier('medium', 'card') {
     @include mixins.e('tab') {
-      padding: mixins.css-variable('tabs-padding--tab--card--medium');
-      font-size: mixins.css-variable('tabs-font-size--tab--card--medium');
-      line-height: mixins.css-variable('tabs-line-height--tab--card--medium');
+      padding: mixins.css-variable('tabs', 'spacing', 'tab', 'card', 'padding', 'medium');
+      font-size: mixins.css-variable('tabs', 'font-size', 'tab', 'card', 'medium');
+      line-height: mixins.css-variable('tabs', 'line-height', 'tab', 'card', 'medium');
     }
 
     @include mixins.e('icon-outer') {
@@ -129,9 +129,9 @@
 
   @include mixins.parallel-modifier('large', 'card') {
     @include mixins.e('tab') {
-      padding: mixins.css-variable('tabs-padding--tab--card--large');
-      font-size: mixins.css-variable('tabs-font-size--tab--card--large');
-      line-height: mixins.css-variable('tabs-line-height--tab--card--large');
+      padding: mixins.css-variable('tabs', 'spacing', 'tab', 'card', 'padding', 'large');
+      font-size: mixins.css-variable('tabs', 'font-size', 'tab', 'card', 'large');
+      line-height: mixins.css-variable('tabs', 'line-height', 'tab', 'card', 'large');
     }
 
     @include mixins.e('icon-outer') {
@@ -144,13 +144,13 @@
   // segment 尺寸
   @include mixins.parallel-modifier('mini', 'segment') {
     @include mixins.e('nav-wrap') {
-      padding: mixins.css-variable('tabs-padding--nav--segment--mini');
+      padding: mixins.css-variable('tabs', 'spacing', 'nav', 'segment', 'padding', 'mini');
     }
 
     @include mixins.e('tab') {
-      padding: mixins.css-variable('tabs-padding--tab--segment--mini');
-      font-size: mixins.css-variable('tabs-font-size--tab--segment--mini');
-      line-height: mixins.css-variable('tabs-line-height--tab--segment--mini');
+      padding: mixins.css-variable('tabs', 'spacing', 'tab', 'segment', 'padding', 'mini');
+      font-size: mixins.css-variable('tabs', 'font-size', 'tab', 'segment', 'mini');
+      line-height: mixins.css-variable('tabs', 'line-height', 'tab', 'segment', 'mini');
     }
 
     @include mixins.e('indicator') {
@@ -161,13 +161,13 @@
 
   @include mixins.parallel-modifier('small', 'segment') {
     @include mixins.e('nav-wrap') {
-      padding: mixins.css-variable('tabs-padding--nav--segment--small');
+      padding: mixins.css-variable('tabs', 'spacing', 'nav', 'segment', 'padding', 'small');
     }
 
     @include mixins.e('tab') {
-      padding: mixins.css-variable('tabs-padding--tab--segment--small');
-      font-size: mixins.css-variable('tabs-font-size--tab--segment--small');
-      line-height: mixins.css-variable('tabs-line-height--tab--segment--small');
+      padding: mixins.css-variable('tabs', 'spacing', 'tab', 'segment', 'padding', 'small');
+      font-size: mixins.css-variable('tabs', 'font-size', 'tab', 'segment', 'small');
+      line-height: mixins.css-variable('tabs', 'line-height', 'tab', 'segment', 'small');
     }
 
     @include mixins.e('indicator') {
@@ -178,13 +178,13 @@
 
   @include mixins.parallel-modifier('medium', 'segment') {
     @include mixins.e('nav-wrap') {
-      padding: mixins.css-variable('tabs-padding--nav--segment--medium');
+      padding: mixins.css-variable('tabs', 'spacing', 'nav', 'segment', 'padding', 'medium');
     }
 
     @include mixins.e('tab') {
-      padding: mixins.css-variable('tabs-padding--tab--segment--medium');
-      font-size: mixins.css-variable('tabs-font-size--tab--segment--medium');
-      line-height: mixins.css-variable('tabs-line-height--tab--segment--medium');
+      padding: mixins.css-variable('tabs', 'spacing', 'tab', 'segment', 'padding', 'medium');
+      font-size: mixins.css-variable('tabs', 'font-size', 'tab', 'segment', 'medium');
+      line-height: mixins.css-variable('tabs', 'line-height', 'tab', 'segment', 'medium');
     }
 
     @include mixins.e('indicator') {
@@ -195,13 +195,13 @@
 
   @include mixins.parallel-modifier('large', 'segment') {
     @include mixins.e('nav-wrap') {
-      padding: mixins.css-variable('tabs-padding--nav--segment--large');
+      padding: mixins.css-variable('tabs', 'spacing', 'nav', 'segment', 'padding', 'large');
     }
 
     @include mixins.e('tab') {
-      padding: mixins.css-variable('tabs-padding--tab--segment--large');
-      font-size: mixins.css-variable('tabs-font-size--tab--segment--large');
-      line-height: mixins.css-variable('tabs-line-height--tab--segment--large');
+      padding: mixins.css-variable('tabs', 'spacing', 'tab', 'segment', 'padding', 'large');
+      font-size: mixins.css-variable('tabs', 'font-size', 'tab', 'segment', 'large');
+      line-height: mixins.css-variable('tabs', 'line-height', 'tab', 'segment', 'large');
     }
 
     @include mixins.e('indicator') {

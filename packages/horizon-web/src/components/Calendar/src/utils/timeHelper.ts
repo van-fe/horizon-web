@@ -147,13 +147,13 @@ export const calculateDisabledHours = (currDate: Dayjs, hourRanges: [Dayjs, Dayj
 export function getOneHourHeightPx() {
   return parseFloat(
     getComputedStyle(document.documentElement).getPropertyValue(
-      cssVariableKey('calendar-height--week--hour-cell'),
+      cssVariableKey('calendar', 'size', 'week', 'hour-cell', 'height'),
     ),
   );
 }
 
 export function getOneHourHeightCssRaw() {
-  return cssVariable('calendar-height--week--hour-cell');
+  return cssVariable('calendar', 'size', 'week', 'hour-cell', 'height');
 }
 
 export function getOneSecondsHeightCssRaw() {

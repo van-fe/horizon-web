@@ -8,7 +8,7 @@
 
   @include mixins.is('border-default') {
     @include mixins.e('cell') {
-      border-bottom: mixins.css-variable('table', 'border', 'default');
+      border-bottom: mixins.css-variable('table', 'border');
 
       &:first-child {
         border-left: none;
@@ -17,11 +17,11 @@
   }
 
   @include mixins.is('border-full') {
-    border: mixins.css-variable('table', 'border', 'default');
+    border: mixins.css-variable('table', 'border');
 
     @include mixins.e('cell') {
-      border-right: mixins.css-variable('table', 'border', 'default');
-      border-bottom: mixins.css-variable('table', 'border', 'default');
+      border-right: mixins.css-variable('table', 'border');
+      border-bottom: mixins.css-variable('table', 'border');
 
       &:last-child {
         border-right: none;
@@ -60,13 +60,13 @@
   }
 
   @include mixins.is('border-outer') {
-    border: mixins.css-variable('table', 'border', 'default');
+    border: mixins.css-variable('table', 'border');
   }
 
   @include mixins.with-multi-state('scrolling-right', 'border-full') {
     @include mixins.e('cell') {
       @include mixins.with-multi-state('fixed-right', 'last-fixed-column') {
-        border-left: mixins.css-variable('table', 'border', 'default');
+        border-left: mixins.css-variable('table', 'border');
       }
     }
   }

@@ -18,7 +18,7 @@ describe('code container', () => {
     });
 
     expect(result).toContain('<code class="language-scss">');
-    expect(result).toContain('--h-tabs-height--underline--line');
+    expect(result).toContain('--h-tabs-size-underline-line-height');
     expect(result).not.toContain('<code-block');
   });
 

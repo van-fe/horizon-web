@@ -5,6 +5,6 @@
   flex: 1;
   flex-basis: auto;
   box-sizing: border-box;
-  padding: mixins.css-variable('container-padding--main');
+  padding: mixins.css-variable('container', 'spacing', 'main', 'padding');
   overflow: auto;
 }

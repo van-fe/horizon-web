@@ -5,7 +5,7 @@
   align-items: center;
 
   @include mixins.e('content') {
-    margin-right: mixins.css-variable('count-margin-right');
-    margin-left: mixins.css-variable('count-margin-left');
+    margin-right: mixins.css-variable('count', 'spacing', 'margin-right');
+    margin-left: mixins.css-variable('count', 'spacing', 'margin-left');
   }
 }

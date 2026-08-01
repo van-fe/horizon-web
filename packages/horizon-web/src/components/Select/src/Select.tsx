@@ -574,7 +574,10 @@ export default defineComponent({
                       classHelper.e('create-option'),
                       classHelper.is('focus', focusedOptionValue.value === inputValue.value),
                     )}
-                    style={{ [cssVariableKey('select-max-line--option')]: props.optionMaxLines }}
+                    style={{
+                      [cssVariableKey('select', 'size', 'option', 'max-line')]:
+                        props.optionMaxLines,
+                    }}
                     onClick={onClickCreateOption}
                   >
                     <div class={classHelper.em('create-option', 'prefix')}>

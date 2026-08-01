@@ -66,9 +66,9 @@ export default defineComponent({
         const columnCellWrapPadding = () => {
           switch (column.props.type) {
             case 'selection':
-              return cssVariable('table', 'spacing', 'padding', 'cell', 'selection');
+              return cssVariable('table', 'spacing', 'cell', 'selection', 'padding');
             default:
-              return cssVariable('table', 'spacing', 'padding', 'cell', 'x');
+              return cssVariable('table', 'spacing', 'cell', 'x', 'padding');
           }
         };
 

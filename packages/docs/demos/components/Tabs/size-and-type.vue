@@ -76,10 +76,10 @@ const onTabChanged = (tab: HTabValue) => {
 
 <style scoped>
 .customize-underline {
-  --h-tabs-height--underline--line: 4px;
+  --h-tabs-size-underline-line-height: 4px;
 }
 
 .customize-space {
-  --h-tabs-padding--nav-wrap--card: 0;
+  --h-tabs-spacing-nav-wrap-card-padding: 0;
 }
 </style>

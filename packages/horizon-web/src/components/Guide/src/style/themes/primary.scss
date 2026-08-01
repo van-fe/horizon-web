@@ -2,35 +2,35 @@
 
 @include mixins.b('guide-item') {
   @include mixins.m('primary') {
-    color: mixins.css-variable('guide-color--primary');
-    background: mixins.css-variable('guide-bg--primary');
+    color: mixins.css-variable('guide', 'color', 'primary');
+    background: mixins.css-variable('guide', 'background', 'primary');
 
     @include mixins.e('arrow', false) {
       &::before {
-        background-color: mixins.css-variable('guide-bg--primary');
-        border-right-color: mixins.css-variable('guide-border-color--arrow--primary');
-        border-bottom-color: mixins.css-variable('guide-border-color--arrow--primary');
+        background-color: mixins.css-variable('guide', 'background', 'primary');
+        border-right-color: mixins.css-variable('guide', 'border-color', 'arrow', 'primary');
+        border-bottom-color: mixins.css-variable('guide', 'border-color', 'arrow', 'primary');
       }
     }
 
     @include mixins.e('header', false) {
       @include mixins.m('close') {
         #{mixins.block-name('button')} {
-          color: mixins.css-variable('guide-color--primary');
+          color: mixins.css-variable('guide', 'color', 'primary');
         }
       }
     }
 
     @include mixins.e('footer', false) {
       @include mixins.m('control-cancel') {
-        color: mixins.css-variable('guide-color--primary--button--cancel');
-        background: mixins.css-variable('guide-bg--primary--button--cancel');
-        border-color: mixins.css-variable('guide-border-color--button--cancel');
+        color: mixins.css-variable('guide', 'color', 'primary', 'button', 'cancel');
+        background: mixins.css-variable('guide', 'background', 'primary', 'button', 'cancel');
+        border-color: mixins.css-variable('guide', 'border-color', 'button', 'cancel');
       }
 
       @include mixins.m('control-confirm') {
-        color: mixins.css-variable('guide-color--primary--button--confirm');
-        background: mixins.css-variable('guide-bg--primary--button--confirm');
+        color: mixins.css-variable('guide', 'color', 'primary', 'button', 'confirm');
+        background: mixins.css-variable('guide', 'background', 'primary', 'button', 'confirm');
       }
     }
   }

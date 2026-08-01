@@ -249,9 +249,7 @@ export default defineComponent({
                 <div
                   class={classHelper.e('drag-over-cursor')}
                   style={{
-                    width: `calc(100% - ${paddingLeft.value}px - ((${cssVariable(
-                      'tree-size--drag-over-cursor-arrow',
-                    )} + ${cssVariable('tree-height--drag-over-cursor')} * 2))`,
+                    width: `calc(100% - ${paddingLeft.value}px - ((${cssVariable('tree', 'size', 'drag-over-cursor-arrow')} + ${cssVariable('tree', 'size', 'drag-over-cursor', 'height')} * 2))`,
                   }}
                 />
               </div>
@@ -269,9 +267,7 @@ export default defineComponent({
                         !parentProps.multiple)
                         ? 24
                         : 0)
-                    }px - (((${cssVariable('tree-size--drag-over-cursor-arrow')} + ${cssVariable(
-                      'tree-height--drag-over-cursor',
-                    )} * 2) * 2))`,
+                    }px - (((${cssVariable('tree', 'size', 'drag-over-cursor-arrow')} + ${cssVariable('tree', 'size', 'drag-over-cursor', 'height')} * 2) * 2))`,
                   }}
                 >
                   <div class={classHelper.e('drag-over-cursor')}></div>

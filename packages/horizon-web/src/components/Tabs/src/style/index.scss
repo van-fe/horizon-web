@@ -22,17 +22,17 @@
     position: relative;
     display: flex;
     align-items: center;
-    transition: transform mixins.css-variable('tabs-transition-time')
-      mixins.css-variable('tabs-transition-fn');
+    transition: transform mixins.css-variable('tabs', 'transition', 'duration')
+      mixins.css-variable('tabs', 'transition', 'timing-function');
   }
 
   @include mixins.e('tab') {
     position: relative;
-    color: mixins.css-variable('tabs-color--tab');
+    color: mixins.css-variable('tabs', 'color', 'tab');
     cursor: pointer;
 
-    $transition: all mixins.css-variable('tabs-transition-time')
-      mixins.css-variable('tabs-transition-fn');
+    $transition: all mixins.css-variable('tabs', 'transition', 'duration')
+      mixins.css-variable('tabs', 'transition', 'timing-function');
 
     @include mixins.e('move') {
       transition: $transition;
@@ -58,11 +58,11 @@
 
     @include mixins.nested('tabs__tab-inner') {
       @include mixins.e('icon') {
-        color: mixins.css-variable('tabs-color--icon');
+        color: mixins.css-variable('tabs', 'color', 'icon');
 
         &:hover,
         &:active {
-          color: mixins.css-variable('tabs-color--icon--hover');
+          color: mixins.css-variable('tabs', 'color', 'icon', 'hover');
         }
       }
     }
@@ -95,7 +95,7 @@
       &::before {
         position: absolute;
         top: 0;
-        bottom: mixins.css-variable('tabs-height--underline--line');
+        bottom: mixins.css-variable('tabs', 'size', 'underline', 'line', 'height');
         left: -24px;
         z-index: 1;
         width: 24px;
@@ -125,17 +125,17 @@
       justify-content: center;
 
       // padding: 2px 4px;
-      color: mixins.css-variable('tabs-color--extra-icon');
+      color: mixins.css-variable('tabs', 'color', 'extra-icon');
       cursor: pointer;
-      transition: color mixins.css-variable('tabs-transition-time')
-        mixins.css-variable('tabs-transition-fn');
+      transition: color mixins.css-variable('tabs', 'transition', 'duration')
+        mixins.css-variable('tabs', 'transition', 'timing-function');
 
       &:hover {
-        color: mixins.css-variable('tabs-color--tab--hover');
+        color: mixins.css-variable('tabs', 'color', 'tab', 'hover');
       }
 
       &:active {
-        color: mixins.css-variable('tabs-color--tab--press');
+        color: mixins.css-variable('tabs', 'color', 'tab', 'press');
       }
 
       @include mixins.nested('tabs__extra-outer') {

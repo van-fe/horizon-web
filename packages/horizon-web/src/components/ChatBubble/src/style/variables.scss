@@ -1,22 +1,48 @@
 @use '../../../../styles/mixins/function';
 
 $values: (
-  'gap': #{function.css-variable('spacing-3')},
-  'header-gap': #{function.css-variable('spacing-2')},
-  'footer-gap': #{function.css-variable('spacing-2')},
-  'content-padding-block': #{function.css-variable('spacing-3')},
-  'content-padding-inline': #{function.css-variable('spacing-4')},
-  'content-bg': #{function.css-variable('bg-secondary')},
-  'content-bg-primary': #{function.css-variable('bg-brand-default')},
-  'content-color': #{function.css-variable('text-primary')},
-  'content-color-primary': #{function.css-variable('text-inverse')},
-  'content-radius': #{function.css-variable('radius-xl')},
-  'content-font-size': #{function.css-variable('text-base')},
-  'content-line-height': #{function.css-variable('line-height-standard')},
-  'name-color': #{function.css-variable('text-primary')},
-  'name-font-size': #{function.css-variable('text-sm')},
-  'name-font-weight': #{function.css-variable('weight-strong')},
-  'meta-color': #{function.css-variable('text-tertiary')},
-  'meta-font-size': #{function.css-variable('text-sm')},
-  'list-item-gap': #{function.css-variable('spacing-4')},
+  font-size: (
+    content: #{function.css-variable('text-base')},
+    name: #{function.css-variable('text-sm')},
+    meta: #{function.css-variable('text-sm')},
+  ),
+  font-weight: (
+    name: #{function.css-variable('weight-strong')},
+  ),
+  line-height: (
+    content: #{function.css-variable('line-height-standard')},
+  ),
+  color: (
+    content: (
+      '': #{function.css-variable('text-primary')},
+      primary: #{function.css-variable('text-inverse')},
+    ),
+    name: #{function.css-variable('text-primary')},
+    meta: #{function.css-variable('text-tertiary')},
+  ),
+  border-radius: (
+    content: #{function.css-variable('radius-xl')},
+  ),
+  background: (
+    content: (
+      '': #{function.css-variable('bg-secondary')},
+      primary: #{function.css-variable('bg-brand-default')},
+    ),
+  ),
+  spacing: (
+    gap: #{function.css-variable('spacing-3')},
+    header: (
+      gap: #{function.css-variable('spacing-2')},
+    ),
+    footer: (
+      gap: #{function.css-variable('spacing-2')},
+    ),
+    content: (
+      padding-block: #{function.css-variable('spacing-3')},
+      padding-inline: #{function.css-variable('spacing-4')},
+    ),
+    list-item: (
+      gap: #{function.css-variable('spacing-4')},
+    ),
+  ),
 );

@@ -15,7 +15,7 @@
       flex-direction: row;
 
       @include mixins.e('label') {
-        margin-right: mixins.css-variable('form-margin-right--form-item--label--position-left');
+        margin-right: mixins.css-variable('form', 'spacing', 'form-item', 'label', 'position-left', 'margin-right');
       }
     }
   }
@@ -48,8 +48,11 @@
     @include mixins.b('form-item') {
       @include mixins.e('label') {
         align-items: center;
-        height: calc(100% - #{mixins.css-variable('form-margin-top--form-item--label--vertical-middle')});
-        margin-bottom: mixins.css-variable('form-margin-bottom--form-item--label--vertical-middle');
+        height: calc(
+          100% -
+            #{mixins.css-variable('form', 'spacing', 'form-item', 'label', 'vertical-middle', 'margin-top')}
+        );
+        margin-bottom: mixins.css-variable('form', 'spacing', 'form-item', 'label', 'vertical-middle', 'margin-bottom');
       }
     }
 
@@ -57,7 +60,7 @@
       @include mixins.b('form-item') {
         @include mixins.e('label') {
           align-self: center;
-          margin-top: mixins.css-variable('form-margin-top--form-item--label--vertical-middle');
+          margin-top: mixins.css-variable('form', 'spacing', 'form-item', 'label', 'vertical-middle', 'margin-top');
         }
       }
     }
@@ -69,11 +72,11 @@
 
     @include mixins.b('form-item') {
       flex-direction: row;
-      margin-right: mixins.css-variable('form-margin-right--form-item--label--inline');
+      margin-right: mixins.css-variable('form', 'spacing', 'form-item', 'label', 'inline', 'margin-right');
 
       @include mixins.e('label') {
         align-items: center;
-        margin-right: mixins.css-variable('form-margin-right--form-item--label--inline');
+        margin-right: mixins.css-variable('form', 'spacing', 'form-item', 'label', 'inline', 'margin-right');
       }
     }
   }
@@ -82,7 +85,7 @@
     @include mixins.is('vertical-top') {
       @include mixins.e('label') {
         align-items: flex-start;
-        margin-top: mixins.css-variable('form-margin-top--form-item--label--vertical-top');
+        margin-top: mixins.css-variable('form', 'spacing', 'form-item', 'label', 'vertical-top', 'margin-top');
       }
     }
 
@@ -107,25 +110,28 @@
 
   @include mixins.has('helper') {
     @include mixins.be('form-item', 'content', false) {
-      padding-right: calc(16px + #{mixins.css-variable('form-margin-bottom--form-item--helper-icon')} * 2);
+      padding-right: calc(
+        16px +
+          #{mixins.css-variable('form', 'spacing', 'form-item', 'helper-icon', 'margin-bottom')} * 2
+      );
     }
   }
 
   @include mixins.m('large') {
     @include mixins.be('form-item', 'label', false) {
-      font-size: mixins.css-variable('form-font-size--form-item--label--large');
+      font-size: mixins.css-variable('form', 'font-size', 'form-item', 'label', 'large');
     }
   }
 
   @include mixins.m('medium') {
     @include mixins.be('form-item', 'label', false) {
-      font-size: mixins.css-variable('form-font-size--form-item--label--medium');
+      font-size: mixins.css-variable('form', 'font-size', 'form-item', 'label', 'medium');
     }
   }
 
   @include mixins.m('small') {
     @include mixins.be('form-item', 'label', false) {
-      font-size: mixins.css-variable('form-font-size--form-item--label--small');
+      font-size: mixins.css-variable('form', 'font-size', 'form-item', 'label', 'small');
     }
   }
 }
@@ -133,9 +139,9 @@
 @include mixins.b('form-item') {
   @include mixins.e('label') {
     display: inline-flex;
-    margin-bottom: mixins.css-variable('form-margin-bottom--form-item--label');
-    color: mixins.css-variable('form-color--form-item--label');
-    line-height: mixins.css-variable('form-line-height--form-item--label');
+    margin-bottom: mixins.css-variable('form', 'spacing', 'form-item', 'label', 'margin-bottom');
+    color: mixins.css-variable('form', 'color', 'form-item', 'label');
+    line-height: mixins.css-variable('form', 'line-height', 'form-item', 'label');
   }
 
   @include mixins.e('label-append') {
@@ -149,16 +155,16 @@
     @include mixins.is('required') {
       @include mixins.is('required-mark-left') {
         &::before {
-          margin-right: mixins.css-variable('form-margin-right--form-item--text--required-mark-left');
-          color: mixins.css-variable('form-color--form-item--text--required-mark');
+          margin-right: mixins.css-variable('form', 'spacing', 'form-item', 'text', 'required-mark-left', 'margin-right');
+          color: mixins.css-variable('form', 'color', 'form-item', 'text', 'required-mark');
           content: '*';
         }
       }
 
       @include mixins.is('required-mark-right') {
         &::after {
-          margin-left: mixins.css-variable('form-margin-right--form-item--text--required-mark-right');
-          color: mixins.css-variable('form-color--form-item--text--required-mark');
+          margin-left: mixins.css-variable('form', 'spacing', 'form-item', 'text', 'required-mark-right', 'margin-right');
+          color: mixins.css-variable('form', 'color', 'form-item', 'text', 'required-mark');
           content: '*';
         }
       }
@@ -192,7 +198,7 @@
         align-items: center;
         justify-content: center;
         height: 1.5em;
-        margin-left: mixins.css-variable('form-margin-x--helper-label');
+        margin-left: mixins.css-variable('form', 'spacing', 'helper-label', 'margin-x');
       }
 
       &-before-label {
@@ -200,33 +206,33 @@
         align-items: center;
         justify-content: center;
         height: 1.5em;
-        margin-right: mixins.css-variable('form-margin-x--helper-label');
+        margin-right: mixins.css-variable('form', 'spacing', 'helper-label', 'margin-x');
       }
     }
 
     @include mixins.m('title') {
-      font-weight: mixins.css-variable('form-font-weight--form-item--label--content--popover-title');
-      font-size: mixins.css-variable('form-font-size--form-item--label--content--popover-title');
-      line-height: mixins.css-variable('form-line-height--form-item--label--content--popover-title');
+      font-weight: mixins.css-variable('form', 'font-weight', 'form-item', 'label', 'content', 'popover-title');
+      font-size: mixins.css-variable('form', 'font-size', 'form-item', 'label', 'content', 'popover-title');
+      line-height: mixins.css-variable('form', 'line-height', 'form-item', 'label', 'content', 'popover-title');
     }
 
     @include mixins.m('content') {
-      font-size: mixins.css-variable('form-font-size--form-item--label--content--popover-contnet');
-      line-height: mixins.css-variable('form-line-height--form-item--label--content--popover-content');
+      font-size: mixins.css-variable('form', 'font-size', 'form-item', 'label', 'content', 'popover-content');
+      line-height: mixins.css-variable('form', 'line-height', 'form-item', 'label', 'content', 'popover-content');
     }
   }
 
   @include mixins.e('ext') {
-    min-height: mixins.css-variable('form-min-height--ext-info');
-    margin: mixins.css-variable('form-margin--form-item--ext');
-    font-size: mixins.css-variable('form-font-size--form-item--ext');
+    min-height: mixins.css-variable('form', 'size', 'ext-info', 'min-height');
+    margin: mixins.css-variable('form', 'spacing', 'form-item', 'ext', 'margin');
+    font-size: mixins.css-variable('form', 'font-size', 'form-item', 'ext');
 
     @include mixins.e('tip') {
-      color: mixins.css-variable('form-color--form-item--ext');
+      color: mixins.css-variable('form', 'color', 'form-item', 'ext');
     }
 
     @include mixins.e('error') {
-      color: mixins.css-variable('form-color--form-item--error');
+      color: mixins.css-variable('form', 'color', 'form-item', 'error');
     }
   }
 }

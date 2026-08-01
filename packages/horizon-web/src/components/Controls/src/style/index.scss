@@ -4,17 +4,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: calc(100% - #{mixins.css-variable('controls-margin')} * 2);
-  height: calc(100% - #{mixins.css-variable('controls-margin')} * 2);
-  margin: mixins.css-variable('controls-margin');
-  column-gap: mixins.css-variable('controls-margin-x--control-siblings');
+  width: calc(100% - #{mixins.css-variable('controls', 'spacing', 'margin')} * 2);
+  height: calc(100% - #{mixins.css-variable('controls', 'spacing', 'margin')} * 2);
+  margin: mixins.css-variable('controls', 'spacing', 'margin');
+  column-gap: mixins.css-variable('controls', 'spacing', 'control-siblings', 'margin-x');
 
   @include mixins.e('inner') {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-evenly;
-    column-gap: mixins.css-variable('controls-margin-x--control-siblings');
+    column-gap: mixins.css-variable('controls', 'spacing', 'control-siblings', 'margin-x');
 
     @include mixins.is('hide') {
       display: none;
@@ -25,15 +25,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: mixins.css-variable('controls-size--control');
-    height: mixins.css-variable('controls-size--control');
-    border-radius: mixins.css-variable('controls-border-radius');
+    width: mixins.css-variable('controls', 'size', 'control');
+    height: mixins.css-variable('controls', 'size', 'control');
+    border-radius: mixins.css-variable('controls', 'border-radius');
     cursor: pointer;
 
     @include mixins.is-not('custom-color') {
       svg {
         path {
-          fill: mixins.css-variable('controls-color--control-icon');
+          fill: mixins.css-variable('controls', 'color', 'control-icon');
         }
       }
     }
@@ -44,7 +44,7 @@
       @include mixins.is-not('custom-color') {
         svg {
           path {
-            fill: mixins.css-variable('controls-color--control-icon--disabled');
+            fill: mixins.css-variable('controls', 'color', 'control-icon', 'disabled');
           }
         }
       }
@@ -52,11 +52,11 @@
 
     @include mixins.is-not('disabled') {
       &:hover {
-        background: mixins.css-variable('controls-bg--control--hover');
+        background: mixins.css-variable('controls', 'background', 'control', 'hover');
       }
 
       &:active {
-        background: mixins.css-variable('controls-bg--control--press');
+        background: mixins.css-variable('controls', 'background', 'control', 'press');
       }
     }
 
@@ -68,28 +68,28 @@
   @include mixins.m('dark') {
     @include mixins.b('control', false) {
       @include mixins.is('disabled') {
-        background: mixins.css-variable('controls-bg--disabled');
+        background: mixins.css-variable('controls', 'background', 'disabled');
       }
     }
   }
 
   @include mixins.m('light') {
     @include mixins.b('control', false) {
-      @include mixins.is-not('custom-color'){
+      @include mixins.is-not('custom-color') {
         svg {
           path {
-            fill: mixins.css-variable('controls-color--control-icon--light');
+            fill: mixins.css-variable('controls', 'color', 'control-icon', 'light');
           }
         }
       }
 
       @include mixins.is('disabled') {
-        background: mixins.css-variable('controls-bg--disabled--light');
+        background: mixins.css-variable('controls', 'background', 'disabled', 'light');
 
         @include mixins.is-not('custom-color') {
           svg {
             path {
-              fill: mixins.css-variable('controls-color--control-icon--light--disabled');
+              fill: mixins.css-variable('controls', 'color', 'control-icon', 'light', 'disabled');
             }
           }
         }
@@ -97,11 +97,11 @@
 
       @include mixins.is-not('disabled') {
         &:hover {
-          background: mixins.css-variable('controls-bg--control--hover--light');
+          background: mixins.css-variable('controls', 'background', 'control', 'hover', 'light');
         }
 
         &:active {
-          background: mixins.css-variable('controls-bg--control--press--light');
+          background: mixins.css-variable('controls', 'background', 'control', 'press', 'light');
         }
       }
     }
@@ -113,8 +113,7 @@
     justify-content: flex-start;
 
     svg {
-      margin-right: mixins.css-variable('controls-margin-right--dropdown-item--svg');
+      margin-right: mixins.css-variable('controls', 'spacing', 'dropdown-item', 'svg', 'margin-right');
     }
   }
 }
-

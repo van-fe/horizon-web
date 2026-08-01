@@ -170,7 +170,7 @@ export default defineComponent({
     const height = computed(
       () =>
         props.height ??
-        (props.mode === 'vertical' ? '100%' : cssVariable('menu-height--horizontal')),
+        (props.mode === 'vertical' ? '100%' : cssVariable('menu', 'size', 'horizontal', 'height')),
     );
 
     watch(

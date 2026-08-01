@@ -1,16 +1,35 @@
 @use '../../../../styles/mixins/function';
 
 $values: (
-  'size--small': #{function.css-variable('spacing-3')},
-  'size--medium': #{function.css-variable('spacing-5')},
-  'size--large': #{function.css-variable('spacing-7')},
-  'spacing--horizontal--small': #{function.css-variable('space-size--small')},
-  'spacing--horizontal--medium': #{function.css-variable('space-size--medium')},
-  'spacing--horizontal--large': #{function.css-variable('space-size--large')},
-  'spacing--vertical--small': #{function.css-variable('space-size--small')},
-  'spacing--vertical--medium': #{function.css-variable('space-size--medium')},
-  'spacing--vertical--large': #{function.css-variable('space-size--large')},
-  'spacing--wrap--small': #{function.css-variable('space-spacing--horizontal--small')} #{function.css-variable('space-spacing--vertical--small')},
-  'spacing--wrap--medium': #{function.css-variable('space-spacing--horizontal--medium')} #{function.css-variable('space-spacing--vertical--medium')},
-  'spacing--wrap--large': #{function.css-variable('space-spacing--horizontal--large')} #{function.css-variable('space-spacing--vertical--large')},
+  spacing: (
+    gap: (
+      small: #{function.css-variable('spacing-3')},
+      medium: #{function.css-variable('spacing-5')},
+      large: #{function.css-variable('spacing-7')},
+    ),
+    horizontal: (
+      gap: (
+        small: #{function.css-variable('space', 'spacing', 'gap', 'small')},
+        medium: #{function.css-variable('space', 'spacing', 'gap', 'medium')},
+        large: #{function.css-variable('space', 'spacing', 'gap', 'large')},
+      ),
+    ),
+    vertical: (
+      gap: (
+        small: #{function.css-variable('space', 'spacing', 'gap', 'small')},
+        medium: #{function.css-variable('space', 'spacing', 'gap', 'medium')},
+        large: #{function.css-variable('space', 'spacing', 'gap', 'large')},
+      ),
+    ),
+    wrap: (
+      gap: (
+        small: #{function.css-variable('space', 'spacing', 'horizontal', 'gap', 'small')}
+          #{function.css-variable('space', 'spacing', 'vertical', 'gap', 'small')},
+        medium: #{function.css-variable('space', 'spacing', 'horizontal', 'gap', 'medium')}
+          #{function.css-variable('space', 'spacing', 'vertical', 'gap', 'medium')},
+        large: #{function.css-variable('space', 'spacing', 'horizontal', 'gap', 'large')}
+          #{function.css-variable('space', 'spacing', 'vertical', 'gap', 'large')},
+      ),
+    ),
+  ),
 );

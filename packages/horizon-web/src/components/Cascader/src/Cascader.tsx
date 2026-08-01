@@ -374,7 +374,9 @@ export default defineComponent({
                 duringInput={!!inputValueMerged.value}
                 onSwitchPanelStatus={status => manualControlPopperVisible(status)}
                 onConfirm={confirmHandle}
-                style={{ [cssVariableKey('cascader-max-line--item')]: optionMaxLinesRef.value }}
+                style={{
+                  [cssVariableKey('cascader', 'size', 'item', 'max-line')]: optionMaxLinesRef.value,
+                }}
               />
             </div>
           ),

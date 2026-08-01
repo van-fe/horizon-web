@@ -40,7 +40,7 @@ export default function useHeaderResizerCursorLine(
         cursorLineStyle.value = {
           display: 'block',
           transform: `translate(${elementRect.right - 1}px, ${elementRect.top}px)`,
-          [cssVariableKey('table', 'column', 'height')]: `${
+          [cssVariableKey('table', 'size', 'column', 'height')]: `${
             elementRect.height + column[HTableColumnContextKey].childrenEachRowColumnsHeightSum
           }px`,
         };

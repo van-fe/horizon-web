@@ -32,7 +32,7 @@ You can set prefix and suffix content through `prefix` and `suffix` `slot`, whic
 
 ## Combined Input Box
 You can add a prepend or append element to the input box through `prepend` and `append` `slot`  
-`--h-input-bg--prepend-append: transparent` is to solve the background color problem of icons and prefix/suffix
+`--h-input-background-prepend-append: transparent` is to solve the background color problem of icons and prefix/suffix
 :::demo components/Input/mixed.vue :::
 
 ## Embedded in Composite Controls

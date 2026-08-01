@@ -191,7 +191,7 @@ export default defineComponent({
                   disabled={disabledProp.value}
                   placeholder={
                     placeholderProp.value ||
-                    useLocaleLang('transfer.filterPlaceholder').value as string
+                    (useLocaleLang('transfer.filterPlaceholder').value as string)
                   }
                 />
               </div>
@@ -355,9 +355,7 @@ export default defineComponent({
                                           : classHelper.is('top'),
                                       )}
                                       style={{
-                                        width: `calc(100% - 16px - ((${cssVariable(
-                                          'transfer-size--drag-over-cursor-arrow',
-                                        )} + ${cssVariable('transfer-height--drag-over-cursor')} * 2))`,
+                                        width: `calc(100% - 16px - ((${cssVariable('transfer', 'size', 'drag-over-cursor-arrow')} + ${cssVariable('transfer', 'size', 'drag-over-cursor', 'height')} * 2))`,
                                       }}
                                     />
                                   </div>

@@ -120,10 +120,12 @@
   }
 
   @include mixins.e(('progress', 'volume-slider')) {
-    #{function.css-variable-name('slider-bg--track')}: transparent;
-    #{function.css-variable-name('slider-bg--track--disabled')}: transparent;
-    #{function.css-variable-name('slider-bg--cursor')}: #{function.css-variable('bg-default')};
-    #{function.css-variable-name('slider-border--cursor')}: 2px solid
+    #{function.css-variable-name('slider', 'background', 'track')}: transparent;
+    #{function.css-variable-name('slider', 'background', 'track', 'disabled')}: transparent;
+    #{function.css-variable-name('slider', 'background', 'cursor')}: #{function.css-variable(
+        'bg-default'
+      )};
+    #{function.css-variable-name('slider', 'border', 'cursor')}: 2px solid
       #{function.css-variable('border-brand-default')};
 
     #{function.e('slider', 'track')} {
@@ -180,7 +182,7 @@
   }
 
   @include mixins.e('volume-slider') {
-    #{function.css-variable-name('slider-bg--track')}: rgba(
+    #{function.css-variable-name('slider', 'background', 'track')}: rgba(
       #{function.css-variable('color-1-1')},
       0.34
     );
@@ -212,33 +214,33 @@
 
   @include mixins.e(('rate-select', 'quality-select')) {
     flex: 0 0 auto;
-    #{function.css-variable-name('picker-color--input--no-border')}: #{function.css-variable(
+    #{function.css-variable-name('picker', 'color', 'input', 'no-border')}: #{function.css-variable(
         'text-inverse'
       )};
-    #{function.css-variable-name('picker-color--input--no-border--hover')}: #{function.css-variable(
+    #{function.css-variable-name('picker', 'color', 'input', 'no-border', 'hover')}: #{function.css-variable(
         'text-inverse'
       )};
-    #{function.css-variable-name('picker-color--input--no-border--press')}: #{function.css-variable(
+    #{function.css-variable-name('picker', 'color', 'input', 'no-border', 'press')}: #{function.css-variable(
         'text-inverse'
       )};
-    #{function.css-variable-name('picker-color--input--no-border--focus')}: #{function.css-variable(
+    #{function.css-variable-name('picker', 'color', 'input', 'no-border', 'focus')}: #{function.css-variable(
         'text-inverse'
       )};
-    #{function.css-variable-name('picker-color--input-append-icon--no-border')}: #{function.css-variable(
+    #{function.css-variable-name('picker', 'color', 'input-append-icon', 'no-border')}: #{function.css-variable(
         'text-inverse'
       )};
-    #{function.css-variable-name('picker-color--input-append-icon--no-border--hover')}: #{function.css-variable(
+    #{function.css-variable-name('picker', 'color', 'input-append-icon', 'no-border', 'hover')}: #{function.css-variable(
         'text-inverse'
       )};
-    #{function.css-variable-name('picker-bg--input--no-border--hover')}: rgba(
+    #{function.css-variable-name('picker', 'background', 'input', 'no-border', 'hover')}: rgba(
       #{function.css-variable('color-1-1')},
       0.16
     );
-    #{function.css-variable-name('picker-bg--input--no-border--press')}: rgba(
+    #{function.css-variable-name('picker', 'background', 'input', 'no-border', 'press')}: rgba(
       #{function.css-variable('color-1-1')},
       0.2
     );
-    #{function.css-variable-name('picker-bg--input--no-border--focus')}: rgba(
+    #{function.css-variable-name('picker', 'background', 'input', 'no-border', 'focus')}: rgba(
       #{function.css-variable('color-1-1')},
       0.16
     );
@@ -251,18 +253,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: mixins.css-variable('video-player-bg--error');
+    background: mixins.css-variable('video-player', 'background', 'error');
   }
 
   @include mixins.e('error-content') {
-    width: mixins.css-variable('video-player-width--error-content');
+    width: mixins.css-variable('video-player', 'size', 'error-content', 'width');
     max-width: 100%;
     text-align: center;
 
     p {
-      margin: mixins.css-variable('video-player-margin--error-content');
-      font-size: mixins.css-variable('video-player-font-size--error-content');
-      color: mixins.css-variable('video-player-color--error-content');
+      margin: mixins.css-variable('video-player', 'spacing', 'error-content', 'margin');
+      font-size: mixins.css-variable('video-player', 'font-size', 'error-content');
+      color: mixins.css-variable('video-player', 'color', 'error-content');
     }
   }
 

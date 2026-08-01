@@ -10,7 +10,9 @@
   align-items: center;
   justify-content: center;
   border-radius: inherit;
-  transition: mixins.css-variable('mask-transition-time') cubic-bezier(0.25, 0.8, 0.5, 1), z-index 1ms;
+  transition:
+    mixins.css-variable('mask', 'transition', 'duration') cubic-bezier(0.25, 0.8, 0.5, 1),
+    z-index 1ms;
   pointer-events: auto;
 
   // 遮罩层

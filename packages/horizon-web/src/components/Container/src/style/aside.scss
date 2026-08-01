@@ -3,6 +3,6 @@
 @include mixins.b('aside') {
   flex-shrink: 0;
   box-sizing: border-box;
-  width: mixins.css-variable('container-width--aside');
+  width: mixins.css-variable('container', 'size', 'aside', 'width');
   overflow: auto;
 }

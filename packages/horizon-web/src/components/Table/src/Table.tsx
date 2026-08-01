@@ -260,10 +260,10 @@ export default defineComponent({
         style={{
           height: sizeUnitTransform(props.height),
           minHeight: sizeUnitTransform(props.minHeight),
-          [cssVariableKey('table', 'wrapper', 'height')]: `${wrapperHeight.value}px`,
-          [cssVariableKey('table', 'header', 'height')]:
+          [cssVariableKey('table', 'size', 'wrapper', 'height')]: `${wrapperHeight.value}px`,
+          [cssVariableKey('table', 'size', 'header', 'height')]:
             `${scrollbarBeginEndSpacing.value[0][0]}px`,
-          [cssVariableKey('table', 'header', 'row', 'height')]:
+          [cssVariableKey('table', 'size', 'header', 'row', 'height')]:
             firstHeaderRowHeight.value > 0 ? `${firstHeaderRowHeight.value}px` : undefined,
           ['--table-border-width']: border.value === 'full' ? '1px' : '0px',
         }}
@@ -275,7 +275,7 @@ export default defineComponent({
           height={props.height}
           maxHeight={props.maxHeight}
           trackBeginEndSpacing={scrollbarBeginEndSpacing.value}
-          zIndex={`var(${cssVariableKey('table', 'z-index', 'default')})`}
+          zIndex={`var(${cssVariableKey('table', 'z-index')})`}
           updateDelay={50}
           onScroll={handleScroll}
           onReachTop={() => emit('scrollTop')}

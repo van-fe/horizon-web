@@ -7,18 +7,19 @@
   @include mixins.e('check-all') {
     display: flex;
     align-items: center;
-    height: mixins.css-variable('select-height--check-all');
-    padding: mixins.css-variable('select-padding--check-all');
-    border-bottom: 1px solid mixins.css-variable('select-border-color--option-group--divider');
+    height: mixins.css-variable('select', 'size', 'check-all', 'height');
+    padding: mixins.css-variable('select', 'spacing', 'check-all', 'padding');
+    border-bottom: 1px solid
+      mixins.css-variable('select', 'border-color', 'option-group', 'divider');
     cursor: pointer;
-    transition: mixins.css-variable('select-transition');
+    transition: mixins.css-variable('select', 'transition');
 
     @include mixins.is('focus') {
-      background: mixins.css-variable('select-bg--option--hover');
+      background: mixins.css-variable('select', 'background', 'option', 'hover');
     }
 
     &:hover {
-      background: mixins.css-variable('select-bg--option--hover');
+      background: mixins.css-variable('select', 'background', 'option', 'hover');
     }
 
     &-label {
@@ -26,11 +27,11 @@
       align-items: center;
 
       @include mixins.is('active') {
-        font-weight: mixins.css-variable('select-font-weight-active');
+        font-weight: mixins.css-variable('select', 'font-weight', 'active');
       }
 
       @include mixins.m('count') {
-        margin-left: mixins.css-variable('select-margin', 'check-all-count', 'left')
+        margin-left: mixins.css-variable('select', 'spacing', 'check-all-count', 'left', 'margin');
       }
     }
   }
@@ -38,16 +39,16 @@
   @include mixins.e('create-option') {
     display: flex;
     align-items: center;
-    min-height: mixins.css-variable('select-height--option');
-    padding: mixins.css-variable('select-padding--option');
-    font-size: mixins.css-variable('select-font-size--create-option');
-    background: mixins.css-variable('select-bg--option');
+    min-height: mixins.css-variable('select', 'size', 'option', 'height');
+    padding: mixins.css-variable('select', 'spacing', 'option', 'padding');
+    font-size: mixins.css-variable('select', 'font-size', 'create-option');
+    background: mixins.css-variable('select', 'background', 'option');
     cursor: pointer;
-    transition: mixins.css-variable('select-transition');
+    transition: mixins.css-variable('select', 'transition');
 
     @include mixins.m('prefix') {
-      margin-right: mixins.css-variable('select-margin-right--create-option--prefix');
-      color: mixins.css-variable('select-color--create-option--prefix');
+      margin-right: mixins.css-variable('select', 'spacing', 'create-option', 'prefix', 'margin-right');
+      color: mixins.css-variable('select', 'color', 'create-option', 'prefix');
     }
 
     @include mixins.m('content') {
@@ -55,16 +56,16 @@
       flex: 1;
       overflow: hidden;
       word-break: break-all;
-      -webkit-line-clamp: mixins.css-variable-with-default-value('select-max-line--option', 1);
+      -webkit-line-clamp: mixins.css-variable-with-default-value('select-size-option-max-line', 1);
       -webkit-box-orient: vertical;
     }
 
     @include mixins.is('focus') {
-      background: mixins.css-variable('select-bg--option--hover');
+      background: mixins.css-variable('select', 'background', 'option', 'hover');
     }
 
     &:hover {
-      background: mixins.css-variable('select-bg--option--hover');
+      background: mixins.css-variable('select', 'background', 'option', 'hover');
     }
   }
 
@@ -81,14 +82,14 @@
     @include mixins.e('panel-tags') {
       min-height: fit-content;
       max-height: mixins.css-variable('select', 'size', 'panel-tags', 'max-height');
-      margin-bottom: mixins.css-variable('select', 'margin', 'panel-tags', 'bottom');
+      margin-bottom: mixins.css-variable('select', 'spacing', 'panel-tags', 'bottom', 'margin');
       overflow-y: auto;
     }
   }
 
   @include mixins.e('panel') {
     @include mixins.nested('scrollbar') {
-      margin: mixins.css-variable('select-margin-y--scrollbar') 0;
+      margin: mixins.css-variable('select', 'spacing', 'scrollbar', 'margin-y') 0;
 
       &__view {
         display: flex;

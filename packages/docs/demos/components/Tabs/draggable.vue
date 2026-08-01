@@ -59,6 +59,6 @@ const onSort = (current: number, target: number, sortedKeys: number[]) => {
 .fade-move,
 .fade-enter-active,
 .fade-leave-active {
-  transition: all var(--h-tabs-transition-time) var(--h-tabs-transition-fn);
+  transition: all var(--h-tabs-transition-duration) var(--h-tabs-transition-timing-function);
 }
 </style>

@@ -3,12 +3,12 @@
 @include mixins.b('license-plate-input') {
   display: inline-flex;
   align-items: flex-start;
-  width: mixins.css-variable('license-plate-input-width');
-  gap: mixins.css-variable('license-plate-input-gap');
+  width: mixins.css-variable('license-plate-input', 'size', 'width');
+  gap: mixins.css-variable('license-plate-input', 'spacing', 'gap');
   max-width: 100%;
 
   @include mixins.e('province') {
-    flex: 0 0 mixins.css-variable('license-plate-input-width--province');
+    flex: 0 0 mixins.css-variable('license-plate-input', 'size', 'province', 'width');
     min-width: 0;
   }
 

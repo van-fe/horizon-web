@@ -5,26 +5,26 @@
   overflow: auto;
 
   @include mixins.e('header') {
-    border-bottom: mixins.css-variable('list-border');
+    border-bottom: mixins.css-variable('list', 'border');
   }
 
   @include mixins.is('footer') {
-    border-top: mixins.css-variable('list-border');
+    border-top: mixins.css-variable('list', 'border');
   }
 
   @include mixins.is('border') {
-    border: mixins.css-variable('list-border');
+    border: mixins.css-variable('list', 'border');
   }
 
   @include mixins.m('medium') {
     #{mixins.block-name('list-item')} {
-      padding: mixins.css-variable('list-padding--list-item');
+      padding: mixins.css-variable('list', 'spacing', 'list-item', 'padding');
     }
   }
 
   @include mixins.m('small') {
     #{mixins.block-name('list-item')} {
-      padding: mixins.css-variable('list-padding--list-item--small');
+      padding: mixins.css-variable('list', 'spacing', 'list-item', 'padding', 'small');
     }
   }
 }
@@ -32,7 +32,7 @@
 @include mixins.b('list') {
   @include mixins.is('split') {
     @include mixins.b('list-item', false) {
-      border-bottom: mixins.css-variable('list-border');
+      border-bottom: mixins.css-variable('list', 'border');
 
       &:last-child {
         border-bottom: none;
@@ -45,11 +45,11 @@
   @include mixins.is('zebra') {
     @include mixins.b('list-item') {
       &:nth-child(odd) {
-        background: mixins.css-variable('list-bg--default');
+        background: mixins.css-variable('list', 'background');
       }
 
       &:nth-child(even) {
-        background: mixins.css-variable('list-bg--even');
+        background: mixins.css-variable('list', 'background', 'even');
       }
     }
   }

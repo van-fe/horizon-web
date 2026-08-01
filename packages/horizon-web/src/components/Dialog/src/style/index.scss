@@ -9,7 +9,7 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background: mixins.css-variable('dialog-bg--mask');
+    background: mixins.css-variable('dialog', 'background', 'mask');
   }
 
   @include mixins.e('container') {
@@ -23,12 +23,12 @@
     /** 当屏幕较小时，离边框要有点空间 */
     max-width: 92%;
     max-height: 84%;
-    margin: mixins.css-variable('dialog-margin--container');
+    margin: mixins.css-variable('dialog', 'spacing', 'container', 'margin');
 
-    // padding: mixins.css-variable('dialog-padding--container');
-    background: mixins.css-variable('dialog-bg--container');
-    border-radius: mixins.css-variable('dialog-border-radius--container');
-    box-shadow: mixins.css-variable('dialog-box-shadow--container');
+    // padding: mixins.css-variable('dialog', 'spacing', 'container', 'padding');
+    background: mixins.css-variable('dialog', 'background', 'container');
+    border-radius: mixins.css-variable('dialog', 'border-radius', 'container');
+    box-shadow: mixins.css-variable('dialog', 'box-shadow', 'container');
   }
 
   @include mixins.m('center') {
@@ -64,14 +64,14 @@
     justify-content: center;
     width: 24px;
     height: 24px;
-    margin-top: mixins.css-variable('dialog-padding--container');
+    margin-top: mixins.css-variable('dialog', 'spacing', 'container', 'padding');
 
-    // margin-right: mixins.css-variable('dialog-margin-right--icon');
-    margin-left: mixins.css-variable('dialog-padding--container');
+    // margin-right: mixins.css-variable('dialog', 'spacing', 'icon', 'margin-right');
+    margin-left: mixins.css-variable('dialog', 'spacing', 'container', 'padding');
   }
   @include mixins.e('icon') {
     flex: none;
-    line-height: mixins.css-variable('dialog-line-height--icon');
+    line-height: mixins.css-variable('dialog', 'line-height', 'icon');
   }
 
   @include mixins.e('inner') {
@@ -89,13 +89,15 @@
     min-height: 0;
 
     @include mixins.m('icon-offset') {
-      margin-left: calc((mixins.css-variable('dialog-padding--container') / 2) * -1);
+      margin-left: calc(
+        (mixins.css-variable('dialog', 'spacing', 'container', 'padding') / 2) * -1
+      );
     }
   }
 
   @include mixins.e('header') {
     flex: none;
-    padding: mixins.css-variable('dialog-padding--header');
+    padding: mixins.css-variable('dialog', 'spacing', 'header', 'padding');
 
     @include mixins.m('draggable') {
       cursor: move;
@@ -110,9 +112,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-weight: mixins.css-variable('dialog-font-weight--title');
-    font-size: mixins.css-variable('dialog-font-size--title');
-    line-height: mixins.css-variable('dialog-line-height--title');
+    font-weight: mixins.css-variable('dialog', 'font-weight', 'title');
+    font-size: mixins.css-variable('dialog', 'font-size', 'title');
+    line-height: mixins.css-variable('dialog', 'line-height', 'title');
 
     @include mixins.nested('icon') {
       cursor: pointer;
@@ -133,17 +135,17 @@
     flex: 1;
 
     /** note: 暂不考虑书写方向间距，只使用 padding/margin */
-    // margin: calc(0px - #{mixins.css-variable('dialog-padding--container')});
-    // padding: mixins.css-variable('dialog-padding--container');
-    margin: mixins.css-variable('dialog-margin--body');
-    padding: mixins.css-variable('dialog-padding--body');
+    // margin: calc(0px - #{mixins.css-variable('dialog', 'spacing', 'container', 'padding')});
+    // padding: mixins.css-variable('dialog', 'spacing', 'container', 'padding');
+    margin: mixins.css-variable('dialog', 'spacing', 'body', 'margin');
+    padding: mixins.css-variable('dialog', 'spacing', 'body', 'padding');
     overflow: auto;
   }
 
   @include mixins.e('footer') {
     flex: none;
-    margin-top: mixins.css-variable('dialog-margin-top--footer');
-    padding: mixins.css-variable('dialog-padding--footer');
+    margin-top: mixins.css-variable('dialog', 'spacing', 'footer', 'margin-top');
+    padding: mixins.css-variable('dialog', 'spacing', 'footer', 'padding');
   }
 
   @include mixins.e('default-footer') {

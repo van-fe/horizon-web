@@ -5,9 +5,9 @@
   position: relative;
   display: inline-flex;
   width: 100%;
-  font-size: mixins.css-variable('input-font-size');
-  line-height: mixins.css-variable('input-line-height');
-  caret-color: mixins.css-variable('input-caret-color');
+  font-size: mixins.css-variable('input', 'font-size');
+  line-height: mixins.css-variable('input', 'line-height');
+  caret-color: mixins.css-variable('input', 'color', 'caret');
 
   @include mixins.e('embedded-inner') {
     box-sizing: border-box;
@@ -49,22 +49,22 @@
     position: relative;
     box-sizing: border-box;
     width: 100%;
-    color: mixins.css-variable('input-color');
+    color: mixins.css-variable('input', 'color');
     font-size: inherit;
-    line-height: mixins.css-variable('input-line-height');
-    background-color: mixins.css-variable('input-bg--inner');
+    line-height: mixins.css-variable('input', 'line-height');
+    background-color: mixins.css-variable('input', 'background', 'inner');
     background-image: none;
     border: none;
     outline: none;
     appearance: none;
 
     &::placeholder {
-      color: mixins.css-variable('input-color--inner--placeholder');
+      color: mixins.css-variable('input', 'color', 'inner', 'placeholder');
     }
 
     &:disabled {
-      color: mixins.css-variable('input-color--inner--disabled');
-      background-color: mixins.css-variable('input-bg--inner--disabled');
+      color: mixins.css-variable('input', 'color', 'inner', 'disabled');
+      background-color: mixins.css-variable('input', 'background', 'inner', 'disabled');
       cursor: not-allowed;
     }
   }
@@ -72,11 +72,11 @@
   @include mixins.e('inner-wrap') {
     @include mixin.input;
 
-    height: mixins.css-variable('input-height--default');
+    height: mixins.css-variable('input', 'size', 'height');
     transition: all 0.2s;
 
     &:not(:focus, &--focused, &--disabled):hover {
-      border-color: mixins.css-variable('input-border-color--hover');
+      border-color: mixins.css-variable('input', 'border-color', 'hover');
     }
 
     @include mixins.m('focused') {
@@ -91,15 +91,15 @@
       @include mixin.disabled;
     }
   }
-  @include mixins.e('textarea--no-border'){
+  @include mixins.e('textarea--no-border') {
     @include mixin.input;
 
     padding: 0;
-    border: mixins.css-variable('input-border--transparent');
+    border: mixins.css-variable('input', 'border', 'transparent');
 
     &:not(:focus, &--focused, &--disabled):hover {
       @include mixins.e('textarea-inner') {
-        background-color: mixins.css-variable('input-bg--inner-wrap--no-border');
+        background-color: mixins.css-variable('input', 'background', 'inner-wrap', 'no-border');
         transition: all 0.2s;
       }
     }
@@ -112,13 +112,12 @@
     }
 
     @include mixins.m('disabled') {
-      background-color: mixins.css-variable('input-bg--inner-wrap--no-border--disabled');
+      background-color: mixins.css-variable('input', 'background', 'inner-wrap', 'no-border', 'disabled');
       cursor: not-allowed;
       @include mixins.e('textarea-inner') {
-        color: mixins.css-variable('input-color--inner--disabled-no-border');
+        color: mixins.css-variable('input', 'color', 'inner', 'disabled-no-border');
       }
     }
-
   }
   @include mixins.e('textarea--normal') {
     @include mixin.input;
@@ -126,7 +125,7 @@
     padding: 0;
 
     &:not(:focus, &--focused, &--disabled):hover {
-      border-color: mixins.css-variable('input-border-color--hover');
+      border-color: mixins.css-variable('input', 'border-color', 'hover');
     }
 
     @include mixins.m('focused') {
@@ -145,17 +144,17 @@
       @include mixin.error;
     }
   }
-  @include mixins.e('textarea--emphasize'){
+  @include mixins.e('textarea--emphasize') {
     @include mixin.input;
 
     padding: 0;
-    border: mixins.css-variable('input-border--transparent');
-    @include mixins.e('textarea-inner'){
-      background-color: mixins.css-variable('input-bg--inner-wrap--filled');
+    border: mixins.css-variable('input', 'border', 'transparent');
+    @include mixins.e('textarea-inner') {
+      background-color: mixins.css-variable('input', 'background', 'inner-wrap', 'filled');
     }
 
     &:not(:focus, &--focused, &--disabled):hover {
-      border-color: mixins.css-variable('input-border-color--hover');
+      border-color: mixins.css-variable('input', 'border-color', 'hover');
     }
 
     @include mixins.m('focused') {
@@ -167,40 +166,37 @@
     }
 
     @include mixins.m('disabled') {
-      background-color: mixins.css-variable('input-bg--inner-wrap--filled--disabled');
-      border-color: mixins.css-variable('input-border-color--inner-wrap--filled--disabled');
+      background-color: mixins.css-variable('input', 'background', 'inner-wrap', 'filled', 'disabled');
+      border-color: mixins.css-variable('input', 'border-color', 'inner-wrap', 'filled', 'disabled');
       cursor: not-allowed;
     }
-
   }
 
-
   @include mixins.e('textarea-inner') {
-    min-height: mixins.css-variable('input-min-height--textarea-inner');
-    padding: mixins.css-variable('input-padding--textarea-inner');
-    line-height: mixins.css-variable('input-line-height--textarea');
-    border-radius: mixins.css-variable('input-border-radius');
+    min-height: mixins.css-variable('input', 'size', 'textarea-inner', 'min-height');
+    padding: mixins.css-variable('input', 'spacing', 'textarea-inner', 'padding');
+    line-height: mixins.css-variable('input', 'line-height', 'textarea');
+    border-radius: mixins.css-variable('input', 'border-radius');
   }
 
   @include mixins.e('textarea-limit-wrap') {
     position: absolute;
-    bottom: mixins.css-variable('input-bottom--textarea-limit-wrap');
+    bottom: mixins.css-variable('input', 'spacing', 'textarea-limit-wrap', 'bottom');
     box-sizing: border-box;
-    height: mixins.css-variable('input-height--limit-text');
-    color: mixins.css-variable('input-color--limit-text');
-    font-size: mixins.css-variable('input-font-size--limit-text');
-    line-height: mixins.css-variable('input-line-height--limit-text');
+    height: mixins.css-variable('input', 'size', 'limit-text', 'height');
+    color: mixins.css-variable('input', 'color', 'limit-text');
+    font-size: mixins.css-variable('input', 'font-size', 'limit-text');
+    line-height: mixins.css-variable('input', 'line-height', 'limit-text');
     text-align: end;
   }
 
   @include mixins.m('limit-with-multi-line') {
-
     @include mixins.e('textarea-limit') {
       padding: 0 2px;
       background-color: mixins.css-variable('bg-default');
 
       @include mixins.m('current') {
-        color: mixins.css-variable('input-color--limit-text--current');
+        color: mixins.css-variable('input', 'color', 'limit-text', 'current');
       }
     }
   }
@@ -209,13 +205,13 @@
     display: inline-flex;
     align-items: center;
     justify-content: flex-end;
-    margin-left: mixins.css-variable('input-margin-left--limit-text');
-    color: mixins.css-variable('input-color--limit-text');
-    font-size: mixins.css-variable('input-font-size--limit-text');
-    line-height: mixins.css-variable('input-line-height--limit-text');
+    margin-left: mixins.css-variable('input', 'spacing', 'limit-text', 'margin-left');
+    color: mixins.css-variable('input', 'color', 'limit-text');
+    font-size: mixins.css-variable('input', 'font-size', 'limit-text');
+    line-height: mixins.css-variable('input', 'line-height', 'limit-text');
 
     @include mixins.m('current') {
-      color: mixins.css-variable('input-color--limit-text--current');
+      color: mixins.css-variable('input', 'color', 'limit-text', 'current');
     }
   }
 
@@ -235,11 +231,11 @@
 
   @include mixins.m('no-border') {
     @include mixins.e('inner-wrap') {
-      border: mixins.css-variable('input-border--transparent');
+      border: mixins.css-variable('input', 'border', 'transparent');
 
       &:not(:focus, &--focused, &--disabled):hover {
-        background-color: mixins.css-variable('input-bg--inner-wrap--no-border');
-        border: mixins.css-variable('input-border--transparent');
+        background-color: mixins.css-variable('input', 'background', 'inner-wrap', 'no-border');
+        border: mixins.css-variable('input', 'border', 'transparent');
       }
 
       @include mixins.m('focused') {
@@ -250,24 +246,24 @@
         @include mixin.active;
       }
       @include mixins.m('disabled') {
-        background-color: mixins.css-variable('input-bg--inner-wrap--no-border--disabled');
+        background-color: mixins.css-variable('input', 'background', 'inner-wrap', 'no-border', 'disabled');
         cursor: not-allowed;
       }
     }
 
     @include mixins.e('inner') {
-      color: mixins.css-variable('input-color--inner--disabled-no-border');
-      background-color: mixins.css-variable('input-bg--inner-wrap--no-border--disabled--inner');
+      color: mixins.css-variable('input', 'color', 'inner', 'disabled-no-border');
+      background-color: mixins.css-variable('input', 'background', 'inner-wrap', 'no-border', 'disabled', 'inner');
     }
   }
 
   @include mixins.m('filled') {
     @include mixins.e('inner-wrap') {
-      background-color: mixins.css-variable('input-bg--inner-wrap--filled');
-      border: mixins.css-variable('input-border--transparent');
+      background-color: mixins.css-variable('input', 'background', 'inner-wrap', 'filled');
+      border: mixins.css-variable('input', 'border', 'transparent');
 
       &:not(:focus, &--focused, &--disabled):hover {
-        border-color: mixins.css-variable('input-border-color--hover');
+        border-color: mixins.css-variable('input', 'border-color', 'hover');
       }
 
       @include mixins.m('focused') {
@@ -279,121 +275,121 @@
       }
 
       @include mixins.m('disabled') {
-        background-color: mixins.css-variable('input-bg--inner-wrap--filled--disabled');
-        border-color: mixins.css-variable('input-border-color--inner-wrap--filled--disabled');
+        background-color: mixins.css-variable('input', 'background', 'inner-wrap', 'filled', 'disabled');
+        border-color: mixins.css-variable('input', 'border-color', 'inner-wrap', 'filled', 'disabled');
         cursor: not-allowed;
       }
     }
 
     @include mixins.e('inner') {
-      background-color: mixins.css-variable('input-bg--inner-wrap--filled--disabled--inner');
+      background-color: mixins.css-variable('input', 'background', 'inner-wrap', 'filled', 'disabled', 'inner');
     }
   }
 
   // 验证错误
-  @include mixins.em('error','normal') {
+  @include mixins.em('error', 'normal') {
     @include mixins.e('inner-wrap') {
       @include mixin.error;
     }
   }
-  @include mixins.em('error','no-border') {
+  @include mixins.em('error', 'no-border') {
     @include mixins.e('inner-wrap') {
-      background-color: mixins.css-variable('input-bg--inner-wrap--error');
+      background-color: mixins.css-variable('input', 'background', 'inner-wrap', 'error');
 
       &:not(:focus, &--focused, &--disabled):hover {
-        background-color: mixins.css-variable('input-bg--inner-wrap--error');
+        background-color: mixins.css-variable('input', 'background', 'inner-wrap', 'error');
         border-color: transparent;
       }
       @include mixins.m('focused') {
-        background-color: mixins.css-variable('input-bg--inner');
-        border-color: mixins.css-variable('input-border-color--error');
+        background-color: mixins.css-variable('input', 'background', 'inner');
+        border-color: mixins.css-variable('input', 'border-color', 'error');
       }
     }
   }
-  @include mixins.em('error','emphasize') {
+  @include mixins.em('error', 'emphasize') {
     @include mixins.e('inner-wrap') {
-      background-color: mixins.css-variable('input-bg--inner-wrap--error');
+      background-color: mixins.css-variable('input', 'background', 'inner-wrap', 'error');
 
       &:not(:focus, &--focused, &--disabled):hover {
-        background-color: mixins.css-variable('input-bg--inner-wrap--error');
+        background-color: mixins.css-variable('input', 'background', 'inner-wrap', 'error');
         border-color: transparent;
       }
       @include mixins.m('focused') {
-        background-color: mixins.css-variable('input-bg--inner');
-        border-color: mixins.css-variable('input-border-color--error');
+        background-color: mixins.css-variable('input', 'background', 'inner');
+        border-color: mixins.css-variable('input', 'border-color', 'error');
       }
     }
   }
   @include mixins.m('small') {
-    font-size: mixins.css-variable('input-font-size--small');
-    line-height: mixins.css-variable('input-line-height--small');
+    font-size: mixins.css-variable('input', 'font-size', 'small');
+    line-height: mixins.css-variable('input', 'line-height', 'small');
 
     @include mixins.e('inner-wrap') {
-      height: mixins.css-variable('input-height--small');
-      padding: mixins.css-variable('input-padding--inner-wrap--small');
-      font-size: mixins.css-variable('input-font-size--small');
-      line-height: mixins.css-variable('input-line-height--small');
+      height: mixins.css-variable('input', 'size', 'height', 'small');
+      padding: mixins.css-variable('input', 'spacing', 'inner-wrap', 'padding', 'small');
+      font-size: mixins.css-variable('input', 'font-size', 'small');
+      line-height: mixins.css-variable('input', 'line-height', 'small');
     }
 
     @include mixins.e('prepend') {
-      height: mixins.css-variable('input-height--small');
+      height: mixins.css-variable('input', 'size', 'height', 'small');
     }
 
     @include mixins.e('append') {
-      height: mixins.css-variable('input-height--small');
+      height: mixins.css-variable('input', 'size', 'height', 'small');
     }
   }
 
   @include mixins.m('medium') {
-    line-height: mixins.css-variable('input-line-height');
+    line-height: mixins.css-variable('input', 'line-height');
 
     @include mixins.e('inner-wrap') {
-      height: mixins.css-variable('input-height--default');
-      padding: mixins.css-variable('input-padding--inner-wrap--default');
-      line-height: mixins.css-variable('input-line-height');
+      height: mixins.css-variable('input', 'size', 'height');
+      padding: mixins.css-variable('input', 'spacing', 'inner-wrap', 'padding');
+      line-height: mixins.css-variable('input', 'line-height');
     }
 
     @include mixins.e('prepend') {
-      height: mixins.css-variable('input-height--default');
+      height: mixins.css-variable('input', 'size', 'height');
     }
 
     @include mixins.e('append') {
-      height: mixins.css-variable('input-height--default');
+      height: mixins.css-variable('input', 'size', 'height');
     }
   }
 
   @include mixins.m('large') {
     color: red;
-    line-height: mixins.css-variable('input-line-height');
+    line-height: mixins.css-variable('input', 'line-height');
 
     @include mixins.e('inner-wrap') {
-      height: mixins.css-variable('input-height--large');
-      padding: mixins.css-variable('input-padding--inner-wrap--large');
-      line-height: mixins.css-variable('input-line-height');
+      height: mixins.css-variable('input', 'size', 'height', 'large');
+      padding: mixins.css-variable('input', 'spacing', 'inner-wrap', 'padding', 'large');
+      line-height: mixins.css-variable('input', 'line-height');
     }
 
     @include mixins.e('prepend') {
-      height: mixins.css-variable('input-height--large');
+      height: mixins.css-variable('input', 'size', 'height', 'large');
     }
 
     @include mixins.e('append') {
-      height: mixins.css-variable('input-height--large');
+      height: mixins.css-variable('input', 'size', 'height', 'large');
     }
   }
 
   @include mixins.e('prefix') {
     display: inline-flex;
     align-items: center;
-    margin-right: mixins.css-variable('input-margin-right--prefix');
-    color: mixins.css-variable('input-color--prefix');
+    margin-right: mixins.css-variable('input', 'spacing', 'prefix', 'margin-right');
+    color: mixins.css-variable('input', 'color', 'prefix');
   }
 
   @include mixins.e('suffix') {
     display: inline-flex;
     align-items: center;
     justify-content: flex-end;
-    margin-left: mixins.css-variable('input-margin-right--suffix');
-    color: mixins.css-variable('input-color--suffix');
+    margin-left: mixins.css-variable('input', 'spacing', 'suffix', 'margin-left');
+    color: mixins.css-variable('input', 'color', 'suffix');
   }
 
   @include mixins.m('password-action') {
@@ -410,7 +406,7 @@
     @include mixins.clear-icon;
 
     display: none !important;
-    margin-right: mixins.css-variable('input-margin-right--clear-icon');
+    margin-right: mixins.css-variable('input', 'spacing', 'clear-icon', 'margin-right');
   }
 
   &:hover {
@@ -447,18 +443,18 @@
   }
 
   @include mixins.is('out-of-exceeded') {
-    border-color: mixins.css-variable('input-border-color--out-of-exceeded') !important;
+    border-color: mixins.css-variable('input', 'border-color', 'over-limit') !important;
 
     @include mixins.e('inner-wrap') {
-      border-color: mixins.css-variable('input-border-color--out-of-exceeded') !important;
+      border-color: mixins.css-variable('input', 'border-color', 'over-limit') !important;
     }
 
     @include mixins.e('textarea-limit--current') {
-      color: mixins.css-variable('input-color--out-of-exceeded');
+      color: mixins.css-variable('input', 'color', 'over-limit');
     }
 
     @include mixins.e('limit--current') {
-      color: mixins.css-variable('input-color--out-of-exceeded');
+      color: mixins.css-variable('input', 'color', 'over-limit');
     }
   }
 }

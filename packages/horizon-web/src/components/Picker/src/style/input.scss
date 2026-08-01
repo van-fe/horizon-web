@@ -3,22 +3,22 @@
 @use 'themes';
 
 @include mixins.b('picker') {
-  #{mixins.css-variable-name('tag-color--default--disabled')}: #{mixins.css-variable('picker-color--tag--disabled')};
-  #{mixins.css-variable-name('tag-bg--default--disabled')}: #{mixins.css-variable('picker-bg--tag--disabled')};
+  #{mixins.css-variable-name('tag', 'color', 'default', 'disabled')}: #{mixins.css-variable('picker', 'color', 'tag', 'disabled')};
+  #{mixins.css-variable-name('tag', 'background', 'default', 'disabled')}: #{mixins.css-variable('picker', 'background', 'tag', 'disabled')};
 
   @include mixins.e('input') {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-height: mixins.css-variable('picker-height');
-    padding: mixins.css-variable('picker-padding--input--outer');
-    font-size: mixins.css-variable('picker-font-size');
+    min-height: mixins.css-variable('picker', 'size', 'height');
+    padding: mixins.css-variable('picker', 'spacing', 'input', 'outer', 'padding');
+    font-size: mixins.css-variable('picker', 'font-size');
     line-height: 1;
-    border-radius: mixins.css-variable('picker-border-radius');
+    border-radius: mixins.css-variable('picker', 'border-radius');
     outline: none;
     cursor: pointer;
-    transition: mixins.css-variable('picker-transition--border-color');
+    transition: mixins.css-variable('picker', 'transition', 'border-color');
 
     @include mixins.m('container') {
       flex: 1;
@@ -47,56 +47,72 @@
     }
 
     @include mixins.m('inner') {
-      padding: mixins.css-variable('picker-padding--input');
-      transition: mixins.css-variable('picker-transition--color-background');
-      caret-color: mixins.css-variable('picker-color--caret');
+      padding: mixins.css-variable('picker', 'spacing', 'input', 'padding');
+      transition: mixins.css-variable('picker', 'transition', 'color-background');
+      caret-color: mixins.css-variable('picker', 'color', 'caret');
 
       @include mixins.is('readonly') {
         // pointer-events: none;
       }
 
       &::placeholder {
-        transition: mixins.css-variable('picker-transition--color');
+        transition: mixins.css-variable('picker', 'transition', 'color');
       }
     }
 
     @include mixins.m('small') {
-      min-height: mixins.css-variable('picker-height--small');
-      padding: mixins.css-variable('picker-padding--input--outer--small');
-      font-size: mixins.css-variable('picker-font-size--small');
-      border-radius: mixins.css-variable('picker-border-radius--small');
+      min-height: mixins.css-variable('picker', 'size', 'height', 'small');
+      padding: mixins.css-variable('picker', 'spacing', 'input', 'outer', 'padding', 'small');
+      font-size: mixins.css-variable('picker', 'font-size', 'small');
+      border-radius: mixins.css-variable('picker', 'border-radius', 'small');
 
       @include mixins.standalone-modifier('inner') {
-        height: calc(#{mixins.css-variable('picker-height--small')} - #{mixins.css-variable('picker-padding--input--outer')} * 2);
-        padding: mixins.css-variable('picker-padding--input--small');
-        font-size: mixins.css-variable('picker-font-size--small');
+        height: calc(
+          #{mixins.css-variable('picker', 'size', 'height', 'small')} -
+            #{mixins.css-variable('picker', 'spacing', 'input', 'outer', 'padding')} * 2
+        );
+        padding: mixins.css-variable('picker', 'spacing', 'input', 'padding', 'small');
+        font-size: mixins.css-variable('picker', 'font-size', 'small');
       }
 
       #{mixins.element-name('wrapper', mixins.block('picker-fit-content-input'))} {
-        height: calc(#{mixins.css-variable('picker-height--small')} - (#{mixins.css-variable('picker-padding-y--input--outer--small')} + 1px) * 2);
+        height: calc(
+          #{mixins.css-variable('picker', 'size', 'height', 'small')} -
+            (
+              #{mixins.css-variable('picker', 'spacing', 'input', 'outer', 'padding-y', 'small')} +
+                1px
+            ) *
+            2
+        );
       }
     }
 
     @include mixins.m('large') {
-      min-height: mixins.css-variable('picker-height--large');
-      padding: mixins.css-variable('picker-padding--input--outer--large');
-      font-size: mixins.css-variable('picker-font-size--large');
+      min-height: mixins.css-variable('picker', 'size', 'height', 'large');
+      padding: mixins.css-variable('picker', 'spacing', 'input', 'outer', 'padding', 'large');
+      font-size: mixins.css-variable('picker', 'font-size', 'large');
 
       @include mixins.standalone-modifier('inner') {
-        height: calc(#{mixins.css-variable('picker-height--large')} - 2px - #{mixins.css-variable('picker-padding-y--input--outer--large')} * 2);
-        padding: mixins.css-variable('picker-padding--input--large');
-        font-size: mixins.css-variable('picker-font-size--large');
+        height: calc(
+          #{mixins.css-variable('picker', 'size', 'height', 'large')} - 2px -
+            #{mixins.css-variable('picker', 'spacing', 'input', 'outer', 'padding-y', 'large')} * 2
+        );
+        padding: mixins.css-variable('picker', 'spacing', 'input', 'padding', 'large');
+        font-size: mixins.css-variable('picker', 'font-size', 'large');
       }
 
       #{mixins.element-name('wrapper', mixins.block('picker-fit-content-input'))} {
-        height: calc(#{mixins.css-variable('picker-height--large')} - 2px - #{mixins.css-variable('picker-padding-y--input--outer--large')} * 2);
+        height: calc(
+          #{mixins.css-variable('picker', 'size', 'height', 'large')} - 2px -
+            #{mixins.css-variable('picker', 'spacing', 'input', 'outer', 'padding-y', 'large')} * 2
+        );
       }
     }
 
     @include mixins.m('prepend-icon') {
-      min-width: mixins.css-variable('picker-width--prepend-icon');
-      margin-left: mixins.css-variable('picker-margin-left--input--prepend-icon');
-      color: mixins.css-variable('picker-color--input-prepend-icon');
+      min-width: mixins.css-variable('picker', 'size', 'prepend-icon', 'width');
+      margin-left: mixins.css-variable('picker', 'spacing', 'input', 'prepend-icon', 'margin-left');
+      color: mixins.css-variable('picker', 'color', 'input-prepend-icon');
       line-height: 0;
     }
 
@@ -105,18 +121,18 @@
     }
 
     @include mixins.m('append-icon') {
-      min-width: mixins.css-variable('picker-width--append-icon');
+      min-width: mixins.css-variable('picker', 'size', 'append-icon', 'width');
       line-height: 0;
 
       @include mixins.nested('icon') {
-        transition: all mixins.css-variable('picker-transiton-time');
+        transition: all mixins.css-variable('picker', 'transition', 'duration');
         pointer-events: none;
       }
 
       @include mixins.standalone-modifier('icon') {
         @include mixins.is('dropdown') {
           @include mixins.nested('icon') {
-            transition: transform mixins.css-variable('picker-transiton-time');
+            transition: transform mixins.css-variable('picker', 'transition', 'duration');
 
             @include mixins.is('rotated') {
               transform: rotate(180deg);
@@ -131,13 +147,13 @@
         position: absolute;
         top: 50%;
         right: 0;
-        color: mixins.css-variable('picker-color--input--clear-icon');
-        background: mixins.css-variable('picker-bg--input');
+        color: mixins.css-variable('picker', 'color', 'input', 'clear-icon');
+        background: mixins.css-variable('picker', 'background', 'input');
         transform: translateY(-50%);
         cursor: pointer;
 
         &:hover {
-          color: mixins.css-variable('picker-color--input--clear-icon--hover');
+          color: mixins.css-variable('picker', 'color', 'input', 'clear-icon', 'hover');
         }
       }
     }
@@ -155,7 +171,7 @@
         cursor: not-allowed !important;
 
         &::placeholder {
-          color: mixins.css-variable('picker-color--input-placeholder--disabled');
+          color: mixins.css-variable('picker', 'color', 'input-placeholder', 'disabled');
         }
       }
     }

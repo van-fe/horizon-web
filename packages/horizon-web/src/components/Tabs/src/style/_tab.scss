@@ -8,8 +8,8 @@
         bottom: 0;
         left: 0;
         width: 100%;
-        height: mixins.css-variable('tabs-height--underline--line');
-        background-color: mixins.css-variable('tabs-border-color--header--line--underline');
+        height: mixins.css-variable('tabs', 'size', 'underline', 'line', 'height');
+        background-color: mixins.css-variable('tabs', 'border-color', 'header', 'line', 'underline');
         content: '';
       }
     }
@@ -18,11 +18,11 @@
   @include mixins.m('line', 'card', 'segment') {
     @include mixins.e('tab') {
       &:hover:active:not([aria-disabled='true']) {
-        color: mixins.css-variable('tabs-color--tab--press');
+        color: mixins.css-variable('tabs', 'color', 'tab', 'press');
       }
 
       &:hover {
-        color: mixins.css-variable('tabs-color--tab--hover');
+        color: mixins.css-variable('tabs', 'color', 'tab', 'hover');
       }
     }
 
@@ -42,7 +42,7 @@
     overflow: hidden;
 
     // @include mixins.e('nav') {
-    //   padding-bottom: mixins.css-variable('tabs-padding-bottom--nav-list--line');
+    //   padding-bottom: mixins.css-variable('tabs', 'spacing', 'nav-list', 'line', 'padding-bottom');
     // }
 
     @include mixins.e('nav-wrap') {
@@ -64,15 +64,15 @@
     }
 
     @include mixins.e('tab') {
-      padding: mixins.css-variable('tabs-padding--tab--line');
+      padding: mixins.css-variable('tabs', 'spacing', 'tab', 'line', 'padding');
     }
 
     @include mixins.e('tab--active') {
-      color: mixins.css-variable('tabs-color--tab--line--activated');
+      color: mixins.css-variable('tabs', 'color', 'tab', 'line', 'activated');
       text-shadow: 0 0 0.25px currentcolor;
 
       &:hover {
-        color: mixins.css-variable('tabs-color--tab--line--activated--hover');
+        color: mixins.css-variable('tabs', 'color', 'tab', 'line', 'activated', 'hover');
       }
     }
 
@@ -81,11 +81,11 @@
       bottom: 0;
       left: 0;
       z-index: 2;
-      height: calc(#{mixins.css-variable('tabs-height--underline--line')} + 1px);
-      background-color: mixins.css-variable('tabs-border-color--indicator--line');
-      border-radius: mixins.css-variable('tabs-border-radius--indicator--line');
-      transition: all mixins.css-variable('tabs-transition-time')
-        mixins.css-variable('tabs-transition-fn');
+      height: calc(#{mixins.css-variable('tabs', 'size', 'underline', 'line', 'height')} + 1px);
+      background-color: mixins.css-variable('tabs', 'border-color', 'indicator', 'line');
+      border-radius: mixins.css-variable('tabs', 'border-radius', 'indicator', 'line');
+      transition: all mixins.css-variable('tabs', 'transition', 'duration')
+        mixins.css-variable('tabs', 'transition', 'timing-function');
     }
   }
 
@@ -99,7 +99,7 @@
         left: 0;
         width: 100%;
         height: 1px;
-        background-color: mixins.css-variable('tabs-border-color--header--card');
+        background-color: mixins.css-variable('tabs', 'border-color', 'header', 'card');
         content: '';
       }
     }
@@ -107,28 +107,28 @@
     @include mixins.e('nav-wrap') {
       display: flex;
       padding: 0 mixins.css-variable('spacing-7') 0
-        mixins.css-variable('tabs-padding--nav-wrap--card');
-      column-gap: mixins.css-variable('tabs-space-right--tab--card');
+        mixins.css-variable('tabs', 'spacing', 'nav-wrap', 'card', 'padding');
+      column-gap: mixins.css-variable('tabs', 'spacing', 'tab', 'card', 'margin-right');
     }
 
     @include mixins.e('nav-list') {
       display: flex;
       align-items: stretch;
-      column-gap: mixins.css-variable('tabs-space-right--tab--card');
+      column-gap: mixins.css-variable('tabs', 'spacing', 'tab', 'card', 'margin-right');
     }
 
     @include mixins.e('tab') {
       display: flex;
       align-items: center;
-      background: mixins.css-variable('tabs-bg--tab--card');
-      border: mixins.css-variable('tabs-border--tab--card');
-      border-radius: mixins.css-variable('tabs-border-radius--tab--card');
-      transition: background mixins.css-variable('tabs-transition-time')
-        mixins.css-variable('tabs-transition-fn');
+      background: mixins.css-variable('tabs', 'background', 'tab', 'card');
+      border: mixins.css-variable('tabs', 'border', 'tab', 'card');
+      border-radius: mixins.css-variable('tabs', 'border-radius', 'tab', 'card');
+      transition: background mixins.css-variable('tabs', 'transition', 'duration')
+        mixins.css-variable('tabs', 'transition', 'timing-function');
 
       @include mixins.m('active') {
-        color: mixins.css-variable('tabs-color--tab--card--activated');
-        background: mixins.css-variable('tabs-bg--tab--card--activated');
+        color: mixins.css-variable('tabs', 'color', 'tab', 'card', 'activated');
+        background: mixins.css-variable('tabs', 'background', 'tab', 'card', 'activated');
         border-bottom: 1px solid transparent;
       }
 
@@ -138,10 +138,10 @@
 
       @include mixins.m('dropping') {
         // 处理拖拽时候，覆盖到某个 tab 上的样式，暂时去掉
-        // border-color: mixins.css-variable('tabs-color--tab--card--activated')
-        //   mixins.css-variable('tabs-color--tab--card--activated') mixins.css-variable('tabs-border-color--header--card');
+        // border-color: mixins.css-variable('tabs', 'color', 'tab', 'card', 'activated')
+        //   mixins.css-variable('tabs', 'color', 'tab', 'card', 'activated') mixins.css-variable('tabs', 'border-color', 'header', 'card');
         // border-style: dashed;
-        // transition: border-color mixins.css-variable('tabs-transition-time') mixins.css-variable('tabs-transition-fn');
+        // transition: border-color mixins.css-variable('tabs', 'transition', 'duration') mixins.css-variable('tabs', 'transition', 'timing-function');
       }
     }
 
@@ -151,9 +151,9 @@
         align-items: center;
         width: auto !important;
         height: 100% !important;
-        background: mixins.css-variable('tabs-bg--add--card');
-        border: mixins.css-variable('tabs-border--add--card');
-        border-radius: mixins.css-variable('tabs-border-radius--tab--card');
+        background: mixins.css-variable('tabs', 'background', 'add', 'card');
+        border: mixins.css-variable('tabs', 'border', 'add', 'card');
+        border-radius: mixins.css-variable('tabs', 'border-radius', 'tab', 'card');
       }
     }
   }
@@ -162,8 +162,8 @@
     position: relative;
     display: inline-block;
     max-width: 100%;
-    background: mixins.css-variable('tabs-bg--segment');
-    border-radius: mixins.css-variable('tabs-border-radius--segment');
+    background: mixins.css-variable('tabs', 'background', 'segment');
+    border-radius: mixins.css-variable('tabs', 'border-radius', 'segment');
 
     @include mixins.e('extra-outer') {
       @include mixins.m('blur') {
@@ -171,14 +171,14 @@
           background: linear-gradient(
             to right,
             transparent 0%,
-            mixins.css-variable('tabs-bg--page') 100%
+            mixins.css-variable('tabs', 'background', 'page') 100%
           );
         }
       }
     }
 
     @include mixins.e('tab') {
-      margin-left: mixins.css-variable('tabs-margin-left--tab--segment');
+      margin-left: mixins.css-variable('tabs', 'spacing', 'tab', 'segment', 'margin-left');
 
       &:first-child {
         margin-left: 0;
@@ -186,7 +186,7 @@
     }
 
     @include mixins.e('tab--active') {
-      color: mixins.css-variable('tabs-color--tab--segment--activated');
+      color: mixins.css-variable('tabs', 'color', 'tab', 'segment', 'activated');
     }
 
     @include mixins.e('indicator') {
@@ -195,8 +195,8 @@
       bottom: 0;
       left: 0;
       z-index: -1;
-      background: mixins.css-variable('tabs-bg--indicator--segment');
-      box-shadow: mixins.css-variable('tabs-box-shadow--indicator--segment');
+      background: mixins.css-variable('tabs', 'background', 'indicator', 'segment');
+      box-shadow: mixins.css-variable('tabs', 'box-shadow', 'indicator', 'segment');
     }
   }
 }

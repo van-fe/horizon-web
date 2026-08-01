@@ -7,7 +7,7 @@
 
   @include mixins.be('table', 'cell', false) {
     position: sticky;
-    z-index: calc(#{mixins.css-variable('table', 'z-index', 'default')} + 1);
+    z-index: calc(#{mixins.css-variable('table', 'z-index')} + 1);
     vertical-align: middle;
     background: inherit;
     pointer-events: none;
@@ -30,11 +30,11 @@
     @include mixins.with-parallel-state('drag-over-before', 'drag-over-after') {
       &::after {
         position: absolute;
-        z-index: calc(#{mixins.css-variable('table', 'z-index', 'default')} + 4);
+        z-index: calc(#{mixins.css-variable('table', 'z-index')} + 4);
         top: 0;
         bottom: 0;
         width: 2px;
-        background: mixins.css-variable('table', 'divider', 'header', 'resizing-color');
+        background: mixins.css-variable('table', 'border-color', 'header', 'divider', 'resizing');
         pointer-events: none;
         content: '';
       }
@@ -53,11 +53,11 @@
     }
 
     @include mixins.is('header-bold') {
-      font-weight: mixins.css-variable('table', 'font', 'weight', 'header');
+      font-weight: mixins.css-variable('table', 'font-weight', 'header');
     }
 
     @include mixins.with-parallel-state('fixed-left', 'fixed-right') {
-      z-index: calc(#{mixins.css-variable('table', 'z-index', 'default')} + 2);
+      z-index: calc(#{mixins.css-variable('table', 'z-index')} + 2);
     }
 
     &-wrap {
@@ -122,14 +122,14 @@
       @include mixins.is('separated') {
         @include mixins.em('header', 'sort-icon', false) {
           &:hover {
-            background: mixins.css-variable('table', 'background', 'header-sort');
+            background: mixins.css-variable('table', 'background', 'header', 'sort');
           }
         }
       }
 
       @include mixins.is-not('separated') {
         &:hover {
-          background: mixins.css-variable('table', 'background', 'header-sort');
+          background: mixins.css-variable('table', 'background', 'header', 'sort');
         }
       }
     }
@@ -155,11 +155,11 @@
       height: 100%;
 
       @include mixins.is('visible') {
-        background: mixins.css-variable('table', 'divider', 'header', 'column-color');
+        background: mixins.css-variable('table', 'border-color', 'header', 'divider', 'column');
       }
 
       @include mixins.is('resizable') {
-        z-index: calc(#{mixins.css-variable('table-z-index-default')} + 3);
+        z-index: calc(#{mixins.css-variable('table', 'z-index')} + 3);
         cursor: col-resize;
         user-select: none;
         pointer-events: auto;
@@ -193,6 +193,6 @@
 
   @include mixins.is('sticky-header') {
     position: relative;
-    z-index: calc(#{mixins.css-variable('table-z-index-default')} + 3);
+    z-index: calc(#{mixins.css-variable('table', 'z-index')} + 3);
   }
 }

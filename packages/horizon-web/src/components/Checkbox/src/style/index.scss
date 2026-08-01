@@ -99,7 +99,7 @@
   }
 
   @include mixins.m('border') {
-    padding: mixins.css-variable('checkbox', 'spacing', 'padding', 'border');
+    padding: mixins.css-variable('checkbox', 'spacing', 'border', 'padding');
     border: mixins.css-variable('checkbox', 'border', 'border');
     border-radius: mixins.css-variable('checkbox', 'border-radius', 'border');
 
@@ -114,7 +114,7 @@
 
   @include mixins.m('viewable') {
     height: auto;
-    margin-right: mixins.css-variable('checkbox', 'spacing', 'margin-right', 'viewable');
+    margin-right: mixins.css-variable('checkbox', 'spacing', 'viewable', 'margin-right');
     padding: 0 !important;
     color: mixins.css-variable('checkbox', 'color', 'viewable') !important;
     background-color: transparent !important;
@@ -148,7 +148,7 @@
 @include mixins.b('checkbox-button') {
   display: inline-flex;
   align-items: center;
-  padding: mixins.css-variable('checkbox', 'spacing', 'padding', 'button');
+  padding: mixins.css-variable('checkbox', 'spacing', 'button', 'padding');
   overflow: hidden;
   color: mixins.css-variable('checkbox', 'color', 'button');
   font-size: mixins.css-variable('checkbox', 'font-size', 'button');
@@ -264,7 +264,7 @@
   }
 
   @include mixins.b('checkbox') {
-    margin-right: mixins.css-variable('checkbox', 'spacing', 'margin-right', 'group-checkbox');
+    margin-right: mixins.css-variable('checkbox', 'spacing', 'group-checkbox', 'margin-right');
 
     &:last-child {
       margin-right: 0;
@@ -273,11 +273,11 @@
 }
 
 @include mixins.siblings-block('checkbox') {
-  margin-left: mixins.css-variable('checkbox', 'spacing', 'margin-left', 'siblings');
+  margin-left: mixins.css-variable('checkbox', 'spacing', 'siblings', 'margin-left');
 }
 
 @include mixins.siblings-block('checkbox-button') {
-  margin-left: mixins.css-variable('checkbox', 'spacing', 'margin-left', 'siblings');
+  margin-left: mixins.css-variable('checkbox', 'spacing', 'siblings', 'margin-left');
 }
 
 @include mixins.b('checkbox-group') {

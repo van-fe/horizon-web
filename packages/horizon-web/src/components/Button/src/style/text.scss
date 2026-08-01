@@ -1,42 +1,67 @@
 @use '../../../../styles/mixins';
 
 @mixin set-button-style-by-status($status) {
-  color: mixins.css-variable('button-color--#{$status}--text');
-  background: mixins.css-variable('button-bg--#{$status}--text');
-  border-color: mixins.css-variable('button-border-color--#{$status}--text');
+  color: mixins.css-variable('button', 'color', $status, 'text');
+  background: mixins.css-variable('button', 'background', $status, 'text');
+  border-color: mixins.css-variable('button', 'border-color', $status, 'text');
 
-  @include mixins.is('activated'){
-    color: mixins.css-variable('button-color--#{$status}--text--activated');
-    background: mixins.css-variable('button-bg--#{$status}--text--activated');
-    border-color: mixins.css-variable('button-border-color--#{$status}--text--activated');
+  @include mixins.is('activated') {
+    color: mixins.css-variable('button', 'color', $status, 'text', 'activated');
+    background: mixins.css-variable('button', 'background', $status, 'text', 'activated');
+    border-color: mixins.css-variable('button', 'border-color', $status, 'text', 'activated');
 
-    &.is-hover, &:hover {
-      color: mixins.css-variable('button-color--#{$status}--text--activated--hover');
-      background: mixins.css-variable('button-bg--#{$status}--text--activated--hover');
+    &.is-hover,
+    &:hover {
+      color: mixins.css-variable('button', 'color', $status, 'text', 'activated', 'hover');
+      background: mixins.css-variable(
+        'button',
+        'background',
+        $status,
+        'text',
+        'activated',
+        'hover'
+      );
     }
 
-    &.is-active, &:active {
-      color: mixins.css-variable('button-color--#{$status}--text--activated--press');
-      background: mixins.css-variable('button-bg--#{$status}--text--activated--press');
+    &.is-active,
+    &:active {
+      color: mixins.css-variable('button', 'color', $status, 'text', 'activated', 'press');
+      background: mixins.css-variable(
+        'button',
+        'background',
+        $status,
+        'text',
+        'activated',
+        'press'
+      );
     }
   }
 
-  &.is-hover, &:hover {
-    color: mixins.css-variable('button-color--#{$status}--text--hover');
-    background: mixins.css-variable('button-bg--#{$status}--text--hover');
-    border-color: mixins.css-variable('button-border-color--#{$status}--text--hover');
+  &.is-hover,
+  &:hover {
+    color: mixins.css-variable('button', 'color', $status, 'text', 'hover');
+    background: mixins.css-variable('button', 'background', $status, 'text', 'hover');
+    border-color: mixins.css-variable('button', 'border-color', $status, 'text', 'hover');
   }
 
-  &.is-active, &:active {
-    color: mixins.css-variable('button-color--#{$status}--text--press');
-    background: mixins.css-variable('button-bg--#{$status}--text--press');
-    border-color: mixins.css-variable('button-border-color--#{$status}--text--press');
+  &.is-active,
+  &:active {
+    color: mixins.css-variable('button', 'color', $status, 'text', 'press');
+    background: mixins.css-variable('button', 'background', $status, 'text', 'press');
+    border-color: mixins.css-variable('button', 'border-color', $status, 'text', 'press');
   }
 
-  &.is-disabled, &[disabled] {
-    color: mixins.css-variable('button-color--#{$status}--text--disabled') !important;
-    background: mixins.css-variable('button-bg--#{$status}--text--disabled') !important;
-    border-color: mixins.css-variable('button-border-color--#{$status}--text--disabled') !important;
+  &.is-disabled,
+  &[disabled] {
+    color: mixins.css-variable('button', 'color', $status, 'text', 'disabled') !important;
+    background: mixins.css-variable('button', 'background', $status, 'text', 'disabled') !important;
+    border-color: mixins.css-variable(
+      'button',
+      'border-color',
+      $status,
+      'text',
+      'disabled'
+    ) !important;
   }
 }
 

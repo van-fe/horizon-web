@@ -100,7 +100,7 @@ export default defineComponent({
         <path
           fill-rule="evenodd"
           clip-rule="evenodd"
-          fill={cssVariable('guide-bg--mask')}
+          fill={cssVariable('guide', 'background', 'mask')}
           d={path.value}
           style={props.currentItem?.props.maskStyle ?? parentProps?.maskStyle}
         ></path>

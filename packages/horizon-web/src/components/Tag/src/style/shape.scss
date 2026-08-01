@@ -5,7 +5,7 @@
     position: relative;
     flex-shrink: 0;
     justify-content: center;
-    width: mixins.css-variable('tag-size');
+    width: mixins.css-variable('tag', 'size');
     padding: 0;
     overflow: hidden;
     vertical-align: middle;
@@ -63,14 +63,14 @@
   }
 
   @include mixins.parallel-modifier('small', 'equally') {
-    width: mixins.css-variable('tag-size--small');
+    width: mixins.css-variable('tag', 'size', 'small');
   }
 
   @include mixins.parallel-modifier('large', 'equally') {
-    width: mixins.css-variable('tag-size--large');
+    width: mixins.css-variable('tag', 'size', 'large');
   }
 
   @include mixins.m('round') {
-    border-radius: mixins.css-variable('tag-border-radius--round');
+    border-radius: mixins.css-variable('tag', 'border-radius', 'round');
   }
 }

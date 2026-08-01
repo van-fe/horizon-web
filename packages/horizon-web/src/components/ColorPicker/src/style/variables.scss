@@ -1,91 +1,207 @@
 @use '../../../../styles/mixins/function';
 
 $values: (
-  'width--panel': 254px,
-  'size--trigger--default': 32px,
-  'size--trigger--small': 24px,
-  'size--trigger--large': 40px,
-  'size--trigger-input--default': 24px,
-  'size--trigger-input--small': 16px,
-  'size--trigger-input--large': 32px,
-  'size--color-cursor': 16px,
-  'size--current-color': 28px,
-  'width--edit-form--alpha-input': 50px,
-  'width--edit-form--number-input': 38px,
-  'size--swatch-item': 20px,
-  'size--swatch-item--inner': 16px,
-  'size--picker': 24px,
-  'size--color-type': 16px,
-  'color--values--label': #{function.css-variable('text-secondary')},
-  'color--trigger': #{function.css-variable('text-inverse')},
-  'stroke-color--trigger': #{function.css-variable('text-primary')},
-  'color--trigger--picker': #{function.css-variable('text-primary')},
-  'color--trigger-icon': #{function.css-variable('text-primary')},
-  'color--trigger-icon--dark': #{function.css-variable('text-inverse')},
-  'color--trigger-icon--shadow': #{function.css-variable('text-primary')},
-  'color--trigger-icon--none-color': #{function.css-variable('text-primary')},
-  'color--hex-prefix': #{function.css-variable('text-disabled')},
-  'color--trigger-text': #{function.css-variable('text-primary')},
-  'color--panel-block-title': #{function.css-variable('text-primary')},
-  'color--swatches-description': #{function.css-variable('text-tertiary')},
-  'font-size--values--label': #{function.css-variable('text-sm')},
-  'font-size--trigger-text--medium': #{function.css-variable('text-base')},
-  'font-size--trigger-text--small': #{function.css-variable('text-sm')},
-  'font-size--trigger-text--large': #{function.css-variable('text-base')},
-  'font-size--panel-block-title': #{function.css-variable('text-sm')},
-  'font-size--swatches-description': #{function.css-variable('text-sm')},
-  'border-radius--label-group': #{function.css-variable('radius-m')},
-  'border-radius--trigger-wrapper': #{function.css-variable('radius-m')},
-  'border-radius--color-type-item': #{function.css-variable('radius-circle')},
-  'border-radius--picker': #{function.css-variable('radius-m')},
-  'border-radius--track': #{function.css-variable('radius-m')},
-  'border-radius--trigger': #{function.css-variable('radius-sm')},
-  'border-color--default': #{function.css-variable('divider-default')},
-  'border-color--default--opacity-50': #{rgba(#{function.css-variable('color-1-3')}, 0.5)},
-  'border-color--transparent': #{function.css-variable('border-transparent')},
-  'border-color--cursor': #{function.css-variable('border-inverse')},
-  'border-color--trigger-wrapper--disabled': #{function.css-variable('border-disabled')},
-  'border-color--trigger-wrapper--error': #{function.css-variable('border-error-default')},
-  'border-color--color-type-item--hover': #{function.css-variable('border-brand-hover')},
-  'border-color--color-type-item--press': #{function.css-variable('border-brand-press')},
-  'border-color--color-type-item--active': #{function.css-variable('border-brand-activated')},
-  'border-color--swatch-item': #{function.css-variable('border-default')},
-  'border-color--swatch-item--empty': #{function.css-variable('border-default')},
-  'border--default': 1px solid #{function.css-variable('color-picker-border-color--default')},
-  'border--default--opacity-50': 1px solid #{function.css-variable('color-picker-border-color--default--opacity-50')},
-  'border--transparent': 1px solid #{function.css-variable('color-picker-border-color--transparent')},
-  'border--dot': 1px solid #{function.css-variable('color-picker-border-color--default--opacity-50')},
-  'border--swatch-item': 0.5px solid #{function.css-variable('color-picker-border-color--default--opacity-50')},
-  'border--swatch-item--empty': 0.5px dashed #{function.css-variable('color-picker-border-color--swatch-item--empty')},
-  'bg--swatches-item--hover': #{function.css-variable('bg-inverse')},
-  'bg--label-group--hover': #{function.css-variable('bg-hover')},
-  'bg--label-group--active': #{function.css-variable('bg-press')},
-  'bg--trigger-wrapper--disabled': #{function.css-variable('bg-disabled')},
-  'bg--picker-item--hover': #{function.css-variable('bg-secondary')},
-  'bg--color-type-item--pure': #{function.css-variable('text-secondary')},
-  'bg--color-type-item--pure--hover': #{function.css-variable('text-brand-hover')},
-  'bg--color-type-item--pure--active': #{function.css-variable('text-brand-hover')},
-  'box-shadow--cursor': #{function.css-variable('shadow-hover')},
-  'margin--default': #{function.css-variable('spacing-4')},
-  'margin-right--color-type-item--siblings': 10px,
-  'margin--color-type--wrapper': calc(-1 * #{function.css-variable('popover-padding--content')}),
-  'margin-left--current-color': #{function.css-variable('spacing-4')},
-  'margin-top--edit-form': #{function.css-variable('spacing-3')},
-  'margin-right--edit-form-input--prefix': #{function.css-variable('spacing-1')},
-  'margin--trigger-text': 0 calc(#{function.css-variable('spacing-3')} - #{function.css-variable('color-picker-padding--trigger-wrapper')}) 0 #{function.css-variable('spacing-2')},
-  'margin-bottom--panel-block-title': #{function.css-variable('spacing-2')},
-  'margin-left--swatches-description': #{function.css-variable('spacing-3')},
-  'margin-right--picker': #{function.css-variable('spacing-4')},
-  'margin-left--button-group': #{function.css-variable('spacing-2')},
-  'padding--trigger-wrapper': #{function.css-variable('spacing-2')},
-  'padding--color-type': #{function.css-variable('spacing-4')},
-  'padding--picker-item': #{function.css-variable('spacing-2')},
-  'padding--popover': #{function.css-variable('spacing-4')},
-  'padding-x--edit-form-input': calc(#{function.css-variable('spacing-3')} - 2px),
-  'padding--confirm': 0 #{function.css-variable('color-picker-padding--popover')} #{function.css-variable('color-picker-padding--popover')},
-  'padding--square--small': 3px,
-  'column-gap--edit-form': #{function.css-variable('spacing-3')},
-  'row-gap--panel-block': #{function.css-variable('spacing-4')},
-  'opacity--swatches-item--hover': 0.4,
-  'transition--border-color': border-color #{function.css-variable('transition-time-fast')},
+  size: (
+    panel: (
+      width: 254px,
+    ),
+    edit-form: (
+      alpha-input: (
+        width: 50px,
+      ),
+      number-input: (
+        width: 38px,
+      ),
+    ),
+    trigger: (
+      '': 32px,
+      small: 24px,
+      large: 40px,
+    ),
+    trigger-input: (
+      '': 24px,
+      small: 16px,
+      large: 32px,
+    ),
+    color-cursor: 16px,
+    current-color: 28px,
+    swatch-item: (
+      '': 20px,
+      inner: 16px,
+    ),
+    picker: 24px,
+    color-type: 16px,
+  ),
+  font-size: (
+    values: (
+      label: #{function.css-variable('text-sm')},
+    ),
+    trigger-text: (
+      medium: #{function.css-variable('text-base')},
+      small: #{function.css-variable('text-sm')},
+      large: #{function.css-variable('text-base')},
+    ),
+    panel-block-title: #{function.css-variable('text-sm')},
+    swatches-description: #{function.css-variable('text-sm')},
+  ),
+  color: (
+    values: (
+      label: #{function.css-variable('text-secondary')},
+    ),
+    trigger: (
+      '': #{function.css-variable('text-inverse')},
+      picker: #{function.css-variable('text-primary')},
+      stroke: #{function.css-variable('text-primary')},
+    ),
+    trigger-icon: (
+      '': #{function.css-variable('text-primary')},
+      dark: #{function.css-variable('text-inverse')},
+      shadow: #{function.css-variable('text-primary')},
+      none-color: #{function.css-variable('text-primary')},
+    ),
+    hex-prefix: #{function.css-variable('text-disabled')},
+    trigger-text: #{function.css-variable('text-primary')},
+    panel-block-title: #{function.css-variable('text-primary')},
+    swatches-description: #{function.css-variable('text-tertiary')},
+  ),
+  border-color: (
+    '': #{function.css-variable('divider-default')},
+    default: (
+      opacity-50: #{rgba(#{function.css-variable('color-1-3')}, 0.5)},
+    ),
+    transparent: #{function.css-variable('border-transparent')},
+    cursor: #{function.css-variable('border-inverse')},
+    trigger-wrapper: (
+      disabled: #{function.css-variable('border-disabled')},
+      error: #{function.css-variable('border-error-default')},
+    ),
+    color-type-item: (
+      hover: #{function.css-variable('border-brand-hover')},
+      press: #{function.css-variable('border-brand-press')},
+      active: #{function.css-variable('border-brand-activated')},
+    ),
+    swatch-item: (
+      '': #{function.css-variable('border-default')},
+      empty: #{function.css-variable('border-default')},
+    ),
+  ),
+  border: (
+    '': 1px solid #{function.css-variable('color-picker', 'border-color')},
+    default: (
+      opacity-50: 1px solid
+        #{function.css-variable('color-picker', 'border-color', 'default', 'opacity-50')},
+    ),
+    transparent: 1px solid #{function.css-variable('color-picker', 'border-color', 'transparent')},
+    dot: 1px solid #{function.css-variable('color-picker', 'border-color', 'default', 'opacity-50')},
+    swatch-item: (
+      '': 0.5px solid
+        #{function.css-variable('color-picker', 'border-color', 'default', 'opacity-50')},
+      empty: 0.5px dashed
+        #{function.css-variable('color-picker', 'border-color', 'swatch-item', 'empty')},
+    ),
+  ),
+  border-radius: (
+    label-group: #{function.css-variable('radius-m')},
+    trigger-wrapper: #{function.css-variable('radius-m')},
+    color-type-item: #{function.css-variable('radius-circle')},
+    picker: #{function.css-variable('radius-m')},
+    track: #{function.css-variable('radius-m')},
+    trigger: #{function.css-variable('radius-sm')},
+  ),
+  background: (
+    swatch-item: (
+      hover: #{function.css-variable('bg-inverse')},
+    ),
+    label-group: (
+      hover: #{function.css-variable('bg-hover')},
+      active: #{function.css-variable('bg-press')},
+    ),
+    trigger-wrapper: (
+      disabled: #{function.css-variable('bg-disabled')},
+    ),
+    picker-item: (
+      hover: #{function.css-variable('bg-secondary')},
+    ),
+    color-type-item: (
+      pure: (
+        '': #{function.css-variable('text-secondary')},
+        hover: #{function.css-variable('text-brand-hover')},
+        active: #{function.css-variable('text-brand-hover')},
+      ),
+    ),
+  ),
+  spacing: (
+    margin: #{function.css-variable('spacing-4')},
+    color-type: (
+      wrapper: (
+        margin: calc(-1 * #{function.css-variable('popover', 'spacing', 'content', 'padding')}),
+      ),
+      padding: #{function.css-variable('spacing-4')},
+    ),
+    trigger-text: (
+      margin: 0 calc(#{function.css-variable('spacing-3')} - #{function.css-variable('color-picker', 'spacing', 'trigger-wrapper', 'padding')}) 0 #{function.css-variable('spacing-2')},
+    ),
+    color-type-item: (
+      siblings: (
+        margin-right: 10px,
+      ),
+    ),
+    edit-form-input: (
+      prefix: (
+        margin-right: #{function.css-variable('spacing-1')},
+      ),
+      padding-x: calc(#{function.css-variable('spacing-3')} - 2px),
+    ),
+    picker: (
+      margin-right: #{function.css-variable('spacing-4')},
+    ),
+    current-color: (
+      margin-left: #{function.css-variable('spacing-4')},
+    ),
+    swatches-description: (
+      margin-left: #{function.css-variable('spacing-3')},
+    ),
+    button-group: (
+      margin-left: #{function.css-variable('spacing-2')},
+    ),
+    edit-form: (
+      margin-top: #{function.css-variable('spacing-3')},
+      column-gap: #{function.css-variable('spacing-3')},
+    ),
+    panel-block-title: (
+      margin-bottom: #{function.css-variable('spacing-2')},
+    ),
+    trigger-wrapper: (
+      padding: #{function.css-variable('spacing-2')},
+    ),
+    picker-item: (
+      padding: #{function.css-variable('spacing-2')},
+    ),
+    popover: (
+      padding: #{function.css-variable('spacing-4')},
+    ),
+    confirm: (
+      padding: 0 #{function.css-variable('color-picker', 'spacing', 'popover', 'padding')}
+        #{function.css-variable('color-picker', 'spacing', 'popover', 'padding')},
+    ),
+    square: (
+      padding: (
+        small: 3px,
+      ),
+    ),
+    panel-block: (
+      row-gap: #{function.css-variable('spacing-4')},
+    ),
+  ),
+  box-shadow: (
+    cursor: #{function.css-variable('shadow-hover')},
+  ),
+  opacity: (
+    swatch-item: (
+      hover: 0.4,
+    ),
+  ),
+  transition: (
+    border-color: border-color #{function.css-variable('transition-time-fast')},
+  ),
 );

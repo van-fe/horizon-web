@@ -4,10 +4,10 @@
 
 @include mixins.b('pagination') {
   display: flex;
-  grid-column-gap: mixins.css-variable('pagination-gap--components');
+  grid-column-gap: mixins.css-variable('pagination', 'spacing', 'components', 'gap');
   align-items: center;
-  margin-right: mixins.css-variable('pagination-margin-right');
-  line-height: mixins.css-variable('pagination-line-height');
+  margin-right: mixins.css-variable('pagination', 'spacing', 'margin-right');
+  line-height: mixins.css-variable('pagination', 'line-height');
   white-space: nowrap;
 
   @include mixins.m('left') {
@@ -23,59 +23,59 @@
   }
 
   @include mixins.e('total') {
-    color: mixins.css-variable('pagination-color--secondary');
-    font-size: mixins.css-variable('pagination-font-size');
+    color: mixins.css-variable('pagination', 'color', 'secondary');
+    font-size: mixins.css-variable('pagination', 'font-size');
     white-space: nowrap;
   }
 
   @include mixins.e('pager') {
     display: flex;
-    grid-column-gap: mixins.css-variable('pagination-gap--inside');
+    grid-column-gap: mixins.css-variable('pagination', 'spacing', 'inside', 'gap');
     white-space: nowrap;
 
     @include mixins.m('item') {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: mixins.css-variable('pagination-height');
-      min-height: mixins.css-variable('pagination-height');
-      padding: 0 mixins.css-variable('pagination-padding-x--pager-item');
+      min-width: mixins.css-variable('pagination', 'size', 'height');
+      min-height: mixins.css-variable('pagination', 'size', 'height');
+      padding: 0 mixins.css-variable('pagination', 'spacing', 'pager-item', 'padding-x');
       vertical-align: middle;
-      background: mixins.css-variable('pagination-bg');
-      border: mixins.css-variable('pagination-border');
-      border-radius: mixins.css-variable('pagination-border-radius');
+      background: mixins.css-variable('pagination', 'background');
+      border: mixins.css-variable('pagination', 'border');
+      border-radius: mixins.css-variable('pagination', 'border-radius');
       cursor: pointer;
-      transition: mixins.css-variable('pagination-transition--all');
+      transition: mixins.css-variable('pagination', 'transition', 'all');
       user-select: none;
 
       &:hover,
       &:focus {
-        color: mixins.css-variable('pagination-color--pager-item--hover');
-        border-color: mixins.css-variable('pagination-border-color--hover');
+        color: mixins.css-variable('pagination', 'color', 'pager-item', 'hover');
+        border-color: mixins.css-variable('pagination', 'border-color', 'hover');
         outline: none;
       }
 
       &:active {
-        color: mixins.css-variable('pagination-color--pager-item--press');
-        border-color: mixins.css-variable('pagination-border-color--press');
+        color: mixins.css-variable('pagination', 'color', 'pager-item', 'press');
+        border-color: mixins.css-variable('pagination', 'border-color', 'press');
       }
 
       @include mixins.is('active') {
-        color: mixins.css-variable('pagination-color--pager-item--active');
-        background: mixins.css-variable('pagination-bg--pager-item--active');
-        border-color: mixins.css-variable('pagination-border-color--active');
+        color: mixins.css-variable('pagination', 'color', 'pager-item', 'active');
+        background: mixins.css-variable('pagination', 'background', 'pager-item', 'active');
+        border-color: mixins.css-variable('pagination', 'border-color', 'active');
       }
 
       @include mixins.is('disabled') {
-        color: mixins.css-variable('pagination-color--pager-item--disabled');
-        background: mixins.css-variable('pagination-bg--pager-item--disabled');
-        border-color: mixins.css-variable('pagination-border-color');
+        color: mixins.css-variable('pagination', 'color', 'pager-item', 'disabled');
+        background: mixins.css-variable('pagination', 'background', 'pager-item', 'disabled');
+        border-color: mixins.css-variable('pagination', 'border-color');
         cursor: not-allowed;
 
         @include mixins.is('active') {
-          color: mixins.css-variable('pagination-color--pager-item--disabled-active');
-          background: mixins.css-variable('pagination-bg--pager-item--disabled-active');
-          border-color: mixins.css-variable('pagination-border-color--disabled-active');
+          color: mixins.css-variable('pagination', 'color', 'pager-item', 'disabled-active');
+          background: mixins.css-variable('pagination', 'background', 'pager-item', 'disabled-active');
+          border-color: mixins.css-variable('pagination', 'border-color', 'disabled-active');
         }
       }
     }
@@ -105,75 +105,75 @@
 
   @include mixins.e('sizes') {
     display: flex;
-    grid-column-gap: mixins.css-variable('pagination-gap--sizes');
+    grid-column-gap: mixins.css-variable('pagination', 'spacing', 'sizes', 'gap');
     align-items: center;
     justify-content: center;
-    min-height: mixins.css-variable('pagination-height');
-    padding: mixins.css-variable('pagination-padding--sizes');
-    color: mixins.css-variable('pagination-color--popper');
+    min-height: mixins.css-variable('pagination', 'size', 'height');
+    padding: mixins.css-variable('pagination', 'spacing', 'sizes', 'padding');
+    color: mixins.css-variable('pagination', 'color', 'popper');
     white-space: nowrap;
-    border: mixins.css-variable('pagination-border');
-    border-radius: mixins.css-variable('pagination-border-radius');
+    border: mixins.css-variable('pagination', 'border');
+    border-radius: mixins.css-variable('pagination', 'border-radius');
     cursor: pointer;
-    transition: mixins.css-variable('pagination-transition--all');
+    transition: mixins.css-variable('pagination', 'transition', 'all');
 
     &:hover,
     &:focus {
-      border-color: mixins.css-variable('pagination-border-color--hover');
+      border-color: mixins.css-variable('pagination', 'border-color', 'hover');
       outline: none;
     }
 
     &:active {
-      border-color: mixins.css-variable('pagination-border-color--press');
+      border-color: mixins.css-variable('pagination', 'border-color', 'press');
     }
 
     @include mixins.is('active') {
-      border-color: mixins.css-variable('pagination-border-color--sizes--activatated');
+      border-color: mixins.css-variable('pagination', 'border-color', 'sizes', 'activated');
     }
 
     @include mixins.is('disabled') {
-      color: mixins.css-variable('pagination-color--popper--disabled');
-      background: mixins.css-variable('pagination-bg--popper--disabled');
-      border-color: mixins.css-variable('pagination-border-color--disabled');
+      color: mixins.css-variable('pagination', 'color', 'popper', 'disabled');
+      background: mixins.css-variable('pagination', 'background', 'popper', 'disabled');
+      border-color: mixins.css-variable('pagination', 'border-color', 'disabled');
       cursor: not-allowed;
     }
   }
 
   @include mixins.e('sizes-popper') {
-    padding: mixins.css-variable('pagination-padding--sizes-popper') !important;
+    padding: mixins.css-variable('pagination', 'spacing', 'sizes-popper', 'padding') !important;
   }
 
   @include mixins.e('sizes-item') {
-    height: mixins.css-variable('pagination-height--sizes-item');
-    padding: mixins.css-variable('pagination-padding--sizes-item');
-    color: mixins.css-variable('pagination-color--primary');
+    height: mixins.css-variable('pagination', 'size', 'sizes-item', 'height');
+    padding: mixins.css-variable('pagination', 'spacing', 'sizes-item', 'padding');
+    color: mixins.css-variable('pagination', 'color', 'primary');
     cursor: pointer;
-    transition: mixins.css-variable('pagination-transition--all');
+    transition: mixins.css-variable('pagination', 'transition', 'all');
 
     &:hover {
-      background: mixins.css-variable('pagination-bg--sizes-item--hover');
+      background: mixins.css-variable('pagination', 'background', 'sizes-item', 'hover');
     }
 
     @include mixins.is('active') {
-      color: mixins.css-variable('pagination-color--sizes-item--active');
+      color: mixins.css-variable('pagination', 'color', 'sizes-item', 'active');
     }
   }
 
   @include mixins.e('jumper') {
     display: flex;
-    grid-column-gap: mixins.css-variable('pagination-gap--inside');
+    grid-column-gap: mixins.css-variable('pagination', 'spacing', 'inside', 'gap');
     align-items: center;
-    color: mixins.css-variable('pagination-color--secondary');
+    color: mixins.css-variable('pagination', 'color', 'secondary');
     white-space: nowrap;
 
     @include mixins.b('input-number', false) {
-      width: mixins.css-variable('pagination-width--input-number');
+      width: mixins.css-variable('pagination', 'size', 'input-number', 'width');
       min-width: auto;
-      font-size: mixins.css-variable('pagination-font-size');
-      border-radius: mixins.css-variable('pagination-border-radius');
+      font-size: mixins.css-variable('pagination', 'font-size');
+      border-radius: mixins.css-variable('pagination', 'border-radius');
 
       @include mixins.be('input-number', 'inner', false) {
-        padding: mixins.css-variable('pagination-padding--jumper-input') !important;
+        padding: mixins.css-variable('pagination', 'spacing', 'jumper-input', 'padding') !important;
       }
     }
   }

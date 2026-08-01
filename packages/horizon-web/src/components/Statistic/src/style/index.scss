@@ -4,18 +4,18 @@
   min-width: 0;
 
   @include mixins.e('title') {
-    margin-bottom: mixins.css-variable('statistic-gap');
+    margin-bottom: mixins.css-variable('statistic', 'spacing', 'gap');
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: mixins.css-variable('statistic-font-size-title');
-    color: mixins.css-variable('statistic-title-color');
+    font-size: mixins.css-variable('statistic', 'font-size', 'title');
+    color: mixins.css-variable('statistic', 'color', 'title');
     white-space: nowrap;
   }
 
   @include mixins.e('body') {
     display: flex;
     flex-wrap: wrap;
-    gap: mixins.css-variable('statistic-gap');
+    gap: mixins.css-variable('statistic', 'spacing', 'gap');
     align-items: baseline;
     min-height: 36px;
   }
@@ -24,40 +24,40 @@
     display: inline-flex;
     align-items: baseline;
     min-width: 0;
-    color: mixins.css-variable('statistic-value-color');
+    color: mixins.css-variable('statistic', 'color', 'value');
   }
 
   @include mixins.e('number') {
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: mixins.css-variable('statistic-font-size-value');
+    font-size: mixins.css-variable('statistic', 'font-size', 'value');
     font-weight: 600;
     line-height: 1.25;
   }
 
   @include mixins.e('prefix') {
-    margin-right: mixins.css-variable('statistic-gap');
-    font-size: mixins.css-variable('statistic-font-size-affix');
+    margin-right: mixins.css-variable('statistic', 'spacing', 'gap');
+    font-size: mixins.css-variable('statistic', 'font-size', 'affix');
   }
 
   @include mixins.e('suffix') {
-    margin-left: mixins.css-variable('statistic-gap');
-    font-size: mixins.css-variable('statistic-font-size-affix');
+    margin-left: mixins.css-variable('statistic', 'spacing', 'gap');
+    font-size: mixins.css-variable('statistic', 'font-size', 'affix');
   }
 
   @include mixins.e('trend') {
     display: inline-flex;
     gap: mixins.css-variable('spacing-1');
     align-items: center;
-    font-size: mixins.css-variable('statistic-font-size-trend');
-    color: mixins.css-variable('statistic-trend-neutral-color');
+    font-size: mixins.css-variable('statistic', 'font-size', 'trend');
+    color: mixins.css-variable('statistic', 'color', 'trend-neutral');
   }
 
   @include mixins.m('trend-success') {
-    color: mixins.css-variable('statistic-trend-success-color');
+    color: mixins.css-variable('statistic', 'color', 'trend', 'success');
   }
 
   @include mixins.m('trend-danger') {
-    color: mixins.css-variable('statistic-trend-danger-color');
+    color: mixins.css-variable('statistic', 'color', 'trend-danger');
   }
 }

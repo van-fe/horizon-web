@@ -35,15 +35,15 @@ Flex 为块级元素提供间距，其本身不会添加包裹元素。适用于
 ## Design Token
 | 变量 | 默认值 | 描述 |
 | --- | --- | --- |
-| --h-space--small | var(--h-spacing-3) | small尺寸间距  |
-| --h-space--medium | var(--h-spacing-5) | medium尺寸间距  |
-| --h-space--large | var(--h-spacing-7) | large尺寸间距  |
-| --h-space--horizontal--small | var(--h-space--small) |  横向small间距  |
-| --h-space--horizontal--medium | var(--h-space--medium) | 横向medium间距  |
-| --h-space--horizontal--large | var(--h-space--large) | 横向large间距  |
-| --h-space--vertical--small | var(--h-space--small) | 纵向small间距  |
-| --h-space--vertical--medium | var(--h-space--medium) | 纵向medium间距  |
-| --h-space--vertical--large | var(--h-space--large) | 纵向large间距 |
-| --h-space--wrap--small | var(--h-space--vertical--small) var(--h-space--vertical--small) |  换行时候上下左右small间距  |
-|  --h-space--wrap--medium | var(--h-space--vertical--medium) var(--h-space--vertical--medium) |  换行时候上下左右medium间距 |
-|  --h-space--wrap--large | var(--h-space--vertical--large) var(--h-space--vertical--large) |  换行时候上下左右large间距 |
+| --h-space-spacing-gap-small | var(--h-spacing-3) | small尺寸间距  |
+| --h-space-spacing-gap-medium | var(--h-spacing-5) | medium尺寸间距  |
+| --h-space-spacing-gap-large | var(--h-spacing-7) | large尺寸间距  |
+| --h-space-spacing-horizontal-gap-small | var(--h-space-spacing-gap-small) |  横向small间距  |
+| --h-space-spacing-horizontal-gap-medium | var(--h-space-spacing-gap-medium) | 横向medium间距  |
+| --h-space-spacing-horizontal-gap-large | var(--h-space-spacing-gap-large) | 横向large间距  |
+| --h-space-spacing-vertical-gap-small | var(--h-space-spacing-gap-small) | 纵向small间距  |
+| --h-space-spacing-vertical-gap-medium | var(--h-space-spacing-gap-medium) | 纵向medium间距  |
+| --h-space-spacing-vertical-gap-large | var(--h-space-spacing-gap-large) | 纵向large间距 |
+| --h-space-spacing-wrap-gap-small | var(--h-space-spacing-horizontal-gap-small) var(--h-space-spacing-vertical-gap-small) |  换行时候上下左右small间距  |
+|  --h-space-spacing-wrap-gap-medium | var(--h-space-spacing-horizontal-gap-medium) var(--h-space-spacing-vertical-gap-medium) |  换行时候上下左右medium间距 |
+|  --h-space-spacing-wrap-gap-large | var(--h-space-spacing-horizontal-gap-large) var(--h-space-spacing-vertical-gap-large) |  换行时候上下左右large间距 |

@@ -54,10 +54,10 @@ function getColumnOverflowTooltipStyle(column: HTableInsertedColumnData): CSSPro
     case 'selection':
       return {
         width: column.props.width
-          ? `calc(${sizeUnitTransform(column.props.width)} - ${cssVariable('table', 'spacing', 'padding', 'cell', 'x')} * 2 - var(--table-border-width))`
+          ? `calc(${sizeUnitTransform(column.props.width)} - ${cssVariable('table', 'spacing', 'cell', 'x', 'padding')} * 2 - var(--table-border-width))`
           : undefined,
         minWidth: column.props.minWidth
-          ? `calc(${sizeUnitTransform(column.props.minWidth)} - ${cssVariable('table', 'spacing', 'padding', 'cell', 'x')} * 2 - var(--table-border-width))`
+          ? `calc(${sizeUnitTransform(column.props.minWidth)} - ${cssVariable('table', 'spacing', 'cell', 'x', 'padding')} * 2 - var(--table-border-width))`
           : undefined,
       };
     case 'drag':

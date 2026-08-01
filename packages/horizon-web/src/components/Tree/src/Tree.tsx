@@ -190,9 +190,7 @@ export default defineComponent({
     const keyboardNavigableItems = computed(() =>
       visibleItems.value.filter(
         node =>
-          !disabledProp.value &&
-          !node.disabled &&
-          (props.checkStrictly || !node.passingDisabled),
+          !disabledProp.value && !node.disabled && (props.checkStrictly || !node.passingDisabled),
       ),
     );
 
@@ -203,9 +201,7 @@ export default defineComponent({
     }
 
     function getCurrentKeyboardIndex() {
-      return keyboardNavigableItems.value.findIndex(
-        node => node._uuid === focusedNodeUuid.value,
-      );
+      return keyboardNavigableItems.value.findIndex(node => node._uuid === focusedNodeUuid.value);
     }
 
     function handleKeyboard(evt: KeyboardEvent) {
@@ -500,9 +496,7 @@ export default defineComponent({
                 <div
                   class={classHelper.e('drag-over-cursor')}
                   style={{
-                    width: `calc(100% - 16px - ((${cssVariable(
-                      'tree-size--drag-over-cursor-arrow',
-                    )} + ${cssVariable('tree-height--drag-over-cursor')} * 2))`,
+                    width: `calc(100% - 16px - ((${cssVariable('tree', 'size', 'drag-over-cursor-arrow')} + ${cssVariable('tree', 'size', 'drag-over-cursor', 'height')} * 2))`,
                   }}
                 />
               )}

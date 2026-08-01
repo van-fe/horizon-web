@@ -55,7 +55,10 @@ export default defineComponent({
             classHelper.is('hidden', hidden),
           )}
           style={
-            { '--h-carousel-item-offset': state.value.offset } as Record<string, string | number>
+            { '--h-carousel-spacing-item-offset': state.value.offset } as Record<
+              string,
+              string | number
+            >
           }
           role="group"
           aria-roledescription={String(itemText.value ?? 'slide')}

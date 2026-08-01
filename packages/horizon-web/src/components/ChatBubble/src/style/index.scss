@@ -2,7 +2,7 @@
 
 @include mixins.b('chat-bubble') {
   display: flex;
-  gap: mixins.css-variable('chat-bubble-gap');
+  gap: mixins.css-variable('chat-bubble', 'spacing', 'gap');
   align-items: flex-start;
   width: 100%;
 
@@ -34,8 +34,8 @@
 
   @include mixins.m('primary') {
     @include mixins.e('content') {
-      color: mixins.css-variable('chat-bubble-content-color-primary');
-      background: mixins.css-variable('chat-bubble-content-bg-primary');
+      color: mixins.css-variable('chat-bubble', 'color', 'content', 'primary');
+      background: mixins.css-variable('chat-bubble', 'background', 'content', 'primary');
     }
   }
 
@@ -52,7 +52,7 @@
 
   @include mixins.e('header') {
     display: flex;
-    gap: mixins.css-variable('chat-bubble-header-gap');
+    gap: mixins.css-variable('chat-bubble', 'spacing', 'header', 'gap');
     align-items: baseline;
     max-width: 100%;
     margin-bottom: mixins.css-variable('spacing-2');
@@ -61,39 +61,39 @@
   @include mixins.e('name') {
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: mixins.css-variable('chat-bubble-name-font-size');
-    font-weight: mixins.css-variable('chat-bubble-name-font-weight');
-    color: mixins.css-variable('chat-bubble-name-color');
+    font-size: mixins.css-variable('chat-bubble', 'font-size', 'name');
+    font-weight: mixins.css-variable('chat-bubble', 'font-weight', 'name');
+    color: mixins.css-variable('chat-bubble', 'color', 'name');
     white-space: nowrap;
   }
 
   @include mixins.e('datetime') {
     flex: none;
-    font-size: mixins.css-variable('chat-bubble-meta-font-size');
-    color: mixins.css-variable('chat-bubble-meta-color');
+    font-size: mixins.css-variable('chat-bubble', 'font-size', 'meta');
+    color: mixins.css-variable('chat-bubble', 'color', 'meta');
   }
 
   @include mixins.e('content') {
     box-sizing: border-box;
     max-width: 100%;
-    padding: mixins.css-variable('chat-bubble-content-padding-block')
-      mixins.css-variable('chat-bubble-content-padding-inline');
-    font-size: mixins.css-variable('chat-bubble-content-font-size');
-    line-height: mixins.css-variable('chat-bubble-content-line-height');
-    color: mixins.css-variable('chat-bubble-content-color');
+    padding: mixins.css-variable('chat-bubble', 'spacing', 'content', 'padding-block')
+      mixins.css-variable('chat-bubble', 'spacing', 'content', 'padding-inline');
+    font-size: mixins.css-variable('chat-bubble', 'font-size', 'content');
+    line-height: mixins.css-variable('chat-bubble', 'line-height', 'content');
+    color: mixins.css-variable('chat-bubble', 'color', 'content');
     overflow-wrap: anywhere;
     white-space: pre-wrap;
-    background: mixins.css-variable('chat-bubble-content-bg');
-    border-radius: mixins.css-variable('chat-bubble-content-radius');
+    background: mixins.css-variable('chat-bubble', 'background', 'content');
+    border-radius: mixins.css-variable('chat-bubble', 'border-radius', 'content');
   }
 
   @include mixins.e('footer') {
     display: flex;
-    gap: mixins.css-variable('chat-bubble-footer-gap');
+    gap: mixins.css-variable('chat-bubble', 'spacing', 'footer', 'gap');
     width: 100%;
     margin-top: mixins.css-variable('spacing-2');
-    font-size: mixins.css-variable('chat-bubble-meta-font-size');
-    color: mixins.css-variable('chat-bubble-meta-color');
+    font-size: mixins.css-variable('chat-bubble', 'font-size', 'meta');
+    color: mixins.css-variable('chat-bubble', 'color', 'meta');
   }
 }
 
@@ -103,6 +103,6 @@
   @include mixins.e('item') {
     box-sizing: border-box;
     width: 100%;
-    padding-bottom: mixins.css-variable('chat-bubble-list-item-gap');
+    padding-bottom: mixins.css-variable('chat-bubble', 'spacing', 'list-item', 'gap');
   }
 }

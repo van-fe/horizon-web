@@ -1,38 +1,110 @@
 @use '../../../../styles/mixins/function';
 
 $values: (
-  'width--item-step': 24px,
-  'width--item--dot--small': 8px,
-  'width--item--dot--medium': 12px,
-  'width--item--dot--large': 24px,
-  'font-size--item--name': #{function.css-variable('text-base')},
-  'font-size--item--timestamp': #{function.css-variable('text-sm')},
-  'font-size--item--desc': #{function.css-variable('text-base')},
-  'font-size--item--icon': #{function.css-variable('text-sm')},
-  'font-weight--item--name': #{function.css-variable('weight-normal')},
-  'font-weight--item--timestamp': #{function.css-variable('weight-normal')},
-  'color--item--dot': #{function.css-variable('text-inverse')},
-  'color--item--dot--circle': #{function.css-variable('text-disabled')},
-  'color--item--name': #{function.css-variable('text-primary')},
-  'color--item--timestamp': #{function.css-variable('text-tertiary')},
-  // 'color--item--desc': #{function.css-variable('text-primary')},
-  'color--item--desc': #595E72,
-  'color--item--desc--hidden': #{function.css-variable('text-brand-default')},
-  'line-height--item--name': #{function.css-variable('line-height-standard')},
-  'line-height--item--timestamp': #{function.css-variable('line-height-standard')},
-  'line-height--item--desc': #{function.css-variable('line-height-standard')},
-  'line-height--item--timestamp--siblings': #{function.css-variable('line-height-standard')},
-  'border-color--item--dot--circle': #{function.css-variable('border-default')},
-  'border-color--item--tail': #{function.css-variable('divider-default')},
-  'border--item--dot--circle': 1px solid #{function.css-variable('timeline-border-color--item--dot--circle')},
-  'border--item--tail': 1px solid #{function.css-variable('timeline-border-color--item--tail')},
-  'border-radius--item--dot': #{function.css-variable('radius-circle')},
-  'bg--item--disc': #{function.css-variable('text-disabled')},
-  'bg--item--dot--circle': #{function.css-variable('bg-default')},
-  'margin-bottom--time--wrapper': #{function.css-variable('spacing-9')},
-  'margin-left--time--wrapper': 10px,
-  'margin-bottom--time--name': #{function.css-variable('spacing-2')},
-  'margin-bottom--time--timestamp': #{function.css-variable('spacing-2')},
-  'margin-bottom--time--desc': #{function.css-variable('spacing-1')},
-  'margin-left--item--timestamp--siblings': #{function.css-variable('spacing-3')},
+  size: (
+    item-step: (
+      width: 24px,
+    ),
+    item: (
+      dot: (
+        width: (
+          small: 8px,
+          medium: 12px,
+          large: 24px,
+        ),
+      ),
+    ),
+  ),
+  font-size: (
+    item: (
+      name: #{function.css-variable('text-base')},
+      timestamp: #{function.css-variable('text-sm')},
+      desc: #{function.css-variable('text-base')},
+      icon: #{function.css-variable('text-sm')},
+    ),
+  ),
+  font-weight: (
+    item: (
+      name: #{function.css-variable('weight-normal')},
+      timestamp: #{function.css-variable('weight-normal')},
+    ),
+  ),
+  line-height: (
+    item: (
+      name: #{function.css-variable('line-height-standard')},
+      timestamp: (
+        '': #{function.css-variable('line-height-standard')},
+        siblings: #{function.css-variable('line-height-standard')},
+      ),
+      desc: #{function.css-variable('line-height-standard')},
+    ),
+  ),
+  color: (
+    item: (
+      dot: (
+        '': #{function.css-variable('text-inverse')},
+        circle: #{function.css-variable('text-disabled')},
+      ),
+      name: #{function.css-variable('text-primary')},
+      timestamp: #{function.css-variable('text-tertiary')},
+      desc: (
+        '': #595e72,
+        hidden: #{function.css-variable('text-brand-default')},
+      ),
+    ),
+  ),
+  border-color: (
+    item: (
+      dot: (
+        circle: #{function.css-variable('border-default')},
+      ),
+      tail: #{function.css-variable('divider-default')},
+    ),
+  ),
+  border: (
+    item: (
+      dot: (
+        circle: 1px solid
+          #{function.css-variable('timeline', 'border-color', 'item', 'dot', 'circle')},
+      ),
+      tail: 1px solid #{function.css-variable('timeline', 'border-color', 'item', 'tail')},
+    ),
+  ),
+  border-radius: (
+    item: (
+      dot: #{function.css-variable('radius-circle')},
+    ),
+  ),
+  background: (
+    item: (
+      disc: #{function.css-variable('text-disabled')},
+      dot: (
+        circle: #{function.css-variable('bg-default')},
+      ),
+    ),
+  ),
+  spacing: (
+    time: (
+      wrapper: (
+        margin-bottom: #{function.css-variable('spacing-9')},
+        margin-left: 10px,
+      ),
+      name: (
+        margin-bottom: #{function.css-variable('spacing-2')},
+      ),
+      timestamp: (
+        margin-bottom: #{function.css-variable('spacing-2')},
+      ),
+      desc: (
+        margin-bottom: #{function.css-variable('spacing-1')},
+      ),
+    ),
+    item: (
+      timestamp: (
+        siblings: (
+          margin-left: #{function.css-variable('spacing-3')},
+        ),
+      ),
+    ),
+  ),
 );

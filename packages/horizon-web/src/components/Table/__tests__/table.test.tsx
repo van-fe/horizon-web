@@ -1338,7 +1338,7 @@ describe('Table', () => {
     await settleTable();
 
     expect(wrapper.find('.h-table').attributes('style')).toContain(
-      '--h-table-header-row-height: 40px',
+      '--h-table-size-header-row-height: 40px',
     );
 
     wrapper.unmount();

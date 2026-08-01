@@ -6,7 +6,7 @@
   pointer-events: none;
 
   // @include mixins.m('no-mask') {
-  //   box-shadow: mixins.css-variable('drawer-box-shadow--container');
+  //   box-shadow: mixins.css-variable('drawer', 'box-shadow', 'container');
   // }
 
   @include mixins.e('mask') {
@@ -14,16 +14,16 @@
     inset: 0;
     width: 100%;
     height: 100%;
-    background: mixins.css-variable('drawer-bg--mask');
+    background: mixins.css-variable('drawer', 'background', 'mask');
     pointer-events: auto;
   }
 
   @include mixins.e('container') {
     position: fixed;
     display: flex;
-    background: mixins.css-variable('drawer-bg--container');
-    border-radius: mixins.css-variable('drawer-border-radius--container');
-    box-shadow: mixins.css-variable('drawer-box-shadow--container');
+    background: mixins.css-variable('drawer', 'background', 'container');
+    border-radius: mixins.css-variable('drawer', 'border-radius', 'container');
+    box-shadow: mixins.css-variable('drawer', 'box-shadow', 'container');
     pointer-events: auto;
   }
 
@@ -40,7 +40,7 @@
     bottom: 0;
     left: 0;
     max-width: 100%;
-    border-radius: mixins.css-variable('drawer-border-radius--left');
+    border-radius: mixins.css-variable('drawer', 'border-radius', 'left');
   }
 
   @include mixins.m('right') {
@@ -48,7 +48,7 @@
     right: 0;
     bottom: 0;
     max-width: 100%;
-    border-radius: mixins.css-variable('drawer-border-radius--right');
+    border-radius: mixins.css-variable('drawer', 'border-radius', 'right');
   }
 
   @include mixins.m('top') {
@@ -56,7 +56,7 @@
     right: 0;
     left: 0;
     max-height: 100%;
-    border-radius: mixins.css-variable('drawer-border-radius--top');
+    border-radius: mixins.css-variable('drawer', 'border-radius', 'top');
   }
 
   @include mixins.m('bottom') {
@@ -64,12 +64,12 @@
     bottom: 0;
     left: 0;
     max-height: 100%;
-    border-radius: mixins.css-variable('drawer-border-radius--bottom');
+    border-radius: mixins.css-variable('drawer', 'border-radius', 'bottom');
   }
 
   @include mixins.e('icon') {
     flex: none;
-    margin-right: mixins.css-variable('drawer-margin-right--icon');
+    margin-right: mixins.css-variable('drawer', 'spacing', 'icon', 'margin-right');
   }
 
   @include mixins.e('main') {
@@ -82,8 +82,8 @@
 
   @include mixins.e('header') {
     position: relative;
-    padding: mixins.css-variable('drawer-top-padding--container');
-    border-bottom: 1px solid mixins.css-variable('drawer-divider-color');
+    padding: mixins.css-variable('drawer', 'spacing', 'container', 'padding-top');
+    border-bottom: 1px solid mixins.css-variable('drawer', 'border-color', 'divider');
   }
 
   @include mixins.em('header', 'customize') {
@@ -94,17 +94,17 @@
     flex: 1;
     min-width: 0;
     min-height: 0;
-    padding: mixins.css-variable('drawer-padding--body');
+    padding: mixins.css-variable('drawer', 'spacing', 'body', 'padding');
     overflow: auto;
   }
 
   @include mixins.e('default-title') {
     display: flex;
     align-items: center;
-    min-height: mixins.css-variable('drawer-line-height--title');
-    font-weight: mixins.css-variable('drawer-font-weight--title');
-    font-size: mixins.css-variable('drawer-font-size--title');
-    line-height: mixins.css-variable('drawer-line-height--title');
+    min-height: mixins.css-variable('drawer', 'line-height', 'title');
+    font-weight: mixins.css-variable('drawer', 'font-weight', 'title');
+    font-size: mixins.css-variable('drawer', 'font-size', 'title');
+    line-height: mixins.css-variable('drawer', 'line-height', 'title');
   }
 
   @include mixins.e('closable') {
@@ -114,8 +114,8 @@
   }
 
   @include mixins.e('footer') {
-    padding: mixins.css-variable('drawer-bottom-padding--container');
-    border-top: 1px solid mixins.css-variable('drawer-divider-color');
+    padding: mixins.css-variable('drawer', 'spacing', 'container', 'padding-bottom');
+    border-top: 1px solid mixins.css-variable('drawer', 'border-color', 'divider');
   }
 
   @include mixins.e('default-footer') {

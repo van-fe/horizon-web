@@ -4,21 +4,21 @@
   position: relative;
   box-sizing: content-box;
   width: 100%;
-  height: mixins.css-variable('carousel-height');
+  height: mixins.css-variable('carousel', 'size', 'container', 'height');
   overflow: visible;
-  border-radius: mixins.css-variable('carousel-radius');
+  border-radius: mixins.css-variable('carousel', 'border-radius');
   outline: none;
   touch-action: pan-y;
 
   &:focus-visible {
-    box-shadow: 0 0 0 2px mixins.css-variable('carousel-focus-color');
+    box-shadow: 0 0 0 2px mixins.css-variable('carousel', 'color', 'focus');
   }
 
   @include mixins.m('vertical') {
     touch-action: pan-x;
 
     @include mixins.nested('carousel-item') {
-      transform: translateY(calc(var(--h-carousel-item-offset) * 100%));
+      transform: translateY(calc(var(--h-carousel-spacing-item-offset) * 100%));
     }
 
     @include mixins.e('indicators') {
@@ -32,14 +32,14 @@
 
     @include mixins.e('indicator') {
       &::before {
-        width: mixins.css-variable('carousel-indicator-size');
-        height: mixins.css-variable('carousel-indicator-size');
+        width: mixins.css-variable('carousel', 'size', 'indicator');
+        height: mixins.css-variable('carousel', 'size', 'indicator');
       }
 
       @include mixins.is('active') {
         &::before {
-          width: mixins.css-variable('carousel-indicator-size');
-          height: mixins.css-variable('carousel-indicator-active-width');
+          width: mixins.css-variable('carousel', 'size', 'indicator');
+          height: mixins.css-variable('carousel', 'size', 'indicator', 'active', 'width');
         }
       }
     }
@@ -50,12 +50,12 @@
       transform: translateX(-50%) rotate(90deg);
 
       @include mixins.m('previous') {
-        top: mixins.css-variable('carousel-arrow-offset');
+        top: mixins.css-variable('carousel', 'spacing', 'arrow', 'offset');
       }
 
       @include mixins.m('next') {
         right: auto;
-        bottom: mixins.css-variable('carousel-arrow-offset');
+        bottom: mixins.css-variable('carousel', 'spacing', 'arrow', 'offset');
       }
     }
   }
@@ -73,7 +73,7 @@
   }
 
   @include mixins.m('indicators-outside') {
-    padding-bottom: mixins.css-variable('carousel-outside-gap');
+    padding-bottom: mixins.css-variable('carousel', 'spacing', 'outside', 'gap');
 
     @include mixins.e('indicators') {
       bottom: 0;
@@ -81,12 +81,12 @@
 
     @include mixins.e('indicator') {
       &::before {
-        background: mixins.css-variable('carousel-indicator-color');
+        background: mixins.css-variable('carousel', 'color', 'indicator');
       }
 
       @include mixins.is('active') {
         &::before {
-          background: mixins.css-variable('carousel-indicator-active-color');
+          background: mixins.css-variable('carousel', 'color', 'indicator', 'active');
         }
       }
     }
@@ -116,12 +116,12 @@
   @include mixins.e(('arrow', 'autoplay')) {
     position: absolute;
     z-index: 3;
-    width: mixins.css-variable('carousel-arrow-size');
-    min-width: mixins.css-variable('carousel-arrow-size');
-    height: mixins.css-variable('carousel-arrow-size');
+    width: mixins.css-variable('carousel', 'size', 'arrow');
+    min-width: mixins.css-variable('carousel', 'size', 'arrow');
+    height: mixins.css-variable('carousel', 'size', 'arrow');
     padding: 0;
-    color: mixins.css-variable('carousel-control-color');
-    background: mixins.css-variable('carousel-control-background');
+    color: mixins.css-variable('carousel', 'color', 'control');
+    background: mixins.css-variable('carousel', 'background', 'control');
     border-radius: mixins.css-variable('radius-circle');
     transition:
       opacity mixins.css-variable('transition-time-fast'),
@@ -129,8 +129,8 @@
 
     &:hover,
     &:focus-visible {
-      color: mixins.css-variable('carousel-control-color');
-      background: mixins.css-variable('carousel-control-background-hover');
+      color: mixins.css-variable('carousel', 'color', 'control');
+      background: mixins.css-variable('carousel', 'background', 'control', 'hover');
     }
   }
 
@@ -139,17 +139,17 @@
     transform: translateY(-50%);
 
     @include mixins.m('previous') {
-      left: mixins.css-variable('carousel-arrow-offset');
+      left: mixins.css-variable('carousel', 'spacing', 'arrow', 'offset');
     }
 
     @include mixins.m('next') {
-      right: mixins.css-variable('carousel-arrow-offset');
+      right: mixins.css-variable('carousel', 'spacing', 'arrow', 'offset');
     }
   }
 
   @include mixins.e('autoplay') {
-    top: mixins.css-variable('carousel-arrow-offset');
-    right: mixins.css-variable('carousel-arrow-offset');
+    top: mixins.css-variable('carousel', 'spacing', 'arrow', 'offset');
+    right: mixins.css-variable('carousel', 'spacing', 'arrow', 'offset');
   }
 
   @include mixins.e('indicators') {
@@ -161,35 +161,35 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: mixins.css-variable('carousel-indicator-gap');
+    gap: mixins.css-variable('carousel', 'spacing', 'indicator', 'gap');
   }
 
   @include mixins.e('indicator') {
     width: auto;
-    min-width: mixins.css-variable('carousel-indicator-size');
+    min-width: mixins.css-variable('carousel', 'size', 'indicator');
     height: 24px;
     padding: 0;
     overflow: visible;
 
     &::before {
       display: block;
-      width: mixins.css-variable('carousel-indicator-size');
-      height: mixins.css-variable('carousel-indicator-size');
-      background: mixins.css-variable('carousel-control-color');
+      width: mixins.css-variable('carousel', 'size', 'indicator');
+      height: mixins.css-variable('carousel', 'size', 'indicator');
+      background: mixins.css-variable('carousel', 'color', 'control');
       border-radius: mixins.css-variable('radius-pill');
       opacity: mixins.css-variable('opacity-7');
       transition:
-        width mixins.css-variable('carousel-transition-duration')
-          mixins.css-variable('carousel-transition-function'),
-        height mixins.css-variable('carousel-transition-duration')
-          mixins.css-variable('carousel-transition-function'),
+        width mixins.css-variable('carousel', 'transition', 'duration')
+          mixins.css-variable('carousel', 'transition', 'timing-function'),
+        height mixins.css-variable('carousel', 'transition', 'duration')
+          mixins.css-variable('carousel', 'transition', 'timing-function'),
         opacity mixins.css-variable('transition-time-fast');
       content: '';
     }
 
     @include mixins.is('active') {
       &::before {
-        width: mixins.css-variable('carousel-indicator-active-width');
+        width: mixins.css-variable('carousel', 'size', 'indicator', 'active', 'width');
         opacity: 1;
       }
     }
@@ -216,12 +216,12 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  transform: translateX(calc(var(--h-carousel-item-offset) * 100%));
+  transform: translateX(calc(var(--h-carousel-spacing-item-offset) * 100%));
   transition:
-    transform mixins.css-variable('carousel-transition-duration')
-      mixins.css-variable('carousel-transition-function'),
-    opacity mixins.css-variable('carousel-transition-duration')
-      mixins.css-variable('carousel-transition-function');
+    transform mixins.css-variable('carousel', 'transition', 'duration')
+      mixins.css-variable('carousel', 'transition', 'timing-function'),
+    opacity mixins.css-variable('carousel', 'transition', 'duration')
+      mixins.css-variable('carousel', 'transition', 'timing-function');
   will-change: transform, opacity;
 
   &:not(.is-active) {

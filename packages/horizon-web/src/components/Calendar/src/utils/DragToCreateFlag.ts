@@ -130,7 +130,7 @@ export default class DragToCreateFlag {
     return (
       parseFloat(
         getComputedStyle(document.documentElement).getPropertyValue(
-          cssVariableKey('calendar-height--week--hour-cell'),
+          cssVariableKey('calendar', 'size', 'week', 'hour-cell', 'height'),
         ),
       ) / 3600
     );

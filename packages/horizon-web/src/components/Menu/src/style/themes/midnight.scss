@@ -2,46 +2,46 @@
 
 @include mixins.b('menu') {
   @include mixins.m('midnight') {
-    background: mixins.css-variable('menu-bg--midnight');
+    background: mixins.css-variable('menu', 'background', 'midnight');
 
     @include mixins.is('active-type-button') {
       @include mixins.e('sub') {
-        background: mixins.css-variable('menu-bg--item--midnight');
+        background: mixins.css-variable('menu', 'background', 'item', 'midnight');
 
         @include mixins.e('title', false) {
           @include mixins.is-not('disabled') {
             @include mixins.em('title', 'inner', false) {
-              outline-color: mixins.css-variable('menu-outline-color');
+              outline-color: mixins.css-variable('menu', 'border-color', 'outline');
             }
 
             &:hover {
               @include mixins.em('title', 'inner', false) {
-                color: mixins.css-variable('menu-color--title--midnight--hover');
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'hover');
               }
 
               @include mixins.em('title', 'icon', false) {
-                color: mixins.css-variable('menu-color--title--midnight--hover');
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'hover');
               }
             }
 
             @include mixins.is('active') {
               @include mixins.em('title', 'inner', false) {
-                color: mixins.css-variable('menu-color--title--midnight--active');
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'active');
               }
 
               @include mixins.em('title', 'icon', false) {
-                color: mixins.css-variable('menu-color--title--midnight--active');
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'active');
               }
             }
 
             @include mixins.is('selected') {
               @include mixins.em('title', 'inner', false) {
-                color: mixins.css-variable('menu-color--title--midnight--selected');
-                background: mixins.css-variable('menu-bg--item--midnight--active');
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'selected');
+                background: mixins.css-variable('menu', 'background', 'item', 'midnight', 'active');
               }
 
               @include mixins.em('title', 'icon', false) {
-                color: mixins.css-variable('menu-color--title--midnight--selected');
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'selected');
               }
             }
           }
@@ -49,22 +49,22 @@
           @include mixins.is('disabled') {
             @include mixins.is('active') {
               @include mixins.em('title', 'inner', false) {
-                color: mixins.css-variable('menu-color--title--midnight--active--disabled');
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'active', 'disabled');
               }
 
               @include mixins.em('title', 'icon', false) {
-                color: mixins.css-variable('menu-color--title--midnight--active--disabled');
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'active', 'disabled');
               }
             }
 
             @include mixins.is('selected') {
               @include mixins.em('title', 'inner', false) {
-                color: mixins.css-variable('menu-color--title--midnight--selected--disabled');
-                background: mixins.css-variable('menu-bg--item--midnight--active--disabled');
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'selected', 'disabled');
+                background: mixins.css-variable('menu', 'background', 'item', 'midnight', 'active', 'disabled');
               }
 
               @include mixins.em('title', 'icon', false) {
-                color: mixins.css-variable('menu-color--title--midnight--active--disabled');
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'active', 'disabled');
               }
             }
           }
@@ -72,38 +72,38 @@
       }
 
       @include mixins.e('item') {
-        background: mixins.css-variable('menu-bg--item--midnight');
+        background: mixins.css-variable('menu', 'background', 'item', 'midnight');
 
         @include mixins.e('title', false) {
           @include mixins.is('active') {
             @include mixins.em('title', 'text', false) {
-              font-weight: mixins.css-variable('menu-font-weight--title--active');
+              font-weight: mixins.css-variable('menu', 'font-weight', 'title', 'active');
             }
           }
 
           @include mixins.is-not('disabled') {
             @include mixins.em('title', 'inner', false) {
-              outline-color: mixins.css-variable('menu-outline-color');
+              outline-color: mixins.css-variable('menu', 'border-color', 'outline');
             }
 
             &:hover {
               @include mixins.em('title', 'inner', false) {
-                color: mixins.css-variable('menu-color--title--midnight--hover');
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'hover');
               }
 
               @include mixins.em('title', 'icon', false) {
-                color: mixins.css-variable('menu-color--title--midnight--hover');
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'hover');
               }
             }
 
             @include mixins.is('active') {
               @include mixins.em('title', 'inner', false) {
-                color: mixins.css-variable('menu-color--title--midnight--selected');
-                background: mixins.css-variable('menu-bg--item--midnight--active');
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'selected');
+                background: mixins.css-variable('menu', 'background', 'item', 'midnight', 'active');
               }
 
               @include mixins.em('title', 'icon', false) {
-                color: mixins.css-variable('menu-color--title--midnight--selected');
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'selected');
               }
             }
           }
@@ -111,12 +111,12 @@
           @include mixins.is('disabled') {
             @include mixins.is('active') {
               @include mixins.em('title', 'inner', false) {
-                color: mixins.css-variable('menu-color--title--midnight--selected--disabled');
-                background: mixins.css-variable('menu-bg--item--midnight--active--disabled');
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'selected', 'disabled');
+                background: mixins.css-variable('menu', 'background', 'item', 'midnight', 'active', 'disabled');
               }
 
               @include mixins.em('title', 'icon', false) {
-                color: mixins.css-variable('menu-color--title--midnight--active--disabled');
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'active', 'disabled');
               }
             }
           }
@@ -124,20 +124,20 @@
       }
 
       @include mixins.e('title') {
-        color: mixins.css-variable('menu-color--title--midnight');
+        color: mixins.css-variable('menu', 'color', 'title', 'midnight');
 
         @include mixins.is('disabled') {
-          color: mixins.css-variable('menu-color--title--midnight--disabled');
+          color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'disabled');
         }
 
         @include mixins.is-not('disabled') {
           @include mixins.em('title', 'icon', false) {
-            color: mixins.css-variable('menu-color--title--icon');
+            color: mixins.css-variable('menu', 'color', 'title', 'icon');
           }
 
           &:hover {
             @include mixins.bem('menu', 'title', 'inner', false) {
-              background: mixins.css-variable('menu-bg--item--midnight--hover');
+              background: mixins.css-variable('menu', 'background', 'item', 'midnight', 'hover');
             }
           }
         }
@@ -146,49 +146,49 @@
 
     @include mixins.is('active-type-link') {
       @include mixins.e('sub') {
-        background: mixins.css-variable('menu-bg--item--midnight');
+        background: mixins.css-variable('menu', 'background', 'item', 'midnight');
 
         @include mixins.e('title', false) {
           @include mixins.is('active') {
             @include mixins.em('title', 'text', false) {
-              font-weight: mixins.css-variable('menu-font-weight--title--active');
+              font-weight: mixins.css-variable('menu', 'font-weight', 'title', 'active');
             }
           }
 
           @include mixins.is-not('disabled') {
             &:hover {
               @include mixins.em('title', 'inner', false) {
-                color: mixins.css-variable('menu-color--title--midnight--hover--link-type');
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'hover', 'link-type');
               }
 
               @include mixins.em('title', 'icon', false) {
-                color: mixins.css-variable('menu-color--title--midnight--hover--link-type');
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'hover', 'link-type');
               }
             }
 
             @include mixins.is('active') {
-              border-bottom: mixins.css-variable('menu-border--title--active');
+              border-bottom: mixins.css-variable('menu', 'border', 'title', 'active');
 
               @include mixins.em('title', 'inner', false) {
-                color: mixins.css-variable('menu-color--title--midnight--active');
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'active');
               }
 
               @include mixins.em('title', 'icon', false) {
-                color: mixins.css-variable('menu-color--title--midnight--active');
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'active');
               }
             }
           }
 
           @include mixins.is('disabled') {
             @include mixins.is('active') {
-              border-bottom: mixins.css-variable('menu-border--title--active--disabled');
+              border-bottom: mixins.css-variable('menu', 'border', 'title', 'active', 'disabled');
 
               @include mixins.em('title', 'inner', false) {
-                color: mixins.css-variable('menu-color--title--midnight--active--disabled');
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'active', 'disabled');
               }
 
               @include mixins.em('title', 'icon', false) {
-                color: mixins.css-variable('menu-color--title--midnight--active--disabled');
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'active', 'disabled');
               }
             }
           }
@@ -196,53 +196,49 @@
       }
 
       @include mixins.e('item') {
-        background: mixins.css-variable('menu-bg--item--midnight');
+        background: mixins.css-variable('menu', 'background', 'item', 'midnight');
 
         @include mixins.e('title', false) {
           @include mixins.is('active') {
             @include mixins.em('title', 'text', false) {
-              font-weight: mixins.css-variable('menu-font-weight--title--active');
+              font-weight: mixins.css-variable('menu', 'font-weight', 'title', 'active');
             }
           }
 
           @include mixins.is-not('disabled') {
             &:hover {
               @include mixins.em('title', 'inner', false) {
-                color: mixins.css-variable('menu-color--title--midnight--hover--link-type');
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'hover', 'link-type');
               }
 
               @include mixins.em('title', 'icon', false) {
-                color: mixins.css-variable('menu-color--title--midnight--hover--link-type');
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'hover', 'link-type');
               }
             }
 
             @include mixins.is('active') {
-              border-bottom: mixins.css-variable('menu-border--title--active');
+              border-bottom: mixins.css-variable('menu', 'border', 'title', 'active');
 
               @include mixins.em('title', 'inner', false) {
-                color: mixins.css-variable('menu-color--title--midnight--selected--link-type');
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'selected', 'link-type');
               }
 
               @include mixins.em('title', 'icon', false) {
-                color: mixins.css-variable('menu-color--title--midnight--selected--link-type');
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'selected', 'link-type');
               }
             }
           }
 
           @include mixins.is('disabled') {
             @include mixins.is('active') {
-              border-bottom: mixins.css-variable('menu-border--title--active--disabled');
+              border-bottom: mixins.css-variable('menu', 'border', 'title', 'active', 'disabled');
 
               @include mixins.em('title', 'inner', false) {
-                color: mixins.css-variable(
-                  'menu-color--title--midnight--selected--disabled--link-type'
-                );
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'selected', 'disabled', 'link-type');
               }
 
               @include mixins.em('title', 'icon', false) {
-                color: mixins.css-variable(
-                  'menu-color--title--midnight--selected--disabled--link-type'
-                );
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'selected', 'disabled', 'link-type');
               }
             }
           }
@@ -250,24 +246,24 @@
       }
 
       @include mixins.e('title') {
-        color: mixins.css-variable('menu-color--title--midnight');
+        color: mixins.css-variable('menu', 'color', 'title', 'midnight');
 
         @include mixins.is('disabled') {
-          color: mixins.css-variable('menu-color--title--midnight--disabled');
+          color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'disabled');
         }
 
         @include mixins.is-not('disabled') {
           @include mixins.em('title', 'icon', false) {
-            color: mixins.css-variable('menu-color--title--icon');
+            color: mixins.css-variable('menu', 'color', 'title', 'icon');
           }
 
           &:hover {
             @include mixins.bem('menu', 'title', 'inner', false) {
-              color: mixins.css-variable('menu-color--title--midnight--hover--link-type');
+              color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'hover', 'link-type');
             }
 
             @include mixins.bem('menu', 'title', 'icon', false) {
-              color: mixins.css-variable('menu-color--title--midnight--hover--link-type');
+              color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'hover', 'link-type');
             }
           }
         }
@@ -275,11 +271,11 @@
     }
 
     @include mixins.e('prepend') {
-      color: mixins.css-variable('menu-color--title--midnight--prepend-append');
+      color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'prepend-append');
     }
 
     @include mixins.e('append') {
-      color: mixins.css-variable('menu-color--title--midnight--prepend-append');
+      color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'prepend-append');
     }
 
     @include mixins.is('horizontal') {
@@ -288,7 +284,7 @@
           @include mixins.is-not('disabled') {
             @include mixins.is('active') {
               @include mixins.em('title', 'inner', false) {
-                color: mixins.css-variable('menu-color--title--midnight--active') !important;
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'active') !important;
               }
             }
           }
@@ -300,7 +296,7 @@
           @include mixins.is-not('disabled') {
             @include mixins.is('active') {
               @include mixins.em('title', 'inner', false) {
-                color: mixins.css-variable('menu-color--title--midnight--active') !important;
+                color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'active') !important;
               }
             }
           }
@@ -310,31 +306,31 @@
 
     @include mixins.e('collapse-button') {
       @include mixins.be('button', 'icon', false) {
-        color: mixins.css-variable('menu-color--title--midnight');
+        color: mixins.css-variable('menu', 'color', 'title', 'midnight');
       }
 
       &:hover {
-        background: mixins.css-variable('menu-bg--item--midnight--hover');
+        background: mixins.css-variable('menu', 'background', 'item', 'midnight', 'hover');
 
         @include mixins.be('button', 'icon', false) {
-          color: mixins.css-variable('menu-color--title--midnight--hover');
+          color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'hover');
         }
       }
 
       &:active {
-        background: mixins.css-variable('menu-bg--item--midnight--press');
+        background: mixins.css-variable('menu', 'background', 'item', 'midnight', 'press');
 
         @include mixins.be('button', 'icon', false) {
-          color: mixins.css-variable('menu-color--title--midnight--selected');
+          color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'selected');
         }
       }
     }
 
     @include mixins.bem('scrollbar', 'track', 'thumb', false) {
-      background: mixins.css-variable('menu-bg--item--midnight--scrollbar');
+      background: mixins.css-variable('menu', 'background', 'item', 'midnight', 'scrollbar');
 
       &:hover {
-        background: mixins.css-variable('menu-bg--item--midnight--scrollbar--hover');
+        background: mixins.css-variable('menu', 'background', 'item', 'midnight', 'scrollbar', 'hover');
       }
     }
   }
@@ -344,30 +340,28 @@
   @include mixins.m('midnight') {
     @include mixins.is('collapsed') {
       @include mixins.e('title') {
-        color: mixins.css-variable('menu-color--title--midnight--collapsed');
+        color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'collapsed');
 
         @include mixins.is-not('disabled') {
           &:hover {
             @include mixins.em('title', 'text', false) {
-              // color: mixins.css-variable('menu-color--title--midnight--collapsed--hover');
+              // color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'collapsed', 'hover');
             }
           }
         }
 
         @include mixins.is('disabled') {
           @include mixins.em('title', 'inner', false) {
-            color: mixins.css-variable('menu-color--title--midnight--disabled');
+            color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'disabled');
           }
 
           @include mixins.em('title', 'icon', false) {
-            color: mixins.css-variable('menu-color--title--midnight--disabled');
+            color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'disabled');
           }
 
           @include mixins.is('active') {
             @include mixins.em('title', 'icon', false) {
-              color: mixins.css-variable(
-                'menu-color--title--midnight--active--disabled--collapsed'
-              );
+              color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'active', 'disabled', 'collapsed');
             }
           }
         }
@@ -378,63 +372,61 @@
 
 @include mixins.b('menu--full-view') {
   @include mixins.m('midnight') {
-    background: mixins.css-variable('menu-bg--midnight');
+    background: mixins.css-variable('menu', 'background', 'midnight');
 
     @include mixins.e('group') {
       @include mixins.m('title') {
-        color: mixins.css-variable('menu-color--title--midnight');
+        color: mixins.css-variable('menu', 'color', 'title', 'midnight');
 
         @include mixins.is-not('router') {
           &::after {
-            background: mixins.css-variable('menu-divider-color--full-view--group--title');
+            background: mixins.css-variable('menu', 'border-color', 'divider', 'full-view', 'group', 'title');
             opacity: 0.1;
           }
         }
 
         @include mixins.is('disabled') {
-          color: mixins.css-variable('menu-color--title--midnight--disabled');
+          color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'disabled');
 
           @include mixins.is('active') {
-            color: mixins.css-variable('menu-color--title--midnight--active--disabled');
+            color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'active', 'disabled');
           }
 
           @include mixins.is('selected') {
-            color: mixins.css-variable('menu-color--title--midnight--active--disabled');
+            color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'active', 'disabled');
           }
         }
 
         @include mixins.is-not('disabled') {
           @include mixins.has('router') {
             &:hover {
-              color: mixins.css-variable('menu-color--title--midnight--hover--full-view');
+              color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'hover', 'full-view');
             }
 
             &:active {
-              color: mixins.css-variable('menu-color--title--midnight--active--full-view');
+              color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'active', 'full-view');
             }
           }
 
           @include mixins.is('active') {
-            color: mixins.css-variable('menu-color--title--midnight--active');
+            color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'active');
           }
 
           @include mixins.is('selected') {
-            color: mixins.css-variable('menu-color--title--midnight--active');
+            color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'active');
           }
         }
       }
 
       @include mixins.m('item') {
-        color: mixins.css-variable('menu-color--title--midnight');
+        color: mixins.css-variable('menu', 'color', 'title', 'midnight');
 
         @include mixins.is('disabled') {
-          color: mixins.css-variable('menu-color--title--midnight--disabled');
+          color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'disabled');
 
           @include mixins.is('active') {
-            color: mixins.css-variable('menu-color--title--midnight--active--disabled--full-view');
-            background: mixins.css-variable(
-              'menu-bg--title--midnight--active--disabled--full-view'
-            );
+            color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'active', 'disabled', 'full-view');
+            background: mixins.css-variable('menu', 'background', 'title', 'midnight', 'active', 'disabled', 'full-view');
           }
         }
 
@@ -443,17 +435,17 @@
             cursor: pointer;
 
             &:hover {
-              color: mixins.css-variable('menu-color--title--midnight--hover');
+              color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'hover');
             }
 
             &:active {
-              color: mixins.css-variable('menu-color--title--midnight--active');
+              color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'active');
             }
           }
 
           @include mixins.is('active') {
-            color: mixins.css-variable('menu-color--title--midnight--active--full-view');
-            background: mixins.css-variable('menu-bg--title--midnight--active--full-view');
+            color: mixins.css-variable('menu', 'color', 'title', 'midnight', 'active', 'full-view');
+            background: mixins.css-variable('menu', 'background', 'title', 'midnight', 'active', 'full-view');
           }
         }
       }

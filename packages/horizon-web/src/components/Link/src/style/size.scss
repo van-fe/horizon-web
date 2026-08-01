@@ -1,13 +1,13 @@
 @use '../../../../styles/mixins';
 
 @include mixins.b('link') {
-  font-size: mixins.css-variable('link-font-size--medium');
+  font-size: mixins.css-variable('link', 'font-size', 'medium');
 
   @include mixins.m('small') {
-    font-size: mixins.css-variable('link-font-size--small');
+    font-size: mixins.css-variable('link', 'font-size', 'small');
   }
 
   @include mixins.m('large') {
-    font-size: mixins.css-variable('link-font-size--large');
+    font-size: mixins.css-variable('link', 'font-size', 'large');
   }
 }

@@ -12,9 +12,9 @@
         @include mixins.be('step', 'tail', false) {
           position: absolute;
           top: 0;
-          left: calc(50% + #{mixins.css-variable('steps-size--icon--dot')} / 2);
+          left: calc(50% + #{mixins.css-variable('steps', 'size', 'icon', 'dot')} / 2);
           z-index: 0;
-          width: calc(100% - #{mixins.css-variable('steps-size--icon--dot')});
+          width: calc(100% - #{mixins.css-variable('steps', 'size', 'icon', 'dot')});
         }
 
         @include mixins.be('step', 'content', false) {
@@ -32,7 +32,7 @@
             }
 
             @include mixins.e('tail') {
-              left: calc(50% + #{mixins.css-variable('steps-size--icon')} - 2px);
+              left: calc(50% + #{mixins.css-variable('steps', 'size', 'icon')} - 2px);
             }
 
             @include mixins.e('content') {

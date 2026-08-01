@@ -9,7 +9,7 @@
 
     @include mixins.e('line-left') {
       flex: 1;
-      border-top: mixins.css-variable('divider-border');
+      border-top: mixins.css-variable('divider', 'border');
     }
 
     @include mixins.e('title') {
@@ -18,7 +18,7 @@
 
     @include mixins.e('line-right') {
       flex: 1;
-      border-top: mixins.css-variable('divider-border');
+      border-top: mixins.css-variable('divider', 'border');
     }
   }
 
@@ -32,7 +32,7 @@
     @include mixins.e('line-left') {
       width: 100%;
       height: 100%;
-      border-right: mixins.css-variable('divider-border');
+      border-right: mixins.css-variable('divider', 'border');
     }
 
     @include mixins.e('line-right') {
@@ -42,25 +42,25 @@
 
   @include mixins.m('default') {
     @include mixins.e('line-left') {
-      border-color: mixins.css-variable('divider-border-color--default');
+      border-color: mixins.css-variable('divider', 'border-color');
     }
   }
 
   @include mixins.m('strong') {
     @include mixins.e('line-left') {
-      border-color: mixins.css-variable('divider-border-color--strong');
+      border-color: mixins.css-variable('divider', 'border-color', 'strong');
     }
   }
 
   @include mixins.parallel-modifier('title-left', 'horizontal') {
     @include mixins.e('line-left') {
-      flex: 0 0 mixins.css-variable('divider-width-placement-not-center');
+      flex: 0 0 mixins.css-variable('divider', 'size', 'placement-not-center', 'width');
     }
   }
 
   @include mixins.parallel-modifier('title-right', 'horizontal') {
     @include mixins.e('line-right') {
-      flex: 0 0 mixins.css-variable('divider-width-placement-not-center');
+      flex: 0 0 mixins.css-variable('divider', 'size', 'placement-not-center', 'width');
     }
   }
 }

@@ -1,5 +1,7 @@
 @use '../../../../styles/mixins/function';
 
 $values: (
-  'transition-time': #{function.css-variable('transition-time')},
+  transition: (
+    duration: #{function.css-variable('transition-time')},
+  ),
 );

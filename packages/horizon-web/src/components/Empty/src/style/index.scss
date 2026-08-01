@@ -8,13 +8,14 @@
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-  padding: mixins.css-variable('empty-padding') 0;
+  padding: mixins.css-variable('empty', 'spacing', 'padding') 0;
   text-align: center;
 
   @include mixins.e('image') {
-    width: mixins.css-variable('empty-width--medium');
+    width: mixins.css-variable('empty', 'size', 'width', 'medium');
 
-    img,svg {
+    img,
+    svg {
       width: 100%;
       height: 100%;
       object-fit: contain;
@@ -25,25 +26,25 @@
 
   @include mixins.e('description') {
     margin: 0;
-    padding: 0 mixins.css-variable('empty-padding--description');
-    color: mixins.css-variable('empty-color--description');
-    font-size: mixins.css-variable('empty-font-size--description');
-    line-height: mixins.css-variable('empty-line-height--description');
+    padding: 0 mixins.css-variable('empty', 'spacing', 'description', 'padding');
+    color: mixins.css-variable('empty', 'color', 'description');
+    font-size: mixins.css-variable('empty', 'font-size', 'description');
+    line-height: mixins.css-variable('empty', 'line-height', 'description');
   }
 
   @include mixins.e('bottom') {
-    margin-top: mixins.css-variable('empty-margin-top--bottom');
+    margin-top: mixins.css-variable('empty', 'spacing', 'bottom', 'margin-top');
   }
 
   @include mixins.m('small') {
     @include mixins.e('image') {
-      width: mixins.css-variable('empty-width--small');
+      width: mixins.css-variable('empty', 'size', 'width', 'small');
     }
   }
 
   @include mixins.m('large') {
     @include mixins.e('image') {
-      width: mixins.css-variable('empty-width--large');
+      width: mixins.css-variable('empty', 'size', 'width', 'large');
     }
   }
 }

@@ -3,16 +3,16 @@
 @include mixins.b('audio-player') {
   display: flex;
   align-items: center;
-  gap: mixins.css-variable('audio-player-gap');
+  gap: mixins.css-variable('audio-player', 'spacing', 'gap');
   box-sizing: border-box;
   width: 100%;
   min-width: 360px;
-  height: mixins.css-variable('audio-player-height');
-  padding: mixins.css-variable('audio-player-padding');
-  color: mixins.css-variable('audio-player-color');
-  background: mixins.css-variable('audio-player-bg');
-  border: mixins.css-variable('audio-player-border');
-  border-radius: mixins.css-variable('audio-player-border-radius');
+  height: mixins.css-variable('audio-player', 'size', 'height');
+  padding: mixins.css-variable('audio-player', 'spacing', 'padding');
+  color: mixins.css-variable('audio-player', 'color');
+  background: mixins.css-variable('audio-player', 'background');
+  border: mixins.css-variable('audio-player', 'border');
+  border-radius: mixins.css-variable('audio-player', 'border-radius');
 
   audio {
     display: none;
@@ -25,7 +25,7 @@
   @include mixins.e('time') {
     flex: 0 0 auto;
     min-width: 38px;
-    color: mixins.css-variable('audio-player-color--secondary');
+    color: mixins.css-variable('audio-player', 'color', 'secondary');
     font-size: mixins.css-variable('text-sm');
     font-variant-numeric: tabular-nums;
   }
@@ -62,14 +62,14 @@
     flex: 1 1 0;
     min-width: 1px;
     max-width: 4px;
-    background: mixins.css-variable('audio-player-bg--bar');
+    background: mixins.css-variable('audio-player', 'background', 'bar');
     border-radius: mixins.css-variable('radius-pill');
     transition:
       height 160ms ease,
       background-color 160ms ease;
 
     @include mixins.is('played') {
-      background: mixins.css-variable('audio-player-bg--bar-played');
+      background: mixins.css-variable('audio-player', 'background', 'bar-played');
     }
   }
 
@@ -85,7 +85,7 @@
   }
 
   @include mixins.is('disabled') {
-    color: mixins.css-variable('audio-player-color--disabled');
+    color: mixins.css-variable('audio-player', 'color', 'disabled');
     cursor: not-allowed;
 
     @include mixins.e(('waveform', 'rate')) {

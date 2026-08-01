@@ -1,15 +1,23 @@
 @use '../../../../styles/mixins/function';
 
 $values: (
-  'height': 64px,
-  'padding': 12px 16px,
-  'gap': 12px,
-  'bg': #{function.css-variable('bg-default')},
-  'border': 1px solid #{function.css-variable('border-noninteractive')},
-  'border-radius': #{function.css-variable('radius-l')},
-  'color': #{function.css-variable('text-primary')},
-  'color--secondary': #{function.css-variable('text-secondary')},
-  'color--disabled': #{function.css-variable('text-disabled')},
-  'bg--bar': #{function.css-variable('bg-tertiary')},
-  'bg--bar-played': #{function.css-variable('bg-brand-default')},
+  size: (
+    height: 64px,
+  ),
+  color: (
+    '': #{function.css-variable('text-primary')},
+    secondary: #{function.css-variable('text-secondary')},
+    disabled: #{function.css-variable('text-disabled')},
+  ),
+  border: 1px solid #{function.css-variable('border-noninteractive')},
+  border-radius: #{function.css-variable('radius-l')},
+  background: (
+    '': #{function.css-variable('bg-default')},
+    bar: #{function.css-variable('bg-tertiary')},
+    bar-played: #{function.css-variable('bg-brand-default')},
+  ),
+  spacing: (
+    padding: 12px 16px,
+    gap: 12px,
+  ),
 );

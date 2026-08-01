@@ -1,106 +1,291 @@
 @use '../../../../styles/mixins/function';
 
 $values: (
-  'size--header-switcher--icon': 30px,
-  'min-height--day--month': 120px,
-  'height--day-header': 32px,
-  'height--flag--month': 24px,
-  'height--year--month-header': 48px,
-  'height--year--week': 38px,
-  'min-height--year--month-day': 26px,
-  'height--week--header': 80px,
-  'height--week--header--week': 24px,
-  'width--week--left': 80px,
-  'height--week--hour-cell': 60px,
-  'size--week--current-time--prenode': 10px,
-  'font-size--header-switcher-date': #{function.css-variable('text-lg')},
-  'font-size--week--month': #{function.css-variable('text-base')},
-  'font-size--flag--month': #{function.css-variable('text-sm')},
-  'font-size--year--month-header--num': #{function.css-variable('text-lg')},
-  'font-size--year--month-body--week': #{function.css-variable('text-base')},
-  'font-size--year--month-body--day': #{function.css-variable('text-base')},
-  'font-size--week--header-week--num': #{function.css-variable('text-2xl')},
-  'font-size--week--time-scroll--current-time-label': #{function.css-variable('text-sm')},
-  'font-weight--header-switcher-date': #{function.css-variable('weight-strong')},
-  'font-weight--day-number': #{function.css-variable('weight-strong')},
-  'font-weight--year--month-header--num': #{function.css-variable('weight-strong')},
-  'font-weight--week--header-week': #{function.css-variable('weight-normal')},
-  'font-weight--week--header-week--num': #{function.css-variable('weight-strong')},
-  'font-weight--flag-content': #{function.css-variable('weight-strong')},
-  'color--header-today': #{function.css-variable('text-primary')},
-  'color--week--month': #{function.css-variable('text-tertiary')},
-  'color--day-number--not-current-month': #{function.css-variable('text-disabled')},
-  'color--day-number--current-month': #{function.css-variable('text-primary')},
-  'color--day-number--current-day': #{function.css-variable('text-inverse')},
-  'color--day-number--current-day--disabled': #{function.css-variable('text-disabled')},
-  'color--day--disabled': #{function.css-variable('text-disabled')},
-  'color--year--month-header--num': #{function.css-variable('text-primary')},
-  'color--year--month-body--week': #{function.css-variable('text-secondary')},
-  'color--year--month-body--day': #{function.css-variable('text-disabled')},
-  'color--year--month-body--day--current-month': #{function.css-variable('text-primary')},
-  'color--year--month-body--day--current-day': #{function.css-variable('text-inverse')},
-  'color--year--month-body--day--disabled': #{function.css-variable('text-disabled')},
-  'color--week--header-week': #{function.css-variable('text-tertiary')},
-  'color--week--header-week--num': #{function.css-variable('text-primary')},
-  'color--week--header--time-zone': #{function.css-variable('text-tertiary')},
-  'color--week--time-scroll--label': #{function.css-variable('text-tertiary')},
-  'color--week--header--today': #{function.css-variable('text-brand-default')},
-  'bg--header-switcher': #{function.css-variable('bg-secondary')},
-  'bg--header-switcher-item--hover': #{function.css-variable('bg-hover')},
-  'bg--header-switcher-item--active': #{function.css-variable('bg-press')},
-  'bg--day': #{function.css-variable('bg-default')},
-  'bg--day--hover': #{function.css-variable('bg-secondary')},
-  'bg--day--active': #{function.css-variable('bg-weak-hover')},
-  'bg--day-number--current-day': #{function.css-variable('bg-brand-default')},
-  'bg--day-number--current-day--disabled': #{function.css-variable('bg-disabled')},
-  'bg--flag--month--default': #{function.css-variable('bg-disabled')},
-  'bg--flag--month--default--hover': #{function.css-variable('text-disabled')},
-  'bg--flag-prefix--month--default': #{function.css-variable('text-secondary')},
-  'bg--flag--month--primary': #{function.css-variable('bg-info-weak-activated')},
-  'bg--flag--month--primary--hover': #{function.css-variable('bg-info-hover')},
-  'bg--flag-prefix--month--primary': #{function.css-variable('bg-info-default')},
-  'bg--flag--month--success': #{function.css-variable('bg-success-weak-activated')},
-  'bg--flag--month--success--hover': #{function.css-variable('bg-success-hover')},
-  'bg--flag-prefix--month--success': #{function.css-variable('bg-success-default')},
-  'bg--flag--month--warning': #{function.css-variable('bg-warning-weak-activated')},
-  'bg--flag--month--warning--hover': #{function.css-variable('bg-warning-hover')},
-  'bg--flag-prefix--month--warning': #{function.css-variable('bg-warning-default')},
-  'bg--flag--month--error': #{function.css-variable('bg-error-weak-activated')},
-  'bg--flag--month--error--hover': #{function.css-variable('bg-error-hover')},
-  'bg--flag-prefix--month--error': #{function.css-variable('bg-error-default')},
-  'bg--year--month-body--day--current-day': #{function.css-variable('bg-brand-default')},
-  'bg--year--month-body--day--current-day--hover': #{function.css-variable('bg-hover')},
-  'bg--year--month-body--day--current-day--active': #{function.css-variable('bg-press')},
-  'bg--year--month-body--day--disabled': #{function.css-variable('bg-disabled')},
-  'bg--year--month-body--day--has-flag': #{function.css-variable('bg-disabled')},
-  'bg--week--disabled-hours': #{function.css-variable('bg-disabled')},
-  'bg--week--current-time': #{function.css-variable('bg-error-hover')},
-  'bg--week--current-time--disabled': #{function.css-variable('bg-error-press')},
-  'border-color--header-switcher': #{function.css-variable('border-default')},
-  'border-color--day-row': #{function.css-variable('divider-default')},
-  'border-color--year--month-body': #{function.css-variable('border-default')},
-  'border-color----week--divider': #{function.css-variable('border-default')},
-  'border--header-switcher': 1px solid #{function.css-variable('calendar-border-color--header-switcher')},
-  'border--day-row': 1px solid #{function.css-variable('calendar-border-color--day-row')},
-  'border--year--month-body': 1px solid #{function.css-variable('calendar-border-color--year--month-body')},
-  'border--week--divider': 1px solid #{function.css-variable('calendar-border-color----week--divider')},
-  'border-radius': #{function.css-variable('radius-m')},
-  'border-radius--pill': #{function.css-variable('radius-pill')},
-  'border-radius--week--current-time--prenode': #{function.css-variable('radius-circle')},
-  'border-radius--flag': #{function.css-variable('radius-s')},
-  'padding--header': #{function.css-variable('spacing-7')} 7px,
-  'padding--header-switcher': #{function.css-variable('spacing-2')},
-  'padding-x--header-switcher-date': #{function.css-variable('spacing-5')},
-  'padding-x--header-suffix': #{function.css-variable('spacing-5')},
-  'padding--day--month': #{function.css-variable('spacing-3')},
-  'padding-x--header': #{function.css-variable('spacing-3')},
-  'padding--year--month-header': 16px 16px 8px,
-  'padding--year--month-wrapper': #{function.css-variable('spacing-3')},
-  'padding--week--date-cell': 0 #{function.css-variable('spacing-4')} #{function.css-variable('spacing-5')},
-  'padding-bottom--week--header--time-zone': #{function.css-variable('spacing-5')},
-  'margin-right--header-today': #{function.css-variable('spacing-4')},
-  'margin-bottom--week-wrapper--month': #{function.css-variable('spacing-5')},
-  'margin-bottom--flag--month': #{function.css-variable('spacing-2')},
-  'padding--flag': 4px 6px,
-  'margin-right--flag-title': #{function.css-variable('spacing-2')},
+  size: (
+    header-switcher: (
+      icon: 30px,
+    ),
+    week: (
+      current-time: (
+        indicator: 10px,
+      ),
+      header: (
+        height: 80px,
+        week: (
+          height: 24px,
+        ),
+      ),
+      hour-cell: (
+        height: 60px,
+      ),
+      left: (
+        width: 80px,
+      ),
+    ),
+    day: (
+      month: (
+        min-height: 120px,
+      ),
+    ),
+    year: (
+      month-day: (
+        min-height: 26px,
+      ),
+      month-header: (
+        height: 48px,
+      ),
+      week: (
+        height: 38px,
+      ),
+    ),
+    day-header: (
+      height: 32px,
+    ),
+    flag: (
+      month: (
+        height: 24px,
+      ),
+    ),
+  ),
+  font-size: (
+    header-switcher-date: #{function.css-variable('text-lg')},
+    week: (
+      month: #{function.css-variable('text-base')},
+      header-week: (
+        '': #{function.css-variable('text-base')},
+        num: #{function.css-variable('text-2xl')},
+      ),
+      time-scroll: (
+        current-time-label: #{function.css-variable('text-sm')},
+      ),
+    ),
+    flag: (
+      month: #{function.css-variable('text-sm')},
+    ),
+    year: (
+      month-header: (
+        num: #{function.css-variable('text-lg')},
+      ),
+      month-body: (
+        week: #{function.css-variable('text-base')},
+        day: #{function.css-variable('text-base')},
+      ),
+    ),
+  ),
+  font-weight: (
+    header-switcher-date: #{function.css-variable('weight-strong')},
+    day-number: #{function.css-variable('weight-strong')},
+    year: (
+      month-header: (
+        num: #{function.css-variable('weight-strong')},
+      ),
+    ),
+    week: (
+      header-week: (
+        '': #{function.css-variable('weight-normal')},
+        num: #{function.css-variable('weight-strong')},
+      ),
+    ),
+    flag-content: #{function.css-variable('weight-strong')},
+  ),
+  color: (
+    header-today: #{function.css-variable('text-primary')},
+    week: (
+      month: #{function.css-variable('text-tertiary')},
+      header-week: (
+        '': #{function.css-variable('text-tertiary')},
+        num: #{function.css-variable('text-primary')},
+      ),
+      header: (
+        time-zone: #{function.css-variable('text-tertiary')},
+        today: #{function.css-variable('text-brand-default')},
+      ),
+      time-scroll: (
+        label: #{function.css-variable('text-tertiary')},
+      ),
+    ),
+    day-number: (
+      not-current-month: #{function.css-variable('text-disabled')},
+      current-month: #{function.css-variable('text-primary')},
+      current-day: (
+        '': #{function.css-variable('text-inverse')},
+        disabled: #{function.css-variable('text-disabled')},
+      ),
+    ),
+    day: (
+      disabled: #{function.css-variable('text-disabled')},
+    ),
+    year: (
+      month-header: (
+        num: #{function.css-variable('text-primary')},
+      ),
+      month-body: (
+        week: #{function.css-variable('text-secondary')},
+        day: (
+          '': #{function.css-variable('text-disabled')},
+          current-month: #{function.css-variable('text-primary')},
+          current-day: #{function.css-variable('text-inverse')},
+          disabled: #{function.css-variable('text-disabled')},
+        ),
+      ),
+    ),
+  ),
+  border-color: (
+    header-switcher: #{function.css-variable('border-default')},
+    day-row: #{function.css-variable('divider-default')},
+    year: (
+      month-body: #{function.css-variable('border-default')},
+    ),
+    week: (
+      divider: #{function.css-variable('border-default')},
+    ),
+  ),
+  border: (
+    header-switcher: 1px solid
+      #{function.css-variable('calendar', 'border-color', 'header-switcher')},
+    day-row: 1px solid #{function.css-variable('calendar', 'border-color', 'day-row')},
+    year: (
+      month-body: 1px solid
+        #{function.css-variable('calendar', 'border-color', 'year', 'month-body')},
+    ),
+    week: (
+      divider: 1px solid #{function.css-variable('calendar', 'border-color', 'week', 'divider')},
+    ),
+  ),
+  border-radius: (
+    '': #{function.css-variable('radius-m')},
+    pill: #{function.css-variable('radius-pill')},
+    week: (
+      current-time: (
+        indicator: #{function.css-variable('radius-circle')},
+      ),
+    ),
+    flag: #{function.css-variable('radius-s')},
+  ),
+  background: (
+    header-switcher: #{function.css-variable('bg-secondary')},
+    header-switcher-item: (
+      hover: #{function.css-variable('bg-hover')},
+      active: #{function.css-variable('bg-press')},
+    ),
+    day: (
+      '': #{function.css-variable('bg-default')},
+      hover: #{function.css-variable('bg-secondary')},
+      active: #{function.css-variable('bg-weak-hover')},
+    ),
+    day-number: (
+      current-day: (
+        '': #{function.css-variable('bg-brand-default')},
+        disabled: #{function.css-variable('bg-disabled')},
+      ),
+    ),
+    flag: (
+      month: (
+        '': #{function.css-variable('bg-disabled')},
+        default: (
+          hover: #{function.css-variable('text-disabled')},
+        ),
+        primary: (
+          '': #{function.css-variable('bg-info-weak-activated')},
+          hover: #{function.css-variable('bg-info-hover')},
+        ),
+        success: (
+          '': #{function.css-variable('bg-success-weak-activated')},
+          hover: #{function.css-variable('bg-success-hover')},
+        ),
+        warning: (
+          '': #{function.css-variable('bg-warning-weak-activated')},
+          hover: #{function.css-variable('bg-warning-hover')},
+        ),
+        error: (
+          '': #{function.css-variable('bg-error-weak-activated')},
+          hover: #{function.css-variable('bg-error-hover')},
+        ),
+      ),
+    ),
+    flag-prefix: (
+      month: (
+        '': #{function.css-variable('text-secondary')},
+        primary: #{function.css-variable('bg-info-default')},
+        success: #{function.css-variable('bg-success-default')},
+        warning: #{function.css-variable('bg-warning-default')},
+        error: #{function.css-variable('bg-error-default')},
+      ),
+    ),
+    year: (
+      month-body: (
+        day: (
+          current-day: (
+            '': #{function.css-variable('bg-brand-default')},
+            hover: #{function.css-variable('bg-hover')},
+            active: #{function.css-variable('bg-press')},
+          ),
+          disabled: #{function.css-variable('bg-disabled')},
+          has-flag: #{function.css-variable('bg-disabled')},
+        ),
+      ),
+    ),
+    week: (
+      disabled-hours: #{function.css-variable('bg-disabled')},
+      current-time: (
+        '': #{function.css-variable('bg-error-hover')},
+        disabled: #{function.css-variable('bg-error-press')},
+      ),
+    ),
+  ),
+  spacing: (
+    header: (
+      padding: #{function.css-variable('spacing-7')} 7px,
+      padding-x: #{function.css-variable('spacing-3')},
+    ),
+    header-switcher: (
+      padding: #{function.css-variable('spacing-2')},
+    ),
+    day: (
+      month: (
+        padding: #{function.css-variable('spacing-3')},
+      ),
+    ),
+    year: (
+      month-header: (
+        padding: 16px 16px 8px,
+      ),
+      month-wrapper: (
+        padding: #{function.css-variable('spacing-3')},
+      ),
+    ),
+    week: (
+      date-cell: (
+        padding: 0 #{function.css-variable('spacing-4')} #{function.css-variable('spacing-5')},
+      ),
+      header: (
+        time-zone: (
+          padding-bottom: #{function.css-variable('spacing-5')},
+        ),
+      ),
+    ),
+    flag: (
+      padding: 4px 6px,
+      month: (
+        margin-bottom: #{function.css-variable('spacing-2')},
+      ),
+    ),
+    header-switcher-date: (
+      padding-x: #{function.css-variable('spacing-5')},
+    ),
+    header-suffix: (
+      padding-x: #{function.css-variable('spacing-5')},
+    ),
+    header-today: (
+      margin-right: #{function.css-variable('spacing-4')},
+    ),
+    flag-title: (
+      margin-right: #{function.css-variable('spacing-2')},
+    ),
+    week-wrapper: (
+      month: (
+        margin-bottom: #{function.css-variable('spacing-5')},
+      ),
+    ),
+  ),
 );

@@ -4,11 +4,11 @@
   position: relative;
   display: inline-flex;
   max-width: 100%;
-  color: mixins.css-variable('input-otp-color');
+  color: mixins.css-variable('input-otp', 'color');
 
   @include mixins.e('cells') {
     display: flex;
-    gap: mixins.css-variable('input-otp-gap');
+    gap: mixins.css-variable('input-otp', 'spacing', 'gap');
     max-width: 100%;
   }
 
@@ -18,15 +18,15 @@
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    width: mixins.css-variable('input-otp-cell-size--medium');
+    width: mixins.css-variable('input-otp', 'size', 'cell', 'medium');
     min-width: 0;
-    height: mixins.css-variable('input-otp-cell-size--medium');
+    height: mixins.css-variable('input-otp', 'size', 'cell', 'medium');
     font-weight: 500;
-    font-size: mixins.css-variable('input-otp-font-size--medium');
-    background: mixins.css-variable('input-otp-bg');
-    border: 1px solid mixins.css-variable('input-otp-border-color');
-    border-radius: mixins.css-variable('input-otp-border-radius');
-    transition: border-color mixins.css-variable('input-otp-transition-time');
+    font-size: mixins.css-variable('input-otp', 'font-size', 'medium');
+    background: mixins.css-variable('input-otp', 'background');
+    border: 1px solid mixins.css-variable('input-otp', 'border-color');
+    border-radius: mixins.css-variable('input-otp', 'border-radius');
+    transition: border-color mixins.css-variable('input-otp', 'transition', 'duration');
   }
 
   @include mixins.e('native') {
@@ -49,29 +49,29 @@
 
   &:not(&.is-disabled, &.is-readonly):hover {
     @include mixins.e('cell') {
-      border-color: mixins.css-variable('input-otp-border-color--hover');
+      border-color: mixins.css-variable('input-otp', 'border-color', 'hover');
     }
   }
 
   @include mixins.is('focused') {
     @include mixins.em('cell', 'active') {
-      border-color: mixins.css-variable('input-otp-border-color--focus');
-      box-shadow: 0 0 0 1px mixins.css-variable('input-otp-border-color--focus');
+      border-color: mixins.css-variable('input-otp', 'border-color', 'focus');
+      box-shadow: 0 0 0 1px mixins.css-variable('input-otp', 'border-color', 'focus');
     }
   }
 
   @include mixins.is('error') {
     @include mixins.e('cell') {
-      border-color: mixins.css-variable('input-otp-border-color--error');
+      border-color: mixins.css-variable('input-otp', 'border-color', 'error');
     }
   }
 
   @include mixins.is('disabled') {
-    color: mixins.css-variable('input-otp-color--disabled');
+    color: mixins.css-variable('input-otp', 'color', 'disabled');
 
     @include mixins.e('cell') {
-      background: mixins.css-variable('input-otp-bg--disabled');
-      border-color: mixins.css-variable('input-otp-border-color--disabled');
+      background: mixins.css-variable('input-otp', 'background', 'disabled');
+      border-color: mixins.css-variable('input-otp', 'border-color', 'disabled');
     }
 
     @include mixins.e('native') {
@@ -87,17 +87,17 @@
 
   @include mixins.m('small') {
     @include mixins.e('cell') {
-      width: mixins.css-variable('input-otp-cell-size--small');
-      height: mixins.css-variable('input-otp-cell-size--small');
-      font-size: mixins.css-variable('input-otp-font-size--small');
+      width: mixins.css-variable('input-otp', 'size', 'cell', 'small');
+      height: mixins.css-variable('input-otp', 'size', 'cell', 'small');
+      font-size: mixins.css-variable('input-otp', 'font-size', 'small');
     }
   }
 
   @include mixins.m('large') {
     @include mixins.e('cell') {
-      width: mixins.css-variable('input-otp-cell-size--large');
-      height: mixins.css-variable('input-otp-cell-size--large');
-      font-size: mixins.css-variable('input-otp-font-size--large');
+      width: mixins.css-variable('input-otp', 'size', 'cell', 'large');
+      height: mixins.css-variable('input-otp', 'size', 'cell', 'large');
+      font-size: mixins.css-variable('input-otp', 'font-size', 'large');
     }
   }
 }

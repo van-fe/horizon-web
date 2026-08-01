@@ -11,7 +11,7 @@
   @include mixins.e('container') {
     display: flex;
     flex-wrap: wrap;
-    grid-gap: mixins.css-variable('tag-spacing-siblings');
+    grid-gap: mixins.css-variable('tag', 'spacing', 'siblings');
     min-width: 100%;
     max-width: max-content;
   }
@@ -49,30 +49,42 @@
             @include mixins.is-not('editing') {
               @include mixins.is('last-tag') {
                 flex: 1;
-                min-width: calc(2em + 2 * #{mixins.css-variable('tag-padding-x')});
+                min-width: calc(2em + 2 * #{mixins.css-variable('tag', 'spacing', 'padding-x')});
                 max-width: fit-content;
 
                 @include mixins.is('closable') {
-                  min-width: calc(2em + 2 * #{mixins.css-variable('tag-padding-x')} + #{mixins.css-variable('tag-gap--inner')} + #{mixins.css-variable('tag-size--icon')});
+                  min-width: calc(
+                    2em + 2 * #{mixins.css-variable('tag', 'spacing', 'padding-x')} +
+                      #{mixins.css-variable('tag', 'spacing', 'inner', 'gap')} +
+                      #{mixins.css-variable('tag', 'size', 'icon')}
+                  );
 
                   &#{mixins.block-modifier-name('small', 'tag')} {
-                    min-width: calc(2em + 2 * #{mixins.css-variable('tag-padding-x')} + #{mixins.css-variable('tag-gap--inner')} + #{mixins.css-variable('tag-size--icon--small')});
+                    min-width: calc(
+                      2em + 2 * #{mixins.css-variable('tag', 'spacing', 'padding-x')} +
+                        #{mixins.css-variable('tag', 'spacing', 'inner', 'gap')} +
+                        #{mixins.css-variable('tag', 'size', 'icon', 'small')}
+                    );
                   }
 
                   &#{mixins.block-modifier-name('large', 'tag')} {
-                    min-width: calc(2em + 2 * #{mixins.css-variable('tag-padding-x')} + #{mixins.css-variable('tag-gap--inner')} + #{mixins.css-variable('tag-size--icon--large')});
+                    min-width: calc(
+                      2em + 2 * #{mixins.css-variable('tag', 'spacing', 'padding-x')} +
+                        #{mixins.css-variable('tag', 'spacing', 'inner', 'gap')} +
+                        #{mixins.css-variable('tag', 'size', 'icon', 'large')}
+                    );
                   }
                 }
 
                 &#{mixins.block-modifier-name('equally', 'tag')} {
-                  min-width: mixins.css-variable('tag-size');
+                  min-width: mixins.css-variable('tag', 'size');
 
                   &#{mixins.block-modifier-name('small', 'tag')} {
-                    min-width: mixins.css-variable('tag-size--small');
+                    min-width: mixins.css-variable('tag', 'size', 'small');
                   }
 
                   &#{mixins.block-modifier-name('large', 'tag')} {
-                    min-width: mixins.css-variable('tag-size--large');
+                    min-width: mixins.css-variable('tag', 'size', 'large');
                   }
                 }
               }
@@ -86,7 +98,7 @@
   @include mixins.e('popper-inner') {
     display: flex;
     flex-wrap: wrap;
-    grid-gap: mixins.css-variable('tag-spacing-siblings');
+    grid-gap: mixins.css-variable('tag', 'spacing', 'siblings');
     max-width: 100%;
 
     @include mixins.nested('tag') {
@@ -97,7 +109,7 @@
   @include mixins.e('tags') {
     display: inline-flex;
     flex-wrap: wrap;
-    grid-gap: mixins.css-variable('tag-spacing-siblings');
+    grid-gap: mixins.css-variable('tag', 'spacing', 'siblings');
     width: fit-content;
 
     @include mixins.nested('tag') {
@@ -107,13 +119,13 @@
 
   @include mixins.m('small') {
     @include mixins.e('container', false) {
-      grid-gap: mixins.css-variable('tag-spacing-siblings--small');
+      grid-gap: mixins.css-variable('tag', 'spacing', 'siblings', 'small');
     }
   }
 
   @include mixins.m('large') {
     @include mixins.e('container', false) {
-      grid-gap: mixins.css-variable('tag-spacing-siblings--large');
+      grid-gap: mixins.css-variable('tag', 'spacing', 'siblings', 'large');
     }
   }
 

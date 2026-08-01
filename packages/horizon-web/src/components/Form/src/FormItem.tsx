@@ -306,7 +306,7 @@ export default defineComponent({
               <HPopContent
                 theme={helperTheme.value}
                 class={cls(classHelper.e('helper'))}
-                style={`${cssVariableKey('popover-padding--content')}: ${sizeUnitTransform(helperOptions.value.padding)}`}
+                style={`${cssVariableKey('popover', 'spacing', 'content', 'padding')}: ${sizeUnitTransform(helperOptions.value.padding)}`}
               >
                 {slots.helper?.() ?? (
                   <Fragment>

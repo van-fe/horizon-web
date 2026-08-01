@@ -4,11 +4,11 @@
   display: flex;
   align-items: center;
   @include mixins.e('content') {
-    color: mixins.css-variable('rate-color--content');
+    color: mixins.css-variable('rate', 'color', 'content');
   }
   @include mixins.e('icon') {
     position: relative;
-    line-height:100%;
+    line-height: 100%;
   }
 }
 
@@ -32,7 +32,7 @@
     }
 
     @include mixins.e('tooltip') {
-      padding-left: mixins.css-variable('rate-padding-left--tooltip');
+      padding-left: mixins.css-variable('rate', 'spacing', 'tooltip', 'padding-left');
     }
   }
 }

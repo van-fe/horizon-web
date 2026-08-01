@@ -1,10 +1,22 @@
 @use '../../../../styles/mixins/function';
 
 $values: (
-  'width-placement-not-center': #{function.css-variable('spacing-8')},
-  'border-color--default': #{function.css-variable('divider-default')},
-  'border-color--strong': #{function.css-variable('divider-strong')},
-  'border': 1px solid #{function.css-variable('divider-border-color--default')},
-  'margin--horizontal': #{function.css-variable('spacing-5')},
-  'margin--vertical': #{function.css-variable('spacing-3')},
+  size: (
+    placement-not-center: (
+      width: #{function.css-variable('spacing-8')},
+    ),
+  ),
+  border-color: (
+    '': #{function.css-variable('divider-default')},
+    strong: #{function.css-variable('divider-strong')},
+  ),
+  border: 1px solid #{function.css-variable('divider', 'border-color')},
+  spacing: (
+    horizontal: (
+      margin: #{function.css-variable('spacing-5')},
+    ),
+    vertical: (
+      margin: #{function.css-variable('spacing-3')},
+    ),
+  ),
 );

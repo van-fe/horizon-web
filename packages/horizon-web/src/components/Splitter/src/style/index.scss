@@ -11,23 +11,23 @@
   @include mixins.e('separator') {
     position: relative;
     z-index: 1;
-    flex: 0 0 mixins.css-variable('splitter-separator-size');
+    flex: 0 0 mixins.css-variable('splitter', 'size', 'separator', 'hit-area');
     touch-action: none;
     outline: none;
 
     &::before {
       position: absolute;
       content: '';
-      background: mixins.css-variable('splitter-separator-color');
+      background: mixins.css-variable('splitter', 'background', 'separator');
       transition: background-color mixins.css-variable('transition-time-fast');
     }
 
     &:hover::before {
-      background: mixins.css-variable('splitter-separator-hover-color');
+      background: mixins.css-variable('splitter', 'background', 'separator', 'hover');
     }
 
     &:focus-visible::before {
-      background: mixins.css-variable('splitter-separator-focus-color');
+      background: mixins.css-variable('splitter', 'background', 'separator', 'focus');
     }
   }
 
@@ -35,7 +35,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    background: mixins.css-variable('splitter-separator-color');
+    background: mixins.css-variable('splitter', 'background', 'separator');
     border-radius: mixins.css-variable('radius-pill');
     transform: translate(-50%, -50%);
   }
@@ -56,8 +56,8 @@
     }
 
     @include mixins.e('handle') {
-      width: mixins.css-variable('splitter-handle-thickness');
-      height: mixins.css-variable('splitter-handle-length');
+      width: mixins.css-variable('splitter', 'size', 'handle', 'thickness');
+      height: mixins.css-variable('splitter', 'size', 'handle', 'length');
     }
   }
 
@@ -77,8 +77,8 @@
     }
 
     @include mixins.e('handle') {
-      width: mixins.css-variable('splitter-handle-length');
-      height: mixins.css-variable('splitter-handle-thickness');
+      width: mixins.css-variable('splitter', 'size', 'handle', 'length');
+      height: mixins.css-variable('splitter', 'size', 'handle', 'thickness');
     }
   }
 

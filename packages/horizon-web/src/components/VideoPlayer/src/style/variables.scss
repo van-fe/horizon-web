@@ -1,59 +1,143 @@
 @use '../../../../styles/mixins/function';
 
 $values: (
-  'font-family': #{function.css-variable('font-family')},
-  'height--progress-control': 20px,
-  'height--progress-holder': 4px,
-  'size--progress-button': 16px,
-  'size--control-icon': 32px,
-  'height--time-text': 18px,
-  'width--volume-bar--slider--vertical': 4px,
-  'height--volume-bar--slider--vertical': 80px,
-  'size--loading-spinner': 28px,
-  'width--quality-selector': 53px,
-  'height--quality-selector': 24px,
-  'width--error-content': 300px,
-  'font-size--icon': #{function.css-variable('text-xl')},
-  'font-size--time-tooltip': #{function.css-variable('text-sm')},
-  'font-size--time-text': #{function.css-variable('text-sm')},
-  'font-size--volume-slider--level--vertical': #{function.css-variable('text-base')},
-  'font-size--menu-item--quality-selector': #{function.css-variable('text-sm')},
-  'font-size--error-content': #{function.css-variable('text-lg')},
-  'font-weight--time-tooltip': 420,
-  'font-weight--quality-selector--selected': #{function.css-variable('weight-strong')},
-  'line-height--time-tooltip': #{function.css-variable('line-height-standard')},
-  'line-height--menu-item--quality-selector': #{function.css-variable('line-height-standard')},
-  'color--time-tooltip': #{function.css-variable('text-inverse')},
-  'color--quality-selector--selected': #{function.css-variable('text-inverse')},
-  'color--error-content': #{function.css-variable('text-tertiary')},
-  'bg--time-tooltip': #{function.css-variable('bg-overlay-strong')},
-  'bg--progress--holder': #{function.css-variable('bg-default')},
-  'bg--progress': #{function.css-variable('text-brand-default')},
-  'bg--load-progress': #{function.css-variable('bg-secondary')},
-  'bg--control-icon': #{function.css-variable('bg-transparent')},
-  'bg--control-icon--hover': #{function.css-variable('bg-overlay-default')},
-  'bg--volume-control': #{function.css-variable('text-primary')},
-  'bg--volume-bar--slider--vertical': #{function.css-variable('text-secondary')},
-  'bg--menu-content--quality-selector': #{function.css-variable('bg-overlay-strong')},
-  'bg--quality-selector--selected': #{function.css-variable('bg-inverse')},
-  'bg--error': #{function.css-variable('bg-overlay-strong')},
-  'border-color--loading-spinner': #{function.css-variable('border-brand-default')},
-  'border-color--quality-selector': #{function.css-variable('text-secondary')},
-  'border--loading-spinner': 3px solid transparent,
-  'border--quality-selector': 0.5px solid
-    #{function.css-variable('video-player-border-color--quality-selector')},
-  'border-radius--time-tooltip': #{function.css-variable('radius-m')},
-  'border-radius--progress': 7px,
-  'border-radius--progress-button': #{function.css-variable('radius-circle')},
-  'border-radius--control-icon': #{function.css-variable('radius-m')},
-  'border-radius--volume-control': #{function.css-variable('radius-m')},
-  'border-radius--quality-selector': #{function.css-variable('radius-s')},
-  'margin--volume-bar--slider--vertical': #{function.css-variable('spacing-7')} auto,
-  'margin--loading-spinner': -14px 0 0 -14px,
-  'margin--error-content': 20px 0 60px,
-  'padding--icon': 6px,
-  'padding--time-tooltip': #{function.css-variable('spacing-4')},
-  'padding--progress': 0 30px,
-  'padding--menu-content--quality-selector': #{function.css-variable('spacing-3')} 0,
-  'padding--menu-item--quality-selector': 10px 0,
+  size: (
+    progress-control: (
+      height: 20px,
+    ),
+    progress-holder: (
+      height: 4px,
+    ),
+    time-text: (
+      height: 18px,
+    ),
+    volume-bar: (
+      slider: (
+        vertical: (
+          height: 80px,
+          width: 4px,
+        ),
+      ),
+    ),
+    quality-selector: (
+      height: 24px,
+      width: 53px,
+    ),
+    progress-button: 16px,
+    control-icon: 32px,
+    loading-spinner: 28px,
+    error-content: (
+      width: 300px,
+    ),
+  ),
+  font-family: #{function.css-variable('font-family')},
+  font-size: (
+    icon: #{function.css-variable('text-xl')},
+    time-tooltip: #{function.css-variable('text-sm')},
+    time-text: #{function.css-variable('text-sm')},
+    volume-slider: (
+      level: (
+        vertical: #{function.css-variable('text-base')},
+      ),
+    ),
+    menu-item: (
+      quality-selector: #{function.css-variable('text-sm')},
+    ),
+    error-content: #{function.css-variable('text-lg')},
+  ),
+  font-weight: (
+    time-tooltip: 420,
+    quality-selector: (
+      selected: #{function.css-variable('weight-strong')},
+    ),
+  ),
+  line-height: (
+    time-tooltip: #{function.css-variable('line-height-standard')},
+    menu-item: (
+      quality-selector: #{function.css-variable('line-height-standard')},
+    ),
+  ),
+  color: (
+    time-tooltip: #{function.css-variable('text-inverse')},
+    quality-selector: (
+      selected: #{function.css-variable('text-inverse')},
+    ),
+    error-content: #{function.css-variable('text-tertiary')},
+  ),
+  border-color: (
+    loading-spinner: #{function.css-variable('border-brand-default')},
+    quality-selector: #{function.css-variable('text-secondary')},
+  ),
+  border: (
+    loading-spinner: 3px solid transparent,
+    quality-selector: 0.5px solid
+      #{function.css-variable('video-player', 'border-color', 'quality-selector')},
+  ),
+  border-radius: (
+    time-tooltip: #{function.css-variable('radius-m')},
+    progress: 7px,
+    progress-button: #{function.css-variable('radius-circle')},
+    control-icon: #{function.css-variable('radius-m')},
+    volume-control: #{function.css-variable('radius-m')},
+    quality-selector: #{function.css-variable('radius-s')},
+  ),
+  background: (
+    time-tooltip: #{function.css-variable('bg-overlay-strong')},
+    progress: (
+      '': #{function.css-variable('text-brand-default')},
+      holder: #{function.css-variable('bg-default')},
+    ),
+    load-progress: #{function.css-variable('bg-secondary')},
+    control-icon: (
+      '': #{function.css-variable('bg-transparent')},
+      hover: #{function.css-variable('bg-overlay-default')},
+    ),
+    volume-control: #{function.css-variable('text-primary')},
+    volume-bar: (
+      slider: (
+        vertical: #{function.css-variable('text-secondary')},
+      ),
+    ),
+    menu-content: (
+      quality-selector: #{function.css-variable('bg-overlay-strong')},
+    ),
+    quality-selector: (
+      selected: #{function.css-variable('bg-inverse')},
+    ),
+    error: #{function.css-variable('bg-overlay-strong')},
+  ),
+  spacing: (
+    volume-bar: (
+      slider: (
+        vertical: (
+          margin: #{function.css-variable('spacing-7')} auto,
+        ),
+      ),
+    ),
+    loading-spinner: (
+      margin: -14px 0 0 -14px,
+    ),
+    error-content: (
+      margin: 20px 0 60px,
+    ),
+    icon: (
+      padding: 6px,
+    ),
+    time-tooltip: (
+      padding: #{function.css-variable('spacing-4')},
+    ),
+    progress: (
+      padding: 0 30px,
+    ),
+    menu-content: (
+      quality-selector: (
+        padding: #{function.css-variable('spacing-3')} 0,
+      ),
+    ),
+    menu-item: (
+      quality-selector: (
+        padding: 10px 0,
+      ),
+    ),
+  ),
 );

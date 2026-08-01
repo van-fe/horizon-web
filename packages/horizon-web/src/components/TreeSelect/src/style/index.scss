@@ -3,9 +3,9 @@
 @use 'item';
 
 @include mixins.b('tree-select') {
-  #{mixins.css-variable-name('tag-max-width')}: #{mixins.css-variable('tree-select-max-width--tag')};
-  #{mixins.css-variable-name('tag-max-width--large')}: #{mixins.css-variable('tree-select-max-width--tag')};
-  #{mixins.css-variable-name('tag-max-width--small')}: #{mixins.css-variable('tree-select-max-width--tag')};
+  #{mixins.css-variable-name('tag', 'size', 'max-width')}: #{mixins.css-variable('tree-select', 'size', 'tag', 'max-width')};
+  #{mixins.css-variable-name('tag', 'size', 'max-width', 'large')}: #{mixins.css-variable('tree-select', 'size', 'tag', 'max-width')};
+  #{mixins.css-variable-name('tag', 'size', 'max-width', 'small')}: #{mixins.css-variable('tree-select', 'size', 'tag', 'max-width')};
 
   @include mixins.is('inputable') {
     #{mixins.element-name('input', mixins.block('picker'))} {
@@ -20,9 +20,9 @@
   }
 
   @include mixins.em('tag-group', 'popper') {
-    #{mixins.css-variable-name('tag-max-width')}: #{mixins.css-variable('tree-select-max-width--tag')};
-    #{mixins.css-variable-name('tag-max-width--large')}: #{mixins.css-variable('tree-select-max-width--tag')};
-    #{mixins.css-variable-name('tag-max-width--small')}: #{mixins.css-variable('tree-select-max-width--tag')};
+    #{mixins.css-variable-name('tag', 'size', 'max-width')}: #{mixins.css-variable('tree-select', 'size', 'tag', 'max-width')};
+    #{mixins.css-variable-name('tag', 'size', 'max-width', 'large')}: #{mixins.css-variable('tree-select', 'size', 'tag', 'max-width')};
+    #{mixins.css-variable-name('tag', 'size', 'max-width', 'small')}: #{mixins.css-variable('tree-select', 'size', 'tag', 'max-width')};
 
     #{mixins.element-name('content', mixins.block('tag'))} {
       max-width: fit-content;
@@ -40,12 +40,12 @@
   }
 
   #{mixins.element-name('container', #{mixins.block('tag-group')})} {
-    grid-gap: mixins.css-variable('tree-select-gap-column--tags-container');
+    grid-gap: mixins.css-variable('tree-select', 'spacing', 'tags-container', 'column-gap');
   }
 
   @include mixins.bem('picker', 'input', 'small', false) {
     #{mixins.element-name('container', mixins.block('tag-group'))} {
-      grid-gap: mixins.css-variable('tree-select-gap-column--tags-container--small');
+      grid-gap: mixins.css-variable('tree-select', 'spacing', 'tags-container', 'column-gap', 'small');
     }
   }
 }

@@ -17,9 +17,9 @@ describe('Typography', () => {
     expect(wrapper.element.tagName).toBe('H2');
     expect(wrapper.classes()).toContain('h-typography--heading-2');
     expect(wrapper.classes()).toContain('is-ellipsis');
-    expect((wrapper.element as HTMLElement).style.getPropertyValue('--h-typography-lines')).toBe(
-      '3',
-    );
+    expect(
+      (wrapper.element as HTMLElement).style.getPropertyValue('--h-typography-size-lines'),
+    ).toBe('3');
   });
 
   test('copies controlled text and emits result', async () => {

@@ -61,7 +61,7 @@ export default function useResponsive(options: ToRefs<IndicatorOptions>) {
       // fix note: 初始化时候无需动画，直接移动对应位置
       transition: mounted
         ? 'none'
-        : `transform ${cssVariable('segmented-transition-time')} ${cssVariable(
+        : `transform ${cssVariable('segmented', 'transition', 'duration')} ${cssVariable(
             'segmented-transition-fn',
           )}`,
     };
@@ -114,7 +114,7 @@ export default function useResponsive(options: ToRefs<IndicatorOptions>) {
       // 这里等待一次dom更新，然后再添加动画
       await nextTick();
     }
-    containerEl.style.transition = `transform ${cssVariable('segmented-transition-time')} ease`;
+    containerEl.style.transition = `transform ${cssVariable('segmented', 'transition', 'duration')} ease`;
   };
 
   const createTab = (key: HSegmentedValue) => {

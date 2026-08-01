@@ -3,6 +3,6 @@
 
 @include mixins.b('auto-complete') {
   @include mixins.e('scrollbar') {
-    margin: mixins.css-variable('auto-complete', 'spacing', 'margin', 'panel', 'scrollbar');
+    margin: mixins.css-variable('auto-complete', 'spacing', 'panel', 'scrollbar', 'margin');
   }
 }

@@ -2,10 +2,10 @@
 
 @include mixins.b('float-button') {
   @include mixins.m('circle') {
-    border-radius: mixins.css-variable('float-button-border-radius');
+    border-radius: mixins.css-variable('float-button', 'border-radius');
   }
 
   @include mixins.m('square') {
-    border-radius: mixins.css-variable('float-button-border-radius--square');
+    border-radius: mixins.css-variable('float-button', 'border-radius', 'square');
   }
 }

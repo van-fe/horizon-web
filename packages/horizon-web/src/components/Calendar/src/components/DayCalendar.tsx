@@ -243,7 +243,7 @@ export default defineComponent({
                 <div
                   class={cls(classHelper.em('body', 'hour-divider'))}
                   style={{
-                    top: `calc(${cssVariable('calendar-height--week--hour-cell')} * ${hour + 1})`,
+                    top: `calc(${cssVariable('calendar', 'size', 'week', 'hour-cell', 'height')} * ${hour + 1})`,
                   }}
                 />
               ))}

@@ -1,23 +1,23 @@
 @use '../../../../styles/mixins';
 
 @mixin set-tag-style-by-status($status) {
-  color: mixins.css-variable('tag-color--#{$status}');
-  background: mixins.css-variable('tag-bg--#{$status}');
+  color: mixins.css-variable('tag', 'color', $status);
+  background: mixins.css-variable('tag', 'background', $status);
 
   @include mixins.e('icon', false) {
-    color: mixins.css-variable('tag-color--#{$status}');
+    color: mixins.css-variable('tag', 'color', $status);
   }
 
   @include mixins.is-not('colored') {
     @include mixins.e('close', false) {
-      color: mixins.css-variable('tag-color--icon--close');
+      color: mixins.css-variable('tag', 'color', 'icon', 'close');
 
       &:hover {
-        color: mixins.css-variable('tag-color--icon--close--#{$status}--hover');
+        color: mixins.css-variable('tag', 'color', 'icon', 'close', $status, 'hover');
       }
 
       &:active {
-        color: mixins.css-variable('tag-color--icon--close--#{$status}--press');
+        color: mixins.css-variable('tag', 'color', 'icon', 'close', $status, 'press');
       }
     }
   }
@@ -25,36 +25,36 @@
   @include mixins.is('auto-fit-color') {
     @include mixins.e('close') {
       &:hover {
-        color: mixins.css-variable('tag-color--icon--close--#{$status}--hover');
+        color: mixins.css-variable('tag', 'color', 'icon', 'close', $status, 'hover');
       }
 
       &:active {
-        color: mixins.css-variable('tag-color--icon--close--#{$status}--press');
+        color: mixins.css-variable('tag', 'color', 'icon', 'close', $status, 'press');
       }
     }
   }
 
   &:focus-within {
-    color: mixins.css-variable('tag-color--#{$status}--hover');
-    background: mixins.css-variable('tag-bg--#{$status}--hover');
+    color: mixins.css-variable('tag', 'color', $status, 'hover');
+    background: mixins.css-variable('tag', 'background', $status, 'hover');
   }
 
   @include mixins.is('disabled') {
-    color: mixins.css-variable('tag-color--#{$status}--disabled');
-    background: mixins.css-variable('tag-bg--#{$status}--disabled');
+    color: mixins.css-variable('tag', 'color', $status, 'disabled');
+    background: mixins.css-variable('tag', 'background', $status, 'disabled');
 
     @include mixins.e('icon', false) {
-      color: mixins.css-variable('tag-color--#{$status}--disabled');
+      color: mixins.css-variable('tag', 'color', $status, 'disabled');
     }
   }
 
-  @include mixins.is('active'){
+  @include mixins.is('active') {
     @include mixins.is-not('colorful') {
-      color: mixins.css-variable('tag-color--#{$status}--activated');
-      background: mixins.css-variable('tag-bg--#{$status}--activated');
+      color: mixins.css-variable('tag', 'color', $status, 'activated');
+      background: mixins.css-variable('tag', 'background', $status, 'activated');
 
       @include mixins.e('icon', false) {
-        color: mixins.css-variable('tag-color--#{$status}--activated');
+        color: mixins.css-variable('tag', 'color', $status, 'activated');
       }
     }
   }
@@ -62,22 +62,22 @@
   @include mixins.is-not('disabled') {
     @include mixins.is('clickable') {
       &:hover {
-        color: mixins.css-variable('tag-color--#{$status}--hover');
-        background: mixins.css-variable('tag-bg--#{$status}--hover');
+        color: mixins.css-variable('tag', 'color', $status, 'hover');
+        background: mixins.css-variable('tag', 'background', $status, 'hover');
 
         @include mixins.is('auto-fit-color') {
           @include mixins.e('icon', false) {
-            color: mixins.css-variable('tag-color--#{$status}--hover');
+            color: mixins.css-variable('tag', 'color', $status, 'hover');
           }
         }
       }
 
       &:active {
-        color: mixins.css-variable('tag-color--#{$status}--press');
-        background: mixins.css-variable('tag-bg--#{$status}--press');
+        color: mixins.css-variable('tag', 'color', $status, 'press');
+        background: mixins.css-variable('tag', 'background', $status, 'press');
 
         @include mixins.e('icon', false) {
-          color: mixins.css-variable('tag-color--#{$status}--press');
+          color: mixins.css-variable('tag', 'color', $status, 'press');
         }
       }
     }

@@ -4,10 +4,10 @@
 @include mixins.b('color-picker-panel') {
   display: flex;
   flex-direction: column;
-  grid-row-gap: mixins.css-variable('color-picker-row-gap--panel-block');
+  grid-row-gap: mixins.css-variable('color-picker', 'spacing', 'panel-block', 'row-gap');
   align-items: center;
-  width: mixins.css-variable('color-picker-width--panel');
-  padding: mixins.css-variable('color-picker-padding--popover');
+  width: mixins.css-variable('color-picker', 'size', 'panel', 'width');
+  padding: mixins.css-variable('color-picker', 'spacing', 'popover', 'padding');
 
   @include mixins.e('block') {
     width: 100%;
@@ -16,9 +16,9 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: mixins.css-variable('color-picker-margin-bottom--panel-block-title');
-      color: mixins.css-variable('color-picker-color--panel-block-title');
-      font-size: mixins.css-variable('color-picker-font-size--panel-block-title');
+      margin-bottom: mixins.css-variable('color-picker', 'spacing', 'panel-block-title', 'margin-bottom');
+      color: mixins.css-variable('color-picker', 'color', 'panel-block-title');
+      font-size: mixins.css-variable('color-picker', 'font-size', 'panel-block-title');
     }
 
     @include mixins.m('pointer-icon') {
@@ -27,7 +27,7 @@
 
     @include mixins.m('button-group') {
       @include mixins.siblings-block('button') {
-        margin-left: mixins.css-variable('color-picker-margin-left--button-group') !important;
+        margin-left: mixins.css-variable('color-picker', 'spacing', 'button-group', 'margin-left') !important;
       }
     }
   }

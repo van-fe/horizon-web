@@ -189,7 +189,7 @@ export default defineComponent({
         confirmNeedConfirm={props.needConfirm}
         confirmNeedCancel={props.needConfirm}
         confirmAreaSize="small"
-        confirmAreaPadding={cssVariable('color-picker-padding--confirm')}
+        confirmAreaPadding={cssVariable('color-picker', 'spacing', 'confirm', 'padding')}
         confirmNeedClear={props.clearable}
         destroyOnHide={true}
         popoverOptions={{ hideEventType: 'mousedown' }}

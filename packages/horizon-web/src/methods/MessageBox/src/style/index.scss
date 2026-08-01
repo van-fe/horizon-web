@@ -8,11 +8,15 @@
 }
 
 @include mixins.b('messagebox') {
-  // #{function.css-variable-name('dialog-padding--header')}: #{function.css-variable('dialog-padding--container')} #{function.css-variable('dialog-padding--container')} #{function.css-variable('spacing-3')};
-  #{function.css-variable-name('dialog-margin--body')}: #{function.css-variable('spacing-3')} 0 #{function.css-variable('dialog-padding--container')};
+  // #{function.css-variable-name('dialog', 'spacing', 'header', 'padding')}: #{function.css-variable('dialog', 'spacing', 'container', 'padding')} #{function.css-variable('dialog', 'spacing', 'container', 'padding')} #{function.css-variable('spacing-3')};
+  #{function.css-variable-name('dialog', 'spacing', 'body', 'margin')}: #{function.css-variable(
+      'spacing-3'
+    )}
+    0 #{function.css-variable('dialog', 'spacing', 'container', 'padding')};
 
   @include mixins.e('pure') {
-    #{function.css-variable-name('dialog-margin--body')}:  #{function.css-variable('dialog-padding--container')} 0;
+    #{function.css-variable-name('dialog', 'spacing', 'body', 'margin')}: #{function.css-variable('dialog', 'spacing', 'container', 'padding')}
+      0;
   }
 
   @include mixins.e('alert-body') {

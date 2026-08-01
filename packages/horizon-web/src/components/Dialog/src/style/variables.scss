@@ -1,20 +1,46 @@
 @use '../../../../styles/mixins/function';
 
 $values: (
-  'font-size--title': #{function.css-variable('text-lg')},
-  'font-weight--title': #{function.css-variable('weight-strong')},
-  'line-height--icon': #{function.css-variable('line-height-default')},
-  'line-height--title': 24px,
-  'border-radius--container': #{function.css-variable('radius-m')},
-  'box-shadow--container': #{function.css-variable('shadow-down')},
-  'bg--mask': #{function.css-variable('bg-overlay-default')},
-  'bg--container': #{function.css-variable('bg-default')},
-  'padding--container': #{function.css-variable('spacing-7')},
-  'padding--header': #{function.css-variable('dialog-padding--container')} #{function.css-variable('dialog-padding--container')} 0,
-  'padding--body': 0 #{function.css-variable('dialog-padding--container')},
-  'padding--footer': 0 #{function.css-variable('dialog-padding--container')} #{function.css-variable('dialog-padding--container')},
-  'margin--body':#{function.css-variable('spacing-7')} 0,
-  'margin--container': 0 auto,
-  'margin-right--icon': #{function.css-variable('spacing-4')},
-  'margin-top--footer': 0,
+  font-size: (
+    title: #{function.css-variable('text-lg')},
+  ),
+  font-weight: (
+    title: #{function.css-variable('weight-strong')},
+  ),
+  line-height: (
+    icon: #{function.css-variable('line-height-default')},
+    title: 24px,
+  ),
+  border-radius: (
+    container: #{function.css-variable('radius-m')},
+  ),
+  background: (
+    mask: #{function.css-variable('bg-overlay-default')},
+    container: #{function.css-variable('bg-default')},
+  ),
+  spacing: (
+    container: (
+      padding: #{function.css-variable('spacing-7')},
+      margin: 0 auto,
+    ),
+    header: (
+      padding: #{function.css-variable('dialog', 'spacing', 'container', 'padding')}
+        #{function.css-variable('dialog', 'spacing', 'container', 'padding')} 0,
+    ),
+    body: (
+      padding: 0 #{function.css-variable('dialog', 'spacing', 'container', 'padding')},
+      margin: #{function.css-variable('spacing-7')} 0,
+    ),
+    footer: (
+      padding: 0 #{function.css-variable('dialog', 'spacing', 'container', 'padding')}
+        #{function.css-variable('dialog', 'spacing', 'container', 'padding')},
+      margin-top: 0,
+    ),
+    icon: (
+      margin-right: #{function.css-variable('spacing-4')},
+    ),
+  ),
+  box-shadow: (
+    container: #{function.css-variable('shadow-down')},
+  ),
 );

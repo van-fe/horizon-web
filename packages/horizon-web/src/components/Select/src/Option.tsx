@@ -163,7 +163,8 @@ export default defineComponent({
           classHelper.has('icon', parentProps.showSelectedIcon ?? false),
         )}
         style={{
-          [cssVariableKey('select-max-line--option')]: props.maxLines ?? parentProps.optionMaxLines,
+          [cssVariableKey('select', 'size', 'option', 'max-line')]:
+            props.maxLines ?? parentProps.optionMaxLines,
           order: orderValue.value,
         }}
         data-value={props.value}

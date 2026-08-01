@@ -7,11 +7,11 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  font-weight: mixins.css-variable('avatar-font-weight');
-  font-size: mixins.css-variable('avatar-font-size--default');
+  font-weight: mixins.css-variable('avatar', 'font-weight');
+  font-size: mixins.css-variable('avatar', 'font-size');
   text-align: center;
-  background-color: mixins.css-variable('avatar-bg--default');
-  border-radius: mixins.css-variable('avatar-border-radius--circle');
+  background-color: mixins.css-variable('avatar', 'background');
+  border-radius: mixins.css-variable('avatar', 'border-radius', 'circle');
 
   @include mixins.e('img') {
     display: block;
@@ -41,19 +41,19 @@
   @include mixins.m('medium') {
     width: 56px;
     height: 56px;
-    font-size: mixins.css-variable('avatar-font-size--medium');
+    font-size: mixins.css-variable('avatar', 'font-size', 'medium');
   }
 
   @include mixins.m('large') {
     width: 80px;
     height: 80px;
-    font-size: mixins.css-variable('avatar-font-size--large');
+    font-size: mixins.css-variable('avatar', 'font-size', 'large');
   }
 
   @include mixins.m('work') {
     flex-direction: column;
-    color: mixins.css-variable('avatar-color--work');
-    border: 1.5px solid mixins.css-variable('avatar-border-color--work');
+    color: mixins.css-variable('avatar', 'color', 'work');
+    border: 1.5px solid mixins.css-variable('avatar', 'border-color', 'work');
   }
 
   @include mixins.m('normal') {
@@ -64,31 +64,31 @@
 @include mixins.b('avatar') {
   @include mixins.parallel-modifier('work', 'mini') {
     @include mixins.be('avatar', 'icon', false) {
-      font-size: mixins.css-variable('avatar-font-size--work--mini');
+      font-size: mixins.css-variable('avatar', 'font-size', 'work', 'mini');
     }
   }
 
   @include mixins.parallel-modifier('work', 'small') {
     @include mixins.be('avatar', 'icon', false) {
-      font-size: mixins.css-variable('avatar-font-size--work--small');
+      font-size: mixins.css-variable('avatar', 'font-size', 'work', 'small');
     }
   }
 
   @include mixins.parallel-modifier('work', 'smedium') {
     @include mixins.be('avatar', 'icon', false) {
-      font-size: mixins.css-variable('avatar-font-size--work--smedium');
+      font-size: mixins.css-variable('avatar', 'font-size', 'work', 'smedium');
     }
   }
 
   @include mixins.parallel-modifier('work', 'medium') {
     @include mixins.be('avatar', 'icon', false) {
-      font-size: mixins.css-variable('avatar-font-size--work--medium');
+      font-size: mixins.css-variable('avatar', 'font-size', 'work', 'medium');
     }
   }
 
   @include mixins.parallel-modifier('work', 'large') {
     @include mixins.be('avatar', 'icon', false) {
-      font-size: mixins.css-variable('avatar-font-size--work--large');
+      font-size: mixins.css-variable('avatar', 'font-size', 'work', 'large');
     }
   }
 }

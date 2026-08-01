@@ -3,63 +3,63 @@
 @include mixins.b('dropdown') {
   @include mixins.e('inner') {
     @include mixins.m('gray') {
-      background: mixins.css-variable('dropdown-bg--gray') !important;
+      background: mixins.css-variable('dropdown', 'background', 'gray') !important;
 
       @include mixins.b('dropdown-item', false) {
-        color: mixins.css-variable('dropdown-color--gray');
+        color: mixins.css-variable('dropdown', 'color', 'gray');
 
         @include mixins.is-not('disabled') {
           @include mixins.e('inner', false) {
-            outline-color: mixins.css-variable('dropdown-outline-color');
+            outline-color: mixins.css-variable('dropdown', 'border-color', 'outline');
 
             &:hover {
-              background: mixins.css-variable('dropdown-bg--gray--item--hover');
+              background: mixins.css-variable('dropdown', 'background', 'gray', 'item', 'hover');
             }
           }
 
           @include mixins.is('active') {
-            color: mixins.css-variable('dropdown-color--gray--active');
+            color: mixins.css-variable('dropdown', 'color', 'gray', 'active');
 
             @include mixins.e('inner', false) {
-              background: mixins.css-variable('dropdown-bg--gray--item--active');
+              background: mixins.css-variable('dropdown', 'background', 'gray', 'item', 'active');
             }
           }
         }
 
         @include mixins.is('disabled') {
-          color: mixins.css-variable('dropdown-color--gray--disabled');
+          color: mixins.css-variable('dropdown', 'color', 'gray', 'disabled');
 
           @include mixins.is('active') {
-            color: mixins.css-variable('dropdown-color--gray--active--disabled');
+            color: mixins.css-variable('dropdown', 'color', 'gray', 'active', 'disabled');
 
             @include mixins.e('inner', false) {
-              background: mixins.css-variable('dropdown-bg--gray--item--active--disabled');
+              background: mixins.css-variable('dropdown', 'background', 'gray', 'item', 'active', 'disabled');
             }
           }
         }
       }
 
       @include mixins.b('dropdown-submenu', false) {
-        color: mixins.css-variable('dropdown-color--gray');
+        color: mixins.css-variable('dropdown', 'color', 'gray');
 
         @include mixins.is-not('disabled') {
           @include mixins.em('item', 'inner', false) {
-            outline-color: mixins.css-variable('dropdown-outline-color');
+            outline-color: mixins.css-variable('dropdown', 'border-color', 'outline');
           }
 
           @include mixins.e('inner', false) {
-            background: mixins.css-variable('dropdown-bg--gray');
+            background: mixins.css-variable('dropdown', 'background', 'gray');
           }
 
           > #{mixins.element-name('reference', mixins.block('popover'))} {
             > #{mixins.element-name('item', mixins.block('dropdown-submenu'))} {
               @include mixins.m('inner') {
-                background: mixins.css-variable('dropdown-bg--gray');
+                background: mixins.css-variable('dropdown', 'background', 'gray');
               }
 
               &:hover {
                 @include mixins.em('item', 'inner', false) {
-                  background: mixins.css-variable('dropdown-bg--gray--item--hover');
+                  background: mixins.css-variable('dropdown', 'background', 'gray', 'item', 'hover');
                 }
               }
             }
@@ -68,7 +68,7 @@
           @include mixins.is('active') {
             > #{mixins.element-name('reference', mixins.block('popover'))} {
               > #{mixins.element-name('item', mixins.block('dropdown-submenu'))} {
-                color: mixins.css-variable('dropdown-color--gray--active');
+                color: mixins.css-variable('dropdown', 'color', 'gray', 'active');
               }
             }
           }
@@ -76,10 +76,10 @@
           @include mixins.is('selected') {
             > #{mixins.element-name('reference', mixins.block('popover'))} {
               > #{mixins.element-name('item', mixins.block('dropdown-submenu'))} {
-                color: mixins.css-variable('dropdown-color--gray--active');
+                color: mixins.css-variable('dropdown', 'color', 'gray', 'active');
 
                 > #{mixins.modifier-name('inner', 'item', mixins.block('dropdown-submenu'))} {
-                  background: mixins.css-variable('dropdown-bg--gray--item--active');
+                  background: mixins.css-variable('dropdown', 'background', 'gray', 'item', 'active');
                 }
               }
             }
@@ -88,13 +88,13 @@
 
         @include mixins.is('disabled') {
           @include mixins.e('item', false) {
-            color: mixins.css-variable('dropdown-color--gray--disabled');
+            color: mixins.css-variable('dropdown', 'color', 'gray', 'disabled');
           }
 
           @include mixins.is('active') {
             > #{mixins.element-name('reference', mixins.block('popover'))} {
               > #{mixins.element-name('item', mixins.block('dropdown-submenu'))} {
-                color: mixins.css-variable('dropdown-color--gray--active--disabled');
+                color: mixins.css-variable('dropdown', 'color', 'gray', 'active', 'disabled');
               }
             }
           }
@@ -102,10 +102,10 @@
           @include mixins.is('selected') {
             > #{mixins.element-name('reference', mixins.block('popover'))} {
               > #{mixins.element-name('item', mixins.block('dropdown-submenu'))} {
-                color: mixins.css-variable('dropdown-color--gray--active--disabled');
+                color: mixins.css-variable('dropdown', 'color', 'gray', 'active', 'disabled');
 
                 > #{mixins.modifier-name('inner', 'item', mixins.block('dropdown-submenu'))} {
-                  background: mixins.css-variable('dropdown-bg--gray--item--active--disabled');
+                  background: mixins.css-variable('dropdown', 'background', 'gray', 'item', 'active', 'disabled');
                 }
               }
             }

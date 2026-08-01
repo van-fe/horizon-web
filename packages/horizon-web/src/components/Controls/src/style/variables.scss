@@ -1,19 +1,45 @@
 @use '../../../../styles/mixins/function';
 
 $values: (
-  'size--control': 24px,
-  'color--control-icon': #{function.css-variable('text-primary')},
-  'color--control-icon--disabled': #{function.css-variable('text-disabled')},
-  'color--control-icon--light': #{function.css-variable('text-inverse')},
-  'color--control-icon--light--disabled': #{function.css-variable('text-inverse-disabled')},
-  'border-radius': #{function.css-variable('radius-m')},
-  'bg--disabled': #{function.css-variable('bg-disabled')},
-  'bg--disabled--light': #{function.css-variable('bg-overlay-default')},
-  'bg--control--hover': #{function.css-variable('bg-hover')},
-  'bg--control--press': #{function.css-variable('bg-press')},
-  'bg--control--hover--light': #{function.css-variable('bg-overlay-inverse')},
-  'bg--control--press--light': #{function.css-variable('bg-overlay-inverse')},
-  'margin-x--control-siblings': #{function.css-variable('spacing-2')},
-  'margin': #{function.css-variable('spacing-4')},
-  'margin-right--dropdown-item--svg': #{function.css-variable('dropdown-margin-right--item--icon')},
+  size: (
+    control: 24px,
+  ),
+  color: (
+    control-icon: (
+      '': #{function.css-variable('text-primary')},
+      disabled: #{function.css-variable('text-disabled')},
+      light: (
+        '': #{function.css-variable('text-inverse')},
+        disabled: #{function.css-variable('text-inverse-disabled')},
+      ),
+    ),
+  ),
+  border-radius: #{function.css-variable('radius-m')},
+  background: (
+    disabled: (
+      '': #{function.css-variable('bg-disabled')},
+      light: #{function.css-variable('bg-overlay-default')},
+    ),
+    control: (
+      hover: (
+        '': #{function.css-variable('bg-hover')},
+        light: #{function.css-variable('bg-overlay-inverse')},
+      ),
+      press: (
+        '': #{function.css-variable('bg-press')},
+        light: #{function.css-variable('bg-overlay-inverse')},
+      ),
+    ),
+  ),
+  spacing: (
+    control-siblings: (
+      margin-x: #{function.css-variable('spacing-2')},
+    ),
+    margin: #{function.css-variable('spacing-4')},
+    dropdown-item: (
+      svg: (
+        margin-right: #{function.css-variable('dropdown', 'spacing', 'item', 'icon', 'margin-right')},
+      ),
+    ),
+  ),
 );

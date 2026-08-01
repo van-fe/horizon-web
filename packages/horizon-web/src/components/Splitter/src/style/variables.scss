@@ -1,10 +1,20 @@
 @use '../../../../styles/mixins/function';
 
 $values: (
-  'separator-size': 8px,
-  'separator-color': #{function.css-variable('border-default')},
-  'separator-hover-color': #{function.css-variable('border-brand-default')},
-  'separator-focus-color': #{function.css-variable('border-focused')},
-  'handle-length': 32px,
-  'handle-thickness': 2px,
+  size: (
+    separator: (
+      hit-area: 8px,
+    ),
+    handle: (
+      length: 32px,
+      thickness: 2px,
+    ),
+  ),
+  background: (
+    separator: (
+      '': #{function.css-variable('border-default')},
+      hover: #{function.css-variable('border-brand-default')},
+      focus: #{function.css-variable('border-focused')},
+    ),
+  ),
 );

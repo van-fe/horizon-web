@@ -17,8 +17,8 @@
     @include mixins.e('content') {
       width: 8px;
       height: 8px;
-      border: 1px solid mixins.css-variable('badge-border-color--content');
-      border-radius: mixins.css-variable('badge-border-radius--content--default');
+      border: 1px solid mixins.css-variable('badge', 'border-color', 'content');
+      border-radius: mixins.css-variable('badge', 'border-radius', 'content');
     }
   }
 
@@ -27,12 +27,12 @@
       min-width: 16px;
       height: 16px;
       padding: 0 3px;
-      color: mixins.css-variable('badge-color');
-      border: 1px solid mixins.css-variable('badge-border-color--content');
-      border-radius: mixins.css-variable('badge-border-radius--content--pill');
+      color: mixins.css-variable('badge', 'color');
+      border: 1px solid mixins.css-variable('badge', 'border-color', 'content');
+      border-radius: mixins.css-variable('badge', 'border-radius', 'content', 'pill');
 
       span {
-        font-size: mixins.css-variable('badge-font-size--content');
+        font-size: mixins.css-variable('badge', 'font-size', 'content');
         transform: scale(0.83);
       }
     }
@@ -40,10 +40,10 @@
 
   @include mixins.m('icon') {
     @include mixins.e('content') {
-      color: mixins.css-variable('badge-color');
-      background-color: mixins.css-variable('badge-bg--content') !important;
-      border: 1px solid mixins.css-variable('badge-border-color--content');
-      border-radius: mixins.css-variable('badge-border-radius--content--default');
+      color: mixins.css-variable('badge', 'color');
+      background-color: mixins.css-variable('badge', 'background', 'content') !important;
+      border: 1px solid mixins.css-variable('badge', 'border-color', 'content');
+      border-radius: mixins.css-variable('badge', 'border-radius', 'content');
     }
   }
 
