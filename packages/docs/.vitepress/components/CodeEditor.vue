@@ -2,6 +2,7 @@
 import { EditorView, basicSetup } from 'codemirror';
 import { html } from '@codemirror/lang-html';
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { getEditorIndentChanges } from './editorIndent';
 
 const props = defineProps({
   code: {
@@ -23,12 +24,29 @@ onMounted(() => {
       emit('update:code', update.state.doc.toString());
     }
   });
+  const indentExtension = EditorView.domEventHandlers({
+    keydown(event, view) {
+      if (event.key !== 'Tab' || event.altKey || event.ctrlKey || event.metaKey) return false;
+      const changes = getEditorIndentChanges(
+        view.state.doc.toString(),
+        view.state.selection.ranges,
+        event.shiftKey,
+      );
+      if (changes.length) {
+        view.dispatch({
+          changes,
+          userEvent: event.shiftKey ? 'delete.dedent' : 'input.indent',
+        });
+      }
+      return true;
+    },
+  });
 
   if (!domRef.value) return;
   editor = new EditorView({
     doc: props.code,
     parent: domRef.value,
-    extensions: [basicSetup, html(), updateListenerExtension],
+    extensions: [basicSetup, html(), indentExtension, updateListenerExtension],
   });
 });
 
