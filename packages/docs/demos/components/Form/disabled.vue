@@ -2,17 +2,30 @@
   <h-form label-position="left">
     <h-form-item label="disabled">
       <h-radio-group v-model="disabled">
-        <h-radio :label="true">True</h-radio>
-        <h-radio :label="false">False</h-radio>
+        <h-radio :value="true">True</h-radio>
+        <h-radio :value="false">False</h-radio>
       </h-radio-group>
     </h-form-item>
   </h-form>
-  <h-form ref="formRef" :model="formData" :disabled="disabled" label-vertical-align="middle" @submit.prevent="onSubmit">
+  <h-form
+    ref="formRef"
+    :model="formData"
+    :disabled="disabled"
+    label-vertical-align="middle"
+    @submit.prevent="onSubmit"
+  >
     <h-form-item label="Input" prop="input" required>
       <h-input v-model="formData.input" clearable />
     </h-form-item>
     <h-form-item label="Number" prop="number" required>
-      <h-input-number v-model="formData.number" :min="0" :max="120" clearable @input="onInput" @change="onChange" />
+      <h-input-number
+        v-model="formData.number"
+        :min="0"
+        :max="120"
+        clearable
+        @input="onInput"
+        @change="onChange"
+      />
     </h-form-item>
     <h-form-item label="Select" prop="select" required>
       <h-select v-model="formData.select" clearable :multiple="true">
@@ -59,12 +72,7 @@
       <h-radio v-model="formData.radio" />
     </h-form-item>
     <h-form-item label="Textarea" prop="textarea" required>
-      <h-input
-        v-model="formData.textarea"
-        :show-limit="true"
-        :maxlength="100"
-        type="textarea"
-      />
+      <h-input v-model="formData.textarea" :show-limit="true" :maxlength="100" type="textarea" />
     </h-form-item>
     <h-form-item label="Upload" prop="upload" required>
       <h-upload v-model="formData.upload"></h-upload>
@@ -102,7 +110,9 @@ const formData = ref({
 });
 
 onMounted(async () => {
-  cascaderData.value = await fetch(new URL('/cascader-tree-data.json', import.meta.url).href).then(r => r.json());
+  cascaderData.value = await fetch(new URL('/cascader-tree-data.json', import.meta.url).href).then(
+    r => r.json(),
+  );
 });
 
 function onInput() {

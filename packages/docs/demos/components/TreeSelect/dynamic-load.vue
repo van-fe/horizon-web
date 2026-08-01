@@ -5,11 +5,16 @@
     </h-grid-item>
     <h-grid-item :span="6">
       <div class="demo-title">单选</div>
-      <h-tree-select v-model:tree-data="dynamicTreeData" :dynamic-load-data="dynLoad" :to-body="false" />
+      <h-tree-select v-model:tree-data="dynamicTreeData" :dynamic-load="dynLoad" :to-body="false" />
     </h-grid-item>
     <h-grid-item :span="6">
       <div class="demo-title">多选</div>
-      <h-tree-select v-model:tree-data="dynamicTreeData" :dynamic-load-data="dynLoad" :multiple="true" :to-body="false" />
+      <h-tree-select
+        v-model:tree-data="dynamicTreeData"
+        :dynamic-load="dynLoad"
+        :multiple="true"
+        :to-body="false"
+      />
     </h-grid-item>
   </h-grid>
 </template>
@@ -50,33 +55,33 @@ const dynLoad = (data: HTreeDynamicLoadNode) => {
         resolve(
           data.node!.value === 'disciplines'
             ? [
-              {
-                value: 'consistency',
-                label: 'Consistency',
-              },
-              {
-                value: 'feedback',
-                label: 'Feedback',
-              },
-              {
-                value: 'efficiency',
-                label: 'Efficiency',
-              },
-              {
-                value: 'controllability',
-                label: 'Controllability',
-              },
-            ]
+                {
+                  value: 'consistency',
+                  label: 'Consistency',
+                },
+                {
+                  value: 'feedback',
+                  label: 'Feedback',
+                },
+                {
+                  value: 'efficiency',
+                  label: 'Efficiency',
+                },
+                {
+                  value: 'controllability',
+                  label: 'Controllability',
+                },
+              ]
             : [
-              {
-                value: 'side nav',
-                label: 'Side Navigation',
-              },
-              {
-                value: 'top nav',
-                label: 'Top Navigation',
-              },
-            ],
+                {
+                  value: 'side nav',
+                  label: 'Side Navigation',
+                },
+                {
+                  value: 'top nav',
+                  label: 'Top Navigation',
+                },
+              ],
         ),
       2000,
     );
@@ -93,7 +98,9 @@ const dynLoad = (data: HTreeDynamicLoadNode) => {
   padding: 10px;
   flex-shrink: 0;
   flex-basis: 340px;
-  box-shadow: 0px 3px 6px -4px rgba(0, 0, 0, 0.1), 0px 6px 16px rgba(0, 0, 0, 0.06),
+  box-shadow:
+    0px 3px 6px -4px rgba(0, 0, 0, 0.1),
+    0px 6px 16px rgba(0, 0, 0, 0.06),
     0px 9px 28px 8px rgba(0, 0, 0, 0.03);
 }
 </style>

@@ -29,7 +29,8 @@ describe('Popover.tsx', () => {
 
       expect(element.element.parentElement).toBe(el);
 
-      document.body.innerHTML = '';
+      wrapper.unmount();
+      el.remove();
     });
   });
 });

@@ -19,7 +19,6 @@ export default defineConfig({
     rollupOptions: {
       external: [
         'vue',
-        'video.js',
         /^dayjs/,
         /@vue/,
         /@aurora\//,
@@ -30,7 +29,6 @@ export default defineConfig({
         'deepmerge',
         'dompurify',
         'nanoid',
-        'resize-observer-polyfill',
         'decimal.js',
       ],
       output: [
@@ -74,7 +72,7 @@ export default defineConfig({
       {
         find: /^@root\//,
         replacement: path.join(__dirname, '../../'),
-      }
+      },
     ],
   },
   define: {

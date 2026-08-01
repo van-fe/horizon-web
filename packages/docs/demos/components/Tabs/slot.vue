@@ -1,11 +1,11 @@
 <template>
   <h-tabs v-model="currentRef" type="card">
-    <h-tab label="Tab1" name="tab1">
+    <h-tab label="Tab1" key="tab1">
       <span class="px-2 font-bold">Custom Tab</span>
       <a-icon v-tooltip="'something helpful message'" name="help" class="ml-1" />
     </h-tab>
-    <h-tab label="Section 2" name="tab2" />
-    <h-tab label="Section 3" name="tab3" />
+    <h-tab label="Section 2" key="tab2" />
+    <h-tab label="Section 3" key="tab3" />
   </h-tabs>
 </template>
 

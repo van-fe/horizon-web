@@ -2,16 +2,16 @@
   <h-form label-position="left" label-vertical-align="middle">
     <h-form-item label="size">
       <h-radio-group v-model="size">
-        <h-radio label="small" />
-        <h-radio label="medium" />
-        <h-radio label="large" />
+        <h-radio value="small" />
+        <h-radio value="medium" />
+        <h-radio value="large" />
       </h-radio-group>
     </h-form-item>
-    <h-form-item label="selectStyle">
-      <h-radio-group v-model="selectStyle">
-        <h-radio label="normal" />
-        <h-radio label="emphasize" />
-        <h-radio label="no-border" />
+    <h-form-item label="inputStyle">
+      <h-radio-group v-model="inputStyle">
+        <h-radio value="normal" />
+        <h-radio value="emphasize" />
+        <h-radio value="no-border" />
       </h-radio-group>
     </h-form-item>
   </h-form>
@@ -23,7 +23,7 @@
         :multiple="true"
         :use-statistic="true"
         :to-body="false"
-        :input-style="selectStyle"
+        :input-style="inputStyle"
         :clearable="true"
         :size="size"
       >
@@ -43,7 +43,7 @@
         :use-statistic="true"
         statistic-text="城市标签"
         :to-body="false"
-        :input-style="selectStyle"
+        :input-style="inputStyle"
         :clearable="true"
         :size="size"
       >
@@ -62,7 +62,7 @@
 import { ref } from 'vue';
 
 const size = ref('medium');
-const selectStyle = ref('normal');
+const inputStyle = ref('normal');
 
 const value = ref<string[]>([]);
 const value2 = ref<string[]>([]);

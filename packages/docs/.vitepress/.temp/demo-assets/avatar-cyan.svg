@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title">
-  <title id="title">Cyan illustrated avatar</title>
-  <rect width="256" height="256" rx="48" fill="#d9f7f4"/>
-  <circle cx="128" cy="104" r="51" fill="#d99c78"/>
-  <path d="M77 108c-5-45 16-77 53-77 39 0 62 30 53 79l-17-22-10-31c-21 23-47 37-79 51Z" fill="#173f4a"/>
-  <path d="M43 256c6-64 37-94 85-94s79 30 85 94Z" fill="#18a6a8"/>
-  <circle cx="109" cy="110" r="4" fill="#243b41"/><circle cx="149" cy="110" r="4" fill="#243b41"/>
-  <path d="M112 135c10 7 22 7 32 0" fill="none" stroke="#8f5148" stroke-width="4" stroke-linecap="round"/>
-</svg>

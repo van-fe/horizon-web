@@ -84,7 +84,6 @@ export default defineComponent({
           closeButton={props.closeButton}
           iconName={getIcon()?.name}
           iconColor={getIcon()?.color}
-          iconSize={getIcon()?.size}
           escClose={props.escClose}
           maskClose={props.maskClose}
           okText={props.okText || (defaultOkText.value as string)}

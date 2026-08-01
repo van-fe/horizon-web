@@ -2,22 +2,22 @@
   <h-form label-position="left" label-vertical-align="middle">
     <h-form-item label="size">
       <h-radio-group v-model="size">
-        <h-radio label="small" />
-        <h-radio label="medium" />
-        <h-radio label="large" />
+        <h-radio value="small" />
+        <h-radio value="medium" />
+        <h-radio value="large" />
       </h-radio-group>
     </h-form-item>
     <h-form-item label="inputStyle">
       <h-radio-group v-model="inputStyle">
-        <h-radio label="normal" />
-        <h-radio label="emphasize" />
-        <h-radio label="no-border" />
+        <h-radio value="normal" />
+        <h-radio value="emphasize" />
+        <h-radio value="no-border" />
       </h-radio-group>
     </h-form-item>
     <h-form-item label="disabled">
       <h-radio-group v-model="disabled">
-        <h-radio :label="true">True</h-radio>
-        <h-radio :label="false">False</h-radio>
+        <h-radio :value="true">True</h-radio>
+        <h-radio :value="false">False</h-radio>
       </h-radio-group>
     </h-form-item>
   </h-form>
@@ -35,5 +35,4 @@ const inputStyle = ref('normal');
 const disabled = ref(false);
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

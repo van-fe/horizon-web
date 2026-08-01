@@ -1,104 +1,86 @@
-import { defineComponent, inject, ref, watch } from 'vue';
+import type { HorizonWebComponentInstance } from '@aurora/utils';
 import { cls, ComponentClassBlock, isDefined, useNamespace } from '@aurora/utils';
+import { computed, defineComponent, inject, provide, ref, unref, watch } from 'vue';
+import HInput from '~/components/Input/src/Input';
+import type { InputExposes } from '~/components/Input/src/composables/useExposes';
+import { HFormItemTriggerInjectedKey } from '~/components/Form/src/utils/injectedKeys';
 import { HPickerPopperVisibleInjectKey } from '../utils/InjectKeys';
 import { usePickerPureInputExpose } from '../composables/useExposes';
 import { usePickerPureInputProps } from '../composables/useProps';
 import { usePickerPureInputEmits } from '../composables/useEmits';
 
+/** Picker 内部的 Input 兼容层。 */
 export default defineComponent({
   name: `${useNamespace()}PickerPureInput`,
+  inheritAttrs: false,
   props: usePickerPureInputProps,
   emits: usePickerPureInputEmits,
   exposes: usePickerPureInputExpose,
-  setup(props, { emit, expose }) {
+  setup(props, { emit, expose, attrs }) {
     const classHelper = new ComponentClassBlock('picker');
-
-    const inputRef = ref<HTMLInputElement | null>(null);
-    const inputString = ref(props.modelValue);
-    const compositionString = ref('');
-
-    const popperVisible = inject(HPickerPopperVisibleInjectKey)!;
+    const inputRef = ref<HorizonWebComponentInstance<typeof HInput, InputExposes> | null>(null);
+    const localValue = ref(props.modelValue.toString());
+    const popperVisible = inject(HPickerPopperVisibleInjectKey, ref(false));
+    provide(HFormItemTriggerInjectedKey, () => undefined);
+    const nativeInput = computed(() => unref(inputRef.value?.input) ?? null);
 
     watch(
       () => props.modelValue,
-      val => {
-        inputString.value = val;
+      value => {
+        localValue.value = value.toString();
       },
     );
 
-    watch(inputString, val => {
-      emit('update:modelValue', val);
-    });
-
-    let isInputFocus = false;
-
-    function onFocus(evt: FocusEvent) {
-      isInputFocus = true;
-      emit('focus', evt);
-    }
+    watch(localValue, value => emit('update:modelValue', value));
 
     function onBlur(evt: FocusEvent) {
       evt.stopImmediatePropagation();
-      isInputFocus = false;
       emit('blur', evt);
     }
 
-    function onCompositionStart(evt: CompositionEvent) {
-      emit('compositionStart', evt);
-    }
-
-    function onCompositionUpdate(evt: CompositionEvent) {
-      compositionString.value = evt.data;
-      emit('compositionUpdate', evt);
-    }
-
-    function onCompositionEnd(evt: CompositionEvent) {
-      compositionString.value = '';
-      emit('compositionEnd', evt);
+    function onFocus(evt: FocusEvent) {
+      emit('focus', evt);
     }
 
     function onClick(evt: MouseEvent) {
-      if (popperVisible.value) {
-        evt.stopPropagation();
-      }
+      if (popperVisible.value) evt.stopPropagation();
     }
 
     expose({
-      focus: () => {
-        !isInputFocus && inputRef.value?.focus();
-      },
-      blur: () => {
-        isInputFocus && inputRef.value?.blur();
-      },
-      forceBlur: () => {
-        inputRef.value?.blur();
-      },
-      input: inputRef,
+      focus: () => nativeInput.value?.focus(),
+      blur: () => nativeInput.value?.blur(),
+      forceBlur: () => nativeInput.value?.blur(),
+      input: nativeInput,
       resetInputString: (value?: string | number) => {
-        inputString.value = isDefined(value) ? value?.toString() : props.modelValue?.toString();
+        localValue.value = isDefined(value) ? value.toString() : props.modelValue.toString();
       },
     });
 
     return () => (
-      <input
-        v-model={inputString.value}
+      <HInput
+        {...attrs}
         ref={inputRef}
-        class={cls(classHelper.em('input', 'inner'), classHelper.is('pure-input'))}
+        embedded
+        embeddedInputHandler={evt => emit('input', evt)}
+        modelValue={localValue.value}
+        embeddedClass={cls(classHelper.em('input', 'inner'), classHelper.is('pure-input'))}
+        embeddedStyle={props.style}
         disabled={props.disabled}
         readonly={props.readonly}
         placeholder={props.placeholder}
-        style={props.style}
         tabindex={props.tabindex}
         autocomplete={props.autocomplete}
         unselectable={props.unselectable}
-        onInput={evt => emit('input', evt)}
-        onCompositionstart={onCompositionStart}
-        onCompositionupdate={onCompositionUpdate}
-        onCompositionend={onCompositionEnd}
+        onUpdate:modelValue={value => {
+          localValue.value = value;
+        }}
         onFocus={onFocus}
         onBlur={onBlur}
         onClick={onClick}
         onKeydown={evt => emit('keydown', evt)}
+        onCompositionstart={evt => emit('compositionStart', evt)}
+        onCompositionupdate={evt => emit('compositionUpdate', evt)}
+        onCompositionend={evt => emit('compositionEnd', evt)}
       />
     );
   },

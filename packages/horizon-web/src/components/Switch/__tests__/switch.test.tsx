@@ -68,6 +68,9 @@ describe('Switch.tsx', () => {
 
       expect(core.classes('is-disabled')).eq(true);
       expect(core.classes('is-active')).eq(true);
+      const input = wrapper.find('input[role="switch"]');
+      expect(input.attributes('disabled')).toBeDefined();
+      expect(input.attributes('aria-disabled')).toBe('true');
     });
 
     test('before-change', async () => {

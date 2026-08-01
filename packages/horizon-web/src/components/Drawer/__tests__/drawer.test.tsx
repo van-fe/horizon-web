@@ -7,7 +7,7 @@ interface LocalTestContext {
   teleportEl: HTMLElement;
 }
 
-describe('Drawer.tsx v2', () => {
+describe('Drawer.tsx', () => {
   beforeEach<LocalTestContext>(ctx => {
     // vi.useFakeTimers();
     const el = document.createElement('div');
@@ -26,7 +26,7 @@ describe('Drawer.tsx v2', () => {
     const dTitle = 'drawer title';
     const dContent = 'drawer content';
     const wrapper = mount(() => (
-      <Drawer v2 to="#test" visible={visible.value} title={dTitle}>
+      <Drawer to="#test" visible={visible.value} title={dTitle}>
         <div>{dContent}</div>
       </Drawer>
     ));
@@ -41,7 +41,7 @@ describe('Drawer.tsx v2', () => {
     visible.value = true;
     await nextTick();
     expect(ctx.teleportEl.innerHTML).toMatchInlineSnapshot(
-      `"<div class="h-drawer" style="position: absolute; z-index: 2002;"><transition-stub name="h-fade-in-normal" duration="300" appear="true" persisted="false" css="true"><div class="h-drawer__mask" style="z-index: inherit; position: absolute;"></div></transition-stub><transition-stub name="h-drawer-slide-right" appear="true" persisted="false" css="true"><div class="h-drawer__container h-drawer--right" style="z-index: 2003; width: 418.666667px; height: 100%; position: absolute;"><div class="h-drawer__main"><div class="h-drawer__header h-drawer__header--customize"><div class="h-drawer__default-title">drawer title</div><button class="h-button h-button--normal h-button--small h-button--text h-button--equally is-solid is-with-icon h-drawer__closable h-drawer__closable" type="button" tabindex="0" autofocus="false"><div class="h-button__icon is-custom-size"><svg class="a-icon h-icon_close h-icon__close" viewBox="0 0 24 24" fill="none" style="width: 16px; height: 16px; font-size: 16px; display: inline-block; vertical-align: inherit;"><path d="M11.9999 10.9517L19.9429 3C20.5267 3.58446 20.5267 4.53206 19.9429 5.11652L13.057 12.01L21 19.9617C20.4162 20.5461 19.4696 20.5461 18.8858 19.9617L11.9999 13.0682L5.11419 19.9615C4.53038 20.546 3.58382 20.546 3 19.9615L10.9428 12.01L4.0571 5.11664C3.47328 4.53217 3.47328 3.58458 4.0571 3.00011L11.9999 10.9517Z" fill="currentColor"></path></svg></div><!----><!----></button></div><div class="h-drawer__body"><div>drawer content</div></div><div class="h-drawer__footer"><div class="h-drawer__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0" autofocus="false"><!----><div class="h-button__content"><!----></div><!----></button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: var(--h-spacing-5);"><!----><div class="h-button__content"><!----></div><!----></button></div></div><!----></div></div></transition-stub></div>"`,
+      `"<div class="h-drawer" style="position: absolute; z-index: 2002;"><transition-stub name="h-fade-in-normal" duration="300" appear="true" persisted="false" css="true"><div class="h-drawer__mask" style="z-index: inherit; position: absolute;"></div></transition-stub><transition-stub name="h-drawer-slide-right" appear="true" persisted="false" css="true"><div role="dialog" aria-modal="true" aria-labelledby="v-0" tabindex="-1" class="h-drawer__container h-drawer--right" style="z-index: 2003; width: 418.666667px; height: 100%; position: absolute;"><div class="h-drawer__main"><div id="v-0" class="h-drawer__header h-drawer__header--customize"><div class="h-drawer__default-title">drawer title</div><button class="h-button h-button--normal h-button--small h-button--text h-button--equally is-solid is-with-icon h-drawer__closable h-drawer__closable" type="button" tabindex="0" autofocus="false" aria-label="Close drawer"><div class="h-button__icon is-custom-size"><svg class="a-icon h-icon_close h-icon__close" viewBox="0 0 24 24" fill="none" style="width: 16px; height: 16px; font-size: 16px; display: inline-block; vertical-align: inherit;"><path d="M11.9999 10.9517L19.9429 3C20.5267 3.58446 20.5267 4.53206 19.9429 5.11652L13.057 12.01L21 19.9617C20.4162 20.5461 19.4696 20.5461 18.8858 19.9617L11.9999 13.0682L5.11419 19.9615C4.53038 20.546 3.58382 20.546 3 19.9615L10.9428 12.01L4.0571 5.11664C3.47328 4.53217 3.47328 3.58458 4.0571 3.00011L11.9999 10.9517Z" fill="currentColor"></path></svg></div><!----><!----></button></div><div class="h-drawer__body"><div>drawer content</div></div><div class="h-drawer__footer"><div class="h-drawer__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0" autofocus="false"><!----><div class="h-button__content"><!----></div><!----></button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: var(--h-spacing-5);"><!----><div class="h-button__content"><!----></div><!----></button></div></div><!----></div></div></transition-stub></div>"`,
     );
 
     expect(ctx.teleportEl.querySelector('.h-drawer__header')?.textContent).toBe(dTitle);
@@ -108,8 +108,9 @@ describe('Drawer.tsx v2', () => {
     const cancel = vi.fn();
     const wrapper = mount(() => (
       <Drawer
+        to={null}
         visible={visible.value}
-        onUpdate:modelValue={flag => (visible.value = flag)}
+        onUpdate:visible={flag => (visible.value = flag)}
         onOk={ok}
         onCancel={cancel}
       >
@@ -182,7 +183,7 @@ describe('Drawer.tsx v2', () => {
 
     const destroyOnClose = ref(false);
     const wrapper = mount(() => (
-      <Drawer v2 to={null} visible={visible.value} destroyOnClose={destroyOnClose.value}>
+      <Drawer to={null} visible={visible.value} destroyOnClose={destroyOnClose.value}>
         <UserForm />
       </Drawer>
     ));
@@ -208,12 +209,12 @@ describe('Drawer.tsx v2', () => {
           <div class="h-drawer__mask" style="z-index: inherit; position: absolute;"></div>
         </transition-stub>
         <transition-stub name="h-drawer-slide-right" appear="true" persisted="true" css="true">
-          <div class="h-drawer__container h-drawer--right" style="z-index: 2010; width: 418.666667px; height: 100%; position: absolute;">
+          <div role="dialog" aria-modal="true" aria-labelledby="v-0" tabindex="-1" class="h-drawer__container h-drawer--right" style="z-index: 2010; width: 418.666667px; height: 100%; position: absolute;">
             <div class="h-drawer__main">
-              <div class="h-drawer__header h-drawer__header--customize">
+              <div id="v-0" class="h-drawer__header h-drawer__header--customize">
                 <div class="h-drawer__default-title">
                   <!---->
-                </div><button class="h-button h-button--normal h-button--small h-button--text h-button--equally is-solid is-with-icon h-drawer__closable h-drawer__closable" type="button" tabindex="0" autofocus="false">
+                </div><button class="h-button h-button--normal h-button--small h-button--text h-button--equally is-solid is-with-icon h-drawer__closable h-drawer__closable" type="button" tabindex="0" autofocus="false" aria-label="Close drawer">
                   <div class="h-button__icon is-custom-size"><svg class="a-icon h-icon_close h-icon__close" viewBox="0 0 24 24" fill="none" style="width: 16px; height: 16px; font-size: 16px; display: inline-block; vertical-align: inherit;">
                       <path d="M11.9999 10.9517L19.9429 3C20.5267 3.58446 20.5267 4.53206 19.9429 5.11652L13.057 12.01L21 19.9617C20.4162 20.5461 19.4696 20.5461 18.8858 19.9617L11.9999 13.0682L5.11419 19.9615C4.53038 20.546 3.58382 20.546 3 19.9615L10.9428 12.01L4.0571 5.11664C3.47328 4.53217 3.47328 3.58458 4.0571 3.00011L11.9999 10.9517Z" fill="currentColor"></path>
                     </svg></div>
@@ -252,22 +253,4 @@ describe('Drawer.tsx v2', () => {
     await nextTick();
     expect(wrapper.find('input').element.value).toBe('');
   });
-
-  // test('Drawer mask-click/icon-click #emits', async () => {
-  //   const visible = ref(true);
-  //   const maskClick = vi.fn();
-  //   const iconClick = vi.fn();
-  //   const wrapper = mount(() => (
-  //     <Drawer v2 to={null} visible={visible.value} onMaskClick={maskClick} onIconClick={iconClick}>
-  //       <div>Hello World</div>
-  //     </Drawer>
-  //   ));
-  //   expect(wrapper.findComponent(Drawer).exists()).toBe(true);
-
-  //   await wrapper.find('.h-drawer__mask').trigger('click');
-  //   expect(maskClick).toBeCalledTimes(1);
-
-  //   await wrapper.find('.h-drawer__closable').trigger('click');
-  //   expect(iconClick).toBeCalledTimes(1);
-  // });
 });

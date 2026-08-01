@@ -27,5 +27,3 @@ Use `gap` for uniform spacing, or control each direction with `column-gap` and `
 `cols`, `gap`, `column-gap`, `row-gap`, `span`, and `offset` accept responsive objects with `xs`, `sm`, `md`, `lg`, `xl`, and `xxl` keys. Values naturally carry forward until the next breakpoint overrides them.
 
 :::demo components/Layout/responsive.vue :::
-
-The legacy `h-row` and `h-col` components remain available for gradual migration. Prefer Grid for new pages.

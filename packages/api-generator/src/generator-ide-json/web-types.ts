@@ -19,7 +19,7 @@ import components from '../../dist/components-analysis.json';
 import directives from '../../dist/directives-analysis.json';
 
 export default async function createWebTypesJson() {
-  const getDocUrl = (cmp: string, heading?: string, type = 'components') =>
+  const getDocUrl = (cmp: string, heading?: string, _type = 'components') =>
     `https://aurora-design.example.com/horizon-web/dev-component/vue/base/component/${cmp.toLowerCase()}${
       heading ? `#${capitalize(cmp)}${heading}` : ''
     }`;
@@ -57,11 +57,10 @@ export default async function createWebTypesJson() {
           prop.default === null
             ? 'null'
             : prop.default === undefined
-            ? 'undefined'
-            : prop.default.toString(),
+              ? 'undefined'
+              : prop.default.toString(),
         required: !prop.required ? undefined : true,
         value: createTagValue(prop.baseType),
-        type: prop.type === 'boolean' ? 'boolean' : undefined, // this is deprecated but should be const 'boolean' for compatibility with 2019.2
       };
     };
 

@@ -89,9 +89,9 @@ describe('Form.tsx special', () => {
     expect(
       wrapper.findComponent(HSelect).findComponent(HPickerInput).classes('is-error'),
     ).toBeTruthy();
-    expect(
-      wrapper.findComponent(HTimePicker).findComponent(HInput).classes('is-error'),
-    ).toBeTruthy();
+    expect(wrapper.findComponent(HTimePicker).find('.h-picker__input').classes('is-error')).toBe(
+      true,
+    );
     expect(
       wrapper.findComponent(HCascader).findComponent(HPickerInput).classes('is-error'),
     ).toBeTruthy();

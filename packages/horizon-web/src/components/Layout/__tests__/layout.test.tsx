@@ -1,25 +1,7 @@
-import { mount, shallowMount } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 import { h } from 'vue';
 import { describe, expect, test } from 'vitest';
-import { HCol, HGrid, HGridItem, HRow } from '../index';
-
-describe('Row.tsx', () => {
-  test('basic', () => {
-    const wrapper = shallowMount(() => <HRow />);
-    const element = wrapper.findComponent(HRow);
-
-    expect(element.exists()).toBe(true);
-  });
-});
-
-describe('Col.tsx', () => {
-  test('basic', () => {
-    const wrapper = shallowMount(() => <HCol />);
-    const element = wrapper.findComponent(HCol);
-
-    expect(element.exists()).toBe(true);
-  });
-});
+import { HGrid, HGridItem } from '../index';
 
 describe('Grid.tsx', () => {
   test('renders a native grid with responsive columns and gaps', () => {

@@ -20,7 +20,6 @@ export default defineConfig({
     rollupOptions: {
       external: [
         'vue',
-        'video.js',
         /^dayjs/,
         /@aurora\//,
         /^lodash/,
@@ -30,7 +29,6 @@ export default defineConfig({
         'deepmerge',
         'dompurify',
         'nanoid',
-        'resize-observer-polyfill',
       ],
       output: [
         {

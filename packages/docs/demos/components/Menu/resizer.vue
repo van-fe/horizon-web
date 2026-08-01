@@ -4,15 +4,15 @@
       <h-form label-position="left" label-vertical-align="middle" :inline="true">
         <h-form-item label="theme:">
           <h-radio-group v-model="theme">
-            <h-radio label="default">default</h-radio>
-            <h-radio label="gray">gray</h-radio>
-            <h-radio label="midnight">midnight</h-radio>
+            <h-radio value="default">default</h-radio>
+            <h-radio value="gray">gray</h-radio>
+            <h-radio value="midnight">midnight</h-radio>
           </h-radio-group>
         </h-form-item>
         <h-form-item label="resize-to-collapse:">
           <h-radio-group v-model="resizeToCollapse">
-            <h-radio :label="true">True</h-radio>
-            <h-radio :label="false">False</h-radio>
+            <h-radio :value="true">True</h-radio>
+            <h-radio :value="false">False</h-radio>
           </h-radio-group>
         </h-form-item>
       </h-form>
@@ -62,7 +62,10 @@
               <h-menu-item value="2-2" name="二级菜单 2" />
             </h-sub-menu>
             <h-sub-menu value="3" icon="matestore_filled">
-              <template #title>一级菜单 3 的名字超级长，可以看到 tooltip 的显示，如果没有显示，还需要增加更多更多内容</template>
+              <template #title>
+                一级菜单 3 的名字超级长，可以看到 tooltip
+                的显示，如果没有显示，还需要增加更多更多内容
+              </template>
               <h-sub-menu value="3-1">
                 <template #title>二级菜单 1</template>
                 <h-menu-item value="3-1-1" :disabled="true">三级菜单 1</h-menu-item>

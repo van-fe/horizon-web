@@ -40,7 +40,8 @@ $values: (
   'border-color--loading-spinner': #{function.css-variable('border-brand-default')},
   'border-color--quality-selector': #{function.css-variable('text-secondary')},
   'border--loading-spinner': 3px solid transparent,
-  'border--quality-selector': 0.5px solid #{function.css-variable('video-player-border-color--quality-selector')},
+  'border--quality-selector': 0.5px solid
+    #{function.css-variable('video-player-border-color--quality-selector')},
   'border-radius--time-tooltip': #{function.css-variable('radius-m')},
   'border-radius--progress': 7px,
   'border-radius--progress-button': #{function.css-variable('radius-circle')},

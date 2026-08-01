@@ -8,8 +8,8 @@ describe('Radio.tsx', () => {
     const modelValue = ref('1');
     const wrapper = shallowMount(() => (
       <div>
-        <HRadio modelValue={modelValue.value} label="1" />
-        <HRadio modelValue={modelValue.value} label="2" />
+        <HRadio modelValue={modelValue.value} value="1" />
+        <HRadio modelValue={modelValue.value} value="2" />
       </div>
     ));
     const elements = wrapper.findAllComponents(HRadio);

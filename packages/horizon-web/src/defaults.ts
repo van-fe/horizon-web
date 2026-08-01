@@ -2,7 +2,7 @@ import * as components from './components';
 import * as directives from './directives';
 import makeInstaller from './makeInstaller';
 
-export default makeInstaller([
+export default makeInstaller(() => [
   ...Object.values(components),
   ...Object.values(
     Object.fromEntries(

@@ -2,18 +2,18 @@
   <div class="flex align-center mb-6">
     <div class="mr-4">标签位置</div>
     <h-radio-group v-model="labelPosition" size="small">
-      <h-radio-button label="top" />
-      <h-radio-button label="left" />
+      <h-radio-button value="top" />
+      <h-radio-button value="left" />
     </h-radio-group>
     <div class="ml-6 mr-4">水平对齐</div>
     <h-radio-group v-model="labelJustifyAlign" size="small">
-      <h-radio-button label="left" />
-      <h-radio-button label="right" />
+      <h-radio-button value="left" />
+      <h-radio-button value="right" />
     </h-radio-group>
     <div class="ml-6 mr-4">垂直对齐</div>
     <h-radio-group v-model="labelVerticalAlign" size="small">
-      <h-radio-button label="top" />
-      <h-radio-button label="middle" />
+      <h-radio-button value="top" />
+      <h-radio-button value="middle" />
     </h-radio-group>
   </div>
   <h-form

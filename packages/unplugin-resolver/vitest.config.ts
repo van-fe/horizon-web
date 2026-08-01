@@ -4,13 +4,5 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'happy-dom',
-    transformMode: {
-      web: [/.tsx$/],
-    },
-    browser: {
-      enabled: false,
-      name: 'chromium',
-      provider: 'playwright',
-    },
   },
 });

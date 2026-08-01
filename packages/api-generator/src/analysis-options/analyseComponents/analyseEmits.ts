@@ -1,7 +1,6 @@
 import type { Project, PropertyAssignment, ArrowFunction } from 'ts-morph';
 import type { ApiGeneratorAnalysedEmitType, ApiGeneratorExportedComponent } from '@aurora/utils';
 import { ts } from 'ts-morph';
-import type { FileElements } from '../../utils/analyseFileElements';
 import analysisFileElements from '../../utils/analyseFileElements';
 import checkInvisibleTagExits from '../../utils/checkInvisibleTagExist';
 import analysisJsDocs from '../../utils/analyseJsDocs';
@@ -11,7 +10,6 @@ const ignoreEmitNames: string[] = [];
 
 function analysisPropertyAssignment(
   property: PropertyAssignment,
-  fileElements: FileElements,
 ): ApiGeneratorAnalysedEmitType | undefined {
   if (checkInvisibleTagExits(property.compilerNode)) {
     return undefined;
@@ -29,7 +27,6 @@ function analysisPropertyAssignment(
     descLocales: jsDoc.locales,
     name: emitName,
     params: [],
-    deprecated: jsDoc.tags.deprecated?.default,
     version: jsDoc.tags.version?.default,
   };
 
@@ -80,7 +77,7 @@ export default function analyseEmits(
         for (const properties of fileElements.variables[
           componentInfo.emitsVariableName
         ]?.getChildrenOfKind(ts.SyntaxKind.PropertyAssignment) ?? []) {
-          const emit = analysisPropertyAssignment(properties, fileElements);
+          const emit = analysisPropertyAssignment(properties);
           emit && emits.push(emit);
         }
       }

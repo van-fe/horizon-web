@@ -5,7 +5,12 @@
     </h-grid-item>
   </h-grid>
 
-  <h-dialog v-model="dialogVisible" title="信息填写" @close="onCloseDialog" @opened="onOpened">
+  <h-dialog
+    v-model:visible="dialogVisible"
+    title="信息填写"
+    @close="onCloseDialog"
+    @opened="onOpened"
+  >
     <h-form>
       <h-form-item label="姓名">
         <h-input ref="inputRef" v-model="name" @keypress.enter="onInputBlur" />
@@ -20,10 +25,30 @@
     </template>
   </h-dialog>
 
-  <h-guide ref="guideRef" v-model:visible="visible" :use-controls="false" @close="onClose" @finish="onFinish">
-    <h-guide-item :target="inputRef" title="第一步" content="请填写姓名，至少2位字符；填写完成后按下回车" />
-    <h-guide-item :target="inputNumberRef" title="第二步" content="请填写年龄，在10-60区间；填写完成后按下回车" placement="top-start" />
-    <h-guide-item :target="confirmBtnRef" title="第三步" content="点击确定提交" placement="right-start"></h-guide-item>
+  <h-guide
+    ref="guideRef"
+    v-model:visible="visible"
+    :use-controls="false"
+    @close="onClose"
+    @finish="onFinish"
+  >
+    <h-guide-item
+      :target="inputRef"
+      title="第一步"
+      content="请填写姓名，至少2位字符；填写完成后按下回车"
+    />
+    <h-guide-item
+      :target="inputNumberRef"
+      title="第二步"
+      content="请填写年龄，在10-60区间；填写完成后按下回车"
+      placement="top-start"
+    />
+    <h-guide-item
+      :target="confirmBtnRef"
+      title="第三步"
+      content="点击确定提交"
+      placement="right-start"
+    ></h-guide-item>
   </h-guide>
 </template>
 
@@ -82,5 +107,4 @@ function onSubmit() {
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

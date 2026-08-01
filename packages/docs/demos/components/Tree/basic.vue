@@ -2,20 +2,17 @@
   <h-form label-position="left" label-vertical-align="middle">
     <h-form-item label="尺寸">
       <h-radio-group v-model="size">
-        <h-radio label="small" />
-        <h-radio label="medium" />
-        <h-radio label="large" />
-        <h-radio label="huge" />
+        <h-radio value="small" />
+        <h-radio value="medium" />
+        <h-radio value="large" />
+        <h-radio value="huge" />
       </h-radio-group>
     </h-form-item>
   </h-form>
   <h-grid :gap="12">
     <h-grid-item :span="12">
       <div class="demo-title">单选</div>
-      <h-tree
-        :tree-data="baseTreeData"
-        :size="size"
-      />
+      <h-tree :tree-data="baseTreeData" :size="size" />
     </h-grid-item>
     <h-grid-item :span="12">
       <div class="demo-title">多选</div>
@@ -45,5 +42,4 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

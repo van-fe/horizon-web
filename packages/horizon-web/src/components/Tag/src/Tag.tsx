@@ -161,7 +161,7 @@ export default defineComponent({
             background:
               (isColorBar(props.background!)
                 ? useColors(props.background!)
-                : props.background ?? colorList.value.background.disabled) + ' !important',
+                : (props.background ?? colorList.value.background.disabled)) + ' !important',
             borderColor: colorList.value.border.disabled + ' !important',
           };
         }
@@ -172,7 +172,7 @@ export default defineComponent({
               color: colorList.value.text.press,
               background: isColorBar(props.background!)
                 ? useColors(props.background!)
-                : props.background ?? colorList.value.background.press,
+                : (props.background ?? colorList.value.background.press),
               borderColor: colorList.value.border.press,
             };
           }
@@ -182,7 +182,7 @@ export default defineComponent({
               color: colorList.value.text.hover,
               background: isColorBar(props.background!)
                 ? useColors(props.background!)
-                : props.background ?? colorList.value.background.hover,
+                : (props.background ?? colorList.value.background.hover),
               borderColor: colorList.value.border.hover,
             };
           }
@@ -193,7 +193,7 @@ export default defineComponent({
             color: colorList.value.text.active,
             background: isColorBar(props.background!)
               ? useColors(props.background!)
-              : props.background ?? colorList.value.background.active,
+              : (props.background ?? colorList.value.background.active),
             borderColor: colorList.value.border.active,
           };
         }
@@ -202,7 +202,7 @@ export default defineComponent({
           color: colorList.value.text.default,
           background: isColorBar(props.background!)
             ? useColors(props.background!)
-            : props.background ?? colorList.value.background.default,
+            : (props.background ?? colorList.value.background.default),
           borderColor: colorList.value.border.default,
         };
       } else return {};
@@ -229,8 +229,6 @@ export default defineComponent({
       if (isDisabled.value || !isClickable.value) return;
 
       emit('click', e);
-      // @deprecated
-      emit('clickTag', e);
 
       if (typeof modelValue?.value === 'boolean') {
         emit('update:modelValue', !modelValue.value);
@@ -251,16 +249,12 @@ export default defineComponent({
         onCloseNotice?.(props.id)
           .then(() => {
             emit('close', e);
-            // @deprecated
-            emit('closeTag', e);
           })
           .finally(() => {
             isWaitingForConfirm.value = false;
           });
       } else {
         emit('close', e);
-        // @deprecated
-        emit('closeTag', e);
       }
     }
 
@@ -381,7 +375,7 @@ export default defineComponent({
             classHelper.m(props.type || 'default', !props.color),
             classHelper.m(sizeRef.value),
             classHelper.m('bold', props.bold),
-            classHelper.m('round', props.round || props.major),
+            classHelper.m('round', props.round),
             classHelper.m('equally', props.equally),
             classHelper.is('active', isActivated.value),
             classHelper.is('loading', props.loading || isWaitingForConfirm.value),

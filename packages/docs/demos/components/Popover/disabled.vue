@@ -3,14 +3,14 @@
     <h-form>
       <h-form-item label="Visible">
         <h-radio-group v-model="visible" :disabled="disabled">
-          <h-radio :label="true">True</h-radio>
-          <h-radio :label="false">False</h-radio>
+          <h-radio :value="true">True</h-radio>
+          <h-radio :value="false">False</h-radio>
         </h-radio-group>
       </h-form-item>
       <h-form-item label="Disabled">
         <h-radio-group v-model="disabled">
-          <h-radio :label="true">True</h-radio>
-          <h-radio :label="false">False</h-radio>
+          <h-radio :value="true">True</h-radio>
+          <h-radio :value="false">False</h-radio>
         </h-radio-group>
       </h-form-item>
     </h-form>

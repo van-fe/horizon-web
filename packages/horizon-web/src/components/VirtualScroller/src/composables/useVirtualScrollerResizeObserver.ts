@@ -1,9 +1,6 @@
 import { onBeforeUnmount } from 'vue';
 
-/**
- * 动态尺寸观察能力。
- * 兼容数组与单对象两种 borderBoxSize 实现，并在卸载时取消待执行任务。
- */
+/** 动态尺寸观察能力，并在卸载时取消待执行任务。 */
 export default function useVirtualScrollerResizeObserver(): ResizeObserver | undefined {
   if (typeof ResizeObserver === 'undefined') return undefined;
 
@@ -25,13 +22,9 @@ export default function useVirtualScrollerResizeObserver(): ResizeObserver | und
           continue;
         }
 
-        const borderBoxSize = entry.borderBoxSize as
-          | readonly ResizeObserverSize[]
-          | ResizeObserverSize
-          | undefined;
-        const resizeObserverSize = Array.isArray(borderBoxSize) ? borderBoxSize[0] : borderBoxSize;
-        const width = resizeObserverSize?.inlineSize ?? entry.contentRect.width;
-        const height = resizeObserverSize?.blockSize ?? entry.contentRect.height;
+        const resizeObserverSize = entry.borderBoxSize[0];
+        const width = resizeObserverSize.inlineSize;
+        const height = resizeObserverSize.blockSize;
 
         entry.target.$_vs_onResize(entry.target.$_vs_id, width, height);
       }

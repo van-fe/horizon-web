@@ -1,4 +1,4 @@
-import type { ExtractPropTypes, PropType } from 'vue';
+import type { CSSProperties, ExtractPropTypes, PropType } from 'vue';
 import { IconMaybeFalsyPropType } from '~/utils/useIcon';
 
 export const useInputProps = {
@@ -151,6 +151,92 @@ export const useInputProps = {
   autoSize: {
     type: [Boolean, Object] as PropType<boolean | { minRows?: number; maxRows?: number }>,
     default: false,
+  },
+  /**
+   * 是否作为复合表单组件的无外观输入框使用
+   * 启用后仅渲染原生输入能力，不渲染 Input 的边框、前后缀和字数统计
+   * @en Whether to render as an unstyled input embedded in a composite form control.
+   */
+  embedded: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * 是否使嵌入式输入框宽度自适应内容
+   * 仅在 `embedded` 为 `true` 且 `type` 为 `text` 时生效
+   * @en Whether an embedded text input should fit its content width.
+   */
+  fitContent: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * 自适应内容输入框的最小宽度
+   * @en Minimum width of a fit-content input.
+   */
+  fitContentMinWidth: {
+    type: [String, Number],
+  },
+  /**
+   * 自适应内容输入框根节点的类名
+   * 复合组件可通过该属性保持已有 DOM 样式契约
+   * @en Root class name of a fit-content input.
+   */
+  fitContentClass: {
+    type: String,
+  },
+  /**
+   * 自适应内容输入框尺寸镜像节点的类名
+   * 复合组件可通过该属性保持已有 DOM 样式契约
+   * @en Sizing mirror class name of a fit-content input.
+   */
+  fitContentMirrorClass: {
+    type: String,
+  },
+  /**
+   * 嵌入式原生输入框的类名，供复合组件衔接既有样式
+   * @en Class name applied to the embedded native input.
+   */
+  embeddedClass: {
+    type: String,
+  },
+  /**
+   * 嵌入式原生输入框的样式，供复合组件控制原生输入区域
+   * @en Styles applied to the embedded native input.
+   */
+  embeddedStyle: {
+    type: Object as PropType<CSSProperties>,
+  },
+  /**
+   * 嵌入式原生输入框的输入事件处理器
+   * 复合组件可用它保持原生事件时序，包括输入法组合输入期间的事件
+   * @param evt 原生输入事件
+   * @paramEn evt Native input event.
+   * @en Native input handler for preserving event timing in composite controls.
+   */
+  embeddedInputHandler: {
+    type: Function as PropType<(evt: Event) => void>,
+  },
+  /**
+   * 原生输入框的 tab 顺序
+   * @en Native input tab order.
+   */
+  tabindex: {
+    type: [String, Number],
+  },
+  /**
+   * 原生输入框的自动完成策略
+   * @en Native input autocomplete strategy.
+   */
+  autocomplete: {
+    type: String,
+  },
+  /**
+   * 原生输入框是否可被选择
+   * @en Native input selection hint.
+   */
+  unselectable: {
+    type: String as PropType<'on' | 'off'>,
   },
 };
 

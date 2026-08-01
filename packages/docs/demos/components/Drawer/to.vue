@@ -5,11 +5,10 @@
   </div>
   <h-drawer
     v-model:visible="visible"
-    v2
     :to="to"
     size="small"
     title="Title"
-    position="right"
+    placement="right"
     @ok="onOk"
     @cancel="onCancel"
   >

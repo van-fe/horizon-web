@@ -1,4 +1,4 @@
-import { colors } from '~/globalMethods';
+import { colors } from '~/styles';
 // 默认随机头像的cdn链接
 export const randomAvatar = [
   'https://cdn-app.example.com/user/2022/3/1/a72ad7d3-5c45-48dc-a4cc-9f90277e4c00.jpg',

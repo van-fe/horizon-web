@@ -2,9 +2,9 @@
   <h-grid :gap="12">
     <h-grid-item :span="24">
       <h-radio-group v-model="size">
-        <h-radio label="small" />
-        <h-radio label="medium" />
-        <h-radio label="large" />
+        <h-radio value="small" />
+        <h-radio value="medium" />
+        <h-radio value="large" />
       </h-radio-group>
     </h-grid-item>
   </h-grid>

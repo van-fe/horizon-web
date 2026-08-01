@@ -1,19 +1,12 @@
 import { AIcon } from '@aurora/icon';
 import type { HorizonWebSetupContext } from '@aurora/utils';
-import {
-  ComponentClassBlock,
-  getBooleanProp,
-  getUnitString,
-  isVNodeEmpty,
-  useNamespace,
-} from '@aurora/utils';
+import { ComponentClassBlock, getBooleanProp, isVNodeEmpty, useNamespace } from '@aurora/utils';
 import {
   cloneVNode,
   computed,
   defineComponent,
   getCurrentInstance,
   inject,
-  toRefs,
   type VNode,
   type VNodeRef,
 } from 'vue';
@@ -21,7 +14,6 @@ import { useTabEmits, type TabEmits } from './composables/useEmits';
 import { useTabProps, type HTabValue } from './composables/useProps';
 import type { TabSlots } from './composables/useSlots';
 import { useTabSlots } from './composables/useSlots';
-import { useTabPropsLogWarnProperty } from './composables/useWarning';
 import { tabsContextKey } from './constants';
 
 export default defineComponent({
@@ -34,8 +26,6 @@ export default defineComponent({
   slots: useTabSlots,
   emits: useTabEmits,
   setup(props, { slots, emit, attrs }: HorizonWebSetupContext<TabEmits, TabSlots>) {
-    useTabPropsLogWarnProperty(toRefs(props));
-
     const ctx = inject(tabsContextKey);
     if (!ctx) throw new Error('Please using <h-tab> in the <h-tabs>');
 
@@ -43,8 +33,8 @@ export default defineComponent({
 
     const instance = getCurrentInstance();
 
-    const key = computed(() => props.name ?? (instance?.vnode.key as HTabValue));
-    const closable = computed(() => props.showClose ?? props.closable);
+    const key = computed(() => instance?.vnode.key as HTabValue);
+    const closable = computed(() => props.closable);
 
     const dragActivated = computed(
       () =>
@@ -69,6 +59,12 @@ export default defineComponent({
       ctx.onClick?.(key.value);
     };
 
+    const onKeydown = (evt: KeyboardEvent) => {
+      if (evt.key !== 'Enter' && evt.key !== ' ') return;
+      evt.preventDefault();
+      onClick();
+    };
+
     const onClose = (evt: Event) => {
       evt.stopPropagation();
       emit('close', key.value);
@@ -76,22 +72,6 @@ export default defineComponent({
     };
 
     const isActivated = computed(() => ctx.activeKey.value === key.value);
-
-    const boundaryStyle = computed(() => {
-      if (!props.minWidth && !props.maxWidth) return {};
-
-      // const limitWidth = ctx.wrapperEl.value
-      //   ? Math.min(
-      //       (ctx.wrapperEl.value.clientWidth || 300) * 0.6,
-      //       typeof props.maxWidth === 'number' ? props.maxWidth : 300,
-      //     )
-      //   : props.maxWidth;
-
-      return {
-        minWidth: getUnitString(props.minWidth),
-        maxWidth: getUnitString(props.maxWidth),
-      };
-    });
 
     const addTab = ctx.createTab(key.value) as VNodeRef;
     const dndContext = ctx.createDraggable(key.value);
@@ -125,11 +105,11 @@ export default defineComponent({
             dragActivated.value && cls.em('tab', 'dragging'),
             dropActivated.value && cls.em('tab', 'dropping'),
           ]}
-          tabindex={isActivated.value ? -1 : 0}
+          tabindex={props.disabled ? -1 : isActivated.value ? 0 : -1}
           aria-selected={isActivated.value}
           aria-disabled={props.disabled}
-          style={boundaryStyle.value}
           onClick={onClick}
+          onKeydown={onKeydown}
           onDragstart={dndContext.onDragstart}
           onDrag={dndContext.onDrag}
           onDragover={dndContext.onDragover}
@@ -151,8 +131,22 @@ export default defineComponent({
               slotDefaults
             )}
 
-            {closable.value && ctx.type.value !== 'segment' && (
-              <AIcon name="close" class={[cls.e('icon'), cls.e('close')]} onClick={onClose} />
+            {closable.value && (
+              <span
+                class={[cls.e('icon'), cls.e('close')]}
+                role="button"
+                tabindex={0}
+                aria-label={`Close ${props.label || 'tab'}`}
+                onClick={onClose}
+                onKeydown={(evt: KeyboardEvent) => {
+                  if (evt.key === 'Enter' || evt.key === ' ') {
+                    evt.preventDefault();
+                    onClose(evt);
+                  }
+                }}
+              >
+                <AIcon name="close" />
+              </span>
             )}
           </div>
         </div>

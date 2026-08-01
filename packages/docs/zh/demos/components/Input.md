@@ -35,6 +35,10 @@ PS: 在`password`状态设置`show-password`为`true`的情况下，`suffix-icon
 `--h-input-bg--prepend-append: transparent` 为了解决图标和前后缀的背景色问题
 :::demo components/Input/mixed.vue :::
 
+## 嵌入复合组件
+通过 `embedded` 复用 Input 的输入、焦点、禁用和输入法行为，同时不渲染默认外观。配合 `fit-content` 可让输入框宽度随内容变化，适合 Picker、标签输入等复合表单组件。
+:::demo components/Input/embedded.vue :::
+
 ## 多行输入框
 将`type`设置为`textarea`时，输入框将会变为多行输入框
 

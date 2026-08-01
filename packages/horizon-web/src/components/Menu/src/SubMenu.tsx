@@ -206,16 +206,6 @@ export default defineComponent({
 
         void nextTick(() => {
           parentEmits(
-            'select',
-            props.value ?? '',
-            (activatedMenus?.value.map(curr => curr.props).reverse() ?? []) as (
-              | MenuItemProps
-              | SubMenuProps
-            )[],
-            props,
-          );
-
-          parentEmits(
             'selected',
             props.value ?? '',
             (activatedMenus?.value.map(curr => curr.props).reverse() ?? []) as (
@@ -266,16 +256,6 @@ export default defineComponent({
 
         void nextTick(() => {
           parentEmits(
-            'select',
-            target.props.value ?? '',
-            (activatedMenus?.value.map(curr => curr.props).reverse() ?? []) as (
-              | MenuItemProps
-              | SubMenuProps
-            )[],
-            target.props as SubMenuProps,
-          );
-
-          parentEmits(
             'selected',
             target.props.value ?? '',
             (activatedMenus?.value.map(curr => curr.props).reverse() ?? []) as (
@@ -322,22 +302,7 @@ export default defineComponent({
         'click',
         target.props as MenuItemProps,
       );
-      (target.emits as HorizonWebSetupContext<MenuItemEmits>['emit'])(
-        'menuItemActive',
-        target.props as MenuItemProps,
-      );
-
       void nextTick(() => {
-        parentEmits(
-          'select',
-          target.props.value ?? '',
-          (activatedMenus?.value.map(curr => curr.props).reverse() ?? []) as (
-            | MenuItemProps
-            | SubMenuProps
-          )[],
-          target.props as MenuItemProps,
-        );
-
         parentEmits(
           'selected',
           target.props.value ?? '',
@@ -445,9 +410,15 @@ export default defineComponent({
                       <div
                         ref={titleInnerDomRef}
                         class={cls(classHelper.em('title', 'inner'))}
+                        role="menuitem"
+                        aria-haspopup="menu"
+                        aria-expanded={
+                          expandedMenu?.value.has(uuid) || dropdownVisible.value
+                        }
+                        aria-disabled={props.disabled}
                         tabindex={props.disabled ? -1 : 0}
                         onClick={onClick}
-                        onKeyup={withModifiers(withKeys(onKeyup, ['enter']), ['self'])}
+                        onKeyup={withModifiers(withKeys(onKeyup, ['enter', 'space']), ['self'])}
                         onMouseenter={onMouseEnter}
                         onMouseleave={onMouseleave}
                         onBlur={handleBlur}
@@ -559,9 +530,7 @@ export default defineComponent({
                                       default: () => (
                                         <>
                                           {item.slots.default?.()}
-                                          {item.slots.title?.() ??
-                                            item.slots.name?.() ??
-                                            item.props.name}
+                                          {item.slots.title?.() ?? item.props.name}
                                         </>
                                       ),
                                       icon: item.slots.icon,

@@ -12,10 +12,10 @@ export default defineComponent({
     const {
       popperClass: popperClassProp,
       visible: visibleProp,
+      theme: themeProp,
       arrow: arrowProp,
       content: contentProp,
       size,
-      theme: themeProp,
     } = toRefs(props);
     const classHelper = new ComponentClassBlock('tooltip');
 

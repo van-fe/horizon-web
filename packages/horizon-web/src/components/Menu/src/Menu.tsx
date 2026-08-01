@@ -155,7 +155,6 @@ export default defineComponent({
         }, 500);
       }
       emit('update:collapse', value);
-      emit('collapseChanged', value);
     });
 
     watch(activeMenu, () => {

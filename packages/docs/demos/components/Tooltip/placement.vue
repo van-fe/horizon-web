@@ -2,14 +2,14 @@
   <h-form class="block-tooltip-props">
     <h-form-item label="尺寸">
       <h-radio-group v-model="size">
-        <h-radio label="medium">Medium</h-radio>
-        <h-radio label="small">Small</h-radio>
+        <h-radio value="medium">Medium</h-radio>
+        <h-radio value="small">Small</h-radio>
       </h-radio-group>
     </h-form-item>
     <h-form-item label="主题">
       <h-radio-group v-model="theme">
-        <h-radio label="dark">Dark</h-radio>
-        <h-radio label="light">Light</h-radio>
+        <h-radio value="dark">Dark</h-radio>
+        <h-radio value="light">Light</h-radio>
       </h-radio-group>
     </h-form-item>
     <h-form-item label="延迟关闭">
@@ -22,7 +22,6 @@
       <h-tooltip
         placement="top-start"
         content="top-start"
-        singleton
         :size="size"
         :theme="theme"
         :hide-after="hideAfter"

@@ -178,6 +178,53 @@ export default defineComponent({
       emit('visibleChange', false);
     }
 
+    function getEnabledMenuItems() {
+      const popContent = popContentDomRef.value?.$el as HTMLElement | undefined;
+      return Array.from(
+        popContent?.querySelectorAll<HTMLElement>('[role="menuitem"]:not([aria-disabled="true"])') ??
+          [],
+      );
+    }
+
+    function handleKeydown(evt: KeyboardEvent) {
+      if (evt.key === 'Escape' && visible.value) {
+        evt.preventDefault();
+        handleClose();
+        wrapperDomRef.value?.focus();
+        return;
+      }
+
+      if (!['ArrowDown', 'ArrowUp', 'Home', 'End', 'Enter', ' '].includes(evt.key)) return;
+
+      if (!visible.value) {
+        if (props.disabled) return;
+        evt.preventDefault();
+        handleOpen();
+        void nextTick(() => getEnabledMenuItems().at(0)?.focus());
+        return;
+      }
+
+      if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(evt.key)) return;
+
+      const items = getEnabledMenuItems();
+      if (items.length === 0) return;
+      evt.preventDefault();
+
+      const currentIndex = items.indexOf(document.activeElement as HTMLElement);
+      const nextIndex =
+        evt.key === 'Home'
+          ? 0
+          : evt.key === 'End'
+            ? items.length - 1
+            : currentIndex < 0
+              ? evt.key === 'ArrowUp'
+                ? items.length - 1
+                : 0
+              : (currentIndex + (evt.key === 'ArrowUp' ? -1 : 1) + items.length) % items.length;
+
+      items[nextIndex]?.focus();
+    }
+
     expose({
       handleOpen,
       handleClose,
@@ -201,11 +248,17 @@ export default defineComponent({
 
       if (trigger.value === 'context-menu') {
         return (
-          <div class={cls(classHelper.block, classHelper.m(props.theme))}>
+          <div
+            ref={wrapperDomRef}
+            class={cls(classHelper.block, classHelper.m(props.theme))}
+            tabindex={props.disabled ? undefined : 0}
+            onKeydown={handleKeydown}
+          >
             <span onContextmenu={onContextMenu}>{reference}</span>
             <Teleport to={props.teleportTo} disabled={!props.toBody}>
               <HTransition appear name="dropdown" speed="slow">
                 <HPopContent
+                  ref={popContentDomRef}
                   v-click-outside={handleClose}
                   v-show={visible.value}
                   class={cls(classHelper.e('inner'), classHelper.em('inner', props.theme))}
@@ -214,7 +267,7 @@ export default defineComponent({
                     ...(props.popperWidth && { '--h-dropdown-width': props.popperWidth + 'px' }),
                   }}
                 >
-                  {renderContent(popper)}
+                  <div onKeydown={handleKeydown}>{renderContent(popper)}</div>
                 </HPopContent>
               </HTransition>
             </Teleport>
@@ -227,6 +280,8 @@ export default defineComponent({
           ref={wrapperDomRef}
           class={cls(classHelper.block, classHelper.m(props.theme), classHelper.m(size.value))}
           data-placement={placement.value}
+          tabindex={props.disabled ? undefined : 0}
+          onKeydown={handleKeydown}
         >
           <HPopover
             ref={popoverRef}
@@ -266,7 +321,7 @@ export default defineComponent({
                     classHelper.em('inner', size.value),
                   )}
                 >
-                  {renderContent(popper)}
+                  <div onKeydown={handleKeydown}>{renderContent(popper)}</div>
                 </HPopContent>
               ),
             }}

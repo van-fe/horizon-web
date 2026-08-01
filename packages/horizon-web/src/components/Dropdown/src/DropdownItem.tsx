@@ -4,8 +4,6 @@ import {
   onBeforeUnmount,
   onMounted,
   ref,
-  withKeys,
-  withModifiers,
 } from 'vue';
 import { ComponentClassBlock, cls, useNamespace, isUndefined } from '@aurora/utils';
 import type { HorizonWebSetupContext } from '@aurora/utils';
@@ -89,12 +87,16 @@ export default defineComponent({
           classHelper.is('focusable', !props.disabled),
         )}
         onClick={onClick}
+        role="none"
       >
         <div
           class={classHelper.e('inner')}
+          role="menuitem"
+          aria-disabled={props.disabled}
           tabindex={props.disabled ? -1 : 0}
           onKeyup={(e: KeyboardEvent) => {
-            if (e.key === 'Enter' && e.target === e.currentTarget) {
+            if ((e.key === 'Enter' || e.key === ' ') && e.target === e.currentTarget) {
+              e.preventDefault();
               onClick(e);
             }
           }}

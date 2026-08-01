@@ -80,7 +80,7 @@
 
 `confirmRender` 插槽也对外暴露了 `cancelHandle` `confirmHandle` 两个方法，用于自定义尾部时使用
 
-另外也可以通过 `cascader` 实例对外暴露的 `exposeConfirm` 来执行确认和取消操作
+另外也可以通过 `cascader` 实例对外暴露的 `confirmHandle`、`cancelHandle` 来执行确认和取消操作
 :::demo components/Cascader/custom-confirm.vue :::
 ## panel 分组
 因 `cascader` 树结构的特殊性，如果要达到分组效果，只能在传入 `options` 时，设置一个只有 `groupLabel` 的节点来模拟分组

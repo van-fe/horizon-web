@@ -26,7 +26,6 @@ function analysisPropertyAssignment(
     required: false,
     type: '',
     baseType: '',
-    deprecated: jsDoc.tags.deprecated?.default,
     version: jsDoc.tags.version?.default,
     options: [],
   };

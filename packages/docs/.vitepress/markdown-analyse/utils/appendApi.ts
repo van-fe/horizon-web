@@ -12,10 +12,6 @@ import type {
 } from '@aurora/utils';
 import { kebabCase, isString } from '@aurora/utils';
 
-function createDeprecatedTips(deprecated: string) {
-  return `<deprecated-tips name="${deprecated}" />`;
-}
-
 function createVersionTips(version: string) {
   return `<version-tips desc="${version}" />`;
 }
@@ -35,8 +31,8 @@ function analyseProps(
 
     tbody.push(`<tr>
         <td style="word-break: keep-all">${name}${
-          isString(prop.deprecated) ? createDeprecatedTips(prop.deprecated) : ''
-        }${isString(prop.version) ? createVersionTips(prop.version) : ''}</td>
+          isString(prop.version) ? createVersionTips(prop.version) : ''
+        }</td>
         <td>${escapeHtml(prop.desc)}</td>
         <td><code>${escapeHtml(prop.type || prop.baseType)}</code></td>
         <td class="text-center">${prop.required ? '是' : '否'}</td>
@@ -71,7 +67,7 @@ function analyseEmits(emits: ApiGeneratorAnalysedEmitType[]) {
     tbody.push(`<tr>
         <td rowspan="${emit.params.length || 1}" style="word-break: keep-all">${kebabCase(
           emit.name,
-        )}${isString(emit.deprecated) ? createDeprecatedTips(emit.deprecated) : ''}</td>
+        )}</td>
         <td rowspan="${emit.params.length || 1}">${escapeHtml(emit.desc)}</td>
         <td rowspan="${emit.params.length || 1}">(
 ${emit.params
@@ -117,9 +113,7 @@ function analyseSlots(slots: ApiGeneratorAnalysedSlotType[]) {
 
   slots.forEach(slot => {
     tbody.push(`<tr>
-        <td rowspan="${slot.params.length || 1}" style="word-break: keep-all">${slot.name}${
-          isString(slot.deprecated) ? createDeprecatedTips(slot.deprecated) : ''
-        }</td>
+        <td rowspan="${slot.params.length || 1}" style="word-break: keep-all">${slot.name}</td>
         <td rowspan="${slot.params.length || 1}">${escapeHtml(slot.desc)}</td>
         <td rowspan="${slot.params.length || 1}">(
 ${slot.params
@@ -164,12 +158,10 @@ function analyseExposes(exposes: ApiGeneratorAnalysedExposeType[]) {
   const tbody: string[] = [];
 
   exposes.forEach(expose => {
-    const rowspan = (expose.params.length + expose.returns.length) || 1;
+    const rowspan = expose.params.length + expose.returns.length || 1;
     const allParams = [...expose.params, ...expose.returns];
     tbody.push(`<tr>
-        <td rowspan="${rowspan}" style="word-break: keep-all">${expose.name}${
-          isString(expose.deprecated) ? createDeprecatedTips(expose.deprecated) : ''
-        }</td>
+        <td rowspan="${rowspan}" style="word-break: keep-all">${expose.name}</td>
         <td rowspan="${rowspan}">${escapeHtml(expose.desc)}</td>
         <td rowspan="${rowspan}">${
           expose.nativeType === 'function'
@@ -183,7 +175,8 @@ ${expose.params
             : `<code>${escapeHtml(expose.type)}</code>`
         }
 </td>
-${allParams.length > 0
+${
+  allParams.length > 0
     ? allParams
         .map(param => {
           return `<td style="word-break: keep-all">${param.field}</td>
@@ -219,9 +212,7 @@ function analyseOptions(options: ApiGeneratorAnalysedOptionType[]) {
 
   options.forEach(option => {
     tbody.push(`<tr>
-        <td rowspan="${option.params?.length || 1}" style="word-break: keep-all">${option.name}${
-          isString(option.deprecated) ? createDeprecatedTips(option.deprecated) : ''
-        }</td>
+        <td rowspan="${option.params?.length || 1}" style="word-break: keep-all">${option.name}</td>
         <td rowspan="${option.params?.length || 1}">${escapeHtml(option.desc)}</td>
         <td rowspan="${option.params?.length || 1}">${escapeHtml(
           option.required ? '是' : '否',
@@ -275,9 +266,7 @@ function analyseMethods(methods: ApiGeneratorAnalysedMethodType[]) {
 
   methods.forEach(method => {
     tbody.push(`<tr>
-        <td rowspan="${method.params.length || 1}" style="word-break: keep-all">${method.name}${
-          isString(method.deprecated) ? createDeprecatedTips(method.deprecated) : ''
-        }</td>
+        <td rowspan="${method.params.length || 1}" style="word-break: keep-all">${method.name}</td>
         <td rowspan="${method.params.length || 1}">${escapeHtml(method.desc)}</td>
         <td rowspan="${method.params.length || 1}">(
 ${method.params

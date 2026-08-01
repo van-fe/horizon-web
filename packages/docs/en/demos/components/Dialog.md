@@ -16,7 +16,6 @@ You can set an icon for the dialog, which will be displayed before all content.
 
 ## Size
 According to different scenarios, you can choose to use four sizes of dialogs: `small`, `medium`, `large`, `huge`.
-Design specification update, custom width will be deprecated in the future, unified use of size control.
 :::demo components/Dialog/demo4.vue :::
 
 ## Overflow Content

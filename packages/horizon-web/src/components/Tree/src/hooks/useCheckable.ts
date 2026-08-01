@@ -15,12 +15,7 @@ export default function (
     new Set<HTreeUuidType>(props.selectedValues?.value),
   );
 
-  const isCheckComponentVisible = computed(
-    () =>
-      props.showRadio.value ||
-      props.showCheckbox.value ||
-      (props.checkable?.value && props.multiple.value),
-  );
+  const isCheckComponentVisible = computed(() => props.showRadio.value || props.showCheckbox.value);
 
   const fullCheckedValues = computed(() => {
     if (props.checkStrictly.value) {

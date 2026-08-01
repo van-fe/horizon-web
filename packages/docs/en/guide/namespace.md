@@ -1,12 +1,10 @@
 # Namespace
 The default namespace of `Horizon Web` is `h`. In the following cases, you may need to customize the namespace:
-- Multiple versions of `Horizon Web` are used together
-- Third-party toolkits
+- Naming conflicts with other components or third-party toolkits
 - ...
 
 **Benefits of using custom namespace**:
-- CSS styles of different versions can be completely isolated without interfering with each other
-- Third-party toolkits can stably use the current version of `Horizon Web` without being affected by various impacts of the latest version
+- CSS styles can be isolated to avoid naming conflicts
 - ...
 
 ## Script Configuration

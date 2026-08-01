@@ -1,6 +1,11 @@
 import type { VNode } from 'vue';
 import { computed, defineComponent, inject, provide, ref, toRefs } from 'vue';
-import { cls, ComponentClassBlock, type HorizonWebComponentInstance, useNamespace } from '@aurora/utils';
+import {
+  cls,
+  ComponentClassBlock,
+  type HorizonWebComponentInstance,
+  useNamespace,
+} from '@aurora/utils';
 import type { TreeSelectProps } from './composables/useProps';
 import { useTreeSelectProps } from './composables/useProps';
 import { useTreeSelectEmits } from './composables/useEmits';
@@ -56,11 +61,8 @@ export default defineComponent({
 
     const {
       size,
-      itemSize: itemSizeProp,
       treeSize: treeSizeProp,
-      collapse: collapseProp,
       collapseTags: collapseTagsProp,
-      selectStyle: selectStyleProp,
       inputStyle: inputStyleProp,
       useBuildInPanelFilter: useBuildInPanelFilterProp,
       panelInputPlaceholder: panelInputPlaceholderProp,
@@ -70,7 +72,6 @@ export default defineComponent({
       placement: placementProp,
       toBody: toBodyProp,
       placeholder: placeholderProp,
-      emptyContent: optionEmptyTextProp,
       emptyText: emptyTextProp,
       collapseTagsTooltip: collapseTagsTooltipProp,
       maxCollapseTags: maxCollapseTagsProp,
@@ -108,7 +109,7 @@ export default defineComponent({
      * other ref value
      */
     const sizeRef = useSize(size, 'medium');
-    const useCollapse = computed(() => collapseProp?.value ?? collapseTagsProp.value);
+    const useCollapse = computed(() => collapseTagsProp.value);
     const renderedModelValueTags = ref<Array<VNode | JSX.Element>>([]);
     // To prevent optionList changes that cause already selected options to fail to render
     const prevRenderedModelValueTags = new Map<HTreeUuidType, VNode | JSX.Element>();
@@ -310,18 +311,12 @@ export default defineComponent({
           placeholderProp?.value ?? (useLocaleLang('select.placeholder').value as string)
         }
         needConfirm={needConfirm.value}
-        confirmButtonText={props.confirmButtonText ?? props.confirmBtnText}
-        cancelButtonText={props.cancelButtonText ?? props.cancelBtnText}
-        emptyText={optionEmptyTextProp?.value ?? emptyTextProp?.value}
+        confirmButtonText={props.confirmButtonText}
+        cancelButtonText={props.cancelButtonText}
+        emptyText={emptyTextProp?.value}
         hoverShowDelay={hoverShowDelayProp.value}
         hoverHideDelay={hoverHideDelayProp.value}
-        inputStyle={
-          selectStyleProp?.value
-            ? selectStyleProp.value === 'noborder'
-              ? 'no-border'
-              : selectStyleProp.value
-            : inputStyleProp.value
-        }
+        inputStyle={inputStyleProp.value}
         modelValueRegardAsPlaceholder={
           !multipleProp.value && isFilterable.value && modelValueSet.value.size > 0
         }
@@ -350,6 +345,16 @@ export default defineComponent({
         onCancel={cancelHandle}
         onCompositionStart={onCompositionStart}
         onCompositionEnd={onCompositionEnd}
+        onKeydown={evt => {
+          if (evt.key === 'Escape') {
+            controlPopperVisible(false);
+          } else if (!popperVisible.value && ['ArrowDown', 'ArrowUp', 'Enter'].includes(evt.key)) {
+            evt.preventDefault();
+            controlPopperVisible(true);
+          } else if (popperVisible.value) {
+            domRefs.tree.value?.keyboardEventDeal(evt);
+          }
+        }}
       >
         {{
           panelPrefix: slots.panelHeaderRender,
@@ -437,7 +442,7 @@ export default defineComponent({
             <HTree
               ref={domRefs.tree}
               treeHelper={treeHelper}
-              size={treeSizeProp?.value ?? itemSizeProp?.value}
+              size={treeSizeProp?.value}
               disabled={isDisabled.value}
               filterable={isFilterable.value}
               filterMethod={refProps.filterMethod?.value}
@@ -464,7 +469,6 @@ export default defineComponent({
               checkOnClickLeaf={refProps.checkOnClickLeaf.value}
               stress={refProps.stress.value}
               emptyText={refProps.emptyText?.value}
-              dynamicLoadData={refProps.dynamicLoadData?.value}
               dynamicLoad={refProps.dynamicLoad?.value}
               isDefaultExpandAll={refProps.isDefaultExpandAll.value}
               isDefaultExpandParent={refProps.isDefaultExpandParent.value}
@@ -473,13 +477,10 @@ export default defineComponent({
               indent={refProps.indent.value}
               tooltip={refProps.tooltip.value}
               parentEffectDisabledChild={refProps.parentEffectDisabledChild.value}
-              checkable={refProps.checkable?.value}
               showCheckbox={refProps.showCheckbox?.value}
               showRadio={refProps.showRadio.value}
               showLine={refProps.showLine.value}
-              expandWrapperByChildren={
-                refProps.expandWrapperByChildren.value ?? refProps.expandPanelByChildren.value
-              }
+              expandWrapperByChildren={refProps.expandPanelByChildren.value}
               draggable={refProps.draggable.value}
               draggableIcon={refProps.draggableIcon?.value}
               undraggableIcon={refProps.undraggableIcon?.value}

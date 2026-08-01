@@ -56,19 +56,18 @@ describe('v-loading.tsx', () => {
     const { getLoadingDom } = await createInstance({ isShow, delay: 0 }, <span>1</span>);
 
     isShow.value = true;
+    await new Promise(resolve => setTimeout(resolve, 0));
 
-    setTimeout(async () => {
-      $message('message');
+    $message('message');
 
-      await nextTick();
+    await nextTick();
 
-      const loadingDom = getLoadingDom();
+    const loadingDom = getLoadingDom();
 
-      const messageDom = document.body.querySelector('.h-message') as HTMLElement;
+    const messageDom = document.body.querySelector('.h-message') as HTMLElement;
 
-      expect(Number(loadingDom.element.style.zIndex)).toBeGreaterThan(
-        Number(messageDom.style.zIndex),
-      );
-    });
+    expect(Number(loadingDom.element.style.zIndex)).toBeGreaterThan(
+      Number(messageDom.style.zIndex),
+    );
   });
 });

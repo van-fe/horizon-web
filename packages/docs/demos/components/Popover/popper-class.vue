@@ -36,10 +36,10 @@
   <div class="mb-4">在Dialog中使用popover，设置toBody来处理z-index的问题</div>
   <h-button :plain="true" class="mb-4" @click="dialogShow1 = true">在Dialog中使用popover</h-button>
   <h-dialog
-    v-model="dialogShow1"
+    v-model:visible="dialogShow1"
     title="标题"
-    @primaryClick="dialogShow1 = false"
-    @secondaryClick="dialogShow1 = false"
+    @ok="dialogShow1 = false"
+    @cancel="dialogShow1 = false"
   >
     <h-popover class="mr-4">
       <template #reference>
@@ -71,10 +71,10 @@
   <div class="mb-4">在Dialog中使用popover，直接设置z-index</div>
   <h-button :plain="true" class="mb-4" @click="dialogShow2 = true">在Dialog中使用popover</h-button>
   <h-dialog
-    v-model="dialogShow2"
+    v-model:visible="dialogShow2"
     title="标题"
-    @primaryClick="dialogShow2 = false"
-    @secondaryClick="dialogShow2 = false"
+    @ok="dialogShow2 = false"
+    @cancel="dialogShow2 = false"
   >
     <h-popover class="mr-4">
       <template #reference>

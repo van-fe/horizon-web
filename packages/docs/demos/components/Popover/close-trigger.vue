@@ -2,9 +2,9 @@
   <h-space direction="vertical" block>
     <h-space>
       <div>hide event type</div>
-      <h-radio v-model="hideEventType" label="click">click</h-radio>
-      <h-radio v-model="hideEventType" label="mousedown">mousedown</h-radio>
-      <h-radio v-model="hideEventType" label="mouseup">mouseup</h-radio>
+      <h-radio v-model="hideEventType" value="click">click</h-radio>
+      <h-radio v-model="hideEventType" value="mousedown">mousedown</h-radio>
+      <h-radio v-model="hideEventType" value="mouseup">mouseup</h-radio>
     </h-space>
     <h-space>
       <h-popover

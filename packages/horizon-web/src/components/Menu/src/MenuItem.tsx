@@ -133,19 +133,8 @@ export default defineComponent({
       addExpandMenu?.(uuid);
       setActivatedMenu?.(uuid);
       emit('click', props);
-      emit('menuItemActive', props);
 
       void nextTick(() => {
-        parentEmits(
-          'select',
-          props.value ?? '',
-          (activatedMenus?.value.map(curr => curr.props).reverse() ?? []) as (
-            | MenuItemProps
-            | SubMenuProps
-          )[],
-          props,
-        );
-
         parentEmits(
           'selected',
           props.value ?? '',
@@ -189,9 +178,11 @@ export default defineComponent({
               >
                 <div
                   class={cls(classHelper.em('title', 'inner'))}
+                  role="menuitem"
+                  aria-disabled={props.disabled}
                   tabindex={props.disabled ? -1 : 0}
                   onClick={onClick}
-                  onKeyup={withModifiers(withKeys(onClick, ['enter']), ['self'])}
+                  onKeyup={withModifiers(withKeys(onClick, ['enter', 'space']), ['self'])}
                   onMouseenter={onMouseEnter}
                   onMouseleave={onMouseleave}
                 >
@@ -208,7 +199,7 @@ export default defineComponent({
                       class={cls(classHelper.em('title', 'text'))}
                     >
                       {slots.default?.()}
-                      {slots.title?.() ?? slots.name?.() ?? props.name}
+                      {slots.title?.() ?? props.name}
                     </div>
                   </div>
                 </div>
@@ -217,7 +208,7 @@ export default defineComponent({
             content: () => (
               <Fragment>
                 {slots.default?.()}
-                {slots.title?.() ?? slots.name?.() ?? props.name}
+                {slots.title?.() ?? props.name}
               </Fragment>
             ),
           }}

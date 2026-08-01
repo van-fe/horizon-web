@@ -13,7 +13,7 @@
 
 
 ## 自定义节点
-你可以设置模块是否显示或通过插槽完全自定义底部。请注意这里设置 `v2` 采用新版本逻辑
+你可以设置模块是否显示或通过插槽完全自定义底部。
 :::demo components/Drawer/customize.vue :::
 
 ## 嵌套抽屉
@@ -28,15 +28,6 @@
 ## 挂载位置
 通过 `to` 可以设置弹出层节点的挂载位置
 :::demo components/Drawer/to.vue :::
-
-## v1.x 兼容性逻辑
-为了业务更顺滑迁移，针对 `v1.x` 版本做了部分兼容，通过 `v2` 可以设置使用 `v2.x` 逻辑。<br />
-1.抽屉顶部展示逻辑。默认采用 `v1.x` 逻辑，`title` 或者 `slot.title` 设置为 `Falsy`，抽屉不展示顶部内容<br />
-2.抽屉底部展示逻辑。默认采用 `v1.x` 逻辑，`slot.footer` 或者 `primaryButton(deprecated) | secondaryButton(deprecated)` 为 `Falsy`，不展示底部的值。<br />
-3.抽屉teleport逻辑。默认采用`v1.x`，设置 `toBody=false`，则直接渲染抽屉到特定的位置，开启 `v2` 后，则根据 `to` 判断
-
-当 `v2=true` 时候，抽屉顶部和底部逻辑分别被 `header` 和 `footer` 控制。
-:::demo components/Drawer/compatible.vue :::
 
 ## Design Token
 ```scss
@@ -54,7 +45,6 @@
   --h-drawer-bg--container: var(--h-bg-default);
   --h-drawer-bg--mask: var(--h-bg-overlay-default);
 
-  // @deprecated: NOTE: 下个版本移除，本版本生效
   // border-radius
   --h-drawer-border-radius--container: 0;
   --h-drawer-border-radius--left: 0 var(--h-drawer-border-radius--container) var(--h-drawer-border-radius--container) 0;

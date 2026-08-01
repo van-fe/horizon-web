@@ -2,14 +2,14 @@
   <h-form label-position="left" label-vertical-align="middle">
     <h-form-item label="Pickable">
       <h-radio-group v-model="pickable">
-        <h-radio :label="true">True</h-radio>
-        <h-radio :label="false">False</h-radio>
+        <h-radio :value="true">True</h-radio>
+        <h-radio :value="false">False</h-radio>
       </h-radio-group>
     </h-form-item>
     <h-form-item label="DateType">
       <h-radio-group v-model="dateType">
-        <h-radio label="full">Full</h-radio>
-        <h-radio label="only-current">Only Current</h-radio>
+        <h-radio value="full">Full</h-radio>
+        <h-radio value="only-current">Only Current</h-radio>
       </h-radio-group>
     </h-form-item>
   </h-form>

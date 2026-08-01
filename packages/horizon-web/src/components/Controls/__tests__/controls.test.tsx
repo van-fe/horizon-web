@@ -4,6 +4,7 @@ import { describe, expect, test } from 'vitest';
 import { HControl } from '../index';
 import { IconAdd, IconEdit } from '@aurora/icon';
 import { ref } from 'vue';
+import Ellipsis from '../src/components/Ellipsis';
 
 describe('Controls.tsx', () => {
   test('basic', async () => {
@@ -18,8 +19,7 @@ describe('Controls.tsx', () => {
   });
 
   describe('props', () => {
-    // happy-dom not support ResizeObserver API
-    test.todo('accessList', async () => {
+    test('accessList', async () => {
       const accessList = ref(['edit']);
 
       const wrapper = mount(() => (
@@ -29,9 +29,10 @@ describe('Controls.tsx', () => {
         </HControls>
       ));
 
-      const elements = wrapper.findAllComponents(HControl);
+      const overflowItems = wrapper.findComponent(Ellipsis).props('items');
 
-      expect(elements.length).eq(1);
+      expect(overflowItems).toHaveLength(1);
+      expect(overflowItems[0].props?.label).toBe('edit');
     });
   });
 });

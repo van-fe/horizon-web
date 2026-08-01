@@ -12,6 +12,21 @@ import HTreeItem from '~/components/Tree/src/components/TreeItem';
 import HPickerPopper from '~/components/Picker/src/components/PickerPopper';
 
 describe('TreeSelect.tsx special', () => {
+  test('supports keyboard navigation and selection', async () => {
+    const instance = new TreeSelectHelper();
+    await instance.open();
+    const input = instance.pickerInput!.find('input');
+
+    await input.trigger('keydown', { key: 'ArrowUp' });
+    expect(instance.wrapper?.find('.h-tree-item.is-focus').text()).toContain(
+      'Design Documentation',
+    );
+
+    await input.trigger('keydown', { key: 'Enter' });
+    await nextTick();
+    expect(instance.modelValue.value).toBe('docs');
+  });
+
   test('default-value in multiple', async () => {
     const modelValue = ref(['feedback', 'input']);
     const onChange = vi.fn();

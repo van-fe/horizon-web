@@ -12,7 +12,7 @@ export default function useDynamicLoad(
   function dynamicLoad(currentNode: HTreeExtendsData, vNode?: VNode) {
     if (
       loadingNodes.value.some(curr => curr._uuid === currentNode._uuid) ||
-      (!props.dynamicLoadData?.value && !props.dynamicLoad?.value)
+      !props.dynamicLoad?.value
     ) {
       return;
     }
@@ -20,18 +20,11 @@ export default function useDynamicLoad(
     loadingNodes.value.push(currentNode);
 
     Promise.resolve(
-      props.dynamicLoadData?.value?.({
+      props.dynamicLoad?.value?.({
         level: currentNode.level,
         node: currentNode,
-        vnode: vNode,
         vNode,
-      }) ??
-        props.dynamicLoad?.value?.({
-          level: currentNode.level,
-          node: currentNode,
-          vnode: vNode,
-          vNode,
-        }),
+      }),
     )
       .then((res: HTreeNodeData[] | undefined) => {
         if (Array.isArray(res) && res.length > 0) {

@@ -48,9 +48,10 @@ export default defineComponent({
     const gapX = computed(() => props.gap[0] * dpr);
     const gapY = computed(() => props.gap[1] * dpr);
 
-    const contentCalc = computed(() =>
-      Array.isArray(props.content) ? props.content : [props.content],
-    );
+    const contentCalc = computed(() => {
+      const content = Array.isArray(props.content) ? props.content : [props.content];
+      return content.length > 0 ? content : [''];
+    });
     const contentStyleCalc = computed(() => {
       const res = { ...defaultContentStyle, ...props.contentStyle };
       res.fontSize *= dpr;

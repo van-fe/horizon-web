@@ -43,9 +43,6 @@ dayjs.extend(localizedFormat);
 const currDayjs = dayjs;
 
 declare module 'dayjs' {
-  /**
-   * @deprecated
-   */
   interface DayjsObject {
     years: number;
     months: number;

@@ -24,7 +24,10 @@ export default defineComponent({
   props: useNotificationProps,
   emits: useNotificationEmits,
   exposes: useNotificationExposes,
-  setup(props, { emit, expose }: HorizonWebSetupContext<NotificationEmits, {}, NotificationExposes>) {
+  setup(
+    props,
+    { emit, expose }: HorizonWebSetupContext<NotificationEmits, {}, NotificationExposes>,
+  ) {
     const classHelper = new ComponentClassBlock('notification');
     const {
       placement,
@@ -204,7 +207,6 @@ export default defineComponent({
               <HButton
                 v-show={showCancelButton.value}
                 class={cls(classHelper.e('cancel'))}
-                forceNewestSize={true}
                 {...cancelButtonProps.value}
                 onClick={cancel}
               >
@@ -213,7 +215,6 @@ export default defineComponent({
               <HButton
                 v-show={showConfirmButton.value}
                 class={cls(classHelper.e('confirm'))}
-                forceNewestSize={true}
                 {...confirmButtonProps.value}
                 onClick={confirm}
               >

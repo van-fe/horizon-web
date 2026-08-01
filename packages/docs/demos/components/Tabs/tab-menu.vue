@@ -20,7 +20,7 @@ const onCommand = (key: string, cmd: string) => {
 </script>
 
 <template>
-  <h-tabs v-model:active-key="activeKey" v2 @change="onTabChanged">
+  <h-tabs v-model:active-key="activeKey" @change="onTabChanged">
     <h-tab v-for="tab in tabs" :key="tab">
       <template #default>
         <h-dropdown trigger="context-menu" @command="onCommand(tab, $event)">

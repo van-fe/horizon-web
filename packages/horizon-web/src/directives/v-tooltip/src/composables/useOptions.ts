@@ -124,7 +124,6 @@ export const useTooltipOptions = declareDirectiveOptionType({
   /**
    * 尺寸
    * @en Size
-   * @deprecated 此设置已无效
    */
   size: {
     type: String as DirectiveOptionType<'medium' | 'small'>,
@@ -133,7 +132,6 @@ export const useTooltipOptions = declareDirectiveOptionType({
   /**
    * 主题
    * @en Theme
-   * @deprecated `light` 已过时，请改成 `dark`
    */
   theme: {
     type: String as DirectiveOptionType<'dark' | 'light'>,

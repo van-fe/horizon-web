@@ -49,7 +49,11 @@ export default defineComponent({
                 classHelper.is('active', popoverVisible.value),
                 classHelper.is('disabled', parentProps.disabled),
               )}
-              tabindex={0}
+              role="button"
+              aria-haspopup="listbox"
+              aria-expanded={popoverVisible.value}
+              aria-disabled={parentProps.disabled}
+              tabindex={parentProps.disabled ? -1 : 0}
               onKeyup={withKeys(() => popoverRef.value?.switchVisible(true), ['enter'])}
             >
               {props.pageSize}
@@ -61,20 +65,31 @@ export default defineComponent({
           ),
           popper: () => (
             <HPopContent class={classHelper.e('sizes-popper')}>
-              {parentProps.pageSizes.map(size => (
-                <div
-                  class={cls(
-                    classHelper.e('sizes-item'),
-                    classHelper.is('active', props.pageSize === size),
-                  )}
-                  onClick={() => onSwitchSizeItem(size)}
-                >
-                  {size}
-                  {parentProps.label?.sizeItemText ??
-                    parentProps.label?.size_item_text ??
-                    locale.value?.langService.td().horizonWeb.pagination.pageSize}
-                </div>
-              ))}
+              <div role="listbox">
+                {parentProps.pageSizes.map(size => (
+                  <div
+                    class={cls(
+                      classHelper.e('sizes-item'),
+                      classHelper.is('active', props.pageSize === size),
+                    )}
+                    onClick={() => onSwitchSizeItem(size)}
+                    role="option"
+                    aria-selected={props.pageSize === size}
+                    tabindex={0}
+                    onKeydown={(evt: KeyboardEvent) => {
+                      if (evt.key === 'Enter' || evt.key === ' ') {
+                        evt.preventDefault();
+                        onSwitchSizeItem(size);
+                      }
+                    }}
+                  >
+                    {size}
+                    {parentProps.label?.sizeItemText ??
+                      parentProps.label?.size_item_text ??
+                      locale.value?.langService.td().horizonWeb.pagination.pageSize}
+                  </div>
+                ))}
+              </div>
             </HPopContent>
           ),
         }}

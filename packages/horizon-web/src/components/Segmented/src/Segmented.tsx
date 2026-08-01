@@ -107,6 +107,27 @@ export default defineComponent({
       createTab,
     });
 
+    const getEnabledTabs = () =>
+      Array.from(rootDomRef.value?.querySelectorAll<HTMLElement>('[role="tab"]') ?? []).filter(
+        tab => tab.getAttribute('aria-disabled') !== 'true',
+      );
+
+    const focusTabFromKeyboard = (evt: KeyboardEvent) => {
+      const tabs = getEnabledTabs();
+      if (!tabs.length) return;
+      const eventTab = (evt.target as HTMLElement | null)?.closest<HTMLElement>('[role="tab"]');
+      const currentIndex = tabs.indexOf(eventTab ?? (document.activeElement as HTMLElement));
+      let nextIndex: number | undefined;
+      if (evt.key === 'ArrowRight') nextIndex = (currentIndex + 1) % tabs.length;
+      if (evt.key === 'ArrowLeft') nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+      if (evt.key === 'Home') nextIndex = 0;
+      if (evt.key === 'End') nextIndex = tabs.length - 1;
+      if (nextIndex === undefined) return;
+      evt.preventDefault();
+      tabs[nextIndex]?.focus();
+      tabs[nextIndex]?.click();
+    };
+
     return () => {
       if (!slots.default) return null;
 
@@ -117,7 +138,12 @@ export default defineComponent({
           {...attrs}
           ref={rootDomRef}
           class={[cls.block, cls.m(size.value), props.block && cls.m('block')]}
-          tabindex={0}
+          aria-orientation="horizontal"
+          tabindex={activeKey.value === undefined ? 0 : undefined}
+          onFocus={(evt: FocusEvent) => {
+            if (evt.target === evt.currentTarget) getEnabledTabs()[0]?.focus();
+          }}
+          onKeydown={focusTabFromKeyboard}
         >
           <div class={cls.e('nav')}>
             <div ref={wrapperDomRef} class={cls.e('nav-wrap')}>
@@ -142,6 +168,16 @@ export default defineComponent({
                       firstViewport.value && cls.em('icon-outer', 'disabled'),
                     ]}
                     onClick={onArrowLeft}
+                    role="button"
+                    tabindex={firstViewport.value ? -1 : 0}
+                    aria-disabled={firstViewport.value}
+                    aria-label="Scroll backward"
+                    onKeydown={(evt: KeyboardEvent) => {
+                      if (evt.key === 'Enter' || evt.key === ' ') {
+                        evt.preventDefault();
+                        onArrowLeft();
+                      }
+                    }}
                     test-id="left-btn"
                   >
                     <AIcon name="arrow_left" class={cls.e('icon')} />
@@ -152,6 +188,16 @@ export default defineComponent({
                       lastViewport.value && cls.em('icon-outer', 'disabled'),
                     ]}
                     onClick={onArrowRight}
+                    role="button"
+                    tabindex={lastViewport.value ? -1 : 0}
+                    aria-disabled={lastViewport.value}
+                    aria-label="Scroll forward"
+                    onKeydown={(evt: KeyboardEvent) => {
+                      if (evt.key === 'Enter' || evt.key === ' ') {
+                        evt.preventDefault();
+                        onArrowRight();
+                      }
+                    }}
                     test-id="right-btn"
                   >
                     <AIcon name="arrow_right" class={cls.e('icon')} />

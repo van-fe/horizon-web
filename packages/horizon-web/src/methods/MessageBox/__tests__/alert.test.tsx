@@ -3,7 +3,6 @@ import Alert from '../src/components/Alert';
 import { $alert } from '../../index';
 import { describe, expect, test } from 'vitest';
 import { nextTick } from 'vue';
-import { sleep } from '../../../utils/tools';
 
 describe('alert.tsx', () => {
   test('alert.basic', async () => {
@@ -17,25 +16,23 @@ describe('alert.tsx', () => {
   });
 
   test('alert confirm', async () => {
-    $alert('content').then(() => {
-      // on close
+    const alertPromise = $alert({
+      content: 'content',
+      okButtonProps: {
+        debounceType: 'none',
+      },
     });
-
-    const confirmButton = document.body.querySelector(
-      '.h-button--primary_positive',
-    ) as HTMLButtonElement | null;
-
-    confirmButton?.click();
-
     await nextTick();
 
-    await sleep(200);
+    const dialog = document.body.querySelector('.h-messagebox');
+    const confirmButton = dialog?.querySelector('.h-button--primary') as HTMLButtonElement | null;
 
-    const dialogContainer = document.body.querySelector('.h-dialog__container')!;
+    expect(confirmButton).not.toBeNull();
+    confirmButton?.click();
+    await alertPromise;
 
-    const style = window.getComputedStyle(dialogContainer);
-
-    expect(style.display).eq('none');
+    await nextTick();
+    expect(document.body.querySelector('.h-messagebox')).toBeNull();
   });
 
   // test('alert close', async () => {

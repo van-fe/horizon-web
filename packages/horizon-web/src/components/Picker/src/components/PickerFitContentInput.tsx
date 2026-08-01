@@ -1,10 +1,18 @@
-import { defineComponent, inject, ref, watch } from 'vue';
-import { cls, ComponentClassBlock, sizeUnitTransform, useNamespace } from '@aurora/utils';
+import type { HorizonWebComponentInstance } from '@aurora/utils';
+import { ComponentClassBlock, useNamespace } from '@aurora/utils';
+import { computed, defineComponent, inject, provide, ref, unref, watch } from 'vue';
+import HInput from '~/components/Input/src/Input';
+import type { InputExposes } from '~/components/Input/src/composables/useExposes';
+import { HFormItemTriggerInjectedKey } from '~/components/Form/src/utils/injectedKeys';
 import { HPickerPopperVisibleInjectKey } from '../utils/InjectKeys';
 import { usePickerFitContentInputExposes } from '../composables/useExposes';
 import { usePickerPureInputProps } from '../composables/useProps';
 import { usePickerPureInputEmits } from '../composables/useEmits';
 
+/**
+ * Picker 内部兼容层。输入、IME、焦点和禁用行为统一复用 Input，
+ * 这里只保留 Picker 既有的事件签名和 expose API。
+ */
 export default defineComponent({
   name: `${useNamespace()}PickerFitContentInput`,
   inheritAttrs: false,
@@ -13,111 +21,72 @@ export default defineComponent({
   exposes: usePickerFitContentInputExposes,
   setup(props, { emit, expose, attrs }) {
     const classHelper = new ComponentClassBlock('picker-fit-content-input');
-
-    const inputRef = ref<HTMLInputElement | null>(null);
-    const inputString = ref(props.modelValue);
-    const compositionString = ref('');
-
-    const popperVisible = inject(HPickerPopperVisibleInjectKey)!;
+    const inputRef = ref<HorizonWebComponentInstance<typeof HInput, InputExposes> | null>(null);
+    const localValue = ref(props.modelValue);
+    const popperVisible = inject(HPickerPopperVisibleInjectKey, ref(false));
+    provide(HFormItemTriggerInjectedKey, () => undefined);
+    const nativeInput = computed(() => unref(inputRef.value?.input) ?? null);
 
     watch(
       () => props.modelValue,
-      val => {
-        inputString.value = val;
+      value => {
+        localValue.value = value;
       },
     );
 
-    watch(inputString, val => {
-      emit('update:modelValue', val);
-    });
-
-    let isInputFocus = false;
+    watch(localValue, value => emit('update:modelValue', value));
 
     function onFocus(evt: FocusEvent) {
-      isInputFocus = true;
       emit('focus', evt);
     }
 
     function onBlur(evt: FocusEvent) {
       evt.stopImmediatePropagation();
-      isInputFocus = false;
       emit('blur', evt);
     }
 
-    function onCompositionStart(evt: CompositionEvent) {
-      emit('compositionStart', evt);
-    }
-
-    function onCompositionUpdate(evt: CompositionEvent) {
-      compositionString.value = evt.data;
-      emit('compositionUpdate', evt);
-    }
-
-    function onCompositionEnd(evt: CompositionEvent) {
-      compositionString.value = '';
-      emit('compositionEnd', evt);
-    }
-
     function onClick(evt: MouseEvent) {
-      if (popperVisible.value) {
-        evt.stopPropagation();
-      }
+      if (popperVisible.value) evt.stopPropagation();
     }
 
     expose({
-      focus: () => {
-        !isInputFocus && inputRef.value?.focus();
-      },
-      blur: () => {
-        isInputFocus && inputRef.value?.blur();
-      },
-      forceBlur: () => {
-        inputRef.value?.blur();
-      },
-      input: inputRef,
+      focus: () => nativeInput.value?.focus(),
+      blur: () => nativeInput.value?.blur(),
+      forceBlur: () => nativeInput.value?.blur(),
+      input: nativeInput,
+      resetInputString: () => undefined,
     });
 
     return () => (
-      <span
-        class={cls(
-          classHelper.e('wrapper'),
-          attrs.class as string | undefined,
-          attrs.className as string | undefined,
-        )}
-      >
-        <span
-          class={classHelper.e('opacity-content')}
-          style={{ minWidth: sizeUnitTransform(props.minWidth) }}
-        >
-          <span
-            v-html={(inputString.value || (props.placeholder as string) || '')
-              .toString()
-              .replace(/\s/g, '&nbsp;')}
-          />
-          {compositionString.value}
-        </span>
-        <input
-          v-model={inputString.value}
-          ref={inputRef}
-          class={cls(classHelper.e('input'))}
-          disabled={props.disabled}
-          readonly={props.readonly}
-          placeholder={props.placeholder}
-          style={props.style}
-          tabindex={props.tabindex}
-          autocomplete={props.autocomplete}
-          unselectable={props.unselectable}
-          {...attrs}
-          onInput={evt => emit('input', evt)}
-          onCompositionstart={onCompositionStart}
-          onCompositionupdate={onCompositionUpdate}
-          onCompositionend={onCompositionEnd}
-          onFocus={onFocus}
-          onBlur={onBlur}
-          onClick={onClick}
-          onKeydown={evt => emit('keydown', evt)}
-        />
-      </span>
+      <HInput
+        {...attrs}
+        ref={inputRef}
+        embedded
+        fitContent
+        embeddedInputHandler={evt => emit('input', evt)}
+        fitContentMinWidth={props.minWidth}
+        fitContentClass={classHelper.e('wrapper')}
+        fitContentMirrorClass={classHelper.e('opacity-content')}
+        modelValue={localValue.value.toString()}
+        embeddedClass={classHelper.e('input')}
+        embeddedStyle={props.style}
+        disabled={props.disabled}
+        readonly={props.readonly}
+        placeholder={props.placeholder}
+        tabindex={props.tabindex}
+        autocomplete={props.autocomplete}
+        unselectable={props.unselectable}
+        onUpdate:modelValue={value => {
+          localValue.value = value;
+        }}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        onClick={onClick}
+        onKeydown={evt => emit('keydown', evt)}
+        onCompositionstart={evt => emit('compositionStart', evt)}
+        onCompositionupdate={evt => emit('compositionUpdate', evt)}
+        onCompositionend={evt => emit('compositionEnd', evt)}
+      />
     );
   },
 });

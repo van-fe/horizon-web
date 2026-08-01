@@ -28,7 +28,7 @@ describe('LicensePlateInput', () => {
 
   test('normalizes input and emits the complete controlled value', async () => {
     const wrapper = mount(LicensePlateInput, { props: { modelValue: '' } });
-    const input = wrapper.findComponent(HInput);
+    const input = wrapper.findAllComponents(HInput).at(-1)!;
 
     input.vm.$emit('update:modelValue', 'a·12-345');
     await nextTick();
@@ -50,7 +50,7 @@ describe('LicensePlateInput', () => {
 
   test('shows validation state after blur and exposes validation', async () => {
     const wrapper = mount(LicensePlateInput, { props: { modelValue: '京A12' } });
-    const input = wrapper.findComponent(HInput);
+    const input = wrapper.findAllComponents(HInput).at(-1)!;
 
     input.vm.$emit('blur', new FocusEvent('blur'));
     await nextTick();
@@ -76,16 +76,16 @@ describe('LicensePlateInput', () => {
     });
 
     expect(wrapper.findComponent(HSelect).props('disabled')).toBe(true);
-    expect(wrapper.findComponent(HInput).props('disabled')).toBe(true);
+    expect(wrapper.findAllComponents(HInput).at(-1)!.props('disabled')).toBe(true);
     expect(wrapper.findComponent(HSelect).props('options')).toHaveLength(2);
 
-    wrapper.findComponent(HInput).vm.$emit('clear');
+    wrapper.findAllComponents(HInput).at(-1)!.vm.$emit('clear');
     await nextTick();
     expect(onClear).toHaveBeenCalledOnce();
 
     await wrapper.setProps({ disabled: false, readonly: true });
     expect(wrapper.findComponent(HSelect).props('disabled')).toBe(true);
-    expect(wrapper.findComponent(HInput).props('readonly')).toBe(true);
+    expect(wrapper.findAllComponents(HInput).at(-1)!.props('readonly')).toBe(true);
   });
 
   test('ships labels in every supported locale', () => {

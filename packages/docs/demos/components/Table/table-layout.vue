@@ -1,7 +1,7 @@
 <template>
   <h-radio-group v-model="tableLayout" class="mb-4">
-    <h-radio-button label="auto" />
-    <h-radio-button label="fixed" />
+    <h-radio-button value="auto" />
+    <h-radio-button value="fixed" />
   </h-radio-group>
 
   <h-table :data="data" :table-layout="tableLayout" cell-class-name="custom-cell">
@@ -29,14 +29,16 @@ interface TableData {
 
 const tableLayout = ref<TableProps['tableLayout']>('fixed');
 
-const data = ref<TableData[]>(new Array(10).fill(0).map((_, index) => ({
-  id: index + 1,
-  name: faker.person.fullName(),
-  birthday: faker.date.birthdate({ min: 22, max: 50, mode: 'age' }).toDateString(),
-  gender: faker.helpers.arrayElement(['male', 'female']),
-  address: faker.location.streetAddress(),
-  message: faker.hacker.phrase(),
-})));
+const data = ref<TableData[]>(
+  new Array(10).fill(0).map((_, index) => ({
+    id: index + 1,
+    name: faker.person.fullName(),
+    birthday: faker.date.birthdate({ min: 22, max: 50, mode: 'age' }).toDateString(),
+    gender: faker.helpers.arrayElement(['male', 'female']),
+    address: faker.location.streetAddress(),
+    message: faker.hacker.phrase(),
+  })),
+);
 </script>
 
 <style>

@@ -262,13 +262,13 @@ describe('Form.tsx', () => {
       expect(wrapper.findComponent(HTreeSelect).html()).not.contains('--disabled');
     });
 
-    test('compact', async () => {
-      const compact = ref(false);
+    test('compact spacing', async () => {
+      const spacing = ref<'default' | 'compact'>('default');
 
-      const wrapper = mount(() => <HForm compact={compact.value}></HForm>);
+      const wrapper = mount(() => <HForm spacing={spacing.value}></HForm>);
 
       expect(wrapper.classes('is-spacing-compact')).toBeFalsy();
-      compact.value = true;
+      spacing.value = 'compact';
       await nextTick();
       expect(wrapper.classes('is-spacing-compact')).toBeTruthy();
     });

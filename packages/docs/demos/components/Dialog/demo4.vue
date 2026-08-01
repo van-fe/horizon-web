@@ -35,7 +35,7 @@
   >
     超大对话框
   </h-button>
-  <h-dialog v-model="visible" title="标题" :size="size" @primaryClick="onPrimary">
+  <h-dialog v-model:visible="visible" title="标题" :size="size" @ok="onPrimary">
     <div>随便写点什么</div>
   </h-dialog>
 </template>

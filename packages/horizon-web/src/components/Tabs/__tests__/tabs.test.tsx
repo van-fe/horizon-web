@@ -22,17 +22,17 @@ describe('Tabs.tsx', () => {
     expect(tabList).toHaveLength(2);
     expect(wrapper.html()).toMatchInlineSnapshot(
       `
-      "<div class="h-tabs h-tabs--line h-tabs--medium h-tabs--underline" role="tablist" tabindex="0">
+      "<div class="h-tabs h-tabs--line h-tabs--small h-tabs--underline" role="tablist" aria-orientation="horizontal">
         <div class="h-tabs__nav">
           <div class="h-tabs__nav-wrap">
             <div class="h-tabs__nav-list h-tabs__nav-list--space">
-              <div role="tab" data-name="1" class="h-tabs__tab" tabindex="0" aria-selected="false" aria-disabled="false">
+              <div role="tab" data-name="1" class="h-tabs__tab" tabindex="-1" aria-selected="false" aria-disabled="false">
                 <div class="h-tabs__tab-inner">
                   <div class="h-tabs__tab-text">Tab1</div>
                   <!---->
                 </div>
               </div>
-              <div role="tab" data-name="2" class="h-tabs__tab" tabindex="0" aria-selected="false" aria-disabled="false">
+              <div role="tab" data-name="2" class="h-tabs__tab" tabindex="-1" aria-selected="false" aria-disabled="false">
                 <div class="h-tabs__tab-inner">
                   <div class="h-tabs__tab-text">Tab1</div>
                   <!---->
@@ -46,10 +46,10 @@ describe('Tabs.tsx', () => {
             <div class="h-tabs__default-actions">
               <!---->
               <div class="h-tabs__arrow">
-                <div class="h-tabs__icon-outer h-tabs__icon-outer--disabled"><svg class="a-icon h-icon_arrow_left h-icon__arrow_left h-tabs__icon" viewBox="0 0 24 24" fill="none" style="width: 1em; height: 1em; font-size: 1em; display: inline-block; vertical-align: inherit;">
+                <div class="h-tabs__icon-outer h-tabs__icon-outer--disabled" role="button" tabindex="-1" aria-disabled="true" aria-label="Scroll tabs backward"><svg class="a-icon h-icon_arrow_left h-icon__arrow_left h-tabs__icon" viewBox="0 0 24 24" fill="none" style="width: 1em; height: 1em; font-size: 1em; display: inline-block; vertical-align: inherit;">
                     <path d="M16.2446 2L7.20708 11.4826C6.93097 11.7723 6.93097 12.2277 7.20708 12.5174L16.2446 22C16.8385 21.3769 16.8384 20.3973 16.2446 19.7741L8.83516 12L16.2446 4.22585C16.8384 3.60274 16.8385 2.62312 16.2446 2Z" fill="currentColor"></path>
                   </svg></div>
-                <div class="h-tabs__icon-outer"><svg class="a-icon h-icon_arrow_right h-icon__arrow_right h-tabs__icon" viewBox="0 0 24 24" fill="none" style="width: 1em; height: 1em; font-size: 1em; display: inline-block; vertical-align: inherit;">
+                <div class="h-tabs__icon-outer" role="button" tabindex="0" aria-disabled="false" aria-label="Scroll tabs forward"><svg class="a-icon h-icon_arrow_right h-icon__arrow_right h-tabs__icon" viewBox="0 0 24 24" fill="none" style="width: 1em; height: 1em; font-size: 1em; display: inline-block; vertical-align: inherit;">
                     <path d="M7.75542 2L16.7929 11.4826C17.069 11.7723 17.069 12.2277 16.7929 12.5174L7.75542 22C7.16155 21.3769 7.16155 20.3973 7.75543 19.7741L15.1648 12L7.75543 4.22585C7.16155 3.60274 7.16155 2.62312 7.75542 2Z" fill="currentColor"></path>
                   </svg></div>
               </div>
@@ -74,17 +74,17 @@ describe('Tabs.tsx', () => {
       ));
 
       expect(wrapper.html()).toMatchInlineSnapshot(`
-        "<div class="h-tabs h-tabs--line h-tabs--medium h-tabs--underline" role="tablist" tabindex="0">
+        "<div class="h-tabs h-tabs--line h-tabs--small h-tabs--underline" role="tablist" aria-orientation="horizontal" tabindex="0">
           <div class="h-tabs__nav">
             <div class="h-tabs__nav-wrap">
               <div class="h-tabs__nav-list">
-                <div role="tab" data-name="tab1" class="h-tabs__tab" tabindex="0" aria-selected="false" aria-disabled="false">
+                <div role="tab" data-name="tab1" class="h-tabs__tab" tabindex="-1" aria-selected="false" aria-disabled="false">
                   <div class="h-tabs__tab-inner">
                     <div class="h-tabs__tab-text">tab1</div>
                     <!---->
                   </div>
                 </div>
-                <div role="tab" data-name="tab2" class="h-tabs__tab" tabindex="0" aria-selected="false" aria-disabled="false">
+                <div role="tab" data-name="tab2" class="h-tabs__tab" tabindex="-1" aria-selected="false" aria-disabled="false">
                   <div class="h-tabs__tab-inner">
                     <div class="h-tabs__tab-text">tab2</div>
                     <!---->
@@ -154,27 +154,23 @@ describe('Tabs.tsx', () => {
       ));
 
       expect(wrapper.html()).toMatchInlineSnapshot(`
-        "<div class="h-tabs h-tabs--line h-tabs--medium h-tabs--underline" role="tablist" tabindex="0">
+        "<div class="h-tabs h-tabs--line h-tabs--small h-tabs--underline" role="tablist" aria-orientation="horizontal" tabindex="0">
           <div class="h-tabs__nav">
             <div class="h-tabs__nav-wrap">
               <div class="h-tabs__nav-list">
-                <div role="tab" test-id="tab1" data-name="tab1" class="h-tabs__tab" tabindex="0" aria-selected="false" aria-disabled="false">
+                <div role="tab" test-id="tab1" data-name="tab1" class="h-tabs__tab" tabindex="-1" aria-selected="false" aria-disabled="false">
                   <div class="h-tabs__tab-inner">
-                    <div class="h-tabs__tab-text">tab1</div><svg class="a-icon h-icon_close h-icon__close h-tabs__icon h-tabs__close" viewBox="0 0 24 24" fill="none" style="width: 1em; height: 1em; font-size: 1em; display: inline-block; vertical-align: inherit;">
-                      <path d="M11.9999 10.9517L19.9429 3C20.5267 3.58446 20.5267 4.53206 19.9429 5.11652L13.057 12.01L21 19.9617C20.4162 20.5461 19.4696 20.5461 18.8858 19.9617L11.9999 13.0682L5.11419 19.9615C4.53038 20.546 3.58382 20.546 3 19.9615L10.9428 12.01L4.0571 5.11664C3.47328 4.53217 3.47328 3.58458 4.0571 3.00011L11.9999 10.9517Z" fill="currentColor"></path>
-                    </svg>
+                    <div class="h-tabs__tab-text">tab1</div><span class="h-tabs__icon h-tabs__close" role="button" tabindex="0" aria-label="Close tab1"><svg class="a-icon h-icon_close h-icon__close" viewBox="0 0 24 24" fill="none" style="width: 1em; height: 1em; font-size: 1em; display: inline-block; vertical-align: inherit;"><path d="M11.9999 10.9517L19.9429 3C20.5267 3.58446 20.5267 4.53206 19.9429 5.11652L13.057 12.01L21 19.9617C20.4162 20.5461 19.4696 20.5461 18.8858 19.9617L11.9999 13.0682L5.11419 19.9615C4.53038 20.546 3.58382 20.546 3 19.9615L10.9428 12.01L4.0571 5.11664C3.47328 4.53217 3.47328 3.58458 4.0571 3.00011L11.9999 10.9517Z" fill="currentColor"></path></svg></span>
                   </div>
                 </div>
-                <div role="tab" test-id="tab2" data-name="tab2" class="h-tabs__tab" tabindex="0" aria-selected="false" aria-disabled="false">
+                <div role="tab" test-id="tab2" data-name="tab2" class="h-tabs__tab" tabindex="-1" aria-selected="false" aria-disabled="false">
                   <div class="h-tabs__tab-inner">
-                    <div class="h-tabs__tab-text">tab2</div><svg class="a-icon h-icon_close h-icon__close h-tabs__icon h-tabs__close" viewBox="0 0 24 24" fill="none" style="width: 1em; height: 1em; font-size: 1em; display: inline-block; vertical-align: inherit;">
-                      <path d="M11.9999 10.9517L19.9429 3C20.5267 3.58446 20.5267 4.53206 19.9429 5.11652L13.057 12.01L21 19.9617C20.4162 20.5461 19.4696 20.5461 18.8858 19.9617L11.9999 13.0682L5.11419 19.9615C4.53038 20.546 3.58382 20.546 3 19.9615L10.9428 12.01L4.0571 5.11664C3.47328 4.53217 3.47328 3.58458 4.0571 3.00011L11.9999 10.9517Z" fill="currentColor"></path>
-                    </svg>
+                    <div class="h-tabs__tab-text">tab2</div><span class="h-tabs__icon h-tabs__close" role="button" tabindex="0" aria-label="Close tab2"><svg class="a-icon h-icon_close h-icon__close" viewBox="0 0 24 24" fill="none" style="width: 1em; height: 1em; font-size: 1em; display: inline-block; vertical-align: inherit;"><path d="M11.9999 10.9517L19.9429 3C20.5267 3.58446 20.5267 4.53206 19.9429 5.11652L13.057 12.01L21 19.9617C20.4162 20.5461 19.4696 20.5461 18.8858 19.9617L11.9999 13.0682L5.11419 19.9615C4.53038 20.546 3.58382 20.546 3 19.9615L10.9428 12.01L4.0571 5.11664C3.47328 4.53217 3.47328 3.58458 4.0571 3.00011L11.9999 10.9517Z" fill="currentColor"></path></svg></span>
                   </div>
                 </div>
                 <div class="h-tabs__indicator"></div>
               </div>
-              <div class="h-tabs__icon-outer h-tabs__icon-outer--add h-tabs__icon-outer--follow"><svg class="a-icon h-icon_add h-icon__add h-tabs__icon" viewBox="0 0 24 24" fill="none" style="width: 1em; height: 1em; font-size: 1em; display: inline-block; vertical-align: inherit;">
+              <div class="h-tabs__icon-outer h-tabs__icon-outer--add h-tabs__icon-outer--follow" role="button" tabindex="0" aria-label="Add tab"><svg class="a-icon h-icon_add h-icon__add h-tabs__icon" viewBox="0 0 24 24" fill="none" style="width: 1em; height: 1em; font-size: 1em; display: inline-block; vertical-align: inherit;">
                   <path d="M12.75 3.5C12.75 2.67157 12.0784 2 11.25 2V11.25H2C2 12.0784 2.67157 12.75 3.5 12.75H11.25V22C12.0784 22 12.75 21.3284 12.75 20.5V12.75H20.5C21.3284 12.75 22 12.0784 22 11.25H12.75V3.5Z" fill="currentColor"></path>
                 </svg></div>
             </div>
@@ -219,7 +215,7 @@ describe('Tabs.tsx', () => {
         <div style="width: 300px">
           <HTabs activeKey={current.value}>
             {tabList.map(tab => (
-              <HTab key={tab} name={`tab${tab}`} label={`tab${tab}`} />
+              <HTab key={`tab${tab}`} label={`tab${tab}`} />
             ))}
           </HTabs>
         </div>
@@ -236,5 +232,23 @@ describe('Tabs.tsx', () => {
         targetEl.offsetLeft - rootEl.clientWidth / 2 + targetEl.clientWidth,
       );
     });
+  });
+
+  test('moves and activates tabs with arrow keys', async () => {
+    const activeKey = ref<HTabValue>('one');
+    const wrapper = mount(() => (
+      <HTabs v-model:activeKey={activeKey.value}>
+        <HTab key="one" label="One" />
+        <HTab key="disabled" label="Disabled" disabled />
+        <HTab key="two" label="Two" />
+      </HTabs>
+    ));
+    const first = wrapper.find('[data-name="one"]');
+    (first.element as HTMLElement).focus();
+    await first.trigger('keydown', { key: 'ArrowRight' });
+
+    expect(activeKey.value).toBe('two');
+    expect(wrapper.find('[data-name="two"]').attributes('tabindex')).toBe('0');
+    expect(wrapper.find('[data-name="disabled"]').attributes('tabindex')).toBe('-1');
   });
 });

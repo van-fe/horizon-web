@@ -1,22 +1,10 @@
 <template>
-  <div class="mb-2">
-    <h-radio-group v-model="displayType">
-      <h-radio label="show">show</h-radio>
-      <h-radio label="if">if</h-radio>
-    </h-radio-group>
-  </div>
   <h-button @click="visible = true">点我</h-button>
-  <h-dialog
-    v-model="visible"
-    title="标题"
-    :display-type="displayType"
-    @primaryClick="onPrimary"
-    @secondaryClick="onSecondary"
-  >
+  <h-dialog v-model:visible="visible" title="标题" @ok="onPrimary" @cancel="onSecondary">
     <div>
       <h-tabs v-model="currentTab">
-        <h-tab name="tab1" label="Tab1" />
-        <h-tab name="tab2" label="Tab2" />
+        <h-tab key="tab1" label="Tab1" />
+        <h-tab key="tab2" label="Tab2" />
       </h-tabs>
       <h-panels v-model="currentTab">
         <h-panel name="tab1">
@@ -65,7 +53,6 @@ import type { HFormInstance } from '@aurora/horizon-web';
 
 export default defineComponent({
   setup() {
-    const displayType = ref('show');
     const formRef = ref<HFormInstance | null>(null);
     const formData = ref({
       username: '',
@@ -118,7 +105,6 @@ export default defineComponent({
       onPrimary,
       onSecondary,
       currentTab,
-      displayType,
     };
   },
 });

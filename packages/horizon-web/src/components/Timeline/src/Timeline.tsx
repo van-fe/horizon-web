@@ -15,7 +15,7 @@ export default defineComponent({
   props: useTimelineProps,
   slots: useTimelineSlots,
   setup(props, { slots }: HorizonWebSetupContext<{}, TimelineSlots>) {
-    const { sort: sortProp, first: firstProp, last: lastProp, v2: v2Prop } = toRefs(props);
+    const { sort: sortProp, first: firstProp, last: lastProp } = toRefs(props);
     const classHelper = new ComponentClassBlock('timeline');
     const showItem = ref<VNode[] | undefined>([]);
     let content: VNode[] | undefined = [];
@@ -44,7 +44,6 @@ export default defineComponent({
     provide('HTimeline', {
       hide: onHide,
       show: onShow,
-      v2: v2Prop.value,
     });
     onMounted(() => {
       content?.forEach(vnode => {

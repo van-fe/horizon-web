@@ -11,7 +11,7 @@ import HTreeItem from '~/components/Tree/src/components/TreeItem';
 import { sleep } from '~/utils/tools';
 
 describe('Tree.tsx special', () => {
-  test('selected-values old version bug', async () => {
+  test('selected-values update', async () => {
     const selectedValues = ref(['component', 'basic', 'color', 'data']);
 
     await createInstance(

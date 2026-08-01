@@ -96,7 +96,6 @@ export default defineComponent({
                 <HButton
                   plain={true}
                   size={sizeRef.value}
-                  forceNewestSize={true}
                   {...props.secondaryButtonProps}
                   onClick={evt => emit('secondaryClick', evt)}
                 >
@@ -107,7 +106,6 @@ export default defineComponent({
               {props.primaryButton ? (
                 <HButton
                   size={sizeRef.value}
-                  forceNewestSize={true}
                   {...props.primaryButtonProps}
                   onClick={evt => emit('primaryClick', evt)}
                 >

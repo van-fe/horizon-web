@@ -122,9 +122,14 @@ export default defineComponent({
               role="switch"
               type="checkbox"
               readonly={readonlyRef.value}
+              disabled={isDisabled.value}
               checked={modelValueRef.value}
               aria-checked={modelValueRef.value}
               aria-disabled={isDisabled.value}
+              aria-readonly={readonlyRef.value}
+              aria-label={labelRef.value || undefined}
+              onClick={evt => evt.stopPropagation()}
+              onChange={() => onChange()}
               onBlur={onBlur}
             />
             {statusRef.value && statusPositionRef.value === 'inside' && (

@@ -1,24 +1,29 @@
 <template>
   <h-grid :gap="12">
     <h-grid-item :span="24">
-      <h-form label-position="left" label-vertical-align="middle" label-justify-align="right" :inline="true">
+      <h-form
+        label-position="left"
+        label-vertical-align="middle"
+        label-justify-align="right"
+        :inline="true"
+      >
         <h-form-item label="theme:">
           <h-radio-group v-model="theme">
-            <h-radio label="default">default</h-radio>
-            <h-radio label="gray">gray</h-radio>
-            <h-radio label="midnight">midnight</h-radio>
+            <h-radio value="default">default</h-radio>
+            <h-radio value="gray">gray</h-radio>
+            <h-radio value="midnight">midnight</h-radio>
           </h-radio-group>
         </h-form-item>
         <h-form-item label="activeType:">
           <h-radio-group v-model="activeType">
-            <h-radio label="button">button</h-radio>
-            <h-radio label="link">link</h-radio>
+            <h-radio value="button">button</h-radio>
+            <h-radio value="link">link</h-radio>
           </h-radio-group>
         </h-form-item>
         <h-form-item label="submenuExpandType:">
           <h-radio-group v-model="submenuExpandType">
-            <h-radio label="single">single</h-radio>
-            <h-radio label="full">full</h-radio>
+            <h-radio value="single">single</h-radio>
+            <h-radio value="full">full</h-radio>
           </h-radio-group>
         </h-form-item>
       </h-form>
@@ -27,7 +32,7 @@
   <h-grid :gap="12">
     <h-grid-item :span="24">
       <h-container>
-        <h-header height="auto" style="padding: 0;">
+        <h-header height="auto" style="padding: 0">
           <h-menu
             ref="menuRef"
             mode="horizontal"
@@ -60,12 +65,18 @@
             <template #append>
               <h-button v-tooltip="'提醒'" type="normal" :text="true">
                 <template #icon>
-                  <a-icon name="notice" size="20" :color="theme === 'midnight' ? 'var(--h-text-inverse)' : 'var(--h-text-primary)'"></a-icon>
+                  <a-icon
+                    name="notice"
+                    size="20"
+                    :color="
+                      theme === 'midnight' ? 'var(--h-text-inverse)' : 'var(--h-text-primary)'
+                    "
+                  ></a-icon>
                 </template>
               </h-button>
               <h-popover class="avatar-popover" placement="bottom-end">
                 <template #reference>
-                  <h-avatar size="small" style="align-self: center;" />
+                  <h-avatar size="small" style="align-self: center" />
                 </template>
                 <template #popper>
                   <h-pop-content>
@@ -95,11 +106,16 @@
                 <h-menu-item value="2-2-1">三级菜单 1</h-menu-item>
                 <h-menu-item value="2-2-2">三级菜单 2</h-menu-item>
                 <h-menu-item value="2-2-3">三级菜单 3</h-menu-item>
-                <h-menu-item value="2-2-4">三级菜单 4三级菜单 4三级菜单 4三级菜单 4三级菜单 4</h-menu-item>
+                <h-menu-item value="2-2-4">
+                  三级菜单 4三级菜单 4三级菜单 4三级菜单 4三级菜单 4
+                </h-menu-item>
               </h-sub-menu>
             </h-sub-menu>
             <h-sub-menu value="3" :selectable="true">
-              <template #title>一级菜单 3 的名字超级长，可以看到 tooltip 的显示，如果没有显示，还需要增加更多更多内容</template>
+              <template #title>
+                一级菜单 3 的名字超级长，可以看到 tooltip
+                的显示，如果没有显示，还需要增加更多更多内容
+              </template>
               <h-sub-menu value="3-1">
                 <template #title>二级菜单 1</template>
                 <h-menu-item value="3-1-1" disabled icon="calendar">三级菜单 1</h-menu-item>
@@ -109,7 +125,9 @@
               </h-sub-menu>
               <h-sub-menu value="3-2">
                 <template #title>二级菜单 2</template>
-                <h-menu-item value="3-2-1">三级菜单 1三级菜单 1三级菜单 1三级菜单 1三级菜单 1</h-menu-item>
+                <h-menu-item value="3-2-1">
+                  三级菜单 1三级菜单 1三级菜单 1三级菜单 1三级菜单 1
+                </h-menu-item>
                 <h-menu-item value="3-2-2">三级菜单 2</h-menu-item>
                 <h-menu-item value="3-2-3">三级菜单 3</h-menu-item>
                 <h-menu-item value="3-2-4">三级菜单 4</h-menu-item>
@@ -135,7 +153,7 @@
             </h-menu-item>
           </h-menu>
         </h-header>
-        <h-main style="background: var(--h-bg-info-weak-hover); min-height: 500px;"></h-main>
+        <h-main style="background: var(--h-bg-info-weak-hover); min-height: 500px"></h-main>
       </h-container>
     </h-grid-item>
   </h-grid>
@@ -144,7 +162,7 @@
 <script setup lang="ts">
 import { ExtractPropTypes, ref } from 'vue';
 import { AIcon } from '@aurora/icon';
-import { HMenu , useMenuItemProps, useMenuProps, useSubMenuProps } from '@aurora/horizon-web';
+import { HMenu, useMenuItemProps, useMenuProps, useSubMenuProps } from '@aurora/horizon-web';
 
 type menuPropType = ExtractPropTypes<typeof useMenuProps>;
 type menuItemPropType = ExtractPropTypes<typeof useMenuItemProps>;

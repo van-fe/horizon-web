@@ -2,19 +2,17 @@
   <h-button @click="visible = true">点我</h-button>
   <h-dialog
     class="my-dialog"
-    v-model="visible"
-    header-margin="0"
-    footer-margin="0"
+    v-model:visible="visible"
     :class-names="{
       wrapper: 'my-wrapper',
       header: 'my-header',
       body: 'my-body',
       footer: 'my-footer',
-      mask: 'my-mask'
+      mask: 'my-mask',
     }"
     title="标题"
-    @primaryClick="onPrimary"
-    @secondaryClick="onSecondary"
+    @ok="onPrimary"
+    @cancel="onSecondary"
   >
     <p>完全自定义</p>
   </h-dialog>
@@ -36,7 +34,7 @@ const onSecondary = () => {
 </script>
 
 <style lang="scss">
-.my-dialog{
+.my-dialog {
   .my-wrapper {
     padding: 0;
   }

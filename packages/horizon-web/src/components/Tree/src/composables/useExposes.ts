@@ -164,6 +164,12 @@ export const useTreeExposes = {
     * @en Controls scroll to.
    */
   scrollTo: Function as ExposeType<(value?: string | number) => void>,
+
+  /**
+   * 处理树节点键盘导航。
+   * @en Handles keyboard navigation for tree nodes.
+   */
+  keyboardEventDeal: Function as ExposeType<(evt: KeyboardEvent) => void>,
 };
 
 export type TreeExposes = ExtractExposeTypes<typeof useTreeExposes>;

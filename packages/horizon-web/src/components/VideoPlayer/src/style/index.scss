@@ -1,27 +1,256 @@
 @use '../../../../styles/mixins';
+@use '../../../../styles/mixins/function';
 
 @include mixins.b('video-player') {
   position: relative;
   width: 100%;
   height: 100%;
+  min-height: 220px;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  font-family: mixins.css-variable('font-family');
+  color: mixins.css-variable('text-inverse');
+  outline: none;
+  background: mixins.css-variable('bg-inverse');
+  border-radius: mixins.css-variable('radius-l');
+  isolation: isolate;
+
+  @at-root #{function.b('video-player')}:focus-visible {
+    box-shadow: 0 0 0 2px mixins.css-variable('border-brand-default');
+  }
 
   @include mixins.e('video') {
+    position: absolute;
+    top: 50%;
+    left: 50%;
     display: block;
-    width: 100%;
-    height: 100%;
     object-fit: contain;
-    background-color: #000;
+    background: mixins.css-variable('bg-inverse');
+    transform-origin: center;
+  }
+
+  @include mixins.e(('center-play', 'loading')) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    color: mixins.css-variable('text-inverse');
+    background: rgba(#{function.css-variable('color-1-9')}, 0.72);
+    border: 1px solid rgba(#{function.css-variable('color-1-1')}, 0.28);
+    border-radius: mixins.css-variable('radius-circle');
+    backdrop-filter: blur(8px);
+    transform: translate(-50%, -50%);
+  }
+
+  @include mixins.e('center-play') {
+    padding: 0;
+    cursor: pointer;
+    transition:
+      transform 180ms ease,
+      background-color 180ms ease;
+
+    @at-root #{function.e('video-player', 'center-play')}:hover {
+      background: rgba(#{function.css-variable('color-2-6')}, 0.88);
+      transform: translate(-50%, -50%) scale(1.06);
+    }
+
+    @at-root #{function.e('video-player', 'center-play')}:focus-visible {
+      outline: 2px solid mixins.css-variable('border-brand-default');
+      outline-offset: 3px;
+    }
+  }
+
+  @include mixins.e('loading') {
+    width: 52px;
+    height: 52px;
+    border: 0;
+  }
+
+  @include mixins.e('controls') {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 3;
+    padding: 34px 14px 10px;
+    background: linear-gradient(transparent, rgba(#{function.css-variable('color-1-10')}, 0.88));
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity 180ms ease,
+      transform 180ms ease;
+  }
+
+  @include mixins.is('controls-hidden') {
+    cursor: none;
+
+    @include mixins.e('controls') {
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+
+  @include mixins.e('progress-wrap') {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 21px;
+  }
+
+  @include mixins.e('progress-track') {
+    position: absolute;
+    right: 0;
+    left: 0;
+    height: 4px;
+    background: rgba(#{function.css-variable('color-1-1')}, 0.3);
+    border-radius: mixins.css-variable('radius-pill');
+  }
+
+  @include mixins.e('buffered') {
+    display: block;
+    height: 100%;
+    background: rgba(#{function.css-variable('color-1-1')}, 0.62);
+    border-radius: inherit;
+  }
+
+  @include mixins.e(('progress', 'volume-slider')) {
+    #{function.css-variable-name('slider-bg--track')}: transparent;
+    #{function.css-variable-name('slider-bg--track--disabled')}: transparent;
+    #{function.css-variable-name('slider-bg--cursor')}: #{function.css-variable('bg-default')};
+    #{function.css-variable-name('slider-border--cursor')}: 2px solid
+      #{function.css-variable('border-brand-default')};
+
+    #{function.e('slider', 'track')} {
+      top: 50%;
+      height: 4px;
+      transform: translateY(-50%);
+    }
+  }
+
+  @include mixins.e('progress') {
+    z-index: 1;
+    width: 100%;
+  }
+
+  @include mixins.e('control-row') {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    height: 36px;
+  }
+
+  @include mixins.e('icon-button') {
+    flex: 0 0 auto;
+    width: 34px;
+    height: 34px;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+
+    @at-root #{function.e('video-player', 'icon-button')}:hover {
+      background: rgba(#{function.css-variable('color-1-1')}, 0.16);
+    }
+
+    @at-root #{function.e('video-player', 'icon-button')}:focus-visible {
+      outline: 2px solid mixins.css-variable('border-brand-default');
+    }
+  }
+
+  @include mixins.e('volume') {
+    display: flex;
+    align-items: center;
+
+    @at-root #{function.e('video-player', 'volume')}:hover,
+      #{function.e('video-player', 'volume')}:focus-within {
+      @include mixins.e('volume-slider') {
+        visibility: visible;
+        width: 72px;
+        margin-right: 6px;
+        pointer-events: auto;
+        opacity: 1;
+      }
+    }
+  }
+
+  @include mixins.e('volume-slider') {
+    #{function.css-variable-name('slider-bg--track')}: rgba(
+      #{function.css-variable('color-1-1')},
+      0.34
+    );
+    visibility: hidden;
+    width: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition:
+      width 180ms ease,
+      margin 180ms ease,
+      opacity 120ms ease;
+  }
+
+  @include mixins.e('time') {
+    margin-left: 2px;
+    font-size: mixins.css-variable('text-sm');
+    font-variant-numeric: tabular-nums;
+    color: rgba(#{function.css-variable('color-1-1')}, 0.92);
+    white-space: nowrap;
+
+    span {
+      color: rgba(#{function.css-variable('color-1-1')}, 0.55);
+    }
+  }
+
+  @include mixins.e('spacer') {
+    flex: 1 1 auto;
+  }
+
+  @include mixins.e(('rate-select', 'quality-select')) {
+    flex: 0 0 auto;
+    #{function.css-variable-name('picker-color--input--no-border')}: #{function.css-variable(
+        'text-inverse'
+      )};
+    #{function.css-variable-name('picker-color--input--no-border--hover')}: #{function.css-variable(
+        'text-inverse'
+      )};
+    #{function.css-variable-name('picker-color--input--no-border--press')}: #{function.css-variable(
+        'text-inverse'
+      )};
+    #{function.css-variable-name('picker-color--input--no-border--focus')}: #{function.css-variable(
+        'text-inverse'
+      )};
+    #{function.css-variable-name('picker-color--input-append-icon--no-border')}: #{function.css-variable(
+        'text-inverse'
+      )};
+    #{function.css-variable-name('picker-color--input-append-icon--no-border--hover')}: #{function.css-variable(
+        'text-inverse'
+      )};
+    #{function.css-variable-name('picker-bg--input--no-border--hover')}: rgba(
+      #{function.css-variable('color-1-1')},
+      0.16
+    );
+    #{function.css-variable-name('picker-bg--input--no-border--press')}: rgba(
+      #{function.css-variable('color-1-1')},
+      0.2
+    );
+    #{function.css-variable-name('picker-bg--input--no-border--focus')}: rgba(
+      #{function.css-variable('color-1-1')},
+      0.16
+    );
   }
 
   @include mixins.e('error') {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
+    z-index: 4;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    height: 100%;
     background: mixins.css-variable('video-player-bg--error');
   }
 
@@ -32,8 +261,47 @@
 
     p {
       margin: mixins.css-variable('video-player-margin--error-content');
-      color: mixins.css-variable('video-player-color--error-content');
       font-size: mixins.css-variable('video-player-font-size--error-content');
+      color: mixins.css-variable('video-player-color--error-content');
+    }
+  }
+
+  @include mixins.is('fullscreen') {
+    min-height: 100%;
+    aspect-ratio: auto;
+    border-radius: 0;
+  }
+}
+
+@media (width <= 560px) {
+  @include mixins.b('video-player') {
+    min-height: 180px;
+
+    @include mixins.e('controls') {
+      padding-right: 8px;
+      padding-left: 8px;
+    }
+
+    @include mixins.e('time') {
+      font-size: 11px;
+    }
+
+    @include mixins.e('volume-slider') {
+      display: none;
+    }
+
+    @include mixins.e('rate-select') {
+      display: none;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @include mixins.b('video-player') {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
     }
   }
 }

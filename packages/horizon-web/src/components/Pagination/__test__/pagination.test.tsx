@@ -26,7 +26,11 @@ describe('Pagination.tsx', () => {
       const onChange = vi.fn();
 
       const wrapper = mount(() => (
-        <HPagination total={100} v-model:currentPage={currentPage.value} onChange={onChange} />
+        <HPagination
+          total={100}
+          v-model:currentPage={currentPage.value}
+          onCurrentChange={onChange}
+        />
       ));
 
       const pageItem = wrapper.findAll('.h-pagination__pager--item:not(.is-active)');
@@ -69,7 +73,7 @@ describe('Pagination.tsx', () => {
             v-model:pageSize={pageSize.value}
             pageSizes={pageSizes.value}
             pageSizesToBody={false}
-            onChangeSize={onChangeSize}
+            onSizeChange={onChangeSize}
           />
         ),
         {

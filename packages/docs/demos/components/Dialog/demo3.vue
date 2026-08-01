@@ -20,9 +20,9 @@
     无图标时
   </h-button>
   <h-dialog
-    v-model="visible"
+    v-model:visible="visible"
     :title="title"
-    @primaryClick="onPrimary"
+    @ok="onPrimary"
     :icon-name="icon"
     icon-color="orange"
   >
@@ -53,6 +53,6 @@ export default defineComponent({
 <style scoped lang="scss">
 .content {
   min-height: 32px;
-  line-height:32px;
+  line-height: 32px;
 }
 </style>

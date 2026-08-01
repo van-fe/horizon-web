@@ -46,8 +46,8 @@
         >
           <template #confirmRender>
             <div class="confirm-buttons">
-              <span @click="confirmCancelHandle">取消</span>
-              <span @click="confirmEnterHandle">确认</span>
+              <span @click="cancelHandle">取消</span>
+              <span @click="confirmHandle">确认</span>
             </div>
           </template>
         </h-cascader>
@@ -71,11 +71,11 @@ fetch(new URL('/cascader-options.json', import.meta.url).href).then(res => {
   });
 });
 
-const confirmCancelHandle = () => {
+const cancelHandle = () => {
   cascaderRef.value?.cancelHandle();
 };
 
-const confirmEnterHandle = () => {
+const confirmHandle = () => {
   cascaderRef.value?.confirmHandle();
 };
 </script>

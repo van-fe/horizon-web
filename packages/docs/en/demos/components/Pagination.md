@@ -16,7 +16,7 @@ You can set `hide-on-single-page` to hide pagination when there is only one page
 ## Control Pagination Sub-elements
 Set `layout` to configure displayed elements
 
-Starting from `2.0.0-beta.4`, `layout` can not only receive string arrays, but also strings separated by commas
+`layout` accepts a string array or a comma-separated string.
 :::demo components/Pagination/layout.vue :::
 
 ## Prefix/Suffix Slots

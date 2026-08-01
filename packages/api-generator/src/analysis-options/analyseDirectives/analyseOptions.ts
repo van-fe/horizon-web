@@ -4,10 +4,7 @@ import type { FileElements } from '../../utils/analyseFileElements';
 import analysisFileElements from '../../utils/analyseFileElements';
 import checkInvisibleTagExits from '../../utils/checkInvisibleTagExist';
 import completeFileExtName from '../../utils/completeFileExtName';
-import type {
-  ApiGeneratorAnalysedOptionType,
-  ApiGeneratorExportedDirectives,
-} from '@aurora/utils';
+import type { ApiGeneratorAnalysedOptionType, ApiGeneratorExportedDirectives } from '@aurora/utils';
 import analyseJsDocs from '../../utils/analyseJsDocs';
 import { analyseFunctionExpression } from '../../utils/analysisType/analyseFunction';
 
@@ -29,7 +26,6 @@ function analysisPropertyAssignment(
     required: false,
     type: '',
     baseType: '',
-    deprecated: jsDoc.tags.deprecated?.default,
     version: jsDoc.tags.version?.default,
     options: [],
   };

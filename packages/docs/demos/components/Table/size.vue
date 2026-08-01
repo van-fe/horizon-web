@@ -2,10 +2,10 @@
   <h-form label-position="left">
     <h-form-item label="size">
       <h-radio-group v-model="size">
-        <h-radio label="mini"></h-radio>
-        <h-radio label="small"></h-radio>
-        <h-radio label="medium"></h-radio>
-        <h-radio label="large"></h-radio>
+        <h-radio value="mini"></h-radio>
+        <h-radio value="small"></h-radio>
+        <h-radio value="medium"></h-radio>
+        <h-radio value="large"></h-radio>
       </h-radio-group>
     </h-form-item>
   </h-form>
@@ -28,9 +28,9 @@ interface TableData {
 const size = ref('medium');
 
 const data = ref<TableData[]>([
-  {name: 'Jon', age: 32, address: 'Shanghai'},
-  {name: 'Jacob', age: 16, address: 'Shenzhen'},
-  {name: 'Wang', age: 22, address: 'Hangzhou'},
-  {name: 'Alice', age: 26, address: 'Beijing'},
+  { name: 'Jon', age: 32, address: 'Shanghai' },
+  { name: 'Jacob', age: 16, address: 'Shenzhen' },
+  { name: 'Wang', age: 22, address: 'Hangzhou' },
+  { name: 'Alice', age: 26, address: 'Beijing' },
 ]);
 </script>

@@ -18,6 +18,7 @@ import {
   HTreeEmitsInjectKey,
   HTreeExpandedNodesUuidInjectKey,
   HTreeFilterInputValueInjectKey,
+  HTreeFocusedNodeUuidInjectKey,
   HTreeFullCheckedValuesInjectKey,
   HTreeHalfCheckedValuesInjectKey,
   HTreeHelperInjectKey,
@@ -64,6 +65,7 @@ export default defineComponent({
     const parentSlots = inject(HTreeSlotsInjectKey)!;
     const size = inject(HTreeSizeInjectKey)!;
     const filterInputValue = inject(HTreeFilterInputValueInjectKey)!;
+    const focusedNodeUuid = inject(HTreeFocusedNodeUuidInjectKey)!;
     const expandedNodesUuid = inject(HTreeExpandedNodesUuidInjectKey)!;
     const switchExpandStatus = inject(HTreeSwitchNodeExpandStatusInjectKey)!;
     const switchCheckedStatus = inject(HTreeSwitchNodeSelectedStatusInjectKey)!;
@@ -135,6 +137,8 @@ export default defineComponent({
     });
 
     function onClick(evt: MouseEvent) {
+      focusedNodeUuid.value = valueProp.value._uuid;
+
       if (parentProps.expandOnClickNode && !treeHelper.getOptionValue(valueProp.value, 'isLeaf')) {
         switchExpandStatus(valueProp.value, evt, instance?.vnode);
       }
@@ -220,12 +224,17 @@ export default defineComponent({
             ),
             classHelper.is('drag-over', isDragOver.value),
             classHelper.is('disabled', isDisabled.value),
+            classHelper.is('focus', focusedNodeUuid.value === valueProp.value._uuid),
             classHelper.is('shadow', shadowProp.value),
           )}
           style={{
             paddingLeft: paddingLeft.value + 'px',
           }}
           draggable={false}
+          role="treeitem"
+          aria-disabled={isDisabled.value}
+          aria-selected={isChecked.value}
+          aria-expanded={valueProp.value.isLeaf ? undefined : isExpanded.value}
           data-level={valueProp.value.level}
           data-uuid={valueProp.value._uuid}
           data-children-amount={valueProp.value.transformedChildren.length || 0}
@@ -257,8 +266,7 @@ export default defineComponent({
                       ((parentProps.showCheckbox && parentProps.multiple) ||
                       (parentProps.showRadio &&
                         !treeHelper.getOptionValue(valueProp.value, 'isLeaf') &&
-                        !parentProps.multiple) ||
-                      !!parentProps.checkable
+                        !parentProps.multiple)
                         ? 24
                         : 0)
                     }px - (((${cssVariable('tree-size--drag-over-cursor-arrow')} + ${cssVariable(
@@ -350,7 +358,7 @@ export default defineComponent({
             </div>
           )}
           {parentProps.multiple
-            ? (parentProps.checkable || parentProps.showCheckbox) && (
+            ? parentProps.showCheckbox && (
                 <div
                   class={cls(classHelper.e('checkbox'))}
                   onClick={onClickCheckbox}
@@ -405,7 +413,6 @@ export default defineComponent({
             ) : (
               parentSlots.treeNodeRender?.({
                 data: valueProp.value,
-                vnode: instance?.vnode,
                 vNode: instance?.vnode,
               })
             )}

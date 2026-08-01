@@ -92,3 +92,7 @@ export const HTreeIsCheckComponentVisibleInjectKey = Symbol(
 export const HTreeHighlightRangesInjectKey = Symbol(
   generatorInjectedKeyName('tree', 'highlight-ranges'),
 ) as InjectionKey<Ref<Map<TreeItemProps['value'], Range>>>;
+
+export const HTreeFocusedNodeUuidInjectKey = Symbol(
+  generatorInjectedKeyName('tree', 'focused-node-uuid'),
+) as InjectionKey<Ref<HTreeUuidType | undefined>>;

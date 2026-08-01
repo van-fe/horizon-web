@@ -26,10 +26,9 @@ const onSort = (current: number, target: number, sortedKeys: number[]) => {
   <div class="mb-4 flex align-center">
     <span class="mr-4">类型</span>
     <h-radio-group v-model="cardType">
-      <h-radio label="line">line(Default)</h-radio>
-      <h-radio label="card">card</h-radio>
-      <h-radio label="segment">segment</h-radio>
-      <h-radio label="page">page(不支持尺寸调整)</h-radio>
+      <h-radio value="line">line(Default)</h-radio>
+      <h-radio value="card">card</h-radio>
+      <h-radio value="page">page(不支持尺寸调整)</h-radio>
     </h-radio-group>
   </div>
   <div class="mb-8 flex align-center">

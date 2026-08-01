@@ -2,22 +2,22 @@
   <h-form>
     <h-form-item label="尺寸">
       <h-radio-group v-model="size">
-        <h-radio label="small"></h-radio>
-        <h-radio label="medium"></h-radio>
-        <h-radio label="large"></h-radio>
+        <h-radio value="small"></h-radio>
+        <h-radio value="medium"></h-radio>
+        <h-radio value="large"></h-radio>
       </h-radio-group>
     </h-form-item>
     <h-form-item label="文件元素尺寸">
       <h-radio-group v-model="fileItemSize">
-        <h-radio label="small"></h-radio>
-        <h-radio label="medium"></h-radio>
-        <h-radio label="large"></h-radio>
+        <h-radio value="small"></h-radio>
+        <h-radio value="medium"></h-radio>
+        <h-radio value="large"></h-radio>
       </h-radio-group>
     </h-form-item>
     <h-form-item label="展示上传按钮">
       <h-radio-group v-model="showUploader">
-        <h-radio :label="true">True</h-radio>
-        <h-radio :label="false">False</h-radio>
+        <h-radio :value="true">True</h-radio>
+        <h-radio :value="false">False</h-radio>
       </h-radio-group>
     </h-form-item>
   </h-form>

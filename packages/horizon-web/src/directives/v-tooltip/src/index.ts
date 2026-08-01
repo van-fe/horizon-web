@@ -22,8 +22,8 @@ export interface TooltipBindingArgs {
   style?: unknown;
   reference?: HTMLElement;
   fallbackPlacements?: TooltipProps['fallbackPlacements'];
-  size?: string;
-  theme?: string;
+  size?: 'medium' | 'small';
+  theme?: 'dark' | 'light';
 }
 
 export interface PopTooltipEl extends HTMLElement {
@@ -89,10 +89,10 @@ const getPropOptions = (el: PopTooltipEl, { value, modifiers }: DirectiveBinding
       optionObj.trigger = key;
     }
     if (SIZE_ARR.includes(key)) {
-      optionObj.size = key;
+      optionObj.size = key as TooltipBindingArgs['size'];
     }
     if (THEME_ARR.includes(key)) {
-      optionObj.theme = key;
+      optionObj.theme = key as TooltipBindingArgs['theme'];
     }
   });
   return optionObj;

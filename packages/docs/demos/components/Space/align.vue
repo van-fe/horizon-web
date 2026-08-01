@@ -9,15 +9,15 @@ const direction = ref('horizontal');
   <h-space block direction="vertical">
     <h-space>
       Direction
-      <h-radio v-model="direction" label="horizontal">horizontal</h-radio>
-      <h-radio v-model="direction" label="vertical">vertical</h-radio>
+      <h-radio v-model="direction" value="horizontal">horizontal</h-radio>
+      <h-radio v-model="direction" value="vertical">vertical</h-radio>
     </h-space>
     <h-space>
       Align
-      <h-radio v-model="align" label="start">start</h-radio>
-      <h-radio v-model="align" label="center">center</h-radio>
-      <h-radio v-model="align" label="end">end</h-radio>
-      <h-radio v-model="align" label="baseline">baseline</h-radio>
+      <h-radio v-model="align" value="start">start</h-radio>
+      <h-radio v-model="align" value="center">center</h-radio>
+      <h-radio v-model="align" value="end">end</h-radio>
+      <h-radio v-model="align" value="baseline">baseline</h-radio>
     </h-space>
     <h-space
       :direction="direction"

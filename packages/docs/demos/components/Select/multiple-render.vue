@@ -51,7 +51,7 @@
         <h-option label="上海" :value="1" />
         <h-option :value="2" label="北京" />
         <h-option :value="3" label="合肥" name="hefei" />
-        <template #selectRender>你的选择是：{{ values3.map(v => v.label).join('+') }}</template>
+        <template #pickerInner>你的选择是：{{ values3.map(v => v.label).join('+') }}</template>
       </h-select>
     </h-grid-item>
   </h-grid>

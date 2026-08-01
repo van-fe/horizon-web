@@ -257,9 +257,7 @@ export default defineComponent({
                             {...(parentProps.cancelButtonProps ?? {})}
                             onClick={evt => parentEmits('cancel', evt)}
                           >
-                            {parentProps.cancelButtonText ??
-                              parentProps.cancelBtnText ??
-                              useLocaleLang('global.cancel').value}
+                            {parentProps.cancelButtonText ?? useLocaleLang('global.cancel').value}
                           </HButton>
                         )}
                         {parentProps.confirmNeedConfirm && (
@@ -269,9 +267,7 @@ export default defineComponent({
                             {...(parentProps.confirmButtonProps ?? {})}
                             onClick={evt => parentEmits('confirm', evt)}
                           >
-                            {parentProps.confirmButtonText ??
-                              parentProps.confirmBtnText ??
-                              useLocaleLang('global.confirm').value}
+                            {parentProps.confirmButtonText ?? useLocaleLang('global.confirm').value}
                           </HButton>
                         )}
                       </div>

@@ -3,27 +3,27 @@
     <h-form label-position="left" label-vertical-align="middle" label-width="200px">
       <h-form-item label="Enable Create Pin Flags">
         <h-radio-group v-model="enableCreatePinFlags">
-          <h-radio :label="true">True</h-radio>
-          <h-radio :label="false">False</h-radio>
+          <h-radio :value="true">True</h-radio>
+          <h-radio :value="false">False</h-radio>
         </h-radio-group>
       </h-form-item>
       <h-form-item label="Reserve Event">
         <h-radio-group v-model="reserveEvent">
-          <h-radio :label="1">Don't reserve</h-radio>
-          <h-radio :label="2">Reserve original</h-radio>
-          <h-radio :label="3">Reserve and modify</h-radio>
+          <h-radio :value="1">Don't reserve</h-radio>
+          <h-radio :value="2">Reserve original</h-radio>
+          <h-radio :value="3">Reserve and modify</h-radio>
         </h-radio-group>
       </h-form-item>
       <h-form-item label="Show Spacing Between Flags">
         <h-radio-group v-model="showSpacingBetweenFlags">
-          <h-radio :label="true">True</h-radio>
-          <h-radio :label="false">False</h-radio>
+          <h-radio :value="true">True</h-radio>
+          <h-radio :value="false">False</h-radio>
         </h-radio-group>
       </h-form-item>
       <h-form-item label="Create Flag Can Though Disable Date Or Hour">
         <h-radio-group v-model="createFlagCanThoughDisableDateOrHour">
-          <h-radio :label="true">Yes</h-radio>
-          <h-radio :label="false">No</h-radio>
+          <h-radio :value="true">Yes</h-radio>
+          <h-radio :value="false">No</h-radio>
         </h-radio-group>
       </h-form-item>
     </h-form>
@@ -138,9 +138,16 @@ export default defineComponent({
         if ([0, 6].includes(Number(date.format('d')))) {
           return [[date, date.endOf('d')]];
         } else if (date.isSame(dayjs().startOf('d'))) {
-          return [[date, date.add(8, 'h')], [date.add(10, 'h'), date.add(12, 'h').add(20, 'm')], [date.add(20, 'h'), date.endOf('d')]];
+          return [
+            [date, date.add(8, 'h')],
+            [date.add(10, 'h'), date.add(12, 'h').add(20, 'm')],
+            [date.add(20, 'h'), date.endOf('d')],
+          ];
         } else {
-          return [[date, date.add(8, 'h')], [date.add(20, 'h'), date.endOf('d')]];
+          return [
+            [date, date.add(8, 'h')],
+            [date.add(20, 'h'), date.endOf('d')],
+          ];
         }
       },
     };

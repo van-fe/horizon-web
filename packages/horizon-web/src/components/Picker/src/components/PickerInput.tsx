@@ -3,6 +3,7 @@ import {
   cls,
   ComponentClassBlock,
   isBoolean,
+  isVNodeEmpty,
   useNamespace,
   safelyGetEventTarget,
   sizeUnitTransform,
@@ -242,6 +243,18 @@ export default defineComponent({
       emit('click', evt);
     }
 
+    function getPickerInnerContent() {
+      const content = parentSlots.pickerInner?.(
+        parentProps.modelValue,
+        inputStatus.value,
+        pickerStatus.value,
+        onInputFocus,
+        onInputBlur,
+      );
+
+      return Array.isArray(content) && isVNodeEmpty(content) ? undefined : content;
+    }
+
     useResizeObserver(inputPrependDomRef, ([entry]) => {
       inputStyle.value.width =
         (inputWrapperDomRef.value?.clientWidth || 0) - entry.contentRect.width + 'px';
@@ -270,6 +283,8 @@ export default defineComponent({
     });
 
     return () => {
+      const pickerInnerContent = getPickerInnerContent();
+
       return (
         <div
           ref={inputWrapperDomRef}
@@ -323,13 +338,8 @@ export default defineComponent({
                     inputStatus.value,
                     pickerStatus.value,
                   )}
-                  {parentSlots.pickerInner?.(
-                    parentProps.modelValue,
-                    inputStatus.value,
-                    pickerStatus.value,
-                    onInputFocus,
-                    onInputBlur,
-                  ) ?? (
+                  {pickerInnerContent}
+                  {(!pickerInnerContent || parentProps.hideInput) && (
                     <HTooltip
                       trigger="manual"
                       visible={isShowTooltip.value}

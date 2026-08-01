@@ -8,9 +8,7 @@
     </div>
     <h-button @click="visible2 = true">Two-level Drawer</h-button>
   </h-drawer>
-  <h-drawer version="v2" v-model:visible="visible2" title="Two-level Drawer">
-    This is two-level drawer
-  </h-drawer>
+  <h-drawer v-model:visible="visible2" title="Two-level Drawer">This is two-level drawer</h-drawer>
 </template>
 
 <script lang="ts" setup>

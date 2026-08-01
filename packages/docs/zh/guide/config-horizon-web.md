@@ -5,26 +5,6 @@
 以下配置中，`locale` 是通过 `provide` 传导，因此如果你创建了多个 `app`，则需要分别配置它们
 :::
 
-## cssVariableUseVersion
-- 类型: `Boolean`
-- 默认: `false`
-
-因为不同版本的 `Horizon Web` 默认情况下 `css` 变量前缀相同，所以为了防止互相影响，请设置此项为 `true`
-
-::: tip
-为适配微应用等场景，此配置项会存于 `localStorage`
-:::
-
-## cssVariableUseVersionStoreKey
-- 类型: `Boolean`
-- 默认: `${current-version}-css-variable-use-version`
-
-为了防止相同版本号的 `Horizon Web` 因为配置的全局变量相同而互相影响，所以可以通过此项配置防止此问题
-
-::: tip
-为适配微应用等场景，此配置项会存于 `localStorage`
-:::
-
 ## locale
 - 类型: `Object`
 

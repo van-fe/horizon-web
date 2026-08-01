@@ -1,24 +1,23 @@
 <template>
   <h-space direction="vertical" block>
     <h-radio-group v-model="mode" class="example">
-      <h-radio :label="0">Default</h-radio>
-      <h-radio :label="1">Customize Header</h-radio>
-      <h-radio :label="2">Customize Title</h-radio>
-      <h-radio :label="3">Customize Footer</h-radio>
-      <h-radio :label="4">No Title</h-radio>
-      <h-radio :label="5">No Header and No Footer</h-radio>
-      <h-radio :label="6">Hide Mask</h-radio>
+      <h-radio :value="0">Default</h-radio>
+      <h-radio :value="1">Customize Header</h-radio>
+      <h-radio :value="2">Customize Title</h-radio>
+      <h-radio :value="3">Customize Footer</h-radio>
+      <h-radio :value="4">No Title</h-radio>
+      <h-radio :value="5">No Header and No Footer</h-radio>
+      <h-radio :value="6">Hide Mask</h-radio>
     </h-radio-group>
     <h-button @click="visible = true">Open Drawer</h-button>
   </h-space>
   <h-drawer
     v-model:visible="visible"
-    v2
     :title="mode !== 4 ? 'Default Title' : ''"
     :header="mode !== 5"
     :footer="mode !== 5"
     :mask="mode !== 6"
-    position="right"
+    placement="right"
   >
     <template v-if="mode === 1" #header>
       <h-space size="4" block direction="vertical">
@@ -37,7 +36,7 @@
     </div>
     <template v-if="mode === 3" #footer>
       <h-button type="danger" style="margin-right: 8px" @click="onOk">Confirm Delete</h-button>
-      <h-button type="secondary" @click="onCancel">Close</h-button>
+      <h-button plain @click="onCancel">Close</h-button>
     </template>
   </h-drawer>
 </template>

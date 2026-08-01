@@ -8,13 +8,7 @@
     </h-button>
   </div>
 
-  <h-list
-    :data="list"
-    :max-height="400"
-    :zebra="isZebra"
-    :is-border="isBorder"
-    :split="isSplit"
-  >
+  <h-list :data="list" :max-height="400" :zebra="isZebra" :border="isBorder" :split="isSplit">
     <template #item="{ item, index }">
       <h-list-item
         :key="index"
@@ -24,12 +18,7 @@
         :title-size="titleSize"
       >
         <template #sider>
-          <h-image
-            src="/demo-assets/scene-city.svg"
-            object-fit="cover"
-            :width="50"
-            :height="50"
-          />
+          <h-image src="/demo-assets/scene-city.svg" object-fit="cover" :width="50" :height="50" />
         </template>
         <template #right>
           <section class="list-right">

@@ -1,5 +1,5 @@
-import type { VNode } from 'vue';
-import { computed, defineComponent, inject, nextTick, ref, toRef, toRefs, watch } from 'vue';
+import type { StyleValue, VNode } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { useInputProps } from './composables/useProps';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import {
@@ -7,35 +7,30 @@ import {
   ComponentClassBlock,
   cls,
   isDefined,
+  sizeUnitTransform,
   useNamespace,
-  safelyGetEventTarget,
 } from '@aurora/utils';
 import { AIcon } from '@aurora/icon';
 import type { InputEmits } from './composables/useEmits';
 import { useInputEmits } from './composables/useEmits';
-import {
-  HFormDisabledInjectedKey,
-  HFormItemErrorInjectedKey,
-  HFormItemTriggerInjectedKey,
-} from '~/components/Form/src/utils/injectedKeys';
 import type { InputSlots } from './composables/useSlots';
 import { useInputSlots } from './composables/useSlots';
 import type { InputExposes } from './composables/useExposes';
 import { useInputExposes } from './composables/useExposes';
-import useSize from '~/utils/useSize';
 import useIconRender from '~/utils/useIconRender';
-import { useAutoSizeStyle } from './composables/useAutoSizeStyle';
-import { useLimitStyle } from './composables/useLimitStyle';
-import useLocaleLang from '~/utils/useLocaleLang';
-import { warn } from '~/utils/useLog';
+import { useInput } from './hooks/useInput';
 
 export default defineComponent({
   name: `${useNamespace()}Input`,
   desc: '输入框组件',
+  descLocales: {
+    en: 'Input component',
+  },
   props: useInputProps,
   emits: useInputEmits,
   slots: useInputSlots,
   exposes: useInputExposes,
+  inheritAttrs: false,
   setup(
     props,
     { slots, attrs, emit, expose }: HorizonWebSetupContext<InputEmits, InputSlots, InputExposes>,
@@ -63,163 +58,56 @@ export default defineComponent({
       'autocomplete',
     ]);
 
-    const localValue = ref();
-    const showPassword = ref(false);
-    const focused = ref(false);
-    const isComposing = ref(false);
-    const inputRef = ref<HTMLInputElement | null>(null);
-    const textareaRef = ref<HTMLTextAreaElement | null>(null);
-    const inputOrTextarea = computed(() => inputRef.value || textareaRef.value);
-    const checkedType = computed(() => {
-      if (['text', 'textarea', 'password'].includes(props.type)) {
-        return props.type;
-      }
-      warn('input', 'Please use one of these values as the input prop "type": "text"/"textarea"/"password". Or it will be converted to "text".');
-      return 'text';
-    });
+    const {
+      autoSizeStyle,
+      blur,
+      checkedType,
+      focus,
+      focused,
+      formError,
+      handleBlur,
+      handleClear,
+      handleCompositionEnd,
+      handleCompositionStart,
+      handleCompositionUpdate,
+      handleFocus,
+      handleInput,
+      handleKeyDown,
+      handleKeyPress,
+      handleKeyUp,
+      handleToggleShowPassword,
+      iconSize,
+      inputRef,
+      isDisabled,
+      isOutOfExceeded,
+      limitCountStyle,
+      localValue,
+      placeholder,
+      select,
+      showPassword,
+      sizeRef,
+      textareaRef,
+    } = useInput(props, emit);
+    const compositionValue = ref('');
 
-    // global size
-    const sizeRef = useSize(toRef(props, 'size'), 'medium');
+    function onInput(event: Event) {
+      if (props.embedded) props.embeddedInputHandler?.(event);
+      handleInput(event);
+    }
 
-    // form disabled inject
-    const formDisabled = inject(HFormDisabledInjectedKey, undefined);
-    const isDisabled = computed(() => props.disabled ?? formDisabled?.value ?? false);
+    function onCompositionStart(event: CompositionEvent) {
+      handleCompositionStart(event);
+    }
 
-    let preValue = localValue.value;
+    function onCompositionUpdate(event: CompositionEvent) {
+      compositionValue.value = event.data;
+      handleCompositionUpdate(event);
+    }
 
-    // form-item validate trigger
-    const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
-    const { modelValue, autoSize } = toRefs(props);
-    const autoSizeStyle = useAutoSizeStyle(textareaRef, modelValue, autoSize);
-    const limitCountStyle = useLimitStyle(textareaRef, modelValue);
-    const handleInput = (event: Event): void => {
-      if (isComposing.value) return;
-      const target = safelyGetEventTarget(event) as HTMLInputElement;
-      localValue.value = target?.value;
-      emit('update:modelValue', target?.value);
-      emit('input', target?.value, event);
-
-      nextTick().then(() => {
-        formItemTrigger?.('change');
-      });
-    };
-
-    const isOutOfExceeded = computed(
-      () =>
-        isDefined(props.maxlength) &&
-        props.enableOutOfExceeded &&
-        localValue.value?.length > props.maxlength,
-    );
-
-    watch(
-      () => props.modelValue,
-      val => {
-        localValue.value = val;
-      },
-      { immediate: true },
-    );
-
-    watch(isDisabled, val => {
-      if (val) {
-        focused.value = false;
-      }
-    });
-
-    const handleToggleShowPassword = () => {
-      showPassword.value = !showPassword.value;
-      focus();
-    };
-
-    const focus = () => {
-      // 应对dialog内input无法聚焦的情况；应对showPassword后光标移到最前面的情况
-      nextTick().then(() => {
-        inputOrTextarea.value?.focus();
-      });
-    };
-
-    const blur = () => {
-      inputOrTextarea.value?.blur();
-    };
-
-    const select = () => {
-      inputOrTextarea.value?.select();
-    };
-
-    const emitChange = (value: string) => {
-      if (preValue !== value) {
-        preValue = value;
-        emit('change', value);
-      }
-    };
-
-    const handleFocus = (event: FocusEvent) => {
-      focused.value = true;
-      preValue = localValue.value;
-      emit('focus', event);
-    };
-
-    const handleBlur = (event: FocusEvent) => {
-      focused.value = false;
-      emitChange(localValue.value);
-      emit('blur', event);
-      nextTick().then(() => {
-        formItemTrigger?.('blur');
-      });
-    };
-
-    const handleClear = (evt: MouseEvent) => {
-      localValue.value = '';
-      emit('update:modelValue', '');
-      emit('input', '', evt);
-      emitChange(localValue.value);
-      emit('clear');
-      // When clear icon clicked, should focus on element.
-      focus();
-      nextTick().then(() => {
-        formItemTrigger?.('change');
-      });
-    };
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      emit('keydown', event);
-    };
-
-    const handleKeyPress = (event: KeyboardEvent) => {
-      emit('keypress', event);
-    };
-
-    const handleKeyUp = (event: KeyboardEvent) => {
-      emit('keyup', event);
-    };
-
-    const handleCompositionStart = (event: CompositionEvent) => {
-      emit('compositionstart', event);
-      isComposing.value = true;
-    };
-
-    const handleCompositionUpdate = (event: CompositionEvent) => {
-      emit('compositionupdate', event);
-    };
-
-    const handleCompositionEnd = (event: CompositionEvent) => {
-      emit('compositionend', event);
-      if (isComposing.value) {
-        isComposing.value = false;
-        handleInput(event);
-      }
-    };
-
-    const iconSize = computed(() => {
-      switch (sizeRef.value) {
-        case 'large':
-          return 16;
-        case 'small':
-          return 12;
-        case 'medium':
-        default:
-          return 16;
-      }
-    });
+    function onCompositionEnd(event: CompositionEvent) {
+      compositionValue.value = '';
+      handleCompositionEnd(event);
+    }
 
     expose({
       input: props.type === 'textarea' ? textareaRef : inputRef,
@@ -229,6 +117,29 @@ export default defineComponent({
     });
 
     return () => {
+      const forwardedAttrs = Object.fromEntries(
+        Object.entries(attrs).filter(
+          ([key]) =>
+            ![
+              'class',
+              'className',
+              'style',
+              'onUpdate:modelValue',
+              'onInput',
+              'onChange',
+              'onFocus',
+              'onBlur',
+              'onClear',
+              'onClick',
+              'onKeydown',
+              'onKeypress',
+              'onKeyup',
+              'onCompositionstart',
+              'onCompositionupdate',
+              'onCompositionend',
+            ].includes(key),
+        ),
+      );
       const suffixVisible =
         (!isDisabled.value && props.clearable && localValue.value) ||
         (props.type === 'password' && props.showPassword) ||
@@ -282,17 +193,79 @@ export default defineComponent({
 
       const isPassword = props.type === 'password';
 
-      const nFormError = inject(HFormItemErrorInjectedKey, ref(''));
+      const inputNode = (
+        <input
+          {...(props.embedded ? forwardedAttrs : {})}
+          ref={inputRef}
+          class={
+            props.embedded
+              ? [attrs.class, attrs.className, props.embeddedClass || cHelper.e('embedded-inner')]
+              : cHelper.e('inner')
+          }
+          style={props.embedded ? [attrs.style as StyleValue, props.embeddedStyle] : undefined}
+          {...originalAttrs}
+          type={isPassword && showPassword.value ? 'text' : checkedType.value}
+          v-model={localValue.value}
+          placeholder={props.placeholder || (placeholder.value as string)}
+          readonly={props.readonly}
+          maxlength={props.enableOutOfExceeded ? undefined : props.maxlength}
+          minlength={props.minlength}
+          tabindex={props.tabindex}
+          autocomplete={props.autocomplete}
+          unselectable={props.unselectable}
+          onInput={onInput}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onKeydown={handleKeyDown}
+          onKeypress={handleKeyPress}
+          onKeyup={handleKeyUp}
+          onCompositionstart={onCompositionStart}
+          onCompositionupdate={onCompositionUpdate}
+          onCompositionend={onCompositionEnd}
+          onClick={evt => emit('click', evt)}
+          disabled={isDisabled.value}
+        />
+      );
+
+      if (props.embedded && props.type !== 'textarea') {
+        if (!props.fitContent) return inputNode;
+
+        return (
+          <span
+            {...forwardedAttrs}
+            class={[
+              props.fitContentClass || cHelper.e('fit-content'),
+              attrs.class,
+              attrs.className,
+            ]}
+            style={attrs.style as StyleValue}
+          >
+            <span
+              aria-hidden="true"
+              class={props.fitContentMirrorClass || cHelper.e('fit-content-mirror')}
+              style={{ minWidth: sizeUnitTransform(props.fitContentMinWidth) }}
+            >
+              <span>{localValue.value || props.placeholder || ''}</span>
+              {compositionValue.value}
+            </span>
+            {inputNode}
+          </span>
+        );
+      }
 
       if (props.type === 'textarea') {
         return (
           <div
+            {...forwardedAttrs}
+            style={attrs.style as StyleValue}
             class={cls(
               cHelper.block,
+              attrs.class as string | undefined,
+              attrs.className as string | undefined,
               cHelper.e(`textarea--${props.inputStyle}`),
               cHelper.em(`textarea--${props.inputStyle}`, 'focused', focused.value),
               cHelper.em(`textarea--${props.inputStyle}`, 'disabled', isDisabled.value),
-              cHelper.is('error', !!nFormError?.value || props.status === 'error'),
+              cHelper.is('error', !!formError?.value || props.status === 'error'),
               props.showLimit &&
                 isDefined(props.maxlength) &&
                 props.maxlength > 0 &&
@@ -309,13 +282,14 @@ export default defineComponent({
               }}
               {...originalAttrs}
               v-model={localValue.value}
-              placeholder={
-                props.placeholder || useLocaleLang('input.placeholder').value as string
-              }
+              placeholder={props.placeholder || (placeholder.value as string)}
               readonly={props.readonly}
               rows={props.autoSize ? undefined : props.rows}
               maxlength={props.enableOutOfExceeded ? undefined : props.maxlength}
               minlength={props.minlength}
+              tabindex={props.tabindex}
+              autocomplete={props.autocomplete}
+              unselectable={props.unselectable}
               onInput={handleInput}
               onFocus={handleFocus}
               onBlur={handleBlur}
@@ -356,14 +330,18 @@ export default defineComponent({
 
       return (
         <div
+          {...forwardedAttrs}
+          style={attrs.style as StyleValue}
           class={cls(
             cHelper.block,
+            attrs.class as string | undefined,
+            attrs.className as string | undefined,
             cHelper.m(sizeRef.value, !!sizeRef.value),
             cHelper.m('filled', props.inputStyle === 'emphasize'),
             cHelper.m('no-border', props.inputStyle === 'no-border'),
             cHelper.m('with-prepend', !!slots.prepend),
             cHelper.m('with-append', !!slots.append),
-            cHelper.em('error', props.inputStyle, !!nFormError?.value || props.status === 'error'),
+            cHelper.em('error', props.inputStyle, !!formError?.value || props.status === 'error'),
             cHelper.is('out-of-exceeded', isOutOfExceeded.value),
           )}
         >
@@ -377,30 +355,7 @@ export default defineComponent({
               }}
             >
               {prefixNode}
-              <input
-                ref={inputRef}
-                class={[cHelper.e('inner')]}
-                {...originalAttrs}
-                type={isPassword && showPassword.value ? 'text' : checkedType.value}
-                v-model={localValue.value}
-                placeholder={
-                  props.placeholder || useLocaleLang('input.placeholder').value as string
-                }
-                readonly={props.readonly}
-                maxlength={props.enableOutOfExceeded ? undefined : props.maxlength}
-                minlength={props.minlength}
-                onInput={handleInput}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-                onKeydown={handleKeyDown}
-                onKeypress={handleKeyPress}
-                onKeyup={handleKeyUp}
-                onCompositionstart={handleCompositionStart}
-                onCompositionupdate={handleCompositionUpdate}
-                onCompositionend={handleCompositionEnd}
-                onClick={evt => emit('click', evt)}
-                disabled={isDisabled.value}
-              />
+              {inputNode}
               {suffixNode}
               {props.showLimit && props.maxlength ? (
                 <span class={[cHelper.e('limit')]}>

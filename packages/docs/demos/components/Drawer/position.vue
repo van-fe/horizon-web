@@ -1,9 +1,9 @@
 <template>
   <h-radio-group v-model="placement" style="margin-bottom: 20px">
-    <h-radio label="right">右 - right（默认）</h-radio>
-    <h-radio label="bottom">下 - bottom</h-radio>
-    <h-radio label="left">左 - left</h-radio>
-    <h-radio label="top">上 - top</h-radio>
+    <h-radio value="right">右 - right（默认）</h-radio>
+    <h-radio value="bottom">下 - bottom</h-radio>
+    <h-radio value="left">左 - left</h-radio>
+    <h-radio value="top">上 - top</h-radio>
   </h-radio-group>
   <h-button @click="visible = true">Open Drawer ({{ placement }})</h-button>
   <h-drawer v-model="visible" title="Title" :placement="placement" @ok="onOk" @cancel="onCancel">

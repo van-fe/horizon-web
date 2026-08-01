@@ -54,28 +54,12 @@ export default defineComponent({
     const sizeRef = useSize(
       computed(() => size?.value ?? groupSizeRef?.value),
       'medium',
-      {
-        mini: 'small',
-      },
+      {},
     );
 
-    const type = computed(() => {
-      if (['normal', 'primary', 'danger'].includes(props.type)) {
-        return props.type;
-      }
-
-      if (props.kind === 'negative') {
-        return 'danger';
-      }
-
-      if (props.kind === 'neutral') {
-        return 'normal';
-      }
-
-      return 'primary';
-    });
-    const isPlain = computed(() => props.plain || props.type === 'secondary');
-    const isText = computed(() => props.type === 'text' || props.text);
+    const type = computed(() => props.type);
+    const isPlain = computed(() => props.plain);
+    const isText = computed(() => props.text);
 
     const appendStyle = computed(() => {
       if (
@@ -166,7 +150,7 @@ export default defineComponent({
           classHelper.m('block', props.block),
           classHelper.m('round', props.round),
           classHelper.m('plain', isPlain.value),
-          classHelper.m('text', props.type === 'tertiary' || isText.value),
+          classHelper.m('text', isText.value),
           classHelper.m('link', props.link),
           classHelper.m('equally', isOnlyIcon.value),
           classHelper.is(borderStyleProp.value),
@@ -176,7 +160,7 @@ export default defineComponent({
           ),
           classHelper.is('with-icon', !!(props.icon || slots.icon || props.loading)),
           classHelper.is('auto-fit', props.autoFit),
-          classHelper.is('activated', props.type === 'tertiary' || props.active),
+          classHelper.is('activated', props.active),
           classHelper.is('ghost', props.ghost),
         )}
         type={props.nativeType}

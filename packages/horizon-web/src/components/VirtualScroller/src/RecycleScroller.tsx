@@ -583,7 +583,6 @@ export default defineComponent({
             item: view.item,
             index: view.nr.index,
             active: view.nr.used,
-            activated: view.nr.used,
           }),
         );
       });

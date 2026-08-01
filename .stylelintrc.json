@@ -1,14 +1,10 @@
 {
   "extends": [
-    "stylelint-config-standard",
-    "stylelint-config-rational-order",
     "stylelint-config-standard-scss",
-    "stylelint-config-prettier"
+    "stylelint-config-recess-order"
   ],
   "plugins": [
-    "stylelint-order",
-    "stylelint-declaration-block-no-ignored-properties",
-    "stylelint-scss"
+    "stylelint-declaration-block-no-ignored-properties"
   ],
   "rules": {
     "at-rule-no-unknown": null,
@@ -33,21 +29,15 @@
       }
     ],
     "annotation-no-unknown": null,
-    "indentation": 2,
     "no-descending-specificity": null,
     "custom-property-pattern": null,
-    "max-line-length": 300,
-    "string-quotes": "single",
     "color-function-notation": "legacy",
     "value-no-vendor-prefix": null,
     "font-family-no-missing-generic-family-keyword": null,
     "scss/operator-no-newline-before": null,
     "scss/operator-no-unspaced": null,
     "declaration-empty-line-before": "never",
-    "max-empty-lines": 1,
     "no-empty-source": true,
-    "no-eol-whitespace": true,
-    "no-missing-end-of-source-newline": true,
     "number-max-precision": 5
   }
 }

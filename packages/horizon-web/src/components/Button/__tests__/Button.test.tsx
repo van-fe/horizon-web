@@ -131,8 +131,8 @@ describe('Button.tsx', () => {
       expect(element.classes('is-ghost')).toBe(true);
     });
 
-    test('type=secondary', async () => {
-      const wrapper = mount(() => <HButton type="secondary">OK</HButton>);
+    test('plain', async () => {
+      const wrapper = mount(() => <HButton plain>OK</HButton>);
       const element = wrapper.findComponent(HButton);
 
       expect(element.classes('h-button--plain')).toBe(true);

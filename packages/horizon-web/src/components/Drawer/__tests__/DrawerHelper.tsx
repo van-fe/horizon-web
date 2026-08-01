@@ -46,7 +46,9 @@ export default class DrawerHelper<
       () => (
         <Fragment>
           <HDrawer
-            v-model:visible={this.visible.value}
+            to={null}
+            visible={this.visible.value}
+            onUpdate:visible={value => (this.visible.value = value)}
             {...Object.fromEntries(
               Object.entries(this.propsOrEmits || {}).map(([key, value]) => [key, unref(value)]),
             )}
@@ -71,6 +73,7 @@ export default class DrawerHelper<
         <>
           {this.visible.value ? (
             <HDrawer
+              to={null}
               visible={true}
               {...Object.fromEntries(
                 Object.entries(this.propsOrEmits || {}).map(([key, value]) => [key, unref(value)]),

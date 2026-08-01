@@ -104,6 +104,31 @@ describe('Input.tsx', () => {
     // expect(inputElement.attributes('type')).toBe('password');
   });
 
+  test('embedded fit-content input reuses native input behavior', async () => {
+    const modelValue = ref('Horizon');
+    const onInput = vi.fn();
+    const wrapper = mount(() => (
+      <HInput
+        v-model={modelValue.value}
+        embedded
+        fitContent
+        fitContentMinWidth={24}
+        onInput={onInput}
+      />
+    ));
+
+    expect(wrapper.classes()).toContain('h-input__fit-content');
+    expect(wrapper.find('.h-input__fit-content-mirror').attributes('style')).toContain(
+      'min-width: 24px',
+    );
+
+    await wrapper.find('input').setValue('Web');
+
+    expect(modelValue.value).toBe('Web');
+    expect(onInput).toHaveBeenCalledWith('Web', expect.any(Event));
+    expect(wrapper.find('.h-input__fit-content-mirror').text()).toBe('Web');
+  });
+
   test('input.max-length', async () => {
     const modelValue = ref('12345678901111');
     const wrapper = mount(() => (
@@ -149,7 +174,7 @@ describe('Input.tsx', () => {
 
       await element.trigger('focus');
 
-      expect(onFocus).toHaveBeenCalled();
+      expect(onFocus).toHaveBeenCalledOnce();
 
       await element.setValue('input');
 
@@ -157,7 +182,7 @@ describe('Input.tsx', () => {
 
       await element.trigger('blur');
 
-      expect(onBlur).toHaveBeenCalled();
+      expect(onBlur).toHaveBeenCalledOnce();
     });
 
     test('Do not trigger "change event" before input manually', async () => {

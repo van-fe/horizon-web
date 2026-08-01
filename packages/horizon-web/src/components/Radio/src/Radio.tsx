@@ -28,7 +28,6 @@ export default defineComponent({
       border: propBorder,
       disabled: propDisabled,
       viewable: propViewable,
-      label: propLabel,
       value: propValue,
       size: propSize,
       name: propName,
@@ -37,9 +36,7 @@ export default defineComponent({
     const HRadioGroup = inject(HRadioGroupInjectedKey, undefined);
     const isGroup = computed(() => !!HRadioGroup);
 
-    const radioValue = computed(() => {
-      return propValue.value !== '' ? propValue.value : propLabel.value;
-    });
+    const radioValue = computed(() => propValue.value);
 
     // form disabled inject
     const formDisabled = inject(HFormDisabledInjectedKey, undefined);

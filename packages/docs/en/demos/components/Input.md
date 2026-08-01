@@ -35,6 +35,10 @@ You can add a prepend or append element to the input box through `prepend` and `
 `--h-input-bg--prepend-append: transparent` is to solve the background color problem of icons and prefix/suffix
 :::demo components/Input/mixed.vue :::
 
+## Embedded in Composite Controls
+Use `embedded` to reuse Input value, focus, disabled, and IME behavior without its default appearance. Combine it with `fit-content` to size the field by its content in Picker, tag-input, and similar composite form controls.
+:::demo components/Input/embedded.vue :::
+
 ## Multi-line Input Box
 When `type` is set to `textarea`, the input box will become a multi-line input box
 

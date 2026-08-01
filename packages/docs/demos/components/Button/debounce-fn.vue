@@ -19,9 +19,9 @@ const saveData = () => {
   <div class="flex mb-4">
     <span class="mr-2">debounce-type:</span>
     <h-radio-group v-model="debounceType" size="small">
-      <h-radio label="disabled">disabled</h-radio>
-      <h-radio label="loading">loading</h-radio>
-      <h-radio label="none">none</h-radio>
+      <h-radio value="disabled">disabled</h-radio>
+      <h-radio value="loading">loading</h-radio>
+      <h-radio value="none">none</h-radio>
     </h-radio-group>
   </div>
   <h-button :debounce-fn="saveData" :debounce-type="debounceType">防抖按钮</h-button>

@@ -2,7 +2,6 @@ import type { ToRefs, UnwrapNestedRefs } from 'vue';
 import { computed, ref, watch } from 'vue';
 import type { TreeProps } from '../composables/useProps';
 import type { HorizonWebSetupContext } from '@aurora/utils';
-import { isObject } from '@aurora/utils';
 import type { HTreeExtendsData, HTreeData } from '../utils/types';
 import type Tree from '~/utils/useTree/index';
 import type { TreeEmits } from '../composables/useEmits';
@@ -18,14 +17,9 @@ export default function (
     () => !!filterValue.value || !!props.filterInputValue?.value || false,
   );
   const isUsingFilter = computed(
-    () =>
-      !!props.filter?.value || props.filterable?.value || props.filterInputValue?.value || false,
+    () => props.filterable?.value || !!props.filterInputValue?.value || false,
   );
-  const expandFilteredTree = computed(() =>
-    isObject(props.filter?.value)
-      ? (props.filter?.value?.expandSearchedTree ?? props.expandFilteredTree.value)
-      : props.expandFilteredTree.value,
-  );
+  const expandFilteredTree = computed(() => props.expandFilteredTree.value);
 
   const filterValueMerged = computed(
     () => filterValue.value || props.filterInputValue?.value || '',
@@ -39,12 +33,6 @@ export default function (
           .includes(input.toLowerCase()) || false
       );
     };
-
-    if (props.filter?.value) {
-      return typeof props.filter.value === 'boolean'
-        ? defaultFilterMethod
-        : props.filter.value.filterMethod;
-    }
 
     if (props.filterable?.value) {
       return props.filterMethod?.value ? props.filterMethod.value : defaultFilterMethod;

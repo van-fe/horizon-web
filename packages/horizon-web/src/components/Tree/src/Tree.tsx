@@ -1,4 +1,4 @@
-import { computed, defineComponent, Fragment, provide, ref, toRefs, watch } from 'vue';
+import { computed, defineComponent, Fragment, nextTick, provide, ref, toRefs, watch } from 'vue';
 import { ComponentClassBlock, cls, useNamespace, cssVariable } from '@aurora/utils';
 import type { HorizonWebSetupContext, HorizonWebComponentInstance } from '@aurora/utils';
 import { useTreeProps } from './composables/useProps';
@@ -15,6 +15,7 @@ import {
   HTreeEmitsInjectKey,
   HTreeExpandedNodesUuidInjectKey,
   HTreeFilterInputValueInjectKey,
+  HTreeFocusedNodeUuidInjectKey,
   HTreeFullCheckedValuesInjectKey,
   HTreeHalfCheckedValuesInjectKey,
   HTreeHelperInjectKey,
@@ -32,7 +33,7 @@ import {
 } from './utils/injectKeys';
 import HInput from '~/components/Input/src/Input';
 import Tree from '~/utils/useTree/index';
-import type { HTreeExtendsData, HTreeData } from './utils/types';
+import type { HTreeExtendsData, HTreeData, HTreeUuidType } from './utils/types';
 import TreeItem from './components/TreeItem';
 import { HVirtualScroller, HVirtualScrollerItem } from '~/components/VirtualScroller';
 import useSize from '~/utils/useSize';
@@ -83,7 +84,6 @@ export default defineComponent({
       fieldMap: fieldMapProp,
       draggable: draggableProp,
       size: sizeProp,
-      itemSize: itemSizeProp,
       height: heightProp,
       maxHeight: maxHeightProp,
       useVirtualScroll: useVirtualScrollProp,
@@ -99,7 +99,7 @@ export default defineComponent({
     } = refProps;
 
     const size = useSize(
-      computed(() => sizeProp?.value || itemSizeProp?.value),
+      computed(() => sizeProp?.value),
       'medium',
     );
 
@@ -185,6 +185,93 @@ export default defineComponent({
 
     useHighlight();
 
+    const focusedNodeUuid = ref<HTreeUuidType>();
+
+    const keyboardNavigableItems = computed(() =>
+      visibleItems.value.filter(
+        node =>
+          !disabledProp.value &&
+          !node.disabled &&
+          (props.checkStrictly || !node.passingDisabled),
+      ),
+    );
+
+    function focusNode(node?: HTreeExtendsData) {
+      if (!node) return;
+      focusedNodeUuid.value = node._uuid;
+      void nextTick(() => scrollTo(tree.getOptionValue(node, 'value')));
+    }
+
+    function getCurrentKeyboardIndex() {
+      return keyboardNavigableItems.value.findIndex(
+        node => node._uuid === focusedNodeUuid.value,
+      );
+    }
+
+    function handleKeyboard(evt: KeyboardEvent) {
+      const options = keyboardNavigableItems.value;
+      if (options.length === 0) return;
+
+      const targetIsInput = evt.target instanceof HTMLInputElement;
+      const currentIndex = getCurrentKeyboardIndex();
+      const current = options.at(currentIndex);
+
+      if (evt.key === 'ArrowDown' || evt.key === 'ArrowUp') {
+        evt.preventDefault();
+        const nextIndex =
+          currentIndex < 0
+            ? evt.key === 'ArrowUp'
+              ? options.length - 1
+              : 0
+            : Math.max(
+                0,
+                Math.min(options.length - 1, currentIndex + (evt.key === 'ArrowUp' ? -1 : 1)),
+              );
+        focusNode(options[nextIndex]);
+        return;
+      }
+
+      if ((evt.key === 'Home' || evt.key === 'End') && !targetIsInput) {
+        evt.preventDefault();
+        focusNode(evt.key === 'Home' ? options[0] : options.at(-1));
+        return;
+      }
+
+      if (!current || (targetIsInput && ['ArrowLeft', 'ArrowRight', ' '].includes(evt.key))) return;
+
+      if (evt.key === 'ArrowRight') {
+        evt.preventDefault();
+        if (!current.isLeaf) {
+          if (!expandedNodesUuid.has(current._uuid)) {
+            setNodeExpandStatus(current, true, evt, vNodesMapping.get(current._uuid));
+          } else {
+            focusNode(options[currentIndex + 1]);
+          }
+        }
+        return;
+      }
+
+      if (evt.key === 'ArrowLeft') {
+        evt.preventDefault();
+        if (!current.isLeaf && expandedNodesUuid.has(current._uuid)) {
+          setNodeExpandStatus(current, false, evt, vNodesMapping.get(current._uuid));
+        } else {
+          focusNode(current.parent ?? undefined);
+        }
+        return;
+      }
+
+      if (evt.key === 'Enter' || evt.key === ' ') {
+        evt.preventDefault();
+        switchNodeSelectedStatus(
+          current._uuid,
+          !selectedValuesUuid.has(current._uuid),
+          evt,
+          vNodesMapping.get(current._uuid),
+        );
+      }
+    }
+
     let prevEmittedExpandValues: Array<string | number> | undefined = expandValuesProp?.value;
     watch(
       expandedNodesUuid,
@@ -222,6 +309,7 @@ export default defineComponent({
     provide(HTreeEmitsInjectKey, emit);
     provide(HTreeSlotsInjectKey, slots);
     provide(HTreeFilterInputValueInjectKey, filterValueMerged);
+    provide(HTreeFocusedNodeUuidInjectKey, focusedNodeUuid);
     provide(HTreeSizeInjectKey, size);
     provide(HTreeExpandedNodesUuidInjectKey, expandedNodesUuid);
     provide(HTreeSwitchNodeExpandStatusInjectKey, switchNodeExpandStatus);
@@ -320,6 +408,7 @@ export default defineComponent({
         })),
       treeTemplateRef: wrapperDomRef,
       scrollTo,
+      keyboardEventDeal: handleKeyboard,
     });
 
     return () => (
@@ -337,6 +426,9 @@ export default defineComponent({
           rootClassNameProp?.value,
         )}
         style={rootStyleProp?.value}
+        role="tree"
+        tabindex={disabledProp.value ? undefined : 0}
+        onKeydown={handleKeyboard}
       >
         {isUsingFilter.value && !hideFilterInputProp.value && (
           <div class={cls(classHelper.e('filter'))}>

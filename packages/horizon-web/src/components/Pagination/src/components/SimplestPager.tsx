@@ -68,7 +68,10 @@ export default defineComponent({
             classHelper.is('clickable'),
             classHelper.is('disabled', currentPage.value <= 1),
           )}
-          tabindex={0}
+          role="button"
+          aria-label="Previous page"
+          aria-disabled={currentPage.value <= 1 || parentProps.disabled}
+          tabindex={currentPage.value <= 1 || parentProps.disabled ? -1 : 0}
           onClick={prevPage}
           onKeyup={withKeys(prevPage, ['enter'])}
         >
@@ -96,7 +99,10 @@ export default defineComponent({
             classHelper.is('clickable'),
             classHelper.is('disabled', currentPage.value >= props.pages),
           )}
-          tabindex={0}
+          role="button"
+          aria-label="Next page"
+          aria-disabled={currentPage.value >= props.pages || parentProps.disabled}
+          tabindex={currentPage.value >= props.pages || parentProps.disabled ? -1 : 0}
           onClick={nextPage}
           onKeyup={withKeys(nextPage, ['enter'])}
         >

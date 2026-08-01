@@ -7,7 +7,7 @@
 :::demo components/Tabs/disable.vue :::
 
 ## 尺寸类型
-定义`mini | small | medium | large`四个尺寸，应用在不同的场景下, 默认 `medium`。 定义`line | card | segment | page` 四个类型，默认 `line`。<span style="color: #FA541C; font-weight: bold;">特别说明当类型是 `page` 时候，不支持 `size` 属性。</span>
+定义 `small | medium | large | huge` 四个尺寸，应用在不同的场景下，默认 `small`。支持 `line | card | page` 三种类型，默认 `line`。<span style="color: #FA541C; font-weight: bold;">特别说明当类型是 `page` 时候，不支持 `size` 属性。</span>
 :::demo components/Tabs/size-and-type.vue :::
 
 ## 有图标选项卡
@@ -20,11 +20,11 @@
 
 
 ## 关闭和增加
-通过设置 `h-tabs (editable)`、`h-tab (closable)` 属性可以开启动态增减选项卡。仅在 `line | card | page` 生效；关闭和新增的逻辑由业务实现。 `v2 = true`，删除如果是当前选项卡，则默认选中第一个选项卡
+通过设置 `h-tabs (editable)`、`h-tab (closable)` 属性可以开启动态增减选项卡。关闭和新增的逻辑由业务实现；删除当前选项卡时会默认选中第一个可用选项卡。
 :::demo components/Tabs/editable.vue :::
 
 ## 右侧附加操作区域
-可以在选项卡的右侧添加额外内容，例如按钮。<span style="color: #FA541C; font-weight: bold;">特别说明: `segment` 类型不支持右侧操作区域按钮</span>
+可以在选项卡的右侧添加额外内容，例如按钮。
 :::demo components/Tabs/extra.vue :::
 
 ## 文字溢出
@@ -50,14 +50,6 @@
 ## 文字类页签
 通过自定义 `type=line` 的页签实现，这个时候设置 `indicator=false` 即可
 :::demo components/Tabs/tab-text.vue :::
-
-## v1.x 兼容性
-为了业务更顺滑迁移，针对 v1.x 版本做了完整兼容，通过 v2 可以设置使用 v2.x 逻辑。影响逻辑点：<br />
-1.`beforeChange` 逻辑，开启后 `beforeChange` 返回 `PromiseLike<false>`阻止tab切换 <br />
-2.`emits.close` ，开启后如果删除是激活的tab，则默认选中第一个
-3.`size`,开启后默认使用`small`尺寸
-:::demo components/Tabs/compatible.vue :::
-
 
 ## Design Token
 :::code ./demos/design-token.scss :::

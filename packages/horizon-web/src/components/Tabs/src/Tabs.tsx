@@ -15,7 +15,6 @@ import useResponsive from './composables/useResponsive';
 import type { TabsSlots } from './composables/useSlots';
 import { useTabsSlots } from './composables/useSlots';
 import { tabsContextKey } from './constants';
-import { useTabsPropsLogWarnProperty } from './composables/useWarning';
 
 export default defineComponent({
   name: `${useNamespace()}Tabs`,
@@ -27,36 +26,28 @@ export default defineComponent({
   emits: useTabsEmits,
   slots: useTabsSlots,
   setup(props, context: HorizonWebSetupContext<TabsEmits, TabsSlots>) {
-    useTabsPropsLogWarnProperty(toRefs(props));
     const classHelper = new ComponentClassBlock('tabs');
     const { slots, emit, attrs } = context;
 
-    const globalSize = inject<Ref<HTabSize>>(
-      GlobalSizeInjectedKey,
-      props.v2 ? ref('small') : ref('medium'),
-    );
+    const globalSize = inject<Ref<HTabSize>>(GlobalSizeInjectedKey, ref('small'));
     // FIXME: 下一个版本移除页签和form耦合
     const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
 
     const rootDomRef = ref<HTMLElement>();
     const wrapperDomRef = ref<HTMLElement>();
     const navListDomRef = ref<HTMLElement>();
-    const activeKey = ref(props.activeKey ?? props.modelValue ?? props.defaultActiveKey);
+    const activeKey = ref(props.activeKey ?? props.defaultActiveKey);
 
     const size = computed(() => {
       return props.size || globalSize.value;
     }) as ComputedRef<HApplicationSizeType>;
-    const editable = computed(() => props.showAdd ?? props.editable ?? false);
-    const underline = computed(
-      () => props.type === 'line' && (props.showUnderline ?? props.underline),
-    );
-    const indicator = computed(
-      () => (props.type === 'line' && props.indicator) || props.type === 'segment',
-    );
+    const editable = computed(() => props.editable ?? false);
+    const underline = computed(() => props.type === 'line' && props.underline);
+    const indicator = computed(() => props.type === 'line' && props.indicator);
     const showSpace = computed(() => !!(slots.extra?.length || props.arrow) && scrollable.value);
     const showNextBlur = computed(() => !lastViewport.value && scrollable.value);
     const showAddButton = computed(() => {
-      return editable.value && props.type !== 'segment';
+      return editable.value;
     });
     const showFollowAddButton = computed(() => showAddButton.value && !scrollable.value);
 
@@ -87,15 +78,6 @@ export default defineComponent({
       createTab,
     } = useResponsive(indicatorOptions);
 
-    // @deprecated notes: 被动收集 tabs 信息，然后当 activeKey.value 不存在时候默认选中第一个
-    // @2024-04-25 更新：社区ui库调研后，当不存在 activeKey 时，默认不做选中，下次更新移除
-    // const unwatchKeys = watch(keys, () => {
-    //   if (!keys.value.length || !isUndefined(activeKey.value)) return;
-
-    //   activeKey.value = keys.value[0];
-    //   unwatchKeys();
-    // });
-
     const dragContext = useDnd(
       toRefs(reactive({ ...props, activeKey, editable, size, underline, keys })),
       context,
@@ -107,7 +89,6 @@ export default defineComponent({
       activeKey.value = key;
       // 当从 props 更新时，不触发事件
       if (fromProps) return;
-      emit('update:modelValue', key);
       emit('update:activeKey', key);
       emit('change', key);
       formItemTrigger?.('change');
@@ -118,19 +99,33 @@ export default defineComponent({
     const onArrowLeft = () => move('left');
     const onArrowRight = () => move('right');
 
-    // FIXME: 下个 major 版本移除
-    const onBlur = (evt: FocusEvent) => {
-      emit('blur', evt);
-      formItemTrigger?.('blur');
+    const onBlur = () => formItemTrigger?.('blur');
+
+    const getEnabledTabs = () =>
+      Array.from(rootDomRef.value?.querySelectorAll<HTMLElement>('[role="tab"]') ?? []).filter(
+        tab => tab.getAttribute('aria-disabled') !== 'true',
+      );
+
+    const focusTabFromKeyboard = (evt: KeyboardEvent) => {
+      const tabs = getEnabledTabs();
+      if (!tabs.length) return;
+      const eventTab = (evt.target as HTMLElement | null)?.closest<HTMLElement>('[role="tab"]');
+      const currentIndex = tabs.indexOf(eventTab ?? (document.activeElement as HTMLElement));
+      let nextIndex: number | undefined;
+      if (evt.key === 'ArrowRight') nextIndex = (currentIndex + 1) % tabs.length;
+      if (evt.key === 'ArrowLeft') nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+      if (evt.key === 'Home') nextIndex = 0;
+      if (evt.key === 'End') nextIndex = tabs.length - 1;
+      if (nextIndex === undefined) return;
+      evt.preventDefault();
+      tabs[nextIndex]?.focus();
+      tabs[nextIndex]?.click();
     };
 
     const onTabClick = async (tabKey: HTabValue) => {
       if (activeKey.value === tabKey) return;
 
-      if (!props.v2 || !props.beforeChange) {
-        const cb = () => updateTabValue(tabKey);
-        return props.beforeChange ? props.beforeChange(tabKey, cb) : updateTabValue(tabKey);
-      }
+      if (!props.beforeChange) return updateTabValue(tabKey);
 
       const oldKey = activeKey.value;
       const ret = await props.beforeChange(tabKey);
@@ -141,8 +136,6 @@ export default defineComponent({
     };
 
     const onTabClose = (tabKey: HTabValue) => {
-      if (!props.v2) return emit('close', tabKey);
-
       const iter = items.value.keys();
       const firstKey = iter.next().value;
       if (tabKey === activeKey.value && items.value.size) {
@@ -153,9 +146,9 @@ export default defineComponent({
     };
 
     watch(
-      () => [props.activeKey, props.modelValue],
+      () => props.activeKey,
       () => {
-        const propActiveKey = props.activeKey ?? props.modelValue;
+        const propActiveKey = props.activeKey;
         if (propActiveKey === activeKey.value) return;
         return updateTabValue(propActiveKey!, true);
       },
@@ -182,6 +175,15 @@ export default defineComponent({
             showFollowAddButton.value && classHelper.em('icon-outer', 'follow'),
           )}
           onClick={() => onAdd()}
+          role="button"
+          tabindex={0}
+          aria-label="Add tab"
+          onKeydown={(evt: KeyboardEvent) => {
+            if (evt.key === 'Enter' || evt.key === ' ') {
+              evt.preventDefault();
+              onAdd();
+            }
+          }}
         >
           <AIcon name="add" class={classHelper.e('icon')} />
         </div>
@@ -199,7 +201,12 @@ export default defineComponent({
             classHelper.m('underline', underline.value),
           )}
           role="tablist"
-          tabindex={0}
+          aria-orientation="horizontal"
+          tabindex={activeKey.value === undefined ? 0 : undefined}
+          onFocus={(evt: FocusEvent) => {
+            if (evt.target === evt.currentTarget) getEnabledTabs()[0]?.focus();
+          }}
+          onKeydown={focusTabFromKeyboard}
           onBlur={onBlur}
         >
           <div class={classHelper.e('nav')}>
@@ -237,6 +244,16 @@ export default defineComponent({
                         firstViewport.value && classHelper.em('icon-outer', 'disabled'),
                       ]}
                       onClick={onArrowLeft}
+                      role="button"
+                      tabindex={firstViewport.value ? -1 : 0}
+                      aria-disabled={firstViewport.value}
+                      aria-label="Scroll tabs backward"
+                      onKeydown={(evt: KeyboardEvent) => {
+                        if (evt.key === 'Enter' || evt.key === ' ') {
+                          evt.preventDefault();
+                          onArrowLeft();
+                        }
+                      }}
                     >
                       <AIcon name="arrow_left" class={classHelper.e('icon')} />
                     </div>
@@ -246,6 +263,16 @@ export default defineComponent({
                         lastViewport.value && classHelper.em('icon-outer', 'disabled'),
                       ]}
                       onClick={onArrowRight}
+                      role="button"
+                      tabindex={lastViewport.value ? -1 : 0}
+                      aria-disabled={lastViewport.value}
+                      aria-label="Scroll tabs forward"
+                      onKeydown={(evt: KeyboardEvent) => {
+                        if (evt.key === 'Enter' || evt.key === ' ') {
+                          evt.preventDefault();
+                          onArrowRight();
+                        }
+                      }}
                     >
                       <AIcon name="arrow_right" class={classHelper.e('icon')} />
                     </div>
@@ -253,7 +280,7 @@ export default defineComponent({
                 )}
               </div>
 
-              {props.type !== 'segment' && slots.extra && (
+              {slots.extra && (
                 <div class={classHelper.e('extra')}>{slots.extra({ size: size.value })}</div>
               )}
             </div>

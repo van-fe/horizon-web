@@ -74,10 +74,6 @@ export interface PropsTyped<T = unknown, U = unknown> {
   [key: string]: Prop<T, U>;
 }
 
-export interface WithDeprecatedPropsTyped<T = unknown, U = unknown> {
-  [key: string]: Prop<T, U> & { deprecated?: string | boolean };
-}
-
 export function useEmitsValues<U extends Function, T extends Record<keyof T, U>>(
   val: T,
 ): Array<keyof T> {

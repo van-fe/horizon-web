@@ -1,10 +1,10 @@
 <template>
   <h-empty :size="emptySizeRef" description="No task for now, take a coffee break" />
   <h-radio-group v-model="sizeRef">
-    <h-radio label="small" />
-    <h-radio label="medium" />
-    <h-radio label="large" />
-    <h-radio label="number">
+    <h-radio value="small" />
+    <h-radio value="medium" />
+    <h-radio value="large" />
+    <h-radio value="number">
       <h-input-number v-model="sizeNumberRef" :step="10" />
     </h-radio>
   </h-radio-group>

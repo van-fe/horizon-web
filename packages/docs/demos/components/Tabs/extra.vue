@@ -48,18 +48,17 @@ watch(() => all.value, showAllAction, { immediate: true });
   <div class="mb-4 flex align-center">
     <span class="mr-4">类型</span>
     <h-radio-group v-model="cardType">
-      <h-radio label="line">line(Default)</h-radio>
-      <h-radio label="card">card</h-radio>
-      <h-radio label="page">page(不支持尺寸调整)</h-radio>
+      <h-radio value="line">line(Default)</h-radio>
+      <h-radio value="card">card</h-radio>
+      <h-radio value="page">page(不支持尺寸调整)</h-radio>
     </h-radio-group>
   </div>
   <div class="mb-4 flex align-center">
     <span class="mr-4">尺寸</span>
     <h-radio-group v-model="size" :disabled="cardType === 'page'">
-      <h-radio label="mini">mini</h-radio>
-      <h-radio label="small">small</h-radio>
-      <h-radio label="medium">medium(Default)</h-radio>
-      <h-radio label="large">large</h-radio>
+      <h-radio value="small">small</h-radio>
+      <h-radio value="medium">medium(Default)</h-radio>
+      <h-radio value="large">large</h-radio>
     </h-radio-group>
   </div>
   <div class="mb-8 flex align-center">
@@ -73,7 +72,6 @@ watch(() => all.value, showAllAction, { immediate: true });
     <h-tabs
       v-model:active-key="activeKey"
       editable
-      v2
       :size="size"
       :type="cardType"
       @change="onTabChanged"

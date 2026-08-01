@@ -29,7 +29,7 @@
         <h-option label="上海" :value="1" />
         <h-option :value="2" label="北京" />
         <h-option :value="3" label="合肥" name="hefei" />
-        <template #selectRender>
+        <template #pickerInner>
           <div style="height: 100px; border: 1px solid #f00">
             {{ value2 ? value2?.label + '' + value2?.value : '' }}
           </div>

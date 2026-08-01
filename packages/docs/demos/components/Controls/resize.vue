@@ -24,14 +24,14 @@ function onCommand(type: 'edit' | 'del' | 'view') {
   <h-form label-position="left" label-vertical-align="middle" label-width="120px">
     <h-form-item label="size">
       <h-radio-group v-model="size">
-        <h-radio :label="60">60px</h-radio>
-        <h-radio :label="100">100px</h-radio>
-        <h-radio :label="150">150px</h-radio>
+        <h-radio :value="60">60px</h-radio>
+        <h-radio :value="100">100px</h-radio>
+        <h-radio :value="150">150px</h-radio>
       </h-radio-group>
     </h-form-item>
   </h-form>
   <h-hover v-slot="{ hover }">
-    <div class="square" :style="{width: size + 'px', height: size + 'px'}">
+    <div class="square" :style="{ width: size + 'px', height: size + 'px' }">
       Mouse move here
       <h-mask :absolute="true" :value="hover" :content-full-size="true">
         <h-controls theme="light" @command="onCommand">

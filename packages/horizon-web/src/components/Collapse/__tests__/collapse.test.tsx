@@ -29,6 +29,24 @@ describe('Collapse.tsx', () => {
 
     expect(element.exists()).toBe(true);
     expect(itemElements.length).toBe(4);
+    const headers = wrapper.findAll('[role="button"]');
+    expect(headers).toHaveLength(4);
+    expect(headers[0].attributes('aria-controls')).toBeTruthy();
+    expect(wrapper.find('[role="region"]').attributes('aria-labelledby')).toBeTruthy();
+  });
+
+  test('supports keyboard activation', async () => {
+    const activeKey = ref<(string | number)[]>([]);
+    const wrapper = mount(() => (
+      <HCollapse v-model:activeKey={activeKey.value}>
+        <HCollapseItem name="keyboard" title="Keyboard panel" />
+      </HCollapse>
+    ));
+
+    const header = wrapper.find('[role="button"]');
+    await header.trigger('keydown', { key: ' ' });
+    expect(activeKey.value).toEqual(['keyboard']);
+    expect(header.attributes('aria-expanded')).toBe('true');
   });
 
   describe('props', () => {

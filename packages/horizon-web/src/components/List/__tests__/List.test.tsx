@@ -46,7 +46,7 @@ describe('List.tsx', () => {
     test('border', async () => {
       const border = ref(false);
       const wrapper = mount(() => (
-        <HList data={templateData} isBorder={border.value}>
+        <HList data={templateData} border={border.value}>
           {{
             item: ({ item }: { item: (typeof templateData)[number] }) => (
               <HListItem title={item.title} subtitle={item.subtitle} describe={item.describe} />

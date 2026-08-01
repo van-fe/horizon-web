@@ -168,6 +168,8 @@ export default defineComponent({
       return (
         <div
           ref={breadcrumbRef}
+          role="navigation"
+          aria-label="Breadcrumb"
           class={cls(
             classHelper.block,
             classHelper.m(sizeRef.value),

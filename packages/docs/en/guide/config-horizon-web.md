@@ -5,26 +5,6 @@ When using `createApp` to create an `app`, you will use `app.use(HorizonWeb)`, w
 In the following configuration, `locale` is passed through `provide`, so if you create multiple `app`s, you need to configure them separately
 :::
 
-## cssVariableUseVersion
-- Type: `Boolean`
-- Default: `false`
-
-Because different versions of `Horizon Web` have the same CSS variable prefix by default, to prevent mutual interference, please set this to `true`
-
-::: tip
-To adapt to scenarios such as micro-applications, this configuration item will be stored in `localStorage`
-:::
-
-## cssVariableUseVersionStoreKey
-- Type: `Boolean`
-- Default: `${current-version}-css-variable-use-version`
-
-To prevent different `Horizon Web` instances with the same version number from interfering with each other due to the same global variable configuration, you can prevent this problem by configuring this item
-
-::: tip
-To adapt to scenarios such as micro-applications, this configuration item will be stored in `localStorage`
-:::
-
 ## locale
 - Type: `Object`
 

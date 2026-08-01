@@ -4,7 +4,6 @@ type StatementJsDocTagName =
   | 'params'
   | 'param'
   | 'paramEn'
-  | 'deprecated'
   | 'version'
   | 'return'
   | 'returns'
@@ -44,8 +43,9 @@ export default function (node: ts.Node) {
       const raw = tag.comment?.toString() || '';
       // TypeScript does not assign `name` for custom @param-like tags.
       const match = raw.match(/^([\w$]+)\s+([\s\S]*)$/);
-      res.tags.paramEn[tag.name?.getText() || match?.[1] || name] =
-        tag.name ? raw : match?.[2] || raw;
+      res.tags.paramEn[tag.name?.getText() || match?.[1] || name] = tag.name
+        ? raw
+        : match?.[2] || raw;
       return;
     }
 

@@ -55,10 +55,13 @@ export default defineComponent({
     } = toRefs(props);
 
     const pickerDomRef = ref<HTMLDivElement | null>(null);
-    const inputDomRef = ref<HorizonWebComponentInstance<typeof PickerInput, PickerInputExposes> | null>(
+    const inputDomRef = ref<HorizonWebComponentInstance<
+      typeof PickerInput,
+      PickerInputExposes
+    > | null>(null);
+    const popoverDomRef = ref<HorizonWebComponentInstance<typeof HPopover, PopoverExposes> | null>(
       null,
     );
-    const popoverDomRef = ref<HorizonWebComponentInstance<typeof HPopover, PopoverExposes> | null>(null);
     const popContentDomRef = ref<(InstanceType<typeof HPopContent> & HTMLElement) | null>(null);
 
     const popperVisible = ref(false);
@@ -257,8 +260,6 @@ export default defineComponent({
     provide(HScrollbarUpdateDelayInjectKey, 400);
 
     expose({
-      show: showPopover,
-      hide: hidePopover,
       showPopover,
       hidePopover,
       focus,

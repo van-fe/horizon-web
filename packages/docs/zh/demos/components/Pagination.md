@@ -16,7 +16,7 @@
 ## 控制分页子元素
 设置 `layout`，可以配置展示的元素
 
-自 `2.0.0-beta.4` 开始，`layout` 不仅可以接收字符串数组，也可接收由逗号分割的字符串
+`layout` 支持字符串数组或由逗号分隔的字符串。
 :::demo components/Pagination/layout.vue :::
 
 ## 前后缀插槽

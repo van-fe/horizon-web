@@ -49,13 +49,6 @@ export default defineComponent({
   descLocales: {
     en: 'A cascading selector for browsing and selecting values from hierarchical data.',
   },
-  components: {
-    HPicker,
-    HScrollbar,
-    HTagGroup,
-    HPickerFitContentInput,
-    CascaderPanels,
-  },
   props: useCascaderProps,
   emits: useCascaderEmits,
   slots: useCascaderSlots,
@@ -272,6 +265,7 @@ export default defineComponent({
         onCancel={cancelHandle}
         onCompositionStart={onCompositionStart}
         onCompositionEnd={onCompositionEnd}
+        onKeydown={evt => cascaderPanelsDomRef.value?.keyboardEventDeal(evt)}
       >
         {{
           panelEmpty: slots.empty,

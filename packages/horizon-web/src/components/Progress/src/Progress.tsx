@@ -187,7 +187,14 @@ export default defineComponent({
           : {};
 
       return (
-        <div class={classes}>
+        <div
+          class={classes}
+          role="progressbar"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={Math.max(0, Math.min(100, percentage))}
+          aria-valuetext={String(content || formatContent.value)}
+        >
           {type == 'line' ? (
             <div class={`${classHelper.block}-bar`}>
               <div
@@ -209,7 +216,7 @@ export default defineComponent({
                 width: `${radiusMap[sizeRef.value]}px`,
               }}
             >
-              <svg viewBox="0 0 100 100">
+              <svg viewBox="0 0 100 100" aria-hidden="true">
                 <path
                   d={trackPath.value}
                   stroke={cssVariable('bg-hover')}

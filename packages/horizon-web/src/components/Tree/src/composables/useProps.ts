@@ -7,7 +7,6 @@ import type {
   HTreeHighlightMethod,
   HTreeDynamicLoadMethod,
   HTreeNodeDataWithLevel,
-  HTreeFilterType,
 } from '../utils/types';
 import type { InputProps } from '~/components/Input/src/composables/useProps';
 import type { BaseTreeData } from '~/utils/useTree/types';
@@ -33,14 +32,6 @@ export const useTreeProps = declarePropType({
     default: () => [],
   },
   /**
-   * 尺寸大小
-   * @deprecated size
-   * @en Configuration for item size.
-   */
-  itemSize: {
-    type: String as PropType<'small' | 'medium' | 'large' | 'huge'>,
-  },
-  /**
    * 大小
    * @en Configuration for size.
    */
@@ -54,14 +45,6 @@ export const useTreeProps = declarePropType({
   disabled: {
     type: Boolean,
     default: false,
-  },
-  /**
-   * 是否开启过滤，并进行设置
-   * @deprecated filterable / filterMethod / highlightMethod / expandFilteredTree
-   * @en Configuration for filter.
-   */
-  filter: {
-    type: [Boolean, Object] as PropType<boolean | HTreeFilterType>,
   },
   /**
    * 是否开启过滤
@@ -289,14 +272,6 @@ export const useTreeProps = declarePropType({
   },
   /**
    * 动态加载数据方法
-   * @deprecated dynamicLoad
-   * @en Configuration for dynamic load data.
-   */
-  dynamicLoadData: {
-    type: Function as PropType<HTreeDynamicLoadMethod>,
-  },
-  /**
-   * 动态加载数据方法
    * @en Configuration for dynamic load.
    */
   dynamicLoad: {
@@ -362,15 +337,6 @@ export const useTreeProps = declarePropType({
   parentEffectDisabledChild: {
     type: Boolean,
     default: false,
-  },
-  /**
-   * 节点前是否添加 `Checkbox` 复选框，单选场景下默认没有，多选场景下默认添加
-   * @deprecated showCheckbox/showRadio
-   * @en Configuration for checkable.
-   */
-  checkable: {
-    type: Boolean,
-    default: undefined,
   },
   /**
    * 多选时是否使用 `checkbox` 组件

@@ -110,7 +110,6 @@ export default defineComponent({
             <HButton
               plain={true}
               size="small"
-              forceNewestSize={true}
               {...props.cancelButtonProps}
               onClick={(evt: MouseEvent) => emit('cancel', evt)}
             >
@@ -118,7 +117,6 @@ export default defineComponent({
             </HButton>
             <HButton
               size="small"
-              forceNewestSize={true}
               {...props.okButtonProps}
               onClick={(evt: MouseEvent) => emit('ok', evt)}
               style="margin-left: 12px"

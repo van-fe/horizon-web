@@ -4,9 +4,9 @@
       <h-form label-position="left" label-vertical-align="middle" :inline="true">
         <h-form-item label="theme:">
           <h-radio-group v-model="theme">
-            <h-radio label="default">default</h-radio>
-            <h-radio label="gray">gray</h-radio>
-            <h-radio label="midnight">midnight</h-radio>
+            <h-radio value="default">default</h-radio>
+            <h-radio value="gray">gray</h-radio>
+            <h-radio value="midnight">midnight</h-radio>
           </h-radio-group>
         </h-form-item>
       </h-form>

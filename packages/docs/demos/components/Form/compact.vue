@@ -4,7 +4,16 @@
       <h-switch v-model="compact" :status="true" />
     </h-form-item>
   </h-form>
-  <h-form ref="formRef" :model="formData" :compact="compact" label-position="left" label-vertical-align="middle" label-justify-align="right" label-width="120px" @submit.prevent="submit">
+  <h-form
+    ref="formRef"
+    :model="formData"
+    :spacing="compact ? 'compact' : 'default'"
+    label-position="left"
+    label-vertical-align="middle"
+    label-justify-align="right"
+    label-width="120px"
+    @submit.prevent="submit"
+  >
     <h-form-item label="User name" prop="username" :required="true">
       <h-input v-model="formData.username" />
     </h-form-item>
@@ -33,7 +42,7 @@ const formData = ref({
 });
 
 const submit = () => {
-  formRef.value?.validate().then((res) => {
+  formRef.value?.validate().then(res => {
     console.info('formData:', formData.value, res);
     $message.success('Submit');
   });

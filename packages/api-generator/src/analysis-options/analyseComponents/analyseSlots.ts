@@ -1,15 +1,11 @@
 import type { Project, PropertyAssignment } from 'ts-morph';
 import type { ApiGeneratorAnalysedSlotType, ApiGeneratorExportedComponent } from '@aurora/utils';
 import { ts } from 'ts-morph';
-import type { FileElements } from '../../utils/analyseFileElements';
 import analysisFileElements from '../../utils/analyseFileElements';
 import completeFileExtName from '../../utils/completeFileExtName';
 import analysisJsDocs from '../../utils/analyseJsDocs';
 
-function analysisPropertyAssignment(
-  property: PropertyAssignment,
-  fileElements: FileElements,
-): ApiGeneratorAnalysedSlotType {
+function analysisPropertyAssignment(property: PropertyAssignment): ApiGeneratorAnalysedSlotType {
   const jsDoc = analysisJsDocs(property.compilerNode);
 
   const res: ApiGeneratorAnalysedSlotType = {
@@ -18,7 +14,6 @@ function analysisPropertyAssignment(
     name: property.getName(),
     type: '',
     params: [],
-    deprecated: jsDoc.tags.deprecated?.default,
     version: jsDoc.tags.version?.default,
   };
 
@@ -70,7 +65,7 @@ export default function analyseSlots(
         for (const properties of fileElements.variables[
           componentInfo.slotsVariableName
         ]?.getChildrenOfKind(ts.SyntaxKind.PropertyAssignment) ?? []) {
-          props.push(analysisPropertyAssignment(properties, fileElements));
+          props.push(analysisPropertyAssignment(properties));
         }
       }
     }

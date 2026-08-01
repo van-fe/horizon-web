@@ -14,9 +14,8 @@ const onTabChanged = (tab: HTabValue) => {
   <div class="mb-8 flex align-center">
     <span class="mr-4">类型</span>
     <h-radio-group v-model="cardType">
-      <h-radio label="line">line(Default)</h-radio>
-      <h-radio label="card">card</h-radio>
-      <h-radio label="segment">segment</h-radio>
+      <h-radio value="line">line(Default)</h-radio>
+      <h-radio value="card">card</h-radio>
     </h-radio-group>
   </div>
   <h-tabs default-active-key="3" :type="cardType" @change="onTabChanged">

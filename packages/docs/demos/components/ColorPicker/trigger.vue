@@ -2,15 +2,35 @@
   <h-form label-position="left" label-vertical-align="middle">
     <h-form-item label="触发器类型">
       <h-radio-group v-model="type">
-        <h-radio label="square">正方形</h-radio>
-        <h-radio label="square-text">带色号</h-radio>
+        <h-radio value="square">正方形</h-radio>
+        <h-radio value="square-text">带色号</h-radio>
       </h-radio-group>
     </h-form-item>
   </h-form>
 
-  <h-color-picker v-model="value1" trigger-type="square" :square-text="squareText" :need-confirm="false" :clearable="false" @change="onChange" />
-  <h-color-picker v-model="value1" trigger-type="square" :square-text="squareText" :need-confirm="false" :clearable="false" disabled />
-  <h-color-picker v-model="value4" trigger-type="square" :square-text="squareText" :need-confirm="false" @change="onChange" />
+  <h-color-picker
+    v-model="value1"
+    trigger-type="square"
+    :square-text="squareText"
+    :need-confirm="false"
+    :clearable="false"
+    @change="onChange"
+  />
+  <h-color-picker
+    v-model="value1"
+    trigger-type="square"
+    :square-text="squareText"
+    :need-confirm="false"
+    :clearable="false"
+    disabled
+  />
+  <h-color-picker
+    v-model="value4"
+    trigger-type="square"
+    :square-text="squareText"
+    :need-confirm="false"
+    @change="onChange"
+  />
 </template>
 
 <script setup lang="ts">

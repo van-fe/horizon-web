@@ -11,7 +11,7 @@
       </h-radio-group>
     </h-form-item>
     <h-form-item label="style">
-      <h-radio-group v-model="selectStyle">
+      <h-radio-group v-model="inputStyle">
         <h-radio
           v-for="(label, index) in ['normal', 'no-border', 'emphasize']"
           :key="index"
@@ -38,7 +38,7 @@
         :model-value="value1"
         class="curGroup"
         :size="selectSize"
-        :input-style="selectStyle"
+        :input-style="inputStyle"
         clearable
         placeholder="请选择"
         :disabled="selectDisabled === 'disabled'"
@@ -62,7 +62,7 @@
         class="curGroup"
         multiple
         :size="selectSize"
-        :input-style="selectStyle"
+        :input-style="inputStyle"
         clearable
         placeholder="请选择"
         :disabled="selectDisabled === 'disabled'"
@@ -89,7 +89,7 @@ import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
     const selectSize = ref('medium');
-    const selectStyle = ref('normal');
+    const inputStyle = ref('normal');
     const selectDisabled = ref('useable');
     const value1 = ref(null);
     const value2 = ref();
@@ -122,7 +122,7 @@ export default defineComponent({
     return {
       selectSize,
       changeHandle,
-      selectStyle,
+      inputStyle,
       selectDisabled,
       selectOptions,
       remoteSelect1,

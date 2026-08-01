@@ -171,9 +171,11 @@ export default defineComponent({
 
       switch (evt.code) {
         case 'ArrowLeft':
+          evt.preventDefault();
           onPressArrowLeft();
           break;
         case 'ArrowRight':
+          evt.preventDefault();
           onPressArrowRight();
           break;
       }
@@ -249,7 +251,13 @@ export default defineComponent({
         <div
           class={classHelper.e('cursor')}
           ref={cursorRef}
-          tabindex={0}
+          role="slider"
+          aria-valuemin={parentProps.min}
+          aria-valuemax={parentProps.max}
+          aria-valuenow={currentValue.value}
+          aria-disabled={parentProps.disabled}
+          aria-orientation="horizontal"
+          tabindex={parentProps.disabled ? -1 : 0}
           style={{ left: cursorToLeft.value }}
           onFocus={onFocus}
           onBlur={onBlur}

@@ -39,7 +39,6 @@ export interface HorizonWebResolverOption extends HorizonWebBaseResolverOption {
 }
 
 const resolveComponents = (name: string, options: HorizonWebResolverOption) => {
-  name = name.replace(new RegExp(`^${useNamespace()}`), 'N');
   const dirType = options.ssr ? 'lib' : 'es';
   const styleExt = options.importStyle ?? 'css';
   const pattern = new RegExp(`^${options.namespace}[A-Z]`);
@@ -47,16 +46,18 @@ const resolveComponents = (name: string, options: HorizonWebResolverOption) => {
     return;
   }
 
+  const importName = name.replace(new RegExp(`^${options.namespace}`), useNamespace());
+
   if (
     (options?.exclude instanceof RegExp && options.exclude.test(name)) ||
     (typeof options.exclude === 'function' && options.exclude(name))
   )
     return;
 
-  const iconPattern = new RegExp(`^${options.namespace}Icon$`);
-  if (iconPattern.test(name)) {
+  const iconPattern = new RegExp(`^${useNamespace()}Icon$`);
+  if (iconPattern.test(importName)) {
     return {
-      name,
+      name: importName,
       from: '@aurora/icon',
       sideEffects: options.importStyle
         ? [`@aurora/icon/dist/${options.importStyle === 'scss' ? 'index.scss' : 'style.css'}`]
@@ -64,10 +65,10 @@ const resolveComponents = (name: string, options: HorizonWebResolverOption) => {
     };
   }
 
-  const tablePattern = new RegExp(`^${options.namespace}Table$`);
-  if (tablePattern.test(name)) {
+  const tablePattern = new RegExp(`^${useNamespace()}Table(?:Column)?V3$`);
+  if (tablePattern.test(importName)) {
     return {
-      name,
+      name: importName,
       from: '@aurora/horizon-web-table',
       sideEffects: options.importStyle
         ? [
@@ -80,7 +81,7 @@ const resolveComponents = (name: string, options: HorizonWebResolverOption) => {
   }
 
   const matched = Object.entries(components).find(([, reg]) => {
-    return new RegExp(reg).test(name);
+    return new RegExp(reg).test(importName);
   });
 
   if (matched) {
@@ -98,7 +99,7 @@ const resolveComponents = (name: string, options: HorizonWebResolverOption) => {
     }
 
     return {
-      name,
+      name: importName,
       from,
       sideEffects,
     };

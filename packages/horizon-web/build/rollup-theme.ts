@@ -27,22 +27,6 @@ export async function copyFilesToTargets(targets: string[]) {
   });
 }
 
-export function scssPathImporter(url: string) {
-  const nodeModules = ['video.js'];
-
-  for (const module of nodeModules) {
-    if (url.indexOf(module) === 0) {
-      return {
-        file: path.resolve(__dirname, '../node_modules', url),
-      };
-    }
-  }
-
-  return {
-    file: url,
-  };
-}
-
 async function buildStyle(targets: string[]) {
   for (const file of await getScssFiles(`${scanDir}/styles/*.scss`)) {
     const currFilePath = file.replace(scanDir, '');
@@ -56,7 +40,6 @@ async function buildStyle(targets: string[]) {
     const res = sass.renderSync({
       file,
       outputStyle: 'compressed',
-      importer: scssPathImporter,
     });
 
     targets.forEach(target => {

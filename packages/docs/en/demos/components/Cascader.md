@@ -81,7 +81,7 @@ You can control the text of confirm and cancel buttons through `confirm-button-t
 
 The `confirmRender` slot also exposes two methods `cancelHandle` `confirmHandle` for use when customizing the footer
 
-In addition, you can also use the `exposeConfirm` exposed by the `cascader` instance to perform confirm and cancel operations
+You can also call the `confirmHandle` and `cancelHandle` methods exposed by the `cascader` instance.
 :::demo components/Cascader/custom-confirm.vue :::
 ## panel Grouping
 Due to the special nature of the `cascader` tree structure, if you want to achieve grouping effect, you can only set a node with only `groupLabel` when passing in `options` to simulate grouping

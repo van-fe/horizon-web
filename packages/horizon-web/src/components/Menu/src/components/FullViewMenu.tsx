@@ -73,22 +73,7 @@ export default defineComponent({
         'click',
         target.props as MenuItemProps,
       );
-      (target.emits as HorizonWebSetupContext<MenuItemEmits>['emit'])(
-        'menuItemActive',
-        target.props as MenuItemProps,
-      );
-
       void nextTick(() => {
-        parentEmits?.(
-          'select',
-          target.props.value ?? '',
-          (activatedMenus?.value.map(curr => curr.props).reverse() ?? []) as (
-            | MenuItemProps
-            | SubMenuProps
-          )[],
-          target.props as MenuItemProps,
-        );
-
         parentEmits?.(
           'selected',
           target.props.value ?? '',
@@ -110,16 +95,6 @@ export default defineComponent({
         (target.emits as HorizonWebSetupContext<SubMenuEmits>['emit'])('click', target.props);
 
         void nextTick(() => {
-          parentEmits?.(
-            'select',
-            target.props.value ?? '',
-            (activatedMenus?.value.map(curr => curr.props).reverse() ?? []) as (
-              | MenuItemProps
-              | SubMenuProps
-            )[],
-            target.props,
-          );
-
           parentEmits?.(
             'selected',
             target.props.value ?? '',
@@ -180,11 +155,8 @@ export default defineComponent({
                   )}
                 >
                   {group.type === 'menuItem'
-                    ? group.slots.default?.() ??
-                      group.slots.title?.() ??
-                      group.slots.name?.() ??
-                      group.props.name
-                    : group.slots.title?.() ?? group.slots.name?.() ?? group.props.name}
+                    ? (group.slots.default?.() ?? group.slots.title?.() ?? group.props.name)
+                    : (group.slots.title?.() ?? group.props.name)}
                 </div>
               </div>
               <div class={classHelper.em('group', 'list')}>
@@ -217,19 +189,13 @@ export default defineComponent({
                       {{
                         content: () =>
                           item.type === 'menuItem'
-                            ? item.slots.default?.() ??
-                              item.slots.title?.() ??
-                              item.slots.name?.() ??
-                              item.props.name
-                            : item.slots.title?.() ?? item.slots.name?.() ?? item.props.name,
+                            ? (item.slots.default?.() ?? item.slots.title?.() ?? item.props.name)
+                            : (item.slots.title?.() ?? item.props.name),
                         default: () => (
                           <div class={classHelper.em('group', 'item-content')}>
                             {item.type === 'menuItem'
-                              ? item.slots.default?.() ??
-                                item.slots.title?.() ??
-                                item.slots.name?.() ??
-                                item.props.name
-                              : item.slots.title?.() ?? item.slots.name?.() ?? item.props.name}
+                              ? (item.slots.default?.() ?? item.slots.title?.() ?? item.props.name)
+                              : (item.slots.title?.() ?? item.props.name)}
                           </div>
                         ),
                       }}

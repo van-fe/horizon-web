@@ -15,9 +15,9 @@ export default function (
 
   function controlPopperVisible(visible: boolean) {
     if (visible) {
-      domRefs.picker.value?.show();
+      domRefs.picker.value?.showPopover();
     } else {
-      domRefs.picker.value?.hide();
+      domRefs.picker.value?.hidePopover();
     }
   }
 
@@ -31,7 +31,7 @@ export default function (
 
   /** provides *
    * @en Description for provide.
- */
+   */
   provide(HTreeSelectPopperVisibleInjectKey, popperVisible);
 
   return {

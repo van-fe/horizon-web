@@ -36,8 +36,7 @@ export default function (
   /** computed **/
   const isDuringFilter = computed(() => !!filterValue.value);
   const isFilterable = computed(
-    () =>
-      ((!!props.filter?.value || props.filterable?.value) && !props.panelFilterable.value) || false,
+    () => (props.filterable?.value && !props.panelFilterable.value) || false,
   );
   const isReadonly = computed(() => !(isFilterable.value && popperVisible.value));
 
@@ -67,7 +66,7 @@ export default function (
 
   /** watches *
    * @en Description for watch.
- */
+   */
   watch(inputValue, val => {
     context.emit('input', val);
   });

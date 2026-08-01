@@ -231,7 +231,7 @@ describe('Select.tsx', () => {
     expect(modelValue.value).toEqual(1);
   });
 
-  test('confirm-btn-text and cancel-btn-text', async () => {
+  test('confirm-button-text and cancel-button-text', async () => {
     const wrapper = mount(() => (
       <HSelect
         needConfirm={true}
@@ -864,10 +864,6 @@ describe('Select.tsx', () => {
 
     expect(modelValue.value).toEqual('5');
     expect(wrapper.findComponent(HPickerPopper).isVisible()).toBeFalsy();
-  });
-
-  test.skip('collapse & collapse-tags collapse-tags-tooltip', () => {
-    console.debug("Because the style not inject in vitest, these props can't do test");
   });
 
   test('max-collapse-tags', async () => {

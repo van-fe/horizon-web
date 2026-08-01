@@ -4,10 +4,6 @@ export interface VirtualScrollerDefaultSlotRowType<T = any> {
   item: T;
   index: number;
   active: boolean;
-  /**
-   * @deprecated Use `active` instead.
-   */
-  activated: boolean;
 }
 
 export interface VirtualScrollerRenderlessScope<T = any> {

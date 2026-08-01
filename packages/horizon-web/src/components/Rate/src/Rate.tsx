@@ -209,6 +209,22 @@ export default defineComponent({
       });
     }
 
+    function onKeydown(evt: KeyboardEvent) {
+      if (readonlyRef.value || isDisabled.value) return;
+      const step = halfRef.value ? 0.5 : 1;
+      let value = modelValueRef.value;
+      if (evt.key === 'ArrowRight' || evt.key === 'ArrowUp') value += step;
+      else if (evt.key === 'ArrowLeft' || evt.key === 'ArrowDown') value -= step;
+      else if (evt.key === 'Home') value = 0;
+      else if (evt.key === 'End') value = countRef.value;
+      else return;
+      evt.preventDefault();
+      value = Math.max(0, Math.min(countRef.value, value));
+      emit('update:modelValue', value);
+      emit('change', value);
+      nextTick().then(() => formItemTrigger?.('change'));
+    }
+
     return () => (
       <div
         class={[
@@ -216,7 +232,14 @@ export default defineComponent({
           classHelper.m('enabled', !readonlyRef.value && !isDisabled.value),
           classHelper.m('disabled', isDisabled.value),
         ]}
-        tabindex={0}
+        role="slider"
+        aria-valuemin={0}
+        aria-valuemax={countRef.value}
+        aria-valuenow={modelValueRef.value}
+        aria-disabled={isDisabled.value}
+        aria-readonly={readonlyRef.value}
+        tabindex={isDisabled.value ? -1 : 0}
+        onKeydown={onKeydown}
         onBlur={onBlur}
       >
         {iconList.value.map((item: RateListItem, index: number) => {

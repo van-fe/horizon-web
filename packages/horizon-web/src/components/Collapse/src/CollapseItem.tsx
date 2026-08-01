@@ -1,5 +1,5 @@
 import type { Component } from 'vue';
-import { defineComponent, inject, toRefs, onMounted } from 'vue';
+import { defineComponent, inject, toRefs, onMounted, useId } from 'vue';
 import { useCollapseItemProps } from './composables/useProps';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
@@ -27,6 +27,8 @@ export default defineComponent({
     } = toRefs(props);
     const injectCollapse = inject<CollapseProvidesData>(injectedKey)!;
     const classHelper = new ComponentClassBlock('collapse-item');
+    const headerId = useId();
+    const panelId = useId();
 
     const verifyNameIsActive = () => {
       return injectCollapse.accordionProp.value
@@ -67,8 +69,20 @@ export default defineComponent({
         >
           <div
             class={[classHelper.e('header')]}
+            id={headerId}
+            role="button"
+            tabindex={disabledProp.value ? -1 : 0}
+            aria-expanded={isActiveName}
+            aria-controls={panelId}
+            aria-disabled={disabledProp.value}
             style={{ backgroundColor: backgroundProp.value }}
             onClick={clickHeader}
+            onKeydown={(evt: KeyboardEvent) => {
+              if (evt.key === 'Enter' || evt.key === ' ') {
+                evt.preventDefault();
+                clickHeader();
+              }
+            }}
           >
             {slots?.title?.() ?? (
               <div class={[classHelper.e('header-title')]}>{titleProp.value}</div>
@@ -81,7 +95,13 @@ export default defineComponent({
           </div>
           <HTransition name="collapse">
             {directiveProp.value === 'show' ? (
-              <div class={[`${classHelper.e('body')}`]} v-show={isActiveName}>
+              <div
+                id={panelId}
+                role="region"
+                aria-labelledby={headerId}
+                class={[`${classHelper.e('body')}`]}
+                v-show={isActiveName}
+              >
                 <div
                   class={[`${classHelper.e('content')}`, nest && classHelper.e('content--nest')]}
                 >
@@ -90,7 +110,12 @@ export default defineComponent({
               </div>
             ) : (
               isActiveName && (
-                <div class={[`${classHelper.e('body')}`]}>
+                <div
+                  id={panelId}
+                  role="region"
+                  aria-labelledby={headerId}
+                  class={[`${classHelper.e('body')}`]}
+                >
                   <div
                     class={[`${classHelper.e('content')}`, nest && classHelper.e('content--nest')]}
                   >

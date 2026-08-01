@@ -111,6 +111,11 @@
   }
 
   @include mixins.is-not('disabled') {
+    @include mixins.is('focus') {
+      color: mixins.css-variable('tree-color--item--hover');
+      background: mixins.css-variable('tree-bg--item--hover');
+    }
+
     &:hover {
       color: mixins.css-variable('tree-color--item--hover');
       background: mixins.css-variable('tree-bg--item--hover');

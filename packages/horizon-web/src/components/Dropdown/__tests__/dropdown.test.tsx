@@ -8,7 +8,7 @@ import { HDropdownItem, HDropdownMenu } from '../index';
 import { sleep } from '~/utils/tools';
 import HPopover from '../../Popover/src/Popover';
 
-describe.skip('Dropdown.tsx', () => {
+describe('Dropdown.tsx', () => {
   test('basic', async () => {
     const wrapper = mount(() => <HDropdown />);
     const element = wrapper.findComponent(HDropdown);

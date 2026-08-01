@@ -29,7 +29,7 @@ export default defineComponent({
     const classBlock = new ComponentClassBlock('steps');
     const { direction, labelPlacement, progressDot, size, clickable, labelAlign } = toRefs(props);
     const stepItems = ref<Array<StepInstance>>([]);
-    const activeIndex = ref(props.modelValue || props.current);
+    const activeIndex = ref(props.modelValue);
 
     const setCurrentIndex = (index: number, triggerChange = true) => {
       if (activeIndex.value !== index) {
@@ -44,9 +44,9 @@ export default defineComponent({
     };
 
     watch(
-      () => [props.modelValue, props.current],
-      ([val1, val2]) => {
-        setCurrentIndex(val1 || val2, false);
+      () => props.modelValue,
+      val => {
+        setCurrentIndex(val, false);
       },
     );
 

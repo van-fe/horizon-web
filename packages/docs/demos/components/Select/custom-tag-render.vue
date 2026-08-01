@@ -33,9 +33,9 @@ function onDeselect(collection: string[], value: string) {
   <h-form label-position="left" label-vertical-align="middle">
     <h-form-item label="尺寸">
       <h-radio-group v-model="size">
-        <h-radio label="small" />
-        <h-radio label="medium" />
-        <h-radio label="large" />
+        <h-radio value="small" />
+        <h-radio value="medium" />
+        <h-radio value="large" />
       </h-radio-group>
     </h-form-item>
     <h-form-item label="是否可过滤">
@@ -153,7 +153,7 @@ function onDeselect(collection: string[], value: string) {
             </h-tag>
           </template>
         </h-option>
-        <template #selectRender>
+        <template #pickerInner>
           <h-tag-group collapse-tags collapse-use-tooltip tooltip-render-type="full">
             <template #prefix><div style="align-self: center">你的选择是：</div></template>
             <h-tag

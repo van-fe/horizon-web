@@ -16,6 +16,7 @@ import { sleep } from '~/utils/tools';
 import HCascaderPanel from '~/components/Cascader/src/components/CascaderPanel';
 import HCascaderItem from '~/components/Cascader/src/components/CascaderItem';
 import HRadio from '~/components/Radio/src/Radio';
+import HCheckbox from '~/components/Checkbox/src/Checkbox';
 import treeDataLevelNotEqual from './tree-data-level-not-equal.json';
 
 describe('Cascader.tsx special', () => {
@@ -252,13 +253,13 @@ describe('Cascader.tsx special', () => {
 
     await nextTick();
 
-    expect(pickerInput.text()).toBe('React / Next');
+    expect(pickerInput.text().replace(/\s/g, ' ')).toBe('React / Next');
 
     modelValue.value = [3, 5];
 
     await nextTick();
 
-    expect(pickerInput.text()).toBe('3 / 5');
+    expect(pickerInput.text().replace(/\s/g, ' ')).toBe('3 / 5');
   });
 
   test('expand-trigger = hover & check-strictly = true should not hover to check parent', async () => {
@@ -292,7 +293,41 @@ describe('Cascader.tsx special', () => {
     expect(currPanels.length).toBe(1);
   });
 
-  test.skip('on reach multiple limit should set disabled to checkbox', async () => {
+  test('keyboard navigation can traverse levels and select a leaf', async () => {
+    const { wrapper, modelValue, pickerInput } = createInstance();
+    await openCascader(wrapper);
+    const input = pickerInput.find('input');
+
+    await input.trigger('keydown', { key: 'ArrowDown' });
+    await nextTick();
+    expect(wrapper.find('.h-cascader-item.is-focus').text()).toContain('Guide');
+
+    await input.trigger('keydown', { key: 'ArrowRight' });
+    await input.trigger('keydown', { key: 'ArrowDown' });
+    await input.trigger('keydown', { key: 'ArrowRight' });
+    await nextTick();
+    expect(wrapper.findAll('.h-cascader-item.is-focus').at(-1)?.text()).toContain(
+      'Side Navigation',
+    );
+
+    await input.trigger('keydown', { key: 'Enter' });
+    await nextTick();
+    expect(modelValue.value).toStrictEqual(['guide', 'navigation', 'side nav']);
+  });
+
+  test('keyboard navigation skips disabled options', async () => {
+    const { wrapper, pickerInput } = createInstance({ checkStrictly: true }, 'disabled');
+    await openCascader(wrapper);
+    const input = pickerInput.find('input');
+
+    await input.trigger('keydown', { key: 'ArrowDown' });
+    await input.trigger('keydown', { key: 'ArrowRight' });
+    await nextTick();
+
+    expect(wrapper.findAll('.h-cascader-item.is-focus').at(-1)?.text()).toContain('Navigation');
+  });
+
+  test('on reach multiple limit should set disabled to checkbox', async () => {
     const modelValue = ref([
       ['guide', 'navigation', 'side'],
       ['guide', 'disciplines', 'feedback'],
@@ -300,13 +335,14 @@ describe('Cascader.tsx special', () => {
     ]);
     const { wrapper } = createInstance({
       modelValue,
-      filterable: true,
       multiple: true,
       multipleLimit: 3,
     });
 
-    const { panels } = await openCascader(wrapper);
+    await openCascader(wrapper);
+    const checkboxes = wrapper.findAllComponents(HCheckbox);
 
-    console.info(panels.html());
+    expect(checkboxes.length).toBeGreaterThan(0);
+    expect(checkboxes.every(checkbox => checkbox.props('disabled'))).toBe(true);
   });
 });

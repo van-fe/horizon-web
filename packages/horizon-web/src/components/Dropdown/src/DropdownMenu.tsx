@@ -22,6 +22,10 @@ export default defineComponent({
 
     provide(HDropdownActivatedChildInjectKey, activeChildUuid);
 
-    return () => <div class={cls(classHelper.block)}>{slots.default?.()}</div>;
+    return () => (
+      <div class={cls(classHelper.block)} role="menu">
+        {slots.default?.()}
+      </div>
+    );
   },
 });

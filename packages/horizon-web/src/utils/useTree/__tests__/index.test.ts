@@ -24,7 +24,7 @@ function createDeepTree(depth: number) {
 }
 
 describe('useTree', () => {
-  it('keeps transformed tree data and ancestry information compatible', () => {
+  it('keeps transformed tree data and ancestry information consistent', () => {
     const tree = new Tree<TestTreeNode, TransformedTestTreeNode>(
       [
         {

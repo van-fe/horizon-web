@@ -84,8 +84,10 @@ describe('Slider.tsx', () => {
       const wrapper = mount(() => <HSlider v-model={modelValue.value} onFocus={onFocus} />);
 
       const cursor = wrapper.findComponent(SliderCursor);
+      const slider = wrapper.find('[role="slider"]');
 
       expect(cursor.exists()).toBe(true);
+      expect(slider.attributes('aria-valuenow')).toBe('50');
 
       await cursor.trigger('focus');
 

@@ -43,7 +43,7 @@
       cursor: pointer;
       transition: all 0.3s ease;
 
-      .video-js {
+      > div {
         width: 100%;
         height: 100%;
       }
@@ -261,7 +261,7 @@
   }
 
   @include mixins.e('legend') {
-    @include mixins.m('hoverable'){
+    @include mixins.m('hoverable') {
       &:hover {
         cursor: pointer;
 

@@ -61,7 +61,6 @@ export default defineComponent({
     const injectProp = inject<{
       show: (val: object) => void;
       hide: (val: object) => void;
-      v2: boolean;
     }>('HTimeline');
     const timelineItemElRef = ref<HTMLElement | null>(null);
     const isHidden = ref(false);
@@ -93,7 +92,7 @@ export default defineComponent({
             onClick={onClickDot}
           >
             {isHidden.value
-              ? slots?.hiddenDot?.() ?? (
+              ? (slots?.hiddenDot?.() ?? (
                   <div
                     class={[
                       classHelper.e('dot'),
@@ -113,8 +112,8 @@ export default defineComponent({
                       <AIcon name={dotIcon.value} class={classHelper.e(`icon--${dotSize.value}`)} />
                     )}
                   </div>
-                )
-              : slots?.dot?.() ?? (
+                ))
+              : (slots?.dot?.() ?? (
                   <div
                     class={[
                       classHelper.e('dot'),
@@ -140,7 +139,7 @@ export default defineComponent({
                       />
                     )}
                   </div>
-                )}
+                ))}
           </div>
           {tailProp.value && (
             <div
@@ -161,11 +160,7 @@ export default defineComponent({
                 classHelper.e(`timestamp--${placementProp.value}`),
               ]}
             >
-              {injectProp?.v2
-                ? useDateFormative(timestampProp.value, format.value, locale.value?.current)
-                : formatProp.value
-                  ? useDateFormative(timestampProp.value, formatProp.value, locale.value?.current)
-                  : timestampProp.value}
+              {useDateFormative(timestampProp.value, format.value, locale.value?.current)}
             </div>
           )}
           {!isHidden.value && (
@@ -178,21 +173,13 @@ export default defineComponent({
                     classHelper.e(`timestamp--${placementProp.value}`),
                   ]}
                 >
-                  {injectProp?.v2
-                    ? useDateFormative(timestampProp.value, format.value, locale.value?.current)
-                    : formatProp.value
-                      ? useDateFormative(
-                          timestampProp.value,
-                          formatProp.value,
-                          locale.value?.current,
-                        )
-                      : timestampProp.value}
+                  {useDateFormative(timestampProp.value, format.value, locale.value?.current)}
                 </div>
               )}
             </div>
           )}
           <div class={[classHelper.e('desc'), isHidden.value && classHelper.e('desc--hidden')]}>
-            {isHidden.value ? foldConfigProp.value?.content : slots?.desc?.() ?? descProp.value}
+            {isHidden.value ? foldConfigProp.value?.content : (slots?.desc?.() ?? descProp.value)}
           </div>
           {placementProp.value === 'bottom' && !isHidden.value && (
             <div
@@ -201,11 +188,7 @@ export default defineComponent({
                 classHelper.e(`timestamp--${placementProp.value}`),
               ]}
             >
-              {injectProp?.v2
-                ? useDateFormative(timestampProp.value, format.value, locale.value?.current)
-                : formatProp.value
-                  ? useDateFormative(timestampProp.value, formatProp.value, locale.value?.current)
-                  : timestampProp.value}
+              {useDateFormative(timestampProp.value, format.value, locale.value?.current)}
             </div>
           )}
         </div>

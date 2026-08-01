@@ -114,9 +114,9 @@ export default defineComponent({
 
     function setPopperVisible(visible: boolean) {
       if (visible) {
-        domRefs.pickerDomRef.value?.show();
+        domRefs.pickerDomRef.value?.showPopover();
       } else {
-        domRefs.pickerDomRef.value?.hide();
+        domRefs.pickerDomRef.value?.hidePopover();
 
         setTimeout(() => {
           domRefs.filterInputDomRef.value?.blur();
@@ -344,6 +344,8 @@ export default defineComponent({
 
     function renderPickerInner() {
       if (props.multiple) {
+        if (modelValueSet.value.size === 0) return undefined;
+
         if (props.useStatistic) {
           return getSelectedOptionsPopoverRender(
             <span class={new ComponentClassBlock('picker').em('input', 'static-text')}>
@@ -439,6 +441,7 @@ export default defineComponent({
 
     return () => {
       renderDefaultSlot(context.slots);
+
       return (
         <HPicker
           ref={domRefs.pickerDomRef}
@@ -617,12 +620,7 @@ export default defineComponent({
                 )}
               </div>
             ),
-            pickerInner:
-              (props.multiple
-                ? modelValueSet.value.size > 0
-                : !!context.slots.tagRender && modelValueSet.value.size > 0)
-                ? renderPickerInner
-                : undefined,
+            pickerInner: renderPickerInner,
           }}
         </HPicker>
       );

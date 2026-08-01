@@ -1,9 +1,9 @@
 <template>
   <h-space block direction="vertical" size="small">
     <h-tabs v-model="currentRef">
-      <h-tab name="panel1" label="Option1" />
-      <h-tab name="panel2" label="Option2" />
-      <h-tab name="panel3" label="Option3" />
+      <h-tab key="panel1" label="Option1" />
+      <h-tab key="panel2" label="Option2" />
+      <h-tab key="panel3" label="Option3" />
     </h-tabs>
     <h-panels v-model="currentRef" animated>
       <h-panel name="panel1">Panel1 Content</h-panel>

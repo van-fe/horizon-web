@@ -40,6 +40,12 @@ export default defineComponent({
       ctx.onClick?.(key.value);
     };
 
+    const onKeydown = (evt: KeyboardEvent) => {
+      if (evt.key !== 'Enter' && evt.key !== ' ') return;
+      evt.preventDefault();
+      onClick();
+    };
+
     const isActivated = computed(() => ctx.activeKey.value === key.value);
 
     const addTab = ctx.createTab(key.value) as VNodeRef;
@@ -60,9 +66,11 @@ export default defineComponent({
             props.disabled && cls.em('item', 'disabled'),
           ]}
           role="tab"
-          tabindex={isActivated.value ? -1 : 0}
+          tabindex={props.disabled ? -1 : isActivated.value ? 0 : -1}
           aria-selected={isActivated.value}
+          aria-disabled={getBooleanProp(props.disabled)}
           onClick={onClick}
+          onKeydown={onKeydown}
         >
           <div class={cls.e('item-inner')}>
             {slots.icon

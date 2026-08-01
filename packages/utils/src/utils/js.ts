@@ -1,7 +1,5 @@
-// import type { PropOptions, WithDeprecatedPropsTyped } from './tsHelper';
 import isRegExp from 'lodash/isRegExp';
 import type { PropsTyped } from './tsHelper';
-// import { isDefined } from './validate';
 
 /**
  *
@@ -46,42 +44,6 @@ export function getBooleanProp(prop: unknown): boolean {
   }
   return Boolean(prop);
 }
-
-declare module '@vue/runtime-core' {
-  interface PropOptions {
-    deprecated?: boolean | string;
-  }
-}
-
-// export function declarePropType<T extends WithDeprecatedPropsTyped, Key extends keyof T = keyof T>(
-//   val: T,
-//   plugin?: string,
-// ): { [K in Key]: Omit<T[Key], 'deprecated'> } {
-//   Object.keys(val).forEach(key => {
-//     const curr = val[key];
-//     if (!Array.isArray(curr) && typeof curr === 'object' && curr.deprecated !== undefined) {
-//       curr.validator = (value: unknown): boolean => {
-//         if (isDefined(value)) {
-//           // type = Boolean, the default value is false. Whether set value to it or not.
-//           if (curr.type === Boolean && value === false) {
-//             return true;
-//           }
-//
-//           console.warn(
-//             `${plugin} prop (${key}) is deprecated.${
-//               curr.deprecated !== false ? ` Please use ${curr.deprecated}` : ''
-//             }`,
-//           );
-//           return false;
-//         }
-//
-//         return true;
-//       };
-//     }
-//   });
-//
-//   return val;
-// }
 
 export function declarePropType<T extends PropsTyped>(val: T): T {
   return val;

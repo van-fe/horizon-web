@@ -1,21 +1,11 @@
 <template>
   <h-button @click="visible = true">点我</h-button>
-  <h-dialog
-    v-model="visible"
-    title="标题"
-    @primaryClick="onPrimary"
-    @secondaryClick="onSecondary"
-  >
+  <h-dialog v-model:visible="visible" title="标题" @ok="onPrimary" @cancel="onSecondary">
     <div>点击 OK 会打开第二个 Dialog</div>
     <div>点击 Cancel 会关闭当前 Dialog</div>
   </h-dialog>
 
-  <h-dialog
-    v-model="visible2"
-    title="标题"
-    @primaryClick="onPrimary2"
-    @secondaryClick="onSecondary2"
-  >
+  <h-dialog v-model:visible="visible2" title="标题" @ok="onPrimary2" @cancel="onSecondary2">
     <div>点击 OK 会关闭当前 Dialog</div>
     <div>点击 Cancel 会关闭所有 Dialog</div>
   </h-dialog>

@@ -5,7 +5,7 @@ import dayjs from '~/utils/useDayJs';
 import type { VueLocaleService } from '@aurora/locale-vue';
 
 /**
- * Because of old DatePicker, the locale cannot be loaded
+ * DatePicker loads locale data separately.
  */
 export default function (locale: ComputedRef<UnwrapNestedRefs<VueLocaleService>>) {
   watch(

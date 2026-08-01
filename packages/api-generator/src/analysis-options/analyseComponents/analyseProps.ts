@@ -24,7 +24,6 @@ function analysisPropertyAssignment(
     descLocales: jsDoc.locales,
     name: property.getName(),
     required: false,
-    deprecated: jsDoc.tags.deprecated?.default,
     version: jsDoc.tags.version?.default,
     type: '',
     baseType: '',

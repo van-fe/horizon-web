@@ -3,8 +3,8 @@
     <h-grid-item :span="24">
       <div class="mr-4">必填星号位置</div>
       <h-radio-group v-model="requireMarkPosition" size="small">
-        <h-radio-button label="left" />
-        <h-radio-button label="right" />
+        <h-radio-button value="left" />
+        <h-radio-button value="right" />
       </h-radio-group>
     </h-grid-item>
   </h-grid>

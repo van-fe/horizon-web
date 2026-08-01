@@ -77,7 +77,6 @@ export interface ApiGeneratorAnalysedPropType {
   options: (string | number)[];
   required: boolean;
   default: string | number;
-  deprecated?: string;
   version?: string;
 }
 
@@ -93,7 +92,6 @@ export interface ApiGeneratorAnalysedEmitType {
   params: ApiGeneratorAnalysedEmitParamType[];
   desc: string;
   descLocales?: Record<string, string>;
-  deprecated?: string;
   version?: string;
 }
 
@@ -109,7 +107,6 @@ export interface ApiGeneratorAnalysedSlotType {
   type: string;
   desc: string;
   descLocales?: Record<string, string>;
-  deprecated?: string;
   version?: string;
   params: ApiGeneratorAnalysedSlotParamType[];
 }
@@ -141,7 +138,6 @@ export interface ApiGeneratorAnalysedExposeType {
   descLocales?: Record<string, string>;
   type: string;
   nativeType: ApiGeneratorAnalysedBaseType;
-  deprecated?: string;
   version?: string;
   params: ApiGeneratorAnalysedExposeParamType[];
   returnText: string;
@@ -169,7 +165,6 @@ export interface ApiGeneratorAnalysedOptionType {
   options: (string | number)[];
   required: boolean;
   default: string | number;
-  deprecated?: string;
   version?: string;
   params?: ApiGeneratorAnalysedOptionParamType[];
 }

@@ -24,7 +24,6 @@ function analysePropertyAssignment(
     params: [],
     returns: [],
     returnText: '',
-    deprecated: jsDoc.tags.deprecated?.default,
     version: jsDoc.tags.version?.default,
   };
 

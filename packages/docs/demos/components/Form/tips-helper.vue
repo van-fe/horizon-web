@@ -2,8 +2,8 @@
   <h-form>
     <h-form-item label="helper主题">
       <h-radio-group v-model="helperTheme">
-        <h-radio label="light" />
-        <h-radio label="dark" />
+        <h-radio value="light" />
+        <h-radio value="dark" />
       </h-radio-group>
     </h-form-item>
   </h-form>
@@ -17,7 +17,7 @@
   >
     <h-form-item label="input style" prop="inputStyle">
       <h-radio-group v-model="formData.inputStyle" size="medium">
-        <h-radio v-for="item in ['normal', 'emphasize', 'no-border']" :key="item" :label="item" />
+        <h-radio v-for="item in ['normal', 'emphasize', 'no-border']" :key="item" :value="item" />
       </h-radio-group>
     </h-form-item>
     <h-form-item label="Username" prop="username" :validate-trigger="['change']">
@@ -47,7 +47,11 @@
       />
     </h-form-item>
     <h-form-item label="Province" prop="province">
-      <h-select v-model="formData.province" :input-style="formData.inputStyle" placeholder="Please select">
+      <h-select
+        v-model="formData.province"
+        :input-style="formData.inputStyle"
+        placeholder="Please select"
+      >
         <h-option label="Beijing" value="beijing" />
         <h-option label="Shanghai" value="shanghai" />
         <h-option label="Hefei" value="hefei" />
@@ -151,5 +155,4 @@ function onInput() {
 function onChange() {
   console.info('change:', formData.value.age);
 }
-
 </script>

@@ -8,16 +8,13 @@ import methodsRegister from '../../../horizon-web/src/methods';
 import '../../../horizon-web/src/styles/index.scss';
 import './tailwind.css';
 import DemoBlock from '../components/DemoBlock.vue';
-import DeprecatedTips from '../components/DeprecatedTips.vue';
 import VersionTips from '../components/VersionTips.vue';
 
 export default {
   extends: DefaultTheme,
   enhanceApp({ app, router }) {
     const getLocale = (path = typeof window === 'undefined' ? '/' : window.location.pathname) =>
-      path === '/en' || path.startsWith('/en/')
-        ? LocaleSupportLang.En
-        : LocaleSupportLang.ZhCN;
+      path === '/en' || path.startsWith('/en/') ? LocaleSupportLang.En : LocaleSupportLang.ZhCN;
 
     // VitePress toggles `dark` on <html>, while Horizon Web's design tokens
     // use `horizon-web-dark-mode`. Keep the component demos in sync with the
@@ -58,7 +55,6 @@ export default {
     });
 
     app.component('DemoBlock', DemoBlock);
-    app.component('DeprecatedTips', DeprecatedTips);
     app.component('VersionTips', VersionTips);
   },
 } satisfies Theme;

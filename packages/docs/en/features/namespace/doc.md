@@ -2,8 +2,6 @@
 
 The default namespace provided by horizon-web is `n`. In special environments such as micro-applications, you need to customize the namespace to reduce component function and style confusion caused by naming conflicts.
 
-:::tip This feature has been supported since 2.0.0 :::
-
 ## Modify Using HApplication
 
 You can use `HApplication`'s `props.namespace` to modify the namespace

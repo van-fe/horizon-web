@@ -1,6 +1,6 @@
 <template>
   <h-tabs v-model:active-key="activeKey">
-    <h-tab v-for="tab in tabs" :key="tab.name" :label="tab.label" :name="tab.name" />
+    <h-tab v-for="tab in tabs" :key="tab.name" :label="tab.label" />
   </h-tabs>
   <h-panels v-model="activeKey" class="p-1 pt-2">
     <h-panel v-for="panel in tabs" :key="panel.name" :name="panel.name">

@@ -14,7 +14,7 @@ export default defineComponent({
   props: useListProps,
   slots: useListSlots,
   setup(props, { slots }: HorizonWebSetupContext<{}, ListSlots>) {
-    const { data, zebra, isBorder, border, split, size } = toRefs(props);
+    const { data, zebra, border, split, size } = toRefs(props);
     const classHelper = new ComponentClassBlock('list');
 
     // global size
@@ -38,7 +38,7 @@ export default defineComponent({
             classHelper.m(sizeRef.value),
             classHelper.is('zebra', zebra.value),
             classHelper.is('split', split.value),
-            classHelper.is('border', isBorder.value ?? border.value),
+            classHelper.is('border', border.value),
           )}
         >
           {slots.header && <div class={classHelper.e('header')}>{slots.header()}</div>}

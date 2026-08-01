@@ -2,8 +2,8 @@
   <h-form label-position="left" label-vertical-align="middle">
     <h-form-item label="position">
       <h-radio-group v-model="position">
-        <h-radio label="right" />
-        <h-radio label="bottom" />
+        <h-radio value="right" />
+        <h-radio value="bottom" />
       </h-radio-group>
     </h-form-item>
   </h-form>
@@ -38,5 +38,4 @@ function onSearch(val: string) {
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

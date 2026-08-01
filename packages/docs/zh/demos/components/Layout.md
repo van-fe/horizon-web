@@ -27,5 +27,3 @@
 `cols`、`gap`、`column-gap`、`row-gap`、`span` 和 `offset` 均支持 `xs`、`sm`、`md`、`lg`、`xl`、`xxl` 响应式对象。未重复声明的值会从较小断点自然延续。
 
 :::demo components/Layout/responsive.vue :::
-
-旧的 `h-row` 和 `h-col` 仍然保留，供已有项目渐进迁移；新页面建议优先采用 Grid。

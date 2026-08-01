@@ -183,7 +183,7 @@ export default defineComponent({
     provide(HTagGroupNoticeTagUnmountedInjectKey, onTagUnmounted);
 
     /***** collapse *****/
-    const collapseProp = computed(() => props.ellipsis ?? props.collapse);
+    const collapseProp = computed(() => props.collapse);
     const useCollapse = ref(collapseProp.value);
     const collapseEnable = computed(() => collapseProp.value && useCollapse.value);
     const needRenderedItemsLength = ref<number>(0);
@@ -419,7 +419,7 @@ export default defineComponent({
                                     isPure: true,
                                     isInPopover: true,
                                   })}
-                                  {index < arr.length - 1 ? props.symbol ?? props.separator : ''}
+                                  {index < arr.length - 1 ? props.separator : ''}
                                 </>
                               ))}
                           </Fragment>

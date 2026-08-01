@@ -53,13 +53,11 @@ export default defineComponent({
 
     watch(pageSize, val => {
       emit('update:pageSize', val);
-      emit('changeSize', val);
       emit('sizeChange', val);
     });
 
     watch(currentPage, val => {
       emit('update:currentPage', val);
-      emit('change', val);
       emit('currentChange', val);
     });
 

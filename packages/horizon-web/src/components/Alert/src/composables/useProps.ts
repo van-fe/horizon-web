@@ -94,19 +94,19 @@ export const useAlertProps = declarePropType({
 export const typeMap = {
   success: {
     icon: 'success_filled',
-    color: '#26BD4B',
+    color: ['#26BD4B', '#FFFFFF'],
   },
   info: {
     icon: 'info_filled',
-    color: '#1880F2',
+    color: ['#1880F2', '#FFFFFF'],
   },
   warning: {
     icon: 'warning_filled',
-    color: '#FDA71C',
+    color: ['#FDA71C', '#FFFFFF'],
   },
   error: {
-    icon: 'warning_filled',
-    color: '#E83030',
+    icon: 'error_filled',
+    color: ['#E83030', '#FFFFFF'],
   },
 };
 

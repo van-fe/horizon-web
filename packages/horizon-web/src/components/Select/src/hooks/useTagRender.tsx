@@ -1,5 +1,5 @@
 import type { Ref, VNode, Reactive } from 'vue';
-import { computed, ref, watch } from 'vue';
+import { computed, ref, toDisplayString, watch } from 'vue';
 import type { JSX } from 'vue/jsx-runtime';
 import type { OptionProps, SelectProps } from '../composables/useProps';
 import type { HorizonWebSetupContext } from '@aurora/utils';
@@ -60,12 +60,19 @@ export default function useTagRender(
   );
 
   watch(
-    () => [props.useCheckAllSummary, options.optionsMap, options.modelValueSet.value],
+    () => [
+      props.useCheckAllSummary,
+      options.optionsMap.size,
+      ...Array.from(options.optionsMap.values()).flatMap(option => [
+        option.props.label,
+        option.props.disabled,
+      ]),
+      ...options.modelValueSet.value,
+    ],
     () => {
       resetRenderedTags();
     },
     {
-      deep: true,
       immediate: true,
     },
   );
@@ -157,7 +164,7 @@ export default function useTagRender(
                     disabled={options.isDisabled.value}
                     onClose={evt => options.pickOption(optValue, true, true, evt, true)}
                   >
-                    {optValue}
+                    {toDisplayString(optValue)}
                   </HTag>
                 ))
               : undefined)

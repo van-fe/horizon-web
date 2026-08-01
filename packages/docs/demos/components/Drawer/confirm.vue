@@ -2,9 +2,8 @@
   <h-button @click="visible = true">Open Drawer</h-button>
   <h-drawer
     :visible="visible"
-    v2
     title="Title"
-    position="right"
+    placement="right"
     :before-close="onBeforeClose"
     @ok="onOk"
     @cancel="onCancel"

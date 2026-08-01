@@ -59,7 +59,7 @@
 
 自定义颜色时，请传入色系中最深的颜色，防止在 `disabled` 等状态下不可视的问题
 
-**为保证兼容性，2.0.2开始默认不会自动生成颜色，需要自动生成颜色需要开启 `auto-color = true`**
+需要自动生成颜色时，请开启 `auto-color = true`。
 :::demo components/Tag/colorful.vue :::
 
 ## 新建、修改标签

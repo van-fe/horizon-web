@@ -10,9 +10,10 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'happy-dom',
+    exclude: ['**/*.browser.test.{ts,tsx}'],
+    setupFiles: [path.join(__dirname, './vitest.setup.ts')],
     css: true,
     testTimeout: 10000,
-    dangerouslyIgnoreUnhandledErrors: true,
     typecheck: {
       ignoreSourceErrors: true,
     },

@@ -2,28 +2,28 @@
   <h-form label-position="left" label-vertical-align="middle">
     <h-form-item label="size">
       <h-radio-group v-model="size">
-        <h-radio label="small" />
-        <h-radio label="medium" />
-        <h-radio label="large" />
+        <h-radio value="small" />
+        <h-radio value="medium" />
+        <h-radio value="large" />
       </h-radio-group>
     </h-form-item>
     <h-form-item label="inputStyle">
       <h-radio-group v-model="inputStyle">
-        <h-radio label="normal" />
-        <h-radio label="emphasize" />
-        <h-radio label="no-border" />
+        <h-radio value="normal" />
+        <h-radio value="emphasize" />
+        <h-radio value="no-border" />
       </h-radio-group>
     </h-form-item>
     <h-form-item label="disabled">
       <h-radio-group v-model="disabled">
-        <h-radio :label="true">True</h-radio>
-        <h-radio :label="false">False</h-radio>
+        <h-radio :value="true">True</h-radio>
+        <h-radio :value="false">False</h-radio>
       </h-radio-group>
     </h-form-item>
     <h-form-item label="filterable">
       <h-radio-group v-model="filterable">
-        <h-radio :label="true">True</h-radio>
-        <h-radio :label="false">False</h-radio>
+        <h-radio :value="true">True</h-radio>
+        <h-radio :value="false">False</h-radio>
       </h-radio-group>
     </h-form-item>
   </h-form>
@@ -44,7 +44,12 @@
         @focus="onFocus"
         @blur="onBlur"
       >
-        <h-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
+        <h-option
+          v-for="item of selectOptions"
+          :key="item.value"
+          :value="item.value"
+          :label="item.label"
+        />
       </h-select>
     </h-grid-item>
     <h-grid-item :span="{ xs: 12, md: 8, lg: 6, xl: 6, xxl: 6 }">
@@ -63,11 +68,15 @@
         @focus="onFocus"
         @blur="onBlur"
       >
-        <h-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
+        <h-option
+          v-for="item of selectOptions"
+          :key="item.value"
+          :value="item.value"
+          :label="item.label"
+        />
       </h-select>
     </h-grid-item>
   </h-grid>
-
 </template>
 
 <script setup lang="ts">

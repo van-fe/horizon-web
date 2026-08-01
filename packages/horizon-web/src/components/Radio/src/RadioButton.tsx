@@ -27,7 +27,6 @@ export default defineComponent({
       disabled: propDisabled,
       viewable: propViewable,
       size: propSize,
-      label: propLabel,
       value: propValue,
       fill: propFill,
       name: propName,
@@ -42,7 +41,7 @@ export default defineComponent({
     const isDisabled = computed(
       () => HRadioGroup?.disabled ?? propDisabled?.value ?? formDisabled?.value ?? false,
     );
-    const radioButtonValue = computed(() => propValue.value || propLabel.value);
+    const radioButtonValue = computed(() => propValue.value);
 
     const viewable = computed(() => (isGroup.value ? HRadioGroup!.viewable : propViewable.value));
     const size = computed(() => (isGroup.value ? HRadioGroup!.size : propSize.value));

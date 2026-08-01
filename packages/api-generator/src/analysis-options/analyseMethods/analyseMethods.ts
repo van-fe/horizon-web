@@ -23,7 +23,6 @@ function analysePropertyAssignment(
     type: '',
     nativeType: ApiGeneratorAnalysedBaseType.Function,
     params: [],
-    deprecated: jsDoc.tags.deprecated?.default,
     version: jsDoc.tags.version?.default,
     return: 'void',
   };

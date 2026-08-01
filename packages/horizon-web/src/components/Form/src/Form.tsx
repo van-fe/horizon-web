@@ -42,7 +42,6 @@ export default defineComponent({
       rules: rulesRef,
       model: modelRef,
       disabled: disabledRef,
-      compact: compactRef,
       spacing: spacingRef,
     } = toRefs(props);
 
@@ -69,20 +68,6 @@ export default defineComponent({
       rulesRef,
       () => {
         if (props.validateOnRuleChange) {
-          validate().catch(() => {
-            // no need to console error
-          });
-        }
-      },
-      {
-        deep: true,
-      },
-    );
-
-    watch(
-      modelRef,
-      () => {
-        if (props.validateOnChange) {
           validate().catch(() => {
             // no need to console error
           });
@@ -250,7 +235,7 @@ export default defineComponent({
           classHelper.is(`position-${props.labelPosition}`),
           classHelper.is(`justify-${props.labelJustifyAlign}`),
           classHelper.is(`vertical-${props.labelVerticalAlign}`),
-          classHelper.is(`spacing-${compactRef?.value ? 'compact' : spacingRef.value}`),
+          classHelper.is(`spacing-${spacingRef.value}`),
           classHelper.has('helper', hasHelper.value),
         )}
         onSubmit={onSubmit}

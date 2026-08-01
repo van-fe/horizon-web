@@ -3,7 +3,7 @@
     <div class="mb-8">
       <h-popover trigger="click-remain">
         <template #reference>
-          <h-button type="secondary" class="mr-4">
+          <h-button plain class="mr-4">
             click-remain 模式，点击 popper 里面的内容，浮层会消失
           </h-button>
         </template>
@@ -20,9 +20,7 @@
     <div>
       <h-popover trigger="click-remain" hide-event-type="mousedown">
         <template #reference>
-          <h-button type="secondary" class="mr-4">
-            设置了hide-event-type="mousedown"，浮层会保留
-          </h-button>
+          <h-button plain class="mr-4">设置了hide-event-type="mousedown"，浮层会保留</h-button>
         </template>
         <template #popper>
           <h-pop-content>

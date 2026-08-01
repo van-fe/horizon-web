@@ -96,8 +96,9 @@ export default defineComponent({
       }
     }
 
-    function onKeyUP(evt: KeyboardEvent) {
-      if (evt.code === 'Enter' && isClickable.value) {
+    function onKeyDown(evt: KeyboardEvent) {
+      if ((evt.key === 'Enter' || evt.key === ' ') && isClickable.value) {
+        evt.preventDefault();
         emit('click', evt, index.value);
 
         onClickStep(index.value);
@@ -155,9 +156,11 @@ export default defineComponent({
           style={stepStyle.value}
           data-index={index.value}
           role={isClickable.value ? 'button' : undefined}
-          tabindex={isClickable.value ? '0' : undefined}
+          tabindex={isClickable.value ? 0 : undefined}
+          aria-current={activeIndex.value === index.value ? 'step' : undefined}
+          aria-disabled={props.disabled || undefined}
           onClick={onClick}
-          onKeyup={onKeyUP}
+          onKeydown={onKeyDown}
         >
           <div class={classHelper.e('wrapper')}>
             <div class={classHelper.e('tail')}></div>

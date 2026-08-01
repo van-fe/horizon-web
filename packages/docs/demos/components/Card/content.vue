@@ -1,11 +1,7 @@
 <template>
   <div class="content">
     <h-card title="标题">
-      <img
-          class="content-img"
-          src="/demo-assets/scene-city.svg"
-          alt=""
-      />
+      <img class="content-img" src="/demo-assets/scene-city.svg" alt="" />
     </h-card>
     <h-card>
       <ul class="list">
@@ -20,9 +16,9 @@
     <h-card>
       <template #header>
         <h-tabs size="medium" v-model="tab">
-          <h-tab label="标签一" name="label1"></h-tab>
-          <h-tab label="标签二" name="label2"></h-tab>
-          <h-tab label="标签三" name="label3"></h-tab>
+          <h-tab label="标签一" key="label1"></h-tab>
+          <h-tab label="标签二" key="label2"></h-tab>
+          <h-tab label="标签三" key="label3"></h-tab>
         </h-tabs>
       </template>
       <p>
@@ -63,7 +59,7 @@ const tab = ref('label1');
   }
   h4 {
     font-weight: 400;
-    color: #868A9A;
+    color: #868a9a;
     margin-bottom: 4px;
   }
   p {

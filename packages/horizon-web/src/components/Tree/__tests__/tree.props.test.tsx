@@ -38,20 +38,6 @@ describe('Tree.tsx props', () => {
     }
   });
 
-  test('item-size', async () => {
-    const itemSize = ref<TreeProps['itemSize']>();
-
-    const { element } = await createInstance({ itemSize });
-
-    expect(element.classes(treeClassHelper.m('medium'))).toBeTruthy();
-
-    for (const currSize of ['small', 'medium', 'large', 'huge'] as const) {
-      itemSize.value = currSize;
-      await nextTick();
-      expect(element.classes(treeClassHelper.m(currSize))).toBeTruthy();
-    }
-  });
-
   test('disabled', async () => {
     const disabled = ref<TreeProps['disabled']>(false);
 
@@ -255,10 +241,6 @@ describe('Tree.tsx props', () => {
     await nextTick();
 
     expect(element.find('.h-recycle-scroller__item-wrapper').exists()).toBeTruthy();
-  });
-
-  test.skip('tooltip-show-after & tooltip-hide-after', async () => {
-    // not necessary to test
   });
 
   test('expand-values', async () => {

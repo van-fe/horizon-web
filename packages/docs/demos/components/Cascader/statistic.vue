@@ -2,16 +2,16 @@
   <h-form label-position="left" label-vertical-align="middle">
     <h-form-item label="size">
       <h-radio-group v-model="size">
-        <h-radio label="small" />
-        <h-radio label="medium" />
-        <h-radio label="large" />
+        <h-radio value="small" />
+        <h-radio value="medium" />
+        <h-radio value="large" />
       </h-radio-group>
     </h-form-item>
     <h-form-item label="inputStyle">
       <h-radio-group v-model="inputStyle">
-        <h-radio label="normal" />
-        <h-radio label="emphasize" />
-        <h-radio label="no-border" />
+        <h-radio value="normal" />
+        <h-radio value="emphasize" />
+        <h-radio value="no-border" />
       </h-radio-group>
     </h-form-item>
   </h-form>
@@ -44,7 +44,6 @@
       />
     </h-grid-item>
   </h-grid>
-
 </template>
 
 <script setup lang="ts">
@@ -57,10 +56,11 @@ const baseData = ref([]);
 const currentVal1 = ref<string[][]>([]);
 const currentVal2 = ref<string[][]>([]);
 
-onMounted(async()=>{
-  baseData.value = await fetch(new URL('/cascader-tree-data.json', import.meta.url).href).then(r => r.json());
+onMounted(async () => {
+  baseData.value = await fetch(new URL('/cascader-tree-data.json', import.meta.url).href).then(r =>
+    r.json(),
+  );
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

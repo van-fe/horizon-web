@@ -79,6 +79,8 @@ export default defineComponent({
       <Transition name="h-alert-fade">
         <div
           v-show={visible.value}
+          role={props.type === 'error' || props.type === 'warning' ? 'alert' : 'status'}
+          aria-live={props.type === 'error' || props.type === 'warning' ? 'assertive' : 'polite'}
           class={cls(
             classHelper.block,
             classHelper.is('round', props.rounded),
@@ -138,6 +140,15 @@ export default defineComponent({
                 classHelper.is('flex-start', !!props.title && !!props.description),
               )}
               onClick={close}
+              role="button"
+              tabindex={0}
+              aria-label="Close alert"
+              onKeydown={(evt: KeyboardEvent) => {
+                if (evt.key === 'Enter' || evt.key === ' ') {
+                  evt.preventDefault();
+                  close(evt as unknown as MouseEvent);
+                }
+              }}
             >
               <AIcon size={12} name="close" />
             </div>

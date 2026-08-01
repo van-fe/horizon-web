@@ -14,7 +14,7 @@ import { nextTick } from 'vue';
 export const useRadioProps = declarePropType({
   /**
    * 选中项绑定值
-    * @en Configuration for model value.
+   * @en Configuration for model value.
    */
   modelValue: {
     type: [String, Number, Boolean],
@@ -22,18 +22,8 @@ export const useRadioProps = declarePropType({
     default: '',
   },
   /**
-   * 单选框对应的值
-   * @deprecated value
-    * @en Configuration for label.
-   */
-  label: {
-    type: [String, Number, Boolean],
-    required: false,
-    default: '',
-  },
-  /**
    * 单选框按钮对应的值
-    * @en Configuration for value.
+   * @en Configuration for value.
    */
   value: {
     type: [String, Number, Boolean],
@@ -42,7 +32,7 @@ export const useRadioProps = declarePropType({
   },
   /**
    * 是否禁用单选框
-    * @en Configuration for disabled.
+   * @en Configuration for disabled.
    */
   disabled: {
     type: Boolean,
@@ -50,7 +40,7 @@ export const useRadioProps = declarePropType({
   },
   /**
    * 是否显示边框
-    * @en Configuration for border.
+   * @en Configuration for border.
    */
   border: {
     type: Boolean,
@@ -59,7 +49,7 @@ export const useRadioProps = declarePropType({
   },
   /**
    * 开启只读模式
-    * @en Configuration for viewable.
+   * @en Configuration for viewable.
    */
   viewable: {
     type: Boolean,
@@ -68,23 +58,15 @@ export const useRadioProps = declarePropType({
   },
   /**
    *  单选框对应尺寸，仅在开启border有效
-    * @en Configuration for size.
+   * @en Configuration for size.
    */
   size: {
     type: String as PropType<'small' | 'medium' | 'large'>,
     required: false,
   },
   /**
-   * 是否强制使用最新尺寸规则
-    * @en Configuration for force newest size.
-   */
-  forceNewestSize: {
-    type: Boolean,
-    default: false,
-  },
-  /**
    * 同原生 `name`
-    * @en Configuration for name.
+   * @en Configuration for name.
    */
   name: {
     type: String,
@@ -94,7 +76,7 @@ export const useRadioProps = declarePropType({
 export const useRadioButtonProps = declarePropType({
   /**
    * 选中项绑定值
-    * @en Configuration for model value.
+   * @en Configuration for model value.
    */
   modelValue: {
     type: [String, Number, Boolean],
@@ -103,17 +85,7 @@ export const useRadioButtonProps = declarePropType({
   },
   /**
    * 单选框按钮对应的值
-   * @deprecated value
-    * @en Configuration for label.
-   */
-  label: {
-    type: [String, Number, Boolean],
-    required: false,
-    default: '',
-  },
-  /**
-   * 单选框按钮对应的值
-    * @en Configuration for value.
+   * @en Configuration for value.
    */
   value: {
     type: [String, Number, Boolean],
@@ -122,7 +94,7 @@ export const useRadioButtonProps = declarePropType({
   },
   /**
    * 是否禁用单选框按钮
-    * @en Configuration for disabled.
+   * @en Configuration for disabled.
    */
   disabled: {
     type: Boolean,
@@ -130,23 +102,15 @@ export const useRadioButtonProps = declarePropType({
   },
   /**
    *  单选框按钮对应尺寸
-    * @en Configuration for size.
+   * @en Configuration for size.
    */
   size: {
     type: String as PropType<'small' | 'medium' | 'large'>,
     required: false,
   },
   /**
-   * 是否强制使用最新尺寸规则
-    * @en Configuration for force newest size.
-   */
-  forceNewestSize: {
-    type: Boolean,
-    default: false,
-  },
-  /**
    * 开启只读模式
-    * @en Configuration for viewable.
+   * @en Configuration for viewable.
    */
   viewable: {
     type: Boolean,
@@ -156,7 +120,7 @@ export const useRadioButtonProps = declarePropType({
   /**
    * 填充色
    * 支持全部主题色
-    * @en Configuration for fill.
+   * @en Configuration for fill.
    */
   fill: {
     type: String,
@@ -165,7 +129,7 @@ export const useRadioButtonProps = declarePropType({
   },
   /**
    * 同原生 `name`
-    * @en Configuration for name.
+   * @en Configuration for name.
    */
   name: {
     type: String,
@@ -175,7 +139,7 @@ export const useRadioButtonProps = declarePropType({
 export const useRadioGroupProps = declarePropType({
   /**
    * 选中项绑定值
-    * @en Configuration for model value.
+   * @en Configuration for model value.
    */
   modelValue: {
     type: [String, Number, Boolean],
@@ -183,7 +147,7 @@ export const useRadioGroupProps = declarePropType({
   },
   /**
    * 是否禁用单选框(按钮)组
-    * @en Configuration for disabled.
+   * @en Configuration for disabled.
    */
   disabled: {
     type: Boolean,
@@ -191,23 +155,15 @@ export const useRadioGroupProps = declarePropType({
   },
   /**
    *  单选框组尺寸
-    * @en Configuration for size.
+   * @en Configuration for size.
    */
   size: {
     type: String as PropType<'small' | 'medium' | 'large'>,
     required: false,
   },
   /**
-   * 是否强制使用最新尺寸规则
-    * @en Configuration for force newest size.
-   */
-  forceNewestSize: {
-    type: Boolean,
-    default: false,
-  },
-  /**
    * 开启只读模式
-    * @en Configuration for viewable.
+   * @en Configuration for viewable.
    */
   viewable: {
     type: Boolean,
@@ -216,7 +172,7 @@ export const useRadioGroupProps = declarePropType({
   },
   /**
    * 同原生 `name`，会设置给子元素
-    * @en Configuration for name.
+   * @en Configuration for name.
    */
   name: {
     type: String,

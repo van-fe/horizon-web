@@ -1,6 +1,6 @@
 import { createTextVNode, Comment } from 'vue';
 import type { VNode, Slot, VNodeChild } from 'vue';
-import { pascalize, isVNodeEmpty } from '../helpers';
+import { isVNodeEmpty } from '../helpers';
 
 export function flattenVNodes(
   vNodes: VNodeChild[],
@@ -32,30 +32,6 @@ export function slotVNodes(slot: Slot | undefined): VNode[] {
   return slot ? slot() : [];
 }
 
-/**
- * a-b-cd --> ABCd
- * ABc --> ABc
- */
-export function transformTag(tag: string) {
-  const tags = tag.split('-');
-  if (tags.length === 1) return tag;
-  return pascalize(tag);
-}
-
-export function compatible(vnode: VNode) {
-  vnode.type = vnode.type || {
-    name:
-      (vnode as any)?.componentOptions?.Ctor?.extendOptions?.name ??
-      transformTag((vnode as any)?.componentOptions?.tag ?? ''),
-  };
-
-  vnode.props = vnode.props || (vnode as any)?.componentOptions?.propsData;
-
-  if (Array.isArray(vnode?.children)) {
-    vnode.children.forEach(child => compatible(child as any));
-  }
-}
-
 export function slotAdapter(slot?: Slot): VNode[] | undefined {
   if (!slot) return slot;
   const VNodes = slotVNodes(slot);
@@ -72,15 +48,13 @@ export function slotAdapter(slot?: Slot): VNode[] | undefined {
     }
     V3Nodes.push(vnode);
   });
-  V3Nodes.forEach(vnode => compatible(vnode));
-
   return V3Nodes;
 }
 
+let textWidthCanvas: HTMLCanvasElement | undefined;
+
 export function getTextWidth(text: string, fontSize = '14px') {
-  // @ts-ignore
-  // eslint-disable-next-line
-  const canvas: HTMLCanvasElement = getTextWidth.canvas || (getTextWidth.canvas = document.createElement('canvas'));
+  const canvas = textWidthCanvas ?? (textWidthCanvas = document.createElement('canvas'));
   const context = canvas.getContext('2d');
   if (context) {
     context.font = `${fontSize} Blue Sky Standard-Regular, Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif`;

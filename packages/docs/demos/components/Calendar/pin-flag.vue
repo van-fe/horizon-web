@@ -3,27 +3,27 @@
     <h-form label-position="left" label-vertical-align="middle" label-width="150px">
       <h-form-item label="Reserve Event">
         <h-radio-group v-model="reserveEvent">
-          <h-radio :label="1">Don't reserve</h-radio>
-          <h-radio :label="2">Reserve original</h-radio>
-          <h-radio :label="3">Reserve and modify</h-radio>
+          <h-radio :value="1">Don't reserve</h-radio>
+          <h-radio :value="2">Reserve original</h-radio>
+          <h-radio :value="3">Reserve and modify</h-radio>
         </h-radio-group>
       </h-form-item>
       <h-form-item label="Date Type">
         <h-radio-group v-model="dateType">
-          <h-radio label="full">Full</h-radio>
-          <h-radio label="only-current">Only Current</h-radio>
+          <h-radio value="full">Full</h-radio>
+          <h-radio value="only-current">Only Current</h-radio>
         </h-radio-group>
       </h-form-item>
       <h-form-item label="Pin Flags Show Time">
         <h-radio-group v-model="showTime">
-          <h-radio :label="true">Yes</h-radio>
-          <h-radio :label="false">No</h-radio>
+          <h-radio :value="true">Yes</h-radio>
+          <h-radio :value="false">No</h-radio>
         </h-radio-group>
       </h-form-item>
       <h-form-item label="Create Flag Can Though Disable Date Or Hour">
         <h-radio-group v-model="createFlagCanThoughDisableDateOrHour">
-          <h-radio :label="true">Yes</h-radio>
-          <h-radio :label="false">No</h-radio>
+          <h-radio :value="true">Yes</h-radio>
+          <h-radio :value="false">No</h-radio>
         </h-radio-group>
       </h-form-item>
     </h-form>

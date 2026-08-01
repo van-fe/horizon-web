@@ -2,14 +2,14 @@
   <h-form label-position="left">
     <h-form-item label="size">
       <h-radio-group v-model="size">
-        <h-radio label="small"></h-radio>
-        <h-radio label="medium"></h-radio>
+        <h-radio value="small"></h-radio>
+        <h-radio value="medium"></h-radio>
       </h-radio-group>
     </h-form-item>
     <h-form-item label="dot">
       <h-radio-group v-model="dot">
-        <h-radio :label="true">True</h-radio>
-        <h-radio :label="false">False</h-radio>
+        <h-radio :value="true">True</h-radio>
+        <h-radio :value="false">False</h-radio>
       </h-radio-group>
     </h-form-item>
   </h-form>

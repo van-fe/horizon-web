@@ -25,14 +25,3 @@ Set `disabled = true` to enable disabled state
 ## One-Click Inverse Selection
 Use the exposed `toggle()` method to implement one-click inverse selection
 :::demo components/Checkbox/inverse.vue :::
-
-## v2 Version Changes
-Since `2.0.0`, `small` is no longer part of the specification:
-
-① The original `size='small'` will automatically be treated as `size='medium'`
-
-② The original `small` size is consistent with the current `medium` size
-
-③ The original `medium` size is consistent with the current `large` size
-
-④ The original `large` size has been removed

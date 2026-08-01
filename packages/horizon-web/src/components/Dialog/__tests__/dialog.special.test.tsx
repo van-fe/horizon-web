@@ -6,14 +6,14 @@ import HButton from '../../Button';
 
 describe('Dialog.tsx special problem', () => {
   test('visible set true while rendering', async () => {
-    const modelValue = ref(true);
+    const visible = ref(true);
     const wrapper = mount(
       () => (
         <HDialog
-          modelValue={modelValue.value}
-          toBody={false}
-          secondaryText="Close"
-          onUpdate:modelValue={val => (modelValue.value = val)}
+          visible={visible.value}
+          to={null}
+          cancelText="Close"
+          onUpdate:visible={val => (visible.value = val)}
         />
       ),
       {

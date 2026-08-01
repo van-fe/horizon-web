@@ -5,19 +5,19 @@
       <h-checkbox-button v-model="border">Border</h-checkbox-button>
       <div>Type：</div>
       <h-radio-group v-model="type">
-        <h-radio-button v-for="(label, index) in typeOptions" :key="index" :label="label" />
+        <h-radio-button v-for="(label, index) in typeOptions" :key="index" :value="label" />
       </h-radio-group>
       <div>Size：</div>
       <h-radio-group v-model="size">
-        <h-radio-button v-for="(label, index) in sizeOptions" :key="index" :label="label" />
+        <h-radio-button v-for="(label, index) in sizeOptions" :key="index" :value="label" />
       </h-radio-group>
       <div>LabelPosition：</div>
       <h-radio-group v-model="LabelPosition">
-        <h-radio-button v-for="(label, index) in ['left', 'top']" :key="index" :label="label" />
+        <h-radio-button v-for="(label, index) in ['left', 'top']" :key="index" :value="label" />
       </h-radio-group>
       <div>Column：</div>
       <h-radio-group v-model="column">
-        <h-radio-button v-for="(label, index) in [1, 2]" :key="index" :label="label" />
+        <h-radio-button v-for="(label, index) in [1, 2]" :key="index" :value="label" />
       </h-radio-group>
     </div>
     <h-descriptions

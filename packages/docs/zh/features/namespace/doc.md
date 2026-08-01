@@ -2,8 +2,6 @@
 
 horizon-web 提供的默认命名空间为 `n`，在微应用等特殊环境下，需要自定义命名空间，来减少因为命名冲突造成的组件功能、样式错乱。
 
-:::tip 此功能自 2.0.0 开始支持 :::
-
 ## 使用 HApplication 修改
 
 可以使用 `HApplication` 的 `props.namespace` 修改命名空间

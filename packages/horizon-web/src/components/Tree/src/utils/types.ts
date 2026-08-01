@@ -69,11 +69,6 @@ export interface HTreeDynamicLoadNode {
   node: HExtendTreeNodeData | null;
   /**
    * 当前节点 `vNode`
-   * @deprecated `vNode`
-   */
-  vnode?: VNode;
-  /**
-   * 当前节点 `vNode`
    */
   vNode?: VNode;
 }

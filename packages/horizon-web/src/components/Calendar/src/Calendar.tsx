@@ -31,8 +31,8 @@ import {
   HCalendarPropsInjectKey,
   HCalendarSlotsInjectKey,
 } from './utils/injectKeys';
-import HTab from '~/components/Tabs/src/Tab';
-import HTabs from '~/components/Tabs/src/Tabs';
+import HSegmented from '~/components/Segmented/src/Segmented';
+import HSegmentedItem from '~/components/Segmented/src/SegmentedItem';
 import HButton from '~/components/Button/src/Button';
 import PinFlagsHelper from './utils/PinFlagsHelper';
 import HDatePicker from '~/components/DatePicker/src/DatePicker';
@@ -186,21 +186,35 @@ export default defineComponent({
         switch (item) {
           case 'year':
             nodes.push(
-              <HTab label={locale.value?.langService.td().horizonWeb.calendar.year} key="year" />,
+              <HSegmentedItem
+                label={locale.value?.langService.td().horizonWeb.calendar.year}
+                key="year"
+              />,
             );
             break;
           case 'month':
             nodes.push(
-              <HTab label={locale.value?.langService.td().horizonWeb.calendar.month} key="month" />,
+              <HSegmentedItem
+                label={locale.value?.langService.td().horizonWeb.calendar.month}
+                key="month"
+              />,
             );
             break;
           case 'week':
             nodes.push(
-              <HTab label={locale.value?.langService.td().horizonWeb.calendar.week} key="week" />,
+              <HSegmentedItem
+                label={locale.value?.langService.td().horizonWeb.calendar.week}
+                key="week"
+              />,
             );
             break;
           case 'day':
-            nodes.push(<HTab label={locale.value?.langService.td().horizonWeb.calendar.day} key="day" />);
+            nodes.push(
+              <HSegmentedItem
+                label={locale.value?.langService.td().horizonWeb.calendar.day}
+                key="day"
+              />,
+            );
             break;
         }
       });
@@ -266,7 +280,6 @@ export default defineComponent({
                 type="normal"
                 plain={true}
                 size="large"
-                forceNewestSize={true}
                 class={classHelper.em('header', 'today')}
                 onClick={() => (currentDate.value = dayjs())}
               >
@@ -302,16 +315,15 @@ export default defineComponent({
           <div class={classHelper.em('header', 'suffix')}>{slots.header?.()}</div>
           {props.modeSwitchable && (
             <div class={classHelper.em('header', 'mode-switcher')}>
-              <HTabs
+              <HSegmented
                 activeKey={currentMode.value}
-                type="segment"
                 size="medium"
                 onUpdate:activeKey={val =>
                   (currentMode.value = val as 'month' | 'year' | 'week' | 'day')
                 }
               >
                 {switchModes.value}
-              </HTabs>
+              </HSegmented>
             </div>
           )}
         </div>

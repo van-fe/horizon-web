@@ -6,14 +6,6 @@ import methodsRegister from './methods';
 
 export interface HorizonWebOption {
   locale?: LocalOptionType;
-  /**
-   * 是否让 css 变量中存在版本号
-   */
-  cssVariableUseVersion?: boolean;
-  /**
-   * css 变量使用版本的存储的 key
-   */
-  cssVariableUseVersionStoreKey?: string;
 }
 
 export function defineOption(option: HorizonWebOption): HorizonWebOption {
@@ -27,12 +19,13 @@ export interface HorizonWebInstaller {
 
 const INSTALLED_KEY = Symbol('INSTALLED_KEY');
 
-export default function makeInstaller(plugins: Plugin[] = []): HorizonWebInstaller {
+export default function makeInstaller(plugins: Plugin[] | (() => Plugin[]) = []): HorizonWebInstaller {
   const install = (app: App, options?: HorizonWebOption) => {
     if (app[INSTALLED_KEY]) return app;
 
     app[INSTALLED_KEY] = true;
-    plugins.forEach(plugin => app.use(plugin, options));
+    const resolvedPlugins = typeof plugins === 'function' ? plugins() : plugins;
+    resolvedPlugins.forEach(plugin => app.use(plugin, options));
 
     app.use(provides, options);
     app.use(methodsRegister);

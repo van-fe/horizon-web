@@ -16,7 +16,6 @@
 
 ## 尺寸
 根据不同的场景，你可以选择使用 `small`, `medium`, `large`, `huge` 四种尺寸的对话框。
-设计规范更新，后续废弃自定义宽度，统一使用尺寸控制。
 :::demo components/Dialog/demo4.vue :::
 
 ## 溢出内容

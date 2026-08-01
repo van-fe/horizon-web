@@ -24,6 +24,7 @@ import {
   watch,
   Transition,
   provide,
+  useId,
 } from 'vue';
 import HTransition from '~/components/Transition/src/Transition';
 import useLocaleLang from '~/utils/useLocaleLang';
@@ -53,55 +54,51 @@ export default defineComponent({
   emits: useDialogEmits,
   slots: useDialogSlots,
   exposes: useDialogExposes,
-  setup(props, { slots, emit, attrs }: HorizonWebSetupContext<DialogEmits, DialogSlots, DialogExposes>) {
+  setup(
+    props,
+    { slots, emit, attrs }: HorizonWebSetupContext<DialogEmits, DialogSlots, DialogExposes>,
+  ) {
     // const locale = inject(localeInjectKey, defaultLocale);
 
     const {
       title: titleRef,
       iconName: iconNameRef,
-      iconSize: iconSizeRef,
       iconColor: iconColorRef,
       closeButton: closeButtonRef,
       mask: maskRef,
       maskClose: maskCloseRef,
       escClose: escCloseRef,
       size,
-      priorZIndex: priorZIndexRef,
     } = toRefs(props);
     const popupContainerGetter = usePopupContainerGetter();
     const classHelper = new ComponentClassBlock('dialog');
-    const visible = computed(() => props.modelValue || props.visible);
-    const closedDestroy = computed(() => props.displayType === 'if' || props.destroyOnClose);
+    const titleId = useId();
+    let previouslyFocused: HTMLElement | null = null;
+    const visible = computed(() => props.visible);
+    const closedDestroy = computed(() => props.destroyOnClose);
 
-    const okText = computed(() => props.primaryText || props.okText);
-    const cancelText = computed(() => props.secondaryText || props.cancelText);
+    const okText = computed(() => props.okText);
+    const cancelText = computed(() => props.cancelText);
     const defaultOkText = useLocaleLang('global.ok');
     const defaultCancelText = useLocaleLang('global.cancel');
-    const okButton = computed(() => props.primaryButton && !!props.okButtonProps);
-    const cancelButton = computed(() => props.secondaryButton && !!props.cancelButtonProps);
-    const okButtonProps = computed(
-      () =>
-        props.primaryButtonProps ||
-        (typeof props.okButtonProps === 'object' ? props.okButtonProps : {}),
+    const okButton = computed(() => !!props.okButtonProps);
+    const cancelButton = computed(() => !!props.cancelButtonProps);
+    const okButtonProps = computed(() =>
+      typeof props.okButtonProps === 'object' ? props.okButtonProps : {},
     );
-    const cancelButtonProps = computed(
-      () =>
-        props.secondaryButtonProps ||
-        (typeof props.cancelButtonProps === 'object' ? props.cancelButtonProps : {}),
+    const cancelButtonProps = computed(() =>
+      typeof props.cancelButtonProps === 'object' ? props.cancelButtonProps : {},
     );
-    const top = computed(() => (props.verticalPosition === 'top' ? props.top ?? '20%' : props.top));
+    const top = computed(() => props.top);
     const to = computed(() => {
       if (props.to || typeof props.to !== 'undefined') return props.to;
 
       if (popupContainerGetter.value) return popupContainerGetter.value();
 
-      if (props.toBody) return 'body';
-
       return undefined;
     });
 
     const closeDirectly = () => {
-      emit('update:modelValue', false);
       emit('update:visible', false);
     };
 
@@ -127,7 +124,7 @@ export default defineComponent({
     });
 
     const zIndexHandler = useZIndex(props.zIndex);
-    const zIndex = ref(priorZIndexRef?.value ?? zIndexHandler.current);
+    const zIndex = ref(props.zIndex ?? zIndexHandler.current);
 
     onKeyStroke('Escape', () => {
       if (escCloseRef.value && visible.value) {
@@ -149,8 +146,9 @@ export default defineComponent({
       visible,
       (newVal, oldVal) => {
         if (newVal) {
+          previouslyFocused = document.activeElement as HTMLElement | null;
           emit('open');
-          zIndex.value = priorZIndexRef?.value ?? zIndexHandler.next();
+          zIndex.value = props.zIndex ?? zIndexHandler.next();
           setLockScroll();
           // setTimeout(() => {
           //   emit('opened');
@@ -183,10 +181,36 @@ export default defineComponent({
     const { hasMoved, movableElement, dragging, draggleHandle, dialogStyle, notifyDialogClosed } =
       useDraggable(toRefs(props));
 
+    const trapFocus = (evt: KeyboardEvent) => {
+      if (evt.key !== 'Tab' || !movableElement.value) return;
+      const focusable = Array.from(
+        movableElement.value.querySelectorAll<HTMLElement>(
+          'a[href], button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"])',
+        ),
+      );
+      if (!focusable.length) {
+        evt.preventDefault();
+        movableElement.value.focus();
+        return;
+      }
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (evt.shiftKey && document.activeElement === first) {
+        evt.preventDefault();
+        last.focus();
+      } else if (!evt.shiftKey && document.activeElement === last) {
+        evt.preventDefault();
+        first.focus();
+      }
+    };
+
     const onOpened = () => {
+      movableElement.value?.focus();
       emit('opened');
     };
     const onClosed = () => {
+      previouslyFocused?.focus();
+      previouslyFocused = null;
       notifyDialogClosed();
       emit('closed');
     };
@@ -209,7 +233,7 @@ export default defineComponent({
                 <AIcon
                   class={classHelper.e('icon')}
                   name={iconNameRef.value}
-                  size={iconSizeRef.value}
+                  size={24}
                   color={iconColorRef.value}
                 />
               </div>
@@ -222,6 +246,7 @@ export default defineComponent({
             >
               {titleValue && (
                 <div
+                  id={titleId}
                   ref={draggleHandle}
                   class={[
                     classHelper.e('header'),
@@ -235,7 +260,9 @@ export default defineComponent({
                 >
                   {slots.title?.() ?? (
                     <div class={classHelper.e('default-title')}>
-                      <div class={classHelper.em('default-title', 'text')}>{titleRef.value}</div>
+                      <div class={classHelper.em('default-title', 'text')}>
+                        {titleRef.value}
+                      </div>
                       {closeButtonRef.value && (
                         <HButton
                           class={classHelper.e('header-close')}
@@ -243,8 +270,8 @@ export default defineComponent({
                           text={true}
                           type="normal"
                           size="small"
-                          forceNewestSize
                           iconSize={16}
+                          aria-label="Close dialog"
                           onClick={handleCloseIconClick}
                         />
                       )}
@@ -266,12 +293,6 @@ export default defineComponent({
                             plain
                             onClick={() => {
                               emit('cancel');
-                              if (attrs['onSecondary-click']) {
-                                // @ts-ignore
-                                emit('secondary-click');
-                              } else {
-                                emit('secondaryClick');
-                              }
                               close();
                             }}
                           >
@@ -285,12 +306,6 @@ export default defineComponent({
                             onDebounceFinished={() => emit('confirmDebounceFinished')}
                             onClick={() => {
                               emit('ok');
-                              if (attrs['onPrimary-click']) {
-                                // @ts-ignore
-                                emit('primary-click');
-                              } else {
-                                emit('primaryClick');
-                              }
                             }}
                           >
                             {okText.value || defaultOkText.value}
@@ -309,6 +324,11 @@ export default defineComponent({
         <div
           v-show={visible.value}
           ref={movableElement}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={titleValue ? titleId : undefined}
+          tabindex={-1}
+          onKeydown={trapFocus}
           class={[
             classHelper.e('container'),
             isString(sizeRef.value) && classHelper.m(sizeRef.value),

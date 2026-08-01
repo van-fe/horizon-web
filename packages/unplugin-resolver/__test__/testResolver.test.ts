@@ -20,7 +20,7 @@ describe('unplugin-resolver', () => {
 
   test('directive', () => {
     for (const dir of directives) {
-      const dirName = dir.name.replace(/^NV/, '');
+      const dirName = dir.name.replace(/^HV/, '');
       const res = directive.resolve(dirName);
       expect(res).not.toBeUndefined();
       expect(res?.name).toEqual(dir.name);
@@ -67,6 +67,13 @@ describe('unplugin-resolver', () => {
     ).not.toBeUndefined();
   });
 
+  test('custom component namespace', () => {
+    expect(HorizonWebPluginResolvers({ namespace: 'X' })[0].resolve('XButton')).toMatchObject({
+      name: 'HButton',
+      from: expect.stringContaining('/Button'),
+    });
+  });
+
   test('ssr', () => {
     expect(
       HorizonWebPluginResolvers({
@@ -107,29 +114,12 @@ describe('unplugin-resolver', () => {
     ).toEqual(expect.arrayContaining([expect.stringMatching(/\.scss$/)]));
   });
 
-  test('useResetStyle', () => {
-    expect(
-      HorizonWebPluginResolvers({
-        useResetStyle: true,
-      })[0].resolve('HButton')?.sideEffects,
-    ).toEqual(expect.arrayContaining([expect.stringMatching(/reset\.css$/)]));
+  test('can disable style imports', () => {
+    const [componentWithoutStyle, directiveWithoutStyle] = HorizonWebPluginResolvers({
+      importStyle: false,
+    });
 
-    expect(
-      HorizonWebPluginResolvers({
-        useResetStyle: false,
-      })[0].resolve('HButton')?.sideEffects,
-    ).not.toEqual(expect.arrayContaining([expect.stringMatching(/reset\.scss$/)]));
-
-    expect(
-      HorizonWebPluginResolvers({
-        useResetStyle: true,
-      })[1].resolve('Loading')?.sideEffects,
-    ).toEqual(expect.arrayContaining([expect.stringMatching(/reset\.css$/)]));
-
-    expect(
-      HorizonWebPluginResolvers({
-        useResetStyle: false,
-      })[1].resolve('Loading')?.sideEffects,
-    ).not.toEqual(expect.arrayContaining([expect.stringMatching(/reset\.scss$/)]));
+    expect(componentWithoutStyle.resolve('HButton')?.sideEffects).toStrictEqual([]);
+    expect(directiveWithoutStyle.resolve('Loading')?.sideEffects).toStrictEqual([]);
   });
 });

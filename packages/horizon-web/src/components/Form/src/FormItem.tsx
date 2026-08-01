@@ -161,11 +161,9 @@ export default defineComponent({
       return validator.validate({ [props.prop]: value }, errors => {
         if (errors?.length) {
           nForm.emit('validate', props.prop!, false, errors[0].message);
-          nForm.emit('validateChange', false);
           error.value = errors[0].message;
         } else {
           nForm.emit('validate', props.prop!, true, '');
-          nForm.emit('validateChange', true);
           error.value = '';
         }
       });
@@ -379,8 +377,8 @@ export default defineComponent({
             {(slots.error || error.value) && (
               <div class={classHelper.e('error')}>{slots.error?.() ?? error.value}</div>
             )}
-            {(slots.tip || slots.tips || props.tip) && (
-              <div class={classHelper.e('tip')}>{slots.tips?.() ?? slots.tip?.() ?? props.tip}</div>
+            {(slots.tip || props.tip) && (
+              <div class={classHelper.e('tip')}>{slots.tip?.() ?? props.tip}</div>
             )}
           </div>
         </div>

@@ -3,6 +3,9 @@ import { HResult } from '..';
 import { describe, expect, test, vi } from 'vitest';
 import HButton from '../../Button';
 import { nextTick, ref } from 'vue';
+import notAllowed from '../src/source/not-allowed.svg';
+import notFound from '../src/source/not-found.svg';
+import serverError from '../src/source/server-error.svg';
 
 describe('Result.tsx', () => {
   test('basic', async () => {
@@ -99,20 +102,21 @@ describe('Result.tsx', () => {
     test('403 404 500', async () => {
       const status = ref<403 | 404 | 500>(403);
       const wrapper = mount(() => <HResult type={status.value} />);
+      const imageSrc = () => wrapper.get('.h-result__image img').attributes('src');
 
-      expect(wrapper.html()).contains('not-allowed.svg');
+      expect(imageSrc()).toBe(notAllowed);
 
       status.value = 404;
 
       await nextTick();
 
-      expect(wrapper.html()).contains('not-found.svg');
+      expect(imageSrc()).toBe(notFound);
 
       status.value = 500;
 
       await nextTick();
 
-      expect(wrapper.html()).contains('server-error.svg');
+      expect(imageSrc()).toBe(serverError);
     });
   });
 

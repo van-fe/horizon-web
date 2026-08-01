@@ -101,3 +101,6 @@
 @forward '../methods/Notification/src/style/index';
 @forward '../methods/Message/src/style/index';
 @forward '../methods/LoadingBar/src/style/index';
+
+// Shared accessibility behavior must load after component styles so local outline resets cannot hide it.
+@forward './accessibility';

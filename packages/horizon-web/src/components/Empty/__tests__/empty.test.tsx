@@ -22,12 +22,12 @@ describe('Empty.tsx', () => {
     });
 
     test('image', async () => {
-      const wrapper = mount(() => <HEmpty image={HEmpty.PRESEHTED_IMAGES.EMPTY_ADDRESS} />);
+      const wrapper = mount(() => <HEmpty image={HEmpty.PRESENTED_IMAGES.EMPTY_ADDRESS} />);
       const element = wrapper.findComponent(HEmpty);
 
       await nextTick();
-      expect(element.find('.h-empty__image').html()).toEqual(
-        expect.stringMatching(/src=".*48efb02f7b3d.svg"/),
+      expect(element.find('.h-empty__image img').attributes('src')).toBe(
+        HEmpty.PRESENTED_IMAGES.EMPTY_ADDRESS,
       );
     });
 

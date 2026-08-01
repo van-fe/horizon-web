@@ -2,28 +2,28 @@
   <h-form label-position="left" label-width="fit-content">
     <h-form-item label="size">
       <h-radio-group v-model="sizeValue">
-        <h-radio value="large" label="large" />
-        <h-radio value="medium" label="medium" />
-        <h-radio value="small" label="small" />
+        <h-radio value="large" />
+        <h-radio value="medium" />
+        <h-radio value="small" />
       </h-radio-group>
     </h-form-item>
     <h-form-item label="input style">
       <h-radio-group v-model="inputStyle">
-        <h-radio value="normal" label="normal" />
-        <h-radio value="emphasize" label="emphasize" />
-        <h-radio value="no-border" label="no-border" />
+        <h-radio value="normal" />
+        <h-radio value="emphasize" />
+        <h-radio value="no-border" />
       </h-radio-group>
     </h-form-item>
     <h-form-item label="disabled">
       <h-radio-group v-model="disabled">
-        <h-radio :label="true">True</h-radio>
-        <h-radio :label="false">False</h-radio>
+        <h-radio :value="true">True</h-radio>
+        <h-radio :value="false">False</h-radio>
       </h-radio-group>
     </h-form-item>
     <h-form-item label="check-strictly">
       <h-radio-group v-model="checkStrictly">
-        <h-radio :label="true">True</h-radio>
-        <h-radio :label="false">False</h-radio>
+        <h-radio :value="true">True</h-radio>
+        <h-radio :value="false">False</h-radio>
       </h-radio-group>
     </h-form-item>
   </h-form>
@@ -79,7 +79,7 @@ import { HorizonWebComponentInstance } from '@aurora/utils';
 const cascaderDomRef1 = ref<HorizonWebComponentInstance<typeof HCascader, CascaderExposes>>();
 const cascaderDomRef2 = ref<HorizonWebComponentInstance<typeof HCascader, CascaderExposes>>();
 
-const currentVal1 = ref<string[]>(["guide", "navigation", "side nav"]);
+const currentVal1 = ref<string[]>(['guide', 'navigation', 'side nav']);
 const currentVal2 = ref<string[][]>([]);
 const baseData = ref([]);
 
@@ -108,9 +108,11 @@ function onBlur() {
   console.info('blur');
 }
 
-onMounted(async()=>{
-  baseData.value = await fetch(new URL('/cascader-options.json', import.meta.url).href).then(r => r.json());
-  currentVal2.value.push(["guide", "navigation", "side nav"]);
+onMounted(async () => {
+  baseData.value = await fetch(new URL('/cascader-options.json', import.meta.url).href).then(r =>
+    r.json(),
+  );
+  currentVal2.value.push(['guide', 'navigation', 'side nav']);
 
   console.info(cascaderDomRef1.value, cascaderDomRef2.value);
 });

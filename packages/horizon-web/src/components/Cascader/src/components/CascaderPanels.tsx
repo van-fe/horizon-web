@@ -3,7 +3,6 @@ import {
   defineComponent,
   inject,
   nextTick,
-  onBeforeUnmount,
   provide,
   ref,
   watch,
@@ -37,7 +36,6 @@ import type {
 } from '../utils/types';
 import CascaderSearchPanel from './CascaderSearchPanel';
 import { clamp } from '@vueuse/core';
-import throttle from 'lodash/throttle';
 import { useCascaderPanelsExposes } from '../composables/useExposes';
 import VLoading from '~/directives/v-loading/src';
 
@@ -323,7 +321,8 @@ export default defineComponent({
         ?.at(activePanelIndex.value)
         ?.filter(
           curr =>
-            (!parentProps.checkStrictly ? !curr.passingDisabled && !curr.disabled : true) &&
+            !curr.disabled &&
+            (parentProps.checkStrictly || !curr.passingDisabled) &&
             !curr.groupLabel,
         ),
     );
@@ -359,22 +358,35 @@ export default defineComponent({
 
     provide(HCascaderMouseOverOptionInjectKey, focusOptionWhileFilter);
 
-    const onArrowUpOrDownOnSearchingResults = throttle((evt: KeyboardEvent) => {
+    function onArrowUpOrDownOnSearchingResults(evt: KeyboardEvent) {
       let index = -1;
 
       const filteredVisibleOptions = visibleOptions.value.filter(
         curr =>
-          (parentProps.checkStrictly ? !curr.disabled : !curr.passingDisabled) && !curr.groupLabel,
+          !curr.disabled &&
+          (parentProps.checkStrictly || !curr.passingDisabled) &&
+          !curr.groupLabel,
       );
+
+      if (filteredVisibleOptions.length === 0) return;
 
       if (focusedFilterOption.value) {
         index = filteredVisibleOptions.indexOf(focusedFilterOption.value);
       }
 
-      index = clamp(index + (evt.key === 'ArrowUp' ? -1 : 1), 0, filteredVisibleOptions.length);
+      index =
+        index === -1
+          ? evt.key === 'ArrowUp'
+            ? filteredVisibleOptions.length - 1
+            : 0
+          : clamp(
+              index + (evt.key === 'ArrowUp' ? -1 : 1),
+              0,
+              filteredVisibleOptions.length - 1,
+            );
 
       focusedFilterOption.value = filteredVisibleOptions.at(index);
-    }, 150);
+    }
 
     /*** in normal mode***/
     function presetActiveIndex() {
@@ -400,41 +412,75 @@ export default defineComponent({
 
       activeItemsStack.value = currentActiveNode?.paths.concat() || [];
 
-      activeItemIndex.value = activeItemsStack.value.at(-1)?._index ?? -1;
+      activeItemIndex.value =
+        activePanelChildren.value?.findIndex(item => item._uuid === currentActiveNode?._uuid) ?? -1;
     }
 
-    const onArrowUpOrDown = throttle((evt: KeyboardEvent) => {
-      activeItemIndex.value = clamp(
-        activeItemIndex.value + (evt.key === 'ArrowUp' ? -1 : 1),
-        0,
-        (activePanelChildren.value?.length || 1) - 1,
-      );
+    function onArrowUpOrDown(evt: KeyboardEvent) {
+      const itemCount = activePanelChildren.value?.length ?? 0;
+      if (itemCount === 0) return;
+
+      activeItemIndex.value =
+        activeItemIndex.value === -1
+          ? evt.key === 'ArrowUp'
+            ? itemCount - 1
+            : 0
+          : clamp(
+              activeItemIndex.value + (evt.key === 'ArrowUp' ? -1 : 1),
+              0,
+              itemCount - 1,
+            );
 
       if (activeItemOption.value) {
         activeItemsStack.value.splice(activePanelIndex.value, 1, activeItemOption.value);
       }
-    }, 150);
+    }
 
-    const onArrowLeftOrRight = throttle((evt: KeyboardEvent) => {
-      const aimPanelIndex = clamp(
-        activePanelIndex.value + (evt.key === 'ArrowLeft' ? -1 : 1),
-        0,
-        renderPanels.value.length,
-      );
-
+    function onArrowLeftOrRight(evt: KeyboardEvent) {
       if (evt.key === 'ArrowRight') {
         if (activeItemOption.value && !activeItemOption.value.isLeaf) {
           expandChildren(activeItemOption.value, false);
-          activeItemsStack.value.push(activeItemOption.value);
-          activePanelIndex.value = aimPanelIndex;
-          activeItemIndex.value = 0;
+          if (activeItemOption.value.transformedChildren.length > 0) {
+            activeItemsStack.value.splice(activePanelIndex.value, 1, activeItemOption.value);
+            activePanelIndex.value = Math.min(
+              activePanelIndex.value + 1,
+              renderPanels.value.length - 1,
+            );
+            activeItemIndex.value = activePanelChildren.value?.length ? 0 : -1;
+            if (activeItemOption.value) {
+              activeItemsStack.value.splice(activePanelIndex.value, 1, activeItemOption.value);
+            }
+          }
         }
-      } else {
+      } else if (activePanelIndex.value > 0) {
         activeItemsStack.value.pop();
-        activePanelIndex.value = aimPanelIndex;
-        activeItemIndex.value = activeItemsStack.value.at(-1)?._index ?? activeItemIndex.value;
+        activePanelIndex.value -= 1;
+        const parent = activeItemsStack.value.at(-1);
+        activeItemIndex.value =
+          activePanelChildren.value?.findIndex(item => item._uuid === parent?._uuid) ?? -1;
       }
-    }, 100);
+    }
+
+    function onHomeOrEnd(evt: KeyboardEvent) {
+      const options = props.duringInput
+        ? visibleOptions.value.filter(
+            curr =>
+              !curr.disabled &&
+              (parentProps.checkStrictly || !curr.passingDisabled) &&
+              !curr.groupLabel,
+          )
+        : activePanelChildren.value;
+
+      if (!options?.length) return;
+
+      const index = evt.key === 'Home' ? 0 : options.length - 1;
+      if (props.duringInput) {
+        focusedFilterOption.value = options[index];
+      } else {
+        activeItemIndex.value = index;
+        activeItemsStack.value.splice(activePanelIndex.value, 1, options[index]);
+      }
+    }
 
     function onKeyboard(evt: KeyboardEvent) {
       if (
@@ -451,6 +497,11 @@ export default defineComponent({
       if (['ArrowDown', 'ArrowUp'].includes(evt.key)) {
         evt.preventDefault();
 
+        if (!popperVisible.value) {
+          emit('switchPanelStatus', true);
+          return;
+        }
+
         if (props.duringInput) {
           onArrowUpOrDownOnSearchingResults(evt);
         } else {
@@ -460,9 +511,14 @@ export default defineComponent({
 
       if (['ArrowLeft', 'ArrowRight'].includes(evt.key)) {
         evt.preventDefault();
-        if (!props.duringInput) {
+        if (popperVisible.value && !props.duringInput) {
           onArrowLeftOrRight(evt);
         }
+      }
+
+      if (['Home', 'End'].includes(evt.key) && popperVisible.value) {
+        evt.preventDefault();
+        onHomeOrEnd(evt);
       }
 
       if (evt.key === 'Enter') {
@@ -483,21 +539,6 @@ export default defineComponent({
       emit('mouseEnter', evt);
       // resetActiveIndex();
     }
-
-    watch(
-      () => props.isFocusing,
-      val => {
-        if (val) {
-          window.addEventListener('keydown', onKeyboard);
-        } else {
-          window.removeEventListener('keydown', onKeyboard);
-        }
-      },
-    );
-
-    onBeforeUnmount(() => {
-      window.removeEventListener('keydown', onKeyboard);
-    });
 
     expose({
       keyboardEventDeal: onKeyboard,

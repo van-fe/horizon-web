@@ -3,25 +3,36 @@
     <div class="control-box">
       <strong>设置 组件尺寸:</strong>
       <h-radio-group v-model="curSize">
-        <h-radio v-for="item in sizeOptions" :key="item.value" :label="item.value" size="small">{{item.label}}</h-radio>
+        <h-radio v-for="item in sizeOptions" :key="item.value" :value="item.value" size="small">
+          {{ item.label }}
+        </h-radio>
       </h-radio-group>
-      <br/>
+      <br />
       <strong>设置 容器的最大高度(px):</strong>
       <h-input-number v-model="curMaxHeight" :precision="0" :step="50" />
-      <br/><br/>
+      <br />
+      <br />
       <strong>设置 是否显示一级导航的数字后缀:</strong>
-      <br/>
+      <br />
       <h-switch v-model="showTitleSuffix" status status-on-text="是" status-off-text="否" />
-      <br/><br/>
+      <br />
+      <br />
       <strong>修改 倒数第二个导航title:</strong>
       <h-input v-model="lastSecondTitle" />
-      <br/><br/>
+      <br />
+      <br />
       <strong>修改 倒数第一个导航title:</strong>
       <h-input v-model="lastFirstTitle" />
     </div>
     <div class="content-box">
-      <h-anchor :scroll-container="scrollContainer" :size="curSize" :show-title-suffix="showTitleSuffix" :max-height="curMaxHeight" link-target="_top">
-        <h-anchor-link href="#设置尺寸" title="设置尺寸"  />
+      <h-anchor
+        :scroll-container="scrollContainer"
+        :size="curSize"
+        :show-title-suffix="showTitleSuffix"
+        :max-height="curMaxHeight"
+        link-target="_top"
+      >
+        <h-anchor-link href="#设置尺寸" title="设置尺寸" />
         <h-anchor-link href="#是否改变hash" title="是否改变hash" />
         <h-anchor-link href="#自定义滚动容器" title="自定义滚动容器" />
         <h-anchor-link href="#设置偏移量" title="设置偏移量" />

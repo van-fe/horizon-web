@@ -1,5 +1,5 @@
 <template>
-  <h-tabs v-model:active-key="activeKey" v2 type="card" :before-change="beforeChange">
+  <h-tabs v-model:active-key="activeKey" type="card" :before-change="beforeChange">
     <h-tab key="tab1" label="普通Tab" />
     <h-tab key="tab2" label="2s延迟">
       <template v-if="loading" #icon>

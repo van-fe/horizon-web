@@ -23,21 +23,20 @@ describe('Dialog.tsx 2nd', () => {
         () => (
           <div>
             <HDialog
-              modelValue={visible1.value}
+              visible={visible1.value}
               class="dialog-1"
-              primaryText="Confirm"
-              secondaryText="Cancel"
-              // onPrimaryClick={onPrimaryClick}
-              onPrimary-click={onPrimaryClick}
-              onUpdate:modelValue={val => (visible1.value = val)}
+              okText="Confirm"
+              cancelText="Cancel"
+              onOk={onPrimaryClick}
+              onUpdate:visible={val => (visible1.value = val)}
             />
             <HDialog
-              modelValue={visible2.value}
+              visible={visible2.value}
               class="dialog-2"
-              primaryText="Confirm"
-              secondaryText="Cancel"
-              onPrimaryClick={onPrimaryClick2}
-              onUpdate:modelValue={val => (visible2.value = val)}
+              okText="Confirm"
+              cancelText="Cancel"
+              onOk={onPrimaryClick2}
+              onUpdate:visible={val => (visible2.value = val)}
             />
           </div>
         ),

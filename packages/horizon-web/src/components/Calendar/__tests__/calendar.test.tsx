@@ -231,8 +231,28 @@ describe('Calendar.tsx', () => {
     });
   });
 
-  // happy-dom do not support IntersectionObserver
-  test.todo('mode-switchable update:mode');
+  test('mode-switchable update:mode', async () => {
+    const mode = ref<CalendarProps['mode']>('month');
+    const onUpdateMode = vi.fn((value: CalendarProps['mode']) => (mode.value = value));
+    const wrapper = mount(() => (
+      <HCalendar
+        mode={mode.value}
+        modeSwitchable={true}
+        modeSwitchableList={['year', 'month']}
+        {...{ 'onUpdate:mode': onUpdateMode }}
+      />
+    ));
+
+    const modeItems = wrapper.findAll('.h-segmented__item');
+    expect(modeItems).toHaveLength(2);
+
+    await modeItems[0].trigger('click');
+    await nextTick();
+
+    expect(onUpdateMode).toHaveBeenCalledWith('year');
+    expect(mode.value).toBe('year');
+    expect(wrapper.findComponent(YearCalendar).exists()).toBe(true);
+  });
 
   describe('emits', function () {
     test('update:modelValue', async () => {

@@ -5,33 +5,33 @@
   <h-form :inline="true">
     <h-form-item label="是否显示">
       <h-radio-group v-model="loadingOptions.isShow" size="small">
-        <h-radio :label="true" size="small">显示</h-radio>
-        <h-radio :label="false" size="small">隐藏</h-radio>
+        <h-radio :value="true" size="small">显示</h-radio>
+        <h-radio :value="false" size="small">隐藏</h-radio>
       </h-radio-group>
     </h-form-item>
     <h-form-item label="样式">
       <h-radio-group v-model="loadingOptions.loadingType" size="small">
-        <h-radio label="circle" size="small" />
-        <h-radio label="dots" size="small" />
+        <h-radio value="circle" size="small" />
+        <h-radio value="dots" size="small" />
       </h-radio-group>
     </h-form-item>
     <h-form-item label="排列风格">
       <h-radio-group v-model="loadingOptions.textOrient" size="small">
-        <h-radio label="column" size="small" />
-        <h-radio label="row" size="small" />
+        <h-radio value="column" size="small" />
+        <h-radio value="row" size="small" />
       </h-radio-group>
     </h-form-item>
     <h-form-item label="大小">
       <h-radio-group v-model="loadingOptions.size" size="small">
-        <h-radio label="large" size="small" />
-        <h-radio label="medium" size="small" />
-        <h-radio label="small" size="small" />
+        <h-radio value="large" size="small" />
+        <h-radio value="medium" size="small" />
+        <h-radio value="small" size="small" />
       </h-radio-group>
     </h-form-item>
     <h-form-item label="是否全屏">
       <h-radio-group v-model="loadingOptions.fullscreen" size="small">
-        <h-radio :label="true" size="small" />
-        <h-radio :label="false" size="small" />
+        <h-radio :value="true" size="small" />
+        <h-radio :value="false" size="small" />
       </h-radio-group>
     </h-form-item>
     <h-form-item label="loading文字">

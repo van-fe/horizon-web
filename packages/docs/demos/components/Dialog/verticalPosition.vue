@@ -1,13 +1,6 @@
 <template>
   <h-button @click="visible = true">点我</h-button>
-  <h-dialog
-    v-model="visible"
-    title="标题"
-    vertical-position="top"
-    :top="100"
-    @primaryClick="onPrimary"
-    @secondaryClick="onSecondary"
-  >
+  <h-dialog v-model:visible="visible" title="标题" :top="100" @ok="onPrimary" @cancel="onSecondary">
     <div>随便写点什么</div>
   </h-dialog>
 </template>

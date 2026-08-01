@@ -315,7 +315,7 @@ export default defineComponent({
     return () => (
       <div
         class={[`${classHelper.block}`, !slots.control && classHelper.m('none-control')]}
-        tabindex={0}
+        role="group"
         onBlur={onBlur}
       >
         <TransferPanel
@@ -388,7 +388,6 @@ export default defineComponent({
                       class={[classHelper.em('header', 'clear')]}
                       size="medium"
                       text={true}
-                      forceNewestSize={true}
                       onClick={() => clearChecked()}
                       disabled={isDisabled.value}
                     >

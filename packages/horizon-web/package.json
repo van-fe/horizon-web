@@ -46,12 +46,12 @@
     "*.scss"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.26.0",
-    "@floating-ui/vue": "^1.1.9",
     "@aurora/colors": "workspace:*",
     "@aurora/icon": "workspace:*",
     "@aurora/locale-vue": "workspace:*",
     "@aurora/utils": "workspace:*",
+    "@babel/runtime": "^7.26.0",
+    "@floating-ui/vue": "^1.1.9",
     "@popperjs/core": "^2.11.8",
     "@vueuse/core": "^11.0.0",
     "async-validator": "^4.2.5",
@@ -61,18 +61,17 @@
     "dompurify": "^3.2.2",
     "lodash": "^4.17.21",
     "nanoid": "^5.0.9",
-    "qrcode": "1.5.4",
-    "resize-observer-polyfill": "^1.5.1"
+    "qrcode": "1.5.4"
   },
   "devDependencies": {
     "@aurora/locale": "workspace:*",
     "@types/dompurify": "^3.0.5",
     "@types/qrcode": "1.5.5",
-    "vue": "^3.5.26",
     "@vue/reactivity": "^3.5.26",
     "fast-glob": "^3.3.2",
     "rollup-plugin-copy": "^3.4.0",
     "ts-morph": "^27.0.2",
+    "vue": "^3.5.26",
     "vue-router": "^4.4.5"
   },
   "imports": {}

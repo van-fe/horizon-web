@@ -6,7 +6,7 @@ import {
   useNamespace,
   useZIndex,
 } from '@aurora/utils';
-import { onKeyStroke, useWindowSize, useElementSize } from '@vueuse/core';
+import { onKeyStroke } from '@vueuse/core';
 import type { CSSProperties, ComponentInternalInstance } from 'vue';
 import {
   Teleport,
@@ -22,6 +22,7 @@ import {
   watch,
   Fragment,
   provide,
+  useId,
 } from 'vue';
 import HButton from '~/components/Button/src/Button';
 import HTransition from '~/components/Transition/src/Transition';
@@ -43,8 +44,11 @@ export default defineComponent({
   props: useDrawerProps,
   emits: useDrawerEmits,
   slots: useDrawerSlots,
-  setup(props, { slots, emit, attrs, expose }: HorizonWebSetupContext<DrawerEmits, DrawerSlots>) {
+  setup(props, { slots, emit, attrs }: HorizonWebSetupContext<DrawerEmits, DrawerSlots>) {
     const classHelper = new ComponentClassBlock('drawer');
+    const titleId = useId();
+    const drawerRef = ref<HTMLElement>();
+    let previouslyFocused: HTMLElement | null = null;
 
     const instance = getCurrentInstance();
     const locale = inject(localeInjectKey, defaultLocale);
@@ -52,108 +56,32 @@ export default defineComponent({
     const zIndexHandler = useZIndex();
 
     const zIndex = ref(zIndexHandler.next());
-    // const rendered = ref(props.visible || props.modelValue);
-    const containerEl = ref<HTMLElement>();
-
-    const visible = computed(() => props.visible || props.modelValue);
-    const closable = computed(() => props.closable && props.closeButton);
-    const maskClosable = computed(() => props.maskClosable && props.maskClose);
-    const escClosable = computed(() => props.escClosable && props.escClose);
-    const placement = computed(() => {
-      if (props.position !== 'right') return props.position;
-      return props.placement;
-    });
+    const visible = computed(() => props.visible);
+    const closable = computed(() => props.closable);
+    const maskClosable = computed(() => props.maskClosable);
+    const escClosable = computed(() => props.escClosable);
+    const placement = computed(() => props.placement);
     const transitionName = computed(() => `${classHelper.block}-slide-${placement.value}`);
-    const renderInBody = computed(() => {
-      if (props.v2) return props.to === document.body || props.to === 'body';
-      return !props.toBody;
-    });
-    const toBody = computed(() => {
-      if (props.v2) return !!props.to || props.toBody;
-      return props.toBody;
-    });
-    const cancelButton = computed(() => props.cancelButton && props.secondaryButton);
-    const okButton = computed(() => props.okButton && props.primaryButton);
+    const renderInBody = computed(() => props.to === document.body || props.to === 'body');
+    const toBody = computed(() => !!props.to);
+    const cancelButton = computed(() => props.cancelButton);
+    const okButton = computed(() => props.okButton);
     const okButtonText = computed(
-      () =>
-        props.okButtonText ?? props.primaryText ?? locale.value?.langService.td().horizonWeb.global.ok,
+      () => props.okButtonText ?? locale.value?.langService.td().horizonWeb.global.ok,
     );
     const cancelButtonText = computed(
-      () =>
-        props.cancelButtonText ??
-        props.secondaryText ??
-        locale.value?.langService.td().horizonWeb.global.cancel,
+      () => props.cancelButtonText ?? locale.value?.langService.td().horizonWeb.global.cancel,
     );
 
     const showHeader = computed(() => {
-      if (props.v2) return props.header;
-
-      let title: any = props.title;
-      if (slots.title?.()?.length) title = slots.title?.();
-      return props.header && !!title;
+      return props.header;
     });
 
     const showFooter = computed(() => {
-      if (props.v2) return props.footer;
-
-      const hasBtn = !!(props.primaryButton || props.secondaryButton);
-      const hasFooter = !!slots.footer?.()?.length;
-
-      return (hasBtn || hasFooter) && props.footer;
+      return props.footer;
     });
 
     const { sizeStyle, handleEl } = useResponsiveSize(visible, toRef(props, 'size'), placement);
-    const { width: ww, height: wh } = useWindowSize();
-    const elSize = useElementSize(containerEl);
-
-    const offset = computed<number>(() => {
-      const i = instances.value.indexOf(instance!);
-      const next = instances.value[i + 1];
-      if (['top', 'bottom'].includes(placement.value)) {
-        const ns = next?.exposed?.getSize()?.height.value ?? 0;
-        const accOffset = (next?.exposed?.getOffset() ?? 0) + ns;
-        const maxOffset = wh.value - elSize.height.value - 20;
-        return Math.min(maxOffset, accOffset);
-      } else {
-        const ns = next?.exposed?.getSize()?.width.value ?? 0;
-        const accOffset = (next?.exposed?.getOffset() ?? 0) + ns;
-        const maxOffset = ww.value - elSize.width.value - 20;
-        return Math.min(maxOffset, accOffset);
-      }
-    });
-
-    expose({
-      getOffset: () => {
-        if (instances.value.length <= 1) return 0;
-        return offset.value;
-      },
-      getSize: () => elSize,
-    });
-
-    const computedPush = computed<CSSProperties>(() => {
-      const lastInstance = instances.value.slice(-1)[0];
-      const noPush = instances.value.length < 2 || instance === lastInstance;
-      if (!props.push || noPush || !visible.value) return {};
-
-      if (props.push === true) {
-        switch (placement.value) {
-          case 'top':
-          case 'bottom':
-          case 'left':
-          case 'right':
-            return { [placement.value]: `${offset.value}px` };
-          default:
-            return {};
-        }
-      }
-
-      // TODO: 未来实现
-      // if ('distance' in props.push) {
-      //   return { right: `${props.push.distance * (instances.value.length - 1)}px` };
-      // }
-      return {};
-    });
-
     const inlineStyle = computed<CSSProperties>(() => {
       return renderInBody.value ? {} : { position: 'absolute' };
     });
@@ -161,7 +89,6 @@ export default defineComponent({
     const containerStyle = computed<CSSProperties>(() => {
       return {
         zIndex: zIndex.value + 1,
-        ...computedPush.value,
         ...sizeStyle.value,
         ...inlineStyle.value,
       };
@@ -180,6 +107,7 @@ export default defineComponent({
     watch(
       visible,
       val => {
+        if (val) previouslyFocused = document.activeElement as HTMLElement | null;
         if (shouldLockScroll.value) {
           if (val) {
             useLockScroll(true);
@@ -200,21 +128,17 @@ export default defineComponent({
 
     const close = () => {
       instances.value = instances.value.filter(inst => inst !== instance);
-      emit('update:modelValue', false); // TODO: 下个版本移除
       emit('update:visible', false);
       // emit('close');
       // setTimeout(() => emit('closed'), 300);
     };
 
     const onClose = async () => {
-      if (props.v2) {
-        if (props.beforeClose) {
-          const ret = await Promise.resolve(props.beforeClose()).catch(() => false);
-          if (ret === false) return;
-        }
-        return close();
+      if (props.beforeClose) {
+        const ret = await Promise.resolve(props.beforeClose()).catch(() => false);
+        if (ret === false) return;
       }
-      return props.beforeClose ? props.beforeClose(close) : close();
+      return close();
     };
 
     const onMaskClick = () => {
@@ -249,24 +173,11 @@ export default defineComponent({
     watch(visible, onVisibleChanged);
 
     const onDefaultCancel = async () => {
-      if (attrs['onSecondary-click']) {
-        // @ts-ignore
-        emit('secondary-click');
-      } else {
-        emit('secondaryClick');
-      }
       emit('cancel');
       await onClose();
     };
 
     const onDefaultOk = () => {
-      if (attrs['onPrimary-click']) {
-        // @ts-ignore
-        emit('primary-click');
-      } else {
-        emit('primaryClick');
-      }
-
       emit('ok');
     };
 
@@ -278,12 +189,38 @@ export default defineComponent({
     };
 
     const onAfterLeave = () => {
+      previouslyFocused?.focus();
+      previouslyFocused = null;
       // rendered.value = false;
       emit('closed');
     };
 
     const onAfterEnter = () => {
+      drawerRef.value?.focus();
       emit('opened');
+    };
+
+    const trapFocus = (evt: KeyboardEvent) => {
+      if (evt.key !== 'Tab' || !drawerRef.value) return;
+      const focusable = Array.from(
+        drawerRef.value.querySelectorAll<HTMLElement>(
+          'a[href], button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"])',
+        ),
+      );
+      if (!focusable.length) {
+        evt.preventDefault();
+        drawerRef.value.focus();
+        return;
+      }
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (evt.shiftKey && document.activeElement === first) {
+        evt.preventDefault();
+        last.focus();
+      } else if (!evt.shiftKey && document.activeElement === last) {
+        evt.preventDefault();
+        first.focus();
+      }
     };
 
     provide(HScrollbarUpdateDelayInjectKey, 400);
@@ -303,6 +240,7 @@ export default defineComponent({
           text
           icon="close"
           icon-size={16}
+          aria-label="Close drawer"
           onClick={handleCloseIconClick}
         />
       );
@@ -310,33 +248,29 @@ export default defineComponent({
       const drawerBody = (
         <div
           v-show={visible.value}
-          class={[
-            classHelper.e('container'),
-            classHelper.m(placement.value),
-            classHelper.m('push', instances.value.slice(-1)[0] !== instance),
-          ]}
+          ref={drawerRef}
+          role="dialog"
+          aria-modal={props.mask || undefined}
+          aria-labelledby={showHeader.value ? titleId : undefined}
+          tabindex={-1}
+          onKeydown={trapFocus}
+          class={[classHelper.e('container'), classHelper.m(placement.value)]}
           style={containerStyle.value}
-          ref={containerEl}
         >
           <div class={classHelper.e('main')}>
             {showHeader.value && (
-              <div class={[classHelper.e('header'), classHelper.em('header', 'customize')]}>
-                {slots.header?.() ??
-                  (props.v2 ? (
-                    <Fragment>
-                      <div class={classHelper.e('default-title')}>
-                        {slots.title?.() ?? props.title}
-                      </div>
-                      {closable.value && closeButton}
-                    </Fragment>
-                  ) : (
-                    slots.title?.() ?? (
-                      <div class={`${classHelper.e('default-title')}`}>
-                        {props.title}
-                        {closable.value && closeButton}
-                      </div>
-                    )
-                  ))}
+              <div
+                id={titleId}
+                class={[classHelper.e('header'), classHelper.em('header', 'customize')]}
+              >
+                {slots.header?.() ?? (
+                  <Fragment>
+                    <div class={classHelper.e('default-title')}>
+                      {slots.title?.() ?? props.title}
+                    </div>
+                    {closable.value && closeButton}
+                  </Fragment>
+                )}
               </div>
             )}
 

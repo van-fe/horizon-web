@@ -1,11 +1,6 @@
 <template>
   <h-button @click="visible = true">点我</h-button>
-  <h-dialog
-    v-model="visible"
-    title="标题"
-    @primaryClick="onPrimary"
-    @secondaryClick="onSecondary"
-  >
+  <h-dialog v-model:visible="visible" title="标题" @ok="onPrimary" @cancel="onSecondary">
     <div>
       <div class="privacy_content__3rZRW">
         <p>更新及生效日期： 2022年3月31日</p>
@@ -155,7 +150,8 @@
         </p>
         <h5>8. 车辆使用与远程车辆管理</h5>
         <p>
-          在您使用车辆过程中，为实现您车辆驾乘及使用车上相关产品/服务的目的，我们会收集和使用您的车辆信息、车载应用平台相关信息、Demo Assistant互动的音频信息、车载SIM卡相关信息、
+          在您使用车辆过程中，为实现您车辆驾乘及使用车上相关产品/服务的目的，我们会收集和使用您的车辆信息、车载应用平台相关信息、Demo
+          Assistant互动的音频信息、车载SIM卡相关信息、
           <b>车内及车外摄像头影像资料</b>
           、充换电及维修保养信息，这些信息还会被用于保证车辆安全持续运行、甄别和解决潜在问题、事故追查、履行法定义务。
           <b>

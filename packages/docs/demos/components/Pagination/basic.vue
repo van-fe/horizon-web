@@ -2,9 +2,9 @@
   <h-form label-position="left" label-vertical-align="middle">
     <h-form-item label="align">
       <h-radio-group v-model="align">
-        <h-radio label="left">left</h-radio>
-        <h-radio label="center">center</h-radio>
-        <h-radio label="right">right</h-radio>
+        <h-radio value="left">left</h-radio>
+        <h-radio value="center">center</h-radio>
+        <h-radio value="right">right</h-radio>
       </h-radio-group>
     </h-form-item>
   </h-form>
@@ -13,7 +13,13 @@
       <div class="demo-title">当你页数不超过7页时</div>
     </h-grid-item>
     <h-grid-item :span="18">
-      <h-pagination :total="50" :align="align" @modify="onModify" @currentChange="onCurrentChange" @sizeChange="onSizeChange" />
+      <h-pagination
+        :total="50"
+        :align="align"
+        @modify="onModify"
+        @currentChange="onCurrentChange"
+        @sizeChange="onSizeChange"
+      />
     </h-grid-item>
   </h-grid>
   <h-grid :gap="10" align="center">
@@ -40,9 +46,8 @@ function onSizeChange(size: number) {
 }
 
 function onModify(currentPage: number, pageSize: number) {
-  console.info({currentPage, pageSize});
+  console.info({ currentPage, pageSize });
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

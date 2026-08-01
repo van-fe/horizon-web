@@ -15,9 +15,9 @@ const onChecked = (checked: boolean) => {
     <h-space block size="medium">
       <h-space align="start" size="small">
         Size
-        <h-radio v-model="size" :disabled="customized" label="small">small</h-radio>
-        <h-radio v-model="size" :disabled="customized" label="medium">medium</h-radio>
-        <h-radio v-model="size" :disabled="customized" label="large">large</h-radio>
+        <h-radio v-model="size" :disabled="customized" value="small">small</h-radio>
+        <h-radio v-model="size" :disabled="customized" value="medium">medium</h-radio>
+        <h-radio v-model="size" :disabled="customized" value="large">large</h-radio>
       </h-space>
       <h-space>
         Other Setting:

@@ -17,14 +17,3 @@ Combine `h-radio-group` with `h-radio` or `h-radio-button` to implement radio gr
 ## Disabled State
 Set `disabled = true` to enable disabled state
 :::demo components/Radio/disabled.vue :::
-
-## 2.0.0 Version Changes
-Since `2.0.0`, `small` is no longer part of the specification:
-
-① The original `size='small'` will automatically be treated as `size='medium'`
-
-② The original `small` size is consistent with the current `medium` size
-
-③ The original `medium` size is consistent with the current `large` size
-
-④ The original `large` size has been removed

@@ -9,19 +9,19 @@
     <li class="flex">
       <span>圆角：</span>
       <h-radio-group v-if="border" v-model="radius">
-        <h-radio label="none" v-model="radius">none</h-radio>
-        <h-radio label="small" v-model="radius">small</h-radio>
-        <h-radio label="medium" v-model="radius">medium</h-radio>
-        <h-radio label="large" v-model="radius">large</h-radio>
+        <h-radio value="none" v-model="radius">none</h-radio>
+        <h-radio value="small" v-model="radius">small</h-radio>
+        <h-radio value="medium" v-model="radius">medium</h-radio>
+        <h-radio value="large" v-model="radius">large</h-radio>
       </h-radio-group>
     </li>
   </ul>
   <h-card
-      :title="title"
-      :top-divider="topDivider"
-      :bottom-divider="bottomDivider"
-      :radius="radius"
-      :border="border"
+    :title="title"
+    :top-divider="topDivider"
+    :bottom-divider="bottomDivider"
+    :radius="radius"
+    :border="border"
   >
     {{ text }}
     <template #footer>
@@ -42,7 +42,7 @@ const topDivider = ref(false);
 const bottomDivider = ref(false);
 const border = ref(true);
 const text =
-    '这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很的内容文案这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很的内容文案这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很的内容文案这是一段长很长很长很长很长很长很的内容文案';
+  '这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很的内容文案这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很的内容文案这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很的内容文案这是一段长很长很长很长很长很长很的内容文案';
 </script>
 
 <style lang="scss" scoped>
@@ -50,7 +50,7 @@ const text =
   display: flex;
   justify-content: flex-end;
 }
-ul{
+ul {
   display: flex;
   flex-direction: column;
   row-gap: 8px;

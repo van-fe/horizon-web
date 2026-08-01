@@ -115,7 +115,10 @@ export default defineComponent({
             classHelper.is('prev'),
             classHelper.is('disabled', currentPage.value <= 1 || parentProps.disabled),
           )}
-          tabindex={0}
+          role="button"
+          aria-label="Previous page"
+          aria-disabled={currentPage.value <= 1 || parentProps.disabled}
+          tabindex={currentPage.value <= 1 || parentProps.disabled ? -1 : 0}
           onClick={prevPage}
           onKeyup={withKeys(prevPage, ['enter'])}
         >
@@ -128,7 +131,11 @@ export default defineComponent({
               classHelper.is('active', currentPage.value === num),
               classHelper.is('disabled', parentProps.disabled),
             )}
-            tabindex={0}
+            role="button"
+            aria-label={typeof num === 'number' ? `Page ${num}` : `${num} pages`}
+            aria-current={currentPage.value === num ? 'page' : undefined}
+            aria-disabled={parentProps.disabled}
+            tabindex={parentProps.disabled ? -1 : 0}
             data-num={num}
             onClick={() => onPickPage(num)}
             onKeyup={withKeys(() => onPickPage(num), ['enter'])}
@@ -162,7 +169,10 @@ export default defineComponent({
             classHelper.is('next'),
             classHelper.is('disabled', currentPage.value >= props.pages || parentProps.disabled),
           )}
-          tabindex={0}
+          role="button"
+          aria-label="Next page"
+          aria-disabled={currentPage.value >= props.pages || parentProps.disabled}
+          tabindex={currentPage.value >= props.pages || parentProps.disabled ? -1 : 0}
           onClick={nextPage}
           onKeyup={withKeys(nextPage, ['enter'])}
         >
