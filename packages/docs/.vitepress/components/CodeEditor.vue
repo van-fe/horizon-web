@@ -79,6 +79,12 @@ onBeforeUnmount(() => {
     font-size: 13px;
   }
 
+  :deep(.cm-gutters) {
+    border-color: var(--h-border-default);
+    background-color: var(--h-bg-secondary);
+    color: var(--h-text-secondary);
+  }
+
   :deep(.cm-focused) {
     outline: 2px solid var(--h-border-focused);
     outline-offset: -2px;
