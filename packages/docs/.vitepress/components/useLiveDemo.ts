@@ -20,12 +20,15 @@ export function useLiveDemo(path: string, loader?: DemoLoader) {
   let styleElement: HTMLStyleElement | undefined;
 
   async function loadOriginal() {
+    const sequence = ++compileSequence;
+    compiling.value = false;
+    error.value = '';
     if (!loader) return;
     const module = (await loader()) as DemoModule;
-    if (!disposed) {
+    if (!disposed && sequence === compileSequence) {
       component.value = markRaw(module.default);
       updateStyle('');
-      error.value = '';
+      renderKey.value += 1;
     }
   }
 
@@ -80,10 +83,6 @@ export function useLiveDemo(path: string, loader?: DemoLoader) {
     if (!styleElement.isConnected) document.head.append(styleElement);
   }
 
-  function refresh() {
-    renderKey.value += 1;
-  }
-
   onBeforeUnmount(() => {
     disposed = true;
     compileSequence += 1;
@@ -94,5 +93,5 @@ export function useLiveDemo(path: string, loader?: DemoLoader) {
     error.value = reason instanceof Error ? reason.message : String(reason);
   });
 
-  return { component, renderKey, compiling, error, compile, refresh, loadOriginal };
+  return { component, renderKey, compiling, error, compile, loadOriginal };
 }

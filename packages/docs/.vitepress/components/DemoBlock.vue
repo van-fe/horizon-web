@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed, defineAsyncComponent, onBeforeUnmount, ref, watch } from 'vue';
+import { computed, defineAsyncComponent, ref, toRef } from 'vue';
 import { $message } from '@aurora/horizon-web';
+import { useDemoSource } from './useDemoSource';
 import { useLiveDemo } from './useLiveDemo';
 
 const CodeEditor = defineAsyncComponent(() => import('./CodeEditor.vue'));
@@ -16,7 +17,6 @@ const props = defineProps({
   },
 });
 
-const code = ref(props.source);
 const visible = ref(false);
 
 // Keep demo imports inside Vite's module graph. Using a runtime absolute URL
@@ -25,10 +25,15 @@ const demoModules = import.meta.glob('../../**/*.vue');
 
 const moduleKey = `../../${props.path}`;
 const loader = props.path ? demoModules[moduleKey] : undefined;
-const { component, renderKey, compiling, error, compile, refresh, loadOriginal } = useLiveDemo(
+const { component, renderKey, compiling, error, compile, loadOriginal } = useLiveDemo(
   props.path,
   loader,
 );
+const { code, reset } = useDemoSource({
+  source: toRef(props, 'source'),
+  compile,
+  loadOriginal,
+});
 const isEnglish = computed(
   () => typeof location !== 'undefined' && location.pathname.startsWith('/en/'),
 );
@@ -42,24 +47,6 @@ const labels = computed(() =>
       }
     : { copy: '复制代码', edit: '查看/编辑代码', refresh: '刷新 Demo', compiling: '编译中…' },
 );
-let compileTimer: ReturnType<typeof setTimeout> | undefined;
-
-watch(
-  () => props.source,
-  val => {
-    code.value = val;
-    void loadOriginal();
-  },
-);
-
-watch(code, value => {
-  if (value === props.source) return;
-  clearTimeout(compileTimer);
-  compileTimer = setTimeout(() => void compile(value), 250);
-});
-
-onBeforeUnmount(() => clearTimeout(compileTimer));
-
 async function copyCode() {
   await navigator.clipboard.writeText(code.value);
   $message.success(isEnglish.value ? 'Copied' : '已复制');
@@ -88,7 +75,7 @@ function toggleCode() {
           :icon-size="14"
           :text="true"
           type="normal"
-          @click="refresh"
+          @click="reset"
         />
         <h-button
           v-tooltip="labels.copy"
