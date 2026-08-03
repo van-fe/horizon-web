@@ -1,0 +1,43 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  size: (
+    arrow: 36px,
+    indicator: (
+      '': 8px,
+      active: (
+        width: 24px,
+      ),
+    ),
+  ),
+  color: (
+    control: #{function.css-variable('text-inverse')},
+    indicator: (
+      '': #{function.css-variable('bg-secondary')},
+      active: #{function.css-variable('bg-brand-default')},
+    ),
+    focus: #{function.css-variable('border-brand-default')},
+  ),
+  border-radius: #{function.css-variable('radius-m')},
+  background: (
+    control: (
+      '': #{function.css-variable('bg-overlay-default')},
+      hover: #{function.css-variable('bg-overlay-strong')},
+    ),
+  ),
+  spacing: (
+    arrow: (
+      offset: #{function.css-variable('spacing-4')},
+    ),
+    indicator: (
+      gap: #{function.css-variable('spacing-3')},
+    ),
+    outside: (
+      gap: 32px,
+    ),
+  ),
+  transition: (
+    duration: #{function.css-variable('transition-time')},
+    timing-function: #{function.css-variable('transition-func-ease-in-out-bezier')},
+  ),
+);

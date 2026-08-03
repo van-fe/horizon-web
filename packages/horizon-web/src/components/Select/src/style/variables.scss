@@ -1,0 +1,116 @@
+@use '../../../../styles/mixins';
+
+$values: (
+  size: (
+    option: (
+      height: 40px,
+    ),
+    check-all: (
+      height: 40px,
+    ),
+    panel-tags: (
+      max-height: 104px,
+    ),
+  ),
+  font-size: (
+    option-group: (
+      title: #{mixins.css-variable('text-sm')},
+    ),
+    create-option: #{mixins.css-variable('text-base')},
+    description: (
+      bottom: #{mixins.css-variable('text-sm')},
+    ),
+    option: #{mixins.css-variable('text-base')},
+  ),
+  font-weight: (
+    active: mixins.css-variable('weight-strong'),
+  ),
+  color: (
+    option: (
+      '': #{mixins.css-variable('text-primary')},
+      description: #{mixins.css-variable('text-disabled')},
+      keyword: #{mixins.css-variable('text-brand-default')},
+      disabled: #{mixins.css-variable('text-disabled')},
+    ),
+    option-group: (
+      title: #{mixins.css-variable('text-tertiary')},
+    ),
+    create-option: (
+      prefix: #{mixins.css-variable('text-tertiary')},
+    ),
+    placeholder: (
+      no-border: (
+        '': #{mixins.css-variable('text-primary')},
+        focus: #{mixins.css-variable('text-disabled')},
+      ),
+    ),
+  ),
+  border-color: (
+    option-group: (
+      divider: #{mixins.css-variable('border-noninteractive')},
+    ),
+  ),
+  background: (
+    option: (
+      '': #{mixins.css-variable('bg-default')},
+      hover: #{mixins.css-variable('bg-secondary')},
+    ),
+  ),
+  spacing: (
+    option: (
+      padding: 9px #{mixins.css-variable('spacing-4')},
+      right: (
+        padding: #{mixins.css-variable('spacing-4')},
+        has-icon: (
+          padding: calc(#{mixins.css-variable('spacing-5')} + #{mixins.css-variable('spacing-4')}),
+        ),
+      ),
+    ),
+    option-group: (
+      title: (
+        padding: #{mixins.css-variable('spacing-2')} #{mixins.css-variable('spacing-4')},
+        margin-bottom: #{mixins.css-variable('spacing-3')},
+      ),
+      divider: (
+        margin: #{mixins.css-variable('spacing-3')} #{mixins.css-variable('spacing-4')},
+      ),
+    ),
+    check-all: (
+      padding: 0 #{mixins.css-variable('spacing-4')},
+    ),
+    statistic-text: (
+      left: (
+        margin: mixins.css-variable('spacing-3'),
+      ),
+      margin-left: (
+        '': #{mixins.css-variable('spacing-3')},
+        small: calc(#{mixins.css-variable('spacing-2')} + #{mixins.css-variable('spacing-1')}),
+      ),
+    ),
+    check-all-count: (
+      left: (
+        margin: mixins.css-variable('spacing-2'),
+      ),
+    ),
+    panel-tags: (
+      bottom: (
+        margin: mixins.css-variable('spacing-3'),
+      ),
+    ),
+    create-option: (
+      prefix: (
+        margin-right: #{mixins.css-variable('spacing-4')},
+      ),
+    ),
+    scrollbar: (
+      margin-y: #{mixins.css-variable('spacing-3')},
+    ),
+    tags-container: (
+      column-gap: (
+        '': #{mixins.css-variable('spacing-2')},
+        small: #{mixins.css-variable('spacing-1')},
+      ),
+    ),
+  ),
+  transition: #{mixins.css-variable('transition-all--fast')},
+);

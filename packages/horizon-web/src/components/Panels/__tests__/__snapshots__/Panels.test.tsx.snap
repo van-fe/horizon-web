@@ -1,0 +1,25 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Panels > should enabled animated or not 1`] = `
+"<div class="h-panels">
+  <transition-stub name="h-fade-in-normal" duration="300" appear="false" persisted="false" css="true">
+    <div class="h-panels__panel" role="tabpanel">
+      <div class="h-panels__content">panel1</div>
+    </div>
+  </transition-stub>
+</div>"
+`;
+
+exports[`Panels > should enabled animated or not 2`] = `
+"<div class="h-panels">
+  <div class="h-panels__panel" role="tabpanel">
+    <div class="h-panels__content">panel1</div>
+  </div>
+</div>"
+`;
+
+exports[`Panels > should renders correct panel content 1`] = `"panel1"`;
+
+exports[`Panels > should renders correct panel content 2`] = `"panel2"`;
+
+exports[`Panels > should renders correct panel content 3`] = `"panel3"`;

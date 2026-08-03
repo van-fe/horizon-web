@@ -1,5 +1,6 @@
 import { defineConfig } from 'vitepress'
-import version from '../../../../versions.json';
+import version from './version.json';
+import demosSidebar from './demos-sidebar.json';
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -7,15 +8,15 @@ export default defineConfig({
   lang: 'zh',
   themeConfig: {
     nav: [
-      { text: '指南', link: '/guide/why-choose-lego', activeMatch: '/guide/' },
+      { text: '指南', link: '/guide/why-choose-horizon-web', activeMatch: '/guide/' },
       { text: 'API 及示例', link: '/demos/index', activeMatch: '/demos/' },
-      { text: version.lego, items: [
+      { text: version.version, items: [
           {
             text: '更新日志',
-            link: 'https://nio.feishu.cn/docs/doccnmqUM4iuP2kN5AGxAMM0Rkc',
+            link: 'https://github.com/van-fe/horizon-web/releases',
           }, {
             text: '反馈问题',
-            link: 'https://applink.feishu.cn/client/chat/chatter/add_by_link?link_token=320le63a-d4d6-4561-947a-f85716e5f345'
+            link: 'https://github.com/van-fe/horizon-web/issues'
           }
         ]
       },
@@ -29,7 +30,7 @@ export default defineConfig({
             collapsed: false,
             items: [
               {
-                text: '为什么选用 LEGO ?', link: 'why-choose-lego'
+                text: '为什么选用 Horizon Web ?', link: 'why-choose-horizon-web'
               },{
                 text: '快速开始', link: 'start'
               },{
@@ -46,7 +47,7 @@ export default defineConfig({
             collapsed: false,
             items: [
               {
-                text: 'Lego', link: 'config-lego'
+                text: 'HorizonWeb', link: 'config-horizon-web'
               },{
                 text: 'UnpluginResolver', link: 'config-unplugin-resolver'
               },
@@ -56,18 +57,14 @@ export default defineConfig({
       },
       '/demos/': {
         base: '/demos/',
-        items: [
-          {
-            text: '基础组件',
-            collapsed: false,
-            items: [
-              {
-                text: 'Button 按钮',
-                link: 'components/Button'
-              }
-            ]
-          }
-        ]
+        items: demosSidebar.map(category => ({
+          text: category.zh,
+          collapsed: false,
+          items: category.items.map(item => ({
+            text: item.zh,
+            link: item.link
+          }))
+        }))
       }
     }
   }

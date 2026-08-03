@@ -1,0 +1,13 @@
+@use '../../../../styles/mixins';
+@use 'fade';
+@use 'zoom';
+@use 'collapse';
+@use 'slide';
+@use 'special';
+@use 'dropdown';
+@use 'tooltip';
+
+@include mixins.b('opacity-transition') {
+  transition: opacity mixins.css-variable('transition-time')
+    cubic-bezier(0.55, 0, 0.1, 1);
+}

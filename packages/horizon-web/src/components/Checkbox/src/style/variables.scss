@@ -1,0 +1,115 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  size: (
+    icon: (
+      width: 16px,
+      height: 16px,
+    ),
+    border: (
+      height: (
+        medium: 32px,
+        large: 40px,
+      ),
+    ),
+  ),
+  font-size: (
+    '': function.css-variable('text-base'),
+    large: function.css-variable('text-lg'),
+    icon: function.css-variable('text-lg'),
+    button: function.css-variable('text-base'),
+    button-large: function.css-variable('text-lg'),
+  ),
+  color: (
+    '': function.css-variable('text-primary'),
+    label: (
+      checked: function.css-variable('text-primary'),
+    ),
+    checked: function.css-variable('bg-brand-default'),
+    disabled: function.css-variable('text-disabled'),
+    checkbox: (
+      indeterminate: function.css-variable('text-primary'),
+    ),
+    viewable: (
+      '': function.css-variable('text-primary'),
+      hover: function.css-variable('text-primary'),
+    ),
+    button: (
+      '': function.css-variable('text-primary'),
+      hover: function.css-variable('text-brand-hover'),
+      checked: function.css-variable('text-inverse'),
+      checked-hover: function.css-variable('text-inverse'),
+      disabled: function.css-variable('text-disabled'),
+      disabled-hover: function.css-variable('text-disabled'),
+      checked-disabled: function.css-variable('text-disabled'),
+      checked-disabled-hover: function.css-variable('text-disabled'),
+    ),
+  ),
+  border-color: (
+    '': function.css-variable('border-default'),
+    checked: function.css-variable('border-brand-default'),
+    hover: function.css-variable('border-brand-hover'),
+    disabled: function.css-variable('border-disabled'),
+    border: function.css-variable('border-default'),
+    button: function.css-variable('border-default'),
+    border-icon: function.css-variable('border-default'),
+    indeterminate: function.css-variable('text-disabled'),
+    indeterminate-hover: function.css-variable('border-brand-hover'),
+    button-checked: function.css-variable('border-brand-default'),
+  ),
+  border: (
+    '': 1px solid function.css-variable('border-default'),
+    border: 1px solid function.css-variable('border-default'),
+    button: 1px solid function.css-variable('border-default'),
+  ),
+  border-radius: (
+    '': function.css-variable('radius-s'),
+    border: function.css-variable('radius-m'),
+    button: function.css-variable('radius-m'),
+    group-button: function.css-variable('radius-square'),
+  ),
+  background: (
+    '': function.css-variable('bg-default'),
+    icon: (
+      checked: function.css-variable('bg-default'),
+    ),
+    disabled: function.css-variable('bg-disabled'),
+    button: (
+      '': function.css-variable('bg-default'),
+      checked: function.css-variable('bg-brand-default'),
+      checked-disabled: function.css-variable('bg-disabled'),
+    ),
+    group-border: (
+      '': function.css-variable('text-disabled'),
+      checked: function.css-variable('bg-brand-default'),
+      disabled: function.css-variable('text-disabled'),
+      divider: function.css-variable('bg-secondary'),
+    ),
+  ),
+  spacing: (
+    icon: (
+      margin: function.css-variable('spacing-3'),
+    ),
+    viewable: (
+      margin-right: 14px,
+    ),
+    group-checkbox: (
+      margin-right: function.css-variable('spacing-5'),
+    ),
+    siblings: (
+      margin-left: function.css-variable('spacing-3'),
+    ),
+    border: (
+      padding: 12px 24px 12px 12px,
+    ),
+    button: (
+      padding: 0 function.css-variable('spacing-5'),
+    ),
+  ),
+  box-shadow: (
+    button: (
+      checked: -1px 0 0 0 function.css-variable('bg-brand-default'),
+      checked-siblings: -1px 0 0 0 function.css-variable('bg-secondary'),
+    ),
+  ),
+);

@@ -1,0 +1,37 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('dropdown') {
+  @include mixins.e('inner') {
+    @include mixins.m('small') {
+      @include mixins.nested('dropdown-item') {
+        &__inner {
+          min-height: mixins.css-variable('dropdown', 'size', 'item', 'height', 'small');
+          padding: mixins.css-variable('dropdown', 'spacing', 'item', 'padding', 'small');
+        }
+
+        &:first-child {
+          margin-top: mixins.css-variable('dropdown', 'spacing', 'first-last-child', 'margin-y', 'small');
+        }
+
+        &:last-child {
+          margin-bottom: mixins.css-variable('dropdown', 'spacing', 'first-last-child', 'margin-y', 'small');
+        }
+      }
+
+      @include mixins.nested('dropdown-submenu') {
+        &__item--inner {
+          min-height: mixins.css-variable('dropdown', 'size', 'item', 'height', 'small');
+          padding: mixins.css-variable('dropdown', 'spacing', 'item', 'padding', 'small');
+        }
+
+        &:first-child {
+          margin-top: mixins.css-variable('dropdown', 'spacing', 'first-last-child', 'margin-y', 'small');
+        }
+
+        &:last-child {
+          margin-bottom: mixins.css-variable('dropdown', 'spacing', 'first-last-child', 'margin-y', 'small');
+        }
+      }
+    }
+  }
+}

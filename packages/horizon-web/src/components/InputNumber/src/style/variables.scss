@@ -1,0 +1,213 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  size: (
+    height: (
+      '': 30px,
+      small: 22px,
+      large: 38px,
+    ),
+    step-item: (
+      height: (
+        '': 15px,
+        large: 19px,
+        small: 11px,
+      ),
+      width: (
+        '': 24px,
+        large: 24px,
+        small: 24px,
+      ),
+      controls-between: (
+        width: 34px,
+      ),
+    ),
+  ),
+  font-size: (
+    '': #{function.css-variable('text-base')},
+    large: #{function.css-variable('text-base')},
+    small: #{function.css-variable('text-sm')},
+  ),
+  line-height: (
+    '': 30px,
+    inner: 1,
+    small: 22px,
+    large: 38px,
+  ),
+  color: (
+    '': #{function.css-variable('text-primary')},
+    hover: #{function.css-variable('text-brand-default')},
+    press: #{function.css-variable('text-brand-default')},
+    active: #{function.css-variable('text-brand-default')},
+    focus: #{function.css-variable('text-brand-default')},
+    disabled: #{function.css-variable('text-secondary')},
+    error: #{function.css-variable('text-tertiary')},
+    placeholder: (
+      '': #{function.css-variable('text-disabled')},
+      hover: #{function.css-variable('text-disabled')},
+      press: #{function.css-variable('text-disabled')},
+      active: #{function.css-variable('text-disabled')},
+      focus: #{function.css-variable('text-disabled')},
+      disabled: #{function.css-variable('text-disabled')},
+      error: #{function.css-variable('text-disabled')},
+      emphasize: (
+        '': #{function.css-variable('text-disabled')},
+        hover: #{function.css-variable('text-disabled')},
+        press: #{function.css-variable('text-disabled')},
+        active: #{function.css-variable('text-disabled')},
+        focus: #{function.css-variable('text-disabled')},
+        disabled: #{function.css-variable('text-disabled')},
+        error: #{function.css-variable('text-disabled')},
+      ),
+      no-border: (
+        '': #{function.css-variable('text-disabled')},
+        hover: #{function.css-variable('text-disabled')},
+        press: #{function.css-variable('text-disabled')},
+        active: #{function.css-variable('text-disabled')},
+        focus: #{function.css-variable('text-disabled')},
+        disabled: #{function.css-variable('text-disabled')},
+        error: #{function.css-variable('text-disabled')},
+      ),
+    ),
+    emphasize: (
+      '': #{function.css-variable('text-primary')},
+      hover: #{function.css-variable('text-primary')},
+      press: #{function.css-variable('text-primary')},
+      active: #{function.css-variable('text-primary')},
+      focus: #{function.css-variable('text-primary')},
+      disabled: #{function.css-variable('text-secondary')},
+      error: #{function.css-variable('text-error-default')},
+    ),
+    no-border: (
+      '': #{function.css-variable('text-primary')},
+      hover: #{function.css-variable('text-primary')},
+      press: #{function.css-variable('text-primary')},
+      active: #{function.css-variable('text-primary')},
+      focus: #{function.css-variable('text-primary')},
+      disabled: #{function.css-variable('text-disabled')},
+      error: #{function.css-variable('text-error-default')},
+    ),
+    step-item: (
+      '': #{function.css-variable('text-primary')},
+      disabled: #{function.css-variable('text-disabled')},
+      active: #{function.css-variable('text-primary')},
+      hover: #{function.css-variable('text-brand-default')},
+    ),
+    prefix-suffix: #{function.css-variable('text-primary')},
+    inner: (
+      caret: #{function.css-variable('text-brand-default')},
+    ),
+  ),
+  border-color: (
+    '': #{function.css-variable('border-default')},
+    disabled: #{function.css-variable('border-disabled')},
+    hover: #{function.css-variable('border-brand-hover')},
+    press: #{function.css-variable('border-brand-default')},
+    focus: #{function.css-variable('border-brand-default')},
+    error: #{function.css-variable('border-error-default')},
+    emphasize: (
+      '': #{function.css-variable('border-transparent')},
+      hover: #{function.css-variable('border-transparent')},
+      press: #{function.css-variable('border-transparent')},
+      focus: #{function.css-variable('border-brand-default')},
+      disabled: #{function.css-variable('border-transparent')},
+      error: #{function.css-variable('border-transparent')},
+    ),
+    no-border: (
+      '': #{function.css-variable('border-transparent')},
+      hover: #{function.css-variable('border-transparent')},
+      press: #{function.css-variable('border-transparent')},
+      focus: #{function.css-variable('border-brand-default')},
+      disabled: #{function.css-variable('border-transparent')},
+      error: #{function.css-variable('border-transparent')},
+    ),
+  ),
+  border: (
+    '': 1px solid #{function.css-variable('input-number', 'border-color')},
+    emphasize: 1px solid #{function.css-variable('input-number', 'border-color', 'emphasize')},
+    no-border: 1px solid #{function.css-variable('input-number', 'border-color', 'no-border')},
+  ),
+  border-radius: (
+    '': #{function.css-variable('radius-m')},
+    small: #{function.css-variable('radius-s')},
+    step-up: #{function.css-variable('radius-m')} #{function.css-variable('radius-m')} 0 0,
+    step-down: 0 0 #{function.css-variable('radius-m')} #{function.css-variable('radius-m')},
+    controls-between: (
+      step-up: 0 #{function.css-variable('radius-m')} #{function.css-variable('radius-m')} 0,
+      step-down: #{function.css-variable('radius-m')} 0 0 #{function.css-variable('radius-m')},
+    ),
+  ),
+  background: (
+    '': #{function.css-variable('bg-default')},
+    hover: #{function.css-variable('bg-default')},
+    press: #{function.css-variable('bg-default')},
+    disabled: #{function.css-variable('bg-disabled')},
+    focus: #{function.css-variable('bg-default')},
+    error: #{function.css-variable('bg-default')},
+    emphasize: (
+      '': #{function.css-variable('bg-secondary')},
+      hover: #{function.css-variable('bg-hover')},
+      press: #{function.css-variable('bg-press')},
+      focus: #{function.css-variable('bg-default')},
+      disabled: #{function.css-variable('bg-disabled')},
+      error: #{function.css-variable('bg-error-weak-activated')},
+    ),
+    no-border: (
+      '': #{function.css-variable('bg-transparent')},
+      hover: #{function.css-variable('bg-hover')},
+      press: #{function.css-variable('bg-press')},
+      focus: #{function.css-variable('bg-default')},
+      disabled: #{function.css-variable('bg-transparent')},
+      error: #{function.css-variable('bg-error-weak-activated')},
+    ),
+    step-item: (
+      '': #{function.css-variable('bg-secondary')},
+      disabled: #{function.css-variable('bg-disabled')},
+      active: #{function.css-variable('input-number', 'background', 'step-item', 'disabled')},
+    ),
+    prepend-append: #{function.css-variable('bg-secondary')},
+  ),
+  spacing: (
+    clear: (
+      padding: 0 #{function.css-variable('spacing-4')} 0 0,
+      no-controls: (
+        padding: 0 #{function.css-variable('spacing-4')} 0 0,
+      ),
+    ),
+    inner: (
+      padding: (
+        '': 0 calc(#{function.css-variable('spacing-4')} - 1px),
+        large: 0 calc(#{function.css-variable('spacing-4')} - 1px),
+        small: 0 calc(#{function.css-variable('spacing-3')} - 1px),
+      ),
+      emphasize: (
+        padding: (
+          '': 0 calc(#{function.css-variable('spacing-4')} - 1px),
+          large: 0 calc(#{function.css-variable('spacing-4')} - 1px),
+          small: 0 calc(#{function.css-variable('spacing-3')} - 1px),
+        ),
+      ),
+      no-border: (
+        padding: (
+          '': 0 calc(#{function.css-variable('spacing-4')} - 1px),
+          large: 0 calc(#{function.css-variable('spacing-4')} - 1px),
+          small: 0 calc(#{function.css-variable('spacing-3')} - 1px),
+        ),
+      ),
+    ),
+    no-controls: (
+      padding: 0 #{function.css-variable('spacing-4')},
+    ),
+    prepend-append: (
+      padding-x: #{function.css-variable('spacing-4')},
+    ),
+    prefix-suffix: (
+      padding-inline: #{function.css-variable('spacing-3')},
+    ),
+  ),
+  transition: (
+    all: #{function.css-variable('transition-all--fast')},
+    border-color: border-color #{function.css-variable('transition-time-fast')},
+    color: color #{function.css-variable('transition-time-fast')},
+  ),
+);

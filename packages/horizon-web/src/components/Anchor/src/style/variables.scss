@@ -1,0 +1,82 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  size: (
+    width: (
+      '': 140px,
+      small: 120px,
+    ),
+    line: (
+      width: 1px,
+    ),
+    line-text: (
+      min-height: (
+        '': 22px,
+        small: 18px,
+      ),
+    ),
+    collapse-btn: (
+      min-height: 28px,
+      max-width: 90px,
+    ),
+  ),
+  font-size: (
+    '': #{function.css-variable('text-base')},
+    small: #{function.css-variable('text-sm')},
+  ),
+  color: (
+    link-text: (
+      '': #{function.css-variable('text-primary')},
+      activated: #{function.css-variable('text-brand-default')},
+    ),
+    collapse-btn-arrow: #{function.css-variable('text-tertiary')},
+    collapse-btn-txt: #{function.css-variable('text-secondary')},
+  ),
+  border-color: (
+    collapse-btn: #{function.css-variable('divider-default')},
+  ),
+  border: (
+    collapse-btn: 1px solid #{function.css-variable('anchor', 'border-color', 'collapse-btn')},
+  ),
+  border-radius: (
+    collapse-btn: 9999px 0 0 9999px,
+  ),
+  background: (
+    '': #{function.css-variable('bg-transparent')},
+    line: (
+      '': #{function.css-variable('border-noninteractive')},
+      highlight: #{function.css-variable('border-brand-default')},
+    ),
+    collapse-btn: #{function.css-variable('bg-default')},
+  ),
+  spacing: (
+    title: (
+      padding: #{function.css-variable('spacing-2')} 0,
+    ),
+    collapse-btn: (
+      padding: 5px 6px 5px 9px,
+      is-collapse: (
+        padding: 5px 9px 5px 6px,
+      ),
+    ),
+    link: (
+      padding-left: #{function.css-variable('spacing-4')},
+      next: (
+        padding-left: #{function.css-variable('spacing-3')},
+      ),
+    ),
+    margin: 24px 0 0 32px,
+    link-title: (
+      margin-top: #{function.css-variable('spacing-2')},
+      next: (
+        margin-top: #{function.css-variable('spacing-3')},
+      ),
+    ),
+    collapse-btn-txt: (
+      margin-left: #{function.css-variable('spacing-2')},
+    ),
+  ),
+  transition: (
+    duration: #{function.css-variable('transition-time')},
+  ),
+);

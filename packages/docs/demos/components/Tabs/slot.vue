@@ -1,0 +1,25 @@
+<template>
+  <h-tabs v-model="currentRef" type="card">
+    <h-tab label="Tab1" key="tab1">
+      <span class="px-2 font-bold">Custom Tab</span>
+      <a-icon v-tooltip="'something helpful message'" name="help" class="ml-1" />
+    </h-tab>
+    <h-tab label="Section 2" key="tab2" />
+    <h-tab label="Section 3" key="tab3" />
+  </h-tabs>
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+import { AIcon } from '@aurora/icon';
+export default defineComponent({
+  components: {
+    AIcon,
+  },
+  setup() {
+    return {
+      currentRef: ref('tab1'),
+    };
+  },
+});
+</script>

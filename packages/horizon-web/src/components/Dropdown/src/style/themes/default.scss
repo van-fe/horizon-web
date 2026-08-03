@@ -1,0 +1,117 @@
+@use '../../../../../styles/mixins';
+
+@include mixins.b('dropdown') {
+  @include mixins.e('inner') {
+    @include mixins.m('default') {
+      background: mixins.css-variable('dropdown', 'background') !important;
+
+      @include mixins.b('dropdown-item', false) {
+        color: mixins.css-variable('dropdown', 'color');
+
+        @include mixins.is-not('disabled') {
+          @include mixins.e('inner', false) {
+            outline-color: mixins.css-variable('dropdown', 'border-color', 'outline');
+
+            &:hover {
+              background: mixins.css-variable('dropdown', 'background', 'item', 'hover');
+            }
+          }
+
+          @include mixins.is('active') {
+            color: mixins.css-variable('dropdown', 'color', 'active');
+
+            @include mixins.e('inner', false) {
+              background: mixins.css-variable('dropdown', 'background', 'item', 'active');
+            }
+          }
+        }
+
+        @include mixins.is('disabled') {
+          color: mixins.css-variable('dropdown', 'color', 'disabled');
+
+          @include mixins.is('active') {
+            color: mixins.css-variable('dropdown', 'color', 'active', 'disabled');
+
+            @include mixins.e('inner', false) {
+              background: mixins.css-variable('dropdown', 'background', 'item', 'active', 'disabled');
+            }
+          }
+        }
+      }
+
+      @include mixins.b('dropdown-submenu', false) {
+        color: mixins.css-variable('dropdown', 'color');
+
+        @include mixins.is-not('disabled') {
+          @include mixins.em('item', 'inner', false) {
+            outline-color: mixins.css-variable('dropdown', 'border-color', 'outline');
+          }
+
+          @include mixins.e('inner', false) {
+            background: mixins.css-variable('dropdown', 'background');
+          }
+
+          > #{mixins.element-name('reference', mixins.block('popover'))} {
+            > #{mixins.element-name('item', mixins.block('dropdown-submenu'))} {
+              @include mixins.m('inner') {
+                background: mixins.css-variable('dropdown', 'background');
+              }
+
+              &:hover {
+                @include mixins.em('item', 'inner', false) {
+                  background: mixins.css-variable('dropdown', 'background', 'item', 'hover');
+                }
+              }
+            }
+          }
+
+          @include mixins.is('active') {
+            > #{mixins.element-name('reference', mixins.block('popover'))} {
+              > #{mixins.element-name('item', mixins.block('dropdown-submenu'))} {
+                color: mixins.css-variable('dropdown', 'color', 'active');
+              }
+            }
+          }
+
+          @include mixins.is('selected') {
+            > #{mixins.element-name('reference', mixins.block('popover'))} {
+              > #{mixins.element-name('item', mixins.block('dropdown-submenu'))} {
+                color: mixins.css-variable('dropdown', 'color', 'active');
+
+                > #{mixins.modifier-name('inner', 'item', mixins.block('dropdown-submenu'))} {
+                  background: mixins.css-variable('dropdown', 'background', 'item', 'active');
+                }
+              }
+            }
+          }
+        }
+
+        @include mixins.is('disabled') {
+          @include mixins.e('item', false) {
+            color: mixins.css-variable('dropdown', 'color', 'disabled');
+          }
+
+          @include mixins.is('active') {
+            > #{mixins.element-name('reference', mixins.block('popover'))} {
+              > #{mixins.element-name('item', mixins.block('dropdown-submenu'))} {
+                color: mixins.css-variable('dropdown', 'color', 'active', 'disabled');
+              }
+            }
+          }
+
+          @include mixins.is('selected') {
+            > #{mixins.element-name('reference', mixins.block('popover'))} {
+              > #{mixins.element-name('item', mixins.block('dropdown-submenu'))} {
+                color: mixins.css-variable('dropdown', 'color', 'active', 'disabled');
+
+                > #{mixins.modifier-name('inner', 'item', mixins.block('dropdown-submenu'))} {
+                  background: mixins.css-variable('dropdown', 'background', 'item', 'active', 'disabled');
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

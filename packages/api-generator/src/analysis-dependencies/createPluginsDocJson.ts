@@ -1,16 +1,16 @@
 import type { SourceFile } from 'ts-morph';
 import { Project, SyntaxKind } from 'ts-morph';
 import { excludeFiles } from '../utils';
-import type { ApiGeneratorExportedPlugin } from '@nio-fe/shared';
+import type { ApiGeneratorExportedPlugin } from '@aurora/utils';
 import * as fs from 'fs';
 import merge from 'deepmerge';
 import {
-  red,
-  writeJsonFile,
   docDescriptionOutput,
-  legoProjectRoot,
+  horizonwebProjectRoot,
   apiGeneratorOutPut,
-} from '@nio-fe/shared/plugins';
+} from '@root/scripts/paths';
+import { writeJsonFile } from '@root/scripts/writeJsonFile';
+import { red } from '@root/scripts/log';
 
 export interface ComponentDeclarationType {
   props: Record<string, string>;
@@ -29,15 +29,15 @@ function snakeCase(str: string): string {
   });
 }
 
-export default async function (exportedPlugins: Record<string, ApiGeneratorExportedPlugin>) {
+export default async function(exportedPlugins: Record<string, ApiGeneratorExportedPlugin>) {
   const project = new Project({
     compilerOptions: {
       emitDeclarationOnly: true,
       outDir: apiGeneratorOutPut,
-      baseUrl: legoProjectRoot,
+      baseUrl: horizonwebProjectRoot,
       preserveSymlinks: true,
     },
-    tsConfigFilePath: legoProjectRoot + '/tsconfig.json',
+    tsConfigFilePath: horizonwebProjectRoot + '/tsconfig.json',
     skipAddingFilesFromTsConfig: true,
   });
 
@@ -74,7 +74,7 @@ export default async function (exportedPlugins: Record<string, ApiGeneratorExpor
       });
 
       allExportedComponentNames.forEach(comName => {
-        const noPrefixComName = comName.replace(/^N/, '');
+        const noPrefixComName = comName.replace(/^H/, '');
         const componentDeclaration: ComponentDeclarationType = {
           props: {},
           events: {},

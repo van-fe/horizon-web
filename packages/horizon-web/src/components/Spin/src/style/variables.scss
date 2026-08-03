@@ -1,0 +1,23 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  font-size: (
+    indicator: (
+      small: 16px,
+      medium: 24px,
+      large: 36px,
+    ),
+  ),
+  color: (
+    indicator: #{function.css-variable('text-brand-default')},
+    tip: #{function.css-variable('text-secondary')},
+  ),
+  background: (
+    mask: rgba(#{function.css-variable('color-1-1')}, #{function.css-variable('opacity-8')}),
+  ),
+  spacing: (
+    tip: (
+      margin-top: #{function.css-variable('spacing-2')},
+    ),
+  ),
+);

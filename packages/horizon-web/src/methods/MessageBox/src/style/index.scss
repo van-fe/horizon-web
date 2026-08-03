@@ -1,0 +1,29 @@
+@use '../../../../styles/mixins';
+@use '../../../../styles/mixins/function';
+
+%transform-text {
+  word-break: break-all;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+@include mixins.b('messagebox') {
+  // #{function.css-variable-name('dialog', 'spacing', 'header', 'padding')}: #{function.css-variable('dialog', 'spacing', 'container', 'padding')} #{function.css-variable('dialog', 'spacing', 'container', 'padding')} #{function.css-variable('spacing-3')};
+  #{function.css-variable-name('dialog', 'spacing', 'body', 'margin')}: #{function.css-variable(
+      'spacing-3'
+    )}
+    0 #{function.css-variable('dialog', 'spacing', 'container', 'padding')};
+
+  @include mixins.e('pure') {
+    #{function.css-variable-name('dialog', 'spacing', 'body', 'margin')}: #{function.css-variable('dialog', 'spacing', 'container', 'padding')}
+      0;
+  }
+
+  @include mixins.e('alert-body') {
+    @extend %transform-text;
+  }
+
+  @include mixins.e('confirm-body') {
+    @extend %transform-text;
+  }
+}

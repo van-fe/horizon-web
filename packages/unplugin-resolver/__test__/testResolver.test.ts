@@ -1,10 +1,10 @@
 import { describe, expect, test } from 'vitest';
-import { LegoPluginResolvers } from '../src';
+import { HorizonWebPluginResolvers } from '../src';
 import components from '../../api-generator/dist/components-dependencies.json';
 import directives from '../../api-generator/dist/directives-dependencies.json';
 
 describe('unplugin-resolver', () => {
-  const [component, directive] = LegoPluginResolvers();
+  const [component, directive] = HorizonWebPluginResolvers();
 
   test('component', () => {
     for (const comp of components) {
@@ -20,7 +20,7 @@ describe('unplugin-resolver', () => {
 
   test('directive', () => {
     for (const dir of directives) {
-      const dirName = dir.name.replace(/^NV/, '');
+      const dirName = dir.name.replace(/^HV/, '');
       const res = directive.resolve(dirName);
       expect(res).not.toBeUndefined();
       expect(res?.name).toEqual(dir.name);
@@ -35,7 +35,7 @@ describe('unplugin-resolver', () => {
 
   test('no directive', () => {
     expect(
-      LegoPluginResolvers({
+      HorizonWebPluginResolvers({
         directives: false,
       })[1].resolve('ClickOutside'),
     ).toBeUndefined();
@@ -43,93 +43,83 @@ describe('unplugin-resolver', () => {
 
   test('exclude', () => {
     expect(
-      LegoPluginResolvers({
-        exclude: /NButton/,
-      })[0].resolve('NButton'),
+      HorizonWebPluginResolvers({
+        exclude: /HButton/,
+      })[0].resolve('HButton'),
     ).toBeUndefined();
 
     expect(
-      LegoPluginResolvers({
-        exclude: /NButton/,
-      })[0].resolve('NInput'),
+      HorizonWebPluginResolvers({
+        exclude: /HButton/,
+      })[0].resolve('HInput'),
     ).not.toBeUndefined();
 
     expect(
-      LegoPluginResolvers({
+      HorizonWebPluginResolvers({
         exclude: /ClickOutside/,
       })[1].resolve('ClickOutside'),
     ).toBeUndefined();
 
     expect(
-      LegoPluginResolvers({
+      HorizonWebPluginResolvers({
         exclude: /ClickOutside/,
       })[1].resolve('Tooltip'),
     ).not.toBeUndefined();
   });
 
+  test('custom component namespace', () => {
+    expect(HorizonWebPluginResolvers({ namespace: 'X' })[0].resolve('XButton')).toMatchObject({
+      name: 'HButton',
+      from: expect.stringContaining('/Button'),
+    });
+  });
+
   test('ssr', () => {
     expect(
-      LegoPluginResolvers({
+      HorizonWebPluginResolvers({
         ssr: false,
-      })[0].resolve('NButton')?.sideEffects,
+      })[0].resolve('HButton')?.sideEffects,
     ).toEqual(expect.arrayContaining([expect.stringMatching('/es/')]));
 
     expect(
-      LegoPluginResolvers({
+      HorizonWebPluginResolvers({
         ssr: true,
-      })[0].resolve('NButton')?.sideEffects,
+      })[0].resolve('HButton')?.sideEffects,
     ).toEqual(expect.arrayContaining([expect.stringMatching('/lib/')]));
   });
 
   test('import style', () => {
     expect(
-      LegoPluginResolvers({
+      HorizonWebPluginResolvers({
         importStyle: 'css',
-      })[0].resolve('NButton')?.sideEffects,
+      })[0].resolve('HButton')?.sideEffects,
     ).toEqual(expect.arrayContaining([expect.stringMatching(/\.css$/)]));
 
     expect(
-      LegoPluginResolvers({
+      HorizonWebPluginResolvers({
         importStyle: 'scss',
-      })[0].resolve('NButton')?.sideEffects,
+      })[0].resolve('HButton')?.sideEffects,
     ).toEqual(expect.arrayContaining([expect.stringMatching(/\.scss$/)]));
 
     expect(
-      LegoPluginResolvers({
+      HorizonWebPluginResolvers({
         importStyle: 'css',
       })[1].resolve('Loading')?.sideEffects,
     ).toEqual(expect.arrayContaining([expect.stringMatching(/\.css$/)]));
 
     expect(
-      LegoPluginResolvers({
+      HorizonWebPluginResolvers({
         importStyle: 'scss',
       })[1].resolve('Loading')?.sideEffects,
     ).toEqual(expect.arrayContaining([expect.stringMatching(/\.scss$/)]));
   });
 
-  test('useResetStyle', () => {
-    expect(
-      LegoPluginResolvers({
-        useResetStyle: true,
-      })[0].resolve('NButton')?.sideEffects,
-    ).toEqual(expect.arrayContaining([expect.stringMatching(/reset\.css$/)]));
+  test('can disable style imports', () => {
+    const [componentWithoutStyle, directiveWithoutStyle] = HorizonWebPluginResolvers({
+      importStyle: false,
+    });
 
-    expect(
-      LegoPluginResolvers({
-        useResetStyle: false,
-      })[0].resolve('NButton')?.sideEffects,
-    ).not.toEqual(expect.arrayContaining([expect.stringMatching(/reset\.scss$/)]));
-
-    expect(
-      LegoPluginResolvers({
-        useResetStyle: true,
-      })[1].resolve('Loading')?.sideEffects,
-    ).toEqual(expect.arrayContaining([expect.stringMatching(/reset\.css$/)]));
-
-    expect(
-      LegoPluginResolvers({
-        useResetStyle: false,
-      })[1].resolve('Loading')?.sideEffects,
-    ).not.toEqual(expect.arrayContaining([expect.stringMatching(/reset\.scss$/)]));
+    expect(componentWithoutStyle.resolve('HButton')?.sideEffects).toStrictEqual([]);
+    expect(directiveWithoutStyle.resolve('Loading')?.sideEffects).toStrictEqual([]);
   });
 });

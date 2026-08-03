@@ -5,33 +5,33 @@ const disabled = ref(false);
 </script>
 
 <template>
-  <n-form label-position="left" label-width="fit-content">
-    <n-form-item label="disabled">
-      <n-radio-group v-model="disabled">
-        <n-radio :value="true">True</n-radio>
-        <n-radio :value="false">False</n-radio>
-      </n-radio-group>
-    </n-form-item>
-  </n-form>
+  <h-form label-position="left" label-width="fit-content">
+    <h-form-item label="disabled">
+      <h-radio-group v-model="disabled">
+        <h-radio :value="true">True</h-radio>
+        <h-radio :value="false">False</h-radio>
+      </h-radio-group>
+    </h-form-item>
+  </h-form>
   <div class="grid-buttons">
     <div>Default</div>
     <div>Plain</div>
     <div>Text</div>
     <div>Link</div>
     <div>Ghost</div>
-    <div><n-button color="brand" :disabled="disabled">brand</n-button></div>
-    <div><n-button color="indigo" :disabled="disabled" :plain="true">indigo</n-button></div>
-    <div><n-button color="purple" :disabled="disabled" :text="true">purple</n-button></div>
-    <div><n-button color="magenta" :disabled="disabled" :link="true">magenta</n-button></div>
+    <div><h-button color="brand" :disabled="disabled">brand</h-button></div>
+    <div><h-button color="indigo" :disabled="disabled" :plain="true">indigo</h-button></div>
+    <div><h-button color="purple" :disabled="disabled" :text="true">purple</h-button></div>
+    <div><h-button color="magenta" :disabled="disabled" :link="true">magenta</h-button></div>
     <div>
-      <n-button color="orange" :disabled="disabled" :plain="true" :ghost="true">orange</n-button>
+      <h-button color="orange" :disabled="disabled" :plain="true" :ghost="true">orange</h-button>
     </div>
-    <div><n-button color="#595E72" :disabled="disabled">#595E72</n-button></div>
-    <div><n-button color="#00B3BE" :disabled="disabled" :plain="true">#00B3BE</n-button></div>
-    <div><n-button color="#1880F2" :disabled="disabled" :text="true">#1880F2</n-button></div>
-    <div><n-button color="#FD8C08" :disabled="disabled" :link="true">#FD8C08</n-button></div>
+    <div><h-button color="#595E72" :disabled="disabled">#595E72</h-button></div>
+    <div><h-button color="#00B3BE" :disabled="disabled" :plain="true">#00B3BE</h-button></div>
+    <div><h-button color="#1880F2" :disabled="disabled" :text="true">#1880F2</h-button></div>
+    <div><h-button color="#FD8C08" :disabled="disabled" :link="true">#FD8C08</h-button></div>
     <div>
-      <n-button color="#26BD4B" :disabled="disabled" :plain="true" :ghost="true">#26BD4B</n-button>
+      <h-button color="#26BD4B" :disabled="disabled" :plain="true" :ghost="true">#26BD4B</h-button>
     </div>
   </div>
 </template>

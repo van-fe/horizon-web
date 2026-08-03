@@ -1,0 +1,11 @@
+import type { ComputedRef, InjectionKey } from 'vue';
+import type { ButtonGroupProps } from '../composables/useProps';
+import { generatorInjectedKeyName } from '@aurora/utils';
+
+export const HButtonGroupPropsInjectKey = Symbol(
+  generatorInjectedKeyName('button-group', 'props'),
+) as InjectionKey<ButtonGroupProps>;
+
+export const HButtonGroupSizeInjectKey = Symbol(
+  generatorInjectedKeyName('button-group', 'size'),
+) as InjectionKey<ComputedRef<Exclude<ButtonGroupProps['size'], undefined>>>;

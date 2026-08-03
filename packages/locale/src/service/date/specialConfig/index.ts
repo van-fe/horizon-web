@@ -5,18 +5,18 @@ import ZhTW from './zh-TW';
 import DE from './DE';
 import AE from './AE';
 import type { LocaleDateSpecialSetting } from '../../../config';
-import { LocaleSupportLangV2 } from '../../../config';
+import { LocaleSupportLang } from '../../../config';
 
-const dateSpecialConfig: Record<LocaleSupportLangV2, LocaleDateSpecialSetting> = {
-  [LocaleSupportLangV2.En]: En,
-  [LocaleSupportLangV2.EnGB]: En,
-  [LocaleSupportLangV2.EnUS]: En,
-  [LocaleSupportLangV2.SvSE]: SvSE,
-  [LocaleSupportLangV2.ZhCN]: ZhCN,
-  [LocaleSupportLangV2.ZhTW]: ZhTW,
-  [LocaleSupportLangV2.AE]: AE,
-  [LocaleSupportLangV2.SG]: En,
-  [LocaleSupportLangV2.DE]: DE,
+const dateSpecialConfig: Record<LocaleSupportLang, LocaleDateSpecialSetting> = {
+  [LocaleSupportLang.En]: En,
+  [LocaleSupportLang.EnGB]: En,
+  [LocaleSupportLang.EnUS]: En,
+  [LocaleSupportLang.SvSE]: SvSE,
+  [LocaleSupportLang.ZhCN]: ZhCN,
+  [LocaleSupportLang.ZhTW]: ZhTW,
+  [LocaleSupportLang.AE]: AE,
+  [LocaleSupportLang.SG]: En,
+  [LocaleSupportLang.DE]: DE,
 };
 
 export default dateSpecialConfig;

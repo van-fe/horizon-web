@@ -1,0 +1,108 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  size: (
+    ext-info: (
+      min-height: 18px,
+    ),
+  ),
+  font-size: (
+    form-item: (
+      label: (
+        small: #{function.css-variable('text-sm')},
+        medium: #{function.css-variable('text-base')},
+        large: #{function.css-variable('text-base')},
+        content: (
+          popover-title: #{function.css-variable('text-base')},
+          popover-content: #{function.css-variable('text-sm')},
+        ),
+      ),
+      ext: #{function.css-variable('text-sm')},
+    ),
+  ),
+  font-weight: (
+    form-item: (
+      label: (
+        content: (
+          popover-title: #{function.css-variable('weight-strong')},
+        ),
+      ),
+    ),
+  ),
+  line-height: (
+    form-item: (
+      label: (
+        '': #{function.css-variable('line-height-standard')},
+        content: (
+          popover-title: #{function.css-variable('line-height-standard')},
+          popover-content: #{function.css-variable('line-height-standard')},
+        ),
+      ),
+    ),
+  ),
+  color: (
+    form-item: (
+      label: #{function.css-variable('text-secondary')},
+      text: (
+        required-mark: #{function.css-variable('text-error-default')},
+      ),
+      ext: #{function.css-variable('text-tertiary')},
+      error: #{function.css-variable('text-error-default')},
+    ),
+  ),
+  background: (
+    form-item: (
+      helper: (
+        black: #{function.css-variable('bg-inverse')},
+      ),
+    ),
+  ),
+  spacing: (
+    form-item: (
+      label: (
+        position-left: (
+          margin-right: #{function.css-variable('spacing-5')},
+        ),
+        inline: (
+          margin-right: #{function.css-variable('spacing-5')},
+          margin-top: 0,
+        ),
+        vertical-middle: (
+          margin-top: calc(#{function.css-variable('form', 'size', 'ext-info', 'min-height')} * -1),
+          margin-bottom: 0,
+        ),
+        vertical-top: (
+          margin-top: 0,
+        ),
+        margin-bottom: #{function.css-variable('spacing-2')},
+        compact: (
+          margin-bottom: #{function.css-variable('spacing-5')},
+        ),
+        dynamic: (
+          margin-bottom: #{function.css-variable('spacing-5')},
+        ),
+      ),
+      inline: (
+        margin-right: #{function.css-variable('spacing-7')},
+      ),
+      text: (
+        required-mark-left: (
+          margin-right: #{function.css-variable('spacing-2')},
+        ),
+        required-mark-right: (
+          margin-right: #{function.css-variable('spacing-2')},
+        ),
+      ),
+      margin-bottom: 0,
+      helper-icon: (
+        margin-bottom: #{function.css-variable('spacing-3')},
+      ),
+      ext: (
+        margin: #{function.css-variable('spacing-1')} 0 0,
+      ),
+    ),
+    helper-label: (
+      margin-x: #{function.css-variable('spacing-2')},
+    ),
+  ),
+);

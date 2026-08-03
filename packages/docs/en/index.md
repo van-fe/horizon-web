@@ -2,26 +2,28 @@
 layout: home
 
 hero:
-  name: "LEGO"
-  text: "A Vue3 Modern Components"
-  tagline: To better improve your efficiency
+  name: "Horizon Web"
+  text: "Modern Vue3 Component Library"
+  tagline: Committed to improving your work efficiency
+  image:
+    src: /logo.svg
+    alt: Horizon Web logo
   actions:
     - theme: brand
-      text: 
-      link: /markdown-examples
-    - theme: brand
-      text: Directives
-      link: /markdown-examples
-    - theme: brand
-      text: Methods
-      link: /api-examples
+      text: Why Choose Horizon Web?
+      link: /guide/why-choose-horizon-web
+    - theme: alt
+      text: Quick Start
+      link: /guide/start
+    - theme: alt
+      text: API & Examples
+      link: /demos
 
 features:
   - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+    details: A complete and easy-to-use Vue 3 component set for common business scenarios.
   - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+    details: Theme customization, dark mode, and localization work out of the box.
   - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+    details: Type-safe, tree-shakable, and backed by comprehensive API documentation.
 ---
-

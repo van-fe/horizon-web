@@ -1,0 +1,37 @@
+{
+  "name": "@aurora/utils",
+  "version": "1.0.0",
+  "description": "For @aurora/horizon-web. Include a series of functions for developing.",
+  "main": "dist/utils.cjs",
+  "module": "dist/utils.js",
+  "unpkg": "dist/utils.umd.js",
+  "types": "types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./dist/utils.js",
+      "require": "./dist/utils.cjs"
+    }
+  },
+  "scripts": {
+    "dev": "bun run build:types && vite build -- --watch",
+    "build": "bun run build:dist && bun run build:types",
+    "build:dist": "bunx --bun vite build",
+    "build:types": "rm -rf types && tsc -d --pretty --emitDeclarationOnly --declarationDir ./types",
+    "rm": "rm -rf dist && rm -rf plugins/*.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "dist",
+    "types"
+  ],
+  "devConfig": {
+    "watch": false
+  },
+  "keywords": [],
+  "license": "ISC",
+  "dependencies": {
+    "@vueuse/core": "^11.0.0",
+    "lodash": "^4.17.21"
+  }
+}

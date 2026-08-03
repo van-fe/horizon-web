@@ -1,0 +1,30 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('steps') {
+  @include mixins.is('small') {
+    @include mixins.b('step', false) {
+      @include mixins.e('icon') {
+        width: mixins.css-variable('steps', 'size', 'icon', 'small');
+        height: mixins.css-variable('steps', 'size', 'icon', 'small');
+      }
+
+      @include mixins.em('content', 'title') {
+        height: mixins.css-variable('steps', 'size', 'icon', 'small');
+      }
+    }
+
+    @include mixins.is('vertical') {
+      @include mixins.b('step', false) {
+        @include mixins.e('icon') {
+          &::after {
+            top: calc(
+              #{mixins.css-variable('steps', 'size', 'icon', 'small')} +
+                #{mixins.css-variable('steps', 'spacing', 'tail', 'margin-y')}
+            );
+            left: calc(#{mixins.css-variable('steps', 'size', 'icon', 'small')} / 2);
+          }
+        }
+      }
+    }
+  }
+}

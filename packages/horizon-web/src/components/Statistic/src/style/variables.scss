@@ -1,0 +1,22 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  font-size: (
+    title: #{function.css-variable('text-base')},
+    value: #{function.css-variable('font-size-6')},
+    affix: #{function.css-variable('text-lg')},
+    trend: #{function.css-variable('text-sm')},
+  ),
+  color: (
+    title: #{function.css-variable('text-secondary')},
+    value: #{function.css-variable('text-primary')},
+    trend-neutral: #{function.css-variable('text-secondary')},
+    trend: (
+      success: #{function.css-variable('text-success-default')},
+    ),
+    trend-danger: #{function.css-variable('text-error-default')},
+  ),
+  spacing: (
+    gap: #{function.css-variable('spacing-2')},
+  ),
+);

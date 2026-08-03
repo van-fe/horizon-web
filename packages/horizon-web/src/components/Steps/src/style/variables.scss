@@ -1,0 +1,153 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  size: (
+    title: (
+      height: 22px,
+    ),
+    tail: (
+      height: 1px,
+      vertical: (
+        min-height: 40px,
+        max-height: 120px,
+      ),
+    ),
+    icon: (
+      '': 32px,
+      small: 24px,
+      dot: 8px,
+    ),
+  ),
+  font-size: (
+    title: #{function.css-variable('text-base')},
+    subtitle: #{function.css-variable('text-sm')},
+    description: #{function.css-variable('text-sm')},
+  ),
+  color: (
+    title: (
+      '': #{function.css-variable('text-primary')},
+      warning: #{function.css-variable('text-warning-default')},
+      error: (
+        '': #{function.css-variable('text-error-default')},
+        hover: #{function.css-variable('text-error-hover')},
+        active: #{function.css-variable('text-error-press')},
+      ),
+      disabled: #{function.css-variable('text-disabled')},
+    ),
+    subtitle: #{function.css-variable('text-tertiary')},
+    description: #{function.css-variable('text-tertiary')},
+    icon: (
+      '': #{function.css-variable('text-primary')},
+      finished: #{function.css-variable('text-brand-default')},
+      process: #{function.css-variable('text-inverse')},
+      error: #{function.css-variable('text-inverse')},
+      warning: #{function.css-variable('text-inverse')},
+      hover: #{function.css-variable('text-brand-hover')},
+      active: #{function.css-variable('text-brand-press')},
+      disabled: #{function.css-variable('text-disabled')},
+    ),
+  ),
+  border-color: (
+    icon: (
+      '': #{function.css-variable('border-default')},
+      finished: (
+        '': #{function.css-variable('border-brand-default')},
+        dot: #{function.css-variable('border-brand-default')},
+      ),
+      process: (
+        '': #{function.css-variable('border-brand-default')},
+        hover: #{function.css-variable('border-brand-hover')},
+        active: #{function.css-variable('border-brand-press')},
+        dot: #{function.css-variable('border-brand-default')},
+      ),
+      warning: #{function.css-variable('border-warning-default')},
+      error: (
+        '': #{function.css-variable('border-error-default')},
+        hover: #{function.css-variable('border-error-hover')},
+        active: #{function.css-variable('border-error-press')},
+        dot: #{function.css-variable('border-error-default')},
+      ),
+      disabled: (
+        '': #{function.css-variable('border-disabled')},
+        dot: #{function.css-variable('border-disabled')},
+      ),
+      hover: (
+        '': #{function.css-variable('border-brand-hover')},
+        dot: #{function.css-variable('border-brand-hover')},
+      ),
+      active: (
+        '': #{function.css-variable('border-brand-press')},
+        dot: #{function.css-variable('border-brand-press')},
+      ),
+      dot: #{function.css-variable('divider-default')},
+    ),
+  ),
+  border: (
+    icon: (
+      '': 1px solid #{function.css-variable('steps', 'border-color', 'icon')},
+      dot: 2px solid #{function.css-variable('steps', 'border-color', 'icon', 'dot')},
+    ),
+  ),
+  background: (
+    tail: (
+      '': #{function.css-variable('divider-default')},
+      finished: #{function.css-variable('bg-brand-default')},
+      process: #{function.css-variable('bg-brand-default')},
+      warning: #{function.css-variable('bg-warning-default')},
+      error: #{function.css-variable('bg-error-default')},
+    ),
+    icon: (
+      finished: (
+        '': #{function.css-variable('bg-brand-default')},
+        dot: (
+          '': #{function.css-variable('steps', 'background', 'icon', 'finished')},
+          hover: #{function.css-variable('bg-brand-hover')},
+          active: #{function.css-variable('bg-brand-press')},
+        ),
+      ),
+      process: (
+        '': #{function.css-variable('bg-brand-default')},
+        hover: #{function.css-variable('bg-brand-hover')},
+        active: #{function.css-variable('bg-brand-press')},
+        dot: #{function.css-variable('bg-transparent')},
+      ),
+      warning: #{function.css-variable('bg-warning-default')},
+      error: (
+        '': #{function.css-variable('bg-error-default')},
+        hover: #{function.css-variable('bg-error-hover')},
+        active: #{function.css-variable('bg-error-press')},
+        dot: #{function.css-variable('bg-transparent')},
+      ),
+      disabled: (
+        '': #{function.css-variable('bg-transparent')},
+        dot: #{function.css-variable('border-disabled')},
+      ),
+      dot: (
+        '': #{function.css-variable('text-disabled')},
+        hover: #{function.css-variable('bg-transparent')},
+      ),
+    ),
+  ),
+  spacing: (
+    tail: (
+      margin-x: 14px,
+      margin-y: #{function.css-variable('spacing-3')},
+    ),
+    content: (
+      margin-left: #{function.css-variable('spacing-4')},
+      dot: (
+        margin-left: #{function.css-variable('spacing-4')},
+        margin-top: #{function.css-variable('spacing-3')},
+      ),
+    ),
+    title: (
+      margin-bottom: calc(#{function.css-variable('spacing-1')} * -1),
+    ),
+    subtitle: (
+      margin-bottom: #{function.css-variable('spacing-3')},
+    ),
+  ),
+  transition: (
+    all: all #{function.css-variable('transition-time-fast')},
+  ),
+);

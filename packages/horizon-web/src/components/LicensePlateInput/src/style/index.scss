@@ -1,0 +1,181 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('license-plate-input') {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: mixins.css-variable('license-plate-input', 'size', 'width');
+  max-width: 100%;
+  color: mixins.css-variable('license-plate-input', 'color');
+  cursor: text;
+
+  @include mixins.e('popover-reference') {
+    display: inline-flex;
+    max-width: 100%;
+  }
+
+  @include mixins.e('cells') {
+    display: flex;
+    gap: mixins.css-variable('license-plate-input', 'spacing', 'cell-gap');
+    width: 100%;
+  }
+
+  @include mixins.e('cell') {
+    box-sizing: border-box;
+    display: inline-flex;
+    flex: 0 1 auto;
+    align-items: center;
+    justify-content: center;
+    width: mixins.css-variable('license-plate-input', 'size', 'cell', 'medium');
+    min-width: 0;
+    height: mixins.css-variable('license-plate-input', 'size', 'cell', 'medium');
+    font-size: mixins.css-variable('license-plate-input', 'font-size', 'medium');
+    font-weight: 500;
+    color: mixins.css-variable('license-plate-input', 'color', 'placeholder');
+    background: mixins.css-variable('license-plate-input', 'background');
+    border: 1px solid mixins.css-variable('license-plate-input', 'border-color');
+    border-radius: mixins.css-variable('license-plate-input', 'border-radius');
+    transition:
+      border-color mixins.css-variable('license-plate-input', 'transition', 'duration'),
+      background-color mixins.css-variable('license-plate-input', 'transition', 'duration');
+
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+    &:not(:empty) {
+      color: mixins.css-variable('license-plate-input', 'color');
+    }
+
+    @include mixins.m('active') {
+      background: mixins.css-variable('license-plate-input', 'background', 'active');
+      border-color: mixins.css-variable('license-plate-input', 'border-color', 'focus');
+    }
+
+    @include mixins.m('new-energy') {
+      font-size: mixins.css-variable('license-plate-input', 'font-size', 'new-energy');
+      font-weight: 400;
+      color: mixins.css-variable('license-plate-input', 'color', 'new-energy');
+      border-style: dashed;
+    }
+
+    @include mixins.m('new-energy-enabled') {
+      border-style: solid;
+    }
+  }
+
+  @include mixins.e('native') {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    border: 0;
+    clip-path: inset(50%);
+  }
+
+  /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+  &:not(&.is-disabled, &.is-readonly):hover {
+    @include mixins.e('cell') {
+      border-color: mixins.css-variable('license-plate-input', 'border-color', 'hover');
+    }
+  }
+
+  @include mixins.is('error') {
+    @include mixins.e('cell') {
+      border-color: mixins.css-variable('license-plate-input', 'border-color', 'error');
+    }
+  }
+
+  @include mixins.is('disabled') {
+    color: mixins.css-variable('license-plate-input', 'color', 'disabled');
+    cursor: not-allowed;
+
+    @include mixins.e('cell') {
+      background: mixins.css-variable('license-plate-input', 'background', 'disabled');
+      border-color: mixins.css-variable('license-plate-input', 'border-color', 'disabled');
+    }
+  }
+
+  @include mixins.m('emphasize') {
+    @include mixins.e('cell') {
+      background: mixins.css-variable('license-plate-input', 'background', 'emphasize');
+      border-color: transparent;
+    }
+  }
+
+  @include mixins.m('no-border') {
+    @include mixins.e('cell') {
+      border-color: transparent;
+    }
+  }
+
+  @include mixins.m('small') {
+    @include mixins.e('cell') {
+      width: mixins.css-variable('license-plate-input', 'size', 'cell', 'small');
+      height: mixins.css-variable('license-plate-input', 'size', 'cell', 'small');
+      font-size: mixins.css-variable('license-plate-input', 'font-size', 'small');
+
+      @include mixins.m('new-energy') {
+        font-size: mixins.css-variable('license-plate-input', 'font-size', 'new-energy');
+      }
+    }
+  }
+
+  @include mixins.m('large') {
+    @include mixins.e('cell') {
+      width: mixins.css-variable('license-plate-input', 'size', 'cell', 'large');
+      height: mixins.css-variable('license-plate-input', 'size', 'cell', 'large');
+      font-size: mixins.css-variable('license-plate-input', 'font-size', 'large');
+
+      @include mixins.m('new-energy') {
+        font-size: mixins.css-variable('license-plate-input', 'font-size', 'new-energy');
+      }
+    }
+  }
+
+  @include mixins.e('popper') {
+    max-width: calc(100vw - 24px);
+  }
+
+  @include mixins.e('keyboard') {
+    display: flex;
+    flex-direction: column;
+    gap: mixins.css-variable('license-plate-input', 'spacing', 'keyboard-gap');
+    width: mixins.css-variable('license-plate-input', 'size', 'keyboard-width');
+    max-width: 100%;
+  }
+
+  @include mixins.e('key-grid') {
+    display: grid;
+    grid-template-columns: repeat(10, minmax(28px, 1fr));
+    gap: mixins.css-variable('license-plate-input', 'spacing', 'key-gap');
+
+    @include mixins.m('province') {
+      grid-template-columns: repeat(8, minmax(32px, 1fr));
+    }
+  }
+
+  @include mixins.e('key') {
+    width: 100%;
+    min-width: 0;
+    padding-inline: 0;
+
+    /* Horizon buttons add sibling spacing outside layout containers. */
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+    & + & {
+      margin-left: 0 !important;
+    }
+  }
+
+  @include mixins.e('actions') {
+    display: flex;
+    gap: mixins.css-variable('license-plate-input', 'spacing', 'key-gap');
+    justify-content: flex-end;
+  }
+
+  @include mixins.e('action') {
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+    & + & {
+      margin-left: 0 !important;
+    }
+  }
+}

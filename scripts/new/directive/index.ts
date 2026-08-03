@@ -7,7 +7,7 @@ import { green } from '../../../packages/shared/plugins';
 function writeFiles(replacer: Record<string, string>) {
   const mainDir = resolve(
     __dirname,
-    '../../../packages/lego/src/directives',
+    '../../../packages/horizon-web/src/directives',
     replacer.nameWithPrefix,
   );
   const docDir = resolve(
@@ -52,7 +52,7 @@ function register(replacer: Record<string, string>) {
   function registerOnSensorTracker() {
     const targetFile = resolve(
       __dirname,
-      '../../../packages/lego-sensor-tracker/src/setting/directives.json',
+      '../../../packages/horizon-web-sensor-tracker/src/setting/directives.json',
     );
 
     const fileContent = fs.readFileSync(targetFile, { encoding: 'utf-8' });

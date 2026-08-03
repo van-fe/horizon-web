@@ -1,0 +1,5 @@
+import { default as Picker } from './src/Picker';
+import { withInstall } from '@aurora/utils';
+
+export const HPicker = withInstall(Picker);
+export default HPicker;

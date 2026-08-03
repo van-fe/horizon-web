@@ -1,0 +1,39 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  font-size: (
+    title: #{function.css-variable('text-lg')},
+    content: #{function.css-variable('text-base')},
+  ),
+  font-weight: (
+    title: #{function.css-variable('weight-strong')},
+  ),
+  line-height: #{function.css-variable('line-height-standard')},
+  color: #{function.css-variable('text-primary')},
+  border-radius: #{function.css-variable('radius-m')},
+  background: (
+    '': #{function.css-variable('bg-default')},
+    info: #{function.css-variable('bg-info-weak-hover')},
+    success: #{function.css-variable('bg-success-weak-hover')},
+    warning: #{function.css-variable('bg-warning-weak-hover')},
+    error: #{function.css-variable('bg-error-weak-hover')},
+  ),
+  spacing: (
+    padding: (
+      '': #{function.css-variable('spacing-5')},
+      small: #{function.css-variable('spacing-3')},
+    ),
+    content: (
+      gap: (
+        '': #{function.css-variable('spacing-3')},
+        small: #{function.css-variable('spacing-2')},
+      ),
+      action: (
+        gap: (
+          '': #{function.css-variable('spacing-7')},
+          small: #{function.css-variable('spacing-5')},
+        ),
+      ),
+    ),
+  ),
+);

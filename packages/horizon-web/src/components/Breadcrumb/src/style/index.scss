@@ -1,0 +1,86 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('breadcrumb') {
+  color: mixins.css-variable('breadcrumb', 'color');
+  word-break: break-word;
+
+  @include mixins.e('ellipsis__panel') {
+    display: inline;
+    margin-right: 4px;
+  }
+
+  // 折叠时用，没有和下面重复
+  @include mixins.e('suffix') {
+    margin-right: mixins.css-variable('breadcrumb', 'spacing');
+  }
+
+  @include mixins.is('ellipsis') {
+    white-space: nowrap;
+  }
+
+  @include mixins.e('ellipsis') {
+    display: inline-flex;
+    align-items: flex-end;
+    vertical-align: text-bottom;
+    cursor: pointer;
+
+    &:hover {
+      color: mixins.css-variable('breadcrumb', 'color', 'hover');
+    }
+
+    &:active {
+      color: mixins.css-variable('breadcrumb', 'color', 'press');
+    }
+  }
+}
+
+@include mixins.b('breadcrumb-item') {
+  display: inline-flex;
+  align-items: center;
+  color: mixins.css-variable('breadcrumb', 'color');
+  font-size: mixins.css-variable('breadcrumb', 'font-size');
+  line-height: mixins.css-variable('breadcrumb', 'line-height');
+  cursor: default;
+
+  &:last-child {
+    color: mixins.css-variable('breadcrumb', 'color', 'active');
+
+    @include mixins.e('title') {
+      font-weight: mixins.css-variable('breadcrumb', 'font-weight');
+    }
+
+    @include mixins.e('suffix') {
+      display: none;
+    }
+  }
+
+  @include mixins.e('link') {
+    cursor: pointer;
+
+    &:hover {
+      color: mixins.css-variable('breadcrumb', 'color', 'hover');
+    }
+
+    &:active {
+      color: mixins.css-variable('breadcrumb', 'color', 'press');
+    }
+  }
+
+  @include mixins.e('text') {
+    display: inline-block;
+    max-width: mixins.css-variable('breadcrumb', 'size', 'item', 'max-width');
+    margin-right: mixins.css-variable('breadcrumb', 'spacing');
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  @include mixins.e('suffix') {
+    margin-right: mixins.css-variable('breadcrumb', 'spacing');
+    line-height: 1;
+  }
+
+  @include mixins.m('small') {
+    font-size: mixins.css-variable('breadcrumb', 'font-size', 'small');
+  }
+}

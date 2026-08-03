@@ -1,0 +1,104 @@
+@use '../../../../styles/mixins';
+
+@include mixins.be('table', 'table-foot') {
+  @include mixins.be('table', 'row', false) {
+    background: mixins.css-variable('table', 'background', 'footer');
+
+    &:first-child {
+      @include mixins.be('table', 'cell', false) {
+        border-top: mixins.css-variable('table', 'border');
+      }
+    }
+  }
+
+  @include mixins.be('table', 'cell', false) {
+    position: sticky;
+    z-index: calc(#{mixins.css-variable('table', 'z-index')} + 1);
+    vertical-align: middle;
+    background: inherit;
+
+    @include mixins.is('footer-bold') {
+      font-weight: mixins.css-variable('table', 'font-weight', 'footer');
+    }
+
+    @include mixins.with-parallel-state('fixed-left', 'fixed-right') {
+      z-index: calc(#{mixins.css-variable('table', 'z-index')} + 2);
+    }
+  }
+
+  @include mixins.e('footer') {
+    @include mixins.m('action-button-wrap') {
+      display: inline-flex;
+      flex-shrink: 0;
+      width: mixins.css-variable('table', 'size', 'sort-button');
+      height: mixins.css-variable('table', 'size', 'sort-button');
+      vertical-align: middle;
+      border-radius: mixins.css-variable('table', 'border-radius');
+      cursor: pointer;
+    }
+
+    @include mixins.m('sort') {
+      flex-direction: column;
+      grid-row-gap: 1px;
+      transition: mixins.css-variable('table', 'transition', 'color-behavior');
+
+      &-icon {
+        display: flex;
+        justify-content: center;
+        height: calc(#{mixins.css-variable('table', 'size', 'sort-button')} / 2);
+        transition: mixins.css-variable('table', 'transition', 'color-behavior');
+
+        @include mixins.is('asc') {
+          align-items: flex-end;
+          border-top-left-radius: mixins.css-variable('table', 'border-radius');
+          border-top-right-radius: mixins.css-variable('table', 'border-radius');
+
+          svg {
+            transform: translateY(1px);
+          }
+        }
+
+        @include mixins.is('desc') {
+          align-items: flex-start;
+          border-bottom-right-radius: mixins.css-variable('table', 'border-radius');
+          border-bottom-left-radius: mixins.css-variable('table', 'border-radius');
+
+          svg {
+            transform: translateY(-1px);
+          }
+        }
+
+        @include mixins.is('active') {
+          color: mixins.css-variable('table', 'color', 'header', 'sort', 'active');
+        }
+      }
+
+      @include mixins.is('separated') {
+        @include mixins.em('header', 'sort-icon', false) {
+          &:hover {
+            background: mixins.css-variable('table', 'background', 'header', 'sort');
+          }
+        }
+      }
+
+      @include mixins.is-not('separated') {
+        &:hover {
+          background: mixins.css-variable('table', 'background', 'header', 'sort');
+        }
+      }
+    }
+
+    @include mixins.m('filter') {
+      align-items: center;
+      justify-content: center;
+    }
+
+    @include mixins.m('search-panel-wrapper') {
+      padding: 12px;
+    }
+
+    @include mixins.m('selection') {
+      line-height: initial;
+    }
+  }
+}

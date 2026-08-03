@@ -1,0 +1,51 @@
+@use '../../../../styles/mixins';
+
+$values: (
+  size: (
+    time-cell: (
+      height: 40px,
+    ),
+    panel-header: (
+      height: 39px,
+    ),
+  ),
+  font-weight: (
+    time-cell: (
+      active: mixins.css-variable('weight', 'strong'),
+    ),
+    panel-header: (
+      label: mixins.css-variable('weight', 'strong'),
+    ),
+  ),
+  color: (
+    time-cell: (
+      '': mixins.css-variable('text', 'primary'),
+      disabled: mixins.css-variable('text', 'disabled'),
+    ),
+    panels-header: (
+      separator: mixins.css-variable('text', 'disabled'),
+    ),
+  ),
+  border-color: mixins.css-variable('divider', 'default'),
+  border: (
+    panel-column: #{1px solid mixins.css-variable('time-picker', 'border-color')},
+    panel: #{2px solid mixins.css-variable('time-picker', 'border-color')},
+  ),
+  background: (
+    time-cell: (
+      '': mixins.css-variable('bg', 'default'),
+      hover: mixins.css-variable('bg', 'secondary'),
+      active: mixins.css-variable('bg', 'weak', 'activated'),
+      active-hover: mixins.css-variable('bg', 'weak', 'hover'),
+      disabled-active: mixins.css-variable('bg', 'weak', 'disabled'),
+    ),
+  ),
+  spacing: (
+    time-cell: (
+      padding: #{0 mixins.css-variable('spacing-5')},
+    ),
+  ),
+  transition: (
+    color-behavior: mixins.css-variable('transition', 'color-behavior'),
+  ),
+);

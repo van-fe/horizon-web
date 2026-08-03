@@ -1,0 +1,97 @@
+@use '../../../../styles/mixins';
+@use 'type';
+@use 'size';
+
+@include mixins.b('slider') {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  @include mixins.e('container') {
+    position: relative;
+    flex: 1;
+    width: 100%;
+    height: mixins.css-variable('slider', 'size', 'container', 'height');
+
+    &::before {
+      display: block;
+      width: 100%;
+      height: mixins.css-variable('slider', 'size', 'container', 'placeholder', 'height');
+      content: '';
+    }
+  }
+
+  @include mixins.e('input') {
+    max-width: mixins.css-variable('slider', 'size', 'input', 'width');
+    margin-left: mixins.css-variable('slider', 'spacing', 'input', 'margin-left');
+  }
+
+  @include mixins.e('track') {
+    position: absolute;
+    width: 100%;
+    height: 30%;
+    background: mixins.css-variable('slider', 'background', 'track');
+    border-radius: mixins.css-variable('slider', 'border-radius', 'progress');
+  }
+
+  @include mixins.e('progress') {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    height: 100%;
+    margin: auto 0;
+    border-radius: mixins.css-variable('slider', 'border-radius', 'progress');
+  }
+
+  @include mixins.e('separator') {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    margin: auto 0;
+
+    @include mixins.m('item') {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      display: block;
+      width: 2px;
+      height: 100%;
+      margin: auto 0;
+      background: #fff;
+    }
+  }
+
+  @include mixins.e('cursor') {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: mixins.css-variable('slider', 'size', 'cursor');
+    height: mixins.css-variable('slider', 'size', 'cursor');
+    margin: auto 0;
+    background: mixins.css-variable('slider', 'background', 'cursor');
+    border: mixins.css-variable('slider', 'border', 'cursor');
+    border-radius: mixins.css-variable('slider', 'border-radius', 'cursor');
+    transform-origin: 50% 50%;
+    transition: transform mixins.css-variable('slider', 'transition', 'duration');
+  }
+
+  @include mixins.is-not('disabled') {
+    @include mixins.e('cursor') {
+      &:hover,
+      &:focus {
+        transform: scale(120%);
+      }
+
+      &:focus {
+        border-color: mixins.css-variable('slider', 'border-color', 'cursor', 'focus');
+      }
+    }
+  }
+
+  @include mixins.is('disabled') {
+    cursor: not-allowed;
+  }
+}

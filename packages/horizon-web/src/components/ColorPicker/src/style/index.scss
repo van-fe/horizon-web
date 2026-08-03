@@ -1,0 +1,63 @@
+@use '../../../../styles/mixins';
+@use 'utils';
+@use 'trigger';
+@use 'color-type';
+@use 'panel';
+@use 'swatches';
+@use 'edit-form';
+@use 'color-board';
+@use 'preview';
+
+@include mixins.b('color-picker') {
+  @include mixins.m('square') {
+    #{mixins.css-variable-name('picker', 'size', 'normal', 'min-width')}: 0;
+    #{mixins.css-variable-name('picker', 'size', 'fit-content-input', 'min-width')}: 20px;
+    #{mixins.css-variable-name('picker', 'spacing', 'input-dropdown-icon', 'margin')}: 0;
+    #{mixins.css-variable-name('picker', 'spacing', 'input-dropdown-icon', 'margin', 'small')}: 0;
+    #{mixins.css-variable-name('picker', 'spacing', 'input-dropdown-icon', 'margin', 'large')}: 0;
+    display: inline-flex;
+    min-width: mixins.css-variable('color-picker', 'size', 'trigger');
+    height: mixins.css-variable('color-picker', 'size', 'trigger');
+
+    > #{mixins.block-name('popover__reference')} {
+      > #{mixins.block-name('picker__input')} {
+        justify-content: center;
+
+        & > #{mixins.block-name('picker__input--container')} {
+          display: none;
+        }
+
+        & > #{mixins.block-name('picker__input--append-icon')} {
+          width: auto;
+          min-width: auto;
+          margin: 0;
+          overflow: hidden;
+          line-height: normal;
+          text-align: left;
+          border-radius: mixins.css-variable('color-picker', 'border-radius', 'trigger');
+        }
+      }
+    }
+  }
+
+  @include mixins.parallel-modifier('square', 'small') {
+    #{mixins.css-variable-name('picker', 'spacing', 'input', 'outer', 'padding', 'small')}: #{mixins.css-variable('color-picker', 'spacing', 'square', 'padding', 'small')};
+    min-width: mixins.css-variable('color-picker', 'size', 'trigger', 'small');
+    height: mixins.css-variable('color-picker', 'size', 'trigger', 'small');
+
+    @include mixins.be('picker', 'input', false) {
+      min-width: mixins.css-variable('color-picker', 'size', 'trigger', 'small');
+      height: mixins.css-variable('color-picker', 'size', 'trigger', 'small');
+    }
+  }
+
+  @include mixins.parallel-modifier('square', 'large') {
+    min-width: mixins.css-variable('color-picker', 'size', 'trigger', 'large');
+    height: mixins.css-variable('color-picker', 'size', 'trigger', 'large');
+
+    @include mixins.be('picker', 'input', false) {
+      min-width: mixins.css-variable('color-picker', 'size', 'trigger', 'large');
+      height: mixins.css-variable('color-picker', 'size', 'trigger', 'large');
+    }
+  }
+}

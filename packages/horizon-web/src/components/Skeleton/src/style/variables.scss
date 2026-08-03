@@ -1,0 +1,24 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  size: (
+    avatar: 40px,
+    image: 40px,
+    picture: 160px,
+    text: (
+      height: 24px,
+    ),
+    operate: (
+      height: 40px,
+      width: 120px,
+    ),
+  ),
+  border-radius: (
+    '': #{function.css-variable('radius-m')},
+    avatar: #{function.css-variable('radius-circle')},
+  ),
+  background: #{function.css-variable('bg-secondary')},
+  spacing: (
+    margin-bottom: #{function.css-variable('spacing-3')},
+  ),
+);

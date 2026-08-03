@@ -1,0 +1,69 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  size: (
+    container: (
+      height: (
+        '': 30px,
+        small: 21px,
+        large: 36px,
+      ),
+      placeholder: (
+        height: (
+          '': 10px,
+          small: 7px,
+          large: 12px,
+        ),
+      ),
+    ),
+    cursor: (
+      '': 20px,
+      small: 14px,
+      large: 24px,
+    ),
+    input: (
+      width: 100px,
+    ),
+  ),
+  border-color: (
+    cursor: (
+      '': #{function.css-variable('border-brand-default')},
+      focus: #{function.css-variable('border-brand-press')},
+      disabled: #{function.css-variable('border-disabled')},
+    ),
+  ),
+  border: (
+    cursor: 1px solid #{function.css-variable('slider', 'border-color', 'cursor')},
+  ),
+  border-radius: (
+    progress: (
+      '': #{function.css-variable('radius-m')},
+      small: #{function.css-variable('radius-s')},
+      large: #{function.css-variable('radius-l')},
+    ),
+    cursor: #{function.css-variable('radius-circle')},
+  ),
+  background: (
+    cursor: #{function.css-variable('bg-default')},
+    track: (
+      '': #{function.css-variable('bg-secondary')},
+      disabled: #{function.css-variable('bg-disabled')},
+    ),
+    progress: (
+      disabled: #{function.css-variable('bg-press')},
+      primary: #{function.css-variable('bg-brand-default')},
+      info: #{function.css-variable('bg-info-default')},
+      success: #{function.css-variable('bg-success-default')},
+      warning: #{function.css-variable('bg-warning-default')},
+      error: #{function.css-variable('bg-error-default')},
+    ),
+  ),
+  spacing: (
+    input: (
+      margin-left: 16px,
+    ),
+  ),
+  transition: (
+    duration: #{function.css-variable('transition-time')},
+  ),
+);

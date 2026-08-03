@@ -1,0 +1,43 @@
+import type { ExtractPropTypes } from 'vue';
+import { declarePropType } from '@aurora/utils';
+
+export const useTimeProps = declarePropType({
+  /**
+   * 时间（秒/毫秒级时间戳）
+    * @en Configuration for time.
+   */
+  time: {
+    type: [Date, Number, String],
+    required: false,
+    default: 10,
+  },
+  /**
+   * 到期时间（秒/毫秒级时间戳）
+    * @en Configuration for end time.
+   */
+  endTime: {
+    type: [Date, Number, String],
+    required: false,
+    default: 0,
+  },
+  /**
+   * 是否正向计时
+    * @en Configuration for forward.
+   */
+  forward: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+  /**
+   * 是否计算time和endTime的差值
+    * @en Configuration for calculative.
+   */
+  calculative: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+});
+
+export type TimeProps = ExtractPropTypes<typeof useTimeProps>;

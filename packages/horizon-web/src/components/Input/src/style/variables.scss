@@ -1,0 +1,145 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  size: (
+    height: (
+      '': 32px,
+      small: 24px,
+      large: 40px,
+    ),
+    limit-text: (
+      height: #{function.css-variable('input', 'size', 'height')},
+    ),
+    textarea-inner: (
+      min-height: #{function.css-variable('input', 'size', 'height')},
+    ),
+  ),
+  font-size: (
+    '': #{function.css-variable('text-base')},
+    small: #{function.css-variable('text-sm')},
+    limit-text: #{function.css-variable('text-sm')},
+  ),
+  line-height: (
+    '': #{function.css-variable('line-height-standard')},
+    small: #{function.css-variable('line-height-standard')},
+    limit-text: #{function.css-variable('input', 'size', 'height')},
+    textarea: calc(#{function.css-variable('input', 'size', 'height')} - 10px),
+  ),
+  color: (
+    '': #{function.css-variable('text-primary')},
+    caret: #{function.css-variable('text-brand-default')},
+    inner: (
+      placeholder: #{function.css-variable('text-disabled')},
+      disabled: #{function.css-variable('text-secondary')},
+      disabled-no-border: #{function.css-variable('text-primary')},
+    ),
+    limit-text: (
+      '': #{function.css-variable('text-disabled')},
+      current: #{function.css-variable('text-secondary')},
+    ),
+    prefix: #{function.css-variable('text-primary')},
+    suffix: #{function.css-variable('text-primary')},
+    prepend-append: #{function.css-variable('text-disabled')},
+    over-limit: #{function.css-variable('text-error-default')},
+  ),
+  border-color: (
+    '': #{function.css-variable('border-default')},
+    hover: #{function.css-variable('border-brand-hover')},
+    focus: #{function.css-variable('border-brand-default')},
+    disabled: #{function.css-variable('border-disabled')},
+    error: #{function.css-variable('border-error-default')},
+    inner-wrap: (
+      filled: (
+        '': #{function.css-variable('border-transparent')},
+        disabled: #{function.css-variable('border-transparent')},
+      ),
+    ),
+    over-limit: #{function.css-variable('border-error-default')},
+  ),
+  border: (
+    '': 1px solid #{function.css-variable('input', 'border-color')},
+    transparent: 1px solid #{function.css-variable('input', 'border-color', 'inner-wrap', 'filled')},
+  ),
+  border-radius: #{function.css-variable('radius-m')},
+  background: (
+    disabled: #{function.css-variable('bg-disabled')},
+    inner: (
+      '': #{function.css-variable('bg-default')},
+      disabled: #{function.css-variable('bg-transparent')},
+    ),
+    limit-text: (
+      '': #{function.css-variable('bg-default')},
+      disabled: #{function.css-variable('bg-secondary')},
+    ),
+    inner-wrap: (
+      filled: (
+        '': #{function.css-variable('bg-secondary')},
+        disabled: (
+          '': #{function.css-variable('bg-disabled')},
+          inner: #{function.css-variable('bg-transparent')},
+        ),
+      ),
+      no-border: (
+        '': #{function.css-variable('bg-hover')},
+        disabled: (
+          '': #{function.css-variable('bg-default')},
+          inner: #{function.css-variable('bg-transparent')},
+        ),
+      ),
+      error: #{function.css-variable('bg-error-weak-activated')},
+    ),
+    prepend-append: #{function.css-variable('bg-disabled')},
+  ),
+  spacing: (
+    textarea-limit-wrap: (
+      right: #{function.css-variable('spacing-4')},
+      scrollbar: (
+        right: #{function.css-variable('spacing-4')},
+      ),
+      bottom: 0,
+      padding: 0 #{function.css-variable('spacing-2')},
+    ),
+    textarea-inner: (
+      padding-y: (
+        '': #{function.css-variable('spacing-2')},
+        small: #{function.css-variable('spacing-1')},
+        large: #{function.css-variable('spacing-3')},
+      ),
+      padding-x: (
+        '': calc(#{function.css-variable('spacing-4')} - 1px),
+        small: calc(#{function.css-variable('spacing-3')} - 1px),
+      ),
+      padding: 5px #{function.css-variable('spacing-4')},
+    ),
+    prepend-append: (
+      padding: 0 #{function.css-variable('input', 'spacing', 'textarea-inner', 'padding-x')},
+    ),
+    inner-wrap: (
+      padding: (
+        '': #{function.css-variable('input', 'spacing', 'textarea-inner', 'padding-y')}
+          #{function.css-variable('input', 'spacing', 'textarea-inner', 'padding-x')},
+        small: #{function.css-variable('input', 'spacing', 'textarea-inner', 'padding-y', 'small')}
+          #{function.css-variable('input', 'spacing', 'textarea-inner', 'padding-x', 'small')},
+        large: #{function.css-variable('input', 'spacing', 'textarea-inner', 'padding-y', 'large')}
+          #{function.css-variable('input', 'spacing', 'textarea-inner', 'padding-x')},
+      ),
+    ),
+    multi-line-limit: (
+      textarea-inner: (
+        padding-bottom: calc(#{function.css-variable('input', 'line-height', 'limit-text')} + #{function.css-variable('input', 'spacing', 'textarea-inner', 'padding-y')}),
+      ),
+    ),
+    limit-text: (
+      margin-left: #{function.css-variable('input', 'spacing', 'textarea-inner', 'padding-x')},
+    ),
+    prefix: (
+      margin-right: #{function.css-variable('spacing-3')},
+    ),
+    suffix: (
+      margin-left: #{function.css-variable('input', 'spacing', 'textarea-inner', 'padding-x')},
+    ),
+    clear-icon: (
+      margin-right: #{function.css-variable('spacing-3')},
+    ),
+  ),
+);

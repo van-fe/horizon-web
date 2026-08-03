@@ -1,0 +1,8 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('footer') {
+  flex-shrink: 0;
+  box-sizing: border-box;
+  height: mixins.css-variable('container', 'size', 'footer', 'height');
+  padding: mixins.css-variable('container', 'spacing', 'footer', 'padding');
+}

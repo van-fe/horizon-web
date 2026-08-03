@@ -7,7 +7,7 @@ import type {
   ExportDeclaration,
 } from 'ts-morph';
 import { ts } from 'ts-morph';
-import type { ApiGeneratorExportedPluginType, ApiGeneratorExportedMethod } from '@nio-fe/shared';
+import type { ApiGeneratorExportedPluginType, ApiGeneratorExportedMethod } from '@aurora/utils';
 import { analyseMethod } from './analyseMethod';
 import { analyseImportExportStatement } from '../../utils/analyseImportExportStatement';
 import { analyseExportedTypes } from '../../utils/analysisType/analyseExportedTypes';
@@ -58,7 +58,7 @@ export function analyseMethodExports(
             continue;
           }
 
-          if (/^N/.test(exportedVariableName)) {
+          if (/^H/.test(exportedVariableName)) {
             const res: ApiGeneratorExportedMethod = {
               dirName,
               name: exportedVariableName,

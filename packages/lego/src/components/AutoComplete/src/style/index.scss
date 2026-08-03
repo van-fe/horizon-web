@@ -1,8 +1,0 @@
-@use '../../../../styles/mixins';
-@import './option';
-
-@include mixins.b('auto-complete') {
-  @include mixins.e('scrollbar') {
-    margin: mixins.css-variable('auto-complete', 'spacing', 'margin', 'panel', 'scrollbar');
-  }
-}

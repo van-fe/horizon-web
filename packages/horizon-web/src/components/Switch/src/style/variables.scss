@@ -1,0 +1,112 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  size: (
+    core: (
+      width: (
+        '': 32px,
+        small: (
+          '': 24px,
+          with-inner-text: 40px,
+        ),
+        large: (
+          '': 40px,
+          with-inner-text: 56px,
+        ),
+      ),
+      with-inner-text: (
+        width: 48px,
+      ),
+      height: (
+        '': 16px,
+        small: 12px,
+        large: 20px,
+      ),
+    ),
+    inner: (
+      '': 14px,
+      small: 10px,
+      large: 18px,
+    ),
+  ),
+  font-size: (
+    label: #{function.css-variable('text-base')},
+    status: (
+      '': #{function.css-variable('text-base')},
+      small: #{function.css-variable('text-sm')},
+      large: #{function.css-variable('text-lg')},
+    ),
+    inner-text: #{function.css-variable('text-sm')},
+  ),
+  line-height: (
+    label: (
+      '': #{function.css-variable('line-height-standard')},
+      left: #{function.css-variable('line-height-standard')},
+      right: #{function.css-variable('line-height-standard')},
+    ),
+    status: #{function.css-variable('line-height-standard')},
+  ),
+  color: (
+    label: #{function.css-variable('text-primary')},
+    inner-text: #{function.css-variable('text-primary')},
+  ),
+  border-radius: (
+    core: #{function.css-variable('radius-pill')},
+    inner: #{function.css-variable('radius-circle')},
+  ),
+  background: (
+    core: (
+      '': #{function.css-variable('text-disabled')},
+      active: #{function.css-variable('text-brand-hover')},
+      disabled: (
+        '': #{function.css-variable('bg-disabled')},
+        active: #{function.css-variable('bg-brand-disabled')},
+      ),
+    ),
+    inner: #{function.css-variable('bg-default')},
+  ),
+  spacing: (
+    label: (
+      margin-bottom: #{function.css-variable('spacing-2')},
+      left: (
+        margin-bottom: 0,
+      ),
+      right: (
+        margin-bottom: 0,
+        margin-left: #{function.css-variable('spacing-3')},
+      ),
+    ),
+    status: (
+      margin-left: (
+        '': #{function.css-variable('spacing-3')},
+        small: #{function.css-variable('spacing-2')},
+        large: #{function.css-variable('spacing-3')},
+      ),
+    ),
+    main: (
+      margin-left: #{function.css-variable('spacing-5')},
+    ),
+    core: (
+      padding: 1px,
+    ),
+  ),
+  transform: (
+    translate-x: (
+      inner: (
+        with-inner-text: 32px,
+        small: (
+          with-inner-text: 28px,
+        ),
+        large: (
+          with-inner-text: 36px,
+        ),
+      ),
+    ),
+  ),
+  transition: (
+    duration: #{function.css-variable('transition-time')},
+    timing-function: (
+      cubic: #{function.css-variable('transition-func-cubic')},
+    ),
+  ),
+);

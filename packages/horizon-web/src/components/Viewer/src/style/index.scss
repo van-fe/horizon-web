@@ -1,0 +1,282 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('viewer') {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: mixins.css-variable('viewer', 'background');
+
+  @include mixins.e('preview') {
+    position: absolute;
+    top: 56px;
+    right: 0;
+    left: 0;
+    user-select: none;
+
+    @include mixins.e('loading') {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 1;
+      transform: translate(-50%, -50%);
+    }
+
+    @include mixins.e('wrap') {
+      position: absolute;
+      cursor: grab;
+      transition: all mixins.css-variable('viewer', 'transition', 'duration') ease;
+
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    @include mixins.e('wrap-video') {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      > div {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  @include mixins.e('navbar') {
+    position: absolute;
+    right: 0;
+    bottom: mixins.css-variable('viewer', 'spacing', 'navbar', 'bottom');
+    left: 0;
+    overflow: hidden;
+    user-select: none;
+
+    &::before {
+      position: absolute;
+      left: 50%;
+      z-index: 1;
+      width: mixins.css-variable('viewer', 'size', 'navbar-item');
+      height: mixins.css-variable('viewer', 'size', 'navbar-item');
+      margin-left: -40px;
+      border: mixins.css-variable('viewer', 'border', 'navbar', 'selected');
+      content: '';
+      pointer-events: none;
+    }
+
+    ul {
+      position: relative;
+      left: 50%;
+      display: flex;
+      margin-left: calc(-1 * #{mixins.css-variable('viewer', 'size', 'navbar-item')} / 2);
+      list-style: none;
+      transition: transform 0.3s ease;
+
+      li {
+        position: relative;
+        width: mixins.css-variable('viewer', 'size', 'navbar-item');
+        height: mixins.css-variable('viewer', 'size', 'navbar-item');
+        margin-right: mixins.css-variable('viewer', 'spacing', 'navbar-item', 'margin-right');
+        cursor: pointer;
+        opacity: 0.5;
+
+        img {
+          width: mixins.css-variable('viewer', 'size', 'navbar-item');
+          height: mixins.css-variable('viewer', 'size', 'navbar-item');
+          object-fit: cover;
+        }
+
+        @include mixins.e('play-icon') {
+          position: absolute;
+          top: calc(#{mixins.css-variable('viewer', 'size', 'navbar-item')} / 4);
+          left: calc(#{mixins.css-variable('viewer', 'size', 'navbar-item')} / 4);
+          width: calc(#{mixins.css-variable('viewer', 'size', 'navbar-item')} / 2);
+          height: calc(#{mixins.css-variable('viewer', 'size', 'navbar-item')} / 2);
+          line-height: mixins.css-variable('viewer', 'line-height', 'navbar-item', 'play-icon');
+          text-align: center;
+          background: mixins.css-variable('viewer', 'background', 'navbar-item', 'play-icon');
+          border-radius: mixins.css-variable('viewer', 'border-radius', 'navbar-item', 'play-icon');
+        }
+      }
+    }
+  }
+
+  @include mixins.e('toolbar') {
+    position: absolute;
+    bottom: mixins.css-variable('viewer', 'spacing', 'toolbar', 'bottom');
+    left: 50%;
+    display: flex;
+    align-items: center;
+    height: mixins.css-variable('viewer', 'size', 'toolbar', 'height');
+    padding: mixins.css-variable('viewer', 'spacing', 'toolbar', 'padding');
+    overflow: hidden;
+    color: mixins.css-variable('viewer', 'color', 'toolbar');
+    background: mixins.css-variable('viewer', 'background', 'toolbar');
+    border-radius: mixins.css-variable('viewer', 'border-radius', 'toolbar');
+    transform: translateX(-50%);
+    user-select: none;
+
+    button {
+      width: mixins.css-variable('viewer', 'size', 'toolbar-button');
+      height: mixins.css-variable('viewer', 'size', 'toolbar-button');
+      color: mixins.css-variable('viewer', 'color', 'toolbar');
+      background: mixins.css-variable('viewer', 'background', 'toolbar');
+      border-radius: mixins.css-variable('viewer', 'border-radius', 'toolbar');
+      outline: none;
+
+      &:hover {
+        background: mixins.css-variable('viewer', 'background', 'toolbar-button', 'hover');
+      }
+
+      &[disabled] {
+        color: mixins.css-variable('viewer', 'color', 'toolbar-button', 'disabled');
+        cursor: not-allowed;
+
+        &:hover {
+          background: mixins.css-variable('viewer', 'background', 'toolbar-button', 'disabled', 'hover');
+        }
+      }
+    }
+
+    > * {
+      margin-right: mixins.css-variable('viewer', 'spacing', 'toolbar-button', 'next-item', 'margin-right');
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      > * {
+        justify-content: center;
+        margin-right: mixins.css-variable('spacing-3');
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+
+    @include mixins.e('split') {
+      display: block;
+      width: 1px;
+      height: mixins.css-variable('viewer', 'size', 'toolbar-split', 'height');
+      background: mixins.css-variable('viewer', 'background', 'toolbar-split');
+    }
+  }
+
+  @include mixins.m('active') {
+    opacity: 1 !important;
+  }
+
+  @include mixins.e('header') {
+    position: absolute;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: mixins.css-variable('viewer', 'size', 'header', 'height');
+    color: mixins.css-variable('viewer', 'color', 'header');
+    background: mixins.css-variable('viewer', 'background', 'header');
+
+    span {
+      font-size: mixins.css-variable('viewer', 'font-size', 'header');
+    }
+
+    button {
+      position: absolute;
+      right: mixins.css-variable('viewer', 'spacing', 'header-close', 'right');
+      width: mixins.css-variable('viewer', 'size', 'header-close');
+      height: mixins.css-variable('viewer', 'size', 'header-close');
+      cursor: pointer;
+
+      &:hover {
+        color: mixins.css-variable('viewer', 'color', 'header-close', 'hover');
+      }
+    }
+  }
+
+  @include mixins.e('legend') {
+    position: absolute;
+    display: flex;
+    align-items: center;
+
+    @include mixins.e('legend-dot') {
+      position: relative;
+      width: mixins.css-variable('viewer', 'size', 'legend-dot');
+      height: mixins.css-variable('viewer', 'size', 'legend-dot');
+      background: mixins.css-variable('viewer', 'background', 'legend-dot');
+      border-radius: mixins.css-variable('viewer', 'border-radius', 'legend-dot');
+      transition: background 0.3s ease;
+
+      &::before {
+        position: absolute;
+        top: calc(#{mixins.css-variable('viewer', 'size', 'legend-dot')} / 4);
+        left: calc(#{mixins.css-variable('viewer', 'size', 'legend-dot')} / 4);
+        width: calc(#{mixins.css-variable('viewer', 'size', 'legend-dot')} / 2);
+        height: calc(#{mixins.css-variable('viewer', 'size', 'legend-dot')} / 2);
+        background: mixins.css-variable('viewer', 'background', 'legend-dot', 'point');
+        border-radius: mixins.css-variable('viewer', 'border-radius', 'legend-dot');
+        content: '';
+      }
+    }
+
+    @include mixins.e('legend-line') {
+      position: relative;
+      top: -1px;
+      width: mixins.css-variable('viewer', 'size', 'legend-line', 'width');
+      height: mixins.css-variable('viewer', 'size', 'legend-line', 'height');
+      background: mixins.css-variable('viewer', 'background', 'legend-dot');
+      transition: background 0.3s ease;
+    }
+
+    @include mixins.e('legend-body') {
+      padding: mixins.css-variable('viewer', 'spacing', 'legend-body', 'padding');
+      color: mixins.css-variable('viewer', 'color', 'legend-body');
+      font-size: mixins.css-variable('viewer', 'font-size', 'legend-body');
+      line-height: mixins.css-variable('viewer', 'line-height', 'legend-body');
+      background: mixins.css-variable('viewer', 'background', 'legend-dot');
+      border-radius: mixins.css-variable('viewer', 'border-radius', 'legend-body');
+      transition: background mixins.css-variable('viewer', 'transition', 'duration') ease;
+    }
+  }
+
+  @include mixins.e('close') {
+    color: mixins.css-variable('viewer', 'color', 'header-close');
+
+    &:hover {
+      color: mixins.css-variable('viewer', 'color', 'header-close', 'hover');
+    }
+  }
+
+  @include mixins.e('legend') {
+    @include mixins.m('hoverable') {
+      &:hover {
+        cursor: pointer;
+
+        @include mixins.e('legend-dot') {
+          background: mixins.css-variable('viewer', 'background', 'legend-item', 'hoverable');
+        }
+
+        @include mixins.e('legend-line') {
+          background: mixins.css-variable('viewer', 'background', 'legend-item', 'hoverable');
+        }
+
+        @include mixins.e('legend-body') {
+          background: mixins.css-variable('viewer', 'background', 'legend-item', 'hoverable');
+        }
+      }
+    }
+  }
+}

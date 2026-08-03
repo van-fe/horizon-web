@@ -48,5 +48,5 @@ class 规则：`{type}{direction}-{size}`。
 |mx-auto|margin-left: auto;<br>margin-right: auto;|
 |py-10|padding-top: 40px;<br>padding-bottom: 40px;|
 
-### Demo
+## Demo
 :::demo ./demos/demo1.vue :::

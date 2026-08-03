@@ -1,10 +1,8 @@
 {
-  "lego": "2.12.18",
-  "shared": "2.12.18",
-  "locale": "2.12.18",
-  "locale-vue": "2.12.18",
-  "unplugin-resolver": "2.12.18",
-  "lego-sensor-tracker": "2.12.18",
-  "colors": "2.12.18", 
-  "lego-pad": "2.12.18"
+  "horizon-web": "1.0.0",
+  "utils": "1.0.0",
+  "locale": "1.0.0",
+  "locale-vue": "1.0.0",
+  "unplugin-resolver": "1.0.0",
+  "colors": "1.0.0"
 }

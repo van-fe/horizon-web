@@ -1,0 +1,16 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  spacing: (
+    grid: (
+      gutter: (
+        xs: #{function.css-variable('spacing-3')},
+        sm: #{function.css-variable('spacing-5')},
+        md: #{function.css-variable('spacing-5')},
+        lg: #{function.css-variable('spacing-5')},
+        xl: #{function.css-variable('spacing-7')},
+        xxl: #{function.css-variable('spacing-10')},
+      ),
+    ),
+  ),
+);

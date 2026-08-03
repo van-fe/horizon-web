@@ -1,0 +1,81 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('steps') {
+  @include mixins.is-not('dot') {
+    @include mixins.is('label-placement-vertical') {
+      @include mixins.b('step', false) {
+        @include mixins.e('content') {
+          margin-left: 0;
+
+          @include mixins.m('title') {
+            &::after {
+              display: none;
+            }
+          }
+        }
+
+        @include mixins.e('wrapper') {
+          position: relative;
+          flex-direction: column;
+          justify-content: center;
+        }
+
+        @include mixins.e('tail') {
+          position: absolute;
+          top: 0;
+          left: calc(
+            #{mixins.css-variable('steps', 'size', 'icon')} +
+              #{mixins.css-variable('steps', 'spacing', 'tail', 'margin-x')}
+          );
+          display: flex;
+          align-items: center;
+          width: calc(
+            100% - #{mixins.css-variable('steps', 'size', 'icon')} -
+              #{mixins.css-variable('steps', 'spacing', 'tail', 'margin-x')} * 2
+          );
+          height: mixins.css-variable('steps', 'size', 'icon');
+
+          &::after {
+            display: block;
+            width: 100%;
+            height: 1px;
+            background: mixins.css-variable('steps', 'background', 'tail');
+            content: '';
+          }
+        }
+
+        /**
+        @include mixins.is('next-finish') {
+          @include mixins.e('tail') {
+            &::after {
+              background: mixins.css-variable('steps', 'background', 'tail', 'finished');
+            }
+          }
+        }
+
+        @include mixins.is('next-process') {
+          @include mixins.e('tail') {
+            &::after {
+              background: mixins.css-variable('steps', 'background', 'tail', 'process');
+            }
+          }
+        }
+
+        @include mixins.is('next-error') {
+          @include mixins.e('tail') {
+            &::after {
+              background: mixins.css-variable('steps', 'background', 'tail', 'error');
+            }
+          }
+        }
+        **/
+
+        &:last-child {
+          @include mixins.e('tail') {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

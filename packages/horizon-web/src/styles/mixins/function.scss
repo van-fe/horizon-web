@@ -1,0 +1,245 @@
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:meta';
+@use 'sass:string';
+@use './config';
+@use '../version';
+
+@function block($block) {
+  @return config.$namespace + '-' + $block;
+}
+
+@function block-name($block) {
+  @return #{'.' + config.$namespace + '-' + $block};
+}
+
+@function element-name($element, $block) {
+  @return #{'.' + $block + config.$element-separator + $element};
+}
+
+@function modifier-name($modifier, $element, $block) {
+  @return #{element-name($element, $block) + config.$modifier-separator + $modifier};
+}
+
+@function block-modifier-name($modifier, $block) {
+  @return #{block-name($block) + config.$modifier-separator + $modifier};
+}
+
+@function b($block) {
+  @return #{'.' + config.$namespace + '-' + $block};
+}
+
+@function be($block, $element) {
+  @return #{b($block) #{b($block) + config.$element-separator + $element}};
+}
+
+@function bem($block, $element, $modifier) {
+  @return #{be($block, $element) #{be($block, $modifier) + config.$modifier-separator + $modifier}};
+}
+
+@function e($block, $element) {
+  @return #{b($block) + config.$element-separator + $element};
+}
+
+@function size($value) {
+  @return $value + px;
+}
+
+@function shadow($arg...) {
+  $result: ();
+
+  @each $val in $arg {
+    @if meta.type-of($val) != color {
+      $result: list.join($result, size($val));
+    } @else {
+      $result: list.join($result, $val);
+    }
+  }
+
+  @return $result;
+}
+
+@function padding($arg...) {
+  $result: ();
+
+  @each $val in $arg {
+    @if meta.type-of($val) != 0 {
+      $result: list.join($result, size($val));
+    } @else {
+      $result: list.join($result, $val);
+    }
+  }
+
+  @return $result;
+}
+
+// BEM support Func
+@function selector-to-string($selector) {
+  $selector: meta.inspect($selector);
+  $selector: string.slice($selector, 2, -2);
+
+  @return $selector;
+}
+
+@function contains-modifier($selector) {
+  $selector: selector-to-string($selector);
+
+  @if string.index($selector, config.$modifier-separator) {
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+@function contain-when-flag($selector) {
+  $selector: selector-to-string($selector);
+
+  @if string.index($selector, '.' + config.$state-prefix) {
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+@function contain-pseudo-class($selector) {
+  $selector: selector-to-string($selector);
+
+  @if string.index($selector, ':') {
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+@function hit-all-special-nest-rule($selector) {
+  @return contains-modifier($selector) or contain-when-flag($selector) or
+    contain-pseudo-class($selector);
+}
+
+@function package-element($element...) {
+  $current-selector: '';
+
+  @each $unit in $element {
+    $current-selector: #{$current-selector + '.' + $-block + config.$element-separator + $unit + ','};
+  }
+
+  @return $current-selector;
+}
+
+@function package-modifier($modifier...) {
+  $current-selector: ();
+
+  @if meta.global-variable-exists('-element') {
+    @each $e in $-element {
+      $be: #{'.' + $-block + config.$element-separator + $e};
+
+      @each $m in $modifier {
+        $current-selector: list.append($current-selector, $current-selector + $be + config.$modifier-separator + $m)
+      }
+
+      $current-selector: #{$current-selector + ','};
+    }
+  } @else {
+    @each $m in $modifier {
+      $current-selector: list.append($current-selector, $current-selector + '.' + $-block + config.$modifier-separator + $m)
+    }
+  }
+
+  @return $current-selector;
+}
+
+@function trim($str, $separator: '-') {
+  @if  string.index($str, $separator) == 1 {
+    $str: trim(string.slice($str, 2));
+  }
+
+  $len: string.length($str);
+
+  @if  string.slice($str, $len) == $separator {
+    $str: trim(string.slice($str, 1, $len - 1));
+  }
+
+  @return $str;
+}
+
+@function list-join-width-hyphen($list) {
+  $res: '';
+
+  @each $item in $list {
+    @if list.separator($item) == 'comma' {
+      $res: #{$res + '-' + list-join-width-hyphen($item)};
+    } @else if $item != '' {
+      $res: #{$res + '-' + string.unquote(#{$item})};
+    }
+  }
+
+  @return trim($res);
+}
+
+@function array-join-width-hyphen($items...) {
+  $res: '';
+
+  @each $item in $items {
+    @if string.length(#{$item}) > 0 {
+      $res: #{$res + '-' + string.unquote(#{$item})};
+    }
+  }
+
+  @return trim($res);
+}
+
+@function css-variable-name($names...) {
+  $list: (config.$namespace);
+
+  @if config.$css-variable-with-version {
+    $list: list.join($list, version.$version, $separator: space);
+  }
+
+  $list: list.join($list, $names, $separator: space);
+
+  @return #{'--' + list-join-width-hyphen($list)};
+}
+
+@function css-variable-name-with-version($names...) {
+  @return #{'--' + array-join-width-hyphen(config.$namespace, version.$version, list-join-width-hyphen($names))};
+}
+
+@function css-variable($name...) {
+  @return #{'var(' + css-variable-name($name) + ')'};
+}
+
+@function css-variable-with-default-value($name, $default-value) {
+  @return #{'var(' + css-variable-name($name) + ',' + $default-value + ')'};
+}
+
+@function flatten-variables($list, $prefix: '') {
+  $res: ();
+
+  @each $key, $value in $list {
+    $curr-key: ($prefix);
+
+    @if  string.length($curr-key) == 0 {
+      $curr-key: ($key);
+    } @else {
+      $curr-key: list.join($curr-key, $key);
+    }
+
+    @if list.separator($value) == 'comma' {
+      $res: map.merge($res, flatten-variables($value, list-join-width-hyphen($curr-key)));
+    } @else {
+      $res: map.merge($res, (#{list-join-width-hyphen($curr-key)}: $value))
+    }
+  }
+
+  @return $res;
+}
+
+@function map-merge-multi($maps...) {
+  $res: ();
+
+  @each $map in $maps {
+    $res: map.merge($res, $map);
+  }
+
+  @return $res;
+}

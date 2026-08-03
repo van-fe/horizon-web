@@ -1,0 +1,82 @@
+@use '../../../../styles/mixins';
+
+$values: (
+  size: (
+    check-all: (
+      height: 40px,
+    ),
+    panel-tags: (
+      max-height: 104px,
+    ),
+    panel: (
+      max-width: 286px,
+      min-width: 136px,
+      min-height: 256px,
+    ),
+    tag: (
+      max-width: 100%,
+    ),
+    item: (
+      min-height: 40px,
+    ),
+    item-icon: (
+      height: 16px,
+    ),
+  ),
+  font-size: (
+    no-data: #{mixins.css-variable('text-base')},
+  ),
+  color: (
+    '': #{mixins.css-variable('text-primary')},
+    item: (
+      '': #{mixins.css-variable('text-primary')},
+      disabled: #{mixins.css-variable('text-disabled')},
+      keyword: #{mixins.css-variable('text-brand-default')},
+    ),
+    no-data: #{mixins.css-variable('text-disabled')},
+  ),
+  border-color: (
+    panel: #{mixins.css-variable('divider-default')},
+  ),
+  border: (
+    panel: 1px solid #{mixins.css-variable('cascader', 'border-color', 'panel')},
+  ),
+  background: (
+    item: (
+      '': #{mixins.css-variable('bg-default')},
+      hover: #{mixins.css-variable('bg-hover')},
+    ),
+  ),
+  spacing: (
+    item: (
+      padding: 9px #{mixins.css-variable('spacing-4')},
+      padding-right: #{mixins.css-variable('spacing-4')},
+      has-icon: (
+        padding-right: calc(
+            #{mixins.css-variable('spacing-5')} + #{mixins.css-variable('spacing-4')}
+          ),
+      ),
+    ),
+    check-all: (
+      padding: 0 #{mixins.css-variable('spacing-4')},
+    ),
+    panel-tags: (
+      margin-bottom: #{mixins.css-variable('spacing-3')},
+    ),
+    panel: (
+      scrollbar: (
+        margin-y: #{mixins.css-variable('spacing-3')},
+      ),
+    ),
+    tags-container: (
+      column-gap: (
+        '': #{mixins.css-variable('select', 'spacing', 'tags-container', 'column-gap')},
+        small: #{mixins.css-variable('select', 'spacing', 'tags-container', 'column-gap', 'small')},
+      ),
+    ),
+  ),
+  transition: (
+    '': #{mixins.css-variable('transition-all--fast')},
+    background: background #{mixins.css-variable('transition-time-fast')},
+  ),
+);

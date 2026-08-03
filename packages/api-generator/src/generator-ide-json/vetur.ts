@@ -1,5 +1,6 @@
-import { apiGeneratorOutPut, writeJsonFile } from '@nio-fe/shared/plugins';
-import { kebabCase } from '@nio-fe/shared';
+import { apiGeneratorOutPut } from '@root/scripts/paths';
+import { writeJsonFile } from '@root/scripts/writeJsonFile';
+import { kebabCase } from '@aurora/utils';
 import components from '../../dist/components-analysis.json';
 import directives from '../../dist/directives-analysis.json';
 
@@ -25,18 +26,18 @@ export default async function createVeturJson() {
   const attributes: Record<string, VeturAttributeType> = {};
 
   components.forEach(component => {
-    tags[`n-${kebabCase(component.name)}`] = {
+    tags[`h-${kebabCase(component.name)}`] = {
       attributes: component.props.map(prop => kebabCase(prop.name)),
-      description: `[Docs](https://aurora-design.nio.com/horizon-web/dev-component/vue/base/component/${component.parentComponentName.toLowerCase()})`,
+      description: `[Docs](https://aurora-design.example.com/horizon-web/dev-component/vue/base/component/${component.parentComponentName.toLowerCase()})`,
     };
 
     component.props.forEach(prop => {
-      attributes[`n-${kebabCase(component.name)}/${kebabCase(prop.name)}`] = {
+      attributes[`h-${kebabCase(component.name)}/${kebabCase(prop.name)}`] = {
         type: prop.baseType,
         options: prop.options,
         description: `${
           prop.desc
-        }\n\n[Docs](https://aurora-design.nio.com/horizon-web/dev-component/vue/base/component/${component.parentComponentName.toLowerCase()}#${
+        }\n\n[Docs](https://aurora-design.example.com/horizon-web/dev-component/vue/base/component/${component.parentComponentName.toLowerCase()}#${
           component.name
         } Props)`,
       };

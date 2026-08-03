@@ -1,23 +1,19 @@
 import type { Project, PropertyAssignment } from 'ts-morph';
-import type { ApiGeneratorAnalysedSlotType, ApiGeneratorExportedComponent } from '@nio-fe/shared';
+import type { ApiGeneratorAnalysedSlotType, ApiGeneratorExportedComponent } from '@aurora/utils';
 import { ts } from 'ts-morph';
-import type { FileElements } from '../../utils/analyseFileElements';
 import analysisFileElements from '../../utils/analyseFileElements';
 import completeFileExtName from '../../utils/completeFileExtName';
 import analysisJsDocs from '../../utils/analyseJsDocs';
 
-function analysisPropertyAssignment(
-  property: PropertyAssignment,
-  fileElements: FileElements,
-): ApiGeneratorAnalysedSlotType {
+function analysisPropertyAssignment(property: PropertyAssignment): ApiGeneratorAnalysedSlotType {
   const jsDoc = analysisJsDocs(property.compilerNode);
 
   const res: ApiGeneratorAnalysedSlotType = {
     desc: jsDoc.comment,
+    descLocales: jsDoc.locales,
     name: property.getName(),
     type: '',
     params: [],
-    deprecated: jsDoc.tags.deprecated?.default,
     version: jsDoc.tags.version?.default,
   };
 
@@ -31,6 +27,9 @@ function analysisPropertyAssignment(
           field: paramFieldName,
           value: parameter.getLastChild()!.getText(),
           desc: (jsDoc.tags.param || jsDoc.tags.params)?.[paramFieldName] || '',
+          descLocales: jsDoc.tags.paramEn?.[paramFieldName]
+            ? { en: jsDoc.tags.paramEn[paramFieldName] }
+            : undefined,
         });
       }
     });
@@ -66,7 +65,7 @@ export default function analyseSlots(
         for (const properties of fileElements.variables[
           componentInfo.slotsVariableName
         ]?.getChildrenOfKind(ts.SyntaxKind.PropertyAssignment) ?? []) {
-          props.push(analysisPropertyAssignment(properties, fileElements));
+          props.push(analysisPropertyAssignment(properties));
         }
       }
     }

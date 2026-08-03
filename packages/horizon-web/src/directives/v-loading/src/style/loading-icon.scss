@@ -1,0 +1,41 @@
+@use '../../../../styles/mixins';
+
+@keyframes #{mixins.block('loading-icon-dash')} {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -40px;
+  }
+
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -120px;
+  }
+}
+
+@keyframes #{mixins.block('loading-icon-rotate')} {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@include mixins.b('loading-icon') {
+  display: inline;
+  color: inherit;
+  transform-origin: center;
+  transform-box: view-box;
+  animation: #{mixins.block('loading-icon-rotate')} 2s linear infinite;
+  will-change: transform;
+
+  @include mixins.e('path') {
+    stroke: currentcolor;
+    stroke-linecap: round;
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: 0;
+    animation: #{mixins.block('loading-icon-dash')} 1.5s ease-in-out infinite;
+  }
+}

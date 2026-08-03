@@ -1,6 +1,6 @@
 import * as path from 'path';
 import fs from 'fs';
-import { legoSourceRoot } from '@nio-fe/shared/plugins';
+import { horizonwebSourceRoot } from '@root/scripts/paths';
 
 function completeFilePath(filePath: string): undefined | string {
   const basename = path.basename(filePath);
@@ -23,7 +23,7 @@ export default function (filePath: string) {
 
   if (filePath.includes('~')) {
     const absolutePath = filePath.replace(/^.*?~\//, '');
-    filePath = path.resolve(legoSourceRoot, absolutePath);
+    filePath = path.resolve(horizonwebSourceRoot, absolutePath);
   }
 
   return completeFilePath(filePath);

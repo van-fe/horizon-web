@@ -1,13 +1,13 @@
 # Flex
 样式工具类，帮助你快速设置弹性布局。
 
-### 启用 Flex
+## 启用 Flex
 |Class|Properties|
 |-|-|
 |flex|display: flex;|
 |inline-flex|display: inline-flex;|
 
-### 排列方向
+## 排列方向
 |Class|Properties|
 |-|-|
 |flex-row|flex-direction: row;|
@@ -15,7 +15,7 @@
 |flex-column|flex-direction: column;|
 |flex-column-reverse|flex-direction: column-reverse;|
 
-### 主轴对齐
+## 主轴对齐
 |Class|Properties|
 |-|-|
 |justify-start|justify-content: flex-start;|
@@ -25,7 +25,7 @@
 |justify-space-around|justify-content: space-around;|
 |justify-space-evenly|justify-content: space-evenly;|
 
-### 交叉轴对齐
+## 交叉轴对齐
 |Class|Properties|
 |-|-|
 |align-start|align-items: flex-start;|
@@ -34,14 +34,14 @@
 |align-baseline|align-items: baseline;|
 |align-stretch|align-items: stretch;|
 
-### 换行
+## 换行
 |Class|Properties|
 |-|-|
 |flex-nowrap|flex-wrap: nowrap;|
 |flex-wrap|flex-wrap: wrap;|
 |flex-wrap-reverse|flex-wrap: wrap-reverse;|
 
-### 空间分配
+## 空间分配
 |Class|Properties|
 |-|-|
 |flex-grow-0|flex-grow: 0;|
@@ -51,7 +51,7 @@
 |flex-1|flex: 1 1 0;|
 |flex-none|flex: 0 0 auto;|
 
-### 排列次序
+## 排列次序
 |Class|Properties|
 |-|-|
 |order-1|order: 1;|
@@ -65,5 +65,5 @@
 |order-9|order: 9;|
 |order-10|order: 10;|
 
-### Demo
+## Demo
 :::demo ./demos/demo1.vue :::

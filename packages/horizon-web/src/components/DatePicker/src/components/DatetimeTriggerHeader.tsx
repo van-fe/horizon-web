@@ -1,0 +1,107 @@
+import { defineComponent, inject, ref } from 'vue';
+import type { HorizonWebComponentInstance, HorizonWebSetupContext } from '@aurora/utils';
+import { cls, ComponentClassBlock } from '@aurora/utils';
+import type { DatePickerDatetimeTriggerHeaderProps } from '../composables/useProps';
+import { useDatePickerDatetimeTriggerHeaderProps } from '../composables/useProps';
+import HInput from '~/components/Input/src/Input';
+import HTimePicker from '~/components/TimePicker/src/TimePicker';
+import { getTimePanelTypeByType } from '../hooks/usePanel';
+import {
+  HDatePickerFormatInjectKey,
+  HDatePickerPropsInjectKey,
+  HDatePickerValueFormatMappingInjectKey,
+} from '../utils/injectKeys';
+import type { Dayjs } from 'dayjs';
+import type { DatePickerDatePanelHeaderExposes } from '../composables/useExposes';
+import { useDatePickerDatePanelHeaderExposes } from '../composables/useExposes';
+import type { TimePickerExposes } from '~/components/TimePicker/src/composables/useExposes';
+import type { DatePickerDatePanelTriggerHeaderEmits } from '../composables/useEmits';
+import { useDatePickerDatePanelTriggerHeaderEmit } from '../composables/useEmits';
+
+export default defineComponent({
+  name: 'DatetimeTriggerHeader',
+  props: useDatePickerDatetimeTriggerHeaderProps,
+  emits: useDatePickerDatePanelTriggerHeaderEmit,
+  exposes: useDatePickerDatePanelHeaderExposes,
+  setup(
+    props: DatePickerDatetimeTriggerHeaderProps,
+    {
+      emit,
+      expose,
+    }: HorizonWebSetupContext<
+      DatePickerDatePanelTriggerHeaderEmits,
+      {},
+      DatePickerDatePanelHeaderExposes
+    >,
+  ) {
+    const classHelper = new ComponentClassBlock('date-picker-panel-header');
+
+    const timePickerDomRef =
+      ref<HorizonWebComponentInstance<typeof HTimePicker, TimePickerExposes>>();
+
+    const parentProps = inject(HDatePickerPropsInjectKey)!;
+    const valueFormatMapping = inject(HDatePickerValueFormatMappingInjectKey)!;
+    const pickerType = inject(HDatePickerFormatInjectKey)!;
+
+    expose({
+      clickTimeCell: (
+        time: Dayjs,
+        triggerType: 'click' | 'input' | 'confirmable-input' = 'click',
+      ) => {
+        timePickerDomRef.value?.clickTimeCell(time, triggerType);
+      },
+    });
+
+    return () => (
+      <div class={cls(classHelper.e('datetime-trigger'))}>
+        <HInput
+          modelValue={props.date?.format(valueFormatMapping.value.date)}
+          readonly
+          placeholder={props.datePlaceholder}
+        />
+        <HTimePicker
+          ref={timePickerDomRef}
+          previewTime={props.previewTime}
+          prefixIcon={false}
+          clearable={false}
+          class={classHelper.e('panel-container-time-panel')}
+          modelValue={props.time}
+          placeholder={props.timePlaceholder}
+          type={getTimePanelTypeByType(pickerType.value)}
+          timeStep={parentProps.timeStep}
+          hourStep={parentProps.hourStep}
+          minuteStep={parentProps.minuteStep}
+          secondStep={parentProps.secondStep}
+          startAt={parentProps.timeStartAt}
+          endAt={parentProps.timeEndAt}
+          optionListMaxHeight={parentProps.optionListMaxHeight}
+          formatCellText={parentProps.formatTimeCellText}
+          disabledTime={
+            props.type === 'start' ? parentProps.beginDisabledTime : parentProps.endDisabledTime
+          }
+          toBody={false}
+          pickerMinWidth="fit-content"
+          preserveSuffixIconSpace={false}
+          showTimeTooltip={parentProps.showTimeTooltip}
+          hoverToDisplayValue={parentProps.hoverToDisplayValue}
+          tooltipShowAfter={parentProps.tooltipShowAfter}
+          tooltipHideAfter={parentProps.tooltipHideAfter}
+          confirmType={parentProps.timePickerConfirmType}
+          fitInputWidth={
+            ['datetime-range', 'date-minutes-range'].includes(pickerType.value)
+              ? true
+              : 'fit-content'
+          }
+          panelMinWidth={
+            ['datetime-range', 'date-minutes-range'].includes(pickerType.value) ? 'auto' : undefined
+          }
+          panelMaxWidth="auto"
+          onUpdate:modelValue={(val, triggerType) =>
+            emit('update:time', val as Dayjs | undefined | null, triggerType)
+          }
+          onUpdate:previewTime={val => emit('update:previewTime', val)}
+        />
+      </div>
+    );
+  },
+});

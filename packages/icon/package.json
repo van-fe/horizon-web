@@ -1,0 +1,36 @@
+{
+  "name": "@aurora/icon",
+  "version": "1.0.0",
+  "description": "Vue icon component library with SVG icons",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "generate": "rm -rf src/components/icons && bun run scripts/generate-icon-components.ts",
+    "build": "bun run generate && bunx --bun vite build",
+    "dev": "vite",
+    "prepublishOnly": "bun run build"
+  },
+  "keywords": [
+    "vue",
+    "icons",
+    "svg",
+    "component"
+  ],
+  "author": "",
+  "license": "ISC",
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.3",
+    "@vitejs/plugin-vue-jsx": "^5.1.2",
+    "typescript": "~6.0.3",
+    "vite": "^7.3.0",
+    "vite-plugin-dts": "^4.3.0",
+    "vue": "^3.5.26"
+  }
+}

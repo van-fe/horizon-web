@@ -1,0 +1,44 @@
+import type { LoadingOptions } from '../src/composables/useOptions';
+import type { DOMWrapper } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
+import HVLoading from '../index';
+import type { Ref, VNode } from 'vue';
+import { isRef, nextTick } from 'vue';
+import type { JSX } from 'vue/jsx-runtime';
+
+type TransformPropsToRefValue<
+  T,
+  Key extends keyof T = T extends object ? keyof T : never,
+> = T extends object ? { [K in Key]: T[K] | Ref<T[K]> } : T;
+
+export async function createInstance(
+  params: TransformPropsToRefValue<LoadingOptions>,
+  defaultSlot: VNode | JSX.Element | string | Ref<string>,
+) {
+  const wrapper = mount(
+    () => (
+      <div v-loading={params} class="wrapper" style="width: 300px; height: 300px;">
+        {isRef(defaultSlot) ? defaultSlot.value : defaultSlot}
+      </div>
+    ),
+    {
+      attachTo: document.body,
+      global: {
+        directives: {
+          [HVLoading.name]: HVLoading,
+        },
+      },
+    },
+  );
+
+  await nextTick();
+
+  function getLoadingDom() {
+    return wrapper.find('.h-loading') as DOMWrapper<HTMLElement>;
+  }
+
+  return {
+    wrapper,
+    getLoadingDom,
+  };
+}

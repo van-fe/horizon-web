@@ -1,0 +1,86 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('input-number') {
+  @include mixins.e('group') {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+
+    @include mixins.m('inner') {
+      position: relative;
+      display: flex;
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      transition: mixins.css-variable('input-number', 'transition', 'all');
+    }
+  }
+
+  @include mixins.is('disabled') {
+    @include mixins.em('group', 'prepend', false) {
+      border-color: mixins.css-variable('input-number', 'border-color', 'disabled') !important;
+    }
+
+    @include mixins.em('group', 'append', false) {
+      border-color: mixins.css-variable('input-number', 'border-color', 'disabled') !important;
+    }
+  }
+
+  @include mixins.is('error') {
+    @include mixins.em('group', 'prepend', false) {
+      border-color: mixins.css-variable('input-number', 'border-color', 'error') !important;
+    }
+
+    @include mixins.em('group', 'append', false) {
+      border-color: mixins.css-variable('input-number', 'border-color', 'error') !important;
+    }
+  }
+}
+
+@include mixins.bem('input-number', 'group', 'prepend') {
+  padding: 0 mixins.css-variable('input-number', 'spacing', 'prepend-append', 'padding-x');
+  overflow: hidden;
+  background: mixins.css-variable('input-number', 'background', 'prepend-append');
+  border-color: mixins.css-variable('input-number', 'border-color');
+  border-style: solid;
+  border-width: 1px 0 1px 1px;
+  border-radius: mixins.css-variable('input-number', 'border-radius') 0 0
+    mixins.css-variable('input-number', 'border-radius');
+
+  @include mixins.b('select', false) {
+    margin: -1px
+      calc(
+        0px - #{mixins.css-variable('input-number', 'spacing', 'prepend-append', 'padding-x')} - 1px
+      );
+
+    @include mixins.be('picker', 'input', false) {
+      background: mixins.css-variable('input-number', 'background', 'prepend-append');
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+}
+
+@include mixins.bem('input-number', 'group', 'append') {
+  padding: 0 mixins.css-variable('input-number', 'spacing', 'prepend-append', 'padding-x');
+  overflow: hidden;
+  background: mixins.css-variable('input-number', 'background', 'prepend-append');
+  border-color: mixins.css-variable('input-number', 'border-color');
+  border-style: solid;
+  border-width: 1px 1px 1px 0;
+  border-radius: 0 mixins.css-variable('input-number', 'border-radius')
+    mixins.css-variable('input-number', 'border-radius') 0;
+
+  @include mixins.b('select', false) {
+    margin: -1px
+      calc(
+        0px - #{mixins.css-variable('input-number', 'spacing', 'prepend-append', 'padding-x')} - 1px
+      );
+
+    @include mixins.be('picker', 'input', false) {
+      background: mixins.css-variable('input-number', 'background', 'prepend-append');
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+}

@@ -1,0 +1,486 @@
+import {
+  computed,
+  defineComponent,
+  getCurrentInstance,
+  nextTick,
+  onMounted,
+  provide,
+  ref,
+  watch,
+} from 'vue';
+import {
+  ComponentClassBlock,
+  cls,
+  sizeUnitTransform,
+  isDefined,
+  useNamespace,
+  cssVariable,
+} from '@aurora/utils';
+import type { HorizonWebSetupContext, HorizonWebComponentInstance } from '@aurora/utils';
+import { useMenuProps } from './composables/useProps';
+import { useMenuEmits } from './composables/useEmits';
+import { useMenuSlots } from './composables/useSlots';
+import { useMenuExposes } from './composables/useExposes';
+import type { MenuProps, SubMenuProps } from './composables/useProps';
+import type { MenuEmits } from './composables/useEmits';
+import type { MenuSlots } from './composables/useSlots';
+import type { MenuExposes } from './composables/useExposes';
+import type { Router } from 'vue-router';
+import {
+  HMenuExpandedMenuInjectKey,
+  HMenuAddExpandMenuInjectKey,
+  HMenuAppendChildInjectKey,
+  HMenuEmitInjectKey,
+  HMenuPropsInjectKey,
+  HMenuRemoveExpandMenuInjectKey,
+  HMenuRemoveChildInjectKey,
+  HMenuActivatedMenusInjectKey,
+  HMenuSetActivatedMenuInjectKey,
+  HMenuMenuTreeInjectKey,
+  HMenuTreeLevelInjectKey,
+  HMenuParentHasIconAmountInjectKey,
+  HMenuIsCollapsedInjectKey,
+  HMenuScrollTopTopInjectKey,
+  HMenuRefInjectKey,
+  HMenuActiveTopMenuUuidInjectKey,
+  HMenuSwitchFullViewMenuVisibleInjectKey,
+} from './util/injectKeys';
+import CollapseButton from './components/CollapseButton';
+import FullViewMenu from './components/FullViewMenu';
+import HTransition from '~/components/Transition/src/Transition';
+import type { HMenuTreeData } from './util/types';
+import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
+import useResizer from './util/useResizer';
+import { warn } from '~/utils/useLog';
+import type { ScrollbarExposes } from '~/components/Scrollbar/src/composables/useExposes';
+import useMapTree from '~/utils/useMapTree';
+
+export default defineComponent({
+  name: `${useNamespace()}Menu`,
+  desc: '多用于信息层级多、对导航效率有一定要求的后台系统页面',
+  descLocales: { en: 'Navigation menu and menu-item components.' },
+  components: {
+    CollapseButton,
+    FullViewMenu,
+    HTransition,
+    HScrollbar,
+  },
+  props: useMenuProps,
+  emits: useMenuEmits,
+  slots: useMenuSlots,
+  exposes: useMenuExposes,
+  setup(
+    props: MenuProps,
+    { emit, slots, expose }: HorizonWebSetupContext<MenuEmits, MenuSlots, MenuExposes>,
+  ) {
+    const instance = getCurrentInstance();
+
+    const classHelper = new ComponentClassBlock('menu');
+
+    const menuRef = ref<HTMLElement | null>(null);
+    const scrollbarRef = ref<HorizonWebComponentInstance<
+      typeof HScrollbar,
+      ScrollbarExposes
+    > | null>(null);
+    const resizerDomRef = ref<HTMLElement | null>(null);
+
+    const activeMenu = ref<string>(props.selectedValue || '');
+    const activeMenuUuid = ref('');
+    const isCollapseModelValue = ref<boolean>(props.collapse);
+    const isDoingCollapse = ref(false);
+    let prevExpandedMenu: string[] = [];
+    const expandedMenu = ref(new Set<string>());
+    const {
+      tree: menuTree,
+      flattenedNodes: flattenMenus,
+      appendChild,
+      removeChild,
+      findPath,
+      getNodeByUuid,
+    } = useMapTree<HMenuTreeData<'subMenu' | 'menuItem'>>();
+
+    let prevScrollTop: number | null = null;
+    let scrollTop = 0;
+
+    const isCollapse = computed(() => props.collapseForever ?? isCollapseModelValue.value);
+
+    const activeType = computed(() =>
+      props.mode === 'vertical'
+        ? 'button'
+        : isDefined(props.activeType)
+          ? props.activeType
+          : 'link',
+    );
+
+    watch(
+      () => props.selectedValue,
+      value => {
+        activeMenu.value = value || '';
+        void nextTick(() => {
+          scrollToActive();
+        });
+      },
+    );
+
+    watch(
+      () => props.collapse,
+      value => {
+        isCollapseModelValue.value = value;
+      },
+    );
+
+    watch(isCollapseModelValue, () => {
+      isDoingCollapse.value = true;
+      setTimeout(() => {
+        isDoingCollapse.value = false;
+      }, 300);
+    });
+
+    watch(isCollapse, value => {
+      if (value) {
+        prevScrollTop = scrollTop;
+        prevExpandedMenu = Array.from(expandedMenu.value.values());
+        expandedMenu.value.clear();
+      } else {
+        if (prevExpandedMenu.length) {
+          expandedMenu.value = new Set(prevExpandedMenu);
+        }
+
+        setTimeout(() => {
+          if (prevScrollTop === null) {
+            scrollToActive();
+          } else {
+            scrollbarRef.value?.scrollTo({ top: prevScrollTop, behavior: 'smooth' });
+          }
+        }, 500);
+      }
+      emit('update:collapse', value);
+    });
+
+    watch(activeMenu, () => {
+      updateActiveMenuUuid();
+    });
+
+    watch(activeMenuUuid, val => {
+      if (val) {
+        activeMenu.value = getNodeByUuid(val)?.props.value || '';
+      }
+    });
+
+    const height = computed(
+      () =>
+        props.height ??
+        (props.mode === 'vertical' ? '100%' : cssVariable('menu', 'size', 'horizontal', 'height')),
+    );
+
+    watch(
+      menuTree,
+      () => {
+        updateActiveMenuUuid(true);
+      },
+      {
+        deep: true,
+      },
+    );
+
+    const getMenuPath = (uuid: string) => findPath(item => item.uuid === uuid);
+    const activatedMenus = computed(() => getMenuPath(activeMenuUuid.value));
+
+    const router = instance?.appContext.config.globalProperties.$router as Router | undefined;
+
+    function setActivatedMenu(uuid: string) {
+      activeMenuUuid.value = uuid;
+
+      if (props.router) {
+        if (!router) {
+          warn('menu', `You haven't import and set "vue-router"`);
+        } else {
+          const target = getNodeByUuid(uuid);
+
+          if (target) {
+            target.props.value && router.push(target.props.value);
+          }
+        }
+      }
+    }
+
+    function addExpandMenu(uuid: string, scroll = false) {
+      if (isCollapseModelValue.value || props.mode === 'horizontal') {
+        return;
+      }
+
+      if (props.exclusiveExpand) {
+        expandedMenu.value.clear();
+      }
+
+      const paths = getMenuPath(uuid);
+
+      paths.forEach(leaf => {
+        leaf.level < props.useDropdownLevel && expandedMenu.value.add(leaf.uuid);
+      });
+
+      if (scroll) {
+        setTimeout(() => {
+          paths[0]?.scrollTo();
+        }, 300);
+      }
+
+      emit(
+        'open',
+        getNodeByUuid(uuid)?.props.value ?? '',
+        paths.map(curr => curr.props as SubMenuProps) as SubMenuProps[],
+      );
+    }
+
+    function removeExpandMenu(uuid: string) {
+      expandedMenu.value.delete(uuid);
+
+      emit(
+        'close',
+        getNodeByUuid(uuid)?.props.value ?? '',
+        getMenuPath(uuid).map(curr => curr.props as SubMenuProps) as SubMenuProps[],
+      );
+    }
+
+    function updateActiveMenuUuid(expand = false) {
+      const paths = findPath(item => item.props.value === activeMenu.value);
+      activeMenuUuid.value = paths[0]?.uuid || '';
+
+      if (activeMenuUuid.value) {
+        if (expand) {
+          addExpandMenu(activeMenuUuid.value, true);
+        }
+
+        if (isCollapseModelValue.value) {
+          prevScrollTop = null;
+          prevExpandedMenu = getMenuPath(activeMenuUuid.value).map(curr => curr.uuid);
+        }
+      }
+    }
+
+    function onScroll(position: { scrollLeft: number; scrollTop: number }) {
+      scrollTop = position.scrollTop;
+    }
+
+    function scrollToActive() {
+      const target = activatedMenus.value[0];
+      if (target && target.level <= props.useDropdownLevel) {
+        target.scrollTo();
+      }
+    }
+
+    function scrollToTop(top: number) {
+      scrollbarRef.value?.scrollTo({ top, behavior: 'smooth' });
+    }
+
+    const activeTopMenuUuid = ref('');
+    const fullViewMenuVisible = ref(false);
+    let fullViewMenuVisibleTimer: ReturnType<typeof setTimeout> | null = null;
+    let fullViewMenuHideTimer: ReturnType<typeof setTimeout> | null = null;
+
+    watch(activeTopMenuUuid, val => {
+      if (val) {
+        onMouseEnterContainer();
+      } else {
+        onMouseLeaveContainer();
+      }
+    });
+
+    function clearFullViewMenuVisibleTimer() {
+      if (fullViewMenuVisibleTimer !== null) {
+        clearTimeout(fullViewMenuVisibleTimer);
+        fullViewMenuVisibleTimer = null;
+      }
+    }
+
+    function clearFullViewMenuHideTimer() {
+      if (fullViewMenuHideTimer !== null) {
+        clearTimeout(fullViewMenuHideTimer);
+        fullViewMenuHideTimer = null;
+      }
+    }
+
+    function onMouseEnterContainer() {
+      clearFullViewMenuVisibleTimer();
+      clearFullViewMenuHideTimer();
+      fullViewMenuVisibleTimer = setTimeout(() => {
+        fullViewMenuVisible.value = true;
+      }, 0);
+    }
+
+    function onMouseLeaveContainer() {
+      clearFullViewMenuVisibleTimer();
+      clearFullViewMenuHideTimer();
+      fullViewMenuHideTimer = setTimeout(() => {
+        fullViewMenuVisible.value = false;
+        activeTopMenuUuid.value = '';
+      }, 200);
+    }
+
+    function expandAll() {
+      if (!isCollapseModelValue.value && props.mode !== 'horizontal') {
+        flattenMenus.value
+          .filter(curr => curr.type === 'subMenu' && curr.level <= props.useDropdownLevel)
+          .forEach(curr => expandedMenu.value.add(curr.uuid));
+      }
+    }
+
+    function initialExpandAll() {
+      if (props.isDefaultExpandAll) {
+        expandAll();
+      }
+    }
+
+    /*** resizer ***/
+    const { isDragging, width } = useResizer(resizerDomRef, props.width, (collapse: boolean) => {
+      if (props.resizeToCollapse) {
+        isCollapseModelValue.value = collapse;
+      }
+    });
+
+    provide(HMenuRefInjectKey, menuRef);
+    provide(HMenuPropsInjectKey, props);
+    provide(HMenuEmitInjectKey, emit);
+    provide(HMenuMenuTreeInjectKey, menuTree);
+    provide(HMenuActivatedMenusInjectKey, activatedMenus);
+    provide(HMenuSetActivatedMenuInjectKey, setActivatedMenu);
+    provide(HMenuAppendChildInjectKey, appendChild);
+    provide(HMenuRemoveChildInjectKey, removeChild);
+    provide(HMenuExpandedMenuInjectKey, expandedMenu);
+    provide(HMenuAddExpandMenuInjectKey, addExpandMenu);
+    provide(HMenuRemoveExpandMenuInjectKey, removeExpandMenu);
+    provide(HMenuTreeLevelInjectKey, 0);
+    provide(
+      HMenuParentHasIconAmountInjectKey,
+      computed(() => 0),
+    );
+    provide(HMenuIsCollapsedInjectKey, isCollapse);
+    provide(HMenuScrollTopTopInjectKey, scrollToTop);
+    provide(HMenuActiveTopMenuUuidInjectKey, activeTopMenuUuid);
+    provide(HMenuSwitchFullViewMenuVisibleInjectKey, () => {
+      if (fullViewMenuVisible.value) {
+        onMouseLeaveContainer();
+      } else {
+        onMouseEnterContainer();
+      }
+    });
+
+    onMounted(() => {
+      void nextTick(() => {
+        updateActiveMenuUuid(true);
+        initialExpandAll();
+      });
+    });
+
+    expose({
+      expandAll,
+      collapseAll: () => {
+        expandedMenu.value.clear();
+      },
+      expand: (values: string[], replace = true) => {
+        if (replace) {
+          expandedMenu.value.clear();
+        }
+
+        flattenMenus.value
+          .filter(
+            curr =>
+              curr.props.value &&
+              values.includes(curr.props.value) &&
+              curr.level <= props.useDropdownLevel,
+          )
+          .forEach(curr => expandedMenu.value.add(curr.uuid));
+      },
+      collapse: (values: string[]) => {
+        flattenMenus.value
+          .filter(curr => curr.props.value && values.includes(curr.props.value))
+          .forEach(curr => {
+            expandedMenu.value.delete(curr.uuid);
+          });
+      },
+      scrollToActive,
+      expandMenus: computed(() =>
+        Array.from(expandedMenu.value.values()).map(uuid => getNodeByUuid(uuid)?.props.value),
+      ),
+    });
+
+    return () => (
+      <div
+        ref={menuRef}
+        class={cls(
+          classHelper.block,
+          classHelper.m(props.theme),
+          classHelper.is(props.mode),
+          classHelper.is('collapsed', isCollapse.value),
+          classHelper.is('collapsed-forever', props.collapseForever ?? false),
+          classHelper.is(
+            'collapsed-show-title',
+            props.collapseForever ?? props.collapseShowTitle ?? false,
+          ),
+          classHelper.is(`active-type-${activeType.value}`),
+          classHelper.is('dragging', isDragging.value),
+          classHelper.is('collapsing', isDoingCollapse.value),
+          classHelper.is('max-width', width.value === 240),
+          classHelper.has('resizer', props.resizable),
+        )}
+        style={{
+          height: sizeUnitTransform(height.value),
+          width: props.mode === 'vertical' ? sizeUnitTransform(width.value) : undefined,
+        }}
+      >
+        <div
+          class={cls(classHelper.e('container'))}
+          style={{
+            maxWidth: props.mode === 'horizontal' ? sizeUnitTransform(props.maxWidth) : undefined,
+          }}
+          onMouseleave={onMouseLeaveContainer}
+        >
+          {slots.prepend && (
+            <div class={cls(classHelper.e('prepend'))}>{slots.prepend(isCollapse)}</div>
+          )}
+          <div class={cls(classHelper.e('inner'))}>
+            <HScrollbar ref={scrollbarRef} size="small" onScroll={onScroll}>
+              {slots.default?.()}
+            </HScrollbar>
+          </div>
+
+          {((props.collapseButton && props.mode === 'vertical') || slots.append) &&
+            props.collapseForever !== true && (
+              <div class={cls(classHelper.e('append'))}>
+                {props.collapseButton && props.mode === 'vertical' && (
+                  <div class={cls(classHelper.e('collapse'))}>
+                    <CollapseButton v-model={isCollapseModelValue.value} />
+                  </div>
+                )}
+                {slots.append && (
+                  <HTransition name="collapse-horizontal">
+                    <div v-show={!isCollapse.value} class={cls(classHelper.em('append', 'inner'))}>
+                      {slots.append?.(isCollapse)}
+                    </div>
+                  </HTransition>
+                )}
+              </div>
+            )}
+          {props.resizable && (
+            <div
+              ref={resizerDomRef}
+              class={cls(classHelper.e('resizer'), classHelper.is('dragging', isDragging.value))}
+            />
+          )}
+        </div>
+
+        {props.submenuExpandType === 'full' && (
+          <HTransition name="collapse">
+            <FullViewMenu
+              v-show={fullViewMenuVisible.value}
+              menuTree={menuTree.value}
+              activeTopMenuUuid={activeTopMenuUuid.value}
+              onMouseEnter={onMouseEnterContainer}
+              onMouseLeave={onMouseLeaveContainer}
+            />
+          </HTransition>
+        )}
+      </div>
+    );
+  },
+});

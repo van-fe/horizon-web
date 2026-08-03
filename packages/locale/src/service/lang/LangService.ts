@@ -5,7 +5,7 @@ import type {
   LocaleReturnLangDictionary,
   LocalOptionType,
   PartialLocaleLangFileType,
-  LocaleSupportLangV2,
+  LocaleSupportLang,
 } from '../../config';
 
 export default class LangService extends BaseService {
@@ -34,7 +34,7 @@ export default class LangService extends BaseService {
     };
   }
 
-  public defaultTranslator(path: string, language?: LocaleSupportLangV2): string {
+  public defaultTranslator(path: string, language?: LocaleSupportLang): string {
     let currDictionary: LocaleLangDictionary = this.dictionaries[language || this.current]!;
     let res = '';
 

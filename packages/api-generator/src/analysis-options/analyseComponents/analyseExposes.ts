@@ -1,13 +1,13 @@
 import type { Project, PropertyAssignment } from 'ts-morph';
 import { ts } from 'ts-morph';
-import type { ApiGeneratorAnalysedExposeType, ApiGeneratorExportedComponent } from '@nio-fe/shared';
+import type { ApiGeneratorAnalysedExposeType, ApiGeneratorExportedComponent } from '@aurora/utils';
 import type { FileElements } from '../../utils/analyseFileElements';
 import analyseFileElements from '../../utils/analyseFileElements';
 import completeFileExtName from '../../utils/completeFileExtName';
 import analyseJsDocs from '../../utils/analyseJsDocs';
 import { analyseObjectExpression } from '../../utils/analysisType/analyseObject';
 import { analyseFunctionExpression } from '../../utils/analysisType/analyseFunction';
-import { ApiGeneratorAnalysedBaseType } from '@nio-fe/shared';
+import { ApiGeneratorAnalysedBaseType } from '@aurora/utils';
 
 function analysePropertyAssignment(
   property: PropertyAssignment,
@@ -17,13 +17,13 @@ function analysePropertyAssignment(
 
   const res: ApiGeneratorAnalysedExposeType = {
     desc: jsDoc.comment,
+    descLocales: jsDoc.locales,
     name: property.getName(),
     type: '',
     nativeType: ApiGeneratorAnalysedBaseType.Unknown,
     params: [],
     returns: [],
     returnText: '',
-    deprecated: jsDoc.tags.deprecated?.default,
     version: jsDoc.tags.version?.default,
   };
 

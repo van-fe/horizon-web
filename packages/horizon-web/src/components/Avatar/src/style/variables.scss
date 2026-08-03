@@ -1,0 +1,27 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  font-size: (
+    '': #{function.css-variable('text-sm')},
+    medium: #{function.css-variable('text-base')},
+    large: #{function.css-variable('text-xl')},
+    work: (
+      mini: #{function.css-variable('text-sm')},
+      small: #{function.css-variable('text-base')},
+      smedium: #{function.css-variable('text-lg')},
+      medium: #{function.css-variable('text-2xl')},
+      large: #{function.css-variable('text-3xl')},
+    ),
+  ),
+  font-weight: #{function.css-variable('weight-strong')},
+  color: (
+    work: #{function.css-variable('text-brand-default')},
+  ),
+  border-color: (
+    work: #{function.css-variable('border-brand-default')},
+  ),
+  border-radius: (
+    circle: #{function.css-variable('radius-circle')},
+  ),
+  background: #{function.css-variable('bg-default')},
+);

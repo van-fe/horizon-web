@@ -1,0 +1,114 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  size: (
+    navbar-item: 80px,
+    toolbar-button: 32px,
+    header-close: 40px,
+    legend-dot: 8px,
+    toolbar: (
+      height: 48px,
+    ),
+    toolbar-split: (
+      height: 20px,
+    ),
+    header: (
+      height: 56px,
+    ),
+    legend-line: (
+      height: 1px,
+      width: 28px,
+    ),
+  ),
+  font-size: (
+    header: #{function.css-variable('text-base')},
+    legend-body: #{function.css-variable('text-base')},
+  ),
+  line-height: (
+    navbar-item: (
+      play-icon: 48px,
+    ),
+    legend-body: #{function.css-variable('line-height-standard')},
+  ),
+  color: (
+    toolbar: #{function.css-variable('text-inverse')},
+    toolbar-button: (
+      disabled: #{function.css-variable('text-primary')},
+    ),
+    header: #{function.css-variable('viewer', 'color', 'toolbar')},
+    header-close: (
+      '': #{function.css-variable('viewer', 'color', 'toolbar')},
+      hover: #{function.css-variable('text-secondary')},
+    ),
+    legend-body: #{function.css-variable('viewer', 'color', 'toolbar')},
+  ),
+  border-color: (
+    navbar: (
+      selected: #{function.css-variable('border-inverse')},
+    ),
+  ),
+  border: (
+    navbar: (
+      selected: 2px solid #{function.css-variable('viewer', 'border-color', 'navbar', 'selected')},
+    ),
+  ),
+  border-radius: (
+    navbar-item: (
+      play-icon: #{function.css-variable('radius-circle')},
+    ),
+    toolbar: #{function.css-variable('radius-m')},
+    legend-dot: #{function.css-variable('radius-circle')},
+    legend-body: #{function.css-variable('radius-pill')},
+  ),
+  background: (
+    '': #{function.css-variable('bg-overlay-default')},
+    navbar-item: (
+      play-icon: #{function.css-variable('bg-overlay-default')},
+    ),
+    toolbar: #{function.css-variable('bg-inverse')},
+    toolbar-button: (
+      hover: #{function.css-variable('bg-overlay-inverse')},
+      disabled: (
+        hover: #{function.css-variable('bg-transparent')},
+      ),
+    ),
+    header: #{function.css-variable('bg-overlay-weak')},
+    legend-dot: (
+      '': #{function.css-variable('bg-overlay-weak')},
+      point: #{function.css-variable('bg-default')},
+    ),
+    legend-item: (
+      hoverable: #{function.css-variable('bg-brand-default')},
+    ),
+    toolbar-split: #{function.css-variable('border-noninteractive')},
+  ),
+  spacing: (
+    navbar: (
+      bottom: 116px,
+    ),
+    toolbar: (
+      bottom: 49px,
+      padding: 0 #{function.css-variable('spacing-7')},
+    ),
+    header-close: (
+      right: #{function.css-variable('spacing-7')},
+    ),
+    navbar-item: (
+      margin-right: #{function.css-variable('spacing-2')},
+    ),
+    toolbar-button: (
+      next-item: (
+        margin-right: #{function.css-variable('spacing-5')},
+      ),
+    ),
+    header-item: (
+      margin-right: #{function.css-variable('spacing-5')},
+    ),
+    legend-body: (
+      padding: #{function.css-variable('spacing-2')} #{function.css-variable('spacing-4')},
+    ),
+  ),
+  transition: (
+    duration: #{function.css-variable('transition-time')},
+  ),
+);

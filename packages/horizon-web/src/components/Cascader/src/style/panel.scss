@@ -1,0 +1,65 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('cascader-panels') {
+  display: flex;
+}
+
+@include mixins.b('cascader-panel') {
+  flex: fit-content;
+  min-width: mixins.css-variable('cascader', 'size', 'panel', 'min-width');
+  max-width: mixins.css-variable('cascader', 'size', 'panel', 'max-width');
+  min-height: mixins.css-variable('cascader', 'size', 'panel', 'min-height');
+  border-right: mixins.css-variable('cascader', 'border', 'panel');
+
+  &:last-child {
+    border-right: none;
+  }
+
+  @include mixins.e('scrollbar') {
+    margin: mixins.css-variable('cascader', 'spacing', 'panel', 'scrollbar', 'margin-y') 0;
+  }
+
+  @include mixins.e('empty') {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: mixins.css-variable('cascader', 'color', 'no-data');
+    font-size: mixins.css-variable('cascader', 'font-size', 'no-data');
+  }
+
+  @include mixins.e('group-label') {
+    padding: mixins.css-variable('select', 'spacing', 'option-group', 'title', 'padding');
+    overflow: hidden;
+    color: mixins.css-variable('select', 'color', 'option-group', 'title');
+    font-size: mixins.css-variable('select', 'font-size', 'option-group', 'title');
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+@include mixins.b('cascader-search-panel') {
+  @include mixins.e('scrollbar') {
+    @include mixins.m('view') {
+      margin: mixins.css-variable('cascader', 'spacing', 'panel', 'scrollbar', 'margin-y') 0;
+    }
+  }
+
+  @include mixins.e('check-all') {
+    display: flex;
+    align-items: center;
+    height: mixins.css-variable('cascader', 'size', 'check-all', 'height');
+    padding: mixins.css-variable('cascader', 'spacing', 'check-all', 'padding');
+    border-bottom: mixins.css-variable('cascader', 'border', 'panel');
+    cursor: pointer;
+    transition: mixins.css-variable('cascader', 'transition');
+
+    @include mixins.is('focus') {
+      background: mixins.css-variable('cascader', 'background', 'item', 'hover');
+    }
+
+    &:hover {
+      background: mixins.css-variable('cascader', 'background', 'item', 'hover');
+    }
+  }
+}

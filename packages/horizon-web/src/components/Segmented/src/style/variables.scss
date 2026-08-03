@@ -1,0 +1,70 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  font-size: (
+    item: (
+      mini: #{function.css-variable('text-sm')},
+      small: #{function.css-variable('text-base')},
+      medium: #{function.css-variable('text-base')},
+      large: #{function.css-variable('text-lg')},
+    ),
+  ),
+  line-height: (
+    item: (
+      mini: 18px,
+      small: 22px,
+      medium: 22px,
+      large: 24px,
+    ),
+  ),
+  color: (
+    item: (
+      '': #{function.css-variable('text-secondary')},
+      disabled: #{function.css-variable('text-disabled')},
+      hover: #{function.css-variable('text-brand-hover')},
+      press: #{function.css-variable('text-brand-press')},
+      active: #{function.css-variable('text-brand-default')},
+    ),
+  ),
+  border-radius: (
+    '': #{function.css-variable('radius-m')},
+    indicator: (
+      mini: #{function.css-variable('radius-s')},
+      small: #{function.css-variable('radius-s')},
+      medium: #{function.css-variable('radius-m')},
+      large: #{function.css-variable('radius-m')},
+    ),
+  ),
+  background: (
+    '': #{function.css-variable('bg-secondary')},
+    indicator: #{function.css-variable('bg-default')},
+  ),
+  spacing: (
+    item: (
+      gap: #{function.css-variable('spacing-2')},
+      padding: (
+        mini: 1px 8px,
+        small: 1px 12px,
+        medium: 5px 16px,
+        large: 8px 20px,
+      ),
+    ),
+    nav: (
+      padding: (
+        mini: 2px,
+        small: 4px,
+        medium: 4px,
+        large: 4px,
+      ),
+    ),
+  ),
+  box-shadow: (
+    indicator: #{0 5px 12px 4px rgba(0, 0, 0, 4%),
+    0 3px 6px 0 rgba(0, 0, 0, 6%),
+    0 1px 2px -2px rgba(0, 0, 0, 10%)},
+  ),
+  transition: (
+    duration: #{function.css-variable('transition-time')},
+    timing-function: #{cubic-bezier(0.205, 0, 0.25, 1.01)},
+  ),
+);

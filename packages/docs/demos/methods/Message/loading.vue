@@ -1,0 +1,17 @@
+<template>
+  <h-button type="normal" plain @click="open">加载</h-button>
+</template>
+
+<script lang="ts" setup>
+import { $message } from '@aurora/horizon-web';
+const open = () => {
+  const inst = $message.loading('After 2 seconds, the asynchronous operation will be completed');
+  setTimeout(() => {
+    inst.update({
+      message: 'The asynchronous operation is completed',
+      type: 'success',
+      duration: 3000,
+    });
+  }, 2000);
+};
+</script>

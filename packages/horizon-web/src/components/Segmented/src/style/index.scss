@@ -1,0 +1,275 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('segmented') {
+  display: inline-block;
+  max-width: 100%;
+  background: mixins.css-variable('segmented', 'background');
+  border-radius: mixins.css-variable('segmented', 'border-radius');
+
+  @include mixins.e('nav') {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+  }
+
+  @include mixins.e('nav-wrap') {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  @include mixins.e('nav-list') {
+    position: relative;
+    display: flex;
+    align-items: center;
+    transition: transform mixins.css-variable('segmented', 'transition', 'duration')
+      mixins.css-variable('segmented', 'transition', 'timing-function');
+  }
+
+  @include mixins.e('item') {
+    position: relative;
+    margin-left: mixins.css-variable('segmented', 'spacing', 'item', 'gap');
+    color: mixins.css-variable('segmented', 'color', 'item');
+    cursor: pointer;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    $transition: all mixins.css-variable('segmented', 'transition', 'duration')
+      mixins.css-variable('segmented', 'transition', 'timing-function');
+
+    @include mixins.e('move') {
+      transition: $transition;
+    }
+
+    @include mixins.e('enter-active') {
+      transition: $transition;
+    }
+
+    @include mixins.e('leave-active') {
+      transition: $transition;
+    }
+
+    &:hover:active {
+      color: mixins.css-variable('segmented', 'color', 'item', 'press');
+    }
+
+    &:hover {
+      color: mixins.css-variable('segmented', 'color', 'item', 'hover');
+    }
+  }
+
+  @include mixins.e('item-inner') {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 8px;
+    user-select: none;
+  }
+
+  @include mixins.e('item-text') {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  @include mixins.e('arrow') {
+    position: relative;
+    display: flex;
+    align-items: center;
+    column-gap: 4px;
+  }
+
+  @include mixins.e('extra-outer') {
+    display: flex;
+    flex-shrink: 0;
+    align-items: stretch;
+    line-height: 1;
+    column-gap: 4px;
+
+    @include mixins.m('blur') {
+      position: relative;
+
+      &::before {
+        position: absolute;
+        top: 0;
+        bottom: 1px;
+        left: -24px;
+        z-index: 1;
+        width: 24px;
+        margin: auto;
+        line-height: 1;
+        background: linear-gradient(
+          to right,
+          transparent 0%,
+          mixins.css-variable('tabs', 'background', 'page') 100%
+        );
+        content: '';
+        pointer-events: none;
+      }
+    }
+
+    @include mixins.e('extra') {
+      display: flex;
+      align-items: center;
+    }
+
+    @include mixins.e('icon-outer') {
+      display: flex;
+      align-items: center;
+      padding: 2px 4px;
+      cursor: pointer;
+      transition: color mixins.css-variable('segmented', 'transition', 'duration')
+        mixins.css-variable('segmented', 'transition', 'timing-function');
+
+      &:hover {
+        color: mixins.css-variable('segmented', 'color', 'item', 'hover');
+      }
+
+      &:active {
+        color: mixins.css-variable('segmented', 'color', 'item', 'press');
+      }
+
+      @include mixins.m('disabled') {
+        $c: mixins.css-variable('segmented', 'color', 'item', 'disabled');
+
+        color: $c;
+        cursor: not-allowed;
+
+        &:hover {
+          color: $c !important;
+        }
+
+        &:active {
+          color: $c !important;
+        }
+      }
+    }
+  }
+
+  @include mixins.e('item--active') {
+    color: mixins.css-variable('segmented', 'color', 'item', 'active');
+  }
+
+  @include mixins.e('item--disabled') {
+    $c: mixins.css-variable('segmented', 'color', 'item', 'disabled');
+
+    color: $c;
+    cursor: not-allowed;
+
+    &:hover,
+    &:active {
+      color: $c;
+    }
+
+    &:hover:active {
+      color: $c;
+    }
+  }
+
+  @include mixins.e('indicator') {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    height: 100%;
+    background: mixins.css-variable('segmented', 'background', 'indicator');
+    box-shadow: mixins.css-variable('segmented', 'box-shadow', 'indicator');
+  }
+
+  // segment 尺寸
+  @include mixins.m('mini') {
+    @include mixins.e('nav-wrap') {
+      padding: mixins.css-variable('segmented', 'spacing', 'nav', 'padding', 'mini');
+    }
+
+    @include mixins.e('item') {
+      padding: mixins.css-variable('segmented', 'spacing', 'item', 'padding', 'mini');
+      font-size: mixins.css-variable('segmented', 'font-size', 'item', 'mini');
+      line-height: mixins.css-variable('segmented', 'line-height', 'item', 'mini');
+    }
+
+    @include mixins.e('indicator') {
+      border-radius: mixins.css-variable('segmented', 'border-radius', 'indicator', 'mini');
+    }
+  }
+
+  @include mixins.m('small') {
+    @include mixins.e('nav-wrap') {
+      padding: mixins.css-variable('segmented', 'spacing', 'nav', 'padding', 'small');
+    }
+
+    @include mixins.e('item') {
+      padding: mixins.css-variable('segmented', 'spacing', 'item', 'padding', 'small');
+      font-size: mixins.css-variable('segmented', 'font-size', 'item', 'small');
+      line-height: mixins.css-variable('segmented', 'line-height', 'item', 'small');
+    }
+
+    @include mixins.e('indicator') {
+      border-radius: mixins.css-variable('segmented', 'border-radius', 'indicator', 'small');
+    }
+  }
+
+  @include mixins.m('medium') {
+    @include mixins.e('nav-wrap') {
+      padding: mixins.css-variable('segmented', 'spacing', 'nav', 'padding', 'medium');
+    }
+
+    @include mixins.e('item') {
+      padding: mixins.css-variable('segmented', 'spacing', 'item', 'padding', 'medium');
+      font-size: mixins.css-variable('segmented', 'font-size', 'item', 'medium');
+      line-height: mixins.css-variable('segmented', 'line-height', 'item', 'medium');
+    }
+
+    @include mixins.e('indicator') {
+      border-radius: mixins.css-variable('segmented', 'border-radius', 'indicator', 'medium');
+    }
+  }
+
+  @include mixins.m('large') {
+    @include mixins.e('nav-wrap') {
+      padding: mixins.css-variable('segmented', 'spacing', 'nav', 'padding', 'large');
+    }
+
+    @include mixins.e('item') {
+      padding: mixins.css-variable('segmented', 'spacing', 'item', 'padding', 'large');
+      font-size: mixins.css-variable('segmented', 'font-size', 'item', 'large');
+      line-height: mixins.css-variable('segmented', 'line-height', 'item', 'large');
+    }
+
+    @include mixins.e('indicator') {
+      border-radius: mixins.css-variable('segmented', 'border-radius', 'indicator', 'large');
+    }
+  }
+
+  @include mixins.m('block') {
+    display: flex;
+
+    %block-shared {
+      display: flex;
+      flex: 1;
+    }
+
+    @include mixins.e('nav') {
+      @extend %block-shared;
+    }
+
+    @include mixins.e('nav-wrap') {
+      @extend %block-shared;
+    }
+
+    @include mixins.e('nav-list') {
+      @extend %block-shared;
+    }
+
+    @include mixins.e('item') {
+      flex: 1;
+      min-width: 0;
+    }
+  }
+}

@@ -1,12 +1,12 @@
 {
-  "name": "@nio-fe/locale-vue",
+  "name": "@aurora/locale-vue",
   "version": "1.0.0",
   "main": "lib/index.js",
   "module": "es/index.js",
   "unpkg": "dist/index.umd.js",
   "types": "es/index.d.ts",
   "scripts": {
-    "build": "pnpm run build:js && pnpm run build:ts",
+    "build": "bun run build:js && bun run build:ts",
     "build:js": "bunx --bun vite build",
     "build:ts": "tsc -d --pretty --emitDeclarationOnly"
   },
@@ -22,9 +22,9 @@
     "vue": "^3.2.33"
   },
   "dependencies": {
-    "@nio-fe/locale": "workspace:*"
+    "@aurora/locale": "workspace:*"
   },
   "devDependencies": {
-    "@nio-fe/shared": "workspace:*"
+    "@aurora/utils": "workspace:*"
   }
 }

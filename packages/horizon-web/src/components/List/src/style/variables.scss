@@ -1,0 +1,54 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  font-size: (
+    '': #{function.css-variable('text-base')},
+    main-title: #{function.css-variable('text-lg')},
+    main-subtitle: #{function.css-variable('text-base')},
+    describe: #{function.css-variable('text-sm')},
+  ),
+  font-weight: (
+    '': #{function.css-variable('weight-normal')},
+    title: (
+      bold: #{function.css-variable('weight-strong')},
+    ),
+    describe: #{function.css-variable('weight-normal')},
+  ),
+  line-height: (
+    '': #{function.css-variable('line-height-standard')},
+    main-title: #{function.css-variable('line-height-standard')},
+    describe: #{function.css-variable('line-height-standard')},
+  ),
+  color: (
+    '': #{function.css-variable('text-primary')},
+    main-title: #{function.css-variable('text-primary')},
+    main-subtitle: #{function.css-variable('text-secondary')},
+    describe: #{function.css-variable('text-secondary')},
+  ),
+  border-color: #{function.css-variable('border-noninteractive')},
+  border: 1px solid #{function.css-variable('list', 'border-color')},
+  background: (
+    '': #{function.css-variable('bg-default')},
+    even: #{function.css-variable('bg-secondary')},
+  ),
+  spacing: (
+    main-sider: (
+      margin-right: #{function.css-variable('spacing-4')},
+    ),
+    main-title: (
+      margin-bottom: #{function.css-variable('spacing-4')},
+    ),
+    subtitle: (
+      margin-left: #{function.css-variable('spacing-3')},
+    ),
+    right: (
+      padding-left: #{function.css-variable('spacing-4')},
+    ),
+    list-item: (
+      padding: (
+        '': #{function.css-variable('spacing-5')},
+        small: #{function.css-variable('spacing-4')} #{function.css-variable('spacing-5')},
+      ),
+    ),
+  ),
+);

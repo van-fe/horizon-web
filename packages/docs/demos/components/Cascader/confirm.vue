@@ -1,0 +1,67 @@
+<template>
+  <div>
+    <h-grid :gap="10">
+      <h-grid-item :span="6">
+        <div class="demo-title">
+          单选
+        </div>
+        <h-cascader
+            v-model="currentVal1"
+            placeholder="which component?"
+            :clearable="true"
+            :to-body="false"
+            :options="options"
+            :confirm="true"
+            @confirm="onConfirm"
+            @cancel="onCancel"
+            @change="onChange"
+        />
+      </h-grid-item>
+      <h-grid-item :span="6">
+        <div class="demo-title">
+          多选
+        </div>
+        <h-cascader
+            v-model="currentVal2"
+            :clearable="true"
+            :options="options"
+            :multiple="true"
+            :confirm="true"
+            :to-body="false"
+            @confirm="onConfirm"
+            @cancel="onCancel"
+            @change="onChange"
+        />
+      </h-grid-item>
+    </h-grid>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref} from 'vue';
+import type { HCascaderExtendOption, HCascaderModelValueType } from '@aurora/horizon-web';
+
+const currentVal1 = ref<string[]>([]);
+const currentVal2 = ref<string[][]>([]);
+
+const options = ref([]);
+fetch(
+  new URL('/cascader-options.json', import.meta.url).href,
+).then(res => {
+  res.json().then(value => {
+    options.value = value;
+  });
+});
+
+const onConfirm = (value: any) => {
+  console.info('confirm: ', value);
+};
+
+const onCancel = (value: any) => {
+  console.info('cancel: ', value);
+};
+
+const onChange = (value: HCascaderModelValueType, option: HCascaderExtendOption) => {
+  console.info('change: ', value, option);
+};
+</script>

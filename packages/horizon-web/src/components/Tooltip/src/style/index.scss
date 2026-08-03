@@ -1,0 +1,109 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('tooltip') {
+  position: fixed;
+  padding: mixins.css-variable('tooltip', 'spacing', 'padding');
+  color: mixins.css-variable('tooltip', 'color');
+  font-weight: mixins.css-variable('tooltip', 'font-weight');
+  font-size: mixins.css-variable('tooltip', 'font-size');
+  font-style: normal;
+  line-height: mixins.css-variable('tooltip', 'line-height');
+  background-color: mixins.css-variable('tooltip', 'background');
+  border: 1px solid mixins.css-variable('tooltip', 'border-color');
+  border-radius: mixins.css-variable('tooltip', 'border-radius');
+
+  @include mixins.e('content') {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: mixins.css-variable('tooltip', 'size', 'min', 'width');
+    max-width: mixins.css-variable('tooltip', 'size', 'max', 'width');
+    white-space: normal;
+    word-break: break-word;
+
+    @include mixins.is('clickable') {
+      cursor: pointer;
+    }
+  }
+
+  @include mixins.m('large') {
+    padding: mixins.css-variable('tooltip', 'spacing', 'padding', 'large');
+    font-size: mixins.css-variable('tooltip', 'font-size', 'large');
+  }
+
+  @include mixins.m('small') {
+    padding: mixins.css-variable('tooltip', 'spacing', 'padding', 'small');
+  }
+
+  @include mixins.m('light') {
+    #{mixins.css-variable-name('tooltip', 'background')}: #{mixins.css-variable('tooltip', 'background', 'light')};
+    #{mixins.css-variable-name('tooltip', 'color')}: #{mixins.css-variable('tooltip', 'color', 'light')};
+    #{mixins.css-variable-name('tooltip', 'border-color')}: #{mixins.css-variable('tooltip', 'border-color', 'light')};
+    box-shadow:
+      0 4px 6px 0 rgba(0, 22, 60, 2%),
+      0 2px 4px 0 rgba(0, 22, 60, 2%),
+      0 1px 2px 0 rgba(0, 0, 60, 1%);
+  }
+
+  /* arrow */
+  @include mixins.e('arrow') {
+    position: absolute;
+    z-index: -1;
+    width: mixins.css-variable('tooltip', 'size', 'arrow');
+    height: mixins.css-variable('tooltip', 'size', 'arrow');
+    pointer-events: none;
+
+    &::before {
+      display: block;
+      box-sizing: border-box;
+      width: 100%;
+      height: 100%;
+      background-color: mixins.css-variable('tooltip', 'background');
+      border: 1px solid;
+      border-color: transparent mixins.css-variable('tooltip', 'border-color')
+        mixins.css-variable('tooltip', 'border-color') transparent;
+      border-radius: 1px;
+      transform: mixins.css-variable('tooltip', 'transform', 'arrow', 'rotate');
+      content: '';
+      clip-path: circle(65%);
+    }
+  }
+
+  @include mixins.m('hidden') {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  &.popper-reference-hidden[data-popper-reference-hidden] {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  &[data-popper-placement^='top'] {
+    @include mixins.be('tooltip', 'arrow', false) {
+      #{mixins.css-variable-name('tooltip', 'transform', 'arrow', 'rotate')}: rotate(45deg);
+      bottom: mixins.css-variable('tooltip', 'size', 'arrow', 'offset');
+    }
+  }
+
+  &[data-popper-placement^='bottom'] {
+    @include mixins.be('tooltip', 'arrow', false) {
+      #{mixins.css-variable-name('tooltip', 'transform', 'arrow', 'rotate')}: rotate(-135deg);
+      top: mixins.css-variable('tooltip', 'size', 'arrow', 'offset');
+    }
+  }
+
+  &[data-popper-placement^='left'] {
+    @include mixins.be('tooltip', 'arrow', false) {
+      #{mixins.css-variable-name('tooltip', 'transform', 'arrow', 'rotate')}: rotate(-45deg);
+      right: mixins.css-variable('tooltip', 'size', 'arrow', 'offset');
+    }
+  }
+
+  &[data-popper-placement^='right'] {
+    @include mixins.be('tooltip', 'arrow', false) {
+      #{mixins.css-variable-name('tooltip', 'transform', 'arrow', 'rotate')}: rotate(135deg);
+      left: mixins.css-variable('tooltip', 'size', 'arrow', 'offset');
+    }
+  }
+}

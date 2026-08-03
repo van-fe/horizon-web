@@ -1,5 +1,5 @@
-import type { Project, PropertyAssignment, AsExpression, Node } from 'ts-morph';
-import type { ApiGeneratorAnalysedPropType, ApiGeneratorExportedComponent } from '@nio-fe/shared';
+import type { Project, PropertyAssignment, Node } from 'ts-morph';
+import type { ApiGeneratorAnalysedPropType, ApiGeneratorExportedComponent } from '@aurora/utils';
 import { ts } from 'ts-morph';
 import type { FileElements } from '../../utils/analyseFileElements';
 import analysisFileElements from '../../utils/analyseFileElements';
@@ -21,9 +21,9 @@ function analysisPropertyAssignment(
   const res: ApiGeneratorAnalysedPropType = {
     default: '',
     desc: jsDoc.comment,
+    descLocales: jsDoc.locales,
     name: property.getName(),
     required: false,
-    deprecated: jsDoc.tags.deprecated?.default,
     version: jsDoc.tags.version?.default,
     type: '',
     baseType: '',
@@ -139,7 +139,25 @@ function analysisPropertyAssignment(
     });
   } catch (e) {
     console.error(e);
-    
+  }
+
+  // Keep the source type when a newer/complex TS node is not handled by the
+  // specialised branches above (e.g. `PropType<boolean | null>`).  An empty
+  // type is much harder for consumers to diagnose than a lossless fallback.
+  if (!res.type) {
+    const typeEntry = property
+      .getChildrenOfKind(ts.SyntaxKind.ObjectLiteralExpression)?.[0]
+      ?.getProperties()
+      .find(curr => curr.asKind(ts.SyntaxKind.PropertyAssignment)?.getName() === 'type');
+    const statement = typeEntry?.getLastChild();
+    if (statement) {
+      res.type = statement.getText();
+      res.baseType = lowerFirst(
+        statement.getKind() === ts.SyntaxKind.AsExpression
+          ? statement.getFirstChild()?.getText() || 'unknown'
+          : statement.getText(),
+      );
+    }
   }
 
   return res;

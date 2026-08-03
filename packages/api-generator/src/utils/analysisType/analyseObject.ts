@@ -5,8 +5,8 @@ import analyseJsDocs from '../analyseJsDocs';
 import type { FileElements } from '../analyseFileElements';
 import formatTsTypeToUnitType from '../formatTsTypeToUnitType';
 import { analyseFunctionExpression } from './analyseFunction';
-import type { ApiGeneratorAnalysedExposeParamType } from '@nio-fe/shared';
-import { ApiGeneratorAnalysedBaseType } from '@nio-fe/shared';
+import type { ApiGeneratorAnalysedExposeParamType } from '@aurora/utils';
+import { ApiGeneratorAnalysedBaseType } from '@aurora/utils';
 import deepmerge from 'deepmerge';
 
 export function analyseObjectExpression(
@@ -40,6 +40,9 @@ export function analyseObjectExpression(
             currentJsDoc.tags.return?.default ||
             currentJsDoc.comment ||
             '',
+          descLocales: currentJsDoc.tags.paramEn?.[field]
+            ? { en: currentJsDoc.tags.paramEn[field] }
+            : undefined,
           nativeType,
           params: [],
         };

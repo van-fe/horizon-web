@@ -1,0 +1,17 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('upload--file-list') {
+  max-width: mixins.css-variable('upload', 'size', 'file-list', 'max-width');
+}
+
+@include mixins.siblings-block('upload--file-item') {
+  margin-top: mixins.css-variable('upload', 'spacing', 'file-list', 'item', 'siblings', 'margin-top');
+}
+
+@include mixins.siblings-block('upload__trigger', 'upload--file-list') {
+  margin-top: mixins.css-variable('upload', 'spacing', 'file-list', 'margin-top');
+}
+
+@include mixins.siblings-block('upload--drop-area', 'upload--file-list') {
+  margin-top: mixins.css-variable('upload', 'spacing', 'file-list', 'margin-top');
+}

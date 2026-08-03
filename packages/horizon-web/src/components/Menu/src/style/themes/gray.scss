@@ -1,0 +1,319 @@
+@use '../../../../../styles/mixins';
+
+@include mixins.b('menu') {
+  @include mixins.m('gray') {
+    background: mixins.css-variable('menu', 'background', 'gray');
+
+    @include mixins.is('collapsed') {
+      @include mixins.e('title') {
+        color: mixins.css-variable('menu', 'color', 'title', 'gray', 'collapsed');
+      }
+    }
+
+    @include mixins.is('active-type-button') {
+      @include mixins.e('sub') {
+        background: mixins.css-variable('menu', 'background', 'item', 'gray');
+
+        @include mixins.e('title', false) {
+          @include mixins.is-not('disabled') {
+            @include mixins.em('title', 'inner', false) {
+              outline-color: mixins.css-variable('menu', 'border-color', 'outline');
+            }
+          }
+
+          @include mixins.is('active') {
+            @include mixins.is-not('disabled') {
+              @include mixins.em('title', 'inner', false) {
+                color: mixins.css-variable('menu', 'color', 'title', 'gray', 'active');
+              }
+
+              @include mixins.em('title', 'icon', false) {
+                color: mixins.css-variable('menu', 'color', 'title', 'gray', 'active');
+              }
+            }
+
+            @include mixins.is('disabled') {
+              @include mixins.em('title', 'inner', false) {
+                color: mixins.css-variable('menu', 'color', 'title', 'gray', 'active', 'disabled');
+              }
+
+              @include mixins.em('title', 'icon', false) {
+                color: mixins.css-variable('menu', 'color', 'title', 'gray', 'active', 'disabled');
+              }
+            }
+          }
+
+          @include mixins.is('selected') {
+            @include mixins.em('title', 'text', false) {
+              font-weight: mixins.css-variable('menu', 'font-weight', 'title', 'active');
+            }
+
+            @include mixins.is-not('disabled') {
+              @include mixins.em('title', 'inner', false) {
+                color: mixins.css-variable('menu', 'color', 'title', 'gray', 'active');
+                background: mixins.css-variable('menu', 'background', 'item', 'gray', 'active');
+              }
+
+              @include mixins.em('title', 'icon', false) {
+                color: mixins.css-variable('menu', 'color', 'title', 'gray', 'active');
+              }
+            }
+
+            @include mixins.is('disabled') {
+              @include mixins.em('title', 'inner', false) {
+                color: mixins.css-variable('menu', 'color', 'title', 'gray', 'active', 'disabled');
+                background: mixins.css-variable('menu', 'background', 'item', 'gray', 'active', 'disabled');
+              }
+
+              @include mixins.em('title', 'icon', false) {
+                color: mixins.css-variable('menu', 'color', 'title', 'gray', 'active', 'disabled');
+              }
+            }
+          }
+        }
+      }
+
+      @include mixins.e('item') {
+        background: mixins.css-variable('menu', 'background', 'item', 'gray');
+
+        @include mixins.e('title', false) {
+          @include mixins.is-not('disabled') {
+            @include mixins.em('title', 'inner', false) {
+              outline-color: mixins.css-variable('menu', 'border-color', 'outline');
+            }
+          }
+
+          @include mixins.is('active') {
+            @include mixins.em('title', 'text', false) {
+              font-weight: mixins.css-variable('menu', 'font-weight', 'title', 'active');
+            }
+
+            @include mixins.is-not('disabled') {
+              @include mixins.em('title', 'inner', false) {
+                color: mixins.css-variable('menu', 'color', 'title', 'gray', 'active');
+                background: mixins.css-variable('menu', 'background', 'item', 'gray', 'active');
+              }
+
+              @include mixins.em('title', 'icon', false) {
+                color: mixins.css-variable('menu', 'color', 'title', 'gray', 'active');
+              }
+            }
+
+            @include mixins.is('disabled') {
+              @include mixins.em('title', 'inner', false) {
+                color: mixins.css-variable('menu', 'color', 'title', 'gray', 'active', 'disabled');
+                background: mixins.css-variable('menu', 'background', 'item', 'gray', 'active', 'disabled');
+              }
+
+              @include mixins.em('title', 'icon', false) {
+                color: mixins.css-variable('menu', 'color', 'title', 'gray', 'active', 'disabled');
+              }
+            }
+          }
+        }
+      }
+
+      @include mixins.e('title') {
+        color: mixins.css-variable('menu', 'color', 'title', 'gray');
+
+        @include mixins.is('disabled') {
+          color: mixins.css-variable('menu', 'color', 'title', 'gray', 'disabled');
+        }
+
+        @include mixins.is-not('disabled') {
+          @include mixins.em('title', 'icon', false) {
+            color: mixins.css-variable('menu', 'color', 'title', 'gray', 'icon');
+          }
+
+          &:hover {
+            @include mixins.bem('menu', 'title', 'inner', false) {
+              background: mixins.css-variable('menu', 'background', 'item', 'gray', 'hover');
+            }
+          }
+        }
+      }
+    }
+
+    @include mixins.is('active-type-link') {
+      @include mixins.e('sub') {
+        background: mixins.css-variable('menu', 'background', 'item', 'gray');
+
+        @include mixins.e('title', false) {
+          @include mixins.is('active') {
+            @include mixins.em('title', 'text', false) {
+              font-weight: mixins.css-variable('menu', 'font-weight', 'title', 'active');
+            }
+          }
+
+          @include mixins.is('active') {
+            @include mixins.is-not('disabled') {
+              border-bottom: mixins.css-variable('menu', 'border', 'title', 'active');
+
+              @include mixins.em('title', 'inner', false) {
+                color: mixins.css-variable('menu', 'color', 'title', 'gray', 'active');
+              }
+
+              @include mixins.em('title', 'icon', false) {
+                color: mixins.css-variable('menu', 'color', 'title', 'gray', 'active');
+              }
+            }
+
+            @include mixins.is('disabled') {
+              border-bottom: mixins.css-variable('menu', 'border', 'title', 'active', 'disabled');
+
+              @include mixins.em('title', 'inner', false) {
+                color: mixins.css-variable('menu', 'color', 'title', 'gray', 'active', 'disabled');
+              }
+
+              @include mixins.em('title', 'icon', false) {
+                color: mixins.css-variable('menu', 'color', 'title', 'gray', 'active', 'disabled');
+              }
+            }
+          }
+        }
+      }
+
+      @include mixins.e('item') {
+        background: mixins.css-variable('menu', 'background', 'item', 'gray');
+
+        @include mixins.e('title', false) {
+          height: mixins.css-variable('menu', 'size', 'menu-item', 'horizontal', 'link-type', 'height');
+          border-bottom: mixins.css-variable('menu', 'border', 'title');
+          transition: mixins.css-variable('menu', 'transition', 'all');
+
+          @include mixins.m('inner') {
+            padding: mixins.css-variable('menu', 'spacing', 'item', 'title', 'inner', 'horizontal', 'link-type', 'padding');
+          }
+
+          @include mixins.is('active') {
+            @include mixins.em('title', 'text', false) {
+              font-weight: mixins.css-variable('menu', 'font-weight', 'title', 'active');
+            }
+
+            @include mixins.is-not('disabled') {
+              border-bottom: mixins.css-variable('menu', 'border', 'title', 'active');
+
+              @include mixins.em('title', 'inner', false) {
+                color: mixins.css-variable('menu', 'color', 'title', 'gray', 'active');
+              }
+
+              @include mixins.em('title', 'icon', false) {
+                color: mixins.css-variable('menu', 'color', 'title', 'gray', 'active');
+              }
+            }
+
+            @include mixins.is('disabled') {
+              border-bottom: mixins.css-variable('menu', 'border', 'title', 'active', 'disabled');
+
+              @include mixins.em('title', 'inner', false) {
+                color: mixins.css-variable('menu', 'color', 'title', 'gray', 'active', 'disabled');
+              }
+
+              @include mixins.em('title', 'icon', false) {
+                color: mixins.css-variable('menu', 'color', 'title', 'gray', 'active', 'disabled');
+              }
+            }
+          }
+        }
+      }
+
+      @include mixins.e('title') {
+        color: mixins.css-variable('menu', 'color', 'title', 'gray');
+
+        @include mixins.is('disabled') {
+          color: mixins.css-variable('menu', 'color', 'title', 'gray', 'disabled');
+        }
+
+        @include mixins.is-not('disabled') {
+          @include mixins.em('title', 'icon', false) {
+            color: mixins.css-variable('menu', 'color', 'title', 'gray', 'icon');
+          }
+
+          &:hover {
+            @include mixins.bem('menu', 'title', 'inner', false) {
+              color: mixins.css-variable('menu', 'color', 'title', 'gray', 'hover');
+            }
+
+            @include mixins.bem('menu', 'title', 'icon', false) {
+              color: mixins.css-variable('menu', 'color', 'title', 'gray', 'hover');
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@include mixins.b('menu--full-view') {
+  @include mixins.m('gray') {
+    background: mixins.css-variable('menu', 'background', 'gray');
+
+    @include mixins.e('group') {
+      @include mixins.m('title') {
+        color: mixins.css-variable('menu', 'color', 'title', 'gray');
+
+        @include mixins.is-not('router') {
+          &::after {
+            background: mixins.css-variable('menu', 'border-color', 'divider', 'full-view', 'group', 'title');
+          }
+        }
+
+        @include mixins.is('disabled') {
+          color: mixins.css-variable('menu', 'color', 'title', 'gray', 'disabled');
+
+          @include mixins.is('active') {
+            color: mixins.css-variable('menu', 'color', 'title', 'gray', 'active', 'disabled');
+          }
+        }
+
+        @include mixins.is-not('disabled') {
+          @include mixins.has('router') {
+            &:hover {
+              color: mixins.css-variable('menu', 'color', 'title', 'gray', 'hover', 'full-view');
+            }
+
+            &:active {
+              color: mixins.css-variable('menu', 'color', 'title', 'gray', 'active', 'full-view');
+            }
+          }
+
+          @include mixins.is('active') {
+            color: mixins.css-variable('menu', 'color', 'title', 'gray', 'active', 'full-view');
+          }
+        }
+      }
+
+      @include mixins.m('item') {
+        color: mixins.css-variable('menu', 'color', 'title', 'gray');
+
+        @include mixins.is('disabled') {
+          color: mixins.css-variable('menu', 'color', 'title', 'gray', 'disabled');
+
+          @include mixins.is('active') {
+            color: mixins.css-variable('menu', 'color', 'title', 'gray', 'active', 'disabled', 'full-view');
+            background: mixins.css-variable('menu', 'background', 'title', 'gray', 'active', 'disabled', 'full-view');
+          }
+        }
+
+        @include mixins.is-not('disabled') {
+          @include mixins.has('router') {
+            cursor: pointer;
+
+            &:hover {
+              color: mixins.css-variable('menu', 'color', 'title', 'gray', 'hover');
+            }
+
+            &:active {
+              color: mixins.css-variable('menu', 'color', 'title', 'gray', 'active');
+            }
+          }
+
+          @include mixins.is('active') {
+            color: mixins.css-variable('menu', 'color', 'title', 'gray', 'active', 'full-view');
+            background: mixins.css-variable('menu', 'background', 'title', 'gray', 'active', 'full-view');
+          }
+        }
+      }
+    }
+  }
+}

@@ -5,13 +5,13 @@
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
+    "stableTypeOrdering": true,
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "baseUrl": ".",
     "skipLibCheck": true,
     "types": [
       "webpack-env",
@@ -21,9 +21,14 @@
       "esnext",
       "dom",
       "dom.iterable",
-      "scripthost",
-      "browser"
-    ]
+      "scripthost"
+    ],
+    "paths": {
+      "*": ["./*"],
+      "~/*": ["./src/*"],
+      "@/*": ["./node_modules/*"],
+      "@root/*": ["../../*"]
+    },
   },
   "include": [
     "src/**/*.ts",

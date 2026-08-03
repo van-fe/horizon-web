@@ -1,0 +1,35 @@
+@use '../../../../styles/mixins';
+
+@mixin cursor() {
+  position: absolute;
+  box-sizing: border-box;
+  width: mixins.css-variable('color-picker', 'size', 'color-cursor');
+  height: mixins.css-variable('color-picker', 'size', 'color-cursor');
+  background: transparent;
+  border: 2px solid mixins.css-variable('color-picker', 'border-color', 'cursor');
+  border-radius: 100%;
+  box-shadow: mixins.css-variable('color-picker', 'box-shadow', 'cursor');
+  cursor: pointer;
+  user-select: none;
+
+  &::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    width: mixins.css-variable('color-picker', 'size', 'color-cursor');
+    height: mixins.css-variable('color-picker', 'size', 'color-cursor');
+    border: mixins.css-variable('color-picker', 'border', 'transparent');
+    border-radius: 100%;
+    transform: translate(-50%, -50%);
+    content: '';
+  }
+}
+
+@mixin absolute-full() {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}

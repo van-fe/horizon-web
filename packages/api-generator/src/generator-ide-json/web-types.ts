@@ -2,7 +2,8 @@
  * web-types is a json file which just for Jetbrains's IDEs to provide autocomplete.
  * for more details: https://github.com/jetbrains/web-types
  */
-import { apiGeneratorOutPut, writeJsonFile } from '@nio-fe/shared/plugins';
+import { apiGeneratorOutPut } from '@root/scripts/paths';
+import { writeJsonFile } from '@root/scripts/writeJsonFile';
 import type {
   ApiGeneratorAnalysedComponentDetail,
   ApiGeneratorAnalysedEmitParamType,
@@ -11,15 +12,15 @@ import type {
   ApiGeneratorAnalysedSlotType,
   ApiGeneratorAnalysedDirectiveDetail,
   ApiGeneratorAnalysedOptionType,
-} from '@nio-fe/shared';
-import { capitalize, kebabCase } from '@nio-fe/shared';
+} from '@aurora/utils';
+import { capitalize, kebabCase } from '@aurora/utils';
 import version from '../../../../versions.json';
 import components from '../../dist/components-analysis.json';
 import directives from '../../dist/directives-analysis.json';
 
 export default async function createWebTypesJson() {
-  const getDocUrl = (cmp: string, heading?: string, type = 'components') =>
-    `https://aurora-design.nio.com/horizon-web/dev-component/vue/base/component/${cmp.toLowerCase()}${
+  const getDocUrl = (cmp: string, heading?: string, _type = 'components') =>
+    `https://aurora-design.example.com/horizon-web/dev-component/vue/base/component/${cmp.toLowerCase()}${
       heading ? `#${capitalize(cmp)}${heading}` : ''
     }`;
 
@@ -56,11 +57,10 @@ export default async function createWebTypesJson() {
           prop.default === null
             ? 'null'
             : prop.default === undefined
-            ? 'undefined'
-            : prop.default.toString(),
+              ? 'undefined'
+              : prop.default.toString(),
         required: !prop.required ? undefined : true,
         value: createTagValue(prop.baseType),
-        type: prop.type === 'boolean' ? 'boolean' : undefined, // this is deprecated but should be const 'boolean' for compatibility with 2019.2
       };
     };
 
@@ -72,7 +72,7 @@ export default async function createWebTypesJson() {
     };
 
     return {
-      name: `n-${kebabCase(component.name)}`,
+      name: `h-${kebabCase(component.name)}`,
       source: {
         symbol: `N${component.name}`,
       },
@@ -127,8 +127,8 @@ export default async function createWebTypesJson() {
   const webTypes = {
     $schema: 'https://raw.githubusercontent.com/JetBrains/web-types/master/schema/web-types.json',
     framework: 'vue',
-    name: 'lego',
-    version: version.lego,
+    name: 'horizon-web',
+    version: version['horizon-web'],
     'js-types-syntax': 'typescript',
     'description-markup': 'markdown',
     contributions: {

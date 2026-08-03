@@ -1,0 +1,78 @@
+{
+  "name": "@aurora/horizon-web",
+  "version": "1.0.0",
+  "description": "Vue3 UI components library.",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "unpkg": "dist/horizon-web-browser.umd.js",
+  "types": "es/index.d.ts",
+  "vetur": {
+    "tags": "json/tags.json",
+    "attributes": "json/attributes.json"
+  },
+  "web-types": "json/web-types.json",
+  "keywords": [
+    "ui",
+    "components",
+    "vue3",
+    "rollup"
+  ],
+  "scripts": {
+    "build": "bun run build:index && bun run build:theme && bun run build:dist && bun run build:browser",
+    "build:index": "bun run ./build/build-index.ts",
+    "build:theme": "bun run ./build/theme-build/index.ts",
+    "build:browser": "bunx --bun vite build --config ./build/vite.browser.config.ts",
+    "build:dist": "bunx --bun vite build && bun run build:ts",
+    "build:json": "bun run ./build/build-json.ts",
+    "build:ts": "tsc -d -p tsconfig.build.json --pretty --emitDeclarationOnly && bun run recorrect:tsc-alias",
+    "recorrect:tsc-alias": "tsc ./build/tsc-alias/shared.ts && tsc-alias -p tsconfig.json",
+    "ts:check": "tsc --noEmit",
+    "test": "vitest",
+    "lint": "bunx oxlint && eslint --fix --ext .jsx,.js,.ts,.tsx ./src"
+  },
+  "license": "MIT",
+  "files": [
+    "dist",
+    "lib",
+    "json",
+    "es"
+  ],
+  "sideEffects": [
+    "dist/horizon-web-browser.iife.js",
+    "dist/horizon-web-browser.mjs",
+    "dist/horizon-web-browser.umd.js",
+    "dist/style.css",
+    "*.css",
+    "*.scss"
+  ],
+  "dependencies": {
+    "@aurora/colors": "workspace:*",
+    "@aurora/icon": "workspace:*",
+    "@aurora/locale-vue": "workspace:*",
+    "@aurora/utils": "workspace:*",
+    "@babel/runtime": "^7.26.0",
+    "@floating-ui/vue": "^1.1.9",
+    "@popperjs/core": "^2.11.8",
+    "@vueuse/core": "^11.0.0",
+    "async-validator": "^4.2.5",
+    "dayjs": "^1.11.13",
+    "decimal.js": "^10.4.3",
+    "deepmerge": "^4.3.1",
+    "dompurify": "^3.2.2",
+    "lodash": "^4.17.21",
+    "nanoid": "^5.0.9",
+    "qrcode": "1.5.4"
+  },
+  "devDependencies": {
+    "@aurora/locale": "workspace:*",
+    "@types/dompurify": "^3.0.5",
+    "@types/qrcode": "1.5.5",
+    "@vue/reactivity": "^3.5.26",
+    "fast-glob": "^3.3.2",
+    "rollup-plugin-copy": "^3.4.0",
+    "ts-morph": "^27.0.2",
+    "vue": "^3.5.26",
+    "vue-router": "^4.4.5"
+  },
+  "imports": {}
+}

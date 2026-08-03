@@ -1,0 +1,104 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  size: (
+    item: (
+      height: (
+        '': 32px,
+        small: 24px,
+        large: 40px,
+        huge: 48px,
+      ),
+    ),
+    empty: (
+      height: 280px,
+    ),
+    drag-over-cursor: (
+      height: 2px,
+    ),
+    icon: (
+      '': 16px,
+      small: 16px,
+      large: 16px,
+      huge: 20px,
+    ),
+    drag-over-cursor-arrow: 6px,
+  ),
+  font-size: (
+    '': #{function.css-variable('text-base')},
+    small: #{function.css-variable('text-sm')},
+    large: #{function.css-variable('text-base')},
+    huge: #{function.css-variable('text-lg')},
+    icon: (
+      '': #{function.css-variable('text-lg')},
+      small: #{function.css-variable('text-lg')},
+      large: #{function.css-variable('text-lg')},
+      huge: #{function.css-variable('text-xl')},
+    ),
+  ),
+  font-weight: (
+    item: (
+      checked: #{function.css-variable('weight-strong')},
+    ),
+  ),
+  color: (
+    item: (
+      '': #{function.css-variable('text-primary')},
+      hover: #{function.css-variable('text-primary')},
+      press: #{function.css-variable('text-primary')},
+      disabled: #{function.css-variable('text-disabled')},
+      keyword: #{function.css-variable('text-brand-default')},
+      stress: #{function.css-variable('text-brand-default')},
+    ),
+    empty: #{function.css-variable('text-tertiary')},
+    loading-icon: #{function.css-variable('text-brand-default')},
+  ),
+  border-color: (
+    drag-over-cursor-arrow: #{function.css-variable('bg-brand-activated')},
+  ),
+  border: (
+    drag-over-cursor-arrow: #{function.css-variable('tree', 'size', 'drag-over-cursor', 'height')}
+      solid #{function.css-variable('tree', 'border-color', 'drag-over-cursor-arrow')},
+  ),
+  border-radius: (
+    item: #{function.css-variable('radius-m')},
+    drag-over-cursor-arrow: #{function.css-variable('radius-circle')},
+  ),
+  background: (
+    item: (
+      '': #{function.css-variable('bg-default')},
+      hover: #{function.css-variable('bg-hover')},
+      press: #{function.css-variable('bg-press')},
+      stress: #{function.css-variable('bg-weak-activated')},
+      dragging: #{function.css-variable('bg-disabled')},
+      drag-over: #{function.css-variable('bg-weak-activated')},
+    ),
+    action-icon: (
+      '': #{function.css-variable('bg-transparent')},
+      hover: #{function.css-variable('bg-hover')},
+      press: #{function.css-variable('bg-press')},
+    ),
+    drag-over-cursor: #{function.css-variable('bg-brand-activated')},
+  ),
+  spacing: (
+    expand-icon: (
+      margin-right: #{function.css-variable('spacing-3')},
+    ),
+    filter: (
+      margin-bottom: #{function.css-variable('spacing-3')},
+    ),
+    item: (
+      padding-left: #{function.css-variable('spacing-3')},
+      content: (
+        padding-right: #{function.css-variable('spacing-3')},
+      ),
+    ),
+  ),
+  transition: (
+    all: (
+      '': #{function.css-variable('transition-all')},
+      fast: #{function.css-variable('transition-all--fast')},
+    ),
+    color-behavior: #{function.css-variable('transition-color-behavior')},
+  ),
+);

@@ -1,0 +1,291 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  size: (
+    header-switcher: (
+      icon: 30px,
+    ),
+    week: (
+      current-time: (
+        indicator: 10px,
+      ),
+      header: (
+        height: 80px,
+        week: (
+          height: 24px,
+        ),
+      ),
+      hour-cell: (
+        height: 60px,
+      ),
+      left: (
+        width: 80px,
+      ),
+    ),
+    day: (
+      month: (
+        min-height: 120px,
+      ),
+    ),
+    year: (
+      month-day: (
+        min-height: 26px,
+      ),
+      month-header: (
+        height: 48px,
+      ),
+      week: (
+        height: 38px,
+      ),
+    ),
+    day-header: (
+      height: 32px,
+    ),
+    flag: (
+      month: (
+        height: 24px,
+      ),
+    ),
+  ),
+  font-size: (
+    header-switcher-date: #{function.css-variable('text-lg')},
+    week: (
+      month: #{function.css-variable('text-base')},
+      header-week: (
+        '': #{function.css-variable('text-base')},
+        num: #{function.css-variable('text-2xl')},
+      ),
+      time-scroll: (
+        current-time-label: #{function.css-variable('text-sm')},
+      ),
+    ),
+    flag: (
+      month: #{function.css-variable('text-sm')},
+    ),
+    year: (
+      month-header: (
+        num: #{function.css-variable('text-lg')},
+      ),
+      month-body: (
+        week: #{function.css-variable('text-base')},
+        day: #{function.css-variable('text-base')},
+      ),
+    ),
+  ),
+  font-weight: (
+    header-switcher-date: #{function.css-variable('weight-strong')},
+    day-number: #{function.css-variable('weight-strong')},
+    year: (
+      month-header: (
+        num: #{function.css-variable('weight-strong')},
+      ),
+    ),
+    week: (
+      header-week: (
+        '': #{function.css-variable('weight-normal')},
+        num: #{function.css-variable('weight-strong')},
+      ),
+    ),
+    flag-content: #{function.css-variable('weight-strong')},
+  ),
+  color: (
+    header-today: #{function.css-variable('text-primary')},
+    week: (
+      month: #{function.css-variable('text-tertiary')},
+      header-week: (
+        '': #{function.css-variable('text-tertiary')},
+        num: #{function.css-variable('text-primary')},
+      ),
+      header: (
+        time-zone: #{function.css-variable('text-tertiary')},
+        today: #{function.css-variable('text-brand-default')},
+      ),
+      time-scroll: (
+        label: #{function.css-variable('text-tertiary')},
+      ),
+    ),
+    day-number: (
+      not-current-month: #{function.css-variable('text-disabled')},
+      current-month: #{function.css-variable('text-primary')},
+      current-day: (
+        '': #{function.css-variable('text-inverse')},
+        disabled: #{function.css-variable('text-disabled')},
+      ),
+    ),
+    day: (
+      disabled: #{function.css-variable('text-disabled')},
+    ),
+    year: (
+      month-header: (
+        num: #{function.css-variable('text-primary')},
+      ),
+      month-body: (
+        week: #{function.css-variable('text-secondary')},
+        day: (
+          '': #{function.css-variable('text-disabled')},
+          current-month: #{function.css-variable('text-primary')},
+          current-day: #{function.css-variable('text-inverse')},
+          disabled: #{function.css-variable('text-disabled')},
+        ),
+      ),
+    ),
+  ),
+  border-color: (
+    header-switcher: #{function.css-variable('border-default')},
+    day-row: #{function.css-variable('divider-default')},
+    year: (
+      month-body: #{function.css-variable('border-default')},
+    ),
+    week: (
+      divider: #{function.css-variable('border-default')},
+    ),
+  ),
+  border: (
+    header-switcher: 1px solid
+      #{function.css-variable('calendar', 'border-color', 'header-switcher')},
+    day-row: 1px solid #{function.css-variable('calendar', 'border-color', 'day-row')},
+    year: (
+      month-body: 1px solid
+        #{function.css-variable('calendar', 'border-color', 'year', 'month-body')},
+    ),
+    week: (
+      divider: 1px solid #{function.css-variable('calendar', 'border-color', 'week', 'divider')},
+    ),
+  ),
+  border-radius: (
+    '': #{function.css-variable('radius-m')},
+    pill: #{function.css-variable('radius-pill')},
+    week: (
+      current-time: (
+        indicator: #{function.css-variable('radius-circle')},
+      ),
+    ),
+    flag: #{function.css-variable('radius-s')},
+  ),
+  background: (
+    header-switcher: #{function.css-variable('bg-secondary')},
+    header-switcher-item: (
+      hover: #{function.css-variable('bg-hover')},
+      active: #{function.css-variable('bg-press')},
+    ),
+    day: (
+      '': #{function.css-variable('bg-default')},
+      hover: #{function.css-variable('bg-secondary')},
+      active: #{function.css-variable('bg-weak-hover')},
+    ),
+    day-number: (
+      current-day: (
+        '': #{function.css-variable('bg-brand-default')},
+        disabled: #{function.css-variable('bg-disabled')},
+      ),
+    ),
+    flag: (
+      month: (
+        '': #{function.css-variable('bg-disabled')},
+        default: (
+          hover: #{function.css-variable('text-disabled')},
+        ),
+        primary: (
+          '': #{function.css-variable('bg-info-weak-activated')},
+          hover: #{function.css-variable('bg-info-hover')},
+        ),
+        success: (
+          '': #{function.css-variable('bg-success-weak-activated')},
+          hover: #{function.css-variable('bg-success-hover')},
+        ),
+        warning: (
+          '': #{function.css-variable('bg-warning-weak-activated')},
+          hover: #{function.css-variable('bg-warning-hover')},
+        ),
+        error: (
+          '': #{function.css-variable('bg-error-weak-activated')},
+          hover: #{function.css-variable('bg-error-hover')},
+        ),
+      ),
+    ),
+    flag-prefix: (
+      month: (
+        '': #{function.css-variable('text-secondary')},
+        primary: #{function.css-variable('bg-info-default')},
+        success: #{function.css-variable('bg-success-default')},
+        warning: #{function.css-variable('bg-warning-default')},
+        error: #{function.css-variable('bg-error-default')},
+      ),
+    ),
+    year: (
+      month-body: (
+        day: (
+          current-day: (
+            '': #{function.css-variable('bg-brand-default')},
+            hover: #{function.css-variable('bg-hover')},
+            active: #{function.css-variable('bg-press')},
+          ),
+          disabled: #{function.css-variable('bg-disabled')},
+          has-flag: #{function.css-variable('bg-disabled')},
+        ),
+      ),
+    ),
+    week: (
+      disabled-hours: #{function.css-variable('bg-disabled')},
+      current-time: (
+        '': #{function.css-variable('bg-error-hover')},
+        disabled: #{function.css-variable('bg-error-press')},
+      ),
+    ),
+  ),
+  spacing: (
+    header: (
+      padding: #{function.css-variable('spacing-7')} 7px,
+      padding-x: #{function.css-variable('spacing-3')},
+    ),
+    header-switcher: (
+      padding: #{function.css-variable('spacing-2')},
+    ),
+    day: (
+      month: (
+        padding: #{function.css-variable('spacing-3')},
+      ),
+    ),
+    year: (
+      month-header: (
+        padding: 16px 16px 8px,
+      ),
+      month-wrapper: (
+        padding: #{function.css-variable('spacing-3')},
+      ),
+    ),
+    week: (
+      date-cell: (
+        padding: 0 #{function.css-variable('spacing-4')} #{function.css-variable('spacing-5')},
+      ),
+      header: (
+        time-zone: (
+          padding-bottom: #{function.css-variable('spacing-5')},
+        ),
+      ),
+    ),
+    flag: (
+      padding: 4px 6px,
+      month: (
+        margin-bottom: #{function.css-variable('spacing-2')},
+      ),
+    ),
+    header-switcher-date: (
+      padding-x: #{function.css-variable('spacing-5')},
+    ),
+    header-suffix: (
+      padding-x: #{function.css-variable('spacing-5')},
+    ),
+    header-today: (
+      margin-right: #{function.css-variable('spacing-4')},
+    ),
+    flag-title: (
+      margin-right: #{function.css-variable('spacing-2')},
+    ),
+    week-wrapper: (
+      month: (
+        margin-bottom: #{function.css-variable('spacing-5')},
+      ),
+    ),
+  ),
+);

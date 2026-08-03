@@ -1,7 +1,0 @@
-@use '../../../../styles/mixins/function';
-
-$values: (
-  'color--content': #{function.css-variable('color-3-5')},
-  'color--empty': #{function.css-variable('border-default')},
-  'padding-left--tooltip': 5px,
-);

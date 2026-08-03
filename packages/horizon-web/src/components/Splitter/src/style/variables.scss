@@ -1,0 +1,20 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  size: (
+    separator: (
+      hit-area: 8px,
+    ),
+    handle: (
+      length: 32px,
+      thickness: 2px,
+    ),
+  ),
+  background: (
+    separator: (
+      '': #{function.css-variable('border-default')},
+      hover: #{function.css-variable('border-brand-default')},
+      focus: #{function.css-variable('border-focused')},
+    ),
+  ),
+);

@@ -1,0 +1,25 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  font-size: (
+    header: #{function.css-variable('text-lg')},
+    content: #{function.css-variable('text-base')},
+  ),
+  font-weight: (
+    header: #{function.css-variable('weight-3')},
+  ),
+  color: #{function.css-variable('text-primary')},
+  border-color: (
+    divider: #{function.css-variable('divider-default')},
+  ),
+  border-radius: (
+    small: #{function.css-variable('radius-m')},
+    medium: #{function.css-variable('radius-l')},
+    large: #{function.css-variable('radius-xl')},
+  ),
+  background: #{function.css-variable('bg-default')},
+  spacing: (
+    padding: 16px,
+    row-gap: 12px,
+  ),
+);

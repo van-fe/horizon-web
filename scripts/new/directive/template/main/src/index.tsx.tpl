@@ -1,4 +1,4 @@
-import { defineDirective } from '@nio-fe/shared';
+import { defineDirective } from '@aurora/utils';
 import { use${capitalName}Options } from './composables/useOptions';
 
 const ${name}Handler = () => {

@@ -1,0 +1,57 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "module": "ES2022",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+    "noEmit": true,
+    "types": [
+      "node",
+      "vite/client"
+    ],
+    "paths": {
+      "*": [
+        "./*"
+      ],
+      "@aurora/horizon-web": [
+        "../horizon-web/src"
+      ],
+      "@aurora/horizon-web/*": [
+        "../horizon-web/src/*"
+      ],
+      "horizon-web-package/*": [
+        "../horizon-web/*"
+      ],
+      "@root/*": [
+        "../../*"
+      ]
+    }
+  },
+  "vueCompilerOptions": {
+    "target": 3
+  },
+  "include": [
+    ".vitepress/**/*.ts",
+    ".vitepress/**/*.tsx",
+    ".vitepress/**/*.vue",
+    ".vitepress/**/*.mts",
+    "**/*.vue",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".vitepress/cache"
+  ]
+}
+

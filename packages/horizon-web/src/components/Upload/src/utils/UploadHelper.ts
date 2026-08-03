@@ -1,0 +1,358 @@
+import { nanoid } from 'nanoid';
+import type { ToRefs } from 'vue';
+import { ref } from 'vue';
+import type { UploadProps } from '../composables/useProps';
+import type { Data, EmitValueCallbackToVoid } from '@aurora/utils';
+import { EventEmitter, jsonParse, getVideoDuration } from '@aurora/utils';
+import type { HUploadFileType, HUploadSetStatusOptionsMapping } from './fileDefines';
+import { HUploadFileTypeEnum, HUploadFileStatusEnum } from './fileDefines';
+import type { UploadEmits } from '../composables/useEmits';
+import MultipartUploadHelper from './multipart';
+import UploadHelperOptions from './UploadHelperOptions';
+import { warn } from '~/utils/useLog';
+import round from 'lodash/round';
+
+export default class UploadHelper extends UploadHelperOptions {
+  protected readonly uuid: string;
+
+  public readonly eventEmitter = new EventEmitter<EmitValueCallbackToVoid<UploadEmits>>();
+  protected _fileList = ref(new Set<HUploadFileType>());
+  protected xhrFileMapping = new Map<string, XMLHttpRequest>();
+  private multipartUploadHelpers = new Map<string, MultipartUploadHelper>();
+
+  private readyUploadFilesQueue: HUploadFileType[] = [];
+  private uploadingFilesQueue: {
+    file: HUploadFileType;
+    requestInstance: unknown;
+  }[] = [];
+
+  constructor(props?: ToRefs<Partial<UploadProps>>) {
+    super(props);
+    this.uuid = nanoid();
+  }
+
+  public async uploadFiles() {
+    this.readyUploadFilesQueue = (
+      Array.from(this._fileList.value).filter(curr =>
+        [HUploadFileStatusEnum.New, HUploadFileStatusEnum.Pending].includes(curr.status),
+      ) as HUploadFileType[]
+    ).map(file => {
+      file.status = HUploadFileStatusEnum.Pending;
+      return file;
+    });
+
+    await this.uploadFileFromQueue();
+  }
+
+  private async uploadFileFromQueue() {
+    while (this.uploadingFilesQueue.length < (this.maxUploadsAmountAtSameTime || Infinity)) {
+      const file = this.readyUploadFilesQueue.shift();
+      if (!file) break;
+      void this.uploadFile(file);
+    }
+  }
+
+  protected removeFileFromReadyUploadFilesQueue(file: HUploadFileType) {
+    const index = this.readyUploadFilesQueue.indexOf(file);
+
+    if (index >= 0) {
+      this.readyUploadFilesQueue.splice(index, 1);
+    }
+  }
+
+  private addUploadingQueue(file: HUploadFileType, requestInstance: unknown) {
+    const index = this.uploadingFilesQueue.findIndex(curr => curr.file === file);
+
+    if (index >= 0) {
+      this.uploadingFilesQueue[index].requestInstance = requestInstance;
+    } else {
+      this.uploadingFilesQueue.push({
+        file,
+        requestInstance,
+      });
+    }
+  }
+
+  protected removeFromUploadingQueue(file: HUploadFileType) {
+    const index = this.uploadingFilesQueue.findIndex(curr => curr.file === file);
+
+    if (index >= 0) {
+      this.uploadingFilesQueue.splice(index, 1);
+    }
+  }
+
+  private async onUploadSuccess(file: HUploadFileType, response: string) {
+    let uploadUrl: string | undefined;
+
+    if (this.handleSuccess) {
+      uploadUrl = await this.handleSuccess(response, file);
+    } else {
+      const findHttpUrl = (data: Data | undefined): string | undefined => {
+        if (!data) return undefined;
+
+        for (const value of Object.values(data)) {
+          if (typeof value === 'object' && value !== null) {
+            return findHttpUrl(value as Data);
+          } else {
+            if (typeof value === 'string' && /^http(s)*:\/\//.test(value)) {
+              return value;
+            }
+          }
+        }
+
+        return undefined;
+      };
+
+      uploadUrl = findHttpUrl(jsonParse<Data>(response));
+    }
+
+    this.setStatus(file, HUploadFileStatusEnum.Success, {
+      response: jsonParse<Data>(response),
+      uploadUrl,
+    });
+
+    await this.onUploadFinished(file);
+  }
+
+  private async onUploadFail(file: HUploadFileType, responseText: string, response: string) {
+    this.setStatus(file, HUploadFileStatusEnum.Fail, {
+      reason: responseText,
+      response: jsonParse<Data>(response),
+    });
+    await this.onUploadFinished(file);
+  }
+
+  private async onUploadFinished(file: HUploadFileType) {
+    const index = this.uploadingFilesQueue.findIndex(curr => curr.file === file);
+
+    if (index >= 0) {
+      this.uploadingFilesQueue.splice(index, 1);
+    }
+
+    this.xhrFileMapping.delete(file.uuid);
+    if (file.status === HUploadFileStatusEnum.Success) {
+      this.multipartUploadHelpers.delete(file.uuid);
+    }
+
+    await this.uploadFileFromQueue();
+  }
+
+  private appendHeader(xhr: XMLHttpRequest) {
+    Object.entries(this.header).forEach(([key, value]) => {
+      xhr.setRequestHeader(key, value.toString());
+    });
+  }
+
+  private appendData(formData: FormData) {
+    Object.entries(this.data).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+  }
+
+  public getVideoDuration(file: HUploadFileType) {
+    const url = file.url || file.blobUrl;
+    if (file.type === HUploadFileTypeEnum.Video && url) {
+      getVideoDuration(url, duration => {
+        file.duration = duration;
+      });
+    }
+  }
+
+  public setStatus<T extends HUploadFileStatusEnum = HUploadFileStatusEnum>(
+    file: HUploadFileType,
+    status: T,
+    args?: HUploadSetStatusOptionsMapping[T],
+  ) {
+    file.status = status;
+
+    const { response } = args || { response: undefined };
+
+    this.eventEmitter.emit('change', this, response);
+
+    switch (status) {
+      case HUploadFileStatusEnum.Success:
+        const { uploadUrl } = args as HUploadSetStatusOptionsMapping[HUploadFileStatusEnum.Success];
+
+        this.eventEmitter.emit('uploaded', file, response);
+
+        if (uploadUrl) {
+          file.url = uploadUrl;
+          this.getVideoDuration(file);
+        }
+        break;
+      case HUploadFileStatusEnum.Uploading:
+        {
+          const { progress } =
+            args as HUploadSetStatusOptionsMapping[HUploadFileStatusEnum.Uploading];
+
+          this.eventEmitter.emit('uploading', file, round(progress, 2), response);
+          file.percentage = round(progress, 2);
+        }
+        break;
+      case HUploadFileStatusEnum.Pause:
+        this.eventEmitter.emit('pause', file);
+        break;
+      case HUploadFileStatusEnum.Retrying:
+        this.eventEmitter.emit('retry', file);
+        break;
+      case HUploadFileStatusEnum.Fail:
+        {
+          const { reason } = args as HUploadSetStatusOptionsMapping[HUploadFileStatusEnum.Fail];
+          file.response = reason;
+          this.eventEmitter.emit('fail', file, reason, response);
+        }
+        break;
+    }
+
+    this.eventEmitter.emit('change', file, response);
+
+    this.fitStatus(file);
+  }
+
+  public async beforeUploadFile(file: HUploadFileType) {
+    const handler = this.beforeUpload;
+
+    if (handler) {
+      try {
+        if (!(await handler(file))) {
+          return false;
+        }
+      } catch {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public async uploadFile(file: HUploadFileType) {
+    this.removeFileFromReadyUploadFilesQueue(file);
+
+    if (this.multipart) {
+      const existingHelper = this.multipartUploadHelpers.get(file.uuid);
+
+      if (existingHelper) {
+        this.setStatus(file, HUploadFileStatusEnum.Retrying);
+        void existingHelper.resume();
+      } else {
+        const helper = new MultipartUploadHelper(
+          file,
+          {
+            setStatus: this.setStatus.bind(this),
+            onUploadFinished: this.onUploadFinished.bind(this),
+            onUploadSuccess: this.onUploadSuccess.bind(this),
+            onUploadFail: this.onUploadFail.bind(this),
+            addUploadingQueue: this.addUploadingQueue.bind(this),
+          },
+          this.props,
+        );
+        this.multipartUploadHelpers.set(file.uuid, helper);
+        void helper.start();
+      }
+    } else {
+      if (this.httpRequest) {
+        this.httpRequest(file, {
+          setStatus: this.setStatus.bind(this),
+          onUploadFinished: this.onUploadFinished.bind(this),
+          onUploadSuccess: this.onUploadSuccess.bind(this),
+          onUploadFail: this.onUploadFail.bind(this),
+          addUploadingQueue: this.addUploadingQueue.bind(this),
+        });
+      } else {
+        this.uploadFileDirectly(file);
+      }
+    }
+  }
+
+  public pauseUpload(file: HUploadFileType) {
+    const multipartHelper = this.multipartUploadHelpers.get(file.uuid);
+    if (multipartHelper) {
+      multipartHelper.pause();
+    } else {
+      this.xhrFileMapping.get(file.uuid)?.abort();
+    }
+
+    this.setStatus(file, HUploadFileStatusEnum.Pause);
+    this.removeFromUploadingQueue(file);
+    void this.uploadFileFromQueue();
+  }
+
+  public continueUpload(file: HUploadFileType) {
+    const multipartHelper = this.multipartUploadHelpers.get(file.uuid);
+    if (multipartHelper) {
+      this.setStatus(file, HUploadFileStatusEnum.Retrying);
+      void multipartHelper.resume();
+    } else {
+      this.uploadFileDirectly(file);
+    }
+  }
+
+  private uploadFileDirectly(file: HUploadFileType) {
+    if (!this.action) {
+      warn('upload', `You haven't set action.`);
+      return;
+    }
+
+    if (!file.raw) {
+      warn('upload', `${file.name} is not picked manually.`);
+      return;
+    }
+
+    const xhr = new XMLHttpRequest();
+    this.xhrFileMapping.set(file.uuid, xhr);
+
+    xhr.upload.addEventListener('progress', evt => {
+      const progress = Math.min(evt.loaded / evt.total, 1) * 100;
+
+      this.setStatus(file, HUploadFileStatusEnum.Uploading, {
+        progress,
+        response: undefined,
+      });
+    });
+
+    xhr.open(this.method, this.action, true);
+    xhr.withCredentials = this.withCredentials || false;
+    this.appendHeader(xhr);
+
+    this.setStatus(file, HUploadFileStatusEnum.Uploading, {
+      progress: 0,
+      response: undefined,
+    });
+
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          void this.onUploadSuccess(file, xhr.response);
+        } else if (xhr.status > 0) {
+          void this.onUploadFail(file, xhr.responseText, xhr.response);
+        }
+
+        file.response = xhr.response;
+      }
+    };
+
+    xhr.onerror = () => {
+      void this.onUploadFail(file, xhr.responseText, xhr.response);
+    };
+
+    this.addUploadingQueue(file, xhr);
+
+    const formData = new FormData();
+
+    formData.append(this.name, file.raw);
+
+    this.appendData(formData);
+
+    xhr.send(formData);
+  }
+
+  private fitStatus(file: HUploadFileType) {
+    switch (file.status) {
+      case HUploadFileStatusEnum.Success:
+        file.percentage = 100;
+        break;
+      case HUploadFileStatusEnum.Pending:
+        file.percentage = 0;
+        break;
+    }
+  }
+}

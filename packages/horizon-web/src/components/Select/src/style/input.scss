@@ -1,0 +1,80 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('select') {
+  @include mixins.is('inputable') {
+    #{mixins.element-name('input', mixins.block('picker'))} {
+      cursor: text;
+    }
+  }
+
+  @include mixins.e('tag-render') {
+    @include mixins.m('single') {
+      position: relative;
+      display: flex;
+      align-items: center;
+      min-height: calc(
+        #{mixins.css-variable('picker', 'size', 'height')} -
+          (#{mixins.css-variable('picker', 'spacing', 'input', 'outer', 'padding')} + 1px) * 2
+      );
+
+      @include mixins.em('tag-render', 'instance', false) {
+        position: absolute;
+        z-index: 0;
+      }
+
+      @include mixins.is('inputting') {
+        @include mixins.em('tag-render', 'instance', false) {
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+
+  @include mixins.nested('tag-group') {
+    float: left;
+    min-width: 0;
+  }
+
+  #{mixins.element-name('container', #{mixins.block('tag-group')})} {
+    grid-gap: mixins.css-variable('select', 'spacing', 'tags-container', 'column-gap');
+    align-items: center;
+  }
+
+  @include mixins.bem('picker', 'input', 'small', false) {
+    #{mixins.element-name('container', mixins.block('tag-group'))} {
+      grid-gap: mixins.css-variable('select', 'spacing', 'tags-container', 'column-gap', 'small');
+    }
+
+    @include mixins.bem('select', 'tag-render', 'single', false) {
+      min-height: calc(
+        #{mixins.css-variable('picker', 'size', 'height', 'small')} -
+          (#{mixins.css-variable('picker', 'spacing', 'input', 'outer', 'padding')} + 1px) * 2
+      );
+    }
+  }
+
+  @include mixins.bem('picker', 'input', 'large', false) {
+    @include mixins.bem('select', 'tag-render', 'single', false) {
+      min-height: calc(
+        #{mixins.css-variable('picker', 'size', 'height', 'large')} -
+          (#{mixins.css-variable('picker', 'spacing', 'input', 'outer', 'padding')} + 1px) * 2
+      );
+    }
+  }
+
+  @include mixins.be('picker', 'input', false) {
+    @include mixins.m('no-border') {
+      input {
+        &::placeholder {
+          color: mixins.css-variable('select', 'color', 'placeholder', 'no-border');
+        }
+
+        &:focus {
+          &::placeholder {
+            color: mixins.css-variable('select', 'color', 'placeholder', 'no-border', 'focus');
+          }
+        }
+      }
+    }
+  }
+}

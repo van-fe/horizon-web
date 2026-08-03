@@ -1,5 +1,5 @@
 {
-  "name": "@nio-fe/locale",
+  "name": "@aurora/locale",
   "version": "1.0.0",
   "main": "./dist/locale.cjs",
   "module": "./dist/locale.js",
@@ -13,13 +13,13 @@
     "types"
   ],
   "scripts": {
-    "dev": "pnpm run build:types && pnpm run build:js -- --watch",
-    "build": "pnpm run build:types && pnpm run build:js",
+    "dev": "bun run build:types && bun run build:js -- --watch",
+    "build": "bun run build:types && bun run build:js",
     "build:types": "rm -rf types && tsc -d --emitDeclarationOnly --declarationDir ./types",
     "build:js": "bunx --bun vite build --config vite.config.ts"
   },
   "dependencies": {
-    "@nio-fe/shared": "workspace:*",
+    "@aurora/utils": "workspace:*",
     "dayjs": "^1.11.13",
     "lodash": "^4.17.21"
   }

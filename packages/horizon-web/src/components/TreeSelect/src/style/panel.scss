@@ -1,0 +1,57 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('tree-select') {
+  @include mixins.e('panel') {
+    @include mixins.b('picker', false) {
+      @include mixins.e('panel-input') {
+        border-bottom: mixins.css-variable('tree-select', 'border', 'panel');
+      }
+    }
+  }
+}
+
+@include mixins.b('tree') {
+  @include mixins.e('list') {
+    margin: mixins.css-variable('tree-select', 'spacing', 'panel', 'scrollbar', 'margin-y') 0;
+  }
+}
+
+@include mixins.b('tree-select-panel') {
+  flex: fit-content;
+  min-width: mixins.css-variable('tree-select', 'size', 'panel', 'min-width');
+  max-width: mixins.css-variable('tree-select', 'size', 'panel', 'max-width');
+  min-height: mixins.css-variable('tree-select', 'size', 'panel', 'min-height');
+  border-right: mixins.css-variable('tree-select', 'border', 'panel');
+
+  &:last-child {
+    border-right: none;
+  }
+
+  @include mixins.e('empty') {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: mixins.css-variable('tree-select', 'color', 'no-data');
+    font-size: mixins.css-variable('tree-select', 'font-size', 'no-data');
+  }
+
+  @include mixins.e('group-label') {
+    padding: mixins.css-variable('select', 'spacing', 'option-group', 'title', 'padding');
+    overflow: hidden;
+    color: mixins.css-variable('select', 'color', 'option-group', 'title');
+    font-size: mixins.css-variable('select', 'font-size', 'option-group', 'title');
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+@include mixins.b('tree-select-search-panel') {
+  @include mixins.e('scrollbar') {
+    border-top: mixins.css-variable('tree-select', 'border', 'panel');
+
+    @include mixins.m('view') {
+      margin: mixins.css-variable('tree-select', 'spacing', 'panel', 'scrollbar', 'margin-y') 0;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import type { ApiGeneratorExportedDirectives } from '@nio-fe/shared';
+import type { ApiGeneratorExportedDirectives } from '@aurora/utils';
 import type {
   Project,
   ImportDeclaration,

@@ -1,0 +1,102 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  size: (
+    height: (
+      '': #{function.css-variable('spacing-7')},
+      large: #{function.css-variable('spacing-8')},
+    ),
+    sizes-item: (
+      height: #{function.css-variable('spacing-9')},
+    ),
+    input-number: (
+      width: #{function.css-variable('spacing-9')},
+    ),
+    pager-split: (
+      min-width: #{function.css-variable('spacing-5')},
+    ),
+  ),
+  font-size: #{function.css-variable('text-base')},
+  line-height: #{function.css-variable('line-height-standard')},
+  color: (
+    primary: #{function.css-variable('text-primary')},
+    secondary: #{function.css-variable('text-secondary')},
+    pager-item: (
+      split: #{function.css-variable('text-disabled')},
+      hover: #{function.css-variable('text-brand-hover')},
+      press: #{function.css-variable('text-brand-press')},
+      active: #{function.css-variable('text-inverse')},
+      disabled: #{function.css-variable('text-disabled')},
+      disabled-active: #{function.css-variable('text-inverse')},
+    ),
+    popper: (
+      '': #{function.css-variable('text-primary')},
+      disabled: #{function.css-variable('text-tertiary')},
+    ),
+    sizes-item: (
+      active: #{function.css-variable('text-brand-default')},
+    ),
+  ),
+  border-color: (
+    '': #{function.css-variable('border-default')},
+    hover: #{function.css-variable('border-brand-hover')},
+    press: #{function.css-variable('border-brand-press')},
+    active: #{function.css-variable('border-transparent')},
+    disabled: #{function.css-variable('border-default')},
+    disabled-active: #{function.css-variable('border-transparent')},
+    sizes: (
+      activated: #{function.css-variable('border-brand-activated')},
+    ),
+  ),
+  border: 1px solid #{function.css-variable('pagination', 'border-color')},
+  border-radius: (
+    '': #{function.css-variable('radius-s')},
+    large: #{function.css-variable('radius')},
+  ),
+  background: (
+    '': #{function.css-variable('bg-default')},
+    pager-item: (
+      active: #{function.css-variable('bg-brand-default')},
+      disabled: #{function.css-variable('bg-disabled')},
+      disabled-active: #{function.css-variable('bg-brand-disabled')},
+    ),
+    popper: (
+      '': #{function.css-variable('bg-default')},
+      disabled: #{function.css-variable('bg-disabled')},
+    ),
+    sizes-item: (
+      hover: #{function.css-variable('bg-navigator')},
+    ),
+  ),
+  spacing: (
+    components: (
+      gap: #{function.css-variable('spacing-4')},
+    ),
+    inside: (
+      gap: #{function.css-variable('spacing-3')},
+      min: (
+        gap: #{function.css-variable('spacing-1')},
+      ),
+    ),
+    sizes: (
+      gap: #{function.css-variable('spacing-2')},
+      padding: 1px #{function.css-variable('spacing-3')},
+    ),
+    sizes-popper: (
+      padding: #{function.css-variable('spacing-3')} 0,
+    ),
+    sizes-item: (
+      padding: 9px 16px,
+    ),
+    jumper-input: (
+      padding: 0 #{function.css-variable('spacing-2')},
+    ),
+    pager-item: (
+      padding-x: 1px,
+    ),
+    margin-right: #{function.css-variable('spacing-7')},
+  ),
+  transition: (
+    all: #{function.css-variable('transition-all--fast')},
+  ),
+);

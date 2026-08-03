@@ -1,7 +1,7 @@
 import type { MethodDeclaration, Project, PropertyAssignment, ArrowFunction } from 'ts-morph';
 import { ts } from 'ts-morph';
-import type { ApiGeneratorExportedMethod, ApiGeneratorAnalysedMethodType } from '@nio-fe/shared';
-import { ApiGeneratorAnalysedBaseType } from '@nio-fe/shared';
+import type { ApiGeneratorExportedMethod, ApiGeneratorAnalysedMethodType } from '@aurora/utils';
+import { ApiGeneratorAnalysedBaseType } from '@aurora/utils';
 import type { FileElements } from '../../utils/analyseFileElements';
 import analyseFileElements from '../../utils/analyseFileElements';
 import completeFileExtName from '../../utils/completeFileExtName';
@@ -18,11 +18,11 @@ function analysePropertyAssignment(
     returnText: '',
     returns: [],
     desc: jsDoc.comment,
+    descLocales: jsDoc.locales,
     name: property.getName(),
     type: '',
     nativeType: ApiGeneratorAnalysedBaseType.Function,
     params: [],
-    deprecated: jsDoc.tags.deprecated?.default,
     version: jsDoc.tags.version?.default,
     return: 'void',
   };
@@ -36,21 +36,31 @@ function analysePropertyAssignment(
 
     for (const child of paramsAndReturn) {
       switch (child.getKind()) {
-        case ts.SyntaxKind.Parameter:
-          const field = child.getFirstChildByKind(ts.SyntaxKind.Identifier)?.getText() ?? '';
-          const value = child.getLastChild()?.getText() ?? '';
+        case ts.SyntaxKind.Parameter: {
+          const parameter = child.asKind(ts.SyntaxKind.Parameter);
+          if (!parameter) break;
+          const field = parameter.getName();
+          const parameterType = parameter.getTypeNode();
+          const value = parameterType?.getText() || parameter.getType().getText() || 'unknown';
           if (field && value) {
             res.params.push({
               returnText: '',
+              returnType: '',
               returns: [],
               field,
               value,
               desc: (jsDoc.tags.params || jsDoc.tags.param)?.[field] ?? '',
-              nativeType: formatTsTypeToUnitType(child.getLastChild()!, fileElements),
+              descLocales: jsDoc.tags.paramEn?.[field]
+                ? { en: jsDoc.tags.paramEn[field] }
+                : undefined,
+              nativeType: parameterType
+                ? formatTsTypeToUnitType(parameterType, fileElements)
+                : ApiGeneratorAnalysedBaseType.Unknown,
               params: [],
             });
           }
           break;
+        }
         default:
           if (child.getKind() !== ts.SyntaxKind.Identifier) res.return = child.getText();
           break;

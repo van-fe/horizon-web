@@ -4,10 +4,7 @@ import type { FileElements } from '../../utils/analyseFileElements';
 import analysisFileElements from '../../utils/analyseFileElements';
 import checkInvisibleTagExits from '../../utils/checkInvisibleTagExist';
 import completeFileExtName from '../../utils/completeFileExtName';
-import type {
-  ApiGeneratorAnalysedOptionType,
-  ApiGeneratorExportedDirectives,
-} from '@nio-fe/shared';
+import type { ApiGeneratorAnalysedOptionType, ApiGeneratorExportedDirectives } from '@aurora/utils';
 import analyseJsDocs from '../../utils/analyseJsDocs';
 import { analyseFunctionExpression } from '../../utils/analysisType/analyseFunction';
 
@@ -24,17 +21,17 @@ function analysisPropertyAssignment(
   const res: ApiGeneratorAnalysedOptionType = {
     default: '',
     desc: jsDoc.comment,
+    descLocales: jsDoc.locales,
     name: property.getName(),
     required: false,
     type: '',
     baseType: '',
-    deprecated: jsDoc.tags.deprecated?.default,
     version: jsDoc.tags.version?.default,
     options: [],
   };
 
   try {
-    property.getChildrenOfKind(ts.SyntaxKind.ObjectLiteralExpression)[0].forEachChild(object => {
+    property.getChildrenOfKind(ts.SyntaxKind.ObjectLiteralExpression)?.[0]?.forEachChild(object => {
       switch (object.getChildrenOfKind(ts.SyntaxKind.Identifier)[0].getText()) {
         case 'default':
           const lastChild = object.getLastChild();
@@ -134,7 +131,18 @@ function analysisPropertyAssignment(
     });
   } catch (e) {
     console.error(e);
-    debugger;
+  }
+
+  if (!res.type) {
+    const typeEntry = property
+      .getChildrenOfKind(ts.SyntaxKind.ObjectLiteralExpression)?.[0]
+      ?.getProperties()
+      .find(curr => curr.asKind(ts.SyntaxKind.PropertyAssignment)?.getName() === 'type');
+    const statement = typeEntry?.getLastChild();
+    if (statement) {
+      res.type = statement.getText();
+      res.baseType = statement.getText().toLowerCase();
+    }
   }
 
   return res;

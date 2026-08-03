@@ -17,22 +17,20 @@ const { confirm, tag } = argv;
 
 // the packages of need to be published
 const publishPackages = [
-  'lego',
-  'shared',
+  'horizon-web',
+  'utils',
   'locale',
   'locale-vue',
   'unplugin-resolver',
-  'lego-sensor-tracker',
   'colors',
-  'lego-pad',
 ];
 
 const packageJsonOrigin: Record<string, string> = {};
 const packagesPath = resolve(__dirname, '../packages');
 const packageJsonModified: Record<string, string> = {};
 
-const rmLego = () => {
-  // shell.exec(`rm -rf ${resolve(__dirname, './.lego')}`);
+const rmHorizonWeb = () => {
+  // shell.exec(`rm -rf ${resolve(__dirname, './.horizon-web')}`);
 };
 
 const replacePackageJson = (packageName: string, jsonStr: string) => {
@@ -47,23 +45,23 @@ const resetPackageVersion = () => {
 };
 
 async function ensureVersion() {
-  if (!fs.existsSync(resolve(__dirname, './.lego'))) {
-    rmLego();
+  if (!fs.existsSync(resolve(__dirname, './.horizon-web'))) {
+    rmHorizonWeb();
     shell.exec(
-      `git clone -b keep-version git@git.nevint.com:lego/lego.git ${resolve(__dirname, './.lego')}`,
+      `git clone -b keep-version git@git.nevint.com:horizon-web/horizon-web.git ${resolve(__dirname, './.horizon-web')}`,
     );
   } else {
-    shell.exec(`cd ${resolve(__dirname, './.lego')} && git pull`);
+    shell.exec(`cd ${resolve(__dirname, './.horizon-web')} && git pull`);
   }
 
   if (!confirm) {
     throw new Error(
-      `Please confirm ./versions.json file is modified. Then enter 'pnpm run pub -- --confirm'.`,
+      `Please confirm ./versions.json file is modified. Then enter 'bun run pub -- --confirm'.`,
     );
   }
 
   for (const pkg of publishPackages) {
-    // console.log(
+    // console.info(
     //   resolve(packagesPath, pkg, 'package.json'),
     //   fs.readFileSync(resolve(packagesPath, pkg, 'package.json'), 'utf-8'),
     // );
@@ -77,7 +75,7 @@ async function ensureVersion() {
     json.version = versions[pkg];
 
     function replaceDependenciesVersion(pkgName: string, type = 'dependencies') {
-      const noScopeName = pkgName.replace(/^@nio-fe\//, '');
+      const noScopeName = pkgName.replace(/^@aurora\//, '');
       if (Object.keys(versions).includes(noScopeName)) {
         json[type][pkgName] = versions[noScopeName];
       }
@@ -115,7 +113,7 @@ async function ensureVersion() {
   // empty dir
   shell.rm('-rf', '../dist/*');
 
-  cloneBrowserBuildFileToDist(versions.lego);
+  cloneBrowserBuildFileToDist(versions.horizon-web);
   cloneBrowserBuildFileToDist(tag || 'latest');
 
   // publish doc to fx manually
@@ -124,20 +122,20 @@ async function ensureVersion() {
 function publish() {
   Object.keys(packageJsonModified).forEach(pkgName => {
     shell.cd(resolve(__dirname, '../packages', pkgName));
-    shell.exec(`npm publish --registry https://npmmirror.nioint.com/ ${tag ? `--tag ${tag}` : ''}`);
+    shell.exec(`bun publish --registry https://registry.npmmirror.com/ ${tag ? `--tag ${tag}` : ''}`);
   });
 }
 
 function writeVersionFileAndPush(versions: unknown) {
-  fs.writeFileSync(resolve(__dirname, './.lego/version.json'), JSON.stringify(versions, null, 2));
+  fs.writeFileSync(resolve(__dirname, './.horizon-web/version.json'), JSON.stringify(versions, null, 2));
 
   shell.exec(
     `cd ${resolve(
       __dirname,
-      './.lego',
+      './.horizon-web',
     )} && git add . && git commit -m "release: update version" && git push`,
   );
-  rmLego();
+  rmHorizonWeb();
 }
 
 function checkPublishedVersion() {
@@ -149,9 +147,7 @@ function checkPublishedVersion() {
   }> = [];
   Object.entries(versions).forEach(([pkgName, version]) => {
     const npmMirrorVersion = shell.exec(
-      `npm view @nio-fe/${pkgName} version ${
-        tag ? `--tag ${tag}` : ''
-      } --registry https://npmmirror.nioint.com/`,
+      `curl -fsSL https://registry.npmmirror.com/@aurora%2F${pkgName} | sed -n 's/.*"latest":{"version":"\([^"]*\)".*/\1/p'`,
       { silent: true },
     );
 
@@ -178,6 +174,6 @@ ensureVersion().then(() => {
 
 process.on('uncaughtException', err => {
   console.error(chalk.bgRed(err));
-  rmLego();
+  rmHorizonWeb();
   resetPackageVersion();
 });

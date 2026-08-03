@@ -1,0 +1,33 @@
+@use '../../../../styles/mixins';
+@use 'utils';
+
+@include mixins.b('color-picker-panel') {
+  @include mixins.e('color-board') {
+    position: relative;
+    width: mixins.size(232);
+    height: mixins.size(160);
+    overflow: hidden;
+    user-select: none;
+
+    &__wrapper {
+      position: relative;
+      overflow: hidden;
+    }
+
+    @include mixins.m('white') {
+      @include utils.absolute-full;
+
+      background: linear-gradient(to right, #fff, rgb(255 255 255 / 0%));
+    }
+
+    @include mixins.m('black') {
+      @include utils.absolute-full;
+
+      background: linear-gradient(to top, #000, rgb(0 0 0 / 0%));
+    }
+
+    @include mixins.m('cursor') {
+      @include utils.cursor;
+    }
+  }
+}

@@ -1,0 +1,49 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  font-size: (
+    small: #{function.css-variable('text-sm')},
+    medium: #{function.css-variable('text-base')},
+    large: #{function.css-variable('text-lg')},
+  ),
+  color: (
+    positive: (
+      '': #{function.css-variable('text-link-default')},
+      hover: #{function.css-variable('text-link-hover')},
+      active: #{function.css-variable('text-link-press')},
+    ),
+    neutral: (
+      '': #{function.css-variable('text-primary')},
+      hover: #{function.css-variable('text-secondary')},
+      active: #{function.css-variable('text-primary')},
+    ),
+    negative: (
+      '': #{function.css-variable('text-error-default')},
+      hover: #{function.css-variable('text-error-hover')},
+      active: #{function.css-variable('text-error-press')},
+    ),
+    disabled: #{function.css-variable('text-link-disabled')},
+    visited: #{function.css-variable('text-link-visited')},
+    attribute-decoration: #{function.css-variable('text-primary')},
+  ),
+  spacing: (
+    siblings: (
+      margin-left: #{function.css-variable('spacing-3')},
+    ),
+    prefix: (
+      margin-right: #{function.css-variable('spacing-2')},
+    ),
+    suffix: (
+      margin-left: #{function.css-variable('spacing-2')},
+    ),
+    anchor: (
+      gap: #{function.css-variable('spacing-2')},
+    ),
+    loading-icon: (
+      margin-right: #{function.css-variable('spacing-2')},
+    ),
+  ),
+  transition: (
+    all: #{function.css-variable('transition-all--fast')},
+  ),
+);

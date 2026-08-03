@@ -1,8 +1,0 @@
-@use '../../../../styles/mixins';
-
-@include mixins.b('header') {
-  flex-shrink: 0;
-  box-sizing: border-box;
-  height: mixins.css-variable('container-height--header');
-  padding: mixins.css-variable('container-padding--header');
-}

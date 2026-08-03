@@ -1,22 +1,22 @@
 <template>
-  <n-row>
-    <n-col :span="24">
-      <n-button type="normal" plain>Normal Plain Button</n-button>
-      <n-button plain>Primary Plain Button</n-button>
-      <n-button type="danger" plain>Danger Plain Button</n-button>
-    </n-col>
-  </n-row>
-  <n-row class="dark-wrapper">
-    <n-col :span="24">
-      <n-button type="normal" ghost plain>Normal Ghost Button</n-button>
-      <n-button ghost plain>Primary Ghost Button</n-button>
-      <n-button type="danger" ghost plain>Danger Ghost Button</n-button>
-    </n-col>
-  </n-row>
+  <h-grid :gap="12">
+    <h-grid-item :span="24">
+      <h-button type="normal" plain>Normal Plain Button</h-button>
+      <h-button plain>Primary Plain Button</h-button>
+      <h-button type="danger" plain>Danger Plain Button</h-button>
+    </h-grid-item>
+  </h-grid>
+  <h-grid class="dark-wrapper" :gap="12">
+    <h-grid-item :span="24">
+      <h-button type="normal" ghost plain>Normal Ghost Button</h-button>
+      <h-button ghost plain>Primary Ghost Button</h-button>
+      <h-button type="danger" ghost plain>Danger Ghost Button</h-button>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <style scoped>
-.n-button + .n-button {
+.h-button + .h-button {
   margin-left: 10px;
 }
 

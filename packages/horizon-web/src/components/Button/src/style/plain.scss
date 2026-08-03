@@ -1,0 +1,144 @@
+@use '../../../../styles/mixins';
+
+@mixin set-button-style-by-status($status) {
+  @include mixins.is-not('ghost') {
+    color: mixins.css-variable('button', 'color', $status, 'plain');
+    background: mixins.css-variable('button', 'background', $status, 'plain');
+    border-color: mixins.css-variable('button', 'border-color', $status, 'plain');
+
+    @include mixins.is('activated') {
+      color: mixins.css-variable('button', 'color', $status, 'plain', 'activated');
+      background: mixins.css-variable('button', 'background', $status, 'plain', 'activated');
+      border-color: mixins.css-variable('button', 'border-color', $status, 'plain', 'activated');
+    }
+
+    &.is-hover,
+    &:hover {
+      color: mixins.css-variable('button', 'color', $status, 'plain', 'hover');
+      background: mixins.css-variable('button', 'background', $status, 'plain', 'hover');
+      border-color: mixins.css-variable('button', 'border-color', $status, 'plain', 'hover');
+    }
+
+    &.is-active,
+    &:active {
+      color: mixins.css-variable('button', 'color', $status, 'plain', 'press');
+      background: mixins.css-variable('button', 'background', $status, 'plain', 'press');
+      border-color: mixins.css-variable('button', 'border-color', $status, 'plain', 'press');
+    }
+
+    &.is-disabled,
+    &[disabled] {
+      color: mixins.css-variable('button', 'color', $status, 'plain', 'disabled') !important;
+      background: mixins.css-variable(
+        'button',
+        'background',
+        $status,
+        'plain',
+        'disabled'
+      ) !important;
+      border-color: mixins.css-variable(
+        'button',
+        'border-color',
+        $status,
+        'plain',
+        'disabled'
+      ) !important;
+    }
+  }
+
+  @include mixins.is('ghost') {
+    color: mixins.css-variable('button', 'color', $status, 'plain', 'ghost');
+    background: mixins.css-variable('button', 'background', $status, 'plain', 'ghost');
+    border-color: mixins.css-variable('button', 'border-color', $status, 'plain', 'ghost');
+
+    @include mixins.is('activated') {
+      color: mixins.css-variable('button', 'color', $status, 'plain', 'ghost', 'activated');
+      background: mixins.css-variable(
+        'button',
+        'background',
+        $status,
+        'plain',
+        'ghost',
+        'activated'
+      );
+      border-color: mixins.css-variable(
+        'button',
+        'border-color',
+        $status,
+        'plain',
+        'ghost',
+        'activated'
+      );
+    }
+
+    &.is-hover,
+    &:hover {
+      color: mixins.css-variable('button', 'color', $status, 'plain', 'ghost', 'hover');
+      background: mixins.css-variable('button', 'background', $status, 'plain', 'ghost', 'hover');
+      border-color: mixins.css-variable(
+        'button',
+        'border-color',
+        $status,
+        'plain',
+        'ghost',
+        'hover'
+      );
+    }
+
+    &.is-active,
+    &:active {
+      color: mixins.css-variable('button', 'color', $status, 'plain', 'ghost', 'press');
+      background: mixins.css-variable('button', 'background', $status, 'plain', 'ghost', 'press');
+      border-color: mixins.css-variable(
+        'button',
+        'border-color',
+        $status,
+        'plain',
+        'ghost',
+        'press'
+      );
+    }
+
+    &.is-disabled,
+    &[disabled] {
+      color: mixins.css-variable(
+        'button',
+        'color',
+        $status,
+        'plain',
+        'ghost',
+        'disabled'
+      ) !important;
+      background: mixins.css-variable(
+        'button',
+        'background',
+        $status,
+        'plain',
+        'ghost',
+        'disabled'
+      ) !important;
+      border-color: mixins.css-variable(
+        'button',
+        'border-color',
+        $status,
+        'plain',
+        'ghost',
+        'disabled'
+      ) !important;
+    }
+  }
+}
+
+@include mixins.b('button') {
+  @include mixins.m('plain') {
+    @include set-button-style-by-status('primary');
+  }
+
+  @include mixins.parallel-modifier('plain', 'normal') {
+    @include set-button-style-by-status('normal');
+  }
+
+  @include mixins.parallel-modifier('plain', 'danger') {
+    @include set-button-style-by-status('danger');
+  }
+}

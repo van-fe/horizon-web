@@ -1,6 +1,6 @@
-import type { PartialLocaleLangFileType, LocaleSupportLangV2 } from '../lang';
+import type { PartialLocaleLangFileType, LocaleSupportLang } from '../lang';
 
-export type LocaleLangMethod = (path: string, lang?: LocaleSupportLangV2) => string;
+export type LocaleLangMethod = (path: string, lang?: LocaleSupportLang) => string;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface LocaleReturnLangDictionaryData {}

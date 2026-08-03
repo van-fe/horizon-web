@@ -1,0 +1,277 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  size: (
+    '': 24px,
+    small: 20px,
+    large: 32px,
+    icon: (
+      '': 12px,
+      small: 12px,
+      large: 16px,
+    ),
+    avatar: (
+      '': 16px,
+      small: 14px,
+      large: 24px,
+    ),
+    max-width: (
+      '': 172px,
+      small: 148px,
+      large: 200px,
+    ),
+    input: (
+      min-width: (
+        '': 68px,
+        small: 68px,
+        large: 86px,
+      ),
+    ),
+    content: (
+      height: (
+        '': 18px,
+        small: 18px,
+        large: 21px,
+      ),
+    ),
+  ),
+  font-size: (
+    '': #{function.css-variable('font-size-10')},
+    small: #{function.css-variable('font-size-10')},
+    large: #{function.css-variable('font-size-9')},
+  ),
+  line-height: (
+    '': #{function.css-variable('line-height-standard')},
+    icon: #{function.css-variable('line-height-default')},
+  ),
+  color: (
+    '': #{function.css-variable('text-primary')},
+    default: (
+      hover: #{function.css-variable('text-inverse')},
+      press: #{function.css-variable('text-inverse')},
+      activated: #{function.css-variable('text-brand-activated')},
+      disabled: #{function.css-variable('text-disabled')},
+    ),
+    success: (
+      '': #{function.css-variable('text-success-default')},
+      hover: #{function.css-variable('text-inverse')},
+      press: #{function.css-variable('text-inverse')},
+      activated: #{function.css-variable('text-inverse')},
+      disabled: #{function.css-variable('text-success-disabled')},
+    ),
+    info: (
+      '': #{function.css-variable('text-info-default')},
+      hover: #{function.css-variable('text-inverse')},
+      press: #{function.css-variable('text-inverse')},
+      activated: #{function.css-variable('text-inverse')},
+      disabled: #{function.css-variable('text-info-disabled')},
+    ),
+    warning: (
+      '': #{function.css-variable('text-warning-default')},
+      hover: #{function.css-variable('text-inverse')},
+      press: #{function.css-variable('text-inverse')},
+      activated: #{function.css-variable('text-inverse')},
+      disabled: #{function.css-variable('text-warning-disabled')},
+    ),
+    error: (
+      '': #{function.css-variable('text-error-default')},
+      hover: #{function.css-variable('text-inverse')},
+      press: #{function.css-variable('text-inverse')},
+      activated: #{function.css-variable('text-inverse')},
+      disabled: #{function.css-variable('text-error-disabled')},
+    ),
+    plain: (
+      '': #{function.css-variable('text-primary')},
+      default: (
+        hover: #{function.css-variable('text-brand-hover')},
+        press: #{function.css-variable('text-brand-press')},
+        activated: #{function.css-variable('text-brand-default')},
+        disabled: #{function.css-variable('text-disabled')},
+      ),
+      success: (
+        '': #{function.css-variable('text-success-default')},
+        hover: #{function.css-variable('text-success-hover')},
+        press: #{function.css-variable('text-success-press')},
+        activated: #{function.css-variable('text-success-activated')},
+        disabled: #{function.css-variable('text-success-disabled')},
+      ),
+      info: (
+        '': #{function.css-variable('text-info-default')},
+        hover: #{function.css-variable('text-info-hover')},
+        press: #{function.css-variable('text-info-press')},
+        activated: #{function.css-variable('text-info-activated')},
+        disabled: #{function.css-variable('text-info-disabled')},
+      ),
+      warning: (
+        '': #{function.css-variable('text-warning-default')},
+        hover: #{function.css-variable('text-warning-hover')},
+        press: #{function.css-variable('text-warning-press')},
+        activated: #{function.css-variable('text-warning-activated')},
+        disabled: #{function.css-variable('text-warning-disabled')},
+      ),
+      error: (
+        '': #{function.css-variable('text-error-default')},
+        hover: #{function.css-variable('text-error-hover')},
+        press: #{function.css-variable('text-error-press')},
+        activated: #{function.css-variable('text-error-activated')},
+        disabled: #{function.css-variable('text-error-disabled')},
+      ),
+    ),
+    icon: (
+      '': #{function.css-variable('text-primary')},
+      loading: #{function.css-variable('text-brand-default')},
+      close: (
+        '': #{function.css-variable('text-tertiary')},
+        default: (
+          hover: #{function.css-variable('text-primary')},
+          press: #{function.css-variable('text-secondary')},
+          disabled: #{function.css-variable('text-disabled')},
+        ),
+        success: (
+          hover: #{function.css-variable('text-success-hover')},
+          press: #{function.css-variable('text-success-press')},
+          disabled: #{function.css-variable('text-success-disabled')},
+        ),
+        info: (
+          hover: #{function.css-variable('text-info-hover')},
+          press: #{function.css-variable('text-info-press')},
+          disabled: #{function.css-variable('text-info-disabled')},
+        ),
+        warning: (
+          hover: #{function.css-variable('text-warning-hover')},
+          press: #{function.css-variable('text-warning-press')},
+          disabled: #{function.css-variable('text-warning-disabled')},
+        ),
+        error: (
+          hover: #{function.css-variable('text-error-hover')},
+          press: #{function.css-variable('text-error-press')},
+          disabled: #{function.css-variable('text-error-disabled')},
+        ),
+      ),
+    ),
+  ),
+  border-color: (
+    '': #{function.css-variable('border-transparent')},
+    plain: (
+      '': #{function.css-variable('border-default')},
+      default: (
+        hover: #{function.css-variable('border-brand-hover')},
+        press: #{function.css-variable('border-brand-press')},
+        activated: #{function.css-variable('border-brand-activated')},
+        disabled: #{function.css-variable('border-disabled')},
+      ),
+      success: (
+        '': #{function.css-variable('border-success-default')},
+        hover: #{function.css-variable('border-success-hover')},
+        press: #{function.css-variable('border-success-press')},
+        activated: #{function.css-variable('border-success-activated')},
+        disabled: #{function.css-variable('border-success-disabled')},
+      ),
+      info: (
+        '': #{function.css-variable('border-info-default')},
+        hover: #{function.css-variable('border-info-hover')},
+        press: #{function.css-variable('border-info-press')},
+        activated: #{function.css-variable('border-info-activated')},
+        disabled: #{function.css-variable('border-info-disabled')},
+      ),
+      warning: (
+        '': #{function.css-variable('border-warning-default')},
+        hover: #{function.css-variable('border-warning-hover')},
+        press: #{function.css-variable('border-warning-press')},
+        activated: #{function.css-variable('border-warning-activated')},
+        disabled: #{function.css-variable('border-warning-disabled')},
+      ),
+      error: (
+        '': #{function.css-variable('border-error-default')},
+        hover: #{function.css-variable('border-error-hover')},
+        press: #{function.css-variable('border-error-press')},
+        activated: #{function.css-variable('border-error-activated')},
+        disabled: #{function.css-variable('border-error-disabled')},
+      ),
+    ),
+  ),
+  border: 1px solid #{function.css-variable('tag', 'border-color')},
+  border-radius: (
+    '': #{function.css-variable('radius-s')},
+    small: #{function.css-variable('radius-s')},
+    large: #{function.css-variable('radius-m')},
+    round: #{function.css-variable('radius-pill')},
+  ),
+  background: (
+    '': #{function.css-variable('bg-tertiary')},
+    default: (
+      hover: #{function.css-variable('bg-brand-hover')},
+      press: #{function.css-variable('bg-brand-press')},
+      activated: #{function.css-variable('bg-weak-activated')},
+      disabled: #{function.css-variable('bg-tertiary')},
+    ),
+    success: (
+      '': #{function.css-variable('bg-success-weak-hover')},
+      hover: #{function.css-variable('bg-success-hover')},
+      press: #{function.css-variable('bg-success-press')},
+      activated: #{function.css-variable('bg-success-activated')},
+      disabled: #{function.css-variable('bg-success-weak-disabled')},
+    ),
+    info: (
+      '': #{function.css-variable('bg-info-weak-hover')},
+      hover: #{function.css-variable('bg-info-hover')},
+      press: #{function.css-variable('bg-info-press')},
+      activated: #{function.css-variable('bg-info-activated')},
+      disabled: #{function.css-variable('bg-info-weak-disabled')},
+    ),
+    warning: (
+      '': #{function.css-variable('bg-warning-weak-hover')},
+      hover: #{function.css-variable('bg-warning-hover')},
+      press: #{function.css-variable('bg-warning-press')},
+      activated: #{function.css-variable('bg-warning-activated')},
+      disabled: #{function.css-variable('bg-warning-weak-disabled')},
+    ),
+    error: (
+      '': #{function.css-variable('bg-error-weak-hover')},
+      hover: #{function.css-variable('bg-error-hover')},
+      press: #{function.css-variable('bg-error-press')},
+      activated: #{function.css-variable('bg-error-activated')},
+      disabled: #{function.css-variable('bg-error-weak-disabled')},
+    ),
+    plain: (
+      '': #{function.css-variable('bg-default')},
+      success: (
+        activated: #{function.css-variable('bg-success-weak-activated')},
+      ),
+      info: (
+        activated: #{function.css-variable('bg-info-weak-activated')},
+      ),
+      warning: (
+        activated: #{function.css-variable('bg-warning-weak-activated')},
+      ),
+      error: (
+        activated: #{function.css-variable('bg-error-weak-activated')},
+      ),
+    ),
+  ),
+  spacing: (
+    padding-x: (
+      '': #{function.css-variable('spacing-3')},
+      small: #{function.css-variable('spacing-2')},
+      large: #{function.css-variable('spacing-4')},
+    ),
+    siblings: (
+      '': #{function.css-variable('spacing-2')},
+      small: #{function.css-variable('spacing-3')},
+      large: #{function.css-variable('spacing-2')},
+    ),
+    inner: (
+      gap: #{function.css-variable('spacing-2')},
+    ),
+    avatar: (
+      margin-right: (
+        '': 0,
+        small: 0,
+        large: #{function.css-variable('spacing-2')},
+      ),
+    ),
+  ),
+  transition: (
+    duration: #{function.css-variable('transition-time-fast')},
+  ),
+);

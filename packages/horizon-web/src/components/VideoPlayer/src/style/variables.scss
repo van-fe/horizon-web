@@ -1,0 +1,143 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  size: (
+    progress-control: (
+      height: 20px,
+    ),
+    progress-holder: (
+      height: 4px,
+    ),
+    time-text: (
+      height: 18px,
+    ),
+    volume-bar: (
+      slider: (
+        vertical: (
+          height: 80px,
+          width: 4px,
+        ),
+      ),
+    ),
+    quality-selector: (
+      height: 24px,
+      width: 53px,
+    ),
+    progress-button: 16px,
+    control-icon: 32px,
+    loading-spinner: 28px,
+    error-content: (
+      width: 300px,
+    ),
+  ),
+  font-family: #{function.css-variable('font-family')},
+  font-size: (
+    icon: #{function.css-variable('text-xl')},
+    time-tooltip: #{function.css-variable('text-sm')},
+    time-text: #{function.css-variable('text-sm')},
+    volume-slider: (
+      level: (
+        vertical: #{function.css-variable('text-base')},
+      ),
+    ),
+    menu-item: (
+      quality-selector: #{function.css-variable('text-sm')},
+    ),
+    error-content: #{function.css-variable('text-lg')},
+  ),
+  font-weight: (
+    time-tooltip: 420,
+    quality-selector: (
+      selected: #{function.css-variable('weight-strong')},
+    ),
+  ),
+  line-height: (
+    time-tooltip: #{function.css-variable('line-height-standard')},
+    menu-item: (
+      quality-selector: #{function.css-variable('line-height-standard')},
+    ),
+  ),
+  color: (
+    time-tooltip: #{function.css-variable('text-inverse')},
+    quality-selector: (
+      selected: #{function.css-variable('text-inverse')},
+    ),
+    error-content: #{function.css-variable('text-tertiary')},
+  ),
+  border-color: (
+    loading-spinner: #{function.css-variable('border-brand-default')},
+    quality-selector: #{function.css-variable('text-secondary')},
+  ),
+  border: (
+    loading-spinner: 3px solid transparent,
+    quality-selector: 0.5px solid
+      #{function.css-variable('video-player', 'border-color', 'quality-selector')},
+  ),
+  border-radius: (
+    time-tooltip: #{function.css-variable('radius-m')},
+    progress: 7px,
+    progress-button: #{function.css-variable('radius-circle')},
+    control-icon: #{function.css-variable('radius-m')},
+    volume-control: #{function.css-variable('radius-m')},
+    quality-selector: #{function.css-variable('radius-s')},
+  ),
+  background: (
+    time-tooltip: #{function.css-variable('bg-overlay-strong')},
+    progress: (
+      '': #{function.css-variable('text-brand-default')},
+      holder: #{function.css-variable('bg-default')},
+    ),
+    load-progress: #{function.css-variable('bg-secondary')},
+    control-icon: (
+      '': #{function.css-variable('bg-transparent')},
+      hover: #{function.css-variable('bg-overlay-default')},
+    ),
+    volume-control: #{function.css-variable('text-primary')},
+    volume-bar: (
+      slider: (
+        vertical: #{function.css-variable('text-secondary')},
+      ),
+    ),
+    menu-content: (
+      quality-selector: #{function.css-variable('bg-overlay-strong')},
+    ),
+    quality-selector: (
+      selected: #{function.css-variable('bg-inverse')},
+    ),
+    error: #{function.css-variable('bg-overlay-strong')},
+  ),
+  spacing: (
+    volume-bar: (
+      slider: (
+        vertical: (
+          margin: #{function.css-variable('spacing-7')} auto,
+        ),
+      ),
+    ),
+    loading-spinner: (
+      margin: -14px 0 0 -14px,
+    ),
+    error-content: (
+      margin: 20px 0 60px,
+    ),
+    icon: (
+      padding: 6px,
+    ),
+    time-tooltip: (
+      padding: #{function.css-variable('spacing-4')},
+    ),
+    progress: (
+      padding: 0 30px,
+    ),
+    menu-content: (
+      quality-selector: (
+        padding: #{function.css-variable('spacing-3')} 0,
+      ),
+    ),
+    menu-item: (
+      quality-selector: (
+        padding: 10px 0,
+      ),
+    ),
+  ),
+);

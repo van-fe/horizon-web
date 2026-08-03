@@ -1,0 +1,44 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('picker-fit-content-input') {
+  @include mixins.e('wrapper') {
+    position: relative;
+    float: left;
+    display: inline-block;
+    max-width: 100%;
+    height: calc(
+      #{mixins.css-variable('picker', 'size', 'height')} -
+        (#{mixins.css-variable('picker', 'spacing', 'input', 'outer', 'padding')} + 1px) * 2
+    );
+    vertical-align: middle;
+
+    @include mixins.is('main') {
+      margin-left: 0;
+    }
+  }
+
+  @include mixins.e('opacity-content') {
+    display: inline-flex;
+    align-items: center;
+    min-width: calc(
+      #{mixins.css-variable('picker', 'size', 'fit-content-input', 'min-width')} + 2 *
+        #{mixins.css-variable('picker', 'spacing', 'pop-content', 'padding-y')}
+    );
+    height: 100%;
+    opacity: 0;
+  }
+
+  @include mixins.e('input') {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    align-self: baseline;
+    width: 100%;
+    height: 100%;
+    color: inherit;
+    caret-color: mixins.css-variable('picker', 'color', 'caret');
+    outline: none;
+    border: none;
+    transform: translateY(-50%);
+  }
+}

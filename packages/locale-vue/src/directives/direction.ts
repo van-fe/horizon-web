@@ -1,15 +1,15 @@
 import type { Directive, DirectiveBinding } from 'vue';
 
-enum LegoLocaleDirectionEnum {
+enum HorizonWebLocaleDirectionEnum {
   Ltr = 'ltr',
   Rtl = 'rtl',
 }
 
-function checkValue(value: LegoLocaleDirectionEnum): boolean {
-  return Object.values(LegoLocaleDirectionEnum).includes(value);
+function checkValue(value: HorizonWebLocaleDirectionEnum): boolean {
+  return Object.values(HorizonWebLocaleDirectionEnum).includes(value);
 }
 
-function addStyleToElement(el: HTMLElement, value: LegoLocaleDirectionEnum): void {
+function addStyleToElement(el: HTMLElement, value: HorizonWebLocaleDirectionEnum): void {
   el.style.direction = value;
 }
 

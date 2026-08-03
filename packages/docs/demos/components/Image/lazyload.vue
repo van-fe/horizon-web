@@ -1,0 +1,9 @@
+<template>
+  <div>
+    <h-image
+      src="/demo-assets/scene-aurora.svg"
+      lazyload
+      :width="500"
+    />
+  </div>
+</template>

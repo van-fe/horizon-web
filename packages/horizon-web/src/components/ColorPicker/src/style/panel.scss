@@ -1,0 +1,34 @@
+@use '../../../../styles/mixins';
+@use 'utils';
+
+@include mixins.b('color-picker-panel') {
+  display: flex;
+  flex-direction: column;
+  grid-row-gap: mixins.css-variable('color-picker', 'spacing', 'panel-block', 'row-gap');
+  align-items: center;
+  width: mixins.css-variable('color-picker', 'size', 'panel', 'width');
+  padding: mixins.css-variable('color-picker', 'spacing', 'popover', 'padding');
+
+  @include mixins.e('block') {
+    width: 100%;
+
+    @include mixins.m('title') {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: mixins.css-variable('color-picker', 'spacing', 'panel-block-title', 'margin-bottom');
+      color: mixins.css-variable('color-picker', 'color', 'panel-block-title');
+      font-size: mixins.css-variable('color-picker', 'font-size', 'panel-block-title');
+    }
+
+    @include mixins.m('pointer-icon') {
+      cursor: pointer;
+    }
+
+    @include mixins.m('button-group') {
+      @include mixins.siblings-block('button') {
+        margin-left: mixins.css-variable('color-picker', 'spacing', 'button-group', 'margin-left') !important;
+      }
+    }
+  }
+}

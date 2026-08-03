@@ -1,0 +1,144 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('progress') {
+  position: relative;
+  display: flex;
+  align-items: center;
+  line-height: mixins.css-variable('line-height-default');
+
+  @include mixins.e(text) {
+    min-width: 50px;
+    margin-left: mixins.css-variable('progress', 'spacing', 'text', 'margin-left');
+    color: mixins.css-variable('progress', 'color', 'text');
+    font-weight: mixins.css-variable('progress', 'font-weight', 'text');
+    font-size: mixins.css-variable('progress', 'font-size', 'text');
+    font-style: normal;
+  }
+
+  &-circle {
+    display: inline-block;
+
+    @include mixins.be('progress', 'text', false) {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      min-width: auto;
+      margin: 0;
+      text-align: center;
+      transform: translate(0, -50%);
+    }
+  }
+
+  &-mini,
+  &-small {
+    @include mixins.be('progress', 'text', false) {
+      font-size: mixins.css-variable('progress', 'font-size', 'text');
+
+      &-right-top {
+        position: absolute;
+        top: -18px;
+        right: 0;
+      }
+
+      &-right-bottom {
+        position: absolute;
+        top: calc(#{mixins.css-variable('progress', 'size', 'height', 'mini')} + 4px);
+        right: 0;
+      }
+
+      &-follow {
+        position: absolute;
+        top: -18px;
+      }
+    }
+  }
+
+  &-medium {
+    @include mixins.be('progress', 'text', false) {
+      font-size: mixins.css-variable('progress', 'font-size', 'text', 'medium');
+
+      &-right-top {
+        position: absolute;
+        top: -21px;
+        right: 0;
+      }
+
+      &-right-bottom {
+        position: absolute;
+        top: calc(#{mixins.css-variable('progress', 'size', 'height', 'medium')} + 4px);
+        right: 0;
+      }
+
+      &-follow {
+        position: absolute;
+        top: -21px;
+      }
+    }
+  }
+
+  &-large {
+    @include mixins.be('progress', 'text', false) {
+      font-size: mixins.css-variable('progress', 'font-size', 'text', 'large');
+
+      &-right-top {
+        position: absolute;
+        top: -24px;
+        right: 0;
+      }
+
+      &-right-bottom {
+        position: absolute;
+        top: calc(#{mixins.css-variable('progress', 'size', 'height', 'large')} + 4px);
+        right: 0;
+      }
+
+      &-follow {
+        position: absolute;
+        top: -24px;
+      }
+    }
+  }
+
+  &-bar {
+    flex-grow: 1;
+    box-sizing: border-box;
+
+    &__outer {
+      &-mini {
+        height: mixins.css-variable('progress', 'size', 'height', 'mini');
+      }
+
+      &-small {
+        height: mixins.css-variable('progress', 'size', 'height', 'small');
+      }
+
+      &-medium {
+        height: mixins.css-variable('progress', 'size', 'height', 'medium');
+      }
+
+      &-large {
+        height: mixins.css-variable('progress', 'size', 'height', 'large');
+      }
+
+      position: relative;
+      overflow: hidden;
+      vertical-align: middle;
+      background-color: mixins.css-variable('progress', 'background', 'bar');
+      border-radius: 100px;
+    }
+
+    &__inner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      line-height: mixins.css-variable('line-height-default');
+      white-space: nowrap;
+      text-align: right;
+      background-color: mixins.css-variable('progress', 'background', 'inner');
+      border-radius: 100px;
+      transition: width 0.6s ease;
+    }
+  }
+}

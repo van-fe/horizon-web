@@ -1,0 +1,64 @@
+@use '../../../../styles/mixins' as mixins;
+
+@include mixins.b('image-cropper') {
+  display: inline-grid;
+  gap: 12px;
+  max-width: 100%;
+
+  @include mixins.e('viewport') {
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+    touch-action: none;
+    background: repeating-conic-gradient(#222 0 25%, #2d2d2d 0 50%) 50% / 16px 16px;
+    border-radius: mixins.css-variable('border-radius-medium');
+  }
+
+  canvas {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    cursor: grab;
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+
+  @include mixins.e('grid') {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(
+        90deg,
+        transparent 33.1%,
+        rgb(255, 255, 255, 45%) 33.3%,
+        transparent 33.5%,
+        transparent 66.4%,
+        rgb(255, 255, 255, 45%) 66.6%,
+        transparent 66.8%
+      ),
+      linear-gradient(
+        transparent 33.1%,
+        rgb(255, 255, 255, 45%) 33.3%,
+        transparent 33.5%,
+        transparent 66.4%,
+        rgb(255, 255, 255, 45%) 66.6%,
+        transparent 66.8%
+      );
+  }
+
+  @include mixins.e('toolbar') {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+
+    input[type='range'] {
+      flex: 1;
+      min-width: 120px;
+      accent-color: mixins.css-variable('brand-primary');
+    }
+  }
+}

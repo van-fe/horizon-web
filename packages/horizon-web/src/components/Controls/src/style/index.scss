@@ -1,0 +1,119 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('controls') {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% - #{mixins.css-variable('controls', 'spacing', 'margin')} * 2);
+  height: calc(100% - #{mixins.css-variable('controls', 'spacing', 'margin')} * 2);
+  margin: mixins.css-variable('controls', 'spacing', 'margin');
+  column-gap: mixins.css-variable('controls', 'spacing', 'control-siblings', 'margin-x');
+
+  @include mixins.e('inner') {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+    column-gap: mixins.css-variable('controls', 'spacing', 'control-siblings', 'margin-x');
+
+    @include mixins.is('hide') {
+      display: none;
+    }
+  }
+
+  @include mixins.b('control', false) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: mixins.css-variable('controls', 'size', 'control');
+    height: mixins.css-variable('controls', 'size', 'control');
+    border-radius: mixins.css-variable('controls', 'border-radius');
+    cursor: pointer;
+
+    @include mixins.is-not('custom-color') {
+      svg {
+        path {
+          fill: mixins.css-variable('controls', 'color', 'control-icon');
+        }
+      }
+    }
+
+    @include mixins.is('disabled') {
+      cursor: not-allowed;
+
+      @include mixins.is-not('custom-color') {
+        svg {
+          path {
+            fill: mixins.css-variable('controls', 'color', 'control-icon', 'disabled');
+          }
+        }
+      }
+    }
+
+    @include mixins.is-not('disabled') {
+      &:hover {
+        background: mixins.css-variable('controls', 'background', 'control', 'hover');
+      }
+
+      &:active {
+        background: mixins.css-variable('controls', 'background', 'control', 'press');
+      }
+    }
+
+    @include mixins.is('ellipsis') {
+      margin: 0 auto;
+    }
+  }
+
+  @include mixins.m('dark') {
+    @include mixins.b('control', false) {
+      @include mixins.is('disabled') {
+        background: mixins.css-variable('controls', 'background', 'disabled');
+      }
+    }
+  }
+
+  @include mixins.m('light') {
+    @include mixins.b('control', false) {
+      @include mixins.is-not('custom-color') {
+        svg {
+          path {
+            fill: mixins.css-variable('controls', 'color', 'control-icon', 'light');
+          }
+        }
+      }
+
+      @include mixins.is('disabled') {
+        background: mixins.css-variable('controls', 'background', 'disabled', 'light');
+
+        @include mixins.is-not('custom-color') {
+          svg {
+            path {
+              fill: mixins.css-variable('controls', 'color', 'control-icon', 'light', 'disabled');
+            }
+          }
+        }
+      }
+
+      @include mixins.is-not('disabled') {
+        &:hover {
+          background: mixins.css-variable('controls', 'background', 'control', 'hover', 'light');
+        }
+
+        &:active {
+          background: mixins.css-variable('controls', 'background', 'control', 'press', 'light');
+        }
+      }
+    }
+  }
+
+  @include mixins.be('dropdown-item', 'content', false) {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    svg {
+      margin-right: mixins.css-variable('controls', 'spacing', 'dropdown-item', 'svg', 'margin-right');
+    }
+  }
+}

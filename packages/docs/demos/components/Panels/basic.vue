@@ -1,0 +1,25 @@
+<template>
+  <h-space block direction="vertical">
+    <h-radio-group v-model="currentRef">
+      <h-radio value="panel1">Option1</h-radio>
+      <h-radio value="panel2">Option2</h-radio>
+      <h-radio value="panel3">Option3</h-radio>
+    </h-radio-group>
+    <h-panels v-model="currentRef" animated>
+      <h-panel name="panel1">Panel1 Content</h-panel>
+      <h-panel name="panel2">Panel2 Content</h-panel>
+      <h-panel name="panel3">Panel3 Content</h-panel>
+    </h-panels>
+  </h-space>
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+export default defineComponent({
+  setup() {
+    return {
+      currentRef: ref('panel1'),
+    };
+  },
+});
+</script>

@@ -1,0 +1,244 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  size: (
+    underline: (
+      line: (
+        height: 1px,
+      ),
+    ),
+    add: (
+      card: (
+        width: 48px,
+      ),
+    ),
+    tab: (
+      page: (
+        min-width: (
+          activated: 40px,
+        ),
+      ),
+    ),
+  ),
+  font-size: (
+    tab: (
+      page: #{function.css-variable('text-base')},
+      line: (
+        mini: #{function.css-variable('text-sm')},
+        small: #{function.css-variable('text-base')},
+        medium: #{function.css-variable('text-lg')},
+        large: #{function.css-variable('text-xl')},
+      ),
+      card: (
+        mini: #{function.css-variable('text-sm')},
+        small: #{function.css-variable('text-base')},
+        medium: #{function.css-variable('text-base')},
+        large: #{function.css-variable('text-lg')},
+      ),
+      segment: (
+        mini: #{function.css-variable('text-sm')},
+        small: #{function.css-variable('text-base')},
+        medium: #{function.css-variable('text-base')},
+        large: #{function.css-variable('text-lg')},
+      ),
+    ),
+  ),
+  line-height: (
+    tab: (
+      page: 22px,
+      line: (
+        mini: 18px,
+        small: 22px,
+        medium: 24px,
+        large: 30px,
+      ),
+      card: (
+        mini: 18px,
+        small: 22px,
+        medium: 22px,
+        large: 24px,
+      ),
+      segment: (
+        mini: 18px,
+        small: 22px,
+        medium: 22px,
+        large: 24px,
+      ),
+    ),
+  ),
+  color: (
+    tab: (
+      '': #{function.css-variable('text-secondary')},
+      hover: #{function.css-variable('text-brand-hover')},
+      press: #{function.css-variable('text-brand-press')},
+      line: (
+        activated: (
+          '': #{function.css-variable('text-brand-default')},
+          hover: #{function.css-variable('text-brand-default')},
+        ),
+      ),
+      card: (
+        '': #{function.css-variable('text-secondary')},
+        hover: #{function.css-variable('text-brand-hover')},
+        activated: #{function.css-variable('text-brand-default')},
+      ),
+      segment: (
+        activated: #{function.css-variable('text-brand-default')},
+      ),
+      page: (
+        activated: #{function.css-variable('text-brand-default')},
+      ),
+    ),
+    icon: (
+      '': #868a9a,
+      hover: #{function.css-variable('text-primary')},
+    ),
+    extra-icon: #{function.css-variable('text-primary')},
+    add: (
+      card: (
+        '': #{function.css-variable('tabs', 'color', 'tab', 'card')},
+        hover: #{function.css-variable('tabs', 'color', 'tab', 'card', 'hover')},
+      ),
+      page: (
+        hover: #{function.css-variable('text-brand-hover')},
+      ),
+    ),
+  ),
+  border-color: (
+    header: (
+      line: (
+        underline: #{function.css-variable('divider-default')},
+      ),
+      card: #{function.css-variable('divider-default')},
+    ),
+    indicator: (
+      line: #{function.css-variable('border-brand-default')},
+    ),
+    tab: (
+      card: #{function.css-variable('tabs', 'border-color', 'header', 'card')},
+    ),
+    add: (
+      card: #{function.css-variable('tabs', 'border-color', 'header', 'card')},
+    ),
+  ),
+  border: (
+    tab: (
+      card: 1px solid #{function.css-variable('tabs', 'border-color', 'tab', 'card')},
+    ),
+    add: (
+      card: 1px solid #{function.css-variable('tabs', 'border-color', 'add', 'card')},
+    ),
+  ),
+  border-radius: (
+    indicator: (
+      line: #{function.css-variable('radius-m')} #{function.css-variable('radius-m')} 0 0,
+      segment: #{function.css-variable('radius-s')},
+    ),
+    tab: (
+      card: #{function.css-variable('radius-m')} #{function.css-variable('radius-m')} 0 0,
+      page: #{function.css-variable('radius-l')} #{function.css-variable('radius-l')} 0 0,
+    ),
+    segment: #{function.css-variable('radius-m')},
+  ),
+  background: (
+    tab: (
+      card: (
+        '': #{function.css-variable('bg-secondary')},
+        activated: #{function.css-variable('bg-default')},
+      ),
+      page: (
+        '': #{function.css-variable('bg-transparent')},
+        hover: #{function.css-variable('bg-hover')},
+        activated: (
+          '': #{function.css-variable('bg-default')},
+          hover: #{function.css-variable('tabs', 'background', 'tab', 'page', 'activated')},
+        ),
+      ),
+    ),
+    add: (
+      card: #{function.css-variable('tabs', 'background', 'tab', 'card')},
+    ),
+    segment: #{function.css-variable('bg-secondary')},
+    page: #{function.css-variable('bg-secondary')},
+    indicator: (
+      segment: #{function.css-variable('bg-default')},
+    ),
+  ),
+  spacing: (
+    tab: (
+      card: (
+        margin-right: #{function.css-variable('spacing-3')},
+        padding: (
+          mini: 2px #{function.css-variable('spacing-3')},
+          small: 4px #{function.css-variable('spacing-4')},
+          medium: 8px #{function.css-variable('spacing-5')},
+          large: 11px #{function.css-variable('spacing-6')},
+        ),
+      ),
+      segment: (
+        margin-left: #{function.css-variable('spacing-2')},
+        padding: (
+          mini: 1px 8px,
+          small: 1px 12px,
+          medium: 5px 16px,
+          large: 8px 20px,
+        ),
+      ),
+      line: (
+        gap: (
+          mini: 20px,
+          small: 20px,
+          medium: 20px,
+          large: 32px,
+        ),
+        padding: #{function.css-variable('tabs', 'spacing', 'nav-list', 'line', 'padding-bottom')}
+          #{function.css-variable('spacing-2')},
+      ),
+    ),
+    close: (
+      page: (
+        margin-left: 6px,
+      ),
+    ),
+    arrow-wrap: (
+      padding: 0 20px,
+    ),
+    nav-wrap: (
+      card: (
+        padding: #{function.css-variable('spacing-7')},
+      ),
+    ),
+    page: (
+      padding: 10px #{function.css-variable('spacing-5')} 0 #{function.css-variable('spacing-5')},
+    ),
+    nav-list: (
+      page: (
+        padding: 0 0 0 #{function.css-variable('spacing-4')},
+      ),
+      line: (
+        padding-bottom: #{function.css-variable('spacing-3')},
+      ),
+    ),
+    nav: (
+      segment: (
+        padding: (
+          mini: 2px,
+          small: 4px,
+          medium: 4px,
+          large: 4px,
+        ),
+      ),
+    ),
+  ),
+  box-shadow: (
+    indicator: (
+      segment: #{0 5px 12px 4px rgba(0, 0, 0, 4%),
+      0 3px 6px 0 rgba(0, 0, 0, 6%),
+      0 1px 2px -2px rgba(0, 0, 0, 10%)},
+    ),
+  ),
+  transition: (
+    duration: #{function.css-variable('transition-time')},
+    timing-function: #{cubic-bezier(0.205, 0, 0.25, 1.01)},
+  ),
+);

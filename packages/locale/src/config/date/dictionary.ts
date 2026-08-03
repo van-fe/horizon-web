@@ -1,5 +1,5 @@
 import type { DateLocaleAvailableShownType } from './enum';
-import type { LocaleSupportLangV2 } from '../lang';
+import type { LocaleSupportLang } from '../lang';
 
 export type LocaleDateFormatOptions = {
   weekday?: 'long' | 'short' | 'narrow' | string;
@@ -16,6 +16,6 @@ export type LocaleDateLocaleDictionary = Record<
   DateLocaleAvailableShownType,
   LocaleDateFormatOptions
 >;
-export type LocaleDateLocaleDictionaries = Record<LocaleSupportLangV2, LocaleDateLocaleDictionary>;
+export type LocaleDateLocaleDictionaries = Record<LocaleSupportLang, LocaleDateLocaleDictionary>;
 
 export type PartialLocaleDateFormatDictionaries = Partial<LocaleDateLocaleDictionaries>;

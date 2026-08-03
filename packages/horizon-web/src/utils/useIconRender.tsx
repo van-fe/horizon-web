@@ -1,0 +1,18 @@
+import type { Component, VNode, Slot } from 'vue';
+import { AIcon } from '@aurora/icon';
+import { isDefined, isString } from '@aurora/utils';
+
+export default function (
+  icon: string | Component | VNode | undefined | null | false,
+  iconSlot?: Slot,
+  iconProps?: Record<string, unknown>,
+) {
+  return (isDefined(icon) && icon !== false) || isDefined(iconSlot)
+    ? (iconSlot?.() ??
+        (isString(icon) ? (
+          <AIcon name={(icon as string).replace(/^h-icon_/, '')} {...(iconProps || {})} />
+        ) : (
+          <icon {...(iconProps || {})} />
+        )))
+    : undefined;
+}

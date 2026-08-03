@@ -1,5 +1,5 @@
-import type { LocalOptionType, LangService, NumberService, DateService } from '@nio-fe/locale';
-import { LocaleService, LocaleSupportLangV2 } from '@nio-fe/locale';
+import type { LocalOptionType, LangService, NumberService, DateService } from '@aurora/locale';
+import { LocaleService, LocaleSupportLang } from '@aurora/locale';
 import type { App } from 'vue';
 import { reactive } from 'vue';
 import LangLocale from './components/LangLocale';
@@ -19,7 +19,7 @@ export default class VueLocaleService extends LocaleService {
 
   public setOption(localeOptions: LocalOptionType) {
     return reactive({
-      current: LocaleSupportLangV2.En,
+      current: LocaleSupportLang.En,
       ...localeOptions,
     });
   }

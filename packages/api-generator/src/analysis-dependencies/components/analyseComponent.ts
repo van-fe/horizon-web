@@ -1,4 +1,4 @@
-import type { ApiGeneratorExportedComponent } from '@nio-fe/shared';
+import type { ApiGeneratorExportedComponent } from '@aurora/utils';
 import type {
   Project,
   ImportDeclaration,
@@ -95,6 +95,19 @@ export function analyseComponent(componentInfo: ApiGeneratorExportedComponent, p
                         .trim()
                         .replace(/(^'|'$)/g, '') || '';
                     break;
+                  case 'descLocales': {
+                    const locales = curr.getLastChildByKind(ts.SyntaxKind.ObjectLiteralExpression);
+                    componentInfo.descLocales = {};
+                    locales?.getProperties().forEach(property => {
+                      const key = property
+                        .asKind(ts.SyntaxKind.PropertyAssignment)
+                        ?.getName()
+                        .replace(/['"]/g, '');
+                      const value = property.getLastChild()?.getText().replace(/^['"]|['"]$/g, '');
+                      if (key && value) componentInfo.descLocales![key] = value;
+                    });
+                    break;
+                  }
                   case 'props':
                     const propsRes = analysisComponentDefinedVariable(
                       curr,

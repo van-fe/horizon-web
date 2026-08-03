@@ -4,16 +4,16 @@ import glob from 'fast-glob';
 import {
   componentRoot,
   directiveRoot,
-  legoProjectRoot,
+  horizonwebProjectRoot,
   apiGeneratorOutPut,
   methodsRoot,
-} from '@nio-fe/shared/plugins';
+} from '@root/scripts/paths';
 import type {
   ApiGeneratorExportedPluginType,
   ApiGeneratorExportedComponent,
   ApiGeneratorExportedDirectives,
   ApiGeneratorExportedMethod,
-} from '@nio-fe/shared';
+} from '@aurora/utils';
 import { analyseComponentExports } from './components';
 import { analyseDirectiveExports } from './directives';
 import { analyseMethodExports } from './methods';
@@ -30,10 +30,10 @@ export default async function (): Promise<
     compilerOptions: {
       emitDeclarationOnly: true,
       outDir: apiGeneratorOutPut,
-      baseUrl: legoProjectRoot,
+      baseUrl: horizonwebProjectRoot,
       preserveSymlinks: true,
     },
-    tsConfigFilePath: legoProjectRoot + '/tsconfig.json',
+    tsConfigFilePath: horizonwebProjectRoot + '/tsconfig.json',
     skipAddingFilesFromTsConfig: true,
   });
 

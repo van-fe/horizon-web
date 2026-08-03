@@ -1,0 +1,305 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('descriptions') {
+  font-size: mixins.css-variable('descriptions', 'font-size', 'content');
+  background-color: mixins.css-variable('descriptions', 'background');
+
+  @include mixins.e('title') {
+    color: mixins.css-variable('descriptions', 'color', 'title');
+    font-weight: mixins.css-variable('descriptions', 'font-weight', 'title');
+    font-size: mixins.css-variable('descriptions', 'font-size', 'title');
+  }
+
+  @include mixins.e('title--small') {
+    margin-bottom: mixins.css-variable('descriptions', 'spacing', 'title', 'margin-bottom', 'small');
+  }
+
+  @include mixins.e('title--medium') {
+    margin-bottom: mixins.css-variable('descriptions', 'spacing', 'title', 'margin-bottom', 'medium');
+  }
+
+  @include mixins.e('title--large') {
+    margin-bottom: mixins.css-variable('descriptions', 'spacing', 'title', 'margin-bottom', 'large');
+  }
+
+  @include mixins.e('item') {
+    display: flex;
+    align-items: center;
+    padding-right: mixins.css-variable('descriptions', 'spacing', 'item', 'padding-right');
+    line-height: mixins.css-variable('descriptions', 'line-height', 'item');
+
+    @include mixins.e('value') {
+      padding-left: mixins.css-variable('descriptions', 'spacing', 'item-value', 'padding-right');
+    }
+  }
+
+  @include mixins.e('label') {
+    align-self: stretch;
+    box-sizing: content-box;
+    color: mixins.css-variable('descriptions', 'color', 'label');
+  }
+
+  @include mixins.e('value') {
+    flex: 1;
+    align-self: stretch;
+    color: mixins.css-variable('descriptions', 'color', 'value');
+  }
+
+  @include mixins.m('horizontal') {
+    @include mixins.e('content') {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    @include mixins.bm('descriptions', 'border', false) {
+      &#{mixins.block-name('descriptions__content')} {
+        flex-wrap: nowrap;
+      }
+    }
+  }
+
+  @include mixins.m('vertical') {
+    @include mixins.e('content') {
+      display: grid;
+    }
+  }
+
+  @include mixins.m('small') {
+    @include mixins.e('item') {
+      padding-bottom: mixins.css-variable('descriptions', 'spacing', 'item', 'margin-bottom', 'small');
+    }
+  }
+
+  @include mixins.m('medium') {
+    @include mixins.e('item') {
+      padding-bottom: mixins.css-variable('descriptions', 'spacing', 'item', 'margin-bottom', 'medium');
+    }
+  }
+
+  @include mixins.m('large') {
+    @include mixins.e('item') {
+      padding-bottom: mixins.css-variable('descriptions', 'spacing', 'item', 'margin-bottom', 'large');
+    }
+  }
+
+  @include mixins.m('vertical') {
+    @include mixins.bm('descriptions', 'small', false) {
+      @include mixins.e('item') {
+        @include mixins.e('value') {
+          padding-left: mixins.css-variable('descriptions', 'spacing', 'item-value', 'padding-left', 'small', 'vertical');
+        }
+      }
+
+      @include mixins.bem('descriptions', 'item', 'vertical', false) {
+        &#{mixins.block-name('descriptions__item--top')} {
+          @include mixins.e('label') {
+            padding-bottom: mixins.css-variable('descriptions', 'spacing', 'label', 'padding-bottom', 'small', 'vertical');
+          }
+        }
+      }
+    }
+
+    @include mixins.bm('descriptions', 'medium', false) {
+      @include mixins.e('item') {
+        @include mixins.e('value') {
+          padding-left: mixins.css-variable('descriptions', 'spacing', 'item-value', 'padding-left', 'medium', 'vertical');
+        }
+      }
+
+      @include mixins.bem('descriptions', 'item', 'vertical', false) {
+        &#{mixins.block-name('descriptions__item--top')} {
+          @include mixins.e('label') {
+            padding-bottom: mixins.css-variable('descriptions', 'spacing', 'label', 'padding-bottom', 'medium', 'vertical');
+          }
+        }
+      }
+    }
+
+    @include mixins.bm('descriptions', 'large', false) {
+      @include mixins.e('item') {
+        @include mixins.e('value') {
+          padding-left: mixins.css-variable('descriptions', 'spacing', 'item-value', 'padding-left', 'large', 'vertical');
+        }
+      }
+
+      @include mixins.bem('descriptions', 'item', 'vertical', false) {
+        &#{mixins.block-name('descriptions__item--top')} {
+          @include mixins.e('label') {
+            padding-bottom: mixins.css-variable('descriptions', 'spacing', 'label', 'padding-bottom', 'large', 'vertical');
+          }
+        }
+      }
+    }
+  }
+
+  @include mixins.be('descriptions', 'content', false) {
+    @include mixins.bem('descriptions', 'item', 'vertical', false) {
+      &#{mixins.block-name('descriptions__item--top')} {
+        @include mixins.e('value') {
+          padding-left: mixins.css-variable('descriptions', 'spacing', 'content-value', 'vertical', 'padding-left');
+        }
+      }
+    }
+    &#{mixins.block-name('descriptions--small')} {
+      @include mixins.bem('descriptions', 'item', 'vertical', false) {
+        &#{mixins.block-name('descriptions__item--top')} {
+          padding-bottom: mixins.css-variable('descriptions', 'spacing', 'content', 'vertical-small', 'padding-bottom');
+        }
+      }
+    }
+    &#{mixins.block-name('descriptions--medium')} {
+      @include mixins.bem('descriptions', 'item', 'vertical', false) {
+        &#{mixins.block-name('descriptions__item--top')} {
+          padding-bottom: mixins.css-variable('descriptions', 'spacing', 'content', 'vertical-medium', 'padding-bottom');
+        }
+      }
+    }
+    &#{mixins.block-name('descriptions--large')} {
+      @include mixins.bem('descriptions', 'item', 'vertical', false) {
+        &#{mixins.block-name('descriptions__item--top')} {
+          padding-bottom: mixins.css-variable('descriptions', 'spacing', 'content', 'vertical-large', 'padding-bottom');
+        }
+      }
+    }
+  }
+
+  @include mixins.m('border') {
+    overflow: hidden;
+    border: mixins.css-variable('descriptions', 'border');
+    border-radius: mixins.css-variable('descriptions', 'border-radius');
+
+    @include mixins.e('item') {
+      padding-right: 0 !important;
+      padding-bottom: 0 !important;
+
+      @include mixins.e('label') {
+        position: relative;
+        color: mixins.css-variable('descriptions', 'color', 'label', 'border');
+        background-color: mixins.css-variable('descriptions', 'background', 'item-label', 'border');
+
+        &::before {
+          position: absolute;
+          bottom: -1px;
+          left: 0;
+          z-index: 1;
+          display: block;
+          width: 100%;
+          height: 1px;
+          background-color: mixins.css-variable('descriptions', 'border-color');
+          content: '';
+        }
+
+        &::after {
+          position: absolute;
+          top: 0;
+          right: -1px;
+          z-index: 1;
+          display: block;
+          width: 1px;
+          height: 100%;
+          background-color: mixins.css-variable('descriptions', 'border-color');
+          content: '';
+        }
+
+        &:last-child {
+          border-bottom: 0;
+        }
+      }
+
+      @include mixins.e('value') {
+        position: relative;
+
+        &::before {
+          position: absolute;
+          bottom: -1px;
+          left: 0;
+          z-index: 1;
+          display: block;
+          width: 100%;
+          height: 1px;
+          background-color: mixins.css-variable('descriptions', 'border-color');
+          content: '';
+        }
+
+        &::after {
+          position: absolute;
+          top: 0;
+          right: -1px;
+          z-index: 1;
+          display: block;
+          width: 1px;
+          height: 100%;
+          background-color: mixins.css-variable('descriptions', 'border-color');
+          content: '';
+        }
+      }
+    }
+  }
+
+  #{mixins.block-name('descriptions--medium')}#{mixins.block-name('descriptions--border')} {
+    #{mixins.block-name('descriptions__label')},
+    #{mixins.block-name('descriptions__value')} {
+      padding: mixins.css-variable('descriptions', 'spacing', 'grid', 'padding', 'medium', 'border') !important;
+    }
+  }
+
+  #{mixins.block-name('descriptions--large')}#{mixins.block-name('descriptions--border')} {
+    #{mixins.block-name('descriptions__label')},
+    #{mixins.block-name('descriptions__value')} {
+      padding: mixins.css-variable('descriptions', 'spacing', 'grid', 'padding', 'large', 'border') !important;
+    }
+  }
+
+  #{mixins.block-name('descriptions--small')}#{mixins.block-name('descriptions--border')} {
+    #{mixins.block-name('descriptions__label')},
+    #{mixins.block-name('descriptions__value')} {
+      padding: mixins.css-variable('descriptions', 'spacing', 'grid', 'padding', 'small', 'border') !important;
+    }
+  }
+}
+
+@include mixins.bm('descriptions', horizontal) {
+  @include mixins.standalone-modifier('border') {
+    @include mixins.e('item') {
+      &:last-child {
+        @include mixins.e('value') {
+          &::after {
+            display: none;
+          }
+        }
+      }
+
+      &--top {
+        &:last-child {
+          flex: 1;
+
+          @include mixins.e('label') {
+            &::after {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@include mixins.bm('descriptions', 'vertical') {
+  &#{mixins.element-name('col-1', mixins.block('descriptions'))} {
+    @include mixins.standalone-modifier('small') {
+      @include mixins.e('item') {
+        padding-bottom: mixins.css-variable('descriptions', 'spacing', 'item', 'padding-bottom', 'small', 'vertical');
+      }
+    }
+    @include mixins.standalone-modifier('medium') {
+      @include mixins.e('item') {
+        padding-bottom: mixins.css-variable('descriptions', 'spacing', 'item', 'padding-bottom', 'medium', 'vertical');
+      }
+    }
+    @include mixins.standalone-modifier('large') {
+      @include mixins.e('item') {
+        padding-bottom: mixins.css-variable('descriptions', 'spacing', 'item', 'padding-bottom', 'large', 'vertical');
+      }
+    }
+  }
+}

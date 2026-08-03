@@ -1,0 +1,186 @@
+@use '../../../../styles/mixins';
+@use 'themes';
+@use 'size';
+
+@include mixins.b('dropdown') {
+  @include mixins.e('inner') {
+    width: var(
+      --h-dropdown-size-container-width
+    ); // 这里用变量定义宽度，因为直接用style的width，初始化失败
+    min-width: mixins.css-variable('dropdown', 'size', 'min-width');
+    max-width: mixins.css-variable('dropdown', 'size', 'max-width');
+    padding: 0 !important;
+  }
+}
+
+@include mixins.b('dropdown-item') {
+  font-size: mixins.css-variable('dropdown', 'font-size', 'item');
+  cursor: pointer;
+  transition: mixins.css-variable('dropdown', 'transition', 'all');
+
+  @include mixins.is('active') {
+    font-weight: mixins.css-variable('dropdown', 'font-weight', 'item', 'active');
+  }
+
+  @include mixins.is('disabled') {
+    cursor: not-allowed;
+  }
+
+  @include mixins.e('inner') {
+    display: flex;
+    align-items: center;
+    min-height: mixins.css-variable('dropdown', 'size', 'item', 'height');
+    padding: mixins.css-variable('dropdown', 'spacing', 'item', 'padding');
+  }
+
+  @include mixins.e('icon') {
+    display: flex;
+    align-items: center;
+    margin-right: mixins.css-variable('dropdown', 'spacing', 'item', 'icon', 'margin-right');
+  }
+
+  @include mixins.e('content') {
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  @include mixins.is('divided') {
+    &::after {
+      display: block;
+      height: 1px;
+      margin: 8px;
+      background: mixins.css-variable('dropdown', 'border-color', 'group-siblings', 'no-title');
+      content: '';
+    }
+  }
+
+  &:first-child {
+    margin-top: mixins.css-variable('dropdown', 'spacing', 'first-last-child', 'margin-y');
+  }
+
+  &:last-child {
+    margin-bottom: mixins.css-variable('dropdown', 'spacing', 'first-last-child', 'margin-y');
+  }
+}
+
+@include mixins.b('dropdown-submenu') {
+  @include mixins.e('item') {
+    font-size: mixins.css-variable('dropdown', 'font-size', 'item');
+    cursor: pointer;
+
+    @include mixins.m('inner') {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: mixins.css-variable('dropdown', 'size', 'item', 'height');
+      padding: mixins.css-variable('dropdown', 'spacing', 'item', 'padding');
+      transition: mixins.css-variable('dropdown', 'transition', 'all');
+    }
+
+    @include mixins.m('content') {
+      display: flex;
+      grid-column-gap: mixins.css-variable('dropdown', 'spacing', 'item', 'icon', 'margin-right');
+      min-width: 0;
+      white-space: nowrap;
+    }
+
+    @include mixins.m('icon') {
+      display: flex;
+      align-items: center;
+    }
+
+    @include mixins.m('title') {
+      max-width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    @include mixins.m('arrow') {
+      display: inline-flex;
+      align-items: center;
+    }
+  }
+
+  @include mixins.is('disabled') {
+    @include mixins.e('item') {
+      cursor: not-allowed;
+    }
+  }
+
+  @include mixins.e('inner') {
+    min-width: mixins.css-variable('dropdown', 'size', 'min-width');
+    max-width: mixins.css-variable('dropdown', 'size', 'max-width');
+    max-height: mixins.css-variable('dropdown', 'size', 'max-height');
+    padding: 0 !important;
+  }
+
+  &:first-child {
+    margin-top: mixins.css-variable('dropdown', 'spacing', 'first-last-child', 'margin-y');
+  }
+
+  &:last-child {
+    margin-bottom: mixins.css-variable('dropdown', 'spacing', 'first-last-child', 'margin-y');
+  }
+}
+
+@include mixins.b('dropdown-group') {
+  @include mixins.e('title') {
+    max-width: 100%;
+    padding: mixins.css-variable('dropdown', 'spacing', 'group-title', 'padding');
+    overflow: hidden;
+    color: mixins.css-variable('dropdown', 'color', 'group-title');
+    font-size: mixins.css-variable('dropdown', 'font-size', 'group-title');
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  @include mixins.has-not('title') {
+    &:not(:last-of-type) {
+      &::after {
+        display: block;
+        height: 1px;
+        margin: mixins.css-variable('dropdown', 'spacing', 'group-divider', 'no-title', 'margin');
+        background-color: mixins.css-variable('dropdown', 'border-color', 'group-siblings', 'no-title');
+        background-size: 1px 100%;
+        content: '';
+      }
+    }
+  }
+
+  @include mixins.e('inner') {
+    &:first-child {
+      margin-top: mixins.css-variable('dropdown', 'spacing', 'first-last-child', 'margin-y');
+    }
+
+    > #{mixins.block-name('dropdown-item')} {
+      &:first-child {
+        margin-top: 0;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &:first-child {
+    margin-top: mixins.css-variable('dropdown', 'spacing', 'first-last-child', 'margin-y');
+  }
+
+  &:last-child {
+    margin-bottom: mixins.css-variable('dropdown', 'spacing', 'first-last-child', 'margin-y');
+  }
+}
+
+@include mixins.siblings-block('dropdown-group') {
+  margin-top: mixins.css-variable('dropdown', 'spacing', 'first-last-child', 'margin-y');
+}
+
+@include mixins.b('dropdown-item') {
+  & + #{mixins.block-name('dropdown-group')} {
+    margin-top: mixins.css-variable('dropdown', 'spacing', 'first-last-child', 'margin-y');
+  }
+}

@@ -1,0 +1,337 @@
+/* stylelint-disable nesting-selector-no-missing-scoping-root, scss/operator-no-newline-after, order/properties-order -- Legacy BEM mixins and multiline calculations use these forms. */
+@use '../../../../styles/mixins';
+@use 'cell';
+@use 'header';
+@use 'border';
+@use 'footer';
+@use 'column-manager';
+
+@include mixins.b('table') {
+  position: relative;
+  width: 100%;
+  color: mixins.css-variable('text', 'primary');
+  font-size: mixins.css-variable('text', 'base');
+  #{mixins.css-variable-name('table', 'background', 'row', 'hover', 'current')}: mixins.css-variable('table', 'background', 'row', 'hover');
+
+  @include mixins.e('hidden-columns') {
+    display: none;
+  }
+
+  @include mixins.be('table', 'table', false) {
+    display: table;
+    width: max-content;
+    min-width: 100%;
+    margin: 0;
+    overflow: visible;
+    border-collapse: separate;
+    border-spacing: 0;
+
+    @include mixins.is('layout-fixed') {
+      table-layout: fixed;
+    }
+
+    @include mixins.is('layout-auto') {
+      table-layout: auto;
+    }
+
+    @include mixins.be('table', 'row', false) {
+      border-top: 0;
+    }
+  }
+
+  // Keep host-page table styles from leaking into section backgrounds.
+  @include mixins.be('table', 'table-head', false) {
+    @include mixins.be('table', 'row', false) {
+      background: mixins.css-variable('table', 'background', 'header');
+    }
+  }
+
+  @include mixins.be('table', 'table-body', false) {
+    @include mixins.be('table', 'row', false) {
+      background: mixins.css-variable('table', 'background', 'body');
+    }
+  }
+
+  @include mixins.be('table', 'table-foot', false) {
+    @include mixins.be('table', 'row', false) {
+      background: mixins.css-variable('table', 'background', 'footer');
+    }
+  }
+
+  @include mixins.e('row') {
+    outline: none;
+    background: mixins.css-variable('table', 'background', 'body');
+
+    @at-root #{mixins.e('table', 'row')}:focus-visible {
+      > td {
+        box-shadow: inset 0 0 0 2px mixins.css-variable('border', 'brand', 'default');
+      }
+    }
+
+    @include mixins.is('row-dragging') {
+      > td {
+        opacity: 0.55;
+      }
+    }
+
+    @include mixins.is('row-drag-over-before') {
+      > td {
+        box-shadow: inset 0 2px
+          mixins.css-variable('table', 'border-color', 'header', 'divider', 'resizing');
+      }
+    }
+
+    @include mixins.is('row-drag-over-after') {
+      > td {
+        box-shadow: inset 0 -2px
+          mixins.css-variable('table', 'border-color', 'header', 'divider', 'resizing');
+      }
+    }
+
+    @include mixins.m('expand') {
+      background: mixins.css-variable('table', 'background', 'body', 'expand');
+
+      > #{mixins.e('table', 'cell')}
+        > #{mixins.e('table', 'cell-wrap')}
+        > #{mixins.e(
+          'table',
+          'cell-inner'
+        )} {
+        overflow: visible;
+      }
+
+      @include mixins.be('table', 'cell', false) {
+        &-wrap {
+          #{mixins.css-variable-name('table-z-index-temp')}: mixins.css-variable('table', 'z-index');
+          width: 100%;
+        }
+
+        &-inner {
+          #{mixins.css-variable-name('table', 'z-index')}: calc(
+            #{mixins.css-variable('table-z-index-temp')} - 2
+          );
+          #{mixins.css-variable-name('table', 'background', 'header')}: mixins.css-variable('table', 'background', 'body');
+          flex: 1;
+        }
+      }
+    }
+
+    @include mixins.is('expanded') {
+      > td {
+        position: sticky;
+        top: mixins.css-variable('table', 'size', 'header', 'height');
+        z-index: mixins.css-variable('table', 'z-index');
+        margin-top: mixins.css-variable('table', 'size', 'header', 'height');
+      }
+    }
+  }
+
+  @include mixins.is('native-sticky-header') {
+    > #{mixins.b('scrollbar')} {
+      overflow: visible;
+
+      > #{mixins.e('scrollbar', 'wrap')} {
+        overflow: visible !important;
+      }
+    }
+  }
+
+  @include mixins.is('stripe') {
+    @include mixins.e('table-body') {
+      @include mixins.is-not('virtual') {
+        tr {
+          &:nth-child(even) {
+            background: #{mixins.css-variable('table', 'background', 'row', 'stripe')};
+
+            @include mixins.e('cell') {
+              @include mixins.is('row-span-cell') {
+                background: mixins.css-variable('table', 'background', 'body');
+              }
+            }
+          }
+        }
+      }
+
+      @include mixins.is('virtual') {
+        > tr {
+          @include mixins.is('stripe-row') {
+            background: #{mixins.css-variable('table', 'background', 'row', 'stripe')};
+          }
+        }
+      }
+    }
+  }
+
+  @include mixins.e('virtual-spacer') {
+    height: 0;
+    pointer-events: none;
+
+    > td {
+      box-sizing: border-box;
+      height: 0;
+      padding: 0;
+      border: 0;
+    }
+  }
+
+  @include mixins.em('row', 'group') {
+    > td {
+      background: mixins.css-variable('table', 'background', 'header');
+    }
+  }
+
+  @include mixins.e('group-wrap') {
+    box-sizing: border-box;
+    display: flex;
+    gap: mixins.css-variable('spacing', 2);
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100%;
+    padding: 0 mixins.css-variable('table', 'spacing', 'cell', 'x', 'padding');
+  }
+
+  @include mixins.e('group-toggle') {
+    display: inline-flex;
+    gap: mixins.css-variable('spacing', 1);
+    align-items: center;
+    min-width: 0;
+    padding: 0;
+    font: inherit;
+    font-weight: mixins.css-variable('weight-strong');
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+
+    @at-root #{mixins.e('table', 'group-toggle')}:focus-visible {
+      outline: 2px solid mixins.css-variable('border', 'brand', 'default');
+      outline-offset: 2px;
+      border-radius: mixins.css-variable('border-radius-small');
+    }
+  }
+
+  @include mixins.e('group-icon') {
+    flex: none;
+    transition: transform mixins.css-variable('table', 'transition', 'color-behavior');
+
+    @include mixins.is('active') {
+      transform: rotate(90deg);
+    }
+  }
+
+  @include mixins.e('group-label') {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @include mixins.e('group-count') {
+    flex: none;
+    font-weight: normal;
+    color: mixins.css-variable('text', 'tertiary');
+  }
+
+  @include mixins.e('group-aggregates') {
+    display: inline-flex;
+    flex: none;
+    gap: mixins.css-variable('spacing', 4);
+    font-variant-numeric: tabular-nums;
+    color: mixins.css-variable('text', 'secondary');
+  }
+
+  @include mixins.is('hoverable') {
+    #{mixins.e('table', 'table-body')},
+    #{mixins.e('table', 'table-foot')} {
+      @include mixins.be('table', 'cell', false) {
+        transition: mixins.css-variable('table', 'transition', 'color-behavior');
+      }
+
+      @include mixins.be('table', 'row', false) {
+        &:not(#{mixins.modifier-name('expand', 'row', #{mixins.block('table')})}) {
+          &:hover {
+            @include mixins.be('table', 'cell', false) {
+              @include mixins.is-not('row-span-cell') {
+                background: mixins.css-variable('table', 'background', 'row', 'hover', 'current');
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @include mixins.is('highlight-selected') {
+    @include mixins.e('row') {
+      @include mixins.is('selected') {
+        background: mixins.css-variable('table', 'background', 'body', 'selected');
+      }
+    }
+  }
+
+  @include mixins.e('resizing-cursor-line') {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: calc(#{mixins.css-variable('table', 'z-index')} + 5);
+    display: none;
+    width: 2px;
+    height: calc(
+      #{mixins.css-variable('table', 'size', 'wrapper', 'height')} -
+        #{mixins.css-variable('table', 'size', 'header', 'height')} +
+        #{mixins.css-variable-with-default-value('table-size-column-height', '0px')}
+    );
+    background: mixins.css-variable('table', 'border-color', 'header', 'divider', 'resizing');
+    pointer-events: none;
+  }
+
+  @include mixins.em('table', 'empty') {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: mixins.css-variable('table', 'size', 'empty', 'min-height');
+    color: mixins.css-variable('text', 'tertiary');
+    background: mixins.css-variable('table', 'background', 'body');
+  }
+
+  @include mixins.has('height') {
+    @include mixins.em('table', 'empty', false) {
+      min-height: max(
+        mixins.css-variable('table', 'size', 'empty', 'min-height'),
+        calc(
+          #{mixins.css-variable('table', 'size', 'wrapper', 'height')} -
+            #{mixins.css-variable('table', 'size', 'header', 'height')}
+        )
+      );
+    }
+  }
+
+  @include mixins.e('table-append') {
+    box-sizing: border-box;
+    width: 100%;
+    color: mixins.css-variable('text', 'secondary');
+    background: mixins.css-variable('table', 'background', 'body');
+  }
+
+  @include mixins.has('column-manager') {
+    #{mixins.e('table', 'table-head')} {
+      tr:nth-of-type(1) {
+        #{mixins.e('table', 'cell')} {
+          @include mixins.is('last-column') {
+            padding-right: calc(
+              #{mixins.css-variable('table', 'spacing', 'cell', 'x', 'padding')} + 24px + 16px
+            );
+          }
+        }
+      }
+    }
+  }
+}
+
+:root.#{mixins.$dark-mode-class-name} {
+  @include mixins.b('table', false) {
+    #{mixins.css-variable-name('table', 'background', 'row', 'hover', 'current')}: mixins.css-variable('table', 'background', 'row', 'hover', 'dark');
+  }
+}

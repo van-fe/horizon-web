@@ -1,4 +1,4 @@
-import type { LocaleSupportLangV2 } from '../config';
+import type { LocaleSupportLang } from '../config';
 
 export default {
   En: 'en',
@@ -10,4 +10,4 @@ export default {
   AE: 'ae',
   SG: 'en-sg',
   DE: 'de',
-} satisfies Record<LocaleSupportLangV2, string>;
+} satisfies Record<LocaleSupportLang, string>;

@@ -1,0 +1,37 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  font-size: (
+    small: #{function.css-variable('text-sm')},
+    medium: #{function.css-variable('text-base')},
+    large: #{function.css-variable('text-lg')},
+    heading: (
+      '1': #{function.css-variable('font-size-4')},
+      '2': #{function.css-variable('font-size-6')},
+      '3': #{function.css-variable('text-xl')},
+      '4': #{function.css-variable('text-lg')},
+      '5': #{function.css-variable('text-base')},
+      '6': #{function.css-variable('text-sm')},
+    ),
+  ),
+  line-height: #{function.css-variable('line-height-standard')},
+  color: (
+    '': #{function.css-variable('text-primary')},
+    secondary: #{function.css-variable('text-secondary')},
+    success: #{function.css-variable('text-success-default')},
+    warning: #{function.css-variable('text-warning-default')},
+    danger: #{function.css-variable('text-error-default')},
+    disabled: #{function.css-variable('text-disabled')},
+  ),
+  border-color: (
+    code: #{function.css-variable('border-default')},
+  ),
+  background: (
+    code: #{function.css-variable('bg-hover')},
+  ),
+  spacing: (
+    actions: (
+      gap: #{function.css-variable('spacing-2')},
+    ),
+  ),
+);

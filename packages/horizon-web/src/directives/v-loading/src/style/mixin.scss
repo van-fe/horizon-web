@@ -1,0 +1,124 @@
+@use 'sass:map';
+@use '../../../../styles/mixins';
+@use 'var';
+
+@mixin dots-size($size) {
+  &#{mixins.$modifier-separator}#{$size} {
+    $width: map.get(var.$dot-sizes, $size, 'width');
+    $height: map.get(var.$dot-sizes, $size, 'height');
+    $gap: map.get(var.$dot-sizes, $size, 'gap');
+    $dots-translate-x: map.get(var.$dot-sizes, $size, 'dots-translate-x');
+    $dots-right-left: map.get(var.$dot-sizes, $size, 'dots-right-left');
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .loading-wrap {
+      position: relative;
+      height: $height;
+      transform: translateX($dots-translate-x);
+
+      .dot {
+        width: $width;
+        height: $height;
+        border-radius: 50%;
+        transition: all 0.3s;
+      }
+
+      .dot-left {
+        position: absolute;
+        left: 0;
+        background-color: mixins.css-variable('v-loading-color--dots-left');
+        animation: left-ani 0.6s infinite;
+      }
+
+      .dot-right {
+        position: absolute;
+        left: $dots-right-left;
+        background: mixins.css-variable('v-loading-color--dots-right');
+        animation: right-ani 0.6s infinite;
+      }
+
+      @keyframes left-ani {
+        from {
+          left: 0;
+        }
+
+        to {
+          left: $dots-right-left;
+        }
+      }
+
+      @keyframes right-ani {
+        from {
+          left: $dots-right-left;
+        }
+
+        to {
+          left: 0;
+        }
+      }
+    }
+  }
+}
+
+@mixin circle-size($size) {
+  &#{mixins.$modifier-separator}#{$size} {
+    $width: map.get(var.$circle-sizes, $size, 'width');
+    $height: map.get(var.$circle-sizes, $size, 'height');
+    display: flex;
+    align-items: center;
+    width: $width;
+
+    .#{mixins.block('loading-icon')} {
+      width: $width;
+      height: $height;
+      color: mixins.css-variable('v-loading-color--circle');
+    }
+  }
+}
+
+@mixin dots-text-row-gap($size) {
+  &#{mixins.$modifier-separator}#{$size} {
+    margin-right: map.get(var.$dot-sizes, $size, 'dots-translate-x');
+    margin-left: map.get(var.$dot-sizes, $size, 'text-row-gap');
+    font-size: mixins.css-variable('v-loading-font-size');
+    font-style: normal;
+    font-weight: 420;
+    line-height: mixins.css-variable('v-loading-line-height');
+    color: mixins.css-variable('v-loading-color--text');
+  }
+}
+
+@mixin dots-text-column-gap($size) {
+  &#{mixins.$modifier-separator}#{$size} {
+    margin-top: map.get(var.$dot-sizes, $size, 'text-column-gap');
+    font-size: mixins.css-variable('v-loading-font-size');
+    font-style: normal;
+    font-weight: 420;
+    line-height: mixins.css-variable('v-loading-line-height');
+    color: mixins.css-variable('v-loading-color--text');
+  }
+}
+
+@mixin circle-text-row-gap($size) {
+  &#{mixins.$modifier-separator}#{$size} {
+    margin-left: map.get(var.$circle-sizes, $size, 'text-row-gap');
+    font-size: mixins.css-variable('v-loading-font-size');
+    font-style: normal;
+    font-weight: 420;
+    line-height: mixins.css-variable('v-loading-line-height');
+    color: mixins.css-variable('v-loading-color--text');
+  }
+}
+
+@mixin circle-text-column-gap($size) {
+  &#{mixins.$modifier-separator}#{$size} {
+    margin-top: map.get(var.$circle-sizes, $size, 'text-column-gap');
+    font-size: mixins.css-variable('v-loading-font-size');
+    font-style: normal;
+    font-weight: 420;
+    line-height: mixins.css-variable('v-loading-line-height');
+    color: mixins.css-variable('v-loading-color--text');
+  }
+}

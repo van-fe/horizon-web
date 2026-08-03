@@ -1,0 +1,120 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('typography') {
+  margin: 0;
+  font-size: mixins.css-variable('typography', 'font-size', 'medium');
+  line-height: mixins.css-variable('typography', 'line-height');
+  color: mixins.css-variable('typography', 'color');
+  overflow-wrap: anywhere;
+
+  @include mixins.m('secondary') {
+    color: mixins.css-variable('typography', 'color', 'secondary');
+  }
+
+  @include mixins.m('success') {
+    color: mixins.css-variable('typography', 'color', 'success');
+  }
+
+  @include mixins.m('warning') {
+    color: mixins.css-variable('typography', 'color', 'warning');
+  }
+
+  @include mixins.m('danger') {
+    color: mixins.css-variable('typography', 'color', 'danger');
+  }
+
+  @include mixins.m('small') {
+    font-size: mixins.css-variable('typography', 'font-size', 'small');
+  }
+
+  @include mixins.m('large') {
+    font-size: mixins.css-variable('typography', 'font-size', 'large');
+  }
+
+  @include mixins.m('regular') {
+    font-weight: 400;
+  }
+
+  @include mixins.m('medium') {
+    font-weight: 500;
+  }
+
+  @include mixins.m('semibold') {
+    font-weight: 600;
+  }
+
+  @include mixins.m('bold') {
+    font-weight: 700;
+  }
+
+  @include mixins.m('heading-1') {
+    font-size: mixins.css-variable('typography', 'font-size', 'heading', '1');
+  }
+
+  @include mixins.m('heading-2') {
+    font-size: mixins.css-variable('typography', 'font-size', 'heading', '2');
+  }
+
+  @include mixins.m('heading-3') {
+    font-size: mixins.css-variable('typography', 'font-size', 'heading', '3');
+  }
+
+  @include mixins.m('heading-4') {
+    font-size: mixins.css-variable('typography', 'font-size', 'heading', '4');
+  }
+
+  @include mixins.m('heading-5') {
+    font-size: mixins.css-variable('typography', 'font-size', 'heading', '5');
+  }
+
+  @include mixins.m('heading-6') {
+    font-size: mixins.css-variable('typography', 'font-size', 'heading', '6');
+  }
+
+  @include mixins.is('block') {
+    display: block;
+  }
+
+  @include mixins.is('italic') {
+    font-style: italic;
+  }
+
+  @include mixins.is('underline') {
+    text-decoration: underline;
+  }
+
+  @include mixins.is('deleted') {
+    text-decoration: line-through;
+  }
+
+  @include mixins.is('code') {
+    padding: 0 mixins.css-variable('spacing-1');
+    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    background: mixins.css-variable('typography', 'background', 'code');
+    border: 1px solid mixins.css-variable('typography', 'border-color', 'code');
+    border-radius: mixins.css-variable('radius-m');
+  }
+
+  @include mixins.is('ellipsis') {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: var(--h-typography-size-lines, 1);
+  }
+
+  @include mixins.is('disabled') {
+    color: mixins.css-variable('typography', 'color', 'disabled');
+    cursor: not-allowed;
+  }
+
+  @include mixins.e('actions') {
+    display: inline-flex;
+    gap: mixins.css-variable('typography', 'spacing', 'actions', 'gap');
+    margin-left: mixins.css-variable('spacing-2');
+    vertical-align: middle;
+  }
+
+  @include mixins.e('editor') {
+    max-width: 100%;
+  }
+}

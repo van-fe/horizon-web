@@ -1,0 +1,121 @@
+@use '../../../../../styles/mixins';
+
+@include mixins.b('input-number') {
+  @include mixins.m('emphasize') {
+    @include mixins.em('group', 'inner', false) {
+      color: mixins.css-variable('input-number', 'color', 'emphasize');
+      background: mixins.css-variable('input-number', 'background', 'emphasize');
+      border: mixins.css-variable('input-number', 'border', 'emphasize');
+      border-radius: mixins.css-variable('input-number', 'border-radius');
+      caret-color: mixins.css-variable('input-number', 'color', 'inner', 'caret');
+
+      @include mixins.has('prepend') {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+
+      @include mixins.has('append') {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      input {
+        color: mixins.css-variable('input-number', 'color', 'emphasize');
+      }
+    }
+
+    &:not(:focus-within) {
+      @include mixins.be('input-number', 'step-wrapper', false) {
+        display: none;
+      }
+    }
+
+    @include mixins.is-not('disabled') {
+      @include mixins.em('group', 'inner', false) {
+        @include mixins.e('inner') {
+          &::placeholder {
+            color: mixins.css-variable('input-number', 'color', 'placeholder', 'emphasize');
+          }
+        }
+
+        &:hover {
+          color: mixins.css-variable('input-number', 'color', 'emphasize', 'hover');
+          background: mixins.css-variable('input-number', 'background', 'emphasize', 'hover');
+          border-color: mixins.css-variable('input-number', 'border-color', 'emphasize', 'hover');
+
+          &::placeholder {
+            color: mixins.css-variable('input-number', 'color', 'placeholder', 'emphasize', 'hover');
+          }
+        }
+
+        &:active {
+          color: mixins.css-variable('input-number', 'color', 'emphasize', 'press');
+          background: mixins.css-variable('input-number', 'background', 'emphasize', 'press');
+          border-color: mixins.css-variable('input-number', 'border-color', 'emphasize', 'press');
+
+          &::placeholder {
+            color: mixins.css-variable('input-number', 'color', 'placeholder', 'emphasize', 'press');
+          }
+        }
+
+        &:focus-within {
+          color: mixins.css-variable('input-number', 'color', 'emphasize', 'focus');
+          background: mixins.css-variable('input-number', 'background', 'emphasize', 'focus');
+          border-color: mixins.css-variable('input-number', 'border-color', 'emphasize', 'focus');
+
+          &::placeholder {
+            color: mixins.css-variable('input-number', 'color', 'placeholder', 'emphasize', 'focus');
+          }
+        }
+      }
+    }
+
+    @include mixins.is('error') {
+      @include mixins.em('group', 'inner', false) {
+        color: mixins.css-variable('input-number', 'color', 'emphasize', 'error');
+        background: mixins.css-variable('input-number', 'background', 'emphasize', 'error');
+        border-color: mixins.css-variable('input-number', 'border-color', 'emphasize', 'error');
+
+        &::placeholder {
+          color: mixins.css-variable('input-number', 'color', 'placeholder', 'emphasize', 'error');
+        }
+      }
+    }
+
+    @include mixins.is('disabled') {
+      @include mixins.em('group', 'inner', false) {
+        color: mixins.css-variable('input-number', 'color', 'emphasize', 'disabled');
+        background: mixins.css-variable('input-number', 'background', 'emphasize', 'disabled');
+        border-color: mixins.css-variable('input-number', 'border-color', 'emphasize', 'disabled');
+
+        input {
+          color: mixins.css-variable('input-number', 'color', 'emphasize', 'disabled');
+        }
+
+        @include mixins.e('inner') {
+          &::placeholder {
+            color: mixins.css-variable('input-number', 'color', 'placeholder', 'emphasize', 'disabled');
+          }
+        }
+      }
+    }
+  }
+
+  @include mixins.parallel-modifier('emphasize', 'large') {
+    @include mixins.e('inner') {
+      padding: mixins.css-variable('input-number', 'spacing', 'inner', 'emphasize', 'padding', 'large');
+    }
+  }
+
+  @include mixins.parallel-modifier('emphasize', 'medium') {
+    @include mixins.e('inner') {
+      padding: mixins.css-variable('input-number', 'spacing', 'inner', 'emphasize', 'padding');
+    }
+  }
+
+  @include mixins.parallel-modifier('emphasize', 'small') {
+    @include mixins.e('inner') {
+      padding: mixins.css-variable('input-number', 'spacing', 'inner', 'emphasize', 'padding', 'small');
+    }
+  }
+}

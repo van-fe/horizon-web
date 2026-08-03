@@ -1,0 +1,60 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  size: (
+    actions-container: (
+      dropdown-btn: 28px,
+    ),
+  ),
+  line-height: (
+    actions-container: (
+      icon: #{function.css-variable('line-height-default')},
+    ),
+  ),
+  color: (
+    actions-container: (
+      dropdown-item: #{function.css-variable('text-primary')},
+    ),
+    image-list: (
+      item: (
+        overflow: #{function.css-variable('text-inverse')},
+      ),
+    ),
+  ),
+  border-radius: (
+    actions-container: (
+      dropdown-btn: #{function.css-variable('radius-s')},
+    ),
+  ),
+  background: (
+    placeholder: #{function.css-variable('bg-secondary')},
+    actions-container: (
+      '': #{function.css-variable('bg-overlay-weak')},
+      dropdown-btn: (
+        '': #{function.css-variable('bg-transparent')},
+        hover: #{function.css-variable('bg-overlay-weak')},
+      ),
+    ),
+    image-list: (
+      item: (
+        overflow: #{function.css-variable('bg-overlay-weak')},
+      ),
+    ),
+  ),
+  spacing: (
+    actions-container: (
+      bottom-right: (
+        padding-right: 10px,
+        padding-bottom: 10px,
+      ),
+      icon: (
+        margin-right: 10px,
+      ),
+      dropdown-item: (
+        span: (
+          margin-left: #{function.css-variable('spacing-3')},
+        ),
+      ),
+    ),
+  ),
+);

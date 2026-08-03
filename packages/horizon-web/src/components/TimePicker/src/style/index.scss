@@ -1,0 +1,129 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('time-picker') {
+  @include mixins.e('panels-wrapper') {
+    display: flex;
+    flex-direction: column;
+
+    @include mixins.m('header') {
+      display: flex;
+      align-items: center;
+      height: mixins.css-variable('time-picker', 'size', 'panel-header', 'height');
+      border-bottom: mixins.css-variable('time-picker', 'border', 'panel-column');
+
+      &-label {
+        flex: 1;
+        font-weight: mixins.css-variable('time-picker', 'font-weight', 'panel-header', 'label');
+        text-align: center;
+      }
+
+      &-separator {
+        display: flex;
+        flex: 0 0 20px;
+        align-items: center;
+        justify-content: center;
+        color: mixins.css-variable('time-picker', 'color', 'panels-header', 'separator');
+      }
+    }
+
+    @include mixins.m('body') {
+      display: flex;
+      flex: 1;
+      align-items: flex-start;
+      min-height: 0;
+    }
+
+    @include mixins.is('range') {
+      @include mixins.be('time-picker', 'time-panel', false) {
+        &:first-child {
+          border-right: mixins.css-variable('time-picker', 'border', 'panel');
+        }
+
+        &:last-child {
+          border-left: mixins.css-variable('time-picker', 'border', 'panel');
+        }
+      }
+    }
+  }
+
+  @include mixins.e('time-panel') {
+    display: flex;
+    flex: 1;
+    align-items: flex-start;
+    min-height: 0;
+    max-height: 100%;
+  }
+
+  @include mixins.e('time-column-panel') {
+    flex: 1;
+    height: 100%;
+    padding-top: mixins.css-variable('spacing-3');
+    border-right: mixins.css-variable('time-picker', 'border', 'panel-column');
+
+    &:last-child {
+      border-right: none;
+    }
+
+    @include mixins.m('option-list') {
+      margin: #{0 0
+        calc(
+          #{'var(--scrollbar-max-height, var(--scrollbar-height))' + ' - ' +
+            mixins.css-variable('time-picker', 'size', 'time-cell', 'height')}
+        )
+        0};
+    }
+  }
+
+  @include mixins.e('input-wrapper') {
+    display: flex;
+    align-items: center;
+
+    @include mixins.m('separator') {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: mixins.css-variable('time-picker', 'color', 'panels-header', 'separator');
+    }
+  }
+
+  @include mixins.e('time-cell') {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: flex-start;
+    height: mixins.css-variable('time-picker', 'size', 'time-cell', 'height');
+    padding: mixins.css-variable('time-picker', 'spacing', 'time-cell', 'padding');
+    background: mixins.css-variable('time-picker', 'background', 'time-cell');
+    cursor: pointer;
+    transition: mixins.css-variable('time-picker', 'transition', 'color-behavior');
+
+    @include mixins.is('disabled') {
+      color: mixins.css-variable('time-picker', 'color', 'time-cell', 'disabled');
+      cursor: not-allowed;
+
+      @include mixins.is('active') {
+        font-weight: mixins.css-variable('time-picker', 'font-weight', 'time-cell', 'active');
+        background: mixins.css-variable('time-picker', 'background', 'time-cell', 'disabled-active');
+      }
+    }
+
+    @include mixins.is-not('disabled') {
+      &:hover {
+        background: mixins.css-variable('time-picker', 'background', 'time-cell', 'hover');
+      }
+
+      @include mixins.is('active') {
+        font-weight: mixins.css-variable('time-picker', 'font-weight', 'time-cell', 'active');
+        background: mixins.css-variable('time-picker', 'background', 'time-cell', 'active');
+
+        &:hover {
+          background: mixins.css-variable('time-picker', 'background', 'time-cell', 'active-hover');
+        }
+      }
+    }
+  }
+
+  @include mixins.is('clearable') {
+    --h-picker-size-append-icon-width: 32px;
+  }
+}

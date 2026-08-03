@@ -1,4 +1,4 @@
-import type { LocaleSupportLangV2 } from '../lang';
+import type { LocaleSupportLang } from '../lang';
 
 export type LocaleNumberLocaleDictionary = {
   segmentsDigits: number;
@@ -13,6 +13,6 @@ export type LocaleNumberLocaleDictionary = {
 };
 
 export type LocaleNumberLocaleDictionaries = Record<
-  LocaleSupportLangV2,
+  LocaleSupportLang,
   LocaleNumberLocaleDictionary
 >;

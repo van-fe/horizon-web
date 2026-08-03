@@ -1,0 +1,27 @@
+@use '../../../../styles/mixins';
+
+@mixin outline() {
+  outline: none;
+
+  &:focus {
+    > #{mixins.element-name('title', mixins.block('menu'))},
+    > #{mixins.block-name('dropdown')} {
+      @include mixins.is-not('disabled') {
+        @include mixins.nested('menu__title--inner') {
+          position: relative;
+
+          &::after {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            border: mixins.css-variable('menu', 'border', 'outline');
+            border-radius: mixins.css-variable('menu', 'border-radius', 'item');
+            content: '';
+          }
+        }
+      }
+    }
+  }
+}

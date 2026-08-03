@@ -1,17 +1,17 @@
 <script setup lang="ts"></script>
 
 <template>
-  <n-row>
-    <n-col :span="24">
-      <n-button size="small" :auto-fit="true">Small</n-button>
-      <n-button size="medium" :auto-fit="true">Medium</n-button>
-      <n-button size="large" :auto-fit="true">Large</n-button>
-    </n-col>
-  </n-row>
+  <h-grid :gap="12">
+    <h-grid-item :span="24">
+      <h-button size="small" :auto-fit="true">Small</h-button>
+      <h-button size="medium" :auto-fit="true">Medium</h-button>
+      <h-button size="large" :auto-fit="true">Large</h-button>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <style scoped>
-.n-button + .n-button {
+.h-button + .h-button {
   margin-left: 10px;
 }
 </style>

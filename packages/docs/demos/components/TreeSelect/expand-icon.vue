@@ -1,0 +1,70 @@
+<template>
+  <h-grid :gap="12">
+    <h-grid-item :span="6">
+      <div class="demo-title">单选</div>
+      <h-tree-select
+        :tree-data="baseTreeData"
+        :fold-icon="customIcon"
+        :to-body="false"
+      />
+    </h-grid-item>
+    <h-grid-item :span="6">
+      <div class="demo-title">多选</div>
+      <h-tree-select
+        :tree-data="baseTreeData"
+        :fold-icon="customIcon"
+        :multiple="true"
+        :to-body="false"
+      />
+    </h-grid-item>
+    <h-grid-item :span="6">
+      <div class="demo-title">单选-加减符号</div>
+      <h-tree-select
+        :tree-data="baseTreeData"
+        :expand-icon="customIconExpand"
+        :fold-icon="customIconFold"
+        :to-body="false"
+      />
+    </h-grid-item>
+    <h-grid-item :span="6">
+      <div class="demo-title">多选-加减符号</div>
+      <h-tree-select
+        :tree-data="baseTreeData"
+        :expand-icon="customIconExpand"
+        :fold-icon="customIconFold"
+        :multiple="true"
+        :to-body="false"
+      />
+    </h-grid-item>
+  </h-grid>
+</template>
+
+<script setup lang="ts">
+import { onMounted, ref, h } from 'vue';
+import { IconArrowRight, IconAdd, IconReduce } from '@aurora/icon';
+
+const baseTreeData = ref([]);
+
+const customIcon = h(IconArrowRight, {
+  size: 12,
+});
+
+const customIconFold = h(IconAdd, {
+  size: 12,
+});
+
+const customIconExpand = h(IconReduce, {
+  size: 12,
+});
+
+onMounted(() => {
+  fetch(new URL('/tree-data.json', import.meta.url).href)
+    .then(res => res.json())
+    .then(res => {
+      baseTreeData.value = res;
+    });
+});
+</script>
+
+<style scoped>
+</style>

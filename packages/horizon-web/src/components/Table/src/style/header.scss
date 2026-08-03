@@ -1,0 +1,198 @@
+@use '../../../../styles/mixins';
+
+@include mixins.be('table', 'table-head') {
+  @include mixins.be('table', 'row', false) {
+    background: mixins.css-variable('table', 'background', 'header');
+  }
+
+  @include mixins.be('table', 'cell', false) {
+    position: sticky;
+    z-index: calc(#{mixins.css-variable('table', 'z-index')} + 1);
+    vertical-align: middle;
+    background: inherit;
+    pointer-events: none;
+
+    & > * {
+      pointer-events: auto;
+    }
+
+    @include mixins.is('draggable') {
+      cursor: grab;
+      user-select: none;
+      pointer-events: auto;
+    }
+
+    @include mixins.is('dragging') {
+      opacity: 0.55;
+      cursor: grabbing;
+    }
+
+    @include mixins.with-parallel-state('drag-over-before', 'drag-over-after') {
+      &::after {
+        position: absolute;
+        z-index: calc(#{mixins.css-variable('table', 'z-index')} + 4);
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: mixins.css-variable('table', 'border-color', 'header', 'divider', 'resizing');
+        pointer-events: none;
+        content: '';
+      }
+    }
+
+    @include mixins.is('drag-over-before') {
+      &::after {
+        left: -1px;
+      }
+    }
+
+    @include mixins.is('drag-over-after') {
+      &::after {
+        right: -1px;
+      }
+    }
+
+    @include mixins.is('header-bold') {
+      font-weight: mixins.css-variable('table', 'font-weight', 'header');
+    }
+
+    @include mixins.with-parallel-state('fixed-left', 'fixed-right') {
+      z-index: calc(#{mixins.css-variable('table', 'z-index')} + 2);
+    }
+
+    &-wrap {
+      @include mixins.is('sticky') {
+        position: sticky;
+      }
+    }
+  }
+
+  @include mixins.e('header') {
+    @include mixins.m('action-button-wrap') {
+      display: inline-flex;
+      flex-shrink: 0;
+      width: mixins.css-variable('table', 'size', 'sort-button');
+      height: mixins.css-variable('table', 'size', 'sort-button');
+      vertical-align: middle;
+      border-radius: mixins.css-variable('table', 'border-radius');
+      cursor: pointer;
+    }
+
+    @include mixins.m('sort') {
+      flex-direction: column;
+      grid-row-gap: 1px;
+      transition: mixins.css-variable('table', 'transition', 'color-behavior');
+
+      &-icon {
+        display: flex;
+        justify-content: center;
+        height: calc(#{mixins.css-variable('table', 'size', 'sort-button')} / 2);
+        transition: mixins.css-variable('table', 'transition', 'color-behavior');
+
+        @include mixins.is('asc') {
+          align-items: flex-end;
+          border-top-left-radius: mixins.css-variable('table', 'border-radius');
+          border-top-right-radius: mixins.css-variable('table', 'border-radius');
+
+          svg {
+            transform: translateY(1px);
+          }
+        }
+
+        @include mixins.is('desc') {
+          align-items: flex-start;
+          border-bottom-right-radius: mixins.css-variable('table', 'border-radius');
+          border-bottom-left-radius: mixins.css-variable('table', 'border-radius');
+
+          svg {
+            transform: translateY(-1px);
+          }
+        }
+
+        @include mixins.is('active') {
+          color: mixins.css-variable('table', 'color', 'header', 'sort', 'active');
+        }
+      }
+
+      @include mixins.is('disabled') {
+        color: mixins.css-variable('text', 'disabled');
+        cursor: not-allowed;
+      }
+
+      @include mixins.is('separated') {
+        @include mixins.em('header', 'sort-icon', false) {
+          &:hover {
+            background: mixins.css-variable('table', 'background', 'header', 'sort');
+          }
+        }
+      }
+
+      @include mixins.is-not('separated') {
+        &:hover {
+          background: mixins.css-variable('table', 'background', 'header', 'sort');
+        }
+      }
+    }
+
+    @include mixins.m('filter') {
+      align-items: center;
+      justify-content: center;
+    }
+
+    @include mixins.m('search-panel-wrapper') {
+      padding: 12px;
+    }
+
+    @include mixins.m('selection') {
+      line-height: initial;
+    }
+
+    @include mixins.m('divider') {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 1px;
+      height: 100%;
+
+      @include mixins.is('visible') {
+        background: mixins.css-variable('table', 'border-color', 'header', 'divider', 'column');
+      }
+
+      @include mixins.is('resizable') {
+        z-index: calc(#{mixins.css-variable('table', 'z-index')} + 3);
+        cursor: col-resize;
+        user-select: none;
+        pointer-events: auto;
+
+        &::before {
+          position: absolute;
+          top: 0;
+          left: 50%;
+          display: block;
+          width: 24px;
+          height: 100%;
+          transform: translateX(-50%);
+          content: '';
+        }
+      }
+    }
+  }
+
+  @include mixins.be('table', 'cell', false) {
+    @include mixins.is('last-column') {
+      @include mixins.em('header', 'divider', false) {
+        @include mixins.is('resizable') {
+          &::before {
+            width: 12px;
+            transform: translateX(-100%);
+          }
+        }
+      }
+    }
+  }
+
+  @include mixins.is('sticky-header') {
+    position: relative;
+    z-index: calc(#{mixins.css-variable('table', 'z-index')} + 3);
+  }
+}

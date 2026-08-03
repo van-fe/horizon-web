@@ -1,0 +1,96 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('menu') {
+  @include mixins.is('horizontal') {
+    position: relative;
+    border-bottom: mixins.css-variable('menu', 'border');
+    box-shadow: mixins.css-variable('menu', 'box-shadow', 'horizontal');
+
+    @include mixins.e('container') {
+      flex-direction: row;
+      width: 100%;
+      height: mixins.css-variable('menu', 'size', 'horizontal', 'height');
+      margin: 0 auto;
+    }
+
+    @include mixins.e('prepend') {
+      display: flex;
+      align-items: center;
+      padding: mixins.css-variable('menu', 'spacing', 'prepend', 'horizontal', 'padding');
+    }
+
+    @include mixins.e('inner') {
+      flex: 1;
+      min-width: 0;
+
+      > #{mixins.block-name('scrollbar')} {
+        > #{mixins.element-name('wrap', mixins.block('scrollbar'))} {
+          display: flex;
+          align-items: center;
+
+          > #{mixins.element-name('view', mixins.block('scrollbar'))} {
+            display: flex;
+            flex-direction: row;
+            grid-column-gap: mixins.css-variable('menu', 'spacing', 'item', 'horizontal', 'column-gap');
+          }
+        }
+      }
+    }
+
+    @include mixins.e('append') {
+      display: flex;
+      align-items: center;
+      padding: mixins.css-variable('menu', 'spacing', 'append', 'horizontal', 'padding');
+
+      @include mixins.m('inner') {
+        display: flex;
+        flex: 1;
+        grid-column-gap: mixins.css-variable('menu', 'spacing', 'append', 'vertical', 'column-gap');
+        align-items: center;
+        margin-left: mixins.css-variable('menu', 'spacing', 'append', 'vertical', 'column-gap');
+      }
+    }
+
+    @include mixins.e('title') {
+      height: mixins.css-variable('menu', 'size', 'menu-item', 'horizontal', 'height');
+      padding: 0;
+      border-bottom: mixins.css-variable('menu', 'border', 'title');
+
+      @include mixins.m('inner') {
+        padding: mixins.css-variable('menu', 'spacing', 'item', 'title', 'inner', 'horizontal', 'padding');
+      }
+
+      @include mixins.m('text') {
+        max-width: mixins.css-variable('menu', 'size', 'item-text', 'horizontal', 'max-width');
+      }
+    }
+
+    @include mixins.e('item', false) {
+      @include mixins.e('title', false) {
+        @include mixins.is('active') {
+          @include mixins.em('title', 'inner', false) {
+            background: transparent !important;
+          }
+        }
+      }
+    }
+
+    @include mixins.e('sub', false) {
+      @include mixins.e('title', false) {
+        @include mixins.is('selected') {
+          @include mixins.em('title', 'inner', false) {
+            background: transparent !important;
+          }
+        }
+      }
+    }
+
+    @include mixins.e('sub', false) {
+      @include mixins.e('title', false) {
+        @include mixins.is('active') {
+          font-weight: mixins.css-variable('menu', 'font-weight', 'title', 'active');
+        }
+      }
+    }
+  }
+}

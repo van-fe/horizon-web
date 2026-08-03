@@ -1,0 +1,187 @@
+@use 'sass:list';
+@use '../../../../styles/mixins';
+@use 'themes';
+
+@include mixins.b('picker') {
+  #{mixins.css-variable-name('tag', 'color', 'default', 'disabled')}: #{mixins.css-variable('picker', 'color', 'tag', 'disabled')};
+  #{mixins.css-variable-name('tag', 'background', 'default', 'disabled')}: #{mixins.css-variable('picker', 'background', 'tag', 'disabled')};
+
+  @include mixins.e('input') {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: mixins.css-variable('picker', 'size', 'height');
+    padding: mixins.css-variable('picker', 'spacing', 'input', 'outer', 'padding');
+    font-size: mixins.css-variable('picker', 'font-size');
+    line-height: 1;
+    border-radius: mixins.css-variable('picker', 'border-radius');
+    outline: none;
+    cursor: pointer;
+    transition: mixins.css-variable('picker', 'transition', 'border-color');
+
+    @include mixins.m('container') {
+      flex: 1;
+      min-width: 0;
+
+      @include mixins.nested('tag-group') {
+        // noinspection CssInvalidPropertyValue
+        max-width: -webkit-fill-available;
+      }
+
+      .#{mixins.$state-prefix}input-placeholder {
+        position: absolute;
+        opacity: 0;
+        user-select: none;
+      }
+    }
+
+    @include mixins.m('prepend') {
+      flex: 1;
+      overflow: hidden;
+
+      #{mixins.block-name('tag-group')} {
+        // noinspection CssInvalidPropertyValue
+        width: -webkit-fill-available;
+      }
+    }
+
+    @include mixins.m('inner') {
+      padding: mixins.css-variable('picker', 'spacing', 'input', 'padding');
+      transition: mixins.css-variable('picker', 'transition', 'color-background');
+      caret-color: mixins.css-variable('picker', 'color', 'caret');
+
+      @include mixins.is('readonly') {
+        // pointer-events: none;
+      }
+
+      &::placeholder {
+        transition: mixins.css-variable('picker', 'transition', 'color');
+      }
+    }
+
+    @include mixins.m('small') {
+      min-height: mixins.css-variable('picker', 'size', 'height', 'small');
+      padding: mixins.css-variable('picker', 'spacing', 'input', 'outer', 'padding', 'small');
+      font-size: mixins.css-variable('picker', 'font-size', 'small');
+      border-radius: mixins.css-variable('picker', 'border-radius', 'small');
+
+      @include mixins.standalone-modifier('inner') {
+        height: calc(
+          #{mixins.css-variable('picker', 'size', 'height', 'small')} -
+            #{mixins.css-variable('picker', 'spacing', 'input', 'outer', 'padding')} * 2
+        );
+        padding: mixins.css-variable('picker', 'spacing', 'input', 'padding', 'small');
+        font-size: mixins.css-variable('picker', 'font-size', 'small');
+      }
+
+      #{mixins.element-name('wrapper', mixins.block('picker-fit-content-input'))} {
+        height: calc(
+          #{mixins.css-variable('picker', 'size', 'height', 'small')} -
+            (
+              #{mixins.css-variable('picker', 'spacing', 'input', 'outer', 'padding-y', 'small')} +
+                1px
+            ) *
+            2
+        );
+      }
+    }
+
+    @include mixins.m('large') {
+      min-height: mixins.css-variable('picker', 'size', 'height', 'large');
+      padding: mixins.css-variable('picker', 'spacing', 'input', 'outer', 'padding', 'large');
+      font-size: mixins.css-variable('picker', 'font-size', 'large');
+
+      @include mixins.standalone-modifier('inner') {
+        height: calc(
+          #{mixins.css-variable('picker', 'size', 'height', 'large')} - 2px -
+            #{mixins.css-variable('picker', 'spacing', 'input', 'outer', 'padding-y', 'large')} * 2
+        );
+        padding: mixins.css-variable('picker', 'spacing', 'input', 'padding', 'large');
+        font-size: mixins.css-variable('picker', 'font-size', 'large');
+      }
+
+      #{mixins.element-name('wrapper', mixins.block('picker-fit-content-input'))} {
+        height: calc(
+          #{mixins.css-variable('picker', 'size', 'height', 'large')} - 2px -
+            #{mixins.css-variable('picker', 'spacing', 'input', 'outer', 'padding-y', 'large')} * 2
+        );
+      }
+    }
+
+    @include mixins.m('prepend-icon') {
+      min-width: mixins.css-variable('picker', 'size', 'prepend-icon', 'width');
+      margin-left: mixins.css-variable('picker', 'spacing', 'input', 'prepend-icon', 'margin-left');
+      color: mixins.css-variable('picker', 'color', 'input-prepend-icon');
+      line-height: 0;
+    }
+
+    @include mixins.em('input', 'icon', false) {
+      width: fit-content;
+    }
+
+    @include mixins.m('append-icon') {
+      min-width: mixins.css-variable('picker', 'size', 'append-icon', 'width');
+      line-height: 0;
+
+      @include mixins.nested('icon') {
+        transition: all mixins.css-variable('picker', 'transition', 'duration');
+        pointer-events: none;
+      }
+
+      @include mixins.standalone-modifier('icon') {
+        @include mixins.is('dropdown') {
+          @include mixins.nested('icon') {
+            transition: transform mixins.css-variable('picker', 'transition', 'duration');
+
+            @include mixins.is('rotated') {
+              transform: rotate(180deg);
+            }
+          }
+        }
+      }
+    }
+
+    @include mixins.em('input', 'icon', false) {
+      @include mixins.is('clear') {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        color: mixins.css-variable('picker', 'color', 'input', 'clear-icon');
+        background: mixins.css-variable('picker', 'background', 'input');
+        transform: translateY(-50%);
+        cursor: pointer;
+
+        &:hover {
+          color: mixins.css-variable('picker', 'color', 'input', 'clear-icon', 'hover');
+        }
+      }
+    }
+
+    @include mixins.is('inputable') {
+      @include mixins.em('input', 'inner', false) {
+        cursor: text;
+      }
+    }
+
+    @include mixins.is('disabled') {
+      cursor: not-allowed !important;
+
+      @include mixins.em('input', 'inner', false) {
+        cursor: not-allowed !important;
+
+        &::placeholder {
+          color: mixins.css-variable('picker', 'color', 'input-placeholder', 'disabled');
+        }
+      }
+    }
+
+    &:not(:focus) {
+      @include mixins.em('input', 'inner', false) {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}

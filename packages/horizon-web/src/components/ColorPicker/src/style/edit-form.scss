@@ -1,0 +1,96 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('color-picker-edit-form') {
+  display: flex;
+  grid-column-gap: mixins.css-variable('color-picker', 'spacing', 'edit-form', 'column-gap');
+  align-items: center;
+  width: 100%;
+
+  @include mixins.e('type-picker') {
+    #{mixins.css-variable-name('picker', 'size', 'normal', 'min-width')}: 64px;
+    #{mixins.css-variable-name('picker', 'spacing', 'input-append-icon', 'margin')}: 4px;
+
+    @include mixins.nested('picker__input') {
+      width: 64px;
+    }
+  }
+
+  @include mixins.e('hex-prefix') {
+    color: mixins.css-variable('color-picker', 'color', 'hex-prefix');
+  }
+
+  @include mixins.e('combine-input') {
+    display: flex;
+    flex: 1;
+    align-items: center;
+
+    @include mixins.prev('>', 'input') {
+      flex: 1 1 fit-content;
+      width: fit-content;
+      min-width: 0;
+
+      &:not(:last-child) {
+        @include mixins.be('input', 'inner-wrap', false) {
+          width: mixins.css-variable('color-picker', 'size', 'edit-form', 'number-input', 'width');
+          padding-left: mixins.css-variable('color-picker', 'spacing', 'edit-form-input', 'padding-x');
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+
+        @include mixins.bem('input-number', 'group', 'inner', false) {
+          width: mixins.css-variable('color-picker', 'size', 'edit-form', 'number-input', 'width');
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+
+        @include mixins.be('input-number', 'inner', false) {
+          padding: 0 mixins.css-variable('color-picker', 'spacing', 'edit-form-input', 'padding-x');
+        }
+      }
+
+      &:not(:first-child) {
+        @include mixins.be('input', 'inner-wrap', false) {
+          width: mixins.css-variable('color-picker', 'size', 'edit-form', 'number-input', 'width');
+          padding-left: mixins.css-variable('color-picker', 'spacing', 'edit-form-input', 'padding-x');
+          border-left: none;
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+        }
+
+        @include mixins.bem('input-number', 'group', 'inner', false) {
+          width: mixins.css-variable('color-picker', 'size', 'edit-form', 'number-input', 'width');
+          border-left: none;
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+        }
+
+        @include mixins.be('input-number', 'inner', false) {
+          padding: 0 mixins.css-variable('color-picker', 'spacing', 'edit-form-input', 'padding-x');
+        }
+      }
+
+      @include mixins.m('hex') {
+        @include mixins.be('input', 'inner-wrap', false) {
+          width: auto !important;
+          padding-left: mixins.css-variable('color-picker', 'spacing', 'edit-form-input', 'padding-x');
+        }
+
+        @include mixins.be('input', 'prefix', false) {
+          margin-right: mixins.css-variable('color-picker', 'spacing', 'edit-form-input', 'prefix', 'margin-right');
+        }
+      }
+
+      @include mixins.m('alpha') {
+        flex: 0 0 mixins.css-variable('color-picker', 'size', 'edit-form', 'alpha-input', 'width');
+
+        @include mixins.be('input-number', 'suffix', false) {
+          padding-right: 2px !important;
+
+          @include mixins.m('wrapper') {
+            min-width: 0;
+          }
+        }
+      }
+    }
+  }
+}

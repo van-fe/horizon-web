@@ -1,0 +1,39 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('result') {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: mixins.css-variable('result', 'spacing', 'margin');
+
+  @include mixins.e('icon') {
+    margin-bottom: mixins.css-variable('result', 'spacing', 'icon', 'margin-bottom');
+  }
+
+  @include mixins.e('title') {
+    display: -webkit-box;
+    margin-bottom: mixins.css-variable('result', 'spacing', 'title', 'margin-bottom');
+    overflow: hidden;
+    color: mixins.css-variable('result', 'color', 'title');
+    font-size: mixins.css-variable('result', 'font-size', 'title');
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+
+  @include mixins.e('subtitle') {
+    display: -webkit-box;
+    margin-bottom: mixins.css-variable('result', 'spacing', 'subtitle', 'margin-bottom');
+    overflow: hidden;
+    color: mixins.css-variable('result', 'color', 'subtitle');
+    font-size: mixins.css-variable('result', 'font-size', 'subtitle');
+    text-align: center;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  @include mixins.e('extra') {
+    @include mixins.siblings-block('button') {
+      margin-left: mixins.css-variable('result', 'spacing', 'siblings-button', 'margin-left');
+    }
+  }
+}

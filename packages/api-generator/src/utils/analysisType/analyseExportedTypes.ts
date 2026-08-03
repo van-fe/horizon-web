@@ -1,4 +1,4 @@
-import type { ApiGeneratorExportedPluginType } from '@nio-fe/shared';
+import type { ApiGeneratorExportedPluginType } from '@aurora/utils';
 import type { ExportDeclaration } from 'ts-morph';
 
 export function analyseExportedTypes(
@@ -15,7 +15,7 @@ export function analyseExportedTypes(
 
   const namedExports = statement
     .getNamedExports()
-    .filter(exports => /^N[A-Z]/.test(exports.getText()));
+    .filter(exports => /^H[A-Z]/.test(exports.getText()));
 
   namedExports &&
     exportedTypes.push({

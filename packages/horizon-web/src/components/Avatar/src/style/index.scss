@@ -1,0 +1,94 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('avatar') {
+  display: inline-flex;
+  flex: none;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-weight: mixins.css-variable('avatar', 'font-weight');
+  font-size: mixins.css-variable('avatar', 'font-size');
+  text-align: center;
+  background-color: mixins.css-variable('avatar', 'background');
+  border-radius: mixins.css-variable('avatar', 'border-radius', 'circle');
+
+  @include mixins.e('img') {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  @include mixins.e('txt') {
+    line-height: mixins.css-variable('line-height-default');
+  }
+
+  @include mixins.m('mini') {
+    width: 24px;
+    height: 24px;
+  }
+
+  @include mixins.m('small') {
+    width: 32px;
+    height: 32px;
+  }
+
+  @include mixins.m('smedium') {
+    width: 40px;
+    height: 40px;
+  }
+
+  @include mixins.m('medium') {
+    width: 56px;
+    height: 56px;
+    font-size: mixins.css-variable('avatar', 'font-size', 'medium');
+  }
+
+  @include mixins.m('large') {
+    width: 80px;
+    height: 80px;
+    font-size: mixins.css-variable('avatar', 'font-size', 'large');
+  }
+
+  @include mixins.m('work') {
+    flex-direction: column;
+    color: mixins.css-variable('avatar', 'color', 'work');
+    border: 1.5px solid mixins.css-variable('avatar', 'border-color', 'work');
+  }
+
+  @include mixins.m('normal') {
+    padding: 0;
+  }
+}
+
+@include mixins.b('avatar') {
+  @include mixins.parallel-modifier('work', 'mini') {
+    @include mixins.be('avatar', 'icon', false) {
+      font-size: mixins.css-variable('avatar', 'font-size', 'work', 'mini');
+    }
+  }
+
+  @include mixins.parallel-modifier('work', 'small') {
+    @include mixins.be('avatar', 'icon', false) {
+      font-size: mixins.css-variable('avatar', 'font-size', 'work', 'small');
+    }
+  }
+
+  @include mixins.parallel-modifier('work', 'smedium') {
+    @include mixins.be('avatar', 'icon', false) {
+      font-size: mixins.css-variable('avatar', 'font-size', 'work', 'smedium');
+    }
+  }
+
+  @include mixins.parallel-modifier('work', 'medium') {
+    @include mixins.be('avatar', 'icon', false) {
+      font-size: mixins.css-variable('avatar', 'font-size', 'work', 'medium');
+    }
+  }
+
+  @include mixins.parallel-modifier('work', 'large') {
+    @include mixins.be('avatar', 'icon', false) {
+      font-size: mixins.css-variable('avatar', 'font-size', 'work', 'large');
+    }
+  }
+}

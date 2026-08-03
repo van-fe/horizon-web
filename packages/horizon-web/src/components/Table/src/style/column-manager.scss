@@ -1,0 +1,53 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('table') {
+  @include mixins.e('column-manager') {
+    position: absolute;
+    top: 0;
+    right: mixins.css-variable('table', 'spacing', 'cell', 'x', 'padding');
+    z-index: calc(#{mixins.css-variable('table', 'z-index')} + 5);
+    display: flex;
+    align-items: center;
+    height: mixins.css-variable-with-default-value('table-size-header-row-height', '46px');
+
+    @include mixins.m('popper') {
+      @include mixins.nested('picker__pop-content--container') {
+        padding: 0 8px;
+      }
+    }
+
+    @include mixins.m('item') {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: normal;
+
+      &-content {
+        @include mixins.is('disabled') {
+          color: mixins.css-variable('table', 'color', 'header', 'column-manager', 'disabled');
+          cursor: not-allowed;
+        }
+      }
+
+      &-action {
+        display: flex;
+        align-items: center;
+        padding: mixins.css-variable('table', 'spacing', 'column-manager', 'item', 'action', 'padding');
+      }
+
+      &-action-button {
+        @include mixins.is-not('always-visible') {
+          display: none;
+          color: mixins.css-variable('table', 'color', 'header', 'column-manager', 'not-active');
+        }
+      }
+
+      &:hover {
+        @include mixins.em('column-manager', 'item-action-button', false) {
+          display: inline-flex;
+          color: mixins.css-variable('table', 'color', 'header', 'column-manager', 'active');
+        }
+      }
+    }
+  }
+}

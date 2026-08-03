@@ -1,0 +1,80 @@
+@use '../../../../styles/mixins';
+@use '../../../../directives/v-loading/src/style/loading-icon';
+
+@include mixins.b('spin') {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: mixins.css-variable('spin', 'color', 'indicator');
+
+  @include mixins.e('indicator') {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @include mixins.e('icon') {
+    width: 1em;
+    height: 1em;
+  }
+
+  @include mixins.e('tip') {
+    margin-top: mixins.css-variable('spin', 'spacing', 'tip', 'margin-top');
+    font-size: mixins.css-variable('text-sm');
+    color: mixins.css-variable('spin', 'color', 'tip');
+  }
+
+  @include mixins.e('content') {
+    width: 100%;
+    transition: opacity mixins.css-variable('transition-time-fast');
+  }
+
+  @include mixins.e('overlay') {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @include mixins.m('small') {
+    @include mixins.e('indicator') {
+      font-size: mixins.css-variable('spin', 'font-size', 'indicator', 'small');
+    }
+  }
+
+  @include mixins.m('medium') {
+    @include mixins.e('indicator') {
+      font-size: mixins.css-variable('spin', 'font-size', 'indicator', 'medium');
+    }
+  }
+
+  @include mixins.m('large') {
+    @include mixins.e('indicator') {
+      font-size: mixins.css-variable('spin', 'font-size', 'indicator', 'large');
+    }
+  }
+
+  @include mixins.is('nested') {
+    position: relative;
+    display: block;
+    width: 100%;
+  }
+
+  @include mixins.is('masked') {
+    @include mixins.e('overlay') {
+      background: mixins.css-variable('spin', 'background', 'mask');
+    }
+  }
+
+  @include mixins.is('fullscreen') {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    width: 100vw;
+    height: 100vh;
+    background: mixins.css-variable('spin', 'background', 'mask');
+  }
+}

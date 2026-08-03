@@ -1,0 +1,12 @@
+@use '../../../../styles/mixins';
+@use 'item';
+@use 'size';
+@use 'dot';
+@use 'vertical';
+@use 'clickable';
+@use 'labelVertical';
+@use 'labelAlign';
+
+@include mixins.b('steps') {
+  display: flex;
+}

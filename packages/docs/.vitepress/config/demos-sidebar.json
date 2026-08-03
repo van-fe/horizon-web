@@ -1,0 +1,167 @@
+[
+  {
+    "zh": "基础组件",
+    "en": "Basic Components",
+    "items": [
+      { "link": "components/Affix", "zh": "Affix 固钉", "en": "Affix" },
+      { "link": "components/Application", "zh": "Application 应用", "en": "Application" },
+      { "link": "components/Backtop", "zh": "Backtop 回到顶部", "en": "Backtop" },
+      { "link": "components/Button", "zh": "Button 按钮", "en": "Button" },
+      { "link": "components/Count", "zh": "Count 数字动画", "en": "Count" },
+      { "link": "components/FloatButton", "zh": "FloatButton 悬浮按钮", "en": "FloatButton" },
+      { "link": "components/Hover", "zh": "Hover 悬浮", "en": "Hover" },
+      { "link": "components/Icon", "zh": "Icon 图标", "en": "Icon" },
+      { "link": "components/Link", "zh": "Link 链接", "en": "Link" },
+      { "link": "components/Mask", "zh": "Mask 遮罩", "en": "Mask" },
+      { "link": "components/Transition", "zh": "Transition 过渡", "en": "Transition" },
+      { "link": "components/Typography", "zh": "Typography 排版", "en": "Typography" },
+      { "link": "components/Watermark", "zh": "Watermark 水印", "en": "Watermark" }
+    ]
+  },
+  {
+    "zh": "状态反馈",
+    "en": "Status Feedback",
+    "items": [
+      { "link": "components/Alert", "zh": "Alert 警告", "en": "Alert" },
+      { "link": "components/Empty", "zh": "Empty 空状态", "en": "Empty" },
+      { "link": "components/Result", "zh": "Result 结果", "en": "Result" },
+      { "link": "components/Skeleton", "zh": "Skeleton 骨架屏", "en": "Skeleton" },
+      { "link": "components/Spin", "zh": "Spin 加载中", "en": "Spin" }
+    ]
+  },
+  {
+    "zh": "图标/头像",
+    "en": "Icons & Avatars",
+    "items": [
+      { "link": "components/Avatar", "zh": "Avatar 头像", "en": "Avatar" },
+      { "link": "components/Badge", "zh": "Badge 徽标", "en": "Badge" },
+      { "link": "components/Image", "zh": "Image 图片", "en": "Image" }
+    ]
+  },
+  {
+    "zh": "布局组件",
+    "en": "Layout Components",
+    "items": [
+      { "link": "components/Container", "zh": "Container 容器", "en": "Container" },
+      { "link": "components/Divider", "zh": "Divider 分割线", "en": "Divider" },
+      { "link": "components/Layout", "zh": "Layout 布局", "en": "Layout" },
+      { "link": "components/Space", "zh": "Space 间距", "en": "Space" },
+      { "link": "components/Splitter", "zh": "Splitter 分割面板", "en": "Splitter" }
+    ]
+  },
+  {
+    "zh": "表单组件",
+    "en": "Form Components",
+    "items": [
+      { "link": "components/AutoComplete", "zh": "AutoComplete 自动完成", "en": "AutoComplete" },
+      { "link": "components/ChatBubble", "zh": "ChatBubble 对话气泡", "en": "ChatBubble" },
+      { "link": "components/Cascader", "zh": "Cascader 级联选择器", "en": "Cascader" },
+      { "link": "components/Checkbox", "zh": "Checkbox 复选框", "en": "Checkbox" },
+      { "link": "components/ColorPicker", "zh": "ColorPicker 颜色选择器", "en": "ColorPicker" },
+      { "link": "components/DatePicker", "zh": "DatePicker 日期选择器", "en": "DatePicker" },
+      { "link": "components/Form", "zh": "Form 表单", "en": "Form" },
+      { "link": "components/Input", "zh": "Input 输入框", "en": "Input" },
+      { "link": "components/InputOtp", "zh": "InputOtp 验证码输入框", "en": "InputOtp" },
+      { "link": "components/InputNumber", "zh": "InputNumber 数字输入框", "en": "InputNumber" },
+      { "link": "components/Mentions", "zh": "Mentions 提及", "en": "Mentions" },
+      { "link": "components/LicensePlateInput", "zh": "LicensePlateInput 车牌号输入", "en": "LicensePlateInput" },
+      { "link": "components/Picker", "zh": "Picker 选择器", "en": "Picker" },
+      { "link": "components/Progress", "zh": "Progress 进度条", "en": "Progress" },
+      { "link": "components/Radio", "zh": "Radio 单选框", "en": "Radio" },
+      { "link": "components/Rate", "zh": "Rate 评分", "en": "Rate" },
+      { "link": "components/Select", "zh": "Select 选择器", "en": "Select" },
+      { "link": "components/Slider", "zh": "Slider 滑块", "en": "Slider" },
+      { "link": "components/Switch", "zh": "Switch 开关", "en": "Switch" },
+      { "link": "components/TimePicker", "zh": "TimePicker 时间选择器", "en": "TimePicker" },
+      { "link": "components/TimeSelect", "zh": "TimeSelect 时间选择", "en": "TimeSelect" },
+      { "link": "components/Timeline", "zh": "Timeline 时间轴", "en": "Timeline" },
+      { "link": "components/TreeSelect", "zh": "TreeSelect 树形选择器", "en": "TreeSelect" },
+      { "link": "components/Upload", "zh": "Upload 上传", "en": "Upload" }
+    ]
+  },
+  {
+    "zh": "反馈组件",
+    "en": "Feedback Components",
+    "items": [
+      { "link": "components/Dialog", "zh": "Dialog 对话框", "en": "Dialog" },
+      { "link": "components/Drawer", "zh": "Drawer 抽屉", "en": "Drawer" },
+      { "link": "components/Guide", "zh": "Guide 引导", "en": "Guide" },
+      { "link": "components/Popover", "zh": "Popover 气泡卡片", "en": "Popover" },
+      { "link": "components/Popconfirm", "zh": "Popconfirm 气泡确认", "en": "Popconfirm" },
+      { "link": "components/Tooltip", "zh": "Tooltip 文字提示", "en": "Tooltip" }
+    ]
+  },
+  {
+    "zh": "数据展示",
+    "en": "Data Display",
+    "items": [
+      { "link": "components/Calendar", "zh": "Calendar 日历", "en": "Calendar" },
+      { "link": "components/Carousel", "zh": "Carousel 走马灯", "en": "Carousel" },
+      { "link": "components/Card", "zh": "Card 卡片", "en": "Card" },
+      { "link": "components/Collapse", "zh": "Collapse 折叠面板", "en": "Collapse" },
+      { "link": "components/Descriptions", "zh": "Descriptions 描述列表", "en": "Descriptions" },
+      { "link": "components/QRCode", "zh": "QRCode 二维码", "en": "QRCode" },
+      { "link": "components/List", "zh": "List 列表", "en": "List" },
+      { "link": "components/Panels", "zh": "Panels 面板", "en": "Panels" },
+      { "link": "components/Statistic", "zh": "Statistic 统计数值", "en": "Statistic" },
+      { "link": "components/Table", "zh": "Table 表格", "en": "Table" },
+      { "link": "components/Tag", "zh": "Tag 标签", "en": "Tag" },
+      { "link": "components/Time", "zh": "Time 时间", "en": "Time" },
+      { "link": "components/Transfer", "zh": "Transfer 穿梭框", "en": "Transfer" },
+      { "link": "components/Tree", "zh": "Tree 树形控件", "en": "Tree" },
+      { "link": "components/VirtualScroller", "zh": "VirtualScroller 虚拟滚动", "en": "VirtualScroller" }
+    ]
+  },
+  {
+    "zh": "媒体组件",
+    "en": "Media Components",
+    "items": [
+      { "link": "components/AudioPlayer", "zh": "AudioPlayer 音频播放器", "en": "AudioPlayer" },
+      { "link": "components/ImageCropper", "zh": "ImageCropper 图片裁剪", "en": "ImageCropper" },
+      { "link": "components/VideoPlayer", "zh": "VideoPlayer 视频播放器", "en": "VideoPlayer" },
+      { "link": "components/Viewer", "zh": "Viewer 查看器", "en": "Viewer" }
+    ]
+  },
+  {
+    "zh": "导航组件",
+    "en": "Navigation Components",
+    "items": [
+      { "link": "components/Anchor", "zh": "Anchor 锚点", "en": "Anchor" },
+      { "link": "components/Breadcrumb", "zh": "Breadcrumb 面包屑", "en": "Breadcrumb" },
+      { "link": "components/Controls", "zh": "Controls 控制器", "en": "Controls" },
+      { "link": "components/CommandPalette", "zh": "CommandPalette 命令面板", "en": "CommandPalette" },
+      { "link": "components/Dropdown", "zh": "Dropdown 下拉菜单", "en": "Dropdown" },
+      { "link": "components/Menu", "zh": "Menu 菜单", "en": "Menu" },
+      { "link": "components/PageHeader", "zh": "PageHeader 页头", "en": "PageHeader" },
+      { "link": "components/Pagination", "zh": "Pagination 分页", "en": "Pagination" },
+      { "link": "components/Scrollbar", "zh": "Scrollbar 滚动条", "en": "Scrollbar" },
+      { "link": "components/Segmented", "zh": "Segmented 分段控制器", "en": "Segmented" },
+      { "link": "components/Steps", "zh": "Steps 步骤条", "en": "Steps" },
+      { "link": "components/Tabs", "zh": "Tabs 标签页", "en": "Tabs" }
+    ]
+  },
+  {
+    "zh": "指令",
+    "en": "Directives",
+    "items": [
+      { "link": "directives/v-click-outside", "zh": "v-click-outside 点击外部", "en": "v-click-outside" },
+      { "link": "directives/v-draggable", "zh": "v-draggable 拖拽", "en": "v-draggable" },
+      { "link": "directives/v-infinite-scroll", "zh": "v-infinite-scroll 无限滚动", "en": "v-infinite-scroll" },
+      { "link": "directives/v-loading", "zh": "v-loading 加载", "en": "v-loading" },
+      { "link": "directives/v-popconfirm", "zh": "v-popconfirm 气泡确认", "en": "v-popconfirm" },
+      { "link": "directives/v-safe-html", "zh": "v-safe-html 安全HTML", "en": "v-safe-html" },
+      { "link": "directives/v-tooltip", "zh": "v-tooltip 文字提示", "en": "v-tooltip" },
+      { "link": "directives/v-watermark", "zh": "v-watermark 水印", "en": "v-watermark" }
+    ]
+  },
+  {
+    "zh": "方法",
+    "en": "Methods",
+    "items": [
+      { "link": "methods/LoadingBar", "zh": "LoadingBar 加载进度条", "en": "LoadingBar" },
+      { "link": "methods/Message", "zh": "Message 消息提示", "en": "Message" },
+      { "link": "methods/MessageBox", "zh": "MessageBox 消息框", "en": "MessageBox" },
+      { "link": "methods/Notification", "zh": "Notification 通知", "en": "Notification" }
+    ]
+  }
+]

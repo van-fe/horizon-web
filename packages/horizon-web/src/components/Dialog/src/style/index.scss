@@ -1,0 +1,204 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('dialog') {
+  position: absolute;
+
+  @include mixins.e('mask') {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: mixins.css-variable('dialog', 'background', 'mask');
+  }
+
+  @include mixins.e('container') {
+    position: fixed;
+    right: 0;
+    left: 0;
+
+    // top: 0;
+    display: flex;
+
+    /** 当屏幕较小时，离边框要有点空间 */
+    max-width: 92%;
+    max-height: 84%;
+    margin: mixins.css-variable('dialog', 'spacing', 'container', 'margin');
+
+    // padding: mixins.css-variable('dialog', 'spacing', 'container', 'padding');
+    background: mixins.css-variable('dialog', 'background', 'container');
+    border-radius: mixins.css-variable('dialog', 'border-radius', 'container');
+    box-shadow: mixins.css-variable('dialog', 'box-shadow', 'container');
+  }
+
+  @include mixins.m('center') {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  @include mixins.m('small') {
+    width: 420px;
+    max-height: 50%;
+  }
+
+  @include mixins.m('medium') {
+    width: 640px;
+    max-height: 72%;
+  }
+
+  @include mixins.m('large') {
+    width: 800px;
+    max-height: 84%;
+  }
+
+  @include mixins.m('huge') {
+    width: 72%;
+    min-width: 920px;
+    max-width: 92%;
+    max-height: 92%;
+  }
+
+  @include mixins.e('icon-box') {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    margin-top: mixins.css-variable('dialog', 'spacing', 'container', 'padding');
+
+    // margin-right: mixins.css-variable('dialog', 'spacing', 'icon', 'margin-right');
+    margin-left: mixins.css-variable('dialog', 'spacing', 'container', 'padding');
+  }
+  @include mixins.e('icon') {
+    flex: none;
+    line-height: mixins.css-variable('dialog', 'line-height', 'icon');
+  }
+
+  @include mixins.e('inner') {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  @include mixins.e('main') {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+
+    @include mixins.m('icon-offset') {
+      margin-left: calc(
+        (mixins.css-variable('dialog', 'spacing', 'container', 'padding') / 2) * -1
+      );
+    }
+  }
+
+  @include mixins.e('header') {
+    flex: none;
+    padding: mixins.css-variable('dialog', 'spacing', 'header', 'padding');
+
+    @include mixins.m('draggable') {
+      cursor: move;
+    }
+
+    @include mixins.m('moving') {
+      user-select: none;
+    }
+  }
+
+  @include mixins.e('default-title') {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: mixins.css-variable('dialog', 'font-weight', 'title');
+    font-size: mixins.css-variable('dialog', 'font-size', 'title');
+    line-height: mixins.css-variable('dialog', 'line-height', 'title');
+
+    @include mixins.nested('icon') {
+      cursor: pointer;
+    }
+
+    @include mixins.m('text') {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+    }
+  }
+
+  @include mixins.e('header-close') {
+    flex-shrink: 0;
+  }
+
+  @include mixins.e('body') {
+    flex: 1;
+
+    /** note: 暂不考虑书写方向间距，只使用 padding/margin */
+    // margin: calc(0px - #{mixins.css-variable('dialog', 'spacing', 'container', 'padding')});
+    // padding: mixins.css-variable('dialog', 'spacing', 'container', 'padding');
+    margin: mixins.css-variable('dialog', 'spacing', 'body', 'margin');
+    padding: mixins.css-variable('dialog', 'spacing', 'body', 'padding');
+    overflow: auto;
+  }
+
+  @include mixins.e('footer') {
+    flex: none;
+    margin-top: mixins.css-variable('dialog', 'spacing', 'footer', 'margin-top');
+    padding: mixins.css-variable('dialog', 'spacing', 'footer', 'padding');
+  }
+
+  @include mixins.e('default-footer') {
+    text-align: right;
+  }
+
+  @include mixins.e('normal-enter-active') {
+    transform-origin: center top;
+    animation: #{mixins.block('dialog-fade')} 0.4s cubic-bezier(0.25, 1.25, 0.3, 1);
+  }
+  @include mixins.e('normal-leave-active') {
+    transform-origin: center top;
+    animation: #{mixins.block('dialog-fade')} 0.2s reverse cubic-bezier(0.32, 0, 0.67, 0);
+  }
+
+  @include mixins.e('move-enter-active') {
+    transform-origin: center top;
+    animation: #{mixins.block('dialog-fade-move')} 0.4s cubic-bezier(0.25, 1.25, 0.3, 1);
+  }
+  @include mixins.e('move-leave-active') {
+    transform-origin: center top;
+    animation: #{mixins.block('dialog-fade-move')} 0.2s reverse cubic-bezier(0.32, 0, 0.67, 0);
+  }
+
+  @keyframes #{mixins.block('dialog-fade-move')} {
+    0% {
+      transform: scale(0.7) translateY(-50%);
+
+      // transform: scale(0);
+      opacity: 0;
+    }
+
+    100% {
+      transform: scale(1) translateY(-50%);
+
+      // transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes #{mixins.block('dialog-fade')} {
+    0% {
+      transform: scale(0.7);
+      opacity: 0;
+    }
+
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+}
+
+[data-popup-parent-hidden] {
+  overflow: hidden;
+}

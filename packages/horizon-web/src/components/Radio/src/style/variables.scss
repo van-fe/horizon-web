@@ -1,0 +1,128 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  size: (
+    indicator: 16px,
+    height: (
+      medium: 32px,
+      large: 40px,
+    ),
+  ),
+  font-size: (
+    '': #{function.css-variable('text-base')},
+    button: #{function.css-variable('text-base')},
+    large: #{function.css-variable('text-lg')},
+  ),
+  color: (
+    '': #{function.css-variable('text-primary')},
+    checked: #{function.css-variable('text-brand-default')},
+    disabled: #{function.css-variable('text-secondary')},
+    viewable: (
+      '': #{function.css-variable('text-primary')},
+      hover: #{function.css-variable('text-primary')},
+    ),
+    bordered: (
+      '': #{function.css-variable('text-primary')},
+      disabled: #{function.css-variable('text-disabled')},
+    ),
+    button: (
+      '': #{function.css-variable('text-primary')},
+      hover: #{function.css-variable('text-brand-hover')},
+      checked: (
+        '': #{function.css-variable('text-inverse')},
+        hover: #{function.css-variable('text-inverse')},
+        disabled: (
+          '': #{function.css-variable('text-disabled')},
+          hover: #{function.css-variable('text-disabled')},
+        ),
+      ),
+      disabled: (
+        '': #{function.css-variable('text-disabled')},
+        hover: #{function.css-variable('text-disabled')},
+      ),
+    ),
+    label: (
+      checked: #{function.css-variable('text-primary')},
+    ),
+  ),
+  border-color: (
+    '': #{function.css-variable('border-default')},
+    indicator: (
+      disabled: (
+        '': #{function.css-variable('text-disabled')},
+        hover: #{function.css-variable('text-disabled')},
+      ),
+      checked: (
+        '': #{function.css-variable('border-brand-default')},
+        hover: #{function.css-variable('border-brand-default')},
+      ),
+      hover: #{function.css-variable('border-brand-hover')},
+    ),
+    disabled: #{function.css-variable('border-default')},
+    checked: #{function.css-variable('border-brand-default')},
+    bordered: (
+      '': #{function.css-variable('border-default')},
+      hover: #{function.css-variable('border-brand-hover')},
+    ),
+    button: (
+      '': #{function.css-variable('border-default')},
+      checked: #{function.css-variable('border-brand-default')},
+    ),
+  ),
+  border: (
+    '': 1px solid #{function.css-variable('radio', 'border-color')},
+    indicator: (
+      checked: 5px solid #{function.css-variable('radio', 'border-color', 'indicator', 'checked')},
+    ),
+    bordered: 1px solid #{function.css-variable('radio', 'border-color', 'bordered')},
+    button: (
+      '': 1px solid #{function.css-variable('radio', 'border-color', 'button')},
+      checked: 1px solid #{function.css-variable('radio', 'border-color', 'button', 'checked')},
+    ),
+  ),
+  border-radius: (
+    indicator: #{function.css-variable('radius-circle')},
+    bordered: #{function.css-variable('radius-m')},
+    button: #{function.css-variable('radius-m')},
+  ),
+  background: (
+    indicator: (
+      checked: (
+        '': #{function.css-variable('text-inverse')},
+        disabled: #{function.css-variable('bg-disabled')},
+      ),
+    ),
+    viewable: #{function.css-variable('bg-transparent')},
+    bordered: (
+      disabled: #{function.css-variable('bg-disabled')},
+    ),
+    button: (
+      '': #{function.css-variable('bg-default')},
+      checked: (
+        '': #{function.css-variable('bg-brand-default')},
+        disabled: #{function.css-variable('bg-disabled')},
+      ),
+    ),
+  ),
+  spacing: (
+    indicator: (
+      margin-right: #{function.css-variable('spacing-3')},
+    ),
+    siblings: (
+      margin-right: #{function.css-variable('spacing-5')},
+    ),
+    bordered: (
+      padding: 5px #{function.css-variable('spacing-7')} 5px #{function.css-variable('spacing-4')},
+    ),
+    viewable: (
+      padding: 0,
+    ),
+    button: (
+      padding: #{function.css-variable('spacing-5')},
+    ),
+  ),
+  box-shadow: -1px 0 0 0 #{function.css-variable('bg-brand-default')},
+  transition: (
+    all: #{function.css-variable('transition-all--fast')},
+  ),
+);

@@ -1,0 +1,11 @@
+@use '../../../../styles/mixins';
+
+$values: (
+  spacing: (
+    panel: (
+      scrollbar: (
+        margin: #{mixins.css-variable('spacing-3') 0},
+      ),
+    ),
+  ),
+);

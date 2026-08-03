@@ -1,0 +1,46 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  size: (
+    min: (
+      width: 40px,
+    ),
+    max: (
+      width: 296px,
+    ),
+    arrow: (
+      '': 12px,
+      offset: calc(-1 * #{function.css-variable('tooltip', 'size', 'arrow')} / 2),
+    ),
+  ),
+  font-size: (
+    '': function.css-variable('text-sm'),
+    small: function.css-variable('text-sm'),
+    large: function.css-variable('text-base'),
+  ),
+  font-weight: function.css-variable('weight-normal'),
+  line-height: function.css-variable('line-height-standard'),
+  color: (
+    '': function.css-variable('text-inverse'),
+    light: function.css-variable('text-primary'),
+  ),
+  border-color: (
+    '': function.css-variable('tooltip', 'background'),
+    light: function.css-variable('border', 'hover'),
+  ),
+  border-radius: function.css-variable('radius-m'),
+  background: (
+    '': function.css-variable('text-primary'),
+    light: function.css-variable('bg-default'),
+  ),
+  spacing: (
+    padding: (
+      '': calc(#{function.css-variable('spacing-3')} - 1px),
+      small: function.css-variable('spacing-2'),
+      large: function.css-variable('spacing-4'),
+    ),
+  ),
+  transition: (
+    time: function.css-variable('transition', 'time'),
+  ),
+);

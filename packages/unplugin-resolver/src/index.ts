@@ -1,6 +1,6 @@
 import components from './components.json';
 import directives from './directives.json';
-import { useNamespace, pascalize } from '@nio-fe/shared';
+import { useNamespace, pascalize } from '@aurora/utils';
 import type { Lib } from 'vite-plugin-style-import';
 
 enum PluginResolverType {
@@ -8,7 +8,7 @@ enum PluginResolverType {
   Directive = 'directive',
 }
 
-export interface LegoBaseResolverOption {
+export interface HorizonWebBaseResolverOption {
   /**
    * exclusions
    */
@@ -25,7 +25,7 @@ export interface LegoBaseResolverOption {
   importStyle?: 'scss' | 'css' | false;
 }
 
-export interface LegoResolverOption extends LegoBaseResolverOption {
+export interface HorizonWebResolverOption extends HorizonWebBaseResolverOption {
   /**
    * Whether directive is included
    * @default true
@@ -33,24 +33,12 @@ export interface LegoResolverOption extends LegoBaseResolverOption {
   directives?: boolean;
   /**
    * Namespace. Do not set it at will
-   * @default 'N'
+   * @default 'H'
    */
   namespace?: string;
-  /**
-   * Whether to use reset style
-   * @default true
-   */
-  useResetStyle?: boolean;
-  /**
-   * Whether to use preset style
-   * The font family preset will import in any case.
-   * @default true
-   */
-  usePresetStyle?: boolean;
 }
 
-const resolveComponents = (name: string, options: LegoResolverOption) => {
-  name = name.replace(new RegExp(`^${useNamespace()}`), 'N');
+const resolveComponents = (name: string, options: HorizonWebResolverOption) => {
   const dirType = options.ssr ? 'lib' : 'es';
   const styleExt = options.importStyle ?? 'css';
   const pattern = new RegExp(`^${options.namespace}[A-Z]`);
@@ -58,31 +46,33 @@ const resolveComponents = (name: string, options: LegoResolverOption) => {
     return;
   }
 
+  const importName = name.replace(new RegExp(`^${options.namespace}`), useNamespace());
+
   if (
     (options?.exclude instanceof RegExp && options.exclude.test(name)) ||
     (typeof options.exclude === 'function' && options.exclude(name))
   )
     return;
 
-  const iconPattern = new RegExp(`^${options.namespace}Icon$`);
-  if (iconPattern.test(name)) {
+  const iconPattern = new RegExp(`^${useNamespace()}Icon$`);
+  if (iconPattern.test(importName)) {
     return {
-      name,
-      from: '@nio-fe/icon',
+      name: importName,
+      from: '@aurora/icon',
       sideEffects: options.importStyle
-        ? [`@nio-fe/icon/dist/${options.importStyle === 'scss' ? 'index.scss' : 'style.css'}`]
+        ? [`@aurora/icon/dist/${options.importStyle === 'scss' ? 'index.scss' : 'style.css'}`]
         : [],
     };
   }
 
-  const tableV2Pattern = new RegExp(`^${options.namespace}TableV2$`);
-  if (tableV2Pattern.test(name)) {
+  const tablePattern = new RegExp(`^${useNamespace()}Table(?:Column)?V3$`);
+  if (tablePattern.test(importName)) {
     return {
-      name,
-      from: '@nio-fe/lego-table-v2',
+      name: importName,
+      from: '@aurora/horizon-web-table',
       sideEffects: options.importStyle
         ? [
-            `@nio-fe/lego-table-v2/dist/${
+            `@aurora/horizon-web-table/dist/${
               options.importStyle === 'scss' ? 'styles/index.scss' : 'style.css'
             }`,
           ]
@@ -91,40 +81,32 @@ const resolveComponents = (name: string, options: LegoResolverOption) => {
   }
 
   const matched = Object.entries(components).find(([, reg]) => {
-    return new RegExp(reg).test(name);
+    return new RegExp(reg).test(importName);
   });
 
   if (matched) {
-    const from = `@nio-fe/lego/${dirType}/components/${matched[0]}`;
+    const from = `@aurora/horizon-web/${dirType}/components/${matched[0]}`;
     const sideEffects: string[] = [];
 
     if (options.importStyle) {
       sideEffects.push(
-        `@nio-fe/lego/${dirType}/styles/base.${styleExt}`,
-        `@nio-fe/lego/${dirType}/styles/global-variables.${styleExt}`,
-        `@nio-fe/lego/${dirType}/components/${matched[0]}/src/style/index.${
+        `@aurora/horizon-web/${dirType}/styles/base.${styleExt}`,
+        `@aurora/horizon-web/${dirType}/styles/global-variables.${styleExt}`,
+        `@aurora/horizon-web/${dirType}/components/${matched[0]}/src/style/index.${
           styleExt === 'scss' ? 'unplugin.scss' : 'css'
         }`,
       );
-
-      if (options.useResetStyle !== false) {
-        sideEffects.push(`@nio-fe/lego/${dirType}/styles/presets/reset.${styleExt}`);
-      }
-
-      if (options.usePresetStyle !== false) {
-        sideEffects.push(`@nio-fe/lego/${dirType}/styles/presets/index.${styleExt}`);
-      }
     }
 
     return {
-      name,
+      name: importName,
       from,
       sideEffects,
     };
   }
 };
 
-const resolveDirectives = (name: string, options: LegoResolverOption) => {
+const resolveDirectives = (name: string, options: HorizonWebResolverOption) => {
   if (!options.directives) return;
 
   const dirType = options.ssr ? 'lib' : 'es';
@@ -142,17 +124,13 @@ const resolveDirectives = (name: string, options: LegoResolverOption) => {
 
   if (options.importStyle) {
     sideEffects.push(
-      `@nio-fe/lego/${dirType}/styles/base.${styleExt}`,
-      `@nio-fe/lego/${dirType}/styles/global-variables.${styleExt}`,
+      `@aurora/horizon-web/${dirType}/styles/base.${styleExt}`,
+      `@aurora/horizon-web/${dirType}/styles/global-variables.${styleExt}`,
     );
-
-    if (options.useResetStyle === true || options.useResetStyle === undefined) {
-      sideEffects.push(`@nio-fe/lego/${dirType}/styles/presets/reset.${styleExt}`);
-    }
 
     if (directive.hasStyle) {
       sideEffects.push(
-        `@nio-fe/lego/${dirType}/directives/${directive.from}/src/style/index.${
+        `@aurora/horizon-web/${dirType}/directives/${directive.from}/src/style/index.${
           styleExt === 'scss' ? 'unplugin.scss' : 'css'
         }`,
       );
@@ -161,17 +139,16 @@ const resolveDirectives = (name: string, options: LegoResolverOption) => {
 
   return {
     name: directive.importName,
-    from: `@nio-fe/lego/${dirType}/directives/${directive.from}`,
+    from: `@aurora/horizon-web/${dirType}/directives/${directive.from}`,
     sideEffects,
   };
 };
 
-export function LegoPluginResolvers(options: LegoResolverOption = {}) {
+export function HorizonWebPluginResolvers(options: HorizonWebResolverOption = {}) {
   options = {
     directives: true,
     importStyle: 'css',
-    useResetStyle: true,
-    namespace: 'N',
+    namespace: 'H',
     ...options,
   };
 
@@ -187,22 +164,22 @@ export function LegoPluginResolvers(options: LegoResolverOption = {}) {
   ];
 }
 
-export function LegoVitePluginStyleImportResolvers(options: LegoBaseResolverOption = {}): Lib {
+export function HorizonWebVitePluginStyleImportResolvers(options: HorizonWebBaseResolverOption = {}): Lib {
   options = {
     importStyle: 'css',
     ...options,
   };
 
   return {
-    libraryName: '@nio-fe/lego',
+    libraryName: '@aurora/horizon-web',
     resolveStyle: (name: string) => {
       name = pascalize(name);
 
       const dirType = options.ssr ? 'lib' : 'es';
 
-      const iconPattern = new RegExp(`^NIcon$`);
+      const iconPattern = new RegExp(`^AIcon$`);
       if (iconPattern.test(name)) {
-        return '@nio-fe/icon/dist/style.css';
+        return '@aurora/icon/dist/style.css';
       }
 
       const matched = Object.entries(components).find(([, reg]) => {
@@ -210,7 +187,7 @@ export function LegoVitePluginStyleImportResolvers(options: LegoBaseResolverOpti
       });
 
       if (matched) {
-        return `@nio-fe/lego/${dirType}/components/${matched[0]}/src/style/index${
+        return `@aurora/horizon-web/${dirType}/components/${matched[0]}/src/style/index${
           options.importStyle === 'css' ? '.css' : 'unplugin.scss'
         }`;
       }

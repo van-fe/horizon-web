@@ -1,0 +1,91 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('table') {
+  @include mixins.be('table', 'table', false) {
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  @include mixins.is('border-default') {
+    @include mixins.e('cell') {
+      border-bottom: mixins.css-variable('table', 'border');
+
+      &:first-child {
+        border-left: none;
+      }
+    }
+  }
+
+  @include mixins.is('border-full') {
+    border: mixins.css-variable('table', 'border');
+
+    @include mixins.e('cell') {
+      border-right: mixins.css-variable('table', 'border');
+      border-bottom: mixins.css-variable('table', 'border');
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+
+    @include mixins.has('footer') {
+      @include mixins.e('table-foot') {
+        @include mixins.e('row') {
+          &:last-child {
+            @include mixins.e('cell') {
+              border-bottom: none;
+            }
+          }
+        }
+      }
+    }
+
+    @include mixins.has-not('footer') {
+      @include mixins.e('table-body') {
+        @include mixins.e('row') {
+          &:last-child {
+            @include mixins.e('cell') {
+              border-bottom: none;
+            }
+          }
+
+          @include mixins.e('cell') {
+            @include mixins.is('last-row-span-cell') {
+              border-bottom: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @include mixins.is('border-outer') {
+    border: mixins.css-variable('table', 'border');
+  }
+
+  @include mixins.with-multi-state('scrolling-right', 'border-full') {
+    @include mixins.e('cell') {
+      @include mixins.with-multi-state('fixed-right', 'last-fixed-column') {
+        border-left: mixins.css-variable('table', 'border');
+      }
+    }
+  }
+
+  @include mixins.has('footer') {
+    @include mixins.be('table', 'table-body', false) {
+      @include mixins.be('table', 'row', false) {
+        &:last-child {
+          @include mixins.be('table', 'cell', false) {
+            border-bottom: none;
+          }
+        }
+
+        @include mixins.be('table', 'cell', false) {
+          @include mixins.is('last-row-span-cell') {
+            border-bottom: none;
+          }
+        }
+      }
+    }
+  }
+}

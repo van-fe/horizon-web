@@ -1,0 +1,33 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('button') {
+  @include mixins.m('equally') {
+    @include mixins.is('old-standard') {
+      width: mixins.css-variable('button', 'size', 'icon-only', 'old-standard', 'height');
+      min-width: initial !important;
+      height: mixins.css-variable('button', 'size', 'icon-only', 'old-standard', 'height');
+      padding: 0;
+    }
+  }
+
+  @include mixins.parallel-modifier('small', 'equally') {
+    @include mixins.is('old-standard') {
+      width: mixins.css-variable('button', 'size', 'height', 'small', 'icon-only', 'old-standard');
+      height: mixins.css-variable('button', 'size', 'height', 'small', 'icon-only', 'old-standard');
+    }
+  }
+
+  @include mixins.parallel-modifier('large', 'equally') {
+    @include mixins.is('old-standard') {
+      width: mixins.css-variable('button', 'size', 'height', 'large', 'icon-only', 'old-standard');
+      height: mixins.css-variable('button', 'size', 'height', 'large', 'icon-only', 'old-standard');
+    }
+  }
+
+  @include mixins.parallel-modifier('huge', 'equally') {
+    @include mixins.is('old-standard') {
+      width: mixins.css-variable('button', 'size', 'height', 'huge', 'icon-only', 'old-standard');
+      height: mixins.css-variable('button', 'size', 'height', 'huge', 'icon-only', 'old-standard');
+    }
+  }
+}

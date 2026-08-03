@@ -1,0 +1,183 @@
+@use '../../../../styles/mixins';
+@use 'vertical';
+@use 'horizontal';
+@use 'collapseButton';
+@use 'themes';
+@use 'fullViewMenu';
+
+@include mixins.b('menu') {
+  display: flex;
+
+  @include mixins.e('container') {
+    position: relative;
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  @include mixins.e('title') {
+    width: 100%;
+    height: mixins.css-variable('menu', 'size', 'menu-item', 'height');
+    padding: mixins.css-variable('menu', 'spacing', 'title', 'padding');
+
+    @include mixins.m('inner') {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      min-width: 0;
+      height: 100%;
+      padding: mixins.css-variable('menu', 'spacing', 'item', 'title', 'inner', 'padding');
+      padding-left: calc(
+        #{mixins.css-variable('menu', 'spacing', 'item', 'title', 'inner', 'base', 'padding-left')} +
+          #{mixins.css-variable-with-default-value('menu-size-tree-level', 0)} *
+          #{mixins.css-variable('menu', 'spacing', 'item', 'title', 'inner', 'level', 'padding-left')} +
+          #{mixins.css-variable-with-default-value('menu-size-parent-icon-amount', 0)} *
+          #{mixins.css-variable('menu', 'spacing', 'item', 'title', 'inner', 'icon', 'padding-left')}
+      );
+      border-radius: mixins.css-variable('menu', 'border-radius', 'item');
+      transition: mixins.css-variable('menu', 'transition', 'all');
+    }
+
+    @include mixins.m('content') {
+      display: flex;
+      align-items: center;
+      min-width: 0;
+      max-width: 100%;
+
+      > #{mixins.block-name('dropdown')} {
+        display: inline-block;
+        flex: 0 0 20px;
+        background: transparent;
+      }
+    }
+
+    @include mixins.m('icon') {
+      height: 20px;
+      margin-right: mixins.css-variable('menu', 'spacing', 'item', 'icon', 'margin-right');
+      transition: mixins.css-variable('menu', 'transition', 'all');
+    }
+
+    @include mixins.m('text') {
+      flex: 1;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    @include mixins.m('arrow') {
+      display: flex;
+      align-items: center;
+      margin-left: mixins.css-variable('menu', 'spacing', 'arrow', 'margin-left');
+
+      #{mixins.block-name('icon')} {
+        transition: all 0.3s;
+      }
+    }
+
+    @include mixins.is-not('disabled') {
+      cursor: pointer;
+    }
+
+    @include mixins.is('disabled') {
+      cursor: not-allowed;
+    }
+  }
+
+  @include mixins.e('sub') {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @include mixins.is('collapsed') {
+    @include mixins.em('title', 'arrow', false) {
+      display: none;
+    }
+
+    @include mixins.em('title', 'icon', false) {
+      margin-right: 0;
+    }
+  }
+
+  @include mixins.is('active-type-link') {
+    @include mixins.e('title', false) {
+      height: mixins.css-variable('menu', 'size', 'menu-item', 'horizontal', 'link-type', 'height');
+      border-bottom: mixins.css-variable('menu', 'border', 'title');
+      transition: mixins.css-variable('menu', 'transition', 'all');
+    }
+  }
+
+  @include mixins.is('dragging') {
+    user-select: none;
+  }
+
+  @include mixins.has('resizer') {
+    border-right: none;
+  }
+
+  @include mixins.e('resizer') {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 9999;
+    width: 1px;
+    height: 100%;
+    background: transparent;
+    cursor: ew-resize;
+    transition: all 0.2s;
+
+    &::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      width: 5px;
+      height: 100%;
+      transform: translateX(-50%);
+      content: '';
+    }
+
+    &:hover {
+      width: 2px;
+      background: mixins.css-variable('border-brand-hover');
+    }
+  }
+
+  @include mixins.is('collapsed') {
+    @include mixins.e('resizer', false) {
+      cursor: e-resize;
+    }
+  }
+
+  @include mixins.is('max-width') {
+    @include mixins.e('resizer', false) {
+      cursor: w-resize;
+    }
+  }
+
+  @include mixins.is('min-width') {
+    @include mixins.e('resizer', false) {
+      cursor: e-resize;
+    }
+  }
+
+  @include mixins.is('collapsing') {
+    transition: mixins.css-variable('menu', 'transition', 'all');
+  }
+}
+
+@include mixins.b('menu') {
+  @include mixins.e('popper') {
+    @include mixins.bem('dropdown-submenu', 'item', 'inner', false) {
+      margin: mixins.css-variable('menu', 'spacing', 'dropdown-item', 'inner', 'margin');
+      padding: mixins.css-variable('menu', 'spacing', 'dropdown-item', 'padding');
+      border-radius: mixins.css-variable('menu', 'border-radius', 'item');
+    }
+
+    @include mixins.be('dropdown-item', 'inner', false) {
+      margin: mixins.css-variable('menu', 'spacing', 'dropdown-item', 'inner', 'margin');
+      padding: mixins.css-variable('menu', 'spacing', 'dropdown-item', 'padding');
+      border-radius: mixins.css-variable('menu', 'border-radius', 'item');
+    }
+  }
+}

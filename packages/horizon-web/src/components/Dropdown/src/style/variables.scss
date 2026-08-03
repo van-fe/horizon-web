@@ -1,0 +1,126 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  size: (
+    min-width: 92px,
+    max-width: 320px,
+    inner: (
+      max-width: 270px,
+    ),
+    item: (
+      height: (
+        '': 40px,
+        small: 32px,
+      ),
+    ),
+    max-height: 296px,
+  ),
+  font-size: (
+    item: #{function.css-variable('text-base')},
+    group-title: #{function.css-variable('text-sm')},
+  ),
+  font-weight: (
+    item: (
+      active: #{function.css-variable('weight-strong')},
+    ),
+  ),
+  color: (
+    '': #{function.css-variable('text-primary')},
+    active: (
+      '': #{function.css-variable('text-brand-activated')},
+      disabled: #{function.css-variable('text-brand-disabled')},
+    ),
+    group-title: #{function.css-variable('text-tertiary')},
+    disabled: #{function.css-variable('text-disabled')},
+    gray: (
+      '': #{function.css-variable('text-primary')},
+      disabled: #{function.css-variable('text-disabled')},
+      active: (
+        '': #{function.css-variable('text-brand-activated')},
+        disabled: #{function.css-variable('text-brand-disabled')},
+      ),
+    ),
+    midnight: (
+      '': rgba(255, 255, 255, 70%),
+      disabled: rgba(255, 255, 255, 50%),
+      active: (
+        '': rgba(255, 255, 255, 100%),
+        disabled: rgba(1, 160, 172, 50%),
+      ),
+      submenu: (
+        active: (
+          '': rgba(33, 201, 204, 100%),
+          disabled: rgba(1, 160, 172, 50%),
+        ),
+      ),
+    ),
+  ),
+  border-color: (
+    group-siblings: (
+      no-title: #{function.css-variable('border-noninteractive')},
+    ),
+    outline: function.css-variable('border-focused'),
+  ),
+  background: (
+    '': #{function.css-variable('bg-default')},
+    item: (
+      hover: #{function.css-variable('bg-hover')},
+      active: (
+        '': #{function.css-variable('bg-weak-activated')},
+        disabled: #{function.css-variable('bg-weak-disabled')},
+      ),
+    ),
+    gray: (
+      '': #{function.css-variable('bg-navigator')},
+      item: (
+        hover: #{function.css-variable('bg-hover')},
+        active: (
+          '': #{function.css-variable('bg-weak-activated')},
+          disabled: #{function.css-variable('bg-weak-disabled')},
+        ),
+      ),
+    ),
+    midnight: (
+      '': #00263c,
+      item: (
+        hover: rgba(33, 201, 204, 20%),
+        active: (
+          '': rgba(33, 201, 204, 70%),
+          disabled: rgba(255, 255, 255, 50%),
+        ),
+      ),
+      submenu: (
+        active: rgba(33, 201, 204, 100%),
+      ),
+    ),
+  ),
+  spacing: (
+    first-last-child: (
+      margin-y: (
+        '': #{function.css-variable('spacing-3')},
+        small: #{calc(function.css-variable('spacing-3') - function.css-variable('spacing-1'))},
+      ),
+    ),
+    group-divider: (
+      no-title: (
+        margin: #{function.css-variable('spacing-3')} #{function.css-variable('spacing-4')},
+      ),
+    ),
+    item: (
+      icon: (
+        margin-right: #{function.css-variable('spacing-3')},
+      ),
+      padding: (
+        '': 0 #{function.css-variable('spacing-4')},
+        small: 0 #{function.css-variable('spacing-3')},
+      ),
+    ),
+    group-title: (
+      padding: #{function.css-variable('spacing-2')} #{function.css-variable('spacing-4')},
+    ),
+    group-siblings: #{function.css-variable('spacing-3')},
+  ),
+  transition: (
+    all: all #{function.css-variable('transition-time')},
+  ),
+);

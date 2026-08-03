@@ -1,0 +1,34 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  size: (
+    height: (
+      mini: 2px,
+      small: 4px,
+      medium: 6px,
+      large: 8px,
+    ),
+  ),
+  font-size: (
+    text: (
+      '': #{function.css-variable('text-sm')},
+      medium: #{function.css-variable('text-base')},
+      large: #{function.css-variable('text-lg')},
+    ),
+  ),
+  font-weight: (
+    text: #{function.css-variable('weight-normal')},
+  ),
+  color: (
+    text: #{function.css-variable('text-secondary')},
+  ),
+  background: (
+    bar: #{function.css-variable('bg-hover')},
+    inner: #{function.css-variable('bg-brand-default')},
+  ),
+  spacing: (
+    text: (
+      margin-left: #{function.css-variable('spacing-4')},
+    ),
+  ),
+);

@@ -1,0 +1,78 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('picker') {
+  @include mixins.e('pop-content') {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    padding: 0 !important;
+    background: mixins.css-variable('picker', 'background', 'panel');
+
+    @include mixins.m('center') {
+      flex: 1;
+    }
+
+    @include mixins.m('wrapper') {
+      outline: none;
+      pointer-events: none;
+
+      > * {
+        pointer-events: auto;
+      }
+
+      @include mixins.is('show-popover-content-only') {
+        width: fit-content;
+
+        @include mixins.nested('popover__popcontent') {
+          box-shadow: none;
+        }
+      }
+    }
+
+    @include mixins.m('empty') {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: mixins.css-variable('picker', 'size', 'panel', 'empty', 'height');
+      color: mixins.css-variable('picker', 'color', 'panel-empty');
+    }
+
+    @include mixins.m('loading') {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: mixins.css-variable('picker', 'background', 'panel-empty');
+
+      > svg {
+        color: mixins.css-variable('picker', 'color', 'panel-empty', 'loading');
+      }
+    }
+
+    @include mixins.m('confirm-wrapper') {
+      position: relative;
+      display: flex;
+      grid-column-gap: mixins.css-variable('picker', 'spacing', 'confirm-wrapper', 'button', 'margin-left');
+      align-items: center;
+      justify-content: space-between;
+      min-height: mixins.css-variable('picker', 'size', 'panel', 'confirm-wrapper', 'height');
+      padding: mixins.css-variable('picker', 'spacing', 'pop-content', 'confirm-wrapper', 'padding-x');
+      border-top: mixins.css-variable('picker', 'border', 'top', 'popper', 'confirm-wrapper');
+
+      @include mixins.siblings-block('button') {
+        margin-left: mixins.css-variable('picker', 'spacing', 'confirm-wrapper', 'button', 'margin-left') !important;
+      }
+
+      @include mixins.is('small') {
+        height: auto;
+        padding: mixins.css-variable('picker', 'spacing', 'pop-content', 'confirm-wrapper', 'padding-x', 'small');
+        border-top: 0;
+      }
+    }
+  }
+
+  @include mixins.e('panel-input') {
+    padding: mixins.css-variable('picker', 'spacing', 'panel-filter', 'padding');
+  }
+}

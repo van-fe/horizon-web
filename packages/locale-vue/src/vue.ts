@@ -3,7 +3,7 @@ import type {
   LocaleDateLocaleMethod,
   LocaleLangMethod,
   LocaleNumberLocaleMethod,
-} from '@nio-fe/locale';
+} from '@aurora/locale';
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {

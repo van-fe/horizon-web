@@ -12,7 +12,7 @@ export default defineConfig({
     },
     cssCodeSplit: true,
     rollupOptions: {
-      external: ['vue', 'video.js', /^dayjs/, /@nio-fe\//, /^lodash/],
+      external: ['vue', /^dayjs/, /@aurora\//, /^lodash/],
       output: [
         {
           format: 'es',
