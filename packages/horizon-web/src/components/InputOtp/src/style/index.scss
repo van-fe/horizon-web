@@ -26,7 +26,9 @@
     background: mixins.css-variable('input-otp', 'background');
     border: 1px solid mixins.css-variable('input-otp', 'border-color');
     border-radius: mixins.css-variable('input-otp', 'border-radius');
-    transition: border-color mixins.css-variable('input-otp', 'transition', 'duration');
+    transition:
+      border-color mixins.css-variable('input-otp', 'transition', 'duration'),
+      box-shadow mixins.css-variable('input-otp', 'transition', 'duration');
   }
 
   @include mixins.e('native') {
@@ -47,16 +49,17 @@
     appearance: none;
   }
 
-  &:not(&.is-disabled, &.is-readonly):hover {
+  &:not(&.is-disabled, &.is-readonly, &.is-focused):hover {
     @include mixins.e('cell') {
       border-color: mixins.css-variable('input-otp', 'border-color', 'hover');
     }
   }
 
   @include mixins.is('focused') {
-    @include mixins.em('cell', 'active') {
+    @include mixins.em('cell', 'active', false) {
       border-color: mixins.css-variable('input-otp', 'border-color', 'focus');
-      box-shadow: 0 0 0 1px mixins.css-variable('input-otp', 'border-color', 'focus');
+
+      @include mixins.focus-ring;
     }
   }
 

@@ -30,6 +30,8 @@ export default defineComponent({
           style={{ width: `${props.width}px`, height: `${props.height}px` }}
         >
           <canvas
+            class={c.e('canvas')}
+            data-focus-visible-inset=""
             ref={state.canvas}
             width={props.width}
             height={props.height}
@@ -45,6 +47,7 @@ export default defineComponent({
         </div>
         <div class={c.e('toolbar')}>
           <input
+            class={c.e('zoom')}
             type="range"
             min={props.minZoom}
             max={props.maxZoom}

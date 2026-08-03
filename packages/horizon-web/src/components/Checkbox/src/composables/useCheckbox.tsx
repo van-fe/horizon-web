@@ -63,6 +63,7 @@ export default defineComponent({
               <i class={classHelper.e('icon')}></i>
             ))}
           <input
+            data-focus-visible-proxy
             type="checkbox"
             id={uuid}
             value={propTrueLabel.value ?? propLabel.value}

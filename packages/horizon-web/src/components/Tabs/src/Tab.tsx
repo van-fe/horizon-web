@@ -95,6 +95,7 @@ export default defineComponent({
         <div
           role="tab"
           {...attrs}
+          data-focus-visible-inset=""
           ref={addTab}
           data-name={key.value}
           {...conditionProps.value}

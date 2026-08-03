@@ -147,6 +147,7 @@ export default defineComponent({
               class={classHelper.e('inner')}
               name={props.name}
               {...attrs}
+              data-focus-visible-proxy
               placeholder={props.placeholder ?? defaultPlaceholder.value as string}
               disabled={isDisabled.value}
               readonly={props.readonly}

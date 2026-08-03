@@ -347,6 +347,7 @@ export default defineComponent({
                     >
                       {parentProps.useFitContentInput ? (
                         <PickerFitContentInput
+                          data-focus-visible-proxy=""
                           v-show={!parentProps.hideInput}
                           v-model={inputValue.value}
                           ref={fitContentInputDomRef}
@@ -381,6 +382,7 @@ export default defineComponent({
                         />
                       ) : (
                         <PickerPureInput
+                          data-focus-visible-proxy=""
                           v-show={!parentProps.hideInput}
                           ref={inputDomRef}
                           modelValue={inputValue.value}

@@ -29,6 +29,11 @@
     transition: background-color mixins.css-variable('switch', 'transition', 'duration')
       mixins.css-variable('switch', 'transition', 'timing-function', 'cubic');
 
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+    &:has(> [data-focus-visible-proxy]:focus-visible) {
+      @include mixins.focus-ring;
+    }
+
     input {
       position: absolute;
       width: 100%;

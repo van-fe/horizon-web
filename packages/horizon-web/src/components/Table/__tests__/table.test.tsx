@@ -166,6 +166,7 @@ describe('Table', () => {
 
     const rows = wrapper.findAll<HTMLElement>('tbody .h-table__row');
     expect(rows.map(row => row.attributes('tabindex'))).toEqual(['0', '-1', '-1']);
+    expect(rows.every(row => row.attributes('data-focus-visible-inset') === '')).toBe(true);
 
     await rows[0].trigger('keydown', { key: 'ArrowDown' });
     await settleTable();
@@ -450,6 +451,7 @@ describe('Table', () => {
     expect(wrapper.find('.h-table__row--group').text()).toContain('Points: 13');
 
     const firstGroup = wrapper.find('.h-table__row--group');
+    expect(firstGroup.attributes('data-focus-visible-inset')).toBe('');
     await firstGroup.trigger('keydown', { key: 'Enter' });
     await settleTable();
 

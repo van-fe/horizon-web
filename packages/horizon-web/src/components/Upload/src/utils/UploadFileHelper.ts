@@ -115,6 +115,9 @@ export default class UploadFileHelper extends UploadHelper {
 
     this.inputEl.id = this.id ?? this.uuid;
     this.inputEl.type = 'file';
+    // The generated input is only a programmatic file-dialog proxy. Keeping it
+    // out of the tab order prevents an invisible keyboard focus stop.
+    this.inputEl.tabIndex = -1;
     this.inputEl.accept = this.accept.value!;
     this.inputEl.multiple = this.multiple.value;
 

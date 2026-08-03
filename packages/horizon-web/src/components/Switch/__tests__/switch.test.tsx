@@ -13,6 +13,13 @@ describe('Switch.tsx', () => {
     expect(element.exists()).toBe(true);
   });
 
+  test('uses the native switch as a focus-visible proxy', () => {
+    const input = mount(() => <HSwitch modelValue={false} />).find('input[role="switch"]');
+
+    expect(input.attributes()).toHaveProperty('data-focus-visible-proxy');
+    expect((input.element as HTMLInputElement).tabIndex).toBe(0);
+  });
+
   test('clicking anywhere in the switch toggles it', async () => {
     const modelValue = ref(false);
     const onChange = vi.fn();

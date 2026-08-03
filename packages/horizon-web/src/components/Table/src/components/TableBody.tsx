@@ -939,6 +939,7 @@ export default defineComponent({
               classHelper.is('stripe-row', parentProps.stripe && index % 2 === 1),
             )}
             tabindex={parentProps.keyboardNavigation && activeRowIndex.value === index ? 0 : -1}
+            data-focus-visible-inset=""
             aria-rowindex={index + 1}
             aria-level={group.level + 1}
             aria-expanded={group.expanded}
@@ -1020,6 +1021,7 @@ export default defineComponent({
                 getRowDraggableClass(rowData),
               )}
               tabindex={parentProps.keyboardNavigation && activeRowIndex.value === index ? 0 : -1}
+              data-focus-visible-inset=""
               aria-rowindex={index + 1}
               aria-selected={selected || undefined}
               aria-expanded={

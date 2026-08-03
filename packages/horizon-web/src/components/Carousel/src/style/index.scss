@@ -6,12 +6,13 @@
   width: 100%;
   height: mixins.css-variable('carousel', 'size', 'container', 'height');
   overflow: visible;
-  border-radius: mixins.css-variable('carousel', 'border-radius');
-  outline: none;
   touch-action: pan-y;
+  outline: none;
+  border-radius: mixins.css-variable('carousel', 'border-radius');
 
+  /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
   &:focus-visible {
-    box-shadow: 0 0 0 2px mixins.css-variable('carousel', 'color', 'focus');
+    @include mixins.focus-ring;
   }
 
   @include mixins.m('vertical') {
@@ -128,9 +129,15 @@
       background-color mixins.css-variable('transition-time-fast');
 
     &:hover,
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
     &:focus-visible {
       color: mixins.css-variable('carousel', 'color', 'control');
       background: mixins.css-variable('carousel', 'background', 'control', 'hover');
+    }
+
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+    &:focus-visible {
+      @include mixins.focus-ring;
     }
   }
 
@@ -170,6 +177,11 @@
     height: 24px;
     padding: 0;
     overflow: visible;
+    border-radius: mixins.css-variable('radius-pill');
+
+    &:focus-visible {
+      @include mixins.focus-ring(mixins.css-variable('radius-pill'));
+    }
 
     &::before {
       display: block;

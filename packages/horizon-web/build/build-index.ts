@@ -123,6 +123,11 @@ function buildStyleIndex() {
   content += '\n// methods\n';
   writeImport(methods, 'methods', methodsRoot);
 
+  content += `
+// Shared accessibility behavior must load after component styles so local outline resets cannot hide it.
+@forward './accessibility';
+`;
+
   fs.writeFileSync(styleRoot + '/index.scss', content, 'utf-8');
 }
 

@@ -27,6 +27,8 @@ describe('InputOtp.tsx', () => {
     expect(input.attributes('inputmode')).toBe('numeric');
     expect(input.attributes('pattern')).toBe('[0-9]*');
     expect(input.attributes('aria-label')).toBe('Verification code');
+    expect(input.attributes()).toHaveProperty('data-focus-visible-proxy');
+    expect((input.element as HTMLInputElement).tabIndex).toBe(0);
     expect(wrapper.find('.h-input-otp__cells').attributes('aria-hidden')).toBe('true');
   });
 

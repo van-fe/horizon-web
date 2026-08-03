@@ -29,6 +29,12 @@
     &:focus-visible::before {
       background: mixins.css-variable('splitter', 'background', 'separator', 'focus');
     }
+
+    &:focus-visible {
+      @include mixins.e('handle') {
+        @include mixins.focus-ring(mixins.css-variable('radius-pill'));
+      }
+    }
   }
 
   @include mixins.e('handle') {

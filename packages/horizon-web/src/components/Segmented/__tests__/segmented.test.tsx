@@ -32,10 +32,10 @@ describe('Segmented.tsx', () => {
         <div class="h-segmented__nav">
           <div class="h-segmented__nav-wrap">
             <div class="h-segmented__nav-list">
-              <div class="h-segmented__item h-segmented__item--active" role="tab" tabindex="0" aria-selected="true" aria-disabled="false">
+              <div class="h-segmented__item h-segmented__item--active" role="tab" data-focus-visible-inset="" tabindex="0" aria-selected="true" aria-disabled="false">
                 <div class="h-segmented__item-inner">1</div>
               </div>
-              <div class="h-segmented__item" role="tab" tabindex="-1" aria-selected="false" aria-disabled="false">
+              <div class="h-segmented__item" role="tab" data-focus-visible-inset="" tabindex="-1" aria-selected="false" aria-disabled="false">
                 <div class="h-segmented__item-inner">2</div>
               </div>
               <div class="h-segmented__indicator"></div>
@@ -95,10 +95,10 @@ describe('Segmented.tsx', () => {
           <div class="h-segmented__nav">
             <div class="h-segmented__nav-wrap">
               <div class="h-segmented__nav-list">
-                <div class="h-segmented__item" role="tab" tabindex="-1" aria-selected="false" aria-disabled="false">
+                <div class="h-segmented__item" role="tab" data-focus-visible-inset="" tabindex="-1" aria-selected="false" aria-disabled="false">
                   <div class="h-segmented__item-inner">1</div>
                 </div>
-                <div class="h-segmented__item" role="tab" tabindex="-1" aria-selected="false" aria-disabled="false">
+                <div class="h-segmented__item" role="tab" data-focus-visible-inset="" tabindex="-1" aria-selected="false" aria-disabled="false">
                   <div class="h-segmented__item-inner">2</div>
                 </div>
                 <div class="h-segmented__indicator"></div>
@@ -133,10 +133,10 @@ describe('Segmented.tsx', () => {
         <div class="h-segmented__nav">
           <div class="h-segmented__nav-wrap">
             <div class="h-segmented__nav-list">
-              <div class="h-segmented__item h-segmented__item--disabled" role="tab" tabindex="-1" aria-selected="false" aria-disabled="true">
+              <div class="h-segmented__item h-segmented__item--disabled" role="tab" data-focus-visible-inset="" tabindex="-1" aria-selected="false" aria-disabled="true">
                 <div class="h-segmented__item-inner">1</div>
               </div>
-              <div class="h-segmented__item h-segmented__item--active" role="tab" tabindex="0" aria-selected="true" aria-disabled="false">
+              <div class="h-segmented__item h-segmented__item--active" role="tab" data-focus-visible-inset="" tabindex="0" aria-selected="true" aria-disabled="false">
                 <div class="h-segmented__item-inner">2</div>
               </div>
               <div class="h-segmented__indicator"></div>
@@ -259,7 +259,7 @@ describe('Segmented.tsx', () => {
         <div class="h-segmented__nav">
           <div class="h-segmented__nav-wrap">
             <div class="h-segmented__nav-list">
-              <div class="h-segmented__item" role="tab" tabindex="-1" aria-selected="false" aria-disabled="false">
+              <div class="h-segmented__item" role="tab" data-focus-visible-inset="" tabindex="-1" aria-selected="false" aria-disabled="false">
                 <div class="h-segmented__item-inner"><svg class="a-icon h-icon_layout h-icon__layout h-segmented__icon" viewBox="0 0 24 24" fill="none" style="width: 1em; height: 1em; font-size: 1em; display: inline-block; vertical-align: inherit;">
                     <path d="M2.79951 2.00195C2.35768 2.00195 1.99951 2.36013 1.99951 2.80195V8.20195C1.99951 8.64378 2.35768 9.00195 2.79951 9.00195H21.1995C21.6413 9.00195 21.9995 8.64378 21.9995 8.20195V2.80195C21.9995 2.36013 21.6413 2.00195 21.1995 2.00195H2.79951ZM20.4995 3.50195V7.50195H3.49951V3.50195H20.4995Z" fill="currentColor"></path>
                     <path d="M2.79951 11.002C2.35768 11.002 1.99951 11.3601 1.99951 11.802V21.202C1.99951 21.6438 2.35768 22.002 2.79951 22.002H11.1995C11.6413 22.002 11.9995 21.6438 11.9995 21.202V11.802C11.9995 11.3601 11.6413 11.002 11.1995 11.002H2.79951ZM10.4995 12.502V20.502H3.49951V12.502H10.4995Z" fill="currentColor"></path>
@@ -270,7 +270,7 @@ describe('Segmented.tsx', () => {
                   <div class="h-segmented__item-text" title="1">1</div>
                 </div>
               </div>
-              <div class="h-segmented__item" role="tab" tabindex="-1" aria-selected="false" aria-disabled="false">
+              <div class="h-segmented__item" role="tab" data-focus-visible-inset="" tabindex="-1" aria-selected="false" aria-disabled="false">
                 <div class="h-segmented__item-inner"><svg class="a-icon h-icon_list h-icon__list h-segmented__icon" viewBox="0 0 24 24" fill="none" style="width: 1em; height: 1em; font-size: 1em; display: inline-block; vertical-align: inherit;">
                     <path d="M8.5 4.36743H21C21 5.19586 20.3284 5.86743 19.5 5.86743H10C9.17157 5.86743 8.5 5.19586 8.5 4.36743Z" fill="currentColor"></path>
                     <path d="M8.1065 3.34771L5.6065 6.34771C5.32416 6.68651 4.81185 6.70975 4.5 6.3979L3 4.8979C3.54604 4.35186 4.37175 4.14832 4.97993 4.75651L5.99389 3.53976C6.52423 2.90335 7.47008 2.81736 8.1065 3.34771Z" fill="currentColor"></path>
@@ -330,12 +330,12 @@ describe('Segmented.tsx', () => {
                   <div class="h-segmented__nav">
                     <div class="h-segmented__nav-wrap">
                       <div class="h-segmented__nav-list">
-                        <div class="h-segmented__item" role="tab" tabindex="-1" aria-selected="false" aria-disabled="false">
+                        <div class="h-segmented__item" role="tab" data-focus-visible-inset="" tabindex="-1" aria-selected="false" aria-disabled="false">
                           <div class="h-segmented__item-inner">
                             <div class="h-segmented__item-text" title="1">1</div>
                           </div>
                         </div>
-                        <div class="h-segmented__item" role="tab" tabindex="-1" aria-selected="false" aria-disabled="false">
+                        <div class="h-segmented__item" role="tab" data-focus-visible-inset="" tabindex="-1" aria-selected="false" aria-disabled="false">
                           <div class="h-segmented__item-inner">
                             <div class="h-segmented__item-text" title="2">2</div>
                           </div>

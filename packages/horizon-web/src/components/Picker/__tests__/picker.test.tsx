@@ -24,6 +24,7 @@ describe('Picker.tsx', () => {
     expect(input.exists()).toBe(true);
     expect(input.props('embedded')).toBe(true);
     expect(input.props('fitContent')).toBe(true);
+    expect(wrapper.find('input').attributes()).toHaveProperty('data-focus-visible-proxy');
   });
 
   test('fit-content compatibility keeps legacy DOM, styles and IME input timing', async () => {

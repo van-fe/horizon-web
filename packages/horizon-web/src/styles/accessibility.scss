@@ -1,38 +1,49 @@
-@use './mixins/function' as mixins;
+@use './mixins/config';
+@use './mixins/util';
 
-// A consistent, visible keyboard focus indicator for every native and ARIA control.
-:where(
-  a[href],
-  button,
-  input,
-  select,
-  textarea,
-  [tabindex]:not([tabindex='-1']),
-  [role='button'],
-  [role='checkbox'],
-  [role='menuitem'],
-  [role='option'],
-  [role='radio'],
-  [role='slider'],
-  [role='switch'],
-  [role='tab'],
-  [role='treeitem']
-):focus-visible {
-  outline: 2px solid mixins.css-variable('border-brand-default');
-  outline-offset: 2px;
+// A consistent, visible keyboard focus indicator for Horizon Web controls.
+// :is() intentionally outranks legacy component-level `outline: none` resets.
+:is([class^='#{config.$namespace}-'], [class*=' #{config.$namespace}-']):is(
+    a[href],
+    area[href],
+    audio[controls],
+    button,
+    iframe,
+    input:not([type='hidden']),
+    select,
+    summary,
+    textarea,
+    video[controls],
+    [contenteditable]:not([contenteditable='false']),
+    [tabindex]:not([tabindex='-1']),
+    [role='button'],
+    [role='checkbox'],
+    [role='combobox'],
+    [role='gridcell'],
+    [role='link'],
+    [role='listbox'],
+    [role='menuitem'],
+    [role='menuitemcheckbox'],
+    [role='menuitemradio'],
+    [role='option'],
+    [role='radio'],
+    [role='scrollbar'],
+    [role='searchbox'],
+    [role='separator'],
+    [role='slider'],
+    [role='spinbutton'],
+    [role='switch'],
+    [role='tab'],
+    [role='textbox'],
+    [role='tree'],
+    [role='treeitem']
+  ):not(:disabled):not([data-focus-visible-proxy]):not([data-focus-visible-inset]):focus-visible {
+  @include util.focus-ring;
 }
 
 // Utility for labels and instructions that should only be announced by assistive technology.
-.h-sr-only {
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  margin: -1px !important;
-  padding: 0 !important;
-  overflow: hidden !important;
-  white-space: nowrap !important;
-  border: 0 !important;
-  clip-path: inset(50%) !important;
+.#{config.$namespace}-sr-only {
+  @include util.visually-hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -40,8 +51,8 @@
   *::before,
   *::after {
     scroll-behavior: auto !important;
-    animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
 }

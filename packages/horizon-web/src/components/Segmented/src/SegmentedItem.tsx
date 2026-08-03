@@ -66,6 +66,7 @@ export default defineComponent({
             props.disabled && cls.em('item', 'disabled'),
           ]}
           role="tab"
+          data-focus-visible-inset=""
           tabindex={props.disabled ? -1 : isActivated.value ? 0 : -1}
           aria-selected={isActivated.value}
           aria-disabled={getBooleanProp(props.disabled)}

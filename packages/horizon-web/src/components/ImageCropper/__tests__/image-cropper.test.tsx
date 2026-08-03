@@ -38,6 +38,7 @@ describe('ImageCropper', () => {
   test('updates zoom and exposes transform actions', async () => {
     const wrapper = mount(HImageCropper, { props: { src: 'data:image/png;base64,test' } });
     const range = wrapper.get('input[type="range"]');
+    expect(wrapper.get('canvas').attributes('data-focus-visible-inset')).toBe('');
     await range.setValue('1.5');
     expect(wrapper.emitted('change')?.at(-1)?.[0]).toMatchObject({ zoom: 1.5 });
     expect(typeof (wrapper.vm as any).reset).toBe('function');

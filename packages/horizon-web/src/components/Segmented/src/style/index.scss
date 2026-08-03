@@ -34,6 +34,11 @@
     color: mixins.css-variable('segmented', 'color', 'item');
     cursor: pointer;
 
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+    &:focus-visible {
+      @include mixins.focus-ring-inset(mixins.css-variable('segmented', 'border-radius'));
+    }
+
     &:first-child {
       margin-left: 0;
     }

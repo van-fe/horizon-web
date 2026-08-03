@@ -11,7 +11,7 @@
     overflow: hidden;
     touch-action: none;
     background: repeating-conic-gradient(#222 0 25%, #2d2d2d 0 50%) 50% / 16px 16px;
-    border-radius: mixins.css-variable('border-radius-medium');
+    border-radius: mixins.css-variable('radius-m');
   }
 
   canvas {
@@ -19,6 +19,11 @@
     max-width: 100%;
     height: auto;
     cursor: grab;
+    border-radius: inherit;
+
+    &:focus-visible {
+      @include mixins.focus-ring-inset(inherit);
+    }
 
     &:active {
       cursor: grabbing;
@@ -60,5 +65,9 @@
       min-width: 120px;
       accent-color: mixins.css-variable('brand-primary');
     }
+  }
+
+  @include mixins.e('zoom') {
+    border-radius: mixins.css-variable('radius-pill');
   }
 }

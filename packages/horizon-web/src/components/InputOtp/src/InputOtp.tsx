@@ -172,6 +172,7 @@ export default defineComponent({
           </div>
           <input
             {...inputAttrs}
+            data-focus-visible-proxy
             ref={inputRef}
             class={cHelper.e('native')}
             type="text"

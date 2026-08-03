@@ -119,6 +119,7 @@ export default defineComponent({
             )}
           >
             <input
+              data-focus-visible-proxy
               role="switch"
               type="checkbox"
               readonly={readonlyRef.value}
