@@ -22,11 +22,16 @@ describe('Spin animation', () => {
     app.mount(root);
 
     const icon = root.querySelector<SVGElement>('.h-spin__icon');
+    const path = root.querySelector<SVGCircleElement>('.h-loading-icon__path');
     expect(icon).toBeInstanceOf(SVGElement);
+    expect(path).toBeInstanceOf(SVGCircleElement);
 
     const animation = icon!.getAnimations()[0];
+    const pathAnimation = path!.getAnimations()[0];
     expect(animation).toBeDefined();
     expect(animation.playState).toBe('running');
+    expect(pathAnimation).toBeDefined();
+    expect(pathAnimation.playState).toBe('running');
 
     const firstTransform = getComputedStyle(icon!).transform;
     await new Promise(resolve => setTimeout(resolve, 100));

@@ -70,4 +70,11 @@ describe('v-loading.tsx', () => {
       Number(messageDom.style.zIndex),
     );
   });
+
+  test('renders the shared circle loading icon', async () => {
+    const { getLoadingDom } = await createInstance({ isShow: true }, <span>Content</span>);
+
+    expect(getLoadingDom().find('svg.h-loading-icon').exists()).toBe(true);
+    expect(getLoadingDom().find('circle.h-loading-icon__path').exists()).toBe(true);
+  });
 });

@@ -4,6 +4,7 @@ import type { LoadingProps } from '../composables/useProps';
 import { useLoadingProps } from '../composables/useProps';
 import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import HTransition from '~/components/Transition/src/Transition';
+import LoadingIcon from './LoadingIcon';
 
 export default defineComponent({
   name: `${useNamespace()}Loading`,
@@ -35,16 +36,7 @@ export default defineComponent({
           >
             {props.loadingType === 'circle' ? (
               <div class={`${classHelper.em('container', `animation-circle--${props.size}`)}`}>
-                <svg class="circular" viewBox="25 25 50 50">
-                  <circle
-                    class="path"
-                    cx="50"
-                    cy="50"
-                    r="20"
-                    fill="none"
-                    stroke-width="4.8"
-                  ></circle>
-                </svg>
+                <LoadingIcon />
               </div>
             ) : (
               <div class={`${classHelper.em('container', `animation-dots--${props.size}`)}`}>

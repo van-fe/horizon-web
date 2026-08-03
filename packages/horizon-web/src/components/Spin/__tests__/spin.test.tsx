@@ -1,7 +1,7 @@
-import { IconLoadingLine } from '@aurora/icon';
 import { mount } from '@vue/test-utils';
 import { describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
+import LoadingIcon from '../../../directives/v-loading/src/components/LoadingIcon';
 import { dictionaries } from '../../../locales';
 import HSpin from '../src/Spin';
 
@@ -14,13 +14,13 @@ describe('Spin', () => {
     expect(wrapper.text()).toContain('Loading data');
   });
 
-  test('starts a visually distinct default indicator on the first render', () => {
+  test('reuses the v-loading circle icon on the first render', () => {
     const wrapper = mount(HSpin);
-    const indicator = wrapper.getComponent(IconLoadingLine);
+    const indicator = wrapper.getComponent(LoadingIcon);
 
-    expect(indicator.props('spin')).toBeUndefined();
-    expect(indicator.classes()).toContain('h-icon__loading_line');
+    expect(indicator.classes()).toContain('h-loading-icon');
     expect(indicator.classes()).toContain('h-spin__icon');
+    expect(indicator.get('circle').classes()).toContain('h-loading-icon__path');
     expect(indicator.find('animateTransform').exists()).toBe(false);
   });
 

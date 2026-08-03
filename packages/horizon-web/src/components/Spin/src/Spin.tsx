@@ -1,7 +1,7 @@
-import { IconLoadingLine } from '@aurora/icon';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { defineComponent, onBeforeUnmount, ref, watch } from 'vue';
+import LoadingIcon from '~/directives/v-loading/src/components/LoadingIcon';
 import useLocaleLang from '~/utils/useLocaleLang';
 import { useSpinProps } from './composables/useProps';
 import type { SpinSlots } from './composables/useSlots';
@@ -53,7 +53,7 @@ export default defineComponent({
         aria-live="polite"
         aria-label={(props.tip || loadingText.value) as string}
       >
-        {slots.indicator?.() ?? <IconLoadingLine class={classHelper.e('icon')} />}
+        {slots.indicator?.() ?? <LoadingIcon class={classHelper.e('icon')} />}
         {(slots.tip || props.tip) && (
           <span class={classHelper.e('tip')}>{slots.tip?.() ?? props.tip}</span>
         )}

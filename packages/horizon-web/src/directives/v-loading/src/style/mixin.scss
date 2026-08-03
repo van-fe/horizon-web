@@ -9,7 +9,6 @@
     $gap: map.get(var.$dot-sizes, $size, 'gap');
     $dots-translate-x: map.get(var.$dot-sizes, $size, 'dots-translate-x');
     $dots-right-left: map.get(var.$dot-sizes, $size, 'dots-right-left');
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -67,47 +66,14 @@
   &#{mixins.$modifier-separator}#{$size} {
     $width: map.get(var.$circle-sizes, $size, 'width');
     $height: map.get(var.$circle-sizes, $size, 'height');
-
     display: flex;
     align-items: center;
     width: $width;
 
-    @keyframes loading-dash {
-      0% {
-        stroke-dasharray: 1, 200;
-        stroke-dashoffset: 0;
-      }
-
-      50% {
-        stroke-dasharray: 90, 150;
-        stroke-dashoffset: -40px;
-      }
-
-      100% {
-        stroke-dasharray: 90, 150;
-        stroke-dashoffset: -120px;
-      }
-    }
-
-    .path {
-      animation: loading-dash 1.5s ease-in-out infinite;
-      stroke: mixins.css-variable('v-loading-color--circle');
-      stroke-dasharray: 90, 150;
-      stroke-dashoffset: 0;
-      stroke-linecap: round;
-    }
-
-    @keyframes loading-rotate {
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-
-    .circular {
-      display: inline;
+    .#{mixins.block('loading-icon')} {
       width: $width;
       height: $height;
-      animation: loading-rotate 2s linear infinite;
+      color: mixins.css-variable('v-loading-color--circle');
     }
   }
 }
@@ -116,43 +82,43 @@
   &#{mixins.$modifier-separator}#{$size} {
     margin-right: map.get(var.$dot-sizes, $size, 'dots-translate-x');
     margin-left: map.get(var.$dot-sizes, $size, 'text-row-gap');
-    color: mixins.css-variable('v-loading-color--text');
-    font-weight: 420;
     font-size: mixins.css-variable('v-loading-font-size');
     font-style: normal;
+    font-weight: 420;
     line-height: mixins.css-variable('v-loading-line-height');
+    color: mixins.css-variable('v-loading-color--text');
   }
 }
 
 @mixin dots-text-column-gap($size) {
   &#{mixins.$modifier-separator}#{$size} {
     margin-top: map.get(var.$dot-sizes, $size, 'text-column-gap');
-    color: mixins.css-variable('v-loading-color--text');
-    font-weight: 420;
     font-size: mixins.css-variable('v-loading-font-size');
     font-style: normal;
+    font-weight: 420;
     line-height: mixins.css-variable('v-loading-line-height');
+    color: mixins.css-variable('v-loading-color--text');
   }
 }
 
 @mixin circle-text-row-gap($size) {
   &#{mixins.$modifier-separator}#{$size} {
     margin-left: map.get(var.$circle-sizes, $size, 'text-row-gap');
-    color: mixins.css-variable('v-loading-color--text');
-    font-weight: 420;
     font-size: mixins.css-variable('v-loading-font-size');
     font-style: normal;
+    font-weight: 420;
     line-height: mixins.css-variable('v-loading-line-height');
+    color: mixins.css-variable('v-loading-color--text');
   }
 }
 
 @mixin circle-text-column-gap($size) {
   &#{mixins.$modifier-separator}#{$size} {
     margin-top: map.get(var.$circle-sizes, $size, 'text-column-gap');
-    color: mixins.css-variable('v-loading-color--text');
-    font-weight: 420;
     font-size: mixins.css-variable('v-loading-font-size');
     font-style: normal;
+    font-weight: 420;
     line-height: mixins.css-variable('v-loading-line-height');
+    color: mixins.css-variable('v-loading-color--text');
   }
 }

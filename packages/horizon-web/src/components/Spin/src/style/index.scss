@@ -1,10 +1,5 @@
 @use '../../../../styles/mixins';
-
-@keyframes #{mixins.block('spin-rotate')} {
-  to {
-    transform: rotate(1turn);
-  }
-}
+@use '../../../../directives/v-loading/src/style/loading-icon';
 
 @include mixins.b('spin') {
   display: inline-flex;
@@ -20,10 +15,8 @@
   }
 
   @include mixins.e('icon') {
-    transform-origin: center;
-    transform-box: view-box;
-    animation: #{mixins.block('spin-rotate')} 1s linear infinite;
-    will-change: transform;
+    width: 1em;
+    height: 1em;
   }
 
   @include mixins.e('tip') {
