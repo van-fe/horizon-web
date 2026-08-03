@@ -40,12 +40,13 @@ import {
   HTableScrollWrapInjectKey,
   HTableSizeInjectKey,
   HTableSlotsInjectKey,
+  HTableUseBuiltInDataOperationsInjectKey,
 } from './utils/injectKeys';
 import useColumn from './hooks/useColumn';
 import TableHeader from './components/TableHeader';
 import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
 import useSize from '~/utils/useSize';
-import TableBody from './components/TableBody';
+import ProcessedTableBody from './components/ProcessedTableBody';
 import useBorder from './hooks/useBorder';
 import useScroll from './hooks/useScroll';
 import useResizeListener from './hooks/useResizeListener';
@@ -65,6 +66,7 @@ import useHeaderResizer from './hooks/useHeaderResizer';
 import useColumnManager from './hooks/useColumnManager';
 import type { TableBodyExposes } from './components/TableBody';
 import useState from './hooks/useState';
+import useDataProcessing from './hooks/useDataProcessing';
 
 export default defineComponent({
   name: `${useNamespace()}Table`,
@@ -99,6 +101,17 @@ export default defineComponent({
 
     const fieldMapFormatted = formatTreeFieldMap(propsRef);
     const { flattenData, reloadData } = useDataAnalysis(propsRef, emit, { fieldMapFormatted });
+    const isTreeData = computed(() =>
+      flattenData.value.some(
+        row => fieldMapFormatted.value.children in row || fieldMapFormatted.value.isLeaf in row,
+      ),
+    );
+    const centralizeDataOperations = computed(
+      () => props.queryMode !== 'remote' && !isTreeData.value,
+    );
+    const useBuiltInDataOperations = () =>
+      props.queryMode !== 'remote' && !centralizeDataOperations.value;
+
     const {
       columns,
       analysisColumns,
@@ -107,15 +120,29 @@ export default defineComponent({
       visibleStore,
       getVisibleState,
       sortStore,
-    } = useColumn(flattenData, emit, () => props.queryMode !== 'remote');
+    } = useColumn(flattenData, emit, useBuiltInDataOperations);
 
     const { border } = useBorder(propsRef, analysisColumns);
-    const { currentSorts } = useSortable(
+    const { currentSorts, compareRows } = useSortable(
       emit,
       analysisColumns,
       propsRef.defaultSort,
-      () => props.queryMode !== 'remote',
+      useBuiltInDataOperations,
     );
+    const dataProcessing = useDataProcessing({
+      props,
+      rows: flattenData,
+      columns: analysisColumns,
+      currentSorts,
+      compareRows,
+      enabled: centralizeDataOperations,
+      disabledReason: computed(() => {
+        if (props.queryMode === 'remote') return 'remote-query';
+        if (isTreeData.value) return 'tree-data';
+        return undefined;
+      }),
+      emit,
+    });
     const { scrollbarDomRef, handleScroll, initialScrollState, scrollComputedClassName } =
       useScroll();
 
@@ -194,9 +221,13 @@ export default defineComponent({
     provide(HTableExpandedRowsInjectKey, expandedRows);
     provide(HTableScrollWrapInjectKey, scrollWrapDomRef);
     provide(HTableSizeInjectKey, size);
+    provide(HTableUseBuiltInDataOperationsInjectKey, useBuiltInDataOperations);
 
     expose({
       reloadData,
+      cancelDataProcessing: dataProcessing.cancelDataProcessing,
+      getDataProcessingState: dataProcessing.getDataProcessingState,
+      refreshDataProcessing: dataProcessing.refreshDataProcessing,
       refreshLayout,
       getScrollWrap: () => scrollbarDomRef.value?.wrapRef,
       scrollToIndex: (index: number) => tableBodyRef.value?.scrollToIndex(index),
@@ -204,9 +235,9 @@ export default defineComponent({
       getVisibleRange: () =>
         tableBodyRef.value?.getVisibleRange() ?? {
           startIndex: 0,
-          endIndex: flattenData.value.length,
+          endIndex: dataProcessing.processedRows.value.length,
           visibleStartIndex: 0,
-          visibleEndIndex: flattenData.value.length,
+          visibleEndIndex: dataProcessing.processedRows.value.length,
         },
       startCellEdit: (rowKey: HTableRowKeyType, columnKey: string) =>
         tableBodyRef.value?.startCellEdit(rowKey, columnKey) ?? Promise.resolve(false),
@@ -253,7 +284,10 @@ export default defineComponent({
           classHelper.has('footer', props.showSummary),
           classHelper.has('column-manager', props.useColumnManager),
           classHelper.has('height', isDefined(props.height)),
-          classHelper.has('empty', flattenData.value.length === 0 && !isLoading.value),
+          classHelper.has(
+            'empty',
+            dataProcessing.processedRows.value.length === 0 && !isLoading.value,
+          ),
           classHelper.is('native-sticky-header', isNativeSticky.value),
           scrollComputedClassName.value,
         )}
@@ -267,6 +301,7 @@ export default defineComponent({
             firstHeaderRowHeight.value > 0 ? `${firstHeaderRowHeight.value}px` : undefined,
           ['--table-border-width']: border.value === 'full' ? '1px' : '0px',
         }}
+        aria-busy={dataProcessing.processingState.value.status === 'processing' || undefined}
       >
         <div class={cls(classHelper.e('hidden-columns'))}>{slots.default?.()}</div>
         <HScrollbar
@@ -331,20 +366,26 @@ export default defineComponent({
                 ))}
               </thead>
             )}
-            <TableBody ref={tableBodyRef} columns={analysisColumns.value.flattenColumns} />
+            <ProcessedTableBody
+              ref={tableBodyRef}
+              columns={analysisColumns.value.flattenColumns}
+              rows={dataProcessing.processedRows.value}
+            />
             <TableFooter ref={tableFooterDomRef} />
           </table>
-          {flattenData.value.length === 0 && !isLoading.value && (
-            <div class={classHelper.em('table', 'empty')}>
-              {slots.empty?.() ?? (
-                <HEmpty
-                  description={
-                    props.emptyText ?? (useLocaleLang('table.emptyText').value as string)
-                  }
-                />
-              )}
-            </div>
-          )}
+          {dataProcessing.processedRows.value.length === 0 &&
+            dataProcessing.processingState.value.status !== 'processing' &&
+            !isLoading.value && (
+              <div class={classHelper.em('table', 'empty')}>
+                {slots.empty?.() ?? (
+                  <HEmpty
+                    description={
+                      props.emptyText ?? (useLocaleLang('table.emptyText').value as string)
+                    }
+                  />
+                )}
+              </div>
+            )}
           {props.useColumnManager && columnManagerRender()}
         </HScrollbar>
         <div class={classHelper.e('resizing-cursor-line')} style={cursorLineStyle.value} />

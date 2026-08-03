@@ -4,6 +4,7 @@ import type {
   HTableColumnData,
   HTableQuery,
   HTableState,
+  HTableDataProcessingState,
 } from '../utils/types';
 import { HTableSortOrderEnum } from '../utils/types';
 
@@ -224,6 +225,13 @@ export const useTableEmits = {
    * @en Emitted when sorting or filtering query changes.
    */
   queryChange: (query: HTableQuery) => isObject(query),
+  /**
+   * 本地数据处理状态变化时触发
+   * @param state 数据处理状态
+   * @paramEn state The data processing state.
+   * @en Emitted when local data processing state changes.
+   */
+  dataProcessingChange: (state: HTableDataProcessingState) => isObject(state),
   /**
    * 已展开分组变化时触发
    * @param keys 已展开分组 key

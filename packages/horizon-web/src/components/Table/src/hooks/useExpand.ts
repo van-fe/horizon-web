@@ -4,7 +4,7 @@ import type { HTableRowKeyType, HTableTransformedRowDataType } from '../utils/ty
 import { HTableTransformedRowContextKey } from '../utils/types';
 import type { TableProps } from '../composables/useProps';
 import type { TableEmits } from '../composables/useEmits';
-import { HTableExpandedRowsInjectKey } from '../utils/injectKeys';
+import { HTableExpandedRowsInjectKey, HTableFullDataForStateInjectKey } from '../utils/injectKeys';
 
 export default function useExpand(
   rowsData: Ref<HTableTransformedRowDataType[]>,
@@ -12,6 +12,7 @@ export default function useExpand(
   emit: SetupContext<TableEmits>['emit'],
 ) {
   const expandRows = inject(HTableExpandedRowsInjectKey, ref(new Set<HTableRowKeyType>()));
+  const fullRowsData = inject(HTableFullDataForStateInjectKey, rowsData);
 
   watch(
     () => tableProps.expandRowKeys,
@@ -25,7 +26,7 @@ export default function useExpand(
     },
   );
 
-  watch(rowsData, val => {
+  watch(fullRowsData, val => {
     const currentKeys = new Set(val.map(row => row[HTableTransformedRowContextKey].uuid));
 
     expandRows.value.forEach(key => {

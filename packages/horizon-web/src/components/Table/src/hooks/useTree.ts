@@ -31,11 +31,41 @@ export default function (tableProps: TableProps, rowsData: Ref<HTableTransformed
   const setChildrenByRowKey = inject(HTableSetChildrenByRowKeyValueInjectKey)!;
   const fieldMapFormatted = inject(HTableFieldMapFormattedInjectKey)!;
 
-  const isTreeData = computed(() =>
-    rowsData.value.some(
-      row => fieldMapFormatted.value.children in row || fieldMapFormatted.value.isLeaf in row,
-    ),
-  );
+  const treeIndex = computed(() => {
+    const childrenByParent = new Map<HTableRowKeyType | null, HTableRowKeyType[]>();
+    const childrenField = fieldMapFormatted.value.children;
+    const isLeafField = fieldMapFormatted.value.isLeaf;
+    let hasTreeFields = false;
+
+    for (const row of rowsData.value) {
+      const context = row[HTableTransformedRowContextKey];
+      const siblings = childrenByParent.get(context.parentUuid) ?? [];
+      siblings.push(context.uuid);
+      childrenByParent.set(context.parentUuid, siblings);
+      hasTreeFields ||= childrenField in row || isLeafField in row;
+    }
+
+    return {
+      childrenByParent,
+      hasTreeFields,
+    };
+  });
+
+  const isTreeData = computed(() => treeIndex.value.hasTreeFields);
+
+  const treeRowVisibility = computed(() => {
+    const visibleByUuid = new Map<HTableRowKeyType, boolean>();
+
+    for (const row of rowsData.value) {
+      const { uuid, parentUuid } = row[HTableTransformedRowContextKey];
+      const visible =
+        parentUuid === null ||
+        (treeExpandRows.value.has(parentUuid) && (visibleByUuid.get(parentUuid) ?? true));
+      visibleByUuid.set(uuid, visible);
+    }
+
+    return visibleByUuid;
+  });
 
   async function toggleTreeExpandRows(rowData: HTableTransformedRowDataType) {
     if (treeExpandRows.value.has(rowData[HTableTransformedRowContextKey].uuid)) {
@@ -49,18 +79,19 @@ export default function (tableProps: TableProps, rowsData: Ref<HTableTransformed
     const currentUuid = rowData[HTableTransformedRowContextKey].uuid;
 
     treeExpandRows.value.delete(currentUuid);
+    const parentUuids = [currentUuid];
+    const visited = new Set<HTableRowKeyType>();
 
-    const recursionSetChildrenToggleUp = (parentUuid: HTableRowKeyType) => {
-      rowsData.value
-        .filter(row => row[HTableTransformedRowContextKey].parentUuid === parentUuid)
-        .forEach(row => {
-          const thisUuid = row[HTableTransformedRowContextKey].uuid;
-          recursionSetChildrenToggleUp(thisUuid);
-          treeExpandRows.value.delete(thisUuid);
-        });
-    };
+    while (parentUuids.length > 0) {
+      const parentUuid = parentUuids.pop()!;
+      if (visited.has(parentUuid)) continue;
+      visited.add(parentUuid);
 
-    recursionSetChildrenToggleUp(currentUuid);
+      for (const childUuid of treeIndex.value.childrenByParent.get(parentUuid) ?? []) {
+        treeExpandRows.value.delete(childUuid);
+        parentUuids.push(childUuid);
+      }
+    }
   }
 
   async function expandRow(rowData: HTableTransformedRowDataType) {
@@ -112,20 +143,7 @@ export default function (tableProps: TableProps, rowsData: Ref<HTableTransformed
   }
 
   function isTreeRowVisible(rowData: HTableTransformedRowDataType) {
-    let parentUuid = rowData[HTableTransformedRowContextKey].parentUuid;
-
-    while (parentUuid !== null) {
-      if (!treeExpandRows.value.has(parentUuid)) {
-        return false;
-      }
-
-      parentUuid =
-        rowsData.value.find(row => row[HTableTransformedRowContextKey].uuid === parentUuid)?.[
-          HTableTransformedRowContextKey
-        ].parentUuid ?? null;
-    }
-
-    return true;
+    return treeRowVisibility.value.get(rowData[HTableTransformedRowContextKey].uuid) ?? true;
   }
 
   function shouldSelectionBeVisible(

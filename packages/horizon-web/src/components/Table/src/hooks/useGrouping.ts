@@ -1,33 +1,96 @@
-import { computed, reactive, type ComputedRef, type SetupContext } from 'vue';
+import { computed, reactive, shallowReactive, type ComputedRef, type SetupContext } from 'vue';
 import get from 'lodash/get';
 import type { TableProps } from '../composables/useProps';
 import type { TableEmits } from '../composables/useEmits';
 import type {
   HTableAggregationMethod,
   HTableAggregationType,
+  HTableAggregations,
   HTableGroupContext,
   HTableGroupRowDataType,
   HTableTransformedRowDataType,
 } from '../utils/types';
 import { HTableGroupContextKey, HTableTransformedRowContextKey } from '../utils/types';
 
-function aggregate(
-  type: HTableAggregationType | HTableAggregationMethod,
-  rows: HTableTransformedRowDataType[],
-  field: string,
-) {
-  const values = rows.map(row => get(row, field));
-  if (typeof type === 'function') return type(values, rows, field);
-  if (type === 'count') return rows.length;
+interface BuiltInAggregationState {
+  type: HTableAggregationType;
+  count: number;
+  sum: number;
+  min: number;
+  max: number;
+}
 
-  const numbers = values.filter(value => typeof value === 'number' && Number.isFinite(value));
-  if (!numbers.length) return undefined;
-  if (type === 'sum') return numbers.reduce((total, value) => total + value, 0);
-  if (type === 'average') {
-    return numbers.reduce((total, value) => total + value, 0) / numbers.length;
+interface WorkingGroup {
+  value: unknown;
+  rows: HTableTransformedRowDataType[];
+  aggregationStates: Map<string, BuiltInAggregationState>;
+}
+
+const EMPTY_VISIBLE_STATE = shallowReactive<Record<string, boolean>>({});
+
+function createAggregationStates(entries: Array<[string, HTableAggregationType]>) {
+  return new Map<string, BuiltInAggregationState>(
+    entries.map(([field, type]) => [
+      field,
+      {
+        type,
+        count: 0,
+        sum: 0,
+        min: Infinity,
+        max: -Infinity,
+      },
+    ]),
+  );
+}
+
+function collectBuiltInAggregations(
+  states: Map<string, BuiltInAggregationState>,
+  row: HTableTransformedRowDataType,
+) {
+  states.forEach((state, field) => {
+    if (state.type === 'count') return;
+
+    const value = get(row, field);
+    if (typeof value !== 'number' || !Number.isFinite(value)) return;
+
+    state.count++;
+    state.sum += value;
+    if (value < state.min) state.min = value;
+    if (value > state.max) state.max = value;
+  });
+}
+
+function finishAggregations(
+  group: WorkingGroup,
+  customEntries: Array<[string, HTableAggregationMethod]>,
+) {
+  const aggregates: Record<string, unknown> = {};
+
+  group.aggregationStates.forEach((state, field) => {
+    if (state.type === 'count') {
+      aggregates[field] = group.rows.length;
+    } else if (state.count === 0) {
+      aggregates[field] = undefined;
+    } else if (state.type === 'sum') {
+      aggregates[field] = state.sum;
+    } else if (state.type === 'average') {
+      aggregates[field] = state.sum / state.count;
+    } else if (state.type === 'min') {
+      aggregates[field] = state.min;
+    } else {
+      aggregates[field] = state.max;
+    }
+  });
+
+  for (const [field, method] of customEntries) {
+    aggregates[field] = method(
+      group.rows.map(row => get(row, field)),
+      group.rows,
+      field,
+    );
   }
-  if (type === 'min') return Math.min(...numbers);
-  return Math.max(...numbers);
+
+  return aggregates;
 }
 
 function serializeGroupValue(value: unknown) {
@@ -56,6 +119,10 @@ export default function useGrouping(options: {
   const collapsedKeys = reactive(new Set<string>());
   let allGroupKeys: string[] = [];
 
+  const controlledExpandedKeys = computed(() =>
+    options.props.expandedGroupKeys ? new Set(options.props.expandedGroupKeys) : undefined,
+  );
+
   const groupFields = computed(() => {
     if (!options.props.groupBy) return [];
     return typeof options.props.groupBy === 'function'
@@ -66,8 +133,8 @@ export default function useGrouping(options: {
   });
 
   function isExpanded(key: string) {
-    if (options.props.expandedGroupKeys) {
-      return options.props.expandedGroupKeys.includes(key);
+    if (controlledExpandedKeys.value) {
+      return controlledExpandedKeys.value.has(key);
     }
     return options.props.defaultExpandAllGroups ? !collapsedKeys.has(key) : expandedKeys.has(key);
   }
@@ -102,6 +169,15 @@ export default function useGrouping(options: {
     const result: HTableTransformedRowDataType[] = [];
     const nextGroupKeys: string[] = [];
     const rowKeyField = options.props.rowKey;
+    const aggregationEntries = Object.entries(options.props.aggregations) as Array<
+      [string, HTableAggregations[string]]
+    >;
+    const builtInEntries = aggregationEntries.filter(
+      (entry): entry is [string, HTableAggregationType] => typeof entry[1] !== 'function',
+    );
+    const customEntries = aggregationEntries.filter(
+      (entry): entry is [string, HTableAggregationMethod] => typeof entry[1] === 'function',
+    );
 
     const appendGroups = (
       source: HTableTransformedRowDataType[],
@@ -109,15 +185,17 @@ export default function useGrouping(options: {
       parentPath: string[],
     ) => {
       const groupField = groupFields.value[level];
-      const grouped = new Map<string, { value: unknown; rows: HTableTransformedRowDataType[] }>();
+      const grouped = new Map<string, WorkingGroup>();
       source.forEach(row => {
         const value = typeof groupField === 'function' ? groupField(row) : get(row, groupField);
         const segment = serializeGroupValue(value);
         const current = grouped.get(segment) ?? {
           value,
           rows: [] as HTableTransformedRowDataType[],
+          aggregationStates: createAggregationStates(builtInEntries),
         };
         current.rows.push(row);
+        collectBuiltInAggregations(current.aggregationStates, row);
         grouped.set(segment, current);
       });
 
@@ -125,12 +203,7 @@ export default function useGrouping(options: {
         const path = [...parentPath, segment];
         const key = `group:${level}:${path.map(encodeURIComponent).join('/')}`;
         nextGroupKeys.push(key);
-        const aggregates = Object.fromEntries(
-          Object.entries(options.props.aggregations).map(([field, type]) => [
-            field,
-            aggregate(type, group.rows, field),
-          ]),
-        );
+        const aggregates = finishAggregations(group, customEntries);
         const context: HTableGroupContext = {
           key,
           value: group.value,
@@ -148,7 +221,7 @@ export default function useGrouping(options: {
             uuid: key,
             index: result.length,
             siblingIndex: result.length,
-            visible: computed(() => ({})),
+            visible: EMPTY_VISIBLE_STATE,
             parentUuid: null,
             level,
             isLeaf: false,

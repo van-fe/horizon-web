@@ -1,6 +1,6 @@
-import type { DefinedComponent, HorizonWebComponentInstance } from '@aurora/utils';
+import type { DefinedComponent } from '@aurora/utils';
 import { cls, ComponentClassBlock, isNil } from '@aurora/utils';
-import { computed, inject, type Ref, ref } from 'vue';
+import { inject, type Ref } from 'vue';
 import type { HTableColumnData, HTableTransformedRowDataType } from '../utils/types';
 import { HTableColumnFilterKey, HTableSortOrderEnum } from '../utils/types';
 import {
@@ -17,16 +17,17 @@ import HButton from '../../../Button/src/Button';
 import HPicker from '../../../Picker/src/Picker';
 import HInput from '../../../Input/src/Input';
 import HInputNumber from '../../../InputNumber/src/InputNumber';
-import type { PickerExposes } from '../../../Picker/src/composables/useExposes';
 import useLocaleLang from '~/utils/useLocaleLang';
 import HCascader from '../../../Cascader/src/Cascader';
 import HDatePicker from '../../../DatePicker/src/DatePicker';
 import HSelect from '../../../Select/src/Select';
+import type { SelectProps } from '../../../Select/src/composables/useProps';
 import HTimePicker from '../../../TimePicker/src/TimePicker';
 import HTreeSelect from '../../../TreeSelect/src/TreeSelect';
 import HTooltip from '../../../Tooltip/src/Tooltip';
 import type { TableColumnProps } from '../composables/useProps';
 import { warn } from '~/utils/useLog';
+import { getColumnRuntime } from './useColumnRuntime';
 
 export function useSortPlugin(column: HTableColumnData) {
   if (!column.props.field) {
@@ -38,12 +39,12 @@ export function useSortPlugin(column: HTableColumnData) {
   const currentSorts = inject(HTableCurrentSortsInjectKey, undefined);
   const setSort = inject(HTableSetSortInjectKey, undefined);
 
-  const currentSortState = computed(() => currentSorts?.value.get(column));
-  const canSort = computed(() => !column.props.sortDisabled);
-  const sortLabel = computed(() => String(column.props.title ?? column.props.field));
+  const currentSortState = currentSorts?.value.get(column);
+  const canSort = !column.props.sortDisabled;
+  const sortLabel = String(column.props.title ?? column.props.field);
 
   function handleKeyboardSort(evt: KeyboardEvent, order?: HTableSortOrderEnum) {
-    if (!['Enter', ' ', 'Spacebar'].includes(evt.key) || !canSort.value) return;
+    if (!['Enter', ' ', 'Spacebar'].includes(evt.key) || !canSort) return;
     evt.preventDefault();
     evt.stopPropagation();
     setSort?.(column, order, evt.ctrlKey || evt.metaKey);
@@ -57,10 +58,10 @@ export function useSortPlugin(column: HTableColumnData) {
         classHelper.is('separated', column.props.sortSeparate),
         classHelper.is('disabled', column.props.sortDisabled),
       )}
-      role={!column.props.sortSeparate && canSort.value ? 'button' : undefined}
-      tabindex={!column.props.sortSeparate && canSort.value ? 0 : -1}
-      aria-label={!column.props.sortSeparate ? sortLabel.value : undefined}
-      aria-pressed={!column.props.sortSeparate ? !!currentSortState.value : undefined}
+      role={!column.props.sortSeparate && canSort ? 'button' : undefined}
+      tabindex={!column.props.sortSeparate && canSort ? 0 : -1}
+      aria-label={!column.props.sortSeparate ? sortLabel : undefined}
+      aria-pressed={!column.props.sortSeparate ? !!currentSortState : undefined}
       onClick={(evt: MouseEvent) => {
         !column.props.sortSeparate &&
           !column.props.sortDisabled &&
@@ -74,13 +75,13 @@ export function useSortPlugin(column: HTableColumnData) {
         class={cls(
           classHelper.em('header', 'sort-icon'),
           classHelper.is('asc'),
-          classHelper.is('active', currentSortState.value === HTableSortOrderEnum.ASC),
+          classHelper.is('active', currentSortState === HTableSortOrderEnum.ASC),
         )}
-        role={column.props.sortSeparate && canSort.value ? 'button' : undefined}
-        tabindex={column.props.sortSeparate && canSort.value ? 0 : -1}
-        aria-label={column.props.sortSeparate ? `${sortLabel.value} ↑` : undefined}
+        role={column.props.sortSeparate && canSort ? 'button' : undefined}
+        tabindex={column.props.sortSeparate && canSort ? 0 : -1}
+        aria-label={column.props.sortSeparate ? `${sortLabel} ↑` : undefined}
         aria-pressed={
-          column.props.sortSeparate ? currentSortState.value === HTableSortOrderEnum.ASC : undefined
+          column.props.sortSeparate ? currentSortState === HTableSortOrderEnum.ASC : undefined
         }
         onClick={(evt: MouseEvent) => {
           column.props.sortSeparate &&
@@ -95,15 +96,13 @@ export function useSortPlugin(column: HTableColumnData) {
         class={cls(
           classHelper.em('header', 'sort-icon'),
           classHelper.is('desc'),
-          classHelper.is('active', currentSortState.value === HTableSortOrderEnum.DESC),
+          classHelper.is('active', currentSortState === HTableSortOrderEnum.DESC),
         )}
-        role={column.props.sortSeparate && canSort.value ? 'button' : undefined}
-        tabindex={column.props.sortSeparate && canSort.value ? 0 : -1}
-        aria-label={column.props.sortSeparate ? `${sortLabel.value} ↓` : undefined}
+        role={column.props.sortSeparate && canSort ? 'button' : undefined}
+        tabindex={column.props.sortSeparate && canSort ? 0 : -1}
+        aria-label={column.props.sortSeparate ? `${sortLabel} ↓` : undefined}
         aria-pressed={
-          column.props.sortSeparate
-            ? currentSortState.value === HTableSortOrderEnum.DESC
-            : undefined
+          column.props.sortSeparate ? currentSortState === HTableSortOrderEnum.DESC : undefined
         }
         onClick={(evt: MouseEvent) => {
           column.props.sortSeparate &&
@@ -120,7 +119,7 @@ export function useSortPlugin(column: HTableColumnData) {
 
 export function useFilterPlugin(
   column: HTableColumnData,
-  flattenData: Ref<HTableTransformedRowDataType[]>,
+  _flattenData: Ref<HTableTransformedRowDataType[]>,
 ) {
   const classHelper = new ComponentClassBlock('table');
   let RenderComponent: DefinedComponent = HSelect;
@@ -142,12 +141,7 @@ export function useFilterPlugin(
         useCheckAll: true,
         useCheckAllCount: true,
         multiple: true,
-        options: [...new Set(flattenData.value.map(row => row[column.props.field!]))].map(
-          value => ({
-            label: value,
-            value,
-          }),
-        ),
+        options: getColumnRuntime(column).filterUi.selectOptions.value as SelectProps['options'],
       };
       break;
     case 'cascader':
@@ -176,7 +170,7 @@ export function useFilterPlugin(
     }
   }
 
-  const isValueIsEmpty = computed(checkValueEmpty);
+  const isValueIsEmpty = checkValueEmpty();
 
   return (
     <RenderComponent
@@ -197,13 +191,13 @@ export function useFilterPlugin(
     >
       {{
         pickerOuter: (modelValue?: string) => (
-          <HTooltip disabled={isValueIsEmpty.value} content={modelValue}>
+          <HTooltip disabled={isValueIsEmpty} content={modelValue}>
             <HButton
               class={cls(classHelper.em('header', 'filter-icon'))}
               size="small"
               text={true}
-              active={!isValueIsEmpty.value}
-              type={!isValueIsEmpty.value ? 'primary' : 'normal'}
+              active={!isValueIsEmpty}
+              type={!isValueIsEmpty ? 'primary' : 'normal'}
               icon={triggerIcon}
               iconSize={16}
               disabled={column.props.filterDisabled}
@@ -218,8 +212,9 @@ export function useFilterPlugin(
 export function useSearchPlugin(column: HTableColumnData) {
   const classHelper = new ComponentClassBlock('table');
 
-  const pickerDomRef = ref<HorizonWebComponentInstance<typeof HPicker, PickerExposes>>();
-  const value = ref(column[HTableColumnFilterKey].currentFilterValue.value);
+  const runtime = getColumnRuntime(column);
+  const pickerDomRef = runtime.filterUi.pickerRef;
+  const value = runtime.filterUi.searchDraft;
 
   let RenderComponent: DefinedComponent = HInput;
 

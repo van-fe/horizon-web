@@ -232,5 +232,25 @@
 
 :::demo components/Table/virtual.vue :::
 
+## 大数据处理
+
+`virtual` 只减少 DOM 渲染量；排序、过滤等数据计算可通过 `data-processing` 单独优化：
+
+- `sync` 保持同步执行，适合小数据或自定义计算；
+- `auto` 在数据达到阈值且只使用内置排序、过滤时自动使用 Web Worker；
+- `worker` 优先使用 Worker，创建失败或操作不可序列化时会透明回退到同步执行。
+
+Worker 只接收查询涉及字段的轻量投影并返回行索引，原始行对象、插槽和事件仍留在主线程。`sort-method`、`sort-by`、`filter-method` 等函数会使用同步回退；树表、SSR、严格 CSP 禁止 Blob Worker 或浏览器不支持 Worker 时同样不会影响结果。严格 CSP 场景可通过 `workerFactory` 提供自托管 Worker。
+
+组件包同时导出无 UI 的 `processTableData`、`createTableDataProcessingRequest`、`createTableDataProcessingWorkerSource`、协议版本和相关类型，便于在构建阶段生成自托管 Worker，或在其他数据管理场景复用同一套列式过滤与稳定排序引擎。
+
+如果业务以不可变方式替换 `data`，可设置 `:watch-data="false"` 跳过 Vue 对大数组的深度遍历；原地修改后需要调用 `reloadData()`。`data-processing-change`、`getDataProcessingState()`、`refreshDataProcessing()` 和 `cancelDataProcessing()` 可用于观察或控制异步任务。
+
+Worker 默认 30 秒无响应会终止并同步回退，可通过 `workerTimeout` 调整，设为 `0` 可关闭超时。运行期替换自定义 `sort-method`、`sort-by` 或 `filter-method` 后，可调用 `refreshDataProcessing()` 立即重算。
+
+下面的示例使用 50,000 行数据，可切换同步、自动和 Worker 模式，并与虚拟滚动组合。
+
+:::demo components/Table/data-processing.vue :::
+
 ## 类型定义
 :::code ../../../../horizon-web/src/components/Table/src/utils/types.ts :::

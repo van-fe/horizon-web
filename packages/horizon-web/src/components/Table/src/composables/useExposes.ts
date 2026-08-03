@@ -1,9 +1,11 @@
 import type { ExposeType, ExtractExposeTypes } from '@aurora/utils';
 import type {
   HTableRowKeyType,
+  HTableRowDataType,
   HTableTransformedRowDataType,
   HTableVisibleRange,
   HTableState,
+  HTableDataProcessingState,
 } from '../utils/types';
 
 export const useTableExposes = {
@@ -13,7 +15,22 @@ export const useTableExposes = {
    * @paramEn data The data value.
    * @en Controls reload data.
    */
-  reloadData: Function as ExposeType<(data?: HTableTransformedRowDataType[]) => void>,
+  reloadData: Function as ExposeType<(data?: HTableRowDataType[]) => void>,
+  /**
+   * 取消当前尚未完成的数据处理任务
+   * @en Cancels the current pending data processing task.
+   */
+  cancelDataProcessing: Function as ExposeType<() => void>,
+  /**
+   * 获取当前数据处理状态
+   * @en Gets the current data processing state.
+   */
+  getDataProcessingState: Function as ExposeType<() => HTableDataProcessingState>,
+  /**
+   * 立即重新执行本地数据处理，并在完成后返回状态
+   * @en Immediately reruns local data processing and resolves with its final state.
+   */
+  refreshDataProcessing: Function as ExposeType<() => Promise<HTableDataProcessingState>>,
   /**
    * 在一些未能正确响应表格布局，且需要对表格的布局刷新，可以调用此方法
    * @en Controls refresh layout.

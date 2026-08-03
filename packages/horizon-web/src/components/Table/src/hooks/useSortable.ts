@@ -15,6 +15,57 @@ import {
 import get from 'lodash/get';
 import { warn } from '~/utils/useLog';
 
+const numericCollator = new Intl.Collator(undefined, { numeric: true });
+
+function compareNumbers(left: number, right: number) {
+  if (Number.isNaN(left)) return Number.isNaN(right) ? 0 : 1;
+  if (Number.isNaN(right)) return -1;
+  if (left === right) return 0;
+  return left < right ? -1 : 1;
+}
+
+export function compareTableRows(
+  sorts: Iterable<[HTableColumnData, HTableSortOrderEnum]>,
+  a: HTableTransformedRowDataType,
+  b: HTableTransformedRowDataType,
+) {
+  for (const [column, order] of sorts) {
+    let sortRes: number;
+    if (!column.props.useBuiltInSort || column.props.sortable === 'custom') {
+      continue;
+    } else if (column.props.sortMethod) {
+      sortRes = column.props.sortMethod(order)(a, b);
+    } else if (column.props.sortBy) {
+      sortRes = column.props.sortBy(a, b);
+      if (order === HTableSortOrderEnum.DESC) {
+        sortRes *= -1;
+      }
+    } else {
+      const field = column.props.field;
+
+      if (!field) {
+        warn('table', `Column should set 'field' first to sort.`);
+        continue;
+      }
+
+      const aValue = get(a, field);
+      const bValue = get(b, field);
+      const baseResult =
+        typeof aValue === 'number' && typeof bValue === 'number'
+          ? compareNumbers(aValue, bValue)
+          : numericCollator.compare(String(aValue ?? ''), String(bValue ?? ''));
+
+      sortRes = order === HTableSortOrderEnum.ASC ? baseResult : -baseResult;
+    }
+
+    if (sortRes !== 0) {
+      return sortRes;
+    }
+  }
+
+  return 0;
+}
+
 export default function useSortable(
   emit: SetupContext<TableEmits>['emit'],
   columns: Ref<{
@@ -149,44 +200,7 @@ export default function useSortable(
 
   function sortRow(a: HTableTransformedRowDataType, b: HTableTransformedRowDataType) {
     if (!useBuiltInSort()) return 0;
-
-    for (const [column, order] of currentSorts.value) {
-      let sortRes: number;
-      if (!column.props.useBuiltInSort || column.props.sortable === 'custom') {
-        continue;
-      } else if (column.props.sortMethod) {
-        sortRes = column.props.sortMethod(order)(a, b);
-      } else if (column.props.sortBy) {
-        sortRes = column.props.sortBy(a, b);
-        if (order === HTableSortOrderEnum.DESC) {
-          sortRes *= -1;
-        }
-      } else {
-        const field = column.props.field;
-
-        if (!field) {
-          warn('table', `Column should set 'field' first to sort.`);
-          continue;
-        }
-
-        const aValue = get(a, field);
-        const bValue = get(b, field);
-        const baseResult =
-          typeof aValue === 'number' && typeof bValue === 'number'
-            ? aValue - bValue
-            : String(aValue ?? '').localeCompare(String(bValue ?? ''), undefined, {
-                numeric: true,
-              });
-
-        sortRes = order === HTableSortOrderEnum.ASC ? baseResult : -baseResult;
-      }
-
-      if (sortRes !== 0) {
-        return sortRes;
-      }
-    }
-
-    return 0;
+    return compareTableRows(currentSorts.value, a, b);
   }
 
   provide(HTableCurrentSortsInjectKey, currentSorts);
@@ -197,5 +211,7 @@ export default function useSortable(
     currentSorts,
     setSort,
     sortRow,
+    compareRows: (a: HTableTransformedRowDataType, b: HTableTransformedRowDataType) =>
+      compareTableRows(currentSorts.value, a, b),
   };
 }

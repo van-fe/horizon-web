@@ -17,6 +17,8 @@ import type {
   HTableState,
   HTableAggregations,
   HTableGroupBy,
+  HTableDataProcessingMode,
+  HTableDataProcessingOptions,
 } from '../utils/types';
 import type { Promisable } from '@aurora/utils';
 import { HTableAlignEnum, HTableSortOrderEnum } from '../utils/types';
@@ -46,6 +48,14 @@ export const useTableProps = declarePropType({
   data: {
     type: Array as PropType<HTableRowDataType[]>,
     default: () => [],
+  },
+  /**
+   * 是否深度监听数据变化。大数据使用不可变更新时可关闭，并通过替换数组或 `reloadData` 刷新
+   * @en Whether to deeply watch data changes. Disable for large immutable datasets and refresh by replacing the array or calling `reloadData`.
+   */
+  watchData: {
+    type: Boolean,
+    default: true,
   },
   /**
    * 表格高度，默认根据表格数据自适应。 会使用 `@aurora/utils.sizeUnitTransform` 转化尺寸
@@ -457,6 +467,21 @@ export const useTableProps = declarePropType({
   virtual: {
     type: [Boolean, Object] as PropType<boolean | HTableVirtualOptions>,
     default: false,
+  },
+  /**
+   * 本地排序和过滤的数据处理模式。`auto` 会在适合的大数据场景使用 Web Worker，并在不可用时同步回退
+   * @en Local sorting and filtering processing mode. Auto mode uses a Web Worker for suitable large datasets and falls back synchronously when unavailable.
+   */
+  dataProcessing: {
+    type: [String, Object] as PropType<HTableDataProcessingMode | HTableDataProcessingOptions>,
+    default: 'sync',
+    validator: (value: unknown) => {
+      const modes = ['sync', 'auto', 'worker'];
+      if (typeof value === 'string') return modes.includes(value);
+      if (value === null || typeof value !== 'object') return false;
+      const mode = (value as HTableDataProcessingOptions).mode;
+      return mode === undefined || modes.includes(mode);
+    },
   },
   /**
    * 是否启用行键盘导航。使用方向键、Home、End、PageUp、PageDown 移动，空格选择，Enter 展开

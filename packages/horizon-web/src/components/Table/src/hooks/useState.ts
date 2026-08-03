@@ -1,4 +1,4 @@
-import { computed, nextTick, ref, watch, type Ref, type SetupContext } from 'vue';
+import { computed, nextTick, ref, toRaw, watch, type Ref, type SetupContext } from 'vue';
 import type { TableProps } from '../composables/useProps';
 import type { TableEmits } from '../composables/useEmits';
 import type {
@@ -107,7 +107,7 @@ export default function useState(options: HTableStateOptions) {
     analyzedColumns.forEach(column => {
       const key = columnIdentity(column);
       const filterValue = column[HTableColumnFilterKey].currentFilterValue.value;
-      if (filterValue !== undefined && filterValue !== null) filters[key] = filterValue;
+      if (filterValue !== undefined && filterValue !== null) filters[key] = toRaw(filterValue);
       if (column.props.type === 'selection') {
         selection[key] = Array.from(column[HTableColumnSelectionKey].checkedRows);
       }

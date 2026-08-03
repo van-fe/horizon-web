@@ -1,5 +1,5 @@
 import type { CSSProperties, Ref, SetupContext } from 'vue';
-import { computed, inject, provide, ref, shallowReactive } from 'vue';
+import { computed, inject, provide, ref } from 'vue';
 import {
   HTableColumnDecreaseCollectionInjectKey,
   HTableColumnIncreaseCollectionInjectKey,
@@ -7,63 +7,17 @@ import {
   HTableGetLastFixedRightColumnInjectKey,
   HTableIsColumnsHaveFixedInjectKey,
 } from '../utils/injectKeys';
-import { cssVariable, sizeUnitTransform } from '@aurora/utils';
-import useSelection from './useSelection';
 import type { TableEmits } from '../composables/useEmits';
 import type {
   HTableColumnData,
   HTableInsertedColumnData,
-  HTableRowKeyType,
   HTableTransformedRowDataType,
 } from '../utils/types';
-import {
-  HTableColumnContextKey,
-  HTableColumnFilterKey,
-  HTableColumnSelectionKey,
-} from '../utils/types';
-import useFilter from './useFilter';
+import { HTableColumnContextKey } from '../utils/types';
 import useColumnFixed, { sortColumnsMethod } from './useColumnFixed';
 import useColumnVisible from './useColumnVisible';
 import useColumnSort from './useColumnSort';
-
-function getColumnWidthStyle(column: HTableInsertedColumnData) {
-  switch (column.props.type) {
-    default:
-    case 'default':
-    case 'index':
-    case 'expand':
-    case 'selection':
-      return {
-        width: sizeUnitTransform(column.props.width),
-        minWidth: sizeUnitTransform(column.props.minWidth),
-      };
-    case 'drag':
-      return {
-        width: sizeUnitTransform(column.props.width ?? 40),
-        minWidth: sizeUnitTransform(column.props.minWidth ?? 40),
-      };
-  }
-}
-
-function getColumnOverflowTooltipStyle(column: HTableInsertedColumnData): CSSProperties {
-  switch (column.props.type) {
-    default:
-    case 'default':
-    case 'index':
-    case 'expand':
-    case 'selection':
-      return {
-        width: column.props.width
-          ? `calc(${sizeUnitTransform(column.props.width)} - ${cssVariable('table', 'spacing', 'cell', 'x', 'padding')} * 2 - var(--table-border-width))`
-          : undefined,
-        minWidth: column.props.minWidth
-          ? `calc(${sizeUnitTransform(column.props.minWidth)} - ${cssVariable('table', 'spacing', 'cell', 'x', 'padding')} * 2 - var(--table-border-width))`
-          : undefined,
-      };
-    case 'drag':
-      return {};
-  }
-}
+import { getColumnRuntime } from './useColumnRuntime';
 
 function getWidthStyleForCol(columns: HTableColumnData[]) {
   const colWithStyle: Array<{ column: HTableColumnData; style: CSSProperties }> = [];
@@ -83,9 +37,9 @@ function getWidthStyleForCol(columns: HTableColumnData[]) {
 }
 
 export default function useColumn(
-  flattenData: Ref<HTableTransformedRowDataType[]>,
-  emit: SetupContext<TableEmits>['emit'],
-  useBuiltInDataOperations: () => boolean = () => true,
+  _flattenData: Ref<HTableTransformedRowDataType[]>,
+  _emit: SetupContext<TableEmits>['emit'],
+  _useBuiltInDataOperations: () => boolean = () => true,
 ) {
   const currColumns = ref<HTableInsertedColumnData[]>([]);
   const { fixedStore, getFixedState, resetFixedState } = useColumnFixed(currColumns);
@@ -135,73 +89,14 @@ export default function useColumn(
 
       sortColumns(current.filter(column => getVisibleState(column.uuid))).forEach(
         (column: HTableInsertedColumnData) => {
-          const calcChildren: HTableColumnData[] = [];
+          const currentColumn = getColumnRuntime(column).column;
+          const calcChildren = currentColumn.calcChildren;
 
-          const {
-            checkedRows,
-            isSelectable,
-            isRowChecked,
-            isRowIndeterminate,
-            isCheckedAll,
-            isIndeterminate,
-            handleSelect,
-            handleSelectAll,
-            handleClear,
-            getSelectionRows,
-            toggleRowSelection,
-          } = useSelection(column, emit, flattenData);
-
-          const { currentFilterValue } = useFilter(
-            column,
-            emit,
-            flattenData,
-            useBuiltInDataOperations,
-          );
-
-          const currentColumn: HTableColumnData = {
-            ...column,
-            headerColSpan: 1,
-            headerRowSpan: 1,
-            calcChildren,
-            index: -1,
-            // Widths are measured after render; keep the layout context reactive so sticky
-            // offsets and resized column styles are applied without another parent render.
-            [HTableColumnContextKey]: shallowReactive({
-              sizeStyle: getColumnWidthStyle(column),
-              resizeWidth: -1,
-              isResizing: false,
-              overflowStyle: getColumnOverflowTooltipStyle(column),
-              prevColumnsWidthSum: 0,
-              nextColumnsWidthSum: 0,
-              prevColumn: undefined,
-              nextColumn: undefined,
-              selfElement: ref<HTMLTableCellElement>(),
-              parentColumn: parent,
-              parentColumnsHeightSum: 0,
-              childrenEachRowColumnsHeightSum: 0,
-            }),
-            [HTableColumnSelectionKey]: {
-              checkedRows: checkedRows.value,
-              isSelectable,
-              isRowChecked,
-              isRowIndeterminate,
-              isCheckedAll,
-              isIndeterminate,
-              handleSelect,
-              handleSelectAll: () => handleSelectAll(flattenData.value),
-              handleClear: (ignoreSelectable: boolean) =>
-                handleClear(flattenData.value, ignoreSelectable),
-              getSelectionRows: () => getSelectionRows(flattenData.value),
-              toggleRowSelection: (
-                rowKey: HTableRowKeyType | HTableRowKeyType[],
-                selected?: boolean,
-                ignoreSelectable?: boolean,
-              ) => toggleRowSelection(flattenData.value, rowKey, selected, ignoreSelectable),
-            },
-            [HTableColumnFilterKey]: {
-              currentFilterValue,
-            },
-          };
+          currentColumn.headerColSpan = 1;
+          currentColumn.headerRowSpan = 1;
+          currentColumn.index = -1;
+          currentColumn[HTableColumnContextKey].parentColumn = parent;
+          calcChildren.splice(0, calcChildren.length);
 
           if (column.children.length > 0) {
             calcChildren.splice(
@@ -309,7 +204,8 @@ export default function useColumn(
   });
 
   provide(HTableColumnDecreaseCollectionInjectKey, uuid => {
-    currColumns.value = currColumns.value.filter(column => column.uuid !== uuid);
+    const index = currColumns.value.findIndex(column => column.uuid === uuid);
+    if (index >= 0) currColumns.value.splice(index, 1);
   });
 
   provide(HTableGetLastFixedLeftColumnInjectKey, getLastFixedLeftColumn);

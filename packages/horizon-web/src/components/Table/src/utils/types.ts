@@ -35,6 +35,64 @@ export interface HTableVirtualOptions {
   dynamic?: boolean;
 }
 
+export type HTableDataProcessingMode = 'sync' | 'auto' | 'worker';
+
+export type HTableDataProcessingFallbackReason =
+  | 'below-threshold'
+  | 'custom-operation'
+  | 'no-operation'
+  | 'remote-query'
+  | 'ssr'
+  | 'tree-data'
+  | 'worker-error'
+  | 'worker-unavailable';
+
+export interface HTableDataWorkerFactoryContext {
+  source: string;
+  name: string;
+}
+
+export type HTableDataWorkerFactory = (context: HTableDataWorkerFactoryContext) => Worker;
+
+export interface HTableDataProcessingOptions {
+  /**
+   * 数据处理执行模式
+   * @en Data processing execution mode.
+   */
+  mode?: HTableDataProcessingMode;
+  /**
+   * `auto` 模式启用 Worker 的最小数据行数
+   * @en Minimum row count for enabling a Worker in auto mode.
+   */
+  workerThreshold?: number;
+  /**
+   * 合并连续查询更新的防抖时间（毫秒）
+   * @en Debounce delay in milliseconds for coalescing consecutive query updates.
+   */
+  debounce?: number;
+  /**
+   * Worker 无响应时自动终止并同步回退的超时时间（毫秒），`0` 表示不限制
+   * @en Timeout in milliseconds before terminating an unresponsive Worker and falling back synchronously. Use `0` to disable.
+   */
+  workerTimeout?: number;
+  /**
+   * 自定义 Worker 创建方法，适用于严格 CSP 或自托管 Worker
+   * @en Custom Worker factory for strict CSP or self-hosted workers.
+   */
+  workerFactory?: HTableDataWorkerFactory;
+}
+
+export interface HTableDataProcessingState {
+  revision: number;
+  status: 'idle' | 'processing' | 'ready' | 'cancelled' | 'error';
+  requestedMode: HTableDataProcessingMode;
+  mode: 'sync' | 'worker';
+  rowCount: number;
+  resultRowCount: number;
+  duration: number;
+  fallbackReason?: HTableDataProcessingFallbackReason;
+}
+
 export interface HTableVisibleRange {
   startIndex: number;
   endIndex: number;
@@ -130,7 +188,7 @@ export type HTableTransformedRowDataType = HTableRowDataType & {
     uuid: HTableRowKeyType;
     index: number;
     siblingIndex: number;
-    visible: Ref<Record<string, boolean>>;
+    visible: Record<string, boolean>;
     parentUuid: HTableRowKeyType | null;
     level: number;
     isLeaf: boolean;

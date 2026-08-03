@@ -19,6 +19,10 @@ export const HTablePropsInjectKey = Symbol(
   generatorInjectedKeyName('table', 'props'),
 ) as InjectionKey<TableProps>;
 
+export const HTableUseBuiltInDataOperationsInjectKey = Symbol.for(
+  generatorInjectedKeyName('table', 'use-built-in-data-operations'),
+) as InjectionKey<() => boolean>;
+
 export const HTableEmitsInjectKey = Symbol(
   generatorInjectedKeyName('table', 'emits'),
 ) as InjectionKey<HorizonWebSetupContext<TableEmits>['emit']>;
@@ -53,6 +57,10 @@ export const HTableColumnAnalysisInjectKey = Symbol(
 
 export const HTableFlattenDataInjectKey = Symbol.for(
   generatorInjectedKeyName('table', 'flatten-data'),
+) as InjectionKey<Ref<HTableTransformedRowDataType[]>>;
+
+export const HTableFullDataForStateInjectKey = Symbol.for(
+  generatorInjectedKeyName('table', 'full-data-for-state'),
 ) as InjectionKey<Ref<HTableTransformedRowDataType[]>>;
 
 export const HTableCurrentSortsInjectKey = Symbol.for(

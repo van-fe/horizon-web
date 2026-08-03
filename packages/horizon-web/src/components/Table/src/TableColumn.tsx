@@ -15,10 +15,13 @@ import {
   HTableColumnAnalysisInjectKey,
   HTableEmitsInjectKey,
   HTableFlattenDataInjectKey,
+  HTablePropsInjectKey,
+  HTableUseBuiltInDataOperationsInjectKey,
 } from './utils/injectKeys';
 import { formatFixed } from './hooks/useLayout';
-import type { HTableRowKeyType } from './utils/types';
+import type { HTableInsertedColumnData, HTableRowKeyType } from './utils/types';
 import { HTableColumnSelectionKey } from './utils/types';
+import useColumnRuntime, { attachColumnRuntime } from './hooks/useColumnRuntime';
 
 export default defineComponent({
   name: `${useNamespace()}TableColumn`,
@@ -38,10 +41,29 @@ export default defineComponent({
     const classHelper = new ComponentClassBlock('table-column');
 
     const parentEmit = inject(HTableEmitsInjectKey)!;
+    const parentProps = inject(HTablePropsInjectKey)!;
     const analysisColumns = inject(HTableColumnAnalysisInjectKey)!;
     const flattenData = inject(HTableFlattenDataInjectKey)!;
+    const useBuiltInDataOperations = inject(
+      HTableUseBuiltInDataOperationsInjectKey,
+      () => parentProps.queryMode !== 'remote',
+    );
 
     const { columns, increaseChild, decreaseChild } = useColumn(flattenData, parentEmit);
+    const insertedColumn: HTableInsertedColumnData = {
+      uuid,
+      props,
+      emit,
+      slots,
+      children: columns.value,
+    };
+    const runtime = useColumnRuntime(
+      insertedColumn,
+      parentEmit,
+      flattenData,
+      useBuiltInDataOperations,
+    );
+    const columnWithRuntime = attachColumnRuntime(insertedColumn, runtime);
 
     expose({
       clearSelection: (ignoreSelectable: boolean = false) => {
@@ -66,13 +88,7 @@ export default defineComponent({
     });
 
     onMounted(() => {
-      increaseChild?.({
-        uuid,
-        props,
-        emit,
-        slots,
-        children: columns.value,
-      });
+      increaseChild?.(columnWithRuntime);
     });
 
     onBeforeUnmount(() => {
