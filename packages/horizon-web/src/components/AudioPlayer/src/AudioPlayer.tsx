@@ -175,7 +175,7 @@ export default defineComponent({
       emit('volumeChange', audioRef.value.volume, muted.value);
     }
 
-    function changeVolume(value: number | [number, number]) {
+    function changeVolume(value: number | number[]) {
       if (!audioRef.value) return;
       if (Array.isArray(value)) return;
       const volume = value / 100;
