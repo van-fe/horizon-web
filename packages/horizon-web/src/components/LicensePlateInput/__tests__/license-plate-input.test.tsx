@@ -43,6 +43,8 @@ describe('LicensePlateInput', () => {
     await wrapper.find('input').trigger('focus');
 
     expect(wrapper.findComponent(HPopover).exists()).toBe(true);
+    expect(wrapper.findComponent(HPopover).props('placement')).toBe('bottom-start');
+    expect(wrapper.findComponent(HPopover).props('flip')).toBe(false);
     expect(wrapper.findAllComponents(HButton).length).toBeGreaterThan(31);
     expect(wrapper.find('.h-license-plate-input__keyboard').exists()).toBe(true);
   });

@@ -34,6 +34,7 @@
 | province-aria-label | 省份键盘无障碍名称 | `string` | 国际化文案 |
 | keyboard-aria-label | 车牌键盘面板无障碍名称 | `string` | 国际化文案 |
 | placement | 键盘面板位置 | `'top-start' \| 'top' \| 'top-end' \| 'bottom-start' \| 'bottom' \| 'bottom-end'` | `'bottom-start'` |
+| flip | 底部空间不足时是否允许面板翻转到顶部 | `boolean` | `false` |
 | to-body | 将键盘面板传送至 body | `boolean` | `true` |
 
 ### Events

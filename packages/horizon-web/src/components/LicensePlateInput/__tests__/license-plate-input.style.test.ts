@@ -15,4 +15,8 @@ describe('LicensePlateInput styles', () => {
     expect(newEnergyRules).not.toContain('width:');
     expect(variables).not.toMatch(/new-energy-(?:small|medium|large)/);
   });
+
+  test('lets the keyboard grid own spacing between Horizon buttons', () => {
+    expect(style).toMatch(/& \+ & \{\s+margin-left: 0 !important;/);
+  });
 });

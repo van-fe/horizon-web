@@ -158,11 +158,24 @@
     width: 100%;
     min-width: 0;
     padding-inline: 0;
+
+    /* Horizon buttons add sibling spacing outside layout containers. */
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+    & + & {
+      margin-left: 0 !important;
+    }
   }
 
   @include mixins.e('actions') {
     display: flex;
     gap: mixins.css-variable('license-plate-input', 'spacing', 'key-gap');
     justify-content: flex-end;
+  }
+
+  @include mixins.e('action') {
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+    & + & {
+      margin-left: 0 !important;
+    }
   }
 }

@@ -172,6 +172,7 @@ export default defineComponent({
         trigger="manual"
         visible={keyboard.panelVisible.value}
         placement={props.placement}
+        flip={props.flip}
         toBody={props.toBody}
         arrow={false}
         destroyOnHide={false}
@@ -297,6 +298,7 @@ export default defineComponent({
                 </div>
                 <div class={classHelper.e('actions')}>
                   <HButton
+                    class={classHelper.e('action')}
                     type="normal"
                     size="small"
                     plain
@@ -308,6 +310,7 @@ export default defineComponent({
                   </HButton>
                   {props.clearable && (
                     <HButton
+                      class={classHelper.e('action')}
                       type="normal"
                       size="small"
                       text
@@ -318,7 +321,12 @@ export default defineComponent({
                       {labels.value.clear}
                     </HButton>
                   )}
-                  <HButton size="small" {...preserveInputFocusAttrs} onClick={keyboard.close}>
+                  <HButton
+                    class={classHelper.e('action')}
+                    size="small"
+                    {...preserveInputFocusAttrs}
+                    onClick={keyboard.close}
+                  >
                     {labels.value.done}
                   </HButton>
                 </div>

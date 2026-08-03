@@ -34,6 +34,7 @@ Both seven-character standard plates and eight-character new-energy plates are s
 | province-aria-label | Accessible province-keyboard name | `string` | Localized text |
 | keyboard-aria-label | Accessible keyboard-panel name | `string` | Localized text |
 | placement | Keyboard-panel placement | `'top-start' \| 'top' \| 'top-end' \| 'bottom-start' \| 'bottom' \| 'bottom-end'` | `'bottom-start'` |
+| flip | Allow the panel to flip above when bottom space is insufficient | `boolean` | `false` |
 | to-body | Teleport the keyboard panel to body | `boolean` | `true` |
 
 ### Events

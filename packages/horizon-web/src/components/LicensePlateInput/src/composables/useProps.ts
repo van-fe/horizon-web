@@ -95,6 +95,11 @@ export const useLicensePlateInputProps = declarePropType({
     default: 'bottom-start',
   },
   /**
+   * 底部空间不足时是否允许键盘面板翻转到顶部
+   * @en Whether the keyboard panel may flip to the top when bottom space is insufficient.
+   */
+  flip: { type: Boolean, default: false },
+  /**
    * 是否将键盘面板传送到 body
    * @en Whether to teleport the keyboard panel to body.
    */
