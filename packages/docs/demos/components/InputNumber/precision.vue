@@ -1,19 +1,44 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
-const value1 = ref(1.255);
-const value2 = ref(1.255);
+type PrecisionKey = '0' | '2' | '4';
+
+const precisionKey = ref<PrecisionKey>('2');
+const precision = computed(() => Number(precisionKey.value));
+const step = computed(() => (precision.value === 0 ? 1 : 10 ** -precision.value));
+const value = ref(12.3456);
 </script>
 
 <template>
-  <h-grid :gap="12">
-    <h-grid-item :span="8">
-      <div class="demo-title">普通四舍五入 (default)</div>
-      <h-input-number v-model="value1" :precision="2" />
-    </h-grid-item>
-    <h-grid-item :span="8">
-      <div class="demo-title">银行家舍入法</div>
-      <h-input-number v-model="value2" :precision="2" precision-type="bankers" />
-    </h-grid-item>
-  </h-grid>
+  <section class="input-number-precision-demo">
+    <h-segmented
+      v-model:active-key="precisionKey"
+      size="small"
+      block
+      aria-label="Numeric precision"
+    >
+      <h-segmented-item key="0" label="Integer" />
+      <h-segmented-item key="2" label="Currency" />
+      <h-segmented-item key="4" label="Measurement" />
+    </h-segmented>
+    <h-input-number
+      v-model="value"
+      :precision="precision"
+      :step="step"
+      :aria-label="`${precision} decimal places`"
+    />
+    <small aria-live="polite">precision="{{ precision }}"</small>
+  </section>
 </template>
+
+<style scoped>
+.input-number-precision-demo {
+  display: grid;
+  gap: var(--h-spacing-3);
+  max-inline-size: 460px;
+}
+
+.input-number-precision-demo > small {
+  color: var(--h-text-secondary);
+}
+</style>

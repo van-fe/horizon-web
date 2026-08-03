@@ -1,91 +1,58 @@
-<template>
-  <h-grid :gap="10">
-    <h-grid-item :span="6">
-      <div class="demo-title">事件监听</div>
-      <h-select
-        v-model="values2"
-        multiple
-        allow-create
-        :to-body="false"
-        @blur="blur"
-        @focus="focus"
-        @change="changeHandle"
-        @clear="clear"
-        @deselect="deselect"
-        @dropdownVisibleChange="dropdownVisibleChange"
-      >
-        <h-option label="中国" :value="1" />
-        <h-option :value="2" label="美国" />
-        <h-option :value="3" label="日本" />
-      </h-select>
-    </h-grid-item>
+<script setup lang="ts">
+import { ref } from 'vue';
 
-    <h-grid-item :span="6">
-      <div class="demo-title">事件监听 -- 确认选项</div>
-      <h-select
-        v-model="values3"
-        multiple
-        allow-create
-        need-confirm
-        :to-body="false"
-        @blur="blur"
-        @focus="focus"
-        @change="changeHandle"
-        @clear="clear"
-        @deselect="deselect"
-        @dropdownVisibleChange="dropdownVisibleChange"
-      >
-        <h-option label="中国" :value="1" />
-        <h-option :value="2" label="美国" />
-        <h-option :value="3" label="日本" />
-      </h-select>
-    </h-grid-item>
-  </h-grid>
-</template>
+const countries = [
+  { value: 'cn', label: '中国' },
+  { value: 'sg', label: '新加坡' },
+  { value: 'de', label: '德国' },
+  { value: 'br', label: '巴西' },
+];
+const selected = ref<string[]>(['cn']);
+const lastEvent = ref('等待操作');
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    const values2 = ref([]);
-    const values3 = ref([]);
+function displayValue(value: unknown) {
+  if (Array.isArray(value)) return value.length ? value.join(', ') : '空数组';
+  return value === undefined || value === null || value === '' ? '空值' : String(value);
+}
 
-    const changeHandle = (value: any, option: any) => {
-      console.group('change');
-      console.info(value);
-      console.info(option);
-      console.groupEnd();
-    };
-
-    return {
-      valueFormat(originValue: any) {
-        return {
-          value: originValue.value,
-          label: originValue.label,
-        };
-      },
-      blur() {
-        console.info('blur');
-      },
-      focus() {
-        console.info('focus');
-      },
-      clear() {
-        console.info('clear');
-      },
-      deselect(value: any) {
-        console.info('deselect', value);
-      },
-      dropdownVisibleChange(visible: boolean) {
-        console.info('dropdownVisibleChange', visible);
-      },
-
-      changeHandle,
-      values2,
-      values3,
-    };
-  },
-});
+function record(name: string, detail: unknown) {
+  lastEvent.value = `${name} · ${displayValue(detail)}`;
+}
 </script>
 
-<style scoped></style>
+<template>
+  <div class="select-demo">
+    <h-select
+      v-model="selected"
+      multiple
+      filterable
+      allow-create
+      clearable
+      collapse-tags
+      :to-body="false"
+      placeholder="选择或创建国家"
+      @focus="record('focus', '已聚焦')"
+      @blur="record('blur', '已失焦')"
+      @change="record('change', $event)"
+      @clear="record('clear', selected)"
+      @deselect="record('deselect', $event)"
+      @dropdown-visible-change="record('dropdown', $event ? 'open' : 'closed')"
+    >
+      <h-option v-for="country in countries" :key="country.value" v-bind="country" />
+    </h-select>
+    <p class="docs-demo__status" role="status">{{ lastEvent }}</p>
+  </div>
+</template>
+
+<style scoped>
+.select-demo {
+  display: grid;
+  min-width: 0;
+  gap: 10px;
+}
+
+.select-demo :deep(.h-select) {
+  width: 100%;
+  min-width: 0;
+}
+</style>

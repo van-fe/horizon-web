@@ -1,48 +1,52 @@
 <template>
-  <h-container class="common-container">
-    <h-header>Header</h-header>
+  <h-container class="container-demo">
+    <h-header class="region region--header">Header</h-header>
     <h-container>
-      <h-aside>Aside</h-aside>
+      <h-aside class="region region--aside">Aside</h-aside>
       <h-container>
-        <h-main>Main</h-main>
-        <h-footer>Footer</h-footer>
+        <h-main class="region region--main">Main</h-main>
+        <h-footer class="region region--footer">Footer</h-footer>
       </h-container>
     </h-container>
   </h-container>
 </template>
 
 <style scoped>
-.common-container {
-  text-align: center;
-}
-.common-container .h-header {
-  background: var(--h-bg-info-weak-default);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.container-demo {
+  min-height: 240px;
+  overflow: hidden;
+  border-radius: var(--h-radius-l);
 }
 
-.common-container .h-main {
-  height: 200px;
-  background: var(--h-bg-warning-weak-default);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.region {
+  display: grid;
+  place-items: center;
+  color: var(--h-text-secondary);
 }
 
-.common-container .h-footer {
-  background: var(--h-bg-error-weak-default);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.region--header {
+  height: 52px;
+  color: var(--h-text-inverse);
+  background: var(--h-bg-brand-default);
 }
 
-.common-container .h-aside {
-  background: var(--h-bg-success-weak-default);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.region--aside {
+  width: 140px;
+  background: var(--h-bg-weak-default);
+}
+
+.region--main {
+  background: var(--h-bg-secondary);
+}
+
+.region--footer {
+  height: 44px;
+  background: var(--h-bg-weak-default);
+}
+
+@media (max-width: 560px) {
+  .region--aside {
+    width: 88px;
+  }
 }
 </style>
-<script setup lang="ts">
-</script>

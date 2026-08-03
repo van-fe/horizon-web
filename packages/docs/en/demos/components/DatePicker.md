@@ -4,6 +4,12 @@ The DatePicker provides date selection by default.
 
 :::demo components/DatePicker/basic.vue :::
 
+## Multiple Date Fields
+
+Compose independent date pickers when several dates represent different business milestones. Give each field a clear label and visible value feedback.
+
+:::demo components/DatePicker/multiple.vue :::
+
 ## Confirmation Mode
 
 By default, users press Enter to confirm the value after entering a date. Set `confirm-type="blur"` to confirm when the input loses focus or when Enter is pressed.

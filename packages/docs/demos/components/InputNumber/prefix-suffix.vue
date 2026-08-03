@@ -1,73 +1,53 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const budget = ref(4200);
+const points = ref(850);
+</script>
+
 <template>
-  <div>
-    <h-grid :gap="12">
-      <h-grid-item :span="8">
-        <div class="demo-title">前缀-默认状态</div>
-        <h-input-number :min="0" prefix-icon="points" />
-      </h-grid-item>
-      <h-grid-item :span="8">
-        <div class="demo-title">前缀-控制器位于两侧</div>
-        <h-input-number controls-position="between" :min="0" prefix-icon="points" />
-      </h-grid-item>
-      <h-grid-item :span="8">
-        <div class="demo-title">前缀-控制器隐藏</div>
-        <h-input-number :controls="false" :min="0" prefix-icon="points" />
-      </h-grid-item>
-    </h-grid>
-    <h-grid :gap="12">
-      <h-grid-item :span="8">
-        <div class="demo-title">后缀-默认状态</div>
-        <h-input-number :min="0" suffix-icon="points" :clearable="true" />
-      </h-grid-item>
-      <h-grid-item :span="8">
-        <div class="demo-title">后缀-控制器位于两侧</div>
-        <h-input-number controls-position="between" :min="0" :clearable="true">
-          <template #suffix>RMB</template>
-        </h-input-number>
-      </h-grid-item>
-      <h-grid-item :span="8">
-        <div class="demo-title">后缀-控制器隐藏</div>
-        <h-input-number :controls="false" :min="0" suffix-icon="points" :clearable="true">
-          <template #suffix>RMB</template>
-        </h-input-number>
-      </h-grid-item>
-    </h-grid>
-    <h-grid :gap="12">
-      <h-grid-item :span="8">
-        <div class="demo-title">前后缀-默认状态</div>
-        <h-input-number :min="0" suffix-icon="points">
-          <template #prefix>
-            <a-icon v-tooltip="`请注意，这里是积分`" name="remind" size="12" />
-          </template>
-        </h-input-number>
-      </h-grid-item>
-      <h-grid-item :span="8">
-        <div class="demo-title">前后缀-控制器位于两侧</div>
-        <h-input-number controls-position="between" :min="0" suffix-icon="points">
-          <template #prefix>
-            <a-icon v-tooltip="`请注意，这里是积分`" name="remind" size="12" />
-          </template>
-        </h-input-number>
-      </h-grid-item>
-      <h-grid-item :span="8">
-        <div class="demo-title">前后缀-控制器隐藏</div>
-        <h-input-number :controls="false" :min="0" suffix-icon="points">
-          <template #prefix>
-            <a-icon v-tooltip="`请注意，这里是积分`" name="remind" size="12" />
-          </template>
-        </h-input-number>
-      </h-grid-item>
-    </h-grid>
-  </div>
+  <section class="input-number-affix-demo" aria-label="Numeric affixes">
+    <label>
+      <span>Prefix and suffix slots</span>
+      <h-input-number v-model="budget" :min="0" :step="100" aria-label="Campaign budget">
+        <template #prefix>$</template>
+        <template #suffix>USD</template>
+      </h-input-number>
+    </label>
+    <label>
+      <span>Icon props</span>
+      <h-input-number
+        v-model="points"
+        :min="0"
+        prefix-icon="remind"
+        suffix-icon="points"
+        aria-label="Reward points"
+      />
+    </label>
+  </section>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import { AIcon } from '@aurora/icon';
+<style scoped>
+.input-number-affix-demo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--h-spacing-4);
+}
 
-export default defineComponent({
-  components: {
-    AIcon,
-  },
-});
-</script>
+.input-number-affix-demo label {
+  display: grid;
+  gap: var(--h-spacing-2);
+  min-inline-size: 0;
+}
+
+.input-number-affix-demo span {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+
+@media (max-width: 390px) {
+  .input-number-affix-demo {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

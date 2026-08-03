@@ -1,35 +1,33 @@
-<template>
-  <h-form ref="instance" :model="values">
-    <h-form-item label="Name" prop="name" style="width: 300px" required>
-      <h-input v-model="values.name" />
-    </h-form-item>
-    <h-form-item label="Category" prop="category" required>
-      <h-segmented v-model:active-key="values.category" form>
-        <h-segmented-item v-for="v in options" :key="v" :label="v" />
-      </h-segmented>
-    </h-form-item>
-    <h-space>
-      <h-button @click="onSubmit">Submit</h-button>
-      <h-button type="danger" @click="instance?.validate()">Validate</h-button>
-    </h-space>
-  </h-form>
-</template>
-
 <script setup lang="ts">
-import { HFormInstance, $message } from '@aurora/horizon-web';
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
+import type { HFormInstance } from '@aurora/horizon-web';
 
-const values = ref({
-  name: '',
-  category: undefined,
-});
-const instance = ref<HFormInstance>();
-const options = ['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly'];
+const formRef = ref<HFormInstance>();
+const values = reactive<{ cadence?: string }>({ cadence: undefined });
+const status = ref('请选择发布节奏');
 
-const onSubmit = async () => {
-  await instance.value?.validate();
-  $message.success('提交成功');
-};
+async function submit() {
+  try {
+    await formRef.value?.validate();
+    status.value = `已选择：${values.cadence}`;
+  } catch {
+    status.value = '请先完成必填项';
+  }
+}
 </script>
 
-<style scoped></style>
+<template>
+  <section class="docs-demo">
+    <h-form ref="formRef" :model="values" label-position="top">
+      <h-form-item label="发布节奏" prop="cadence" required>
+        <h-segmented v-model:active-key="values.cadence" form block>
+          <h-segmented-item key="Weekly" label="Weekly" />
+          <h-segmented-item key="Biweekly" label="Biweekly" />
+          <h-segmented-item key="Monthly" label="Monthly" />
+        </h-segmented>
+      </h-form-item>
+      <h-button @click="submit">保存</h-button>
+    </h-form>
+    <p class="docs-demo__status" aria-live="polite">{{ status }}</p>
+  </section>
+</template>

@@ -1,38 +1,40 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="12">
-      <div class="demo-title">单选</div>
-      <h-tree
-        :tree-data="baseTreeData"
-        :filterable="true"
-        :max-height="300"
-      />
-    </h-grid-item>
-    <h-grid-item :span="12">
-      <div class="demo-title">多选</div>
-      <h-tree
-        :tree-data="baseTreeData"
-        :filterable="true"
-        :max-height="300"
-        :multiple="true"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
+import type { HTreeFilterMethodType, HTreeNodeData } from '@aurora/horizon-web';
 
-const baseTreeData = ref([]);
-
-onMounted(() => {
-  fetch(new URL('/tree-data.json', import.meta.url).href)
-    .then(res => res.json())
-    .then(res => {
-      baseTreeData.value = res;
-    });
-});
+const filterValue = ref('');
+const selectedValues = ref<Array<string | number>>([]);
+const treeData: HTreeNodeData[] = [
+  {
+    value: 'product',
+    label: 'Product',
+    children: [
+      { value: 'maya', label: 'Maya Chen · Product lead' },
+      { value: 'ines', label: 'Ines Park · Researcher' },
+    ],
+  },
+  {
+    value: 'engineering',
+    label: 'Engineering',
+    children: [
+      { value: 'sam', label: 'Sam Lee · Staff engineer' },
+      { value: 'ana', label: 'Ana Silva · Frontend engineer' },
+    ],
+  },
+];
+const filterMethod: HTreeFilterMethodType = (inputValue, node) =>
+  String(node.label).toLowerCase().includes(inputValue.trim().toLowerCase());
 </script>
 
-<style scoped>
-</style>
+<template>
+  <h-tree
+    v-model:filter-value="filterValue"
+    v-model:selected-values="selectedValues"
+    :tree-data="treeData"
+    filterable
+    :filter-method="filterMethod"
+    :filter-input-props="{ clearable: true, placeholder: 'Find a teammate' }"
+    :max-height="300"
+    show-radio
+  />
+</template>

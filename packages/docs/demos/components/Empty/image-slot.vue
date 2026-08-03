@@ -1,20 +1,31 @@
 <template>
-  <h-empty :size="120">
-    <template #image>
-      <div class="my-img">
-        <img
-          src="/demo-assets/empty-state.svg"
-          alt="img"
-        />
-      </div>
-    </template>
-  </h-empty>
+  <section class="docs-demo">
+    <div class="docs-demo__stage">
+      <h-empty :size="120" description="No saved views in this workspace.">
+        <template #image>
+          <div class="empty-image-frame">
+            <img src="/demo-assets/empty-state.svg" alt="No saved views" />
+          </div>
+        </template>
+      </h-empty>
+    </div>
+  </section>
 </template>
 
-<style lang="scss">
-.my-img {
-  width: 100%;
-  border-radius: 50%;
+<style scoped>
+.empty-image-frame {
   overflow: hidden;
+  width: 100%;
+  aspect-ratio: 1;
+  border: 1px solid var(--h-border-default);
+  border-radius: var(--h-radius-circle);
+  background: var(--h-bg-secondary);
+}
+
+.empty-image-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>

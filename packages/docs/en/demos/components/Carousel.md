@@ -1,27 +1,29 @@
-## Basic usage
+Carousel rotates peer content in limited space. Give every item a concise `label` and the carousel a purpose-specific `aria-label`.
 
-Place multiple `h-carousel-item` components inside `h-carousel`. A slide can contain imagery, cards or any custom content.
+## Basic Usage
+
+Place multiple `h-carousel-item` components inside `h-carousel`. Users can navigate with arrows, indicators, touch, or the keyboard.
 
 :::demo components/Carousel/basic.vue :::
 
 ## Autoplay
 
-Autoplay is enabled by default and `interval` controls its timing. Rotation pauses on hover, when the page is hidden, or when focus enters the carousel. The top-right control explicitly pauses or resumes it.
+`interval` controls rotation timing. Autoplay pauses on hover, hidden pages, or focus entry, and the demo also provides an explicit pause and resume action.
 
 :::demo components/Carousel/autoplay.vue :::
 
-## Fade, controlled index and methods
+## Fade, Controlled Index, and Methods
 
-Use `v-model` to control the active index and `effect="fade"` for a cross-fade transition. The instance exposes `prev`, `next`, `setActiveItem`, `pause` and `play`.
+Use `v-model` for the active index and `effect="fade"` for cross-fade. The instance exposes `prev`, `next`, `setActiveItem`, `pause`, and `play`.
 
 :::demo components/Carousel/effect.vue :::
 
-## Vertical direction
+## Vertical Direction
 
-Set `direction="vertical"` for vertical movement. Touch swipes are supported; when the carousel has focus, use the directional, Home and End keys to navigate.
+Set `direction="vertical"` for vertical movement. After focusing the carousel, use the arrow, Home, and End keys.
 
 :::demo components/Carousel/vertical.vue :::
 
 ## Accessibility
 
-Autoplay includes a dedicated pause/resume control and does not restart by itself after focus enters. Inactive slides are hidden from assistive technology and keyboard navigation. Give the carousel a purpose-specific `aria-label` and each slide a concise `label`.
+Inactive slides are removed from assistive technology and keyboard navigation. Autoplay should expose a discoverable pause mechanism and remain paused after an explicit user choice.

@@ -1,32 +1,37 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="12">
-      <div class="demo-title">单选</div>
-      <h-tree
-        :tree-data="baseTreeData"
-        :show-radio="true"
-      />
-    </h-grid-item>
-    <h-grid-item :span="12">
-      <div class="demo-title">多选</div>
-      <h-tree
-        :tree-data="baseTreeData"
-        :multiple="true"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
+import type { HTreeNodeData } from '@aurora/horizon-web';
 
-const baseTreeData = ref([]);
-
-onMounted(() => {
-  fetch(new URL('/unselectable-options.json', import.meta.url).href)
-    .then(res => res.json())
-    .then(res => {
-      baseTreeData.value = res;
-    });
-});
+const selectedValues = ref<Array<string | number>>(['mobile']);
+const treeData: HTreeNodeData[] = [
+  {
+    value: 'experience',
+    label: 'Experience · grouping only',
+    selectable: false,
+    children: [
+      { value: 'web', label: 'Web experience' },
+      { value: 'mobile', label: 'Mobile experience' },
+    ],
+  },
+  {
+    value: 'core',
+    label: 'Core platform',
+    children: [
+      { value: 'identity', label: 'Identity · disabled', disabled: true },
+      { value: 'data', label: 'Data platform' },
+    ],
+  },
+];
 </script>
+
+<template>
+  <div class="docs-demo">
+    <h-tree
+      v-model:selected-values="selectedValues"
+      :tree-data="treeData"
+      multiple
+      :is-default-expand-all="true"
+    />
+    <span aria-live="polite">Selected: {{ selectedValues.join(', ') || 'none' }}</span>
+  </div>
+</template>

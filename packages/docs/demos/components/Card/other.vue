@@ -1,65 +1,88 @@
 <template>
-  <div class="flex">
-    <h-card
-      draggable="true"
-      :class="[
-        'drag',
-        'hover',
-        {
-          dragging: dragging,
-        },
-      ]"
-      title="可拖拽"
-      @dragstart="handleDragStart"
-      @dragend="handleDragEnd"
-    >
-      {{ text }}
-    </h-card>
-    <h-card
-        draggable="true"
-        class='hover'
-        title="悬浮阴影"
-        @dragstart="handleDragStart"
-        @dragend="handleDragEnd"
-    >
-      {{ text }}
-    </h-card>
-  </div>
+  <section class="card-other-demo">
+    <h-grid :cols="{ xs: 1, md: 2 }" :gap="16">
+      <h-grid-item>
+        <h-card
+          draggable="true"
+          :class="[
+            'card-other-demo__draggable',
+            { 'card-other-demo__draggable--active': dragging },
+          ]"
+          title="Prioritize accessibility QA"
+          @dragstart="handleDragStart"
+          @dragend="handleDragEnd"
+        >
+          Move this planning card into a different priority lane while keeping the content readable.
+        </h-card>
+      </h-grid-item>
+      <h-grid-item>
+        <h-card class="card-other-demo__hover" title="Release health">
+          Hover emphasis can identify a selectable card without changing its layout or content
+          hierarchy.
+        </h-card>
+      </h-grid-item>
+    </h-grid>
+    <p class="card-other-demo__status" aria-live="polite">{{ status }}</p>
+  </section>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const text = '这是一段很长很长很长很长很长很长很长很长很长很';
 const dragging = ref(false);
-const handleDragStart = () => {
-  dragging.value = true;
-};
+const status = ref('Ready for interaction');
 
-const handleDragEnd = () => {
+function handleDragStart() {
+  dragging.value = true;
+  status.value = 'Dragging “Prioritize accessibility QA”';
+}
+
+function handleDragEnd() {
   dragging.value = false;
-};
+  status.value = 'Card dropped';
+}
 </script>
 
-<style lang="scss" scoped>
-.flex {
-  display: flex;
-  column-gap: 20px;
+<style scoped>
+.card-other-demo {
+  display: grid;
+  gap: var(--h-spacing-4);
 }
-.drag {
+
+.card-other-demo__status {
+  margin: 0;
+  color: var(--h-text-secondary);
+}
+
+.card-other-demo__draggable {
   cursor: grab;
-  &:active {
-    cursor: grabbing;
-  }
+  transition: opacity 160ms ease;
 }
-.dragging {
-  opacity: 0.5; // 或其他你想要的样式
-  cursor: grabbing!important;
+
+.card-other-demo__draggable:active,
+.card-other-demo__draggable--active {
+  cursor: grabbing;
 }
-.hover{
-  &:hover{
-    transition: .3s ease-in-out;
-    box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.1), 0px 3px 6px rgba(0, 0, 0, 0.06), 0px 5px 12px 4px rgba(0, 0, 0, 0.04);
+
+.card-other-demo__draggable--active {
+  opacity: 0.58;
+}
+
+.card-other-demo__hover {
+  transition:
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.card-other-demo__hover:hover {
+  box-shadow: var(--h-shadow-basic);
+  transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-other-demo__draggable,
+  .card-other-demo__hover {
+    transition: none;
   }
 }
 </style>

@@ -1,29 +1,29 @@
 <template>
-  <div class="chat-list">
+  <div class="chat-bubble-basic-demo" role="log" aria-label="Release support conversation">
     <h-chat-bubble
-      avatar="https://avatars.githubusercontent.com/u/20601764?v=4"
+      avatar="/demo-assets/avatar-cyan.svg"
       name="Horizon Assistant"
       datetime="10:24"
-      content="你好！这是一个支持长文本自动换行的聊天气泡。"
-      aria-label="Horizon Assistant 的消息"
+      content="The accessibility checks are complete. Would you like a summary of the remaining release risks?"
+      aria-label="Message from Horizon Assistant at 10:24"
     />
     <h-chat-bubble
+      avatar="/demo-assets/avatar-indigo.svg"
       placement="end"
       variant="primary"
       name="You"
       datetime="10:25"
-      status="已读"
-      content="很好，也可以展示我发送的消息。"
-      aria-label="我发送的消息"
+      status="Read"
+      content="Yes—group them by severity and include the owner for each follow-up."
+      aria-label="Message from you at 10:25, read"
     />
   </div>
 </template>
 
 <style scoped>
-.chat-list {
+.chat-bubble-basic-demo {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  width: 100%;
+  gap: var(--h-spacing-5);
 }
 </style>

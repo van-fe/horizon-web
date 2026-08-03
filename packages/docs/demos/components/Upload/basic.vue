@@ -1,101 +1,36 @@
-<template>
-  <h-form>
-    <h-form-item label="尺寸">
-      <h-radio-group v-model="size">
-        <h-radio value="small"></h-radio>
-        <h-radio value="medium"></h-radio>
-        <h-radio value="large"></h-radio>
-      </h-radio-group>
-    </h-form-item>
-    <h-form-item label="文件元素尺寸">
-      <h-radio-group v-model="fileItemSize">
-        <h-radio value="small"></h-radio>
-        <h-radio value="medium"></h-radio>
-        <h-radio value="large"></h-radio>
-      </h-radio-group>
-    </h-form-item>
-    <h-form-item label="展示上传按钮">
-      <h-radio-group v-model="showUploader">
-        <h-radio :value="true">True</h-radio>
-        <h-radio :value="false">False</h-radio>
-      </h-radio-group>
-    </h-form-item>
-  </h-form>
-  <h-space>
-    <h-upload
-      v-model="modelValue"
-      :action="actionURL"
-      method="POST"
-      :size="size"
-      :file-item-size="fileItemSize"
-      :no-uploader="!showUploader"
-      @change="handleChange"
-      @add="onAddFile"
-      @upload="onUploadFile"
-      @remove="onRemoveFile"
-      @uploading="onUploadingFile"
-      @uploaded="onUploadedFile"
-      @pause="onPauseFile"
-      @continue="onContinueFile"
-      @retry="onRetryFile"
-      @fail="onFailFile"
-    />
-  </h-space>
-</template>
+<script setup lang="ts">
+import type { HUploadFileType, HUploadUserFile } from '@aurora/horizon-web';
+import { onBeforeUnmount, ref } from 'vue';
+import { createMockUploader, resolveLocalUpload } from './mockUpload';
 
-<script lang="ts" setup>
-import { ref } from 'vue';
-import type { HUploadRawFileType, UploadProps, HUploadFileType } from '@aurora/horizon-web';
-import type { Data } from '@aurora/utils';
-
-const actionURL = new URL('/upload-mock.json', import.meta.url).href;
-
-const size = ref<Exclude<UploadProps['size'], undefined>>('medium');
-const fileItemSize = ref<Exclude<UploadProps['fileItemSize'], undefined>>('medium');
-const showUploader = ref(true);
-
-const modelValue = ref<HUploadRawFileType>({
-  name: 'background.jpg',
+const mockUploader = createMockUploader();
+const file = ref<HUploadUserFile>({
+  name: 'release-cover.svg',
   url: '/demo-assets/scene-coast.svg',
 });
+const status = ref('Ready to replace the current file');
 
-function handleChange(file: HUploadFileType, response: Data) {
-  console.info('change:', file, response);
+function onUploading(file: HUploadFileType, progress: number) {
+  status.value = `Uploading ${file.name} · ${Math.round(progress)}%`;
 }
 
-function onAddFile(file: HUploadFileType) {
-  console.info('Add File: ', file);
-}
-
-function onUploadFile(file: HUploadFileType) {
-  console.info('Upload File: ', file);
-}
-
-function onRemoveFile(file: HUploadFileType) {
-  console.info('Remove File: ', file);
-}
-
-function onUploadingFile(file: HUploadFileType, process: number, response: Data) {
-  console.info('Uploading File: ', file, process, response);
-}
-
-function onUploadedFile(file: HUploadFileType, response: Data) {
-  console.info('Uploaded File: ', file, response);
-}
-
-function onPauseFile(file: HUploadFileType) {
-  console.info('Pause File: ', file);
-}
-
-function onContinueFile(file: HUploadFileType) {
-  console.info('Continue File: ', file);
-}
-
-function onRetryFile(file: HUploadFileType) {
-  console.info('Retry File: ', file);
-}
-
-function onFailFile(file: HUploadFileType, reason: string, response: Data) {
-  console.info('Fail File: ', file, reason, response);
-}
+onBeforeUnmount(mockUploader.dispose);
 </script>
+
+<template>
+  <div class="docs-demo">
+    <h-upload
+      id="upload-demo-basic"
+      v-model="file"
+      :http-request="mockUploader.request"
+      :handle-success="resolveLocalUpload"
+      accept=".svg,.png,.jpg,.jpeg"
+      controls-always-visible
+      @add="addedFile => (status = `${addedFile.name} selected`)"
+      @uploading="onUploading"
+      @uploaded="uploadedFile => (status = `${uploadedFile.name} uploaded`)"
+      @remove="status = 'File removed'"
+    />
+    <span aria-live="polite">{{ status }}</span>
+  </div>
+</template>

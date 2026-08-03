@@ -1,77 +1,77 @@
-## Basic Usage
-Set `clickable = true` to allow tag clicking
+## Basic usage
 
-Set `bold = true` to enable tag emphasis state
+Tags come in `small`, `medium`, and `large` sizes. Use `bold` when the text needs more emphasis, and keep the chosen size consistent within one interface.
+
 :::demo components/Tag/basic.vue :::
 
-## Different Types
-Change the state by setting `type`, thereby changing the color
+## Semantic types
+
+Use `type` to communicate success, information, warning, and error states. The example places each type in a release workflow so their hierarchy is easy to compare.
+
 :::demo components/Tag/type.vue :::
 
-## Linear Tag
-Set `plain = true` to enable linear style
+## Low-emphasis style
+
+Enable `plain` to reduce background emphasis for supporting metadata such as environments and sources while preserving semantic color.
+
 :::demo components/Tag/plain.vue :::
 
-## Activatable Tag
-Pass a `boolean` value to `modelValue` to activate the function of whether to activate after clicking.
+## Shapes
 
-After passing `boolean`, there is no need to set `clickable` additionally. The tag is automatically in a clickable state.
-:::demo components/Tag/active.vue :::
+Use `round` for categories and filters, and `equally` when short status labels need equal-width alignment.
 
-## Icon
-You can pass in `icon` through `props.icon` or `slots.icon`
-:::demo components/Tag/icon.vue :::
-
-## Avatar
-You can pass in an avatar link through `props.avatar`
-
-Or directly use `slots.avatar` to pass in a custom avatar component
-:::demo components/Tag/avatar.vue :::
-
-## Capsule and Square Tags
-Set `round = true` to set the tag to capsule shape
-
-Set `equally = true` to set the tag to a square tag with equal length and width
 :::demo components/Tag/shape.vue :::
 
-## Closable Tag
-Set `closable = true` to set the tag to closable state
+## Automatic colors
 
-If both `clickable` and `equally` are set, the close button will be displayed after hovering `props.showCloseDelay (default 1 second)`. If the button is clicked before this, the close button will not be triggered to display again **before the mouse moves away**
+With `auto-color`, the component derives a stable color from the tag content. Toggle the regular, plain, and disabled states to check legibility across contexts.
 
-If `clickable` is not set but `equally` is set, the close button will be displayed immediately without delay
-:::demo components/Tag/closable.vue :::
-
-## Loading
-Set `loading = true` to display the loading `icon`
-:::demo components/Tag/loading.vue :::
-
-## Disabled
-Set `disabled = true` to disable the tag. At this time, even if `closable` is set, the close button will not be displayed
-:::demo components/Tag/disabled.vue :::
-
-## Colorful Tags
-Some colors are built-in and can be used directly
-
-Of course, you can also set only one `color` to customize the color, and then automatically generate colors for various states
-
-If you are not satisfied with the generated background color, you can specify `background`, but this will not automatically generate colors
-
-When customizing colors, please pass in the darkest color in the color system to prevent invisibility problems in states such as `disabled`
-
-Enable `auto-color = true` to generate colors automatically.
 :::demo components/Tag/colorful.vue :::
 
-## Create and Modify Tags
-Quickly create a tag that allows input creation through `h-tag-group`'s `props.useCreate`
+## Icons
 
-With `max-tags`, you can not display the create tag after the number of tags reaches a certain value
+Add an icon through the `icon` prop or slot to reinforce a state. Keep a text label so the icon is never the only cue.
 
-Set `editable = true` for `h-tag` or `h-tag-group` to allow tag editing
+:::demo components/Tag/icon.vue :::
+
+## Avatars
+
+Use `avatar` to combine a person's image and name in a compact assignee tag, or provide custom avatar content through the slot.
+
+:::demo components/Tag/avatar.vue :::
+
+## Activatable tags
+
+Control selection with `v-model:active` to build multi-select filters and surface the active result immediately.
+
+:::demo components/Tag/active.vue :::
+
+## Closable tags
+
+Enable `closable` and handle the close event to maintain the tag list. The example includes result feedback and a reset action for the complete flow.
+
+:::demo components/Tag/closable.vue :::
+
+## Disabled tags
+
+Use `disabled` for labels that must remain visible but cannot be changed. Explain the reason close to the disabled item.
+
+:::demo components/Tag/disabled.vue :::
+
+## Loading state
+
+Use `loading` while a tag is briefly syncing or awaiting confirmation. The example provides clear feedback when the operation completes.
+
+:::demo components/Tag/loading.vue :::
+
+## Create and edit
+
+Combine `use-create`, `editable`, and `closable` on `h-tag-group` for a complete management flow. `before-create`, `before-edit`, and `before-close` can run asynchronous validation.
+
 :::demo components/Tag/create-update.vue :::
 
-## Tag Collapse
-Set `collapse = true` to collapse tags that are about to wrap
+## Collapsible tag group
 
-Set `expand = true` to click the collapsed number `tag` to collapse or expand
+With `collapse`, overflowing tags are collected according to the available width. Combine it with `expand`, tooltip modes, and a minimum visible count for containers of different densities.
+
 :::demo components/Tag/collapse.vue :::

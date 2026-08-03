@@ -1,52 +1,58 @@
-<template>
-  <h-switch
-    v-model="showHeaderDivider"
-    class="mb-2"
-    status
-    status-on-text="Shown Header Divider"
-    status-off-text="Hidden Header Divider"
-  />
-
-  <h-table :data="data" :show-header-divider="showHeaderDivider">
-    <h-table-column title="Seq" type="index" :fixed="true" :resizable="false" />
-    <h-table-column title="Name" field="name" fixed resizable />
-    <h-table-column title="Birthday" field="birthday" width="200px" resizable show-overflow-tooltip />
-    <h-table-column title="Address" field="address" min-width="500px" resizable />
-    <h-table-column title="Message" field="message" show-overflow-tooltip width="800px" />
-    <h-table-column title="Operations" fixed="right" min-width="120px" align="center" header-align="center" resizable>
-      <template #default="scope">
-        <h-button link size="small" @click="view(scope.row)">View</h-button>
-        <h-button link size="small" @click="edit(scope.row)">Edit</h-button>
-      </template>
-    </h-table-column>
-  </h-table>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
-import { faker } from '@faker-js/faker';
 
-interface TableData {
-  name: string;
-  birthday: string;
-  address: string;
-  message: string;
-}
+const resizeStatus = ref('Drag a header divider to resize a column.');
+const campaigns = [
+  { campaign: 'Summer launch', channel: 'Paid social', owner: 'Mina Park', budget: '$42,000' },
+  {
+    campaign: 'Customer stories',
+    channel: 'Lifecycle email',
+    owner: 'Noah Chen',
+    budget: '$18,500',
+  },
+  { campaign: 'Partner week', channel: 'Co-marketing', owner: 'Iris Wang', budget: '$27,250' },
+  {
+    campaign: 'Developer report',
+    channel: 'Organic search',
+    owner: 'Leo Martin',
+    budget: '$14,800',
+  },
+];
 
-const showHeaderDivider = ref(true);
-
-const data = ref<TableData[]>(new Array(5).fill(0).map(_ => ({
-  name: faker.person.fullName(),
-  birthday: faker.date.birthdate({ min: 22, max: 50, mode: 'age' }).toDateString(),
-  address: faker.location.streetAddress(),
-  message: faker.hacker.phrase(),
-})));
-
-function view(data: TableData) {
-  console.info('view:', data.name);
-}
-
-function edit(data: TableData) {
-  console.info('edit:', data.name);
+function onResize(newWidth: number, oldWidth: number, column: { props?: { title?: string } }) {
+  const label = column.props?.title ?? 'Column';
+  resizeStatus.value = `${label} resized from ${Math.round(oldWidth)}px to ${Math.round(newWidth)}px.`;
 }
 </script>
+
+<template>
+  <div class="table-resize-demo">
+    <h-table :data="campaigns" row-key="campaign" show-header-divider @header-dragend="onResize">
+      <h-table-column title="Campaign" field="campaign" width="190" resizable />
+      <h-table-column title="Channel" field="channel" width="170" resizable />
+      <h-table-column title="Owner" field="owner" width="140" resizable />
+      <h-table-column
+        title="Budget"
+        field="budget"
+        width="120"
+        align="right"
+        header-align="right"
+      />
+    </h-table>
+    <p aria-live="polite">{{ resizeStatus }}</p>
+  </div>
+</template>
+
+<style scoped>
+.table-resize-demo {
+  display: grid;
+  min-width: 0;
+  gap: var(--h-spacing-3);
+}
+
+.table-resize-demo p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+</style>

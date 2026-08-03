@@ -1,36 +1,36 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const plain = ref(false);
+const disabled = ref(false);
+const labels = ['Core', 'Infrastructure', 'Experience', 'Growth', 'Operations'];
+</script>
+
 <template>
-  <h-grid :gap="12">
-    <h-grid-item :span="24">
-      <h-tag color="brand" :auto-color="true">Brand</h-tag>
-      <h-tag color="indigo" :auto-color="true">Indigo</h-tag>
-      <h-tag color="purple" :auto-color="true">Purple</h-tag>
-      <h-tag color="magenta" :auto-color="true">Magenta</h-tag>
-      <h-tag color="orange" :auto-color="true">Orange</h-tag>
-    </h-grid-item>
-    <h-grid-item :span="24">
-      <h-tag :disabled="true" color="brand" :auto-color="true">Brand</h-tag>
-      <h-tag :disabled="true" color="indigo" :auto-color="true">Indigo</h-tag>
-      <h-tag :disabled="true" color="purple" :auto-color="true">Purple</h-tag>
-      <h-tag :disabled="true" color="magenta" :auto-color="true">Magenta</h-tag>
-      <h-tag :disabled="true" color="orange" :auto-color="true">Orange</h-tag>
-    </h-grid-item>
-    <h-grid-item :span="24">
-      <h-tag :plain="true" color="brand" :auto-color="true">Brand</h-tag>
-      <h-tag :plain="true" color="indigo" :auto-color="true">Indigo</h-tag>
-      <h-tag :plain="true" color="purple" :auto-color="true">Purple</h-tag>
-      <h-tag :plain="true" color="magenta" :auto-color="true">Magenta</h-tag>
-      <h-tag :plain="true" color="orange" :auto-color="true">Orange</h-tag>
-    </h-grid-item>
-    <h-grid-item :span="24">
-      <h-tag :plain="true" :disabled="true" color="brand" :auto-color="true">Brand</h-tag>
-      <h-tag :plain="true" :disabled="true" color="indigo" :auto-color="true">Indigo</h-tag>
-      <h-tag :plain="true" :disabled="true" color="purple" :auto-color="true">Purple</h-tag>
-      <h-tag :plain="true" :disabled="true" color="magenta" :auto-color="true">Magenta</h-tag>
-      <h-tag :plain="true" :disabled="true" color="orange" :auto-color="true">Orange</h-tag>
-    </h-grid-item>
-  </h-grid>
+  <section class="docs-demo">
+    <div class="docs-demo__controls">
+      <h-switch v-model="plain" label="Plain" />
+      <h-switch v-model="disabled" label="Disabled" />
+    </div>
+    <div class="tag-row">
+      <h-tag
+        v-for="label in labels"
+        :key="label"
+        auto-color
+        :plain="plain"
+        :disabled="disabled"
+        :clickable="false"
+      >
+        {{ label }}
+      </h-tag>
+    </div>
+  </section>
 </template>
 
-<script setup lang="ts"></script>
-
-<style scoped></style>
+<style scoped>
+.tag-row {
+  display: flex;
+  gap: var(--h-spacing-3);
+  flex-wrap: wrap;
+}
+</style>

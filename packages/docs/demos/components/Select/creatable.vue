@@ -1,59 +1,62 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <div class="demo-title">单选-允许创建 <h-tooltip content="拦截创建【南京】"><IconHelp /></h-tooltip></div>
-      <h-select v-model="value1" allow-create :before-create="beforeCreate" :to-body="false" @input="onInput">
-        <h-option value="1" label="上海" />
-        <h-option value="2" label="北京" />
-        <h-option value="3" label="合肥" name="hefei" />
-      </h-select>
-    </h-grid-item>
-
-    <h-grid-item :span="6">
-      <div class="demo-title">多选-允许创建</div>
-      <h-select v-model="values1" allow-create multiple :to-body="false">
-        <h-option label="上海" :value="1" />
-        <h-option :value="2" label="北京" />
-        <h-option :value="3" label="合肥" name="hefei" />
-      </h-select>
-    </h-grid-item>
-
-    <h-grid-item :span="6">
-      <div class="demo-title">多选-带创建选项长度超长</div>
-      <h-select v-model="values2" allow-create multiple :to-body="false">
-        <h-option label="齐齐哈尔" :value="1" />
-        <h-option :value="2" label="那然色布斯台音布拉格" />
-        <h-option label="上海" :value="3" />
-        <h-option :value="4" label="北京" />
-        <h-option :value="5" label="合肥" name="hefei" />
-        <h-option
-          :value="6"
-          label="黄台甫马哈那坤弃他哇劳狄希阿由他亚马哈底陆浦欧叻辣塔尼布黎隆乌冬帕拉查尼卫马哈洒坦"
-        />
-      </h-select>
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
-import { IconHelp } from '@aurora/icon';
 
-const value1 = ref();
-const values1 = ref([]);
-const values2 = ref([]);
+const existingLabels = [
+  { value: 'frontend', label: '前端' },
+  { value: 'backend', label: '后端' },
+  { value: 'design', label: '设计' },
+  { value: 'quality', label: '质量保障' },
+];
+const selected = ref<string[]>(['frontend', 'quality']);
+const feedback = ref('输入新名称后按 Enter 创建');
+const reservedNames = new Set(['管理员', 'admin']);
 
-const beforeCreate = (value: string, optionMap: Map<any, any>) => {
-  console.info(value);
-  console.info(optionMap);
-
-  if (optionMap.get(value) || value === '南京') return false;
-};
-
-function onInput(val) {
-  console.info('input:', val);
+function beforeCreate(value: string, optionMap: Map<unknown, unknown>) {
+  const normalized = value.trim();
+  if (!normalized) {
+    feedback.value = '名称不能为空';
+    return false;
+  }
+  if (optionMap.has(normalized)) {
+    feedback.value = `“${normalized}”已经存在`;
+    return false;
+  }
+  if (reservedNames.has(normalized.toLowerCase())) {
+    feedback.value = `“${normalized}”是保留名称`;
+    return false;
+  }
+  feedback.value = `可以创建“${normalized}”`;
 }
 </script>
 
+<template>
+  <div class="select-demo">
+    <h-select
+      v-model="selected"
+      multiple
+      allow-create
+      filterable
+      clearable
+      collapse-tags
+      :before-create="beforeCreate"
+      :to-body="false"
+      placeholder="选择或创建标签"
+    >
+      <h-option v-for="item in existingLabels" :key="item.value" v-bind="item" />
+    </h-select>
+    <p class="docs-demo__status" role="status">{{ feedback }} · {{ selected.length }} 项</p>
+  </div>
+</template>
+
 <style scoped>
+.select-demo {
+  display: grid;
+  min-width: 0;
+  gap: 10px;
+}
+
+.select-demo :deep(.h-select) {
+  width: 100%;
+  min-width: 0;
+}
 </style>

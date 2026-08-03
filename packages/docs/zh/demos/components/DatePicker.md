@@ -1,11 +1,13 @@
 ## 基本用法
-默认情况下，是日期选择器
+默认情况下，组件提供单日期选择。
 :::demo components/DatePicker/basic.vue :::
 
-## 确认方式
-默认情况下，用户在输入日期结束后，需要按下回车确认
+## 多个日期字段
+当多个日期各自表达不同业务含义时，可以组合多个独立的日期选择器，并为每个字段提供清晰标签与当前值反馈。
+:::demo components/DatePicker/multiple.vue :::
 
-也可以通过设置 `confirm-type="blur"` 控制在失焦或按下回车时都确认
+## 确认方式
+默认需要按下回车确认手动输入；设置 `confirm-type="blur"` 后，失焦或按下回车都会确认。
 
 :::demo components/DatePicker/confirm-type.vue :::
 
@@ -59,18 +61,14 @@
 :::demo components/DatePicker/shortcuts.vue :::
 
 ## 日期+时间选择器
-设置 `type = 'datetime' | 'datetimeRange` 即可开启日期+时间的选择器
+设置 `type = 'datetime' | 'datetime-range'` 即可开启日期与时间选择。
 
-时间列也可以精确到分和秒，即 `type = 'date-minutes' | 'date-minutes-range' | 'date-seconds' | 'date-seconds-range'`
+使用 `date-minutes`、`date-minutes-range`、`date-seconds` 或 `date-seconds-range` 可精确到分或秒。
 
 :::demo components/DatePicker/datetime.vue :::
 
 ## 格式化
-`date-picker` 内置使用 `dayjs` 作为数据处理，所以支持所有 `dayjs` 支持的格式化方案
-
-另外也支持插件 `AdvancedFormat` 所支持的格式
-
-如果默认不填写，则会根据 `type` 和国际化配置进行自动约束
+组件使用 Dayjs 处理日期，支持 Dayjs 及 `AdvancedFormat` 的格式。未填写时，会根据 `type` 和当前语言自动选择格式。
 
 详见 [格式化格式](#格式化格式)
 
@@ -78,11 +76,7 @@
 :::demo components/DatePicker/format.vue :::
 
 ## 值的转化
-`format` 可以控制展示的格式，而如果希望 `model-value` 的格式是另一种格式，可以填入 `value-format`。如果不填写，则会返回 `Dayjs` 格式
-
-`value-format` 不仅会作用于读入 `model-value` 时格式的设置，也会影响用户选择日期时间后的值的返回格式
-
-如果不填写 `value-format`，`model-value` 的读入格式会根据选择器的 `type` 和国际化选择的区域有关，详见 [格式化格式](#格式化格式)
+`format` 控制展示格式，`value-format` 控制 `model-value` 的读入与返回格式；不设置 `value-format` 时返回 Dayjs 对象。
 
 :::error 注意！<code>Dayjs</code> 对象直接打印时，时区默认是格林威治时间（GMT+0)，<b>在做转化时才会根据系统所在地理位置处理时区</b>:::
 
@@ -99,11 +93,7 @@
 :::demo components/DatePicker/disabled-date-and-time.vue :::
 
 ## 快捷选择此刻
-设置 `show-now`，即可在面板中显示【此刻】按钮
-
-如果希望此刻是另外的功能，则传入 `showNow` 插槽来自定义
-
-如果额外设置了 `default-time`，则优先使用 `default-time` 所设置的值
+设置 `show-now` 显示“此刻”按钮，也可以通过 `showNow` 插槽替换该操作。若同时设置 `default-time`，优先使用默认时间。
 
 :::demo components/DatePicker/show-now.vue :::
 
@@ -132,7 +122,7 @@
 :::demo components/DatePicker/show-dot.vue :::
 
 ## 默认时间
-在选择日期时，如果有对时间期望，则可以给定一个默认的时间，减少用户手动选择的复杂，提升交互效率
+通过 `default-time` 为新选择提供合理的起止时间，减少重复输入。
 :::demo components/DatePicker/default-time.vue :::
 
 ## 需要确认

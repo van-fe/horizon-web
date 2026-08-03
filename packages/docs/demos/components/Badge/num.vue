@@ -1,23 +1,21 @@
 <template>
-  <h-badge
-    v-for="(item, index) in listRef"
-    :key="index"
-    type="num"
-    :content="item"
-    :num-max="99"
-    style="margin-right: 20px"
-  >
-    <div style="background: gray; width: 50px; height: 50px"></div>
-  </h-badge>
+  <h-space wrap size="large">
+    <h-badge
+      v-for="item in samples"
+      :key="item.label"
+      type="num"
+      :content="item.count"
+      :num-max="99"
+    >
+      <h-button type="normal">{{ item.label }}</h-button>
+    </h-badge>
+  </h-space>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    return {
-      listRef: ref([0, 8, 15, 10000]),
-    };
-  },
-});
+<script setup lang="ts">
+const samples = [
+  { label: 'Zero', count: 0 },
+  { label: 'Eight', count: 8 },
+  { label: 'Maximum', count: 10000 },
+];
 </script>

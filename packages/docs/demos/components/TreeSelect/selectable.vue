@@ -1,36 +1,40 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <div class="demo-title">单选</div>
-      <h-tree-select
-        v-model="value"
-        :tree-data="baseTreeData"
-        :show-radio="true"
-      />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">多选</div>
-      <h-tree-select
-        v-model="values"
-        :tree-data="baseTreeData"
-        :multiple="true"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
+import type { HTreeNodeData } from '@aurora/horizon-web';
 
-const baseTreeData = ref([]);
-const value = ref();
-const values = ref();
-
-onMounted(() => {
-  fetch(new URL('/unselectable-options.json', import.meta.url).href)
-    .then(res => res.json())
-    .then(res => {
-      baseTreeData.value = res;
-    });
-});
+const selectedValue = ref<string | number>('prod-eu');
+const treeData: HTreeNodeData[] = [
+  {
+    value: 'production',
+    label: 'Production · grouping only',
+    selectable: false,
+    children: [
+      { value: 'prod-us', label: 'US cluster' },
+      { value: 'prod-eu', label: 'EU cluster' },
+    ],
+  },
+  {
+    value: 'testing',
+    label: 'Testing · grouping only',
+    selectable: false,
+    children: [
+      { value: 'staging', label: 'Shared staging' },
+      { value: 'preview', label: 'Preview environments · disabled', disabled: true },
+    ],
+  },
+];
 </script>
+
+<template>
+  <div class="docs-demo">
+    <h-tree-select
+      v-model="selectedValue"
+      :tree-data="treeData"
+      show-radio
+      show-line
+      placeholder="Choose a release destination"
+      :to-body="false"
+    />
+    <span aria-live="polite">Selected: {{ selectedValue || 'none' }}</span>
+  </div>
+</template>

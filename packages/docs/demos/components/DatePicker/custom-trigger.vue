@@ -1,27 +1,29 @@
+<script setup lang="ts">
+import { computed, ref } from 'vue';
+import { dayjs } from '@aurora/horizon-web';
+
+const publishAt = ref(dayjs().add(1, 'day').hour(9).minute(30));
+const label = computed(() => `Publish · ${publishAt.value.format('MMM D, HH:mm')}`);
+</script>
+
 <template>
-  <h-grid align="center" :gap="12">
-    <h-grid-item :span="12">
-      <h-date-picker v-model="value" type="datetime" show-now>
-        <template #pickerOuter>
-          <h-button plain>Pick datetime: {{ value }}</h-button>
-        </template>
-      </h-date-picker>
-    </h-grid-item>
-  </h-grid>
-  <h-grid align="center" :gap="12">
-    <h-grid-item :span="12">
-      <h-date-picker v-model="rangeValue" type="datetimeRange" show-now>
-        <template #pickerOuter>
-          <h-button plain>Pick datetimeRange: {{ rangeValue }}</h-button>
-        </template>
-      </h-date-picker>
-    </h-grid-item>
-  </h-grid>
+  <section class="date-picker-demo">
+    <h-date-picker v-model="publishAt" type="datetime" show-now>
+      <template #pickerOuter>
+        <h-button plain icon="calendar">{{ label }}</h-button>
+      </template>
+    </h-date-picker>
+  </section>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
+<style scoped>
+.date-picker-demo {
+  max-inline-size: 680px;
+}
 
-const value = ref();
-const rangeValue = ref();
-</script>
+@media (max-width: 390px) {
+  .date-picker-demo {
+    inline-size: 100%;
+  }
+}
+</style>

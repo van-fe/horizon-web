@@ -1,22 +1,33 @@
 ## When to Use
-1. Collapse panels can make information processing and discovery more effective. Group and hide complex areas to keep the page clean.
-2. If users are likely to read all content, do not use collapse panels as they add the burden of additional clicks; instead, use a full scrolling page with normal headings.
+
+Collapse panels group supporting information and reveal it on demand, keeping the primary path clear. Prefer regular headings and a full page when users usually need to read everything in sequence.
 
 ## Basic Usage
-By default, multiple panels can be expanded at the same time, and you can set which one to expand by default.
+
+The default mode allows multiple panels to stay open. Use `v-model:active-key` for expanded items, and enable `filled` for stronger section grouping.
+
 :::demo components/Collapse/basic.vue :::
 
-## Attributes
-The default size is medium.
+## Size and Icon Position
+
+Use `size` to adjust panel density and `expand-icon-position` to place the expand icon before or after the title.
+
 :::demo components/Collapse/size.vue :::
 
 ## Accordion
-Set `accordion` to open only one panel at a time.
+
+Set `accordion` to keep only one panel open. In this mode, `active-key` should be a single string or number rather than an array.
+
 :::demo components/Collapse/accordion.vue :::
 
 ## Nested Panels
-Nested collapse panels.
+
+Use nesting only for a clear parent-child hierarchy. Maintain separate `active-key` models for the outer and inner groups.
+
 :::demo components/Collapse/nest.vue :::
 
-## Others
+## Custom Titles
+
+Use the `title` slot to combine icons, status, and actions. Stop event propagation on header buttons so the action does not also toggle the panel.
+
 :::demo components/Collapse/other.vue :::

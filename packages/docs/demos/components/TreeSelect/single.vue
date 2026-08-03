@@ -1,36 +1,37 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <div class="demo-title">普通单选</div>
-      <h-tree-select v-model="value1" :tree-data="baseTreeData" :to-body="false" />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">有 Radio 组件</div>
-      <h-tree-select
-        v-model="value2"
-        :tree-data="baseTreeData"
-        :show-radio="true"
-        :to-body="false"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
+import type { HTreeNodeData } from '@aurora/horizon-web';
 
-const value1 = ref();
-const value2 = ref();
-
-const baseTreeData = ref([]);
-
-onMounted(() => {
-  fetch(new URL('/tree-data.json', import.meta.url).href)
-    .then(res => res.json())
-    .then(res => {
-      baseTreeData.value = res;
-    });
-});
+const showRadio = ref(true);
+const department = ref<string | number>('customer-success');
+const treeData: HTreeNodeData[] = [
+  {
+    value: 'customer',
+    label: 'Customer organization',
+    children: [
+      { value: 'customer-success', label: 'Customer success' },
+      { value: 'support', label: 'Technical support' },
+    ],
+  },
+  {
+    value: 'operations',
+    label: 'Operations',
+    children: [{ value: 'finance', label: 'Finance' }],
+  },
+];
 </script>
 
-<style scoped></style>
+<template>
+  <div class="docs-demo">
+    <h-switch v-model="showRadio" label="Show radios" />
+    <h-tree-select
+      v-model="department"
+      :tree-data="treeData"
+      :show-radio="showRadio"
+      :check-on-click-leaf="true"
+      placeholder="Choose a department"
+      :to-body="false"
+    />
+    <span aria-live="polite">Selected: {{ department || 'none' }}</span>
+  </div>
+</template>

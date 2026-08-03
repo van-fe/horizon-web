@@ -1,69 +1,76 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="24">
-      <h-button ref="firstRef">First</h-button>
-      <h-button class="guide-second-2">Second</h-button>
-      <h-button ref="thirdRef">Third</h-button>
-    </h-grid-item>
-    <h-divider />
-    <h-grid-item :span="24">
-      <h-button @click="start">Start</h-button>
-    </h-grid-item>
-  </h-grid>
-
-  <h-guide v-model:visible="visible" :item-list="itemList" @close="onClose" @finish="onFinish" />
-</template>
-
 <script setup lang="ts">
 import { onMounted, ref, shallowRef } from 'vue';
 import type { GuideItemProps } from '@aurora/horizon-web';
-import { $message } from '@aurora/horizon-web';
 
-const firstRef = shallowRef<HTMLElement | null>(null);
-const thirdRef = shallowRef<HTMLElement | null>(null);
+const filterRef = shallowRef<HTMLElement | null>(null);
+const shareRef = shallowRef<HTMLElement | null>(null);
 const itemList = ref<GuideItemProps[]>([]);
-
 const visible = ref(false);
-
-function start() {
-  visible.value = true;
-}
-
-function onClose() {
-  $message.warning('跳过了新手引导');
-}
-
-function onFinish() {
-  $message.success('完成了新手引导');
-}
+const status = ref('Ready to start');
 
 onMounted(() => {
   itemList.value = [
     {
-      target: firstRef,
-      title: '第一步',
-      content: '第一步就是第一步',
+      target: filterRef,
+      title: 'Choose filters',
+      content: 'Focus the report on the customers and period that matter.',
     },
     {
-      target: '.guide-second-2',
-      title: '第二步',
-      content: '第二步就是第二步',
+      target: '.guide-preview',
+      title: 'Preview the report',
+      content: 'Review the result before sharing it.',
       placement: 'top-start',
-      image: '/demo-assets/guide-card.svg',
     },
     {
-      target: thirdRef,
-      title: "第三步",
-      content: "第三步就是第三步",
-      placement:"right-start",
-    },
-    {
-      title:"第四步",
-      content: "第四步全局居中了",
+      target: shareRef,
+      title: 'Share with the team',
+      content: 'Publish a stable link when the report is ready.',
+      placement: 'right-start',
     },
   ];
 });
 </script>
 
+<template>
+  <section class="guide-demo">
+    <div class="guide-actions">
+      <h-button ref="filterRef" type="normal">Choose filters</h-button>
+      <h-button class="guide-preview" type="normal">Preview report</h-button>
+      <h-button ref="shareRef" type="normal">Share report</h-button>
+      <h-button @click="visible = true">Start tour</h-button>
+    </div>
+    <output aria-live="polite">{{ status }}</output>
+
+    <h-guide
+      v-model:visible="visible"
+      :item-list="itemList"
+      @close="status = 'Tour skipped'"
+      @finish="status = 'Tour completed'"
+    />
+  </section>
+</template>
+
 <style scoped>
+.guide-demo {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+}
+
+.guide-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+output {
+  color: var(--h-text-secondary);
+  font-size: 13px;
+}
+
+@media (max-width: 390px) {
+  .guide-actions {
+    gap: 8px;
+  }
+}
 </style>

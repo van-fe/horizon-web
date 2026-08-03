@@ -1,48 +1,45 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+import { workspaceOptions } from './options';
+
+const value = ref<string[]>([]);
+</script>
+
 <template>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <div class="demo-title">单选</div>
-      <h-cascader v-model="currentVal1" :options="options" filter :to-body="false">
-        <template #searchPanelRender="slotProps">
-          🐂
-          {{ slotProps.paths.map(path => path.label).join('～') }}
-        </template>
-      </h-cascader>
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">多选</div>
-      <h-cascader v-model="currentVal2" :options="options" filter multiple :to-body="false">
-        <template #searchPanelRender="slotProps">
-          🐂
-          {{ slotProps.paths.map(path => path.label).join('～') }}
-        </template>
-      </h-cascader>
-    </h-grid-item>
-  </h-grid>
+  <h-cascader
+    v-model="value"
+    aria-label="Organization path"
+    placeholder="Search organization paths"
+    :options="workspaceOptions"
+    filter
+    clearable
+    :to-body="false"
+  >
+    <template #searchPanelRender="{ paths }">
+      <span class="search-result">
+        <small>
+          {{
+            paths
+              .slice(0, -1)
+              .map(path => path.label)
+              .join(' / ')
+          }}
+        </small>
+        <strong>{{ paths.at(-1)?.label }}</strong>
+      </span>
+    </template>
+  </h-cascader>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
+<style scoped>
+.search-result {
+  display: grid;
+  min-width: 0;
+  gap: var(--h-spacing-1);
+}
 
-export default defineComponent({
-  setup() {
-    const currentVal1 = ref<string[]>([]);
-    const currentVal2 = ref<string[][]>([]);
-
-    const options = ref([]);
-    fetch(
-      new URL('/cascader-options.json', import.meta.url).href,
-    ).then(res => {
-      res.json().then(value => {
-        options.value = value;
-      });
-    });
-
-    return {
-      currentVal1,
-      currentVal2,
-      options,
-    };
-  },
-});
-</script>
+.search-result small {
+  color: var(--h-text-secondary);
+  overflow-wrap: anywhere;
+}
+</style>

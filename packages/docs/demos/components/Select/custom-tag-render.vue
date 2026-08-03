@@ -1,182 +1,53 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const optionList = [
-  { label: '正常', color: 'brand' },
-  { label: '警示', type: 'warning' },
-  { label: '错误', type: 'error' },
-  { label: '进行中', type: 'info' },
-  { label: '已完成', type: 'success' },
+type TagType = 'success' | 'info' | 'warning' | 'error' | '';
+
+const statuses: Array<{ value: string; label: string; type: TagType }> = [
+  { value: 'planned', label: '待排期', type: '' },
+  { value: 'building', label: '开发中', type: 'info' },
+  { value: 'blocked', label: '有风险', type: 'warning' },
+  { value: 'failed', label: '未通过', type: 'error' },
+  { value: 'released', label: '已发布', type: 'success' },
 ];
+const selected = ref<string[]>(['building', 'blocked', 'released']);
 
-const value = ref<string>();
-const values = ref<string[]>([]);
-const values2 = ref<string[]>([]);
-const size = ref('medium');
-const filterable = ref(true);
-const pure = ref(false);
-
-function getOptionByValue(value: string | undefined) {
-  return optionList.find(curr => curr.label === value)!;
-}
-
-function onDeselect(collection: string[], value: string) {
-  const index = collection.indexOf(value);
-
-  if (index >= 0) {
-    collection.splice(index, 1);
-  }
+function getStatus(value: string) {
+  return statuses.find(status => status.value === value) ?? statuses[0];
 }
 </script>
 
 <template>
-  <h-form label-position="left" label-vertical-align="middle">
-    <h-form-item label="尺寸">
-      <h-radio-group v-model="size">
-        <h-radio value="small" />
-        <h-radio value="medium" />
-        <h-radio value="large" />
-      </h-radio-group>
-    </h-form-item>
-    <h-form-item label="是否可过滤">
-      <h-switch v-model="filterable" status />
-    </h-form-item>
-    <h-form-item label="是否是纯粹标签">
-      <h-switch v-model="pure" status />
-    </h-form-item>
-  </h-form>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <div class="demo-title">单选</div>
-      <h-select v-model="value" :to-body="false" :filterable="filterable" clearable :size="size">
-        <h-option
-          v-for="item of optionList"
-          :key="item.label"
-          :label="item.label"
-          :value="item.label"
-        >
-          <template #label>
-            <h-tag
-              :type="item.type"
-              :clickable="false"
-              :color="item.color"
-              :auto-color="!!item.color"
-            >
-              {{ item.label }}
-            </h-tag>
-          </template>
-        </h-option>
-        <template #tagRender="props">
-          <h-tag
-            :key="props.value"
-            :type="getOptionByValue(value)?.type"
-            :clickable="false"
-            :color="getOptionByValue(value)?.color"
-            :auto-color="!!getOptionByValue(value)?.color"
-            :size="size"
-            :is-pure="pure"
-          >
-            {{ value }}
-          </h-tag>
-        </template>
-      </h-select>
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">多选</div>
-      <h-select
-        v-model="values"
-        :multiple="true"
-        :collapse-tags="true"
-        :collapse-tags-tooltip="true"
-        :to-body="false"
-        :filterable="filterable"
-        clearable
-        :size="size"
-      >
-        <h-option
-          v-for="item of optionList"
-          :key="item.label"
-          :label="item.label"
-          :value="item.label"
-        >
-          <template #label>
-            <h-tag
-              :type="item.type"
-              :clickable="false"
-              :color="item.color"
-              :auto-color="!!item.color"
-            >
-              {{ item.label }}
-            </h-tag>
-          </template>
-        </h-option>
-        <template #tagRender="props">
-          <h-tag
-            :key="props.value"
-            :type="getOptionByValue(props.value).type"
-            :clickable="false"
-            :closable="true"
-            :size="size"
-            :color="getOptionByValue(props.value).color"
-            :auto-color="!!getOptionByValue(props.value).color"
-            :is-pure="pure"
-            @close="onDeselect(values, props.value)"
-          >
-            {{ getOptionByValue(props.value).label }}
-          </h-tag>
-        </template>
-      </h-select>
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">完全自定</div>
-      <h-select
-        v-model="values2"
-        :multiple="true"
-        :to-body="false"
-        :filterable="filterable"
-        :size="size"
-      >
-        <h-option
-          v-for="item of optionList"
-          :key="item.label"
-          :label="item.label"
-          :value="item.label"
-        >
-          <template #label>
-            <h-tag
-              :type="item.type"
-              :clickable="false"
-              :color="item.color"
-              :auto-color="!!item.color"
-            >
-              {{ item.label }}
-            </h-tag>
-          </template>
-        </h-option>
-        <template #pickerInner>
-          <h-tag-group collapse-tags collapse-use-tooltip tooltip-render-type="full">
-            <template #prefix><div style="align-self: center">你的选择是：</div></template>
-            <h-tag
-              v-for="item of values2"
-              :key="item"
-              :closable="true"
-              :size="size"
-              @close="onDeselect(values2, item)"
-            >
-              {{ item }}
-            </h-tag>
-          </h-tag-group>
-        </template>
-      </h-select>
-    </h-grid-item>
-  </h-grid>
+  <div class="select-demo">
+    <h-select
+      v-model="selected"
+      multiple
+      filterable
+      clearable
+      collapse-tags
+      collapse-tags-tooltip
+      :to-body="false"
+    >
+      <h-option v-for="status in statuses" :key="status.value" v-bind="status" />
+      <template #tagRender="props">
+        <h-tag :type="getStatus(props?.value ?? '').type" plain :clickable="false">
+          {{ getStatus(props?.value ?? '').label }}
+        </h-tag>
+      </template>
+    </h-select>
+    <p class="docs-demo__status">{{ selected.length }} 种状态</p>
+  </div>
 </template>
 
 <style scoped>
-.custom-tag {
-  display: flex;
-  height: var(--h-select-size-option-height);
-  align-items: center;
-  padding-left: 12px;
+.select-demo {
+  display: grid;
+  min-width: 0;
+  gap: 10px;
+}
+
+.select-demo :deep(.h-select) {
+  width: 100%;
+  min-width: 0;
 }
 </style>

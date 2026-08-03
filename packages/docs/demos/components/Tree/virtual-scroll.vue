@@ -1,39 +1,28 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="12">
-      <div class="demo-title">单选</div>
-      <h-tree
-        :tree-data="baseData"
-        :use-virtual-scroll="true"
-        :max-height="300"
-      />
-    </h-grid-item>
-    <h-grid-item :span="12">
-      <div class="demo-title">多选</div>
-      <h-tree
-        :tree-data="baseData"
-        :use-virtual-scroll="true"
-        :max-height="300"
-        :multiple="true"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { shallowRef } from 'vue';
-import type { BaseTreeData } from '@aurora/horizon-web/es/utils/useTree';
+import { ref, shallowRef } from 'vue';
+import type { HTreeNodeData } from '@aurora/horizon-web';
 
-const baseData = shallowRef<BaseTreeData[]>(new Array(100).fill(0).map((_, i) => ({
-  label: `${i + 1}`,
-  value: i + 1,
-  children: new Array(50).fill(0).map((_, j) => ({
-    label: `${i + 1}-${j + 1}`,
-    value: (i + 1) * 100 + j + 1,
-    children: new Array(10).fill(0).map((_, k) => ({
-      label: `${i + 1}-${j + 1}-${k + 1}`,
-      value: (i + 1) * 10000 + (j + 1) * 100 + k + 1,
+const selectedValues = ref<Array<string | number>>([]);
+const treeData = shallowRef<HTreeNodeData[]>(
+  Array.from({ length: 80 }, (_, sectionIndex) => ({
+    value: `section-${sectionIndex + 1}`,
+    label: `Knowledge section ${String(sectionIndex + 1).padStart(2, '0')}`,
+    children: Array.from({ length: 25 }, (_, articleIndex) => ({
+      value: `article-${sectionIndex + 1}-${articleIndex + 1}`,
+      label: `Article ${String(sectionIndex + 1).padStart(2, '0')}.${String(
+        articleIndex + 1,
+      ).padStart(2, '0')}`,
     })),
   })),
-})));
+);
 </script>
+
+<template>
+  <h-tree
+    v-model:selected-values="selectedValues"
+    :tree-data="treeData"
+    use-virtual-scroll
+    :max-height="320"
+    multiple
+  />
+</template>

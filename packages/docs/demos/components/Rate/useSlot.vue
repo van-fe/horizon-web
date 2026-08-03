@@ -1,17 +1,25 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const level = ref(3);
+</script>
+
 <template>
-  <div class="">
-    <h-rate v-model="currentScore" size="large">A</h-rate>
+  <div class="rate-demo">
+    <h-rate v-model="level" size="large">A</h-rate>
+    <span aria-live="polite">{{ level }} / 5</span>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
+<style scoped>
+.rate-demo {
+  display: flex;
+  align-items: center;
+  gap: var(--h-spacing-4);
+}
 
-export default defineComponent({
-  setup() {
-    return {
-      currentScore: ref(3),
-    };
-  },
-});
-</script>
+.rate-demo span {
+  color: var(--h-text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+</style>

@@ -1,211 +1,191 @@
 ## Basic Usage
 
+`h-select` supports single and multiple selection, filtering, disabled states, and the `normal`, `emphasize`, and `no-border` input styles.
+
 :::demo components/Select/basic.vue :::
 
-## Single Selection
-You can configure `show-selected-icon` to enable displaying the selected indicator
+## Sizes
 
-You can also configure `selected-icon` to customize the icon of the selected indicator
+Use `size` with `small`, `medium`, or `large`. The example compares single and multiple selection together with input styles and disabled states.
+
+:::demo components/Select/size.vue :::
+
+## Single-selection Indicator
+
+Enable `show-selected-icon` to display a selection indicator, or replace it with `selected-icon`.
 
 :::demo components/Select/single.vue :::
 
-## Custom `dropdown icon`
-You can control the `dropdown icon` by configuring `dropdown-icon`
+## Custom Single-selection Rendering
 
-If you pass in `false`, it can be set to empty
+Use `tagRender` to customize the selected value, or `pickerInner` to take over the complete input area. `pickerInner` is the better fit for editable pickers.
 
-:::demo components/Select/icon-style.vue :::
+:::demo components/Select/single-render.vue :::
 
-## Multiple Selection
-By default, selected items are not collapsed. You can configure `collapse-tags = true` to collapse selected items
+## Multiple Selection and Collapse
 
-In addition, you can configure `collapse-tags-tooltip = true` to display other selected items when hovering over `+N`, and you can quickly deselect selected items
-
-In addition, if your `select` space is very small, it may be squeezed to only `+N`. You can configure `max-collapse-tags` to force how many selected items to display, and the rest will be collapsed
-
-If your option content is too long, causing it to be unable to fit between selected items and `+N`, you can configure `collapse-tags-fill-up = true` to make selected items fill the space as much as possible
-
-Starting from `2.4.0`, `collapse-tags-fill-up` is enabled by default
+Set `multiple` for multiple selection. `collapse-tags` folds selected tags, `collapse-tags-tooltip` reveals the complete selection on hover, and `max-collapse-tags` keeps a fixed number visible.
 
 :::demo components/Select/multiple.vue :::
 
+## Custom Multiple-selection Rendering
+
+Multiple selection also supports `tagRender` and `pickerInner`. When creation is enabled, provide a fallback because newly created options may not have custom attributes.
+
+:::demo components/Select/multiple-render.vue :::
+
+## Folding Long Tags
+
+Tags collapse according to available width, while `collapse-tags-fill-up` uses remaining space where possible. Consider the width-calculation cost for very large selections.
+
+:::demo components/Select/tag-fold.vue :::
+
+## Custom Dropdown Icon
+
+Use `dropdown-icon` to provide a dropdown icon, or pass `false` to hide it.
+
+:::demo components/Select/icon-style.vue :::
+
+## Groups
+
+Organize options with `h-option-group`. Groups may be labeled and can be mixed with ungrouped options.
+
+:::demo components/Select/group.vue :::
+
+## Disabled States
+
+`h-select`, `h-option`, and `h-option-group` all support `disabled`. Disabling a group makes every option in that group unavailable.
+
+:::demo components/Select/disabled.vue :::
+
+## Hide Selected Candidates
+
+With `selected-visible="false"`, selected options disappear from the dropdown panel while the model value and picker tags remain unchanged.
+
+:::demo components/Select/hide-selected.vue :::
+
+## Supporting Descriptions
+
+Add context with `h-option.description`, and use `description-position` to place it on the right or below the label.
+
+:::demo components/Select/description.vue :::
+
+## Filtering
+
+Enable input filtering with `filterable` and customize matching with `filter-method`. Panel filtering can use the built-in input or a custom `panelHeaderRender`.
+
+:::demo components/Select/filter.vue :::
+
+## Filter Keyword Retention
+
+For filtered multiple selection, `reserve-keyword` supports four strategies: `true`, `false`, `reserve-deselect`, and `reserve-special`.
+
+:::demo components/Select/reserve-keyword.vue :::
+
+## Remote Search
+
+Set `show-search` and handle `search` to update remote results and loading state. Use `hide-panel-when-show-search-and-empty-list="false"` to keep the panel visible with no results.
+
+:::demo components/Select/remote-search.vue :::
+
+## Create Options
+
+`allow-create` lets users create options, while `before-create` can reject empty values, duplicates, or reserved names.
+
+:::demo components/Select/creatable.vue :::
+
+## Confirm Before Committing
+
+With `need-confirm`, panel changes are committed on confirmation. Button labels and the `dropConfirmRender` action area can both be customized.
+
+:::demo components/Select/confirm.vue :::
+
 ## Select All
-Supports passing in `use-check-all = true` to enable select all
+
+Enable select-all behavior with `use-check-all`. Customize its summary through `check-all-text` or `check-all-text-render`.
 
 :::demo components/Select/check-all.vue :::
 
 ## Option Statistics
-Pass in `use-statistic = true` to count multiple selections
 
-You can set `statistic-text` to specify the statistical text
-
-`use-statistic` takes priority over `use-check-all`
+Enable selection statistics with `use-statistic` and customize the copy with `statistic-text`. Statistics take precedence over select-all mode.
 
 :::demo components/Select/statistic.vue :::
 
-## Dynamic Set Collapse
-You can control the collapse state by toggling `collapse-tags`. When `focus`, all are expanded, when `false`, collapsed
+## Dynamic Tag Collapse
+
+`collapse-tags` can change at runtime. A common pattern expands tags on focus and restores the compact view on blur.
 
 :::demo components/Select/dynamic-collapse.vue :::
 
-## Grouping
-You can use `h-option-group` to group, with named groups and unnamed groups
-:::demo components/Select/group.vue :::
+## Move Selected Options to the Top
 
-## Disabled
-Set `disabled = true` to disable `h-select`
-
-Set `disabled = true` for `h-option` to disable the current option
-
-Set `disabled = true` for `h-option-group` to disable all options under the current group
-
-:::demo components/Select/disabled.vue :::
-
-## Selected Options Not Displayed
-Set `selected-visible = false` to not display selected options in the panel
-
-:::demo components/Select/hide-selected.vue :::
-
-## Auxiliary Description Text
-Set content for `h-option.description` to assist in explaining `label`
-:::demo components/Select/description.vue :::
-
-## Filter
-Set `filterable = true` to enable filtering
-
-If you need to customize the filter method, pass `filter-method`
-
-If you need an `input` on the dropdown panel, you can configure `use-build-in-panel-filter` to enable the built-in `input` on the panel
-
-The original implementation using slots can still be used
-
-:::demo components/Select/filter.vue :::
-
-## Filter Reserve Keyword
-In the case of filter + multiple selection, setting `reserve-keyword` can set three modes of reserving keywords
-
-`true`: Reserve keyword
-
-`false`: Do not reserve keyword
-
-`'reserve-deselect'`: Only reserve keyword when deselecting
-
-`'reserve-special'`: Do not reserve keyword, but still reserve the filtered content. Only after the user manually clears the input text or loses focus on the input box will the filtered content change
-
-:::demo components/Select/reserve-keyword.vue :::
-
-## Confirm Panel
-To enable the confirm panel, you need to enable `need-confirm = true`
-
-:::demo components/Select/confirm.vue :::
-
-## Value Conversion
-Use `value-format`, pass in a function, then you can convert `modelValue`
-
-Please note that it is still not recommended to use `value-format`. Since 2.3.0, `h-option.value` already supports `object` type
-
-This method will be removed in `3.x`
-
-:::demo components/Select/format-value.vue :::
-
-## Custom Option
-Through the `option.default` slot, you can customize the display form
-
-You can also set the slot `select.optionRender` to uniformly set the display form of `option`
-
-In addition, you can pass in `select.external-panel-style` to customize the `style` of the panel
-
-:::demo components/Select/option.vue :::
-
-## Option Overflow
-If the option is too long, it will automatically overflow
-
-`select.max-tag-width` has been removed, constrained by `tag` specification
-:::demo components/Select/overflow.vue :::
-
-## Remote Search
-Set `show-search` to enable remote search
-
-Listen to the `search` event to control when search results are displayed
-
-Or you can control it by passing an async method to `search-method`
-
-If you want to display the panel even when there are no results, set `hide-panel-when-show-search-and-empty-list = false`
-
-:::demo components/Select/remote-search.vue :::
-
-## Allow Create
-Set `allow-create` to allow creating `option`
-
-And use the `before-create` callback to determine whether to allow creating `option`
-
-:::demo components/Select/creatable.vue :::
-
-## Reach Bottom Load
-You can listen to the `optionListReachBottom` event to get whether it has scrolled to the bottom, then trigger update loading
-
-Toggling the `loading` state can change the loading state of the popup panel
-
-:::demo components/Select/reach-bottom.vue :::
-
-## Custom Selection Tag
-Through the `select.tagRender` slot, you can customize the rendering performance of selected options in the input box
-
-Using the `option.label` slot, you can customize the display form of text in `h-option`
-
-:::demo components/Select/custom-tag-render.vue :::
-
-## Selected Options to Top
-You can set `selectedOptionOrderToTop = true` to enable selected options to be arranged to the top
-
-The arrangement will only be performed after closing the panel, and the sorting will not change when actively selecting
-
-If it is a grouping situation, it will be ranked first in the group, and will not move the entire group forward
+`selected-option-order-to-top` moves selected options forward after the panel closes. With groups, only the order inside each group changes.
 
 :::demo components/Select/selected-option-order-to-top.vue :::
 
-## Width Adaptation
-By default, the width of the dropdown panel will be consistent with the `select` width.
+## Value Formatting
 
-In special cases, the `select` width may be very small, and the dropdown panel width needs to be unrestricted. You can set `fit-input-width = false`
+`value-format` can transform option metadata into a business object. New code can also use object values directly on `h-option.value` to avoid an extra conversion.
 
-But note that at this time, the dropdown panel width no longer has a maximum width limit, so it will be stretched by overly long child elements
+:::demo components/Select/format-value.vue :::
 
-In addition, the trigger itself has a minimum width of `144px`. If you need to change it, you need to modify the style
+## Custom Options
+
+Use `optionRender` for a shared option layout or override an individual `h-option` slot. `external-panel-style` customizes the dropdown panel itself.
+
+:::demo components/Select/option.vue :::
+
+## Long Options
+
+Long labels are truncated to one line by default. Set `h-option.max-lines` to allow more lines, and combine multiple selection with collapsed tags to keep the picker stable.
+
+:::demo components/Select/overflow.vue :::
+
+## Panel Width
+
+`fit-input-width=true` matches the picker width, `false` allows natural expansion, and `fit-content` sizes the panel from its content.
 
 :::demo components/Select/fit-width.vue :::
 
-## Initial Value
-By default, after clearing the value, `update:modelValue` will default to `undefined`
+## Initial Empty Value
 
-But you can also control the default value after clearing through `initialValue`
-
-For example, you can specify data such as `null` `[]`
-
-**Note that empty strings are also considered non-empty values**
+`initial-value` determines the normalized and cleared model value, such as `null` or `[]`. An empty string is still treated as a valid value.
 
 :::demo components/Select/initial-value.vue :::
 
-## Event Display
+## Events
 
-This example shows all event emissions, you can check the printed events in the console
+The example renders `focus`, `blur`, `change`, `clear`, `deselect`, and `dropdownVisibleChange` in the page so immediate and confirmed commits are easy to compare.
 
 :::demo components/Select/events.vue :::
 
-## Custom Empty Style
-You can use `empty-text` to control the text displayed when the list is empty
+## Custom Empty State
 
-You can also control the content displayed when empty through the slot `slots.empty`
+Change the default copy with `empty-text`, or use the `empty` slot for a compact message or a complete `h-empty` state.
 
 :::demo components/Select/empty.vue :::
 
-## Virtual Scroll
-Enabling virtual scroll requires configuring the `options` field
+## Load on Reach Bottom
 
-Once this value is set, the content of the `default` slot will be ignored, and you cannot customize the display of `option` (that is, all slots related to `option` cannot be used)
+Handle `option-list-reach-bottom` for incremental loading. Set `loading` during a request, prevent duplicate loads, and stop when no more data is available.
 
-This example creates 5000 elements
+:::demo components/Select/reach-bottom.vue :::
 
-**Due to the special nature of the virtual scroll component, there may be blank invisible items in filtering and searching situations. You need to manually scroll up and down to restore**
+## Virtual Scrolling
+
+Pass `options` to enable the virtual list. This ignores options in the default slot and disables option-level slot customization. The example uses 120 deterministic records.
 
 :::demo components/Select/virtual-scroller.vue :::
+
+## Custom Selection Tags
+
+Use `tagRender` to render status-aware tags, customize panel rows with `option.label`, and compose the full input area with `pickerInner`.
+
+:::demo components/Select/custom-tag-render.vue :::
+
+## Async Multiple Selection in a Drawer
+
+When Select is used in a drawer form, keep draft and committed values separate and cancel unfinished asynchronous searches when the component closes.
+
+:::demo components/Select/test.vue :::

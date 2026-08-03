@@ -1,47 +1,47 @@
-<template>
-  <h-button @click="visible = true">点我</h-button>
-  <h-dialog v-model:visible="visible" title="标题" @ok="onPrimary" @cancel="onSecondary">
-    <div>点击 OK 会打开第二个 Dialog</div>
-    <div>点击 Cancel 会关闭当前 Dialog</div>
-  </h-dialog>
+<script setup lang="ts">
+import { ref } from 'vue';
 
-  <h-dialog v-model:visible="visible2" title="标题" @ok="onPrimary2" @cancel="onSecondary2">
-    <div>点击 OK 会关闭当前 Dialog</div>
-    <div>点击 Cancel 会关闭所有 Dialog</div>
-  </h-dialog>
+const visible = ref(false);
+const status = ref('尚未发布');
+
+function publish() {
+  visible.value = false;
+  status.value = 'v2.4.0 已进入发布队列';
+}
+</script>
+
+<template>
+  <section class="dialog-demo">
+    <h-button @click="visible = true">准备发布</h-button>
+    <p role="status">{{ status }}</p>
+
+    <h-dialog
+      v-model:visible="visible"
+      title="确认发布到生产环境？"
+      ok-text="确认发布"
+      @ok="publish"
+    >
+      <p class="dialog-copy">本次发布包含 12 项功能与 6 项修复，预计耗时约 4 分钟。</p>
+    </h-dialog>
+  </section>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    const visible = ref(false);
-    const visible2 = ref(false);
-    const onPrimary = () => {
-      console.info('Primary button clicked!');
-      visible2.value = true;
-    };
-    const onPrimary2 = () => {
-      console.info(`2nd dialog's primary button clicked!`);
-      visible2.value = false;
-    };
-    const onSecondary = () => {
-      console.info('Secondary button clicked!');
-      visible.value = false;
-    };
-    const onSecondary2 = () => {
-      console.info("2nd dialog's secondary button clicked!");
-      visible.value = false;
-      visible2.value = false;
-    };
-    return {
-      visible,
-      visible2,
-      onPrimary,
-      onSecondary,
-      onPrimary2,
-      onSecondary2,
-    };
-  },
-});
-</script>
+<style scoped>
+.dialog-demo {
+  display: grid;
+  justify-items: start;
+  gap: var(--h-spacing-3);
+}
+
+.dialog-demo > p,
+.dialog-copy {
+  margin: 0;
+  color: var(--h-text-secondary);
+}
+
+@media (max-width: 390px) {
+  .dialog-demo {
+    inline-size: 100%;
+  }
+}
+</style>

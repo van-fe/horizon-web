@@ -1,38 +1,43 @@
 <template>
-  <h-page-header>
-    <template #title>
-      This is an extremely long header that may exceed the maximum width limit
-    </template>
-    <template #tags>
-      <h-tag size="small" class="ml-2" :clickable="false">标签</h-tag>
-    </template>
-    <template #content>
-      ID: 0012138
-      <copy-btn text="0012138" />
-      <h-divider direction="vertical" />
-      所有者:
-      <h-tag avatar="/demo-assets/avatar-indigo.svg" :round="true" class="ml-2">Unknown</h-tag>
-      <h-divider direction="vertical" />
-      所属空间:
-      <h-link :link="true" size="small" type="neutral" class="ml-2">
-        <IconEdit />
-        DD
-      </h-link>
-    </template>
-    <template #extra>
-      <h-button :plain="true">副按钮</h-button>
-      <h-button>主按钮</h-button>
-    </template>
-  </h-page-header>
+  <div class="page-header-interactive-demo">
+    <h-page-header>
+      <template #title>Checkout readiness review</template>
+      <template #tags>
+        <h-tag size="small" type="warning" :clickable="false">High priority</h-tag>
+      </template>
+      <template #content>
+        <span class="page-header-meta">INC-2048</span>
+        <copy-btn text="INC-2048" />
+      </template>
+      <template #extra>
+        <h-button @click="status = 'Review opened'">Open review</h-button>
+      </template>
+    </h-page-header>
+    <p aria-live="polite">{{ status }}</p>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { IconEdit } from '@aurora/icon';
+import { ref } from 'vue';
+
+const status = ref('Ready');
 </script>
 
 <style scoped>
-.h-link :deep(.h-link__inner){
-  display: flex;
-  align-items: center;
+.page-header-interactive-demo {
+  display: grid;
+  gap: var(--h-spacing-3);
+}
+
+.page-header-meta {
+  margin-right: var(--h-spacing-2);
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+
+.page-header-interactive-demo p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
 }
 </style>

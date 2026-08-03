@@ -4,19 +4,19 @@
 
 ## 稳定模拟波形
 
-`waveform-source="mock"` 不读取音频内容，而是根据 `mock-seed`（未传时使用 `src`）生成稳定波形。相同种子和 `bar-count` 的结果始终一致，适合列表、服务端渲染和未提供波形数据的场景。
+`waveform-source="mock"` 不读取音频内容，而是根据 `mock-seed`（未传时使用 `src`）生成稳定波形。相同种子和 `bar-count` 的结果始终一致，适合列表、服务端渲染和未提供波形数据的首屏场景。
 
 :::demo components/AudioPlayer/basic.vue :::
 
 ## 外部传入波形
 
-通过 `waveform` 传入任意非负数值数组。组件会取绝对值、归一化，并重采样到 `bar-count` 指定的柱数；外部数据的优先级高于 `waveform-source`。
+通过 `waveform` 传入任意非负数值数组。组件会取绝对值、归一化，并重采样到 `bar-count` 指定的柱数；外部数据的优先级高于 `waveform-source`。示例会在播放器上方显示最终来源和柱数，便于验证处理结果。
 
 :::demo components/AudioPlayer/provided.vue :::
 
 ## 自动预读真实波形
 
-`waveform-source="auto"` 会使用 Fetch 与 Web Audio API 在后台解码音频并提取峰值。远程音频需要服务端允许 CORS；解码失败时会自动降级为稳定模拟波形，音频正常播放不受影响。下面的 Demo 在浏览器中生成一段 WAV 音频以演示真实解码。
+`waveform-source="auto"` 会使用 Fetch 与 Web Audio API 在后台解码音频并提取峰值。远程音频需要服务端允许 CORS；解码失败时会自动降级为稳定模拟波形，音频正常播放不受影响。下面的 Demo 在浏览器中生成一段 WAV 音频，可反复生成并观察实际采用的波形来源。
 
 :::demo components/AudioPlayer/auto.vue :::
 

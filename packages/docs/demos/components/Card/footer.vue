@@ -1,90 +1,107 @@
 <template>
-  <h3>带状态</h3>
-  <h-card bottom-divider>
-    <p>
-      内容区域的卡片形式。卡片内容区域可以是文字、图片、表单、表格等形式信息内容。可使用大中小不同的卡片尺寸，按业务需求进行呈现。
-    </p>
-    <template #footer>
-      <footer class="footer-1">
-        <span>2018-06-15</span>
-        <svg
-            t="1671430836155"
-            class="icon"
-            viewBox="0 0 1024 1024"
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-            p-id="2785"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            width="200"
-            height="200"
-        >
-          <path
-              d="M512.042667 682.666667c-94.122667 0-170.666667-76.544-170.666667-170.666667s76.544-170.666667 170.666667-170.666667 170.666667 76.544 170.666666 170.666667-76.586667 170.666667-170.666666 170.666667z m0-298.666667c-70.570667 0-128 57.429333-128 128s57.429333 128 128 128 128-57.429333 128-128-57.429333-128-128-128z"
-              p-id="2786"
-          ></path>
-          <path
-              d="M512.042667 810.666667C267.989333 810.666667 66.56 603.562667 10.666667 540.074667a42.922667 42.922667 0 0 1-0.085334-56.106667C66.517333 420.48 267.989333 213.333333 512.042667 213.333333c243.797333 0 445.098667 206.72 501.205333 270.378667l0.256 0.298667c13.866667 15.957333 13.866667 40.021333 0 55.978666C957.525333 603.52 756.053333 810.666667 512.042667 810.666667z m0-554.666667C285.909333 256 95.573333 452.010667 42.666667 512.128 95.616 571.989333 285.866667 768 512.042667 768c226.133333 0 416.426667-196.010667 469.376-256.128C928.426667 452.010667 738.133333 256 512.042667 256z"
-              p-id="2787"
-          ></path>
-        </svg>
-        <span>2919</span>
-        <svg
-            t="1671430836155"
-            class="icon"
-            viewBox="0 0 1024 1024"
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-            p-id="2785"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            width="200"
-            height="200"
-        >
-          <path
-              d="M512.042667 682.666667c-94.122667 0-170.666667-76.544-170.666667-170.666667s76.544-170.666667 170.666667-170.666667 170.666667 76.544 170.666666 170.666667-76.586667 170.666667-170.666666 170.666667z m0-298.666667c-70.570667 0-128 57.429333-128 128s57.429333 128 128 128 128-57.429333 128-128-57.429333-128-128-128z"
-              p-id="2786"
-          ></path>
-          <path
-              d="M512.042667 810.666667C267.989333 810.666667 66.56 603.562667 10.666667 540.074667a42.922667 42.922667 0 0 1-0.085334-56.106667C66.517333 420.48 267.989333 213.333333 512.042667 213.333333c243.797333 0 445.098667 206.72 501.205333 270.378667l0.256 0.298667c13.866667 15.957333 13.866667 40.021333 0 55.978666C957.525333 603.52 756.053333 810.666667 512.042667 810.666667z m0-554.666667C285.909333 256 95.573333 452.010667 42.666667 512.128 95.616 571.989333 285.866667 768 512.042667 768c226.133333 0 416.426667-196.010667 469.376-256.128C928.426667 452.010667 738.133333 256 512.042667 256z"
-              p-id="2787"
-          ></path>
-        </svg>
-        <span>2919</span>
-      </footer>
-    </template>
-  </h-card>
-  <h3 style="marginTop:2em">带输入</h3>
-  <h-card bottom-divider>
-    这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很的内容文案这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很的内容文案这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很的内容文案
-    <template #footer>
-      <footer class="footer-2">
-        <h-input type="textarea" placeholder="请输入" />
-      </footer>
-    </template>
-  </h-card>
+  <section class="card-footer-demo">
+    <h-grid :cols="{ xs: 1, md: 2 }" :gap="16">
+      <h-grid-item>
+        <h-card title="Accessibility review" bottom-divider>
+          <p>The keyboard walkthrough is complete and all focus states are ready for sign-off.</p>
+          <template #footer>
+            <footer class="card-footer-demo__metrics">
+              <span>Updated Aug 3</span>
+              <h-space>
+                <span>
+                  <IconEye :size="16" />
+                  2,919
+                </span>
+                <span>
+                  <IconMessage :size="16" />
+                  18
+                </span>
+              </h-space>
+            </footer>
+          </template>
+        </h-card>
+      </h-grid-item>
+      <h-grid-item>
+        <h-card title="Add a review note" bottom-divider>
+          <p>
+            Footer slots can hold controls while the main content keeps the task context visible.
+          </p>
+          <template #footer>
+            <footer class="card-footer-demo__composer">
+              <h-input
+                v-model="comment"
+                type="textarea"
+                placeholder="Write a concise review note"
+              />
+              <h-button size="small" :disabled="!comment.trim()" @click="publish">
+                Publish note
+              </h-button>
+            </footer>
+          </template>
+        </h-card>
+      </h-grid-item>
+    </h-grid>
+    <span class="card-footer-demo__status" aria-live="polite">{{ status }}</span>
+  </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from 'vue';
+import { IconEye, IconMessage } from '@aurora/icon';
 
-<style lang="scss" scoped>
-.footer-1 {
+const comment = ref('');
+const status = ref('No review note published');
+
+function publish() {
+  status.value = `Published: ${comment.value.trim()}`;
+  comment.value = '';
+}
+</script>
+
+<style scoped>
+.card-footer-demo {
+  display: grid;
+  gap: var(--h-spacing-4);
+}
+
+.card-footer-demo p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  line-height: 1.7;
+}
+
+.card-footer-demo__metrics,
+.card-footer-demo__metrics span,
+.card-footer-demo__composer {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  color: #6f7385;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 22px;
-  .icon {
-    width: 15px;
-    height: 15px;
-    margin-right: 4px;
-    margin-left: 18px;
-    &:first-of-type {
-      margin-left: auto;
-    }
-  }
+  gap: var(--h-spacing-2);
 }
-p {
-  margin: 0;
+
+.card-footer-demo__metrics {
+  justify-content: space-between;
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+
+.card-footer-demo__composer {
+  align-items: flex-end;
+}
+
+.card-footer-demo__composer .h-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.card-footer-demo__status {
+  color: var(--h-text-brand-default);
+}
+
+@media (max-width: 520px) {
+  .card-footer-demo__metrics,
+  .card-footer-demo__composer {
+    align-items: stretch;
+    flex-direction: column;
+  }
 }
 </style>

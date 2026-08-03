@@ -1,67 +1,32 @@
-<template>
-  <div class="h-demo">
-    <div class="h-demo__container">
-      <div class="h-demo__title">通过 size 设置形状</div>
-      <h-avatar class="avatar" size="mini" :random-src="avatarSources" />
-      <h-avatar class="avatar" size="small" :random-src="avatarSources" />
-      <h-avatar class="avatar" size="smedium" :random-src="avatarSources" />
-      <h-avatar class="avatar" :random-src="avatarSources" />
-      <h-avatar class="avatar" size="large" :random-src="avatarSources" />
-    </div>
-    <div class="h-demo__container">
-      <div class="h-demo__title">通过 src 自定义头像资源</div>
-      <h-avatar class="avatar" src="/demo-assets/avatar-coral.svg" />
-    </div>
-    <div class="h-demo__container">
-      <div class="h-demo__title">通过 fit 设置适应容器,同原生 object-fit</div>
-      <h-avatar
-        class="avatar"
-        src="/demo-assets/avatar-cyan.svg"
-        fit="contain"
-      />
-      <h-avatar
-        class="avatar"
-        src="/demo-assets/avatar-cyan.svg"
-      />
-      <h-avatar
-        class="avatar"
-        src="/demo-assets/avatar-cyan.svg"
-        fit="cover"
-      />
-      <h-avatar
-        class="avatar"
-        src="/demo-assets/avatar-cyan.svg"
-        fit="none"
-      />
-      <h-avatar
-        class="avatar"
-        src="/demo-assets/avatar-cyan.svg"
-        fit="scale-down"
-      />
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
-const avatarSources = [
-  '/demo-assets/avatar-coral.svg',
-  '/demo-assets/avatar-indigo.svg',
-  '/demo-assets/avatar-cyan.svg',
-];
+import { ref } from 'vue';
+import type { AvatarProps } from '@aurora/horizon-web';
+
+const size = ref<AvatarProps['size']>('medium');
+const fit = ref<NonNullable<AvatarProps['fit']>>('cover');
 </script>
 
-<style scoped>
-.avatar + .avatar {
-  margin-left: 20px;
-}
+<template>
+  <section class="docs-demo">
+    <div class="docs-demo__controls">
+      <label class="docs-demo__control">
+        <span class="docs-demo__control-label">Size</span>
+        <h-segmented v-model:active-key="size" size="small">
+          <h-segmented-item key="small" label="Small" />
+          <h-segmented-item key="medium" label="Medium" />
+          <h-segmented-item key="large" label="Large" />
+        </h-segmented>
+      </label>
+      <label class="docs-demo__control">
+        <span class="docs-demo__control-label">Fit</span>
+        <h-segmented v-model:active-key="fit" size="small">
+          <h-segmented-item key="contain" label="Contain" />
+          <h-segmented-item key="cover" label="Cover" />
+          <h-segmented-item key="fill" label="Fill" />
+        </h-segmented>
+      </label>
+    </div>
 
-.h-demo__container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.h-demo__title {
-  margin-right: 20px;
-}
-</style>
+    <h-avatar :size="size" src="/demo-assets/avatar-cyan.svg" :fit="fit" />
+  </section>
+</template>

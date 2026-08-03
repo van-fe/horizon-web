@@ -1,86 +1,42 @@
-<template>
-  <h-grid :gap="12">
-    <!-- 自定义 tag -->
-    <h-grid-item :span="6">
-      <div class="demo-title">
-        自定义 tag
-        <h-tooltip>
-          <template #content>
-            你可以在 tagRender 这个 slot 中接受到传递到每一个选项上的所有参数
-          </template>
-          <a-icon name="help" />
-        </h-tooltip>
-      </div>
-      <h-select v-model="values1" multiple collapse-tags :to-body="false">
-        <h-option label="中国" :value="1" en_name="China" />
-        <h-option :value="2" label="美国" en_name="America" />
-        <h-option :value="3" label="日本" en_name="Japan" />
-        <template #tagRender="slotProps">
-          <h-tag type="info" :clickable="false">
-            {{ `${slotProps.label}(${slotProps.en_name})` ?? '' }}
-          </h-tag>
-        </template>
-      </h-select>
-    </h-grid-item>
-
-    <h-grid-item :span="6">
-      <div class="demo-title">
-        允许创建选项
-        <h-tooltip>
-          <template #content>
-            你可以在 tagRender 这个 slot 中接受到传递到每一个选项上的所有参数
-          </template>
-          <a-icon name="help" />
-        </h-tooltip>
-      </div>
-      <h-select v-model="values2" multiple allow-create collapse-tags :to-body="false">
-        <h-option label="中国" :value="1" en_name="Chinaaaaa" />
-        <h-option :value="3" label="日本" en_name="Japanaaaa" />
-        <h-option :value="2" label="美国" en_name="Afsdffdsa" />
-        <template #tagRender="slotProps">
-          <h-tag type="success" :clickable="false">
-            {{ `${slotProps.label}(${slotProps.en_name})` ?? '' }}
-          </h-tag>
-        </template>
-      </h-select>
-    </h-grid-item>
-
-    <h-grid-item :span="6">
-      <div class="demo-title">自定义 完整 select</div>
-      <h-select v-model="values3" :multiple="true" :value-format="valueFormat" :to-body="false">
-        <h-option label="上海" :value="1" />
-        <h-option :value="2" label="北京" />
-        <h-option :value="3" label="合肥" name="hefei" />
-        <template #pickerInner>你的选择是：{{ values3.map(v => v.label).join('+') }}</template>
-      </h-select>
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
-const values1 = ref([]);
-const values2 = ref([]);
-const values3 = ref<{ label: string }[]>([]);
 
-function valueFormat(originValue: any) {
-  return {
-    value: originValue.value,
-    label: originValue.label,
-  };
-}
+const locales = [
+  { value: 'zh-CN', label: '简体中文', short: 'ZH' },
+  { value: 'en-US', label: 'English (US)', short: 'EN' },
+  { value: 'ja-JP', label: '日本語', short: 'JA' },
+  { value: 'de-DE', label: 'Deutsch', short: 'DE' },
+];
+const selected = ref<string[]>(['zh-CN', 'en-US']);
 </script>
 
+<template>
+  <div class="select-demo">
+    <h-select v-model="selected" multiple collapse-tags collapse-tags-tooltip :to-body="false">
+      <h-option
+        v-for="locale in locales"
+        :key="locale.value"
+        :value="locale.value"
+        :label="locale.label"
+        :short="locale.short"
+      />
+      <template #tagRender="props">
+        <h-tag type="info" plain :clickable="false">{{ props?.short || props?.label }}</h-tag>
+      </template>
+    </h-select>
+    <p class="docs-demo__status">已启用 {{ selected.length }} 种语言</p>
+  </div>
+</template>
+
 <style scoped>
-.multiple-tag {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #14798f;
-  font-size: 12px;
-  padding: 0 3px;
-  height: 24px;
-  margin: 4px 5px;
-  color: #f00;
+.select-demo {
+  display: grid;
+  min-width: 0;
+  gap: 10px;
+}
+
+.select-demo :deep(.h-select) {
+  width: 100%;
+  min-width: 0;
 }
 </style>

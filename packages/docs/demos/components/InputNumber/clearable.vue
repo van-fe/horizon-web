@@ -1,36 +1,35 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const value = ref();
+const value = ref<number | null>(12);
+const status = ref('Configured');
 </script>
 
 <template>
-  <h-grid :gap="12">
-    <h-grid-item :span="8">
-      <div class="demo-title">large</div>
-      <h-input-number v-model="value" size="large" clearable />
-    </h-grid-item>
-    <h-grid-item :span="8">
-      <div class="demo-title">medium (default)</div>
-      <h-input-number v-model="value" clearable />
-    </h-grid-item>
-    <h-grid-item :span="8">
-      <div class="demo-title">small</div>
-      <h-input-number v-model="value" size="small" clearable />
-    </h-grid-item>
-  </h-grid>
-  <h-grid :gap="12">
-    <h-grid-item :span="8">
-      <div class="demo-title">默认</div>
-      <h-input-number v-model="value" clearable />
-    </h-grid-item>
-    <h-grid-item :span="8">
-      <div class="demo-title">控制器位于两侧</div>
-      <h-input-number v-model="value" controls-position="between" clearable />
-    </h-grid-item>
-    <h-grid-item :span="8">
-      <div class="demo-title">控制器隐藏</div>
-      <h-input-number v-model="value" :controls="false" clearable />
-    </h-grid-item>
-  </h-grid>
+  <label class="input-number-clearable-demo">
+    <span>Optional safety stock</span>
+    <h-input-number
+      v-model="value"
+      clearable
+      :min="0"
+      placeholder="Automatic"
+      aria-label="Optional safety stock"
+      @clear="status = 'Cleared; automatic policy applies'"
+    />
+    <small aria-live="polite">{{ status }} · modelValue: {{ value ?? 'null' }}</small>
+  </label>
 </template>
+
+<style scoped>
+.input-number-clearable-demo {
+  display: grid;
+  gap: var(--h-spacing-2);
+  max-inline-size: 420px;
+}
+
+.input-number-clearable-demo > span,
+.input-number-clearable-demo > small {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+</style>

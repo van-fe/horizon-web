@@ -1,51 +1,43 @@
-<template>
-  <div>
-    <div class="mb-8">
-      <h-popover trigger="click-remain">
-        <template #reference>
-          <h-button plain class="mr-4">
-            click-remain 模式，点击 popper 里面的内容，浮层会消失
-          </h-button>
-        </template>
-        <template #popper>
-          <h-pop-content>
-            <h-select clearable :collapse-tags="true" :to-body="false" v-model="categoryCode">
-              <h-option v-for="el in list" :key="el" :label="el" :value="el"></h-option>
-            </h-select>
-          </h-pop-content>
-        </template>
-      </h-popover>
-    </div>
+<script setup lang="ts">
+import { ref } from 'vue';
 
-    <div>
+const category = ref('design');
+const options = [
+  { label: '设计系统', value: 'design' },
+  { label: '产品文档', value: 'product' },
+  { label: '开发指南', value: 'develop' },
+];
+</script>
+
+<template>
+  <div class="docs-demo">
+    <div class="popover-stage">
       <h-popover trigger="click-remain" hide-event-type="mousedown">
-        <template #reference>
-          <h-button plain class="mr-4">设置了hide-event-type="mousedown"，浮层会保留</h-button>
-        </template>
+        <template #reference><h-button>连续选择</h-button></template>
         <template #popper>
           <h-pop-content>
-            <h-select clearable :collapse-tags="true" :to-body="false" v-model="categoryCode">
-              <h-option v-for="el in list" :key="el" :label="el" :value="el"></h-option>
+            <h-select v-model="category" clearable :to-body="false">
+              <h-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
             </h-select>
           </h-pop-content>
         </template>
       </h-popover>
     </div>
+    <p class="docs-demo__status">
+      当前分类：{{ options.find(item => item.value === category)?.label }}
+    </p>
   </div>
 </template>
 
-<script>
-import { defineComponent, h } from 'vue';
-
-export default defineComponent({
-  components: {},
-  data() {
-    return {
-      list: [1, 2, 3, 4, 5, 6],
-      categoryCode: '',
-    };
-  },
-});
-</script>
-
-<style></style>
+<style scoped>
+.popover-stage {
+  display: flex;
+  justify-content: center;
+  padding-block: 24px;
+}
+</style>

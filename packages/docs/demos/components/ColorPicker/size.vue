@@ -1,63 +1,50 @@
-<template>
-  <ul class="color-picker-demo__size">
-    <li>
-      <h-color-picker v-model="value1" trigger-type="square" size="small" alpha />
-    </li>
-    <li>
-      <h-color-picker v-model="value1" trigger-type="square" square-text size="small" alpha />
-    </li>
-    <li>
-      <h-color-picker v-model="value1" trigger-type="square" square-text size="small" alpha>
-        <template #squareText>
-          自定义文本
-        </template>
-      </h-color-picker>
-    </li>
-    <li>
-      <h-color-picker v-model="value1" trigger-type="square" size="medium" alpha />
-    </li>
-    <li>
-      <h-color-picker v-model="value1" trigger-type="square" square-text size="medium" alpha />
-    </li>
-    <li>
-      <h-color-picker v-model="value1" trigger-type="square" square-text size="medium" alpha>
-        <template #squareText>
-          自定义文本
-        </template>
-      </h-color-picker>
-    </li>
-    <li>
-      <h-color-picker v-model="value1" trigger-type="square" size="large" alpha />
-    </li>
-    <li>
-      <h-color-picker v-model="value1" trigger-type="square" square-text size="large" alpha />
-    </li>
-    <li>
-      <h-color-picker v-model="value1" trigger-type="square" square-text size="large" alpha>
-        <template #squareText>
-          自定义文本
-        </template>
-      </h-color-picker>
-    </li>
-  </ul>
-</template>
-
 <script setup lang="ts">
-import { ref } from 'vue';
+import { reactive } from 'vue';
 
-const value1 = ref('#E83030');
+const sizes = [
+  { key: 'small' as const, label: 'Small' },
+  { key: 'medium' as const, label: 'Medium' },
+  { key: 'large' as const, label: 'Large' },
+];
+const values = reactive({
+  small: '#E83030',
+  medium: '#178CA6',
+  large: '#6F5AE8',
+});
 </script>
 
+<template>
+  <div class="color-size-demo">
+    <label v-for="size in sizes" :key="size.key">
+      <span>{{ size.label }}</span>
+      <h-color-picker
+        v-model="values[size.key]"
+        trigger-type="square"
+        square-text
+        :size="size.key"
+        alpha
+      >
+        <template #squareText>{{ size.label }}</template>
+      </h-color-picker>
+    </label>
+  </div>
+</template>
+
 <style scoped>
-.color-picker-demo__size {
-  display: grid;
-  grid-template-rows: repeat(3, 1fr);
-  grid-template-columns: repeat(3, min-content);
-  grid-row-gap: 12px;
-  grid-column-gap: 12px;
+.color-size-demo {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: var(--h-spacing-5);
 }
 
-.color-picker-demo__size li {
-  align-self: center;
+.color-size-demo label {
+  display: grid;
+  gap: var(--h-spacing-2);
+}
+
+.color-size-demo label > span {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
 }
 </style>

@@ -1,21 +1,30 @@
+<script setup lang="ts">
+const items = Array.from({ length: 14 }, (_, index) => `Always-visible row ${index + 1}`);
+</script>
+
 <template>
-  <h-scrollbar height="400px" always>
-    <div v-for="item of 20" :key="item" class="item">
-      {{ item }}
+  <h-scrollbar class="scrollbar-always-demo" height="240px" always>
+    <div class="scrollbar-always-demo__list">
+      <div v-for="item in items" :key="item">{{ item }}</div>
     </div>
   </h-scrollbar>
 </template>
 
-<script setup lang="ts">
-</script>
-
 <style scoped>
-.item {
-  height: 40px;
-  background: var(--h-bg-info-weak-default);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 10px;
+.scrollbar-always-demo {
+  overflow: hidden;
+  border: 1px solid var(--h-border-default);
+  border-radius: var(--h-radius-m);
+}
+
+.scrollbar-always-demo__list {
+  display: grid;
+  padding-inline: var(--h-spacing-3);
+}
+
+.scrollbar-always-demo__list > div {
+  padding: var(--h-spacing-3);
+  border-bottom: 1px solid var(--h-divider-default);
+  color: var(--h-text-secondary);
 }
 </style>

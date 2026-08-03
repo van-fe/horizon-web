@@ -1,71 +1,36 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <div class="demo-title">保留关键字（默认）</div>
-      <h-cascader
-        v-model="currentVal1"
-        :filterable="true"
-        :options="options"
-        :multiple="true"
-        :reserve-keyword="true"
-        :collapse-tags="true"
-        :collapse-tags-fill-up="true"
-        :to-body="false"
-        @change="changeHandle"
-      />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">不保留关键字</div>
-      <h-cascader
-        v-model="currentVal2"
-        :filterable="true"
-        :options="options"
-        :multiple="true"
-        :reserve-keyword="false"
-        :collapse-tags="true"
-        :collapse-tags-fill-up="true"
-        :to-body="false"
-        @change="changeHandle"
-      />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">在反选时保留，正选不保留</div>
-      <h-cascader
-        v-model="currentVal3"
-        :filterable="true"
-        :options="options"
-        :multiple="true"
-        reserve-keyword="reserve-deselect"
-        :collapse-tags="true"
-        :collapse-tags-fill-up="true"
-        :to-body="false"
-        @change="changeHandle"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import type { HCascaderExtendOption } from '@aurora/horizon-web';
-import { onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
+import { workspaceOptions } from './options';
 
-const currentVal1 = ref<string[][]>([]);
-const currentVal2 = ref<string[][]>([]);
-const currentVal3 = ref<string[][]>([]);
+type KeywordMode = 'always' | 'clear' | 'deselect';
+type ReserveKeyword = boolean | 'reserve-deselect';
 
-const changeHandle = (value: boolean, option: HCascaderExtendOption) => {
-  console.info(value, option);
-};
-
-const options = ref([]);
-onMounted(async()=>{
-  options.value = await fetch(new URL('/cascader-tree-data.json', import.meta.url).href).then(r => r.json());
+const mode = ref<KeywordMode>('always');
+const value = ref<string[][]>([]);
+const reserveKeyword = computed<ReserveKeyword>(() => {
+  if (mode.value === 'clear') return false;
+  if (mode.value === 'deselect') return 'reserve-deselect';
+  return true;
 });
 </script>
 
-<style scoped>
-.panel-filter-box {
-  padding: 12px;
-  border-bottom: 1px solid var(--h-divider-default);
-}
-</style>
+<template>
+  <div class="docs-demo">
+    <h-segmented v-model:active-key="mode" size="small">
+      <h-segmented-item key="always" label="Always" />
+      <h-segmented-item key="clear" label="Clear" />
+      <h-segmented-item key="deselect" label="Deselect" />
+    </h-segmented>
+    <h-cascader
+      v-model="value"
+      aria-label="Team search"
+      placeholder="Search teams"
+      :options="workspaceOptions"
+      filterable
+      multiple
+      collapse-tags
+      :reserve-keyword="reserveKeyword"
+      :to-body="false"
+    />
+  </div>
+</template>

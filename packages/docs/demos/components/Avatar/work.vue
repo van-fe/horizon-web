@@ -1,48 +1,62 @@
+<script setup lang="ts">
+const samples = [
+  {
+    label: 'Team icon',
+    icon: 'friend',
+  },
+  {
+    label: 'Platform Design',
+    src: 'PD',
+  },
+  {
+    label: 'Growth',
+    icon: 'friend',
+    color: 'var(--h-text-success-default)',
+  },
+  {
+    label: 'Risk',
+    icon: 'friend',
+    color: 'var(--h-text-warning-default)',
+  },
+  {
+    label: 'Operations',
+    icon: 'friend',
+    color: 'var(--h-text-error-default)',
+  },
+];
+</script>
+
 <template>
-  <div class="h-demo">
-    <div class="h-demo__container">
-      <div class="h-demo__title">通过 type 设置类型</div>
-      <h-avatar class="avatar" icon="friend" type="work" size="mini" />
-      <h-avatar class="avatar" icon="friend" type="work" size="small" />
-      <h-avatar class="avatar" icon="friend" type="work" size="smedium" />
-      <h-avatar class="avatar" icon="friend" type="work" />
-      <h-avatar class="avatar" icon="friend" type="work" size="large" />
-    </div>
-    <div class="h-demo__container">
-      <div class="h-demo__title">自定义颜色</div>
-      <h-avatar class="avatar" icon="friend" type="work" style="color: #178ca6; border-color: #178ca6" />
-      <h-avatar class="avatar" icon="friend" type="work" style="color: #0ba1d6; border-color: #0ba1d6" />
-      <h-avatar class="avatar" icon="friend" type="work" style="color: #00bebe; border-color: #00bebe" />
-      <h-avatar class="avatar" icon="friend" type="work" style="color: #e56c25; border-color: #e56c25" />
-    </div>
-    <div class="h-demo__container">
-      <div class="h-demo__title">通过 src 设置文字</div>
-      <h-avatar class="avatar" src="Design" type="work" size="mini" />
-      <h-avatar class="avatar" src="Design" type="work" size="small" />
-      <h-avatar class="avatar" src="Design" type="work" size="smedium" />
-      <h-avatar class="avatar" src="Design" type="work" />
-      <h-avatar class="avatar" src="Design" type="work" size="large" />
-      <h-avatar class="avatar" src="平台设计" type="work" size="mini" />
-      <h-avatar class="avatar" src="平台设计" type="work" size="small" />
-      <h-avatar class="avatar" src="平台设计" type="work" size="smedium" />
-      <h-avatar class="avatar" src="平台设计" type="work" />
-      <h-avatar class="avatar" src="平台设计" type="work" size="large" />
+  <div class="avatar-work-demo">
+    <div v-for="sample in samples" :key="sample.label">
+      <h-avatar
+        :icon="sample.icon"
+        :src="sample.src"
+        type="work"
+        size="large"
+        :style="sample.color ? { color: sample.color, borderColor: sample.color } : undefined"
+      />
+      <span>{{ sample.label }}</span>
     </div>
   </div>
 </template>
 
 <style scoped>
-.avatar + .avatar {
-  margin-left: 20px;
-}
-
-.h-demo__container {
+.avatar-work-demo {
   display: flex;
-  align-items: center;
-  margin-bottom: 20px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--h-spacing-5);
 }
 
-.h-demo__title {
-  margin-right: 20px;
+.avatar-work-demo > div {
+  display: grid;
+  justify-items: center;
+  gap: var(--h-spacing-2);
+}
+
+.avatar-work-demo span {
+  color: var(--h-text-secondary);
+  font-size: 12px;
 }
 </style>

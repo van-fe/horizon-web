@@ -1,37 +1,45 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="24">
-      <h-dropdown>
-        <h-button>Hover</h-button>
-        <template #dropdown>
-          <h-dropdown-menu>
-            <h-dropdown-item icon="car">北京</h-dropdown-item>
-            <h-dropdown-item :icon="IconSearch">上海</h-dropdown-item>
-            <h-dropdown-item icon="applets">深圳</h-dropdown-item>
-            <h-dropdown-item icon="gift">杭州</h-dropdown-item>
-            <h-dropdown-item>
-              <template #icon>
-                <IconCollection size="16" />
-              </template>
-              重庆
-            </h-dropdown-item>
-          </h-dropdown-menu>
-        </template>
-      </h-dropdown>
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { IconSearch, IconCollection } from '@aurora/icon';
+import { ref } from 'vue';
+import { IconCollection, IconSearch } from '@aurora/icon';
+
+const action = ref('选择一项快捷操作');
 </script>
 
+<template>
+  <div class="dropdown-icon-demo">
+    <h-dropdown @command="action = `已执行：${$event}`">
+      <h-button>快捷操作</h-button>
+      <template #dropdown>
+        <h-dropdown-menu>
+          <h-dropdown-item icon="car" command="查看交付进度">查看交付进度</h-dropdown-item>
+          <h-dropdown-item :icon="IconSearch" command="搜索订单">搜索订单</h-dropdown-item>
+          <h-dropdown-item command="加入收藏">
+            <template #icon><IconCollection size="16" /></template>
+            加入收藏
+          </h-dropdown-item>
+        </h-dropdown-menu>
+      </template>
+    </h-dropdown>
+    <p role="status">{{ action }}</p>
+  </div>
+</template>
+
 <style scoped>
-.h-dropdown {
-  display: inline-flex;
+.dropdown-icon-demo {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
 }
 
-.h-dropdown + .h-dropdown {
-  margin-left: 12px;
+p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: 13px;
+}
+
+@media (max-width: 390px) {
+  .dropdown-icon-demo {
+    gap: 10px;
+  }
 }
 </style>

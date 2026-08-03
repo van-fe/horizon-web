@@ -1,44 +1,54 @@
 <template>
-  <h-transfer v-model="dataModel" :data="data" style="width: 500px"></h-transfer>
+  <section class="transfer-group-demo">
+    <h-transfer
+      v-model="selectedKeys"
+      class="transfer-group-demo__transfer"
+      :data="checks"
+      :titles="['Quality checks', 'Required for launch']"
+      target-order="original"
+    />
+    <h-space wrap>
+      <h-tag v-for="label in selectedLabels" :key="label" is-pure>{{ label }}</h-tag>
+    </h-space>
+  </section>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    const data = ref([
-      {
-        key: 0,
-        label: '分类标题A',
-        isGroup: true,
-      },
-      {
-        key: 1,
-        label: 'A-1',
-      },
-      {
-        key: 2,
-        label: 'A-2',
-      },
-      {
-        key: 3,
-        label: '分类标题B',
-        isGroup: true,
-      },
-      {
-        key: 4,
-        label: 'B-1',
-      },
-      {
-        key: 5,
-        label: 'B-2',
-      },
-    ]);
-    const dataModel = ref([1, 4]);
-    return {
-      data,
-      dataModel,
-    };
-  },
-});
+<script setup lang="ts">
+import { computed, ref } from 'vue';
+
+const checks = [
+  { key: 'experience', label: 'Experience', isGroup: true },
+  { key: 'accessibility', label: 'Accessibility review' },
+  { key: 'localization', label: 'Localization review' },
+  { key: 'engineering', label: 'Engineering', isGroup: true },
+  { key: 'performance', label: 'Performance budget' },
+  { key: 'rollback', label: 'Rollback rehearsal' },
+  { key: 'operations', label: 'Operations', isGroup: true },
+  { key: 'support', label: 'Support handoff' },
+  { key: 'status-page', label: 'Status page update' },
+];
+
+const selectedKeys = ref(['accessibility', 'performance', 'support']);
+const selectedLabels = computed(() =>
+  checks
+    .filter(item => !item.isGroup && selectedKeys.value.includes(item.key))
+    .map(item => item.label),
+);
 </script>
+
+<style scoped>
+.transfer-group-demo {
+  display: grid;
+  gap: var(--h-spacing-4);
+}
+
+.transfer-group-demo__transfer {
+  width: 100%;
+}
+
+@media (max-width: 520px) {
+  .transfer-group-demo__transfer {
+    flex-direction: column;
+  }
+}
+</style>

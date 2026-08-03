@@ -1,110 +1,104 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="24">
-      <h-button @click="start">Start</h-button>
-    </h-grid-item>
-  </h-grid>
-
-  <h-dialog
-    v-model:visible="dialogVisible"
-    title="信息填写"
-    @close="onCloseDialog"
-    @opened="onOpened"
-  >
-    <h-form>
-      <h-form-item label="姓名">
-        <h-input ref="inputRef" v-model="name" @keypress.enter="onInputBlur" />
-      </h-form-item>
-      <h-form-item label="年龄">
-        <h-input-number ref="inputNumberRef" v-model="age" @keypress.enter="onInputAgeBlur" />
-      </h-form-item>
-    </h-form>
-    <template #footer>
-      <h-button @click="dialogVisible = false">取消</h-button>
-      <h-button ref="confirmBtnRef" @click="onSubmit">确定</h-button>
-    </template>
-  </h-dialog>
-
-  <h-guide
-    ref="guideRef"
-    v-model:visible="visible"
-    :use-controls="false"
-    @close="onClose"
-    @finish="onFinish"
-  >
-    <h-guide-item
-      :target="inputRef"
-      title="第一步"
-      content="请填写姓名，至少2位字符；填写完成后按下回车"
-    />
-    <h-guide-item
-      :target="inputNumberRef"
-      title="第二步"
-      content="请填写年龄，在10-60区间；填写完成后按下回车"
-      placement="top-start"
-    />
-    <h-guide-item
-      :target="confirmBtnRef"
-      title="第三步"
-      content="点击确定提交"
-      placement="right-start"
-    ></h-guide-item>
-  </h-guide>
-</template>
-
 <script setup lang="ts">
 import { ref, shallowRef } from 'vue';
-import { $alert, $message, HGuide } from '@aurora/horizon-web';
+import { HGuide } from '@aurora/horizon-web';
 
 const guideRef = shallowRef<typeof HGuide | null>(null);
-const inputRef = shallowRef<HTMLElement | null>(null);
-const inputNumberRef = shallowRef<HTMLElement | null>(null);
-const confirmBtnRef = shallowRef<HTMLElement | null>(null);
-
+const nameInputRef = shallowRef<HTMLElement | null>(null);
+const confirmButtonRef = shallowRef<HTMLElement | null>(null);
 const visible = ref(false);
 const dialogVisible = ref(false);
-
 const name = ref('');
-const age = ref(0);
+const status = ref('Setup not started');
 
-function start() {
+function openForm() {
+  name.value = '';
   dialogVisible.value = true;
+  status.value = 'Form opened';
 }
 
-function onInputBlur() {
-  if (name.value.length >= 2) {
-    guideRef.value?.next();
-  }
-}
-
-function onInputAgeBlur() {
-  if (age.value >= 10 && age.value <= 60) {
-    guideRef.value?.next();
-  }
-}
-
-function onClose() {
-  $message.warning('跳过了新手引导');
-}
-
-function onFinish() {
-  $message.success('完成了新手引导');
-  dialogVisible.value = false;
-}
-
-function onOpened() {
+function startGuide() {
   visible.value = true;
+  status.value = 'Guide in progress';
 }
 
-function onCloseDialog() {
-  visible.value = false;
+function acceptName() {
+  if (name.value.trim().length >= 2) guideRef.value?.next();
+  else status.value = 'Name needs at least two characters';
 }
 
-function onSubmit() {
-  $alert('填写结束').then(() => {
-    guideRef.value?.next();
-  });
+function submit() {
+  if (name.value.trim().length < 2) {
+    status.value = 'Complete the display name first';
+    return;
+  }
+  guideRef.value?.next();
+}
+
+function finish() {
+  status.value = `Profile created for ${name.value}`;
+  dialogVisible.value = false;
 }
 </script>
 
-<style scoped></style>
+<template>
+  <section class="guide-demo">
+    <h-button @click="openForm">Start guided setup</h-button>
+    <output aria-live="polite">{{ status }}</output>
+
+    <h-dialog
+      v-model:visible="dialogVisible"
+      title="Create reviewer profile"
+      @opened="startGuide"
+      @close="visible = false"
+    >
+      <h-form>
+        <h-form-item label="Display name" helper="Enter at least two characters, then press Enter.">
+          <h-input ref="nameInputRef" v-model="name" @keyup.enter="acceptName" />
+        </h-form-item>
+      </h-form>
+      <template #footer>
+        <h-button type="normal" @click="dialogVisible = false">Cancel</h-button>
+        <h-button ref="confirmButtonRef" @click="submit">Create profile</h-button>
+      </template>
+    </h-dialog>
+
+    <h-guide
+      ref="guideRef"
+      v-model:visible="visible"
+      :use-controls="false"
+      @close="status = 'Setup guide skipped'"
+      @finish="finish"
+    >
+      <h-guide-item
+        :target="nameInputRef"
+        title="Name the reviewer"
+        content="Enter at least two characters, then press Enter."
+      />
+      <h-guide-item
+        :target="confirmButtonRef"
+        title="Create the profile"
+        content="Submit the validated value to finish setup."
+        placement="right-start"
+      />
+    </h-guide>
+  </section>
+</template>
+
+<style scoped>
+.guide-demo {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+}
+
+output {
+  color: var(--h-text-secondary);
+  font-size: 13px;
+}
+
+@media (max-width: 390px) {
+  .guide-demo {
+    gap: 10px;
+  }
+}
+</style>

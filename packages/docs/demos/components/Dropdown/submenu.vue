@@ -1,362 +1,52 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="24" @click="onClick">
-      <h-dropdown @command="onCommand">
-        <h-button>Grade (hover)</h-button>
-        <template #dropdown>
-          <h-dropdown-menu>
-            <h-dropdown-submenu v-for="item of list" :key="item.label" :title="item.label">
-              <h-dropdown-submenu v-for="subItem of item.children" :key="subItem.label" :title="subItem.label">
-                <h-dropdown-item v-for="child of subItem.children" :key="child.label" :command="subItem.label + child.label">
-                  {{ child.label }}
-                </h-dropdown-item>
-              </h-dropdown-submenu>
-            </h-dropdown-submenu>
-          </h-dropdown-menu>
-        </template>
-      </h-dropdown>
-
-      <h-dropdown trigger="click" @command="onCommand">
-        <h-button>Grade (click)</h-button>
-        <template #dropdown>
-          <h-dropdown-menu>
-            <h-dropdown-submenu v-for="item of list" :key="item.label" :title="item.label" trigger="click">
-              <h-dropdown-submenu v-for="subItem of item.children" :key="subItem.label" :title="subItem.label" trigger="click">
-                <h-dropdown-item v-for="child of subItem.children" :key="child.label" :command="subItem.label + child.label">
-                  {{ child.label }}
-                </h-dropdown-item>
-              </h-dropdown-submenu>
-            </h-dropdown-submenu>
-          </h-dropdown-menu>
-        </template>
-      </h-dropdown>
-
-      <h-dropdown trigger="click" @command="onCommand">
-        <h-button>Grade (click)</h-button>
-        <template #dropdown>
-          <h-dropdown-menu>
-            <h-dropdown-submenu v-for="item of list" :key="item.label" :title="item.label" trigger="click">
-              <h-dropdown-submenu v-for="subItem of item.children" :key="subItem.label" :title="subItem.label" trigger="click">
-                <h-dropdown-item v-for="child of subItem.children" :key="child.label" :command="subItem.label + child.label">
-                  {{ child.label }}
-                </h-dropdown-item>
-              </h-dropdown-submenu>
-            </h-dropdown-submenu>
-          </h-dropdown-menu>
-        </template>
-      </h-dropdown>
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { $message } from '@aurora/horizon-web';
+import { ref } from 'vue';
 
-const list = [{
-  label: '小学',
-  children: [
-    {
-      label: '一年级',
-      children: [
-        {
-          label: '1班',
-        },
-        {
-          label: '2班',
-        },
-        {
-          label: '3班',
-        },
-        {
-          label: '4班',
-        },
-      ],
-    },
-    {
-      label: '二年级',
-      children: [
-        {
-          label: '1班',
-        },
-        {
-          label: '2班',
-        },
-        {
-          label: '3班',
-        },
-        {
-          label: '4班',
-        },
-      ],
-    },
-    {
-      label: '三年级',
-      children: [
-        {
-          label: '1班',
-        },
-        {
-          label: '2班',
-        },
-        {
-          label: '3班',
-        },
-        {
-          label: '4班',
-        },
-      ],
-    },
-    {
-      label: '四年级',
-      children: [
-        {
-          label: '1班',
-        },
-        {
-          label: '2班',
-        },
-        {
-          label: '3班',
-        },
-        {
-          label: '4班',
-        },
-      ],
-    },
-    {
-      label: '五年级',
-      children: [
-        {
-          label: '1班',
-        },
-        {
-          label: '2班',
-        },
-        {
-          label: '3班',
-        },
-        {
-          label: '4班',
-        },
-      ],
-    },
-    {
-      label: '六年级',
-      children: [
-        {
-          label: '1班',
-        },
-        {
-          label: '2班',
-        },
-        {
-          label: '3班',
-        },
-        {
-          label: '4班',
-        },
-      ],
-    },
-  ],
-}, {
-  label: '初中',
-  children: [
-    {
-      label: '七年级',
-      children: [
-        {
-          label: '1班1班1班1班1班1班1班1班1班1班1班1班1班1班1班1班1班1班1班1班1班1班1班',
-        },
-        {
-          label: '2班',
-        },
-        {
-          label: '3班',
-        },
-        {
-          label: '4班',
-        },
-        {
-          label: '5班',
-        },
-        {
-          label: '6班',
-        },
-        {
-          label: '7班',
-        },
-        {
-          label: '8班',
-        },
-        {
-          label: '9班',
-        },
-        {
-          label: '10班',
-        },
-      ],
-    },
-    {
-      label: '八年级',
-      children: [
-        {
-          label: '1班',
-        },
-        {
-          label: '2班',
-        },
-        {
-          label: '3班',
-        },
-        {
-          label: '4班',
-        },
-        {
-          label: '5班',
-        },
-        {
-          label: '6班',
-        },
-        {
-          label: '7班',
-        },
-        {
-          label: '8班',
-        },
-        {
-          label: '9班',
-        },
-        {
-          label: '10班',
-        },
-      ],
-    },
-    {
-      label: '九年级',
-      children: [
-        {
-          label: '1班',
-        },
-        {
-          label: '2班',
-        },
-        {
-          label: '3班',
-        },
-        {
-          label: '4班',
-        },
-        {
-          label: '5班',
-        },
-        {
-          label: '6班',
-        },
-        {
-          label: '7班',
-        },
-        {
-          label: '8班',
-        },
-        {
-          label: '9班',
-        },
-        {
-          label: '10班',
-        },
-      ],
-    },
-  ],
-}, {
-  label: '高中',
-  children: [
-    {
-      label: '高一',
-      children: [
-        {
-          label: '1班',
-        },
-        {
-          label: '2班',
-        },
-        {
-          label: '3班',
-        },
-        {
-          label: '4班',
-        },
-        {
-          label: '5班',
-        },
-        {
-          label: '6班',
-        },
-        {
-          label: '7班',
-        },
-        {
-          label: '8班',
-        },
-        {
-          label: '9班',
-        },
-        {
-          label: '10班',
-        },
-      ],
-    },
-    {
-      label: '高二',
-      children: [
-        {
-          label: '1班',
-        },
-        {
-          label: '2班',
-        },
-        {
-          label: '3班',
-        },
-        {
-          label: '4班',
-        },
-      ],
-    },
-    {
-      label: '高三',
-      children: [
-        {
-          label: '1班',
-        },
-        {
-          label: '2班',
-        },
-        {
-          label: '3班',
-        },
-        {
-          label: '4班',
-        },
-      ],
-    },
-  ],
-}];
-
-function onCommand(val: string) {
-  $message.info(val);
-}
-
-function onClick() {
-  $message.warning('click 事件外部冒泡');
-}
+const selected = ref('请选择目标团队');
+const organization = [
+  { label: '产品与设计', teams: ['产品团队', '体验设计组'] },
+  { label: '技术中心', teams: ['前端平台组', '质量保障组'] },
+];
 </script>
 
+<template>
+  <div class="dropdown-submenu-demo">
+    <h-dropdown trigger="click" @command="selected = `已分配给：${$event}`">
+      <h-button>分配任务</h-button>
+      <template #dropdown>
+        <h-dropdown-menu>
+          <h-dropdown-submenu
+            v-for="group in organization"
+            :key="group.label"
+            :title="group.label"
+            trigger="click"
+          >
+            <h-dropdown-item v-for="team in group.teams" :key="team" :command="team">
+              {{ team }}
+            </h-dropdown-item>
+          </h-dropdown-submenu>
+        </h-dropdown-menu>
+      </template>
+    </h-dropdown>
+    <p role="status">{{ selected }}</p>
+  </div>
+</template>
+
 <style scoped>
-.h-dropdown {
-  display: inline-flex;
+.dropdown-submenu-demo {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
 }
 
-.h-dropdown + .h-dropdown {
-  margin-left: 12px;
+p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: 13px;
+}
+
+@media (max-width: 390px) {
+  .dropdown-submenu-demo {
+    gap: 10px;
+  }
 }
 </style>

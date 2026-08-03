@@ -93,7 +93,7 @@ type PartialInclude<T, K extends keyof T = keyof T> = {
   [Key in keyof T as Key extends K ? Key : never]?: T[Key];
 } & {
   [Key in keyof T as Key extends K ? never : Key]: T[Key];
-}
+};
 
 export type HUploadUserFile = PartialInclude<
   HUploadFileType,

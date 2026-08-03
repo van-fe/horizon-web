@@ -1,19 +1,29 @@
-## Basic Usage
-The simplest usage, suitable for short warning prompts.
-:::demo components/Alert/basic.vue :::
-## Size
-:::demo components/Alert/size.vue :::
-## Four Styles
-There are four styles: success, info, warning, error.
-:::demo components/Alert/demo1.vue :::
-## Extended Styles
+## Basic usage
 
+Combine `title` and `description` into a complete message. Use `info` for important updates that do not need to interrupt the user.
+
+:::demo components/Alert/basic.vue :::
+
+## Sizes
+
+Use `small` in compact surfaces and `medium` for standard notices with a title, description, or actions.
+
+:::demo components/Alert/size.vue :::
+
+## Semantic types
+
+Use `type` to distinguish information, success, warning, and error states. Pair color with a clear title and `show-icon` so meaning does not depend on color alone.
+
+:::demo components/Alert/demo1.vue :::
+
+## Actions and dismissal
+
+After setting `primary-button-text` or `default-button-text`, use `on-primary` and `on-default` to receive the close function. The demo keeps the result visible and can be reset for another run.
 
 :::demo components/Alert/demo2.vue :::
 
-## Different Layouts
-- Horizontal layout: Used when the description text content is less
-- Vertical layout: Used when the description text content is more
-- Auxiliary text can only store single-line text and will automatically wrap
-- If the text wraps, the close button is automatically hidden. You need to manually pass in `primary-button-text` or `default-button-text`, define the button text, pass in `onPrimary` or `onDefault` corresponding button callback events. The first parameter of the callback function provides the `close` method to close the `alert` component
-  :::demo components/Alert/demo3.vue :::
+## Content layouts
+
+Short messages remain compact. When the description wraps, the action area moves below the content automatically. Give longer notices an explicit next step.
+
+:::demo components/Alert/demo3.vue :::

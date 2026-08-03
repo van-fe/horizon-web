@@ -1,66 +1,35 @@
 <template>
-  <div class="demo-block">
-    <h-tooltip placement="top">
-      <h-button>最小宽度</h-button>
-      <template #content>min</template>
-    </h-tooltip>
-    <h-tooltip placement="top">
-      <h-button>最大宽度中文</h-button>
-      <template #content>
-        你的关心，是独我一份的，还是他人都有的，若不是独我一份的，那这份关心不要也罢。
-      </template>
-    </h-tooltip>
-    <h-tooltip placement="top">
-      <h-button>最大宽度英文</h-button>
-      <template #content>
-        Lorem ipsum dolor sit amet, nullam tacimates scribentur id sea, mea libris docendi tacimates id. Pro laoreet oportere te, id pri quis vero omnesque. Vero utinam mandamus his ad, populo abhorreant duo ad. Mea nibh definitiones ei, an quo civibus commune cotidieque.
-      </template>
-    </h-tooltip>
-
-    <h-tooltip overflow content="总感觉要做点什么，但真正做的时候却又显得有些迷茫，这事还真恼人">
-      <div class="careless">
-        总感觉要做点什么，但真正做的时候却又显得有些迷茫，这事还真恼人
-      </div>
+  <div class="docs-demo">
+    <h-space wrap size="large">
+      <h-tooltip content="2 位审批人">
+        <h-button type="normal">短内容</h-button>
+      </h-tooltip>
+      <h-tooltip>
+        <h-button type="normal">长内容</h-button>
+        <template #content>
+          <span class="tooltip-width-demo__content">
+            本次发布包含权限模型调整，灰度期间请关注登录成功率与审计日志写入延迟。
+          </span>
+        </template>
+      </h-tooltip>
+    </h-space>
+    <h-tooltip overflow content="Analytics Pipeline / Production / Frankfurt / Primary cluster">
+      <span class="tooltip-width-demo__ellipsis">
+        Analytics Pipeline / Production / Frankfurt / Primary cluster
+      </span>
     </h-tooltip>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    let hoverMsg = ref('hover top');
-    let clickMsg = ref('click left');
-    let focusMsg = ref('focus right');
-    let contextmenuMsg = ref('contextmenu top');
-    return {
-      hoverMsg,
-      clickMsg,
-      focusMsg,
-      contextmenuMsg,
-    };
-  },
-});
-</script>
-
 <style scoped>
-.demo-block {
-  display: flex;
-  align-items: center;
+.tooltip-width-demo__content {
+  display: block;
+  width: min(240px, 70vw);
 }
 
-.demo-block .h-popover__reference {
-  margin-bottom: 20px;
-  margin-left: 0;
-  margin-right: 20px;
-}
-
-.careless {
-  display: inline-block;
-  margin-left: 20px;
-  height: 32px;
-  line-height: 32px;
-  max-width: 100px;
+.tooltip-width-demo__ellipsis {
+  display: block;
+  max-width: min(280px, 75vw);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

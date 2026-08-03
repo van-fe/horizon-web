@@ -1,32 +1,48 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="24">
-      <div class="demo-title">选中了 Component、Basic、Color、Data 四个节点</div>
-      <h-tree
-        v-model:expand-values="expandValues"
-        v-model:selected-values="selectedValues"
-        :tree-data="baseTreeData"
-        :multiple="true"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
+import type { HTreeNodeData } from '@aurora/horizon-web';
 
-const selectedValues = ref(['component', 'basic', 'color', 'data']);
-const expandValues = ref(['component', 'basic', 'color', 'data']);
-const baseTreeData = ref([]);
-
-onMounted(() => {
-  fetch(new URL('/tree-data.json', import.meta.url).href)
-    .then(res => res.json())
-    .then(res => {
-      baseTreeData.value = res;
-    });
-});
+const selectedValues = ref<Array<string | number>>(['analytics', 'reports', 'exports', 'platform']);
+const treeData: HTreeNodeData[] = [
+  {
+    value: 'analytics',
+    label: 'Analytics suite',
+    children: [
+      { value: 'reports', label: 'Reports' },
+      { value: 'exports', label: 'Scheduled exports' },
+      { value: 'dashboards', label: 'Dashboards' },
+    ],
+  },
+  {
+    value: 'platform',
+    label: 'Platform suite',
+    children: [
+      { value: 'identity', label: 'Identity' },
+      { value: 'automation', label: 'Automation' },
+    ],
+  },
+];
 </script>
 
-<style scoped>
-</style>
+<template>
+  <div class="docs-demo">
+    <div class="docs-demo__actions">
+      <h-button
+        size="small"
+        @click="selectedValues = ['analytics', 'reports', 'exports', 'platform']"
+      >
+        Mixed values
+      </h-button>
+      <h-button size="small" type="normal" @click="selectedValues = ['analytics', 'platform']">
+        Parents only
+      </h-button>
+    </div>
+    <h-tree
+      v-model:selected-values="selectedValues"
+      :tree-data="treeData"
+      multiple
+      :is-default-expand-all="true"
+    />
+    <span aria-live="polite">{{ selectedValues.join(', ') }}</span>
+  </div>
+</template>

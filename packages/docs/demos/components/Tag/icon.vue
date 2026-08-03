@@ -1,19 +1,15 @@
 <template>
-  <h-tag :clickable="false" :icon="IconEye" :plain="true">View</h-tag>
-  <h-tag :clickable="false" :icon="IconComplete" :plain="true" type="success">Success</h-tag>
-  <h-tag :clickable="false" :icon="IconHelp" :plain="true" type="info">Info</h-tag>
-  <h-tag :clickable="false" :icon="IconRemind" :plain="true" type="warning">Warning</h-tag>
-  <h-tag :clickable="false" :plain="true" type="error">
-    <template #icon>
-      <IconCloseCircle :size="12" />
-    </template>
-    Error
-  </h-tag>
+  <div class="tag-row">
+    <h-tag icon="eye" plain :clickable="false">Preview</h-tag>
+    <h-tag icon="complete" type="success" plain :clickable="false">Passed</h-tag>
+    <h-tag icon="remind" type="warning" plain :clickable="false">Expiring</h-tag>
+  </div>
 </template>
 
-<script setup lang="ts">
-import {IconEye, IconComplete, IconHelp, IconRemind, IconCloseCircle} from '@aurora/icon';
-</script>
-
 <style scoped>
+.tag-row {
+  display: flex;
+  gap: var(--h-spacing-3);
+  flex-wrap: wrap;
+}
 </style>

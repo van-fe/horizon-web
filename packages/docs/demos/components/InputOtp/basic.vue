@@ -1,15 +1,22 @@
 <template>
-  <h-input-otp v-model="code" aria-label="Verification code" @complete="handleComplete" />
-  <p>Code: {{ code || '—' }}</p>
-  <p v-if="completed">Complete: {{ completed }}</p>
+  <section class="docs-demo">
+    <div class="otp-stage">
+      <h-input-otp v-model="code" aria-label="Six-digit verification code" />
+      <output class="docs-demo__value">code={{ code || 'empty' }}</output>
+    </div>
+  </section>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 
 const code = ref('');
-const completed = ref('');
-const handleComplete = (value: string) => {
-  completed.value = value;
-};
 </script>
+
+<style scoped>
+.otp-stage {
+  display: grid;
+  gap: var(--h-spacing-3);
+  place-items: start;
+}
+</style>

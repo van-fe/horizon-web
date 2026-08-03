@@ -1,21 +1,45 @@
+<script setup lang="ts">
+import { computed, ref } from 'vue';
+
+type DisplayMode = 'current' | 'adjacent' | 'six';
+
+const mode = ref<DisplayMode>('adjacent');
+const value = ref('2026-08-12');
+const showAdjacent = computed(() => mode.value !== 'current');
+const fixedRows = computed(() => mode.value === 'six');
+</script>
+
 <template>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <h-date-picker v-model="value" type="date" placeholder="default" />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <h-date-picker v-model="value2" type="date" :show-before-after-date="true" placeholder="show before after date" />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <h-date-picker v-model="value3" type="date" :show-before-after-date="true" :fixed-six-rows="true" placeholder="fixed six rows" />
-    </h-grid-item>
-  </h-grid>
+  <section class="date-picker-display">
+    <h-segmented v-model:active-key="mode" size="small">
+      <h-segmented-item key="current" label="Current month" />
+      <h-segmented-item key="adjacent" label="Adjacent dates" />
+      <h-segmented-item key="six" label="Six rows" />
+    </h-segmented>
+    <h-date-picker
+      v-model="value"
+      type="date"
+      :show-before-after-date="showAdjacent"
+      :fixed-six-rows="fixedRows"
+    />
+  </section>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
+<style scoped>
+.date-picker-display {
+  display: grid;
+  justify-items: start;
+  gap: var(--h-spacing-3);
+  max-inline-size: 680px;
+}
 
-const value = ref();
-const value2 = ref();
-const value3 = ref();
-</script>
+.date-picker-display :deep(.h-date-picker) {
+  inline-size: 100%;
+}
+
+@media (max-width: 390px) {
+  .date-picker-display {
+    inline-size: 100%;
+  }
+}
+</style>

@@ -6,7 +6,7 @@
 :::demo components/Pagination/max-buttons-amount.vue :::
 
 ## 是否显示范围值
-设置 `show-total`，控制是否显示范围值
+设置 `show-range`，控制是否显示当前页的数据范围。
 :::demo components/Pagination/show-range.vue :::
 
 ## 仅一页时隐藏分页

@@ -1,34 +1,50 @@
-<template>
-  <h-upload
-    action="https://horizon-web-inspector.demoint.com/upload-mock"
-    type="drop"
-    :multiple="true"
-    :limit="5"
-    :accept="accept"
-    :handle-success="handleSuccess"
-    @accept-error="onAcceptError"
-  />
-  <h-button class="mt-5" @click="change">修改 accept 为 .png,.jpg</h-button>
-</template>
+<script setup lang="ts">
+import type { HUploadFileType, HUploadUserFile } from '@aurora/horizon-web';
+import { computed, onBeforeUnmount, ref } from 'vue';
+import { createMockUploader, resolveLocalUpload } from './mockUpload';
 
-<script lang="ts" setup>
-import { ref } from 'vue';
-import { $message, HUploadFileType } from '@aurora/horizon-web';
-const accept = ref('.png');
-
-function change() {
-  accept.value = '.png,.jpg';
-}
+const mockUploader = createMockUploader();
+const acceptMode = ref<'png' | 'common'>('common');
+const acceptedTypes = computed(() => (acceptMode.value === 'png' ? '.png' : '.png,.jpg,.jpeg'));
+const files = ref<HUploadUserFile[]>([]);
+const status = ref('PNG and JPEG files accepted');
 
 function onAcceptError(files: HUploadFileType[]) {
-  console.info(files);
-
-  $message.error(`自动拦截：您选择的 ${files.map(file => file.name).join('、')} 不是 ${accept.value} 文件`);
+  status.value = `${files.map(file => file.name).join(', ')} did not match ${acceptedTypes.value}`;
 }
 
-function handleSuccess(res: any, file: HUploadFileType) {
-  // 因为接口是模拟返回，所以不处理 res 数据
-  // 直接把 blobUrl 假定为上传接口返回的预览地址
-  return file.blobUrl;
-}
+onBeforeUnmount(mockUploader.dispose);
 </script>
+
+<template>
+  <div class="docs-demo upload-drop-demo">
+    <h-segmented v-model:active-key="acceptMode" size="small">
+      <h-segmented-item key="png" label="PNG only" />
+      <h-segmented-item key="common" label="PNG + JPEG" />
+    </h-segmented>
+    <h-upload
+      id="upload-demo-drop"
+      v-model="files"
+      :http-request="mockUploader.request"
+      :handle-success="resolveLocalUpload"
+      type="drop"
+      multiple
+      :limit="5"
+      :accept="acceptedTypes"
+      controls-always-visible
+      @uploaded="file => (status = `${file.name} uploaded`)"
+      @accept-error="onAcceptError"
+      @exceed="status = 'Five-file limit exceeded'"
+    />
+    <span aria-live="polite">{{ status }}</span>
+  </div>
+</template>
+
+<style scoped>
+@media (max-width: 390px) {
+  .upload-drop-demo :deep(.h-upload--drop-area) {
+    width: 100%;
+    min-width: 0;
+  }
+}
+</style>

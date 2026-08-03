@@ -3,7 +3,7 @@ To meet most scenarios, the dialog will display primary and secondary buttons by
 :::demo components/Dialog/demo1.vue :::
 
 ## Vertical Position
-By default, the dialog will be displayed vertically centered. You can adjust it to display at a certain distance from the top through `vertical-position`.
+Dialogs are vertically centered by default. Use `top` to set a fixed distance from the viewport edge.
 :::demo components/Dialog/verticalPosition.vue :::
 
 ## Button Settings
@@ -22,8 +22,8 @@ According to different scenarios, you can choose to use four sizes of dialogs: `
 When the dialog content is too long, only the content part will support scrolling.
 :::demo components/Dialog/demo5.vue :::
 
-## Rendering Method
-You can control the rendering method of the dialog by passing in `display-type`. `if` means rendering according to `v-if`, `show` (default) means rendering according to `v-show`. For the difference between the two, please refer to [v-if vs v-show](https://vuejs.org/guide/essentials/conditional.html#v-if-vs-v-show).  
+## Form in a Dialog
+Dialogs can contain forms and validate their fields before submission.
 :::demo components/Dialog/demo6.vue :::
 
 ## Custom class

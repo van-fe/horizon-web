@@ -1,174 +1,92 @@
-<template>
-  <h-grid :gap="10">
-    <h-grid-item :span="6">
-      <div class="demo-title">单选</div>
-      <h-select
-        v-model="value1"
-        show-search
-        clearable
-        :to-body="false"
-        :loading="isLoading"
-        loading-text="加载中"
-        @search="searchHandle"
-        @focus="onFocus"
-        @blur="onBlur"
-      >
-        <h-option
-          v-for="item in options"
-          :key="item.value"
-          :value="item.value"
-          :label="item.text"
-        />
-      </h-select>
-    </h-grid-item>
-
-    <h-grid-item :span="6">
-      <div class="demo-title">单选-无选项也显示面板</div>
-      <h-select
-        v-model="value2"
-        show-search
-        clearable
-        :to-body="false"
-        :loading="isLoading"
-        loading-text="加载中"
-        :hide-panel-when-show-search-and-empty-list="false"
-        @search="searchHandle"
-        @focus="onFocus"
-        @blur="onBlur"
-      >
-        <h-option
-          v-for="item in options"
-          :key="item.value"
-          :value="item.value"
-          :label="item.text"
-        />
-      </h-select>
-    </h-grid-item>
-
-    <h-grid-item :span="6">
-      <div class="demo-title">多选</div>
-      <h-select
-        v-model="values1"
-        :to-body="false"
-        multiple
-        show-search
-        clearable
-        collapse-tags-fill-up
-        collapse-tags-tooltip
-        collapse-tags
-        :loading="isLoading"
-        @search="searchHandle"
-        @focus="onFocus"
-        @blur="onBlur"
-      >
-        <h-option
-          v-for="item in options"
-          :key="item.value"
-          :value="item.value"
-          :label="item.text"
-        />
-      </h-select>
-    </h-grid-item>
-
-    <h-grid-item :span="6">
-      <div class="demo-title">多选-无选项也显示面板</div>
-      <h-select
-        v-model="values2"
-        :to-body="false"
-        multiple
-        show-search
-        clearable
-        collapse-tags-fill-up
-        collapse-tags-tooltip
-        collapse-tags
-        :hide-panel-when-show-search-and-empty-list="false"
-        :loading="isLoading"
-        @search="searchHandle"
-        @focus="onFocus"
-        @blur="onBlur"
-      >
-        <h-option
-          v-for="item in options"
-          :key="item.value"
-          :value="item.value"
-          :label="item.text"
-        />
-      </h-select>
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { ref } from 'vue';
-import jsonp from 'fetch-jsonp';
-import qs from 'qs';
+import { onBeforeUnmount, ref } from 'vue';
 
-let timeout: any = null;
-let currentValue: string = '';
+type ServiceOption = { value: string; label: string; description: string };
 
-const isLoading = ref(false);
+const serviceCatalog: ServiceOption[] = [
+  { value: 'api-gateway', label: 'API Gateway', description: 'Platform · production' },
+  { value: 'audit-service', label: 'Audit Service', description: 'Security · production' },
+  { value: 'billing-api', label: 'Billing API', description: 'Commerce · production' },
+  { value: 'catalog-indexer', label: 'Catalog Indexer', description: 'Search · staging' },
+  { value: 'data-pipeline', label: 'Data Pipeline', description: 'Analytics · production' },
+  { value: 'mobile-backend', label: 'Mobile Backend', description: 'Growth · production' },
+];
+const value = ref<string>();
+const options = ref<ServiceOption[]>(serviceCatalog.slice(0, 4));
+const loading = ref(false);
+const status = ref('输入服务名开始检索');
+let searchTimer: ReturnType<typeof setTimeout> | undefined;
+let requestId = 0;
 
-function fetch(value: string, callback: Function) {
-  if (timeout) {
-    clearTimeout(timeout);
-    timeout = null;
-  }
-  currentValue = value;
+function searchServices(input: string) {
+  requestId += 1;
+  const currentRequest = requestId;
+  if (searchTimer) clearTimeout(searchTimer);
 
-  function fake() {
-    const str = qs.stringify({
-      code: 'utf-8',
-      q: value,
-    });
-
-    isLoading.value = true;
-
-    jsonp(`https://suggest.taobao.com/sug?${str}`)
-      .then(response => response.json())
-      .then(d => {
-        if (currentValue === value) {
-          const { result } = d;
-          const data: any[] = [];
-          result.forEach((r: any) => {
-            data.push({
-              value: r[0],
-              text: r[0],
-            });
-          });
-          callback(data);
-        }
-      }).finally(() => {
-      isLoading.value = false;
-    });
+  if (!input.trim()) {
+    options.value = serviceCatalog.slice(0, 4);
+    loading.value = false;
+    status.value = '已恢复常用服务';
+    return;
   }
 
-  timeout = setTimeout(fake, 300);
+  loading.value = true;
+  status.value = `正在检索 “${input}”…`;
+  searchTimer = setTimeout(() => {
+    if (currentRequest !== requestId) return;
+    const keyword = input.toLowerCase();
+    options.value = serviceCatalog.filter(
+      option =>
+        option.label.toLowerCase().includes(keyword) ||
+        option.description.toLowerCase().includes(keyword),
+    );
+    loading.value = false;
+    status.value = options.value.length ? `找到 ${options.value.length} 项` : '没有匹配服务';
+  }, 450);
 }
 
-const value1 = ref('Demo Phone');
-const value2 = ref();
-const values1 = ref(['demo phone', 'demo phone 手机']);
-const values2 = ref([]);
-
-const options = ref<{value: string; text: string}[]>([]);
-
-const searchHandle = (value: string) => {
-  console.info('search: ', value);
-  if (value) {
-    fetch(value, (data: any) => (options.value = data));
-  } else {
-    options.value = [];
-  }
-};
-
-function onFocus() {
-  console.info('focus');
-}
-
-function onBlur() {
-  console.info('blur');
-}
+onBeforeUnmount(() => {
+  requestId += 1;
+  if (searchTimer) clearTimeout(searchTimer);
+});
 </script>
 
+<template>
+  <div class="select-demo">
+    <h-select
+      v-model="value"
+      show-search
+      clearable
+      :loading="loading"
+      :hide-panel-when-show-search-and-empty-list="false"
+      :to-body="false"
+      placeholder="搜索服务"
+      @search="searchServices"
+    >
+      <h-option v-for="option in options" :key="option.value" v-bind="option" />
+      <template #empty><span class="empty-text">暂无匹配服务</span></template>
+    </h-select>
+    <p class="docs-demo__status" role="status">{{ status }}</p>
+  </div>
+</template>
+
 <style scoped>
+.select-demo {
+  display: grid;
+  min-width: 0;
+  gap: 10px;
+}
+
+.select-demo :deep(.h-select) {
+  width: 100%;
+  min-width: 0;
+}
+
+.empty-text {
+  display: block;
+  padding: 12px;
+  color: var(--h-text-secondary);
+  font-size: 13px;
+  text-align: center;
+}
 </style>

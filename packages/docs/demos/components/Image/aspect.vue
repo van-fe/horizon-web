@@ -1,22 +1,45 @@
+<script setup lang="ts">
+const ratios = ['1/1', '4/3', '16/9'];
+</script>
+
 <template>
-  <div class="flex">
-    <div v-for="ratio in ratios" :key="ratio" class="mr-3" style="width: 20%">
-            <p class="text-center">{{ ratio.replace('/', ':') }}</p>
+  <div class="image-grid">
+    <figure v-for="ratio in ratios" :key="ratio">
       <h-image
-        src="/demo-assets/scene-aurora.svg"
+        src="/demo-assets/scene-forest.svg"
+        :alt="`${ratio} forest artwork`"
         width="100%"
         :aspect-ratio="ratio"
+        rounded="10"
       />
-    </div>
+      <figcaption>{{ ratio.replace('/', ':') }}</figcaption>
+    </figure>
   </div>
 </template>
-<script lang="ts">
-import { defineComponent } from 'vue';
-export default defineComponent({
-  setup() {
-    return {
-      ratios: ['1/1', '16/9'],
-    };
-  },
-});
-</script>
+
+<style scoped>
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: end;
+  gap: var(--h-spacing-4);
+}
+
+figure {
+  min-width: 0;
+  margin: 0;
+}
+
+figcaption {
+  margin-top: var(--h-spacing-2);
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+  text-align: center;
+}
+
+@media (max-width: 560px) {
+  .image-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

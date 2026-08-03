@@ -1,30 +1,30 @@
-<template>
-  <h-form label-position="left">
-    <h-form-item label="size">
-      <h-radio-group v-model="size">
-        <h-radio value="small"></h-radio>
-        <h-radio value="medium"></h-radio>
-      </h-radio-group>
-    </h-form-item>
-    <h-form-item label="dot">
-      <h-radio-group v-model="dot">
-        <h-radio :value="true">True</h-radio>
-        <h-radio :value="false">False</h-radio>
-      </h-radio-group>
-    </h-form-item>
-  </h-form>
-  <h-steps v-model="value" :progress-dot="dot" clickable label-align="left" :size="size">
-    <h-step title="Succeeded" subtitle="This step is finished" />
-    <h-step title="Disabled" :disabled="true" subtitle="This step is disabled" />
-    <h-step title="Future step" subtitle="This is available" />
-    <h-step title="Future step" subtitle="This is available" />
-  </h-steps>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const value = ref(1);
-const size = ref('medium');
-const dot = ref(false);
+const value = ref(0);
 </script>
+
+<template>
+  <div class="docs-demo">
+    <div class="steps-stage">
+      <h-steps v-model="value" clickable>
+        <h-step title="选择方案" subtitle="可以访问" />
+        <h-step title="企业认证" disabled subtitle="当前账号无需此步骤" />
+        <h-step title="填写资料" subtitle="可以访问" />
+        <h-step title="完成" subtitle="等待中" />
+      </h-steps>
+    </div>
+    <p class="docs-demo__status">“企业认证”不可点击</p>
+  </div>
+</template>
+
+<style scoped>
+.steps-stage {
+  overflow-x: auto;
+  padding-block: 12px;
+}
+
+.steps-stage :deep(.h-steps) {
+  min-width: 560px;
+}
+</style>

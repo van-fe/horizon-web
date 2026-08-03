@@ -1,9 +1,10 @@
 <template>
   <h-breadcrumb
     :texts="[
-      { text: 'Home' },
-      { text: 'Components', to: '../Components' },
-      { text: 'Checkbox', to: 'Checkbox' },
+      { text: 'Home', to: '/' },
+      { text: 'Components', to: '/components' },
+      { text: 'Breadcrumb', to: '/components/breadcrumb', replace: true },
     ]"
+    title
   />
 </template>

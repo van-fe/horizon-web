@@ -1,38 +1,37 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="12">
-      <div class="demo-title">单选</div>
-      <h-tree
-        :tree-data="baseTreeData"
-        :stress="true"
-        :to-body="false"
-      />
-    </h-grid-item>
-    <h-grid-item :span="12">
-      <div class="demo-title">多选</div>
-      <h-tree
-        :tree-data="baseTreeData"
-        :stress="true"
-        :multiple="true"
-        :to-body="false"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
+import type { HTreeNodeData } from '@aurora/horizon-web';
 
-const baseTreeData = ref([]);
-
-onMounted(() => {
-  fetch(new URL('/tree-data.json', import.meta.url).href)
-    .then(res => res.json())
-    .then(res => {
-      baseTreeData.value = res;
-    });
-});
+const stressed = ref(true);
+const selectedValue = ref<string | number>('payments-critical');
+const treeData: HTreeNodeData[] = [
+  {
+    value: 'payments',
+    label: 'Payments',
+    children: [
+      { value: 'payments-critical', label: 'P1 · Checkout unavailable' },
+      { value: 'payments-latency', label: 'P2 · Elevated authorization latency' },
+    ],
+  },
+  {
+    value: 'identity',
+    label: 'Identity',
+    children: [{ value: 'identity-login', label: 'P1 · Sign-in failures' }],
+  },
+];
 </script>
 
-<style scoped>
-</style>
+<template>
+  <div class="docs-demo">
+    <h-switch v-model="stressed" label="Emphasize selection" />
+    <h-tree-select
+      v-model="selectedValue"
+      :tree-data="treeData"
+      :stress="stressed"
+      input-style="emphasize"
+      placeholder="Choose the active incident"
+      :to-body="false"
+    />
+    <span aria-live="polite">Selected: {{ selectedValue || 'none' }}</span>
+  </div>
+</template>

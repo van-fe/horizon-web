@@ -1,49 +1,38 @@
-<template>
-  <h-form label-position="left" label-vertical-align="middle">
-    <h-form-item label="显示单选框">
-      <h-switch v-model="showRadio" :status="true" />
-    </h-form-item>
-    <h-form-item label="点击叶子节点勾选">
-      <h-switch v-model="expandOnClickLeaf" :status="true" />
-    </h-form-item>
-  </h-form>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <div class="demo-title">单选</div>
-      <h-tree-select
-        :tree-data="baseTreeData"
-        :check-on-click-leaf="expandOnClickLeaf"
-        :show-radio="showRadio"
-        :to-body="false"
-      />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">多选</div>
-      <h-tree-select
-        :tree-data="baseTreeData"
-        :check-on-click-leaf="expandOnClickLeaf"
-        :multiple="true"
-        :to-body="false"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import {  onMounted, ref } from 'vue';
+import { ref } from 'vue';
+import type { HTreeNodeData } from '@aurora/horizon-web';
 
-const showRadio = ref(false);
-const expandOnClickLeaf = ref(true);
-const baseTreeData = ref([]);
-
-onMounted(() => {
-  fetch(new URL('/tree-data.json', import.meta.url).href)
-    .then(res => res.json())
-    .then(res => {
-      baseTreeData.value = res;
-    });
-});
+const checkOnClickLeaf = ref(true);
+const selectedValues = ref<Array<string | number>>(['prod-eu']);
+const treeData: HTreeNodeData[] = [
+  {
+    value: 'production',
+    label: 'Production',
+    children: [
+      { value: 'prod-us', label: 'US cluster' },
+      { value: 'prod-eu', label: 'EU cluster' },
+    ],
+  },
+  {
+    value: 'non-production',
+    label: 'Non-production',
+    children: [{ value: 'staging', label: 'Shared staging' }],
+  },
+];
 </script>
 
-<style scoped>
-</style>
+<template>
+  <div class="docs-demo">
+    <h-switch v-model="checkOnClickLeaf" label="Leaf row selects" />
+    <h-tree-select
+      v-model="selectedValues"
+      :tree-data="treeData"
+      multiple
+      :check-on-click-node="false"
+      :check-on-click-leaf="checkOnClickLeaf"
+      placeholder="Choose release destinations"
+      :to-body="false"
+    />
+    <span aria-live="polite">Selected: {{ selectedValues.join(', ') || 'none' }}</span>
+  </div>
+</template>

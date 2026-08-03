@@ -1,25 +1,31 @@
+VideoPlayer provides playback, progress, volume, speed, quality, picture-in-picture, and fullscreen controls.
 
-## Component Instructions
-Video player component based on the native HTML5 Video API, with custom controls.
+## Basic Playback
 
-## Basic Example
-Pass video sources through `sources` and a cover image through `poster`. The custom controls include playback, progress, buffering, volume, speed, quality, picture-in-picture, and fullscreen.
+Pass media through `sources` and use `poster` for the pre-playback cover. When focused, the player supports Space or `K` for play/pause, arrow keys for seeking, `M` for mute, and `F` for fullscreen.
+
 :::demo components/VideoPlayer/basic.vue :::
 
-When focused, the player supports Space or `K` to play/pause, the arrow keys to seek by five seconds, `M` to mute, and `F` to toggle fullscreen.
+## Rotation
 
-## Rotate Video
-Control video rotation through `rotate`, supporting four angles: `0`, `90`, `180`, `270`.
+`rotate` accepts `0`, `90`, `180`, and `270` degrees to correct device orientation.
+
 :::demo components/VideoPlayer/rotate.vue :::
 
-## Quality Selection
-Give multiple sources a `label` (or `quality`) to display the quality selector. The player preserves playback time and state when possible.
+## Quality
+
+Add a `label` to multiple sources to expose a quality menu. Switching attempts to preserve playback position and state.
+
 :::demo components/VideoPlayer/quality.vue :::
 
-## Player Control
-The `ready` event returns the native `HTMLVideoElement`, so standard methods such as `play()` and `pause()` can be called directly.
+## External Controls
+
+The component instance exposes `play`, `pause`, and `seek` for task-specific controls outside the player.
+
 :::demo components/VideoPlayer/action.vue :::
 
-## Error Prompt
-Missing sources, network failures, and unsupported codecs display an error state with a retry action. Picture-in-picture, fullscreen, and playable formats depend on browser support; unavailable optional features do not disable basic playback.
+## Error Recovery
+
+An undecodable source emits `error`. Keep the failure message clear and provide an explicit retry path.
+
 :::demo components/VideoPlayer/error.vue :::

@@ -1,26 +1,35 @@
 <script setup lang="ts">
-import { $message, type HTabValue } from '@aurora/horizon-web';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
-const cardType = ref('line');
-
-const onTabChanged = (tab: HTabValue) => {
-  console.info('tab changed', tab);
-  $message({ type: 'success', message: `Tab ${tab} is clicked` });
-};
+const activeKey = ref('details');
+const tabs = [
+  { key: 'details', label: 'Project details' },
+  { key: 'terms', label: 'Terms' },
+  { key: 'legal-hold', label: 'Legal hold', disabled: true },
+  { key: 'history', label: 'History' },
+];
+const activeLabel = computed(() => tabs.find(tab => tab.key === activeKey.value)?.label);
 </script>
 
 <template>
-  <div class="mb-8 flex align-center">
-    <span class="mr-4">类型</span>
-    <h-radio-group v-model="cardType">
-      <h-radio value="line">line(Default)</h-radio>
-      <h-radio value="card">card</h-radio>
-    </h-radio-group>
+  <div class="tabs-disabled-demo">
+    <h-tabs v-model:active-key="activeKey">
+      <h-tab v-for="tab in tabs" :key="tab.key" :label="tab.label" :disabled="tab.disabled" />
+    </h-tabs>
+    <p aria-live="polite">{{ activeLabel }} selected · Legal hold is unavailable.</p>
   </div>
-  <h-tabs default-active-key="3" :type="cardType" @change="onTabChanged">
-    <h-tab key="1" label="Tab 1" />
-    <h-tab key="2" label="Tab 2" disabled />
-    <h-tab key="3" label="Tab 3" />
-  </h-tabs>
 </template>
+
+<style scoped>
+.tabs-disabled-demo {
+  display: grid;
+  min-width: 0;
+  gap: var(--h-spacing-4);
+}
+
+.tabs-disabled-demo p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+</style>

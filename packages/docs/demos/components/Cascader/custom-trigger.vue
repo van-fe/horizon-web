@@ -1,56 +1,50 @@
+<script setup lang="ts">
+import { computed, ref, watch } from 'vue';
+import { workspaceOptions } from './options';
+
+interface CascaderInputMethods {
+  inputChange: (value: string | null) => void;
+}
+
+const cascaderRef = ref<CascaderInputMethods | null>(null);
+const value = ref<string[]>(['product', 'design-system', 'components']);
+const keyword = ref('');
+const selectedLabel = computed(() =>
+  value.value.length
+    ? `Scope · ${value.value.at(-1)?.replaceAll('-', ' ')}`
+    : 'Choose release scope',
+);
+
+watch(keyword, nextKeyword => cascaderRef.value?.inputChange(nextKeyword || null));
+</script>
+
 <template>
-  <h-grid :gap="10">
-    <h-grid-item :span="6">
-      <h-cascader
-          ref="cascaderFilterRef"
-          v-model="currentVal1"
-          :options="options"
-          expand-trigger="click"
-          :filter="true"
-          :to-body="false"
-      >
-        <template #default="{ visible: panelVisible }">
-          <div @click="() => (panelVisible.value = true)">
-            完全自定义的内容，可以点击我：
-            <p v-if="currentVal1.length > 0">{{ currentVal1 }}</p>
-            <h-input v-model="selectRenderInputValue" />
-          </div>
-        </template>
-      </h-cascader>
-    </h-grid-item>
-  </h-grid>
+  <h-cascader ref="cascaderRef" v-model="value" :options="workspaceOptions" filter :to-body="false">
+    <template #default="{ visible }">
+      <div class="custom-trigger">
+        <h-button type="normal" @click="visible.value = true">{{ selectedLabel }}</h-button>
+        <h-input
+          v-model="keyword"
+          aria-label="Search release scope"
+          placeholder="Filter teams"
+          clearable
+        />
+      </div>
+    </template>
+  </h-cascader>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, watch } from 'vue';
+<style scoped>
+.custom-trigger {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--h-spacing-2);
+  width: 100%;
+}
 
-export default defineComponent({
-  setup() {
-    const cascaderFilterRef = ref<any>(null);
-    const currentVal1 = ref<string[]>([]);
-    const selectRenderInputValue = ref('');
-
-    const options = ref([]);
-    fetch(
-      new URL('/cascader-options.json', import.meta.url).href,
-    ).then(res => {
-      res.json().then(value => {
-        options.value = value;
-      });
-    });
-
-    watch(selectRenderInputValue, newValue => {
-      if (cascaderFilterRef.value) {
-        cascaderFilterRef.value.inputChange?.(newValue);
-      }
-    });
-
-    return {
-      currentVal1,
-      options,
-      selectRenderInputValue,
-      cascaderFilterRef,
-    };
-  },
-});
-</script>
+@media (max-width: 390px) {
+  .custom-trigger {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

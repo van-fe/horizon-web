@@ -1,56 +1,73 @@
+<script setup lang="ts">
+const accounts = [
+  {
+    id: 'AC-184',
+    account: 'Northwind Retail',
+    owner: 'Mina Park',
+    balance: '$18,420',
+    invoices: [
+      { invoice: 'INV-8821', issued: 'Jul 01', amount: '$9,200', state: 'Paid' },
+      { invoice: 'INV-8944', issued: 'Aug 01', amount: '$9,220', state: 'Open' },
+    ],
+  },
+  {
+    id: 'AC-217',
+    account: 'Contoso Energy',
+    owner: 'Noah Chen',
+    balance: '$12,860',
+    invoices: [
+      { invoice: 'INV-8796', issued: 'Jul 01', amount: '$6,430', state: 'Paid' },
+      { invoice: 'INV-8927', issued: 'Aug 01', amount: '$6,430', state: 'Review' },
+    ],
+  },
+  {
+    id: 'AC-249',
+    account: 'Fabrikam Health',
+    owner: 'Iris Wang',
+    balance: '$24,180',
+    invoices: [
+      { invoice: 'INV-8810', issued: 'Jul 01', amount: '$12,090', state: 'Paid' },
+      { invoice: 'INV-8961', issued: 'Aug 01', amount: '$12,090', state: 'Open' },
+    ],
+  },
+];
+</script>
+
 <template>
-  <h-table ref="tableDomRef" :data="data" height="500">
-    <h-table-column title="ID" field="id" type="expand" fixed>
-      <template #expand="scope">
-        <h-table
-          :data="scope.row.orders"
-          border
-          header-sticky
-          :header-sticky-offset="92"
-          :header-sticky-container="tableDomRef?.getScrollWrap()"
-        >
-          <h-table-column title="No" field="no" />
-          <h-table-column title="Name" field="name" />
-          <h-table-column title="Price" field="price" />
-        </h-table>
+  <h-table :data="accounts" row-key="id" max-height="420">
+    <h-table-column type="expand" width="48">
+      <template #expand="{ row }">
+        <div class="table-nested-demo__table">
+          <h-table :data="row.invoices" row-key="invoice" border="full" size="small">
+            <h-table-column title="Invoice" field="invoice" min-width="130" />
+            <h-table-column title="Issued" field="issued" width="110" />
+            <h-table-column
+              title="Amount"
+              field="amount"
+              width="120"
+              align="right"
+              header-align="right"
+            />
+            <h-table-column title="State" field="state" width="108" />
+          </h-table>
+        </div>
       </template>
     </h-table-column>
-    <h-table-column title="Name" field="name" width="100px" show-overflow-tooltip />
-    <h-table-column title="Gender" field="gender" width="100px" />
-    <h-table-column title="Birthday" field="birthday" min-width="200px" />
-    <h-table-column title="Address" field="address" min-width="500px" />
+    <h-table-column title="Account" field="account" min-width="190" />
+    <h-table-column title="ID" field="id" width="106" />
+    <h-table-column title="Owner" field="owner" min-width="140" />
+    <h-table-column
+      title="Balance"
+      field="balance"
+      width="130"
+      align="right"
+      header-align="right"
+    />
   </h-table>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
-import { faker } from '@faker-js/faker';
-
-interface TableData {
-  id: number;
-  name: string;
-  birthday: string;
-  gender: 'male' | 'female';
-  address: string;
-  orders: {
-    no: string;
-    name: string;
-    price: string;
-  }[];
+<style scoped>
+.table-nested-demo__table {
+  padding: var(--h-spacing-3);
 }
-
-const tableDomRef = ref();
-
-const data = ref<TableData[]>(new Array(20).fill(0).map((_, index) => ({
-  id: index + 1,
-  name: faker.person.fullName(),
-  birthday: faker.date.birthdate({ min: 22, max: 50, mode: 'age' }).toDateString(),
-  gender: faker.helpers.arrayElement(['male', 'female']),
-  address: faker.location.streetAddress(),
-  orders: new Array(faker.helpers.arrayElement([10, 15, 20, 25])).fill(0).map(() => ({
-    no: faker.finance.bic(),
-    name: faker.word.noun(),
-    price: faker.finance.amount(),
-  })),
-})));
-</script>
+</style>

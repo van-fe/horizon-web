@@ -1,80 +1,76 @@
-<template>
-  <h-grid :gap="10">
-    <h-grid-item :span="24">
-      <div class="demo-title">
-        设置了 <code>index</code> 值
-      </div>
-      <h-steps v-model="current" :initial="initial">
-        <h-step title="Start" :index="initial" />
-        <h-step v-for="(item, index) in steps" :key="item.title" :title="item.title" :index="index + initial + 1" />
-        <h-step title="End" :index="steps.length + initial + 1" />
-      </h-steps>
-    </h-grid-item>
-  </h-grid>
-  <h-grid :gap="10">
-    <h-grid-item :span="24">
-      <div class="demo-title">
-        未设置 <code>index</code> 值
-      </div>
-      <h-steps v-model="current" :initial="initial">
-        <h-step title="Start" />
-        <h-step v-for="item in steps" :key="item.title" :title="item.title" />
-        <h-step title="End" />
-      </h-steps>
-    </h-grid-item>
-  </h-grid>
-  <div class="steps-action">
-    <h-button :disabled="current === initial" @click="prev">上一步</h-button>
-    <h-button :disabled="current === steps.length + initial + 2" type="primary" @click="next">
-      {{ current === steps.length + initial + 2 ? '全部完成' : '下一步' }}
-    </h-button>
-  </div>
-</template>
-
-<script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+<script setup lang="ts">
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 
 const initial = 10;
 const current = ref(initial);
-const steps = ref<{title: string; content: string}[]>([]);
+const loading = ref(true);
+const steps = ref<{ title: string }[]>([]);
+const timers: ReturnType<typeof setTimeout>[] = [];
+
+const maxIndex = computed(() => initial + steps.value.length + 1);
 
 const next = () => {
-  current.value++;
+  if (current.value < maxIndex.value) current.value += 1;
 };
-const prev = () => {
-  current.value--;
+
+const previous = () => {
+  if (current.value > initial) current.value -= 1;
 };
 
 onMounted(() => {
-  setTimeout(() => {
-    steps.value = [
-      {
-        title: 'First',
-        content: 'First-content',
-      },
-      {
-        title: 'Second',
-        content: 'Second-content',
-      },
-    ];
-  }, 500);
-
-  setTimeout(() => {
-    steps.value.push(
-      {
-        title: 'Last',
-        content: 'Last-content',
-      });
-  }, 1000);
+  timers.push(
+    setTimeout(() => {
+      steps.value = [{ title: '校验依赖' }, { title: '生成资源' }];
+      loading.value = false;
+    }, 450),
+    setTimeout(() => {
+      steps.value.push({ title: '上传产物' });
+    }, 900),
+  );
 });
+
+onBeforeUnmount(() => timers.forEach(timer => clearTimeout(timer)));
 </script>
 
+<template>
+  <div class="docs-demo">
+    <div class="steps-scroll">
+      <h-steps v-model="current" :initial="initial">
+        <h-step title="开始构建" :index="initial" />
+        <h-step
+          v-for="(item, index) in steps"
+          :key="item.title"
+          :title="item.title"
+          :index="index + initial + 1"
+        />
+        <h-step title="完成" :index="steps.length + initial + 1" />
+      </h-steps>
+    </div>
+    <div class="step-actions">
+      <h-button type="normal" :disabled="current === initial" @click="previous">上一步</h-button>
+      <h-button :disabled="current === maxIndex" @click="next">
+        {{ current === maxIndex ? '全部完成' : '下一步' }}
+      </h-button>
+    </div>
+    <p class="docs-demo__status" role="status">
+      {{ loading ? '正在加载步骤…' : `当前 index：${current}` }}
+    </p>
+  </div>
+</template>
+
 <style scoped>
-.steps-action {
-  margin-top: 24px;
+.steps-scroll {
+  overflow-x: auto;
+  padding-block: 12px;
 }
 
-.steps-action .h-button + .h-button {
-  margin-left: 8px;
+.steps-scroll :deep(.h-steps) {
+  min-width: 620px;
+}
+
+.step-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
 }
 </style>

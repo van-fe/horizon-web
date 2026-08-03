@@ -1,50 +1,47 @@
-<!--
- * @Date: 2022-01-07 16:11:17
- * @LastEditTime: 2022-01-12 14:00:06
- * @Description: file content
--->
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const reference = ref('AP-1042');
+const amount = ref('1,240.00');
+</script>
+
 <template>
-  <h-grid :gap="12">
-    <h-grid-item :span="12">
-      <h-input v-model="val1" suffix-icon="check" />
-    </h-grid-item>
-    <h-grid-item :span="12">
-      <h-input v-model="val2">
-        <template #prefix>¥</template>
-        <template #suffix>RMB</template>
+  <section class="input-icon-demo" aria-label="Input affixes">
+    <label>
+      <span>Icon props</span>
+      <h-input v-model="reference" prefix-icon="search" suffix-icon="check" />
+    </label>
+    <label>
+      <span>Prefix and suffix slots</span>
+      <h-input v-model="amount" inputmode="decimal">
+        <template #prefix>$</template>
+        <template #suffix>USD</template>
       </h-input>
-    </h-grid-item>
-  </h-grid>
-  <h-grid :gap="12">
-    <h-grid-item :span="24">
-      <h-input v-model="val3">
-        <template #suffix>
-          <h-tooltip placement="top" content="show location detail">
-            <a-icon name="location" />
-          </h-tooltip>
-        </template>
-      </h-input>
-    </h-grid-item>
-  </h-grid>
+    </label>
+  </section>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { AIcon } from '@aurora/icon';
+<style scoped>
+.input-icon-demo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--h-spacing-4);
+}
 
-export default defineComponent({
-  components: {
-    AIcon,
-  },
-  setup() {
-    const val1 = ref('');
-    const val2 = ref('');
-    const val3 = ref('');
-    return {
-      val1,
-      val2,
-      val3,
-    };
-  },
-});
-</script>
+.input-icon-demo label {
+  display: grid;
+  gap: var(--h-spacing-2);
+  min-inline-size: 0;
+}
+
+.input-icon-demo span {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+
+@media (max-width: 390px) {
+  .input-icon-demo {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

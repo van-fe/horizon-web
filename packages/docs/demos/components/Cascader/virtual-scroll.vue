@@ -1,46 +1,34 @@
-<template>
-  <h-grid :gap="10">
-    <h-grid-item :span="6">
-      <div class="demo-title">单选</div>
-      <h-cascader
-        v-model="currentVal1"
-        :clearable="true"
-        :filterable="true"
-        :options="baseData"
-        :use-virtual-scroll="true"
-      />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">多选</div>
-      <h-cascader
-        v-model="currentVal2"
-        :clearable="true"
-        :filterable="true"
-        :options="baseData"
-        :multiple="true"
-        :collapse-tags="true"
-        :use-virtual-scroll="true"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
+import type { HCascaderOption } from '@aurora/horizon-web';
 import { ref } from 'vue';
-import type { BaseTreeData } from '@aurora/horizon-web/es/utils/useTree';
 
-const currentVal1 = ref<string[]>();
-const currentVal2 = ref<string[][]>();
-const baseData: BaseTreeData[] = new Array(100).fill(0).map((_, i) => ({
-  label: `${i + 1}`,
-  value: i + 1,
-  children: new Array(100).fill(0).map((_, j) => ({
-    label: `${i + 1}-${j + 1}`,
-    value: j + 1,
-    children: new Array(5).fill(0).map((_, k) => ({
-      label: `${i + 1}-${j + 1}-${k + 1}`,
-      value: k + 1,
+const value = ref<Array<Array<string | number>>>([
+  [1, 1, 1],
+  [2, 8, 2],
+]);
+const options: HCascaderOption[] = Array.from({ length: 40 }, (_, regionIndex) => ({
+  label: `Region ${regionIndex + 1}`,
+  value: regionIndex + 1,
+  children: Array.from({ length: 40 }, (_, serviceIndex) => ({
+    label: `Service ${serviceIndex + 1}`,
+    value: serviceIndex + 1,
+    children: Array.from({ length: 4 }, (_, environmentIndex) => ({
+      label: ['Production', 'Staging', 'Preview', 'Development'][environmentIndex],
+      value: environmentIndex + 1,
     })),
   })),
 }));
 </script>
+
+<template>
+  <h-cascader
+    v-model="value"
+    aria-label="Deployment destinations"
+    :options="options"
+    filterable
+    multiple
+    collapse-tags
+    use-virtual-scroll
+    :to-body="false"
+  />
+</template>

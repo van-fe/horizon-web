@@ -1,77 +1,77 @@
 ## 基本用法
-设置 `clickable = true` 允许标签点击
 
-设置 `bold = true`，开启标签强调状态
+标签提供 `small`、`medium`、`large` 三种尺寸，并可通过 `bold` 提升文字强调程度。应根据界面密度选择统一尺寸。
+
 :::demo components/Tag/basic.vue :::
 
-## 不同类型
-通过设置 `type` 来更改状态，从而更改颜色
+## 语义类型
+
+使用 `type` 表达成功、信息、警告与错误状态。示例将类型放在真实发布流程中，便于比较语义和层级。
+
 :::demo components/Tag/type.vue :::
 
-## 线性标签
-设置 `plain = true`，可以开启线性样式
+## 低强调样式
+
+开启 `plain` 可降低背景强调度，适合环境、来源等辅助信息，同时仍保留语义色。
+
 :::demo components/Tag/plain.vue :::
 
-## 可激活标签
-给 `modelValue` 传递一个 `boolean` 值，即可激活点击后是否激活的功能。
+## 形状
 
-当传递 `boolean` 后，无需额外设置 `clickable`，标签自动处于可点击的状态。
-:::demo components/Tag/active.vue :::
+`round` 适合分类与筛选，`equally` 适合需要等宽对齐的短状态标签。
 
-## Icon
-可以通过 `props.icon` 或 `slots.icon` 传入 `icon`
+:::demo components/Tag/shape.vue :::
+
+## 自动配色
+
+开启 `auto-color` 后，组件会根据标签内容生成稳定配色。示例可切换普通、线性与禁用状态，检查不同场景下的辨识度。
+
+:::demo components/Tag/colorful.vue :::
+
+## 图标
+
+使用 `icon` 属性或图标插槽补充状态含义。图标应与文字共同传达信息，不应成为唯一线索。
+
 :::demo components/Tag/icon.vue :::
 
 ## 头像
-可以通过 `props.avatar` 传入头像链接
 
-或直接使用 `slots.avatar` 传入自定义头像组件
+`avatar` 可将人员头像与姓名组合成紧凑的负责人标签，也可通过插槽自定义头像内容。
+
 :::demo components/Tag/avatar.vue :::
 
-## 胶囊形和方形标签
-设置 `round = true`，将标签置为胶囊形
+## 可激活标签
 
-设置 `equally = true`，将标签置为长宽一致的正方形标签
-:::demo components/Tag/shape.vue :::
+通过 `v-model:active` 控制激活状态，可构建支持多选的筛选标签，并将当前筛选结果同步展示给用户。
+
+:::demo components/Tag/active.vue :::
 
 ## 可关闭标签
-设置 `closable = true`，将标签置为可关闭状态
 
-如果同时设置了 `clickable` 和 `equally`，则会在悬浮后 `props.showCloseDelay (默认1秒)` 显示关闭按钮，如果在此之前点击了按钮，则在**鼠标移开前**不会再触发显示关闭按钮
+开启 `closable` 并监听关闭事件来维护标签列表。示例提供结果反馈和重置入口，便于观察完整交互。
 
-如果没有设置 `clickable`，但设置了 `equally`，则会无延迟地直接显示关闭按钮
 :::demo components/Tag/closable.vue :::
 
-## 加载中
-设置 `loading = true`，可以展示加载中的 `icon`
-:::demo components/Tag/loading.vue :::
-
 ## 禁用
-设置 `disabled = true`，禁用标签，此时即使设置了 `closable`，也不会显示关闭按钮
+
+`disabled` 用于展示不可操作但仍需保留的标签。禁用原因应在邻近文案中说明。
+
 :::demo components/Tag/disabled.vue :::
 
-## 多彩标签
-内置了一些颜色，可以直接使用这些颜色
+## 加载状态
 
-当然也可以只设定一个 `color` 来自定义颜色，然后会自动生成各种状态的颜色
+`loading` 适合标签内容正在同步或等待确认的短暂状态。示例在操作完成后给出明确反馈。
 
-如果你对生成的背景色不满意，可以指定 `background`，但这个就不会自动生成颜色了
+:::demo components/Tag/loading.vue :::
 
-自定义颜色时，请传入色系中最深的颜色，防止在 `disabled` 等状态下不可视的问题
+## 创建与编辑
 
-需要自动生成颜色时，请开启 `auto-color = true`。
-:::demo components/Tag/colorful.vue :::
+`h-tag-group` 可通过 `use-create`、`editable` 和 `closable` 组合完整的标签管理流程；`before-create`、`before-edit`、`before-close` 可执行异步校验。
 
-## 新建、修改标签
-通过 `h-tag-group` 的 `props.useCreate` 快速创建一个允许输入创建的标签
-
-配合 `max-tags`，可以在标签数量达到一定值后不显示创建标签
-
-给 `h-tag` 或 `h-tag-group` 设置 `editable = true` ，则允许标签进行编辑
 :::demo components/Tag/create-update.vue :::
 
-## 标签折叠
-设置 `collapse = true`，可以将即将换行的标签折叠起来
+## 折叠标签组
 
-设置 `expand = true`，可以点击折叠的数字 `tag`，收起或展开
+开启 `collapse` 后，标签组会根据可用宽度收起溢出项；配合 `expand`、提示方式和最少展示数量，可适配不同密度的容器。
+
 :::demo components/Tag/collapse.vue :::

@@ -1,74 +1,55 @@
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
+<script setup lang="ts">
+import { ref } from 'vue';
 
-export default defineComponent({
-  setup() {
-    const value1 = ref();
-    const value2 = ref();
-    const values1 = ref([]);
-    const values2 = ref([]);
-
-    return {
-      value1,
-      value2,
-      values1,
-      values2,
-    };
+const serviceGroups = [
+  {
+    label: '在线服务',
+    children: [
+      { value: 'gateway', label: 'API Gateway' },
+      { value: 'identity', label: 'Identity Service' },
+      { value: 'billing', label: 'Billing API' },
+    ],
   },
-});
+  {
+    label: '异步任务',
+    children: [
+      { value: 'catalog', label: 'Catalog Indexer' },
+      { value: 'analytics', label: 'Analytics Pipeline' },
+      { value: 'notifications', label: 'Notification Worker' },
+    ],
+  },
+];
+const selected = ref<string[]>(['catalog', 'billing']);
 </script>
 
 <template>
-  <h-grid :gap="20">
-    <h-grid-item :span="6">
-      <div class="demo-title">普通单选</div>
-      <h-select v-model="value1" clearable :selected-option-order-to-top="true" :to-body="false">
-        <h-option label="上海" :value="1" />
-        <h-option :value="2" label="北京" />
-        <h-option :value="3" label="合肥" name="hefei" />
-        <h-option label="杭州" :value="4" />
-        <h-option :value="5" label="成都" />
-        <h-option :value="6" label="重庆" name="hefei" />
-      </h-select>
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">普通多选</div>
-      <h-select v-model="values1" :multiple="true" clearable :to-body="false" :selected-option-order-to-top="true">
-        <h-option label="上海" :value="1" />
-        <h-option :value="2" label="北京" />
-        <h-option :value="3" label="合肥" name="hefei" />
-        <h-option label="杭州" :value="4" />
-        <h-option :value="5" label="成都" />
-        <h-option :value="6" label="重庆" name="hefei" />
-      </h-select>
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">单选 - 不具名分组</div>
-      <h-select v-model="value2" clearable :selected-option-order-to-top="true" :to-body="false">
-        <h-option-group>
-          <h-option label="上海" :value="1" />
-          <h-option :value="2" label="北京" />
-          <h-option :value="3" label="合肥" name="hefei" />
-        </h-option-group>
-        <h-option label="杭州" :value="4" />
-        <h-option :value="5" label="成都" />
-        <h-option :value="6" label="重庆" name="hefei" />
-      </h-select>
-    </h-grid-item>
-    <h-grid-item :span="6">
-        <div class="demo-title">多选 - 具名分组</div>
-        <h-select v-model="values2" clearable multiple :selected-option-order-to-top="true" :to-body="false">
-          <h-option-group label="一线">
-            <h-option label="上海" :value="1" />
-            <h-option :value="2" label="北京" />
-            <h-option :value="3" label="广州" name="hefei" />
-          </h-option-group>
-          <h-option-group label="二线">
-            <h-option label="杭州" :value="4" />
-            <h-option :value="5" label="成都" />
-            <h-option :value="6" label="重庆" name="hefei" />
-          </h-option-group>
-        </h-select>
-    </h-grid-item>
-  </h-grid>
+  <div class="select-demo">
+    <h-select
+      v-model="selected"
+      multiple
+      filterable
+      clearable
+      collapse-tags
+      selected-option-order-to-top
+      :to-body="false"
+    >
+      <h-option-group v-for="group in serviceGroups" :key="group.label" :label="group.label">
+        <h-option v-for="service in group.children" :key="service.value" v-bind="service" />
+      </h-option-group>
+    </h-select>
+    <p class="docs-demo__status">重新打开面板，已选项会在各组内置顶</p>
+  </div>
 </template>
+
+<style scoped>
+.select-demo {
+  display: grid;
+  min-width: 0;
+  gap: 10px;
+}
+
+.select-demo :deep(.h-select) {
+  width: 100%;
+  min-width: 0;
+}
+</style>

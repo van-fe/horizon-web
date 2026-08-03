@@ -1,48 +1,55 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const clickMessage = ref('Click: waiting');
+const changeMessage = ref('Change: waiting');
+
+function handleClick(link: { href: string; title: string }) {
+  clickMessage.value = `Click: ${link.title}`;
+}
+
+function handleChange(link: string, previousLink: string) {
+  changeMessage.value = previousLink ? `Change: ${previousLink} → ${link}` : `Change: ${link}`;
+}
+</script>
+
 <template>
-  <div class="wrapper">
-    <h-anchor
-      :scroll-container="scrollContainer"
-      link-target="_top"
-      @click="clickHandle"
-      @change="changeHandle"
-    >
-      <h-anchor-link href="#设置尺寸" title="设置尺寸" />
-      <h-anchor-link href="#是否改变hash" title="是否改变hash" />
-      <h-anchor-link href="#自定义滚动容器" title="自定义滚动容器" />
-      <h-anchor-link href="#设置偏移量" title="设置偏移量" />
-      <h-anchor-link href="#是否开启折叠模式" title="是否开启折叠模式" />
-      <h-anchor-link href="#是否展示侧边线" title="是否展示侧边线" />
-      <h-anchor-link href="#监听自定义事件" title="监听自定义事件" />
-    </h-anchor>
+  <div class="anchor-events-demo">
+    <div class="anchor-events-demo__status" aria-live="polite">
+      <span>{{ clickMessage }}</span>
+      <span>{{ changeMessage }}</span>
+    </div>
+
+    <div class="anchor-events-demo__layout">
+      <div class="anchor-events-demo__nav">
+        <h-anchor
+          scroll-container="#anchor-events-scroll"
+          :change-hash="false"
+          @click="handleClick"
+          @change="handleChange"
+        >
+          <h-anchor-link href="#anchor-events-brief" title="Brief" />
+          <h-anchor-link href="#anchor-events-feedback" title="Feedback" />
+          <h-anchor-link href="#anchor-events-decision" title="Decision" />
+        </h-anchor>
+      </div>
+
+      <div id="anchor-events-scroll" class="anchor-events-demo__scroll">
+        <div id="anchor-events-brief" class="anchor-events-demo__target">
+          <h4>Brief</h4>
+          <p>Define the problem and constraints.</p>
+        </div>
+        <div id="anchor-events-feedback" class="anchor-events-demo__target">
+          <h4>Feedback</h4>
+          <p>Group comments by theme.</p>
+        </div>
+        <div id="anchor-events-decision" class="anchor-events-demo__target">
+          <h4>Decision</h4>
+          <p>Capture the chosen direction.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-export default defineComponent({
-  setup() {
-    const clickHandle = (linkInfo: { href: string; title: string }, e: MouseEvent) => {
-      console.info(linkInfo, e);
-    };
-    const changeHandle = (link: string, prevLink: string) => {
-      console.info(link, prevLink);
-    };
-
-    const scrollContainer = top?.document.querySelector('main.VPDoc');
-
-    return {
-      scrollContainer,
-      clickHandle,
-      changeHandle,
-    };
-  },
-});
-</script>
-
-<style scoped>
-.wrapper {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-</style>
+<style scoped src="./demo.css"></style>

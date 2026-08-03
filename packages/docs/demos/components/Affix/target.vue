@@ -1,26 +1,32 @@
 <template>
-  <div id="scroll" class="target-wrapper">
-    <div class="target-container">
-      <h-affix target=".target-wrapper">
-        <h-button>Affix in container</h-button>
-      </h-affix>
+  <div id="affix-target" class="viewport">
+    <div class="track">
+      <h-affix target="#affix-target" :offset="12"><h-button>Filter</h-button></h-affix>
+      <div v-for="item in 10" :key="item" class="row">Item {{ item }}</div>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-</script>
-
 <style scoped>
-.target-wrapper {
-  height: 200px;
-  border: 1px solid var(--h-border-default);
+.viewport {
+  height: 260px;
   overflow: auto;
+  border: 1px solid var(--h-border-default);
+  border-radius: var(--h-radius-l);
 }
 
-.target-container {
-  height: 1000px;
-  background: var(--h-bg-weak-activated);
-  padding-top: 50px;
+.track {
+  display: grid;
+  min-height: 640px;
+  align-content: start;
+  gap: var(--h-spacing-3);
+  padding: var(--h-spacing-4);
+}
+
+.row {
+  border-radius: var(--h-radius-m);
+  padding: var(--h-spacing-3);
+  color: var(--h-text-secondary);
+  background: var(--h-bg-secondary);
 }
 </style>

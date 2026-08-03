@@ -1,19 +1,25 @@
-## Single Line Text Watermark
-Through the `content` attribute, you can set: single line text watermark content, the value is a string.
+Watermark repeats a non-interactive mark above protected content.
+
+## Single-line Text
+
+Pass a string to `content`, then tune spacing, rotation, and opacity for the surface.
 
 :::demo components/Watermark/demo1.vue :::
 
-## Multi-line Text Watermark
-Through the `content` attribute, you can set: multi-line text watermark content, the value is a string array.
+## Multi-line Text
+
+Pass a string array to `content` to render a multi-line watermark.
 
 :::demo components/Watermark/demo2.vue :::
 
 ## Image Watermark
-Through the `image` attribute, you can set: image watermark content. When the image fails to load, the value of the `content` attribute will be used as a fallback display.
+
+Use `image` for a bitmap watermark. When it fails to load, `content` can provide a text fallback.
 
 :::demo components/Watermark/demo3.vue :::
 
-## Additional Usage Scenarios
-You can listen to the component's `tampered` event to perform some additional operations.
+## Tamper Feedback
+
+The component emits `tampered` when its watermark nodes are changed, allowing the application to record or surface the event.
 
 :::demo components/Watermark/demo4.vue :::

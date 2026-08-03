@@ -1,11 +1,8 @@
-<template>
-  <h-audio-player v-if="audioUrl" :src="audioUrl" waveform-source="auto" :bar-count="64" />
-</template>
-
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 
 const audioUrl = ref('');
+const waveformSummary = ref('正在生成音频…');
 
 function createToneWav() {
   const sampleRate = 8000;
@@ -14,9 +11,11 @@ function createToneWav() {
   const buffer = new ArrayBuffer(44 + samples * 2);
   const view = new DataView(buffer);
   const write = (offset: number, text: string) => {
-    for (let index = 0; index < text.length; index += 1)
+    for (let index = 0; index < text.length; index += 1) {
       view.setUint8(offset + index, text.charCodeAt(index));
+    }
   };
+
   write(0, 'RIFF');
   view.setUint32(4, 36 + samples * 2, true);
   write(8, 'WAVEfmt ');
@@ -29,14 +28,49 @@ function createToneWav() {
   view.setUint16(34, 16, true);
   write(36, 'data');
   view.setUint32(40, samples * 2, true);
+
   for (let index = 0; index < samples; index += 1) {
     const envelope = Math.sin((index / samples) * Math.PI);
-    const sample = Math.sin((index / sampleRate) * Math.PI * 2 * (220 + (index / samples) * 220));
+    const frequency = 220 + (index / samples) * 220;
+    const sample = Math.sin((index / sampleRate) * Math.PI * 2 * frequency);
     view.setInt16(44 + index * 2, sample * envelope * 0x5fff, true);
   }
+
   return URL.createObjectURL(new Blob([buffer], { type: 'audio/wav' }));
 }
 
-onMounted(() => (audioUrl.value = createToneWav()));
-onBeforeUnmount(() => audioUrl.value && URL.revokeObjectURL(audioUrl.value));
+function regenerateAudio() {
+  if (audioUrl.value) URL.revokeObjectURL(audioUrl.value);
+  waveformSummary.value = '正在解析真实波形…';
+  audioUrl.value = createToneWav();
+}
+
+function handleWaveformReady(values: number[], source: string) {
+  waveformSummary.value = `${source === 'decoded' ? '真实解码' : '模拟降级'} · ${values.length} bars`;
+}
+
+onMounted(regenerateAudio);
+onBeforeUnmount(() => {
+  if (audioUrl.value) URL.revokeObjectURL(audioUrl.value);
+});
 </script>
+
+<template>
+  <section class="docs-demo">
+    <h-audio-player
+      v-if="audioUrl"
+      :key="audioUrl"
+      :src="audioUrl"
+      waveform-source="auto"
+      :bar-count="64"
+      aria-label="自动解码波形示例"
+      @waveform-ready="handleWaveformReady"
+    />
+    <div class="docs-demo__actions">
+      <h-button size="small" type="normal" icon="refresh" @click="regenerateAudio">
+        重新生成
+      </h-button>
+      <span class="docs-demo__status" aria-live="polite">{{ waveformSummary }}</span>
+    </div>
+  </section>
+</template>

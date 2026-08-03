@@ -1,28 +1,34 @@
-<template>
-  <h-space direction="vertical" block>
-    <h-segmented default-active-key="Default Option1">
-      <h-segmented-item v-for="v in options" :key="v" :label="v" />
-    </h-segmented>
-    <h-button type="normal" :loading="loading" :disabled="loaded" @click="onLoad">Load</h-button>
-  </h-space>
-</template>
-
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onBeforeUnmount, ref } from 'vue';
 
-const options = ref(['Default Option1', 'Default Option2']);
-const week = ['Monday', 'Tuesday', 'Wednesday'];
+const options = ref(['Overview', 'Activity']);
+const active = ref('Overview');
 const loading = ref(false);
-const loaded = ref(false);
+let timer: ReturnType<typeof setTimeout> | undefined;
 
-const onLoad = () => {
+function loadMore() {
+  if (loading.value || options.value.length > 2) return;
   loading.value = true;
-  setTimeout(() => {
-    options.value.push(...week);
+  timer = setTimeout(() => {
+    options.value.push('Analytics', 'Automations');
     loading.value = false;
-    loaded.value = true;
-  }, 1500);
-};
+  }, 500);
+}
+
+onBeforeUnmount(() => {
+  if (timer) clearTimeout(timer);
+});
 </script>
 
-<style scoped></style>
+<template>
+  <section class="docs-demo">
+    <div class="docs-demo__actions">
+      <h-button :loading="loading" :disabled="options.length > 2" @click="loadMore">
+        Load more
+      </h-button>
+    </div>
+    <h-segmented v-model:active-key="active" scrollable arrow>
+      <h-segmented-item v-for="option in options" :key="option" :label="option" />
+    </h-segmented>
+  </section>
+</template>

@@ -1,42 +1,18 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <h-auto-complete :options="options" :fit-input-width="false" placeholder="You like..." clearable @search="onSearch">
-        <template #default="item">
-          <div class="item-wrap">
-            <div class="title">{{ item.label }}</div>
-            <div class="font-bold">{{ item.value }}</div>
-          </div>
-        </template>
-      </h-auto-complete>
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { HAutoCompleteOptionProps } from '@aurora/horizon-web';
-import { faker } from '@faker-js/faker';
+import type { HAutoCompleteOption } from '@aurora/horizon-web';
 
-const options = ref<Partial<HAutoCompleteOptionProps>[]>([]);
-
-function onSearch(val: string) {
-  options.value = [];
-
-  if (val) {
-    new Array(10).fill(0).forEach(() => {
-      options.value.push({
-        value: faker.helpers.fake(`${faker.animal.cat()} also likes ${val}`),
-        label: faker.helpers.fake(`${faker.name.fullName()} likes ${val}`),
-      });
-    });
-  }
-}
+const value = ref('');
+const options: HAutoCompleteOption[] = [
+  { label: 'Avery Stone', value: 'avery.stone@example.com', description: 'Product Design' },
+  { label: 'Jordan Lee', value: 'jordan.lee@example.com', description: 'Engineering' },
+  { label: 'Sam Rivera', value: 'sam.rivera@example.com', description: 'Customer Success' },
+];
 </script>
 
-<style scoped>
-.item-wrap {
-  display: flex;
-  flex-direction: column;
-}
-</style>
+<template>
+  <section class="docs-demo">
+    <h-auto-complete v-model="value" :options="options" placeholder="搜索联系人" clearable />
+    <p class="docs-demo__status">modelValue: {{ value || '—' }}</p>
+  </section>
+</template>

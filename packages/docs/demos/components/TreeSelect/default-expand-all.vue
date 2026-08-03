@@ -1,42 +1,43 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <div class="demo-title">单选</div>
-      <h-tree-select
-        v-if="baseTreeData.length"
-        :tree-data="baseTreeData"
-        :is-default-expand-all="true"
-        :max-height="300"
-        :to-body="false"
-      />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">多选</div>
-      <h-tree-select
-        v-if="baseTreeData.length"
-        :tree-data="baseTreeData"
-        :is-default-expand-all="true"
-        :max-height="300"
-        :multiple="true"
-        :to-body="false"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
+import type { HTreeNodeData } from '@aurora/horizon-web';
 
-const baseTreeData = ref([]);
-
-onMounted(() => {
-  fetch(new URL('/tree-data.json', import.meta.url).href)
-    .then(res => res.json())
-    .then(res => {
-      baseTreeData.value = res;
-    });
-});
+const expandAll = ref(true);
+const instanceKey = ref(0);
+const selectedValue = ref<string | number>('audit-log');
+const treeData: HTreeNodeData[] = [
+  {
+    value: 'identity',
+    label: 'Identity',
+    children: [
+      { value: 'sso', label: 'Single sign-on' },
+      { value: 'directory-sync', label: 'Directory sync' },
+    ],
+  },
+  {
+    value: 'governance',
+    label: 'Governance',
+    children: [
+      { value: 'audit-log', label: 'Audit log' },
+      { value: 'retention', label: 'Data retention' },
+    ],
+  },
+];
 </script>
 
-<style scoped>
-</style>
+<template>
+  <div class="docs-demo">
+    <div class="docs-demo__controls">
+      <h-switch v-model="expandAll" label="Expand all initially" />
+      <h-button size="small" @click="instanceKey += 1">Recreate picker</h-button>
+    </div>
+    <h-tree-select
+      :key="instanceKey"
+      v-model="selectedValue"
+      :tree-data="treeData"
+      :is-default-expand-all="expandAll"
+      placeholder="Choose a service"
+      :to-body="false"
+    />
+  </div>
+</template>

@@ -1,46 +1,40 @@
-<template>
-  <h-form>
-    <h-form-item label="是否严格拦截上传文件">
-      <h-switch v-model="acceptStrict" :status="true" />
-    </h-form-item>
-    <h-form-item label="多选">
-      <h-switch v-model="multiple" :status="true" />
-    </h-form-item>
-  </h-form>
-  <h-space>
-    <h-upload
-      v-model="modelValue"
-      action="https://horizon-web-inspector.demoint.com/upload-mock"
-      method="POST"
-      accept=".png"
-      :multiple="multiple"
-      :accept-strict="acceptStrict"
-      :before-upload="onBeforeUpload"
-      @accept-error="onAcceptError"
-    />
-  </h-space>
-</template>
+<script setup lang="ts">
+import type { HUploadFileType, HUploadUserFile } from '@aurora/horizon-web';
+import { onBeforeUnmount, ref } from 'vue';
+import { createMockUploader, resolveLocalUpload } from './mockUpload';
 
-<script lang="ts" setup>
-import { ref } from 'vue';
-import { $message, HUploadFileType, HUploadRawFileType, UploadProps , HUploadFileTypeEnum } from '@aurora/horizon-web';
+const mockUploader = createMockUploader();
+const acceptStrict = ref(true);
+const files = ref<HUploadUserFile[]>([]);
+const status = ref('Only PNG files are accepted');
 
-const acceptStrict = ref<UploadProps['acceptStrict']>(false);
-const multiple = ref(false);
-
-const modelValue = ref<HUploadRawFileType>();
-
-function onBeforeUpload(file: HUploadFileType) {
-  console.info('before-upload:', file);
-  if (!(file.type === HUploadFileTypeEnum.Image && file.raw?.type === 'image/png')) {
-    $message.error('手动拦截：您选择的不是 PNG 文件');
-    return false;
-  } else return true;
+function beforeUpload(file: HUploadFileType) {
+  const valid = file.raw?.type === 'image/png' || file.name.toLowerCase().endsWith('.png');
+  status.value = valid ? `${file.name} passed validation` : `${file.name} was rejected`;
+  return valid;
 }
 
 function onAcceptError(files: HUploadFileType[]) {
-  console.info(files);
-
-  $message.error(`自动拦截：您选择的 ${files.map(file => file.name).join('、')} 不是 PNG 文件`);
+  status.value = `${files.map(file => file.name).join(', ')} did not match .png`;
 }
+
+onBeforeUnmount(mockUploader.dispose);
 </script>
+
+<template>
+  <div class="docs-demo">
+    <h-switch v-model="acceptStrict" label="Strict accept filtering" />
+    <h-upload
+      id="upload-demo-before-upload"
+      v-model="files"
+      :http-request="mockUploader.request"
+      :handle-success="resolveLocalUpload"
+      accept=".png"
+      :accept-strict="acceptStrict"
+      :before-upload="beforeUpload"
+      @accept-error="onAcceptError"
+      @uploaded="file => (status = `${file.name} uploaded`)"
+    />
+    <span aria-live="polite">{{ status }}</span>
+  </div>
+</template>

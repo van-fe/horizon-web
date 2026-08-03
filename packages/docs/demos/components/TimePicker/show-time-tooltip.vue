@@ -1,27 +1,45 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <h-time-picker v-model="value" type="time" :show-time-tooltip="showTimeTooltip" />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
-import { Dayjs } from 'dayjs';
+import type { Dayjs } from 'dayjs';
 
-const value = ref();
+const selectedTime = ref('10:00');
 
-function showTimeTooltip(time: Dayjs) {
-  if (time.hour() < 9 || time.hour() > 20) {
-    return {
-      show: false,
-    };
-  }
+function showWorkingHourTooltip(time: Dayjs) {
+  const hour = time.hour();
+  if (hour < 9 || hour > 20) return { show: false };
 
-  return {
-    show: true,
-    content: 'Working hours',
-  };
+  const period = hour < 12 ? '上午协作时段' : hour < 18 ? '核心协作时段' : '晚间值守时段';
+  return { show: true, content: period };
 }
 </script>
+
+<template>
+  <label class="time-picker-tooltip-demo">
+    <span>协作时段</span>
+    <h-time-picker
+      v-model="selectedTime"
+      type="time"
+      value-format="HH:mm"
+      :time-step="60"
+      :show-time-tooltip="showWorkingHourTooltip"
+      :clearable="false"
+      :to-body="false"
+      aria-label="带时段提示的时间"
+    />
+    <small aria-live="polite">已选择 {{ selectedTime }}</small>
+  </label>
+</template>
+
+<style scoped>
+.time-picker-tooltip-demo {
+  display: grid;
+  gap: var(--h-spacing-2);
+  max-inline-size: 420px;
+}
+
+.time-picker-tooltip-demo > span,
+.time-picker-tooltip-demo > small {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+</style>

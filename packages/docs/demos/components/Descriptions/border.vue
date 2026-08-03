@@ -1,20 +1,19 @@
 <template>
-  <div class="container">
-    <div>
-      <h-descriptions title="User Info" type="vertical" border :column="3">
-        <h-description-item label="Name" value="bingkun Zhou"></h-description-item>
-        <h-description-item label="Telephone" value="0924-250492" />
-        <h-description-item label="Residence" value="Norway" />
-        <h-description-item label="City" value="Oslo" />
-        <h-description-item label="Address" value="Leg.Kiropraktor Iréne Johnson" :span-col="2" />
+  <section class="docs-demo">
+    <article class="description-preview">
+      <h-descriptions title="PO-2026-0814" type="vertical" border :column="3">
+        <h-description-item label="Vendor" value="Northstar Studio" />
+        <h-description-item label="Amount" value="$12,480" />
+        <h-description-item label="Status" value="Awaiting approval" />
+        <h-description-item label="Requested by" value="Design Operations" />
+        <h-description-item label="Purpose" value="Research participant program" :span-col="2" />
       </h-descriptions>
-    </div>
-  </div>
+    </article>
+  </section>
 </template>
 
 <style scoped>
-.container {
-  display: flex;
-  flex-direction: column;
+.description-preview {
+  overflow-x: auto;
 }
 </style>

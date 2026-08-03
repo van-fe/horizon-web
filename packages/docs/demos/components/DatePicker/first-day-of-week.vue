@@ -1,36 +1,41 @@
-<template>
-  <h-form>
-    <h-form-item label="first day of week">
-      <h-input-number v-model="firstDayOfWeek" :min="0" :max="6" style="width: 200px" />
-    </h-form-item>
-    <h-form-item label="show before and after date">
-      <h-switch v-model="showBeforeAfterDate" status />
-    </h-form-item>
-    <h-form-item label="fixed six rows">
-      <h-switch v-model="fixedSixRows" status />
-    </h-form-item>
-  </h-form>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <h-date-picker v-model="value" type="date" :first-day-of-week="firstDayOfWeek" :show-before-after-date="showBeforeAfterDate" :fixed-six-rows="fixedSixRows" />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <h-date-picker v-model="values" type="date-range" :first-day-of-week="firstDayOfWeek" :show-before-after-date="showBeforeAfterDate" :fixed-six-rows="fixedSixRows" />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <h-date-picker v-model="value2" type="week" placeholder="week picker" format="[Week:] wo" :first-day-of-week="firstDayOfWeek" :show-before-after-date="showBeforeAfterDate" :fixed-six-rows="fixedSixRows" />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { DatePickerProps } from '@aurora/horizon-web';
 
-const value = ref();
-const values = ref();
-const value2 = ref();
-const firstDayOfWeek = ref<DatePickerProps['firstDayOfWeek']>(0);
-const showBeforeAfterDate = ref(true);
-const fixedSixRows = ref(false);
+const firstDayOfWeek = ref(1);
+const week = ref('2026-08-12');
 </script>
+
+<template>
+  <section class="date-picker-first-day">
+    <h-segmented v-model:active-key="firstDayOfWeek" size="small">
+      <h-segmented-item :key="0" label="Sunday" />
+      <h-segmented-item :key="1" label="Monday" />
+      <h-segmented-item :key="6" label="Saturday" />
+    </h-segmented>
+    <h-date-picker
+      v-model="week"
+      type="week"
+      :first-day-of-week="Number(firstDayOfWeek)"
+      format="[Week] wo"
+    />
+  </section>
+</template>
+
+<style scoped>
+.date-picker-first-day {
+  display: grid;
+  justify-items: start;
+  gap: var(--h-spacing-3);
+  max-inline-size: 680px;
+}
+
+.date-picker-first-day :deep(.h-date-picker) {
+  inline-size: 100%;
+}
+
+@media (max-width: 390px) {
+  .date-picker-first-day {
+    inline-size: 100%;
+  }
+}
+</style>

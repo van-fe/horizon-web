@@ -1,21 +1,34 @@
 <template>
-  <h-breadcrumb
-    class="mb-2"
-    :texts="[{ text: 'Home' }, { text: 'Sub Page1' }, { text: 'Sub Page2' }]"
-    separator="*"
-  />
-  <h-breadcrumb :texts="[{ text: 'Home' }, { text: 'Sub Page1' }, { text: 'Sub Page2' }]">
-    <template #separator><a-icon name="gift" size="12" /></template>
-  </h-breadcrumb>
+  <section class="docs-demo breadcrumb-divider-demo">
+    <div>
+      <span>Text</span>
+      <h-breadcrumb :texts="path" separator="·" />
+    </div>
+    <div>
+      <span>Icon</span>
+      <h-breadcrumb :texts="path">
+        <template #separator><IconArrowRight :size="12" /></template>
+      </h-breadcrumb>
+    </div>
+  </section>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import { AIcon } from '@aurora/icon';
+<script setup lang="ts">
+import { IconArrowRight } from '@aurora/icon';
 
-export default defineComponent({
-  components: {
-    AIcon,
-  },
-});
+const path = [{ text: 'Library' }, { text: 'Patterns' }, { text: 'Navigation' }];
 </script>
+
+<style scoped>
+.breadcrumb-divider-demo > div {
+  display: flex;
+  align-items: center;
+  gap: var(--h-spacing-4);
+}
+
+.breadcrumb-divider-demo span {
+  width: 40px;
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+</style>

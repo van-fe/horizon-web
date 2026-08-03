@@ -1,35 +1,38 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const src = ref('');
+</script>
+
 <template>
-  <div>
-    <h-button class="mb-2" @click="generateImage">reload</h-button>
-    <div class="flex">
-      <h-image :src="imgSrc" class="mr-2" :width="70" :height="70" />
-      <h-image :src="imgSrc" class="mr-2" :width="100" :height="100" />
-      <h-image :src="imgSrc" class="mr-2" :width="150" :height="150" />
-      <h-image :src="imgSrc" :width="150" :height="150">
-        <template #placeholder>
-          <div class="flex justify-center align-center" style="height: 100%">Loading...</div>
-        </template>
-      </h-image>
+  <section class="docs-demo">
+    <div class="docs-demo__actions">
+      <h-button @click="src = src ? '' : '/demo-assets/scene-forest.svg'">
+        {{ src ? 'Reset' : 'Load image' }}
+      </h-button>
     </div>
-  </div>
+
+    <h-image
+      :src="src"
+      alt="Forest campaign asset"
+      width="100%"
+      max-width="480px"
+      aspect-ratio="4/3"
+      rounded="10"
+    >
+      <template #placeholder>
+        <div class="placeholder">Awaiting artwork</div>
+      </template>
+    </h-image>
+  </section>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { getDemoImageUrl } from '../../demo-assets';
-export default defineComponent({
-  setup() {
-    const imgSrc = ref('');
-    let imageIndex = 0;
-    const generateImage = () => {
-      imgSrc.value = getDemoImageUrl(imageIndex);
-      imageIndex += 1;
-    };
-    generateImage();
-    return {
-      imgSrc,
-      generateImage,
-    };
-  },
-});
-</script>
+<style scoped>
+.placeholder {
+  display: grid;
+  height: 100%;
+  place-items: center;
+  color: var(--h-text-secondary);
+  background: var(--h-bg-secondary);
+}
+</style>

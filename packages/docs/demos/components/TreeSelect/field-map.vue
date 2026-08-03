@@ -1,40 +1,41 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <div class="demo-title">单选</div>
-      <h-tree-select
-        :tree-data="baseTreeData"
-        :field-map="{value: 'key', label: 'text', children: 'items'}"
-      >
-        <template #treeNodeRender="{data}">
-          {{ data.label }}
-        </template>
-      </h-tree-select>
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">多选</div>
-      <h-tree-select
-        :tree-data="baseTreeData"
-        :field-map="{value: 'key', label: 'text', children: 'items'}"
-        :multiple="true"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
+import type { HTreeNodeData } from '@aurora/horizon-web';
 
-const baseTreeData = ref([]);
+interface TaxonomyNode {
+  code: string;
+  text: string;
+  items?: TaxonomyNode[];
+}
 
-onMounted(() => {
-  fetch(new URL('/field-map-options.json', import.meta.url).href)
-    .then(res => res.json())
-    .then(res => {
-      baseTreeData.value = res;
-    });
-});
+const selectedValue = ref<string | number>('security-access');
+const externalData: TaxonomyNode[] = [
+  {
+    code: 'security',
+    text: 'Security controls',
+    items: [
+      { code: 'security-access', text: 'Access governance' },
+      { code: 'security-audit', text: 'Audit evidence' },
+    ],
+  },
+  {
+    code: 'privacy',
+    text: 'Privacy controls',
+    items: [{ code: 'privacy-retention', text: 'Retention policy' }],
+  },
+];
+const treeData = externalData as unknown as HTreeNodeData[];
 </script>
 
-<style scoped>
-</style>
+<template>
+  <div class="docs-demo">
+    <h-tree-select
+      v-model="selectedValue"
+      :tree-data="treeData"
+      :field-map="{ value: 'code', label: 'text', children: 'items' }"
+      placeholder="Choose a compliance category"
+      :to-body="false"
+    />
+    <span aria-live="polite">External key: {{ selectedValue || 'none' }}</span>
+  </div>
+</template>

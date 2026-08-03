@@ -1,36 +1,45 @@
-## 基本用法
-通过 `sources` 传入资源列表。
+Viewer 在全屏层中查看图片、视频或混合资源列表。
+
+## 基础用法
+
+通过 `sources` 传入资源，并使用 `v-model` 控制打开状态。
+
 :::demo components/Viewer/basic.vue :::
 
-## 循环展示
-你可以传入 `loop` 启用循环切换功能。
+## 循环切换
+
+`loop` 让上一项和下一项操作在列表首尾循环。
+
 :::demo components/Viewer/loop.vue :::
 
 ## 自动隐藏工具栏
-默认情况下 3 秒无操作会自动隐藏工具栏，你可以禁用这一行为。
+
+`auto-hide-tools` 控制工具栏是否在无操作后隐藏。
+
 :::demo components/Viewer/autohide.vue :::
 
 ## 图注
-图注是图片上的标签，你可以给一张图片配置多个图注，设置了 `handler` 的图注是可点击的。  
-只有图片才支持图注，视频不支持。
+
+图片 source 可配置多个 `legends`；提供 `handler` 后图注可点击。视频不支持图注。
+
 :::demo components/Viewer/legend.vue :::
 
-## 自定义按钮
-你可以重新组合想要的内置按钮，或者添加完全自定义的按钮。
+## 自定义工具
+
+`tools` 可重排内置工具，也可加入包含图标、标题和处理函数的自定义操作。
+
 :::demo components/Viewer/tools.vue :::
 
-## 点击图片触发
-要想通过点击页面上已经存在的图片触发画廊，需要一点额外的工作。
+## 从缩略图打开
+
+点击页面中的缩略图时，使用 `init-index` 从对应资源开始查看。
+
 :::demo components/Viewer/imgclick.vue :::
 
-## 按键支持
-<kbd>Esc</kbd> 关闭查看器  
-<kbd>←</kbd> 上一张图片  
-<kbd>→</kbd> 下一张图片  
-<kbd>↑</kbd> 放大图片  
-<kbd>↓</kbd> 缩小图片  
-<kbd>鼠标双击</kbd> 在原始大小和自适应大小间切换  
-<kbd>鼠标滚轮或触控板双指滑动</kbd> 浏览超出可视区域的图片<br>
-<kbd>触控板双指捏合或 Ctrl + 鼠标滚轮</kbd> 以指针位置为中心放大或缩小图片
+## 键盘与指针
 
-高度明显大于宽度的长图会按可读宽度展示，并从图片顶部开始浏览。
+- <kbd>Esc</kbd> 关闭查看器
+- <kbd>←</kbd> / <kbd>→</kbd> 切换资源
+- <kbd>↑</kbd> / <kbd>↓</kbd> 缩放图片
+- 双击在原始大小与自适应大小间切换
+- 滚轮、触控板和捏合手势可浏览或缩放图片

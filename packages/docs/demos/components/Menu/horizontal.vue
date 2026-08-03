@@ -1,210 +1,93 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="24">
-      <h-form
-        label-position="left"
-        label-vertical-align="middle"
-        label-justify-align="right"
-        :inline="true"
-      >
-        <h-form-item label="theme:">
-          <h-radio-group v-model="theme">
-            <h-radio value="default">default</h-radio>
-            <h-radio value="gray">gray</h-radio>
-            <h-radio value="midnight">midnight</h-radio>
-          </h-radio-group>
-        </h-form-item>
-        <h-form-item label="activeType:">
-          <h-radio-group v-model="activeType">
-            <h-radio value="button">button</h-radio>
-            <h-radio value="link">link</h-radio>
-          </h-radio-group>
-        </h-form-item>
-        <h-form-item label="submenuExpandType:">
-          <h-radio-group v-model="submenuExpandType">
-            <h-radio value="single">single</h-radio>
-            <h-radio value="full">full</h-radio>
-          </h-radio-group>
-        </h-form-item>
-      </h-form>
-    </h-grid-item>
-  </h-grid>
-  <h-grid :gap="12">
-    <h-grid-item :span="24">
-      <h-container>
-        <h-header height="auto" style="padding: 0">
-          <h-menu
-            ref="menuRef"
-            mode="horizontal"
-            :selected-value="selectedValue"
-            :theme="theme"
-            :active-type="activeType"
-            :submenu-expand-type="submenuExpandType"
-            max-width="1200px"
-            @selected="onSelected"
-          >
-            <template #prepend>
-              <div class="logo">
-                <div class="img">
-                  <svg
-                    width="36"
-                    height="26"
-                    viewBox="0 0 32 29"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M30.405 18.4413L21.7817 3.52064C20.8864 1.97192 19.4675 0.842547 17.7659 0.317556C17.762 0.316275 17.7582 0.314995 17.7543 0.314354C17.7159 0.30219 17.6768 0.290666 17.6383 0.279782C17.5941 0.266977 17.5499 0.254813 17.5057 0.242648H17.5031C16.9526 0.0921936 16.3867 0.0115242 15.8163 0.000640233C15.8009 0.000640233 15.7855 0 15.7701 0C15.74 0 15.7099 0 15.6798 0C15.6458 0 15.6112 0 15.5772 0C15.5657 0 15.5548 0 15.5432 0.000640233C14.9235 0.0115242 14.3082 0.105638 13.7122 0.279782C13.6744 0.290666 13.6372 0.30219 13.6 0.313074C13.5949 0.314354 13.5898 0.316275 13.5847 0.317556C11.8837 0.842547 10.4654 1.97128 9.57009 3.52L0.946819 18.4413C0.00598254 20.0694 -0.243967 21.9658 0.243114 23.7815C0.730196 25.5972 1.89599 27.1145 3.52515 28.0544C4.61083 28.6805 5.81507 29 7.03598 29C7.64804 29 8.26394 28.92 8.87087 28.7573C10.6885 28.2708 12.2074 27.1062 13.1482 25.4787L15.6766 21.1066L18.2036 25.4787C19.1445 27.1068 20.6634 28.2708 22.481 28.7573C23.0879 28.92 23.7038 29 24.3158 29C25.5368 29 26.741 28.6799 27.8267 28.0544C29.4565 27.1145 30.6216 25.5972 31.1087 23.7815C31.5958 21.9658 31.3458 20.0694 30.405 18.4413ZM27.3941 22.7872C27.173 23.6118 26.6436 24.3007 25.9034 24.7277C25.1631 25.1548 24.3011 25.2681 23.4756 25.0472C22.6502 24.8263 21.9606 24.2975 21.5331 23.558L17.8973 17.2664C18.1216 16.8791 18.2742 16.5981 18.8523 15.6C19.8104 13.9456 19.1003 11.345 17.4398 10.3847L14.7088 15.1172L14.6992 15.1108L9.81683 23.558C9.38936 24.2975 8.69975 24.8263 7.87428 25.0472C7.0488 25.2681 6.18679 25.1548 5.44656 24.7277C4.70632 24.3007 4.17694 23.6118 3.95583 22.7872C3.73472 21.9626 3.84816 21.1014 4.27564 20.362L12.9008 5.44134C13.0002 5.26976 13.1142 5.1097 13.2405 4.96181L13.2431 4.96821C13.4776 4.69355 13.7596 4.45794 14.082 4.27164C14.4518 4.05844 14.8517 3.92335 15.2619 3.86957C15.4003 3.85164 15.5388 3.84268 15.6766 3.84204C15.8143 3.84204 15.9528 3.851 16.0912 3.86893C16.502 3.92335 16.902 4.05844 17.2717 4.271C17.7351 4.53797 18.1158 4.90867 18.3901 5.35043L18.3952 5.34787C18.4145 5.3786 18.4337 5.40933 18.4523 5.4407L27.0762 20.362C27.5037 21.1014 27.6171 21.9626 27.396 22.7872H27.3941Z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </div>
-                <div class="text">Aurora</div>
-              </div>
-            </template>
-            <template #append>
-              <h-button v-tooltip="'提醒'" type="normal" :text="true">
-                <template #icon>
-                  <a-icon
-                    name="notice"
-                    size="20"
-                    :color="
-                      theme === 'midnight' ? 'var(--h-text-inverse)' : 'var(--h-text-primary)'
-                    "
-                  ></a-icon>
-                </template>
-              </h-button>
-              <h-popover class="avatar-popover" placement="bottom-end">
-                <template #reference>
-                  <h-avatar size="small" style="align-self: center" />
-                </template>
-                <template #popper>
-                  <h-pop-content>
-                    <div class="text-body-2 text-center mb-3" style="color: var(--h-text-tertiary)">
-                      Dear Demoer, Welcome
-                    </div>
-                    <h-button type="normal" size="large" text block class="mb-2">修改密码</h-button>
-                    <h-button type="normal" size="large" text block>退出登录</h-button>
-                  </h-pop-content>
-                </template>
-              </h-popover>
-            </template>
-            <h-menu-item value="1">
-              <template #title>一级菜单 1</template>
-            </h-menu-item>
-            <h-sub-menu value="2">
-              <template #title>一级菜单 2</template>
-              <h-sub-menu value="2-1">
-                <template #title>二级菜单 1</template>
-                <h-menu-item value="2-1-1">三级菜单 1</h-menu-item>
-                <h-menu-item value="2-1-2">三级菜单 2</h-menu-item>
-                <h-menu-item value="2-1-3">三级菜单 3</h-menu-item>
-                <h-menu-item value="2-1-4">三级菜单 4</h-menu-item>
-              </h-sub-menu>
-              <h-sub-menu value="2-2">
-                <template #title>二级菜单 2</template>
-                <h-menu-item value="2-2-1">三级菜单 1</h-menu-item>
-                <h-menu-item value="2-2-2">三级菜单 2</h-menu-item>
-                <h-menu-item value="2-2-3">三级菜单 3</h-menu-item>
-                <h-menu-item value="2-2-4">
-                  三级菜单 4三级菜单 4三级菜单 4三级菜单 4三级菜单 4
-                </h-menu-item>
-              </h-sub-menu>
-            </h-sub-menu>
-            <h-sub-menu value="3" :selectable="true">
-              <template #title>
-                一级菜单 3 的名字超级长，可以看到 tooltip
-                的显示，如果没有显示，还需要增加更多更多内容
-              </template>
-              <h-sub-menu value="3-1">
-                <template #title>二级菜单 1</template>
-                <h-menu-item value="3-1-1" disabled icon="calendar">三级菜单 1</h-menu-item>
-                <h-menu-item value="3-1-2">三级菜单 2</h-menu-item>
-                <h-menu-item value="3-1-3">三级菜单 3</h-menu-item>
-                <h-menu-item value="3-1-4">三级菜单 4</h-menu-item>
-              </h-sub-menu>
-              <h-sub-menu value="3-2">
-                <template #title>二级菜单 2</template>
-                <h-menu-item value="3-2-1">
-                  三级菜单 1三级菜单 1三级菜单 1三级菜单 1三级菜单 1
-                </h-menu-item>
-                <h-menu-item value="3-2-2">三级菜单 2</h-menu-item>
-                <h-menu-item value="3-2-3">三级菜单 3</h-menu-item>
-                <h-menu-item value="3-2-4">三级菜单 4</h-menu-item>
-              </h-sub-menu>
-              <h-sub-menu value="3-3" :selectable="true">
-                <template #title>二级菜单 3</template>
-                <h-menu-item value="3-3-1">三级菜单 1</h-menu-item>
-                <h-sub-menu value="3-3-2">
-                  <template #title>三级菜单 2</template>
-                  <h-menu-item value="3-3-2-1">四级菜单 1</h-menu-item>
-                  <h-menu-item value="3-3-2-2">四级菜单 2</h-menu-item>
-                </h-sub-menu>
-              </h-sub-menu>
-            </h-sub-menu>
-            <h-menu-item value="4">
-              <template #title>一级菜单 4</template>
-            </h-menu-item>
-            <h-menu-item value="5">
-              <template #title>一级菜单 5</template>
-            </h-menu-item>
-            <h-menu-item value="6">
-              <template #title>一级菜单 6</template>
-            </h-menu-item>
-          </h-menu>
-        </h-header>
-        <h-main style="background: var(--h-bg-info-weak-hover); min-height: 500px"></h-main>
-      </h-container>
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { ExtractPropTypes, ref } from 'vue';
-import { AIcon } from '@aurora/icon';
-import { HMenu, useMenuItemProps, useMenuProps, useSubMenuProps } from '@aurora/horizon-web';
+import { ref } from 'vue';
 
-type menuPropType = ExtractPropTypes<typeof useMenuProps>;
-type menuItemPropType = ExtractPropTypes<typeof useMenuItemProps>;
-type subMenuPropType = ExtractPropTypes<typeof useSubMenuProps>;
+const selectedValue = ref('home');
 
-const menuRef = ref<typeof HMenu | null>(null);
-const theme = ref<menuPropType['theme']>('default');
-const activeType = ref<menuPropType['activeType']>('link');
-const submenuExpandType = ref<menuPropType['submenuExpandType']>('full');
-const selectedValue = ref('3-1-1');
+const pages: Record<string, string> = {
+  home: '首页',
+  dashboard: '数据看板',
+  realtime: '实时监控',
+  reports: '分析报告',
+  members: '成员管理',
+  roles: '角色权限',
+  settings: '系统设置',
+};
 
-const onSelected = (value: string, values: (menuItemPropType | subMenuPropType)[]) => {
+const select = (value: string) => {
   selectedValue.value = value;
-  console.info('selected', value, values);
 };
 </script>
 
+<template>
+  <div class="docs-demo">
+    <div class="horizontal-shell">
+      <div class="horizontal-scroll">
+        <h-menu
+          mode="horizontal"
+          :selected-value="selectedValue"
+          max-width="980px"
+          @selected="select"
+        >
+          <template #prepend>
+            <div class="horizontal-brand">
+              <span>H</span>
+              <strong>Horizon</strong>
+            </div>
+          </template>
+          <h-menu-item value="home">首页</h-menu-item>
+          <h-sub-menu value="analytics">
+            <template #title>数据中心</template>
+            <h-menu-item value="dashboard">数据看板</h-menu-item>
+            <h-sub-menu value="monitoring">
+              <template #title>监控分析</template>
+              <h-menu-item value="realtime">实时监控</h-menu-item>
+              <h-menu-item value="reports">分析报告</h-menu-item>
+            </h-sub-menu>
+          </h-sub-menu>
+          <h-sub-menu value="team">
+            <template #title>团队</template>
+            <h-menu-item value="members">成员管理</h-menu-item>
+            <h-menu-item value="roles">角色权限</h-menu-item>
+          </h-sub-menu>
+          <h-menu-item value="settings">系统设置</h-menu-item>
+        </h-menu>
+      </div>
+    </div>
+    <p class="docs-demo__status" role="status">当前页面：{{ pages[selectedValue] }}</p>
+  </div>
+</template>
+
 <style scoped>
-.logo {
-  display: flex;
-  grid-column-gap: 12px;
-  align-items: center;
+.horizontal-shell {
+  overflow: hidden;
+  border: 1px solid var(--h-border-default);
+  border-radius: 12px;
 }
 
-.logo .img {
-  flex: 0 0 36px;
-  display: flex;
-  align-items: center;
+.horizontal-scroll {
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
 }
 
-.logo .text {
-  font-size: 24px;
-  font-weight: bold;
-  line-height: 1;
+.horizontal-scroll :deep(.h-menu) {
+  min-width: 720px;
 }
 
-.avatar-popover {
+.horizontal-brand {
   display: flex;
   align-items: center;
+  gap: 8px;
+  padding-right: 16px;
 }
 
-.avatar-popover :deep(.h-popover__reference) {
-  display: flex;
+.horizontal-brand span {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: 8px;
+  color: var(--h-text-inverse);
+  background: var(--h-bg-brand-default);
+  font-weight: var(--h-weight-strong);
 }
 </style>

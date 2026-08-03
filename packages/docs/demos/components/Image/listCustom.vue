@@ -1,53 +1,37 @@
+<script setup lang="ts">
+const images = [
+  { src: '/demo-assets/scene-city.svg', title: 'North entrance' },
+  { src: '/demo-assets/scene-coast.svg', title: 'Cooling system' },
+  { src: '/demo-assets/scene-forest.svg', title: 'Safety perimeter' },
+  { src: '/demo-assets/scene-night.svg', title: 'Night lighting' },
+  { src: '/demo-assets/scene-summit.svg', title: 'Roof access' },
+  { src: '/demo-assets/scene-aurora.svg', title: 'Control room' },
+];
+const limit = 3;
+</script>
+
 <template>
-  <div>
-    <h-image-list margin="8px" :limit="3" :limit-text-size="20">
-      <h-image
-        v-for="img in imgs"
-        :key="img.src"
-        :src="img.src"
-        width="120px"
-        height="120px"
-        rounded="8px"
-        :show-viewer="true"
-      />
-      <template #limit>
-        <span class="font-bold">More {{ imgs.length - 3 }}</span>
-      </template>
-    </h-image-list>
-  </div>
+  <h-image-list :limit="limit" :margin="8" :limit-text-size="12">
+    <h-image
+      v-for="image in images"
+      :key="image.src"
+      :src="image.src"
+      :alt="image.title"
+      :title="image.title"
+      width="96px"
+      height="96px"
+      rounded="10"
+      show-viewer
+    />
+    <template #limit>
+      <span class="limit">+{{ images.length - limit }}</span>
+    </template>
+  </h-image-list>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    const imgs = ref([
-      {
-        src: '/demo-assets/scene-aurora.svg',
-      },
-      {
-        src: '/demo-assets/scene-summit.svg',
-      },
-      {
-        src: '/demo-assets/scene-city.svg',
-      },
-      {
-        src: '/demo-assets/scene-coast.svg',
-      },
-      {
-        src: '/demo-assets/scene-forest.svg',
-      },
-      {
-        src: '/demo-assets/scene-night.svg',
-      },
-    ]);
-    const customLimitText = (total: number, limit: number) => {
-      return `More ${total - limit}...`;
-    };
-    return {
-      imgs,
-      customLimitText,
-    };
-  },
-});
-</script>
+<style scoped>
+.limit {
+  color: var(--h-text-inverse);
+  font-weight: 700;
+}
+</style>

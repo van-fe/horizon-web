@@ -1,20 +1,38 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const score = ref(3);
+const sizes = [
+  { label: 'small', value: 'small' },
+  { label: 'large', value: 'large' },
+  { label: '32px', value: '32' },
+];
+</script>
+
 <template>
-  <div class="">
-    <h-rate v-model="currentScore" size="small" />
-    <h-rate v-model="currentScore" size="medium" />
-    <h-rate v-model="currentScore" size="large" />
-    <h-rate v-model="currentScore" size="32" />
-    <h-rate v-model="currentScore" size="36" />
+  <div class="size-list">
+    <div v-for="item in sizes" :key="item.value">
+      <span>{{ item.label }}</span>
+      <h-rate v-model="score" :size="item.value" />
+    </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    return {
-      currentScore: ref(3),
-    };
-  },
-});
-</script>
+<style scoped>
+.size-list {
+  display: grid;
+  gap: var(--h-spacing-4);
+}
+
+.size-list > div {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  align-items: center;
+  gap: var(--h-spacing-4);
+}
+
+.size-list span {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+</style>

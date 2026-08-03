@@ -1,44 +1,25 @@
-<template>
-  <div>
-    <h-button class="mb-3" @click="doRotate">Rotate</h-button>
-    <h-video-player
-      :sources="[
-        {
-          src: '/aurora-background.mp4',
-          type: 'video/mp4',
-        },
-      ]"
-      poster="/demo-assets/video-poster.svg"
-      :rotate="degree"
-    />
-  </div>
-</template>
+<script setup lang="ts">
+import { ref } from 'vue';
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    const degree = ref(0);
-    const doRotate = () => {
-      switch (degree.value) {
-        case 0:
-          degree.value = 90;
-          return;
-        case 90:
-          degree.value = 180;
-          return;
-        case 180:
-          degree.value = 270;
-          return;
-        case 270:
-          degree.value = 0;
-          return;
-      }
-    };
-    return {
-      degree,
-      doRotate,
-    };
-  },
-});
+const sources = [{ src: '/aurora-background.mp4', type: 'video/mp4' }];
+const rotation = ref<0 | 90 | 180 | 270>(0);
 </script>
+
+<template>
+  <section class="docs-demo">
+    <div class="docs-demo__controls">
+      <h-segmented v-model:active-key="rotation" size="small">
+        <h-segmented-item :key="0" label="0°" />
+        <h-segmented-item :key="90" label="90°" />
+        <h-segmented-item :key="180" label="180°" />
+        <h-segmented-item :key="270" label="270°" />
+      </h-segmented>
+    </div>
+    <h-video-player
+      :sources="sources"
+      poster="/demo-assets/video-poster.svg"
+      :rotate="rotation"
+      preload="metadata"
+    />
+  </section>
+</template>

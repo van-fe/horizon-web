@@ -1,106 +1,71 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const flip = ref(true);
+const preventOverflow = ref(false);
+</script>
+
 <template>
-  <div class="mb-4">
-    <h-popover class="mr-4" popper-class="flip_popover" trigger="click" placement="top">
-      <template #reference>
-        <h-button :plain="true">flip top bottom</h-button>
-      </template>
-      <template #popper>
-        <demo-content></demo-content>
-      </template>
-    </h-popover>
-  </div>
-  <!--  -->
-  <div class="mb-4">
-    <h-popover
-      class="mr-4"
-      trigger="click"
-      popper-class="flip_popover"
-      :fallback-placements="['top', 'bottom', 'left', 'right']"
-    >
-      <template #reference>
-        <h-button :plain="true">fallbackPlacements left right</h-button>
-      </template>
-      <template #popper>
-        <demo-content></demo-content>
-      </template>
-    </h-popover>
-  </div>
-  <div class="mb-4">
-    <h-popover
-      class="mr-4"
-      trigger="click"
-      popper-class="flip_popover"
-      prevent-overflow
-    >
-      <template #reference>
-        <h-button :plain="true">preventOverflow enabled</h-button>
-      </template>
-      <template #popper>
-        <demo-content></demo-content>
-      </template>
-    </h-popover>
+  <div class="docs-demo">
+    <div class="docs-demo__controls">
+      <label class="toggle-row">
+        <span>空间不足时翻转</span>
+        <h-switch v-model="flip" status />
+      </label>
+      <label class="toggle-row">
+        <span>防止溢出</span>
+        <h-switch v-model="preventOverflow" status />
+      </label>
+    </div>
+    <div class="flip-stage">
+      <h-popover
+        trigger="click"
+        placement="top"
+        :flip="flip"
+        :fallback-placements="['top', 'bottom', 'left']"
+        :prevent-overflow="preventOverflow"
+      >
+        <template #reference><h-button type="normal">从顶部打开</h-button></template>
+        <template #popper>
+          <h-pop-content>
+            <div class="flip-content">
+              <strong>自动寻找可用空间</strong>
+              <span>空间不足时自动选择可用方向。</span>
+            </div>
+          </h-pop-content>
+        </template>
+      </h-popover>
+    </div>
   </div>
 </template>
 
-<script>
-import { defineComponent, h } from 'vue';
-import { HPopContent } from '@aurora/horizon-web';
-
-const DemoContent = defineComponent({
-  render: () =>
-    h(
-      HPopContent,
-      {},
-      {
-        default: () =>
-          h(
-            'div',
-            {
-              class: 'popper',
-            },
-            [
-              h(
-                'div',
-                {
-                  class: 'header',
-                },
-                ['内容标题'],
-              ),
-              h(
-                'div',
-                {
-                  class: 'content',
-                },
-                ['我是气泡卡片文本描述内容, 我是气泡卡片文字链接...'],
-              ),
-            ],
-          ),
-      },
-    ),
-});
-
-export default defineComponent({
-  components: {
-    DemoContent,
-  },
-});
-</script>
-
-<style>
-.flip_popover .popper {
-  width: 280px;
+<style scoped>
+.flip-stage {
+  display: flex;
+  min-height: 160px;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 16px;
+  border-radius: 8px;
+  background: var(--h-bg-secondary);
 }
 
-.flip_popover .header {
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 22px;
-  margin-bottom: 4px;
+.toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--h-text-secondary);
+  font-size: 13px;
 }
 
-.flip_popover .content {
-  font-size: 14px;
-  line-height: 22px;
-  height: 400px;
+.flip-content {
+  display: grid;
+  width: 220px;
+  gap: 5px;
+}
+
+.flip-content span {
+  color: var(--h-text-secondary);
+  font-size: 12px;
 }
 </style>

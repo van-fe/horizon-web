@@ -1,51 +1,122 @@
-<template>
-  <h-table :data="data" height="500" row-key="uuid" :dynamic-load="dynamicLoad" @update:data="onUpdate">
-    <h-table-column title="Seq" type="index" />
-    <h-table-column title="Name" field="name" />
-    <h-table-column title="Gender" field="gender" />
-    <h-table-column title="Birthday" field="birthday" />
-    <h-table-column title="Address" field="address" />
-  </h-table>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
-import { faker } from '@faker-js/faker';
 import type { HTableTransformedRowDataType } from '@aurora/horizon-web';
 
-interface TableData {
-  uuid: string;
-  name: string;
-  birthday: string;
-  gender: 'male' | 'female';
-  address: string;
-  children: TableData[];
-  isLeaf: boolean | undefined;
+interface ServiceRow {
+  id: string;
+  service: string;
+  owner: string;
+  environment: string;
+  health: string;
+  children: ServiceRow[];
+  isLeaf?: boolean;
 }
 
-const createData = (amount: number, childAmount: number, level = 0): TableData[] => new Array(amount).fill(0).map(() => ({
-  uuid: faker.string.uuid(),
-  name: faker.person.fullName(),
-  birthday: faker.date.birthdate({ min: 22, max: 50, mode: 'age' }).toDateString(),
-  gender: faker.helpers.arrayElement(['male', 'female']),
-  address: faker.location.streetAddress(),
-  children: childAmount > 0 && level < 4 ? createData(childAmount, childAmount - 2, level + 1) : [],
-  isLeaf: childAmount <= 0 ? (level >= 4 ? true : faker.datatype.boolean()) : undefined,
-}));
+const loadStatus = ref('Expand Data services to lazy-load its children.');
+const services = ref<ServiceRow[]>([
+  {
+    id: 'commerce',
+    service: 'Commerce',
+    owner: 'Mina Park',
+    environment: 'Production',
+    health: 'Healthy',
+    children: [
+      {
+        id: 'checkout',
+        service: 'Checkout API',
+        owner: 'Platform',
+        environment: 'Production',
+        health: 'Healthy',
+        children: [],
+        isLeaf: true,
+      },
+      {
+        id: 'catalog',
+        service: 'Catalog index',
+        owner: 'Search',
+        environment: 'Production',
+        health: 'Watch',
+        children: [],
+        isLeaf: true,
+      },
+    ],
+  },
+  {
+    id: 'data',
+    service: 'Data services',
+    owner: 'Noah Chen',
+    environment: 'Production',
+    health: 'Healthy',
+    children: [],
+    isLeaf: false,
+  },
+  {
+    id: 'internal',
+    service: 'Internal tools',
+    owner: 'Iris Wang',
+    environment: 'Staging',
+    health: 'Healthy',
+    children: [
+      {
+        id: 'admin',
+        service: 'Admin console',
+        owner: 'Operations',
+        environment: 'Staging',
+        health: 'Healthy',
+        children: [],
+        isLeaf: true,
+      },
+    ],
+  },
+]);
 
-const data = ref<TableData[]>(createData(20, 6));
-
-function dynamicLoad(rowData: HTableTransformedRowDataType) {
-  console.info(rowData);
-
-  return new Promise<TableData[]>(resolve => {
-    setTimeout(() => {
-      resolve(createData(2, 0));
-    }, 2000);
-  });
-}
-
-function onUpdate(data: any) {
-  console.info(data);
+function dynamicLoad(row: HTableTransformedRowDataType) {
+  loadStatus.value = `Loaded child services for ${String(row.service)}.`;
+  return Promise.resolve<ServiceRow[]>([
+    {
+      id: 'warehouse',
+      service: 'Warehouse sync',
+      owner: 'Data Infra',
+      environment: 'Production',
+      health: 'Healthy',
+      children: [],
+      isLeaf: true,
+    },
+    {
+      id: 'metrics',
+      service: 'Metrics pipeline',
+      owner: 'Observability',
+      environment: 'Production',
+      health: 'Watch',
+      children: [],
+      isLeaf: true,
+    },
+  ]);
 }
 </script>
+
+<template>
+  <div class="table-tree-demo">
+    <h-table :data="services" row-key="id" :dynamic-load="dynamicLoad" height="360">
+      <h-table-column title="Service" field="service" min-width="220" />
+      <h-table-column title="Owner" field="owner" min-width="145" />
+      <h-table-column title="Environment" field="environment" width="130" />
+      <h-table-column title="Health" field="health" width="108" />
+    </h-table>
+    <p aria-live="polite">{{ loadStatus }}</p>
+  </div>
+</template>
+
+<style scoped>
+.table-tree-demo {
+  display: grid;
+  min-width: 0;
+  gap: var(--h-spacing-3);
+}
+
+.table-tree-demo p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+</style>

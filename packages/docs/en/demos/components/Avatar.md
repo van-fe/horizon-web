@@ -1,17 +1,23 @@
-## Default Image Avatar
+## Image and group avatars
+
+A personal avatar can choose from `random-src` candidates. Pass an image array to `src` to compose a group avatar with up to nine members.
 
 :::demo components/Avatar/normal.vue :::
 
-## Attribute Settings
+## Size and image fit
+
+`size` accepts named presets or a custom pixel value. In image mode, use `fit` to control the native `object-fit` behavior inside the avatar.
 
 :::demo components/Avatar/type.vue :::
 
-## Text Avatar
+## Work and text avatars
+
+Set `type="work"` to represent a team or department with an icon or text. Use Horizon semantic tokens for custom colors so the result works in light and dark themes.
 
 :::demo components/Avatar/work.vue :::
 
-## Fallback
+## Image fallbacks
 
-Fallback behavior when the image fails to load when the display type is image
+When an image fails, provide a `default` resource, replace the URL from the `error` event, or fully customize the result through the `error` slot. The demo uses a missing local path for deterministic feedback without an external service.
 
 :::demo components/Avatar/error.vue :::

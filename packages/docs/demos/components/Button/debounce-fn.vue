@@ -1,35 +1,81 @@
-<script lang="ts" setup>
-import { ref } from 'vue';
-import { $message } from '@aurora/horizon-web';
-
-const debounceType = ref('disabled');
-
-const saveData = () => {
-  console.info('clicked!');
-  return new Promise(resolve => {
-    setTimeout(() => {
-      $message.success('保存成功！');
-      resolve(null);
-    }, 2000);
-  });
-};
-</script>
-
 <template>
-  <div class="flex mb-4">
-    <span class="mr-2">debounce-type:</span>
-    <h-radio-group v-model="debounceType" size="small">
-      <h-radio value="disabled">disabled</h-radio>
-      <h-radio value="loading">loading</h-radio>
-      <h-radio value="none">none</h-radio>
-    </h-radio-group>
-  </div>
-  <h-button :debounce-fn="saveData" :debounce-type="debounceType">防抖按钮</h-button>
-  <h-button @click="saveData">普通按钮</h-button>
+  <section class="button-debounce-demo">
+    <div class="button-debounce-demo__controls">
+      <span>While saving</span>
+      <h-segmented v-model:active-key="debounceType" size="small" block>
+        <h-segmented-item label="disabled" />
+        <h-segmented-item label="loading" />
+        <h-segmented-item label="none" />
+      </h-segmented>
+    </div>
+
+    <h-space wrap>
+      <h-button :debounce-fn="saveDebounced" :debounce-type="debounceType">Guarded save</h-button>
+      <h-button type="normal" plain @click="saveData('Standard save')">Standard save</h-button>
+    </h-space>
+
+    <p class="button-debounce-demo__status" aria-live="polite">
+      {{ status }} · {{ completed }} completed / {{ attempts }} requested
+    </p>
+  </section>
 </template>
 
+<script setup lang="ts">
+import { onBeforeUnmount, ref } from 'vue';
+
+const debounceType = ref<'disabled' | 'loading' | 'none'>('disabled');
+const attempts = ref(0);
+const completed = ref(0);
+const status = ref('Ready to save');
+const timers = new Set<number>();
+
+function saveData(source: string) {
+  attempts.value += 1;
+  status.value = `${source} is running…`;
+
+  return new Promise<void>(resolve => {
+    const timer = window.setTimeout(() => {
+      timers.delete(timer);
+      completed.value += 1;
+      status.value = `${source} completed`;
+      resolve();
+    }, 1200);
+
+    timers.add(timer);
+  });
+}
+
+const saveDebounced = () => saveData('Guarded save');
+
+onBeforeUnmount(() => {
+  timers.forEach(timer => window.clearTimeout(timer));
+  timers.clear();
+});
+</script>
+
 <style scoped>
-.h-button + .h-button {
-  margin-left: 10px;
+.button-debounce-demo {
+  display: grid;
+  gap: var(--h-spacing-5);
+}
+
+.button-debounce-demo__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--h-spacing-3);
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+
+.button-debounce-demo__status {
+  margin: 0;
+  color: var(--h-text-secondary);
+}
+
+@media (max-width: 520px) {
+  .button-debounce-demo__controls {
+    align-items: stretch;
+    flex-direction: column;
+  }
 }
 </style>

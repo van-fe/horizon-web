@@ -1,20 +1,20 @@
+Table presents structured data that users need to compare, sort, filter, or act on in bulk. Give dynamic rows a stable `row-key`, preserve the table's own horizontal scrolling at narrow widths, and provide explicit feedback for loading, empty, selection, and remote-query states.
+
 ## Basic Usage
 
-Like a traditional Vue table component, pass the table data to `h-table` through `data`. Pass
-`title` to `h-table-column` as the header, and use `field` to select the value from each row.
+Pass rows through `data`. Each `h-table-column` uses `title` for its header and `field` to read a value from the row. Add a cell slot only when the value needs status or actions.
 
 :::demo components/Table/basic.vue :::
 
 ## Size
 
-The component supports four sizes: `mini`, `small`, `medium`, and `large`.
+The component supports `mini`, `small`, `medium`, and `large`. Choose density with data volume, touch targets, and long localized text in mind.
 
 :::demo components/Table/size.vue :::
 
 ## Border
 
-Set `:border="true"` to show all borders. This keeps elements visually distinct and preserves
-strong information contrast in compact layouts.
+`border` accepts `default`, `full`, `outer`, and `false`. Full borders suit tightly aligned financial grids, while the default horizontal separators are quieter for general lists.
 
 :::demo components/Table/border.vue :::
 
@@ -26,7 +26,7 @@ Set `:stripe="true"` to show zebra stripes, helping users follow a row without l
 
 ## Row States
 
-Set `row-class-name` to apply a custom highlight color to specific rows.
+Use `row-class-name` to express warning, error, and completed rows. Build custom treatments from theme tokens and never rely on color alone.
 
 :::demo components/Table/row-class-name.vue :::
 
@@ -206,15 +206,15 @@ See `HTableHeaderCellScopeSlots` in the [type definitions](#type-definitions).
 
 ## Empty State
 
-This is the display used when the data is empty. Configure `empty-text` to provide custom text.
+Use `empty-text` for a concise empty result.
 
-The `empty` slot is also available for more extensive customization.
+When users need an explanation or recovery action, compose a richer state through the `empty` slot.
 
 :::demo components/Table/empty.vue :::
 
 ## Loading
 
-Set `loading` to put the table in a loading state.
+Set `loading` to put the table in a loading state. Keep loading controls outside the masked target so users can always cancel or retry.
 
 Loading is implemented with `v-loading`, so the default text is localized. Configure
 `loading-text` to provide custom loading text.
@@ -272,10 +272,9 @@ Set `check-strictly` to ignore parent-child relationships when selecting rows.
 
 ## Summary Footer
 
-Enable `show-summary` to display summary statistics for numeric data in the table footer.
+Enable `show-summary` to display numeric statistics in the footer. Built-in and custom summaries use `Decimal.js` accumulation to avoid ordinary floating-point errors.
 
-For multiple summary rows, set `summary-row-amount` to the desired number of rows and return a
-two-dimensional array from `summary-method` (see the second table in the demo).
+For multiple summary rows, set `summary-row-amount` and return a two-dimensional array from `summary-method`.
 
 :::tip `summary-method` must always return a two-dimensional array. :::
 

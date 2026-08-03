@@ -1,106 +1,88 @@
 <template>
-  <h-form ref="formRef" :model="formData" validate-trigger="change" @validate="onValidateChange">
-    <h-form-item
-      label="User name"
-      prop="username"
-      :rules="[
-        {
-          required: true,
-          message: 'User name is required!',
-        },
-        {
-          min: 3,
-          max: 100,
-          message: 'User name should be 3 to 100.',
-        },
-      ]"
+  <section class="form-submit-state-demo">
+    <h-form
+      ref="formRef"
+      :model="formData"
+      validate-trigger="change"
+      spacing="dynamic"
+      @validate="onValidate"
+      @submit="submit"
     >
-      <h-input v-model="formData.username" />
-    </h-form-item>
-    <h-form-item label="Email" prop="email" :rules="emailRules">
-      <h-input v-model="formData.email" />
-    </h-form-item>
-    <h-form-item label="Notes" prop="notes">
-      <h-input v-model="formData.notes" type="textarea" />
-    </h-form-item>
-    <div>
-      <h-button :disabled="!canSubmit" @click="submit">Submit</h-button>
+      <h-form-item label="Release title" prop="title" :rules="titleRules">
+        <h-input v-model="formData.title" placeholder="At least 6 characters" />
+      </h-form-item>
+      <h-form-item label="Approver email" prop="approverEmail" :rules="emailRules">
+        <h-input v-model="formData.approverEmail" placeholder="approver@example.com" />
+      </h-form-item>
+      <h-form-item label="Coordinator note">
+        <h-input v-model="formData.note" type="textarea" placeholder="Optional handoff note" />
+      </h-form-item>
+      <h-form-item>
+        <h-button native-type="submit" :disabled="!canSubmit">Send for approval</h-button>
+      </h-form-item>
+    </h-form>
+    <div class="form-submit-state-demo__summary" aria-live="polite">
+      <span>{{ validCount }}/2 required fields valid</span>
+      <strong>{{ status }}</strong>
     </div>
-  </h-form>
+  </section>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
-import type { HFormInstance } from '@aurora/horizon-web';
-import { $message } from '@aurora/horizon-web';
+<script setup lang="ts">
+import type { HFormInstance, HFormRule } from '@aurora/horizon-web';
+import { computed, reactive, ref } from 'vue';
 
-export default defineComponent({
-  setup() {
-    const formRef = ref<HFormInstance | null>(null);
-    const formData = ref({
-      username: '',
-      email: '',
-      notes: '',
+const formRef = ref<HFormInstance | null>(null);
+const formData = reactive({ title: '', approverEmail: '', note: '' });
+const validity = reactive({ title: false, approverEmail: false });
+const status = ref('Complete both required fields to enable submission');
+const validCount = computed(() => Object.values(validity).filter(Boolean).length);
+const canSubmit = computed(() => validCount.value === 2);
+const titleRules: HFormRule[] = [
+  { required: true, message: 'Enter a release title' },
+  { min: 6, max: 80, message: 'Use 6–80 characters' },
+];
+const emailRules: HFormRule[] = [
+  { required: true, message: 'Enter an approver email' },
+  { type: 'email', message: 'Enter a valid email address' },
+];
+
+function onValidate(prop: string, isValidated: boolean, message?: string) {
+  if (prop === 'title' || prop === 'approverEmail') validity[prop] = isValidated;
+  status.value = isValidated ? `${prop} is valid` : message || `${prop} needs attention`;
+}
+
+function submit() {
+  formRef.value
+    ?.validate()
+    .then(() => {
+      status.value = `“${formData.title}” sent for approval`;
+    })
+    .catch(() => {
+      status.value = 'Submission paused until all fields are valid';
     });
-
-    const validateInfo = ref<Record<string, boolean>>({
-      username: false,
-      email: false,
-      notes: true,
-    });
-
-    const canSubmit = computed(() => !Object.values(validateInfo.value).some(curr => !curr));
-
-    const emailRules = ref([
-      {
-        required: true,
-        message: 'Email is required!',
-      },
-      {
-        type: 'email',
-        message: 'Email format invalid!',
-      },
-      {
-        validator(rule: any, value: string) {
-          if (!value.endsWith('@gmail.com')) {
-            return new Error('Only support gmail!');
-          }
-          return true;
-        },
-      },
-    ]);
-
-    const submit = () => {
-      if (formRef.value) {
-        formRef.value
-          .validate()
-          .then(() => {
-            $message.success('Submit');
-          })
-          .catch(errors => {
-            console.info('errors:', errors);
-          });
-      }
-    };
-
-    const onValidateChange = (
-      prop: keyof (typeof formData)['value'],
-      isValidated: boolean,
-      message?: string,
-    ) => {
-      console.info(`[${prop}] field is ${isValidated}${isValidated ? '' : `: ${message}`}`);
-      validateInfo.value[prop] = isValidated;
-    };
-
-    return {
-      formData,
-      emailRules,
-      formRef,
-      submit,
-      canSubmit,
-      onValidateChange,
-      validateInfo,
-    };
-  },
-});
+}
 </script>
+
+<style scoped>
+.form-submit-state-demo {
+  display: grid;
+  gap: var(--h-spacing-4);
+}
+
+.form-submit-state-demo__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--h-spacing-2);
+  padding: var(--h-spacing-4);
+  border-radius: var(--h-radius-m);
+  background: var(--h-bg-secondary);
+}
+
+.form-submit-state-demo__summary > span {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+</style>

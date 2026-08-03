@@ -1,66 +1,46 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="12">
-      <div class="demo-title">单选</div>
-      <h-tree
-        :tree-data="baseTreeData"
-        :fold-icon="customIcon"
-      />
-    </h-grid-item>
-    <h-grid-item :span="12">
-      <div class="demo-title">多选</div>
-      <h-tree
-        :tree-data="baseTreeData"
-        :fold-icon="customIcon"
-        :multiple="true"
-      />
-    </h-grid-item>
-    <h-grid-item :span="12">
-      <div class="demo-title">单选-加减符号</div>
-      <h-tree
-        :tree-data="baseTreeData"
-        :expand-icon="customIconExpand"
-        :fold-icon="customIconFold"
-      />
-    </h-grid-item>
-    <h-grid-item :span="12">
-      <div class="demo-title">多选-加减符号</div>
-      <h-tree
-        :tree-data="baseTreeData"
-        :expand-icon="customIconExpand"
-        :fold-icon="customIconFold"
-        :multiple="true"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { onMounted, ref, h } from 'vue';
-import { IconArrowRight, IconAdd, IconReduce } from '@aurora/icon';
+import { computed, h, ref } from 'vue';
+import { IconAdd, IconArrowRight, IconReduce } from '@aurora/icon';
+import type { HTreeNodeData } from '@aurora/horizon-web';
 
-const baseTreeData = ref([]);
+type IconMode = 'rotate' | 'explicit';
 
-const customIcon = h(IconArrowRight, {
-  size: 12,
-});
-
-const customIconFold = h(IconAdd, {
-  size: 12,
-});
-
-const customIconExpand = h(IconReduce, {
-  size: 12,
-});
-
-onMounted(() => {
-  fetch(new URL('/tree-data.json', import.meta.url).href)
-    .then(res => res.json())
-    .then(res => {
-      baseTreeData.value = res;
-    });
-});
+const iconMode = ref<IconMode>('rotate');
+const expandValues = ref<Array<string | number>>(['quarter-one']);
+const treeData: HTreeNodeData[] = [
+  {
+    value: 'quarter-one',
+    label: 'Quarter one',
+    children: [
+      { value: 'research', label: 'Customer research' },
+      { value: 'prototype', label: 'Prototype validation' },
+    ],
+  },
+  {
+    value: 'quarter-two',
+    label: 'Quarter two',
+    children: [{ value: 'beta', label: 'Private beta' }],
+  },
+];
+const foldIcon = computed(() =>
+  h(iconMode.value === 'rotate' ? IconArrowRight : IconAdd, { size: 12 }),
+);
+const expandIcon = computed(() =>
+  iconMode.value === 'explicit' ? h(IconReduce, { size: 12 }) : undefined,
+);
 </script>
 
-<style scoped>
-</style>
+<template>
+  <div class="docs-demo">
+    <h-segmented v-model:active-key="iconMode" size="small">
+      <h-segmented-item key="rotate" label="Rotating arrow" />
+      <h-segmented-item key="explicit" label="Plus / minus" />
+    </h-segmented>
+    <h-tree
+      v-model:expand-values="expandValues"
+      :tree-data="treeData"
+      :fold-icon="foldIcon"
+      :expand-icon="expandIcon"
+    />
+  </div>
+</template>

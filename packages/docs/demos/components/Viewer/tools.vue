@@ -1,45 +1,25 @@
-<template>
-  <h-button @click="showViewer">查看自定义按钮的示例</h-button>
-  <h-viewer v-model="visibleRef" :sources="imagesRef" :tools="tools" />
-</template>
+<script setup lang="ts">
+import { ref } from 'vue';
+import type { HViewerCustomToolItem } from '@aurora/horizon-web';
+import { createImageReviewSources } from './sources';
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-import type { HViewerSource, HViewerCustomToolItem } from '@aurora/horizon-web';
-import { createDemoViewerSources } from '../../demo-assets';
-export default defineComponent({
-  setup() {
-    const imagesRef = ref<HViewerSource[]>([]);
-    const visibleRef = ref(false);
-    const showViewer = () => {
-      imagesRef.value = createDemoViewerSources(10);
-      visibleRef.value = true;
-    };
-    const tools = [
-      'previous',
-      'next',
-      'split',
-      'zoomOut',
-      'ratio',
-      'zoomIn',
-      '1:1',
-      'split',
-      {
-        iconName: 'tips',
-        iconSize: '24',
-        iconColor: 'white',
-        title: 'More info',
-        handler(url: string) {
-          console.info('Click info button', url);
-        },
-      } as HViewerCustomToolItem,
-    ];
-    return {
-      visibleRef,
-      imagesRef,
-      showViewer,
-      tools,
-    };
-  },
-});
+const visible = ref(false);
+const status = ref('Custom tool ready');
+const sources = createImageReviewSources();
+const reviewTool: HViewerCustomToolItem = {
+  iconName: 'tips',
+  iconSize: '20',
+  iconColor: 'var(--h-text-inverse)',
+  title: 'Review note',
+  handler: () => (status.value = 'Review note selected'),
+};
+const tools = ['previous', 'next', 'current', 'split', 'zoomOut', 'zoomIn', reviewTool] as const;
 </script>
+
+<template>
+  <section class="docs-demo">
+    <div class="docs-demo__actions"><h-button @click="visible = true">Open viewer</h-button></div>
+    <p class="docs-demo__status">{{ status }}</p>
+    <h-viewer v-model="visible" :sources="sources" :tools="tools" />
+  </section>
+</template>

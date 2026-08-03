@@ -1,17 +1,35 @@
 <template>
-  <div class="demo-progress">
-    <h-progress type="circle" :percentage="30" content="内容" />
-    <h-progress :percentage="100" content="content" />
-    <h-progress :percentage="100" content="content" placement="right-top" />
-    <h-progress :percentage="80" content="content" placement="right-bottom" />
-    <h-progress :percentage="30" placement="follow" />
-    <h-progress :percentage="0" content="content" placement="follow" />
+  <div class="content-list">
+    <div v-for="item in lineItems" :key="item.label">
+      <span>{{ item.label }}</span>
+      <h-progress
+        :percentage="item.percentage"
+        :content="item.content"
+        :placement="item.placement"
+      />
+    </div>
   </div>
 </template>
 
-<style>
-.demo-progress .h-progress-line {
-  margin-bottom: 35px;
-  width: 350px;
+<script setup lang="ts">
+const lineItems = [
+  { label: 'Default', percentage: 100, content: 'Ready', placement: undefined },
+  { label: 'Right top', percentage: 100, content: 'Complete', placement: 'right-top' },
+  { label: 'Right bottom', percentage: 80, content: '8 of 10', placement: 'right-bottom' },
+  { label: 'Follow progress', percentage: 30, content: 'Processing', placement: 'follow' },
+] as const;
+</script>
+
+<style scoped>
+.content-list {
+  display: grid;
+  gap: var(--h-spacing-4);
+}
+
+.content-list > div {
+  display: grid;
+  gap: var(--h-spacing-2);
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
 }
 </style>

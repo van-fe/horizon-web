@@ -1,15 +1,7 @@
 <template>
-  <h-grid :gap="12">
-    <h-grid-item :span="24">
-      <h-button :plain="true" border-style="solid">Solid</h-button>
-      <h-button :plain="true" border-style="dotted">Dotted</h-button>
-      <h-button :plain="true" border-style="dashed">Dashed</h-button>
-    </h-grid-item>
-  </h-grid>
+  <h-space wrap>
+    <h-button plain border-style="solid">Solid · default</h-button>
+    <h-button plain border-style="dotted">Dotted · optional</h-button>
+    <h-button plain border-style="dashed">Dashed · add new</h-button>
+  </h-space>
 </template>
-
-<style scoped>
-.h-button + .h-button {
-  margin-left: 10px;
-}
-</style>

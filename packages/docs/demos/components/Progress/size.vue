@@ -1,27 +1,34 @@
 <template>
-  <div class="demo-progress">
-    <h-progress :percentage="100" size="xs" />
-    <h-progress :percentage="100" :format="format" size="s" />
-    <h-progress :percentage="50" />
-    <h-progress :percentage="100" size="l" />
+  <div class="progress-list">
+    <div v-for="item in items" :key="item.size">
+      <span>{{ item.size }}</span>
+      <h-progress :percentage="item.percentage" :size="item.size" />
+    </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-export default defineComponent({
-  setup() {
-    const format = (percentage: number) => (percentage === 100 ? 'Full' : `${percentage}%`);
-    return {
-      format,
-    };
-  },
-});
+<script setup lang="ts">
+const items = [
+  { size: 'xs', percentage: 100 },
+  { size: 's', percentage: 100 },
+  { size: 'm', percentage: 50 },
+  { size: 'l', percentage: 75 },
+] as const;
 </script>
 
-<style>
-.demo-progress .h-progress-container {
-  margin-bottom: 15px;
-  width: 350px;
+<style scoped>
+.progress-list {
+  display: grid;
+  gap: var(--h-spacing-4);
+}
+
+.progress-list > div {
+  display: grid;
+  gap: var(--h-spacing-2);
+}
+
+.progress-list span {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
 }
 </style>

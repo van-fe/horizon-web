@@ -1,94 +1,128 @@
 <template>
-  <h-form ref="formRef" :model="formData" :rules="rules" validate-trigger="blur" style="padding: 20px;" @submit="submit">
-    <h-form-item label="操作域" prop="domain">
-      <h-input v-model="formData.domain" placeholder="Please input domain">
-        <template #append>.com</template>
-      </h-input>
-    </h-form-item>
-    <h-form-item
-      v-for="(_, index) of formData.users"
-      :label="`用户 ${index + 1}`"
-      :prop="`users[${index}].value`"
-      :rules="{
-          required: true,
-          message: '用户必填',
-        }"
-      validate-trigger="change"
+  <section class="form-dynamic-demo">
+    <h-form
+      ref="formRef"
+      :model="formData"
+      :rules="rules"
+      validate-trigger="blur"
+      spacing="dynamic"
+      @submit="submit"
     >
-      <h-grid :gap="0">
-        <h-grid-item :span="18">
-          <h-input v-model="formData.users[index].value" />
-        </h-grid-item>
-        <h-grid-item :span="6" class="text-right">
-          <h-space>
-            <h-button v-show="index === formData.users.length - 1" icon="add" @click="addUser">增加</h-button>
-            <h-button icon="rubbish" type="danger" @click="del(index)">删除</h-button>
-          </h-space>
-        </h-grid-item>
-      </h-grid>
-    </h-form-item>
-    <div>
-      <h-space>
-        <h-button icon="check" native-type="submit">提交</h-button>
-      </h-space>
-    </div>
-  </h-form>
+      <h-form-item label="Change request" prop="request">
+        <h-input v-model="formData.request" placeholder="Production database migration" />
+      </h-form-item>
+
+      <h-form-item
+        v-for="(reviewer, index) in formData.reviewers"
+        :key="reviewer.id"
+        :label="`Reviewer ${index + 1}`"
+        :prop="`reviewers[${index}].email`"
+        :rules="reviewerRules"
+        validate-trigger="change"
+      >
+        <div class="form-dynamic-demo__row">
+          <h-input
+            v-model="reviewer.email"
+            :aria-label="`Reviewer ${index + 1} email`"
+            placeholder="reviewer@example.com"
+          />
+          <h-button
+            type="danger"
+            plain
+            :disabled="formData.reviewers.length === 1"
+            :aria-label="`Remove reviewer ${index + 1}`"
+            @click="removeReviewer(index)"
+          >
+            Remove
+          </h-button>
+        </div>
+      </h-form-item>
+
+      <h-form-item>
+        <h-space wrap>
+          <h-button plain :disabled="formData.reviewers.length >= 5" @click="addReviewer">
+            Add reviewer
+          </h-button>
+          <h-button native-type="submit">Validate request</h-button>
+        </h-space>
+      </h-form-item>
+    </h-form>
+    <p class="form-dynamic-demo__status" aria-live="polite">{{ status }}</p>
+  </section>
 </template>
 
 <script setup lang="ts">
-import { ref, Ref } from 'vue';
 import type { HFormInstance, HFormRule } from '@aurora/horizon-web';
-import { $message } from '@aurora/horizon-web';
-import { Arrayable } from '@aurora/utils';
+import { reactive, ref } from 'vue';
 
+let nextReviewerId = 2;
 const formRef = ref<HFormInstance | null>(null);
-const formData = ref({
-  domain: '',
-  users: [{
-    value: '',
-  }],
+const formData = reactive({
+  request: 'Production database migration',
+  reviewers: [{ id: 1, email: 'maya@example.com' }],
 });
-
-const rules: Ref<Partial<Record<keyof typeof formData.value, Arrayable<HFormRule>>>> = ref({
-  domain: {
-    required: true,
-    message: 'Domain is required!',
-  },
-});
-
-const submit = () => {
-  if (formRef.value) {
-    formRef.value?.validate()
-      .then(() => {
-        $message.success('Submit');
-      })
-      .catch(errors => {
-        console.info('errors:', errors);
-      });
-  }
+const status = ref('One reviewer assigned');
+const rules: Record<string, HFormRule> = {
+  request: { required: true, message: 'Enter a change request' },
 };
+const reviewerRules: HFormRule[] = [
+  { required: true, message: 'Enter a reviewer email' },
+  { type: 'email', message: 'Enter a valid email address' },
+];
 
-function addUser() {
-  formData.value.users.push({
-    value: '',
-  });
+function addReviewer() {
+  if (formData.reviewers.length >= 5) return;
+  formData.reviewers.push({ id: nextReviewerId++, email: '' });
+  status.value = `${formData.reviewers.length} reviewer rows available`;
 }
 
-function del(index: number) {
-  formData.value.users.splice(index, 1);
+function removeReviewer(index: number) {
+  if (formData.reviewers.length === 1) return;
+  formData.reviewers.splice(index, 1);
+  status.value = `${formData.reviewers.length} reviewer rows available`;
+}
+
+function submit() {
+  formRef.value
+    ?.validate()
+    .then(() => {
+      status.value = `${formData.reviewers.length} reviewers are ready for “${formData.request}”`;
+    })
+    .catch(() => {
+      status.value = 'Review each highlighted reviewer row';
+    });
 }
 </script>
 
-<style>
-.custom-input {
-  height: 30px;
-  line-height: 30px;
-  border: 1px solid #ccc;
-  width: 100%;
-  border-radius: 4px;
+<style scoped>
+.form-dynamic-demo {
+  display: grid;
+  gap: var(--h-spacing-4);
 }
 
-.custom-input.is-error {
-  border-color: red;
+.form-dynamic-demo__status {
+  margin: 0;
+  color: var(--h-text-secondary);
+}
+
+.form-dynamic-demo__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--h-spacing-3);
+  width: 100%;
+}
+
+.form-dynamic-demo__status {
+  font-size: var(--h-text-sm);
+}
+
+@media (max-width: 520px) {
+  .form-dynamic-demo__row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-dynamic-demo__row .h-button {
+    justify-self: start;
+  }
 }
 </style>

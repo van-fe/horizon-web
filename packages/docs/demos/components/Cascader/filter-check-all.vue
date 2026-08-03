@@ -1,20 +1,23 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="{ xs: 12, md: 8, lg: 6, xl: 6, xxl: 6 }">
-      <div class="demo-title">普通过滤全选</div>
-      <h-cascader v-model="values" :multiple="true" :filterable="true" :use-filter-check-all="true" :to-body="false" :collapse-tags="true" :options="baseData" />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
+import { formatSelectionCount, policyOptions } from './options';
 
-const values= ref([]);
-const baseData = ref([]);
-
-onMounted(async()=>{
-  baseData.value = await fetch(new URL('/unselectable-options.json', import.meta.url).href).then(r => r.json());
-});
+const value = ref<string[][]>([['team', 'delivery', 'release']]);
 </script>
 
+<template>
+  <div class="docs-demo">
+    <h-cascader
+      v-model="value"
+      aria-label="Policy owners"
+      placeholder="Search policy areas"
+      :options="policyOptions"
+      multiple
+      filterable
+      collapse-tags
+      use-filter-check-all
+      :to-body="false"
+    />
+    <span aria-live="polite">{{ formatSelectionCount(value) }}</span>
+  </div>
+</template>

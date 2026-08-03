@@ -1,25 +1,16 @@
-<template>
-  <h-button @click="showViewer">点我浏览精彩图集</h-button>
-  <h-viewer v-model="visibleRef" :sources="imagesRef" :auto-hide-tools="false" />
-</template>
+<script setup lang="ts">
+import { ref } from 'vue';
+import { createImageReviewSources } from './sources';
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-import type { HViewerSource } from '@aurora/horizon-web';
-import { createDemoViewerSources } from '../../demo-assets';
-export default defineComponent({
-  setup() {
-    const imagesRef = ref<HViewerSource[]>([]);
-    const visibleRef = ref(false);
-    const showViewer = () => {
-      imagesRef.value = createDemoViewerSources(10);
-      visibleRef.value = true;
-    };
-    return {
-      visibleRef,
-      imagesRef,
-      showViewer,
-    };
-  },
-});
+const visible = ref(false);
+const autoHide = ref(true);
+const sources = createImageReviewSources();
 </script>
+
+<template>
+  <section class="docs-demo">
+    <div class="docs-demo__controls"><h-switch v-model="autoHide" label="Auto hide tools" /></div>
+    <div class="docs-demo__actions"><h-button @click="visible = true">Open viewer</h-button></div>
+    <h-viewer v-model="visible" :sources="sources" :auto-hide-tools="autoHide" />
+  </section>
+</template>

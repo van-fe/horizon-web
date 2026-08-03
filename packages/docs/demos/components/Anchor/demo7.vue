@@ -1,90 +1,83 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const size = ref<'small' | 'medium'>('medium');
+const maxHeight = ref(180);
+const showTitleSuffix = ref(true);
+const deliveryTitle = ref('Delivery');
+</script>
+
 <template>
-  <div class="wrapper">
-    <div class="control-box">
-      <strong>设置 组件尺寸:</strong>
-      <h-radio-group v-model="curSize">
-        <h-radio v-for="item in sizeOptions" :key="item.value" :value="item.value" size="small">
-          {{ item.label }}
-        </h-radio>
-      </h-radio-group>
-      <br />
-      <strong>设置 容器的最大高度(px):</strong>
-      <h-input-number v-model="curMaxHeight" :precision="0" :step="50" />
-      <br />
-      <br />
-      <strong>设置 是否显示一级导航的数字后缀:</strong>
-      <br />
-      <h-switch v-model="showTitleSuffix" status status-on-text="是" status-off-text="否" />
-      <br />
-      <br />
-      <strong>修改 倒数第二个导航title:</strong>
-      <h-input v-model="lastSecondTitle" />
-      <br />
-      <br />
-      <strong>修改 倒数第一个导航title:</strong>
-      <h-input v-model="lastFirstTitle" />
+  <div class="anchor-dynamic-demo">
+    <div class="anchor-dynamic-demo__settings">
+      <label>
+        <span>Size</span>
+        <h-segmented v-model:active-key="size" size="small" block>
+          <h-segmented-item key="small" label="Small" />
+          <h-segmented-item key="medium" label="Medium" />
+        </h-segmented>
+      </label>
+      <label class="anchor-dynamic-demo__switch">
+        <span>Child count</span>
+        <h-switch v-model="showTitleSuffix" aria-label="Show child count" />
+      </label>
+      <label>
+        <span>Anchor height · {{ maxHeight }}px</span>
+        <h-slider v-model="maxHeight" :min="140" :max="240" :step="20" />
+      </label>
+      <label>
+        <span>Link title</span>
+        <h-input v-model="deliveryTitle" placeholder="Delivery" />
+      </label>
     </div>
-    <div class="content-box">
-      <h-anchor
-        :scroll-container="scrollContainer"
-        :size="curSize"
-        :show-title-suffix="showTitleSuffix"
-        :max-height="curMaxHeight"
-        link-target="_top"
-      >
-        <h-anchor-link href="#设置尺寸" title="设置尺寸" />
-        <h-anchor-link href="#是否改变hash" title="是否改变hash" />
-        <h-anchor-link href="#自定义滚动容器" title="自定义滚动容器" />
-        <h-anchor-link href="#设置偏移量" title="设置偏移量" />
-        <h-anchor-link href="#是否开启折叠模式" title="是否开启折叠模式" />
-        <h-anchor-link href="#是否展示侧边线" title="是否展示侧边线" />
-        <h-anchor-link href="#监听自定义事件" :title="lastSecondTitle" />
-        <h-anchor-link href="#额外的使用场景" :title="lastFirstTitle">
-          <h-anchor-link href="#sectionOne3" title="sectionOne3" />
-          <h-anchor-link href="#sectionOne4" title="sectionOne4" />
-          <h-anchor-link href="#sectionOne5" title="sectionOne5" />
-          <h-anchor-link href="#sectionOne6" title="多行文本溢出多行文本溢出多行文本溢出" />
-        </h-anchor-link>
-      </h-anchor>
+
+    <div class="anchor-dynamic-demo__layout">
+      <div class="anchor-dynamic-demo__nav">
+        <h-anchor
+          :size="size"
+          :max-height="maxHeight"
+          :show-title-suffix="showTitleSuffix"
+          scroll-container="#anchor-dynamic-scroll"
+          :change-hash="false"
+        >
+          <h-anchor-link href="#anchor-dynamic-overview" title="Overview" />
+          <h-anchor-link href="#anchor-dynamic-plan" title="Plan">
+            <h-anchor-link href="#anchor-dynamic-audience" title="Audience" />
+            <h-anchor-link href="#anchor-dynamic-timeline" title="Timeline" />
+          </h-anchor-link>
+          <h-anchor-link href="#anchor-dynamic-delivery" :title="deliveryTitle || 'Delivery'" />
+          <h-anchor-link href="#anchor-dynamic-support" title="Support" />
+        </h-anchor>
+      </div>
+
+      <div id="anchor-dynamic-scroll" class="anchor-dynamic-demo__scroll">
+        <div id="anchor-dynamic-overview" class="anchor-dynamic-demo__target">
+          <h4>Overview</h4>
+          <p>A compact launch reference.</p>
+        </div>
+        <div id="anchor-dynamic-plan" class="anchor-dynamic-demo__target">
+          <h4>Plan</h4>
+          <p>Start with audience and timeline.</p>
+        </div>
+        <div id="anchor-dynamic-audience" class="anchor-dynamic-demo__target">
+          <h5>Audience</h5>
+          <p>Validate with internal teams first.</p>
+        </div>
+        <div id="anchor-dynamic-timeline" class="anchor-dynamic-demo__target">
+          <h5>Timeline</h5>
+          <p>Give every stage an owner.</p>
+        </div>
+        <div id="anchor-dynamic-delivery" class="anchor-dynamic-demo__target">
+          <h4>{{ deliveryTitle || 'Delivery' }}</h4>
+          <p>Check migration and permissions.</p>
+        </div>
+        <div id="anchor-dynamic-support" class="anchor-dynamic-demo__target">
+          <h4>Support</h4>
+          <p>Share escalation paths.</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
-<script lang="ts" setup>
-import { ref } from 'vue';
-
-const scrollContainer = top?.document.querySelector('main.VPDoc');
-const curSize = ref<'medium' | 'small'>('medium');
-const sizeOptions = ref([
-  { label: 'medium', value: 'medium' },
-  { label: 'small', value: 'small' },
-]);
-const curMaxHeight = ref(260);
-const showTitleSuffix = ref(false);
-const lastFirstTitle = ref('倒数第一个导航title');
-const lastSecondTitle = ref('倒数第二个导航title');
-</script>
-
-<style scoped>
-.wrapper {
-  width: 100%;
-  min-height: 300px;
-  margin: 10px;
-}
-
-.wrapper::after {
-  content: '';
-  display: block;
-  clear: both;
-}
-
-.wrapper .control-box {
-  float: left;
-  width: 50%;
-}
-
-.wrapper .content-box {
-  float: left;
-  margin-left: 30px;
-}
-</style>
+<style scoped src="./demo.css"></style>

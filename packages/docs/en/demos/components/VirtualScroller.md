@@ -1,18 +1,25 @@
-## RecycleScroller Basic Usage
-If you can determine the element size scenario, using RecycleScroller will have better performance
+Virtual scrolling mounts only items near the viewport and is suited to large lists and grids.
+
+## Fixed and Data-driven Sizes
+
+Prefer RecycleScroller when item size is known. Use `item-size` for fixed rows or `size-field` to read varying sizes from the data.
+
 :::demo components/VirtualScroller/RecycleScrollerDemo.vue :::
 
-## RecycleScroller Grid Usage
-In grid mode, itemSize is the width and height of a single grid. You can achieve different widths and heights with itemSecondarySize
+## Grid
+
+`grid-items` sets the number of items per row and `item-size` sets the primary-axis size of each cell.
+
 :::demo components/VirtualScroller/GridDemo.vue :::
 
-## VirtualScroller Basic Usage
-VirtualScroller doesn't care whether the elements wrapped by the scroll container have specified heights
+## Dynamic Sizes
+
+VirtualScroller can measure content through VirtualScrollerItem. List changing content in `size-dependencies` so it is measured again.
+
 :::demo components/VirtualScroller/VirtualScrollerDemo.vue :::
 
-## VirtualScroller Horizontal Scroll
-VirtualScroller doesn't care whether the elements wrapped by the scroll container have specified widths. In the Demo, setting random width for HVirtualScrollerItem is to make the text wrap
-:::demo components/VirtualScroller/HorizontalDemo.vue :::
+## Horizontal Scrolling
 
-<!-- ## VirtualScroller Implement Chat Dialog -->
-<!-- :::demo components/VirtualScroller/ChatDemo.tsx ::: -->
+Set `direction="horizontal"` to virtualize horizontal items with different widths.
+
+:::demo components/VirtualScroller/HorizontalDemo.vue :::

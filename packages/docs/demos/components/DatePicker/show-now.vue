@@ -1,68 +1,58 @@
-<template>
-  <h-grid align="center" :gap="12">
-    <h-grid-item :span="4">
-      Date:
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <h-date-picker v-model="value" show-now default-time="00:00" />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <h-date-picker v-model="values" type="dateRange" show-now default-time="00:00" />
-    </h-grid-item>
-  </h-grid>
-  <h-grid align="center" :gap="12">
-    <h-grid-item :span="4">
-      Datetime:
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <h-date-picker v-model="value2" type="dateSeconds" show-now default-time="00:00" need-confirm />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <h-date-picker v-model="values2" type="dateSecondsRange" show-now need-confirm />
-    </h-grid-item>
-  </h-grid>
-  <h-grid align="center" :gap="12">
-    <h-grid-item :span="4">
-      Custom:
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <h-date-picker ref="datePickerRef" v-model="value3">
-        <template #showNow>
-          <h-button size="small" plain @click="setSingleDate">Tomorrow</h-button>
-        </template>
-      </h-date-picker>
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <h-date-picker ref="datePickerRef2" v-model="values3" type="datetimeRange">
-        <template #showNow>
-          <h-button size="small" plain @click="setRangeDate">Five minute later</h-button>
-        </template>
-      </h-date-picker>
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
 import { dayjs } from '@aurora/horizon-web';
 
-const value = ref();
-const value2 = ref();
-const value3 = ref();
-const values = ref();
-const values2 = ref();
-const values3 = ref();
-
-const datePickerRef = ref();
-const datePickerRef2 = ref();
-
-function setSingleDate() {
-  value3.value = dayjs().add(1, 'day');
-  datePickerRef.value?.confirmHandle();
+interface DatePickerInstance {
+  confirmHandle: () => void;
 }
 
-function setRangeDate() {
-  values3.value = [dayjs(), dayjs().add(5, 'minutes')];
-  datePickerRef2.value?.confirmHandle();
+type NowMode = 'built-in' | 'custom';
+
+const mode = ref<NowMode>('built-in');
+const value = ref();
+const pickerRef = ref<DatePickerInstance>();
+
+function chooseTomorrow() {
+  value.value = dayjs().add(1, 'day').second(0);
+  pickerRef.value?.confirmHandle();
 }
 </script>
+
+<template>
+  <section class="date-picker-show-now">
+    <h-segmented v-model:active-key="mode" size="small">
+      <h-segmented-item key="built-in" label="Current time" />
+      <h-segmented-item key="custom" label="Tomorrow" />
+    </h-segmented>
+    <h-date-picker
+      ref="pickerRef"
+      v-model="value"
+      type="date-seconds"
+      :show-now="mode === 'built-in'"
+      need-confirm
+    >
+      <template v-if="mode === 'custom'" #showNow>
+        <h-button size="small" plain @click="chooseTomorrow">Choose tomorrow</h-button>
+      </template>
+    </h-date-picker>
+  </section>
+</template>
+
+<style scoped>
+.date-picker-show-now {
+  display: grid;
+  justify-items: start;
+  gap: var(--h-spacing-3);
+  max-inline-size: 680px;
+}
+
+.date-picker-show-now :deep(.h-date-picker) {
+  inline-size: 100%;
+}
+
+@media (max-width: 390px) {
+  .date-picker-show-now {
+    inline-size: 100%;
+  }
+}
+</style>

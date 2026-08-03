@@ -1,13 +1,12 @@
-<template>
-  <h-slider v-model="valueRef" />
-</template>
+<script setup lang="ts">
+import { ref } from 'vue';
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    const valueRef = ref(50);
-    return { valueRef };
-  },
-});
+const value = ref(62);
 </script>
+
+<template>
+  <section class="docs-demo">
+    <h-slider v-model="value" aria-label="任务完成度" />
+    <p class="docs-demo__status">{{ value }}%</p>
+  </section>
+</template>

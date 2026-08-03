@@ -1,158 +1,118 @@
 <template>
-  <h-form>
-    <h-form-item label="helper主题">
-      <h-radio-group v-model="helperTheme">
-        <h-radio value="light" />
-        <h-radio value="dark" />
-      </h-radio-group>
-    </h-form-item>
-  </h-form>
+  <section class="form-helper-demo">
+    <div class="form-helper-demo__control" role="group" aria-label="Helper theme">
+      <span>Helper theme</span>
+      <h-segmented v-model:active-key="helperTheme" size="small">
+        <h-segmented-item key="light" label="Light" />
+        <h-segmented-item key="dark" label="Dark" />
+      </h-segmented>
+    </div>
 
-  <h-form
-    ref="formRef"
-    :model="formData"
-    :rules="rules"
-    :helper-theme="helperTheme"
-    @submit="submit"
-  >
-    <h-form-item label="input style" prop="inputStyle">
-      <h-radio-group v-model="formData.inputStyle" size="medium">
-        <h-radio v-for="item in ['normal', 'emphasize', 'no-border']" :key="item" :value="item" />
-      </h-radio-group>
-    </h-form-item>
-    <h-form-item label="Username" prop="username" :validate-trigger="['change']">
-      <h-input
-        v-model="formData.username"
-        :input-style="formData.inputStyle"
-        placeholder="Please enter your username"
-        :clearable="true"
-      />
-    </h-form-item>
-    <h-form-item
-      label="Age"
-      prop="age"
-      helper-placement="after-label"
-      :validate-trigger="['change']"
+    <h-form
+      ref="formRef"
+      :model="formData"
+      :rules="rules"
+      :helper-theme="helperTheme"
+      spacing="dynamic"
+      @submit="submit"
     >
-      <template #helper>Age is between 0 to 120</template>
-      <h-input-number
-        v-model="formData.age"
-        placeholder="Please enter your age"
-        :input-style="formData.inputStyle"
-        :min="0"
-        :max="120"
-        :clearable="true"
-        @input="onInput"
-        @change="onChange"
-      />
-    </h-form-item>
-    <h-form-item label="Province" prop="province">
-      <h-select
-        v-model="formData.province"
-        :input-style="formData.inputStyle"
-        placeholder="Please select"
+      <h-form-item
+        label="Repository"
+        prop="repository"
+        helper="Choose the repository that owns the production service."
+        helper-placement="before-label"
       >
-        <h-option label="Beijing" value="beijing" />
-        <h-option label="Shanghai" value="shanghai" />
-        <h-option label="Hefei" value="hefei" />
-      </h-select>
-    </h-form-item>
-    <h-form-item label="Date" prop="date" :helper="dateHelper">
-      <h-date-picker
-        v-model="formData.date"
-        type="daterange"
-        format="yyyy-MM-dd"
-        value-format="yyyy-MM-dd"
-        start-placeholder="Start date"
-        end-placeholder="End date"
-        :input-style="formData.inputStyle"
-      />
-    </h-form-item>
-    <h-form-item label="Switch" prop="switch">
-      <h-switch v-model="formData.switch" />
-    </h-form-item>
-    <h-form-item label="Remark" tip="Hint or Error Message" prop="remark">
-      <h-input
-        v-model="formData.remark"
-        placeholder="Type something"
-        :input-style="formData.inputStyle"
-        :show-limit="true"
-        :maxlength="100"
-        type="textarea"
-      />
-    </h-form-item>
-    <h-form-item>
-      <h-button native-type="submit">Submit</h-button>
-    </h-form-item>
-  </h-form>
+        <h-select v-model="formData.repository" placeholder="Choose a repository">
+          <h-option label="horizon-web" value="horizon-web" />
+          <h-option label="customer-portal" value="customer-portal" />
+          <h-option label="release-service" value="release-service" />
+        </h-select>
+      </h-form-item>
+
+      <h-form-item label="Change window" prop="changeWindow" helper-placement="after-label">
+        <template #helper>Select the approved UTC deployment window for this service.</template>
+        <h-input v-model="formData.changeWindow" placeholder="14:00–15:00 UTC" />
+      </h-form-item>
+
+      <h-form-item label="Rollback owner" prop="rollbackOwner" :helper="rollbackHelper">
+        <h-input v-model="formData.rollbackOwner" placeholder="on-call@example.com" />
+      </h-form-item>
+
+      <h-form-item label="Operator note" tip="Visible to the release coordinator.">
+        <h-input
+          v-model="formData.note"
+          type="textarea"
+          :maxlength="120"
+          show-limit
+          placeholder="Optional coordination note"
+        />
+      </h-form-item>
+
+      <h-form-item><h-button native-type="submit">Review deployment</h-button></h-form-item>
+    </h-form>
+    <p class="form-helper-demo__status" aria-live="polite">{{ status }}</p>
+  </section>
 </template>
 
 <script setup lang="ts">
-import { ref, h } from 'vue';
-import { $message, HFormRule, HFormItemHelper, HFormInstance } from '@aurora/horizon-web';
+import type { HFormInstance, HFormItemHelper, HFormRule } from '@aurora/horizon-web';
+import { reactive, ref } from 'vue';
 
-const helperTheme = ref('light');
-
-const formRef = ref<(HTMLElement & HFormInstance) | null>(null);
-const formData = ref({
-  inputStyle: 'normal',
-  username: '',
-  age: null,
-  province: null,
-  date: [],
-  switch: true,
-  remark: '',
+const formRef = ref<HFormInstance | null>(null);
+const helperTheme = ref<'light' | 'dark'>('light');
+const formData = reactive({
+  repository: 'horizon-web',
+  changeWindow: '14:00–15:00 UTC',
+  rollbackOwner: '',
+  note: 'Coordinate the dashboard smoke test after rollout.',
 });
+const status = ref('Open a helper to inspect its placement and theme');
+const rollbackHelper: HFormItemHelper = {
+  title: 'Rollback contact',
+  content: 'Use the address monitored by the team during the full change window.',
+  trigger: 'click',
+};
+const rules: Record<string, HFormRule> = {
+  repository: { required: true, message: 'Choose a repository' },
+  changeWindow: { required: true, message: 'Enter an approved change window' },
+  rollbackOwner: {
+    required: true,
+    type: 'email',
+    message: 'Enter a valid rollback contact',
+  },
+};
 
-const submit = () => {
-  console.info('formData:', formData.value);
+function submit() {
   formRef.value
     ?.validate()
     .then(() => {
-      $message.success('Submit');
+      status.value = `Deployment review ready for ${formData.repository}`;
     })
-    .catch(err => {
-      $message.error(err[0]);
+    .catch(() => {
+      status.value = 'Complete the required deployment details';
     });
-};
-
-const rules: Partial<Record<keyof (typeof formData)['value'], HFormRule | HFormRule[]>> = {
-  username: {
-    required: true,
-    message: 'Please enter your username',
-  },
-  age: [
-    {
-      required: true,
-      message: 'Please enter your age',
-    },
-    {
-      min: 0,
-      max: 120,
-      type: 'number',
-      message: 'Age is between 0 - 120',
-    },
-  ],
-  province: {
-    required: true,
-    message: 'Please pick your location',
-  },
-  date: {
-    required: true,
-    message: 'Please pick your wish time which you will be free',
-  },
-};
-
-const dateHelper: HFormItemHelper = {
-  title: 'Tips',
-  content: () => h('div', 'Please pick your wish time which you will be free'),
-};
-
-function onInput() {
-  console.info('input:', formData.value.age);
-}
-
-function onChange() {
-  console.info('change:', formData.value.age);
 }
 </script>
+
+<style scoped>
+.form-helper-demo {
+  display: grid;
+  gap: var(--h-spacing-4);
+}
+
+.form-helper-demo__control {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--h-spacing-3);
+  padding: var(--h-spacing-4);
+  border-radius: var(--h-radius-m);
+  background: var(--h-bg-secondary);
+}
+
+.form-helper-demo__status {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+</style>

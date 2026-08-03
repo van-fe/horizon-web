@@ -1,55 +1,101 @@
+Tabs switch between peer views within the same context. Keep labels concise and structurally consistent; when labels are numerous or long, preserve their full names while making the navigation scrollable.
+
 ## Basic Usage
-Basic usage of tabs. Default is `line` type, `medium` size
+
+Synchronize the selected tab with `v-model:active-key`. The default `line` type works well for peer navigation within a page.
+
 :::demo components/Tabs/basic.vue :::
 
-## Status
-Tab items in disabled state indicate that the tab item exists but is not available in the current situation. Set a single tab `disabled`, when `type=page` it does not take effect.
+## Card Type
+
+`type="card"` creates a stronger container boundary for settings, editors, and other focused workspaces.
+
+:::demo components/Tabs/card.vue :::
+
+## Disabled State
+
+Set `disabled` on an `h-tab` to preserve the navigation structure while communicating that content is temporarily unavailable. The `page` type does not apply the disabled state.
+
 :::demo components/Tabs/disable.vue :::
 
-## Size Type
-Define four sizes `small | medium | large | huge`, applied in different scenarios, default `small`. Define three types `line | card | page`, default `line`. <span style="color: #FA541C; font-weight: bold;">Special note: When the type is `page`, the `size` attribute is not supported.</span>
+## Types and Sizes
+
+Tabs supports `line`, `card`, and `page` types plus `small`, `medium`, `large`, and `huge` sizes. The `page` type ignores `size`; `underline` and `indicator` only affect `line` tabs.
+
 :::demo components/Tabs/size-and-type.vue :::
 
 ## Tabs with Icons
-You can add an icon before the tab title.
+
+Use `icon` to place an icon before a label. Icons should improve recognition rather than replace clear text.
+
 :::demo components/Tabs/icon.vue :::
 
-## Scroll
-In tight spaces, you can scroll left and right to accommodate more tabs. The example shows the performance within an element with a width of `600px`. You can control whether to automatically scroll to the active element through `focusable`
+## Scrollable Tabs
+
+When labels exceed the available width, `scrollable` enables horizontal navigation. `arrow` controls the arrow buttons, while `focusable` keeps the active tab in view.
+
 :::demo components/Tabs/scroll.vue :::
 
+## Add and Close
 
-## Close and Add
-By setting `h-tabs (editable)` and `h-tab (closable)`, you can enable dynamic addition and deletion of tabs. The application handles adding and closing; deleting the current tab selects the first available tab by default.
+Set `editable` on `h-tabs` to expose the add action and `closable` on an `h-tab` to expose its close action. The application updates business data in the `add` and `close` handlers.
+
 :::demo components/Tabs/editable.vue :::
 
-## Right Additional Operation Area
-You can add additional content, such as buttons, to the right of the tabs.
+## Extra Actions
+
+The `extra` slot places view-level actions such as refresh and reset beside the tab list and provides the current tab size.
+
 :::demo components/Tabs/extra.vue :::
 
-## Text Overflow
-The overflow part is displayed with " ... " and a text prompt appears when the mouse moves in.
+## Long Labels and Overflow
+
+In constrained layouts, truncate text through a custom label slot and preserve the complete name in a Tooltip. Ensure keyboard users can access the full label too.
+
 :::demo components/Tabs/text-overflow.vue :::
 
 ## Draggable Tabs
-If you need to sort tabs, you can enable it by setting `draggable`.
+
+Enable `draggable` to reorder tabs. The `sort` event provides the source and target positions plus the ordered key list. An individual tab can opt out through its own `draggable` prop.
+
 :::demo components/Tabs/draggable.vue :::
 
-## Use with `h-panel`
-Use panel component to develop tab applications
+## Use with Panels
+
+Tabs provides navigation only. Bind the same active key to `h-tabs` and `h-panels` to coordinate navigation with visible content.
+
 :::demo components/Tabs/with-panel.vue :::
 
-## Before Change Callback
-You can delay or prevent tab switching through `beforeChange`.
+## Before-change Guard
+
+`before-change` prevents navigation when it returns `false` or `Promise<false>`. Use it for unsaved work, permission checks, or asynchronous confirmation.
+
 :::demo components/Tabs/before-change.vue :::
 
-## Right-click Menu
-Custom `slot` method to implement right-click menu
+## Context Menu
+
+Compose Dropdown inside a custom label slot to offer actions such as duplicate and close. The application still owns the tab collection.
+
 :::demo components/Tabs/tab-menu.vue :::
 
-## Text Tabs
-Implemented by customizing `type=line` tabs. At this time, set `indicator=false`
+## Text-style Tabs
+
+Disable `indicator` and `underline`, then compose Tag in the label slot to create compact filter navigation.
+
 :::demo components/Tabs/tab-text.vue :::
 
+## Equal-width Page Tabs
+
+`type="page"` lays out page-level labels across the available width and suits steps or primary views. Keep long labels understandable at narrow widths or provide their full text.
+
+:::demo components/Tabs/width.vue :::
+
+## Custom Labels
+
+The default `h-tab` slot exposes `state` and `activeKey`, allowing counts, states, and tooltips while retaining Tabs selection and keyboard behavior.
+
+:::demo components/Tabs/slot.vue :::
+
 ## Design Token
+
 :::code ./demos/design-token.scss :::

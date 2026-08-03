@@ -1,25 +1,37 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const sizes = ref([30, 70]);
+</script>
+
 <template>
-  <h-splitter v-model="sizes" style="height: 260px; border: 1px solid var(--h-border-default)">
-    <h-splitter-panel :size="28" :min="18" :max="45" collapsible>
-      <div class="panel">导航 {{ sizes[0].toFixed(0) }}%</div>
+  <h-splitter v-model="sizes" class="splitter-basic-demo">
+    <h-splitter-panel :size="30">
+      <div class="splitter-basic-demo__panel splitter-basic-demo__panel--muted">Navigation</div>
     </h-splitter-panel>
-    <h-splitter-panel>
-      <div class="panel">主要内容 {{ sizes[1].toFixed(0) }}%</div>
+    <h-splitter-panel :size="70">
+      <div class="splitter-basic-demo__panel">Content</div>
     </h-splitter-panel>
   </h-splitter>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
-
-const sizes = ref([28, 72]);
-</script>
-
 <style scoped>
-.panel {
-  box-sizing: border-box;
-  height: 100%;
-  padding: 16px;
-  background: var(--h-bg-secondary);
+.splitter-basic-demo {
+  block-size: 280px;
+  overflow: hidden;
+  border: 1px solid var(--h-border-default);
+  border-radius: var(--h-radius-m);
+}
+
+.splitter-basic-demo__panel {
+  display: grid;
+  block-size: 100%;
+  place-items: center;
+  color: var(--h-text-primary);
+  white-space: nowrap;
+}
+
+.splitter-basic-demo__panel--muted {
+  color: var(--h-text-secondary);
 }
 </style>

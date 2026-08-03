@@ -4,19 +4,19 @@ An audio player with play/pause, waveform seeking, keyboard navigation, volume, 
 
 ## Deterministic mock waveform
 
-`waveform-source="mock"` does not read the audio data. It generates a stable waveform from `mock-seed`, or from `src` when no seed is supplied. The same seed and `bar-count` always produce the same result.
+`waveform-source="mock"` does not read the audio data. It generates a stable waveform from `mock-seed`, or from `src` when no seed is supplied. The same seed and `bar-count` always produce the same result, which is useful for lists, SSR, and first paint.
 
 :::demo components/AudioPlayer/basic.vue :::
 
 ## Provided waveform
 
-Pass any numeric array through `waveform`. Values are converted to absolute values, normalized, and resampled to `bar-count`. Provided data takes precedence over `waveform-source`.
+Pass any numeric array through `waveform`. Values are converted to absolute values, normalized, and resampled to `bar-count`. Provided data takes precedence over `waveform-source`. The demo reports the resolved source and bar count above the player.
 
 :::demo components/AudioPlayer/provided.vue :::
 
 ## Decode the real waveform
 
-`waveform-source="auto"` uses Fetch and the Web Audio API to decode audio and extract peaks in the background. Remote audio must allow CORS. If decoding fails, the component falls back to a deterministic mock waveform without interrupting playback. This demo generates a WAV clip in the browser to exercise real decoding.
+`waveform-source="auto"` uses Fetch and the Web Audio API to decode audio and extract peaks in the background. Remote audio must allow CORS. If decoding fails, the component falls back to a deterministic mock waveform without interrupting playback. This demo generates a WAV clip in the browser and lets you repeat the decode while observing the resolved source.
 
 :::demo components/AudioPlayer/auto.vue :::
 

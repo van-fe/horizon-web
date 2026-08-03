@@ -1,42 +1,51 @@
 <script setup lang="ts">
-const scrollContainer = top?.document.querySelector('main.VPDoc');
+import { ref } from 'vue';
 
-const collapseUpdateHandle = (collapse: boolean) => {
-  console.info('是否处于折叠状态: ', collapse);
-};
+const collapsed = ref(true);
 </script>
 
 <template>
-  <div class="wrapper">
-    <h-anchor :scroll-container="scrollContainer" link-target="_top" :use-collapse="true" @update:collapse="collapseUpdateHandle">
-      <h-anchor-link href="#设置尺寸" title="设置尺寸" />
-      <h-anchor-link href="#是否改变hash" title="是否改变hash" />
-      <h-anchor-link href="#自定义滚动容器" title="自定义滚动容器" />
-      <h-anchor-link href="#设置偏移量" title="设置偏移量" />
-      <h-anchor-link href="#是否开启折叠模式" title="是否开启折叠模式" />
-      <h-anchor-link href="#是否展示侧边线" title="是否展示侧边线" />
-      <h-anchor-link href="#监听自定义事件" title="监听自定义事件" />
-    </h-anchor>
-    <div class="split"></div>
-    <h-anchor :scroll-container="scrollContainer" link-target="_top" :use-collapse="true" :collapse-text="'展开全部内容'" @update:collapse="collapseUpdateHandle">
-      <h-anchor-link href="#设置尺寸" title="设置尺寸" />
-      <h-anchor-link href="#是否改变hash" title="是否改变hash" />
-      <h-anchor-link href="#自定义滚动容器" title="自定义滚动容器" />
-      <h-anchor-link href="#设置偏移量" title="设置偏移量" />
-      <h-anchor-link href="#是否开启折叠模式" title="是否开启折叠模式" />
-      <h-anchor-link href="#是否展示侧边线" title="是否展示侧边线" />
-      <h-anchor-link href="#监听自定义事件" title="监听自定义事件" />
-    </h-anchor>
+  <div class="anchor-collapse-demo">
+    <span class="anchor-collapse-demo__status" aria-live="polite">
+      {{ collapsed ? 'Collapsed' : 'Expanded' }}
+    </span>
+
+    <div class="anchor-collapse-demo__layout">
+      <div class="anchor-collapse-demo__nav">
+        <h-anchor
+          v-model:collapse="collapsed"
+          scroll-container="#anchor-collapse-scroll"
+          :change-hash="false"
+          use-collapse
+          collapse-text="On this page"
+        >
+          <h-anchor-link href="#anchor-collapse-context" title="Context" />
+          <h-anchor-link href="#anchor-collapse-principles" title="Principles" />
+          <h-anchor-link href="#anchor-collapse-patterns" title="Patterns" />
+          <h-anchor-link href="#anchor-collapse-checklist" title="Checklist" />
+        </h-anchor>
+      </div>
+
+      <div id="anchor-collapse-scroll" class="anchor-collapse-demo__scroll">
+        <div id="anchor-collapse-context" class="anchor-collapse-demo__target">
+          <h4>Context</h4>
+          <p>Explain who should use the guidance.</p>
+        </div>
+        <div id="anchor-collapse-principles" class="anchor-collapse-demo__target">
+          <h4>Principles</h4>
+          <p>Use a small set of durable rules.</p>
+        </div>
+        <div id="anchor-collapse-patterns" class="anchor-collapse-demo__target">
+          <h4>Patterns</h4>
+          <p>Pair guidance with realistic examples.</p>
+        </div>
+        <div id="anchor-collapse-checklist" class="anchor-collapse-demo__target">
+          <h4>Checklist</h4>
+          <p>Finish with clear, testable checks.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
-<style scoped>
-.wrapper {
-  display: flex;
-  justify-content: flex-start;
-  padding-bottom: 30px;
-}
-.split {
-  width: 60px;
-}
-</style>
+<style scoped src="./demo.css"></style>

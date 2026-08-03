@@ -1,13 +1,7 @@
-<script setup lang="ts"></script>
-
 <template>
-  <h-button type="normal" text>Normal Text Button</h-button>
-  <h-button text>Primary Text Button</h-button>
-  <h-button type="danger" text>Danger Text Button</h-button>
+  <h-space wrap>
+    <h-button type="normal" text>Dismiss</h-button>
+    <h-button text>View activity</h-button>
+    <h-button type="danger" text>Remove filter</h-button>
+  </h-space>
 </template>
-
-<style scoped>
-.h-button + .h-button {
-  margin-left: 10px;
-}
-</style>

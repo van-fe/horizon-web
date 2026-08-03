@@ -1,59 +1,42 @@
-<template>
-  <h-button type="normal" class="mb-2" @click="visible = !visible">Change</h-button>
-  <h-grid :gap="10">
-    <h-grid-item :span="6">
-      <div class="animate-box__wrapper">
-        <h-transition name="slide-up">
-          <div v-show="visible" class="animate-box">slide-up</div>
-        </h-transition>
-      </div>
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="animate-box__wrapper">
-        <h-transition name="slide-down">
-          <div v-show="visible" class="animate-box">slide-down</div>
-        </h-transition>
-      </div>
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="animate-box__wrapper">
-        <h-transition name="slide-left">
-          <div v-show="visible" class="animate-box">slide-left</div>
-        </h-transition>
-      </div>
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="animate-box__wrapper">
-        <h-transition name="slide-right">
-          <div v-show="visible" class="animate-box">slide-right</div>
-        </h-transition>
-      </div>
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
+const direction = ref<'up' | 'right' | 'down' | 'left'>('up');
 const visible = ref(true);
+const name = computed(() => `slide-${direction.value}` as const);
 </script>
 
+<template>
+  <section class="docs-demo">
+    <div class="docs-demo__controls">
+      <h-segmented v-model:active-key="direction" size="small">
+        <h-segmented-item key="up" label="Up" />
+        <h-segmented-item key="right" label="Right" />
+        <h-segmented-item key="down" label="Down" />
+        <h-segmented-item key="left" label="Left" />
+      </h-segmented>
+      <h-switch v-model="visible" label="Visible" />
+    </div>
+    <div class="stage">
+      <h-transition :name="name"><div v-show="visible" class="sample">Slide</div></h-transition>
+    </div>
+  </section>
+</template>
+
 <style scoped>
-.animate-box__wrapper {
-  width: 150px;
-  height: 80px;
+.stage {
+  display: grid;
+  min-height: 100px;
   overflow: hidden;
-  position: relative;
+  place-items: center;
 }
 
-.animate-box {
-  width: 150px;
-  height: 80px;
-  background: var(--h-bg-brand-default);
-  border-radius: var(--h-radius);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.sample {
+  width: 140px;
+  border-radius: var(--h-radius-m);
+  padding: var(--h-spacing-5);
   color: var(--h-text-inverse);
+  background: var(--h-bg-brand-default);
+  text-align: center;
 }
 </style>

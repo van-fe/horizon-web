@@ -1,63 +1,56 @@
-<template>
-  <h-form label-position="left" label-vertical-align="middle">
-    <h-form-item label="触发器类型">
-      <h-radio-group v-model="type">
-        <h-radio value="square">正方形</h-radio>
-        <h-radio value="square-text">带色号</h-radio>
-      </h-radio-group>
-    </h-form-item>
-  </h-form>
-
-  <h-color-picker
-    v-model="value1"
-    trigger-type="square"
-    :square-text="squareText"
-    :need-confirm="false"
-    :clearable="false"
-    @change="onChange"
-  />
-  <h-color-picker
-    v-model="value1"
-    trigger-type="square"
-    :square-text="squareText"
-    :need-confirm="false"
-    :clearable="false"
-    disabled
-  />
-  <h-color-picker
-    v-model="value4"
-    trigger-type="square"
-    :square-text="squareText"
-    :need-confirm="false"
-    @change="onChange"
-  />
-</template>
-
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 
-const type = ref('square');
+type TriggerState = 'default' | 'disabled' | 'clearable';
 
-const value1 = ref('#178CA6');
-const value4 = ref();
-
-const squareText = computed(() => type.value === 'square-text');
-
-function onChange(color: string) {
-  console.info('change:', color);
-}
+const displayMode = ref<'square' | 'square-text'>('square-text');
+const state = ref<TriggerState>('default');
+const color = ref<string>('#178CA6');
+const showValue = computed(() => displayMode.value === 'square-text');
 </script>
 
+<template>
+  <div class="color-trigger-demo">
+    <div class="color-trigger-demo__options">
+      <h-segmented v-model:active-key="displayMode" size="small">
+        <h-segmented-item key="square" label="Swatch" />
+        <h-segmented-item key="square-text" label="Value" />
+      </h-segmented>
+      <h-segmented v-model:active-key="state" size="small">
+        <h-segmented-item key="default" label="Default" />
+        <h-segmented-item key="disabled" label="Disabled" />
+        <h-segmented-item key="clearable" label="Clearable" />
+      </h-segmented>
+    </div>
+
+    <h-color-picker
+      v-model="color"
+      trigger-type="square"
+      :square-text="showValue"
+      :disabled="state === 'disabled'"
+      :clearable="state === 'clearable'"
+      :need-confirm="false"
+    />
+    <p aria-live="polite">{{ color || 'No color selected' }}</p>
+  </div>
+</template>
+
 <style scoped>
-p {
-  margin-top: 10px;
+.color-trigger-demo {
+  display: grid;
+  justify-items: start;
+  gap: var(--h-spacing-4);
 }
 
-.h-color-picker--square + .h-color-picker--square {
-  margin-left: 16px;
+.color-trigger-demo__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--h-spacing-3);
 }
 
-.h-color-picker--input + .h-color-picker--input {
-  margin-top: 12px;
+.color-trigger-demo p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
 }
 </style>

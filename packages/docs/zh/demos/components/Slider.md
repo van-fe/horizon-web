@@ -1,43 +1,53 @@
-## 基础用法
+## 基本用法
+
+使用 `v-model` 绑定数值。示例在滑动过程中同步展示业务结果。
 
 :::demo components/Slider/index.vue :::
 
-## 设置大小
-可以设置 `small` `medium` `large`
+## 尺寸
+
+通过 `size` 选择 `small`、`medium` 或 `large`。
+
 :::demo components/Slider/size.vue :::
 
 ## 禁用状态
-通过设置 `disabled` 来禁用
+
+`disabled` 会保留当前值和视觉上下文，但禁止指针与键盘修改。
+
 :::demo components/Slider/disable.vue :::
 
-## 不同类型
-可以设置 `type` 字段来控制不同类型
+## 语义类型
+
+`type` 提供 `primary`、`info`、`success`、`warning` 和 `danger` 五种语义颜色。
+
 :::demo components/Slider/types.vue :::
 
 ## 自定义颜色
-如果不同类型的颜色无法满足需求，可以通过设置 `color` 来控制进度条颜色
+
+`color` 可接收自定义颜色。优先传入 Horizon 语义 token，以便自动适配明暗主题。
 
 :::demo components/Slider/color.vue :::
 
-## 指定选择范围
-可以使用 `range` 来配置范围选择
+## 范围选择
+
+启用 `range` 后，模型值为包含起止位置的二元数组。
+
 :::demo components/Slider/range.vue :::
 
-## 指定步长
-可以设置 `step` 指定步长
+## 步长与刻度
+
+`step` 支持整数和小数；当步长大于 1 时，可用 `show-separator` 展示离散刻度。
+
 :::demo components/Slider/step.vue :::
 
 ## 自定义提示
-可以配置 `tooltip-formatter` 来控制显示的文字
 
-也可以配置 `tooltip-enable = false` 来控制不显示 `tooltip`
+通过 `tooltip-formatter` 补充业务单位，并用 `tooltip-enable`、`tooltip-placement` 控制显示方式。
 
 :::demo components/Slider/custom-tooltip.vue :::
 
-## 配合输入框
-可以设置 `input-enable` 开启输入框
+## 配合数字输入框
 
-但需要注意的是，如果开启了 `range`，则不会启用输入框
+设置 `input-enable` 后，滑块与 `HInputNumber` 双向同步。范围选择模式不会显示输入框。
+
 :::demo components/Slider/with-input.vue :::
-
-

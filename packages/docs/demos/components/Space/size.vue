@@ -1,39 +1,32 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
-const size = ref<string | number>('medium');
-const customized = ref(false);
+const preset = ref('medium');
+const customSize = ref(32);
 
-const onChecked = (checked: boolean) => {
-  if (checked) size.value = 50;
-  else size.value = 'medium';
-};
+const size = computed(() => (preset.value === 'custom' ? customSize.value : preset.value));
+const presets = ['small', 'medium', 'large', 'custom'];
 </script>
 
 <template>
-  <h-space direction="vertical" size="large">
-    <h-space block size="medium">
-      <h-space align="start" size="small">
-        Size
-        <h-radio v-model="size" :disabled="customized" value="small">small</h-radio>
-        <h-radio v-model="size" :disabled="customized" value="medium">medium</h-radio>
-        <h-radio v-model="size" :disabled="customized" value="large">large</h-radio>
-      </h-space>
-      <h-space>
-        Other Setting:
-        <h-checkbox v-model="customized" @change="onChecked">Customize</h-checkbox>
-        {{ customized ? `size: ${size}px` : '' }}
-      </h-space>
-    </h-space>
+  <div class="docs-demo">
+    <div class="docs-demo__controls">
+      <label class="docs-demo__control">
+        <span>间距规格</span>
+        <h-segmented v-model:active-key="preset" size="small">
+          <h-segmented-item v-for="item in presets" :key="item" :label="item" />
+        </h-segmented>
+      </label>
+      <label v-if="preset === 'custom'" class="docs-demo__control docs-demo__control--grow">
+        <span>自定义间距：{{ customSize }}px</span>
+        <h-slider v-model="customSize" :min="4" :max="64" :step="2" />
+      </label>
+    </div>
 
-    <h-slider v-if="customized" v-model="size" :min="8" :max="100" :step="1" />
-
-    <h-space :size="size">
-      <h-button>Created</h-button>
-      <h-button type="normal">Refresh</h-button>
-      <h-button type="normal" icon="full_screen" />
+    <h-space wrap :size="size">
+      <h-button>保存</h-button>
+      <h-button type="normal">预览</h-button>
+      <h-button type="normal">取消</h-button>
     </h-space>
-  </h-space>
+  </div>
 </template>
-
-<style scoped></style>

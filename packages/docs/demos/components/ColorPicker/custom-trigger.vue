@@ -1,26 +1,27 @@
-<template>
-  <h-color-picker v-model="modelValue">
-    <template #trigger="color">
-      <h-button icon="edit" :link="true" :style="{ color: color.resultsValue.value }" />
-    </template>
-  </h-color-picker>
+<script setup lang="ts">
+import { ref } from 'vue';
 
-  <h-color-picker v-model="modelValue2">
+const accentColor = ref('#178CA6');
+</script>
+
+<template>
+  <h-color-picker v-model="accentColor" :need-confirm="false" :clearable="false">
     <template #trigger="color">
-      <h-button :plain="true">Pick Color {{ color.resultsValue.value ? `: ${color.resultsValue.value}` : '' }}</h-button>
+      <h-button plain>
+        <span
+          class="custom-color-trigger-demo__swatch"
+          :style="{ background: color.resultsValue.value }"
+        ></span>
+        Edit {{ color.resultsValue.value }}
+      </h-button>
     </template>
   </h-color-picker>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
-
-const modelValue = ref();
-const modelValue2 = ref();
-</script>
-
-<style>
-.h-color-picker--square + .h-color-picker--square {
-  margin-left: 16px;
+<style scoped>
+.custom-color-trigger-demo__swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--h-radius-circle);
 }
 </style>

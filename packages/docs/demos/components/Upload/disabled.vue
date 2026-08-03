@@ -1,24 +1,13 @@
-<template>
-  <h-upload action="https://horizon-web-inspector.demoint.com/upload-mock" :disabled="true" />
-  <h-upload
-    action="https://horizon-web-inspector.demoint.com/upload-mock"
-    type="gallery"
-    :disabled="true"
-  />
-  <h-upload action="https://horizon-web-inspector.demoint.com/upload-mock" type="drop" :disabled="true" accept="image/*" />
-</template>
+<script setup lang="ts">
+import type { HUploadUserFile } from '@aurora/horizon-web';
+import { ref } from 'vue';
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-export default defineComponent({
-  setup() {
-    return {};
-  },
+const file = ref<HUploadUserFile>({
+  name: 'release-evidence.pdf',
+  url: '/demo-assets/scene-city.svg',
 });
 </script>
 
-<style scoped>
-.h-upload + .h-upload {
-  margin-top: 10px;
-}
-</style>
+<template>
+  <h-upload id="upload-demo-disabled" v-model="file" disabled controls-always-visible />
+</template>

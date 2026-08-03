@@ -1,39 +1,53 @@
-## Set Size
-Through the `size` attribute, you can set the size of the component, supporting `'medium' | 'small'`.
+## Navigation sizes
+
+Use `size` to switch between `medium` and `small`. The demo uses an isolated scroll container so text and navigation widths can be compared directly.
+
 :::demo components/Anchor/demo1.vue :::
 
-## Whether to Change Hash
-Through the `changeHash` attribute, you can set: clicking the anchor point without changing the hash value of the current URL, that is, preventing the browser from generating corresponding history records.
+## URL hash
+
+`change-hash` controls whether clicking an anchor updates the URL hash. With it disabled, Anchor still scrolls to the target without creating browser history, which suits dialogs and nested panels.
+
 :::demo components/Anchor/demo2.vue :::
 
-## Custom Scroll Container
-Through the `scrollContainer` attribute, you can set: the scroll container. If a nested child scroll container in the page is specified and the container does not have fixed positioning set, it needs to be used with `:changeHash="false"`.
+## Custom scroll container and hierarchy
 
-Through the `showTitleSuffix` attribute, you can set: whether to display a numeric suffix at the end of the first-level navigation's "title" (indicating the total number of second-level navigations below it).
+`scroll-container` accepts a selector, element, or Window. Nested scroll regions usually pair with `:change-hash="false"`; `show-title-suffix` displays the number of child sections after a top-level title.
+
 :::demo components/Anchor/demo3.vue :::
 
-## Set Offset
-Through the `scrollOffset` attribute, you can set: the scroll offset. That is, the distance from the anchor point to the top of the "scroll container" when the document scrolling ends.
+## Scroll and activation offsets
 
-Through the `boundsOffset` attribute, you can set: the offset of the anchor area boundary. That is, when the scroll content reaches the specified offset from the top of the "scroll container", the "currently highlighted Link" change is triggered.
+`scroll-offset` controls where a clicked target lands. `bounds-offset` controls where the active link changes while scrolling. Both accept pixels or `start`, `center`, and `end`.
+
 :::demo components/Anchor/demo4.vue :::
 
-## Whether to Enable Collapse Mode
-Through the `useCollapse` attribute, you can set whether to enable "collapse mode"; through the `collapse` attribute, you can set the default "collapse state"; you can also listen to the component's `update:collapse` event to perform some additional operations.
+## Collapsible navigation
+
+Set `use-collapse` to enable collapse mode and customize its prompt with `collapse-text`. Use `v-model:collapse` when the current state must remain visible outside Anchor.
+
 :::demo components/Anchor/demo9.vue :::
 
-## Whether to Display Side Line
-Through the `showLine` attribute, you can set: whether to display the side line.
+## Side line
+
+`show-line` controls the side line and `show-highlight-line` controls its active segment. The demo disables the dependent control when the whole line is hidden.
+
 :::demo components/Anchor/demo5.vue :::
 
-## Listen to Custom Events
-You can listen to the component's `click` and `change` events to perform some additional operations.
+## Navigation events
+
+`click` returns the selected link information and native event. `change` fires when scrolling activates a different section. The demo surfaces both results above the preview.
+
 :::demo components/Anchor/demo6.vue :::
 
-## Additional Usage Scenarios
-Dynamic changes: `size` | `maxHeight` | `showTitleSuffix` attributes in AnchorProps, `title` attribute in AnchorLinkProps.
+## Dynamic configuration
+
+`size`, `max-height`, `show-title-suffix`, and each AnchorLink `title` can update dynamically. The controls make navigation layout, scrolling, and overflow behavior immediately visible.
+
 :::demo components/Anchor/demo7.vue :::
 
-## Auto Render
-Through the `autoRender` attribute, you can enable "auto render" mode: after enabling, it will automatically traverse the elements inside the `scrollContainer` container and generate elevator navigation. The generation rules are detailed in the `autoRenderRules` attribute.
+## Automatic table of contents
+
+With `auto-render`, Anchor scans headings in the scroll container according to `auto-render-rules`. After the content structure changes, call the exposed `refreshAnchorList()` method to scan again.
+
 :::demo components/Anchor/demo8.vue :::

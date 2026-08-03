@@ -1,45 +1,41 @@
+<script setup lang="ts">
+import { computed, ref } from 'vue';
+
+const scheme = ref('https://');
+const host = ref('research-notes');
+const address = computed(() => `${scheme.value}${host.value || 'workspace'}.example.com`);
+</script>
+
 <template>
-  <h-input v-model="val1">
-    <template #prepend>https://</template>
-    <template #append>.com</template>
-  </h-input>
-  <br />
-  <br />
-  <h-input v-model="val2" style="--h-input-background-prepend-append: transparent">
-    <template #prepend>
-      <h-select v-model="select1" placeholder="Please Select" size="medium" style="width: 200px">
-        <h-option key="1" label="选项1" value="1"></h-option>
-        <h-option key="2" label="选项2" value="2"></h-option>
-      </h-select>
-    </template>
-  </h-input>
-  <br />
-  <br />
-  <h-input v-model="val3" style="--h-input-background-prepend-append: transparent">
-    <template #append>
-      <h-select v-model="select2" placeholder="Please Select" size="medium">
-        <h-option key="1" label="选项1" value="1"></h-option>
-      </h-select>
-    </template>
-  </h-input>
+  <label class="input-mixed-demo">
+    <span>Workspace address</span>
+    <h-input v-model="host" aria-label="Workspace host">
+      <template #prepend>
+        <h-select v-model="scheme" aria-label="URL scheme">
+          <h-option label="https://" value="https://" />
+          <h-option label="http://" value="http://" />
+        </h-select>
+      </template>
+      <template #append>.example.com</template>
+    </h-input>
+    <small aria-live="polite">{{ address }}</small>
+  </label>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    const val1 = ref('');
-    const val2 = ref('');
-    const val3 = ref('');
-    const select1 = ref();
-    const select2 = ref();
-    return {
-      val1,
-      val2,
-      val3,
-      select1,
-      select2,
-    };
-  },
-});
-</script>
+<style scoped>
+.input-mixed-demo {
+  display: grid;
+  gap: var(--h-spacing-2);
+  max-inline-size: 640px;
+}
+
+.input-mixed-demo > span,
+.input-mixed-demo > small {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+
+.input-mixed-demo :deep(.h-input__group--prepend .h-select) {
+  inline-size: 104px;
+}
+</style>

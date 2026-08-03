@@ -1,21 +1,31 @@
-## 基础示例
-通过 `sources` 传入视频源，`poster` 传入封面图。播放器提供自定义的播放、进度、缓冲、音量、倍速、清晰度、画中画和全屏控制。
+VideoPlayer 提供播放、进度、音量、倍速、清晰度、画中画和全屏控制。
+
+## 基础播放
+
+通过 `sources` 传入视频源，`poster` 设置加载前封面。播放器获得焦点后支持空格或 `K` 播放/暂停、方向键快退或快进、`M` 静音和 `F` 全屏。
+
 :::demo components/VideoPlayer/basic.vue :::
 
-播放器获得焦点后支持以下快捷键：空格或 `K` 播放/暂停、左右方向键快退/快进 5 秒、`M` 静音、`F` 切换全屏。
+## 旋转
 
-## 旋转视频
-通过 `rotate` 控制视频的旋转，支持 `0`, `90`, `180`, `270` 四个角度。
+`rotate` 支持 `0`、`90`、`180` 和 `270` 度，适合修正设备方向。
+
 :::demo components/VideoPlayer/rotate.vue :::
 
-## 清晰度选择
-为多个视频源设置 `label`（或 `quality`）后，控制栏会展示清晰度选择列表。切换视频源时会尽量保持当前播放时间和播放状态。
+## 清晰度
+
+为多个 source 设置 `label` 后，控制栏会提供清晰度菜单，并在切换时尽量保持播放位置和状态。
+
 :::demo components/VideoPlayer/quality.vue :::
 
-## 播放器控制
-你可以通过 `ready` 事件的回调参数获取原生 `HTMLVideoElement`，直接调用 `play()`、`pause()` 等标准方法。
+## 外部控制
+
+组件实例提供 `play`、`pause` 和 `seek`，可与页面上的业务控件组合。
+
 :::demo components/VideoPlayer/action.vue :::
 
-## 错误提示
-视频源缺失、网络失败或浏览器不支持当前编码时，播放器会显示错误提示和刷新按钮。画中画、全屏以及具体可播放格式取决于浏览器能力；可选能力不可用时不会影响基础播放。
+## 错误恢复
+
+视频无法解码时会触发 `error`；应保留清晰的故障信息和重试入口。
+
 :::demo components/VideoPlayer/error.vue :::

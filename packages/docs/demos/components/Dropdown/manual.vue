@@ -1,54 +1,77 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="24">
-      <h-button style="width: 80px" @click="handle">{{ visible ? 'Hide' : 'Show' }}</h-button>
-      <h-dropdown ref="dropdown" trigger="manual" align="center" :exclusive="false">
-        <h-button :text="true">Dropdown Menu</h-button>
-        <template #dropdown>
-          <h-dropdown-menu>
-            <h-dropdown-item>北京</h-dropdown-item>
-            <h-dropdown-item>上海</h-dropdown-item>
-            <h-dropdown-item>深圳</h-dropdown-item>
-            <h-dropdown-item>杭州</h-dropdown-item>
-            <h-dropdown-item>重庆</h-dropdown-item>
-          </h-dropdown-menu>
-        </template>
-      </h-dropdown>
-      <h-dropdown trigger="manual" align="center" :visible="visible" :exclusive="false">
-        <h-button :text="true">Dropdown Menu (visible prop control)</h-button>
-        <template #dropdown>
-          <h-dropdown-menu>
-            <h-dropdown-item>北京</h-dropdown-item>
-            <h-dropdown-item>上海</h-dropdown-item>
-            <h-dropdown-item>深圳</h-dropdown-item>
-            <h-dropdown-item>杭州</h-dropdown-item>
-            <h-dropdown-item>重庆</h-dropdown-item>
-          </h-dropdown-menu>
-        </template>
-      </h-dropdown>
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { HDropdown } from '@aurora/horizon-web';
 import { ref } from 'vue';
 
-const dropdown = ref<typeof HDropdown | null>(null);
-const visible = ref(false);
-
-function handle() {
-  visible.value ? dropdown.value?.handleClose() : dropdown.value?.handleOpen();
-  visible.value = !visible.value;
+interface DropdownExpose {
+  handleOpen: () => void;
+  handleClose: () => void;
 }
+
+const dropdown = ref<DropdownExpose | null>(null);
+const visible = ref(false);
+const selected = ref('两个菜单由同一个开关控制');
+
+const toggle = () => {
+  if (visible.value) dropdown.value?.handleClose();
+  else dropdown.value?.handleOpen();
+  visible.value = !visible.value;
+};
 </script>
 
+<template>
+  <div class="dropdown-manual-demo">
+    <h-space wrap>
+      <h-button @click="toggle">{{ visible ? '收起菜单' : '展开菜单' }}</h-button>
+
+      <h-dropdown
+        ref="dropdown"
+        trigger="manual"
+        :exclusive="false"
+        @command="selected = `实例方法：${$event}`"
+      >
+        <h-button type="normal">实例方法</h-button>
+        <template #dropdown>
+          <h-dropdown-menu>
+            <h-dropdown-item command="复制链接">复制链接</h-dropdown-item>
+            <h-dropdown-item command="生成快照">生成快照</h-dropdown-item>
+          </h-dropdown-menu>
+        </template>
+      </h-dropdown>
+
+      <h-dropdown
+        trigger="manual"
+        :visible="visible"
+        :exclusive="false"
+        @command="selected = `visible 属性：${$event}`"
+      >
+        <h-button type="normal">visible 属性</h-button>
+        <template #dropdown>
+          <h-dropdown-menu>
+            <h-dropdown-item command="标记已读">标记已读</h-dropdown-item>
+            <h-dropdown-item command="稍后处理">稍后处理</h-dropdown-item>
+          </h-dropdown-menu>
+        </template>
+      </h-dropdown>
+    </h-space>
+    <p role="status">{{ selected }}</p>
+  </div>
+</template>
+
 <style scoped>
-.h-dropdown {
-  display: inline-flex;
+.dropdown-manual-demo {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
 }
 
-.h-button + .h-dropdown {
-  margin-left: 12px;
+p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: 13px;
+}
+
+@media (max-width: 390px) {
+  .dropdown-manual-demo {
+    gap: 10px;
+  }
 }
 </style>

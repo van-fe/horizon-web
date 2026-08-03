@@ -1,30 +1,32 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const value = ref(0);
+type InputSize = 'small' | 'medium' | 'large';
 
-function onInput(value: number) {
-  console.info('input', value);
-}
-
-function onChange(value: number) {
-  console.info('change', value);
-}
+const size = ref<InputSize>('medium');
+const value = ref(24);
 </script>
 
 <template>
-  <h-grid :gap="12">
-    <h-grid-item :span="8">
-      <div class="demo-title">large</div>
-      <h-input-number v-model="value" size="large" @input="onInput" @change="onChange" />
-    </h-grid-item>
-    <h-grid-item :span="8">
-      <div class="demo-title">medium (default)</div>
-      <h-input-number v-model="value" @input="onInput" @change="onChange" />
-    </h-grid-item>
-    <h-grid-item :span="8">
-      <div class="demo-title">small</div>
-      <h-input-number v-model="value" size="small" @input="onInput" @change="onChange" />
-    </h-grid-item>
-  </h-grid>
+  <section class="input-number-size-demo">
+    <h-segmented v-model:active-key="size" size="small" block aria-label="Input number size">
+      <h-segmented-item key="small" label="Small" />
+      <h-segmented-item key="medium" label="Medium" />
+      <h-segmented-item key="large" label="Large" />
+    </h-segmented>
+    <h-input-number v-model="value" :size="size" :min="0" :aria-label="`${size} quantity`" />
+    <small aria-live="polite">size="{{ size }}"</small>
+  </section>
 </template>
+
+<style scoped>
+.input-number-size-demo {
+  display: grid;
+  gap: var(--h-spacing-3);
+  max-inline-size: 460px;
+}
+
+.input-number-size-demo > small {
+  color: var(--h-text-secondary);
+}
+</style>

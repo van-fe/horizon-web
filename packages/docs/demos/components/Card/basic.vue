@@ -1,58 +1,73 @@
 <template>
-  <ul>
-    <li>
-      <h-input size="small" v-model="title" placeholder="请输入"></h-input>
-    </li>
-    <li><h-checkbox v-model="topDivider" label="上分割线" /></li>
-    <li><h-checkbox v-model="bottomDivider" label="下分割线" /></li>
-    <li><h-checkbox v-model="border" label="边框" /></li>
-    <li class="flex">
-      <span>圆角：</span>
-      <h-radio-group v-if="border" v-model="radius">
-        <h-radio value="none" v-model="radius">none</h-radio>
-        <h-radio value="small" v-model="radius">small</h-radio>
-        <h-radio value="medium" v-model="radius">medium</h-radio>
-        <h-radio value="large" v-model="radius">large</h-radio>
-      </h-radio-group>
-    </li>
-  </ul>
-  <h-card
-    :title="title"
-    :top-divider="topDivider"
-    :bottom-divider="bottomDivider"
-    :radius="radius"
-    :border="border"
-  >
-    {{ text }}
-    <template #footer>
-      <div class="custom-footer">
-        <h-button type="normal" size="small">Default</h-button>
-        <h-button size="small">Default</h-button>
+  <div class="card-basic-demo">
+    <div class="card-basic-demo__options">
+      <label>
+        <span>Corner radius</span>
+        <h-segmented v-model:active-key="radius" size="small">
+          <h-segmented-item v-for="option in radiusOptions" :key="option" :label="option" />
+        </h-segmented>
+      </label>
+      <h-switch v-model="border" label="Show border" status />
+    </div>
+
+    <h-card title="Horizon Web 2.8" :radius="radius" :border="border">
+      <div class="card-basic-demo__content">
+        <h-tag size="small" :clickable="false">Ready for review</h-tag>
+        <p>
+          The accessibility pass is complete and the release candidate is ready for final approval.
+        </p>
       </div>
-    </template>
-  </h-card>
+    </h-card>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const title = ref('我是标题');
-const radius = ref('small');
-const topDivider = ref(false);
-const bottomDivider = ref(false);
+const radius = ref<'none' | 'small' | 'medium' | 'large'>('medium');
+const radiusOptions = ['none', 'small', 'medium', 'large'];
 const border = ref(true);
-const text =
-  '这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很的内容文案这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很的内容文案这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很的内容文案这是一段长很长很长很长很长很长很的内容文案';
 </script>
 
-<style lang="scss" scoped>
-.custom-footer {
-  display: flex;
-  justify-content: flex-end;
+<style scoped>
+.card-basic-demo,
+.card-basic-demo__content,
+.card-basic-demo__options label {
+  display: grid;
+  gap: var(--h-spacing-3);
 }
-ul {
+
+.card-basic-demo {
+  max-width: 640px;
+  gap: var(--h-spacing-4);
+}
+
+.card-basic-demo__options {
   display: flex;
-  flex-direction: column;
-  row-gap: 8px;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: var(--h-spacing-4);
+}
+
+.card-basic-demo__options label {
+  min-width: min(100%, 280px);
+}
+
+.card-basic-demo__options span,
+.card-basic-demo__content p {
+  color: var(--h-text-secondary);
+}
+
+.card-basic-demo__options span {
+  font-size: var(--h-text-sm);
+}
+
+.card-basic-demo__content {
+  justify-items: start;
+}
+
+.card-basic-demo__content p {
+  margin: 0;
+  line-height: 1.7;
 }
 </style>

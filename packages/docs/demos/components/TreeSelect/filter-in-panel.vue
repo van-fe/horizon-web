@@ -1,51 +1,49 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <div class="demo-title">内置面板</div>
-      <h-tree-select
-        :tree-data="baseTreeData"
-        :panel-filterable="true"
-        :use-build-in-panel-filter="true"
-        :max-height="300"
-        :multiple="true"
-        :to-body="false"
-      />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">自定义插槽</div>
-      <h-tree-select
-        :tree-data="baseTreeData"
-        :panel-filterable="true"
-        :panel-filter-input-value="filterValue"
-        :max-height="300"
-        :multiple="true"
-        :to-body="false"
-      >
-        <template #panelHeaderRender>
-          <h-input v-model="filterValue" class="filter-input" />
-        </template>
-      </h-tree-select>
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
+import type { HTreeNodeData } from '@aurora/horizon-web';
 
-const baseTreeData = ref([]);
-const filterValue = ref();
-
-onMounted(() => {
-  fetch(new URL('/tree-data.json', import.meta.url).href)
-    .then(res => res.json())
-    .then(res => {
-      baseTreeData.value = res;
-    });
-});
+const builtIn = ref(true);
+const filterValue = ref('');
+const selectedValues = ref<Array<string | number>>(['api-gateway']);
+const treeData: HTreeNodeData[] = [
+  {
+    value: 'runtime',
+    label: 'Runtime services',
+    children: [
+      { value: 'api-gateway', label: 'API gateway' },
+      { value: 'job-runner', label: 'Background job runner' },
+    ],
+  },
+  {
+    value: 'data',
+    label: 'Data services',
+    children: [
+      { value: 'warehouse', label: 'Analytics warehouse' },
+      { value: 'event-stream', label: 'Event stream' },
+    ],
+  },
+];
 </script>
 
-<style scoped>
-.filter-input {
-  padding: 10px;
-}
-</style>
+<template>
+  <div class="docs-demo">
+    <h-switch v-model="builtIn" label="Use built-in panel filter" />
+    <h-tree-select
+      v-model="selectedValues"
+      :tree-data="treeData"
+      panel-filterable
+      :use-build-in-panel-filter="builtIn"
+      :panel-filter-input-value="filterValue"
+      panel-input-placeholder="Filter resources"
+      multiple
+      collapse-tags
+      :max-height="300"
+      placeholder="Choose resources"
+      :to-body="false"
+    >
+      <template v-if="!builtIn" #panelHeaderRender>
+        <h-input v-model="filterValue" clearable placeholder="Filter resources" />
+      </template>
+    </h-tree-select>
+  </div>
+</template>

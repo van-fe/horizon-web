@@ -1,40 +1,41 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="12">
-      <div class="demo-title">单选</div>
-      <h-tree
-        :tree-data="baseTreeData"
-        :field-map="{value: 'key', label: 'text', children: 'items'}"
-      >
-        <template #treeNodeRender="{data}">
-          {{ data.label }}
-        </template>
-      </h-tree>
-    </h-grid-item>
-    <h-grid-item :span="12">
-      <div class="demo-title">多选</div>
-      <h-tree
-        :tree-data="baseTreeData"
-        :field-map="{value: 'key', label: 'text', children: 'items'}"
-        :multiple="true"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
+import type { HTreeNodeData } from '@aurora/horizon-web';
 
-const baseTreeData = ref([]);
+interface TaxonomyNode {
+  key: string;
+  text: string;
+  items?: TaxonomyNode[];
+}
 
-onMounted(() => {
-  fetch(new URL('/field-map-options.json', import.meta.url).href)
-    .then(res => res.json())
-    .then(res => {
-      baseTreeData.value = res;
-    });
-});
+const selectedValues = ref<Array<string | number>>(['tax-eu']);
+const externalData: TaxonomyNode[] = [
+  {
+    key: 'tax',
+    text: 'Tax domains',
+    items: [
+      { key: 'tax-us', text: 'US sales tax' },
+      { key: 'tax-eu', text: 'EU value-added tax' },
+    ],
+  },
+  {
+    key: 'privacy',
+    text: 'Privacy domains',
+    items: [{ key: 'privacy-gdpr', text: 'GDPR' }],
+  },
+];
+const treeData = externalData as unknown as HTreeNodeData[];
 </script>
 
-<style scoped>
-</style>
+<template>
+  <div class="docs-demo">
+    <h-tree
+      v-model:selected-values="selectedValues"
+      :tree-data="treeData"
+      :field-map="{ value: 'key', label: 'text', children: 'items' }"
+      multiple
+      :is-default-expand-all="true"
+    />
+    <span aria-live="polite">External keys: {{ selectedValues.join(', ') || 'none' }}</span>
+  </div>
+</template>

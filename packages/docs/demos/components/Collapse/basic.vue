@@ -1,50 +1,52 @@
 <template>
-  <div class="flex justify-space-between">
-    <h-collapse :active-key="activeKey" style="width: 500px" @change="handleExpand">
-      <h-collapse-item title="This is a panel header." name="1">
-        <div>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</div>
-        <div>Velit officia consequat duis enim velit mollit. Exercitation veniam consequat</div>
-        <div>sunt nostrud amet.Amet minim mollit.</div>
-      </h-collapse-item>
-      <h-collapse-item title="Why can i not submit a higher price?" name="2">
-        <div>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</div>
-        <div>Velit officia consequat duis enim velit mollit.</div>
-      </h-collapse-item>
-      <h-collapse-item title="How are you？" name="3">How are you？</h-collapse-item>
-      <h-collapse-item title="What are Promotion Products?" name="4">
-        What are Promotion Products?
-      </h-collapse-item>
-    </h-collapse>
-    <h-collapse :active-key="activeKey" filled style="width: 500px">
-      <h-collapse-item title="This is a panel header." name="1">
-        <div>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</div>
-        <div>Velit officia consequat duis enim velit mollit. Exercitation veniam consequat</div>
-        <div>sunt nostrud amet.Amet minim mollit.</div>
-      </h-collapse-item>
-      <h-collapse-item title="Why can i not submit a higher price?" name="2">
-        <div>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</div>
-        <div>Velit officia consequat duis enim velit mollit.</div>
-      </h-collapse-item>
-      <h-collapse-item title="How are you？" name="3">How are you？</h-collapse-item>
-      <h-collapse-item title="What are Promotion Products?" name="4">
-        What are Promotion Products?
+  <div class="collapse-basic-demo">
+    <h-switch v-model="filled" label="Filled panels" />
+    <h-collapse v-model:active-key="activeKeys" :filled="filled">
+      <h-collapse-item
+        v-for="panel in panels"
+        :key="panel.id"
+        :name="panel.id"
+        :title="panel.title"
+      >
+        <p>{{ panel.content }}</p>
       </h-collapse-item>
     </h-collapse>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    const activeKey = ref(['1', '2']);
-    const handleExpand = activeKeys => {
-      console.info(`activeKeys ===> `, activeKeys);
-    };
-    return {
-      activeKey,
-      handleExpand,
-    };
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const filled = ref(false);
+const activeKeys = ref(['overview', 'timeline']);
+const panels = [
+  {
+    id: 'overview',
+    title: 'Outcome and audience',
+    content: 'Create a focused workspace for product teams reviewing weekly decisions.',
   },
-});
+  {
+    id: 'timeline',
+    title: 'Delivery timeline',
+    content: 'Prototype on Monday, review on Wednesday, and publish on Friday.',
+  },
+  {
+    id: 'measure',
+    title: 'Success measure',
+    content: 'A reviewer should find the latest decision and owner in under thirty seconds.',
+  },
+];
 </script>
+
+<style scoped>
+.collapse-basic-demo {
+  display: grid;
+  gap: var(--h-spacing-4);
+}
+
+.collapse-basic-demo p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  line-height: 1.7;
+}
+</style>

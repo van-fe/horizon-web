@@ -1,22 +1,31 @@
+<script setup lang="ts">
+const items = Array.from({ length: 160 }, (_, index) => `Long list row ${index + 1}`);
+</script>
+
 <template>
-  <h-scrollbar height="400px">
-    <div v-for="item of 1000" :key="item" class="item">
-      {{ item }}
+  <h-scrollbar class="scrollbar-min-demo" height="260px" :min-size="48">
+    <div class="scrollbar-min-demo__list">
+      <div v-for="item in items" :key="item">{{ item }}</div>
     </div>
   </h-scrollbar>
 </template>
 
-<script setup lang="ts">
-</script>
-
 <style scoped>
-.item {
-  width: 120%;
-  height: 40px;
-  background: var(--h-bg-info-weak-default);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 10px;
+.scrollbar-min-demo {
+  overflow: hidden;
+  border: 1px solid var(--h-border-default);
+  border-radius: var(--h-radius-m);
+}
+
+.scrollbar-min-demo__list {
+  display: grid;
+  padding-inline: var(--h-spacing-3);
+}
+
+.scrollbar-min-demo__list > div {
+  min-block-size: 40px;
+  padding: var(--h-spacing-2) var(--h-spacing-3);
+  border-bottom: 1px solid var(--h-divider-default);
+  color: var(--h-text-secondary);
 }
 </style>

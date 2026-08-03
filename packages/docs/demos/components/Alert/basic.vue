@@ -1,3 +1,9 @@
 <template>
-  <h-alert description="Info Text" type="info" />
+  <h-alert
+    title="新版本已准备就绪"
+    description="刷新页面即可使用最新功能，你也可以稍后再处理。"
+    type="info"
+    show-icon
+    :closable="false"
+  />
 </template>

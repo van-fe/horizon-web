@@ -27,5 +27,5 @@
 :::demo components/Scrollbar/manual.vue :::
 
 ## 最小尺寸
-设置 `minSize` ，可以保证在滚动内容非常多时，滚动条依旧可以被容易点击到
+设置 `min-size`，可以保证在滚动内容非常多时，滚动条依旧容易被点击。
 :::demo components/Scrollbar/min-size.vue :::

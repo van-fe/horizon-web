@@ -1,36 +1,45 @@
+Viewer opens images, videos, or a mixed media set in a full-screen layer.
+
 ## Basic Usage
-Pass resource list through `sources`.
+
+Pass resources through `sources` and control visibility with `v-model`.
+
 :::demo components/Viewer/basic.vue :::
 
-## Loop Display
-You can pass in `loop` to enable loop switching function.
+## Loop
+
+`loop` wraps previous and next navigation at both ends of the source list.
+
 :::demo components/Viewer/loop.vue :::
 
-## Auto Hide Toolbar
-By default, the toolbar will automatically hide after 3 seconds of no operation. You can disable this behavior.
+## Auto-hide Tools
+
+`auto-hide-tools` controls whether the toolbar disappears after inactivity.
+
 :::demo components/Viewer/autohide.vue :::
 
-## Legend
-Legend is a label on the image. You can configure multiple legends for an image. Legends with `handler` set are clickable.  
-Only images support legends, videos do not.
+## Legends
+
+An image source can define multiple `legends`. A legend becomes interactive when it has a `handler`. Video sources do not support legends.
+
 :::demo components/Viewer/legend.vue :::
 
-## Custom Buttons
-You can recombine the built-in buttons you want, or add completely custom buttons.
+## Custom Tools
+
+Use `tools` to reorder built-in controls or add a custom action with an icon, title, and handler.
+
 :::demo components/Viewer/tools.vue :::
 
-## Click Image to Trigger
-To trigger the gallery by clicking an image that already exists on the page, a little extra work is needed.
+## Open from a Thumbnail
+
+When a page thumbnail is selected, use `init-index` to open the corresponding source.
+
 :::demo components/Viewer/imgclick.vue :::
 
-## Keyboard Support
-<kbd>Esc</kbd> Close viewer  
-<kbd>←</kbd> Previous image  
-<kbd>→</kbd> Next image  
-<kbd>↑</kbd> Zoom in image  
-<kbd>↓</kbd> Zoom out image  
-<kbd>Double Click Mouse</kbd> Toggle between original size and adaptive size  
-<kbd>Mouse Wheel or Two-finger Scroll</kbd> Pan an image beyond the viewport<br>
-<kbd>Trackpad Pinch or Ctrl + Mouse Wheel</kbd> Zoom around the pointer
+## Keyboard and Pointer
 
-Tall images are displayed at a readable width and start at the top of the image.
+- <kbd>Esc</kbd> closes the viewer
+- <kbd>←</kbd> / <kbd>→</kbd> navigates sources
+- <kbd>↑</kbd> / <kbd>↓</kbd> zooms images
+- Double-click toggles between actual and fitted size
+- Wheel, trackpad, and pinch gestures pan or zoom images

@@ -1,25 +1,11 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
-
-const size = reactive([10, 8]);
+const filters = ['全部项目', '我创建的', '本周更新', '等待评审', '高优先级', '已归档'];
 </script>
 
 <template>
-  <h-space block direction="vertical">
-    <h-space block size="small" direction="vertical">
-      <h-space block direction="vertical">
-        Horizontal
-        <h-slider v-model="size[0]" :step="1" :min="0" :max="100" />
-      </h-space>
-      <h-space block direction="vertical">
-        Vertical
-        <h-slider v-model="size[1]" :step="1" :min="0" :max="100" />
-      </h-space>
-    </h-space>
-    <h-space wrap :size="size">
-      <h-button v-for="i in 20" :key="i">Button</h-button>
-    </h-space>
+  <h-space block wrap :size="[12, 10]">
+    <h-button v-for="(filter, index) in filters" :key="filter" :type="index ? 'normal' : 'primary'">
+      {{ filter }}
+    </h-button>
   </h-space>
 </template>
-
-<style scoped></style>

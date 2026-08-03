@@ -1,20 +1,31 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const size = ref<'small' | 'medium' | 'large'>('medium');
+</script>
+
 <template>
-  <h-grid :gap="10">
-    <h-grid-item :span="8">
-      <div class="demo-title">默认状态</div>
-      <h-tag :clickable="false" size="small">Small</h-tag>
-      <h-tag :clickable="false">Medium</h-tag>
-      <h-tag :clickable="false" size="large">Large</h-tag>
-    </h-grid-item>
-    <h-grid-item :span="8">
-      <div class="demo-title">强调状态</div>
-      <h-tag :clickable="false" :bold="true" size="small">Small</h-tag>
-      <h-tag :clickable="false" :bold="true">Medium</h-tag>
-      <h-tag :clickable="false" :bold="true" size="large">Large</h-tag>
-    </h-grid-item>
-  </h-grid>
+  <section class="docs-demo">
+    <div class="docs-demo__controls">
+      <h-segmented v-model:active-key="size" size="small">
+        <h-segmented-item key="small" label="Small" />
+        <h-segmented-item key="medium" label="Medium" />
+        <h-segmented-item key="large" label="Large" />
+      </h-segmented>
+    </div>
+
+    <div class="tag-row">
+      <h-tag :size="size" :clickable="false">v3.8</h-tag>
+      <h-tag :size="size" bold :clickable="false">重点版本</h-tag>
+    </div>
+  </section>
 </template>
 
-<script setup lang="ts"></script>
-
-<style scoped></style>
+<style scoped>
+.tag-row {
+  display: flex;
+  align-items: center;
+  gap: var(--h-spacing-3);
+  flex-wrap: wrap;
+}
+</style>

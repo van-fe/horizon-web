@@ -1,128 +1,104 @@
 <template>
-  <h-form label-position="left">
-    <h-form-item label="disabled">
-      <h-radio-group v-model="disabled">
-        <h-radio :value="true">True</h-radio>
-        <h-radio :value="false">False</h-radio>
-      </h-radio-group>
-    </h-form-item>
-  </h-form>
-  <h-form
-    ref="formRef"
-    :model="formData"
-    :disabled="disabled"
-    label-vertical-align="middle"
-    @submit.prevent="onSubmit"
-  >
-    <h-form-item label="Input" prop="input" required>
-      <h-input v-model="formData.input" clearable />
-    </h-form-item>
-    <h-form-item label="Number" prop="number" required>
-      <h-input-number
-        v-model="formData.number"
-        :min="0"
-        :max="120"
-        clearable
-        @input="onInput"
-        @change="onChange"
-      />
-    </h-form-item>
-    <h-form-item label="Select" prop="select" required>
-      <h-select v-model="formData.select" clearable :multiple="true">
-        <h-option label="Beijing" value="beijing" />
-        <h-option label="Shanghai" value="shanghai" />
-        <h-option label="Hefei" value="hefei" />
-      </h-select>
-    </h-form-item>
-    <h-form-item label="Cascader" prop="cascader" required>
-      <h-cascader
-        v-model="formData.cascader"
-        :clearable="true"
-        :to-body="false"
-        :multiple="true"
-        :options="cascaderData"
-      />
-    </h-form-item>
-    <h-form-item label="TreeSelect" prop="treeSelect" required>
-      <h-tree-select
-        v-model="formData.treeSelect"
-        :clearable="true"
-        :to-body="false"
-        :multiple="true"
-        :tree-data="cascaderData"
-      />
-    </h-form-item>
-    <h-form-item label="Date" prop="date" required>
-      <h-date-picker
-        v-model="formData.date"
-        type="daterange"
-        format="yyyy-MM-dd"
-        value-format="yyyy-MM-dd"
-        start-placeholder="Start date"
-        end-placeholder="End date"
-      />
-    </h-form-item>
-    <h-form-item label="Switch" prop="switch" required>
-      <h-switch v-model="formData.switch" />
-    </h-form-item>
-    <h-form-item label="Checkbox" prop="checkbox" required>
-      <h-checkbox v-model="formData.checkbox" />
-    </h-form-item>
-    <h-form-item label="Radio" prop="radio" required>
-      <h-radio v-model="formData.radio" />
-    </h-form-item>
-    <h-form-item label="Textarea" prop="textarea" required>
-      <h-input v-model="formData.textarea" :show-limit="true" :maxlength="100" type="textarea" />
-    </h-form-item>
-    <h-form-item label="Upload" prop="upload" required>
-      <h-upload v-model="formData.upload"></h-upload>
-    </h-form-item>
-    <h-form-item label="Upload Drop" prop="upload" required>
-      <h-upload v-model="formData.upload" type="drop" :limit="5" :multiple="true"></h-upload>
-    </h-form-item>
-    <h-form-item label="Upload Gallery" prop="upload" required>
-      <h-upload v-model="formData.upload" type="gallery"></h-upload>
-    </h-form-item>
+  <section class="form-disabled-demo">
+    <label class="form-disabled-demo__control">
+      <h-switch v-model="disabled" />
+      Lock the full release request
+    </label>
 
-    <h-button native-type="submit">Submit</h-button>
-  </h-form>
+    <h-form :model="formData" :disabled="disabled" spacing="dynamic" @submit="submit">
+      <h-grid :cols="{ xs: 1, md: 2 }" :gap="16">
+        <h-grid-item>
+          <h-form-item label="Release name" required>
+            <h-input v-model="formData.releaseName" clearable />
+          </h-form-item>
+        </h-grid-item>
+        <h-grid-item>
+          <h-form-item label="Environment" required>
+            <h-select v-model="formData.environment">
+              <h-option label="Production" value="production" />
+              <h-option label="Staging" value="staging" />
+            </h-select>
+          </h-form-item>
+        </h-grid-item>
+      </h-grid>
+      <h-form-item label="Review teams" required>
+        <h-cascader
+          v-model="formData.reviewTeams"
+          aria-label="Review teams"
+          :options="workspaceOptions"
+          multiple
+          clearable
+          collapse-tags
+          :to-body="false"
+        />
+      </h-form-item>
+      <h-form-item label="Automation">
+        <h-space wrap>
+          <label>
+            <h-switch v-model="formData.autoRollback" />
+            Automatic rollback
+          </label>
+          <h-checkbox v-model="formData.notifyOwners">Notify service owners</h-checkbox>
+        </h-space>
+      </h-form-item>
+      <h-form-item label="Release note">
+        <h-input v-model="formData.note" type="textarea" :maxlength="120" show-limit />
+      </h-form-item>
+      <h-form-item><h-button native-type="submit">Save request</h-button></h-form-item>
+    </h-form>
+    <p class="form-disabled-demo__status" aria-live="polite">
+      {{ disabled ? 'The release request is locked and read-only' : status }}
+    </p>
+  </section>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import type { HFormInstance } from '@aurora/horizon-web';
+import { reactive, ref } from 'vue';
+import { workspaceOptions } from '../Cascader/options';
 
 const disabled = ref(true);
-const cascaderData = ref([]);
-const formRef = ref<HFormInstance | null>(null);
-const formData = ref({
-  input: '',
-  number: null,
-  select: null,
-  date: [],
-  switch: true,
-  checkbox: false,
-  radio: false,
-  cascader: [],
-  treeSelect: [],
-  textarea: '',
-  upload: undefined,
+const formData = reactive({
+  releaseName: 'August reliability release',
+  environment: 'production',
+  reviewTeams: [
+    ['product', 'design-system', 'accessibility'],
+    ['engineering', 'reliability', 'observability'],
+  ],
+  autoRollback: true,
+  notifyOwners: true,
+  note: 'Pause rollout if the retry error budget drops below the threshold.',
 });
+const status = ref('Release request unlocked for editing');
 
-onMounted(async () => {
-  cascaderData.value = await fetch(new URL('/cascader-tree-data.json', import.meta.url).href).then(
-    r => r.json(),
-  );
-});
-
-function onInput() {
-  console.info('input:', formData.value.number);
-}
-function onChange() {
-  console.info('change:', formData.value.number);
-}
-
-function onSubmit() {
-  formRef.value?.validate();
+function submit() {
+  status.value = `Saved ${formData.releaseName}`;
 }
 </script>
+
+<style scoped>
+.form-disabled-demo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--h-spacing-4);
+}
+
+.form-disabled-demo__control,
+.form-disabled-demo label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--h-spacing-2);
+}
+
+.form-disabled-demo__control {
+  width: fit-content;
+  padding: var(--h-spacing-3) var(--h-spacing-4);
+  border-radius: var(--h-radius-m);
+  background: var(--h-bg-secondary);
+}
+
+.form-disabled-demo__status {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+</style>

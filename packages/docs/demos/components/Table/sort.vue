@@ -1,61 +1,81 @@
-<template>
-  <h-table :data="data" height="300px" :loading="isLoading" @sort-change="onSortChange">
-    <h-table-column title="ID" field="id" width="80" sortable :sort-method="numberSort" />
-    <h-table-column title="Name" field="name" sortable />
-    <h-table-column title="Gender" field="gender" sortable />
-    <h-table-column title="Birthday" field="birthday" sortable sort-separate :sort-method="dateSort" />
-    <h-table-column title="Address" field="address" sortable :use-built-in-sort="false" @sort-change="onColumnSortChange" />
-  </h-table>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
-import { faker } from '@faker-js/faker';
-import { dayjs, HTableColumnData, HTableSortOrderEnum } from '@aurora/horizon-web';
+import { dayjs, type HTableColumnData, HTableSortOrderEnum } from '@aurora/horizon-web';
 
-interface TableData {
+interface MilestoneRow {
   id: number;
-  name: string;
-  birthday: string;
-  gender: 'male' | 'female';
-  address: string;
+  milestone: string;
+  owner: string;
+  due: string;
+  confidence: number;
 }
 
-const isLoading = ref(false);
-
-const data = ref<TableData[]>(new Array(20).fill(0).map((_, index) => ({
-  id: index + 1,
-  name: faker.person.fullName(),
-  birthday: faker.date.birthdate({ min: 22, max: 50, mode: 'age' }).toDateString(),
-  gender: faker.helpers.arrayElement(['male', 'female']),
-  address: faker.location.streetAddress(),
-})));
+const sortStatus = ref('Click a sortable header; hold Ctrl or Command for another sort.');
+const milestones: MilestoneRow[] = [
+  { id: 104, milestone: 'Security review', owner: 'Leo Martin', due: '2026-08-12', confidence: 76 },
+  { id: 101, milestone: 'Design sign-off', owner: 'Iris Wang', due: '2026-08-06', confidence: 94 },
+  { id: 106, milestone: 'Regional rollout', owner: 'Mina Park', due: '2026-08-21', confidence: 68 },
+  { id: 103, milestone: 'Load validation', owner: 'Noah Chen', due: '2026-08-09', confidence: 84 },
+  {
+    id: 108,
+    milestone: 'General availability',
+    owner: 'Avery Kim',
+    due: '2026-08-28',
+    confidence: 71,
+  },
+];
 
 function numberSort(order: HTableSortOrderEnum) {
-  return (a: TableData, b: TableData) => order === HTableSortOrderEnum.ASC ? a.id - b.id : b.id - a.id;
+  return (a: MilestoneRow, b: MilestoneRow) =>
+    order === HTableSortOrderEnum.ASC ? a.id - b.id : b.id - a.id;
 }
 
 function dateSort(order: HTableSortOrderEnum) {
-  return (a: TableData, b: TableData) => {
-    const diff = dayjs(a.birthday).valueOf() - dayjs(b.birthday).valueOf();
-
-    return order === HTableSortOrderEnum.ASC ? diff : -diff;
+  return (a: MilestoneRow, b: MilestoneRow) => {
+    const difference = dayjs(a.due).valueOf() - dayjs(b.due).valueOf();
+    return order === HTableSortOrderEnum.ASC ? difference : -difference;
   };
 }
 
 function onSortChange(states: Array<{ column: HTableColumnData; order: HTableSortOrderEnum }>) {
-  console.info('Table sort change', states);
-
-  // You can sort by your self
-}
-
-function onColumnSortChange(order: HTableSortOrderEnum | null) {
-  console.info('Column(Address) sort change:', order);
-  isLoading.value = true;
-
-  setTimeout(() => {
-    data.value = order === null ? data.value.sort(numberSort(HTableSortOrderEnum.ASC)) : data.value.sort((a, b) => order === HTableSortOrderEnum.ASC ? a.address.localeCompare(b.address) : b.address.localeCompare(a.address));
-    isLoading.value = false;
-  }, 2000);
+  sortStatus.value = states.length
+    ? `Active sort: ${states
+        .map(({ column, order }) => `${column.props.title ?? column.props.field} ${order}`)
+        .join(', ')}`
+    : 'Sort cleared.';
 }
 </script>
+
+<template>
+  <div class="table-sort-demo">
+    <h-table :data="milestones" row-key="id" @sort-change="onSortChange">
+      <h-table-column title="ID" field="id" width="88" sortable :sort-method="numberSort" />
+      <h-table-column title="Milestone" field="milestone" min-width="190" sortable />
+      <h-table-column title="Owner" field="owner" min-width="140" sortable />
+      <h-table-column title="Due" field="due" width="122" sortable :sort-method="dateSort" />
+      <h-table-column
+        title="Confidence"
+        field="confidence"
+        width="122"
+        sortable
+        align="right"
+        header-align="right"
+      />
+    </h-table>
+    <p aria-live="polite">{{ sortStatus }}</p>
+  </div>
+</template>
+
+<style scoped>
+.table-sort-demo {
+  display: grid;
+  min-width: 0;
+  gap: var(--h-spacing-3);
+}
+
+.table-sort-demo p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+</style>

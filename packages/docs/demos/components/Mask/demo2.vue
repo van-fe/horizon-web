@@ -1,41 +1,54 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const visible = ref(false);
+</script>
+
 <template>
-  <div class="box">
-    <h-button @click="open">打开</h-button>
-    <h-mask absolute :value="show">
-      <h-button @click="close">关闭</h-button>
-    </h-mask>
+  <div class="docs-demo">
+    <div class="project-panel">
+      <span>遮罩只覆盖这个局部容器</span>
+      <h-button size="small" @click="visible = true">执行任务</h-button>
+      <h-mask absolute :value="visible">
+        <div class="mask-action">
+          <strong>任务执行中</strong>
+          <h-button size="small" @click="visible = false">结束演示</h-button>
+        </div>
+      </h-mask>
+    </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-
-export default defineComponent({
-  setup() {
-    const show = ref(false);
-    const open = function () {
-      console.info('打开');
-      show.value = true;
-    };
-    const close = function () {
-      console.info('关闭');
-      show.value = false;
-    };
-    return {
-      show,
-      open,
-      close,
-    };
-  },
-});
-</script>
-
 <style scoped>
-.box {
+.project-panel {
   position: relative;
-  width: 200px;
-  height: 200px;
-  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%),
-    0px 1px 5px 0px rgb(0 0 0 / 12%);
+  display: flex;
+  min-height: 150px;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--h-spacing-4);
+  overflow: hidden;
+  padding: var(--h-spacing-5);
+  border-radius: var(--h-radius-l);
+  background: var(--h-bg-secondary);
+}
+
+.project-panel > span {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+
+.mask-action {
+  display: grid;
+  justify-items: center;
+  gap: var(--h-spacing-3);
+  color: var(--h-text-inverse);
+}
+
+@media (max-width: 560px) {
+  .project-panel {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
 </style>

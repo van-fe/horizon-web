@@ -7,6 +7,7 @@ import * as directives from '../../../horizon-web/src/directives';
 import methodsRegister from '../../../horizon-web/src/methods';
 import '../../../horizon-web/src/styles/index.scss';
 import './tailwind.css';
+import './demo.css';
 import DemoBlock from '../components/DemoBlock.vue';
 import VersionTips from '../components/VersionTips.vue';
 

@@ -1,20 +1,43 @@
-## Basic Usage
+Transfer assigns items between two lists. `v-model` stores the keys shown in the target list.
+
+## Basic Selection
+
+Use `titles` to name each list. `filterable` adds search while disabled items retain context.
+
 :::demo components/Transfer/basic.vue :::
 
-## Category
+## Grouped Data
+
+Mark read-only group headings with `isGroup` to make longer lists easier to scan.
+
 :::demo components/Transfer/group.vue :::
 
-## Single Selection
+## Single Assignment
+
+Compose radio controls through `leftBody` when the target must contain only one item.
+
 :::demo components/Transfer/radio.vue :::
 
-## Select People
+## Custom People Rows
+
+Use the `item` slot for avatars and team details, and pass a function to `filterable` for custom matching.
+
 :::demo components/Transfer/people.vue :::
 
-## Select Organization Structure
+## Tree Data
+
+Nested `children` allow users to browse levels and select a team or an individual.
+
 :::demo components/Transfer/tree.vue :::
 
-## Draggable
+## Target Ordering
+
+Enable `draggable` to reorder items directly in the target list.
+
 :::demo components/Transfer/drag.vue :::
 
-[//]: # (## Table)
-[//]: # (:::demo components/Transfer/table.vue :::)
+## Custom Panels
+
+Header, body, and control slots can replace the default lists with business-specific views such as tables.
+
+:::demo components/Transfer/table.vue :::

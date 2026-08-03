@@ -1,44 +1,28 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <div class="demo-title">单选</div>
-      <h-tree-select
-        v-if="baseTreeData.length"
-        :tree-data="baseTreeData"
-        :use-virtual-scroll="true"
-        :max-height="300"
-        :is-default-expand-all="true"
-        :to-body="false"
-      />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">多选</div>
-      <h-tree-select
-        v-if="baseTreeData.length"
-        :tree-data="baseTreeData"
-        :use-virtual-scroll="true"
-        :max-height="300"
-        :is-default-expand-all="true"
-        :multiple="true"
-        :to-body="false"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
+import type { HTreeNodeData } from '@aurora/horizon-web';
 
-const baseTreeData = ref([]);
-
-onMounted(() => {
-  fetch(new URL('/tree-data.json', import.meta.url).href)
-    .then(res => res.json())
-    .then(res => {
-      baseTreeData.value = res;
-    });
-});
+const selectedValues = ref<Array<string | number>>(['collection-18-item-7']);
+const treeData: HTreeNodeData[] = Array.from({ length: 80 }, (_, collectionIndex) => ({
+  value: `collection-${collectionIndex + 1}`,
+  label: `Collection ${String(collectionIndex + 1).padStart(2, '0')}`,
+  children: Array.from({ length: 25 }, (_, articleIndex) => ({
+    value: `collection-${collectionIndex + 1}-item-${articleIndex + 1}`,
+    label: `Article ${String(articleIndex + 1).padStart(2, '0')} · Operational reference`,
+  })),
+}));
 </script>
 
-<style scoped>
-</style>
+<template>
+  <h-tree-select
+    v-model="selectedValues"
+    :tree-data="treeData"
+    multiple
+    collapse-tags
+    filterable
+    :use-virtual-scroll="true"
+    :height="288"
+    placeholder="Search the knowledge base"
+    :to-body="false"
+  />
+</template>

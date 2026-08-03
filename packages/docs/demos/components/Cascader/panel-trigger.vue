@@ -1,42 +1,24 @@
-<template>
-  <h-grid :gap="10">
-    <h-grid-item :span="6">
-      <div class="demo-title">
-        点击
-      </div>
-      <h-cascader v-model="currentVal1" :options="options" expand-trigger="click" :to-body="false" />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">
-        悬浮
-      </div>
-      <h-cascader v-model="currentVal2" :options="options" expand-trigger="hover" :to-body="false" />
-    </h-grid-item>
-  </h-grid>
-</template>
+<script setup lang="ts">
+import { ref } from 'vue';
+import { formatPath, workspaceOptions } from './options';
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-
-export default defineComponent({
-  setup() {
-    const currentVal1 = ref<string[]>([]);
-    const currentVal2 = ref<string[]>([]);
-
-    const options = ref([]);
-    fetch(
-      new URL('/cascader-options.json', import.meta.url).href,
-    ).then(res => {
-      res.json().then(value => {
-        options.value = value;
-      });
-    });
-
-    return {
-      currentVal1,
-      currentVal2,
-      options,
-    };
-  },
-});
+const trigger = ref<'click' | 'hover'>('click');
+const value = ref<string[]>(['product', 'design-system', 'components']);
 </script>
+
+<template>
+  <div class="docs-demo">
+    <h-segmented v-model:active-key="trigger" size="small">
+      <h-segmented-item key="click" label="Click" />
+      <h-segmented-item key="hover" label="Hover" />
+    </h-segmented>
+    <h-cascader
+      v-model="value"
+      aria-label="Release team"
+      :options="workspaceOptions"
+      :expand-trigger="trigger"
+      :to-body="false"
+    />
+    <span aria-live="polite">{{ formatPath(value) }}</span>
+  </div>
+</template>

@@ -1,59 +1,41 @@
-<template>
-  <p>带关闭操作:为用户提供关闭操作</p>
-  <h-alert description="这是一条提示消息" type="info" closable show-icon />
-  <h-alert
-    :closable="true"
-    show-icon
-    title="标题"
-    description="描述文字不换行，按钮布局方式在容器的右侧"
-    type="info"
-  />
-  <p>带一个操作按钮:为了解决提示框内的问题需要进行操作/跳转时</p>
-  <h-alert
-    closable
-    show-icon
-    description="这是一条提示消息"
-    type="info"
-    primary-button-text="确定"
-  />
-  <p>带两个操作按钮:为了解决提示框内的问题需要进行操作/跳转时</p>
-  <h-alert
-    closable
-    show-icon
-    description="这是一条提示消息"
-    type="info"
-    primary-button-text="确定"
-    default-button-text="取消"
-    @close="callback"
-  />
-</template>
+<script setup lang="ts">
+import { ref } from 'vue';
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+const renderKey = ref(0);
+const result = ref('等待操作');
 
-export default defineComponent({
-  setup() {
-    const onPrimary = (close: Function) => {
-      close();
-    };
-    const callback = () => {
-      alert('设置回调的alert！');
-    };
-    const onDefault = () => {};
-    return {
-      callback,
-      onDefault,
-      onPrimary,
-    };
-  },
-});
+function confirmUpdate(close: () => void) {
+  result.value = '已安排今晚 22:00 自动更新';
+  close();
+}
+
+function postponeUpdate(close: () => void) {
+  result.value = '已推迟到明天提醒';
+  close();
+}
+
+function resetDemo() {
+  result.value = '等待操作';
+  renderKey.value += 1;
+}
 </script>
-<style scoped>
-.h-alert {
-  margin: 20px 0;
-}
 
-.h-alert:first-child {
-  margin: 0;
-}
-</style>
+<template>
+  <div class="docs-demo">
+    <h-alert
+      :key="renderKey"
+      title="检测到可用更新"
+      description="更新预计需要 3 分钟，期间服务会短暂重启。"
+      type="info"
+      show-icon
+      primary-button-text="今晚更新"
+      default-button-text="明天提醒"
+      :on-primary="confirmUpdate"
+      :on-default="postponeUpdate"
+    />
+    <h-space wrap align="center">
+      <span aria-live="polite">{{ result }}</span>
+      <h-button size="small" type="normal" icon="refresh" @click="resetDemo">重置</h-button>
+    </h-space>
+  </div>
+</template>

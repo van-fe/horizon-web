@@ -1,47 +1,35 @@
 <template>
-  <h-grid align="center" :gap="12">
-    <h-grid-item :span="6">
-      <div class="demo-title">medium(default)</div>
-    </h-grid-item>
-    <h-grid-item :span="18">
-      <h-checkbox-button
-        v-for="item in checkBoxOptions"
-        :key="item.key"
-        v-model="item.checked"
-        class="checkbox"
-        :label="item.label"
-      />
-    </h-grid-item>
-  </h-grid>
-  <h-grid align="center" :gap="12">
-    <h-grid-item :span="6">
-      <div class="demo-title">large</div>
-    </h-grid-item>
-    <h-grid-item :span="18">
-      <h-checkbox-button
-        v-for="item in checkBoxOptions"
-        :key="item.key"
-        v-model="item.checked"
-        :label="item.label"
-        class="checkbox"
-        size="large"
-      />
-    </h-grid-item>
-  </h-grid>
+  <div class="checkbox-button-demo">
+    <h-checkbox-group v-model="selectedTeams">
+      <h-checkbox-button v-for="team in teams" :key="team" :label="team" />
+    </h-checkbox-group>
+    <p aria-live="polite">Selected: {{ selectedTeams.join(', ') || 'none' }}</p>
+  </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { ref } from 'vue';
-const checkBoxOptions = ref([
-  {
-    key: 1,
-    label: 'checked',
-    checked: true,
-  },
-  {
-    key: 2,
-    label: 'unchecked',
-    checked: false,
-  },
-]);
+
+const teams = ['Design', 'Engineering', 'Research'];
+const selectedTeams = ref(['Design', 'Research']);
 </script>
+
+<style scoped>
+.checkbox-button-demo {
+  display: grid;
+  justify-items: start;
+  gap: var(--h-spacing-4);
+}
+
+.checkbox-button-demo p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+
+@media (max-width: 480px) {
+  .checkbox-button-demo {
+    overflow-x: auto;
+  }
+}
+</style>

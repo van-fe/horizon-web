@@ -1,18 +1,26 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <h-date-picker v-model="value" readonly />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <h-date-picker v-model="values" readonly type="dateRange" />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
 import { dayjs } from '@aurora/horizon-web';
 
-const value = ref(dayjs());
-const values = ref([dayjs(), dayjs().add(1, 'day')]);
+const launchDate = ref(dayjs('2026-08-18'));
 </script>
+
+<template>
+  <section class="date-picker-demo">
+    <h-date-picker v-model="launchDate" type="date" readonly />
+  </section>
+</template>
+
+<style scoped>
+.date-picker-demo {
+  display: grid;
+  gap: var(--h-spacing-3);
+  max-inline-size: 680px;
+}
+
+@media (max-width: 390px) {
+  .date-picker-demo {
+    inline-size: 100%;
+  }
+}
+</style>

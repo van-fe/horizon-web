@@ -1,13 +1,16 @@
 <template>
-  <h-tag :clickable="false" :plain="true">Default</h-tag>
-  <h-tag :clickable="false" :plain="true" type="success">Success</h-tag>
-  <h-tag :clickable="false" :plain="true" type="info">Info</h-tag>
-  <h-tag :clickable="false" :plain="true" type="warning">Warning</h-tag>
-  <h-tag :clickable="false" :plain="true" type="error">Error</h-tag>
+  <div class="tag-row">
+    <h-tag plain :clickable="false">Development</h-tag>
+    <h-tag plain type="info" :clickable="false">Testing</h-tag>
+    <h-tag plain type="warning" :clickable="false">Staging</h-tag>
+    <h-tag plain type="success" :clickable="false">Production</h-tag>
+  </div>
 </template>
 
-<script setup lang="ts">
-</script>
-
 <style scoped>
+.tag-row {
+  display: flex;
+  gap: var(--h-spacing-3);
+  flex-wrap: wrap;
+}
 </style>

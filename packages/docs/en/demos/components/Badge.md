@@ -1,22 +1,37 @@
-## Basic Usage
-The default mark is a small red dot.
+Badge adds a new-state, quantity, or identity marker to a meaningful target. It should supplement readable content rather than replace it.
+
+## Basic Dot
+
+The default dot indicates new content. Set `bottom` to move it to the lower corner.
+
 :::demo components/Badge/basic.vue :::
 
-## Number
-You can also display a numeric type mark and limit the maximum value.
+## Number and Maximum
+
+Set `type="num"` and `content` for a count. Values above `num-max` use the capped display.
+
 :::demo components/Badge/num.vue :::
 
-## Color
-You can customize the color of the mark.
+## Semantic Color
+
+`color` accepts theme variables or custom colors. Prefer semantic product tokens so light and dark themes stay consistent.
+
 :::demo components/Badge/color.vue :::
 
-## Icon
-Supports using an icon as the mark content.
+## Icon Badge
+
+Combine `type="icon"`, `content`, and `icon-size` for compact identity markers on avatars or objects.
+
 :::demo components/Badge/icon.vue :::
 
-## Show/Hide
-By default, the mark is always displayed, even when the numeric type value is `0`. You can completely control the display state of the mark through the `hidden` attribute.
+## Show and Hide
+
+`hidden` controls visibility completely. Numeric zero remains visible by default, distinguishing “nothing pending” from “not loaded.”
+
 :::demo components/Badge/hidden.vue :::
 
-## Alignment
+## Alignment and Offset
+
+Use `align` for center, inner, outer, and fixed-left placement. Reserve `offset` for necessary fine adjustment.
+
 :::demo components/Badge/align.vue :::

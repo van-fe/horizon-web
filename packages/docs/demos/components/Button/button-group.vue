@@ -1,48 +1,40 @@
+<template>
+  <h-space wrap align="center" size="large">
+    <h-button-group type="primary">
+      <h-button :icon="IconArrowLeft">Previous</h-button>
+      <h-button>
+        Next
+        <template #suffix><IconArrowRight :size="16" /></template>
+      </h-button>
+    </h-button-group>
+
+    <h-button-group>
+      <h-button plain :icon="IconEye" aria-label="Preview record" />
+      <h-button plain :icon="IconEdit" aria-label="Edit record" />
+      <h-button plain :icon="IconRubbish" aria-label="Delete record" />
+    </h-button-group>
+
+    <h-button-group type="primary">
+      <h-button>Approve</h-button>
+      <h-dropdown>
+        <h-button :icon="IconArrowDown" aria-label="More approval actions" />
+        <h-dropdown-menu>
+          <h-dropdown-item>Approve and notify</h-dropdown-item>
+          <h-dropdown-item>Request changes</h-dropdown-item>
+          <h-dropdown-item>Archive request</h-dropdown-item>
+        </h-dropdown-menu>
+      </h-dropdown>
+    </h-button-group>
+  </h-space>
+</template>
+
 <script setup lang="ts">
 import {
   IconArrowDown,
   IconArrowLeft,
   IconArrowRight,
-  IconEye,
   IconEdit,
+  IconEye,
   IconRubbish,
 } from '@aurora/icon';
 </script>
-
-<template>
-  <h-grid :gap="12">
-    <h-button-group type="primary">
-      <h-button :icon="IconArrowLeft">Previous Page</h-button>
-      <h-button>
-        Next Page
-        <template #suffix>
-          <div class="h-button__icon">
-            <IconArrowRight :size="16" />
-          </div>
-        </template>
-      </h-button>
-    </h-button-group>
-    <h-button-group>
-      <h-button :plain="true" :icon="IconEye" />
-      <h-button :plain="true" :icon="IconEdit" />
-      <h-button :plain="true" :icon="IconRubbish" />
-    </h-button-group>
-    <h-button-group type="primary">
-      <h-button>Confirm</h-button>
-      <h-dropdown>
-        <h-button :icon="IconArrowDown" />
-        <h-dropdown-menu>
-          <h-dropdown-item>Agree</h-dropdown-item>
-          <h-dropdown-item>Disagree</h-dropdown-item>
-          <h-dropdown-item>Cancel</h-dropdown-item>
-        </h-dropdown-menu>
-      </h-dropdown>
-    </h-button-group>
-  </h-grid>
-</template>
-
-<style scoped>
-.h-button-group + .h-button-group {
-  margin-left: 10px;
-}
-</style>

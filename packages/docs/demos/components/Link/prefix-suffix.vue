@@ -1,25 +1,18 @@
-<template>
-  <p>
-    <h-link>
-      <template #suffix>...</template>
-      And So on
-    </h-link>
-  </p>
-  <p>
-    <h-link icon="el-icon-edit" :underline="false">
-      {{ new Date().toLocaleString() }}
-      <template #prefix><a-icon name="time" suffix="2xs" /></template>
-    </h-link>
-  </p>
-</template>
-
-<script>
-import { defineComponent } from 'vue';
+<script setup lang="ts">
 import { AIcon } from '@aurora/icon';
-
-export default defineComponent({
-  components: {
-    AIcon,
-  },
-});
 </script>
+
+<template>
+  <div class="docs-demo__stage">
+    <h-space wrap size="large">
+      <h-link>
+        查看其余 8 项
+        <template #suffix>…</template>
+      </h-link>
+      <h-link :underline="false">
+        <template #prefix><AIcon name="time" suffix="2xs" /></template>
+        更新于 10:24
+      </h-link>
+    </h-space>
+  </div>
+</template>

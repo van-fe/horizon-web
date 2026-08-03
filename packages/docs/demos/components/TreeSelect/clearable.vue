@@ -1,32 +1,34 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <div class="demo-title">单选</div>
-      <h-tree-select v-model="value" :tree-data="baseTreeData" :clearable="true" :to-body="false" />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">多选</div>
-      <h-tree-select v-model="values" :tree-data="baseTreeData" :clearable="true" :multiple="true" :to-body="false" />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
+import type { HTreeNodeData } from '@aurora/horizon-web';
 
-const value = ref();
-const values = ref();
-
-const baseTreeData = ref([]);
-
-onMounted(() => {
-  fetch(new URL('/tree-data.json', import.meta.url).href)
-    .then(res => res.json())
-    .then(res => {
-      baseTreeData.value = res;
-    });
-});
+const costCenter = ref<string | number>('cc-product');
+const treeData: HTreeNodeData[] = [
+  {
+    value: 'north-america',
+    label: 'North America',
+    children: [
+      { value: 'cc-product', label: '4100 · Product' },
+      { value: 'cc-growth', label: '4200 · Growth' },
+    ],
+  },
+  {
+    value: 'europe',
+    label: 'Europe',
+    children: [{ value: 'cc-platform', label: '5100 · Platform' }],
+  },
+];
 </script>
 
-<style scoped>
-</style>
+<template>
+  <div class="docs-demo">
+    <h-tree-select
+      v-model="costCenter"
+      :tree-data="treeData"
+      placeholder="Choose a cost center"
+      clearable
+      :to-body="false"
+    />
+    <span aria-live="polite">Selected: {{ costCenter || 'unallocated' }}</span>
+  </div>
+</template>

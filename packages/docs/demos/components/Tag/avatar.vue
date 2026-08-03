@@ -1,16 +1,17 @@
 <template>
-  <h-tag avatar="/demo-assets/avatar-indigo.svg" :plain="true" :round="true" :clickable="false" size="small">Elizabeth</h-tag>
-  <h-tag avatar="/demo-assets/avatar-indigo.svg" :plain="true" :round="true" :clickable="false" size="medium">Jupiter</h-tag>
-  <h-tag :plain="true" :round="true" :clickable="false" size="large">
-    <template #avatar>
-      <h-avatar src="/demo-assets/avatar-indigo.svg" :size="24" />
-    </template>
-    William
-  </h-tag>
+  <div class="tag-row">
+    <h-tag avatar="/demo-assets/avatar-indigo.svg" round plain :clickable="false">Mia Chen</h-tag>
+    <h-tag round plain :clickable="false">
+      <template #avatar><h-avatar src="/demo-assets/avatar-cyan.svg" :size="20" /></template>
+      Ava Wang
+    </h-tag>
+  </div>
 </template>
 
-<script setup lang="ts">
-</script>
-
 <style scoped>
+.tag-row {
+  display: flex;
+  gap: var(--h-spacing-3);
+  flex-wrap: wrap;
+}
 </style>

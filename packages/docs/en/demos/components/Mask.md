@@ -10,7 +10,7 @@ Note: You need to set relative positioning for the parent element to expand the 
 
 ## Opacity
 
-You can set `opacity`, which is the transparency of the mask layer (after 2.1.4, default value 0.5 -> 1)
+Use `opacity` to adjust the mask transparency with a value between 0 and 1.
 :::demo components/Mask/demo3.vue :::
 
 ## Z-index

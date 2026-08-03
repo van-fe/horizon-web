@@ -1,195 +1,131 @@
-<template>
-  <h-form class="block-tooltip-props">
-    <h-form-item label="尺寸">
-      <h-radio-group v-model="size">
-        <h-radio value="medium">Medium</h-radio>
-        <h-radio value="small">Small</h-radio>
-      </h-radio-group>
-    </h-form-item>
-    <h-form-item label="主题">
-      <h-radio-group v-model="theme">
-        <h-radio value="dark">Dark</h-radio>
-        <h-radio value="light">Light</h-radio>
-      </h-radio-group>
-    </h-form-item>
-    <h-form-item label="延迟关闭">
-      <h-input v-model="hideAfter"><template #suffix>ms</template></h-input>
-    </h-form-item>
-  </h-form>
-  <div class="block-tooltip">
-    <div class="item"></div>
-    <div class="item">
-      <h-tooltip
-        placement="top-start"
-        content="top-start"
-        :size="size"
-        :theme="theme"
-        :hide-after="hideAfter"
-      >
-        <h-button>上左</h-button>
-      </h-tooltip>
-    </div>
-    <div class="item">
-      <h-tooltip placement="top" content="top" :size="size" :theme="theme" :hide-after="hideAfter">
-        <h-button>上</h-button>
-      </h-tooltip>
-    </div>
-    <div class="item">
-      <h-tooltip
-        placement="top-end"
-        content="top-end"
-        :size="size"
-        :theme="theme"
-        :hide-after="hideAfter"
-      >
-        <h-button>上右</h-button>
-      </h-tooltip>
-    </div>
-    <div class="item"></div>
-    <div class="item">
-      <h-tooltip
-        placement="left-start"
-        content="left-start"
-        :size="size"
-        :theme="theme"
-        :hide-after="hideAfter"
-      >
-        <h-button>左上</h-button>
-      </h-tooltip>
-    </div>
-    <div class="item"></div>
-    <div class="item"></div>
-    <div class="item"></div>
-    <div class="item">
-      <h-tooltip
-        placement="right-start"
-        content="right-start"
-        :size="size"
-        :theme="theme"
-        :hide-after="hideAfter"
-      >
-        <h-button>右上</h-button>
-      </h-tooltip>
-    </div>
-    <div class="item">
-      <h-tooltip
-        placement="left"
-        content="left"
-        :size="size"
-        :theme="theme"
-        :hide-after="hideAfter"
-      >
-        <h-button>左</h-button>
-      </h-tooltip>
-    </div>
-    <div class="item"></div>
-    <div class="item"></div>
-    <div class="item"></div>
-    <div class="item">
-      <h-tooltip
-        placement="right"
-        content="right"
-        :size="size"
-        :theme="theme"
-        :hide-after="hideAfter"
-      >
-        <h-button>右</h-button>
-      </h-tooltip>
-    </div>
-    <div class="item">
-      <h-tooltip
-        placement="left-end"
-        content="left-end"
-        :size="size"
-        :theme="theme"
-        :hide-after="hideAfter"
-      >
-        <h-button>左下</h-button>
-      </h-tooltip>
-    </div>
-    <div class="item"></div>
-    <div class="item"></div>
-    <div class="item"></div>
-    <div class="item">
-      <h-tooltip
-        placement="right-end"
-        content="right-end"
-        :size="size"
-        :theme="theme"
-        :hide-after="hideAfter"
-      >
-        <h-button>右下</h-button>
-      </h-tooltip>
-    </div>
-    <div class="item"></div>
-    <div class="item">
-      <h-tooltip
-        placement="bottom-start"
-        content="bottom-start"
-        :size="size"
-        :theme="theme"
-        :hide-after="hideAfter"
-      >
-        <h-button>下左</h-button>
-      </h-tooltip>
-    </div>
-    <div class="item">
-      <h-tooltip
-        placement="bottom"
-        content="bottom"
-        :size="size"
-        :theme="theme"
-        :hide-after="hideAfter"
-      >
-        <h-button>下</h-button>
-      </h-tooltip>
-    </div>
-    <div class="item">
-      <h-tooltip
-        placement="bottom-end"
-        content="bottom-end"
-        :size="size"
-        :theme="theme"
-        :hide-after="hideAfter"
-      >
-        <h-button>下右</h-button>
-      </h-tooltip>
-    </div>
-    <div class="item"></div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const size = ref('medium');
-const theme = ref('dark');
+type TooltipPlacement =
+  | 'top-start'
+  | 'top'
+  | 'top-end'
+  | 'right-start'
+  | 'right'
+  | 'right-end'
+  | 'bottom-start'
+  | 'bottom'
+  | 'bottom-end'
+  | 'left-start'
+  | 'left'
+  | 'left-end';
+type TooltipSize = 'small' | 'medium' | 'large';
+type TooltipTheme = 'dark' | 'light';
+
+const placements: Array<{ value: TooltipPlacement; label: string }> = [
+  { value: 'top-start', label: '上左' },
+  { value: 'top', label: '上' },
+  { value: 'top-end', label: '上右' },
+  { value: 'right-start', label: '右上' },
+  { value: 'right', label: '右' },
+  { value: 'right-end', label: '右下' },
+  { value: 'bottom-start', label: '下左' },
+  { value: 'bottom', label: '下' },
+  { value: 'bottom-end', label: '下右' },
+  { value: 'left-start', label: '左上' },
+  { value: 'left', label: '左' },
+  { value: 'left-end', label: '左下' },
+];
+const size = ref<TooltipSize>('medium');
+const theme = ref<TooltipTheme>('dark');
 const hideAfter = ref(200);
+const activePlacement = ref<TooltipPlacement>('top');
 </script>
 
-<style>
-.block-tooltip-props {
-  display: flex;
-  margin-bottom: 20px;
-}
+<template>
+  <div class="tooltip-placement-demo">
+    <div class="tooltip-controls">
+      <label>
+        <span>尺寸</span>
+        <h-segmented v-model:active-key="size" size="small">
+          <h-segmented-item key="small" label="S" />
+          <h-segmented-item key="medium" label="M" />
+          <h-segmented-item key="large" label="L" />
+        </h-segmented>
+      </label>
+      <label>
+        <span>主题</span>
+        <h-segmented v-model:active-key="theme" size="small">
+          <h-segmented-item key="dark" label="Dark" />
+          <h-segmented-item key="light" label="Light" />
+        </h-segmented>
+      </label>
+      <label class="tooltip-controls__delay">
+        <span>
+          关闭延迟
+          <code>{{ hideAfter }}ms</code>
+        </span>
+        <h-slider v-model="hideAfter" :min="0" :max="800" :step="100" />
+      </label>
+    </div>
 
-.block-tooltip-props > * {
-  margin-right: 50px;
-}
+    <div class="tooltip-placements">
+      <h-tooltip
+        v-for="item in placements"
+        :key="item.value"
+        :placement="item.value"
+        :content="item.value"
+        :size="size"
+        :theme="theme"
+        :hide-after="hideAfter"
+        @show="activePlacement = item.value"
+      >
+        <h-button size="small" type="normal">{{ item.label }}</h-button>
+      </h-tooltip>
+    </div>
+    <span class="tooltip-placement-demo__status" aria-live="polite">
+      最近查看：{{ activePlacement }}
+    </span>
+  </div>
+</template>
 
-.block-tooltip {
-  width: 430px;
+<style scoped>
+.tooltip-placement-demo {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(5, 1fr);
-  grid-gap: 20px;
+  gap: var(--h-spacing-4);
 }
 
-.block-tooltip .item {
-  width: 120px;
+.tooltip-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: var(--h-spacing-4);
 }
 
-.block-tooltip .item button {
+.tooltip-controls label {
+  display: grid;
+  gap: var(--h-spacing-2);
+}
+
+.tooltip-controls label > span,
+.tooltip-placement-demo__status {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+
+.tooltip-controls__delay {
+  flex: 1 1 220px;
+}
+
+.tooltip-placements {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--h-spacing-3);
+}
+
+.tooltip-placements :deep(.h-popover__reference),
+.tooltip-placements :deep(.h-button) {
   width: 100%;
+}
+
+@media (max-width: 520px) {
+  .tooltip-placements {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 </style>

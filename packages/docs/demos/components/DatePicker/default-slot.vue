@@ -1,105 +1,98 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <h-date-picker v-model="value" type="date" :to-body="false">
-        <template #default="{ grid }">
-          <div :class="{'custom-grid': true, 'is-selected': grid.isSelected ,'is-holiday': ([0, 6].includes(grid.date.day()) && !isInWorkday(grid.date)) || isInHoliday(grid.date)}">
-            {{ grid.text }}
-            <div v-if="isInHoliday(grid.date)" class="badge holiday">休</div>
-            <div v-if="isInWorkday(grid.date)" class="badge workday">班</div>
-          </div>
-        </template>
-      </h-date-picker>
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { ref } from 'vue';
-import { Dayjs } from 'dayjs';
+import { computed, ref } from 'vue';
+import { dayjs } from '@aurora/horizon-web';
+import type { Dayjs } from 'dayjs';
 
-const value = ref();
+const selectedDate = ref(dayjs().date(14));
+const releaseDates = [dayjs().date(7), dayjs().date(14), dayjs().date(21)].map(date =>
+  date.format('YYYY-MM-DD'),
+);
+const maintenanceDate = dayjs().date(18).format('YYYY-MM-DD');
+const selectionLabel = computed(() => selectedDate.value.format('YYYY-MM-DD'));
 
-const holiday2025 = [
-  '2025/01/01',
-  '2025/01/28', '2025/01/29', '2025/01/30', '2025/01/31', '2025/02/01', '2025/02/02', '2025/02/03', '2025/02/04',
-  '2025/04/04', '2025/04/05', '2025/04/06',
-  '2025/05/01', '2025/05/02', '2025/05/03', '2025/05/04', '2025/05/05',
-  '2025/05/31', '2025/06/01', '2025/06/02',
-  '2025/10/01', '2025/10/02', '2025/10/03', '2025/10/04', '2025/10/05', '2025/10/06', '2025/10/07', '2025/10/08',
-];
+function isReleaseDate(date: Dayjs) {
+  return releaseDates.includes(date.format('YYYY-MM-DD'));
+}
 
-const workday2025 = [
-  '2025/01/26', '2025/02/08',
-  '2025/04/27',
-  '2025/09/28', '2025/10/11',
-];
-
-const isInHoliday = (date: Dayjs) => holiday2025.includes(date.format('YYYY/MM/DD'));
-const isInWorkday = (date: Dayjs) => workday2025.includes(date.format('YYYY/MM/DD'));
-
+function isMaintenanceDate(date: Dayjs) {
+  return date.format('YYYY-MM-DD') === maintenanceDate;
+}
 </script>
 
-<style>
-.custom-grid {
-  width: 50px;
-  height: 50px;
-  display: flex;
-  aligh-items: center;
-  justify-content: center;
-  border: 1px solid var(--h-divider-default);
+<template>
+  <section class="date-picker-slot">
+    <h-date-picker v-model="selectedDate" type="date" :to-body="false">
+      <template #default="{ grid }">
+        <div
+          class="release-date-cell"
+          :class="{
+            'is-selected': grid.isSelected,
+            'has-release': isReleaseDate(grid.date),
+            'has-maintenance': isMaintenanceDate(grid.date),
+          }"
+        >
+          <span>{{ grid.text }}</span>
+          <small v-if="isReleaseDate(grid.date)">R</small>
+          <small v-else-if="isMaintenanceDate(grid.date)">M</small>
+        </div>
+      </template>
+    </h-date-picker>
+    <p aria-live="polite">{{ selectionLabel }} · R release · M maintenance</p>
+  </section>
+</template>
+
+<style scoped>
+.date-picker-slot {
+  display: grid;
+  gap: var(--h-spacing-3);
+  max-inline-size: 680px;
+}
+
+.date-picker-slot p {
+  margin: 0;
+  color: var(--h-text-secondary);
+}
+
+.release-date-cell {
   position: relative;
-  cursor: pointer;
-  transition: var(--h-transition-color-behavior);
+  display: grid;
+  place-items: center;
+  inline-size: 100%;
+  block-size: 100%;
+  border-radius: var(--h-radius-m);
+  color: var(--h-text-primary);
+}
 
+.release-date-cell:hover {
+  background: var(--h-bg-weak-hover);
+}
 
+.release-date-cell.is-selected {
+  color: var(--h-text-inverse);
+  background: var(--h-bg-brand-activated);
+}
 
-  &.is-holiday {
-    color: var(--h-text-secondary);
-    background-color: var(--h-bg-secondary);
-  }
+.release-date-cell small {
+  position: absolute;
+  inset-block-start: 1px;
+  inset-inline-end: 2px;
+  color: var(--h-text-brand-default);
+  font-size: 9px;
+  font-weight: var(--h-weight-strong);
+  line-height: 1;
+}
 
-  &.is-selected {
-    color: var(--h-text-inverse);
-    background-color: var(--h-bg-brand-activated);
+.release-date-cell.has-maintenance small {
+  color: var(--h-text-warning-default);
+}
 
-    &:hover {
-      background-color: var(--h-bg-brand-hover);
-    }
+.release-date-cell.is-selected small {
+  color: var(--h-text-inverse);
+}
 
-    .badge {
-      &.holiday {
-        color: var(--h-text-inverse);
-      }
-
-      &.workday {
-        color: var(--h-text-inverse);
-      }
-    }
-  }
-
-  &:not(.is-selected) {
-    &:hover {
-      background-color: var(--h-bg-weak-hover);
-    }
-
-    .badge {
-      &.holiday {
-        color: var(--h-text-success-default);
-      }
-
-      &.workday {
-        color: var(--h-text-warning-default);
-      }
-    }
-  }
-
-  .badge {
-    font-size: 12px;
-    position: absolute;
-    top: 0;
-    right: 2px;
-    transform: scale(.9);
+@media (max-width: 390px) {
+  .date-picker-slot {
+    inline-size: 100%;
   }
 }
 </style>

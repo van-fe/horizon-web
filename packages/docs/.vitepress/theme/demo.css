@@ -1,0 +1,120 @@
+.docs-demo {
+  display: grid;
+  gap: var(--h-spacing-4);
+  width: 100%;
+  min-width: 0;
+}
+
+.docs-demo__controls,
+.docs-demo__actions,
+.docs-demo__status {
+  display: flex;
+  align-items: center;
+}
+
+.docs-demo__description {
+  max-width: 62ch;
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+  line-height: 1.7;
+}
+
+.docs-demo__value,
+.docs-demo__status {
+  border-radius: var(--h-radius-pill);
+  padding: var(--h-spacing-1) var(--h-spacing-3);
+  font-size: var(--h-text-sm);
+  line-height: 1.5;
+}
+
+.docs-demo__controls {
+  flex-wrap: wrap;
+  gap: var(--h-spacing-4) var(--h-spacing-5);
+}
+
+.docs-demo__control {
+  display: grid;
+  min-width: min(100%, 180px);
+  gap: var(--h-spacing-2);
+}
+
+.docs-demo__control--grow {
+  flex: 1 1 240px;
+}
+
+.docs-demo__control-label {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+  line-height: 1.5;
+}
+
+.docs-demo__actions {
+  flex-wrap: wrap;
+  gap: var(--h-spacing-3);
+}
+
+.docs-demo__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: var(--h-spacing-4);
+}
+
+.docs-demo__stack {
+  display: grid;
+  min-width: 0;
+  gap: var(--h-spacing-3);
+}
+
+.docs-demo__stage {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 104px;
+  border-radius: var(--h-radius-l);
+  padding: var(--h-spacing-4);
+  background: var(--h-bg-secondary);
+  box-sizing: border-box;
+}
+
+.docs-demo__value {
+  overflow-wrap: anywhere;
+  color: var(--h-text-secondary);
+  background: var(--h-bg-secondary);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.docs-demo__status {
+  gap: var(--h-spacing-2);
+  width: fit-content;
+  color: var(--h-text-secondary);
+  background: var(--h-bg-secondary);
+}
+
+.docs-demo__status::before {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--h-radius-circle);
+  background: var(--h-bg-brand-default);
+  content: '';
+}
+
+.docs-demo__empty-value {
+  color: var(--h-text-disabled);
+  font-style: normal;
+}
+
+@media (max-width: 560px) {
+  .docs-demo__controls {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .docs-demo__control {
+    width: 100%;
+  }
+
+  .docs-demo__stage {
+    padding: var(--h-spacing-4);
+  }
+}

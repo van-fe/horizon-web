@@ -1,9 +1,18 @@
-<template>
-  <div>
-    <div class="text-subtitle-2 mb-2">medium(default)</div>
-    <h-breadcrumb :texts="[{ text: 'Home' }, { text: 'Sub Page1' }, { text: 'Sub Page2' }]" />
-    <div class="text-subtitle-2 mt-4 mb-2">small</div>
-    <h-breadcrumb :texts="[{ text: 'Home' }, { text: 'Sub Page1' }, { text: 'Sub Page2' }]" size="small" />
-  </div>
-</template>
+<script setup lang="ts">
+import { ref } from 'vue';
 
+const size = ref('medium');
+const path = [{ text: 'Projects' }, { text: 'Horizon Web' }, { text: 'Release 2.8' }];
+</script>
+
+<template>
+  <section class="docs-demo">
+    <div class="docs-demo__controls">
+      <h-segmented v-model:active-key="size" size="small">
+        <h-segmented-item key="small" label="Small" />
+        <h-segmented-item key="medium" label="Medium" />
+      </h-segmented>
+    </div>
+    <h-breadcrumb :texts="path" :size="size" title />
+  </section>
+</template>

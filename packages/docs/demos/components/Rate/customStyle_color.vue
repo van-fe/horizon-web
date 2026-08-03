@@ -1,17 +1,41 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const score = ref(3);
+</script>
+
 <template>
-  <div class="">
-    <h-rate v-model="currentScore" color="pink" void-color="blue" />
-    <h-rate v-model="currentScore" disabled disabled-color="green" />
+  <div class="rate-options">
+    <div>
+      <span>品牌色</span>
+      <h-rate
+        v-model="score"
+        color="var(--h-text-brand-default)"
+        void-color="var(--h-bg-disabled)"
+      />
+    </div>
+    <div>
+      <span>禁用色</span>
+      <h-rate v-model="score" disabled disabled-color="var(--h-text-success-default)" />
+    </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    return {
-      currentScore: ref(3),
-    };
-  },
-});
-</script>
+<style scoped>
+.rate-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--h-spacing-6);
+}
+
+.rate-options > div {
+  display: grid;
+  justify-items: start;
+  gap: var(--h-spacing-2);
+}
+
+.rate-options span {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+</style>

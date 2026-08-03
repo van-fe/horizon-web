@@ -1,23 +1,35 @@
 ## Basic Usage
-Used together with `h-hover` and `h-mask`, you can display controllers after hovering over the mask
+
+Controls commonly works with `h-hover` and `h-mask` to present contextual actions over content. The `command` event returns the selected `h-control` label.
+
 :::demo components/Controls/basic.vue :::
 
 ## Theme
-Control theme selection through `theme`, which can be `'light'(default)` `'dark'`
+
+Use `theme` to choose `light` or `dark` according to the surface underneath the controls, rather than simply mirroring the page theme.
+
 :::demo components/Controls/theme.vue :::
 
-## Whether to Use `tooltip`
-Control whether to display `tooltip` through `use-tooltip`
+## Tooltip
+
+`use-tooltip` controls explanatory labels for icon actions. Keep tooltips enabled when space is tight or actions are represented only by icons.
+
 :::demo components/Controls/tooltip.vue :::
 
 ## Disabled
-Control `disabled` to prohibit clicking
+
+Set `disabled` to lock the whole action group during loading, export, or another in-progress workflow while preserving its visual context.
+
 :::demo components/Controls/disabled.vue :::
 
-## Auto Adapt
-Automatically adapt to display how many controllers based on the parent element's width, and the rest will be omitted as `dropdown` display
+## Automatic Adaptation
+
+Controls decides how many actions fit in its parent and moves the remainder into an overflow menu. Change the parent width in the demo to observe the behavior.
+
 :::demo components/Controls/resize.vue :::
 
-## Permission Check
-Pass in `access-list` to control which buttons can be displayed
+## Permission Filtering
+
+Pass allowed control labels through `access-list` so only actions available to the current role render. The business security layer must still perform final authorization.
+
 :::demo components/Controls/access.vue :::

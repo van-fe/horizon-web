@@ -1,41 +1,41 @@
-<template>
-  <h-grid :gap="10">
-    <h-grid-item :span="6">
-      <div class="demo-title">单选</div>
-      <h-select v-model="value1" :value-format="valueFormat" :to-body="false">
-        <h-option :value="1" label="中国" />
-        <h-option :value="2" label="美国" />
-        <h-option :value="3" label="日本" />
-      </h-select>
-      <div class="mb-2">你选中的值是 {{ value1 }}</div>
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">多选</div>
-      <h-select v-model="value2" :value-format="valueFormat" multiple :to-body="false">
-        <h-option :value="1" label="中国" />
-        <h-option :value="2" label="美国" />
-        <h-option :value="3" label="日本" />
-      </h-select>
-      <div class="mb-2">你选中的值是 {{ value2 }}</div>
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { shallowRef } from 'vue';
-import type { OptionProps } from '@aurora/horizon-web/es/components/Select/src/composables/useProps';
+import { ref } from 'vue';
 
-const value1 = shallowRef({ "value": 1, "label": "中国" });
-const value2 = shallowRef([{ "value": 1, "label": "中国" }]);
+type OptionInput = { value?: unknown; label?: unknown; region?: unknown };
+type FormattedValue = { id: unknown; name: unknown; region: unknown };
 
-function valueFormat(originValue: OptionProps) {
-  console.info(JSON.stringify(originValue));
-  return {
-    value: originValue.value,
-    label: originValue.label,
-  };
+const members = [
+  { value: 'u-104', label: 'Mia Chen', region: 'Shanghai' },
+  { value: 'u-208', label: 'Noah Li', region: 'Singapore' },
+  { value: 'u-316', label: 'Ava Wang', region: 'Frankfurt' },
+];
+const reviewer = ref<FormattedValue>({ id: 'u-104', name: 'Mia Chen', region: 'Shanghai' });
+
+function valueFormat(option: OptionInput): FormattedValue {
+  return { id: option.value, name: option.label, region: option.region };
 }
 </script>
 
+<template>
+  <div class="select-demo">
+    <h-select v-model="reviewer" :value-format="valueFormat" :to-body="false">
+      <h-option v-for="member in members" :key="member.value" v-bind="member" />
+    </h-select>
+    <p class="docs-demo__status" role="status">
+      {{ reviewer.name }} · {{ reviewer.id }} · {{ reviewer.region }}
+    </p>
+  </div>
+</template>
+
 <style scoped>
+.select-demo {
+  display: grid;
+  min-width: 0;
+  gap: 10px;
+}
+
+.select-demo :deep(.h-select) {
+  width: 100%;
+  min-width: 0;
+}
 </style>

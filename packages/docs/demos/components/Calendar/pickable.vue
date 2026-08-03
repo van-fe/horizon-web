@@ -1,50 +1,59 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+import dayjs from 'dayjs';
+import type { Dayjs } from 'dayjs';
+
+const value = ref(dayjs().format('YYYY-MM-DD'));
+const status = ref('Weekends are unavailable');
+
+function onDateClick(date: string) {
+  status.value = `Selected ${date}`;
+}
+
+function disableDate(date: Dayjs) {
+  return [0, 6].includes(date.day());
+}
+</script>
+
 <template>
-  <h-form label-position="left" label-vertical-align="middle">
-    <h-form-item label="Pickable">
-      <h-radio-group v-model="pickable">
-        <h-radio :value="true">True</h-radio>
-        <h-radio :value="false">False</h-radio>
-      </h-radio-group>
-    </h-form-item>
-    <h-form-item label="DateType">
-      <h-radio-group v-model="dateType">
-        <h-radio value="full">Full</h-radio>
-        <h-radio value="only-current">Only Current</h-radio>
-      </h-radio-group>
-    </h-form-item>
-  </h-form>
-  <h-calendar
-    :pickable="pickable"
-    :date-type="dateType"
-    :disable-date="disableDate"
-    :mode-switchable="true"
-    @date-click="onDateClick"
-  />
+  <div class="calendar-pickable-demo">
+    <p aria-live="polite">{{ status }}</p>
+    <div class="calendar-pickable-demo-viewport">
+      <h-calendar
+        v-model="value"
+        mode="month"
+        pickable
+        auto-fit
+        :disable-date="disableDate"
+        @date-click="onDateClick"
+      />
+    </div>
+  </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { Dayjs } from 'dayjs';
+<style scoped>
+.calendar-pickable-demo {
+  display: grid;
+  gap: var(--h-spacing-3);
+  min-width: 0;
+}
 
-export default defineComponent({
-  setup() {
-    const pickable = ref(true);
-    const dateType = ref('full');
+.calendar-pickable-demo p {
+  margin: 0;
+  color: var(--h-text-secondary);
+}
 
-    function onDateClick(date: string, type: 'month' | 'year' | 'week') {
-      console.info(date, type);
-    }
+.calendar-pickable-demo-viewport {
+  min-width: 0;
+  height: min(72vh, 640px);
+  min-height: 540px;
+  overflow: auto;
+}
 
-    function disableDate(date: Dayjs) {
-      return [0, 6].includes(date.day());
-    }
-
-    return {
-      pickable,
-      dateType,
-      onDateClick,
-      disableDate,
-    };
-  },
-});
-</script>
+@media (width <= 520px) {
+  .calendar-pickable-demo-viewport {
+    height: 520px;
+    min-height: 0;
+  }
+}
+</style>

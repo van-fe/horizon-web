@@ -1,33 +1,43 @@
+<script setup lang="ts">
+import { ref, watch } from 'vue';
+
+type PickerType = 'year' | 'year-range' | 'month' | 'month-range';
+
+const type = ref<PickerType>('month');
+const value = ref<string | string[]>('2026-08');
+
+watch(type, nextType => {
+  value.value = nextType === 'year' ? '2027' : nextType === 'month' ? '2026-08' : [];
+});
+</script>
+
 <template>
-  <h-grid align="center" :gap="12">
-    <h-grid-item :span="4">
-      Year:
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <h-date-picker v-model="value1" type="year" />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <h-date-picker v-model="rangeValue1" type="year-range" />
-    </h-grid-item>
-  </h-grid>
-  <h-grid align="center" :gap="12">
-    <h-grid-item :span="4">
-      Month:
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <h-date-picker v-model="value2" type="month" />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <h-date-picker v-model="rangeValue2" type="month-range" />
-    </h-grid-item>
-  </h-grid>
+  <section class="date-picker-year-month">
+    <h-segmented v-model:active-key="type" size="small">
+      <h-segmented-item key="year" label="Year" />
+      <h-segmented-item key="year-range" label="Year range" />
+      <h-segmented-item key="month" label="Month" />
+      <h-segmented-item key="month-range" label="Month range" />
+    </h-segmented>
+    <h-date-picker v-model="value" :type="type" />
+  </section>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
+<style scoped>
+.date-picker-year-month {
+  display: grid;
+  justify-items: start;
+  gap: var(--h-spacing-3);
+  max-inline-size: 680px;
+}
 
-const value1 = ref();
-const rangeValue1 = ref();
-const value2 = ref();
-const rangeValue2 = ref();
-</script>
+.date-picker-year-month :deep(.h-date-picker) {
+  inline-size: 100%;
+}
+
+@media (max-width: 390px) {
+  .date-picker-year-month {
+    inline-size: 100%;
+  }
+}
+</style>

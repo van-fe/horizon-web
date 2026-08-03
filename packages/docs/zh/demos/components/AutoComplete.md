@@ -1,19 +1,29 @@
 ## 基本用法
-需要注意的是，如果希望点击后直接显示备选选项，需要在输入前给 `options` 提供数据
+
+通过 `options` 提供候选项，并在 `search` 中按输入内容过滤。若希望聚焦后立即展示推荐项，应在输入前准备好初始数据。示例还可以对比 `size` 与 `input-style`。
+
 :::demo components/AutoComplete/basic.vue :::
 
-## 显示备注
-`options` 接受 `description` 选项
+## 选项备注
+
+为选项设置 `description`，再通过 `description-position` 选择右侧紧凑布局或底部详细布局。
+
 :::demo components/AutoComplete/description.vue :::
 
-## 加载状态
-可以设置 `loading` 的值，用于等待远程加载
+## 远程加载
+
+请求期间设置 `loading`，并可用 `loading-text` 解释当前状态。示例使用两个独立的短延时请求；新搜索会取消同一输入框的旧请求，组件卸载时也会清理计时器。
+
 :::demo components/AutoComplete/loading.vue :::
 
-## 自定义插槽展示
-可以使用 `default` 插槽显示自定义内容
+## 自定义面板
+
+使用 `panelHeaderRender` 与 `panelFooterRender` 为候选面板补充上下文和键盘提示。示例在选中后展示完整成员信息，不挤占输入区域。
+
 :::demo components/AutoComplete/custom-render.vue :::
 
-## value 优先
-如果在传入的 `option` 中有 `value` 字段，则优先使用 `value` 的值
+## Label 与 Value
+
+`label` 用于展示，存在 `value` 时，选中后优先把 `value` 写入模型。示例在下方实时展示实际的 `modelValue`。
+
 :::demo components/AutoComplete/value-label.vue :::

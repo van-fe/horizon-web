@@ -1,47 +1,42 @@
-<template>
-  <h-form label-position="left" label-vertical-align="middle">
-    <h-form-item label="显示单选框">
-      <h-switch v-model="showRadio" :status="true" />
-    </h-form-item>
-    <h-form-item label="点击叶子节点勾选">
-      <h-switch v-model="expandOnClickLeaf" :status="true" />
-    </h-form-item>
-  </h-form>
-  <h-grid :gap="12">
-    <h-grid-item :span="12">
-      <div class="demo-title">单选</div>
-      <h-tree
-        :tree-data="baseTreeData"
-        :check-on-click-leaf="expandOnClickLeaf"
-        :show-radio="showRadio"
-      />
-    </h-grid-item>
-    <h-grid-item :span="12">
-      <div class="demo-title">多选</div>
-      <h-tree
-        :tree-data="baseTreeData"
-        :check-on-click-leaf="expandOnClickLeaf"
-        :multiple="true"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import {  onMounted, ref } from 'vue';
+import { ref } from 'vue';
+import type { HTreeNodeData } from '@aurora/horizon-web';
 
-const showRadio = ref(false);
-const expandOnClickLeaf = ref(true);
-const baseTreeData = ref([]);
-
-onMounted(() => {
-  fetch(new URL('/tree-data.json', import.meta.url).href)
-    .then(res => res.json())
-    .then(res => {
-      baseTreeData.value = res;
-    });
-});
+const checkOnClickLeaf = ref(true);
+const selectedValues = ref<Array<string | number>>([]);
+const treeData: HTreeNodeData[] = [
+  {
+    value: 'regions',
+    label: 'Release regions',
+    children: [
+      {
+        value: 'americas',
+        label: 'Americas',
+        children: [
+          { value: 'us-east', label: 'US East' },
+          { value: 'ca-central', label: 'Canada Central' },
+        ],
+      },
+      {
+        value: 'europe',
+        label: 'Europe',
+        children: [{ value: 'eu-west', label: 'EU West' }],
+      },
+    ],
+  },
+];
 </script>
 
-<style scoped>
-</style>
+<template>
+  <div class="docs-demo">
+    <h-switch v-model="checkOnClickLeaf" label="Leaf row selects" />
+    <h-tree
+      v-model:selected-values="selectedValues"
+      :tree-data="treeData"
+      :check-on-click-leaf="checkOnClickLeaf"
+      multiple
+      :is-default-expand-all="true"
+    />
+    <span aria-live="polite">Selected: {{ selectedValues.join(', ') || 'none' }}</span>
+  </div>
+</template>

@@ -1,84 +1,64 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+interface WorkspaceRow {
+  id: string;
+  workspace: string;
+  region: string;
+  seats: number;
+  available: boolean;
+}
+
+const selectedKey = ref<string>();
+const workspaces: WorkspaceRow[] = [
+  { id: 'WS-01', workspace: 'Commerce APAC', region: 'Singapore', seats: 184, available: true },
+  { id: 'WS-02', workspace: 'Analytics EU', region: 'Frankfurt', seats: 96, available: false },
+  { id: 'WS-03', workspace: 'Support AMER', region: 'Virginia', seats: 142, available: true },
+  { id: 'WS-04', workspace: 'Research Labs', region: 'Tokyo', seats: 58, available: false },
+  { id: 'WS-05', workspace: 'Partner Hub', region: 'Sydney', seats: 77, available: true },
+];
+
+function isSelectable(row: WorkspaceRow) {
+  return row.available;
+}
+</script>
+
 <template>
-  <p>current picked index: {{ checkedRow }}</p>
-  <p>
-    indexes 3 and 4 are disabled by
-    <code>selectable</code>
-  </p>
-
-  <h-table :data="data" height="300px">
-    <h-table-column
-      ref="selectionColumnDomRef"
-      v-model:selected-keys="checkedRow"
-      type="selection"
-      align="center"
-      width="40"
-      column-key="id"
-      :selectable="isSelectable"
-    />
-    <h-table-column title="Index" field="id" width="80" />
-    <h-table-column title="Name" field="name" />
-    <h-table-column title="Birthday" field="birthday" />
-    <h-table-column title="Address" field="address" />
-  </h-table>
-
-  <div class="my-4">
-    <p>
-      <h-button plain @click="() => setSelected(true)">toggle index = 4 ignore selectable</h-button>
-      <h-button plain @click="() => setSelected()">toggle index = 4 consider selectable</h-button>
-    </p>
-    <p>
-      <h-button plain @click="getSelected">get selected</h-button>
-    </p>
-    <p>
-      <h-button plain @click="() => clearSelection(true)">
-        clear selection ignore selectable
-      </h-button>
-      <h-button plain @click="() => clearSelection()">clear selection consider selectable</h-button>
-    </p>
+  <div class="table-single-demo">
+    <h-table :data="workspaces" row-key="id" highlight-selected>
+      <h-table-column
+        v-model:selected-keys="selectedKey"
+        type="selection"
+        column-key="id"
+        width="48"
+        align="center"
+        :selectable="isSelectable"
+      />
+      <h-table-column title="Workspace" field="workspace" min-width="180" />
+      <h-table-column title="Region" field="region" min-width="130" />
+      <h-table-column title="Seats" field="seats" width="86" align="right" header-align="right" />
+      <h-table-column title="Eligibility" width="112">
+        <template #default="{ row }">
+          <h-tag :type="row.available ? 'success' : 'warning'" plain>
+            {{ row.available ? 'Available' : 'Locked' }}
+          </h-tag>
+        </template>
+      </h-table-column>
+    </h-table>
+    <p aria-live="polite">Selected: {{ selectedKey ?? 'none' }}</p>
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
-import { faker } from '@faker-js/faker';
-import { HTableColumn, type TableColumnExposes } from '@aurora/horizon-web';
-import type { HorizonWebComponentInstance } from '@aurora/utils';
-
-interface TableData {
-  id: number;
-  name: string;
-  birthday: string;
-  address: string;
-  selectable: boolean;
+<style scoped>
+.table-single-demo {
+  display: grid;
+  min-width: 0;
+  gap: var(--h-spacing-3);
 }
 
-const selectionColumnDomRef =
-  ref<HorizonWebComponentInstance<typeof HTableColumn, TableColumnExposes>>();
-const checkedRow = ref();
-
-const data = ref<TableData[]>(
-  new Array(20).fill(0).map((_, index) => ({
-    id: index,
-    name: faker.person.fullName(),
-    birthday: faker.date.birthdate({ min: 22, max: 50, mode: 'age' }).toDateString(),
-    address: faker.location.streetAddress(),
-    selectable: ![3, 4].includes(index),
-  })),
-);
-
-function isSelectable(rowData: TableData) {
-  return rowData.selectable;
+.table-single-demo p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
 }
-
-function setSelected(ignoreSelectable = false) {
-  selectionColumnDomRef.value?.toggleRowSelection(4, undefined, ignoreSelectable);
-}
-
-function getSelected() {
-  console.info(selectionColumnDomRef.value?.getSelectionRows());
-}
-
-function clearSelection(ignoreSelectable = false) {
-  selectionColumnDomRef.value?.clearSelection(ignoreSelectable);
-}
-</script>
+</style>

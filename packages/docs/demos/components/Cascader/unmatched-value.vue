@@ -1,59 +1,25 @@
-<template>
-  <h-grid :gap="10">
-    <h-grid-item :span="6">
-      <div class="demo-title">单选</div>
-      <h-cascader
-        v-model="currentVal1"
-        :clearable="true"
-        :to-body="false"
-        :options="baseData"
-      />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">多选</div>
-      <h-cascader
-        v-model="currentVal2"
-        :clearable="true"
-        :options="baseData"
-        :multiple="true"
-        :to-body="false"
-      />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">单选-仅展示叶子节点</div>
-      <h-cascader
-        v-model="currentVal3"
-        :clearable="true"
-        :options="baseData"
-        show-checked-strategy="leaf"
-        :to-body="false"
-      />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">多选-仅展示叶子节点</div>
-      <h-cascader
-        v-model="currentVal4"
-        :clearable="true"
-        :options="baseData"
-        show-checked-strategy="leaf"
-        :multiple="true"
-        :to-body="false"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
+import { workspaceOptions } from './options';
 
-const currentVal1 = ref<string[]>(["guide", "navigation", "side"]);
-const currentVal2 = ref<string[][]>([["guide", "navigation", "side"]]);
-const currentVal3 = ref<string[]>(["guide", "navigation", "side"]);
-const currentVal4 = ref<string[][]>([["guide", "navigation", "side"]]);
-
-const baseData = ref([]);
-
-onMounted(async()=>{
-  baseData.value = await fetch(new URL('/cascader-tree-data.json', import.meta.url).href).then(r => r.json());
-});
+const strategy = ref<'fullPath' | 'leaf'>('fullPath');
+const value = ref<string[][]>([['product', 'legacy-app', 'mobile-v1']]);
 </script>
+
+<template>
+  <div class="docs-demo">
+    <h-segmented v-model:active-key="strategy" size="small">
+      <h-segmented-item key="fullPath" label="Full path" />
+      <h-segmented-item key="leaf" label="Leaf only" />
+    </h-segmented>
+    <h-cascader
+      v-model="value"
+      aria-label="Saved release scope"
+      :options="workspaceOptions"
+      multiple
+      collapse-tags
+      :show-checked-strategy="strategy"
+      :to-body="false"
+    />
+  </div>
+</template>

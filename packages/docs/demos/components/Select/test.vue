@@ -1,104 +1,130 @@
+<script setup lang="ts">
+import { computed, onBeforeUnmount, ref } from 'vue';
+
+type MemberOption = { value: string; label: string; description: string };
+
+const catalog: MemberOption[] = [
+  { value: 'mia', label: 'Mia Chen', description: 'Product · Shanghai' },
+  { value: 'noah', label: 'Noah Li', description: 'Frontend · Singapore' },
+  { value: 'ava', label: 'Ava Wang', description: 'Design · Shanghai' },
+  { value: 'leo', label: 'Leo Zhang', description: 'Quality · Beijing' },
+  { value: 'zoe', label: 'Zoe Wu', description: 'Data · Frankfurt' },
+  { value: 'ethan', label: 'Ethan Lin', description: 'Security · Singapore' },
+];
+const visible = ref(false);
+const committedMembers = ref<string[]>(['mia', 'noah']);
+const draftMembers = ref<string[]>([]);
+const options = ref<MemberOption[]>(catalog);
+const loading = ref(false);
+const status = ref('已配置 2 位评审成员');
+const fieldState = ref('等待操作');
+const committedLabels = computed(() =>
+  committedMembers.value.map(value => catalog.find(item => item.value === value)?.label ?? value),
+);
+let searchTimer: ReturnType<typeof setTimeout> | undefined;
+let requestId = 0;
+
+function openDrawer() {
+  draftMembers.value = [...committedMembers.value];
+  options.value = catalog;
+  fieldState.value = '可搜索或创建成员';
+  visible.value = true;
+}
+
+function searchMembers(input: string) {
+  requestId += 1;
+  const currentRequest = requestId;
+  if (searchTimer) clearTimeout(searchTimer);
+  if (!input.trim()) {
+    options.value = catalog;
+    loading.value = false;
+    fieldState.value = '已恢复全部成员';
+    return;
+  }
+  loading.value = true;
+  fieldState.value = `正在搜索 “${input}”…`;
+  searchTimer = setTimeout(() => {
+    if (currentRequest !== requestId) return;
+    const keyword = input.toLowerCase();
+    options.value = catalog.filter(
+      item =>
+        item.label.toLowerCase().includes(keyword) ||
+        item.description.toLowerCase().includes(keyword),
+    );
+    loading.value = false;
+    fieldState.value = `找到 ${options.value.length} 位成员`;
+  }, 400);
+}
+
+function saveMembers() {
+  committedMembers.value = [...draftMembers.value];
+  status.value = `已保存 ${committedMembers.value.length} 位成员`;
+  visible.value = false;
+}
+
+function cancelEdit() {
+  draftMembers.value = [...committedMembers.value];
+  status.value = '已取消修改';
+  visible.value = false;
+}
+
+onBeforeUnmount(() => {
+  requestId += 1;
+  if (searchTimer) clearTimeout(searchTimer);
+});
+</script>
+
 <template>
-  <h-button @click="visible = true">Open Drawer</h-button>
-  <h-drawer v-model:visible="visible" title="Title" placement="right" @ok="onOk" @cancel="onCancel">
-    <h-select
-      v-model="value1"
-      show-search
-      clearable
-      allow-create
-      multiple
-      :to-body="false"
-      :loading="isLoading"
-      loading-text="加载中"
-      @search="searchHandle"
-      @focus="onFocus"
-      @blur="onBlur"
+  <div class="drawer-demo">
+    <h-button @click="openDrawer">编辑成员</h-button>
+    <p class="docs-demo__status" role="status">{{ status }} · {{ committedLabels.join('、') }}</p>
+
+    <h-drawer
+      v-model:visible="visible"
+      title="配置发布评审成员"
+      placement="right"
+      @ok="saveMembers"
+      @cancel="cancelEdit"
     >
-      <h-option
-        v-for="item in options"
-        :key="item.value"
-        :value="item.value"
-        :label="item.text"
-      />
-    </h-select>
-  </h-drawer>
+      <div class="drawer-form">
+        <h-select
+          v-model="draftMembers"
+          multiple
+          show-search
+          allow-create
+          clearable
+          collapse-tags
+          collapse-tags-tooltip
+          :loading="loading"
+          :to-body="false"
+          placeholder="搜索或创建成员"
+          @search="searchMembers"
+        >
+          <h-option v-for="option in options" :key="option.value" v-bind="option" />
+        </h-select>
+        <p class="docs-demo__status" role="status">
+          {{ fieldState }} · 已选 {{ draftMembers.length }} 人
+        </p>
+      </div>
+    </h-drawer>
+  </div>
 </template>
 
-<script lang="ts" setup>
-import { ref } from 'vue';
-import { $message } from '@aurora/horizon-web';
-import jsonp from 'fetch-jsonp';
-import qs from 'qs';
-
-const visible = ref(false);
-const isLoading = ref(false);
-// const value1 = ref();
-const value1 = ref(['1', '2', '3']);
-let timeout: any = null;
-let currentValue: string = '';
-
-const options = ref<{value: string; text: string}[]>([]);
-
-const searchHandle = (value: string) => {
-  console.info('search: ', value);
-  if (value) {
-    fetch(value, (data: any) => (options.value = data));
-  } else {
-    options.value = [];
-  }
-};
-
-function fetch(value: string, callback: Function) {
-  if (timeout) {
-    clearTimeout(timeout);
-    timeout = null;
-  }
-  currentValue = value;
-
-  function fake() {
-    const str = qs.stringify({
-      code: 'utf-8',
-      q: value,
-    });
-
-    isLoading.value = true;
-
-    jsonp(`https://suggest.taobao.com/sug?${str}`)
-      .then(response => response.json())
-      .then(d => {
-        if (currentValue === value) {
-          const { result } = d;
-          const data: any[] = [];
-          result.forEach((r: any) => {
-            data.push({
-              value: r[0],
-              text: r[0],
-            });
-          });
-          callback(data);
-        }
-      }).finally(() => {
-      isLoading.value = false;
-    });
-  }
-
-  timeout = setTimeout(fake, 300);
+<style scoped>
+.drawer-demo,
+.drawer-form {
+  display: grid;
+  min-width: 0;
+  justify-items: start;
+  gap: 10px;
 }
 
-const onOk = () => {
-  console.info('ok button clicked!');
-  $message({ type: 'success', message: 'ok button clicked' });
-};
-const onCancel = () => {
-  console.info('cancel button clicked!');
-  $message({ type: 'warning', message: 'cancel button clicked!' });
-};
-
-function onFocus() {
-  console.trace('focus');
+.drawer-form {
+  justify-items: stretch;
 }
 
-function onBlur() {
-  console.trace('blur');
+.drawer-form :deep(.h-select) {
+  width: 100%;
+  min-width: 0;
 }
-</script>
+</style>

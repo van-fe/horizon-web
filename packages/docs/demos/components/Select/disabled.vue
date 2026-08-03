@@ -1,206 +1,73 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const disabled = ref(false);
+const selected = ref<string[]>(['product']);
+const departments = [
+  {
+    label: '受管部门',
+    disabled: true,
+    children: [
+      { value: 'security', label: '安全与合规' },
+      { value: 'finance', label: '财务系统' },
+    ],
+  },
+  {
+    label: '开放部门',
+    disabled: false,
+    children: [
+      { value: 'product', label: '产品设计' },
+      { value: 'operations', label: '客户运营', disabled: true },
+      { value: 'growth', label: '增长产品' },
+    ],
+  },
+];
+</script>
+
 <template>
-  <div>
-    <h-grid :gap="12">
-      <h-grid-item :span="6">
-        <div class="demo-title">单选: 整体禁用</div>
-        <h-select
-          v-model="value1"
-          :clearable="true"
-          placeholder="请选择"
-          :disabled="true"
-          :to-body="false"
-          @change="changeHandle"
-        >
-          <h-option
-            v-for="item in selectOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-            :disabled="item.value === 2"
-          />
-        </h-select>
-      </h-grid-item>
-      <h-grid-item :span="6">
-        <div class="demo-title">单选: 选项禁用</div>
-        <h-select
-          v-model="value2"
-          :clearable="true"
-          placeholder="请选择"
-          :to-body="false"
-          @change="changeHandle"
-        >
-          <h-option
-            v-for="item in selectOptionsHasDisabled"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-            :disabled="item.disabled"
-          />
-        </h-select>
-      </h-grid-item>
-      <h-grid-item :span="6">
-        <div class="demo-title">单选: 选项组禁用</div>
-        <h-select
-          v-model="value3"
-          :clearable="true"
-          placeholder="请选择"
-          :to-body="false"
-          @change="changeHandle"
-        >
-          <h-option-group
-            v-for="(group, index) in selectOptionGroupsHasDisabled"
-            :key="index"
-            :label="group.label"
-            :disabled="group.disabled"
-          >
-            <h-option
-              v-for="item in group.children"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-              :disabled="item.disabled"
-            />
-          </h-option-group>
-        </h-select>
-      </h-grid-item>
-    </h-grid>
-    <h-grid :gap="12">
-      <h-grid-item :span="6">
-        <div class="demo-title">多选: 整体禁用</div>
-        <h-select
-          v-model="values1"
-          :multiple="true"
-          :clearable="true"
-          placeholder="请选择"
-          :disabled="true"
-          :collapse-tags="true"
-          :to-body="false"
-          @change="changeHandle"
-        >
-          <h-option
-            v-for="item in selectOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
-        </h-select>
-      </h-grid-item>
-      <h-grid-item :span="6">
-        <div class="demo-title">多选: 选项禁用</div>
-        <h-select
-          v-model="values2"
-          :multiple="true"
-          :clearable="true"
-          placeholder="请选择"
-          :collapse-tags="true"
-          :to-body="false"
-          @change="changeHandle"
-        >
-          <h-option
-            v-for="item in selectOptionsHasDisabled"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-            :disabled="item.disabled"
-          />
-        </h-select>
-      </h-grid-item>
-      <h-grid-item :span="6">
-        <div class="demo-title">多选: 选项组禁用</div>
-        <h-select
-          v-model="values3"
-          :multiple="true"
-          :clearable="true"
-          placeholder="请选择"
-          :collapse-tags="true"
-          :to-body="false"
-          @change="changeHandle"
-        >
-          <h-option-group
-            v-for="(group, index) in selectOptionGroupsHasDisabled"
-            :key="index"
-            :label="group.label"
-            :disabled="group.disabled"
-          >
-            <h-option
-              v-for="item in group.children"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-              :disabled="item.disabled"
-            />
-          </h-option-group>
-        </h-select>
-      </h-grid-item>
-    </h-grid>
+  <div class="select-demo">
+    <label class="toggle-row">
+      <span>禁用选择器</span>
+      <h-switch v-model="disabled" status />
+    </label>
+    <h-select
+      v-model="selected"
+      multiple
+      clearable
+      collapse-tags
+      :disabled="disabled"
+      :to-body="false"
+    >
+      <h-option-group
+        v-for="group in departments"
+        :key="group.label"
+        :label="group.label"
+        :disabled="group.disabled"
+      >
+        <h-option v-for="item in group.children" :key="item.value" v-bind="item" />
+      </h-option-group>
+    </h-select>
+    <p class="docs-demo__status">受管部门与“客户运营”不可选</p>
   </div>
 </template>
 
-<script lang="ts" setup>
-import { ExtractPropTypes, ref } from 'vue';
-import { useOptionProps, useOptionGroupProps } from '@aurora/horizon-web';
+<style scoped>
+.select-demo {
+  display: grid;
+  min-width: 0;
+  gap: 10px;
+}
 
-const value1 = ref(1);
-const value2 = ref(1);
-const value3 = ref(1);
-const values1 = ref([1]);
-const values2 = ref([1]);
-const values3 = ref([1]);
+.toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--h-text-secondary);
+  font-size: 13px;
+}
 
-const selectOptions: ExtractPropTypes<useOptionProps>[] = [
-  { value: 1, label: '上海' },
-  { value: 2, label: '北京' },
-  { value: 3, label: '合肥' },
-  { value: 4, label: '深圳' },
-  { value: 5, label: '杭州' },
-  { value: 6, label: '天津' },
-  { value: 7, label: '西安' },
-  { value: 8, label: '南京' },
-  { value: 9, label: '哈尔滨' },
-  { value: 10, label: '香港' },
-];
-
-const selectOptionsHasDisabled: ExtractPropTypes<useOptionProps>[] = [
-  { value: 1, label: '上海', disabled: true },
-  { value: 2, label: '北京' },
-  { value: 3, label: '合肥' },
-  { value: 4, label: '深圳' },
-  { value: 5, label: '杭州' },
-  { value: 6, label: '天津' },
-  { value: 7, label: '西安' },
-  { value: 8, label: '南京' },
-  { value: 9, label: '哈尔滨' },
-  { value: 10, label: '香港' },
-];
-
-const selectOptionGroupsHasDisabled: Array<
-  ExtractPropTypes<useOptionGroupProps> & { children: ExtractPropTypes<useOptionProps>[] }
-> = [
-  {
-    disabled: true,
-    children: [
-      { value: 1, label: '上海', disabled: true },
-      { value: 2, label: '北京' },
-      { value: 3, label: '合肥' },
-      { value: 4, label: '深圳' },
-      { value: 5, label: '杭州' },
-    ],
-  },
-  {
-    disabled: false,
-    children: [
-      { value: 6, label: '天津' },
-      { value: 7, label: '西安' },
-      { value: 8, label: '南京' },
-      { value: 9, label: '哈尔滨' },
-      { value: 10, label: '香港' },
-    ],
-  },
-];
-
-const changeHandle = () => {
-  console.info(value1.value);
-};
-</script>
-
-<style scoped></style>
+.select-demo :deep(.h-select) {
+  width: 100%;
+  min-width: 0;
+}
+</style>

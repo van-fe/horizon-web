@@ -1,54 +1,40 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <div class="demo-title">单选</div>
-      <h-tree-select
-        :tree-data="baseTreeData"
-        :filterable="true"
-        :max-height="300"
-        :to-body="false"
-        clearable
-        @focus="onFocus"
-        @blur="onBlur"
-      />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">多选</div>
-      <h-tree-select
-        :tree-data="baseTreeData"
-        :filterable="true"
-        :max-height="300"
-        :multiple="true"
-        :to-body="false"
-        clearable
-        @focus="onFocus"
-        @blur="onBlur"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
+import type { HTreeFilterMethodType, HTreeNodeData } from '@aurora/horizon-web';
 
-const baseTreeData = ref([]);
-
-function onFocus() {
-  console.info('focus');
-}
-
-function onBlur() {
-  console.info('blur');
-}
-
-onMounted(() => {
-  fetch(new URL('/tree-data.json', import.meta.url).href)
-    .then(res => res.json())
-    .then(res => {
-      baseTreeData.value = res;
-    });
-});
+const owner = ref<string | number>();
+const treeData: HTreeNodeData[] = [
+  {
+    value: 'design',
+    label: 'Design',
+    children: [
+      { value: 'maya', label: 'Maya Chen · Product design' },
+      { value: 'ines', label: 'Ines Silva · Research' },
+    ],
+  },
+  {
+    value: 'engineering',
+    label: 'Engineering',
+    children: [
+      { value: 'noah', label: 'Noah Williams · Platform' },
+      { value: 'ana', label: 'Ana Costa · Reliability' },
+    ],
+  },
+];
+const filterMethod: HTreeFilterMethodType = (inputValue, node) =>
+  String(node.label).toLowerCase().includes(inputValue.trim().toLowerCase());
 </script>
 
-<style scoped>
-</style>
+<template>
+  <h-tree-select
+    v-model="owner"
+    :tree-data="treeData"
+    filterable
+    clearable
+    :filter-method="filterMethod"
+    search-input-placeholder="Search people or disciplines"
+    empty-text="No matching owner"
+    placeholder="Choose an owner"
+    :to-body="false"
+  />
+</template>

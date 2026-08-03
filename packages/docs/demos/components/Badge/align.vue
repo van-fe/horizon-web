@@ -1,79 +1,53 @@
 <template>
-  <p class="my-4">center-point，按中心点对齐</p>
-  <h-badge
-    v-for="(item, index) in listRef"
-    :key="index"
-    type="num"
-    :content="item"
-    :num-max="99"
-    style="margin-right: 20px"
-  >
-    <div style="background: gray; width: 50px; height: 50px"></div>
-  </h-badge>
-  <p class="my-4">inner，内部对齐</p>
-  <h-badge
-    v-for="(item, index) in listRef"
-    :key="index"
-    type="num"
-    align="inner"
-    :content="item"
-    :num-max="99"
-    style="margin-right: 20px"
-  >
-    <div style="background: gray; width: 50px; height: 50px"></div>
-  </h-badge>
-  <p class="my-4">outer，外部对齐</p>
-  <h-badge
-    v-for="(item, index) in listRef"
-    :key="index"
-    type="num"
-    align="outer"
-    :content="item"
-    :num-max="99"
-    style="margin-right: 20px"
-  >
-    <div style="background: gray; width: 50px; height: 50px"></div>
-  </h-badge>
-  <p class="my-4">fix-left，固定左边边距，长度向右延伸</p>
-  <h-badge
-    v-for="(item, index) in listRef"
-    :key="index"
-    type="num"
-    align="fix-left"
-    :content="item"
-    :num-max="99"
-    style="margin-right: 20px"
-  >
-    <div style="background: gray; width: 50px; height: 50px"></div>
-  </h-badge>
-  <p class="my-4">自定义偏移量</p>
-  <h-badge
-    v-for="(item, index) in listRef"
-    :key="index"
-    type="num"
-    align="fix-left"
-    :offset="{ top: '-2px', right: '-2px' }"
-    :content="item"
-    :num-max="99"
-    style="margin-right: 20px"
-  >
-    <div style="background: gray; width: 50px; height: 50px"></div>
-  </h-badge>
+  <div class="badge-align-demo">
+    <div v-for="mode in modes" :key="mode.label">
+      <h-badge type="num" :content="8" :align="mode.align" :offset="mode.offset">
+        <span class="badge-align-demo__target">Queue</span>
+      </h-badge>
+      <span>{{ mode.label }}</span>
+    </div>
+  </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    return {
-      listRef: ref([0, 8, 15, 10000]),
-    };
+<script setup lang="ts">
+const modes = [
+  { label: 'center-point', align: 'center-point' as const },
+  { label: 'inner', align: 'inner' as const },
+  { label: 'outer', align: 'outer' as const },
+  { label: 'fix-left', align: 'fix-left' as const },
+  {
+    label: 'custom offset',
+    align: 'fix-left' as const,
+    offset: { top: '-2px', right: '-2px' },
   },
-});
+];
 </script>
 
-<style>
-.my-4 {
-  margin: 16px 0;
+<style scoped>
+.badge-align-demo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--h-spacing-5);
+}
+
+.badge-align-demo > div {
+  display: grid;
+  justify-items: center;
+  gap: var(--h-spacing-2);
+}
+
+.badge-align-demo__target {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--h-spacing-4);
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+
+.badge-align-demo > div > span:last-child {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
 }
 </style>

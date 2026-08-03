@@ -1,27 +1,31 @@
+<script setup lang="ts">
+const audits = [
+  {
+    time: '09:42',
+    actor: 'Mina Park',
+    action: 'Changed workspace retention',
+    detail: 'Reduced analytics event retention from 24 months to 18 months for the APAC workspace.',
+  },
+  {
+    time: '10:18',
+    actor: 'Noah Chen',
+    action: 'Rotated an access key',
+    detail: 'Created a replacement key for the nightly warehouse synchronization.',
+  },
+  {
+    time: '11:03',
+    actor: 'Iris Wang',
+    action: 'Updated export permissions',
+    detail: 'Granted Finance Analysts permission to export approved billing reports.',
+  },
+];
+</script>
+
 <template>
-  <h-table :data="data">
-    <h-table-column title="Name" field="name" />
-    <h-table-column title="Birthday" field="birthday" width="100px" />
-    <h-table-column title="Address" field="address" :show-overflow-tooltip="true" width="100px" />
-    <h-table-column title="Message" field="message" />
+  <h-table :data="audits" row-key="time" table-layout="fixed">
+    <h-table-column title="Time" field="time" width="76" />
+    <h-table-column title="Actor" field="actor" width="128" show-overflow-tooltip />
+    <h-table-column title="Change" field="action" width="180" show-overflow-tooltip />
+    <h-table-column title="Details" field="detail" width="240" show-overflow-tooltip />
   </h-table>
 </template>
-
-<script setup lang="ts">
-import { ref } from 'vue';
-import { faker } from '@faker-js/faker';
-
-interface TableData {
-  name: string;
-  birthday: string;
-  address: string;
-  message: string;
-}
-
-const data = ref<TableData[]>(new Array(5).fill(0).map(_ => ({
-  name: faker.person.fullName(),
-  birthday: faker.date.birthdate({ min: 22, max: 50, mode: 'age' }).toDateString(),
-  address: faker.location.streetAddress(),
-  message: faker.hacker.phrase(),
-})));
-</script>

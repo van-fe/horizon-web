@@ -1,68 +1,41 @@
-<template>
-  <h-grid :gap="10">
-    <h-grid-item :span="6">
-      <div class="demo-title">单选: 隐藏选中项</div>
-      <h-select v-model="value3" :selected-visible="false" clearable :to-body="false">
-        <h-option label="上海" :value="1" />
-        <h-option :value="2" label="北京" />
-        <h-option :value="3" label="合肥" name="hefei" />
-      </h-select>
-    </h-grid-item>
+<script setup lang="ts">
+import { ref } from 'vue';
 
-    <h-grid-item :span="6">
-      <div class="demo-title">多选: 隐藏选中项</div>
-      <h-select v-model="values4" :selected-visible="false" clearable multiple :to-body="false">
-        <h-option label="上海" :value="1" />
-        <h-option :value="2" label="北京" />
-        <h-option :value="3" label="合肥" name="hefei" />
-      </h-select>
-    </h-grid-item>
-  </h-grid>
-</template>
-
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    const value3 = ref();
-    const values4 = ref([]);
-
-    const changeHandle = (value: any, option: any) => {
-      console.group('change');
-      console.info(value);
-      console.info(option);
-      console.groupEnd();
-    };
-
-    return {
-      valueFormat(originValue: any) {
-        return {
-          value: originValue.value,
-          label: originValue.label,
-        };
-      },
-      blur() {
-        console.info('blur');
-      },
-      focus() {
-        console.info('focus');
-      },
-      clear() {
-        console.info('clear');
-      },
-      deselect(value: any) {
-        console.info('deselect', value);
-      },
-      dropdownVisibleChange(visible: boolean) {
-        console.info('dropdownVisibleChange', visible);
-      },
-
-      changeHandle,
-      value3,
-      values4,
-    };
-  },
-});
+const audiences = [
+  { value: 'owners', label: '项目负责人' },
+  { value: 'reviewers', label: '评审成员' },
+  { value: 'contributors', label: '所有贡献者' },
+  { value: 'guests', label: '外部访客' },
+];
+const selected = ref<string[]>(['owners', 'reviewers']);
 </script>
 
-<style scoped></style>
+<template>
+  <div class="select-demo">
+    <h-select
+      v-model="selected"
+      multiple
+      :selected-visible="false"
+      clearable
+      collapse-tags
+      :to-body="false"
+      placeholder="添加通知对象"
+    >
+      <h-option v-for="audience in audiences" :key="audience.value" v-bind="audience" />
+    </h-select>
+    <p class="docs-demo__status">已选项会从候选列表隐藏 · {{ selected.length }} 项</p>
+  </div>
+</template>
+
+<style scoped>
+.select-demo {
+  display: grid;
+  min-width: 0;
+  gap: 10px;
+}
+
+.select-demo :deep(.h-select) {
+  width: 100%;
+  min-width: 0;
+}
+</style>

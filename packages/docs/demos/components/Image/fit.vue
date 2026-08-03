@@ -1,34 +1,38 @@
-<template>
-  <div class="flex flex-wrap">
-    <div v-for="item in fits" :key="item">
-      <p class="text-center">
-        {{ item }}
-        <span v-if="item === 'cover'">(default)</span>
-      </p>
-      <h-image
-        src="/demo-assets/scene-aurora.svg"
-        :object-fit="item"
-        class="mr-2 img"
-        :width="150"
-        :height="150"
-      />
-    </div>
-  </div>
-</template>
+<script setup lang="ts">
+import { ref } from 'vue';
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-export default defineComponent({
-  setup() {
-    return {
-      fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
-    };
-  },
-});
+type ObjectFit = 'fill' | 'contain' | 'cover' | 'none' | 'scale-down';
+
+const fit = ref<ObjectFit>('cover');
+const fits: ObjectFit[] = ['fill', 'contain', 'cover', 'none', 'scale-down'];
 </script>
 
+<template>
+  <section class="docs-demo">
+    <div class="docs-demo__controls">
+      <h-segmented v-model:active-key="fit" size="small">
+        <h-segmented-item v-for="item in fits" :key="item" :label="item" />
+      </h-segmented>
+    </div>
+
+    <div class="image-frame">
+      <h-image
+        src="/demo-assets/scene-city.svg"
+        alt="City artwork inside a fixed frame"
+        width="100%"
+        height="100%"
+        :object-fit="fit"
+      />
+    </div>
+  </section>
+</template>
+
 <style scoped>
-.img {
-  border: 2px dashed #aaa;
+.image-frame {
+  width: min(100%, 520px);
+  height: 240px;
+  overflow: hidden;
+  border-radius: var(--h-radius-l);
+  background: var(--h-bg-secondary);
 }
 </style>

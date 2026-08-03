@@ -1,61 +1,50 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { faker } from '@faker-js/faker';
 
-const options = new Array(50).fill(0).map((_, index) => {
-  const value = faker.person.fullName();
+const teams = ['Platform', 'Commerce', 'Growth', 'Security', 'Data', 'Quality'];
+const regions = ['Shanghai', 'Singapore', 'Frankfurt', 'Virginia'];
+const options = Array.from({ length: 120 }, (_, index) => {
+  const number = String(index + 1).padStart(3, '0');
   return {
-    label: value,
-    value,
-    description: index % 2 === 0 ? undefined : faker.location.county(),
-    disabled: index % 5 === 0,
+    value: `service-${number}`,
+    label: `Service ${number}`,
+    description: `${teams[index % teams.length]} · ${regions[index % regions.length]}`,
+    disabled: (index + 1) % 11 === 0,
   };
 });
-const value1 = ref();
-const value2 = ref([options[12].value, options[15].value]);
-const descriptionPosition = ref('right');
-
-function onReachBottom() {
-  console.info('reach bottom');
-}
+const selected = ref<string[]>(['service-013', 'service-046']);
+const reachCount = ref(0);
 </script>
 
 <template>
-  <h-form label-position="left" label-vertical-align="middle">
-    <h-form-item label="description-position">
-      <h-radio-group v-model="descriptionPosition">
-        <h-radio value="right"></h-radio>
-        <h-radio value="bottom"></h-radio>
-      </h-radio-group>
-    </h-form-item>
-  </h-form>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <div class="demo-title">单选</div>
-      <h-select
-        v-model="value1"
-        :to-body="false"
-        filterable
-        :options="options"
-        :description-position="descriptionPosition"
-        @option-list-reach-bottom="onReachBottom"
-      />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">多选</div>
-      <h-select
-        v-model="value2"
-        :to-body="false"
-        filterable
-        multiple
-        :options="options"
-        :description-position="descriptionPosition"
-        :collapse-tags="true"
-        :collapse-tags-tooltip="true"
-        @option-list-reach-bottom="onReachBottom"
-      />
-    </h-grid-item>
-  </h-grid>
+  <div class="select-demo">
+    <h-select
+      v-model="selected"
+      multiple
+      filterable
+      collapse-tags
+      collapse-tags-tooltip
+      :options="options"
+      description-position="bottom"
+      :to-body="false"
+      placeholder="搜索 120 个服务"
+      @option-list-reach-bottom="reachCount += 1"
+    />
+    <p class="docs-demo__status">
+      120 项 · 已选 {{ selected.length }} 项 · 触底 {{ reachCount }} 次
+    </p>
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.select-demo {
+  display: grid;
+  min-width: 0;
+  gap: 10px;
+}
+
+.select-demo :deep(.h-select) {
+  width: 100%;
+  min-width: 0;
+}
+</style>

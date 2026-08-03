@@ -11,7 +11,7 @@ Set `props.icon` for `h-menu-item` to add an `icon` prefix
 :::demo components/Dropdown/icon.vue :::
 
 ## Trigger Method
-Allows using `click` `hover` `contextMenu` to trigger
+Use `click`, `hover`, or `context-menu` to trigger the dropdown.
 :::demo components/Dropdown/trigger.vue :::
 
 ## Directive Event
@@ -25,7 +25,7 @@ Of course, you can set `trigger="manual"` and pass in `visible` to control wheth
 :::demo components/Dropdown/manual.vue :::
 
 ## Grouped Menu
-You can use `h-dropdown-gruop` to group
+Use `h-dropdown-group` to organize menu items into groups.
 :::demo components/Dropdown/group.vue :::
 
 ## Multi-level Menu

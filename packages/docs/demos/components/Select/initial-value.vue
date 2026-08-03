@@ -1,46 +1,65 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="{ xs: 12, md: 8, lg: 6, xl: 6, xxl: 6 }">
-      <div class="demo-title">默认值为 null</div>
-      <div class="demo-description">
-        modelValue: {{ Object.prototype.toString.call(value1) }} {{ value1 }}
-      </div>
-      <h-select v-model="value1" :initial-value="null" :clearable="true" :to-body="false">
-        <h-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
-      </h-select>
-    </h-grid-item>
-    <h-grid-item :span="{ xs: 12, md: 8, lg: 6, xl: 6, xxl: 6 }">
-      <div class="demo-title">默认值为 []</div>
-      <div class="demo-description">
-        modelValue: {{ Object.prototype.toString.call(value2) }} {{ value2 }}
-      </div>
-      <h-select v-model="value2" :multiple="true" :initial-value="[]" :to-body="false" :clearable="true">
-        <h-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
-      </h-select>
-    </h-grid-item>
-  </h-grid>
-
-</template>
-
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
-const value1 = ref();
-const value2 = ref(undefined);
-
-const selectOptions = [
-  { value: '', label: '上海' },
-  { value: 2, label: '北京' },
-  { value: 3, label: '合肥' },
-  { value: 4, label: '深圳' },
-  { value: 5, label: '杭州' },
-  { value: 6, label: '天津' },
-  { value: 7, label: '西安' },
-  { value: 8, label: '南京' },
-  { value: 9, label: '哈尔滨' },
-  { value: 10, label: '香港' },
+const channels = [
+  { value: 'email', label: '邮件' },
+  { value: 'chat', label: '即时消息' },
+  { value: 'webhook', label: 'Webhook' },
 ];
+const primary = ref<string | null>();
+const fallback = ref<string[] | undefined>();
+const primaryState = computed(() => (primary.value === null ? 'null' : String(primary.value)));
+const fallbackState = computed(() =>
+  Array.isArray(fallback.value) ? `[${fallback.value.join(', ')}]` : String(fallback.value),
+);
 </script>
 
+<template>
+  <div class="comparison-row">
+    <label>
+      <span>初始值 null</span>
+      <h-select v-model="primary" :initial-value="null" clearable :to-body="false">
+        <h-option v-for="channel in channels" :key="channel.value" v-bind="channel" />
+      </h-select>
+      <small>{{ primaryState }}</small>
+    </label>
+    <label>
+      <span>初始值 []</span>
+      <h-select v-model="fallback" multiple :initial-value="[]" clearable :to-body="false">
+        <h-option v-for="channel in channels" :key="channel.value" v-bind="channel" />
+      </h-select>
+      <small>{{ fallbackState }}</small>
+    </label>
+  </div>
+</template>
+
 <style scoped>
+.comparison-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.comparison-row label {
+  display: grid;
+  min-width: 0;
+  gap: 7px;
+}
+
+.comparison-row span,
+.comparison-row small {
+  color: var(--h-text-secondary);
+  font-size: 12px;
+}
+
+.comparison-row :deep(.h-select) {
+  width: 100%;
+  min-width: 0;
+}
+
+@media (max-width: 560px) {
+  .comparison-row {
+    grid-template-columns: 1fr;
+  }
+}
 </style>

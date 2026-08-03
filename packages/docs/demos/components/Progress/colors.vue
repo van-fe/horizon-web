@@ -1,55 +1,57 @@
 <template>
-  <div class="demo-progress">
-    <h-progress :percentage="percentage" :color="customColor" />
-    <h-progress :percentage="percentage" :color="customColorMethod" />
-    <h-progress :percentage="percentage" :color="customColors" />
-    <h-progress :percentage="percentage" :color="customColors" />
-    <div>
-      <h-button class="mr-2" @click="decrease">decrease</h-button>
-      <h-button @click="increase">add</h-button>
+  <div class="docs-demo">
+    <div class="docs-demo__controls">
+      <h-slider v-model="percentage" :min="0" :max="100" :step="10" input-enable />
+    </div>
+
+    <div class="progress-list">
+      <div v-for="item in examples" :key="item.label">
+        <span>{{ item.label }}</span>
+        <h-progress :percentage="percentage" :color="item.color" />
+      </div>
     </div>
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { ref } from 'vue';
-const percentage = ref(20);
-const customColor = ref('#409eff');
 
-const customColors = [
-  { color: '#f56c6c', percentage: 20 },
-  { color: '#e6a23c', percentage: 40 },
-  { color: '#5cb87a', percentage: 60 },
-  { color: '#1989fa', percentage: 80 },
-  { color: '#6f7ad3', percentage: 100 },
+const percentage = ref(40);
+const steppedColors = [
+  { color: 'var(--h-bg-error-default)', percentage: 20 },
+  { color: 'var(--h-bg-warning-default)', percentage: 40 },
+  { color: 'var(--h-bg-success-default)', percentage: 60 },
+  { color: 'var(--h-bg-brand-default)', percentage: 100 },
 ];
-
-const customColorMethod = (percentage: number) => {
-  if (percentage < 30) {
-    return '#909399';
-  }
-  if (percentage < 70) {
-    return '#e6a23c';
-  }
-  return '#67c23a';
+const colorByProgress = (value: number) => {
+  if (value < 30) return 'var(--h-bg-tertiary)';
+  if (value < 70) return 'var(--h-bg-warning-default)';
+  return 'var(--h-bg-success-default)';
 };
-const increase = () => {
-  percentage.value += 10;
-  if (percentage.value > 100) {
-    percentage.value = 100;
-  }
-};
-const decrease = () => {
-  percentage.value -= 10;
-  if (percentage.value < 0) {
-    percentage.value = 0;
-  }
-};
+const examples = [
+  { label: 'Single', color: 'var(--h-bg-brand-default)' },
+  { label: 'Function', color: colorByProgress },
+  { label: 'Steps', color: steppedColors },
+];
 </script>
 
 <style scoped>
-.demo-progress .h-progress--line {
-  margin-bottom: 15px;
-  width: 350px;
+.docs-demo__controls {
+  display: grid;
+}
+
+.progress-list {
+  display: grid;
+  gap: var(--h-spacing-4);
+}
+
+.progress-list > div {
+  display: grid;
+  gap: var(--h-spacing-2);
+}
+
+.progress-list span {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
 }
 </style>

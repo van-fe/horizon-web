@@ -1,27 +1,31 @@
+<script setup lang="ts">
+const jobs = Array.from({ length: 14 }, (_, index) => ({
+  id: `JOB-${4100 + index}`,
+  workflow: ['Daily warehouse sync', 'Invoice reconciliation', 'Search index refresh'][index % 3],
+  started: `${String(8 + Math.floor(index / 4)).padStart(2, '0')}:${String((index * 13) % 60).padStart(2, '0')}`,
+  duration: `${18 + index * 3}s`,
+  result: index % 5 === 0 ? 'Review' : 'Complete',
+}));
+</script>
+
 <template>
-  <h-table :data="data" height="300px">
-    <h-table-column title="Name" field="name" />
-    <h-table-column title="Birthday" field="birthday" />
-    <h-table-column title="Address" field="address" />
-    <h-table-column title="Message" field="message" show-overflow-tooltip max-width="300" />
+  <h-table :data="jobs" height="280" row-key="id" stripe>
+    <h-table-column title="Run" field="id" width="108" />
+    <h-table-column title="Workflow" field="workflow" min-width="210" />
+    <h-table-column title="Started" field="started" width="94" />
+    <h-table-column
+      title="Duration"
+      field="duration"
+      width="96"
+      align="right"
+      header-align="right"
+    />
+    <h-table-column title="Result" width="104">
+      <template #default="{ row }">
+        <h-tag :type="row.result === 'Complete' ? 'success' : 'warning'" plain>
+          {{ row.result }}
+        </h-tag>
+      </template>
+    </h-table-column>
   </h-table>
 </template>
-
-<script setup lang="ts">
-import { ref } from 'vue';
-import { faker } from '@faker-js/faker';
-
-interface TableData {
-  name: string;
-  birthday: string;
-  address: string;
-  message: string;
-}
-
-const data = ref<TableData[]>(new Array(20).fill(0).map(_ => ({
-  name: faker.person.fullName(),
-  birthday: faker.date.birthdate({ min: 22, max: 50, mode: 'age' }).toDateString(),
-  address: faker.location.streetAddress(),
-  message: faker.hacker.phrase(),
-})));
-</script>

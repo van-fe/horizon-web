@@ -1,42 +1,38 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <h-auto-complete :options="options" :fit-input-width="false" placeholder="You like..." @search="onSearch">
-        <template #default="item">
-          <div class="item-wrap">
-            <div class="title">{{ item.label }}</div>
-            <div class="title"><h-tag :clickable="false">{{ item.description }}</h-tag></div>
-          </div>
-        </template>
-      </h-auto-complete>
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { HAutoCompleteOptionProps } from '@aurora/horizon-web';
-import { faker } from '@faker-js/faker';
+import type { HAutoCompleteOption } from '@aurora/horizon-web';
 
-const options = ref<Partial<HAutoCompleteOptionProps>[]>([]);
-
-function onSearch(val: string) {
-  options.value = [];
-
-  if (val) {
-    new Array(10).fill(0).forEach(() => {
-      options.value.push({
-        label: faker.helpers.fake(`${faker.name.fullName()} likes ${val}`),
-        description: faker.animal.dog(),
-      });
-    });
-  }
-}
+const value = ref('');
+const options: HAutoCompleteOption[] = [
+  { label: 'Mia Chen', value: 'mia.chen', description: 'Design Systems' },
+  { label: 'Leo Wang', value: 'leo.wang', description: 'Web Platform' },
+  { label: 'Nora Lin', value: 'nora.lin', description: 'Product Operations' },
+];
 </script>
 
+<template>
+  <h-auto-complete v-model="value" :options="options" placeholder="搜索协作者">
+    <template #panelHeaderRender>
+      <div class="panel-row">
+        <strong>推荐协作者</strong>
+        <span>{{ options.length }} 位</span>
+      </div>
+    </template>
+    <template #panelFooterRender>
+      <div class="panel-row">
+        <span>↑ ↓ 选择</span>
+        <span>Enter 确认</span>
+      </div>
+    </template>
+  </h-auto-complete>
+</template>
+
 <style scoped>
-.item-wrap {
+.panel-row {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--h-spacing-4);
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
 }
 </style>
