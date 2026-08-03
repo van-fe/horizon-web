@@ -311,6 +311,12 @@ export const ZhTW = {
       label: '車牌號',
       provinceLabel: '省份簡稱',
       placeholder: '請輸入車牌號',
+      keyboardLabel: '車牌號鍵盤',
+      provincePlaceholder: '省',
+      newEnergy: '新能源',
+      backspace: '退格',
+      clear: '清空',
+      done: '完成',
     },
     switch: {
       on: '開',

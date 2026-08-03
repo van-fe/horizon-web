@@ -9,8 +9,8 @@ export interface LicensePlateValidationResult {
 
 export const useLicensePlateInputExposes = {
   /**
-   * 原生号码输入元素
-   * @en Native number input element.
+   * 原生隐藏输入元素
+   * @en Native hidden input element.
    */
   input: Object as ExposeType<HTMLInputElement | undefined>,
   /**
@@ -28,6 +28,16 @@ export const useLicensePlateInputExposes = {
    * @en Select the number field content.
    */
   select: Function as ExposeType<() => void>,
+  /**
+   * 打开车牌键盘面板
+   * @en Open the license plate keyboard panel.
+   */
+  open: Function as ExposeType<() => void>,
+  /**
+   * 关闭车牌键盘面板
+   * @en Close the license plate keyboard panel.
+   */
+  close: Function as ExposeType<() => void>,
   /**
    * 校验当前车牌号并返回结果
    * @en Validate the current license plate and return its result.

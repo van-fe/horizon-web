@@ -32,6 +32,11 @@ export const useLicensePlateInputProps = declarePropType({
    */
   readonly: { type: Boolean, default: false },
   /**
+   * 是否固定显示并启用新能源第八位
+   * @en Whether to keep the eighth new-energy position enabled.
+   */
+  newEnergy: { type: Boolean, default: false },
+  /**
    * 是否显示清空按钮
    * @en Whether to show the clear action.
    */
@@ -47,10 +52,15 @@ export const useLicensePlateInputProps = declarePropType({
    */
   ariaLabel: { type: String, default: '' },
   /**
-   * 省份选择器的无障碍名称
-   * @en Accessible name for the province selector.
+   * 省份键盘的无障碍名称
+   * @en Accessible name for the province keyboard.
    */
   provinceAriaLabel: { type: String, default: '' },
+  /**
+   * 车牌键盘面板的无障碍名称
+   * @en Accessible name for the license plate keyboard panel.
+   */
+  keyboardAriaLabel: { type: String, default: '' },
   /**
    * 空值时默认选中的省份简称
    * @en Province abbreviation selected when the value is empty.
@@ -74,6 +84,21 @@ export const useLicensePlateInputProps = declarePropType({
    * @en Whether to show a format error automatically after blur.
    */
   validateOnBlur: { type: Boolean, default: true },
+  /**
+   * 键盘面板弹出位置
+   * @en Placement of the keyboard panel.
+   */
+  placement: {
+    type: String as PropType<
+      'top-start' | 'top' | 'top-end' | 'bottom-start' | 'bottom' | 'bottom-end'
+    >,
+    default: 'bottom-start',
+  },
+  /**
+   * 是否将键盘面板传送到 body
+   * @en Whether to teleport the keyboard panel to body.
+   */
+  toBody: { type: Boolean, default: true },
   /**
    * 手动设置错误状态
    * @en Manually set the error state.

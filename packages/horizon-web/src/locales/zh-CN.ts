@@ -324,6 +324,12 @@ export const ZhCN = {
       label: '车牌号',
       provinceLabel: '省份简称',
       placeholder: '请输入车牌号',
+      keyboardLabel: '车牌号键盘',
+      provincePlaceholder: '省',
+      newEnergy: '新能源',
+      backspace: '退格',
+      clear: '清空',
+      done: '完成',
     },
     switch: {
       on: '开',

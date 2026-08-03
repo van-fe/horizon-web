@@ -324,6 +324,12 @@ export const AE = {
       label: 'لوحة المركبة',
       provinceLabel: 'اختصار المقاطعة',
       placeholder: 'أدخل رقم اللوحة',
+      keyboardLabel: 'لوحة مفاتيح رقم المركبة',
+      provincePlaceholder: 'المقاطعة',
+      newEnergy: 'طاقة جديدة',
+      backspace: 'حذف للخلف',
+      clear: 'مسح',
+      done: 'تم',
     },
     switch: {
       on: 'تشغيل',

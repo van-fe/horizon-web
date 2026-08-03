@@ -298,6 +298,12 @@ export const SvSE = {
       label: 'Registreringsskylt',
       provinceLabel: 'Provinsförkortning',
       placeholder: 'Ange registreringsnummer',
+      keyboardLabel: 'Tangentbord för registreringsskylt',
+      provincePlaceholder: 'Provins',
+      newEnergy: 'Ny energi',
+      backspace: 'Backsteg',
+      clear: 'Rensa',
+      done: 'Klar',
     },
     switch: {
       on: 'På',

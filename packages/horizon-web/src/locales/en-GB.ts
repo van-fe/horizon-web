@@ -311,6 +311,12 @@ export const EnGB = {
       label: 'License plate',
       provinceLabel: 'Province abbreviation',
       placeholder: 'Enter plate number',
+      keyboardLabel: 'License plate keyboard',
+      provincePlaceholder: 'Province',
+      newEnergy: 'New energy',
+      backspace: 'Backspace',
+      clear: 'Clear',
+      done: 'Done',
     },
     switch: {
       on: 'On',

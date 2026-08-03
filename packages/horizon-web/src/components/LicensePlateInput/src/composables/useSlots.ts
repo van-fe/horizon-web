@@ -2,8 +2,8 @@ import type { SlotsType } from 'vue';
 
 export const useLicensePlateInputSlots = Object as SlotsType<{
   /**
-   * 号码输入框尾部内容
-   * @en Custom content at the end of the number field.
+   * 车牌输入区域尾部内容
+   * @en Custom content at the end of the license plate field.
    */
   suffix?: {};
 }>;

@@ -2,12 +2,49 @@
 
 $values: (
   size: (
-    width: 320px,
-    province: (
-      width: 72px,
+    width: 392px,
+    keyboard-width: 404px,
+    cell: (
+      small: 32px,
+      medium: 40px,
+      large: 48px,
+      new-energy-small: 48px,
+      new-energy-medium: 56px,
+      new-energy-large: 64px,
     ),
   ),
+  font-size: (
+    small: #{function.css-variable('text-base')},
+    medium: #{function.css-variable('text-lg')},
+    large: 20px,
+    new-energy: #{function.css-variable('text-sm')},
+  ),
+  color: (
+    '': #{function.css-variable('text-primary')},
+    placeholder: #{function.css-variable('text-disabled')},
+    disabled: #{function.css-variable('text-secondary')},
+    new-energy: #{function.css-variable('text-brand-default')},
+  ),
+  border-color: (
+    '': #{function.css-variable('border-default')},
+    hover: #{function.css-variable('border-brand-hover')},
+    focus: #{function.css-variable('border-brand-default')},
+    disabled: #{function.css-variable('border-disabled')},
+    error: #{function.css-variable('border-error-default')},
+  ),
+  border-radius: #{function.css-variable('radius-m')},
+  background: (
+    '': #{function.css-variable('bg-default')},
+    active: #{function.css-variable('bg-secondary')},
+    emphasize: #{function.css-variable('bg-secondary')},
+    disabled: #{function.css-variable('bg-disabled')},
+  ),
   spacing: (
-    gap: #{function.css-variable('spacing-2')},
+    cell-gap: #{function.css-variable('spacing-2')},
+    key-gap: #{function.css-variable('spacing-2')},
+    keyboard-gap: #{function.css-variable('spacing-4')},
+  ),
+  transition: (
+    duration: #{function.css-variable('transition-time')},
   ),
 );

@@ -314,6 +314,12 @@ export const DE = {
       label: 'Kfz-Kennzeichen',
       provinceLabel: 'Provinzkürzel',
       placeholder: 'Kennzeichen eingeben',
+      keyboardLabel: 'Kennzeichentastatur',
+      provincePlaceholder: 'Provinz',
+      newEnergy: 'Neue Energie',
+      backspace: 'Rücktaste',
+      clear: 'Leeren',
+      done: 'Fertig',
     },
     switch: {
       on: 'Ein',
