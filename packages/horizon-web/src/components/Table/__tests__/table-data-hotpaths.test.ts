@@ -16,14 +16,20 @@ import { describe, expect, test, vi } from 'vitest';
 import type { TableProps } from '../src/composables/useProps';
 import useDataAnalysis from '../src/hooks/useDataAnalysis';
 import useGrouping from '../src/hooks/useGrouping';
+import useSelection from '../src/hooks/useSelection';
 import useTree from '../src/hooks/useTree';
 import useVisibleRows from '../src/hooks/useVisibleRows';
 import {
   HTableFieldMapFormattedInjectKey,
   HTableSetChildrenByRowKeyValueInjectKey,
 } from '../src/utils/injectKeys';
-import type { HTableRowDataType, HTableTransformedRowDataType } from '../src/utils/types';
+import type {
+  HTableInsertedColumnData,
+  HTableRowDataType,
+  HTableTransformedRowDataType,
+} from '../src/utils/types';
 import { HTableGroupContextKey, HTableTransformedRowContextKey } from '../src/utils/types';
+import Tree from '~/utils/useTree';
 
 function createTransformedRow(
   id: number,
@@ -220,6 +226,60 @@ describe('Table data hot paths', () => {
     expect(tree.isTreeRowVisible(grandchild)).toBe(false);
 
     wrapper.unmount();
+  });
+
+  test('reuses the tree selection index while reading and updating checkbox state', () => {
+    const root = createTransformedRow(0, { children: [{}] });
+    const children = Array.from({ length: 200 }, (_, index) =>
+      createTransformedRow(index + 1, { parentId: 0 }),
+    );
+    const rowsData = shallowRef([root, ...children]);
+    const columnProps = reactive({
+      type: 'default',
+      selectedKeys: [] as number[],
+      columnKey: 'id',
+      multiple: true,
+      multipleLimit: Infinity,
+      selectable: true,
+      checkStrictly: false,
+    });
+    const column = {
+      props: columnProps,
+      emit: vi.fn(),
+    } as unknown as HTableInsertedColumnData;
+    const setTreeData = vi.spyOn(Tree.prototype, 'setTreeData');
+    let selection!: ReturnType<typeof useSelection>;
+    const Harness = defineComponent({
+      setup() {
+        selection = useSelection(column, vi.fn() as never, rowsData);
+        return () => null;
+      },
+    });
+    const wrapper = mount(Harness);
+
+    try {
+      expect(setTreeData).not.toHaveBeenCalled();
+
+      columnProps.type = 'selection';
+      expect(setTreeData).toHaveBeenCalledTimes(1);
+
+      for (const row of rowsData.value) {
+        selection.isRowChecked.value(row);
+        selection.isRowIndeterminate.value(row);
+      }
+
+      expect(setTreeData).toHaveBeenCalledTimes(1);
+
+      selection.handleSelect(children.at(-1)!, children.length);
+      expect(column.emit).toHaveBeenLastCalledWith('update:selectedKeys', [children.at(-1)!.id]);
+      expect(setTreeData).toHaveBeenCalledTimes(1);
+
+      rowsData.value = [...rowsData.value];
+      expect(setTreeData).toHaveBeenCalledTimes(2);
+    } finally {
+      setTreeData.mockRestore();
+      wrapper.unmount();
+    }
   });
 
   test('reuses an already ordered flat source and filters in one pass', () => {
