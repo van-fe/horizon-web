@@ -1,5 +1,11 @@
 @use '../../../../styles/mixins';
 
+@keyframes #{mixins.block('spin-rotate')} {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
 @include mixins.b('spin') {
   display: inline-flex;
   align-items: center;
@@ -11,6 +17,13 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+  }
+
+  @include mixins.e('icon') {
+    transform-origin: center;
+    transform-box: view-box;
+    animation: #{mixins.block('spin-rotate')} 1s linear infinite;
+    will-change: transform;
   }
 
   @include mixins.e('tip') {

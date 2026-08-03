@@ -1,3 +1,4 @@
+import { IconLoadingLine } from '@aurora/icon';
 import { mount } from '@vue/test-utils';
 import { describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
@@ -11,6 +12,16 @@ describe('Spin', () => {
     expect(wrapper.get('[role="status"]').attributes('aria-label')).toBe('Loading data');
     expect(wrapper.find('.a-icon').exists() || wrapper.find('svg').exists()).toBe(true);
     expect(wrapper.text()).toContain('Loading data');
+  });
+
+  test('starts a visually distinct default indicator on the first render', () => {
+    const wrapper = mount(HSpin);
+    const indicator = wrapper.getComponent(IconLoadingLine);
+
+    expect(indicator.props('spin')).toBeUndefined();
+    expect(indicator.classes()).toContain('h-icon__loading_line');
+    expect(indicator.classes()).toContain('h-spin__icon');
+    expect(indicator.find('animateTransform').exists()).toBe(false);
   });
 
   test('wraps content and reflects aria-busy', async () => {
