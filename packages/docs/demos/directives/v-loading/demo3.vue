@@ -76,10 +76,15 @@
               <strong>动画类型</strong>
               <code>loadingType</code>
             </div>
-            <h-radio-group v-model="loadingOptions.loadingType" size="small" aria-label="动画类型">
-              <h-radio-button value="circle">圆环</h-radio-button>
-              <h-radio-button value="dots">圆点</h-radio-button>
-            </h-radio-group>
+            <h-segmented
+              v-model:active-key="loadingOptions.loadingType"
+              size="small"
+              block
+              aria-label="动画类型"
+            >
+              <h-segmented-item key="circle" label="圆环" />
+              <h-segmented-item key="dots" label="圆点" />
+            </h-segmented>
           </div>
 
           <div class="loading-config-field">
@@ -87,10 +92,15 @@
               <strong>图文排列</strong>
               <code>textOrient</code>
             </div>
-            <h-radio-group v-model="loadingOptions.textOrient" size="small" aria-label="图文排列">
-              <h-radio-button value="column">纵向</h-radio-button>
-              <h-radio-button value="row">横向</h-radio-button>
-            </h-radio-group>
+            <h-segmented
+              v-model:active-key="loadingOptions.textOrient"
+              size="small"
+              block
+              aria-label="图文排列"
+            >
+              <h-segmented-item key="column" label="纵向" />
+              <h-segmented-item key="row" label="横向" />
+            </h-segmented>
           </div>
 
           <div class="loading-config-field">
@@ -98,11 +108,16 @@
               <strong>动画尺寸</strong>
               <code>size</code>
             </div>
-            <h-radio-group v-model="loadingOptions.size" size="small" aria-label="动画尺寸">
-              <h-radio-button value="small">小</h-radio-button>
-              <h-radio-button value="medium">中</h-radio-button>
-              <h-radio-button value="large">大</h-radio-button>
-            </h-radio-group>
+            <h-segmented
+              v-model:active-key="loadingOptions.size"
+              size="small"
+              block
+              aria-label="动画尺寸"
+            >
+              <h-segmented-item key="small" label="小" />
+              <h-segmented-item key="medium" label="中" />
+              <h-segmented-item key="large" label="大" />
+            </h-segmented>
           </div>
 
           <div class="loading-config-field">
@@ -122,11 +137,16 @@
               <strong>遮罩背景</strong>
               <code>bgc</code>
             </div>
-            <h-radio-group v-model="loadingOptions.bgc" size="small" aria-label="遮罩背景">
-              <h-radio-button value="var(--h-bg-default)">页面色</h-radio-button>
-              <h-radio-button value="var(--h-bg-secondary)">次级色</h-radio-button>
-              <h-radio-button value="var(--h-bg-weak-default)">品牌弱色</h-radio-button>
-            </h-radio-group>
+            <h-segmented
+              v-model:active-key="loadingOptions.bgc"
+              size="small"
+              block
+              aria-label="遮罩背景"
+            >
+              <h-segmented-item key="var(--h-bg-default)" label="页面色" />
+              <h-segmented-item key="var(--h-bg-secondary)" label="次级色" />
+              <h-segmented-item key="var(--h-bg-weak-default)" label="品牌弱色" />
+            </h-segmented>
           </div>
         </div>
       </section>

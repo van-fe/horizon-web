@@ -70,6 +70,15 @@ Build components as native members of Horizon Web rather than isolated widgets. 
 - Explain non-obvious browser constraints and fallback behavior, such as CORS, media decoding, Teleport, or deterministic mock data.
 - Document Props, Events, Slots, and Exposes. Source JSDoc remains required even when API tables are written manually.
 
+### Make demos polished and readable
+
+- Present realistic, meaningful content instead of raw option objects, placeholder text, or empty fixed-size blocks. Make the demonstrated state and outcome understandable at a glance.
+- Give complex demos a clear hierarchy: introduce the scenario briefly, separate the preview from its controls, label configuration fields with user-facing text and API names, and summarize the active state compactly when helpful.
+- Choose controls by interaction semantics. Prefer `HSegmented` with its public `small` and `block` APIs for compact mutually exclusive configuration choices; reserve `HRadioButton` for demos that specifically teach radio-button behavior. Inspect actual size mappings instead of assuming every named size has a distinct visual variant.
+- Build responsive layouts with Grid, cards, scoped kebab-case or BEM-style classes, and Horizon Web tokens. Avoid hardcoded product colors, brittle sibling margins, and widths that overflow narrow documentation viewports.
+- Keep loading demos observable and controllable: place controls outside the loading target, use realistic content beneath the mask, keep delays short enough to compare behavior, and clean up timers on unmount.
+- Verify the rendered documentation page in light and dark themes and at a narrow viewport such as 390px. Exercise every control, check text wrapping and horizontal overflow, and inspect console errors before handoff.
+
 ## Test behavior, not only mounting
 
 Cover the component's core state transitions and public contract, including:
