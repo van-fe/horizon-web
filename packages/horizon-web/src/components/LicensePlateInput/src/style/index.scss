@@ -50,7 +50,6 @@
     }
 
     @include mixins.m('new-energy') {
-      width: mixins.css-variable('license-plate-input', 'size', 'cell', 'new-energy-medium');
       font-size: mixins.css-variable('license-plate-input', 'font-size', 'new-energy');
       font-weight: 400;
       color: mixins.css-variable('license-plate-input', 'color', 'new-energy');
@@ -116,7 +115,6 @@
       font-size: mixins.css-variable('license-plate-input', 'font-size', 'small');
 
       @include mixins.m('new-energy') {
-        width: mixins.css-variable('license-plate-input', 'size', 'cell', 'new-energy-small');
         font-size: mixins.css-variable('license-plate-input', 'font-size', 'new-energy');
       }
     }
@@ -129,7 +127,6 @@
       font-size: mixins.css-variable('license-plate-input', 'font-size', 'large');
 
       @include mixins.m('new-energy') {
-        width: mixins.css-variable('license-plate-input', 'size', 'cell', 'new-energy-large');
         font-size: mixins.css-variable('license-plate-input', 'font-size', 'new-energy');
       }
     }
