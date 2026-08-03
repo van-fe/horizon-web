@@ -1,31 +1,52 @@
 ## 指令说明
-在需要的时候展示加载动画，防止页面失去响应提高用户体验（例如在请求数据后生产的图表）。horizonweb组件库通过自定义指令的方式使用loading。 对于自定义指令 v-loading，传入一个对象，且这个对象的各个value值为响应式数据，如demo1/demo2中的示例所示。
 
-## loading加载
+`v-loading` 用于在页面或局部内容等待异步数据时展示加载反馈。向指令传入配置对象，即可控制动画类型、尺寸、图文排列、遮罩背景以及延迟时间；对象中的响应式值更新后，加载状态会同步变化。
+
+## 基本样式
+
+内置 `circle` 与 `dots` 两种动画，并提供小、中、大三种尺寸。切换右上角开关可以查看内容加载前后的状态。
+
 :::demo directives/v-loading/demo1.vue :::
 
-## 与horizonweb其他组件同用
+## 局部与全屏加载
+
+加载指令可以覆盖任意内容容器，也可以通过 `fullscreen` 展示页面级等待状态。全屏示例会在 2 秒后自动关闭。
+
 :::demo directives/v-loading/demo2.vue :::
 
 ## 动态配置
+
+组合配置项可以即时调整加载动画，适合根据不同业务场景统一加载反馈。
+
 :::demo directives/v-loading/demo3.vue :::
 
 ## 延迟显示
-当访问请求详情非常快的时候，如果直接使用 loading 会导致闪屏，所以可以通过设置 `delay` 来控制延迟显示时间
+
+当请求很快完成时，立即展示 loading 可能产生闪屏。通过 `delay` 设置延迟时间，可以让短于该时间的请求不显示加载遮罩。
+
 :::demo directives/v-loading/delay.vue :::
 
-## horizonweb与其他组件库共用时可能的情况
-当项目中同时使用horizonweb与其它组件库时，其它组件库中存在v-loading同名的vue指令时，可能会造成horizonweb的v-loading指令失效，此时，horizonweb用户可以重新注册v-loading指令，如下
+## 与其他组件库共存
+
+当项目中的其他组件库注册了同名 `v-loading` 指令时，可以为 Horizon Web 的 loading 指令重新注册一个名称：
+
 ```javascript
 import { loading } from '@aurora/horizon-web';
-app.directive('my-loading', loading);
-// 在组件中使用时
- <div v-my-loading="{isShow,loadingType:'circle',textOrient:'column',size:'medium',}" class="loadingContainer">测试</div>
 
+app.directive('my-loading', loading);
+```
+
+```vue
+<div
+  v-my-loading="{ isShow, loadingType: 'circle', textOrient: 'column', size: 'medium' }"
+>
+  内容区域
+</div>
 ```
 
 ## 全局方法
-可以引入 `LoadingService`，使用函数形式调用 `Loading`
+
+可以引入 `LoadingService`，使用函数形式调用 loading：
 
 ```ts
 import { LoadingService } from '@aurora/horizon-web';
