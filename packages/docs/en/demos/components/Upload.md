@@ -66,6 +66,12 @@ most `multipart-max-amount-uploading-at-same-time` chunk requests concurrently. 
 the regular `action`, `method`, `header`, and `data` props. Completed chunks are not uploaded again
 after pausing or retrying a failed upload.
 
+When a file produces many chunks, Upload creates its `Blob` slices in a Web Worker so that the
+slicing loop does not block page interactions. Small files stay on the main thread to avoid Worker
+startup overhead. If Worker support is unavailable or the site's CSP blocks `blob:` workers, Upload
+automatically falls back to batched slicing that yields between batches; no extra configuration is
+required.
+
 The demo below simulates a slow server entirely in the browser and does not require an external
 endpoint. Pause with the control beside the file and watch the green stored chunks remain intact.
 Resume to send only unfinished chunks, or choose “重新加入同一文件” after pausing to verify that

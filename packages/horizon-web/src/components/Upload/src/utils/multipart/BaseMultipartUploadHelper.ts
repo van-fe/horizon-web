@@ -5,6 +5,7 @@ import type { Data } from '@aurora/utils';
 import UploadHelperOptions from '../UploadHelperOptions';
 import type { ToRefs } from 'vue';
 import type { UploadProps } from '../../composables/useProps';
+import { createMultipartChunks } from './createMultipartChunks';
 
 export default abstract class BaseMultipartUploadHelper extends UploadHelperOptions {
   protected readonly file: HUploadFileType;
@@ -14,6 +15,9 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
   private readonly requests = new Map<number, { abort: () => void }>();
   private readonly loadedBytes = new Map<number, number>();
   private initializePromise?: Promise<void>;
+  private nextPendingChunkIndex = 0;
+  private completedBytes = 0;
+  private inFlightLoadedBytes = 0;
   private paused = false;
   private failed = false;
   private merging = false;
@@ -75,28 +79,23 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
     });
   }
 
-  private sliceFile() {
+  private async sliceFile() {
     if (this.chunks.length) return;
 
-    const size = this.file.size || 0;
-    const totalChunks = Math.ceil(size / this.chunkSize);
-
-    for (let index = 0; index < totalChunks; index++) {
-      const start = index * this.chunkSize;
-      const end = Math.min(start + this.chunkSize, size);
-
+    const chunks = await createMultipartChunks(this.file.raw!, this.chunkSize);
+    chunks.forEach(({ index, size, part }) => {
       this.chunks.push({
         index,
-        size: end - start,
-        part: this.file.raw!.slice(start, end),
+        size,
+        part,
         status: 'pending',
       });
-    }
+    });
   }
 
   private async initialize() {
     await this.initUpload(this.file);
-    this.sliceFile();
+    await this.sliceFile();
 
     const uploadedChunkIndexes = new Set(
       (await this.getUploadedChunkIndexes(this.file, this.chunks)).filter(
@@ -105,21 +104,40 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
     );
 
     this.chunks.forEach(chunk => {
-      if (uploadedChunkIndexes.has(chunk.index)) chunk.status = 'success';
+      if (uploadedChunkIndexes.has(chunk.index)) {
+        chunk.status = 'success';
+        this.completedBytes += chunk.size;
+      }
     });
   }
 
   private updateProgress() {
-    const uploadedBytes = this.chunks.reduce((total, chunk) => {
-      if (chunk.status === 'success') return total + chunk.size;
-      return total + (this.loadedBytes.get(chunk.index) || 0);
-    }, 0);
+    const uploadedBytes = this.completedBytes + this.inFlightLoadedBytes;
     const progress = this.file.size ? Math.min(uploadedBytes / this.file.size, 1) * 100 : 100;
 
     this.instanceMethods.setStatus(this.file, HUploadFileStatusEnum.Uploading, {
       progress,
       response: undefined,
     });
+  }
+
+  private updateChunkLoadedBytes(index: number, loaded: number, size: number) {
+    const previousLoaded = this.loadedBytes.get(index) || 0;
+    const nextLoaded = Math.min(Math.max(loaded, 0), size);
+    this.loadedBytes.set(index, nextLoaded);
+    this.inFlightLoadedBytes += nextLoaded - previousLoaded;
+  }
+
+  private clearChunkLoadedBytes(index: number) {
+    this.inFlightLoadedBytes -= this.loadedBytes.get(index) || 0;
+    this.loadedBytes.delete(index);
+  }
+
+  private completeChunk(chunk: HUploadChunk, response: unknown) {
+    this.clearChunkLoadedBytes(chunk.index);
+    if (chunk.status !== 'success') this.completedBytes += chunk.size;
+    chunk.status = 'success';
+    chunk.response = response;
   }
 
   private abortActiveRequests() {
@@ -130,6 +148,7 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
     });
     this.requests.clear();
     this.loadedBytes.clear();
+    this.inFlightLoadedBytes = 0;
   }
 
   private fail(chunk: HUploadChunk, responseText: string, response: unknown) {
@@ -150,7 +169,7 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
     const abortController = new AbortController();
     const onProgress = (loaded: number) => {
       if (settled || this.paused) return;
-      this.loadedBytes.set(chunk.index, Math.min(Math.max(loaded, 0), chunk.size));
+      this.updateChunkLoadedBytes(chunk.index, loaded, chunk.size);
       this.updateProgress();
     };
 
@@ -178,7 +197,7 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
         if (settled) return;
         settled = true;
         this.requests.delete(chunk.index);
-        this.loadedBytes.delete(chunk.index);
+        this.clearChunkLoadedBytes(chunk.index);
         if (chunk.status === 'uploading') chunk.status = 'pending';
       };
 
@@ -190,9 +209,7 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
           if (settled) return;
           settled = true;
           this.requests.delete(chunk.index);
-          this.loadedBytes.delete(chunk.index);
-          chunk.status = 'success';
-          chunk.response = response;
+          this.completeChunk(chunk, response);
           this.updateProgress();
           void this.schedule();
         },
@@ -200,7 +217,7 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
           if (settled) return;
           settled = true;
           this.requests.delete(chunk.index);
-          this.loadedBytes.delete(chunk.index);
+          this.clearChunkLoadedBytes(chunk.index);
           const reason = error instanceof Error ? error.message : String(error);
           this.fail(chunk, reason, error);
         },
@@ -223,11 +240,10 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
       if (settled) return;
       settled = true;
       this.requests.delete(chunk.index);
-      this.loadedBytes.delete(chunk.index);
+      this.clearChunkLoadedBytes(chunk.index);
 
       if (xhr.status >= 200 && xhr.status < 300) {
-        chunk.status = 'success';
-        chunk.response = xhr.response;
+        this.completeChunk(chunk, xhr.response);
         this.updateProgress();
         void this.schedule();
       } else {
@@ -239,7 +255,7 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
       if (settled) return;
       settled = true;
       this.requests.delete(chunk.index);
-      this.loadedBytes.delete(chunk.index);
+      this.clearChunkLoadedBytes(chunk.index);
       this.fail(chunk, xhr.responseText, xhr.response);
     };
 
@@ -247,7 +263,7 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
       if (settled) return;
       settled = true;
       this.requests.delete(chunk.index);
-      this.loadedBytes.delete(chunk.index);
+      this.clearChunkLoadedBytes(chunk.index);
       if (chunk.status === 'uploading') chunk.status = 'pending';
     };
 
@@ -281,13 +297,22 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
   private async schedule() {
     if (this.paused || this.failed || this.completed || this.merging) return;
 
-    const pendingChunks = this.chunks.filter(chunk => chunk.status === 'pending');
     const maxConcurrency = Math.max(1, this.maxConcurrentChunks || 1);
     const availableSlots = Math.max(0, maxConcurrency - this.requests.size);
 
-    pendingChunks.slice(0, availableSlots).forEach(chunk => this.uploadChunk(chunk));
+    for (let slot = 0; slot < availableSlots && !this.failed && !this.paused; slot++) {
+      let chunk: HUploadChunk | undefined;
 
-    if (!pendingChunks.length && !this.requests.size) {
+      while (this.nextPendingChunkIndex < this.chunks.length && !chunk) {
+        const candidate = this.chunks[this.nextPendingChunkIndex++];
+        if (candidate.status === 'pending') chunk = candidate;
+      }
+
+      if (!chunk) break;
+      this.uploadChunk(chunk);
+    }
+
+    if (this.nextPendingChunkIndex >= this.chunks.length && !this.requests.size) {
       await this.finish();
     }
   }
@@ -326,6 +351,7 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
     this.chunks.forEach(chunk => {
       if (chunk.status === 'fail' || chunk.status === 'uploading') chunk.status = 'pending';
     });
+    this.nextPendingChunkIndex = 0;
     this.instanceMethods.addUploadingQueue(this.file, this);
     await this.start();
   }

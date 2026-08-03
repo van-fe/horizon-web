@@ -38,7 +38,12 @@ class MockXMLHttpRequest {
   }
 
   progress(loaded: number, total: number) {
-    this.upload.dispatchEvent(new ProgressEvent('progress', { loaded, total }));
+    const event = new Event('progress');
+    Object.defineProperties(event, {
+      loaded: { value: loaded },
+      total: { value: total },
+    });
+    this.upload.dispatchEvent(event);
   }
 
   respond(status = 200, response = '{}') {

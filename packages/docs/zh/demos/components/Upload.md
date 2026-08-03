@@ -65,6 +65,10 @@
 `multipart-max-amount-uploading-at-same-time` 个分片请求。每个请求仍使用 `action`、`method`、`header`
 和 `data`，成功分片在暂停或失败重试后不会重复上传。
 
+切片数量较多时，Upload 会自动在 Web Worker 中生成 `Blob` 分片，避免连续切片循环阻塞页面交互；
+小文件仍直接切片，避免 Worker 启动开销。如果浏览器不支持 Worker，或站点 CSP 禁止 `blob:` Worker，
+则自动退化为分批切片并在批次间让出主线程，无需额外配置。
+
 下面的示例完全在浏览器中模拟慢速服务端，不依赖外部接口。上传时点击文件右侧的暂停按钮，观察绿色的
 “已保存”分片；继续上传时只有未完成分片会再次开始。也可以暂停后点击“重新加入同一文件”，验证
 `getUploadedChunkIndexes` 从模拟服务端恢复断点。
