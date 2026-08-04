@@ -327,7 +327,6 @@
       transform: none;
 
       @include mixins.is('active') {
-        z-index: 1;
         opacity: 1;
       }
     }
@@ -335,31 +334,15 @@
 
   @include mixins.m('card') {
     @include mixins.e('viewport') {
-      isolation: isolate;
-      transform-style: preserve-3d;
       perspective: mixins.css-variable('carousel', 'size', 'card', 'perspective');
     }
 
     @include mixins.nested('carousel-item') {
-      z-index: 0;
       opacity: 0;
-      backface-visibility: hidden;
       transition: none;
       animation-duration: mixins.css-variable('carousel', 'transition', 'duration');
       animation-timing-function: mixins.css-variable('carousel', 'transition', 'timing-function');
-      animation-fill-mode: both;
-
-      @include mixins.is('placement-previous') {
-        z-index: 1;
-      }
-
-      @include mixins.is('placement-next') {
-        z-index: 1;
-      }
-
-      @include mixins.is('active') {
-        z-index: 2;
-      }
+      will-change: auto;
 
       @include mixins.is('hidden') {
         visibility: visible;
@@ -961,6 +944,10 @@
     opacity mixins.css-variable('carousel', 'transition', 'duration')
       mixins.css-variable('carousel', 'transition', 'timing-function');
   will-change: transform, opacity;
+
+  @include mixins.is('active') {
+    z-index: 1;
+  }
 
   /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
   &:not(.is-active) {

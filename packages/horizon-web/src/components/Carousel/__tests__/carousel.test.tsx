@@ -1,5 +1,7 @@
+import { resolve } from 'node:path';
 import { setNamespace, useNamespace } from '@aurora/utils';
 import { mount } from '@vue/test-utils';
+import { compile } from 'sass';
 import { h, nextTick, ref } from 'vue';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { dictionaries } from '~/locales';
@@ -37,6 +39,55 @@ const createRect = ({ bottom, left, right, top }: TestRect): DOMRect => ({
   y: top,
   toJSON: () => ({}),
 });
+
+const compileCarouselStyleRules = () => {
+  const css = compile(resolve(__dirname, '../src/style/index.scss')).css;
+  return [...css.matchAll(/([^{}]+)\{([^{}]*)\}/g)].map(([, selector, body]) => {
+    const declarations = new Map<string, string>();
+    body
+      .split(';')
+      .map(declaration => declaration.trim())
+      .filter(Boolean)
+      .forEach(declaration => {
+        const separator = declaration.indexOf(':');
+        if (separator < 0) return;
+        declarations.set(
+          declaration.slice(0, separator).trim(),
+          declaration.slice(separator + 1).trim(),
+        );
+      });
+    return { declarations, selector: selector.trim() };
+  });
+};
+
+const stackingTransitionCases = (['slide', 'card'] as const).flatMap(effect =>
+  [
+    {
+      from: 0,
+      motion: 'next',
+      outgoingClass: 'is-previous',
+      placementClass: 'is-placement-previous',
+      scenario: 'first to second',
+      to: 1,
+    },
+    {
+      from: 1,
+      motion: 'previous',
+      outgoingClass: 'is-next',
+      placementClass: 'is-placement-next',
+      scenario: 'second to first',
+      to: 0,
+    },
+    {
+      from: 3,
+      motion: 'next',
+      outgoingClass: 'is-previous',
+      placementClass: 'is-placement-previous',
+      scenario: 'last to first',
+      to: 0,
+    },
+  ].map(scenario => ({ effect, ...scenario })),
+);
 
 type CarouselVm = {
   activeIndex: number;
@@ -97,6 +148,41 @@ describe('Carousel', () => {
     expect(next.find('svg').exists()).toBe(true);
     expect(autoplay.find('svg').exists()).toBe(true);
     expect(wrapper.findAllComponents(HButton).length).toBeGreaterThanOrEqual(6);
+  });
+
+  test('uses one global active layer without card-specific stacking tiers', () => {
+    const rules = compileCarouselStyleRules();
+    const globalActiveRule = rules.find(rule => rule.selector === '.h-carousel-item.is-active');
+    const cardViewportRule = rules.find(
+      rule => rule.selector === '.h-carousel--card .h-carousel__viewport',
+    );
+    const baseCardItemRule = rules.find(
+      rule => rule.selector === '.h-carousel--card .h-carousel-item',
+    );
+    const cardItemRules = rules.filter(
+      rule =>
+        rule.selector.includes('.h-carousel--card') && rule.selector.includes('.h-carousel-item'),
+    );
+    const itemZIndexRules = rules.filter(
+      rule => rule.selector.includes('.h-carousel-item') && rule.declarations.has('z-index'),
+    );
+
+    expect(globalActiveRule?.declarations.get('z-index')).toBe('1');
+    expect(itemZIndexRules.map(rule => rule.selector)).toEqual(['.h-carousel-item.is-active']);
+    expect(cardViewportRule).toBeDefined();
+    expect([...cardViewportRule!.declarations.keys()]).toEqual(['perspective']);
+    expect(baseCardItemRule?.declarations.get('will-change')).toBe('auto');
+    expect(cardItemRules.length).toBeGreaterThan(0);
+    for (const rule of cardItemRules) {
+      for (const property of [
+        'animation-fill-mode',
+        'backface-visibility',
+        'isolation',
+        'transform-style',
+        'z-index',
+      ])
+        expect(rule.declarations.has(property)).toBe(false);
+    }
   });
 
   test('switches with arrows, emits updates and loops in uncontrolled mode', async () => {
@@ -282,6 +368,29 @@ describe('Carousel', () => {
     expect(items[0].classes()).toContain('is-active');
     expect(items[3].classes()).toContain('is-previous');
   });
+
+  test.each(stackingTransitionCases)(
+    'keeps one incoming active $effect item and an adjacent outgoing item from $scenario',
+    async ({ effect, from, motion, outgoingClass, placementClass, to }) => {
+      vi.useFakeTimers();
+      const wrapper = mount(HCarousel, {
+        props: { autoplay: false, effect, initialIndex: from, moveSpeed: 120 },
+        slots: { default: cardSlides },
+      });
+      const items = wrapper.findAll('.h-carousel-item');
+
+      await wrapper.findAll('.h-carousel__indicator')[to].trigger('click');
+
+      expect(wrapper.classes()).toContain(`h-carousel--motion-${motion}`);
+      expect(items.filter(item => item.classes().includes('is-active'))).toHaveLength(1);
+      expect(items[to].classes()).toContain('is-active');
+      expect(items[from].classes()).not.toContain('is-active');
+      expect(items[from].classes()).toEqual(
+        expect.arrayContaining([outgoingClass, placementClass]),
+      );
+      expect(items[from].classes()).not.toContain('is-hidden');
+    },
+  );
 
   test('keeps the first card paint static and unlocks at the configured move speed', async () => {
     vi.useFakeTimers();
