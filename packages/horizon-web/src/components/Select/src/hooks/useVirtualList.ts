@@ -16,24 +16,31 @@ export function transformOptionList(
   return computed(
     () =>
       props.options?.map(optionProp => {
-        const active = isOptionChecked(options.presetModelValueSet.value, optionProp.value);
+        const normalizedOptionProps = {
+          ...optionProp,
+          disabled: optionProp.disabled ?? false,
+        };
+        const active = computed(() =>
+          isOptionChecked(
+            options.presetModelValueSet.value,
+            optionProp.value,
+            props.valueFormat ? () => props.valueFormat!(normalizedOptionProps) : undefined,
+          ),
+        );
 
         return {
           uuid: nanoid(),
           type: 'option',
-          props: {
-            ...optionProp,
-            disabled: optionProp.disabled ?? false,
-          },
+          props: normalizedOptionProps,
           slots: {},
           attrs: {},
           el: ref<HTMLElement | null>(null),
-          active: computed(() => active),
+          active,
           disabled: computed(
             () =>
               optionProp.disabled ||
               options.isDisabled.value ||
-              (options.presetModelValueSet.value.size >= props.multipleLimit && !active),
+              (options.presetModelValueSet.value.size >= props.multipleLimit && !active.value),
           ),
           children: null,
           scrollTo: () => void 0,

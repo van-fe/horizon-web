@@ -137,9 +137,8 @@ export default defineComponent({
       emitChange,
       optionsMap,
       prevOptionValue,
-      isModelValueSetHasValue,
-      modelValueSetDeleteValue,
       reserveNumberOfModelValues,
+      consumeModelValueSetFromProps,
     } = useData(props, context);
 
     const {
@@ -183,6 +182,8 @@ export default defineComponent({
       focusOnFirstModelValue,
       getAllOptionsInDom,
       savedOptions,
+      isModelValueSetHasValue,
+      modelValueSetDeleteValue,
     } = useOption(props, context, {
       domRefs,
       optionsMap,
@@ -196,8 +197,6 @@ export default defineComponent({
       presetModelValueSet,
       changeIsAddValue,
       isDisabled,
-      isModelValueSetHasValue,
-      modelValueSetDeleteValue,
       handleConfirm,
       setPopperVisible,
       delInput,
@@ -237,6 +236,8 @@ export default defineComponent({
       presetModelValueSet,
       needConfirm,
       handleConfirm,
+      isModelValueSetHasValue,
+      modelValueSetDeleteValue,
     });
 
     const {
@@ -264,7 +265,6 @@ export default defineComponent({
       presetModelValueSet,
       prevOptionValue,
       prevScrollTop,
-      optionsMap,
       visibleOptions,
       isDisabled,
       focusedOptionValue,
@@ -301,6 +301,7 @@ export default defineComponent({
       handleClear,
       pickOption,
       getFormattedModelValue,
+      isModelValueSetHasValue,
     });
 
     useDataProcess(props, context, {
@@ -309,6 +310,7 @@ export default defineComponent({
       resetRenderedTags,
       getFormattedModelValue,
       reserveNumberOfModelValues,
+      consumeModelValueSetFromProps,
       emitChange,
     });
 

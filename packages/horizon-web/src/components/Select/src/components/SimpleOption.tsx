@@ -21,7 +21,7 @@ import {
   HSelectPropsInjectKey,
   HSelectVirtualScrollListIsScrollingInjectKey,
 } from '../utils/injectKeys';
-import { isOptionChecked } from '../utils/valueFormat';
+import { isEqualIgnoreCtx, isOptionChecked } from '../utils/valueFormat';
 import { useHighlightOption } from '../hooks/useHighlight';
 
 export default defineComponent({
@@ -71,12 +71,20 @@ export default defineComponent({
     const onMouseOverOption = inject(HSelectMouseOverOptionInjectKey)!;
 
     const isMouseEnter = ref(false);
-    const isChecked = computed(() => isOptionChecked(presetModelValue.value, valueRef.value));
+    const isChecked = computed(() =>
+      isOptionChecked(
+        presetModelValue.value,
+        valueRef.value,
+        parentProps.valueFormat
+          ? () => parentProps.valueFormat!({ ...props, ...attrs })
+          : undefined,
+      ),
+    );
     const isLimited = computed(
       () => presetModelValue.value.size >= parentProps.multipleLimit && !isChecked.value,
     );
     const isDisabled = computed(() => disabledRef.value || isLimited.value);
-    const isFocused = computed(() => focusedOptionValue.value === valueRef.value);
+    const isFocused = computed(() => isEqualIgnoreCtx(focusedOptionValue.value, valueRef.value));
 
     watch(isFocused, val => {
       if (val && !scrollListIsScrolling.value && !isMouseEnter.value) {

@@ -5,14 +5,14 @@ import type { SelectEmits } from '../composables/useEmits';
 import type { SelectSlots } from '../composables/useSlots';
 import type { SelectExposes } from '../composables/useExposes';
 import { ComponentClassBlock, isDefined, type HorizonWebSetupContext } from '@aurora/utils';
-import {
-  HSelectValueFormatSymbol,
-  type ModelValueSingleType,
-  type SelectDomRefs,
-} from '../utils/types';
+import { type ModelValueSingleType, type SelectDomRefs } from '../utils/types';
 import { HSelectPopperVisibleInjectKey, type SelectCollectedOptionData } from '../utils/injectKeys';
 import useLocaleLang from '~/utils/useLocaleLang';
-import { isValueFormatWrapped, unwrapValueFormattedValue } from '../utils/valueFormat';
+import {
+  isValueFormatWrapped,
+  unwrapValueFormattedValue,
+  wrapValueFormattedValue,
+} from '../utils/valueFormat';
 
 export default function usePanel(
   props: SelectProps,
@@ -20,8 +20,8 @@ export default function usePanel(
   options: {
     domRefs: SelectDomRefs;
     popperVisible: Ref<boolean>;
-    modelValueSet: Ref<Set<OptionProps['value']>>;
-    presetModelValueSet: Ref<Set<OptionProps['value']>>;
+    modelValueSet: Ref<Set<ModelValueSingleType>>;
+    presetModelValueSet: Ref<Set<ModelValueSingleType>>;
     inputValue: Ref<string>;
     filterInputValue: Ref<string>;
     isInputable: Ref<boolean>;
@@ -69,7 +69,7 @@ export default function usePanel(
           return options.modelValueSet.value.size > 0
             ? [...options.modelValueSet.value.values()]
                 .map(val => options.getOptionDataByValue(val)?.props.label)
-                .filter(Boolean)
+                .filter(isDefined)
                 .join('、')
             : '';
         }
@@ -91,9 +91,9 @@ export default function usePanel(
             return prevSelectedLabel;
           } else if (props.showValueUnMatch) {
             // Empty string is considered valuable. Because the option.value may be empty string
-            if (value === '') {
+            if (unwrapValue === '') {
               return ' ';
-            } else return value?.toString();
+            } else return unwrapValue?.toString();
           }
         }
 
@@ -166,11 +166,11 @@ export default function usePanel(
 
         const tempData = options.getOptionDataByValue(curr);
 
+        if (!tempData) return curr;
+
         const formattedValue = props.valueFormat!({ ...tempData?.props, ...tempData?.attrs });
 
-        formattedValue[HSelectValueFormatSymbol] = curr;
-
-        return formattedValue;
+        return wrapValueFormattedValue(formattedValue, tempData.props.value);
       });
     }
 

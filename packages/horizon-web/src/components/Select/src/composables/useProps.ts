@@ -22,7 +22,7 @@ export const useSelectProps = declarePropType({
    * @en Configuration for model value.
    */
   modelValue: {
-    type: [String, Number, Boolean, Array, Object] as PropType<ModelValueType>,
+    type: [String, Number, Boolean, Array, Object, Symbol] as PropType<ModelValueType>,
     default: undefined,
   },
   /**

@@ -1,17 +1,15 @@
 import type { Ref, VNode } from 'vue';
-import { provide, ref, watch, reactive } from 'vue';
+import { provide, reactive, ref, toRaw, watch } from 'vue';
 import type { OptionProps, SelectProps } from '../composables/useProps';
 import { isNil, type HorizonWebSetupContext } from '@aurora/utils';
 import type { SelectEmits } from '../composables/useEmits';
 import type { SelectSlots } from '../composables/useSlots';
 import type { SelectExposes } from '../composables/useExposes';
-import { isEqualLoose } from '../utils/utils';
 import type { SelectCollectedOptionData } from '../utils/injectKeys';
 import { HSelectModelValueInjectKey, HSelectPresetModelValueInjectKey } from '../utils/injectKeys';
-import { unwrapValueFormattedValue } from '../utils/valueFormat';
 import type { ModelValueType, ModelValueSingleType } from '../utils/types';
-import type { JSX } from 'vue/jsx-runtime';
 import { HSelectValueFormatSymbol } from '../utils/types';
+import type { JSX } from 'vue/jsx-runtime';
 
 export default function useData(
   props: SelectProps,
@@ -27,29 +25,45 @@ export default function useData(
   const focusedOptionValue = ref<OptionProps['value']>();
   const renderedModelValueTags: Ref<Array<VNode | JSX.Element>> = ref([]);
   const changeIsAddValue = ref(false);
+  const modelValueSetsFromProps = new WeakSet<Set<ModelValueSingleType>>();
+  let initialModelValueHasSynced = false;
 
   watch(
     () => props.modelValue,
     val => {
+      let nextModelValueSet: Set<ModelValueSingleType>;
+
       if (isNil(val)) {
-        modelValueSet.value.clear();
+        nextModelValueSet = new Set();
+      } else if (props.multiple) {
+        nextModelValueSet = new Set(Array.isArray(val) ? val : [val]);
       } else {
-        if (props.multiple) {
-          if (Array.isArray(val)) {
-            modelValueSet.value = new Set(val);
-          } else {
-            modelValueSet.value = new Set([val]);
-          }
-        } else {
-          modelValueSet.value = new Set([val]);
-        }
+        nextModelValueSet = new Set([val]);
       }
+
+      if (initialModelValueHasSynced) {
+        modelValueSetsFromProps.add(toRaw(nextModelValueSet));
+      }
+
+      modelValueSet.value = nextModelValueSet;
+      initialModelValueHasSynced = true;
     },
     {
       immediate: true,
       deep: true,
     },
   );
+
+  function consumeModelValueSetFromProps(value: Set<ModelValueSingleType>) {
+    const rawValue = toRaw(value);
+    const isFromProps = modelValueSetsFromProps.has(rawValue);
+
+    if (isFromProps) {
+      modelValueSetsFromProps.delete(rawValue);
+    }
+
+    return isFromProps;
+  }
 
   watch(
     () => props.multipleLimit,
@@ -96,45 +110,17 @@ export default function useData(
     return true;
   }
 
-  function isModelValueSetHasValue(
-    setData: Set<ModelValueSingleType>,
-    value: ModelValueSingleType,
-  ) {
-    if (setData.has(value)) {
-      return true;
-    } else {
-      return Array.from(setData.values()).some(
-        curr => unwrapValueFormattedValue(curr) === unwrapValueFormattedValue(value),
-      );
-    }
-  }
-
-  function modelValueSetDeleteValue(
-    setData: Set<ModelValueSingleType>,
-    value: ModelValueSingleType,
-  ) {
-    if (setData.has(value)) {
-      return setData.delete(value);
-    } else {
-      for (const setDataItem of Array.from(setData.values())) {
-        if (
-          isEqualLoose(unwrapValueFormattedValue(setDataItem), unwrapValueFormattedValue(value))
-        ) {
-          return setData.delete(setDataItem);
-        }
-      }
-    }
-  }
-
   /**
    * emit change event
    * @param emptyInputValue boolean
    * @paramEn emptyInputValue The empty input value value.
    * @param inputVal inputValue.value
    * @paramEn inputVal The input val value.
+   * @param modelValue 当前模型值
+   * @paramEn modelValue The current model value.
    */
-  function emitChange(emptyInputValue = false, inputVal = '') {
-    context.emit('change', emptyInputValue ? null : inputVal, props.modelValue);
+  function emitChange(emptyInputValue = false, inputVal = '', modelValue = props.modelValue) {
+    context.emit('change', emptyInputValue ? null : inputVal, modelValue);
   }
 
   provide(HSelectModelValueInjectKey, modelValueSet);
@@ -152,9 +138,8 @@ export default function useData(
     renderedModelValueTags,
     changeIsAddValue,
     emitChange,
-    isModelValueSetHasValue,
-    modelValueSetDeleteValue,
     reserveNumberOfModelValues,
+    consumeModelValueSetFromProps,
     HSelectValueFormatSymbol,
   };
 }

@@ -40,6 +40,10 @@ export default function useTagRender(
       emitPickEmpty: boolean,
     ) => void;
     getFormattedModelValue: (modelValueSet: Set<ModelValueSingleType>) => ModelValueSingleType[];
+    isModelValueSetHasValue: (
+      setData: Set<ModelValueSingleType>,
+      value: ModelValueSingleType,
+    ) => boolean;
   },
 ) {
   const presetRenderedModelValueTags: Ref<Array<VNode | JSX.Element>> = ref([]);
@@ -114,7 +118,10 @@ export default function useTagRender(
   function resetRenderedTags() {
     if (
       props.useCheckAllSummary &&
-      !Array.from(options.optionsMap.keys()).some(curr => !options.modelValueSet.value.has(curr))
+      options.optionsMap.size > 0 &&
+      Array.from(options.optionsMap.keys()).every(curr =>
+        options.isModelValueSetHasValue(options.modelValueSet.value, curr),
+      )
     ) {
       options.renderedModelValueTags.value = [
         getSelectedOptionsPopoverRender(

@@ -4,10 +4,11 @@ import type { SelectEmits } from '../composables/useEmits';
 import type { SelectSlots } from '../composables/useSlots';
 import type { SelectExposes } from '../composables/useExposes';
 import { HFormItemTriggerInjectedKey } from '~/components/Form/src/utils/injectedKeys';
-import type { Ref, Reactive } from 'vue';
+import type { Ref } from 'vue';
 import { ref, nextTick, inject, provide, onBeforeUnmount, watch } from 'vue';
 import type { OptionProps, SelectProps } from '../composables/useProps';
-import type { SelectDomRefs, ModelValueType } from '../utils/types';
+import type { SelectDomRefs, ModelValueSingleType, ModelValueType } from '../utils/types';
+import { isEqualIgnoreCtx, unwrapValueFormattedValue } from '../utils/valueFormat';
 import {
   HSelectMouseOverOptionInjectKey,
   type SelectCollectedOptionData,
@@ -23,11 +24,10 @@ export default function useEvents(
     inputValue: Ref<string>;
     isInputable: Ref<boolean>;
     filterInputValue: Ref<string>;
-    modelValueSet: Ref<Set<OptionProps['value']>>;
-    presetModelValueSet: Ref<Set<OptionProps['value']>>;
+    modelValueSet: Ref<Set<ModelValueSingleType>>;
+    presetModelValueSet: Ref<Set<ModelValueSingleType>>;
     prevOptionValue: ModelValueType;
     prevScrollTop: number;
-    optionsMap: Reactive<Map<OptionProps['value'], SelectCollectedOptionData<'option'>>>;
     visibleOptions: Ref<SelectCollectedOptionData<'option'>[]>;
     isDisabled: Ref<boolean>;
     focusedOptionValue: Ref<OptionProps['value'] | undefined>;
@@ -36,7 +36,7 @@ export default function useEvents(
       value: OptionProps['value'] | undefined,
     ) => SelectCollectedOptionData<'option'> | undefined | null;
     pickOption: (
-      value: OptionProps['value'],
+      value: ModelValueSingleType,
       isPickAll?: boolean,
       isPickByKeyboard?: boolean,
     ) => void;
@@ -98,12 +98,18 @@ export default function useEvents(
     let modelValueHasChanged = false;
 
     if (props.multiple) {
+      const nextModelValueSet = new Set(options.modelValueSet.value);
+
       for (const value of Array.from(options.modelValueSet.value.values())) {
         const option = options.getOptionDataByValue(value);
         if (!option?.props?.disabled) {
           modelValueHasChanged = true;
-          options.modelValueSet.value.delete(option?.props?.value ?? value);
+          nextModelValueSet.delete(value);
         }
+      }
+
+      if (modelValueHasChanged) {
+        options.modelValueSet.value = nextModelValueSet;
       }
     } else {
       if (options.modelValueSet.value.size > 0) modelValueHasChanged = true;
@@ -168,10 +174,7 @@ export default function useEvents(
       if (options.isDisabled.value) return;
 
       if (options.popperVisible.value && !isDuringComposition.value) {
-        if (
-          options.focusedOptionValue.value &&
-          options.optionsMap.has(options.focusedOptionValue.value)
-        ) {
+        if (isDefined(options.focusedOptionValue.value)) {
           if (
             options.isCreateOptionVisible.value &&
             options.focusedOptionValue.value === options.inputValue.value
@@ -179,7 +182,7 @@ export default function useEvents(
             options.onClickCreateOption();
           } else if (props.useCheckAll && options.focusedOptionValue.value === '__checkAll') {
             options.toggleCheckAll();
-          } else {
+          } else if (options.getOptionDataByValue(options.focusedOptionValue.value)) {
             options.pickOption(options.focusedOptionValue.value, false);
 
             if (!props.multiple) {
@@ -220,12 +223,21 @@ export default function useEvents(
       : options.getAllOptionsInDom();
 
     if (options.focusedOptionValue.value === undefined) {
-      options.focusedOptionValue.value =
-        Array.from(options.modelValueSet.value.values()).at(0) ??
-        (options.isCreateOptionVisible.value ? options.inputValue.value : undefined);
+      const firstModelValue = Array.from(options.modelValueSet.value.values()).at(0);
+
+      options.focusedOptionValue.value = isDefined(firstModelValue)
+        ? (options.getOptionDataByValue(firstModelValue)?.props.value ??
+          unwrapValueFormattedValue(firstModelValue) ??
+          undefined)
+        : options.isCreateOptionVisible.value
+          ? options.inputValue.value
+          : undefined;
     }
 
-    let index = opts.findIndex(value => value.props.value === options.focusedOptionValue.value);
+    const focusedOption = options.getOptionDataByValue(options.focusedOptionValue.value);
+    let index = opts.findIndex(value =>
+      isEqualIgnoreCtx(focusedOption?.props.value, value.props.value),
+    );
 
     if (evt.key === 'ArrowUp') {
       index -= 1;

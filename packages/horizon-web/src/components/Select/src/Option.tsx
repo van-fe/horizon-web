@@ -32,7 +32,7 @@ import {
 import HCheckbox from '~/components/Checkbox/src/Checkbox';
 import useIconRender from '~/utils/useIconRender';
 import HTooltip from '~/components/Tooltip/src/Tooltip';
-import { isOptionChecked } from './utils/valueFormat';
+import { isEqualIgnoreCtx, isOptionChecked } from './utils/valueFormat';
 import SafeHtml from '~/directives/v-safe-html/src/index';
 import { useHighlightOption } from './hooks/useHighlight';
 
@@ -76,7 +76,15 @@ export default defineComponent({
       }
     });
 
-    const isChecked = computed(() => isOptionChecked(presetModelValue.value, props.value));
+    const isChecked = computed(() =>
+      isOptionChecked(
+        presetModelValue.value,
+        props.value,
+        parentProps.valueFormat
+          ? () => parentProps.valueFormat!({ ...props, ...attrs })
+          : undefined,
+      ),
+    );
     const isLimited = computed(
       () => presetModelValue.value.size >= parentProps.multipleLimit && !isChecked.value,
     );
@@ -84,10 +92,10 @@ export default defineComponent({
       () => props.disabled || parentProps.disabled || groupProps?.disabled || isLimited.value,
     );
     const isVisible = computed(() =>
-      visibleOptions.value.some(curr => curr.props.value === props.value),
+      visibleOptions.value.some(curr => isEqualIgnoreCtx(curr.props.value, props.value)),
     );
 
-    const isFocused = computed(() => focusedOptionValue.value === props.value);
+    const isFocused = computed(() => isEqualIgnoreCtx(focusedOptionValue.value, props.value));
 
     const descriptionPosition = computed(() => {
       const position = props.descriptionPosition ?? parentProps.descriptionPosition;

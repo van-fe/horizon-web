@@ -19,7 +19,14 @@ import {
 import type { SelectEmits } from '../composables/useEmits';
 import type { SelectSlots } from '../composables/useSlots';
 import type { SelectExposes } from '../composables/useExposes';
-import { unwrapValueFormattedValue, isEqualIgnoreCtx } from '../utils/valueFormat';
+import {
+  unwrapValueFormattedValue,
+  isEqualIgnoreCtx,
+  isModelValueMatchingOption,
+  isOptionChecked,
+  isValueFormatWrapped,
+  removeValueFormatMetadata,
+} from '../utils/valueFormat';
 import type {
   ModelValueType,
   ModelValueSingleType,
@@ -40,18 +47,10 @@ export default function useOption(
     filterMethod: ComputedRef<HSelectFilterFunction>;
     filterInputValue: Ref<string>;
     inputValue: Ref<string>;
-    modelValueSet: Ref<Set<OptionProps['value']>>;
-    presetModelValueSet: Ref<Set<OptionProps['value']>>;
+    modelValueSet: Ref<Set<ModelValueSingleType>>;
+    presetModelValueSet: Ref<Set<ModelValueSingleType>>;
     changeIsAddValue: Ref<boolean>;
     isDisabled: ComputedRef<boolean>;
-    isModelValueSetHasValue: (
-      setData: Set<ModelValueSingleType>,
-      value: ModelValueSingleType,
-    ) => boolean;
-    modelValueSetDeleteValue: (
-      setData: Set<ModelValueSingleType>,
-      value: ModelValueSingleType,
-    ) => void;
     handleConfirm: (hidePopper: boolean, manual: boolean) => void;
     setPopperVisible: (visible: boolean) => void;
     delInput: (inputValue: string, manual: boolean, hidePopper: boolean) => void;
@@ -93,7 +92,12 @@ export default function useOption(
 
     if (!props.selectedVisible) {
       tempVisibleOptions = tempVisibleOptions.filter(
-        option => !options.modelValueSet.value.has(option.props.value),
+        option =>
+          !isOptionChecked(
+            options.modelValueSet.value,
+            option.props.value,
+            props.valueFormat ? () => getFormattedOptionValue(option) : undefined,
+          ),
       );
     }
 
@@ -118,20 +122,82 @@ export default function useOption(
     },
   );
 
+  function getFormattedOptionValue(option: SelectCollectedOptionData<'option'>) {
+    return props.valueFormat!({ ...option.props, ...option.attrs });
+  }
+
   function getOptionDataByValue(value: ModelValueSingleType | undefined) {
     const unwrappedValue = unwrapValueFormattedValue(value);
-    if (isObject(unwrappedValue)) {
-      return Array.from(options.optionsMap.values()).find(option => {
-        return (
-          isEqualIgnoreCtx(option.props.value, unwrappedValue) ||
-          ('value' in unwrappedValue
-            ? isEqualIgnoreCtx(option.props.value, unwrappedValue.value)
-            : false)
-        );
-      });
-    } else {
-      return isNil(unwrappedValue) ? unwrappedValue : options.optionsMap.get(unwrappedValue);
+
+    if (isNil(unwrappedValue)) return unwrappedValue;
+
+    const optionList = Array.from(options.optionsMap.values());
+    const directlyMatchedOption =
+      options.optionsMap.get(unwrappedValue) ??
+      optionList.find(option => isEqualIgnoreCtx(option.props.value, unwrappedValue));
+
+    if (directlyMatchedOption) return directlyMatchedOption;
+
+    if (props.valueFormat && typeof value !== 'undefined') {
+      const publicModelValue = removeValueFormatMetadata(value);
+      const formattedMatchedOption = optionList.find(option =>
+        isEqualIgnoreCtx(publicModelValue, getFormattedOptionValue(option)),
+      );
+
+      if (formattedMatchedOption) return formattedMatchedOption;
     }
+
+    return isObject(unwrappedValue) && 'value' in unwrappedValue
+      ? optionList.find(option => isEqualIgnoreCtx(option.props.value, unwrappedValue.value))
+      : undefined;
+  }
+
+  function findModelValueIndex(setData: Set<ModelValueSingleType>, value: ModelValueSingleType) {
+    const setValues = Array.from(setData.values());
+
+    if (setValues.length === 0) return -1;
+
+    const optionData = getOptionDataByValue(value);
+    const canonicalValue = (optionData?.props.value ??
+      unwrapValueFormattedValue(value)) as OptionProps['value'];
+    const directlyMatchedIndex = setValues.findIndex(curr =>
+      isEqualIgnoreCtx(unwrapValueFormattedValue(curr), canonicalValue),
+    );
+
+    if (directlyMatchedIndex >= 0) return directlyMatchedIndex;
+
+    const shouldCompareFormattedValue = setValues.some(
+      curr => isObject(curr) && !isValueFormatWrapped(curr),
+    );
+    const formattedOptionValue =
+      shouldCompareFormattedValue && optionData && props.valueFormat
+        ? getFormattedOptionValue(optionData)
+        : undefined;
+
+    return setValues.findIndex(curr =>
+      isModelValueMatchingOption(
+        curr,
+        canonicalValue,
+        formattedOptionValue ? { value: formattedOptionValue } : undefined,
+      ),
+    );
+  }
+
+  function isModelValueSetHasValue(
+    setData: Set<ModelValueSingleType>,
+    value: ModelValueSingleType,
+  ) {
+    return findModelValueIndex(setData, value) >= 0;
+  }
+
+  function modelValueSetDeleteValue(
+    setData: Set<ModelValueSingleType>,
+    value: ModelValueSingleType,
+  ) {
+    const setValues = Array.from(setData.values());
+    const matchedIndex = findModelValueIndex(setData, value);
+
+    return matchedIndex >= 0 ? setData.delete(setValues[matchedIndex]) : false;
   }
 
   function pickOption(
@@ -142,31 +208,32 @@ export default function useOption(
     singlePickToClear = false,
   ) {
     const optionData = getOptionDataByValue(value);
+    const canonicalValue = optionData?.props.value ?? value;
 
     if (optionData) {
       if (optionData.props.disabled) return;
 
-      savedOptions.set(value, optionData);
+      savedOptions.set(canonicalValue, optionData);
     }
 
     evt?.preventDefault();
 
-    options.prevOptionValue = value;
+    options.prevOptionValue = canonicalValue;
 
     if (!props.multiple) {
       if (singlePickToClear) {
-        if (options.isModelValueSetHasValue(options.presetModelValueSet.value, value)) {
+        if (isModelValueSetHasValue(options.presetModelValueSet.value, canonicalValue)) {
           options.changeIsAddValue.value = false;
           options.presetModelValueSet.value = new Set();
         } else {
           options.changeIsAddValue.value = true;
-          options.presetModelValueSet.value = new Set([value]);
+          options.presetModelValueSet.value = new Set([canonicalValue]);
         }
       } else {
         options.changeIsAddValue.value = true;
 
-        if (!options.isModelValueSetHasValue(options.presetModelValueSet.value, value)) {
-          options.presetModelValueSet.value = new Set([value]);
+        if (!isModelValueSetHasValue(options.presetModelValueSet.value, canonicalValue)) {
+          options.presetModelValueSet.value = new Set([canonicalValue]);
         }
       }
 
@@ -174,10 +241,10 @@ export default function useOption(
         options.handleConfirm(singleChooseHide, false);
       }
     } else {
-      if (options.isModelValueSetHasValue(options.presetModelValueSet.value, value)) {
+      if (isModelValueSetHasValue(options.presetModelValueSet.value, canonicalValue)) {
         options.changeIsAddValue.value = false;
-        options.modelValueSetDeleteValue(options.presetModelValueSet.value, value);
-        context.emit('deselect', value);
+        modelValueSetDeleteValue(options.presetModelValueSet.value, canonicalValue);
+        context.emit('deselect', canonicalValue);
 
         if (!props.reserveKeyword || props.reserveKeyword === 'reserve-special') {
           options.delInput('', true, false);
@@ -185,7 +252,7 @@ export default function useOption(
       } else {
         options.changeIsAddValue.value = true;
         if (props.multipleLimit > options.presetModelValueSet.value.size) {
-          options.presetModelValueSet.value.add(value);
+          options.presetModelValueSet.value.add(canonicalValue);
         }
 
         if (props.reserveKeyword !== true) {
@@ -257,7 +324,12 @@ export default function useOption(
   }
 
   function focusOnFirstModelValue() {
-    options.focusedOptionValue.value = Array.from(options.modelValueSet.value.values()).at(0);
+    const firstModelValue = Array.from(options.modelValueSet.value.values()).at(0);
+
+    options.focusedOptionValue.value =
+      getOptionDataByValue(firstModelValue)?.props.value ??
+      unwrapValueFormattedValue(firstModelValue) ??
+      undefined;
   }
 
   function getAllOptionsInDom() {
@@ -304,6 +376,8 @@ export default function useOption(
     addOption,
     removeOption,
     pickOption,
+    isModelValueSetHasValue,
+    modelValueSetDeleteValue,
     tempCreateOptions,
     onClickCreateOption,
     focusOnFirstModelValue,

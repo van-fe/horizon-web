@@ -12,6 +12,7 @@ import {
   HSelectVisibleOptionsInjectKey,
 } from '../utils/injectKeys';
 import SimpleOption from './SimpleOption';
+import { isOptionChecked } from '../utils/valueFormat';
 import {
   SelectVirtualScrollListExposes,
   useSelectVirtualScrollListExposes,
@@ -86,7 +87,15 @@ export default defineComponent({
       let index = 0;
 
       if (typeof modelValue !== 'undefined') {
-        index = visibleOptions.value.findIndex(value => value.props.value === modelValue);
+        index = visibleOptions.value.findIndex(option =>
+          isOptionChecked(
+            new Set([modelValue]),
+            option.props.value,
+            parentProps.valueFormat
+              ? () => parentProps.valueFormat!({ ...option.props, ...option.attrs })
+              : undefined,
+          ),
+        );
       }
 
       scrollToIndex(index >= 0 ? index : 0);
@@ -126,13 +135,7 @@ export default defineComponent({
             active: boolean;
           }) => (
             <HVirtualScrollerItem item={row.item} active={row.active} index={row.index}>
-              <SimpleOption
-                key={row.item.props.value!.toString()}
-                disabled={row.item.props.disabled}
-                value={row.item.props.value}
-                label={row.item.props.label}
-                description={row.item.props.description}
-              />
+              <SimpleOption key={row.item.props.value!.toString()} {...row.item.props} />
             </HVirtualScrollerItem>
           ),
         }}

@@ -18,16 +18,17 @@ export default function useDataProcess(
     resetRenderedTags: () => void;
     reserveNumberOfModelValues: () => boolean;
     getFormattedModelValue: (modelValueSet: Set<ModelValueSingleType>) => ModelValueSingleType[];
-    emitChange: (emptyInputValue?: boolean, inputVal?: string) => void;
+    consumeModelValueSetFromProps: (value: Set<ModelValueSingleType>) => boolean;
+    emitChange: (emptyInputValue?: boolean, inputVal?: string, modelValue?: ModelValueType) => void;
   },
 ) {
-  let prevEmitModelValue: ModelValueType = props.modelValue;
-
   const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
 
   watch(
     options.modelValueSet,
-    () => {
+    value => {
+      if (options.consumeModelValueSetFromProps(value)) return;
+
       updateModelValue();
     },
     {
@@ -62,15 +63,13 @@ export default function useDataProcess(
       }
     }
 
-    if (!isEqualLoose(modelValue, prevEmitModelValue)) {
+    if (!isEqualLoose(modelValue, props.modelValue)) {
       context.emit('update:modelValue', modelValue);
 
       void nextTick(() => {
-        options.emitChange(true);
+        options.emitChange(true, '', modelValue);
         formItemTrigger?.('change');
       });
-
-      prevEmitModelValue = modelValue;
     }
   }
 
