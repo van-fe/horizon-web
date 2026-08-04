@@ -69,6 +69,7 @@ export default defineComponent({
       atEnd,
       atStart,
       cardMotionReady,
+      isAnimating,
       motion,
       next,
       prev,
@@ -226,6 +227,8 @@ export default defineComponent({
         'data-carousel-previous': previousIndex.value,
         'data-carousel-loop': props.loop,
         'data-carousel-motion': motion.value,
+        'data-carousel-animating': isAnimating.value,
+        'data-carousel-effect': props.effect,
       });
 
     return () => {
@@ -243,6 +246,7 @@ export default defineComponent({
             classHelper.m(props.direction),
             classHelper.m(props.effect),
             classHelper.m(`motion-${motion.value}`),
+            classHelper.is('animating', isAnimating.value),
             classHelper.is('motion-ready', cardMotionReady.value),
             classHelper.m(`arrow-${props.arrow}`),
             classHelper.m(`indicators-${props.indicatorPosition}`),

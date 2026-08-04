@@ -321,6 +321,81 @@
     }
   }
 
+  @include mixins.m('slide') {
+    @include mixins.nested('carousel-item') {
+      visibility: hidden;
+      transform: none;
+      transition: none;
+      will-change: auto;
+
+      @include mixins.is('active') {
+        visibility: visible;
+      }
+
+      @include mixins.is('slide-in') {
+        visibility: visible;
+        animation-duration: mixins.css-variable('carousel', 'transition', 'duration');
+        animation-timing-function: mixins.css-variable('carousel', 'transition', 'timing-function');
+        will-change: transform;
+      }
+
+      @include mixins.is('slide-out') {
+        visibility: visible;
+        animation-duration: mixins.css-variable('carousel', 'transition', 'duration');
+        animation-timing-function: mixins.css-variable('carousel', 'transition', 'timing-function');
+        will-change: transform;
+      }
+    }
+  }
+
+  @include mixins.parallel-modifier('slide', 'horizontal') {
+    @include mixins.nested('carousel-item') {
+      @include mixins.is('slide-in') {
+        animation-name: h-carousel-slide-x-in;
+      }
+
+      @include mixins.is('slide-out') {
+        animation-name: h-carousel-slide-x-out;
+      }
+    }
+  }
+
+  @include mixins.parallel-modifier('slide', 'horizontal', 'motion-previous') {
+    @include mixins.nested('carousel-item') {
+      @include mixins.is('slide-in') {
+        animation-name: h-carousel-slide-x-in-reverse;
+      }
+
+      @include mixins.is('slide-out') {
+        animation-name: h-carousel-slide-x-out-reverse;
+      }
+    }
+  }
+
+  @include mixins.parallel-modifier('slide', 'vertical') {
+    @include mixins.nested('carousel-item') {
+      @include mixins.is('slide-in') {
+        animation-name: h-carousel-slide-y-in;
+      }
+
+      @include mixins.is('slide-out') {
+        animation-name: h-carousel-slide-y-out;
+      }
+    }
+  }
+
+  @include mixins.parallel-modifier('slide', 'vertical', 'motion-previous') {
+    @include mixins.nested('carousel-item') {
+      @include mixins.is('slide-in') {
+        animation-name: h-carousel-slide-y-in-reverse;
+      }
+
+      @include mixins.is('slide-out') {
+        animation-name: h-carousel-slide-y-out-reverse;
+      }
+    }
+  }
+
   @include mixins.m('fade') {
     @include mixins.nested('carousel-item') {
       opacity: 0;
@@ -959,6 +1034,86 @@
   }
 }
 
+@keyframes h-carousel-slide-x-in {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes h-carousel-slide-x-out {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes h-carousel-slide-x-in-reverse {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes h-carousel-slide-x-out-reverse {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes h-carousel-slide-y-in {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes h-carousel-slide-y-out {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes h-carousel-slide-y-in-reverse {
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes h-carousel-slide-y-out-reverse {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(100%);
+  }
+}
+
 @keyframes h-carousel-card-bottom-to-middle {
   from {
     opacity: 0;
@@ -1194,6 +1349,12 @@
   }
 
   @include mixins.b('carousel') {
+    @include mixins.m('slide') {
+      @include mixins.nested('carousel-item') {
+        animation-duration: 1ms;
+      }
+    }
+
     @include mixins.m('card') {
       @include mixins.nested('carousel-item') {
         animation-duration: 1ms;

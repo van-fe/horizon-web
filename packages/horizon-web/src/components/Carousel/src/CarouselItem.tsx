@@ -26,6 +26,8 @@ export default defineComponent({
       const previous = Number(attrs['data-carousel-previous'] ?? active);
       const loop = attrs['data-carousel-loop'] === true;
       const motion = attrs['data-carousel-motion'] === 'previous' ? 'previous' : 'next';
+      const effect = attrs['data-carousel-effect'];
+      const animating = attrs['data-carousel-animating'] === true;
       let offset = index - active;
 
       if (loop && total > 2) {
@@ -41,9 +43,12 @@ export default defineComponent({
         index,
         total,
         active,
+        effect,
         offset,
         isPrevious: isSharedLoopNeighbor || offset === -1,
         isNext: isSharedLoopNeighbor || offset === 1,
+        isSlideIncoming: effect === 'slide' && animating && index === active,
+        isSlideOutgoing: effect === 'slide' && animating && index === previous && index !== active,
       };
     });
 
@@ -56,7 +61,10 @@ export default defineComponent({
 
     return () => {
       const active = state.value.index === state.value.active;
-      const hidden = !active && Math.abs(state.value.offset) > 1;
+      const hidden =
+        state.value.effect === 'slide'
+          ? !active && !state.value.isSlideOutgoing
+          : !active && Math.abs(state.value.offset) > 1;
       const forwardedAttrs = Object.fromEntries(
         Object.entries(attrs).filter(
           ([key]) => key !== 'class' && key !== 'style' && !key.startsWith('data-carousel-'),
@@ -72,6 +80,8 @@ export default defineComponent({
             classHelper.is('next', state.value.isNext),
             classHelper.is('placement-previous', state.value.offset === -1),
             classHelper.is('placement-next', state.value.offset === 1),
+            classHelper.is('slide-in', state.value.isSlideIncoming),
+            classHelper.is('slide-out', state.value.isSlideOutgoing),
             classHelper.is('hidden', hidden),
             attrs.class as string,
           )}

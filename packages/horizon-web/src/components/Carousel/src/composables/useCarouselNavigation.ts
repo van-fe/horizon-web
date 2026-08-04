@@ -29,22 +29,21 @@ export function useCarouselNavigation(
   const activeIndex = ref(isValidIndex(initialIndex) ? initialIndex : 0);
   const previousIndex = ref(activeIndex.value);
   const motion = ref<CarouselMotionDirection>('next');
-  const isCardAnimating = ref(false);
+  const isAnimating = ref(false);
   const cardMotionReady = ref(false);
   let pendingRequest: PendingRequest | undefined;
   let animationTimer: ReturnType<typeof setTimeout> | undefined;
 
-  const beginCardAnimation = () => {
-    if (props.effect !== 'card') return;
-    cardMotionReady.value = true;
-    isCardAnimating.value = true;
+  const beginAnimation = () => {
+    if (props.effect === 'card') cardMotionReady.value = true;
+    isAnimating.value = true;
     if (animationTimer !== undefined) clearTimeout(animationTimer);
     const reducedMotion =
       typeof window !== 'undefined' &&
       (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false);
     animationTimer = setTimeout(
       () => {
-        isCardAnimating.value = false;
+        isAnimating.value = false;
         animationTimer = undefined;
       },
       reducedMotion ? 1 : props.moveSpeed,
@@ -81,13 +80,13 @@ export function useCarouselNavigation(
     previousIndex.value = oldIndex;
     motion.value = direction ?? inferDirection(oldIndex, nextIndex);
     activeIndex.value = nextIndex;
-    beginCardAnimation();
+    beginAnimation();
     if (shouldEmitChange) emit('change', nextIndex, oldIndex);
     return true;
   };
 
   const requestChange = (target: number, direction?: CarouselMotionDirection) => {
-    if (props.effect === 'card' && isCardAnimating.value) return false;
+    if (isAnimating.value) return false;
     if (!isValidIndex(target)) return false;
     const nextIndex = normalizeIndex(target);
     const oldIndex = activeIndex.value;
@@ -135,7 +134,7 @@ export function useCarouselNavigation(
     () => props.effect,
     () => {
       cardMotionReady.value = false;
-      isCardAnimating.value = false;
+      isAnimating.value = false;
       if (animationTimer !== undefined) clearTimeout(animationTimer);
       animationTimer = undefined;
     },
@@ -173,6 +172,7 @@ export function useCarouselNavigation(
     atEnd,
     atStart,
     cardMotionReady: readonly(cardMotionReady),
+    isAnimating: readonly(isAnimating),
     motion: readonly(motion),
     next,
     normalizeIndex,

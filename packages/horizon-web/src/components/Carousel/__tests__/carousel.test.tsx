@@ -185,9 +185,45 @@ describe('Carousel', () => {
     }
   });
 
+  test('keeps slide bystanders hidden and only assigns animations to transition roles', () => {
+    const rules = compileCarouselStyleRules();
+    const baseSlideItemRule = rules.find(
+      rule => rule.selector === '.h-carousel--slide .h-carousel-item',
+    );
+    const activeSlideItemRule = rules.find(
+      rule => rule.selector === '.h-carousel--slide .h-carousel-item.is-active',
+    );
+    const slideAnimationRules = rules.filter(
+      rule =>
+        rule.selector.includes('.h-carousel--slide') && rule.declarations.has('animation-name'),
+    );
+
+    expect(baseSlideItemRule?.declarations.get('visibility')).toBe('hidden');
+    expect(baseSlideItemRule?.declarations.get('transform')).toBe('none');
+    expect(baseSlideItemRule?.declarations.get('transition')).toBe('none');
+    expect(activeSlideItemRule?.declarations.get('visibility')).toBe('visible');
+    expect(slideAnimationRules).toHaveLength(8);
+    expect(slideAnimationRules.map(rule => rule.declarations.get('animation-name')).sort()).toEqual(
+      [
+        'h-carousel-slide-x-in',
+        'h-carousel-slide-x-in-reverse',
+        'h-carousel-slide-x-out',
+        'h-carousel-slide-x-out-reverse',
+        'h-carousel-slide-y-in',
+        'h-carousel-slide-y-in-reverse',
+        'h-carousel-slide-y-out',
+        'h-carousel-slide-y-out-reverse',
+      ].sort(),
+    );
+    for (const rule of slideAnimationRules) {
+      expect(rule.selector).toMatch(/\.is-slide-(?:in|out)$/);
+    }
+  });
+
   test('switches with arrows, emits updates and loops in uncontrolled mode', async () => {
+    vi.useFakeTimers();
     const wrapper = mount(HCarousel, {
-      props: { autoplay: false },
+      props: { autoplay: false, moveSpeed: 120 },
       slots: { default: slides },
     });
 
@@ -196,15 +232,20 @@ describe('Carousel', () => {
     expect(wrapper.emitted('change')?.[0]).toEqual([1, 0]);
 
     const carousel = wrapper.vm as unknown as CarouselVm;
+    await vi.advanceTimersByTimeAsync(120);
     carousel.setActiveItem('first');
+    await wrapper.vm.$nextTick();
+    expect(carousel.activeIndex).toBe(0);
+    await vi.advanceTimersByTimeAsync(120);
     carousel.prev();
     await wrapper.vm.$nextTick();
     expect(carousel.activeIndex).toBe(2);
   });
 
   test('clamps navigation when looping is disabled', async () => {
+    vi.useFakeTimers();
     const wrapper = mount(HCarousel, {
-      props: { autoplay: false, loop: false },
+      props: { autoplay: false, loop: false, moveSpeed: 120 },
       slots: { default: slides },
     });
 
@@ -213,13 +254,15 @@ describe('Carousel', () => {
     carousel.setActiveItem(2);
     await wrapper.vm.$nextTick();
     expect(wrapper.find('.h-carousel__arrow--next').attributes('disabled')).toBeDefined();
+    await vi.advanceTimersByTimeAsync(120);
     carousel.next();
     expect(carousel.activeIndex).toBe(2);
   });
 
   test('does not update a controlled carousel until the parent accepts the request', async () => {
+    vi.useFakeTimers();
     const wrapper = mount(HCarousel, {
-      props: { autoplay: false, modelValue: 0 },
+      props: { autoplay: false, modelValue: 0, moveSpeed: 120 },
       slots: { default: slides },
     });
     const carousel = wrapper.vm as unknown as CarouselVm;
@@ -235,6 +278,7 @@ describe('Carousel', () => {
     expect(carousel.activeIndex).toBe(1);
     expect(wrapper.emitted('change')).toEqual([[1, 0]]);
 
+    await vi.advanceTimersByTimeAsync(120);
     await wrapper.trigger('keydown', { key: 'End' });
     expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual([2]);
     expect(carousel.activeIndex).toBe(1);
@@ -314,11 +358,13 @@ describe('Carousel', () => {
   });
 
   test('uses vertical keys, hover indicators and outside layout together', async () => {
+    vi.useFakeTimers();
     const wrapper = mount(HCarousel, {
       props: {
         autoplay: false,
         direction: 'vertical',
         indicatorPosition: 'outside',
+        moveSpeed: 120,
         trigger: 'hover',
       },
       slots: { default: slides },
@@ -329,6 +375,7 @@ describe('Carousel', () => {
     await wrapper.trigger('keydown', { key: 'ArrowDown' });
     const carousel = wrapper.vm as unknown as CarouselVm;
     expect(carousel.activeIndex).toBe(1);
+    await vi.advanceTimersByTimeAsync(120);
     await wrapper.findAll('.h-carousel__indicator-trigger')[2].trigger('mouseenter');
     expect(carousel.activeIndex).toBe(2);
   });
@@ -389,6 +436,95 @@ describe('Carousel', () => {
         expect.arrayContaining([outgoingClass, placementClass]),
       );
       expect(items[from].classes()).not.toContain('is-hidden');
+    },
+  );
+
+  test.each([
+    { from: 0, idle: 2, motion: 'next', scenario: '0 to 1', to: 1 },
+    { from: 1, idle: 2, motion: 'previous', scenario: '1 to 0', to: 0 },
+    { from: 2, idle: 1, motion: 'next', scenario: 'last to first', to: 0 },
+  ])(
+    'limits slide animation roles to source and target for $scenario',
+    async ({ from, idle, motion, to }) => {
+      vi.useFakeTimers();
+      const wrapper = mount(HCarousel, {
+        props: { autoplay: false, effect: 'slide', initialIndex: from, moveSpeed: 120 },
+        slots: { default: slides },
+      });
+      const carousel = wrapper.vm as unknown as CarouselVm;
+      const items = wrapper.findAll('.h-carousel-item');
+      const indicators = wrapper.findAll('.h-carousel__indicator');
+
+      expect(wrapper.findAll('.h-carousel-item.is-slide-in')).toHaveLength(0);
+      expect(wrapper.findAll('.h-carousel-item.is-slide-out')).toHaveLength(0);
+
+      await indicators[to].trigger('click');
+
+      expect(carousel.activeIndex).toBe(to);
+      expect(wrapper.classes()).toEqual(
+        expect.arrayContaining(['is-animating', `h-carousel--motion-${motion}`]),
+      );
+      expect(wrapper.findAll('.h-carousel-item.is-slide-in')).toHaveLength(1);
+      expect(wrapper.findAll('.h-carousel-item.is-slide-out')).toHaveLength(1);
+      expect(items[to].classes()).toEqual(expect.arrayContaining(['is-active', 'is-slide-in']));
+      expect(items[from].classes()).toContain('is-slide-out');
+      expect(items[from].classes()).not.toContain('is-hidden');
+      expect(items[idle].classes()).toContain('is-hidden');
+      expect(items[idle].classes()).not.toContain('is-slide-in');
+      expect(items[idle].classes()).not.toContain('is-slide-out');
+
+      await indicators[idle].trigger('click');
+      expect(carousel.activeIndex).toBe(to);
+      await vi.advanceTimersByTimeAsync(119);
+      expect(wrapper.classes()).toContain('is-animating');
+      expect(items[to].classes()).toContain('is-slide-in');
+      expect(items[from].classes()).toContain('is-slide-out');
+      await indicators[idle].trigger('click');
+      expect(carousel.activeIndex).toBe(to);
+
+      await vi.advanceTimersByTimeAsync(1);
+      await wrapper.vm.$nextTick();
+      expect(wrapper.classes()).not.toContain('is-animating');
+      expect(wrapper.findAll('.h-carousel-item.is-slide-in')).toHaveLength(0);
+      expect(wrapper.findAll('.h-carousel-item.is-slide-out')).toHaveLength(0);
+      expect(items[from].classes()).toContain('is-hidden');
+      expect(items[idle].classes()).toContain('is-hidden');
+
+      await indicators[idle].trigger('click');
+      expect(carousel.activeIndex).toBe(idle);
+    },
+  );
+
+  test.each([
+    { action: 'next' as const, from: 0, motion: 'next', to: 1 },
+    { action: 'next' as const, from: 1, motion: 'next', to: 0 },
+    { action: 'prev' as const, from: 0, motion: 'previous', to: 1 },
+  ])(
+    'keeps two-item slide $action navigation isolated from $from to $to',
+    async ({ action, from, motion, to }) => {
+      vi.useFakeTimers();
+      const wrapper = mount(HCarousel, {
+        props: { autoplay: false, effect: 'slide', initialIndex: from, moveSpeed: 120 },
+        slots: { default: twoCardSlides },
+      });
+      const carousel = wrapper.vm as unknown as CarouselVm;
+      const items = wrapper.findAll('.h-carousel-item');
+
+      carousel[action]();
+      await wrapper.vm.$nextTick();
+
+      expect(carousel.activeIndex).toBe(to);
+      expect(wrapper.classes()).toContain(`h-carousel--motion-${motion}`);
+      expect(items[to].classes()).toEqual(expect.arrayContaining(['is-active', 'is-slide-in']));
+      expect(items[from].classes()).toContain('is-slide-out');
+      expect(items[from].classes()).not.toContain('is-hidden');
+      expect(wrapper.findAll('.h-carousel-item.is-slide-in')).toHaveLength(1);
+      expect(wrapper.findAll('.h-carousel-item.is-slide-out')).toHaveLength(1);
+
+      await vi.advanceTimersByTimeAsync(120);
+      expect(items[from].classes()).toContain('is-hidden');
+      expect(wrapper.findAll('.h-carousel-item.is-slide-in')).toHaveLength(0);
+      expect(wrapper.findAll('.h-carousel-item.is-slide-out')).toHaveLength(0);
     },
   );
 
@@ -764,8 +900,9 @@ describe('Carousel', () => {
   });
 
   test('supports only main-axis single-touch swipes and clears cancelled gestures', async () => {
+    vi.useFakeTimers();
     const wrapper = mount(HCarousel, {
-      props: { autoplay: false, swipeThreshold: 30 },
+      props: { autoplay: false, moveSpeed: 120, swipeThreshold: 30 },
       slots: { default: slides },
     });
     const carousel = wrapper.vm as unknown as CarouselVm;
@@ -785,6 +922,7 @@ describe('Carousel', () => {
     await wrapper.vm.$nextTick();
     expect(carousel.activeIndex).toBe(1);
 
+    await vi.advanceTimersByTimeAsync(120);
     dispatchTouch('touchstart', [{ clientX: 100, clientY: 20, identifier: 2 }]);
     dispatchTouch('touchend', [{ clientX: 60, clientY: 100, identifier: 2 }]);
     await wrapper.vm.$nextTick();
@@ -798,8 +936,9 @@ describe('Carousel', () => {
   });
 
   test('distinguishes numeric names from numeric indices', async () => {
+    vi.useFakeTimers();
     const wrapper = mount(HCarousel, {
-      props: { autoplay: false },
+      props: { autoplay: false, moveSpeed: 120 },
       slots: {
         default: () => [
           h(HCarouselItem, { name: 7, label: 'Numeric name' }, () => 'Numeric'),
@@ -813,9 +952,11 @@ describe('Carousel', () => {
     carousel.setActiveItem({ name: '7' });
     await wrapper.vm.$nextTick();
     expect(carousel.activeIndex).toBe(1);
+    await vi.advanceTimersByTimeAsync(120);
     carousel.setActiveItem({ name: 7 });
     await wrapper.vm.$nextTick();
     expect(carousel.activeIndex).toBe(0);
+    await vi.advanceTimersByTimeAsync(120);
     carousel.setActiveItem(2);
     await wrapper.vm.$nextTick();
     expect(carousel.activeIndex).toBe(2);
