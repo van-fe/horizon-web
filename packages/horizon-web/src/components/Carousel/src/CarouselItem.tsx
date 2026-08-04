@@ -1,5 +1,6 @@
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
+import type { CSSProperties } from 'vue';
 import { computed, defineComponent } from 'vue';
 import useLocaleLang from '~/utils/useLocaleLang';
 import { useCarouselItemProps } from './composables/useProps';
@@ -34,7 +35,16 @@ export default defineComponent({
         offset = index === previous ? (motion === 'next' ? -1 : 1) : motion === 'next' ? 1 : -1;
       }
 
-      return { index, total, active, offset };
+      const isSharedLoopNeighbor = loop && total === 2 && index !== active;
+
+      return {
+        index,
+        total,
+        active,
+        offset,
+        isPrevious: isSharedLoopNeighbor || offset === -1,
+        isNext: isSharedLoopNeighbor || offset === 1,
+      };
     });
 
     const accessibleLabel = computed(() => {
@@ -47,19 +57,28 @@ export default defineComponent({
     return () => {
       const active = state.value.index === state.value.active;
       const hidden = !active && Math.abs(state.value.offset) > 1;
+      const forwardedAttrs = Object.fromEntries(
+        Object.entries(attrs).filter(
+          ([key]) => key !== 'class' && key !== 'style' && !key.startsWith('data-carousel-'),
+        ),
+      );
       return (
         <div
+          {...forwardedAttrs}
           class={cls(
             classHelper.block,
             classHelper.is('active', active),
+            classHelper.is('previous', state.value.isPrevious),
+            classHelper.is('next', state.value.isNext),
+            classHelper.is('placement-previous', state.value.offset === -1),
+            classHelper.is('placement-next', state.value.offset === 1),
             classHelper.is('hidden', hidden),
+            attrs.class as string,
           )}
-          style={
-            { '--h-carousel-spacing-item-offset': state.value.offset } as Record<
-              string,
-              string | number
-            >
-          }
+          style={[
+            { '--h-carousel-spacing-item-offset': state.value.offset } as CSSProperties,
+            attrs.style as CSSProperties,
+          ]}
           role="group"
           aria-roledescription={String(itemText.value ?? 'slide')}
           aria-label={accessibleLabel.value}

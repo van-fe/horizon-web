@@ -3,17 +3,19 @@ const images = [
   { src: '/demo-assets/scene-city.svg', label: 'City at blue hour' },
   { src: '/demo-assets/scene-coast.svg', label: 'Coast at sunset' },
   { src: '/demo-assets/scene-summit.svg', label: 'Mountain summit' },
+  { src: '/demo-assets/scene-night.svg', label: 'City at night' },
 ];
 </script>
 
 <template>
   <h-carousel
-    class="image-carousel"
-    :initial-index="1"
-    :autoplay="false"
-    arrow="always"
+    class="card-carousel"
+    effect="card"
+    arrow="never"
+    indicator-position="outside"
+    autoplay
     height="240px"
-    aria-label="Featured images"
+    aria-label="Card image carousel"
   >
     <h-carousel-item v-for="image in images" :key="image.src" :label="image.label">
       <img :src="image.src" :alt="image.label" />
@@ -22,13 +24,11 @@ const images = [
 </template>
 
 <style scoped>
-.image-carousel {
-  width: 600px;
-  max-width: 100%;
-  margin: 0 auto;
+.card-carousel {
+  width: 100%;
 }
 
-.image-carousel img {
+.card-carousel img {
   display: block;
   width: 100%;
   height: 100%;

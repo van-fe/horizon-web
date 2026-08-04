@@ -1,37 +1,37 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
-const carousel = ref<{ pause: () => void; play: () => void }>();
-const playing = ref(true);
-const slides = ['Research', 'Design', 'Release'];
-
-function toggle() {
-  playing.value = !playing.value;
-  playing.value ? carousel.value?.play() : carousel.value?.pause();
-}
+const images = [
+  { src: '/demo-assets/scene-city.svg', label: 'City at blue hour' },
+  { src: '/demo-assets/scene-coast.svg', label: 'Coast at sunset' },
+  { src: '/demo-assets/scene-summit.svg', label: 'Mountain summit' },
+];
 </script>
 
 <template>
-  <section class="docs-demo">
-    <div class="docs-demo__actions">
-      <h-button size="small" @click="toggle">{{ playing ? 'Pause' : 'Resume' }}</h-button>
-    </div>
-    <h-carousel ref="carousel" height="200px" :interval="2500" aria-label="Campaign">
-      <h-carousel-item v-for="(slide, index) in slides" :key="slide" :label="slide">
-        <div class="slide">{{ index + 1 }} · {{ slide }}</div>
-      </h-carousel-item>
-    </h-carousel>
-  </section>
+  <h-carousel
+    class="image-carousel"
+    autoplay
+    arrow="hover"
+    :interval="3000"
+    height="240px"
+    aria-label="Automatically rotating images"
+  >
+    <h-carousel-item v-for="image in images" :key="image.src" :label="image.label">
+      <img :src="image.src" :alt="image.label" />
+    </h-carousel-item>
+  </h-carousel>
 </template>
 
 <style scoped>
-.slide {
-  display: grid;
+.image-carousel {
+  width: 600px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.image-carousel img {
+  display: block;
+  width: 100%;
   height: 100%;
-  place-items: center;
-  color: var(--h-text-inverse);
-  background: var(--h-bg-brand-default);
-  font-size: var(--h-text-xl);
-  font-weight: 700;
+  object-fit: cover;
 }
 </style>

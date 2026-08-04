@@ -1,29 +1,37 @@
 <script setup lang="ts">
-const slides = ['Compose', 'Navigate', 'Control'];
+const images = [
+  { src: '/demo-assets/scene-city.svg', label: 'City at blue hour' },
+  { src: '/demo-assets/scene-coast.svg', label: 'Coast at sunset' },
+  { src: '/demo-assets/scene-summit.svg', label: 'Mountain summit' },
+];
 </script>
 
 <template>
   <h-carousel
+    class="image-carousel"
     direction="vertical"
-    arrow="always"
+    arrow="never"
     :autoplay="false"
-    height="220px"
-    aria-label="Workflow"
+    height="240px"
+    aria-label="Vertical image carousel"
   >
-    <h-carousel-item v-for="(slide, index) in slides" :key="slide" :label="slide">
-      <div class="slide">{{ index + 1 }} · {{ slide }}</div>
+    <h-carousel-item v-for="image in images" :key="image.src" :label="image.label">
+      <img :src="image.src" :alt="image.label" />
     </h-carousel-item>
   </h-carousel>
 </template>
 
 <style scoped>
-.slide {
-  display: grid;
+.image-carousel {
+  width: 600px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.image-carousel img {
+  display: block;
+  width: 100%;
   height: 100%;
-  place-items: center;
-  color: var(--h-text-inverse);
-  background: var(--h-bg-brand-default);
-  font-size: var(--h-text-xl);
-  font-weight: 700;
+  object-fit: cover;
 }
 </style>

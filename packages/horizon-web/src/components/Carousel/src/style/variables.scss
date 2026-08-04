@@ -2,42 +2,79 @@
 
 $values: (
   size: (
-    arrow: 36px,
+    arrow: 24px,
     indicator: (
-      '': 8px,
-      active: (
-        width: 24px,
+      dot: 6px,
+      line: (
+        width: 12px,
+        height: 4px,
+      ),
+      slider: (
+        width: 48px,
+        height: 4px,
+      ),
+    ),
+    indicator-hit: (
+      horizontal: 14px,
+      vertical: 24px,
+    ),
+    indicator-wrapper: 48px,
+    card: (
+      width: 60%,
+      vertical-height: 66.6667%,
+      perspective: 800px,
+    ),
+    outer-right-wrapper: 20px,
+  ),
+  color: (
+    control: rgb(255, 255, 255),
+    indicator: (
+      '': rgb(255, 255, 255, 30%),
+      active: rgb(255, 255, 255),
+      outside: (
+        '': rgb(function.css-variable('color-1-4'), 50%),
+        active: #{function.css-variable('bg-tertiary')},
       ),
     ),
   ),
-  color: (
-    control: #{function.css-variable('text-inverse')},
-    indicator: (
-      '': #{function.css-variable('bg-secondary')},
-      active: #{function.css-variable('bg-brand-default')},
+  border-radius: 0,
+  depth: (
+    card: (
+      preview: -200px,
+      hidden: -400px,
     ),
-    focus: #{function.css-variable('border-brand-default')},
   ),
-  border-radius: #{function.css-variable('radius-m')},
+  opacity: (
+    card: (
+      preview: 0.4,
+    ),
+  ),
   background: (
     control: (
-      '': #{function.css-variable('bg-overlay-default')},
-      hover: #{function.css-variable('bg-overlay-strong')},
+      '': rgb(255, 255, 255, 30%),
+      hover: rgb(255, 255, 255, 50%),
+      dark: (
+        '': rgb(23, 23, 26, 30%),
+        hover: rgb(23, 23, 26, 50%),
+      ),
     ),
+    indicator-mask: rgb(0, 0, 0, 15%),
   ),
   spacing: (
     arrow: (
-      offset: #{function.css-variable('spacing-4')},
+      offset: 12px,
     ),
     indicator: (
-      gap: #{function.css-variable('spacing-3')},
+      gap: 8px,
+      offset: 12px,
     ),
     outside: (
-      gap: 32px,
+      gap: 30px,
     ),
   ),
   transition: (
-    duration: #{function.css-variable('transition-time')},
-    timing-function: #{function.css-variable('transition-func-ease-in-out-bezier')},
+    duration: 500ms,
+    control-duration: 300ms,
+    timing-function: cubic-bezier(0.34, 0.69, 0.1, 1),
   ),
 );
