@@ -3,7 +3,7 @@ Most basic usage
 :::demo components/Segmented/basic.vue :::
 
 ## Block Mode
-Set `block` to adapt to parent width
+Set `block` to adapt to parent width. Truncated `label` text automatically exposes its full content in a Tooltip; custom slots manage their own hints.
 :::demo components/Segmented/block.vue :::
 
 ## Unavailable

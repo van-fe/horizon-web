@@ -28,7 +28,7 @@
 :::demo components/Tabs/extra.vue :::
 
 ## 文字溢出
-超出部分用 “ ... ” 展示，并在鼠标移入出现文字提示。
+通过 `label` 传入的标签文字被截断时，会自动用 Tooltip 展示完整名称。自定义标签插槽的结构和省略规则由使用方控制，需要时请自行组合 Tooltip。
 :::demo components/Tabs/text-overflow.vue :::
 
 ## 可拖拽标签

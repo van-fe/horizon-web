@@ -3,7 +3,7 @@
 :::demo components/Segmented/basic.vue :::
 
 ## Block 模式
-设置 `block` 让其适应父级宽度
+设置 `block` 让其适应父级宽度。通过 `label` 传入的文字被截断时，会自动用 Tooltip 展示完整内容；自定义插槽需要自行处理提示。
 :::demo components/Segmented/block.vue :::
 
 ## 不可用

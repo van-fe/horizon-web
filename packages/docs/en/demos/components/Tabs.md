@@ -28,7 +28,7 @@ You can add additional content, such as buttons, to the right of the tabs.
 :::demo components/Tabs/extra.vue :::
 
 ## Text Overflow
-The overflow part is displayed with " ... " and a text prompt appears when the mouse moves in.
+When a label supplied through `label` is truncated, a Tooltip automatically reveals its complete name. Custom label slots own their structure and truncation rules, so compose a Tooltip there when needed.
 :::demo components/Tabs/text-overflow.vue :::
 
 ## Draggable Tabs
