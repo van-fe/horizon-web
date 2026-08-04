@@ -723,6 +723,30 @@
     }
   }
 
+  /* stylelint-disable scss/operator-no-newline-after */
+  @include mixins.parallel-modifier('horizontal', 'indicator-position-left') {
+    @include mixins.e('arrow') {
+      @include mixins.m('previous') {
+        left: calc(
+          #{mixins.css-variable('carousel', 'size', 'indicator-wrapper')} +
+            #{mixins.css-variable('carousel', 'spacing', 'arrow', 'offset')}
+        );
+      }
+    }
+  }
+
+  @include mixins.parallel-modifier('horizontal', 'indicator-position-right') {
+    @include mixins.e('arrow') {
+      @include mixins.m('next') {
+        right: calc(
+          #{mixins.css-variable('carousel', 'size', 'indicator-wrapper')} +
+            #{mixins.css-variable('carousel', 'spacing', 'arrow', 'offset')}
+        );
+      }
+    }
+  }
+  /* stylelint-enable scss/operator-no-newline-after */
+
   @include mixins.m('indicator-position-outer-right') {
     @include mixins.e('indicators') {
       inset: 0 0 0 auto;

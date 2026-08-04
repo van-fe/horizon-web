@@ -220,6 +220,27 @@ describe('Carousel', () => {
     }
   });
 
+  test('keeps horizontal side indicators clear of their same-side arrows', () => {
+    const rules = compileCarouselStyleRules();
+    const leftArrowRule = rules.find(
+      rule =>
+        rule.selector ===
+        '.h-carousel--horizontal.h-carousel--indicator-position-left .h-carousel__arrow--previous',
+    );
+    const rightArrowRule = rules.find(
+      rule =>
+        rule.selector ===
+        '.h-carousel--horizontal.h-carousel--indicator-position-right .h-carousel__arrow--next',
+    );
+    const sideControlOffset =
+      'calc(var(--h-carousel-size-indicator-wrapper) + var(--h-carousel-spacing-arrow-offset))';
+
+    expect(leftArrowRule?.declarations.get('left')).toBe(sideControlOffset);
+    expect(rightArrowRule?.declarations.get('right')).toBe(sideControlOffset);
+    expect(leftArrowRule?.selector).not.toContain('h-carousel--vertical');
+    expect(rightArrowRule?.selector).not.toContain('h-carousel--vertical');
+  });
+
   test('switches with arrows, emits updates and loops in uncontrolled mode', async () => {
     vi.useFakeTimers();
     const wrapper = mount(HCarousel, {

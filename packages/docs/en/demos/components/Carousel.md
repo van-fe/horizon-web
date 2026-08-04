@@ -38,7 +38,7 @@ Vertical cards combine `direction="vertical"`, `effect="card"`, and `indicator-p
 
 ## Indicator
 
-Use `indicator-type` to switch between `dot`, `line`, and `slider`, and use `indicator-position` to place the indicator around the carousel.
+Use `indicator-type` to switch between `dot`, `line`, and `slider`, and use `indicator-position` to place the indicator around the carousel. When arrows and side indicators are both visible, the arrow on that side automatically moves inward.
 
 :::demo components/Carousel/indicator.vue :::
 

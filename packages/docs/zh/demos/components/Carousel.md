@@ -38,7 +38,7 @@ Carousel 在有限空间中轮换同层级内容。图片轮播采用纯图片�
 
 ## 指示器
 
-通过 `indicator-type` 在 `dot`、`line` 和 `slider` 之间切换指示器样式；也可以通过 `indicator-position` 设置指示器位置。
+通过 `indicator-type` 在 `dot`、`line` 和 `slider` 之间切换指示器样式；也可以通过 `indicator-position` 设置指示器位置。方向箭头与左右指示器同时显示时，同侧箭头会自动向内避让。
 
 :::demo components/Carousel/indicator.vue :::
 

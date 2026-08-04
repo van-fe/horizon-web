@@ -20,9 +20,9 @@ const images = [
       <div class="indicator-demo__control">
         <code>indicator-type</code>
         <h-segmented v-model:active-key="indicatorType" size="small" aria-label="Indicator type">
-          <h-segmented-item key="dot" label="dot" />
-          <h-segmented-item key="line" label="line" />
-          <h-segmented-item key="slider" label="slider" />
+          <h-segmented-item value="dot" label="dot" />
+          <h-segmented-item value="line" label="line" />
+          <h-segmented-item value="slider" label="slider" />
         </h-segmented>
       </div>
 
@@ -33,11 +33,11 @@ const images = [
           size="small"
           aria-label="Indicator position"
         >
-          <h-segmented-item key="left" label="left" />
-          <h-segmented-item key="right" label="right" />
-          <h-segmented-item key="top" label="top" />
-          <h-segmented-item key="bottom" label="bottom" />
-          <h-segmented-item key="outside" label="outside" />
+          <h-segmented-item value="left" label="left" />
+          <h-segmented-item value="right" label="right" />
+          <h-segmented-item value="top" label="top" />
+          <h-segmented-item value="bottom" label="bottom" />
+          <h-segmented-item value="outside" label="outside" />
         </h-segmented>
       </div>
     </div>
@@ -46,7 +46,7 @@ const images = [
       class="indicator-carousel"
       :indicator-type="indicatorType"
       :indicator-position="indicatorPosition"
-      arrow="never"
+      arrow="always"
       :autoplay="false"
       height="240px"
       aria-label="Custom indicator image carousel"
