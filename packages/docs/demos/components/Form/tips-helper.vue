@@ -3,8 +3,8 @@
     <div class="form-helper-demo__control" role="group" aria-label="Helper theme">
       <span>Helper theme</span>
       <h-segmented v-model:active-key="helperTheme" size="small">
-        <h-segmented-item key="light" label="Light" />
-        <h-segmented-item key="dark" label="Dark" />
+        <h-segmented-item value="light" label="Light" />
+        <h-segmented-item value="dark" label="Dark" />
       </h-segmented>
     </div>
 

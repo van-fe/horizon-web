@@ -9,9 +9,9 @@ const imageHeight = computed(() => Number(height.value));
   <section class="docs-demo">
     <div class="docs-demo__controls">
       <h-segmented v-model:active-key="height" size="small">
-        <h-segmented-item key="180" label="180 px" />
-        <h-segmented-item key="240" label="240 px" />
-        <h-segmented-item key="320" label="320 px" />
+        <h-segmented-item value="180" label="180 px" />
+        <h-segmented-item value="240" label="240 px" />
+        <h-segmented-item value="320" label="320 px" />
       </h-segmented>
     </div>
 

@@ -20,9 +20,9 @@ const services = [
 <template>
   <div class="select-demo">
     <h-segmented v-model:active-key="widthMode" size="small" block>
-      <h-segmented-item key="same" label="Same width" />
-      <h-segmented-item key="natural" label="Natural" />
-      <h-segmented-item key="content" label="Fit content" />
+      <h-segmented-item value="same" label="Same width" />
+      <h-segmented-item value="natural" label="Natural" />
+      <h-segmented-item value="content" label="Fit content" />
     </h-segmented>
     <h-select
       v-model="value"

@@ -9,8 +9,8 @@ const visible = ref(true);
   <section class="docs-demo">
     <div class="docs-demo__controls">
       <h-segmented v-model:active-key="name" size="small">
-        <h-segmented-item key="fade-in-linear" label="Linear" />
-        <h-segmented-item key="fade-in" label="Ease" />
+        <h-segmented-item value="fade-in-linear" label="Linear" />
+        <h-segmented-item value="fade-in" label="Ease" />
       </h-segmented>
       <h-switch v-model="visible" label="Visible" />
     </div>

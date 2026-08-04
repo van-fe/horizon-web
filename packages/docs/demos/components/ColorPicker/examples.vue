@@ -37,7 +37,12 @@ const swatches = [
 <template>
   <div class="color-capabilities-demo">
     <h-segmented v-model:active-key="mode" size="small" block>
-      <h-segmented-item v-for="item in modes" :key="item.value" :label="item.label" />
+      <h-segmented-item
+        v-for="item in modes"
+        :key="item.value"
+        :value="item.value"
+        :label="item.label"
+      />
     </h-segmented>
 
     <h-color-picker

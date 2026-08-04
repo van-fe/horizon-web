@@ -12,7 +12,7 @@ const eventTypes = ['click', 'mousedown', 'mouseup'];
       <label class="docs-demo__control">
         <span>全局关闭事件</span>
         <h-segmented v-model:active-key="hideEventType" size="small">
-          <h-segmented-item v-for="item in eventTypes" :key="item" :label="item" />
+          <h-segmented-item v-for="item in eventTypes" :key="item" :value="item" :label="item" />
         </h-segmented>
       </label>
       <h-popover

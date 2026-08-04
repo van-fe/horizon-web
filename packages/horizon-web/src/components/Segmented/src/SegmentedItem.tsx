@@ -1,15 +1,7 @@
 import { AIcon } from '@aurora/icon';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, getBooleanProp, useNamespace, isVNodeEmpty } from '@aurora/utils';
-import {
-  cloneVNode,
-  computed,
-  defineComponent,
-  getCurrentInstance,
-  inject,
-  type VNodeRef,
-  type VNode,
-} from 'vue';
+import { cloneVNode, computed, defineComponent, inject, type VNodeRef, type VNode } from 'vue';
 import type { SegmentedItemEmits } from './composables/useEmits';
 import { useSegmentedItemEmits } from './composables/useEmits';
 import type { HSegmentedValue } from './composables/useProps';
@@ -29,15 +21,13 @@ export default defineComponent({
 
     const cls = new ComponentClassBlock('segmented');
 
-    const instance = getCurrentInstance();
-
-    const key = computed(() => instance?.vnode.key as HSegmentedValue);
+    const value = computed<HSegmentedValue>(() => props.value);
 
     const onClick = () => {
       if (getBooleanProp(props.disabled)) return;
 
-      emit('click', key.value);
-      ctx.onClick?.(key.value);
+      emit('click', value.value);
+      ctx.onClick?.(value.value);
     };
 
     const onKeydown = (evt: KeyboardEvent) => {
@@ -46,9 +36,9 @@ export default defineComponent({
       onClick();
     };
 
-    const isActivated = computed(() => ctx.activeKey.value === key.value);
+    const isActivated = computed(() => ctx.activeKey.value === value.value);
 
-    const addTab = ctx.createTab(key.value) as VNodeRef;
+    const addTab = ctx.createTab(value) as VNodeRef;
 
     return () => {
       const slotDefault = slots?.default?.({

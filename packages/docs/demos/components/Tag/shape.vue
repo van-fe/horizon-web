@@ -8,8 +8,8 @@ const shape = ref<'round' | 'equally'>('round');
   <section class="docs-demo">
     <div class="docs-demo__controls">
       <h-segmented v-model:active-key="shape" size="small">
-        <h-segmented-item key="round" label="Round" />
-        <h-segmented-item key="equally" label="Equally" />
+        <h-segmented-item value="round" label="Round" />
+        <h-segmented-item value="equally" label="Equally" />
       </h-segmented>
     </div>
 

@@ -4,8 +4,8 @@
       <label class="docs-demo__control">
         <span class="docs-demo__control-label">Title size</span>
         <h-segmented v-model:active-key="titleSize" size="small" block>
-          <h-segmented-item key="small" label="Small" />
-          <h-segmented-item key="medium" label="Medium" />
+          <h-segmented-item value="small" label="Small" />
+          <h-segmented-item value="medium" label="Medium" />
         </h-segmented>
       </label>
       <h-switch v-model="isZebra" label="Zebra" />

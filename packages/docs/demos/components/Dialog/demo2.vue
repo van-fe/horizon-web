@@ -18,10 +18,10 @@ function finish(message: string) {
 <template>
   <section class="dialog-footer-demo">
     <h-segmented v-model:active-key="mode" size="small">
-      <h-segmented-item key="all" label="Both" />
-      <h-segmented-item key="primary" label="Primary" />
-      <h-segmented-item key="none" label="None" />
-      <h-segmented-item key="custom" label="Custom" />
+      <h-segmented-item value="all" label="Both" />
+      <h-segmented-item value="primary" label="Primary" />
+      <h-segmented-item value="none" label="None" />
+      <h-segmented-item value="custom" label="Custom" />
     </h-segmented>
     <h-button @click="visible = true">打开对话框</h-button>
     <p role="status">{{ status }}</p>

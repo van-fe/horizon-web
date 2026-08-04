@@ -20,18 +20,18 @@ const stages = [
       <label>
         <span>Type</span>
         <h-segmented v-model:active-key="type" size="small" block>
-          <h-segmented-item key="line" label="Line" />
-          <h-segmented-item key="card" label="Card" />
-          <h-segmented-item key="page" label="Page" />
+          <h-segmented-item value="line" label="Line" />
+          <h-segmented-item value="card" label="Card" />
+          <h-segmented-item value="page" label="Page" />
         </h-segmented>
       </label>
       <label>
         <span>Size</span>
         <h-segmented v-model:active-key="size" size="small" block :disabled="type === 'page'">
-          <h-segmented-item key="small" label="S" />
-          <h-segmented-item key="medium" label="M" />
-          <h-segmented-item key="large" label="L" />
-          <h-segmented-item key="huge" label="XL" />
+          <h-segmented-item value="small" label="S" />
+          <h-segmented-item value="medium" label="M" />
+          <h-segmented-item value="large" label="L" />
+          <h-segmented-item value="huge" label="XL" />
         </h-segmented>
       </label>
     </div>

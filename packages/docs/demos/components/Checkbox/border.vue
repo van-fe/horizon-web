@@ -1,8 +1,8 @@
 <template>
   <div class="checkbox-border-demo">
     <h-segmented v-model:active-key="size" size="small">
-      <h-segmented-item key="medium" label="Medium" />
-      <h-segmented-item key="large" label="Large" />
+      <h-segmented-item value="medium" label="Medium" />
+      <h-segmented-item value="large" label="Large" />
     </h-segmented>
     <div class="checkbox-border-demo__options">
       <h-checkbox v-model="email" border :size="size">Email</h-checkbox>

@@ -10,10 +10,10 @@ const size = ref<DialogSize>('medium');
 <template>
   <section class="dialog-size-demo">
     <h-segmented v-model:active-key="size" size="small">
-      <h-segmented-item key="small" label="Small" />
-      <h-segmented-item key="medium" label="Medium" />
-      <h-segmented-item key="large" label="Large" />
-      <h-segmented-item key="huge" label="Huge" />
+      <h-segmented-item value="small" label="Small" />
+      <h-segmented-item value="medium" label="Medium" />
+      <h-segmented-item value="large" label="Large" />
+      <h-segmented-item value="huge" label="Huge" />
     </h-segmented>
     <h-button @click="visible = true">预览尺寸</h-button>
 

@@ -2,7 +2,12 @@
   <section class="docs-demo">
     <div class="docs-demo__controls">
       <h-segmented v-model:active-key="activeType" size="small">
-        <h-segmented-item v-for="item in items" :key="item.type" :label="item.type" />
+        <h-segmented-item
+          v-for="item in items"
+          :key="item.type"
+          :value="item.type"
+          :label="item.type"
+        />
       </h-segmented>
     </div>
     <h-result

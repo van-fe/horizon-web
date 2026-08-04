@@ -12,8 +12,8 @@ const items = Array.from({ length: 1200 }, (_, index) => ({
 <template>
   <section class="recycle-scroller-demo">
     <h-segmented v-model:active-key="rowMode" size="small" block aria-label="Row sizing">
-      <h-segmented-item key="fixed" label="Fixed 56px" />
-      <h-segmented-item key="variable" label="Data field" />
+      <h-segmented-item value="fixed" label="Fixed 56px" />
+      <h-segmented-item value="variable" label="Data field" />
     </h-segmented>
 
     <div

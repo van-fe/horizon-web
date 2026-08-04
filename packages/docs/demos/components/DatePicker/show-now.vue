@@ -21,8 +21,8 @@ function chooseTomorrow() {
 <template>
   <section class="date-picker-show-now">
     <h-segmented v-model:active-key="mode" size="small">
-      <h-segmented-item key="built-in" label="Current time" />
-      <h-segmented-item key="custom" label="Tomorrow" />
+      <h-segmented-item value="built-in" label="Current time" />
+      <h-segmented-item value="custom" label="Tomorrow" />
     </h-segmented>
     <h-date-picker
       ref="pickerRef"

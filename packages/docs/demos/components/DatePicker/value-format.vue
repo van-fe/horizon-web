@@ -30,9 +30,9 @@ function serialize(modelValue: unknown) {
 <template>
   <section class="date-picker-value-format">
     <h-segmented v-model:active-key="mode" size="small">
-      <h-segmented-item key="dayjs" label="Dayjs" />
-      <h-segmented-item key="string" label="String" />
-      <h-segmented-item key="unix" label="Unix" />
+      <h-segmented-item value="dayjs" label="Dayjs" />
+      <h-segmented-item value="string" label="String" />
+      <h-segmented-item value="unix" label="Unix" />
     </h-segmented>
     <h-date-picker
       v-model="value"

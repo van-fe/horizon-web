@@ -7,10 +7,10 @@
           <code>size</code>
         </span>
         <h-segmented v-model:active-key="sizeMode" size="small" block>
-          <h-segmented-item key="small" label="Small" />
-          <h-segmented-item key="medium" label="Medium" />
-          <h-segmented-item key="large" label="Large" />
-          <h-segmented-item key="custom" label="Custom" />
+          <h-segmented-item value="small" label="Small" />
+          <h-segmented-item value="medium" label="Medium" />
+          <h-segmented-item value="large" label="Large" />
+          <h-segmented-item value="custom" label="Custom" />
         </h-segmented>
       </label>
       <label v-if="sizeMode === 'custom'" class="docs-demo__control">

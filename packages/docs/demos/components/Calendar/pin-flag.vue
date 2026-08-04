@@ -64,9 +64,9 @@ async function onCreateFinished(flag: HCalendarPinFlag) {
     <label class="calendar-flags-demo-option">
       <span>After creation</span>
       <h-segmented v-model:active-key="finishBehavior" size="small">
-        <h-segmented-item key="Discard" label="Discard" />
-        <h-segmented-item key="Keep" label="Keep" />
-        <h-segmented-item key="Rename" label="Rename" />
+        <h-segmented-item value="Discard" label="Discard" />
+        <h-segmented-item value="Keep" label="Keep" />
+        <h-segmented-item value="Rename" label="Rename" />
       </h-segmented>
     </label>
     <p aria-live="polite">{{ status }}</p>

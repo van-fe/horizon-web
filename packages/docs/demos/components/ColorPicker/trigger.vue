@@ -13,13 +13,13 @@ const showValue = computed(() => displayMode.value === 'square-text');
   <div class="color-trigger-demo">
     <div class="color-trigger-demo__options">
       <h-segmented v-model:active-key="displayMode" size="small">
-        <h-segmented-item key="square" label="Swatch" />
-        <h-segmented-item key="square-text" label="Value" />
+        <h-segmented-item value="square" label="Swatch" />
+        <h-segmented-item value="square-text" label="Value" />
       </h-segmented>
       <h-segmented v-model:active-key="state" size="small">
-        <h-segmented-item key="default" label="Default" />
-        <h-segmented-item key="disabled" label="Disabled" />
-        <h-segmented-item key="clearable" label="Clearable" />
+        <h-segmented-item value="default" label="Default" />
+        <h-segmented-item value="disabled" label="Disabled" />
+        <h-segmented-item value="clearable" label="Clearable" />
       </h-segmented>
     </div>
 

@@ -13,9 +13,9 @@ const clearable = ref(true);
   <section class="input-number-style-demo">
     <div class="input-number-style-demo__controls">
       <h-segmented v-model:active-key="inputStyle" size="small" block aria-label="Input style">
-        <h-segmented-item key="normal" label="Normal" />
-        <h-segmented-item key="emphasize" label="Emphasize" />
-        <h-segmented-item key="no-border" label="No border" />
+        <h-segmented-item value="normal" label="Normal" />
+        <h-segmented-item value="emphasize" label="Emphasize" />
+        <h-segmented-item value="no-border" label="No border" />
       </h-segmented>
       <h-switch v-model="disabled" label="Disabled" status />
       <h-switch v-model="clearable" label="Clearable" status />

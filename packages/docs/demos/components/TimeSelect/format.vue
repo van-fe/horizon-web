@@ -9,8 +9,8 @@ const format = ref<'HH:mm' | 'hh:mm A'>('hh:mm A');
   <section class="docs-demo">
     <div class="docs-demo__controls">
       <h-segmented v-model:active-key="format" size="small">
-        <h-segmented-item key="HH:mm" label="24-hour" />
-        <h-segmented-item key="hh:mm A" label="12-hour" />
+        <h-segmented-item value="HH:mm" label="24-hour" />
+        <h-segmented-item value="hh:mm A" label="12-hour" />
       </h-segmented>
     </div>
     <h-time-select

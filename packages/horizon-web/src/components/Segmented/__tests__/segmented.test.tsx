@@ -22,8 +22,8 @@ describe('Segmented.tsx', () => {
 
     const wrapper = mount(() => (
       <HSegmented defaultActiveKey={defaultActiveKey.value}>
-        <HSegmentedItem key="1">1</HSegmentedItem>
-        <HSegmentedItem key="2">2</HSegmentedItem>
+        <HSegmentedItem value="1">1</HSegmentedItem>
+        <HSegmentedItem value="2">2</HSegmentedItem>
       </HSegmented>
     ));
     const element = wrapper.findComponent(HSegmented);
@@ -59,7 +59,7 @@ describe('Segmented.tsx', () => {
           {Array(max)
             .fill(0)
             .map((_, index) => (
-              <HSegmentedItem key={index} label={`Label ${index}`} />
+              <HSegmentedItem key={index} value={index} label={`Label ${index}`} />
             ))}
         </HSegmented>
       </div>
@@ -83,8 +83,8 @@ describe('Segmented.tsx', () => {
     const wrapper = mount(() => (
       <div style={{ width: `${bw}px`, display: 'block' }}>
         <HSegmented block>
-          <HSegmentedItem key="1">1</HSegmentedItem>
-          <HSegmentedItem key="2">2</HSegmentedItem>
+          <HSegmentedItem value="1">1</HSegmentedItem>
+          <HSegmentedItem value="2">2</HSegmentedItem>
         </HSegmented>
       </div>
     ));
@@ -121,10 +121,10 @@ describe('Segmented.tsx', () => {
     const fn = vi.fn();
     const wrapper = mount(() => (
       <HSegmented defaultActiveKey="2" onChange={fn}>
-        <HSegmentedItem key="1" disabled>
+        <HSegmentedItem value="1" disabled>
           1
         </HSegmentedItem>
-        <HSegmentedItem key="2">2</HSegmentedItem>
+        <HSegmentedItem value="2">2</HSegmentedItem>
       </HSegmented>
     ));
 
@@ -164,8 +164,8 @@ describe('Segmented.tsx', () => {
     });
     const wrapper = mount(() => (
       <HSegmented activeKey={activeKey.value} onChange={fn}>
-        <HSegmentedItem key="1">1</HSegmentedItem>
-        <HSegmentedItem key="2">2</HSegmentedItem>
+        <HSegmentedItem value="1">1</HSegmentedItem>
+        <HSegmentedItem value="2">2</HSegmentedItem>
       </HSegmented>
     ));
 
@@ -185,8 +185,8 @@ describe('Segmented.tsx', () => {
     const size = ref();
     const wrapper = mount(() => (
       <HSegmented size={size.value}>
-        <HSegmentedItem key="1">1</HSegmentedItem>
-        <HSegmentedItem key="2">2</HSegmentedItem>
+        <HSegmentedItem value="1">1</HSegmentedItem>
+        <HSegmentedItem value="2">2</HSegmentedItem>
       </HSegmented>
     ));
 
@@ -212,7 +212,7 @@ describe('Segmented.tsx', () => {
     const wrapper = mount(() => (
       <HSegmented activeKey={activeKey.value} onChange={fn}>
         {items.value.map(item => (
-          <HSegmentedItem key={item} label={`Label ${item}`} />
+          <HSegmentedItem key={item} value={item} label={`Label ${item}`} />
         ))}
       </HSegmented>
     ));
@@ -233,8 +233,8 @@ describe('Segmented.tsx', () => {
     });
     const wrapper = mount(() => (
       <HSegmented activeKey={activeKey.value} onChange={fn}>
-        <HSegmentedItem key="1" label="1" />
-        <HSegmentedItem key="2">
+        <HSegmentedItem value="1" label="1" />
+        <HSegmentedItem value="2">
           <div test-id="custom">2</div>
         </HSegmentedItem>
       </HSegmented>
@@ -249,8 +249,8 @@ describe('Segmented.tsx', () => {
   test('test custom icon #render', async () => {
     const wrapper = mount(() => (
       <HSegmented>
-        <HSegmentedItem key="1" label="1" icon="layout" />
-        <HSegmentedItem key="2" label="2" icon="list" />
+        <HSegmentedItem value="1" label="1" icon="layout" />
+        <HSegmentedItem value="2" label="2" icon="list" />
       </HSegmented>
     ));
 
@@ -311,8 +311,8 @@ describe('Segmented.tsx', () => {
         <HForm model={formValue} validateTrigger="change" ref={formInst} onValidate={onValidate}>
           <HFormItem prop="category" required>
             <HSegmented form activeKey={formValue.category} onChange={fn}>
-              <HSegmentedItem key="1" label="1" />
-              <HSegmentedItem key="2" label="2" />
+              <HSegmentedItem value="1" label="1" />
+              <HSegmentedItem value="2" label="2" />
             </HSegmented>
           </HFormItem>
         </HForm>
@@ -377,11 +377,11 @@ describe('Segmented.tsx', () => {
     const activeKey = ref<HSegmentedValue>('one');
     const wrapper = mount(() => (
       <HSegmented v-model:activeKey={activeKey.value}>
-        <HSegmentedItem key="one">One</HSegmentedItem>
-        <HSegmentedItem key="disabled" disabled>
+        <HSegmentedItem value="one">One</HSegmentedItem>
+        <HSegmentedItem value="disabled" disabled>
           Disabled
         </HSegmentedItem>
-        <HSegmentedItem key="two">Two</HSegmentedItem>
+        <HSegmentedItem value="two">Two</HSegmentedItem>
       </HSegmented>
     ));
     const items = wrapper.findAll('[role="tab"]');
@@ -391,5 +391,78 @@ describe('Segmented.tsx', () => {
     expect(activeKey.value).toBe('two');
     expect(items[1].attributes('aria-disabled')).toBe('true');
     expect(items[1].attributes('tabindex')).toBe('-1');
+  });
+
+  test('uses item values for selection and events independently of vnode keys', async () => {
+    const activeKey = ref<HSegmentedValue>('first');
+    const wrapper = mount(() => (
+      <HSegmented v-model:activeKey={activeKey.value}>
+        <HSegmentedItem key="render-first" value="first">
+          First
+        </HSegmentedItem>
+        <HSegmentedItem key="render-second" value={2}>
+          Second
+        </HSegmentedItem>
+      </HSegmented>
+    ));
+    const segmented = wrapper.findComponent(HSegmented);
+    const itemComponents = wrapper.findAllComponents(HSegmentedItem);
+    const items = wrapper.findAll('[role="tab"]');
+
+    expect(items[0].attributes('aria-selected')).toBe('true');
+    expect(items[1].attributes('aria-selected')).toBe('false');
+
+    await items[1].trigger('click');
+
+    expect(activeKey.value).toBe(2);
+    expect(items[0].attributes('aria-selected')).toBe('false');
+    expect(items[1].attributes('aria-selected')).toBe('true');
+    expect(itemComponents[1].emitted('click')).toEqual([[2]]);
+    expect(segmented.emitted('update:activeKey')).toEqual([[2]]);
+    expect(segmented.emitted('change')).toEqual([[2]]);
+  });
+
+  test('refreshes the responsive registry when item values change', async () => {
+    const activeKey = ref<HSegmentedValue>('first');
+    const firstValue = ref<HSegmentedValue>('first');
+    const secondValue = ref<HSegmentedValue>('second');
+    const wrapper = mount(() => (
+      <HSegmented activeKey={activeKey.value}>
+        <HSegmentedItem key="render-first" value={firstValue.value}>
+          First
+        </HSegmentedItem>
+        <HSegmentedItem key="render-second" value={secondValue.value}>
+          Second
+        </HSegmentedItem>
+      </HSegmented>
+    ));
+    const items = wrapper.findAll('[role="tab"]');
+    const indicator = wrapper.find('.h-segmented__indicator');
+
+    Object.defineProperties(items[0].element, {
+      clientWidth: { configurable: true, value: 40 },
+      offsetLeft: { configurable: true, value: 0 },
+    });
+    Object.defineProperties(items[1].element, {
+      clientWidth: { configurable: true, value: 90 },
+      offsetLeft: { configurable: true, value: 50 },
+    });
+
+    activeKey.value = 'second';
+    await nextTick();
+    expect(indicator.attributes('style')).toContain('width: 90px');
+    expect(indicator.attributes('style')).toContain('translate3d(50px, 0, 0)');
+
+    firstValue.value = 'second';
+    secondValue.value = 'first';
+    await nextTick();
+    expect(items[0].attributes('aria-selected')).toBe('true');
+    expect(indicator.attributes('style')).toContain('width: 40px');
+    expect(indicator.attributes('style')).toContain('translate3d(0px, 0, 0)');
+
+    firstValue.value = 'third';
+    await nextTick();
+    expect(items.every(item => item.attributes('aria-selected') === 'false')).toBe(true);
+    expect(indicator.attributes('style')).toBeUndefined();
   });
 });

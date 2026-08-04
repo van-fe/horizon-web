@@ -21,9 +21,9 @@ async function submit() {
     <h-form ref="formRef" :model="values" label-position="top">
       <h-form-item label="发布节奏" prop="cadence" required>
         <h-segmented v-model:active-key="values.cadence" form block>
-          <h-segmented-item key="Weekly" label="Weekly" />
-          <h-segmented-item key="Biweekly" label="Biweekly" />
-          <h-segmented-item key="Monthly" label="Monthly" />
+          <h-segmented-item value="Weekly" label="Weekly" />
+          <h-segmented-item value="Biweekly" label="Biweekly" />
+          <h-segmented-item value="Monthly" label="Monthly" />
         </h-segmented>
       </h-form-item>
       <h-button @click="submit">保存</h-button>

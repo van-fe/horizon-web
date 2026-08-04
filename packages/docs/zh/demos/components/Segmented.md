@@ -1,6 +1,6 @@
 ## 基本用法
 
-通过 `active-key` 或 `v-model:active-key` 读取当前选项。适合在少量互斥视图之间快速切换。
+每个 `SegmentedItem` 都应通过唯一的 `value` 明确声明选项值，并通过 `active-key` 或 `v-model:active-key` 读取当前选项。适合在少量互斥视图之间快速切换。
 
 :::demo components/Segmented/basic.vue :::
 

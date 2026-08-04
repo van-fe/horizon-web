@@ -13,17 +13,17 @@ const boundsOffset = ref<OffsetPreset>('center');
       <label>
         <span>Scroll target</span>
         <h-segmented v-model:active-key="scrollOffset" size="small" block>
-          <h-segmented-item key="start" label="Start" />
-          <h-segmented-item key="center" label="Center" />
-          <h-segmented-item key="end" label="End" />
+          <h-segmented-item value="start" label="Start" />
+          <h-segmented-item value="center" label="Center" />
+          <h-segmented-item value="end" label="End" />
         </h-segmented>
       </label>
       <label>
         <span>Active boundary</span>
         <h-segmented v-model:active-key="boundsOffset" size="small" block>
-          <h-segmented-item key="start" label="Start" />
-          <h-segmented-item key="center" label="Center" />
-          <h-segmented-item key="end" label="End" />
+          <h-segmented-item value="start" label="Start" />
+          <h-segmented-item value="center" label="Center" />
+          <h-segmented-item value="end" label="End" />
         </h-segmented>
       </label>
     </div>

@@ -7,8 +7,8 @@
           <code>type</code>
         </span>
         <h-segmented v-model:active-key="type" size="small" block>
-          <h-segmented-item key="horizontal" label="Horizontal" />
-          <h-segmented-item key="vertical" label="Vertical" />
+          <h-segmented-item value="horizontal" label="Horizontal" />
+          <h-segmented-item value="vertical" label="Vertical" />
         </h-segmented>
       </label>
       <label class="docs-demo__control">
@@ -17,9 +17,9 @@
           <code>size</code>
         </span>
         <h-segmented v-model:active-key="size" size="small" block>
-          <h-segmented-item key="small" label="Small" />
-          <h-segmented-item key="medium" label="Medium" />
-          <h-segmented-item key="large" label="Large" />
+          <h-segmented-item value="small" label="Small" />
+          <h-segmented-item value="medium" label="Medium" />
+          <h-segmented-item value="large" label="Large" />
         </h-segmented>
       </label>
       <label class="docs-demo__control">

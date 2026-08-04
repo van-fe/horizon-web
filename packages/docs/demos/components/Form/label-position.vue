@@ -4,22 +4,22 @@
       <div>
         <span>Position</span>
         <h-segmented v-model:active-key="labelPosition" size="small" block>
-          <h-segmented-item key="top" label="Top" />
-          <h-segmented-item key="left" label="Left" />
+          <h-segmented-item value="top" label="Top" />
+          <h-segmented-item value="left" label="Left" />
         </h-segmented>
       </div>
       <div>
         <span>Horizontal</span>
         <h-segmented v-model:active-key="labelJustifyAlign" size="small" block>
-          <h-segmented-item key="left" label="Left" :disabled="labelPosition === 'top'" />
-          <h-segmented-item key="right" label="Right" :disabled="labelPosition === 'top'" />
+          <h-segmented-item value="left" label="Left" :disabled="labelPosition === 'top'" />
+          <h-segmented-item value="right" label="Right" :disabled="labelPosition === 'top'" />
         </h-segmented>
       </div>
       <div>
         <span>Vertical</span>
         <h-segmented v-model:active-key="labelVerticalAlign" size="small" block>
-          <h-segmented-item key="top" label="Top" :disabled="labelPosition === 'top'" />
-          <h-segmented-item key="middle" label="Middle" :disabled="labelPosition === 'top'" />
+          <h-segmented-item value="top" label="Top" :disabled="labelPosition === 'top'" />
+          <h-segmented-item value="middle" label="Middle" :disabled="labelPosition === 'top'" />
         </h-segmented>
       </div>
     </div>

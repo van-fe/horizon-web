@@ -16,9 +16,9 @@ const type = computed(() => {
 <template>
   <section class="date-picker-step">
     <h-segmented v-model:active-key="mode" size="small">
-      <h-segmented-item key="hour" label="60 minutes" />
-      <h-segmented-item key="minute" label="5 minutes" />
-      <h-segmented-item key="second" label="10 seconds" />
+      <h-segmented-item value="hour" label="60 minutes" />
+      <h-segmented-item value="minute" label="5 minutes" />
+      <h-segmented-item value="second" label="10 seconds" />
     </h-segmented>
     <h-date-picker
       v-model="value"

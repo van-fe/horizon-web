@@ -12,7 +12,7 @@ const alignments = ['start', 'center', 'end', 'baseline'];
       <label class="docs-demo__control">
         <span>对齐方式</span>
         <h-segmented v-model:active-key="align" size="small">
-          <h-segmented-item v-for="item in alignments" :key="item" :label="item" />
+          <h-segmented-item v-for="item in alignments" :key="item" :value="item" :label="item" />
         </h-segmented>
       </label>
     </div>

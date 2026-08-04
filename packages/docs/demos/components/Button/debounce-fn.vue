@@ -3,9 +3,9 @@
     <div class="button-debounce-demo__controls">
       <span>While saving</span>
       <h-segmented v-model:active-key="debounceType" size="small" block>
-        <h-segmented-item label="disabled" />
-        <h-segmented-item label="loading" />
-        <h-segmented-item label="none" />
+        <h-segmented-item value="disabled" label="disabled" />
+        <h-segmented-item value="loading" label="loading" />
+        <h-segmented-item value="none" label="none" />
       </h-segmented>
     </div>
 

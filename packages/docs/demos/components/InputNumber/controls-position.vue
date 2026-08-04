@@ -11,9 +11,9 @@ const controlsPosition = computed(() => (mode.value === 'between' ? 'between' : 
 <template>
   <section class="input-number-controls-demo">
     <h-segmented v-model:active-key="mode" size="small" block aria-label="Control position">
-      <h-segmented-item key="right" label="Right" />
-      <h-segmented-item key="between" label="Between" />
-      <h-segmented-item key="none" label="Hidden" />
+      <h-segmented-item value="right" label="Right" />
+      <h-segmented-item value="between" label="Between" />
+      <h-segmented-item value="none" label="Hidden" />
     </h-segmented>
     <h-input-number
       v-model="value"

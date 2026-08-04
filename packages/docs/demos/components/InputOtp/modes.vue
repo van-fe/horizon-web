@@ -9,9 +9,9 @@ const code = ref('A7');
   <section class="docs-demo">
     <div class="docs-demo__controls">
       <h-segmented v-model:active-key="mode" size="small">
-        <h-segmented-item key="masked" label="Masked" />
-        <h-segmented-item key="alphanumeric" label="Alphanumeric" />
-        <h-segmented-item key="disabled" label="Disabled" />
+        <h-segmented-item value="masked" label="Masked" />
+        <h-segmented-item value="alphanumeric" label="Alphanumeric" />
+        <h-segmented-item value="disabled" label="Disabled" />
       </h-segmented>
     </div>
 

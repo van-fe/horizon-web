@@ -14,9 +14,9 @@ const disabled = ref(false);
       <label>
         <span>Appearance</span>
         <h-segmented v-model:active-key="inputStyle" size="small" block>
-          <h-segmented-item key="normal" label="Normal" />
-          <h-segmented-item key="emphasize" label="Emphasize" />
-          <h-segmented-item key="no-border" label="No border" />
+          <h-segmented-item value="normal" label="Normal" />
+          <h-segmented-item value="emphasize" label="Emphasize" />
+          <h-segmented-item value="no-border" label="No border" />
         </h-segmented>
       </label>
       <h-switch v-model="disabled" label="Disabled" status />

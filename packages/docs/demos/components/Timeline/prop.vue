@@ -20,8 +20,8 @@ const foldConfig = {
 <template>
   <section class="timeline-prop-demo">
     <h-segmented v-model:active-key="sort" size="small" block aria-label="时间线排序">
-      <h-segmented-item key="order" label="Order" />
-      <h-segmented-item key="reverse" label="Reverse" />
+      <h-segmented-item value="order" label="Order" />
+      <h-segmented-item value="reverse" label="Reverse" />
     </h-segmented>
 
     <h-timeline :sort="sort" :first="{ color: 'var(--h-bg-brand-default)' }">

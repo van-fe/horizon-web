@@ -11,7 +11,7 @@ const fits: ObjectFit[] = ['fill', 'contain', 'cover', 'none', 'scale-down'];
   <section class="docs-demo">
     <div class="docs-demo__controls">
       <h-segmented v-model:active-key="fit" size="small">
-        <h-segmented-item v-for="item in fits" :key="item" :label="item" />
+        <h-segmented-item v-for="item in fits" :key="item" :value="item" :label="item" />
       </h-segmented>
     </div>
 

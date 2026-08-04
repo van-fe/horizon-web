@@ -12,9 +12,9 @@ const panelKeyword = ref('');
 <template>
   <div class="docs-demo">
     <h-segmented v-model:active-key="mode" size="small">
-      <h-segmented-item key="trigger" label="Trigger" />
-      <h-segmented-item key="built-in" label="Panel" />
-      <h-segmented-item key="custom" label="Custom" />
+      <h-segmented-item value="trigger" label="Trigger" />
+      <h-segmented-item value="built-in" label="Panel" />
+      <h-segmented-item value="custom" label="Custom" />
     </h-segmented>
     <h-cascader
       v-model="value"

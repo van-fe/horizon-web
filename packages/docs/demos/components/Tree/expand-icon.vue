@@ -33,8 +33,8 @@ const expandIcon = computed(() =>
 <template>
   <div class="docs-demo">
     <h-segmented v-model:active-key="iconMode" size="small">
-      <h-segmented-item key="rotate" label="Rotating arrow" />
-      <h-segmented-item key="explicit" label="Plus / minus" />
+      <h-segmented-item value="rotate" label="Rotating arrow" />
+      <h-segmented-item value="explicit" label="Plus / minus" />
     </h-segmented>
     <h-tree
       v-model:expand-values="expandValues"

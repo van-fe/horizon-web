@@ -9,8 +9,8 @@ const visible = ref(true);
   <section class="docs-demo">
     <div class="docs-demo__controls">
       <h-segmented v-model:active-key="name" size="small">
-        <h-segmented-item key="collapse" label="Vertical" />
-        <h-segmented-item key="collapse-horizontal" label="Horizontal" />
+        <h-segmented-item value="collapse" label="Vertical" />
+        <h-segmented-item value="collapse-horizontal" label="Horizontal" />
       </h-segmented>
       <h-switch v-model="visible" label="Expanded" />
     </div>

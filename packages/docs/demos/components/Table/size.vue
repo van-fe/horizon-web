@@ -26,6 +26,7 @@ const deployments = [
         <h-segmented-item
           v-for="option in densityOptions"
           :key="option.key"
+          :value="option.key"
           :label="option.label"
         />
       </h-segmented>

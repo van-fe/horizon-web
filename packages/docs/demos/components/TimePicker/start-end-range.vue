@@ -16,8 +16,8 @@ watch(mode, nextMode => {
 <template>
   <section class="time-picker-start-end-demo">
     <h-segmented v-model:active-key="mode" size="small" block aria-label="候选时间窗口">
-      <h-segmented-item key="day" label="08:00–21:00" />
-      <h-segmented-item key="overnight" label="00:00–次日 06:00" />
+      <h-segmented-item value="day" label="08:00–21:00" />
+      <h-segmented-item value="overnight" label="00:00–次日 06:00" />
     </h-segmented>
     <h-time-picker
       v-model="value"

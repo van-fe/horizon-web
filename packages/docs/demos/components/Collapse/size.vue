@@ -4,16 +4,16 @@
       <div>
         <span>Size</span>
         <h-segmented v-model:active-key="size" size="small">
-          <h-segmented-item key="small" label="Small" />
-          <h-segmented-item key="medium" label="Medium" />
-          <h-segmented-item key="large" label="Large" />
+          <h-segmented-item value="small" label="Small" />
+          <h-segmented-item value="medium" label="Medium" />
+          <h-segmented-item value="large" label="Large" />
         </h-segmented>
       </div>
       <div>
         <span>Icon</span>
         <h-segmented v-model:active-key="iconPosition" size="small">
-          <h-segmented-item key="left" label="Left" />
-          <h-segmented-item key="right" label="Right" />
+          <h-segmented-item value="left" label="Left" />
+          <h-segmented-item value="right" label="Right" />
         </h-segmented>
       </div>
     </div>

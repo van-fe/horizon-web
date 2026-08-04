@@ -12,17 +12,17 @@ const fit = ref<NonNullable<AvatarProps['fit']>>('cover');
       <label class="docs-demo__control">
         <span class="docs-demo__control-label">Size</span>
         <h-segmented v-model:active-key="size" size="small">
-          <h-segmented-item key="small" label="Small" />
-          <h-segmented-item key="medium" label="Medium" />
-          <h-segmented-item key="large" label="Large" />
+          <h-segmented-item value="small" label="Small" />
+          <h-segmented-item value="medium" label="Medium" />
+          <h-segmented-item value="large" label="Large" />
         </h-segmented>
       </label>
       <label class="docs-demo__control">
         <span class="docs-demo__control-label">Fit</span>
         <h-segmented v-model:active-key="fit" size="small">
-          <h-segmented-item key="contain" label="Contain" />
-          <h-segmented-item key="cover" label="Cover" />
-          <h-segmented-item key="fill" label="Fill" />
+          <h-segmented-item value="contain" label="Contain" />
+          <h-segmented-item value="cover" label="Cover" />
+          <h-segmented-item value="fill" label="Fill" />
         </h-segmented>
       </label>
     </div>

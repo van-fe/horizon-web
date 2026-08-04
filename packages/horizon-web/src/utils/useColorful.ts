@@ -66,25 +66,35 @@ export function getCssVariableByStatus(
   component: string,
   color: string,
   type: 'default' | 'plain' | 'text' | 'link' | 'ghost',
+  status: 'primary' | 'normal' | 'danger' = 'primary',
 ) {
   const generatedColor = generator(color);
   const colorList = generatedColor.colors;
   const isColorDark = generatedColor.colorIns.isDark();
+  const variable = (...segments: string[]) => cssVariableKey(component, ...segments);
 
   switch (type) {
     case 'default': {
       const mainColor = isColorDark ? cssVariable('text-inverse') : cssVariable('text-primary');
+      const borderColor = cssVariable('border-transparent');
       return {
-        [cssVariableKey(component, 'color', '-primary')]: mainColor,
-        [cssVariableKey(component, 'bg', '-primary')]: colorList[5],
-        [cssVariableKey(component, 'color', '-primary', '-hover')]: mainColor,
-        [cssVariableKey(component, 'bg', '-primary', '-hover')]: colorList[4],
-        [cssVariableKey(component, 'color', '-primary', '-press')]: mainColor,
-        [cssVariableKey(component, 'bg', '-primary', '-press')]: colorList[6],
-        [cssVariableKey(component, 'color', '-primary', '-disabled')]: mainColor,
-        [cssVariableKey(component, 'bg', '-primary', '-disabled')]: generatedColor.colorIns
+        [variable('color', status)]: mainColor,
+        [variable('background', status)]: colorList[5],
+        [variable('border-color', status)]: borderColor,
+        [variable('color', status, 'activated')]: mainColor,
+        [variable('background', status, 'activated')]: colorList[5],
+        [variable('border-color', status, 'activated')]: borderColor,
+        [variable('color', status, 'hover')]: mainColor,
+        [variable('background', status, 'hover')]: colorList[4],
+        [variable('border-color', status, 'hover')]: borderColor,
+        [variable('color', status, 'press')]: mainColor,
+        [variable('background', status, 'press')]: colorList[6],
+        [variable('border-color', status, 'press')]: borderColor,
+        [variable('color', status, 'disabled')]: mainColor,
+        [variable('background', status, 'disabled')]: generatedColor.colorIns
           .mix('#FFF', 70)
           .toHex8String(),
+        [variable('border-color', status, 'disabled')]: borderColor,
       };
     }
     case 'plain': {
@@ -92,19 +102,21 @@ export function getCssVariableByStatus(
       const disabledColor = generatedColor.colorIns.mix('#FFF', 70).toHex8String();
 
       return {
-        [cssVariableKey(component, 'color', '-primary', '-plain')]: colorList[5],
-        [cssVariableKey(component, 'bg', '-primary', '-plain')]: backgroundColor,
-        [cssVariableKey(component, 'border-color', '-primary', '-plain')]: colorList[5],
-        [cssVariableKey(component, 'color', '-primary', '-plain', '-hover')]: colorList[4],
-        [cssVariableKey(component, 'bg', '-primary', '-plain', '-hover')]: backgroundColor,
-        [cssVariableKey(component, 'border-color', '-primary', '-plain', '-hover')]: colorList[4],
-        [cssVariableKey(component, 'color', '-primary', '-plain', '-press')]: colorList[6],
-        [cssVariableKey(component, 'bg', '-primary', '-plain', '-press')]: backgroundColor,
-        [cssVariableKey(component, 'border-color', '-primary', '-plain', '-press')]: colorList[6],
-        [cssVariableKey(component, 'color', '-primary', '-plain', '-disabled')]: disabledColor,
-        [cssVariableKey(component, 'bg', '-primary', '-plain', '-disabled')]: backgroundColor,
-        [cssVariableKey(component, 'border-color', '-primary', '-plain', '-disabled')]:
-          disabledColor,
+        [variable('color', status, 'plain')]: colorList[5],
+        [variable('background', status, 'plain')]: backgroundColor,
+        [variable('border-color', status, 'plain')]: colorList[5],
+        [variable('color', status, 'plain', 'activated')]: colorList[5],
+        [variable('background', status, 'plain', 'activated')]: backgroundColor,
+        [variable('border-color', status, 'plain', 'activated')]: colorList[5],
+        [variable('color', status, 'plain', 'hover')]: colorList[4],
+        [variable('background', status, 'plain', 'hover')]: backgroundColor,
+        [variable('border-color', status, 'plain', 'hover')]: colorList[4],
+        [variable('color', status, 'plain', 'press')]: colorList[6],
+        [variable('background', status, 'plain', 'press')]: backgroundColor,
+        [variable('border-color', status, 'plain', 'press')]: colorList[6],
+        [variable('color', status, 'plain', 'disabled')]: disabledColor,
+        [variable('background', status, 'plain', 'disabled')]: backgroundColor,
+        [variable('border-color', status, 'plain', 'disabled')]: disabledColor,
       };
     }
     case 'ghost': {
@@ -114,40 +126,41 @@ export function getCssVariableByStatus(
       const disabledColor = generatedColor.colorIns.setAlpha(0.5).toHex8String();
 
       return {
-        [cssVariableKey(component, 'color', '-primary', '-plain', '-ghost')]: mainColor,
-        [cssVariableKey(component, 'border-color', '-primary', '-plain', '-ghost')]: mainColor,
-        [cssVariableKey(component, 'color', '-primary', '-plain', '-ghost', '-hover')]:
-          colorList[4],
-        [cssVariableKey(component, 'border-color', '-primary', '-plain', '-ghost', '-hover')]:
-          colorList[4],
-        [cssVariableKey(component, 'color', '-primary', '-plain', '-ghost', '-press')]:
-          colorList[6],
-        [cssVariableKey(component, 'border-color', '-primary', '-plain', '-ghost', '-press')]:
-          colorList[6],
-        [cssVariableKey(component, 'color', '-primary', '-plain', '-ghost', '-disabled')]:
-          disabledColor,
-        [cssVariableKey(component, 'border-color', '-primary', '-plain', '-ghost', '-disabled')]:
-          disabledColor,
+        [variable('color', status, 'plain', 'ghost')]: mainColor,
+        [variable('border-color', status, 'plain', 'ghost')]: mainColor,
+        [variable('color', status, 'plain', 'ghost', 'activated')]: mainColor,
+        [variable('border-color', status, 'plain', 'ghost', 'activated')]: mainColor,
+        [variable('color', status, 'plain', 'ghost', 'hover')]: colorList[4],
+        [variable('border-color', status, 'plain', 'ghost', 'hover')]: colorList[4],
+        [variable('color', status, 'plain', 'ghost', 'press')]: colorList[6],
+        [variable('border-color', status, 'plain', 'ghost', 'press')]: colorList[6],
+        [variable('color', status, 'plain', 'ghost', 'disabled')]: disabledColor,
+        [variable('border-color', status, 'plain', 'ghost', 'disabled')]: disabledColor,
       };
     }
     case 'link': {
       return {
-        [cssVariableKey(component, 'color', '-primary', '-link')]: colorList[5],
-        [cssVariableKey(component, 'color', '-primary', '-link', '-hover')]: colorList[4],
-        [cssVariableKey(component, 'color', '-primary', '-link', '-press')]: colorList[6],
-        [cssVariableKey(component, 'color', '-primary', '-link', '-disabled')]:
-          generatedColor.colorIns.mix('#FFF', 70).toHex8String(),
+        [variable('color', status, 'link')]: colorList[5],
+        [variable('color', status, 'link', 'activated')]: colorList[5],
+        [variable('color', status, 'link', 'hover')]: colorList[4],
+        [variable('color', status, 'link', 'press')]: colorList[6],
+        [variable('color', status, 'link', 'disabled')]: generatedColor.colorIns
+          .mix('#FFF', 70)
+          .toHex8String(),
       };
     }
     case 'text': {
       return {
-        [cssVariableKey(component, 'color', '-primary', '-text')]: colorList[5],
-        [cssVariableKey(component, 'color', '-primary', '-text', '-hover')]: colorList[5],
-        [cssVariableKey(component, 'color', '-primary', '-text', '-press')]: colorList[5],
-        [cssVariableKey(component, 'color', '-primary', '-text', '-disabled')]:
-          generatedColor.colorIns.mix('#FFF', 70).toHex8String(),
-        [cssVariableKey(component, 'border-color', '-primary', '-text', '-disabled')]:
-          'transparent',
+        [variable('color', status, 'text')]: colorList[5],
+        [variable('color', status, 'text', 'activated')]: colorList[5],
+        [variable('color', status, 'text', 'activated', 'hover')]: colorList[4],
+        [variable('color', status, 'text', 'activated', 'press')]: colorList[6],
+        [variable('color', status, 'text', 'hover')]: colorList[4],
+        [variable('color', status, 'text', 'press')]: colorList[6],
+        [variable('color', status, 'text', 'disabled')]: generatedColor.colorIns
+          .mix('#FFF', 70)
+          .toHex8String(),
+        [variable('border-color', status, 'text', 'disabled')]: 'transparent',
       };
     }
   }

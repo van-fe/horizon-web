@@ -14,7 +14,7 @@ const presets = ['small', 'medium', 'large', 'custom'];
       <label class="docs-demo__control">
         <span>间距规格</span>
         <h-segmented v-model:active-key="preset" size="small">
-          <h-segmented-item v-for="item in presets" :key="item" :label="item" />
+          <h-segmented-item v-for="item in presets" :key="item" :value="item" :label="item" />
         </h-segmented>
       </label>
       <label v-if="preset === 'custom'" class="docs-demo__control docs-demo__control--grow">

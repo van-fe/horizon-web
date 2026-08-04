@@ -12,8 +12,8 @@ const confirmType = computed(() => (mode.value === 'blur' ? 'blur' : undefined))
 <template>
   <section class="date-picker-confirm-type">
     <h-segmented v-model:active-key="mode" size="small">
-      <h-segmented-item key="enter" label="Enter" />
-      <h-segmented-item key="blur" label="Blur or Enter" />
+      <h-segmented-item value="enter" label="Enter" />
+      <h-segmented-item value="blur" label="Blur or Enter" />
     </h-segmented>
     <h-date-picker
       v-model="value"

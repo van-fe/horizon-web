@@ -34,10 +34,10 @@ const reserveKeyword = computed<ReserveKeyword>(() => {
 <template>
   <div class="docs-demo">
     <h-segmented v-model:active-key="mode" size="small" block>
-      <h-segmented-item key="always" label="Always" />
-      <h-segmented-item key="clear" label="Clear" />
-      <h-segmented-item key="deselect" label="Deselect" />
-      <h-segmented-item key="sticky" label="Sticky" />
+      <h-segmented-item value="always" label="Always" />
+      <h-segmented-item value="clear" label="Clear" />
+      <h-segmented-item value="deselect" label="Deselect" />
+      <h-segmented-item value="sticky" label="Sticky" />
     </h-segmented>
     <h-tree-select
       v-model="selectedValues"

@@ -11,9 +11,9 @@ const value = ref(dayjs().add(1, 'day').hour(10).minute(30).second(20));
 <template>
   <section class="date-picker-datetime">
     <h-segmented v-model:active-key="type" size="small">
-      <h-segmented-item key="datetime" label="Date & time" />
-      <h-segmented-item key="date-minutes" label="Minutes" />
-      <h-segmented-item key="date-seconds" label="Seconds" />
+      <h-segmented-item value="datetime" label="Date & time" />
+      <h-segmented-item value="date-minutes" label="Minutes" />
+      <h-segmented-item value="date-seconds" label="Seconds" />
     </h-segmented>
     <h-date-picker v-model="value" :type="type" />
   </section>

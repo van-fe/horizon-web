@@ -14,9 +14,9 @@ watch(type, nextType => {
   <section class="docs-demo">
     <div class="docs-demo__controls">
       <h-segmented v-model:active-key="type" size="small">
-        <h-segmented-item key="time" label="30 min" />
-        <h-segmented-item key="minutes" label="3 h / 5 min" />
-        <h-segmented-item key="seconds" label="3 h / 5 min / 10 s" />
+        <h-segmented-item value="time" label="30 min" />
+        <h-segmented-item value="minutes" label="3 h / 5 min" />
+        <h-segmented-item value="seconds" label="3 h / 5 min / 10 s" />
       </h-segmented>
     </div>
 

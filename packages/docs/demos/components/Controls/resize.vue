@@ -1,9 +1,9 @@
 <template>
   <div class="controls-resize-demo">
     <h-segmented v-model:active-key="widthKey" size="small">
-      <h-segmented-item key="120" label="120 px" />
-      <h-segmented-item key="200" label="200 px" />
-      <h-segmented-item key="320" label="320 px" />
+      <h-segmented-item value="120" label="120 px" />
+      <h-segmented-item value="200" label="200 px" />
+      <h-segmented-item value="320" label="320 px" />
     </h-segmented>
 
     <h-hover v-slot="{ hover }">

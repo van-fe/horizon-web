@@ -11,8 +11,8 @@ const zIndex = ref('600');
       <label class="docs-demo__control">
         <span>遮罩层级</span>
         <h-segmented v-model:active-key="zIndex" size="small">
-          <h-segmented-item label="400" />
-          <h-segmented-item label="600" />
+          <h-segmented-item value="400" label="400" />
+          <h-segmented-item value="600" label="600" />
         </h-segmented>
       </label>
       <h-button @click="visible = true">比较层级</h-button>

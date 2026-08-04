@@ -30,7 +30,12 @@ const config = computed(() => configs[mode.value]);
 <template>
   <section class="docs-demo">
     <h-segmented v-model:active-key="mode" size="small">
-      <h-segmented-item v-for="item in modes" :key="item.value" :label="item.label" />
+      <h-segmented-item
+        v-for="item in modes"
+        :key="item.value"
+        :value="item.value"
+        :label="item.label"
+      />
     </h-segmented>
 
     <div class="count-preview">

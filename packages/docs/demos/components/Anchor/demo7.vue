@@ -13,8 +13,8 @@ const deliveryTitle = ref('Delivery');
       <label>
         <span>Size</span>
         <h-segmented v-model:active-key="size" size="small" block>
-          <h-segmented-item key="small" label="Small" />
-          <h-segmented-item key="medium" label="Medium" />
+          <h-segmented-item value="small" label="Small" />
+          <h-segmented-item value="medium" label="Medium" />
         </h-segmented>
       </label>
       <label class="anchor-dynamic-demo__switch">

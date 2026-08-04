@@ -4,7 +4,12 @@
       <label>
         <span>Corner radius</span>
         <h-segmented v-model:active-key="radius" size="small">
-          <h-segmented-item v-for="option in radiusOptions" :key="option" :label="option" />
+          <h-segmented-item
+            v-for="option in radiusOptions"
+            :key="option"
+            :value="option"
+            :label="option"
+          />
         </h-segmented>
       </label>
       <h-switch v-model="border" label="Show border" status />

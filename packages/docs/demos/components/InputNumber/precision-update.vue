@@ -17,9 +17,9 @@ const stringValue = ref('1234.5678');
       block
       aria-label="Decimal precision"
     >
-      <h-segmented-item key="0" label="0 places" />
-      <h-segmented-item key="2" label="2 places" />
-      <h-segmented-item key="4" label="4 places" />
+      <h-segmented-item value="0" label="0 places" />
+      <h-segmented-item value="2" label="2 places" />
+      <h-segmented-item value="4" label="4 places" />
     </h-segmented>
     <div>
       <label>

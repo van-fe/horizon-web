@@ -1,9 +1,9 @@
 <template>
   <section class="grid-scroller-demo">
     <h-segmented v-model:active-key="gridItems" size="small" block aria-label="Grid columns">
-      <h-segmented-item :key="2" label="2 columns" />
-      <h-segmented-item :key="3" label="3 columns" />
-      <h-segmented-item :key="4" label="4 columns" />
+      <h-segmented-item :value="2" label="2 columns" />
+      <h-segmented-item :value="3" label="3 columns" />
+      <h-segmented-item :value="4" label="4 columns" />
     </h-segmented>
 
     <div class="grid-scroller-demo__viewport" role="region" aria-label="Virtualized grid">

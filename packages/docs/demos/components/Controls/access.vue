@@ -1,9 +1,9 @@
 <template>
   <div class="controls-access-demo">
     <h-segmented v-model:active-key="role" size="small">
-      <h-segmented-item key="viewer" label="Viewer" />
-      <h-segmented-item key="editor" label="Editor" />
-      <h-segmented-item key="admin" label="Admin" />
+      <h-segmented-item value="viewer" label="Viewer" />
+      <h-segmented-item value="editor" label="Editor" />
+      <h-segmented-item value="admin" label="Admin" />
     </h-segmented>
 
     <h-hover v-slot="{ hover }">

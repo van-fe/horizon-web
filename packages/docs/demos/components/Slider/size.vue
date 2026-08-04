@@ -9,9 +9,9 @@ const value = ref(54);
   <section class="docs-demo">
     <div class="docs-demo__controls">
       <h-segmented v-model:active-key="size" size="small">
-        <h-segmented-item key="small" label="Small" />
-        <h-segmented-item key="medium" label="Medium" />
-        <h-segmented-item key="large" label="Large" />
+        <h-segmented-item value="small" label="Small" />
+        <h-segmented-item value="medium" label="Medium" />
+        <h-segmented-item value="large" label="Large" />
       </h-segmented>
     </div>
 

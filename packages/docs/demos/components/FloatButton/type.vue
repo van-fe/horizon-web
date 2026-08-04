@@ -4,8 +4,8 @@
       <label class="docs-demo__control">
         <span class="docs-demo__control-label">Type</span>
         <h-segmented v-model:active-key="type" size="small" block>
-          <h-segmented-item key="normal" label="Normal" />
-          <h-segmented-item key="primary" label="Primary" />
+          <h-segmented-item value="normal" label="Normal" />
+          <h-segmented-item value="primary" label="Primary" />
         </h-segmented>
       </label>
     </div>

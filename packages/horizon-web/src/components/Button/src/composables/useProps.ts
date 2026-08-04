@@ -192,8 +192,8 @@ export const useButtonProps = declarePropType({
     default: false,
   },
   /**
-   * 自定义文字颜色
-   * @en Configuration for color.
+   * 自定义主题颜色，会自动生成默认、悬浮、按下和禁用状态
+   * @en Custom theme color with derived default, hover, pressed, and disabled states.
    */
   color: {
     type: String,

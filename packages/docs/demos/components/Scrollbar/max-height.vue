@@ -9,8 +9,8 @@ const items = computed(() => allItems.slice(0, mode.value === 'short' ? 3 : 12))
 <template>
   <section class="scrollbar-max-demo">
     <h-segmented v-model:active-key="mode" size="small" block aria-label="Content length">
-      <h-segmented-item key="short" label="Short content" />
-      <h-segmented-item key="long" label="Long content" />
+      <h-segmented-item value="short" label="Short content" />
+      <h-segmented-item value="long" label="Long content" />
     </h-segmented>
     <h-scrollbar class="scrollbar-max-demo__scroller" max-height="220px">
       <div class="scrollbar-max-demo__list">

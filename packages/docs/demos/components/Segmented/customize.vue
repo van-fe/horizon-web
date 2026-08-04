@@ -11,7 +11,7 @@ const plans = [
 
 <template>
   <h-segmented v-model:active-key="active" block>
-    <h-segmented-item v-for="plan in plans" :key="plan.key">
+    <h-segmented-item v-for="plan in plans" :key="plan.key" :value="plan.key">
       <template #default>
         <span class="custom-item">
           <a-icon :name="plan.icon" size="16" />

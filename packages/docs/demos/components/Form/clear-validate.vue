@@ -3,8 +3,8 @@
     <div class="form-clear-demo__control" role="group" aria-label="Required mark position">
       <span>Required mark</span>
       <h-segmented v-model:active-key="requireMarkPosition" size="small">
-        <h-segmented-item key="left" label="Left" />
-        <h-segmented-item key="right" label="Right" />
+        <h-segmented-item value="left" label="Left" />
+        <h-segmented-item value="right" label="Right" />
       </h-segmented>
     </div>
 

@@ -28,9 +28,9 @@ onMounted(() => {
   <section class="docs-demo">
     <div class="docs-demo__controls">
       <h-segmented v-model:active-key="mode" size="small">
-        <h-segmented-item key="forward" label="Forward" />
-        <h-segmented-item key="deadline" label="End time" />
-        <h-segmented-item key="calculative" label="Calculative" />
+        <h-segmented-item value="forward" label="Forward" />
+        <h-segmented-item value="deadline" label="End time" />
+        <h-segmented-item value="calculative" label="Calculative" />
       </h-segmented>
     </div>
 

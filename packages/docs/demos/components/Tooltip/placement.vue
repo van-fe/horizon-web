@@ -43,16 +43,16 @@ const activePlacement = ref<TooltipPlacement>('top');
       <label>
         <span>尺寸</span>
         <h-segmented v-model:active-key="size" size="small">
-          <h-segmented-item key="small" label="S" />
-          <h-segmented-item key="medium" label="M" />
-          <h-segmented-item key="large" label="L" />
+          <h-segmented-item value="small" label="S" />
+          <h-segmented-item value="medium" label="M" />
+          <h-segmented-item value="large" label="L" />
         </h-segmented>
       </label>
       <label>
         <span>主题</span>
         <h-segmented v-model:active-key="theme" size="small">
-          <h-segmented-item key="dark" label="Dark" />
-          <h-segmented-item key="light" label="Light" />
+          <h-segmented-item value="dark" label="Dark" />
+          <h-segmented-item value="light" label="Light" />
         </h-segmented>
       </label>
       <label class="tooltip-controls__delay">

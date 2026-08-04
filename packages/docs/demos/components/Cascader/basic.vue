@@ -14,9 +14,9 @@ const status = ref('Ready');
   <div class="docs-demo">
     <div class="docs-demo__controls">
       <h-segmented v-model:active-key="inputStyle" size="small">
-        <h-segmented-item key="normal" label="Normal" />
-        <h-segmented-item key="emphasize" label="Emphasis" />
-        <h-segmented-item key="no-border" label="Plain" />
+        <h-segmented-item value="normal" label="Normal" />
+        <h-segmented-item value="emphasize" label="Emphasis" />
+        <h-segmented-item value="no-border" label="Plain" />
       </h-segmented>
       <h-switch v-model="checkStrictly" label="Independent nodes" />
       <h-switch v-model="disabled" label="Disabled" />

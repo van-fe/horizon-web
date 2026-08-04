@@ -32,9 +32,9 @@ const collapseTagsTooltip = computed(() => tagMode.value === 'tooltip');
 <template>
   <div class="docs-demo">
     <h-segmented v-model:active-key="tagMode" size="small">
-      <h-segmented-item key="all" label="All tags" />
-      <h-segmented-item key="compact" label="Compact" />
-      <h-segmented-item key="tooltip" label="Tooltip" />
+      <h-segmented-item value="all" label="All tags" />
+      <h-segmented-item value="compact" label="Compact" />
+      <h-segmented-item value="tooltip" label="Tooltip" />
     </h-segmented>
     <h-tree-select
       v-model="selectedValues"

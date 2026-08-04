@@ -7,9 +7,9 @@ const size = ref<'small' | 'medium' | 'large'>('medium');
 <template>
   <section class="spin-basic-demo">
     <h-segmented v-model:active-key="size" size="small" block aria-label="Spinner size">
-      <h-segmented-item key="small" label="Small" />
-      <h-segmented-item key="medium" label="Medium" />
-      <h-segmented-item key="large" label="Large" />
+      <h-segmented-item value="small" label="Small" />
+      <h-segmented-item value="medium" label="Medium" />
+      <h-segmented-item value="large" label="Large" />
     </h-segmented>
     <div class="spin-basic-demo__preview">
       <h-spin :size="size" tip="Loading" />

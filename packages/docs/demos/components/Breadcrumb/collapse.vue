@@ -16,8 +16,8 @@ const path = [
   <section class="docs-demo">
     <div class="docs-demo__controls">
       <h-segmented v-model:active-key="displayType" size="small">
-        <h-segmented-item key="full" label="Full" />
-        <h-segmented-item key="ellipsis" label="Ellipsis" />
+        <h-segmented-item value="full" label="Full" />
+        <h-segmented-item value="ellipsis" label="Ellipsis" />
       </h-segmented>
       <label class="breadcrumb-width">
         <span>{{ width }} px</span>

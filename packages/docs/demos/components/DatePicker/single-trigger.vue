@@ -13,9 +13,9 @@ const linkPanels = computed(() => mode.value !== 'independent');
 <template>
   <section class="date-picker-single-trigger">
     <h-segmented v-model:active-key="mode" size="small">
-      <h-segmented-item key="linked" label="Linked panels" />
-      <h-segmented-item key="independent" label="Independent" />
-      <h-segmented-item key="single" label="Single panel" />
+      <h-segmented-item value="linked" label="Linked panels" />
+      <h-segmented-item value="independent" label="Independent" />
+      <h-segmented-item value="single" label="Single panel" />
     </h-segmented>
     <h-date-picker
       v-model="value"

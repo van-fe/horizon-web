@@ -15,8 +15,8 @@ const options: HAutoCompleteOption[] = [
   <section class="docs-demo">
     <div class="docs-demo__controls">
       <h-segmented v-model:active-key="position" size="small">
-        <h-segmented-item key="right" label="Right" />
-        <h-segmented-item key="bottom" label="Bottom" />
+        <h-segmented-item value="right" label="Right" />
+        <h-segmented-item value="bottom" label="Bottom" />
       </h-segmented>
     </div>
 

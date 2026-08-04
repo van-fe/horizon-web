@@ -13,9 +13,9 @@ const content = computed(() => {
   <div class="docs-demo">
     <div class="docs-demo__controls">
       <h-segmented v-model:active-key="mode" size="small">
-        <h-segmented-item key="quick" label="Quick" />
-        <h-segmented-item key="enterable" label="Enterable" />
-        <h-segmented-item key="copy" label="Copy" />
+        <h-segmented-item value="quick" label="Quick" />
+        <h-segmented-item value="enterable" label="Enterable" />
+        <h-segmented-item value="copy" label="Copy" />
       </h-segmented>
     </div>
 

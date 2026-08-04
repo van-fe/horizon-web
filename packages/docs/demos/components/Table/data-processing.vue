@@ -54,9 +54,9 @@ async function refreshProcessing() {
       <label>
         <span>Execution mode</span>
         <h-segmented v-model:active-key="mode" size="small" block>
-          <h-segmented-item key="sync" label="Sync" />
-          <h-segmented-item key="auto" label="Auto" />
-          <h-segmented-item key="worker" label="Worker" />
+          <h-segmented-item value="sync" label="Sync" />
+          <h-segmented-item value="auto" label="Auto" />
+          <h-segmented-item value="worker" label="Worker" />
         </h-segmented>
       </label>
 

@@ -6,9 +6,9 @@ const active = ref('Review');
 
 <template>
   <h-segmented v-model:active-key="active" block>
-    <h-segmented-item key="Brief" label="Brief" />
-    <h-segmented-item key="Design" label="Design" />
-    <h-segmented-item key="Review" label="Review" />
-    <h-segmented-item key="Ready" label="Ready" />
+    <h-segmented-item value="Brief" label="Brief" />
+    <h-segmented-item value="Design" label="Design" />
+    <h-segmented-item value="Review" label="Review" />
+    <h-segmented-item value="Ready" label="Ready" />
   </h-segmented>
 </template>

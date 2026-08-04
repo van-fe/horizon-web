@@ -20,6 +20,6 @@ const months = [
 
 <template>
   <h-segmented v-model:active-key="active" scrollable arrow focusable>
-    <h-segmented-item v-for="month in months" :key="month" :label="month" />
+    <h-segmented-item v-for="month in months" :key="month" :value="month" :label="month" />
   </h-segmented>
 </template>

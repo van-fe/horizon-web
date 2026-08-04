@@ -12,7 +12,7 @@ const types: SliderType[] = ['primary', 'info', 'success', 'warning', 'danger'];
   <section class="docs-demo">
     <div class="docs-demo__controls">
       <h-segmented v-model:active-key="type" size="small">
-        <h-segmented-item v-for="item in types" :key="item" :label="item" />
+        <h-segmented-item v-for="item in types" :key="item" :value="item" :label="item" />
       </h-segmented>
     </div>
     <h-slider v-model="value" :type="type" />

@@ -189,6 +189,7 @@ export default defineComponent({
               <HSegmentedItem
                 label={locale.value?.langService.td().horizonWeb.calendar.year}
                 key="year"
+                value="year"
               />,
             );
             break;
@@ -197,6 +198,7 @@ export default defineComponent({
               <HSegmentedItem
                 label={locale.value?.langService.td().horizonWeb.calendar.month}
                 key="month"
+                value="month"
               />,
             );
             break;
@@ -205,6 +207,7 @@ export default defineComponent({
               <HSegmentedItem
                 label={locale.value?.langService.td().horizonWeb.calendar.week}
                 key="week"
+                value="week"
               />,
             );
             break;
@@ -213,6 +216,7 @@ export default defineComponent({
               <HSegmentedItem
                 label={locale.value?.langService.td().horizonWeb.calendar.day}
                 key="day"
+                value="day"
               />,
             );
             break;

@@ -8,9 +8,9 @@ const week = ref('2026-08-12');
 <template>
   <section class="date-picker-first-day">
     <h-segmented v-model:active-key="firstDayOfWeek" size="small">
-      <h-segmented-item :key="0" label="Sunday" />
-      <h-segmented-item :key="1" label="Monday" />
-      <h-segmented-item :key="6" label="Saturday" />
+      <h-segmented-item :value="0" label="Sunday" />
+      <h-segmented-item :value="1" label="Monday" />
+      <h-segmented-item :value="6" label="Saturday" />
     </h-segmented>
     <h-date-picker
       v-model="week"

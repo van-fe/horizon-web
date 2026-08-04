@@ -17,9 +17,9 @@ const value = ref(12.3456);
       block
       aria-label="Numeric precision"
     >
-      <h-segmented-item key="0" label="Integer" />
-      <h-segmented-item key="2" label="Currency" />
-      <h-segmented-item key="4" label="Measurement" />
+      <h-segmented-item value="0" label="Integer" />
+      <h-segmented-item value="2" label="Currency" />
+      <h-segmented-item value="4" label="Measurement" />
     </h-segmented>
     <h-input-number
       v-model="value"

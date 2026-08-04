@@ -13,9 +13,9 @@ const indeterminate = computed(() => state.value === 'indeterminate');
   <section class="checkbox-disabled-demo">
     <div class="checkbox-disabled-demo__controls">
       <h-segmented v-model:active-key="state" size="small">
-        <h-segmented-item key="unchecked" label="Unchecked" />
-        <h-segmented-item key="indeterminate" label="Mixed" />
-        <h-segmented-item key="checked" label="Checked" />
+        <h-segmented-item value="unchecked" label="Unchecked" />
+        <h-segmented-item value="indeterminate" label="Mixed" />
+        <h-segmented-item value="checked" label="Checked" />
       </h-segmented>
       <h-switch v-model="border" label="Border" />
     </div>

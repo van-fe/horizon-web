@@ -11,11 +11,11 @@ const active = ref('Wednesday');
       <h-switch v-model="disabled" label="Disable all" />
     </div>
     <h-segmented v-model:active-key="active" block>
-      <h-segmented-item key="Monday" label="Monday" disabled />
-      <h-segmented-item key="Tuesday" label="Tuesday" :disabled="disabled" />
-      <h-segmented-item key="Wednesday" label="Wednesday" :disabled="disabled" />
-      <h-segmented-item key="Thursday" label="Thursday" :disabled="disabled" />
-      <h-segmented-item key="Friday" label="Friday" disabled />
+      <h-segmented-item value="Monday" label="Monday" disabled />
+      <h-segmented-item value="Tuesday" label="Tuesday" :disabled="disabled" />
+      <h-segmented-item value="Wednesday" label="Wednesday" :disabled="disabled" />
+      <h-segmented-item value="Thursday" label="Thursday" :disabled="disabled" />
+      <h-segmented-item value="Friday" label="Friday" disabled />
     </h-segmented>
   </section>
 </template>

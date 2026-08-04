@@ -18,10 +18,10 @@ const items = [
     <label>
       <span>Border mode</span>
       <h-segmented v-model:active-key="borderChoice" size="small" block>
-        <h-segmented-item key="default" label="Default" />
-        <h-segmented-item key="full" label="Full" />
-        <h-segmented-item key="outer" label="Outer" />
-        <h-segmented-item key="none" label="None" />
+        <h-segmented-item value="default" label="Default" />
+        <h-segmented-item value="full" label="Full" />
+        <h-segmented-item value="outer" label="Outer" />
+        <h-segmented-item value="none" label="None" />
       </h-segmented>
     </label>
 

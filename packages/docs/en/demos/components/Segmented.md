@@ -1,6 +1,6 @@
 ## Basic usage
 
-Use `active-key` or `v-model:active-key` to read the current option. Segmented works best for a small set of mutually exclusive views.
+Give every `SegmentedItem` an explicit, unique `value`, then use `active-key` or `v-model:active-key` to read the current option. Segmented works best for a small set of mutually exclusive views.
 
 :::demo components/Segmented/basic.vue :::
 

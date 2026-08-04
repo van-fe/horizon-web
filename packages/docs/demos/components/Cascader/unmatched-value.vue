@@ -9,8 +9,8 @@ const value = ref<string[][]>([['product', 'legacy-app', 'mobile-v1']]);
 <template>
   <div class="docs-demo">
     <h-segmented v-model:active-key="strategy" size="small">
-      <h-segmented-item key="fullPath" label="Full path" />
-      <h-segmented-item key="leaf" label="Leaf only" />
+      <h-segmented-item value="fullPath" label="Full path" />
+      <h-segmented-item value="leaf" label="Leaf only" />
     </h-segmented>
     <h-cascader
       v-model="value"

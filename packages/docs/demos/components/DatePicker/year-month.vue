@@ -14,10 +14,10 @@ watch(type, nextType => {
 <template>
   <section class="date-picker-year-month">
     <h-segmented v-model:active-key="type" size="small">
-      <h-segmented-item key="year" label="Year" />
-      <h-segmented-item key="year-range" label="Year range" />
-      <h-segmented-item key="month" label="Month" />
-      <h-segmented-item key="month-range" label="Month range" />
+      <h-segmented-item value="year" label="Year" />
+      <h-segmented-item value="year-range" label="Year range" />
+      <h-segmented-item value="month" label="Month" />
+      <h-segmented-item value="month-range" label="Month range" />
     </h-segmented>
     <h-date-picker v-model="value" :type="type" />
   </section>

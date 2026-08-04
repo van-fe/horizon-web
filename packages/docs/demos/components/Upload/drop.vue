@@ -19,8 +19,8 @@ onBeforeUnmount(mockUploader.dispose);
 <template>
   <div class="docs-demo upload-drop-demo">
     <h-segmented v-model:active-key="acceptMode" size="small">
-      <h-segmented-item key="png" label="PNG only" />
-      <h-segmented-item key="common" label="PNG + JPEG" />
+      <h-segmented-item value="png" label="PNG only" />
+      <h-segmented-item value="common" label="PNG + JPEG" />
     </h-segmented>
     <h-upload
       id="upload-demo-drop"

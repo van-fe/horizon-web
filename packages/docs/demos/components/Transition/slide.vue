@@ -10,10 +10,10 @@ const name = computed(() => `slide-${direction.value}` as const);
   <section class="docs-demo">
     <div class="docs-demo__controls">
       <h-segmented v-model:active-key="direction" size="small">
-        <h-segmented-item key="up" label="Up" />
-        <h-segmented-item key="right" label="Right" />
-        <h-segmented-item key="down" label="Down" />
-        <h-segmented-item key="left" label="Left" />
+        <h-segmented-item value="up" label="Up" />
+        <h-segmented-item value="right" label="Right" />
+        <h-segmented-item value="down" label="Down" />
+        <h-segmented-item value="left" label="Left" />
       </h-segmented>
       <h-switch v-model="visible" label="Visible" />
     </div>

@@ -11,8 +11,8 @@ const placement = ref<'top' | 'bottom'>('top');
     <div class="docs-demo__controls">
       <h-switch v-model="enabled" label="Tooltip" />
       <h-segmented v-model:active-key="placement" size="small">
-        <h-segmented-item key="top" label="Top" />
-        <h-segmented-item key="bottom" label="Bottom" />
+        <h-segmented-item value="top" label="Top" />
+        <h-segmented-item value="bottom" label="Bottom" />
       </h-segmented>
     </div>
     <h-slider

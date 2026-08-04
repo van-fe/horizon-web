@@ -12,8 +12,8 @@ const size = ref<'small' | 'medium'>('medium');
       size="small"
       aria-label="Anchor size"
     >
-      <h-segmented-item key="small" label="Small" />
-      <h-segmented-item key="medium" label="Medium" />
+      <h-segmented-item value="small" label="Small" />
+      <h-segmented-item value="medium" label="Medium" />
     </h-segmented>
 
     <div class="anchor-size-demo__layout">

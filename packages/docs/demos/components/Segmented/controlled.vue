@@ -11,7 +11,7 @@ const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
       <h-option v-for="day in days" :key="day" :label="day" :value="day" />
     </h-select>
     <h-segmented v-model:active-key="active" block>
-      <h-segmented-item v-for="day in days" :key="day" :label="day" />
+      <h-segmented-item v-for="day in days" :key="day" :value="day" :label="day" />
     </h-segmented>
   </section>
 </template>

@@ -28,7 +28,7 @@ onBeforeUnmount(() => {
       </h-button>
     </div>
     <h-segmented v-model:active-key="active" scrollable arrow>
-      <h-segmented-item v-for="option in options" :key="option" :label="option" />
+      <h-segmented-item v-for="option in options" :key="option" :value="option" :label="option" />
     </h-segmented>
   </section>
 </template>

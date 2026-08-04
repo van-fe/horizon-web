@@ -6,8 +6,8 @@ const active = ref('Monthly');
 
 <template>
   <h-segmented v-model:active-key="active">
-    <h-segmented-item key="Daily" label="Daily" />
-    <h-segmented-item key="Weekly" label="Weekly" />
-    <h-segmented-item key="Monthly" label="Monthly" />
+    <h-segmented-item value="Daily" label="Daily" />
+    <h-segmented-item value="Weekly" label="Weekly" />
+    <h-segmented-item value="Monthly" label="Monthly" />
   </h-segmented>
 </template>

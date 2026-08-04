@@ -9,8 +9,8 @@ const value = ref<string[]>(['product', 'design-system', 'components']);
 <template>
   <div class="docs-demo">
     <h-segmented v-model:active-key="trigger" size="small">
-      <h-segmented-item key="click" label="Click" />
-      <h-segmented-item key="hover" label="Hover" />
+      <h-segmented-item value="click" label="Click" />
+      <h-segmented-item value="hover" label="Hover" />
     </h-segmented>
     <h-cascader
       v-model="value"

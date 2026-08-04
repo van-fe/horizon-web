@@ -17,7 +17,7 @@ const types: MaskType[] = ['default', 'weak', 'strong', 'inverse', 'transparent'
           <code>type</code>
         </span>
         <h-segmented v-model:active-key="type" size="small">
-          <h-segmented-item v-for="item in types" :key="item" :label="item" />
+          <h-segmented-item v-for="item in types" :key="item" :value="item" :label="item" />
         </h-segmented>
       </label>
       <h-button @click="visible = true">查看效果</h-button>

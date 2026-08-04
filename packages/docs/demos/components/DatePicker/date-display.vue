@@ -12,9 +12,9 @@ const fixedRows = computed(() => mode.value === 'six');
 <template>
   <section class="date-picker-display">
     <h-segmented v-model:active-key="mode" size="small">
-      <h-segmented-item key="current" label="Current month" />
-      <h-segmented-item key="adjacent" label="Adjacent dates" />
-      <h-segmented-item key="six" label="Six rows" />
+      <h-segmented-item value="current" label="Current month" />
+      <h-segmented-item value="adjacent" label="Adjacent dates" />
+      <h-segmented-item value="six" label="Six rows" />
     </h-segmented>
     <h-date-picker
       v-model="value"

@@ -10,7 +10,7 @@ const themes = ['default', 'gray', 'midnight'];
   <div class="dropdown-theme-demo">
     <div class="controls">
       <h-segmented v-model:active-key="theme" size="small">
-        <h-segmented-item v-for="item in themes" :key="item" :label="item" />
+        <h-segmented-item v-for="item in themes" :key="item" :value="item" :label="item" />
       </h-segmented>
       <h-dropdown :theme="theme" @command="selected = `${theme}：${$event}`">
         <h-button>打开菜单</h-button>

@@ -16,9 +16,9 @@ watch(type, nextType => {
 <template>
   <section class="date-picker-need-confirm">
     <h-segmented v-model:active-key="type" size="small">
-      <h-segmented-item key="date" label="Date" />
-      <h-segmented-item key="date-range" label="Range" />
-      <h-segmented-item key="datetime" label="Date & time" />
+      <h-segmented-item value="date" label="Date" />
+      <h-segmented-item value="date-range" label="Range" />
+      <h-segmented-item value="datetime" label="Date & time" />
     </h-segmented>
     <h-date-picker v-model="value" :type="type" need-confirm />
   </section>

@@ -16,17 +16,17 @@ const disabled = ref(false);
       <label>
         <span>尺寸</span>
         <h-segmented v-model:active-key="size" size="small" block>
-          <h-segmented-item key="small" label="S" />
-          <h-segmented-item key="medium" label="M" />
-          <h-segmented-item key="large" label="L" />
+          <h-segmented-item value="small" label="S" />
+          <h-segmented-item value="medium" label="M" />
+          <h-segmented-item value="large" label="L" />
         </h-segmented>
       </label>
       <label>
         <span>输入框样式</span>
         <h-segmented v-model:active-key="inputStyle" size="small" block>
-          <h-segmented-item key="normal" label="Normal" />
-          <h-segmented-item key="emphasize" label="Emphasize" />
-          <h-segmented-item key="no-border" label="No border" />
+          <h-segmented-item value="normal" label="Normal" />
+          <h-segmented-item value="emphasize" label="Emphasize" />
+          <h-segmented-item value="no-border" label="No border" />
         </h-segmented>
       </label>
       <label>

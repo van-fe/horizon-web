@@ -14,8 +14,8 @@ function record(event: string, nextValue: unknown) {
   <section class="docs-demo">
     <div class="docs-demo__controls">
       <h-segmented v-model:active-key="confirmType" size="small">
-        <h-segmented-item key="enter" label="Enter" />
-        <h-segmented-item key="blur" label="Blur" />
+        <h-segmented-item value="enter" label="Enter" />
+        <h-segmented-item value="blur" label="Blur" />
       </h-segmented>
     </div>
 

@@ -13,8 +13,8 @@ const flipIcon = h(IconFlip, { color: 'var(--h-text-brand-default)', size: 14 })
 <template>
   <section class="date-picker-icon">
     <h-segmented v-model:active-key="mode" size="small">
-      <h-segmented-item key="prefix" label="Prefix" />
-      <h-segmented-item key="suffix" label="Suffix" />
+      <h-segmented-item value="prefix" label="Prefix" />
+      <h-segmented-item value="suffix" label="Suffix" />
     </h-segmented>
     <h-date-picker
       v-model="value"

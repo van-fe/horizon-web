@@ -18,9 +18,9 @@ const visible = ref(true);
         <h-option label="Left" value="zoom-in-left" />
       </h-select>
       <h-segmented v-model:active-key="speed" size="small">
-        <h-segmented-item key="fast" label="Fast" />
-        <h-segmented-item key="normal" label="Normal" />
-        <h-segmented-item key="slow" label="Slow" />
+        <h-segmented-item value="fast" label="Fast" />
+        <h-segmented-item value="normal" label="Normal" />
+        <h-segmented-item value="slow" label="Slow" />
       </h-segmented>
       <h-switch v-model="visible" label="Visible" />
     </div>

@@ -10,8 +10,8 @@ const labelAlign = ref<'left' | 'center'>('left');
       <label class="docs-demo__control">
         <span>标签对齐</span>
         <h-segmented v-model:active-key="labelAlign" size="small">
-          <h-segmented-item label="left" />
-          <h-segmented-item label="center" />
+          <h-segmented-item value="left" label="left" />
+          <h-segmented-item value="center" label="center" />
         </h-segmented>
       </label>
     </div>

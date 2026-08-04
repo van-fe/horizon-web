@@ -31,8 +31,8 @@ const changes = [
 <template>
   <div class="table-layout-demo">
     <h-segmented v-model:active-key="tableLayout" size="small">
-      <h-segmented-item key="fixed" label="Fixed" />
-      <h-segmented-item key="auto" label="Auto" />
+      <h-segmented-item value="fixed" label="Fixed" />
+      <h-segmented-item value="auto" label="Auto" />
     </h-segmented>
     <h-table
       :data="changes"

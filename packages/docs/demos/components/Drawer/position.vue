@@ -10,7 +10,7 @@ const placements = ['right', 'bottom', 'left', 'top'];
   <div class="drawer-position-demo">
     <div class="controls">
       <h-segmented v-model:active-key="placement" size="small">
-        <h-segmented-item v-for="item in placements" :key="item" :label="item" />
+        <h-segmented-item v-for="item in placements" :key="item" :value="item" :label="item" />
       </h-segmented>
       <h-button @click="visible = true">打开抽屉</h-button>
     </div>
