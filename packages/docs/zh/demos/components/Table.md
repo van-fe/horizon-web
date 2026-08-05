@@ -104,7 +104,7 @@ Table 适合展示需要比较、排序、筛选或批量操作的结构化数�
 
 在选择列上开启 `reserve-selection` 后，替换表格当前页的 `data` 不会清除该列的已选值。选择值始终来自当前列的 `column-key`。
 
-开启后，表格底部会固定显示清空操作、全部已选数量和当前数据集合已选数量；同时开启 `show-summary` 时，选择栏位于合计行下方。可通过 `selection-footer-prepend`、`selection-footer-text` 和 `selection-footer-append` scoped slots 自定义三个区域，插槽参数包含 `selectedKeys`、`currentSelectedKeys`、对应数量以及 `clearSelection`。示例将 Pagination 放入结尾区域。
+开启后，表格底部会固定显示清空操作、全部已选数量和当前数据集合已选数量。可通过 `selection-footer-prepend`、`selection-footer-text` 和 `selection-footer-append` scoped slots 自定义三个区域，插槽参数包含 `selectedKeys`、`currentSelectedKeys`、对应数量以及 `clearSelection`。示例将 Pagination 放入结尾区域。
 
 :::demo components/Table/cross-page-selection.vue :::
 

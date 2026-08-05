@@ -6,7 +6,6 @@ interface CandidateRow {
   candidateCode: string;
   candidate: string;
   role: string;
-  score: number;
 }
 
 const currentPage = ref(1);
@@ -18,28 +17,24 @@ const candidates: CandidateRow[] = [
     candidateCode: 'C-101',
     candidate: 'Avery Kim',
     role: 'Product designer',
-    score: 92,
   },
   {
     id: 102,
     candidateCode: 'C-102',
     candidate: 'Riley Chen',
     role: 'Frontend engineer',
-    score: 89,
   },
   {
     id: 103,
     candidateCode: 'C-103',
     candidate: 'Morgan Lee',
     role: 'Data analyst',
-    score: 87,
   },
   {
     id: 104,
     candidateCode: 'C-104',
     candidate: 'Jordan Patel',
     role: 'Product manager',
-    score: 94,
   },
 ];
 const pageData = computed(() => {
@@ -50,7 +45,7 @@ const pageData = computed(() => {
 
 <template>
   <div class="table-cross-page-demo">
-    <h-table :data="pageData" height="300" show-summary>
+    <h-table :data="pageData" height="300">
       <h-table-column
         v-model:selected-keys="selectedKeys"
         type="selection"
@@ -62,7 +57,6 @@ const pageData = computed(() => {
       />
       <h-table-column title="Candidate" field="candidate" min-width="170" />
       <h-table-column title="Role" field="role" min-width="170" />
-      <h-table-column title="Score" field="score" width="88" align="right" />
 
       <template #selection-footer-text="{ selectedCount, currentSelectedCount }">
         <span>{{ selectedCount }} candidates selected</span>
