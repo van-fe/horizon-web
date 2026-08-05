@@ -91,11 +91,7 @@ bun run dev
 
 ## 贡献指南
 
-欢迎任何形式的贡献，包括提交 Issue、完善文档与提交代码。请先阅读：
-
-- [CONTRIBUTING.md](./CONTRIBUTING.md)：Issue、开发环境、提交规范与 PR 流程
-- [开发必读.md](./开发必读.md)：组件开发约定（useProps 规则、编码规范、文档规范等）
-- [发版流程.md](./发版流程.md)：版本发布流程
+欢迎任何形式的贡献，包括提交 Issue、完善文档与提交代码。请先阅读 [CONTRIBUTING.md](./CONTRIBUTING.md)，其中涵盖 Issue 规范、本地开发、组件开发约定（功能设计、useProps、样式与文档规范）、Commit / PR 规范以及发布流程。
 
 ## Roadmap
 
