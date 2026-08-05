@@ -233,6 +233,33 @@ export default function useSelection(
     );
   }
 
+  watch(
+    [rowsData, () => column.props.reserveSelection],
+    ([currentRowsData, shouldReserveSelection]) => {
+      if (
+        shouldReserveSelection ||
+        !isDefined(selectedKeys.value) ||
+        !isDefined(column.props.columnKey) ||
+        column.props.columnKey === ''
+      ) {
+        return;
+      }
+
+      const currentPageKeys = new Set(
+        currentRowsData.map(row => row[column.props.columnKey!] as HTableRowKeyType),
+      );
+      const currentSelectedKeys = Array.isArray(selectedKeys.value)
+        ? selectedKeys.value
+        : [selectedKeys.value];
+      const nextSelectedKeys = currentSelectedKeys.filter(key => currentPageKeys.has(key));
+
+      if (nextSelectedKeys.length !== currentSelectedKeys.length) {
+        emitUpdate(nextSelectedKeys);
+      }
+    },
+    { flush: 'sync' },
+  );
+
   function addSelectionValue(checkedVals: Set<HTableRowKeyType>, checkValue: HTableRowKeyType) {
     if (checkedVals.has(checkValue) || checkedVals.size >= column.props.multipleLimit) {
       return;

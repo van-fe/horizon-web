@@ -124,6 +124,14 @@ Without two-way binding, clicking a selector does not leave it selected.
 
 :::demo components/Table/multiple.vue :::
 
+## Cross-page Selection
+
+Enable `reserve-selection` on a selection column to preserve that column's selected values when the
+table's current-page `data` is replaced. Selection values always come from that column's
+`column-key`; `row-key` is not required.
+
+:::demo components/Table/cross-page-selection.vue :::
+
 ## Column Tip
 
 Set `tip` on `h-table-column` to add a tip to the column.

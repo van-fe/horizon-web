@@ -182,6 +182,78 @@ describe('Table', () => {
     expect(wrapper.findAll('tbody .h-table__row')[2].attributes('tabindex')).toBe('0');
   });
 
+  test('reserves column-key selections across page data changes', async () => {
+    const page = ref(0);
+    const selectedKeys = ref<string[]>([]);
+    const pages = [
+      [
+        { id: 1, code: 'A', name: 'Alice' },
+        { id: 2, code: 'B', name: 'Bob' },
+      ],
+      [
+        { id: 3, code: 'C', name: 'Carol' },
+        { id: 4, code: 'D', name: 'David' },
+      ],
+    ];
+    const wrapper = mount(() => (
+      <HTable data={pages[page.value]} rowKey="id">
+        <HTableColumn
+          type="selection"
+          columnKey="code"
+          reserveSelection
+          multiple
+          selectedKeys={selectedKeys.value}
+          onUpdate:selectedKeys={value => {
+            selectedKeys.value = value as string[];
+          }}
+        />
+        <HTableColumn title="Name" field="name" />
+      </HTable>
+    ));
+    await settleTable();
+
+    await wrapper.findAll('tbody .h-table__selection')[0].trigger('click');
+    await settleTable();
+    expect(selectedKeys.value).toEqual(['A']);
+
+    page.value = 1;
+    await settleTable();
+    await wrapper.findAll('tbody .h-table__selection')[1].trigger('click');
+    await settleTable();
+    expect(selectedKeys.value).toEqual(['A', 'D']);
+
+    page.value = 0;
+    await settleTable();
+    expect(wrapper.findAll('tbody label.h-checkbox')[0].classes()).toContain('h-checkbox--checked');
+    expect(wrapper.findAll('tbody label.h-checkbox')[1].classes()).not.toContain(
+      'h-checkbox--checked',
+    );
+  });
+
+  test('drops selections missing from replacement data by default', async () => {
+    const data = ref([{ code: 'A' }]);
+    const selectedKeys = ref<string[]>(['A']);
+    mount(() => (
+      <HTable data={data.value}>
+        <HTableColumn
+          type="selection"
+          columnKey="code"
+          multiple
+          selectedKeys={selectedKeys.value}
+          onUpdate:selectedKeys={value => {
+            selectedKeys.value = value as string[];
+          }}
+        />
+      </HTable>
+    ));
+    await settleTable();
+
+    data.value = [{ code: 'B' }];
+    await settleTable();
+
+    expect(selectedKeys.value).toEqual([]);
+  });
+
   test('expands and collapses tree rows with horizontal arrow keys', async () => {
     const wrapper = mount(() => (
       <HTable data={[{ id: 1, name: 'Parent', children: [{ id: 2, name: 'Child' }] }]} rowKey="id">

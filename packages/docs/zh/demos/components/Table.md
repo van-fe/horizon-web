@@ -100,6 +100,12 @@ Table 适合展示需要比较、排序、筛选或批量操作的结构化数�
 
 :::demo components/Table/multiple.vue :::
 
+## 跨页选择
+
+在选择列上开启 `reserve-selection` 后，替换表格当前页的 `data` 不会清除该列的已选值。选择值始终来自当前列的 `column-key`，无需设置 `row-key`。
+
+:::demo components/Table/cross-page-selection.vue :::
+
 ## 列提示
 如果需要对列提示，则给予 `h-table-column` 设置 `tip` 即可
 :::demo components/Table/tip.vue :::

@@ -923,10 +923,10 @@ export const useTableColumnProps = declarePropType({
     default: false,
   },
   /**
-   * 仅当 `type = 'selection'` 并设置 `table.row-key` 和 `table-column.column-key` 时有效
-   * 是否在 `data` 更新时，仍保留当前列、行的选中态
-   * 开启此项可以支持跨页多选
-   * @en Configuration for reserve selection.
+   * 仅当 `type = 'selection'` 并设置 `column-key` 时有效
+   * 是否在表格 `data` 更新时保留当前列的已选值，以支持跨页选择
+   * 已选值始终取自当前列的 `column-key`
+   * @en Whether to preserve this column's selected values when table data changes for cross-page selection. Only applies to selection columns with `column-key`, whose values are used as the selected keys.
    */
   reserveSelection: {
     type: Boolean,
