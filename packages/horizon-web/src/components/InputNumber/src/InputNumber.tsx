@@ -17,6 +17,7 @@ import useLocaleLang from '~/utils/useLocaleLang';
 export default defineComponent({
   name: `${useNamespace()}InputNumber`,
   desc: '提供一个数字输入框，可以设置最小值、最大值和步长等，返回一个数字',
+  descLocales: { en: "The component provides `large`, `medium`, and `small`, with `medium` as the default. Match the size to a prominent setup step, a standard form, or a compact policy row." },
   props: useInputNumberProps,
   emits: useInputNumberEmits,
   slots: useInputNumberSlots,

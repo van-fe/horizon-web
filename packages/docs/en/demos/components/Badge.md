@@ -1,4 +1,3 @@
-Badge adds a new-state, quantity, or identity marker to a meaningful target. It should supplement readable content rather than replace it.
 
 ## Basic Dot
 

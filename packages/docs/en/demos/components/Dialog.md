@@ -1,5 +1,4 @@
 ## Basic Example
-To meet most scenarios, the dialog will display primary and secondary buttons by default.
 :::demo components/Dialog/demo1.vue :::
 
 ## Vertical Position

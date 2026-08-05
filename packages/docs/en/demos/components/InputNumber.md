@@ -1,6 +1,5 @@
 ## Sizes
 
-The component provides `large`, `medium`, and `small`, with `medium` as the default. Match the size to a prominent setup step, a standard form, or a compact policy row.
 
 :::demo components/InputNumber/size.vue :::
 

@@ -1,6 +1,5 @@
 ## Pin to the page top
 
-Affix listens to window scrolling by default and pins its content to the viewport top. It preserves the original space so surrounding content does not jump.
 
 :::demo components/Affix/basic.vue :::
 

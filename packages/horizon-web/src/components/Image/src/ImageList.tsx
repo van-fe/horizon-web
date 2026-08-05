@@ -17,6 +17,8 @@ import { useImageListSlots } from './composables/useSlots';
 
 export default defineComponent({
   name: `${useNamespace()}ImageList`,
+  desc: "组织一组可预览的图片",
+  descLocales: { en: "Organizes a collection of previewable images." },
   components: {
     HViewer,
   },

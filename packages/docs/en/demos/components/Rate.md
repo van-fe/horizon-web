@@ -1,5 +1,4 @@
 ## Basic Usage
-Use `v-model` to bind the current rating value.
 :::demo components/Rate/basic.vue :::
 
 ## Allow Half Star

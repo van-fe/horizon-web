@@ -39,6 +39,8 @@ import useTooltip from './util/useTooltip';
 
 export default defineComponent({
   name: `${useNamespace()}MenuItem`,
+  desc: "菜单中的单个导航项",
+  descLocales: { en: "A single navigation item within Menu." },
   props: useMenuItemProps,
   emits: useMenuItemEmits,
   slots: useMenuItemSlots,

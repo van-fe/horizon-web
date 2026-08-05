@@ -1,4 +1,3 @@
-Transition wraps the common enter, leave, and list-movement animations in Horizon Web.
 
 ## Fade
 

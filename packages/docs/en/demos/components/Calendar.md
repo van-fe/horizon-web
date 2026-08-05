@@ -1,4 +1,3 @@
-Calendar supports year, month, week, and day planning. Complex examples should separate controls, current state, and the calendar preview clearly.
 
 ## Basic Usage
 

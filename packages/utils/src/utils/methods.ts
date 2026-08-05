@@ -29,6 +29,7 @@ export interface MethodConfig<
   options?: Options;
   methods?: Methods;
   desc?: string;
+  descLocales?: Record<string, string>;
   default?: Default;
   [index: string]: unknown;
 }

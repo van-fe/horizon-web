@@ -1,5 +1,4 @@
 ## Basic Usage
-Default is `success` state
 :::demo components/Result/basic.vue :::
 
 ## Different States

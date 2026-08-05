@@ -18,6 +18,7 @@ import useSize from '~/utils/useSize';
 export default defineComponent({
   name: `${useNamespace()}Alert`,
   desc: '用于页面中展示重要的提示信息',
+  descLocales: { en: "Combine `title` and `description` into a complete message. Use `info` for important updates that do not need to interrupt the user." },
   props: useAlertProps,
   emits: useAlertEmits,
   slots: useAlertSlots,

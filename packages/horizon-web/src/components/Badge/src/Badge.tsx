@@ -9,6 +9,7 @@ import { useBadgeSlots } from './composables/useSlots';
 export default defineComponent({
   name: `${useNamespace()}Badge`,
   desc: '元素上的状态或数字标记',
+  descLocales: { en: "Badge adds a new-state, quantity, or identity marker to a meaningful target. It should supplement readable content rather than replace it." },
   components: {
     AIcon,
   },

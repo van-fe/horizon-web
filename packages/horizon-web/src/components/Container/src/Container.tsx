@@ -15,6 +15,7 @@ export default defineComponent({
     '<h-aside>：侧边栏容器。\n' +
     '<h-main>：主要区域容器。\n' +
     '<h-footer>：底栏容器。',
+  descLocales: { en: "When a direct child is `h-header`, `h-container` automatically uses a vertical direction. This is the simplest shell for a top bar and main content." },
   props: useContainerProps,
   slots: useContainerSlots,
   setup(props, { slots }: HorizonWebSetupContext<{}, ContainerSlots>) {

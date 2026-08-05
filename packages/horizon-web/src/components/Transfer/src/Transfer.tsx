@@ -24,6 +24,7 @@ export default defineComponent({
   desc:
     '需要在多个可选项中进行多选时，用直观的方式在两栏中移动元素，完成选择行为。\n' +
     '比起 `Select` 和 `TreeSelect`，穿梭框占据更大的空间，可以展示可选项的更多信息。',
+  descLocales: { en: "Transfer assigns items between two lists. `v-model` stores the keys shown in the target list." },
   author: '@chris.deng',
   components: { TransferPanel, HButton, HCheckbox, HInput },
   props: useTransferProps,

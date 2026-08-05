@@ -38,6 +38,8 @@ import { useHighlightOption } from './hooks/useHighlight';
 
 export default defineComponent({
   name: `${useNamespace()}Option`,
+  desc: "选择器中的单个选项",
+  descLocales: { en: "A single option within Select." },
   components: {
     HCheckbox,
     HTooltip,

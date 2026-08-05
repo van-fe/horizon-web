@@ -17,6 +17,8 @@ import { getBadgeDefaultOption } from '~/components/FloatButton/src/utils/badgeO
 
 export default defineComponent({
   name: `${useNamespace()}FloatButtonGroup`,
+  desc: "组织一组相关悬浮按钮",
+  descLocales: { en: "Groups related floating buttons." },
   props: useFloatButtonGroupProps,
   emits: useFloatButtonGroupEmits,
   slots: useFloatButtonGroupSlots,

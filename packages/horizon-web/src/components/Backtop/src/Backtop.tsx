@@ -14,6 +14,7 @@ import { warn } from '~/utils/useLog';
 export default defineComponent({
   name: `${useNamespace()}Backtop`,
   desc: '返回页面顶部按钮',
+  descLocales: { en: "Backtop provides a quick return action for long pages or independently scrolling containers after a configured distance." },
   props: useBacktopProps,
   emits: useBacktopEmits,
   slots: useBacktopSlots,

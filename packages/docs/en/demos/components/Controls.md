@@ -1,6 +1,5 @@
 ## Basic Usage
 
-Controls commonly works with `h-hover` and `h-mask` to present contextual actions over content. The `command` event returns the selected `h-control` label.
 
 :::demo components/Controls/basic.vue :::
 

@@ -35,6 +35,7 @@ import useBeginEndSpacing from './hooks/useBeginEndSpacing';
 export default defineComponent({
   name: `${useNamespace()}Scrollbar`,
   desc: '用于替换浏览器原生滚动条，统一不同系统的滚动条差异',
+  descLocales: { en: "By setting `height`, when the content height exceeds this height, a scrollbar will be displayed" },
   inheritAttrs: false,
   props: useScrollbarProps,
   emits: useScrollbarEmits,

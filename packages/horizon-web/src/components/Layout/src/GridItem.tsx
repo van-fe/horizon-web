@@ -11,6 +11,8 @@ const defaultColumnGap = resolveGridValue(0, 0);
 
 export default defineComponent({
   name: `${useNamespace()}GridItem`,
+  desc: 'CSS Grid 布局中的单个网格项',
+  descLocales: { en: 'A single grid item within a CSS Grid layout.' },
   props: useGridItemProps,
   slots: useGridItemSlots,
   setup(props, { slots }: HorizonWebSetupContext<{}, GridItemSlots>) {

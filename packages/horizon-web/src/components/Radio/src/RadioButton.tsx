@@ -17,6 +17,8 @@ import useSize from '~/utils/useSize';
 
 export default defineComponent({
   name: `${useNamespace()}RadioButton`,
+  desc: "按钮样式的单选项",
+  descLocales: { en: "A button-styled radio option." },
   components: { Radio },
   props: useRadioButtonProps,
   emits: useRadioEmits,

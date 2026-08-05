@@ -31,6 +31,7 @@ import { useTooltipSlots } from './composables/useSlots';
 export default defineComponent({
   name: `${useNamespace()}Tooltip`,
   desc: 'Tooltip 是浮动标签，主要用于简要说明界面元素的功能。',
+  descLocales: { en: "`placement` supports 12 positions around the trigger. The example also controls size, theme, and delay while reporting the most recently opened position." },
   components: { HChildOnly, HTransition },
   props: useTooltipProps,
   emits: useTooltipEmits,

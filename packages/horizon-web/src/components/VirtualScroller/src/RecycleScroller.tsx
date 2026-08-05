@@ -32,6 +32,8 @@ import useRecycleScrollerPool from './composables/useRecycleScrollerPool';
 
 export default defineComponent({
   name: `${useNamespace()}RecycleScroller`,
+  desc: "复用渲染节点的虚拟滚动容器",
+  descLocales: { en: "A virtual scroller that reuses rendered nodes." },
   components: {
     HScrollbar,
   },

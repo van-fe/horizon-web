@@ -1,6 +1,5 @@
 ## Basic usage
 
-The time picker supports three sizes, multiple input styles, and a disabled state. When binding strings, set `value-format` explicitly.
 
 :::demo components/TimePicker/basic.vue :::
 

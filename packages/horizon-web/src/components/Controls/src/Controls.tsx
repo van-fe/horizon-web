@@ -22,6 +22,7 @@ import { HHoverSwitchVisibleInjectKey } from '~/components/Hover/src/utils/injec
 export default defineComponent({
   name: `${useNamespace()}Controls`,
   desc: '可以根据宽度自动控制显示的按钮数量',
+  descLocales: { en: "Controls commonly works with `h-hover` and `h-mask` to present contextual actions over content. The `command` event returns the selected `h-control` label." },
   components: {
     Ellipsis,
   },

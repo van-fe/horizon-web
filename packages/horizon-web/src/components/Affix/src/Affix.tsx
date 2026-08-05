@@ -21,6 +21,7 @@ declare global {
 export default defineComponent({
   name: `${useNamespace()}Affix`,
   desc: '将页面元素固定在特定可视区域',
+  descLocales: { en: "Affix listens to window scrolling by default and pins its content to the viewport top. It preserves the original space so surrounding content does not jump." },
   inheritAttrs: false,
   props: useAffixProps,
   emits: useAffixEmits,

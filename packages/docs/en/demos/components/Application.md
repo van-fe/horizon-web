@@ -1,6 +1,5 @@
 ## Scoped locale
 
-`Application` provides `locale` to its descendants. The demo keeps the selection local, so switching languages does not affect other examples on the documentation page. Open the date panel to compare month, weekday, and action labels.
 
 :::demo components/Application/i18n.vue :::
 

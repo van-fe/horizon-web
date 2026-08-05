@@ -1,4 +1,3 @@
-Viewer opens images, videos, or a mixed media set in a full-screen layer.
 
 ## Basic Usage
 

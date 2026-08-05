@@ -1,5 +1,4 @@
 ## Basic Usage
-Basic text link usage
 :::demo components/Link/base.vue :::
 
 ## Different Sizes

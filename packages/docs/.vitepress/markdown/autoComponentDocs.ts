@@ -49,9 +49,9 @@ function localizeApiLabels(html: string, locale: string) {
       .replaceAll('属性', 'Name')
       .replaceAll('说明', 'Description')
       .replaceAll('类型', 'Type')
+      .replaceAll('是否必填', 'Required')
       .replaceAll('必填', 'Required')
       .replaceAll('默认值', 'Default')
-      .replaceAll('是否必填', 'Required')
       .replaceAll('>是<', '>Yes<')
       .replaceAll('>否<', '>No<')
   );
@@ -98,12 +98,14 @@ export default function autoComponentDocs(md: MarkdownIt) {
       const modes = related.length ? related : [component!];
       if (component) {
         intro = appendPluginInfo(localizeApi(component, locale), kind);
+      } else {
+        intro = appendPluginInfo({ ...localizeApi(related[0], locale), name }, kind);
       }
       api = modes
         .map(mode => localizeApiLabels(appendApi(localizeApi(mode, locale), true, kind), locale))
         .join('');
     } else if (kind === 'directives') {
-      const name = rawName.replace(/^v-/, '');
+      const name = pascalize(rawName.replace(/^v-/, ''));
       const directive = directives.find(item => item.name.toLowerCase() === name.toLowerCase());
       if (!directive) return;
       intro = appendPluginInfo(localizeApi(directive, locale), kind);
@@ -113,7 +115,7 @@ export default function autoComponentDocs(md: MarkdownIt) {
       const method = methods.find(item => item.dirName.toLowerCase() === name.toLowerCase());
       if (!method) return;
       const related = methods.filter(item => item.dirName.toLowerCase() === name.toLowerCase());
-      intro = appendPluginInfo(localizeApi(method, locale), kind);
+      intro = appendPluginInfo({ ...localizeApi(method, locale), name: method.dirName }, kind);
       api = related
         .map(mode =>
           localizeApiLabels(appendApi(localizeApi(mode, locale), related.length > 1, kind), locale),

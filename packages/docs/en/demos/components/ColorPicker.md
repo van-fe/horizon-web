@@ -1,6 +1,5 @@
 ## Basic Usage and Alpha
 
-ColorPicker edits a solid color by default. Enable `alpha` to adjust opacity, and preview the result against a realistic surface to judge the final effect.
 
 :::demo components/ColorPicker/alpha.vue :::
 

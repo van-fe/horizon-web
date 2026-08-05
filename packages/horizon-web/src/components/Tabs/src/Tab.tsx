@@ -19,6 +19,8 @@ import { tabsContextKey } from './constants';
 
 export default defineComponent({
   name: `${useNamespace()}Tab`,
+  desc: "页签中的单个可切换项",
+  descLocales: { en: "A single switchable item within Tabs." },
   components: {
     AIcon,
     HTooltip,

@@ -1,6 +1,5 @@
 ## Header and Main Content
 
-When a direct child is `h-header`, `h-container` automatically uses a vertical direction. This is the simplest shell for a top bar and main content.
 
 :::demo components/Container/demo1.vue :::
 

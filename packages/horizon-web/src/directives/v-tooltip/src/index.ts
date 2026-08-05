@@ -180,6 +180,7 @@ export default defineDirective<PopTooltipEl, typeof useTooltipOptions>({
   name: 'tooltip',
   options: useTooltipOptions,
   desc: '`v-tooltip` 是 `tooltip` 组件的指令使用方式',
+  descLocales: { en: 'The directive form of the Tooltip component.' },
   mounted(el, binding, vnode) {
     const originObj = getPropOptions(el, binding);
     useEvent(el, originObj, vnode);

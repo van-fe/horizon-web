@@ -104,6 +104,23 @@
   font-style: normal;
 }
 
+.api-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.api-table-wrapper .api-table {
+  width: max(100%, calc(var(--api-column-count) * 9rem));
+  table-layout: fixed;
+}
+
+.api-table-wrapper .api-table th,
+.api-table-wrapper .api-table td {
+  width: calc(100% / var(--api-column-count));
+  min-width: 9rem;
+  overflow-wrap: anywhere;
+}
+
 @media (max-width: 560px) {
   .docs-demo__controls {
     align-items: stretch;

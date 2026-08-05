@@ -12,6 +12,8 @@ import { HControlsEmitInjectKey, HControlsPropsInjectKey } from './utils/injectK
 
 export default defineComponent({
   name: `${useNamespace()}Control`,
+  desc: "Controls 中的单个操作项",
+  descLocales: { en: "A single action item within Controls." },
   components: {
     HTooltip,
   },

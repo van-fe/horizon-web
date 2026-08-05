@@ -10,6 +10,8 @@ import { AnchorContextInjectedKey, AnchorPropsInjectedKey } from './utils/Inject
 
 export default defineComponent({
   name: `${useNamespace()}AnchorLink`,
+  desc: "锚点导航中的可跳转链接项",
+  descLocales: { en: "A navigable link item within Anchor." },
   components: {
     HTooltip,
   },

@@ -1,6 +1,5 @@
 ## Basic Usage
 
-The DatePicker provides date selection by default.
 
 :::demo components/DatePicker/basic.vue :::
 

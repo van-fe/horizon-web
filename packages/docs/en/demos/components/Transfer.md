@@ -1,4 +1,3 @@
-Transfer assigns items between two lists. `v-model` stores the keys shown in the target list.
 
 ## Basic Selection
 

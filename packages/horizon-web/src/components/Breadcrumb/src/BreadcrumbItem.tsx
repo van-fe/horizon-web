@@ -17,6 +17,8 @@ import { useBreadcrumbItemEmits } from './composables/useEmits';
 
 export default defineComponent({
   name: `${useNamespace()}BreadcrumbItem`,
+  desc: "面包屑导航中的单个层级项",
+  descLocales: { en: "A single hierarchy item within Breadcrumb." },
   props: useBreadcrumbItemProps,
   emits: useBreadcrumbItemEmits,
   slots: useBreadcrumbItemSlots,

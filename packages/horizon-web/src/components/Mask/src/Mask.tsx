@@ -10,6 +10,7 @@ import { cls, ComponentClassBlock, cssVariable, useNamespace } from '@aurora/uti
 export default defineComponent({
   name: `${useNamespace()}Mask`,
   desc: '提供一个遮罩，可以覆盖在任意元素上',
+  descLocales: { en: "Add a dim layer on the application (type: five types, default is default)." },
   props: useMaskProps,
   emits: useMaskEmits,
   slots: useMaskSlots,

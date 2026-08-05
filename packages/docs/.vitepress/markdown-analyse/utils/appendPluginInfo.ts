@@ -5,6 +5,7 @@ import type {
 } from '@aurora/utils';
 import { kebabCase } from '@aurora/utils';
 import type { OtherInfo } from '../index';
+import { escapeHtml } from './utils';
 
 export default function (
   currMode:
@@ -31,8 +32,14 @@ export default function (
       break;
   }
 
-  return `<h1>${showName}</h1>
-<p class="description">${currMode?.desc}</p>`
+  const description = currMode?.desc ? escapeHtml(currMode.desc) : '';
+
+  return `<h1>${showName}</h1>${
+    description
+      ? `
+<p class="description">${description}</p>`
+      : ''
+  }`
     .replace(/\\n\s*/g, '<br>')
     .replace(/`(.*?)`/g, '<code>$1</code>')
     .replace(/\[(.*?)]\((.*?)\)/g, '<h-link href="$2" target="_blank">$1</h-link>');

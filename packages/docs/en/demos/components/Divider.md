@@ -5,7 +5,6 @@
 :::demo components/Divider/vertical.vue :::
 
 ## Line Style
-By configuring `line-style`, you can change the line type
 :::demo components/Divider/line-style.vue :::
 
 ## Insert Text

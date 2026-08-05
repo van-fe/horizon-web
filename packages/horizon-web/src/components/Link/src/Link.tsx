@@ -25,6 +25,7 @@ import { renderIcon } from '~/utils/useIcon';
 export default defineComponent({
   name: `${useNamespace()}Link`,
   desc: '文字超链接',
+  descLocales: { en: "Basic text link usage" },
   props: useLinkProps,
   emits: useLinkEmits,
   slots: useLinkSlots,

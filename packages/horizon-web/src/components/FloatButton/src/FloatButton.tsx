@@ -24,6 +24,7 @@ import type { TooltipProps } from '~/components/Tooltip/src/composables/useProps
 export default defineComponent({
   name: `${useNamespace()}FloatButton`,
   desc: '悬浮按钮大多会独立出现在界面之上，提升整体的导航，拓展页面的功能，使应用的操作更加便捷',
+  descLocales: { en: "Use `type` to switch button type, which can be `normal` and `primary`" },
   version: '2.7.0',
   components: {
     HTransition,

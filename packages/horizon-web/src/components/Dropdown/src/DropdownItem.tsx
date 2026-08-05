@@ -25,6 +25,8 @@ import { nanoid } from 'nanoid';
 
 export default defineComponent({
   name: `${useNamespace()}DropdownItem`,
+  desc: "下拉菜单中的单个操作项",
+  descLocales: { en: "A single action item within a dropdown menu." },
   components: {
     HTooltip,
   },

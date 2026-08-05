@@ -2,7 +2,6 @@
 :::demo components/Pagination/basic.vue :::
 
 ## Configure Maximum Page Button Count
-Control the maximum number of page buttons through `pager-count`
 :::demo components/Pagination/max-buttons-amount.vue :::
 
 ## Whether to Display Range Value

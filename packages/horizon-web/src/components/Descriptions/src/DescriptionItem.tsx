@@ -13,6 +13,8 @@ export type observerReturnType = {
 
 export default defineComponent({
   name: `${useNamespace()}DescriptionItem`,
+  desc: "描述列表中的单个只读字段",
+  descLocales: { en: "A single read-only field within Descriptions." },
   props: useDescriptionItemProps,
   slots: useDescriptionItemSlots,
   setup(props, { slots }: HorizonWebSetupContext<{}, DescriptionItemSlots>) {
@@ -40,7 +42,7 @@ export default defineComponent({
     }>('HDescriptions');
     const labelRef = ref<HTMLElement | null>(null);
 
-    const { stop } = useIntersectionObserver(labelRef, ([{ target, isIntersecting }]) => {
+    const { stop } = useIntersectionObserver(labelRef, () => {
       setClientWidth();
     });
 

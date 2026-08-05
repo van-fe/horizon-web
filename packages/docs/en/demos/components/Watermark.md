@@ -1,4 +1,3 @@
-Watermark repeats a non-interactive mark above protected content.
 
 ## Single-line Text
 

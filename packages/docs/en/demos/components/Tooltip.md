@@ -1,6 +1,5 @@
 ## Placement
 
-`placement` supports 12 positions around the trigger. The example also controls size, theme, and delay while reporting the most recently opened position.
 
 :::demo components/Tooltip/placement.vue :::
 

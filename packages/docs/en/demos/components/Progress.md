@@ -8,7 +8,6 @@
 :::demo components/Progress/colors.vue :::
 
 ## Circle Progress Bar
-Circle progress bar with size xs does not support text and icon display
 :::demo components/Progress/circle.vue :::
 
 ## Circle Custom Color

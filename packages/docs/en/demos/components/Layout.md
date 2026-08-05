@@ -1,5 +1,3 @@
-# Layout
-
 ## CSS Grid Layout
 
 Use `h-grid` and `h-grid-item` for new layouts. The container defines responsive tracks and spacing, while each item describes its placement with `span` and `offset`. The implementation uses native CSS Grid without negative margins or compensating column padding.

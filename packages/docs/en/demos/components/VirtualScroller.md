@@ -1,4 +1,3 @@
-Virtual scrolling mounts only items near the viewport and is suited to large lists and grids.
 
 ## Fixed and Data-driven Sizes
 

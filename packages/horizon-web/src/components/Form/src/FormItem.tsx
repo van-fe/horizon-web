@@ -50,6 +50,8 @@ import { GRID_KEY, useGridItemStyle } from '~/components/Layout/src/composables/
 
 export default defineComponent({
   name: `${useNamespace()}FormItem`,
+  desc: '表单中的字段布局与校验容器',
+  descLocales: { en: 'Provides field layout and validation context within a form.' },
   components: {
     HPopover,
     HPopContent,

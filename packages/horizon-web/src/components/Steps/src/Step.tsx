@@ -21,6 +21,8 @@ import {
 
 export default defineComponent({
   name: `${useNamespace()}Step`,
+  desc: "步骤条中的单个步骤",
+  descLocales: { en: "A single step within Steps." },
   props: useStepProps,
   emits: useStepEmits,
   slots: useStepSlots,

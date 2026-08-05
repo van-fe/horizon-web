@@ -15,6 +15,7 @@ import HButton from '~/components/Button/src/Button';
 export default defineComponent({
   name: `${useNamespace()}PageHeader`,
   desc: '页头位于页面内容上方，主要作用是申明页面主题、页内信息导航、页面级内容操作',
+  descLocales: { en: "Use `breadcrumb` slot to place breadcrumb" },
   props: usePageHeaderProps,
   emits: usePageHeaderEmits,
   slots: usePageHeaderSlots,

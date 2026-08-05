@@ -2,7 +2,6 @@
 :::demo components/FloatButton/basic.vue :::
 
 ## Type
-Use `type` to switch button type, which can be `normal` and `primary`
 :::demo components/FloatButton/type.vue :::
 
 ## Shape

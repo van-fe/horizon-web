@@ -30,6 +30,7 @@ import HTransition from '~/components/Transition/src/Transition';
 export default defineComponent({
   name: `${useNamespace()}Viewer`,
   desc: '图片视频查看器',
+  descLocales: { en: "Viewer opens images, videos, or a mixed media set in a full-screen layer." },
   components: {
     AIcon,
     IconLoadingLine,

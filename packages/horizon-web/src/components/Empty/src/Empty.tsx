@@ -12,6 +12,7 @@ import { PRESENTED_IMAGES } from './utils/presentedImages';
 export default defineComponent({
   name: `${useNamespace()}Empty`,
   desc: '空状态时的占位提示，并提供多场景可供使用',
+  descLocales: { en: "Default empty placeholder effect." },
   props: useEmptyProps,
   slots: useEmptySlots,
   setup(props, { slots }: HorizonWebSetupContext<{}, EmptySlots>) {

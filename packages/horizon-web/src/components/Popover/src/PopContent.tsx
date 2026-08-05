@@ -8,6 +8,8 @@ import { usePopContentProps } from './composables/useProps';
 
 export default defineComponent({
   name: `${useNamespace()}PopContent`,
+  desc: "Popover 的浮层内容容器",
+  descLocales: { en: "The floating content container for Popover." },
   props: usePopContentProps,
   slots: usePopContentSlots,
   setup(props, { slots }: HorizonWebSetupContext<{}, PopContentSlots>) {

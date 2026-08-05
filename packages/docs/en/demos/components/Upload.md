@@ -1,4 +1,3 @@
-Upload provides file selection, validation, list management, and progress state. These demos use local simulated requests and never send files to an external service.
 
 ## Single File
 

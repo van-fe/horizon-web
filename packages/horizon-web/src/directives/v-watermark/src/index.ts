@@ -36,6 +36,7 @@ export default defineDirective<WatermarkElement, typeof useWatermarkOptions | st
   name: 'watermark',
   options: useWatermarkOptions,
   desc: '`v-watermark` 是 `watermark` 组件的指令使用方式',
+  descLocales: { en: 'The directive form of the Watermark component.' },
   mounted: watermarkFunc,
   updated: watermarkFunc,
   unmounted(el) {

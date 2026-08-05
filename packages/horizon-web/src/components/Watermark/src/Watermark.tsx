@@ -31,6 +31,7 @@ const dpr = getDpr();
 export default defineComponent({
   name: `${useNamespace()}Watermark`,
   desc: '水印组件',
+  descLocales: { en: "Watermark repeats a non-interactive mark above protected content." },
   props: useWatermarkProps,
   emits: useWatermarkEmits,
   slots: useWatermarkSlots,

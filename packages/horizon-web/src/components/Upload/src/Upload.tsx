@@ -53,6 +53,7 @@ import UploadGalleryMixedList from '~/components/Upload/src/components/UploadGal
 export default defineComponent({
   name: `${useNamespace()}Upload`,
   desc: '通过点击或拖拽，将信息（文件、图片、视频等）上传到远程服务器上的过程',
+  descLocales: { en: "Upload provides file selection, validation, list management, and progress state. These demos use local simulated requests and never send files to an external service." },
   props: useUploadProps,
   emits: useUploadEmits,
   slots: useUploadSlots,

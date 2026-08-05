@@ -1,6 +1,5 @@
 ## When to use
 
-Use a timeline for milestones, state changes, or activity records arranged by time. Forward and reverse order support different reading directions.
 
 ## Basic style
 

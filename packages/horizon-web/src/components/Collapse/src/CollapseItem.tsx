@@ -12,6 +12,8 @@ import HTransition from '~/components/Transition/src/Transition';
 
 export default defineComponent({
   name: `${useNamespace()}CollapseItem`,
+  desc: "折叠面板中的单个内容项",
+  descLocales: { en: "A single content panel within Collapse." },
   components: { AIcon },
   props: useCollapseItemProps,
   slots: useCollapseItemSlots,

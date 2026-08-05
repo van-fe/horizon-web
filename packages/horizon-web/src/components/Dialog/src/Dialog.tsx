@@ -43,6 +43,7 @@ import { HScrollbarUpdateDelayInjectKey } from '~/components/Scrollbar/src/utils
 export default defineComponent({
   name: `${useNamespace()}Dialog`,
   desc: '对话框是一种模态窗口，干扰性比较强。通常用来展示用户当前需要的或用户必须关注的信息或操作，其他情况不建议使用弹出框，可考虑 Message 等其他非模态窗口',
+  descLocales: { en: "To meet most scenarios, the dialog will display primary and secondary buttons by default." },
   components: {
     HButton,
     AIcon,

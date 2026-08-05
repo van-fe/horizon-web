@@ -1,5 +1,4 @@
 ## Basic Usage
-Default empty placeholder effect.
 :::demo components/Empty/basic.vue :::
 
 ## Description Text

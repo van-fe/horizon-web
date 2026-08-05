@@ -1,5 +1,4 @@
 ## Basic Usage
-By setting `height`, when the content height exceeds this height, a scrollbar will be displayed
 :::demo components/Scrollbar/basic.vue :::
 
 ## Size

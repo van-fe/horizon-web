@@ -324,6 +324,7 @@ const methods = {
 export default defineMethod({
   name: 'message',
   desc: '由用户的操作触发的轻量级全局反馈，具有即时、简短的特点',
+  descLocales: { en: 'Lightweight global feedback triggered by a user action.' },
   options: useMessageOptions,
   methods,
   default: createMessage,

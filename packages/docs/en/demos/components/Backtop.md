@@ -1,4 +1,3 @@
-Backtop provides a quick return action for long pages or independently scrolling containers after a configured distance.
 
 ## Page Scroll
 

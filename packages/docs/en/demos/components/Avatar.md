@@ -1,6 +1,5 @@
 ## Image and group avatars
 
-A personal avatar can choose from `random-src` candidates. Pass an image array to `src` to compose a group avatar with up to nine members.
 
 :::demo components/Avatar/normal.vue :::
 

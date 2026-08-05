@@ -12,6 +12,7 @@ import { useNamespace, useLowCaseNamespace } from '@aurora/utils';
 export default defineComponent({
   name: `${useNamespace()}Transition`,
   desc: '内置过渡动画',
+  descLocales: { en: "Transition wraps the common enter, leave, and list-movement animations in Horizon Web." },
   version: '1.6.2',
   props: useTransitionProps,
   emits: useTransitionEmits,

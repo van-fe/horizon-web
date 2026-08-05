@@ -13,6 +13,7 @@ import { HHoverSwitchVisibleInjectKey } from '~/components/Hover/src/utils/injec
 export default defineComponent({
   name: `${useNamespace()}Hover`,
   desc: '鼠标移入容器后显示某个元素，鼠标移出容器后隐藏元素',
+  descLocales: { en: "Set disabled to true to disable the hover component" },
   props: useHoverProps,
   emits: useHoverEmits,
   slots: useHoverSlots,

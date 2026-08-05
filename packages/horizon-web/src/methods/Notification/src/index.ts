@@ -90,6 +90,9 @@ async function handleInstancesOffset(vNode: VNode) {
 const Notify = defineMethod({
   name: 'Notify',
   desc: '全局展示通知提醒，悬浮出现在页面角落，将信息及时有效的传达给用户。更偏向系统本身的通知，大多数与用户操作无关',
+  descLocales: {
+    en: 'Displays system-oriented global notifications in a corner of the page.',
+  },
   options: useNotificationProps,
   methods: NotifyFunctions,
   async default(...args: Array<string | Partial<NotificationProps>>) {

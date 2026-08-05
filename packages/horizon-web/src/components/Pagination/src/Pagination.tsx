@@ -24,6 +24,7 @@ import useSize from '~/utils/useSize';
 export default defineComponent({
   name: `${useNamespace()}Pagination`,
   desc: '采用分页的形式分隔长列表，每次只加载一个页面',
+  descLocales: { en: "Control the maximum number of page buttons through `pager-count`" },
   props: usePaginationProps,
   emits: usePaginationEmits,
   slots: usePaginationSlots,

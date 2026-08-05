@@ -8,7 +8,6 @@ import {
   onMounted,
   ref,
   watch,
-  watchEffect,
 } from 'vue';
 import { ComponentClassBlock, cls, useNamespace, getElement } from '@aurora/utils';
 import type { HorizonWebSetupContext } from '@aurora/utils';
@@ -39,6 +38,8 @@ import { useDrag } from './utils/useDrag';
 
 export default defineComponent({
   name: `${useNamespace()}GuideItem`,
+  desc: "新手引导中的单个步骤",
+  descLocales: { en: "A single step within Guide." },
   components: {
     IconClose,
     HButton,

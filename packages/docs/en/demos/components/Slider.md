@@ -1,6 +1,5 @@
 ## Basic usage
 
-Bind a number with `v-model`. The demo keeps the business result visible while the value changes.
 
 :::demo components/Slider/index.vue :::
 

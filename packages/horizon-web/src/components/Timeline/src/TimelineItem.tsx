@@ -13,6 +13,8 @@ import useSize from '~/utils/useSize';
 
 export default defineComponent({
   name: `${useNamespace()}TimelineItem`,
+  desc: "时间线中的单个事件项",
+  descLocales: { en: "A single event item within Timeline." },
   components: { AIcon },
   props: useTimelineItemProps,
   slots: useTimelineItemSlots,

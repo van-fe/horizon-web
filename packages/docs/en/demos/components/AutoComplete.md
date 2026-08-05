@@ -1,6 +1,5 @@
 ## Basic usage
 
-Provide suggestions through `options` and filter them in the `search` handler. Supply initial options before input if suggestions should appear on focus. The demo also compares `size` and `input-style`.
 
 :::demo components/AutoComplete/basic.vue :::
 

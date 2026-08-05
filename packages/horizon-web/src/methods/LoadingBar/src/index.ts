@@ -144,5 +144,8 @@ const LoadingMethods = {
 export default defineMethod({
   name: 'loadingBar',
   desc: '在页面最顶端创建了一个用于显示页面加载、异步请求文件上传的加载进度条，缓解用户等待时的焦虑感，因为可复用性的关系，全局只会存在一个 `loadingBar` 的实例',
+  descLocales: {
+    en: 'Creates a single reusable progress bar at the top of the page for loading, asynchronous requests, and file uploads.',
+  },
   methods: LoadingMethods,
 });

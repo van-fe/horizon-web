@@ -1,5 +1,4 @@
 ## Basic Usage
-Provides `#dropdown` slot to place `h-dropdown-menu`, or you can directly place `h-dropdown-menu` in `#default` without using named slots
 :::demo components/Dropdown/basic.vue :::
 
 ## Trigger Object

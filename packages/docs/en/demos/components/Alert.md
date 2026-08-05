@@ -1,6 +1,5 @@
 ## Basic usage
 
-Combine `title` and `description` into a complete message. Use `info` for important updates that do not need to interrupt the user.
 
 :::demo components/Alert/basic.vue :::
 

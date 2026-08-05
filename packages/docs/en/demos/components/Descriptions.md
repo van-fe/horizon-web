@@ -1,5 +1,4 @@
 ## Basic Usage
-Simply display multiple read-only fields in groups, generally used for detail page information (such as user details, vehicle details)
 :::demo components/Descriptions/basic.vue :::
 
 ## Single Column Style

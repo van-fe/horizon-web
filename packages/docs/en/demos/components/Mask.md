@@ -1,6 +1,5 @@
 ## Basic Usage
 
-Add a dim layer on the application (type: five types, default is default).
 :::demo components/Mask/demo1.vue :::
 
 ## Absolute Positioning

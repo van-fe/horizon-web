@@ -40,7 +40,7 @@ function analyseProps(
 </tr>`);
   });
 
-  return `<table class="md-table">
+  return `<div class="api-table-wrapper"><table class="md-table api-table" style="--api-column-count: 5">
   <thead>
   <tr>
     <th>属性</th>
@@ -53,7 +53,7 @@ function analyseProps(
   <tbody>
   ${tbody.join('')}
   </tbody>
-  </table>`;
+  </table></div>`;
 }
 
 function analyseEmits(emits: ApiGeneratorAnalysedEmitType[]) {
@@ -91,7 +91,7 @@ ${emit.params
 </tr>`);
   });
 
-  return `<table class="md-table">
+  return `<div class="api-table-wrapper"><table class="md-table api-table" style="--api-column-count: 6">
   <thead>
   <tr>
     <th>属性</th>
@@ -105,7 +105,7 @@ ${emit.params
   <tbody>
   ${tbody.join('')}
   </tbody>
-  </table>`;
+  </table></div>`;
 }
 
 function analyseSlots(slots: ApiGeneratorAnalysedSlotType[]) {
@@ -137,7 +137,7 @@ ${slot.params
 </tr>`);
   });
 
-  return `<table class="md-table">
+  return `<div class="api-table-wrapper"><table class="md-table api-table" style="--api-column-count: 6">
   <thead>
   <tr>
     <th>属性</th>
@@ -151,7 +151,7 @@ ${slot.params
   <tbody>
   ${tbody.join('')}
   </tbody>
-  </table>`;
+  </table></div>`;
 }
 
 function analyseExposes(exposes: ApiGeneratorAnalysedExposeType[]) {
@@ -190,7 +190,7 @@ ${
 </tr>`);
   });
 
-  return `<table class="md-table">
+  return `<div class="api-table-wrapper"><table class="md-table api-table" style="--api-column-count: 6">
   <thead>
   <tr>
     <th>属性</th>
@@ -204,7 +204,7 @@ ${
   <tbody>
   ${tbody.join('')}
   </tbody>
-  </table>`;
+  </table></div>`;
 }
 
 function analyseOptions(options: ApiGeneratorAnalysedOptionType[]) {
@@ -242,7 +242,7 @@ ${
 </tr>`);
   });
 
-  return `<table class="md-table">
+  return `<div class="api-table-wrapper"><table class="md-table api-table" style="--api-column-count: 8">
   <thead>
   <tr>
     <th>属性</th>
@@ -258,7 +258,7 @@ ${
   <tbody>
   ${tbody.join('')}
   </tbody>
-  </table>`;
+  </table></div>`;
 }
 
 function analyseMethods(methods: ApiGeneratorAnalysedMethodType[]) {
@@ -290,7 +290,7 @@ ${
 </tr>`);
   });
 
-  return `<table class="md-table">
+  return `<div class="api-table-wrapper"><table class="md-table api-table" style="--api-column-count: 6">
   <thead>
   <tr>
     <th>属性</th>
@@ -304,7 +304,7 @@ ${
   <tbody>
   ${tbody.join('')}
   </tbody>
-  </table>`;
+  </table></div>`;
 }
 
 export default function (

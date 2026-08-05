@@ -28,6 +28,8 @@ import { nanoid } from 'nanoid';
 
 export default defineComponent({
   name: `${useNamespace()}OptionGroup`,
+  desc: "选择器中的选项分组",
+  descLocales: { en: "Groups related options within Select." },
   props: useOptionGroupProps,
   slots: useOptionGroupSlots,
   setup(props, { slots, attrs }: HorizonWebSetupContext<{}, OptionGroupSlots>) {
