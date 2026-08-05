@@ -1,21 +1,19 @@
-## 何时使用
+ChatBubble 用于聊天、客服或智能助手中的单条消息展示。发送、重试和消息数据管理仍由业务层负责。
 
-用于在聊天、客服或智能助手场景中展示单条消息。组件只负责消息展示，发送、重试和消息列表管理应由业务层处理。
+## 基础对话
 
-## 基本用法
-
-通过 `placement` 控制消息排列方向，使用 `variant="primary"` 强调当前用户的消息。
+`placement` 控制消息方向，`variant="primary"` 强调当前用户消息；名称、时间、状态和 `aria-label` 提供完整上下文。
 
 :::demo components/ChatBubble/basic.vue :::
 
-## 自定义内容
+## 自定义插槽
 
-可以通过插槽自定义正文、头像、名称、时间、状态和底部操作区域。
+正文、头像、名称、时间、状态和底部操作都可自定义。示例将底部操作结果显示在消息下方。
 
 :::demo components/ChatBubble/slots.vue :::
 
 ## 虚拟滚动消息列表
 
-`HChatBubbleList` 复用组件库的动态尺寸虚拟滚动能力，只渲染可视区域附近的消息。它支持不等高气泡，并暴露 `scrollToItem(index)` 和 `scrollToBottom()` 方法。
+`HChatBubbleList` 只渲染可视区域附近的消息，支持不等高内容，并暴露 `scrollToItem(index)` 与 `scrollToBottom()`。
 
 :::demo components/ChatBubble/virtual-list.vue :::

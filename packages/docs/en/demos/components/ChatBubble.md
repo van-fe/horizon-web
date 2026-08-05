@@ -1,21 +1,19 @@
-## When to Use
+ChatBubble displays one message in chat, support, or assistant experiences. Sending, retrying, and message-data management remain application responsibilities.
 
-Use ChatBubble to display a single message in chat, support, or assistant experiences. Sending, retrying, and message-list management remain the responsibility of the application.
+## Basic Conversation
 
-## Basic Usage
-
-Use `placement` to align a message and `variant="primary"` to emphasize the current user's message.
+`placement` controls direction and `variant="primary"` emphasizes the current user. Name, time, status, and `aria-label` provide complete context.
 
 :::demo components/ChatBubble/basic.vue :::
 
-## Custom Content
+## Custom Slots
 
-Slots can customize the message body, avatar, name, time, status, and footer actions.
+Customize the body, avatar, name, time, status, and footer actions. The demo reports footer-action results below the message.
 
 :::demo components/ChatBubble/slots.vue :::
 
 ## Virtualized Message List
 
-`HChatBubbleList` reuses the library's dynamic-size virtual scroller and only renders messages near the viewport. It supports variable-height bubbles and exposes `scrollToItem(index)` and `scrollToBottom()`.
+`HChatBubbleList` renders only messages near the viewport, supports variable-height content, and exposes `scrollToItem(index)` and `scrollToBottom()`.
 
 :::demo components/ChatBubble/virtual-list.vue :::

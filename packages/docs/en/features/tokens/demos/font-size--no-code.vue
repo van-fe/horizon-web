@@ -1,15 +1,8 @@
 <script setup lang="ts">
 import tokens from './theme.json';
-import { snakeCase } from '@aurora/utils';
 import { ref } from 'vue';
 
 type Data<T = unknown> = Record<string, T>;
-
-interface FontListType {
-  label: string;
-  rawLabel: string;
-  value: string;
-}
 
 interface TokenRealValueData {
   label: string;
@@ -20,41 +13,12 @@ interface TokenRealValueData {
   path: string;
 }
 
-function cssVariableNameToJsName(cssVariableName: string) {
-  return snakeCase(cssVariableName.replace(/^--h-/, ''));
-}
-
 const formatTokenName = (token: string) =>
   token.replace(/([A-Z][a-z]*|\d+)/gu, (curr, index) =>
     index === 0 ? curr.toLowerCase() : `-${curr.toLowerCase()}`,
   );
 
-function getFontList(currTokens: (typeof tokens)['basic']['font']) {
-  const list: Array<FontListType> = [];
-
-  const handler = (currTokens: Data) => {
-    Object.entries(currTokens || {}).map(([key, value]) => {
-      if (typeof value === 'object') {
-        return handler(value as Data);
-      } else if (typeof value === 'string') {
-        list.push({
-          label: key,
-          rawLabel: key,
-          value,
-        });
-      }
-    });
-  };
-
-  handler(currTokens);
-
-  return list;
-}
-
-function getElementTokenRealValue(
-  elementTokens: (typeof tokens)['element'],
-  groupedBasicTokens: FontListType[],
-) {
+function getElementTokenRealValue(elementTokens: (typeof tokens)['element']) {
   const list: Data<Data | TokenRealValueData> = {};
 
   const handler = (current: Data, subTree: Data, parentKey: string[]) => {
@@ -63,34 +27,14 @@ function getElementTokenRealValue(
         subTree[key] = {};
         handler(value as Data, subTree[key] as Data, parentKey.concat(key));
       } else if (typeof value === 'string') {
-        const reg = /^var\((.*?)\)$/;
-        if (reg.test(value)) {
-          const cssVariable = value.match(reg)?.[1] || '';
-
-          const target = groupedBasicTokens.find(
-            curr => curr.rawLabel === cssVariableNameToJsName(cssVariable),
-          );
-
-          const currentValue = target?.value ?? value;
-
-          subTree[key] = {
-            label: formatTokenName(key),
-            value: currentValue,
-            refToken: `--h-${key.replace(/_/g, '-')}`,
-            rawLabel: key,
-            rawValue: value,
-            path: `element.${parentKey.concat(key).join('.')}`,
-          };
-        } else {
-          subTree[key] = {
-            label: formatTokenName(key),
-            value,
-            refToken: `--h-${key.replace(/_/g, '-')}`,
-            rawLabel: key,
-            rawValue: value,
-            path: `element.${parentKey.concat(key).join('.')}`,
-          };
-        }
+        subTree[key] = {
+          label: formatTokenName(key),
+          value,
+          refToken: `--h-${key.replace(/_/g, '-')}`,
+          rawLabel: key,
+          rawValue: value,
+          path: `element.${parentKey.concat(key).join('.')}`,
+        };
       }
     });
   };
@@ -100,8 +44,7 @@ function getElementTokenRealValue(
   return list;
 }
 
-const basicFontListTokens = getFontList(tokens.basic.font);
-const elementListTokens = getElementTokenRealValue(tokens.element, basicFontListTokens);
+const elementListTokens = getElementTokenRealValue(tokens.element);
 
 const currentTabs = ref('lineHeight');
 </script>

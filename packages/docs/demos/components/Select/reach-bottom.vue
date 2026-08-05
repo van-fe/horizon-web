@@ -1,49 +1,82 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { faker } from '@faker-js/faker';
-import throttle from 'lodash/throttle';
+import { computed, onBeforeUnmount, ref } from 'vue';
 
-interface ListType {
-  value: string;
-  label: string;
-}
+type Member = { value: string; label: string; description: string };
 
-const value = ref(null);
-const list = ref<ListType[]>([]);
+const firstNames = ['Mia', 'Noah', 'Ava', 'Leo', 'Zoe', 'Ethan'];
+const lastNames = ['Chen', 'Li', 'Wang', 'Zhang', 'Wu', 'Lin'];
+const teams = ['Platform', 'Design', 'Quality', 'Growth'];
+const allMembers: Member[] = Array.from({ length: 36 }, (_, index) => ({
+  value: `member-${index + 1}`,
+  label: `${firstNames[index % firstNames.length]} ${lastNames[Math.floor(index / 6)]}`,
+  description: `${teams[index % teams.length]} · ID ${String(index + 1).padStart(2, '0')}`,
+}));
+const pageSize = 12;
+const value = ref<string>();
+const members = ref<Member[]>(allMembers.slice(0, pageSize));
 const loading = ref(false);
+const status = ref('滚动到面板底部加载下一页');
+const hasMore = computed(() => members.value.length < allMembers.length);
+let loadTimer: ReturnType<typeof setTimeout> | undefined;
 
-function generateRandomOptions() {
+function loadMore() {
+  if (loading.value || !hasMore.value) return;
   loading.value = true;
-
-  setTimeout(() => {
-    for (let i = 0; i < 20; i ++) {
-      list.value.push({
-        label: faker.person.fullName(),
-        value: faker.phone.number(),
-      });
-    }
-
+  status.value = '正在加载…';
+  loadTimer = setTimeout(() => {
+    members.value = allMembers.slice(
+      0,
+      Math.min(members.value.length + pageSize, allMembers.length),
+    );
     loading.value = false;
-  }, 1000);
+    status.value = hasMore.value ? `已加载 ${members.value.length} 人` : '全部成员已加载';
+  }, 500);
 }
 
-const onOptionListReachBottom = throttle(() => {
-  console.info('reach bottom');
-  generateRandomOptions();
-}, 500);
-
-generateRandomOptions();
+onBeforeUnmount(() => {
+  if (loadTimer) clearTimeout(loadTimer);
+});
 </script>
 
 <template>
-  <h-grid :gap="10">
-    <h-grid-item :span="6">
-      <h-select v-model="value" :clearable="true" :to-body="false" :loading="loading" @optionListReachBottom="onOptionListReachBottom">
-        <h-option v-for="item of list" :key="item.value" :label="item.label" :value="item.value" />
-      </h-select>
-    </h-grid-item>
-  </h-grid>
+  <div class="select-demo">
+    <h-select
+      v-model="value"
+      filterable
+      clearable
+      :loading="loading"
+      :to-body="false"
+      placeholder="打开面板并滚动到底部"
+      @option-list-reach-bottom="loadMore"
+    >
+      <h-option v-for="member in members" :key="member.value" v-bind="member" />
+    </h-select>
+    <div class="status-row">
+      <p class="docs-demo__status" role="status">{{ status }}</p>
+      <h-button size="small" type="normal" :disabled="loading || !hasMore" @click="loadMore">
+        模拟触底
+      </h-button>
+    </div>
+  </div>
 </template>
 
 <style scoped>
+.select-demo {
+  display: grid;
+  min-width: 0;
+  gap: 10px;
+}
+
+.select-demo :deep(.h-select) {
+  width: 100%;
+  min-width: 0;
+}
+
+.status-row {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
 </style>

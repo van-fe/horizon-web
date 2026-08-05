@@ -18,6 +18,7 @@ import type { TransitionProps } from '~/components/Transition/src/composables/us
 export default defineComponent({
   name: `${useNamespace()}Panels`,
   desc: 'Panels 组件用来显示可切换的更多内容，可以单独使用，也常常结合 `radio`, `tabs` 等组件一起使用',
+  descLocales: { en: "By default, panels have horizontal animation effects and automatically detect whether the switching direction is from left to right or from right to left, displaying the most appropriate animation. You can also enable vertical animation by setting `vertical`." },
   props: usePanelsProps,
   slots: usePanelsSlots,
   setup(props, { slots }: HorizonWebSetupContext<{}, PanelsSlots>) {

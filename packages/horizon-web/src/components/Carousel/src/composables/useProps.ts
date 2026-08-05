@@ -2,10 +2,20 @@ import { declarePropType } from '@aurora/utils';
 import type { ExtractPropTypes, PropType } from 'vue';
 
 export type HCarouselDirection = 'horizontal' | 'vertical';
-export type HCarouselEffect = 'slide' | 'fade';
+export type HCarouselEffect = 'slide' | 'fade' | 'card';
 export type HCarouselArrow = 'always' | 'hover' | 'never';
-export type HCarouselIndicatorPosition = 'inside' | 'outside' | 'none';
+export type HCarouselIndicatorType = 'dot' | 'line' | 'slider';
+export type HCarouselIndicatorPosition =
+  | 'inside'
+  | 'outside'
+  | 'none'
+  | 'top'
+  | 'bottom'
+  | 'left'
+  | 'right'
+  | 'outer-right';
 export type HCarouselTrigger = 'click' | 'hover';
+export type HCarouselTarget = number | string | { index: number } | { name: string | number };
 
 export const useCarouselProps = declarePropType({
   /**
@@ -15,6 +25,7 @@ export const useCarouselProps = declarePropType({
   modelValue: {
     type: Number,
     required: false,
+    validator: (value: number) => Number.isInteger(value) && value >= 0,
   },
   /**
    * 非受控模式下初始激活项的索引
@@ -39,7 +50,7 @@ export const useCarouselProps = declarePropType({
    */
   autoplay: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   /**
    * 自动轮播间隔，单位为毫秒
@@ -48,6 +59,15 @@ export const useCarouselProps = declarePropType({
   interval: {
     type: Number,
     default: 3000,
+    validator: (value: number) => Number.isFinite(value) && value > 0,
+  },
+  /**
+   * 切换动画时长，单位为毫秒
+   * @en Slide transition duration in milliseconds.
+   */
+  moveSpeed: {
+    type: Number,
+    default: 500,
     validator: (value: number) => Number.isFinite(value) && value > 0,
   },
   /**
@@ -74,7 +94,7 @@ export const useCarouselProps = declarePropType({
   effect: {
     type: String as PropType<HCarouselEffect>,
     default: 'slide',
-    validator: (value: string) => ['slide', 'fade'].includes(value),
+    validator: (value: string) => ['slide', 'fade', 'card'].includes(value),
   },
   /**
    * 切换箭头的显示时机
@@ -82,7 +102,7 @@ export const useCarouselProps = declarePropType({
    */
   arrow: {
     type: String as PropType<HCarouselArrow>,
-    default: 'hover',
+    default: 'always',
     validator: (value: string) => ['always', 'hover', 'never'].includes(value),
   },
   /**
@@ -92,7 +112,19 @@ export const useCarouselProps = declarePropType({
   indicatorPosition: {
     type: String as PropType<HCarouselIndicatorPosition>,
     default: 'inside',
-    validator: (value: string) => ['inside', 'outside', 'none'].includes(value),
+    validator: (value: string) =>
+      ['inside', 'outside', 'none', 'top', 'bottom', 'left', 'right', 'outer-right'].includes(
+        value,
+      ),
+  },
+  /**
+   * 指示器类型
+   * @en Visual type of slide indicators.
+   */
+  indicatorType: {
+    type: String as PropType<HCarouselIndicatorType>,
+    default: 'dot',
+    validator: (value: string) => ['dot', 'line', 'slider'].includes(value),
   },
   /**
    * 指示器切换的触发方式；无论此配置为何，键盘用户都可点击指示器
@@ -112,8 +144,8 @@ export const useCarouselProps = declarePropType({
     default: true,
   },
   /**
-   * 焦点进入时是否暂停自动轮播；暂停后需由用户主动恢复
-   * @en Whether focus entering the carousel pauses autoplay until the user resumes it.
+   * 焦点位于走马灯内部时是否暂停自动轮播
+   * @en Whether autoplay pauses while focus is inside the carousel.
    */
   pauseOnFocus: {
     type: Boolean,

@@ -1,35 +1,28 @@
-<template>
-  <h-grid :gap="10">
-    <h-grid-item :span="6">
-      <h-cascader v-model="currentVal1" :options="options" multiple :to-body="false">
-        <template #tagRender="slotProps">
-          <h-tag :key="slotProps.value" is-pure><span class="multiple-tag">{{ `${slotProps.label}` ?? '' }}</span></h-tag>
-        </template>
-      </h-cascader>
-    </h-grid-item>
-  </h-grid>
-</template>
+<script setup lang="ts">
+import { ref } from 'vue';
+import { formatSelectionCount, workspaceOptions } from './options';
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-
-export default defineComponent({
-  setup() {
-    const currentVal1 = ref<string[]>([]);
-
-    const options = ref([]);
-    fetch(
-      new URL('/cascader-options.json', import.meta.url).href,
-    ).then(res => {
-      res.json().then(value => {
-        options.value = value;
-      });
-    });
-
-    return {
-      currentVal1,
-      options,
-    };
-  },
-});
+const value = ref<string[][]>([
+  ['product', 'design-system', 'accessibility'],
+  ['engineering', 'reliability', 'observability'],
+]);
 </script>
+
+<template>
+  <div class="docs-demo">
+    <h-cascader
+      v-model="value"
+      aria-label="Release reviewers"
+      placeholder="Choose reviewers"
+      :options="workspaceOptions"
+      multiple
+      clearable
+      :to-body="false"
+    >
+      <template #tagRender="option">
+        <h-tag :key="String(option.value)" is-pure>Team · {{ option.label }}</h-tag>
+      </template>
+    </h-cascader>
+    <span aria-live="polite">{{ formatSelectionCount(value) }}</span>
+  </div>
+</template>

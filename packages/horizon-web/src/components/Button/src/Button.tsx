@@ -58,6 +58,7 @@ export default defineComponent({
     );
 
     const type = computed(() => props.type);
+    const effectiveType = computed(() => parentProps?.type ?? type.value);
     const isPlain = computed(() => props.plain);
     const isText = computed(() => props.text);
 
@@ -72,8 +73,8 @@ export default defineComponent({
       let type: 'default' | 'plain' | 'text' | 'link' | 'ghost' = 'default';
       if (isPlain.value) {
         type = props.ghost ? 'ghost' : 'plain';
-      } else if (isText.value) type = 'text';
-      else if (props.link) type = 'link';
+      } else if (props.link) type = 'link';
+      else if (isText.value) type = 'text';
 
       return getCssVariableByStatus(
         'button',
@@ -81,6 +82,7 @@ export default defineComponent({
           ? builtinColorMapping[colorProp.value]
           : colorProp.value,
         type,
+        effectiveType.value,
       );
     });
 
@@ -145,7 +147,7 @@ export default defineComponent({
       <props.tag
         class={cls(
           classHelper.block,
-          classHelper.m(parentProps?.type ?? type.value),
+          classHelper.m(effectiveType.value),
           classHelper.m(sizeRef.value),
           classHelper.m('block', props.block),
           classHelper.m('round', props.round),

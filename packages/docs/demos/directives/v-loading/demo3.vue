@@ -82,8 +82,8 @@
               block
               aria-label="动画类型"
             >
-              <h-segmented-item key="circle" label="圆环" />
-              <h-segmented-item key="dots" label="圆点" />
+              <h-segmented-item value="circle" label="圆环" />
+              <h-segmented-item value="dots" label="圆点" />
             </h-segmented>
           </div>
 
@@ -98,8 +98,8 @@
               block
               aria-label="图文排列"
             >
-              <h-segmented-item key="column" label="纵向" />
-              <h-segmented-item key="row" label="横向" />
+              <h-segmented-item value="column" label="纵向" />
+              <h-segmented-item value="row" label="横向" />
             </h-segmented>
           </div>
 
@@ -114,9 +114,9 @@
               block
               aria-label="动画尺寸"
             >
-              <h-segmented-item key="small" label="小" />
-              <h-segmented-item key="medium" label="中" />
-              <h-segmented-item key="large" label="大" />
+              <h-segmented-item value="small" label="小" />
+              <h-segmented-item value="medium" label="中" />
+              <h-segmented-item value="large" label="大" />
             </h-segmented>
           </div>
 
@@ -143,9 +143,9 @@
               block
               aria-label="遮罩背景"
             >
-              <h-segmented-item key="var(--h-bg-default)" label="页面色" />
-              <h-segmented-item key="var(--h-bg-secondary)" label="次级色" />
-              <h-segmented-item key="var(--h-bg-weak-default)" label="品牌弱色" />
+              <h-segmented-item value="var(--h-bg-default)" label="页面色" />
+              <h-segmented-item value="var(--h-bg-secondary)" label="次级色" />
+              <h-segmented-item value="var(--h-bg-weak-default)" label="品牌弱色" />
             </h-segmented>
           </div>
         </div>

@@ -43,7 +43,6 @@ const items = ['Analytics', 'Workspace', 'Automation', 'Settings'];
   height: 7px;
   border-radius: 50%;
   background: var(--h-bg-brand-default);
-  box-shadow: 0 0 0 4px var(--h-bg-weak-activated);
 }
 
 .responsive-card {
@@ -55,7 +54,13 @@ const items = ['Analytics', 'Workspace', 'Automation', 'Settings'];
   box-sizing: border-box;
   border: 1px solid var(--h-border-default);
   border-radius: 10px;
-  background: linear-gradient(145deg, rgb(0 188 188 / 10%), transparent 60%), var(--h-bg-secondary);
+  background: var(--h-bg-secondary);
+}
+
+@media (max-width: 560px) {
+  .responsive-card {
+    min-height: 88px;
+  }
 }
 
 .responsive-card span {

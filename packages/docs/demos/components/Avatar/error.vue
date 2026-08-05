@@ -1,74 +1,28 @@
-<template>
-  <div class="h-demo">
-    <div class="h-demo__container">
-      <div class="h-demo__title">通过加载图片失败默认处理</div>
-      <h-avatar
-        size="large"
-        :src="src1"
-        default="/demo-assets/avatar-indigo.svg"
-        @error="errorHandler1"
-      />
-    </div>
-    <div class="h-demo__container">
-      <div class="h-demo__title">通过 error 方法自定义处理加载图片失败情况</div>
-      <h-avatar
-        size="large"
-        :src="src"
-        default="/demo-assets/avatar-indigo.svg"
-        @error="errorHandler"
-      />
-    </div>
-    <div class="h-demo__container">
-      <div class="h-demo__title">通过插槽自定义加载图片失败情况</div>
-      <h-avatar size="large" :src="src2">
-        <template #error>
-          <div>失败了</div>
-        </template>
-      </h-avatar>
-    </div>
-  </div>
-</template>
-
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    let src = ref('https://cdn-app.example.com/us/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg');
-    let src2 = ref('https://cdn-app.example.com/us/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg');
-    let src1 = ref('https://cdn-app.example.com/us/2022/3/1/61e23a30-bf79-4479-b084-27a36adb8334.jpg');
-    const errorHandler = () => {
-      src.value = '/demo-assets/avatar-cyan.svg';
-    };
-    const errorHandler1 = () => {
-      console.info('图片加载失败了');
-    };
-    return {
-      errorHandler,
-      errorHandler1,
-      src,
-      src1,
-      src2,
-    };
-  },
-});
+<script setup lang="ts">
+const missingAvatar = 'data:image/png;base64,not-an-image';
 </script>
 
-<style scoped lang="scss">
-.h-avatar {
-  margin-right: 20px;
-  &--error {
-    background-color: #000;
-    color: #fff;
-  }
-}
+<template>
+  <section class="docs-demo avatar-error-demo">
+    <h-avatar
+      size="large"
+      :src="missingAvatar"
+      default="/demo-assets/avatar-indigo.svg"
+      aria-label="Fallback avatar"
+    />
+    <span>Fallback asset shown after the image fails to load.</span>
+  </section>
+</template>
 
-.h-demo__container {
+<style scoped>
+.avatar-error-demo {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  gap: var(--h-spacing-3);
 }
 
-.h-demo__title {
-  margin-right: 20px;
+.avatar-error-demo span {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
 }
 </style>

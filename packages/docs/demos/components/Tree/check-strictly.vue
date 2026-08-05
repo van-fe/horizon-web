@@ -1,42 +1,36 @@
-<template>
-  <h-form label-position="left" label-vertical-align="middle" label-width="150px">
-    <h-form-item label="是否忽视父子关系">
-      <h-switch v-model="checkStrictly" :status="true" status-off-text="否" status-on-text="是" />
-    </h-form-item>
-  </h-form>
-  <h-grid :gap="12">
-    <h-grid-item :span="12">
-      <div class="demo-title">单选</div>
-      <h-tree
-        :tree-data="baseTreeData"
-        :check-strictly="checkStrictly"
-      />
-    </h-grid-item>
-    <h-grid-item :span="12">
-      <div class="demo-title">多选</div>
-      <h-tree
-        :tree-data="baseTreeData"
-        :check-strictly="checkStrictly"
-        :multiple="true"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
+import type { HTreeNodeData } from '@aurora/horizon-web';
 
 const checkStrictly = ref(false);
-const baseTreeData = ref([]);
-
-onMounted(() => {
-  fetch(new URL('/tree-data.json', import.meta.url).href)
-    .then(res => res.json())
-    .then(res => {
-      baseTreeData.value = res;
-    });
-});
+const selectedValues = ref<Array<string | number>>(['payment-failures']);
+const treeData: HTreeNodeData[] = [
+  {
+    value: 'billing',
+    label: 'Billing notifications',
+    children: [
+      { value: 'payment-failures', label: 'Payment failures' },
+      { value: 'receipts', label: 'Receipt delivery' },
+    ],
+  },
+  {
+    value: 'operations',
+    label: 'Operations notifications',
+    children: [{ value: 'incidents', label: 'Incident updates' }],
+  },
+];
 </script>
 
-<style scoped>
-</style>
+<template>
+  <div class="docs-demo">
+    <h-switch v-model="checkStrictly" label="Independent nodes" />
+    <h-tree
+      v-model:selected-values="selectedValues"
+      :tree-data="treeData"
+      :check-strictly="checkStrictly"
+      multiple
+      :is-default-expand-all="true"
+    />
+    <span aria-live="polite">Selected: {{ selectedValues.join(', ') || 'none' }}</span>
+  </div>
+</template>

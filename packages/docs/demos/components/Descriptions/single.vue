@@ -1,43 +1,35 @@
 <template>
-  <div class="container">
-    <div>
-      small
-      <h-descriptions title="User Info" type="vertical" size="small">
-        <h-description-item label="Name" value="bingkun Zhou"></h-description-item>
-        <h-description-item label="Telephone" value="0924-250492" />
-        <h-description-item label="Residence" value="Norway" />
-        <h-description-item label="City" value="Oslo" />
-        <h-description-item label="Address" value="Leg.Kiropraktor Iréne Johnson" />
+  <section class="docs-demo">
+    <label class="docs-demo__control">
+      <span class="docs-demo__control-label">
+        尺寸 ·
+        <code>size</code>
+      </span>
+      <h-segmented v-model:active-key="size" size="small">
+        <h-segmented-item value="small" label="Small" />
+        <h-segmented-item value="medium" label="Medium" />
+        <h-segmented-item value="large" label="Large" />
+      </h-segmented>
+    </label>
+
+    <div class="description-preview">
+      <h-descriptions title="Environment" type="vertical" :size="size" :column="3">
+        <h-description-item label="Name" value="Production" />
+        <h-description-item label="Region" value="Singapore" />
+        <h-description-item label="Version" value="v3.8.0" />
       </h-descriptions>
     </div>
-    <div>
-      medium
-      <h-descriptions title="User Info" type="vertical">
-        <h-description-item label="Name" value="bingkun Zhou"></h-description-item>
-        <h-description-item label="Telephone" value="0924-250492" />
-        <h-description-item label="Residence" value="Norway" />
-        <h-description-item label="City" value="Oslo" />
-        <h-description-item label="Address" value="Leg.Kiropraktor Iréne Johnson" />
-      </h-descriptions>
-    </div>
-    <div>
-      large
-      <h-descriptions title="User Info" type="vertical" size="large">
-        <h-description-item label="Name" value="bingkun Zhou"></h-description-item>
-        <h-description-item label="Telephone" value="0924-250492" />
-        <h-description-item label="Residence" value="Norway" />
-        <h-description-item label="City" value="Oslo" />
-        <h-description-item label="Address" value="Leg.Kiropraktor Iréne Johnson" />
-      </h-descriptions>
-    </div>
-  </div>
+  </section>
 </template>
 
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const size = ref<'small' | 'medium' | 'large'>('medium');
+</script>
+
 <style scoped>
-.h-descriptions {
-  padding: 32px 24px 16px;
-}
-.container {
-  display: flex;
+.description-preview {
+  overflow-x: auto;
 }
 </style>

@@ -1,25 +1,20 @@
 import { AIcon } from '@aurora/icon';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, getBooleanProp, useNamespace, isVNodeEmpty } from '@aurora/utils';
-import {
-  cloneVNode,
-  computed,
-  defineComponent,
-  getCurrentInstance,
-  inject,
-  type VNodeRef,
-  type VNode,
-} from 'vue';
+import { cloneVNode, computed, defineComponent, inject, type VNodeRef, type VNode } from 'vue';
 import type { SegmentedItemEmits } from './composables/useEmits';
 import { useSegmentedItemEmits } from './composables/useEmits';
 import type { HSegmentedValue } from './composables/useProps';
 import { useSegmentedItemProps } from './composables/useProps';
 import { useSegmentedItemSlots, type SegmentedItemSlots } from './composables/useSlots';
 import { contextKey } from './constants';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
 
 export default defineComponent({
   name: `${useNamespace()}SegmentedItem`,
-  components: { AIcon },
+  desc: "分段控制器中的单个选项",
+  descLocales: { en: "A single option within Segmented." },
+  components: { AIcon, HTooltip },
   props: useSegmentedItemProps,
   slots: useSegmentedItemSlots,
   emits: useSegmentedItemEmits,
@@ -29,15 +24,13 @@ export default defineComponent({
 
     const cls = new ComponentClassBlock('segmented');
 
-    const instance = getCurrentInstance();
-
-    const key = computed(() => instance?.vnode.key as HSegmentedValue);
+    const value = computed<HSegmentedValue>(() => props.value);
 
     const onClick = () => {
       if (getBooleanProp(props.disabled)) return;
 
-      emit('click', key.value);
-      ctx.onClick?.(key.value);
+      emit('click', value.value);
+      ctx.onClick?.(value.value);
     };
 
     const onKeydown = (evt: KeyboardEvent) => {
@@ -46,9 +39,9 @@ export default defineComponent({
       onClick();
     };
 
-    const isActivated = computed(() => ctx.activeKey.value === key.value);
+    const isActivated = computed(() => ctx.activeKey.value === value.value);
 
-    const addTab = ctx.createTab(key.value) as VNodeRef;
+    const addTab = ctx.createTab(value) as VNodeRef;
 
     return () => {
       const slotDefault = slots?.default?.({
@@ -66,6 +59,7 @@ export default defineComponent({
             props.disabled && cls.em('item', 'disabled'),
           ]}
           role="tab"
+          data-focus-visible-inset=""
           tabindex={props.disabled ? -1 : isActivated.value ? 0 : -1}
           aria-selected={isActivated.value}
           aria-disabled={getBooleanProp(props.disabled)}
@@ -80,10 +74,10 @@ export default defineComponent({
                 )}
 
             {isVNodeEmpty(slotDefaults)
-              ? props.label && (
-                  <div class={cls.e('item-text')} title={props.label as string}>
-                    {props.label}
-                  </div>
+              ? props.label !== undefined && (
+                  <HTooltip content={String(props.label)} overflow={true}>
+                    <div class={cls.e('item-text')}>{props.label}</div>
+                  </HTooltip>
                 )
               : slotDefaults}
           </div>

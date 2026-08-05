@@ -1,29 +1,44 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const value1 = ref(1000);
-const value2 = ref(100);
+const value = ref<number | string>(128500);
 
+function formatter(nextValue: number | string) {
+  const [integer, decimal] = String(nextValue).split('.');
+  const grouped = integer.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return `$ ${grouped}${decimal === undefined ? '' : `.${decimal}`}`;
+}
+
+function parser(nextValue: string) {
+  return nextValue.replace(/[$,\s]/g, '');
+}
 </script>
 
 <template>
-  <h-grid :gap="12">
-    <h-grid-item :span="8">
-      <div class="demo-title">千分位</div>
-      <h-input-number
-        v-model="value1"
-        :formatter="(val: string) => `$ ${val.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`"
-        :parser="(val: string) => val.replace(/\$\s?|(,*)/g, '')"
-      />
-    </h-grid-item>
-    <h-grid-item :span="8">
-      <div class="demo-title">带百分号</div>
-      <h-input-number
-        v-model="value2"
-        :min="0"
-        :max="100"
-        :formatter="(value: string) => `${value}%`"
-        :parser="(value: string) => value.replace(/%/g, '')"  />
-    </h-grid-item>
-  </h-grid>
+  <label class="input-number-formatter-demo">
+    <span>Annual budget</span>
+    <h-input-number
+      v-model="value"
+      :min="0"
+      :step="500"
+      :formatter="formatter"
+      :parser="parser"
+      aria-label="Annual budget"
+    />
+    <small aria-live="polite">modelValue: {{ value }}</small>
+  </label>
 </template>
+
+<style scoped>
+.input-number-formatter-demo {
+  display: grid;
+  gap: var(--h-spacing-2);
+  max-inline-size: 420px;
+}
+
+.input-number-formatter-demo > span,
+.input-number-formatter-demo > small {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+</style>

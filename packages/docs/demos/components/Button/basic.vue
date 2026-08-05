@@ -1,20 +1,8 @@
-<script setup lang="ts"></script>
-
 <template>
-  <h-grid :gap="12">
-    <h-grid-item :span="24">
-      <h-button>Primary Button</h-button>
-      <h-button type="danger">Danger Button</h-button>
-    </h-grid-item>
-    <h-grid-item :span="24">
-      <h-button :round="true">Primary Button</h-button>
-      <h-button :round="true" type="danger">Danger Button</h-button>
-    </h-grid-item>
-  </h-grid>
+  <h-space wrap>
+    <h-button>Publish update</h-button>
+    <h-button type="danger">Delete draft</h-button>
+    <h-button type="normal">Cancel</h-button>
+    <h-button round>Invite member</h-button>
+  </h-space>
 </template>
-
-<style scoped>
-.h-button + .h-button {
-  margin-left: 10px;
-}
-</style>

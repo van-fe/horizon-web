@@ -49,6 +49,8 @@ import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
 
 export default defineComponent({
   name: `${useNamespace()}TagGroup`,
+  desc: "组织一组相关标签",
+  descLocales: { en: "Groups related tags." },
   components: {
     HPopover,
     HScrollbar,

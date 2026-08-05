@@ -1,29 +1,21 @@
 <template>
-  <h-form
-    label-position="left"
-    label-vertical-align="middle"
-    label-width="80px"
-    style="width: 400px"
-  >
-    <h-form-item label="是否显示">
-      <h-switch v-model="visible" :status="true" status-on-text="显示" status-off-text="隐藏" />
-    </h-form-item>
-    <h-form-item label="类型">
-      <h-radio-group v-model="type">
-        <h-radio value="normal"></h-radio>
-        <h-radio value="primary"></h-radio>
-      </h-radio-group>
-    </h-form-item>
-  </h-form>
-  <h-float-button :visible="visible" icon="filter" :type="type" />
-  <h-float-button :visible="visible" description="按钮" :type="type" />
+  <section class="docs-demo">
+    <div class="docs-demo__controls">
+      <label class="docs-demo__control">
+        <span class="docs-demo__control-label">Type</span>
+        <h-segmented v-model:active-key="type" size="small" block>
+          <h-segmented-item value="normal" label="Normal" />
+          <h-segmented-item value="primary" label="Primary" />
+        </h-segmented>
+      </label>
+    </div>
+
+    <h-float-button icon="filter" :type="type" tooltip="Filter results" />
+  </section>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const visible = ref(true);
 const type = ref('primary');
 </script>
-
-<style scoped></style>

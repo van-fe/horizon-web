@@ -6,9 +6,9 @@
 
   @include mixins.e('label') {
     margin-bottom: mixins.css-variable('switch', 'spacing', 'label', 'margin-bottom');
-    color: mixins.css-variable('switch', 'color', 'label');
     font-size: mixins.css-variable('switch', 'font-size', 'label');
     line-height: mixins.css-variable('switch', 'line-height', 'label');
+    color: mixins.css-variable('switch', 'color', 'label');
   }
 
   @include mixins.e('main') {
@@ -18,21 +18,31 @@
 
   @include mixins.e('core') {
     position: relative;
+    box-sizing: border-box;
     display: inline-flex;
+    align-items: center;
     width: mixins.css-variable('switch', 'size', 'core', 'width');
     height: mixins.css-variable('switch', 'size', 'core', 'height');
     padding: mixins.css-variable('switch', 'spacing', 'core', 'padding');
     overflow: hidden;
+    cursor: pointer;
     background-color: mixins.css-variable('switch', 'background', 'core');
     border-radius: mixins.css-variable('switch', 'border-radius', 'core');
-    cursor: pointer;
     transition: background-color mixins.css-variable('switch', 'transition', 'duration')
       mixins.css-variable('switch', 'transition', 'timing-function', 'cubic');
 
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+    &:has(> [data-focus-visible-proxy]:focus-visible) {
+      @include mixins.focus-ring;
+    }
+
     input {
       position: absolute;
+      inset: 0;
+      z-index: 2;
       width: 100%;
       height: 100%;
+      margin: 0;
       cursor: pointer;
       opacity: 0;
     }
@@ -56,19 +66,19 @@
     top: 0;
     right: 0;
     bottom: 0;
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-sizing: border-box;
     width: 50%;
     overflow: hidden;
-    color: mixins.css-variable('switch', 'color', 'inner-text');
+    text-overflow: ellipsis;
     font-size: mixins.css-variable('switch', 'font-size', 'inner-text');
     line-height: 1;
+    color: mixins.css-variable('switch', 'color', 'inner-text');
     white-space: nowrap;
-    text-overflow: ellipsis;
-    user-select: none;
     pointer-events: none;
+    user-select: none;
 
     @include mixins.is('active') {
       right: auto;
@@ -108,6 +118,7 @@
     @include mixins.e('core') {
       width: mixins.css-variable('switch', 'size', 'core', 'width', 'small');
       height: mixins.css-variable('switch', 'size', 'core', 'height', 'small');
+      padding: mixins.css-variable('switch', 'spacing', 'core', 'padding', 'small');
 
       @include mixins.is('with-inner-text') {
         width: mixins.css-variable('switch', 'size', 'core', 'width', 'small', 'with-inner-text');
@@ -128,6 +139,7 @@
       width: mixins.css-variable('switch', 'size', 'inner', 'small');
       height: mixins.css-variable('switch', 'size', 'inner', 'small');
     }
+
     @include mixins.e('status') {
       height: mixins.css-variable('switch', 'line-height', 'status');
       margin-left: mixins.css-variable('switch', 'spacing', 'status', 'margin-left', 'small');
@@ -148,6 +160,7 @@
     @include mixins.e('core') {
       width: mixins.css-variable('switch', 'size', 'core', 'width', 'large');
       height: mixins.css-variable('switch', 'size', 'core', 'height', 'large');
+      padding: mixins.css-variable('switch', 'spacing', 'core', 'padding', 'large');
 
       @include mixins.is('with-inner-text') {
         width: mixins.css-variable('switch', 'size', 'core', 'width', 'large', 'with-inner-text');
@@ -168,6 +181,7 @@
       width: mixins.css-variable('switch', 'size', 'inner', 'large');
       height: mixins.css-variable('switch', 'size', 'inner', 'large');
     }
+
     @include mixins.e('status') {
       height: mixins.css-variable('switch', 'line-height', 'status');
       margin-left: mixins.css-variable('switch', 'spacing', 'status', 'margin-left', 'large');
@@ -223,8 +237,8 @@
     }
 
     @include mixins.is('disabled') {
-      background-color: mixins.css-variable('switch', 'background', 'core', 'disabled');
       cursor: not-allowed;
+      background-color: mixins.css-variable('switch', 'background', 'core', 'disabled');
 
       input {
         cursor: not-allowed;

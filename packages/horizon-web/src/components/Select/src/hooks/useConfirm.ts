@@ -2,16 +2,16 @@ import type { HorizonWebSetupContext } from '@/@aurora/utils/types';
 import type { Ref } from 'vue';
 import type { SelectEmits } from '../composables/useEmits';
 import type { SelectExposes } from '../composables/useExposes';
-import type { SelectProps, OptionProps } from '../composables/useProps';
+import type { SelectProps } from '../composables/useProps';
 import type { SelectSlots } from '../composables/useSlots';
-import type { ModelValueType } from '../utils/types';
+import type { ModelValueSingleType, ModelValueType } from '../utils/types';
 
 export default function useConfirm(
   props: SelectProps,
   context: HorizonWebSetupContext<SelectEmits, SelectSlots, SelectExposes>,
   options: {
-    modelValueSet: Ref<Set<OptionProps['value']>>;
-    presetModelValueSet: Ref<Set<OptionProps['value']>>;
+    modelValueSet: Ref<Set<ModelValueSingleType>>;
+    presetModelValueSet: Ref<Set<ModelValueSingleType>>;
     prevOptionValue: ModelValueType;
     setPopperVisible: (visible: boolean) => void;
     judgeWhetherInputCanFocus: () => void;

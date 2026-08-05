@@ -1,21 +1,27 @@
 <template>
-  <h-hover v-slot="{ hover }" :disabled="true">
-    <div class="container">
-      <span>容器</span>
-      <h-button v-if="hover" size="medium">删除</h-button>
+  <h-hover v-slot="{ hover }" disabled>
+    <div class="hover-disabled-demo">
+      <span>Hover tracking disabled</span>
+      <small>hover={{ hover }}</small>
     </div>
   </h-hover>
 </template>
 
-<style lang="scss" scoped>
-.container {
+<style scoped>
+.hover-disabled-demo {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  height: 70px;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 4px;
-  background-color: var(--h-bg-success-weak-activated);
+  justify-content: space-between;
+  gap: var(--h-spacing-4);
+  min-height: 72px;
+  padding: var(--h-spacing-4);
+  box-sizing: border-box;
+  border: 1px solid var(--h-border-default);
+  border-radius: var(--h-radius-l);
+  background: var(--h-bg-disabled);
+}
+
+.hover-disabled-demo small {
+  color: var(--h-text-secondary);
 }
 </style>

@@ -1,84 +1,70 @@
 <template>
-  <h-form ref="formRef" :model="formData">
-    <h-form-item
-      label="User name"
-      prop="username"
-      :rules="[
-        {
-          required: true,
-          message: 'User name is required!',
-        },
-        {
-          min: 3,
-          max: 100,
-          message: 'User name should be 3 to 100.',
-        },
-      ]"
-    >
-      <h-input v-model="formData.username" />
-    </h-form-item>
-    <h-form-item label="Email" prop="email" :rules="emailRules">
-      <h-input v-model="formData.email" />
-    </h-form-item>
-    <h-form-item label="Notes" prop="notes">
-      <h-input v-model="formData.notes" type="textarea" />
-    </h-form-item>
-    <div>
-      <h-button @click="submit">Submit</h-button>
-    </div>
-  </h-form>
+  <section class="form-validate-demo">
+    <h-form ref="formRef" :model="formData" spacing="dynamic" @submit="submit">
+      <h-form-item label="Change title" prop="title" :rules="titleRules">
+        <h-input v-model="formData.title" placeholder="Describe the production change" />
+      </h-form-item>
+      <h-form-item label="Approver email" prop="approverEmail" :rules="emailRules">
+        <h-input v-model="formData.approverEmail" placeholder="approver@example.com" />
+      </h-form-item>
+      <h-form-item
+        label="Risk summary"
+        prop="risk"
+        :rules="{ required: true, message: 'Describe the release risk' }"
+      >
+        <h-input
+          v-model="formData.risk"
+          type="textarea"
+          placeholder="Impact, safeguards, and rollback conditions"
+        />
+      </h-form-item>
+      <h-form-item><h-button native-type="submit">Validate request</h-button></h-form-item>
+    </h-form>
+    <p class="form-validate-demo__status" aria-live="polite">{{ status }}</p>
+  </section>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-import type { HFormInstance } from '@aurora/horizon-web';
-import { $message } from '@aurora/horizon-web';
-export default defineComponent({
-  setup() {
-    const formRef = ref<HFormInstance | null>(null);
-    const formData = ref({
-      username: '',
-      email: '',
-      notes: '',
-    });
-    const emailRules = ref([
-      {
-        required: true,
-        message: 'Email is required!',
-      },
-      {
-        type: 'email',
-        message: 'Email format invalid!',
-      },
-      {
-        validator(rule, value: string) {
-          if (!value.endsWith('@gmail.com')) {
-            return new Error('Only support gmail!');
-          }
-          return true;
-        },
-      },
-    ]);
+<script setup lang="ts">
+import type { HFormInstance, HFormRule } from '@aurora/horizon-web';
+import { reactive, ref } from 'vue';
 
-    const submit = () => {
-      if (formRef.value) {
-        formRef.value
-          ?.validate()
-          .then(() => {
-            $message.success('Submit');
-          })
-          .catch(errors => {
-            console.info('errors:', errors);
-          });
-      }
-    };
-
-    return {
-      formData,
-      emailRules,
-      formRef,
-      submit,
-    };
+const formRef = ref<HFormInstance | null>(null);
+const formData = reactive({ title: '', approverEmail: '', risk: '' });
+const status = ref('Complete the request, then validate every field');
+const titleRules: HFormRule[] = [
+  { required: true, message: 'Enter a change title' },
+  { min: 6, max: 80, message: 'Use 6–80 characters' },
+];
+const emailRules: HFormRule[] = [
+  { required: true, message: 'Enter an approver email' },
+  { type: 'email', message: 'Enter a valid email address' },
+  {
+    validator: (_rule, value: string) =>
+      value.endsWith('@example.com') || new Error('Use an @example.com approver'),
   },
-});
+];
+
+function submit() {
+  formRef.value
+    ?.validate()
+    .then(() => {
+      status.value = `Request “${formData.title}” is ready for approval`;
+    })
+    .catch(() => {
+      status.value = 'Review the highlighted fields before submitting';
+    });
+}
 </script>
+
+<style scoped>
+.form-validate-demo {
+  display: grid;
+  gap: var(--h-spacing-3);
+}
+
+.form-validate-demo__status {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+</style>

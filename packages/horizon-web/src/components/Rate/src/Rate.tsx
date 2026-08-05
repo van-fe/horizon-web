@@ -33,6 +33,7 @@ function getRateStatus(value: number, index: number): RateListItem {
 export default defineComponent({
   name: `${useNamespace()}Rate`,
   desc: '用于评分操作',
+  descLocales: { en: "Use `v-model` to bind the current rating value." },
   components: {
     AIcon,
   },

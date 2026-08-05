@@ -25,6 +25,7 @@ export default function useLayout(
     flattenColumns: HTableColumnData[];
   }>,
   getFixedState: (uuid: string) => HTableFixedValue,
+  selectionFooterHeight: Ref<number>,
 ) {
   const tableFooterDomRef = ref<HorizonWebComponentInstance<typeof TableFooter>>();
   const footerRowHeight = ref<number[]>([]);
@@ -111,7 +112,7 @@ export default function useLayout(
       [
         (lastHeaderCell?.parentColumnsHeightSum || 0) +
           (lastHeaderCell?.selfElement.value?.clientHeight || 0),
-        tableFooterDomRef.value?.$el?.clientHeight || 0,
+        (tableFooterDomRef.value?.$el?.clientHeight || 0) + selectionFooterHeight.value,
       ],
       [
         lastFixedLeftColumn
@@ -127,7 +128,7 @@ export default function useLayout(
   }
 
   function refreshFooterHeight() {
-    footerRowHeight.value = [0];
+    footerRowHeight.value = [selectionFooterHeight.value];
 
     const rows = tableFooterDomRef.value?.$el?.rows ?? [];
     let sum = 0;
@@ -180,7 +181,13 @@ export function isFirstColumn(columnData: HTableColumnData) {
 }
 
 export function isLastColumn(columnData: HTableColumnData) {
-  return !columnData[HTableColumnContextKey].nextColumn;
+  let lastLeafColumn = columnData;
+
+  while (lastLeafColumn.calcChildren.length > 0) {
+    lastLeafColumn = lastLeafColumn.calcChildren[lastLeafColumn.calcChildren.length - 1];
+  }
+
+  return !lastLeafColumn[HTableColumnContextKey].nextColumn;
 }
 
 export function isLastFixedColumn(

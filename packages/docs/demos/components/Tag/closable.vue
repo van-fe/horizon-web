@@ -1,45 +1,40 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="24">
-      <h-tag :clickable="false" :closable="true">Default</h-tag>
-      <h-tag :clickable="false" :closable="true" type="success">Success</h-tag>
-      <h-tag :clickable="false" :closable="true" type="info">Info</h-tag>
-      <h-tag :clickable="false" :closable="true" type="warning">Warning</h-tag>
-      <h-tag :clickable="false" :closable="true" type="error">Error</h-tag>
-    </h-grid-item>
-    <h-grid-item :span="24">
-      <h-tag :clickable="false" :closable="true" :round="true" @click="onClick" @close="onClose">Default</h-tag>
-      <h-tag :clickable="false" :closable="true" :round="true" type="success">Success</h-tag>
-      <h-tag :clickable="false" :closable="true" :round="true" type="info">Info</h-tag>
-      <h-tag :clickable="false" :closable="true" :round="true" type="warning">Warning</h-tag>
-      <h-tag :clickable="false" :closable="true" :round="true" type="error">Error</h-tag>
-    </h-grid-item>
-    <h-grid-item :span="24">
-      <h-tag :clickable="false" :closable="true" :plain="true">Default</h-tag>
-      <h-tag :clickable="false" :closable="true" :plain="true" type="success">Success</h-tag>
-      <h-tag :clickable="false" :closable="true" :plain="true" type="info">Info</h-tag>
-      <h-tag :clickable="false" :closable="true" :plain="true" type="warning">Warning</h-tag>
-      <h-tag :clickable="false" :closable="true" :plain="true" type="error">Error</h-tag>
-    </h-grid-item>
-    <h-grid-item :span="24">
-      <h-tag :clickable="false" :closable="true" :plain="true" :equally="true" @click="onClick" @close="onClose">普</h-tag>
-      <h-tag :clickable="false" :closable="true" :plain="true" :equally="true" type="success">成</h-tag>
-      <h-tag :clickable="false" :closable="true" :plain="true" :equally="true" type="info">进</h-tag>
-      <h-tag :clickable="false" :closable="true" :plain="true" :equally="true" type="warning">警</h-tag>
-      <h-tag :clickable="false" :closable="true" :plain="true" :equally="true" type="error">错</h-tag>
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-function onClick() {
-  console.info('click');
-}
+import { ref } from 'vue';
 
-function onClose() {
-  console.info('close');
-}
+const initial = ['Owner: Mia', 'Status: Active', 'Version: v3.8'];
+const tags = ref([...initial]);
 </script>
 
+<template>
+  <section class="docs-demo">
+    <div class="docs-demo__actions">
+      <h-button
+        size="small"
+        :disabled="tags.length === initial.length"
+        @click="tags = [...initial]"
+      >
+        Reset
+      </h-button>
+    </div>
+    <div class="tag-row">
+      <h-tag
+        v-for="tag in tags"
+        :key="tag"
+        closable
+        plain
+        :clickable="false"
+        @close="tags = tags.filter(item => item !== tag)"
+      >
+        {{ tag }}
+      </h-tag>
+    </div>
+  </section>
+</template>
+
 <style scoped>
+.tag-row {
+  display: flex;
+  gap: var(--h-spacing-3);
+  flex-wrap: wrap;
+}
 </style>

@@ -1,19 +1,28 @@
-## Display Position
-Change the position where `tooltip` appears by setting `placement`
+## Placement
+
+
 :::demo components/Tooltip/placement.vue :::
 
-## Width Settings
-Minimum width is `64px`, maximum width is `320px`
+## Width and overflow
+
+Use `width` to constrain long content. With overflow detection, the tooltip only appears when its trigger text is truncated.
+
 :::demo components/Tooltip/width.vue :::
 
-## Whether to Allow Copy After Entering
-Set `enterable = true` to enable copy after entering
+## Enterable and copyable content
+
+With `enterable`, the pointer can move into the floating layer and interact with its content. `click-to-copy` can copy the tooltip text or a specified target.
+
 :::demo components/Tooltip/enterable.vue :::
 
-## Size
-Starting from `2.0.5`, `tooltip` supports `small` size
+## Size and arrow
+
+Tooltips support `large`, `medium`, and `small` sizes, and the arrow can be hidden. The example also surfaces show and hide event feedback.
+
 :::demo components/Tooltip/size.vue :::
 
 ## Theme
-Starting from `2.7.0`, `tooltip` supports `light` theme
+
+Use `dark` for common interface hints and `light` against dark or strongly colored surfaces. Choose the theme that preserves contrast with nearby content.
+
 :::demo components/Tooltip/theme.vue :::

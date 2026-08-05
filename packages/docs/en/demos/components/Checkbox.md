@@ -1,27 +1,41 @@
 ## Basic Usage
-Use `modelValue` to set the bound value
+
+Use `v-model` to manage an individual checkbox. The demo exposes both the selected count and the latest change so the binding result stays visible.
+
 :::demo components/Checkbox/basic.vue :::
 
-## Enable Border
-Use `border = true` to enable border style, border mode supports `props.size`
+## Bordered Style
+
+Set `border` to enlarge the interactive target. Use `size` to adjust the bordered control for forms or touch-oriented settings.
+
 :::demo components/Checkbox/border.vue :::
 
 ## Button Style
-Just replace the `h-checkbox` element with the `h-checkbox-button` element, and provide the `size` attribute to control the size
+
+Use `h-checkbox-button` inside `h-checkbox-group` for compact multi-select filters, with one group-level `v-model` maintaining the selected values.
+
 :::demo components/Checkbox/button.vue :::
 
-## Indeterminate Mode
-Set `props.indeterminate` to enable indeterminate mode
+## Indeterminate State
+
+`indeterminate` controls only the visual state and is commonly paired with select-all logic. Keep the parent value synchronized with the number of selected children.
+
 :::demo components/Checkbox/indeterminate.vue :::
 
 ## Checkbox Group
-Combine `h-checkbox-group` with `h-checkbox` or `h-checkbox-button` to implement checkbox groups
+
+`h-checkbox-group` manages related choices together. Set `disabled` on the group to present inherited values that users cannot edit.
+
 :::demo components/Checkbox/group.vue :::
 
-## Disabled State
-Set `disabled = true` to enable disabled state
+## Disabled States
+
+Disabled controls can remain unchecked, indeterminate, or checked, and can also use `border`. They preserve meaning without responding to input.
+
 :::demo components/Checkbox/disabled.vue :::
 
-## One-Click Inverse Selection
-Use the exposed `toggle()` method to implement one-click inverse selection
+## Invert Selection
+
+Call the exposed `toggle()` method on each Checkbox to invert a collection. The demo shows component refs and an asynchronous bulk action.
+
 :::demo components/Checkbox/inverse.vue :::

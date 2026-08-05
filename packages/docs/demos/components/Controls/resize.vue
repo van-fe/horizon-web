@@ -1,60 +1,68 @@
+<template>
+  <div class="controls-resize-demo">
+    <h-segmented v-model:active-key="widthKey" size="small">
+      <h-segmented-item value="120" label="120 px" />
+      <h-segmented-item value="200" label="200 px" />
+      <h-segmented-item value="320" label="320 px" />
+    </h-segmented>
+
+    <h-hover v-slot="{ hover }">
+      <div class="controls-target" :style="{ width: `${width}px` }">
+        <strong>{{ width }} px</strong>
+        <span>Hover for actions</span>
+        <h-mask :absolute="true" :value="hover" :content-full-size="true">
+          <h-controls theme="light" @command="onCommand">
+            <h-control :icon="IconEye" text="View" label="view" />
+            <h-control :icon="IconEdit" text="Edit" label="edit" />
+            <h-control :icon="IconMessage" text="Comment" label="comment" />
+            <h-control :icon="IconRubbish" text="Delete" label="delete" />
+          </h-controls>
+        </h-mask>
+      </div>
+    </h-hover>
+
+    <p aria-live="polite">{{ status }}</p>
+  </div>
+</template>
+
 <script setup lang="ts">
-import { IconEdit, IconEye, IconRubbish } from '@aurora/icon';
-import { $message } from '@aurora/horizon-web';
-import { ref } from 'vue';
+import { IconEdit, IconEye, IconMessage, IconRubbish } from '@aurora/icon';
+import { computed, ref } from 'vue';
 
-const size = ref(150);
+const widthKey = ref('200');
+const status = ref('No action selected');
+const width = computed(() => Number(widthKey.value));
 
-function onCommand(type: 'edit' | 'del' | 'view') {
-  switch (type) {
-    case 'view':
-      $message.success('查看');
-      break;
-    case 'edit':
-      $message.info('编辑');
-      break;
-    case 'del':
-      $message.error('删除');
-      break;
-  }
+function onCommand(type: 'view' | 'edit' | 'comment' | 'delete') {
+  status.value = `${type} selected at ${width.value} px`;
 }
 </script>
 
-<template>
-  <h-form label-position="left" label-vertical-align="middle" label-width="120px">
-    <h-form-item label="size">
-      <h-radio-group v-model="size">
-        <h-radio :value="60">60px</h-radio>
-        <h-radio :value="100">100px</h-radio>
-        <h-radio :value="150">150px</h-radio>
-      </h-radio-group>
-    </h-form-item>
-  </h-form>
-  <h-hover v-slot="{ hover }">
-    <div class="square" :style="{ width: size + 'px', height: size + 'px' }">
-      Mouse move here
-      <h-mask :absolute="true" :value="hover" :content-full-size="true">
-        <h-controls theme="light" @command="onCommand">
-          <h-control :icon="IconEye" text="查看" label="view" />
-          <h-control :icon="IconEdit" text="编辑" label="edit" />
-          <h-control :icon="IconRubbish" text="删除" label="del" />
-        </h-controls>
-      </h-mask>
-    </div>
-  </h-hover>
-</template>
-
 <style scoped>
-.square {
+.controls-resize-demo {
+  display: grid;
+  justify-items: start;
+  gap: var(--h-spacing-4);
+}
+
+.controls-target {
   position: relative;
-  width: 150px;
-  height: 150px;
+  display: grid;
+  align-content: center;
+  gap: var(--h-spacing-1);
+  max-width: 100%;
+  min-height: 120px;
+  padding: var(--h-spacing-4);
+  box-sizing: border-box;
   border: 1px solid var(--h-border-default);
-  border-radius: var(--h-radius);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: var(--h-radius-l);
+  background: var(--h-bg-secondary);
+}
+
+.controls-target span,
+.controls-resize-demo p {
+  margin: 0;
   color: var(--h-text-secondary);
-  text-align: center;
+  font-size: var(--h-text-sm);
 }
 </style>

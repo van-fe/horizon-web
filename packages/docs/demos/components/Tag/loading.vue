@@ -1,83 +1,37 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="24">
-      <h-form label-position="left" label-vertical-align="middle">
-        <h-form-item label="Loading">
-          <h-radio-group v-model="isLoading">
-            <h-radio :value="true">True</h-radio>
-            <h-radio :value="false">False</h-radio>
-          </h-radio-group>
-        </h-form-item>
-      </h-form>
-    </h-grid-item>
-    <h-grid-item :span="24">
-      <h-tag :clickable="false" :loading="isLoading">Default</h-tag>
-      <h-tag :clickable="false" :loading="isLoading" type="success">Success</h-tag>
-      <h-tag :clickable="false" :loading="isLoading" type="info">Info</h-tag>
-      <h-tag :clickable="false" :loading="isLoading" type="warning">Warning</h-tag>
-      <h-tag :clickable="false" :loading="isLoading" type="error">Error</h-tag>
-    </h-grid-item>
-    <h-grid-item :span="24">
-      <h-tag
-        :clickable="false"
-        :loading="isLoading"
-        :round="true"
-        @click="onClick"
-        @close="onClose"
-      >
-        Default
-      </h-tag>
-      <h-tag :clickable="false" :loading="isLoading" :round="true" type="success">Success</h-tag>
-      <h-tag :clickable="false" :loading="isLoading" :round="true" type="info">Info</h-tag>
-      <h-tag :clickable="false" :loading="isLoading" :round="true" type="warning">Warning</h-tag>
-      <h-tag :clickable="false" :loading="isLoading" :round="true" type="error">Error</h-tag>
-    </h-grid-item>
-    <h-grid-item :span="24">
-      <h-tag :clickable="false" :loading="isLoading" :plain="true">Default</h-tag>
-      <h-tag :clickable="false" :loading="isLoading" :plain="true" type="success">Success</h-tag>
-      <h-tag :clickable="false" :loading="isLoading" :plain="true" type="info">Info</h-tag>
-      <h-tag :clickable="false" :loading="isLoading" :plain="true" type="warning">Warning</h-tag>
-      <h-tag :clickable="false" :loading="isLoading" :plain="true" type="error">Error</h-tag>
-    </h-grid-item>
-    <h-grid-item :span="24">
-      <h-tag
-        :clickable="false"
-        :loading="isLoading"
-        :plain="true"
-        :equally="true"
-        @click="onClick"
-        @close="onClose"
-      >
-        普
-      </h-tag>
-      <h-tag :clickable="false" :loading="isLoading" :plain="true" :equally="true" type="success">
-        成
-      </h-tag>
-      <h-tag :clickable="false" :loading="isLoading" :plain="true" :equally="true" type="info">
-        进
-      </h-tag>
-      <h-tag :clickable="false" :loading="isLoading" :plain="true" :equally="true" type="warning">
-        警
-      </h-tag>
-      <h-tag :clickable="false" :loading="isLoading" :plain="true" :equally="true" type="error">
-        错
-      </h-tag>
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onBeforeUnmount, ref } from 'vue';
 
-const isLoading = ref(true);
+const loading = ref(false);
+let timer: ReturnType<typeof setTimeout> | undefined;
 
-function onClick() {
-  console.info('click');
+function sync() {
+  if (loading.value) return;
+  loading.value = true;
+  timer = setTimeout(() => (loading.value = false), 700);
 }
 
-function onClose() {
-  console.info('close');
-}
+onBeforeUnmount(() => {
+  if (timer) clearTimeout(timer);
+});
 </script>
 
-<style scoped></style>
+<template>
+  <section class="docs-demo">
+    <div class="docs-demo__actions">
+      <h-button size="small" :loading="loading" @click="sync">Sync</h-button>
+    </div>
+    <div class="tag-row">
+      <h-tag :loading="loading" :clickable="false">Development</h-tag>
+      <h-tag :loading="loading" type="warning" :clickable="false">Staging</h-tag>
+      <h-tag :loading="loading" type="success" :clickable="false">Production</h-tag>
+    </div>
+  </section>
+</template>
+
+<style scoped>
+.tag-row {
+  display: flex;
+  gap: var(--h-spacing-3);
+  flex-wrap: wrap;
+}
+</style>

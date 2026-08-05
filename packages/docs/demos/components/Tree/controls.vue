@@ -1,124 +1,90 @@
-<template>
-  <h-form label-width="fit-content" label-position="left" label-vertical-align="middle">
-    <h-form-item label="展开收起">
-      <h-space>
-        <h-button @click="getExpand">获取已展开</h-button>
-        <h-button @click="setExpand">设置展开</h-button>
-        <h-button @click="setFold">设置收起</h-button>
-        <h-button @click="setExpandAll">全部展开</h-button>
-        <h-button @click="setFoldAll">全部收起</h-button>
-      </h-space>
-    </h-form-item>
-    <h-form-item label="选中处理">
-      <h-space>
-        <h-button @click="getAllCheckedValues">获取所有已选（不含半选）</h-button>
-        <h-button @click="getHalfCheckedValues">获取所有半选</h-button>
-        <h-button @click="getUnCheckedValues">获取所有未选</h-button>
-        <h-button @click="setSelectedValues">增加选中</h-button>
-        <h-button @click="deleteSelectedValues">取消选中</h-button>
-      </h-space>
-    </h-form-item>
-    <h-form-item label="节点数据">
-      <h-space>
-        <h-button @click="getNodes">获取节点</h-button>
-        <h-button @click="setNode">设置节点</h-button>
-        <h-button @click="delNode">删除节点</h-button>
-        <h-button @click="addNodeChildren">添加节点</h-button>
-      </h-space>
-    </h-form-item>
-  </h-form>
-  <h-grid :gap="12">
-    <h-grid-item :span="24">
-      <h-tree
-        ref="treeDomRef"
-        :tree-data="baseTreeData"
-        :multiple="true"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import { HTree, useTreeExposes } from '@aurora/horizon-web';
-import { ExtractExposeTypes } from '@aurora/utils';
+import { ref } from 'vue';
+import { HTree, useTreeExposes, type HTreeNodeData } from '@aurora/horizon-web';
+import type { ExtractExposeTypes } from '@aurora/utils';
 
-const baseTreeData = ref([]);
-const treeDomRef = ref<InstanceType<typeof HTree> & ExtractExposeTypes<typeof useTreeExposes>>();
+type TreeInstance = InstanceType<typeof HTree> & ExtractExposeTypes<typeof useTreeExposes>;
 
-function getExpand() {
-  console.info(treeDomRef.value?.getExpandNodes());
+const treeRef = ref<TreeInstance | null>(null);
+const selectedValues = ref<Array<string | number>>(['gateway']);
+const expandValues = ref<Array<string | number>>(['platform']);
+const canaryAdded = ref(false);
+const status = ref('Use an exposed method to update the service map.');
+const serviceTree = ref<HTreeNodeData[]>([
+  {
+    value: 'platform',
+    label: 'Platform services',
+    children: [
+      { value: 'gateway', label: 'API gateway' },
+      { value: 'identity', label: 'Identity service' },
+    ],
+  },
+  {
+    value: 'data',
+    label: 'Data services',
+    children: [
+      { value: 'warehouse', label: 'Warehouse' },
+      { value: 'streaming', label: 'Event streaming' },
+    ],
+  },
+]);
+
+function openEverything() {
+  treeRef.value?.setAllCollapseStatus(true);
+  status.value = 'All service groups expanded.';
 }
 
-function setExpand() {
-  treeDomRef.value?.setCollapseStatusByValue(['feedback'], true);
+function selectDataServices() {
+  treeRef.value?.setSelectedStatus(['warehouse', 'streaming'], true);
+  status.value = 'Data services added to the selection.';
 }
 
-function setFold() {
-  treeDomRef.value?.setCollapseStatusByValue(['guide', 'disciplines'], false);
-}
+function addCanaryPolicy() {
+  if (canaryAdded.value) return;
 
-function setExpandAll() {
-  treeDomRef.value?.setAllCollapseStatus(true);
+  treeRef.value?.addNodeChildrenByValue(
+    [{ value: 'canary-policy', label: 'Canary policy' }],
+    'gateway',
+  );
+  canaryAdded.value = true;
+  status.value = 'Canary policy added under API gateway.';
 }
-
-function setFoldAll() {
-  treeDomRef.value?.setAllCollapseStatus(false);
-}
-
-function getAllCheckedValues() {
-  console.info(treeDomRef.value?.getSelectedNodes());
-}
-
-function getHalfCheckedValues() {
-  console.info(treeDomRef.value?.getPartSelectedNodes());
-}
-
-function getUnCheckedValues() {
-  console.info(treeDomRef.value?.getUnSelectedNodes());
-}
-
-function setSelectedValues() {
-  treeDomRef.value?.setSelectedStatus(['feedback', 'color'], true);
-}
-
-function deleteSelectedValues() {
-  treeDomRef.value?.setSelectedStatus(['feedback', 'color'], false);
-}
-
-function getNodes() {
-  console.info(treeDomRef.value?.getNodeByValues(['feedback']));
-}
-
-function setNode() {
-  treeDomRef.value?.setNodeByValue({
-    label: 'Feedback - modified',
-  }, 'feedback');
-}
-
-function delNode() {
-  treeDomRef.value?.delNodeByValue('feedback');
-}
-
-let index = 0;
-function addNodeChildren() {
-  treeDomRef.value?.addNodeChildrenByValue([
-    {
-      label: `New Item Child ${index}`,
-      value: `new child ${index}`,
-    },
-  ], 'efficiency');
-  index++;
-}
-
-onMounted(() => {
-  fetch(new URL('/tree-data.json', import.meta.url).href)
-    .then(res => res.json())
-    .then(res => {
-      baseTreeData.value = res;
-    });
-});
 </script>
 
+<template>
+  <div class="tree-controls-demo" aria-label="Service map exposed controls">
+    <h-space wrap>
+      <h-button size="small" @click="openEverything">Expand all</h-button>
+      <h-button size="small" type="normal" @click="selectDataServices">
+        Select data services
+      </h-button>
+      <h-button size="small" type="normal" :disabled="canaryAdded" @click="addCanaryPolicy">
+        Add gateway child
+      </h-button>
+    </h-space>
+
+    <p role="status">{{ status }}</p>
+
+    <h-tree
+      ref="treeRef"
+      v-model:tree-data="serviceTree"
+      v-model:selected-values="selectedValues"
+      v-model:expand-values="expandValues"
+      multiple
+      show-line
+    />
+  </div>
+</template>
+
 <style scoped>
+.tree-controls-demo {
+  display: grid;
+  gap: var(--h-spacing-3);
+}
+
+.tree-controls-demo p {
+  min-height: 24px;
+  margin: 0;
+  color: var(--h-text-secondary);
+}
 </style>

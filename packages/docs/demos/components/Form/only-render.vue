@@ -1,62 +1,60 @@
 <template>
-  <h-form ref="formRef" validate-trigger="blur" :only-render="true">
-    <h-form-item label="Username" prop="username" :required="true" :error="errorInfo['username']">
-      <h-input v-model="formData.username" />
-    </h-form-item>
-    <h-form-item label="Email" prop="email" :required="true" :error="errorInfo['email']">
-      <h-input v-model="formData.email" />
-    </h-form-item>
-    <h-form-item label="Notes" prop="notes" :required="true" :error="errorInfo['notes']">
-      <h-input v-model="formData.notes" type="textarea" />
-    </h-form-item>
-    <div>
-      <h-button @click="submit">Submit</h-button>
-    </div>
-  </h-form>
+  <section class="form-render-only-demo">
+    <h-form only-render :model="formData" spacing="dynamic" @submit="submit">
+      <h-form-item label="Project key" prop="projectKey" required :error="errors.projectKey">
+        <h-input v-model="formData.projectKey" placeholder="HORIZON" />
+      </h-form-item>
+      <h-form-item label="Owner email" prop="ownerEmail" required :error="errors.ownerEmail">
+        <h-input v-model="formData.ownerEmail" placeholder="owner@example.com" />
+      </h-form-item>
+      <h-form-item label="Access reason" prop="reason" required :error="errors.reason">
+        <h-input
+          v-model="formData.reason"
+          type="textarea"
+          placeholder="Why does this project need access?"
+        />
+      </h-form-item>
+      <h-form-item><h-button native-type="submit">Run external validation</h-button></h-form-item>
+    </h-form>
+    <p class="form-render-only-demo__status" aria-live="polite">{{ status }}</p>
+  </section>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { $message } from '@aurora/horizon-web';
-export default defineComponent({
-  setup() {
-    const formData = ref({
-      username: '',
-      email: '',
-      notes: '',
-    });
+<script setup lang="ts">
+import { reactive, ref } from 'vue';
 
-    const errorInfo = ref<Partial<Record<keyof (typeof formData)['value'], string>>>({});
+const formData = reactive({ projectKey: '', ownerEmail: '', reason: '' });
+const errors = reactive({ projectKey: '', ownerEmail: '', reason: '' });
+const status = ref('External validation has not run');
 
-    const submit = () => {
-      errorInfo.value = {};
-
-      if (!formData.value.username) {
-        errorInfo.value.username = 'Please enter Username';
-      }
-
-      if (!formData.value.email) {
-        errorInfo.value.email = 'Please enter Email';
-      } else if (!/^[\w.-_]+@gmail.com/.test(formData.value.email)) {
-        errorInfo.value.email = 'Only support Gmail!';
-      }
-
-      if (!formData.value.notes) {
-        errorInfo.value.notes = 'Please enter Notes';
-      }
-
-      if (Object.keys(errorInfo.value).length === 0) {
-        $message.success('Submit!');
-      } else {
-        $message.error('Please check error message');
-      }
-    };
-
-    return {
-      formData,
-      errorInfo,
-      submit,
-    };
-  },
-});
+function submit() {
+  errors.projectKey = /^[A-Z][A-Z0-9_-]{2,15}$/.test(formData.projectKey)
+    ? ''
+    : 'Use 3–16 uppercase letters, numbers, hyphens, or underscores';
+  errors.ownerEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.ownerEmail)
+    ? ''
+    : 'Enter a valid owner email';
+  errors.reason =
+    formData.reason.trim().length >= 12 ? '' : 'Explain the request in 12+ characters';
+  const errorCount = Object.values(errors).filter(Boolean).length;
+  status.value = errorCount
+    ? `External validator found ${errorCount} issue${errorCount === 1 ? '' : 's'}`
+    : 'External validation passed';
+}
 </script>
+
+<style scoped>
+.form-render-only-demo {
+  display: grid;
+  gap: var(--h-spacing-4);
+}
+
+.form-render-only-demo__status {
+  margin: 0;
+  color: var(--h-text-secondary);
+}
+
+.form-render-only-demo__status {
+  font-size: var(--h-text-sm);
+}
+</style>

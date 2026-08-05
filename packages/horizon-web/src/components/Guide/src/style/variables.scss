@@ -65,5 +65,5 @@ $values: (
     ),
   ),
   box-shadow: #{function.css-variable('shadow-down')},
-  transition: #{function.css-variable('transition-all')},
+  transition: #{function.css-variable('transition', 'all')},
 );

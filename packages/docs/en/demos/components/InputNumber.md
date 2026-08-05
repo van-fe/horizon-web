@@ -1,57 +1,88 @@
-## Different Sizes
-Provides three sizes: `large`, `medium`, `small`, default is `medium`.
+## Sizes
+
+
 :::demo components/InputNumber/size.vue :::
 
-## Different Styles
-Provides three styles: `normal` `emphasize` `no-border`, default is `normal`.
+## Styles
+
+`input-style` supports `normal`, `emphasize`, and `no-border`. Appearance can be combined with states such as `disabled` and `clearable` without losing the bound value.
+
 :::demo components/InputNumber/style.vue :::
 
-## Input Box with Step and Max/Min Values
-You can limit input items by setting `step` and `min`, `max`. 
+## Range and Step
+
+Use `min`, `max`, and `step` to constrain the value. `precision` controls decimal places, while `step-strictly` requires values to be exact step multiples. Keep boundaries and outcomes visible.
 
 :::demo components/InputNumber/range.vue :::
 
-## Controller Position, Hide Controller
-In some business scenarios, the controller position needs to be changed to both sides
+## Control Placement
 
-When you don't need to use the controller and only need the filter function, you can set `controls = false`
+`controls-position="right"` uses compact controls on the right, while `between` places decrement and increment on opposite sides. Set `controls="false"` for numeric entry without steppers.
+
 :::demo components/InputNumber/controls-position.vue :::
 
 ## Disabled State
+
+`disabled` prevents input, stepping, and focus interaction. For externally synchronized numbers, explain the lock source and surface the current state if temporary unlocking is available.
+
 :::demo components/InputNumber/disabled.vue :::
 
 ## Long Press
-In some scenarios, long pressing the controller is allowed to increase/decrease the value
+
+With `enable-lang-press`, holding a control repeatedly increments or decrements the value. `lang-press-frequency` sets the repeat interval; shorter intervals suit bulk changes while single clicks remain available.
+
 :::demo components/InputNumber/lang-press.vue :::
 
-## Clear
-inputNumber allows clearing
+## Clearable
+
+Enable `clearable` to restore an optional number to an empty value and emit `clear`. Give emptiness a clear domain meaning, such as falling back to an automatic policy.
+
 :::demo components/InputNumber/clearable.vue :::
 
-## Placeholder Text
+## Placeholder
+
+When the model is `null` or `undefined`, `placeholder` can explain the default policy used in the absence of a value. Placeholder text does not replace a field label.
+
 :::demo components/InputNumber/placeholder.vue :::
 
 ## Readonly
-After setting `readonly`, `controls` will not be displayed
+
+`readonly` preserves content and focus behavior but prevents editing and hides the controls. It suits approved values that users still need to inspect or select.
+
 :::demo components/InputNumber/readonly.vue :::
 
-## Prefix/Suffix
-You can configure prefix and suffix
+## Prefix and Suffix
+
+Use `prefix-icon`, `suffix-icon`, or the `prefix` and `suffix` slots for currency, percentages, points, and supporting guidance. Affixes should not obscure the field's label.
+
 :::demo components/InputNumber/prefix-suffix.vue :::
 
-## Combined Input Box
-You can set prepend and append slots through `slots.prepend` `slots.append`
+## Grouped Input
+
+The `prepend` and `append` slots can attach currencies, units, or semantic text. Interactive controls such as Select inside a slot need their own accessible names and usable narrow-screen sizing.
+
 :::demo components/InputNumber/prepend-append.vue :::
 
-## Number Conversion
-Convert numbers to the format you need through `formatter`, and then convert the formatted string to processable numbers through `parser`
+## Number Formatting
+
+`formatter` produces the displayed string, while `parser` converts edited content back to a number or string the model can use. Keep the two functions symmetrical so presentation formatting never enters business calculations.
+
 :::demo components/InputNumber/formatter.vue :::
 
-## Zero Padding
-Starting from `2.4.6`, if zero padding is needed, you need to set `string-mode = true`
+## Preserve Trailing Zeros
+
+JavaScript numbers do not retain trailing decimal zeros. When the display and returned value require a fixed format, combine `string-mode` with `precision` to preserve an exact string such as `1.2000`.
+
 :::demo components/InputNumber/reserve-decimal-separator.vue :::
 
-## Precision Update
-Starting from `2.4.7`, you can listen to precision updates
+## Dynamic Precision
+
+`precision` can update reactively for decimal places selected by currency, measurement standards, or user preferences. Numeric and string modes share the display precision but return different types.
 
 :::demo components/InputNumber/precision-update.vue :::
+
+## Fixed Precision
+
+`precision` sets the decimal places retained after commit. Whole units, currency, and detailed measurements can use 0, 2, or more places; the decimal places in `step` should not exceed `precision`.
+
+:::demo components/InputNumber/precision.vue :::

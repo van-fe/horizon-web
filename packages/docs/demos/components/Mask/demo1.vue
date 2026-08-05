@@ -1,102 +1,46 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+type MaskType = 'default' | 'weak' | 'strong' | 'inverse' | 'transparent';
+
+const type = ref<MaskType>('default');
+const visible = ref(false);
+const types: MaskType[] = ['default', 'weak', 'strong', 'inverse', 'transparent'];
+</script>
+
 <template>
-  <div style="display: flex">
-    <div class="box">
-      <h-button @click="open">打开(default)</h-button>
-      <h-mask :value="show" type="default">
-        <h-button @click="close">关闭</h-button>
-      </h-mask>
+  <div class="docs-demo">
+    <div class="docs-demo__controls">
+      <label class="docs-demo__control docs-demo__control--grow">
+        <span class="docs-demo__control-label">
+          类型 ·
+          <code>type</code>
+        </span>
+        <h-segmented v-model:active-key="type" size="small">
+          <h-segmented-item v-for="item in types" :key="item" :value="item" :label="item" />
+        </h-segmented>
+      </label>
+      <h-button @click="visible = true">查看效果</h-button>
     </div>
-    <div class="box">
-      <h-button @click="open01">打开(weak)</h-button>
-      <h-mask :value="show01" type="weak">
-        <h-button @click="close01">关闭</h-button>
-      </h-mask>
-    </div>
-    <div class="box">
-      <h-button @click="open02">打开(strong)</h-button>
-      <h-mask :value="show02" type="strong">
-        <h-button @click="close02">关闭</h-button>
-      </h-mask>
-    </div>
-    <div class="box">
-      <h-button @click="open03">打开(inverse)</h-button>
-      <h-mask :value="show03" type="inverse">
-        <h-button @click="close03">关闭</h-button>
-      </h-mask>
-    </div>
-    <div class="box">
-      <h-button @click="open04">打开(transparent)</h-button>
-      <h-mask :value="show04" type="transparent">
-        <h-button @click="close04">关闭</h-button>
+
+    <div class="mask-stage">
+      <span>背景内容在遮罩下保持可见</span>
+      <h-mask absolute :value="visible" :type="type">
+        <h-button size="small" @click="visible = false">关闭遮罩</h-button>
       </h-mask>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-
-export default defineComponent({
-  setup() {
-    const show = ref(false);
-    const show01 = ref(false);
-    const show02 = ref(false);
-    const show03 = ref(false);
-    const show04 = ref(false);
-    const open = function () {
-      show.value = true;
-    };
-    const close = function () {
-      show.value = false;
-    };
-    const open01 = function () {
-      show01.value = true;
-    };
-    const close01 = function () {
-      show01.value = false;
-    };
-    const open02 = function () {
-      show02.value = true;
-    };
-    const close02 = function () {
-      show02.value = false;
-    };
-    const open03 = function () {
-      show03.value = true;
-    };
-    const close03 = function () {
-      show03.value = false;
-    };
-    const open04 = function () {
-      show04.value = true;
-    };
-    const close04 = function () {
-      show04.value = false;
-    };
-    return {
-      show,
-      show01,
-      show02,
-      show03,
-      show04,
-      open,
-      close,
-      open01,
-      close01,
-      open02,
-      close02,
-      open03,
-      close03,
-      open04,
-      close04,
-    };
-  },
-});
-</script>
-
 <style scoped>
-.box {
+.mask-stage {
   position: relative;
-  margin: 0px 10px;
+  display: grid;
+  min-height: 160px;
+  overflow: hidden;
+  place-items: center;
+  border-radius: var(--h-radius-l);
+  color: var(--h-text-secondary);
+  background: var(--h-bg-secondary);
 }
 </style>

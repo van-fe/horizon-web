@@ -35,6 +35,21 @@ describe('Cascader.tsx props', () => {
     expect(modelValue.value).toStrictEqual(['component', 'form', 'checkbox']);
   });
 
+  test('removes disabled multiple-value focus proxies from the tab order', async () => {
+    const { wrapper } = createInstance({
+      modelValue: [['guide', 'navigation', 'side nav']],
+      multiple: true,
+      disabled: true,
+    });
+
+    await nextTick();
+    const proxy = wrapper.get('input.is-input-placeholder');
+
+    expect(proxy.attributes()).toHaveProperty('data-focus-visible-proxy');
+    expect(proxy.attributes()).toHaveProperty('disabled');
+    expect(proxy.attributes('tabindex')).toBe('-1');
+  });
+
   test('input-style', async () => {
     const inputStyle = ref<CascaderProps['inputStyle']>('normal');
     const { wrapper } = createInstance({ inputStyle });

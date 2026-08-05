@@ -23,6 +23,8 @@ import useSize from '~/utils/useSize';
 
 export default defineComponent({
   name: `${useNamespace()}CheckboxButton`,
+  desc: "按钮样式的多选项",
+  descLocales: { en: "A button-styled checkbox option." },
   components: { Checkbox },
   props: useCheckboxButtonProps,
   emits: useCheckboxEmits,

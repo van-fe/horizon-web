@@ -16,6 +16,8 @@ import useSize from '~/utils/useSize';
 
 export default defineComponent({
   name: `${useNamespace()}RadioGroup`,
+  desc: "管理一组单选项的选中值",
+  descLocales: { en: "Manages the selected value of a radio collection." },
   props: useRadioGroupProps,
   emits: useRadioEmits,
   slots: useRadioSlots,

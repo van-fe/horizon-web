@@ -17,7 +17,7 @@ There are 15 position strategies to choose from. You can use top, bottom, left, 
 
 Without auxiliary alignment flags, it defaults to center alignment
 
-The following demo sets flip: false to illustrate the position where the popper is displayed
+Fixed placements disable `flip` so their exact position is easy to inspect; `auto` placements remain adaptive to the available space.
 
 :::demo components/Popover/position.vue :::
 
@@ -66,7 +66,7 @@ In the following example, because the select's option responds to the mousedown 
 :::demo components/Popover/complex.vue :::
 
 ## Arrow
-Do not use small triangle
+Compare popovers with and without an arrow. Use `arrow` to control whether it is displayed.
 :::demo components/Popover/arrow.vue :::
 
 ## Disabled State
@@ -78,5 +78,6 @@ You can set `showWithMask` to set whether to display a mask when the popper is d
 :::demo components/Popover/mask.vue :::
 
 ## Custom Close Configuration
+Use `hide-event-type` to choose whether an outside `click`, `mousedown`, or `mouseup` closes the popover.
 
 :::demo components/Popover/close-trigger.vue :::

@@ -1,25 +1,38 @@
 <template>
-  <div class="demo-progress">
-    <h-progress type="circle" :percentage="60" size="xs" />
-    <h-progress type="circle" :percentage="25" size="s" />
-    <h-progress type="circle" :percentage="60" size="m" />
-    <h-progress type="circle" :percentage="70" size="l" />
-    <h-progress type="circle" :percentage="85" size="s" status="success" />
-    <h-progress type="circle" :percentage="70" size="m" status="exception" />
-    <h-progress type="circle" :percentage="70" size="l" status="warning" />
+  <div class="circle-list">
+    <div v-for="item in items" :key="item.size">
+      <h-progress type="circle" :percentage="item.percentage" :size="item.size" />
+      <span>{{ item.size }}</span>
+    </div>
   </div>
 </template>
+
+<script setup lang="ts">
+const items = [
+  { percentage: 60, size: 'xs' },
+  { percentage: 25, size: 's' },
+  { percentage: 60, size: 'm' },
+  { percentage: 70, size: 'l' },
+] as const;
+</script>
+
 <style scoped>
-.demo-progress {
-    display: flex;
-    align-items: center;
-}
-.demo-progress .h-progress--line {
-    margin-bottom: 15px;
-    width: 350px;
+.circle-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--h-spacing-4);
 }
 
-.demo-progress .h-progress-circle {
-    margin-right: 15px;
+.circle-list > div {
+  display: grid;
+  flex: 1 1 120px;
+  justify-items: center;
+  gap: var(--h-spacing-2);
+}
+
+.circle-list span {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
 }
 </style>

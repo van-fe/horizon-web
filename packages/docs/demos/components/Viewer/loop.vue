@@ -1,25 +1,14 @@
-<template>
-  <h-button @click="showViewer">点我浏览精彩图集</h-button>
-  <h-viewer v-model="visibleRef" :sources="imagesRef" loop />
-</template>
+<script setup lang="ts">
+import { ref } from 'vue';
+import { createImageReviewSources } from './sources';
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-import type { HViewerSource } from '@aurora/horizon-web';
-import { createDemoViewerSources } from '../../demo-assets';
-export default defineComponent({
-  setup() {
-    const imagesRef = ref<HViewerSource[]>([]);
-    const visibleRef = ref(false);
-    const showViewer = () => {
-      imagesRef.value = createDemoViewerSources(10);
-      visibleRef.value = true;
-    };
-    return {
-      visibleRef,
-      imagesRef,
-      showViewer,
-    };
-  },
-});
+const visible = ref(false);
+const sources = createImageReviewSources();
 </script>
+
+<template>
+  <div>
+    <h-button @click="visible = true">Open from last image</h-button>
+    <h-viewer v-model="visible" :sources="sources" :init-index="sources.length - 1" loop />
+  </div>
+</template>

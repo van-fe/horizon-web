@@ -1,36 +1,40 @@
-<template>
-  <h-form label-position="left" label-vertical-align="middle" label-width="150px">
-    <h-form-item label="是否忽视父子关系">
-      <h-switch v-model="checkStrictly" :status="true" status-off-text="否" status-on-text="是" />
-    </h-form-item>
-  </h-form>
-  <h-grid :gap="12">
-    <h-grid-item :span="24">
-      <div class="demo-title">最多勾选3个</div>
-      <h-tree
-        :tree-data="baseTreeData"
-        :multiple="true"
-        :multiple-limit="3"
-        :check-strictly="checkStrictly"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
+import type { HTreeNodeData } from '@aurora/horizon-web';
 
-const baseTreeData = ref([]);
-const checkStrictly = ref<boolean>(false);
-
-onMounted(() => {
-  fetch(new URL('/tree-data.json', import.meta.url).href)
-    .then(res => res.json())
-    .then(res => {
-      baseTreeData.value = res;
-    });
-});
+const limit = 3;
+const selectedValues = ref<Array<string | number>>(['maya', 'omar']);
+const treeData: HTreeNodeData[] = [
+  {
+    value: 'platform',
+    label: 'Platform team',
+    children: [
+      { value: 'maya', label: 'Maya Chen' },
+      { value: 'omar', label: 'Omar Khan' },
+      { value: 'ines', label: 'Ines Park' },
+    ],
+  },
+  {
+    value: 'data',
+    label: 'Data team',
+    children: [
+      { value: 'sam', label: 'Sam Lee' },
+      { value: 'ana', label: 'Ana Silva' },
+    ],
+  },
+];
 </script>
 
-<style scoped>
-</style>
+<template>
+  <div class="docs-demo">
+    <h-tree
+      v-model:selected-values="selectedValues"
+      :tree-data="treeData"
+      multiple
+      :multiple-limit="limit"
+      check-strictly
+      :is-default-expand-all="true"
+    />
+    <span aria-live="polite">{{ selectedValues.length }} / {{ limit }} selected</span>
+  </div>
+</template>

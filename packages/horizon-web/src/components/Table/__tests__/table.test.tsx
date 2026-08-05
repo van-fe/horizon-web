@@ -2,6 +2,7 @@ import { DOMWrapper, mount } from '@vue/test-utils';
 import { nextTick, ref } from 'vue';
 import { describe, expect, test, vi } from 'vitest';
 import { HTable, HTableColumn, HTableSortOrderEnum } from '..';
+import type { HTableSelectionFooterScope } from '..';
 import HDropdown from '../../Dropdown/src/Dropdown';
 import HDropdownItem from '../../Dropdown/src/DropdownItem';
 import type { HTreeData } from '../../Tree/src/utils/types';
@@ -10,6 +11,8 @@ import HVirtualScroller from '../../VirtualScroller/src/VirtualScroller';
 import HVirtualScrollerItem from '../../VirtualScroller/src/VirtualScrollerItem';
 import HInput from '../../Input/src/Input';
 import HSelect from '../../Select/src/Select';
+import HButton from '../../Button/src/Button';
+import { dictionaries } from '../../../locales';
 
 async function settleTable() {
   await nextTick();
@@ -166,6 +169,7 @@ describe('Table', () => {
 
     const rows = wrapper.findAll<HTMLElement>('tbody .h-table__row');
     expect(rows.map(row => row.attributes('tabindex'))).toEqual(['0', '-1', '-1']);
+    expect(rows.every(row => row.attributes('data-focus-visible-inset') === '')).toBe(true);
 
     await rows[0].trigger('keydown', { key: 'ArrowDown' });
     await settleTable();
@@ -179,6 +183,154 @@ describe('Table', () => {
     await wrapper.findAll('tbody .h-table__row')[1].trigger('keydown', { key: 'End' });
     await settleTable();
     expect(wrapper.findAll('tbody .h-table__row')[2].attributes('tabindex')).toBe('0');
+  });
+
+  test('reserves column-key selections across page data changes', async () => {
+    const page = ref(0);
+    const selectedKeys = ref<string[]>([]);
+    const pages = [
+      [
+        { id: 1, code: 'A', name: 'Alice' },
+        { id: 2, code: 'B', name: 'Bob' },
+      ],
+      [
+        { id: 3, code: 'C', name: 'Carol' },
+        { id: 4, code: 'D', name: 'David' },
+      ],
+    ];
+    const wrapper = mount(() => (
+      <HTable data={pages[page.value]} rowKey="id" showSummary height={280}>
+        <HTableColumn
+          type="selection"
+          columnKey="code"
+          reserveSelection
+          multiple
+          selectedKeys={selectedKeys.value}
+          onUpdate:selectedKeys={value => {
+            selectedKeys.value = value as string[];
+          }}
+        />
+        <HTableColumn title="Name" field="name" />
+      </HTable>
+    ));
+    await settleTable();
+
+    const selectionFooter = wrapper.find('.h-table__selection-footer');
+    expect(selectionFooter.exists()).toBe(true);
+    expect(wrapper.find('table').element.nextElementSibling).toBe(selectionFooter.element);
+    expect(selectionFooter.findComponent(HButton).exists()).toBe(true);
+    expect(selectionFooter.find('.h-table__selection-footer--selected-count').text()).toContain(
+      '0',
+    );
+
+    await wrapper.findAll('tbody .h-table__selection')[0].trigger('click');
+    await settleTable();
+    expect(selectedKeys.value).toEqual(['A']);
+    expect(selectionFooter.find('.h-table__selection-footer--selected-count').text()).toContain(
+      '1',
+    );
+    expect(
+      selectionFooter.find('.h-table__selection-footer--current-selected-count').text(),
+    ).toContain('1');
+
+    page.value = 1;
+    await settleTable();
+    expect(
+      selectionFooter.find('.h-table__selection-footer--current-selected-count').text(),
+    ).toContain('0');
+    await wrapper.findAll('tbody .h-table__selection')[1].trigger('click');
+    await settleTable();
+    expect(selectedKeys.value).toEqual(['A', 'D']);
+
+    page.value = 0;
+    await settleTable();
+    expect(wrapper.findAll('tbody label.h-checkbox')[0].classes()).toContain('h-checkbox--checked');
+    expect(wrapper.findAll('tbody label.h-checkbox')[1].classes()).not.toContain(
+      'h-checkbox--checked',
+    );
+
+    await selectionFooter.findComponent(HButton).trigger('click');
+    await settleTable();
+    expect(selectedKeys.value).toEqual([]);
+  });
+
+  test('renders kebab-case scoped selection footer slots', async () => {
+    const selectedKeys = ref<string[]>(['A', 'OUTSIDE']);
+    const wrapper = mount(() => (
+      <HTable data={[{ code: 'A', name: 'Alice' }]}>
+        {{
+          default: () => (
+            <>
+              <HTableColumn
+                type="selection"
+                columnKey="code"
+                reserveSelection
+                multiple
+                selectedKeys={selectedKeys.value}
+                onUpdate:selectedKeys={value => {
+                  selectedKeys.value = value as string[];
+                }}
+              />
+              <HTableColumn title="Name" field="name" />
+            </>
+          ),
+          'selection-footer-prepend': (scope: HTableSelectionFooterScope) => (
+            <button class="custom-clear" onClick={scope.clearSelection}>
+              Clear {scope.selectedCount}
+            </button>
+          ),
+          'selection-footer-text': (scope: HTableSelectionFooterScope) => (
+            <span class="custom-selection-text">
+              {scope.selectedKeys.join(',')} / {scope.currentSelectedKeys.join(',')}
+            </span>
+          ),
+          'selection-footer-append': (scope: HTableSelectionFooterScope) => (
+            <span class="custom-selection-append">Current {scope.currentSelectedCount}</span>
+          ),
+        }}
+      </HTable>
+    ));
+    await settleTable();
+
+    expect(wrapper.find('.custom-clear').text()).toBe('Clear 2');
+    expect(wrapper.find('.custom-selection-text').text()).toBe('A,OUTSIDE / A');
+    expect(wrapper.find('.custom-selection-append').text()).toBe('Current 1');
+
+    await wrapper.find('.custom-clear').trigger('click');
+    await settleTable();
+    expect(selectedKeys.value).toEqual([]);
+  });
+
+  test('provides selection footer locale text in every dictionary', () => {
+    Object.values(dictionaries).forEach(locale => {
+      expect(locale.horizonWeb.table.clearSelection).toBeTruthy();
+      expect(locale.horizonWeb.table.selectedCount).toContain('{count}');
+      expect(locale.horizonWeb.table.currentSelectedCount).toContain('{count}');
+    });
+  });
+
+  test('drops selections missing from replacement data by default', async () => {
+    const data = ref([{ code: 'A' }]);
+    const selectedKeys = ref<string[]>(['A']);
+    mount(() => (
+      <HTable data={data.value}>
+        <HTableColumn
+          type="selection"
+          columnKey="code"
+          multiple
+          selectedKeys={selectedKeys.value}
+          onUpdate:selectedKeys={value => {
+            selectedKeys.value = value as string[];
+          }}
+        />
+      </HTable>
+    ));
+    await settleTable();
+
+    data.value = [{ code: 'B' }];
+    await settleTable();
+
+    expect(selectedKeys.value).toEqual([]);
   });
 
   test('expands and collapses tree rows with horizontal arrow keys', async () => {
@@ -450,6 +602,7 @@ describe('Table', () => {
     expect(wrapper.find('.h-table__row--group').text()).toContain('Points: 13');
 
     const firstGroup = wrapper.find('.h-table__row--group');
+    expect(firstGroup.attributes('data-focus-visible-inset')).toBe('');
     await firstGroup.trigger('keydown', { key: 'Enter' });
     await settleTable();
 
@@ -557,6 +710,28 @@ describe('Table', () => {
     expect(headerRows[0].findAll('th')[0].attributes('rowspan')).toBe('2');
     expect(headerRows[0].findAll('th')[1].attributes('colspan')).toBe('2');
     expect(headerRows[1].findAll('th').map(cell => cell.text())).toEqual(['Name', 'Email', 'Role']);
+  });
+
+  test('only marks a grouped header cell as last when it reaches the table edge', async () => {
+    const wrapper = mount(() => (
+      <HTable data={[{ account: 'Northwind', market: 'APAC', hub: 'Singapore', arr: '$248k' }]}>
+        <HTableColumn title="Account" field="account" />
+        <HTableColumn title="Region">
+          <HTableColumn title="Market" field="market" />
+          <HTableColumn title="Hub" field="hub" />
+        </HTableColumn>
+        <HTableColumn title="ARR" field="arr" />
+      </HTable>
+    ));
+
+    await settleTable();
+
+    const headerCells = wrapper.findAll('thead th');
+    const hub = headerCells.find(cell => cell.text() === 'Hub');
+    const arr = headerCells.find(cell => cell.text() === 'ARR');
+
+    expect(hub?.classes()).not.toContain('is-last-column');
+    expect(arr?.classes()).toContain('is-last-column');
   });
 
   test('preserves zero row and column spans returned as an object', async () => {

@@ -1,38 +1,26 @@
 <template>
-  <div class="mb-4">
-    <h-switch v-model="isHidden" label="hidden" label-position="right" />
+  <div class="docs-demo">
+    <h-switch v-model="isHidden" label="隐藏徽标" label-position="left" />
+    <h-space wrap size="large">
+      <h-badge
+        v-for="item in samples"
+        :key="item.label"
+        :hidden="isHidden"
+        :type="item.type"
+        :content="item.content"
+      >
+        <h-button type="normal">{{ item.label }}</h-button>
+      </h-badge>
+    </h-space>
   </div>
-  <h-badge :hidden="isHidden" class="mr-5">
-    <div style="background: gray; width: 50px; height: 50px"></div>
-  </h-badge>
-  <h-badge :hidden="isHidden" type="num" :content="0" class="mr-5">
-    <div style="background: gray; width: 50px; height: 50px"></div>
-  </h-badge>
-  <h-badge :hidden="isHidden" type="num" :content="99" class="mr-5">
-    <div style="background: gray; width: 50px; height: 50px"></div>
-  </h-badge>
-  <h-badge
-    :hidden="isHidden"
-    type="icon"
-    content="owner_os"
-    :icon-size="12"
-    icon-color="#24A7B2"
-    align="inner"
-    bottom
-    class="mr-5"
-  >
-    <div style="background: gray; border-radius: 50%; width: 50px; height: 50px"></div>
-  </h-badge>
 </template>
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
 
-export default defineComponent({
-  setup() {
-    const isHidden = ref(false);
-    return {
-      isHidden,
-    };
-  },
-});
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const isHidden = ref(false);
+const samples = [
+  { label: 'Dot', type: 'dot' as const, content: '' },
+  { label: 'Zero', type: 'num' as const, content: 0 },
+];
 </script>

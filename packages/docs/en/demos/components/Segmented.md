@@ -1,38 +1,59 @@
-## Basic Usage
-Most basic usage
+## Basic usage
+
+Give every `SegmentedItem` an explicit, unique `value`, then use `active-key` or `v-model:active-key` to read the current option. Segmented works best for a small set of mutually exclusive views.
+
 :::demo components/Segmented/basic.vue :::
 
-## Block Mode
-Set `block` to adapt to parent width
+## Block mode
+
+With `block`, the options share the available parent width, which suits toolbars with a stable number of steps. Truncated `label` text automatically exposes its full content in a Tooltip; custom slots manage their own hints.
+
 :::demo components/Segmented/block.vue :::
 
-## Unavailable
+## Disabled options
+
+Set `disabled` on an individual `SegmentedItem`. The demo also shows an external state locking every option.
+
 :::demo components/Segmented/disabled.vue :::
 
-## Scrolling Segmented
-When there are super many options, the controller calculates based on width. You can close it through `scrollable`. <strong style="color: red;">(PS: Generally not recommended to use Segmented for too many option nodes)</strong>
+## Horizontal scrolling
+
+For longer lists, combine `scrollable`, `arrow`, and `focusable`. Keep the list concise; Tabs are usually better for complex navigation.
+
 :::demo components/Segmented/scroll.vue :::
 
-## Controlled Mode
-Activate the corresponding option through `activeKey`
+## Controlled mode
+
+An external control and Segmented can share the same `active-key`, keeping both surfaces synchronized.
+
 :::demo components/Segmented/controlled.vue :::
 
-## Different Sizes of Segmented
-Set size through `size`, default size: `medium`
+## Sizes
+
+The available sizes are `small`, `medium`, `large`, and `huge`.
+
 :::demo components/Segmented/size.vue :::
 
-## Dynamic Load Data
-Asynchronously load more options
+## Dynamic options
+
+Update the `SegmentedItem` list reactively to append options. Prevent duplicate requests and clear pending timers when the demo unmounts.
+
 :::demo components/Segmented/load-more.vue :::
 
-## Custom Render
-Use `slot` to customize node rendering
+## Custom content
+
+Use the item default slot to combine an icon, primary label, and supporting text. The `state` slot value indicates whether the item is active.
+
 :::demo components/Segmented/customize.vue :::
 
-## Support Setting Icon and Badge
-Use `icon` to set option icon
+## Icons and badges
+
+`icon` can be combined with text and badges. When icons stand alone, the surrounding context should still explain their meaning.
+
 :::demo components/Segmented/icon.vue :::
 
-## Use with Form
-You can enable the `form` attribute to adapt to the `h-form` component
+## Form mode
+
+Enable `form` inside `HForm` so Segmented participates in validation and error presentation.
+
 :::demo components/Segmented/form.vue :::

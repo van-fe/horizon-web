@@ -1,5 +1,5 @@
 import type { Ref, SetupContext } from 'vue';
-import { computed, ref, watch } from 'vue';
+import { computed, markRaw, ref, shallowRef, watch } from 'vue';
 import { isBoolean, isDefined } from '@aurora/utils';
 import { warn } from '~/utils/useLog';
 import Tree from '~/utils/useTree';
@@ -47,11 +47,11 @@ export default function useSelection(
       (typeof column.props.selectable === 'function' && column.props.selectable(rowData, rowIndex)),
   );
 
-  const selectionTree = computed(() => {
+  function createSelectionTree(currentRowsData: HTableTransformedRowDataType[]) {
     const treeDataByUuid = new Map<HTableRowKeyType, TableSelectionTreeData>();
     const roots: TableSelectionTreeData[] = [];
 
-    for (const row of rowsData.value) {
+    for (const row of currentRowsData) {
       const uuid = row[HTableTransformedRowContextKey].uuid;
 
       treeDataByUuid.set(uuid, {
@@ -62,7 +62,7 @@ export default function useSelection(
       });
     }
 
-    for (const row of rowsData.value) {
+    for (const row of currentRowsData) {
       const context = row[HTableTransformedRowContextKey];
       const current = treeDataByUuid.get(context.uuid)!;
       const parent =
@@ -76,17 +76,39 @@ export default function useSelection(
     }
 
     return new Tree<TableSelectionTreeData, TableSelectionTreeNode>(roots, {}, node => node.value);
-  });
+  }
 
-  const isTreeSelectionLinked = computed(
-    () =>
-      column.props.multiple &&
-      !column.props.checkStrictly &&
-      rowsData.value.some(row => row[HTableTransformedRowContextKey].parentUuid !== null),
+  const selectionTree = shallowRef<Tree<TableSelectionTreeData, TableSelectionTreeNode>>();
+
+  // Tree mutates its own refs while being constructed. Keep construction outside a computed
+  // effect so those mutations cannot invalidate the index and rebuild it for every row lookup.
+  watch(
+    [
+      rowsData,
+      () => column.props.type,
+      () => column.props.multiple,
+      () => column.props.checkStrictly,
+    ],
+    ([currentRowsData, type, multiple, checkStrictly]) => {
+      if (
+        type !== 'selection' ||
+        !multiple ||
+        checkStrictly ||
+        !currentRowsData.some(row => row[HTableTransformedRowContextKey].parentUuid !== null)
+      ) {
+        selectionTree.value = undefined;
+        return;
+      }
+
+      selectionTree.value = markRaw(createSelectionTree(currentRowsData));
+    },
+    { immediate: true, flush: 'sync' },
   );
 
+  const isTreeSelectionLinked = computed(() => selectionTree.value !== undefined);
+
   function getTreeNode(rowData: HTableTransformedRowDataType) {
-    return selectionTree.value.getInfoByValue(rowData[HTableTransformedRowContextKey].uuid);
+    return selectionTree.value?.getInfoByValue(rowData[HTableTransformedRowContextKey].uuid);
   }
 
   function getNodeRow(node: TableSelectionTreeNode) {
@@ -121,8 +143,11 @@ export default function useSelection(
 
   const effectiveCheckedNodesUuid = computed(() => {
     const result = new Set<HTableRowKeyType>();
+    const tree = selectionTree.value;
 
-    for (const node of selectionTree.value.flattenTreeData.value) {
+    if (!tree) return result;
+
+    for (const node of tree.flattenTreeData.value) {
       const row = getNodeRow(node);
       const checkValue = row[column.props.columnKey] as HTableRowKeyType;
 
@@ -139,15 +164,13 @@ export default function useSelection(
   });
 
   const linkedCheckboxStatus = computed(() => {
-    if (!isTreeSelectionLinked.value) {
+    const tree = selectionTree.value;
+
+    if (!tree) {
       return new Map();
     }
 
-    return selectionTree.value.getCheckboxStatus(
-      effectiveCheckedNodesUuid.value,
-      false,
-      isTreeNodeSelectable,
-    );
+    return tree.getCheckboxStatus(effectiveCheckedNodesUuid.value, false, isTreeNodeSelectable);
   });
 
   const isRowChecked = computed(() => (rowData: HTableTransformedRowDataType) => {
@@ -210,6 +233,33 @@ export default function useSelection(
     );
   }
 
+  watch(
+    [rowsData, () => column.props.reserveSelection],
+    ([currentRowsData, shouldReserveSelection]) => {
+      if (
+        shouldReserveSelection ||
+        !isDefined(selectedKeys.value) ||
+        !isDefined(column.props.columnKey) ||
+        column.props.columnKey === ''
+      ) {
+        return;
+      }
+
+      const currentPageKeys = new Set(
+        currentRowsData.map(row => row[column.props.columnKey!] as HTableRowKeyType),
+      );
+      const currentSelectedKeys = Array.isArray(selectedKeys.value)
+        ? selectedKeys.value
+        : [selectedKeys.value];
+      const nextSelectedKeys = currentSelectedKeys.filter(key => currentPageKeys.has(key));
+
+      if (nextSelectedKeys.length !== currentSelectedKeys.length) {
+        emitUpdate(nextSelectedKeys);
+      }
+    },
+    { flush: 'sync' },
+  );
+
   function addSelectionValue(checkedVals: Set<HTableRowKeyType>, checkValue: HTableRowKeyType) {
     if (checkedVals.has(checkValue) || checkedVals.size >= column.props.multipleLimit) {
       return;
@@ -220,10 +270,11 @@ export default function useSelection(
 
   function normalizeLinkedCheckedValues(ignoreSelectable = false) {
     const checkedVals = new Set<HTableRowKeyType>(checkedRows.value as Set<HTableRowKeyType>);
+    const tree = selectionTree.value;
 
-    if (!isTreeSelectionLinked.value) return checkedVals;
+    if (!tree) return checkedVals;
 
-    for (const node of selectionTree.value.flattenTreeData.value) {
+    for (const node of tree.flattenTreeData.value) {
       if (node.transformedChildren.length === 0) continue;
 
       const nodeValue = getNodeRow(node)[column.props.columnKey] as HTableRowKeyType;

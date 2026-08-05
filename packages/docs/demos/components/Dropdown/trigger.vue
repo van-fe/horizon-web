@@ -1,73 +1,80 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="24">
-      <h-dropdown>
-        <h-button>Hover(default)</h-button>
-        <template #dropdown>
-          <h-dropdown-menu>
-            <h-dropdown-item>北京</h-dropdown-item>
-            <h-dropdown-item>上海</h-dropdown-item>
-            <h-dropdown-item>深圳</h-dropdown-item>
-            <h-dropdown-item>杭州</h-dropdown-item>
-            <h-dropdown-item>重庆</h-dropdown-item>
-          </h-dropdown-menu>
-        </template>
-      </h-dropdown>
-      <h-dropdown trigger="click">
-        <h-button>Click</h-button>
-        <template #dropdown>
-          <h-dropdown-menu>
-            <h-dropdown-item>北京</h-dropdown-item>
-            <h-dropdown-item>上海</h-dropdown-item>
-            <h-dropdown-item>深圳</h-dropdown-item>
-            <h-dropdown-item>杭州</h-dropdown-item>
-            <h-dropdown-item>重庆</h-dropdown-item>
-          </h-dropdown-menu>
-        </template>
-      </h-dropdown>
-      <h-dropdown trigger="context-menu" @command="onCommand">
-        <div class="context-menu-area">
-          context-menu
-        </div>
-        <template #dropdown>
-          <h-dropdown-menu>
-            <h-dropdown-item command="1">北京</h-dropdown-item>
-            <h-dropdown-item command="2">上海</h-dropdown-item>
-            <h-dropdown-item command="3">深圳</h-dropdown-item>
-            <h-dropdown-item command="4">杭州</h-dropdown-item>
-            <h-dropdown-item command="5">重庆</h-dropdown-item>
-          </h-dropdown-menu>
-        </template>
-      </h-dropdown>
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { $message } from '@aurora/horizon-web';
+import { ref } from 'vue';
 
-function onCommand(val: string) {
-  $message.info(val);
-}
+const status = ref('尝试悬浮、点击或单击右键');
+const actions = ['打开', '复制链接', '归档'];
 </script>
 
-<style scoped>
-.h-dropdown {
-  display: inline-flex;
-  vertical-align: top;
-}
+<template>
+  <div class="dropdown-trigger-demo">
+    <h-space wrap>
+      <h-dropdown @command="status = `悬浮菜单：${$event}`">
+        <h-button type="normal">悬浮触发</h-button>
+        <template #dropdown>
+          <h-dropdown-menu>
+            <h-dropdown-item v-for="action in actions" :key="action" :command="action">
+              {{ action }}
+            </h-dropdown-item>
+          </h-dropdown-menu>
+        </template>
+      </h-dropdown>
 
-.h-dropdown + .h-dropdown {
-  margin-left: 12px;
+      <h-dropdown trigger="click" @command="status = `点击菜单：${$event}`">
+        <h-button>点击触发</h-button>
+        <template #dropdown>
+          <h-dropdown-menu>
+            <h-dropdown-item v-for="action in actions" :key="action" :command="action">
+              {{ action }}
+            </h-dropdown-item>
+          </h-dropdown-menu>
+        </template>
+      </h-dropdown>
+    </h-space>
+
+    <h-dropdown trigger="context-menu" @command="status = `右键菜单：${$event}`">
+      <div class="context-menu-area" tabindex="0">在此区域单击右键</div>
+      <template #dropdown>
+        <h-dropdown-menu>
+          <h-dropdown-item command="新建便签">新建便签</h-dropdown-item>
+          <h-dropdown-item command="粘贴内容">粘贴内容</h-dropdown-item>
+          <h-dropdown-item command="查看详情">查看详情</h-dropdown-item>
+        </h-dropdown-menu>
+      </template>
+    </h-dropdown>
+    <p role="status">{{ status }}</p>
+  </div>
+</template>
+
+<style scoped>
+.dropdown-trigger-demo {
+  display: grid;
+  gap: 12px;
 }
 
 .context-menu-area {
-  width: 300px;
-  height: 200px;
-  background: var(--h-bg-info-weak-default);
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  min-height: 120px;
+  place-content: center;
+  border: 1px dashed var(--h-border-brand-default);
+  color: var(--h-text-primary);
+  text-align: center;
+  cursor: context-menu;
+}
+
+.context-menu-area:focus-visible {
+  outline: 2px solid var(--h-border-brand-default);
+  outline-offset: 2px;
+}
+
+p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: 13px;
+}
+
+@media (max-width: 390px) {
+  .context-menu-area {
+    min-height: 100px;
+  }
 }
 </style>

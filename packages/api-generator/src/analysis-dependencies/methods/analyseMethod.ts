@@ -14,6 +14,7 @@ import { ts } from 'ts-morph';
 import { analyseImportExportStatement } from '../../utils/analyseImportExportStatement';
 import findVariableThroughFileImports from '../../utils/findVariableThroughFileImports';
 import completeFileExtName from '../../utils/completeFileExtName';
+import { analyseDescriptionLocales, analyseStaticText } from '../utils/analyseMetadata';
 
 /**
  * 解析组件定义的对象
@@ -90,12 +91,14 @@ export function analyseMethod(methodInfo: ApiGeneratorExportedMethod, project: P
           if (identifier) {
             switch (identifier.getText()) {
               case 'desc':
-                methodInfo.desc =
-                  curr
-                    .getChildrenOfKind(ts.SyntaxKind.StringLiteral)?.[0]
-                    ?.getText()
-                    .trim()
-                    .replace(/(^'|'$)/g, '') || '';
+                methodInfo.desc = analyseStaticText((curr as PropertyAssignment).getInitializer());
+                break;
+              case 'descLocales':
+                methodInfo.descLocales = analyseDescriptionLocales(
+                  (curr as PropertyAssignment).getInitializerIfKind(
+                    ts.SyntaxKind.ObjectLiteralExpression,
+                  ),
+                );
                 break;
               case 'options':
                 const optionsRes = analysisMethodDefinedVariable(

@@ -1,14 +1,19 @@
 ## 何时使用
-- 当有一系列信息需按时间排列时，可正序和倒序；
-- 需要有一条时间轴进行视觉上的串联时。
+
+时间轴适合呈现按时间发生的一组里程碑、状态变更或操作记录，也可通过正序与倒序适应不同阅读方向。
 
 ## 基本样式
-时间轴包含节点、时间线、节点名称、时间日期、描述等基本信息，此外可附加Icon、描述、操作记录、评论等；
+
+时间轴由节点、连接线、时间、名称和描述组成。示例并排比较三种尺寸，便于根据内容密度选择。
+
 :::demo components/Timeline/basic.vue :::
 
-## 可附加属性
+## 状态与排序
+
+节点可配置类型、颜色、图标、虚线和折叠内容，也可用插槽自定义名称与描述。示例提供排序控制以展示完整阅读路径。
+
 :::demo components/Timeline/prop.vue :::
 
-## `format` 值的说明
+## `format` 值
 
-`format` 直接使用 Day.js 格式字符串。更多可用格式，请查看 [Day.js Format 文档](https://day.js.org/docs/zh-CN/display/format)。
+`format` 直接接受 Day.js 格式字符串。更多可用格式请查看 [Day.js Format 文档](https://day.js.org/docs/zh-CN/display/format)。

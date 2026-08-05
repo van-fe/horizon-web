@@ -1,41 +1,43 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const value = ref();
+const repositories = [
+  { value: 'horizon-web', label: 'horizon-web' },
+  { value: 'design-tokens', label: 'design-tokens' },
+  { value: 'developer-portal', label: 'developer-portal' },
+];
+const value = ref<string>();
+const query = ref('');
 </script>
 
 <template>
-  <h-grid :gap="10">
-    <h-grid-item :span="{ xs: 12, md: 8, lg: 6, xl: 6, xxl: 6 }">
-      <div class="demo-title">自定义空样式</div>
-      <h-select v-model="value" filterable :to-body="false">
-        <h-option label="上海" :value="1" />
-        <h-option :value="2" label="北京" />
-        <h-option :value="3" label="合肥" name="hefei" />
-        <template #empty>
-          <div class="empty-city">没有找到对应的城市信息</div>
-        </template>
-      </h-select>
-    </h-grid-item>
-    <h-grid-item :span="{ xs: 12, md: 8, lg: 6, xl: 6, xxl: 6 }">
-      <div class="demo-title">使用 h-empty 组件</div>
-      <h-select v-model="value" filterable :to-body="false">
-        <h-option label="上海" :value="1" />
-        <h-option :value="2" label="北京" />
-        <h-option :value="3" label="合肥" name="hefei" />
-        <template #empty>
-          <h-empty description="没有找到对应的城市信息"></h-empty>
-        </template>
-      </h-select>
-    </h-grid-item>
-  </h-grid>
+  <div class="select-demo">
+    <h-select
+      v-model="value"
+      filterable
+      clearable
+      :to-body="false"
+      placeholder="搜索仓库"
+      @input="query = $event"
+    >
+      <h-option v-for="repository in repositories" :key="repository.value" v-bind="repository" />
+      <template #empty>
+        <h-empty :description="`没有找到 “${query || '当前关键字'}”`" />
+      </template>
+    </h-select>
+    <p class="docs-demo__status">输入 “mobile” 查看空状态</p>
+  </div>
 </template>
 
 <style scoped>
-.empty-city {
-  height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.select-demo {
+  display: grid;
+  min-width: 0;
+  gap: 10px;
+}
+
+.select-demo :deep(.h-select) {
+  width: 100%;
+  min-width: 0;
 }
 </style>

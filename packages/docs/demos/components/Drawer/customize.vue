@@ -1,67 +1,83 @@
-<template>
-  <h-space direction="vertical" block>
-    <h-radio-group v-model="mode" class="example">
-      <h-radio :value="0">Default</h-radio>
-      <h-radio :value="1">Customize Header</h-radio>
-      <h-radio :value="2">Customize Title</h-radio>
-      <h-radio :value="3">Customize Footer</h-radio>
-      <h-radio :value="4">No Title</h-radio>
-      <h-radio :value="5">No Header and No Footer</h-radio>
-      <h-radio :value="6">Hide Mask</h-radio>
-    </h-radio-group>
-    <h-button @click="visible = true">Open Drawer</h-button>
-  </h-space>
-  <h-drawer
-    v-model:visible="visible"
-    :title="mode !== 4 ? 'Default Title' : ''"
-    :header="mode !== 5"
-    :footer="mode !== 5"
-    :mask="mode !== 6"
-    placement="right"
-  >
-    <template v-if="mode === 1" #header>
-      <h-space size="4" block direction="vertical">
-        <h-space size="4">
-          <div class="text-subtitle-1">Great declaration</div>
-          <h-tag :clickable="false">Demo</h-tag>
-        </h-space>
-        <div class="text-caption-1">Make Demo great again</div>
-      </h-space>
-    </template>
-
-    <template v-if="mode === 2" #title>Customize Title</template>
-    <div>
-      You can customize modal body text by the current situation. This modal will be closed
-      immediately once you press the OK button.
-    </div>
-    <template v-if="mode === 3" #footer>
-      <h-button type="danger" style="margin-right: 8px" @click="onOk">Confirm Delete</h-button>
-      <h-button plain @click="onCancel">Close</h-button>
-    </template>
-  </h-drawer>
-</template>
-
-<script lang="ts" setup>
+<script setup lang="ts">
 import { ref } from 'vue';
-import { $message } from '@aurora/horizon-web';
 
 const visible = ref(false);
-const mode = ref(0);
+const status = ref('可自定义抽屉的头部和底部');
+const selectedTags = ref(['review']);
 
-const onOk = () => {
-  console.info('ok button clicked!');
-  $message({ type: 'success', message: 'ok button clicked' });
-};
-const onCancel = () => {
-  console.info('cancel button clicked!');
-  $message({ type: 'warning', message: 'cancel button clicked!' });
+const finish = (message: string) => {
+  status.value = message;
+  visible.value = false;
 };
 </script>
 
+<template>
+  <div class="drawer-custom-demo">
+    <h-button @click="visible = true">批量更新标签</h-button>
+    <p class="status" role="status">{{ status }}</p>
+
+    <h-drawer v-model:visible="visible" placement="right">
+      <template #header>
+        <div class="custom-header">
+          <strong>批量更新标签</strong>
+          <span>已选择 24 个项目</span>
+        </div>
+      </template>
+
+      <div class="drawer-content">
+        <p>所选标签将应用到全部项目。</p>
+        <h-select v-model="selectedTags" multiple placeholder="请选择标签">
+          <h-option label="高优先级" value="priority" />
+          <h-option label="等待评审" value="review" />
+          <h-option label="本周发布" value="release" />
+        </h-select>
+      </div>
+
+      <template #footer>
+        <h-space>
+          <h-button @click="finish('标签已更新')">应用</h-button>
+          <h-button type="normal" @click="finish('已取消更新')">取消</h-button>
+        </h-space>
+      </template>
+    </h-drawer>
+  </div>
+</template>
+
 <style scoped>
-.example {
-  display: inline-grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+.drawer-custom-demo,
+.custom-header,
+.drawer-content {
+  display: grid;
+  gap: 12px;
+}
+
+.drawer-custom-demo {
+  justify-items: start;
+}
+
+.custom-header {
+  gap: 2px;
+}
+
+.custom-header strong {
+  color: var(--h-text-primary);
+}
+
+.custom-header span,
+p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: 13px;
+}
+
+.drawer-content {
+  width: 100%;
+}
+
+@media (max-width: 390px) {
+  .drawer-custom-demo,
+  .drawer-content {
+    gap: 10px;
+  }
 }
 </style>

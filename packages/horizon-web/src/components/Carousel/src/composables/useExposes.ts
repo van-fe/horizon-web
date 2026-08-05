@@ -1,5 +1,6 @@
 import type { ExposeType, ExtractExposeTypes } from '@aurora/utils';
 import type { Ref } from 'vue';
+import type { HCarouselTarget } from './useProps';
 
 export const useCarouselExposes = {
   /**
@@ -8,12 +9,12 @@ export const useCarouselExposes = {
    */
   activeIndex: Object as ExposeType<Readonly<Ref<number>>>,
   /**
-   * 切换到指定索引或名称的轮播项
-   * @param target 目标索引或轮播项名称
-   * @paramEn target Target slide index or name.
-   * @en Activates a slide by index or name.
+   * 切换到指定索引或名称的轮播项；数字名称可使用 `{ name }` 明确指定
+   * @param target 目标索引、名称或显式目标对象
+   * @paramEn target Target index, name, or explicit target object.
+   * @en Activates a slide by index or name. Use `{ name }` for numeric names.
    */
-  setActiveItem: Function as ExposeType<(target: number | string) => void>,
+  setActiveItem: Function as ExposeType<(target: HCarouselTarget) => void>,
   /**
    * 切换到上一项
    * @en Activates the previous slide.

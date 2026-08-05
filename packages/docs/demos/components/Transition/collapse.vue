@@ -1,52 +1,40 @@
-<template>
-  <div style="height: 200px">
-    <h-button type="normal" class="mb-2" @click="visible = !visible">Change</h-button>
-    <h-grid :gap="10">
-      <h-grid-item :span="6">
-        <h-transition name="collapse">
-          <div v-show="visible">
-            <div class="animate-box">collapse</div>
-            <div class="animate-box" style="margin-top: 10px">collapse</div>
-          </div>
-        </h-transition>
-      </h-grid-item>
-      <h-grid-item :span="12">
-        <h-transition name="collapse-horizontal">
-          <div v-show="visible" style="white-space: nowrap">
-            <div class="animate-box-horizontal">collapse-horizontal</div>
-            <div class="animate-box-horizontal" style="margin-left: 10px">collapse-horizontal</div>
-          </div>
-        </h-transition>
-      </h-grid-item>
-    </h-grid>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
+
+const name = ref<'collapse' | 'collapse-horizontal'>('collapse');
 const visible = ref(true);
 </script>
 
-<style scoped lang="scss">
-.animate-box {
-  width: 150px;
-  height: 80px;
-  background: var(--h-bg-brand-default);
-  border-radius: var(--h-radius);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--h-text-inverse);
+<template>
+  <section class="docs-demo">
+    <div class="docs-demo__controls">
+      <h-segmented v-model:active-key="name" size="small">
+        <h-segmented-item value="collapse" label="Vertical" />
+        <h-segmented-item value="collapse-horizontal" label="Horizontal" />
+      </h-segmented>
+      <h-switch v-model="visible" label="Expanded" />
+    </div>
+    <div class="stage">
+      <h-transition :name="name">
+        <div v-show="visible" class="sample">Collapsible content</div>
+      </h-transition>
+    </div>
+  </section>
+</template>
+
+<style scoped>
+.stage {
+  min-height: 72px;
 }
 
-.animate-box-horizontal {
-  width: 150px;
-  height: 80px;
-  background: var(--h-bg-brand-default);
-  border-radius: var(--h-radius);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--h-text-inverse);
+.sample {
+  width: 200px;
+  overflow: hidden;
+  border-radius: var(--h-radius-m);
+  padding: var(--h-spacing-4);
+  color: var(--h-text-secondary);
+  background: var(--h-bg-secondary);
+  box-sizing: border-box;
+  white-space: nowrap;
 }
 </style>

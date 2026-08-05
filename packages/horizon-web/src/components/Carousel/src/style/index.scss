@@ -2,107 +2,17 @@
 
 @include mixins.b('carousel') {
   position: relative;
-  box-sizing: content-box;
+  box-sizing: border-box;
   width: 100%;
   height: mixins.css-variable('carousel', 'size', 'container', 'height');
   overflow: visible;
-  border-radius: mixins.css-variable('carousel', 'border-radius');
+  touch-action: pan-y pinch-zoom;
   outline: none;
-  touch-action: pan-y;
+  border-radius: mixins.css-variable('carousel', 'border-radius');
 
+  /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
   &:focus-visible {
-    box-shadow: 0 0 0 2px mixins.css-variable('carousel', 'color', 'focus');
-  }
-
-  @include mixins.m('vertical') {
-    touch-action: pan-x;
-
-    @include mixins.nested('carousel-item') {
-      transform: translateY(calc(var(--h-carousel-spacing-item-offset) * 100%));
-    }
-
-    @include mixins.e('indicators') {
-      top: 50%;
-      right: mixins.css-variable('spacing-4');
-      bottom: auto;
-      left: auto;
-      flex-direction: column;
-      transform: translateY(-50%);
-    }
-
-    @include mixins.e('indicator') {
-      &::before {
-        width: mixins.css-variable('carousel', 'size', 'indicator');
-        height: mixins.css-variable('carousel', 'size', 'indicator');
-      }
-
-      @include mixins.is('active') {
-        &::before {
-          width: mixins.css-variable('carousel', 'size', 'indicator');
-          height: mixins.css-variable('carousel', 'size', 'indicator', 'active', 'width');
-        }
-      }
-    }
-
-    @include mixins.e('arrow') {
-      top: auto;
-      left: 50%;
-      transform: translateX(-50%) rotate(90deg);
-
-      @include mixins.m('previous') {
-        top: mixins.css-variable('carousel', 'spacing', 'arrow', 'offset');
-      }
-
-      @include mixins.m('next') {
-        right: auto;
-        bottom: mixins.css-variable('carousel', 'spacing', 'arrow', 'offset');
-      }
-    }
-  }
-
-  @include mixins.m('fade') {
-    @include mixins.nested('carousel-item') {
-      opacity: 0;
-      transform: none;
-
-      @include mixins.is('active') {
-        z-index: 1;
-        opacity: 1;
-      }
-    }
-  }
-
-  @include mixins.m('indicators-outside') {
-    padding-bottom: mixins.css-variable('carousel', 'spacing', 'outside', 'gap');
-
-    @include mixins.e('indicators') {
-      bottom: 0;
-    }
-
-    @include mixins.e('indicator') {
-      &::before {
-        background: mixins.css-variable('carousel', 'color', 'indicator');
-      }
-
-      @include mixins.is('active') {
-        &::before {
-          background: mixins.css-variable('carousel', 'color', 'indicator', 'active');
-        }
-      }
-    }
-  }
-
-  @include mixins.m('arrow-hover') {
-    @include mixins.e('arrow') {
-      opacity: 0;
-    }
-
-    &:hover,
-    &:focus-within {
-      @include mixins.e('arrow') {
-        opacity: 1;
-      }
-    }
+    @include mixins.focus-ring;
   }
 
   @include mixins.e('viewport') {
@@ -114,23 +24,44 @@
   }
 
   @include mixins.e(('arrow', 'autoplay')) {
-    position: absolute;
-    z-index: 3;
-    width: mixins.css-variable('carousel', 'size', 'arrow');
-    min-width: mixins.css-variable('carousel', 'size', 'arrow');
-    height: mixins.css-variable('carousel', 'size', 'arrow');
-    padding: 0;
-    color: mixins.css-variable('carousel', 'color', 'control');
-    background: mixins.css-variable('carousel', 'background', 'control');
-    border-radius: mixins.css-variable('radius-circle');
-    transition:
-      opacity mixins.css-variable('transition-time-fast'),
-      background-color mixins.css-variable('transition-time-fast');
-
-    &:hover,
-    &:focus-visible {
+    /* Button styles are loaded after Carousel, so both classes are required here. */
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+    &.h-button {
+      position: absolute;
+      z-index: 3;
+      width: mixins.css-variable('carousel', 'size', 'arrow');
+      min-width: mixins.css-variable('carousel', 'size', 'arrow');
+      height: mixins.css-variable('carousel', 'size', 'arrow');
+      padding: 0;
       color: mixins.css-variable('carousel', 'color', 'control');
-      background: mixins.css-variable('carousel', 'background', 'control', 'hover');
+      background: mixins.css-variable('carousel', 'background', 'control');
+      border: 0;
+      border-radius: mixins.css-variable('radius-circle');
+      box-shadow: none;
+      transition:
+        opacity mixins.css-variable('carousel', 'transition', 'control-duration'),
+        background-color mixins.css-variable('carousel', 'transition', 'control-duration');
+
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &:hover,
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &:focus-visible {
+        color: mixins.css-variable('carousel', 'color', 'control');
+        background: mixins.css-variable('carousel', 'background', 'control', 'hover');
+      }
+
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &:focus-visible {
+        @include mixins.focus-ring(mixins.css-variable('radius-circle'));
+      }
+
+      /* stylelint-disable-next-line selector-class-pattern */
+      .h-button__icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: auto;
+      }
     }
   }
 
@@ -154,44 +85,178 @@
 
   @include mixins.e('indicators') {
     position: absolute;
-    right: 0;
-    bottom: mixins.css-variable('spacing-4');
-    left: 0;
-    z-index: 3;
+    inset: auto 0 0;
+    z-index: 2;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
-    gap: mixins.css-variable('carousel', 'spacing', 'indicator', 'gap');
+    height: mixins.css-variable('carousel', 'size', 'indicator-wrapper');
+    padding-bottom: 3px;
+    pointer-events: none;
+    background: linear-gradient(
+      180deg,
+      rgb(0, 0, 0, 0%) 13%,
+      mixins.css-variable('carousel', 'background', 'indicator-mask') 100%
+    );
+  }
+
+  @include mixins.e('indicator-trigger') {
+    display: flex;
+    width: mixins.css-variable('carousel', 'size', 'indicator-hit', 'horizontal');
+    height: 24px;
+    pointer-events: auto;
   }
 
   @include mixins.e('indicator') {
-    width: auto;
-    min-width: mixins.css-variable('carousel', 'size', 'indicator');
-    height: 24px;
-    padding: 0;
-    overflow: visible;
-
-    &::before {
-      display: block;
-      width: mixins.css-variable('carousel', 'size', 'indicator');
-      height: mixins.css-variable('carousel', 'size', 'indicator');
-      background: mixins.css-variable('carousel', 'color', 'control');
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+    &.h-button {
+      width: mixins.css-variable('carousel', 'size', 'indicator-hit', 'horizontal');
+      min-width: mixins.css-variable('carousel', 'size', 'indicator-hit', 'horizontal');
+      height: 24px;
+      padding: 0;
+      color: transparent;
+      background: transparent;
+      border: 0;
       border-radius: mixins.css-variable('radius-pill');
-      opacity: mixins.css-variable('opacity-7');
-      transition:
-        width mixins.css-variable('carousel', 'transition', 'duration')
-          mixins.css-variable('carousel', 'transition', 'timing-function'),
-        height mixins.css-variable('carousel', 'transition', 'duration')
-          mixins.css-variable('carousel', 'transition', 'timing-function'),
-        opacity mixins.css-variable('transition-time-fast');
-      content: '';
+      box-shadow: none;
+
+      /* stylelint-disable-next-line selector-class-pattern */
+      .h-button__content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &:hover,
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &:focus-visible,
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &.is-active {
+        color: transparent;
+        background: transparent;
+      }
+
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &:hover #{mixins.e('carousel', 'indicator-mark')},
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &:focus-visible #{mixins.e('carousel', 'indicator-mark')},
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &.is-active #{mixins.e('carousel', 'indicator-mark')} {
+        background: mixins.css-variable('carousel', 'color', 'indicator', 'active');
+      }
+
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &:focus-visible {
+        @include mixins.focus-ring(mixins.css-variable('radius-pill'));
+      }
+    }
+  }
+
+  @include mixins.e('indicator-mark') {
+    display: block;
+    width: mixins.css-variable('carousel', 'size', 'indicator', 'dot');
+    height: mixins.css-variable('carousel', 'size', 'indicator', 'dot');
+    background: mixins.css-variable('carousel', 'color', 'indicator');
+    border-radius: mixins.css-variable('radius-circle');
+    transition: background-color mixins.css-variable('carousel', 'transition', 'control-duration');
+  }
+
+  @include mixins.e('indicator-slider') {
+    position: relative;
+    width: mixins.css-variable('carousel', 'size', 'indicator', 'slider', 'width');
+    height: 24px;
+    pointer-events: auto;
+  }
+
+  @include mixins.e(('indicator-slider-track', 'indicator-slider-mark')) {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: mixins.css-variable('carousel', 'size', 'indicator', 'slider', 'height');
+    border-radius: mixins.css-variable('radius-m');
+    transform: translateY(-50%);
+  }
+
+  @include mixins.e('indicator-slider-track') {
+    width: 100%;
+    background: mixins.css-variable('carousel', 'color', 'indicator');
+  }
+
+  @include mixins.e('indicator-slider-mark') {
+    left: var(--h-carousel-indicator-slider-offset);
+    z-index: 1;
+    width: var(--h-carousel-indicator-slider-size);
+    background: mixins.css-variable('carousel', 'color', 'indicator', 'active');
+    transition: left mixins.css-variable('carousel', 'transition', 'control-duration');
+  }
+
+  @include mixins.e('indicator-slider-segment-trigger') {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--h-carousel-indicator-segment-offset);
+    z-index: 2;
+    width: var(--h-carousel-indicator-segment-size);
+  }
+
+  @include mixins.e('indicator-slider-segment') {
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+    &.h-button {
+      width: 100%;
+      min-width: 0;
+      height: 100%;
+      padding: 0;
+      color: transparent;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &:hover,
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &:focus-visible,
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &.is-active {
+        color: transparent;
+        background: transparent;
+      }
+
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &:focus-visible {
+        @include mixins.focus-ring;
+      }
+    }
+  }
+
+  @include mixins.m('indicator-line') {
+    @include mixins.e('indicators') {
+      padding-bottom: 2px;
     }
 
-    @include mixins.is('active') {
-      &::before {
-        width: mixins.css-variable('carousel', 'size', 'indicator', 'active', 'width');
-        opacity: 1;
+    @include mixins.e('indicator-trigger') {
+      width: 20px;
+    }
+
+    @include mixins.e('indicator') {
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &.h-button {
+        width: 20px;
+        min-width: 20px;
       }
+    }
+
+    @include mixins.e('indicator-mark') {
+      width: mixins.css-variable('carousel', 'size', 'indicator', 'line', 'width');
+      height: mixins.css-variable('carousel', 'size', 'indicator', 'line', 'height');
+      border-radius: mixins.css-variable('radius-m');
+    }
+  }
+
+  @include mixins.m('indicator-slider') {
+    @include mixins.e('indicators') {
+      padding-bottom: 2px;
     }
   }
 
@@ -204,8 +269,763 @@
     overflow: hidden;
     white-space: nowrap;
     border: 0;
-    clip: rect(0, 0, 0, 0);
     clip-path: inset(50%);
+  }
+
+  @include mixins.m('vertical') {
+    touch-action: pan-x pinch-zoom;
+
+    @include mixins.nested('carousel-item') {
+      transform: translateY(calc(var(--h-carousel-spacing-item-offset) * 100%));
+    }
+
+    @include mixins.e('indicators') {
+      inset: 0 0 0 auto;
+      flex-direction: column;
+      align-items: flex-end;
+      width: mixins.css-variable('carousel', 'size', 'indicator-wrapper');
+      height: 100%;
+      padding: 0 3px 0 0;
+      background: linear-gradient(
+        90deg,
+        rgb(0, 0, 0, 0%) 13%,
+        mixins.css-variable('carousel', 'background', 'indicator-mask') 100%
+      );
+    }
+
+    @include mixins.e('indicator-trigger') {
+      width: mixins.css-variable('carousel', 'size', 'indicator-hit', 'vertical');
+      height: mixins.css-variable('carousel', 'size', 'indicator-hit', 'horizontal');
+    }
+
+    @include mixins.e('indicator') {
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &.h-button {
+        width: mixins.css-variable('carousel', 'size', 'indicator-hit', 'vertical');
+        min-width: mixins.css-variable('carousel', 'size', 'indicator-hit', 'vertical');
+        height: mixins.css-variable('carousel', 'size', 'indicator-hit', 'horizontal');
+      }
+    }
+
+    @include mixins.e('arrow') {
+      inset: auto auto auto 50%;
+      transform: translateX(-50%);
+
+      @include mixins.m('previous') {
+        top: mixins.css-variable('carousel', 'spacing', 'arrow', 'offset');
+      }
+
+      @include mixins.m('next') {
+        bottom: mixins.css-variable('carousel', 'spacing', 'arrow', 'offset');
+      }
+    }
+  }
+
+  @include mixins.m('slide') {
+    @include mixins.nested('carousel-item') {
+      visibility: hidden;
+      transform: none;
+      transition: none;
+      will-change: auto;
+
+      @include mixins.is('active') {
+        visibility: visible;
+      }
+
+      @include mixins.is('slide-in') {
+        visibility: visible;
+        animation-duration: mixins.css-variable('carousel', 'transition', 'duration');
+        animation-timing-function: mixins.css-variable('carousel', 'transition', 'timing-function');
+        will-change: transform;
+      }
+
+      @include mixins.is('slide-out') {
+        visibility: visible;
+        animation-duration: mixins.css-variable('carousel', 'transition', 'duration');
+        animation-timing-function: mixins.css-variable('carousel', 'transition', 'timing-function');
+        will-change: transform;
+      }
+    }
+  }
+
+  @include mixins.parallel-modifier('slide', 'horizontal') {
+    @include mixins.nested('carousel-item') {
+      @include mixins.is('slide-in') {
+        animation-name: h-carousel-slide-x-in;
+      }
+
+      @include mixins.is('slide-out') {
+        animation-name: h-carousel-slide-x-out;
+      }
+    }
+  }
+
+  @include mixins.parallel-modifier('slide', 'horizontal', 'motion-previous') {
+    @include mixins.nested('carousel-item') {
+      @include mixins.is('slide-in') {
+        animation-name: h-carousel-slide-x-in-reverse;
+      }
+
+      @include mixins.is('slide-out') {
+        animation-name: h-carousel-slide-x-out-reverse;
+      }
+    }
+  }
+
+  @include mixins.parallel-modifier('slide', 'vertical') {
+    @include mixins.nested('carousel-item') {
+      @include mixins.is('slide-in') {
+        animation-name: h-carousel-slide-y-in;
+      }
+
+      @include mixins.is('slide-out') {
+        animation-name: h-carousel-slide-y-out;
+      }
+    }
+  }
+
+  @include mixins.parallel-modifier('slide', 'vertical', 'motion-previous') {
+    @include mixins.nested('carousel-item') {
+      @include mixins.is('slide-in') {
+        animation-name: h-carousel-slide-y-in-reverse;
+      }
+
+      @include mixins.is('slide-out') {
+        animation-name: h-carousel-slide-y-out-reverse;
+      }
+    }
+  }
+
+  @include mixins.m('fade') {
+    @include mixins.nested('carousel-item') {
+      opacity: 0;
+      transform: none;
+
+      @include mixins.is('active') {
+        opacity: 1;
+      }
+    }
+  }
+
+  @include mixins.m('card') {
+    @include mixins.e('viewport') {
+      perspective: mixins.css-variable('carousel', 'size', 'card', 'perspective');
+    }
+
+    @include mixins.nested('carousel-item') {
+      opacity: 0;
+      transition: none;
+      animation-duration: mixins.css-variable('carousel', 'transition', 'duration');
+      animation-timing-function: mixins.css-variable('carousel', 'transition', 'timing-function');
+      will-change: auto;
+
+      @include mixins.is('hidden') {
+        visibility: visible;
+      }
+    }
+  }
+
+  @include mixins.parallel-modifier('card', 'horizontal') {
+    @include mixins.nested('carousel-item') {
+      right: auto;
+      left: 50%;
+      width: mixins.css-variable('carousel', 'size', 'card', 'width');
+      transform: translateX(-50%)
+        translateZ(mixins.css-variable('carousel', 'depth', 'card', 'hidden'));
+      animation-name: h-carousel-card-middle-to-bottom;
+
+      @include mixins.is('placement-previous') {
+        opacity: mixins.css-variable('carousel', 'opacity', 'card', 'preview');
+        transform: translateX(-100%)
+          translateZ(mixins.css-variable('carousel', 'depth', 'card', 'preview'));
+        animation-name: h-carousel-card-top-to-middle;
+      }
+
+      @include mixins.is('placement-next') {
+        opacity: mixins.css-variable('carousel', 'opacity', 'card', 'preview');
+        transform: translateX(0)
+          translateZ(mixins.css-variable('carousel', 'depth', 'card', 'preview'));
+        animation-name: h-carousel-card-bottom-to-middle;
+      }
+
+      @include mixins.is('active') {
+        opacity: 1;
+        transform: translateX(-50%) translateZ(0);
+        animation-name: h-carousel-card-middle-to-top;
+      }
+    }
+  }
+
+  @include mixins.parallel-modifier('card', 'horizontal', 'motion-previous') {
+    @include mixins.nested('carousel-item') {
+      animation-name: h-carousel-card-middle-to-bottom-reverse;
+
+      @include mixins.is('placement-previous') {
+        animation-name: h-carousel-card-bottom-to-middle-reverse;
+      }
+
+      @include mixins.is('placement-next') {
+        animation-name: h-carousel-card-top-to-middle-reverse;
+      }
+
+      @include mixins.is('active') {
+        animation-name: h-carousel-card-middle-to-top-reverse;
+      }
+    }
+  }
+
+  @include mixins.parallel-modifier('card', 'vertical') {
+    @include mixins.nested('carousel-item') {
+      inset: 50% auto auto 50%;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      height: mixins.css-variable('carousel', 'size', 'card', 'vertical-height');
+      transform: translateX(-50%) translateY(-50%)
+        translateZ(mixins.css-variable('carousel', 'depth', 'card', 'hidden'));
+      animation-name: h-carousel-card-middle-to-right;
+
+      @include mixins.is('placement-previous') {
+        opacity: mixins.css-variable('carousel', 'opacity', 'card', 'preview');
+        transform: translateX(-50%) translateY(-100%)
+          translateZ(mixins.css-variable('carousel', 'depth', 'card', 'preview'));
+        animation-name: h-carousel-card-left-to-middle;
+      }
+
+      @include mixins.is('placement-next') {
+        opacity: mixins.css-variable('carousel', 'opacity', 'card', 'preview');
+        transform: translateX(-50%) translateY(0)
+          translateZ(mixins.css-variable('carousel', 'depth', 'card', 'preview'));
+        animation-name: h-carousel-card-right-to-middle;
+      }
+
+      @include mixins.is('active') {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-50%) translateZ(0);
+        animation-name: h-carousel-card-middle-to-left;
+      }
+    }
+
+    @include mixins.e('indicators') {
+      top: calc((100% - #{mixins.css-variable('carousel', 'size', 'card', 'vertical-height')}) / 2);
+      bottom: calc(
+        (100% - #{mixins.css-variable('carousel', 'size', 'card', 'vertical-height')}) / 2
+      );
+      height: auto;
+    }
+  }
+
+  @include mixins.parallel-modifier('card', 'vertical', 'motion-previous') {
+    @include mixins.nested('carousel-item') {
+      animation-name: h-carousel-card-middle-to-right-reverse;
+
+      @include mixins.is('placement-previous') {
+        animation-name: h-carousel-card-right-to-middle-reverse;
+      }
+
+      @include mixins.is('placement-next') {
+        animation-name: h-carousel-card-left-to-middle-reverse;
+      }
+
+      @include mixins.is('active') {
+        animation-name: h-carousel-card-middle-to-left-reverse;
+      }
+    }
+  }
+
+  @include mixins.m('card') {
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+    &:not(.is-motion-ready) {
+      @include mixins.nested('carousel-item') {
+        animation-name: none;
+
+        @include mixins.is('placement-previous') {
+          animation-name: none;
+        }
+
+        @include mixins.is('placement-next') {
+          animation-name: none;
+        }
+
+        @include mixins.is('active') {
+          animation-name: none;
+        }
+      }
+    }
+  }
+
+  @include mixins.m('indicators-outside', 'indicator-position-outer') {
+    margin-bottom: mixins.css-variable('carousel', 'spacing', 'outside', 'gap');
+
+    @include mixins.e('indicators') {
+      inset: auto 0 calc(-1 * #{mixins.css-variable('carousel', 'spacing', 'outside', 'gap')});
+      flex-direction: row;
+      align-items: flex-start;
+      width: auto;
+      height: mixins.css-variable('carousel', 'spacing', 'outside', 'gap');
+      padding: 7px 0 0;
+      background: none;
+    }
+
+    @include mixins.e('indicator-trigger') {
+      width: mixins.css-variable('carousel', 'size', 'indicator-hit', 'horizontal');
+      height: 24px;
+    }
+
+    @include mixins.e('indicator') {
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &.h-button {
+        width: mixins.css-variable('carousel', 'size', 'indicator-hit', 'horizontal');
+        min-width: mixins.css-variable('carousel', 'size', 'indicator-hit', 'horizontal');
+        height: 24px;
+
+        #{mixins.e('carousel', 'indicator-mark')} {
+          background: mixins.css-variable('carousel', 'color', 'indicator', 'outside');
+        }
+
+        /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+        &:hover #{mixins.e('carousel', 'indicator-mark')},
+        /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+        &:focus-visible #{mixins.e('carousel', 'indicator-mark')},
+        /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+        &.is-active #{mixins.e('carousel', 'indicator-mark')} {
+          background: mixins.css-variable('carousel', 'color', 'indicator', 'outside', 'active');
+        }
+      }
+    }
+
+    @include mixins.e('indicator-slider-track') {
+      background: mixins.css-variable('carousel', 'color', 'indicator', 'outside');
+    }
+
+    @include mixins.e('indicator-slider-mark') {
+      background: mixins.css-variable('carousel', 'color', 'indicator', 'outside', 'active');
+    }
+  }
+
+  @include mixins.m('indicator-position-bottom') {
+    @include mixins.e('indicators') {
+      inset: auto 0 0;
+      flex-direction: row;
+      align-items: flex-end;
+      width: auto;
+      height: mixins.css-variable('carousel', 'size', 'indicator-wrapper');
+      padding: 0 0 3px;
+      background: linear-gradient(
+        180deg,
+        rgb(0, 0, 0, 0%) 13%,
+        mixins.css-variable('carousel', 'background', 'indicator-mask') 100%
+      );
+    }
+
+    @include mixins.e('indicator-trigger') {
+      width: mixins.css-variable('carousel', 'size', 'indicator-hit', 'horizontal');
+      height: 24px;
+    }
+
+    @include mixins.e('indicator') {
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &.h-button {
+        width: mixins.css-variable('carousel', 'size', 'indicator-hit', 'horizontal');
+        min-width: mixins.css-variable('carousel', 'size', 'indicator-hit', 'horizontal');
+        height: 24px;
+      }
+    }
+  }
+
+  @include mixins.m('indicator-position-top') {
+    @include mixins.e('indicators') {
+      inset: 0 0 auto;
+      flex-direction: row;
+      align-items: flex-start;
+      width: auto;
+      height: mixins.css-variable('carousel', 'size', 'indicator-wrapper');
+      padding: 3px 0 0;
+      background: linear-gradient(
+        180deg,
+        mixins.css-variable('carousel', 'background', 'indicator-mask') 0%,
+        rgb(0, 0, 0, 0%) 87%
+      );
+    }
+
+    @include mixins.e('indicator-trigger') {
+      width: mixins.css-variable('carousel', 'size', 'indicator-hit', 'horizontal');
+      height: 24px;
+    }
+
+    @include mixins.e('indicator') {
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &.h-button {
+        width: mixins.css-variable('carousel', 'size', 'indicator-hit', 'horizontal');
+        min-width: mixins.css-variable('carousel', 'size', 'indicator-hit', 'horizontal');
+        height: 24px;
+      }
+    }
+  }
+
+  @include mixins.m('indicator-position-left') {
+    @include mixins.e('indicators') {
+      inset: 0 auto 0 0;
+      flex-direction: column;
+      align-items: flex-start;
+      width: mixins.css-variable('carousel', 'size', 'indicator-wrapper');
+      height: auto;
+      padding: 0 0 0 3px;
+      background: linear-gradient(
+        90deg,
+        mixins.css-variable('carousel', 'background', 'indicator-mask') 0%,
+        rgb(0, 0, 0, 0%) 87%
+      );
+    }
+
+    @include mixins.e('indicator-trigger') {
+      width: 24px;
+      height: mixins.css-variable('carousel', 'size', 'indicator-hit', 'horizontal');
+    }
+
+    @include mixins.e('indicator') {
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &.h-button {
+        width: 24px;
+        min-width: 24px;
+        height: mixins.css-variable('carousel', 'size', 'indicator-hit', 'horizontal');
+      }
+    }
+  }
+
+  @include mixins.m('indicator-position-right') {
+    @include mixins.e('indicators') {
+      inset: 0 0 0 auto;
+      flex-direction: column;
+      align-items: flex-end;
+      width: mixins.css-variable('carousel', 'size', 'indicator-wrapper');
+      height: auto;
+      padding: 0 3px 0 0;
+      background: linear-gradient(
+        90deg,
+        rgb(0, 0, 0, 0%) 13%,
+        mixins.css-variable('carousel', 'background', 'indicator-mask') 100%
+      );
+    }
+
+    @include mixins.e('indicator-trigger') {
+      width: 24px;
+      height: mixins.css-variable('carousel', 'size', 'indicator-hit', 'horizontal');
+    }
+
+    @include mixins.e('indicator') {
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &.h-button {
+        width: 24px;
+        min-width: 24px;
+        height: mixins.css-variable('carousel', 'size', 'indicator-hit', 'horizontal');
+      }
+    }
+  }
+
+  /* stylelint-disable scss/operator-no-newline-after */
+  @include mixins.parallel-modifier('horizontal', 'indicator-position-left') {
+    @include mixins.e('arrow') {
+      @include mixins.m('previous') {
+        left: calc(
+          #{mixins.css-variable('carousel', 'size', 'indicator-wrapper')} +
+            #{mixins.css-variable('carousel', 'spacing', 'arrow', 'offset')}
+        );
+      }
+    }
+  }
+
+  @include mixins.parallel-modifier('horizontal', 'indicator-position-right') {
+    @include mixins.e('arrow') {
+      @include mixins.m('next') {
+        right: calc(
+          #{mixins.css-variable('carousel', 'size', 'indicator-wrapper')} +
+            #{mixins.css-variable('carousel', 'spacing', 'arrow', 'offset')}
+        );
+      }
+    }
+  }
+  /* stylelint-enable scss/operator-no-newline-after */
+
+  @include mixins.m('indicator-position-outer-right') {
+    @include mixins.e('indicators') {
+      inset: 0 0 0 auto;
+      flex-direction: column;
+      align-items: center;
+      width: mixins.css-variable('carousel', 'size', 'outer-right-wrapper');
+      height: auto;
+      padding: 0;
+      background: none;
+    }
+
+    @include mixins.e('indicator-trigger') {
+      width: 20px;
+      height: mixins.css-variable('carousel', 'size', 'indicator-hit', 'horizontal');
+    }
+
+    @include mixins.e('indicator') {
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &.h-button {
+        width: 20px;
+        min-width: 20px;
+        height: mixins.css-variable('carousel', 'size', 'indicator-hit', 'horizontal');
+
+        #{mixins.e('carousel', 'indicator-mark')} {
+          background: mixins.css-variable('carousel', 'color', 'indicator', 'outside');
+        }
+
+        /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+        &:hover #{mixins.e('carousel', 'indicator-mark')},
+        /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+        &:focus-visible #{mixins.e('carousel', 'indicator-mark')},
+        /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+        &.is-active #{mixins.e('carousel', 'indicator-mark')} {
+          background: mixins.css-variable('carousel', 'color', 'indicator', 'outside', 'active');
+        }
+      }
+    }
+
+    @include mixins.e('indicator-slider-track') {
+      background: mixins.css-variable('carousel', 'color', 'indicator', 'outside');
+    }
+
+    @include mixins.e('indicator-slider-mark') {
+      background: mixins.css-variable('carousel', 'color', 'indicator', 'outside', 'active');
+    }
+  }
+
+  @include mixins.m('indicator-position-left', 'indicator-position-right') {
+    @include mixins.e('indicator-slider') {
+      width: 24px;
+      height: mixins.css-variable('carousel', 'size', 'indicator', 'slider', 'width');
+    }
+
+    @include mixins.e(('indicator-slider-track', 'indicator-slider-mark')) {
+      top: 0;
+      left: 50%;
+      width: mixins.css-variable('carousel', 'size', 'indicator', 'slider', 'height');
+      transform: translateX(-50%);
+    }
+
+    @include mixins.e('indicator-slider-track') {
+      height: 100%;
+    }
+
+    @include mixins.e('indicator-slider-mark') {
+      top: var(--h-carousel-indicator-slider-offset);
+      height: var(--h-carousel-indicator-slider-size);
+      transition: top mixins.css-variable('carousel', 'transition', 'control-duration');
+    }
+
+    @include mixins.e('indicator-slider-segment-trigger') {
+      top: var(--h-carousel-indicator-segment-offset);
+      bottom: auto;
+      left: 0;
+      width: 24px;
+      height: var(--h-carousel-indicator-segment-size);
+    }
+  }
+
+  @include mixins.m('indicator-position-outer-right') {
+    @include mixins.e('indicator-slider') {
+      width: mixins.css-variable('carousel', 'size', 'outer-right-wrapper');
+      height: mixins.css-variable('carousel', 'size', 'indicator', 'slider', 'width');
+    }
+
+    @include mixins.e(('indicator-slider-track', 'indicator-slider-mark')) {
+      top: 0;
+      left: 50%;
+      width: mixins.css-variable('carousel', 'size', 'indicator', 'slider', 'height');
+      transform: translateX(-50%);
+    }
+
+    @include mixins.e('indicator-slider-track') {
+      height: 100%;
+    }
+
+    @include mixins.e('indicator-slider-mark') {
+      top: var(--h-carousel-indicator-slider-offset);
+      height: var(--h-carousel-indicator-slider-size);
+      transition: top mixins.css-variable('carousel', 'transition', 'control-duration');
+    }
+
+    @include mixins.e('indicator-slider-segment-trigger') {
+      top: var(--h-carousel-indicator-segment-offset);
+      bottom: auto;
+      left: 0;
+      width: mixins.css-variable('carousel', 'size', 'outer-right-wrapper');
+      height: var(--h-carousel-indicator-segment-size);
+    }
+  }
+
+  @include mixins.parallel-modifier('indicator-line', 'indicator-position-bottom') {
+    @include mixins.e('indicators') {
+      padding-bottom: 2px;
+    }
+
+    @include mixins.e('indicator-trigger') {
+      width: 20px;
+    }
+
+    @include mixins.e('indicator') {
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &.h-button {
+        width: 20px;
+        min-width: 20px;
+      }
+    }
+  }
+
+  @include mixins.parallel-modifier('indicator-line', 'indicator-position-top') {
+    @include mixins.e('indicators') {
+      padding-top: 2px;
+    }
+
+    @include mixins.e('indicator-trigger') {
+      width: 20px;
+    }
+
+    @include mixins.e('indicator') {
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &.h-button {
+        width: 20px;
+        min-width: 20px;
+      }
+    }
+  }
+
+  @include mixins.parallel-modifier('indicator-line', 'indicator-position-left') {
+    @include mixins.e('indicators') {
+      padding-left: 2px;
+    }
+
+    @include mixins.e('indicator-trigger') {
+      width: 24px;
+      height: 20px;
+    }
+
+    @include mixins.e('indicator') {
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &.h-button {
+        width: 24px;
+        min-width: 24px;
+        height: 20px;
+      }
+    }
+
+    @include mixins.e('indicator-mark') {
+      width: mixins.css-variable('carousel', 'size', 'indicator', 'line', 'height');
+      height: mixins.css-variable('carousel', 'size', 'indicator', 'line', 'width');
+    }
+  }
+
+  @include mixins.parallel-modifier('indicator-line', 'indicator-position-right') {
+    @include mixins.e('indicators') {
+      padding-right: 2px;
+    }
+
+    @include mixins.e('indicator-trigger') {
+      width: 24px;
+      height: 20px;
+    }
+
+    @include mixins.e('indicator') {
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &.h-button {
+        width: 24px;
+        min-width: 24px;
+        height: 20px;
+      }
+    }
+
+    @include mixins.e('indicator-mark') {
+      width: mixins.css-variable('carousel', 'size', 'indicator', 'line', 'height');
+      height: mixins.css-variable('carousel', 'size', 'indicator', 'line', 'width');
+    }
+  }
+
+  @include mixins.parallel-modifier('indicator-line', 'indicator-position-outer-right') {
+    @include mixins.e('indicator-trigger') {
+      width: 20px;
+      height: 20px;
+    }
+
+    @include mixins.e('indicator') {
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &.h-button {
+        width: 20px;
+        min-width: 20px;
+        height: 20px;
+      }
+    }
+
+    @include mixins.e('indicator-mark') {
+      width: mixins.css-variable('carousel', 'size', 'indicator', 'line', 'height');
+      height: mixins.css-variable('carousel', 'size', 'indicator', 'line', 'width');
+    }
+  }
+
+  @include mixins.parallel-modifier('indicator-line', 'indicator-position-outer') {
+    @include mixins.e('indicators') {
+      padding-top: 6px;
+    }
+
+    @include mixins.e('indicator-trigger') {
+      width: 20px;
+    }
+
+    @include mixins.e('indicator') {
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &.h-button {
+        width: 20px;
+        min-width: 20px;
+      }
+    }
+  }
+
+  @include mixins.parallel-modifier('indicator-slider', 'indicator-position-outer') {
+    @include mixins.e('indicators') {
+      padding-top: 2px;
+    }
+  }
+
+  @include mixins.parallel-modifier('indicator-slider', 'indicator-position-bottom') {
+    @include mixins.e('indicators') {
+      padding-bottom: 2px;
+    }
+  }
+
+  @include mixins.parallel-modifier('indicator-slider', 'indicator-position-top') {
+    @include mixins.e('indicators') {
+      padding-top: 2px;
+    }
+  }
+
+  @include mixins.parallel-modifier('indicator-slider', 'indicator-position-left') {
+    @include mixins.e('indicators') {
+      padding-left: 2px;
+    }
+  }
+
+  @include mixins.parallel-modifier('indicator-slider', 'indicator-position-right') {
+    @include mixins.e('indicators') {
+      padding-right: 2px;
+    }
+  }
+
+  @include mixins.m('arrow-hover') {
+    @include mixins.e('arrow') {
+      opacity: 0;
+    }
+
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+    &:hover,
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+    &:focus-within {
+      @include mixins.e('arrow') {
+        opacity: 1;
+      }
+    }
   }
 }
 
@@ -224,6 +1044,11 @@
       mixins.css-variable('carousel', 'transition', 'timing-function');
   will-change: transform, opacity;
 
+  @include mixins.is('active') {
+    z-index: 1;
+  }
+
+  /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
   &:not(.is-active) {
     pointer-events: none;
   }
@@ -233,8 +1058,331 @@
   }
 }
 
+@keyframes h-carousel-slide-x-in {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes h-carousel-slide-x-out {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes h-carousel-slide-x-in-reverse {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes h-carousel-slide-x-out-reverse {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes h-carousel-slide-y-in {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes h-carousel-slide-y-out {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes h-carousel-slide-y-in-reverse {
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes h-carousel-slide-y-out-reverse {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes h-carousel-card-bottom-to-middle {
+  from {
+    opacity: 0;
+    transform: translateX(0) translateZ(mixins.css-variable('carousel', 'depth', 'card', 'hidden'));
+  }
+
+  to {
+    opacity: mixins.css-variable('carousel', 'opacity', 'card', 'preview');
+    transform: translateX(0) translateZ(mixins.css-variable('carousel', 'depth', 'card', 'preview'));
+  }
+}
+
+@keyframes h-carousel-card-middle-to-bottom {
+  from {
+    opacity: mixins.css-variable('carousel', 'opacity', 'card', 'preview');
+    transform: translateX(-100%)
+      translateZ(mixins.css-variable('carousel', 'depth', 'card', 'preview'));
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(-100%)
+      translateZ(mixins.css-variable('carousel', 'depth', 'card', 'hidden'));
+  }
+}
+
+@keyframes h-carousel-card-top-to-middle {
+  from {
+    opacity: 1;
+    transform: translateX(-50%) translateZ(0);
+  }
+
+  to {
+    opacity: mixins.css-variable('carousel', 'opacity', 'card', 'preview');
+    transform: translateX(-100%)
+      translateZ(mixins.css-variable('carousel', 'depth', 'card', 'preview'));
+  }
+}
+
+@keyframes h-carousel-card-middle-to-top {
+  from {
+    opacity: mixins.css-variable('carousel', 'opacity', 'card', 'preview');
+    transform: translateX(0) translateZ(mixins.css-variable('carousel', 'depth', 'card', 'preview'));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateZ(0);
+  }
+}
+
+@keyframes h-carousel-card-bottom-to-middle-reverse {
+  from {
+    opacity: 0;
+    transform: translateX(-100%)
+      translateZ(mixins.css-variable('carousel', 'depth', 'card', 'hidden'));
+  }
+
+  to {
+    opacity: mixins.css-variable('carousel', 'opacity', 'card', 'preview');
+    transform: translateX(-100%)
+      translateZ(mixins.css-variable('carousel', 'depth', 'card', 'preview'));
+  }
+}
+
+@keyframes h-carousel-card-middle-to-bottom-reverse {
+  from {
+    opacity: mixins.css-variable('carousel', 'opacity', 'card', 'preview');
+    transform: translateX(0) translateZ(mixins.css-variable('carousel', 'depth', 'card', 'preview'));
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(0) translateZ(mixins.css-variable('carousel', 'depth', 'card', 'hidden'));
+  }
+}
+
+@keyframes h-carousel-card-top-to-middle-reverse {
+  from {
+    opacity: 1;
+    transform: translateX(-50%) translateZ(0);
+  }
+
+  to {
+    opacity: mixins.css-variable('carousel', 'opacity', 'card', 'preview');
+    transform: translateX(0) translateZ(mixins.css-variable('carousel', 'depth', 'card', 'preview'));
+  }
+}
+
+@keyframes h-carousel-card-middle-to-top-reverse {
+  from {
+    opacity: mixins.css-variable('carousel', 'opacity', 'card', 'preview');
+    transform: translateX(-100%)
+      translateZ(mixins.css-variable('carousel', 'depth', 'card', 'preview'));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateZ(0);
+  }
+}
+
+@keyframes h-carousel-card-right-to-middle {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(0)
+      translateZ(mixins.css-variable('carousel', 'depth', 'card', 'hidden'));
+  }
+
+  to {
+    opacity: mixins.css-variable('carousel', 'opacity', 'card', 'preview');
+    transform: translateX(-50%) translateY(0)
+      translateZ(mixins.css-variable('carousel', 'depth', 'card', 'preview'));
+  }
+}
+
+@keyframes h-carousel-card-middle-to-right {
+  from {
+    opacity: mixins.css-variable('carousel', 'opacity', 'card', 'preview');
+    transform: translateX(-50%) translateY(-100%)
+      translateZ(mixins.css-variable('carousel', 'depth', 'card', 'preview'));
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-100%)
+      translateZ(mixins.css-variable('carousel', 'depth', 'card', 'hidden'));
+  }
+}
+
+@keyframes h-carousel-card-left-to-middle {
+  from {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-50%) translateZ(0);
+  }
+
+  to {
+    opacity: mixins.css-variable('carousel', 'opacity', 'card', 'preview');
+    transform: translateX(-50%) translateY(-100%)
+      translateZ(mixins.css-variable('carousel', 'depth', 'card', 'preview'));
+  }
+}
+
+@keyframes h-carousel-card-middle-to-left {
+  from {
+    opacity: mixins.css-variable('carousel', 'opacity', 'card', 'preview');
+    transform: translateX(-50%) translateY(0)
+      translateZ(mixins.css-variable('carousel', 'depth', 'card', 'preview'));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-50%) translateZ(0);
+  }
+}
+
+@keyframes h-carousel-card-right-to-middle-reverse {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-100%)
+      translateZ(mixins.css-variable('carousel', 'depth', 'card', 'hidden'));
+  }
+
+  to {
+    opacity: mixins.css-variable('carousel', 'opacity', 'card', 'preview');
+    transform: translateX(-50%) translateY(-100%)
+      translateZ(mixins.css-variable('carousel', 'depth', 'card', 'preview'));
+  }
+}
+
+@keyframes h-carousel-card-middle-to-right-reverse {
+  from {
+    opacity: mixins.css-variable('carousel', 'opacity', 'card', 'preview');
+    transform: translateX(-50%) translateY(0)
+      translateZ(mixins.css-variable('carousel', 'depth', 'card', 'preview'));
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(-50%) translateY(0)
+      translateZ(mixins.css-variable('carousel', 'depth', 'card', 'hidden'));
+  }
+}
+
+@keyframes h-carousel-card-left-to-middle-reverse {
+  from {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-50%) translateZ(0);
+  }
+
+  to {
+    opacity: mixins.css-variable('carousel', 'opacity', 'card', 'preview');
+    transform: translateX(-50%) translateY(0)
+      translateZ(mixins.css-variable('carousel', 'depth', 'card', 'preview'));
+  }
+}
+
+@keyframes h-carousel-card-middle-to-left-reverse {
+  from {
+    opacity: mixins.css-variable('carousel', 'opacity', 'card', 'preview');
+    transform: translateX(-50%) translateY(-100%)
+      translateZ(mixins.css-variable('carousel', 'depth', 'card', 'preview'));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-50%) translateZ(0);
+  }
+}
+
+:root.#{mixins.$dark-mode-class-name} {
+  @include mixins.b('carousel', false) {
+    #{mixins.css-variable-name('carousel', 'background', 'control')}: mixins.css-variable(
+      'carousel',
+      'background',
+      'control',
+      'dark'
+    );
+    #{mixins.css-variable-name('carousel', 'background', 'control', 'hover')}: mixins.css-variable(
+      'carousel',
+      'background',
+      'control',
+      'dark',
+      'hover'
+    );
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   @include mixins.b('carousel-item') {
     transition-duration: 1ms;
+    animation-duration: 1ms;
+  }
+
+  @include mixins.b('carousel') {
+    @include mixins.m('slide') {
+      @include mixins.nested('carousel-item') {
+        animation-duration: 1ms;
+      }
+    }
+
+    @include mixins.m('card') {
+      @include mixins.nested('carousel-item') {
+        animation-duration: 1ms;
+      }
+    }
   }
 }

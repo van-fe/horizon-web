@@ -81,6 +81,31 @@ export default class UploadHelper extends UploadHelperOptions {
     }
   }
 
+  protected releaseUploadFile(file: HUploadFileType) {
+    this.removeFileFromReadyUploadFilesQueue(file);
+    this.removeFromUploadingQueue(file);
+
+    const multipartHelper = this.multipartUploadHelpers.get(file.uuid);
+    multipartHelper?.pause();
+    this.multipartUploadHelpers.delete(file.uuid);
+
+    this.xhrFileMapping.get(file.uuid)?.abort();
+    this.xhrFileMapping.delete(file.uuid);
+  }
+
+  protected releaseAllUploadFiles() {
+    this.multipartUploadHelpers.forEach(helper => helper.pause());
+    this.multipartUploadHelpers.clear();
+    this.xhrFileMapping.forEach(xhr => xhr.abort());
+    this.xhrFileMapping.clear();
+    this.readyUploadFilesQueue = [];
+    this.uploadingFilesQueue = [];
+  }
+
+  protected continueReadyUploads() {
+    void this.uploadFileFromQueue();
+  }
+
   private async onUploadSuccess(file: HUploadFileType, response: string) {
     let uploadUrl: string | undefined;
 
@@ -130,7 +155,7 @@ export default class UploadHelper extends UploadHelperOptions {
     }
 
     this.xhrFileMapping.delete(file.uuid);
-    if (file.status === HUploadFileStatusEnum.Success) {
+    if (file.status === HUploadFileStatusEnum.Success || !this._fileList.value.has(file)) {
       this.multipartUploadHelpers.delete(file.uuid);
     }
 

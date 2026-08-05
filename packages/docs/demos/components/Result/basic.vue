@@ -1,19 +1,10 @@
-<script setup lang="ts">
-import { $alert } from '@aurora/horizon-web';
-
-function onPrimaryClick() {
-  $alert('点击了主按钮', '提示');
-}
-function onSecondaryClick() {
-  $alert('点击了次按钮', '提示');
-}
-</script>
-
 <template>
-  <h-result
-    title="这是一条成功信息"
-    subtitle="这是一段相关的描述文案"
-    @primaryClick="onPrimaryClick"
-    @secondaryClick="onSecondaryClick"
-  />
+  <section class="docs-demo">
+    <h-result
+      title="Deployment complete"
+      subtitle="Horizon Web 3.8 is live in the production environment."
+      primary-button-text="View release"
+      secondary-button-text="Back to deployments"
+    />
+  </section>
 </template>

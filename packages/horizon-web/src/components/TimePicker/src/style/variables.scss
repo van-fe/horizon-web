@@ -46,6 +46,6 @@ $values: (
     ),
   ),
   transition: (
-    color-behavior: mixins.css-variable('transition', 'color-behavior'),
+    color-behavior: mixins.css-variable('transition', 'color', 'behavior'),
   ),
 );

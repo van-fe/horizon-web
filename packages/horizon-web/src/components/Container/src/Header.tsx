@@ -7,6 +7,8 @@ import { useHeaderSlots } from './composables/useSlots';
 
 export default defineComponent({
   name: `${useNamespace()}Header`,
+  desc: "页面布局中的顶部容器",
+  descLocales: { en: "A header region within a page layout." },
   props: useHeaderProps,
   slots: useHeaderSlots,
   setup(props, { slots }: HorizonWebSetupContext<{}, HeaderSlots>) {

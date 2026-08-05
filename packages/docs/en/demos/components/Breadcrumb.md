@@ -1,31 +1,49 @@
+Breadcrumb communicates the current page's place in a hierarchy and works best for paths with at least two levels that users may revisit.
+
 ## Basic Usage
+
+Use `texts` for a concise path and `title` to emphasize the final item.
+
 :::demo components/Breadcrumb/basic.vue :::
 
-## Size Settings
-You can configure `medium(default)` and `small` to control the size, or specifically set the size for `BreadcrumbItem`
+## Sizes
+
+`medium` suits page-level navigation, while `small` fits cards and compact panels.
+
 :::demo components/Breadcrumb/size.vue :::
 
-## Jump Link
-You can allow jumping by configuring `to` or `replace`
+## Router Navigation
+
+Items with `to` use Vue Router. Set `replace` when navigation should not add a history entry.
+
 :::demo components/Breadcrumb/link-mode.vue :::
 
-## Collapse Mode
-Configure `display-type` to control the collapse mode
+## Width and Collapse
 
-`full`: Display all, if it exceeds the parent width, it will wrap
+`full` wraps, while `ellipsis` collects overflow into a menu. When writing `h-breadcrumb-item` nodes manually, give each a stable, unique `key`.
 
-`ellipsis`: Ellipsis display, if it exceeds the parent width, elements starting from the second one will be collapsed until it does not exceed the parent width
-
-**Note that when using the `ellipsis` display mode and rendering with `h-breadcrumb-item`, you must set a unique `key` for each `h-breadcrumb-item`, otherwise the rendered content may be incorrect**
 :::demo components/Breadcrumb/collapse.vue :::
 
-## Special Style
-`Horizon-web` design specification defines the following style rules
+## Long Text and Current Page
+
+Long items truncate automatically, and `title` emphasizes the current page.
+
 :::demo components/Breadcrumb/special-style.vue :::
 
-## Custom Divider
+## Custom Separator
+
+`separator` accepts text or a component, and the `separator` slot supports custom markup.
+
 :::demo components/Breadcrumb/custom-divider.vue :::
 
-## Custom Item Content
-You can directly use the `BreadcrumbItem` component to define content
+## Custom Item
+
+Use `h-breadcrumb-item` to compose compact interactions such as a team switcher into the path.
+
 :::demo components/Breadcrumb/custom-item.vue :::
+
+## Composed Content and Per-item Separators
+
+The default item slot and item-level `separator` slot can combine status icons with distinct separator treatments.
+
+:::demo components/Breadcrumb/custom.vue :::

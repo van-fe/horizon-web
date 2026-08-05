@@ -1,49 +1,24 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+import { dayjs } from '@aurora/horizon-web';
+
+const value = ref(dayjs().add(1, 'day'));
+</script>
+
 <template>
-  <h-grid :gap="12">
-    <h-grid-item :span="24">
-      <h-date-picker
-        v-model="value"
-        type="date"
-        :show-popover-content-only="true"
-        @update:modelValue="onUpdate"
-        @change="onChange"
-        @pick="onPick"
-      />
-    </h-grid-item>
-    <h-grid-item :span="24">
-      <h-date-picker
-        v-model="value2"
-        type="date-range"
-        :show-popover-content-only="true"
-        @update:modelValue="onUpdate"
-        @change="onChange"
-        @pick="onPick"
-      />
-    </h-grid-item>
-  </h-grid>
+  <section class="date-picker-inline-panel">
+    <h-date-picker v-model="value" type="date" show-popover-content-only />
+  </section>
 </template>
 
-<script setup lang="ts">
-import { onMounted, ref } from 'vue';
-
-const value = ref();
-const value2 = ref('');
-
-function onUpdate(val: unknown) {
-  console.info('update: ', val);
+<style scoped>
+.date-picker-inline-panel {
+  max-inline-size: 360px;
 }
 
-function onChange(val: unknown) {
-  console.info('change: ', val);
+@media (max-width: 390px) {
+  .date-picker-inline-panel {
+    inline-size: 100%;
+  }
 }
-
-function onPick(val: unknown) {
-  console.info('pick: ', val);
-}
-
-onMounted(() => {
-  setTimeout(() => {
-    value.value = new Date();
-  }, 1000);
-});
-</script>
+</style>

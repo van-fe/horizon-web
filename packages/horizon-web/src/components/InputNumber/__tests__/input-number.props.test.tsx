@@ -18,6 +18,8 @@ describe('InputNumber.tsx props', () => {
     const wrapper = mount(() => <HInputNumber v-model={modelValue.value} />);
     const input = wrapper.find('input');
 
+    expect(input.attributes()).toHaveProperty('data-focus-visible-proxy');
+
     await input.setValue('12');
 
     expect(modelValue.value).eq(12);

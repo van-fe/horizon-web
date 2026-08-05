@@ -1,36 +1,63 @@
-<template>
-  <h-form label-position="left">
-    <h-form-item label="size">
-      <h-radio-group v-model="size">
-        <h-radio value="mini"></h-radio>
-        <h-radio value="small"></h-radio>
-        <h-radio value="medium"></h-radio>
-        <h-radio value="large"></h-radio>
-      </h-radio-group>
-    </h-form-item>
-  </h-form>
-  <h-table :data="data" :size="size">
-    <h-table-column title="Name" field="name" />
-    <h-table-column title="Age" field="age" />
-    <h-table-column title="Address" field="address" />
-  </h-table>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
 
-interface TableData {
-  name: string;
-  age: number;
-  address: string;
+type TableSize = 'mini' | 'small' | 'medium' | 'large';
+
+const size = ref<TableSize>('medium');
+const densityOptions: Array<{ key: TableSize; label: string }> = [
+  { key: 'mini', label: 'Mini' },
+  { key: 'small', label: 'Small' },
+  { key: 'medium', label: 'Medium' },
+  { key: 'large', label: 'Large' },
+];
+const deployments = [
+  { service: 'Identity API', environment: 'Production', version: 'v4.18.2' },
+  { service: 'Billing worker', environment: 'Production', version: 'v2.9.0' },
+  { service: 'Search indexer', environment: 'Staging', version: 'v7.4.1' },
+  { service: 'Email gateway', environment: 'Staging', version: 'v3.12.6' },
+];
+</script>
+
+<template>
+  <div class="table-size-demo">
+    <label>
+      <span>Table size</span>
+      <h-segmented v-model:active-key="size" size="small" block>
+        <h-segmented-item
+          v-for="option in densityOptions"
+          :key="option.key"
+          :value="option.key"
+          :label="option.label"
+        />
+      </h-segmented>
+    </label>
+
+    <h-table :data="deployments" :size="size" row-key="service" stripe>
+      <h-table-column title="Service" field="service" min-width="160" />
+      <h-table-column title="Environment" field="environment" min-width="140" />
+      <h-table-column title="Version" field="version" width="110" />
+    </h-table>
+  </div>
+</template>
+
+<style scoped>
+.table-size-demo,
+.table-size-demo label {
+  display: grid;
+  min-width: 0;
+  gap: var(--h-spacing-3);
 }
 
-const size = ref('medium');
+.table-size-demo {
+  gap: var(--h-spacing-4);
+}
 
-const data = ref<TableData[]>([
-  { name: 'Jon', age: 32, address: 'Shanghai' },
-  { name: 'Jacob', age: 16, address: 'Shenzhen' },
-  { name: 'Wang', age: 22, address: 'Hangzhou' },
-  { name: 'Alice', age: 26, address: 'Beijing' },
-]);
-</script>
+.table-size-demo label {
+  max-width: 420px;
+}
+
+.table-size-demo label > span {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+</style>

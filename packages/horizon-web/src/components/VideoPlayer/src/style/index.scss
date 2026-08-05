@@ -16,7 +16,7 @@
   isolation: isolate;
 
   @at-root #{function.b('video-player')}:focus-visible {
-    box-shadow: 0 0 0 2px mixins.css-variable('border-brand-default');
+    @include mixins.focus-ring;
   }
 
   @include mixins.e('video') {
@@ -60,8 +60,7 @@
     }
 
     @at-root #{function.e('video-player', 'center-play')}:focus-visible {
-      outline: 2px solid mixins.css-variable('border-brand-default');
-      outline-offset: 3px;
+      @include mixins.focus-ring;
     }
   }
 
@@ -154,6 +153,7 @@
     color: inherit;
     background: transparent;
     border: 0;
+    border-radius: mixins.css-variable('radius-m');
     box-shadow: none;
 
     @at-root #{function.e('video-player', 'icon-button')}:hover {
@@ -161,7 +161,7 @@
     }
 
     @at-root #{function.e('video-player', 'icon-button')}:focus-visible {
-      outline: 2px solid mixins.css-variable('border-brand-default');
+      @include mixins.focus-ring(mixins.css-variable('radius-m'));
     }
   }
 

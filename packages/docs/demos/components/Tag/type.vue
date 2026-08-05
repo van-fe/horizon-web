@@ -1,17 +1,17 @@
 <template>
-  <h-grid :gap="12">
-    <h-grid-item :span="24">
-      <h-tag :clickable="false">Default</h-tag>
-      <h-tag :clickable="false" type="success">Success</h-tag>
-      <h-tag :clickable="false" type="info">Info</h-tag>
-      <h-tag :clickable="false" type="warning">Warning</h-tag>
-      <h-tag :clickable="false" type="error">Error</h-tag>
-    </h-grid-item>
-  </h-grid>
+  <div class="tag-row">
+    <h-tag :clickable="false">Default</h-tag>
+    <h-tag type="info" :clickable="false">Info</h-tag>
+    <h-tag type="success" :clickable="false">Success</h-tag>
+    <h-tag type="warning" :clickable="false">Warning</h-tag>
+    <h-tag type="error" :clickable="false">Error</h-tag>
+  </div>
 </template>
 
-<script setup lang="ts">
-</script>
-
 <style scoped>
+.tag-row {
+  display: flex;
+  gap: var(--h-spacing-3);
+  flex-wrap: wrap;
+}
 </style>

@@ -2,11 +2,10 @@
 :::demo components/Pagination/basic.vue :::
 
 ## Configure Maximum Page Button Count
-Control the maximum number of page buttons through `pager-count`
 :::demo components/Pagination/max-buttons-amount.vue :::
 
 ## Whether to Display Range Value
-Set `show-total` to control whether to display range value
+Set `show-range` to display the data range of the current page.
 :::demo components/Pagination/show-range.vue :::
 
 ## Hide Pagination When Only One Page

@@ -16,6 +16,8 @@ import useSize from '~/utils/useSize';
 
 export default defineComponent({
   name: `${useNamespace()}CheckboxGroup`,
+  desc: "管理一组多选项的选中值",
+  descLocales: { en: "Manages the selected values of a checkbox collection." },
   props: useCheckboxGroupProps,
   emits: useCheckboxEmits,
   slots: useCheckboxGroupSlots,

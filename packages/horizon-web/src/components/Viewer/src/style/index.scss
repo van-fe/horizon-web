@@ -127,8 +127,14 @@
       height: mixins.css-variable('viewer', 'size', 'toolbar-button');
       color: mixins.css-variable('viewer', 'color', 'toolbar');
       background: mixins.css-variable('viewer', 'background', 'toolbar');
-      border-radius: mixins.css-variable('viewer', 'border-radius', 'toolbar');
       outline: none;
+      border-radius: mixins.css-variable('viewer', 'border-radius', 'toolbar');
+
+      &:focus-visible {
+        @include mixins.focus-ring-inset(
+          mixins.css-variable('viewer', 'border-radius', 'toolbar')
+        );
+      }
 
       &:hover {
         background: mixins.css-variable('viewer', 'background', 'toolbar-button', 'hover');

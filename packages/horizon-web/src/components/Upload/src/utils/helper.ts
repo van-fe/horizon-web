@@ -4,6 +4,65 @@ import type { HUploadFileType, HUploadRawFileType, HUploadUserFile } from './fil
 import { HUploadFileStatusEnum, fileTypeMapping, HUploadFileTypeEnum } from './fileDefines';
 import { nanoid } from 'nanoid';
 import { warn } from '~/utils/useLog';
+import { toRaw } from 'vue';
+
+interface OwnedObjectUrlRecord {
+  urls: Set<string>;
+  owners: WeakSet<object>;
+  ownerCount: number;
+}
+
+const ownedObjectUrls = new WeakMap<HUploadFileType, OwnedObjectUrlRecord>();
+
+function getOwnedObjectUrlRecord(file: HUploadFileType) {
+  file = toRaw(file);
+  const current = ownedObjectUrls.get(file);
+  if (current) return current;
+
+  const record: OwnedObjectUrlRecord = {
+    urls: new Set(),
+    owners: new WeakSet(),
+    ownerCount: 0,
+  };
+  ownedObjectUrls.set(file, record);
+  return record;
+}
+
+function revokeOwnedObjectUrlRecord(file: HUploadFileType, record: OwnedObjectUrlRecord) {
+  file = toRaw(file);
+  if (typeof URL.revokeObjectURL === 'function') {
+    record.urls.forEach(url => URL.revokeObjectURL(url));
+  }
+  if (file.blobUrl && record.urls.has(file.blobUrl)) file.blobUrl = undefined;
+  if (file.posterUrl && record.urls.has(file.posterUrl)) file.posterUrl = undefined;
+  ownedObjectUrls.delete(file);
+}
+
+export function rememberUploadObjectUrl(file: HUploadFileType, url: string) {
+  getOwnedObjectUrlRecord(file).urls.add(url);
+}
+
+export function retainUploadObjectUrls(file: HUploadFileType, owner: object) {
+  const record = getOwnedObjectUrlRecord(file);
+  if (record.owners.has(owner)) return;
+  record.owners.add(owner);
+  record.ownerCount += 1;
+}
+
+export function releaseUploadObjectUrls(file: HUploadFileType, owner: object) {
+  file = toRaw(file);
+  const record = ownedObjectUrls.get(file);
+  if (!record?.owners.has(owner)) return;
+  record.owners.delete(owner);
+  record.ownerCount -= 1;
+  if (record.ownerCount === 0) revokeOwnedObjectUrlRecord(file, record);
+}
+
+export function discardUploadObjectUrls(file: HUploadFileType) {
+  file = toRaw(file);
+  const record = ownedObjectUrls.get(file);
+  if (record?.ownerCount === 0) revokeOwnedObjectUrlRecord(file, record);
+}
 
 export function isUploadUserFile(data: unknown): data is HUploadUserFile {
   return isObject(data) && 'name' in data && 'url' in data;
@@ -152,7 +211,7 @@ export function durationFormat(time: number | undefined) {
 export async function getAndSetFileSize(file: HUploadUserFile) {
   try {
     file.size = await getRemoteUrlFileHeader(file.url);
-  } catch (e) {
+  } catch {
     warn('upload', `Cannot get file size from url: ${file.url}`);
   }
 }
@@ -175,7 +234,7 @@ export function transformSingleRawFileTypeToUploadFileType(target: HUploadRawFil
       status: target.url ? HUploadFileStatusEnum.Success : HUploadFileStatusEnum.New,
     };
   } else {
-    return {
+    const file: HUploadFileType = {
       name: target.name,
       type: getFileType(target.name),
       uuid: nanoid(),
@@ -186,5 +245,7 @@ export function transformSingleRawFileTypeToUploadFileType(target: HUploadRawFil
       blobUrl: URL.createObjectURL(target),
       raw: target,
     };
+    rememberUploadObjectUrl(file, file.blobUrl!);
+    return file;
   }
 }

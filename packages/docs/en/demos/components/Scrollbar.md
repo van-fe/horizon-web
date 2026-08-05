@@ -1,5 +1,4 @@
 ## Basic Usage
-By setting `height`, when the content height exceeds this height, a scrollbar will be displayed
 :::demo components/Scrollbar/basic.vue :::
 
 ## Size
@@ -27,5 +26,5 @@ Through the exposed `setScrollTop` and `setScrollLeft` methods, you can set the 
 :::demo components/Scrollbar/manual.vue :::
 
 ## Minimum Size
-Set `minSize` to ensure that when there is a lot of scroll content, the scrollbar can still be easily clicked
+Set `min-size` to keep the scrollbar easy to click even when the scrollable content is very long.
 :::demo components/Scrollbar/min-size.vue :::

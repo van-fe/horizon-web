@@ -1,28 +1,28 @@
-## Basic Usage
-Affix is fixed at the top of the page by default
+## Pin to the page top
 
-Affix uses `div` to wrap elements, so if you need to modify styles, you can directly set `style.display` to `inline-block` or other values
 
 :::demo components/Affix/basic.vue :::
 
-## Set offset
-If you want the affix to have a distance from the scroll container, you can specify `offset`
+## Top offset
+
+Use `offset` to reserve room for global navigation or a safe area. Numeric values are measured in pixels.
 
 :::demo components/Affix/offset.vue :::
 
-## Specify Container
-Affix listens to the scroll event of `document.body` by default. If you need to specify another one, you can set `target`
+## Custom scroll container
+
+Pass an element or selector through `target` and Affix will calculate its boundaries from that container. The demo uses a unique ID so multiple examples on the page cannot select one another.
 
 :::demo components/Affix/target.vue :::
 
-## Nested Scroll Container
-If the parent of the container where the affix is located can also scroll, without special settings, it cannot accurately ensure that the element is within the container
+## Nested scroll containers
 
-At this time, it is necessary to listen to the parent scroll event
+Affix listens to its own `target`. If an outer container also scrolls, call the exposed `updatePosition()` method from the outer scroll handler. The demo uses a Vue listener that is removed automatically on unmount.
 
 :::demo components/Affix/multiple-scroll-container.vue :::
 
-## Fixed Bottom
-You can set `position = 'bottom'` to fix the affix at the bottom
+## Pin to the bottom
+
+Set `position="bottom"` and combine it with `offset` for persistent submit or save actions. The pinned element still remains inside the target boundary.
 
 :::demo components/Affix/bottom.vue :::

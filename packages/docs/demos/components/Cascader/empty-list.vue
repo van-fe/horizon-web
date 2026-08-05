@@ -1,53 +1,28 @@
-<template>
-  <h-grid :gap="10">
-    <h-grid-item :span="6">
-      <div class="demo-title">默认</div>
-      <h-cascader v-model="currentVal1" :options="optionsWithEmpty" :to-body="false" />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">自定义空列表文案内容</div>
-      <h-cascader
-        v-model="currentVal1"
-        :options="optionsWithEmpty"
-        empty-text="没有对应的内容"
-        :to-body="false"
-      />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">自定义空列表展示</div>
-      <h-cascader v-model="currentVal1" :options="optionsWithEmpty" :to-body="false">
-        <template #empty>
-          <h-empty description="没有对应的内容" />
-        </template>
-      </h-cascader>
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
+import type { HCascaderOption } from '@aurora/horizon-web';
 import { ref } from 'vue';
 
-const currentVal1 = ref<string[]>([]);
-
-const optionsWithEmpty = [
+const value = ref<string[]>([]);
+const options: HCascaderOption[] = [
+  { value: 'archived', label: 'Archived workspaces', isLeaf: false },
   {
-    value: 'disciplines',
-    label: 'disciplines',
-    isLeaf: false,
-  },
-  {
-    value: 'navigation',
-    label: 'Navigation',
-    children: [
-      {
-        value: 'side nav',
-        label: 'Side Navigation',
-      },
-      {
-        value: 'top nav',
-        label: 'Top Navigation',
-      },
-    ],
+    value: 'active',
+    label: 'Active workspaces',
+    children: [{ value: 'horizon', label: 'Horizon release' }],
   },
 ];
 </script>
+
+<template>
+  <h-cascader
+    v-model="value"
+    aria-label="Workspace"
+    :options="options"
+    empty-text="No archived workspaces"
+    :to-body="false"
+  >
+    <template #empty>
+      <h-empty description="No archived workspaces to restore" />
+    </template>
+  </h-cascader>
+</template>

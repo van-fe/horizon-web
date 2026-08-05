@@ -1,59 +1,34 @@
 <template>
-  <h-grid align="center" :gap="12">
-    <h-grid-item :span="6">
-      <div class="demo-title">medium(default)</div>
-    </h-grid-item>
-    <h-grid-item :span="18">
-      <h-checkbox
-        v-for="item in checkboxOptions"
-        :key="item.key"
-        v-model="item.checked"
-        :label="item.label"
-        :border="true"
-        class="checkbox"
-        @change="selectCheckbox"
-      />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">large</div>
-    </h-grid-item>
-    <h-grid-item :span="18">
-      <h-checkbox
-        v-for="item in checkboxOptions"
-        :key="item.key"
-        v-model="item.checked"
-        :label="item.label"
-        :border="true"
-        class="checkbox"
-        size="large"
-        @change="selectCheckbox"
-      />
-    </h-grid-item>
-  </h-grid>
+  <div class="checkbox-border-demo">
+    <h-segmented v-model:active-key="size" size="small">
+      <h-segmented-item value="medium" label="Medium" />
+      <h-segmented-item value="large" label="Large" />
+    </h-segmented>
+    <div class="checkbox-border-demo__options">
+      <h-checkbox v-model="email" border :size="size">Email</h-checkbox>
+      <h-checkbox v-model="push" border :size="size">Push</h-checkbox>
+    </div>
+  </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { ref } from 'vue';
-const checkboxOptions = ref([
-  {
-    key: 1,
-    label: 'checked',
-    checked: true,
-  },
-  {
-    key: 2,
-    label: 'unchecked',
-    checked: false,
-  },
-]);
 
-const selectCheckbox = (val: boolean) => {
-  console.info('selectCheckbox ==> ', val);
-};
+const size = ref<'medium' | 'large'>('medium');
+const email = ref(true);
+const push = ref(false);
 </script>
 
 <style scoped>
-.checkbox + .checkbox {
-  margin-left: 12px;
+.checkbox-border-demo {
+  display: grid;
+  justify-items: start;
+  gap: var(--h-spacing-5);
+}
+
+.checkbox-border-demo__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--h-spacing-3);
 }
 </style>

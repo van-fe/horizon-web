@@ -3,7 +3,7 @@
 :::demo components/Dialog/demo1.vue :::
 
 ## 垂直位置
-默认情况下，对话框会垂直居中显示，你可以通过 `vertical-position` 调整为距离顶部一定距离显示。
+默认情况下，对话框会垂直居中显示，你可以通过 `top` 调整它与视口顶部的距离。
 :::demo components/Dialog/verticalPosition.vue :::
 
 ## 按钮设置
@@ -22,8 +22,8 @@
 当对话框内容过长时，仅内容部分会支持滚动。
 :::demo components/Dialog/demo5.vue :::
 
-## 渲染方式
-你可以通过传入 `display-type` 来控制对话框的渲染方式，`if` 表示按照 `v-if` 进行渲染，`show`（默认） 表示按照 `v-show` 进行渲染，二者区别可以参考 [v-if vs v-show](https://vuejs.org/guide/essentials/conditional.html#v-if-vs-v-show)。  
+## 对话框内表单
+对话框可以承载表单，并在确认前完成字段校验。
 :::demo components/Dialog/demo6.vue :::
 
 ## 自定义class

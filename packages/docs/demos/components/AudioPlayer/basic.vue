@@ -1,3 +1,10 @@
 <template>
-  <h-audio-player src="/aurora-background.mp4" waveform-source="mock" mock-seed="aurora-theme" />
+  <section class="docs-demo">
+    <h-audio-player
+      src="/aurora-background.mp4"
+      waveform-source="mock"
+      mock-seed="product-podcast-12"
+      aria-label="产品播客：从想法到可交付设计"
+    />
+  </section>
 </template>

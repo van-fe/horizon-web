@@ -11,7 +11,7 @@ import {
   watch,
 } from 'vue';
 import type { HorizonWebSetupContext } from '@aurora/utils';
-import { unrefElement } from '@vueuse/core';
+import { unrefElement, useResizeObserver } from '@vueuse/core';
 import {
   cls,
   ComponentClassBlock,
@@ -67,6 +67,8 @@ import useColumnManager from './hooks/useColumnManager';
 import type { TableBodyExposes } from './components/TableBody';
 import useState from './hooks/useState';
 import useDataProcessing from './hooks/useDataProcessing';
+import useSelectionFooter from './hooks/useSelectionFooter';
+import HButton from '~/components/Button/src/Button';
 
 export default defineComponent({
   name: `${useNamespace()}Table`,
@@ -92,6 +94,8 @@ export default defineComponent({
     const tableDomRef = ref<HTMLTableElement>();
     const headDomRef = ref<HTMLTableSectionElement>();
     const tableBodyRef = ref<TableBodyExposes>();
+    const selectionFooterDomRef = ref<HTMLElement>();
+    const selectionFooterHeight = ref(0);
     const expandedRows = ref(new Set<HTableRowKeyType>(props.expandRowKeys ?? []));
 
     const size = useSize(toRef(props, 'size'), 'medium');
@@ -154,7 +158,7 @@ export default defineComponent({
       refreshScrollbarSpacing,
       refreshLayout,
       firstHeaderRowHeight,
-    } = useLayout(analysisColumns, getFixedState);
+    } = useLayout(analysisColumns, getFixedState, selectionFooterHeight);
 
     const { wrapperDomRef, wrapperHeight } = useResizeListener(analysisColumns, [
       initialScrollState,
@@ -198,6 +202,30 @@ export default defineComponent({
       expandedRows,
       refreshLayout,
     });
+
+    const selectionFooter = useSelectionFooter(
+      computed(() => analysisColumns.value.flattenColumns),
+      dataProcessing.processedRows,
+    );
+
+    useResizeObserver(selectionFooterDomRef, entries => {
+      const nextHeight = entries[0]?.target.getBoundingClientRect().height ?? 0;
+
+      if (selectionFooterHeight.value === nextHeight) return;
+      selectionFooterHeight.value = nextHeight;
+      refreshLayout();
+    });
+
+    const selectionCountTexts = {
+      selectedCount: useLocaleLang('table.selectedCount', '{count} selected'),
+      currentSelectedCount: useLocaleLang(
+        'table.currentSelectedCount',
+        '{count} currently selected',
+      ),
+    };
+    const clearSelectionText = useLocaleLang('table.clearSelection', 'Clear');
+    const formatSelectionCount = (path: keyof typeof selectionCountTexts, count: number) =>
+      String(selectionCountTexts[path].value).replace('{count}', String(count));
 
     watch(
       [fixedStore, visibleStore],
@@ -281,7 +309,8 @@ export default defineComponent({
           classHelper.is(`border-${border.value}`, !!border.value),
           classHelper.is('hoverable', props.hoverable),
           classHelper.is('highlight-selected', props.highlightSelected),
-          classHelper.has('footer', props.showSummary),
+          classHelper.has('footer', props.showSummary || selectionFooter.visible.value),
+          classHelper.has('selection-footer', selectionFooter.visible.value),
           classHelper.has('column-manager', props.useColumnManager),
           classHelper.has('height', isDefined(props.height)),
           classHelper.has(
@@ -387,6 +416,52 @@ export default defineComponent({
               </div>
             )}
           {props.useColumnManager && columnManagerRender()}
+          {selectionFooter.scope.value && (
+            <div ref={selectionFooterDomRef} class={classHelper.e('selection-footer')}>
+              <div class={classHelper.em('selection-footer', 'prepend')}>
+                {slots['selection-footer-prepend']?.(selectionFooter.scope.value) ?? (
+                  <HButton
+                    link
+                    disabled={selectionFooter.scope.value.selectedCount === 0}
+                    onClick={selectionFooter.scope.value.clearSelection}
+                  >
+                    {clearSelectionText.value}
+                  </HButton>
+                )}
+              </div>
+              <div
+                class={classHelper.em('selection-footer', 'text')}
+                role="status"
+                aria-live="polite"
+              >
+                {slots['selection-footer-text']?.(selectionFooter.scope.value) ?? (
+                  <>
+                    <span class={classHelper.em('selection-footer', 'selected-count')}>
+                      {formatSelectionCount(
+                        'selectedCount',
+                        selectionFooter.scope.value.selectedCount,
+                      )}
+                    </span>
+                    <span
+                      class={classHelper.em('selection-footer', 'divider')}
+                      aria-hidden="true"
+                    />
+                    <span class={classHelper.em('selection-footer', 'current-selected-count')}>
+                      {formatSelectionCount(
+                        'currentSelectedCount',
+                        selectionFooter.scope.value.currentSelectedCount,
+                      )}
+                    </span>
+                  </>
+                )}
+              </div>
+              {slots['selection-footer-append'] && (
+                <div class={classHelper.em('selection-footer', 'append')}>
+                  {slots['selection-footer-append'](selectionFooter.scope.value)}
+                </div>
+              )}
+            </div>
+          )}
         </HScrollbar>
         <div class={classHelper.e('resizing-cursor-line')} style={cursorLineStyle.value} />
         {slots.append ? (

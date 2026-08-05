@@ -1,34 +1,23 @@
-<template>
-  <h-video-player
-    :sources="[
-      {
-        src: '/aurora-background.mp4',
-        type: 'video/mp4',
-      },
-    ]"
-    poster="/demo-assets/video-poster.svg"
-    @ready="ready"
-  />
-  <h-button class="mt-3 mr-2" @click="play">播放</h-button>
-  <h-button @click="pause">暂停</h-button>
-</template>
+<script setup lang="ts">
+import { ref } from 'vue';
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    const player = ref();
-    return {
-      ready: (playerInstance: any) => {
-        player.value = playerInstance;
-      },
-      play: () => {
-        player.value.play();
-      },
-      pause: () => {
-        player.value.pause();
-      },
-    };
-  },
-});
+interface PlayerExpose {
+  play: () => Promise<void>;
+  pause: () => void;
+  seek: (time: number) => void;
+}
+
+const player = ref<PlayerExpose>();
+const sources = [{ src: '/aurora-background.mp4', type: 'video/mp4' }];
 </script>
+
+<template>
+  <section class="docs-demo">
+    <h-video-player ref="player" :sources="sources" poster="/demo-assets/video-poster.svg" />
+    <div class="docs-demo__actions">
+      <h-button @click="player?.play()">Play</h-button>
+      <h-button @click="player?.pause()">Pause</h-button>
+      <h-button @click="player?.seek(0)">Restart</h-button>
+    </div>
+  </section>
+</template>

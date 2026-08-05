@@ -1,37 +1,41 @@
-<template>
-  <h-form label-position="left" label-vertical-align="middle" label-width="150px">
-    <h-form-item label="是否忽视父子关系">
-      <h-switch v-model="checkStrictly" :status="true" status-off-text="否" status-on-text="是" />
-    </h-form-item>
-  </h-form>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <div class="demo-title">最多勾选3个</div>
-      <h-tree-select
-        :tree-data="baseTreeData"
-        :multiple="true"
-        :multiple-limit="3"
-        :check-strictly="checkStrictly"
-        :to-body="false"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
+import type { HTreeNodeData } from '@aurora/horizon-web';
 
-const baseTreeData = ref([]);
-const checkStrictly = ref<boolean>(false);
-
-onMounted(() => {
-  fetch(new URL('/tree-data.json', import.meta.url).href)
-    .then(res => res.json())
-    .then(res => {
-      baseTreeData.value = res;
-    });
-});
+const limit = 3;
+const selectedValues = ref<Array<string | number>>(['us-east', 'eu-central']);
+const treeData: HTreeNodeData[] = [
+  {
+    value: 'americas',
+    label: 'Americas',
+    children: [
+      { value: 'us-east', label: 'US East · Virginia' },
+      { value: 'us-west', label: 'US West · Oregon' },
+      { value: 'ca-central', label: 'Canada Central · Toronto' },
+    ],
+  },
+  {
+    value: 'emea',
+    label: 'Europe & Middle East',
+    children: [
+      { value: 'eu-central', label: 'EU Central · Frankfurt' },
+      { value: 'eu-west', label: 'EU West · Dublin' },
+    ],
+  },
+];
 </script>
 
-<style scoped>
-</style>
+<template>
+  <div class="docs-demo">
+    <h-tree-select
+      v-model="selectedValues"
+      :tree-data="treeData"
+      multiple
+      :multiple-limit="limit"
+      collapse-tags
+      placeholder="Choose up to three regions"
+      :to-body="false"
+    />
+    <span aria-live="polite">{{ selectedValues.length }} / {{ limit }} selected</span>
+  </div>
+</template>

@@ -1,93 +1,46 @@
+<script setup lang="ts">
+import { computed, ref } from 'vue';
+
+const useMask = ref(true);
+const maskOption = computed(() => ({ enable: useMask.value }));
+</script>
+
 <template>
-  <div class="mb16">
-    <h-popover
-      class="mr16"
-      popper-class="mask_popover"
-      trigger="click"
-      placement="top"
-      :show-with-mask="maskOption"
-    >
-      <template #reference>
-        <h-button :plain="true">show with mask</h-button>
-      </template>
-      <template #popper>
-        <demo-content></demo-content>
-      </template>
-    </h-popover>
+  <div class="docs-demo">
+    <div class="docs-demo__controls">
+      <label class="toggle-row">
+        <span>显示全局蒙层</span>
+        <h-switch v-model="useMask" status />
+      </label>
+    </div>
+    <div class="popover-stage">
+      <h-popover trigger="click" placement="top" :show-with-mask="maskOption">
+        <template #reference><h-button>打开授权说明</h-button></template>
+        <template #popper>
+          <h-pop-content>
+            <div class="mask-content">
+              <strong>需要管理员授权</strong>
+            </div>
+          </h-pop-content>
+        </template>
+      </h-popover>
+    </div>
+    <p class="docs-demo__status">{{ useMask ? '打开时显示蒙层' : '打开时不遮挡背景' }}</p>
   </div>
 </template>
 
-<script>
-import { defineComponent, h } from 'vue';
-import { HPopContent } from '@aurora/horizon-web';
-
-const DemoContent = defineComponent({
-  render: () =>
-    h(
-      HPopContent,
-      {},
-      {
-        default: () =>
-          h(
-            'div',
-            {
-              class: 'popper',
-            },
-            [
-              h(
-                'div',
-                {
-                  class: 'header',
-                },
-                ['内容标题'],
-              ),
-              h(
-                'div',
-                {
-                  class: 'content',
-                },
-                ['我是气泡卡片文本描述内容, 我是气泡卡片文字链接...'],
-              ),
-            ],
-          ),
-      },
-    ),
-});
-
-export default defineComponent({
-  components: {
-    DemoContent,
-  },
-  data() {
-    return {
-      maskOption: {
-        enable: true,
-        // class: 'mask-opacity',
-        // to: document.querySelector('#app')
-      },
-    };
-  },
-});
-</script>
-
-<style>
-.mask_popover .popper {
-  width: 280px;
+<style scoped>
+.toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--h-text-secondary);
+  font-size: 13px;
 }
 
-.mask_popover .header {
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 22px;
-  margin-bottom: 4px;
-}
-
-.mask_popover .content {
-  font-size: 14px;
-  line-height: 22px;
-}
-
-.mask-opacity {
-  opacity: 0;
+.popover-stage {
+  display: flex;
+  justify-content: center;
+  padding-block: 24px;
 }
 </style>

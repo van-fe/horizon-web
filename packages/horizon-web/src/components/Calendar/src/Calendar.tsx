@@ -46,6 +46,7 @@ import DayCalendar from './components/DayCalendar';
 export default defineComponent({
   name: `${useNamespace()}Calendar`,
   desc: '用来显示日期，并且可以方便的在日历上以横幅的方式展示某些活动',
+  descLocales: { en: "Calendar supports year, month, week, and day planning. Complex examples should separate controls, current state, and the calendar preview clearly." },
   components: {
     HButton,
   },
@@ -189,6 +190,7 @@ export default defineComponent({
               <HSegmentedItem
                 label={locale.value?.langService.td().horizonWeb.calendar.year}
                 key="year"
+                value="year"
               />,
             );
             break;
@@ -197,6 +199,7 @@ export default defineComponent({
               <HSegmentedItem
                 label={locale.value?.langService.td().horizonWeb.calendar.month}
                 key="month"
+                value="month"
               />,
             );
             break;
@@ -205,6 +208,7 @@ export default defineComponent({
               <HSegmentedItem
                 label={locale.value?.langService.td().horizonWeb.calendar.week}
                 key="week"
+                value="week"
               />,
             );
             break;
@@ -213,6 +217,7 @@ export default defineComponent({
               <HSegmentedItem
                 label={locale.value?.langService.td().horizonWeb.calendar.day}
                 key="day"
+                value="day"
               />,
             );
             break;

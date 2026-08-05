@@ -1,16 +1,12 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const score = ref(4);
+</script>
+
 <template>
-  <div class="">
-    <h-rate v-model="currentScore" icon="car" />
+  <div class="docs-demo">
+    <h-rate v-model="score" icon="car" />
+    <span aria-live="polite">{{ score }} / 5</span>
   </div>
 </template>
-
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    return {
-      currentScore: ref(3),
-    };
-  },
-});
-</script>

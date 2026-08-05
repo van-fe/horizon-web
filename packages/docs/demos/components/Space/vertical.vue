@@ -1,12 +1,7 @@
-<script setup lang="ts"></script>
-
 <template>
-  <h-space block direction="vertical">
-    <h-card title="Card Title">Content</h-card>
-    <h-card title="Card Title">Content</h-card>
-    <h-card title="Card Title">Content</h-card>
-    <h-card title="Card Title">Content</h-card>
+  <h-space block direction="vertical" size="medium">
+    <h-button>第一项</h-button>
+    <h-button type="normal">第二项</h-button>
+    <h-button type="normal">第三项</h-button>
   </h-space>
 </template>
-
-<style scoped></style>

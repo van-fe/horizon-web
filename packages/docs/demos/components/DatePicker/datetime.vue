@@ -1,46 +1,39 @@
-<template>
-  <h-grid align="center" :gap="12">
-    <h-grid-item :span="4">
-      Datetime:
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <h-date-picker v-model="value" type="datetime" />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <h-date-picker v-model="rangeValue" type="datetime-range" />
-    </h-grid-item>
-  </h-grid>
-  <h-grid align="center" :gap="12">
-    <h-grid-item :span="4">
-      DateMinutes:
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <h-date-picker v-model="value2" type="date-minutes" />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <h-date-picker v-model="rangeValue2" type="date-minutes-range" />
-    </h-grid-item>
-  </h-grid>
-  <h-grid align="center" :gap="12">
-    <h-grid-item :span="4">
-      DateSeconds:
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <h-date-picker v-model="value3" type="date-seconds" />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <h-date-picker v-model="rangeValue3" type="date-seconds-range" />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
+import { dayjs } from '@aurora/horizon-web';
 
-const value = ref();
-const rangeValue = ref();
-const value2 = ref();
-const rangeValue2 = ref();
-const value3 = ref();
-const rangeValue3 = ref();
+type DateTimeType = 'datetime' | 'date-minutes' | 'date-seconds';
+
+const type = ref<DateTimeType>('datetime');
+const value = ref(dayjs().add(1, 'day').hour(10).minute(30).second(20));
 </script>
+
+<template>
+  <section class="date-picker-datetime">
+    <h-segmented v-model:active-key="type" size="small">
+      <h-segmented-item value="datetime" label="Date & time" />
+      <h-segmented-item value="date-minutes" label="Minutes" />
+      <h-segmented-item value="date-seconds" label="Seconds" />
+    </h-segmented>
+    <h-date-picker v-model="value" :type="type" />
+  </section>
+</template>
+
+<style scoped>
+.date-picker-datetime {
+  display: grid;
+  justify-items: start;
+  gap: var(--h-spacing-3);
+  max-inline-size: 680px;
+}
+
+.date-picker-datetime :deep(.h-date-picker) {
+  inline-size: 100%;
+}
+
+@media (max-width: 390px) {
+  .date-picker-datetime {
+    inline-size: 100%;
+  }
+}
+</style>

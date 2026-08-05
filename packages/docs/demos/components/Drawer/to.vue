@@ -1,55 +1,66 @@
-<template>
-  <div ref="innerEl" class="customize">
-    <h-button @click="openDrawer(innerEl)">Open Drawer on Inner</h-button>
-    <h-button class="ml-2" @click="openDrawer()">Open Drawer on Body</h-button>
-  </div>
-  <h-drawer
-    v-model:visible="visible"
-    :to="to"
-    size="small"
-    title="Title"
-    placement="right"
-    @ok="onOk"
-    @cancel="onCancel"
-  >
-    <div>
-      You can customize modal body text by the current situation. This modal will be closed
-      immediately once you press the OK button.
-    </div>
-  </h-drawer>
-</template>
-
-<script lang="ts" setup>
+<script setup lang="ts">
 import { ref } from 'vue';
-import { $message } from '@aurora/horizon-web';
 
 const visible = ref(false);
-const innerEl = ref();
-const to = ref();
+const innerEl = ref<HTMLElement | null>(null);
+const target = ref<HTMLElement | undefined>();
+const targetLabel = ref('尚未选择挂载目标');
 
-const openDrawer = (el?: HTMLElement) => {
-  if (el) to.value = el;
-  else to.value = document.body;
+const openDrawer = (inside: boolean) => {
+  target.value = inside ? (innerEl.value ?? undefined) : document.body;
+  targetLabel.value = inside ? '局部容器' : '页面 body';
   visible.value = true;
-};
-
-const onOk = () => {
-  console.info('ok button clicked!');
-  $message({ type: 'success', message: 'ok button clicked' });
-};
-const onCancel = () => {
-  console.info('cancel button clicked!');
-  $message({ type: 'warning', message: 'cancel button clicked!' });
 };
 </script>
 
+<template>
+  <div class="drawer-to-demo">
+    <div ref="innerEl" class="target-stage">
+      <h-space wrap>
+        <h-button @click="openDrawer(true)">挂载到局部容器</h-button>
+        <h-button type="normal" @click="openDrawer(false)">挂载到页面 body</h-button>
+      </h-space>
+    </div>
+    <p role="status">{{ targetLabel }}</p>
+
+    <h-drawer
+      v-model:visible="visible"
+      :to="target"
+      size="small"
+      :title="`挂载到${targetLabel}`"
+      placement="right"
+    >
+      <p>局部挂载可限制抽屉的显示范围。</p>
+    </h-drawer>
+  </div>
+</template>
+
 <style scoped>
-.customize {
+.drawer-to-demo {
+  display: grid;
+  gap: 12px;
+}
+
+.target-stage {
   position: relative;
-  height: 500px;
-  background-color: #efefef;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  min-height: 260px;
+  overflow: hidden;
+  place-items: center;
+  padding: 16px;
+  border: 1px solid var(--h-border-default);
+  background: var(--h-bg-secondary);
+}
+
+p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: 13px;
+}
+
+@media (max-width: 390px) {
+  .target-stage {
+    min-height: 220px;
+  }
 }
 </style>

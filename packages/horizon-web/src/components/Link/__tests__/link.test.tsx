@@ -14,6 +14,18 @@ describe('Link.tsx', () => {
     expect(element.exists()).toBe(true);
   });
 
+  test('supports keyboard focus and activation when used as an action', async () => {
+    const onClick = vi.fn();
+    const wrapper = mount(() => <HLink onClick={onClick}>Action</HLink>);
+    const action = wrapper.get('a');
+
+    expect(action.attributes('role')).toBe('button');
+    expect(action.attributes('tabindex')).toBe('0');
+
+    await action.trigger('keydown', { key: ' ' });
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
   test('keeps its presentation above contextual link styles', () => {
     const css = compile(resolve(__dirname, '../src/style/index.scss')).css;
 

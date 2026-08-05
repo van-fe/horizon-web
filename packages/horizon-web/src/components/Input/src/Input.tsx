@@ -140,6 +140,8 @@ export default defineComponent({
             ].includes(key),
         ),
       );
+      const focusVisibleProxyAttrs =
+        !props.embedded || props.type === 'textarea' ? { 'data-focus-visible-proxy': '' } : {};
       const suffixVisible =
         (!isDisabled.value && props.clearable && localValue.value) ||
         (props.type === 'password' && props.showPassword) ||
@@ -204,6 +206,7 @@ export default defineComponent({
           }
           style={props.embedded ? [attrs.style as StyleValue, props.embeddedStyle] : undefined}
           {...originalAttrs}
+          {...focusVisibleProxyAttrs}
           type={isPassword && showPassword.value ? 'text' : checkedType.value}
           v-model={localValue.value}
           placeholder={props.placeholder || (placeholder.value as string)}
@@ -281,6 +284,7 @@ export default defineComponent({
                 ...autoSizeStyle.value,
               }}
               {...originalAttrs}
+              {...focusVisibleProxyAttrs}
               v-model={localValue.value}
               placeholder={props.placeholder || (placeholder.value as string)}
               readonly={props.readonly}

@@ -1,11 +1,13 @@
-<template>
-  <h-segmented default-active-key="Monthly">
-    <h-segmented-item v-for="v in options" :key="v" :label="v" />
-  </h-segmented>
-</template>
-
 <script setup lang="ts">
-const options = ['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly'];
+import { ref } from 'vue';
+
+const active = ref('Monthly');
 </script>
 
-<style scoped></style>
+<template>
+  <h-segmented v-model:active-key="active">
+    <h-segmented-item value="Daily" label="Daily" />
+    <h-segmented-item value="Weekly" label="Weekly" />
+    <h-segmented-item value="Monthly" label="Monthly" />
+  </h-segmented>
+</template>

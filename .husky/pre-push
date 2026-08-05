@@ -1,4 +1,1 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
-bun run vitest:all && bun --filter @aurora/horizon-web run ts:check
+bun run vitest:all && bun --filter @aurora/horizon-web ts:check

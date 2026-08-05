@@ -41,6 +41,7 @@ import useLocaleLang from '~/utils/useLocaleLang';
 export default defineComponent({
   name: `${useNamespace()}AutoComplete`,
   desc: '根据输入内容提供对应的输入建议',
+  descLocales: { en: "Provide suggestions through `options` and filter them in the `search` handler. Supply initial options before input if suggestions should appear on focus. The demo also compares `size` and `input-style`." },
   components: {
     HPicker,
     HPickerFitContentInput,

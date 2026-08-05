@@ -1,69 +1,109 @@
 <template>
-  <div class="content">
-    <h-card title="标题">
-      <img class="content-img" src="/demo-assets/scene-city.svg" alt="" />
-    </h-card>
-    <h-card>
-      <ul class="list">
-        <li :key="item" v-for="item in 3">
-          <h4>标题</h4>
-          <p>
-            卡片内容区域可以是文字、图片、表单、表格等形式信息内容。可使用大中小不同的卡片尺寸，按业务需求进行呈现。
-          </p>
-        </li>
-      </ul>
-    </h-card>
-    <h-card>
-      <template #header>
-        <h-tabs size="medium" v-model="tab">
-          <h-tab label="标签一" key="label1"></h-tab>
-          <h-tab label="标签二" key="label2"></h-tab>
-          <h-tab label="标签三" key="label3"></h-tab>
-        </h-tabs>
-      </template>
-      <p>
-        这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很的内容文案这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很的内容文案这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很的内容文案这是一段长很长很长很长很长很长很的内容文案
-      </p>
-    </h-card>
-  </div>
+  <h-grid :cols="{ xs: 1, md: 3 }" :gap="16">
+    <h-grid-item>
+      <h-card title="Visual summary">
+        <img
+          class="card-content-demo__image"
+          src="/demo-assets/scene-city.svg"
+          alt="Illustrated city skyline"
+        />
+        <p class="card-content-demo__copy">
+          A visual can establish context before the supporting details.
+        </p>
+      </h-card>
+    </h-grid-item>
+    <h-grid-item>
+      <h-card title="Recent activity">
+        <ul class="card-content-demo__list">
+          <li v-for="item in activity" :key="item.title">
+            <span>{{ item.time }}</span>
+            <div>
+              <strong>{{ item.title }}</strong>
+              <p>{{ item.description }}</p>
+            </div>
+          </li>
+        </ul>
+      </h-card>
+    </h-grid-item>
+    <h-grid-item>
+      <h-card>
+        <template #header>
+          <h-tabs v-model="tab" size="medium">
+            <h-tab v-for="item in tabs" :key="item" :label="item" />
+          </h-tabs>
+        </template>
+        <div class="card-content-demo__tab-panel" aria-live="polite">
+          <strong>{{ tab }}</strong>
+          <p>{{ tabContent[tab] }}</p>
+        </div>
+      </h-card>
+    </h-grid-item>
+  </h-grid>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const tab = ref('label1');
+const activity = [
+  { time: '09:20', title: 'Review completed', description: 'Navigation states approved.' },
+  { time: '11:45', title: 'Build promoted', description: 'Candidate available in staging.' },
+  { time: '14:10', title: 'Notes updated', description: 'Localization copy is ready.' },
+];
+const tabs = ['Overview', 'Activity', 'Files'];
+const tab = ref('Overview');
+const tabContent: Record<string, string> = {
+  Overview: 'The release is on track with no blocking issues.',
+  Activity: 'Seven updates were recorded during the current review cycle.',
+  Files: 'Three design files and two verification reports are attached.',
+};
 </script>
 
-<style lang="scss" scoped>
-.content {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  column-gap: 20px;
-}
-.content-img {
+<style scoped>
+.card-content-demo__image {
+  display: block;
   width: 100%;
-  object-fit: contain;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--h-radius-m);
+  object-fit: cover;
 }
-.list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
 
-  li + li {
-    margin-top: 24px;
-    font-family: 'Blue Sky Noto';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 22px;
-  }
-  h4 {
-    font-weight: 400;
-    color: #868a9a;
-    margin-bottom: 4px;
-  }
-  p {
-    color: #040b29;
-  }
+.card-content-demo__copy,
+.card-content-demo__list p,
+.card-content-demo__tab-panel p {
+  color: var(--h-text-secondary);
+  line-height: 1.6;
+}
+
+.card-content-demo__copy,
+.card-content-demo__tab-panel p {
+  margin: var(--h-spacing-3) 0 0;
+}
+
+.card-content-demo__list {
+  display: grid;
+  gap: var(--h-spacing-4);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.card-content-demo__list li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--h-spacing-3);
+}
+
+.card-content-demo__list span {
+  color: var(--h-text-brand-default);
+  font-size: var(--h-text-sm);
+}
+
+.card-content-demo__list strong,
+.card-content-demo__tab-panel strong {
+  color: var(--h-text-primary);
+}
+
+.card-content-demo__list p {
+  margin: var(--h-spacing-1) 0 0;
 }
 </style>

@@ -1,64 +1,66 @@
 <script setup lang="ts">
-import { $message, type HTabValue } from '@aurora/horizon-web';
 import { ref } from 'vue';
+import type { HTabValue } from '@aurora/horizon-web';
 
-const activeKey = ref(1);
-const cardType = ref('card');
-const disabled = ref(false);
-const tabs = ref(
-  Array(5)
-    .fill(0)
-    .map((_, i) => ({ title: `Tab ${i + 1}`, key: i })),
-);
+interface PhaseTab {
+  key: number;
+  label: string;
+}
 
-const onTabChanged = (tab: HTabValue) => {
-  console.info('tab changed', tab);
-  $message({ type: 'success', message: `Tab ${tab} is clicked` });
-};
+const activeKey = ref(2);
+const status = ref('Drag a phase to change the roadmap order; Review is fixed.');
+const phases = ref<PhaseTab[]>([
+  { key: 1, label: 'Discovery' },
+  { key: 2, label: 'Design' },
+  { key: 3, label: 'Review' },
+  { key: 4, label: 'Build' },
+  { key: 5, label: 'Launch' },
+]);
 
-const onSort = (current: number, target: number, sortedKeys: number[]) => {
-  console.debug('sort', current, target, sortedKeys);
-  tabs.value = sortedKeys.map(key => ({ title: `Tab ${key + 1}`, key }));
-};
+function onSort(current: number, target: number, keys: HTabValue[]) {
+  const byKey = new Map(phases.value.map(phase => [phase.key, phase]));
+  phases.value = keys
+    .map(key => byKey.get(Number(key)))
+    .filter((phase): phase is PhaseTab => Boolean(phase));
+  status.value = `Moved ${current + 1} to ${target + 1}: ${phases.value
+    .map(phase => phase.label)
+    .join(' → ')}`;
+}
 </script>
 
 <template>
-  <div class="mb-4 flex align-center">
-    <span class="mr-4">类型</span>
-    <h-radio-group v-model="cardType">
-      <h-radio value="line">line(Default)</h-radio>
-      <h-radio value="card">card</h-radio>
-      <h-radio value="page">page(不支持尺寸调整)</h-radio>
-    </h-radio-group>
+  <div class="tabs-drag-demo">
+    <h-tabs v-model:active-key="activeKey" draggable type="card" @sort="onSort">
+      <transition-group name="tabs-drag">
+        <h-tab
+          v-for="phase in phases"
+          :key="phase.key"
+          :label="phase.label"
+          :draggable="phase.key !== 3"
+        />
+      </transition-group>
+    </h-tabs>
+    <p aria-live="polite">{{ status }}</p>
   </div>
-  <div class="mb-8 flex align-center">
-    <span class="mr-4">其他</span>
-    <div class="flex align-center" style="column-gap: 10px">
-      <h-checkbox v-model="disabled" label="设置第三项不可拖拽" />
-    </div>
-  </div>
-  <h-tabs
-    :default-active-key="activeKey"
-    draggable
-    :type="cardType"
-    @change="onTabChanged"
-    @sort="onSort"
-  >
-    <transition-group name="fade">
-      <h-tab
-        v-for="(tab, i) in tabs"
-        :key="tab.key"
-        :label="tab.title"
-        :draggable="disabled ? !(i === 2) : true"
-      />
-    </transition-group>
-  </h-tabs>
 </template>
 
 <style scoped>
-.fade-move,
-.fade-enter-active,
-.fade-leave-active {
+.tabs-drag-demo {
+  display: grid;
+  min-width: 0;
+  gap: var(--h-spacing-4);
+}
+
+.tabs-drag-demo p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+  overflow-wrap: anywhere;
+}
+
+.tabs-drag-move,
+.tabs-drag-enter-active,
+.tabs-drag-leave-active {
   transition: all var(--h-tabs-transition-duration) var(--h-tabs-transition-timing-function);
 }
 </style>

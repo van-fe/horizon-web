@@ -1,31 +1,37 @@
-<template>
-  <div>
-    <h-button type="normal" class="mb-2" @click="visible = !visible">Change</h-button>
-    <h-grid :gap="10" style="height: 80px;">
-      <h-grid-item :span="6">
-        <h-transition name="float">
-          <div v-show="visible" class="animate-box">float</div>
-        </h-transition>
-      </h-grid-item>
-    </h-grid>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const visible = ref(true);
+const nextId = ref(4);
+const items = ref([
+  { id: 1, label: 'Design review' },
+  { id: 2, label: 'Accessibility check' },
+  { id: 3, label: 'Release approval' },
+]);
+
+function add() {
+  items.value.push({ id: nextId.value, label: `Task ${nextId.value}` });
+  nextId.value += 1;
+}
 </script>
 
+<template>
+  <section class="docs-demo">
+    <div class="docs-demo__actions">
+      <h-button @click="add">Add</h-button>
+      <h-button :disabled="!items.length" @click="items.shift()">Remove first</h-button>
+    </div>
+    <h-transition name="float" group>
+      <div v-for="item in items" :key="item.id" class="list-item">{{ item.label }}</div>
+    </h-transition>
+  </section>
+</template>
+
 <style scoped>
-.animate-box {
-    width: 150px;
-    height: 80px;
-    background: var(--h-bg-brand-default);
-    border-radius: var(--h-radius);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--h-text-inverse);
+.list-item {
+  margin-bottom: var(--h-spacing-2);
+  border-radius: var(--h-radius-m);
+  padding: var(--h-spacing-3);
+  color: var(--h-text-secondary);
+  background: var(--h-bg-secondary);
 }
 </style>

@@ -1,69 +1,27 @@
-<template>
-  <div class="flex">
-    <h-image
-      v-for="size in sizes"
-      :key="size"
-      src="/demo-assets/scene-aurora.svg"
-      :show-actions="true"
-      :actions-list="actions"
-      class="mr-2"
-      :width="size"
-      :height="size"
-      @load="imgLoad"
-      @error="imgError"
-    />
-  </div>
-</template>
-
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
+<script setup lang="ts">
+import { ref } from 'vue';
 import type { HImageAction } from '@aurora/horizon-web';
-export default defineComponent({
-  setup() {
-    const sizes = [150, 80, 40];
-    const actions = ref<HImageAction[]>([]);
-    const imgLoad = () => {
-      actions.value = [
-        {
-          icon: 'scale_big',
-          title: '放大',
-          handler: (src: string) => {
-            console.info('scale_big', src);
-          },
-        },
-        {
-          icon: 'download',
-          title: '下载',
-          handler: (src: string) => {
-            console.info('download', src);
-          },
-        },
-        {
-          icon: 'rubbish',
-          title: '删除',
-          handler: (src: string) => {
-            console.info('close', src);
-          },
-        },
-      ];
-    };
-    const imgError = () => {
-      actions.value = [
-        {
-          icon: 'refresh',
-          title: '重新加载',
-          handler: (src: string) => {
-            console.info('refresh', src);
-          },
-        },
-      ];
-    };
-    return {
-      sizes,
-      actions,
-      imgLoad,
-      imgError,
-    };
-  },
-});
+
+const status = ref('Hover the image to show actions');
+const actions: HImageAction[] = [
+  { icon: 'scale_big', title: 'Inspect', handler: () => (status.value = 'Inspect') },
+  { icon: 'download', title: 'Export', handler: () => (status.value = 'Export') },
+  { icon: 'rubbish', title: 'Archive', handler: () => (status.value = 'Archive') },
+];
 </script>
+
+<template>
+  <section class="docs-demo">
+    <h-image
+      src="/demo-assets/scene-aurora.svg"
+      alt="Aurora campaign asset"
+      width="100%"
+      max-width="420px"
+      aspect-ratio="4/3"
+      rounded="10"
+      show-actions
+      :actions-list="actions"
+    />
+    <p class="docs-demo__status" role="status">{{ status }}</p>
+  </section>
+</template>

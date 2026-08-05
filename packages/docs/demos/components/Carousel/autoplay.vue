@@ -1,31 +1,37 @@
+<script setup lang="ts">
+const images = [
+  { src: '/demo-assets/scene-city.svg', label: 'City at blue hour' },
+  { src: '/demo-assets/scene-coast.svg', label: 'Coast at sunset' },
+  { src: '/demo-assets/scene-summit.svg', label: 'Mountain summit' },
+];
+</script>
+
 <template>
-  <h-carousel height="220px" :interval="2500">
-    <h-carousel-item v-for="item in 4" :key="item" :label="`Campaign ${item}`">
-      <div class="number-slide" :class="`number-slide--${item}`">0{{ item }}</div>
+  <h-carousel
+    class="image-carousel"
+    autoplay
+    arrow="hover"
+    :interval="3000"
+    height="240px"
+    aria-label="Automatically rotating images"
+  >
+    <h-carousel-item v-for="image in images" :key="image.src" :label="image.label">
+      <img :src="image.src" :alt="image.label" />
     </h-carousel-item>
   </h-carousel>
 </template>
 
 <style scoped>
-.number-slide {
-  display: grid;
-  height: 100%;
-  color: rgba(255, 255, 255, 0.92);
-  font-size: 64px;
-  font-weight: 600;
-  place-items: center;
+.image-carousel {
+  width: 600px;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
-.number-slide--1 {
-  background: #354f52;
-}
-.number-slide--2 {
-  background: #52796f;
-}
-.number-slide--3 {
-  background: #756ab6;
-}
-.number-slide--4 {
-  background: #ac87c5;
+.image-carousel img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>

@@ -1,149 +1,61 @@
-<template>
-  <h-grid :gap="10">
-    <h-grid-item :span="24">
-      <h-form
-        label-width="150px"
-        label-position="left"
-        label-vertical-align="middle"
-        helper-placement="after-label"
-      >
-        <h-form-item label="Toggle" helper="展开/收起">
-          <h-button size="small" @click="toggle">Toggle</h-button>
-        </h-form-item>
-        <h-form-item label="size">
-          <h-radio-group v-model="size">
-            <h-radio value="small" />
-            <h-radio value="medium" />
-            <h-radio value="large" />
-          </h-radio-group>
-        </h-form-item>
-        <h-form-item label="tooltip render type">
-          <template #helperTitle>折叠 `tooltip` 展示的内容</template>
-          <template #helperContent>
-            <li>innerText: 展示每个元素的文字内容</li>
-            <li>full: 完整渲染元素</li>
-          </template>
-          <h-radio-group v-model="renderType">
-            <h-radio value="innerText"></h-radio>
-            <h-radio value="full"></h-radio>
-          </h-radio-group>
-        </h-form-item>
-        <h-form-item label="editable">
-          <h-radio-group v-model="editable">
-            <h-radio :value="true">True</h-radio>
-            <h-radio :value="false">False</h-radio>
-          </h-radio-group>
-        </h-form-item>
-        <h-form-item label="closable">
-          <h-radio-group v-model="closable">
-            <h-radio :value="true">True</h-radio>
-            <h-radio :value="false">False</h-radio>
-          </h-radio-group>
-        </h-form-item>
-        <h-form-item label="fill up" helper="是否尽量占满容器。启用 minDisplayed 无效">
-          <h-radio-group v-model="fillUp">
-            <h-radio :value="true">True</h-radio>
-            <h-radio :value="false">False</h-radio>
-          </h-radio-group>
-        </h-form-item>
-        <h-form-item label="width" style="max-width: 500px">
-          <h-slider v-model="width" :min="100" :max="600" :step="25" :input-enable="true" />
-        </h-form-item>
-        <h-form-item label="amount" style="max-width: 500px">
-          <h-slider v-model="renderedAmount" :min="5" :max="50" :input-enable="true" />
-        </h-form-item>
-        <h-form-item
-          label="use min displayed"
-          style="max-width: 500px"
-          helper="是否启用至少显示Tag数量的属性。启用后，超过 minDisplayed 的数量的元素都会被折叠"
-        >
-          <h-radio-group v-model="minDisplayedEnable">
-            <h-radio :value="true">True</h-radio>
-            <h-radio :value="false">False</h-radio>
-          </h-radio-group>
-        </h-form-item>
-        <h-form-item
-          v-show="minDisplayedEnable"
-          label="min displayed"
-          style="max-width: 500px"
-          helper="至少显示的tag数量"
-        >
-          <h-slider v-model="minDisplayed" :min="1" :max="renderedAmount" :input-enable="true" />
-        </h-form-item>
-      </h-form>
-    </h-grid-item>
-    <h-grid-item :span="24">
-      <h-tag-group
-        ref="tagGroup"
-        :collapse="true"
-        :expand="true"
-        :editable="editable"
-        :fill-up="fillUp"
-        :size="size"
-        :tooltip-render-type="renderType"
-        :min-displayed="minDisplayedEnable ? minDisplayed : undefined"
-        :before-edit="onBeforeEdit"
-        :before-close="onBeforeClose"
-        :style="{ width: width + 'px' }"
-      >
-        <h-tag
-          v-for="(item, index) of renderedItems"
-          :id="index"
-          :key="index"
-          :clickable="false"
-          :closable="closable"
-        >
-          {{ item }}
-        </h-tag>
-      </h-tag-group>
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { ref, watch, watchEffect } from 'vue';
-import { DefinedComponent } from '@aurora/utils';
-import { $message } from '@aurora/horizon-web';
+import { computed, ref } from 'vue';
 
-const tagGroup = ref<InstanceType<DefinedComponent> | null>(null);
-
-const renderedAmount = ref(20);
-const minDisplayed = ref(1);
-const width = ref(600);
-const editable = ref(false);
-const closable = ref(false);
-const fillUp = ref(false);
-const minDisplayedEnable = ref(false);
-const renderType = ref('innerText');
-const size = ref('medium');
-const renderedItems = ref<Array<string | number>>([]);
-
-watchEffect(() => {
-  renderedItems.value = Array.from(Array(renderedAmount.value).keys()).map(val => `Tag ${val + 1}`);
-});
-
-watch(
-  () => renderedItems.value.length,
-  val => {
-    renderedAmount.value = val;
-  },
-);
-
-function toggle() {
-  tagGroup.value?.toggle();
-}
-
-function onBeforeEdit(newVal: string, oldVal: string, id: number) {
-  renderedItems.value[id] = newVal;
-}
-
-function onBeforeClose(id: number) {
-  if (renderedItems.value.length <= 5) {
-    $message.warning("Cannot reduce the item's length less than 5");
-    return;
-  }
-  renderedItems.value.splice(id, 1);
-}
+const services = [
+  { id: 'gateway', name: 'API Gateway' },
+  { id: 'identity', name: 'Identity Service' },
+  { id: 'billing', name: 'Billing API' },
+  { id: 'catalog', name: 'Catalog Indexer' },
+  { id: 'analytics', name: 'Analytics Pipeline' },
+  { id: 'notifications', name: 'Notification Worker' },
+  { id: 'audit', name: 'Audit Service' },
+  { id: 'flags', name: 'Feature Flags' },
+  { id: 'mobile', name: 'Mobile Backend' },
+  { id: 'search', name: 'Search Aggregator' },
+];
+const width = ref(520);
+const stageStyle = computed(() => ({ maxWidth: `${width.value}px` }));
 </script>
 
-<style scoped></style>
+<template>
+  <div class="tag-collapse-demo">
+    <label class="tag-collapse-demo__option">
+      <span>Available width · {{ width }}px</span>
+      <h-slider v-model="width" :min="220" :max="720" :step="20" />
+    </label>
+
+    <div class="tag-collapse-demo__stage" :style="stageStyle">
+      <h-tag-group collapse expand :min-displayed="2" tooltip-render-type="innerText">
+        <h-tag v-for="service in services" :id="service.id" :key="service.id" :clickable="false">
+          {{ service.name }}
+        </h-tag>
+      </h-tag-group>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.tag-collapse-demo {
+  display: grid;
+  gap: var(--h-spacing-5);
+}
+
+.tag-collapse-demo__option {
+  display: grid;
+  max-width: 520px;
+  gap: var(--h-spacing-2);
+}
+
+.tag-collapse-demo__option span {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+
+.tag-collapse-demo__stage {
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--h-spacing-4);
+  border-radius: var(--h-radius-m);
+  background: var(--h-bg-secondary);
+}
+</style>

@@ -1,66 +1,72 @@
 <script setup lang="ts">
-import { $message, type HTabValue } from '@aurora/horizon-web';
-import { ref, reactive } from 'vue';
+import { ref } from 'vue';
+import type { HTabValue } from '@aurora/horizon-web';
 
-const randomUid = () => Math.random().toString(36).slice(2);
+interface DocumentTab {
+  key: string;
+  label: string;
+  closable: boolean;
+}
 
-const activeKey = ref(randomUid());
-const size = ref('medium');
-const cardType = ref('line');
-const items = ref([
-  { label: 'Default Tab 1', uid: activeKey.value },
-  { label: 'Default Tab 2', uid: randomUid() },
-  { label: 'Default Tab 3', uid: randomUid() },
+const activeKey = ref('overview');
+const counter = ref(2);
+const status = ref('Use + to add a tab or close an editable tab.');
+const documents = ref<DocumentTab[]>([
+  { key: 'overview', label: 'Overview', closable: false },
+  { key: 'brief-1', label: 'Research brief', closable: true },
+  { key: 'brief-2', label: 'Launch notes', closable: true },
 ]);
 
-const firstTab = reactive({ label: 'FirstTab', uid: randomUid(), show: true });
+function addDocument() {
+  counter.value += 1;
+  const document = {
+    key: `brief-${counter.value}`,
+    label: `Untitled ${counter.value}`,
+    closable: true,
+  };
+  documents.value = [...documents.value, document];
+  activeKey.value = document.key;
+  status.value = `${document.label} added.`;
+}
 
-const onTabChanged = (tab: HTabValue) => {
-  console.info('tab changed', tab);
-};
-
-const onTabAdd = () => {
-  $message({ type: 'success', message: 'Add tab' });
-
-  const newTab = { label: `New Tab ${items.value.length + 1}`, uid: randomUid() };
-  items.value = items.value.concat(newTab);
-  activeKey.value = newTab.uid;
-};
-
-const onTabClose = (key: HTabValue) => {
-  $message({ type: 'success', message: `Close tab ${key}` });
-
-  items.value = items.value.filter(t => t.uid !== key);
-};
+function closeDocument(key: HTabValue) {
+  const target = documents.value.find(document => document.key === key);
+  documents.value = documents.value.filter(document => document.key !== key);
+  if (activeKey.value === key) activeKey.value = documents.value[0]?.key ?? '';
+  status.value = `${target?.label ?? String(key)} closed.`;
+}
 </script>
 
 <template>
-  <div class="mb-4 flex align-center">
-    <span class="mr-4">类型</span>
-    <h-radio-group v-model="cardType">
-      <h-radio value="line">line(Default)</h-radio>
-      <h-radio value="card">card</h-radio>
-      <h-radio value="page">page(不支持尺寸调整)</h-radio>
-    </h-radio-group>
+  <div class="tabs-editable-demo">
+    <h-tabs
+      v-model:active-key="activeKey"
+      editable
+      type="card"
+      @add="addDocument"
+      @close="closeDocument"
+    >
+      <h-tab
+        v-for="document in documents"
+        :key="document.key"
+        :label="document.label"
+        :closable="document.closable"
+      />
+    </h-tabs>
+    <p aria-live="polite">{{ status }}</p>
   </div>
-  <div class="mb-4 flex align-center">
-    <span class="mr-4">尺寸</span>
-    <h-radio-group v-model="size" :disabled="cardType === 'page'">
-      <h-radio value="small">small</h-radio>
-      <h-radio value="medium">medium(Default)</h-radio>
-      <h-radio value="large">large</h-radio>
-    </h-radio-group>
-  </div>
-  <h-tabs
-    v-model:active-key="activeKey"
-    editable
-    :type="cardType"
-    :size="size"
-    @change="onTabChanged"
-    @add="onTabAdd"
-    @close="onTabClose"
-  >
-    <h-tab v-if="firstTab.show" :key="firstTab.uid" :label="firstTab.label" />
-    <h-tab v-for="item in items" :key="item.uid" :label="item.label" closable />
-  </h-tabs>
 </template>
+
+<style scoped>
+.tabs-editable-demo {
+  display: grid;
+  min-width: 0;
+  gap: var(--h-spacing-4);
+}
+
+.tabs-editable-demo p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+</style>

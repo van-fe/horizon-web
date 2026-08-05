@@ -23,6 +23,7 @@ import serverError from './source/server-error.svg';
 export default defineComponent({
   name: `${useNamespace()}Result`,
   desc: '用于对用户的操作结果或者异常状态做反馈',
+  descLocales: { en: "Default is `success` state" },
   components: {
     HButton,
     IconSuccessFilledLight,

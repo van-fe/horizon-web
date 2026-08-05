@@ -1,22 +1,37 @@
-@use 'sass:list';
 @use '../mixins/function';
 
+$-time: function.css-variable('transition', 'time');
+$-time-fast: function.css-variable('transition', 'time', 'fast');
+$-func-ease-in-out: function.css-variable('transition', 'func', 'ease-in-out-bezier');
+$-func-fast: function.css-variable('transition', 'func', 'fast-bezier');
 $values: (
-  'time': 0.3s,
-  'time-fast': 0.2s,
-  'time-extra-fast': 0.18s,
-  'time-slow': 0.4s,
-  'func-cubic': cubic-bezier(0.205, 0, 0.25, 1.01),
-  'func-ease-in-out-bezier': cubic-bezier(.645, .045, .355, 1),
-  'func-fast-bezier': cubic-bezier(.23, 1, .32, 1),
-  'all': all function.css-variable('transition-time') function.css-variable('transition-func-ease-in-out-bezier'),
-  'all--fast': all function.css-variable('transition-time-fast') function.css-variable('transition-func-ease-in-out-bezier'),
-  'fade': opacity function.css-variable('transition-time') function.css-variable('transition-func-fast-bezier'),
-  'md-fade': list.join(transform function.css-variable('transition-time') function.css-variable('transition-func-fast-bezier'), opacity function.css-variable('transition-time') function.css-variable('transition-func-fast-bezier'), comma),
-  'fade-linear': opacity function.css-variable('transition-time-fast') linear,
-  'border': border-color function.css-variable('transition-time-fast') function.css-variable('transition-func-ease-in-out-bezier'),
-  'box-shadow': box-shadow function.css-variable('transition-time-fast') function.css-variable('transition-func-ease-in-out-bezier'),
-  'transform': transform function.css-variable('transition-time-fast') function.css-variable('transition-func-ease-in-out-bezier'),
-  'color': color function.css-variable('transition-time-fast') function.css-variable('transition-func-ease-in-out-bezier'),
-  'color-behavior': #{color function.css-variable('transition-time-fast') function.css-variable('transition-func-ease-in-out-bezier'), background function.css-variable('transition-time-fast') function.css-variable('transition-func-ease-in-out-bezier')},
+  time: (
+    '': 0.3s,
+    fast: 0.2s,
+    extra-fast: 0.18s,
+    slow: 0.4s,
+  ),
+  func: (
+    cubic: cubic-bezier(0.205, 0, 0.25, 1.01),
+    ease-in-out-bezier: cubic-bezier(.645, .045, .355, 1),
+    fast-bezier: cubic-bezier(.23, 1, .32, 1),
+  ),
+  all: (
+    '': all $-time $-func-ease-in-out,
+    fast: all $-time-fast $-func-ease-in-out,
+  ),
+  fade: (
+    '': opacity $-time $-func-fast,
+    linear: opacity $-time-fast linear,
+  ),
+  border: border-color $-time-fast $-func-ease-in-out,
+  box-shadow: box-shadow $-time-fast $-func-ease-in-out,
+  transform: (
+    '': transform $-time-fast $-func-ease-in-out,
+    opacity: #{transform $-time $-func-fast, opacity $-time $-func-fast},
+  ),
+  color: (
+    '': color $-time-fast $-func-ease-in-out,
+    behavior: #{color $-time-fast $-func-ease-in-out, background $-time-fast $-func-ease-in-out},
+  ),
 );

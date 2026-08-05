@@ -1,108 +1,95 @@
-## Basic Form
-Set the label of the form item on the `label` attribute of `h-form-item`. By default, the label is displayed above.
+## Basic form
+
+`h-form` directly supports Layout's responsive Grid capabilities. Configure the form with `cols`, `gap`, `column-gap`, and `row-gap`, then use FormItem `span` and `offset` to control field placement without nesting an `h-grid`.
+
 :::demo components/Form/basic.vue :::
 
 ## Size
-You can control the component size through `h-form`
 
-`size` can override the `size` set through `h-application`
+The form-level `size` propagates to child controls and overrides the global size from `h-application`.
+
 :::demo components/Form/size.vue :::
 
-## Tips Helper
-Generally, a `popover` tip can be set at the end of the form. You only need to configure a `helper` for `form-item`
+## Helpers
 
-The tip helper is placed on the far right of the form (`'right'`) by default. You can also pass `'after-label'` `'before-label'` to `helper-placement` to control the position
+`helper` provides popover guidance. `helper-placement` positions it before the label, after the label, or at the right of the field; the form can set a shared theme.
+
 :::demo components/Form/tips-helper.vue :::
 
-## Label Configuration
-You can control the position of the label through `label-position`. When the label is on the left, you can also control the horizontal alignment of the label through `label-justify-align`, and control the vertical alignment of the label through `label-vertical-align`.
+## Label layout
+
+`label-position` switches between top and left labels. Left labels also support horizontal and vertical alignment. An individual `h-form-item` can override the form-level `label-position`.
+
 :::demo components/Form/label-position.vue :::
 
-## Inline Form
-If there are fewer form items and they are all simple components with small height like `h-input`, you can enable inline forms by setting `inline` to `true`.
+## Inline form
+
+`inline` suits a small number of compact filters and wraps naturally in a narrow viewport.
+
 :::demo components/Form/inline.vue :::
 
-## Add Validation Rules
-You can add validation rules to the form to determine whether the bound value of the form item meets expectations.  
-First, set the `model` attribute for the `h-form` component, which is a collection of all bound fields in the entire form domain.
-Then add the `prop` attribute to the `h-form-item` that needs validation. It should be the field name in `model`, and pass validation rules to the `rules` attribute. For detailed usage, see [async-validator#rules](https://github.com/yiminghe/async-validator#rules).
+## Validation
+
+Provide `model` to `h-form`, then connect each field through its item `prop` and `rules`. Rules follow async-validator syntax.
+
 :::demo components/Form/validate.vue :::
 
-## Clear Validation Results After Validation
-After validating a form, if you want to clear the validation results, you can use `clearValidate` on `h-form` to clear the validation results, or use `clearValidate` on `h-form-item` to clear the validation results
+## Clear validation and reset
+
+`clearValidate` removes validation messages while preserving values. `resetFields` restores both initial values and validation state.
 
 :::demo components/Form/clear-validate.vue :::
 
-## Control Submit Button with Validation Status
-You can control whether the submit button can be clicked by listening to `validate`
+## Submit from validation state
+
+Listen to `validate` to aggregate field state and enable submission only after every required field is valid.
+
 :::demo components/Form/validate-with-submit.vue :::
 
-## Dynamically Add or Remove Form Items
-For dynamic forms, the focus is on the definition of `prop` and `rule`
+## Dynamic fields
+
+Dynamic lists need stable render keys and an indexed `prop` such as `reviewers[0].email`.
+
 :::demo components/Form/dynamic-change-item-amount.vue :::
 
-## Validation Trigger Method
-You can configure `validateTrigger` to validate only when a form element triggers a certain event:
+## Validation trigger
 
-- `change`: Validate when `update:modelValue` is triggered (default)
-- `blur`: Validate when the form component loses focus
-
-Currently supported components:
-- Cascader
-- Checkbox
-- ColorPicker
-- DatePicker
-- Input
-- InputNumber
-- Radio
-- Rate
-- Select
-- Slider
-- Switch
-- Tabs
-- TimePicker
-- Transfer
-- TreeSelect
-- Upload (excluding UploadArea)
+Form-level `validate-trigger` supplies the default. Individual items can override it with `change`, `blur`, or both.
 
 :::demo components/Form/validate-trigger.vue :::
 
-## Render-only Component
-When used together with some form components (such as `formily`), they have their own validation rules. At this time, `h-form` does not need to do validation, so you can configure `only-render` to set whether it is only used as a rendering component
+## Render-only mode
 
-When `form.only-render` is set to `true` and `form-item.error` changes, it will immediately mark the form element as an error state based on whether `form-item.error` is empty
-
-Note that `emit.validateChange` will not be triggered at this time
+`only-render` suits workflows validated by an external form framework. Pass external errors through item `error` without triggering Form validation events.
 
 :::demo components/Form/only-render.vue :::
 
-## Use Custom Form Components
-If you use form components outside of `horizon-web`, but also need to use the validation function of `h-form` `h-form-item`, just use the provided `provide` value
+## Custom controls
 
-You only need to `inject('HFormItemTriggerInjectedKey')` and call it when the form has `change` or `blur` events
+A custom control can inject `HFormItemTriggerInjectedKey` and notify Form on change and blur. Read `HFormItemErrorInjectedKey` to render its error state.
 
 :::demo components/Form/custom-form.vue :::
 
-## Built-in required Validation
+## Built-in required validation
 
-By default, internationalization configuration is used to display required information
-
-**Because the internationalization string will be passed to the `async-validator` method, it cannot be dynamically changed**
+Item `required` uses the current locale. With `required-use-label`, the default message refers to the visible field label.
 
 :::demo components/Form/build-in-required.vue :::
 
-## Global disabled
-Configure disabled to disable form elements in the form
+## Global disabled state
+
+Form `disabled` overrides its child controls, making it useful for submitted or read-only workflows.
 
 :::demo components/Form/disabled.vue :::
 
-## Compact Layout
-Use `compact` to control whether to enable compact layout
+## Compact spacing
 
-**Note: At this time, error prompts will be hidden**
+`spacing="compact"` reduces item spacing and intentionally hides tip and error rows. Return to default spacing to inspect messages.
 
 :::demo components/Form/compact.vue :::
 
-## label Tail Slot
-When `label-position = 'top'`, you can use the `label-append` slot to place custom content
+## Label append content
+
+With top-positioned labels, use `labelAppend` for lightweight actions that directly affect the field.
+
 :::demo components/Form/label-append.vue :::

@@ -1,26 +1,44 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const selected = ref('选择导出格式');
+const select = (value: string) => {
+  selected.value = `已选择：${value}`;
+};
+</script>
+
 <template>
-  <h-grid :gap="12">
-    <h-grid-item :span="24">
-      <h-dropdown @command="onCommand">
-        <h-button>Hover</h-button>
-        <template #dropdown>
-          <h-dropdown-menu>
-            <h-dropdown-item command="北京">北京</h-dropdown-item>
-            <h-dropdown-item @click="onCommand('上海')">上海</h-dropdown-item>
-            <h-dropdown-item command="深圳">深圳</h-dropdown-item>
-            <h-dropdown-item command="杭州" :disabled="true">杭州</h-dropdown-item>
-            <h-dropdown-item @click="onCommand('重庆')">重庆</h-dropdown-item>
-          </h-dropdown-menu>
-        </template>
-      </h-dropdown>
-    </h-grid-item>
-  </h-grid>
+  <div class="dropdown-command-demo">
+    <h-dropdown @command="select">
+      <h-button>导出报告</h-button>
+      <template #dropdown>
+        <h-dropdown-menu>
+          <h-dropdown-item command="Excel (.xlsx)">Excel (.xlsx)</h-dropdown-item>
+          <h-dropdown-item @click="select('CSV (.csv)')">CSV (.csv)</h-dropdown-item>
+          <h-dropdown-item command="JSON (.json)" disabled>JSON（暂不可用）</h-dropdown-item>
+        </h-dropdown-menu>
+      </template>
+    </h-dropdown>
+    <p role="status">{{ selected }}</p>
+  </div>
 </template>
 
-<script setup lang="ts">
-import { $message } from '@aurora/horizon-web';
-
-function onCommand(value: string) {
-  $message.info(`点击了 ${value}`);
+<style scoped>
+.dropdown-command-demo {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
 }
-</script>
+
+p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: 13px;
+}
+
+@media (max-width: 390px) {
+  .dropdown-command-demo {
+    gap: 10px;
+  }
+}
+</style>

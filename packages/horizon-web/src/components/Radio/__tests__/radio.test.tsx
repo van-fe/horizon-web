@@ -16,6 +16,17 @@ describe('Radio.tsx', () => {
 
     expect(elements.length).toBe(2);
   });
+
+  test('keeps radio inputs tabbable as focus-visible proxies', () => {
+    const inputs = [mount(() => <HRadio />), mount(() => <HRadioButton />)].map(wrapper =>
+      wrapper.find('input'),
+    );
+
+    inputs.forEach(input => {
+      expect(input.attributes()).toHaveProperty('data-focus-visible-proxy');
+      expect((input.element as HTMLInputElement).tabIndex).toBe(0);
+    });
+  });
 });
 
 test('sizeBorder', async () => {

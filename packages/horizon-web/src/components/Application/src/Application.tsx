@@ -18,6 +18,7 @@ import {
 export default defineComponent({
   name: `${useNamespace()}Application`,
   desc: '被用来提供全局的配置选项，让你的配置能够在全局都能够被访问到',
+  descLocales: { en: "`Application` provides `locale` to its descendants. The demo keeps the selection local, so switching languages does not affect other examples on the documentation page. Open the date panel to compare month, weekday, and action labels." },
   props: useApplicationProps,
   slots: useApplicationSlots,
   setup(props, { slots }: HorizonWebSetupContext<{}, ApplicationSlots>) {

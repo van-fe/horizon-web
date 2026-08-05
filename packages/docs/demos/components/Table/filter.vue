@@ -1,69 +1,94 @@
-<template>
-  <h-table :data="data" height="300px" :loading="isLoading">
-    <h-table-column title="Seq" type="index" width="80" fixed />
-    <h-table-column title="Name" field="name" :filterable="true" />
-    <h-table-column
-      title="Register Date"
-      field="registerDate"
-      :filterable="true"
-      filter-type="date-picker"
-      tip="This column's data can be all formats that Dayjs can parse. If you have special format, you can set 'value-format' in 'filter-options'."
-      :filter-options="{type: 'date-range', showNow: true}"
-    />
-    <h-table-column
-      title="Register Time"
-      field="registerTime"
-      :filterable="true"
-      filter-type="time-picker"
-      tip="If you want to use time-picker component, you should give this column's data with HH:mm or HH:mm:ss format string"
-      :filter-options="{type: 'time', isRange: true, showNow: true, panelMinWidth: 250, fitInputWidth: 'fit-content'}"
-    />
-    <h-table-column
-      title="Country"
-      field="country"
-      :filterable="true"
-      filter-type="select"
-      show-overflow-tooltip
-      width="200px"
-      tip="Select filter will auto collect column's data to filter in multiple. If you have special options, you should give 'options' in 'filter-options'."
-    />
-    <h-table-column title="Address" field="address" :filterable="true" min-width="400" :use-built-in-filter="false" @filter-change="onFilterChange" />
-  </h-table>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
-import { faker } from '@faker-js/faker';
-import { dayjs } from '@aurora/horizon-web';
 
-interface TableData {
-  id: number;
-  name: string;
-  registerDate: string;
-  registerTime: string;
-  country: string;
-  address: string;
-}
+const filterStatus = ref('Use a column filter to narrow the table.');
+const accounts = [
+  {
+    account: 'Northwind',
+    owner: 'Mina Park',
+    reviewDate: '2026-08-05',
+    region: 'APAC',
+    health: 'Healthy',
+  },
+  {
+    account: 'Contoso',
+    owner: 'Noah Chen',
+    reviewDate: '2026-08-07',
+    region: 'EMEA',
+    health: 'Watch',
+  },
+  {
+    account: 'Fabrikam',
+    owner: 'Iris Wang',
+    reviewDate: '2026-08-08',
+    region: 'AMER',
+    health: 'Healthy',
+  },
+  {
+    account: 'Globex',
+    owner: 'Leo Martin',
+    reviewDate: '2026-08-11',
+    region: 'APAC',
+    health: 'Risk',
+  },
+  {
+    account: 'Initech',
+    owner: 'Avery Kim',
+    reviewDate: '2026-08-12',
+    region: 'EMEA',
+    health: 'Watch',
+  },
+  {
+    account: 'Umbrella',
+    owner: 'Riley Chen',
+    reviewDate: '2026-08-14',
+    region: 'AMER',
+    health: 'Healthy',
+  },
+];
 
-const isLoading = ref(false);
-
-const originData: TableData[] = new Array(100).fill(0).map((_, index) => ({
-  id: index,
-  name: faker.person.fullName(),
-  registerDate: faker.date.recent(180).toDateString(),
-  registerTime: dayjs(faker.date.recent()).format('HH:mm:ss'),
-  country: faker.location.country(),
-  address: faker.location.streetAddress(),
-}));
-
-const data = ref<TableData[]>(originData);
-
-function onFilterChange(str?: string) {
-  isLoading.value = true;
-
-  setTimeout(() => {
-    data.value = str ? originData.filter((row) => row.address.includes(str)) : originData;
-    isLoading.value = false;
-  }, 2000);
+function onFilterChange(value: unknown) {
+  filterStatus.value = value ? 'Health filter updated.' : 'Health filter cleared.';
 }
 </script>
+
+<template>
+  <div class="table-filter-demo">
+    <h-table :data="accounts" row-key="account" height="320">
+      <h-table-column title="Account" field="account" min-width="160" filterable />
+      <h-table-column title="Owner" field="owner" min-width="140" filterable />
+      <h-table-column
+        title="Review date"
+        field="reviewDate"
+        width="150"
+        filterable
+        filter-type="date-picker"
+        :filter-options="{ type: 'date-range', valueFormat: 'YYYY-MM-DD' }"
+      />
+      <h-table-column title="Region" field="region" width="120" filterable filter-type="select" />
+      <h-table-column
+        title="Health"
+        field="health"
+        width="120"
+        filterable
+        filter-type="select"
+        @filter-change="onFilterChange"
+      />
+    </h-table>
+    <p aria-live="polite">{{ filterStatus }}</p>
+  </div>
+</template>
+
+<style scoped>
+.table-filter-demo {
+  display: grid;
+  min-width: 0;
+  gap: var(--h-spacing-3);
+}
+
+.table-filter-demo p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+</style>

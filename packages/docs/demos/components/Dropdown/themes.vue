@@ -1,367 +1,56 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const theme = ref<'default' | 'gray' | 'midnight'>('default');
+const selected = ref('切换主题后打开菜单');
+const themes = ['default', 'gray', 'midnight'];
+</script>
+
 <template>
-  <h-grid :gap="12">
-    <h-grid-item :span="24">
-      <h-form label-position="left" label-vertical-align="middle" :inline="true">
-        <h-form-item label="theme:">
-          <h-radio-group v-model="theme">
-            <h-radio value="default">default</h-radio>
-            <h-radio value="gray">gray</h-radio>
-            <h-radio value="midnight">midnight</h-radio>
-          </h-radio-group>
-        </h-form-item>
-      </h-form>
-      <h-dropdown :theme="theme" @command="onCommand">
-        <h-button>Grade</h-button>
+  <div class="dropdown-theme-demo">
+    <div class="controls">
+      <h-segmented v-model:active-key="theme" size="small">
+        <h-segmented-item v-for="item in themes" :key="item" :value="item" :label="item" />
+      </h-segmented>
+      <h-dropdown :theme="theme" @command="selected = `${theme}：${$event}`">
+        <h-button>打开菜单</h-button>
         <template #dropdown>
           <h-dropdown-menu>
-            <h-dropdown-submenu
-              v-for="item of list"
-              :key="item.label"
-              :title="item.label"
-              :disabled="item.disabled ?? false"
-            >
-              <h-dropdown-submenu
-                v-for="subItem of item.children"
-                :key="subItem.label"
-                :title="subItem.label"
-                :disabled="subItem.disabled ?? false"
-              >
-                <h-dropdown-item
-                  v-for="child of subItem.children"
-                  :key="child.label"
-                  :command="subItem.label + child.label"
-                  :disabled="child.disabled ?? false"
-                >
-                  {{ child.label }}
-                </h-dropdown-item>
-              </h-dropdown-submenu>
-            </h-dropdown-submenu>
+            <h-dropdown-item command="产品设计">产品设计</h-dropdown-item>
+            <h-dropdown-item command="工程研发">工程研发</h-dropdown-item>
+            <h-dropdown-item command="归档空间" disabled>归档空间</h-dropdown-item>
           </h-dropdown-menu>
         </template>
       </h-dropdown>
-    </h-grid-item>
-  </h-grid>
+    </div>
+    <p role="status">{{ selected }}</p>
+  </div>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
-import { $message } from '@aurora/horizon-web';
-
-const theme = ref('default');
-
-interface ListType {
-  label: string;
-  children?: ListType[];
-  disabled?: boolean;
-}
-
-const list: ListType[] = [
-  {
-    label: '小学',
-    children: [
-      {
-        label: '一年级',
-        children: [
-          {
-            label: '1班',
-          },
-          {
-            label: '2班',
-            disabled: true,
-          },
-          {
-            label: '3班',
-          },
-          {
-            label: '4班',
-          },
-        ],
-      },
-      {
-        label: '二年级',
-        children: [
-          {
-            label: '1班',
-          },
-          {
-            label: '2班',
-          },
-          {
-            label: '3班',
-          },
-          {
-            label: '4班',
-          },
-        ],
-      },
-      {
-        label: '三年级',
-        disabled: true,
-        children: [
-          {
-            label: '1班',
-          },
-          {
-            label: '2班',
-          },
-          {
-            label: '3班',
-          },
-          {
-            label: '4班',
-          },
-        ],
-      },
-      {
-        label: '四年级',
-        children: [
-          {
-            label: '1班',
-          },
-          {
-            label: '2班',
-          },
-          {
-            label: '3班',
-          },
-          {
-            label: '4班',
-          },
-        ],
-      },
-      {
-        label: '五年级',
-        children: [
-          {
-            label: '1班',
-          },
-          {
-            label: '2班',
-          },
-          {
-            label: '3班',
-          },
-          {
-            label: '4班',
-          },
-        ],
-      },
-      {
-        label: '六年级',
-        children: [
-          {
-            label: '1班',
-          },
-          {
-            label: '2班',
-          },
-          {
-            label: '3班',
-          },
-          {
-            label: '4班',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    label: '初中',
-    children: [
-      {
-        label: '七年级',
-        children: [
-          {
-            label: '1班',
-          },
-          {
-            label: '2班',
-          },
-          {
-            label: '3班',
-          },
-          {
-            label: '4班',
-          },
-          {
-            label: '5班',
-          },
-          {
-            label: '6班',
-          },
-          {
-            label: '7班',
-          },
-          {
-            label: '8班',
-          },
-          {
-            label: '9班',
-          },
-          {
-            label: '10班',
-          },
-        ],
-      },
-      {
-        label: '八年级',
-        children: [
-          {
-            label: '1班',
-          },
-          {
-            label: '2班',
-          },
-          {
-            label: '3班',
-          },
-          {
-            label: '4班',
-          },
-          {
-            label: '5班',
-          },
-          {
-            label: '6班',
-          },
-          {
-            label: '7班',
-          },
-          {
-            label: '8班',
-          },
-          {
-            label: '9班',
-          },
-          {
-            label: '10班',
-          },
-        ],
-      },
-      {
-        label: '九年级',
-        children: [
-          {
-            label: '1班',
-          },
-          {
-            label: '2班',
-          },
-          {
-            label: '3班',
-          },
-          {
-            label: '4班',
-          },
-          {
-            label: '5班',
-          },
-          {
-            label: '6班',
-          },
-          {
-            label: '7班',
-          },
-          {
-            label: '8班',
-          },
-          {
-            label: '9班',
-          },
-          {
-            label: '10班',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    label: '高中',
-    children: [
-      {
-        label: '高一',
-        children: [
-          {
-            label: '1班',
-          },
-          {
-            label: '2班',
-          },
-          {
-            label: '3班',
-          },
-          {
-            label: '4班',
-          },
-          {
-            label: '5班',
-          },
-          {
-            label: '6班',
-          },
-          {
-            label: '7班',
-          },
-          {
-            label: '8班',
-          },
-          {
-            label: '9班',
-          },
-          {
-            label: '10班',
-          },
-        ],
-      },
-      {
-        label: '高二',
-        children: [
-          {
-            label: '1班',
-          },
-          {
-            label: '2班',
-          },
-          {
-            label: '3班',
-          },
-          {
-            label: '4班',
-          },
-        ],
-      },
-      {
-        label: '高三',
-        children: [
-          {
-            label: '1班',
-          },
-          {
-            label: '2班',
-          },
-          {
-            label: '3班',
-          },
-          {
-            label: '4班',
-          },
-        ],
-      },
-    ],
-  },
-];
-
-function onCommand(val: string) {
-  $message.info(val);
-}
-</script>
-
 <style scoped>
-.h-dropdown {
-  display: inline-flex;
+.dropdown-theme-demo {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
 }
 
-.h-dropdown + .h-dropdown {
-  margin-left: 12px;
+.controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: 13px;
+}
+
+@media (max-width: 390px) {
+  .controls {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
 </style>

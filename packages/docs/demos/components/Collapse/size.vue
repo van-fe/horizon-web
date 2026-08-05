@@ -1,88 +1,88 @@
 <template>
-  <div class="mb-5">
-    <div>size:</div>
-    <h-radio-group v-model="selectSize">
-      <h-radio
-        v-for="(label, index) in ['small', 'medium', 'large']"
-        :key="index"
-        :label="label"
-        size="small"
-      />
-    </h-radio-group>
-  </div>
-  <div class="mb-5">
-    <div>expand-icon-position:</div>
-    <h-radio-group v-model="selectPosition">
-      <h-radio
-        v-for="(label, index) in ['left', 'right']"
-        :key="index"
-        :label="label"
-        size="small"
-      />
-    </h-radio-group>
-  </div>
-  <div class="flex justify-space-between">
+  <div class="collapse-size-demo">
+    <div class="collapse-size-demo__controls">
+      <div>
+        <span>Size</span>
+        <h-segmented v-model:active-key="size" size="small">
+          <h-segmented-item value="small" label="Small" />
+          <h-segmented-item value="medium" label="Medium" />
+          <h-segmented-item value="large" label="Large" />
+        </h-segmented>
+      </div>
+      <div>
+        <span>Icon</span>
+        <h-segmented v-model:active-key="iconPosition" size="small">
+          <h-segmented-item value="left" label="Left" />
+          <h-segmented-item value="right" label="Right" />
+        </h-segmented>
+      </div>
+    </div>
+
     <h-collapse
-      :active-key="activeKey"
-      style="width: 500px"
-      :size="selectSize"
-      :expand-icon-position="selectPosition"
-      @change="handleExpand"
-    >
-      <h-collapse-item title="This is a panel header." name="1">
-        <div>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</div>
-        <div>Velit officia consequat duis enim velit mollit. Exercitation veniam consequat</div>
-        <div>sunt nostrud amet.Amet minim mollit.</div>
-      </h-collapse-item>
-      <h-collapse-item title="Why can i not submit a higher price?" name="2">
-        <div>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</div>
-        <div>Velit officia consequat duis enim velit mollit.</div>
-      </h-collapse-item>
-      <h-collapse-item title="How are you？" name="3">How are you？</h-collapse-item>
-      <h-collapse-item title="What are Promotion Products?" name="4">
-        What are Promotion Products?
-      </h-collapse-item>
-    </h-collapse>
-    <h-collapse
-      :active-key="activeKey"
+      v-model:active-key="activeKeys"
       filled
-      :size="selectSize"
-      style="width: 500px"
-      :expand-icon-position="selectPosition"
+      :size="size"
+      :expand-icon-position="iconPosition"
     >
-      <h-collapse-item title="This is a panel header." name="1">
-        <div>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</div>
-        <div>Velit officia consequat duis enim velit mollit. Exercitation veniam consequat</div>
-        <div>sunt nostrud amet.Amet minim mollit.</div>
-      </h-collapse-item>
-      <h-collapse-item title="Why can i not submit a higher price?" name="2">
-        <div>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</div>
-        <div>Velit officia consequat duis enim velit mollit.</div>
-      </h-collapse-item>
-      <h-collapse-item title="How are you？" name="3">How are you？</h-collapse-item>
-      <h-collapse-item title="What are Promotion Products?" name="4">
-        What are Promotion Products?
+      <h-collapse-item
+        v-for="section in sections"
+        :key="section.id"
+        :name="section.id"
+        :title="section.title"
+      >
+        <p>{{ section.content }}</p>
       </h-collapse-item>
     </h-collapse>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    const activeKey = ref(['1', '2']);
-    const handleExpand = activeKeys => {
-      console.info(`activeKeys ===> `, activeKeys);
-    };
-    const selectSize = ref('medium');
-    const selectPosition = ref('left');
-    return {
-      activeKey,
-      handleExpand,
-      selectSize,
-      selectPosition,
-    };
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const size = ref<'small' | 'medium' | 'large'>('medium');
+const iconPosition = ref<'left' | 'right'>('left');
+const activeKeys = ref(['scope']);
+const sections = [
+  {
+    id: 'scope',
+    title: 'Project scope',
+    content: 'A lightweight reporting page for three cross-functional teams.',
   },
-});
+  {
+    id: 'owners',
+    title: 'Owners',
+    content: 'Design owns the flow, Engineering owns data quality, and Operations owns rollout.',
+  },
+];
 </script>
+
+<style scoped>
+.collapse-size-demo {
+  display: grid;
+  gap: var(--h-spacing-5);
+}
+
+.collapse-size-demo__controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--h-spacing-4) var(--h-spacing-6);
+}
+
+.collapse-size-demo__controls > div {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--h-spacing-2);
+}
+
+.collapse-size-demo__controls span {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+
+.collapse-size-demo p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  line-height: 1.7;
+}
+</style>

@@ -1,130 +1,108 @@
 <template>
-  <h-grid :gap="12">
-    <h-grid-item :span="24">
-      <div class="mr-4">必填星号位置</div>
-      <h-radio-group v-model="requireMarkPosition" size="small">
-        <h-radio-button value="left" />
-        <h-radio-button value="right" />
-      </h-radio-group>
-    </h-grid-item>
-  </h-grid>
-  <h-form
-    ref="formRef"
-    :model="formData"
-    :rules="rules"
-    :require-mark-position="requireMarkPosition"
-    scroll-to-error
-    @submit="submit()"
-  >
-    <h-form-item label="User name" prop="username">
-      <h-input v-model="formData.username" />
-    </h-form-item>
-    <h-form-item label="Email" prop="email">
-      <h-input v-model="formData.email" />
-    </h-form-item>
-    <h-form-item label="Province" prop="province">
-      <h-select v-model="formData.province" placeholder="Please select">
-        <h-option label="Beijing" value="beijing" />
-        <h-option label="Shanghai" value="shanghai" />
-        <h-option label="Hefei" value="hefei" />
-      </h-select>
-    </h-form-item>
-    <h-form-item label="Notes" prop="notes">
-      <h-input v-model="formData.notes" type="textarea" />
-    </h-form-item>
-    <div>
-      <h-button native-type="submit">Submit</h-button>
-      <h-button :plain="true" @click="clearValidate">Clear Validate</h-button>
-      <h-button :plain="true" @click="resetFields">Reset Fields</h-button>
+  <section class="form-clear-demo">
+    <div class="form-clear-demo__control" role="group" aria-label="Required mark position">
+      <span>Required mark</span>
+      <h-segmented v-model:active-key="requireMarkPosition" size="small">
+        <h-segmented-item value="left" label="Left" />
+        <h-segmented-item value="right" label="Right" />
+      </h-segmented>
     </div>
-  </h-form>
+
+    <h-form
+      ref="formRef"
+      :model="formData"
+      :rules="rules"
+      :require-mark-position="requireMarkPosition"
+      scroll-to-error
+      spacing="dynamic"
+      @submit="submit"
+    >
+      <h-form-item label="Service" prop="service">
+        <h-input v-model="formData.service" placeholder="Service name" />
+      </h-form-item>
+      <h-form-item label="Owner email" prop="ownerEmail">
+        <h-input v-model="formData.ownerEmail" placeholder="owner@example.com" />
+      </h-form-item>
+      <h-form-item label="Region" prop="region">
+        <h-select v-model="formData.region" placeholder="Choose a region">
+          <h-option label="Asia Pacific" value="apac" />
+          <h-option label="Europe" value="europe" />
+          <h-option label="North America" value="north-america" />
+        </h-select>
+      </h-form-item>
+      <h-form-item>
+        <h-space wrap>
+          <h-button native-type="submit">Validate</h-button>
+          <h-button plain @click="clearValidation">Clear messages</h-button>
+          <h-button plain @click="resetFields">Reset values</h-button>
+        </h-space>
+      </h-form-item>
+    </h-form>
+    <p class="form-clear-demo__status" aria-live="polite">{{ status }}</p>
+  </section>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
+<script setup lang="ts">
 import type { HFormInstance, HFormRule } from '@aurora/horizon-web';
-import { $message } from '@aurora/horizon-web';
+import { reactive, ref } from 'vue';
 
-export default defineComponent({
-  setup() {
-    const formRef = ref<HFormInstance | null>(null);
-    const formData = ref({
-      username: '',
-      email: '',
-      notes: '',
-      province: null,
+const formRef = ref<HFormInstance | null>(null);
+const formData = reactive({ service: '', ownerEmail: '', region: null as string | null });
+const requireMarkPosition = ref<'left' | 'right'>('right');
+const status = ref('Validation has not run');
+const rules: Record<string, HFormRule | HFormRule[]> = {
+  service: [
+    { required: true, message: 'Enter a service name' },
+    { min: 3, message: 'Use at least 3 characters' },
+  ],
+  ownerEmail: [
+    { required: true, message: 'Enter an owner email' },
+    { type: 'email', message: 'Enter a valid email address' },
+  ],
+  region: { required: true, message: 'Choose a deployment region' },
+};
+
+function submit() {
+  formRef.value
+    ?.validate()
+    .then(() => {
+      status.value = 'All deployment fields are valid';
+    })
+    .catch(() => {
+      status.value = 'Validation found fields that need attention';
     });
+}
 
-    const requireMarkPosition = ref('right');
+function clearValidation() {
+  formRef.value?.clearValidate();
+  status.value = 'Validation messages cleared; values kept';
+}
 
-    const rules = ref<Partial<Record<keyof typeof formData.value, HFormRule | HFormRule[]>>>({
-      username: [
-        {
-          required: true,
-          message: 'User name is required!',
-        },
-        {
-          min: 3,
-          max: 100,
-          message: 'User name should be 3 to 100.',
-        },
-      ],
-      email: [
-        {
-          required: true,
-          message: 'Email is required!',
-        },
-        {
-          type: 'email',
-          message: 'Email format invalid!',
-        },
-        {
-          validator(rule, value: string | null) {
-            if (!value?.endsWith('@gmail.com')) {
-              return new Error('Only support gmail!');
-            }
-            return true;
-          },
-        },
-      ],
-    });
-
-    const submit = () => {
-      if (formRef.value) {
-        formRef.value
-          .validate()
-          .then(() => {
-            $message.success('Submit');
-          })
-          .catch(errors => {
-            console.info('errors:', errors);
-          });
-      }
-    };
-
-    const clearValidate = () => {
-      formRef.value?.clearValidate();
-    };
-
-    const resetFields = () => {
-      formRef.value?.resetFields();
-    };
-
-    return {
-      formData,
-      formRef,
-      submit,
-      rules,
-      clearValidate,
-      resetFields,
-      requireMarkPosition,
-    };
-  },
-});
+function resetFields() {
+  formRef.value?.resetFields();
+  status.value = 'Values and validation reset';
+}
 </script>
 
-<style>
-.h-button + .h-button {
-  margin-left: 10px;
+<style scoped>
+.form-clear-demo {
+  display: grid;
+  gap: var(--h-spacing-4);
+}
+
+.form-clear-demo__control {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--h-spacing-3);
+  padding: var(--h-spacing-4);
+  border-radius: var(--h-radius-m);
+  background: var(--h-bg-secondary);
+}
+
+.form-clear-demo__status {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
 }
 </style>

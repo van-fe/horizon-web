@@ -1,21 +1,14 @@
 <template>
-  <h-space direction="vertical" size="large">
-    <h-alert
-      :closable="false"
-      show-icon
-      type="info"
-      description="点击生成示例文件；上传过程中可使用文件右侧的暂停和继续按钮，绿色分片不会重新上传。"
-    />
-
-    <h-space style="flex-wrap: wrap">
-      <h-button type="primary" @click="startDemo">生成 5.5 MB 文件并上传</h-button>
-      <h-button plain @click="restartDemo">重新加入同一文件</h-button>
-      <h-button text @click="resetDemo">清空模拟服务端</h-button>
-    </h-space>
+  <div class="docs-demo upload-multipart-demo">
+    <div class="docs-demo__actions">
+      <h-button type="primary" size="small" @click="startDemo">Start fresh upload</h-button>
+      <h-button size="small" @click="restartDemo">Re-add the same file</h-button>
+      <h-button size="small" @click="resetDemo">Reset mock server</h-button>
+    </div>
 
     <h-upload
+      id="upload-demo-multipart"
       ref="uploadRef"
-      action="/mock/multipart"
       :auto-upload="false"
       :controls="['upload', 'delete']"
       controls-always-visible
@@ -25,22 +18,21 @@
       @uploaded="onUploaded"
     />
 
-    <h-card title="模拟服务端状态">
-      <h-space style="flex-wrap: wrap">
-        <h-tag
-          v-for="index in chunkCount"
-          :key="index"
-          :type="uploadedChunkIndexes.has(index - 1) ? 'success' : 'info'"
-        >
-          分片 {{ index }} · {{ uploadedChunkIndexes.has(index - 1) ? '已保存' : '等待中' }}
-        </h-tag>
-      </h-space>
+    <h-space wrap>
+      <h-tag
+        v-for="index in chunkCount"
+        :key="index"
+        :type="uploadedChunkIndexes.has(index - 1) ? 'success' : 'info'"
+        is-pure
+      >
+        Part {{ index }} · {{ uploadedChunkIndexes.has(index - 1) ? 'saved' : 'waiting' }}
+      </h-tag>
+    </h-space>
 
-      <ol class="multipart-demo-logs" aria-live="polite">
-        <li v-for="(log, index) in logs" :key="`${index}-${log}`">{{ log }}</li>
-      </ol>
-    </h-card>
-  </h-space>
+    <ol class="upload-multipart-demo__logs" aria-live="polite">
+      <li v-for="(log, index) in logs" :key="`${index}-${log}`">{{ log }}</li>
+    </ol>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -49,7 +41,7 @@ import type {
   HUploadMultipartSetting,
   HUploadRawFileType,
 } from '@aurora/horizon-web';
-import { reactive, ref } from 'vue';
+import { onBeforeUnmount, reactive, ref } from 'vue';
 
 interface UploadDemoExpose {
   upload: (files?: HUploadRawFileType[]) => Promise<void>;
@@ -60,49 +52,59 @@ interface UploadDemoExpose {
 const chunkCount = 6;
 const uploadRef = ref<UploadDemoExpose>();
 const uploadedChunkIndexes = reactive(new Set<number>());
-const logs = ref<string[]>(['模拟服务端尚未收到分片']);
+const activeTimers = new Set<number>();
+const logs = ref<string[]>(['The local mock server has not received any chunks.']);
+let disposed = false;
 
 function appendLog(message: string) {
+  if (disposed) return;
   logs.value = [message, ...logs.value].slice(0, 8);
 }
 
 function createDemoFile() {
-  return new File([new Uint8Array(5.5 * 1024 * 1024)], 'resumable-demo.bin', {
+  return new File([new Uint8Array(5.5 * 1024 * 1024)], 'release-evidence.bin', {
     type: 'application/octet-stream',
   });
 }
 
+function clearTimer(timer: number) {
+  window.clearInterval(timer);
+  activeTimers.delete(timer);
+}
+
 const multipart: HUploadMultipartSetting = {
   initUpload(file) {
-    appendLog(`初始化 ${file.name}，服务端已有 ${uploadedChunkIndexes.size} 个分片`);
+    appendLog(`Initialized ${file.name}; ${uploadedChunkIndexes.size} parts already exist.`);
     return { uploadId: `${file.name}-${file.size}` };
   },
   getUploadedChunkIndexes() {
     return Array.from(uploadedChunkIndexes);
   },
   uploadPart(_file, chunk, { signal, onProgress }) {
-    appendLog(`开始上传分片 ${chunk.index + 1}`);
+    if (disposed) return Promise.reject(new DOMException('Demo unmounted', 'AbortError'));
+    appendLog(`Uploading part ${chunk.index + 1}.`);
 
     return new Promise((resolve, reject) => {
       let loaded = 0;
-      const step = Math.max(Math.ceil(chunk.size / 20), 1);
+      const step = Math.max(Math.ceil(chunk.size / 10), 1);
       const timer = window.setInterval(() => {
         loaded = Math.min(loaded + step, chunk.size);
         onProgress(loaded);
 
         if (loaded === chunk.size) {
-          window.clearInterval(timer);
+          clearTimer(timer);
           uploadedChunkIndexes.add(chunk.index);
-          appendLog(`服务端保存分片 ${chunk.index + 1}`);
-          resolve({ etag: `mock-part-${chunk.index}` });
+          appendLog(`Saved part ${chunk.index + 1}.`);
+          resolve({ etag: `local-part-${chunk.index}` });
         }
-      }, 250);
+      }, 120);
+      activeTimers.add(timer);
 
       signal.addEventListener(
         'abort',
         () => {
-          window.clearInterval(timer);
-          appendLog(`暂停分片 ${chunk.index + 1}，下次从该分片继续`);
+          clearTimer(timer);
+          appendLog(`Paused part ${chunk.index + 1}; it will restart on resume.`);
           reject(new DOMException('Upload paused', 'AbortError'));
         },
         { once: true },
@@ -110,7 +112,7 @@ const multipart: HUploadMultipartSetting = {
     });
   },
   handleMerge(file, chunks) {
-    appendLog(`合并完成：${file.name}，共 ${chunks.length} 个分片`);
+    appendLog(`Merged ${file.name} from ${chunks.length} parts.`);
     return { uploadId: `${file.name}-${file.size}`, merged: true };
   },
 };
@@ -119,14 +121,14 @@ async function startDemo() {
   await uploadRef.value?.abort();
   uploadRef.value?.clearFiles();
   uploadedChunkIndexes.clear();
-  logs.value = ['创建 5.5 MB 示例文件'];
+  logs.value = ['Created a fresh 5.5 MB sample file.'];
   await uploadRef.value?.upload([createDemoFile()]);
 }
 
 async function restartDemo() {
   await uploadRef.value?.abort();
   uploadRef.value?.clearFiles();
-  appendLog('重新加入同一文件，读取服务端断点');
+  appendLog('Re-added the same file and requested its saved part indexes.');
   await uploadRef.value?.upload([createDemoFile()]);
 }
 
@@ -134,18 +136,28 @@ async function resetDemo() {
   await uploadRef.value?.abort();
   uploadRef.value?.clearFiles();
   uploadedChunkIndexes.clear();
-  logs.value = ['模拟服务端记录已清空'];
+  logs.value = ['Local mock server state cleared.'];
 }
 
 function onUploaded(file: HUploadFileType) {
-  appendLog(`${file.name} 上传成功`);
+  appendLog(`${file.name} uploaded successfully.`);
 }
+
+onBeforeUnmount(() => {
+  disposed = true;
+  void uploadRef.value?.abort();
+  for (const timer of [...activeTimers]) clearTimer(timer);
+});
 </script>
 
 <style scoped>
-.multipart-demo-logs {
-  min-height: 8em;
-  padding-left: 20px;
-  margin: 16px 0 0;
+.upload-multipart-demo__logs {
+  margin: 0;
+  padding-left: var(--h-spacing-5);
+  color: var(--h-text-secondary);
+}
+
+.upload-multipart-demo__logs li + li {
+  margin-top: var(--h-spacing-1);
 }
 </style>

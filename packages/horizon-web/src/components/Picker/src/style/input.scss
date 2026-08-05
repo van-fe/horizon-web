@@ -20,6 +20,11 @@
     cursor: pointer;
     transition: mixins.css-variable('picker', 'transition', 'border-color');
 
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+    &:has([data-focus-visible-proxy]:focus-visible) {
+      @include mixins.focus-ring;
+    }
+
     @include mixins.m('container') {
       flex: 1;
       min-width: 0;

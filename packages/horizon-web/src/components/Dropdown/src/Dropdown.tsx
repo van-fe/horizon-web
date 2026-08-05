@@ -40,6 +40,7 @@ import useDropdownTree from './composables/useDropdownTree';
 export default defineComponent({
   name: `${useNamespace()}Dropdown`,
   desc: '下拉菜单是轻量级的快捷菜单，用于页面内部的内容导航和相关操作。主要用于导航、工具菜单以及部分操作集合，通过下拉菜单将某功能下面的子系统、功能集合等统一放在一起。',
+  descLocales: { en: "Provides `#dropdown` slot to place `h-dropdown-menu`, or you can directly place `h-dropdown-menu` in `#default` without using named slots" },
   components: {
     HPopover,
   },

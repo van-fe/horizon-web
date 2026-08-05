@@ -1,78 +1,65 @@
+<script setup lang="ts">
+import { computed, ref } from 'vue';
+
+type FooterMode = 'all' | 'primary' | 'none' | 'custom';
+
+const visible = ref(false);
+const mode = ref<FooterMode>('all');
+const status = ref('选择底部操作形式');
+const showPrimary = computed(() => mode.value === 'all' || mode.value === 'primary');
+const showSecondary = computed(() => mode.value === 'all');
+
+function finish(message: string) {
+  visible.value = false;
+  status.value = message;
+}
+</script>
+
 <template>
-  <h-button
-    class="mr-2"
-    @click="
-      primaryButton = true;
-      secondaryButton = true;
-      visible1 = true;
-    "
-  >
-    默认显示全部按钮
-  </h-button>
-  <h-button
-    class="mr-2"
-    @click="
-      primaryButton = true;
-      secondaryButton = false;
-      visible1 = true;
-    "
-  >
-    只显示主要按钮
-  </h-button>
-  <h-button
-    class="mr-2"
-    @click="
-      primaryButton = false;
-      secondaryButton = false;
-      visible1 = true;
-    "
-  >
-    不显示按钮
-  </h-button>
-  <h-button class="mr-2" @click="visible2 = true">自定义底部区域</h-button>
-  <h-dialog
-    v-model:visible="visible1"
-    title="标题"
-    :ok-button-props="primaryButton"
-    :cancel-button-props="secondaryButton"
-  >
-    <div>随便写点什么</div>
-  </h-dialog>
-  <h-dialog v-model:visible="visible2" title="标题">
-    <div>随便写点什么</div>
-    <template #footer>
-      <div class="flex">
-        <h-button type="normal" class="ml-auto">辅助按钮</h-button>
-        <h-button :plain="true">次要按钮</h-button>
-        <h-button>主要按钮</h-button>
-      </div>
-    </template>
-  </h-dialog>
-  <h-dialog
-    v-model:visible="visible3"
-    title="标题"
-    :ok-button-props="{
-      type: 'danger',
-    }"
-    :cancel-button-props="{
-      text: true,
-    }"
-  >
-    <div>随便写点什么</div>
-  </h-dialog>
+  <section class="dialog-footer-demo">
+    <h-segmented v-model:active-key="mode" size="small">
+      <h-segmented-item value="all" label="Both" />
+      <h-segmented-item value="primary" label="Primary" />
+      <h-segmented-item value="none" label="None" />
+      <h-segmented-item value="custom" label="Custom" />
+    </h-segmented>
+    <h-button @click="visible = true">打开对话框</h-button>
+    <p role="status">{{ status }}</p>
+
+    <h-dialog
+      v-model:visible="visible"
+      title="保存视图配置"
+      :ok-button-props="mode === 'custom' ? false : showPrimary"
+      :cancel-button-props="mode === 'custom' ? false : showSecondary"
+      @ok="finish('视图配置已保存')"
+    >
+      <p class="dialog-copy">底部操作应与任务风险和决策成本相匹配。</p>
+      <template v-if="mode === 'custom'" #footer>
+        <h-space>
+          <h-button type="normal" @click="visible = false">取消</h-button>
+          <h-button @click="finish('设计评审已提交')">提交评审</h-button>
+        </h-space>
+      </template>
+    </h-dialog>
+  </section>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    return {
-      visible1: ref(false),
-      primaryButton: ref(true),
-      secondaryButton: ref(true),
-      visible2: ref(false),
-      visible3: ref(false),
-    };
-  },
-});
-</script>
+<style scoped>
+.dialog-footer-demo {
+  display: grid;
+  justify-items: start;
+  gap: var(--h-spacing-3);
+}
+
+.dialog-footer-demo > p,
+.dialog-copy {
+  margin: 0;
+  color: var(--h-text-secondary);
+}
+
+@media (max-width: 390px) {
+  .dialog-footer-demo {
+    inline-size: 100%;
+  }
+}
+</style>

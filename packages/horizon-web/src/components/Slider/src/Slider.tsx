@@ -28,6 +28,7 @@ import useSize from '~/utils/useSize';
 export default defineComponent({
   name: `${useNamespace()}Slider`,
   desc: '通过拖动滑块在一个固定区间内进行选择',
+  descLocales: { en: "Bind a number with `v-model`. The demo keeps the business result visible while the value changes." },
   components: {
     SliderCursor,
   },

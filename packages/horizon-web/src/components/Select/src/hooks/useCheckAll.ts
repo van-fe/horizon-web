@@ -12,6 +12,14 @@ export default function useCheckAll(
     presetModelValueSet: Ref<Set<ModelValueSingleType>>;
     needConfirm: ComputedRef<boolean>;
     handleConfirm: (hidePopper: boolean, manual: boolean) => void;
+    isModelValueSetHasValue: (
+      setData: Set<ModelValueSingleType>,
+      value: ModelValueSingleType,
+    ) => boolean;
+    modelValueSetDeleteValue: (
+      setData: Set<ModelValueSingleType>,
+      value: ModelValueSingleType,
+    ) => boolean;
   },
 ) {
   const canBeCheckedOptions = computed(() =>
@@ -58,11 +66,15 @@ export default function useCheckAll(
       canBeCheckedOptions.value.every(curr => curr.active)
     ) {
       canBeCheckedOptions.value.forEach(option => {
-        options.presetModelValueSet.value.delete(option.props.value);
+        options.modelValueSetDeleteValue(options.presetModelValueSet.value, option.props.value);
       });
     } else {
       canBeCheckedOptions.value.forEach(option => {
-        options.presetModelValueSet.value.add(option.props.value);
+        if (
+          !options.isModelValueSetHasValue(options.presetModelValueSet.value, option.props.value)
+        ) {
+          options.presetModelValueSet.value.add(option.props.value);
+        }
       });
     }
 

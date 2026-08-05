@@ -1,51 +1,32 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+type InputSize = 'small' | 'medium' | 'large';
+
+const size = ref<InputSize>('medium');
+const value = ref('Quarterly renewal review');
+</script>
+
 <template>
-  <h-form>
-    <h-grid :gap="12">
-      <h-form-item label="style">
-      <h-radio-group v-model="inputStyle">
-        <h-radio
-          v-for="(label, index) in ['normal', 'no-border', 'emphasize']"
-          :key="index"
-          :label="label"
-          size="small"
-        />
-      </h-radio-group>
-    </h-form-item>
-    </h-grid>
-    <h-grid :gap="12">
-      <h-grid-item :span="8">
-        <h-form-item label="Large">
-          <h-input v-model="val1" size="large" :input-style = 'inputStyle'/>
-        </h-form-item>
-      </h-grid-item>
-      <h-grid-item :span="8">
-        <h-form-item label="Medium">
-          <h-input v-model="val2" size="medium" :input-style = 'inputStyle'/>
-        </h-form-item>
-      </h-grid-item>
-      <h-grid-item :span="8">
-        <h-form-item label="Small">
-          <h-input v-model="val3" size="small" :input-style = 'inputStyle'/>
-        </h-form-item>
-      </h-grid-item>
-    </h-grid>
-  </h-form>
+  <section class="input-size-demo">
+    <h-segmented v-model:active-key="size" size="small" block aria-label="Input size">
+      <h-segmented-item value="small" label="Small" />
+      <h-segmented-item value="medium" label="Medium" />
+      <h-segmented-item value="large" label="Large" />
+    </h-segmented>
+    <h-input v-model="value" :size="size" :aria-label="`${size} input`" />
+    <small aria-live="polite">size="{{ size }}"</small>
+  </section>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    const val1 = ref('');
-    const val2 = ref('');
-    const val3 = ref('');
-    const inputStyle = ref('normal');
-    return {
-      val1,
-      val2,
-      val3,
-      inputStyle,
-    };
-  },
-});
-</script>
+<style scoped>
+.input-size-demo {
+  display: grid;
+  gap: var(--h-spacing-3);
+  max-inline-size: 560px;
+}
+
+.input-size-demo > small {
+  color: var(--h-text-secondary);
+}
+</style>

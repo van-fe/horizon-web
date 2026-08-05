@@ -1,72 +1,90 @@
 <template>
-  <div class="mb-4">
-    <h-switch v-model="isZebra" label="是否斑马纹" class="switch" />
-    <h-switch v-model="isBorder" label="是否显示边框" class="switch" />
-    <h-switch v-model="isSplit" label="是否显示分界线" class="switch" />
-    <h-button size="medium" type="primary" class="switch" @click="changeTitleSize">
-      切换标题size
-    </h-button>
-  </div>
+  <section class="docs-demo">
+    <div class="docs-demo__controls">
+      <label class="docs-demo__control">
+        <span class="docs-demo__control-label">Title size</span>
+        <h-segmented v-model:active-key="titleSize" size="small" block>
+          <h-segmented-item value="small" label="Small" />
+          <h-segmented-item value="medium" label="Medium" />
+        </h-segmented>
+      </label>
+      <h-switch v-model="isZebra" label="Zebra" />
+      <h-switch v-model="isBorder" label="Border" />
+    </div>
 
-  <h-list :data="list" :max-height="400" :zebra="isZebra" :border="isBorder" :split="isSplit">
-    <template #item="{ item, index }">
-      <h-list-item
-        :key="index"
-        :title="item.title"
-        :describe="item.describe"
-        :subtitle="item.subtitle"
-        :title-size="titleSize"
-      >
-        <template #sider>
-          <h-image src="/demo-assets/scene-city.svg" object-fit="cover" :width="50" :height="50" />
-        </template>
-        <template #right>
-          <section class="list-right">
-            <section>
-              <h-button size="medium" :plain="true" class="list-btn">撤销</h-button>
-              <h-button size="medium" type="primary">提交</h-button>
-            </section>
-          </section>
-        </template>
-      </h-list-item>
-    </template>
-  </h-list>
+    <h-list :data="requests" :max-height="420" :zebra="isZebra" :border="isBorder">
+      <template #item="{ item }">
+        <h-list-item
+          :key="item.id"
+          :title="item.title"
+          :describe="item.description"
+          :subtitle="item.subtitle"
+          :title-size="titleSize"
+        >
+          <template #sider>
+            <h-image
+              :src="item.image"
+              :alt="`${item.title} preview`"
+              object-fit="cover"
+              :width="48"
+              :height="48"
+            />
+          </template>
+          <template #right>
+            <div class="request-actions">
+              <h-button size="small" plain>Return</h-button>
+              <h-button size="small">Approve</h-button>
+            </div>
+          </template>
+        </h-list-item>
+      </template>
+    </h-list>
+  </section>
 </template>
 
-<script lang="ts" setup>
-import { HListItem } from '@aurora/horizon-web';
-import { reactive, ref } from 'vue';
-const list = reactive(
-  Array(10)
-    .fill('')
-    .map((item, index) => {
-      return {
-        title: 'This is Title' + item,
-        subtitle: 'Subhead' + item,
-        describe: `${index}: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin volutpat eget ipsum vel blandit. Nam sed enim orci. Vivamus non eros at ex varius luctus. Pellentesque blandit molestie leo, vel vulputate mi vehicula ac. Etiam dignissim arcu eget felis egestas cursus. Pellentesque tempus sollicitudin nulla at hendrerit.`,
-      };
-    }),
-);
-const changeTitleSize = () => {
-  titleSize.value = titleSize.value === 'medium' ? 'small' : 'medium';
-};
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const requests = [
+  {
+    id: 'REQ-142',
+    title: 'Checkout accessibility pass',
+    subtitle: 'Mira Chen · 12 min ago',
+    description: 'Keyboard order, focus visibility, and screen-reader labels are ready for review.',
+    image: '/demo-assets/scene-city.svg',
+  },
+  {
+    id: 'REQ-139',
+    title: 'Analytics empty states',
+    subtitle: 'Noah Williams · 38 min ago',
+    description: 'Three responsive illustrations and recovery actions for filtered dashboards.',
+    image: '/demo-assets/scene-aurora.svg',
+  },
+  {
+    id: 'REQ-135',
+    title: 'Mobile navigation study',
+    subtitle: 'Avery Lee · Yesterday',
+    description: 'Prototype findings and the proposed compact navigation behavior.',
+    image: '/demo-assets/scene-coast.svg',
+  },
+];
 const isZebra = ref(true);
 const isBorder = ref(false);
-const isSplit = ref(false);
 const titleSize = ref<'medium' | 'small'>('medium');
 </script>
 
 <style scoped>
-.list-right {
-  height: 100%;
+.request-actions {
   display: flex;
-  flex-direction: column-reverse;
-  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: var(--h-spacing-2);
 }
-.list-btn {
-  margin-right: 12px;
-}
-.switch {
-  margin-right: 12px;
+
+@media (max-width: 560px) {
+  .request-actions {
+    justify-content: flex-start;
+    margin-top: var(--h-spacing-3);
+  }
 }
 </style>

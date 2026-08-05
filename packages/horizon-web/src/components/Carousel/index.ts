@@ -9,6 +9,8 @@ export type {
   HCarouselDirection,
   HCarouselEffect,
   HCarouselIndicatorPosition,
+  HCarouselIndicatorType,
+  HCarouselTarget,
   HCarouselTrigger,
 } from './src/composables/useProps';
 

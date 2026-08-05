@@ -1,18 +1,23 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const video = '/aurora-background.mp4';
+const status = ref('720p');
+const sources = [
+  { src: video, type: 'video/mp4', label: '1080p' },
+  { src: video, type: 'video/mp4', label: '720p', default: true },
+  { src: video, type: 'video/mp4', label: 'Data saver' },
+];
+</script>
+
 <template>
-  <h-video-player
-    :sources="[
-      {
-        src: '/aurora-background.mp4',
-        type: 'video/mp4',
-        label: 'HD',
-        default: true,
-      },
-      {
-        src: '/aurora-background.mp4',
-        type: 'video/mp4',
-        label: 'SD',
-      },
-    ]"
-    poster="/demo-assets/video-poster.svg"
-  />
+  <section class="docs-demo">
+    <h-video-player
+      :sources="sources"
+      poster="/demo-assets/video-poster.svg"
+      preload="metadata"
+      @source-change="status = $event.label"
+    />
+    <p class="docs-demo__status">{{ status }}</p>
+  </section>
 </template>

@@ -1,31 +1,38 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { $message, type HTabValue } from '@aurora/horizon-web';
+import { computed, ref } from 'vue';
 
-// const activeKey = ref(0);
-const cardType = ref('line');
-const tabs = ['Tab 1', 'Tab 2', 'Tab 3'];
-const icons = ['car', 'change_power', 'card_voucher'];
-
-const onTabChanged = (tab: HTabValue) => {
-  console.info('tab changed', tab);
-  $message({ type: 'success', message: `Tab ${tab} is clicked` });
-};
+const activeKey = ref('mobility');
+const products = [
+  { key: 'mobility', label: 'Mobility', icon: 'car' },
+  { key: 'energy', label: 'Energy', icon: 'change_power' },
+  { key: 'benefits', label: 'Benefits', icon: 'card_voucher' },
+];
+const activeProduct = computed(() => products.find(product => product.key === activeKey.value)!);
 </script>
 
 <template>
-  <div class="mb-8 flex align-center">
-    <span class="mr-4">类型</span>
-    <h-radio-group v-model="cardType">
-      <h-radio value="line">line(Default)</h-radio>
-      <h-radio value="card">card</h-radio>
-      <h-radio value="page">page(不支持尺寸调整)</h-radio>
-    </h-radio-group>
-  </div>
-
-  <div style="height: 50px">
-    <h-tabs :default-active-key="0" :type="cardType" @change="onTabChanged">
-      <h-tab v-for="(tab, i) in tabs" :key="i" :icon="icons[i]" :label="tab" />
+  <div class="tabs-icon-demo">
+    <h-tabs v-model:active-key="activeKey">
+      <h-tab
+        v-for="product in products"
+        :key="product.key"
+        :label="product.label"
+        :icon="product.icon"
+      />
     </h-tabs>
+    <p aria-live="polite">{{ activeProduct.label }} selected.</p>
   </div>
 </template>
+
+<style scoped>
+.tabs-icon-demo {
+  display: grid;
+  min-width: 0;
+  gap: var(--h-spacing-4);
+}
+
+.tabs-icon-demo p {
+  margin: 0;
+  color: var(--h-text-secondary);
+}
+</style>

@@ -27,6 +27,8 @@ import { normalizeScrollerKey } from './composables/useRecycleScrollerLayout';
 
 export default defineComponent({
   name: `${useNamespace()}VirtualScrollerItem`,
+  desc: "虚拟滚动列表中的单个测量项",
+  descLocales: { en: "A measurable item within VirtualScroller." },
   props: useVirtualScrollerItemProps,
   emits: useVirtualScrollerItemEmits,
   slots: useVirtualScrollerItemSlots,

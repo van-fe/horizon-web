@@ -14,26 +14,15 @@
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
     "noEmit": true,
-    "types": [
-      "node",
-      "vite/client"
-    ],
+    "types": ["node", "vite/client"],
     "paths": {
-      "*": [
-        "./*"
-      ],
-      "@aurora/horizon-web": [
-        "../horizon-web/src"
-      ],
-      "@aurora/horizon-web/*": [
-        "../horizon-web/src/*"
-      ],
-      "horizon-web-package/*": [
-        "../horizon-web/*"
-      ],
-      "@root/*": [
-        "../../*"
-      ]
+      "*": ["./*"],
+      "@aurora/horizon-web": ["../horizon-web/src"],
+      "@aurora/horizon-web/*": ["../horizon-web/src/*"],
+      "@aurora/upload-adapters": ["../upload-adapters/src"],
+      "@aurora/upload-adapters/*": ["../upload-adapters/src/*"],
+      "horizon-web-package/*": ["../horizon-web/*"],
+      "@root/*": ["../../*"]
     }
   },
   "vueCompilerOptions": {
@@ -48,10 +37,5 @@
     "**/*.ts",
     "**/*.tsx"
   ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    ".vitepress/cache"
-  ]
+  "exclude": ["node_modules", "dist", ".vitepress/cache"]
 }
-

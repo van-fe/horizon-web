@@ -76,7 +76,7 @@ $values: (
     ),
   ),
   transition: (
-    '': #{mixins.css-variable('transition-all--fast')},
-    background: background #{mixins.css-variable('transition-time-fast')},
+    '': #{mixins.css-variable('transition', 'all', 'fast')},
+    background: background #{mixins.css-variable('transition', 'time', 'fast')},
   ),
 );

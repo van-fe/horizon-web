@@ -15,6 +15,7 @@ import useSize from '~/utils/useSize';
 export default defineComponent({
   name: `${useNamespace()}Avatar`,
   desc: '返回页面顶部按钮',
+  descLocales: { en: "A personal avatar can choose from `random-src` candidates. Pass an image array to `src` to compose a group avatar with up to nine members." },
   components: { AIcon },
   props: useAvatarProps,
   emits: useAvatarEmits,

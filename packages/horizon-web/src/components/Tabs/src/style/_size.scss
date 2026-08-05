@@ -3,7 +3,7 @@
 @mixin style {
   @include mixins.m('mini') {
     @include mixins.e('icon') {
-      font-size: mixins.css-variable('font-size-10');
+      font-size: mixins.css-variable('text-sm');
     }
 
     @include mixins.e('icon-outer') {
@@ -14,7 +14,7 @@
 
   @include mixins.m('small', 'medium') {
     @include mixins.e('icon') {
-      font-size: mixins.css-variable('font-size-9');
+      font-size: mixins.css-variable('text-base');
     }
 
     @include mixins.e('icon-outer') {
@@ -25,7 +25,7 @@
 
   @include mixins.m('large') {
     @include mixins.e('icon') {
-      font-size: mixins.css-variable('font-size-8');
+      font-size: mixins.css-variable('text-lg');
     }
 
     @include mixins.e('icon-outer') {
@@ -51,7 +51,7 @@
     }
 
     @include mixins.e('icon') {
-      font-size: mixins.css-variable('font-size-10');
+      font-size: mixins.css-variable('text-sm');
     }
   }
 

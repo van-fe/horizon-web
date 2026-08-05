@@ -1,78 +1,41 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const workstreams = [
+  { value: 'design', label: '设计系统与交互规范' },
+  { value: 'frontend', label: '前端组件库与业务应用集成' },
+  { value: 'backend', label: '服务端接口、权限与审计链路' },
+  { value: 'quality', label: '跨端自动化测试与发布质量保障' },
+  { value: 'operations', label: '生产监控、告警响应与故障复盘流程' },
+];
+const selected = ref<string[]>(['design', 'frontend', 'backend', 'quality']);
+</script>
+
 <template>
-  <h-grid :gap="10">
-    <h-grid-item :span="6">
-      <div class="demo-title">
-        选项超长
-        <h-tooltip>
-          <template #content>由于折叠需要执行宽度计算，在选项较多时，会对性能造成影响</template>
-          <a-icon name="help" />
-        </h-tooltip>
-      </div>
-      <h-select v-model="values4" collapse-tags multiple :to-body="false">
-        <h-option label="齐齐哈尔" :value="1" />
-        <h-option :value="2" label="那然色布斯台音布拉格" />
-        <h-option label="上海" :value="3" />
-        <h-option :value="4" label="北京" />
-        <h-option :value="5" label="合肥" name="hefei" />
-        <h-option
-          :value="6"
-          label="黄台甫马哈那坤弃他哇劳狄希阿由他亚马哈底陆浦欧叻辣塔尼布黎隆乌冬帕拉查尼卫马哈洒坦"
-        />
-      </h-select>
-    </h-grid-item>
-
-    <h-grid-item :span="6">
-      <div class="demo-title">带过滤选项长度超长</div>
-      <h-select
-        v-model="values5"
-        filterable
-        collapse-tags
-        multiple
-        :max-tag-width="200"
-        :to-body="false"
-      >
-        <h-option label="齐齐哈尔" :value="1" />
-        <h-option :value="2" label="那然色布斯台音布拉格" />
-        <h-option label="上海" :value="3" />
-        <h-option :value="4" label="北京" />
-        <h-option :value="5" label="合肥" name="hefei" />
-        <h-option
-          :value="6"
-          label="黄台甫马哈那坤弃他哇劳狄希阿由他亚马哈底陆浦欧叻辣塔尼布黎隆乌冬帕拉查尼卫马哈洒坦"
-        />
-      </h-select>
-    </h-grid-item>
-
-    <h-grid-item :span="6">
-      <div class="demo-title">允许创建</div>
-      <h-select v-model="values6" allow-create collapse-tags multiple :to-body="false">
-        <h-option label="齐齐哈尔" :value="1" />
-        <h-option :value="2" label="那然色布斯台音布拉格" />
-        <h-option label="上海" :value="3" />
-        <h-option :value="4" label="北京" />
-        <h-option :value="5" label="合肥" name="hefei" />
-        <h-option
-          :value="6"
-          label="黄台甫马哈那坤弃他哇劳狄希阿由他亚马哈底陆浦欧叻辣塔尼布黎隆乌冬帕拉查尼卫马哈洒坦"
-        />
-      </h-select>
-    </h-grid-item>
-  </h-grid>
+  <div class="select-demo">
+    <h-select
+      v-model="selected"
+      multiple
+      collapse-tags
+      collapse-tags-tooltip
+      collapse-tags-fill-up
+      :to-body="false"
+    >
+      <h-option v-for="item in workstreams" :key="item.value" v-bind="item" />
+    </h-select>
+    <p class="docs-demo__status">{{ selected.length }} 个工作流</p>
+  </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    const values4 = ref([]);
-    const values5 = ref([]);
-    const values6 = ref([]);
+<style scoped>
+.select-demo {
+  display: grid;
+  min-width: 0;
+  gap: 10px;
+}
 
-    return {
-      values4,
-      values5,
-      values6,
-    };
-  },
-});
-</script>
+.select-demo :deep(.h-select) {
+  width: 100%;
+  min-width: 0;
+}
+</style>

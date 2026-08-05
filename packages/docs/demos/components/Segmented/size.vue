@@ -1,18 +1,25 @@
-<template>
-  <h-space direction="vertical" block>
-    <h-segmented
-      v-for="s in ['mini', 'small', 'medium', 'large']"
-      :key="s"
-      :size="s"
-      default-active-key="Daily"
-    >
-      <h-segmented-item v-for="v in options" :key="v" :label="v" />
-    </h-segmented>
-  </h-space>
-</template>
-
 <script setup lang="ts">
-const options = ['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly'];
+import { ref } from 'vue';
+import type { HSegmentedSize } from '@aurora/horizon-web';
+
+const size = ref<HSegmentedSize>('medium');
+const active = ref('Tasks');
 </script>
 
-<style scoped></style>
+<template>
+  <section class="docs-demo">
+    <div class="docs-demo__controls">
+      <h-segmented v-model:active-key="size" size="small">
+        <h-segmented-item value="small" label="Small" />
+        <h-segmented-item value="medium" label="Medium" />
+        <h-segmented-item value="large" label="Large" />
+        <h-segmented-item value="huge" label="Huge" />
+      </h-segmented>
+    </div>
+    <h-segmented v-model:active-key="active" :size="size">
+      <h-segmented-item value="Overview" label="Overview" />
+      <h-segmented-item value="Tasks" label="Tasks" />
+      <h-segmented-item value="Files" label="Files" />
+    </h-segmented>
+  </section>
+</template>

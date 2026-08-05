@@ -2,6 +2,7 @@ import { AIcon } from '@aurora/icon';
 import { mount } from '@vue/test-utils';
 import { describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
+import HTooltip from '../../Tooltip/src/Tooltip';
 import HTab from '../src/Tab';
 import HTabs from '../src/Tabs';
 import type { HTabType, HTabValue } from '../src/composables/useProps';
@@ -26,15 +27,19 @@ describe('Tabs.tsx', () => {
         <div class="h-tabs__nav">
           <div class="h-tabs__nav-wrap">
             <div class="h-tabs__nav-list h-tabs__nav-list--space">
-              <div role="tab" data-name="1" class="h-tabs__tab" tabindex="-1" aria-selected="false" aria-disabled="false">
+              <div role="tab" data-focus-visible-inset="" data-name="1" class="h-tabs__tab" tabindex="-1" aria-selected="false" aria-disabled="false">
                 <div class="h-tabs__tab-inner">
                   <div class="h-tabs__tab-text">Tab1</div>
+                  <!--teleport start-->
+                  <!--teleport end-->
                   <!---->
                 </div>
               </div>
-              <div role="tab" data-name="2" class="h-tabs__tab" tabindex="-1" aria-selected="false" aria-disabled="false">
+              <div role="tab" data-focus-visible-inset="" data-name="2" class="h-tabs__tab" tabindex="-1" aria-selected="false" aria-disabled="false">
                 <div class="h-tabs__tab-inner">
                   <div class="h-tabs__tab-text">Tab1</div>
+                  <!--teleport start-->
+                  <!--teleport end-->
                   <!---->
                 </div>
               </div>
@@ -78,15 +83,19 @@ describe('Tabs.tsx', () => {
           <div class="h-tabs__nav">
             <div class="h-tabs__nav-wrap">
               <div class="h-tabs__nav-list">
-                <div role="tab" data-name="tab1" class="h-tabs__tab" tabindex="-1" aria-selected="false" aria-disabled="false">
+                <div role="tab" data-focus-visible-inset="" data-name="tab1" class="h-tabs__tab" tabindex="-1" aria-selected="false" aria-disabled="false">
                   <div class="h-tabs__tab-inner">
                     <div class="h-tabs__tab-text">tab1</div>
+                    <!--teleport start-->
+                    <!--teleport end-->
                     <!---->
                   </div>
                 </div>
-                <div role="tab" data-name="tab2" class="h-tabs__tab" tabindex="-1" aria-selected="false" aria-disabled="false">
+                <div role="tab" data-focus-visible-inset="" data-name="tab2" class="h-tabs__tab" tabindex="-1" aria-selected="false" aria-disabled="false">
                   <div class="h-tabs__tab-inner">
                     <div class="h-tabs__tab-text">tab2</div>
+                    <!--teleport start-->
+                    <!--teleport end-->
                     <!---->
                   </div>
                 </div>
@@ -158,14 +167,18 @@ describe('Tabs.tsx', () => {
           <div class="h-tabs__nav">
             <div class="h-tabs__nav-wrap">
               <div class="h-tabs__nav-list">
-                <div role="tab" test-id="tab1" data-name="tab1" class="h-tabs__tab" tabindex="-1" aria-selected="false" aria-disabled="false">
+                <div role="tab" test-id="tab1" data-focus-visible-inset="" data-name="tab1" class="h-tabs__tab" tabindex="-1" aria-selected="false" aria-disabled="false">
                   <div class="h-tabs__tab-inner">
-                    <div class="h-tabs__tab-text">tab1</div><span class="h-tabs__icon h-tabs__close" role="button" tabindex="0" aria-label="Close tab1"><svg class="a-icon h-icon_close h-icon__close" viewBox="0 0 24 24" fill="none" style="width: 1em; height: 1em; font-size: 1em; display: inline-block; vertical-align: inherit;"><path d="M11.9999 10.9517L19.9429 3C20.5267 3.58446 20.5267 4.53206 19.9429 5.11652L13.057 12.01L21 19.9617C20.4162 20.5461 19.4696 20.5461 18.8858 19.9617L11.9999 13.0682L5.11419 19.9615C4.53038 20.546 3.58382 20.546 3 19.9615L10.9428 12.01L4.0571 5.11664C3.47328 4.53217 3.47328 3.58458 4.0571 3.00011L11.9999 10.9517Z" fill="currentColor"></path></svg></span>
+                    <div class="h-tabs__tab-text">tab1</div>
+                    <!--teleport start-->
+                    <!--teleport end--><span class="h-tabs__icon h-tabs__close" role="button" tabindex="0" aria-label="Close tab1"><svg class="a-icon h-icon_close h-icon__close" viewBox="0 0 24 24" fill="none" style="width: 1em; height: 1em; font-size: 1em; display: inline-block; vertical-align: inherit;"><path d="M11.9999 10.9517L19.9429 3C20.5267 3.58446 20.5267 4.53206 19.9429 5.11652L13.057 12.01L21 19.9617C20.4162 20.5461 19.4696 20.5461 18.8858 19.9617L11.9999 13.0682L5.11419 19.9615C4.53038 20.546 3.58382 20.546 3 19.9615L10.9428 12.01L4.0571 5.11664C3.47328 4.53217 3.47328 3.58458 4.0571 3.00011L11.9999 10.9517Z" fill="currentColor"></path></svg></span>
                   </div>
                 </div>
-                <div role="tab" test-id="tab2" data-name="tab2" class="h-tabs__tab" tabindex="-1" aria-selected="false" aria-disabled="false">
+                <div role="tab" test-id="tab2" data-focus-visible-inset="" data-name="tab2" class="h-tabs__tab" tabindex="-1" aria-selected="false" aria-disabled="false">
                   <div class="h-tabs__tab-inner">
-                    <div class="h-tabs__tab-text">tab2</div><span class="h-tabs__icon h-tabs__close" role="button" tabindex="0" aria-label="Close tab2"><svg class="a-icon h-icon_close h-icon__close" viewBox="0 0 24 24" fill="none" style="width: 1em; height: 1em; font-size: 1em; display: inline-block; vertical-align: inherit;"><path d="M11.9999 10.9517L19.9429 3C20.5267 3.58446 20.5267 4.53206 19.9429 5.11652L13.057 12.01L21 19.9617C20.4162 20.5461 19.4696 20.5461 18.8858 19.9617L11.9999 13.0682L5.11419 19.9615C4.53038 20.546 3.58382 20.546 3 19.9615L10.9428 12.01L4.0571 5.11664C3.47328 4.53217 3.47328 3.58458 4.0571 3.00011L11.9999 10.9517Z" fill="currentColor"></path></svg></span>
+                    <div class="h-tabs__tab-text">tab2</div>
+                    <!--teleport start-->
+                    <!--teleport end--><span class="h-tabs__icon h-tabs__close" role="button" tabindex="0" aria-label="Close tab2"><svg class="a-icon h-icon_close h-icon__close" viewBox="0 0 24 24" fill="none" style="width: 1em; height: 1em; font-size: 1em; display: inline-block; vertical-align: inherit;"><path d="M11.9999 10.9517L19.9429 3C20.5267 3.58446 20.5267 4.53206 19.9429 5.11652L13.057 12.01L21 19.9617C20.4162 20.5461 19.4696 20.5461 18.8858 19.9617L11.9999 13.0682L5.11419 19.9615C4.53038 20.546 3.58382 20.546 3 19.9615L10.9428 12.01L4.0571 5.11664C3.47328 4.53217 3.47328 3.58458 4.0571 3.00011L11.9999 10.9517Z" fill="currentColor"></path></svg></span>
                   </div>
                 </div>
                 <div class="h-tabs__indicator"></div>
@@ -250,5 +263,52 @@ describe('Tabs.tsx', () => {
     expect(activeKey.value).toBe('two');
     expect(wrapper.find('[data-name="two"]').attributes('tabindex')).toBe('0');
     expect(wrapper.find('[data-name="disabled"]').attributes('tabindex')).toBe('-1');
+  });
+
+  test('shows the full label tooltip only when the tab text overflows', async () => {
+    vi.useFakeTimers();
+    const fullLabel = 'A tab with a complete label that does not fit';
+    const wrapper = mount(
+      () => (
+        <HTabs arrow={false}>
+          <HTab key="fits" label="Fits" />
+          <HTab key="overflows" label={fullLabel} />
+        </HTabs>
+      ),
+      { attachTo: document.body },
+    );
+
+    try {
+      const tooltips = wrapper.findAllComponents(HTooltip);
+      const labels = wrapper.findAll('.h-tabs__tab-text');
+      expect(tooltips).toHaveLength(2);
+      expect(tooltips[1].props('overflow')).toBe(true);
+      expect(tooltips[1].props('content')).toBe(fullLabel);
+
+      for (const [index, label] of labels.entries()) {
+        Object.defineProperties(label.element, {
+          scrollWidth: { configurable: true, value: index === 0 ? 80 : 180 },
+          scrollHeight: { configurable: true, value: 20 },
+          getBoundingClientRect: {
+            configurable: true,
+            value: () => ({ width: 100, height: 20 }),
+          },
+        });
+      }
+
+      await labels[0].trigger('mouseenter');
+      await vi.advanceTimersByTimeAsync(200);
+      await nextTick();
+      expect(document.body.querySelector('.h-tooltip__content')).toBeNull();
+
+      await labels[1].trigger('mouseenter');
+      await vi.advanceTimersByTimeAsync(200);
+      await nextTick();
+      expect(document.body.querySelector('.h-tooltip__content')?.textContent).toBe(fullLabel);
+    } finally {
+      wrapper.unmount();
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
   });
 });

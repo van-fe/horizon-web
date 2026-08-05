@@ -1,18 +1,13 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const score = ref(4);
+const tooltipText = ['很不满意', '不满意', '一般', '满意', '非常满意'];
+</script>
+
 <template>
-  <div class="">
-    <h-rate v-model="currentScore" show-tooltip />
-    <h-rate v-model="currentScore" show-tooltip :tooltip="tooltipText" />
+  <div class="docs-demo">
+    <h-rate v-model="score" show-tooltip :tooltip="tooltipText" />
+    <span aria-live="polite">{{ tooltipText[score - 1] }}</span>
   </div>
 </template>
-
-<script lang="ts">
-import { defineComponent, reactive, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    return {
-      tooltipText: reactive(['oops', 'disappointed', 'normal', 'good', 'great']),
-      currentScore: ref(3),
-    };
-  },
-});
-</script>

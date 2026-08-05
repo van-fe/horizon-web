@@ -1,60 +1,83 @@
 ## Basic Usage
-Set the image path through `src`, and set the image width and maximum width through `width` and `max-width`.  
-You don't need to set the image height, so the image can maintain its original aspect ratio.
+
+Use `src` for the image resource and `width` or `max-width` to constrain its responsive container. Without an explicit height, the image keeps its intrinsic aspect ratio. Always provide meaningful `alt` text.
+
 :::demo components/Image/basic.vue :::
 
-## Set Height
-You can also set the image height and maximum height through `height` and `max-height`, which is equivalent to customizing the image aspect ratio.
+## Height
+
+`height` and `max-height` establish a stable content box for aligned banners and card covers. Pair them with `object-fit="cover"` when the image should continue filling the box at each height.
+
 :::demo components/Image/height.vue :::
 
-## Set Aspect Ratio
-Sometimes the image width is not a fixed value, making it inconvenient to set the height, but you want to customize the image aspect ratio. At this time, `aspect-ratio` can help you. For details, see [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/aspect-ratio).
+## Aspect Ratio
+
+When the container width changes with the viewport, `aspect-ratio` preserves the intended shape. Square, editorial, and widescreen presets can serve different publishing surfaces. See [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/aspect-ratio) for the underlying CSS behavior.
+
 :::demo components/Image/aspect.vue :::
 
-## Fit Content Box
-When the actual aspect ratio of the image is inconsistent with the original aspect ratio, you can control how the image fits the content box through the `object-fit` attribute. For details, see [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit).  
-The dashed line is used to indicate the size of the current content box.
+## Object Fit
+
+When the source and content-box ratios differ, `object-fit` determines whether the image stretches, stays fully visible, or crops. Choose a mode that respects the artwork's safe area. See [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) for details.
+
 :::demo components/Image/fit.vue :::
 
-## Set Title
-Set `show-tooltip` to `true` and `title` is not empty, and the image title will be displayed in the form of tooltip.
+## Title Tooltip
+
+Set both `title` and `show-tooltip` to reveal the full title on hover. A title can recover a truncated asset name, but it does not replace descriptive `alt` text.
+
 :::demo components/Image/title.vue :::
 
-## Set Border Radius
-Control the border radius of the image through `rounded`.
+## Rounded Corners
+
+Use `rounded` with a number, a unit-bearing string, or a percentage to adapt the same image behavior to content cards, feature tiles, and profile crops.
+
 :::demo components/Image/rounded.vue :::
 
 ## Placeholder
-By default, a placeholder of adaptive size will be displayed during image loading. You can also customize it through the `placeholder` slot.
+
+The default placeholder appears while the source is unavailable or loading. A `placeholder` slot can explain an approval, generation, or upload state; make the eventual load result visible as well.
+
 :::demo components/Image/placeholder.vue :::
 
-## Load Failed
-By default, error content of adaptive size will be displayed after the image fails to load. You can also customize it through the `error` slot.
+## Error Recovery
+
+The component shows a default error state when loading fails, while the `error` slot can offer a clearer recovery path. This example simulates a decode failure with an invalid local data URI and retries with a repository asset, so it does not depend on the network.
+
 :::demo components/Image/error.vue :::
 
-## Lazy Load
-Pass in `lazyload` to enable lazy loading. Images will only be loaded when they first appear in the visible area.  
-You can open Developer Tools - Network - Filter Img, then go back to the top of the page and refresh the page to observe when the images are loaded.
+## Lazy Loading
+
+With `lazyload`, a resource is requested only when it first enters the viewport. For long lists, keep the scroll container keyboard-focusable and use the `load` event to expose progress.
+
 :::demo components/Image/lazyload.vue :::
 
 ## Image Viewer
-Pass in `show-viewer` to enable the image viewer `<h-viewer />`.
+
+Enable `show-viewer` to open the viewer when the image is clicked. `viewer-src` can provide a separate full-size asset for a thumbnail, while `title` or `alt` identifies the content in the viewer.
+
 :::demo components/Image/viewer.vue :::
 
-## Action Items
-Sometimes you want to display some action items when the mouse moves over the image. You can set `show-actions` to `true` and pass in an action list through `actions-list`.  
-By default, when the image width is greater than `40px`, the action items will be displayed as buttons, otherwise they will be displayed as a dropdown list; when the image width is greater than `80px`, the action items will be located in the bottom right corner, otherwise they will be centered. You can also completely customize the type and position through `actions-type` and `actions-position`.
+## Actions
+
+Enable `show-actions` and provide `actions-list` for preview, export, or archive commands on hover. The default `auto` type and placement switch between icons and a dropdown according to image size. Surface action results in the page instead of only logging them.
+
 :::demo components/Image/actions.vue :::
 
-## Content Slot
-If you need to completely customize the content on the image, you can use the default slot, which will always be displayed on the upper layer of the image; we also provide a `hover` slot, which will only be displayed when the mouse moves over the image.  
-The content slot will only take effect after the image has been successfully loaded.
+## Content Slots
+
+The default slot stays above a successfully loaded image; the `hover` slot appears only on hover. Maintain readable contrast and avoid covering the image's important subject.
+
 :::demo components/Image/slot.vue :::
 
 ## Image List
-To make it easier to display a series of images, we also provide the `h-image-list` component. You can control the spacing between each image and the maximum number of images to display.
+
+`h-image-list` uses `margin` for thumbnail spacing and `limit` for the visible count. When child images enable `show-viewer`, any visible item can open the complete list.
+
 :::demo components/Image/list.vue :::
 
 ## Custom Overflow
-You can control the font size of overflow text through `limit-text-size`, and you can also completely customize the overflow display through the `limit` slot.
+
+When the item count exceeds `limit`, the last visible position displays the overflow count. Use the `limit` slot for domain-specific wording and `limit-text-size` to tune its typography.
+
 :::demo components/Image/listCustom.vue :::

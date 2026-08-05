@@ -21,6 +21,7 @@ export interface ApiGeneratorExportedDirectives {
   name: string;
   entranceFilePath: string;
   desc: string;
+  descLocales?: Record<string, string>;
   directiveDefinedFilePath: string;
   optionsVariableFilePath: string;
   optionsVariableName: string;
@@ -174,6 +175,7 @@ export interface ApiGeneratorExportedMethod {
   name: string;
   entranceFilePath: string;
   desc: string;
+  descLocales?: Record<string, string>;
   methodDefinedFilePath: string;
   methodExportedName: string;
   optionsVariableFilePath: string;

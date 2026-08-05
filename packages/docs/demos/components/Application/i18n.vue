@@ -1,25 +1,46 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+import { LocaleSupportLang } from '@aurora/locale-vue';
+
+const currentLocale = ref<LocaleSupportLang>(LocaleSupportLang.ZhCN);
+const deadline = ref();
+const localeOptions = [
+  { label: '简体中文', value: LocaleSupportLang.ZhCN },
+  { label: 'English', value: LocaleSupportLang.En },
+  { label: 'Deutsch', value: LocaleSupportLang.DE },
+];
+</script>
+
 <template>
-  <h-application :locale="locale.current">
-    <h-form label-position="left">
-      <h-form-item label="current language">
-        <h-select v-model="locale.current" size="small" style="width: 120px; display: inline-block">
-          <h-option v-for="item of LocaleSupportLang" :key="item" :value="item" :label="item" />
+  <section class="docs-demo">
+    <div class="docs-demo__controls">
+      <label class="docs-demo__control">
+        <span class="docs-demo__control-label">Locale</span>
+        <h-select v-model="currentLocale" aria-label="界面语言" :to-body="false">
+          <h-option
+            v-for="option in localeOptions"
+            :key="option.value"
+            :label="option.label"
+            :value="option.value"
+          />
         </h-select>
-      </h-form-item>
-    </h-form>
-    <p style="margin-top: 20px;">
-      {{ td().horizonWeb.datePicker.now }}
-    </p>
-    <p>
-      {{ td().horizonWeb.datePicker.today }}
-    </p>
-  </h-application>
+      </label>
+    </div>
+
+    <h-application :locale="currentLocale">
+      <div class="application-fields">
+        <h-date-picker v-model="deadline" type="date" />
+        <h-button>Confirm</h-button>
+      </div>
+    </h-application>
+  </section>
 </template>
 
-<script setup lang="ts">
-import { inject } from 'vue';
-import { LocaleSupportLang } from '@aurora/locale-vue';
-import { localeInjectKey, defaultLocale } from '@aurora/horizon-web';
-
-const locale = inject(localeInjectKey, defaultLocale);
-</script>
+<style scoped>
+.application-fields {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--h-spacing-3);
+}
+</style>

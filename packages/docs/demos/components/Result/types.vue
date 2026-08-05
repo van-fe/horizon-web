@@ -1,16 +1,36 @@
 <template>
-  <h-grid :gap="10">
-    <h-grid-item :span="12">
-      <h-result title="这是一条成功消息" subtitle="这是一段相关的描述文案,这是一段相关的描述文案,这是一段相关的描述文案" type="success" />
-    </h-grid-item>
-    <h-grid-item :span="12">
-      <h-result title="这是一条提示信息" subtitle="这是一段相关的描述文案,这是一段相关的描述文案" type="info" />
-    </h-grid-item>
-    <h-grid-item :span="12">
-      <h-result title="这是一条警示信息" subtitle="这是一段相关的描述文案,这是一段相关的描述文案" type="warning" />
-    </h-grid-item>
-    <h-grid-item :span="12">
-      <h-result title="这是一条错误信息" subtitle="这是一段相关的描述文案,这是一段相关的描述文案" type="error" />
-    </h-grid-item>
-  </h-grid>
+  <section class="docs-demo">
+    <div class="docs-demo__controls">
+      <h-segmented v-model:active-key="activeType" size="small">
+        <h-segmented-item
+          v-for="item in items"
+          :key="item.type"
+          :value="item.type"
+          :label="item.type"
+        />
+      </h-segmented>
+    </div>
+    <h-result
+      :title="activeItem.title"
+      :subtitle="activeItem.subtitle"
+      :type="activeItem.type"
+      size="small"
+      :primary-button="false"
+      :secondary-button="false"
+    />
+  </section>
 </template>
+
+<script setup lang="ts">
+import { computed, ref } from 'vue';
+
+const items = [
+  { type: 'success', title: 'Import complete', subtitle: '248 customer records are ready.' },
+  { type: 'info', title: 'Review scheduled', subtitle: 'The request is queued for tomorrow.' },
+  { type: 'warning', title: 'Two fields skipped', subtitle: 'Review the import mapping.' },
+  { type: 'error', title: 'Import failed', subtitle: 'Correct the source file and retry.' },
+] as const;
+
+const activeType = ref<(typeof items)[number]['type']>('success');
+const activeItem = computed(() => items.find(item => item.type === activeType.value) ?? items[0]);
+</script>

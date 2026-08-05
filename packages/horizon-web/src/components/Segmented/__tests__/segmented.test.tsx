@@ -3,6 +3,7 @@ import { mount } from '@vue/test-utils';
 import { describe, expect, test, vi } from 'vitest';
 import { nextTick, reactive, ref } from 'vue';
 import { HForm, HFormItem, type HFormInstance } from '../../Form';
+import HTooltip from '../../Tooltip/src/Tooltip';
 import HSegmented from '../src/Segmented';
 import HSegmentedItem from '../src/SegmentedItem';
 import type { HSegmentedValue } from '../src/composables/useProps';
@@ -22,8 +23,8 @@ describe('Segmented.tsx', () => {
 
     const wrapper = mount(() => (
       <HSegmented defaultActiveKey={defaultActiveKey.value}>
-        <HSegmentedItem key="1">1</HSegmentedItem>
-        <HSegmentedItem key="2">2</HSegmentedItem>
+        <HSegmentedItem value="1">1</HSegmentedItem>
+        <HSegmentedItem value="2">2</HSegmentedItem>
       </HSegmented>
     ));
     const element = wrapper.findComponent(HSegmented);
@@ -32,10 +33,10 @@ describe('Segmented.tsx', () => {
         <div class="h-segmented__nav">
           <div class="h-segmented__nav-wrap">
             <div class="h-segmented__nav-list">
-              <div class="h-segmented__item h-segmented__item--active" role="tab" tabindex="0" aria-selected="true" aria-disabled="false">
+              <div class="h-segmented__item h-segmented__item--active" role="tab" data-focus-visible-inset="" tabindex="0" aria-selected="true" aria-disabled="false">
                 <div class="h-segmented__item-inner">1</div>
               </div>
-              <div class="h-segmented__item" role="tab" tabindex="-1" aria-selected="false" aria-disabled="false">
+              <div class="h-segmented__item" role="tab" data-focus-visible-inset="" tabindex="-1" aria-selected="false" aria-disabled="false">
                 <div class="h-segmented__item-inner">2</div>
               </div>
               <div class="h-segmented__indicator"></div>
@@ -59,7 +60,7 @@ describe('Segmented.tsx', () => {
           {Array(max)
             .fill(0)
             .map((_, index) => (
-              <HSegmentedItem key={index} label={`Label ${index}`} />
+              <HSegmentedItem key={index} value={index} label={`Label ${index}`} />
             ))}
         </HSegmented>
       </div>
@@ -83,8 +84,8 @@ describe('Segmented.tsx', () => {
     const wrapper = mount(() => (
       <div style={{ width: `${bw}px`, display: 'block' }}>
         <HSegmented block>
-          <HSegmentedItem key="1">1</HSegmentedItem>
-          <HSegmentedItem key="2">2</HSegmentedItem>
+          <HSegmentedItem value="1">1</HSegmentedItem>
+          <HSegmentedItem value="2">2</HSegmentedItem>
         </HSegmented>
       </div>
     ));
@@ -95,10 +96,10 @@ describe('Segmented.tsx', () => {
           <div class="h-segmented__nav">
             <div class="h-segmented__nav-wrap">
               <div class="h-segmented__nav-list">
-                <div class="h-segmented__item" role="tab" tabindex="-1" aria-selected="false" aria-disabled="false">
+                <div class="h-segmented__item" role="tab" data-focus-visible-inset="" tabindex="-1" aria-selected="false" aria-disabled="false">
                   <div class="h-segmented__item-inner">1</div>
                 </div>
-                <div class="h-segmented__item" role="tab" tabindex="-1" aria-selected="false" aria-disabled="false">
+                <div class="h-segmented__item" role="tab" data-focus-visible-inset="" tabindex="-1" aria-selected="false" aria-disabled="false">
                   <div class="h-segmented__item-inner">2</div>
                 </div>
                 <div class="h-segmented__indicator"></div>
@@ -121,10 +122,10 @@ describe('Segmented.tsx', () => {
     const fn = vi.fn();
     const wrapper = mount(() => (
       <HSegmented defaultActiveKey="2" onChange={fn}>
-        <HSegmentedItem key="1" disabled>
+        <HSegmentedItem value="1" disabled>
           1
         </HSegmentedItem>
-        <HSegmentedItem key="2">2</HSegmentedItem>
+        <HSegmentedItem value="2">2</HSegmentedItem>
       </HSegmented>
     ));
 
@@ -133,10 +134,10 @@ describe('Segmented.tsx', () => {
         <div class="h-segmented__nav">
           <div class="h-segmented__nav-wrap">
             <div class="h-segmented__nav-list">
-              <div class="h-segmented__item h-segmented__item--disabled" role="tab" tabindex="-1" aria-selected="false" aria-disabled="true">
+              <div class="h-segmented__item h-segmented__item--disabled" role="tab" data-focus-visible-inset="" tabindex="-1" aria-selected="false" aria-disabled="true">
                 <div class="h-segmented__item-inner">1</div>
               </div>
-              <div class="h-segmented__item h-segmented__item--active" role="tab" tabindex="0" aria-selected="true" aria-disabled="false">
+              <div class="h-segmented__item h-segmented__item--active" role="tab" data-focus-visible-inset="" tabindex="0" aria-selected="true" aria-disabled="false">
                 <div class="h-segmented__item-inner">2</div>
               </div>
               <div class="h-segmented__indicator"></div>
@@ -164,8 +165,8 @@ describe('Segmented.tsx', () => {
     });
     const wrapper = mount(() => (
       <HSegmented activeKey={activeKey.value} onChange={fn}>
-        <HSegmentedItem key="1">1</HSegmentedItem>
-        <HSegmentedItem key="2">2</HSegmentedItem>
+        <HSegmentedItem value="1">1</HSegmentedItem>
+        <HSegmentedItem value="2">2</HSegmentedItem>
       </HSegmented>
     ));
 
@@ -185,8 +186,8 @@ describe('Segmented.tsx', () => {
     const size = ref();
     const wrapper = mount(() => (
       <HSegmented size={size.value}>
-        <HSegmentedItem key="1">1</HSegmentedItem>
-        <HSegmentedItem key="2">2</HSegmentedItem>
+        <HSegmentedItem value="1">1</HSegmentedItem>
+        <HSegmentedItem value="2">2</HSegmentedItem>
       </HSegmented>
     ));
 
@@ -212,7 +213,7 @@ describe('Segmented.tsx', () => {
     const wrapper = mount(() => (
       <HSegmented activeKey={activeKey.value} onChange={fn}>
         {items.value.map(item => (
-          <HSegmentedItem key={item} label={`Label ${item}`} />
+          <HSegmentedItem key={item} value={item} label={`Label ${item}`} />
         ))}
       </HSegmented>
     ));
@@ -233,8 +234,8 @@ describe('Segmented.tsx', () => {
     });
     const wrapper = mount(() => (
       <HSegmented activeKey={activeKey.value} onChange={fn}>
-        <HSegmentedItem key="1" label="1" />
-        <HSegmentedItem key="2">
+        <HSegmentedItem value="1" label="1" />
+        <HSegmentedItem value="2">
           <div test-id="custom">2</div>
         </HSegmentedItem>
       </HSegmented>
@@ -249,8 +250,8 @@ describe('Segmented.tsx', () => {
   test('test custom icon #render', async () => {
     const wrapper = mount(() => (
       <HSegmented>
-        <HSegmentedItem key="1" label="1" icon="layout" />
-        <HSegmentedItem key="2" label="2" icon="list" />
+        <HSegmentedItem value="1" label="1" icon="layout" />
+        <HSegmentedItem value="2" label="2" icon="list" />
       </HSegmented>
     ));
 
@@ -259,7 +260,7 @@ describe('Segmented.tsx', () => {
         <div class="h-segmented__nav">
           <div class="h-segmented__nav-wrap">
             <div class="h-segmented__nav-list">
-              <div class="h-segmented__item" role="tab" tabindex="-1" aria-selected="false" aria-disabled="false">
+              <div class="h-segmented__item" role="tab" data-focus-visible-inset="" tabindex="-1" aria-selected="false" aria-disabled="false">
                 <div class="h-segmented__item-inner"><svg class="a-icon h-icon_layout h-icon__layout h-segmented__icon" viewBox="0 0 24 24" fill="none" style="width: 1em; height: 1em; font-size: 1em; display: inline-block; vertical-align: inherit;">
                     <path d="M2.79951 2.00195C2.35768 2.00195 1.99951 2.36013 1.99951 2.80195V8.20195C1.99951 8.64378 2.35768 9.00195 2.79951 9.00195H21.1995C21.6413 9.00195 21.9995 8.64378 21.9995 8.20195V2.80195C21.9995 2.36013 21.6413 2.00195 21.1995 2.00195H2.79951ZM20.4995 3.50195V7.50195H3.49951V3.50195H20.4995Z" fill="currentColor"></path>
                     <path d="M2.79951 11.002C2.35768 11.002 1.99951 11.3601 1.99951 11.802V21.202C1.99951 21.6438 2.35768 22.002 2.79951 22.002H11.1995C11.6413 22.002 11.9995 21.6438 11.9995 21.202V11.802C11.9995 11.3601 11.6413 11.002 11.1995 11.002H2.79951ZM10.4995 12.502V20.502H3.49951V12.502H10.4995Z" fill="currentColor"></path>
@@ -267,10 +268,12 @@ describe('Segmented.tsx', () => {
                     <path d="M13.9995 15.752H21.9995C21.9995 16.5804 21.3279 17.252 20.4995 17.252H15.4995C14.6711 17.252 13.9995 16.5804 13.9995 15.752Z" fill="currentColor"></path>
                     <path d="M21.9995 19.752H13.9995C13.9995 20.5804 14.6711 21.252 15.4995 21.252H20.4995C21.3279 21.252 21.9995 20.5804 21.9995 19.752Z" fill="currentColor"></path>
                   </svg>
-                  <div class="h-segmented__item-text" title="1">1</div>
+                  <div class="h-segmented__item-text">1</div>
+                  <!--teleport start-->
+                  <!--teleport end-->
                 </div>
               </div>
-              <div class="h-segmented__item" role="tab" tabindex="-1" aria-selected="false" aria-disabled="false">
+              <div class="h-segmented__item" role="tab" data-focus-visible-inset="" tabindex="-1" aria-selected="false" aria-disabled="false">
                 <div class="h-segmented__item-inner"><svg class="a-icon h-icon_list h-icon__list h-segmented__icon" viewBox="0 0 24 24" fill="none" style="width: 1em; height: 1em; font-size: 1em; display: inline-block; vertical-align: inherit;">
                     <path d="M8.5 4.36743H21C21 5.19586 20.3284 5.86743 19.5 5.86743H10C9.17157 5.86743 8.5 5.19586 8.5 4.36743Z" fill="currentColor"></path>
                     <path d="M8.1065 3.34771L5.6065 6.34771C5.32416 6.68651 4.81185 6.70975 4.5 6.3979L3 4.8979C3.54604 4.35186 4.37175 4.14832 4.97993 4.75651L5.99389 3.53976C6.52423 2.90335 7.47008 2.81736 8.1065 3.34771Z" fill="currentColor"></path>
@@ -279,7 +282,9 @@ describe('Segmented.tsx', () => {
                     <path d="M5 11.8674C4.72386 11.8674 4.5 11.6436 4.5 11.3674C4.5 11.0913 4.72386 10.8674 5 10.8674C5.27614 10.8674 5.5 11.0913 5.5 11.3674C5.5 11.6436 5.27614 11.8674 5 11.8674ZM5 13.3674C6.10457 13.3674 7 12.472 7 11.3674C7 10.2629 6.10457 9.36743 5 9.36743C3.89543 9.36743 3 10.2629 3 11.3674C3 12.472 3.89543 13.3674 5 13.3674Z" fill="currentColor"></path>
                     <path d="M5 18.8674C4.72386 18.8674 4.5 18.6436 4.5 18.3674C4.5 18.0913 4.72386 17.8674 5 17.8674C5.27614 17.8674 5.5 18.0913 5.5 18.3674C5.5 18.6436 5.27614 18.8674 5 18.8674ZM5 20.3674C6.10457 20.3674 7 19.472 7 18.3674C7 17.2629 6.10457 16.3674 5 16.3674C3.89543 16.3674 3 17.2629 3 18.3674C3 19.472 3.89543 20.3674 5 20.3674Z" fill="currentColor"></path>
                   </svg>
-                  <div class="h-segmented__item-text" title="2">2</div>
+                  <div class="h-segmented__item-text">2</div>
+                  <!--teleport start-->
+                  <!--teleport end-->
                 </div>
               </div>
               <div class="h-segmented__indicator"></div>
@@ -311,8 +316,8 @@ describe('Segmented.tsx', () => {
         <HForm model={formValue} validateTrigger="change" ref={formInst} onValidate={onValidate}>
           <HFormItem prop="category" required>
             <HSegmented form activeKey={formValue.category} onChange={fn}>
-              <HSegmentedItem key="1" label="1" />
-              <HSegmentedItem key="2" label="2" />
+              <HSegmentedItem value="1" label="1" />
+              <HSegmentedItem value="2" label="2" />
             </HSegmented>
           </HFormItem>
         </HForm>
@@ -330,14 +335,18 @@ describe('Segmented.tsx', () => {
                   <div class="h-segmented__nav">
                     <div class="h-segmented__nav-wrap">
                       <div class="h-segmented__nav-list">
-                        <div class="h-segmented__item" role="tab" tabindex="-1" aria-selected="false" aria-disabled="false">
+                        <div class="h-segmented__item" role="tab" data-focus-visible-inset="" tabindex="-1" aria-selected="false" aria-disabled="false">
                           <div class="h-segmented__item-inner">
-                            <div class="h-segmented__item-text" title="1">1</div>
+                            <div class="h-segmented__item-text">1</div>
+                            <!--teleport start-->
+                            <!--teleport end-->
                           </div>
                         </div>
-                        <div class="h-segmented__item" role="tab" tabindex="-1" aria-selected="false" aria-disabled="false">
+                        <div class="h-segmented__item" role="tab" data-focus-visible-inset="" tabindex="-1" aria-selected="false" aria-disabled="false">
                           <div class="h-segmented__item-inner">
-                            <div class="h-segmented__item-text" title="2">2</div>
+                            <div class="h-segmented__item-text">2</div>
+                            <!--teleport start-->
+                            <!--teleport end-->
                           </div>
                         </div>
                         <div class="h-segmented__indicator"></div>
@@ -365,7 +374,7 @@ describe('Segmented.tsx', () => {
 
     expect(formInst.value).toBeTruthy();
     await expect(formInst.value?.validate()).rejects.toThrowError();
-    const activate = wrapper.find('[title=2]');
+    const activate = wrapper.findAll('[role="tab"]')[1];
     await activate.trigger('click');
     await nextTick();
     expect(onValidate).toBeCalledTimes(2);
@@ -373,15 +382,62 @@ describe('Segmented.tsx', () => {
     expect(formValue.category).toBe('2');
   });
 
+  test('shows the full label tooltip only when the item text overflows', async () => {
+    vi.useFakeTimers();
+    const fullLabel = 'A segmented option with a complete label';
+    const wrapper = mount(
+      () => (
+        <HSegmented block>
+          <HSegmentedItem key="fits" value="fits" label="Fits" />
+          <HSegmentedItem key="overflows" value="overflows" label={fullLabel} />
+        </HSegmented>
+      ),
+      { attachTo: document.body },
+    );
+
+    try {
+      const tooltips = wrapper.findAllComponents(HTooltip);
+      const labels = wrapper.findAll('.h-segmented__item-text');
+      expect(tooltips).toHaveLength(2);
+      expect(tooltips[1].props('overflow')).toBe(true);
+      expect(tooltips[1].props('content')).toBe(fullLabel);
+
+      for (const [index, label] of labels.entries()) {
+        Object.defineProperties(label.element, {
+          scrollWidth: { configurable: true, value: index === 0 ? 80 : 180 },
+          scrollHeight: { configurable: true, value: 20 },
+          getBoundingClientRect: {
+            configurable: true,
+            value: () => ({ width: 100, height: 20 }),
+          },
+        });
+      }
+
+      await labels[0].trigger('mouseenter');
+      await vi.advanceTimersByTimeAsync(200);
+      await nextTick();
+      expect(document.body.querySelector('.h-tooltip__content')).toBeNull();
+
+      await labels[1].trigger('mouseenter');
+      await vi.advanceTimersByTimeAsync(200);
+      await nextTick();
+      expect(document.body.querySelector('.h-tooltip__content')?.textContent).toBe(fullLabel);
+    } finally {
+      wrapper.unmount();
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
+  });
+
   test('supports arrow-key selection and skips disabled items', async () => {
     const activeKey = ref<HSegmentedValue>('one');
     const wrapper = mount(() => (
       <HSegmented v-model:activeKey={activeKey.value}>
-        <HSegmentedItem key="one">One</HSegmentedItem>
-        <HSegmentedItem key="disabled" disabled>
+        <HSegmentedItem value="one">One</HSegmentedItem>
+        <HSegmentedItem value="disabled" disabled>
           Disabled
         </HSegmentedItem>
-        <HSegmentedItem key="two">Two</HSegmentedItem>
+        <HSegmentedItem value="two">Two</HSegmentedItem>
       </HSegmented>
     ));
     const items = wrapper.findAll('[role="tab"]');
@@ -391,5 +447,78 @@ describe('Segmented.tsx', () => {
     expect(activeKey.value).toBe('two');
     expect(items[1].attributes('aria-disabled')).toBe('true');
     expect(items[1].attributes('tabindex')).toBe('-1');
+  });
+
+  test('uses item values for selection and events independently of vnode keys', async () => {
+    const activeKey = ref<HSegmentedValue>('first');
+    const wrapper = mount(() => (
+      <HSegmented v-model:activeKey={activeKey.value}>
+        <HSegmentedItem key="render-first" value="first">
+          First
+        </HSegmentedItem>
+        <HSegmentedItem key="render-second" value={2}>
+          Second
+        </HSegmentedItem>
+      </HSegmented>
+    ));
+    const segmented = wrapper.findComponent(HSegmented);
+    const itemComponents = wrapper.findAllComponents(HSegmentedItem);
+    const items = wrapper.findAll('[role="tab"]');
+
+    expect(items[0].attributes('aria-selected')).toBe('true');
+    expect(items[1].attributes('aria-selected')).toBe('false');
+
+    await items[1].trigger('click');
+
+    expect(activeKey.value).toBe(2);
+    expect(items[0].attributes('aria-selected')).toBe('false');
+    expect(items[1].attributes('aria-selected')).toBe('true');
+    expect(itemComponents[1].emitted('click')).toEqual([[2]]);
+    expect(segmented.emitted('update:activeKey')).toEqual([[2]]);
+    expect(segmented.emitted('change')).toEqual([[2]]);
+  });
+
+  test('refreshes the responsive registry when item values change', async () => {
+    const activeKey = ref<HSegmentedValue>('first');
+    const firstValue = ref<HSegmentedValue>('first');
+    const secondValue = ref<HSegmentedValue>('second');
+    const wrapper = mount(() => (
+      <HSegmented activeKey={activeKey.value}>
+        <HSegmentedItem key="render-first" value={firstValue.value}>
+          First
+        </HSegmentedItem>
+        <HSegmentedItem key="render-second" value={secondValue.value}>
+          Second
+        </HSegmentedItem>
+      </HSegmented>
+    ));
+    const items = wrapper.findAll('[role="tab"]');
+    const indicator = wrapper.find('.h-segmented__indicator');
+
+    Object.defineProperties(items[0].element, {
+      clientWidth: { configurable: true, value: 40 },
+      offsetLeft: { configurable: true, value: 0 },
+    });
+    Object.defineProperties(items[1].element, {
+      clientWidth: { configurable: true, value: 90 },
+      offsetLeft: { configurable: true, value: 50 },
+    });
+
+    activeKey.value = 'second';
+    await nextTick();
+    expect(indicator.attributes('style')).toContain('width: 90px');
+    expect(indicator.attributes('style')).toContain('translate3d(50px, 0, 0)');
+
+    firstValue.value = 'second';
+    secondValue.value = 'first';
+    await nextTick();
+    expect(items[0].attributes('aria-selected')).toBe('true');
+    expect(indicator.attributes('style')).toContain('width: 40px');
+    expect(indicator.attributes('style')).toContain('translate3d(0px, 0, 0)');
+
+    firstValue.value = 'third';
+    await nextTick();
+    expect(items.every(item => item.attributes('aria-selected') === 'false')).toBe(true);
+    expect(indicator.attributes('style')).toBeUndefined();
   });
 });

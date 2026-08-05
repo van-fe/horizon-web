@@ -1,67 +1,57 @@
-<template>
-  <h-form label-vertical-align="middle" label-position="left">
-    <h-form-item label="是否将文件传输到后台上传">
-      <h-switch v-model="useBackground" />
-    </h-form-item>
-    <h-form-item label="后台上传是否显示">
-      <h-switch v-model="backgroundVisible" />
-    </h-form-item>
-    <h-form-item label="是否显示文件列表">
-      <h-switch v-model="showFileList" />
-    </h-form-item>
-  </h-form>
-  <h-grid :gap="12">
-    <h-grid-item :span="24">
-      <h-upload
-        id="background-uploader"
-        v-model:use-background="useBackground"
-        action="https://horizon-web-inspector.demoint.com/upload-mock"
-        button-text="单选手动上传"
-        :show-file-list="showFileList"
-        :auto-upload="false"
-      />
-    </h-grid-item>
-    <h-grid-item :span="24">
-      <h-upload
-        v-model:use-background="useBackground"
-        action="https://horizon-web-inspector.demoint.com/upload-mock"
-        button-text="多选自动上传"
-        :multiple="true"
-        :show-file-list="showFileList"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { ref, watch, onBeforeUnmount } from 'vue';
+import type { HUploadFileType, HUploadRawFileType } from '@aurora/horizon-web';
+import { onBeforeUnmount, ref } from 'vue';
+import { createMockUploader, resolveLocalUpload } from './mockUpload';
 
+interface UploadExpose {
+  upload: (files?: HUploadRawFileType[]) => Promise<void>;
+  abort: () => Promise<void>;
+  destroyBackgroundUploader: () => void;
+}
+
+const mockUploader = createMockUploader(120);
+const uploadRef = ref<UploadExpose>();
 const useBackground = ref(true);
-const backgroundVisible = ref(true);
 const showFileList = ref(true);
+const status = ref('Background upload ready');
 
-watch(backgroundVisible, visible => {
-  window.dispatchEvent(new CustomEvent('switchBackgroundUploadVisible', {
-    detail: {
-      visible,
-    },
-  }));
-});
-
-function onBackgroundUploadVisibleChanged(evt: WindowEventMap['backgroundUploadVisibleChanged']) {
-  console.info(`id: ${evt.detail.id} 的后台上传状态改变为 ${evt.detail.visible}`);
-  backgroundVisible.value = evt.detail.visible;
+function onUploading(file: HUploadFileType, progress: number) {
+  status.value = `${file.name} · ${Math.round(progress)}%`;
 }
 
-function onBackgroundUploadDestroy(evt: WindowEventMap['backgroundUploadDestroy']) {
-  console.info(`id: ${evt.detail} 的后台已销毁`);
+async function startSampleUpload() {
+  const file = new File([new Uint8Array(640 * 1024)], 'release-evidence.zip', {
+    type: 'application/zip',
+  });
+  status.value = 'Sample added to background queue';
+  await uploadRef.value?.upload([file]);
 }
-
-window.addEventListener('backgroundUploadVisibleChanged', onBackgroundUploadVisibleChanged);
-window.addEventListener('backgroundUploadDestroy', onBackgroundUploadDestroy);
 
 onBeforeUnmount(() => {
-  window.removeEventListener('backgroundUploadVisibleChanged', onBackgroundUploadVisibleChanged);
-  window.removeEventListener('backgroundUploadDestroy', onBackgroundUploadDestroy);
+  void uploadRef.value?.abort();
+  uploadRef.value?.destroyBackgroundUploader();
+  mockUploader.dispose();
 });
 </script>
+
+<template>
+  <div class="docs-demo">
+    <div class="docs-demo__controls">
+      <h-switch v-model="useBackground" label="Background queue" />
+      <h-switch v-model="showFileList" label="Show inline list" />
+      <h-button size="small" @click="startSampleUpload">Start sample</h-button>
+    </div>
+    <h-upload
+      id="release-background-uploader"
+      ref="uploadRef"
+      v-model:use-background="useBackground"
+      :http-request="mockUploader.request"
+      :handle-success="resolveLocalUpload"
+      :show-file-list="showFileList"
+      :auto-upload="false"
+      @uploading="onUploading"
+      @uploaded="file => (status = `${file.name} uploaded`)"
+    />
+    <span aria-live="polite">{{ status }}</span>
+  </div>
+</template>

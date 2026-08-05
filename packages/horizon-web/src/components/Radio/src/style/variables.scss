@@ -123,6 +123,6 @@ $values: (
   ),
   box-shadow: -1px 0 0 0 #{function.css-variable('bg-brand-default')},
   transition: (
-    all: #{function.css-variable('transition-all--fast')},
+    all: #{function.css-variable('transition', 'all', 'fast')},
   ),
 );

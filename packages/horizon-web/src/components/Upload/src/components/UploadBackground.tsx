@@ -111,9 +111,7 @@ export default defineComponent({
 
     const canViewerFiles = computed(() =>
       Array.from(uploadFileHelper.fileList.value.values())
-        .filter(file =>
-          [HUploadFileTypeEnum.Image, HUploadFileTypeEnum.Video].includes(file.type),
-        )
+        .filter(file => [HUploadFileTypeEnum.Image, HUploadFileTypeEnum.Video].includes(file.type))
         .filter(file => props.uploadProps?.beforeViewerPreview?.(file) ?? true),
     );
 
@@ -267,7 +265,7 @@ export default defineComponent({
 
     expose({
       addFile(file: Arrayable<HUploadFileType>) {
-        void uploadFileHelper.addFiles(file);
+        void uploadFileHelper.addFiles(file, false);
       },
       removeFile(file: HUploadFileType) {
         void uploadFileHelper.removeFile([file], false);
@@ -278,6 +276,7 @@ export default defineComponent({
     });
 
     onBeforeUnmount(() => {
+      uploadFileHelper.dispose();
       emit('destroy');
     });
 

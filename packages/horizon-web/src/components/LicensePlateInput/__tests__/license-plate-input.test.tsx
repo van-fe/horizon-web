@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, expect, test } from 'vitest';
-import { nextTick } from 'vue';
+import { nextTick, ref } from 'vue';
 import HButton from '~/components/Button/src/Button';
 import HPopover from '~/components/Popover/src/Popover';
 import { dictionaries } from '~/locales';
@@ -49,6 +49,28 @@ describe('LicensePlateInput', () => {
     expect(wrapper.find('.h-license-plate-input__keyboard').exists()).toBe(true);
   });
 
+  test('renders a persistent inline panel without creating a Popover', async () => {
+    const modelValue = ref('');
+    const wrapper = mount(() => (
+      <LicensePlateInput v-model={modelValue.value} inlinePanel toBody={false} />
+    ));
+
+    expect(wrapper.findComponent(HPopover).exists()).toBe(false);
+    expect(wrapper.find('.h-license-plate-input__inline-panel').exists()).toBe(true);
+
+    await wrapper
+      .findAllComponents(HButton)
+      .find(button => button.text() === '京')!
+      .trigger('click');
+    expect(modelValue.value).toBe('京');
+
+    await wrapper
+      .findAllComponents(HButton)
+      .find(button => button.text() === 'Done')!
+      .trigger('click');
+    expect(wrapper.find('.h-license-plate-input__inline-panel').exists()).toBe(true);
+  });
+
   test('switches keyboard layouts and emits a complete plate', async () => {
     const wrapper = mountInput();
     await wrapper.find('input').trigger('focus');
@@ -86,6 +108,22 @@ describe('LicensePlateInput', () => {
     expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual(['粤BD12345']);
   });
 
+  test('clears v-model when backspacing the selected province cell', async () => {
+    const modelValue = ref('京A12345');
+    const wrapper = mount(() => <LicensePlateInput v-model={modelValue.value} toBody={false} />);
+    const cells = wrapper.findAll('.h-license-plate-input__cell');
+
+    await cells[0].trigger('click');
+    await wrapper
+      .findAllComponents(HButton)
+      .find(button => button.text() === 'Backspace')!
+      .trigger('click');
+
+    expect(modelValue.value).toBe('');
+    expect(wrapper.find('input').element.value).toBe('');
+    expect(cells.slice(1, 7).every(cell => cell.text() === '')).toBe(true);
+  });
+
   test('activates the eighth new-energy position and validates on completion', async () => {
     const wrapper = mountInput({ modelValue: '粤BD1234', newEnergy: true });
     await wrapper.find('input').trigger('focus');
@@ -97,6 +135,22 @@ describe('LicensePlateInput', () => {
       type: 'new-energy',
       value: '粤BD12345',
     });
+  });
+
+  test('uses compact typography only for the empty new-energy placeholder', async () => {
+    const wrapper = mountInput({ modelValue: '粤BD1234', newEnergy: true });
+    const newEnergyCell = wrapper.findAll('.h-license-plate-input__cell')[7];
+
+    expect(newEnergyCell.classes()).toContain(
+      'h-license-plate-input__cell--new-energy-placeholder',
+    );
+
+    await wrapper.setProps({ modelValue: '粤BD12345' });
+
+    expect(newEnergyCell.text()).toBe('5');
+    expect(newEnergyCell.classes()).not.toContain(
+      'h-license-plate-input__cell--new-energy-placeholder',
+    );
   });
 
   test('supports clear, disabled and readonly states', async () => {

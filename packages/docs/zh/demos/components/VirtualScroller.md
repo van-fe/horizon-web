@@ -1,18 +1,25 @@
-## RecycleScroller 基本用法
-如果是能够确定元素尺寸的场景, 使用RecycleScroller的性能会更好
+虚拟滚动只挂载可视区域附近的条目，适合大规模列表和网格。
+
+## 固定与数据驱动尺寸
+
+能确定条目尺寸时优先使用 RecycleScroller。固定尺寸使用 `item-size`，不同尺寸可通过 `size-field` 从数据读取。
+
 :::demo components/VirtualScroller/RecycleScrollerDemo.vue :::
 
-## RecycleScroller 网格用法
-网格模式下itemSize即是单个网格的宽和高, 可以配合itemSecondarySize实现不同的宽高
+## 网格
+
+`grid-items` 设置每行数量，`item-size` 设置网格项的主轴尺寸。
+
 :::demo components/VirtualScroller/GridDemo.vue :::
 
-## VirtualScroller 基本用法
-VirtualScroller不关心被滚动容器包裹的元素是否指定了高度
+## 动态尺寸
+
+VirtualScroller 可配合 VirtualScrollerItem 测量内容，并通过 `size-dependencies` 在内容变化后重新计算。
+
 :::demo components/VirtualScroller/VirtualScrollerDemo.vue :::
 
-## VirtualScroller 横向滚动
-VirtualScroller不关心被滚动容器包裹的元素是否指定了宽度, Demo中为NVirtualScrollerItem设置随机宽度是为了让文本换行
-:::demo components/VirtualScroller/HorizontalDemo.vue :::
+## 横向滚动
 
-<!-- ## VirtualScroller 实现聊天对话框 -->
-<!-- :::demo components/VirtualScroller/ChatDemo.tsx ::: -->
+设置 `direction="horizontal"` 后，可虚拟化宽度不同的横向条目。
+
+:::demo components/VirtualScroller/HorizontalDemo.vue :::

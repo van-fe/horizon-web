@@ -1,52 +1,56 @@
-<template>
-  <h-grid :gap="10">
-    <h-grid-item :span="6">
-      <h-select
-        v-model="values1"
-        placeholder="请选择"
-        :collapse-tags="collapse"
-        :multiple="true"
-        :to-body="false"
-        @focus="focusHandle"
-        @blur="blurHandle"
-      >
-        <h-option
-          v-for="item of selectOptions"
-          :key="item.value"
-          :value="item.value"
-          :label="item.label"
-        />
-      </h-select>
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const values1 = ref([]);
-const collapse = ref(false);
-
-const selectOptions = [
-  { value: 1, label: '上海' },
-  { value: 2, label: '北京' },
-  { value: 3, label: '合肥' },
-  { value: 4, label: '深圳' },
-  { value: 5, label: '杭州' },
-  { value: 6, label: '天津' },
-  { value: 7, label: '西安' },
-  { value: 8, label: '南京' },
-  { value: 9, label: '哈尔滨' },
-  { value: 10, label: '香港' },
+const collaborators = [
+  { value: 'mia', label: 'Mia Chen · 产品' },
+  { value: 'noah', label: 'Noah Li · 前端' },
+  { value: 'ava', label: 'Ava Wang · 设计' },
+  { value: 'leo', label: 'Leo Zhang · 测试' },
+  { value: 'zoe', label: 'Zoe Wu · 数据' },
 ];
+const selected = ref<string[]>(['mia', 'noah', 'ava', 'leo']);
+const collapseTags = ref(true);
+const status = ref('失焦时折叠标签');
 
-const focusHandle = () => {
-  console.info('focus');
-  collapse.value = false;
-};
+function handleFocus() {
+  collapseTags.value = false;
+  status.value = '已展开全部标签';
+}
 
-const blurHandle = () => {
-  console.info('blur');
-  collapse.value = true;
-};
+function handleBlur() {
+  collapseTags.value = true;
+  status.value = '标签已自动折叠';
+}
 </script>
+
+<template>
+  <div class="select-demo">
+    <h-select
+      v-model="selected"
+      multiple
+      filterable
+      :collapse-tags="collapseTags"
+      collapse-tags-tooltip
+      :to-body="false"
+      placeholder="添加评审人"
+      @focus="handleFocus"
+      @blur="handleBlur"
+    >
+      <h-option v-for="person in collaborators" :key="person.value" v-bind="person" />
+    </h-select>
+    <p class="docs-demo__status" role="status">{{ status }} · {{ selected.length }} 位成员</p>
+  </div>
+</template>
+
+<style scoped>
+.select-demo {
+  display: grid;
+  min-width: 0;
+  gap: 10px;
+}
+
+.select-demo :deep(.h-select) {
+  width: 100%;
+  min-width: 0;
+}
+</style>

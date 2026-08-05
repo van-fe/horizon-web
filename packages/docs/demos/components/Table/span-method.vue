@@ -1,78 +1,35 @@
-<template>
-  <h-table :data="data" :span-method="arraySpanMethod" row-key="id" :height="400" border>
-    <h-table-column title="Part No." field="partNo" width="120" />
-    <h-table-column title="Parent SV Number" field="parentSVNumber" />
-    <h-table-column title="Status">
-      <template #default="scope">
-        <h-tag :type="scope.row.status === 'released' ? 'success' : 'info'" :clickable="false">
-          {{ scope.row.status }}
-        </h-tag>
-      </template>
-    </h-table-column>
-  </h-table>
-
-  <h-table :data="data" :span-method="objectSpanMethod" row-key="id" :max-height="400" class="mt-3" border>
-    <h-table-column title="Part No." field="partNo" width="120" />
-    <h-table-column title="Parent SV Number" field="parentSVNumber" />
-    <h-table-column title="Status">
-      <template #default="scope">
-        <h-tag :type="scope.row.status === 'released' ? 'success' : 'info'" :clickable="false">
-          {{ scope.row.status }}
-        </h-tag>
-      </template>
-    </h-table-column>
-  </h-table>
-</template>
-
 <script setup lang="ts">
-import { ref } from 'vue';
-import { faker } from '@faker-js/faker';
-import { type HTableSpanMethodType } from '@aurora/horizon-web';
+import type { HTableSpanMethodType } from '@aurora/horizon-web';
 
-interface TableData {
-  id: string;
-  partNo: string;
-  parentSVNumber: string;
-  status: string;
-}
+const lineItems = [
+  { id: 1, order: 'ORD-4821', item: 'Team plan', quantity: 24, state: 'Approved' },
+  { id: 2, order: 'ORD-4821', item: 'Audit add-on', quantity: 1, state: 'Approved' },
+  { id: 3, order: 'ORD-4821', item: 'Sandbox', quantity: 2, state: 'Approved' },
+  { id: 4, order: 'ORD-4828', item: 'Business plan', quantity: 18, state: 'Review' },
+  { id: 5, order: 'ORD-4828', item: 'Data retention', quantity: 1, state: 'Review' },
+  { id: 6, order: 'ORD-4833', item: 'Enterprise plan', quantity: 80, state: 'Approved' },
+];
 
-let count = 2;
-let partNo = '';
-function createPartNo() {
-  if (count === 2) {
-    count = 0;
-    partNo = `P${faker.helpers.rangeToNumber({min: 1000000, max: 9999999})}`;
-  } else {
-    count++;
-  }
-
-  return partNo;
-}
-
-const data = ref<TableData[]>((new Array(20)).fill(0).map(() => ({
-  id: faker.string.uuid(),
-  partNo: createPartNo(),
-  parentSVNumber: `P${faker.helpers.rangeToNumber({min: 1000000, max: 9999999})}`,
-  status: faker.helpers.arrayElement(['released', 'working']),
-})));
-
-const arraySpanMethod: HTableSpanMethodType = (scope) => {
-  if (scope.columnIndex === 0) {
-    if (scope.rowIndex % 3 === 0) {
-      return [Math.min(3, data.value.length - scope.rowIndex), 1];
-    } else {
-      return [0, 0];
-    }
-  }
-};
-
-const objectSpanMethod: HTableSpanMethodType = (scope) => {
-  if (scope.rowIndex % 2 === 0) {
-    if (scope.columnIndex === 0) {
-      return { rowSpan: 1, colSpan: 2 };
-    } else if (scope.columnIndex === 1) {
-      return { rowSpan: 0, colSpan: 0 };
-    }
-  }
+const spanMethod: HTableSpanMethodType = ({ rowIndex, columnIndex }) => {
+  if (columnIndex !== 0) return;
+  if (rowIndex === 0) return [3, 1];
+  if (rowIndex === 3) return [2, 1];
+  if (rowIndex === 5) return [1, 1];
+  return [0, 0];
 };
 </script>
+
+<template>
+  <h-table :data="lineItems" row-key="id" border="full" :span-method="spanMethod">
+    <h-table-column title="Order" field="order" width="130" />
+    <h-table-column title="Item" field="item" min-width="190" />
+    <h-table-column
+      title="Quantity"
+      field="quantity"
+      width="110"
+      align="right"
+      header-align="right"
+    />
+    <h-table-column title="State" field="state" width="120" />
+  </h-table>
+</template>

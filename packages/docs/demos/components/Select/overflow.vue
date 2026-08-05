@@ -1,96 +1,50 @@
-<template>
-  <h-grid :gap="10">
-    <h-grid-item :span="6">
-      <div class="demo-title">单选：选项长度超长</div>
-      <h-select v-model="value1" :to-body="false">
-        <h-option label="齐齐哈尔" :value="1" />
-        <h-option :value="2" label="那然色布斯台音布拉格" />
-        <h-option
-          :value="3"
-          label="这是一个超长的选项，非常非常长，如果没有显示省略号，则是因为还不够长，还需要增加一些文字才可以够长"
-        />
-      </h-select>
-    </h-grid-item>
-
-    <h-grid-item :span="6">
-      <div class="demo-title">单选：过滤+选项长度超长</div>
-      <h-select v-model="value2" filterable :to-body="false">
-        <h-option label="齐齐哈尔" :value="1" />
-        <h-option :value="2" label="那然色布斯台音布拉格" />
-        <h-option
-          :value="3"
-          label="这是一个超长的选项，非常非常长，如果没有显示省略号，则是因为还不够长，还需要增加一些文字才可以够长"
-        />
-      </h-select>
-    </h-grid-item>
-
-    <h-grid-item :span="6">
-      <div class="demo-title">多选：选项长度超长</div>
-      <h-select
-        v-model="values1"
-        multiple
-        :to-body="false"
-        :collapse-tags="true"
-        :collapse-tags-fill-up="true"
-      >
-        <h-option label="齐齐哈尔" :value="1" />
-        <h-option :value="2" label="那然色布斯台音布拉格" />
-        <h-option label="上海" :value="3" />
-        <h-option :value="4" label="北京" />
-        <h-option :value="5" label="合肥" name="hefei" />
-        <h-option
-          :value="6"
-          label="这是一个超长的选项，非常非常长，如果没有显示省略号，则是因为还不够长，还需要增加一些文字才可以够长"
-        />
-      </h-select>
-    </h-grid-item>
-
-    <h-grid-item :span="6">
-      <div class="demo-title">多选：过滤+选项长度超长</div>
-      <h-select
-        v-model="values2"
-        :multiple="true"
-        :filterable="true"
-        :collapse-tags="true"
-        collapse-tags-fill-up
-        :to-body="false"
-      >
-        <h-option label="齐齐哈尔" :value="1" />
-        <h-option :value="2" label="那然色布斯台音布拉格" />
-        <h-option
-          :value="3"
-          label="这是一个超长的选项，非常非常长，如果没有显示省略号，则是因为还不够长，还需要增加一些文字才可以够长"
-        />
-      </h-select>
-    </h-grid-item>
-
-    <h-grid-item :span="6">
-      <div class="demo-title">选项行数设定为2</div>
-      <h-select
-        v-model="values3"
-        :multiple="true"
-        :filterable="true"
-        :collapse-tags="true"
-        :to-body="false"
-      >
-        <h-option label="齐齐哈尔" :value="1" />
-        <h-option :value="2" label="那然色布斯台音布拉格" />
-        <h-option
-          :value="3"
-          :max-lines="2"
-          label="这是一个超长的选项，非常非常长，如果没有显示省略号，则是因为还不够长，还需要增加一些文字才可以够长"
-        />
-      </h-select>
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const value1 = ref();
-const value2 = ref();
-const values1 = ref([]);
-const values2 = ref([]);
-const values3 = ref([]);
+const policies = [
+  { value: 'standard', label: '标准发布流程' },
+  { value: 'reviewed', label: '需要服务负责人和质量负责人共同审批的生产发布流程' },
+  {
+    value: 'regulated',
+    label: '适用于受监管业务的完整变更评审、风险确认、灰度验证与生产回滚预案流程',
+  },
+];
+const selected = ref<string[]>(['standard', 'regulated']);
 </script>
+
+<template>
+  <div class="select-demo">
+    <h-select
+      v-model="selected"
+      multiple
+      filterable
+      collapse-tags
+      collapse-tags-tooltip
+      collapse-tags-fill-up
+      :to-body="false"
+      placeholder="选择发布策略"
+    >
+      <h-option
+        v-for="policy in policies"
+        :key="policy.value"
+        :value="policy.value"
+        :label="policy.label"
+        :max-lines="2"
+      />
+    </h-select>
+    <p class="docs-demo__status">已选择 {{ selected.length }} 项长文本策略</p>
+  </div>
+</template>
+
+<style scoped>
+.select-demo {
+  display: grid;
+  min-width: 0;
+  gap: 10px;
+}
+
+.select-demo :deep(.h-select) {
+  width: 100%;
+  min-width: 0;
+}
+</style>

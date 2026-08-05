@@ -1,7 +1,5 @@
-@use '../../mixins/function';
-
 $values: (
-  'thin': function.css-variable('weight-1'),
-  'normal': function.css-variable('weight-2'),
-  'strong': function.css-variable('weight-3'),
+  'thin': 200,
+  'normal': 400,
+  'strong': 700,
 );

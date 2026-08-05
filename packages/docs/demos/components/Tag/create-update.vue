@@ -1,61 +1,55 @@
-<template>
-  <h-tag-group
-    :use-create="true"
-    :editable="true"
-    :before-create="onBeforeCreate"
-    :before-edit="onBeforeEdit"
-    :before-close="onBeforeClose"
-    :max-tags="5"
-    @created="onCreated"
-    @edited="onEdited"
-    @closed="onClosed"
-  >
-    <h-tag v-for="(item, index) of tagList" :id="index" :key="index" :closable="true" :clickable="false">{{ item }}</h-tag>
-  </h-tag-group>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
-import { $confirm, $message } from '@aurora/horizon-web';
 
-function sleep(ms: number) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(void 0);
-    }, ms);
-  });
+type ProjectTag = { id: string; label: string };
+
+const tags = ref<ProjectTag[]>([
+  { id: 'frontend', label: 'Frontend' },
+  { id: 'quality', label: 'Quality' },
+  { id: 'design', label: 'Design system' },
+]);
+const status = ref('Create, edit, or close a tag');
+let nextId = 1;
+
+function beforeCreate(label: string) {
+  const value = label.trim();
+  if (!value || tags.value.some(tag => tag.label.toLowerCase() === value.toLowerCase()))
+    return false;
+  tags.value.push({ id: `custom-${nextId++}`, label: value });
+  return true;
 }
 
-const tagList = ref(['北京', '上海']);
-
-async function onBeforeCreate(tag: string) {
-  const close = await $confirm(`是否确定创建 ${tag} ？`, '提示');
-  close();
-  await sleep(2000);
-  tagList.value.push(tag);
+function beforeEdit(label: string, _oldValue: string, id: string) {
+  const target = tags.value.find(tag => tag.id === id);
+  if (!target || !label.trim()) return false;
+  target.label = label.trim();
+  return true;
 }
 
-async function onBeforeEdit(newVal: string, oldVal: string, id: number) {
-  const close = await $confirm(`是否确定修改 ${oldVal} 为 ${newVal} ？`, '提示');
-  close();
-  await sleep(2000);
-  tagList.value[id] = newVal;
-}
-
-async function onBeforeClose(id: number) {
-  await sleep(2000);
-  tagList.value.splice(id, 1);
-}
-
-function onCreated(tag: string) {
-  $message(`创建了${tag}标签`);
-}
-
-function onEdited(newVal: string, oldVal: string, id: number) {
-  $message(`由 ${oldVal} 修改为 ${newVal}，下标: ${id}`);
-}
-
-function onClosed(id: number) {
-  $message(`删除了下标为 ${id} 的标签`);
+function beforeClose(id: string) {
+  if (tags.value.length <= 2) return false;
+  tags.value = tags.value.filter(tag => tag.id !== id);
+  return true;
 }
 </script>
+
+<template>
+  <section class="docs-demo">
+    <h-tag-group
+      use-create
+      editable
+      :max-tags="6"
+      :before-create="beforeCreate"
+      :before-edit="beforeEdit"
+      :before-close="beforeClose"
+      @created="status = `Created ${$event}`"
+      @edited="status = 'Tag updated'"
+      @closed="status = 'Tag removed'"
+    >
+      <h-tag v-for="tag in tags" :id="tag.id" :key="tag.id" closable plain :clickable="false">
+        {{ tag.label }}
+      </h-tag>
+    </h-tag-group>
+    <p class="docs-demo__status">{{ status }}</p>
+  </section>
+</template>

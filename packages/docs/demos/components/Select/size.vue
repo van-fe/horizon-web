@@ -1,141 +1,58 @@
-<template>
-  <h-form label-position="left" label-vertical-align="middle" label-justify-align="right">
-    <h-form-item label="size">
-      <h-radio-group v-model="selectSize">
-        <h-radio
-          v-for="(label, index) in ['small', 'medium', 'large']"
-          :key="index"
-          :label="label"
-          size="small"
-        />
-      </h-radio-group>
-    </h-form-item>
-    <h-form-item label="style">
-      <h-radio-group v-model="inputStyle">
-        <h-radio
-          v-for="(label, index) in ['normal', 'no-border', 'emphasize']"
-          :key="index"
-          :label="label"
-          size="small"
-        />
-      </h-radio-group>
-    </h-form-item>
-    <h-form-item label="disabled">
-      <h-radio-group v-model="selectDisabled">
-        <h-radio
-          v-for="(label, index) in ['disabled', 'useable']"
-          :key="index"
-          :label="label"
-          size="small"
-        />
-      </h-radio-group>
-    </h-form-item>
-  </h-form>
-  <h-grid :gap="10">
-    <h-grid-item :span="6">
-      <div class="demo-title">单选</div>
-      <h-select
-        :model-value="value1"
-        class="curGroup"
-        :size="selectSize"
-        :input-style="inputStyle"
-        clearable
-        placeholder="请选择"
-        :disabled="selectDisabled === 'disabled'"
-        :to-body="false"
-        @change="changeHandle"
-        @update:modelValue="onUpdateModelValue"
-      >
-        <h-option
-          v-for="item in selectOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-          :disabled="item.value === 2"
-        />
-      </h-select>
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">多选</div>
-      <h-select
-        :model-value="values1"
-        class="curGroup"
-        multiple
-        :size="selectSize"
-        :input-style="inputStyle"
-        clearable
-        placeholder="请选择"
-        :disabled="selectDisabled === 'disabled'"
-        :collapse-tags="true"
-        :multiple-limit="2"
-        :to-body="false"
-        @change="changeHandle"
-        @update:modelValue="onUpdateMultipleModelValue"
-      >
-        <h-option
-          v-for="item in selectOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        />
-      </h-select>
-    </h-grid-item>
-  </h-grid>
-</template>
+<script setup lang="ts">
+import { reactive } from 'vue';
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
+type SelectSize = 'small' | 'medium' | 'large';
 
-export default defineComponent({
-  setup() {
-    const selectSize = ref('medium');
-    const inputStyle = ref('normal');
-    const selectDisabled = ref('useable');
-    const value1 = ref(null);
-    const value2 = ref();
-    const values1 = ref([]);
-    const values2 = ref([]);
-
-    const remoteSelect1 = ref<any>(null);
-    const remoteSelect2 = ref<any>(null);
-
-    const selectOptions = [
-      { value: 1, label: '上海' },
-      { value: 2, label: '北京' },
-      { value: 3, label: '合肥' },
-    ];
-
-    const changeHandle = () => {
-      console.info(value1.value);
-    };
-
-    const onUpdateModelValue = (val: any) => {
-      console.info('update-modelValue', val);
-      value1.value = val;
-    };
-
-    const onUpdateMultipleModelValue = (val: any) => {
-      console.info('update-multiple-modelValue', val);
-      values1.value = val;
-    };
-
-    return {
-      selectSize,
-      changeHandle,
-      inputStyle,
-      selectDisabled,
-      selectOptions,
-      remoteSelect1,
-      remoteSelect2,
-      value1,
-      value2,
-      values1,
-      values2,
-      onUpdateModelValue,
-      onUpdateMultipleModelValue,
-    };
-  },
+const sizes = ['small', 'medium', 'large'] as const;
+const values = reactive<Record<SelectSize, string>>({
+  small: 'starter',
+  medium: 'team',
+  large: 'enterprise',
 });
+const plans = [
+  { value: 'starter', label: '基础版' },
+  { value: 'team', label: '团队版' },
+  { value: 'enterprise', label: '企业版' },
+];
 </script>
 
-<style scoped></style>
+<template>
+  <div class="size-row">
+    <label v-for="size in sizes" :key="size">
+      <span>{{ size }}</span>
+      <h-select v-model="values[size]" :size="size" :to-body="false">
+        <h-option v-for="plan in plans" :key="plan.value" v-bind="plan" />
+      </h-select>
+    </label>
+  </div>
+</template>
+
+<style scoped>
+.size-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.size-row label {
+  display: grid;
+  min-width: 0;
+  gap: 7px;
+}
+
+.size-row span {
+  color: var(--h-text-secondary);
+  font-size: 12px;
+}
+
+.size-row :deep(.h-select) {
+  width: 100%;
+  min-width: 0;
+}
+
+@media (max-width: 560px) {
+  .size-row {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

@@ -1,23 +1,47 @@
+<script setup lang="ts">
+import { computed, ref } from 'vue';
+import { dayjs } from '@aurora/horizon-web';
+
+type PanelMode = 'linked' | 'independent' | 'single';
+
+const mode = ref<PanelMode>('linked');
+const value = ref([dayjs().add(1, 'day'), dayjs().add(6, 'day')]);
+const singlePanel = computed(() => mode.value === 'single');
+const linkPanels = computed(() => mode.value !== 'independent');
+</script>
+
 <template>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <h-date-picker v-model="value" type="datetimeRange" single-trigger />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <h-date-picker v-model="value2" type="dateRange" single-trigger placeholder="Do Not Link Panels" :is-link-panels="false" />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <h-date-picker v-model="value3" type="dateRange" single-trigger single-panel placeholder="Single Panel" />
-    </h-grid-item>
-  </h-grid>
+  <section class="date-picker-single-trigger">
+    <h-segmented v-model:active-key="mode" size="small">
+      <h-segmented-item value="linked" label="Linked panels" />
+      <h-segmented-item value="independent" label="Independent" />
+      <h-segmented-item value="single" label="Single panel" />
+    </h-segmented>
+    <h-date-picker
+      v-model="value"
+      type="date-range"
+      single-trigger
+      :single-panel="singlePanel"
+      :is-link-panels="linkPanels"
+    />
+  </section>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
-import { dayjs } from '@aurora/horizon-web';
-import type { Dayjs } from 'dayjs';
+<style scoped>
+.date-picker-single-trigger {
+  display: grid;
+  justify-items: start;
+  gap: var(--h-spacing-3);
+  max-inline-size: 680px;
+}
 
-const value = ref();
-const value2 = ref<[Dayjs, Dayjs]>([dayjs().subtract(1, 'month'), dayjs().add(4, 'month')]);
-const value3 = ref();
-</script>
+.date-picker-single-trigger :deep(.h-date-picker) {
+  inline-size: 100%;
+}
+
+@media (max-width: 390px) {
+  .date-picker-single-trigger {
+    inline-size: 100%;
+  }
+}
+</style>

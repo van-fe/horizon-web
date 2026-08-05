@@ -9,6 +9,8 @@ import useSize from '~/utils/useSize';
 
 export default defineComponent({
   name: `${useNamespace()}ListItem`,
+  desc: "列表中的单个内容项",
+  descLocales: { en: "A single content item within List." },
   props: useListItemProps,
   slots: useListItemSlots,
   setup(props: ListItemProps, { slots }: HorizonWebSetupContext<{}, ListItemSlots>) {

@@ -1,18 +1,26 @@
 import type { UploadProps } from '../composables/useProps';
 import type { CSSProperties, ToRefs } from 'vue';
-import { unref, watch } from 'vue';
+import { toRaw, unref, watch } from 'vue';
 import type { MaybeElementRef } from '@vueuse/core';
 import { unrefElement } from '@vueuse/core';
 import type { Arrayable } from '@aurora/utils';
 import { getVideoFirstFrame, isFileList, getVideoDuration, isNumber } from '@aurora/utils';
 import UploadHelper from './UploadHelper';
-import { isFileSame, transformSingleRawFileTypeToUploadFileType } from './helper';
+import {
+  discardUploadObjectUrls,
+  isFileSame,
+  releaseUploadObjectUrls,
+  rememberUploadObjectUrl,
+  retainUploadObjectUrls,
+  transformSingleRawFileTypeToUploadFileType,
+} from './helper';
 import type { HUploadFileType, HUploadRawFileType } from './fileDefines';
-import { HUploadFileTypeEnum } from './fileDefines';
+import { HUploadFileStatusEnum, HUploadFileTypeEnum } from './fileDefines';
 
 export default class UploadFileHelper extends UploadHelper {
   private containerEl: HTMLElement | undefined;
   private inputEl: HTMLInputElement | undefined;
+  private readonly inputChangeHandler = this.onInputElChange.bind(this);
 
   public get fileList() {
     return this._fileList;
@@ -36,7 +44,7 @@ export default class UploadFileHelper extends UploadHelper {
         if (!value) {
           this.removeAllFiles();
         } else {
-          this._fileList.value = new Set(this.transformRawFileTypeToUploadFileType(value));
+          this.replaceFiles(this.transformRawFileTypeToUploadFileType(value));
         }
       },
     );
@@ -52,7 +60,12 @@ export default class UploadFileHelper extends UploadHelper {
 
             if (!file.posterUrl) {
               getVideoFirstFrame(file.blobUrl || file.url, ({ blobUrl }) => {
+                if (!this._fileList.value.has(file)) {
+                  URL.revokeObjectURL(blobUrl);
+                  return;
+                }
                 file.posterUrl = blobUrl;
+                rememberUploadObjectUrl(file, blobUrl);
               });
             }
           }
@@ -66,6 +79,7 @@ export default class UploadFileHelper extends UploadHelper {
 
   public removeInput(containerEl = this.containerEl) {
     if (containerEl && this.inputEl) {
+      this.inputEl.removeEventListener('change', this.inputChangeHandler);
       containerEl.removeChild(this.inputEl);
       this.inputEl = undefined;
       return true;
@@ -76,8 +90,9 @@ export default class UploadFileHelper extends UploadHelper {
 
   public removeInputElement() {
     if (this.inputEl) {
-      this.inputEl.removeEventListener('change', this.onInputElChange.bind(this));
+      this.inputEl.removeEventListener('change', this.inputChangeHandler);
       this.inputEl.parentElement?.removeChild(this.inputEl);
+      this.inputEl = undefined;
     }
 
     const restElement = document.querySelector(`input[id="${this.uuid}"]`);
@@ -115,6 +130,9 @@ export default class UploadFileHelper extends UploadHelper {
 
     this.inputEl.id = this.id ?? this.uuid;
     this.inputEl.type = 'file';
+    // The generated input is only a programmatic file-dialog proxy. Keeping it
+    // out of the tab order prevents an invisible keyboard focus stop.
+    this.inputEl.tabIndex = -1;
     this.inputEl.accept = this.accept.value!;
     this.inputEl.multiple = this.multiple.value;
 
@@ -122,7 +140,7 @@ export default class UploadFileHelper extends UploadHelper {
       this.inputEl.style.setProperty(key, value);
     }
 
-    this.inputEl.addEventListener('change', this.onInputElChange.bind(this));
+    this.inputEl.addEventListener('change', this.inputChangeHandler);
 
     return true;
   }
@@ -208,6 +226,7 @@ export default class UploadFileHelper extends UploadHelper {
 
         if (notValidFiles.length) {
           this.eventEmitter.emit('fileSizeExceed', notValidFiles);
+          notValidFiles.forEach(discardUploadObjectUrls);
 
           files = files.filter(file => !notValidFiles.includes(file));
         }
@@ -218,6 +237,7 @@ export default class UploadFileHelper extends UploadHelper {
 
         if (notValidFiles.length) {
           this.eventEmitter.emit('acceptError', notValidFiles);
+          notValidFiles.forEach(discardUploadObjectUrls);
 
           files = files.filter(file => !notValidFiles.includes(file));
         }
@@ -227,6 +247,7 @@ export default class UploadFileHelper extends UploadHelper {
         const file = files[i];
 
         if (!(await this.beforeUploadFile(file))) {
+          discardUploadObjectUrls(file);
           files.splice(i, 1);
           i--;
         }
@@ -238,25 +259,35 @@ export default class UploadFileHelper extends UploadHelper {
         this.eventEmitter.emit('exceed', files, Array.from(this._fileList.value.values()));
 
         if (!this.autoSliceExceedFiles.value) {
+          files.forEach(discardUploadObjectUrls);
           return;
         }
 
-        files = files.slice(0, this.limit - this._fileList.value.size);
+        const acceptedAmount = Math.max(0, this.limit - this._fileList.value.size);
+        files.slice(acceptedAmount).forEach(discardUploadObjectUrls);
+        files = files.slice(0, acceptedAmount);
       }
 
-      files.forEach(file => this._fileList.value.add(file));
+      files.forEach(file => {
+        if (!this._fileList.value.has(file)) {
+          this._fileList.value.add(file);
+          retainUploadObjectUrls(file, this);
+        }
+      });
     } else {
       if (files.length) {
         if (files.length > 1) {
           this.eventEmitter.emit('exceed', files, Array.from(this._fileList.value.values()));
 
           if (!this.autoSliceExceedFiles.value) {
+            files.forEach(discardUploadObjectUrls);
             return;
           }
         }
 
+        files.slice(1).forEach(discardUploadObjectUrls);
         files = files.slice(0, 1);
-        this._fileList.value = new Set(files);
+        this.replaceFiles(files);
       }
     }
 
@@ -273,11 +304,14 @@ export default class UploadFileHelper extends UploadHelper {
   }
 
   public async removeFile(files: HUploadRawFileType[], check = true) {
+    let didRemove = false;
     const doRemove = (file: HUploadFileType) => {
-      this.pauseUpload(file);
-      this.removeFromUploadingQueue(file);
+      this.releaseUploadFile(file);
+      this.setStatus(file, HUploadFileStatusEnum.Pause);
       unref(this._fileList).delete(file);
+      releaseUploadObjectUrls(file, this);
       this.eventEmitter.emit('remove', file);
+      didRemove = true;
     };
 
     const transformedFiles = files
@@ -302,6 +336,7 @@ export default class UploadFileHelper extends UploadHelper {
     } else {
       transformedFiles.forEach(file => void doRemove(file));
     }
+    if (didRemove) this.continueReadyUploads();
   }
 
   public async abortFiles(
@@ -327,11 +362,53 @@ export default class UploadFileHelper extends UploadHelper {
   }
 
   public removeAllFiles() {
+    Array.from(this._fileList.value).forEach(file => {
+      if (
+        [
+          HUploadFileStatusEnum.New,
+          HUploadFileStatusEnum.Pause,
+          HUploadFileStatusEnum.Fail,
+          HUploadFileStatusEnum.Success,
+        ].includes(file.status)
+      ) {
+        this.releaseUploadFile(file);
+      }
+      releaseUploadObjectUrls(file, this);
+    });
     this._fileList.value.clear();
     this.eventEmitter.emit('update:modelValue', []);
   }
 
+  public dispose() {
+    this.releaseAllUploadFiles();
+    Array.from(this._fileList.value).forEach(file => releaseUploadObjectUrls(file, this));
+    this._fileList.value.clear();
+    this.removeInputElement();
+  }
+
+  public detachForBackgroundUpload() {
+    Array.from(this._fileList.value).forEach(file => releaseUploadObjectUrls(file, this));
+    this.removeInputElement();
+  }
+
   /*** private ***/
+
+  private replaceFiles(files: HUploadFileType[]) {
+    const nextFiles = new Set(files);
+    const currentFiles = Array.from(this._fileList.value);
+    const currentRawFiles = new Set(currentFiles.map(file => toRaw(file)));
+    const nextRawFiles = new Set(files.map(file => toRaw(file)));
+
+    currentFiles.forEach(file => {
+      if (nextRawFiles.has(toRaw(file))) return;
+      this.releaseUploadFile(file);
+      releaseUploadObjectUrls(file, this);
+    });
+    nextFiles.forEach(file => {
+      if (!currentRawFiles.has(toRaw(file))) retainUploadObjectUrls(file, this);
+    });
+    this._fileList.value = nextFiles;
+  }
 
   private setModifyListener() {
     watch([this.accept, this.multiple], () => {

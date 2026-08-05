@@ -12,6 +12,7 @@ interface InjectObj {
 export default defineComponent({
   name: `${useNamespace()}Timeline`,
   desc: '垂直展示的时间流信息，例如对任务跟踪、操作历史的回顾',
+  descLocales: { en: "Use a timeline for milestones, state changes, or activity records arranged by time. Forward and reverse order support different reading directions." },
   props: useTimelineProps,
   slots: useTimelineSlots,
   setup(props, { slots }: HorizonWebSetupContext<{}, TimelineSlots>) {

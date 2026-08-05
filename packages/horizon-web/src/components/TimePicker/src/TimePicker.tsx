@@ -37,6 +37,7 @@ import type { Dayjs } from 'dayjs';
 export default defineComponent({
   name: `${useNamespace()}TimePicker`,
   desc: '选择或输入时间的控件',
+  descLocales: { en: "The time picker supports three sizes, multiple input styles, and a disabled state. When binding strings, set `value-format` explicitly." },
   props: useTimePickerProps,
   emits: useTimePickerEmits,
   slots: useTimePickerSlots,

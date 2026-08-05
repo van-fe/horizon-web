@@ -1,33 +1,18 @@
-<template>
-  <h-grid :gap="10">
-    <h-grid-item :span="6">
-      <h-cascader v-model="currentVal1" :options="options" expand-trigger="click" :to-body="false">
-        <template #selectRender>你的选择是：{{ currentVal1.join('+') }}</template>
-      </h-cascader>
-    </h-grid-item>
-  </h-grid>
-</template>
+<script setup lang="ts">
+import { computed, ref } from 'vue';
+import { workspaceOptions } from './options';
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-
-export default defineComponent({
-  setup() {
-    const currentVal1 = ref<string[]>([]);
-
-    const options = ref([]);
-    fetch(
-      new URL('/cascader-options.json', import.meta.url).href,
-    ).then(res => {
-      res.json().then(value => {
-        options.value = value;
-      });
-    });
-
-    return {
-      currentVal1,
-      options,
-    };
-  },
-});
+const value = ref<string[]>(['engineering', 'web-platform', 'frontend']);
+const selectedTeam = computed(() => value.value.at(-1)?.replaceAll('-', ' ') ?? 'Not assigned');
 </script>
+
+<template>
+  <h-cascader
+    v-model="value"
+    aria-label="Release owner"
+    :options="workspaceOptions"
+    :to-body="false"
+  >
+    <template #selectRender>Owner · {{ selectedTeam }}</template>
+  </h-cascader>
+</template>

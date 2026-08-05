@@ -1,67 +1,79 @@
-## Basic Usage
-Control the `type` field to enable different button colors
+Button triggers an immediate action. Keep a clear primary and secondary hierarchy, and give icon-only controls an accessible name.
 
-Set `round` to make the button oval-shaped
+## Type and Shape
+
+`type` communicates primary, normal, and dangerous actions. `round` applies a pill-shaped treatment.
 
 :::demo components/Button/basic.vue :::
 
 ## Size
-Control the `size` field to set different button sizes
+
+Use `size` for different interface densities and `auto-fit` to keep short labels compact.
+
 :::demo components/Button/size.vue :::
 
-## Plain Button
-Use `plain = true` to enable plain button
+## Plain and Ghost
 
-If you need to apply it on a black background, set `ghost = true` to enable ghost button form
+`plain` lowers visual emphasis. Combine it with `ghost` on a strong-colored surface.
+
 :::demo components/Button/plain.vue :::
 
 ## Text Button
-Use `text = true` to enable text button
+
+`text` works for low-emphasis actions that keep users in the current context.
+
 :::demo components/Button/text.vue :::
 
 ## Link Button
-Use `link = true` to enable link button
 
-Set `to` or `href` to jump directly
+`link` applies link styling, `href` uses native navigation, and `to` uses Vue Router.
+
 :::demo components/Button/link.vue :::
 
-## Active Button
-Set `active = true` to set the button to active state
+## Active State
+
+`active` communicates the selected view, filter, or tool.
+
 :::demo components/Button/active.vue :::
 
-## Disabled
-Set `disabled = true` to set the button to unavailable state
+## Disabled State
+
+`disabled` prevents interaction. Explain why an action is unavailable in nearby supporting copy.
+
 :::demo components/Button/disabled.vue :::
 
-## Icon Button
-Set `icon`, it will automatically determine whether the default slot is used and display square or adaptive
+## Icon and Loading
+
+`icon` works with or without text; set `aria-label` when no visible label exists. `loading` represents an asynchronous action in progress.
+
 :::demo components/Button/icon.vue :::
 
 ## Block Button
-Set `block = true` to make the button width fill the parent
+
+`block` fills the container and works well in narrow forms or high-confidence confirmation areas.
+
 :::demo components/Button/block.vue :::
 
 ## Button Group
-Use `h-button-group` to wrap buttons, you can set a smooth adjacent button group
+
+`h-button-group` joins strongly related controls and can compose with a dropdown to create a split action.
+
 :::demo components/Button/button-group.vue :::
 
-## Debounce Function Call
-Pass a function through `debounce-fn`, this function will be automatically triggered when the button is clicked, and if the function returns a Promise, it will automatically implement debounce during execution to avoid the effects of multiple clicks. The bound `click` event will be ignored at this time.
+## Guarded Async Action
 
-You can also control the button state during debounce through `debounce-type`.
-
-This will be very useful if you need to perform asynchronous operations such as calling interfaces when clicking the button.
+`debounce-fn` prevents duplicate execution until its Promise settles. `debounce-type` selects a `disabled`, `loading`, or logic-only state.
 
 :::demo components/Button/debounce-fn.vue :::
 
 ## Border Style
-The border can be set to `solid` `dotted` `dashed`, the default is `solid`
+
+`border-style` supports `solid`, `dotted`, and `dashed` treatments for semantically related secondary actions.
+
 :::demo components/Button/border-style.vue :::
 
-
 ## Custom Color (BETA)
-After setting `color`, it will automatically calculate the colors of hover, click and other states based on the given color
 
-The system has five built-in colors: <code>brand</code> <code>indigo</code> <code>purple</code> <code>magenta</code> <code>orange</code>
+`color` accepts built-in names and color literals, then derives interaction states. Prefer built-in names in product flows; the hexadecimal value below exists only to demonstrate custom input.
 
 :::demo components/Button/custom-color.vue :::

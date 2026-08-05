@@ -2,78 +2,78 @@
 
 @mixin chat-1($addon: null) {
   font-weight: function.css-variable('weight-normal') $addon;
-  font-size: function.css-variable('font-size-1') $addon;
+  font-size: 60px $addon;
   line-height: function.css-variable('line-height-standard') $addon;
 }
 
 @mixin chat-2($addon: null) {
   font-weight: function.css-variable('weight-normal') $addon;
-  font-size: function.css-variable('font-size-15') $addon;
+  font-size: 46px $addon;
   line-height: function.css-variable('line-height-standard') $addon;
 }
 
 @mixin chat-3($addon: null) {
   font-weight: function.css-variable('weight-normal') $addon;
-  font-size: function.css-variable('font-size-2') $addon;
+  font-size: 40px $addon;
   line-height: function.css-variable('line-height-standard') $addon;
 }
 
 @mixin headline-1($addon: null) {
   font-weight: function.css-variable('weight-normal') $addon;
-  font-size: function.css-variable('font-size-4') $addon;
+  font-size: function.css-variable('text-3xl') $addon;
   line-height: function.css-variable('line-height-standard') $addon;
 }
 
 @mixin headline-2($addon: null) {
   font-weight: function.css-variable('weight-normal') $addon;
-  font-size: function.css-variable('font-size-6') $addon;
+  font-size: function.css-variable('text-2xl') $addon;
   line-height: function.css-variable('line-height-standard') $addon;
 }
 
 @mixin subtitle-1($addon: null) {
   font-weight: function.css-variable('weight-strong') $addon;
-  font-size: function.css-variable('font-size-13') $addon;
+  font-size: function.css-variable('text-xl') $addon;
   line-height: function.css-variable('line-height-standard') $addon;
 }
 
 @mixin subtitle-2($addon: null) {
   font-weight: function.css-variable('weight-strong') $addon;
-  font-size: function.css-variable('font-size-8') $addon;
+  font-size: function.css-variable('text-lg') $addon;
   line-height: function.css-variable('line-height-standard') $addon;
 }
 
 @mixin subtitle-3($addon: null) {
   font-weight: function.css-variable('weight-strong') $addon;
-  font-size: function.css-variable('font-size-9') $addon;
+  font-size: function.css-variable('text-base') $addon;
   line-height: function.css-variable('line-height-standard') $addon;
 }
 
 @mixin body-1($addon: null) {
   font-weight: function.css-variable('weight-normal') $addon;
-  font-size: function.css-variable('font-size-8') $addon;
+  font-size: function.css-variable('text-lg') $addon;
   line-height: function.css-variable('line-height-standard') $addon;
 }
 
 @mixin body-2($addon: null) {
   font-weight: function.css-variable('weight-normal') $addon;
-  font-size: function.css-variable('font-size-9') $addon;
+  font-size: function.css-variable('text-base') $addon;
   line-height: function.css-variable('line-height-standard') $addon;
 }
 
 @mixin body-3($addon: null) {
   font-weight: function.css-variable('weight-normal') $addon;
-  font-size: function.css-variable('font-size-10') $addon;
+  font-size: function.css-variable('text-sm') $addon;
   line-height: function.css-variable('line-height-standard') $addon;
 }
 
 @mixin caption-1($addon: null) {
   font-weight: function.css-variable('weight-normal') $addon;
-  font-size: function.css-variable('font-size-10') $addon;
+  font-size: function.css-variable('text-sm') $addon;
   line-height: function.css-variable('line-height-standard') $addon;
 }
 
 @mixin caption-2($addon: null) {
   font-weight: function.css-variable('weight-strong') $addon;
-  font-size: function.css-variable('font-size-10') $addon;
+  font-size: function.css-variable('text-sm') $addon;
   line-height: function.css-variable('line-height-standard') $addon;
 }

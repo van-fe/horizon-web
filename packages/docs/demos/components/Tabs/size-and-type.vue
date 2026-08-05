@@ -1,85 +1,81 @@
 <script setup lang="ts">
-import { $message, type HTabValue } from '@aurora/horizon-web';
 import { ref } from 'vue';
 
-const activeKey = ref(1);
-const size = ref('medium');
-const cardType = ref('line');
-const showIcon = ref(true);
-const underline = ref(true);
-const customizeUnderline = ref(false);
-const customizeSpace = ref(false);
+type TabType = 'line' | 'card' | 'page';
+type TabSize = 'small' | 'medium' | 'large' | 'huge';
 
-const tabs = ['Tab 1', 'Tab 2', 'Tab 3'];
-const icons = ['car', 'change_power', 'card_voucher'];
-
-const onTabChanged = (tab: HTabValue) => {
-  console.info('tab changed', tab);
-  $message({ type: 'success', message: `Tab ${tab} is clicked` });
-};
+const activeKey = ref('build');
+const type = ref<TabType>('line');
+const size = ref<TabSize>('medium');
+const stages = [
+  { key: 'brief', label: 'Brief' },
+  { key: 'build', label: 'Build' },
+  { key: 'launch', label: 'Launch' },
+];
 </script>
 
 <template>
-  <div class="mb-4 flex align-center">
-    <span class="mr-4">类型</span>
-    <h-radio-group v-model="cardType">
-      <h-radio value="line">line(Default)</h-radio>
-      <h-radio value="card">card</h-radio>
-      <h-radio value="page">page(不支持尺寸调整)</h-radio>
-    </h-radio-group>
-  </div>
-  <div class="mb-4 flex align-center">
-    <span class="mr-4">尺寸</span>
-    <h-radio-group v-model="size" :disabled="cardType === 'page'">
-      <h-radio value="small">small</h-radio>
-      <h-radio value="medium">medium(Default)</h-radio>
-      <h-radio value="large">large</h-radio>
-    </h-radio-group>
-  </div>
-  <div class="mb-8 flex align-center">
-    <span class="mr-4">其他</span>
-    <div class="flex align-center" style="column-gap: 10px">
-      <h-checkbox v-model="showIcon" label="展示图标" />
-      <h-checkbox
-        v-model="underline"
-        :disabled="cardType !== 'line'"
-        label="展示分割线(only line)"
-      />
-      <h-checkbox
-        v-model="customizeUnderline"
-        :disabled="cardType !== 'line'"
-        label="自定义分割线(only line)"
-      />
-      <h-checkbox
-        v-model="customizeSpace"
-        :disabled="cardType !== 'card'"
-        label="移除首段间距(only card)"
-      />
+  <div class="tabs-variants-demo">
+    <div class="tabs-variants-demo__options">
+      <label>
+        <span>Type</span>
+        <h-segmented v-model:active-key="type" size="small" block>
+          <h-segmented-item value="line" label="Line" />
+          <h-segmented-item value="card" label="Card" />
+          <h-segmented-item value="page" label="Page" />
+        </h-segmented>
+      </label>
+      <label>
+        <span>Size</span>
+        <h-segmented v-model:active-key="size" size="small" block :disabled="type === 'page'">
+          <h-segmented-item value="small" label="S" />
+          <h-segmented-item value="medium" label="M" />
+          <h-segmented-item value="large" label="L" />
+          <h-segmented-item value="huge" label="XL" />
+        </h-segmented>
+      </label>
     </div>
-  </div>
 
-  <div
-    style="height: 80px"
-    :class="{ 'customize-underline': customizeUnderline, 'customize-space': customizeSpace }"
-  >
-    <h-tabs
-      v-model:active-key="activeKey"
-      :underline="underline"
-      :type="cardType"
-      :size="size"
-      @change="onTabChanged"
-    >
-      <h-tab v-for="(tab, i) in tabs" :key="i" :icon="showIcon ? icons[i] : null" :label="tab" />
+    <h-tabs v-model:active-key="activeKey" :type="type" :size="size">
+      <h-tab v-for="stage in stages" :key="stage.key" :label="stage.label" />
     </h-tabs>
+    <p aria-live="polite">
+      {{ stages.find(stage => stage.key === activeKey)?.label }} stage selected.
+    </p>
   </div>
 </template>
 
 <style scoped>
-.customize-underline {
-  --h-tabs-size-underline-line-height: 4px;
+.tabs-variants-demo,
+.tabs-variants-demo__options label {
+  display: grid;
+  gap: var(--h-spacing-3);
 }
 
-.customize-space {
-  --h-tabs-spacing-nav-wrap-card-padding: 0;
+.tabs-variants-demo {
+  min-width: 0;
+  gap: var(--h-spacing-5);
+}
+
+.tabs-variants-demo__options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--h-spacing-4);
+}
+
+.tabs-variants-demo__options span,
+.tabs-variants-demo > p {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+
+.tabs-variants-demo > p {
+  margin: 0;
+}
+
+@media (max-width: 560px) {
+  .tabs-variants-demo__options {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 </style>

@@ -34,6 +34,8 @@ import useDropdownTree from './composables/useDropdownTree';
 
 export default defineComponent({
   name: `${useNamespace()}DropdownSubmenu`,
+  desc: "包含下级菜单的下拉菜单项",
+  descLocales: { en: "A dropdown item that contains a nested menu." },
   components: {
     HPopover,
     HPopContent,

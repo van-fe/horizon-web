@@ -7,6 +7,8 @@ import { useFooterSlots } from './composables/useSlots';
 
 export default defineComponent({
   name: `${useNamespace()}Footer`,
+  desc: "页面布局中的底部容器",
+  descLocales: { en: "A footer region within a page layout." },
   props: useFooterProps,
   slots: useFooterSlots,
   setup(props, { slots }: HorizonWebSetupContext<{}, FooterSlots>) {

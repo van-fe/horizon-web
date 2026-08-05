@@ -1,34 +1,57 @@
-<template>
-  <h-tabs v-model:active-key="activeKey" type="card" :before-change="beforeChange">
-    <h-tab key="tab1" label="普通Tab" />
-    <h-tab key="tab2" label="2s延迟">
-      <template v-if="loading" #icon>
-        <a-icon spin="ccw" name="loading" />
-      </template>
-    </h-tab>
-    <h-tab key="tab3" label="不可访问" />
-    <h-tab key="tab4" label="普通Tab 2" />
-  </h-tabs>
-</template>
-
-<script lang="ts" setup>
-import { $message } from '@aurora/horizon-web';
+<script setup lang="ts">
 import { ref } from 'vue';
+import type { HTabValue } from '@aurora/horizon-web';
 
-const activeKey = ref('tab1');
-const loading = ref(false);
-const delay = () => new Promise(r => setTimeout(r, 2000));
-const beforeChange = async (tabName: string | number) => {
-  if (tabName === 'tab2') {
-    loading.value = true;
-    await delay();
-    loading.value = false;
-    return true;
-  }
-  if (tabName === 'tab3') {
-    $message.warning('不可访问！');
+const activeKey = ref('draft');
+const hasUnsavedChanges = ref(true);
+const status = ref('Draft contains unsaved changes.');
+
+function beforeChange(nextKey: HTabValue) {
+  if (hasUnsavedChanges.value && nextKey !== activeKey.value) {
+    status.value = 'Switch blocked: save the draft first.';
     return false;
   }
+  status.value = `${String(nextKey)} opened.`;
   return true;
-};
+}
+
+function toggleDraftState() {
+  hasUnsavedChanges.value = !hasUnsavedChanges.value;
+  if (hasUnsavedChanges.value) activeKey.value = 'draft';
+  status.value = hasUnsavedChanges.value
+    ? 'Draft changed; switching is protected again.'
+    : 'Draft saved; other tabs are available.';
+}
 </script>
+
+<template>
+  <div class="tabs-guard-demo">
+    <h-tabs v-model:active-key="activeKey" type="card" :before-change="beforeChange">
+      <h-tab key="draft" label="Draft" />
+      <h-tab key="preview" label="Preview" />
+      <h-tab key="publish" label="Publish" />
+    </h-tabs>
+    <h-button class="tabs-guard-demo__action" size="small" @click="toggleDraftState">
+      {{ hasUnsavedChanges ? 'Save draft' : 'Simulate edit' }}
+    </h-button>
+    <p role="status" aria-live="polite">{{ status }}</p>
+  </div>
+</template>
+
+<style scoped>
+.tabs-guard-demo {
+  display: grid;
+  min-width: 0;
+  gap: var(--h-spacing-4);
+}
+
+.tabs-guard-demo__action {
+  justify-self: start;
+}
+
+.tabs-guard-demo p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+</style>

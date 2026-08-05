@@ -1,67 +1,52 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="{ xs: 24, sm: 12, md: 8, lg: 6 }">
-      <div class="demo-title">普通多选</div>
-      <h-tree-select
-        v-model="values1"
-        :tree-data="baseTreeData"
-        :multiple="true"
-        :to-body="false"
-      />
-    </h-grid-item>
-    <h-grid-item :span="{ xs: 24, sm: 12, md: 8, lg: 6 }">
-      <div class="demo-title">折叠多选</div>
-      <h-tree-select
-        v-model="values2"
-        :tree-data="baseTreeData"
-        :multiple="true"
-        :collapse-tags="true"
-        :to-body="false"
-      />
-    </h-grid-item>
-    <h-grid-item :span="{ xs: 24, sm: 12, md: 8, lg: 6 }">
-      <div class="demo-title">+N 显示其余已选项</div>
-      <h-tree-select
-        v-model="values3"
-        :tree-data="baseTreeData"
-        :multiple="true"
-        :collapse-tags="true"
-        :collapse-tags-tooltip="true"
-        :to-body="false"
-      />
-    </h-grid-item>
-    <h-grid-item :span="{ xs: 24, sm: 12, md: 8, lg: 6 }">
-      <div class="demo-title">强制显示3个已选项，其余折叠</div>
-      <h-tree-select
-        v-model="values4"
-        :tree-data="baseTreeData"
-        :multiple="true"
-        :collapse-tags="true"
-        :collapse-tags-tooltip="true"
-        :max-collapse-tags="3"
-        :to-body="false"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
+import type { HTreeNodeData } from '@aurora/horizon-web';
 
-const values1 = ref(['input', 'consistency', 'feedback', 'radio', 'tree']);
-const values2 = ref(['input', 'consistency', 'feedback', 'radio', 'tree']);
-const values3 = ref(['input', 'consistency', 'feedback', 'radio', 'tree']);
-const values4 = ref(['input', 'consistency', 'feedback', 'radio', 'tree']);
+type TagMode = 'all' | 'compact' | 'tooltip';
 
-const baseTreeData = ref([]);
-
-onMounted(() => {
-  fetch(new URL('/tree-data.json', import.meta.url).href)
-    .then(res => res.json())
-    .then(res => {
-      baseTreeData.value = res;
-    });
-});
+const tagMode = ref<TagMode>('compact');
+const selectedValues = ref<Array<string | number>>(['admins', 'analysts', 'billing']);
+const treeData: HTreeNodeData[] = [
+  {
+    value: 'internal',
+    label: 'Internal users',
+    children: [
+      { value: 'admins', label: 'Workspace admins' },
+      { value: 'analysts', label: 'Data analysts' },
+      { value: 'operators', label: 'Service operators' },
+    ],
+  },
+  {
+    value: 'external',
+    label: 'External users',
+    children: [
+      { value: 'billing', label: 'Billing contacts' },
+      { value: 'partners', label: 'Solution partners' },
+    ],
+  },
+];
+const collapseTags = computed(() => tagMode.value !== 'all');
+const collapseTagsTooltip = computed(() => tagMode.value === 'tooltip');
 </script>
 
-<style scoped></style>
+<template>
+  <div class="docs-demo">
+    <h-segmented v-model:active-key="tagMode" size="small">
+      <h-segmented-item value="all" label="All tags" />
+      <h-segmented-item value="compact" label="Compact" />
+      <h-segmented-item value="tooltip" label="Tooltip" />
+    </h-segmented>
+    <h-tree-select
+      v-model="selectedValues"
+      :tree-data="treeData"
+      multiple
+      clearable
+      :collapse-tags="collapseTags"
+      :collapse-tags-tooltip="collapseTagsTooltip"
+      :max-collapse-tags="2"
+      placeholder="Choose audience groups"
+      :to-body="false"
+    />
+    <span aria-live="polite">{{ selectedValues.length }} selected</span>
+  </div>
+</template>

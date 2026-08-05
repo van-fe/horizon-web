@@ -1,27 +1,43 @@
-<template>
-  <h-form label-position="left" label-vertical-align="middle">
-    <h-form-item label="hide on single page">
-      <h-radio-group v-model="hideOnSinglePage">
-        <h-radio :value="true">true</h-radio>
-        <h-radio :value="false">false</h-radio>
-      </h-radio-group>
-    </h-form-item>
-    <h-form-item label="total">
-      <h-input-number
-        v-model="total"
-        :min="0"
-        :step="10"
-        :enable-lang-press="true"
-        style="max-width: 150px"
-      />
-    </h-form-item>
-  </h-form>
-  <h-pagination :total="total" :hide-on-single-page="hideOnSinglePage" />
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const hideOnSinglePage = ref(false);
-const total = ref(10);
+const hideOnSinglePage = ref(true);
+const total = ref(8);
 </script>
+
+<template>
+  <div class="docs-demo">
+    <div class="docs-demo__controls">
+      <label class="toggle-row">
+        <span>单页时隐藏</span>
+        <h-switch v-model="hideOnSinglePage" status />
+      </label>
+      <label class="docs-demo__control">
+        <span>数据总数</span>
+        <h-input-number v-model="total" :min="0" :max="50" :step="2" />
+      </label>
+    </div>
+    <div class="pagination-stage">
+      <h-pagination :total="total" :hide-on-single-page="hideOnSinglePage" />
+    </div>
+    <p class="docs-demo__status" role="status">
+      {{ hideOnSinglePage && total <= 10 ? '分页器已隐藏' : '分页器可见' }} · {{ total }} 条数据
+    </p>
+  </div>
+</template>
+
+<style scoped>
+.toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--h-text-secondary);
+  font-size: 13px;
+}
+
+.pagination-stage {
+  min-height: 40px;
+  overflow-x: auto;
+  padding-block: 8px;
+}
+</style>

@@ -1,7 +1,7 @@
 import isArrayLike from 'lodash/isArrayLike';
 import { isBoolean, isNumber, isObject } from '@aurora/utils';
 import isEqual from 'lodash/isEqual';
-import { unwrapValueFormattedValue } from './valueFormat';
+import { removeValueFormatMetadata, unwrapValueFormattedValue } from './valueFormat';
 import type { ModelValueType } from './types';
 import type { Slots, VNode, VNodeArrayChildren } from 'vue';
 import { isVNode } from 'vue';
@@ -54,6 +54,15 @@ export function isEmptyArray(value1: unknown) {
  */
 export function isEqualLoose(value1: ModelValueType, value2: ModelValueType): boolean {
   if (isEmpty(value1) && isEmpty(value2)) return true;
+
+  const publicValue1 = Array.isArray(value1)
+    ? value1.map(curr => removeValueFormatMetadata(curr))
+    : removeValueFormatMetadata(value1);
+  const publicValue2 = Array.isArray(value2)
+    ? value2.map(curr => removeValueFormatMetadata(curr))
+    : removeValueFormatMetadata(value2);
+
+  if (isEqual(publicValue1, publicValue2)) return true;
 
   let val1 = value1;
   let val2 = value2;

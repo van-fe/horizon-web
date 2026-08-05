@@ -1,23 +1,30 @@
-## Basic Usage
-The basic style only includes single color adjustment. Set `alpha = true` to enable transparency setting
+## Basic Usage and Alpha
+
+
 :::demo components/ColorPicker/alpha.vue :::
 
-## Trigger Type
-You can enable the style with color code by configuring `square-text = true`
+## Trigger Types and States
+
+Use `trigger-type="square"` for a swatch trigger and add `square-text` to expose the current value. Triggers also support disabled and clearable states.
+
 :::demo components/ColorPicker/trigger.vue :::
 
-## Custom trigger
-In some cases, you may need to set your own trigger `trigger`. You can configure it using `slots.trigger`
+## Custom Trigger
 
-You can use `resultsValue.value` in the return parameters to get the set value
+Use the `trigger` slot to integrate color selection into an existing action. `resultsValue.value` from the slot scope contains the formatted current value.
+
 :::demo components/ColorPicker/custom-trigger.vue :::
 
-## Trigger Size
-The trigger size is divided into S, M, and L, controlled by `size`
+## Trigger Sizes
+
+`size` supports `small`, `medium`, and `large`. It changes only the trigger, not the popup panel. Use the `squareText` slot to replace the displayed color value.
+
 :::demo components/ColorPicker/size.vue :::
 
-## Extended Styles
-Extended functions include: with gradient setting, with system preset colors, with recently used colors, with custom colors, with web color picker, only one gradient, with cancel/confirm buttons, with clear button, with cancel/confirm + clear buttons;
+## Advanced Capabilities
 
-Note: The web color picker uses the [EyeDropper API](https://developer.mozilla.org/en-US/docs/Web/API/EyeDropper), but the specific browser support needs to be checked: [Can I Use](https://caniuse.com/?search=EyeDropper). In actual production scenarios, please use this capability with caution. This `API` is not precise and may have slight differences
+Combine gradients, swatches, recent colors, custom colors, confirmation, and screen sampling according to the editing task. Recent and custom colors are stored in the current browser.
+
+Screen sampling depends on the [EyeDropper API](https://developer.mozilla.org/en-US/docs/Web/API/EyeDropper) and should be progressive enhancement; keep the regular board and inputs available when unsupported.
+
 :::demo components/ColorPicker/examples.vue :::

@@ -1,34 +1,43 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const current = ref(0);
+const status = ref('点击可用步骤进行切换');
+const steps = [
+  { title: '资料填写', description: '已完成' },
+  { title: '系统审核', description: '进行中' },
+  { title: '结果确认', description: '等待中' },
+  { title: '完成归档', description: '等待中' },
+];
+
+const change = (value: number) => {
+  status.value = `已切换到：${steps[value]?.title ?? value}`;
+};
+</script>
+
 <template>
-  <h-steps v-model="current" :clickable="true" @change="onChange">
-    <h-step title="Step 1" description="Here is a paragraph." @click="onClickStep1" />
-    <h-step title="Step 2" description="Cannot click" :clickable="false" />
-    <h-step title="Step 3" description="Here is a paragraph." />
-    <h-step title="Step 3" description="Here is a paragraph." />
-  </h-steps>
-  <br />
-  <h-steps v-model="current" :clickable="true" direction="vertical" @change="onChange">
-    <h-step title="Step 1" description="Here is a paragraph." />
-    <h-step title="Step 2" description="Cannot click" :clickable="false" />
-    <h-step title="Step 3" description="Here is a paragraph." />
-    <h-step title="Step 3" description="Here is a paragraph." />
-  </h-steps>
+  <div class="docs-demo">
+    <div class="steps-scroll">
+      <h-steps v-model="current" clickable @change="change">
+        <h-step
+          v-for="item in steps"
+          :key="item.title"
+          :title="item.title"
+          :description="item.description"
+        />
+      </h-steps>
+    </div>
+    <p class="docs-demo__status" role="status">{{ status }}</p>
+  </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-export default defineComponent({
-  data() {
-    return {
-      current: 0,
-    };
-  },
-  methods: {
-    onChange(current: number) {
-      console.info('onChange:', current);
-    },
-    onClickStep1(evt: Event, index: number) {
-      console.info({evt, index});
-    },
-  },
-});
-</script>
+<style scoped>
+.steps-scroll {
+  overflow-x: auto;
+  padding-block: 12px;
+}
+
+.steps-scroll :deep(.h-steps) {
+  min-width: 560px;
+}
+</style>

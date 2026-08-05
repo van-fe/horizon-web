@@ -1,8 +1,13 @@
 ## Basic Usage
 
-The DatePicker provides date selection by default.
 
 :::demo components/DatePicker/basic.vue :::
+
+## Multiple Date Fields
+
+Compose independent date pickers when several dates represent different business milestones. Give each field a clear label and visible value feedback.
+
+:::demo components/DatePicker/multiple.vue :::
 
 ## Confirmation Mode
 

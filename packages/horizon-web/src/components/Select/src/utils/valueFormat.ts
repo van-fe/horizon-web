@@ -40,20 +40,92 @@ export function unwrapValueFormattedValue(val: ModelValueSingleType | undefined 
   }
 }
 
+/**
+ * 为格式化值附加不可枚举的原始选项值，避免修改 `valueFormat` 的返回对象。
+ */
+export function wrapValueFormattedValue(
+  formattedValue: ModelValueFormattedType & Record<string, unknown>,
+  optionValue: OptionProps['value'],
+): Required<ModelValueFormattedType> & Record<string, unknown> {
+  const wrappedValue = (
+    Array.isArray(formattedValue) ? [...formattedValue] : { ...formattedValue }
+  ) as Required<ModelValueFormattedType> & Record<string, unknown>;
+
+  Object.defineProperty(wrappedValue, HSelectValueFormatSymbol, {
+    configurable: true,
+    value: optionValue,
+  });
+
+  return wrappedValue;
+}
+
+/**
+ * 比较模型值与选项。优先使用规范原始值，其次比较 `valueFormat` 结果，最后兼容旧的
+ * `{ value }` 格式化值。
+ */
+export function isModelValueMatchingOption(
+  modelValue: ModelValueSingleType,
+  optionValue: OptionProps['value'],
+  formattedOptionValue?: { value: ModelValueFormattedType & Record<string, unknown> },
+) {
+  const unwrappedValue = unwrapValueFormattedValue(modelValue);
+
+  if (isEqualIgnoreCtx(unwrappedValue, optionValue)) {
+    return true;
+  }
+
+  if (
+    formattedOptionValue &&
+    isEqualIgnoreCtx(removeValueFormatMetadata(modelValue), formattedOptionValue.value)
+  ) {
+    return true;
+  }
+
+  return isObject(unwrappedValue) && 'value' in unwrappedValue
+    ? isEqualIgnoreCtx(unwrappedValue.value, optionValue)
+    : false;
+}
+
+/**
+ * 移除格式化值上的内部元数据，仅保留向用户公开的数据结构。
+ */
+export function removeValueFormatMetadata<T>(value: T): T {
+  if (!isValueFormatWrapped(value)) return value;
+
+  const publicValue = (Array.isArray(value) ? [...value] : { ...value }) as T &
+    ModelValueFormattedType;
+
+  delete publicValue[HSelectValueFormatSymbol];
+
+  return publicValue;
+}
+
 export function isOptionChecked(
   modelValue: Set<ModelValueSingleType>,
   optionValue: OptionProps['value'],
+  getFormattedOptionValue?: () => ModelValueFormattedType & Record<string, unknown>,
 ) {
-  if (modelValue.has(optionValue)) {
-    return true;
-  } else {
-    return Array.from(modelValue.values()).some(curr => {
-      const unwrapValue = unwrapValueFormattedValue(curr);
+  const values = Array.from(modelValue.values());
 
-      return !isObject(unwrapValue)
-        ? isEqualIgnoreCtx(unwrapValue, optionValue)
-        : isEqualIgnoreCtx(unwrapValue, optionValue) ||
-            ('value' in unwrapValue ? isEqualIgnoreCtx(unwrapValue?.value, optionValue) : false);
-    });
+  if (
+    modelValue.has(optionValue) ||
+    values.some(curr => isEqualIgnoreCtx(unwrapValueFormattedValue(curr), optionValue))
+  ) {
+    return true;
   }
+
+  const shouldCompareFormattedValue = values.some(
+    curr => isObject(curr) && !isValueFormatWrapped(curr),
+  );
+  const formattedOptionValue = shouldCompareFormattedValue
+    ? getFormattedOptionValue?.()
+    : undefined;
+
+  return values.some(curr =>
+    isModelValueMatchingOption(
+      curr,
+      optionValue,
+      formattedOptionValue ? { value: formattedOptionValue } : undefined,
+    ),
+  );
 }

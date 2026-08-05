@@ -1,31 +1,37 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      {{ Object.prototype.toString.call(value) }}
-      <h-date-picker v-model="value" type="date" :initial-value="null" @update:modelValue="onUpdate" @change="onChange" @pick="onPick" />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      {{ Object.prototype.toString.call(value2) }}
-      <h-date-picker v-model="value2" type="date-range" :initial-value="null" @update:modelValue="onUpdate" @change="onChange" @pick="onPick" />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
+import { dayjs } from '@aurora/horizon-web';
 
-const value = ref();
-const value2 = ref();
+const value = ref<unknown>(dayjs().add(1, 'day'));
 
-function onUpdate(val: unknown) {
-  console.info('update: ', val);
-}
-
-function onChange(val: unknown) {
-  console.info('change: ', val);
-}
-
-function onPick(val: unknown) {
-  console.info('pick: ', val);
+function describe(modelValue: unknown) {
+  if (modelValue === null) return 'null';
+  if (modelValue === undefined) return 'undefined';
+  return 'Dayjs value';
 }
 </script>
+
+<template>
+  <section class="date-picker-demo">
+    <h-date-picker v-model="value" type="date" :initial-value="null" />
+    <code aria-live="polite">Model: {{ describe(value) }}</code>
+  </section>
+</template>
+
+<style scoped>
+.date-picker-demo {
+  display: grid;
+  gap: var(--h-spacing-3);
+  max-inline-size: 680px;
+}
+
+.date-picker-demo code {
+  color: var(--h-text-secondary);
+}
+
+@media (max-width: 390px) {
+  .date-picker-demo {
+    inline-size: 100%;
+  }
+}
+</style>

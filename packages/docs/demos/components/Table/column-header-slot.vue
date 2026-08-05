@@ -1,42 +1,62 @@
-<template>
-  <h-table :data="data" height="300">
-    <h-table-column title="ID" field="id" />
-    <h-table-column title="Name" field="name" />
-    <h-table-column title="Gender" field="gender" />
-    <h-table-column title="Birthday" field="birthday" />
-    <h-table-column title="Address" field="address">
-      <template #header>
-        <h-input v-model="searchedAddress" placeholder="Please search" />
-      </template>
-    </h-table-column>
-  </h-table>
-</template>
-
 <script setup lang="ts">
-import { ref, watch } from 'vue';
-import { faker } from '@faker-js/faker';
+import { computed, ref } from 'vue';
 
-const searchedAddress = ref();
-
-interface TableData {
-  id: number;
-  name: string;
-  birthday: string;
-  gender: 'male' | 'female';
-  address: string;
-}
-
-const originData: TableData[] = new Array(20).fill(0).map((_, index) => ({
-  id: index + 1,
-  name: faker.person.fullName(),
-  birthday: faker.date.birthdate({ min: 22, max: 50, mode: 'age' }).toDateString(),
-  gender: faker.helpers.arrayElement(['male', 'female']),
-  address: faker.location.streetAddress(),
-}));
-
-const data = ref<TableData[]>(originData);
-
-watch(searchedAddress, val => {
-  data.value = val ? originData.filter(row => row.address.includes(val)) : originData;
+const ownerQuery = ref('');
+const reviews = [
+  { item: 'Checkout copy', owner: 'Mina Park', team: 'Commerce', updated: 'Aug 03' },
+  { item: 'Access policy', owner: 'Noah Chen', team: 'Security', updated: 'Aug 02' },
+  { item: 'Export flow', owner: 'Iris Wang', team: 'Analytics', updated: 'Aug 01' },
+  { item: 'Token migration', owner: 'Leo Martin', team: 'Design systems', updated: 'Jul 31' },
+  { item: 'Alert routing', owner: 'Avery Kim', team: 'Platform', updated: 'Jul 30' },
+];
+const filteredReviews = computed(() => {
+  const query = ownerQuery.value.trim().toLowerCase();
+  return query ? reviews.filter(row => row.owner.toLowerCase().includes(query)) : reviews;
 });
 </script>
+
+<template>
+  <div class="table-header-slot-demo">
+    <h-table :data="filteredReviews" row-key="item">
+      <h-table-column title="Item" field="item" min-width="180" />
+      <h-table-column title="Owner" field="owner" min-width="190">
+        <template #header>
+          <div class="table-header-slot-demo__search">
+            <span>Owner</span>
+            <h-input
+              v-model="ownerQuery"
+              size="small"
+              clearable
+              aria-label="Filter by owner"
+              placeholder="Filter"
+            />
+          </div>
+        </template>
+      </h-table-column>
+      <h-table-column title="Team" field="team" min-width="150" />
+      <h-table-column title="Updated" field="updated" width="104" />
+    </h-table>
+    <p aria-live="polite">{{ filteredReviews.length }} matching rows.</p>
+  </div>
+</template>
+
+<style scoped>
+.table-header-slot-demo {
+  display: grid;
+  min-width: 0;
+  gap: var(--h-spacing-3);
+}
+
+.table-header-slot-demo__search {
+  display: grid;
+  grid-template-columns: auto minmax(100px, 1fr);
+  align-items: center;
+  gap: var(--h-spacing-2);
+}
+
+.table-header-slot-demo p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+</style>

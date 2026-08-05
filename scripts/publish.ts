@@ -23,6 +23,7 @@ const publishPackages = [
   'locale-vue',
   'unplugin-resolver',
   'colors',
+  'upload-adapters',
 ];
 
 const packageJsonOrigin: Record<string, string> = {};

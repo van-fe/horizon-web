@@ -6,7 +6,6 @@
   display: flex;
   grid-column-gap: mixins.css-variable('pagination', 'spacing', 'components', 'gap');
   align-items: center;
-  margin-right: mixins.css-variable('pagination', 'spacing', 'margin-right');
   line-height: mixins.css-variable('pagination', 'line-height');
   white-space: nowrap;
 

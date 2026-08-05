@@ -1,63 +1,57 @@
-<template>
-  <h-grid :gap="10">
-    <h-grid-item :span="6">
-      <div class="demo-title">
-        自定义 tag
-        <h-tooltip>
-          <template #content>
-            你可以在 tagRender 这个 slot 中接受到传递到每一个选项上的所有参数。自定义 tag
-            不支持在可以输入（例如：filterable、allowCreate）中生效
-          </template>
-          <a-icon name="help" />
-        </h-tooltip>
-      </div>
-      <h-select v-model="value1" :to-body="false">
-        <h-option label="中国" :value="1" en_name="China" />
-        <h-option :value="2" label="美国" en_name="America" />
-        <h-option :value="3" label="日本" en_name="Japan" />
-        <template #tagRender="slotProps">
-          <div style="height: 100px; display: flex; align-items: center">
-            {{ `${slotProps.label}(${slotProps.en_name})` ?? '' }}
-          </div>
-        </template>
-      </h-select>
-    </h-grid-item>
+<script setup lang="ts">
+import { computed, ref } from 'vue';
 
-    <h-grid-item :span="6">
-      <div class="demo-title">自定义 完整 select</div>
-      <h-select v-model="value2" :value-format="valueFormat" :to-body="false">
-        <h-option label="上海" :value="1" />
-        <h-option :value="2" label="北京" />
-        <h-option :value="3" label="合肥" name="hefei" />
-        <template #pickerInner>
-          <div style="height: 100px; border: 1px solid #f00">
-            {{ value2 ? value2?.label + '' + value2?.value : '' }}
-          </div>
-        </template>
-      </h-select>
-    </h-grid-item>
-  </h-grid>
-</template>
-
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    const value1 = ref();
-    const value2 = ref();
-
-    return {
-      valueFormat(originValue: any) {
-        return {
-          value: originValue.value,
-          label: originValue.label,
-        };
-      },
-      value1,
-      value2,
-    };
-  },
-});
+const countries = [
+  { value: 'cn', label: '中国', english: 'China' },
+  { value: 'sg', label: '新加坡', english: 'Singapore' },
+  { value: 'de', label: '德国', english: 'Germany' },
+];
+const country = ref('cn');
+const selectedCountry = computed(() => countries.find(item => item.value === country.value));
 </script>
 
-<style scoped></style>
+<template>
+  <div class="select-demo">
+    <h-select v-model="country" :to-body="false">
+      <h-option
+        v-for="item in countries"
+        :key="item.value"
+        :value="item.value"
+        :label="item.label"
+        :english="item.english"
+      />
+      <template #tagRender="props">
+        <span class="bilingual-value">
+          <strong>{{ props?.label ?? selectedCountry?.label }}</strong>
+          <span>{{ props?.english ?? selectedCountry?.english }}</span>
+        </span>
+      </template>
+    </h-select>
+    <p class="docs-demo__status">{{ selectedCountry?.english }}</p>
+  </div>
+</template>
+
+<style scoped>
+.select-demo {
+  display: grid;
+  min-width: 0;
+  gap: 10px;
+}
+
+.select-demo :deep(.h-select) {
+  width: 100%;
+  min-width: 0;
+}
+
+.bilingual-value {
+  display: inline-flex;
+  min-width: 0;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.bilingual-value > span {
+  color: var(--h-text-secondary);
+  font-size: 12px;
+}
+</style>

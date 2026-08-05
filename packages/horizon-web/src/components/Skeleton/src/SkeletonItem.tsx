@@ -5,6 +5,8 @@ import HTransition from '~/components/Transition/src/Transition';
 
 export default defineComponent({
   name: `${useNamespace()}SkeletonItem`,
+  desc: "骨架屏中的单个占位元素",
+  descLocales: { en: "A single placeholder element within Skeleton." },
   components: {
     HTransition,
   },

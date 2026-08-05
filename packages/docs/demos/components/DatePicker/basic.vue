@@ -1,78 +1,32 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+import { dayjs } from '@aurora/horizon-web';
+
+const releaseDate = ref(dayjs().add(7, 'day'));
+</script>
+
 <template>
-  <h-form>
-    <h-form-item label="size">
-      <h-radio-group v-model="size">
-        <h-radio value="small" />
-        <h-radio value="medium" />
-        <h-radio value="large" />
-      </h-radio-group>
-    </h-form-item>
-    <h-form-item label="style">
-      <h-radio-group v-model="inputStyle">
-        <h-radio value="normal" />
-        <h-radio value="no-border" />
-      </h-radio-group>
-    </h-form-item>
-    <h-form-item label="disabled">
-      <h-radio-group v-model="disabled">
-        <h-radio :value="true">True</h-radio>
-        <h-radio :value="false">False</h-radio>
-      </h-radio-group>
-    </h-form-item>
-  </h-form>
-  <h-grid :gap="12">
-    <h-grid-item :span="24">
-      <h-date-picker
-        v-model="value"
-        type="date"
-        :size="size"
-        :input-style="inputStyle"
-        :disabled="disabled"
-        @update:modelValue="onUpdate"
-        @change="onChange"
-        @pick="onPick"
-      />
-    </h-grid-item>
-    <h-grid-item :span="24">
-      <h-date-picker
-        v-model="value2"
-        type="date-range"
-        :size="size"
-        :input-style="inputStyle"
-        :disabled="disabled"
-        @update:modelValue="onUpdate"
-        @change="onChange"
-        @pick="onPick"
-      />
-    </h-grid-item>
-  </h-grid>
+  <section class="date-picker-demo">
+    <h-date-picker v-model="releaseDate" type="date" />
+    <p aria-live="polite">Planned release: {{ releaseDate.format('YYYY-MM-DD') }}</p>
+  </section>
 </template>
 
-<script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import { DatePickerProps } from '@aurora/horizon-web';
-
-const value = ref();
-const value2 = ref('');
-const size = ref<NonNullable<DatePickerProps['size']>>('medium');
-const inputStyle = ref<DatePickerProps['inputStyle']>('normal');
-const disabled = ref(false);
-
-function onUpdate(val: unknown) {
-  console.info('update: ', val);
+<style scoped>
+.date-picker-demo {
+  display: grid;
+  gap: var(--h-spacing-3);
+  max-inline-size: 680px;
 }
 
-function onChange(val: unknown) {
-  console.info('change: ', val);
+.date-picker-demo p {
+  margin: 0;
+  color: var(--h-text-secondary);
 }
 
-function onPick(val: unknown) {
-  console.info('pick: ', val);
+@media (max-width: 390px) {
+  .date-picker-demo {
+    inline-size: 100%;
+  }
 }
-
-onMounted(() => {
-  setTimeout(() => {
-    value.value = new Date();
-  }, 1000);
-});
-</script>
+</style>

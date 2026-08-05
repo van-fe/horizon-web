@@ -1,4 +1,6 @@
 <template>
-  <h-breadcrumb :texts="[{ text: 'Home' }, { text: 'Sub Page1' }, { text: 'Sub Page2' }]" />
+  <h-breadcrumb
+    :texts="[{ text: 'Workspace' }, { text: 'Design system' }, { text: 'Accessibility review' }]"
+    title
+  />
 </template>
-

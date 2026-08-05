@@ -40,6 +40,7 @@ const instances = shallowRef<ComponentInternalInstance[]>([]);
 export default defineComponent({
   name: `${useNamespace()}Drawer`,
   desc: '触发命令后，从屏幕一侧滑出的抽屉式的面板。',
+  descLocales: { en: "Drawer supports sliding out from any side of the screen. The default position is from the right, and the default size is `medium`." },
   inheritAttrs: false,
   props: useDrawerProps,
   emits: useDrawerEmits,

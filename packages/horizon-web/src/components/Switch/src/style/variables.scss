@@ -24,9 +24,9 @@ $values: (
       ),
     ),
     inner: (
-      '': 14px,
-      small: 10px,
-      large: 18px,
+      '': 10px,
+      small: 8px,
+      large: 14px,
     ),
   ),
   font-size: (
@@ -87,7 +87,11 @@ $values: (
       margin-left: #{function.css-variable('spacing-5')},
     ),
     core: (
-      padding: 1px,
+      padding: (
+        '': 3px,
+        small: 2px,
+        large: 3px,
+      ),
     ),
   ),
   transform: (

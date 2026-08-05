@@ -1,24 +1,49 @@
+<script setup lang="ts">
+const crops = [
+  { label: '0', rounded: 0 },
+  { label: '8px', rounded: 8 },
+  { label: '24px', rounded: 24 },
+  { label: '50%', rounded: '50%' },
+];
+</script>
+
 <template>
-  <div class="flex">
-    <h-image
-      v-for="rounded in roundedList"
-      :key="rounded"
-      class="mr-3"
-      src="/demo-assets/scene-aurora.svg"
-      width="150px"
-      height="150px"
-      :rounded="rounded"
-    />
+  <div class="image-grid">
+    <figure v-for="crop in crops" :key="crop.label">
+      <h-image
+        src="/demo-assets/avatar-indigo.svg"
+        :alt="`${crop.label} rounded image`"
+        width="100%"
+        aspect-ratio="1/1"
+        :rounded="crop.rounded"
+      />
+      <figcaption>{{ crop.label }}</figcaption>
+    </figure>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-export default defineComponent({
-  setup() {
-    return {
-      roundedList: [0, 2, 4, '8px', '50%'],
-    };
-  },
-});
-</script>
+<style scoped>
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--h-spacing-4);
+}
+
+figure {
+  min-width: 0;
+  margin: 0;
+}
+
+figcaption {
+  margin-top: var(--h-spacing-2);
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+  text-align: center;
+}
+
+@media (max-width: 560px) {
+  .image-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+</style>

@@ -17,7 +17,7 @@ focus 表示鼠标按下状态
 
 不加辅助的对齐标志默认居中对齐
 
-以下 demo 为了说明 popper 显示的位置都设置了 flip: false
+固定方向会关闭 `flip` 以便观察准确位置；`auto` 方向仍会根据可用空间自适应。
 
 :::demo components/Popover/position.vue :::
 
@@ -66,7 +66,7 @@ reference skidding 表示 popper 在辅助方向上的的偏移，正值表示 p
 :::demo components/Popover/complex.vue :::
 
 ## 箭头
-不使用小三角
+对比带箭头与无箭头的浮层效果，可以通过 `arrow` 控制箭头是否显示。
 :::demo components/Popover/arrow.vue :::
 
 ## 禁用状态
@@ -78,5 +78,6 @@ reference skidding 表示 popper 在辅助方向上的的偏移，正值表示 p
 :::demo components/Popover/mask.vue :::
 
 ## 自定义关闭配置
+通过 `hide-event-type` 指定外部交互使用 `click`、`mousedown` 或 `mouseup` 中的哪一种事件关闭浮层。
 
 :::demo components/Popover/close-trigger.vue :::

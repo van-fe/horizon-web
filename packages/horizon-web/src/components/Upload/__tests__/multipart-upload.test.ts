@@ -270,4 +270,79 @@ describe('multipart upload', () => {
     await uploader.resume();
     expect(uploadedIndexes).toEqual([0, 1, 2, 1, 2]);
   });
+
+  test('reinitializes every chunk when a provider reports an expired multipart session', async () => {
+    const initUpload = vi.fn(() => ({ uploadId: 'upload-id' }));
+    const attempts: number[] = [];
+    let rejectSessionOnce = true;
+    const { uploader } = createUploader(
+      {
+        maxAmountUploadingAtSameTime: 1,
+        initUpload,
+        uploadPart: (_file, chunk) => {
+          attempts.push(chunk.index);
+          if (chunk.index === 1 && rejectSessionOnce) {
+            rejectSessionOnce = false;
+            return Promise.reject(
+              Object.assign(new Error('NoSuchUpload'), { requiresFullRestart: true }),
+            );
+          }
+          if (attempts.length >= 3) return new Promise(() => undefined);
+          return Promise.resolve({ etag: `etag-${chunk.index}` });
+        },
+        handleMerge: vi.fn(),
+      },
+      1,
+    );
+
+    await uploader.start();
+    await flushPromises();
+    expect(attempts).toEqual([0, 1]);
+
+    await uploader.resume();
+    expect(initUpload).toHaveBeenCalledTimes(2);
+    expect(attempts).toEqual([0, 1, 0]);
+  });
+
+  test('retries initialization after a transient initialization failure', async () => {
+    const initUpload = vi
+      .fn()
+      .mockRejectedValueOnce(new Error('temporary STS failure'))
+      .mockResolvedValueOnce({ uploadId: 'upload-id' });
+    const { uploader } = createUploader({
+      initUpload,
+      uploadPart: () => new Promise(() => undefined),
+      handleMerge: vi.fn(),
+    });
+
+    await uploader.start();
+    expect(initUpload).toHaveBeenCalledOnce();
+
+    await uploader.resume();
+    expect(initUpload).toHaveBeenCalledTimes(2);
+  });
+
+  test('keeps successful initialization when scheduling fails synchronously', async () => {
+    const initUpload = vi.fn(() => ({ uploadId: 'upload-id' }));
+    const beforePartUpload = vi
+      .fn()
+      .mockImplementationOnce(() => {
+        throw new Error('temporary scheduling failure');
+      })
+      .mockReturnValue({});
+    const { methods, uploader } = createUploader({
+      initUpload,
+      beforePartUpload,
+      uploadPart: () => new Promise(() => undefined),
+      handleMerge: vi.fn(),
+    });
+
+    await uploader.start();
+    expect(methods.onUploadFail).toHaveBeenCalledOnce();
+    expect(initUpload).toHaveBeenCalledOnce();
+
+    await uploader.resume();
+    expect(initUpload).toHaveBeenCalledOnce();
+    expect(beforePartUpload).toHaveBeenCalledTimes(3);
+  });
 });

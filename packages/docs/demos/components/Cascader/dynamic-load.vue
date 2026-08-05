@@ -1,87 +1,54 @@
-<template>
-  <div>
-    <h-grid :gap="10">
-      <h-grid-item :span="6">
-        <div class="demo-title">单选</div>
-        <h-cascader
-            v-model="currentVal1"
-            v-model:options="refDynOptions1"
-            :dynamic-load="dynamicLoad"
-            :to-body="false"
-        />
-      </h-grid-item>
-      <h-grid-item :span="6">
-        <div class="demo-title">多选</div>
-        <h-cascader
-            v-model="currentVal2"
-            v-model:options="refDynOptions2"
-            multiple
-            :dynamic-load="dynamicLoad"
-            :to-body="false"
-        />
-      </h-grid-item>
-    </h-grid>
-  </div>
-</template>
+<script setup lang="ts">
+import type { HCascaderDynamicLoadNode, HCascaderOption } from '@aurora/horizon-web';
+import { onBeforeUnmount, ref } from 'vue';
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { HCascaderDynamicLoadNode } from '@aurora/horizon-web';
+const options = ref<HCascaderOption[]>([
+  { value: 'asia-pacific', label: 'Asia Pacific', isLeaf: false },
+  { value: 'europe', label: 'Europe', isLeaf: false },
+  { value: 'north-america', label: 'North America', isLeaf: false },
+]);
+const value = ref<string[]>([]);
+const status = ref('No region loaded yet');
+const pending = new Map<ReturnType<typeof setTimeout>, (value: HCascaderOption[]) => void>();
 
-const dynOptions = [
-  {
-    value: 'disciplines',
-    label: 'disciplines',
-  },
-  {
-    value: 'navigation',
-    label: 'Navigation',
-    isLeaf: false,
-  },
-];
+function dynamicLoad(node: HCascaderDynamicLoadNode): Promise<HCascaderOption[]> {
+  const parent = String(node.options.at(-1)?.label ?? 'region');
+  status.value = `Loading clusters for ${parent}…`;
+  return new Promise(resolve => {
+    const timer = setTimeout(() => {
+      pending.delete(timer);
+      const slug = String(node.options.at(-1)?.value ?? 'region');
+      const children = ['Primary', 'Secondary'].map((label, index) => ({
+        value: `${slug}-${index + 1}`,
+        label: `${parent} · ${label}`,
+        isLeaf: true,
+      }));
+      status.value = `Loaded ${children.length} clusters for ${parent}`;
+      resolve(children);
+    }, 400);
+    pending.set(timer, resolve);
+  });
+}
 
-export default defineComponent({
-  setup() {
-    const refDynOptions1 = ref([...dynOptions]);
-    const refDynOptions2 = ref(JSON.parse(JSON.stringify(dynOptions)));
-    const currentVal1 = ref<string[]>([]);
-    const currentVal2 = ref<string[][]>([]);
-
-    const options = ref([]);
-    fetch(
-      new URL('/cascader-options.json', import.meta.url).href,
-    ).then(res => {
-      res.json().then(value => {
-        options.value = value;
-      });
-    });
-
-    const dynamicLoad = (node: HCascaderDynamicLoadNode) => {
-      console.info(node);
-      return new Promise(resolve => {
-        setTimeout(() => {
-          const codePoint = 97 + node.level;
-
-          resolve(new Array(5).fill(0).map((_, index) => (
-            {
-              label: `${node.options.at(0)?.label} - ${String.fromCodePoint(codePoint)}(${index})`,
-              value: `${codePoint}(${index})`,
-              isLeaf: codePoint > 100,
-              children: [],
-            }
-          )));
-        }, 2000);
-      });
-    };
-
-    return {
-      refDynOptions1,
-      refDynOptions2,
-      currentVal1,
-      currentVal2,
-      options,
-      dynamicLoad,
-    };
-  },
+onBeforeUnmount(() => {
+  pending.forEach((resolve, timer) => {
+    clearTimeout(timer);
+    resolve([]);
+  });
+  pending.clear();
 });
 </script>
+
+<template>
+  <div class="docs-demo">
+    <h-cascader
+      v-model="value"
+      v-model:options="options"
+      aria-label="Primary cluster"
+      placeholder="Choose a cluster"
+      :dynamic-load="dynamicLoad"
+      :to-body="false"
+    />
+    <span aria-live="polite">{{ status }}</span>
+  </div>
+</template>

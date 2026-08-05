@@ -1,17 +1,15 @@
-import { IconArrowLeft, IconArrowRight, IconPause, IconPlay } from '@aurora/icon';
+import {
+  IconArrowDown,
+  IconArrowLeft,
+  IconArrowRight,
+  IconArrowUp,
+  IconPause,
+  IconPlay,
+} from '@aurora/icon';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, flattenVNodes, useNamespace } from '@aurora/utils';
 import type { CSSProperties, VNode } from 'vue';
-import {
-  cloneVNode,
-  computed,
-  defineComponent,
-  onBeforeUnmount,
-  onMounted,
-  readonly,
-  ref,
-  watch,
-} from 'vue';
+import { cloneVNode, computed, defineComponent, ref } from 'vue';
 import HButton from '~/components/Button/src/Button';
 import useLocaleLang from '~/utils/useLocaleLang';
 import CarouselItem from './CarouselItem';
@@ -19,11 +17,11 @@ import type { CarouselEmits } from './composables/useEmits';
 import { useCarouselEmits } from './composables/useEmits';
 import type { CarouselExposes } from './composables/useExposes';
 import { useCarouselExposes } from './composables/useExposes';
+import { useCarouselAutoplay } from './composables/useCarouselAutoplay';
+import { useCarouselNavigation } from './composables/useCarouselNavigation';
 import { useCarouselProps } from './composables/useProps';
 import type { CarouselSlots } from './composables/useSlots';
 import { useCarouselSlots } from './composables/useSlots';
-
-type MotionDirection = 'next' | 'previous';
 
 export default defineComponent({
   name: `${useNamespace()}Carousel`,
@@ -44,17 +42,10 @@ export default defineComponent({
     }: HorizonWebSetupContext<CarouselEmits, CarouselSlots, CarouselExposes>,
   ) {
     const classHelper = new ComponentClassBlock('carousel');
-    const activeIndex = ref(props.modelValue ?? props.initialIndex);
-    const previousIndex = ref(activeIndex.value);
+    const itemClassHelper = new ComponentClassBlock('carousel-item');
     const itemCount = ref(0);
     const itemNames = ref<Array<string | number | undefined>>([]);
-    const motion = ref<MotionDirection>('next');
-    const manuallyPaused = ref(false);
-    const hoverPaused = ref(false);
-    const pageHidden = ref(false);
-    const reducedMotion = ref(false);
-    const touchStart = ref<{ x: number; y: number }>();
-    let timer: ReturnType<typeof setTimeout> | undefined;
+    const touchStart = ref<{ identifier: number; x: number; y: number }>();
 
     const carouselText = useLocaleLang('carousel.label', 'Carousel');
     const previousText = useLocaleLang('carousel.previous', 'Previous slide');
@@ -67,113 +58,62 @@ export default defineComponent({
     const cssHeight = computed(() =>
       typeof props.height === 'number' ? `${props.height}px` : props.height,
     );
-    const atStart = computed(() => !props.loop && activeIndex.value <= 0);
-    const atEnd = computed(
-      () => !props.loop && activeIndex.value >= Math.max(0, itemCount.value - 1),
-    );
-    const canAutoplay = computed(
-      () =>
-        props.autoplay &&
-        itemCount.value > 1 &&
-        !manuallyPaused.value &&
-        !hoverPaused.value &&
-        !pageHidden.value &&
-        !reducedMotion.value,
-    );
-
-    const normalizeIndex = (index: number) => {
-      if (!itemCount.value) return 0;
-      if (!props.loop) return Math.min(Math.max(index, 0), itemCount.value - 1);
-      return ((index % itemCount.value) + itemCount.value) % itemCount.value;
-    };
-
-    const changeTo = (target: number, direction?: MotionDirection, shouldEmit = true) => {
-      const nextIndex = normalizeIndex(target);
-      const oldIndex = activeIndex.value;
-      if (nextIndex === oldIndex) return;
-
-      previousIndex.value = oldIndex;
-      motion.value =
-        direction ??
-        (Math.abs(nextIndex - oldIndex) > itemCount.value / 2
-          ? nextIndex < oldIndex
-            ? 'next'
-            : 'previous'
-          : nextIndex > oldIndex
-            ? 'next'
-            : 'previous');
-      activeIndex.value = nextIndex;
-      if (shouldEmit) {
-        emit('update:modelValue', nextIndex);
-        emit('change', nextIndex, oldIndex);
-      }
-    };
-
-    const next = () => changeTo(activeIndex.value + 1, 'next');
-    const prev = () => changeTo(activeIndex.value - 1, 'previous');
-    const setActiveItem = (target: number | string) => {
-      const index =
-        typeof target === 'number'
-          ? target
-          : itemNames.value.findIndex(name => String(name) === target);
-      if (index >= 0) changeTo(index);
-    };
-    const pause = () => {
-      manuallyPaused.value = true;
-    };
-    const play = () => {
-      manuallyPaused.value = false;
-      reducedMotion.value = false;
-    };
-
-    const clearTimer = () => {
-      if (timer !== undefined) clearTimeout(timer);
-      timer = undefined;
-    };
-    const schedule = () => {
-      clearTimer();
-      if (!canAutoplay.value) return;
-      timer = setTimeout(next, props.interval);
-    };
-
-    watch(
-      () => props.modelValue,
-      value => {
-        if (value === undefined || value === activeIndex.value) return;
-        changeTo(value, undefined, false);
-      },
-    );
-    watch([activeIndex, canAutoplay, () => props.interval], schedule, { flush: 'post' });
-    watch(itemCount, count => {
-      if (!count) {
-        activeIndex.value = 0;
-        return;
-      }
-      const normalized = normalizeIndex(activeIndex.value);
-      if (normalized !== activeIndex.value)
-        changeTo(normalized, undefined, props.modelValue === undefined);
+    const resolvedIndicatorPosition = computed(() => {
+      if (props.indicatorPosition === 'inside')
+        return props.direction === 'vertical' ? 'right' : 'bottom';
+      if (props.indicatorPosition === 'outside') return 'outer';
+      return props.indicatorPosition;
     });
-
-    const onVisibilityChange = () => {
-      pageHidden.value = document.hidden;
-    };
-    onMounted(() => {
-      reducedMotion.value =
-        window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
-      document.addEventListener('visibilitychange', onVisibilityChange);
-      schedule();
+    const {
+      activeIndex,
+      atEnd,
+      atStart,
+      cardMotionReady,
+      isAnimating,
+      motion,
+      next,
+      prev,
+      previousIndex,
+      requestChange,
+      setActiveItem,
+    } = useCarouselNavigation(props, itemCount, itemNames, emit);
+    const {
+      actionIsPaused,
+      canAutoplay,
+      onFocusin,
+      onFocusout,
+      onMouseenter,
+      onMouseleave,
+      pause,
+      play,
+      toggle,
+    } = useCarouselAutoplay({
+      activeIndex,
+      atEnd,
+      itemCount,
+      props,
+      restart: () => requestChange(0, 'next'),
+      rotate: next,
     });
-    onBeforeUnmount(() => {
-      clearTimer();
-      document.removeEventListener('visibilitychange', onVisibilityChange);
-    });
-
-    const isInteractiveTarget = (target: EventTarget | null) =>
-      target instanceof HTMLElement &&
-      !!target.closest('button, a, input, select, textarea, [contenteditable="true"]');
+    const previousIcon = computed(() =>
+      props.direction === 'vertical' ? IconArrowUp : IconArrowLeft,
+    );
+    const nextIcon = computed(() =>
+      props.direction === 'vertical' ? IconArrowDown : IconArrowRight,
+    );
 
     const onKeydown = (event: KeyboardEvent) => {
-      if (!props.keyboard || isInteractiveTarget(event.target)) return;
+      if (
+        !props.keyboard ||
+        event.target !== event.currentTarget ||
+        event.defaultPrevented ||
+        event.isComposing ||
+        event.altKey ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.shiftKey
+      )
+        return;
       let target: number | undefined;
       if (event.key === 'Home') target = 0;
       if (event.key === 'End') target = itemCount.value - 1;
@@ -185,27 +125,86 @@ export default defineComponent({
         if (event.key === 'ArrowDown') target = activeIndex.value + 1;
       }
       if (target === undefined) return;
-      event.preventDefault();
-      changeTo(target, target < activeIndex.value ? 'previous' : 'next');
+      const changed = requestChange(target, target < activeIndex.value ? 'previous' : 'next');
+      if (changed) event.preventDefault();
     };
 
     const onTouchStart = (event: TouchEvent) => {
-      const touch = event.touches[0];
-      if (!touch || !props.swipeThreshold) return;
-      touchStart.value = { x: touch.clientX, y: touch.clientY };
+      const touch = event.touches.length === 1 ? event.touches[0] : undefined;
+      if (!touch || !props.swipeThreshold) {
+        touchStart.value = undefined;
+        return;
+      }
+      touchStart.value = {
+        identifier: touch.identifier ?? 0,
+        x: touch.clientX,
+        y: touch.clientY,
+      };
     };
     const onTouchEnd = (event: TouchEvent) => {
       const start = touchStart.value;
-      const touch = event.changedTouches[0];
+      const touch = Array.from(event.changedTouches).find(
+        item => (item.identifier ?? 0) === start?.identifier,
+      );
       touchStart.value = undefined;
       if (!start || !touch) return;
-      const distance =
-        props.direction === 'horizontal' ? touch.clientX - start.x : touch.clientY - start.y;
-      if (Math.abs(distance) < props.swipeThreshold) return;
-      distance < 0 ? next() : prev();
+      const distanceX = touch.clientX - start.x;
+      const distanceY = touch.clientY - start.y;
+      const mainDistance = props.direction === 'horizontal' ? distanceX : distanceY;
+      const crossDistance = props.direction === 'horizontal' ? distanceY : distanceX;
+      if (
+        Math.abs(mainDistance) < props.swipeThreshold ||
+        Math.abs(mainDistance) <= Math.abs(crossDistance)
+      )
+        return;
+      mainDistance < 0 ? next() : prev();
+    };
+    const onTouchCancel = () => {
+      touchStart.value = undefined;
     };
 
-    expose({ activeIndex: readonly(activeIndex), setActiveItem, prev, next, pause, play });
+    const onViewportClick = (event: MouseEvent) => {
+      if (props.effect !== 'card' || itemCount.value < 2) return;
+      const viewport = event.currentTarget;
+      if (!(viewport instanceof HTMLElement)) return;
+      const findItem = (state: 'active' | 'placement-previous' | 'placement-next') => {
+        const stateClass = itemClassHelper.is(state);
+        return Array.from(viewport.children).find(
+          (child): child is HTMLElement =>
+            child instanceof HTMLElement &&
+            child.classList.contains(itemClassHelper.block) &&
+            !!stateClass &&
+            child.classList.contains(stateClass),
+        );
+      };
+      const activeItem = findItem('active');
+      if (!activeItem || (event.target instanceof Node && activeItem.contains(event.target)))
+        return;
+
+      const isWithin = (element: Element | null) => {
+        if (!element) return false;
+        const rect = element.getBoundingClientRect();
+        return (
+          event.clientX >= rect.left &&
+          event.clientX <= rect.right &&
+          event.clientY >= rect.top &&
+          event.clientY <= rect.bottom
+        );
+      };
+      const activeRect = activeItem.getBoundingClientRect();
+      if (props.direction === 'horizontal') {
+        if (event.clientX < activeRect.left && isWithin(findItem('placement-previous') ?? null))
+          prev();
+        if (event.clientX > activeRect.right && isWithin(findItem('placement-next') ?? null))
+          next();
+        return;
+      }
+      if (event.clientY < activeRect.top && isWithin(findItem('placement-previous') ?? null))
+        prev();
+      if (event.clientY > activeRect.bottom && isWithin(findItem('placement-next') ?? null)) next();
+    };
+
+    expose({ activeIndex, setActiveItem, prev, next, pause, play });
 
     const getItems = () => {
       const content = slots.default?.();
@@ -228,12 +227,17 @@ export default defineComponent({
         'data-carousel-previous': previousIndex.value,
         'data-carousel-loop': props.loop,
         'data-carousel-motion': motion.value,
+        'data-carousel-animating': isAnimating.value,
+        'data-carousel-effect': props.effect,
       });
 
     return () => {
       const items = getItems();
       const showControls = items.length > 1;
-      const rootStyle = { '--h-carousel-size-container-height': cssHeight.value } as CSSProperties;
+      const rootStyle = {
+        '--h-carousel-size-container-height': cssHeight.value,
+        '--h-carousel-transition-duration': `${props.moveSpeed}ms`,
+      } as CSSProperties;
       return (
         <section
           {...attrs}
@@ -241,29 +245,41 @@ export default defineComponent({
             classHelper.block,
             classHelper.m(props.direction),
             classHelper.m(props.effect),
+            classHelper.m(`motion-${motion.value}`),
+            classHelper.is('animating', isAnimating.value),
+            classHelper.is('motion-ready', cardMotionReady.value),
             classHelper.m(`arrow-${props.arrow}`),
             classHelper.m(`indicators-${props.indicatorPosition}`),
+            classHelper.m(`indicator-position-${resolvedIndicatorPosition.value}`),
+            classHelper.m(`indicator-${props.indicatorType}`),
             attrs.class as string,
           )}
-          style={[rootStyle, attrs.style as CSSProperties]}
+          style={[attrs.style as CSSProperties, rootStyle]}
           role="region"
           aria-roledescription={localized(carouselText.value, 'Carousel')}
           aria-label={props.ariaLabel ?? localized(carouselText.value, 'Carousel')}
           tabindex={0}
           onKeydown={onKeydown}
-          onMouseenter={() => {
-            if (props.pauseOnHover) hoverPaused.value = true;
-          }}
-          onMouseleave={() => {
-            hoverPaused.value = false;
-          }}
-          onFocusin={() => {
-            if (props.pauseOnFocus) pause();
-          }}
+          onMouseenter={onMouseenter}
+          onMouseleave={onMouseleave}
+          onFocusin={onFocusin}
+          onFocusout={onFocusout}
           onTouchstart={onTouchStart}
           onTouchend={onTouchEnd}
+          onTouchcancel={onTouchCancel}
         >
-          <div class={classHelper.e('viewport')}>
+          {showControls && props.autoplay && (
+            <HButton
+              class={classHelper.e('autoplay')}
+              icon={actionIsPaused.value ? IconPlay : IconPause}
+              iconSize={14}
+              size="small"
+              aria-label={actionIsPaused.value ? playText.value : pauseText.value}
+              onClick={toggle}
+            />
+          )}
+
+          <div class={classHelper.e('viewport')} onClick={onViewportClick}>
             {items.map((item, index) => renderItem(item, index, items.length))}
           </div>
 
@@ -271,38 +287,25 @@ export default defineComponent({
             <>
               <HButton
                 class={cls(classHelper.e('arrow'), classHelper.em('arrow', 'previous'))}
-                icon={slots.previous ? undefined : IconArrowLeft}
-                text
+                icon={slots.previous ? undefined : previousIcon.value}
+                iconSize={14}
                 size="small"
                 disabled={atStart.value}
                 aria-label={previousText.value}
                 onClick={prev}
-              >
-                {slots.previous?.()}
-              </HButton>
+                v-slots={slots.previous ? { icon: slots.previous } : undefined}
+              />
               <HButton
                 class={cls(classHelper.e('arrow'), classHelper.em('arrow', 'next'))}
-                icon={slots.next ? undefined : IconArrowRight}
-                text
+                icon={slots.next ? undefined : nextIcon.value}
+                iconSize={14}
                 size="small"
                 disabled={atEnd.value}
                 aria-label={nextText.value}
                 onClick={next}
-              >
-                {slots.next?.()}
-              </HButton>
+                v-slots={slots.next ? { icon: slots.next } : undefined}
+              />
             </>
-          )}
-
-          {showControls && props.autoplay && (
-            <HButton
-              class={classHelper.e('autoplay')}
-              icon={canAutoplay.value ? IconPause : IconPlay}
-              text
-              size="small"
-              aria-label={canAutoplay.value ? pauseText.value : playText.value}
-              onClick={canAutoplay.value ? pause : play}
-            />
           )}
 
           {showControls && props.indicatorPosition !== 'none' && (
@@ -310,37 +313,105 @@ export default defineComponent({
               class={classHelper.e('indicators')}
               role="group"
               aria-label={localized(carouselText.value, 'Carousel')}
+              aria-orientation={
+                ['left', 'right', 'outer-right'].includes(resolvedIndicatorPosition.value)
+                  ? 'vertical'
+                  : 'horizontal'
+              }
             >
-              {items.map((item, index) => {
-                const active = activeIndex.value === index;
-                const label = item.props?.label;
-                return (
+              {props.indicatorType === 'slider' && !slots.indicator ? (
+                <div class={classHelper.e('indicator-slider')}>
+                  <span class={classHelper.e('indicator-slider-track')} aria-hidden="true" />
                   <span
-                    class={classHelper.e('indicator-trigger')}
-                    onMouseenter={() => {
-                      if (props.trigger === 'hover') changeTo(index);
-                    }}
-                  >
-                    <HButton
-                      class={cls(classHelper.e('indicator'), classHelper.is('active', active))}
-                      text
-                      size="small"
-                      aria-label={
-                        label !== undefined
-                          ? String(label)
-                          : localized(indicatorText.value, 'Go to slide {current}').replace(
-                              '{current}',
-                              String(index + 1),
-                            )
-                      }
-                      aria-current={active ? 'true' : undefined}
-                      onClick={() => changeTo(index)}
+                    class={classHelper.e('indicator-slider-mark')}
+                    style={
+                      {
+                        '--h-carousel-indicator-slider-offset': `${
+                          (activeIndex.value * 100) / items.length
+                        }%`,
+                        '--h-carousel-indicator-slider-size': `${100 / items.length}%`,
+                      } as CSSProperties
+                    }
+                    aria-hidden="true"
+                  />
+                  {items.map((item, index) => {
+                    const active = activeIndex.value === index;
+                    const label = item.props?.label;
+                    return (
+                      <span
+                        key={item.key ?? index}
+                        class={classHelper.e('indicator-slider-segment-trigger')}
+                        style={
+                          {
+                            '--h-carousel-indicator-segment-offset': `${
+                              (index * 100) / items.length
+                            }%`,
+                            '--h-carousel-indicator-segment-size': `${100 / items.length}%`,
+                          } as CSSProperties
+                        }
+                        onMouseenter={() => {
+                          if (props.trigger === 'hover') requestChange(index);
+                        }}
+                      >
+                        <HButton
+                          class={cls(
+                            classHelper.e('indicator-slider-segment'),
+                            classHelper.is('active', active),
+                          )}
+                          text
+                          size="small"
+                          aria-label={
+                            label !== undefined
+                              ? String(label)
+                              : localized(indicatorText.value, 'Go to slide {current}').replace(
+                                  '{current}',
+                                  String(index + 1),
+                                )
+                          }
+                          aria-current={active ? 'true' : undefined}
+                          onClick={() => requestChange(index)}
+                        />
+                      </span>
+                    );
+                  })}
+                </div>
+              ) : (
+                items.map((item, index) => {
+                  const active = activeIndex.value === index;
+                  const label = item.props?.label;
+                  return (
+                    <span
+                      key={item.key ?? index}
+                      class={classHelper.e('indicator-trigger')}
+                      onMouseenter={() => {
+                        if (props.trigger === 'hover') requestChange(index);
+                      }}
                     >
-                      {slots.indicator?.(index, active, label)}
-                    </HButton>
-                  </span>
-                );
-              })}
+                      <HButton
+                        class={cls(classHelper.e('indicator'), classHelper.is('active', active))}
+                        text
+                        size="small"
+                        aria-label={
+                          label !== undefined
+                            ? String(label)
+                            : localized(indicatorText.value, 'Go to slide {current}').replace(
+                                '{current}',
+                                String(index + 1),
+                              )
+                        }
+                        aria-current={active ? 'true' : undefined}
+                        onClick={() => requestChange(index)}
+                      >
+                        {slots.indicator ? (
+                          slots.indicator(index, active, label)
+                        ) : (
+                          <span class={classHelper.e('indicator-mark')} aria-hidden="true" />
+                        )}
+                      </HButton>
+                    </span>
+                  );
+                })
+              )}
             </div>
           )}
 

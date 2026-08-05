@@ -32,6 +32,25 @@ describe('ButtonGroup.tsx', () => {
       expect(element.classes('h-button--normal')).toBe(true);
     });
 
+    test('type controls custom color variables for child buttons', async () => {
+      const type = ref<ButtonGroupProps['type']>('danger');
+      const wrapper = mount(() => (
+        <HButtonGroup type={type.value}>
+          <HButton color="#476582">1</HButton>
+        </HButtonGroup>
+      ));
+      const element = wrapper.findComponent(HButton);
+
+      expect(element.attributes('style')).toContain('--h-button-background-danger:');
+      expect(element.attributes('style')).not.toContain('--h-button-background-primary:');
+
+      type.value = 'normal';
+      await nextTick();
+
+      expect(element.attributes('style')).toContain('--h-button-background-normal:');
+      expect(element.attributes('style')).not.toContain('--h-button-background-danger:');
+    });
+
     test('size', async () => {
       const size = ref<ButtonGroupProps['size']>();
       const wrapper = mount(() => (

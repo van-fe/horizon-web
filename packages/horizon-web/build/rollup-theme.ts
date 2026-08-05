@@ -37,9 +37,8 @@ async function buildStyle(targets: string[]) {
       continue;
     }
 
-    const res = sass.renderSync({
-      file,
-      outputStyle: 'compressed',
+    const res = sass.compile(file, {
+      style: 'compressed',
     });
 
     targets.forEach(target => {

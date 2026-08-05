@@ -54,6 +54,8 @@ import useMapTree from '~/utils/useMapTree';
 
 export default defineComponent({
   name: `${useNamespace()}SubMenu`,
+  desc: "包含下级菜单项的菜单分组",
+  descLocales: { en: "A menu group that contains nested items." },
   props: useSubMenuProps,
   emits: useSubMenuEmits,
   slots: useSubMenuSlots,

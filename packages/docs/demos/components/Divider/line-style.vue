@@ -1,17 +1,29 @@
 <template>
-  <p>↓ solid(default)</p>
-  <h-grid :gap="12">
-    <h-grid-item :span="12"><h-divider /></h-grid-item>
-    <h-grid-item :span="12"><h-divider direction="vertical" /></h-grid-item>
-  </h-grid>
-  <p>↓ dashed</p>
-  <h-grid :gap="12">
-    <h-grid-item :span="12"><h-divider line-style="dashed" /></h-grid-item>
-    <h-grid-item :span="12"><h-divider line-style="dashed" direction="vertical" /></h-grid-item>
-  </h-grid>
-  <p>↓ dotted</p>
-  <h-grid :gap="12">
-    <h-grid-item :span="12"><h-divider line-style="dotted" /></h-grid-item>
-    <h-grid-item :span="12"><h-divider line-style="dotted" direction="vertical" /></h-grid-item>
-  </h-grid>
+  <section class="divider-list">
+    <div v-for="style in lineStyles" :key="style">
+      <code>{{ style }}</code>
+      <h-divider :line-style="style" />
+    </div>
+  </section>
 </template>
+
+<script setup lang="ts">
+const lineStyles = ['solid', 'dashed', 'dotted'] as const;
+</script>
+
+<style scoped>
+.divider-list {
+  display: grid;
+  gap: var(--h-spacing-5);
+}
+
+.divider-list > div {
+  display: grid;
+  gap: var(--h-spacing-1);
+}
+
+.divider-list code {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+</style>

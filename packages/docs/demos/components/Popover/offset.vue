@@ -1,148 +1,39 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const distance = ref(12);
+const skidding = ref(0);
+</script>
+
 <template>
-  <div class="mb-4">
-    调整popper和reference的远近，小三角会影响 distance 的效果，这里的 demo 不使用小三角以方便展示
-    distance 的效果
-  </div>
-  <div class="mb-4">
-    <h-popover class="mr-4" :arrow="false" :distance="0" popper-class="offset_popover">
-      <template #reference>
-        <h-button :plain="true">distance 0</h-button>
-      </template>
-      <template #popper>
-        <demo-content></demo-content>
-      </template>
-    </h-popover>
-    <h-popover class="mr-4" :arrow="false" :distance="10" popper-class="offset_popover">
-      <template #reference>
-        <h-button :plain="true">distance 10</h-button>
-      </template>
-      <template #popper>
-        <demo-content></demo-content>
-      </template>
-    </h-popover>
-    <h-popover class="mr-4" :arrow="false" :distance="-10" popper-class="offset_popover">
-      <template #reference>
-        <h-button :plain="true">distance -10</h-button>
-      </template>
-      <template #popper>
-        <demo-content></demo-content>
-      </template>
-    </h-popover>
-  </div>
-  <!--  -->
-  <div class="mb-4">调整popper在辅助方向上的偏移</div>
-  <div class="mb-4">
-    <h-popover class="mr-4" :skidding="0" placement="top" popper-class="offset_popover">
-      <template #reference>
-        <h-button>placement top: skidding 0</h-button>
-      </template>
-      <template #popper>
-        <demo-content></demo-content>
-      </template>
-    </h-popover>
-    <h-popover class="mr-4" :skidding="30" placement="top" popper-class="offset_popover">
-      <template #reference>
-        <h-button>placement top: skidding 30</h-button>
-      </template>
-      <template #popper>
-        <demo-content></demo-content>
-      </template>
-    </h-popover>
-    <h-popover class="mr-4" :skidding="-30" placement="top" popper-class="offset_popover">
-      <template #reference>
-        <h-button>placement top: skidding -30</h-button>
-      </template>
-      <template #popper>
-        <demo-content></demo-content>
-      </template>
-    </h-popover>
-  </div>
-  <div class="mb-4">
-    <h-popover class="mr-4" :skidding="0" placement="left" popper-class="offset_popover">
-      <template #reference>
-        <h-button>placement left: skidding 0</h-button>
-      </template>
-      <template #popper>
-        <demo-content></demo-content>
-      </template>
-    </h-popover>
-    <h-popover class="mr-4" :skidding="30" placement="left" popper-class="offset_popover">
-      <template #reference>
-        <h-button>placement left: skidding 30</h-button>
-      </template>
-      <template #popper>
-        <demo-content></demo-content>
-      </template>
-    </h-popover>
-    <h-popover class="mr-4" :skidding="-30" placement="left" popper-class="offset_popover">
-      <template #reference>
-        <h-button>placement left: skidding -30</h-button>
-      </template>
-      <template #popper>
-        <demo-content></demo-content>
-      </template>
-    </h-popover>
+  <div class="docs-demo">
+    <div class="docs-demo__controls">
+      <label class="docs-demo__control docs-demo__control--grow">
+        <span>主轴距离：{{ distance }}px</span>
+        <h-slider v-model="distance" :min="-12" :max="36" :step="2" />
+      </label>
+      <label class="docs-demo__control docs-demo__control--grow">
+        <span>辅轴偏移：{{ skidding }}px</span>
+        <h-slider v-model="skidding" :min="-36" :max="36" :step="4" />
+      </label>
+    </div>
+    <div class="offset-stage">
+      <h-popover trigger="click" placement="top" :distance="distance" :skidding="skidding">
+        <template #reference><h-button>查看偏移</h-button></template>
+        <template #popper>
+          <h-pop-content>distance {{ distance }} / skidding {{ skidding }}</h-pop-content>
+        </template>
+      </h-popover>
+    </div>
   </div>
 </template>
 
-<script>
-import { defineComponent, h } from 'vue';
-import { HPopContent } from '@aurora/horizon-web';
-
-const DemoContent = defineComponent({
-  render: () =>
-    h(
-      HPopContent,
-      {},
-      {
-        default: () =>
-          h(
-            'div',
-            {
-              class: 'popper',
-            },
-            [
-              h(
-                'div',
-                {
-                  class: 'header',
-                },
-                ['内容标题'],
-              ),
-              h(
-                'div',
-                {
-                  class: 'content',
-                },
-                ['我是气泡卡片文本描述内容, 我是气泡卡片文字链接...'],
-              ),
-            ],
-          ),
-      },
-    ),
-});
-
-export default defineComponent({
-  components: {
-    DemoContent,
-  },
-});
-</script>
-
-<style>
-.offset_popper .popper {
-  width: 280px;
-}
-
-.offset_popper .header {
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 22px;
-  margin-bottom: 4px;
-}
-
-.offset_popper .content {
-  font-size: 14px;
-  line-height: 22px;
+<style scoped>
+.offset-stage {
+  display: grid;
+  min-height: 160px;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--h-bg-secondary);
 }
 </style>

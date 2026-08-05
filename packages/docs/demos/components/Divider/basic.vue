@@ -1,18 +1,25 @@
 <template>
-  <h-grid :gap="10" align="center">
-    <h-grid-item :span="4">
-      Default
-    </h-grid-item>
-    <h-grid-item :span="20">
-      <h-divider />
-    </h-grid-item>
-  </h-grid>
-  <h-grid :gap="10" align="center">
-    <h-grid-item :span="4">
-      Strong
-    </h-grid-item>
-    <h-grid-item :span="20">
-      <h-divider type="strong" />
-    </h-grid-item>
-  </h-grid>
+  <section class="docs-demo">
+    <div class="divider-types">
+      <div>
+        <code>default</code>
+        <h-divider />
+      </div>
+      <div>
+        <code>strong</code>
+        <h-divider type="strong" />
+      </div>
+    </div>
+  </section>
 </template>
+
+<style scoped>
+.divider-types {
+  display: grid;
+  gap: var(--h-spacing-5);
+}
+
+.divider-types code {
+  color: var(--h-text-secondary);
+}
+</style>

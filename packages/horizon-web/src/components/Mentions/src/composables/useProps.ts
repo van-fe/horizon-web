@@ -1,15 +1,22 @@
 import { declarePropType } from '@aurora/utils';
 import type { ExtractPropTypes, PropType } from 'vue';
 
-export interface MentionOption {
+export interface HMentionsOption {
+  /** 候选项的插入值 @en The value inserted for the candidate. */
   value: string;
+  /** 候选项的显示文本 @en The display label for the candidate. */
   label?: string;
+  /** 是否禁用该候选项 @en Whether the candidate is disabled. */
   disabled?: boolean;
 }
+
+/** @deprecated Use `HMentionsOption` from the package entry instead. */
+export type MentionOption = HMentionsOption;
+
 export const useMentionsProps = declarePropType({
   /** 输入值 @en Input value. */ modelValue: { type: String, default: '' },
   /** 候选项 @en Mention candidates. */ options: {
-    type: Array as PropType<MentionOption[]>,
+    type: Array as PropType<HMentionsOption[]>,
     default: () => [],
   },
   /** 触发字符 @en Mention trigger characters. */ triggers: {
@@ -27,8 +34,25 @@ export const useMentionsProps = declarePropType({
     type: Number,
     default: 240,
   },
-  /** 自定义过滤函数 @en Custom candidate filter. */ filter: {
-    type: Function as PropType<(keyword: string, option: MentionOption) => boolean>,
+  /**
+   * 候选面板的优先弹出方向，空间不足时会自动翻转
+   * @en Preferred suggestion placement. It flips automatically when space is limited.
+   */
+  placement: {
+    type: String as PropType<'top' | 'bottom'>,
+    default: 'bottom',
+  },
+  /**
+   * 自定义过滤函数
+   * @en Custom candidate filter.
+   * @param keyword 关键词
+   * @paramEn keyword Search keyword.
+   * @param option 候选项
+   * @paramEn option Candidate option.
+   */
+  filter: {
+    type: Function as PropType<(keyword: string, option: HMentionsOption) => boolean>,
   },
 });
+
 export type MentionsProps = ExtractPropTypes<typeof useMentionsProps>;

@@ -1,25 +1,36 @@
 <template>
-  <h-empty :size="emptySizeRef" description="No task for now, take a coffee break" />
-  <h-radio-group v-model="sizeRef">
-    <h-radio value="small" />
-    <h-radio value="medium" />
-    <h-radio value="large" />
-    <h-radio value="number">
-      <h-input-number v-model="sizeNumberRef" :step="10" />
-    </h-radio>
-  </h-radio-group>
+  <section class="docs-demo">
+    <div class="docs-demo__controls">
+      <label class="docs-demo__control">
+        <span class="docs-demo__control-label">
+          Preset ·
+          <code>size</code>
+        </span>
+        <h-segmented v-model:active-key="sizeMode" size="small" block>
+          <h-segmented-item value="small" label="Small" />
+          <h-segmented-item value="medium" label="Medium" />
+          <h-segmented-item value="large" label="Large" />
+          <h-segmented-item value="custom" label="Custom" />
+        </h-segmented>
+      </label>
+      <label v-if="sizeMode === 'custom'" class="docs-demo__control">
+        <span class="docs-demo__control-label">Custom pixels</span>
+        <h-input-number v-model="customSize" :min="80" :max="280" :step="10" />
+      </label>
+    </div>
+
+    <div class="docs-demo__stage">
+      <h-empty :size="resolvedSize" description="No tasks are due in this view." />
+    </div>
+  </section>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { computed, ref } from 'vue';
 
-const sizeRef = ref('medium');
-const sizeNumberRef = ref(240);
-
-const emptySizeRef = computed(() => {
-  if (sizeRef.value === 'number') {
-    return sizeNumberRef.value;
-  }
-  return sizeRef.value;
-});
+const sizeMode = ref('medium');
+const customSize = ref(180);
+const resolvedSize = computed(() =>
+  sizeMode.value === 'custom' ? customSize.value : sizeMode.value,
+);
 </script>

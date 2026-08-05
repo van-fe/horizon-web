@@ -1,17 +1,18 @@
-## Basic Usage
 
-Scroll the page to see the back-to-top button in the bottom right corner
+## Page Scroll
+
+Use `visibility-height` to set the reveal threshold. The demo reports the click result in the page.
 
 :::demo components/Backtop/basic.vue :::
 
-## Custom Display Content
+## Custom Button Content
 
-The top button size is fixed at 40*40px, and the content can be customized
+The default size and behavior remain intact while the default slot combines a short label and icon.
 
 :::demo components/Backtop/custom.vue :::
 
-## Custom Scroll Trigger Element
+## Custom Scroll Target
 
-Set the element whose scroll event needs to be listened to
+Use `target` for a local scrolling area. The target should scroll, remain keyboard-focusable, and use a unique selector.
 
 :::demo components/Backtop/target.vue :::

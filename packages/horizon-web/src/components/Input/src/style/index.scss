@@ -9,6 +9,11 @@
   line-height: mixins.css-variable('input', 'line-height');
   caret-color: mixins.css-variable('input', 'color', 'caret');
 
+  /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+  &:has(> [data-focus-visible-proxy]:focus-visible) {
+    @include mixins.focus-ring(mixins.css-variable('input', 'border-radius'));
+  }
+
   @include mixins.e('embedded-inner') {
     box-sizing: border-box;
     width: 100%;
@@ -16,10 +21,11 @@
     padding: 0;
     font: inherit;
     color: inherit;
+    appearance: none;
+    outline: none;
     background: transparent;
     border: none;
-    outline: none;
-    appearance: none;
+    border-radius: mixins.css-variable('input', 'border-radius');
   }
 
   @include mixins.e('fit-content') {
@@ -74,6 +80,11 @@
 
     height: mixins.css-variable('input', 'size', 'height');
     transition: all 0.2s;
+
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+    &:has(> [data-focus-visible-proxy]:focus-visible) {
+      @include mixins.focus-ring;
+    }
 
     &:not(:focus, &--focused, &--disabled):hover {
       border-color: mixins.css-variable('input', 'border-color', 'hover');

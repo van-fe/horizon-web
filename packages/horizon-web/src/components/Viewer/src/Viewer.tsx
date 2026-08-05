@@ -30,6 +30,7 @@ import HTransition from '~/components/Transition/src/Transition';
 export default defineComponent({
   name: `${useNamespace()}Viewer`,
   desc: '图片视频查看器',
+  descLocales: { en: "Viewer opens images, videos, or a mixed media set in a full-screen layer." },
   components: {
     AIcon,
     IconLoadingLine,
@@ -542,6 +543,8 @@ export default defineComponent({
                         case 'thumbnail':
                           return (
                             <button
+                              class={classHelper.e('toolbar-button')}
+                              data-focus-visible-inset=""
                               v-tooltip={
                                 showThumbnailRef.value
                                   ? locale.value?.langService.td().horizonWeb.viewer.closeThumbnail
@@ -561,6 +564,8 @@ export default defineComponent({
                         case 'previous':
                           return (
                             <button
+                              class={classHelper.e('toolbar-button')}
+                              data-focus-visible-inset=""
                               v-tooltip={locale.value?.langService.td().horizonWeb.viewer.previous}
                               type="button"
                               onClick={goToPrevious}
@@ -572,6 +577,8 @@ export default defineComponent({
                         case 'next':
                           return (
                             <button
+                              class={classHelper.e('toolbar-button')}
+                              data-focus-visible-inset=""
                               v-tooltip={locale.value?.langService.td().horizonWeb.viewer.next}
                               type="button"
                               onClick={goToNext}
@@ -589,6 +596,8 @@ export default defineComponent({
                         case 'zoomOut':
                           return (
                             <button
+                              class={classHelper.e('toolbar-button')}
+                              data-focus-visible-inset=""
                               v-tooltip={locale.value?.langService.td().horizonWeb.viewer.zoomOut}
                               type="button"
                               onClick={zoomOut}
@@ -599,6 +608,8 @@ export default defineComponent({
                         case 'zoomIn':
                           return (
                             <button
+                              class={classHelper.e('toolbar-button')}
+                              data-focus-visible-inset=""
                               v-tooltip={locale.value?.langService.td().horizonWeb.viewer.zoomIn}
                               type="button"
                               onClick={zoomIn}
@@ -611,6 +622,8 @@ export default defineComponent({
                         case '1:1':
                           return (
                             <button
+                              class={classHelper.e('toolbar-button')}
+                              data-focus-visible-inset=""
                               v-tooltip={
                                 originIconRef.value
                                   ? locale.value?.langService.td().horizonWeb.viewer.fitContent
@@ -628,6 +641,8 @@ export default defineComponent({
                         case 'rotate':
                           return (
                             <button
+                              class={classHelper.e('toolbar-button')}
+                              data-focus-visible-inset=""
                               v-tooltip={locale.value?.langService.td().horizonWeb.viewer.spin}
                               type="button"
                               onClick={rotate}
@@ -639,6 +654,8 @@ export default defineComponent({
                           if (currentSource.value.type === 'image' && currentSource.value.legends) {
                             return (
                               <button
+                                class={classHelper.e('toolbar-button')}
+                                data-focus-visible-inset=""
                                 v-tooltip={
                                   showLegendRef.value
                                     ? locale.value?.langService.td().horizonWeb.viewer.hideLabel
@@ -658,6 +675,8 @@ export default defineComponent({
                         case 'download':
                           return (
                             <button
+                              class={classHelper.e('toolbar-button')}
+                              data-focus-visible-inset=""
                               v-tooltip={locale.value?.langService.td().horizonWeb.viewer.download}
                               type="button"
                               onClick={download}
@@ -669,6 +688,8 @@ export default defineComponent({
                           if (typeof tool === 'object') {
                             return (
                               <button
+                                class={classHelper.e('toolbar-button')}
+                                data-focus-visible-inset=""
                                 v-tooltip={{
                                   content: tool.title,
                                   disabled: !tool.title,

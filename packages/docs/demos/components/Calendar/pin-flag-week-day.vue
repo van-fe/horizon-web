@@ -1,169 +1,118 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+import dayjs from 'dayjs';
+import type { Dayjs } from 'dayjs';
+import type { HCalendarPinFlag } from '@aurora/horizon-web';
+
+const weekStart = dayjs().startOf('week');
+const currentDate = ref(dayjs().format('YYYY-MM-DD'));
+const showSpacing = ref(true);
+const allowCrossing = ref(false);
+const status = ref('Drag on the timeline to add a session');
+
+const pinFlags = ref<HCalendarPinFlag[]>([
+  {
+    title: 'Planning',
+    startAt: weekStart.day(1).hour(9),
+    endAt: weekStart.day(1).hour(10),
+    type: 'info',
+    clickable: true,
+  },
+  {
+    title: 'Build',
+    startAt: weekStart.day(1).hour(10).minute(30),
+    endAt: weekStart.day(1).hour(14),
+    type: 'success',
+    clickable: true,
+  },
+  {
+    title: 'Review',
+    startAt: weekStart.day(3).hour(13),
+    endAt: weekStart.day(3).hour(15),
+    type: 'warning',
+    clickable: true,
+  },
+]);
+
+function onFlagClick(flag: HCalendarPinFlag) {
+  status.value = `Selected ${String(flag.title ?? 'session')}`;
+}
+
+function onCreatingPinFlag(date: Dayjs) {
+  status.value = `Planning from ${date.format('ddd HH:mm')}`;
+  return { title: 'Focus session', type: 'pill' as const };
+}
+
+async function onCreateFinished() {
+  status.value = 'Session added';
+  return true;
+}
+
+function disableHours(date: Dayjs): Array<[Dayjs, Dayjs]> {
+  if ([0, 6].includes(date.day())) {
+    return [[date.startOf('day'), date.endOf('day')]];
+  }
+
+  return [
+    [date.startOf('day'), date.hour(8)],
+    [date.hour(12), date.hour(13)],
+    [date.hour(18), date.endOf('day')],
+  ];
+}
+</script>
+
 <template>
-  <div class="wrapper">
-    <h-form label-position="left" label-vertical-align="middle" label-width="200px">
-      <h-form-item label="Enable Create Pin Flags">
-        <h-radio-group v-model="enableCreatePinFlags">
-          <h-radio :value="true">True</h-radio>
-          <h-radio :value="false">False</h-radio>
-        </h-radio-group>
-      </h-form-item>
-      <h-form-item label="Reserve Event">
-        <h-radio-group v-model="reserveEvent">
-          <h-radio :value="1">Don't reserve</h-radio>
-          <h-radio :value="2">Reserve original</h-radio>
-          <h-radio :value="3">Reserve and modify</h-radio>
-        </h-radio-group>
-      </h-form-item>
-      <h-form-item label="Show Spacing Between Flags">
-        <h-radio-group v-model="showSpacingBetweenFlags">
-          <h-radio :value="true">True</h-radio>
-          <h-radio :value="false">False</h-radio>
-        </h-radio-group>
-      </h-form-item>
-      <h-form-item label="Create Flag Can Though Disable Date Or Hour">
-        <h-radio-group v-model="createFlagCanThoughDisableDateOrHour">
-          <h-radio :value="true">Yes</h-radio>
-          <h-radio :value="false">No</h-radio>
-        </h-radio-group>
-      </h-form-item>
-    </h-form>
-    <h-calendar
-      v-model:pin-flags="pinFlags"
-      :pickable="true"
-      mode="week"
-      :mode-switchable="true"
-      :mode-switchable-list="['week', 'day']"
-      :enable-create-pin-flags="enableCreatePinFlags"
-      :pin-flags-show-time="true"
-      :creating-pin-flag-callback="onCreatingPinFlagCallback"
-      :creat-finish-flag-callback="onCreatFinishFlagCallback"
-      :create-flag-can-though-disable-date-or-hour="createFlagCanThoughDisableDateOrHour"
-      :show-spacing-between-flags="showSpacingBetweenFlags"
-      :disable-hours="disableHours"
-      @pinFlagClick="onFlagClick"
-    >
-      <template #dayHeader="dayStr, dayObj, isToday">
-        {{ dayStr }} {{ dayObj.format('dddd') }} {{ isToday ? 'Today' : '' }}
-      </template>
-    </h-calendar>
+  <div class="calendar-timeline-demo">
+    <h-space wrap>
+      <h-switch v-model="showSpacing" label="Space flags" status />
+      <h-switch v-model="allowCrossing" label="Cross blocked hours" status />
+    </h-space>
+    <p aria-live="polite">{{ status }}</p>
+
+    <div class="calendar-timeline-demo-viewport">
+      <h-calendar
+        v-model="currentDate"
+        v-model:pin-flags="pinFlags"
+        mode="week"
+        mode-switchable
+        :mode-switchable-list="['week', 'day']"
+        enable-create-pin-flags
+        pin-flags-show-time
+        :creating-pin-flag-callback="onCreatingPinFlag"
+        :creat-finish-flag-callback="onCreateFinished"
+        :create-flag-can-though-disable-date-or-hour="allowCrossing"
+        :show-spacing-between-flags="showSpacing"
+        :disable-hours="disableHours"
+        @pin-flag-click="onFlagClick"
+      />
+    </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { HCalendarPinFlag } from '@aurora/horizon-web';
-import dayjs, { Dayjs } from 'dayjs';
-
-export default defineComponent({
-  setup() {
-    const reserveEvent = ref(1);
-    const enableCreatePinFlags = ref(true);
-    const showSpacingBetweenFlags = ref(true);
-    const createFlagCanThoughDisableDateOrHour = ref(true);
-    const weekStart = dayjs().startOf('week');
-
-    const pinFlags = ref<HCalendarPinFlag[]>([
-      {
-        startAt: weekStart.day(1).hour(8),
-        endAt: weekStart.day(1).hour(9),
-        type: 'success',
-        clickable: true,
-      },
-      {
-        title: '会议',
-        startAt: weekStart.day(1).hour(9),
-        endAt: weekStart.day(1).hour(10).minute(30),
-        type: 'info',
-      },
-      {
-        startAt: weekStart.day(1).hour(10).minute(30),
-        endAt: weekStart.day(1).hour(14),
-        type: 'warning',
-      },
-      {
-        startAt: weekStart.day(3).hour(9),
-        endAt: weekStart.day(4).hour(6),
-        type: 'success',
-      },
-      {
-        title: 'On Leave',
-        startAt: weekStart.day(5).hour(8),
-        endAt: weekStart.day(5).hour(15),
-        type: 'error',
-      },
-    ]);
-
-    function onFlagClick(flag: HCalendarPinFlag) {
-      console.info(flag);
-    }
-
-    function onCreatingPinFlagCallback(date: Dayjs) {
-      console.info(date.format('YYYY-MM-DD HH:mm'));
-
-      return {
-        title: 'New Event',
-        type: 'pill',
-      };
-    }
-
-    function onCreatFinishFlagCallback(flag: HCalendarPinFlag) {
-      return new Promise(resolve => {
-        console.info(flag);
-
-        switch (reserveEvent.value) {
-          case 1:
-            resolve(false);
-            break;
-          case 2:
-            resolve(true);
-            break;
-          case 3:
-            flag.title = 'Created Flag';
-            resolve(flag);
-            break;
-        }
-      });
-    }
-
-    return {
-      reserveEvent,
-      enableCreatePinFlags,
-      showSpacingBetweenFlags,
-      createFlagCanThoughDisableDateOrHour,
-      pinFlags,
-      onFlagClick,
-      onCreatingPinFlagCallback,
-      onCreatFinishFlagCallback,
-      disableHours(date: Dayjs) {
-        if ([0, 6].includes(Number(date.format('d')))) {
-          return [[date, date.endOf('d')]];
-        } else if (date.isSame(dayjs().startOf('d'))) {
-          return [
-            [date, date.add(8, 'h')],
-            [date.add(10, 'h'), date.add(12, 'h').add(20, 'm')],
-            [date.add(20, 'h'), date.endOf('d')],
-          ];
-        } else {
-          return [
-            [date, date.add(8, 'h')],
-            [date.add(20, 'h'), date.endOf('d')],
-          ];
-        }
-      },
-    };
-  },
-});
-</script>
-
 <style scoped>
-.wrapper {
-  max-height: 1000px;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
+.calendar-timeline-demo {
+  display: grid;
+  gap: var(--h-spacing-3);
+  min-width: 0;
 }
 
-.wrapper .h-calendar {
-  flex: 1;
+.calendar-timeline-demo p {
+  margin: 0;
+  font-size: var(--h-text-sm);
+  color: var(--h-text-secondary);
+}
+
+.calendar-timeline-demo-viewport {
+  min-width: 0;
+  height: min(82vh, 760px);
+  min-height: 660px;
+  overflow: auto;
+}
+
+@media (width <= 520px) {
+  .calendar-timeline-demo-viewport {
+    height: 640px;
+    min-height: 0;
+  }
 }
 </style>

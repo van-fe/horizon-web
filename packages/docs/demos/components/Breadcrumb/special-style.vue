@@ -1,34 +1,15 @@
 <template>
-  <div class="demo-block">
-    <h-grid :gap="12">
-      <h-grid-item :span="24">
-        <div class="demo-title">
-          单个文本超出一定长度后
-        </div>
-        <h-breadcrumb
-          :separator="IconArrowRight"
-          :texts="[
-        { text: 'Home' },
-        { text: 'long text long text long text long text long text long text long text long text' },
-        { text: 'Sub Page2' },
+  <section class="docs-demo">
+    <h-breadcrumb
+      title
+      :separator="IconArrowRight"
+      :texts="[
+        { text: 'Projects' },
+        { text: 'International customer experience research programme' },
+        { text: 'Findings' },
       ]"
-        />
-      </h-grid-item>
-      <h-grid-item :span="24">
-        <div class="demo-title">当前所在位置增加字重</div>
-        <h-breadcrumb
-          :title="true"
-          :texts="[
-      { text: 'Home' },
-      { text: 'Sub Page1' },
-      { text: 'Sub Page2' },
-      { text: 'Sub Page3' },
-      { text: 'Sub Page4' },
-    ]"
-        />
-      </h-grid-item>
-    </h-grid>
-  </div>
+    />
+  </section>
 </template>
 
 <script setup lang="ts">

@@ -43,6 +43,13 @@
     }
   }
 
+  @include mixins.em('group', 'inner', false) {
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+    &:has([data-focus-visible-proxy]:focus-visible) {
+      @include mixins.focus-ring;
+    }
+  }
+
   @include mixins.e('clear') {
     display: flex;
     align-items: center;

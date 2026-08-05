@@ -1,44 +1,88 @@
-<template>
-  <h-table :data="data" :row-class-name="rowClassNameSet">
-    <h-table-column title="Name" field="name" />
-    <h-table-column title="Age" field="age" />
-    <h-table-column title="Address" field="address" />
-  </h-table>
-</template>
-
 <script setup lang="ts">
-import { ref } from 'vue';
-
-interface TableData {
-  name: string;
-  age: number;
-  address: string;
+interface IncidentRow {
+  id: string;
+  service: string;
+  owner: string;
+  severity: 'Critical' | 'Warning' | 'Resolved';
+  updated: string;
 }
 
-const data = ref<TableData[]>([
-  {name: 'Jon', age: 32, address: 'Shanghai'},
-  {name: 'Wang', age: 22, address: 'Hangzhou'},
-  {name: 'Jacob', age: 16, address: 'Shenzhen'},
-  {name: 'Alice', age: 26, address: 'Beijing'},
-]);
+const incidents: IncidentRow[] = [
+  {
+    id: 'INC-1842',
+    service: 'Payment gateway',
+    owner: 'SRE East',
+    severity: 'Critical',
+    updated: '2 min ago',
+  },
+  {
+    id: 'INC-1840',
+    service: 'Search indexing',
+    owner: 'Core Search',
+    severity: 'Warning',
+    updated: '11 min ago',
+  },
+  {
+    id: 'INC-1837',
+    service: 'Email delivery',
+    owner: 'Messaging',
+    severity: 'Resolved',
+    updated: '36 min ago',
+  },
+  {
+    id: 'INC-1835',
+    service: 'Analytics ingest',
+    owner: 'Data Infra',
+    severity: 'Warning',
+    updated: '48 min ago',
+  },
+];
 
-function rowClassNameSet(row: TableData) {
-  if (row.age >= 25) {
-    return 'bg-weak-success';
-  }
-  
-  if (row.age < 18) {
-    return 'bg-weak-error';
-  }
+function rowClassName(row: IncidentRow) {
+  return `table-state-row--${row.severity.toLowerCase()}`;
 }
 </script>
 
-<style>
-.bg-weak-success {
-  background: var(--h-bg-success-weak-activated);
+<template>
+  <h-table
+    class="table-row-state-demo"
+    :data="incidents"
+    row-key="id"
+    :row-class-name="rowClassName"
+  >
+    <h-table-column title="Incident" field="id" width="112" />
+    <h-table-column title="Service" field="service" min-width="180" />
+    <h-table-column title="Owner" field="owner" min-width="130" />
+    <h-table-column title="Severity" width="112">
+      <template #default="{ row }">
+        <h-tag
+          :type="
+            row.severity === 'Critical'
+              ? 'error'
+              : row.severity === 'Warning'
+                ? 'warning'
+                : 'success'
+          "
+          plain
+        >
+          {{ row.severity }}
+        </h-tag>
+      </template>
+    </h-table-column>
+    <h-table-column title="Updated" field="updated" width="112" />
+  </h-table>
+</template>
+
+<style scoped>
+.table-row-state-demo :deep(.table-state-row--critical td) {
+  background: var(--h-bg-error-weak-default);
 }
 
-.bg-weak-error {
-  background: var(--h-bg-error-weak-activated);
+.table-row-state-demo :deep(.table-state-row--warning td) {
+  background: var(--h-bg-warning-weak-default);
+}
+
+.table-row-state-demo :deep(.table-state-row--resolved td) {
+  color: var(--h-text-tertiary);
 }
 </style>

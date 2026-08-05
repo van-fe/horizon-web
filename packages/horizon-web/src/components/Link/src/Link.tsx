@@ -25,6 +25,7 @@ import { renderIcon } from '~/utils/useIcon';
 export default defineComponent({
   name: `${useNamespace()}Link`,
   desc: '文字超链接',
+  descLocales: { en: "Basic text link usage" },
   props: useLinkProps,
   emits: useLinkEmits,
   slots: useLinkSlots,
@@ -142,6 +143,16 @@ export default defineComponent({
     );
 
     const wrapperElement = computed(() => (props.anchor ? 'span' : 'a'));
+    const isAction = computed(() => !props.anchor && !redirectHref.value);
+
+    const onActionKeydown = (evt: KeyboardEvent) => {
+      if (!isAction.value || props.disabled || props.loading) return;
+
+      if (evt.key === 'Enter' || evt.key === ' ') {
+        evt.preventDefault();
+        (evt.currentTarget as HTMLElement).click();
+      }
+    };
 
     return () => (
       <wrapperElement.value
@@ -158,7 +169,11 @@ export default defineComponent({
         )}
         href={props.disabled ? undefined : redirectHref.value}
         target={props.target}
+        role={isAction.value ? 'button' : undefined}
+        tabindex={isAction.value && !props.disabled && !props.loading ? 0 : undefined}
+        aria-disabled={isAction.value && (props.disabled || props.loading) ? true : undefined}
         onClick={onClick}
+        onKeydown={onActionKeydown}
       >
         {props.loading ? (
           <HChildOnly>

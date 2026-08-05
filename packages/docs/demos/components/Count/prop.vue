@@ -1,14 +1,79 @@
+<script setup lang="ts">
+import { computed, ref } from 'vue';
+
+type FormatMode = 'grouped' | 'precision' | 'currency' | 'slots';
+
+interface CountConfig {
+  endValue: number;
+  decimal?: number;
+  prefix?: string;
+  suffix?: string;
+  separator?: string;
+}
+
+const mode = ref<FormatMode>('grouped');
+const modes: Array<{ value: FormatMode; label: string }> = [
+  { value: 'grouped', label: 'Grouped' },
+  { value: 'precision', label: 'Precision' },
+  { value: 'currency', label: 'Currency' },
+  { value: 'slots', label: 'Slots' },
+];
+const configs: Record<FormatMode, CountConfig> = {
+  grouped: { endValue: 987654321, separator: ',' },
+  precision: { endValue: 98.678, decimal: 2, suffix: '%' },
+  currency: { endValue: 12840, prefix: '¥', suffix: ' CNY', separator: ',' },
+  slots: { endValue: 4200, separator: ' ' },
+};
+const config = computed(() => configs[mode.value]);
+</script>
+
 <template>
-  <div class="flex justify-space-between" style="width: 500px">
-    <div>展示数字,三位一个分隔符</div>
-    <h-count :end-value="987654321" :auto-play="false" />
-  </div>
-  <div class="flex justify-space-between" style="width: 500px">
-    <div>设置精度（toFixed）</div>
-    <h-count :end-value="987654321.8989" :auto-play="false" :decimal="2" />
-  </div>
-  <div class="flex justify-space-between" style="width: 500px">
-    <div>设置前后缀和延迟时间</div>
-    <h-count :end-value="100" :start-value="10" prefix="¥" suffix="RMB" :delay="1000" />
-  </div>
+  <section class="docs-demo">
+    <h-segmented v-model:active-key="mode" size="small">
+      <h-segmented-item
+        v-for="item in modes"
+        :key="item.value"
+        :value="item.value"
+        :label="item.label"
+      />
+    </h-segmented>
+
+    <div class="count-preview">
+      <h-count
+        :end-value="config.endValue"
+        :auto-play="false"
+        :decimal="config.decimal"
+        :prefix="config.prefix"
+        :suffix="config.suffix"
+        :separator="config.separator"
+      >
+        <template v-if="mode === 'slots'" #prefix>
+          <span class="count-muted">About&nbsp;</span>
+        </template>
+        <template v-if="mode === 'slots'" #suffix>
+          <span class="count-muted">seats</span>
+        </template>
+      </h-count>
+    </div>
+  </section>
 </template>
+
+<style scoped>
+.count-preview {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--h-spacing-3);
+}
+
+.count-preview :deep(.h-count) {
+  color: var(--h-text-primary);
+  font-size: var(--h-text-2xl);
+  font-weight: var(--h-weight-strong);
+}
+
+.count-muted {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+</style>

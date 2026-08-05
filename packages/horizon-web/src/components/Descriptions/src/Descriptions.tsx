@@ -28,6 +28,7 @@ import { useElementSize, useDebounceFn } from '@vueuse/core';
 export default defineComponent({
   name: `${useNamespace()}Descriptions`,
   desc: '成组展示多个只读字段，一般用于详情页的信息展示',
+  descLocales: { en: "Simply display multiple read-only fields in groups, generally used for detail page information (such as user details, vehicle details)" },
   props: useDescriptionsProps,
   slots: useDescriptionsSlots,
   setup(props, { slots }: HorizonWebSetupContext<{}, DescriptionsSlots>) {

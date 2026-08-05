@@ -86,7 +86,9 @@ describe('Input.tsx', () => {
 
   test('type', async () => {
     const wrapper = mount(() => <HInput type="text" />);
-    expect(wrapper.find('input').exists()).toBe(true);
+    const input = wrapper.find('input');
+    expect(input.exists()).toBe(true);
+    expect(input.attributes()).toHaveProperty('data-focus-visible-proxy');
 
     // todo:: need to provide type modified dynamically
     // await wrapper.setProps({
@@ -121,6 +123,7 @@ describe('Input.tsx', () => {
     expect(wrapper.find('.h-input__fit-content-mirror').attributes('style')).toContain(
       'min-width: 24px',
     );
+    expect(wrapper.find('input').attributes()).not.toHaveProperty('data-focus-visible-proxy');
 
     await wrapper.find('input').setValue('Web');
 
@@ -157,6 +160,7 @@ describe('Input.tsx', () => {
     ));
 
     expect(wrapper.find('.h-input__textarea-limit').exists()).toBe(true);
+    expect(wrapper.find('textarea').attributes()).toHaveProperty('data-focus-visible-proxy');
     expect(wrapper.classes('is-out-of-exceeded')).toBe(true);
   });
 

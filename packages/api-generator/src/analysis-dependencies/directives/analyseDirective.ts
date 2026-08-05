@@ -12,6 +12,7 @@ import { ts } from 'ts-morph';
 import { analyseImportExportStatement } from '../../utils/analyseImportExportStatement';
 import findVariableThroughFileImports from '../../utils/findVariableThroughFileImports';
 import completeFileExtName from '../../utils/completeFileExtName';
+import { analyseDescriptionLocales, analyseStaticText } from '../utils/analyseMetadata';
 
 /**
  * 解析组件定义的对象
@@ -88,12 +89,12 @@ export function analyseDirective(directiveInfo: ApiGeneratorExportedDirectives, 
               if (identifier) {
                 switch (identifier.getText()) {
                   case 'desc':
-                    directiveInfo.desc =
-                      curr
-                        .getChildrenOfKind(ts.SyntaxKind.StringLiteral)?.[0]
-                        ?.getText()
-                        .trim()
-                        .replace(/(^'|'$)/g, '') || '';
+                    directiveInfo.desc = analyseStaticText(curr.getInitializer());
+                    break;
+                  case 'descLocales':
+                    directiveInfo.descLocales = analyseDescriptionLocales(
+                      curr.getInitializerIfKind(ts.SyntaxKind.ObjectLiteralExpression),
+                    );
                     break;
                   case 'options':
                     const optionsRes = analysisDirectiveDefinedVariable(

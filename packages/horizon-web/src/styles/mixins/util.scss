@@ -27,6 +27,66 @@
   background-size: calc(#{$size} * 2) calc(#{$size} * 2);
 }
 
+@mixin -focus-ring-radius($radius) {
+  @if $radius {
+    border-radius: $radius;
+  }
+}
+
+@mixin -focus-ring-forced-colors($offset) {
+  outline: function.size(2) solid Highlight;
+  outline-offset: $offset;
+  box-shadow: none;
+}
+
+// Keep the component's semantic focus border crisp, then add a translucent
+// brand halo around its visible surface. Box shadow follows that surface's
+// border radius, unlike the previous offset outline treatment.
+@mixin focus-ring($radius: null) {
+  @include -focus-ring-radius($radius);
+  outline: 0;
+  box-shadow: 0 0 0 function.size(2) function.css-variable('border-focused');
+
+  @media (forced-colors: active) {
+    @include -focus-ring-forced-colors(function.size(2));
+  }
+}
+
+// Small selection controls and segmented button groups can already own a
+// stateful box shadow. Use the same translucent color as an outline so their
+// checked-state shadow is preserved.
+@mixin focus-outline($radius: null, $offset: function.size(1)) {
+  @include -focus-ring-radius($radius);
+  outline: function.size(2) solid function.css-variable('border-focused');
+  outline-offset: $offset;
+
+  @media (forced-colors: active) {
+    @include -focus-ring-forced-colors($offset);
+  }
+}
+
+@mixin focus-ring-inset($radius: null) {
+  @include -focus-ring-radius($radius);
+  outline: 0;
+  box-shadow: inset 0 0 0 function.size(2) function.css-variable('border-focused');
+
+  @media (forced-colors: active) {
+    @include -focus-ring-forced-colors(function.size(-2));
+  }
+}
+
+@mixin visually-hidden() {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  clip-path: inset(50%) !important;
+}
+
 @mixin clear-icon() {
   color: function.css-variable('text-tertiary');
   cursor: pointer;

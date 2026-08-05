@@ -1,57 +1,48 @@
-<template>
-  <h-grid :gap="10">
-    <h-grid-item :span="6">
-      <h-cascader v-model="currentVal1" :options="optionsWithGroup" :to-body="false" />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { ref, h } from 'vue';
+import type { HCascaderOption } from '@aurora/horizon-web';
+import { ref } from 'vue';
+import { formatPath } from './options';
 
-const currentVal1 = ref<(string | number)[]>([]);
-
-const optionsWithGroup = [
+const value = ref<Array<string | number>>(['delivery', 'release', 'web']);
+const options: HCascaderOption[] = [
+  { groupLabel: 'Delivery runbooks' },
   {
-    groupLabel: 'components',
-  },
-  {
-    value: 'navigation',
-    label: 'Navigation',
+    value: 'delivery',
+    label: 'Delivery',
     children: [
       {
-        value: 'side navigation',
-        label: 'Side Navigation',
-      },
-      {
-        value: 'top navigation',
-        label: 'Top Navigation',
+        value: 'release',
+        label: 'Release',
+        children: [
+          { value: 'web', label: 'Web release' },
+          { value: 'mobile', label: 'Mobile release' },
+        ],
       },
     ],
   },
+  { groupLabel: 'Operations runbooks' },
   {
-    groupLabel: () =>
-      h(
-        'div',
-        {
-          style: 'font-weight: 700;',
-        },
-        ['directives'],
-      ),
-  },
-  {
-    value: 'tooltip',
-    label: 'Tooltip',
+    value: 'operations',
+    label: 'Operations',
     children: [
       {
-        value: 'visible tooltip',
-        label: 'Visible Tooltip',
-      },
-      {
-        value: 'hidden tooltip',
-        label: 'Hidden Tooltip',
+        value: 'incident',
+        label: 'Incident response',
+        children: [{ value: 'service', label: 'Service degradation' }],
       },
     ],
   },
 ];
 </script>
+
+<template>
+  <div class="docs-demo">
+    <h-cascader
+      v-model="value"
+      aria-label="Runbook destination"
+      :options="options"
+      :to-body="false"
+    />
+    <span aria-live="polite">{{ formatPath(value) }}</span>
+  </div>
+</template>

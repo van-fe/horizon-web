@@ -1,57 +1,41 @@
-<template>
-  <h-form label-position="left" label-vertical-align="middle" label-width="150px">
-    <h-form-item label="整体是否禁用">
-      <h-switch v-model="disabled" :status="true" />
-    </h-form-item>
-    <h-form-item label="是否忽视父子关系">
-      <h-switch v-model="checkStrictly" :status="true" status-off-text="否" status-on-text="是" />
-    </h-form-item>
-    <h-form-item label="父节点点选是否能更改禁用的子节点的状态">
-      <h-switch v-model="parentEffectDisabledChild" :status="true" status-off-text="否" status-on-text="是" />
-    </h-form-item>
-  </h-form>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <div class="demo-title">单选</div>
-      <h-tree-select
-        :tree-data="baseTreeData"
-        :disabled="disabled"
-        :check-strictly="checkStrictly"
-        :parent-effect-disabled-child="parentEffectDisabledChild"
-        :to-body="false"
-      />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">多选</div>
-      <h-tree-select
-        :tree-data="baseTreeData"
-        :disabled="disabled"
-        :check-strictly="checkStrictly"
-        :parent-effect-disabled-child="parentEffectDisabledChild"
-        :multiple="true"
-        :to-body="false"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
+import type { HTreeNodeData } from '@aurora/horizon-web';
 
 const disabled = ref(false);
-const checkStrictly = ref(false);
-const parentEffectDisabledChild = ref(false);
-
-const baseTreeData = ref([]);
-
-onMounted(() => {
-  fetch(new URL('/tree-data-disabled.json', import.meta.url).href)
-    .then(res => res.json())
-    .then(res => {
-      baseTreeData.value = res;
-    });
-});
+const selectedValues = ref<Array<string | number>>(['mfa', 'encryption']);
+const treeData: HTreeNodeData[] = [
+  {
+    value: 'identity',
+    label: 'Identity controls',
+    children: [
+      { value: 'mfa', label: 'Multi-factor authentication · managed', disabled: true },
+      { value: 'session', label: 'Session timeout' },
+    ],
+  },
+  {
+    value: 'data',
+    label: 'Data controls',
+    children: [
+      { value: 'encryption', label: 'Encryption at rest · managed', disabled: true },
+      { value: 'exports', label: 'Restricted exports' },
+    ],
+  },
+];
 </script>
 
-<style scoped>
-</style>
+<template>
+  <div class="docs-demo">
+    <h-switch v-model="disabled" label="Disable entire picker" />
+    <h-tree-select
+      v-model="selectedValues"
+      :tree-data="treeData"
+      :disabled="disabled"
+      multiple
+      :parent-effect-disabled-child="false"
+      placeholder="Choose compliance controls"
+      :to-body="false"
+    />
+    <span aria-live="polite">Selected: {{ selectedValues.join(', ') }}</span>
+  </div>
+</template>

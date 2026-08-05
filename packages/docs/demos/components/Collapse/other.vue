@@ -1,65 +1,79 @@
 <template>
-  <div class="flex justify-space-between">
-    <h-collapse :active-key="activeKey" style="width: 500px" @change="handleExpand">
-      <h-collapse-item name="1">
+  <div class="collapse-slots-demo">
+    <h-collapse v-model:active-key="activeKeys">
+      <h-collapse-item name="research">
         <template #title>
-          <AIcon name="task_complete" class="mr-2" size="24" />
-          This is a panel header.
+          <span class="panel-title">
+            <AIcon name="task_complete" size="20" />
+            Research synthesis
+            <h-tag size="small" type="success">Complete</h-tag>
+          </span>
         </template>
-        <div>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</div>
-        <div>Velit officia consequat duis enim velit mollit. Exercitation veniam consequat</div>
-        <div>sunt nostrud amet.Amet minim mollit.</div>
+        <p>Seven interviews were grouped into three recurring workflow themes.</p>
       </h-collapse-item>
-      <h-collapse-item name="2">
+
+      <h-collapse-item name="prototype">
         <template #title>
-          <div class="flex justify-space-between flex-1">
-            <div>Why can i not submit a higher price?</div>
-            <div class="ml-3">Extra Info</div>
-          </div>
+          <span class="panel-title panel-title--action">
+            <span>
+              <AIcon name="alarm" size="20" />
+              Prototype review
+            </span>
+            <h-button size="small" plain @click.stop="requestReview">Request review</h-button>
+          </span>
         </template>
-        <div>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</div>
-        <div>Velit officia consequat duis enim velit mollit.</div>
-      </h-collapse-item>
-      <h-collapse-item name="3">
-        <template #title>
-          <div class="flex justify-space-between flex-1">
-            <div>How are you？</div>
-            <h-button class="ml-3" size="small" :plain="true" @click.stop="handleClickButton">
-              Default
-            </h-button>
-          </div>
-        </template>
-        How are you？
-      </h-collapse-item>
-      <h-collapse-item name="4">
-        <template #title>
-          <div class="flex justify-space-between flex-1">
-            <div>What are Promotion Products?</div>
-            <AIcon class="ml-3" name="alarm" />
-          </div>
-        </template>
-        What are Promotion Products?
+        <p>The prototype is ready for accessibility and narrow-screen review.</p>
       </h-collapse-item>
     </h-collapse>
+    <p class="collapse-slots-demo__status" aria-live="polite">{{ status }}</p>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    const activeKey = ref(['1', '2']);
-    const handleExpand = activeKeys => {
-      console.info(`activeKeys ===> `, activeKeys);
-    };
-    const handleClickButton = () => {
-      console.info('click button');
-    };
-    return {
-      activeKey,
-      handleExpand,
-      handleClickButton,
-    };
-  },
-});
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const activeKeys = ref(['research', 'prototype']);
+const status = ref('No review requested');
+
+function requestReview() {
+  status.value = 'Prototype review requested';
+}
 </script>
+
+<style scoped>
+.collapse-slots-demo {
+  display: grid;
+  gap: var(--h-spacing-3);
+}
+
+.panel-title,
+.panel-title > span {
+  display: flex;
+  align-items: center;
+  gap: var(--h-spacing-2);
+}
+
+.panel-title--action {
+  justify-content: space-between;
+  width: 100%;
+  min-width: 0;
+  padding-right: var(--h-spacing-3);
+}
+
+.collapse-slots-demo p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  line-height: 1.7;
+}
+
+.collapse-slots-demo__status {
+  font-size: var(--h-text-sm);
+}
+
+@media (max-width: 480px) {
+  .panel-title--action {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+</style>

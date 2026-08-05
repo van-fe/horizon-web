@@ -10,6 +10,7 @@ import {
   type VNode,
   type VNodeRef,
 } from 'vue';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
 import { useTabEmits, type TabEmits } from './composables/useEmits';
 import { useTabProps, type HTabValue } from './composables/useProps';
 import type { TabSlots } from './composables/useSlots';
@@ -18,8 +19,11 @@ import { tabsContextKey } from './constants';
 
 export default defineComponent({
   name: `${useNamespace()}Tab`,
+  desc: "页签中的单个可切换项",
+  descLocales: { en: "A single switchable item within Tabs." },
   components: {
     AIcon,
+    HTooltip,
   },
   inheritAttrs: false,
   props: useTabProps,
@@ -95,6 +99,7 @@ export default defineComponent({
         <div
           role="tab"
           {...attrs}
+          data-focus-visible-inset=""
           ref={addTab}
           data-name={key.value}
           {...conditionProps.value}
@@ -126,7 +131,12 @@ export default defineComponent({
                 )}
 
             {isVNodeEmpty(slotDefaults) ? (
-              <div class={cls.e('tab-text')}>{props.label}</div>
+              <HTooltip
+                content={props.label === undefined ? '' : String(props.label)}
+                overflow={true}
+              >
+                <div class={cls.e('tab-text')}>{props.label}</div>
+              </HTooltip>
             ) : (
               slotDefaults
             )}

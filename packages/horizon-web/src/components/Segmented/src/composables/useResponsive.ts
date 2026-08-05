@@ -17,6 +17,7 @@ export default function useResponsive(options: ToRefs<IndicatorOptions>) {
 
   const indicatorStyle = ref<any>({});
   const items = ref<Map<HSegmentedValue, HTMLElement>>(new Map());
+  const registryRevision = ref(0);
   const scrollable = ref(options.arrow.value);
   const keys = computed({
     get: () => Array.from(items.value.keys()),
@@ -27,6 +28,7 @@ export default function useResponsive(options: ToRefs<IndicatorOptions>) {
         if (el) map.set(key, el);
       });
       items.value = map;
+      registryRevision.value += 1;
     },
   });
   // 考虑初始化位置
@@ -117,14 +119,50 @@ export default function useResponsive(options: ToRefs<IndicatorOptions>) {
     containerEl.style.transition = `transform ${cssVariable('segmented', 'transition', 'duration')} ease`;
   };
 
-  const createTab = (key: HSegmentedValue) => {
-    return function addTab(el: Element | null) {
-      if (el) {
-        // 2024-04-25 更新：社区ui库调研后，当不存在 activeKey 时，默认不做选中，下次更新移除
-        // if (isNil(activeKey.value)) activeKey.value = key;
+  const createTab = (value: Readonly<Ref<HSegmentedValue>>) => {
+    let element: HTMLElement | undefined;
+    let registeredValue: HSegmentedValue | undefined;
 
-        items.value.set(key, el as HTMLElement);
-      } else items.value.delete(key);
+    const unregister = () => {
+      if (
+        element &&
+        registeredValue !== undefined &&
+        items.value.get(registeredValue) === element
+      ) {
+        items.value.delete(registeredValue);
+        registryRevision.value += 1;
+      }
+      registeredValue = undefined;
+    };
+
+    const register = (nextValue: HSegmentedValue) => {
+      if (!element) return;
+      if (items.value.get(nextValue) !== element) {
+        items.value.set(nextValue, element);
+        registryRevision.value += 1;
+      }
+      registeredValue = nextValue;
+    };
+
+    watch(
+      value,
+      nextValue => {
+        unregister();
+        register(nextValue);
+      },
+      { flush: 'sync' },
+    );
+
+    return function addTab(el: Element | null) {
+      if (!el) {
+        unregister();
+        element = undefined;
+        return;
+      }
+
+      if (element && element !== el) unregister();
+      element = el as HTMLElement;
+      register(value.value);
     };
   };
 
@@ -175,7 +213,7 @@ export default function useResponsive(options: ToRefs<IndicatorOptions>) {
 
   useResize({ root, container }, onRectChanged);
 
-  watch([activeKey, size, options.arrow, () => items.value.size], onRectChanged, {
+  watch([activeKey, size, options.arrow, registryRevision], onRectChanged, {
     flush: 'post',
   });
 

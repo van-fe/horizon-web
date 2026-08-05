@@ -1,37 +1,60 @@
-<template>
-  <h-radio-group v-model="size" style="margin-bottom: 20px">
-    <h-radio value="small">小 - small</h-radio>
-    <h-radio value="medium">中(默认) - medium</h-radio>
-    <h-radio value="large">大 - large</h-radio>
-    <h-radio value="500px">固定像素 - 500px</h-radio>
-    <h-radio value="75%">固定尺寸 - 75%</h-radio>
-  </h-radio-group>
-  <h-button @click="onOpen()">Open Drawer ({{ size }})</h-button>
-  <h-drawer v-model:visible="visible" title="Title" :size="size" @ok="onOk" @cancel="onCancel">
-    <div>
-      You can customize modal body text by the current situation. This modal will be closed
-      immediately once you press the OK button.
-    </div>
-  </h-drawer>
-</template>
-
-<script lang="ts" setup>
-import { ref } from 'vue';
-import { $message } from '@aurora/horizon-web';
+<script setup lang="ts">
+import { computed, ref } from 'vue';
 
 const visible = ref(false);
 const size = ref('medium');
-
-const onOpen = () => {
-  visible.value = true;
-};
-
-const onOk = () => {
-  console.info('ok button clicked!');
-  $message({ type: 'success', message: 'ok button clicked' });
-};
-const onCancel = () => {
-  console.info('cancel button clicked!');
-  $message({ type: 'warning', message: 'cancel button clicked!' });
-};
+const sizes = [
+  { label: '小型', value: 'small' },
+  { label: '中型', value: 'medium' },
+  { label: '大型', value: 'large' },
+  { label: '500px', value: '500px' },
+  { label: '75%', value: '75%' },
+];
+const sizeLabel = computed(
+  () => sizes.find(item => item.value === size.value)?.label ?? size.value,
+);
 </script>
+
+<template>
+  <div class="drawer-size-demo">
+    <div class="controls">
+      <h-select v-model="size" aria-label="抽屉尺寸">
+        <h-option v-for="item in sizes" :key="item.value" :label="item.label" :value="item.value" />
+      </h-select>
+      <h-button @click="visible = true">打开抽屉</h-button>
+    </div>
+    <p role="status">当前尺寸：{{ sizeLabel }}</p>
+
+    <h-drawer v-model:visible="visible" title="配置数据源" :size="size">
+      <p>预设尺寸与自定义尺寸使用同一套 API。</p>
+    </h-drawer>
+  </div>
+</template>
+
+<style scoped>
+.drawer-size-demo {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: 13px;
+}
+
+@media (max-width: 390px) {
+  .controls {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+</style>

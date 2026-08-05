@@ -10,7 +10,7 @@
 只需要把`h-radio`元素换成`h-radio-button`元素即可，同时提供`size`属性控制大小
 :::demo components/Radio/button.vue :::
 
-## 多选框组
+## 单选框组
 结合`h-radio-group`和`h-radio`或者`h-radio-button`可以实现单选框组，用于多个互斥选项
 :::demo components/Radio/group.vue :::
 

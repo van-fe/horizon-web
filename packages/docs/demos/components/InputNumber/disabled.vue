@@ -1,24 +1,29 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const value = ref();
-const value2 = ref(12);
-const value3 = ref(12);
+const value = ref(1840);
 </script>
 
 <template>
-  <h-grid :gap="12">
-    <h-grid-item :span="8">
-      <div class="demo-title">默认（居右）</div>
-      <h-input-number v-model="value" disabled />
-    </h-grid-item>
-    <h-grid-item :span="8">
-      <div class="demo-title">两侧</div>
-      <h-input-number v-model="value2" controls-position="between" disabled />
-    </h-grid-item>
-    <h-grid-item :span="8">
-      <div class="demo-title">隐藏</div>
-      <h-input-number v-model="value3" :controls="false" disabled />
-    </h-grid-item>
-  </h-grid>
+  <label class="input-number-disabled-demo">
+    <span>ERP subtotal</span>
+    <h-input-number v-model="value" disabled :min="0" aria-label="ERP subtotal">
+      <template #prefix>$</template>
+    </h-input-number>
+    <small>Locked by the ERP synchronization policy</small>
+  </label>
 </template>
+
+<style scoped>
+.input-number-disabled-demo {
+  display: grid;
+  gap: var(--h-spacing-2);
+  max-inline-size: 420px;
+}
+
+.input-number-disabled-demo > span,
+.input-number-disabled-demo > small {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+</style>

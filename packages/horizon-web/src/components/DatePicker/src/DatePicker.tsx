@@ -47,6 +47,7 @@ import { transformType } from './utils/utils';
 export default defineComponent({
   name: `${useNamespace()}DatePicker`,
   desc: '当用户需要输入一个日期，可以点击标准输入框，弹出日期面板进行选择',
+  descLocales: { en: "The DatePicker provides date selection by default." },
   props: useDatePickerProps,
   emits: useDatePickerEmits,
   slots: useDatePickerSlots,

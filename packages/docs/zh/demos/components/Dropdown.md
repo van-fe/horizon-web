@@ -11,7 +11,7 @@
 :::demo components/Dropdown/icon.vue :::
 
 ## 触发方式
-允许使用 `click` `hover` `contextMenu` 来触发
+支持通过 `click`、`hover` 和 `context-menu` 触发下拉菜单。
 :::demo components/Dropdown/trigger.vue :::
 
 ## 指令事件
@@ -25,7 +25,7 @@
 :::demo components/Dropdown/manual.vue :::
 
 ## 分组菜单
-可以使用 `h-dropdown-gruop` 分组
+可以使用 `h-dropdown-group` 对菜单项分组。
 :::demo components/Dropdown/group.vue :::
 
 ## 多级菜单

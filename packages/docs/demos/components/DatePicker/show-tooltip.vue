@@ -1,56 +1,52 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <h-date-picker
-        v-model="value"
-        type="datetime"
-        :show-date-tooltip="showDateTooltip"
-        :show-month-tooltip="showMonthTooltip"
-        :show-year-tooltip="showYearTooltip"
-        :show-time-tooltip="showTimeTooltip"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
-import { Dayjs } from 'dayjs';
+import { dayjs } from '@aurora/horizon-web';
+import type { Dayjs } from 'dayjs';
 
-const value = ref();
+const appointment = ref(dayjs().add(1, 'day').hour(10).minute(30));
 
 function showDateTooltip(date: Dayjs) {
-  return {
-    show: true,
-    content: date.format('YYYY-MM-DD'),
-  };
+  return { show: true, content: date.format('dddd · YYYY-MM-DD') };
 }
 
 function showMonthTooltip(month: Dayjs) {
-  return {
-    show: true,
-    content: `${month.daysInMonth()} Days`,
-  };
+  return { show: true, content: `${month.daysInMonth()} days` };
 }
 
 function showYearTooltip(year: Dayjs) {
-  const isLoopYear = (year.year() % 4 === 0 && year.year() % 100 !== 0) || year.year() % 400 === 0;
-  return {
-    show: isLoopYear,
-    content: isLoopYear ? 'Loop Year' : undefined,
-  };
+  const leapYear = (year.year() % 4 === 0 && year.year() % 100 !== 0) || year.year() % 400 === 0;
+  return { show: leapYear, content: leapYear ? 'Leap year' : undefined };
 }
 
 function showTimeTooltip(time: Dayjs) {
-  if (time.hour() < 9 || time.hour() > 20) {
-    return {
-      show: false,
-    };
-  }
-
-  return {
-    show: true,
-    content: 'Working hours',
-  };
+  const businessHour = time.hour() >= 9 && time.hour() <= 18;
+  return { show: businessHour, content: businessHour ? 'Business hours' : undefined };
 }
 </script>
+
+<template>
+  <section class="date-picker-demo">
+    <h-date-picker
+      v-model="appointment"
+      type="datetime"
+      :show-date-tooltip="showDateTooltip"
+      :show-month-tooltip="showMonthTooltip"
+      :show-year-tooltip="showYearTooltip"
+      :show-time-tooltip="showTimeTooltip"
+    />
+  </section>
+</template>
+
+<style scoped>
+.date-picker-demo {
+  display: grid;
+  gap: var(--h-spacing-3);
+  max-inline-size: 680px;
+}
+
+@media (max-width: 390px) {
+  .date-picker-demo {
+    inline-size: 100%;
+  }
+}
+</style>

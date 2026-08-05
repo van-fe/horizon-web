@@ -1,48 +1,59 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="{ xs: 12, md: 8, lg: 6, xl: 6, xxl: 6 }">
-      <div class="demo-title">默认单选</div>
-      <h-select v-model="value1" :to-body="false">
-        <h-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
-      </h-select>
-    </h-grid-item>
-    <h-grid-item :span="{ xs: 12, md: 8, lg: 6, xl: 6, xxl: 6 }">
-      <div class="demo-title">有选中标识</div>
-      <h-select v-model="value2" :show-selected-icon="true" :to-body="false">
-        <h-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
-      </h-select>
-    </h-grid-item>
-    <h-grid-item :span="{ xs: 12, md: 8, lg: 6, xl: 6, xxl: 6 }">
-      <div class="demo-title">自定义选中标识</div>
-      <h-select v-model="value3" :show-selected-icon="true" :selected-icon="IconPin" :to-body="false">
-        <h-option v-for="item of selectOptions" :key="item.value" :value="item.value" :label="item.label" />
-      </h-select>
-    </h-grid-item>
-  </h-grid>
-
-</template>
-
 <script setup lang="ts">
-import { IconPin } from '@aurora/icon';
 import { ref } from 'vue';
+import { IconPin } from '@aurora/icon';
 
-const value1 = ref();
-const value2 = ref();
-const value3 = ref();
-
-const selectOptions = [
-  { value: 1, label: '上海' },
-  { value: 2, label: '北京' },
-  { value: 3, label: '合肥' },
-  { value: 4, label: '深圳' },
-  { value: 5, label: '杭州' },
-  { value: 6, label: '天津' },
-  { value: 7, label: '西安' },
-  { value: 8, label: '南京' },
-  { value: 9, label: '哈尔滨' },
-  { value: 10, label: '香港' },
+const checkedValue = ref('engineering');
+const pinnedValue = ref('operations');
+const teams = [
+  { value: 'design', label: 'Product Design' },
+  { value: 'engineering', label: 'Web Engineering' },
+  { value: 'operations', label: 'Product Operations' },
 ];
 </script>
 
+<template>
+  <div class="comparison-row">
+    <label>
+      <span>默认标识</span>
+      <h-select v-model="checkedValue" show-selected-icon :to-body="false">
+        <h-option v-for="team in teams" :key="team.value" v-bind="team" />
+      </h-select>
+    </label>
+    <label>
+      <span>自定义标识</span>
+      <h-select v-model="pinnedValue" show-selected-icon :selected-icon="IconPin" :to-body="false">
+        <h-option v-for="team in teams" :key="team.value" v-bind="team" />
+      </h-select>
+    </label>
+  </div>
+</template>
+
 <style scoped>
+.comparison-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.comparison-row label {
+  display: grid;
+  min-width: 0;
+  gap: 7px;
+}
+
+.comparison-row span {
+  color: var(--h-text-secondary);
+  font-size: 12px;
+}
+
+.comparison-row :deep(.h-select) {
+  width: 100%;
+  min-width: 0;
+}
+
+@media (max-width: 560px) {
+  .comparison-row {
+    grid-template-columns: 1fr;
+  }
+}
 </style>

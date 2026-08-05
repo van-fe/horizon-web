@@ -1,108 +1,95 @@
 ## 基础表单
-在 `h-form-item` 的 `label` 属性上设置表单项的标签，默认情况下，标签展示在上方。
+
+`h-form` 直接支持 Layout 的响应式 Grid 能力。通过 `cols`、`gap`、`column-gap` 和 `row-gap` 设置表单布局，再用 `h-form-item` 的 `span`、`offset` 控制字段占位，无需额外嵌套 `h-grid`。
+
 :::demo components/Form/basic.vue :::
 
-## 大小
-可以通过 `h-form` 控制组件大小
+## 尺寸
 
-`size` 可以覆盖通过 `h-application` 设置的 `size`
+`h-form` 的 `size` 会传递给内部表单控件，并覆盖 `h-application` 的全局尺寸。
+
 :::demo components/Form/size.vue :::
 
-## 提示帮助
-一般在表单尾部可以设置一个 `popover` 提示，只需要给 `form-item` 配置一个 `helper` 即可
+## 帮助提示
 
-提示帮助默认放在表单的最右侧(`'right'`)，你也可以给 `helper-placement` 传入 `'after-label'` `'before-label'` 控制位置
+`helper` 提供弹出式说明，`helper-placement` 控制其位于标签前、标签后或表单项右侧；主题可由表单统一配置。
+
 :::demo components/Form/tips-helper.vue :::
 
-## 标签配置
-你可以通过 `label-position` 控制标签的位置，当标签位于左侧时，还可以通过 `label-justify-align` 控制标签的水平对齐方式，`label-vertical-align` 控制标签的垂直对齐方式。
+## 标签布局
+
+`label-position` 控制顶部或左侧标签；左侧模式还可配置水平、垂直对齐方式。单个 `h-form-item` 也可以设置 `label-position` 覆盖表单级布局。
+
 :::demo components/Form/label-position.vue :::
 
 ## 行内表单
-如果表单项数量较少，且都是 `h-input` 这样高度较小的简单组件，可以通过设置 `inline` 为 `true` 启用行内表单。
+
+`inline` 适合较少且紧凑的筛选字段，并会在窄屏自然换行。
+
 :::demo components/Form/inline.vue :::
 
-## 添加验证规则
-你可以给表单添加验证规则，以判断表单项的绑定值是否符合预期。  
-首先给 `h-form` 组件设置 `model` 属性，这是整个表单域中所有绑定字段的集合。
-然后给需要校验的的 `h-form-item` 添加 `prop` 属性，它应该是 `model` 中的字段名，并给 `rules` 属性传入验证规则。详细用法参见 [async-validator#rules](https://github.com/yiminghe/async-validator#rules)。
+## 表单验证
+
+为 `h-form` 提供 `model`，再通过表单项的 `prop` 与 `rules` 关联字段。规则语法兼容 async-validator。
+
 :::demo components/Form/validate.vue :::
 
-## 验证后清空验证结果
-验证某个表单后，如果想清空验证结果，可以对 `h-form` 使用 `clearValidate` 去清空验证结果，也可以针对 `h-form-item` 使用`clearValidate` 去清空验证结果
+## 清除验证与重置
+
+`clearValidate` 仅清除验证信息并保留值；`resetFields` 同时恢复初始值和验证状态。
 
 :::demo components/Form/clear-validate.vue :::
 
-## 配合验证状态控制提交按钮
-可以通过监听 `validate` 来控制提交按钮是否可以点击
+## 根据验证状态提交
+
+监听 `validate` 事件可汇总字段状态，并在必填字段全部有效后启用提交按钮。
+
 :::demo components/Form/validate-with-submit.vue :::
 
-## 动态增减表单项
-对于动态表单，重点是 `prop` 和 `rule` 的定义
+## 动态表单项
+
+动态列表需要稳定的渲染键，以及与数组索引对应的 `prop`，例如 `reviewers[0].email`。
+
 :::demo components/Form/dynamic-change-item-amount.vue :::
 
-## 触发验证的方式
-可以通过配置 `validateTrigger` 来做到在表单元素触发某种事件时才进行验证：
+## 验证触发时机
 
-- `change`: 在触发 `update:modelValue` 时验证（默认）
-- `blur`: 在表单组件失焦时验证
-
-目前支持的组件有：
-- Cascader
-- Checkbox
-- ColorPicker
-- DatePicker
-- Input
-- InputNumber
-- Radio
-- Rate
-- Select
-- Slider
-- Switch
-- Tabs
-- TimePicker
-- Transfer
-- TreeSelect
-- Upload（不包括 UploadArea）
+表单级 `validate-trigger` 提供默认时机，表单项可以单独覆盖为 `change`、`blur` 或两者组合。
 
 :::demo components/Form/validate-trigger.vue :::
 
-## 只做显示组件
-在结合一些表单组件使用时（例如 `formily`），有自己的验证规则，此时就不需要 `h-form` 做验证，所以可以配置 `only-render` 来设定是否只作为渲染组件
+## 仅渲染模式
 
-当设置 `form.only-render` 为 `true` 且 `form-item.error` 有变化时，会立刻根据 `form-item.error` 是否为空而标注表单元素为错误状态
-
-需要注意的是，此时 `emit.validateChange` 不会触发
+`only-render` 适合由外部表单框架负责验证的场景。通过表单项的 `error` 显示外部错误，不触发 Form 自身验证事件。
 
 :::demo components/Form/only-render.vue :::
 
-## 使用自定义表单组件
-如果使用了 `horizon-web` 外的表单组件，但也需要用到 `h-form` `h-form-item` 的验证功能，直接使用提供的 `provide` 值来做即可
+## 接入自定义控件
 
-只需要 `inject('HFormItemTriggerInjectedKey')`，在表单有 `change` 或 `blur` 事件时调用即可
+自定义控件可以注入 `HFormItemTriggerInjectedKey`，在值变化和失焦时通知 Form；错误状态可通过 `HFormItemErrorInjectedKey` 获取。
 
 :::demo components/Form/custom-form.vue :::
 
-## 内置的 required 验证
+## 内置必填验证
 
-默认使用国际化配置展示必填信息
-
-**因为国际化字符串会传给 `async-validator` 方法中，所以无法做到动态变更**
+表单项的 `required` 会使用当前国际化文案。开启 `required-use-label` 后，默认消息会引用可见标签。
 
 :::demo components/Form/build-in-required.vue :::
 
-## 全局 disabled
-配置 disabled 即可禁用 form 中的表单元素
+## 全局禁用
+
+表单的 `disabled` 会统一覆盖内部控件状态，适合锁定已提交或只读的工作流。
 
 :::demo components/Form/disabled.vue :::
 
-## 紧凑布局
-使用 `compact` 控制是否开启紧凑布局
+## 紧凑间距
 
-**注：此时，错误提示将会被隐藏**
+`spacing="compact"` 缩短表单项间距，并有意隐藏提示和错误行；切换回默认间距即可查看消息。
 
 :::demo components/Form/compact.vue :::
 
-## label 尾部插槽
-在 `label-position = 'top'` 时，可以使用 `label-append` 插槽用来放置自定义内容
+## 标签尾部内容
+
+标签位于顶部时，可使用 `labelAppend` 插槽放置与该字段直接相关的轻量操作。
+
 :::demo components/Form/label-append.vue :::

@@ -1,5 +1,4 @@
 ## Basic Usage
-Drawer supports sliding out from any side of the screen. The default position is from the right, and the default size is `medium`.
 :::demo components/Drawer/basic.vue :::
 
 ## Drawer Position

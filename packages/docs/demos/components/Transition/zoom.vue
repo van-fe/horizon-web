@@ -1,51 +1,50 @@
-<template>
-  <div>
-    <h-button type="normal" class="mb-2" @click="visible = !visible">Change</h-button>
-    <h-grid :gap="10" style="height: 80px;">
-      <h-grid-item :span="6">
-        <h-transition name="zoom-in-center">
-          <div v-show="visible" class="animate-box">zoom-in-center</div>
-        </h-transition>
-      </h-grid-item>
-      <h-grid-item :span="6">
-        <h-transition name="zoom-in-top">
-          <div v-show="visible" class="animate-box">zoom-in-top</div>
-        </h-transition>
-      </h-grid-item>
-      <h-grid-item :span="6">
-        <h-transition name="zoom-in-bottom">
-          <div v-show="visible" class="animate-box">zoom-in-bottom</div>
-        </h-transition>
-      </h-grid-item>
-      <h-grid-item :span="6">
-        <h-transition name="zoom-in-left">
-          <div v-show="visible" class="animate-box">zoom-in-left</div>
-        </h-transition>
-      </h-grid-item>
-    </h-grid>
-  </div>
-</template>
+<script setup lang="ts">
+import { ref } from 'vue';
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    return {
-      visible: ref(true),
-    };
-  },
-});
+const name = ref<'zoom-in-center' | 'zoom-in-top' | 'zoom-in-bottom' | 'zoom-in-left'>(
+  'zoom-in-center',
+);
+const speed = ref<'fast' | 'normal' | 'slow'>('normal');
+const visible = ref(true);
 </script>
 
+<template>
+  <section class="docs-demo">
+    <div class="docs-demo__controls">
+      <h-select v-model="name" :to-body="false" aria-label="Zoom origin">
+        <h-option label="Center" value="zoom-in-center" />
+        <h-option label="Top" value="zoom-in-top" />
+        <h-option label="Bottom" value="zoom-in-bottom" />
+        <h-option label="Left" value="zoom-in-left" />
+      </h-select>
+      <h-segmented v-model:active-key="speed" size="small">
+        <h-segmented-item value="fast" label="Fast" />
+        <h-segmented-item value="normal" label="Normal" />
+        <h-segmented-item value="slow" label="Slow" />
+      </h-segmented>
+      <h-switch v-model="visible" label="Visible" />
+    </div>
+    <div class="stage">
+      <h-transition :name="name" :speed="speed">
+        <div v-show="visible" class="sample">Zoom</div>
+      </h-transition>
+    </div>
+  </section>
+</template>
+
 <style scoped>
-.animate-box {
-    width: 150px;
-    height: 80px;
-    background: var(--h-bg-brand-default);
-    border-radius: var(--h-radius);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--h-text-inverse);
+.stage {
+  display: grid;
+  min-height: 100px;
+  place-items: center;
+}
+
+.sample {
+  width: 140px;
+  border-radius: var(--h-radius-m);
+  padding: var(--h-spacing-5);
+  color: var(--h-text-inverse);
+  background: var(--h-bg-brand-default);
+  text-align: center;
 }
 </style>

@@ -10,7 +10,7 @@ import {
   HSelectInputValueInjectKey,
   type SelectCollectedOptionData,
 } from '../utils/injectKeys';
-import type { HSelectFilterFunction, SelectDomRefs } from '../utils/types';
+import type { HSelectFilterFunction, ModelValueSingleType, SelectDomRefs } from '../utils/types';
 import { HFormItemTriggerInjectedKey } from '~/components/Form/src/utils/injectedKeys';
 import debounce from 'lodash/debounce';
 
@@ -24,7 +24,7 @@ export default function useInput(
     popperVisible: Ref<boolean>;
     optionsMap: Reactive<Map<OptionProps['value'], SelectCollectedOptionData<'option'>>>;
     focusedOptionValue: Ref<OptionProps['value'] | undefined>;
-    modelValueSet: Ref<Set<OptionProps['value']>>;
+    modelValueSet: Ref<Set<ModelValueSingleType>>;
     renderedModelValueTags: Ref<OptionProps['value'][]>;
     isFilterable: ComputedRef<boolean>;
     isInputable: ComputedRef<boolean>;

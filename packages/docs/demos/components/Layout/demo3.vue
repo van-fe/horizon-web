@@ -2,10 +2,7 @@
   <h-grid class="alignment-demo" :cols="{ xs: 1, sm: 3 }" :gap="12">
     <h-grid-item>
       <section class="alignment-card">
-        <header>
-          <strong>Start</strong>
-          <code>align="start"</code>
-        </header>
+        <code>align="start"</code>
         <h-grid class="alignment-stage" :cols="1" align="start" justify="center">
           <h-grid-item><span>Item</span></h-grid-item>
         </h-grid>
@@ -14,10 +11,7 @@
 
     <h-grid-item>
       <section class="alignment-card">
-        <header>
-          <strong>Center</strong>
-          <code>align="center"</code>
-        </header>
+        <code>align="center"</code>
         <h-grid class="alignment-stage" :cols="1" align="center" justify="center">
           <h-grid-item><span>Item</span></h-grid-item>
         </h-grid>
@@ -26,10 +20,7 @@
 
     <h-grid-item>
       <section class="alignment-card">
-        <header>
-          <strong>End</strong>
-          <code>align="end"</code>
-        </header>
+        <code>align="end"</code>
         <h-grid class="alignment-stage" :cols="1" align="end" justify="center">
           <h-grid-item><span>Item</span></h-grid-item>
         </h-grid>
@@ -40,28 +31,16 @@
 
 <style scoped>
 .alignment-card {
-  overflow: hidden;
+  display: grid;
+  gap: 12px;
+  padding-top: 12px;
   border: 1px solid var(--h-border-default);
   border-radius: 12px;
   background: var(--h-bg-default);
 }
 
-.alignment-card header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 12px 14px;
-  border-bottom: 1px solid var(--h-border-default);
-  background: var(--h-bg-secondary);
-}
-
-.alignment-card strong {
-  color: var(--h-text-primary);
-  font-size: 13px;
-}
-
 .alignment-card code {
+  padding-inline: 14px;
   color: var(--h-text-secondary);
   font-size: 11px;
 }

@@ -1,40 +1,68 @@
+<script setup lang="ts">
+import { computed, ref, watch } from 'vue';
+import { dayjs } from '@aurora/horizon-web';
+
+type ValueMode = 'dayjs' | 'string' | 'unix';
+
+const mode = ref<ValueMode>('string');
+const value = ref<unknown>('2026-08-12 09:30');
+const valueFormat = computed(() => {
+  if (mode.value === 'string') return 'YYYY-MM-DD HH:mm';
+  if (mode.value === 'unix') return 'X';
+  return undefined;
+});
+
+watch(mode, nextMode => {
+  value.value =
+    nextMode === 'dayjs'
+      ? dayjs('2026-08-12 09:30')
+      : nextMode === 'unix'
+        ? 1786498200
+        : '2026-08-12 09:30';
+});
+
+function serialize(modelValue: unknown) {
+  if (dayjs.isDayjs(modelValue)) return `Dayjs(${modelValue.format('YYYY-MM-DD HH:mm')})`;
+  return String(modelValue ?? 'Empty');
+}
+</script>
+
 <template>
-  <h-grid :gap="12">
-    <h-grid-item :span="8">
-      <div class="demo-title">
-        Default: {{ value }}
-      </div>
-      <h-date-picker v-model="value" type="date" format="YYYY-MM-DD" />
-    </h-grid-item>
-    <h-grid-item :span="8">
-      <div class="demo-title">
-        Datetime Format: {{ value2 }}
-      </div>
-      <h-date-picker v-model="value2" type="date" format="YYYY-MM-DD" value-format="YYYY-MM-DD HH:mm" />
-    </h-grid-item>
-  </h-grid>
-  <h-grid :gap="12">
-    <h-grid-item :span="8">
-      <div class="demo-title">
-        Timestamp: {{ value3 }}
-      </div>
-      <h-date-picker v-model="value3" type="datetime" format="YYYY-MM-DD HH:mm:ss" value-format="X" />
-    </h-grid-item>
-    <h-grid-item :span="12">
-      <div class="demo-title">
-        Timestamp(ms): {{ value4 }}
-      </div>
-      <h-date-picker v-model="value4" type="date-range" format="YYYY/MM/DD wo" value-format="x" />
-    </h-grid-item>
-  </h-grid>
+  <section class="date-picker-value-format">
+    <h-segmented v-model:active-key="mode" size="small">
+      <h-segmented-item value="dayjs" label="Dayjs" />
+      <h-segmented-item value="string" label="String" />
+      <h-segmented-item value="unix" label="Unix" />
+    </h-segmented>
+    <h-date-picker
+      v-model="value"
+      type="datetime"
+      format="YYYY-MM-DD HH:mm"
+      :value-format="valueFormat"
+    />
+    <code aria-live="polite">{{ serialize(value) }}</code>
+  </section>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
-import { Dayjs } from 'dayjs';
+<style scoped>
+.date-picker-value-format {
+  display: grid;
+  justify-items: start;
+  gap: var(--h-spacing-3);
+  max-inline-size: 680px;
+}
 
-const value = ref<Dayjs>();
-const value2 = ref<string>();
-const value3 = ref<number>(1734559200);
-const value4 = ref<[number, number]>();
-</script>
+.date-picker-value-format :deep(.h-date-picker) {
+  inline-size: 100%;
+}
+
+.date-picker-value-format code {
+  color: var(--h-text-secondary);
+}
+
+@media (max-width: 390px) {
+  .date-picker-value-format {
+    inline-size: 100%;
+  }
+}
+</style>

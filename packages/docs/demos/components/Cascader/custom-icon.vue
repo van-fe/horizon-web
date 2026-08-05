@@ -1,48 +1,18 @@
-<template>
-  <h-grid :gap="10">
-    <h-grid-item :span="6">
-      <div class="demo-title">
-        自定义级联面板展开图标
-      </div>
-      <h-cascader
-          v-model="currentVal1"
-          :options="options"
-          expand-trigger="click"
-          expand-icon="spread_right"
-          :to-body="false"
-      />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">
-        自定义单选选中项图标
-      </div>
-      <h-cascader v-model="currentVal2" :options="options" selected-icon="tag" :to-body="false" />
-    </h-grid-item>
-  </h-grid>
-</template>
+<script setup lang="ts">
+import { IconArrowRight, IconCheck } from '@aurora/icon';
+import { ref } from 'vue';
+import { workspaceOptions } from './options';
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-
-export default defineComponent({
-  setup() {
-    const currentVal1 = ref<string[]>([]);
-    const currentVal2 = ref<string[]>([]);
-
-    const options = ref([]);
-    fetch(
-      new URL('/cascader-options.json', import.meta.url).href,
-    ).then(res => {
-      res.json().then(value => {
-        options.value = value;
-      });
-    });
-
-    return {
-      currentVal1,
-      currentVal2,
-      options,
-    };
-  },
-});
+const value = ref<string[]>(['product', 'growth', 'activation']);
 </script>
+
+<template>
+  <h-cascader
+    v-model="value"
+    aria-label="Release team"
+    :options="workspaceOptions"
+    :expand-icon="IconArrowRight"
+    :selected-icon="IconCheck"
+    :to-body="false"
+  />
+</template>

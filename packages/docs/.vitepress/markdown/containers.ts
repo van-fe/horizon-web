@@ -4,6 +4,11 @@ import type Token from 'markdown-it/lib/token';
 import path from 'path';
 import fs from 'fs';
 
+function getDocumentLocale(docsRoot: string, markdownPath: string) {
+  const relativePath = path.relative(docsRoot, markdownPath).replace(/\\/g, '/');
+  return relativePath === 'en' || relativePath.startsWith('en/') ? 'en' : 'zh';
+}
+
 function resolveReferencedFile(docsRoot: string, markdownPath: string, sourcePath: string) {
   const localPath = markdownPath
     ? path.resolve(path.dirname(markdownPath), sourcePath)
@@ -56,8 +61,9 @@ export default (md: MarkdownIt) => {
 
         // 计算相对于 packages/docs 的路径，用于动态导入
         const relativePath = path.relative(docsRoot, fullPath).replace(/\\/g, '/');
+        const locale = getDocumentLocale(docsRoot, markdownPath);
 
-        return `<demo-block source="${md.utils.escapeHtml(content)}" path="${relativePath}" />`;
+        return `<demo-block source="${md.utils.escapeHtml(content)}" path="${relativePath}" locale="${locale}" />`;
       }
       return '';
     },

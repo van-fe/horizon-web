@@ -1,273 +1,198 @@
-## 基本用法
-与其他选择器组件一致，都会有 `normal` `emphasize` `no-border` 样式
+## 基础用法
+
+组合 `size`、`input-style`、`disabled` 与 `check-strictly`，并对比单选和多选。示例中的焦点、失焦与选择结果会直接显示在页面中。
+
 :::demo components/Cascader/basic.vue :::
 
 ## 单选
-单选模式下，可以配置 `show-radio` 是否在节点中显示 `radio`
 
-在显示 `radio` 的时候，只允许点击非叶子节点的 `radio` 才可以选中当前节点
-
-与 `check-strictly` 配合，会有不同的显示逻辑
+`show-radio` 可以明确显示单选控件；配合 `check-strictly` 时，也能选择非叶子节点。
 
 :::demo components/Cascader/single.vue :::
 
-## 多选
-与 `select` 一样，多选的标签使用了 `h-tag` 和 `h-tag-group` 组件结合
+## 多选标签
 
-默认情况下，不会折叠选中项。可以配置 `collapse-tags = true` 折叠已选项
-
-另外可以配置 `collapse-tags-tooltip = true`，可以在悬浮在 `+N` 上时显示其他已选项，并可以快捷反选已选项
-
-另外，如果你的 `select` 空间很小，可能会此被挤压到只有 `+N` ，则可以配置 `max-collapse-tags`，强制展示多少个已选项，其余已选项则会折叠起来
+使用 `collapse-tags`、`collapse-tags-tooltip` 与 `max-collapse-tags` 控制密集选项的摘要方式。
 
 :::demo components/Cascader/multiple.vue :::
 
-## 全选
-支持配置 `use-check-all-summary`，可以在所有选项都选中时标记为 `全部` (会有国际化处理)
+## 全选摘要
 
-如果希望自定义 `全部` 的文字，可以配置 `check-all-summary-text`
+`use-check-all-summary` 会在全部选中后展示简洁摘要，`check-all-summary-text` 可替换业务文案。
 
 :::demo components/Cascader/check-all-summary.vue :::
 
-## 父子节点点选严格模式
-可以通过设置 `check-strictly` 来控制是否父子节点是否严格控制
+## 父子节点关联
 
-如果设置为 `true`，则可以点选任意非 `disabled` 状态的节点
-
-如果设置为 `false`，则不可展开 `disabled` 的节点，并且也无法选择其下属节点
+`check-strictly` 控制父子节点是否独立选择。关闭时遵循层级关联，开启后可独立选择任意可用节点。
 
 :::demo components/Cascader/check-strictly.vue :::
 
-## 父子节点展开控制
-在配置了 `check-strictly = true` 后，展开的逻辑也会根据 `expand-strictly` 控制
+## 父节点展开行为
 
-如果设置为 `true`，则在点击 单选、多选 框时，不会展开子节点
-
-如果设置为 `false`，点击 单选、多选 框时，会展开子节点
-
-需要注意的是，对于单选，则需要开启 `show-radio` 才有效，否则无论如何都会展开子节点
+在 `check-strictly` 开启时，`expand-strictly` 决定选择父节点是否继续展开下一层。
 
 :::demo components/Cascader/expand-strictly.vue :::
 
 ## 选项统计
-传入 `use-statistic = true`，即可对多选项进行统计
 
-可以设置 `statistic-text` 来指定统计文字
+`use-statistic` 将多选结果显示为数量摘要，`statistic-text` 可以使用业务名词。
 
 :::demo components/Cascader/statistic.vue :::
 
-## 节点展示策略
-可以选择展示完整路径还是展示叶子节点，默认展示完整路径
+## 选中项展示策略
+
+`show-checked-strategy="fullPath"` 保留完整上下文；`leaf` 只显示最终节点。
+
 :::demo components/Cascader/display-way.vue :::
 
-## 面板展开方式
-设置 `trigger = 'hover'` 即可在悬浮时打开面板
+## 悬浮打开面板
+
+`trigger="hover"` 控制面板显隐，`hover-show-delay` 与 `hover-hide-delay` 可减少误触。
+
 :::demo components/Cascader/trigger-hover.vue :::
 
-## 节点展开方式
-可以设置 `expand-trigger` 来修改展开方式
+## 子面板展开方式
 
-默认为 `click`，可以修改为 `hover` 悬浮节点展开子节点
+`expand-trigger` 支持 `click` 与 `hover`。点击方式也适合触控和键盘，悬浮方式适合快速浏览。
 
 :::demo components/Cascader/panel-trigger.vue :::
 
 ## 确认选择
-配置 `need-confirm = true` ，开启勾选后二次确认能力
+
+`need-confirm` 将临时选择与最终值分开，并通过 `confirm`、`cancel` 事件反馈结果。
+
 :::demo components/Cascader/confirm.vue :::
 
-## 确认选择自定义内容
-通过 `confirm-button-text` `cancel-button-text` 可以控制确认、取消按钮文字
+## 自定义确认区
 
-`confirmRender` 插槽也对外暴露了 `cancelHandle` `confirmHandle` 两个方法，用于自定义尾部时使用
+可以修改内置按钮文案、通过 `confirmRender` 插槽组合操作，或调用实例暴露的 `confirmHandle`、`cancelHandle`。
 
-另外也可以通过 `cascader` 实例对外暴露的 `confirmHandle`、`cancelHandle` 来执行确认和取消操作
 :::demo components/Cascader/custom-confirm.vue :::
-## panel 分组
-因 `cascader` 树结构的特殊性，如果要达到分组效果，只能在传入 `options` 时，设置一个只有 `groupLabel` 的节点来模拟分组
+
+## 面板分组
+
+只有 `groupLabel` 的选项可作为不可选择的分组标题，用于组织多套独立层级。
 
 :::demo components/Cascader/panel-grouped.vue :::
 
 ## 动态加载
-需要注意的是，在使用动态加载的时候，需要使用 `v-model:options` 的方式传入 `options`
 
-因为这里需要双向同步 `options` 数据，另外需要给动态加载的 `option`指定为非叶子结点（即设置 `isLeaf` 为 `false`）
+动态加载必须使用 `v-model:options` 同步选项，并将待加载节点标记为 `isLeaf: false`。同一层级的 `value` 必须唯一。
 
-**特别注意：同层级下的 `value` 不得重复，否则组件在挂载子项时会出现异常**
 :::demo components/Cascader/dynamic-load.vue :::
 
 ## 过滤
-设置 `filterable` 即可开启过滤功能
 
-需要注意的是，`check-strictly` 状态的不同会影响展示的 `option` 列表
+`filterable` 支持在触发器中搜索；`panel-filter-option` 则在打开的面板内过滤。示例同时展示内置与自定义面板搜索框。
+
 :::demo components/Cascader/filterable.vue :::
 
-## 过滤全选
-支持传入 `use-filter-check-all = true`，在过滤时开启全选
+## 过滤结果全选
+
+多选过滤时开启 `use-filter-check-all`，即可一次选择当前搜索结果中的可选节点。
 
 :::demo components/Cascader/filter-check-all.vue :::
 
-## 过滤配置
-配置 `filter-method` 可以自定义过滤方法
+## 自定义过滤配置
 
-`filter-max-result` 可以控制展示结果的最大数量
+`filter-method` 控制匹配规则，`filter-max-result` 限制结果数量，`filter-result-sort` 控制排序。
 
-`filter-result-sort` 可以控制过滤后结果的排列函数
 :::demo components/Cascader/filterable-config.vue :::
 
-## 过滤后自定义展示
-通过 `searchPanelRender` 插槽，可以自定义过滤的内容
+## 自定义过滤结果
+
+`searchPanelRender` 插槽可以重新组织每条搜索结果，同时保留完整层级信息。
+
 :::demo components/Cascader/filter-render-slot.vue :::
 
 ## 过滤并确认
-`filterable` 与 `need-confirm` 结合展示
+
+组合 `filterable` 与 `need-confirm`，适合在大数据集中检索后批量确认。
+
 :::demo components/Cascader/common-search-confirm.vue :::
 
-## 关键字保留
-使用 `reserve-keyword` 配置，可以控制在勾选选项后是否保留关键字
+## 保留搜索关键字
+
+`reserve-keyword` 支持始终保留、始终清除，或仅在取消选择时保留关键字。
+
 :::demo components/Cascader/filter-reserve-keyword.vue :::
 
-## 空列表
-一般来说 `cascader` 会根据 `children` 是否为空来判断是否是叶子节点，如果你显式地给一个 `children` 为空的节点指定了 `isLeaf` 属性为 `false`，这个时候就会展示空状态
+## 空子列表
+
+当节点被明确标记为非叶子但没有子项时，可使用 `empty-text` 或 `empty` 插槽解释该分支的空状态。
+
 :::demo components/Cascader/empty-list.vue :::
 
 ## 空数据集
-如果 `options` 是空数组，则会直接展示空状态
 
-此处的设置对过滤情况下结果集为空时同样起效
+当 `options` 为空时，组件会展示空状态；可提供业务文案或完整的自定义空状态。
 
 :::demo components/Cascader/empty.vue :::
 
-
 ## 字段映射
-配置 `field-map` 来控制映射的字段，从而可以直接使用自定的 `options` 结构而不必改成 `cascader` 指定默认字段
 
-对于 `ts` 类型报错的问题，可以在全局 `declare HCascaderOption` 类型解决（以下方 `demo` 中使用字段为例）：
+`field-map` 可把 `value`、`label`、`stringLabel` 与 `children` 映射到已有数据结构，无需预先改写数据。
+
+如需扩展 TypeScript 类型，可在项目中补充 `HCascaderOption` 声明：
 
 ```ts
-import type { HCascaderOption } from '@aurora/horizon-web';
-
 declare module '@aurora/horizon-web' {
   interface HCascaderOption {
     id?: HCascaderOption['value'];
     tag?: HCascaderOption['label'];
     tagString?: HCascaderOption['stringLabel'];
+    nodes?: HCascaderOption[];
   }
 }
 ```
+
 :::demo components/Cascader/field-map.vue :::
 
-## 自定义触发器输入框内展示内容
-通过 `selectRender` 插槽，可以自定义选择器的渲染
+## 自定义触发器内容
+
+`selectRender` 插槽可将选中路径改写为更紧凑的业务摘要。
+
 :::demo components/Cascader/custom-trigger-inner.vue :::
 
-## 自定义选中 tag
-常用在多选中，使用 `tagRender` 插槽自定义被选中的 `tag`
+## 自定义选中标签
+
+多选模式下使用 `tagRender` 自定义每个选中标签的内容。
+
 :::demo components/Cascader/custom-selected-item.vue :::
 
 ## 自定义图标
-使用 `expand-icon` 和 `selected-icon`，可以自定义 展开图标 和 单选选中图标
+
+`expand-icon` 与 `selected-icon` 分别控制层级展开图标和叶子选中图标。
+
 :::demo components/Cascader/custom-icon.vue :::
 
-## 自定义选项 render
-使用 `itemRender` 自定义每个选项的渲染
+## 自定义选项
 
-为了选中内容和搜索结果的正确展示，当指定 `label` 的类型为函数时，需要给 `option` 指定 `stringLabel` 的值
+`itemRender` 自定义选项行。若 `label` 是渲染函数，请同时提供 `stringLabel`，确保过滤和选中摘要仍有可读文本。
 
 :::demo components/Cascader/custom-option-render.vue :::
 
-## 自定义选择器
-借助 `default` 插槽，可以自定义选择器
+## 自定义完整触发器
+
+默认插槽可替换完整触发器；实例的 `inputChange` 方法可以把自定义输入同步给过滤逻辑。
+
 :::demo components/Cascader/custom-trigger.vue :::
 
-## model-value 未匹配
-当 `model-value` 无法在 options 中找到时，会直接展示其 `value` 值
+## 未匹配的值
+
+当已保存值不在当前 `options` 中时，组件保留原始值；完整路径与叶子策略仍然有效。
+
 :::demo components/Cascader/unmatched-value.vue :::
 
 ## 虚拟滚动
-设置 `use-virtual-scroll = true` ，则会启用虚拟滚动
 
-此处展示了 5w 条数据（因为需要处理父子层级关系，层级越多性能影响越大，这个会在后续迭代中优化计算能力）
+`use-virtual-scroll` 只渲染可见选项。示例使用 40 × 40 × 4、共 6,400 个叶子节点验证搜索和多选。
 
 :::demo components/Cascader/virtual-scroll.vue :::
 
-## 不可选择
-传入 `options` 时，可以设定 `selectable = false`，即可不允许选择该项（但展开不受限）
+## 不可选择与禁用
 
-**下面是与 disabled 的对比表格（树和树选择器同理）：**
+`selectable: false` 只禁止选择当前节点，仍可展开并选择后代；`disabled: true` 会禁用该节点及其交互。
 
-<table class="md-table text-center">
-    <thead>
-        <tr>
-            <th rowspan="2"></th>
-            <th rowspan="2">设置对象</th>
-            <th rowspan="2" width="120">鼠标选择对象</th>
-            <th>disabled = true</th>
-            <th>selectable = false</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th rowspan="9" width="120">父子节点关联</th>
-            <th rowspan="3" width="80">根节点</th>
-            <th width="80">当前根节点</th>
-            <td>不可勾选、交互</td>
-            <td>不可勾选、交互</td>
-        </tr>
-        <tr>
-            <th width="80">子节点</th>
-            <td>不可勾选、交互</td>
-            <td>可以自由勾选并交互，并且可以关联勾选其后代节点状态</td>
-        </tr>
-        <tr>
-            <th width="80">叶子节点</th>
-            <td>不可勾选、交互</td>
-            <td colspan="2">可以勾选并交互</td>
-        </tr>
-        <tr>
-            <th rowspan="3" width="80">子节点</th>
-            <th width="80">根节点</th>
-            <td>可以勾选、交互 <br> 但不可更改其后代设置了 <code>disabled</code> 的节点状态</td>
-            <td>可以勾选、交互 <br> 但不可更改其后代设置了 <code>unselectable</code> 的节点状态</td>
-        </tr>
-        <tr>
-            <th width="80">当前子节点</th>
-            <td>不可勾选、交互</td>
-            <td>不可勾选、交互</td>
-        </tr>
-        <tr>
-            <th width="80">叶子节点</th>
-            <td>不可勾选、交互</td>
-            <td>可以勾选并交互</td>
-        </tr>
-        <tr>
-            <th rowspan="3" width="80">叶子节点</th>
-            <th width="80">根节点</th>
-            <td>可以勾选、交互 <br> 但不可更改其后代设置了 <code>disabled</code> 的节点状态</td>
-            <td>可以勾选、交互 <br> 但不可更改其后代设置了 <code>unselectable</code> 的节点状态</td>
-        </tr>
-        <tr>
-            <th width="80">子节点</th>
-            <td>可以勾选、交互 <br> 但不可更改其后代设置了 <code>disabled</code> 的节点状态</td>
-            <td>可以勾选、交互 <br> 但不可更改其后代设置了 <code>unselectable</code> 的节点状态</td>
-        </tr>
-        <tr>
-            <th width="80">当前叶子节点</th>
-            <td>不可勾选、交互</td>
-            <td>不可勾选、交互</td>
-        </tr>
-        <tr>
-            <th rowspan="3" width="120">父子节点不关联</th>
-            <th>根节点</th>
-            <td rowspan="3" colspan="3">自身不可以勾选、交互，其他节点不干扰</td>
-        </tr>
-        <tr>
-            <th>子节点</th>
-        </tr>
-        <tr>
-            <th>叶子结点</th>
-        </tr>
-    </tbody>
-</table>
-
-如果启用了单选，则最好搭配 `show-radio = true`，否则在展示形式上无法看出区别
 :::demo components/Cascader/selectable.vue :::

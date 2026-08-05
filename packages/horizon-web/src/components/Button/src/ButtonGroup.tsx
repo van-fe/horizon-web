@@ -10,6 +10,8 @@ import useSize from '~/utils/useSize';
 
 export default defineComponent({
   name: `${useNamespace()}ButtonGroup`,
+  desc: "将一组相关按钮组织为连续控件",
+  descLocales: { en: "Groups related buttons into a connected control." },
   props: useButtonGroupProps,
   slots: useButtonGroupSlots,
   setup(props: ButtonGroupProps, { slots }: HorizonWebSetupContext<{}, ButtonGroupSlots>) {

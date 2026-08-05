@@ -10,6 +10,8 @@ import { HDropdownActivatedChildInjectKey } from './utils/InjectedKeys';
 
 export default defineComponent({
   name: `${useNamespace()}DropdownMenu`,
+  desc: "下拉菜单的内容容器",
+  descLocales: { en: "The content container for a dropdown menu." },
   emits: useDropdownMenuEmits,
   slots: useDropdownMenuSlots,
   setup(

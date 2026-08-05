@@ -91,6 +91,9 @@ export default defineDirective<PopconfirmEl, typeof usePopConfirmOptions | strin
   name: 'popconfirm',
   options: usePopConfirmOptions,
   desc: '用于二次确认场景，会在点击元素上弹出浮层进行提示确认',
+  descLocales: {
+    en: 'Use `v-popconfirm` to request confirmation in a popup before an action runs.',
+  },
   created(el, binding, vNode) {
     el[bindingValueSymbol] = binding.value;
 

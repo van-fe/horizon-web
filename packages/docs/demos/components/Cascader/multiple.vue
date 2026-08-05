@@ -1,39 +1,37 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="{ xs: 24, sm: 12, md: 8, lg: 6 }">
-      <div class="demo-title">普通多选</div>
-      <h-cascader v-model="currentVal1" :options="options" :multiple="true" :to-body="false" />
-    </h-grid-item>
-    <h-grid-item :span="{ xs: 24, sm: 12, md: 8, lg: 6 }">
-      <div class="demo-title">折叠多选</div>
-      <h-cascader v-model="currentVal2" :options="options" :multiple="true" :collapse-tags="true" :to-body="false" />
-    </h-grid-item>
-    <h-grid-item :span="{ xs: 24, sm: 12, md: 8, lg: 6 }">
-      <div class="demo-title">+N 显示其余已选项</div>
-      <h-cascader v-model="currentVal3" :options="options" :multiple="true" :collapse-tags="true" :collapse-tags-tooltip="true" :to-body="false" />
-    </h-grid-item>
-    <h-grid-item :span="{ xs: 24, sm: 12, md: 8, lg: 6 }">
-      <div class="demo-title">强制显示3个已选项，其余折叠</div>
-      <h-cascader v-model="currentVal4" :options="options" :multiple="true" :collapse-tags="true" :collapse-tags-tooltip="true" :max-collapse-tags="3" :to-body="false" />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
+import { formatSelectionCount, workspaceOptions } from './options';
 
-const currentVal1 = ref<string[][]>([[ "guide", "navigation", "side nav"], [ "guide", "navigation", "top nav"], [ "guide", "disciplines", "consistency"], [ "guide", "disciplines", "feedback"]]);
-const currentVal2 = ref<string[][]>([[ "guide", "navigation", "side nav"], [ "guide", "navigation", "top nav"], [ "guide", "disciplines", "consistency"], [ "guide", "disciplines", "feedback"]]);
-const currentVal3 = ref<string[][]>([[ "guide", "navigation", "side nav"], [ "guide", "navigation", "top nav"], [ "guide", "disciplines", "consistency"], [ "guide", "disciplines", "feedback"]]);
-const currentVal4 = ref<string[][]>([[ "guide", "navigation", "side nav"], [ "guide", "navigation", "top nav"], [ "guide", "disciplines", "consistency"], [ "guide", "disciplines", "feedback"]]);
+type TagMode = 'all' | 'compact' | 'tooltip';
 
-const options = ref([]);
-
-fetch(
-  new URL('/cascader-options.json', import.meta.url).href,
-).then(res => {
-  res.json().then(value => {
-    options.value = value;
-  });
-});
+const mode = ref<TagMode>('compact');
+const value = ref<string[][]>([
+  ['product', 'design-system', 'accessibility'],
+  ['product', 'growth', 'retention'],
+  ['engineering', 'web-platform', 'frontend'],
+]);
+const collapseTags = computed(() => mode.value !== 'all');
+const collapseTagsTooltip = computed(() => mode.value === 'tooltip');
 </script>
+
+<template>
+  <div class="docs-demo">
+    <h-segmented v-model:active-key="mode" size="small">
+      <h-segmented-item value="all" label="All tags" />
+      <h-segmented-item value="compact" label="Compact" />
+      <h-segmented-item value="tooltip" label="Tooltip" />
+    </h-segmented>
+    <h-cascader
+      v-model="value"
+      aria-label="Review teams"
+      :options="workspaceOptions"
+      multiple
+      clearable
+      :collapse-tags="collapseTags"
+      :collapse-tags-tooltip="collapseTagsTooltip"
+      :max-collapse-tags="2"
+      :to-body="false"
+    />
+    <span aria-live="polite">{{ formatSelectionCount(value) }}</span>
+  </div>
+</template>

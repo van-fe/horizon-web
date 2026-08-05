@@ -3,7 +3,11 @@ import type Token from 'markdown-it/lib/token.mjs';
 import componentsAnalysis from '../../../api-generator/dist/components-analysis.json';
 import directivesAnalysis from '../../../api-generator/dist/directives-analysis.json';
 import methodsAnalysis from '../../../api-generator/dist/methods-analysis.json';
-import type { ApiGeneratorAnalysedComponentDetail, ApiGeneratorAnalysedDirectiveDetail, ApiGeneratorAnalysedMethodDetail } from '@aurora/utils';
+import type {
+  ApiGeneratorAnalysedComponentDetail,
+  ApiGeneratorAnalysedDirectiveDetail,
+  ApiGeneratorAnalysedMethodDetail,
+} from '@aurora/utils';
 import { pascalize } from '@aurora/utils';
 import appendApi from '../markdown-analyse/utils/appendApi';
 import appendPluginInfo from '../markdown-analyse/utils/appendPluginInfo';
@@ -33,25 +37,30 @@ function localizeApi<T>(value: T, locale: string): T {
 
 function localizeApiLabels(html: string, locale: string) {
   if (locale !== 'en') return html;
-  return html
-    // Replace the compound labels before their shorter Chinese substrings.
-    .replaceAll('入参/出参说明', 'Input/Output Description')
-    .replaceAll('入参/出参类型', 'Input/Output Type')
-    .replaceAll('入参/出参名', 'Input/Output')
-    .replaceAll('参数说明', 'Parameter Description')
-    .replaceAll('参数类型', 'Parameter Type')
-    .replaceAll('参数名', 'Parameter')
-    .replaceAll('属性', 'Name')
-    .replaceAll('说明', 'Description')
-    .replaceAll('类型', 'Type')
-    .replaceAll('必填', 'Required')
-    .replaceAll('默认值', 'Default')
-    .replaceAll('是否必填', 'Required')
-    .replaceAll('>是<', '>Yes<')
-    .replaceAll('>否<', '>No<');
+  return (
+    html
+      // Replace the compound labels before their shorter Chinese substrings.
+      .replaceAll('入参/出参说明', 'Input/Output Description')
+      .replaceAll('入参/出参类型', 'Input/Output Type')
+      .replaceAll('入参/出参名', 'Input/Output')
+      .replaceAll('参数说明', 'Parameter Description')
+      .replaceAll('参数类型', 'Parameter Type')
+      .replaceAll('参数名', 'Parameter')
+      .replaceAll('属性', 'Name')
+      .replaceAll('说明', 'Description')
+      .replaceAll('类型', 'Type')
+      .replaceAll('是否必填', 'Required')
+      .replaceAll('必填', 'Required')
+      .replaceAll('默认值', 'Default')
+      .replaceAll('>是<', '>Yes<')
+      .replaceAll('>否<', '>No<')
+  );
 }
 
-function createHtmlToken(state: { Token: new (type: string, tag: string, nesting: number) => Token }, content: string) {
+function createHtmlToken(
+  state: { Token: new (type: string, tag: string, nesting: number) => Token },
+  content: string,
+) {
   const token = new state.Token('html_block', '', 0);
   token.content = content;
   return token;
@@ -60,10 +69,14 @@ function createHtmlToken(state: { Token: new (type: string, tag: string, nesting
 /** Automatically adds component introduction and generated API to demo pages. */
 export default function autoComponentDocs(md: MarkdownIt) {
   md.core.ruler.after('block', 'auto-component-docs', state => {
-    const filePath = String((state.env as { path?: string; filePath?: string }).path
-      || (state.env as { filePath?: string }).filePath
-      || '');
-    const match = filePath.match(/[\\/]demos[\\/](components|directives|methods)[\\/]([^\\/]+)\.md$/i);
+    const filePath = String(
+      (state.env as { path?: string; filePath?: string }).path ||
+        (state.env as { filePath?: string }).filePath ||
+        '',
+    );
+    const match = filePath.match(
+      /[\\/]demos[\\/](components|directives|methods)[\\/]([^\\/]+)\.md$/i,
+    );
 
     if (!match) {
       return;
@@ -78,13 +91,21 @@ export default function autoComponentDocs(md: MarkdownIt) {
     if (kind === 'components') {
       const name = pascalize(rawName);
       const component = components.find(item => item.name.toLowerCase() === name.toLowerCase());
-      if (!component) return;
-      const related = components.filter(item => item.parentComponentName.toLowerCase() === name.toLowerCase());
-      const modes = related.length ? related : [component];
-      intro = appendPluginInfo(localizeApi(component, locale), kind);
-      api = modes.map(mode => localizeApiLabels(appendApi(localizeApi(mode, locale), true, kind), locale)).join('');
+      const related = components.filter(
+        item => item.parentComponentName.toLowerCase() === name.toLowerCase(),
+      );
+      if (!component && !related.length) return;
+      const modes = related.length ? related : [component!];
+      if (component) {
+        intro = appendPluginInfo(localizeApi(component, locale), kind);
+      } else {
+        intro = appendPluginInfo({ ...localizeApi(related[0], locale), name }, kind);
+      }
+      api = modes
+        .map(mode => localizeApiLabels(appendApi(localizeApi(mode, locale), true, kind), locale))
+        .join('');
     } else if (kind === 'directives') {
-      const name = rawName.replace(/^v-/, '');
+      const name = pascalize(rawName.replace(/^v-/, ''));
       const directive = directives.find(item => item.name.toLowerCase() === name.toLowerCase());
       if (!directive) return;
       intro = appendPluginInfo(localizeApi(directive, locale), kind);
@@ -94,8 +115,12 @@ export default function autoComponentDocs(md: MarkdownIt) {
       const method = methods.find(item => item.dirName.toLowerCase() === name.toLowerCase());
       if (!method) return;
       const related = methods.filter(item => item.dirName.toLowerCase() === name.toLowerCase());
-      intro = appendPluginInfo(localizeApi(method, locale), kind);
-      api = related.map(mode => localizeApiLabels(appendApi(localizeApi(mode, locale), related.length > 1, kind), locale)).join('');
+      intro = appendPluginInfo({ ...localizeApi(method, locale), name: method.dirName }, kind);
+      api = related
+        .map(mode =>
+          localizeApiLabels(appendApi(localizeApi(mode, locale), related.length > 1, kind), locale),
+        )
+        .join('');
     }
 
     state.tokens.unshift(createHtmlToken(state, `${intro}\n`));

@@ -26,6 +26,7 @@ export default defineDirective<HTMLElement, typeof useSafeHtmlOptions | string>(
   name: 'safe-html',
   options: useSafeHtmlOptions,
   desc: '原生 v-html 指令的替代方案，用于安全地设置 HTML 内容',
+  descLocales: { en: 'A safer alternative to native `v-html` for setting HTML content.' },
   mounted: fn,
   updated: fn,
 });

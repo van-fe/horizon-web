@@ -1,64 +1,42 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 
-const activeKey = ref(0);
-const size = ref('medium');
-const cardType = ref('line');
-const focusable = ref(true);
-const scrollable = ref(true);
-const arrow = ref(true);
-const tabs = ref<number[]>(
-  Array(20)
-    .fill(0)
-    .map((_, i) => i),
-);
+const activeKey = ref('Aug 2026');
+const periods = [
+  'Jan 2026',
+  'Feb 2026',
+  'Mar 2026',
+  'Apr 2026',
+  'May 2026',
+  'Jun 2026',
+  'Jul 2026',
+  'Aug 2026',
+  'Sep 2026',
+  'Oct 2026',
+  'Nov 2026',
+  'Dec 2026',
+];
 </script>
 
 <template>
-  <div class="mb-4 flex align-center">
-    <span class="mr-4">类型</span>
-    <h-radio-group v-model="cardType">
-      <h-radio value="line">line(Default)</h-radio>
-      <h-radio value="card">card</h-radio>
-      <h-radio value="page">page(不支持尺寸调整)</h-radio>
-    </h-radio-group>
-  </div>
-  <div class="mb-4 flex align-center">
-    <span class="mr-4">尺寸</span>
-    <h-radio-group v-model="size" :disabled="cardType === 'page'">
-      <h-radio value="small">small</h-radio>
-      <h-radio value="medium">medium(Default)</h-radio>
-      <h-radio value="large">large</h-radio>
-    </h-radio-group>
-  </div>
-  <div class="mb-8 flex align-center">
-    <span class="mr-4">其他</span>
-    <div class="flex align-center" style="column-gap: 10px">
-      <h-checkbox v-model="scrollable" label="标签可滑动" />
-      <h-checkbox v-model="focusable" label="自动滑动到激活元素" />
-      <h-checkbox v-model="arrow" label="超长页签使用箭头" />
-    </div>
-  </div>
-  <div class="flex">
-    <div class="box">
-      <h-tabs
-        v-model:activeKey="activeKey"
-        :default-active-key="1"
-        :type="cardType"
-        :size="size"
-        :arrow="arrow"
-        :focusable="focusable"
-        :scrollable="scrollable"
-      >
-        <h-tab v-for="key in tabs" :key="key" :label="`Tab${key}`" />
-      </h-tabs>
-    </div>
+  <div class="tabs-scroll-demo">
+    <h-tabs v-model:active-key="activeKey" scrollable arrow focusable>
+      <h-tab v-for="period in periods" :key="period" :label="period" />
+    </h-tabs>
+    <p aria-live="polite">{{ activeKey }} report selected.</p>
   </div>
 </template>
 
 <style scoped>
-.box {
-  height: 80px;
-  width: 600px;
+.tabs-scroll-demo {
+  display: grid;
+  min-width: 0;
+  gap: var(--h-spacing-4);
+}
+
+.tabs-scroll-demo p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
 }
 </style>

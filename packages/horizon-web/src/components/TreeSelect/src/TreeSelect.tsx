@@ -394,6 +394,8 @@ export default defineComponent({
                         default: () => renderedModelValueTags.value,
                         suffix: () => (
                           <HPickerFitContentInput
+                            data-focus-visible-proxy=""
+                            disabled={isDisabled.value}
                             ref={domRefs.filterInput}
                             v-show={
                               multipleProp.value &&
@@ -412,8 +414,10 @@ export default defineComponent({
                         ),
                         append: () => (
                           <input
+                            data-focus-visible-proxy=""
+                            disabled={isDisabled.value}
                             class={cls(classHelper.is('input-placeholder'))}
-                            tabindex="0"
+                            tabindex={isDisabled.value ? -1 : 0}
                             unselectable="on"
                             onFocus={onTagGroupSuffixInputFocus}
                             onBlur={onTagGroupSuffixInputBlur}

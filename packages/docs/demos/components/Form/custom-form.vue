@@ -1,141 +1,149 @@
 <template>
-  <h-form ref="formRef" :model="formData" validate-trigger="blur">
-    <h-form-item
-      label="User name"
-      prop="username"
-      :rules="[
-        {
-          required: true,
-          message: 'User name is required!',
-        },
-        {
-          min: 3,
-          max: 100,
-          message: 'User name should be 3 to 100.',
-        },
-      ]"
-      validate-trigger="change"
+  <section class="form-custom-control-demo">
+    <h-form
+      ref="formRef"
+      :model="formData"
+      validate-trigger="blur"
+      spacing="dynamic"
+      @submit="submit"
     >
-      <custom-input v-model="formData.username" />
-    </h-form-item>
-    <h-form-item label="Email" prop="email" :rules="emailRules">
-      <custom-input v-model="formData.email" />
-    </h-form-item>
-    <h-form-item label="Notes" prop="notes">
-      <h-input v-model="formData.notes" type="textarea" />
-    </h-form-item>
-    <div>
-      <h-button @click="submit">Submit</h-button>
-    </div>
-  </h-form>
+      <h-form-item
+        label="Service name"
+        prop="service"
+        :rules="serviceRules"
+        validate-trigger="change"
+      >
+        <CustomInput
+          v-model="formData.service"
+          label="Service name"
+          placeholder="release-service"
+        />
+      </h-form-item>
+      <h-form-item label="Owner email" prop="ownerEmail" :rules="emailRules">
+        <CustomInput
+          v-model="formData.ownerEmail"
+          label="Owner email"
+          placeholder="owner@example.com"
+        />
+      </h-form-item>
+      <h-form-item label="Operational note">
+        <h-input v-model="formData.note" type="textarea" placeholder="Optional handoff context" />
+      </h-form-item>
+      <h-form-item><h-button native-type="submit">Validate custom controls</h-button></h-form-item>
+    </h-form>
+    <p class="form-custom-control-demo__status" aria-live="polite">{{ status }}</p>
+  </section>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, h, watch, inject } from 'vue';
-import type { HFormInstance } from '@aurora/horizon-web';
-import { $message, HFormItemTriggerInjectedKey, HFormItemErrorInjectedKey } from '@aurora/horizon-web';
-import { isString, isUndefined } from '@aurora/utils';
+<script setup lang="ts">
+import {
+  HFormItemErrorInjectedKey,
+  HFormItemTriggerInjectedKey,
+  type HFormInstance,
+  type HFormRule,
+} from '@aurora/horizon-web';
+import { defineComponent, h, inject, reactive, ref, watch } from 'vue';
 
 const CustomInput = defineComponent({
-  name: 'CustomInput',
+  name: 'FormDemoCustomInput',
   props: {
-    modelValue: {
-      type: String,
-    },
+    modelValue: { type: String, default: '' },
+    label: { type: String, required: true },
+    placeholder: { type: String, default: '' },
   },
-  emits: {
-    'update:modelValue': (val: string | undefined) => isString(val) || isUndefined(val),
-    blur: () => true,
-  },
+  emits: ['update:modelValue', 'blur'],
   setup(props, { emit }) {
     const value = ref(props.modelValue);
+    const triggerValidation = inject(HFormItemTriggerInjectedKey);
+    const error = inject(HFormItemErrorInjectedKey);
 
-    // form-item validate trigger
-    const formItemTrigger = inject(HFormItemTriggerInjectedKey);
-    const formItemError = inject(HFormItemErrorInjectedKey);
-
-    watch(value, val => {
-      emit('update:modelValue', val);
-      formItemTrigger?.('change');
+    watch(
+      () => props.modelValue,
+      nextValue => {
+        if (nextValue !== value.value) value.value = nextValue;
+      },
+    );
+    watch(value, nextValue => {
+      emit('update:modelValue', nextValue);
+      triggerValidation?.('change');
     });
 
     return () =>
       h('input', {
-        class: { 'custom-input': true, 'is-error': !!formItemError?.value },
+        class: ['form-custom-control-demo__input', { 'is-error': Boolean(error?.value) }],
         value: value.value,
-        onInput(evt: InputEvent) {
-          value.value = (evt.target as HTMLInputElement).value;
+        placeholder: props.placeholder,
+        'aria-label': props.label,
+        'aria-invalid': Boolean(error?.value),
+        onInput(event: Event) {
+          value.value = (event.target as HTMLInputElement).value;
         },
         onBlur() {
           emit('blur');
-          formItemTrigger?.('blur');
+          triggerValidation?.('blur');
         },
       });
   },
 });
 
-export default defineComponent({
-  components: {
-    CustomInput,
-  },
-  setup() {
-    const formRef = ref<HFormInstance | null>(null);
-    const formData = ref({
-      username: '',
-      email: '',
-      notes: '',
+const formRef = ref<HFormInstance | null>(null);
+const formData = reactive({ service: '', ownerEmail: '', note: '' });
+const status = ref('Custom controls are ready for input');
+const serviceRules: HFormRule[] = [
+  { required: true, message: 'Enter a service name' },
+  { min: 3, message: 'Use at least 3 characters' },
+];
+const emailRules: HFormRule[] = [
+  { required: true, message: 'Enter an owner email' },
+  { type: 'email', message: 'Enter a valid email address' },
+];
+
+function submit() {
+  formRef.value
+    ?.validate()
+    .then(() => {
+      status.value = `Custom controls validated for ${formData.service}`;
+    })
+    .catch(() => {
+      status.value = 'Review the custom control errors';
     });
-    const emailRules = ref([
-      {
-        required: true,
-        message: 'Email is required!',
-      },
-      {
-        type: 'email',
-        message: 'Email format invalid!',
-      },
-      {
-        validator(_: any, value: string) {
-          if (!value.endsWith('@gmail.com')) {
-            return new Error('Only support gmail!');
-          }
-          return true;
-        },
-      },
-    ]);
-
-    const submit = () => {
-      if (formRef.value) {
-        formRef.value?.validate()
-          .then(() => {
-            $message.success('Submit');
-          })
-          .catch(errors => {
-            console.info('errors:', errors);
-          });
-      }
-    };
-
-    return {
-      formData,
-      emailRules,
-      formRef,
-      submit,
-    };
-  },
-});
+}
 </script>
 
-<style>
-.custom-input {
-  height: 30px;
-  line-height: 30px;
-  border: 1px solid #ccc;
-  width: 100%;
-  border-radius: 4px;
+<style scoped>
+.form-custom-control-demo {
+  display: grid;
+  gap: var(--h-spacing-4);
 }
 
-.custom-input.is-error {
-  border-color: red;
+.form-custom-control-demo__status {
+  margin: 0;
+  color: var(--h-text-secondary);
+}
+
+.form-custom-control-demo__input {
+  box-sizing: border-box;
+  width: 100%;
+  height: var(--h-input-size-height);
+  padding: 0 var(--h-spacing-3);
+  border: 1px solid var(--h-border-default);
+  border-radius: var(--h-radius-m);
+  outline: none;
+  color: var(--h-text-primary);
+  background: var(--h-bg-default);
+  font: inherit;
+}
+
+.form-custom-control-demo__input:focus-visible {
+  border-color: var(--h-border-brand-default);
+  box-shadow: 0 0 0 2px var(--h-bg-weak-default);
+}
+
+.form-custom-control-demo__input.is-error {
+  border-color: var(--h-border-error-default);
+}
+
+.form-custom-control-demo__status {
+  font-size: var(--h-text-sm);
 }
 </style>

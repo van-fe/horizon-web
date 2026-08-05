@@ -1,57 +1,31 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <div class="demo-title">单选</div>
-      <h-cascader
-        v-model="currentVal1"
-        :options="options"
-        :filterable="true"
-        :filter-method="filterFn"
-        :filter-max-result="3"
-        :filter-result-sort="sortFn"
-        :to-body="false"
-      />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">多选</div>
-      <h-cascader
-        v-model="currentVal2"
-        :options="options"
-        :filterable="true"
-        :filter-method="filterFn"
-        :filter-max-result="3"
-        :filter-result-sort="sortFn"
-        multiple
-        :to-body="false"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
 import type { HCascaderExtendOption } from '@aurora/horizon-web';
 import { ref } from 'vue';
+import { workspaceOptions } from './options';
 
-const currentVal1 = ref<string[]>([]);
-const currentVal2 = ref<string[][]>([]);
+const value = ref<string[]>([]);
 
-const options = ref([]);
-fetch(
-  new URL('/cascader-options.json', import.meta.url).href,
-).then(res => {
-  res.json().then(value => {
-    options.value = value;
-  });
-});
-
-function sortFn(a: HCascaderExtendOption, b: HCascaderExtendOption) {
-  return b.paths.at(-1).label.length - a.paths.at(-1).label.length;
+function filterTeams(inputValue: string, paths: Array<{ label: string }>) {
+  const keyword = inputValue.trim().toLocaleLowerCase();
+  return paths.some(path => path.label.toLocaleLowerCase().includes(keyword));
 }
 
-function filterFn(
-  inputValue: string,
-  paths: { value: string | number; label: string; option: HCascaderExtendOption }[],
-) {
-  return paths.every(path => path.label.includes(inputValue));
+function sortTeams(a: HCascaderExtendOption, b: HCascaderExtendOption) {
+  return a.paths.length - b.paths.length || String(a.label).localeCompare(String(b.label));
 }
 </script>
+
+<template>
+  <h-cascader
+    v-model="value"
+    aria-label="Team search"
+    placeholder="Try “design” or “release”"
+    :options="workspaceOptions"
+    filterable
+    clearable
+    :filter-method="filterTeams"
+    :filter-max-result="4"
+    :filter-result-sort="sortTeams"
+    :to-body="false"
+  />
+</template>

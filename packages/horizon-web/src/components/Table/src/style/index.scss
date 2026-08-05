@@ -63,8 +63,42 @@
     background: mixins.css-variable('table', 'background', 'body');
 
     @at-root #{mixins.e('table', 'row')}:focus-visible {
+      $focus-ring-color: mixins.css-variable('border-focused');
+
       > td {
-        box-shadow: inset 0 0 0 2px mixins.css-variable('border', 'brand', 'default');
+        box-shadow:
+          inset 0 2px 0 $focus-ring-color,
+          inset 0 -2px 0 $focus-ring-color;
+
+        &:first-child {
+          border-radius: mixins.css-variable('radius-m') 0 0
+            mixins.css-variable('radius-m');
+          box-shadow:
+            inset 2px 0 0 $focus-ring-color,
+            inset 0 2px 0 $focus-ring-color,
+            inset 0 -2px 0 $focus-ring-color;
+        }
+
+        &:last-child {
+          border-radius: 0 mixins.css-variable('radius-m') mixins.css-variable('radius-m') 0;
+          box-shadow:
+            inset -2px 0 0 $focus-ring-color,
+            inset 0 2px 0 $focus-ring-color,
+            inset 0 -2px 0 $focus-ring-color;
+        }
+
+        &:only-child {
+          border-radius: mixins.css-variable('radius-m');
+          box-shadow: inset 0 0 0 2px $focus-ring-color;
+        }
+      }
+
+      @media (forced-colors: active) {
+        > td {
+          box-shadow: none;
+          outline: 2px solid Highlight;
+          outline-offset: -2px;
+        }
       }
     }
 
@@ -205,9 +239,7 @@
     border: 0;
 
     @at-root #{mixins.e('table', 'group-toggle')}:focus-visible {
-      outline: 2px solid mixins.css-variable('border', 'brand', 'default');
-      outline-offset: 2px;
-      border-radius: mixins.css-variable('border-radius-small');
+      @include mixins.focus-ring(mixins.css-variable('radius-s'));
     }
   }
 

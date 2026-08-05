@@ -1,50 +1,81 @@
-<template>
-  <h-button @click="visible = true">Open Drawer</h-button>
-  <h-drawer
-    :visible="visible"
-    title="Title"
-    placement="right"
-    :before-close="onBeforeClose"
-    @ok="onOk"
-    @cancel="onCancel"
-    @close="onClose"
-  >
-    <div v-loading="{ isShow: loading, loadingType: 'dots' }">
-      You can customize modal body text by the current situation. This modal will be closed
-      immediately once you press the OK button.
-    </div>
-  </h-drawer>
-</template>
-
-<script lang="ts" setup>
+<script setup lang="ts">
 import { ref } from 'vue';
-import { $message } from '@aurora/horizon-web';
 
 const visible = ref(false);
-const loading = ref(false);
+const allowClose = ref(false);
+const status = ref('关闭前会检查草稿状态');
 
-const onOk = () => {
-  console.info('ok button clicked!');
-  $message({ type: 'success', message: 'ok button clicked' });
-  // visible.value = false;
+const open = () => {
+  allowClose.value = false;
+  visible.value = true;
+  status.value = '存在未保存更改';
 };
-const onCancel = () => {
-  console.info('cancel button clicked!');
-  $message({ type: 'warning', message: 'cancel button clicked!' });
+
+const beforeClose = () => {
+  const allowed = allowClose.value;
+  status.value = allowed ? '检查通过，抽屉已关闭' : '请先开启“允许关闭”';
+  return Promise.resolve(allowed);
+};
+
+const save = () => {
+  status.value = '发布说明已保存';
   visible.value = false;
-};
-
-const onClose = () => {
-  visible.value = false;
-};
-
-const wait = (n: number) => new Promise(r => setTimeout(r, n));
-const onBeforeClose = async () => {
-  const seed = Math.floor(Math.random() * 100) % 2 === 0;
-  loading.value = true;
-  $message.info({ message: `Drawer will ${seed ? 'close' : 'not close'}`, type: 'info' });
-  await wait(3000);
-  loading.value = false;
-  return seed;
 };
 </script>
+
+<template>
+  <div class="drawer-confirm-demo">
+    <h-button @click="open">编辑发布说明</h-button>
+    <p role="status">{{ status }}</p>
+
+    <h-drawer
+      v-model:visible="visible"
+      title="发布说明"
+      placement="right"
+      :before-close="beforeClose"
+      @ok="save"
+    >
+      <div class="drawer-content">
+        <h-input type="textarea" :rows="4" model-value="完善了组件示例的交互反馈。" />
+        <label>
+          <span>允许关闭</span>
+          <h-switch v-model="allowClose" status />
+        </label>
+      </div>
+    </h-drawer>
+  </div>
+</template>
+
+<style scoped>
+.drawer-confirm-demo,
+.drawer-content {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+}
+
+.drawer-content {
+  width: 100%;
+}
+
+p {
+  margin: 0;
+  color: var(--h-text-secondary);
+  font-size: 13px;
+}
+
+label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--h-text-primary);
+  font-size: 13px;
+}
+
+@media (max-width: 390px) {
+  .drawer-confirm-demo,
+  .drawer-content {
+    gap: 10px;
+  }
+}
+</style>

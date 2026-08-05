@@ -1,80 +1,48 @@
+<script setup lang="ts">
+import { computed, ref } from 'vue';
+
+const limit = 120;
+const value = ref('Traffic has returned to the primary pool.');
+const allowOverflow = ref(true);
+const exceeded = computed(() => value.value.length > limit);
+</script>
+
 <template>
-  <h-switch v-model="disabled" label="禁用" status />
-  <h-form :model="formModel" :rules="rules">
-    <h-form-item label="Input" prop="val1">
-      <h-input v-model="formModel.val1" :disabled="disabled" :maxlength="10" show-limit />
-    </h-form-item>
-    <h-form-item label="Input enable out of exceeded" prop="val2">
+  <section class="input-limit-demo">
+    <h-switch v-model="allowOverflow" label="Allow over limit" status />
+    <label for="limited-message">
+      <span>Subscriber message</span>
       <h-input
-        v-model="formModel.val2"
-        :disabled="disabled"
-        :maxlength="10"
-        show-limit
-        enable-out-of-exceeded
-      />
-    </h-form-item>
-    <h-form-item label="Textarea" prop="val3">
-      <h-input
-        v-model="formModel.val3"
-        :disabled="disabled"
+        id="limited-message"
+        v-model="value"
         type="textarea"
-        :maxlength="100"
-        :rows="3"
+        :maxlength="limit"
+        :enable-out-of-exceeded="allowOverflow"
+        :status="exceeded ? 'error' : undefined"
+        :auto-size="{ minRows: 3, maxRows: 5 }"
+        resize="none"
         show-limit
       />
-    </h-form-item>
-    <h-form-item label="Textarea enable out of exceeded" prop="val4">
-      <h-input
-        v-model="formModel.val4"
-        :disabled="disabled"
-        type="textarea"
-        :maxlength="100"
-        :rows="1"
-        show-limit
-        enable-out-of-exceeded
-      />
-    </h-form-item>
-  </h-form>
+    </label>
+    <small aria-live="polite">{{ exceeded ? 'Over the limit' : 'Within the limit' }}</small>
+  </section>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { HFormRule } from '@aurora/horizon-web';
+<style scoped>
+.input-limit-demo,
+.input-limit-demo label {
+  display: grid;
+  gap: var(--h-spacing-2);
+}
 
-export default defineComponent({
-  setup() {
-    const disabled = ref(false);
-    const formModel = ref({
-      val1: '',
-      val2: '',
-      val3: '',
-      val4: '',
-    });
+.input-limit-demo {
+  gap: var(--h-spacing-3);
+  max-inline-size: 640px;
+}
 
-    const rules = ref<Record<string, HFormRule | HFormRule[]>>({
-      val1: {
-        max: 10,
-        message: 'Please enter less than 10 characters',
-      },
-      val2: {
-        max: 10,
-        message: 'Please enter less than 10 characters',
-      },
-      val3: {
-        max: 100,
-        message: 'Please enter less than 100 characters',
-      },
-      val4: {
-        max: 100,
-        message: 'Please enter less than 100 characters',
-      },
-    });
-
-    return {
-      formModel,
-      rules,
-      disabled,
-    };
-  },
-});
-</script>
+.input-limit-demo span,
+.input-limit-demo small {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+</style>

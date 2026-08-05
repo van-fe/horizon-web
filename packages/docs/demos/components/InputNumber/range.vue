@@ -1,32 +1,37 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const value1 = ref();
-const value2 = ref(0);
-const value3 = ref();
-
-function onChange(val: number) {
-  console.info('change: ', val);
-}
-
-function onUpdate(val: number) {
-  console.info('update: ', val);
-}
+const value = ref(1.5);
 </script>
 
 <template>
-  <h-grid :gap="12">
-    <h-grid-item :span="8">
-      <div class="demo-title">步长默认</div>
-      <h-input-number v-model="value1" :min="5" :max="10" @change="onChange" />
-    </h-grid-item>
-    <h-grid-item :span="8">
-      <div class="demo-title">步长为0.5</div>
-      <h-input-number v-model="value2" :min="5" :max="10" :step="0.5" :precision="1" />
-    </h-grid-item>
-    <h-grid-item :span="8">
-      <div class="demo-title">数值必须是步长的倍数，步长为3</div>
-      <h-input-number v-model="value3" :min="0" :max="10" :step="3" :step-strictly="true" @update:modelValue="onUpdate" @change="onChange" />
-    </h-grid-item>
-  </h-grid>
+  <label class="input-number-range-demo">
+    <span>Session length</span>
+    <h-input-number
+      v-model="value"
+      :min="0.5"
+      :max="8"
+      :step="0.5"
+      :precision="1"
+      step-strictly
+      aria-label="Session length from 0.5 to 8 hours"
+    >
+      <template #suffix>hr</template>
+    </h-input-number>
+    <small aria-live="polite">0.5–8 hours · strict 0.5 steps · {{ value }}</small>
+  </label>
 </template>
+
+<style scoped>
+.input-number-range-demo {
+  display: grid;
+  gap: var(--h-spacing-2);
+  max-inline-size: 420px;
+}
+
+.input-number-range-demo > span,
+.input-number-range-demo > small {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+</style>

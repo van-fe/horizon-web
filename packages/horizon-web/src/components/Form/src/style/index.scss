@@ -1,147 +1,169 @@
 @use '../../../../styles/mixins';
 @use 'spacing';
 
-@include mixins.b('form') {
-  @include mixins.is('position-top') {
-    @include mixins.b('form-item') {
-      display: flex;
-      flex-direction: column;
-    }
-  }
+$helper-icon-spacing: mixins.css-variable(
+  'form',
+  'spacing',
+  'form-item',
+  'helper-icon',
+  'margin-bottom'
+);
 
-  @include mixins.is('position-left') {
-    @include mixins.b('form-item') {
-      display: flex;
-      flex-direction: row;
-
-      @include mixins.e('label') {
-        margin-right: mixins.css-variable('form', 'spacing', 'form-item', 'label', 'position-left', 'margin-right');
-      }
-    }
-  }
-
-  @include mixins.is('justify-left') {
-    @include mixins.b('form-item') {
-      @include mixins.e('label') {
-        justify-content: flex-start;
-      }
-    }
-  }
-
-  @include mixins.is('justify-right') {
-    @include mixins.b('form-item') {
-      @include mixins.e('label') {
-        justify-content: flex-end;
-      }
-    }
-  }
-
-  @include mixins.is('vertical-top') {
-    @include mixins.b('form-item') {
-      @include mixins.e('label') {
-        align-items: flex-start;
-      }
-    }
-  }
-
-  @include mixins.is('vertical-middle') {
-    @include mixins.b('form-item') {
-      @include mixins.e('label') {
-        align-items: center;
-        height: calc(
-          100% -
-            #{mixins.css-variable('form', 'spacing', 'form-item', 'label', 'vertical-middle', 'margin-top')}
-        );
-        margin-bottom: mixins.css-variable('form', 'spacing', 'form-item', 'label', 'vertical-middle', 'margin-bottom');
-      }
-    }
-
-    @include mixins.is('position-left') {
-      @include mixins.b('form-item') {
-        @include mixins.e('label') {
-          align-self: center;
-          margin-top: mixins.css-variable('form', 'spacing', 'form-item', 'label', 'vertical-middle', 'margin-top');
-        }
-      }
-    }
-  }
-
-  @include mixins.m('inline') {
-    display: flex;
-    flex-wrap: wrap;
-
-    @include mixins.b('form-item') {
-      flex-direction: row;
-      margin-right: mixins.css-variable('form', 'spacing', 'form-item', 'label', 'inline', 'margin-right');
-
-      @include mixins.e('label') {
-        align-items: center;
-        margin-right: mixins.css-variable('form', 'spacing', 'form-item', 'label', 'inline', 'margin-right');
-      }
+@mixin responsive-form-grid($size) {
+  @include mixins.b('form') {
+    @include mixins.is('grid') {
+      grid-template-columns: repeat(var(--h-grid-cols-#{$size}), minmax(0, 1fr));
+      gap: var(--h-grid-row-gap-#{$size}) var(--h-grid-column-gap-#{$size});
     }
   }
 
   @include mixins.b('form-item') {
-    @include mixins.is('vertical-top') {
-      @include mixins.e('label') {
-        align-items: flex-start;
-        margin-top: mixins.css-variable('form', 'spacing', 'form-item', 'label', 'vertical-top', 'margin-top');
-      }
-    }
-
-    @include mixins.is('vertical-middle') {
-      @include mixins.e('label') {
-        align-items: center;
-      }
-    }
-
-    @include mixins.is('justify-left') {
-      @include mixins.e('label') {
-        justify-content: flex-start;
-      }
-    }
-
-    @include mixins.is('justify-right') {
-      @include mixins.e('label') {
-        justify-content: flex-end;
-      }
+    @include mixins.is('grid-item') {
+      display: var(--h-grid-item-display-#{$size});
+      grid-column: span var(--h-grid-item-span-#{$size}) / span var(--h-grid-item-span-#{$size});
+      margin-inline-start: var(--h-grid-item-offset-#{$size});
     }
   }
+}
 
-  @include mixins.has('helper') {
-    @include mixins.be('form-item', 'content', false) {
-      padding-right: calc(
-        16px +
-          #{mixins.css-variable('form', 'spacing', 'form-item', 'helper-icon', 'margin-bottom')} * 2
-      );
-    }
+@include mixins.b('form') {
+  @include mixins.is('grid') {
+    box-sizing: border-box;
+    display: grid;
+    width: 100%;
+  }
+}
+
+@include mixins.b('form-item') {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  min-width: 0;
+
+  @include mixins.is('grid-item') {
+    margin-bottom: 0;
   }
 
   @include mixins.m('large') {
-    @include mixins.be('form-item', 'label', false) {
+    @include mixins.e('label') {
       font-size: mixins.css-variable('form', 'font-size', 'form-item', 'label', 'large');
     }
   }
 
   @include mixins.m('medium') {
-    @include mixins.be('form-item', 'label', false) {
+    @include mixins.e('label') {
       font-size: mixins.css-variable('form', 'font-size', 'form-item', 'label', 'medium');
     }
   }
 
   @include mixins.m('small') {
-    @include mixins.be('form-item', 'label', false) {
+    @include mixins.e('label') {
       font-size: mixins.css-variable('form', 'font-size', 'form-item', 'label', 'small');
     }
   }
-}
 
-@include mixins.b('form-item') {
-  @include mixins.e('label') {
+  @include mixins.is('position-top') {
+    flex-direction: column;
+  }
+
+  @include mixins.is('position-left') {
+    flex-direction: row;
+
+    @include mixins.e('label') {
+      margin-right: mixins.css-variable(
+        'form',
+        'spacing',
+        'form-item',
+        'label',
+        'position-left',
+        'margin-right'
+      );
+      margin-bottom: 0;
+    }
+  }
+
+  @include mixins.is('inline') {
     display: inline-flex;
+    flex-direction: row;
+    width: auto;
+    margin-right: mixins.css-variable('form', 'spacing', 'form-item', 'inline', 'margin-right');
+    vertical-align: middle;
+
+    @include mixins.e('label') {
+      align-items: center;
+      margin-right: mixins.css-variable(
+        'form',
+        'spacing',
+        'form-item',
+        'label',
+        'inline',
+        'margin-right'
+      );
+      margin-bottom: 0;
+    }
+  }
+
+  @include mixins.is('vertical-top') {
+    @include mixins.e('label') {
+      align-items: flex-start;
+      margin-top: mixins.css-variable(
+        'form',
+        'spacing',
+        'form-item',
+        'label',
+        'vertical-top',
+        'margin-top'
+      );
+    }
+  }
+
+  @include mixins.is('vertical-middle') {
+    @include mixins.e('label') {
+      align-items: center;
+    }
+
+    @include mixins.is('position-left') {
+      @include mixins.e('label') {
+        align-self: center;
+        margin-top: mixins.css-variable(
+          'form',
+          'spacing',
+          'form-item',
+          'label',
+          'vertical-middle',
+          'margin-top'
+        );
+        margin-bottom: mixins.css-variable(
+          'form',
+          'spacing',
+          'form-item',
+          'label',
+          'vertical-middle',
+          'margin-bottom'
+        );
+      }
+    }
+  }
+
+  @include mixins.is('justify-left') {
+    @include mixins.e('label') {
+      justify-content: flex-start;
+    }
+  }
+
+  @include mixins.is('justify-right') {
+    @include mixins.e('label') {
+      justify-content: flex-end;
+    }
+  }
+
+  @include mixins.e('label') {
+    box-sizing: border-box;
+    display: inline-flex;
+    flex: 0 0 auto;
     margin-bottom: mixins.css-variable('form', 'spacing', 'form-item', 'label', 'margin-bottom');
-    color: mixins.css-variable('form', 'color', 'form-item', 'label');
     line-height: mixins.css-variable('form', 'line-height', 'form-item', 'label');
+    color: mixins.css-variable('form', 'color', 'form-item', 'label');
   }
 
   @include mixins.e('label-append') {
@@ -154,16 +176,32 @@
 
     @include mixins.is('required') {
       @include mixins.is('required-mark-left') {
+        /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
         &::before {
-          margin-right: mixins.css-variable('form', 'spacing', 'form-item', 'text', 'required-mark-left', 'margin-right');
+          margin-right: mixins.css-variable(
+            'form',
+            'spacing',
+            'form-item',
+            'text',
+            'required-mark-left',
+            'margin-right'
+          );
           color: mixins.css-variable('form', 'color', 'form-item', 'text', 'required-mark');
           content: '*';
         }
       }
 
       @include mixins.is('required-mark-right') {
+        /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
         &::after {
-          margin-left: mixins.css-variable('form', 'spacing', 'form-item', 'text', 'required-mark-right', 'margin-right');
+          margin-left: mixins.css-variable(
+            'form',
+            'spacing',
+            'form-item',
+            'text',
+            'required-mark-right',
+            'margin-right'
+          );
           color: mixins.css-variable('form', 'color', 'form-item', 'text', 'required-mark');
           content: '*';
         }
@@ -177,11 +215,16 @@
 
     @include mixins.e('content') {
       position: relative;
+
+      @include mixins.has('helper') {
+        padding-right: calc(16px + #{$helper-icon-spacing} * 2);
+      }
     }
   }
 
   @include mixins.e('helper') {
     @include mixins.m('reference') {
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
       &-right {
         position: absolute;
         top: 0;
@@ -193,6 +236,7 @@
         height: 100%;
       }
 
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
       &-after-label {
         display: flex;
         align-items: center;
@@ -201,6 +245,7 @@
         margin-left: mixins.css-variable('form', 'spacing', 'helper-label', 'margin-x');
       }
 
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
       &-before-label {
         display: flex;
         align-items: center;
@@ -211,14 +256,49 @@
     }
 
     @include mixins.m('title') {
-      font-weight: mixins.css-variable('form', 'font-weight', 'form-item', 'label', 'content', 'popover-title');
-      font-size: mixins.css-variable('form', 'font-size', 'form-item', 'label', 'content', 'popover-title');
-      line-height: mixins.css-variable('form', 'line-height', 'form-item', 'label', 'content', 'popover-title');
+      font-size: mixins.css-variable(
+        'form',
+        'font-size',
+        'form-item',
+        'label',
+        'content',
+        'popover-title'
+      );
+      font-weight: mixins.css-variable(
+        'form',
+        'font-weight',
+        'form-item',
+        'label',
+        'content',
+        'popover-title'
+      );
+      line-height: mixins.css-variable(
+        'form',
+        'line-height',
+        'form-item',
+        'label',
+        'content',
+        'popover-title'
+      );
     }
 
     @include mixins.m('content') {
-      font-size: mixins.css-variable('form', 'font-size', 'form-item', 'label', 'content', 'popover-content');
-      line-height: mixins.css-variable('form', 'line-height', 'form-item', 'label', 'content', 'popover-content');
+      font-size: mixins.css-variable(
+        'form',
+        'font-size',
+        'form-item',
+        'label',
+        'content',
+        'popover-content'
+      );
+      line-height: mixins.css-variable(
+        'form',
+        'line-height',
+        'form-item',
+        'label',
+        'content',
+        'popover-content'
+      );
     }
   }
 
@@ -235,4 +315,28 @@
       color: mixins.css-variable('form', 'color', 'form-item', 'error');
     }
   }
+}
+
+@media screen and (width <= 480px) {
+  @include responsive-form-grid('xs');
+}
+
+@media screen and (width >= 480px) and (width <= 1023px) {
+  @include responsive-form-grid('sm');
+}
+
+@media screen and (width >= 1024px) and (width <= 1439px) {
+  @include responsive-form-grid('md');
+}
+
+@media screen and (width >= 1440px) and (width <= 1919px) {
+  @include responsive-form-grid('lg');
+}
+
+@media screen and (width >= 1920px) and (width <= 2879px) {
+  @include responsive-form-grid('xl');
+}
+
+@media screen and (width >= 2880px) {
+  @include responsive-form-grid('xxl');
 }

@@ -1,5 +1,15 @@
 import type { ComponentPublicInstance } from 'vue';
-import { ref, inject, computed, defineComponent, provide, toRefs, watch, Fragment } from 'vue';
+import {
+  ref,
+  inject,
+  computed,
+  defineComponent,
+  provide,
+  toRefs,
+  watch,
+  Fragment,
+  onBeforeUnmount,
+} from 'vue';
 import { ComponentClassBlock, cls, useNamespace, isNil } from '@aurora/utils';
 import type { HorizonWebSetupContext, Data } from '@aurora/utils';
 import { useUploadProps } from './composables/useProps';
@@ -43,6 +53,7 @@ import UploadGalleryMixedList from '~/components/Upload/src/components/UploadGal
 export default defineComponent({
   name: `${useNamespace()}Upload`,
   desc: '通过点击或拖拽，将信息（文件、图片、视频等）上传到远程服务器上的过程',
+  descLocales: { en: "Upload provides file selection, validation, list management, and progress state. These demos use local simulated requests and never send files to an external service." },
   props: useUploadProps,
   emits: useUploadEmits,
   slots: useUploadSlots,
@@ -70,9 +81,7 @@ export default defineComponent({
 
     const canViewerFiles = computed(() =>
       Array.from(uploadFileHelper.fileList.value.values())
-        .filter(file =>
-          [HUploadFileTypeEnum.Image, HUploadFileTypeEnum.Video].includes(file.type),
-        )
+        .filter(file => [HUploadFileTypeEnum.Image, HUploadFileTypeEnum.Video].includes(file.type))
         .filter(file => propsRef.beforeViewerPreview?.value?.(file) ?? true),
     );
 
@@ -215,6 +224,14 @@ export default defineComponent({
         immediate: true,
       },
     );
+
+    onBeforeUnmount(() => {
+      if (props.useBackground) {
+        uploadFileHelper.detachForBackgroundUpload();
+      } else {
+        uploadFileHelper.dispose();
+      }
+    });
 
     expose({
       async upload(files?: HUploadRawFileType[]) {

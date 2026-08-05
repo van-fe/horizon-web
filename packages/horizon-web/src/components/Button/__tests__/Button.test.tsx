@@ -206,6 +206,142 @@ describe('Button.tsx', () => {
       expect(element.element.tagName).toBe('DIV');
     });
 
+    test.each([
+      {
+        name: 'default',
+        render: () => <HButton color="#476582">OK</HButton>,
+        variables: [
+          '--h-button-color-primary',
+          '--h-button-background-primary',
+          '--h-button-border-color-primary',
+          '--h-button-background-primary-hover',
+          '--h-button-background-primary-press',
+          '--h-button-background-primary-disabled',
+          '--h-button-background-primary-activated',
+        ],
+      },
+      {
+        name: 'plain',
+        render: () => (
+          <HButton color="#476582" plain>
+            OK
+          </HButton>
+        ),
+        variables: [
+          '--h-button-color-primary-plain',
+          '--h-button-background-primary-plain',
+          '--h-button-border-color-primary-plain',
+        ],
+      },
+      {
+        name: 'text',
+        render: () => (
+          <HButton color="#476582" text>
+            OK
+          </HButton>
+        ),
+        variables: ['--h-button-color-primary-text'],
+      },
+      {
+        name: 'link',
+        render: () => (
+          <HButton color="#476582" link>
+            OK
+          </HButton>
+        ),
+        variables: ['--h-button-color-primary-link'],
+      },
+      {
+        name: 'ghost',
+        render: () => (
+          <HButton color="#476582" plain ghost>
+            OK
+          </HButton>
+        ),
+        variables: [
+          '--h-button-color-primary-plain-ghost',
+          '--h-button-border-color-primary-plain-ghost',
+        ],
+      },
+      {
+        name: 'normal',
+        render: () => (
+          <HButton color="#476582" type="normal">
+            OK
+          </HButton>
+        ),
+        variables: [
+          '--h-button-color-normal',
+          '--h-button-background-normal',
+          '--h-button-border-color-normal',
+        ],
+      },
+      {
+        name: 'danger',
+        render: () => (
+          <HButton color="#476582" type="danger">
+            OK
+          </HButton>
+        ),
+        variables: [
+          '--h-button-color-danger',
+          '--h-button-background-danger',
+          '--h-button-border-color-danger',
+        ],
+      },
+    ])('color uses current CSS variables for $name buttons', ({ render, variables }) => {
+      const wrapper = mount(render);
+      const style = wrapper.findComponent(HButton).attributes('style');
+
+      variables.forEach(variable => expect(style).toContain(`${variable}:`));
+      expect(style).not.toMatch(/--h-button-[^:;]*--/);
+      expect(style).not.toContain('--h-button-bg');
+    });
+
+    test.each([
+      {
+        name: 'plain over link and text',
+        render: () => (
+          <HButton color="#476582" plain text link>
+            OK
+          </HButton>
+        ),
+        included: '--h-button-color-primary-plain',
+        excluded: ['--h-button-color-primary-text', '--h-button-color-primary-link'],
+      },
+      {
+        name: 'link over text',
+        render: () => (
+          <HButton color="#476582" text link>
+            OK
+          </HButton>
+        ),
+        included: '--h-button-color-primary-link',
+        excluded: ['--h-button-color-primary-text'],
+      },
+    ])('color follows rendered variant precedence for $name', ({ render, included, excluded }) => {
+      const style = mount(render).findComponent(HButton).attributes('style');
+
+      expect(style).toContain(`${included}:`);
+      excluded.forEach(variable => expect(style).not.toContain(`${variable}:`));
+    });
+
+    test('color supports reactive built-in and literal values and ignores invalid values', async () => {
+      const color = ref('not-a-color');
+      const wrapper = mount(() => <HButton color={color.value}>OK</HButton>);
+      const element = wrapper.findComponent(HButton);
+
+      expect(element.attributes('style')).toBeUndefined();
+
+      color.value = 'brand';
+      await nextTick();
+      expect(element.attributes('style')).toMatch(/--h-button-background-primary:\s*#00b3be/i);
+
+      color.value = '#476582';
+      await nextTick();
+      expect(element.attributes('style')).toMatch(/--h-button-background-primary:\s*#476582/i);
+    });
+
     test('debounceFn', async () => {
       const onClickCb = vi.fn();
 

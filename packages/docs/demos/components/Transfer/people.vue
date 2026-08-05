@@ -1,112 +1,148 @@
 <template>
-  <h-transfer
-    v-model="dataModel"
-    :data="filterModel"
-    :filterable="handleSearch"
-    :props="{ label: 'name' }"
-    :titles="['']"
-    style="width: 600px"
-  >
-    <template #rightHeader>
-      <div class="flex flex-1 align-center justify-space-between">
-        <div>{{ `已选: ${dataModel.length} 人` }}</div>
-        <h-button v-show="!!dataModel.length" size="medium" :text="true" @click="handleClear">
-          清除
-        </h-button>
-      </div>
-    </template>
-    <template #item="{ item }">
-      <div class="flex align-center">
-        <h-avatar size="small" :src="item.avatar" />
-        <div class="ml-2 flex-1 flex flex-column overflow-hidden">
-          <div style="text-overflow: ellipsis; overflow: hidden">{{ item.name }}</div>
-          <div
-            v-tooltip.overflow="item.department"
-            style="text-overflow: ellipsis; overflow: hidden; color: #929398"
-          >
-            {{ item.department }}
-          </div>
-        </div>
-      </div>
-    </template>
-  </h-transfer>
+  <section class="transfer-people-demo">
+    <h-transfer
+      v-model="selectedKeys"
+      class="transfer-people-demo__transfer"
+      :data="people"
+      :filterable="filterPerson"
+      :props="{ label: 'name' }"
+      :titles="['Directory', 'Review group']"
+      placeholder="Search name or team"
+    >
+      <template #item="{ item }">
+        <span class="transfer-people-demo__person">
+          <h-avatar size="small" :src="item.avatar" />
+          <span class="transfer-people-demo__copy">
+            <strong>{{ item.name }}</strong>
+            <span>{{ item.team }}</span>
+          </span>
+        </span>
+      </template>
+      <template #rightHeader>
+        <span class="transfer-people-demo__right-summary">
+          <span>{{ selectedKeys.length }} reviewers</span>
+          <h-button v-if="selectedKeys.length" link size="small" @click="selectedKeys = []">
+            Clear
+          </h-button>
+        </span>
+      </template>
+    </h-transfer>
+    <p class="transfer-people-demo__status" aria-live="polite">
+      {{ coverageStatus }}
+    </p>
+  </section>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watchEffect } from 'vue';
-const originData = [
+import { computed, ref } from 'vue';
+
+interface Person {
+  key: string;
+  name: string;
+  team: string;
+  avatar: string;
+  disabled?: boolean;
+}
+
+const people: Person[] = [
   {
-    key: 0,
-    name: 'Arooklyn Simmons 王磊',
+    key: 'anna',
+    name: 'Anna Silva',
+    team: 'Product design',
     avatar: '/demo-assets/avatar-indigo.svg',
-    department:
-      'Product Design & Development-Digital Development-Web Application Development Department',
   },
   {
-    key: 1,
-    name: 'Brooklyn Simmons 王磊2',
-    avatar: '/demo-assets/avatar-indigo.svg',
-    department:
-      'Product Design & Development-Digital Development-Web Application Development Department',
+    key: 'eli',
+    name: 'Eli Brooks',
+    team: 'Accessibility engineering',
+    avatar: '/demo-assets/avatar-cyan.svg',
   },
   {
-    key: 2,
-    name: 'Crooklyn Simmons 王磊3',
+    key: 'hana',
+    name: 'Hana Ito',
+    team: 'Localization',
     avatar: '/demo-assets/avatar-indigo.svg',
-    department:
-      'Product Design & Development-Digital Development-Web Application Development Department',
   },
   {
-    key: 3,
-    name: 'Drooklyn Simmons 王磊4',
-    avatar: '/demo-assets/avatar-indigo.svg',
-    department:
-      'Product Design & Development-Digital Development-Web Application Development Department',
+    key: 'marcus',
+    name: 'Marcus Green',
+    team: 'Customer support',
+    avatar: '/demo-assets/avatar-cyan.svg',
   },
   {
-    key: 4,
-    name: 'Erooklyn Simmons 王磊5',
+    key: 'nora',
+    name: 'Nora Patel',
+    team: 'Research · unavailable this week',
     avatar: '/demo-assets/avatar-indigo.svg',
-    department:
-      'Product Design & Development-Digital Development-Web Application Development Department',
+    disabled: true,
   },
 ];
-const data = ref(originData);
-const dataModel = ref<number[]>([]);
-const searchInput = ref('');
 
-const checkedAll = ref(false);
-
-const handleSearch = (value: string, item: any) => {
-  return item.name.toLowerCase().includes(value.toLowerCase());
+const selectedKeys = ref(['anna', 'eli']);
+const filterPerson = (query: string, person: Person) => {
+  const normalizedQuery = query.trim().toLowerCase();
+  return `${person.name} ${person.team}`.toLowerCase().includes(normalizedQuery);
 };
-const filterModel = computed(() => {
-  return data.value.filter(item => {
-    return handleSearch(searchInput.value, item);
-  });
+const coverageStatus = computed(() => {
+  const teams = people
+    .filter(person => selectedKeys.value.includes(person.key))
+    .map(person => person.team.split(' · ')[0]);
+  return teams.length ? `Coverage: ${teams.join(' · ')}` : 'Select at least one review discipline.';
 });
-const indeterminate = computed(() => {
-  return dataModel.value.length > 0 && dataModel.value.length < filterModel.value.length;
-});
-watchEffect(() => {
-  checkedAll.value = dataModel.value.length === filterModel.value.length;
-});
-const handleCheckedAll = (isCheckedAll: any) => {
-  if (isCheckedAll) {
-    dataModel.value = filterModel.value.map(item => item.key);
-  } else {
-    dataModel.value = [];
-  }
-};
-const handleClear = () => {
-  dataModel.value = [];
-};
 </script>
-<style>
-.all-check {
+
+<style scoped>
+.transfer-people-demo {
+  display: grid;
+  gap: var(--h-spacing-4);
+}
+
+.transfer-people-demo__status {
+  margin: 0;
+  color: var(--h-text-secondary);
+}
+
+.transfer-people-demo__transfer {
+  width: 100%;
+}
+
+.transfer-people-demo__person,
+.transfer-people-demo__right-summary {
   display: flex;
-  padding: 0 19px;
-  margin-top: 24px;
-  margin-bottom: 8px;
+  align-items: center;
+  min-width: 0;
+}
+
+.transfer-people-demo__person {
+  gap: var(--h-spacing-2);
+}
+
+.transfer-people-demo__copy {
+  display: grid;
+  min-width: 0;
+}
+
+.transfer-people-demo__copy strong,
+.transfer-people-demo__copy span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.transfer-people-demo__copy span {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+
+.transfer-people-demo__right-summary {
+  justify-content: space-between;
+  width: 100%;
+  gap: var(--h-spacing-2);
+}
+
+@media (max-width: 520px) {
+  .transfer-people-demo__transfer {
+    flex-direction: column;
+  }
 }
 </style>

@@ -2,7 +2,6 @@
 :::demo components/Hover/hover.vue :::
 
 ## Disabled
-Set disabled to true to disable the hover component
 :::demo components/Hover/disabled.vue :::
 
 ## Delayed Appearance and Delayed Hide

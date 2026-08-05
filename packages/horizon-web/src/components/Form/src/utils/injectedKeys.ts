@@ -25,6 +25,8 @@ export const HFormInjectedKey = Symbol.for('form') as InjectionKey<
     unbindValidate: (uid?: number) => void;
     autoLabelWidth: string | number;
     setAutoLabelWidth: (width: number) => void;
+    resolvedSize: 'medium' | 'large' | 'small';
+    gridEnabled: boolean;
     emit: SetupContext<FormEmits>['emit'];
   }
 >;

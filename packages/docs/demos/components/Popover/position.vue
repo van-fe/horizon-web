@@ -1,231 +1,71 @@
+<script setup lang="ts">
+const placements = [
+  null,
+  ['top-start', '上左'],
+  ['top', '上'],
+  ['top-end', '上右'],
+  null,
+  ['left-start', '左上'],
+  null,
+  null,
+  null,
+  ['right-start', '右上'],
+  ['left', '左'],
+  null,
+  null,
+  null,
+  ['right', '右'],
+  ['left-end', '左下'],
+  null,
+  null,
+  null,
+  ['right-end', '右下'],
+  null,
+  ['bottom-start', '下左'],
+  ['bottom', '下'],
+  ['bottom-end', '下右'],
+  null,
+  null,
+  ['auto-start', '自动起始'],
+  ['auto', '自动'],
+  ['auto-end', '自动尾部'],
+  null,
+] as const;
+</script>
+
 <template>
-  <div class="block-popover">
-    <!--top-x-->
-    <div class="item"></div>
-    <div class="item">
-      <h-popover trigger="hover" placement="top-start" :flip="false" popper-class="position_popper">
-        <template #reference>
-          <h-button :plain="true" class="btn">上左</h-button>
-        </template>
-        <template #popper>
-          <h-pop-content>
-            top-start
-          </h-pop-content>
-        </template>
-      </h-popover>
-    </div>
-    <div class="item">
-      <h-popover trigger="hover" placement="top" :flip="false" popper-class="position_popper">
-        <template #reference>
-          <h-button :plain="true" class="btn">上</h-button>
-        </template>
-        <template #popper>
-          <h-pop-content>
-            top
-          </h-pop-content>
-        </template>
-      </h-popover>
-    </div>
-    <div class="item">
-      <h-popover trigger="hover" placement="top-end" :flip="false" popper-class="position_popper">
-        <template #reference>
-          <h-button :plain="true" class="btn">上右</h-button>
-        </template>
-        <template #popper>
-          <h-pop-content>
-            top-end
-          </h-pop-content>
-        </template>
-      </h-popover>
-    </div>
-    <div class="item"></div>
-    <!--x-start-->
-    <div class="item">
-      <h-popover trigger="hover" placement="left-start" :flip="false" popper-class="position_popper">
-        <template #reference>
-          <h-button :plain="true" class="btn">左上</h-button>
-        </template>
-        <template #popper>
-          <h-pop-content>
-            left-start
-          </h-pop-content>
-        </template>
-      </h-popover>
-    </div>
-    <div class="item"></div>
-    <div class="item"></div>
-    <div class="item"></div>
-    <div class="item">
-      <h-popover trigger="hover" placement="right-start" :flip="false" popper-class="position_popper">
-        <template #reference>
-          <h-button :plain="true" class="btn">右上</h-button>
-        </template>
-        <template #popper>
-          <h-pop-content>
-            right-start
-          </h-pop-content>
-        </template>
-      </h-popover>
-    </div>
-    <!--left / right-->
-    <div class="item">
-      <h-popover trigger="hover" placement="left" :flip="false" popper-class="position_popper">
-        <template #reference>
-          <h-button :plain="true" class="btn">左</h-button>
-        </template>
-        <template #popper>
-          <h-pop-content>
-            left
-          </h-pop-content>
-        </template>
-      </h-popover>
-    </div>
-    <div class="item"></div>
-    <div class="item"></div>
-    <div class="item"></div>
-    <div class="item">
-      <h-popover trigger="hover" placement="right" :flip="false" popper-class="position_popper">
-        <template #reference>
-          <h-button :plain="true" class="btn">右</h-button>
-        </template>
-        <template #popper>
-          <h-pop-content>
-            right
-          </h-pop-content>
-        </template>
-      </h-popover>
-    </div>
-    <!--x-end-->
-    <div class="item">
-      <h-popover trigger="hover" placement="left-end" :flip="false" popper-class="position_popper">
-        <template #reference>
-          <h-button :plain="true" class="btn">左下</h-button>
-        </template>
-        <template #popper>
-          <h-pop-content>
-            left-end
-          </h-pop-content>
-        </template>
-      </h-popover>
-    </div>
-    <div class="item"></div>
-    <div class="item"></div>
-    <div class="item"></div>
-    <div class="item">
-      <h-popover trigger="hover" placement="right-end" :flip="false" popper-class="position_popper">
-        <template #reference>
-          <h-button :plain="true" class="btn">右下</h-button>
-        </template>
-        <template #popper>
-          <h-pop-content>
-            right end
-          </h-pop-content>
-        </template>
-      </h-popover>
-    </div>
-    <!--bottom-x-->
-    <div class="item"></div>
-    <div class="item">
+  <div class="demo-block">
+    <div v-for="(placement, index) in placements" :key="index" class="item">
       <h-popover
+        v-if="placement"
         trigger="hover"
-        placement="bottom-start"
-        :flip="false"
-        popper-class="position_popper"
+        :placement="placement[0]"
+        :flip="placement[0].startsWith('auto')"
       >
         <template #reference>
-          <h-button :plain="true" class="btn">下左</h-button>
+          <h-button>{{ placement[1] }}</h-button>
         </template>
         <template #popper>
-          <h-pop-content>
-            bottom-start
-          </h-pop-content>
+          <h-pop-content>{{ placement[0] }}</h-pop-content>
         </template>
       </h-popover>
     </div>
-    <div class="item">
-      <h-popover trigger="hover" placement="bottom" :flip="false" popper-class="position_popper">
-        <template #reference>
-          <h-button :plain="true" class="btn">下</h-button>
-        </template>
-        <template #popper>
-          <h-pop-content>
-            bottom
-          </h-pop-content>
-        </template>
-      </h-popover>
-    </div>
-    <div class="item">
-      <h-popover trigger="hover" placement="bottom-end" :flip="false" popper-class="position_popper">
-        <template #reference>
-          <h-button :plain="true" class="btn">下右</h-button>
-        </template>
-        <template #popper>
-          <h-pop-content>
-            bottom-end
-          </h-pop-content>
-        </template>
-      </h-popover>
-    </div>
-    <div class="item"></div>
-    <!-- auto -->
-    <div class="item"></div>
-    <div class="item">
-      <h-popover trigger="hover" placement="auto-start" popper-class="position_popper">
-        <template #reference>
-          <h-button :plain="true" class="btn">自适应 起始</h-button>
-        </template>
-        <template #popper>
-          <h-pop-content>
-            auto-start
-          </h-pop-content>
-        </template>
-      </h-popover>
-    </div>
-    <div class="item">
-        <h-popover trigger="hover" placement="auto" popper-class="position_popper">
-          <template #reference>
-            <h-button :plain="true" class="btn">自适应</h-button>
-          </template>
-          <template #popper>
-            <h-pop-content>
-              auto
-            </h-pop-content>
-          </template>
-        </h-popover>
-    </div>
-    <div class="item">
-      <h-popover trigger="hover" placement="auto-end" popper-class="position_popper">
-        <template #reference>
-          <h-button :plain="true" class="btn">自适应 尾部</h-button>
-        </template>
-        <template #popper>
-          <h-pop-content>
-            auto-end
-          </h-pop-content>
-        </template>
-      </h-popover>
-    </div>
-    <div class="item"></div>
   </div>
 </template>
 
-<script setup lang="ts">
-</script>
-
-<style>
-.block-popover {
-  width: 430px;
+<style scoped>
+.demo-block {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(6, 1fr);
+  grid-template: repeat(6, 1fr) / repeat(5, 1fr);
   grid-gap: 20px;
+  width: 430px;
 }
 
-.block-popover .item {
+.demo-block .item {
   width: 80px;
 }
 
-.block-popover .item button {
+.demo-block .item button {
   width: 100%;
 }
 </style>

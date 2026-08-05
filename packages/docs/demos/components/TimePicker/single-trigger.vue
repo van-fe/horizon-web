@@ -1,17 +1,25 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <h-time-picker v-model="value" is-range single-trigger />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <h-time-picker v-model="value2" is-range single-trigger placeholder="Do Not Link Panels" :is-link-panels="false" />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const value = ref();
-const value2 = ref();
+const linkPanels = ref(true);
+const value = ref<[string, string]>(['09:30', '11:00']);
 </script>
+
+<template>
+  <section class="docs-demo">
+    <div class="docs-demo__controls">
+      <h-switch v-model="linkPanels" label="Link panels" />
+    </div>
+
+    <h-time-picker
+      v-model="value"
+      value-format="HH:mm"
+      is-range
+      single-trigger
+      :is-link-panels="linkPanels"
+      :clearable="false"
+      :to-body="false"
+    />
+    <p class="docs-demo__status">{{ value.join(' → ') }}</p>
+  </section>
+</template>

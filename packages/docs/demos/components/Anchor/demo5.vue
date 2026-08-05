@@ -1,25 +1,53 @@
 <script setup lang="ts">
-const scrollContainer = top?.document.querySelector('main.VPDoc');
+import { ref } from 'vue';
+
+const showLine = ref(true);
+const showHighlightLine = ref(true);
 </script>
 
 <template>
-  <div class="wrapper">
-    <h-anchor :scroll-container="scrollContainer" :show-line="false" link-target="_top">
-      <h-anchor-link href="#设置尺寸" title="设置尺寸" />
-      <h-anchor-link href="#是否改变hash" title="是否改变hash" />
-      <h-anchor-link href="#自定义滚动容器" title="自定义滚动容器" />
-      <h-anchor-link href="#设置偏移量" title="设置偏移量" />
-      <h-anchor-link href="#是否开启折叠模式" title="是否开启折叠模式" />
-      <h-anchor-link href="#是否展示侧边线" title="是否展示侧边线" />
-      <h-anchor-link href="#监听自定义事件" title="监听自定义事件" />
-    </h-anchor>
+  <div class="anchor-line-demo">
+    <div class="anchor-demo-settings-inline anchor-line-demo__settings">
+      <label>
+        <span>Guide line</span>
+        <h-switch v-model="showLine" aria-label="Show guide line" />
+      </label>
+      <label>
+        <span>Active line</span>
+        <h-switch v-model="showHighlightLine" :disabled="!showLine" aria-label="Show active line" />
+      </label>
+    </div>
+
+    <div class="anchor-line-demo__layout">
+      <div class="anchor-line-demo__nav">
+        <h-anchor
+          scroll-container="#anchor-line-scroll"
+          :change-hash="false"
+          :show-line="showLine"
+          :show-highlight-line="showHighlightLine"
+        >
+          <h-anchor-link href="#anchor-line-intake" title="Intake" />
+          <h-anchor-link href="#anchor-line-review" title="Review" />
+          <h-anchor-link href="#anchor-line-approval" title="Approval" />
+        </h-anchor>
+      </div>
+
+      <div id="anchor-line-scroll" class="anchor-line-demo__scroll">
+        <div id="anchor-line-intake" class="anchor-line-demo__target">
+          <h4>Intake</h4>
+          <p>Capture the request and owner.</p>
+        </div>
+        <div id="anchor-line-review" class="anchor-line-demo__target">
+          <h4>Review</h4>
+          <p>Resolve questions and validate the plan.</p>
+        </div>
+        <div id="anchor-line-approval" class="anchor-line-demo__target">
+          <h4>Approval</h4>
+          <p>Record the decision and follow-up.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
-<style scoped>
-.wrapper {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-</style>
+<style scoped src="./demo.css"></style>

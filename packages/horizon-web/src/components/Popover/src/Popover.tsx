@@ -137,6 +137,10 @@ export default defineComponent({
       popperIns = null;
     }
 
+    function updatePosition() {
+      void popperIns?.update();
+    }
+
     const clearHoverShowTimer = () => {
       if (hoverShowTimer !== null) {
         window.clearTimeout(hoverShowTimer);
@@ -277,6 +281,7 @@ export default defineComponent({
 
     expose({
       switchVisible: onManualControlVisible,
+      updatePosition,
       referenceDom: reference,
       popoverDom: popper,
     });

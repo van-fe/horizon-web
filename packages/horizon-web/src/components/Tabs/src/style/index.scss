@@ -31,6 +31,11 @@
     color: mixins.css-variable('tabs', 'color', 'tab');
     cursor: pointer;
 
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+    &:focus-visible {
+      @include mixins.focus-ring-inset(mixins.css-variable('radius-m'));
+    }
+
     $transition: all mixins.css-variable('tabs', 'transition', 'duration')
       mixins.css-variable('tabs', 'transition', 'timing-function');
 

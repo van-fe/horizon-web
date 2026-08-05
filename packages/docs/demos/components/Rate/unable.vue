@@ -1,20 +1,37 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const score = ref(4);
+</script>
+
 <template>
-  <div class="">
-    只读
-    <h-rate v-model="currentScore" readonly />
-    禁用
-    <h-rate v-model="currentScore" disabled />
+  <div class="rate-options">
+    <div>
+      <span>只读</span>
+      <h-rate v-model="score" readonly />
+    </div>
+    <div>
+      <span>禁用</span>
+      <h-rate v-model="score" disabled />
+    </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
+<style scoped>
+.rate-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--h-spacing-6);
+}
 
-export default defineComponent({
-  setup() {
-    return {
-      currentScore: ref(3),
-    };
-  },
-});
-</script>
+.rate-options > div {
+  display: grid;
+  justify-items: start;
+  gap: var(--h-spacing-2);
+}
+
+.rate-options span {
+  color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
+}
+</style>

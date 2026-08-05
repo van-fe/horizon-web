@@ -6,8 +6,8 @@ $values: (
     medium: #{function.css-variable('text-base')},
     large: #{function.css-variable('text-lg')},
     heading: (
-      '1': #{function.css-variable('font-size-4')},
-      '2': #{function.css-variable('font-size-6')},
+      '1': #{function.css-variable('text-3xl')},
+      '2': #{function.css-variable('text-2xl')},
       '3': #{function.css-variable('text-xl')},
       '4': #{function.css-variable('text-lg')},
       '5': #{function.css-variable('text-base')},

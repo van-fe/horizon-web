@@ -1,25 +1,39 @@
+Table 适合展示需要比较、排序、筛选或批量操作的结构化数据。建议为动态数据设置稳定的 `row-key`，在窄屏中保留表格自身的横向滚动，并为加载、空数据、选择和远程查询提供明确状态反馈。
+
 ## 基本用法
-与传统 `vue` 表格组件一致，给 `h-table` 传入 `data` 即表格数据；给 `h-table-column` 传入 `title` 作为标题，`field` 作为表格数据中每行摘取的数据
+
+通过 `data` 传入行数据；`h-table-column` 使用 `title` 定义表头，并通过 `field` 读取每行字段。单元格插槽可在需要时补充状态与操作。
+
 :::demo components/Table/basic.vue :::
 
 ## 尺寸
-组件支持 `mini` `small` `medium` `large` 四个尺寸
+
+组件支持 `mini`、`small`、`medium`、`large` 四种尺寸。选择密度时应兼顾信息量、触控目标和长文本可读性。
+
 :::demo components/Table/size.vue :::
 
 ## 边框
-设置 `:border="true"` 开启全边框，缩减空间后仍能区分不同的元素，有较强的信息对比性  
+
+`border` 支持 `default`、`full`、`outer` 和 `false`。全边框适合财务等高对齐场景，默认横向分隔更适合普通列表。
+
 :::demo components/Table/border.vue :::
 
 ## 斑马纹
-设置 `:stripe="true"` 开启斑马纹，以用来引导用户的视线，避免在阅读时出现错行、迷失的情况  
+
+设置 `stripe` 开启斑马纹，可帮助用户跨越多列追踪较长的行。
+
 :::demo components/Table/stripe.vue :::
 
 ## 状态表格
-设置 `row-class-name`，可以将设定行给予自定义高亮颜色
+
+`row-class-name` 可根据行数据返回类名，用于表达异常、警告、完成等状态。自定义颜色应使用主题 token，并避免仅依赖颜色传递信息。
+
 :::demo components/Table/row-class-name.vue :::
 
 ## 溢出显示提示
-如果内容太长会将内容换行。但希望不换行并保持一行显示，除了设定宽度，也可以设置 `show-overflow-tooltip`
+
+内容默认可以换行；需要保持单行时，可结合列宽与 `show-overflow-tooltip`。被截断的内容会在悬浮提示中完整展示。
+
 :::demo components/Table/show-overflow-tooltip.vue :::
 
 ## 固定表头
@@ -86,6 +100,14 @@
 
 :::demo components/Table/multiple.vue :::
 
+## 跨页选择
+
+在选择列上开启 `reserve-selection` 后，替换表格当前页的 `data` 不会清除该列的已选值。选择值始终来自当前列的 `column-key`。
+
+开启后，表格底部会固定显示清空操作、全部已选数量和当前已选数量。可通过 `selection-footer-prepend`、`selection-footer-text` 和 `selection-footer-append` scoped slots 自定义三个区域，插槽参数包含 `selectedKeys`、`currentSelectedKeys`、对应数量以及 `clearSelection`。示例将 Pagination 放入结尾区域。
+
+:::demo components/Table/cross-page-selection.vue :::
+
 ## 列提示
 如果需要对列提示，则给予 `h-table-column` 设置 `tip` 即可
 :::demo components/Table/tip.vue :::
@@ -146,18 +168,18 @@
 :::demo components/Table/column-header-slot.vue :::
 
 ## 空状态
-数据为空时的展示形式，如果希望自定义文字，可以配置 `empty-text`
+数据为空时可通过 `empty-text` 提供简短说明。
 
-另外提供了 `empty` 插槽可做更多定制化能力
+需要解释原因或提供恢复操作时，使用 `empty` 插槽构建更完整的空状态。
 
 :::demo components/Table/empty.vue :::
 
 ## 加载中
-可以配置 `loading` 使表格处于加载中状态
+设置 `loading` 使表格进入加载状态。加载控制应放在遮罩目标之外，确保用户始终可以取消或重试。
 
 加载中使用 `v-loading` 处理，因此默认文字是国际化形式，可以通过 `loading-text` 配置自定义加载中文案
 
-另外如果对于加载中有特别的配置，可以传入 `v-loading` 可接收的对象数据自定义其表现 
+如果需要进一步配置，可传入 `v-loading` 支持的对象。
 
 :::demo components/Table/loading.vue :::
 
@@ -198,9 +220,9 @@
 :::demo components/Table/tree-multiple-selection.vue :::
 
 ## 表尾合计
-如果对于一些数值需要做统计，则可以开启 `show-summary` 控制是否显示表尾统计
+开启 `show-summary` 后，表格会内置累加各数值列，无需配置 `summary-method`。内置与示例中的自定义合计均使用 `Decimal.js` 累加，避免普通浮点计算误差。
 
-如果需要多行合计，则设置 `summary-row-amount` 为你想要的行数，然后 `summary-method` 返回一个二维数组即可（参照第二个表格）
+需要自定义计算或展示多行合计时，通过 `summary-row-amount` 指定行数，并由 `summary-method` 返回二维数组。
 
 :::tip `summary-method` 始终需要返回一个二维数组 :::
 :::demo components/Table/summary.vue :::
@@ -253,4 +275,5 @@ Worker 默认 30 秒无响应会终止并同步回退，可通过 `workerTimeout
 :::demo components/Table/data-processing.vue :::
 
 ## 类型定义
+
 :::code ../../../../horizon-web/src/components/Table/src/utils/types.ts :::

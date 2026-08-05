@@ -1,70 +1,96 @@
+<template>
+  <section class="controls-theme-demo">
+    <article class="contact-row">
+      <div class="contact-row__identity">
+        <h-avatar size="small" src="/demo-assets/avatar-indigo.svg" />
+        <div>
+          <strong>William Li</strong>
+          <span>Customer success · Online</span>
+        </div>
+      </div>
+      <h-controls theme="dark" @command="onCommand">
+        <h-control
+          :icon="starred ? IconStarFilled : IconStar"
+          text="Follow"
+          label="star"
+          :icon-color="starred ? ['var(--h-text-warning-default)'] : undefined"
+        />
+        <h-control :icon="IconPhone" text="Call" label="call" />
+        <h-control :icon="IconMessage" text="Message" label="message" />
+      </h-controls>
+    </article>
+
+    <footer aria-live="polite">
+      <span>{{ starred ? 'Following this contact' : 'Not following' }}</span>
+      <strong>{{ status }}</strong>
+    </footer>
+  </section>
+</template>
+
 <script setup lang="ts">
-import { IconPhone, IconMessage, IconStar, IconStarFilled } from '@aurora/icon';
-import { $message } from '@aurora/horizon-web';
+import { IconMessage, IconPhone, IconStar, IconStarFilled } from '@aurora/icon';
 import { ref } from 'vue';
 
-const isStared = ref(false);
+const starred = ref(false);
+const status = ref('Choose a contact action');
 
-function onCommand(type: 'star' | 'call' | 'msn') {
-  switch (type) {
-    case 'star':
-      isStared.value = !isStared.value;
-      break;
-    case 'call':
-      $message.info('沟通');
-      break;
-    case 'msn':
-      $message.info('发送信息');
-      break;
+function onCommand(type: 'star' | 'call' | 'message') {
+  if (type === 'star') {
+    starred.value = !starred.value;
+    status.value = starred.value ? 'Contact followed' : 'Contact unfollowed';
+    return;
   }
+  status.value = type === 'call' ? 'Starting a call' : 'Opening messages';
 }
 </script>
 
-<template>
-  <div class="container">
-    <div class="content">
-      <h-avatar size="small" />
-      <div class="name">
-        William Li
-      </div>
-    </div>
-    <div class="controls">
-      <h-controls theme="dark" @command="onCommand">
-        <h-control :icon="isStared ? IconStarFilled : IconStar" text="关注" label="star" :icon-color="isStared ? ['gold'] : undefined" />
-        <h-control :icon="IconPhone" label="call">
-          <template #text>沟通</template>
-        </h-control>
-        <h-control :icon="IconMessage" text="发送信息" label="msn" />
-      </h-controls>
-    </div>
-  </div>
-</template>
-
 <style scoped>
-.container {
-  position: relative;
-  width: 300px;
-  height: 50px;
-  border: 1px solid var(--h-border-default);
-  border-radius: var(--h-radius);
+.controls-theme-demo {
+  display: grid;
+  gap: var(--h-spacing-5);
+}
+
+.contact-row,
+.contact-row__identity,
+.controls-theme-demo footer {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  gap: var(--h-spacing-4);
+}
+
+.contact-row__identity > div {
+  display: grid;
+  gap: var(--h-spacing-1);
+}
+
+.contact-row__identity span,
+.controls-theme-demo footer {
   color: var(--h-text-secondary);
+  font-size: var(--h-text-sm);
 }
 
-.container .content {
-    flex: 1;
-    padding: 8px;
-    display: flex;
-    align-items: center;
+.contact-row {
+  padding: var(--h-spacing-5);
+  border: 1px solid var(--h-border-default);
+  border-radius: var(--h-radius-xl);
+  background: var(--h-bg-default);
 }
 
-.container .content .name {
-    margin-left: 8px;
+.contact-row__identity {
+  justify-content: flex-start;
+  min-width: 0;
 }
 
-.container .controls {
-    flex: 0 0 80px;
+.controls-theme-demo footer strong {
+  color: var(--h-text-brand-default);
+}
+
+@media (max-width: 560px) {
+  .contact-row,
+  .controls-theme-demo footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
 </style>

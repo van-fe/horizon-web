@@ -54,6 +54,7 @@ export default defineComponent({
         <label>
           <div class={cls(classHelper.e('input'), classHelper.is('checked', isChecked.value))}>
             <input
+              data-focus-visible-proxy
               ref={inputDomRef}
               type="radio"
               value={propValue.value}

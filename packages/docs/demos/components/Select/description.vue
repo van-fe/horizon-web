@@ -1,63 +1,58 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <div class="demo-title">描述文字在右侧</div>
-      <h-select
-        v-model="value1"
-        :clearable="true"
-        placeholder="请选择"
-        :to-body="false"
-      >
-        <h-option
-          v-for="item in selectOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-          :description="item.description"
-        />
-      </h-select>
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">描述文字在下方</div>
-      <h-select
-        v-model="value2"
-        :clearable="true"
-        placeholder="请选择"
-        :to-body="false"
-        description-position="bottom"
-      >
-        <h-option
-          v-for="item in selectOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-          :description="item.description"
-        />
-      </h-select>
-    </h-grid-item>
-  </h-grid>
-</template>
+<script setup lang="ts">
+import { ref } from 'vue';
 
-<script lang="ts" setup>
-import { ExtractPropTypes, ref } from 'vue';
-import { useOptionProps } from '@aurora/horizon-web';
-
-const value1 = ref();
-const value2 = ref();
-
-const selectOptions: Partial<ExtractPropTypes<typeof useOptionProps>>[] = [
-  { value: 1, label: '上海', description: 'Shanghai' },
-  { value: 2, label: '北京', description: 'Beijing' },
-  { value: 3, label: '合肥', description: 'Hefei' },
-  { value: 4, label: '深圳', description: 'Shenzhen' },
-  { value: 5, label: '杭州', description: 'Hangzhou' },
-  { value: 6, label: '天津', description: 'Tianjin' },
-  { value: 7, label: '西安', description: `Xi'an` },
-  { value: 8, label: '南京', description: 'Nanjing' },
-  { value: 9, label: '哈尔滨', description: 'Harbin' },
-  { value: 10, label: '香港', description: 'HongKong' },
+const environments = [
+  { value: 'production', label: '生产环境', description: 'Production · 3 个集群' },
+  { value: 'staging', label: '预发布环境', description: 'Staging · 2 个集群' },
+  { value: 'testing', label: '测试环境', description: 'Testing · 6 个集群' },
 ];
+const rightValue = ref('production');
+const bottomValue = ref('staging');
 </script>
 
+<template>
+  <div class="comparison-row">
+    <label>
+      <span>右侧说明</span>
+      <h-select v-model="rightValue" :to-body="false">
+        <h-option v-for="item in environments" :key="item.value" v-bind="item" />
+      </h-select>
+    </label>
+    <label>
+      <span>下方说明</span>
+      <h-select v-model="bottomValue" description-position="bottom" :to-body="false">
+        <h-option v-for="item in environments" :key="item.value" v-bind="item" />
+      </h-select>
+    </label>
+  </div>
+</template>
+
 <style scoped>
+.comparison-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.comparison-row label {
+  display: grid;
+  min-width: 0;
+  gap: 7px;
+}
+
+.comparison-row span {
+  color: var(--h-text-secondary);
+  font-size: 12px;
+}
+
+.comparison-row :deep(.h-select) {
+  width: 100%;
+  min-width: 0;
+}
+
+@media (max-width: 560px) {
+  .comparison-row {
+    grid-template-columns: 1fr;
+  }
+}
 </style>

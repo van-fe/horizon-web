@@ -1,107 +1,82 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const hideEventType = ref<'click' | 'mousedown' | 'mouseup'>('click');
+const shown = ref(false);
+const eventTypes = ['click', 'mousedown', 'mouseup'];
+</script>
+
 <template>
-  <h-space direction="vertical" block>
-    <h-space>
-      <div>hide event type</div>
-      <h-radio v-model="hideEventType" value="click">click</h-radio>
-      <h-radio v-model="hideEventType" value="mousedown">mousedown</h-radio>
-      <h-radio v-model="hideEventType" value="mouseup">mouseup</h-radio>
-    </h-space>
-    <h-space>
+  <div class="docs-demo">
+    <div class="docs-demo__controls">
+      <label class="docs-demo__control">
+        <span>全局关闭事件</span>
+        <h-segmented v-model:active-key="hideEventType" size="small">
+          <h-segmented-item v-for="item in eventTypes" :key="item" :value="item" :label="item" />
+        </h-segmented>
+      </label>
       <h-popover
         trigger="click"
         :hide-event-type="hideEventType"
-        popper-class="arrow_popover"
-        @show="onShow"
-        @onHide="onHide"
+        @show="shown = true"
+        @hide="shown = false"
       >
-        <template #reference>
-          <h-button :plain="true">点击打开Popover，通过全局 {{ hideEventType }} 事件关闭</h-button>
-        </template>
+        <template #reference><h-button>打开详情</h-button></template>
         <template #popper>
           <h-pop-content>
-            <div class="popper">
-              <div class="header">内容标题</div>
-              <div class="content">我是气泡卡片文本描述内容, 我是气泡卡片文字链接...</div>
+            <div class="popover-copy">
+              <strong>项目详情</strong>
+              <p>点击外部区域关闭此浮层。</p>
             </div>
           </h-pop-content>
         </template>
       </h-popover>
-    </h-space>
-    <h-space>
-      <div class="block-card c1" @click.stop>
-        <h-space block direction="vertical" size="4">
-          <div>阻止 click 事件的冒泡</div>
-          <strong v-if="show && hideEventType === 'click'">点击不能关闭</strong>
-        </h-space>
-      </div>
-      <div class="block-card c2" @mousedown.stop>
-        <h-space block direction="vertical" size="4">
-          <div>阻止 mousedown 事件的冒泡</div>
-          <strong v-if="show && hideEventType === 'mousedown'">点击不能关闭</strong>
-        </h-space>
-      </div>
-      <div class="block-card c3" @mouseup.stop>
-        <h-space block direction="vertical" size="4">
-          <div>阻止 mouseup 事件的冒泡</div>
-          <strong v-if="show && hideEventType === 'mouseup'">点击不能关闭</strong>
-        </h-space>
-      </div>
-    </h-space>
-  </h-space>
+    </div>
+
+    <div class="event-grid">
+      <button type="button" @click.stop>阻止 click</button>
+      <button type="button" @mousedown.stop>阻止 mousedown</button>
+      <button type="button" @mouseup.stop>阻止 mouseup</button>
+    </div>
+    <p class="docs-demo__status" role="status">
+      {{ shown ? `浮层已显示；阻止 ${hideEventType} 时不会关闭` : '浮层当前已关闭' }}
+    </p>
+  </div>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
-
-const hideEventType = ref('click');
-const show = ref(false);
-
-const onShow = () => {
-  show.value = true;
-};
-
-const onHide = () => {
-  show.value = false;
-};
-</script>
-
-<style lang="scss">
-.arrow_popover .popper {
-  width: 280px;
+<style scoped>
+.event-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
 }
 
-.arrow_popover .header {
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 22px;
-  margin-bottom: 4px;
-}
-
-.arrow_popover .content {
-  font-size: 14px;
-  line-height: 22px;
-}
-
-.block-card {
-  width: 220px;
-  height: 120px;
+.event-grid button {
+  padding: 12px;
+  border: 1px solid var(--h-border-default);
   border-radius: 8px;
-  font-size: 14px;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color: var(--h-text-primary);
+  background: var(--h-bg-secondary);
+  font: inherit;
+  cursor: pointer;
 }
 
-.c1 {
-  background-color: #e14cc4;
+.popover-copy p {
+  color: var(--h-text-secondary);
+  font-size: 12px;
 }
 
-.c2 {
-  background-color: #5ab453;
+.popover-copy {
+  width: 220px;
 }
 
-.c3 {
-  background-color: #63aaee;
+.popover-copy p {
+  margin: 5px 0 0;
+}
+
+@media (max-width: 560px) {
+  .event-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

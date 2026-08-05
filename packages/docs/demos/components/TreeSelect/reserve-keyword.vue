@@ -1,58 +1,54 @@
-<template>
-  <h-grid :gap="10">
-    <h-grid-item :span="6">
-      <div class="demo-title">
-        保留关键字（默认）
-      </div>
-      <h-tree-select v-model="values1" :tree-data="baseTreeData" :filterable="true" :multiple="true" :to-body="false" />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">
-        不保留关键字
-      </div>
-      <h-tree-select v-model="values2" :tree-data="baseTreeData" :filterable="true" :multiple="true" :reserve-keyword="false" :to-body="false" />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">
-        仅在反选时保留，正选不保留
-        <h-tooltip>
-          <template #content>
-            考虑了过滤时反选的操作便捷性
-          </template>
-          <a-icon name="help" />
-        </h-tooltip>
-      </div>
-      <h-tree-select v-model="values3" :tree-data="baseTreeData" :filterable="true" :multiple="true" reserve-keyword="reserve-deselect" :to-body="false" />
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">
-        不保留关键字，但过滤内容特殊处理
-        <h-tooltip content="用户手动清空输入文字或失焦输入框后，才会改变过滤内容">
-          <a-icon name="help" />
-        </h-tooltip>
-      </div>
-      <h-tree-select v-model="values4" :tree-data="baseTreeData" :filterable="true" :multiple="true" reserve-keyword="reserve-special" :to-body="false" />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import { AIcon } from '@aurora/icon';
+import { computed, ref } from 'vue';
+import type { HTreeNodeData } from '@aurora/horizon-web';
 
-const values1 = ref([]);
-const values2 = ref([]);
-const values3 = ref([]);
-const values4 = ref([]);
+type KeywordMode = 'always' | 'clear' | 'deselect' | 'sticky';
+type ReserveKeyword = boolean | 'reserve-deselect' | 'reserve-special';
 
-const baseTreeData = ref([]);
-
-onMounted(() => {
-  fetch(new URL('/tree-data.json', import.meta.url).href)
-    .then(res => res.json())
-    .then(res => {
-      baseTreeData.value = res;
-    });
+const mode = ref<KeywordMode>('always');
+const selectedValues = ref<Array<string | number>>(['typescript']);
+const treeData: HTreeNodeData[] = [
+  {
+    value: 'engineering',
+    label: 'Engineering',
+    children: [
+      { value: 'typescript', label: 'TypeScript' },
+      { value: 'testing', label: 'Test automation' },
+      { value: 'observability', label: 'Observability' },
+    ],
+  },
+  {
+    value: 'product',
+    label: 'Product',
+    children: [{ value: 'research', label: 'User research' }],
+  },
+];
+const reserveKeyword = computed<ReserveKeyword>(() => {
+  if (mode.value === 'clear') return false;
+  if (mode.value === 'deselect') return 'reserve-deselect';
+  if (mode.value === 'sticky') return 'reserve-special';
+  return true;
 });
-
 </script>
+
+<template>
+  <div class="docs-demo">
+    <h-segmented v-model:active-key="mode" size="small" block>
+      <h-segmented-item value="always" label="Always" />
+      <h-segmented-item value="clear" label="Clear" />
+      <h-segmented-item value="deselect" label="Deselect" />
+      <h-segmented-item value="sticky" label="Sticky" />
+    </h-segmented>
+    <h-tree-select
+      v-model="selectedValues"
+      :tree-data="treeData"
+      :reserve-keyword="reserveKeyword"
+      multiple
+      filterable
+      collapse-tags
+      search-input-placeholder="Filter skills"
+      placeholder="Add reviewer skills"
+      :to-body="false"
+    />
+  </div>
+</template>

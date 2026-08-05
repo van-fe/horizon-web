@@ -1,17 +1,25 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const score = ref(3.5);
+</script>
+
 <template>
-  <div class="">
-    <h-rate v-model="currentScore" :half="true" />
-    <h-rate v-model="currentScore" :half="true" size="32">A</h-rate>
+  <div class="rate-demo">
+    <h-rate v-model="score" half size="large" />
+    <span aria-live="polite">{{ score.toFixed(1) }}</span>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    return {
-      currentScore: ref(3.5),
-    };
-  },
-});
-</script>
+<style scoped>
+.rate-demo {
+  display: flex;
+  align-items: center;
+  gap: var(--h-spacing-4);
+}
+
+.rate-demo span {
+  color: var(--h-text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+</style>

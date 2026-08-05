@@ -1,43 +1,48 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="18">
-      <div class="demo-title">容器中使用 <code>medium</code></div>
-      <h-scrollbar height="400px">
-        <div v-for="item of 20" :key="item" class="item">
-          {{ item }}
-        </div>
-      </h-scrollbar>
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">弹窗中使用 <code>small</code></div>
-      <h-popover placement="bottom" :to-body="false">
-        <template #popper>
-          <h-pop-content>
-            <h-scrollbar size="small" height="400px">
-              <div v-for="item of 20" :key="item" class="item" style="width: 300px;">
-                {{ item }}
-              </div>
-            </h-scrollbar>
-          </h-pop-content>
-        </template>
-        <template #reference>
-          <h-button>Hover Me</h-button>
-        </template>
-      </h-popover>
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
+import { ref } from 'vue';
+
+const size = ref<'small' | 'medium'>('medium');
+const items = Array.from({ length: 12 }, (_, index) => `版本 v2.${12 - index}.0`);
 </script>
 
+<template>
+  <section class="scrollbar-size-demo">
+    <h-segmented v-model:active-key="size" size="small" block aria-label="Scrollbar size">
+      <h-segmented-item value="small" label="Small" />
+      <h-segmented-item value="medium" label="Medium" />
+    </h-segmented>
+    <h-scrollbar class="scrollbar-size-demo__scroller" :size="size" height="220px">
+      <div class="version-list">
+        <div v-for="item in items" :key="item">{{ item }}</div>
+      </div>
+    </h-scrollbar>
+  </section>
+</template>
+
 <style scoped>
-.item {
-  height: 40px;
-  background: var(--h-bg-info-weak-default);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 10px;
+.scrollbar-size-demo {
+  display: grid;
+  gap: var(--h-spacing-3);
+}
+
+.scrollbar-size-demo > :deep(.h-segmented) {
+  max-inline-size: 320px;
+}
+
+.scrollbar-size-demo__scroller {
+  overflow: hidden;
+  border: 1px solid var(--h-border-default);
+  border-radius: var(--h-radius-m);
+}
+
+.version-list {
+  display: grid;
+  padding-inline: var(--h-spacing-3);
+}
+
+.version-list > div {
+  padding: var(--h-spacing-3);
+  border-bottom: 1px solid var(--h-divider-default);
+  color: var(--h-text-secondary);
 }
 </style>

@@ -11,6 +11,8 @@ import HTooltip from '~/components/Tooltip/src/Tooltip';
 
 export default defineComponent({
   name: `${useNamespace()}DropdownGroup`,
+  desc: "下拉菜单中的分组容器",
+  descLocales: { en: "Groups related items within a dropdown menu." },
   components: {
     HTooltip,
   },

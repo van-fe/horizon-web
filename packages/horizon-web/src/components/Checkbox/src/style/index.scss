@@ -27,10 +27,19 @@
   cursor: pointer;
 
   @include mixins.e('original') {
-    display: none;
-    outline: none;
+    @include mixins.visually-hidden;
     appearance: none;
+    outline: none;
     pointer-events: none;
+  }
+
+  /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+  &:has([data-focus-visible-proxy]:focus-visible) {
+    overflow: visible;
+
+    @include mixins.e('icon') {
+      @include mixins.focus-outline;
+    }
   }
 
   @include mixins.e('icon') {
@@ -163,9 +172,14 @@
   }
 
   @include mixins.e('original') {
-    display: none;
-    outline: none;
+    @include mixins.visually-hidden;
     appearance: none;
+    outline: none;
+  }
+
+  /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+  &:has([data-focus-visible-proxy]:focus-visible) {
+    @include mixins.focus-outline;
   }
 
   @include mixins.m('medium') {

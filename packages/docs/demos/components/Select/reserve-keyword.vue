@@ -1,93 +1,69 @@
-<template>
-  <h-grid :gap="10">
-    <h-grid-item :span="6">
-      <div class="demo-title">
-        保留关键字（默认）
-      </div>
-      <h-select v-model="values1" :filterable="true" :multiple="true" :to-body="false">
-        <h-option
-          v-for="item of selectOptions"
-          :key="item.value"
-          :value="item.value"
-          :label="item.label"
-          :description="item.description"
-        />
-      </h-select>
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">
-        不保留关键字
-      </div>
-      <h-select v-model="values2" :filterable="true" :multiple="true" :reserve-keyword="false" :to-body="false">
-        <h-option
-          v-for="item of selectOptions"
-          :key="item.value"
-          :value="item.value"
-          :label="item.label"
-          :description="item.description"
-        />
-      </h-select>
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">
-        仅在反选时保留，正选不保留
-        <h-tooltip>
-          <template #content>
-            考虑了过滤时反选的操作便捷性
-          </template>
-          <a-icon name="help" />
-        </h-tooltip>
-      </div>
-      <h-select v-model="values3" :filterable="true" :multiple="true" reserve-keyword="reserve-deselect" :to-body="false">
-        <h-option
-          v-for="item of selectOptions"
-          :key="item.value"
-          :value="item.value"
-          :label="item.label"
-          :description="item.description"
-        />
-      </h-select>
-    </h-grid-item>
-    <h-grid-item :span="6">
-      <div class="demo-title">
-        不保留关键字，但过滤内容特殊处理
-        <h-tooltip content="用户手动清空输入文字或失焦输入框后，才会改变过滤内容">
-          <a-icon name="help" />
-        </h-tooltip>
-      </div>
-      <h-select v-model="values4" :filterable="true" :multiple="true" reserve-keyword="reserve-special" :to-body="false">
-        <h-option
-          v-for="item of selectOptions"
-          :key="item.value"
-          :value="item.value"
-          :label="item.label"
-          :description="item.description"
-        />
-      </h-select>
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { ExtractPropTypes, ref } from 'vue';
-import { useOptionProps } from '@aurora/horizon-web';
-import { AIcon } from '@aurora/icon';
+import { computed, ref } from 'vue';
 
-const values1 = ref([]);
-const values2 = ref([]);
-const values3 = ref([]);
-const values4 = ref([]);
+type ReserveMode = boolean | 'reserve-deselect' | 'reserve-special';
 
-const selectOptions: ExtractPropTypes<ExtractPropTypes<typeof useOptionProps>>[] = [
-  { value: 1, label: '上海', description: 'Shanghai' },
-  { value: 2, label: '北京', description: 'Beijing' },
-  { value: 3, label: '合肥', description: 'Hefei' },
-  { value: 4, label: '深圳', description: 'Shenzhen' },
-  { value: 5, label: '杭州', description: 'Hangzhou' },
-  { value: 6, label: '天津', description: 'Tianjin' },
-  { value: 7, label: '西安', description: `Xi'an` },
-  { value: 8, label: '南京', description: 'Nanjing' },
-  { value: 9, label: '哈尔滨', description: 'Harbin' },
-  { value: 10, label: '香港', description: 'HongKong' },
+const modes = ['true', 'false', 'reserve-deselect', 'reserve-special'] as const;
+const activeMode = ref<(typeof modes)[number]>('true');
+const selected = ref<string[]>(['prod-cn']);
+const query = ref('');
+const reserveKeyword = computed<ReserveMode>(() => {
+  if (activeMode.value === 'true') return true;
+  if (activeMode.value === 'false') return false;
+  return activeMode.value;
+});
+const environments = [
+  { value: 'prod-cn', label: 'Production CN' },
+  { value: 'prod-eu', label: 'Production EU' },
+  { value: 'stage-cn', label: 'Staging CN' },
+  { value: 'test-ap', label: 'Testing APAC' },
 ];
 </script>
+
+<template>
+  <div class="select-demo">
+    <label class="mode-control">
+      <span>关键词策略</span>
+      <h-select v-model="activeMode" size="small" :to-body="false">
+        <h-option v-for="mode in modes" :key="mode" :value="mode" :label="mode" />
+      </h-select>
+    </label>
+    <h-select
+      v-model="selected"
+      multiple
+      filterable
+      collapse-tags
+      :reserve-keyword="reserveKeyword"
+      :to-body="false"
+      placeholder="输入 prod"
+      @input="query = $event"
+    >
+      <h-option v-for="item in environments" :key="item.value" v-bind="item" />
+    </h-select>
+    <p class="docs-demo__status">输入：{{ query || '空' }} · 已选 {{ selected.length }} 项</p>
+  </div>
+</template>
+
+<style scoped>
+.select-demo {
+  display: grid;
+  min-width: 0;
+  gap: 12px;
+}
+
+.select-demo :deep(.h-select) {
+  width: 100%;
+  min-width: 0;
+}
+
+.mode-control {
+  display: grid;
+  min-width: 0;
+  gap: 7px;
+}
+
+.mode-control > span {
+  color: var(--h-text-secondary);
+  font-size: 12px;
+}
+</style>

@@ -1,59 +1,31 @@
-<template>
-  <h-form :inline="true" label-position="top">
-    <h-form-item label="尺寸">
-      <h-select v-model="sizeValue" :to-body="false">
-        <h-option value="large" label="large" />
-        <h-option value="medium" label="medium" />
-        <h-option value="small" label="small" />
-      </h-select>
-    </h-form-item>
-    <h-form-item label="样式">
-      <h-select v-model="inputStyle" :to-body="false">
-        <h-option value="normal" label="normal" />
-        <h-option value="emphasize" label="emphasize" />
-        <h-option value="no-border" label="no-border" />
-      </h-select>
-    </h-form-item>
-  </h-form>
-  <h-grid :gap="12">
-    <h-grid-item :span="6">
-      <h-auto-complete :options="options" :size="sizeValue" :input-style="inputStyle" @search="onSearch" @select="onSelect" @update:model-value="onUpdate" />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { ExtractPropTypes, ref } from 'vue';
-import type { HAutoCompleteOptionProps } from '@aurora/horizon-web';
-import { useAutoCompleteProps } from '@aurora/horizon-web';
+import { ref } from 'vue';
+import type { HAutoCompleteOption } from '@aurora/horizon-web';
 
-const sizeValue = ref<Required<ExtractPropTypes<typeof useAutoCompleteProps>['size']>>('medium');
-const inputStyle = ref<Required<ExtractPropTypes<typeof useAutoCompleteProps>['inputStyle']>>('normal');
+const value = ref('');
+const allOptions: HAutoCompleteOption[] = [
+  { label: '上海虹桥国际机场', value: 'SHA', description: '上海 · SHA' },
+  { label: '上海浦东国际机场', value: 'PVG', description: '上海 · PVG' },
+  { label: '北京首都国际机场', value: 'PEK', description: '北京 · PEK' },
+  { label: '深圳宝安国际机场', value: 'SZX', description: '深圳 · SZX' },
+];
+const options = ref(allOptions);
 
-const options = ref<Partial<HAutoCompleteOptionProps>[]>([]);
-
-function onSearch(val: string) {
-  options.value = [];
-
-  if (val) {
-    new Array(10).fill(0).forEach((_, index) => {
-      const value = val.repeat(index + 1);
-      options.value.push({
-        label: value,
-        value,
-      });
-    });
-  }
-}
-
-function onSelect(val: string) {
-  console.info('select: ', val);
-}
-
-function onUpdate(val: string) {
-  console.info('update: ', val);
+function search(query: string | null | undefined) {
+  const keyword = query?.trim().toLowerCase() ?? '';
+  options.value = keyword
+    ? allOptions.filter(option => `${option.label} ${option.value}`.toLowerCase().includes(keyword))
+    : allOptions;
 }
 </script>
 
-<style scoped>
-</style>
+<template>
+  <h-auto-complete
+    v-model="value"
+    :options="options"
+    placeholder="输入城市或机场代码"
+    search-icon="search"
+    clearable
+    @search="search"
+  />
+</template>

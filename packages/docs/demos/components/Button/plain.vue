@@ -1,27 +1,30 @@
 <template>
-  <h-grid :gap="12">
-    <h-grid-item :span="24">
-      <h-button type="normal" plain>Normal Plain Button</h-button>
-      <h-button plain>Primary Plain Button</h-button>
-      <h-button type="danger" plain>Danger Plain Button</h-button>
-    </h-grid-item>
-  </h-grid>
-  <h-grid class="dark-wrapper" :gap="12">
-    <h-grid-item :span="24">
-      <h-button type="normal" ghost plain>Normal Ghost Button</h-button>
-      <h-button ghost plain>Primary Ghost Button</h-button>
-      <h-button type="danger" ghost plain>Danger Ghost Button</h-button>
-    </h-grid-item>
-  </h-grid>
+  <div class="button-plain-demo">
+    <h-space wrap>
+      <h-button type="normal" plain>View details</h-button>
+      <h-button plain>Approve</h-button>
+      <h-button type="danger" plain>Reject</h-button>
+    </h-space>
+
+    <h-space class="button-plain-demo__inverse" wrap>
+      <h-button type="normal" ghost plain>Preview</h-button>
+      <h-button ghost plain>Continue</h-button>
+      <h-button type="danger" ghost plain>Stop</h-button>
+    </h-space>
+  </div>
 </template>
 
 <style scoped>
-.h-button + .h-button {
-  margin-left: 10px;
+.button-plain-demo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--h-spacing-4);
 }
 
-.dark-wrapper {
-  background: rgba(69, 69, 69, 1);
-  padding: 10px 0;
+.button-plain-demo__inverse {
+  padding: var(--h-spacing-3);
+  background: var(--h-bg-brand-activated);
+  border-radius: var(--h-radius-m);
 }
 </style>

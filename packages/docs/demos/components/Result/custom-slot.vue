@@ -1,25 +1,18 @@
+<template>
+  <section class="docs-demo">
+    <h-result :primary-button="false" :secondary-button="false">
+      <template #icon>
+        <IconLogo size="56" :color="['var(--h-text-primary)']" />
+      </template>
+      <template #title>Battery swap complete</template>
+      <template #subtitle>Vehicle A·8F26 is ready. The session added 62 kWh in 4 minutes.</template>
+      <template #extra>
+        <h-button>Save receipt</h-button>
+      </template>
+    </h-result>
+  </section>
+</template>
+
 <script setup lang="ts">
 import { IconLogo } from '@aurora/icon';
-import { $alert } from '@aurora/horizon-web';
-
-function submit() {
-  $alert('点击了确定', '提示');
-}
 </script>
-
-<template>
-  <h-result>
-    <template #icon>
-      <IconLogo size="56" :color="['var(--h-text-default)']" />
-    </template>
-    <template #title>
-      尊贵的示例车主
-    </template>
-    <template #subtitle>
-      本次换电已结束，感谢您的使用
-    </template>
-    <template #extra>
-      <h-button @click="submit">确定</h-button>
-    </template>
-  </h-result>
-</template>

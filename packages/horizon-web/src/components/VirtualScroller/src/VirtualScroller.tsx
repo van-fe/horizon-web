@@ -39,6 +39,7 @@ import useRenderlessVirtualScroller from './composables/useRenderlessVirtualScro
 export default defineComponent({
   name: `${useNamespace()}VirtualScroller`,
   desc: '虚拟滚动组件, 实现有限的Dom节点渲染无限的数据',
+  descLocales: { en: "Virtual scrolling mounts only items near the viewport and is suited to large lists and grids." },
   components: {
     HRecycleScroller,
   },

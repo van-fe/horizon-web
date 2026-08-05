@@ -33,6 +33,7 @@ import { recordRecentlyColor } from '~/components/ColorPicker/src/utils/useStora
 export default defineComponent({
   name: `${useNamespace()}ColorPicker`,
   desc: '用于选择颜色，支持HEX、RGB、HSL、HSB四种格式',
+  descLocales: { en: "ColorPicker edits a solid color by default. Enable `alpha` to adjust opacity, and preview the result against a realistic surface to judge the final effect." },
   components: {
     HPicker,
   },

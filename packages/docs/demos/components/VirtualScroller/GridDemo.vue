@@ -1,96 +1,71 @@
 <template>
-  <div class="grid-scroller-demo">
-    <section class="toolbar">
-      <div class="tip">每行网格数:</div>
-      <div class="slider-wrap">
-        <h-slider
-          v-model="gridItems"
-          :min="2"
-          :max="10"
-        ></h-slider>
-      </div>
-      <div class="grid-num">{{ gridItems }}</div>
-    </section>
+  <section class="grid-scroller-demo">
+    <h-segmented v-model:active-key="gridItems" size="small" block aria-label="Grid columns">
+      <h-segmented-item :value="2" label="2 columns" />
+      <h-segmented-item :value="3" label="3 columns" />
+      <h-segmented-item :value="4" label="4 columns" />
+    </h-segmented>
 
-    <h-recycle-scroller
-      class="scroller"
-      :item-size="128"
-      :items="items"
-      :grid-items="gridItems"
-    >
-      <template #default="{ item, index }">
-        <div class="item">
-          <div class="index">{{ index }}</div>
-          <div class="name">{{ item.name }}</div>
-        </div>
-      </template>
-    </h-recycle-scroller>
-  </div>
+    <div class="grid-scroller-demo__viewport" role="region" aria-label="Virtualized grid">
+      <h-recycle-scroller
+        :items="items"
+        :item-size="96"
+        :grid-items="gridItems"
+        scroller-height="320px"
+      >
+        <template #default="{ item, index }">
+          <div class="grid-scroller-demo__item">
+            <strong>Item {{ index + 1 }}</strong>
+            <small>{{ item.label }}</small>
+          </div>
+        </template>
+      </h-recycle-scroller>
+    </div>
+  </section>
 </template>
 
-<script setup lang='ts'>
-import { ref, onMounted } from 'vue';
-import { faker } from '@faker-js/faker';
+<script setup lang="ts">
+import { ref } from 'vue';
 
-type Item = {
-  id: number;
-  name: string;
-}
-
-const gridItems = ref(5);
-const items = ref<Item[]>([]);
-
-onMounted(() => {
-  for (let i = 0; i < 5000; i++) {
-    items.value.push({
-      id: i,
-      name: faker.person.fullName(),
-    });
-  }
-});
+const gridItems = ref(3);
+const items = Array.from({ length: 1200 }, (_, index) => ({
+  id: index + 1,
+  label: `Grid cell ${String(index + 1).padStart(4, '0')}`,
+}));
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .grid-scroller-demo {
-  height: 500px;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  gap: var(--h-spacing-3);
+  max-inline-size: 720px;
+}
 
-  .toolbar {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    .tip {
-      margin-right: 10px;
-      width: 100px;
-    }
-    .slider-wrap {
-      width: 160px;
-    }
-    .grid-num {
-      background-color: rgb(196, 196, 196);
-      margin-left: 10px;
-      border-radius: 4px;
-      padding: 0 10px;
-    }
-  }
+.grid-scroller-demo__viewport {
+  overflow: hidden;
+  border: 1px solid var(--h-border-default);
+  border-radius: var(--h-radius-m);
+}
 
-  .scroller {
-    flex: 1;
-  }
+.grid-scroller-demo__item {
+  display: grid;
+  height: 100%;
+  align-content: center;
+  gap: var(--h-spacing-2);
+  min-inline-size: 0;
+  padding: var(--h-spacing-3);
+  border-right: 1px solid var(--h-divider-default);
+  border-bottom: 1px solid var(--h-divider-default);
+}
 
-  .item {
-    border: 1px solid #cecece;
-    border-radius: 4px;
-    overflow: hidden;
-    padding: 10px;
-    box-sizing: border-box;
-    height: 100%;
-    cursor: pointer;
+.grid-scroller-demo__item strong,
+.grid-scroller-demo__item small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
-    &:hover {
-      background-color: #c8c8c8;
-    }
-  }
+.grid-scroller-demo__item small {
+  color: var(--h-text-secondary);
 }
 </style>

@@ -1,40 +1,32 @@
-<template>
-  <h-grid :gap="12">
-    <h-grid-item :span="12">
-      <div class="demo-title">单选</div>
-      <h-tree
-        v-if="baseTreeData.length"
-        :tree-data="baseTreeData"
-        :is-default-expand-all="true"
-        :max-height="300"
-      />
-    </h-grid-item>
-    <h-grid-item :span="12">
-      <div class="demo-title">多选</div>
-      <h-tree
-        v-if="baseTreeData.length"
-        :tree-data="baseTreeData"
-        :is-default-expand-all="true"
-        :max-height="300"
-        :multiple="true"
-      />
-    </h-grid-item>
-  </h-grid>
-</template>
-
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import type { HTreeNodeData } from '@aurora/horizon-web';
 
-const baseTreeData = ref([]);
-
-onMounted(() => {
-  fetch(new URL('/tree-data.json', import.meta.url).href)
-    .then(res => res.json())
-    .then(res => {
-      baseTreeData.value = res;
-    });
-});
+const treeData: HTreeNodeData[] = [
+  {
+    value: 'day-one',
+    label: 'Day one',
+    children: [
+      { value: 'account', label: 'Activate your account' },
+      { value: 'security-key', label: 'Register a security key' },
+    ],
+  },
+  {
+    value: 'first-week',
+    label: 'First week',
+    children: [
+      {
+        value: 'product-tour',
+        label: 'Product tour',
+        children: [
+          { value: 'workspace', label: 'Create a workspace' },
+          { value: 'invite', label: 'Invite a collaborator' },
+        ],
+      },
+    ],
+  },
+];
 </script>
 
-<style scoped>
-</style>
+<template>
+  <h-tree :tree-data="treeData" :is-default-expand-all="true" :max-height="300" show-line />
+</template>

@@ -1,41 +1,52 @@
-## Basic Usage
+## Basic usage
+
 
 :::demo components/Slider/index.vue :::
 
-## Set Size
-You can set `small` `medium` `large`
+## Sizes
+
+Set `size` to `small`, `medium`, or `large`.
+
 :::demo components/Slider/size.vue :::
 
-## Disabled State
-Disable by setting `disabled`
+## Disabled state
+
+`disabled` preserves the current value and visual context while preventing pointer and keyboard changes.
+
 :::demo components/Slider/disable.vue :::
 
-## Different Types
-You can set the `type` field to control different types
+## Semantic types
+
+`type` supports the `primary`, `info`, `success`, `warning`, and `danger` semantic colors.
+
 :::demo components/Slider/types.vue :::
 
-## Custom Color
-If the colors of different types cannot meet the requirements, you can control the progress bar color by setting `color`
+## Custom color
+
+`color` accepts a custom color. Prefer Horizon semantic tokens so the result adapts to light and dark themes.
 
 :::demo components/Slider/color.vue :::
 
-## Specify Selection Range
-You can use `range` to configure range selection
+## Range selection
+
+With `range`, the model is a two-value array containing the start and end positions.
+
 :::demo components/Slider/range.vue :::
 
-## Specify Step
-You can set `step` to specify the step
+## Steps and separators
+
+`step` supports integer and decimal increments. Use `show-separator` to visualize discrete values when the step is greater than one.
+
 :::demo components/Slider/step.vue :::
 
-## Custom Tooltip
-You can configure `tooltip-formatter` to control the displayed text
+## Custom tooltip
 
-You can also configure `tooltip-enable = false` to control not displaying `tooltip`
+Use `tooltip-formatter` to add a business unit, then control visibility and placement with `tooltip-enable` and `tooltip-placement`.
 
 :::demo components/Slider/custom-tooltip.vue :::
 
-## With Input Box
-You can set `input-enable` to enable the input box
+## Number input
 
-But note that if `range` is enabled, the input box will not be enabled
+Enable `input-enable` to synchronize the slider with `HInputNumber`. The input is not shown in range mode.
+
 :::demo components/Slider/with-input.vue :::

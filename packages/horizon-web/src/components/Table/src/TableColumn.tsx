@@ -25,6 +25,8 @@ import useColumnRuntime, { attachColumnRuntime } from './hooks/useColumnRuntime'
 
 export default defineComponent({
   name: `${useNamespace()}TableColumn`,
+  desc: "定义表格中的单列数据与展示方式",
+  descLocales: { en: "Defines the data and presentation of one table column." },
   props: useTableColumnProps,
   emits: useTableColumnEmits,
   slots: useTableColumnSlots,
