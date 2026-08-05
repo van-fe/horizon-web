@@ -10,33 +10,64 @@ interface CandidateRow {
 
 const currentPage = ref(1);
 const selectedKeys = ref<string[]>([]);
-const pageSize = 2;
-const candidates: CandidateRow[] = [
-  {
-    id: 101,
-    candidateCode: 'C-101',
-    candidate: 'Avery Kim',
-    role: 'Product designer',
-  },
-  {
-    id: 102,
-    candidateCode: 'C-102',
-    candidate: 'Riley Chen',
-    role: 'Frontend engineer',
-  },
-  {
-    id: 103,
-    candidateCode: 'C-103',
-    candidate: 'Morgan Lee',
-    role: 'Data analyst',
-  },
-  {
-    id: 104,
-    candidateCode: 'C-104',
-    candidate: 'Jordan Patel',
-    role: 'Product manager',
-  },
+const pageSize = 6;
+const candidateNames = [
+  'Avery Kim',
+  'Riley Chen',
+  'Morgan Lee',
+  'Jordan Patel',
+  'Taylor Nguyen',
+  'Casey Brown',
+  'Quinn Davis',
+  'Cameron Wilson',
+  'Reese Martinez',
+  'Parker Anderson',
+  'Rowan Thomas',
+  'Skyler Moore',
+  'Emerson Clark',
+  'Finley Lewis',
+  'Hayden Walker',
+  'Dakota Hall',
+  'Jamie Young',
+  'Kendall Allen',
+  'Alex King',
+  'Drew Wright',
+  'Robin Scott',
+  'Sidney Green',
+  'Ari Baker',
+  'Blair Adams',
+  'Charlie Nelson',
+  'Devon Carter',
+  'Ellis Mitchell',
+  'Frankie Perez',
+  'Gray Roberts',
+  'Harper Turner',
+  'Jules Phillips',
+  'Kai Campbell',
+  'Lane Parker',
+  'Micah Evans',
+  'Noel Edwards',
+  'Oakley Collins',
 ];
+const candidateRoles = [
+  'Product designer',
+  'Frontend engineer',
+  'Data analyst',
+  'Product manager',
+  'Backend engineer',
+  'UX researcher',
+  'QA engineer',
+  'DevOps engineer',
+];
+const candidates: CandidateRow[] = candidateNames.map((candidate, index) => {
+  const id = 101 + index;
+  return {
+    id,
+    candidateCode: `C-${id}`,
+    candidate,
+    role: candidateRoles[index % candidateRoles.length]!,
+  };
+});
 const pageData = computed(() => {
   const start = (currentPage.value - 1) * pageSize;
   return candidates.slice(start, start + pageSize);
