@@ -15,6 +15,8 @@ const spend: SpendRow[] = [
   { id: 'CC-130', category: 'Email delivery', costs: ['1890.00', '2044.90', '1988.30'] },
 ];
 
+const months = ['May', 'Jun', 'Jul'];
+
 const summaryMethod: HTableSummaryMethodType = ({ columns, flattenData }) => {
   const average: string[] = [];
   const total: string[] = [];
@@ -42,25 +44,75 @@ const summaryMethod: HTableSummaryMethodType = ({ columns, flattenData }) => {
 </script>
 
 <template>
-  <h-table
-    :data="spend"
-    row-key="id"
-    border="full"
-    show-summary
-    :summary-row-amount="2"
-    :summary-method="summaryMethod"
-  >
-    <h-table-column title="Code" field="id" width="100" />
-    <h-table-column title="Category" field="category" min-width="180" />
-    <h-table-column
-      v-for="(month, index) in ['May', 'Jun', 'Jul']"
-      :key="month"
-      :title="month"
-      :field="`costs[${index}]`"
-      width="130"
-      align="right"
-      header-align="right"
-      footer-align="right"
-    />
-  </h-table>
+  <div class="table-summary-demo">
+    <section>
+      <h4>Built-in total</h4>
+      <p>
+        Set
+        <code>show-summary</code>
+        to automatically accumulate numeric columns.
+      </p>
+      <h-table :data="spend" row-key="id" border="full" show-summary>
+        <h-table-column title="Code" field="id" width="100" />
+        <h-table-column title="Category" field="category" min-width="180" />
+        <h-table-column
+          v-for="(month, index) in months"
+          :key="month"
+          :title="month"
+          :field="`costs[${index}]`"
+          width="130"
+          align="right"
+          header-align="right"
+          footer-align="right"
+        />
+      </h-table>
+    </section>
+
+    <section>
+      <h4>Custom summary</h4>
+      <p>
+        Use
+        <code>summary-method</code>
+        to calculate and format multiple summary rows.
+      </p>
+      <h-table
+        :data="spend"
+        row-key="id"
+        border="full"
+        show-summary
+        :summary-row-amount="2"
+        :summary-method="summaryMethod"
+      >
+        <h-table-column title="Code" field="id" width="100" />
+        <h-table-column title="Category" field="category" min-width="180" />
+        <h-table-column
+          v-for="(month, index) in months"
+          :key="month"
+          :title="month"
+          :field="`costs[${index}]`"
+          width="130"
+          align="right"
+          header-align="right"
+          footer-align="right"
+        />
+      </h-table>
+    </section>
+  </div>
 </template>
+
+<style scoped>
+.table-summary-demo {
+  display: grid;
+  gap: 24px;
+}
+
+.table-summary-demo h4,
+.table-summary-demo p {
+  margin: 0;
+}
+
+.table-summary-demo p {
+  margin-block: 8px 12px;
+  color: var(--h-text-secondary);
+}
+</style>

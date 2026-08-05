@@ -218,9 +218,9 @@ Table 适合展示需要比较、排序、筛选或批量操作的结构化数�
 :::demo components/Table/tree-multiple-selection.vue :::
 
 ## 表尾合计
-开启 `show-summary` 展示数值合计。内置与示例中的自定义合计均使用 `Decimal.js` 累加，避免普通浮点计算误差。
+开启 `show-summary` 后，表格会内置累加各数值列，无需配置 `summary-method`。内置与示例中的自定义合计均使用 `Decimal.js` 累加，避免普通浮点计算误差。
 
-多行合计通过 `summary-row-amount` 指定行数，并由 `summary-method` 返回二维数组。
+需要自定义计算或展示多行合计时，通过 `summary-row-amount` 指定行数，并由 `summary-method` 返回二维数组。
 
 :::tip `summary-method` 始终需要返回一个二维数组 :::
 :::demo components/Table/summary.vue :::

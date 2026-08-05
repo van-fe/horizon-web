@@ -280,9 +280,9 @@ Set `check-strictly` to ignore parent-child relationships when selecting rows.
 
 ## Summary Footer
 
-Enable `show-summary` to display numeric statistics in the footer. Built-in and custom summaries use `Decimal.js` accumulation to avoid ordinary floating-point errors.
+Enable `show-summary` to automatically accumulate each numeric column without configuring `summary-method`. Built-in and custom summaries use `Decimal.js` accumulation to avoid ordinary floating-point errors.
 
-For multiple summary rows, set `summary-row-amount` and return a two-dimensional array from `summary-method`.
+For custom calculations or multiple summary rows, set `summary-row-amount` and return a two-dimensional array from `summary-method`.
 
 :::tip `summary-method` must always return a two-dimensional array. :::
 
