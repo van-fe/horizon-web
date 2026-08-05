@@ -118,6 +118,7 @@
     @include mixins.e('core') {
       width: mixins.css-variable('switch', 'size', 'core', 'width', 'small');
       height: mixins.css-variable('switch', 'size', 'core', 'height', 'small');
+      padding: mixins.css-variable('switch', 'spacing', 'core', 'padding', 'small');
 
       @include mixins.is('with-inner-text') {
         width: mixins.css-variable('switch', 'size', 'core', 'width', 'small', 'with-inner-text');
@@ -159,6 +160,7 @@
     @include mixins.e('core') {
       width: mixins.css-variable('switch', 'size', 'core', 'width', 'large');
       height: mixins.css-variable('switch', 'size', 'core', 'height', 'large');
+      padding: mixins.css-variable('switch', 'spacing', 'core', 'padding', 'large');
 
       @include mixins.is('with-inner-text') {
         width: mixins.css-variable('switch', 'size', 'core', 'width', 'large', 'with-inner-text');

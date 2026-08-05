@@ -35,9 +35,9 @@ describe('Switch pointer interaction', () => {
     const coreRect = core.getBoundingClientRect();
     const thumbRect = thumb.getBoundingClientRect();
 
-    expect(thumbRect.top - coreRect.top).toBe(2);
-    expect(coreRect.bottom - thumbRect.bottom).toBe(2);
-    expect(thumbRect.left - coreRect.left).toBe(2);
+    expect(thumbRect.top - coreRect.top).toBe(3);
+    expect(coreRect.bottom - thumbRect.bottom).toBe(3);
+    expect(thumbRect.left - coreRect.left).toBe(3);
 
     const thumbCenterX = thumbRect.left + thumbRect.width / 2;
     const thumbCenterY = thumbRect.top + thumbRect.height / 2;
@@ -50,6 +50,6 @@ describe('Switch pointer interaction', () => {
     await Promise.all(thumb.getAnimations().map(animation => animation.finished));
 
     const activeThumbRect = thumb.getBoundingClientRect();
-    expect(coreRect.right - activeThumbRect.right).toBe(2);
+    expect(coreRect.right - activeThumbRect.right).toBe(3);
   });
 });
