@@ -5,20 +5,12 @@ export const packagesRoot = resolve(monorepoRoot, 'packages');
 export const rootScriptsRoot = resolve(monorepoRoot, 'scripts');
 
 /**
- * doc
+ * docs
  */
-export const docRoot = resolve(packagesRoot, 'doc');
-export const docDocs = resolve(docRoot, 'docs');
-export const docPartHtml = resolve(docRoot, 'part-html');
-export const docComponentsDocs = resolve(docDocs, 'components');
-export const docDirectivesDocs = resolve(docDocs, 'directives');
-export const docMethodsDocs = resolve(docDocs, 'methods');
-export const docOthersDocs = resolve(docDocs, 'others');
-export const docOutput = resolve(docRoot, 'dist');
-export const docDescriptionOutput = resolve(docRoot, 'descriptions');
-export const docConfig = resolve(docRoot, 'src/config');
-export const docThemesConfig = resolve(docConfig, 'themes');
-export const docDemoThemesConfig = resolve(docDocs, 'features/tokens/demos');
+export const docsRoot = resolve(packagesRoot, 'docs');
+export const docDescriptionOutput = resolve(packagesRoot, 'api-generator/descriptions');
+export const docThemesConfig = resolve(docsRoot, 'zh/features/theme');
+export const docDemoThemesConfig = resolve(docsRoot, 'zh/features/tokens/demos');
 
 /**
  * api-generator

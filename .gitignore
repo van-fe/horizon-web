@@ -37,15 +37,6 @@ packages/horizon-web/src/methods/index.ts
 packages/horizon-web/build/**/*.js
 *.temp.*
 
-# doc
-packages/doc/src/config/themes/default.json
-packages/doc/dist
-packages/doc/part-html
-packages/doc/docs/features/tokens/demos/theme.json
-packages/doc/build/json/components-analysis.json
-packages/doc/build/json/directives-analysis.json
-packages/doc/build/json/methods-analysis.json
-
 # docs
 packages/docs/.vitepress/dist
 packages/docs/.vitepress/cache

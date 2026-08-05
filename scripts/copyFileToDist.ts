@@ -32,7 +32,7 @@ export function cloneBrowserBuildFileToDist(tag: string) {
   // theme config
   shell.cp(
     '-R',
-    '../packages/doc/src/config/themes/default.json',
+    '../packages/docs/zh/features/theme/default.json',
     `../dist/default-theme@${tag}.json`,
   );
 }

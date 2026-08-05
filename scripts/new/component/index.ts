@@ -1,21 +1,23 @@
 import { upperFirst, kebabCase, lowerFirst } from 'lodash';
 import writeFilesByPath from '../utils/writeFilesByPath';
+import { writeDocs, registerDemosSidebar } from '../utils/writeDocs';
 import { resolve } from 'path';
 import fs from 'fs';
-import { green } from '../../../packages/shared/plugins';
+import chalk from 'chalk';
 
 function writeFiles(replacer: Record<string, string>) {
   const mainDir = resolve(__dirname, '../../../packages/horizon-web/src/components', replacer.capitalName);
-  const docDir = resolve(__dirname, '../../../packages/doc/docs/components', replacer.capitalName);
 
   fs.mkdirSync(mainDir, { recursive: true });
-  fs.mkdirSync(docDir, { recursive: true });
 
   writeFilesByPath(resolve(__dirname, './template/main'), mainDir, replacer);
 
-  fs.mkdirSync(mainDir, { recursive: true });
-
-  writeFilesByPath(resolve(__dirname, './template/doc'), docDir, replacer);
+  writeDocs({
+    type: 'components',
+    name: replacer.capitalName,
+    templateDir: resolve(__dirname, './template/doc'),
+    replacer,
+  });
 }
 
 function register(replacer: Record<string, string>) {
@@ -37,26 +39,19 @@ function register(replacer: Record<string, string>) {
     fs.writeFileSync(targetFile, JSON.stringify(fileJson, null, 2), { encoding: 'utf-8' });
   }
 
-  function registerOnSensorTracker() {
-    const targetFile = resolve(
-      __dirname,
-      '../../../packages/horizon-web-sensor-tracker/src/setting/components.json',
+  function registerOnDemosSidebar() {
+    registerDemosSidebar(
+      {
+        link: `components/${replacer.capitalName}`,
+        zh: replacer.capitalName,
+        en: replacer.capitalName,
+      },
+      'Basic Components',
     );
-
-    const fileContent = fs.readFileSync(targetFile, { encoding: 'utf-8' });
-    let fileJson = JSON.parse(fileContent) as Record<string, string[]>;
-
-    fileJson[replacer.nameSpaceName] = [];
-
-    fileJson = Object.fromEntries(
-      Object.entries(fileJson).sort((a, b) => a[0].localeCompare(b[0])),
-    );
-
-    fs.writeFileSync(targetFile, JSON.stringify(fileJson, null, 2), { encoding: 'utf-8' });
   }
 
   registerOnUnpluginResolver();
-  registerOnSensorTracker();
+  registerOnDemosSidebar();
 }
 
 export default function (name: string) {
@@ -79,5 +74,5 @@ export default function (name: string) {
 
   register(replacer);
 
-  green(`Create component ${name} success!`, 'info');
+  console.info(chalk.green(`Create component ${name} success! 已注册到 demos-sidebar.json（如分类不合适请手动调整）`));
 }

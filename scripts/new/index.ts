@@ -3,7 +3,7 @@ import { hideBin } from 'yargs/helpers';
 import newComponent from './component';
 import newDirective from './directive';
 import newMethod from './method';
-import { red } from '../../packages/shared/plugins';
+import chalk from 'chalk';
 
 // note: 先这样简单处理下 @archie.zheng
 const argv = yargs(hideBin(process.argv)) as any;
@@ -18,7 +18,8 @@ function main() {
       break;
     case 'directive':
       if (!name.startsWith('v-')) {
-        return red('The directive name must start with "v-"', 'error');
+        console.error(chalk.red('The directive name must start with "v-"'));
+        return;
       }
       newDirective(name);
       break;
@@ -26,9 +27,10 @@ function main() {
       newMethod(name);
       break;
     default:
-      red(
-        `Unknown create type: '${type}' ! Only support 'component', 'directive' and 'method'`,
-        'error',
+      console.error(
+        chalk.red(
+          `Unknown create type: '${type}' ! Only support 'component', 'directive' and 'method'`,
+        ),
       );
   }
 }

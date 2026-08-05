@@ -1,2 +1,2 @@
-### 基本用法
+## Basic Usage
 :::demo components/${capitalName}/basic.vue :::

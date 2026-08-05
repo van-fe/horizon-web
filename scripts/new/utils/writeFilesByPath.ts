@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { resolve } from 'path';
 
-function doReplace(content: string, replacer: Record<string, string>) {
+export function renderTemplate(content: string, replacer: Record<string, string>) {
   Object.entries(replacer).forEach(([key, value]) => {
     content = content.replaceAll(`\$\{${key}\}`, value);
   });
@@ -17,13 +17,13 @@ export default function (templateDir: string, targetDir: string, replacer: Recor
 
     fs.readdirSync(currPath, { withFileTypes: true }).forEach(dir => {
       if (dir.isFile()) {
-        const content = doReplace(
+        const content = renderTemplate(
           fs.readFileSync(resolve(currPath, dir.name), { encoding: 'utf-8' }),
           replacer,
         );
 
         fs.writeFileSync(
-          doReplace(resolve(targetDir, ...tierPaths, dir.name.replace('.tpl', '')), replacer),
+          renderTemplate(resolve(targetDir, ...tierPaths, dir.name.replace('.tpl', '')), replacer),
           content,
           {
             encoding: 'utf-8',

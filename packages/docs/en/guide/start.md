@@ -1,8 +1,7 @@
 # Quick Start
-## Installation
 
 ## Prerequisites
-- [Node.js](https://nodejs.org/) 16+
+- [Node.js](https://nodejs.org/) 20+
 - [Vue](https://vuejs.org/) 3.2.30+
 - [Vite](https://vitejs.dev/) or [CreateVue](https://github.com/vuejs/create-vue) ([VueCli](https://cli.vuejs.org/) is no longer recommended)
 
@@ -19,8 +18,8 @@ $ bun add @aurora/horizon-web
 ```sh [yarn]
 $ yarn add @aurora/horizon-web
 ```
-```sh [bun]
-$ bun add @aurora/horizon-web
+```sh [npm]
+$ npm install @aurora/horizon-web
 ```
 :::
 
@@ -31,7 +30,7 @@ You can use `Horizon Web` components directly through `script` and `link` tags.
 
 - **Style File**
 ```html
-<link rel="stylesheet" href="//unpack.com/@aurora/horizon-web/es/styles/index.css" />
+<link rel="stylesheet" href="//unpkg.com/@aurora/horizon-web/es/styles/index.css" />
 ```
 
 - **Script File**
@@ -40,13 +39,13 @@ You can use `Horizon Web` components directly through `script` and `link` tags.
 <!-- Import Vue 3 -->
 <script src="//cdn.jsdelivr.net/npm/vue@3"></script>
 <!-- Import component library -->
-<script src="//unpack.com/@aurora/horizon-web/dist/horizon-web-browser.iife.js"></script>
+<script src="//unpkg.com/@aurora/horizon-web/dist/horizon-web-browser.iife.js"></script>
 ```
 ```html [UMD]
 <!-- Import Vue 3 -->
 <script src="//cdn.jsdelivr.net/npm/vue@3"></script>
 <!-- Import component library -->
-<script src="//unpack.com/@aurora/horizon-web/dist/horizon-web-browser.umd.js"></script>
+<script src="//unpkg.com/@aurora/horizon-web/dist/horizon-web-browser.umd.js"></script>
 ```
 :::
 
@@ -78,11 +77,11 @@ createApp(App)
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <link rel="stylesheet" href="//unpack.com/@aurora/horizon-web/es/styles/index.css" />
+    <link rel="stylesheet" href="//unpkg.com/@aurora/horizon-web/es/styles/index.css" />
     <!-- Import Vue 3 -->
     <script src="//cdn.jsdelivr.net/npm/vue@3"></script>
     <!-- Import component library -->
-    <script src="//unpack.com/@aurora/horizon-web/dist/horizon-web-browser.iife.js"></script>
+    <script src="//unpkg.com/@aurora/horizon-web/dist/horizon-web-browser.iife.js"></script>
     <title>Horizon Web demo</title>
   </head>
   <body>
