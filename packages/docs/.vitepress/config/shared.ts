@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitepress'
+import { defineConfig } from 'vitepress';
 import DefineOptions from 'unplugin-vue-define-options/vite';
 import ResolveComponentsAlias from './resolveComponentsAlias';
 import watchDemos from './watchDemos';
@@ -8,40 +8,45 @@ import { liveDemoPlugin } from './liveDemoPlugin';
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "Horizon Web",
+  title: 'Horizon Web',
   cleanUrls: true,
   locales: {
     root: {
       label: '中文',
       lang: 'zh',
-      dir: 'src'
+      dir: 'src',
     },
     en: {
       label: 'English',
       lang: 'en',
-    }
+    },
   },
   themeConfig: {
     appearance: true,
     logo: './logo.svg',
-    nav: [
-      { text: 'Home', link: '/' },
-    ],
+    nav: [{ text: 'Home', link: '/' }],
     socialLinks: [
       {
         icon: 'github',
-        link: 'https://github.com/van-fe/horizon-web'
+        link: 'https://github.com/van-fe/horizon-web',
       },
-    ]
+    ],
   },
   vue: {
     template: {
       compilerOptions: {
-        isCustomElement: (tag) => tag === 'demo-render',
-      }
-    }
+        isCustomElement: tag => tag === 'demo-render',
+      },
+    },
   },
   vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler',
+        },
+      },
+    },
     resolve: {
       alias: [
         {
@@ -54,7 +59,11 @@ export default defineConfig({
           find: /^@aurora\/horizon-web$/,
           replacement: path.join(__dirname, '../../../../node_modules/@aurora/horizon-web/src/'),
         },
-        ...['colors', 'utils', 'icon', 'locale-vue', 'locale'].map(name => ({
+        {
+          find: /^@aurora\/upload-adapters\/(.*)$/,
+          replacement: path.join(__dirname, '../../../../packages/upload-adapters/src/$1'),
+        },
+        ...['colors', 'utils', 'icon', 'locale-vue', 'locale', 'upload-adapters'].map(name => ({
           find: new RegExp(`^@aurora\\/${name}$`),
           replacement: path.join(__dirname, `../../../../packages/${name}/src`),
         })),
@@ -70,21 +79,21 @@ export default defineConfig({
         },
         {
           find: /^decimal\.js$/,
-          replacement: path.join(__dirname, '../../../../packages/horizon-web/node_modules/decimal.js'),
+          replacement: path.join(
+            __dirname,
+            '../../../../packages/horizon-web/node_modules/decimal.js',
+          ),
         },
         {
           find: /^lodash\/(.*)$/,
-          replacement: path.join(__dirname, '../../../../packages/horizon-web/node_modules/lodash/$1'),
+          replacement: path.join(
+            __dirname,
+            '../../../../packages/horizon-web/node_modules/lodash/$1',
+          ),
         },
-      ]
+      ],
     },
-    plugins: [
-      liveDemoPlugin(),
-      vueJsx(),
-      DefineOptions(),
-      ResolveComponentsAlias(),
-      watchDemos(),
-    ],
+    plugins: [liveDemoPlugin(), vueJsx(), DefineOptions(), ResolveComponentsAlias(), watchDemos()],
     server: {
       watch: {
         // 确保配置文件目录和 demos 目录被监听（使用 ! 前缀表示不忽略）
@@ -97,5 +106,5 @@ export default defineConfig({
         ],
       },
     },
-  }
-})
+  },
+});

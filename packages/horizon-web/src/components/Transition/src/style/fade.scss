@@ -4,17 +4,17 @@
   $time-func: '';
 
   @if  $time == 'normal' {
-    $time-func: mixins.css-variable('transition-time');
+    $time-func: mixins.css-variable('transition', 'time');
   } @else if $time == 'fast' {
-    $time-func: mixins.css-variable('transition-time-fast');
+    $time-func: mixins.css-variable('transition', 'time', 'fast');
   } @else if $time == 'slow' {
-    $time-func: mixins.css-variable('transition-time-slow');
+    $time-func: mixins.css-variable('transition', 'time', 'slow');
   } @else if $time == 'extra-fast' {
-    $time-func: mixins.css-variable('transition-time-extra-fast');
+    $time-func: mixins.css-variable('transition', 'time', 'extra-fast');
   }
 
   #{mixins.block-name('fade-in-linear-#{$time}-enter-active')}, #{mixins.block-name('fade-in-linear-#{$time}-leave-active')} {
-    transition: mixins.css-variable('transition-fade-linear');
+    transition: mixins.css-variable('transition', 'fade', 'linear');
   }
 
   #{mixins.block-name('fade-in-linear-#{$time}-enter-from')}, #{mixins.block-name('fade-in-linear-#{$time}-leave-to')} {

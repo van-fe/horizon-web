@@ -30,6 +30,28 @@ const localSources = new Map<string, LocalSource>();
 let compilerPromise: Promise<typeof import('@vue/compiler-sfc')> | undefined;
 let transformerPromise: Promise<typeof import('sucrase')> | undefined;
 
+const bareDependencyLoaders: Record<string, () => Promise<object>> = {
+  vue: () => import('vue'),
+  '@aurora/horizon-web': () => import('@aurora/horizon-web'),
+  '@aurora/icon': () => import('@aurora/icon'),
+  '@aurora/utils': () => import('@aurora/utils'),
+  '@aurora/colors': () => import('@aurora/colors'),
+  '@aurora/locale-vue': () => import('@aurora/locale-vue'),
+  '@aurora/upload-adapters': () => import('@aurora/upload-adapters'),
+  '@aurora/upload-adapters/core': () => import('@aurora/upload-adapters/core'),
+  '@aurora/upload-adapters/qiniu': () => import('@aurora/upload-adapters/qiniu'),
+  '@aurora/upload-adapters/aliyun-oss': () => import('@aurora/upload-adapters/aliyun-oss'),
+  '@aurora/upload-adapters/tencent-cos': () => import('@aurora/upload-adapters/tencent-cos'),
+  '@faker-js/faker': () => import('@faker-js/faker'),
+  dayjs: () => import('dayjs'),
+  'decimal.js': () => import('decimal.js'),
+  'fetch-jsonp': () => import('fetch-jsonp'),
+  'lodash/get': () => import('lodash/get'),
+  'lodash/groupBy': () => import('lodash/groupBy'),
+  'lodash/throttle': () => import('lodash/throttle'),
+  qs: () => import('qs'),
+};
+
 export async function compileStaticDemo(
   source: string,
   sourcePath: string,
@@ -190,66 +212,24 @@ async function loadBareDependency(specifier: string) {
   const runtime = getRuntime();
   if (runtime.dependencies[specifier]) return runtime.dependencies[specifier];
 
-  let dependency: object;
-  switch (specifier) {
-    case 'vue':
-      dependency = await import('vue');
-      break;
-    case '@aurora/horizon-web':
-      dependency = await import('@aurora/horizon-web');
-      break;
-    case '@aurora/icon':
-      dependency = await import('@aurora/icon');
-      break;
-    case '@aurora/utils':
-      dependency = await import('@aurora/utils');
-      break;
-    case '@aurora/colors':
-      dependency = await import('@aurora/colors');
-      break;
-    case '@aurora/locale-vue':
-      dependency = await import('@aurora/locale-vue');
-      break;
-    case '@faker-js/faker':
-      dependency = await import('@faker-js/faker');
-      break;
-    case 'dayjs':
-      dependency = await import('dayjs');
-      break;
-    case 'decimal.js':
-      dependency = await import('decimal.js');
-      break;
-    case 'fetch-jsonp':
-      dependency = await import('fetch-jsonp');
-      break;
-    case 'lodash/get':
-      dependency = await import('lodash/get');
-      break;
-    case 'lodash/groupBy':
-      dependency = await import('lodash/groupBy');
-      break;
-    case 'lodash/throttle':
-      dependency = await import('lodash/throttle');
-      break;
-    case 'qs':
-      dependency = await import('qs');
-      break;
-    default:
-      // Type-only imports are removed by Sucrase before execution.
-      if (specifier.startsWith('@aurora/horizon-web/es/')) return undefined;
-      throw new Error(`Static demo compiler does not support import "${specifier}"`);
+  const loader = bareDependencyLoaders[specifier];
+  if (!loader) {
+    // Type-only imports are removed by Sucrase before execution.
+    if (specifier.startsWith('@aurora/horizon-web/es/')) return undefined;
+    throw new Error(`Static demo compiler does not support import "${specifier}"`);
   }
 
+  const dependency = await loader();
   const module = { __esModule: true, ...dependency };
   runtime.dependencies[specifier] = module;
   return module;
 }
 
-async function executeCommonJs(
-  code: string,
-  cacheKey: string,
-  aliases: Record<string, string>,
-) {
+export function isStaticDemoBareDependencySupported(specifier: string) {
+  return Object.prototype.hasOwnProperty.call(bareDependencyLoaders, specifier);
+}
+
+async function executeCommonJs(code: string, cacheKey: string, aliases: Record<string, string>) {
   const wrapper = `
 const runtime = globalThis[${JSON.stringify(RUNTIME_KEY)}];
 const aliases = ${JSON.stringify(aliases)};

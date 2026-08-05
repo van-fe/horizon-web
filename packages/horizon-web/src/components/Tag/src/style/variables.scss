@@ -36,9 +36,9 @@ $values: (
     ),
   ),
   font-size: (
-    '': #{function.css-variable('font-size-10')},
-    small: #{function.css-variable('font-size-10')},
-    large: #{function.css-variable('font-size-9')},
+    '': #{function.css-variable('text-sm')},
+    small: #{function.css-variable('text-sm')},
+    large: #{function.css-variable('text-base')},
   ),
   line-height: (
     '': #{function.css-variable('line-height-standard')},

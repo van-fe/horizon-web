@@ -8,10 +8,11 @@ import type { HSegmentedValue } from './composables/useProps';
 import { useSegmentedItemProps } from './composables/useProps';
 import { useSegmentedItemSlots, type SegmentedItemSlots } from './composables/useSlots';
 import { contextKey } from './constants';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
 
 export default defineComponent({
   name: `${useNamespace()}SegmentedItem`,
-  components: { AIcon },
+  components: { AIcon, HTooltip },
   props: useSegmentedItemProps,
   slots: useSegmentedItemSlots,
   emits: useSegmentedItemEmits,
@@ -71,10 +72,10 @@ export default defineComponent({
                 )}
 
             {isVNodeEmpty(slotDefaults)
-              ? props.label && (
-                  <div class={cls.e('item-text')} title={props.label as string}>
-                    {props.label}
-                  </div>
+              ? props.label !== undefined && (
+                  <HTooltip content={String(props.label)} overflow={true}>
+                    <div class={cls.e('item-text')}>{props.label}</div>
+                  </HTooltip>
                 )
               : slotDefaults}
           </div>

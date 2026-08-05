@@ -60,6 +60,7 @@ With `multipart`, files are split by `multipart-chunk-size`, while `multipart-ma
 
 :::demo components/Upload/multipart.vue :::
 
+See the [Upload Adapters extension](/en/extensions/upload-adapters) for cloud-provider presets and an interactive sandbox. Production integrations can use the default XHR transport or provide `uploadPart` for a custom service or storage SDK.
 
 ## Type Definitions
 

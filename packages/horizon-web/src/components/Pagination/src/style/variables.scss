@@ -97,6 +97,6 @@ $values: (
     margin-right: #{function.css-variable('spacing-7')},
   ),
   transition: (
-    all: #{function.css-variable('transition-all--fast')},
+    all: #{function.css-variable('transition', 'all', 'fast')},
   ),
 );

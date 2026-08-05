@@ -3,6 +3,7 @@ import { mount } from '@vue/test-utils';
 import { describe, expect, test, vi } from 'vitest';
 import { nextTick, reactive, ref } from 'vue';
 import { HForm, HFormItem, type HFormInstance } from '../../Form';
+import HTooltip from '../../Tooltip/src/Tooltip';
 import HSegmented from '../src/Segmented';
 import HSegmentedItem from '../src/SegmentedItem';
 import type { HSegmentedValue } from '../src/composables/useProps';
@@ -267,7 +268,9 @@ describe('Segmented.tsx', () => {
                     <path d="M13.9995 15.752H21.9995C21.9995 16.5804 21.3279 17.252 20.4995 17.252H15.4995C14.6711 17.252 13.9995 16.5804 13.9995 15.752Z" fill="currentColor"></path>
                     <path d="M21.9995 19.752H13.9995C13.9995 20.5804 14.6711 21.252 15.4995 21.252H20.4995C21.3279 21.252 21.9995 20.5804 21.9995 19.752Z" fill="currentColor"></path>
                   </svg>
-                  <div class="h-segmented__item-text" title="1">1</div>
+                  <div class="h-segmented__item-text">1</div>
+                  <!--teleport start-->
+                  <!--teleport end-->
                 </div>
               </div>
               <div class="h-segmented__item" role="tab" data-focus-visible-inset="" tabindex="-1" aria-selected="false" aria-disabled="false">
@@ -279,7 +282,9 @@ describe('Segmented.tsx', () => {
                     <path d="M5 11.8674C4.72386 11.8674 4.5 11.6436 4.5 11.3674C4.5 11.0913 4.72386 10.8674 5 10.8674C5.27614 10.8674 5.5 11.0913 5.5 11.3674C5.5 11.6436 5.27614 11.8674 5 11.8674ZM5 13.3674C6.10457 13.3674 7 12.472 7 11.3674C7 10.2629 6.10457 9.36743 5 9.36743C3.89543 9.36743 3 10.2629 3 11.3674C3 12.472 3.89543 13.3674 5 13.3674Z" fill="currentColor"></path>
                     <path d="M5 18.8674C4.72386 18.8674 4.5 18.6436 4.5 18.3674C4.5 18.0913 4.72386 17.8674 5 17.8674C5.27614 17.8674 5.5 18.0913 5.5 18.3674C5.5 18.6436 5.27614 18.8674 5 18.8674ZM5 20.3674C6.10457 20.3674 7 19.472 7 18.3674C7 17.2629 6.10457 16.3674 5 16.3674C3.89543 16.3674 3 17.2629 3 18.3674C3 19.472 3.89543 20.3674 5 20.3674Z" fill="currentColor"></path>
                   </svg>
-                  <div class="h-segmented__item-text" title="2">2</div>
+                  <div class="h-segmented__item-text">2</div>
+                  <!--teleport start-->
+                  <!--teleport end-->
                 </div>
               </div>
               <div class="h-segmented__indicator"></div>
@@ -332,12 +337,16 @@ describe('Segmented.tsx', () => {
                       <div class="h-segmented__nav-list">
                         <div class="h-segmented__item" role="tab" data-focus-visible-inset="" tabindex="-1" aria-selected="false" aria-disabled="false">
                           <div class="h-segmented__item-inner">
-                            <div class="h-segmented__item-text" title="1">1</div>
+                            <div class="h-segmented__item-text">1</div>
+                            <!--teleport start-->
+                            <!--teleport end-->
                           </div>
                         </div>
                         <div class="h-segmented__item" role="tab" data-focus-visible-inset="" tabindex="-1" aria-selected="false" aria-disabled="false">
                           <div class="h-segmented__item-inner">
-                            <div class="h-segmented__item-text" title="2">2</div>
+                            <div class="h-segmented__item-text">2</div>
+                            <!--teleport start-->
+                            <!--teleport end-->
                           </div>
                         </div>
                         <div class="h-segmented__indicator"></div>
@@ -365,12 +374,59 @@ describe('Segmented.tsx', () => {
 
     expect(formInst.value).toBeTruthy();
     await expect(formInst.value?.validate()).rejects.toThrowError();
-    const activate = wrapper.find('[title=2]');
+    const activate = wrapper.findAll('[role="tab"]')[1];
     await activate.trigger('click');
     await nextTick();
     expect(onValidate).toBeCalledTimes(2);
     await expect(formInst.value?.validate()).resolves.toBeUndefined();
     expect(formValue.category).toBe('2');
+  });
+
+  test('shows the full label tooltip only when the item text overflows', async () => {
+    vi.useFakeTimers();
+    const fullLabel = 'A segmented option with a complete label';
+    const wrapper = mount(
+      () => (
+        <HSegmented block>
+          <HSegmentedItem key="fits" value="fits" label="Fits" />
+          <HSegmentedItem key="overflows" value="overflows" label={fullLabel} />
+        </HSegmented>
+      ),
+      { attachTo: document.body },
+    );
+
+    try {
+      const tooltips = wrapper.findAllComponents(HTooltip);
+      const labels = wrapper.findAll('.h-segmented__item-text');
+      expect(tooltips).toHaveLength(2);
+      expect(tooltips[1].props('overflow')).toBe(true);
+      expect(tooltips[1].props('content')).toBe(fullLabel);
+
+      for (const [index, label] of labels.entries()) {
+        Object.defineProperties(label.element, {
+          scrollWidth: { configurable: true, value: index === 0 ? 80 : 180 },
+          scrollHeight: { configurable: true, value: 20 },
+          getBoundingClientRect: {
+            configurable: true,
+            value: () => ({ width: 100, height: 20 }),
+          },
+        });
+      }
+
+      await labels[0].trigger('mouseenter');
+      await vi.advanceTimersByTimeAsync(200);
+      await nextTick();
+      expect(document.body.querySelector('.h-tooltip__content')).toBeNull();
+
+      await labels[1].trigger('mouseenter');
+      await vi.advanceTimersByTimeAsync(200);
+      await nextTick();
+      expect(document.body.querySelector('.h-tooltip__content')?.textContent).toBe(fullLabel);
+    } finally {
+      wrapper.unmount();
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
   });
 
   test('supports arrow-key selection and skips disabled items', async () => {

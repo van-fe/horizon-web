@@ -50,7 +50,7 @@ The `extra` slot places view-level actions such as refresh and reset beside the 
 
 ## Long Labels and Overflow
 
-In constrained layouts, truncate text through a custom label slot and preserve the complete name in a Tooltip. Ensure keyboard users can access the full label too.
+When a label supplied through `label` is truncated, a Tooltip automatically reveals its complete name. Custom label slots own their structure and truncation rules, so compose a Tooltip there when needed.
 
 :::demo components/Tabs/text-overflow.vue :::
 

@@ -1,0 +1,30 @@
+export {
+  createTencentCosMultipartAdapter,
+  createTencentCosUploadPreset,
+} from './providers/tencent-cos';
+
+export type {
+  TencentCosClientLike,
+  TencentCosCallback,
+  TencentCosCompletePart,
+  TencentCosListedPart,
+  TencentCosMultipartAbortParams,
+  TencentCosMultipartAbortResult,
+  TencentCosMultipartAdapterOptions,
+  TencentCosMultipartCompleteParams,
+  TencentCosMultipartCompleteResult,
+  TencentCosMultipartInitParams,
+  TencentCosMultipartInitResult,
+  TencentCosMultipartListPartParams,
+  TencentCosMultipartListPartResult,
+  TencentCosMultipartSession,
+  TencentCosMultipartUploadParams,
+  TencentCosMultipartUploadResult,
+  TencentCosObjectParams,
+  TencentCosOptionResolver,
+  TencentCosProgressInfo,
+  TencentCosResolverContext,
+  TencentCosUploadedPart,
+  TencentCosUploadPreset,
+  TencentCosUploadPresetOptions,
+} from './providers/tencent-cos';

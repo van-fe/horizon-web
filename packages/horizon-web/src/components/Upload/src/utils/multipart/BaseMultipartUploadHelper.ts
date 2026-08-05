@@ -7,6 +7,15 @@ import type { ToRefs } from 'vue';
 import type { UploadProps } from '../../composables/useProps';
 import { createMultipartChunks } from './createMultipartChunks';
 
+function requiresFullMultipartRestart(error: unknown) {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'requiresFullRestart' in error &&
+    (error as { requiresFullRestart?: unknown }).requiresFullRestart === true
+  );
+}
+
 export default abstract class BaseMultipartUploadHelper extends UploadHelperOptions {
   protected readonly file: HUploadFileType;
   protected readonly instanceMethods: HUploadHttpRequestInstanceMethods;
@@ -22,6 +31,7 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
   private failed = false;
   private merging = false;
   private completed = false;
+  private fullRestartRequired = false;
 
   protected get chunkSize() {
     return (this.multipartChunkSize || 2) * 1024 * 1024;
@@ -152,6 +162,7 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
   }
 
   private fail(chunk: HUploadChunk, responseText: string, response: unknown) {
+    if (requiresFullMultipartRestart(response)) this.fullRestartRequired = true;
     if (this.paused || this.failed || this.completed) return;
 
     chunk.status = 'fail';
@@ -214,6 +225,7 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
           void this.schedule();
         },
         error => {
+          if (requiresFullMultipartRestart(error)) this.fullRestartRequired = true;
           if (settled) return;
           settled = true;
           this.requests.delete(chunk.index);
@@ -286,6 +298,7 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
         typeof response === 'string' ? response : JSON.stringify(response ?? {});
       void this.instanceMethods.onUploadSuccess(this.file, serializedResponse);
     } catch (error) {
+      if (requiresFullMultipartRestart(error)) this.fullRestartRequired = true;
       this.failed = true;
       const reason = error instanceof Error ? error.message : String(error);
       void this.instanceMethods.onUploadFail(this.file, reason, JSON.stringify({ reason }));
@@ -323,15 +336,26 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
     this.paused = false;
     this.failed = false;
     this.instanceMethods.addUploadingQueue(this.file, this);
-    this.initializePromise ??= this.initialize();
+    const initializePromise = (this.initializePromise ??= this.initialize());
 
     try {
-      await this.initializePromise;
+      await initializePromise;
+    } catch (error) {
+      if (this.initializePromise === initializePromise) this.initializePromise = undefined;
+      if (requiresFullMultipartRestart(error)) this.fullRestartRequired = true;
+      this.failed = true;
+      const reason = error instanceof Error ? error.message : String(error);
+      void this.instanceMethods.onUploadFail(this.file, reason, JSON.stringify({ reason }));
+      return;
+    }
+
+    try {
       if (!this.paused) {
         this.updateProgress();
         await this.schedule();
       }
     } catch (error) {
+      if (requiresFullMultipartRestart(error)) this.fullRestartRequired = true;
       this.failed = true;
       const reason = error instanceof Error ? error.message : String(error);
       void this.instanceMethods.onUploadFail(this.file, reason, JSON.stringify({ reason }));
@@ -348,6 +372,18 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
     if (this.completed) return;
     this.paused = false;
     this.failed = false;
+    if (this.fullRestartRequired) {
+      this.fullRestartRequired = false;
+      this.initializePromise = undefined;
+      this.nextPendingChunkIndex = 0;
+      this.completedBytes = 0;
+      this.inFlightLoadedBytes = 0;
+      this.loadedBytes.clear();
+      this.chunks.forEach(chunk => {
+        chunk.status = 'pending';
+        chunk.response = undefined;
+      });
+    }
     this.chunks.forEach(chunk => {
       if (chunk.status === 'fail' || chunk.status === 'uploading') chunk.status = 'pending';
     });

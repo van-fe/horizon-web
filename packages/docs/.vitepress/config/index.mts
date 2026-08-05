@@ -1,5 +1,6 @@
 import shared from './shared';
 import zh from './zh';
+import en from './en';
 import { defineConfig } from 'vitepress';
 import containers from '../markdown/containers';
 import markdownAnalyseFenceConfig from '../markdown-analyse/markdown/fenceConfig';
@@ -10,7 +11,7 @@ import autoComponentDocs from '../markdown/autoComponentDocs';
 // 添加 markdown-analyse 中的其他容器类型（tip, info, warning, success, error）
 function addMarkdownAnalyseContainers(md: MarkdownIt) {
   const containerTypes = ['tip', 'info', 'warning', 'success', 'error'] as const;
-  const alertTypes: Record<typeof containerTypes[number], string> = {
+  const alertTypes: Record<(typeof containerTypes)[number], string> = {
     tip: 'info',
     info: 'info',
     warning: 'warning',
@@ -26,10 +27,9 @@ function addMarkdownAnalyseContainers(md: MarkdownIt) {
       render(tokens: any[], idx: number) {
         const m = tokens[idx].info.trim().match(new RegExp(`^${type}\\s*(.*?)\\s*:::$`));
         if (m && tokens[idx].nesting === 1) {
-          const content = m[1]
-            ?.replace(/\\n\s*/g, '<br>')
-            .replace(/`(.*?)`/g, '<code>$1</code>') || '';
-          
+          const content =
+            m[1]?.replace(/\\n\s*/g, '<br>').replace(/`(.*?)`/g, '<code>$1</code>') || '';
+
           return `<h-alert type="${alertTypes[type]}" style="margin: 20px 0;" :closable="false" show-icon>${content}</h-alert>`;
         }
         return '';
@@ -49,24 +49,24 @@ export default defineConfig({
   },
   locales: {
     root: { label: '简体中文', lang: 'zh-CN', ...zh },
-    en: { label: 'English', lang: 'en' },
+    en: { label: 'English', lang: 'en', ...en },
   },
   markdown: {
     lineNumbers: true,
     sfc: {
-      customBlocks: ['demo-block']
+      customBlocks: ['demo-block'],
     },
-    config: (md) => {
+    config: md => {
       // 使用原有的 containers（demo, code）- 这些是 VitePress 专用的实现
       md.use(containers);
       // 自动从 API Generator 数据注入组件名称、简介和 API
       autoComponentDocs(md);
-      
+
       // 添加 markdown-analyse 中的其他容器类型
       addMarkdownAnalyseContainers(md);
-      
+
       // 配置代码块和表格样式
       markdownAnalyseFenceConfig(md);
-    }
-  }
-})
+    },
+  },
+});

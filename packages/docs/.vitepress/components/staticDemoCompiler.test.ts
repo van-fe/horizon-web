@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { findImports, normalizePath } from './staticDemoCompiler';
+import {
+  findImports,
+  isStaticDemoBareDependencySupported,
+  normalizePath,
+} from './staticDemoCompiler';
 
 describe('static demo compiler utilities', () => {
   it('finds static imports needed by the browser dependency registry', () => {
@@ -19,5 +23,19 @@ describe('static demo compiler utilities', () => {
     expect(normalizePath('en/features/tokens/demos/./theme.json')).toBe(
       'en/features/tokens/demos/theme.json',
     );
+  });
+
+  it.each([
+    '@aurora/upload-adapters',
+    '@aurora/upload-adapters/core',
+    '@aurora/upload-adapters/qiniu',
+    '@aurora/upload-adapters/aliyun-oss',
+    '@aurora/upload-adapters/tencent-cos',
+  ])('registers %s for live browser demos', specifier => {
+    expect(isStaticDemoBareDependencySupported(specifier)).toBe(true);
+  });
+
+  it('does not accept an unregistered upload adapter subpath', () => {
+    expect(isStaticDemoBareDependencySupported('@aurora/upload-adapters/internal')).toBe(false);
   });
 });

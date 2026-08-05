@@ -116,7 +116,7 @@ $values: (
   ),
   transition: (
     transform: mixins.css-variable('transition', 'transform'),
-    color-behavior: mixins.css-variable('transition-color-behavior'),
+    color-behavior: mixins.css-variable('transition', 'color', 'behavior'),
   ),
   z-index: 10,
 );

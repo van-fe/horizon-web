@@ -6,7 +6,7 @@ Give every `SegmentedItem` an explicit, unique `value`, then use `active-key` or
 
 ## Block mode
 
-With `block`, the options share the available parent width, which suits toolbars with a stable number of steps.
+With `block`, the options share the available parent width, which suits toolbars with a stable number of steps. Truncated `label` text automatically exposes its full content in a Tooltip; custom slots manage their own hints.
 
 :::demo components/Segmented/block.vue :::
 

@@ -112,5 +112,5 @@ $values: (
       ),
     ),
   ),
-  transition: #{mixins.css-variable('transition-all--fast')},
+  transition: #{mixins.css-variable('transition', 'all', 'fast')},
 );

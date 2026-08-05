@@ -3,7 +3,7 @@
 $values: (
   font-size: (
     title: #{function.css-variable('text-base')},
-    value: #{function.css-variable('font-size-6')},
+    value: #{function.css-variable('text-2xl')},
     affix: #{function.css-variable('text-lg')},
     trend: #{function.css-variable('text-sm')},
   ),

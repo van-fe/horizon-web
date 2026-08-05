@@ -15,7 +15,7 @@
 
     @include mixins.e('nav-list') {
       @include mixins.m('space') {
-        padding-right: mixins.css-variable('font-size-6');
+        padding-right: mixins.css-variable('spacing-7');
       }
     }
 
@@ -109,11 +109,11 @@
     }
 
     @include mixins.e('tab-inner') {
-      padding: 0 mixins.css-variable('font-size-10');
+      padding: 0 mixins.css-variable('spacing-4');
     }
 
     @include mixins.e('icon') {
-      font-size: mixins.css-variable('font-size-8');
+      font-size: mixins.css-variable('text-lg');
     }
 
     @include mixins.e('icon-outer') {

@@ -324,7 +324,7 @@ $values: (
     background: mixins.css-variable('shadow', 'dropdown')
   ),
   transition: (
-    '': mixins.css-variable('transition', 'color-behavior'),
-    'background-opacity': #{background function.css-variable('transition-time-fast') function.css-variable('transition-func-ease-in-out-bezier'), opacity function.css-variable('transition-time-fast') function.css-variable('transition-func-ease-in-out-bezier')}
+    '': mixins.css-variable('transition', 'color', 'behavior'),
+    'background-opacity': #{background function.css-variable('transition', 'time', 'fast') function.css-variable('transition', 'func', 'ease-in-out-bezier'), opacity function.css-variable('transition', 'time', 'fast') function.css-variable('transition', 'func', 'ease-in-out-bezier')}
   ),
 );

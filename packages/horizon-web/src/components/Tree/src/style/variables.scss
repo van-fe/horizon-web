@@ -96,9 +96,9 @@ $values: (
   ),
   transition: (
     all: (
-      '': #{function.css-variable('transition-all')},
-      fast: #{function.css-variable('transition-all--fast')},
+      '': #{function.css-variable('transition', 'all')},
+      fast: #{function.css-variable('transition', 'all', 'fast')},
     ),
-    color-behavior: #{function.css-variable('transition-color-behavior')},
+    color-behavior: #{function.css-variable('transition', 'color', 'behavior')},
   ),
 );

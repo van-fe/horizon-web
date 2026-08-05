@@ -10,6 +10,7 @@ import './tailwind.css';
 import './demo.css';
 import DemoBlock from '../components/DemoBlock.vue';
 import VersionTips from '../components/VersionTips.vue';
+import IconGallery from '../../demos/components/Icon/all.vue';
 
 export default {
   extends: DefaultTheme,
@@ -57,5 +58,6 @@ export default {
 
     app.component('DemoBlock', DemoBlock);
     app.component('VersionTips', VersionTips);
+    app.component('IconGallery', IconGallery);
   },
 } satisfies Theme;

@@ -44,6 +44,6 @@ $values: (
     ),
   ),
   transition: (
-    all: #{function.css-variable('transition-all--fast')},
+    all: #{function.css-variable('transition', 'all', 'fast')},
   ),
 );

@@ -10,6 +10,7 @@ import {
   type VNode,
   type VNodeRef,
 } from 'vue';
+import HTooltip from '~/components/Tooltip/src/Tooltip';
 import { useTabEmits, type TabEmits } from './composables/useEmits';
 import { useTabProps, type HTabValue } from './composables/useProps';
 import type { TabSlots } from './composables/useSlots';
@@ -20,6 +21,7 @@ export default defineComponent({
   name: `${useNamespace()}Tab`,
   components: {
     AIcon,
+    HTooltip,
   },
   inheritAttrs: false,
   props: useTabProps,
@@ -127,7 +129,12 @@ export default defineComponent({
                 )}
 
             {isVNodeEmpty(slotDefaults) ? (
-              <div class={cls.e('tab-text')}>{props.label}</div>
+              <HTooltip
+                content={props.label === undefined ? '' : String(props.label)}
+                overflow={true}
+              >
+                <div class={cls.e('tab-text')}>{props.label}</div>
+              </HTooltip>
             ) : (
               slotDefaults
             )}

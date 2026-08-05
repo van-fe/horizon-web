@@ -230,6 +230,13 @@
         "vite-plugin-style-import": "^2.0.0",
       },
     },
+    "packages/upload-adapters": {
+      "name": "@aurora/upload-adapters",
+      "version": "1.0.0",
+      "devDependencies": {
+        "@aurora/horizon-web": "workspace:*",
+      },
+    },
     "packages/utils": {
       "name": "@aurora/utils",
       "version": "1.0.0",
@@ -314,6 +321,8 @@
     "@aurora/locale": ["@aurora/locale@workspace:packages/locale"],
 
     "@aurora/locale-vue": ["@aurora/locale-vue@workspace:packages/locale-vue"],
+
+    "@aurora/upload-adapters": ["@aurora/upload-adapters@workspace:packages/upload-adapters"],
 
     "@aurora/utils": ["@aurora/utils@workspace:packages/utils"],
 

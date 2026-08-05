@@ -6,8 +6,10 @@
         id="review-comment"
         v-model="comment"
         :options="options"
+        :rows="4"
         placeholder="Add a comment and mention a reviewer"
       />
+      <p class="mention-hint">Type @ on any line; the suggestions follow the text caret.</p>
       <output class="docs-demo__value">{{ comment || 'No comment yet' }}</output>
     </div>
   </section>
@@ -16,7 +18,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const comment = ref('Could @design review the empty state?');
+const comment = ref('Review notes:\nPlease ask @design about the empty state.');
 const options = [
   { value: 'alice', label: 'Alice Chen · Product' },
   { value: 'bob', label: 'Bob Williams · Engineering' },
@@ -28,6 +30,11 @@ const options = [
 .mention-label {
   color: var(--h-text-primary);
   font-weight: var(--h-weight-strong);
+}
+
+.mention-hint {
+  margin: 0;
+  color: var(--h-text-secondary);
 }
 
 .mention-field {

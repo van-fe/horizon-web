@@ -1,61 +1,122 @@
 @use '../../../../styles/mixins' as mixins;
+@use '../../../Dropdown/src/style/index' as dropdown-style;
+
+@mixin mentions-text-layout {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 88px;
+  padding: mixins.css-variable('spacing-2') mixins.css-variable('spacing-4');
+  margin: 0;
+  overflow: hidden auto;
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+  font-variant: inherit;
+  line-height: inherit;
+  vertical-align: top;
+  text-align: inherit;
+  letter-spacing: inherit;
+  word-break: inherit;
+  overflow-wrap: break-word;
+  tab-size: inherit;
+  white-space: inherit;
+}
 
 @include mixins.b('mentions') {
   position: relative;
+  box-sizing: border-box;
+  display: flex;
   width: 100%;
+  min-width: 0;
+  font-size: mixins.css-variable('text-base');
+  line-height: mixins.css-variable('line-height-standard');
+  color: mixins.css-variable('text-primary');
+  white-space: pre-wrap;
+  caret-color: mixins.css-variable('text-brand-default');
+  background: mixins.css-variable('bg-default');
+  border: 1px solid mixins.css-variable('border-default');
+  border-radius: mixins.css-variable('radius-m');
+  isolation: isolate;
+  transition: border-color mixins.css-variable('transition-time');
+
+  @include mixins.is-not('disabled') {
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+    &:hover {
+      border-color: mixins.css-variable('border-brand-hover');
+    }
+  }
+
+  /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+  &:focus-within {
+    border-color: mixins.css-variable('border-brand-default');
+  }
+
+  /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+  &:has(> #{mixins.element-name('input', mixins.block('mentions'))}:focus-visible) {
+    @include mixins.focus-ring(mixins.css-variable('radius-m'));
+  }
 
   @include mixins.e('input') {
-    box-sizing: border-box;
-    width: 100%;
-    min-height: 88px;
-    padding: 8px 12px;
-    color: mixins.css-variable('text-primary');
+    @include mentions-text-layout;
+    flex: auto;
+    color: inherit;
     resize: vertical;
     outline: none;
-    background: mixins.css-variable('bg-white');
-    border: 1px solid mixins.css-variable('border-default');
-    border-radius: mixins.css-variable('border-radius-medium');
+    background: transparent;
+    border: 0;
+    border-radius: inherit;
 
     /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
-    &:focus {
-      border-color: mixins.css-variable('brand-primary');
+    &::placeholder {
+      color: mixins.css-variable('text-disabled');
     }
   }
 
-  @include mixins.e('dropdown') {
+  @include mixins.e('measure') {
+    @include mentions-text-layout;
     position: absolute;
-    right: 0;
-    left: 0;
-    z-index: 10;
-    padding: 4px;
-    overflow: auto;
-    background: mixins.css-variable('bg-white');
-    border-radius: mixins.css-variable('border-radius-medium');
-    box-shadow: mixins.css-variable('shadow-3');
+    inset: 0;
+    z-index: -1;
+    color: transparent;
+    pointer-events: none;
   }
 
-  @include mixins.e('option') {
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: mixins.css-variable('border-radius-small');
+  @include mixins.e('caret-reference') {
+    display: inline;
+  }
 
-    @include mixins.is('active') {
-      background: mixins.css-variable('bg-hover');
-    }
+  @include mixins.e('caret') {
+    display: inline-block;
+    width: 0;
+    min-height: 1em;
+  }
 
-    @include mixins.is('disabled') {
-      cursor: not-allowed;
-      opacity: 0.5;
-    }
+  @include mixins.e('popper') {
+    display: block;
+    width: max-content;
+    max-width: calc(100vw - #{mixins.css-variable('spacing-4')});
   }
 
   @include mixins.e('empty') {
-    padding: 12px;
+    display: flex;
+    align-items: center;
+    min-height: mixins.css-variable('dropdown', 'size', 'item', 'height');
+    padding: mixins.css-variable('dropdown', 'spacing', 'item', 'padding');
+    margin: mixins.css-variable('dropdown', 'spacing', 'first-last-child', 'margin-y') 0;
     color: mixins.css-variable('text-secondary');
     text-align: center;
   }
 
   @include mixins.is('disabled') {
-    opacity: 0.6;
+    color: mixins.css-variable('text-disabled');
+    background: mixins.css-variable('bg-disabled');
+    border-color: mixins.css-variable('border-disabled');
+
+    @include mixins.e('input') {
+      cursor: not-allowed;
+      resize: none;
+    }
   }
 }

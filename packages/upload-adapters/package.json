@@ -1,0 +1,61 @@
+{
+  "name": "@aurora/upload-adapters",
+  "version": "1.0.0",
+  "description": "Framework-agnostic resumable upload adapters with Horizon Web integration.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./core": {
+      "types": "./types/core/index.d.ts",
+      "import": "./dist/core.js",
+      "require": "./dist/core.cjs"
+    },
+    "./qiniu": {
+      "types": "./types/qiniu.d.ts",
+      "import": "./dist/qiniu.js",
+      "require": "./dist/qiniu.cjs"
+    },
+    "./aliyun-oss": {
+      "types": "./types/aliyun-oss.d.ts",
+      "import": "./dist/aliyun-oss.js",
+      "require": "./dist/aliyun-oss.cjs"
+    },
+    "./tencent-cos": {
+      "types": "./types/tencent-cos.d.ts",
+      "import": "./dist/tencent-cos.js",
+      "require": "./dist/tencent-cos.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "types",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "bun run build:dist && bun run build:types",
+    "build:dist": "bunx --bun vite build",
+    "build:types": "tsc -d --pretty --emitDeclarationOnly --declarationDir ./types",
+    "prepack": "bun run build",
+    "typecheck": "tsc --noEmit --pretty false",
+    "test": "bun run --bun vitest run --config ./vitest.config.ts"
+  },
+  "keywords": [
+    "multipart-upload",
+    "resumable-upload",
+    "qiniu",
+    "aliyun-oss",
+    "tencent-cos"
+  ],
+  "license": "ISC",
+  "devDependencies": {
+    "@aurora/horizon-web": "workspace:*"
+  }
+}

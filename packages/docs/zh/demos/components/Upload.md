@@ -60,6 +60,7 @@ Gallery 模式以缩略图展示文件，适合管理一组图片。
 
 :::demo components/Upload/multipart.vue :::
 
+云存储厂商预设与交互沙箱见 [Upload Adapters 扩展](/extensions/upload-adapters)。生产环境可使用默认 XHR，也可通过 `uploadPart` 接入自定义服务或云存储 SDK。
 
 ## 类型定义
 

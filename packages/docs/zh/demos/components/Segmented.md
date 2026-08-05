@@ -6,7 +6,7 @@
 
 ## Block 模式
 
-设置 `block` 后，选项会分配父容器的可用宽度，适合步骤固定的工具栏。
+设置 `block` 后，选项会分配父容器的可用宽度，适合步骤固定的工具栏。通过 `label` 传入的文字被截断时，会自动用 Tooltip 展示完整内容；自定义插槽需要自行处理提示。
 
 :::demo components/Segmented/block.vue :::
 

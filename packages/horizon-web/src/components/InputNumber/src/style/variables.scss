@@ -206,8 +206,8 @@ $values: (
     ),
   ),
   transition: (
-    all: #{function.css-variable('transition-all--fast')},
-    border-color: border-color #{function.css-variable('transition-time-fast')},
-    color: color #{function.css-variable('transition-time-fast')},
+    all: #{function.css-variable('transition', 'all', 'fast')},
+    border-color: border-color #{function.css-variable('transition', 'time', 'fast')},
+    color: color #{function.css-variable('transition', 'time', 'fast')},
   ),
 );

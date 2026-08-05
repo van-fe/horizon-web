@@ -4,5 +4,6 @@
   "locale": "1.0.0",
   "locale-vue": "1.0.0",
   "unplugin-resolver": "1.0.0",
-  "colors": "1.0.0"
+  "colors": "1.0.0",
+  "upload-adapters": "1.0.0"
 }
