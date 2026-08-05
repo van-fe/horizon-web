@@ -327,7 +327,7 @@ describe('Segmented.tsx', () => {
     expect(wrapper.html()).toMatchInlineSnapshot(`
       "<div>
         <form class="h-form h-form--medium is-position-top is-justify-left is-vertical-top is-spacing-default">
-          <div class="h-form-item">
+          <div class="h-form-item h-form-item--medium is-position-top is-justify-left is-vertical-top is-spacing-default">
             <!---->
             <div class="h-form-item__wrap">
               <div class="h-form-item__content">
