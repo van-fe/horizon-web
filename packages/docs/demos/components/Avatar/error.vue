@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 const missingAvatar = 'data:image/png;base64,not-an-image';
 </script>
 
@@ -7,7 +8,7 @@ const missingAvatar = 'data:image/png;base64,not-an-image';
     <h-avatar
       size="large"
       :src="missingAvatar"
-      default="/demo-assets/avatar-indigo.svg"
+      :default="demoAssetUrl('avatar-indigo.svg')"
       aria-label="Fallback avatar"
     />
     <span>Fallback asset shown after the image fails to load.</span>

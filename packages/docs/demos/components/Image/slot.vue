@@ -1,7 +1,11 @@
+<script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
+</script>
+
 <template>
   <div class="image-grid">
     <h-image
-      src="/demo-assets/scene-coast.svg"
+      :src="demoAssetUrl('scene-coast.svg')"
       alt="Coastal monitoring station"
       width="100%"
       aspect-ratio="4/3"
@@ -11,7 +15,7 @@
     </h-image>
 
     <h-image
-      src="/demo-assets/scene-forest.svg"
+      :src="demoAssetUrl('scene-forest.svg')"
       alt="Forest canopy survey"
       width="100%"
       aspect-ratio="4/3"

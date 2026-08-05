@@ -2,7 +2,7 @@
   <section class="controls-theme-demo">
     <article class="contact-row">
       <div class="contact-row__identity">
-        <h-avatar size="small" src="/demo-assets/avatar-indigo.svg" />
+        <h-avatar size="small" :src="demoAssetUrl('avatar-indigo.svg')" />
         <div>
           <strong>William Li</strong>
           <span>Customer success · Online</span>
@@ -28,6 +28,7 @@
 </template>
 
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 import { IconMessage, IconPhone, IconStar, IconStarFilled } from '@aurora/icon';
 import { ref } from 'vue';
 

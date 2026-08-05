@@ -1,14 +1,18 @@
+<script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
+</script>
+
 <template>
   <div class="chat-bubble-basic-demo" role="log" aria-label="Release support conversation">
     <h-chat-bubble
-      avatar="/demo-assets/avatar-cyan.svg"
+      :avatar="demoAssetUrl('avatar-cyan.svg')"
       name="Horizon Assistant"
       datetime="10:24"
       content="The accessibility checks are complete. Would you like a summary of the remaining release risks?"
       aria-label="Message from Horizon Assistant at 10:24"
     />
     <h-chat-bubble
-      avatar="/demo-assets/avatar-indigo.svg"
+      :avatar="demoAssetUrl('avatar-indigo.svg')"
       placement="end"
       variant="primary"
       name="You"

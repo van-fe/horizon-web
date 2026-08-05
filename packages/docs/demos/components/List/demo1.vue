@@ -43,6 +43,7 @@
 </template>
 
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 import { ref } from 'vue';
 
 const requests = [
@@ -51,21 +52,21 @@ const requests = [
     title: 'Checkout accessibility pass',
     subtitle: 'Mira Chen · 12 min ago',
     description: 'Keyboard order, focus visibility, and screen-reader labels are ready for review.',
-    image: '/demo-assets/scene-city.svg',
+    image: demoAssetUrl('scene-city.svg'),
   },
   {
     id: 'REQ-139',
     title: 'Analytics empty states',
     subtitle: 'Noah Williams · 38 min ago',
     description: 'Three responsive illustrations and recovery actions for filtered dashboards.',
-    image: '/demo-assets/scene-aurora.svg',
+    image: demoAssetUrl('scene-aurora.svg'),
   },
   {
     id: 'REQ-135',
     title: 'Mobile navigation study',
     subtitle: 'Avery Lee · Yesterday',
     description: 'Prototype findings and the proposed compact navigation behavior.',
-    image: '/demo-assets/scene-coast.svg',
+    image: demoAssetUrl('scene-coast.svg'),
   },
 ];
 const isZebra = ref(true);

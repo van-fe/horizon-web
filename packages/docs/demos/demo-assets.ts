@@ -1,12 +1,20 @@
 import type { HViewerSource } from '@aurora/horizon-web';
 
+export function publicAssetUrl(pathname: string) {
+  return `${import.meta.env.BASE_URL}${pathname.replace(/^\/+/, '')}`;
+}
+
+export function demoAssetUrl(fileName: string) {
+  return publicAssetUrl(`demo-assets/${fileName}`);
+}
+
 export const demoImageUrls = [
-  '/demo-assets/scene-aurora.svg',
-  '/demo-assets/scene-summit.svg',
-  '/demo-assets/scene-coast.svg',
-  '/demo-assets/scene-city.svg',
-  '/demo-assets/scene-forest.svg',
-  '/demo-assets/scene-night.svg',
+  demoAssetUrl('scene-aurora.svg'),
+  demoAssetUrl('scene-summit.svg'),
+  demoAssetUrl('scene-coast.svg'),
+  demoAssetUrl('scene-city.svg'),
+  demoAssetUrl('scene-forest.svg'),
+  demoAssetUrl('scene-night.svg'),
 ] as const;
 
 export function getDemoImageUrl(index: number) {

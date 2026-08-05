@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 import { ref } from 'vue';
 import type { AvatarProps } from '@aurora/horizon-web';
 
@@ -27,6 +28,6 @@ const fit = ref<NonNullable<AvatarProps['fit']>>('cover');
       </label>
     </div>
 
-    <h-avatar :size="size" src="/demo-assets/avatar-cyan.svg" :fit="fit" />
+    <h-avatar :size="size" :src="demoAssetUrl('avatar-cyan.svg')" :fit="fit" />
   </section>
 </template>

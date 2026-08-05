@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 import { ref } from 'vue';
 
 const brokenSrc = 'data:image/png;base64,not-a-valid-local-image';
@@ -8,7 +9,7 @@ const src = ref(brokenSrc);
 <template>
   <section class="docs-demo">
     <div class="docs-demo__actions">
-      <h-button @click="src = src === brokenSrc ? '/demo-assets/scene-aurora.svg' : brokenSrc">
+      <h-button @click="src = src === brokenSrc ? demoAssetUrl('scene-aurora.svg') : brokenSrc">
         {{ src === brokenSrc ? 'Use fallback' : 'Simulate failure' }}
       </h-button>
     </div>

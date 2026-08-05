@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { demoAssetUrl, publicAssetUrl } from '../../demo-assets';
 import { ref } from 'vue';
 
-const sources = [{ src: '/aurora-background.mp4', type: 'video/mp4' }];
+const sources = [{ src: publicAssetUrl('aurora-background.mp4'), type: 'video/mp4' }];
 const rotation = ref<0 | 90 | 180 | 270>(0);
 </script>
 
@@ -17,7 +18,7 @@ const rotation = ref<0 | 90 | 180 | 270>(0);
     </div>
     <h-video-player
       :sources="sources"
-      poster="/demo-assets/video-poster.svg"
+      :poster="demoAssetUrl('video-poster.svg')"
       :rotate="rotation"
       preload="metadata"
     />

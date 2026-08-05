@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 const images = [
-  { src: '/demo-assets/scene-city.svg', title: 'North entrance' },
-  { src: '/demo-assets/scene-coast.svg', title: 'Cooling system' },
-  { src: '/demo-assets/scene-forest.svg', title: 'Safety perimeter' },
-  { src: '/demo-assets/scene-night.svg', title: 'Night lighting' },
-  { src: '/demo-assets/scene-summit.svg', title: 'Roof access' },
-  { src: '/demo-assets/scene-aurora.svg', title: 'Control room' },
+  { src: demoAssetUrl('scene-city.svg'), title: 'North entrance' },
+  { src: demoAssetUrl('scene-coast.svg'), title: 'Cooling system' },
+  { src: demoAssetUrl('scene-forest.svg'), title: 'Safety perimeter' },
+  { src: demoAssetUrl('scene-night.svg'), title: 'Night lighting' },
+  { src: demoAssetUrl('scene-summit.svg'), title: 'Roof access' },
+  { src: demoAssetUrl('scene-aurora.svg'), title: 'Control room' },
 ];
 const limit = 3;
 </script>

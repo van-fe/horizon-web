@@ -24,6 +24,7 @@
 </template>
 
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 import { computed, ref } from 'vue';
 
 interface OrganizationEntry {
@@ -38,23 +39,23 @@ const organization: OrganizationEntry[] = [
   {
     key: 'product',
     label: 'Product & design',
-    avatar: '/demo-assets/avatar-cyan.svg',
+    avatar: demoAssetUrl('avatar-cyan.svg'),
     children: [
       {
         key: 'design-systems',
         label: 'Design systems',
-        avatar: '/demo-assets/avatar-cyan.svg',
+        avatar: demoAssetUrl('avatar-cyan.svg'),
         children: [
           {
             key: 'mia',
             label: 'Mia Torres',
-            avatar: '/demo-assets/avatar-indigo.svg',
+            avatar: demoAssetUrl('avatar-indigo.svg'),
             role: 'Product designer',
           },
           {
             key: 'owen',
             label: 'Owen Kim',
-            avatar: '/demo-assets/avatar-indigo.svg',
+            avatar: demoAssetUrl('avatar-indigo.svg'),
             role: 'Frontend engineer',
           },
         ],
@@ -62,12 +63,12 @@ const organization: OrganizationEntry[] = [
       {
         key: 'research',
         label: 'Research',
-        avatar: '/demo-assets/avatar-cyan.svg',
+        avatar: demoAssetUrl('avatar-cyan.svg'),
         children: [
           {
             key: 'sana',
             label: 'Sana Ali',
-            avatar: '/demo-assets/avatar-indigo.svg',
+            avatar: demoAssetUrl('avatar-indigo.svg'),
             role: 'Staff researcher',
           },
         ],
@@ -77,17 +78,17 @@ const organization: OrganizationEntry[] = [
   {
     key: 'engineering',
     label: 'Engineering',
-    avatar: '/demo-assets/avatar-cyan.svg',
+    avatar: demoAssetUrl('avatar-cyan.svg'),
     children: [
       {
         key: 'web-platform',
         label: 'Web platform',
-        avatar: '/demo-assets/avatar-cyan.svg',
+        avatar: demoAssetUrl('avatar-cyan.svg'),
         children: [
           {
             key: 'liam',
             label: 'Liam Scott',
-            avatar: '/demo-assets/avatar-indigo.svg',
+            avatar: demoAssetUrl('avatar-indigo.svg'),
             role: 'Tech lead',
           },
         ],
@@ -95,12 +96,12 @@ const organization: OrganizationEntry[] = [
       {
         key: 'reliability',
         label: 'Reliability',
-        avatar: '/demo-assets/avatar-cyan.svg',
+        avatar: demoAssetUrl('avatar-cyan.svg'),
         children: [
           {
             key: 'zoe',
             label: 'Zoe Evans',
-            avatar: '/demo-assets/avatar-indigo.svg',
+            avatar: demoAssetUrl('avatar-indigo.svg'),
             role: 'Incident commander',
           },
         ],

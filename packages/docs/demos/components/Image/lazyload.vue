@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 import { ref } from 'vue';
 
 const sources = [
-  '/demo-assets/scene-aurora.svg',
-  '/demo-assets/scene-summit.svg',
-  '/demo-assets/scene-coast.svg',
-  '/demo-assets/scene-forest.svg',
+  demoAssetUrl('scene-aurora.svg'),
+  demoAssetUrl('scene-summit.svg'),
+  demoAssetUrl('scene-coast.svg'),
+  demoAssetUrl('scene-forest.svg'),
 ];
 const loaded = ref(0);
 </script>

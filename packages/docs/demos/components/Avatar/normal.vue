@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 const avatarSources = [
-  '/demo-assets/avatar-coral.svg',
-  '/demo-assets/avatar-indigo.svg',
-  '/demo-assets/avatar-cyan.svg',
+  demoAssetUrl('avatar-coral.svg'),
+  demoAssetUrl('avatar-indigo.svg'),
+  demoAssetUrl('avatar-cyan.svg'),
 ];
 </script>
 

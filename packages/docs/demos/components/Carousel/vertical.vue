@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 const images = [
-  { src: '/demo-assets/scene-city.svg', label: 'City at blue hour' },
-  { src: '/demo-assets/scene-coast.svg', label: 'Coast at sunset' },
-  { src: '/demo-assets/scene-summit.svg', label: 'Mountain summit' },
+  { src: demoAssetUrl('scene-city.svg'), label: 'City at blue hour' },
+  { src: demoAssetUrl('scene-coast.svg'), label: 'Coast at sunset' },
+  { src: demoAssetUrl('scene-summit.svg'), label: 'Mountain summit' },
 ];
 </script>
 

@@ -51,6 +51,7 @@
 </template>
 
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 import { computed, ref } from 'vue';
 
 const people = [
@@ -58,25 +59,25 @@ const people = [
     key: 'maya',
     name: 'Maya Chen',
     role: 'Site reliability · primary rotation',
-    avatar: '/demo-assets/avatar-indigo.svg',
+    avatar: demoAssetUrl('avatar-indigo.svg'),
   },
   {
     key: 'jonas',
     name: 'Jonas Reed',
     role: 'Web platform · backup rotation',
-    avatar: '/demo-assets/avatar-cyan.svg',
+    avatar: demoAssetUrl('avatar-cyan.svg'),
   },
   {
     key: 'priya',
     name: 'Priya Nair',
     role: 'Release operations · primary rotation',
-    avatar: '/demo-assets/avatar-indigo.svg',
+    avatar: demoAssetUrl('avatar-indigo.svg'),
   },
   {
     key: 'leo',
     name: 'Leo Martin',
     role: 'On leave · unavailable',
-    avatar: '/demo-assets/avatar-cyan.svg',
+    avatar: demoAssetUrl('avatar-cyan.svg'),
     disabled: true,
   },
 ];

@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 const images = [
-  { src: '/demo-assets/scene-aurora.svg', title: 'Aurora station' },
-  { src: '/demo-assets/scene-summit.svg', title: 'Summit route' },
-  { src: '/demo-assets/scene-city.svg', title: 'City archive' },
-  { src: '/demo-assets/scene-coast.svg', title: 'Coastal lab' },
-  { src: '/demo-assets/scene-forest.svg', title: 'Forest survey' },
-  { src: '/demo-assets/scene-night.svg', title: 'Night camp' },
+  { src: demoAssetUrl('scene-aurora.svg'), title: 'Aurora station' },
+  { src: demoAssetUrl('scene-summit.svg'), title: 'Summit route' },
+  { src: demoAssetUrl('scene-city.svg'), title: 'City archive' },
+  { src: demoAssetUrl('scene-coast.svg'), title: 'Coastal lab' },
+  { src: demoAssetUrl('scene-forest.svg'), title: 'Forest survey' },
+  { src: demoAssetUrl('scene-night.svg'), title: 'Night camp' },
 ];
 </script>
 

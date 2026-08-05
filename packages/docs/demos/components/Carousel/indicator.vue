@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 import { ref } from 'vue';
 
 type IndicatorType = 'dot' | 'line' | 'slider';
@@ -7,10 +8,10 @@ type IndicatorPosition = 'left' | 'right' | 'top' | 'bottom' | 'outside';
 const indicatorType = ref<IndicatorType>('dot');
 const indicatorPosition = ref<IndicatorPosition>('bottom');
 const images = [
-  { src: '/demo-assets/scene-city.svg', label: 'City at blue hour' },
-  { src: '/demo-assets/scene-coast.svg', label: 'Coast at sunset' },
-  { src: '/demo-assets/scene-summit.svg', label: 'Mountain summit' },
-  { src: '/demo-assets/scene-night.svg', label: 'City at night' },
+  { src: demoAssetUrl('scene-city.svg'), label: 'City at blue hour' },
+  { src: demoAssetUrl('scene-coast.svg'), label: 'Coast at sunset' },
+  { src: demoAssetUrl('scene-summit.svg'), label: 'Mountain summit' },
+  { src: demoAssetUrl('scene-night.svg'), label: 'City at night' },
 ];
 </script>
 

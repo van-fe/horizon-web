@@ -1,31 +1,32 @@
+import { demoAssetUrl, publicAssetUrl } from '../../demo-assets';
 import type { HViewerSource } from '@aurora/horizon-web';
 
-const localVideo = '/aurora-background.mp4';
+const localVideo = publicAssetUrl('aurora-background.mp4');
 
 export function createImageReviewSources(): HViewerSource[] {
   return [
     {
       type: 'image',
-      cover: '/demo-assets/scene-coast.svg',
-      thumbnail: '/demo-assets/scene-coast.svg',
+      cover: demoAssetUrl('scene-coast.svg'),
+      thumbnail: demoAssetUrl('scene-coast.svg'),
       title: 'Coastal launch campaign',
     },
     {
       type: 'image',
-      cover: '/demo-assets/scene-city.svg',
-      thumbnail: '/demo-assets/scene-city.svg',
+      cover: demoAssetUrl('scene-city.svg'),
+      thumbnail: demoAssetUrl('scene-city.svg'),
       title: 'City launch campaign',
     },
     {
       type: 'image',
-      cover: '/demo-assets/scene-forest.svg',
-      thumbnail: '/demo-assets/scene-forest.svg',
+      cover: demoAssetUrl('scene-forest.svg'),
+      thumbnail: demoAssetUrl('scene-forest.svg'),
       title: 'Forest launch campaign',
     },
     {
       type: 'image',
-      cover: '/demo-assets/scene-night.svg',
-      thumbnail: '/demo-assets/scene-night.svg',
+      cover: demoAssetUrl('scene-night.svg'),
+      thumbnail: demoAssetUrl('scene-night.svg'),
       title: 'Night launch campaign',
     },
   ];
@@ -34,8 +35,8 @@ export function createImageReviewSources(): HViewerSource[] {
 export function createVideoSource(): HViewerSource {
   return {
     type: 'video',
-    cover: '/demo-assets/video-poster.svg',
-    thumbnail: '/demo-assets/video-poster.svg',
+    cover: demoAssetUrl('video-poster.svg'),
+    thumbnail: demoAssetUrl('video-poster.svg'),
     title: 'Reliability briefing',
     videoSources: [{ src: localVideo, type: 'video/mp4' }],
   };

@@ -34,6 +34,7 @@
 </template>
 
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 import { computed, ref } from 'vue';
 
 interface Person {
@@ -49,31 +50,31 @@ const people: Person[] = [
     key: 'anna',
     name: 'Anna Silva',
     team: 'Product design',
-    avatar: '/demo-assets/avatar-indigo.svg',
+    avatar: demoAssetUrl('avatar-indigo.svg'),
   },
   {
     key: 'eli',
     name: 'Eli Brooks',
     team: 'Accessibility engineering',
-    avatar: '/demo-assets/avatar-cyan.svg',
+    avatar: demoAssetUrl('avatar-cyan.svg'),
   },
   {
     key: 'hana',
     name: 'Hana Ito',
     team: 'Localization',
-    avatar: '/demo-assets/avatar-indigo.svg',
+    avatar: demoAssetUrl('avatar-indigo.svg'),
   },
   {
     key: 'marcus',
     name: 'Marcus Green',
     team: 'Customer support',
-    avatar: '/demo-assets/avatar-cyan.svg',
+    avatar: demoAssetUrl('avatar-cyan.svg'),
   },
   {
     key: 'nora',
     name: 'Nora Patel',
     team: 'Research · unavailable this week',
-    avatar: '/demo-assets/avatar-indigo.svg',
+    avatar: demoAssetUrl('avatar-indigo.svg'),
     disabled: true,
   },
 ];

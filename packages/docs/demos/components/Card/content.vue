@@ -4,7 +4,7 @@
       <h-card title="Visual summary">
         <img
           class="card-content-demo__image"
-          src="/demo-assets/scene-city.svg"
+          :src="demoAssetUrl('scene-city.svg')"
           alt="Illustrated city skyline"
         />
         <p class="card-content-demo__copy">
@@ -42,6 +42,7 @@
 </template>
 
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 import { ref } from 'vue';
 
 const activity = [

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 import { ref } from 'vue';
 
 const key = ref(0);
@@ -11,7 +12,7 @@ const sources = [{ src: 'data:video/mp4;base64,AAAA', type: 'video/mp4' }];
     <h-video-player
       :key="key"
       :sources="sources"
-      poster="/demo-assets/video-poster.svg"
+      :poster="demoAssetUrl('video-poster.svg')"
       preload="metadata"
       @error="failed = true"
     />

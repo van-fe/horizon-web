@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 import { ref } from 'vue';
 
 const src = ref('');
@@ -7,7 +8,7 @@ const src = ref('');
 <template>
   <section class="docs-demo">
     <div class="docs-demo__actions">
-      <h-button @click="src = src ? '' : '/demo-assets/scene-forest.svg'">
+      <h-button @click="src = src ? '' : demoAssetUrl('scene-forest.svg')">
         {{ src ? 'Reset' : 'Load image' }}
       </h-button>
     </div>

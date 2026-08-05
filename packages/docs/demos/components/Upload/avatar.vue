@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 import type { HUploadUserFile } from '@aurora/horizon-web';
 import { onBeforeUnmount, ref } from 'vue';
 import { createMockUploader, resolveLocalUpload } from './mockUpload';
@@ -6,7 +7,7 @@ import { createMockUploader, resolveLocalUpload } from './mockUpload';
 const mockUploader = createMockUploader();
 const file = ref<HUploadUserFile>({
   name: 'avatar.svg',
-  url: '/demo-assets/avatar-indigo.svg',
+  url: demoAssetUrl('avatar-indigo.svg'),
 });
 const status = ref('Avatar ready');
 

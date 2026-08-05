@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { demoAssetUrl, publicAssetUrl } from '../../demo-assets';
 import { ref } from 'vue';
 
 interface PlayerExpose {
@@ -8,12 +9,12 @@ interface PlayerExpose {
 }
 
 const player = ref<PlayerExpose>();
-const sources = [{ src: '/aurora-background.mp4', type: 'video/mp4' }];
+const sources = [{ src: publicAssetUrl('aurora-background.mp4'), type: 'video/mp4' }];
 </script>
 
 <template>
   <section class="docs-demo">
-    <h-video-player ref="player" :sources="sources" poster="/demo-assets/video-poster.svg" />
+    <h-video-player ref="player" :sources="sources" :poster="demoAssetUrl('video-poster.svg')" />
     <div class="docs-demo__actions">
       <h-button @click="player?.play()">Play</h-button>
       <h-button @click="player?.pause()">Pause</h-button>

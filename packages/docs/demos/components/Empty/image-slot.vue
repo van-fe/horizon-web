@@ -1,10 +1,14 @@
+<script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
+</script>
+
 <template>
   <section class="docs-demo">
     <div class="docs-demo__stage">
       <h-empty :size="120" description="No saved views in this workspace.">
         <template #image>
           <div class="empty-image-frame">
-            <img src="/demo-assets/empty-state.svg" alt="No saved views" />
+            <img :src="demoAssetUrl('empty-state.svg')" alt="No saved views" />
           </div>
         </template>
       </h-empty>

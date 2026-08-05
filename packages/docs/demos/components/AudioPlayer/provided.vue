@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { publicAssetUrl } from '../../demo-assets';
 import { ref } from 'vue';
 
 const waveform = [
@@ -15,7 +16,7 @@ function handleWaveformReady(values: number[], source: string) {
 <template>
   <section class="docs-demo">
     <h-audio-player
-      src="/aurora-background.mp4"
+      :src="publicAssetUrl('aurora-background.mp4')"
       :waveform="waveform"
       :bar-count="48"
       aria-label="周会行动项语音备忘录"

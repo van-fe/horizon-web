@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 import { computed, ref } from 'vue';
 
 const height = ref('240');
@@ -16,7 +17,7 @@ const imageHeight = computed(() => Number(height.value));
     </div>
 
     <h-image
-      src="/demo-assets/scene-summit.svg"
+      :src="demoAssetUrl('scene-summit.svg')"
       alt="Mountain summit campaign artwork"
       width="100%"
       :height="imageHeight"

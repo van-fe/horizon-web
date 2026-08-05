@@ -24,7 +24,7 @@
 
         <template #default>
           <div class="profile-row">
-            <h-avatar size="smedium" src="/demo-assets/avatar-cyan.svg" />
+            <h-avatar size="smedium" :src="demoAssetUrl('avatar-cyan.svg')" />
             <div class="profile-row__copy">
               <strong>Mira Chen</strong>
               <span>Product designer · Horizon Studio</span>
@@ -38,6 +38,7 @@
 </template>
 
 <script lang="ts" setup>
+import { demoAssetUrl } from '../../demo-assets';
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 
 const PREVIEW_DELAY = 1400;

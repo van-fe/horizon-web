@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 import type { HUploadFileType, HUploadUserFile } from '@aurora/horizon-web';
 import { onBeforeUnmount, ref } from 'vue';
 import { createMockUploader, resolveLocalUpload } from './mockUpload';
@@ -6,7 +7,7 @@ import { createMockUploader, resolveLocalUpload } from './mockUpload';
 const mockUploader = createMockUploader();
 const file = ref<HUploadUserFile>({
   name: 'release-cover.svg',
-  url: '/demo-assets/scene-coast.svg',
+  url: demoAssetUrl('scene-coast.svg'),
 });
 const status = ref('Ready to replace the current file');
 

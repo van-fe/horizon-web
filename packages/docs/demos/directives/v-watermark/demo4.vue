@@ -1,19 +1,37 @@
 <template>
   <div class="wrapper">
     <div v-watermark="watermarkOptions" class="content-box">
-      <div style="height: 500px; overflow: auto;">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem rerum, dolores ex ipsa distinctio officiis necessitatibus ab deserunt aperiam veritatis quisquam nihil non praesentium quasi ad tempore est. Necessitatibus, id.
-        Voluptatem incidunt fugiat fuga quasi iure nobis assumenda impedit nesciunt sequi facere illo ad, necessitatibus odit rerum itaque maxime. Quos molestias aut iste quas eveniet. Tempore culpa molestias beatae impedit.
-        Tempore distinctio accusantium commodi illum ducimus rerum magnam totam sapiente obcaecati illo nostrum corrupti qui velit accusamus iste a et quos, quae cupiditate at deleniti eos! Minima qui debitis in.
-        Necessitatibus officiis nulla iste incidunt unde iure, natus vel voluptatem voluptates minus commodi ad? Velit facere, dolorum rem explicabo voluptate ullam! Facere porro suscipit reprehenderit impedit maxime sed vero aliquid?
-        Cumque, harum. Dignissimos, est quo aliquid placeat minus at quae fugiat deserunt, iure beatae quasi alias aspernatur explicabo, assumenda facere quibusdam veritatis unde dolorem facilis. Delectus officiis quae facilis aliquid?
-        Minus expedita dolor omnis necessitatibus earum? Enim assumenda sequi dolorum consequuntur possimus nulla vero fuga asperiores voluptate laudantium, qui aliquam corporis aliquid, repellat eius eos nisi quam velit modi maxime.
-        Vel minus, ab voluptas veritatis nobis libero ipsum eum ullam blanditiis architecto voluptatem. Eveniet accusantium nobis rerum a aspernatur! Odit nemo quidem tenetur, perspiciatis optio molestias! Modi, beatae. Veritatis, quos.
-        Esse unde ipsam saepe magni, blanditiis qui obcaecati rem officiis earum repellat, et totam sit odio quo, doloribus harum eos vel voluptates excepturi a ducimus! Dolorem quis libero voluptate esse!
-        Nihil nemo laudantium dolore voluptatem iste omnis maxime tenetur, nisi ut veniam doloremque exercitationem vero, qui, porro pariatur! Minus, fugiat ipsa explicabo praesentium tempora delectus aspernatur saepe dolor aliquam pariatur?
-        Maxime cum facere saepe? Dolorem, ipsa, animi excepturi corporis sint velit incidunt placeat totam esse, quos dolores vel? Facilis at maiores ullam dolores voluptas eum temporibus rerum quam modi tempore.
-        Nihil nemo laudantium dolore voluptatem iste omnis maxime tenetur, nisi ut veniam doloremque exercitationem vero, qui, porro pariatur! Minus, fugiat ipsa explicabo praesentium tempora delectus aspernatur saepe dolor aliquam pariatur?
-        Maxime cum facere saepe? Dolorem, ipsa, animi excepturi corporis sint velit incidunt placeat totam esse, quos dolores vel? Facilis at maiores ullam dolores voluptas eum temporibus rerum quam modi tempore.
+      <div style="height: 500px; overflow: auto">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem rerum, dolores ex
+        ipsa distinctio officiis necessitatibus ab deserunt aperiam veritatis quisquam nihil non
+        praesentium quasi ad tempore est. Necessitatibus, id. Voluptatem incidunt fugiat fuga quasi
+        iure nobis assumenda impedit nesciunt sequi facere illo ad, necessitatibus odit rerum itaque
+        maxime. Quos molestias aut iste quas eveniet. Tempore culpa molestias beatae impedit.
+        Tempore distinctio accusantium commodi illum ducimus rerum magnam totam sapiente obcaecati
+        illo nostrum corrupti qui velit accusamus iste a et quos, quae cupiditate at deleniti eos!
+        Minima qui debitis in. Necessitatibus officiis nulla iste incidunt unde iure, natus vel
+        voluptatem voluptates minus commodi ad? Velit facere, dolorum rem explicabo voluptate ullam!
+        Facere porro suscipit reprehenderit impedit maxime sed vero aliquid? Cumque, harum.
+        Dignissimos, est quo aliquid placeat minus at quae fugiat deserunt, iure beatae quasi alias
+        aspernatur explicabo, assumenda facere quibusdam veritatis unde dolorem facilis. Delectus
+        officiis quae facilis aliquid? Minus expedita dolor omnis necessitatibus earum? Enim
+        assumenda sequi dolorum consequuntur possimus nulla vero fuga asperiores voluptate
+        laudantium, qui aliquam corporis aliquid, repellat eius eos nisi quam velit modi maxime. Vel
+        minus, ab voluptas veritatis nobis libero ipsum eum ullam blanditiis architecto voluptatem.
+        Eveniet accusantium nobis rerum a aspernatur! Odit nemo quidem tenetur, perspiciatis optio
+        molestias! Modi, beatae. Veritatis, quos. Esse unde ipsam saepe magni, blanditiis qui
+        obcaecati rem officiis earum repellat, et totam sit odio quo, doloribus harum eos vel
+        voluptates excepturi a ducimus! Dolorem quis libero voluptate esse! Nihil nemo laudantium
+        dolore voluptatem iste omnis maxime tenetur, nisi ut veniam doloremque exercitationem vero,
+        qui, porro pariatur! Minus, fugiat ipsa explicabo praesentium tempora delectus aspernatur
+        saepe dolor aliquam pariatur? Maxime cum facere saepe? Dolorem, ipsa, animi excepturi
+        corporis sint velit incidunt placeat totam esse, quos dolores vel? Facilis at maiores ullam
+        dolores voluptas eum temporibus rerum quam modi tempore. Nihil nemo laudantium dolore
+        voluptatem iste omnis maxime tenetur, nisi ut veniam doloremque exercitationem vero, qui,
+        porro pariatur! Minus, fugiat ipsa explicabo praesentium tempora delectus aspernatur saepe
+        dolor aliquam pariatur? Maxime cum facere saepe? Dolorem, ipsa, animi excepturi corporis
+        sint velit incidunt placeat totam esse, quos dolores vel? Facilis at maiores ullam dolores
+        voluptas eum temporibus rerum quam modi tempore.
       </div>
     </div>
     <div class="control-box">
@@ -66,6 +84,7 @@
 </template>
 
 <script lang="ts" setup>
+import { demoAssetUrl } from '../../demo-assets';
 import { computed, ref, watch } from 'vue';
 
 const global = ref(false);
@@ -82,7 +101,7 @@ const offsetY = ref(0);
 const opacity = ref(0.1);
 
 const tamperedHandle = () => {
-  console.info("水印元素被“删除”或“篡改”啦！");
+  console.info('水印元素被“删除”或“篡改”啦！');
 };
 
 const watermarkOptions = computed(() => ({
@@ -99,7 +118,7 @@ const watermarkOptions = computed(() => ({
 }));
 
 watch(showImage, () => {
-  image.value = showImage.value ? '/demo-assets/watermark.svg' : null;
+  image.value = showImage.value ? demoAssetUrl('watermark.svg') : null;
 });
 </script>
 

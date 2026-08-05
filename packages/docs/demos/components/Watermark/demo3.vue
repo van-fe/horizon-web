@@ -1,13 +1,17 @@
+<script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
+</script>
+
 <template>
   <h-watermark
     content="Northstar"
-    image="/demo-assets/watermark.svg"
+    :image="demoAssetUrl('watermark.svg')"
     :width="96"
     :height="48"
     :opacity="0.22"
   >
     <figure class="watermark-image-demo-asset">
-      <img src="/demo-assets/scene-city.svg" alt="City campaign artwork" />
+      <img :src="demoAssetUrl('scene-city.svg')" alt="City campaign artwork" />
       <figcaption>City launch · pre-release proof</figcaption>
     </figure>
   </h-watermark>

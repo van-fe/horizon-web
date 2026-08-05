@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 import { ref } from 'vue';
 
 type ObjectFit = 'fill' | 'contain' | 'cover' | 'none' | 'scale-down';
@@ -17,7 +18,7 @@ const fits: ObjectFit[] = ['fill', 'contain', 'cover', 'none', 'scale-down'];
 
     <div class="image-frame">
       <h-image
-        src="/demo-assets/scene-city.svg"
+        :src="demoAssetUrl('scene-city.svg')"
         alt="City artwork inside a fixed frame"
         width="100%"
         height="100%"

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 import { ref } from 'vue';
 import type { HViewerSource } from '@aurora/horizon-web';
 
@@ -7,8 +8,8 @@ const status = ref('Select the second marker in the viewer');
 const sources: HViewerSource[] = [
   {
     type: 'image',
-    cover: '/demo-assets/scene-coast.svg',
-    thumbnail: '/demo-assets/scene-coast.svg',
+    cover: demoAssetUrl('scene-coast.svg'),
+    thumbnail: demoAssetUrl('scene-coast.svg'),
     title: 'Coastal launch campaign',
     legends: [
       { x: 420, y: 310, label: 'Headline safe area' },

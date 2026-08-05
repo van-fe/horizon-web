@@ -1,3 +1,4 @@
+import { demoAssetUrl } from '../../demo-assets';
 import type { HUploadFileType, HUploadHttpRequestInstanceMethods } from '@aurora/horizon-web';
 import { HUploadFileStatusEnum } from '@aurora/horizon-web';
 
@@ -50,5 +51,5 @@ export function createMockUploader(stepDuration = 90) {
 }
 
 export function resolveLocalUpload(_response: unknown, file: HUploadFileType) {
-  return file.blobUrl || file.url || '/demo-assets/scene-coast.svg';
+  return file.blobUrl || file.url || demoAssetUrl('scene-coast.svg');
 }

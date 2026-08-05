@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 const ratios = ['1/1', '4/3', '16/9'];
 </script>
 
@@ -6,7 +7,7 @@ const ratios = ['1/1', '4/3', '16/9'];
   <div class="image-grid">
     <figure v-for="ratio in ratios" :key="ratio">
       <h-image
-        src="/demo-assets/scene-forest.svg"
+        :src="demoAssetUrl('scene-forest.svg')"
         :alt="`${ratio} forest artwork`"
         width="100%"
         :aspect-ratio="ratio"

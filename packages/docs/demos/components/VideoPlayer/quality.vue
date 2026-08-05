@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { demoAssetUrl, publicAssetUrl } from '../../demo-assets';
 import { ref } from 'vue';
 
-const video = '/aurora-background.mp4';
+const video = publicAssetUrl('aurora-background.mp4');
 const status = ref('720p');
 const sources = [
   { src: video, type: 'video/mp4', label: '1080p' },
@@ -14,7 +15,7 @@ const sources = [
   <section class="docs-demo">
     <h-video-player
       :sources="sources"
-      poster="/demo-assets/video-poster.svg"
+      :poster="demoAssetUrl('video-poster.svg')"
       preload="metadata"
       @source-change="status = $event.label"
     />

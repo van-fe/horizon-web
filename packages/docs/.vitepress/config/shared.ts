@@ -24,7 +24,7 @@ export default defineConfig({
   },
   themeConfig: {
     appearance: true,
-    logo: './logo.svg',
+    logo: '/logo.svg',
     nav: [{ text: 'Home', link: '/' }],
     socialLinks: [
       {

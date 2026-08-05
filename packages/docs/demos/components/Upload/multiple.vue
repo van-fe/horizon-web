@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 import type { HUploadFileType, HUploadUserFile } from '@aurora/horizon-web';
 import { onBeforeUnmount, ref } from 'vue';
 import { createMockUploader, resolveLocalUpload } from './mockUpload';
@@ -6,8 +7,8 @@ import { createMockUploader, resolveLocalUpload } from './mockUpload';
 const mockUploader = createMockUploader();
 const autoSlice = ref(true);
 const files = ref<HUploadUserFile[]>([
-  { name: 'release-cover.svg', url: '/demo-assets/scene-coast.svg' },
-  { name: 'architecture-review.svg', url: '/demo-assets/scene-city.svg' },
+  { name: 'release-cover.svg', url: demoAssetUrl('scene-coast.svg') },
+  { name: 'architecture-review.svg', url: demoAssetUrl('scene-city.svg') },
 ]);
 const status = ref('Two files attached');
 

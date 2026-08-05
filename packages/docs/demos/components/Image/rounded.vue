@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 const crops = [
   { label: '0', rounded: 0 },
   { label: '8px', rounded: 8 },
@@ -11,7 +12,7 @@ const crops = [
   <div class="image-grid">
     <figure v-for="crop in crops" :key="crop.label">
       <h-image
-        src="/demo-assets/avatar-indigo.svg"
+        :src="demoAssetUrl('avatar-indigo.svg')"
         :alt="`${crop.label} rounded image`"
         width="100%"
         aspect-ratio="1/1"

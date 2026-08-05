@@ -10,6 +10,8 @@ const mediaExtension = /\.(?:avif|gif|jpe?g|m3u8|mov|mp4|png|svg|webm|webp)(?:[?
 const externalUrlPattern = /https?:\/\/[^\s"'`<>]+/g;
 const localMediaPattern =
   /['"`](\/(?!\/)[a-zA-Z0-9_./-]+\.(?:avif|gif|jpe?g|m3u8|mov|mp4|png|svg|webm|webp)(?:[?#][^'"`\s<>]*)?)/gi;
+const demoAssetPattern =
+  /demoAssetUrl\(\s*['"`]([a-zA-Z0-9_./-]+\.(?:avif|gif|jpe?g|m3u8|mov|mp4|png|svg|webm|webp)(?:[?#][^'"`\s<>]*)?)['"`]\s*\)/gi;
 
 // These sources are deliberately broken so their demos continue to exercise
 // the component error states.
@@ -41,8 +43,21 @@ for (const filePath of collectSourceFiles(docsRoot)) {
     const reference = match[1];
     const pathname = reference.split(/[?#]/, 1)[0];
     localReferenceCount += 1;
+    if (pathname.startsWith('/demo-assets/')) {
+      problems.push(`${relativeFile}: use demoAssetUrl() for base-aware media ${reference}`);
+      continue;
+    }
     if (!existsSync(path.join(publicRoot, pathname.slice(1)))) {
       problems.push(`${relativeFile}: missing local media ${reference}`);
+    }
+  }
+
+  for (const match of source.matchAll(demoAssetPattern)) {
+    const reference = match[1];
+    const pathname = reference.split(/[?#]/, 1)[0];
+    localReferenceCount += 1;
+    if (!existsSync(path.join(publicRoot, 'demo-assets', pathname))) {
+      problems.push(`${relativeFile}: missing demo asset ${reference}`);
     }
   }
 

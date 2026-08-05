@@ -1,13 +1,14 @@
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 import type { HUploadUserFile } from '@aurora/horizon-web';
 import { onBeforeUnmount, ref } from 'vue';
 import { createMockUploader, resolveLocalUpload } from './mockUpload';
 
 const mockUploader = createMockUploader();
 const files = ref<HUploadUserFile[]>([
-  { name: 'coast-campaign.svg', url: '/demo-assets/scene-coast.svg' },
-  { name: 'city-campaign.svg', url: '/demo-assets/scene-city.svg' },
-  { name: 'forest-campaign.svg', url: '/demo-assets/scene-forest.svg' },
+  { name: 'coast-campaign.svg', url: demoAssetUrl('scene-coast.svg') },
+  { name: 'city-campaign.svg', url: demoAssetUrl('scene-city.svg') },
+  { name: 'forest-campaign.svg', url: demoAssetUrl('scene-forest.svg') },
 ]);
 const status = ref('Sample gallery ready');
 

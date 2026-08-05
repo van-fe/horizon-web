@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 
 const hostRef = ref<HTMLElement | null>(null);
@@ -30,7 +31,7 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
   <section ref="hostRef" class="cropper-demo">
     <h-image-cropper
       :key="`${cropWidth}-${cropHeight}`"
-      src="/demo-assets/scene-aurora.svg"
+      :src="demoAssetUrl('scene-aurora.svg')"
       :width="cropWidth"
       :height="cropHeight"
       @crop="onCrop"

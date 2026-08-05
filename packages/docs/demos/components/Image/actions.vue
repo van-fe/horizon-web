@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { demoAssetUrl } from '../../demo-assets';
 import { ref } from 'vue';
 import type { HImageAction } from '@aurora/horizon-web';
 
@@ -13,7 +14,7 @@ const actions: HImageAction[] = [
 <template>
   <section class="docs-demo">
     <h-image
-      src="/demo-assets/scene-aurora.svg"
+      :src="demoAssetUrl('scene-aurora.svg')"
       alt="Aurora campaign asset"
       width="100%"
       max-width="420px"
