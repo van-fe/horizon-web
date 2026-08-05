@@ -18,6 +18,7 @@ import { nextTick, ref } from 'vue';
 import HPickerInput from '../../Picker/src/components/PickerInput';
 import baseTreeData from '../../Cascader/__tests__/options.json';
 import type { FormProps } from '../src/composables/useProps';
+import { HGrid, HGridItem } from '../../Layout';
 
 describe('Form.tsx', () => {
   test('basic', async () => {
@@ -287,6 +288,66 @@ describe('Form.tsx', () => {
       spacing.value = 'compact';
       await nextTick();
       expect(wrapper.classes(`is-spacing-${spacing.value}`)).toBeTruthy();
+    });
+
+    test('form items resolve their own layout inside grid', () => {
+      const wrapper = mount(() => (
+        <HForm
+          labelPosition="left"
+          labelJustifyAlign="right"
+          labelVerticalAlign="middle"
+          spacing="compact"
+        >
+          <HGrid cols={2}>
+            <HGridItem>
+              <HFormItem label="Inherited layout" />
+            </HGridItem>
+            <HGridItem>
+              <HFormItem label="Top layout" labelPosition="top" />
+            </HGridItem>
+          </HGrid>
+        </HForm>
+      ));
+      const items = wrapper.findAllComponents(HFormItem);
+
+      expect(items[0].classes()).toEqual(
+        expect.arrayContaining([
+          'is-position-left',
+          'is-justify-right',
+          'is-vertical-middle',
+          'is-spacing-compact',
+        ]),
+      );
+      expect(items[1].classes()).toContain('is-position-top');
+    });
+
+    test('nested forms do not inherit layout classes from an outer form', () => {
+      const wrapper = mount(() => (
+        <HForm labelPosition="left">
+          <HForm labelPosition="top">
+            <HFormItem label="Nested item" />
+          </HForm>
+        </HForm>
+      ));
+      const item = wrapper.findComponent(HFormItem);
+
+      expect(item.classes()).toContain('is-position-top');
+      expect(item.classes()).not.toContain('is-position-left');
+    });
+
+    test('reserves helper space only on the item that renders a right helper', () => {
+      const wrapper = mount(() => (
+        <HForm>
+          <HFormItem label="With helper" helper="Helpful context" />
+          <HFormItem label="Without helper" />
+          <HFormItem label="Label helper" helper="Helpful context" helperPlacement="after-label" />
+        </HForm>
+      ));
+      const contents = wrapper.findAll('.h-form-item__content');
+
+      expect(contents[0].classes()).toContain('has-helper');
+      expect(contents[1].classes()).not.toContain('has-helper');
+      expect(contents[2].classes()).not.toContain('has-helper');
     });
   });
 

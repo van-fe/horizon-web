@@ -1,6 +1,6 @@
 ## 基础表单
 
-`h-form-item` 负责标签、提示和控件布局。示例使用响应式网格组织一份发布简报。
+`h-form-item` 负责标签、提示和控件布局。它可以直接放入 `h-grid-item`，由 Grid 管理响应式分栏，FormItem 始终填满所在网格且不会把标签宽度挤出列边界。
 
 :::demo components/Form/basic.vue :::
 
@@ -18,7 +18,7 @@
 
 ## 标签布局
 
-`label-position` 控制顶部或左侧标签；左侧模式还可配置水平、垂直对齐方式。
+`label-position` 控制顶部或左侧标签；左侧模式还可配置水平、垂直对齐方式。单个 `h-form-item` 也可以设置 `label-position` 覆盖表单级布局。
 
 :::demo components/Form/label-position.vue :::
 

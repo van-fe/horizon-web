@@ -1,6 +1,6 @@
 ## Basic form
 
-`h-form-item` owns labels, supporting text, and control layout. The demo organizes a release brief with a responsive grid.
+`h-form-item` owns labels, supporting text, and control layout. It can sit directly inside an `h-grid-item`: Grid controls the responsive columns while every FormItem fills its track without pushing the label beyond it.
 
 :::demo components/Form/basic.vue :::
 
@@ -18,7 +18,7 @@ The form-level `size` propagates to child controls and overrides the global size
 
 ## Label layout
 
-`label-position` switches between top and left labels. Left labels also support horizontal and vertical alignment.
+`label-position` switches between top and left labels. Left labels also support horizontal and vertical alignment. An individual `h-form-item` can override the form-level `label-position`.
 
 :::demo components/Form/label-position.vue :::
 

@@ -67,6 +67,10 @@ export default defineComponent({
     const onlyRenderRef = toRef(nForm, 'onlyRender');
     let initialValue: any = undefined;
 
+    const labelPosition = computed(() => props.labelPosition ?? nForm.labelPosition);
+    const labelJustifyAlign = computed(() => props.labelJustifyAlign ?? nForm.labelJustifyAlign);
+    const labelVerticalAlign = computed(() => props.labelVerticalAlign ?? nForm.labelVerticalAlign);
+
     provide(HFormItemPropsInjectedKey, props);
     provide(HFormItemSlotsInjectedKey, slots);
 
@@ -195,7 +199,7 @@ export default defineComponent({
 
     const labelWidthAdjust = computed(() => {
       // 标签位于 left
-      if (nForm.labelPosition === 'left') {
+      if (labelPosition.value === 'left') {
         const labelWidth = props.labelWidth || nForm.labelWidth;
 
         // 自适应宽度，要自动按照最大宽度计算
@@ -265,6 +269,11 @@ export default defineComponent({
     provide(HFormItemTriggerInjectedKey, onFormChildItemNotice);
 
     const helperPlacement = computed(() => props.helperPlacement || nForm.helperPlacement);
+    const hasRightHelper = computed(
+      () =>
+        helperPlacement.value === 'right' &&
+        !!(props.helper || slots.helper || slots.helperTitle || slots.helperContent),
+    );
 
     const helperOptions = computed<HFormItemHelper>(() => {
       let defOpts: HFormItemHelper = {
@@ -337,11 +346,12 @@ export default defineComponent({
         ref={blockRef}
         class={cls(
           classHelper.block,
-          classHelper.is(`justify-${props.labelJustifyAlign}`, isDefined(props.labelJustifyAlign)),
-          classHelper.is(
-            `vertical-${props.labelVerticalAlign}`,
-            isDefined(props.labelVerticalAlign),
-          ),
+          classHelper.m(nForm.resolvedSize),
+          classHelper.is(`position-${labelPosition.value}`),
+          classHelper.is(`justify-${labelJustifyAlign.value}`),
+          classHelper.is(`vertical-${labelVerticalAlign.value}`),
+          classHelper.is('inline', nForm.inline),
+          classHelper.is(`spacing-${nForm.spacing}`),
           classHelper.is('error', !!error.value),
         )}
       >
@@ -363,13 +373,15 @@ export default defineComponent({
               {slots.label?.() ?? props.label}
             </span>
             {helperPlacement.value === 'after-label' && helperRender()}
-            {slots.labelAppend && nForm.labelPosition === 'top' ? (
+            {slots.labelAppend && labelPosition.value === 'top' ? (
               <div class={classHelper.e('label-append')}>{slots.labelAppend()}</div>
             ) : undefined}
           </label>
         )}
         <div class={classHelper.e('wrap')}>
-          <div class={cls(classHelper.e('content'), classHelper.has('helper', !!props.helper))}>
+          <div
+            class={cls(classHelper.e('content'), classHelper.has('helper', hasRightHelper.value))}
+          >
             {slotVNodes(slots.default)}
             {helperPlacement.value === 'right' && helperRender()}
           </div>

@@ -42,7 +42,7 @@
           <h-option label="Internal" value="internal" />
         </h-select>
       </h-form-item>
-      <h-form-item label="Release context">
+      <h-form-item label="Release context" label-position="top">
         <h-input v-model="formData.context" type="textarea" />
       </h-form-item>
       <h-form-item><h-button native-type="submit">Save layout</h-button></h-form-item>

@@ -12,7 +12,7 @@ import {
 import { useFormProps } from './composables/useProps';
 import type { ValidateReturnType, BindComponent } from './composables/useProps';
 import type { Arrayable, HorizonWebSetupContext } from '@aurora/utils';
-import { cls, ComponentClassBlock, isNil, useNamespace } from '@aurora/utils';
+import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import type { FormEmits } from './composables/useEmits';
 import { useFormEmits } from './composables/useEmits';
 import { HFormDisabledInjectedKey, HFormInjectedKey } from './utils/injectedKeys';
@@ -44,18 +44,6 @@ export default defineComponent({
       disabled: disabledRef,
       spacing: spacingRef,
     } = toRefs(props);
-
-    const hasHelper = ref(false);
-
-    function updateHasHelperStates() {
-      hasHelper.value =
-        props.helperPlacement === 'right' &&
-        validateComponents.value.some(
-          curr =>
-            !!curr.props.helper &&
-            (isNil(curr.props.helperPlacement) || curr.props.helperPlacement === 'right'),
-        );
-    }
 
     // global size
     const size = toRef(props, 'size');
@@ -178,7 +166,6 @@ export default defineComponent({
 
     const bindValidate = (component: BindComponent) => {
       validateComponents.value.push(component);
-      updateHasHelperStates();
     };
 
     const unbindValidate = (uid?: number) => {
@@ -186,7 +173,6 @@ export default defineComponent({
       if (index > -1) {
         validateComponents.value.splice(index, 1);
       }
-      updateHasHelperStates();
     };
 
     const autoLabelWidth = ref<string | number>('auto');
@@ -206,6 +192,7 @@ export default defineComponent({
       unbindValidate,
       autoLabelWidth,
       setAutoLabelWidth,
+      resolvedSize: sizeRef,
       emit,
     });
 
@@ -236,7 +223,6 @@ export default defineComponent({
           classHelper.is(`justify-${props.labelJustifyAlign}`),
           classHelper.is(`vertical-${props.labelVerticalAlign}`),
           classHelper.is(`spacing-${spacingRef.value}`),
-          classHelper.has('helper', hasHelper.value),
         )}
         onSubmit={onSubmit}
       >

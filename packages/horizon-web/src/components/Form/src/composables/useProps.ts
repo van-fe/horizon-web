@@ -237,6 +237,14 @@ export const useFormItemProps = declarePropType({
     required: false,
   },
   /**
+   * 标签的位置，会覆盖 `h-form` 的 `label-position`
+   * @en Label position. Overrides the form-level label position.
+   */
+  labelPosition: {
+    type: String as PropType<'top' | 'left'>,
+    required: false,
+  },
+  /**
    * 表单项的绑定字段，应该是 `h-form` 上 `model` 属性的字段名，如果不需要表单验证可以不设置
    * @en Configuration for prop.
    */
