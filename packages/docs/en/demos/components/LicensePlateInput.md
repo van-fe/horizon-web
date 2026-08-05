@@ -2,10 +2,6 @@
 
 Use this component for mainland China license plates. It renders seven standard character cells plus an optional eighth new-energy cell. By default, focusing the field or clicking a cell opens a plate-specific keyboard; the same keyboard can also remain inline below the input. It provides provinces for the first position, legal letters for the second, and position-aware letters, digits, and suffixes after that. The complete plate is returned through `v-model`.
 
-## Basic usage
-
-:::demo components/LicensePlateInput/basic.vue :::
-
 ## Inline keyboard panel
 
 Enable `inline-panel` to keep the keyboard in the document flow directly below the input without creating a Popover. This mode suits mobile forms and fixed-entry terminals that need a persistent control area.
