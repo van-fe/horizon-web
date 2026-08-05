@@ -304,7 +304,7 @@ export const ZhCN = {
       loading: '加载中',
       clearSelection: '清空',
       selectedCount: '已选 {count} 项',
-      currentSelectedCount: '当前集合已选 {count} 项',
+      currentSelectedCount: '当前已选 {count} 项',
       pinToLeft: '固定到左侧',
       pinToRight: '固定到右侧',
       pin: '固定该列',

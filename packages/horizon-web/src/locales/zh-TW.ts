@@ -291,7 +291,7 @@ export const ZhTW = {
       loading: '加載中',
       clearSelection: '清空',
       selectedCount: '已選 {count} 項',
-      currentSelectedCount: '目前集合已選 {count} 項',
+      currentSelectedCount: '目前已選 {count} 項',
       pinToLeft: '固定到左側',
       pinToRight: '固定到右側',
       pin: '固定該列',
