@@ -419,7 +419,7 @@ export default defineComponent({
           {selectionFooter.scope.value && (
             <div ref={selectionFooterDomRef} class={classHelper.e('selection-footer')}>
               <div class={classHelper.em('selection-footer', 'prepend')}>
-                {slots.selectionFooterPrepend?.(selectionFooter.scope.value) ?? (
+                {slots['selection-footer-prepend']?.(selectionFooter.scope.value) ?? (
                   <HButton
                     text
                     size="small"
@@ -435,7 +435,7 @@ export default defineComponent({
                 role="status"
                 aria-live="polite"
               >
-                {slots.selectionFooterText?.(selectionFooter.scope.value) ?? (
+                {slots['selection-footer-text']?.(selectionFooter.scope.value) ?? (
                   <>
                     <span class={classHelper.em('selection-footer', 'selected-count')}>
                       {formatSelectionCount(
@@ -456,9 +456,9 @@ export default defineComponent({
                   </>
                 )}
               </div>
-              {slots.selectionFooterAppend && (
+              {slots['selection-footer-append'] && (
                 <div class={classHelper.em('selection-footer', 'append')}>
-                  {slots.selectionFooterAppend(selectionFooter.scope.value)}
+                  {slots['selection-footer-append'](selectionFooter.scope.value)}
                 </div>
               )}
             </div>

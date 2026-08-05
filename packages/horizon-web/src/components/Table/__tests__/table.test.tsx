@@ -254,7 +254,7 @@ describe('Table', () => {
     expect(selectedKeys.value).toEqual([]);
   });
 
-  test('provides scoped selection footer slots', async () => {
+  test('renders kebab-case scoped selection footer slots', async () => {
     const selectedKeys = ref<string[]>(['A', 'OUTSIDE']);
     const wrapper = mount(() => (
       <HTable data={[{ code: 'A', name: 'Alice' }]}>
@@ -274,17 +274,17 @@ describe('Table', () => {
               <HTableColumn title="Name" field="name" />
             </>
           ),
-          selectionFooterPrepend: (scope: HTableSelectionFooterScope) => (
+          'selection-footer-prepend': (scope: HTableSelectionFooterScope) => (
             <button class="custom-clear" onClick={scope.clearSelection}>
               Clear {scope.selectedCount}
             </button>
           ),
-          selectionFooterText: (scope: HTableSelectionFooterScope) => (
+          'selection-footer-text': (scope: HTableSelectionFooterScope) => (
             <span class="custom-selection-text">
               {scope.selectedKeys.join(',')} / {scope.currentSelectedKeys.join(',')}
             </span>
           ),
-          selectionFooterAppend: (scope: HTableSelectionFooterScope) => (
+          'selection-footer-append': (scope: HTableSelectionFooterScope) => (
             <span class="custom-selection-append">Current {scope.currentSelectedCount}</span>
           ),
         }}
