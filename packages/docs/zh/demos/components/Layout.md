@@ -1,3 +1,5 @@
+# Layout
+
 ## CSS Grid 布局
 
 新布局使用 `h-grid` 和 `h-grid-item`。容器负责定义响应式轨道与间距，子项通过 `span` 和 `offset` 描述占位关系；底层直接使用浏览器原生 CSS Grid，无需负边距或额外的列内边距补偿。

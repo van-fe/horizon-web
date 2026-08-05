@@ -2,6 +2,8 @@
 outline: [2, 3]
 ---
 
+# Icon
+
 ## 使用前的说明
 
 `Horizon Web` 组件库使用了 `@aurora/icon` 图标库，如需使用图标请先安装 `@aurora/icon`。

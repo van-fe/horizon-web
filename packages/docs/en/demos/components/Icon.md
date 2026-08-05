@@ -2,6 +2,8 @@
 outline: [2, 3]
 ---
 
+# Icon
+
 ## Icon gallery
 
 The gallery below groups every icon component exported by `@aurora/icon` by its name. Select an icon name to copy its on-demand import.
