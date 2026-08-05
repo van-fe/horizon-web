@@ -1,6 +1,6 @@
 ## Basic form
 
-`h-form-item` owns labels, supporting text, and control layout. It can sit directly inside an `h-grid-item`: Grid controls the responsive columns while every FormItem fills its track without pushing the label beyond it.
+`h-form` directly supports Layout's responsive Grid capabilities. Configure the form with `cols`, `gap`, `column-gap`, and `row-gap`, then use FormItem `span` and `offset` to control field placement without nesting an `h-grid`.
 
 :::demo components/Form/basic.vue :::
 

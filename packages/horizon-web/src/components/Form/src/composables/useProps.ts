@@ -1,6 +1,7 @@
 import type { ExtractPropTypes, PropType, Ref, VNode } from 'vue';
 import type { RuleItem } from 'async-validator';
 import { declarePropType } from '@aurora/utils';
+import type { GridValue } from '~/components/Layout/src/composables/useGridProps';
 
 export interface HFormItemHelper {
   /**
@@ -66,6 +67,54 @@ export const useFormProps = declarePropType({
   inline: {
     type: Boolean,
     default: false,
+  },
+  /**
+   * 每行的网格列数。设置后 Form 会直接启用响应式 Grid 布局，并优先于 `inline`
+   * @en Number of grid columns per row. Enables responsive Grid layout and takes precedence over `inline`.
+   */
+  cols: {
+    type: [Number, Object] as PropType<GridValue>,
+    required: false,
+  },
+  /**
+   * Grid 布局的行列间距
+   * @en Gap between rows and columns in Grid layout.
+   */
+  gap: {
+    type: [Number, Object] as PropType<GridValue>,
+    required: false,
+  },
+  /**
+   * Grid 布局的列间距，优先级高于 `gap`
+   * @en Column gap in Grid layout. Takes precedence over `gap`.
+   */
+  columnGap: {
+    type: [Number, Object] as PropType<GridValue>,
+    required: false,
+  },
+  /**
+   * Grid 布局的行间距，优先级高于 `gap`
+   * @en Row gap in Grid layout. Takes precedence over `gap`.
+   */
+  rowGap: {
+    type: [Number, Object] as PropType<GridValue>,
+    required: false,
+  },
+  /**
+   * Grid 单元格内的垂直对齐方式
+   * @en Vertical alignment of items within their Grid areas.
+   */
+  align: {
+    type: String as PropType<'start' | 'center' | 'end' | 'stretch'>,
+    required: false,
+  },
+  /**
+   * Grid 单元格内的水平对齐方式
+   * @en Horizontal alignment of items within their Grid areas.
+   */
+  justify: {
+    type: String as PropType<'start' | 'center' | 'end' | 'stretch'>,
+    required: false,
   },
   /**
    * 尺寸
@@ -243,6 +292,22 @@ export const useFormItemProps = declarePropType({
   labelPosition: {
     type: String as PropType<'top' | 'left'>,
     required: false,
+  },
+  /**
+   * Grid 布局中占据的列数，支持响应式对象；仅在 Form 设置 `cols` 时生效
+   * @en Number of occupied Grid columns. Supports responsive values and applies when Form has `cols`.
+   */
+  span: {
+    type: [Number, Object] as PropType<GridValue>,
+    default: 1,
+  },
+  /**
+   * Grid 布局中的左侧偏移列数，支持响应式对象；仅在 Form 设置 `cols` 时生效
+   * @en Number of empty Grid columns before the item. Supports responsive values and applies when Form has `cols`.
+   */
+  offset: {
+    type: [Number, Object] as PropType<GridValue>,
+    default: 0,
   },
   /**
    * 表单项的绑定字段，应该是 `h-form` 上 `model` 属性的字段名，如果不需要表单验证可以不设置

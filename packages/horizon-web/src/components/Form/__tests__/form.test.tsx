@@ -18,7 +18,6 @@ import { nextTick, ref } from 'vue';
 import HPickerInput from '../../Picker/src/components/PickerInput';
 import baseTreeData from '../../Cascader/__tests__/options.json';
 import type { FormProps } from '../src/composables/useProps';
-import { HGrid, HGridItem } from '../../Layout';
 
 describe('Form.tsx', () => {
   test('basic', async () => {
@@ -290,28 +289,34 @@ describe('Form.tsx', () => {
       expect(wrapper.classes(`is-spacing-${spacing.value}`)).toBeTruthy();
     });
 
-    test('form items resolve their own layout inside grid', () => {
+    test('form directly provides responsive grid layout to its items', () => {
       const wrapper = mount(() => (
         <HForm
+          cols={{ xs: 1, md: 2 }}
+          gap={8}
+          columnGap={{ md: 16 }}
           labelPosition="left"
           labelJustifyAlign="right"
           labelVerticalAlign="middle"
           spacing="compact"
         >
-          <HGrid cols={2}>
-            <HGridItem>
-              <HFormItem label="Inherited layout" />
-            </HGridItem>
-            <HGridItem>
-              <HFormItem label="Top layout" labelPosition="top" />
-            </HGridItem>
-          </HGrid>
+          <HFormItem label="Inherited layout" />
+          <HFormItem label="Top layout" labelPosition="top" span={{ xs: 1, md: 2 }} />
         </HForm>
       ));
       const items = wrapper.findAllComponents(HFormItem);
+      const formStyle = wrapper.findComponent(HForm).attributes('style');
+
+      expect(wrapper.findComponent(HForm).classes()).toContain('is-grid');
+      expect(wrapper.findComponent(HForm).classes()).not.toContain('h-form--inline');
+      expect(formStyle).toContain('--h-grid-cols-xs: 1');
+      expect(formStyle).toContain('--h-grid-cols-md: 2');
+      expect(formStyle).toContain('--h-grid-column-gap-xs: 8px');
+      expect(formStyle).toContain('--h-grid-column-gap-md: 16px');
 
       expect(items[0].classes()).toEqual(
         expect.arrayContaining([
+          'is-grid-item',
           'is-position-left',
           'is-justify-right',
           'is-vertical-middle',
@@ -319,6 +324,22 @@ describe('Form.tsx', () => {
         ]),
       );
       expect(items[1].classes()).toContain('is-position-top');
+      expect(items[1].attributes('style')).toContain('--h-grid-item-span-xs: 1');
+      expect(items[1].attributes('style')).toContain('--h-grid-item-span-md: 2');
+    });
+
+    test('keeps legacy form layout when cols is not set', () => {
+      const wrapper = mount(() => (
+        <HForm inline gap={16}>
+          <HFormItem label="Legacy item" span={2} />
+        </HForm>
+      ));
+
+      expect(wrapper.findComponent(HForm).classes()).not.toContain('is-grid');
+      expect(wrapper.findComponent(HForm).classes()).toContain('h-form--inline');
+      expect(wrapper.findComponent(HForm).attributes('style')).toBeUndefined();
+      expect(wrapper.findComponent(HFormItem).classes()).not.toContain('is-grid-item');
+      expect(wrapper.findComponent(HFormItem).attributes('style')).toBeUndefined();
     });
 
     test('nested forms do not inherit layout classes from an outer form', () => {

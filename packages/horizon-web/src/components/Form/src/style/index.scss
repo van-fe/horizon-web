@@ -9,11 +9,40 @@ $helper-icon-spacing: mixins.css-variable(
   'margin-bottom'
 );
 
+@mixin responsive-form-grid($size) {
+  @include mixins.b('form') {
+    @include mixins.is('grid') {
+      grid-template-columns: repeat(var(--h-grid-cols-#{$size}), minmax(0, 1fr));
+      gap: var(--h-grid-row-gap-#{$size}) var(--h-grid-column-gap-#{$size});
+    }
+  }
+
+  @include mixins.b('form-item') {
+    @include mixins.is('grid-item') {
+      display: var(--h-grid-item-display-#{$size});
+      grid-column: span var(--h-grid-item-span-#{$size}) / span var(--h-grid-item-span-#{$size});
+      margin-inline-start: var(--h-grid-item-offset-#{$size});
+    }
+  }
+}
+
+@include mixins.b('form') {
+  @include mixins.is('grid') {
+    box-sizing: border-box;
+    display: grid;
+    width: 100%;
+  }
+}
+
 @include mixins.b('form-item') {
   box-sizing: border-box;
   display: flex;
   width: 100%;
   min-width: 0;
+
+  @include mixins.is('grid-item') {
+    margin-bottom: 0;
+  }
 
   @include mixins.m('large') {
     @include mixins.e('label') {
@@ -286,4 +315,28 @@ $helper-icon-spacing: mixins.css-variable(
       color: mixins.css-variable('form', 'color', 'form-item', 'error');
     }
   }
+}
+
+@media screen and (width <= 480px) {
+  @include responsive-form-grid('xs');
+}
+
+@media screen and (width >= 480px) and (width <= 1023px) {
+  @include responsive-form-grid('sm');
+}
+
+@media screen and (width >= 1024px) and (width <= 1439px) {
+  @include responsive-form-grid('md');
+}
+
+@media screen and (width >= 1440px) and (width <= 1919px) {
+  @include responsive-form-grid('lg');
+}
+
+@media screen and (width >= 1920px) and (width <= 2879px) {
+  @include responsive-form-grid('xl');
+}
+
+@media screen and (width >= 2880px) {
+  @include responsive-form-grid('xxl');
 }

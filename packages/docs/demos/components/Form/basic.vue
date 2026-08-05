@@ -1,19 +1,13 @@
 <template>
   <section class="form-basic-demo">
-    <h-form :model="formData" @submit="submit">
-      <h-grid :cols="{ xs: 1, md: 2 }" :gap="16">
-        <h-grid-item>
-          <h-form-item label="Release name" tip="Use a name teammates can recognize.">
-            <h-input v-model="formData.releaseName" placeholder="August reliability release" />
-          </h-form-item>
-        </h-grid-item>
-        <h-grid-item>
-          <h-form-item label="Owner email">
-            <h-input v-model="formData.ownerEmail" placeholder="owner@example.com" />
-          </h-form-item>
-        </h-grid-item>
-      </h-grid>
-      <h-form-item label="Release summary">
+    <h-form :model="formData" :cols="{ xs: 1, md: 2 }" :gap="16" @submit="submit">
+      <h-form-item label="Release name" tip="Use a name teammates can recognize.">
+        <h-input v-model="formData.releaseName" placeholder="August reliability release" />
+      </h-form-item>
+      <h-form-item label="Owner email">
+        <h-input v-model="formData.ownerEmail" placeholder="owner@example.com" />
+      </h-form-item>
+      <h-form-item label="Release summary" :span="{ xs: 1, md: 2 }">
         <h-input
           v-model="formData.summary"
           type="textarea"
@@ -22,7 +16,7 @@
           placeholder="What changes and who is affected?"
         />
       </h-form-item>
-      <h-form-item>
+      <h-form-item :span="{ xs: 1, md: 2 }">
         <h-button native-type="submit">Save release brief</h-button>
       </h-form-item>
     </h-form>

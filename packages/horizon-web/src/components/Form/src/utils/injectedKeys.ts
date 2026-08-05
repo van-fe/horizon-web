@@ -26,6 +26,7 @@ export const HFormInjectedKey = Symbol.for('form') as InjectionKey<
     autoLabelWidth: string | number;
     setAutoLabelWidth: (width: number) => void;
     resolvedSize: 'medium' | 'large' | 'small';
+    gridEnabled: boolean;
     emit: SetupContext<FormEmits>['emit'];
   }
 >;

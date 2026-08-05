@@ -46,6 +46,7 @@ import type { FormItemExposes } from './composables/useExposes';
 import { useFormItemExposes } from './composables/useExposes';
 import clone from 'lodash/clone';
 import useLocaleLang from '~/utils/useLocaleLang';
+import { GRID_KEY, useGridItemStyle } from '~/components/Layout/src/composables/useGridStyles';
 
 export default defineComponent({
   name: `${useNamespace()}FormItem`,
@@ -63,6 +64,7 @@ export default defineComponent({
     const uid = getCurrentInstance()?.uid;
     const error = ref<string | undefined>();
     const nForm = inject(HFormInjectedKey)!;
+    const grid = inject(GRID_KEY)!;
     const errorRef = toRef(props, 'error');
     const onlyRenderRef = toRef(nForm, 'onlyRender');
     let initialValue: any = undefined;
@@ -70,6 +72,7 @@ export default defineComponent({
     const labelPosition = computed(() => props.labelPosition ?? nForm.labelPosition);
     const labelJustifyAlign = computed(() => props.labelJustifyAlign ?? nForm.labelJustifyAlign);
     const labelVerticalAlign = computed(() => props.labelVerticalAlign ?? nForm.labelVerticalAlign);
+    const gridStyle = useGridItemStyle(props, grid, 'flex');
 
     provide(HFormItemPropsInjectedKey, props);
     provide(HFormItemSlotsInjectedKey, slots);
@@ -350,10 +353,12 @@ export default defineComponent({
           classHelper.is(`position-${labelPosition.value}`),
           classHelper.is(`justify-${labelJustifyAlign.value}`),
           classHelper.is(`vertical-${labelVerticalAlign.value}`),
-          classHelper.is('inline', nForm.inline),
+          classHelper.is('inline', nForm.inline && !nForm.gridEnabled),
+          classHelper.is('grid-item', nForm.gridEnabled),
           classHelper.is(`spacing-${nForm.spacing}`),
           classHelper.is('error', !!error.value),
         )}
+        style={nForm.gridEnabled ? gridStyle.value : undefined}
       >
         {(props.label || slots.label) && (
           <label

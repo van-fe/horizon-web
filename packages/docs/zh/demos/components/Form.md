@@ -1,6 +1,6 @@
 ## 基础表单
 
-`h-form-item` 负责标签、提示和控件布局。它可以直接放入 `h-grid-item`，由 Grid 管理响应式分栏，FormItem 始终填满所在网格且不会把标签宽度挤出列边界。
+`h-form` 直接支持 Layout 的响应式 Grid 能力。通过 `cols`、`gap`、`column-gap` 和 `row-gap` 设置表单布局，再用 `h-form-item` 的 `span`、`offset` 控制字段占位，无需额外嵌套 `h-grid`。
 
 :::demo components/Form/basic.vue :::
 

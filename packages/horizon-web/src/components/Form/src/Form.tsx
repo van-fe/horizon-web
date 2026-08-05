@@ -8,6 +8,7 @@ import {
   shallowRef,
   toRef,
   onMounted,
+  computed,
 } from 'vue';
 import { useFormProps } from './composables/useProps';
 import type { ValidateReturnType, BindComponent } from './composables/useProps';
@@ -22,6 +23,7 @@ import { useFormSlots } from './composables/useSlots';
 import type { FormExposes } from './composables/useExposes';
 import { useFormExposes } from './composables/useExposes';
 import useSize from '~/utils/useSize';
+import { GRID_KEY, useGridContainerStyle } from '~/components/Layout/src/composables/useGridStyles';
 
 export default defineComponent({
   name: `${useNamespace()}Form`,
@@ -48,9 +50,12 @@ export default defineComponent({
     // global size
     const size = toRef(props, 'size');
     const sizeRef = useSize(size, 'medium');
+    const gridEnabled = computed(() => props.cols !== undefined);
+    const { context: gridContext, style: gridStyle } = useGridContainerStyle(props, 1);
 
     provide(GlobalSizeInjectedKey, sizeRef);
     provide(HFormDisabledInjectedKey, disabledRef);
+    provide(GRID_KEY, gridContext);
 
     watch(
       rulesRef,
@@ -193,6 +198,7 @@ export default defineComponent({
       autoLabelWidth,
       setAutoLabelWidth,
       resolvedSize: sizeRef,
+      gridEnabled,
       emit,
     });
 
@@ -217,13 +223,15 @@ export default defineComponent({
         ref={formDomRef}
         class={cls(
           classHelper.block,
-          classHelper.m('inline', props.inline),
+          classHelper.m('inline', props.inline && !gridEnabled.value),
           classHelper.m(sizeRef.value),
+          classHelper.is('grid', gridEnabled.value),
           classHelper.is(`position-${props.labelPosition}`),
           classHelper.is(`justify-${props.labelJustifyAlign}`),
           classHelper.is(`vertical-${props.labelVerticalAlign}`),
           classHelper.is(`spacing-${spacingRef.value}`),
         )}
+        style={gridEnabled.value ? gridStyle.value : undefined}
         onSubmit={onSubmit}
       >
         {slots.default?.()}
