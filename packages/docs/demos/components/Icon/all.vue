@@ -1,11 +1,6 @@
 <template>
   <div class="icon-gallery-demo">
-    <p
-      class="icon-gallery-demo__feedback"
-      role="status"
-      aria-live="polite"
-      aria-atomic="true"
-    >
+    <p class="icon-gallery-demo__feedback" role="status" aria-live="polite" aria-atomic="true">
       {{ feedback }}
     </p>
     <ul class="icon-gallery">
@@ -18,35 +13,20 @@
         }"
       >
         <span class="icon-gallery__visual" aria-hidden="true">
-          <component :is="icon.component" :size="28" />
+          <component :is="icon.component" :size="30" />
         </span>
         <h-button
           class="icon-gallery__name-button"
           type="normal"
-          link
+          text
           size="small"
           :active="copyResult?.name === icon.name && copyResult.status === 'success'"
           :aria-label="labels.copyLabel(icon.name)"
+          :title="labels.copyLabel(icon.name)"
           @click="copyUsageCode(icon.name)"
         >
           <span class="icon-gallery__name">{{ icon.name }}</span>
         </h-button>
-        <span
-          class="icon-gallery__copy-state"
-          :class="{
-            'is-success': copyResult?.name === icon.name && copyResult.status === 'success',
-            'is-error': copyResult?.name === icon.name && copyResult.status === 'error',
-          }"
-          aria-hidden="true"
-        >
-          {{
-            copyResult?.name === icon.name
-              ? copyResult.status === 'success'
-                ? labels.copied
-                : labels.copyFailed
-              : ''
-          }}
-        </span>
       </li>
     </ul>
   </div>
@@ -163,7 +143,9 @@ const icons = Object.entries(AuroraIcons)
   .map(([name, component]) => ({ name, component: component as Component }))
   .sort((left, right) => left.name.localeCompare(right.name));
 
-const groupedIcons = new Map(categoryDefinitions.map(category => [category.key, [] as IconEntry[]]));
+const groupedIcons = new Map(
+  categoryDefinitions.map(category => [category.key, [] as IconEntry[]]),
+);
 icons.forEach(icon => {
   const category =
     categoryDefinitions.find(definition => definition.pattern?.test(icon.name)) ??
@@ -236,8 +218,8 @@ async function copyUsageCode(name: string) {
 
 .icon-gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 124px), 1fr));
-  gap: var(--h-spacing-2);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 148px), 1fr));
+  gap: var(--h-spacing-3);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -248,80 +230,116 @@ async function copyUsageCode(name: string) {
   display: grid;
   align-items: center;
   min-width: 0;
-  height: 120px;
-  grid-template-rows: 30px 44px 16px;
-  gap: var(--h-spacing-1);
-  border: 1px solid var(--h-border-default);
+  height: 136px;
+  grid-template-rows: 64px 40px;
+  gap: var(--h-spacing-2);
+  border: 1px solid var(--h-border-divider-secondary);
   border-radius: var(--h-radius-m);
   margin: 0;
-  padding: var(--h-spacing-2);
+  padding: var(--h-spacing-3);
   color: var(--h-text-primary);
   background: var(--h-bg-default);
   box-sizing: border-box;
   transition:
-    border-color 0.2s ease,
-    background-color 0.2s ease;
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
 }
 
 .icon-gallery__item.is-copied {
+  border-color: var(--h-border-brand-default);
+  box-shadow: 0 0 0 1px var(--h-border-brand-default);
+}
+
+.icon-gallery__item:focus-within {
   border-color: var(--h-border-brand-default);
 }
 
 .icon-gallery__visual {
   display: grid;
   width: 100%;
-  height: 30px;
+  height: 64px;
   place-items: center;
+  border-radius: var(--h-radius-m);
+  color: var(--h-text-primary);
+  background: var(--h-bg-secondary);
+  transition:
+    color 160ms ease,
+    transform 160ms ease;
 }
 
 .icon-gallery__name-button {
   width: 100%;
-  height: 44px;
+  height: 40px;
   min-width: 0;
   max-width: 100%;
+  padding: 0 var(--h-spacing-2);
   border-radius: var(--h-radius-s);
   white-space: normal;
 }
 
 .icon-gallery__name-button:focus-visible {
   outline: 2px solid var(--h-border-brand-default);
-  outline-offset: 2px;
-  box-shadow: 0 0 0 2px var(--h-border-brand-default) !important;
+  outline-offset: 1px;
 }
 
 .icon-gallery__name {
   display: -webkit-box;
   max-width: 100%;
-  max-height: 44px;
-  height: 44px;
   overflow: hidden;
+  color: var(--h-text-secondary);
   font-size: 12px;
-  line-height: 15px;
+  line-height: 16px;
   overflow-wrap: anywhere;
   text-align: center;
   white-space: normal;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
 }
 
-.icon-gallery__copy-state {
-  color: var(--h-text-secondary);
-  font-size: 12px;
-  line-height: 16px;
-  text-align: center;
-}
+@media (hover: hover) {
+  .icon-gallery__item:hover {
+    border-color: var(--h-border-default);
+    box-shadow: var(--h-shadow-basic);
+    transform: translateY(-2px);
+  }
 
-.icon-gallery__copy-state.is-success {
-  color: var(--h-text-success-default);
-}
+  .icon-gallery__item:hover .icon-gallery__visual {
+    color: var(--h-text-brand-default);
+    transform: scale(1.03);
+  }
 
-.icon-gallery__copy-state.is-error {
-  color: var(--h-text-error-default);
+  .icon-gallery__item.is-copied:hover {
+    border-color: var(--h-border-brand-default);
+  }
 }
 
 @media (max-width: 560px) {
   .icon-gallery {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--h-spacing-2);
+  }
+
+  .icon-gallery__item,
+  .icon-gallery__item + .icon-gallery__item {
+    height: 124px;
+    grid-template-rows: 56px 36px;
+    padding: var(--h-spacing-2);
+  }
+
+  .icon-gallery__visual {
+    height: 56px;
+  }
+
+  .icon-gallery__name-button {
+    height: 36px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon-gallery__item,
+  .icon-gallery__visual {
+    transition: none;
   }
 }
 </style>
