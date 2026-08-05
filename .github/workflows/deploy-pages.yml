@@ -31,7 +31,9 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: Build documentation prerequisites
-        run: bun --filter @aurora/utils build
+        run: |
+          bun --filter @aurora/utils build
+          bun --filter @aurora/horizon-web build:index
 
       - name: Build documentation
         run: bun run docs:build
