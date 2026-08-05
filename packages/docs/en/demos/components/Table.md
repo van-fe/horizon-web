@@ -128,7 +128,7 @@ Without two-way binding, clicking a selector does not leave it selected.
 
 Enable `reserve-selection` on a selection column to preserve that column's selected values when the
 table's current-page `data` is replaced. Selection values always come from that column's
-`column-key`; `row-key` is not required.
+`column-key`.
 
 :::demo components/Table/cross-page-selection.vue :::
 
