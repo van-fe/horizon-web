@@ -137,6 +137,22 @@ describe('LicensePlateInput', () => {
     });
   });
 
+  test('uses compact typography only for the empty new-energy placeholder', async () => {
+    const wrapper = mountInput({ modelValue: '粤BD1234', newEnergy: true });
+    const newEnergyCell = wrapper.findAll('.h-license-plate-input__cell')[7];
+
+    expect(newEnergyCell.classes()).toContain(
+      'h-license-plate-input__cell--new-energy-placeholder',
+    );
+
+    await wrapper.setProps({ modelValue: '粤BD12345' });
+
+    expect(newEnergyCell.text()).toBe('5');
+    expect(newEnergyCell.classes()).not.toContain(
+      'h-license-plate-input__cell--new-energy-placeholder',
+    );
+  });
+
   test('supports clear, disabled and readonly states', async () => {
     const wrapper = mountInput({ modelValue: '沪A12345', disabled: true });
     const input = wrapper.find('input');

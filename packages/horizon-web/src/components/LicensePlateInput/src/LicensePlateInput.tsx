@@ -187,6 +187,7 @@ export default defineComponent({
                     classHelper.e('cell'),
                     classHelper.em('cell', 'active', isActive),
                     classHelper.em('cell', 'new-energy', isNewEnergyCell),
+                    classHelper.em('cell', 'new-energy-placeholder', isNewEnergyCell && !character),
                     classHelper.em(
                       'cell',
                       'new-energy-enabled',

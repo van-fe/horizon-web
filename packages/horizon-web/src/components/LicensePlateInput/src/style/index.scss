@@ -62,10 +62,13 @@
     }
 
     @include mixins.m('new-energy') {
+      border-style: dashed;
+    }
+
+    @include mixins.m('new-energy-placeholder') {
       font-size: mixins.css-variable('license-plate-input', 'font-size', 'new-energy');
       font-weight: 400;
       color: mixins.css-variable('license-plate-input', 'color', 'new-energy');
-      border-style: dashed;
     }
 
     @include mixins.m('new-energy-enabled') {
@@ -126,7 +129,7 @@
       height: mixins.css-variable('license-plate-input', 'size', 'cell', 'small');
       font-size: mixins.css-variable('license-plate-input', 'font-size', 'small');
 
-      @include mixins.m('new-energy') {
+      @include mixins.m('new-energy-placeholder') {
         font-size: mixins.css-variable('license-plate-input', 'font-size', 'new-energy');
       }
     }
@@ -138,7 +141,7 @@
       height: mixins.css-variable('license-plate-input', 'size', 'cell', 'large');
       font-size: mixins.css-variable('license-plate-input', 'font-size', 'large');
 
-      @include mixins.m('new-energy') {
+      @include mixins.m('new-energy-placeholder') {
         font-size: mixins.css-variable('license-plate-input', 'font-size', 'new-energy');
       }
     }
