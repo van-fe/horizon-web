@@ -33,6 +33,7 @@ jobs:
       - name: Build documentation prerequisites
         run: |
           bun --filter @aurora/utils build
+          bun --filter @aurora/icon generate
           bun --filter @aurora/horizon-web build:index
           mkdir -p packages/doc/src/config/themes packages/doc/docs/features/tokens/demos
           bun --filter @aurora/horizon-web build:theme
