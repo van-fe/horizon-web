@@ -2,6 +2,7 @@ import { DOMWrapper, mount } from '@vue/test-utils';
 import { nextTick, ref } from 'vue';
 import { describe, expect, test, vi } from 'vitest';
 import { HTable, HTableColumn, HTableSortOrderEnum } from '..';
+import type { HTableSelectionFooterScope } from '..';
 import HDropdown from '../../Dropdown/src/Dropdown';
 import HDropdownItem from '../../Dropdown/src/DropdownItem';
 import type { HTreeData } from '../../Tree/src/utils/types';
@@ -10,6 +11,8 @@ import HVirtualScroller from '../../VirtualScroller/src/VirtualScroller';
 import HVirtualScrollerItem from '../../VirtualScroller/src/VirtualScrollerItem';
 import HInput from '../../Input/src/Input';
 import HSelect from '../../Select/src/Select';
+import HButton from '../../Button/src/Button';
+import { dictionaries } from '../../../locales';
 
 async function settleTable() {
   await nextTick();
@@ -196,7 +199,7 @@ describe('Table', () => {
       ],
     ];
     const wrapper = mount(() => (
-      <HTable data={pages[page.value]} rowKey="id">
+      <HTable data={pages[page.value]} rowKey="id" showSummary height={280}>
         <HTableColumn
           type="selection"
           columnKey="code"
@@ -212,12 +215,29 @@ describe('Table', () => {
     ));
     await settleTable();
 
+    const selectionFooter = wrapper.find('.h-table__selection-footer');
+    expect(selectionFooter.exists()).toBe(true);
+    expect(wrapper.find('table').element.nextElementSibling).toBe(selectionFooter.element);
+    expect(selectionFooter.findComponent(HButton).exists()).toBe(true);
+    expect(selectionFooter.find('.h-table__selection-footer--selected-count').text()).toContain(
+      '0',
+    );
+
     await wrapper.findAll('tbody .h-table__selection')[0].trigger('click');
     await settleTable();
     expect(selectedKeys.value).toEqual(['A']);
+    expect(selectionFooter.find('.h-table__selection-footer--selected-count').text()).toContain(
+      '1',
+    );
+    expect(
+      selectionFooter.find('.h-table__selection-footer--current-selected-count').text(),
+    ).toContain('1');
 
     page.value = 1;
     await settleTable();
+    expect(
+      selectionFooter.find('.h-table__selection-footer--current-selected-count').text(),
+    ).toContain('0');
     await wrapper.findAll('tbody .h-table__selection')[1].trigger('click');
     await settleTable();
     expect(selectedKeys.value).toEqual(['A', 'D']);
@@ -228,6 +248,65 @@ describe('Table', () => {
     expect(wrapper.findAll('tbody label.h-checkbox')[1].classes()).not.toContain(
       'h-checkbox--checked',
     );
+
+    await selectionFooter.findComponent(HButton).trigger('click');
+    await settleTable();
+    expect(selectedKeys.value).toEqual([]);
+  });
+
+  test('provides scoped selection footer slots', async () => {
+    const selectedKeys = ref<string[]>(['A', 'OUTSIDE']);
+    const wrapper = mount(() => (
+      <HTable data={[{ code: 'A', name: 'Alice' }]}>
+        {{
+          default: () => (
+            <>
+              <HTableColumn
+                type="selection"
+                columnKey="code"
+                reserveSelection
+                multiple
+                selectedKeys={selectedKeys.value}
+                onUpdate:selectedKeys={value => {
+                  selectedKeys.value = value as string[];
+                }}
+              />
+              <HTableColumn title="Name" field="name" />
+            </>
+          ),
+          selectionFooterPrepend: (scope: HTableSelectionFooterScope) => (
+            <button class="custom-clear" onClick={scope.clearSelection}>
+              Clear {scope.selectedCount}
+            </button>
+          ),
+          selectionFooterText: (scope: HTableSelectionFooterScope) => (
+            <span class="custom-selection-text">
+              {scope.selectedKeys.join(',')} / {scope.currentSelectedKeys.join(',')}
+            </span>
+          ),
+          selectionFooterAppend: (scope: HTableSelectionFooterScope) => (
+            <span class="custom-selection-append">Current {scope.currentSelectedCount}</span>
+          ),
+        }}
+      </HTable>
+    ));
+    await settleTable();
+
+    expect(wrapper.find('.custom-clear').text()).toBe('Clear 2');
+    expect(wrapper.find('.custom-selection-text').text()).toBe('A,OUTSIDE / A');
+    expect(wrapper.find('.custom-selection-append').text()).toBe('Current 1');
+
+    await wrapper.find('.custom-clear').trigger('click');
+    await settleTable();
+    expect(selectedKeys.value).toEqual([]);
+  });
+
+  test('provides selection footer locale text in every dictionary', () => {
+    Object.values(dictionaries).forEach(locale => {
+      expect(locale.horizonWeb.table.clearSelection).toBeTruthy();
+      expect(locale.horizonWeb.table.selectedCount).toContain('{count}');
+      expect(locale.horizonWeb.table.currentSelectedCount).toContain('{count}');
+    });
   });
 
   test('drops selections missing from replacement data by default', async () => {

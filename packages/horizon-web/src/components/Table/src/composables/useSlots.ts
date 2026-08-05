@@ -4,6 +4,7 @@ import type {
   HTableFooterCellScopeSlots,
   HTableHeaderCellScopeSlots,
   HTableGroupScopeSlots,
+  HTableSelectionFooterScope,
 } from '../utils/types';
 
 export const useTableSlots = Object as SlotsType<{
@@ -29,6 +30,27 @@ export const useTableSlots = Object as SlotsType<{
    * @en Custom content for the empty slot.
    */
   empty?: {};
+  /**
+   * 跨页选择栏开头区域，默认显示清空按钮
+   * @param params 跨页选择状态与清空方法
+   * @paramEn params Cross-page selection state and clear method.
+   * @en Custom content before the cross-page selection footer.
+   */
+  selectionFooterPrepend?: HTableSelectionFooterScope;
+  /**
+   * 跨页选择栏提示文字
+   * @param params 所有已选项与当前数据集合已选项
+   * @paramEn params All selected items and selected items in the current data collection.
+   * @en Custom status content in the cross-page selection footer.
+   */
+  selectionFooterText?: HTableSelectionFooterScope;
+  /**
+   * 跨页选择栏结尾区域，可用于放置分页等控件
+   * @param params 跨页选择状态与清空方法
+   * @paramEn params Cross-page selection state and clear method.
+   * @en Custom content after the cross-page selection footer, such as pagination controls.
+   */
+  selectionFooterAppend?: HTableSelectionFooterScope;
   /**
    * 自定义分组行内容
    * @param params 分组信息、聚合值与切换方法

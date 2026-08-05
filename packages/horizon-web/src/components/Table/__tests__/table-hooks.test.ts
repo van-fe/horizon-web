@@ -1,6 +1,7 @@
 import { computed, ref } from 'vue';
 import { describe, expect, test } from 'vitest';
 import useVisibleRows from '../src/hooks/useVisibleRows';
+import { getFooterStyle } from '../src/hooks/useLayout';
 import type { HTableTransformedRowDataType } from '../src/utils/types';
 import { HTableTransformedRowContextKey } from '../src/utils/types';
 
@@ -28,6 +29,10 @@ function createRow(
 }
 
 describe('Table hooks', () => {
+  test('positions summary rows above the sticky selection footer', () => {
+    expect(getFooterStyle(0, ref([52]))).toEqual({ bottom: '52px' });
+  });
+
   test('filters hidden rows and sorts flat data', () => {
     const flattenData = ref([
       createRow(1, { value: 3 }),

@@ -25,6 +25,7 @@ export default function useLayout(
     flattenColumns: HTableColumnData[];
   }>,
   getFixedState: (uuid: string) => HTableFixedValue,
+  selectionFooterHeight: Ref<number>,
 ) {
   const tableFooterDomRef = ref<HorizonWebComponentInstance<typeof TableFooter>>();
   const footerRowHeight = ref<number[]>([]);
@@ -111,7 +112,7 @@ export default function useLayout(
       [
         (lastHeaderCell?.parentColumnsHeightSum || 0) +
           (lastHeaderCell?.selfElement.value?.clientHeight || 0),
-        tableFooterDomRef.value?.$el?.clientHeight || 0,
+        (tableFooterDomRef.value?.$el?.clientHeight || 0) + selectionFooterHeight.value,
       ],
       [
         lastFixedLeftColumn
@@ -127,7 +128,7 @@ export default function useLayout(
   }
 
   function refreshFooterHeight() {
-    footerRowHeight.value = [0];
+    footerRowHeight.value = [selectionFooterHeight.value];
 
     const rows = tableFooterDomRef.value?.$el?.rows ?? [];
     let sum = 0;

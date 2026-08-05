@@ -130,6 +130,13 @@ Enable `reserve-selection` on a selection column to preserve that column's selec
 table's current-page `data` is replaced. Selection values always come from that column's
 `column-key`.
 
+The table then keeps a sticky footer with the clear action, total selected count, and selected
+count in the current data collection. When `show-summary` is also enabled, the selection footer
+appears below the summary rows. Customize its three regions with the scoped
+`selection-footer-prepend`, `selection-footer-text`, and `selection-footer-append` slots. Their
+scope includes `selectedKeys`, `currentSelectedKeys`, both counts, and `clearSelection`. This
+example places Pagination in the append region.
+
 :::demo components/Table/cross-page-selection.vue :::
 
 ## Column Tip

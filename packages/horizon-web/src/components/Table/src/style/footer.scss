@@ -1,3 +1,4 @@
+/* stylelint-disable nesting-selector-no-missing-scoping-root, no-invalid-position-declaration -- BEM and responsive grid mixins provide the selector context. */
 @use '../../../../styles/mixins';
 
 @include mixins.be('table', 'table-foot') {
@@ -33,13 +34,13 @@
       width: mixins.css-variable('table', 'size', 'sort-button');
       height: mixins.css-variable('table', 'size', 'sort-button');
       vertical-align: middle;
-      border-radius: mixins.css-variable('table', 'border-radius');
       cursor: pointer;
+      border-radius: mixins.css-variable('table', 'border-radius');
     }
 
     @include mixins.m('sort') {
       flex-direction: column;
-      grid-row-gap: 1px;
+      row-gap: 1px;
       transition: mixins.css-variable('table', 'transition', 'color-behavior');
 
       &-icon {
@@ -99,6 +100,61 @@
 
     @include mixins.m('selection') {
       line-height: initial;
+    }
+  }
+}
+
+@include mixins.be('table', 'selection-footer') {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  z-index: calc(#{mixins.css-variable('table', 'z-index')} + 3);
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: mixins.css-variable('table', 'spacing', 'selection-footer', 'gap');
+  align-items: center;
+  width: 100%;
+  min-height: mixins.css-variable('table', 'size', 'selection-footer', 'min-height');
+  padding: mixins.css-variable('table', 'spacing', 'selection-footer', 'padding');
+  background: mixins.css-variable('table', 'background', 'selection-footer');
+  border-top: mixins.css-variable('table', 'border');
+  box-shadow: mixins.css-variable('table', 'box-shadow', 'selection-footer');
+
+  @include mixins.m('prepend') {
+    min-width: 0;
+  }
+
+  @include mixins.m('text') {
+    display: flex;
+    flex-wrap: wrap;
+    gap: mixins.css-variable('table', 'spacing', 'selection-footer', 'text-gap');
+    align-items: center;
+    min-width: 0;
+    color: mixins.css-variable('text', 'secondary');
+  }
+
+  @include mixins.m('selected-count') {
+    font-weight: mixins.css-variable('weight-strong');
+    color: mixins.css-variable('text', 'primary');
+  }
+
+  @include mixins.m('divider') {
+    width: 1px;
+    height: 1em;
+    background: mixins.css-variable('divider', 'default');
+  }
+
+  @include mixins.m('append') {
+    justify-self: end;
+    min-width: 0;
+  }
+
+  @media (width <= 520px) {
+    grid-template-columns: auto minmax(0, 1fr);
+
+    @include mixins.m('append') {
+      grid-column: 1 / -1;
     }
   }
 }

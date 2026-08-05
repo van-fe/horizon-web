@@ -329,6 +329,39 @@ export interface HTableColumnSelectionData {
   ) => void;
 }
 
+export interface HTableSelectionFooterScope {
+  /**
+   * 当前跨页选择列
+   * @en The selection column that owns the cross-page selection state.
+   */
+  column: HTableColumnData;
+  /**
+   * 所有已选的 `column-key` 值
+   * @en All selected `column-key` values.
+   */
+  selectedKeys: HTableRowKeyType[];
+  /**
+   * 当前数据集合内已选的 `column-key` 值
+   * @en Selected `column-key` values in the current data collection.
+   */
+  currentSelectedKeys: HTableRowKeyType[];
+  /**
+   * 所有已选数量
+   * @en Total selected count.
+   */
+  selectedCount: number;
+  /**
+   * 当前数据集合内已选数量
+   * @en Selected count in the current data collection.
+   */
+  currentSelectedCount: number;
+  /**
+   * 清空所有跨页选择
+   * @en Clears all cross-page selections.
+   */
+  clearSelection: () => void;
+}
+
 export interface HTableColumnFilterData {
   currentFilterValue: Ref<unknown>;
 }

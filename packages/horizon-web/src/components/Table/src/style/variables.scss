@@ -4,6 +4,9 @@
 $values: (
   size: (
     sort-button: 24px,
+    selection-footer: (
+      min-height: 52px,
+    ),
     empty: (
       min-height: 160px,
     ),
@@ -53,6 +56,7 @@ $values: (
       '': mixins.css-variable('bg', 'default'),
       sort: mixins.css-variable('bg', 'hover'),
     ),
+    selection-footer: mixins.css-variable('bg', 'default'),
     body: (
       '': mixins.css-variable('bg', 'default'),
       expand: mixins.css-variable('bg', 'secondary'),
@@ -107,12 +111,18 @@ $values: (
         ),
       ),
     ),
+    selection-footer: (
+      gap: mixins.css-variable('spacing-4'),
+      text-gap: mixins.css-variable('spacing-3'),
+      padding: mixins.css-variable('spacing-2') mixins.css-variable('spacing-4'),
+    ),
   ),
   box-shadow: (
     scrolling: (
-      left: inset 10px 0 10px -10px rgba(15, 17, 20, 10%),
-      right: inset -10px 0 10px -10px rgba(15, 17, 20, 10%),
+      left: inset 10px 0 10px -10px rgb(15, 17, 20, 10%),
+      right: inset -10px 0 10px -10px rgb(15, 17, 20, 10%),
     ),
+    selection-footer: 0 -4px 12px rgb(15, 17, 20, 6%),
   ),
   transition: (
     transform: mixins.css-variable('transition', 'transform'),

@@ -66,6 +66,7 @@ export type {
   HTableInsertedColumnData,
   HTableColumnContextData,
   HTableColumnSelectionData,
+  HTableSelectionFooterScope,
   HTableColumnFilterData,
   HTableVirtualOptions,
   HTableVisibleRange,
