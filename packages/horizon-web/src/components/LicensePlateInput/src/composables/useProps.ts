@@ -42,6 +42,11 @@ export const useLicensePlateInputProps = declarePropType({
    */
   clearable: { type: Boolean, default: true },
   /**
+   * 是否将车牌键盘作为内联面板持续展示在输入框下方
+   * @en Whether to persistently render the plate keyboard inline below the input.
+   */
+  inlinePanel: { type: Boolean, default: false },
+  /**
    * 车牌号输入占位文本
    * @en Placeholder for the license plate number field.
    */

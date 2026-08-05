@@ -1,8 +1,11 @@
-import { describe, expect, test } from 'vitest';
+import { mount } from '@vue/test-utils';
+import { nextTick, ref } from 'vue';
+import { describe, expect, test, vi } from 'vitest';
 import {
   getLicensePlateKeyboardKeys,
   removeLicensePlateCharacter,
   sanitizeLicensePlateInput,
+  useLicensePlateKeyboard,
 } from '../useLicensePlateKeyboard';
 
 describe('useLicensePlateKeyboard helpers', () => {
@@ -34,5 +37,43 @@ describe('useLicensePlateKeyboard helpers', () => {
       activeIndex: 6,
       provinceRemoved: false,
     });
+  });
+
+  test('keeps an inline panel visible when changes are committed', async () => {
+    const inlinePanel = ref(true);
+    const onChange = vi.fn();
+    let keyboard!: ReturnType<typeof useLicensePlateKeyboard>;
+    const wrapper = mount({
+      setup() {
+        keyboard = useLicensePlateKeyboard({
+          modelValue: () => '',
+          provinces: () => provinces,
+          newEnergy: () => false,
+          inlinePanel: () => inlinePanel.value,
+          disabled: () => false,
+          readonly: () => false,
+          rootRef: ref(),
+          inlinePanelRef: ref(),
+          popoverRef: ref(),
+          onInput: vi.fn(),
+          onChange,
+          onProvinceChange: vi.fn(),
+          onClear: vi.fn(),
+          onTouched: vi.fn(),
+        });
+        return () => null;
+      },
+    });
+
+    expect(keyboard.panelVisible.value).toBe(true);
+    keyboard.choose('京');
+    keyboard.close();
+    expect(keyboard.panelVisible.value).toBe(true);
+    expect(onChange).toHaveBeenCalledWith('京');
+
+    inlinePanel.value = false;
+    await nextTick();
+    expect(keyboard.panelVisible.value).toBe(false);
+    wrapper.unmount();
   });
 });

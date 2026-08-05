@@ -14,9 +14,11 @@ export interface UseLicensePlateKeyboardOptions {
   modelValue: () => string;
   provinces: () => string[];
   newEnergy: () => boolean;
+  inlinePanel: () => boolean;
   disabled: () => boolean;
   readonly: () => boolean;
   rootRef: Ref<HTMLElement | undefined>;
+  inlinePanelRef: Ref<HTMLElement | undefined>;
   popoverRef: Ref<LicensePlatePopoverInstance | undefined>;
   onInput: (value: string) => void;
   onChange: (value: string) => void;
@@ -72,7 +74,7 @@ export function removeLicensePlateCharacter(value: string, activeIndex: number) 
 export function useLicensePlateKeyboard(options: UseLicensePlateKeyboardOptions) {
   const draft = ref(sanitizeLicensePlateInput(options.modelValue(), options.provinces()));
   const activeIndex = ref(Math.min(draft.value.length, 7));
-  const panelVisible = ref(false);
+  const panelVisible = ref(options.inlinePanel() && !options.disabled() && !options.readonly());
   const expandedForNewEnergy = ref(options.newEnergy() || draft.value.length === 8);
   const openedValue = ref(draft.value);
 
@@ -94,9 +96,11 @@ export function useLicensePlateKeyboard(options: UseLicensePlateKeyboardOptions)
   );
 
   watch(
-    () => [options.disabled(), options.readonly()] as const,
-    ([disabled, readonly]) => {
+    () => [options.disabled(), options.readonly(), options.inlinePanel()] as const,
+    ([disabled, readonly, inlinePanel]) => {
       if (disabled || readonly) close();
+      else if (inlinePanel) open();
+      else close();
     },
   );
 
@@ -116,13 +120,22 @@ export function useLicensePlateKeyboard(options: UseLicensePlateKeyboardOptions)
 
   function close() {
     if (!panelVisible.value) return;
-    panelVisible.value = false;
+    panelVisible.value = options.inlinePanel() && !options.disabled() && !options.readonly();
     options.onTouched();
-    if (openedValue.value !== draft.value) options.onChange(draft.value);
+    if (openedValue.value !== draft.value) {
+      options.onChange(draft.value);
+      openedValue.value = draft.value;
+    }
   }
 
   function choose(character: string) {
-    if (!panelVisible.value || !keyboardKeys.value.includes(character)) return;
+    if (
+      !panelVisible.value ||
+      options.disabled() ||
+      options.readonly() ||
+      !keyboardKeys.value.includes(character)
+    )
+      return;
     const characters = draft.value.split('');
     const index = activeIndex.value;
     characters[index] = character;
@@ -197,6 +210,7 @@ export function useLicensePlateKeyboard(options: UseLicensePlateKeyboardOptions)
     if (
       target &&
       (options.rootRef.value?.contains(target) ||
+        options.inlinePanelRef.value?.contains(target) ||
         options.popoverRef.value?.popoverDom?.contains(target))
     ) {
       return;

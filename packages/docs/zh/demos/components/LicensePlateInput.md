@@ -1,10 +1,16 @@
 # LicensePlateInput 车牌号输入
 
-用于输入中国大陆车牌号。组件显示 7 个普通车牌字符格和 1 个新能源扩展格；聚焦或点击字符格后会弹出车牌键盘面板。第一格显示省份简称，第二格只提供合法字母，后续格提供数字、字母以及末位专用字符。通过 `v-model` 返回完整车牌号。
+用于输入中国大陆车牌号。组件显示 7 个普通车牌字符格和 1 个新能源扩展格；默认在聚焦或点击字符格后弹出车牌键盘面板，也可将键盘以内联方式持续展示在输入框下方。第一格显示省份简称，第二格只提供合法字母，后续格提供数字、字母以及末位专用字符。通过 `v-model` 返回完整车牌号。
 
 ## 基础用法
 
 :::demo components/LicensePlateInput/basic.vue :::
+
+## 内联键盘面板
+
+设置 `inline-panel` 后，键盘面板会直接参与页面布局并持续显示在输入框下方，不创建 Popover。此模式适合移动端表单、停车场终端等需要固定操作区的场景。
+
+:::demo components/LicensePlateInput/inline-panel.vue :::
 
 ## 新能源、校验与不可编辑状态
 
@@ -25,6 +31,7 @@
 | readonly | 只读 | `boolean` | `false` |
 | new-energy | 固定启用新能源第八位 | `boolean` | `false` |
 | clearable | 允许清空 | `boolean` | `true` |
+| inline-panel | 在输入框下方持续展示内联键盘面板 | `boolean` | `false` |
 | placeholder | 号码占位文本 | `string` | 国际化文案 |
 | default-province | 空值时默认省份简称 | `string` | `'京'` |
 | provinces | 可选省份简称 | `string[]` | 31 个大陆省级行政区简称 |

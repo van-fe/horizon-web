@@ -49,6 +49,28 @@ describe('LicensePlateInput', () => {
     expect(wrapper.find('.h-license-plate-input__keyboard').exists()).toBe(true);
   });
 
+  test('renders a persistent inline panel without creating a Popover', async () => {
+    const modelValue = ref('');
+    const wrapper = mount(() => (
+      <LicensePlateInput v-model={modelValue.value} inlinePanel toBody={false} />
+    ));
+
+    expect(wrapper.findComponent(HPopover).exists()).toBe(false);
+    expect(wrapper.find('.h-license-plate-input__inline-panel').exists()).toBe(true);
+
+    await wrapper
+      .findAllComponents(HButton)
+      .find(button => button.text() === '京')!
+      .trigger('click');
+    expect(modelValue.value).toBe('京');
+
+    await wrapper
+      .findAllComponents(HButton)
+      .find(button => button.text() === 'Done')!
+      .trigger('click');
+    expect(wrapper.find('.h-license-plate-input__inline-panel').exists()).toBe(true);
+  });
+
   test('switches keyboard layouts and emits a complete plate', async () => {
     const wrapper = mountInput();
     await wrapper.find('input').trigger('focus');
