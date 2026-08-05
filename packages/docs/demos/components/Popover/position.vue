@@ -1,39 +1,52 @@
 <script setup lang="ts">
 const placements = [
-  { value: 'top-start', label: '上左', row: 1, column: 2 },
-  { value: 'top', label: '上', row: 1, column: 3 },
-  { value: 'top-end', label: '上右', row: 1, column: 4 },
-  { value: 'left-start', label: '左上', row: 2, column: 1 },
-  { value: 'right-start', label: '右上', row: 2, column: 5 },
-  { value: 'left', label: '左', row: 3, column: 1 },
-  { value: 'right', label: '右', row: 3, column: 5 },
-  { value: 'left-end', label: '左下', row: 4, column: 1 },
-  { value: 'right-end', label: '右下', row: 4, column: 5 },
-  { value: 'bottom-start', label: '下左', row: 5, column: 2 },
-  { value: 'bottom', label: '下', row: 5, column: 3 },
-  { value: 'bottom-end', label: '下右', row: 5, column: 4 },
-  { value: 'auto-start', label: '自动起始', row: 6, column: 2 },
-  { value: 'auto', label: '自动', row: 6, column: 3 },
-  { value: 'auto-end', label: '自动尾部', row: 6, column: 4 },
+  null,
+  ['top-start', '上左'],
+  ['top', '上'],
+  ['top-end', '上右'],
+  null,
+  ['left-start', '左上'],
+  null,
+  null,
+  null,
+  ['right-start', '右上'],
+  ['left', '左'],
+  null,
+  null,
+  null,
+  ['right', '右'],
+  ['left-end', '左下'],
+  null,
+  null,
+  null,
+  ['right-end', '右下'],
+  null,
+  ['bottom-start', '下左'],
+  ['bottom', '下'],
+  ['bottom-end', '下右'],
+  null,
+  null,
+  ['auto-start', '自动起始'],
+  ['auto', '自动'],
+  ['auto-end', '自动尾部'],
+  null,
 ] as const;
 </script>
 
 <template>
-  <div class="position-demo">
-    <div class="position-grid">
+  <div class="demo-block">
+    <div v-for="(placement, index) in placements" :key="index" class="item">
       <h-popover
-        v-for="placement in placements"
-        :key="placement.value"
+        v-if="placement"
         trigger="hover"
-        :placement="placement.value"
-        :flip="placement.value.startsWith('auto')"
-        :style="{ gridArea: `${placement.row} / ${placement.column}` }"
+        :placement="placement[0]"
+        :flip="placement[0].startsWith('auto')"
       >
         <template #reference>
-          <h-button size="small" type="normal">{{ placement.label }}</h-button>
+          <h-button>{{ placement[1] }}</h-button>
         </template>
         <template #popper>
-          <h-pop-content>{{ placement.value }}</h-pop-content>
+          <h-pop-content>{{ placement[0] }}</h-pop-content>
         </template>
       </h-popover>
     </div>
@@ -41,22 +54,18 @@ const placements = [
 </template>
 
 <style scoped>
-.position-demo {
-  overflow-x: auto;
-  padding-block: var(--h-spacing-4);
-}
-
-.position-grid {
+.demo-block {
   display: grid;
-  grid-template-columns: repeat(5, 88px);
-  grid-template-rows: repeat(6, auto);
-  gap: var(--h-spacing-3);
-  width: max-content;
-  min-width: 100%;
+  grid-template: repeat(6, 1fr) / repeat(5, 1fr);
+  grid-gap: 20px;
+  width: 430px;
 }
 
-.position-grid :deep(.h-popover__reference),
-.position-grid :deep(.h-button) {
+.demo-block .item {
+  width: 80px;
+}
+
+.demo-block .item button {
   width: 100%;
 }
 </style>
