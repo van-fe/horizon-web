@@ -1,9 +1,10 @@
+/* stylelint-disable nesting-selector-no-missing-scoping-root -- BEM state mixins provide the selector scope. */
 @use '../../../../styles/mixins';
 
 @include mixins.b('table') {
   @include mixins.be('table', 'table', false) {
-    border-collapse: separate;
     border-spacing: 0;
+    border-collapse: separate;
   }
 
   @include mixins.is('border-default') {
@@ -25,6 +26,14 @@
 
       &:last-child {
         border-right: none;
+      }
+    }
+
+    @include mixins.e('table-head') {
+      @include mixins.e('cell') {
+        &:last-child:not(.is-last-column) {
+          border-right: mixins.css-variable('table', 'border');
+        }
       }
     }
 

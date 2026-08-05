@@ -633,6 +633,28 @@ describe('Table', () => {
     expect(headerRows[1].findAll('th').map(cell => cell.text())).toEqual(['Name', 'Email', 'Role']);
   });
 
+  test('only marks a grouped header cell as last when it reaches the table edge', async () => {
+    const wrapper = mount(() => (
+      <HTable data={[{ account: 'Northwind', market: 'APAC', hub: 'Singapore', arr: '$248k' }]}>
+        <HTableColumn title="Account" field="account" />
+        <HTableColumn title="Region">
+          <HTableColumn title="Market" field="market" />
+          <HTableColumn title="Hub" field="hub" />
+        </HTableColumn>
+        <HTableColumn title="ARR" field="arr" />
+      </HTable>
+    ));
+
+    await settleTable();
+
+    const headerCells = wrapper.findAll('thead th');
+    const hub = headerCells.find(cell => cell.text() === 'Hub');
+    const arr = headerCells.find(cell => cell.text() === 'ARR');
+
+    expect(hub?.classes()).not.toContain('is-last-column');
+    expect(arr?.classes()).toContain('is-last-column');
+  });
+
   test('preserves zero row and column spans returned as an object', async () => {
     const wrapper = mount(() => (
       <HTable

@@ -180,7 +180,13 @@ export function isFirstColumn(columnData: HTableColumnData) {
 }
 
 export function isLastColumn(columnData: HTableColumnData) {
-  return !columnData[HTableColumnContextKey].nextColumn;
+  let lastLeafColumn = columnData;
+
+  while (lastLeafColumn.calcChildren.length > 0) {
+    lastLeafColumn = lastLeafColumn.calcChildren[lastLeafColumn.calcChildren.length - 1];
+  }
+
+  return !lastLeafColumn[HTableColumnContextKey].nextColumn;
 }
 
 export function isLastFixedColumn(
