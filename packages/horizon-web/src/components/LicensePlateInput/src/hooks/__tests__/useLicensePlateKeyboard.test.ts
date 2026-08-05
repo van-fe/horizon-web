@@ -1,5 +1,9 @@
 import { describe, expect, test } from 'vitest';
-import { getLicensePlateKeyboardKeys, sanitizeLicensePlateInput } from '../useLicensePlateKeyboard';
+import {
+  getLicensePlateKeyboardKeys,
+  removeLicensePlateCharacter,
+  sanitizeLicensePlateInput,
+} from '../useLicensePlateKeyboard';
 
 describe('useLicensePlateKeyboard helpers', () => {
   const provinces = ['京', '沪', '粤'];
@@ -17,5 +21,18 @@ describe('useLicensePlateKeyboard helpers', () => {
     expect(getLicensePlateKeyboardKeys(2, provinces)).toContain('0');
     expect(getLicensePlateKeyboardKeys(2, provinces)).not.toContain('挂');
     expect(getLicensePlateKeyboardKeys(6, provinces)).toContain('挂');
+  });
+
+  test('clears the whole plate when removing the province', () => {
+    expect(removeLicensePlateCharacter('京A12345', 0)).toEqual({
+      value: '',
+      activeIndex: 0,
+      provinceRemoved: true,
+    });
+    expect(removeLicensePlateCharacter('京A12345', 6)).toEqual({
+      value: '京A1234',
+      activeIndex: 6,
+      provinceRemoved: false,
+    });
   });
 });

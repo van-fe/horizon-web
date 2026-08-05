@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, expect, test } from 'vitest';
-import { nextTick } from 'vue';
+import { nextTick, ref } from 'vue';
 import HButton from '~/components/Button/src/Button';
 import HPopover from '~/components/Popover/src/Popover';
 import { dictionaries } from '~/locales';
@@ -84,6 +84,22 @@ describe('LicensePlateInput', () => {
     input.element.dispatchEvent(paste);
     await nextTick();
     expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual(['粤BD12345']);
+  });
+
+  test('clears v-model when backspacing the selected province cell', async () => {
+    const modelValue = ref('京A12345');
+    const wrapper = mount(() => <LicensePlateInput v-model={modelValue.value} toBody={false} />);
+    const cells = wrapper.findAll('.h-license-plate-input__cell');
+
+    await cells[0].trigger('click');
+    await wrapper
+      .findAllComponents(HButton)
+      .find(button => button.text() === 'Backspace')!
+      .trigger('click');
+
+    expect(modelValue.value).toBe('');
+    expect(wrapper.find('input').element.value).toBe('');
+    expect(cells.slice(1, 7).every(cell => cell.text() === '')).toBe(true);
   });
 
   test('activates the eighth new-energy position and validates on completion', async () => {

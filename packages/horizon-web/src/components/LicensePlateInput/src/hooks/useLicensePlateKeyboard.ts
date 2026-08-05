@@ -55,6 +55,20 @@ export function getLicensePlateKeyboardKeys(activeIndex: number, provinces: stri
   return activeIndex === 6 ? [...DIGITS, ...LETTERS, ...SPECIAL_SUFFIXES] : [...DIGITS, ...LETTERS];
 }
 
+export function removeLicensePlateCharacter(value: string, activeIndex: number) {
+  if (!value) return { value: '', activeIndex: 0, provinceRemoved: false };
+  if (activeIndex <= 0) return { value: '', activeIndex: 0, provinceRemoved: true };
+
+  const characters = value.split('');
+  const index = Math.min(activeIndex, characters.length - 1);
+  characters.splice(index, 1);
+  return {
+    value: characters.join(''),
+    activeIndex: Math.max(0, Math.min(index, characters.length)),
+    provinceRemoved: false,
+  };
+}
+
 export function useLicensePlateKeyboard(options: UseLicensePlateKeyboardOptions) {
   const draft = ref(sanitizeLicensePlateInput(options.modelValue(), options.provinces()));
   const activeIndex = ref(Math.min(draft.value.length, 7));
@@ -120,11 +134,13 @@ export function useLicensePlateKeyboard(options: UseLicensePlateKeyboardOptions)
 
   function remove() {
     if (!draft.value) return;
-    const characters = draft.value.split('');
-    const index = Math.min(activeIndex.value, characters.length - 1);
-    characters.splice(index, 1);
-    emitInput(characters.join(''));
-    activeIndex.value = Math.max(0, Math.min(index, characters.length));
+    const result = removeLicensePlateCharacter(draft.value, activeIndex.value);
+    emitInput(result.value);
+    activeIndex.value = result.activeIndex;
+    if (result.provinceRemoved) {
+      expandedForNewEnergy.value = options.newEnergy();
+      options.onProvinceChange('');
+    }
   }
 
   function clear() {
