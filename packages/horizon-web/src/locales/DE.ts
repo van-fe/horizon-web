@@ -294,7 +294,7 @@ export const DE = {
       loading: 'Wird geladen',
       clearSelection: 'Auswahl aufheben',
       selectedCount: '{count} ausgewählt',
-      currentSelectedCount: '{count} in der aktuellen Sammlung ausgewählt',
+      currentSelectedCount: '{count} aktuell ausgewählt',
       pinToLeft: 'Nach links pinnen',
       pinToRight: 'Nach rechts pinnen',
       pin: 'Spalte pinnen',

@@ -278,7 +278,7 @@ export const SvSE = {
       loading: 'Laddar',
       clearSelection: 'Rensa',
       selectedCount: '{count} valda',
-      currentSelectedCount: '{count} valda i den aktuella samlingen',
+      currentSelectedCount: '{count} valda just nu',
       pinToLeft: 'Fäst till vänster',
       pinToRight: 'Fäst till höger',
       pin: 'Fäst kolumn',

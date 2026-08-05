@@ -220,7 +220,7 @@ export default defineComponent({
       selectedCount: useLocaleLang('table.selectedCount', '{count} selected'),
       currentSelectedCount: useLocaleLang(
         'table.currentSelectedCount',
-        '{count} selected in current collection',
+        '{count} currently selected',
       ),
     };
     const clearSelectionText = useLocaleLang('table.clearSelection', 'Clear');

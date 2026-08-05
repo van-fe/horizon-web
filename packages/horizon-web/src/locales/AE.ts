@@ -304,7 +304,7 @@ export const AE = {
       loading: 'جار التحميل',
       clearSelection: 'مسح',
       selectedCount: 'تم تحديد {count}',
-      currentSelectedCount: 'تم تحديد {count} في المجموعة الحالية',
+      currentSelectedCount: 'تم تحديد {count} حاليًا',
       pinToLeft: 'التثبيت إلى اليسار',
       pinToRight: 'التثبيت إلى اليمين',
       pin: 'تثبيت هذا العمود',

@@ -291,7 +291,7 @@ export const EnGB = {
       loading: 'Loading',
       clearSelection: 'Clear',
       selectedCount: '{count} selected',
-      currentSelectedCount: '{count} selected in current collection',
+      currentSelectedCount: '{count} currently selected',
       pinToLeft: 'Pin to left',
       pinToRight: 'Pin to right',
       pin: 'Pin this column',
