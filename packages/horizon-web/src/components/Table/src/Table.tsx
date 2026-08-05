@@ -421,8 +421,7 @@ export default defineComponent({
               <div class={classHelper.em('selection-footer', 'prepend')}>
                 {slots['selection-footer-prepend']?.(selectionFooter.scope.value) ?? (
                   <HButton
-                    text
-                    size="small"
+                    link
                     disabled={selectionFooter.scope.value.selectedCount === 0}
                     onClick={selectionFooter.scope.value.clearSelection}
                   >

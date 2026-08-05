@@ -9,6 +9,7 @@ import { liveDemoPlugin } from './liveDemoPlugin';
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: 'Horizon Web',
+  base: process.env.DOCS_BASE || '/',
   cleanUrls: true,
   locales: {
     root: {

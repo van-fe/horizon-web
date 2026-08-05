@@ -240,6 +240,7 @@ async function copyUsageCode(name: string) {
   color: var(--h-text-primary);
   background: var(--h-bg-default);
   box-sizing: border-box;
+  border: 1px solid transparent;
   transition:
     border-color 160ms ease,
     box-shadow 160ms ease,
@@ -302,6 +303,7 @@ async function copyUsageCode(name: string) {
     border-color: var(--h-border-default);
     box-shadow: var(--h-shadow-basic);
     transform: translateY(-2px);
+    border-color: var(--h-border-hover);
   }
 
   .icon-gallery__item:hover .icon-gallery__visual {
