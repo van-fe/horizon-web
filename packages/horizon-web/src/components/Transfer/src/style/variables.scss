@@ -27,7 +27,12 @@ $values: (
   ),
   border: (
     panel: 1px solid #{function.css-variable('border-default')},
-    drag-over-cursor-arrow: #{function.css-variable('transfer', 'size', 'drag-over-cursor', 'height')}
+    drag-over-cursor-arrow: #{function.css-variable(
+        'transfer',
+        'size',
+        'drag-over-cursor',
+        'height'
+      )}
       solid #{function.css-variable('transfer', 'border-color', 'drag-over-cursor-arrow')},
   ),
   border-radius: (
@@ -79,5 +84,9 @@ $values: (
         margin-top: #{function.css-variable('spacing-3')},
       ),
     ),
+  ),
+  transition: (
+    sort: transform #{function.css-variable('transition-time-fast')}
+      #{function.css-variable('transition-func-ease-in-out-bezier')},
   ),
 );

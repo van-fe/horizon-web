@@ -199,6 +199,10 @@ export const DE = {
       group: 'Gruppen',
       clear: 'Löschen',
     },
+    sortableList: {
+      dragHandle: 'Element {index} ziehen oder mit den Pfeiltasten neu anordnen',
+      moved: 'Element {from} wurde an Position {to} von {total} verschoben',
+    },
     image: {
       error: 'FEHLER',
     },

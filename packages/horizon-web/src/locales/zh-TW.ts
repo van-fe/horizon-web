@@ -209,6 +209,10 @@ export const ZhTW = {
       group: '組',
       clear: '清空',
     },
+    sortableList: {
+      dragHandle: '拖曳或使用方向鍵排序第 {index} 項',
+      moved: '已將第 {from} 項移動到第 {to} 項，共 {total} 項',
+    },
     image: {
       error: '加載失敗',
     },

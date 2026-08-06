@@ -196,6 +196,10 @@ export const EnUS = {
       group: 'Groups',
       clear: 'Clear',
     },
+    sortableList: {
+      dragHandle: 'Drag or use arrow keys to reorder item {index}',
+      moved: 'Moved item {from} to position {to} of {total}',
+    },
     image: {
       error: 'FAILED',
     },

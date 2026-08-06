@@ -209,6 +209,10 @@ export const ZhCN = {
       group: '组',
       clear: '清除',
     },
+    sortableList: {
+      dragHandle: '拖拽或使用方向键排序第 {index} 项',
+      moved: '已将第 {from} 项移动到第 {to} 项，共 {total} 项',
+    },
     image: {
       error: '加载失败',
     },

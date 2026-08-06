@@ -1,4 +1,4 @@
-import { defineComponent, toRefs, ref, watch, computed, Fragment } from 'vue';
+import { computed, defineComponent, onBeforeUnmount, ref, toRefs, watch } from 'vue';
 import type {
   TransferDataProps,
   CheckboxUnionType,
@@ -7,7 +7,7 @@ import type {
 import { useTransferPanelProps } from './composables/useProps';
 import { useTransferPanelEmits } from './composables/useEmits';
 import type { TransferPanelEmits } from './composables/useEmits';
-import { cls, cssVariable, type HorizonWebSetupContext } from '@aurora/utils';
+import { cls, type HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import HCheckbox from '~/components/Checkbox/src/Checkbox';
 import HCheckboxGroup from '~/components/Checkbox/src/CheckboxGroup';
@@ -20,11 +20,11 @@ import HBreadcrumbItem from '~/components/Breadcrumb/src/BreadcrumbItem';
 import { AIcon } from '@aurora/icon';
 import type { TransferPanelSlots } from './composables/useSlots';
 import { useTransferPanelSlots } from './composables/useSlots';
-import { nanoid } from 'nanoid';
 import HVirtualScroller from '~/components/VirtualScroller/src/VirtualScroller';
 import HVirtualScrollerItem from '~/components/VirtualScroller/src/VirtualScrollerItem';
 import type { VirtualScrollerDefaultSlotRowType } from '~/components/VirtualScroller/src/composables/useSlots';
 import useLocaleLang from '~/utils/useLocaleLang';
+import useSortableList from '~/components/SortableList/src/hooks/useSortableList';
 
 export default defineComponent({
   name: `${useNamespace()}TransferPanel`,
@@ -71,9 +71,8 @@ export default defineComponent({
     const checkedItemKeyArr = ref<CheckboxUnionType[]>([]);
     const showBreadcrumb = ref(false);
     const breadcrumbArr = ref<TransferDataProps[]>([]);
-    const dragOver = ref(false);
-    const dragPosition = ref(0);
-    const dragItem = ref<TransferDataProps | null>(null);
+    const sortAnimating = ref(false);
+    let sortAnimationTimer: ReturnType<typeof setTimeout> | undefined;
 
     const filterDataComputed = computed(() => {
       if (typeProp.value === 'right') return dataProp.value;
@@ -110,44 +109,65 @@ export default defineComponent({
       emit('expand', true);
     };
 
-    const handleDragstart = (event: DragEvent, item: TransferDataProps) => {
-      event.stopPropagation();
-      dragItem.value = item;
-      onDragStartProp?.value?.(event, item);
-    };
-    const handleDrop = (event: DragEvent, item: TransferDataProps) => {
-      if (!draggableProp.value) return;
-      event.stopPropagation();
-      event.preventDefault();
-      dragOver.value = false;
-      onDropProp?.value?.(event, item, dragItem.value, dragPosition.value);
-    };
-    const dragOverKey = ref(nanoid());
-    const handleDragover = (event: DragEvent, item: TransferDataProps) => {
-      if (!draggableProp.value) return;
-      event.stopPropagation();
-      event.preventDefault();
-      const rect = (event.target as HTMLElement).getBoundingClientRect();
+    const transferSortable = useSortableList({
+      items: dataProp,
+      disabled: computed(
+        () => disabledProp.value || !draggableProp.value || typeProp.value !== 'right',
+      ),
+      itemKey: computed(
+        () => (item: TransferDataProps) =>
+          item[propsProp.value.key as keyof TransferDataProps] as string | number,
+      ),
+      itemDisabled: computed(
+        () => (item: TransferDataProps) =>
+          !!item[propsProp.value.disabled as keyof TransferDataProps],
+      ),
+      onSort: (_context, meta) => {
+        if (!meta) return;
+        sortAnimating.value = true;
+        if (sortAnimationTimer) clearTimeout(sortAnimationTimer);
+        sortAnimationTimer = setTimeout(() => {
+          sortAnimating.value = false;
+          sortAnimationTimer = undefined;
+        }, 220);
+        onDropProp?.value?.(
+          meta.event,
+          meta.targetItem,
+          meta.sourceItem,
+          meta.position === 'after' ? 1 : -1,
+        );
+      },
+      onDragStart: (event, item) => onDragStartProp?.value?.(event, item),
+      onDragEnd: (event, item) => onDragEndProp?.value?.(event, item),
+      focusHandle: () => undefined,
+    });
 
-      dragOver.value = true;
-      const position = event.pageY > window.pageYOffset + rect.top + rect.height / 4 ? 1 : -1; // -1上 1下
-      dragPosition.value = dataProp.value[0].key === dragOverKey.value ? position : 1;
-      dragOverKey.value = item[propsProp.value.key as keyof TransferDataProps] as string;
+    const handleDragstart = (event: DragEvent, item: TransferDataProps, index: number) => {
+      event.stopPropagation();
+      transferSortable.onDragStart(event, item, index);
+    };
+    const handleDrop = (event: DragEvent, item: TransferDataProps, index: number) => {
+      event.stopPropagation();
+      transferSortable.onDrop(event, item, index);
+    };
+    const handleDragover = (event: DragEvent, item: TransferDataProps, index: number) => {
+      event.stopPropagation();
+      transferSortable.onDragOver(event, item, index);
       onDragOverProp?.value?.(event, item);
     };
-    const handleDragleave = (event: DragEvent, item: TransferDataProps) => {
-      if (!draggableProp.value) return;
+    const handleDragleave = (event: DragEvent, item: TransferDataProps, index: number) => {
       event.stopPropagation();
-      dragOver.value = false;
+      transferSortable.onDragLeave(event, item, index);
       onDragLeaveProp?.value?.(event, item);
     };
-    const handleDragend = (event: DragEvent, item: TransferDataProps) => {
+    const handleDragend = (event: DragEvent, item: TransferDataProps, index: number) => {
       event.stopPropagation();
-      dragOver.value = false;
-      dragItem.value = null;
-      dragOverKey.value = nanoid();
-      onDragEndProp?.value?.(event, item);
+      transferSortable.onDragEnd(event, item, index);
     };
+
+    onBeforeUnmount(() => {
+      if (sortAnimationTimer) clearTimeout(sortAnimationTimer);
+    });
 
     watch(
       () => checkedArrProp.value,
@@ -170,6 +190,7 @@ export default defineComponent({
           class={[
             `${classHelper.block}`,
             !filterDataComputed.value.length && classHelper.m('empty'),
+            classHelper.is('sort-animating', sortAnimating.value),
           ]}
         >
           {
@@ -314,6 +335,11 @@ export default defineComponent({
                   >
                     {{
                       default: ({ item, index, active }: VirtualScrollerDefaultSlotRowType) => {
+                        const itemKey = transferSortable.getKey(item, index);
+                        const dropPosition =
+                          transferSortable.dropTarget.value?.key === itemKey
+                            ? transferSortable.dropTarget.value.position
+                            : undefined;
                         return (
                           <HVirtualScrollerItem
                             item={item}
@@ -331,35 +357,33 @@ export default defineComponent({
                                 ),
                               )}
                               key={item[propsProp.value.key as keyof TransferDataProps] as string}
-                              draggable={draggableProp.value && !disabledProp.value}
-                              onDragstart={e => handleDragstart(e, item)}
-                              onDragend={e => handleDragend(e, item)}
-                              onDragover={e => handleDragover(e, item)}
-                              onDragleave={e => handleDragleave(e, item)}
-                              onDrop={e => handleDrop(e, item)}
+                              draggable={
+                                draggableProp.value &&
+                                !disabledProp.value &&
+                                !transferSortable.isItemDisabled(item, index)
+                              }
+                              onDragstart={e => handleDragstart(e, item, index)}
+                              onDragend={e => handleDragend(e, item, index)}
+                              onDragover={e => handleDragover(e, item, index)}
+                              onDragleave={e => handleDragleave(e, item, index)}
+                              onDrop={e => handleDrop(e, item, index)}
                             >
-                              {item[propsProp.value.key as keyof TransferDataProps] ===
-                                dragOverKey.value && (
-                                <Fragment>
+                              {dropPosition && (
+                                <div
+                                  class={cls(
+                                    classHelper.e('item-drag-over-wrap'),
+                                    classHelper.is('sibling'),
+                                  )}
+                                >
                                   <div
                                     class={cls(
-                                      classHelper.e('item-drag-over-wrap'),
-                                      classHelper.is('sibling'),
+                                      classHelper.e('item-drag-over-cursor'),
+                                      dropPosition === 'after'
+                                        ? classHelper.is('bottom')
+                                        : classHelper.is('top'),
                                     )}
-                                  >
-                                    <div
-                                      class={cls(
-                                        classHelper.e('item-drag-over-cursor'),
-                                        dragPosition.value === 1
-                                          ? classHelper.is('bottom')
-                                          : classHelper.is('top'),
-                                      )}
-                                      style={{
-                                        width: `calc(100% - 16px - ((${cssVariable('transfer', 'size', 'drag-over-cursor-arrow')} + ${cssVariable('transfer', 'size', 'drag-over-cursor', 'height')} * 2))`,
-                                      }}
-                                    />
-                                  </div>
-                                </Fragment>
+                                  />
+                                </div>
                               )}
                               {draggableProp.value && !disabledProp.value && (
                                 <AIcon class={'mr-3'} name="drag_form" />

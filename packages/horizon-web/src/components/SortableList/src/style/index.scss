@@ -1,0 +1,95 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('sortable-list') {
+  display: flex;
+  flex-direction: column;
+
+  @include mixins.e('item') {
+    position: relative;
+    display: flex;
+    gap: mixins.css-variable('sortable-list', 'spacing', 'item-gap');
+    align-items: center;
+    min-width: 0;
+
+    @include mixins.is('dragging') {
+      user-select: none;
+      background: mixins.css-variable('sortable-list', 'background', 'dragging');
+    }
+
+    @include mixins.is('drag-over') {
+      background: mixins.css-variable('sortable-list', 'background', 'drag-over');
+    }
+  }
+
+  @include mixins.e('item-move') {
+    transition: mixins.css-variable('sortable-list', 'transition', 'move');
+  }
+
+  @include mixins.e('handle') {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: mixins.css-variable('sortable-list', 'size', 'handle');
+    height: mixins.css-variable('sortable-list', 'size', 'handle');
+    color: mixins.css-variable('sortable-list', 'color', 'handle');
+    cursor: grab;
+
+    @include mixins.is('disabled') {
+      color: mixins.css-variable('sortable-list', 'color', 'handle', 'disabled');
+      cursor: not-allowed;
+    }
+  }
+
+  @include mixins.e('content') {
+    flex: 1;
+    min-width: 0;
+  }
+
+  @include mixins.e('drop-indicator') {
+    position: absolute;
+    right: mixins.css-variable('sortable-list', 'spacing', 'drop-indicator-inset');
+    left: mixins.css-variable('sortable-list', 'spacing', 'drop-indicator-inset');
+    z-index: 1;
+    height: mixins.css-variable('sortable-list', 'size', 'drop-indicator');
+    pointer-events: none;
+    background: mixins.css-variable('sortable-list', 'background', 'drop-indicator');
+
+    @include mixins.is('before') {
+      top: 0;
+    }
+
+    @include mixins.is('after') {
+      bottom: 0;
+    }
+  }
+}
+
+#{mixins.block-name('sortable-list')}__handle:hover {
+  color: mixins.css-variable('sortable-list', 'color', 'handle', 'hover');
+}
+
+#{mixins.block-name('sortable-list')}__handle:active {
+  cursor: grabbing;
+}
+
+#{mixins.block-name('sortable-list')}__drop-indicator::before,
+#{mixins.block-name('sortable-list')}__drop-indicator::after {
+  position: absolute;
+  top: 50%;
+  box-sizing: border-box;
+  width: mixins.css-variable('sortable-list', 'size', 'drop-indicator-dot');
+  height: mixins.css-variable('sortable-list', 'size', 'drop-indicator-dot');
+  content: '';
+  border: mixins.css-variable('sortable-list', 'border', 'drop-indicator-dot');
+  border-radius: mixins.css-variable('sortable-list', 'border-radius', 'drop-indicator-dot');
+  transform: translateY(-50%);
+}
+
+#{mixins.block-name('sortable-list')}__drop-indicator::before {
+  left: calc(mixins.css-variable('sortable-list', 'size', 'drop-indicator-dot') / -2);
+}
+
+#{mixins.block-name('sortable-list')}__drop-indicator::after {
+  right: calc(mixins.css-variable('sortable-list', 'size', 'drop-indicator-dot') / -2);
+}

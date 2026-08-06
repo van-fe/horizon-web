@@ -5,8 +5,8 @@ import HTransferPanel from '../src/TransferPanel';
 import { localeInjectKey } from '~/provides';
 import VueLocaleService, { LocaleSupportLang } from '@aurora/locale-vue';
 import { dictionaries } from '~/locales';
-import { describe, expect, test } from 'vitest';
-import { ref, nextTick, reactive } from 'vue';
+import { describe, expect, test, vi } from 'vitest';
+import { defineComponent, nextTick, reactive, ref } from 'vue';
 
 describe('Transfer.tsx', () => {
   const getTestData = () => {
@@ -88,12 +88,7 @@ describe('Transfer.tsx', () => {
       value: [],
     });
     const wrapper = mount(() => (
-      <HTransfer
-        v-model={state.value}
-        filterable={true}
-        data={getTestData()}
-        placeholder="hhhh"
-      />
+      <HTransfer v-model={state.value} filterable={true} data={getTestData()} placeholder="hhhh" />
     ));
     const transferELE = wrapper.findComponent(HTransfer);
     expect(transferELE.find('.h-input__inner').attributes('placeholder')).eq('hhhh');
@@ -147,5 +142,66 @@ describe('Transfer.tsx', () => {
     expect(checkboxELENewArr.length === checkboxDisabledELENewArr.length).toBeTruthy();
     const clearButtonELENew = wrapper.find('.h-transfer__header--clear');
     expect(clearButtonELENew.element.hasAttribute('disabled')).toBeTruthy();
+  });
+
+  test('reuses sortable-list drop positioning and animates reordered rows', async () => {
+    const value = ref([1, 2, 3]);
+    const VirtualScrollerStub = defineComponent({
+      props: ['items'],
+      setup(props, { slots }) {
+        return () => (
+          <div>
+            {(props.items as any[]).map((item, index) =>
+              slots.default?.({ item, index, active: true }),
+            )}
+          </div>
+        );
+      },
+    });
+    const VirtualScrollerItemStub = defineComponent({
+      setup(_props, { slots }) {
+        return () => <div>{slots.default?.()}</div>;
+      },
+    });
+    const wrapper = mount(
+      () => <HTransfer data={getTestData()} v-model={value.value} draggable={true} />,
+      {
+        global: {
+          stubs: {
+            HVirtualScroller: VirtualScrollerStub,
+            HVirtualScrollerItem: VirtualScrollerItemStub,
+          },
+        },
+      },
+    );
+    await nextTick();
+    const items = wrapper.findAll('.h-transfer--right .h-transfer-panel__item--right');
+    expect(items).toHaveLength(3);
+    const source = items[0];
+    const target = items[2];
+    vi.spyOn(target.element, 'getBoundingClientRect').mockReturnValue({
+      top: 80,
+      bottom: 118,
+      height: 38,
+      left: 0,
+      right: 240,
+      width: 240,
+      x: 0,
+      y: 80,
+      toJSON: () => ({}),
+    });
+
+    await source.trigger('dragstart');
+    await target.trigger('dragover', { clientY: 110 });
+
+    expect(target.find('.h-transfer-panel__item-drag-over-cursor').classes()).toContain(
+      'is-bottom',
+    );
+
+    await target.trigger('drop', { clientY: 110 });
+    await nextTick();
+
+    expect(value.value).toEqual([2, 3, 1]);
+    expect(wrapper.find('.h-transfer--right').classes()).toContain('is-sort-animating');
   });
 });

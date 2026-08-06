@@ -44,6 +44,7 @@
   "Link": "^HLink$",
   "List": "^(HList|HListItem)$",
   "Mask": "^HMask$",
+  "SortableList": "^HSortableList$",
   "Menu": "^(HMenu|HMenuItem|HSubMenu)$",
   "Mentions": "^HMentions$",
   "PageHeader": "^HPageHeader$",

@@ -102,6 +102,7 @@
       { "link": "components/Descriptions", "zh": "Descriptions 描述列表", "en": "Descriptions" },
       { "link": "components/QRCode", "zh": "QRCode 二维码", "en": "QRCode" },
       { "link": "components/List", "zh": "List 列表", "en": "List" },
+      { "link": "components/SortableList", "zh": "SortableList 可排序列表", "en": "SortableList" },
       { "link": "components/Panels", "zh": "Panels 面板", "en": "Panels" },
       { "link": "components/Statistic", "zh": "Statistic 统计数值", "en": "Statistic" },
       { "link": "components/Table", "zh": "Table 表格", "en": "Table" },

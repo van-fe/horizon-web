@@ -31,7 +31,7 @@ Nested `children` allow users to browse levels and select a team or an individua
 
 ## Target Ordering
 
-Enable `draggable` to reorder items directly in the target list.
+Enable `draggable` to reorder items directly in the target list. A clear insertion marker previews the drop position, and rows animate into their new order after drop.
 
 :::demo components/Transfer/drag.vue :::
 

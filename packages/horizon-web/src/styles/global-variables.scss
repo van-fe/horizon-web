@@ -25,6 +25,7 @@
 @use '../components/Carousel/src/style/variables' as carousel;
 @use '../components/Radio/src/style/variables' as radio;
 @use '../components/Card/src/style/variables' as card;
+@use '../components/SortableList/src/style/variables' as sortable-list;
 @use '../components/ChatBubble/src/style/variables' as chat-bubble;
 @use '../components/AutoComplete/src/style/variables' as auto-complete;
 @use '../components/Empty/src/style/variables' as empty;
@@ -109,6 +110,7 @@ $values: function.map-merge-multi(
   function.flatten-variables(carousel.$values, 'carousel'),
   function.flatten-variables(radio.$values, 'radio'),
   function.flatten-variables(card.$values, 'card'),
+  function.flatten-variables(sortable-list.$values, 'sortable-list'),
   function.flatten-variables(chat-bubble.$values, 'chat-bubble'),
   function.flatten-variables(auto-complete.$values, 'auto-complete'),
   function.flatten-variables(empty.$values, 'empty'),

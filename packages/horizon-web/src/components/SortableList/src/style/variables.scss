@@ -1,0 +1,35 @@
+@use '../../../../styles/mixins/function';
+
+$values: (
+  size: (
+    handle: 16px,
+    drop-indicator: 2px,
+    drop-indicator-dot: 6px,
+  ),
+  color: (
+    handle: (
+      '': #{function.css-variable('text-tertiary')},
+      hover: #{function.css-variable('text-secondary')},
+      disabled: #{function.css-variable('text-disabled')},
+    ),
+  ),
+  background: (
+    dragging: #{function.css-variable('bg-disabled')},
+    drag-over: #{function.css-variable('bg-weak-activated')},
+    drop-indicator: #{function.css-variable('bg-brand-activated')},
+  ),
+  border: (
+    drop-indicator-dot: 2px solid #{function.css-variable('bg-brand-activated')},
+  ),
+  border-radius: (
+    drop-indicator-dot: #{function.css-variable('radius-circle')},
+  ),
+  spacing: (
+    item-gap: #{function.css-variable('spacing-3')},
+    drop-indicator-inset: #{function.css-variable('spacing-3')},
+  ),
+  transition: (
+    move: transform #{function.css-variable('transition-time-fast')}
+      #{function.css-variable('transition-func-ease-in-out-bezier')},
+  ),
+);

@@ -196,6 +196,10 @@ export const SvSE = {
       group: 'grupper',
       clear: 'Klar',
     },
+    sortableList: {
+      dragHandle: 'Dra eller använd piltangenterna för att ordna objekt {index}',
+      moved: 'Flyttade objekt {from} till position {to} av {total}',
+    },
     image: {
       error: 'FAILED', // to be translated
     },

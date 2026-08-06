@@ -209,6 +209,10 @@ export const AE = {
       group: 'المجموعات',
       clear: 'مسح',
     },
+    sortableList: {
+      dragHandle: 'اسحب العنصر {index} أو استخدم مفاتيح الأسهم لإعادة ترتيبه',
+      moved: 'تم نقل العنصر {from} إلى الموضع {to} من {total}',
+    },
     image: {
       error: 'فشل',
     },
