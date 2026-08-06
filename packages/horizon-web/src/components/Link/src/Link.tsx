@@ -11,7 +11,6 @@ import {
 import { useLinkProps } from './composables/useProps';
 import type { Router } from 'vue-router';
 import type { HorizonWebSetupContext } from '@aurora/utils';
-import { IconLoadingLine } from '@aurora/icon';
 import { cls, ComponentClassBlock, HChildOnly, useNamespace } from '@aurora/utils';
 import type { LinkEmits } from './composables/useEmits';
 import { useLinkEmits } from './composables/useEmits';
@@ -21,11 +20,12 @@ import { GlobalSizeInjectedKey } from '~/components/Application/src/utils/inject
 import type { HApplicationSizeType } from '~/components/Application/src/composables/useProps';
 import { defaultLocale, localeInjectKey } from '~/provides';
 import { renderIcon } from '~/utils/useIcon';
+import LoadingIcon from '~/directives/v-loading/src/components/LoadingIcon';
 
 export default defineComponent({
   name: `${useNamespace()}Link`,
   desc: '文字超链接',
-  descLocales: { en: "Basic text link usage" },
+  descLocales: { en: 'Basic text link usage' },
   props: useLinkProps,
   emits: useLinkEmits,
   slots: useLinkSlots,
@@ -177,8 +177,16 @@ export default defineComponent({
       >
         {props.loading ? (
           <HChildOnly>
-            <IconLoadingLine spin="cw" size={loadingSvgSizeMapping[sizeRef.value]} />
-            {locale.value?.langService.td().horizonWeb.link.loading}
+            <LoadingIcon
+              class={classHelper.e('loading-icon')}
+              style={{
+                width: `${loadingSvgSizeMapping[sizeRef.value]}px`,
+                height: `${loadingSvgSizeMapping[sizeRef.value]}px`,
+              }}
+            />
+            <span class={classHelper.e('inner')}>
+              {locale.value?.langService.td().horizonWeb.link.loading}
+            </span>
           </HChildOnly>
         ) : (
           contentRender()

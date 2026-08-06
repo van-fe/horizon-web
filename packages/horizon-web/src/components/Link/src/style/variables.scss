@@ -7,17 +7,17 @@ $values: (
     large: #{function.css-variable('text-lg')},
   ),
   color: (
-    positive: (
+    primary: (
       '': #{function.css-variable('text-link-default')},
       hover: #{function.css-variable('text-link-hover')},
       active: #{function.css-variable('text-link-press')},
     ),
-    neutral: (
+    normal: (
       '': #{function.css-variable('text-primary')},
       hover: #{function.css-variable('text-secondary')},
       active: #{function.css-variable('text-primary')},
     ),
-    negative: (
+    danger: (
       '': #{function.css-variable('text-error-default')},
       hover: #{function.css-variable('text-error-hover')},
       active: #{function.css-variable('text-error-press')},

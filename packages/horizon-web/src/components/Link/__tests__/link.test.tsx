@@ -31,7 +31,7 @@ describe('Link.tsx', () => {
 
     // Two component classes outrank contextual element rules such as `.vp-doc a`.
     expect(css).toContain('.h-link.h-link {');
-    expect(css).toContain('.h-link.h-link--positive {');
+    expect(css).toContain('.h-link.h-link--primary {');
     expect(css).toContain('.h-link__anchor.h-link__anchor {');
     expect(css).toContain('font-weight: inherit;');
     expect(css).toContain('text-underline-offset: auto;');
@@ -43,15 +43,15 @@ describe('Link.tsx', () => {
       const wrapper = mount(() => <HLink type={type.value}>Default</HLink>);
       const element = wrapper.findComponent(HLink);
 
-      expect(element.classes('h-link--positive')).toBe(true);
+      expect(element.classes('h-link--primary')).toBe(true);
 
-      type.value = 'neutral';
+      type.value = 'normal';
       await nextTick();
-      expect(element.classes('h-link--neutral')).toBe(true);
+      expect(element.classes('h-link--normal')).toBe(true);
 
-      type.value = 'negative';
+      type.value = 'danger';
       await nextTick();
-      expect(element.classes('h-link--negative')).toBe(true);
+      expect(element.classes('h-link--danger')).toBe(true);
     });
 
     test('size', async () => {
@@ -124,16 +124,18 @@ describe('Link.tsx', () => {
       const isLoading = ref(false);
       const wrapper = mount(() => <HLink loading={isLoading.value}>Default</HLink>);
 
-      let icon = wrapper.find('.a-icon');
+      let icon = wrapper.find('.h-loading-icon');
 
       expect(icon.exists()).toBe(false);
 
       isLoading.value = true;
       await nextTick();
 
-      icon = wrapper.find('.a-icon');
+      icon = wrapper.find('.h-loading-icon');
 
       expect(icon.exists()).toBe(true);
+      expect(icon.classes()).toContain('h-link__loading-icon');
+      expect(icon.find('.h-loading-icon__path').exists()).toBe(true);
     });
   });
 });

@@ -9,8 +9,8 @@ export const useLinkProps = declarePropType({
    * @en Configuration for type.
    */
   type: {
-    type: String as PropType<'positive' | 'neutral' | 'negative'>,
-    default: 'positive',
+    type: String as PropType<'primary' | 'normal' | 'danger'>,
+    default: 'primary',
   },
   /**
    * 是否启用下划线
