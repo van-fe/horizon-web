@@ -1208,8 +1208,6 @@ describe('Select.tsx', () => {
 
     await nextTick();
 
-    debugger;
-
     await wrapper.findAllComponents(HOption).at(-1)?.trigger('click');
 
     expect(onChange).toHaveBeenLastCalledWith(null, [1, 3]);
