@@ -3,6 +3,7 @@ import {
   findImports,
   isStaticDemoBareDependencySupported,
   normalizePath,
+  shimImportMetaEnv,
 } from './staticDemoCompiler';
 
 describe('static demo compiler utilities', () => {
@@ -37,5 +38,11 @@ describe('static demo compiler utilities', () => {
 
   it('does not accept an unregistered upload adapter subpath', () => {
     expect(isStaticDemoBareDependencySupported('@aurora/upload-adapters/internal')).toBe(false);
+  });
+
+  it('shims import.meta.env for runtime-compiled demo modules', () => {
+    expect(shimImportMetaEnv('return import.meta.env.BASE_URL')).toBe(
+      'return __horizonViteEnv.BASE_URL',
+    );
   });
 });

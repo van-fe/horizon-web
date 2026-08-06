@@ -1,6 +1,13 @@
 import type { Component } from 'vue';
 
 const RUNTIME_KEY = '__HORIZON_STATIC_DEMO_RUNTIME__';
+const IMPORT_META_ENV_SHIM = '__horizonViteEnv';
+
+// Runtime-compiled demo modules are executed from Blob URLs, where
+// `import.meta.env` is undefined. Vite replaces `import.meta.env` in this
+// bundled module with the real env at build time, so it can be injected into
+// the runtime modules that still reference it (e.g. demo-assets.ts).
+const viteEnv = (import.meta.env ?? {}) as Record<string, unknown>;
 
 interface RuntimeRegistry {
   dependencies: Record<string, unknown>;
@@ -110,6 +117,10 @@ export async function compileStaticDemo(
   const css = await compileStyles(descriptor.styles, filename, scopeId, compiler);
 
   return { component: module as Component, css };
+}
+
+export function shimImportMetaEnv(code: string) {
+  return code.replaceAll('import.meta.env', IMPORT_META_ENV_SHIM);
 }
 
 async function compileStyles(
@@ -232,6 +243,7 @@ export function isStaticDemoBareDependencySupported(specifier: string) {
 async function executeCommonJs(code: string, cacheKey: string, aliases: Record<string, string>) {
   const wrapper = `
 const runtime = globalThis[${JSON.stringify(RUNTIME_KEY)}];
+const ${IMPORT_META_ENV_SHIM} = ${JSON.stringify(viteEnv)};
 const aliases = ${JSON.stringify(aliases)};
 const require = id => {
   const resolved = aliases[id];
@@ -241,7 +253,7 @@ const require = id => {
 };
 const module = { exports: {} };
 const exports = module.exports;
-${code}
+${shimImportMetaEnv(code)}
 runtime.modules[${JSON.stringify(cacheKey)}] = module.exports;
 export default module.exports.default ?? module.exports;
 `;
