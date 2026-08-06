@@ -14,19 +14,19 @@
     justify-content: center;
     min-height: mixins.css-variable('anchor', 'size', 'collapse-btn', 'min-height');
     padding: mixins.css-variable('anchor', 'spacing', 'collapse-btn', 'padding');
-    color: mixins.css-variable('anchor', 'color', 'collapse-btn-arrow');
-    font-weight: bold;
     font-size: mixins.css-variable('anchor', 'font-size', 'small');
+    font-weight: bold;
+    color: mixins.css-variable('anchor', 'color', 'collapse-btn-arrow');
+    cursor: pointer;
     background-color: mixins.css-variable('anchor', 'background', 'collapse-btn');
     border-radius: mixins.css-variable('anchor', 'border-radius', 'collapse-btn');
     transform: translateX(-100%);
-    cursor: pointer;
 
     @include mixins.e('collapse-btn-txt') {
       display: none;
       margin-left: mixins.css-variable('anchor', 'spacing', 'collapse-btn-txt', 'margin-left');
-      color: mixins.css-variable('anchor', 'color', 'collapse-btn-txt');
       font-weight: normal;
+      color: mixins.css-variable('anchor', 'color', 'collapse-btn-txt');
     }
 
     @include mixins.is('collapse') {
@@ -35,16 +35,16 @@
       padding: mixins.css-variable('anchor', 'spacing', 'collapse-btn', 'is-collapse', 'padding');
       border: mixins.css-variable('anchor', 'border', 'collapse-btn');
       box-shadow:
-        0 4px 6px rgba(0, 22, 60, 2%),
-        0 2px 4px rgba(0, 22, 60, 2%),
-        0 1px 2px rgba(0, 0, 60, 1%);
+        0 4px 6px rgb(0, 22, 60, 2%),
+        0 2px 4px rgb(0, 22, 60, 2%),
+        0 1px 2px rgb(0, 0, 60, 1%);
       transform: translateX(0);
 
       @include mixins.e('collapse-btn-txt') {
         display: block;
         overflow: hidden;
-        white-space: nowrap;
         text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
   }
@@ -80,25 +80,38 @@
       @include mixins.e('link-title') {
         width: 100%;
         height: 100%;
-        margin-top: mixins.css-variable('anchor', 'spacing', 'link-title', 'margin-top');
         padding: mixins.css-variable('anchor', 'spacing', 'title', 'padding');
+        margin-top: mixins.css-variable('anchor', 'spacing', 'link-title', 'margin-top');
 
         @include mixins.e('link-title-txt') {
-          display: inline-block;
-          display: -webkit-box;
-          width: 100%;
-          min-height: mixins.css-variable('anchor', 'size', 'line-text', 'min-height');
-          max-height: calc(#{mixins.css-variable('anchor', 'size', 'line-text', 'min-height')} * 2);
-          overflow: hidden;
-          color: mixins.css-variable('anchor', 'color', 'link-text');
-          line-height: mixins.css-variable('anchor', 'size', 'line-text', 'min-height');
-          text-align: left;
-          text-decoration: none;
-          text-overflow: ellipsis;
-          word-break: break-all;
-          transition: color mixins.css-variable('anchor', 'transition', 'duration');
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
+          // Keep the component's link presentation above contextual rules such as
+          // VitePress's `.vp-doc a`, without relying on import order or `!important`.
+          &#{mixins.e('anchor', 'link-title-txt')} {
+            display: inline-block;
+            display: -webkit-box;
+            width: 100%;
+            min-height: mixins.css-variable('anchor', 'size', 'line-text', 'min-height');
+            max-height: calc(
+              #{mixins.css-variable('anchor', 'size', 'line-text', 'min-height')} * 2
+            );
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 2;
+            font-weight: inherit;
+            line-height: mixins.css-variable('anchor', 'size', 'line-text', 'min-height');
+            color: mixins.css-variable('anchor', 'color', 'link-text');
+            text-align: left;
+            word-break: break-all;
+            text-decoration: none;
+            text-underline-offset: auto;
+            transition: color mixins.css-variable('anchor', 'transition', 'duration');
+            -webkit-box-orient: vertical;
+
+            &:hover,
+            &:active {
+              color: mixins.css-variable('anchor', 'color', 'link-text');
+            }
+          }
         }
 
         @include mixins.is('active') {
@@ -106,6 +119,7 @@
             color: mixins.css-variable('anchor', 'color', 'link-text', 'activated') !important;
           }
         }
+
         @include mixins.is('hide') {
           display: none;
         }
@@ -123,8 +137,10 @@
         margin-top: mixins.css-variable('anchor', 'spacing', 'link-title', 'next', 'margin-top');
       }
 
-      &:nth-child(2) {
-        @include mixins.child-element('>', 'link-title') {
+      @at-root {
+        #{mixins.block-name('anchor')}__wrap
+          > #{mixins.block-name('anchor')}__link:nth-child(2)
+          > #{mixins.block-name('anchor')}__link-title {
           margin-top: 0;
         }
       }

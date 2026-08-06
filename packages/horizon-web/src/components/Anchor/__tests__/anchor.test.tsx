@@ -3,6 +3,8 @@ import HAnchor from '../src/Anchor';
 import HAnchorLink from '../src/AnchorLink';
 import { describe, expect, test, vi } from 'vitest';
 import { ref, nextTick } from 'vue';
+import { compile } from 'sass';
+import { resolve } from 'node:path';
 
 describe('Anchor.tsx', () => {
   test('basic', async () => {
@@ -11,6 +13,18 @@ describe('Anchor.tsx', () => {
 
     expect(element.exists()).toBe(true);
     expect(element.classes()).toContain('h-anchor');
+  });
+
+  test('keeps its presentation above contextual link styles', () => {
+    const css = compile(resolve(__dirname, '../src/style/index.scss')).css;
+
+    // Two component classes outrank contextual element rules such as `.vp-doc a`.
+    expect(css).toContain('.h-anchor__link-title-txt.h-anchor__link-title-txt {');
+    expect(css).toContain('font-weight: inherit;');
+    expect(css).toContain('text-underline-offset: auto;');
+    expect(css).toContain(
+      '.h-anchor__link-title-txt.h-anchor__link-title-txt:hover, .h-anchor__link-title-txt.h-anchor__link-title-txt:active {',
+    );
   });
 
   describe('props', () => {
