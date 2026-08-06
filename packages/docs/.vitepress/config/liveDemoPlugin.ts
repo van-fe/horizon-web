@@ -15,13 +15,18 @@ interface LiveDemoServer {
   middlewares: {
     use(
       route: string,
-      handler: (request: IncomingMessage, response: ServerResponse) => void | Promise<void>,
+      handler: (
+        request: IncomingMessage,
+        response: ServerResponse,
+        next: (error?: unknown) => void,
+      ) => void | Promise<void>,
     ): void;
   };
   moduleGraph: {
     getModuleById(id: string): object | undefined;
     invalidateModule(module: object): void;
   };
+  transformRequest(url: string): Promise<{ code: string } | null>;
 }
 
 function readRequest(request: IncomingMessage): Promise<string> {
@@ -38,6 +43,18 @@ function readRequest(request: IncomingMessage): Promise<string> {
   });
 }
 
+function getErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message;
+  if (
+    typeof error === 'object' &&
+    error !== null &&
+    'message' in error &&
+    typeof error.message === 'string'
+  )
+    return error.message;
+  return String(error);
+}
+
 export function liveDemoPlugin() {
   const docsRoot = path.resolve(__dirname, '../..');
   const sources = new Map<string, { resolvedId: string; source: string }>();
@@ -47,6 +64,33 @@ export function liveDemoPlugin() {
     name: 'horizon-live-demo',
     enforce: 'pre' as const,
     configureServer(devServer: LiveDemoServer) {
+      devServer.middlewares.use(VIRTUAL_PREFIX, async (request, response, next) => {
+        const requestUrl = request.url || '/';
+        const virtualUrl = requestUrl.startsWith(VIRTUAL_PREFIX)
+          ? requestUrl
+          : `${VIRTUAL_PREFIX.slice(0, -1)}${requestUrl}`;
+
+        response.setHeader('Content-Type', 'text/javascript; charset=utf-8');
+        response.setHeader('Cache-Control', 'no-cache');
+
+        try {
+          const result = await devServer.transformRequest(virtualUrl);
+          if (!result) {
+            next();
+            return;
+          }
+          response.statusCode = 200;
+          response.end(result.code);
+        } catch (error) {
+          // Compile edited demos before Vite's transform middleware sees them.
+          // Returning a rejecting module keeps the error local to the demo's
+          // dynamic import instead of triggering Vite's full-page error overlay.
+          const message = getErrorMessage(error);
+          response.statusCode = 200;
+          response.end(`throw new Error(${JSON.stringify(message)});`);
+        }
+      });
+
       devServer.middlewares.use(COMPILE_ENDPOINT, async (request, response) => {
         response.setHeader('Content-Type', 'application/json; charset=utf-8');
 
@@ -86,7 +130,7 @@ export function liveDemoPlugin() {
           response.statusCode = 400;
           response.end(
             JSON.stringify({
-              error: error instanceof Error ? error.message : String(error),
+              error: getErrorMessage(error),
             }),
           );
         }

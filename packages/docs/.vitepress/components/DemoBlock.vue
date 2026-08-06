@@ -53,6 +53,9 @@ const labels = computed(() =>
         closeEditor: 'Close code editor',
         refresh: 'Refresh demo',
         compiling: 'Compiling…',
+        compileError: 'Compilation failed — preview kept',
+        editorHint:
+          'Changes compile automatically. The last successful preview stays visible on errors.',
       }
     : {
         demo: '组件示例',
@@ -61,6 +64,8 @@ const labels = computed(() =>
         closeEditor: '关闭代码编辑器',
         refresh: '刷新 Demo',
         compiling: '编译中…',
+        compileError: '编译失败，已保留上次成功的预览',
+        editorHint: '修改后将自动编译；编译失败时会保留上次成功的预览。',
       },
 );
 async function copyCode() {
@@ -79,10 +84,14 @@ function toggleCode() {
       <component v-if="component" :is="component" :key="renderKey" />
       <slot name="source" />
     </div>
-    <div v-if="error" class="component-demo__error" role="alert">{{ error }}</div>
     <div class="component-demo__tools">
-      <span class="component-demo__status" aria-live="polite">
-        {{ compiling ? labels.compiling : '' }}
+      <span
+        class="component-demo__status"
+        :class="{ 'is-error': error }"
+        :title="error || undefined"
+        aria-live="polite"
+      >
+        {{ compiling ? labels.compiling : error ? labels.compileError : '' }}
       </span>
       <div class="component-demo__actions">
         <h-button
@@ -128,6 +137,14 @@ function toggleCode() {
         :aria-label="labels.edit"
       >
         <code-editor v-model:code="code" />
+        <div
+          class="component-demo__diagnostics"
+          :class="{ 'is-error': error }"
+          :role="error ? 'alert' : 'status'"
+          aria-live="polite"
+        >
+          {{ error || (compiling ? labels.compiling : labels.editorHint) }}
+        </div>
       </section>
     </h-transition>
   </section>
@@ -167,9 +184,18 @@ function toggleCode() {
   }
 
   &__status {
+    flex: 1;
+    min-width: 0;
     min-height: 20px;
+    overflow: hidden;
     color: mixins.css-variable('text-secondary');
     font-size: mixins.css-variable('text-sm');
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &.is-error {
+      color: mixins.css-variable('text-error');
+    }
   }
 
   &__preview {
@@ -180,14 +206,20 @@ function toggleCode() {
     overscroll-behavior-inline: contain;
   }
 
-  &__error {
+  &__diagnostics {
+    height: 72px;
+    overflow: auto;
     border-top: 1px solid mixins.css-variable('border-default');
     padding: mixins.css-variable('spacing-3') mixins.css-variable('spacing-4');
+    box-sizing: border-box;
     background: mixins.css-variable('bg-secondary');
-    color: mixins.css-variable('text-error');
     font-family: monospace;
     font-size: 12px;
     white-space: pre-wrap;
+
+    &.is-error {
+      color: mixins.css-variable('text-error');
+    }
   }
 
   &__editor {
