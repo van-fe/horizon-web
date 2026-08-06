@@ -2,7 +2,6 @@ import {
   IconClose,
   IconErrorFilledLight,
   IconInfoFilledLight,
-  IconLoadingLine,
   IconMoreTwo,
   IconSuccessFilledLight,
   IconWarningFilledLight,
@@ -11,6 +10,7 @@ import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, cssVariable, useNamespace, useZIndex } from '@aurora/utils';
 import type { CSSProperties } from 'vue';
 import { computed, defineComponent, onMounted, ref, Transition, watch } from 'vue';
+import LoadingIcon from '~/directives/v-loading/src/components/LoadingIcon';
 import type { MessageEmits } from '../composables/useEmits';
 import { useMessageEmits } from '../composables/useEmits';
 import type { MessageExposes } from '../composables/useExposes';
@@ -23,7 +23,7 @@ export default defineComponent({
     IconWarningFilledLight,
     IconErrorFilledLight,
     IconInfoFilledLight,
-    IconLoadingLine,
+    LoadingIcon,
   },
   inheritAttrs: false,
   props: useMessageOptions,
@@ -94,7 +94,6 @@ export default defineComponent({
       info: IconInfoFilledLight,
       warning: IconWarningFilledLight,
       error: IconErrorFilledLight,
-      loading: IconLoadingLine,
     };
 
     function onMouseEnter() {
@@ -106,15 +105,8 @@ export default defineComponent({
     }
 
     return () => {
-      let CurrentTypeIcon = null;
-      let iconProps: { color?: string[] } = {};
-
-      if (showType.value) {
-        CurrentTypeIcon = icons[showType.value];
-        if (showType.value == 'loading') {
-          iconProps = { color: [cssVariable('message-color--loading-icon')] };
-        }
-      }
+      const CurrentTypeIcon =
+        showType.value && showType.value !== 'loading' ? icons[showType.value] : null;
 
       return (
         <Transition
@@ -132,12 +124,12 @@ export default defineComponent({
               onMouseenter={onMouseEnter}
               onMouseleave={onMouseLeave}
             >
-              {!!CurrentTypeIcon && (
-                <CurrentTypeIcon
-                  {...iconProps}
-                  class={cls(classHelper.e('status-icon'))}
-                  size="20"
-                />
+              {showType.value === 'loading' ? (
+                <LoadingIcon class={classHelper.e('status-icon')} />
+              ) : (
+                !!CurrentTypeIcon && (
+                  <CurrentTypeIcon class={cls(classHelper.e('status-icon'))} size="20" />
+                )
               )}
               {props.useHTMLString ? (
                 <p v-html={message.value} class={classHelper.e('content')} />

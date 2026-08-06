@@ -18,8 +18,9 @@ import type { ButtonEmits } from './composables/useEmits';
 import type { ButtonSlots } from './composables/useSlots';
 import type { ButtonExposes } from './composables/useExposes';
 import useSize from '~/utils/useSize';
+import LoadingIcon from '~/directives/v-loading/src/components/LoadingIcon';
 import { iconSizeMapping, onlyIconSizeMapping } from './utils/config';
-import { IconLoadingLine, AIcon } from '@aurora/icon';
+import { AIcon } from '@aurora/icon';
 import { HButtonGroupPropsInjectKey, HButtonGroupSizeInjectKey } from './utils/injectKeys';
 import type { Router } from 'vue-router';
 import { getCssVariableByStatus } from '~/utils/useColorful';
@@ -55,6 +56,9 @@ export default defineComponent({
       computed(() => size?.value ?? groupSizeRef?.value),
       'medium',
       {},
+    );
+    const defaultIconSize = computed(() =>
+      isOnlyIcon.value ? onlyIconSizeMapping[sizeRef.value] : iconSizeMapping[sizeRef.value],
     );
 
     const type = computed(() => props.type);
@@ -177,13 +181,12 @@ export default defineComponent({
       >
         {props.loading || (debounceLoading.value && props.debounceType === 'loading') ? (
           <div class={cls(classHelper.e('icon'), classHelper.m('loading'))}>
-            <IconLoadingLine
-              size={
-                isOnlyIcon.value
-                  ? onlyIconSizeMapping[sizeRef.value]
-                  : iconSizeMapping[sizeRef.value]
-              }
-              spin="cw"
+            <LoadingIcon
+              class={classHelper.e('loading-icon')}
+              style={{
+                width: `${defaultIconSize.value}px`,
+                height: `${defaultIconSize.value}px`,
+              }}
             />
           </div>
         ) : (
@@ -193,22 +196,10 @@ export default defineComponent({
             >
               {props.icon ? (
                 typeof props.icon === 'string' ? (
-                  <AIcon
-                    name={props.icon}
-                    size={
-                      props.iconSize ??
-                      (isOnlyIcon.value
-                        ? onlyIconSizeMapping[sizeRef.value]
-                        : iconSizeMapping[sizeRef.value])
-                    }
-                  />
+                  <AIcon name={props.icon} size={props.iconSize ?? defaultIconSize.value} />
                 ) : (
                   createVNode(props.icon, {
-                    size:
-                      props.iconSize ??
-                      (isOnlyIcon.value
-                        ? onlyIconSizeMapping[sizeRef.value]
-                        : iconSizeMapping[sizeRef.value]),
+                    size: props.iconSize ?? defaultIconSize.value,
                   })
                 )
               ) : (

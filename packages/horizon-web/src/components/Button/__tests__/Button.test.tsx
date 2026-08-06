@@ -3,8 +3,9 @@ import HButton from '../src/Button';
 import { describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
 import type { ButtonProps } from '../src/composables/useProps';
-import { IconEye, IconLoadingLine } from '@aurora/icon';
+import { IconEye } from '@aurora/icon';
 import { sleep } from '../../../utils/tools';
+import LoadingIcon from '../../../directives/v-loading/src/components/LoadingIcon';
 
 describe('Button.tsx', () => {
   test('basic', async () => {
@@ -150,7 +151,10 @@ describe('Button.tsx', () => {
       await nextTick();
 
       expect(element.classes('is-loading')).toBe(true);
-      expect(wrapper.findComponent(IconLoadingLine).exists()).toBe(true);
+      const indicator = wrapper.getComponent(LoadingIcon);
+      expect(indicator.classes()).toContain('h-loading-icon');
+      expect(indicator.classes()).toContain('h-button__loading-icon');
+      expect(indicator.get('circle').classes()).toContain('h-loading-icon__path');
     });
 
     test('disabled', async () => {
