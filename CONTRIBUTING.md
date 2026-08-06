@@ -1,144 +1,146 @@
-# 贡献指南
+# Contributing to Horizon Web
 
-感谢你对 `Horizon Web` 的关注与贡献！本指南涵盖 Issue 规范、本地开发、组件开发约定（功能设计、useProps、样式、文档）、Commit 规范、PR 流程与发布流程，欢迎补充。
+Thanks for your interest in and contribution to `Horizon Web`! This guide covers issue guidelines, local development, component development conventions (feature design, `useProps`, styles, documentation), Commit conventions, the PR workflow, and the release process. Additions are welcome.
 
-## Issue 规范
+**English** | [简体中文](./CONTRIBUTING.zh-CN.md)
 
-提交 Issue 前，请先搜索[已有 Issue](https://github.com/van-fe/horizon-web/issues)（包括已关闭的），避免重复提交。
+## Issue Guidelines
 
-### Bug 报告
+Before filing an issue, please search the [existing issues](https://github.com/van-fe/horizon-web/issues) (including closed ones) to avoid duplicates.
 
-请尽量包含以下信息，便于快速定位问题：
+### Bug Reports
 
-- 环境信息：浏览器及版本、Node / bun 版本、`@aurora/horizon-web` 版本
-- 复现步骤：提供最小化复现仓库或在线 Demo 优先
-- 期望行为与实际行为
-- 报错信息、控制台日志与截图
+Please include as much of the following as possible to help us locate the problem quickly:
 
-### 功能建议
+- Environment info: browser and version, Node / bun version, `@aurora/horizon-web` version
+- Reproduction steps: a minimal reproduction repository or an online demo is preferred
+- Expected behavior and actual behavior
+- Error messages, console logs, and screenshots
 
-请说明使用场景、期望的组件 API 与交互方式，越具体越好。
+### Feature Suggestions
 
-## 功能设计
+Describe the use case, the expected component API, and the interaction you want. The more specific, the better.
 
-开发一个组件之前，先思考这个组件需要哪些功能、定义哪些 props 和 emits、如何与设计稿结合。除了参考 Element、AntD，也建议看看国外流行的组件库，如 [Vuetify](https://vuetifyjs.com/en/components/alerts/)、[Quasar](https://quasar.dev/vue-components/)，可能会有不一样的启发。
+## Feature Design
 
-例如 `Link` 组件：Element 只提供了 `href` 跳转，而 Vuetify 还提供 `to`、`replace` 等 prop 结合 `vue-router` 进行路由跳转，显然更加实用。
+Before developing a component, think about what features it needs, which props and emits it should define, and how it maps to the design mockups. Besides Element and Ant Design, it is also worth looking at popular component libraries abroad, such as [Vuetify](https://vuetifyjs.com/en/components/alerts/) and [Quasar](https://quasar.dev/vue-components/), for different inspirations.
 
-另外，不要复制粘贴 Element 等开源库的代码和文档，文档话术可以参考设计稿中的描述进行整合。
+For example, the `Link` component: Element only provides an `href` navigation, while Vuetify also offers props like `to` and `replace` for route navigation with `vue-router`, which is clearly more practical.
 
-## 本地开发
+Also, do not copy-paste code or documentation from Element and other open-source libraries. Documentation wording can be integrated with reference to the descriptions in the design mockups.
 
-### 环境要求
+## Local Development
 
-- [Node.js](https://nodejs.org/) >= 20（建议使用 [nvm](https://github.com/nvm-sh/nvm) 管理版本）
-- [bun](https://bun.sh) >= 1.0（仓库使用 bun 作为包管理器与脚本运行时）
-- 分支：请基于 `feature` 分支自行创建开发分支
+### Requirements
 
-### 开发步骤
+- [Node.js](https://nodejs.org/) >= 20 (managing versions with [nvm](https://github.com/nvm-sh/nvm) is recommended)
+- [bun](https://bun.sh) >= 1.0 (the repository uses bun as its package manager and script runtime)
+- Branch: create your own development branch based on the `feature` branch
+
+### Development Steps
 
 ```bash
-# 1. fork 仓库并 clone 到本地
+# 1. Fork the repository and clone it locally
 git clone git@github.com:<your-username>/horizon-web.git
 cd horizon-web
 
-# 2. 安装依赖
+# 2. Install dependencies
 bun install
 
-# 3. 首次开发前构建产物
+# 3. Build the artifacts before your first development session
 bun run build
 
-# 4. 启动文档站（包含组件 Demo 与 API 文档）
+# 4. Start the docs site (includes component demos and API docs)
 bun run dev
 ```
 
-开发分支示例：
+Example development branch:
 
 ```bash
 git checkout -b feat/your-feature
 ```
 
-### 生成模板
+### Generating Templates
 
-仓库内置模板生成脚本，可以快速创建组件 / 指令 / 方法的初始代码（含源码、文档与 demo）：
+The repository ships template-generation scripts for quickly scaffolding components / directives / methods (source, docs, and demos):
 
 ```bash
-# 生成组件（组件名使用 PascalCase）
+# Generate a component (use PascalCase)
 bun run new component PanelItem
 
-# 生成指令（指令名必须以 v- 开头）
+# Generate a directive (must start with v-)
 bun run new directive v-focus
 
-# 生成方法
+# Generate a method
 bun run new method your-method
 ```
 
-生成的文档会自动注册到 `packages/docs/.vitepress/config/demos-sidebar.json`（组件默认进入「基础组件」分类，如分类不合适请手动调整）。
+Generated docs are registered automatically in `packages/docs/.vitepress/config/demos-sidebar.json` (new components go into the "Basic Components" category by default; adjust manually if the category is not appropriate).
 
-### 目录结构
+### Project Structure
 
-仓库采用 bun workspaces 管理的 monorepo 结构：
+The repository is a monorepo managed with bun workspaces:
 
 ```
-├── node_modules  # packages 中所有项目公共的模块
-└── packages  # bun 的工作空间（Workspace），包含了多个项目
-    ├── horizon-web      # horizon-web UI 项目
-    │   ├── dist    # 编译生成的浏览器产物目录（IIFE / UMD）
-    │   ├── es      # 编译生成的 esm 文件目录（含类型声明）
-    │   ├── lib     # 编译生成的 cjs 文件目录
-    │   ├── json    # vetur / web-types 等编辑器提示文件
+├── node_modules  # modules shared by all projects in packages
+└── packages  # bun workspaces containing multiple projects
+    ├── horizon-web      # horizon-web UI project
+    │   ├── dist    # compiled browser artifacts (IIFE / UMD)
+    │   ├── es      # compiled ESM files (with type declarations)
+    │   ├── lib     # compiled CJS files
+    │   ├── json    # editor support files such as vetur / web-types
     │   └── src
-    │       ├── components      # 组件目录
-    │       ├── directives      # 指令目录
-    │       ├── composables     # 公共的类 Hook 文件目录
-    │       └── styles          # 样式目录
-    ├── docs     # 文档站项目（VitePress）
-    │   ├── demos       # 存放所有 .vue demo 示例文件的目录
-    │   │   ├── components      # 组件 demo 目录
-    │   │   │   └── Button      # 具体某组件的 demo 目录
-    │   │   ├── directives      # 指令 demo 目录
-    │   │   └── methods         # 方法 demo 目录
-    │   ├── zh                # 中文文档（根语言）
-    │   │   ├── guide           # 快速开始、按需引入等指南文档
-    │   │   ├── demos           # 组件 / 指令 / 方法的 markdown 文档
-    │   │   │   ├── components  # 组件文档目录（Button.md）
-    │   │   │   ├── directives  # 指令文档目录
-    │   │   │   └── methods     # 方法文档目录
-    │   │   ├── features        # 主题、国际化、Token 等特性文档
-    │   │   └── ...             # 其他文档目录
-    │   └── en                # 英文文档（结构与 zh 一致）
-    ├── icon                # 图标库
-    ├── locale              # 多语言库（纯js，无框架代码）
-    ├── locale-vue          # 多语言库，提供 vue 支持
-    ├── colors              # 颜色 / Design Token 包
-    ├── utils               # 工具库
-    ├── unplugin-resolver   # 用于提供给 unplugin-vue-components 做树摇的 resolver
-    ├── upload-adapters     # 上传适配器
-    ├── api-generator       # 组件 API 文档生成器
-    └── eslint-plugin-horizon-web  # 自定义 ESLint 规则
+    │       ├── components      # component directory
+    │       ├── directives      # directive directory
+    │       ├── composables     # shared hook-like files
+    │       └── styles          # styles directory
+    ├── docs     # docs site project (VitePress)
+    │   ├── demos       # all .vue demo files
+    │   │   ├── components      # component demo directory
+    │   │   │   └── Button      # demos for a specific component
+    │   │   ├── directives      # directive demo directory
+    │   │   └── methods         # method demo directory
+    │   ├── zh                # Chinese docs (root locale)
+    │   │   ├── guide           # quick start, on-demand import, and other guide docs
+    │   │   ├── demos           # markdown docs for components / directives / methods
+    │   │   │   ├── components  # component docs (Button.md)
+    │   │   │   ├── directives  # directive docs
+    │   │   │   └── methods     # method docs
+    │   │   ├── features        # feature docs: theme, locale, tokens, etc.
+    │   │   └── ...             # other doc directories
+    │   └── en                # English docs (same structure as zh)
+    ├── icon                # icon library
+    ├── locale              # localization library (pure JS, no framework code)
+    ├── locale-vue          # localization library with Vue support
+    ├── colors              # colors / Design Token package
+    ├── utils               # utility library
+    ├── unplugin-resolver   # resolver for tree-shaking with unplugin-vue-components
+    ├── upload-adapters     # upload adapters
+    ├── api-generator       # component API documentation generator
+    └── eslint-plugin-horizon-web  # custom ESLint rules
 ```
 
-## 代码规范
+## Code Conventions
 
 ### useProps
 
-组件的 props 必须定义在 `./src/composables/useProps.ts` 文件中，为了正确生成文档，需要遵循以下规则：
+Component props must be defined in `./src/composables/useProps.ts` so that documentation can be generated correctly. Follow these rules:
 
-- 组件参数的注释对应文档中的参数说明
+- Component prop comments map to the parameter descriptions in the docs
   ```ts
   export const useXXXProps = {
-    /** switch 关闭时的自定义状态文本 */
+    /** Custom status text when switch is off */
     statusOffText: {
       type: String,
       default: 'Off',
     },
   };
   ```
-- 注释支持 Markdown 语法，但为保证阅读体验与排版，请尽量只使用加粗、斜体、链接等有限语法
+- Comments support Markdown syntax, but for readability and layout, please limit yourself to a small set of syntax such as bold, italics, and links
   ```ts
   export const useXXXProps = {
     /**
-     * **绑定**的值
+     * **Bound** value
      */
     modelValue: {
       type: Boolean,
@@ -147,98 +149,98 @@ bun run new method your-method
     },
   };
   ```
-- 不要写 `enum`，使用 `UnionType` 替代
+- Do not write `enum`; use `UnionType` instead
   ```ts
   export const useXXXProps = {
-    /** switch 大小 */
+    /** switch size */
     size: {
       type: String as PropType<'normal' | 'small'>,
       default: 'normal',
     },
   };
   ```
-- 尽量总是设置 `required` 属性，文档中的「是否必填」以它作为最高优先级判断
-- `PropType` 泛型暂时只支持基本类型、`UnionType` 和 `Interface`
+- Prefer setting `required` whenever possible; it takes the highest priority for the "required" column in the docs
+- The `PropType` generic currently supports only primitive types, `UnionType`, and `Interface`
 
-### 样式
+### Styles
 
-- 样式文件只能使用 scss
-- scss 等文件中不支持路径别名
+- Style files may only use scss
+- Path aliases are not supported in scss and similar files
   ```scss
   // not support
   @use '~/styles/name.scss';
   @use '@/styles/name.scss';
   ```
 
-### 导出关联组件
+### Exporting Related Components
 
-一个组件可能包含关联组件，如 `Checkbox` 内置 `CheckboxGroup`。由于编译产物只有 `Checkbox.js` 而没有 `CheckboxGroup.js`，自动按需加载会失败，请手动修改 `packages/unplugin-resolver/src/index.mts` 中的 config。
+A component may contain related components, such as `Checkbox` embedding `CheckboxGroup`. Because the compiled artifacts contain only `Checkbox.js` and not `CheckboxGroup.js`, automatic on-demand loading will fail. Please manually update the config in `packages/unplugin-resolver/src/index.mts`.
 
-### 本地校验
+### Local Checks
 
-提交前请确保以下检查全部通过：
+Make sure all of the following checks pass before committing:
 
 ```bash
 bun run lint        # oxlint + eslint
-bun run vitest:all  # 全部单测与浏览器测试
-bun run ts:check    # TypeScript 类型检查
+bun run vitest:all  # all unit and browser tests
+bun run ts:check    # TypeScript type checking
 ```
 
-`husky` 会在提交时自动执行 commitlint、lint-staged、单测与类型检查。
+`husky` automatically runs commitlint, lint-staged, unit tests, and type checks on commit.
 
-## 文档规范
+## Documentation Conventions
 
-文档站源码位于 `packages/docs`（VitePress），中文文档在 `packages/docs/zh`，英文文档在 `packages/docs/en`，两者结构保持一致。
+The docs site source lives in `packages/docs` (VitePress): Chinese docs in `packages/docs/zh` and English docs in `packages/docs/en`, with identical structures.
 
-组件、指令和方法的 markdown 文档位于 `packages/docs/[zh|en]/demos/[components|directives|methods]/[组件名].md`，对应的 `.vue` demo 示例文件放在 `packages/docs/demos/[components|directives|methods]/[组件名]/` 目录下。
+Component, directive, and method markdown docs live in `packages/docs/[zh|en]/demos/[components|directives|methods]/[ComponentName].md`, and the corresponding `.vue` demo files go under `packages/docs/demos/[components|directives|methods]/[ComponentName]/`.
 
-文档遵循标准结构，右侧菜单、demo 等内容会根据文档结构自动生成：
+Docs follow a standard structure; the right-side menu, demos, and other content are generated automatically from it:
 
 ```
-### 特性1
+### Feature 1
 
-描述特性1
+Description of feature 1
 
 ::: demo1 :::
 
-### 特性2
+### Feature 2
 
-描述特性2
+Description of feature 2
 
 ::: demo2 :::
 ```
 
-组件 / 指令 / 方法文档中的 demo 使用如下语法，路径相对于 `packages/docs/demos` 目录：
+Demos in component / directive / method docs use the syntax below, with paths relative to the `packages/docs/demos` directory:
 
 ```
 :::demo components/Button/basic.vue :::
 ```
 
-某些场景下可能希望仅展示 demo 效果而不展示源码（如颜色面板），给文件名添加 `--no-code` 即可：
+In some cases you may want to show only the demo effect without the source (for example a color palette). Append `--no-code` to the file name:
 
 ```
 :::demo ./demos/colors--no-code.vue :::
 ```
 
-> 注：`features` 等文档中的 demo 路径相对于当前 markdown 文件所在目录，如 `./demos/colors--no-code.vue`。
+> Note: in docs such as `features`, demo paths are relative to the directory of the current markdown file, e.g. `./demos/colors--no-code.vue`.
 
-组件 / 指令 / 方法的文档不需要定义除 demo 以外的信息，其余内容会自动解析。
+Component / directive / method docs do not need any info beyond the demos; everything else is parsed automatically.
 
-## 依赖库
+## Dependencies
 
-当前组件库依赖以下第三方库，可以在需要时利用这些库的能力：
+The component library depends on the following third-party libraries, whose capabilities can be used when needed:
 
-- [@vueuse/core](https://vueuse.org/)：基于 Composition API 的工具方法，如 `useEventListener`、`useMouse`、`useLocalStorage`
-- [async-validator](https://github.com/yiminghe/async-validator)：异步表单验证库
+- [@vueuse/core](https://vueuse.org/): Composition API utilities such as `useEventListener`, `useMouse`, `useLocalStorage`
+- [async-validator](https://github.com/yiminghe/async-validator): async form validation library
 
-## Commit 规范
+## Commit Conventions
 
-仓库通过 commitlint 约束提交信息，格式为 `<type>(<scope>): <subject>`：
+The repository uses commitlint to enforce commit messages in the format `<type>(<scope>): <subject>`:
 
-- `type` 仅允许：`feat`、`update`、`fix`、`refactor`、`optimize`、`style`、`docs`、`chore`、`release`
-- `scope` 必须使用 PascalCase，通常为组件名或包名
+- Allowed `type` values: `feat`, `update`, `fix`, `refactor`, `optimize`, `style`, `docs`, `chore`, `release`
+- `scope` must be PascalCase, usually the component or package name
 
-示例：
+Examples:
 
 ```text
 feat(Table): support column filter
@@ -246,34 +248,34 @@ fix(Button): fix loading state flicker
 docs(README): rewrite project introduction
 ```
 
-建议保持小提交、语义清晰，一个提交只做一件事。
+Keep commits small and semantically clear; one commit should do one thing.
 
-## Pull Request 流程
+## Pull Request Workflow
 
-1. 从最新的 `feature` 分支（或 `main`）创建开发分支
-2. 保持 PR 小且职责单一，并在描述中关联对应 Issue
-3. 本地通过 lint、单测与类型检查
-4. 在 PR 描述中说明改动内容、影响范围与验证方式
-5. 等待维护者 Review，根据反馈补充修改后合并
+1. Create a development branch from the latest `feature` branch (or `main`)
+2. Keep PRs small and single-purpose, and link the related issue in the description
+3. Pass lint, unit tests, and type checks locally
+4. Describe the changes, impact scope, and verification approach in the PR description
+5. Wait for maintainer review, address feedback, and merge after revision
 
-## 发布流程
+## Release Process
 
-版本发布由维护者执行：
+Version releases are executed by maintainers:
 
-1. 修改 `./versions.json` 中的版本号
-2. 执行 `bun run modify:version` 同步各包版本
-3. 执行 `bun install`
-4. 执行 `bun run build`
-5. 发布：
-   - 最新版：`bun run pub -- --confirm`
-   - alpha 版：`bun run pub -- --confirm --tag alpha`
-   - beta 版：`bun run pub -- --confirm --tag beta`
-   - 2-x 版：`bun run pub -- --confirm --tag v2-x`
-   - 2-x alpha 版：`bun run pub -- --confirm --tag v2-x-alpha`
-   - 2-x beta 版：`bun run pub -- --confirm --tag v2-x-beta`
+1. Update the version number in `./versions.json`
+2. Run `bun run modify:version` to sync all package versions
+3. Run `bun install`
+4. Run `bun run build`
+5. Publish:
+   - latest: `bun run pub -- --confirm`
+   - alpha: `bun run pub -- --confirm --tag alpha`
+   - beta: `bun run pub -- --confirm --tag beta`
+   - v2-x: `bun run pub -- --confirm --tag v2-x`
+   - v2-x alpha: `bun run pub -- --confirm --tag v2-x-alpha`
+   - v2-x beta: `bun run pub -- --confirm --tag v2-x-beta`
 
-## 相关链接
+## Related Links
 
-- [文档站源码](packages/docs)
-- [更新日志](https://github.com/van-fe/horizon-web/releases)
-- [Issue 列表](https://github.com/van-fe/horizon-web/issues)
+- [Docs site source](packages/docs)
+- [Changelog](https://github.com/van-fe/horizon-web/releases)
+- [Issue list](https://github.com/van-fe/horizon-web/issues)
