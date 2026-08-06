@@ -7,17 +7,34 @@ provider from using different part boundaries. See
 [Resumable Multipart Upload](/en/demos/components/Upload#resumable-multipart-upload) for Upload's
 own slicing, Worker behavior, and custom-backend protocol.
 
-## Interactive demo
+## Interactive demos
 
-The offline sandbox below executes the real low-level multipart adapter for Qiniu Multipart v2,
-Aliyun OSS, or Tencent Cloud COS; only its network transport or SDK client is replaced with an
-in-memory implementation. Select a provider, start an upload, pause or re-add the same file, and
-watch ListParts restore Parts and ETags. Qiniu reports byte progress; the sandbox cancels its
-current simulated request, while the production default transport aborts the active XHR. Tencent
-Cloud also reports byte progress but uses logical cancellation at the low-level SDK; Aliyun uses
-logical cancellation and reports progress when each part finishes.
+Three separate offline sandboxes demonstrate each provider's low-level multipart adapter. Only
+the network transport or SDK client is replaced with an in-memory implementation. In every demo,
+you can pause, continue, or re-add the same file and watch the provider's ListParts API restore
+Parts and ETags.
 
-:::demo extensions/upload-adapters/cloud-providers.vue :::
+### Qiniu Kodo
+
+The Qiniu demo executes the Multipart v2 REST API and reports continuous byte progress. Pausing
+cancels the current simulated request; the production transport aborts the active XHR.
+
+:::demo extensions/upload-adapters/qiniu.vue :::
+
+### Aliyun OSS
+
+The Aliyun demo executes the low-level `ali-oss` API. The official `uploadPart` has no
+`AbortSignal`, so pausing is logical cancellation and progress updates when a whole Part finishes.
+
+:::demo extensions/upload-adapters/aliyun-oss.vue :::
+
+### Tencent Cloud COS
+
+The Tencent Cloud demo executes the `cos-js-sdk-v5` callback API and reports continuous byte
+progress through `onProgress`. The low-level SDK only supports logical cancellation, while
+`multipartListPart` restores completed Parts.
+
+:::demo extensions/upload-adapters/tencent-cos.vue :::
 
 ## Installation
 

@@ -7,13 +7,29 @@ Upload 与云端使用不同的分片边界。Upload 自身的切片、Worker �
 
 ## 交互演示
 
-下面的离线沙箱实际执行七牛 Multipart v2、阿里云 OSS 或腾讯云 COS 的低层 multipart 适配代码，
-只把网络层和 SDK client 替换成内存实现。选择 provider 后开始上传，可以暂停、继续或“重新加入
-同一文件”，并观察 ListParts 恢复的 Part 与 ETag。七牛提供连续字节进度；沙箱会取消当前模拟请求，
-生产默认 transport 则中止当前 XHR。腾讯云也提供连续字节进度，但低层 SDK 只能逻辑取消；阿里云
-采用逻辑取消并按整片完成更新进度。
+三个离线沙箱分别展示各厂商的低层 multipart 适配代码，只把网络层或 SDK client 替换成内存实现。
+每个示例都可以暂停、继续或“重新加入同一文件”，并观察厂商 ListParts API 恢复的 Part 与 ETag。
 
-:::demo extensions/upload-adapters/cloud-providers.vue :::
+### 七牛 Kodo
+
+七牛示例执行 Multipart v2 REST API，连续上报字节进度。暂停会取消当前模拟请求；生产默认
+transport 会中止当前 XHR。
+
+:::demo extensions/upload-adapters/qiniu.vue :::
+
+### 阿里云 OSS
+
+阿里云示例执行 `ali-oss` 低层 API。官方 `uploadPart` 没有 `AbortSignal`，因此暂停为逻辑取消，
+进度在整片完成时更新。
+
+:::demo extensions/upload-adapters/aliyun-oss.vue :::
+
+### 腾讯云 COS
+
+腾讯云示例执行 `cos-js-sdk-v5` callback API，通过 `onProgress` 连续上报字节进度。低层 SDK
+只能逻辑取消，已完成 Part 会由 `multipartListPart` 恢复。
+
+:::demo extensions/upload-adapters/tencent-cos.vue :::
 
 ## 安装
 
