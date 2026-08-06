@@ -13,10 +13,12 @@
   box-shadow: mixins.css-variable('notification-box-shadow');
   transition: all mixins.css-variable('notification-transition-time');
 
+  /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
   &.right {
     right: mixins.css-variable('notification-right');
   }
 
+  /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
   &.left {
     left: mixins.css-variable('notification-left');
   }
@@ -32,10 +34,10 @@
 
         // height: 24px;
         margin: 0;
-        color: mixins.css-variable('notification-color--title');
-        font-weight: mixins.css-variable('notification-font-weight--title');
         font-size: mixins.css-variable('notification-font-size--title');
+        font-weight: mixins.css-variable('notification-font-weight--title');
         line-height: mixins.css-variable('notification-line-height--title');
+        color: mixins.css-variable('notification-color--title');
       }
 
       @include mixins.e('close') {
@@ -86,12 +88,12 @@
   @include mixins.e('content') {
     width: 100%;
     margin: mixins.css-variable('notification-margin--content');
-    color: mixins.css-variable('notification-color--content');
-    font-weight: mixins.css-variable('notification-font-weight--content');
     font-size: mixins.css-variable('notification-font-size--content');
+    font-weight: mixins.css-variable('notification-font-weight--content');
+    color: mixins.css-variable('notification-color--content');
+    hyphens: auto;
     word-break: break-all;
     overflow-wrap: break-word;
-    hyphens: auto;
   }
 
   @include mixins.e('footer') {
@@ -108,4 +110,22 @@
   @include mixins.e('confirm') {
     margin-left: mixins.css-variable('notification-margin-left-confirm') !important;
   }
+}
+
+#{mixins.block-name('transition--slide-left-enter-from')},
+#{mixins.block-name('transition--slide-left-leave-to')} {
+  transform: translate3d(
+    calc(100% + #{mixins.css-variable('notification-right')}),
+    0,
+    0
+  );
+}
+
+#{mixins.block-name('transition--slide-right-enter-from')},
+#{mixins.block-name('transition--slide-right-leave-to')} {
+  transform: translate3d(
+    calc(-100% - #{mixins.css-variable('notification-left')}),
+    0,
+    0
+  );
 }

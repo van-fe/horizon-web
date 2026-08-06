@@ -16,4 +16,15 @@ describe('Notification styles', () => {
     );
     expect(notificationCss).toContain('box-shadow: var(--h-notification-box-shadow);');
   });
+
+  test('slides in and out through the nearest viewport edge', () => {
+    const notificationCss = compile(resolve(notificationRoot, 'src/style/index.scss')).css;
+
+    expect(notificationCss).toMatch(
+      /\.h-transition--slide-left-enter-from,[\s\S]*?\.h-transition--slide-left-leave-to[\s\S]*?translate3d\(calc\(100% \+ var\(--h-notification-right\)\), 0, 0\)/,
+    );
+    expect(notificationCss).toMatch(
+      /\.h-transition--slide-right-enter-from,[\s\S]*?\.h-transition--slide-right-leave-to[\s\S]*?translate3d\(calc\(-100% - var\(--h-notification-left\)\), 0, 0\)/,
+    );
+  });
 });
