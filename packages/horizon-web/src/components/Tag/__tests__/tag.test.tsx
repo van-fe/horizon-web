@@ -127,6 +127,29 @@ describe('Tag.tsx', () => {
       expect(element.classes('is-plain')).eq(true);
     });
 
+    test('color automatically derives state colors', async () => {
+      const color = ref<TagProps['color']>('brand');
+      const disabled = ref(false);
+      const wrapper = mount(() => <HTag color={color.value} disabled={disabled.value} />);
+      const element = wrapper.find('.h-tag');
+
+      expect(element.classes('is-colorful')).eq(true);
+      expect(element.classes('is-auto-fit-color')).eq(true);
+      expect(element.attributes('style')).toContain('color:');
+      expect(element.attributes('style')).toContain('background:');
+      expect(element.attributes('style')).toContain('border-color:');
+
+      const brandStyle = element.attributes('style');
+      color.value = 'orange';
+      await nextTick();
+      expect(element.attributes('style')).not.eq(brandStyle);
+
+      const orangeStyle = element.attributes('style');
+      disabled.value = true;
+      await nextTick();
+      expect(element.attributes('style')).not.eq(orangeStyle);
+    });
+
     test('round', async () => {
       const round = ref<TagProps['round']>(false);
       const wrapper = mount(() => <HTag round={round.value} />);

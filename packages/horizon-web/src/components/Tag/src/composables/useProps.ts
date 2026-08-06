@@ -150,8 +150,8 @@ export const useTagProps = declarePropType({
     default: 1000,
   },
   /**
-   * 文本颜色
-   * @en Configuration for color.
+   * 用于自动生成各状态配色的基础色
+   * @en Base color used to derive colors for each state automatically.
    */
   color: {
     type: String as PropType<
@@ -164,14 +164,6 @@ export const useTagProps = declarePropType({
    */
   background: {
     type: String as PropType<string>,
-  },
-  /**
-   * 是否根据传入的 `props.color` 自动生成颜色
-   * @en Configuration for auto color.
-   */
-  autoColor: {
-    type: Boolean,
-    default: false,
   },
   /**
    * 是否处于加载中

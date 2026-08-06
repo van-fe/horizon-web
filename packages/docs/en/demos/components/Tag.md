@@ -22,9 +22,9 @@ Use `round` for categories and filters, and `equally` when short status labels n
 
 :::demo components/Tag/shape.vue :::
 
-## Automatic colors
+## Custom colors
 
-With `auto-color`, the component derives a stable color from the tag content. Toggle the regular, plain, and disabled states to check legibility across contexts.
+Set a base `color` to derive colors automatically for the default, hover, pressed, and disabled states. Toggle the regular, plain, and disabled styles to check legibility across contexts.
 
 :::demo components/Tag/colorful.vue :::
 

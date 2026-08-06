@@ -128,10 +128,7 @@ export default defineComponent({
         ['brand', 'lime', 'indigo', 'purple', 'magenta', 'orange'].includes(props.color!),
     );
     const isAutoFitColor = computed(
-      () =>
-        isBuiltinColor.value ||
-        (!isColorful.value && props.clickable) ||
-        (isColorful.value && props.autoColor),
+      () => isColorful.value || (!isColorful.value && props.clickable),
     );
 
     const colorList = computed(() =>
@@ -147,65 +144,66 @@ export default defineComponent({
     );
 
     const style = computed<CSSProperties>(() => {
-      if (!props.autoColor) {
+      if (!isColorful.value) {
+        return props.background
+          ? {
+              background:
+                (isColorBar(props.background) ? useColors(props.background) : props.background) +
+                ' !important',
+            }
+          : {};
+      }
+
+      if (isDisabled.value) {
         return {
-          color: props.color + ' !important',
-          background: props.background + ' !important',
+          color: colorList.value.text.disabled + ' !important',
+          background:
+            (isColorBar(props.background!)
+              ? useColors(props.background!)
+              : (props.background ?? colorList.value.background.disabled)) + ' !important',
+          borderColor: colorList.value.border.disabled + ' !important',
         };
       }
 
-      if (isColorful.value) {
-        if (isDisabled.value) {
+      if (isClickable.value) {
+        if (isPress.value) {
           return {
-            color: colorList.value.text.disabled + ' !important',
-            background:
-              (isColorBar(props.background!)
-                ? useColors(props.background!)
-                : (props.background ?? colorList.value.background.disabled)) + ' !important',
-            borderColor: colorList.value.border.disabled + ' !important',
-          };
-        }
-
-        if (isClickable.value) {
-          if (isPress.value) {
-            return {
-              color: colorList.value.text.press,
-              background: isColorBar(props.background!)
-                ? useColors(props.background!)
-                : (props.background ?? colorList.value.background.press),
-              borderColor: colorList.value.border.press,
-            };
-          }
-
-          if (isHover.value) {
-            return {
-              color: colorList.value.text.hover,
-              background: isColorBar(props.background!)
-                ? useColors(props.background!)
-                : (props.background ?? colorList.value.background.hover),
-              borderColor: colorList.value.border.hover,
-            };
-          }
-        }
-
-        if (isActivated.value) {
-          return {
-            color: colorList.value.text.active,
+            color: colorList.value.text.press,
             background: isColorBar(props.background!)
               ? useColors(props.background!)
-              : (props.background ?? colorList.value.background.active),
-            borderColor: colorList.value.border.active,
+              : (props.background ?? colorList.value.background.press),
+            borderColor: colorList.value.border.press,
           };
         }
 
+        if (isHover.value) {
+          return {
+            color: colorList.value.text.hover,
+            background: isColorBar(props.background!)
+              ? useColors(props.background!)
+              : (props.background ?? colorList.value.background.hover),
+            borderColor: colorList.value.border.hover,
+          };
+        }
+      }
+
+      if (isActivated.value) {
         return {
-          color: colorList.value.text.default,
+          color: colorList.value.text.active,
           background: isColorBar(props.background!)
             ? useColors(props.background!)
-            : (props.background ?? colorList.value.background.default),
-          borderColor: colorList.value.border.default,
+            : (props.background ?? colorList.value.background.active),
+          borderColor: colorList.value.border.active,
         };
-      } else return {};
+      }
+
+      return {
+        color: colorList.value.text.default,
+        background: isColorBar(props.background!)
+          ? useColors(props.background!)
+          : (props.background ?? colorList.value.background.default),
+        borderColor: colorList.value.border.default,
+      };
     });
 
     /***** expose *****/

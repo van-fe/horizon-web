@@ -3,7 +3,13 @@ import { ref } from 'vue';
 
 const plain = ref(false);
 const disabled = ref(false);
-const labels = ['Core', 'Infrastructure', 'Experience', 'Growth', 'Operations'];
+const labels = [
+  { label: 'Core', color: 'brand' },
+  { label: 'Infrastructure', color: 'indigo' },
+  { label: 'Experience', color: 'purple' },
+  { label: 'Growth', color: 'magenta' },
+  { label: 'Operations', color: 'orange' },
+] as const;
 </script>
 
 <template>
@@ -14,14 +20,14 @@ const labels = ['Core', 'Infrastructure', 'Experience', 'Growth', 'Operations'];
     </div>
     <div class="tag-row">
       <h-tag
-        v-for="label in labels"
-        :key="label"
-        auto-color
+        v-for="item in labels"
+        :key="item.label"
+        :color="item.color"
         :plain="plain"
         :disabled="disabled"
         :clickable="false"
       >
-        {{ label }}
+        {{ item.label }}
       </h-tag>
     </div>
   </section>
