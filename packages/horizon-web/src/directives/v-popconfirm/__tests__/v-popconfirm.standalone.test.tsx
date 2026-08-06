@@ -40,8 +40,6 @@ describe('v-popconfirm.tsx', () => {
 
     expect(isOnline.value).eq(false);
 
-    console.warn(document.body.innerHTML);
-
     const buttons = document.body.querySelectorAll(
       '.h-popconfirm .h-button',
     ) as NodeListOf<HTMLButtonElement>;

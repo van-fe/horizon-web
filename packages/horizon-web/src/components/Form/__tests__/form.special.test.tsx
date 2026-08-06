@@ -78,8 +78,8 @@ describe('Form.tsx special', () => {
 
     try {
       await formRef.value?.validate();
-    } catch (e) {
-      console.debug(e);
+    } catch {
+      // 校验失败是预期行为，错误状态通过下方断言验证
     }
 
     await nextTick();

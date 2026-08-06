@@ -66,7 +66,6 @@ describe('Space.tsx', () => {
       size.value = [100, 200];
       await nextTick();
 
-      console.debug(wrapper.html());
       expect((wrapper.element as HTMLElement).style.gap).toBe('100px 200px');
     });
 
