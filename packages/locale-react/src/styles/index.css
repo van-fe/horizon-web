@@ -1,0 +1,7 @@
+.horizon-web-date-locale,
+.horizon-web-number-locale,
+.horizon-web-lang-locale,
+.horizon-web-read-direction {
+  display: inline-block;
+  white-space: nowrap;
+}

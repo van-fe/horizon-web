@@ -21,6 +21,7 @@ const publishPackages = [
   'utils',
   'locale',
   'locale-vue',
+  'locale-react',
   'unplugin-resolver',
   'colors',
   'upload-adapters',
@@ -114,7 +115,7 @@ async function ensureVersion() {
   // empty dir
   shell.rm('-rf', '../dist/*');
 
-  cloneBrowserBuildFileToDist(versions.horizon-web);
+  cloneBrowserBuildFileToDist(versions['horizon-web']);
   cloneBrowserBuildFileToDist(tag || 'latest');
 
   // publish doc to fx manually
@@ -123,12 +124,17 @@ async function ensureVersion() {
 function publish() {
   Object.keys(packageJsonModified).forEach(pkgName => {
     shell.cd(resolve(__dirname, '../packages', pkgName));
-    shell.exec(`bun publish --registry https://registry.npmmirror.com/ ${tag ? `--tag ${tag}` : ''}`);
+    shell.exec(
+      `bun publish --registry https://registry.npmmirror.com/ ${tag ? `--tag ${tag}` : ''}`,
+    );
   });
 }
 
 function writeVersionFileAndPush(versions: unknown) {
-  fs.writeFileSync(resolve(__dirname, './.horizon-web/version.json'), JSON.stringify(versions, null, 2));
+  fs.writeFileSync(
+    resolve(__dirname, './.horizon-web/version.json'),
+    JSON.stringify(versions, null, 2),
+  );
 
   shell.exec(
     `cd ${resolve(
@@ -148,7 +154,7 @@ function checkPublishedVersion() {
   }> = [];
   Object.entries(versions).forEach(([pkgName, version]) => {
     const npmMirrorVersion = shell.exec(
-      `curl -fsSL https://registry.npmmirror.com/@aurora%2F${pkgName} | sed -n 's/.*"latest":{"version":"\([^"]*\)".*/\1/p'`,
+      String.raw`curl -fsSL https://registry.npmmirror.com/@aurora%2F${pkgName} | sed -n 's/.*"latest":{"version":"\([^"]*\)".*/\1/p'`,
       { silent: true },
     );
 

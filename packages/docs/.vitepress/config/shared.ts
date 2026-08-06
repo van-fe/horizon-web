@@ -23,7 +23,6 @@ export default defineConfig({
     },
   },
   themeConfig: {
-    appearance: true,
     logo: '/logo.png',
     nav: [{ text: 'Home', link: '/' }],
     socialLinks: [
@@ -32,6 +31,9 @@ export default defineConfig({
         link: 'https://github.com/van-fe/horizon-web',
       },
     ],
+    search: {
+      provider: 'local',
+    },
   },
   vue: {
     template: {
@@ -64,7 +66,15 @@ export default defineConfig({
           find: /^@aurora\/upload-adapters\/(.*)$/,
           replacement: path.join(__dirname, '../../../../packages/upload-adapters/src/$1'),
         },
-        ...['colors', 'utils', 'icon', 'locale-vue', 'locale', 'upload-adapters'].map(name => ({
+        ...[
+          'colors',
+          'utils',
+          'icon',
+          'locale-vue',
+          'locale-react',
+          'locale',
+          'upload-adapters',
+        ].map(name => ({
           find: new RegExp(`^@aurora\\/${name}$`),
           replacement: path.join(__dirname, `../../../../packages/${name}/src`),
         })),

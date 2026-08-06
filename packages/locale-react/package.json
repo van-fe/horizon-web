@@ -1,0 +1,60 @@
+{
+  "name": "@aurora/locale-react",
+  "version": "1.0.0",
+  "description": "React bindings for @aurora/locale.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "unpkg": "./dist/locale-react.umd.js",
+  "types": "./types/index.d.ts",
+  "style": "./dist/index.css",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./style.css": {
+      "types": "./types/styles/index.d.ts",
+      "default": "./dist/index.css"
+    }
+  },
+  "files": [
+    "dist",
+    "types",
+    "README.md"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "build": "bun run build:dist && bun run build:types",
+    "build:dist": "bunx --bun vite build",
+    "build:types": "tsc -d --pretty --emitDeclarationOnly --declarationDir ./types",
+    "prepack": "bun run build",
+    "typecheck": "tsc --noEmit --pretty false",
+    "test": "bun run --bun vitest run --config ./vitest.config.ts"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "react",
+    "locale",
+    "i18n",
+    "internationalization"
+  ],
+  "license": "ISC",
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0"
+  },
+  "dependencies": {
+    "@aurora/locale": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}

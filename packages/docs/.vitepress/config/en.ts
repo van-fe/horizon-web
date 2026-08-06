@@ -76,6 +76,8 @@ export default defineConfig({
             collapsed: false,
             items: [
               { text: 'Overview', link: '/en/extensions/' },
+              { text: 'Locale Vue', link: '/en/extensions/locale-vue' },
+              { text: 'Locale React', link: '/en/extensions/locale-react' },
               { text: 'Upload Adapters', link: '/en/extensions/upload-adapters' },
             ],
           },
