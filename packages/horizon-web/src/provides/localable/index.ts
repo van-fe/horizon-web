@@ -32,9 +32,11 @@ export default function localableProvide(app: App, options?: HorizonWebOption): 
 
   app.use(VueLocaleService as unknown as Plugin, localeOption);
 
-  defaultLocale.value = VueLocaleService.currInstance;
+  const localeService = VueLocaleService.getInstance(app)!;
 
-  const locale = computed(() => VueLocaleService.currInstance as VueLocaleService);
+  defaultLocale.value = localeService;
+
+  const locale = computed(() => localeService);
 
   app.provide(localeInjectKey, locale);
   // The locale package registers its Arabic dayjs locale as a bootstrap

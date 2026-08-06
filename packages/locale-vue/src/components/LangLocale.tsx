@@ -16,6 +16,8 @@ export default defineComponent({
   },
   setup(props) {
     const { proxy } = getCurrentInstance()!;
-    return () => <div class="horizon-web-date-locale">{proxy!.$root!.t(props.value, props.lang)}</div>;
+    return () => (
+      <div class="horizon-web-lang-locale">{proxy!.$root!.t(props.value, props.lang)}</div>
+    );
   },
 });

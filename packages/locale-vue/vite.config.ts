@@ -21,6 +21,8 @@ export default defineConfig({
           preserveModulesRoot: 'src',
           exports: 'named',
           globals: {
+            '@aurora/locale': 'locale',
+            '@aurora/utils': 'utils',
             vue: 'Vue',
           },
           entryFileNames: '[name].js',
@@ -32,6 +34,8 @@ export default defineConfig({
           preserveModulesRoot: 'src',
           exports: 'named',
           globals: {
+            '@aurora/locale': 'locale',
+            '@aurora/utils': 'utils',
             vue: 'Vue',
           },
           entryFileNames: '[name].js',
@@ -44,6 +48,8 @@ export default defineConfig({
           preserveModulesRoot: 'src',
           exports: 'named',
           globals: {
+            '@aurora/locale': 'locale',
+            '@aurora/utils': 'utils',
             vue: 'Vue',
           },
           entryFileNames: '[name].umd.js',
@@ -56,6 +62,8 @@ export default defineConfig({
           preserveModulesRoot: 'src',
           exports: 'named',
           globals: {
+            '@aurora/locale': 'locale',
+            '@aurora/utils': 'utils',
             vue: 'Vue',
           },
           entryFileNames: 'locale-vue.umd.js',
@@ -68,6 +76,8 @@ export default defineConfig({
           preserveModulesRoot: 'src',
           exports: 'named',
           globals: {
+            '@aurora/locale': 'locale',
+            '@aurora/utils': 'utils',
             vue: 'Vue',
           },
           entryFileNames: 'locale-vue.js',
@@ -80,6 +90,8 @@ export default defineConfig({
           preserveModulesRoot: 'src',
           exports: 'named',
           globals: {
+            '@aurora/locale': 'locale',
+            '@aurora/utils': 'utils',
             vue: 'Vue',
           },
           entryFileNames: 'locale-vue.cjs',

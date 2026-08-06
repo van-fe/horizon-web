@@ -4,11 +4,20 @@
   "main": "lib/index.js",
   "module": "es/index.js",
   "unpkg": "dist/index.umd.js",
+  "style": "dist/index.css",
   "types": "es/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "dist/index.css": [
+        "es/styles/index.d.ts"
+      ]
+    }
+  },
   "scripts": {
     "build": "bun run build:js && bun run build:ts",
     "build:js": "bunx --bun vite build",
-    "build:ts": "tsc -d --pretty --emitDeclarationOnly"
+    "build:ts": "tsc -d --pretty --emitDeclarationOnly",
+    "test": "bun run --bun vitest run --dir ./src --config ../horizon-web/vitest.config.ts"
   },
   "publishConfig": {
     "access": "public"
@@ -18,13 +27,14 @@
     "es",
     "lib"
   ],
+  "sideEffects": [
+    "**/*.css"
+  ],
   "peerDependencies": {
     "vue": "^3.2.33"
   },
   "dependencies": {
-    "@aurora/locale": "workspace:*"
-  },
-  "devDependencies": {
+    "@aurora/locale": "workspace:*",
     "@aurora/utils": "workspace:*"
   }
 }

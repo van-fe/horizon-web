@@ -1,4 +1,10 @@
-import type { LocalOptionType, LangService, NumberService, DateService } from '@aurora/locale';
+import type {
+  DateService,
+  LangOptions,
+  LangService,
+  LocalOptionType,
+  NumberService,
+} from '@aurora/locale';
 import { LocaleService, LocaleSupportLang } from '@aurora/locale';
 import type { App } from 'vue';
 import { reactive } from 'vue';
@@ -7,10 +13,16 @@ import DateLocale from './components/DateLocale';
 import NumberLocale from './components/NumberLocale';
 import directives from './directives';
 
+export type VueLocaleOptions = LocalOptionType & {
+  lang: LangOptions;
+};
+
 export default class VueLocaleService extends LocaleService {
   public static currInstance: VueLocaleService;
 
-  constructor(props: LocalOptionType) {
+  private static readonly instances = new WeakMap<App, VueLocaleService>();
+
+  constructor(props: VueLocaleOptions) {
     super(props);
     this.langService = reactive(this.langService) as LangService;
     this.numberService = reactive(this.numberService) as NumberService;
@@ -43,12 +55,18 @@ export default class VueLocaleService extends LocaleService {
     });
   }
 
-  static install(app: App, options: LocalOptionType): void {
-    if (!VueLocaleService.currInstance) {
-      VueLocaleService.currInstance = new VueLocaleService(options);
-      VueLocaleService.currInstance.mixin(app);
-      VueLocaleService.currInstance.defineComponents(app);
-      VueLocaleService.currInstance.defineDirectives(app);
-    }
+  public static getInstance(app: App): VueLocaleService | undefined {
+    return VueLocaleService.instances.get(app);
+  }
+
+  static install(app: App, options: VueLocaleOptions): void {
+    const instance = new VueLocaleService(options);
+
+    instance.mixin(app);
+    instance.defineComponents(app);
+    instance.defineDirectives(app);
+
+    VueLocaleService.instances.set(app, instance);
+    VueLocaleService.currInstance = instance;
   }
 }
