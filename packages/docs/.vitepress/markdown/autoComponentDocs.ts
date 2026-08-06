@@ -10,11 +10,20 @@ import type {
 } from '@aurora/utils';
 import { pascalize } from '@aurora/utils';
 import appendApi from '../markdown-analyse/utils/appendApi';
-import appendPluginInfo from '../markdown-analyse/utils/appendPluginInfo';
+import appendPluginInfo, {
+  AUTO_COMPONENT_DOCS_TITLE_MARKER,
+} from '../markdown-analyse/utils/appendPluginInfo';
 
 const components = componentsAnalysis as unknown as ApiGeneratorAnalysedComponentDetail[];
 const directives = directivesAnalysis as unknown as ApiGeneratorAnalysedDirectiveDetail[];
 const methods = methodsAnalysis as unknown as ApiGeneratorAnalysedMethodDetail[];
+
+export { AUTO_COMPONENT_DOCS_TITLE_MARKER };
+
+interface AutoComponentDocsContent {
+  intro: string;
+  api: string;
+}
 
 function localizeApi<T>(value: T, locale: string): T {
   if (Array.isArray(value)) {
@@ -66,6 +75,58 @@ function createHtmlToken(
   return token;
 }
 
+/** Builds the generated introduction and API shared by page rendering and local search. */
+function renderAutoComponentDocs(filePath: string): AutoComponentDocsContent | undefined {
+  const match = filePath.match(
+    /[\\/]demos[\\/](components|directives|methods)[\\/]([^\\/]+)\.md$/i,
+  );
+
+  if (!match) return;
+
+  const locale = /[\\/]en[\\/]/i.test(filePath) ? 'en' : 'zh-CN';
+  const kind = match[1].toLowerCase() as 'components' | 'directives' | 'methods';
+  const rawName = match[2];
+  let intro = '';
+  let api = '';
+
+  if (kind === 'components') {
+    const name = pascalize(rawName);
+    const component = components.find(item => item.name.toLowerCase() === name.toLowerCase());
+    const related = components.filter(
+      item => item.parentComponentName.toLowerCase() === name.toLowerCase(),
+    );
+    if (!component && !related.length) return;
+    const modes = related.length ? related : [component!];
+    if (component) {
+      intro = appendPluginInfo(localizeApi(component, locale), kind);
+    } else {
+      intro = appendPluginInfo({ ...localizeApi(related[0], locale), name }, kind);
+    }
+    api = modes
+      .map(mode => localizeApiLabels(appendApi(localizeApi(mode, locale), true, kind), locale))
+      .join('');
+  } else if (kind === 'directives') {
+    const name = pascalize(rawName.replace(/^v-/, ''));
+    const directive = directives.find(item => item.name.toLowerCase() === name.toLowerCase());
+    if (!directive) return;
+    intro = appendPluginInfo(localizeApi(directive, locale), kind);
+    api = localizeApiLabels(appendApi(localizeApi(directive, locale), true, kind), locale);
+  } else {
+    const name = pascalize(rawName);
+    const method = methods.find(item => item.dirName.toLowerCase() === name.toLowerCase());
+    if (!method) return;
+    const related = methods.filter(item => item.dirName.toLowerCase() === name.toLowerCase());
+    intro = appendPluginInfo({ ...localizeApi(method, locale), name: method.dirName }, kind);
+    api = related
+      .map(mode =>
+        localizeApiLabels(appendApi(localizeApi(mode, locale), related.length > 1, kind), locale),
+      )
+      .join('');
+  }
+
+  return { intro, api };
+}
+
 /** Automatically adds component introduction and generated API to demo pages. */
 export default function autoComponentDocs(md: MarkdownIt) {
   md.core.ruler.after('block', 'auto-component-docs', state => {
@@ -74,56 +135,15 @@ export default function autoComponentDocs(md: MarkdownIt) {
         (state.env as { filePath?: string }).filePath ||
         '',
     );
-    const match = filePath.match(
-      /[\\/]demos[\\/](components|directives|methods)[\\/]([^\\/]+)\.md$/i,
+    const content = renderAutoComponentDocs(filePath);
+    if (!content) return;
+
+    const hasAuthoredTitle = state.tokens.some(
+      token => token.type === 'heading_open' && token.tag === 'h1',
     );
-
-    if (!match) {
-      return;
+    if (!hasAuthoredTitle) {
+      state.tokens.unshift(createHtmlToken(state, `${content.intro}\n`));
     }
-
-    const locale = /[\\/]en[\\/]/i.test(filePath) ? 'en' : 'zh-CN';
-    const kind = match[1].toLowerCase() as 'components' | 'directives' | 'methods';
-    const rawName = match[2];
-    let intro = '';
-    let api = '';
-
-    if (kind === 'components') {
-      const name = pascalize(rawName);
-      const component = components.find(item => item.name.toLowerCase() === name.toLowerCase());
-      const related = components.filter(
-        item => item.parentComponentName.toLowerCase() === name.toLowerCase(),
-      );
-      if (!component && !related.length) return;
-      const modes = related.length ? related : [component!];
-      if (component) {
-        intro = appendPluginInfo(localizeApi(component, locale), kind);
-      } else {
-        intro = appendPluginInfo({ ...localizeApi(related[0], locale), name }, kind);
-      }
-      api = modes
-        .map(mode => localizeApiLabels(appendApi(localizeApi(mode, locale), true, kind), locale))
-        .join('');
-    } else if (kind === 'directives') {
-      const name = pascalize(rawName.replace(/^v-/, ''));
-      const directive = directives.find(item => item.name.toLowerCase() === name.toLowerCase());
-      if (!directive) return;
-      intro = appendPluginInfo(localizeApi(directive, locale), kind);
-      api = localizeApiLabels(appendApi(localizeApi(directive, locale), true, kind), locale);
-    } else {
-      const name = pascalize(rawName);
-      const method = methods.find(item => item.dirName.toLowerCase() === name.toLowerCase());
-      if (!method) return;
-      const related = methods.filter(item => item.dirName.toLowerCase() === name.toLowerCase());
-      intro = appendPluginInfo({ ...localizeApi(method, locale), name: method.dirName }, kind);
-      api = related
-        .map(mode =>
-          localizeApiLabels(appendApi(localizeApi(mode, locale), related.length > 1, kind), locale),
-        )
-        .join('');
-    }
-
-    state.tokens.unshift(createHtmlToken(state, `${intro}\n`));
-    state.tokens.push(createHtmlToken(state, `\n${api}`));
+    state.tokens.push(createHtmlToken(state, `\n${content.api}`));
   });
 }

@@ -61,5 +61,5 @@ export function getHeadingId(content: string) {
 
 export function getHeadingContent(content: string, type: 'h2' | 'h3' = 'h2') {
   const id = getHeadingId(content);
-  return `<${type} id="${id}" class="no-underline ${type}"><a href="#${id}" class="!no-underline">${content}</a></${type}>`;
+  return `<${type} id="${id}" class="no-underline ${type}">${content} <a class="header-anchor" href="#${id}" aria-label="Permalink to &quot;${content}&quot;">​</a></${type}>`;
 }

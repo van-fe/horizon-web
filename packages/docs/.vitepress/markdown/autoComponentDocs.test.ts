@@ -2,7 +2,7 @@ import path from 'node:path';
 import { createRequire } from 'node:module';
 import { readdirSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import autoComponentDocs from './autoComponentDocs';
+import autoComponentDocs, { AUTO_COMPONENT_DOCS_TITLE_MARKER } from './autoComponentDocs';
 
 const require = createRequire(import.meta.url);
 const vitepressEntry = require.resolve('vitepress');
@@ -18,12 +18,20 @@ describe('automatic component docs', () => {
 
     const result = markdown.render('## CSS Grid Layout', { path: markdownPath });
 
-    expect(result).toContain('<h1>Layout</h1>');
-    expect(result).toContain('Modern&nbsp;responsive&nbsp;layout&nbsp;based&nbsp;on&nbsp;CSS&nbsp;Grid.');
+    expect(result).toContain(
+      `<h1 id="layout" tabindex="-1" ${AUTO_COMPONENT_DOCS_TITLE_MARKER}>Layout`,
+    );
+    expect(result).toContain(
+      'Modern&nbsp;responsive&nbsp;layout&nbsp;based&nbsp;on&nbsp;CSS&nbsp;Grid.',
+    );
     expect(result).toContain('Grid Api');
-    expect(result).toContain('Grid Props');
+    expect(result).toContain(
+      '<h3 id="grid-props" class="no-underline h3">Grid Props <a class="header-anchor" href="#grid-props"',
+    );
     expect(result).toContain('GridItem Api');
-    expect(result).toContain('GridItem Props');
+    expect(result).toContain(
+      '<h3 id="griditem-props" class="no-underline h3">GridItem Props <a class="header-anchor" href="#griditem-props"',
+    );
     expect(result).toContain('Number&nbsp;of&nbsp;grid&nbsp;columns&nbsp;per&nbsp;row.');
     expect(result).not.toContain('<h1>Grid</h1>');
     expect(result).toContain('class="api-table-wrapper"');
@@ -36,8 +44,12 @@ describe('automatic component docs', () => {
 
     const result = markdown.render('## Basic\n\nDemo content.', { path: markdownPath });
 
-    expect(result).toContain('<h1>v-click-outside</h1>');
-    expect(result).toContain('Invoke&nbsp;the&nbsp;specified&nbsp;function&nbsp;when&nbsp;clicking&nbsp;outside');
+    expect(result).toContain(
+      `<h1 id="v-click-outside" tabindex="-1" ${AUTO_COMPONENT_DOCS_TITLE_MARKER}>`,
+    );
+    expect(result).toContain(
+      'Invoke&nbsp;the&nbsp;specified&nbsp;function&nbsp;when&nbsp;clicking&nbsp;outside',
+    );
     expect(result).toContain('ClickOutside Api');
     expect(result.lastIndexOf('ClickOutside Api')).toBeGreaterThan(result.indexOf('Demo content.'));
   });
@@ -58,7 +70,9 @@ describe('automatic component docs', () => {
 
     const result = markdown.render('## Alert\n\nDemo content.', { path: markdownPath });
 
-    expect(result).toContain('<h1>MessageBox</h1>');
+    expect(result).toContain(
+      `<h1 id="messagebox" tabindex="-1" ${AUTO_COMPONENT_DOCS_TITLE_MARKER}>`,
+    );
     expect(result).toContain('Alert Api');
     expect(result).toContain('Confirm Api');
     expect(result.lastIndexOf('Confirm Api')).toBeGreaterThan(result.indexOf('Demo content.'));
@@ -77,7 +91,9 @@ describe('automatic component docs', () => {
         path: path.join(demoRoot, kind, file),
       });
 
-      expect(result, `${kind}/${file} should have an injected title`).toContain('<h1>');
+      expect(result, `${kind}/${file} should have an injected title`).toContain(
+        AUTO_COMPONENT_DOCS_TITLE_MARKER,
+      );
       expect(result, `${kind}/${file} should have an injected description`).toMatch(
         /<p class="description">.+<\/p>/,
       );
@@ -87,5 +103,16 @@ describe('automatic component docs', () => {
       ).toBeGreaterThan(result.indexOf('Demo content.'));
       expect(result).not.toContain('<p class="description">undefined</p>');
     }
+  });
+
+  it('keeps an authored page title instead of injecting a duplicate h1', () => {
+    const markdown = new MarkdownIt().use(autoComponentDocs);
+    const markdownPath = path.resolve(__dirname, '../../en/demos/components/AudioPlayer.md');
+
+    const result = markdown.render('# AudioPlayer\n\nManual introduction.', { path: markdownPath });
+
+    expect(result.match(/<h1/g)).toHaveLength(1);
+    expect(result).not.toContain(AUTO_COMPONENT_DOCS_TITLE_MARKER);
+    expect(result).toContain('AudioPlayer Api');
   });
 });
