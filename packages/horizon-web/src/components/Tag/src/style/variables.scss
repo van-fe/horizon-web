@@ -45,8 +45,8 @@ $values: (
     icon: #{function.css-variable('line-height-default')},
   ),
   color: (
-    '': #{function.css-variable('text-primary')},
     default: (
+      '': #{function.css-variable('text-primary')},
       hover: #{function.css-variable('text-inverse')},
       press: #{function.css-variable('text-inverse')},
       activated: #{function.css-variable('text-brand-activated')},
@@ -81,8 +81,8 @@ $values: (
       disabled: #{function.css-variable('text-error-disabled')},
     ),
     plain: (
-      '': #{function.css-variable('text-primary')},
       default: (
+        '': #{function.css-variable('text-primary')},
         hover: #{function.css-variable('text-brand-hover')},
         press: #{function.css-variable('text-brand-press')},
         activated: #{function.css-variable('text-brand-default')},
@@ -198,8 +198,8 @@ $values: (
     round: #{function.css-variable('radius-pill')},
   ),
   background: (
-    '': #{function.css-variable('bg-tertiary')},
     default: (
+      '': #{function.css-variable('bg-tertiary')},
       hover: #{function.css-variable('bg-brand-hover')},
       press: #{function.css-variable('bg-brand-press')},
       activated: #{function.css-variable('bg-weak-activated')},
