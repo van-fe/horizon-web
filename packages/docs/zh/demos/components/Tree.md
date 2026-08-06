@@ -120,7 +120,7 @@
 
 ## 拖拽排序
 
-设置 `draggable = true` 开启排序。`drag-on-handler`、`drag-to-leaf` 和 `before-drop` 可限制拖拽方式与结果。
+设置 `draggable = true` 开启排序。拖动时节点本体跟随指针，落点继续使用高亮横条提示；重排后，受影响节点会通过与 SortableList 相同的 FLIP 动画平滑归位。`drag-on-handler`、`drag-to-leaf` 和 `before-drop` 可限制拖拽方式与结果。
 
 :::demo components/Tree/draggable.vue :::
 

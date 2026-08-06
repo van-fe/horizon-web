@@ -1,4 +1,5 @@
-import { computed, defineComponent, onBeforeUnmount, ref, toRefs, watch } from 'vue';
+import { computed, defineComponent, ref, toRefs, watch } from 'vue';
+import type { ComponentPublicInstance } from 'vue';
 import type {
   TransferDataProps,
   CheckboxUnionType,
@@ -25,6 +26,7 @@ import HVirtualScrollerItem from '~/components/VirtualScroller/src/VirtualScroll
 import type { VirtualScrollerDefaultSlotRowType } from '~/components/VirtualScroller/src/composables/useSlots';
 import useLocaleLang from '~/utils/useLocaleLang';
 import useSortableList from '~/components/SortableList/src/hooks/useSortableList';
+import useSortableMotion from '~/utils/useSortableMotion';
 
 export default defineComponent({
   name: `${useNamespace()}TransferPanel`,
@@ -71,8 +73,6 @@ export default defineComponent({
     const checkedItemKeyArr = ref<CheckboxUnionType[]>([]);
     const showBreadcrumb = ref(false);
     const breadcrumbArr = ref<TransferDataProps[]>([]);
-    const sortAnimating = ref(false);
-    let sortAnimationTimer: ReturnType<typeof setTimeout> | undefined;
 
     const filterDataComputed = computed(() => {
       if (typeProp.value === 'right') return dataProp.value;
@@ -109,6 +109,13 @@ export default defineComponent({
       emit('expand', true);
     };
 
+    const transferMotion = useSortableMotion<string | number>({
+      keys: () =>
+        dataProp.value.map(
+          item => item[propsProp.value.key as keyof TransferDataProps] as string | number,
+        ),
+    });
+
     const transferSortable = useSortableList({
       items: dataProp,
       disabled: computed(
@@ -124,12 +131,7 @@ export default defineComponent({
       ),
       onSort: (_context, meta) => {
         if (!meta || !(meta.event instanceof DragEvent)) return;
-        sortAnimating.value = true;
-        if (sortAnimationTimer) clearTimeout(sortAnimationTimer);
-        sortAnimationTimer = setTimeout(() => {
-          sortAnimating.value = false;
-          sortAnimationTimer = undefined;
-        }, 220);
+        transferMotion.capturePositions();
         onDropProp?.value?.(
           meta.event,
           meta.targetItem,
@@ -165,10 +167,6 @@ export default defineComponent({
       transferSortable.onDragEnd(event, item, index);
     };
 
-    onBeforeUnmount(() => {
-      if (sortAnimationTimer) clearTimeout(sortAnimationTimer);
-    });
-
     watch(
       () => checkedArrProp.value,
       val => {
@@ -190,7 +188,6 @@ export default defineComponent({
           class={[
             `${classHelper.block}`,
             !filterDataComputed.value.length && classHelper.m('empty'),
-            classHelper.is('sort-animating', sortAnimating.value),
           ]}
         >
           {
@@ -348,6 +345,12 @@ export default defineComponent({
                             data-index={index}
                           >
                             <div
+                              ref={(element: Element | ComponentPublicInstance | null) =>
+                                transferMotion.setItemElement(
+                                  itemKey,
+                                  element instanceof HTMLElement ? element : null,
+                                )
+                              }
                               class={cls(
                                 classHelper.e('item'),
                                 classHelper.em('item', 'right'),

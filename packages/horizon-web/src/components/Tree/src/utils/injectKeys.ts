@@ -1,6 +1,7 @@
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { generatorInjectedKeyName } from '@aurora/utils';
 import type { ComputedRef, InjectionKey, Ref, UnwrapNestedRefs, VNode } from 'vue';
+import type { SortableMotionOffset } from '~/utils/useSortableMotion';
 import type { TreeItemProps, TreeProps } from '../composables/useProps';
 import type { TreeEmits } from '../composables/useEmits';
 import type { TreeSlots } from '../composables/useSlots';
@@ -69,9 +70,15 @@ export const HTreeHalfCheckedValuesInjectKey = Symbol(
 
 export const HTreeOnDragStartInjectKey = Symbol(
   generatorInjectedKeyName('tree', 'on-drag-start'),
-) as InjectionKey<
-  (domRef: Ref<HTMLElement | null>, node: HTreeExtendsData, evt: MouseEvent) => void
->;
+) as InjectionKey<(node: HTreeExtendsData, evt: PointerEvent) => void>;
+
+export const HTreeDragOffsetInjectKey = Symbol(
+  generatorInjectedKeyName('tree', 'drag-offset'),
+) as InjectionKey<Ref<SortableMotionOffset>>;
+
+export const HTreeSetItemElementInjectKey = Symbol(
+  generatorInjectedKeyName('tree', 'set-item-element'),
+) as InjectionKey<(uuid: HTreeUuidType, element: HTMLElement | null) => void>;
 
 export const HTreeDragFromNodeInjectKey = Symbol(
   generatorInjectedKeyName('tree', 'drag-from-node-uuid'),

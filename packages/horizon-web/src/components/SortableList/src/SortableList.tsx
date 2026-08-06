@@ -87,7 +87,7 @@ export default defineComponent({
         const scope = { item, index, dragging, disabled: itemDisabled };
         const itemStyle: CSSProperties | undefined = dragging
           ? {
-              transform: `translate3d(0, ${sortable.dragOffsetY.value}px, 0)`,
+              transform: `translate3d(0, ${sortable.dragOffset.value.y}px, 0)`,
               pointerEvents: 'none',
             }
           : undefined;

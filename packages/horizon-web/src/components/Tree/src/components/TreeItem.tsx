@@ -10,10 +10,12 @@ import {
   ref,
   toRefs,
 } from 'vue';
+import type { ComponentPublicInstance } from 'vue';
 import { useTreeItemProps } from '../composables/useProps';
 import HTooltip from '~/components/Tooltip/src/Tooltip';
 import {
   HTreeDragFromNodeInjectKey,
+  HTreeDragOffsetInjectKey,
   HTreeDragToNodeUuidInjectKey,
   HTreeEmitsInjectKey,
   HTreeExpandedNodesUuidInjectKey,
@@ -27,6 +29,7 @@ import {
   HTreeLoadingNodesInjectKey,
   HTreeOnDragStartInjectKey,
   HTreePropsInjectKey,
+  HTreeSetItemElementInjectKey,
   HTreeSizeInjectKey,
   HTreeSlotsInjectKey,
   HTreeSwitchNodeExpandStatusInjectKey,
@@ -78,6 +81,8 @@ export default defineComponent({
     const isDragging = inject(HTreeIsDraggingInjectKey)!;
     const dragToNodeUuid = inject(HTreeDragToNodeUuidInjectKey)!;
     const dragFromNode = inject(HTreeDragFromNodeInjectKey)!;
+    const dragOffset = inject(HTreeDragOffsetInjectKey)!;
+    const setItemElement = inject(HTreeSetItemElementInjectKey)!;
 
     const isLoading = computed(() =>
       loadingNodes.value.some(curr => curr._uuid === valueProp.value._uuid),
@@ -122,6 +127,11 @@ export default defineComponent({
         dragToNodeUuid.value?.toString?.() === valueProp.value._uuid.toString() &&
         !!dragFromNode.value &&
         !valueProp.value.uuidPath.includes(dragFromNode.value._uuid),
+    );
+    const isSourceDragging = computed(
+      () =>
+        dragFromNode.value?._uuid?.toString() === valueProp.value._uuid.toString() &&
+        isDragging.value,
     );
     //  &&
     //         (parentProps.dragToDifferentParent
@@ -174,10 +184,16 @@ export default defineComponent({
       }
     }
 
-    function onMouseDown(evt: MouseEvent) {
-      if (isDraggable.value) {
-        onDragStart(wrapperDomRef, valueProp.value, evt);
-      }
+    function onPointerDown(evt: PointerEvent) {
+      if (evt.button !== 0 || !isDraggable.value) return;
+      evt.preventDefault();
+      onDragStart(valueProp.value, evt);
+    }
+
+    function setWrapperDomRef(element: Element | ComponentPublicInstance | null) {
+      const dom = element instanceof HTMLDivElement ? element : null;
+      wrapperDomRef.value = dom;
+      if (!shadowProp.value) setItemElement(valueProp.value._uuid, dom);
     }
 
     onMounted(() => {
@@ -192,6 +208,7 @@ export default defineComponent({
 
     onBeforeUnmount(() => {
       stopWatch();
+      if (!shadowProp.value) setItemElement(valueProp.value._uuid, null);
     });
 
     return () => {
@@ -206,7 +223,7 @@ export default defineComponent({
 
       return (
         <div
-          ref={wrapperDomRef}
+          ref={setWrapperDomRef}
           class={cls(
             classHelper.block,
             classHelper.is('checked', isChecked.value),
@@ -217,11 +234,7 @@ export default defineComponent({
             classHelper.is('clickable', parentProps.expandOnClickNode),
             classHelper.is('draggable', isDraggable.value),
             classHelper.is('draggable-whole', !parentProps.dragOnHandler),
-            classHelper.is(
-              'dragging',
-              dragFromNode.value?._uuid?.toString() === valueProp.value._uuid.toString() &&
-                isDragging.value,
-            ),
+            classHelper.is('dragging', isSourceDragging.value),
             classHelper.is('drag-over', isDragOver.value),
             classHelper.is('disabled', isDisabled.value),
             classHelper.is('focus', focusedNodeUuid.value === valueProp.value._uuid),
@@ -229,6 +242,12 @@ export default defineComponent({
           )}
           style={{
             paddingLeft: paddingLeft.value + 'px',
+            ...(isSourceDragging.value
+              ? {
+                  transform: `translate3d(0, ${dragOffset.value.y}px, 0)`,
+                  pointerEvents: 'none',
+                }
+              : undefined),
           }}
           draggable={false}
           role="treeitem"
@@ -240,7 +259,7 @@ export default defineComponent({
           data-children-amount={valueProp.value.transformedChildren.length || 0}
           onClick={onClick}
           onContextmenu={onContentMenu}
-          onMousedown={!parentProps.dragOnHandler ? onMouseDown : undefined}
+          onPointerdown={!parentProps.dragOnHandler ? onPointerDown : undefined}
         >
           {renderParentShownLine()}
           {isDragOver.value && (
@@ -284,7 +303,7 @@ export default defineComponent({
                       classHelper.e('draggable-icon'),
                       classHelper.is('always-visible', parentProps.draggableIconAlwaysVisible),
                     )}
-                    onMousedown={parentProps.dragOnHandler ? onMouseDown : undefined}
+                    onPointerdown={parentProps.dragOnHandler ? onPointerDown : undefined}
                   >
                     {renderIcon(parentProps.draggableIcon, undefined, {
                       size: iconSizeMapping[size.value],
@@ -309,7 +328,7 @@ export default defineComponent({
           {isLoading.value ? (
             <div
               class={cls(classHelper.e('icon'), classHelper.e('loading-icon'))}
-              onMousedown={evt => evt.stopPropagation()}
+              onPointerdown={evt => evt.stopPropagation()}
             >
               <IconLoadingLine />
             </div>
@@ -324,7 +343,7 @@ export default defineComponent({
                   classHelper.is('active', isExpanded.value && !parentProps.expandIcon),
                 )}
                 onClick={onClickExpandIcon}
-                onMousedown={evt => evt.stopPropagation()}
+                onPointerdown={evt => evt.stopPropagation()}
               >
                 {renderIcon(
                   !parentProps.expandIcon
@@ -358,7 +377,7 @@ export default defineComponent({
                 <div
                   class={cls(classHelper.e('checkbox'))}
                   onClick={onClickCheckbox}
-                  onMousedown={evt => evt.stopPropagation()}
+                  onPointerdown={evt => evt.stopPropagation()}
                 >
                   <HCheckbox
                     modelValue={isChecked.value}
@@ -374,7 +393,7 @@ export default defineComponent({
                 <div
                   class={cls(classHelper.e('radio'))}
                   onClick={onClickCheckbox}
-                  onMousedown={evt => evt.stopPropagation()}
+                  onPointerdown={evt => evt.stopPropagation()}
                 >
                   <HRadio
                     modelValue={isChecked.value}

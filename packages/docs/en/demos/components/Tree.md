@@ -120,7 +120,7 @@ For large data sets, set `use-virtual-scroll = true` and provide `height` or `ma
 
 ## Drag sorting
 
-Set `draggable = true` to reorder nodes. Use `drag-on-handler`, `drag-to-leaf`, and `before-drop` to constrain the interaction.
+Set `draggable = true` to reorder nodes. The dragged node follows the pointer, the highlighted bar previews the drop target, and affected nodes settle with the same FLIP motion as SortableList. Use `drag-on-handler`, `drag-to-leaf`, and `before-drop` to constrain the interaction.
 
 :::demo components/Tree/draggable.vue :::
 

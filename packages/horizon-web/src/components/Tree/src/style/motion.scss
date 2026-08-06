@@ -1,0 +1,22 @@
+@use '../../../../styles/mixins';
+
+@include mixins.b('tree-item') {
+  @include mixins.is('draggable') {
+    @include mixins.is('draggable-whole') {
+      touch-action: none;
+    }
+  }
+
+  @include mixins.is('dragging') {
+    z-index: 2;
+    pointer-events: none;
+    user-select: none;
+    background: mixins.css-variable('tree', 'background', 'item') !important;
+    opacity: 0.9;
+    will-change: transform;
+  }
+
+  @include mixins.be('tree-item', 'draggable-icon', false) {
+    touch-action: none;
+  }
+}

@@ -19,9 +19,23 @@ import { IconAdd, IconCar, IconReduce } from '@aurora/icon';
 import HCheckbox from '../../Checkbox';
 import { sleep } from '~/utils/tools';
 import HRadio from '../../Radio';
+import { SORTABLE_MOTION_FLIP_OPTIONS } from '~/utils/useSortableMotion';
 
 const treeClassHelper = new ComponentClassBlock('tree');
 const treeItemClassHelper = new ComponentClassBlock('tree-item');
+
+const createRect = (top: number, height = 32): DOMRect =>
+  ({
+    top,
+    bottom: top + height,
+    height,
+    left: 0,
+    right: 240,
+    width: 240,
+    x: 0,
+    y: top,
+    toJSON: () => ({}),
+  }) as DOMRect;
 
 describe('Tree.tsx props', () => {
   test('size', async () => {
@@ -815,15 +829,28 @@ describe('Tree.tsx props', () => {
 
     const handler = guide.find(`.${treeItemClassHelper.e('draggable-icon')}`);
 
-    await handler.trigger('mousedown');
-    await handler.trigger('mousemove');
+    await handler.trigger('pointerdown', { button: 0, clientY: 10 });
+    await handler.trigger('pointermove', { clientY: 34 });
 
-    expect(
-      element.find(`.${treeItemClassHelper.block}.${treeItemClassHelper.is('shadow')}`).exists(),
-    ).toBeTruthy();
+    expect(guide.classes()).toContain(treeItemClassHelper.is('dragging'));
+    expect(guide.attributes('style')).toContain('translate3d(0, 24px, 0)');
   });
 
   test('drag root node behind sibling without losing it', async () => {
+    const animate = vi.fn(() => ({}) as Animation);
+    const originalAnimate = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'animate');
+    Object.defineProperty(HTMLElement.prototype, 'animate', {
+      configurable: true,
+      value: animate,
+    });
+    const rectSpy = vi
+      .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
+      .mockImplementation(function (this: HTMLElement) {
+        if (!this.classList.contains(treeItemClassHelper.block)) return createRect(0);
+        const tree = this.closest(`.${treeClassHelper.block}`);
+        const items = [...(tree?.querySelectorAll(`.${treeItemClassHelper.block}`) ?? [])];
+        return createRect(items.indexOf(this) * 32);
+      });
     const treeData = ref<HTreeData[]>([
       {
         value: 'root-a',
@@ -843,8 +870,8 @@ describe('Tree.tsx props', () => {
     const [source, target] = element.findAllComponents(HTreeItem);
     const handler = source.find(`.${treeItemClassHelper.e('draggable-icon')}`);
 
-    await handler.trigger('mousedown');
-    await target.trigger('mousemove');
+    await handler.trigger('pointerdown', { button: 0, clientY: 10 });
+    await target.trigger('pointermove', { clientY: 44 });
 
     const siblingDropArea = element.find(
       `.${treeItemClassHelper.e('drag-over-wrap')}.${treeItemClassHelper.is('sibling')}`,
@@ -852,11 +879,23 @@ describe('Tree.tsx props', () => {
 
     expect(siblingDropArea.exists()).toBeTruthy();
 
-    await siblingDropArea.trigger('mouseup');
+    await siblingDropArea.trigger('pointerup');
+    await nextTick();
     await nextTick();
 
     expect(treeData.value.map(node => node.value)).toStrictEqual(['root-b', 'root-a']);
     expect(element.findAllComponents(HTreeItem)).toHaveLength(2);
+    expect(animate).toHaveBeenCalledWith(
+      [{ transform: 'translateY(-32px)' }, { transform: 'translateY(0)' }],
+      SORTABLE_MOTION_FLIP_OPTIONS,
+    );
+
+    rectSpy.mockRestore();
+    if (originalAnimate) {
+      Object.defineProperty(HTMLElement.prototype, 'animate', originalAnimate);
+    } else {
+      delete (HTMLElement.prototype as Partial<HTMLElement>).animate;
+    }
   });
 
   test('before-drop can cancel moving a node', async () => {
@@ -881,14 +920,14 @@ describe('Tree.tsx props', () => {
     const [source, target] = element.findAllComponents(HTreeItem);
     const handler = source.find(`.${treeItemClassHelper.e('draggable-icon')}`);
 
-    await handler.trigger('mousedown');
-    await target.trigger('mousemove');
+    await handler.trigger('pointerdown', { button: 0, clientY: 10 });
+    await target.trigger('pointermove', { clientY: 44 });
 
     const siblingDropArea = element.find(
       `.${treeItemClassHelper.e('drag-over-wrap')}.${treeItemClassHelper.is('sibling')}`,
     );
 
-    await siblingDropArea.trigger('mouseup');
+    await siblingDropArea.trigger('pointerup');
     await sleep();
     await nextTick();
 
@@ -920,8 +959,8 @@ describe('Tree.tsx props', () => {
     const [source, target] = element.findAllComponents(HTreeItem);
     const handler = source.find(`.${treeItemClassHelper.e('draggable-icon')}`);
 
-    await handler.trigger('mousedown');
-    await target.trigger('mousemove');
+    await handler.trigger('pointerdown', { button: 0, clientY: 10 });
+    await target.trigger('pointermove', { clientY: 44 });
 
     const childDropArea = element.find(
       `.${treeItemClassHelper.e('drag-over-wrap')}.${treeItemClassHelper.is('child')}`,
@@ -929,7 +968,7 @@ describe('Tree.tsx props', () => {
 
     expect(childDropArea.exists()).toBeTruthy();
 
-    await childDropArea.trigger('mouseup');
+    await childDropArea.trigger('pointerup');
     await nextTick();
 
     expect(treeData.value).toStrictEqual([
@@ -974,9 +1013,11 @@ describe('Tree.tsx props', () => {
     childDropArea.classList.add(treeItemClassHelper.is('child') as string);
     target.element.append(childDropArea);
 
-    handler.element.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
-    childDropArea.dispatchEvent(new MouseEvent('mousemove', { bubbles: true }));
-    childDropArea.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+    handler.element.dispatchEvent(
+      new PointerEvent('pointerdown', { bubbles: true, button: 0, clientY: 10 }),
+    );
+    childDropArea.dispatchEvent(new PointerEvent('pointermove', { bubbles: true, clientY: 44 }));
+    childDropArea.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, clientY: 44 }));
 
     await nextTick();
 
@@ -1007,25 +1048,21 @@ describe('Tree.tsx props', () => {
 
     const handler = guide.find(`.${treeItemClassHelper.e('draggable-icon')}`);
 
-    await handler.trigger('mousedown');
-    await handler.trigger('mousemove');
+    await handler.trigger('pointerdown', { button: 0, clientY: 10 });
+    await handler.trigger('pointermove', { clientY: 34 });
 
-    expect(
-      element.find(`.${treeItemClassHelper.block}.${treeItemClassHelper.is('shadow')}`).exists(),
-    ).toBeTruthy();
+    expect(guide.classes()).toContain(treeItemClassHelper.is('dragging'));
 
-    await handler.trigger('mouseup');
+    await handler.trigger('pointerup');
 
     dragOnHandler.value = false;
 
     await nextTick();
 
-    await guide.trigger('mousedown');
-    await guide.trigger('mousemove');
+    await guide.trigger('pointerdown', { button: 0, clientY: 10 });
+    await guide.trigger('pointermove', { clientY: 34 });
 
-    expect(
-      element.find(`.${treeItemClassHelper.block}.${treeItemClassHelper.is('shadow')}`).exists(),
-    ).toBeTruthy();
+    expect(guide.classes()).toContain(treeItemClassHelper.is('dragging'));
   });
 
   test('filter-to-hide-children', async () => {

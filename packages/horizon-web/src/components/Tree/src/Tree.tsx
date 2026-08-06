@@ -1,4 +1,4 @@
-import { computed, defineComponent, Fragment, nextTick, provide, ref, toRefs, watch } from 'vue';
+import { computed, defineComponent, nextTick, provide, ref, toRefs, watch } from 'vue';
 import { ComponentClassBlock, cls, useNamespace, cssVariable } from '@aurora/utils';
 import type { HorizonWebSetupContext, HorizonWebComponentInstance } from '@aurora/utils';
 import { useTreeProps } from './composables/useProps';
@@ -11,6 +11,7 @@ import type { TreeSlots } from './composables/useSlots';
 import type { TreeExposes } from './composables/useExposes';
 import {
   HTreeDragFromNodeInjectKey,
+  HTreeDragOffsetInjectKey,
   HTreeDragToNodeUuidInjectKey,
   HTreeEmitsInjectKey,
   HTreeExpandedNodesUuidInjectKey,
@@ -24,6 +25,7 @@ import {
   HTreeLoadingNodesInjectKey,
   HTreeOnDragStartInjectKey,
   HTreePropsInjectKey,
+  HTreeSetItemElementInjectKey,
   HTreeSelectedNodesUuidInjectKey,
   HTreeSizeInjectKey,
   HTreeSlotsInjectKey,
@@ -113,7 +115,6 @@ export default defineComponent({
       typeof HVirtualScroller,
       VirtualScrollerExposes
     > | null>(null);
-    const shadowItemDomRef = ref<HorizonWebComponentInstance<typeof TreeItem> | null>(null);
 
     /**
      * tree helper
@@ -158,21 +159,27 @@ export default defineComponent({
 
     const { vNodesMapping, collectVNode } = useVNodeCollection();
 
-    const { isDragging, dragFromNode, dragToNodeUuid, draggingStyle, dragToTop, onDragStart } =
-      useDraggable({
-        props: refProps,
-        treeDomRef: wrapperDomRef,
-        treeHelper: tree,
-        setNodeExpandStatus,
-        expandedNodesUuid,
-        treeDataMutations: {
-          deleteNode,
-          setNodeChildren,
-          addNodeChildren,
-        },
-        isLoading: loading,
-        shadowItemDomRef,
-      });
+    const {
+      isDragging,
+      dragFromNode,
+      dragToNodeUuid,
+      dragOffset,
+      setItemElement,
+      dragToTop,
+      onDragStart,
+    } = useDraggable({
+      props: refProps,
+      treeDomRef: wrapperDomRef,
+      treeHelper: tree,
+      setNodeExpandStatus,
+      expandedNodesUuid,
+      treeDataMutations: {
+        deleteNode,
+        setNodeChildren,
+        addNodeChildren,
+      },
+      isLoading: loading,
+    });
 
     const { isScrolling, scrollTo } = useScroll(
       refProps,
@@ -321,6 +328,8 @@ export default defineComponent({
     provide(HTreeIsDraggingInjectKey, isDragging);
     provide(HTreeDragToNodeUuidInjectKey, dragToNodeUuid);
     provide(HTreeDragFromNodeInjectKey, dragFromNode);
+    provide(HTreeDragOffsetInjectKey, dragOffset);
+    provide(HTreeSetItemElementInjectKey, setItemElement);
 
     /**
      * exposes
@@ -488,33 +497,16 @@ export default defineComponent({
           {slots.empty?.() ?? emptyTextProp?.value ?? useLocaleLang('tree.emptyText').value}
         </div>
         {dragFromNode.value && isDragging.value && (
-          <Fragment>
-            <div class={classHelper.em('drag', 'top')}>
-              {dragToTop.value && (
-                //  &&
-                //                 (props.dragToDifferentParent ? true : dragFromNode.value.parent === undefined)
-                <div
-                  class={classHelper.e('drag-over-cursor')}
-                  style={{
-                    width: `calc(100% - 16px - ((${cssVariable('tree', 'size', 'drag-over-cursor-arrow')} + ${cssVariable('tree', 'size', 'drag-over-cursor', 'height')} * 2))`,
-                  }}
-                />
-              )}
-            </div>
-            <TreeItem
-              ref={shadowItemDomRef}
-              key={dragFromNode.value._uuid}
-              value={dragFromNode.value}
-              indent={indentValue.value}
-              shadow={true}
-              style={{
-                position: 'absolute',
-                width: draggingStyle.value.width + 'px',
-                left: draggingStyle.value.left + 'px',
-                top: draggingStyle.value.top + 'px',
-              }}
-            />
-          </Fragment>
+          <div class={classHelper.em('drag', 'top')}>
+            {dragToTop.value && (
+              <div
+                class={classHelper.e('drag-over-cursor')}
+                style={{
+                  width: `calc(100% - 16px - ((${cssVariable('tree', 'size', 'drag-over-cursor-arrow')} + ${cssVariable('tree', 'size', 'drag-over-cursor', 'height')} * 2))`,
+                }}
+              />
+            )}
+          </div>
         )}
       </div>
     );

@@ -32,7 +32,7 @@ Transfer 用于在两个列表间分配条目，`v-model` 保存右侧条目的 
 
 ## 目标排序
 
-开启 `draggable` 后，可以直接调整右侧条目顺序。拖拽时会显示明确的插入位置，松手后条目会平滑移动到新顺序。
+开启 `draggable` 后，可以直接调整右侧条目顺序。拖拽时会显示明确的插入位置，松手后条目会通过与 SortableList 相同的 FLIP 动画平滑移动到新顺序。
 
 :::demo components/Transfer/drag.vue :::
 

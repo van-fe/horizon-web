@@ -2,16 +2,11 @@ import type { Ref, ToRefs, UnwrapNestedRefs } from 'vue';
 import type { HTreeExtendsData, HTreeUuidType, HTreeData } from '../utils/types';
 import { ref, watch } from 'vue';
 import type { TreeProps } from '../composables/useProps';
-import {
-  ComponentClassBlock,
-  getClientXY,
-  safelyGetEventTarget,
-  findElementInEventTargetTreeByClass,
-} from '@aurora/utils';
+import { ComponentClassBlock, safelyGetEventTarget } from '@aurora/utils';
 import type Tree from '~/utils/useTree';
-import type TreeItem from '../components/TreeItem';
 import type { TreeDataMutations } from './useTreeData';
 import useDropNode from './useDropNode';
+import useSortableMotion from '~/utils/useSortableMotion';
 
 interface UseDraggableOptions {
   props: ToRefs<TreeProps>;
@@ -21,7 +16,6 @@ interface UseDraggableOptions {
   expandedNodesUuid: UnwrapNestedRefs<Set<HTreeUuidType>>;
   treeDataMutations: TreeDataMutations;
   isLoading: Ref<boolean>;
-  shadowItemDomRef: Ref<InstanceType<typeof TreeItem> | null>;
 }
 
 export default function useDraggable({
@@ -32,30 +26,14 @@ export default function useDraggable({
   expandedNodesUuid,
   treeDataMutations,
   isLoading,
-  shadowItemDomRef,
 }: UseDraggableOptions) {
   const treeClassHelper = new ComponentClassBlock('tree');
   const treeItemClassHelper = new ComponentClassBlock('tree-item');
   const { dropNode } = useDropNode(props, treeHelper, isLoading, treeDataMutations);
 
   let isDragStart = false;
-  let dragDom: HTMLElement | null = null;
 
   const isDragging = ref(false);
-
-  const draggingStyle = ref({
-    width: 0,
-    top: 0,
-    left: 0,
-  });
-
-  /**
-   * Used to calculate the offset between mouse position and the top-left corner of the target.
-   */
-  const diffPos = {
-    x: 0,
-    y: 0,
-  };
 
   let currentExpandedNodes: HTreeExtendsData[] = [];
 
@@ -63,6 +41,13 @@ export default function useDraggable({
   const dragToNodeUuid = ref<HTreeUuidType>();
 
   const dragToTop = ref(false);
+
+  const motion = useSortableMotion<HTreeUuidType>({
+    keys: () => treeHelper.flattenTreeData.value.map(node => node._uuid),
+    onPointerMove: onDragMove,
+    onPointerEnd: onDragEnd,
+    onPointerCancel: () => dragStop(),
+  });
 
   let timer: ReturnType<typeof setTimeout> | null = null;
 
@@ -128,21 +113,10 @@ export default function useDraggable({
     return false;
   }
 
-  function onDragStart(domRef: Ref<HTMLElement | null>, node: HTreeExtendsData, evt: MouseEvent) {
+  function onDragStart(node: HTreeExtendsData, evt: PointerEvent) {
     if (!isDragging.value) {
       isDragStart = true;
       dragFromNode.value = node;
-      dragDom = domRef.value;
-
-      const rect = findElementInEventTargetTreeByClass(
-        evt,
-        treeItemClassHelper.block,
-      )?.getBoundingClientRect();
-
-      const { clientX, clientY } = getClientXY(evt);
-
-      diffPos.x = clientX - (rect?.x || 0);
-      diffPos.y = clientY - (rect?.y || 0);
 
       if (dragFromNode.value && !treeHelper.getOptionValue(dragFromNode.value, 'isLeaf')) {
         currentExpandedNodes = treeHelper.flattenTreeData.value.filter(
@@ -152,21 +126,12 @@ export default function useDraggable({
             curr.uuidPath.includes(dragFromNode.value!._uuid),
         );
       }
-
-      document.addEventListener('mousemove', onDragMove);
-      document.addEventListener('mouseup', onDragEnd);
+      motion.startPointerDrag(evt);
     }
   }
 
-  function onDragMove(evt: MouseEvent) {
+  function onDragMove(evt: PointerEvent) {
     if (isDragStart) {
-      const offsetParent = shadowItemDomRef.value?.$el.offsetParent;
-
-      const offsetRect = offsetParent?.getBoundingClientRect();
-
-      draggingStyle.value.top = evt.clientY - (offsetRect?.y ?? 0) - (diffPos?.y ?? 0);
-      draggingStyle.value.left = evt.clientX - (offsetRect?.x ?? 0) - (diffPos?.x ?? 0);
-
       const eventTarget = safelyGetEventTarget(evt);
       const evtTarget = eventTarget instanceof HTMLElement ? eventTarget : null;
       const dragTop = getTreeItemByDomNode(evtTarget, treeClassHelper.em('drag', 'top'));
@@ -179,12 +144,6 @@ export default function useDraggable({
         dragToTop.value = false;
 
         const target = getTreeItemByDomNode(evtTarget, treeItemClassHelper.block);
-
-        const rect = dragDom?.getBoundingClientRect();
-
-        if (rect) {
-          draggingStyle.value.width = rect.width;
-        }
 
         if (target && treeDomRef.value?.contains(target)) {
           isDragging.value = true;
@@ -201,10 +160,8 @@ export default function useDraggable({
     }
   }
 
-  function onDragEnd(evt: MouseEvent) {
+  function onDragEnd(evt: PointerEvent) {
     clearTimer();
-    document.removeEventListener('mousemove', onDragMove);
-    document.removeEventListener('mouseup', onDragEnd);
 
     if (!isDragging.value || !dragFromNode.value) {
       dragStop();
@@ -245,7 +202,13 @@ export default function useDraggable({
           fromNode,
           position: 'root',
         },
-        dragStop,
+        {
+          onBeforeMove: motion.capturePositions,
+          onFinish: moved => {
+            if (!moved) motion.clearCapturedPositions();
+            dragStop();
+          },
+        },
       );
     } else {
       dropNode(
@@ -254,7 +217,13 @@ export default function useDraggable({
           toNode: toNode!,
           position: isMoveToChild ? 'child' : 'after',
         },
-        dragStop,
+        {
+          onBeforeMove: motion.capturePositions,
+          onFinish: moved => {
+            if (!moved) motion.clearCapturedPositions();
+            dragStop();
+          },
+        },
       );
     }
   }
@@ -266,18 +235,14 @@ export default function useDraggable({
   }
 
   function dragStop() {
-    document.removeEventListener('mousemove', onDragMove);
-    document.removeEventListener('mouseup', onDragEnd);
+    motion.stopPointerDrag();
     restoreExpandedNodes();
     isDragStart = false;
     isDragging.value = false;
     currentExpandedNodes = [];
-    dragDom = null;
     dragFromNode.value = undefined;
     dragToNodeUuid.value = undefined;
     dragToTop.value = false;
-    diffPos.x = 0;
-    diffPos.y = 0;
     clearTimer();
   }
 
@@ -285,7 +250,8 @@ export default function useDraggable({
     isDragging,
     dragFromNode,
     dragToNodeUuid,
-    draggingStyle,
+    dragOffset: motion.dragOffset,
+    setItemElement: motion.setItemElement,
     dragToTop,
     onDragStart,
   };

@@ -19,6 +19,11 @@ interface TreeTargetDropContext {
 
 export type TreeDropContext = TreeRootDropContext | TreeTargetDropContext;
 
+interface TreeDropCallbacks {
+  onBeforeMove?: () => void;
+  onFinish: (moved: boolean) => void;
+}
+
 export default function useDropNode(
   props: ToRefs<TreeProps>,
   treeHelper: Tree<HTreeData, HTreeExtendsData>,
@@ -56,13 +61,14 @@ export default function useDropNode(
     ] as const;
   }
 
-  function dropNode(context: TreeDropContext, onFinish: () => void) {
+  function dropNode(context: TreeDropContext, callbacks: TreeDropCallbacks) {
     if (!canDrop(context)) {
-      onFinish();
+      callbacks.onFinish(false);
       return;
     }
 
     const performMove = () => {
+      callbacks.onBeforeMove?.();
       moveNode({
         fromValue: treeHelper.getOptionValue(context.fromNode, 'value'),
         toValue:
@@ -71,7 +77,7 @@ export default function useDropNode(
             : treeHelper.getOptionValue(context.toNode, 'value'),
         position: context.position,
       });
-      onFinish();
+      callbacks.onFinish(true);
     };
 
     const beforeDrop = props.beforeDrop?.value;
@@ -91,7 +97,7 @@ export default function useDropNode(
     } catch (error) {
       console.error(error);
       isLoading.value = false;
-      onFinish();
+      callbacks.onFinish(false);
       return;
     }
 
@@ -100,12 +106,12 @@ export default function useDropNode(
         if (status !== false) {
           performMove();
         } else {
-          onFinish();
+          callbacks.onFinish(false);
         }
       })
       .catch(error => {
         console.error(error);
-        onFinish();
+        callbacks.onFinish(false);
       })
       .finally(() => {
         isLoading.value = false;

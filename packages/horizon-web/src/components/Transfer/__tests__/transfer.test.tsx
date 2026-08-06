@@ -7,6 +7,20 @@ import VueLocaleService, { LocaleSupportLang } from '@aurora/locale-vue';
 import { dictionaries } from '~/locales';
 import { describe, expect, test, vi } from 'vitest';
 import { defineComponent, nextTick, reactive, ref } from 'vue';
+import { SORTABLE_MOTION_FLIP_OPTIONS } from '~/utils/useSortableMotion';
+
+const createRect = (top: number, height: number): DOMRect =>
+  ({
+    top,
+    bottom: top + height,
+    height,
+    left: 0,
+    right: 240,
+    width: 240,
+    x: 0,
+    y: top,
+    toJSON: () => ({}),
+  }) as DOMRect;
 
 describe('Transfer.tsx', () => {
   const getTestData = () => {
@@ -145,6 +159,22 @@ describe('Transfer.tsx', () => {
   });
 
   test('reuses sortable-list drop positioning and animates reordered rows', async () => {
+    const animate = vi.fn(() => ({}) as Animation);
+    const originalAnimate = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'animate');
+    Object.defineProperty(HTMLElement.prototype, 'animate', {
+      configurable: true,
+      value: animate,
+    });
+    const rectSpy = vi
+      .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
+      .mockImplementation(function (this: HTMLElement) {
+        if (!this.classList.contains('h-transfer-panel__item--right')) {
+          return createRect(0, 38);
+        }
+        const panel = this.closest('.h-transfer-panel');
+        const items = [...(panel?.querySelectorAll('.h-transfer-panel__item--right') ?? [])];
+        return createRect(items.indexOf(this) * 38, 38);
+      });
     const value = ref([1, 2, 3]);
     const VirtualScrollerStub = defineComponent({
       props: ['items'],
@@ -179,17 +209,6 @@ describe('Transfer.tsx', () => {
     expect(items).toHaveLength(3);
     const source = items[0];
     const target = items[2];
-    vi.spyOn(target.element, 'getBoundingClientRect').mockReturnValue({
-      top: 80,
-      bottom: 118,
-      height: 38,
-      left: 0,
-      right: 240,
-      width: 240,
-      x: 0,
-      y: 80,
-      toJSON: () => ({}),
-    });
 
     await source.trigger('dragstart');
     await target.trigger('dragover', { clientY: 110 });
@@ -200,8 +219,19 @@ describe('Transfer.tsx', () => {
 
     await target.trigger('drop', { clientY: 110 });
     await nextTick();
+    await nextTick();
 
     expect(value.value).toEqual([2, 3, 1]);
-    expect(wrapper.find('.h-transfer--right').classes()).toContain('is-sort-animating');
+    expect(animate).toHaveBeenCalledWith(
+      [{ transform: 'translateY(-76px)' }, { transform: 'translateY(0)' }],
+      SORTABLE_MOTION_FLIP_OPTIONS,
+    );
+
+    rectSpy.mockRestore();
+    if (originalAnimate) {
+      Object.defineProperty(HTMLElement.prototype, 'animate', originalAnimate);
+    } else {
+      delete (HTMLElement.prototype as Partial<HTMLElement>).animate;
+    }
   });
 });
