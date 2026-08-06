@@ -38,7 +38,7 @@ async function expectFocusRing(
       if (!(element instanceof HTMLElement)) return { hasRing: false, rounded: false };
 
       const style = getComputedStyle(element);
-      const ringColor = 'rgba(0, 179, 190, 0.2)';
+      const ringColor = 'rgba(52, 117, 248, 0.2)';
       const hasRing =
         treatment === 'outline'
           ? style.outlineStyle === 'solid' &&

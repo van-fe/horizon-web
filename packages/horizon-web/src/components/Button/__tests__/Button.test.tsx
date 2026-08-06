@@ -335,7 +335,7 @@ describe('Button.tsx', () => {
 
       color.value = 'brand';
       await nextTick();
-      expect(element.attributes('style')).toMatch(/--h-button-background-primary:\s*#00b3be/i);
+      expect(element.attributes('style')).toMatch(/--h-button-background-primary:\s*#3475f8/i);
 
       color.value = '#476582';
       await nextTick();

@@ -9,7 +9,7 @@ This is only used to display Horizon-Web's color palette
 :::demo ./demos/index--no-code.vue :::
 
 ## CSS Utility Classes
-The names of the theme colors and all color values above are CSS classes, representing the color of elements. Class names with the `bg-` prefix represent the background color of elements. For example: `error` means the color is danger color, `blue-3` means the color is `#94DAFF`, `bg-brand-6` means the background color is `#178CA6`.
+The names of the theme colors and all color values above are CSS classes, representing the color of elements. Class names with the `bg-` prefix represent the background color of elements. For example: `error` means the color is danger color, `blue-3` means the color is `#94DAFF`, `bg-brand-6` means the background color is `#3475F8`.
 
 ## Demo
 :::demo ./demos/demo1.vue :::

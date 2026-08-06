@@ -1,7 +1,7 @@
 import type { TagProps } from '../composables/useProps';
 
 export const builtinColorMapping: Record<string, string> = {
-  brand: '#00B3BE',
+  brand: '#3475F8',
   indigo: '#2F54EB',
   purple: '#722ED1',
   magenta: '#EB2F96',
