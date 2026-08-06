@@ -6,7 +6,7 @@ hero:
   text: "现代 Vue3 组件库"
   tagline: 致力于为你的工作提效
   image:
-    src: /logo.svg
+    src: /logo.png
     alt: Horizon Web logo
   actions:
     - theme: brand

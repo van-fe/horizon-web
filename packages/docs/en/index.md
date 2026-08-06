@@ -6,7 +6,7 @@ hero:
   text: "Modern Vue3 Component Library"
   tagline: Committed to improving your work efficiency
   image:
-    src: /logo.svg
+    src: /logo.png
     alt: Horizon Web logo
   actions:
     - theme: brand
