@@ -39,10 +39,12 @@ export const useDialogProps = declarePropType({
   },
   /**
    * 对话框图标颜色
+   * 传入数组时按图标图形顺序分别设置颜色
    * @en Configuration for icon color.
+   * Pass an array to color each icon shape in order.
    */
   iconColor: {
-    type: String,
+    type: [String, Array] as PropType<string | string[]>,
     required: false,
   },
   /**

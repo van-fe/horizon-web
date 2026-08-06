@@ -18,6 +18,27 @@ describe('confirm.tsx', () => {
     expect(element.exists()).toBe(true);
   });
 
+  test.each([
+    ['success', '#26BD4B', 'success_filled'],
+    ['info', '#1880F2', 'info_filled'],
+    ['warning', '#FDA71C', 'warning_filled'],
+    ['error', '#E83030', 'error_filled'],
+  ] as const)('keeps the %s type icon foreground visible', async (type, background, icon) => {
+    const wrapper = mount(Confirm, {
+      attachTo: document.body,
+      props: { type, content: 'Message' },
+    });
+    await nextTick();
+
+    const svg = document.body.querySelector(`.h-messagebox svg.h-icon__${icon}`);
+    const paths = svg?.querySelectorAll('path');
+
+    expect(svg).not.toBeNull();
+    expect(paths?.[0].getAttribute('fill')).toBe(background);
+    expect(paths?.[1].getAttribute('fill')).toBe('#FFFFFF');
+    wrapper.unmount();
+  });
+
   test('confirm close', async () => {
     const confirmPromise = $confirm({
       content: 'content',

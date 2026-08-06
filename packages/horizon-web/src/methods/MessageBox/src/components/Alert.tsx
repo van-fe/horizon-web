@@ -42,19 +42,19 @@ export default defineComponent({
         switch (props.type) {
           case 'info':
             name = 'info_filled';
-            color = '#1880F2';
+            color = ['#1880F2', '#FFFFFF'];
             break;
           case 'success':
             name = 'success_filled';
-            color = '#26BD4B';
+            color = ['#26BD4B', '#FFFFFF'];
             break;
           case 'warning':
             name = 'warning_filled';
-            color = '#FDA71C';
+            color = ['#FDA71C', '#FFFFFF'];
             break;
           case 'error':
-            name = 'warning_filled';
-            color = '#E83030';
+            name = 'error_filled';
+            color = ['#E83030', '#FFFFFF'];
             break;
           default:
             name = '';
