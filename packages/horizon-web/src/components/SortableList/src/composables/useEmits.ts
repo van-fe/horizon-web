@@ -32,8 +32,8 @@ export const useSortableListEmits = {
     (context.trigger === 'drag' || context.trigger === 'keyboard'),
   /**
    * 开始拖拽列表项时触发
-   * @param event 原始拖拽事件
-   * @paramEn event Original drag event.
+   * @param event 原始指针事件
+   * @paramEn event Original pointer event.
    * @param item 当前列表项
    * @paramEn item Current list item.
    * @param index 当前索引
@@ -42,12 +42,12 @@ export const useSortableListEmits = {
    * @paramEn key Stable key of the current item.
    * @en Emitted when item dragging starts.
    */
-  dragStart: (event: DragEvent, item: any, index: number, key: HSortableListItemKey) =>
+  dragStart: (event: PointerEvent, item: any, index: number, key: HSortableListItemKey) =>
     event instanceof Event && isNumber(index) && (typeof key === 'string' || isNumber(key)),
   /**
    * 结束拖拽列表项时触发
-   * @param event 原始拖拽事件
-   * @paramEn event Original drag event.
+   * @param event 原始指针事件
+   * @paramEn event Original pointer event.
    * @param item 当前列表项
    * @paramEn item Current list item.
    * @param index 当前索引
@@ -56,7 +56,7 @@ export const useSortableListEmits = {
    * @paramEn key Stable key of the current item.
    * @en Emitted when item dragging ends.
    */
-  dragEnd: (event: DragEvent, item: any, index: number, key: HSortableListItemKey) =>
+  dragEnd: (event: PointerEvent, item: any, index: number, key: HSortableListItemKey) =>
     event instanceof Event && isNumber(index) && (typeof key === 'string' || isNumber(key)),
 };
 

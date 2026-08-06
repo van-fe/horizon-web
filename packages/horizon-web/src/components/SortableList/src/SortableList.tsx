@@ -1,12 +1,5 @@
 import type { ComponentPublicInstance, CSSProperties } from 'vue';
-import {
-  computed,
-  defineComponent,
-  ref,
-  resolveDynamicComponent,
-  toRef,
-  TransitionGroup,
-} from 'vue';
+import { defineComponent, ref, resolveDynamicComponent, toRef } from 'vue';
 import { ComponentClassBlock, cls, useLowCaseNamespace, useNamespace } from '@aurora/utils';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { IconDragForm } from '@aurora/icon';
@@ -19,8 +12,6 @@ import { useSortableListExposes } from './composables/useExposes';
 import type { SortableListExposes } from './composables/useExposes';
 import useSortableList from './hooks/useSortableList';
 import useLocaleLang from '~/utils/useLocaleLang';
-
-const SortableTransitionGroup = TransitionGroup as any;
 
 export default defineComponent({
   name: `${useNamespace()}SortableList`,
@@ -72,14 +63,13 @@ export default defineComponent({
       itemKey: toRef(props, 'itemKey'),
       itemDisabled: toRef(props, 'itemDisabled'),
       onSort,
-      onDragStart: (event, item, index, key) => emit('dragStart', event, item, index, key),
-      onDragEnd: (event, item, index, key) => emit('dragEnd', event, item, index, key),
+      onDragStart: () => undefined,
+      onDragEnd: () => undefined,
+      onPointerStart: (event, item, index, key) => emit('dragStart', event, item, index, key),
+      onPointerEnd: (event, item, index, key) => emit('dragEnd', event, item, index, key),
       focusHandle,
+      animated: toRef(props, 'animated'),
     });
-
-    const moveClass = computed(() =>
-      props.animated ? classHelper.e('item-move') : classHelper.e('item-move-disabled'),
-    );
 
     expose({
       move: (oldIndex: number, newIndex: number) => sortable.move(oldIndex, newIndex),
@@ -95,10 +85,18 @@ export default defineComponent({
         const dropPosition =
           sortable.dropTarget.value?.key === key ? sortable.dropTarget.value.position : undefined;
         const scope = { item, index, dragging, disabled: itemDisabled };
-        const draggable = !itemDisabled && !props.dragOnHandler;
+        const itemStyle: CSSProperties | undefined = dragging
+          ? {
+              transform: `translate3d(0, ${sortable.dragOffsetY.value}px, 0)`,
+              pointerEvents: 'none',
+            }
+          : undefined;
 
         return (
           <ItemTag
+            ref={(element: Element | ComponentPublicInstance | null) =>
+              sortable.setItemElement(key, element instanceof HTMLElement ? element : null)
+            }
             key={key}
             role="listitem"
             data-sortable-key={String(key)}
@@ -107,17 +105,14 @@ export default defineComponent({
               classHelper.is('dragging', dragging),
               classHelper.is('disabled', itemDisabled),
               classHelper.is('drag-over', !!dropPosition),
+              classHelper.is('draggable-whole', !itemDisabled && !props.dragOnHandler),
             )}
-            draggable={draggable}
-            onDragstart={
-              draggable ? (event: DragEvent) => sortable.onDragStart(event, item, index) : undefined
+            style={itemStyle}
+            onPointerdown={
+              !itemDisabled && !props.dragOnHandler
+                ? (event: PointerEvent) => sortable.onPointerDown(event, item, index, true)
+                : undefined
             }
-            onDragend={
-              draggable ? (event: DragEvent) => sortable.onDragEnd(event, item, index) : undefined
-            }
-            onDragover={(event: DragEvent) => sortable.onDragOver(event, item, index)}
-            onDragleave={(event: DragEvent) => sortable.onDragLeave(event, item, index)}
-            onDrop={(event: DragEvent) => sortable.onDrop(event, item, index)}
           >
             {dropPosition && (
               <span
@@ -134,15 +129,13 @@ export default defineComponent({
               aria-disabled={itemDisabled || undefined}
               aria-label={String(dragHandleText.value ?? '').replace('{index}', String(index + 1))}
               class={cls(classHelper.e('handle'), classHelper.is('disabled', itemDisabled))}
-              draggable={!itemDisabled && props.dragOnHandler}
-              onDragstart={
-                !itemDisabled && props.dragOnHandler
-                  ? (event: DragEvent) => sortable.onDragStart(event, item, index)
-                  : undefined
-              }
-              onDragend={
-                !itemDisabled && props.dragOnHandler
-                  ? (event: DragEvent) => sortable.onDragEnd(event, item, index)
+              draggable={false}
+              onPointerdown={
+                !itemDisabled
+                  ? (event: PointerEvent) => {
+                      event.stopPropagation();
+                      sortable.onPointerDown(event, item, index);
+                    }
                   : undefined
               }
               onKeydown={(event: KeyboardEvent) => sortable.onHandleKeydown(event, item, index)}
@@ -156,38 +149,19 @@ export default defineComponent({
 
       return (
         <>
-          {items.length ? (
-            <SortableTransitionGroup
-              {...attrs}
-              tag={props.tag}
-              role="list"
-              aria-disabled={props.disabled || undefined}
-              name={`${useLowCaseNamespace()}-sortable-list`}
-              moveClass={moveClass.value}
-              class={cls(
-                classHelper.block,
-                attrs.class as any,
-                classHelper.is('disabled', props.disabled),
-              )}
-              style={attrs.style as CSSProperties}
-            >
-              {items}
-            </SortableTransitionGroup>
-          ) : (
-            <RootTag
-              {...attrs}
-              role="list"
-              aria-disabled={props.disabled || undefined}
-              class={cls(
-                classHelper.block,
-                attrs.class as any,
-                classHelper.is('disabled', props.disabled),
-              )}
-              style={attrs.style as CSSProperties}
-            >
-              {slots.empty?.()}
-            </RootTag>
-          )}
+          <RootTag
+            {...attrs}
+            role="list"
+            aria-disabled={props.disabled || undefined}
+            class={cls(
+              classHelper.block,
+              attrs.class as any,
+              classHelper.is('disabled', props.disabled),
+            )}
+            style={attrs.style as CSSProperties}
+          >
+            {items.length ? items : slots.empty?.()}
+          </RootTag>
           <span class={`${useLowCaseNamespace()}-sr-only`} role="status" aria-live="polite">
             {announcement.value}
           </span>

@@ -123,7 +123,7 @@ export default defineComponent({
           !!item[propsProp.value.disabled as keyof TransferDataProps],
       ),
       onSort: (_context, meta) => {
-        if (!meta) return;
+        if (!meta || !(meta.event instanceof DragEvent)) return;
         sortAnimating.value = true;
         if (sortAnimationTimer) clearTimeout(sortAnimationTimer);
         sortAnimationTimer = setTimeout(() => {

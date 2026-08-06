@@ -14,8 +14,6 @@ $values: (
     ),
   ),
   background: (
-    dragging: #{function.css-variable('bg-disabled')},
-    drag-over: #{function.css-variable('bg-weak-activated')},
     drop-indicator: #{function.css-variable('bg-brand-activated')},
   ),
   border: (
@@ -27,9 +25,5 @@ $values: (
   spacing: (
     item-gap: #{function.css-variable('spacing-3')},
     drop-indicator-inset: #{function.css-variable('spacing-3')},
-  ),
-  transition: (
-    move: transform #{function.css-variable('transition-time-fast')}
-      #{function.css-variable('transition-func-ease-in-out-bezier')},
   ),
 );

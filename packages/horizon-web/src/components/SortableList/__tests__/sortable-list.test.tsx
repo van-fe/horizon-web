@@ -1,17 +1,34 @@
 import { mount } from '@vue/test-utils';
-import { nextTick, ref, TransitionGroup } from 'vue';
+import { nextTick, ref } from 'vue';
 import { describe, expect, test, vi } from 'vitest';
 import { HSortableList } from '..';
 import { dictionaries } from '~/locales';
 import { localeInjectKey } from '~/provides';
 import VueLocaleService, { LocaleSupportLang } from '@aurora/locale-vue';
-import { moveSortableListItem, reorderSortableListItem } from '../src/hooks/useSortableList';
+import {
+  H_SORTABLE_LIST_FLIP_OPTIONS,
+  moveSortableListItem,
+  reorderSortableListItem,
+} from '../src/hooks/useSortableList';
 
 const createItems = () => [
   { id: 'design', label: 'Design review' },
   { id: 'qa', label: 'Quality assurance' },
   { id: 'release', label: 'Release' },
 ];
+
+const createRect = (top: number, height = 40): DOMRect =>
+  ({
+    top,
+    bottom: top + height,
+    height,
+    left: 0,
+    right: 240,
+    width: 240,
+    x: 0,
+    y: top,
+    toJSON: () => ({}),
+  }) as DOMRect;
 
 describe('SortableList', () => {
   test('reorders without mutating the input array', () => {
@@ -36,7 +53,7 @@ describe('SortableList', () => {
     expect(moveSortableListItem(items, -1, 1)).toBeUndefined();
   });
 
-  test('shows the tree-style drop indicator and emits the reordered model', async () => {
+  test('follows the pointer, shows the tree-style indicator, and reorders on release', async () => {
     const items = ref(createItems());
     const sort = vi.fn();
     const wrapper = mount(() => (
@@ -44,28 +61,27 @@ describe('SortableList', () => {
         {{ item: ({ item }: { item: (typeof items.value)[number] }) => item.label }}
       </HSortableList>
     ));
-    const [sourceHandle] = wrapper.findAll('.h-sortable-list__handle');
-    const target = wrapper.findAll('.h-sortable-list__item')[2];
-    vi.spyOn(target.element, 'getBoundingClientRect').mockReturnValue({
-      top: 100,
-      bottom: 140,
-      height: 40,
-      left: 0,
-      right: 240,
-      width: 240,
-      x: 0,
-      y: 100,
-      toJSON: () => ({}),
+    const listItems = wrapper.findAll('.h-sortable-list__item');
+    listItems.forEach((listItem, index) => {
+      vi.spyOn(listItem.element, 'getBoundingClientRect').mockReturnValue(createRect(index * 50));
     });
 
-    await sourceHandle.trigger('dragstart');
-    await target.trigger('dragover', { clientY: 135 });
+    await wrapper.find('.h-sortable-list__handle').trigger('pointerdown', {
+      button: 0,
+      clientY: 20,
+    });
+    window.dispatchEvent(
+      new PointerEvent('pointermove', { bubbles: true, cancelable: true, clientY: 135 }),
+    );
+    await nextTick();
 
-    const indicator = target.find('.h-sortable-list__drop-indicator');
+    expect(listItems[0].attributes('style')).toContain('translate3d(0, 115px, 0)');
+
+    const indicator = listItems[2].find('.h-sortable-list__drop-indicator');
     expect(indicator.exists()).toBe(true);
     expect(indicator.classes()).toContain('is-after');
 
-    await target.trigger('drop', { clientY: 135 });
+    window.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, clientY: 135 }));
     await nextTick();
 
     expect(items.value.map(item => item.id)).toEqual(['qa', 'release', 'design']);
@@ -108,12 +124,55 @@ describe('SortableList', () => {
     expect(items.value.map(item => item.id)).toEqual(['qa', 'design', 'release', 'locked']);
   });
 
-  test('configures keyed FLIP movement animation', () => {
-    const wrapper = mount(() => <HSortableList modelValue={createItems()} itemKey="id" />);
+  test('uses the hg-performance FLIP animation timing', () => {
+    expect(H_SORTABLE_LIST_FLIP_OPTIONS).toEqual({
+      duration: 220,
+      easing: 'cubic-bezier(0.2, 0, 0, 1)',
+    });
+  });
 
-    expect(wrapper.findComponent(TransitionGroup).props('moveClass')).toBe(
-      'h-sortable-list__item-move',
+  test('plays a manual FLIP animation after pointer sorting', async () => {
+    const items = ref(createItems());
+    const animate = vi.fn(() => ({}) as Animation);
+    const originalAnimate = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'animate');
+    Object.defineProperty(HTMLElement.prototype, 'animate', {
+      configurable: true,
+      value: animate,
+    });
+    const rectSpy = vi
+      .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
+      .mockImplementation(function (this: HTMLElement) {
+        const element = this;
+        if (!element.classList.contains('h-sortable-list__item')) return createRect(0);
+        const siblings = [
+          ...(element.parentElement?.querySelectorAll('.h-sortable-list__item') ?? []),
+        ];
+        return createRect(siblings.indexOf(element) * 50);
+      });
+
+    const wrapper = mount(() => <HSortableList v-model={items.value} itemKey="id" />);
+    await wrapper.find('.h-sortable-list__handle').trigger('pointerdown', {
+      button: 0,
+      clientY: 20,
+    });
+    window.dispatchEvent(
+      new PointerEvent('pointermove', { bubbles: true, cancelable: true, clientY: 135 }),
     );
+    window.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, clientY: 135 }));
+    await nextTick();
+    await nextTick();
+
+    expect(animate).toHaveBeenCalledWith(
+      [{ transform: 'translateY(-100px)' }, { transform: 'translateY(0)' }],
+      H_SORTABLE_LIST_FLIP_OPTIONS,
+    );
+
+    rectSpy.mockRestore();
+    if (originalAnimate) {
+      Object.defineProperty(HTMLElement.prototype, 'animate', originalAnimate);
+    } else {
+      delete (HTMLElement.prototype as Partial<HTMLElement>).animate;
+    }
   });
 
   test('all concrete locale dictionaries include accessibility messages', () => {

@@ -1,4 +1,4 @@
-SortableList renders drag-sortable data with stable keys. While dragging, a Tree-style highlighted bar previews the final insertion point. After drop, keyed FLIP transitions move the remaining items smoothly into place.
+SortableList renders drag-sortable data with stable keys. While dragging, the item follows the pointer and a Tree-style highlighted bar previews the final insertion point. After drop, keyed FLIP transitions move every affected item smoothly into place.
 
 ## Basic Usage
 

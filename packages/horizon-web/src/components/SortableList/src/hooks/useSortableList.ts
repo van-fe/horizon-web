@@ -1,4 +1,4 @@
-import { nextTick, ref } from 'vue';
+import { nextTick, onBeforeUnmount, ref, watch } from 'vue';
 import type { Ref } from 'vue';
 import type {
   HSortableListItemDisabledGetter,
@@ -22,7 +22,15 @@ interface UseSortableListOptions {
   onSort: (context: HSortableListSortContext, meta?: HSortableListSortMeta) => void;
   onDragStart: (event: DragEvent, item: any, index: number, key: HSortableListItemKey) => void;
   onDragEnd: (event: DragEvent, item: any, index: number, key: HSortableListItemKey) => void;
+  onPointerStart?: (
+    event: PointerEvent,
+    item: any,
+    index: number,
+    key: HSortableListItemKey,
+  ) => void;
+  onPointerEnd?: (event: PointerEvent, item: any, index: number, key: HSortableListItemKey) => void;
   focusHandle: (key: HSortableListItemKey) => void;
+  animated?: Ref<boolean>;
 }
 
 export interface HSortableListReorderResult {
@@ -33,11 +41,16 @@ export interface HSortableListReorderResult {
 }
 
 export interface HSortableListSortMeta {
-  event: DragEvent;
+  event: DragEvent | PointerEvent;
   sourceItem: any;
   targetItem: any;
   position: HSortableListDropPosition;
 }
+
+export const H_SORTABLE_LIST_FLIP_OPTIONS: KeyframeAnimationOptions = {
+  duration: 220,
+  easing: 'cubic-bezier(0.2, 0, 0, 1)',
+};
 
 export function getSortableListItemKey(
   item: any,
@@ -110,11 +123,61 @@ export function reorderSortableListItem(
 export default function useSortableList(options: UseSortableListOptions) {
   const draggingKey = ref<HSortableListItemKey>();
   const dropTarget = ref<HSortableListDropTarget>();
+  const dragOffsetY = ref(0);
+  const itemElements = new Map<HSortableListItemKey, HTMLElement>();
+  let positionsBeforeSort: Map<HSortableListItemKey, number> | undefined;
+  let pointerStartY = 0;
+  let pointerDraggedItem: any;
+  let pointerDraggedIndex = -1;
+  let previousUserSelect = '';
 
   const getKey = (item: any, index: number) =>
     getSortableListItemKey(item, index, options.itemKey.value);
   const isItemDisabled = (item: any, index: number) =>
     options.disabled.value || getSortableListItemDisabled(item, index, options.itemDisabled.value);
+
+  const shouldAnimate = () =>
+    options.animated?.value !== false &&
+    !(
+      typeof window !== 'undefined' &&
+      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    );
+
+  function setItemElement(key: HSortableListItemKey, element: HTMLElement | null) {
+    if (element) itemElements.set(key, element);
+    else itemElements.delete(key);
+  }
+
+  function capturePositions() {
+    if (!shouldAnimate() || itemElements.size === 0) return;
+    positionsBeforeSort = new Map(
+      [...itemElements].map(([key, element]) => [key, element.getBoundingClientRect().top]),
+    );
+  }
+
+  watch(
+    () => options.items.value.map((item, index) => getKey(item, index)),
+    async () => {
+      const previousPositions = positionsBeforeSort;
+      positionsBeforeSort = undefined;
+      if (!previousPositions) return;
+
+      await nextTick();
+      itemElements.forEach((element, key) => {
+        const previousTop = previousPositions.get(key);
+        if (previousTop === undefined || typeof element.animate !== 'function') return;
+
+        const offset = previousTop - element.getBoundingClientRect().top;
+        if (Math.abs(offset) < 1) return;
+
+        element.animate(
+          [{ transform: `translateY(${offset}px)` }, { transform: 'translateY(0)' }],
+          H_SORTABLE_LIST_FLIP_OPTIONS,
+        );
+      });
+    },
+    { flush: 'post' },
+  );
 
   function clearDropTarget() {
     dropTarget.value = undefined;
@@ -194,6 +257,7 @@ export default function useSortableList(options: UseSortableListOptions) {
 
     if (result) {
       event.preventDefault();
+      capturePositions();
       emitSort(result, 'drag', {
         event,
         sourceItem: options.items.value[result.oldIndex],
@@ -210,6 +274,141 @@ export default function useSortableList(options: UseSortableListOptions) {
     options.onDragEnd(event, item, index, key);
   }
 
+  function removePointerListeners() {
+    if (typeof window === 'undefined') return;
+    window.removeEventListener('pointermove', onPointerMove);
+    window.removeEventListener('pointerup', onPointerUp);
+    window.removeEventListener('pointercancel', onPointerCancel);
+  }
+
+  function stopPointerDragging(event?: PointerEvent, emitEnd = false) {
+    const item = pointerDraggedItem;
+    const index = pointerDraggedIndex;
+    const key = draggingKey.value;
+
+    removePointerListeners();
+    if (typeof document !== 'undefined') document.body.style.userSelect = previousUserSelect;
+    pointerDraggedItem = undefined;
+    pointerDraggedIndex = -1;
+    dragOffsetY.value = 0;
+    clearDragState();
+
+    if (emitEnd && event && item !== undefined && index >= 0 && key !== undefined) {
+      options.onPointerEnd?.(event, item, index, key);
+    }
+  }
+
+  function onPointerMove(event: PointerEvent) {
+    if (draggingKey.value === undefined) return;
+    event.preventDefault();
+    dragOffsetY.value = event.clientY - pointerStartY;
+
+    const candidates = options.items.value
+      .map((item, index) => ({
+        item,
+        key: getKey(item, index),
+        element: itemElements.get(getKey(item, index)),
+      }))
+      .filter(
+        (candidate): candidate is { item: any; key: HSortableListItemKey; element: HTMLElement } =>
+          candidate.key !== draggingKey.value && !!candidate.element,
+      )
+      .map(candidate => ({ ...candidate, bounds: candidate.element.getBoundingClientRect() }))
+      .sort((left, right) => left.bounds.top - right.bounds.top);
+
+    let nextTarget: HSortableListDropTarget | undefined;
+    for (const candidate of candidates) {
+      if (event.clientY < candidate.bounds.top + candidate.bounds.height / 2) {
+        nextTarget = { key: candidate.key, position: 'before' };
+        break;
+      }
+    }
+
+    const lastCandidate = candidates[candidates.length - 1];
+    if (!nextTarget && lastCandidate) {
+      nextTarget = { key: lastCandidate.key, position: 'after' };
+    }
+
+    if (
+      dropTarget.value?.key !== nextTarget?.key ||
+      dropTarget.value?.position !== nextTarget?.position
+    ) {
+      dropTarget.value = nextTarget;
+    }
+  }
+
+  function onPointerUp(event: PointerEvent) {
+    const sourceKey = draggingKey.value;
+    const target = dropTarget.value;
+
+    if (sourceKey !== undefined && target) {
+      const result = reorderSortableListItem(
+        options.items.value,
+        sourceKey,
+        target.key,
+        target.position,
+        options.itemKey.value,
+      );
+
+      if (result) {
+        capturePositions();
+        emitSort(result, 'drag', {
+          event,
+          sourceItem: options.items.value[result.oldIndex],
+          targetItem: options.items.value.find((item, index) => getKey(item, index) === target.key),
+          position: target.position,
+        });
+      }
+    }
+
+    stopPointerDragging(event, true);
+  }
+
+  function onPointerCancel(event: PointerEvent) {
+    stopPointerDragging(event, true);
+  }
+
+  function onPointerDown(
+    event: PointerEvent,
+    item: any,
+    index: number,
+    ignoreInteractiveTarget = false,
+  ) {
+    if (event.button !== 0 || isItemDisabled(item, index)) return;
+
+    if (
+      ignoreInteractiveTarget &&
+      event.target instanceof Element &&
+      event.target.closest(
+        'a, button, input, select, textarea, [contenteditable="true"], [role="button"]',
+      )
+    ) {
+      return;
+    }
+
+    event.preventDefault();
+    stopPointerDragging();
+
+    const key = getKey(item, index);
+    pointerStartY = event.clientY;
+    pointerDraggedItem = item;
+    pointerDraggedIndex = index;
+    draggingKey.value = key;
+    dropTarget.value = undefined;
+    dragOffsetY.value = 0;
+
+    if (typeof document !== 'undefined') {
+      previousUserSelect = document.body.style.userSelect;
+      document.body.style.userSelect = 'none';
+    }
+    if (typeof window !== 'undefined') {
+      window.addEventListener('pointermove', onPointerMove, { passive: false });
+      window.addEventListener('pointerup', onPointerUp);
+      window.addEventListener('pointercancel', onPointerCancel);
+    }
+    options.onPointerStart?.(event, item, index, key);
+  }
+
   function move(
     oldIndex: number,
     newIndex: number,
@@ -222,6 +421,7 @@ export default function useSortableList(options: UseSortableListOptions) {
     const result = moveSortableListItem(options.items.value, oldIndex, newIndex);
     if (!result) return;
 
+    capturePositions();
     emitSort(result, trigger);
     const key = getKey(item, oldIndex);
     nextTick(() => options.focusHandle(key));
@@ -241,11 +441,16 @@ export default function useSortableList(options: UseSortableListOptions) {
     move(index, newIndex);
   }
 
+  onBeforeUnmount(() => stopPointerDragging());
+
   return {
     draggingKey,
     dropTarget,
+    dragOffsetY,
     getKey,
     isItemDisabled,
+    setItemElement,
+    onPointerDown,
     onDragStart,
     onDragOver,
     onDragLeave,

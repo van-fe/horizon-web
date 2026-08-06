@@ -12,17 +12,17 @@
     min-width: 0;
 
     @include mixins.is('dragging') {
+      z-index: 2;
+      pointer-events: none;
       user-select: none;
-      background: mixins.css-variable('sortable-list', 'background', 'dragging');
+      opacity: 0.9;
+      will-change: transform;
     }
 
-    @include mixins.is('drag-over') {
-      background: mixins.css-variable('sortable-list', 'background', 'drag-over');
+    @include mixins.is('draggable-whole') {
+      touch-action: none;
+      cursor: grab;
     }
-  }
-
-  @include mixins.e('item-move') {
-    transition: mixins.css-variable('sortable-list', 'transition', 'move');
   }
 
   @include mixins.e('handle') {
@@ -33,6 +33,7 @@
     width: mixins.css-variable('sortable-list', 'size', 'handle');
     height: mixins.css-variable('sortable-list', 'size', 'handle');
     color: mixins.css-variable('sortable-list', 'color', 'handle');
+    touch-action: none;
     cursor: grab;
 
     @include mixins.is('disabled') {
