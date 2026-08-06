@@ -100,7 +100,7 @@ export default defineComponent({
         info: 'info_filled',
         success: 'success_filled',
         warning: 'warning_filled',
-        error: 'warning_filled',
+        error: 'error_filled',
       };
       return iconClsMap[type.value as keyof typeof iconClsMap];
     });
@@ -176,6 +176,7 @@ export default defineComponent({
                 <AIcon
                   class={cls([classHelper.e('icon'), classHelper.m(type.value)])}
                   name={typeIcon.value}
+                  size={24}
                 />
               ) : (
                 ''
