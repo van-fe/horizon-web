@@ -60,8 +60,9 @@ export function applyIconColor(
   color: IconColor | undefined,
   defaultFill = 'currentColor'
 ): ProcessedIcon {
+  const resolvedDefaultFill = defaultFill || 'currentColor'
   if (!color) {
-    return { content, fill: defaultFill }
+    return { content, fill: resolvedDefaultFill }
   }
 
   if (Array.isArray(color)) {

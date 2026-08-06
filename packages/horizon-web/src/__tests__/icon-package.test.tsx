@@ -1,7 +1,7 @@
 import { createSSRApp, defineComponent, h, nextTick, ref } from 'vue';
 import { renderToString } from 'vue/server-renderer';
 import { mount } from '@vue/test-utils';
-import { AIcon, IconAdd, IconLoadingLine } from '@aurora/icon';
+import { AIcon, IconAdd, IconLoadingLine, registerIcon } from '@aurora/icon';
 import HTab from '../components/Tabs/src/Tab';
 import HTabs from '../components/Tabs/src/Tabs';
 
@@ -70,6 +70,18 @@ describe('@aurora/icon integration', () => {
     );
     expect(wrapper.find('animateTransform').exists()).toBe(true);
     expect(wrapper.find('animateTransform').attributes('to')).toBe('360 12 12');
+  });
+
+  it('falls back to currentColor when a registered icon has no valid fill', () => {
+    registerIcon('custom_no_fill', '<path d="M1 1h22v22H1z" />', '0 0 24 24', '');
+
+    const wrapper = mount(AIcon, {
+      props: {
+        name: 'custom_no_fill',
+      },
+    });
+
+    expect(wrapper.attributes('fill')).toBe('currentColor');
   });
 
   it('clears stale SVG content when the dynamic icon name is missing', async () => {
