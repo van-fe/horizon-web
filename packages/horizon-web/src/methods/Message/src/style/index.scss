@@ -1,4 +1,5 @@
 @use '../../../../styles/mixins';
+@use '../../../../directives/v-loading/src/style/loading-icon';
 
 @mixin icon-color-with-status($status) {
   @include mixins.is($status) {
@@ -18,20 +19,23 @@
   position: fixed;
   top: 10%;
   left: 50%;
-  display: flex;
-  align-items: center;
   box-sizing: border-box;
+  display: flex;
+  column-gap: mixins.css-variable('message-margin-right--content-icon');
+  align-items: center;
   min-width: mixins.css-variable('message-min-width');
   max-width: mixins.css-variable('message-max-width');
   padding: mixins.css-variable('message-padding');
   color: mixins.css-variable('message-color');
-  column-gap: mixins.css-variable('message-margin-right--content-icon');
   background: mixins.css-variable('message-bg');
   border: mixins.css-variable('message-border');
   border-radius: mixins.css-variable('message-radius');
   box-shadow: mixins.css-variable('message-box-shadow');
   transform: translateX(-50%);
-  transition: opacity 0.3s, transform 0.4s, top 0.4s;
+  transition:
+    opacity 0.3s,
+    transform 0.4s,
+    top 0.4s;
 
   @include mixins.is('info') {
     color: mixins.css-variable('message-color--info');
@@ -57,14 +61,20 @@
     border-color: mixins.css-variable('message-border-color--error');
   }
 
+  @include mixins.is('loading') {
+    @include mixins.e('status-icon') {
+      color: mixins.css-variable('message-color--loading-icon');
+    }
+  }
+
   p {
     margin: mixins.css-variable('message-margin--p');
   }
 
   @include mixins.e('content') {
-    font-weight: mixins.css-variable('message-font-weight--content');
     font-size: mixins.css-variable('message-font-size--content');
     font-style: normal;
+    font-weight: mixins.css-variable('message-font-weight--content');
     line-height: 26px;
   }
 
@@ -75,6 +85,8 @@
   @include mixins.e('status-icon') {
     // flex: 0 0 mixins.css-variable('message-font-size--preset-icon');
     flex-shrink: 0;
+    width: mixins.css-variable('message-font-size--preset-icon');
+    height: mixins.css-variable('message-font-size--preset-icon');
 
     // margin-right: mixins.css-variable('message-margin-right--content-icon');
   }
@@ -94,6 +106,7 @@
     height: mixins.css-variable('message-font-size--close-icon');
     cursor: pointer;
 
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
     &:focus {
       outline-width: 0;
     }
@@ -109,9 +122,10 @@
   }
 }
 
-#{mixins.block-name('message-fade-enter-from')}, #{mixins.block-name('message-fade-leave-to')} {
-  transform: translate(-50%, -100%);
+#{mixins.block-name('message-fade-enter-from')},
+#{mixins.block-name('message-fade-leave-to')} {
   opacity: 0;
+  transform: translate(-50%, -100%);
 }
 
 @keyframes ellipsis-show-gradually {
