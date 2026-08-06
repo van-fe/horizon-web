@@ -5,8 +5,6 @@ const manualVisible = ref(false);
 const triggers = [
   { value: 'hover', label: '悬浮' },
   { value: 'click', label: '点击' },
-  { value: 'click-remain', label: '点击保留' },
-  { value: 'click-hide', label: '点击隐藏' },
   { value: 'focus', label: '聚焦' },
 ] as const;
 </script>

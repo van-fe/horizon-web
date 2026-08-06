@@ -12,7 +12,7 @@ const options = [
 <template>
   <div class="docs-demo">
     <div class="popover-stage">
-      <h-popover trigger="click-remain" hide-event-type="mousedown">
+      <h-popover trigger="click" hide-event-type="mousedown">
         <template #reference><h-button>连续选择</h-button></template>
         <template #popper>
           <h-pop-content>

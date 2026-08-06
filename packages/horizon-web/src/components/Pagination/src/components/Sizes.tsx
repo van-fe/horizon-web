@@ -35,7 +35,7 @@ export default defineComponent({
         arrow={false}
         distance={4}
         placement="bottom"
-        trigger="click-remain"
+        trigger="click"
         toBody={parentProps.pageSizesToBody}
         disabled={parentProps.disabled}
         onShow={() => (popoverVisible.value = true)}

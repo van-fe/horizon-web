@@ -61,7 +61,7 @@ export default defineComponent({
 
     // trigger为click下处理隐藏
     const hideClickShowPop = () => {
-      if (['click', 'click-hide', 'click-remain'].includes(props.trigger) && popperVisible.value) {
+      if (props.trigger === 'click' && popperVisible.value) {
         popperVisible.value = false;
         document.removeEventListener(props.hideEventType, hideClickShowPop);
       }
@@ -203,7 +203,7 @@ export default defineComponent({
     const onClickReference = (e: MouseEvent) => {
       if (disabled.value) return false;
 
-      if (['click', 'click-hide', 'click-remain'].includes(props.trigger)) {
+      if (props.trigger === 'click') {
         if (props.stopPropagation) {
           e.stopPropagation();
         }
@@ -240,7 +240,7 @@ export default defineComponent({
     const onClickPopper = (e: MouseEvent) => {
       if (disabled.value) return false;
 
-      if ('click-remain' === props.trigger) {
+      if (props.trigger === 'click') {
         e.stopImmediatePropagation();
       }
     };

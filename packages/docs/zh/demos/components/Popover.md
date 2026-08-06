@@ -4,9 +4,9 @@
 :::demo components/Popover/basic.vue :::
 
 ## 触发方式
-有 6 种触发方式可选，hover、click、click-remain、click-hide、focus、manual;
+有 4 种触发方式可选：hover、click、focus、manual。
 
-click-remain 表示点击 popper 后 popper 保持显示，click-hide 表示点击 popper 后 popper 隐藏，click 与 click-hide 行为一致；
+click 表示点击 reference 切换 popper 的显隐状态；点击 popper 内部时保持显示，点击外部时隐藏。
 
 focus 表示鼠标按下状态
 

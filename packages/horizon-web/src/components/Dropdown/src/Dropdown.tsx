@@ -92,8 +92,6 @@ export default defineComponent({
 
     const trigger = computed(() => {
       switch (props.trigger) {
-        case 'click':
-          return 'click-remain';
         case 'contextMenu':
           return 'context-menu';
         default:

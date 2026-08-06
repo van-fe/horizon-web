@@ -21,9 +21,7 @@ export const usePopoverProps = declarePropType({
     * @en Configuration for trigger.
    */
   trigger: {
-    type: String as PropType<
-      'hover' | 'click' | 'click-hide' | 'click-remain' | 'focus' | 'manual'
-    >,
+    type: String as PropType<'hover' | 'click' | 'focus' | 'manual'>,
     default: 'hover',
   },
   /**
@@ -279,7 +277,7 @@ export const usePopoverProps = declarePropType({
     required: false,
   },
   /**
-   * 是否在 trigger 为 `click` `click-remain` `click-hide` 时拦截冒泡
+   * 是否在 trigger 为 `click` 时拦截冒泡
     * @en Configuration for stop propagation.
    */
   stopPropagation: {

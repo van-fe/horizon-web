@@ -4,9 +4,9 @@ The simplest usage, the size of the floating layer is determined by the content 
 :::demo components/Popover/basic.vue :::
 
 ## Trigger Method
-There are 6 trigger methods to choose from: hover, click, click-remain, click-hide, focus, manual;
+There are 4 trigger methods to choose from: hover, click, focus, and manual.
 
-click-remain means the popper remains displayed after clicking the popper, click-hide means the popper is hidden after clicking the popper, click has the same behavior as click-hide;
+With click, clicking the reference toggles the popper. Clicking inside the popper keeps it open, while clicking outside closes it.
 
 focus means mouse down state
 

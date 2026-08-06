@@ -81,14 +81,7 @@ export default defineComponent({
       renderContent,
     } = useDropdownTree();
 
-    const trigger = computed(() => {
-      switch (props.trigger) {
-        case 'click':
-          return 'click-remain';
-        default:
-          return props.trigger;
-      }
-    });
+    const trigger = computed(() => props.trigger);
 
     function onClick(evt: MouseEvent | KeyboardEvent) {
       evt.preventDefault();
