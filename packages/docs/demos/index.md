@@ -1,6 +1,7 @@
 ---
 title: API 及示例
 description: Horizon Web 组件、指令和方法的 API 与在线示例。
+search: false
 ---
 
 # API 及示例
