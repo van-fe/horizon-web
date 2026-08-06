@@ -106,6 +106,11 @@ export default defineConfig({
     },
     plugins: [liveDemoPlugin(), vueJsx(), DefineOptions(), ResolveComponentsAlias(), watchDemos()],
     server: {
+      hmr: {
+        // Live demo compiler errors are rendered inside DemoBlock. Keeping the
+        // global overlay disabled prevents incomplete edits from covering docs.
+        overlay: false,
+      },
       watch: {
         // 确保配置文件目录和 demos 目录被监听（使用 ! 前缀表示不忽略）
         ignored: [

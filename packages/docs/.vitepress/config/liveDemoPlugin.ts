@@ -1,5 +1,6 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import path from 'path';
+import { parse } from '@vue/compiler-sfc';
 
 const COMPILE_ENDPOINT = '/__horizon_live_demo';
 const VIRTUAL_PREFIX = '/@horizon-live-demo/';
@@ -15,18 +16,13 @@ interface LiveDemoServer {
   middlewares: {
     use(
       route: string,
-      handler: (
-        request: IncomingMessage,
-        response: ServerResponse,
-        next: (error?: unknown) => void,
-      ) => void | Promise<void>,
+      handler: (request: IncomingMessage, response: ServerResponse) => void | Promise<void>,
     ): void;
   };
   moduleGraph: {
     getModuleById(id: string): object | undefined;
     invalidateModule(module: object): void;
   };
-  transformRequest(url: string): Promise<{ code: string } | null>;
 }
 
 function readRequest(request: IncomingMessage): Promise<string> {
@@ -55,6 +51,12 @@ function getErrorMessage(error: unknown) {
   return String(error);
 }
 
+function assertValidSfcSyntax(source: string, filename: string) {
+  const { errors } = parse(source, { filename });
+  if (!errors.length) return;
+  throw new Error(errors.map(getErrorMessage).join('\n'));
+}
+
 export function liveDemoPlugin() {
   const docsRoot = path.resolve(__dirname, '../..');
   const sources = new Map<string, { resolvedId: string; source: string }>();
@@ -64,33 +66,6 @@ export function liveDemoPlugin() {
     name: 'horizon-live-demo',
     enforce: 'pre' as const,
     configureServer(devServer: LiveDemoServer) {
-      devServer.middlewares.use(VIRTUAL_PREFIX, async (request, response, next) => {
-        const requestUrl = request.url || '/';
-        const virtualUrl = requestUrl.startsWith(VIRTUAL_PREFIX)
-          ? requestUrl
-          : `${VIRTUAL_PREFIX.slice(0, -1)}${requestUrl}`;
-
-        response.setHeader('Content-Type', 'text/javascript; charset=utf-8');
-        response.setHeader('Cache-Control', 'no-cache');
-
-        try {
-          const result = await devServer.transformRequest(virtualUrl);
-          if (!result) {
-            next();
-            return;
-          }
-          response.statusCode = 200;
-          response.end(result.code);
-        } catch (error) {
-          // Compile edited demos before Vite's transform middleware sees them.
-          // Returning a rejecting module keeps the error local to the demo's
-          // dynamic import instead of triggering Vite's full-page error overlay.
-          const message = getErrorMessage(error);
-          response.statusCode = 200;
-          response.end(`throw new Error(${JSON.stringify(message)});`);
-        }
-      });
-
       devServer.middlewares.use(COMPILE_ENDPOINT, async (request, response) => {
         response.setHeader('Content-Type', 'application/json; charset=utf-8');
 
@@ -111,6 +86,7 @@ export function liveDemoPlugin() {
           const originalPath = path.resolve(docsRoot, payload.path);
           if (!originalPath.startsWith(`${docsRoot}${path.sep}`))
             throw new Error('Invalid demo path');
+          assertValidSfcSyntax(payload.source, originalPath);
           const resolvedId = path.join(
             path.dirname(originalPath),
             `__horizon_live_${payload.id}.vue`,

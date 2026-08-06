@@ -10,12 +10,11 @@ describe('liveDemoPlugin', () => {
 
     const server = {
       middlewares: {
-        use(route: string, handler: typeof middleware) {
-          if (route === '/__horizon_live_demo') middleware = handler;
+        use(_route: string, handler: typeof middleware) {
+          middleware = handler;
         },
       },
       moduleGraph: { getModuleById: vi.fn(), invalidateModule },
-      transformRequest: vi.fn(),
     };
     (plugin.configureServer as (server: unknown) => void)(server);
 
@@ -45,12 +44,11 @@ describe('liveDemoPlugin', () => {
     let middleware: ((request: Readable, response: ResponseMock) => Promise<void>) | undefined;
     const server = {
       middlewares: {
-        use: (route: string, handler: typeof middleware) => {
-          if (route === '/__horizon_live_demo') middleware = handler;
+        use: (_route: string, handler: typeof middleware) => {
+          middleware = handler;
         },
       },
       moduleGraph: { getModuleById: vi.fn(), invalidateModule: vi.fn() },
-      transformRequest: vi.fn(),
     };
     (plugin.configureServer as (server: unknown) => void)(server);
 
@@ -69,37 +67,37 @@ describe('liveDemoPlugin', () => {
     expect(JSON.parse(response.body).error).toBe('Invalid demo path');
   });
 
-  it('returns compile failures as rejecting modules without invoking Vite error middleware', async () => {
+  it('returns incomplete SFC syntax errors before registering a virtual module', async () => {
     const plugin = liveDemoPlugin();
-    let middleware:
-      | ((
-          request: Readable,
-          response: ResponseMock,
-          next: ReturnType<typeof vi.fn>,
-        ) => Promise<void>)
-      | undefined;
-    const transformRequest = vi.fn().mockRejectedValue({ message: 'Unexpected closing tag' });
+    let middleware: ((request: Readable, response: ResponseMock) => Promise<void>) | undefined;
     const server = {
       middlewares: {
-        use: (route: string, handler: typeof middleware) => {
-          if (route === '/@horizon-live-demo/') middleware = handler;
+        use: (_route: string, handler: typeof middleware) => {
+          middleware = handler;
         },
       },
       moduleGraph: { getModuleById: vi.fn(), invalidateModule: vi.fn() },
-      transformRequest,
     };
     (plugin.configureServer as (server: unknown) => void)(server);
 
-    const request = Readable.from([]);
-    Object.assign(request, { url: '/button-demo.vue?t=1' });
+    const request = Readable.from([
+      JSON.stringify({
+        id: 'incomplete-demo',
+        path: 'demos/components/Button/basic.vue',
+        source: '<template><h-button>Incomplete</template>',
+      }),
+    ]);
+    Object.assign(request, { method: 'POST' });
     const response = createResponse();
-    const next = vi.fn();
-    await middleware?.(request, response, next);
+    await middleware?.(request, response);
 
-    expect(transformRequest).toHaveBeenCalledWith('/@horizon-live-demo/button-demo.vue?t=1');
-    expect(response.statusCode).toBe(200);
-    expect(response.body).toBe('throw new Error("Unexpected closing tag");');
-    expect(next).not.toHaveBeenCalled();
+    expect(response.statusCode).toBe(400);
+    expect(JSON.parse(response.body).error).toBe('Element is missing end tag.');
+    expect(
+      (plugin.resolveId as (id: string) => string | undefined)(
+        '/@horizon-live-demo/incomplete-demo.vue',
+      ),
+    ).toBeUndefined();
   });
 });
 
