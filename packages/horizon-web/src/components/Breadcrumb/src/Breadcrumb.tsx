@@ -2,12 +2,10 @@ import type { VNode } from 'vue';
 import {
   computed,
   defineComponent,
-  Fragment,
   getCurrentInstance,
   nextTick,
   provide,
   ref,
-  render,
   toRef,
   toRefs,
   watch,
@@ -96,20 +94,6 @@ export default defineComponent({
       slots.default
         ? getSymbolNodeChildren(slots.default)
         : getSymbolNodeChildren(() => renderItem(texts.value)),
-    );
-
-    watch(
-      needRenderedItems,
-      val => {
-        // to get items' real dom element. Then can get its innerText to show on dropdown.
-        const invisibleContainer = document.createElement('div');
-        render(<Fragment>{val}</Fragment>, invisibleContainer);
-        render(null, invisibleContainer);
-        invisibleContainer.remove();
-      },
-      {
-        immediate: true,
-      },
     );
 
     function isItemClickable(props: BreadcrumbItem) {

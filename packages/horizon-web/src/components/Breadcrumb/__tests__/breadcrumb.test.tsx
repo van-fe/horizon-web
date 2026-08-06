@@ -2,7 +2,8 @@ import { mount } from '@vue/test-utils';
 import { HBreadcrumb, HBreadcrumbItem } from '..';
 import { describe, expect, test } from 'vitest';
 import type { BreadcrumbProps } from '../src/composables/useProps';
-import { nextTick, ref } from 'vue';
+import { createSSRApp, nextTick, ref } from 'vue';
+import { renderToString } from 'vue/server-renderer';
 
 describe('Breadcrumb.tsx', () => {
   test('basic', async () => {
@@ -47,6 +48,29 @@ describe('Breadcrumb.tsx', () => {
       expect(wrapper.findAll('.h-breadcrumb-item__text')[2].classes('h-breadcrumb-item--small')).eq(
         true,
       );
+    });
+  });
+
+  describe('SSR', () => {
+    test('renders items during server-side rendering', async () => {
+      const app = createSSRApp({
+        render: () => (
+          <HBreadcrumb
+            texts={[
+              { text: 'Home' },
+              { text: 'Sub Page1' },
+              { text: 'Sub Page2' },
+            ]}
+          />
+        ),
+      });
+
+      const html = await renderToString(app);
+
+      expect(html).toContain('h-breadcrumb');
+      expect(html).toContain('h-breadcrumb-item');
+      expect(html).toContain('Home');
+      expect(html).toContain('Sub Page2');
     });
   });
 });
