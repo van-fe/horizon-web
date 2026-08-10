@@ -21,6 +21,7 @@ const zhGuideSidebar = [
       { text: '快速开始', link: 'start' },
       { text: '按需引入', link: 'on-demand-import' },
       { text: '命名空间', link: 'namespace' },
+      { text: '多平台组件库整改指南', link: 'multi-platform-refactor' },
       { text: 'FAQ', link: 'FAQ' },
     ],
   },
