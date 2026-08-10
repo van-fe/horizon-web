@@ -1,11 +1,16 @@
 import { shallowMount, mount } from '@vue/test-utils';
 import HSlider from '../src/Slider';
-import { describe, expect, test, vi } from 'vitest';
+import { afterEach, describe, expect, test, vi } from 'vitest';
 import { ref, nextTick } from 'vue';
 import type { SliderProps } from '../src/composables/useProps';
 import SliderCursor from '../src/components/SliderCursor';
 
 describe('Slider.tsx', () => {
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.restoreAllMocks();
+  });
+
   describe('basic', () => {
     test('create', async () => {
       const modelValue = ref();
@@ -65,23 +70,82 @@ describe('Slider.tsx', () => {
 
       const track = wrapper.find('.h-slider__track');
 
-      const clickEvent = new MouseEvent('click', {
-        clientX: 100,
+      vi.spyOn(track.element, 'getBoundingClientRect').mockReturnValue({
+        x: 0,
+        y: 0,
+        width: 100,
+        height: 8,
+        top: 0,
+        right: 100,
+        bottom: 8,
+        left: 0,
+        toJSON: () => {},
       });
 
-      track.element.dispatchEvent(clickEvent);
+      const clickEvent = new MouseEvent('click', {
+        clientX: 55,
+      });
+
+      wrapper.find('.h-slider__container').element.dispatchEvent(clickEvent);
       await nextTick();
 
-      // todo:: vitest can't load stylesheet
-      expect(modelValue.value).toEqual(0);
+      expect(modelValue.value).toEqual(55);
+    });
+
+    test('does not react to track clicks when disabled or track-clickable is false', async () => {
+      const disabledValue = ref(20);
+      const disabledWrapper = mount(() => <HSlider v-model={disabledValue.value} disabled />);
+      const disabledTrack = disabledWrapper.find('.h-slider__track');
+
+      vi.spyOn(disabledTrack.element, 'getBoundingClientRect').mockReturnValue({
+        x: 0,
+        y: 0,
+        width: 100,
+        height: 8,
+        top: 0,
+        right: 100,
+        bottom: 8,
+        left: 0,
+        toJSON: () => {},
+      });
+
+      await disabledWrapper.find('.h-slider__container').trigger('click', { clientX: 80 });
+      expect(disabledValue.value).toBe(20);
+
+      const unclickableValue = ref(30);
+      const unclickableWrapper = mount(() => (
+        <HSlider v-model={unclickableValue.value} trackClickable={false} />
+      ));
+
+      await unclickableWrapper.find('.h-slider__container').trigger('click', { clientX: 80 });
+      expect(unclickableValue.value).toBe(30);
+    });
+
+    test('normalizes and sorts range values', async () => {
+      const modelValue = ref<[number, number]>([90, 10]);
+      const wrapper = mount(() => (
+        <HSlider v-model={modelValue.value} range min={20} max={80} step={10} />
+      ));
+
+      await nextTick();
+
+      expect(modelValue.value).toEqual([20, 80]);
+      expect(wrapper.findAll('[role="slider"]')).toHaveLength(2);
+      expect(
+        wrapper.findAll('[role="slider"]').map(item => item.attributes('aria-valuenow')),
+      ).toEqual(['80', '20']);
     });
   });
 
   describe('event', () => {
-    test('keyboard event', async () => {
+    test('left and right arrow keys update the value and ARIA state', async () => {
+      vi.useFakeTimers();
       const modelValue = ref(50);
       const onFocus = vi.fn();
-      const wrapper = mount(() => <HSlider v-model={modelValue.value} onFocus={onFocus} />);
+      const onBlur = vi.fn();
+      const wrapper = mount(() => (
+        <HSlider v-model={modelValue.value} step={10} onFocus={onFocus} onBlur={onBlur} />
+      ));
 
       const cursor = wrapper.findComponent(SliderCursor);
       const slider = wrapper.find('[role="slider"]');
@@ -89,14 +153,48 @@ describe('Slider.tsx', () => {
       expect(cursor.exists()).toBe(true);
       expect(slider.attributes('aria-valuenow')).toBe('50');
 
-      await cursor.trigger('focus');
+      await slider.trigger('focus');
+      expect(onFocus).toHaveBeenCalledOnce();
 
-      // cannot trigger focus
-      // expect(onFocus).toHaveBeenCalledOnce();
-
-      await cursor.trigger('keydown', {
+      await slider.trigger('keydown', {
         code: 'ArrowLeft',
       });
+      await slider.trigger('keyup');
+      await nextTick();
+
+      expect(modelValue.value).toBe(40);
+      expect(slider.attributes('aria-valuenow')).toBe('40');
+
+      await slider.trigger('keydown', {
+        code: 'ArrowRight',
+      });
+      await slider.trigger('keyup');
+      await nextTick();
+
+      expect(modelValue.value).toBe(50);
+      expect(slider.attributes('aria-valuenow')).toBe('50');
+
+      await slider.trigger('blur');
+      expect(onBlur).toHaveBeenCalledOnce();
+    });
+
+    test.each([
+      { props: { disabled: true }, label: 'disabled' },
+      { props: { keyboardEnable: false }, label: 'keyboard disabled' },
+    ])('ignores arrow keys when $label', async ({ props }) => {
+      vi.useFakeTimers();
+      const modelValue = ref(50);
+      const wrapper = mount(() => <HSlider v-model={modelValue.value} {...props} />);
+      const slider = wrapper.find('[role="slider"]');
+
+      await slider.trigger('keydown', { code: 'ArrowRight' });
+      await slider.trigger('keyup');
+      await nextTick();
+
+      expect(modelValue.value).toBe(50);
+      expect(wrapper.find('[role="slider"]').attributes('aria-disabled')).toBe(
+        props.disabled ? 'true' : 'false',
+      );
     });
   });
 });

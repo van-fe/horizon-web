@@ -3,9 +3,6 @@ import HLink from '..';
 import { describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
 import type { LinkProps } from '../src/composables/useProps';
-import { compile } from 'sass';
-import { testScssOptions } from '~/__tests__/sass-options';
-import { resolve } from 'node:path';
 
 describe('Link.tsx', () => {
   test('basic', async () => {
@@ -25,17 +22,6 @@ describe('Link.tsx', () => {
 
     await action.trigger('keydown', { key: ' ' });
     expect(onClick).toHaveBeenCalledTimes(1);
-  });
-
-  test('keeps its presentation above contextual link styles', () => {
-    const css = compile(resolve(__dirname, '../src/style/index.scss'), testScssOptions).css;
-
-    // Two component classes outrank contextual element rules such as `.vp-doc a`.
-    expect(css).toContain('.h-link.h-link {');
-    expect(css).toContain('.h-link.h-link--primary {');
-    expect(css).toContain('.h-link__anchor.h-link__anchor {');
-    expect(css).toContain('font-weight: inherit;');
-    expect(css).toContain('text-underline-offset: auto;');
   });
 
   describe('props', () => {

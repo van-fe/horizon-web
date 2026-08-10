@@ -192,20 +192,25 @@ describe('Dropdown.tsx', () => {
 
     test('placement', async () => {
       const placement = ref<DropdownProps['placement']>('top');
-      const wrapper = mount(() => (
-        <HDropdown placement={placement.value} toBody={false}>
-          {{
-            default: () => <HButton>Trigger</HButton>,
-            dropdown: () => (
-              <HDropdownMenu>
-                <HDropdownItem>1</HDropdownItem>
-                <HDropdownItem>2</HDropdownItem>
-                <HDropdownItem>3</HDropdownItem>
-              </HDropdownMenu>
-            ),
-          }}
-        </HDropdown>
-      ));
+      const wrapper = mount(
+        () => (
+          <div style="padding: 300px; width: 800px; height: 800px;">
+            <HDropdown placement={placement.value} toBody={false}>
+              {{
+                default: () => <HButton>Trigger</HButton>,
+                dropdown: () => (
+                  <HDropdownMenu>
+                    <HDropdownItem>1</HDropdownItem>
+                    <HDropdownItem>2</HDropdownItem>
+                    <HDropdownItem>3</HDropdownItem>
+                  </HDropdownMenu>
+                ),
+              }}
+            </HDropdown>
+          </div>
+        ),
+        { attachTo: document.body },
+      );
 
       const triggerEle = wrapper.findComponent(HPopover);
 

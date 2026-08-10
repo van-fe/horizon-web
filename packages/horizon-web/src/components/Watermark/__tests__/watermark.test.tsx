@@ -81,6 +81,39 @@ describe('Watermark', () => {
     wrapper.unmount();
     expect(layer?.isConnected).toBe(false);
   });
+
+  test('mounts into a custom container and removes the layer on unmount', async () => {
+    const container = document.createElement('section');
+    document.body.appendChild(container);
+    const wrapper = mount(HWatermark, {
+      props: { container, content: 'Private' },
+      slots: { default: 'content' },
+    });
+    await nextTick();
+
+    const layer = container.lastElementChild as HTMLElement;
+    expect(layer).not.toBeNull();
+    expect(layer.style.backgroundImage).toContain('data:image/png');
+
+    wrapper.unmount();
+    expect(layer.isConnected).toBe(false);
+    container.remove();
+  });
+
+  test('reports and restores a watermark layer removed from the DOM', async () => {
+    const wrapper = mount(HWatermark, { props: { content: 'Protected' } });
+    await nextTick();
+    await new Promise(resolve => setTimeout(resolve));
+
+    const component = wrapper.findComponent(HWatermark);
+    const firstLayer = wrapper.element.lastElementChild as HTMLElement;
+    firstLayer.remove();
+    await vi.waitFor(() => {
+      expect(component.emitted('tampered')).toHaveLength(1);
+      expect(wrapper.element.lastElementChild).not.toBe(firstLayer);
+    });
+    expect((wrapper.element.lastElementChild as HTMLElement).style.pointerEvents).toBe('none');
+  });
 });
 
 describe('watermark canvas helpers', () => {

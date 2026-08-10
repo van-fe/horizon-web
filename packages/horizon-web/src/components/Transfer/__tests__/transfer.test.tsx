@@ -211,13 +211,18 @@ describe('Transfer.tsx', () => {
     const target = items[2];
 
     await source.trigger('dragstart');
-    await target.trigger('dragover', { clientY: 110 });
+    target.element.dispatchEvent(
+      new DragEvent('dragover', { bubbles: true, cancelable: true, clientY: 110 }),
+    );
+    await nextTick();
 
     expect(target.find('.h-transfer-panel__item-drag-over-cursor').classes()).toContain(
       'is-bottom',
     );
 
-    await target.trigger('drop', { clientY: 110 });
+    target.element.dispatchEvent(
+      new DragEvent('drop', { bubbles: true, cancelable: true, clientY: 110 }),
+    );
     await nextTick();
     await nextTick();
 

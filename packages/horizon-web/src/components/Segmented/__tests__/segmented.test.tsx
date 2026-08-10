@@ -507,18 +507,18 @@ describe('Segmented.tsx', () => {
     activeKey.value = 'second';
     await nextTick();
     expect(indicator.attributes('style')).toContain('width: 90px');
-    expect(indicator.attributes('style')).toContain('translate3d(50px, 0, 0)');
+    expect(indicator.attributes('style')).toContain('translate3d(50px, 0px, 0px)');
 
     firstValue.value = 'second';
     secondValue.value = 'first';
     await nextTick();
     expect(items[0].attributes('aria-selected')).toBe('true');
     expect(indicator.attributes('style')).toContain('width: 40px');
-    expect(indicator.attributes('style')).toContain('translate3d(0px, 0, 0)');
+    expect(indicator.attributes('style')).toContain('translate3d(0px, 0px, 0px)');
 
     firstValue.value = 'third';
     await nextTick();
     expect(items.every(item => item.attributes('aria-selected') === 'false')).toBe(true);
-    expect(indicator.attributes('style')).toBeUndefined();
+    expect(indicator.attributes('style') ?? '').toBe('');
   });
 });

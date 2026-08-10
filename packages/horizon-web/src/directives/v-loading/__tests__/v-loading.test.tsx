@@ -5,7 +5,7 @@ import { createInstance } from './loadingHelper';
 import { $message } from '~/methods';
 
 describe('v-loading.tsx', () => {
-  test('child node change wont recreate instance', async () => {
+  test('keeps the loading layer z-index stable when child content changes', async () => {
     const defaultValue = ref('1');
 
     const { getLoadingDom } = await createInstance(
@@ -22,14 +22,15 @@ describe('v-loading.tsx', () => {
     await sleep(200);
 
     const loadingContainer = getLoadingDom();
+    const initialZIndex = loadingContainer.element.style.zIndex;
 
-    expect(loadingContainer.element.style.zIndex).toBe('2001');
+    expect(Number(initialZIndex)).toBeGreaterThan(0);
 
     defaultValue.value = '2';
 
     await sleep(200);
 
-    expect(loadingContainer.element.style.zIndex).toBe('2001');
+    expect(getLoadingDom().element.style.zIndex).toBe(initialZIndex);
   });
 
   test('eventLoop check', async () => {

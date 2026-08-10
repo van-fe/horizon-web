@@ -73,21 +73,21 @@ describe('VirtualScroller.tsx', () => {
     });
 
     const items = getData();
-    const wrapper = mount(() => (
-      <HRecycleScroller
-        items={items}
-        itemSize={50}
-        buffer={0}
-        v-slots={{
-          default: ({ item }: { item: Item }) => <div>{item.id}</div>,
-        }}
-      />
-    ));
+    const wrapper = mount(
+      () => (
+        <HRecycleScroller
+          items={items}
+          itemSize={50}
+          scrollerHeight={100}
+          buffer={0}
+          v-slots={{
+            default: ({ item }: { item: Item }) => <div>{item.id}</div>,
+          }}
+        />
+      ),
+      { attachTo: document.body },
+    );
     const scrollWrapper = wrapper.find<HTMLElement>('.h-scrollbar__wrap');
-    Object.defineProperty(scrollWrapper.element, 'clientHeight', {
-      configurable: true,
-      value: 100,
-    });
 
     await nextTick();
     await nextTick();
@@ -103,22 +103,26 @@ describe('VirtualScroller.tsx', () => {
   });
 
   test('includes the before slot when scrolling to an item', async () => {
-    const wrapper = mount(() => (
-      <HRecycleScroller
-        items={getData().slice(0, 10)}
-        itemSize={50}
-        v-slots={{ before: () => <div>header</div> }}
-      />
-    ));
+    const wrapper = mount(
+      () => (
+        <HRecycleScroller
+          items={getData().slice(0, 10)}
+          itemSize={50}
+          scrollerHeight={100}
+          v-slots={{ before: () => <div style="height: 30px">header</div> }}
+        />
+      ),
+      { attachTo: document.body },
+    );
     const scroller = wrapper.findComponent(HRecycleScroller);
     const scrollWrapper = wrapper.find<HTMLElement>('.h-scrollbar__wrap');
     const before = wrapper.find<HTMLElement>('.h-recycle-scroller__slot');
 
-    Object.defineProperty(before.element, 'scrollHeight', {
-      configurable: true,
-      value: 30,
-    });
+    await nextTick();
+    await nextTick();
+    expect(before.element.scrollHeight).toBe(30);
     scroller.getCurrentComponent().exposed?.scrollToItem(2);
+    await nextTick();
 
     expect(scrollWrapper.element.scrollTop).toBe(130);
   });
@@ -160,37 +164,40 @@ describe('VirtualScroller.tsx', () => {
 
     const container = ref<HTMLElement>();
     const items = getData().slice(0, 100);
-    const wrapper = mount(() => (
-      <div ref={container} class="external-scroll">
-        <HVirtualScroller
-          items={items}
-          itemSize={20}
-          minItemSize={20}
-          buffer={0}
-          renderless
-          scrollContainer={container.value}
-          v-slots={{
-            renderless: (scope: VirtualScrollerRenderlessScope<Item>) => (
-              <div
-                class="renderless-range"
-                data-start={scope.startIndex}
-                data-end={scope.endIndex}
-                data-total={scope.totalSize}
-              >
-                {scope.views.map(view => (
-                  <span key={view.item.id}>{view.item.id}</span>
-                ))}
-              </div>
-            ),
-          }}
-        />
-      </div>
-    ));
-
-    Object.defineProperty(container.value, 'clientHeight', {
-      configurable: true,
-      value: 100,
-    });
+    const wrapper = mount(
+      () => (
+        <div
+          ref={container}
+          class="external-scroll"
+          style="height: 100px; overflow: auto; position: relative"
+        >
+          <HVirtualScroller
+            items={items}
+            itemSize={20}
+            minItemSize={20}
+            buffer={0}
+            renderless
+            scrollContainer={container.value}
+            v-slots={{
+              renderless: (scope: VirtualScrollerRenderlessScope<Item>) => (
+                <div
+                  class="renderless-range"
+                  data-start={scope.startIndex}
+                  data-end={scope.endIndex}
+                  data-total={scope.totalSize}
+                >
+                  {scope.views.map(view => (
+                    <span key={view.item.id}>{view.item.id}</span>
+                  ))}
+                </div>
+              ),
+            }}
+          />
+          <div aria-hidden="true" style="height: 2000px; width: 1px" />
+        </div>
+      ),
+      { attachTo: document.body },
+    );
     await wrapper.find('.external-scroll').trigger('scroll');
     await nextTick();
 

@@ -6,6 +6,7 @@ import HPopContent from '../../Popover/src/PopContent';
 import HScrollbar from '../../Scrollbar/src/Scrollbar';
 import HMentions from '../src/Mentions';
 import { useMentions } from '../src/hooks/useMentions';
+import '../src/style/index.scss';
 
 const updatePosition = vi.fn();
 const HPopoverStub = defineComponent({
@@ -41,12 +42,14 @@ function mountMentions(props: Record<string, unknown> = {}) {
     global: {
       stubs: { HPopover: HPopoverStub },
     },
+    attachTo: document.body,
   });
   return wrapper;
 }
 
 afterEach(() => {
   updatePosition.mockClear();
+  document.body.replaceChildren();
 });
 
 describe('Mentions', () => {
@@ -200,12 +203,17 @@ describe('Mentions', () => {
     const input = wrapper.get('textarea');
     const mirror = wrapper.get('.h-mentions__measure');
 
-    await input.setValue('first line\n@ali');
+    await input.setValue(
+      `${Array.from({ length: 20 }, (_, index) => `line ${index}`).join('\n')}\n@ali`,
+    );
     updatePosition.mockClear();
     (input.element as HTMLTextAreaElement).scrollTop = 24;
     await input.trigger('scroll');
 
-    expect((mirror.element as HTMLDivElement).scrollTop).toBe(24);
+    expect((input.element as HTMLTextAreaElement).scrollTop).toBeGreaterThan(0);
+    expect((mirror.element as HTMLDivElement).scrollTop).toBe(
+      (input.element as HTMLTextAreaElement).scrollTop,
+    );
     expect(updatePosition).toHaveBeenCalled();
   });
 });

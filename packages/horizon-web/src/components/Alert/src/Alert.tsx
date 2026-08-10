@@ -35,7 +35,7 @@ export default defineComponent({
     const size = toRef(props, 'size');
     const sizeRef = useSize(size, 'medium');
 
-    const close = (evt: MouseEvent) => {
+    const close = (evt: MouseEvent | KeyboardEvent) => {
       visible.value = false;
       emit('close', evt);
     };
@@ -147,7 +147,7 @@ export default defineComponent({
               onKeydown={(evt: KeyboardEvent) => {
                 if (evt.key === 'Enter' || evt.key === ' ') {
                   evt.preventDefault();
-                  close(evt as unknown as MouseEvent);
+                  close(evt);
                 }
               }}
             >

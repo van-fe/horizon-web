@@ -68,10 +68,11 @@ describe('Splitter', () => {
       value: () => ({ width: 100, height: 100, top: 0, left: 0, right: 100, bottom: 100 }),
     });
 
-    await wrapper.get('[role="separator"]').trigger('pointerdown', {
-      button: 0,
-      clientX: 30,
-    });
+    wrapper
+      .get('[role="separator"]')
+      .element.dispatchEvent(
+        new PointerEvent('pointerdown', { bubbles: true, button: 0, clientX: 30 }),
+      );
     window.dispatchEvent(new PointerEvent('pointermove', { clientX: 40 }));
     window.dispatchEvent(new PointerEvent('pointerup'));
 

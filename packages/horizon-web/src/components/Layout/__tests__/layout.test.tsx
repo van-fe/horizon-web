@@ -24,8 +24,8 @@ describe('Grid.tsx', () => {
     expect(style).toContain('--h-grid-column-gap-sm: 4px');
     expect(style).toContain('--h-grid-column-gap-md: 12px');
     expect(style).toContain('--h-grid-row-gap-md: 8px');
-    expect(style).toContain('align-items: center');
-    expect(style).toContain('justify-items: end');
+    expect((wrapper.element as HTMLElement).style.alignItems).toBe('center');
+    expect((wrapper.element as HTMLElement).style.justifyItems).toBe('end');
   });
 
   test('provides responsive grid data to items', () => {

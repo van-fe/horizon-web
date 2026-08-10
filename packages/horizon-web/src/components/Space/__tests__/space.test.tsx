@@ -112,7 +112,7 @@ describe('Space.tsx', () => {
           <div class="h-space--item">
             <div>Hello World</div>
           </div>
-          <div class="h-space--item"><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" autofocus="false">
+          <div class="h-space--item"><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0">
               <!---->
               <div class="h-button__content">Hello World</div>
               <!---->

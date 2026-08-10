@@ -66,16 +66,17 @@ describe('SortableList', () => {
       vi.spyOn(listItem.element, 'getBoundingClientRect').mockReturnValue(createRect(index * 50));
     });
 
-    await wrapper.find('.h-sortable-list__handle').trigger('pointerdown', {
-      button: 0,
-      clientY: 20,
-    });
+    wrapper
+      .find('.h-sortable-list__handle')
+      .element.dispatchEvent(
+        new PointerEvent('pointerdown', { bubbles: true, button: 0, clientY: 20 }),
+      );
     window.dispatchEvent(
       new PointerEvent('pointermove', { bubbles: true, cancelable: true, clientY: 135 }),
     );
     await nextTick();
 
-    expect(listItems[0].attributes('style')).toContain('translate3d(0, 115px, 0)');
+    expect(listItems[0].attributes('style')).toContain('translate3d(0px, 115px, 0px)');
 
     const indicator = listItems[2].find('.h-sortable-list__drop-indicator');
     expect(indicator.exists()).toBe(true);
@@ -151,10 +152,11 @@ describe('SortableList', () => {
       });
 
     const wrapper = mount(() => <HSortableList v-model={items.value} itemKey="id" />);
-    await wrapper.find('.h-sortable-list__handle').trigger('pointerdown', {
-      button: 0,
-      clientY: 20,
-    });
+    wrapper
+      .find('.h-sortable-list__handle')
+      .element.dispatchEvent(
+        new PointerEvent('pointerdown', { bubbles: true, button: 0, clientY: 20 }),
+      );
     window.dispatchEvent(
       new PointerEvent('pointermove', { bubbles: true, cancelable: true, clientY: 135 }),
     );

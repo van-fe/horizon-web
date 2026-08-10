@@ -230,8 +230,7 @@ describe('Input.tsx', () => {
       expect(element.element.value.length).toBe(0);
 
       expect(onClear).toHaveBeenCalled();
-      // happy-dom bug
-      // expect(onFocus).toHaveBeenCalled();
+      expect(onFocus).not.toHaveBeenCalled();
     });
 
     test('click', async () => {

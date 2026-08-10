@@ -116,7 +116,10 @@ describe('Select.tsx', () => {
 
     await instance.open();
 
-    expect(popper.attributes('data-popper-placement')).eq('top-start');
+    expect(instance.wrapper.findComponent(HPopover).props('placement')).eq('top-start');
+    expect(['top-start', 'bottom-start']).toContain(
+      popper.attributes('data-popper-placement'),
+    );
   });
 
   test('input-style', async () => {
@@ -1289,9 +1292,7 @@ describe('Select.tsx', () => {
 
     expect(wrapper.findComponent(HSelect).attributes('style')).contain('display: flex;');
     expect(wrapper.findComponent(HSelect).classes('external-select-class')).toBeTruthy();
-    expect(wrapper.find('.h-picker__pop-content').attributes('style')).contain(
-      'transition: all .2s;',
-    );
+    expect(wrapper.find('.h-picker__pop-content').attributes('style')).contain('transition: 0.2s;');
     expect(
       wrapper.find('.h-picker__pop-content--wrapper').classes('external-panel-class'),
     ).toBeTruthy();

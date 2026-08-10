@@ -70,16 +70,19 @@ describe('Table', () => {
       return 1;
     });
 
-    const wrapper = mount(() => (
-      <HTable
-        data={Array.from({ length: 1000 }, (_, id) => ({ id, name: `Row ${id}` }))}
-        rowKey="id"
-        height={100}
-        virtual={{ itemSize: 20, buffer: 0 }}
-      >
-        <HTableColumn title="Name" field="name" />
-      </HTable>
-    ));
+    const wrapper = mount(
+      () => (
+        <HTable
+          data={Array.from({ length: 1000 }, (_, id) => ({ id, name: `Row ${id}` }))}
+          rowKey="id"
+          height={100}
+          virtual={{ itemSize: 20, buffer: 0 }}
+        >
+          <HTableColumn title="Name" field="name" />
+        </HTable>
+      ),
+      { attachTo: document.body },
+    );
     await settleTable();
 
     const scrollWrapper = wrapper.find<HTMLElement>('.h-scrollbar__wrap');
@@ -1529,18 +1532,22 @@ describe('Table', () => {
 
     await settleTable();
 
-    const dataTransfer = {
-      effectAllowed: 'none',
-      dropEffect: 'none',
-      setData: vi.fn(),
-    };
-
-    await wrapper.findAll('th')[0].trigger('dragstart', { dataTransfer });
-    await wrapper.findAll('th')[1].trigger('dragover', {
-      clientX: 1,
-      dataTransfer,
-    });
-    await wrapper.findAll('th')[1].trigger('drop', { dataTransfer });
+    const dataTransfer = new DataTransfer();
+    const headers = wrapper.findAll('th');
+    headers[0].element.dispatchEvent(
+      new DragEvent('dragstart', { bubbles: true, cancelable: true, dataTransfer }),
+    );
+    headers[1].element.dispatchEvent(
+      new DragEvent('dragover', {
+        bubbles: true,
+        cancelable: true,
+        clientX: 1,
+        dataTransfer,
+      }),
+    );
+    headers[1].element.dispatchEvent(
+      new DragEvent('drop', { bubbles: true, cancelable: true, dataTransfer }),
+    );
     await settleTable();
 
     expect(wrapper.findAll('th').map(cell => cell.text())).toEqual(['Age', 'Name']);
@@ -1567,18 +1574,22 @@ describe('Table', () => {
 
     await settleTable();
 
-    const dataTransfer = {
-      effectAllowed: 'none',
-      dropEffect: 'none',
-      setData: vi.fn(),
-    };
-
-    await wrapper.findAll('.h-table__drag-handle')[0].trigger('dragstart', { dataTransfer });
-    await wrapper.findAll('tbody tr')[1].trigger('dragover', {
-      clientY: 1,
-      dataTransfer,
-    });
-    await wrapper.findAll('tbody tr')[1].trigger('drop', { dataTransfer });
+    const dataTransfer = new DataTransfer();
+    wrapper.findAll('.h-table__drag-handle')[0].element.dispatchEvent(
+      new DragEvent('dragstart', { bubbles: true, cancelable: true, dataTransfer }),
+    );
+    const targetRow = wrapper.findAll('tbody tr')[1];
+    targetRow.element.dispatchEvent(
+      new DragEvent('dragover', {
+        bubbles: true,
+        cancelable: true,
+        clientY: 1,
+        dataTransfer,
+      }),
+    );
+    targetRow.element.dispatchEvent(
+      new DragEvent('drop', { bubbles: true, cancelable: true, dataTransfer }),
+    );
     await settleTable();
 
     expect(data.value.map(row => row.id)).toEqual([2, 1]);

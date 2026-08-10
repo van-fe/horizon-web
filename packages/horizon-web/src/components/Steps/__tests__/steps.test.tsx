@@ -204,5 +204,57 @@ describe('Steps.tsx', () => {
       expect(wrapper.findAllComponents(HStep)[0].classes('is-finish')).toBeTruthy();
       expect(wrapper.findAllComponents(HStep)[1].classes('is-process')).toBeTruthy();
     });
+
+    test('exposes current, clickable and disabled step semantics', async () => {
+      const wrapper = mount(() => (
+        <HSteps modelValue={1} clickable>
+          <HStep title="Done" />
+          <HStep title="Current" />
+          <HStep title="Unavailable" disabled />
+        </HSteps>
+      ));
+      await nextTick();
+
+      const steps = wrapper.findAllComponents(HStep);
+      expect(steps[0].attributes('role')).toBe('button');
+      expect(steps[0].attributes('tabindex')).toBe('0');
+      expect(steps[1].attributes('aria-current')).toBe('step');
+      expect(steps[2].attributes('aria-disabled')).toBe('true');
+      expect(steps[2].attributes('tabindex')).toBeUndefined();
+    });
+
+    test.each(['Enter', ' '])('activates a clickable step with the %s key', async key => {
+      const current = ref(0);
+      const wrapper = mount(() => (
+        <HSteps v-model={current.value} clickable>
+          <HStep title="First" />
+          <HStep title="Second" />
+        </HSteps>
+      ));
+      await nextTick();
+
+      const nextStep = wrapper.findAllComponents(HStep)[1];
+      await nextStep.trigger('keydown', { key });
+
+      expect(current.value).toBe(1);
+      expect(nextStep.emitted('click')).toHaveLength(1);
+    });
+
+    test('does not activate a disabled step from the keyboard', async () => {
+      const current = ref(0);
+      const wrapper = mount(() => (
+        <HSteps v-model={current.value} clickable>
+          <HStep title="First" />
+          <HStep title="Disabled" disabled />
+        </HSteps>
+      ));
+      await nextTick();
+
+      const disabledStep = wrapper.findAllComponents(HStep)[1];
+      await disabledStep.trigger('keydown', { key: 'Enter' });
+
+      expect(current.value).toBe(0);
+      expect(disabledStep.emitted('click')).toBeUndefined();
+    });
   });
 });

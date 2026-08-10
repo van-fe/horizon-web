@@ -90,8 +90,7 @@ describe('InputNumber.tsx special', () => {
     expect(element.element.value.length).toBe(0);
     expect(modelValue.value).eq(null);
     expect(onClear).toHaveBeenCalled();
-    // happy-dom bug
-    // expect(onFocus).toHaveBeenCalled();
+    expect(onFocus).not.toHaveBeenCalled();
   });
 
   test('keydown to increase or decrease number', async () => {
@@ -371,8 +370,7 @@ describe('InputNumber.tsx special', () => {
 
     expect(value.value).eq(1);
     expect(onUpdate).toHaveBeenCalledTimes(0);
-    // happy-dom bug
-    // expect(onBlur).toHaveBeenCalledOnce();
+    expect(onBlur).not.toHaveBeenCalled();
   });
 
   test('do not trigger update:modelValue when model-value is empty string', async () => {

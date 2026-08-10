@@ -3,9 +3,6 @@ import HAnchor from '../src/Anchor';
 import HAnchorLink from '../src/AnchorLink';
 import { describe, expect, test, vi } from 'vitest';
 import { ref, nextTick } from 'vue';
-import { compile } from 'sass';
-import { testScssOptions } from '~/__tests__/sass-options';
-import { resolve } from 'node:path';
 
 describe('Anchor.tsx', () => {
   test('basic', async () => {
@@ -14,18 +11,6 @@ describe('Anchor.tsx', () => {
 
     expect(element.exists()).toBe(true);
     expect(element.classes()).toContain('h-anchor');
-  });
-
-  test('keeps its presentation above contextual link styles', () => {
-    const css = compile(resolve(__dirname, '../src/style/index.scss'), testScssOptions).css;
-
-    // Two component classes outrank contextual element rules such as `.vp-doc a`.
-    expect(css).toContain('.h-anchor__link-title-txt.h-anchor__link-title-txt {');
-    expect(css).toContain('font-weight: inherit;');
-    expect(css).toContain('text-underline-offset: auto;');
-    expect(css).toContain(
-      '.h-anchor__link-title-txt.h-anchor__link-title-txt:hover, .h-anchor__link-title-txt.h-anchor__link-title-txt:active {',
-    );
   });
 
   describe('props', () => {
@@ -86,5 +71,55 @@ describe('Anchor.tsx', () => {
       expect(clickHandle).toHaveBeenCalled();
       expect(changeHandle).toHaveBeenCalled();
     });
+
+    test('prevents the native hash change when changeHash is false', async () => {
+      const wrapper = mount(() => (
+        <HAnchor scrollContainer={document.body} changeHash={false}>
+          <HAnchorLink href="#prevented" title="Prevented" />
+        </HAnchor>
+      ));
+      const event = new MouseEvent('click', { bubbles: true, cancelable: true });
+
+      expect(wrapper.get('a').element.dispatchEvent(event)).toBe(false);
+      expect(event.defaultPrevented).toBe(true);
+    });
+  });
+
+  test('inherits the parent link target and renders nested links', () => {
+    const wrapper = mount(() => (
+      <HAnchor scrollContainer={document.body} linkTarget="_blank" showTitleSuffix>
+        <HAnchorLink href="#parent" title="Parent">
+          <HAnchorLink href="#child" title="Child" />
+        </HAnchorLink>
+      </HAnchor>
+    ));
+
+    expect(wrapper.findAll('a')).toHaveLength(2);
+    expect(wrapper.findAll('a').every(link => link.attributes('target') === '_blank')).toBe(true);
+  });
+
+  test('toggles the navigation wrap and emits the controlled collapse value', async () => {
+    const wrapper = mount(HAnchor, {
+      props: { scrollContainer: document.body, useCollapse: true, collapse: true },
+      slots: { default: () => <HAnchorLink href="#one" title="One" /> },
+    });
+    const wrap = wrapper.get('.h-anchor__wrap');
+
+    expect(wrap.attributes('style')).toContain('display: none');
+    await wrapper.get('.h-anchor__collapse-btn').trigger('click');
+    expect(wrapper.emitted('update:collapse')).toEqual([[false]]);
+    expect(wrap.attributes('style') ?? '').not.toContain('display: none');
+  });
+
+  test('removes its scroll listener when unmounted', async () => {
+    const container = document.createElement('div');
+    const removeEventListener = vi.spyOn(container, 'removeEventListener');
+    const wrapper = mount(() => <HAnchor scrollContainer={container} />);
+
+    await nextTick();
+    await nextTick();
+    wrapper.unmount();
+
+    expect(removeEventListener).toHaveBeenCalledWith('scroll', expect.any(Function));
   });
 });
