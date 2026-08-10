@@ -1,4 +1,4 @@
-# Horizon 多平台组件库项目计划
+# Aurora 多产品组件库项目计划
 
 ## 1. 计划信息
 
@@ -9,10 +9,11 @@
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
 | 首批试点 | Button、Switch、Tooltip、Select 单选模式 |
+| 命名决策 | 公共底座使用 `@aurora/core`；Web 产品使用 Horizon；移动端产品使用 Skyline |
 | 规划单位 | 工程日和两周迭代；工程日表示一名工程师的有效开发时间 |
 | 计划调整点 | 每个里程碑结束时根据实测复杂度、共享比例和回归结果重新估算 |
 
-本计划是《[Horizon 多平台组件库整改指南](./multi-platform-refactor.md)》的执行层。整改指南定义长期架构与边界，本计划定义先做什么、如何验收、何时允许进入下一阶段。
+本计划是《[Aurora 多产品组件库整改指南](./multi-platform-refactor.md)》的执行层。整改指南定义长期架构与边界，本计划定义先做什么、如何验收、何时允许进入下一阶段。
 
 ## 2. 规划假设
 
@@ -23,7 +24,7 @@
 - 设计和无障碍评审按里程碑参与；
 - 现有 Vue 组件仍可能接受必要维护，但暂停无明确收益的大规模内部重构；
 - 一个迭代为两周，计划以工程量为主，日历时间随实际投入人数调整；
-- Mobile 包只预留边界，本轮不实现移动端 renderer。
+- Skyline Mobile 包只预留边界，本轮不实现移动端 renderer。
 
 如果只有 1 名工程师，保持任务顺序不变，延长日历周期；不得通过跳过测试、文档、兼容层或基础设施缩短周期。
 
@@ -33,7 +34,7 @@
 
 首个 Web React MVP 必须包含：
 
-- `@aurora/horizon-core`、`@aurora/horizon-theme`、`@aurora/horizon-web-core` 基础包；
+- `@aurora/core`、`@aurora/horizon-theme`、`@aurora/horizon-web-core` 基础包；
 - `@aurora/horizon-web-vue` 与 `@aurora/horizon-web-react` renderer 基础设施；
 - Button、Switch、Tooltip、Select 单选模式的 Vue/React 双实现；
 - 公共 Token、locale key、状态协议和行为测试向量；
@@ -59,7 +60,7 @@ MVP 达到以下指标才允许进入批量组件迁移：
 
 - 一次迁移全部 87 个组件；
 - 立即删除 `@aurora/horizon-web`；
-- 实现 `horizon-mobile-vue/react`；
+- 实现 `skyline-mobile-vue/react`；
 - 强制 Vue 与 React 使用完全相同的 props 名称；
 - 创建自定义 VDOM 或通用模板 DSL；
 - 在架构未通过 Select 试点前大批量复制组件代码；
@@ -145,7 +146,7 @@ flowchart LR
 
 | ID | 任务 | 交付物 | 验收 |
 | --- | --- | --- | --- |
-| PKG-001 | 创建 `horizon-core` | package、tsconfig、Vite/Vitest、exports | build/typecheck/test 通过，无 renderer 依赖 |
+| PKG-001 | 创建 `core` | package、tsconfig、Vite/Vitest、exports | build/typecheck/test 通过，无产品、平台和 renderer 依赖 |
 | PKG-002 | 创建 `horizon-web-core` | DOM 能力包骨架 | SSR import 不访问浏览器全局 |
 | PKG-003 | 创建 `horizon-theme` | Token/SCSS 输出骨架 | Vue/React 可以消费同一 CSS 入口 |
 | PKG-004 | 创建 `horizon-web-react` | React 19、类型、测试、SSR 骨架 | ESM、类型、renderToString smoke test 通过 |

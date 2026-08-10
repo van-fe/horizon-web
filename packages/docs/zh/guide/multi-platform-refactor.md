@@ -1,8 +1,8 @@
-# Horizon 多平台组件库整改指南
+# Aurora 多产品组件库整改指南
 
 ## 1. 文档目的
 
-本指南用于指导 Horizon 从当前以 Vue 3 为中心的 Web 组件库，渐进演进为同时支持 Vue 3、React，并能够继续扩展移动端实现的多平台组件体系。
+本指南用于指导 Aurora 组件体系从当前以 Vue 3 为中心的 Horizon Web 组件库，渐进演进为 Horizon Web 与 Skyline Mobile 两条产品线，并分别支持适用的 Vue、React renderer。
 
 整改的核心不是复制两套组件，也不是让 Vue 与 React 共享同一份 JSX，而是建立清晰、可测试的能力边界：
 
@@ -28,27 +28,31 @@
 
 ## 3. 命名规范
 
-Horizon 主组件包统一采用“产品名 + 平台 + 框架”的顺序：
+公共能力使用中性包名，产品组件包统一采用“产品名 + 平台 + 框架”的顺序。Web 产品名为 Horizon，移动端产品名为 Skyline：
 
 ```text
-@aurora/horizon-core
+@aurora/core
+
 @aurora/horizon-theme
 
 @aurora/horizon-web-core
 @aurora/horizon-web-vue
 @aurora/horizon-web-react
 
-@aurora/horizon-mobile-core
-@aurora/horizon-mobile-vue
-@aurora/horizon-mobile-react
+@aurora/skyline-theme
+@aurora/skyline-mobile-core
+@aurora/skyline-mobile-vue
+@aurora/skyline-mobile-react
 ```
 
 其中：
 
-- `core` 表示不直接渲染 UI 的公共能力；
-- `web`、`mobile` 表示运行平台；
+- `@aurora/core` 表示跨产品、跨平台且不直接渲染 UI 的公共能力，不携带 Horizon 或 Skyline 品牌语义；
+- `horizon` 表示 Web 产品体系，`skyline` 表示移动端产品体系；
+- `web`、`mobile` 表示产品运行平台；
 - `vue`、`react` 表示最终 renderer；
-- 支撑型包可以继续使用 `locale-*`、`icon-*`、`upload-adapters` 等领域名称，不强制套用 Horizon 主包命名规则。
+- Horizon 与 Skyline 分别维护主题值和组件视觉规范，只共享必要的 Token schema 与纯协议；
+- 支撑型包可以继续使用 `locale-*`、`icon-*`、`upload-adapters` 等领域名称，不强制套用产品组件包命名规则。
 
 ### 3.1 现有包改名与兼容
 
@@ -80,31 +84,34 @@ packages/horizon-web         -> @aurora/horizon-web
 
 ```mermaid
 flowchart TB
-    HC["@aurora/horizon-core<br/>跨平台状态、算法、协议"]
-    HT["@aurora/horizon-theme<br/>Token 与主题源数据"]
+    AC["@aurora/core<br/>跨产品、跨平台状态、算法、协议"]
 
+    HT["@aurora/horizon-theme<br/>Horizon Web 主题"]
     HWC["@aurora/horizon-web-core<br/>DOM 与 Web 交互能力"]
     HWV["@aurora/horizon-web-vue<br/>Vue 3 renderer"]
     HWR["@aurora/horizon-web-react<br/>React renderer"]
 
-    HMC["@aurora/horizon-mobile-core<br/>手势与移动端能力"]
-    HMV["@aurora/horizon-mobile-vue<br/>Mobile Vue renderer"]
-    HMR["@aurora/horizon-mobile-react<br/>Mobile React renderer"]
+    ST["@aurora/skyline-theme<br/>Skyline Mobile 主题"]
+    SMC["@aurora/skyline-mobile-core<br/>手势与移动端能力"]
+    SMV["@aurora/skyline-mobile-vue<br/>Mobile Vue renderer"]
+    SMR["@aurora/skyline-mobile-react<br/>Mobile React renderer"]
 
-    HC --> HWC
-    HT --> HWC
+    AC --> HWC
     HWC --> HWV
     HWC --> HWR
+    HT --> HWV
+    HT --> HWR
 
-    HC --> HMC
-    HT --> HMC
-    HMC --> HMV
-    HMC --> HMR
+    AC --> SMC
+    SMC --> SMV
+    SMC --> SMR
+    ST --> SMV
+    ST --> SMR
 ```
 
-### 4.1 `@aurora/horizon-core`
+### 4.1 `@aurora/core`
 
-只能包含与渲染框架、浏览器 DOM、移动端运行时无关的能力：
+只能包含与 Horizon、Skyline、渲染框架、浏览器 DOM、移动端运行时无关的能力：
 
 - 公共数据结构和领域类型；
 - 组件状态机、reducer、controller 和事件协议；
@@ -123,6 +130,8 @@ flowchart TB
 - Vue Router、React Router；
 - Teleport、Portal、框架 Context。
 
+`@aurora/core` 还禁止包含 Horizon 或 Skyline 的组件名、品牌颜色、产品文案和平台专属默认值。若能力只服务 Horizon Web，应放入 `horizon-web-core`；若只服务 Skyline Mobile，应放入 `skyline-mobile-core`。
+
 ### 4.2 `@aurora/horizon-theme`
 
 负责统一设计语言，不负责组件运行时：
@@ -130,11 +139,10 @@ flowchart TB
 - Design Token 的 TypeScript、JSON 和 SCSS 源数据；
 - 色彩、字号、字重、间距、圆角、阴影、层级和动效参数；
 - Web CSS Variables 和组件 SCSS；
-- Mobile renderer 可消费的 Token 输出；
 - BEM 类名和 namespace 规则；
 - 主题生成、覆盖和类型定义。
 
-该包不得依赖 Vue 或 React。Web Vue 和 Web React 应尽量复用同一份 CSS，并以稳定 DOM/class 契约保证样式一致。
+该包不得依赖 Vue 或 React。Horizon Web Vue 和 Web React 应尽量复用同一份 CSS，并以稳定 DOM/class 契约保证样式一致。Skyline 的移动端主题由 `@aurora/skyline-theme` 维护；两套主题可以共享 Token schema，但不能默认共享产品主题值。
 
 ### 4.3 `@aurora/horizon-web-core`
 
@@ -159,7 +167,7 @@ flowchart TB
 - `ref`、`computed`、`watch`、生命周期和 effect cleanup；
 - `provide/inject`、Teleport、Transition；
 - Vue Router 和 Vue 应用安装器；
-- 将 Horizon controller 的 snapshot 转换为 Vue 响应式状态；
+- 将公共 controller 的 snapshot 转换为 Vue 响应式状态；
 - 保持现有 Vue 组件 API 和行为兼容。
 
 Vue 组件文件应主要负责渲染、布局、公开 API 接线和组合能力，复杂状态及算法逐步下沉到 core。
@@ -178,9 +186,9 @@ Vue 组件文件应主要负责渲染、布局、公开 API 接线和组合能�
 
 React 包不能导入 `@aurora/horizon-web-vue` 或通过挂载 Vue 组件实现功能。
 
-### 4.6 Mobile 扩展边界
+### 4.6 Skyline Mobile 扩展边界
 
-未来的 `horizon-mobile-core` 只复用真正跨平台的 `horizon-core` 和主题源数据，单独承载：
+未来的 `@aurora/skyline-mobile-core` 只复用真正跨产品、跨平台的 `@aurora/core`，并与 `@aurora/skyline-theme` 一起单独承载 Skyline 移动端能力：
 
 - 触摸与手势状态；
 - Safe Area、软键盘和移动端视口；
@@ -188,16 +196,16 @@ React 包不能导入 `@aurora/horizon-web-vue` 或通过挂载 Vue 组件实现
 - 移动端导航和弹层语义；
 - 平台性能约束和资源加载策略。
 
-Web DOM 能力不得反向进入 Mobile 包。若 `horizon-mobile-react` 面向 React Native，应单独提供 Native renderer，不能假设存在 DOM 或 CSS。
+Horizon Web DOM 能力不得反向进入 Skyline Mobile 包。若 `@aurora/skyline-mobile-react` 面向 React Native，应单独提供 Native renderer，不能假设存在 DOM 或 CSS。
 
 ## 5. 强制依赖方向
 
 ```text
-horizon-core
+@aurora/core
     ↑
-horizon-web-core
+@aurora/horizon-web-core
     ↑             ↑
-horizon-web-vue   horizon-web-react
+@aurora/horizon-web-vue   @aurora/horizon-web-react
 ```
 
 必须遵循：
@@ -207,7 +215,7 @@ horizon-web-vue   horizon-web-react
 3. core 永远不能反向依赖 renderer；
 4. Vue 与 React renderer 不能相互依赖；
 5. 组件之间优先通过公开契约协作，避免跨目录引用另一个组件的私有实现；
-6. `horizon-theme` 不依赖任何运行时 renderer；
+6. `horizon-theme` 与未来的 `skyline-theme` 不依赖任何运行时 renderer；
 7. 框架专属依赖只能出现在对应 renderer 包中。
 
 建议在 ESLint 和 CI 中添加依赖边界检查，并提供一个简单的源码扫描任务，阻止 core 中出现以下导入：
@@ -428,7 +436,7 @@ API Generator 应从 manifest 生成：
 
 交付物：
 
-- 新建 `horizon-core`、`horizon-theme`、`horizon-web-core`、`horizon-web-react`；
+- 新建 `core`、`horizon-theme`、`horizon-web-core`、`horizon-web-react`；
 - 将纯 class、namespace、类型判断和无框架工具从 `@aurora/utils` 中分离；
 - 建立 Vue/React 独立构建、类型检查和测试任务；
 - 建立统一 CSS 输出和 package exports；
@@ -519,7 +527,7 @@ Tree、Table、Upload 等组件应优先抽出数据模型、算法和异步调�
 
 1. 记录当前 Vue props、emits、slots、exposes、DOM、class、ARIA 和边界状态；
 2. 标记纯逻辑、DOM 逻辑、Vue 生命周期和渲染逻辑；
-3. 将纯类型、默认值、算法和状态机移动到 `horizon-core`；
+3. 将跨产品的纯类型、默认值、算法和状态机移动到 `core`，Horizon Web 专属能力移动到 `horizon-web-core`；
 4. 将通用 DOM 行为移动到 `horizon-web-core`；
 5. 让现有 Vue 组件重新消费拆出的能力，并运行原测试；
 6. 实现 React adapter 和 React 原生 API；
@@ -578,7 +586,7 @@ Vue 使用 Vue Test Utils，React 使用 React Testing Library，分别验证：
 - 将 Vue TSX 通过字符串替换或 AST 转换长期作为 React 源码；
 - 创建一套自定义 VDOM/模板 DSL 来统一 Vue 和 React 渲染；
 - 把 VNode、ReactNode 或框架实例放入公共 Core；
-- 让 `horizon-core` 在模块初始化时访问 DOM；
+- 让 `@aurora/core` 在模块初始化时访问 DOM；
 - 复制复杂组件后让 Vue/React 两套算法独立演进；
 - 为了 DOM 完全相同而破坏框架原生语义；
 - 在没有契约测试的情况下共享复杂 CSS；
@@ -618,7 +626,7 @@ Vue 使用 Vue Test Utils，React 使用 React Testing Library，分别验证：
 
 第一里程碑不以“完成多少 React 组件”为目标，而以验证架构闭环为目标：
 
-1. 建立 `horizon-core`、`horizon-theme`、`horizon-web-core`、`horizon-web-react` 骨架；
+1. 建立 `core`、`horizon-theme`、`horizon-web-core`、`horizon-web-react` 骨架；
 2. 分离当前 `@aurora/utils` 中的纯工具与 Vue 工具；
 3. 完成 Button、Switch、Tooltip、Select 单选模式四个垂直试点；
 4. 打通 Vue/React 构建、测试、文档、主题和 API Generator；
