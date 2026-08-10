@@ -15,14 +15,14 @@ afterEach(() => {
 });
 
 describe('Badge positioning', () => {
-  it('keeps a bottom icon badge linked to the avatar corner in a stretched layout', async () => {
+  it('keeps an inner icon badge on the avatar corner in a stretched layout', async () => {
     const root = document.createElement('div');
     document.body.append(root);
 
     const app = createApp({
       render: () => (
         <div style="display: grid; height: 80px; align-items: stretch;">
-          <HBadge type="icon" content="owner_os" iconSize={12} bottom>
+          <HBadge type="icon" content="owner_os" iconSize={12} align="inner" bottom>
             <HAvatar type="work" src="UX" size="small" />
           </HBadge>
         </div>
@@ -43,7 +43,7 @@ describe('Badge positioning', () => {
     const badgeRect = badge!.getBoundingClientRect();
     const contentRect = content!.getBoundingClientRect();
     expect(badgeRect.height).toBe(targetRect.height);
-    expect(contentRect.left + contentRect.width / 2).toBeCloseTo(targetRect.right, 1);
-    expect(contentRect.top + contentRect.height / 2).toBeCloseTo(targetRect.bottom, 1);
+    expect(contentRect.right).toBeCloseTo(targetRect.right, 1);
+    expect(contentRect.bottom).toBeCloseTo(targetRect.bottom, 1);
   });
 });
