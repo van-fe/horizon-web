@@ -4,8 +4,10 @@ import { defineConfig } from 'vitest/config';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import vue from '@vitejs/plugin-vue';
 import * as path from 'path';
+import { scssPreprocessorOptions } from './build/sass-options';
 
 export default defineConfig({
+  css: { preprocessorOptions: scssPreprocessorOptions },
   plugins: [vue(), vueJsx()],
   test: {
     globals: true,

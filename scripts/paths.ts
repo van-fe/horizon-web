@@ -5,6 +5,12 @@ export const packagesRoot = resolve(monorepoRoot, 'packages');
 export const rootScriptsRoot = resolve(monorepoRoot, 'scripts');
 
 /**
+ * shared theme
+ */
+export const themeProjectRoot = resolve(packagesRoot, 'theme');
+export const themeStylesRoot = resolve(themeProjectRoot, 'styles');
+
+/**
  * docs
  */
 export const docsRoot = resolve(packagesRoot, 'docs');

@@ -1,3 +1,28 @@
+Switch 在 React 中同时支持受控和非受控模式，并继续使用原生 checkbox 提供键盘、表单和辅助技术语义。
+
+## React 用法
+
+```tsx
+import { Switch } from '@aurora/horizon-web-react';
+import '@aurora/horizon-web-react/style.css';
+
+function Example() {
+  const [enabled, setEnabled] = useState(false);
+
+  return (
+    <Switch
+      beforeChange={nextValue => confirmPreference(nextValue)}
+      label="自动更新"
+      onChange={setEnabled}
+      status
+      value={enabled}
+    />
+  );
+}
+```
+
+使用 `value` + `onChange` 进入受控模式；只提供 `defaultValue` 时由组件维护状态。只读状态使用 React 原生属性命名 `readOnly`。
+
 ## 基础用法
 :::demo components/Switch/basic.vue :::
 

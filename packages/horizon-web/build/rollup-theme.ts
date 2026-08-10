@@ -2,6 +2,7 @@ import * as path from 'path';
 import * as fsExtra from 'fs-extra';
 import fastGlob from 'fast-glob';
 import * as sass from 'sass';
+import { scssPreprocessorOptions } from './sass-options';
 
 const scanDir = path.resolve(__dirname, '../src');
 
@@ -38,6 +39,7 @@ async function buildStyle(targets: string[]) {
     }
 
     const res = sass.compile(file, {
+      ...scssPreprocessorOptions.scss,
       style: 'compressed',
     });
 

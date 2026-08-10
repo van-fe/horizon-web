@@ -1,3 +1,28 @@
+The React Switch supports both controlled and uncontrolled state while retaining a native checkbox for keyboard, form, and assistive-technology semantics.
+
+## React Usage
+
+```tsx
+import { Switch } from '@aurora/horizon-web-react';
+import '@aurora/horizon-web-react/style.css';
+
+function Example() {
+  const [enabled, setEnabled] = useState(false);
+
+  return (
+    <Switch
+      beforeChange={nextValue => confirmPreference(nextValue)}
+      label="Automatic updates"
+      onChange={setEnabled}
+      status
+      value={enabled}
+    />
+  );
+}
+```
+
+Use `value` with `onChange` for controlled state, or provide only `defaultValue` for uncontrolled state. Use the native React `readOnly` spelling for read-only behavior.
+
 ## Basic Usage
 :::demo components/Switch/basic.vue :::
 

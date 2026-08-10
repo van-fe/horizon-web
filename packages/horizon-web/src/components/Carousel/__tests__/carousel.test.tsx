@@ -2,6 +2,7 @@ import { resolve } from 'node:path';
 import { setNamespace, useNamespace } from '@aurora/utils';
 import { mount } from '@vue/test-utils';
 import { compile } from 'sass';
+import { testScssOptions } from '~/__tests__/sass-options';
 import { h, nextTick, ref } from 'vue';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { dictionaries } from '~/locales';
@@ -41,7 +42,7 @@ const createRect = ({ bottom, left, right, top }: TestRect): DOMRect => ({
 });
 
 const compileCarouselStyleRules = () => {
-  const css = compile(resolve(__dirname, '../src/style/index.scss')).css;
+  const css = compile(resolve(__dirname, '../src/style/index.scss'), testScssOptions).css;
   return [...css.matchAll(/([^{}]+)\{([^{}]*)\}/g)].map(([, selector, body]) => {
     const declarations = new Map<string, string>();
     body

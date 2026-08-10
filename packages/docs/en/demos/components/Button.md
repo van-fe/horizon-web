@@ -1,5 +1,31 @@
 Button triggers an immediate action. Keep a clear primary and secondary hierarchy, and give icon-only controls an accessible name.
 
+## React Usage
+
+The React renderer uses native `children`, `ref`, and `onClick` conventions. Use `variant` for visual intent and `asyncAction` with `asyncState` for guarded asynchronous work. Load styles from the renderer-specific entry.
+
+```tsx
+import { Button, HorizonWebProvider } from '@aurora/horizon-web-react';
+import '@aurora/horizon-web-react/style.css';
+
+function Example() {
+  return (
+    <HorizonWebProvider navigate={(to, { replace }) => appRouter.navigate(to, { replace })}>
+      <Button
+        asyncAction={() => saveDraft()}
+        asyncState="loading"
+        onActionFinished={() => console.info('saved')}
+        variant="primary"
+      >
+        Save
+      </Button>
+    </HorizonWebProvider>
+  );
+}
+```
+
+`href` keeps native link semantics, while `to` uses the `HorizonWebProvider` navigation adapter. When combined, priority is `href`, `to`, `asyncAction`, then a regular `onClick`.
+
 ## Type and Shape
 
 `type` communicates primary, normal, and dangerous actions. `round` applies a pill-shaped treatment.

@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M1 基础设施已完成，M2 基础试点待启动 |
+| 计划状态 | M2 基础试点已完成，M3 浮层试点待启动 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -209,6 +209,22 @@ Switch 任务：
 | DOC-PILOT-001 | 双框架基础示例 | Button/Switch Vue/React 示例 | 中英文页面可构建、示例可交互 |
 
 退出门槛：公共状态模型能够同时支持 Vue modelValue 与 React value/defaultValue，不产生回写循环。
+
+#### M2 实施记录（2026-08-10）
+
+| 任务 | 状态 | 实施结果 |
+| --- | --- | --- |
+| CORE-BTN-001 | Done | 在 `@aurora/core` 建立 Button 状态计算、action 优先级和异步防重入协议，并提供共享测试向量 |
+| VUE-BTN-001 | Done | Vue Button 通过 composable 消费公共协议，保留既有 props、emits、slot、路由和异步行为 |
+| REACT-BTN-001 | Done | React Button 提供原生 `children`、ref、原生 button/link 属性和 Provider navigation adapter |
+| DS-BTN-001 | Done | Button Sass 源迁入 `@aurora/theme`，Vue 使用兼容代理，React 构建输出同源 CSS |
+| CORE-SW-001 | Done | 在 `@aurora/core` 建立受控值、交互状态、同步/异步 beforeChange 和结果原因协议 |
+| VUE-SW-001 | Done | Vue Switch 通过 composable 消费公共协议，保持 Form trigger 与同步事件时序，并防止异步陈旧结果回写 |
+| REACT-SW-001 | Done | React Switch 支持受控/非受控状态、原生 checkbox/Form、ref、键盘与异步守卫 |
+| DOC-PILOT-001 | Done | Button、Switch 中英文组件页分别补充 React 原生用法；组件文档不包含框架 API 映射或对照表 |
+| QA-PILOT-001 | Done | Core、Vue、React 消费共享 test vectors；补充组件、hook、浏览器样式和 SSR/build 回归验证 |
+
+M2 的公共抽取只包含与渲染框架无关的状态和行为协议。组件结构、事件对象、路由接入、Form 接入与生命周期仍由各 renderer 负责；共享主题作为唯一 Sass 源，Vue 旧路径在兼容期内继续可用。
 
 ### 迭代 4：Web Overlay Primitives 与 Tooltip
 

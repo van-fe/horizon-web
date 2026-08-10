@@ -11,13 +11,26 @@
       "types": "./types/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
-    }
+    },
+    "./styles/button": "./styles/components/button/index.scss",
+    "./styles/button-variables": "./styles/components/button/variables.scss",
+    "./styles/foundations": "./styles/foundations.scss",
+    "./styles/basic": "./styles/basic/index.scss",
+    "./styles/element": "./styles/element/index.scss",
+    "./styles/mixins": "./styles/mixins/index.scss",
+    "./styles/mixins/*": "./styles/mixins/*.scss",
+    "./styles/switch": "./styles/components/switch/index.scss",
+    "./styles/switch-variables": "./styles/components/switch/variables.scss"
   },
   "files": [
     "dist",
-    "types"
+    "types",
+    "styles"
   ],
-  "sideEffects": false,
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss"
+  ],
   "scripts": {
     "build": "bun run build:dist && bun run build:types",
     "build:dist": "bunx --bun vite build",

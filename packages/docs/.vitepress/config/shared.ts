@@ -5,6 +5,7 @@ import watchDemos from './watchDemos';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import path from 'path';
 import { liveDemoPlugin } from './liveDemoPlugin';
+import { scssPreprocessorOptions } from '../../../horizon-web/build/sass-options';
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -47,6 +48,7 @@ export default defineConfig({
       preprocessorOptions: {
         scss: {
           api: 'modern-compiler',
+          ...scssPreprocessorOptions.scss,
         },
       },
     },

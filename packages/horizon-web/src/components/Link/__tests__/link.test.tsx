@@ -4,6 +4,7 @@ import { describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
 import type { LinkProps } from '../src/composables/useProps';
 import { compile } from 'sass';
+import { testScssOptions } from '~/__tests__/sass-options';
 import { resolve } from 'node:path';
 
 describe('Link.tsx', () => {
@@ -27,7 +28,7 @@ describe('Link.tsx', () => {
   });
 
   test('keeps its presentation above contextual link styles', () => {
-    const css = compile(resolve(__dirname, '../src/style/index.scss')).css;
+    const css = compile(resolve(__dirname, '../src/style/index.scss'), testScssOptions).css;
 
     // Two component classes outrank contextual element rules such as `.vp-doc a`.
     expect(css).toContain('.h-link.h-link {');

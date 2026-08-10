@@ -1,13 +1,14 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { compile } from 'sass';
+import { testScssOptions } from '~/__tests__/sass-options';
 import { describe, expect, it } from 'vitest';
 
 const stylesRoot = resolve(__dirname, '..');
 
 describe('accessibility styles', () => {
   it('ships the shared focus ring through the on-demand base stylesheet', () => {
-    const css = compile(resolve(stylesRoot, 'base.scss')).css;
+    const css = compile(resolve(stylesRoot, 'base.scss'), testScssOptions).css;
 
     expect(css).toContain('[data-focus-visible-proxy]');
     expect(css).toContain('[data-focus-visible-inset]');

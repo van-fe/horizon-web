@@ -1,9 +1,15 @@
 import path from 'path';
-import { componentRoot, directiveRoot, horizonwebSourceRoot, methodsRoot } from '../../../../scripts/paths';
+import {
+  componentRoot,
+  directiveRoot,
+  horizonwebSourceRoot,
+  methodsRoot,
+} from '../../../../scripts/paths';
 import * as sass from 'sass';
 import type { PluginDependencies, PluginType } from './vite.css.plugin';
 import fs from 'fs-extra';
 import { rollupTheme } from '../rollup-theme';
+import { scssPreprocessorOptions } from '../sass-options';
 
 function getPluginStyleIndexPath(pluginName: string, type: PluginType, relativeFrom: string) {
   return path.relative(
@@ -12,7 +18,11 @@ function getPluginStyleIndexPath(pluginName: string, type: PluginType, relativeF
   );
 }
 
-function getScssImportString(pluginName: string, type: PluginType, relativeFrom = horizonwebSourceRoot) {
+function getScssImportString(
+  pluginName: string,
+  type: PluginType,
+  relativeFrom = horizonwebSourceRoot,
+) {
   const importPath = getPluginStyleIndexPath(pluginName, type, relativeFrom);
 
   if (fs.pathExistsSync(path.resolve(relativeFrom, importPath))) {
@@ -70,6 +80,7 @@ export default async ({
       });
 
       const currResult = sass.compileString(scssContent, {
+        ...scssPreprocessorOptions.scss,
         style: 'compressed',
         loadPaths: ['src', 'node_modules'],
       });

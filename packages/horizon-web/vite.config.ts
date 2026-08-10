@@ -3,10 +3,11 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import buildTheme from './build/css-plugin/vite.css.plugin';
+import { scssPreprocessorOptions } from './build/sass-options';
 
 export default defineConfig({
   css: {
-    preprocessorOptions: { scss: { charset: false } },
+    preprocessorOptions: scssPreprocessorOptions,
   },
   build: {
     target: 'esnext',

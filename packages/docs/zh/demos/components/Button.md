@@ -1,5 +1,31 @@
 Button 触发即时操作。一个操作区域应保持清晰的主次关系，并为图标按钮提供可访问名称。
 
+## React 用法
+
+React renderer 使用原生 `children`、`ref` 和 `onClick`，通过 `variant` 设置视觉类型，通过 `asyncAction` 和 `asyncState` 管理异步操作。样式从 renderer 的独立入口加载。
+
+```tsx
+import { Button, HorizonWebProvider } from '@aurora/horizon-web-react';
+import '@aurora/horizon-web-react/style.css';
+
+function Example() {
+  return (
+    <HorizonWebProvider navigate={(to, { replace }) => appRouter.navigate(to, { replace })}>
+      <Button
+        asyncAction={() => saveDraft()}
+        asyncState="loading"
+        onActionFinished={() => console.info('saved')}
+        variant="primary"
+      >
+        保存
+      </Button>
+    </HorizonWebProvider>
+  );
+}
+```
+
+`href` 使用原生链接语义；`to` 交给 `HorizonWebProvider` 的 `navigate` adapter。两者存在时 `href` 优先，其后依次为 `to`、`asyncAction` 和普通 `onClick`。
+
 ## 类型与圆角
 
 `type` 表达主操作、普通操作和危险操作；`round` 提供椭圆外观。

@@ -2,7 +2,8 @@ import * as fs from 'fs';
 import path, { resolve } from 'path';
 import * as cssTree from 'css-tree';
 import * as sass from 'sass';
-import { styleRoot } from '../../../../scripts/paths';
+import { themeStylesRoot } from '../../../../scripts/paths';
+import { scssPreprocessorOptions } from '../sass-options';
 
 export type OneDeepRecordType<T = string> = {
   [key: string]: string | OneDeepRecordType<T>;
@@ -13,11 +14,11 @@ export function getBasicElementCssVariables(filePath: string, withVersion = true
   const tempFilePath = path.resolve(path.dirname(filePath), `${fileBaseName}.temp.scss`);
   const mixinsFilePath = path.relative(
     path.dirname(tempFilePath),
-    path.resolve(styleRoot, 'mixins/mixins.scss'),
+    path.resolve(themeStylesRoot, 'mixins/mixins.scss'),
   );
   const functionFilePath = path.relative(
     path.dirname(tempFilePath),
-    path.resolve(styleRoot, 'mixins/function.scss'),
+    path.resolve(themeStylesRoot, 'mixins/function.scss'),
   );
   let content = fs.readFileSync(filePath, 'utf-8');
 
@@ -26,7 +27,7 @@ export function getBasicElementCssVariables(filePath: string, withVersion = true
   if (withVersion) {
     const forwardConfigFilePath = path.relative(
       path.dirname(tempFilePath),
-      path.resolve(styleRoot, 'mixins/config.scss'),
+      path.resolve(themeStylesRoot, 'mixins/config.scss'),
     );
 
     prevContent = `@forward '${forwardConfigFilePath}' with (
@@ -52,7 +53,7 @@ export function getBasicElementCssVariables(filePath: string, withVersion = true
 
   fs.writeFileSync(tempFilePath, content, 'utf-8');
 
-  const res = sass.compile(tempFilePath);
+  const res = sass.compile(tempFilePath, scssPreprocessorOptions.scss);
 
   fs.rmSync(tempFilePath);
 
@@ -120,7 +121,7 @@ export function getFileName(fileRawName: string) {
 }
 
 export function getScssProperties(filePath: string) {
-  const cssItem = sass.compile(filePath);
+  const cssItem = sass.compile(filePath, scssPreprocessorOptions.scss);
 
   const { propertyNameMap } = getPropertyName(cssItem.css.toString());
 

@@ -158,8 +158,10 @@
       "version": "1.0.0",
       "dependencies": {
         "@aurora/colors": "workspace:*",
+        "@aurora/core": "workspace:*",
         "@aurora/icon": "workspace:*",
         "@aurora/locale-vue": "workspace:*",
+        "@aurora/theme": "workspace:*",
         "@aurora/utils": "workspace:*",
         "@babel/runtime": "^7.26.0",
         "@floating-ui/vue": "^1.1.9",

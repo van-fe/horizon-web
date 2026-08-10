@@ -3,8 +3,16 @@ import HSwitch from '../src/Switch';
 import { describe, expect, test, vi, Mock } from 'vitest';
 import { nextTick, ref } from 'vue';
 import type { Awaitable } from '@aurora/utils';
+import { getSwitchState, switchStateTestVectors } from '@aurora/core';
 
 describe('Switch.tsx', () => {
+  test.each(switchStateTestVectors)(
+    'consumes shared state vector: $name',
+    ({ input, interactive }) => {
+      expect(getSwitchState(input).interactive).toBe(interactive);
+    },
+  );
+
   test('basic', async () => {
     const modelValue = ref();
     const wrapper = shallowMount(() => <HSwitch modelValue={modelValue.value} />);
@@ -82,7 +90,11 @@ describe('Switch.tsx', () => {
 
     test('before-change', async () => {
       const modelValue = ref(false);
-      const beforeChange = ref<boolean | Mock<((newValue: boolean) => Awaitable<boolean>)> | ((newValue: boolean) => Awaitable<boolean>)>(false);
+      const beforeChange = ref<
+        | boolean
+        | Mock<(newValue: boolean) => Awaitable<boolean>>
+        | ((newValue: boolean) => Awaitable<boolean>)
+      >(false);
       const wrapper = mount(() => (
         <HSwitch
           modelValue={modelValue.value}

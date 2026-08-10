@@ -1,12 +1,4 @@
-import {
-  computed,
-  createVNode,
-  defineComponent,
-  getCurrentInstance,
-  inject,
-  ref,
-  toRefs,
-} from 'vue';
+import { computed, createVNode, defineComponent, getCurrentInstance, inject, toRefs } from 'vue';
 import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { useButtonProps } from './composables/useProps';
@@ -26,6 +18,7 @@ import type { Router } from 'vue-router';
 import { getCssVariableByStatus } from '~/utils/useColorful';
 import { builtinColorMapping } from '~/styles';
 import { tinyColor } from '@aurora/colors';
+import { useButtonAction } from './composables/useButtonAction';
 
 export default defineComponent({
   name: `${useNamespace()}Button`,
@@ -44,6 +37,7 @@ export default defineComponent({
 
     const instance = getCurrentInstance();
     const router = instance?.appContext.config.globalProperties.$router as Router | undefined;
+    const { onClick, state: actionState } = useButtonAction(props, router, emit);
 
     const parentProps = inject(HButtonGroupPropsInjectKey, undefined);
     const groupSizeRef = inject(HButtonGroupSizeInjectKey, undefined);
@@ -90,63 +84,6 @@ export default defineComponent({
       );
     });
 
-    const debounceLoading = ref(false);
-    function onClick(e: MouseEvent) {
-      if (props.disabled || props.loading) return;
-
-      if (props.href) {
-        e.preventDefault();
-        switch (props.target) {
-          case '_blank':
-            window.open(props.href);
-            return;
-          case '_self':
-            location.href = props.href;
-            return;
-          case '_parent':
-            window.parent.open(props.href);
-            return;
-          case '_top':
-            window.top?.open(props.href);
-            return;
-        }
-      }
-
-      if (props.to) {
-        if (router) {
-          e.preventDefault();
-          props.replace ? router.replace(props.to) : router.push(props.to);
-          return;
-        } else {
-          console.warn(
-            `You haven't import "vue-router". The props of 'to' and 'replace' will be ignored.`,
-          );
-        }
-      }
-
-      if (props.debounceFn) {
-        e.preventDefault();
-
-        if (debounceLoading.value) {
-          return;
-        }
-
-        debounceLoading.value = true;
-
-        Promise.resolve(props.debounceFn?.())
-          .then(() => {
-            emit('debounceFinished');
-          })
-          .finally(() => {
-            debounceLoading.value = false;
-          });
-
-        return;
-      }
-
-      emit('click', e);
-    }
-
     return () => (
       <props.tag
         class={cls(
@@ -160,26 +97,23 @@ export default defineComponent({
           classHelper.m('link', props.link),
           classHelper.m('equally', isOnlyIcon.value),
           classHelper.is(borderStyleProp.value),
-          classHelper.is(
-            'loading',
-            props.loading || (debounceLoading.value && props.debounceType === 'loading'),
-          ),
+          classHelper.is('loading', actionState.value.loading),
           classHelper.is('with-icon', !!(props.icon || slots.icon || props.loading)),
           classHelper.is('auto-fit', props.autoFit),
           classHelper.is('activated', props.active),
           classHelper.is('ghost', props.ghost),
         )}
         type={props.nativeType}
-        disabled={props.disabled || (debounceLoading.value && props.debounceType === 'disabled')}
+        disabled={actionState.value.disabled}
         tabindex={0}
         autofocus={props.autofocus}
         {...attrs}
         style={appendStyle.value}
-        onClick={evt => onClick(evt)}
+        onClick={onClick}
         onFocus={(e: FocusEvent) => emit('focus', e)}
         onBlur={(e: FocusEvent) => emit('blur', e)}
       >
-        {props.loading || (debounceLoading.value && props.debounceType === 'loading') ? (
+        {actionState.value.loading ? (
           <div class={cls(classHelper.e('icon'), classHelper.m('loading'))}>
             <LoadingIcon
               class={classHelper.e('loading-icon')}

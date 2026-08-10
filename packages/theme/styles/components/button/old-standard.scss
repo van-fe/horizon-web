@@ -1,4 +1,4 @@
-@use '../../../../styles/mixins';
+@use '../../mixins';
 
 @include mixins.b('button') {
   @include mixins.m('equally') {

@@ -2,13 +2,14 @@ import * as path from 'path';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import { scssPreprocessorOptions } from './sass-options';
 import dtsPlugin from 'vite-plugin-dts';
 import { genedBundlePlugin, green } from '../../../scripts/log';
 import { rollupTheme } from './rollup-theme';
 
 export default defineConfig({
   css: {
-    preprocessorOptions: { scss: { charset: false } },
+    preprocessorOptions: scssPreprocessorOptions,
   },
   build: {
     target: 'esnext',

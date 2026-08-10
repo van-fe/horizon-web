@@ -6,8 +6,16 @@ import type { ButtonProps } from '../src/composables/useProps';
 import { IconEye } from '@aurora/icon';
 import { sleep } from '../../../utils/tools';
 import LoadingIcon from '../../../directives/v-loading/src/components/LoadingIcon';
+import { buttonActionTestVectors, resolveButtonAction } from '@aurora/core';
 
 describe('Button.tsx', () => {
+  test.each(buttonActionTestVectors)(
+    'consumes shared action vector: $name',
+    ({ input, expected }) => {
+      expect(resolveButtonAction(input)).toBe(expected);
+    },
+  );
+
   test('basic', async () => {
     const wrapper = mount(() => <HButton>OK</HButton>);
     const element = wrapper.findComponent(HButton);

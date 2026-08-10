@@ -1,0 +1,15 @@
+@use './mixins/function';
+@use './mixins/mixins';
+@use './basic';
+@use './element';
+@use './components/button/variables' as button;
+@use './components/switch/variables' as switch;
+
+$values: function.map-merge-multi(
+  function.flatten-variables(basic.$values),
+  function.flatten-variables(element.$values),
+  function.flatten-variables(button.$values, 'button'),
+  function.flatten-variables(switch.$values, 'switch')
+);
+
+@include mixins.create-root($values);

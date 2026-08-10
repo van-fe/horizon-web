@@ -4,6 +4,7 @@ import HAnchorLink from '../src/AnchorLink';
 import { describe, expect, test, vi } from 'vitest';
 import { ref, nextTick } from 'vue';
 import { compile } from 'sass';
+import { testScssOptions } from '~/__tests__/sass-options';
 import { resolve } from 'node:path';
 
 describe('Anchor.tsx', () => {
@@ -16,7 +17,7 @@ describe('Anchor.tsx', () => {
   });
 
   test('keeps its presentation above contextual link styles', () => {
-    const css = compile(resolve(__dirname, '../src/style/index.scss')).css;
+    const css = compile(resolve(__dirname, '../src/style/index.scss'), testScssOptions).css;
 
     // Two component classes outrank contextual element rules such as `.vp-doc a`.
     expect(css).toContain('.h-anchor__link-title-txt.h-anchor__link-title-txt {');

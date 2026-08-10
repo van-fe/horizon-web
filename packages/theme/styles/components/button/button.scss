@@ -1,20 +1,20 @@
-@use '../../../../styles/mixins';
+@use '../../mixins';
 
 @include mixins.b('button') {
   display: inline-flex;
-  grid-column-gap: mixins.css-variable('button', 'spacing', 'siblings', 'gap');
+  column-gap: mixins.css-variable('button', 'spacing', 'siblings', 'gap');
   align-items: center;
   justify-content: center;
   height: mixins.css-variable('button', 'size', 'height');
   padding: 0 mixins.css-variable('button', 'spacing', 'padding-x');
-  color: mixins.css-variable('button-color');
   font-size: mixins.css-variable('button', 'font-size');
   line-height: mixins.css-variable('button', 'line-height');
-  white-space: nowrap;
   vertical-align: middle;
+  color: mixins.css-variable('button-color');
+  white-space: nowrap;
+  cursor: pointer;
   border: mixins.css-variable('button', 'border');
   border-radius: mixins.css-variable('button', 'border-radius');
-  cursor: pointer;
   transition: all mixins.css-variable('button', 'transition', 'duration');
 
   @include mixins.m('block') {
@@ -127,6 +127,7 @@
     padding: 0;
   }
 
+  /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
   &[disabled] {
     cursor: not-allowed;
   }

@@ -1,0 +1,11 @@
+@use './function';
+
+@mixin create-root($list, $selector: ':root') {
+  #{$selector} {
+    @each $name, $val in $list {
+      @if $val {
+        #{function.css-variable-name($name)}: $val;
+      }
+    }
+  }
+}

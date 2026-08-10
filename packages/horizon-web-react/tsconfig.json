@@ -8,11 +8,19 @@
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "types": [],
     "strict": true,
+    "jsx": "react-jsx",
     "declaration": true,
     "sourceMap": true,
     "esModuleInterop": true,
     "skipLibCheck": true
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["src/**/__tests__/**", "src/**/*.test.ts", "dist", "types", "node_modules"]
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": [
+    "src/**/__tests__/**",
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx",
+    "dist",
+    "types",
+    "node_modules"
+  ]
 }

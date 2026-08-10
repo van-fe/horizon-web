@@ -2,10 +2,11 @@ import * as path from 'path';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import { scssPreprocessorOptions } from './sass-options';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  css: { preprocessorOptions: { scss: { charset: false } } },
+  css: { preprocessorOptions: scssPreprocessorOptions },
   build: {
     sourcemap: true,
     lib: {
@@ -38,7 +39,7 @@ export default defineConfig({
         exports: 'named',
         dynamicImportInCjs: false,
         inlineDynamicImports: true,
-        dir: path.resolve(__dirname, '../dist')
+        dir: path.resolve(__dirname, '../dist'),
       },
     },
   },

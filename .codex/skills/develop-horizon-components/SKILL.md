@@ -66,6 +66,7 @@ Build components as native members of Horizon Web rather than isolated widgets. 
 ## Deliver docs and demos with the component
 
 - Add both Chinese and English component pages and register the navigation entry.
+- Document each renderer in its own native API terms. Do not describe Vue APIs as mapping to React APIs, React APIs as mapping to Vue APIs, or include cross-framework API comparison tables in component docs. Keep cross-framework mappings only in architecture or migration guides.
 - Provide runnable demos for the normal path and the important modes or edge cases. Avoid demos that require unavailable private services.
 - Explain non-obvious browser constraints and fallback behavior, such as CORS, media decoding, Teleport, or deterministic mock data.
 - Document Props, Events, Slots, and Exposes. Source JSDoc remains required even when API tables are written manually.

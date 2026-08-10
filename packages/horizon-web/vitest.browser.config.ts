@@ -3,8 +3,10 @@ import vue from '@vitejs/plugin-vue';
 import { playwright } from '@vitest/browser-playwright';
 import { defineConfig } from 'vitest/config';
 import * as path from 'path';
+import { scssPreprocessorOptions } from './build/sass-options';
 
 export default defineConfig({
+  css: { preprocessorOptions: scssPreprocessorOptions },
   root: __dirname,
   plugins: [vue(), vueJsx()],
   test: {

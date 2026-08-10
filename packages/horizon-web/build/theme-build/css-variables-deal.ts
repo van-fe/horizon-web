@@ -1,4 +1,9 @@
-import { componentRoot, directiveRoot, methodsRoot, styleRoot } from '../../../../scripts/paths';
+import {
+  componentRoot,
+  directiveRoot,
+  methodsRoot,
+  themeStylesRoot,
+} from '../../../../scripts/paths';
 import { resolve } from 'path';
 import type { OneDeepRecordType } from './utils';
 import {
@@ -24,8 +29,8 @@ function recursionTransformScssFileToProperties(filesPathTree: OneDeepRecordType
 
 export function getGroupedBasicAndElementToken() {
   const filesPathTree = {
-    basic: recursionCollectFiles(resolve(styleRoot, 'basic')),
-    element: recursionCollectFiles(resolve(styleRoot, 'element')),
+    basic: recursionCollectFiles(resolve(themeStylesRoot, 'basic')),
+    element: recursionCollectFiles(resolve(themeStylesRoot, 'element')),
   };
 
   return recursionTransformScssFileToProperties(filesPathTree);

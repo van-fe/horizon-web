@@ -1,4 +1,4 @@
-@use '../mixins/function.scss';
+@use '../mixins/function';
 
 $values: (
   '1': #{function.size(2)},

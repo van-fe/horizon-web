@@ -1,12 +1,5 @@
-import { computed, defineComponent, inject, nextTick, toRefs } from 'vue';
-import {
-  cls,
-  ComponentClassBlock,
-  isBoolean,
-  isDefined,
-  isUndefined,
-  useNamespace,
-} from '@aurora/utils';
+import { defineComponent, inject, toRefs } from 'vue';
+import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { useSwitchProps } from './composables/useProps';
 import type { SwitchEmits } from './composables/useEmits';
@@ -17,6 +10,7 @@ import {
 } from '~/components/Form/src/utils/injectedKeys';
 import useSize from '~/utils/useSize';
 import useLocaleLang from '~/utils/useLocaleLang';
+import { useSwitchState } from './composables/useSwitchState';
 
 export default defineComponent({
   name: `${useNamespace()}Switch`,
@@ -33,7 +27,6 @@ export default defineComponent({
       statusOffText: statusOffTextRef,
       label: labelRef,
       labelPosition: labelPositionRef,
-      disabled: disabledRef,
       readonly: readonlyRef,
       size,
     } = toRefs(props);
@@ -44,51 +37,15 @@ export default defineComponent({
     /** formItemTrigger **/
     const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
 
-    // form disabled inject
     const formDisabled = inject(HFormDisabledInjectedKey, undefined);
-    const isDisabled = computed(() => disabledRef?.value ?? formDisabled?.value ?? false);
-
-    const onChange = async () => {
-      if (isDisabled.value || readonlyRef.value) {
-        return;
-      }
-      const newVal = !modelValueRef.value;
-
-      if (isDefined(props.beforeChange)) {
-        if (isBoolean(props.beforeChange)) {
-          props.beforeChange && doChange(newVal);
-        } else {
-          Promise.resolve<boolean | undefined>(props.beforeChange(newVal))
-            .then(res => {
-              if ((isDefined(res) && res) || isUndefined(res)) {
-                doChange(newVal);
-              }
-            })
-            .catch(() => {
-              // no nothing
-            });
-        }
-      } else {
-        doChange(newVal);
-      }
-    };
-
-    const doChange = (newVal: boolean) => {
-      emit('update:modelValue', newVal);
-      emit('change', newVal);
-      nextTick().then(() => {
-        formItemTrigger?.('change');
-      });
-    };
+    const {
+      disabled: isDisabled,
+      onBlur,
+      onChange,
+      pending,
+    } = useSwitchState(props, formDisabled, formItemTrigger, emit);
 
     const classHelper = new ComponentClassBlock('switch');
-
-    function onBlur(evt: FocusEvent) {
-      emit('blur', evt);
-      nextTick().then(() => {
-        formItemTrigger?.('blur');
-      });
-    }
 
     return () => (
       <div
@@ -102,9 +59,7 @@ export default defineComponent({
         )}
         onClick={() => onChange()}
       >
-        {labelRef.value && (
-          <span class={classHelper.e('label')}>{labelRef.value}</span>
-        )}
+        {labelRef.value && <span class={classHelper.e('label')}>{labelRef.value}</span>}
         <span class={classHelper.e('main')}>
           <span
             class={cls(
@@ -128,6 +83,7 @@ export default defineComponent({
               aria-checked={modelValueRef.value}
               aria-disabled={isDisabled.value}
               aria-readonly={readonlyRef.value}
+              aria-busy={pending.value || undefined}
               aria-label={labelRef.value || undefined}
               onClick={evt => evt.stopPropagation()}
               onChange={() => onChange()}
