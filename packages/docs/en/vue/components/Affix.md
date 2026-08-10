@@ -17,12 +17,12 @@ Pass an element or selector through `target` and Affix will calculate its bounda
 
 ## Nested scroll containers
 
-Affix listens to its own `target`. If an outer container also scrolls, call the exposed `updatePosition()` method from the outer scroll handler. The demo uses a Vue listener that is removed automatically on unmount.
+Affix automatically responds to scrolling in the target and its outer containers, and recalculates after the window or target container resizes. Call the exposed `updatePosition()` method when application code changes layout without causing a scroll or resize event.
 
 :::demo vue/components/Affix/multiple-scroll-container.vue :::
 
 ## Pin to the bottom
 
-Set `position="bottom"` and combine it with `offset` for persistent submit or save actions. The pinned element still remains inside the target boundary.
+Set `position="bottom"` and combine it with `offset` for persistent submit or save actions. Without `target`, Affix uses the viewport bottom; with a target container, it stays within that container boundary.
 
 :::demo vue/components/Affix/bottom.vue :::
