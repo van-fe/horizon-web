@@ -22,9 +22,15 @@ export default defineConfig({
       },
     },
     rollupOptions: {
-      external: ['vue'],
+      external: ['vue', '@aurora/core', '@aurora/horizon-web-core', '@aurora/theme'],
       output: {
         sourcemap: true,
+        globals: {
+          '@aurora/core': 'AuroraCore',
+          '@aurora/horizon-web-core': 'HorizonWebCore',
+          '@aurora/theme': 'AuroraTheme',
+          vue: 'Vue',
+        },
       },
     },
   },

@@ -145,6 +145,10 @@
         "@ctrl/tinycolor": "^3.6.0",
       },
     },
+    "packages/core": {
+      "name": "@aurora/core",
+      "version": "1.0.0",
+    },
     "packages/eslint-plugin-horizon-web": {
       "name": "@aurora/eslint-plugin-horizon-web",
       "version": "1.0.0",
@@ -180,6 +184,28 @@
         "ts-morph": "^27.0.2",
         "vue": "^3.5.26",
         "vue-router": "^4.4.5",
+      },
+    },
+    "packages/horizon-web-core": {
+      "name": "@aurora/horizon-web-core",
+      "version": "1.0.0",
+    },
+    "packages/horizon-web-react": {
+      "name": "@aurora/horizon-web-react",
+      "version": "1.0.0",
+      "dependencies": {
+        "@aurora/core": "workspace:*",
+        "@aurora/horizon-web-core": "workspace:*",
+        "@aurora/theme": "workspace:*",
+      },
+      "devDependencies": {
+        "@types/react": "^19.0.0",
+        "@types/react-dom": "^19.0.0",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+      },
+      "peerDependencies": {
+        "react": "^18.0.0 || ^19.0.0",
       },
     },
     "packages/icon": {
@@ -233,6 +259,10 @@
         "vue": "^3.2.33",
       },
     },
+    "packages/theme": {
+      "name": "@aurora/theme",
+      "version": "1.0.0",
+    },
     "packages/unplugin-resolver": {
       "name": "@aurora/horizon-web-unplugin-resolver",
       "version": "1.0.0",
@@ -255,6 +285,9 @@
       "name": "@aurora/utils",
       "version": "1.0.0",
       "dependencies": {
+        "@aurora/core": "workspace:*",
+        "@aurora/horizon-web-core": "workspace:*",
+        "@aurora/theme": "workspace:*",
         "@vueuse/core": "^11.0.0",
         "lodash": "^4.17.21",
       },
@@ -324,9 +357,15 @@
 
     "@aurora/colors": ["@aurora/colors@workspace:packages/colors"],
 
+    "@aurora/core": ["@aurora/core@workspace:packages/core"],
+
     "@aurora/eslint-plugin-horizon-web": ["@aurora/eslint-plugin-horizon-web@workspace:packages/eslint-plugin-horizon-web"],
 
     "@aurora/horizon-web": ["@aurora/horizon-web@workspace:packages/horizon-web"],
+
+    "@aurora/horizon-web-core": ["@aurora/horizon-web-core@workspace:packages/horizon-web-core"],
+
+    "@aurora/horizon-web-react": ["@aurora/horizon-web-react@workspace:packages/horizon-web-react"],
 
     "@aurora/horizon-web-unplugin-resolver": ["@aurora/horizon-web-unplugin-resolver@workspace:packages/unplugin-resolver"],
 
@@ -337,6 +376,8 @@
     "@aurora/locale-react": ["@aurora/locale-react@workspace:packages/locale-react"],
 
     "@aurora/locale-vue": ["@aurora/locale-vue@workspace:packages/locale-vue"],
+
+    "@aurora/theme": ["@aurora/theme@workspace:packages/theme"],
 
     "@aurora/upload-adapters": ["@aurora/upload-adapters@workspace:packages/upload-adapters"],
 

@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | 启动版，进入阶段 0 |
+| 计划状态 | M1 基础设施已完成，M2 基础试点待启动 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -154,6 +154,20 @@ flowchart LR
 | QA-002 | 添加依赖边界检查 | CI 脚本和失败示例测试 | Core 导入 Vue/React 时 CI 必须失败 |
 
 退出门槛：所有新包独立 build/typecheck/test 通过，根工作区脚本可以发现它们，现有 Vue 测试不受影响。
+
+#### M1 实施记录（2026-08-10）
+
+| 任务 | 状态 | 实施结果 |
+| --- | --- | --- |
+| PKG-001 | Done | 新建 `@aurora/core`，承载纯类型、数组/对象/数值工具、通用守卫和 EventEmitter |
+| PKG-002 | Done | 新建 `@aurora/horizon-web-core`，首批抽出 SSR 安全的 browser detection 与 body scroll lock |
+| PKG-003 | Done | 新建统一的 `@aurora/theme`，提供 namespace、class contract、Token 展平与 CSS variable 输出骨架 |
+| PKG-004 | Done | 新建 `@aurora/horizon-web-react`，完成 Provider、context/hook、React 18/19 peer range 与 SSR smoke test |
+| PKG-005 | Done | 保留 `@aurora/horizon-web` 作为 Vue 兼容入口，本期不移动 87 个组件；后续迁移目标固定为 `@aurora/horizon-web-vue` |
+| UTIL-002 | Done | `@aurora/utils` 通过兼容转发消费 `core/theme/web-core`，现有 Vue 导入路径保持有效 |
+| QA-002 | Done | 新增 foundation package boundary scan，并接入根测试命令和 Pages 构建依赖顺序 |
+
+本期不包含 Button、Switch 等 renderer 组件实现，也不提前创建 Skyline renderer。M2 从 Button/Switch 的状态协议和双 renderer 试点开始。
 
 ### 迭代 2：公共工具、主题与 React 基础运行时
 

@@ -1,0 +1,32 @@
+{
+  "name": "@aurora/theme",
+  "version": "1.0.0",
+  "description": "Shared visual contracts and token utilities for Aurora component products.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "types"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "bun run build:dist && bun run build:types",
+    "build:dist": "bunx --bun vite build",
+    "build:types": "rm -rf types && tsc -d --pretty --emitDeclarationOnly --declarationDir ./types",
+    "typecheck": "tsc --noEmit --pretty false",
+    "test": "bun run --bun vitest run --config ./vitest.config.ts"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "ISC"
+}

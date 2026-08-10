@@ -1,1 +1,1 @@
-export const isBrowser = () => ![typeof window, typeof document].includes('undefined');
+export { isBrowser } from '@aurora/horizon-web-core';

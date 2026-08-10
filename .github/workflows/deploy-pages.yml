@@ -32,6 +32,10 @@ jobs:
 
       - name: Build documentation prerequisites
         run: |
+          bun run check:boundaries
+          bun --filter @aurora/core build
+          bun --filter @aurora/theme build
+          bun --filter @aurora/horizon-web-core build
           bun --filter @aurora/utils build
           bun --filter @aurora/icon generate
           bun --filter @aurora/horizon-web build:index
