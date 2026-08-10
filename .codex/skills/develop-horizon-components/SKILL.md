@@ -1,6 +1,6 @@
 ---
 name: develop-horizon-components
-description: Develop or update Vue components in the horizon-web repository while following its component APIs, styling, localization, documentation, demo, JSDoc, and test conventions. Use for any work under packages/horizon-web/src/components, related component demos or docs, or reviews and fixes that affect Horizon Web component behavior.
+description: Develop or document Vue and React components in the horizon-web repository while following its component APIs, styling, localization, renderer-separated documentation, demos, JSDoc, and test conventions. Use for work under packages/horizon-web/src/components, packages/horizon-web-react/src, related component demos or docs, or reviews and fixes that affect Horizon component behavior.
 ---
 
 # Develop Horizon Components
@@ -70,6 +70,17 @@ Build components as native members of Horizon Web rather than isolated widgets. 
 - Provide runnable demos for the normal path and the important modes or edge cases. Avoid demos that require unavailable private services.
 - Explain non-obvious browser constraints and fallback behavior, such as CORS, media decoding, Teleport, or deterministic mock data.
 - Document Props, Events, Slots, and Exposes. Source JSDoc remains required even when API tables are written manually.
+
+### Keep renderer documentation separate
+
+- Put Vue pages under `packages/docs/{locale}/vue/` and React pages under `packages/docs/{locale}/react/`. Use `/vue/...` and `/react/...` as canonical routes.
+- Put Vue SFC demos under `packages/docs/demos/vue/` and React TSX demos under `packages/docs/demos/react/`. Do not load one renderer's demo through the other renderer's compiler or preview component.
+- Give Vue and React independent navigation and sidebars. List only components implemented by that renderer.
+- Keep each component page renderer-native: Vue pages document props, emits, slots, exposes, and Vue demos; React pages document props, callbacks, children, refs, and TSX demos.
+- Keep shared visual rules, tokens, accessibility principles, and framework-neutral design guidance in common documentation sections. Do not duplicate them into renderer pages unless the component needs renderer-specific usage guidance.
+- Redirect legacy component URLs to the canonical Vue route during migration. Do not retain duplicate full-page content at old routes.
+- Make API injection renderer-aware. Never inject Vue analysis into React pages or React analysis into Vue pages.
+- Add documentation checks that reject cross-renderer demo references and mixed component-page content.
 
 ### Make demos polished and readable
 

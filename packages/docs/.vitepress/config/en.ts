@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress';
 import demosSidebar from './demos-sidebar.json';
 import version from './version.json';
 
-const createDemosSidebar = () =>
+const createVueSidebar = () =>
   demosSidebar.map(category => ({
     text: category.en,
     collapsed: false,
@@ -11,6 +11,17 @@ const createDemosSidebar = () =>
       link: item.link,
     })),
   }));
+
+const reactSidebar = [
+  {
+    text: 'Basic Components',
+    collapsed: false,
+    items: [
+      { text: 'Button', link: 'components/Button' },
+      { text: 'Switch', link: 'components/Switch' },
+    ],
+  },
+];
 
 const guideSidebar = [
   {
@@ -35,7 +46,7 @@ const guideSidebar = [
 ];
 
 export default defineConfig({
-  description: 'A modern Vue 3 component library',
+  description: 'Horizon Web component libraries for Vue 3 and React',
   lang: 'en',
   themeConfig: {
     nav: [
@@ -44,7 +55,8 @@ export default defineConfig({
         link: '/en/guide/why-choose-horizon-web',
         activeMatch: '/en/guide/',
       },
-      { text: 'API & Demos', link: '/en/demos/index', activeMatch: '/en/demos/' },
+      { text: 'Vue 3', link: '/en/vue/index', activeMatch: '/en/vue/' },
+      { text: 'React', link: '/en/react/index', activeMatch: '/en/react/' },
       { text: 'Extensions', link: '/en/extensions/', activeMatch: '/en/extensions/' },
       {
         text: version.version,
@@ -65,9 +77,13 @@ export default defineConfig({
         base: '/en/guide/',
         items: guideSidebar,
       },
-      '/en/demos/': {
-        base: '/en/demos/',
-        items: createDemosSidebar(),
+      '/en/vue/': {
+        base: '/en/vue/',
+        items: createVueSidebar(),
+      },
+      '/en/react/': {
+        base: '/en/react/',
+        items: reactSidebar,
       },
       '/en/extensions/': {
         items: [

@@ -17,8 +17,9 @@ export default function markdownAnalysePlugin(md: MarkdownIt) {
     const filePath = (state.env as any)?.filePath || (state.env as any)?.path || '';
     
     // 判断是否需要使用 markdown-analyse
-    // 只处理 demos 目录下的文件（components, directives, methods）
-    const shouldUseAnalyse = filePath.includes('/demos/') && 
+    // 仅 Vue 文档使用基于 Vue 源码的自动 API 分析。
+    // React 文档有独立的 API 表格，不共享这条注入链。
+    const shouldUseAnalyse = filePath.includes('/vue/') &&
       (filePath.includes('/components/') || 
        filePath.includes('/directives/') || 
        filePath.includes('/methods/'));

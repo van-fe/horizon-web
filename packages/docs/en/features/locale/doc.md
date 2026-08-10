@@ -44,10 +44,10 @@ createApp(App)
 
 ## Application
 
-HorizonWeb also provides a Vue component [Application](../../demos/components/Application) for global configuration of internationalization settings
+HorizonWeb also provides a Vue component [Application](../../vue/components/Application) for global configuration of internationalization settings
 If you change `locale`, you can dynamically modify the language
 
-:::demo components/Application/i18n.vue :::
+:::demo vue/components/Application/i18n.vue :::
 
 ## Dynamic Language Modification
 

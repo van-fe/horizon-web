@@ -44,10 +44,10 @@ createApp(App)
 
 ## Application
 
-HorizonWeb 还提供了一个 Vue 组件 [Application](../../demos/components/Application) 用于全局配置国际化的设置
+HorizonWeb 还提供了一个 Vue 组件 [Application](../../vue/components/Application) 用于全局配置国际化的设置
 如果更改 `locale`，可以动态修改语言
 
-:::demo components/Application/i18n.vue :::
+:::demo vue/components/Application/i18n.vue :::
 
 ## 动态修改语言
 

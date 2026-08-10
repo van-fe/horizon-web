@@ -1,2 +1,2 @@
 ## Basic Usage
-:::demo components/${capitalName}/basic.vue :::
+:::demo vue/components/${capitalName}/basic.vue :::

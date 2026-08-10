@@ -9,12 +9,12 @@ const vitepressEntry = require.resolve('vitepress');
 const markdownItPath = require.resolve('markdown-it', { paths: [path.dirname(vitepressEntry)] });
 const MarkdownIt = require(markdownItPath) as typeof import('markdown-it').default;
 
-const demoRoot = path.resolve(__dirname, '../../en/demos');
+const demoRoot = path.resolve(__dirname, '../../en/vue');
 
 describe('automatic component docs', () => {
   it('renders the grouped Layout APIs when there is no standalone Layout metadata', () => {
     const markdown = new MarkdownIt().use(autoComponentDocs);
-    const markdownPath = path.resolve(__dirname, '../../en/demos/components/Layout.md');
+    const markdownPath = path.resolve(__dirname, '../../en/vue/components/Layout.md');
 
     const result = markdown.render('## CSS Grid Layout', { path: markdownPath });
 
@@ -40,7 +40,7 @@ describe('automatic component docs', () => {
 
   it('matches kebab-case directive pages and appends their API', () => {
     const markdown = new MarkdownIt().use(autoComponentDocs);
-    const markdownPath = path.resolve(__dirname, '../../en/demos/directives/v-click-outside.md');
+    const markdownPath = path.resolve(__dirname, '../../en/vue/directives/v-click-outside.md');
 
     const result = markdown.render('## Basic\n\nDemo content.', { path: markdownPath });
 
@@ -56,7 +56,7 @@ describe('automatic component docs', () => {
 
   it('escapes component-like tags from definition descriptions', () => {
     const markdown = new MarkdownIt().use(autoComponentDocs);
-    const markdownPath = path.resolve(__dirname, '../../zh/demos/components/Container.md');
+    const markdownPath = path.resolve(__dirname, '../../zh/vue/components/Container.md');
 
     const result = markdown.render('Demo content.', { path: markdownPath });
 
@@ -66,7 +66,7 @@ describe('automatic component docs', () => {
 
   it('uses the method directory name and appends grouped APIs', () => {
     const markdown = new MarkdownIt().use(autoComponentDocs);
-    const markdownPath = path.resolve(__dirname, '../../en/demos/methods/MessageBox.md');
+    const markdownPath = path.resolve(__dirname, '../../en/vue/methods/MessageBox.md');
 
     const result = markdown.render('## Alert\n\nDemo content.', { path: markdownPath });
 
@@ -107,7 +107,7 @@ describe('automatic component docs', () => {
 
   it('keeps an authored page title instead of injecting a duplicate h1', () => {
     const markdown = new MarkdownIt().use(autoComponentDocs);
-    const markdownPath = path.resolve(__dirname, '../../en/demos/components/AudioPlayer.md');
+    const markdownPath = path.resolve(__dirname, '../../en/vue/components/AudioPlayer.md');
 
     const result = markdown.render('# AudioPlayer\n\nManual introduction.', { path: markdownPath });
 

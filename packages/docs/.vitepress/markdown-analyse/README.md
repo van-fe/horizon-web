@@ -31,7 +31,7 @@
 这是一个警告
 :::
 
-:::demo components/Button/basic.vue
+:::demo vue/components/Button/basic.vue
 :::
 ```
 

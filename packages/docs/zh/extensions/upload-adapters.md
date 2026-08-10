@@ -3,7 +3,7 @@
 云存储接入放在独立的 `@aurora/upload-adapters` 包中，`@aurora/horizon-web` 不依赖任何厂商
 SDK。预设会同时返回 `multipart` 和 `multipartChunkSize`，可以直接通过 `v-bind` 使用，避免
 Upload 与云端使用不同的分片边界。Upload 自身的切片、Worker 与自定义服务端协议见
-[分片断点续传](/demos/components/Upload#分片断点续传)。
+[分片断点续传](/vue/components/Upload#分片断点续传)。
 
 ## 交互演示
 

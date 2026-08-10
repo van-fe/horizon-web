@@ -14,9 +14,9 @@ interface WriteDocsOptions {
 
 export function writeDocs({ type, name, templateDir, replacer }: WriteDocsOptions) {
   const docsRoot = resolve(__dirname, '../../../packages/docs');
-  const zhDocFile = resolve(docsRoot, `zh/demos/${type}`, `${name}.md`);
-  const enDocFile = resolve(docsRoot, `en/demos/${type}`, `${name}.md`);
-  const demosDir = resolve(docsRoot, `demos/${type}`, name);
+  const zhDocFile = resolve(docsRoot, `zh/vue/${type}`, `${name}.md`);
+  const enDocFile = resolve(docsRoot, `en/vue/${type}`, `${name}.md`);
+  const demosDir = resolve(docsRoot, `demos/vue/${type}`, name);
 
   fs.mkdirSync(demosDir, { recursive: true });
 

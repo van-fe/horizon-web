@@ -1,0 +1,16 @@
+## Basic Usage
+:::demo vue/components/Guide/basic.vue :::
+
+## Direct Parameter Passing
+In some cases, you may not need to use the `h-guide-item` component to build steps, you can directly pass in data to build
+:::demo vue/components/Guide/itemList.vue :::
+
+## Mask
+You can set `mask = false` to close the mask
+:::demo vue/components/Guide/mask.vue :::
+
+## Complete Example
+In most cases, the elements that need to be focused appear dynamically, and new elements will appear after interacting with the previously focused element
+
+In this case, you cannot use the controller to switch between steps
+:::demo vue/components/Guide/whole.vue :::

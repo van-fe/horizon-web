@@ -1,2 +1,2 @@
 ## Basic Usage
-:::demo directives/${nameWithPrefix}/basic.vue :::
+:::demo vue/directives/${nameWithPrefix}/basic.vue :::

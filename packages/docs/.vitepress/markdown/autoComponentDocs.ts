@@ -78,7 +78,7 @@ function createHtmlToken(
 /** Builds the generated introduction and API shared by page rendering and local search. */
 function renderAutoComponentDocs(filePath: string): AutoComponentDocsContent | undefined {
   const match = filePath.match(
-    /[\\/]demos[\\/](components|directives|methods)[\\/]([^\\/]+)\.md$/i,
+    /[\\/]vue[\\/](components|directives|methods)[\\/]([^\\/]+)\.md$/i,
   );
 
   if (!match) return;

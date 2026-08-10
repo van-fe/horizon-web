@@ -9,9 +9,8 @@ export default function (content: string, filePath: string, root: string) {
   const importScripts: string[] = [];
   let id = 0; // demo 的 id
 
-  // 计算 demos 目录的路径
-  // 如果 filePath 在 packages/docs/zh/demos/... 或 packages/docs/en/demos/...
-  // 则 demos 目录在 packages/docs/demos/
+  // Vue 页面位于 packages/docs/zh/vue/... 或 packages/docs/en/vue/...
+  // 其示例位于 packages/docs/demos/vue/
   const docsRoot = path.resolve(root, 'packages/docs');
   const demosRoot = path.join(docsRoot, 'demos');
 

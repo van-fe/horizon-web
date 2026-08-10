@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress';
 import demosSidebar from './demos-sidebar.json';
 import version from './version.json';
 
-const createDemosSidebar = () =>
+const createVueSidebar = () =>
   demosSidebar.map(category => ({
     text: category.zh,
     collapsed: false,
@@ -11,6 +11,17 @@ const createDemosSidebar = () =>
       link: item.link,
     })),
   }));
+
+const reactSidebar = [
+  {
+    text: '基础组件',
+    collapsed: false,
+    items: [
+      { text: 'Button 按钮', link: 'components/Button' },
+      { text: 'Switch 开关', link: 'components/Switch' },
+    ],
+  },
+];
 
 const zhGuideSidebar = [
   {
@@ -38,12 +49,13 @@ const zhGuideSidebar = [
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  description: 'Vue3 现代组件库',
+  description: 'Horizon Web Vue 3 与 React 组件库',
   lang: 'zh',
   themeConfig: {
     nav: [
       { text: '指南', link: '/guide/why-choose-horizon-web', activeMatch: '/guide/' },
-      { text: 'API 及示例', link: '/demos/index', activeMatch: '/demos/' },
+      { text: 'Vue 3', link: '/vue/index', activeMatch: '/vue/' },
+      { text: 'React', link: '/react/index', activeMatch: '/react/' },
       { text: '扩展', link: '/extensions/', activeMatch: '/extensions/' },
       {
         text: version.version,
@@ -64,9 +76,13 @@ export default defineConfig({
         base: '/guide/',
         items: zhGuideSidebar,
       },
-      '/demos/': {
-        base: '/demos/',
-        items: createDemosSidebar(),
+      '/vue/': {
+        base: '/vue/',
+        items: createVueSidebar(),
+      },
+      '/react/': {
+        base: '/react/',
+        items: reactSidebar,
       },
       '/extensions/': {
         items: [

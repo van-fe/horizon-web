@@ -9,8 +9,9 @@ import '../../../horizon-web/src/styles/index.scss';
 import './tailwind.css';
 import './demo.css';
 import DemoBlock from '../components/DemoBlock.vue';
+import ReactDemoBlock from '../components/ReactDemoBlock.vue';
 import VersionTips from '../components/VersionTips.vue';
-import IconGallery from '../../demos/components/Icon/all.vue';
+import IconGallery from '../../demos/vue/components/Icon/all.vue';
 
 export default {
   extends: DefaultTheme,
@@ -57,6 +58,7 @@ export default {
     });
 
     app.component('DemoBlock', DemoBlock);
+    app.component('ReactDemoBlock', ReactDemoBlock);
     app.component('VersionTips', VersionTips);
     app.component('IconGallery', IconGallery);
   },

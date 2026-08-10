@@ -1,0 +1,77 @@
+## Basic usage
+
+Tags come in `small`, `medium`, and `large` sizes. Use `bold` when the text needs more emphasis, and keep the chosen size consistent within one interface.
+
+:::demo vue/components/Tag/basic.vue :::
+
+## Semantic types
+
+Use `type` to communicate success, information, warning, and error states. The example places each type in a release workflow so their hierarchy is easy to compare.
+
+:::demo vue/components/Tag/type.vue :::
+
+## Low-emphasis style
+
+Enable `plain` to reduce background emphasis for supporting metadata such as environments and sources while preserving semantic color.
+
+:::demo vue/components/Tag/plain.vue :::
+
+## Shapes
+
+Use `round` for categories and filters, and `equally` when short status labels need equal-width alignment.
+
+:::demo vue/components/Tag/shape.vue :::
+
+## Custom colors
+
+Set a base `color` to derive colors automatically for the default, hover, pressed, and disabled states. Toggle the regular, plain, and disabled styles to check legibility across contexts.
+
+:::demo vue/components/Tag/colorful.vue :::
+
+## Icons
+
+Add an icon through the `icon` prop or slot to reinforce a state. Keep a text label so the icon is never the only cue.
+
+:::demo vue/components/Tag/icon.vue :::
+
+## Avatars
+
+Use `avatar` to combine a person's image and name in a compact assignee tag, or provide custom avatar content through the slot.
+
+:::demo vue/components/Tag/avatar.vue :::
+
+## Activatable tags
+
+Control selection with `v-model:active` to build multi-select filters and surface the active result immediately.
+
+:::demo vue/components/Tag/active.vue :::
+
+## Closable tags
+
+Enable `closable` and handle the close event to maintain the tag list. The example includes result feedback and a reset action for the complete flow.
+
+:::demo vue/components/Tag/closable.vue :::
+
+## Disabled tags
+
+Use `disabled` for labels that must remain visible but cannot be changed. Explain the reason close to the disabled item.
+
+:::demo vue/components/Tag/disabled.vue :::
+
+## Loading state
+
+Use `loading` while a tag is briefly syncing or awaiting confirmation. The example provides clear feedback when the operation completes.
+
+:::demo vue/components/Tag/loading.vue :::
+
+## Create and edit
+
+Combine `use-create`, `editable`, and `closable` on `h-tag-group` for a complete management flow. `before-create`, `before-edit`, and `before-close` can run asynchronous validation.
+
+:::demo vue/components/Tag/create-update.vue :::
+
+## Collapsible tag group
+
+With `collapse`, overflowing tags are collected according to the available width. Combine it with `expand`, tooltip modes, and a minimum visible count for containers of different densities.
+
+:::demo vue/components/Tag/collapse.vue :::

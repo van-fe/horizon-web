@@ -6,11 +6,15 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import path from 'path';
 import { liveDemoPlugin } from './liveDemoPlugin';
 import { scssPreprocessorOptions } from '../../../horizon-web/build/sass-options';
+import { legacyVueDocsRedirectPlugin } from './legacyVueDocsRedirectPlugin';
+import { reactDocsTsxPlugin } from './reactDocsTsxPlugin';
+
+const docsBase = process.env.DOCS_BASE || '/';
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: 'Horizon Web',
-  base: process.env.DOCS_BASE || '/',
+  base: docsBase,
   cleanUrls: true,
   locales: {
     root: {
@@ -65,6 +69,33 @@ export default defineConfig({
           replacement: path.join(__dirname, '../../../../node_modules/@aurora/horizon-web/src/'),
         },
         {
+          find: /^@aurora\/horizon-web-react$/,
+          replacement: path.join(__dirname, '../../../horizon-web-react/src/index.ts'),
+        },
+        {
+          find: /^@aurora\/core$/,
+          replacement: path.join(__dirname, '../../../core/src/index.ts'),
+        },
+        {
+          find: /^@aurora\/theme$/,
+          replacement: path.join(__dirname, '../../../theme/src/index.ts'),
+        },
+        {
+          find: /^react$/,
+          replacement: path.join(__dirname, '../../../horizon-web-react/node_modules/react'),
+        },
+        {
+          find: /^react\/(.*)$/,
+          replacement: path.join(__dirname, '../../../horizon-web-react/node_modules/react/$1'),
+        },
+        {
+          find: /^react-dom\/(.*)$/,
+          replacement: path.join(
+            __dirname,
+            '../../../horizon-web-react/node_modules/react-dom/$1',
+          ),
+        },
+        {
           find: /^@aurora\/upload-adapters\/(.*)$/,
           replacement: path.join(__dirname, '../../../../packages/upload-adapters/src/$1'),
         },
@@ -106,7 +137,17 @@ export default defineConfig({
         },
       ],
     },
-    plugins: [liveDemoPlugin(), vueJsx(), DefineOptions(), ResolveComponentsAlias(), watchDemos()],
+    plugins: [
+      legacyVueDocsRedirectPlugin(docsBase),
+      liveDemoPlugin(),
+      reactDocsTsxPlugin(),
+      vueJsx({
+        exclude: [/horizon-web-react[\\/]/, /docs[\\/]demos[\\/]react[\\/]/],
+      }),
+      DefineOptions(),
+      ResolveComponentsAlias(),
+      watchDemos(),
+    ],
     server: {
       hmr: {
         // Live demo compiler errors are rendered inside DemoBlock. Keeping the

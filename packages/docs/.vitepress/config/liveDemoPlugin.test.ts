@@ -21,7 +21,7 @@ describe('liveDemoPlugin', () => {
     const request = Readable.from([
       JSON.stringify({
         id: 'button-demo',
-        path: 'demos/components/Button/basic.vue',
+        path: 'demos/vue/components/Button/basic.vue',
         source: '<template><h-button>Edited</h-button></template>',
       }),
     ]);
@@ -83,7 +83,7 @@ describe('liveDemoPlugin', () => {
     const request = Readable.from([
       JSON.stringify({
         id: 'incomplete-demo',
-        path: 'demos/components/Button/basic.vue',
+        path: 'demos/vue/components/Button/basic.vue',
         source: '<template><h-button>Incomplete</template>',
       }),
     ]);

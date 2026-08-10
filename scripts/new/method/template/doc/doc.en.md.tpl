@@ -1,2 +1,2 @@
 ## Basic Usage
-:::demo methods/${capitalName}/basic.vue :::
+:::demo vue/methods/${capitalName}/basic.vue :::

@@ -23,7 +23,7 @@ function resolveReferencedFile(docsRoot: string, markdownPath: string, sourcePat
     // sources live beside the component demos in the shared demos tree.
     const componentDemoPath = path.resolve(
       docsRoot,
-      'demos/components',
+      'demos/vue/components',
       path.basename(markdownPath, path.extname(markdownPath)),
       path.basename(sourcePath),
     );
@@ -66,6 +66,31 @@ export default (md: MarkdownIt) => {
         return `<demo-block source="${md.utils.escapeHtml(content)}" path="${relativePath}" locale="${locale}" />`;
       }
       return '';
+    },
+  });
+
+  md.use(mdContainer, 'react-demo', {
+    validate(params: string) {
+      return params.trim().match(/^react-demo\s+(react\/.*\.tsx)(?:\s*:::)?\s*$/);
+    },
+    render(tokens: Token[], idx: number, _options: unknown, env: Record<string, unknown> = {}) {
+      const match = tokens[idx].info.trim().match(/^react-demo\s+(react\/.*\.tsx)(?:\s*:::)?\s*$/);
+      if (tokens[idx].nesting !== 1) return '';
+
+      const demoPath = match?.[1]?.trim() || '';
+      const docsRoot = path.resolve(__dirname, '../../');
+      const markdownPath = typeof env.path === 'string' ? env.path : '';
+      const fullPath = resolveReferencedFile(docsRoot, markdownPath, demoPath);
+      if (!demoPath || !fs.existsSync(fullPath)) {
+        throw new Error(
+          `React demo file not found: ${demoPath} (from ${markdownPath || 'docs root'})`,
+        );
+      }
+
+      const content = fs.readFileSync(fullPath, 'utf-8');
+      const relativePath = path.relative(docsRoot, fullPath).replace(/\\/g, '/');
+      const locale = getDocumentLocale(docsRoot, markdownPath);
+      return `<react-demo-block source="${md.utils.escapeHtml(content)}" path="${relativePath}" locale="${locale}" />`;
     },
   });
 

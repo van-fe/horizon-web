@@ -11,34 +11,48 @@ const MarkdownIt = require(markdownItPath) as typeof import('markdown-it').defau
 describe('demo container', () => {
   it('adds the document locale to the demo frame', () => {
     const markdown = new MarkdownIt().use(containers);
-    const markdownPath = path.resolve(__dirname, '../../en/demos/components/Button.md');
+    const markdownPath = path.resolve(__dirname, '../../en/vue/components/Button.md');
 
     const result = markdown.render(
-      '## Basic `type`\n\nChoose a semantic type for the action.\n\n:::demo components/Button/basic.vue :::',
+      '## Basic `type`\n\nChoose a semantic type for the action.\n\n:::demo vue/components/Button/basic.vue :::',
       { path: markdownPath },
     );
 
     expect(result).toContain('locale="en"');
-    expect(result).toContain('path="demos/components/Button/basic.vue"');
+    expect(result).toContain('path="demos/vue/components/Button/basic.vue"');
     expect(result).not.toContain('title="Basic type"');
   });
 
   it('defaults documents outside the English tree to Chinese', () => {
     const markdown = new MarkdownIt().use(containers);
-    const markdownPath = path.resolve(__dirname, '../../zh/demos/components/Button.md');
+    const markdownPath = path.resolve(__dirname, '../../zh/vue/components/Button.md');
 
-    const result = markdown.render('## 基础用法\n\n:::demo components/Button/basic.vue :::', {
+    const result = markdown.render('## 基础用法\n\n:::demo vue/components/Button/basic.vue :::', {
       path: markdownPath,
     });
 
     expect(result).toContain('locale="zh"');
+  });
+
+  it('renders React demos with their own block and locale', () => {
+    const markdown = new MarkdownIt().use(containers);
+    const markdownPath = path.resolve(__dirname, '../../en/react/components/Button.md');
+
+    const result = markdown.render(
+      '## Basic\n\n:::react-demo react/components/Button/basic.tsx :::',
+      { path: markdownPath },
+    );
+
+    expect(result).toContain('<react-demo-block');
+    expect(result).toContain('path="demos/react/components/Button/basic.tsx"');
+    expect(result).toContain('locale="en"');
   });
 });
 
 describe('code container', () => {
   it('renders an external source file as a highlighted fence', () => {
     const markdown = new MarkdownIt().use(containers);
-    const markdownPath = path.resolve(__dirname, '../../en/demos/components/Tabs.md');
+    const markdownPath = path.resolve(__dirname, '../../en/vue/components/Tabs.md');
 
     const result = markdown.render(':::code ./demos/design-token.scss :::', {
       path: markdownPath,

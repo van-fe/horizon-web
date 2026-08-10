@@ -18,7 +18,7 @@ describe('static demo compiler utilities', () => {
   });
 
   it('resolves relative demo paths without Node path APIs', () => {
-    expect(normalizePath('demos/components/Viewer/../../demo-assets.ts')).toBe(
+    expect(normalizePath('demos/vue/components/Viewer/../../../demo-assets.ts')).toBe(
       'demos/demo-assets.ts',
     );
     expect(normalizePath('en/features/tokens/demos/./theme.json')).toBe(

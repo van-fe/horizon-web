@@ -1,2 +1,2 @@
 ### 基本用法
-:::demo methods/${capitalName}/basic.vue :::
+:::demo vue/methods/${capitalName}/basic.vue :::

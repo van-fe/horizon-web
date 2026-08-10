@@ -1,2 +1,2 @@
 ### 基本用法
-:::demo directives/${nameWithPrefix}/basic.vue :::
+:::demo vue/directives/${nameWithPrefix}/basic.vue :::

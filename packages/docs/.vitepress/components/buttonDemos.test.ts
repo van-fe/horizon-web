@@ -3,7 +3,7 @@ import path from 'node:path';
 import { parse, type SFCDescriptor } from '@vue/compiler-sfc';
 import { describe, expect, it } from 'vitest';
 
-const buttonDemoDirectory = path.resolve(__dirname, '../../demos/components/Button');
+const buttonDemoDirectory = path.resolve(__dirname, '../../demos/vue/components/Button');
 const templateNodeType = {
   element: 1,
   attribute: 6,

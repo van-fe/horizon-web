@@ -32,8 +32,10 @@
     "git:prune": "git remote prune origin && git branch -vv | grep 'origin/.*: gone]' | awk '{print $1}' | xargs git branch -d",
     "docs:prepare": "bun --filter @aurora/api-generator build",
     "docs:dev": "bun run docs:prepare && vitepress dev packages/docs",
-    "docs:build": "bun run docs:prepare && bun run docs:check-media && vitepress build packages/docs",
+    "docs:build": "bun run docs:prepare && bun run docs:check-media && bun run docs:check-renderers && vitepress build packages/docs",
     "docs:check-media": "bun run scripts/checkDocsMedia.ts",
+    "docs:check-renderers": "bun run scripts/checkRendererDocs.ts && bun run docs:typecheck-react",
+    "docs:typecheck-react": "bunx tsc -p packages/docs/demos/react/tsconfig.json --noEmit --pretty false",
     "docs:preview": "vitepress preview packages/docs"
   },
   "devDependencies": {
