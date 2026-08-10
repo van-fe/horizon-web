@@ -3,6 +3,8 @@
 @include mixins.b('badge') {
   position: relative;
   display: inline-flex;
+  width: fit-content;
+  height: fit-content;
 
   @include mixins.e('content') {
     position: absolute;
@@ -76,11 +78,11 @@
       top: auto;
       bottom: 0;
     }
+  }
 
-    @include mixins.parallel-modifier('center-point') {
-      @include mixins.e('content', false) {
-        transform: translate(50%, 50%);
-      }
+  @include mixins.parallel-modifier('bottom', 'center-point') {
+    @include mixins.e('content') {
+      transform: translate(50%, 50%);
     }
   }
 }
