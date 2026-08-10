@@ -32,14 +32,12 @@
 
 ```text
 @aurora/core
-
-@aurora/horizon-theme
+@aurora/theme
 
 @aurora/horizon-web-core
 @aurora/horizon-web-vue
 @aurora/horizon-web-react
 
-@aurora/skyline-theme
 @aurora/skyline-mobile-core
 @aurora/skyline-mobile-vue
 @aurora/skyline-mobile-react
@@ -51,7 +49,7 @@
 - `horizon` 表示 Web 产品体系，`skyline` 表示移动端产品体系；
 - `web`、`mobile` 表示产品运行平台；
 - `vue`、`react` 表示最终 renderer；
-- Horizon 与 Skyline 分别维护主题值和组件视觉规范，只共享必要的 Token schema 与纯协议；
+- `@aurora/theme` 表示 Horizon 与 Skyline 共用的视觉规范、Token 值和主题输出；
 - 支撑型包可以继续使用 `locale-*`、`icon-*`、`upload-adapters` 等领域名称，不强制套用产品组件包命名规则。
 
 ### 3.1 现有包改名与兼容
@@ -86,12 +84,11 @@ packages/horizon-web         -> @aurora/horizon-web
 flowchart TB
     AC["@aurora/core<br/>跨产品、跨平台状态、算法、协议"]
 
-    HT["@aurora/horizon-theme<br/>Horizon Web 主题"]
+    AT["@aurora/theme<br/>统一视觉 Token 与多平台主题输出"]
     HWC["@aurora/horizon-web-core<br/>DOM 与 Web 交互能力"]
     HWV["@aurora/horizon-web-vue<br/>Vue 3 renderer"]
     HWR["@aurora/horizon-web-react<br/>React renderer"]
 
-    ST["@aurora/skyline-theme<br/>Skyline Mobile 主题"]
     SMC["@aurora/skyline-mobile-core<br/>手势与移动端能力"]
     SMV["@aurora/skyline-mobile-vue<br/>Mobile Vue renderer"]
     SMR["@aurora/skyline-mobile-react<br/>Mobile React renderer"]
@@ -99,14 +96,14 @@ flowchart TB
     AC --> HWC
     HWC --> HWV
     HWC --> HWR
-    HT --> HWV
-    HT --> HWR
+    AT --> HWV
+    AT --> HWR
 
     AC --> SMC
     SMC --> SMV
     SMC --> SMR
-    ST --> SMV
-    ST --> SMR
+    AT --> SMV
+    AT --> SMR
 ```
 
 ### 4.1 `@aurora/core`
@@ -132,17 +129,30 @@ flowchart TB
 
 `@aurora/core` 还禁止包含 Horizon 或 Skyline 的组件名、品牌颜色、产品文案和平台专属默认值。若能力只服务 Horizon Web，应放入 `horizon-web-core`；若只服务 Skyline Mobile，应放入 `skyline-mobile-core`。
 
-### 4.2 `@aurora/horizon-theme`
+### 4.2 `@aurora/theme`
 
-负责统一设计语言，不负责组件运行时：
+负责 Horizon 与 Skyline 统一的视觉规范，不负责组件运行时：
 
-- Design Token 的 TypeScript、JSON 和 SCSS 源数据；
+- Design Token 的类型、命名规范与唯一源数据；
 - 色彩、字号、字重、间距、圆角、阴影、层级和动效参数；
-- Web CSS Variables 和组件 SCSS；
+- 两个产品共同使用的语义 Token 和组件 Token；
+- Web CSS Variables、CSS 和 SCSS 输出；
+- Mobile/Native 可消费的 TypeScript、JSON 和普通对象输出；
 - BEM 类名和 namespace 规则；
 - 主题生成、覆盖和类型定义。
 
-该包不得依赖 Vue 或 React。Horizon Web Vue 和 Web React 应尽量复用同一份 CSS，并以稳定 DOM/class 契约保证样式一致。Skyline 的移动端主题由 `@aurora/skyline-theme` 维护；两套主题可以共享 Token schema，但不能默认共享产品主题值。
+建议提供稳定子入口：
+
+```text
+@aurora/theme/tokens
+@aurora/theme/web.css
+@aurora/theme/scss
+@aurora/theme/native
+```
+
+该包不得依赖 Vue 或 React。Horizon Web Vue 和 Web React 复用同一份 CSS，并以稳定 DOM/class 契约保证样式一致；Skyline Mobile 消费同源的 TypeScript/JSON Token，不要求存在 DOM 或 CSS。
+
+平台交互差异，例如 hover、Safe Area、触摸手势和软键盘，不属于主题包。若未来确实出现视觉规范分叉，优先增加 `@aurora/theme/horizon`、`@aurora/theme/skyline` 子入口；只有在版本和发布生命周期也明确分离后，才重新评估拆包。
 
 ### 4.3 `@aurora/horizon-web-core`
 
@@ -188,7 +198,7 @@ React 包不能导入 `@aurora/horizon-web-vue` 或通过挂载 Vue 组件实现
 
 ### 4.6 Skyline Mobile 扩展边界
 
-未来的 `@aurora/skyline-mobile-core` 只复用真正跨产品、跨平台的 `@aurora/core`，并与 `@aurora/skyline-theme` 一起单独承载 Skyline 移动端能力：
+未来的 `@aurora/skyline-mobile-core` 复用真正跨产品、跨平台的 `@aurora/core`，Skyline renderer 同时消费统一的 `@aurora/theme`，并单独承载移动端交互能力：
 
 - 触摸与手势状态；
 - Safe Area、软键盘和移动端视口；
@@ -215,7 +225,7 @@ Horizon Web DOM 能力不得反向进入 Skyline Mobile 包。若 `@aurora/skyli
 3. core 永远不能反向依赖 renderer；
 4. Vue 与 React renderer 不能相互依赖；
 5. 组件之间优先通过公开契约协作，避免跨目录引用另一个组件的私有实现；
-6. `horizon-theme` 与未来的 `skyline-theme` 不依赖任何运行时 renderer；
+6. `@aurora/theme` 不依赖任何产品 runtime 或 renderer；
 7. 框架专属依赖只能出现在对应 renderer 包中。
 
 建议在 ESLint 和 CI 中添加依赖边界检查，并提供一个简单的源码扫描任务，阻止 core 中出现以下导入：
@@ -436,7 +446,7 @@ API Generator 应从 manifest 生成：
 
 交付物：
 
-- 新建 `core`、`horizon-theme`、`horizon-web-core`、`horizon-web-react`；
+- 新建 `core`、`theme`、`horizon-web-core`、`horizon-web-react`；
 - 将纯 class、namespace、类型判断和无框架工具从 `@aurora/utils` 中分离；
 - 建立 Vue/React 独立构建、类型检查和测试任务；
 - 建立统一 CSS 输出和 package exports；
@@ -626,7 +636,7 @@ Vue 使用 Vue Test Utils，React 使用 React Testing Library，分别验证：
 
 第一里程碑不以“完成多少 React 组件”为目标，而以验证架构闭环为目标：
 
-1. 建立 `core`、`horizon-theme`、`horizon-web-core`、`horizon-web-react` 骨架；
+1. 建立 `core`、`theme`、`horizon-web-core`、`horizon-web-react` 骨架；
 2. 分离当前 `@aurora/utils` 中的纯工具与 Vue 工具；
 3. 完成 Button、Switch、Tooltip、Select 单选模式四个垂直试点；
 4. 打通 Vue/React 构建、测试、文档、主题和 API Generator；

@@ -9,7 +9,7 @@
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
 | 首批试点 | Button、Switch、Tooltip、Select 单选模式 |
-| 命名决策 | 公共底座使用 `@aurora/core`；Web 产品使用 Horizon；移动端产品使用 Skyline |
+| 命名决策 | 公共底座使用 `@aurora/core` 和 `@aurora/theme`；Web 产品使用 Horizon；移动端产品使用 Skyline |
 | 规划单位 | 工程日和两周迭代；工程日表示一名工程师的有效开发时间 |
 | 计划调整点 | 每个里程碑结束时根据实测复杂度、共享比例和回归结果重新估算 |
 
@@ -34,7 +34,7 @@
 
 首个 Web React MVP 必须包含：
 
-- `@aurora/core`、`@aurora/horizon-theme`、`@aurora/horizon-web-core` 基础包；
+- `@aurora/core`、`@aurora/theme`、`@aurora/horizon-web-core` 基础包；
 - `@aurora/horizon-web-vue` 与 `@aurora/horizon-web-react` renderer 基础设施；
 - Button、Switch、Tooltip、Select 单选模式的 Vue/React 双实现；
 - 公共 Token、locale key、状态协议和行为测试向量；
@@ -148,7 +148,7 @@ flowchart LR
 | --- | --- | --- | --- |
 | PKG-001 | 创建 `core` | package、tsconfig、Vite/Vitest、exports | build/typecheck/test 通过，无产品、平台和 renderer 依赖 |
 | PKG-002 | 创建 `horizon-web-core` | DOM 能力包骨架 | SSR import 不访问浏览器全局 |
-| PKG-003 | 创建 `horizon-theme` | Token/SCSS 输出骨架 | Vue/React 可以消费同一 CSS 入口 |
+| PKG-003 | 创建 `theme` | 统一 Token 源及 Web/Native 输出骨架 | Web Vue/React 消费同一 CSS，Skyline 可消费同源 TS/JSON Token |
 | PKG-004 | 创建 `horizon-web-react` | React 19、类型、测试、SSR 骨架 | ESM、类型、renderToString smoke test 通过 |
 | PKG-005 | 规划 `horizon-web-vue` 迁移 | 目录迁移清单和兼容包原型 | 明确所有写死路径，不立即大规模移动源码 |
 | QA-002 | 添加依赖边界检查 | CI 脚本和失败示例测试 | Core 导入 Vue/React 时 CI 必须失败 |
