@@ -1,6 +1,6 @@
 import type { Dayjs } from 'dayjs';
 import type { HCalendarPinFlag } from '~/components/Calendar/src/utils/types';
-import cloneDeep from 'lodash/cloneDeep';
+import { cloneDeep } from 'lodash-es';
 import type PinFlagsHelper from './PinFlagsHelper';
 import { isObject, cssVariableKey } from '@aurora/utils';
 import type { Ref } from 'vue';

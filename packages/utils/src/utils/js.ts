@@ -1,4 +1,4 @@
-import isRegExp from 'lodash/isRegExp';
+import { isRegExp } from 'lodash-es';
 import type { PropsTyped } from './tsHelper';
 
 /**

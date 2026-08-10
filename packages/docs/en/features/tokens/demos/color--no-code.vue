@@ -3,7 +3,7 @@ import { tinyColor } from '@aurora/colors';
 import type { TinyColor } from '@aurora/colors';
 import tokens from './theme.json';
 import { ref } from 'vue';
-import groupBy from 'lodash/groupBy';
+import { groupBy } from 'lodash-es';
 import { ThemeType } from '@aurora/horizon-web';
 import { snakeCase } from '@aurora/utils';
 

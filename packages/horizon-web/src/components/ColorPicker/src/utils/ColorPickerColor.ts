@@ -2,8 +2,7 @@ import type { ColorPickerProps } from '../composables/useProps';
 import SingleColor from './SingleColor';
 import type { Ref } from 'vue';
 import { ref } from 'vue';
-import uniqueId from 'lodash/uniqueId';
-import round from 'lodash/round';
+import { uniqueId, round } from 'lodash-es';
 
 export const gradientColorDirection = [
   'top',

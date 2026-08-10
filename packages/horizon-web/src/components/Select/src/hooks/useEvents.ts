@@ -13,7 +13,7 @@ import {
   HSelectMouseOverOptionInjectKey,
   type SelectCollectedOptionData,
 } from '../utils/injectKeys';
-import throttle from 'lodash/throttle';
+import { throttle } from 'lodash-es';
 import { clamp } from '@vueuse/core';
 
 export default function useEvents(

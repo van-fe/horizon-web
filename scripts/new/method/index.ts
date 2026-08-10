@@ -1,4 +1,4 @@
-import { upperFirst, kebabCase } from 'lodash';
+import { upperFirst, kebabCase } from 'lodash-es';
 import writeFilesByPath from '../utils/writeFilesByPath';
 import { writeDocs, registerDemosSidebar } from '../utils/writeDocs';
 import { resolve } from 'path';

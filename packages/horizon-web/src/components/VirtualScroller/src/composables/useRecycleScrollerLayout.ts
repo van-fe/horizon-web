@@ -1,5 +1,5 @@
 import { computed, toRaw } from 'vue';
-import get from 'lodash/get';
+import { get } from 'lodash-es';
 import type { RecycleScrollerProps } from './useProps';
 import type { Sizes } from '../utils/types';
 

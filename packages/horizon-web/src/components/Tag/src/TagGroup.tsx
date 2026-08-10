@@ -42,7 +42,7 @@ import HTag from './Tag';
 import useLocaleLang from '~/utils/useLocaleLang';
 import { IconAdd, IconTriangleUpFilled } from '@aurora/icon';
 import { useResizeObserver } from '@vueuse/core';
-import debounce from 'lodash/debounce';
+import { debounce } from 'lodash-es';
 import HPopover from '~/components/Popover/src/Popover';
 import HPopContent from '~/components/Popover/src/PopContent';
 import HScrollbar from '~/components/Scrollbar/src/Scrollbar';

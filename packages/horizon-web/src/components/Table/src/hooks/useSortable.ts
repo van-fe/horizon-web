@@ -12,7 +12,7 @@ import {
   HTableSetSortInjectKey,
   HTableSortRowInjectKey,
 } from '../utils/injectKeys';
-import get from 'lodash/get';
+import { get } from 'lodash-es';
 import { warn } from '~/utils/useLog';
 
 const numericCollator = new Intl.Collator(undefined, { numeric: true });

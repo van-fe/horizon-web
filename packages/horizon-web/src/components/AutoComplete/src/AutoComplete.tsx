@@ -22,7 +22,7 @@ import {
   HAutoCompleteVisibleOptionsInjectKey,
 } from './utils/injectKeys';
 import useSize from '~/utils/useSize';
-import debounce from 'lodash/debounce';
+import { debounce } from 'lodash-es';
 import { clamp } from '@vueuse/core';
 import HPickerFitContentInput from '~/components/Picker/src/components/PickerFitContentInput';
 import {
@@ -32,7 +32,7 @@ import {
 } from '~/components/Form/src/utils/injectedKeys';
 import { isEqualLoose } from './utils/utils';
 import VirtualScrollList from './components/VirtualScrollList';
-import throttle from 'lodash/throttle';
+import { throttle } from 'lodash-es';
 import { nanoid } from 'nanoid';
 import type { HAutoCompleteOptionWithUuid, HAutoCompleteOption } from './utils/typed';
 import type { PickerExposes } from '~/components/Picker/src/composables/useExposes';

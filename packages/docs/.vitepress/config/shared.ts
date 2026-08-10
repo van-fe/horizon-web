@@ -129,10 +129,10 @@ export default defineConfig({
           ),
         },
         {
-          find: /^lodash\/(.*)$/,
+          find: /^lodash-es$/,
           replacement: path.join(
             __dirname,
-            '../../../../packages/horizon-web/node_modules/lodash/$1',
+            '../../../../packages/horizon-web/node_modules/lodash-es/lodash.js',
           ),
         },
       ],

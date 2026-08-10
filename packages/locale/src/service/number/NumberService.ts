@@ -7,7 +7,7 @@ import type {
   LocalOptionType,
 } from '../../config';
 import * as numberFormatDictionaries from './dictionaries';
-import chunk from 'lodash/chunk';
+import { chunk } from 'lodash-es';
 
 export default class NumberService extends BaseService {
   public dictionaries: LocaleNumberLocaleDictionaries;

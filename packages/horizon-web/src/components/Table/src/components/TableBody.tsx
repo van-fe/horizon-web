@@ -22,7 +22,7 @@ import {
   HTableSlotsInjectKey,
   HTableSortRowInjectKey,
 } from '../utils/injectKeys';
-import get from 'lodash/get';
+import { get } from 'lodash-es';
 import HTooltip from '~/components/Tooltip/src/Tooltip';
 import { getBodyStyle, getFixedStyle, isLastFixedColumn } from '../hooks/useLayout';
 import HCheckbox from '~/components/Checkbox/src/Checkbox';

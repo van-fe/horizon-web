@@ -13,8 +13,7 @@ import { cls, ComponentClassBlock, cssVariable, isObject, useNamespace } from '@
 import { defaultLocale, localeInjectKey } from '~/provides';
 import type { Dayjs } from 'dayjs';
 import dayjs, { isDayjs } from 'dayjs';
-import chunk from 'lodash/chunk';
-import cloneDeep from 'lodash/cloneDeep';
+import { chunk, cloneDeep } from 'lodash-es';
 import HTooltip from '~/components/Tooltip/src/Tooltip';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';

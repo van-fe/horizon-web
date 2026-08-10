@@ -10,7 +10,7 @@ import type { UploadEmits } from '../composables/useEmits';
 import MultipartUploadHelper from './multipart';
 import UploadHelperOptions from './UploadHelperOptions';
 import { warn } from '~/utils/useLog';
-import round from 'lodash/round';
+import { round } from 'lodash-es';
 
 export default class UploadHelper extends UploadHelperOptions {
   protected readonly uuid: string;

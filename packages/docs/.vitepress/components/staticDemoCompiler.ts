@@ -53,9 +53,7 @@ const bareDependencyLoaders: Record<string, () => Promise<object>> = {
   dayjs: () => import('dayjs'),
   'decimal.js': () => import('decimal.js'),
   'fetch-jsonp': () => import('fetch-jsonp'),
-  'lodash/get': () => import('lodash/get'),
-  'lodash/groupBy': () => import('lodash/groupBy'),
-  'lodash/throttle': () => import('lodash/throttle'),
+  'lodash-es': () => import('lodash-es'),
   qs: () => import('qs'),
 };
 

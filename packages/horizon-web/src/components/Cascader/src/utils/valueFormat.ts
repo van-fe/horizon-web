@@ -1,6 +1,6 @@
 import type { CascaderItemProps } from '../composables/useProps';
 import { isObject } from '@aurora/utils';
-import isEqual from 'lodash/isEqual';
+import { isEqual } from 'lodash-es';
 
 export type ObjectWithCtx = Record<string & '_ctx', unknown>;
 export type ObjectWithoutCtx = Omit<ObjectWithCtx, '_ctx'>;

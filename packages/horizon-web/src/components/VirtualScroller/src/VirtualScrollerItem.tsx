@@ -22,7 +22,7 @@ import type { VirtualScrollerItemSlots } from './composables/useSlots';
 import type { VirtualScrollerItemExposes } from './composables/useExposes';
 import type { VirtualScrollerContext } from './utils/types';
 import { VirtualScrollerInjectKey } from './utils/injectionKey';
-import get from 'lodash/get';
+import { get } from 'lodash-es';
 import { normalizeScrollerKey } from './composables/useRecycleScrollerLayout';
 
 export default defineComponent({

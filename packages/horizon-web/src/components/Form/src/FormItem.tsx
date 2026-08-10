@@ -44,7 +44,7 @@ import type { FormItemSlots } from './composables/useSlots';
 import { useFormItemSlots } from './composables/useSlots';
 import type { FormItemExposes } from './composables/useExposes';
 import { useFormItemExposes } from './composables/useExposes';
-import clone from 'lodash/clone';
+import { clone } from 'lodash-es';
 import useLocaleLang from '~/utils/useLocaleLang';
 import { GRID_KEY, useGridItemStyle } from '~/components/Layout/src/composables/useGridStyles';
 

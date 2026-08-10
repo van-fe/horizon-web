@@ -6,7 +6,7 @@ import { nanoid } from 'nanoid';
 import type { MaybeRef } from '@aurora/utils';
 import { EventEmitter } from '@aurora/utils';
 import type { UnwrapRef } from 'vue';
-import cloneDeep from 'lodash/cloneDeep';
+import { cloneDeep } from 'lodash-es';
 import {
   ceilDay,
   floorDay,

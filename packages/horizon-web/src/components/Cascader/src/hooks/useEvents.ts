@@ -1,5 +1,5 @@
 import { inject, nextTick, onBeforeUnmount, ref, watch } from 'vue';
-import debounce from 'lodash/debounce';
+import { debounce } from 'lodash-es';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { CascaderProps } from '../composables/useProps';
 import type { CascaderEmits } from '../composables/useEmits';

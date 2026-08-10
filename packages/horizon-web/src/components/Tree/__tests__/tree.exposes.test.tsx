@@ -7,7 +7,7 @@ import options from './options.json';
 import resetOptions from './modifiedOptions/reset-options.json';
 import addChildrenOptions from './modifiedOptions/add-children-options.json';
 import deletedOptions from './modifiedOptions/deleted-options.json';
-import cloneDeep from 'lodash/cloneDeep';
+import { cloneDeep } from 'lodash-es';
 
 describe('Tree.tsx exposes', () => {
   test('get-selected-nodes & get-part-selected-nodes & get-un-selected-nodes', async () => {
