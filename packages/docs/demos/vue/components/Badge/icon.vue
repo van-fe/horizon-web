@@ -6,6 +6,7 @@
         content="owner_os"
         :icon-size="item.iconSize"
         icon-color="var(--h-text-brand-default)"
+        align="inner"
         bottom
       >
         <h-avatar type="work" :src="item.avatar" :size="item.size" />
