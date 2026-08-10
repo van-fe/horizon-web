@@ -18,12 +18,12 @@ Affix 默认监听窗口滚动并固定在视口顶部。组件会保留原始�
 
 ## 嵌套滚动容器
 
-Affix 会监听 `target` 自身；若外层容器也能滚动，需要在外层滚动时调用暴露的 `updatePosition()`。示例使用 Vue 的滚动监听，组件卸载时会自动移除。
+Affix 会自动监听目标容器及其外层滚动，并在窗口或目标容器尺寸变化后更新位置。布局由其他脚本直接修改且没有触发滚动或 resize 时，可以调用暴露的 `updatePosition()` 主动重新计算。
 
 :::demo components/Affix/multiple-scroll-container.vue :::
 
 ## 固定在底部
 
-设置 `position="bottom"` 后，可配合 `offset` 构建始终可见的提交或保存操作。固定元素仍会被限制在目标容器边界内。
+设置 `position="bottom"` 后，可配合 `offset` 构建始终可见的提交或保存操作。未提供 `target` 时使用窗口底部，提供目标容器时则限制在该容器边界内。
 
 :::demo components/Affix/bottom.vue :::

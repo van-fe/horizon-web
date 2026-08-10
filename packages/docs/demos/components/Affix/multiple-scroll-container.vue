@@ -1,16 +1,10 @@
-<script setup lang="ts">
-import { ref } from 'vue';
-
-const affix = ref<{ updatePosition: () => void }>();
-</script>
-
 <template>
-  <div class="outer" @scroll="affix?.updatePosition()">
+  <div class="outer">
     <div class="outer-track">
       <div class="spacer">Outer content</div>
       <div id="affix-inner" class="inner">
         <div class="inner-track">
-          <h-affix ref="affix" target="#affix-inner" :offset="12">
+          <h-affix target="#affix-inner" :offset="12">
             <h-button size="small">Batch action</h-button>
           </h-affix>
           <div v-for="item in 8" :key="item" class="row">Inner item {{ item }}</div>

@@ -2,8 +2,8 @@ import type { ExtractExposeTypes, ExposeType } from '@aurora/utils';
 
 export const useAffixExposes = {
   /**
-   * 在存在多层滚动容器时，外层容器滚动后，需要用此更新位置
-    * @en Controls update position.
+   * 主动重新计算固定位置
+   * @en Recalculates the affixed position immediately.
    */
   updatePosition: Function as ExposeType<() => void>,
 };
