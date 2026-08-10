@@ -1,7 +1,7 @@
 import type { Ref, ToRefs, VNode } from 'vue';
 import { computed, inject, nextTick, ref, watch } from 'vue';
 import type { TreeSelectProps } from '../composables/useProps';
-import debounce from 'lodash/debounce';
+import { debounce } from 'lodash-es';
 import type { HTreeSelectContext, HTreeSelectDomRefs } from './types';
 import { HFormItemTriggerInjectedKey } from '~/components/Form/src/utils/injectedKeys';
 import type {

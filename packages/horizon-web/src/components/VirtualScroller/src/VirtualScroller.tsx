@@ -28,7 +28,7 @@ import type { ItemsWithSize, VScrollData } from './utils/types';
 // import type { EventType } from 'mitt';
 // import mitt from 'mitt';
 import { VirtualScrollerInjectKey } from './utils/injectionKey';
-import get from 'lodash/get';
+import { get } from 'lodash-es';
 import useVirtualScrollerResizeObserver from './composables/useVirtualScrollerResizeObserver';
 import {
   normalizeScrollerKey,

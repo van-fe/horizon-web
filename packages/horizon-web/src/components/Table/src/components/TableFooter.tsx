@@ -15,7 +15,7 @@ import type { HTableColumnData } from '../utils/types';
 import { HTableColumnContextKey } from '../utils/types';
 import useLocaleLang from '~/utils/useLocaleLang';
 import { Decimal } from 'decimal.js';
-import get from 'lodash/get';
+import { get } from 'lodash-es';
 import type { JSX } from 'vue/jsx-runtime';
 
 export default defineComponent({

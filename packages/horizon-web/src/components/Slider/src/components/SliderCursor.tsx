@@ -11,7 +11,7 @@ import {
 import { HSliderGetTrackSizeInjectedKey, HSliderPropsInjectedKey } from '../utils/injectedKeys';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, getClientXY, getPrecision } from '@aurora/utils';
-import round from 'lodash/round';
+import { round } from 'lodash-es';
 import HTooltip from '~/components/Tooltip/src/Tooltip';
 import type { SliderCursorEmits } from '../composables/useEmits';
 import { useSliderCursorEmits } from '../composables/useEmits';

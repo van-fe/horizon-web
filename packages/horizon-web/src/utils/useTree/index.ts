@@ -1,7 +1,7 @@
 import { computed, shallowRef, triggerRef } from 'vue';
 import { nanoid } from 'nanoid';
 import type { BaseTreeData, BaseTreeWithLevelData, ExtendTreeData } from './types';
-import get from 'lodash/get';
+import { get } from 'lodash-es';
 
 const pathsCache = new WeakMap<ExtendTreeData, ExtendTreeData[]>();
 const pathCache = new WeakMap<ExtendTreeData, Array<string | number>>();

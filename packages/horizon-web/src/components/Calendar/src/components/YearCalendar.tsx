@@ -11,7 +11,7 @@ import {
 } from '../utils/injectKeys';
 import { defaultLocale, localeInjectKey } from '~/provides';
 import type { Dayjs } from 'dayjs';
-import chunk from 'lodash/chunk';
+import { chunk } from 'lodash-es';
 import MonthDayHelper from '../utils/MonthDayHelper';
 import PinFlagsHelper from '../utils/PinFlagsHelper';
 

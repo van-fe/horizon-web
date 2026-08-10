@@ -34,7 +34,7 @@ import useData from './utils/useData';
 import useTagRender from './utils/useTagRender';
 import { IconSearch } from '@aurora/icon';
 import useTreeData from './utils/useTreeData';
-import isEqual from 'lodash/isEqual';
+import { isEqual } from 'lodash-es';
 import type {
   PickerExposes,
   PickerFitContentInputExposes,

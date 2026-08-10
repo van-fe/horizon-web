@@ -1,5 +1,5 @@
 import { computed, reactive, shallowReactive, type ComputedRef, type SetupContext } from 'vue';
-import get from 'lodash/get';
+import { get } from 'lodash-es';
 import type { TableProps } from '../composables/useProps';
 import type { TableEmits } from '../composables/useEmits';
 import type {

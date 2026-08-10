@@ -35,7 +35,7 @@ import {
 } from './utils/injectKeys';
 import HTooltip from '~/components/Tooltip/src/Tooltip';
 import HAvatar from '~/components/Avatar/src/Avatar';
-import debounce from 'lodash/debounce';
+import { debounce } from 'lodash-es';
 import { generateColorList } from '~/utils/useColorful';
 import InputTag from './components/InputTag';
 import { nanoid } from 'nanoid';

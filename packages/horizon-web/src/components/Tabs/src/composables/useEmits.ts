@@ -1,6 +1,6 @@
 import { isNumber, isString } from '@aurora/utils';
 import type { HTabValue } from './useProps';
-import isUndefined from 'lodash/isUndefined';
+import { isUndefined } from 'lodash-es';
 
 export const useTabsEmits = {
   /**

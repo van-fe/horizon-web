@@ -1,4 +1,4 @@
-import isRegExp from 'lodash/isRegExp';
+import { isRegExp } from 'lodash-es';
 
 const INT_HEX_MAP: Record<number, string> = {
   10: 'A',

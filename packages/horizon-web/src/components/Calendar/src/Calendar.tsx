@@ -36,7 +36,7 @@ import HSegmentedItem from '~/components/Segmented/src/SegmentedItem';
 import HButton from '~/components/Button/src/Button';
 import PinFlagsHelper from './utils/PinFlagsHelper';
 import HDatePicker from '~/components/DatePicker/src/DatePicker';
-import uniq from 'lodash/uniq';
+import { uniq } from 'lodash-es';
 import CalendarHelper from './utils/CalendarHelper';
 import MonthCalendar from './components/MonthCalendar';
 import WeekCalendar from './components/WeekCalendar';

@@ -1,6 +1,6 @@
-import isArrayLike from 'lodash/isArrayLike';
+import { isArrayLike } from 'lodash-es';
 import { isBoolean, isMap, isNumber, isObject, isSet } from '@aurora/utils';
-import isEqual from 'lodash/isEqual';
+import { isEqual } from 'lodash-es';
 import type { ModelValueType } from '../composables/useProps';
 
 export function isEmpty(value: unknown) {

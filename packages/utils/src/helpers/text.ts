@@ -1,7 +1,5 @@
-export { default as camelCase } from 'lodash/camelCase';
-export { default as capitalize } from 'lodash/capitalize';
-export { default as snakeCase } from 'lodash/snakeCase';
-import capitalize from 'lodash/capitalize';
+export { camelCase, capitalize, snakeCase } from 'lodash-es';
+import { capitalize } from 'lodash-es';
 
 export type KebabCase<S extends string> = S extends `${infer S1}${infer S2}`
   ? S2 extends Uncapitalize<S2>

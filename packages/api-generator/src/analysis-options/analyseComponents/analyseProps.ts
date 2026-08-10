@@ -6,7 +6,7 @@ import analysisFileElements from '../../utils/analyseFileElements';
 import checkInvisibleTagExits from '../../utils/checkInvisibleTagExist';
 import completeFileExtName from '../../utils/completeFileExtName';
 import analysisJsDocs from '../../utils/analyseJsDocs';
-import lowerFirst from 'lodash/lowerFirst';
+import { lowerFirst } from 'lodash-es';
 
 function analysisPropertyAssignment(
   property: PropertyAssignment,

@@ -2,7 +2,7 @@ import type { OneDeepRecordType } from './utils';
 import fs from 'fs';
 import { docDemoThemesConfig, docThemesConfig } from '../../../../scripts/paths';
 import { resolve } from 'path';
-import { snakeCase } from 'lodash';
+import { snakeCase } from 'lodash-es';
 
 export default function (
   basicElementTokensTree: OneDeepRecordType,

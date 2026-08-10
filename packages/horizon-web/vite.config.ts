@@ -23,7 +23,6 @@ export default defineConfig({
         /^dayjs/,
         /@vue/,
         /@aurora\//,
-        /^lodash/,
         /@popperjs/,
         /^@vueuse/,
         'async-validator',

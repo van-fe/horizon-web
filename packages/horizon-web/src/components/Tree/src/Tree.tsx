@@ -47,7 +47,7 @@ import useTreeData from './hooks/useTreeData';
 import useExpand from './hooks/useExpand';
 import useCheckable from './hooks/useCheckable';
 import useFilter from './hooks/useFilter';
-import isEqual from 'lodash/isEqual';
+import { isEqual } from 'lodash-es';
 import useVNodeCollection from './hooks/useVNodeCollection';
 import useDraggable from './hooks/useDraggable';
 import HScrollbar from '~/components/Scrollbar/src/Scrollbar';

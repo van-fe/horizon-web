@@ -1,7 +1,7 @@
 import { styleRoot } from '@root/scripts/paths';
 import * as fs from 'fs';
 import { resolve } from 'path';
-import { groupBy } from 'lodash';
+import { groupBy } from 'lodash-es';
 
 const INT_HEX_MAP: Record<number, string> = {
   10: 'A',

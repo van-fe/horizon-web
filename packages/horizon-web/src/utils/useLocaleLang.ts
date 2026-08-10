@@ -1,5 +1,5 @@
 import { computed, inject } from 'vue';
-import get from 'lodash/get';
+import { get } from 'lodash-es';
 import { defaultLocale, localeInjectKey } from '~/provides';
 import type { En } from '~/locales/en';
 import type { Paths } from '@aurora/utils';

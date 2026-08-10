@@ -16,7 +16,7 @@ import { useWatermarkSlots } from './composables/useSlots';
 import type { WatermarkEmits } from './composables/useEmits';
 import type { WatermarkSlots } from './composables/useSlots';
 import { getDpr, rotateCanvas, setWaterMarkStyle } from './utils/base';
-import throttle from 'lodash/throttle';
+import { throttle } from 'lodash-es';
 
 const defaultContentStyle = {
   fontStyle: 'normal',

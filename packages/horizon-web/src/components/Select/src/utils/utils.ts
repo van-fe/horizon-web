@@ -1,6 +1,6 @@
-import isArrayLike from 'lodash/isArrayLike';
+import { isArrayLike } from 'lodash-es';
 import { isBoolean, isNumber, isObject } from '@aurora/utils';
-import isEqual from 'lodash/isEqual';
+import { isEqual } from 'lodash-es';
 import { removeValueFormatMetadata, unwrapValueFormattedValue } from './valueFormat';
 import type { ModelValueType } from './types';
 import type { Slots, VNode, VNodeArrayChildren } from 'vue';

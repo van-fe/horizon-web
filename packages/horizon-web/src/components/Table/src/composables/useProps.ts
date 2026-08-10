@@ -593,7 +593,7 @@ export const useTableColumnProps = declarePropType({
   },
   /**
    * 展示的字段
-   * 可以使用 `lodash.get` 接受的数据形式展示，但请注意层级越深，性能影响越大
+   * 可以使用 `lodash-es` 的 `get` 函数接受的数据形式展示，但请注意层级越深，性能影响越大
    * @en Configuration for field.
    */
   field: {

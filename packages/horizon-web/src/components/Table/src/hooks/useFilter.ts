@@ -9,7 +9,7 @@ import type { DatePickerProps } from '~/components/DatePicker/src/composables/us
 import dayjs from '~/utils/useDayJs';
 import { getCompareUnitByType } from '~/components/DatePicker/src/utils/useDayjs';
 import type { TimePickerProps } from '~/components/TimePicker/src/composables/useProps';
-import get from 'lodash/get';
+import { get } from 'lodash-es';
 
 export function isTableFilterValueActive(value: unknown): boolean {
   if (isNil(value)) return false;

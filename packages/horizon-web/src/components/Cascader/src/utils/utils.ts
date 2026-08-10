@@ -1,6 +1,6 @@
 import { isEmpty } from '~/components/Select/src/utils/utils';
 import type { ModelValueType } from './types';
-import isEqualWith from 'lodash/isEqualWith';
+import { isEqualWith } from 'lodash-es';
 
 /**
  * whether the two values are equal in loose mode

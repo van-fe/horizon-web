@@ -12,7 +12,7 @@ import type { AlertExposes } from './composables/useExposes';
 import { useAlertExposes } from './composables/useExposes';
 import type { MaybeElement } from '@vueuse/core';
 import { useIntersectionObserver, useResizeObserver } from '@vueuse/core';
-import throttle from 'lodash/throttle';
+import { throttle } from 'lodash-es';
 import useSize from '~/utils/useSize';
 
 export default defineComponent({

@@ -31,7 +31,7 @@ import {
   HBreadcrumbProps,
   HBreadcrumbSlots,
 } from './utils/injectedKeys';
-import debounce from 'lodash/debounce';
+import { debounce } from 'lodash-es';
 import { onClickBreadcrumbItem } from './utils/helpers';
 import type { BreadcrumbEmits } from './composables/useEmits';
 import { useBreadcrumbEmits } from './composables/useEmits';

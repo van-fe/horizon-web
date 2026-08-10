@@ -12,7 +12,7 @@ import {
 } from '../utils/injectKeys';
 import type { HSelectFilterFunction, ModelValueSingleType, SelectDomRefs } from '../utils/types';
 import { HFormItemTriggerInjectedKey } from '~/components/Form/src/utils/injectedKeys';
-import debounce from 'lodash/debounce';
+import { debounce } from 'lodash-es';
 
 export default function useInput(
   props: SelectProps,
