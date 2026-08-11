@@ -14,6 +14,7 @@ import {
   dividerManifest,
   emptyManifest,
   inputManifest,
+  linkManifest,
   progressManifest,
   rateManifest,
   radioManifest,
@@ -41,6 +42,7 @@ const manifests = [
   dividerManifest,
   emptyManifest,
   inputManifest,
+  linkManifest,
   progressManifest,
   rateManifest,
   radioManifest,
@@ -155,6 +157,30 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
         compositionEnd: 'compositionend',
       },
     },
+  },
+  Link: {
+    props: {
+      rename: { variant: 'type', route: 'to' },
+      extend: [
+        {
+          name: 'icon',
+          type: 'IconMaybeFalsy',
+          description: { zh: '后缀图标', en: 'Trailing icon' },
+        },
+        {
+          name: 'iconSize',
+          type: 'string | number',
+          description: { zh: '图标尺寸', en: 'Icon size' },
+        },
+        {
+          name: 'scrollTarget',
+          type: 'string | Element',
+          defaultValue: "'body'",
+          description: { zh: '锚点滚动容器', en: 'Anchor scroll container' },
+        },
+      ],
+    },
+    regions: { rename: { content: 'default' } },
   },
   Progress: { regions: { rename: { label: 'default' } } },
   Rate: {
@@ -335,6 +361,31 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
         compositionEnd: 'onCompositionEnd',
       },
     },
+  },
+  Link: {
+    props: {
+      rename: { route: 'to' },
+      extend: [
+        {
+          name: 'icon',
+          type: 'ReactNode',
+          description: { zh: '后缀图标或内容', en: 'Trailing icon or content' },
+        },
+        {
+          name: 'iconSize',
+          type: 'string | number',
+          description: { zh: '图标尺寸', en: 'Icon size' },
+        },
+        {
+          name: 'scrollTarget',
+          type: 'string | Element',
+          defaultValue: "'body'",
+          description: { zh: '锚点滚动容器', en: 'Anchor scroll container' },
+        },
+      ],
+    },
+    events: { rename: { click: 'onClick' } },
+    regions: { rename: { content: 'children' } },
   },
   Progress: { regions: { rename: { label: 'children' } } },
   Rate: {

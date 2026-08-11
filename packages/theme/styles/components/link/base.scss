@@ -1,4 +1,4 @@
-@use '../../../../styles/mixins';
+@use '../../mixins';
 
 @include mixins.b('link') {
   // Keep the component's link presentation above contextual rules such as
@@ -66,6 +66,7 @@
     }
 
     @include mixins.e('loading-icon') {
+      flex: 0 0 auto;
       margin-right: mixins.css-variable('link', 'spacing', 'loading-icon', 'margin-right');
     }
   }

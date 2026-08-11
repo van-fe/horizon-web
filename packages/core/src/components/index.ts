@@ -10,6 +10,7 @@ export * from './Count';
 export * from './Divider';
 export * from './Empty';
 export * from './Input';
+export * from './Link';
 export * from './Progress';
 export * from './Result';
 export * from './Rate';

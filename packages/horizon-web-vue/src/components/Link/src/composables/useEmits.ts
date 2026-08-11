@@ -1,11 +1,13 @@
+import type { ComponentEventValidators, LinkEventMap } from '@aurora/core';
+
 export const useLinkEmits = {
   /**
-   * 点击链接后的事件
-   * @param event 鼠标事件
-   * @paramEn event The event value.
-    * @en Emitted when click changes.
+   * 点击可交互链接。
+   * @param event 原生鼠标事件
+   * @paramEn event Native mouse event.
+   * @en Emitted when an interactive link is clicked.
    */
   click: (event: MouseEvent) => event instanceof MouseEvent,
-};
+} satisfies ComponentEventValidators<LinkEventMap<MouseEvent>>;
 
 export type LinkEmits = typeof useLinkEmits;

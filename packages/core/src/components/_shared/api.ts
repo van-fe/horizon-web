@@ -29,7 +29,9 @@ export type AdaptComponentApiShape<
   Omitted extends keyof Shape = never,
   Extended extends object = EmptyComponentApi,
 > = {
-  [Name in Exclude<keyof Shape, Omitted> as AdaptedComponentApiKey<Name, Rename>]: Shape[Name];
+  [Name in keyof Shape as Name extends Omitted
+    ? never
+    : AdaptedComponentApiKey<Name, Rename>]: Shape[Name];
 } & Extended;
 
 /** Forces renderer runtime declarations to cover every adapted prop exactly once. */

@@ -48,6 +48,8 @@
     "./styles/empty-variables": "./styles/components/empty/variables.scss",
     "./styles/input": "./styles/components/input/index.scss",
     "./styles/input-variables": "./styles/components/input/variables.scss",
+    "./styles/link": "./styles/components/link/index.scss",
+    "./styles/link-variables": "./styles/components/link/variables.scss",
     "./styles/foundations": "./styles/foundations.scss",
     "./styles/basic": "./styles/basic/index.scss",
     "./styles/element": "./styles/element/index.scss",

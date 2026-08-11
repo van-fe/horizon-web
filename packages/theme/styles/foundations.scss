@@ -12,6 +12,7 @@
 @use './components/divider/variables' as divider;
 @use './components/empty/variables' as empty;
 @use './components/input/variables' as input;
+@use './components/link/variables' as link;
 @use './components/progress/variables' as progress;
 @use './components/rate/variables' as rate;
 @use './components/radio/variables' as radio;
@@ -39,6 +40,7 @@ $values: function.map-merge-multi(
   function.flatten-variables(divider.$values, 'divider'),
   function.flatten-variables(empty.$values, 'empty'),
   function.flatten-variables(input.$values, 'input'),
+  function.flatten-variables(link.$values, 'link'),
   function.flatten-variables(progress.$values, 'progress'),
   function.flatten-variables(rate.$values, 'rate'),
   function.flatten-variables(radio.$values, 'radio'),

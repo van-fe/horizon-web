@@ -44,6 +44,11 @@ const reactSidebar = [
     ],
   },
   {
+    text: '导航组件',
+    collapsed: false,
+    items: [{ text: 'Link 文字链接', link: 'components/Link' }],
+  },
+  {
     text: '反馈组件',
     collapsed: false,
     items: [

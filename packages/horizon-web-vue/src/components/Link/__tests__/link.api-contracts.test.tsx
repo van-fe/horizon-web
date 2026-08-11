@@ -24,7 +24,9 @@ describe('Link public API contracts', () => {
     const link = wrapper.get('a');
 
     expect(link.attributes()).toMatchObject({ href: '/guide', target: '_blank' });
-    expect(link.classes()).toEqual(expect.arrayContaining(['has-underline', 'is-underline-always']));
+    expect(link.classes()).toEqual(
+      expect.arrayContaining(['has-underline', 'is-underline-always']),
+    );
     expect(wrapper.get('[data-test="link-prefix"]').text()).toBe('Before');
     expect(wrapper.get('[data-test="link-content"]').text()).toBe('Guide');
     expect(wrapper.get('[data-test="link-suffix"]').text()).toBe('After');
@@ -120,6 +122,12 @@ describe('Link public API contracts', () => {
     await wrapper.get('.h-link__anchor').trigger('click');
     await Promise.resolve();
     expect(scroll).toHaveBeenCalledTimes(2);
+
+    await wrapper.setProps({ disabled: true });
+    await wrapper.get('.h-link__anchor').trigger('click');
+    await Promise.resolve();
+    expect(scroll).toHaveBeenCalledTimes(2);
+
     window.history.replaceState(null, '', window.location.pathname);
     wrapper.unmount();
     scrollTarget.remove();

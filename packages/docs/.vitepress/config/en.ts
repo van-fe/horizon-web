@@ -44,6 +44,11 @@ const reactSidebar = [
     ],
   },
   {
+    text: 'Navigation Components',
+    collapsed: false,
+    items: [{ text: 'Link', link: 'components/Link' }],
+  },
+  {
     text: 'Feedback Components',
     collapsed: false,
     items: [

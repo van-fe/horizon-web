@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B4 Input 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B5 Link 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -445,6 +445,19 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DS-B4-001 | Done | Input Sass 与变量迁入 `@aurora/theme`，Vue 使用包导出代理，React 使用同源样式并补齐清空和密码按钮规则 |
 | DOC-B4-001 | Done | Input 中英文 React 页面、独立 TSX 示例和表单侧边栏入口完成；23 组 Vue/React 契约生成且 renderer 隔离检查通过 |
 | QA-B4-001 | Done | Core 80、Web Core Node 7/Chromium 13、React Chromium 81、Vue 2297 项通过且 1 项预期失败，覆盖率为 98.00% / 95.25% / 97.78% / 98.27%，五个包构建、文档和 Vue/React/SSR 消费工程通过 |
+
+#### M6-B5 第五批实施记录（2026-08-11）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-API-004 | Done | 修复公共 API 形状适配器在重命名时丢失 optional/readonly 修饰符的问题，新增类型回归测试与 navigation manifest 分类 |
+| CORE-B5-001 | Done | Link 的公共 props、默认值、枚举、校验器、点击事件、渲染区域、交互优先级、action 语义与 loading 尺寸迁入 `@aurora/core` |
+| WEB-B5-001 | Done | 在同名 Web Core 目录提供滚动容器解析、锚点坐标计算、平滑滚动与 hash 更新 primitives，并覆盖 Chromium 测试 |
+| VUE-B5-001 | Done | Vue props/emits/slots 通过类型化适配消费公共契约，保留 Application 尺寸、Vue Router、图标和 locale 能力；锚点与 disabled/loading 交互复用 Core/Web Core |
+| REACT-B5-001 | Done | 完成 Link 原生 href、action、Provider 路由导航与地址解析、锚点滚动、键盘、加载、禁用、内容区域与原生 ref；Button/Link 复用 renderer `_shared` LoadingIcon |
+| DS-B5-001 | Done | Link Sass 与变量迁入 `@aurora/theme`，Vue 使用包导出代理，React 使用同源样式与 loading icon 视觉基础 |
+| DOC-B5-001 | Done | Link 中英文 React 页面、独立 TSX 示例和导航侧边栏入口完成；24 组 Vue/React 契约生成且 renderer 隔离检查通过 |
+| QA-B5-001 | Done | Core 84、Web Core Node 7/Chromium 17、React Chromium 86、Vue 2297 项通过且 1 项预期失败，覆盖率为 98.00% / 95.23% / 97.76% / 98.27%，五个包构建、文档和 Vue/React/SSR 消费工程通过 |
 
 ### 批次 C：浮层与容器
 

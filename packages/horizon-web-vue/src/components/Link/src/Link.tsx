@@ -12,6 +12,8 @@ import { useLinkProps } from './composables/useProps';
 import type { Router } from 'vue-router';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, HChildOnly, useNamespace } from '@aurora/utils';
+import { getLinkLoadingIconSize, isLinkActionRole, resolveLinkAction } from '@aurora/core';
+import { scrollLinkAnchor } from '@aurora/horizon-web-core';
 import type { LinkEmits } from './composables/useEmits';
 import { useLinkEmits } from './composables/useEmits';
 import type { LinkSlots } from './composables/useSlots';
@@ -57,12 +59,21 @@ export default defineComponent({
     const locale = inject(localeInjectKey, defaultLocale);
 
     const onClick = (evt: MouseEvent): void => {
-      if (props.anchor || props.loading || props.disabled) {
+      const action = resolveLinkAction({
+        disabled: props.disabled,
+        loading: props.loading,
+        anchor: props.anchor,
+        route: props.to,
+        canNavigateRoute: Boolean(router),
+        href: redirectHref.value,
+      });
+
+      if (action === 'anchor' || action === 'blocked') {
         evt.preventDefault();
         return;
       }
 
-      if (props.to && router) {
+      if (action === 'route' && props.to && router) {
         evt.preventDefault();
         props.replace ? router.replace(props.to) : router.push(props.to);
         return;
@@ -75,37 +86,26 @@ export default defineComponent({
       if (props.anchor) {
         evt.stopPropagation();
         evt.preventDefault();
+        if (props.disabled || props.loading) return;
         scrollToCurrent();
       }
     };
 
     const scrollToCurrent = (): void => {
       nextTick(() => {
-        const scrollTarget =
-          typeof props.scrollTarget === 'string'
-            ? document.querySelector(props.scrollTarget)
-            : props.scrollTarget;
-
-        if (!scrollTarget) {
+        const link = instance?.proxy?.$el;
+        if (
+          !(link instanceof Element) ||
+          !scrollLinkAnchor({
+            anchor: props.anchor || '',
+            link,
+            target: props.scrollTarget,
+            offset: props.anchorOffset,
+          })
+        ) {
           console.warn('Cannot find scroll-target');
-          return;
         }
-
-        const scrollTo =
-          instance?.proxy?.$el.getBoundingClientRect().y -
-          (props.anchorOffset || 0) +
-          scrollTarget.scrollTop -
-          scrollTarget.getBoundingClientRect().y;
-
-        scrollTarget.scroll({ top: scrollTo, behavior: 'smooth' });
-        window.location.hash = `#${props.anchor}`;
       });
-    };
-
-    const loadingSvgSizeMapping = {
-      small: 12,
-      medium: 16,
-      large: 16,
     };
 
     onMounted(() => {
@@ -143,7 +143,7 @@ export default defineComponent({
     );
 
     const wrapperElement = computed(() => (props.anchor ? 'span' : 'a'));
-    const isAction = computed(() => !props.anchor && !redirectHref.value);
+    const isAction = computed(() => isLinkActionRole(props.anchor, redirectHref.value));
 
     const onActionKeydown = (evt: KeyboardEvent) => {
       if (!isAction.value || props.disabled || props.loading) return;
@@ -180,8 +180,8 @@ export default defineComponent({
             <LoadingIcon
               class={classHelper.e('loading-icon')}
               style={{
-                width: `${loadingSvgSizeMapping[sizeRef.value]}px`,
-                height: `${loadingSvgSizeMapping[sizeRef.value]}px`,
+                width: `${getLinkLoadingIconSize(sizeRef.value)}px`,
+                height: `${getLinkLoadingIconSize(sizeRef.value)}px`,
               }}
             />
             <span class={classHelper.e('inner')}>

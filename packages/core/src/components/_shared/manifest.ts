@@ -1,6 +1,7 @@
 import type { ComponentApiContract } from './api';
 
 export type ComponentRenderer = 'vue' | 'react';
+export type ComponentCategory = 'basic' | 'form' | 'feedback' | 'navigation' | 'overlay';
 
 export interface ComponentManifestField {
   name: string;
@@ -12,7 +13,7 @@ export interface ComponentManifestField {
 
 export interface ComponentManifest {
   name: string;
-  category: 'basic' | 'form' | 'feedback' | 'overlay';
+  category: ComponentCategory;
   description: { zh: string; en: string };
   semantics: readonly string[];
   accessibility: readonly string[];

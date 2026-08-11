@@ -7,11 +7,16 @@ import type {
   ReactNode,
 } from 'react';
 import { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
-import { BUTTON_DEFAULTS, ButtonAsyncActionGuard, getButtonState, resolveButtonAction } from '@aurora/core';
+import {
+  BUTTON_DEFAULTS,
+  ButtonAsyncActionGuard,
+  getButtonState,
+  resolveButtonAction,
+} from '@aurora/core';
 import type { ButtonCommonProps } from '@aurora/core';
 import { cls, ComponentClassBlock } from '@aurora/theme';
 import { useHorizonWebConfig } from '../../provider';
-import { LoadingIcon } from './LoadingIcon';
+import { LoadingIcon } from '../_shared/LoadingIcon';
 
 export type { ButtonSize, ButtonVariant } from '@aurora/core';
 
@@ -170,7 +175,10 @@ export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPr
       <>
         {state.loading ? (
           <span className={cls(classHelper.e('icon'), classHelper.m('loading'))}>
-            <LoadingIcon namespace={config.namespace} />
+            <LoadingIcon
+              className={`${config.namespace.toLowerCase()}-button__loading-icon`}
+              namespace={config.namespace}
+            />
           </span>
         ) : (
           icon && <span className={classHelper.e('icon')}>{icon}</span>

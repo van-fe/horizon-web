@@ -5,6 +5,7 @@ import { DEFAULT_NAMESPACE } from '@aurora/theme';
 export interface HorizonWebConfig {
   namespace: string;
   navigate?: (to: unknown, options: { replace: boolean }) => void | Promise<void>;
+  resolveHref?: (to: unknown) => string | undefined;
   switchLabels: {
     on: string;
     off: string;
@@ -14,12 +15,16 @@ export interface HorizonWebConfig {
     empty: string;
     clear: string;
   };
+  linkLabels: {
+    loading: string;
+  };
 }
 
 export type HorizonWebProviderProps = PropsWithChildren<
-  Omit<Partial<HorizonWebConfig>, 'selectLabels' | 'switchLabels'> & {
+  Omit<Partial<HorizonWebConfig>, 'linkLabels' | 'selectLabels' | 'switchLabels'> & {
     switchLabels?: Partial<HorizonWebConfig['switchLabels']>;
     selectLabels?: Partial<HorizonWebConfig['selectLabels']>;
+    linkLabels?: Partial<HorizonWebConfig['linkLabels']>;
   }
 >;
 
@@ -27,6 +32,7 @@ const defaultConfig: HorizonWebConfig = Object.freeze({
   namespace: DEFAULT_NAMESPACE,
   switchLabels: { on: 'On', off: 'Off' },
   selectLabels: { placeholder: 'Please select', empty: 'No options', clear: 'Clear selection' },
+  linkLabels: { loading: 'Loading' },
 });
 
 export const HorizonWebContext = createContext<HorizonWebConfig>(defaultConfig);
@@ -34,8 +40,10 @@ export const HorizonWebContext = createContext<HorizonWebConfig>(defaultConfig);
 export function HorizonWebProvider({
   namespace,
   navigate,
+  resolveHref,
   switchLabels,
   selectLabels,
+  linkLabels,
   children,
 }: HorizonWebProviderProps): ReactElement {
   const parent = useContext(HorizonWebContext);
@@ -44,6 +52,7 @@ export function HorizonWebProvider({
       ...parent,
       namespace: namespace ?? parent.namespace,
       navigate: navigate ?? parent.navigate,
+      resolveHref: resolveHref ?? parent.resolveHref,
       switchLabels: {
         ...parent.switchLabels,
         ...switchLabels,
@@ -52,8 +61,12 @@ export function HorizonWebProvider({
         ...parent.selectLabels,
         ...selectLabels,
       },
+      linkLabels: {
+        ...parent.linkLabels,
+        ...linkLabels,
+      },
     }),
-    [namespace, navigate, parent, selectLabels, switchLabels],
+    [namespace, navigate, resolveHref, parent, linkLabels, selectLabels, switchLabels],
   );
 
   return createElement(HorizonWebContext.Provider, { value }, children);
