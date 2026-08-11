@@ -20,6 +20,7 @@ import {
   segmentedManifest,
   selectManifest,
   skeletonManifest,
+  sliderManifest,
   spaceManifest,
   statisticManifest,
   switchManifest,
@@ -45,6 +46,7 @@ const manifests = [
   segmentedManifest,
   selectManifest,
   skeletonManifest,
+  sliderManifest,
   spaceManifest,
   statisticManifest,
   switchManifest,
@@ -158,6 +160,30 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     regions: { rename: { content: 'default' } },
   },
   Select: { props: { rename: { value: 'modelValue' }, omit: ['defaultValue', 'open'] } },
+  Slider: {
+    props: {
+      rename: {
+        value: 'modelValue',
+        showSeparators: 'showSeparator',
+        tone: 'type',
+        showInput: 'inputEnable',
+        keyboard: 'keyboardEnable',
+        showTooltip: 'tooltipEnable',
+        formatTooltip: 'tooltipFormatter',
+      },
+      omit: ['defaultValue'],
+      extend: [
+        {
+          name: 'inputProps',
+          type: 'Partial<InputNumberProps>',
+          description: { zh: '传给 InputNumber 的属性', en: 'Props passed to InputNumber' },
+        },
+      ],
+    },
+    events: {
+      rename: { change: 'update:modelValue' },
+    },
+  },
   Skeleton: { regions: { rename: { content: 'default', placeholder: 'loadingTemplate' } } },
   Statistic: { regions: { rename: { value: 'default' } } },
   Space: {
@@ -255,6 +281,18 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
         footer: 'panelFooter',
       },
     },
+  },
+  Slider: {
+    props: {
+      extend: [
+        {
+          name: 'inputProps',
+          type: 'InputHTMLAttributes<HTMLInputElement>',
+          description: { zh: '原生数字输入属性', en: 'Native number-input attributes' },
+        },
+      ],
+    },
+    events: { rename: { change: 'onChange', focus: 'onFocus', blur: 'onBlur' } },
   },
   Skeleton: { regions: { rename: { content: 'children' } } },
   Statistic: { regions: { rename: { value: 'children' } } },

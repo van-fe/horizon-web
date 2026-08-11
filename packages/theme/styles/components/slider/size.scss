@@ -1,4 +1,6 @@
-@use '../../../../styles/mixins';
+@use '../../mixins';
+
+/* stylelint-disable nesting-selector-no-missing-scoping-root -- BEM mixins provide the selector root. */
 
 @include mixins.b('slider') {
   @include mixins.m('small') {
@@ -6,7 +8,14 @@
       height: mixins.css-variable('slider', 'size', 'container', 'height', 'small');
 
       &::before {
-        height: mixins.css-variable('slider', 'size', 'container', 'placeholder', 'height', 'small');
+        height: mixins.css-variable(
+          'slider',
+          'size',
+          'container',
+          'placeholder',
+          'height',
+          'small'
+        );
       }
     }
 
@@ -29,7 +38,14 @@
       height: mixins.css-variable('slider', 'size', 'container', 'height', 'large');
 
       &::before {
-        height: mixins.css-variable('slider', 'size', 'container', 'placeholder', 'height', 'large');
+        height: mixins.css-variable(
+          'slider',
+          'size',
+          'container',
+          'placeholder',
+          'height',
+          'large'
+        );
       }
     }
 
@@ -47,3 +63,5 @@
     }
   }
 }
+
+/* stylelint-enable nesting-selector-no-missing-scoping-root */

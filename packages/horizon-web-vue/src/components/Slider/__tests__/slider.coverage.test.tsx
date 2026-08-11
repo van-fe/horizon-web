@@ -49,14 +49,14 @@ describe('Slider browser coverage', () => {
     );
     const track = wrapper.get('.h-slider__track').element;
     vi.spyOn(track, 'getBoundingClientRect').mockReturnValue(new DOMRect(0, 0, 100, 8));
-    wrapper.get('.h-slider__container').element.dispatchEvent(
-      new MouseEvent('click', { bubbles: true, clientX: 10 }),
-    );
+    wrapper
+      .get('.h-slider__container')
+      .element.dispatchEvent(new MouseEvent('click', { bubbles: true, clientX: 10 }));
     await nextTick();
     expect(model.value).toEqual([10, 80]);
-    wrapper.get('.h-slider__container').element.dispatchEvent(
-      new MouseEvent('click', { bubbles: true, clientX: 90 }),
-    );
+    wrapper
+      .get('.h-slider__container')
+      .element.dispatchEvent(new MouseEvent('click', { bubbles: true, clientX: 90 }));
     await nextTick();
     expect(model.value).toEqual([10, 90]);
   });
@@ -97,10 +97,9 @@ describe('Slider browser coverage', () => {
   test('shows cursor tooltip on hover/focus and holds arrow keys until keyup', async () => {
     vi.useFakeTimers();
     const model = ref(20);
-    const wrapper = mount(
-      () => <HSlider v-model={model.value} step={10} tooltipEnable />,
-      { attachTo: document.body },
-    );
+    const wrapper = mount(() => <HSlider v-model={model.value} step={10} tooltipEnable />, {
+      attachTo: document.body,
+    });
     const cursor = wrapper.get<HTMLElement>('[role="slider"]');
     await cursor.trigger('mouseenter');
     await nextTick();
@@ -125,10 +124,9 @@ describe('Slider browser coverage', () => {
 
   test('drags with native pointer events across minimum, middle and maximum', async () => {
     const model = ref(50);
-    const wrapper = mount(
-      () => <HSlider v-model={model.value} step={10} />,
-      { attachTo: document.body },
-    );
+    const wrapper = mount(() => <HSlider v-model={model.value} step={10} />, {
+      attachTo: document.body,
+    });
     const track = wrapper.get('.h-slider__track').element;
     vi.spyOn(track, 'getBoundingClientRect').mockReturnValue(new DOMRect(20, 0, 100, 8));
     const cursor = wrapper.get<HTMLElement>('[role="slider"]').element;
@@ -153,9 +151,7 @@ describe('Slider browser coverage', () => {
     const cursor = wrapper.get<HTMLElement>('[role="slider"]');
     await cursor.trigger('mouseenter');
     expect(wrapper.getComponent(HTooltip).props('visible')).toBe(false);
-    cursor.element.dispatchEvent(
-      new PointerEvent('pointerdown', { bubbles: true, clientX: 20 }),
-    );
+    cursor.element.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, clientX: 20 }));
     window.dispatchEvent(new PointerEvent('pointermove', { bubbles: true, clientX: 80 }));
     window.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, clientX: 80 }));
     const exposed = cursorWrapper.getCurrentComponent().exposed as {

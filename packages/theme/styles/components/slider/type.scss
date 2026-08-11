@@ -1,4 +1,4 @@
-@use '../../../../styles/mixins';
+@use '../../mixins';
 
 @include mixins.b('slider') {
   @include mixins.m('primary') {
@@ -26,6 +26,12 @@
   }
 
   @include mixins.m('error') {
+    @include mixins.e('progress') {
+      background: mixins.css-variable('slider', 'background', 'progress', 'error');
+    }
+  }
+
+  @include mixins.m('danger') {
     @include mixins.e('progress') {
       background: mixins.css-variable('slider', 'background', 'progress', 'error');
     }

@@ -38,6 +38,7 @@ const reactSidebar = [
       { text: 'Radio', link: 'components/Radio' },
       { text: 'Segmented', link: 'components/Segmented' },
       { text: 'Select', link: 'components/Select' },
+      { text: 'Slider', link: 'components/Slider' },
       { text: 'Switch', link: 'components/Switch' },
     ],
   },

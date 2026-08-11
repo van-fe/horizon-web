@@ -24,17 +24,32 @@ import SliderCursor from './components/SliderCursor';
 import { HSliderGetTrackSizeInjectedKey, HSliderPropsInjectedKey } from './utils/injectedKeys';
 import HInputNumber from '~/components/InputNumber/src/InputNumber';
 import useSize from '~/utils/useSize';
+import {
+  getClosestSliderThumb,
+  getSliderProgress,
+  getSliderSeparatorPercents,
+  getSliderValueFromPosition,
+} from '@aurora/core';
+import { getSliderTrackMetrics } from '@aurora/horizon-web-core';
+import { useSliderSlots } from './composables/useSlots';
+import type { SliderSlots } from './composables/useSlots';
+import { useSliderExposes } from './composables/useExposes';
+import type { SliderExposes } from './composables/useExposes';
 
 export default defineComponent({
   name: `${useNamespace()}Slider`,
   desc: '通过拖动滑块在一个固定区间内进行选择',
-  descLocales: { en: "Bind a number with `v-model`. The demo keeps the business result visible while the value changes." },
+  descLocales: {
+    en: 'Bind a number with `v-model`. The demo keeps the business result visible while the value changes.',
+  },
   components: {
     SliderCursor,
   },
   props: useSliderProps,
   emits: useSliderEmits,
-  setup(props, { emit }: HorizonWebSetupContext<SliderEmits>) {
+  slots: useSliderSlots,
+  exposes: useSliderExposes,
+  setup(props, { emit, expose }: HorizonWebSetupContext<SliderEmits, SliderSlots, SliderExposes>) {
     const classHelper = new ComponentClassBlock('slider');
     const { disabled, modelValue, max, min, step, type, color, range } = toRefs(props);
 
@@ -108,10 +123,7 @@ export default defineComponent({
      * track size
      */
     function getTrackSize() {
-      return {
-        width: trackRef.value?.getBoundingClientRect().width || 0,
-        left: trackRef.value?.getBoundingClientRect().left || 0,
-      };
+      return getSliderTrackMetrics(trackRef.value);
     }
 
     provide(HSliderGetTrackSizeInjectedKey, getTrackSize);
@@ -128,27 +140,9 @@ export default defineComponent({
     /**
      * progress size
      */
-    const progressWidth = computed(() => {
-      if (!range.value) {
-        return ((firstValue.value - min.value) / (max.value - min.value)) * 100;
-      } else {
-        return (
-          ((Math.abs(firstValue.value - secondValue.value) - min.value) / (max.value - min.value)) *
-          100
-        );
-      }
-    });
-
-    const progressLeft = computed(() => {
-      if (!range.value) {
-        return 0;
-      } else {
-        return (
-          ((Math.min(firstValue.value, secondValue.value) - min.value) / (max.value - min.value)) *
-          100
-        );
-      }
-    });
+    const progress = computed(() =>
+      getSliderProgress(firstValue.value, secondValue.value, min.value, max.value, range.value),
+    );
 
     // global size
     const sizeRef = useSize(toRef(props, 'size'), 'medium', {
@@ -158,26 +152,27 @@ export default defineComponent({
     /**
      * separator
      */
-    const separatorAmount = computed(() => Math.ceil((max.value - min.value) / step.value) - 1);
+    const separators = computed(() => getSliderSeparatorPercents(min.value, max.value, step.value));
 
     /**
      * events
      */
     function onClick(evt: MouseEvent) {
-      if (!props.trackClickable || props.disabled === true) return;
+      if (!props.trackClickable || isDisabled.value) return;
 
       const { left, width } = getTrackSize();
-
-      const value = ((evt.clientX - left) / width) * (max.value - min.value) + min.value;
-
-      if (range.value) {
-        if (Math.abs(value - firstValue.value) > Math.abs(value - secondValue.value)) {
-          secondCursorRef.value?.updateCurrentValue(value, true);
-          return;
-        }
-      }
-
-      firstCursorRef.value?.updateCurrentValue(value, true);
+      const value = getSliderValueFromPosition(
+        evt.clientX,
+        left,
+        width,
+        min.value,
+        max.value,
+        step.value,
+      );
+      const cursorIndex = range.value
+        ? getClosestSliderThumb(value, firstValue.value, secondValue.value)
+        : 0;
+      (cursorIndex === 0 ? firstCursorRef : secondCursorRef).value?.updateCurrentValue(value, true);
     }
 
     function onFocus(evt: FocusEvent) {
@@ -200,6 +195,8 @@ export default defineComponent({
       secondCursorRef.value?.updateCursorPosition();
     });
 
+    expose({ focus: () => firstCursorRef.value?.focus() });
+
     return () => (
       <div
         class={cls(
@@ -215,19 +212,18 @@ export default defineComponent({
               ref={progressRef}
               class={classHelper.e('progress')}
               style={{
-                left: progressLeft.value + '%',
-                width: progressWidth.value + '%',
+                left: progress.value.left + '%',
+                width: progress.value.width + '%',
                 background: color.value,
               }}
             />
             {props.showSeparator && (
               <div class={cls(classHelper.e('separator'))}>
-                {new Array(separatorAmount.value).fill(0).map((_, index) => (
+                {separators.value.map((left, index) => (
                   <div
+                    key={index}
                     class={classHelper.em('separator', 'item')}
-                    style={{
-                      left: (((index + 1) * step.value) / (max.value - min.value)) * 100 + '%',
-                    }}
+                    style={{ left: left + '%' }}
                   />
                 ))}
               </div>
@@ -258,7 +254,7 @@ export default defineComponent({
               min={min.value}
               max={max.value}
               step={step.value}
-              disabled={props.disabled}
+              disabled={isDisabled.value}
               stepStrictly={true}
               {...props.inputProps}
               onUpdate:modelValue={onInputUpdateModelValue}

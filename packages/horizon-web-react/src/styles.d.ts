@@ -13,6 +13,7 @@ declare module '@aurora/theme/styles/rate';
 declare module '@aurora/theme/styles/radio';
 declare module '@aurora/theme/styles/result';
 declare module '@aurora/theme/styles/segmented';
+declare module '@aurora/theme/styles/slider';
 declare module '@aurora/theme/styles/switch';
 declare module '@aurora/theme/styles/tooltip';
 declare module '@aurora/theme/styles/select';

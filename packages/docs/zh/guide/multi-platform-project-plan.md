@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B2 Checkbox/Radio 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B3 Slider 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -421,6 +421,18 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DS-B2-001 | Done | Checkbox、Radio Sass 与变量迁入 `@aurora/theme`，Vue 使用包导出代理，React 使用同源样式和 renderer 专属 indicator 规则 |
 | DOC-B2-001 | Done | Checkbox、Radio 的中英文 React 页面、独立 TSX 示例和表单侧边栏入口完成；组件文档保持 renderer 原生表达 |
 | QA-B2-001 | Done | 21 组 Vue/React 契约生成；Core 72、Web Core Node 7/Chromium 9、React Chromium 73、Vue 2297 项通过且 1 项预期失败，覆盖率为 98.04% / 95.27% / 97.80% / 98.30%，包构建、文档和 Vue/React/SSR 消费工程通过 |
+
+#### M6-B3 第三批实施记录（2026-08-11）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B3-001 | Done | Slider 的公共 props、默认值、校验器、事件载荷、命令以及边界、步长、范围、进度、刻度、指针和键盘算法迁入 `@aurora/core` |
+| WEB-B3-001 | Done | 在同名 Web Core 目录提供轨道几何、游标聚焦与 pointer capture primitives，并覆盖 Node/Chromium 测试 |
+| VUE-B3-001 | Done | Vue props/emits/exposes 通过类型化适配消费公共契约，既有 modelValue、InputNumber 扩展和可变数组兼容保持不变；渲染逻辑复用 Core/Web Core |
+| REACT-B3-001 | Done | 完成 Slider 单值/范围、受控/非受控、轨道点击、指针拖动、键盘、数字输入、tooltip、ARIA 和 ref focus 命令 |
+| DS-B3-001 | Done | Slider Sass 与变量迁入 `@aurora/theme`，Vue 使用包导出代理，React 使用同源样式并补齐原生输入和 tooltip 规则 |
+| DOC-B3-001 | Done | Slider 中英文 React 页面、独立 TSX 示例和表单侧边栏入口完成；22 组 Vue/React 契约生成且 renderer 隔离检查通过 |
+| QA-B3-001 | Done | Core 77、Web Core Node 7/Chromium 11、React Chromium 77、Vue 2297 项通过且 1 项预期失败，覆盖率为 98.00% / 95.23% / 97.76% / 98.27%，五个包构建、文档和 Vue/React/SSR 消费工程通过 |
 
 ### 批次 C：浮层与容器
 

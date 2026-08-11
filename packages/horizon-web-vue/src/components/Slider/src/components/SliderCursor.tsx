@@ -10,8 +10,7 @@ import {
 } from 'vue';
 import { HSliderGetTrackSizeInjectedKey, HSliderPropsInjectedKey } from '../utils/injectedKeys';
 import type { HorizonWebSetupContext } from '@aurora/utils';
-import { ComponentClassBlock, getClientXY, getPrecision } from '@aurora/utils';
-import { round } from 'lodash-es';
+import { ComponentClassBlock, getClientXY } from '@aurora/utils';
 import HTooltip from '~/components/Tooltip/src/Tooltip';
 import type { SliderCursorEmits } from '../composables/useEmits';
 import { useSliderCursorEmits } from '../composables/useEmits';
@@ -22,6 +21,12 @@ import { useSliderCursorSlots } from '../composables/useSlots';
 import type { SliderCursorSlots } from '../composables/useSlots';
 import type { SliderCursorExposes } from '../composables/useExposes';
 import { useSliderCursorExposes } from '../composables/useExposes';
+import {
+  getSliderKeyboardValue,
+  getSliderProgress,
+  getSliderValueFromPosition,
+} from '@aurora/core';
+import { focusSliderThumb } from '@aurora/horizon-web-core';
 
 export default defineComponent({
   name: 'SliderCursor',
@@ -39,7 +44,10 @@ export default defineComponent({
   exposes: useSliderCursorExposes,
   setup(
     props,
-    { emit, expose }: HorizonWebSetupContext<SliderCursorEmits, SliderCursorSlots, SliderCursorExposes>,
+    {
+      emit,
+      expose,
+    }: HorizonWebSetupContext<SliderCursorEmits, SliderCursorSlots, SliderCursorExposes>,
   ) {
     const classHelper = new ComponentClassBlock('slider');
 
@@ -71,7 +79,6 @@ export default defineComponent({
     /**
      * computed value
      */
-    const precision = computed(() => getPrecision(parentProps.step));
     const tooltipVisible = computed(() =>
       parentProps.tooltipEnable ? isDuringDragging.value : false,
     );
@@ -81,10 +88,14 @@ export default defineComponent({
      */
     function updateCursorPosition() {
       const cursorWidth = cursorRef.value?.clientWidth || 24;
-
-      cursorToLeft.value = `calc(${
-        ((currentValue.value - parentProps.min) / (parentProps.max - parentProps.min)) * 100
-      }% - ${cursorWidth / 2}px)`;
+      const progress = getSliderProgress(
+        currentValue.value,
+        parentProps.min,
+        parentProps.min,
+        parentProps.max,
+        false,
+      );
+      cursorToLeft.value = `calc(${progress.width}% - ${cursorWidth / 2}px)`;
     }
 
     function updateCurrentValue(val: number, enableCorrect = false) {
@@ -107,24 +118,18 @@ export default defineComponent({
 
       isDuringDragging.value = true;
       const { clientX } = getClientXY(event);
-      const cursorWidth = cursorRef.value?.offsetWidth || 24;
-
       const { width: trackWidth, left: trackLeft } = getTrackSize();
-
-      if (clientX > trackLeft + trackWidth) {
-        updateCurrentValue(parentProps.max);
-      } else if (clientX < trackLeft) {
-        updateCurrentValue(parentProps.min);
-      } else {
-        const left = Math.min(
-          Math.max(cursorWidth / 2, clientX - trackLeft),
-          trackWidth - cursorWidth / 2,
-        );
-
-        const percent = round((left / trackWidth) * 100, precision.value) / 100;
-
-        updateCurrentValue(percent * (parentProps.max - parentProps.min) + parentProps.min, true);
-      }
+      updateCurrentValue(
+        getSliderValueFromPosition(
+          clientX,
+          trackLeft,
+          trackWidth,
+          parentProps.min,
+          parentProps.max,
+          parentProps.step,
+        ),
+        true,
+      );
     }
 
     function increaseValue() {
@@ -171,13 +176,30 @@ export default defineComponent({
 
       switch (evt.code) {
         case 'ArrowLeft':
+        case 'ArrowDown':
           evt.preventDefault();
           onPressArrowLeft();
           break;
         case 'ArrowRight':
+        case 'ArrowUp':
           evt.preventDefault();
           onPressArrowRight();
           break;
+        case 'Home':
+        case 'End': {
+          const value = getSliderKeyboardValue(
+            currentValue.value,
+            evt.code,
+            parentProps.min,
+            parentProps.max,
+            parentProps.step,
+          );
+          if (value !== undefined) {
+            evt.preventDefault();
+            updateCurrentValue(value);
+          }
+          break;
+        }
       }
     }
 
@@ -210,6 +232,7 @@ export default defineComponent({
     expose({
       updateCursorPosition,
       updateCurrentValue,
+      focus: () => focusSliderThumb(cursorRef.value),
     });
 
     onMounted(() => {
@@ -229,6 +252,7 @@ export default defineComponent({
     });
 
     onBeforeUnmount(() => {
+      clearKeyDownTimer();
       cursorRef.value?.removeEventListener('mouseenter', onMouseEnter);
       cursorRef.value?.removeEventListener('mouseleave', onMouseLeave);
     });
