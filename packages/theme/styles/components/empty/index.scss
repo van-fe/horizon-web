@@ -1,0 +1,50 @@
+@use '../../mixins';
+
+@include mixins.b('empty') {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: mixins.css-variable('empty', 'spacing', 'padding') 0;
+  text-align: center;
+
+  @include mixins.e('image') {
+    width: mixins.css-variable('empty', 'size', 'width', 'medium');
+
+    img,
+    svg {
+      width: 100%;
+      height: 100%;
+      vertical-align: top;
+      user-select: none;
+      object-fit: contain;
+    }
+  }
+
+  @include mixins.e('description') {
+    padding: 0 mixins.css-variable('empty', 'spacing', 'description', 'padding');
+    margin: 0;
+    font-size: mixins.css-variable('empty', 'font-size', 'description');
+    line-height: mixins.css-variable('empty', 'line-height', 'description');
+    color: mixins.css-variable('empty', 'color', 'description');
+  }
+
+  @include mixins.e('bottom') {
+    margin-top: mixins.css-variable('empty', 'spacing', 'bottom', 'margin-top');
+  }
+
+  @include mixins.m('small') {
+    @include mixins.e('image') {
+      width: mixins.css-variable('empty', 'size', 'width', 'small');
+    }
+  }
+
+  @include mixins.m('large') {
+    @include mixins.e('image') {
+      width: mixins.css-variable('empty', 'size', 'width', 'large');
+    }
+  }
+}

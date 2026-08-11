@@ -2,17 +2,22 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {
   adaptManifestFields,
+  alertManifest,
   avatarManifest,
   badgeManifest,
   buttonManifest,
   cardManifest,
+  countManifest,
   createReactComponentManifest,
   createVueComponentManifest,
   dividerManifest,
+  emptyManifest,
   progressManifest,
+  resultManifest,
   selectManifest,
   skeletonManifest,
   spaceManifest,
+  statisticManifest,
   switchManifest,
   tooltipManifest,
   typographyManifest,
@@ -20,15 +25,20 @@ import {
 import type { ManifestFieldAdaptation } from '../packages/core/src';
 
 const manifests = [
+  alertManifest,
   avatarManifest,
   badgeManifest,
   buttonManifest,
   cardManifest,
+  countManifest,
   dividerManifest,
+  emptyManifest,
   progressManifest,
+  resultManifest,
   selectManifest,
   skeletonManifest,
   spaceManifest,
+  statisticManifest,
   switchManifest,
   tooltipManifest,
   typographyManifest,
@@ -42,6 +52,7 @@ interface RendererApiAdaptation {
 }
 
 const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
+  Alert: { regions: { rename: { content: 'default' } } },
   Avatar: {
     props: { rename: { fallbackSrc: 'default' } },
     regions: { rename: { content: 'default', fallback: 'error' } },
@@ -55,9 +66,12 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     props: { rename: { variant: 'type' } },
     regions: { rename: { title: 'default' } },
   },
+  Empty: { regions: { rename: { footer: 'default' } } },
   Progress: { regions: { rename: { label: 'default' } } },
+  Result: {},
   Select: { props: { rename: { value: 'modelValue' }, omit: ['defaultValue', 'open'] } },
   Skeleton: { regions: { rename: { content: 'default', placeholder: 'loadingTemplate' } } },
+  Statistic: { regions: { rename: { value: 'default' } } },
   Space: {
     props: {
       extend: [
@@ -98,6 +112,10 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
 };
 
 const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
+  Alert: {
+    events: { rename: { close: 'onClose' } },
+    regions: { rename: { content: 'children' } },
+  },
   Avatar: {
     events: { rename: { error: 'onError' } },
     regions: { rename: { content: 'children' } },
@@ -114,8 +132,15 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     regions: { rename: { default: 'children' } },
   },
   Card: { regions: { rename: { content: 'children' } } },
+  Count: { events: { rename: { change: 'onChange' } } },
   Divider: { regions: { rename: { title: 'children' } } },
+  Empty: { regions: { rename: { footer: 'children' } } },
   Progress: { regions: { rename: { label: 'children' } } },
+  Result: {
+    events: {
+      rename: { primaryClick: 'onPrimaryClick', secondaryClick: 'onSecondaryClick' },
+    },
+  },
   Select: {
     events: { rename: { change: 'onChange', openChange: 'onOpenChange' } },
     regions: {
@@ -128,6 +153,7 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     },
   },
   Skeleton: { regions: { rename: { content: 'children' } } },
+  Statistic: { regions: { rename: { value: 'children' } } },
   Space: {
     props: {
       extend: [

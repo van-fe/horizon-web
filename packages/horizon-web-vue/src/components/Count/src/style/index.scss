@@ -1,11 +1,1 @@
-@use '../../../../styles/mixins';
-
-@include mixins.b('count') {
-  display: flex;
-  align-items: center;
-
-  @include mixins.e('content') {
-    margin-right: mixins.css-variable('count', 'spacing', 'margin-right');
-    margin-left: mixins.css-variable('count', 'spacing', 'margin-left');
-  }
-}
+@use 'pkg:@aurora/theme/styles/count';

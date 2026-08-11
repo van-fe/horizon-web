@@ -1,7 +1,19 @@
 import { declarePropType } from '@aurora/utils';
 import type { ExtractPropTypes, PropType } from 'vue';
+import type {
+  StatisticFormatter,
+  StatisticTrend,
+  StatisticTrendType,
+  StatisticValue,
+} from '@aurora/core';
+import {
+  isStatisticPrecision,
+  isStatisticTrend,
+  isStatisticTrendType,
+  STATISTIC_DEFAULTS,
+} from '@aurora/core';
 
-export type StatisticFormatter = (value: number | string) => number | string;
+export type { StatisticFormatter } from '@aurora/core';
 
 export const useStatisticProps = declarePropType({
   /**
@@ -16,8 +28,8 @@ export const useStatisticProps = declarePropType({
    * @en Statistic value.
    */
   value: {
-    type: [Number, String] as PropType<number | string>,
-    default: 0,
+    type: [Number, String] as PropType<StatisticValue>,
+    default: STATISTIC_DEFAULTS.value,
   },
   /**
    * 数值小数位数
@@ -25,7 +37,7 @@ export const useStatisticProps = declarePropType({
    */
   precision: {
     type: Number,
-    validator: (value: number) => Number.isInteger(value) && value >= 0 && value <= 20,
+    validator: isStatisticPrecision,
   },
   /**
    * 是否使用千位分组
@@ -33,7 +45,7 @@ export const useStatisticProps = declarePropType({
    */
   useGrouping: {
     type: Boolean,
-    default: true,
+    default: STATISTIC_DEFAULTS.useGrouping,
   },
   /**
    * Intl.NumberFormat 使用的语言标识；默认跟随 Horizon Web 当前语言
@@ -68,25 +80,27 @@ export const useStatisticProps = declarePropType({
    * @en Trend direction.
    */
   trend: {
-    type: String as PropType<'up' | 'down' | 'none'>,
-    default: 'none',
+    type: String as PropType<StatisticTrend>,
+    default: STATISTIC_DEFAULTS.trend,
     values: ['up', 'down', 'none'],
+    validator: isStatisticTrend,
   },
   /**
    * 趋势说明值
    * @en Trend description value.
    */
   trendValue: {
-    type: [Number, String] as PropType<number | string>,
+    type: [Number, String] as PropType<StatisticValue>,
   },
   /**
    * 趋势语义类型，由业务含义决定而非升降方向自动推断
    * @en Semantic trend type, explicitly chosen by business meaning rather than inferred from direction.
    */
   trendType: {
-    type: String as PropType<'success' | 'danger' | 'neutral'>,
-    default: 'neutral',
+    type: String as PropType<StatisticTrendType>,
+    default: STATISTIC_DEFAULTS.trendType,
     values: ['success', 'danger', 'neutral'],
+    validator: isStatisticTrendType,
   },
   /**
    * 是否处于加载状态
@@ -94,7 +108,7 @@ export const useStatisticProps = declarePropType({
    */
   loading: {
     type: Boolean,
-    default: false,
+    default: STATISTIC_DEFAULTS.loading,
   },
 });
 

@@ -103,7 +103,9 @@ describe('Statistic', () => {
   });
 
   test('renders a trend value without directional icon semantics', () => {
-    const wrapper = mount(HStatistic, { props: { value: 5, trend: 'none', trendValue: 'baseline' } });
+    const wrapper = mount(HStatistic, {
+      props: { value: 5, trend: 'none', trendValue: 'baseline' },
+    });
     const trend = wrapper.get('.h-statistic__trend');
     expect(trend.text()).toBe('baseline');
     expect(trend.attributes('aria-label')).toBeUndefined();

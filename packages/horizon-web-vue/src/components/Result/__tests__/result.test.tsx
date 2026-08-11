@@ -1,11 +1,11 @@
 import { mount } from '@vue/test-utils';
+import notAllowed from '@aurora/theme/assets/result-not-allowed.svg';
+import notFound from '@aurora/theme/assets/result-not-found.svg';
+import serverError from '@aurora/theme/assets/result-server-error.svg';
 import { HResult } from '..';
 import { describe, expect, test, vi } from 'vitest';
 import HButton from '../../Button';
 import { nextTick, ref } from 'vue';
-import notAllowed from '../src/source/not-allowed.svg';
-import notFound from '../src/source/not-found.svg';
-import serverError from '../src/source/server-error.svg';
 
 describe('Result.tsx', () => {
   test('basic', async () => {

@@ -8,18 +8,19 @@ import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
 import { GlobalSizeInjectedKey } from '~/components/Application/src/utils/injectedKeys';
 import type { HApplicationSizeType } from '~/components/Application/src/composables/useProps';
 import { PRESENTED_IMAGES } from './utils/presentedImages';
+import { EMPTY_DEFAULTS } from '@aurora/core';
 
 export default defineComponent({
   name: `${useNamespace()}Empty`,
   desc: '空状态时的占位提示，并提供多场景可供使用',
-  descLocales: { en: "Default empty placeholder effect." },
+  descLocales: { en: 'Default empty placeholder effect.' },
   props: useEmptyProps,
   slots: useEmptySlots,
   setup(props, { slots }: HorizonWebSetupContext<{}, EmptySlots>) {
     const classHelper = new ComponentClassBlock('empty');
 
     // size, support global size
-    const globalSize = inject(GlobalSizeInjectedKey, ref('medium'));
+    const globalSize = inject(GlobalSizeInjectedKey, ref(EMPTY_DEFAULTS.size));
     const sizeRef = computed(() =>
       typeof props.size === 'number' ? '' : props.size || globalSize.value,
     ) as ComputedRef<HApplicationSizeType>;

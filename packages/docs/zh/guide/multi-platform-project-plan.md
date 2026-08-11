@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-A2 第一批展示与反馈组件已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-A2 展示与反馈组件已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -377,6 +377,17 @@ Alert Empty Result Statistic Count
 | DS-A2-001 | Done | 四组 Sass 和变量迁入 `@aurora/theme`，Vue 通过代理入口加载，React 构建使用同源样式 |
 | DOC-A2-001 | Done | 四个组件的中英文 React 页面、独立 TSX 示例和 React 侧边栏入口完成 |
 | QA-A2-001 | Done | 12 组 Vue/React 契约生成；Core 50、React Chromium 45、Vue 全量 2296 项通过，覆盖率四项均超过 95%，包构建、文档和 Vue/React/SSR 消费工程通过 |
+
+#### M6-A2 第二批实施记录（2026-08-11）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-A2-002 | Done | Alert、Empty、Result、Statistic、Count 的公共 props、默认值、校验器、事件元组、渲染区域、命令和纯算法迁入 `@aurora/core` |
+| VUE-A2-002 | Done | 五个 Vue 组件消费公共契约与算法，仅保留 Vue props、emits、slots 和渲染适配；Count 定时器支持重调度与卸载清理 |
+| REACT-A2-002 | Done | 五个 React 原生组件、回调、children/ref、ARIA 和浏览器行为实现 |
+| DS-A2-002 | Done | 五组 Sass、变量和 Empty/Result 公共 SVG 资产迁入 `@aurora/theme`，资源子路径自带 TypeScript 声明 |
+| DOC-A2-002 | Done | 五个组件的中英文 React 页面、独立 TSX 示例和侧边栏入口 |
+| QA-A2-002 | Done | 17 组 Vue/React 契约生成；Core 59、React Chromium 56、Vue 全量测试通过，覆盖率为 98.06% / 95.31% / 97.84% / 98.30%，包构建、文档和 Vue/React/SSR 消费工程通过 |
 
 ### 批次 B：基础表单与导航
 

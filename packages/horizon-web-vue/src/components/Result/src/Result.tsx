@@ -16,14 +16,20 @@ import {
 import HButton from '~/components/Button/src/Button';
 import { defaultLocale, localeInjectKey } from '~/provides';
 import useSize from '~/utils/useSize';
-import notAllowed from './source/not-allowed.svg';
-import notFound from './source/not-found.svg';
-import serverError from './source/server-error.svg';
+import notAllowed from '@aurora/theme/assets/result-not-allowed.svg';
+import notFound from '@aurora/theme/assets/result-not-found.svg';
+import serverError from '@aurora/theme/assets/result-server-error.svg';
+import {
+  isResultIconType,
+  normalizeResultHttpType,
+  RESULT_DEFAULTS,
+  type ResultHttpType,
+} from '@aurora/core';
 
 export default defineComponent({
   name: `${useNamespace()}Result`,
   desc: '用于对用户的操作结果或者异常状态做反馈',
-  descLocales: { en: "Default is `success` state" },
+  descLocales: { en: 'Default is `success` state' },
   components: {
     HButton,
     IconSuccessFilledLight,
@@ -38,9 +44,7 @@ export default defineComponent({
   setup(props, { emit, slots }: HorizonWebSetupContext<ResultEmits, ResultSlots>) {
     const classHelper = new ComponentClassBlock('result');
 
-    const isIcon = computed(() =>
-      ['info', 'success', 'warning', 'error'].includes(props.type as string),
-    );
+    const isIcon = computed(() => isResultIconType(props.type));
 
     const iconComponent = computed(() => {
       switch (props.type) {
@@ -57,23 +61,20 @@ export default defineComponent({
     });
 
     const status = computed(() => {
-      switch (props.type) {
+      switch (normalizeResultHttpType(props.type as ResultHttpType)) {
         default:
         case 404:
-        case '404':
           return notFound;
         case 403:
-        case '403':
           return notAllowed;
         case 500:
-        case '500':
           return serverError;
       }
     });
 
     // global size
     const size = toRef(props, 'size');
-    const sizeRef = useSize(size, 'medium');
+    const sizeRef = useSize(size, RESULT_DEFAULTS.size);
 
     const locale = inject(localeInjectKey, defaultLocale);
 

@@ -1,8 +1,1 @@
-@use '../../../../styles/mixins/function';
-
-$values: (
-  spacing: (
-    margin-left: #{function.css-variable('spacing-3')},
-    margin-right: #{function.css-variable('spacing-2')},
-  ),
-);
+@forward 'pkg:@aurora/theme/styles/count-variables';

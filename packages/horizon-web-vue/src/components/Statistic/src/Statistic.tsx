@@ -8,6 +8,7 @@ import useLocaleLang from '~/utils/useLocaleLang';
 import { useStatisticProps } from './composables/useProps';
 import type { StatisticSlots } from './composables/useSlots';
 import { useStatisticSlots } from './composables/useSlots';
+import { formatStatisticValue } from '@aurora/core';
 
 const localeMap: Record<string, string> = {
   AE: 'ar-AE',
@@ -34,15 +35,14 @@ export default defineComponent({
     const decreaseText = useLocaleLang('statistic.decrease', 'Decreased');
 
     const formattedValue = computed(() => {
-      if (props.formatter) return props.formatter(props.value);
-      if (typeof props.value !== 'number' || !Number.isFinite(props.value)) return props.value;
       const locale = props.locale || localeMap[currentLocale.value ?? 'En'] || 'en';
-      const precision = props.precision;
-      return new Intl.NumberFormat(locale, {
+      return formatStatisticValue({
+        value: props.value,
+        precision: props.precision,
         useGrouping: props.useGrouping,
-        minimumFractionDigits: precision,
-        maximumFractionDigits: precision,
-      }).format(props.value);
+        locale,
+        formatter: props.formatter,
+      });
     });
 
     return () => {

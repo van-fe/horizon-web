@@ -1,4 +1,6 @@
 import type { ExtractPropTypes, PropType } from 'vue';
+import type { EmptySize } from '@aurora/core';
+import { isEmptySize } from '@aurora/core';
 
 export const useEmptyProps = {
   /**
@@ -6,7 +8,7 @@ export const useEmptyProps = {
    * 可使用内置图片，列表见文档
    * 可使用自定义图片，建议使用 svg，尺寸 160*160
    * 还可使用插槽自定义
-    * @en Configuration for image.
+   * @en Configuration for image.
    */
   image: {
     type: String,
@@ -15,16 +17,17 @@ export const useEmptyProps = {
   /**
    * 尺寸(图片宽度)
    * 支持内置 small, medium, large 宽度和数值宽度。默认是 medium.
-    * @en Configuration for size.
+   * @en Configuration for size.
    */
   size: {
-    type: [String, Number] as PropType<'small' | 'medium' | 'large' | number>,
+    type: [String, Number] as PropType<EmptySize>,
     required: false,
+    validator: isEmptySize,
   },
   /**
    * 描述文字
    * 可使用插槽自定义
-    * @en Configuration for description.
+   * @en Configuration for description.
    */
   description: {
     type: String,

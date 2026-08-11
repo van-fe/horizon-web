@@ -1,4 +1,4 @@
-import { defineComponent, toRefs, ref, watch, computed } from 'vue';
+import { computed, defineComponent, onBeforeUnmount, ref, toRefs, watch } from 'vue';
 import { useFormatNumber } from './composables/useTools';
 import { useCountProps } from './composables/useProps';
 import { useCountEmits } from './composables/useEmits';
@@ -7,6 +7,7 @@ import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import type { CountSlots } from './composables/useSlots';
 import { useCountSlots } from './composables/useSlots';
+import { nextCountValue } from '@aurora/core';
 
 export default defineComponent({
   name: `${useNamespace()}Count`,
@@ -34,44 +35,42 @@ export default defineComponent({
     const countContent = computed(() =>
       useFormatNumber(count.value, separatorProp.value, extentProp.value, decimalProp.value),
     );
-    const handleChangeCount = () => {
-      count.value += 10 ** stepProp.value;
+    const stopTimer = () => {
+      if (setTimeoutId === null) return;
+      clearTimeout(setTimeoutId);
+      setTimeoutId = null;
     };
-    const handleLoopCount = (callback: any, delay: number) => {
+    const scheduleNextCount = () => {
+      stopTimer();
+      if (!autoPlayProp.value) {
+        count.value = endValueProp.value;
+        return;
+      }
+      if (count.value >= endValueProp.value) return;
       setTimeoutId = window.setTimeout(() => {
-        setTimeoutId && clearTimeout(setTimeoutId);
         setTimeoutId = null;
-        callback();
-        return handleLoopCount(callback, delay);
-      }, delay);
+        count.value = nextCountValue(count.value, endValueProp.value, stepProp.value);
+        scheduleNextCount();
+      }, delayProp.value);
     };
-    watch(
-      () => autoPlayProp.value,
-      val => {
-        if (val) {
-          count.value < (endValueProp.value as number) &&
-            handleLoopCount(handleChangeCount, delayProp.value);
-        } else {
-          count.value = endValueProp.value as number;
-        }
-      },
-      {
-        immediate: true,
-      },
-    );
+    watch([autoPlayProp, endValueProp, stepProp, delayProp], scheduleNextCount, {
+      immediate: true,
+    });
+    watch(startValueProp, value => {
+      count.value = value;
+      scheduleNextCount();
+    });
     watch(
       () => count.value,
       val => {
         emit('change', val);
-        if (val >= (endValueProp.value as number) && setTimeoutId) {
-          clearTimeout(setTimeoutId);
-          setTimeoutId = null;
-        }
+        if (val >= endValueProp.value) stopTimer();
       },
       {
         immediate: true,
       },
     );
+    onBeforeUnmount(stopTimer);
     return () => (
       <div class={`${classHelper.block}`}>
         {slots?.prefix?.() ?? prefixProp.value}

@@ -3,14 +3,19 @@
 @use './basic';
 @use './element';
 @use './components/avatar/variables' as avatar;
+@use './components/alert/variables' as alert;
 @use './components/badge/variables' as badge;
 @use './components/button/variables' as button;
 @use './components/card/variables' as card;
+@use './components/count/variables' as count;
 @use './components/divider/variables' as divider;
+@use './components/empty/variables' as empty;
 @use './components/progress/variables' as progress;
+@use './components/result/variables' as result;
 @use './components/select/variables' as select;
 @use './components/skeleton/variables' as skeleton;
 @use './components/space/variables' as space;
+@use './components/statistic/variables' as statistic;
 @use './components/switch/variables' as switch;
 @use './components/tooltip/variables' as tooltip;
 @use './components/typography/variables' as typography;
@@ -18,15 +23,20 @@
 $values: function.map-merge-multi(
   function.flatten-variables(basic.$values),
   function.flatten-variables(element.$values),
+  function.flatten-variables(alert.$values, 'alert'),
   function.flatten-variables(avatar.$values, 'avatar'),
   function.flatten-variables(badge.$values, 'badge'),
   function.flatten-variables(button.$values, 'button'),
   function.flatten-variables(card.$values, 'card'),
+  function.flatten-variables(count.$values, 'count'),
   function.flatten-variables(divider.$values, 'divider'),
+  function.flatten-variables(empty.$values, 'empty'),
   function.flatten-variables(progress.$values, 'progress'),
+  function.flatten-variables(result.$values, 'result'),
   function.flatten-variables(select.$values, 'select'),
   function.flatten-variables(skeleton.$values, 'skeleton'),
   function.flatten-variables(space.$values, 'space'),
+  function.flatten-variables(statistic.$values, 'statistic'),
   function.flatten-variables(switch.$values, 'switch'),
   function.flatten-variables(tooltip.$values, 'tooltip'),
   function.flatten-variables(typography.$values, 'typography')

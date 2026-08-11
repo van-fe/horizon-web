@@ -3,6 +3,7 @@ import { useAlertProps, typeMap } from './composables/useProps';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { AIcon } from '@aurora/icon';
+import { ALERT_DEFAULTS, isAssertiveAlert } from '@aurora/core';
 import HLink from '../../Link';
 import type { AlertEmits } from './composables/useEmits';
 import { useAlertEmits } from './composables/useEmits';
@@ -18,7 +19,9 @@ import useSize from '~/utils/useSize';
 export default defineComponent({
   name: `${useNamespace()}Alert`,
   desc: '用于页面中展示重要的提示信息',
-  descLocales: { en: "Combine `title` and `description` into a complete message. Use `info` for important updates that do not need to interrupt the user." },
+  descLocales: {
+    en: 'Combine `title` and `description` into a complete message. Use `info` for important updates that do not need to interrupt the user.',
+  },
   props: useAlertProps,
   emits: useAlertEmits,
   slots: useAlertSlots,
@@ -34,7 +37,7 @@ export default defineComponent({
 
     // global size
     const size = toRef(props, 'size');
-    const sizeRef = useSize(size, 'medium');
+    const sizeRef = useSize(size, ALERT_DEFAULTS.size);
 
     const close = (evt: MouseEvent | KeyboardEvent) => {
       visible.value = false;
@@ -84,8 +87,8 @@ export default defineComponent({
       <Transition name="h-alert-fade">
         <div
           v-show={visible.value}
-          role={props.type === 'error' || props.type === 'warning' ? 'alert' : 'status'}
-          aria-live={props.type === 'error' || props.type === 'warning' ? 'assertive' : 'polite'}
+          role={isAssertiveAlert(props.type) ? 'alert' : 'status'}
+          aria-live={isAssertiveAlert(props.type) ? 'assertive' : 'polite'}
           class={cls(
             classHelper.block,
             classHelper.is('round', props.rounded),
