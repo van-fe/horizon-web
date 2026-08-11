@@ -6,6 +6,39 @@
   "module": "es/index.js",
   "unpkg": "dist/horizon-web-browser.umd.js",
   "types": "es/index.d.ts",
+  "style": "es/styles/index.css",
+  "exports": {
+    ".": {
+      "types": "./es/index.d.ts",
+      "import": "./es/index.js",
+      "require": "./lib/index.js",
+      "default": "./es/index.js"
+    },
+    "./components/*": {
+      "types": "./es/components/*/index.d.ts",
+      "import": "./es/components/*/index.js",
+      "require": "./lib/components/*/index.js",
+      "default": "./es/components/*/index.js"
+    },
+    "./styles": {
+      "sass": "./es/styles/index.scss",
+      "style": "./es/styles/index.css",
+      "default": "./es/styles/index.css"
+    },
+    "./styles/base": {
+      "sass": "./es/styles/base.scss",
+      "style": "./es/styles/base.css",
+      "default": "./es/styles/base.css"
+    },
+    "./styles/index.css": "./es/styles/index.css",
+    "./styles/index.scss": "./es/styles/index.scss",
+    "./styles/base.css": "./es/styles/base.css",
+    "./styles/base.scss": "./es/styles/base.scss",
+    "./es/*": "./es/*",
+    "./lib/*": "./lib/*",
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json"
+  },
   "vetur": {
     "tags": "json/tags.json",
     "attributes": "json/attributes.json"
