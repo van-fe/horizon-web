@@ -60,6 +60,8 @@
     "./styles/pagination-variables": "./styles/components/pagination/variables.scss",
     "./styles/popover": "./styles/components/popover/index.scss",
     "./styles/popover-variables": "./styles/components/popover/variables.scss",
+    "./styles/popconfirm": "./styles/components/popconfirm/index.scss",
+    "./styles/popconfirm-variables": "./styles/components/popconfirm/variables.scss",
     "./styles/foundations": "./styles/foundations.scss",
     "./styles/basic": "./styles/basic/index.scss",
     "./styles/element": "./styles/element/index.scss",

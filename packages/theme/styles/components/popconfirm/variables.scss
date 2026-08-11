@@ -1,0 +1,25 @@
+@use '../../mixins/function';
+
+$values: (
+  size: (
+    min-width: 220px,
+    max-width: 360px,
+  ),
+  color: (
+    '': #{function.css-variable('text-primary')},
+    icon: #{function.css-variable('text-warning-default')},
+    disabled: #{function.css-variable('text-disabled')},
+  ),
+  line-height: (
+    content: 20px,
+  ),
+  background: #{function.css-variable('bg-default')},
+  border-radius: #{function.css-variable('radius-m')},
+  box-shadow: #{function.css-variable('shadow-down2')},
+  spacing: (
+    padding: #{function.css-variable('spacing-5')},
+    body-gap: #{function.css-variable('spacing-3')},
+    footer-gap: #{function.css-variable('spacing-3')},
+    footer-margin-top: #{function.css-variable('spacing-5')},
+  ),
+);

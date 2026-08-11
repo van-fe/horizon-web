@@ -7,6 +7,11 @@ function NamespaceProbe() {
   return createElement('span', null, useHorizonWebConfig().namespace);
 }
 
+function PopconfirmLabelsProbe() {
+  const { popconfirmLabels } = useHorizonWebConfig();
+  return createElement('span', null, `${popconfirmLabels.confirm}/${popconfirmLabels.cancel}`);
+}
+
 describe('HorizonWebProvider', () => {
   it('is SSR-safe and exposes renderer configuration', () => {
     const html = renderToStaticMarkup(
@@ -18,5 +23,17 @@ describe('HorizonWebProvider', () => {
 
   it('uses the shared theme namespace by default', () => {
     expect(renderToStaticMarkup(createElement(NamespaceProbe))).toContain('H');
+  });
+
+  it('merges Popconfirm labels with provider defaults', () => {
+    const html = renderToStaticMarkup(
+      createElement(
+        HorizonWebProvider,
+        { popconfirmLabels: { confirm: 'Proceed' } },
+        createElement(PopconfirmLabelsProbe),
+      ),
+    );
+
+    expect(html).toContain('Proceed/Cancel');
   });
 });

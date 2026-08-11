@@ -87,7 +87,7 @@ export default defineComponent({
       <HTransition>
         <div
           v-click-outside={() => emit('cancel')}
-          class={classHelper.block}
+          class={[classHelper.block, classHelper.m('directive')]}
           role="tooltip"
           style={{
             zIndex: zIndex.value,
@@ -119,7 +119,6 @@ export default defineComponent({
               size="small"
               {...props.okButtonProps}
               onClick={(evt: MouseEvent) => emit('ok', evt)}
-              style="margin-left: 12px"
             >
               {props.okText || useLocaleLang('global.confirm').value}
             </HButton>

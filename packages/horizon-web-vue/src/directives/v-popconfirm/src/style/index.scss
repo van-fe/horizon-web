@@ -1,83 +1,57 @@
+@use 'pkg:@aurora/theme/styles/popconfirm';
 @use '../../../../styles/mixins';
 
+/* stylelint-disable nesting-selector-no-missing-scoping-root -- BEM mixins provide the directive modifier root. */
 @include mixins.b('popconfirm') {
-  width: mixins.css-variable('v-popconfirm-width');
-  padding: mixins.css-variable('v-popconfirm-padding');
-  color: mixins.css-variable('v-popconfirm-color');
-  background-color: mixins.css-variable('v-popconfirm-bg');
-  border-radius: mixins.css-variable('v-popconfirm-border-radius');
-  box-shadow: mixins.css-variable('v-popconfirm-box-shadow');
-
-  @include mixins.e('body') {
-    display: flex;
-    margin-bottom: mixins.css-variable('v-popconfirm-margin-bottom--body');
-  }
-
-  @include mixins.e('icon') {
-    flex: none;
-    margin-right: mixins.css-variable('v-popconfirm-margin-right--icon');
-    line-height: mixins.css-variable('v-popconfirm-line-height--icon') !important;
-  }
-
-  @include mixins.e('content') {
-    flex: 1;
-    font-size: mixins.css-variable('v-popconfirm-font-size--content');
-    line-height: mixins.css-variable('v-popconfirm-line-height--content');
-    word-break: break-all;
-    overflow-wrap: break-word;
-    hyphens: auto;
-  }
-
-  @include mixins.e('footer') {
-    text-align: right;
-  }
-
-  @include mixins.e('arrow') {
-    position: absolute;
-    width: mixins.css-variable('v-popconfirm-size--arrow');
-    height: mixins.css-variable('v-popconfirm-size--arrow');
-
-    &::before {
+  @include mixins.m('directive') {
+    @include mixins.e('arrow') {
       position: absolute;
-      width: 100%;
-      height: 100%;
-      background-color: mixins.css-variable('v-popconfirm-bg');
-      box-shadow: mixins.css-variable('v-popconfirm-box-shadow--arrow');
-      transform: rotate(45deg);
-      visibility: visible;
-      content: '';
+      width: 8px;
+      height: 8px;
+
+      &::before {
+        position: absolute;
+        visibility: visible;
+        width: 100%;
+        height: 100%;
+        content: '';
+        background-color: mixins.css-variable('popconfirm', 'background');
+        box-shadow: 2px 2px 3px 0 rgb(0, 0, 0, 4%);
+        transform: rotate(45deg);
+      }
     }
-  }
 
-  &[data-popper-placement^='top'] > .#{mixins.$namespace}-popconfirm__arrow {
-    bottom: calc(-1 * #{mixins.css-variable('v-popconfirm-size--arrow')} / 2);
-  }
-
-  &[data-popper-placement^='bottom'] > .#{mixins.$namespace}-popconfirm__arrow {
-    top: calc(-1 * #{mixins.css-variable('v-popconfirm-size--arrow')} / 2);
-
-    &::before {
-      transform: rotate(225deg);
+    &[data-popper-placement^='top'] > .#{mixins.$namespace}-popconfirm__arrow {
+      bottom: -4px;
     }
-  }
 
-  &[data-popper-placement^='left'] > .#{mixins.$namespace}-popconfirm__arrow {
-    right: calc(-1 * #{mixins.css-variable('v-popconfirm-size--arrow')} / 2);
+    &[data-popper-placement^='bottom'] > .#{mixins.$namespace}-popconfirm__arrow {
+      top: -4px;
 
-    &::before {
-      transform: rotate(-45deg);
+      &::before {
+        transform: rotate(225deg);
+      }
     }
-  }
 
-  &[data-popper-placement^='right'] > .#{mixins.$namespace}-popconfirm__arrow {
-    left: calc(-1 * #{mixins.css-variable('v-popconfirm-size--arrow')} / 2);
+    &[data-popper-placement^='left'] > .#{mixins.$namespace}-popconfirm__arrow {
+      right: -4px;
 
-    &::before {
-      transform: rotate(135deg);
+      &::before {
+        transform: rotate(-45deg);
+      }
     }
-  }
 
-  &[data-popper-reference-hidden] {
-    display: none;
+    &[data-popper-placement^='right'] > .#{mixins.$namespace}-popconfirm__arrow {
+      left: -4px;
+
+      &::before {
+        transform: rotate(135deg);
+      }
+    }
+
+    &[data-popper-reference-hidden] {
+      display: none;
+    }
   }
 }
+/* stylelint-enable nesting-selector-no-missing-scoping-root */

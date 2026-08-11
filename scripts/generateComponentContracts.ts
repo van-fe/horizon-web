@@ -25,6 +25,7 @@ import {
   linkManifest,
   paginationManifest,
   popContentManifest,
+  popconfirmManifest,
   popoverManifest,
   progressManifest,
   rateManifest,
@@ -67,6 +68,7 @@ const manifests = [
   inputManifest,
   linkManifest,
   paginationManifest,
+  popconfirmManifest,
   popoverManifest,
   popContentManifest,
   progressManifest,
@@ -578,6 +580,27 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
       ],
     },
   },
+  Popconfirm: {
+    props: {
+      rename: { open: 'visible' },
+      omit: ['defaultOpen'],
+      override: {
+        confirmButtonProps: { type: 'Partial<ButtonProps>' },
+        cancelButtonProps: { type: 'Partial<ButtonProps>' },
+      },
+    },
+    events: {
+      omit: ['openChange'],
+      extend: [
+        {
+          name: 'update:visible',
+          type: 'boolean',
+          description: { zh: '更新绑定显隐', en: 'Updates bound visibility' },
+        },
+      ],
+    },
+    regions: { rename: { trigger: 'reference', content: 'default' } },
+  },
   PopContent: { regions: { rename: { content: 'default' } } },
   Timeline: {
     props: {
@@ -829,6 +852,45 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
       },
     },
     regions: { rename: { trigger: 'children', content: 'content' } },
+  },
+  Popconfirm: {
+    props: {
+      override: {
+        confirmButtonProps: { type: 'Partial<ButtonProps>' },
+        cancelButtonProps: { type: 'Partial<ButtonProps>' },
+      },
+      extend: [
+        {
+          name: 'portalContainer',
+          type: 'PortalTarget',
+          defaultValue: "'body'",
+          description: { zh: 'Portal 容器', en: 'Portal destination' },
+        },
+        {
+          name: 'portal',
+          type: 'boolean',
+          defaultValue: 'true',
+          description: { zh: '使用 Portal', en: 'Uses a Portal' },
+        },
+        {
+          name: 'zIndex',
+          type: 'number',
+          defaultValue: '1000',
+          description: { zh: '浮层层级', en: 'Floating z-index' },
+        },
+      ],
+    },
+    events: {
+      rename: { openChange: 'onOpenChange', confirm: 'onConfirm', cancel: 'onCancel' },
+      extend: [
+        {
+          name: 'onConfirmError',
+          type: '(error: unknown) => void',
+          description: { zh: '确认守卫失败', en: 'Confirmation guard rejected' },
+        },
+      ],
+    },
+    regions: { rename: { trigger: 'children', content: 'content', icon: 'icon' } },
   },
   PopContent: { regions: { rename: { content: 'children' } } },
   Timeline: {

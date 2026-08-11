@@ -6,6 +6,7 @@ export * from './Input';
 export * from './Link';
 export * from './Pagination';
 export * from './Popover';
+export * from './Popconfirm';
 export * from './Radio';
 export * from './Select';
 export * from './Slider';

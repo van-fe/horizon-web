@@ -25,6 +25,8 @@ describe('v-popconfirm.tsx', () => {
 
     await nextTick();
 
-    expect(document.body.querySelector('.h-popconfirm')).not.eq(null);
+    const popconfirm = document.body.querySelector('.h-popconfirm');
+    expect(popconfirm).not.eq(null);
+    expect(popconfirm?.classList.contains('h-popconfirm--directive')).eq(true);
   });
 });

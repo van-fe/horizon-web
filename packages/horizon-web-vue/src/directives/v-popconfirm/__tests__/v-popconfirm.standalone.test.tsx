@@ -44,6 +44,8 @@ describe('v-popconfirm.tsx', () => {
       '.h-popconfirm .h-button',
     ) as NodeListOf<HTMLButtonElement>;
 
+    expect(document.body.querySelector('.h-popconfirm--directive')).not.eq(null);
+
     const confirmButton = buttons[1];
 
     expect(confirmButton?.textContent).eq('0');

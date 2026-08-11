@@ -126,4 +126,26 @@ describe('React Popover', () => {
     await act(async () => ref.current?.close());
     expect(portal.querySelector('[role="dialog"]')?.hasAttribute('hidden')).toBe(true);
   });
+
+  it('rebinds dismissal after a default-open floating element moves into its portal', async () => {
+    const onOpenChange = vi.fn();
+    const onContentClick = vi.fn();
+    await render(
+      h(
+        Popover,
+        {
+          content: h('button', { onClick: onContentClick }, 'Inside action'),
+          defaultOpen: true,
+          onOpenChange,
+          trigger: 'click',
+        },
+        trigger(),
+      ),
+    );
+
+    await click(document.querySelector<HTMLButtonElement>('[role="dialog"] button')!);
+    expect(onContentClick).toHaveBeenCalledOnce();
+    expect(onOpenChange).not.toHaveBeenCalled();
+    expect(document.querySelector('[role="dialog"]')).not.toBeNull();
+  });
 });

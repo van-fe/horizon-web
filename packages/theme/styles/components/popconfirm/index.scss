@@ -1,0 +1,56 @@
+@use '../../mixins';
+
+@include mixins.b('popconfirm') {
+  min-width: mixins.css-variable('popconfirm', 'size', 'min-width');
+  max-width: mixins.css-variable('popconfirm', 'size', 'max-width');
+  padding: mixins.css-variable('popconfirm', 'spacing', 'padding');
+  color: mixins.css-variable('popconfirm', 'color');
+  background: mixins.css-variable('popconfirm', 'background');
+  border-radius: mixins.css-variable('popconfirm', 'border-radius');
+  box-shadow: mixins.css-variable('popconfirm', 'box-shadow');
+
+  @include mixins.e('body') {
+    display: flex;
+    gap: mixins.css-variable('popconfirm', 'spacing', 'body-gap');
+    align-items: flex-start;
+  }
+
+  @include mixins.e('icon') {
+    flex: none;
+    color: mixins.css-variable('popconfirm', 'color', 'icon');
+  }
+
+  @include mixins.e('content') {
+    line-height: mixins.css-variable('popconfirm', 'line-height', 'content');
+    overflow-wrap: anywhere;
+  }
+
+  @include mixins.e('footer') {
+    display: flex;
+    gap: mixins.css-variable('popconfirm', 'spacing', 'footer-gap');
+    justify-content: flex-end;
+    margin-top: mixins.css-variable('popconfirm', 'spacing', 'footer-margin-top');
+
+    > button:not(#{mixins.block-name('button')}) {
+      padding: 0;
+      margin: 0;
+      font: inherit;
+      color: inherit;
+      appearance: none;
+      cursor: pointer;
+      background: transparent;
+      border: 0;
+      border-radius: mixins.css-variable('popconfirm', 'border-radius');
+
+      &:focus-visible {
+        @include mixins.focus-ring-inset(mixins.css-variable('popconfirm', 'border-radius'));
+      }
+
+      &:disabled,
+      &[aria-disabled='true'] {
+        color: mixins.css-variable('popconfirm', 'color', 'disabled');
+        cursor: not-allowed;
+      }
+    }
+  }
+}

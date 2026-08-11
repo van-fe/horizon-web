@@ -72,7 +72,9 @@ describe('Popconfirm', () => {
     await nextTick();
 
     const dialog = document.body.querySelector('[role="alertdialog"]')!;
-    expect(dialog.getAttribute('aria-label')).toBe('Delete account?');
+    const labelledBy = dialog.getAttribute('aria-labelledby')!;
+    expect(labelledBy).toBeTruthy();
+    expect(document.getElementById(labelledBy)?.textContent).toBe('Delete account?');
     const cancel = Array.from(dialog.querySelectorAll('button')).find(
       button => button.textContent === 'Keep',
     )!;
@@ -87,9 +89,10 @@ describe('Popconfirm', () => {
   test('ignores duplicate confirmations while an async guard is pending', async () => {
     let resolveGuard!: (value: boolean) => void;
     const guard = vi.fn(
-      () => new Promise<boolean>(resolve => {
-        resolveGuard = resolve;
-      }),
+      () =>
+        new Promise<boolean>(resolve => {
+          resolveGuard = resolve;
+        }),
     );
     const emit = vi.fn();
     const state = usePopconfirm(
@@ -174,5 +177,77 @@ describe('Popconfirm', () => {
     expect(usePopconfirmEmits.confirm(new Event('click') as MouseEvent)).toBe(false);
     expect(usePopconfirmEmits.cancel(event)).toBe(true);
     expect(usePopconfirmEmits.cancel({} as MouseEvent)).toBe(false);
+  });
+
+  test('focuses cancel on open, closes on Escape and restores trigger focus', async () => {
+    const wrapper = mount(HPopconfirm, {
+      props: { title: 'Delete account?' },
+      slots: { reference: '<button class="reference">Delete</button>' },
+      attachTo: document.body,
+    });
+    const reference = wrapper.get<HTMLButtonElement>('.reference');
+
+    await reference.trigger('click');
+    await nextTick();
+    await new Promise(resolve =>
+      requestAnimationFrame(() => requestAnimationFrame(() => resolve(undefined))),
+    );
+    const dialog = document.body.querySelector<HTMLElement>('[role="alertdialog"]')!;
+    const cancel = dialog.querySelector<HTMLButtonElement>('[data-popconfirm-action="cancel"]')!;
+    expect(document.activeElement).toBe(cancel);
+
+    cancel.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, key: 'Escape' }));
+    await nextTick();
+    expect(document.body.querySelector('[role="alertdialog"]')).toBeNull();
+    expect(document.activeElement).toBe(reference.element);
+    wrapper.unmount();
+  });
+
+  test('exposes open and close commands from the Core contract', async () => {
+    const wrapper = mount(HPopconfirm, {
+      props: { title: 'Continue?' },
+      slots: { reference: '<button>Open</button>' },
+      attachTo: document.body,
+    });
+
+    (wrapper.vm as unknown as { open: () => void }).open();
+    await nextTick();
+    expect(document.body.querySelector('[role="alertdialog"]')).not.toBeNull();
+
+    (wrapper.vm as unknown as { close: () => void }).close();
+    await nextTick();
+    expect(document.body.querySelector('[role="alertdialog"]')).toBeNull();
+    wrapper.unmount();
+  });
+
+  test('keeps the confirm button loading while the Core guard is pending', async () => {
+    let resolveGuard!: (value: boolean) => void;
+    const wrapper = mount(HPopconfirm, {
+      props: {
+        title: 'Continue?',
+        confirmButtonProps: { loading: false },
+        beforeConfirm: () =>
+          new Promise<boolean>(resolve => {
+            resolveGuard = resolve;
+          }),
+      },
+      slots: { reference: '<button>Open</button>' },
+      attachTo: document.body,
+    });
+
+    await wrapper.get('button').trigger('click');
+    await nextTick();
+    const confirm = wrapper
+      .findAllComponents(HButton)
+      .find(button => button.attributes('data-popconfirm-action') === 'confirm')!;
+    await confirm.trigger('click');
+    await nextTick();
+    expect(confirm.props('loading')).toBe(true);
+
+    resolveGuard(false);
+    await nextTick();
+    await nextTick();
+    expect(confirm.props('loading')).toBe(false);
+    wrapper.unmount();
   });
 });

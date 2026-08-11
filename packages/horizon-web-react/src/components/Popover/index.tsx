@@ -147,6 +147,7 @@ export const Popover = forwardRef<PopoverHandle, PopoverProps>(function Popover(
     onLeaveReference,
     onClick,
     className,
+    role = 'dialog',
     style,
     ...nativeProps
   },
@@ -241,6 +242,7 @@ export const Popover = forwardRef<PopoverHandle, PopoverProps>(function Popover(
     preventOverflow,
     referenceOverflowObserve,
     resizeObserve,
+    resolvedPortal,
     sameHeight,
     sameWidth,
     setMinWidth,
@@ -259,7 +261,7 @@ export const Popover = forwardRef<PopoverHandle, PopoverProps>(function Popover(
         if (reason === 'escape') referenceRef.current?.focus();
       },
     });
-  }, [controller, currentOpen, hideEvent, trigger]);
+  }, [controller, currentOpen, hideEvent, portal, resolvedPortal, trigger]);
 
   useImperativeHandle(
     forwardedRef,
@@ -335,7 +337,7 @@ export const Popover = forwardRef<PopoverHandle, PopoverProps>(function Popover(
         hidden={!currentOpen}
         id={floatingId}
         ref={floatingRef}
-        role="dialog"
+        role={role}
         style={{ ...style, zIndex }}
         onMouseEnter={() => trigger === 'hover' && controller.cancelClose()}
         onMouseLeave={() => trigger === 'hover' && controller.requestClose('hover')}

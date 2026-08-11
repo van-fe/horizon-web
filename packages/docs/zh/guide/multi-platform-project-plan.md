@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B13 Dropdown 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B14 Popconfirm 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -554,6 +554,18 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DS-B13-001 | Done | Dropdown Sass、尺寸、主题与变量迁入 `@aurora/theme`，Vue 使用包导出代理，React 使用同源样式并补齐原生按钮 reset、焦点环、隐藏与禁用规则 |
 | DOC-B13-001 | Done | Dropdown 中英文 React 页面、独立 TSX 示例与导航侧边栏入口完成；39 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
 | QA-B13-001 | Done | Core 115、Web Core Node 10/Chromium 28、React Chromium 128、Vue Chromium 2303 项（2302 通过、1 项预期失败）全部通过，覆盖率为 97.97% / 95.12% / 97.78% / 98.28%；五个包构建、文档、Vue/React/SSR 消费工程及四个中英文 renderer 路由的 390×844 真实浏览器验收通过 |
+
+#### M6-B14 第十四批实施记录（2026-08-12）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B14-001 | Done | Popconfirm 的公共 props、默认值、位置枚举、校验器、事件、内容区域、命令、打开原因和异步确认控制器迁入 `@aurora/core`；受控与非受控状态、禁用关闭、pending 去重、守卫阻止、失败恢复及取消竞态只定义一次 |
+| WEB-B14-001 | Done | 在同名 Web Core 目录提供确认操作查询与首个可用操作聚焦 primitive；兼容 Vue Horizon Button 与 React 按钮结构，并覆盖 Node/真实 Chromium 测试 |
+| VUE-B14-001 | Done | Vue props/emits/slots/exposes 通过类型化 rename/omit 适配消费公共契约，仅保留 runtime props、`visible` 双向绑定、VNode、历史按钮参数和 locale 适配；异步确认复用 Core 控制器，聚焦复用 Web Core，并保留 `v-popconfirm` 的 Vue 指令语义 |
+| REACT-B14-001 | Done | 完成原生受控与非受控 Popconfirm、异步守卫、Portal、外部与 Escape 关闭、焦点回归、Provider 文案、富内容与图标、原生 alertdialog 关系及命令 ref；修复默认打开 Popover 迁入 Portal 后的 dismiss 层重绑定 |
+| DS-B14-001 | Done | Popconfirm Sass、变量与视觉基础迁入 `@aurora/theme`，Vue/React 使用同源样式；`v-popconfirm` 仅在 `.h-popconfirm--directive` 下保留箭头和定位差异，消除旧组件样式与指令样式的同选择器叠加 |
+| DOC-B14-001 | Done | Popconfirm 中英文 React 页面、独立 TSX 示例与侧边栏入口完成；40 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
+| QA-B14-001 | Done | Core 123、Web Core Node 10/Chromium 30、React Chromium 136、Vue Chromium 2306 项（2305 通过、1 项预期失败）全部通过，覆盖率为 97.96% / 95.09% / 97.77% / 98.27%；五个包构建、文档、Vue/React/SSR 消费工程及四个中英文 renderer 路由的真实浏览器验收通过 |
 
 ### 批次 C：浮层与容器
 

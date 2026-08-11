@@ -30,6 +30,10 @@ export interface HorizonWebConfig {
     progress: string;
   };
   paginationLabels: PaginationLabels;
+  popconfirmLabels: {
+    confirm: string;
+    cancel: string;
+  };
 }
 
 export type HorizonWebProviderProps = PropsWithChildren<
@@ -38,6 +42,7 @@ export type HorizonWebProviderProps = PropsWithChildren<
     | 'breadcrumbLabels'
     | 'linkLabels'
     | 'paginationLabels'
+    | 'popconfirmLabels'
     | 'selectLabels'
     | 'stepsLabels'
     | 'switchLabels'
@@ -50,6 +55,7 @@ export type HorizonWebProviderProps = PropsWithChildren<
     timelineLabels?: Partial<HorizonWebConfig['timelineLabels']>;
     stepsLabels?: Partial<HorizonWebConfig['stepsLabels']>;
     paginationLabels?: Partial<HorizonWebConfig['paginationLabels']>;
+    popconfirmLabels?: Partial<HorizonWebConfig['popconfirmLabels']>;
   }
 >;
 
@@ -62,6 +68,7 @@ const defaultConfig: HorizonWebConfig = Object.freeze({
   timelineLabels: { toggle: 'Toggle hidden timeline items' },
   stepsLabels: { progress: 'Progress steps' },
   paginationLabels: PAGINATION_DEFAULT_LABELS,
+  popconfirmLabels: { confirm: 'Confirm', cancel: 'Cancel' },
 });
 
 export const HorizonWebContext = createContext<HorizonWebConfig>(defaultConfig);
@@ -77,6 +84,7 @@ export function HorizonWebProvider({
   timelineLabels,
   stepsLabels,
   paginationLabels,
+  popconfirmLabels,
   children,
 }: HorizonWebProviderProps): ReactElement {
   const parent = useContext(HorizonWebContext);
@@ -114,6 +122,10 @@ export function HorizonWebProvider({
         ...parent.paginationLabels,
         ...paginationLabels,
       },
+      popconfirmLabels: {
+        ...parent.popconfirmLabels,
+        ...popconfirmLabels,
+      },
     }),
     [
       namespace,
@@ -127,6 +139,7 @@ export function HorizonWebProvider({
       timelineLabels,
       stepsLabels,
       paginationLabels,
+      popconfirmLabels,
     ],
   );
 
