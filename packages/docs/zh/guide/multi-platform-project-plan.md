@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B6 Breadcrumb 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B7 Timeline 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -470,6 +470,18 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DS-B6-001 | Done | Breadcrumb Sass 与变量迁入 `@aurora/theme`，Vue 使用包导出代理，React 使用同源样式并补充原生 disclosure 视觉规则 |
 | DOC-B6-001 | Done | Breadcrumb 中英文 React 页面、独立 TSX 示例与导航侧边栏入口完成；25 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
 | QA-B6-001 | Done | Core 87、Web Core Node 7/Chromium 18、React Chromium 91、Vue 2297 项通过且 1 项预期失败，覆盖率为 98.00% / 95.22% / 97.77% / 98.27%；五个包构建、文档、Vue/React/SSR 消费工程与中英文真实浏览器验收通过 |
+
+#### M6-B7 第七批实施记录（2026-08-12）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B7-001 | Done | Timeline 及 TimelineItem 的公共 props、默认值、枚举、校验器、时间排序、折叠索引、节点覆盖、偏移量算法、内容区域与命令迁入 `@aurora/core`；公共契约成为两端 API 语义的唯一来源 |
+| WEB-B7-001 | Done | 在同名 Web Core 目录提供 Day.js 时间格式化与折叠 DOM 所有权 primitive；Day.js 保持 Web 平台依赖并补齐 Node/Chromium 测试及浏览器依赖预优化 |
+| VUE-B7-001 | Done | Vue props/slots/exposes 从公共契约派生，仅保留 Vue runtime props、VNode 与历史 `desc`/时间戳类型适配；排序、节点覆盖、折叠和格式化复用 Core/Web Core，并消除 Timeline slot 脱离 render 的警告 |
+| REACT-B7-001 | Done | 完成原生有序列表语义、组合 children、排序、首尾节点、折叠所有权、Provider 文案、可访问按钮和原生 ref/属性；ReactNode 与 HTML 属性只保留在 renderer 适配层 |
+| DS-B7-001 | Done | Timeline Sass、变量与视觉基础迁入 `@aurora/theme`，Vue 使用包导出代理，React 使用同源样式与原生折叠按钮规则 |
+| DOC-B7-001 | Done | Timeline 中英文 React 页面、独立 TSX 示例与导航侧边栏入口完成；26 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
+| QA-B7-001 | Done | Core 90、Web Core Node 8/Chromium 19、React Chromium 96、Vue 2297 项通过且 1 项预期失败，覆盖率为 97.98% / 95.18% / 97.77% / 98.26%；五个包构建、文档、Vue/React/SSR 消费工程及中英文、暗色、390px 真实浏览器验收通过 |
 
 ### 批次 C：浮层与容器
 

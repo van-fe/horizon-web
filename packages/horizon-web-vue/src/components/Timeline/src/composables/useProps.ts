@@ -1,58 +1,63 @@
 import type { ExtractPropTypes, PropType } from 'vue';
+import type {
+  AdaptComponentApiShape,
+  ComponentRendererPropDefinitions,
+  TimelineCommonProps,
+  TimelineDotCommonProps,
+  TimelineDotSize,
+  TimelineDotType,
+  TimelineFoldCommonProps,
+  TimelineItemCommonProps,
+  TimelineSort,
+  TimelineTimestampPlacement,
+} from '@aurora/core';
+import {
+  isTimelineDotSize,
+  isTimelineDotType,
+  isTimelineSort,
+  isTimelineTimestampPlacement,
+  TIMELINE_DEFAULTS,
+  TIMELINE_ITEM_DEFAULTS,
+} from '@aurora/core';
 import { declarePropType } from '@aurora/utils';
 
-export interface FoldConfig {
+export type TimelineItemDotType = TimelineDotCommonProps<string>;
+
+export interface FoldConfig extends Omit<TimelineFoldCommonProps<string, string>, 'dot'> {
   /** 可折叠数
    * @en Configuration for number.
    */
-  number: number;
-  /** 折叠后显示文案
-   * @en Configuration for content.
-   */
-  content: string;
   /** 折叠后节点图标属性
    * @en Configuration for dot.
    */
   dot: TimelineItemDotType;
 }
-export interface TimelineItemDotType {
-  /**
-   * 节点类型
-   */
-  type?: 'disc' | 'circle';
-  /**
-   * 节点颜色
-   */
-  color?: string;
-  /**
-   * 节点边框颜色
-   */
-  borderColor?: string;
-  /**
-   * 节点尺寸
-   */
-  size?: 'small' | 'medium' | 'large';
-  /**
-   * 节点图标
-   */
-  icon?: string;
-}
+
+type TimelineVueProps = TimelineCommonProps<string>;
+type TimelineItemVueProps = AdaptComponentApiShape<
+  TimelineItemCommonProps<string, string, string, string>,
+  { description: 'desc' },
+  'timestamp' | 'foldConfig',
+  { timestamp?: string | number; foldConfig?: FoldConfig }
+>;
+
 export const useTimelineProps = declarePropType({
   /**
    * 指定节点排序方向
    * @en Configuration for sort.
    */
   sort: {
-    type: String as PropType<'order' | 'reverse'>,
+    type: String as PropType<TimelineSort>,
     required: false,
-    default: '',
+    default: TIMELINE_DEFAULTS.sort,
+    validator: isTimelineSort,
   },
   /**
    * 第一个节点属性
    * @en Configuration for first.
    */
   first: {
-    type: Object as PropType<TimelineItemDotType>,
+    type: Object as PropType<TimelineDotCommonProps<string>>,
     required: false,
   },
   /**
@@ -60,10 +65,10 @@ export const useTimelineProps = declarePropType({
    * @en Configuration for last.
    */
   last: {
-    type: Object as PropType<TimelineItemDotType>,
+    type: Object as PropType<TimelineDotCommonProps<string>>,
     required: false,
   },
-});
+} satisfies ComponentRendererPropDefinitions<TimelineVueProps>);
 
 export const useTimelineItemProps = declarePropType({
   /**
@@ -73,7 +78,7 @@ export const useTimelineItemProps = declarePropType({
   timestamp: {
     type: [String, Number],
     required: false,
-    default: '',
+    default: TIMELINE_ITEM_DEFAULTS.timestamp,
   },
   /**
    * 时间戳格式
@@ -88,9 +93,10 @@ export const useTimelineItemProps = declarePropType({
    * @en Configuration for placement.
    */
   placement: {
-    type: String as PropType<'top' | 'bottom' | 'right'>,
+    type: String as PropType<TimelineTimestampPlacement>,
     required: false,
-    default: 'bottom',
+    default: TIMELINE_ITEM_DEFAULTS.placement,
+    validator: isTimelineTimestampPlacement,
   },
   /**
    * 时间线偏移
@@ -99,16 +105,17 @@ export const useTimelineItemProps = declarePropType({
   offset: {
     type: [String, Number],
     required: false,
-    default: 4,
+    default: TIMELINE_ITEM_DEFAULTS.offset,
   },
   /**
    * 节点类型
    * @en Configuration for type.
    */
   type: {
-    type: String as PropType<'disc' | 'circle'>,
+    type: String as PropType<TimelineDotType>,
     required: false,
-    default: 'disc',
+    default: TIMELINE_ITEM_DEFAULTS.type,
+    validator: isTimelineDotType,
   },
   /**
    * 节点颜色
@@ -139,8 +146,9 @@ export const useTimelineItemProps = declarePropType({
    * @en Configuration for size.
    */
   size: {
-    type: String as PropType<'small' | 'medium' | 'large'>,
+    type: String as PropType<TimelineDotSize>,
     required: false,
+    validator: isTimelineDotSize,
   },
   /**
    * 节点图标
@@ -173,7 +181,7 @@ export const useTimelineItemProps = declarePropType({
   dashed: {
     type: Boolean,
     required: false,
-    default: false,
+    default: TIMELINE_ITEM_DEFAULTS.dashed,
   },
   /**
    * 折叠节点配置
@@ -190,9 +198,9 @@ export const useTimelineItemProps = declarePropType({
   tail: {
     type: Boolean,
     required: false,
-    default: true,
+    default: TIMELINE_ITEM_DEFAULTS.tail,
   },
-});
+} satisfies ComponentRendererPropDefinitions<TimelineItemVueProps>);
 
 export type TimelineProps = ExtractPropTypes<typeof useTimelineProps>;
 export type TimelineItemProps = ExtractPropTypes<typeof useTimelineItemProps>;

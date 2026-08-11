@@ -1,100 +1,91 @@
 import type { VNode } from 'vue';
-import { onMounted, defineComponent, toRefs, provide, ref, watch } from 'vue';
+import { cloneVNode, computed, defineComponent, onMounted, onUpdated, provide, toRefs } from 'vue';
+import type { TimelineDotCommonProps } from '@aurora/core';
+import {
+  getTimelineFoldIndexes,
+  resolveTimelineEndpointDot,
+  sortTimelineItems,
+} from '@aurora/core';
+import { applyTimelineFoldVisibility } from '@aurora/horizon-web-core';
 import { useTimelineProps } from './composables/useProps';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, isObject, slotAdapter, useNamespace } from '@aurora/utils';
 import type { TimelineSlots } from './composables/useSlots';
 import { useTimelineSlots } from './composables/useSlots';
 
-interface InjectObj {
-  [key: string]: any;
+interface TimelineFoldRequest {
+  number: number;
+  uid: string;
 }
 export default defineComponent({
   name: `${useNamespace()}Timeline`,
   desc: '垂直展示的时间流信息，例如对任务跟踪、操作历史的回顾',
-  descLocales: { en: "Use a timeline for milestones, state changes, or activity records arranged by time. Forward and reverse order support different reading directions." },
+  descLocales: {
+    en: 'Use a timeline for milestones, state changes, or activity records arranged by time. Forward and reverse order support different reading directions.',
+  },
   props: useTimelineProps,
   slots: useTimelineSlots,
   setup(props, { slots }: HorizonWebSetupContext<{}, TimelineSlots>) {
     const { sort: sortProp, first: firstProp, last: lastProp } = toRefs(props);
     const classHelper = new ComponentClassBlock('timeline');
-    const showItem = ref<VNode[] | undefined>([]);
-    let content: VNode[] | undefined = [];
-    const onHide = (injectObj: InjectObj) => {
-      const deleteIndex =
-        content?.findIndex(vnode => vnode.component?.uid === +injectObj.uid) ?? -1;
-      if (deleteIndex !== -1) {
-        showItem.value?.forEach((vnode, index) => {
-          if (index > deleteIndex && index < deleteIndex + 1 + injectObj.number) {
-            vnode.el!.classList.add('hidden');
-            if ('hiddenUid' in vnode.el!.dataset === false) {
-              vnode.el!.dataset.hiddenUid = injectObj.uid;
-            }
-          }
-        });
-      }
-    };
-    const onShow = (injectObj: InjectObj) => {
-      showItem.value?.forEach(vnode => {
-        if (vnode.el!.dataset.hiddenUid === injectObj.uid) {
-          vnode.el!.classList.remove('hidden');
-          delete vnode.el!.dataset.hiddenUid;
-        }
-      });
-    };
-    provide('HTimeline', {
-      hide: onHide,
-      show: onShow,
-    });
-    onMounted(() => {
-      content?.forEach(vnode => {
-        vnode.el!.dataset.uid = vnode.component!.uid;
-      });
-    });
-    watch(
-      () => slots?.default?.(),
-      () => {
-        content = slotAdapter(slots.default)?.filter(
+
+    const renderedItems = computed(() => {
+      const content =
+        slotAdapter(slots.default)?.filter(
           (vNode: VNode) =>
             isObject(vNode.type) &&
             'name' in vNode.type &&
             vNode.type?.name?.endsWith('TimelineItem'),
-        );
-        showItem.value = content;
-      },
-      {
-        immediate: true,
-      },
-    );
-    return () => {
-      switch (sortProp.value) {
-        case 'order':
-          showItem.value?.sort(
-            (a: VNode, b: VNode) => +new Date(a.props?.timestamp) - +new Date(b.props?.timestamp),
-          );
-          break;
-        case 'reverse':
-          showItem.value?.sort(
-            (a: VNode, b: VNode) => +new Date(b.props?.timestamp) - +new Date(a.props?.timestamp),
-          );
-          break;
-      }
+        ) ?? [];
+      const sorted = sortTimelineItems(content, sortProp.value, vnode => vnode.props?.timestamp);
+      return sorted.map((vnode, index) =>
+        cloneVNode(
+          vnode,
+          resolveTimelineEndpointDot(
+            (vnode.props ?? {}) as TimelineDotCommonProps<string>,
+            index,
+            sorted.length,
+            firstProp.value,
+            lastProp.value,
+          ) as Record<string, unknown>,
+        ),
+      );
+    });
 
-      showItem.value?.forEach((vnode, index) => {
-        if (firstProp.value && index === 0) {
-          vnode.props = {
-            ...vnode.props,
-            ...firstProp.value,
-          };
-        }
-        if (lastProp.value && index === content!.length - 1 && index !== 0) {
-          vnode.props = {
-            ...vnode.props,
-            ...lastProp.value,
-          };
+    function applyFold(request: TimelineFoldRequest, hidden: boolean) {
+      const ownerIndex = renderedItems.value.findIndex(
+        vnode => vnode.component?.uid === Number(request.uid),
+      );
+      if (ownerIndex === -1) return;
+      const itemElements = renderedItems.value.map(vnode =>
+        vnode.el instanceof HTMLElement ? vnode.el : undefined,
+      );
+      if (itemElements.some(element => element === undefined)) return;
+
+      applyTimelineFoldVisibility({
+        hidden,
+        indexes: getTimelineFoldIndexes(ownerIndex, request.number, itemElements.length),
+        items: itemElements as HTMLElement[],
+        ownerId: request.uid,
+      });
+    }
+
+    provide('HTimeline', {
+      hide: (request: TimelineFoldRequest) => applyFold(request, true),
+      show: (request: TimelineFoldRequest) => applyFold(request, false),
+    });
+
+    function syncItemUids() {
+      renderedItems.value.forEach(vnode => {
+        if (vnode.el instanceof HTMLElement && vnode.component) {
+          vnode.el.dataset.uid = String(vnode.component.uid);
         }
       });
-      return <ul class={`${classHelper.block}`}>{showItem.value}</ul>;
-    };
+    }
+
+    onMounted(syncItemUids);
+    onUpdated(syncItemUids);
+
+    return () => <ul class={`${classHelper.block}`}>{renderedItems.value}</ul>;
   },
 });

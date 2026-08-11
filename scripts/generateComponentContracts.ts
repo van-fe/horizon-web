@@ -27,6 +27,7 @@ import {
   spaceManifest,
   statisticManifest,
   switchManifest,
+  timelineManifest,
   tooltipManifest,
   typographyManifest,
 } from '../packages/core/src';
@@ -56,6 +57,7 @@ const manifests = [
   spaceManifest,
   statisticManifest,
   switchManifest,
+  timelineManifest,
   tooltipManifest,
   typographyManifest,
 ] as const;
@@ -296,6 +298,15 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
   Switch: {
     props: { rename: { value: 'modelValue', readOnly: 'readonly' }, omit: ['defaultValue'] },
   },
+  Timeline: {
+    props: {
+      override: {
+        first: { type: 'TimelineItemDotType' },
+        last: { type: 'TimelineItemDotType' },
+      },
+    },
+    regions: { rename: { content: 'default' } },
+  },
   Tooltip: {
     props: {
       rename: { open: 'visible', showDelay: 'showAfter', hideDelay: 'hideAfter' },
@@ -471,6 +482,23 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
   Switch: {
     events: { rename: { change: 'onChange' } },
     regions: { omit: ['status'] },
+  },
+  Timeline: {
+    props: {
+      override: {
+        first: { type: 'TimelineDotProps' },
+        last: { type: 'TimelineDotProps' },
+      },
+      extend: [
+        {
+          name: 'locale',
+          type: 'string',
+          defaultValue: 'en',
+          description: { zh: 'Day.js 格式化语言', en: 'Day.js formatting locale' },
+        },
+      ],
+    },
+    regions: { rename: { content: 'children' } },
   },
   Tooltip: {
     props: { rename: { showDelay: 'showAfter', hideDelay: 'hideAfter' } },

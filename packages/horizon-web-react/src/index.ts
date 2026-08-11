@@ -23,6 +23,7 @@ import '@aurora/theme/styles/select';
 import '@aurora/theme/styles/skeleton';
 import '@aurora/theme/styles/space';
 import '@aurora/theme/styles/statistic';
+import '@aurora/theme/styles/timeline';
 import '@aurora/theme/styles/typography';
 
 export * from './components/Button';
@@ -49,5 +50,6 @@ export * from './components/Space';
 export * from './components/Statistic';
 export * from './components/Switch';
 export * from './components/Tooltip';
+export * from './components/Timeline';
 export * from './components/Typography';
 export * from './provider';

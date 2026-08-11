@@ -27,6 +27,10 @@
     "test:node": "bun run --bun vitest run --config ./vitest.config.ts",
     "test:browser": "bun run --bun vitest run --config ./vitest.browser.config.ts"
   },
+  "dependencies": {
+    "@aurora/core": "workspace:*",
+    "dayjs": "^1.11.13"
+  },
   "publishConfig": {
     "access": "public"
   },

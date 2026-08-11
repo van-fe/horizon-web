@@ -1,4 +1,5 @@
 import { computed, defineComponent, ref, toRefs, inject } from 'vue';
+import { resolveTimelineDot, toTimelineOffsetCss } from '@aurora/core';
 import { useTimelineItemProps } from './composables/useProps';
 import { useDateFormative } from './composables/useDateFormat';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
@@ -13,8 +14,8 @@ import useSize from '~/utils/useSize';
 
 export default defineComponent({
   name: `${useNamespace()}TimelineItem`,
-  desc: "时间线中的单个事件项",
-  descLocales: { en: "A single event item within Timeline." },
+  desc: '时间线中的单个事件项',
+  descLocales: { en: 'A single event item within Timeline.' },
   components: { AIcon },
   props: useTimelineItemProps,
   slots: useTimelineItemSlots,
@@ -47,114 +48,102 @@ export default defineComponent({
     });
 
     const classHelper = new ComponentClassBlock('timeline-item');
-    const dotColor = computed(() =>
-      foldConfigProp.value?.dot?.color
-        ? useColors(foldConfigProp.value.dot.color)
-        : useColors(colorProp.value ?? ''),
+    const activeDot = computed(() =>
+      resolveTimelineDot(
+        {
+          type: typeProp.value,
+          color: colorProp.value,
+          borderColor: borderColorProp.value,
+          size: sizeRef.value,
+          icon: iconProp.value,
+        },
+        foldConfigProp.value,
+        isHidden.value,
+      ),
     );
-    const dotBorderColor = computed(() =>
-      foldConfigProp.value?.dot?.borderColor
-        ? useColors(foldConfigProp.value.dot.borderColor)
-        : useColors(borderColorProp.value ?? ''),
-    );
-    const dotType = computed(() => foldConfigProp.value?.dot?.type ?? typeProp.value);
-    const dotSize = computed(() => foldConfigProp.value?.dot?.size ?? sizeRef.value);
-    const dotIcon = computed(() => foldConfigProp.value?.dot?.icon ?? iconProp.value);
     const injectProp = inject<{
-      show: (val: object) => void;
-      hide: (val: object) => void;
+      show: (val: { number: number; uid: string }) => void;
+      hide: (val: { number: number; uid: string }) => void;
     }>('HTimeline');
     const timelineItemElRef = ref<HTMLElement | null>(null);
     const isHidden = ref(false);
     const onClickDot = () => {
       if (!foldConfigProp.value) return;
+      const uid = timelineItemElRef.value?.dataset.uid;
+      if (!uid) return;
+      const request = { uid, number: foldConfigProp.value.number };
       if (!isHidden.value) {
-        injectProp?.hide?.({
-          ...timelineItemElRef?.value?.dataset,
-          ...foldConfigProp.value,
-        });
+        injectProp?.hide?.(request);
       } else {
-        injectProp?.show?.({
-          ...timelineItemElRef?.value?.dataset,
-          ...foldConfigProp.value,
-        });
+        injectProp?.show?.(request);
       }
       isHidden.value = !isHidden.value;
     };
+
+    const renderDot = () =>
+      isHidden.value
+        ? (slots?.hiddenDot?.() ?? renderDefaultDot())
+        : (slots?.dot?.() ?? renderDefaultDot());
+
+    function renderDefaultDot() {
+      const dot = activeDot.value;
+      const color = useColors(dot.color ?? '');
+      const borderColor = useColors(dot.borderColor ?? '');
+      return (
+        <div
+          class={[
+            classHelper.e('dot'),
+            classHelper.e(`dot--${dot.size}`),
+            classHelper.e(`dot--${dot.type}`),
+          ]}
+          style={
+            dot.type === 'disc'
+              ? { 'background-color': color, 'border-color': borderColor }
+              : { 'border-color': borderColor, color }
+          }
+        >
+          {dot.icon && <AIcon name={dot.icon} class={classHelper.e(`icon--${dot.size}`)} />}
+        </div>
+      );
+    }
+
+    const renderDotControl = () => {
+      const classes = [
+        classHelper.e('dot-wrapper'),
+        placementProp.value === 'top' &&
+          !isHidden.value &&
+          classHelper.em('dot-wrapper', 'timestamp'),
+      ];
+      if (!foldConfigProp.value) return <div class={classes}>{renderDot()}</div>;
+      return (
+        <button
+          type="button"
+          class={classes}
+          aria-expanded={!isHidden.value}
+          aria-label={foldConfigProp.value.label ?? foldConfigProp.value.content}
+          onClick={onClickDot}
+        >
+          {renderDot()}
+        </button>
+      );
+    };
+
     return () => (
       <li class={`${classHelper.block}`} ref={timelineItemElRef}>
-        <div class={[classHelper.e('step'), classHelper.e(`step--${dotSize.value}`)]}>
-          <div
-            class={[
-              classHelper.e('dot-wrapper'),
-              placementProp.value === 'top' &&
-                !isHidden.value &&
-                classHelper.em('dot-wrapper', 'timestamp'),
-            ]}
-            onClick={onClickDot}
-          >
-            {isHidden.value
-              ? (slots?.hiddenDot?.() ?? (
-                  <div
-                    class={[
-                      classHelper.e('dot'),
-                      classHelper.e(`dot--${dotSize.value}`),
-                      classHelper.e(`dot--${dotType.value}`),
-                    ]}
-                    style={
-                      dotType.value === 'disc'
-                        ? {
-                            'background-color': dotColor.value,
-                            'border-color': dotBorderColor.value,
-                          }
-                        : { 'border-color': dotBorderColor.value, color: dotColor.value }
-                    }
-                  >
-                    {dotIcon.value && (
-                      <AIcon name={dotIcon.value} class={classHelper.e(`icon--${dotSize.value}`)} />
-                    )}
-                  </div>
-                ))
-              : (slots?.dot?.() ?? (
-                  <div
-                    class={[
-                      classHelper.e('dot'),
-                      classHelper.e(`dot--${sizeRef.value}`),
-                      classHelper.e(`dot--${typeProp.value}`),
-                    ]}
-                    style={
-                      dotType.value === 'disc'
-                        ? {
-                            'background-color': useColors(colorProp.value ?? ''),
-                            'border-color': useColors(borderColorProp.value ?? ''),
-                          }
-                        : {
-                            'border-color': useColors(borderColorProp.value ?? ''),
-                            color: useColors(colorProp.value ?? ''),
-                          }
-                    }
-                  >
-                    {iconProp.value && (
-                      <AIcon
-                        name={iconProp.value}
-                        class={classHelper.e(`icon--${sizeRef.value}`)}
-                      />
-                    )}
-                  </div>
-                ))}
-          </div>
+        <div class={[classHelper.e('step'), classHelper.e(`step--${activeDot.value.size}`)]}>
+          {renderDotControl()}
           {tailProp.value && (
             <div
               class={[classHelper.e('tail'), dashedProp.value && classHelper.e('tail--dashed')]}
               style={{
-                margin: `${offsetProp.value}px 0`,
+                margin: `${toTimelineOffsetCss(offsetProp.value)} 0`,
                 'border-color': useColors(tailColorProp.value ?? ''),
               }}
             ></div>
           )}
         </div>
 
-        <div class={[classHelper.e('wrapper'), classHelper.e(`wrapper--${dotSize.value}`)]}>
+        <div class={[classHelper.e('wrapper'), classHelper.e(`wrapper--${activeDot.value.size}`)]}>
           {placementProp.value === 'top' && !isHidden.value && (
             <div
               class={[

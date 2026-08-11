@@ -84,6 +84,8 @@
     "./styles/switch-variables": "./styles/components/switch/variables.scss",
     "./styles/tooltip": "./styles/components/tooltip/index.scss",
     "./styles/tooltip-variables": "./styles/components/tooltip/variables.scss",
+    "./styles/timeline": "./styles/components/timeline/index.scss",
+    "./styles/timeline-variables": "./styles/components/timeline/variables.scss",
     "./styles/typography": "./styles/components/typography/index.scss",
     "./styles/typography-variables": "./styles/components/typography/variables.scss"
   },

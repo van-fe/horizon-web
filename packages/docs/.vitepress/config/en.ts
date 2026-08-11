@@ -49,6 +49,7 @@ const reactSidebar = [
     items: [
       { text: 'Link', link: 'components/Link' },
       { text: 'Breadcrumb', link: 'components/Breadcrumb' },
+      { text: 'Timeline', link: 'components/Timeline' },
     ],
   },
   {

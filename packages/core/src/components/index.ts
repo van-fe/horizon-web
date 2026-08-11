@@ -24,5 +24,6 @@ export * from './Space';
 export * from './Statistic';
 export * from './Switch';
 export * from './Tooltip';
+export * from './Timeline';
 export * from './Typography';
 export * from './_shared/choice';

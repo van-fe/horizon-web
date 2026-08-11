@@ -21,17 +21,21 @@ export interface HorizonWebConfig {
   breadcrumbLabels: {
     collapsed: string;
   };
+  timelineLabels: {
+    toggle: string;
+  };
 }
 
 export type HorizonWebProviderProps = PropsWithChildren<
   Omit<
     Partial<HorizonWebConfig>,
-    'breadcrumbLabels' | 'linkLabels' | 'selectLabels' | 'switchLabels'
+    'breadcrumbLabels' | 'linkLabels' | 'selectLabels' | 'switchLabels' | 'timelineLabels'
   > & {
     switchLabels?: Partial<HorizonWebConfig['switchLabels']>;
     selectLabels?: Partial<HorizonWebConfig['selectLabels']>;
     linkLabels?: Partial<HorizonWebConfig['linkLabels']>;
     breadcrumbLabels?: Partial<HorizonWebConfig['breadcrumbLabels']>;
+    timelineLabels?: Partial<HorizonWebConfig['timelineLabels']>;
   }
 >;
 
@@ -41,6 +45,7 @@ const defaultConfig: HorizonWebConfig = Object.freeze({
   selectLabels: { placeholder: 'Please select', empty: 'No options', clear: 'Clear selection' },
   linkLabels: { loading: 'Loading' },
   breadcrumbLabels: { collapsed: 'Show collapsed breadcrumb items' },
+  timelineLabels: { toggle: 'Toggle hidden timeline items' },
 });
 
 export const HorizonWebContext = createContext<HorizonWebConfig>(defaultConfig);
@@ -53,6 +58,7 @@ export function HorizonWebProvider({
   selectLabels,
   linkLabels,
   breadcrumbLabels,
+  timelineLabels,
   children,
 }: HorizonWebProviderProps): ReactElement {
   const parent = useContext(HorizonWebContext);
@@ -78,6 +84,10 @@ export function HorizonWebProvider({
         ...parent.breadcrumbLabels,
         ...breadcrumbLabels,
       },
+      timelineLabels: {
+        ...parent.timelineLabels,
+        ...timelineLabels,
+      },
     }),
     [
       namespace,
@@ -88,6 +98,7 @@ export function HorizonWebProvider({
       linkLabels,
       selectLabels,
       switchLabels,
+      timelineLabels,
     ],
   );
 

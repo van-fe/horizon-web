@@ -26,6 +26,7 @@
 @use './components/statistic/variables' as statistic;
 @use './components/switch/variables' as switch;
 @use './components/tooltip/variables' as tooltip;
+@use './components/timeline/variables' as timeline;
 @use './components/typography/variables' as typography;
 
 $values: function.map-merge-multi(
@@ -55,6 +56,7 @@ $values: function.map-merge-multi(
   function.flatten-variables(statistic.$values, 'statistic'),
   function.flatten-variables(switch.$values, 'switch'),
   function.flatten-variables(tooltip.$values, 'tooltip'),
+  function.flatten-variables(timeline.$values, 'timeline'),
   function.flatten-variables(typography.$values, 'typography')
 );
 

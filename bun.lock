@@ -176,6 +176,10 @@
     "packages/horizon-web-core": {
       "name": "@aurora/horizon-web-core",
       "version": "1.0.0",
+      "dependencies": {
+        "@aurora/core": "workspace:*",
+        "dayjs": "^1.11.13",
+      },
     },
     "packages/horizon-web-react": {
       "name": "@aurora/horizon-web-react",

@@ -9,9 +9,7 @@ export default function useFormat(formatProp: Ref<string | undefined>) {
   const locale = getCurrentLocale();
   const showTimeZone = useShowTimeZone('timeline');
 
-  const valueFormatMapping = computed(
-    () => valueFormatJson[locale.value ?? LocaleSupportLang.En],
-  );
+  const valueFormatMapping = computed(() => valueFormatJson[locale.value ?? LocaleSupportLang.En]);
 
   const format = computed(() => {
     if (formatProp?.value) {
