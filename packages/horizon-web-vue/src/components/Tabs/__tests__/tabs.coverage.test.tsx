@@ -5,6 +5,7 @@ import { describe, expect, test, vi } from 'vitest';
 import HTab from '../src/Tab';
 import HTabs from '../src/Tabs';
 import { useTabEmits, useTabsEmits } from '../src/composables/useEmits';
+import type { TabsExposes } from '../src/composables/useExposes';
 import useResponsive from '../src/composables/useResponsive';
 import { HFormItemTriggerInjectedKey } from '~/components/Form/src/utils/injectedKeys';
 
@@ -50,6 +51,26 @@ type ResponsiveHarnessApi = ReturnType<typeof useResponsive> & {
 };
 
 describe('Tabs browser coverage', () => {
+  test('exposes focus for the selected or requested enabled tab', async () => {
+    const tabsRef = ref<TabsExposes | null>(null);
+    const wrapper = mount(
+      () => (
+        <HTabs ref={tabsRef} defaultActiveKey="one">
+          <HTab key="one" label="One" />
+          <HTab key="disabled" label="Disabled" disabled />
+          <HTab key="two" label="Two" />
+        </HTabs>
+      ),
+      { attachTo: document.body },
+    );
+    await nextTick();
+    tabsRef.value?.focus();
+    expect(document.activeElement).toBe(wrapper.get('[data-name="one"]').element);
+    tabsRef.value?.focus('two');
+    expect(document.activeElement).toBe(wrapper.get('[data-name="two"]').element);
+    wrapper.unmount();
+  });
+
   test('validates every Tabs and Tab emit branch', () => {
     expect(useTabsEmits['update:activeKey']('one')).toBe(true);
     expect(useTabsEmits['update:activeKey'](1)).toBe(true);
@@ -113,11 +134,7 @@ describe('Tabs browser coverage', () => {
     const active = ref('one');
     const onChange = vi.fn();
     const wrapper = mount(() => (
-      <HTabs
-        activeKey={active.value}
-        beforeChange={() => gate.promise}
-        onChange={onChange}
-      >
+      <HTabs activeKey={active.value} beforeChange={() => gate.promise} onChange={onChange}>
         <HTab key="one" label="One" />
         <HTab key="two" label="Two" />
       </HTabs>
@@ -236,21 +253,15 @@ describe('Tabs browser coverage', () => {
     list.dispatchEvent(mixed);
     expect(mixed.defaultPrevented).toBe(true);
     expect(list.style.transform).toBe('translate3d(-350px, 0px, 0px)');
-    list.dispatchEvent(
-      new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: 60 }),
-    );
+    list.dispatchEvent(new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: 60 }));
     await nextTick();
     expect(list.style.transform).toBe('translate3d(-400px, 0px, 0px)');
     await wrapper.get('[aria-label="Scroll tabs backward"]').trigger('click');
     await nextTick();
     expect(list.style.transform).toBe('translate3d(-200px, 0px, 0px)');
     await wrapper.get('[aria-label="Scroll tabs forward"]').trigger('keydown', { key: 'Enter' });
-    await wrapper
-      .get('[aria-label="Scroll tabs backward"]')
-      .trigger('keydown', { key: 'Escape' });
-    await wrapper
-      .get('[aria-label="Scroll tabs forward"]')
-      .trigger('keydown', { key: 'Escape' });
+    await wrapper.get('[aria-label="Scroll tabs backward"]').trigger('keydown', { key: 'Escape' });
+    await wrapper.get('[aria-label="Scroll tabs forward"]').trigger('keydown', { key: 'Escape' });
     await nextTick();
     expect(list.style.transform).toBe('translate3d(-400px, 0px, 0px)');
     wrapper.unmount();
@@ -273,15 +284,11 @@ describe('Tabs browser coverage', () => {
     tabs[0].element.dispatchEvent(new DragEvent('drag', { bubbles: true }));
     tabs[0].element.dispatchEvent(new DragEvent('dragenter', { bubbles: true }));
     tabs[0].element.dispatchEvent(new DragEvent('dragleave', { bubbles: true }));
-    tabs[0].element.dispatchEvent(
-      new DragEvent('dragover', { bubbles: true, cancelable: true }),
-    );
+    tabs[0].element.dispatchEvent(new DragEvent('dragover', { bubbles: true, cancelable: true }));
     tabs[0].element.dispatchEvent(new DragEvent('drop', { bubbles: true }));
     expect(onSort).not.toHaveBeenCalled();
 
-    tabs[2].element.dispatchEvent(
-      new DragEvent('dragover', { bubbles: true, cancelable: true }),
-    );
+    tabs[2].element.dispatchEvent(new DragEvent('dragover', { bubbles: true, cancelable: true }));
     tabs[2].element.dispatchEvent(new DragEvent('drop', { bubbles: true }));
     expect(onSort).not.toHaveBeenCalled();
     tabs[0].element.dispatchEvent(new DragEvent('dragend', { bubbles: true }));
@@ -373,9 +380,9 @@ describe('Tabs browser coverage', () => {
       ),
       { global: { provide: { [HFormItemTriggerInjectedKey as symbol]: formItemTrigger } } },
     );
-    wrapper.get('[data-name="active"]').element.dispatchEvent(
-      new FocusEvent('focus', { bubbles: true }),
-    );
+    wrapper
+      .get('[data-name="active"]')
+      .element.dispatchEvent(new FocusEvent('focus', { bubbles: true }));
     await wrapper.get('[data-name="active"]').trigger('click');
     await wrapper.get('[data-name="disabled"]').trigger('click');
     await wrapper.get('[data-name="disabled"]').trigger('keydown', { key: 'Enter' });

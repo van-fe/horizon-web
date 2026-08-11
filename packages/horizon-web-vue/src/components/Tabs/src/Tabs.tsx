@@ -1,4 +1,12 @@
 import { AIcon } from '@aurora/icon';
+import type { TabsKey } from '@aurora/core';
+import {
+  isTabsActivationKey,
+  isTabsNavigationKey,
+  resolveTabsCloseValue,
+  resolveTabsNavigationIndex,
+} from '@aurora/core';
+import { focusTabsItem } from '@aurora/horizon-web-core';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, useNamespace, cls } from '@aurora/utils';
 import type { ComputedRef, Ref } from 'vue';
@@ -11,6 +19,8 @@ import type { TabsEmits } from './composables/useEmits';
 import { useTabsEmits } from './composables/useEmits';
 import type { HTabSize, HTabValue } from './composables/useProps';
 import { useTabsProps } from './composables/useProps';
+import type { TabsExposes } from './composables/useExposes';
+import { useTabsExposes } from './composables/useExposes';
 import useResponsive from './composables/useResponsive';
 import type { TabsSlots } from './composables/useSlots';
 import { useTabsSlots } from './composables/useSlots';
@@ -25,9 +35,10 @@ export default defineComponent({
   props: useTabsProps,
   emits: useTabsEmits,
   slots: useTabsSlots,
-  setup(props, context: HorizonWebSetupContext<TabsEmits, TabsSlots>) {
+  exposes: useTabsExposes,
+  setup(props, context: HorizonWebSetupContext<TabsEmits, TabsSlots, TabsExposes>) {
     const classHelper = new ComponentClassBlock('tabs');
-    const { slots, emit, attrs } = context;
+    const { slots, emit, expose, attrs } = context;
 
     const globalSize = inject<Ref<HTabSize>>(GlobalSizeInjectedKey, ref('small'));
     // FIXME: 下一个版本移除页签和form耦合
@@ -67,16 +78,8 @@ export default defineComponent({
       underline,
     };
 
-    const {
-      indicatorStyle,
-      scrollable,
-      firstViewport,
-      lastViewport,
-      items,
-      keys,
-      move,
-      createTab,
-    } = useResponsive(indicatorOptions);
+    const { indicatorStyle, scrollable, firstViewport, lastViewport, keys, move, createTab } =
+      useResponsive(indicatorOptions);
 
     const dragContext = useDnd(
       toRefs(reactive({ ...props, activeKey, editable, size, underline, keys })),
@@ -111,11 +114,8 @@ export default defineComponent({
       if (!tabs.length) return;
       const eventTab = (evt.target as HTMLElement | null)?.closest<HTMLElement>('[role="tab"]');
       const currentIndex = tabs.indexOf(eventTab ?? (document.activeElement as HTMLElement));
-      let nextIndex: number | undefined;
-      if (evt.key === 'ArrowRight') nextIndex = (currentIndex + 1) % tabs.length;
-      if (evt.key === 'ArrowLeft') nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
-      if (evt.key === 'Home') nextIndex = 0;
-      if (evt.key === 'End') nextIndex = tabs.length - 1;
+      if (!isTabsNavigationKey(evt.key)) return;
+      const nextIndex = resolveTabsNavigationIndex(currentIndex, evt.key, tabs.length);
       if (nextIndex === undefined) return;
       evt.preventDefault();
       tabs[nextIndex]?.focus();
@@ -136,12 +136,8 @@ export default defineComponent({
     };
 
     const onTabClose = (tabKey: HTabValue) => {
-      const iter = items.value.keys();
-      const firstKey = iter.next().value;
-      if (tabKey === activeKey.value && items.value.size) {
-        const altKey = firstKey !== tabKey ? firstKey : iter.next().value;
-        updateTabValue(altKey!);
-      }
+      const nextKey = resolveTabsCloseValue(activeKey.value, tabKey, keys.value);
+      if (nextKey !== activeKey.value && nextKey !== undefined) updateTabValue(nextKey);
       emit('close', tabKey);
     };
 
@@ -164,6 +160,8 @@ export default defineComponent({
       ...dragContext,
     });
 
+    expose({ focus: (key?: TabsKey) => void focusTabsItem(rootDomRef.value ?? null, key) });
+
     return () => {
       if (!slots.default) return null;
 
@@ -179,7 +177,7 @@ export default defineComponent({
           tabindex={0}
           aria-label="Add tab"
           onKeydown={(evt: KeyboardEvent) => {
-            if (evt.key === 'Enter' || evt.key === ' ') {
+            if (isTabsActivationKey(evt.key)) {
               evt.preventDefault();
               onAdd();
             }
@@ -249,7 +247,7 @@ export default defineComponent({
                       aria-disabled={firstViewport.value}
                       aria-label="Scroll tabs backward"
                       onKeydown={(evt: KeyboardEvent) => {
-                        if (evt.key === 'Enter' || evt.key === ' ') {
+                        if (isTabsActivationKey(evt.key)) {
                           evt.preventDefault();
                           onArrowLeft();
                         }
@@ -268,7 +266,7 @@ export default defineComponent({
                       aria-disabled={lastViewport.value}
                       aria-label="Scroll tabs forward"
                       onKeydown={(evt: KeyboardEvent) => {
-                        if (evt.key === 'Enter' || evt.key === ' ') {
+                        if (isTabsActivationKey(evt.key)) {
                           evt.preventDefault();
                           onArrowRight();
                         }

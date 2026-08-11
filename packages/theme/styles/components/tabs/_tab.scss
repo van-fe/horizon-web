@@ -1,4 +1,4 @@
-@use '../../../../styles/mixins';
+@use '../../mixins';
 
 @mixin style {
   @include mixins.parallel-modifier('line', 'underline') {
@@ -9,8 +9,14 @@
         left: 0;
         width: 100%;
         height: mixins.css-variable('tabs', 'size', 'underline', 'line', 'height');
-        background-color: mixins.css-variable('tabs', 'border-color', 'header', 'line', 'underline');
         content: '';
+        background-color: mixins.css-variable(
+          'tabs',
+          'border-color',
+          'header',
+          'line',
+          'underline'
+        );
       }
     }
   }
@@ -47,8 +53,8 @@
 
     @include mixins.e('nav-wrap') {
       display: flex;
-      align-items: center;
       column-gap: 20px;
+      align-items: center;
 
       @include mixins.e('icon-outer') {
         @include mixins.m('follow') {
@@ -99,22 +105,22 @@
         left: 0;
         width: 100%;
         height: 1px;
-        background-color: mixins.css-variable('tabs', 'border-color', 'header', 'card');
         content: '';
+        background-color: mixins.css-variable('tabs', 'border-color', 'header', 'card');
       }
     }
 
     @include mixins.e('nav-wrap') {
       display: flex;
+      column-gap: mixins.css-variable('tabs', 'spacing', 'tab', 'card', 'margin-right');
       padding: 0 mixins.css-variable('spacing-7') 0
         mixins.css-variable('tabs', 'spacing', 'nav-wrap', 'card', 'padding');
-      column-gap: mixins.css-variable('tabs', 'spacing', 'tab', 'card', 'margin-right');
     }
 
     @include mixins.e('nav-list') {
       display: flex;
-      align-items: stretch;
       column-gap: mixins.css-variable('tabs', 'spacing', 'tab', 'card', 'margin-right');
+      align-items: stretch;
     }
 
     @include mixins.e('tab') {

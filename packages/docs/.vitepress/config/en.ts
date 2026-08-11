@@ -50,6 +50,7 @@ const reactSidebar = [
       { text: 'Link', link: 'components/Link' },
       { text: 'Breadcrumb', link: 'components/Breadcrumb' },
       { text: 'Collapse', link: 'components/Collapse' },
+      { text: 'Tabs', link: 'components/Tabs' },
       { text: 'Steps', link: 'components/Steps' },
       { text: 'Pagination', link: 'components/Pagination' },
       { text: 'Timeline', link: 'components/Timeline' },

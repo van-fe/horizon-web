@@ -31,6 +31,8 @@ import {
   statisticManifest,
   stepsManifest,
   switchManifest,
+  tabManifest,
+  tabsManifest,
   timelineManifest,
   tooltipManifest,
   typographyManifest,
@@ -65,6 +67,8 @@ const manifests = [
   statisticManifest,
   stepsManifest,
   switchManifest,
+  tabsManifest,
+  tabManifest,
   timelineManifest,
   tooltipManifest,
   typographyManifest,
@@ -388,6 +392,23 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
   Switch: {
     props: { rename: { value: 'modelValue', readOnly: 'readonly' }, omit: ['defaultValue'] },
   },
+  Tabs: {
+    props: { rename: { value: 'activeKey', defaultValue: 'defaultActiveKey', variant: 'type' } },
+    events: {
+      extend: [
+        {
+          name: 'update:activeKey',
+          type: 'TabsKey',
+          description: { zh: '更新绑定选中项', en: 'Updates the bound selected tab' },
+        },
+      ],
+    },
+    regions: { rename: { content: 'default' } },
+  },
+  Tab: {
+    props: { omit: ['value'] },
+    regions: { rename: { content: 'default' } },
+  },
   Timeline: {
     props: {
       override: {
@@ -600,6 +621,17 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
   Switch: {
     events: { rename: { change: 'onChange' } },
     regions: { omit: ['status'] },
+  },
+  Tabs: {
+    events: {
+      rename: { change: 'onChange', add: 'onAdd', close: 'onClose', sort: 'onSort' },
+    },
+    regions: { rename: { content: 'children' } },
+  },
+  Tab: {
+    props: { override: { label: { type: 'ReactNode' }, icon: { type: 'ReactNode' } } },
+    events: { rename: { click: 'onClick', close: 'onClose' } },
+    regions: { rename: { content: 'children' }, omit: ['icon'] },
   },
   Timeline: {
     props: {

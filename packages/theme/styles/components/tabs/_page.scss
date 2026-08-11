@@ -1,4 +1,4 @@
-@use '../../../../styles/mixins';
+@use '../../mixins';
 
 @mixin style {
   @include mixins.m('page') {
@@ -7,10 +7,10 @@
 
     @include mixins.e('nav-wrap') {
       display: flex;
+      column-gap: 12px;
 
       // max-width: 100%;
       padding: mixins.css-variable('tabs', 'spacing', 'nav-list', 'page', 'padding');
-      column-gap: 12px;
     }
 
     @include mixins.e('nav-list') {
@@ -23,9 +23,9 @@
       padding: 8px 0;
       font-size: mixins.css-variable('tabs', 'font-size', 'tab', 'page');
       line-height: mixins.css-variable('tabs', 'line-height', 'tab', 'page');
+      cursor: pointer;
       background: mixins.css-variable('tabs', 'background', 'tab', 'page');
       border-radius: mixins.css-variable('tabs', 'border-radius', 'tab', 'page');
-      cursor: pointer;
 
       &:hover {
         background: mixins.css-variable('tabs', 'background', 'tab', 'page', 'hover');
@@ -43,9 +43,9 @@
         bottom: 0;
         width: 16px;
         height: 16px;
+        content: '';
         border-radius: 50%;
         box-shadow: 0 0 0 8px transparent; /* 使用box-shadow不影响尺寸 */
-        content: '';
       }
 
       &::before {

@@ -1,4 +1,5 @@
 import { AIcon } from '@aurora/icon';
+import { isTabsActivationKey } from '@aurora/core';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, getBooleanProp, isVNodeEmpty, useNamespace } from '@aurora/utils';
 import {
@@ -19,8 +20,8 @@ import { tabsContextKey } from './constants';
 
 export default defineComponent({
   name: `${useNamespace()}Tab`,
-  desc: "页签中的单个可切换项",
-  descLocales: { en: "A single switchable item within Tabs." },
+  desc: '页签中的单个可切换项',
+  descLocales: { en: 'A single switchable item within Tabs.' },
   components: {
     AIcon,
     HTooltip,
@@ -64,7 +65,7 @@ export default defineComponent({
     };
 
     const onKeydown = (evt: KeyboardEvent) => {
-      if (evt.key !== 'Enter' && evt.key !== ' ') return;
+      if (!isTabsActivationKey(evt.key)) return;
       evt.preventDefault();
       onClick();
     };
@@ -149,7 +150,7 @@ export default defineComponent({
                 aria-label={`Close ${props.label || 'tab'}`}
                 onClick={onClose}
                 onKeydown={(evt: KeyboardEvent) => {
-                  if (evt.key === 'Enter' || evt.key === ' ') {
+                  if (isTabsActivationKey(evt.key)) {
                     evt.preventDefault();
                     onClose(evt);
                   }

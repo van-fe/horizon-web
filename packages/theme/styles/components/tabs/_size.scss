@@ -1,4 +1,4 @@
-@use '../../../../styles/mixins';
+@use '../../mixins';
 
 @mixin style {
   @include mixins.m('mini') {
@@ -92,6 +92,7 @@
       font-size: mixins.css-variable('tabs', 'font-size', 'tab', 'card', 'mini');
       line-height: mixins.css-variable('tabs', 'line-height', 'tab', 'card', 'mini');
     }
+
     @include mixins.e('icon-outer') {
       @include mixins.m('add') {
         padding: 0 mixins.css-variable('spacing-3');

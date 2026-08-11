@@ -1,181 +1,79 @@
-import { declarePropType } from '@aurora/utils';
 import type { ExtractPropTypes, PropType } from 'vue';
+import type {
+  AdaptComponentApiShape,
+  ComponentRendererPropDefinitions,
+  TabCommonProps,
+  TabsCommonProps,
+  TabsKey,
+  TabsSize,
+  TabsVariant,
+} from '@aurora/core';
+import { isTabsKey, isTabsSize, isTabsVariant, TAB_DEFAULTS, TABS_DEFAULTS } from '@aurora/core';
+import { declarePropType } from '@aurora/utils';
 
-export type HTabSize = 'small' | 'medium' | 'large' | 'huge';
+export type HTabValue = TabsKey;
+export type HTabSize = TabsSize;
+export type HTabType = TabsVariant;
 
-export type HTabValue = string | number;
-
-export type HTabType = 'line' | 'card' | 'page';
+type TabsVueProps = AdaptComponentApiShape<
+  TabsCommonProps,
+  { value: 'activeKey'; defaultValue: 'defaultActiveKey'; variant: 'type' }
+>;
 
 export const useTabsProps = declarePropType({
-  /**
-   * 当前选中的选项卡的 key，支持 `v-model:active-key`
-   * @en Configuration for active key.
-   **/
-  activeKey: {
-    type: [String, Number] as PropType<HTabValue>,
-    required: false,
-  },
-
-  /**
-   * 默认选中的选项卡的key（非受控状态，为空时选中第一个选项卡页）
-   * @en Configuration for default active key.
-   **/
+  /** 当前选中项。 @en Controlled selected tab. */
+  activeKey: { type: [String, Number] as PropType<TabsKey>, required: false, validator: isTabsKey },
+  /** 非受控初始选中项。 @en Initial uncontrolled selected tab. */
   defaultActiveKey: {
-    type: [String, Number] as PropType<HTabValue>,
+    type: [String, Number] as PropType<TabsKey>,
     required: false,
+    validator: isTabsKey,
   },
-
-  /**
-   * 选项卡尺寸大小，当 `type=page`, 该选项无效
-   * @en Configuration for size.
-   **/
-  size: {
-    type: String as PropType<HTabSize>,
-  },
-
-  /**
-   * 选项卡可拖拽改变位置
-   * @en Configuration for draggable.
-   **/
-  draggable: {
-    type: Boolean,
-    default: false,
-  },
-
-  // /**
-  //  * 是否启用拖拽过渡
-  //  **/
-  // draggableTransition: {
-  //   type: Boolean,
-  //   default: true,
-  // },
-
-  /**
-   * 当元素过多时候，选项卡可滑动
-   * @en Configuration for scrollable.
-   **/
-  scrollable: {
-    type: Boolean,
-    default: true,
-  },
-
-  /**
-   * 当元素选中时候，选项卡是否滑动到目标元素
-   * @en Configuration for focusable.
-   **/
-  focusable: {
-    type: Boolean,
-    default: true,
-  },
-
-  /**
-   * 当页签超长的时候，是否使用箭头
-   * @en Configuration for arrow.
-   **/
-  arrow: {
-    type: Boolean,
-    default: true,
-  },
-
-  /**
-   * 选项卡类型
-   * @en Configuration for type.
-   **/
+  /** 组件尺寸；未设置时继承 Application。 @en Component size; inherits Application when omitted. */
+  size: { type: String as PropType<TabsSize>, required: false, validator: isTabsSize },
+  /** 允许拖拽排序。 @en Enables drag reordering. */
+  draggable: { type: Boolean, default: TABS_DEFAULTS.draggable },
+  /** 允许溢出导航滚动。 @en Enables overflow navigation. */
+  scrollable: { type: Boolean, default: TABS_DEFAULTS.scrollable },
+  /** 切换后将选中项移入视口。 @en Brings the selected tab into view. */
+  focusable: { type: Boolean, default: TABS_DEFAULTS.focusable },
+  /** 溢出时展示导航箭头。 @en Shows overflow navigation arrows. */
+  arrow: { type: Boolean, default: TABS_DEFAULTS.arrow },
+  /** 外观类型。 @en Presentation variant. */
   type: {
-    type: String as PropType<HTabType>,
-    default: 'line',
+    type: String as PropType<TabsVariant>,
+    default: TABS_DEFAULTS.variant,
+    validator: (value: unknown) => value === 'segmented' || isTabsVariant(value),
   },
-
-  /**
-   * 是否显示水平分割线, 当 `type=line` 生效
-   * @en Configuration for underline.
-   **/
-  underline: {
-    type: Boolean,
-    default: true,
-  },
-
-  /**
-   * 是否展示指示器，当 `type=line` 生效
-   * @en Configuration for indicator.
-   */
-  indicator: {
-    type: Boolean,
-    default: true,
-  },
-
-  /**
-   * 是否显示新增按钮
-   * @en Configuration for editable.
-   */
-  editable: {
-    type: Boolean,
-  },
-
-  /**
-   * 切换前的回调函数
-   * key: 待切换到的 tab 的 key
-   * 当 beforeChange 返回 Promise<false>/false 时取消跳转
-   * @en Configuration for before change.
-   */
+  /** 展示底部分割线。 @en Shows the bottom divider. */
+  underline: { type: Boolean, default: TABS_DEFAULTS.underline },
+  /** 展示选中指示器。 @en Shows the selection indicator. */
+  indicator: { type: Boolean, default: TABS_DEFAULTS.indicator },
+  /** 展示新增操作。 @en Shows the add action. */
+  editable: { type: Boolean, default: TABS_DEFAULTS.editable },
+  /** 切换前守卫。 @en Guard invoked before selection changes. */
   beforeChange: {
-    type: Function as PropType<(key: HTabValue) => boolean | PromiseLike<boolean>>,
+    type: Function as PropType<NonNullable<TabsCommonProps['beforeChange']>>,
     required: false,
   },
-});
+} satisfies ComponentRendererPropDefinitions<TabsVueProps>);
+
+type TabVueProps = AdaptComponentApiShape<TabCommonProps<string | number, string>, {}, 'value'>;
 
 export const useTabProps = declarePropType({
-  /**
-   * 选项卡显示名称
-   * @en Configuration for label.
-   **/
-  label: {
-    type: [String, Number] as PropType<HTabValue>,
-  },
-
-  /** 图标名字，为空表示没有图标
-   * @en Configuration for icon.
-   */
-  icon: {
-    type: String,
-    default: '',
-  },
-
-  /** 图标大小
-   * @en Configuration for icon size.
-   */
-  iconSize: {
-    type: [String, Number] as PropType<HTabValue>,
-  },
-
-  /**
-   * 是否禁用选项卡，当 `type=page` 不生效
-   * @en Configuration for disabled.
-   **/
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-
-  /**
-   * 是否显示关闭按钮
-   * @en Configuration for closable.
-   **/
-  closable: {
-    type: Boolean,
-    default: false,
-  },
-
-  /**
-   * 是否可拖拽
-   * @en Configuration for draggable.
-   */
-  draggable: {
-    type: Boolean,
-    default: true,
-  },
-});
+  /** 条目文本。 @en Tab label. */
+  label: { type: [String, Number] as PropType<TabsKey>, required: false },
+  /** 图标名称。 @en Icon name. */
+  icon: { type: String, default: TAB_DEFAULTS.icon },
+  /** 图标尺寸。 @en Icon size. */
+  iconSize: { type: [String, Number] as PropType<string | number>, required: false },
+  /** 禁用条目。 @en Disables the tab. */
+  disabled: { type: Boolean, default: TAB_DEFAULTS.disabled },
+  /** 展示关闭操作。 @en Shows the close action. */
+  closable: { type: Boolean, default: TAB_DEFAULTS.closable },
+  /** 允许当前条目拖拽。 @en Allows this tab to be dragged. */
+  draggable: { type: Boolean, default: TAB_DEFAULTS.draggable },
+} satisfies ComponentRendererPropDefinitions<TabVueProps>);
 
 export type TabsProps = ExtractPropTypes<typeof useTabsProps>;
 export type TabProps = ExtractPropTypes<typeof useTabProps>;

@@ -8,5 +8,6 @@ export * from './Radio';
 export * from './Select';
 export * from './Slider';
 export * from './Steps';
+export * from './Tabs';
 export * from './Tooltip';
 export * from './Timeline';

@@ -1,4 +1,5 @@
 import type { HorizonWebSetupContext } from '@aurora/utils';
+import { reorderTabsKeys } from '@aurora/core';
 import { ref, toRef, type ToRefs } from 'vue';
 import { type TabsEmits } from './useEmits';
 import type { HTabValue, TabsProps } from './useProps';
@@ -51,11 +52,9 @@ export function useDnd(
     const targetKey = overKey.value!;
     if (currentKey === targetKey) return;
 
-    const cloneKeys = options.keys.value.slice();
-    const current = cloneKeys.indexOf(currentKey);
-    const target = cloneKeys.indexOf(targetKey);
-    // 交换位置
-    [cloneKeys[current], cloneKeys[target]] = [cloneKeys[target], cloneKeys[current]];
+    const current = options.keys.value.indexOf(currentKey);
+    const target = options.keys.value.indexOf(targetKey);
+    const cloneKeys = reorderTabsKeys(options.keys.value, current, target);
 
     context.emit('sort', current, target, cloneKeys);
     options.keys.value = cloneKeys;

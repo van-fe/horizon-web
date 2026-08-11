@@ -1,57 +1,35 @@
-import { isNumber, isString } from '@aurora/utils';
-import type { HTabValue } from './useProps';
-import { isUndefined } from 'lodash-es';
+import type {
+  AdaptComponentApiShape,
+  ComponentEventValidators,
+  TabEventMap,
+  TabsEventMap,
+  TabsKey,
+} from '@aurora/core';
+import { isTabsKey } from '@aurora/core';
+
+type TabsVueEventMap = AdaptComponentApiShape<
+  TabsEventMap,
+  {},
+  never,
+  { 'update:activeKey': [key: TabsKey] }
+>;
 
 export const useTabsEmits = {
-  /**
-   * 更新选项卡 activeKey
-   * @en Emitted when update:active key changes.
-   **/
-  'update:activeKey': (key: HTabValue) => isString(key) || isNumber(key),
-
-  /**
-   * 选项卡变化回调
-   * @en Emitted when change changes.
-   **/
-  change: (key: HTabValue) => isString(key) || isNumber(key),
-
-  /**
-   * 点击新增按钮的回调
-   * @en Emitted when add changes.
-   **/
+  'update:activeKey': (key: TabsKey) => isTabsKey(key),
+  change: (key: TabsKey) => isTabsKey(key),
   add: () => true,
-
-  /**
-   * 点击关闭按钮的回调
-   * @en Emitted when close changes.
-   **/
-  close: (key: HTabValue) => isString(key) || isNumber(key) || isUndefined(key),
-
-  /**
-   * 选项卡拖拽排序
-   * @param {number} current 当前拖拽的索引
-   * @param {number} target 目标索引
-   * @param keys 排序后的 key 数组
-   * @paramEn keys The keys value.
-   * @en Emitted when sort changes.
-   **/
-  sort: (current: number, target: number, keys: HTabValue[]) =>
-    isNumber(current) && isNumber(target) && Array.isArray(keys),
-};
+  close: (key: TabsKey | undefined) => key === undefined || isTabsKey(key),
+  sort: (current: number, target: number, keys: readonly TabsKey[]) =>
+    Number.isInteger(current) &&
+    Number.isInteger(target) &&
+    Array.isArray(keys) &&
+    keys.every(isTabsKey),
+} satisfies ComponentEventValidators<TabsVueEventMap>;
 
 export const useTabEmits = {
-  /**
-   * 点击页签触发点击事件
-   * @en Emitted when click changes.
-   **/
-  click: (key: HTabValue) => isString(key) || isNumber(key),
-  /**
-   * 点击页签上的关闭按钮
-   * @en Emitted when close changes.
-   **/
-  close: (key: HTabValue) => isString(key) || isNumber(key),
-};
+  click: (key: TabsKey) => isTabsKey(key),
+  close: (key: TabsKey) => isTabsKey(key),
+} satisfies ComponentEventValidators<TabEventMap>;
 
 export type TabsEmits = typeof useTabsEmits;
-
 export type TabEmits = typeof useTabEmits;

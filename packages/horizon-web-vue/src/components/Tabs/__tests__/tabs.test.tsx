@@ -42,9 +42,7 @@ describe('Tabs.tsx', () => {
     expect(onChange).toHaveBeenCalledWith('two');
 
     const dataTransfer = new DataTransfer();
-    tabs[0].element.dispatchEvent(
-      new DragEvent('dragstart', { bubbles: true, dataTransfer }),
-    );
+    tabs[0].element.dispatchEvent(new DragEvent('dragstart', { bubbles: true, dataTransfer }));
     tabs[1].element.dispatchEvent(
       new DragEvent('dragover', { bubbles: true, cancelable: true, dataTransfer }),
     );
@@ -339,9 +337,9 @@ describe('Tabs.tsx', () => {
       expect(tooltips).toHaveLength(2);
       expect(fittingLabel).toBeDefined();
       expect(overflowingLabel).toBeDefined();
-      expect(tooltips.find(tooltip => tooltip.props('content') === fullLabel)?.props('overflow')).toBe(
-        true,
-      );
+      expect(
+        tooltips.find(tooltip => tooltip.props('content') === fullLabel)?.props('overflow'),
+      ).toBe(true);
 
       Object.defineProperties(fittingLabel!.element, {
         scrollWidth: { configurable: true, value: 80 },
@@ -373,9 +371,7 @@ describe('Tabs.tsx', () => {
       await nextTick();
       const ownTooltipRoots = getOwnTooltipRootsWithContent(fullLabel);
       expect(ownTooltipRoots).toHaveLength(1);
-      expect(ownTooltipRoots[0].querySelector('.h-tooltip__content')?.textContent).toBe(
-        fullLabel,
-      );
+      expect(ownTooltipRoots[0].querySelector('.h-tooltip__content')?.textContent).toBe(fullLabel);
     } finally {
       wrapper.unmount();
       vi.clearAllTimers();

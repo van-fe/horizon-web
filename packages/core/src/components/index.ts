@@ -26,6 +26,7 @@ export * from './Space';
 export * from './Statistic';
 export * from './Steps';
 export * from './Switch';
+export * from './Tabs';
 export * from './Tooltip';
 export * from './Timeline';
 export * from './Typography';
