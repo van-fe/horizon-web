@@ -1,6 +1,41 @@
 import type { ExtractPropTypes, PropType } from 'vue';
+import type {
+  AdaptComponentApiShape,
+  ComponentRendererPropDefinitions,
+  DialogCommonProps,
+  DialogIconColor,
+  DialogOffset,
+  DialogSize as CoreDialogSize,
+} from '@aurora/core';
+import {
+  DIALOG_DEFAULTS,
+  isDialogButtonOptions,
+  isDialogIconColor,
+  isDialogOffset,
+  isDialogSize,
+  isDialogZIndex,
+} from '@aurora/core';
 import { declarePropType } from '@aurora/utils';
 import type { ButtonProps } from '~/components/Button/src/composables/useProps';
+
+type DialogVueProps = AdaptComponentApiShape<
+  DialogCommonProps<Partial<ButtonProps>, Partial<ButtonProps>>,
+  { open: 'visible' },
+  'defaultOpen',
+  {
+    to?: string | HTMLElement | null;
+    ariaLabel?: string;
+    classNames?: {
+      header?: string;
+      body?: string;
+      footer?: string;
+      mask?: string;
+      wrapper?: string;
+    };
+  }
+>;
+
+type DialogVueIconColor = string | Array<Extract<DialogIconColor, readonly string[]>[number]>;
 
 export const useDialogProps = declarePropType({
   /**
@@ -9,7 +44,7 @@ export const useDialogProps = declarePropType({
    */
   visible: {
     type: Boolean,
-    default: false,
+    default: DIALOG_DEFAULTS.defaultOpen,
     required: false,
   },
   /**
@@ -20,12 +55,15 @@ export const useDialogProps = declarePropType({
     type: String,
     required: false,
   },
+  /** 无可见标题时的可访问名称。 @en Accessible name when no visible title exists. */
+  ariaLabel: { type: String, required: false },
   /**
    * 距顶部的距离
    * @en Configuration for top.
    */
   top: {
-    type: [String, Number],
+    type: [String, Number] as PropType<DialogOffset>,
+    validator: isDialogOffset,
   },
 
   /**
@@ -44,7 +82,8 @@ export const useDialogProps = declarePropType({
    * Pass an array to color each icon shape in order.
    */
   iconColor: {
-    type: [String, Array] as PropType<string | string[]>,
+    type: [String, Array] as PropType<DialogVueIconColor>,
+    validator: isDialogIconColor,
     required: false,
   },
   /**
@@ -52,7 +91,9 @@ export const useDialogProps = declarePropType({
    * @en Configuration for size.
    */
   size: {
-    type: String as PropType<'medium' | 'small' | 'large' | 'huge'>,
+    type: String as PropType<CoreDialogSize>,
+    default: DIALOG_DEFAULTS.size,
+    validator: isDialogSize,
     required: false,
   },
   /**
@@ -61,7 +102,7 @@ export const useDialogProps = declarePropType({
    */
   mask: {
     type: Boolean,
-    default: true,
+    default: DIALOG_DEFAULTS.mask,
     required: false,
   },
   /**
@@ -70,7 +111,7 @@ export const useDialogProps = declarePropType({
    */
   maskClose: {
     type: Boolean,
-    default: true,
+    default: DIALOG_DEFAULTS.maskClose,
     required: false,
   },
   /**
@@ -79,7 +120,7 @@ export const useDialogProps = declarePropType({
    */
   escClose: {
     type: Boolean,
-    default: true,
+    default: DIALOG_DEFAULTS.escClose,
     required: false,
   },
   /**
@@ -89,7 +130,7 @@ export const useDialogProps = declarePropType({
    */
   closeButton: {
     type: Boolean,
-    default: true,
+    default: DIALOG_DEFAULTS.closeButton,
     required: false,
   },
   /**
@@ -98,7 +139,8 @@ export const useDialogProps = declarePropType({
    */
   okButtonProps: {
     type: [Boolean, Object] as PropType<boolean | Partial<ButtonProps>>,
-    default: () => ({}),
+    default: () => ({ ...DIALOG_DEFAULTS.okButtonProps }),
+    validator: isDialogButtonOptions,
     required: false,
   },
 
@@ -117,7 +159,8 @@ export const useDialogProps = declarePropType({
    */
   cancelButtonProps: {
     type: [Boolean, Object] as PropType<boolean | Partial<ButtonProps>>,
-    default: () => ({}),
+    default: () => ({ ...DIALOG_DEFAULTS.cancelButtonProps }),
+    validator: isDialogButtonOptions,
     required: false,
   },
   /**
@@ -142,7 +185,7 @@ export const useDialogProps = declarePropType({
    */
   destroyOnClose: {
     type: Boolean,
-    default: false,
+    default: DIALOG_DEFAULTS.destroyOnClose,
   },
 
   /** CSS 层级
@@ -151,6 +194,7 @@ export const useDialogProps = declarePropType({
   zIndex: {
     type: Number,
     required: false,
+    validator: isDialogZIndex,
   },
   /**
    * 挂载节点
@@ -167,7 +211,7 @@ export const useDialogProps = declarePropType({
    */
   lockScroll: {
     type: Boolean,
-    default: true,
+    default: DIALOG_DEFAULTS.lockScroll,
   },
   /**
    * 配置弹窗内置模块的 className header/body/footer/mask/wrapper
@@ -190,9 +234,9 @@ export const useDialogProps = declarePropType({
    */
   draggable: {
     type: Boolean,
-    default: false,
+    default: DIALOG_DEFAULTS.draggable,
   },
-});
+} satisfies ComponentRendererPropDefinitions<DialogVueProps>);
 
 export type DialogProps = ExtractPropTypes<typeof useDialogProps>;
 export type DialogSize = DialogProps['size'];

@@ -86,6 +86,26 @@ describe('web overlay primitives', () => {
     expect(document.activeElement).toBe(before);
   });
 
+  it('pauses and resumes a focus scope without losing its restore target', () => {
+    const before = document.createElement('button');
+    const container = document.createElement('div');
+    const inside = document.createElement('button');
+    const outside = document.createElement('button');
+    container.append(inside);
+    document.body.append(before, container, outside);
+    before.focus();
+    const scope = createFocusScope(container);
+
+    scope.activate();
+    scope.pause();
+    outside.focus();
+    expect(document.activeElement).toBe(outside);
+    scope.resume();
+    expect(document.activeElement).toBe(inside);
+    scope.deactivate();
+    expect(document.activeElement).toBe(before);
+  });
+
   it('supports roving focus and SSR-safe portal resolution', () => {
     const items = [document.createElement('button'), document.createElement('button')];
     applyRovingTabIndex(items, 1);

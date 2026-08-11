@@ -47,7 +47,7 @@ describe('Dialog.tsx', () => {
           <div class="h-dialog__mask" style="z-index: 2001;"></div>
         </transition-stub>
         <transition-stub name="h-dialog__move" appear="true" persisted="true" css="true">
-          <div role="dialog" aria-modal="true" tabindex="-1" class="h-dialog__container h-dialog--medium h-dialog--center" style="z-index: 2002;">
+          <div role="dialog" aria-modal="true" aria-label="Dialog" tabindex="-1" class="h-dialog__container h-dialog--medium h-dialog--center" style="z-index: 2002;">
             <div class="h-dialog__inner">
               <!---->
               <div class="h-dialog__main">
@@ -60,7 +60,7 @@ describe('Dialog.tsx', () => {
                         <!---->
                       </div>
                       <!---->
-                    </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" style="margin-left: 16px;">
+                    </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0">
                       <!---->
                       <div class="h-button__content">
                         <!---->
@@ -114,7 +114,7 @@ describe('Dialog.tsx', () => {
                         <!---->
                       </div>
                       <!---->
-                    </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" style="margin-left: 16px;">
+                    </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0">
                       <!---->
                       <div class="h-button__content">
                         <!---->
@@ -154,7 +154,7 @@ describe('Dialog.tsx', () => {
             <!---->
           </transition-stub>
           <transition-stub name="h-dialog__normal" appear="true" persisted="true" css="true">
-            <div role="dialog" aria-modal="true" tabindex="-1" class="h-dialog__container h-dialog--medium h-dialog--center" style="z-index: 2004; top: 200px; transform: translateY(0px); display: none;">
+            <div role="dialog" aria-modal="true" aria-label="Dialog" tabindex="-1" class="h-dialog__container h-dialog--medium h-dialog--center" style="z-index: 2004; top: 200px; transform: translateY(0px); display: none;">
               <div class="h-dialog__inner">
                 <!---->
                 <div class="h-dialog__main">
@@ -167,7 +167,7 @@ describe('Dialog.tsx', () => {
                           <!---->
                         </div>
                         <!---->
-                      </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" style="margin-left: 16px;">
+                      </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0">
                         <!---->
                         <div class="h-button__content">
                           <!---->
@@ -220,7 +220,7 @@ describe('Dialog.tsx', () => {
             <div class="h-dialog__mask" style="z-index: 2004;"></div>
           </transition-stub>
           <transition-stub name="h-dialog__move" appear="true" persisted="true" css="true">
-            <div role="dialog" aria-modal="true" tabindex="-1" class="h-dialog__container h-dialog--medium h-dialog--center" style="z-index: 2005;">
+            <div role="dialog" aria-modal="true" aria-label="Dialog" tabindex="-1" class="h-dialog__container h-dialog--medium h-dialog--center" style="z-index: 2005;">
               <div class="h-dialog__inner">
                 <!---->
                 <div class="h-dialog__main">
@@ -233,7 +233,7 @@ describe('Dialog.tsx', () => {
                           <!---->
                         </div>
                         <!---->
-                      </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" style="margin-left: 16px;">
+                      </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0">
                         <!---->
                         <div class="h-button__content">
                           <!---->
@@ -304,7 +304,7 @@ describe('Dialog.tsx', () => {
                           <!---->
                         </div>
                         <!---->
-                      </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" style="margin-left: 16px;">
+                      </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0">
                         <!---->
                         <div class="h-button__content">
                           <!---->
@@ -394,7 +394,7 @@ describe('Dialog.tsx', () => {
                           <!---->
                         </div>
                         <!---->
-                      </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" style="margin-left: 16px;">
+                      </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0">
                         <!---->
                         <div class="h-button__content">
                           <!---->
@@ -474,7 +474,7 @@ describe('Dialog.tsx', () => {
                         <!---->
                       </div>
                       <!---->
-                    </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" style="margin-left: 16px;">
+                    </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0">
                       <!---->
                       <div class="h-button__content">
                         <!---->
@@ -541,7 +541,7 @@ describe('Dialog.tsx', () => {
                           <!---->
                         </div>
                         <!---->
-                      </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" style="margin-left: 16px;">
+                      </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0">
                         <!---->
                         <div class="h-button__content">
                           <!---->

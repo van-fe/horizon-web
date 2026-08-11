@@ -24,6 +24,10 @@ export interface FocusScopeOptions {
 export interface FocusScope {
   activate(): void;
   deactivate(): void;
+  /** 暂停焦点约束但保留回焦上下文。 @en Pauses containment while preserving restore context. */
+  pause(): void;
+  /** 恢复焦点约束。 @en Resumes focus containment. */
+  resume(): void;
 }
 
 export function createFocusScope(
@@ -33,6 +37,7 @@ export function createFocusScope(
   const ownerDocument = container.ownerDocument;
   let previouslyFocused: HTMLElement | null = null;
   let active = false;
+  let paused = false;
 
   const focusFirst = () => {
     const configured =
@@ -40,7 +45,7 @@ export function createFocusScope(
     (configured ?? getTabbableElements(container)[0] ?? container).focus();
   };
   const onKeyDown = (event: KeyboardEvent) => {
-    if (!active || options.trap === false || event.key !== 'Tab') return;
+    if (!active || paused || options.trap === false || event.key !== 'Tab') return;
     const tabbable = getTabbableElements(container);
     if (tabbable.length === 0) {
       event.preventDefault();
@@ -58,7 +63,9 @@ export function createFocusScope(
     }
   };
   const onFocusIn = (event: FocusEvent) => {
-    if (!active || options.trap === false || container.contains(event.target as Node)) return;
+    if (!active || paused || options.trap === false || container.contains(event.target as Node)) {
+      return;
+    }
     focusFirst();
   };
 
@@ -66,6 +73,7 @@ export function createFocusScope(
     activate() {
       if (active) return;
       active = true;
+      paused = false;
       previouslyFocused = ownerDocument.activeElement as HTMLElement | null;
       if (!container.hasAttribute('tabindex')) container.tabIndex = -1;
       ownerDocument.addEventListener('keydown', onKeyDown, true);
@@ -75,9 +83,19 @@ export function createFocusScope(
     deactivate() {
       if (!active) return;
       active = false;
+      paused = false;
       ownerDocument.removeEventListener('keydown', onKeyDown, true);
       ownerDocument.removeEventListener('focusin', onFocusIn, true);
-      if (options.restoreFocus !== false && previouslyFocused?.isConnected) previouslyFocused.focus();
+      if (options.restoreFocus !== false && previouslyFocused?.isConnected)
+        previouslyFocused.focus();
+    },
+    pause() {
+      if (active) paused = true;
+    },
+    resume() {
+      if (!active || !paused) return;
+      paused = false;
+      if (options.trap !== false && !container.contains(ownerDocument.activeElement)) focusFirst();
     },
   };
 }

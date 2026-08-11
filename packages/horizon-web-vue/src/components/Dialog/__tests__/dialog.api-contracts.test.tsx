@@ -1,8 +1,10 @@
 import { mount } from '@vue/test-utils';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
+import { bodyScrollLock } from '@aurora/horizon-web-core';
 import HDialog from '../src/Dialog';
 import { useDialogEmits } from '../src/composables/useEmits';
+import { sleep } from '~/utils/tools';
 
 describe('Dialog public API contracts', () => {
   beforeEach(() => {
@@ -43,9 +45,13 @@ describe('Dialog public API contracts', () => {
     expect(wrapper.get('.h-dialog__body').text()).toBe('Dialog content');
     expect(wrapper.get('.h-dialog__icon path').attributes('fill')).toBe('#f00');
     expect(wrapper.get('.h-dialog__main').classes()).toContain('h-dialog__main--icon-offset');
-    expect(wrapper.get('.h-dialog__footer .h-button--primary').attributes('disabled')).toBeDefined();
+    expect(
+      wrapper.get('.h-dialog__footer .h-button--primary').attributes('disabled'),
+    ).toBeDefined();
     expect(wrapper.get('.h-dialog__footer .h-button--primary').text()).toBe('Delete');
-    expect(wrapper.get('.h-dialog__footer .h-button--normal').classes()).toContain('h-button--small');
+    expect(wrapper.get('.h-dialog__footer .h-button--normal').classes()).toContain(
+      'h-button--small',
+    );
     expect(wrapper.get('.h-dialog__footer .h-button--normal').text()).toBe('Keep');
   });
 
@@ -218,13 +224,7 @@ describe('Dialog public API contracts', () => {
     const open = vi.fn();
     const close = vi.fn();
     const wrapper = mount(() => (
-      <HDialog
-        visible={visible.value}
-        to={null}
-        lockScroll={false}
-        onOpen={open}
-        onClose={close}
-      />
+      <HDialog visible={visible.value} to={null} lockScroll={false} onOpen={open} onClose={close} />
     ));
     expect(open).not.toHaveBeenCalled();
     visible.value = true;
@@ -254,5 +254,111 @@ describe('Dialog public API contracts', () => {
     ] as const) {
       expect(useDialogEmits[name]()).toBe(true);
     }
+  });
+
+  test('exposes controlled open and close commands while ok remains action-only', async () => {
+    const update = vi.fn();
+    const ok = vi.fn();
+    const wrapper = mount(HDialog, {
+      attachTo: document.body,
+      props: {
+        visible: false,
+        to: null,
+        onOk: ok,
+        'onUpdate:visible': update,
+      },
+    });
+    const commands = wrapper.vm as unknown as { open: () => void; close: () => void };
+
+    commands.open();
+    expect(update).toHaveBeenLastCalledWith(true);
+    await wrapper.setProps({ visible: true });
+    await wrapper.get('.h-dialog__footer .h-button--primary').trigger('click');
+    expect(ok).toHaveBeenCalledOnce();
+    expect(update).not.toHaveBeenCalledWith(false);
+
+    commands.close();
+    expect(update).toHaveBeenLastCalledWith(false);
+    wrapper.unmount();
+  });
+
+  test('updates scroll locking dynamically without leaking on unmount', async () => {
+    bodyScrollLock.reset(document);
+    const lockScroll = ref(true);
+    const wrapper = mount(
+      () => <HDialog visible to={null} lockScroll={lockScroll.value} title="Dynamic lock" />,
+      { attachTo: document.body },
+    );
+    expect(bodyScrollLock.current).toBe(1);
+    expect(document.body.dataset.popupParentHidden).toBeDefined();
+
+    lockScroll.value = false;
+    await nextTick();
+    expect(bodyScrollLock.current).toBe(0);
+    expect(document.body.dataset.popupParentHidden).toBeUndefined();
+
+    lockScroll.value = true;
+    await nextTick();
+    expect(bodyScrollLock.current).toBe(1);
+    wrapper.unmount();
+    expect(bodyScrollLock.current).toBe(0);
+    expect(document.body.dataset.popupParentHidden).toBeUndefined();
+  });
+
+  test('dismisses only the top dialog and restores the nested focus stack', async () => {
+    bodyScrollLock.reset(document);
+    const trigger = document.createElement('button');
+    document.body.append(trigger);
+    trigger.focus();
+    const parentVisible = ref(true);
+    const childVisible = ref(false);
+    const wrapper = mount(
+      () => (
+        <>
+          <HDialog
+            class="parent-dialog"
+            visible={parentVisible.value}
+            to={null}
+            title="Parent"
+            onUpdate:visible={value => (parentVisible.value = value)}
+          />
+          <HDialog
+            class="child-dialog"
+            visible={childVisible.value}
+            to={null}
+            title="Child"
+            onUpdate:visible={value => (childVisible.value = value)}
+          />
+        </>
+      ),
+      { attachTo: document.body },
+    );
+    await nextTick();
+    const parentDialog = document.querySelector<HTMLElement>('.parent-dialog [role="dialog"]')!;
+    expect(document.activeElement).toBe(parentDialog);
+
+    childVisible.value = true;
+    await nextTick();
+    await nextTick();
+    await sleep(450);
+    const childDialog = document.querySelector<HTMLElement>('.child-dialog [role="dialog"]')!;
+    expect(bodyScrollLock.current).toBe(2);
+    expect(document.activeElement).toBe(childDialog);
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, key: 'Escape' }));
+    await nextTick();
+    expect(childVisible.value).toBe(false);
+    expect(parentVisible.value).toBe(true);
+    expect(bodyScrollLock.current).toBe(1);
+    expect(document.activeElement).toBe(parentDialog);
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, key: 'Escape' }));
+    await nextTick();
+    expect(parentVisible.value).toBe(false);
+    expect(bodyScrollLock.current).toBe(0);
+    expect(document.activeElement).toBe(trigger);
+
+    wrapper.unmount();
+    trigger.remove();
   });
 });

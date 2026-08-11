@@ -48,6 +48,8 @@
     "./styles/count-variables": "./styles/components/count/variables.scss",
     "./styles/divider": "./styles/components/divider/index.scss",
     "./styles/divider-variables": "./styles/components/divider/variables.scss",
+    "./styles/dialog": "./styles/components/dialog/index.scss",
+    "./styles/dialog-variables": "./styles/components/dialog/variables.scss",
     "./styles/dropdown": "./styles/components/dropdown/index.scss",
     "./styles/dropdown-variables": "./styles/components/dropdown/variables.scss",
     "./styles/empty": "./styles/components/empty/index.scss",

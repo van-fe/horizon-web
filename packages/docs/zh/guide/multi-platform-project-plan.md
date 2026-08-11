@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B14 Popconfirm 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B15 Dialog 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -566,6 +566,18 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DS-B14-001 | Done | Popconfirm Sass、变量与视觉基础迁入 `@aurora/theme`，Vue/React 使用同源样式；`v-popconfirm` 仅在 `.h-popconfirm--directive` 下保留箭头和定位差异，消除旧组件样式与指令样式的同选择器叠加 |
 | DOC-B14-001 | Done | Popconfirm 中英文 React 页面、独立 TSX 示例与侧边栏入口完成；40 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
 | QA-B14-001 | Done | Core 123、Web Core Node 10/Chromium 30、React Chromium 136、Vue Chromium 2306 项（2305 通过、1 项预期失败）全部通过，覆盖率为 97.96% / 95.09% / 97.77% / 98.27%；五个包构建、文档、Vue/React/SSR 消费工程及四个中英文 renderer 路由的真实浏览器验收通过 |
+
+#### M6-B15 第十五批实施记录（2026-08-12）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B15-001 | Done | Dialog 的公共 props、默认值、尺寸与校验器、事件、内容区域、命令、关闭原因及 callback-style 关闭控制器迁入 `@aurora/core`；受控与非受控状态、延迟授权、pending 去重、失效回调与异常恢复只定义一次 |
+| WEB-B15-001 | Done | 在同名 Web Core 目录组合 dismissable layer、FocusScope 与滚动锁；FocusScope 新增 pause/resume，嵌套 Dialog 仅顶层约束焦点和响应 Escape，子层关闭后恢复父层焦点上下文 |
+| VUE-B15-001 | Done | Vue props/emits/slots/exposes 通过类型化适配消费公共契约，保留 `visible`、Teleport、Transition、图标、区域 class、Button 防抖与拖拽扩展；所有关闭路径复用 Core/Web Core，并保持 OK 不自动关闭及历史事件顺序 |
+| REACT-B15-001 | Done | 完成原生受控与非受控 Dialog、callback-style 关闭守卫、Portal、遮罩、四尺寸、焦点陷阱与回归、嵌套顶层关闭、滚动锁、销毁、拖拽、自定义内容和命令 ref；Provider 提供操作与 ARIA 文案 |
+| DS-B15-001 | Done | Dialog Sass、变量与视觉基础迁入 `@aurora/theme`，Vue/React 使用同源样式；底部按钮间距归入 Theme，huge 尺寸改为窄屏安全的 `min(920px, 92vw)` |
+| DOC-B15-001 | Done | Dialog 中英文 React 页面、4 个独立 TSX 示例与侧边栏入口完成；41 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
+| QA-B15-001 | Done | Core 132、Web Core Node 10/Chromium 34、React Chromium 144、Vue Chromium 2309 项（2308 通过、1 项预期失败）全部通过，覆盖率为 97.96% / 95.09% / 97.79% / 98.28%；五个包构建、文档、Vue/React/SSR 消费工程及四个中英文 renderer 路由的真实浏览器验收通过 |
 
 ### 批次 C：浮层与容器
 

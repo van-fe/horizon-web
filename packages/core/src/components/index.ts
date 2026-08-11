@@ -10,6 +10,7 @@ export * from './Checkbox';
 export * from './Collapse';
 export * from './Count';
 export * from './Divider';
+export * from './Dialog';
 export * from './Dropdown';
 export * from './Empty';
 export * from './Input';

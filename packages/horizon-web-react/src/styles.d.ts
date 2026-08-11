@@ -5,6 +5,7 @@ declare module '@aurora/theme/styles/link';
 declare module '@aurora/theme/styles/pagination';
 declare module '@aurora/theme/styles/popover';
 declare module '@aurora/theme/styles/popconfirm';
+declare module '@aurora/theme/styles/dialog';
 declare module '@aurora/theme/styles/alert';
 declare module '@aurora/theme/styles/avatar';
 declare module '@aurora/theme/styles/badge';

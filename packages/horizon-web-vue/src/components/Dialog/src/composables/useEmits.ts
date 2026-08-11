@@ -1,7 +1,14 @@
+import type {
+  AdaptComponentApiShape,
+  ComponentEventValidators,
+  DialogEventMap,
+} from '@aurora/core';
 import { isBoolean } from '@aurora/utils';
 
+type DialogVueEvents = AdaptComponentApiShape<DialogEventMap, { openChange: 'update:visible' }>;
+
 export const useDialogEmits = {
-  'update:visible': (value: false) => isBoolean(value),
+  'update:visible': (value: boolean) => isBoolean(value),
 
   /**
    * 点击主要按钮回调
@@ -55,6 +62,6 @@ export const useDialogEmits = {
    * @en Emitted when cancel debounce finished changes.
    */
   cancelDebounceFinished: () => true,
-};
+} satisfies ComponentEventValidators<DialogVueEvents>;
 
 export type DialogEmits = typeof useDialogEmits;

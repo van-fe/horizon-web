@@ -15,6 +15,7 @@ import {
   createReactComponentManifest,
   createVueComponentManifest,
   dividerManifest,
+  dialogManifest,
   dropdownGroupManifest,
   dropdownItemManifest,
   dropdownManifest,
@@ -59,6 +60,7 @@ const manifests = [
   collapseItemManifest,
   countManifest,
   dividerManifest,
+  dialogManifest,
   dropdownManifest,
   dropdownMenuManifest,
   dropdownGroupManifest,
@@ -164,6 +166,44 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
   Divider: {
     props: { rename: { variant: 'type' } },
     regions: { rename: { title: 'default' } },
+  },
+  Dialog: {
+    props: {
+      rename: { open: 'visible' },
+      omit: ['defaultOpen'],
+      override: {
+        okButtonProps: { type: 'boolean | Partial<ButtonProps>' },
+        cancelButtonProps: { type: 'boolean | Partial<ButtonProps>' },
+      },
+      extend: [
+        {
+          name: 'to',
+          type: 'string | HTMLElement | null',
+          description: { zh: '挂载目标', en: 'Teleport destination' },
+        },
+        {
+          name: 'ariaLabel',
+          type: 'string',
+          description: { zh: '可访问名称', en: 'Accessible name' },
+        },
+        {
+          name: 'classNames',
+          type: 'DialogClassNames',
+          description: { zh: '内置区域 class', en: 'Classes for built-in regions' },
+        },
+      ],
+    },
+    events: {
+      omit: ['openChange'],
+      extend: [
+        {
+          name: 'update:visible',
+          type: 'boolean',
+          description: { zh: '更新绑定显隐', en: 'Updates bound visibility' },
+        },
+      ],
+    },
+    regions: { rename: { content: 'default' } },
   },
   Dropdown: {
     props: {
@@ -675,6 +715,56 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
   },
   Count: { events: { rename: { change: 'onChange' } } },
   Divider: { regions: { rename: { title: 'children' } } },
+  Dialog: {
+    props: {
+      omit: ['iconName', 'iconColor'],
+      override: {
+        title: { type: 'ReactNode' },
+        okButtonProps: { type: 'boolean | Partial<ButtonProps>' },
+        cancelButtonProps: { type: 'boolean | Partial<ButtonProps>' },
+      },
+      extend: [
+        { name: 'icon', type: 'ReactNode', description: { zh: '标题图标', en: 'Title icon' } },
+        {
+          name: 'ariaLabel',
+          type: 'string',
+          description: { zh: '可访问名称', en: 'Accessible name' },
+        },
+        {
+          name: 'portalContainer',
+          type: 'PortalTarget',
+          defaultValue: "'body'",
+          description: { zh: 'Portal 容器', en: 'Portal destination' },
+        },
+        {
+          name: 'portal',
+          type: 'boolean',
+          defaultValue: 'true',
+          description: { zh: '使用 Portal', en: 'Uses a Portal' },
+        },
+        {
+          name: 'classNames',
+          type: 'DialogClassNames',
+          description: { zh: '内置区域 class', en: 'Classes for built-in regions' },
+        },
+      ],
+    },
+    events: {
+      omit: ['confirmDebounceFinished', 'cancelDebounceFinished'],
+      rename: {
+        openChange: 'onOpenChange',
+        ok: 'onOk',
+        cancel: 'onCancel',
+        open: 'onOpen',
+        opened: 'onOpened',
+        close: 'onClose',
+        closed: 'onClosed',
+        closeIconClick: 'onCloseIconClick',
+        maskClick: 'onMaskClick',
+      },
+    },
+    regions: { rename: { content: 'children', footer: 'footer' }, omit: ['title'] },
+  },
   Dropdown: {
     events: { rename: { openChange: 'onOpenChange', command: 'onCommand' } },
     regions: { rename: { trigger: 'children', menu: 'menu' } },

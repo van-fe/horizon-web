@@ -30,6 +30,7 @@ const reactSidebar = [
       { text: 'Popover', link: 'components/Popover' },
       { text: 'Dropdown', link: 'components/Dropdown' },
       { text: 'Popconfirm', link: 'components/Popconfirm' },
+      { text: 'Dialog', link: 'components/Dialog' },
     ],
   },
   {

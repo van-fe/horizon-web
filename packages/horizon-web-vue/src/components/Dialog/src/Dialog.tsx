@@ -1,22 +1,25 @@
 import { IconClose, AIcon } from '@aurora/icon';
+import type { DialogOpenReason } from '@aurora/core';
+import { DialogController } from '@aurora/core';
+import type { DialogInteractionLayer } from '@aurora/horizon-web-core';
+import { createDialogInteractionLayer } from '@aurora/horizon-web-core';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import {
   ComponentClassBlock,
   getUnitString,
   isString,
   slotVNodes,
-  useLockScroll,
   useNamespace,
   useZIndex,
   usePopupContainerGetter,
 } from '@aurora/utils';
-import { onKeyStroke } from '@vueuse/core';
 import type { VNode } from 'vue';
 import {
   computed,
   defineComponent,
   mergeProps,
   onBeforeUnmount,
+  onMounted,
   ref,
   Teleport,
   toRefs,
@@ -42,7 +45,9 @@ import { HScrollbarUpdateDelayInjectKey } from '~/components/Scrollbar/src/utils
 export default defineComponent({
   name: `${useNamespace()}Dialog`,
   desc: '对话框是一种模态窗口，干扰性比较强。通常用来展示用户当前需要的或用户必须关注的信息或操作，其他情况不建议使用弹出框，可考虑 Message 等其他非模态窗口',
-  descLocales: { en: "To meet most scenarios, the dialog will display primary and secondary buttons by default." },
+  descLocales: {
+    en: 'To meet most scenarios, the dialog will display primary and secondary buttons by default.',
+  },
   components: {
     HButton,
     AIcon,
@@ -56,7 +61,7 @@ export default defineComponent({
   exposes: useDialogExposes,
   setup(
     props,
-    { slots, emit, attrs }: HorizonWebSetupContext<DialogEmits, DialogSlots, DialogExposes>,
+    { slots, emit, attrs, expose }: HorizonWebSetupContext<DialogEmits, DialogSlots, DialogExposes>,
   ) {
     // const locale = inject(localeInjectKey, defaultLocale);
 
@@ -73,9 +78,17 @@ export default defineComponent({
     const popupContainerGetter = usePopupContainerGetter();
     const classHelper = new ComponentClassBlock('dialog');
     const titleId = useId();
-    let previouslyFocused: HTMLElement | null = null;
     const visible = computed(() => props.visible);
     const closedDestroy = computed(() => props.destroyOnClose);
+    const closePending = ref(false);
+    const controller = new DialogController({
+      open: props.visible,
+      beforeClose: props.beforeClose,
+      onOpenChange: open => emit('update:visible', open),
+      onClosePendingChange: pending => {
+        closePending.value = pending;
+      },
+    });
 
     const okText = computed(() => props.okText);
     const cancelText = computed(() => props.cancelText);
@@ -95,21 +108,24 @@ export default defineComponent({
       return popupContainerGetter.value?.() ?? 'body';
     });
 
-    const closeDirectly = () => {
-      emit('update:visible', false);
+    const syncController = () => {
+      controller.setOptions({ open: props.visible, beforeClose: props.beforeClose });
     };
 
-    const close = () => {
-      if (props.beforeClose) {
-        return props.beforeClose(closeDirectly);
-      }
-      closeDirectly();
+    const requestClose = (reason: DialogOpenReason = 'imperative') => {
+      syncController();
+      return controller.requestClose(reason);
+    };
+
+    const requestOpen = () => {
+      syncController();
+      return controller.requestOpen('imperative');
     };
 
     const maskClick = () => {
       if (maskCloseRef.value) {
         emit('maskClick');
-        close();
+        requestClose('mask');
       }
     };
 
@@ -123,91 +139,86 @@ export default defineComponent({
     const zIndexHandler = useZIndex(props.zIndex);
     const zIndex = ref(props.zIndex ?? zIndexHandler.current);
 
-    onKeyStroke('Escape', () => {
-      if (escCloseRef.value && visible.value) {
-        close();
-      }
-    });
-
-    function setLockScroll(open = true) {
-      if (props.lockScroll) {
-        if (open) {
-          useLockScroll();
-        } else {
-          useLockScroll(false);
-        }
-      }
-    }
-
-    watch(
-      visible,
-      (newVal, oldVal) => {
-        if (newVal) {
-          previouslyFocused = document.activeElement as HTMLElement | null;
-          emit('open');
-          zIndex.value = props.zIndex ?? zIndexHandler.next();
-          setLockScroll();
-          // setTimeout(() => {
-          //   emit('opened');
-          // }, 300);
-        } else if (oldVal !== undefined) {
-          setLockScroll(false);
-          emit('close');
-          // setTimeout(() => {
-          //   emit('closed');
-          // }, 300);
-        }
-      },
-      {
-        immediate: true,
-      },
-    );
-
-    onBeforeUnmount(() => {
-      if (visible.value) {
-        setLockScroll(false);
-      }
-    });
-
     const handleCloseIconClick = (evt: MouseEvent) => {
       emit('closeIconClick');
-      close();
+      requestClose('close-button');
       evt.stopPropagation();
     };
 
     const { hasMoved, movableElement, dragging, draggleHandle, dialogStyle, notifyDialogClosed } =
       useDraggable(toRefs(props));
+    let interactionLayer: DialogInteractionLayer | null = null;
 
-    const trapFocus = (evt: KeyboardEvent) => {
-      if (evt.key !== 'Tab' || !movableElement.value) return;
-      const focusable = Array.from(
-        movableElement.value.querySelectorAll<HTMLElement>(
-          'a[href], button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"])',
-        ),
-      );
-      if (!focusable.length) {
-        evt.preventDefault();
-        movableElement.value.focus();
-        return;
-      }
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (evt.shiftKey && document.activeElement === first) {
-        evt.preventDefault();
-        last.focus();
-      } else if (!evt.shiftKey && document.activeElement === last) {
-        evt.preventDefault();
-        first.focus();
-      }
+    const deactivateInteractionLayer = () => {
+      interactionLayer?.deactivate();
+      interactionLayer = null;
     };
+
+    const activateInteractionLayer = (initialFocus?: HTMLElement | null) => {
+      if (interactionLayer || !visible.value || !movableElement.value) return;
+      const dialog = movableElement.value;
+      interactionLayer = createDialogInteractionLayer(dialog, {
+        dismissOnEscape: true,
+        dismissOnOutsidePointer: false,
+        initialFocus: initialFocus ?? dialog,
+        lockScroll: props.lockScroll,
+        onDismiss: reason => {
+          if (reason === 'escape' && escCloseRef.value) requestClose('escape');
+        },
+      });
+      interactionLayer.activate();
+      dialog.ownerDocument.defaultView?.requestAnimationFrame(() => {
+        if (visible.value && interactionLayer) dialog.focus();
+      });
+    };
+
+    watch(
+      () => [props.visible, props.beforeClose] as const,
+      ([open, beforeClose]) => controller.setOptions({ open, beforeClose }),
+      { immediate: true },
+    );
+
+    watch(
+      visible,
+      (newVal, oldVal) => {
+        if (newVal) {
+          emit('open');
+          zIndex.value = props.zIndex ?? zIndexHandler.next();
+          activateInteractionLayer();
+        } else if (oldVal !== undefined) {
+          deactivateInteractionLayer();
+          emit('close');
+        }
+      },
+      { immediate: true, flush: 'post' },
+    );
+
+    watch(
+      () => props.lockScroll,
+      (lockScroll, previousLockScroll) => {
+        if (!visible.value || lockScroll === previousLockScroll) return;
+        const focused = movableElement.value?.contains(document.activeElement)
+          ? (document.activeElement as HTMLElement)
+          : null;
+        deactivateInteractionLayer();
+        activateInteractionLayer(focused);
+      },
+    );
+
+    onMounted(() => activateInteractionLayer());
+
+    expose({ open: requestOpen, close: () => requestClose('imperative') });
+
+    onBeforeUnmount(() => {
+      controller.cancelCloseRequest();
+      deactivateInteractionLayer();
+    });
 
     const onOpened = () => {
       movableElement.value?.focus();
       emit('opened');
     };
     const onClosed = () => {
-      previouslyFocused?.focus();
-      previouslyFocused = null;
       notifyDialogClosed();
       emit('closed');
     };
@@ -257,9 +268,7 @@ export default defineComponent({
                 >
                   {slots.title?.() ?? (
                     <div class={classHelper.e('default-title')}>
-                      <div class={classHelper.em('default-title', 'text')}>
-                        {titleRef.value}
-                      </div>
+                      <div class={classHelper.em('default-title', 'text')}>{titleRef.value}</div>
                       {closeButtonRef.value && (
                         <HButton
                           class={classHelper.e('header-close')}
@@ -290,7 +299,7 @@ export default defineComponent({
                             plain
                             onClick={() => {
                               emit('cancel');
-                              close();
+                              requestClose('cancel');
                             }}
                           >
                             {cancelText.value || defaultCancelText.value}
@@ -298,7 +307,6 @@ export default defineComponent({
                         )}
                         {okButton.value && (
                           <HButton
-                            style="margin-left: 16px;"
                             {...okButtonProps.value}
                             onDebounceFinished={() => emit('confirmDebounceFinished')}
                             onClick={() => {
@@ -324,8 +332,9 @@ export default defineComponent({
           role="dialog"
           aria-modal="true"
           aria-labelledby={titleValue ? titleId : undefined}
+          aria-label={titleValue ? undefined : props.ariaLabel || 'Dialog'}
+          aria-busy={closePending.value || undefined}
           tabindex={-1}
-          onKeydown={trapFocus}
           class={[
             classHelper.e('container'),
             isString(sizeRef.value) && classHelper.m(sizeRef.value),

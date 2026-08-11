@@ -12,6 +12,15 @@ function PopconfirmLabelsProbe() {
   return createElement('span', null, `${popconfirmLabels.confirm}/${popconfirmLabels.cancel}`);
 }
 
+function DialogLabelsProbe() {
+  const { dialogLabels } = useHorizonWebConfig();
+  return createElement(
+    'span',
+    null,
+    `${dialogLabels.ok}/${dialogLabels.cancel}/${dialogLabels.close}/${dialogLabels.dialog}`,
+  );
+}
+
 describe('HorizonWebProvider', () => {
   it('is SSR-safe and exposes renderer configuration', () => {
     const html = renderToStaticMarkup(
@@ -35,5 +44,17 @@ describe('HorizonWebProvider', () => {
     );
 
     expect(html).toContain('Proceed/Cancel');
+  });
+
+  it('merges Dialog labels with provider defaults', () => {
+    const html = renderToStaticMarkup(
+      createElement(
+        HorizonWebProvider,
+        { dialogLabels: { ok: 'Save', close: 'Dismiss' } },
+        createElement(DialogLabelsProbe),
+      ),
+    );
+
+    expect(html).toContain('Save/Cancel/Dismiss/Dialog');
   });
 });
