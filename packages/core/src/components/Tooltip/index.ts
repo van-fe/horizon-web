@@ -197,3 +197,4 @@ export const defaultTooltipScheduler: TooltipScheduler = {
   set: (callback, delay) => timerRuntime.setTimeout(callback, delay),
   clear: handle => timerRuntime.clearTimeout(handle),
 };
+export { tooltipManifest } from './manifest';

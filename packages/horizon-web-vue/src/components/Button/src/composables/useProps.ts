@@ -2,6 +2,8 @@ import type { Component, ExtractPropTypes, PropType } from 'vue';
 import type { Awaitable } from '@aurora/utils';
 import { declarePropType } from '@aurora/utils';
 import type { RouteLocationRaw } from 'vue-router';
+import { BUTTON_DEFAULTS } from '@aurora/core';
+import type { ButtonBorderStyle, ButtonSize, ButtonTarget, ButtonVariant } from '@aurora/core';
 
 export const useButtonProps = declarePropType({
   /**
@@ -9,15 +11,15 @@ export const useButtonProps = declarePropType({
    * @en Configuration for type.
    */
   type: {
-    type: String as PropType<'primary' | 'normal' | 'danger'>,
-    default: 'primary',
+    type: String as PropType<ButtonVariant>,
+    default: BUTTON_DEFAULTS.variant,
   },
   /**
    * 尺寸
    * @en Configuration for size.
    */
   size: {
-    type: String as PropType<'huge' | 'large' | 'medium' | 'small'>,
+    type: String as PropType<ButtonSize>,
   },
   /**
    * 是否是椭圆按钮
@@ -25,7 +27,7 @@ export const useButtonProps = declarePropType({
    */
   round: {
     type: Boolean,
-    default: false,
+    default: BUTTON_DEFAULTS.round,
   },
   /**
    * 是否是文字按钮
@@ -33,7 +35,7 @@ export const useButtonProps = declarePropType({
    */
   text: {
     type: Boolean,
-    default: false,
+    default: BUTTON_DEFAULTS.text,
   },
   /**
    * 是否是链接按钮
@@ -41,7 +43,7 @@ export const useButtonProps = declarePropType({
    */
   link: {
     type: Boolean,
-    default: false,
+    default: BUTTON_DEFAULTS.link,
   },
   /**
    * 是否自适应父宽度
@@ -49,7 +51,7 @@ export const useButtonProps = declarePropType({
    */
   block: {
     type: Boolean,
-    default: false,
+    default: BUTTON_DEFAULTS.block,
   },
   /**
    * 是否是简洁按钮
@@ -57,7 +59,7 @@ export const useButtonProps = declarePropType({
    */
   plain: {
     type: Boolean,
-    default: false,
+    default: BUTTON_DEFAULTS.plain,
   },
   /**
    * 是否激活按钮
@@ -65,7 +67,7 @@ export const useButtonProps = declarePropType({
    */
   active: {
     type: Boolean,
-    default: false,
+    default: BUTTON_DEFAULTS.active,
   },
   /**
    * 是否自动聚焦
@@ -81,7 +83,7 @@ export const useButtonProps = declarePropType({
    */
   loading: {
     type: Boolean,
-    default: false,
+    default: BUTTON_DEFAULTS.loading,
   },
   /**
    * 是否禁用
@@ -89,7 +91,7 @@ export const useButtonProps = declarePropType({
    */
   disabled: {
     type: Boolean,
-    default: false,
+    default: BUTTON_DEFAULTS.disabled,
   },
   /**
    * 是否自适应启用最小宽度
@@ -97,7 +99,7 @@ export const useButtonProps = declarePropType({
    */
   autoFit: {
     type: Boolean,
-    default: false,
+    default: BUTTON_DEFAULTS.autoFit,
   },
   /**
    * 图标，请传入图标对象
@@ -155,7 +157,7 @@ export const useButtonProps = declarePropType({
    */
   replace: {
     type: Boolean,
-    default: false,
+    default: BUTTON_DEFAULTS.replace,
   },
   /**
    * 链接打开目标对象
@@ -163,8 +165,8 @@ export const useButtonProps = declarePropType({
    * @en Configuration for target.
    */
   target: {
-    type: String as PropType<'_blank' | '_self' | '_parent' | '_top'>,
-    default: '_self',
+    type: String as PropType<ButtonTarget>,
+    default: BUTTON_DEFAULTS.target,
   },
   /**
    * 防抖调用函数
@@ -189,7 +191,7 @@ export const useButtonProps = declarePropType({
    */
   ghost: {
     type: Boolean,
-    default: false,
+    default: BUTTON_DEFAULTS.ghost,
   },
   /**
    * 自定义主题颜色，会自动生成默认、悬浮、按下和禁用状态
@@ -203,8 +205,8 @@ export const useButtonProps = declarePropType({
    * @en Configuration for border style.
    */
   borderStyle: {
-    type: String as PropType<'solid' | 'dashed' | 'dotted'>,
-    default: 'solid',
+    type: String as PropType<ButtonBorderStyle>,
+    default: BUTTON_DEFAULTS.borderStyle,
   },
 });
 
@@ -214,14 +216,14 @@ export const useButtonGroupProps = declarePropType({
    * @en Configuration for size.
    */
   size: {
-    type: String as PropType<'huge' | 'large' | 'medium' | 'small'>,
+    type: String as PropType<ButtonSize>,
   },
   /**
    * 控制按钮组内按钮的类型
    * @en Configuration for type.
    */
   type: {
-    type: String as PropType<'primary' | 'normal' | 'danger'>,
+    type: String as PropType<ButtonVariant>,
   },
 });
 

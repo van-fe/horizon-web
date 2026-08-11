@@ -424,13 +424,21 @@ Web Vue 和 Web React 应尽量使用同一份组件样式。为此必须建立�
 
 ## 11. API 元数据与文档
 
-当前以 Vue 组件源码为主的 API 分析方式需要替换为“公共 manifest + renderer 扩展”。建议每个组件提供：
+当前以 Vue 组件源码为主的 API 分析方式需要替换为“公共 contract/manifest + renderer 扩展”。每个组件在四个包的同名目录中提供：
 
 ```text
-component.manifest.ts           # 描述、公共语义、事件、可访问性要求
-component.vue.manifest.ts       # Vue props/emits/slots/exposes 映射
-component.react.manifest.ts     # React props/callbacks/renderers/ref 映射
+packages/core/src/components/<Component>/
+├── contract.ts 或 index.ts     # 领域类型、默认值、校验、事件 payload、区域和命令
+└── manifest.ts                 # 描述、公共语义、可访问性和测试向量
+
+packages/horizon-web-vue/src/components/<Component>/
+└── renderer adapter            # props/emits/slots/exposes，允许重命名、删减和 Vue 扩展
+
+packages/horizon-web-react/src/components/<Component>/
+└── renderer adapter            # props/callbacks/children 或 renderers/ref，允许 React 扩展
 ```
+
+公共层只描述 API 的语义，不包含 `VNode`、`ReactNode`、框架 Ref 或生命周期。两端必须复用公共枚举、默认值、校验器、事件 payload/reason 和命令签名；renderer adapter 可以按各自习惯调整名称与形态，不追求虚假的逐字段相同。
 
 API Generator 应从 manifest 生成：
 
@@ -438,9 +446,9 @@ API Generator 应从 manifest 生成：
 - 中文和英文描述；
 - IDE 元数据和类型辅助文件；
 - 组件索引与按需导入元数据；
-- API 语义差异说明。
+- renderer 各自的 API 元数据。
 
-文档站建议按组件组织页面，在同一组件页面提供 Vue/React tab，避免维护两份完全独立且容易漂移的说明。示例源码可以分框架存在，但场景、交互和预期结果应保持一致。
+文档站分别维护 Vue 与 React 页面、导航、API 表和示例运行时。公共 manifest 用于保证描述、无障碍和行为语义不漂移，但组件文档只使用当前 renderer 的原生术语，不展示框架映射表或跨框架差异说明。
 
 ## 12. 迁移阶段
 

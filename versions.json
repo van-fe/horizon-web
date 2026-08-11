@@ -1,5 +1,10 @@
 {
+  "core": "1.0.0",
+  "theme": "1.0.0",
+  "horizon-web-core": "1.0.0",
   "horizon-web-vue": "1.0.0",
+  "horizon-web-react": "1.0.0",
+  "horizon-web": "1.0.0",
   "utils": "1.0.0",
   "locale": "1.0.0",
   "locale-vue": "1.0.0",

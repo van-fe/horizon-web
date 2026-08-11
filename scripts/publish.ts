@@ -6,26 +6,16 @@ import { hideBin } from 'yargs/helpers';
 import chalk from 'chalk';
 import versionsJson from '../versions.json';
 import { cloneBrowserBuildFileToDist } from './copyFileToDist';
+import { createReleasePlan, publishPackages } from './releasePlan';
 
 const versions = versionsJson as Record<string, string>;
 const argv = yargs(hideBin(process.argv)).argv as {
   confirm?: boolean;
+  dryRun?: boolean;
   tag?: 'beta' | string;
 };
 
-const { confirm, tag } = argv;
-
-// the packages of need to be published
-const publishPackages = [
-  'horizon-web-vue',
-  'utils',
-  'locale',
-  'locale-vue',
-  'locale-react',
-  'unplugin-resolver',
-  'colors',
-  'upload-adapters',
-];
+const { confirm, dryRun, tag } = argv;
 
 const packageJsonOrigin: Record<string, string> = {};
 const packagesPath = resolve(__dirname, '../packages');
@@ -175,9 +165,13 @@ function checkPublishedVersion() {
   }
 }
 
-ensureVersion().then(() => {
-  checkPublishedVersion();
-});
+if (dryRun) {
+  console.info(JSON.stringify({ tag: tag ?? 'latest', packages: createReleasePlan() }, null, 2));
+} else {
+  ensureVersion().then(() => {
+    checkPublishedVersion();
+  });
+}
 
 process.on('uncaughtException', err => {
   console.error(chalk.bgRed(err));

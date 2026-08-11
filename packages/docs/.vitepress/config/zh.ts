@@ -36,6 +36,7 @@ const zhGuideSidebar = [
       { text: '命名空间', link: 'namespace' },
       { text: 'Aurora 多产品整改指南', link: 'multi-platform-refactor' },
       { text: 'Aurora 多产品项目计划', link: 'multi-platform-project-plan' },
+      { text: 'Web 双 renderer MVP 验收', link: 'mvp-acceptance-report' },
       { text: 'FAQ', link: 'FAQ' },
     ],
   },

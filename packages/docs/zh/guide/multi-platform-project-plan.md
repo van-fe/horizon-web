@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M4 Select 单选复杂试点已完成，M5 工具链与消费矩阵待启动 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6 批量基础组件迁移启动 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -58,7 +58,7 @@ MVP 达到以下指标才允许进入批量组件迁移：
 
 ### 3.3 本轮非目标
 
-- 一次迁移全部 87 个组件；
+- 在 M0–M5 MVP 验收前一次迁移全部 87 个组件；M6/M7 按依赖批次继续完成全量拆分；
 - 立即删除 `@aurora/horizon-web`；
 - 实现 `skyline-mobile-vue/react`；
 - 强制 Vue 与 React 使用完全相同的 props 名称；
@@ -323,6 +323,19 @@ M2 的公共抽取只包含与渲染框架无关的状态和行为协议。组�
 | QA-005 | MVP 验收报告 | 指标、差异、风险和下一阶段估算 | 所有 M0–M5 退出门槛有证据 |
 
 退出门槛：Web React MVP 可构建、按需引入、文档化和发布演练；MVP 验收报告批准后才进入批量迁移。
+
+### M5 实施记录
+
+| 能力 | 状态 | 实施结果 |
+| --- | --- | --- |
+| DOC-001 | Done | 四个试点组件在 Core 同名目录提供公共 manifest、API contract、无障碍要求和测试向量 |
+| DOC-002 | Done | 公共 adapter 支持 renderer 字段重命名、删减和扩展，文档准备阶段分别生成 Vue/React contract JSON |
+| DOC-003 | Done | Vue/React 页面、侧边栏、示例目录、编译器和错误边界保持独立 |
+| PKG-006 | Done | resolver 显式支持 Vue/React 包名与样式入口，12 个 resolver 测试通过 |
+| PKG-007 | Done | 版本表和发布顺序覆盖 Core、Theme、Web Core、双 renderer 与兼容包；dry-run 不修改包文件 |
+| PKG-008 | Done | `@aurora/horizon-web` 默认、具名、CommonJS 和样式转发原型通过 |
+| QA-004 | Done | Vite Vue、Vite React、Vue SSR、React SSR 和 React tree-shaking smoke 通过 |
+| QA-005 | Done | [Web Vue/React MVP 验收报告](./mvp-acceptance-report.md)记录指标、风险和 M6 准入结论 |
 
 ## 8. M6 批量迁移顺序
 

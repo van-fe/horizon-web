@@ -1,41 +1,23 @@
 import type { FocusEventHandler, InputHTMLAttributes, ReactElement, ReactNode } from 'react';
 import { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
-import { getSwitchState, resolveControllableValue, resolveSwitchChange } from '@aurora/core';
-import type { SwitchBeforeChange, SwitchChangeResult } from '@aurora/core';
+import { getSwitchState, resolveControllableValue, resolveSwitchChange, SWITCH_DEFAULTS } from '@aurora/core';
+import type { SwitchChangeResult, SwitchCommonProps } from '@aurora/core';
 import { cls, ComponentClassBlock } from '@aurora/theme';
 import { useHorizonWebConfig } from '../../provider';
 
-export type SwitchSize = 'small' | 'medium' | 'large';
-export type SwitchLabelPosition = 'top' | 'left' | 'right';
-export type SwitchStatusPosition = 'outside' | 'inside';
+export type { SwitchLabelPosition, SwitchSize, SwitchStatusPosition } from '@aurora/core';
 
-export interface SwitchProps {
-  /** 受控值。@en Controlled value. */
-  value?: boolean;
-  /** 非受控初始值。@en Initial uncontrolled value. */
-  defaultValue?: boolean;
+export interface SwitchProps extends SwitchCommonProps {
   /** 状态变化回调。@en Called when the value changes. */
   onChange?: (value: boolean, details: { reason: 'toggle' }) => void;
   /** 状态改变前的守卫。@en Guard evaluated before a value change. */
-  beforeChange?: SwitchBeforeChange;
-  /** 是否禁用。@en Whether the switch is disabled. */
-  disabled?: boolean;
-  /** 是否只读。@en Whether the switch is read-only. */
-  readOnly?: boolean;
   /** 标签内容。@en Label content. */
   label?: ReactNode;
   /** 标签位置。@en Position of the label. */
-  labelPosition?: SwitchLabelPosition;
-  /** 是否显示状态文字。@en Whether status text is shown. */
-  status?: boolean;
-  /** 状态文字位置。@en Position of status text. */
-  statusPosition?: SwitchStatusPosition;
   /** 开启状态文字。@en Text shown for the on state. */
   statusOnText?: ReactNode;
   /** 关闭状态文字。@en Text shown for the off state. */
   statusOffText?: ReactNode;
-  /** 开关尺寸。@en Size of the switch. */
-  size?: SwitchSize;
   /** 根元素类名。@en Class name applied to the root element. */
   className?: string;
   /** 原生输入属性。@en Native input attributes. */
@@ -50,18 +32,18 @@ export interface SwitchProps {
 export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
   {
     value,
-    defaultValue = false,
+    defaultValue = SWITCH_DEFAULTS.defaultValue,
     onChange,
     beforeChange,
-    disabled = false,
-    readOnly = false,
+    disabled = SWITCH_DEFAULTS.disabled,
+    readOnly = SWITCH_DEFAULTS.readOnly,
     label,
-    labelPosition = 'top',
-    status = false,
-    statusPosition = 'outside',
+    labelPosition = SWITCH_DEFAULTS.labelPosition,
+    status = SWITCH_DEFAULTS.status,
+    statusPosition = SWITCH_DEFAULTS.statusPosition,
     statusOnText,
     statusOffText,
-    size = 'medium',
+    size = SWITCH_DEFAULTS.size,
     className,
     inputProps,
     onBlur,

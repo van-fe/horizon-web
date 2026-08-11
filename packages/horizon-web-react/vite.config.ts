@@ -11,8 +11,6 @@ export default defineConfig({
     lib: {
       entry: resolveSource('./src/index.ts'),
       cssFileName: 'style',
-      formats: ['es', 'cjs'],
-      fileName: format => `index.${format === 'es' ? 'js' : 'cjs'}`,
     },
     rollupOptions: {
       external: [
@@ -23,9 +21,24 @@ export default defineConfig({
         '@aurora/horizon-web-core',
         '@aurora/theme',
       ],
-      output: {
-        exports: 'named',
-      },
+      output: [
+        {
+          format: 'es',
+          dir: resolveSource('./dist'),
+          preserveModules: true,
+          preserveModulesRoot: resolveSource('./src'),
+          entryFileNames: '[name].js',
+          exports: 'named',
+        },
+        {
+          format: 'cjs',
+          dir: resolveSource('./dist'),
+          preserveModules: true,
+          preserveModulesRoot: resolveSource('./src'),
+          entryFileNames: '[name].cjs',
+          exports: 'named',
+        },
+      ],
     },
   },
 });

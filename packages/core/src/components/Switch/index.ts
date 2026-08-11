@@ -6,6 +6,32 @@ export type SwitchChangeReason =
   | 'guard-rejected'
   | 'guard-error';
 
+export type SwitchSize = 'small' | 'medium' | 'large';
+export type SwitchLabelPosition = 'top' | 'left' | 'right';
+export type SwitchStatusPosition = 'outside' | 'inside';
+
+export interface SwitchCommonProps {
+  value?: boolean;
+  defaultValue?: boolean;
+  beforeChange?: SwitchBeforeChange;
+  disabled?: boolean;
+  readOnly?: boolean;
+  labelPosition?: SwitchLabelPosition;
+  status?: boolean;
+  statusPosition?: SwitchStatusPosition;
+  size?: SwitchSize;
+}
+
+export const SWITCH_DEFAULTS = Object.freeze({
+  defaultValue: false,
+  disabled: false,
+  readOnly: false,
+  labelPosition: 'top',
+  status: false,
+  statusPosition: 'outside',
+  size: 'medium',
+} as const);
+
 export type SwitchBeforeChange =
   | boolean
   | ((nextValue: boolean) => boolean | undefined | PromiseLike<boolean | undefined>);
@@ -101,3 +127,4 @@ export function resolveSwitchChange(
     return { accepted: false, value: state.value, reason: 'guard-error', error };
   }
 }
+export { switchManifest } from './manifest';

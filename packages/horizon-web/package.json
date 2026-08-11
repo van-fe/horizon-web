@@ -1,0 +1,45 @@
+{
+  "name": "@aurora/horizon-web",
+  "version": "1.0.0",
+  "description": "Compatibility entry forwarding the Horizon Web Vue renderer.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./style.css": "./style.css"
+  },
+  "files": [
+    "dist",
+    "types",
+    "style.css"
+  ],
+  "sideEffects": [
+    "style.css"
+  ],
+  "scripts": {
+    "build": "bun run build:dist && bun run build:types",
+    "build:dist": "bunx --bun vite build",
+    "build:types": "rm -rf types && tsc -d --pretty --emitDeclarationOnly --declarationDir ./types",
+    "typecheck": "tsc --noEmit --pretty false",
+    "test": "bun run build && bun run ./test/compatibility.ts"
+  },
+  "dependencies": {
+    "@aurora/horizon-web-vue": "workspace:*"
+  },
+  "peerDependencies": {
+    "vue": "^3.3.0"
+  },
+  "devDependencies": {
+    "vue": "^3.5.26"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT"
+}

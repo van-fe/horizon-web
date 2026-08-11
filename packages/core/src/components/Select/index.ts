@@ -351,3 +351,4 @@ export class SelectController<Value = SelectValue> {
     this.options.onOpenChange(open, { reason });
   }
 }
+export { selectManifest } from './manifest';

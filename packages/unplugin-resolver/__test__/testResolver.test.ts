@@ -1,7 +1,10 @@
 import { describe, expect, test } from 'vitest';
 import {
+  getHorizonWebRendererPackage,
   HorizonWebPluginResolvers,
+  HorizonWebReactVitePluginStyleImportResolver,
   HorizonWebVitePluginStyleImportResolvers,
+  resolveHorizonWebPackageImport,
 } from '../src';
 import components from '../../api-generator/dist/components-dependencies.json';
 import directives from '../../api-generator/dist/directives-dependencies.json';
@@ -135,5 +138,29 @@ describe('unplugin-resolver', () => {
     expect(resolver.resolveStyle('h-button')).toBe(
       '@aurora/horizon-web-vue/es/components/Button/src/style/index.css',
     );
+  });
+
+  test('resolves explicit renderer packages without cross-renderer paths', () => {
+    expect(getHorizonWebRendererPackage('vue')).toBe('@aurora/horizon-web-vue');
+    expect(getHorizonWebRendererPackage('react')).toBe('@aurora/horizon-web-react');
+    expect(resolveHorizonWebPackageImport('vue', 'Button')).toMatchObject({
+      name: 'HButton',
+      from: '@aurora/horizon-web-vue/es/components/Button',
+    });
+    expect(resolveHorizonWebPackageImport('react', 'Button')).toEqual({
+      renderer: 'react',
+      packageName: '@aurora/horizon-web-react',
+      name: 'Button',
+      from: '@aurora/horizon-web-react',
+      sideEffects: ['@aurora/horizon-web-react/style.css'],
+    });
+  });
+
+  test('provides a React style resolver with exclusion and opt-out', () => {
+    const resolver = HorizonWebReactVitePluginStyleImportResolver();
+    expect(resolver.libraryName).toBe('@aurora/horizon-web-react');
+    expect(resolver.resolveStyle('select')).toBe('@aurora/horizon-web-react/style.css');
+    expect(HorizonWebReactVitePluginStyleImportResolver({ importStyle: false }).resolveStyle('Button')).toBe('');
+    expect(HorizonWebReactVitePluginStyleImportResolver({ exclude: /Button/ }).resolveStyle('Button')).toBe('');
   });
 });

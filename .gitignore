@@ -42,6 +42,7 @@ packages/horizon-web-vue/build/**/*.js
 # docs
 packages/docs/.vitepress/dist
 packages/docs/.vitepress/cache
+packages/docs/.vitepress/generated/
 .vscode
 
 # test artifacts
@@ -51,3 +52,4 @@ packages/horizon-web-react/.vitest-attachments/
 packages/horizon-web-vue/coverage*/
 packages/horizon-web-vue/packages/horizon-web-vue/coverage*/
 packages/horizon-web-vue/src/components/**/__screenshots__/
+tests/consumers/.output/

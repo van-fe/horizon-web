@@ -8,6 +8,60 @@ enum PluginResolverType {
   Directive = 'directive',
 }
 
+export type HorizonWebRenderer = 'vue' | 'react';
+
+export interface HorizonWebResolvedPackageImport {
+  renderer: HorizonWebRenderer;
+  packageName: '@aurora/horizon-web-vue' | '@aurora/horizon-web-react';
+  from: string;
+  name: string;
+  sideEffects: string[];
+}
+
+export function getHorizonWebRendererPackage(renderer: HorizonWebRenderer) {
+  return renderer === 'vue' ? '@aurora/horizon-web-vue' : '@aurora/horizon-web-react';
+}
+
+export function resolveHorizonWebPackageImport(
+  renderer: HorizonWebRenderer,
+  name: string,
+  options: HorizonWebBaseResolverOption = {},
+): HorizonWebResolvedPackageImport | undefined {
+  const packageName = getHorizonWebRendererPackage(renderer);
+  const importStyle = options.importStyle ?? 'css';
+  const normalizedName = pascalize(name).replace(/^H(?=[A-Z])/, '');
+  const matched = Object.entries(components).find(([dirName, reg]) => {
+    return dirName === normalizedName || new RegExp(reg).test(`H${normalizedName}`);
+  });
+  if (!matched) return undefined;
+  if (renderer === 'react') {
+    return {
+      renderer,
+      packageName,
+      from: packageName,
+      name: normalizedName,
+      sideEffects: importStyle ? [`${packageName}/style.css`] : [],
+    };
+  }
+  const dirType = options.ssr ? 'lib' : 'es';
+  const styleExt = importStyle === 'scss' ? 'scss' : 'css';
+  return {
+    renderer,
+    packageName,
+    from: `${packageName}/${dirType}/components/${matched[0]}`,
+    name: `H${normalizedName}`,
+    sideEffects: importStyle
+      ? [
+          `${packageName}/${dirType}/styles/base.${styleExt}`,
+          `${packageName}/${dirType}/styles/global-variables.${styleExt}`,
+          `${packageName}/${dirType}/components/${matched[0]}/src/style/index.${
+            styleExt === 'scss' ? 'unplugin.scss' : 'css'
+          }`,
+        ]
+      : [],
+  };
+}
+
 export interface HorizonWebBaseResolverOption {
   /**
    * exclusions
@@ -195,5 +249,25 @@ export function HorizonWebVitePluginStyleImportResolvers(options: HorizonWebBase
       return '';
     },
     esModule: options.importStyle !== 'css',
+  };
+}
+
+/** Style resolver for named imports from the React renderer package. */
+export function HorizonWebReactVitePluginStyleImportResolver(
+  options: Pick<HorizonWebBaseResolverOption, 'exclude' | 'importStyle'> = {},
+): Lib {
+  return {
+    libraryName: '@aurora/horizon-web-react',
+    resolveStyle: (name: string) => {
+      if (options.importStyle === false) return '';
+      if (
+        (options.exclude instanceof RegExp && options.exclude.test(name)) ||
+        (typeof options.exclude === 'function' && options.exclude(name))
+      ) {
+        return '';
+      }
+      return resolveHorizonWebPackageImport('react', name, options)?.sideEffects[0] ?? '';
+    },
+    esModule: true,
   };
 }

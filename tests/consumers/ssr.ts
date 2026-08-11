@@ -1,0 +1,14 @@
+import { createElement } from 'react';
+import { renderToString as renderReact } from 'react-dom/server';
+import { createSSRApp, h } from 'vue';
+import { renderToString as renderVue } from 'vue/server-renderer';
+import { Button } from '@aurora/horizon-web-react';
+import { HButton } from '@aurora/horizon-web-vue/es/components/Button';
+
+const reactHtml = renderReact(createElement(Button, null, 'React SSR'));
+if (!reactHtml.includes('React SSR')) throw new Error('React SSR consumer failed.');
+
+const vueHtml = await renderVue(createSSRApp({ render: () => h(HButton, null, () => 'Vue SSR') }));
+if (!vueHtml.includes('Vue SSR')) throw new Error('Vue SSR consumer failed.');
+
+console.info('Vue and React SSR consumers verified.');

@@ -7,61 +7,48 @@ import type {
   ReactNode,
 } from 'react';
 import { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
-import { ButtonAsyncActionGuard, getButtonState, resolveButtonAction } from '@aurora/core';
-import type { ButtonAsyncState } from '@aurora/core';
+import { BUTTON_DEFAULTS, ButtonAsyncActionGuard, getButtonState, resolveButtonAction } from '@aurora/core';
+import type { ButtonCommonProps } from '@aurora/core';
 import { cls, ComponentClassBlock } from '@aurora/theme';
 import { useHorizonWebConfig } from '../../provider';
 import { LoadingIcon } from './LoadingIcon';
 
-export type ButtonVariant = 'primary' | 'normal' | 'danger';
-export type ButtonSize = 'huge' | 'large' | 'medium' | 'small';
+export type { ButtonSize, ButtonVariant } from '@aurora/core';
 
 export interface ButtonProps extends Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
   'color' | 'disabled' | 'onClick'
 > {
-  /** 按钮视觉类型。@en Visual variant of the button. */
-  variant?: ButtonVariant;
-  /** 按钮尺寸。@en Size of the button. */
-  size?: ButtonSize;
-  /** 是否为椭圆按钮。@en Whether the button uses a pill shape. */
-  round?: boolean;
-  /** 是否为简洁按钮。@en Whether the button uses the plain treatment. */
-  plain?: boolean;
-  /** 是否为幽灵按钮。@en Whether the button uses the ghost treatment. */
-  ghost?: boolean;
-  /** 是否为文字按钮。@en Whether the button uses the text treatment. */
-  text?: boolean;
-  /** 是否为链接视觉。@en Whether the button uses the link treatment. */
-  link?: boolean;
-  /** 是否填满容器。@en Whether the button fills its container. */
-  block?: boolean;
-  /** 是否处于激活态。@en Whether the button is active. */
-  active?: boolean;
-  /** 是否处于加载态。@en Whether the button is loading. */
-  loading?: boolean;
-  /** 是否禁用。@en Whether the button is disabled. */
-  disabled?: boolean;
-  /** 是否按内容收缩。@en Whether the button auto-fits its content. */
-  autoFit?: boolean;
-  /** 按钮边框样式。@en Border style of the button. */
-  borderStyle?: 'solid' | 'dashed' | 'dotted';
+  /** Shared renderer-neutral button configuration. */
+  variant?: ButtonCommonProps['variant'];
+  size?: ButtonCommonProps['size'];
+  round?: ButtonCommonProps['round'];
+  plain?: ButtonCommonProps['plain'];
+  ghost?: ButtonCommonProps['ghost'];
+  text?: ButtonCommonProps['text'];
+  link?: ButtonCommonProps['link'];
+  block?: ButtonCommonProps['block'];
+  active?: ButtonCommonProps['active'];
+  loading?: ButtonCommonProps['loading'];
+  disabled?: ButtonCommonProps['disabled'];
+  autoFit?: ButtonCommonProps['autoFit'];
+  borderStyle?: ButtonCommonProps['borderStyle'];
   /** 前置图标。@en Leading icon content. */
   icon?: ReactNode;
   /** 后置内容。@en Trailing content. */
   suffix?: ReactNode;
   /** 原生链接地址，优先级最高。@en Native href with the highest action priority. */
-  href?: string;
+  href?: ButtonCommonProps['href'];
   /** 链接打开目标。@en Native link target. */
-  target?: '_blank' | '_self' | '_parent' | '_top';
+  target?: ButtonCommonProps['target'];
   /** 交给 Provider navigation adapter 的路由目标。@en Route target handled by the Provider navigation adapter. */
   to?: unknown;
   /** 是否替换当前路由记录。@en Whether route navigation replaces the current entry. */
-  replace?: boolean;
+  replace?: ButtonCommonProps['replace'];
   /** 防止重复执行的异步操作。@en Guarded asynchronous action. */
   asyncAction?: () => unknown | PromiseLike<unknown>;
   /** 异步执行期间的视觉状态。@en Visual state while the async action is running. */
-  asyncState?: ButtonAsyncState;
+  asyncState?: ButtonCommonProps['asyncState'];
   /** 普通按钮点击事件。@en Click event for a regular button action. */
   onClick?: (event: MouseEvent<HTMLElement>) => void;
   /** 异步操作完成事件。@en Called after the async action completes successfully. */
@@ -73,27 +60,27 @@ export interface ButtonProps extends Omit<
 export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
   function Button(
     {
-      variant = 'primary',
-      size = 'medium',
-      round = false,
-      plain = false,
-      ghost = false,
-      text = false,
-      link = false,
-      block = false,
-      active = false,
-      loading = false,
-      disabled = false,
-      autoFit = false,
-      borderStyle = 'solid',
+      variant = BUTTON_DEFAULTS.variant,
+      size = BUTTON_DEFAULTS.size,
+      round = BUTTON_DEFAULTS.round,
+      plain = BUTTON_DEFAULTS.plain,
+      ghost = BUTTON_DEFAULTS.ghost,
+      text = BUTTON_DEFAULTS.text,
+      link = BUTTON_DEFAULTS.link,
+      block = BUTTON_DEFAULTS.block,
+      active = BUTTON_DEFAULTS.active,
+      loading = BUTTON_DEFAULTS.loading,
+      disabled = BUTTON_DEFAULTS.disabled,
+      autoFit = BUTTON_DEFAULTS.autoFit,
+      borderStyle = BUTTON_DEFAULTS.borderStyle,
       icon,
       suffix,
       href,
-      target = '_self',
+      target = BUTTON_DEFAULTS.target,
       to,
-      replace = false,
+      replace = BUTTON_DEFAULTS.replace,
       asyncAction,
-      asyncState = 'none',
+      asyncState = BUTTON_DEFAULTS.asyncState,
       onClick,
       onActionFinished,
       onActionError,
