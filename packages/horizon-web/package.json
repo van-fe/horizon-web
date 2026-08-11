@@ -78,5 +78,14 @@
     "vue": "^3.5.26",
     "vue-router": "^4.4.5"
   },
+  "peerDependencies": {
+    "vue": "^3.5.0",
+    "vue-router": "^4.4.5"
+  },
+  "peerDependenciesMeta": {
+    "vue-router": {
+      "optional": true
+    }
+  },
   "imports": {}
 }
