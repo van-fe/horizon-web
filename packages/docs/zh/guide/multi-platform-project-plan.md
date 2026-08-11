@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B11 Tabs 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B12 Popover 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -530,6 +530,18 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DS-B11-001 | Done | Tabs Sass、变量与视觉基础迁入 `@aurora/theme`，Vue 使用包导出代理，React 使用同源样式并补齐原生 tab 与操作按钮的 reset、焦点环和禁用规则 |
 | DOC-B11-001 | Done | Tabs 中英文 React 页面、独立 TSX 示例与导航侧边栏入口完成；32 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
 | QA-B11-001 | Done | Core 109、Web Core Node 8/Chromium 24、React Chromium 118、Vue Chromium 2303 项（含 1 项预期失败）全部通过，覆盖率为 97.97% / 95.13% / 97.76% / 98.27%；五个包构建、文档、Vue/React/SSR 消费工程及四个中英文 renderer 路由的 390×844 真实浏览器验收通过 |
+
+#### M6-B12 第十二批实施记录（2026-08-12）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B12-001 | Done | Popover 与 PopContent 的公共 props、默认值、枚举、校验器、事件载荷、内容区域和命令迁入 `@aurora/core`；开关时序复用 Tooltip 公共控制器，并通过显式零延迟调度策略保留 renderer 历史语义 |
+| WEB-B12-001 | Done | 在同名 Web Core 目录提供自动位置解析、reference 尺寸同步、定位器封装以及外部指针与 Escape 关闭 primitives；扩展共享 Tooltip positioner 的 resize 观察策略，并覆盖 Node/真实 Chromium 测试 |
+| VUE-B12-001 | Done | Vue props/emits/slots/exposes 通过类型化 rename/omit/extend 适配消费公共契约，仅保留 runtime props、Teleport、Transition、VNode 与历史 DOM 暴露；修复点击与 hover 时序兼容，并使 Tag 折叠计算在并发 RAF 中保持可等待 |
+| REACT-B12-001 | Done | 完成原生受控/非受控 Popover、hover/focus/click/manual 触发、Portal、遮罩、自动与备选位置、尺寸同步、外部关闭、Escape 焦点回归、可访问 dialog 关系、条件挂载、PopContent 主题继承与命令 ref |
+| DS-B12-001 | Done | Popover Sass、变量与视觉基础迁入 `@aurora/theme`，Vue 使用包导出代理，React 使用同源样式并补齐原生 trigger、reference hidden、焦点和内容换行规则 |
+| DOC-B12-001 | Done | Popover 中英文 React 页面、独立 TSX 示例与反馈侧边栏入口完成；34 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
+| QA-B12-001 | Done | Core 112、Web Core Node 9/Chromium 27、React Chromium 123、Vue Chromium 2303 项（2302 通过、1 项预期失败）全部通过，覆盖率为 97.97% / 95.12% / 97.76% / 98.27%；五个包构建、文档、Vue/React/SSR 消费工程及四个中英文 renderer 路由的暗色 390×844 真实浏览器验收通过 |
 
 ### 批次 C：浮层与容器
 

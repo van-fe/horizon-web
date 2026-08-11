@@ -9,6 +9,7 @@ import {
   provide,
 } from 'vue';
 import type { HorizonWebSetupContext } from '@aurora/utils';
+import { TooltipOpenController } from '@aurora/core';
 import {
   cls,
   ComponentClassBlock,
@@ -42,9 +43,6 @@ export default defineComponent({
   ) {
     const popupContainerGetter = usePopupContainerGetter();
     const classHelper = new ComponentClassBlock('popover');
-    // hover情况下，离开reference后，popper的延迟隐藏时间，让用户有时间进入popper区域
-    let hoverHideTimer: number | null = null;
-    let hoverShowTimer: number | null = null;
     let popperIns: PopperInstance | null = null;
     //
     const reference = ref<HTMLElement | null>(null);
@@ -52,6 +50,16 @@ export default defineComponent({
     // 将popperVisible初始化为props.visible的值
     const popperVisible = ref<boolean>(props.visible);
     const popperAppear = ref(false);
+    const visibilityController = new TooltipOpenController({
+      open: props.visible,
+      disabled: props.disabled,
+      showDelay: props.hoverShowDelay,
+      hideDelay: props.hoverHideDelay,
+      deferZeroDelay: true,
+      onOpenChange: visible => {
+        popperVisible.value = visible;
+      },
+    });
 
     const { disabled, showWithMask } = toRefs(props);
     const zIndexHandler = useZIndex(props.zIndex);
@@ -62,13 +70,14 @@ export default defineComponent({
     // trigger为click下处理隐藏
     const hideClickShowPop = () => {
       if (props.trigger === 'click' && popperVisible.value) {
-        popperVisible.value = false;
+        visibilityController.closeImmediately('outside-pointer');
         document.removeEventListener(props.hideEventType, hideClickShowPop);
       }
     };
 
     onBeforeUnmount(() => {
       document.removeEventListener(props.hideEventType, hideClickShowPop);
+      visibilityController.destroy();
       // 不能只设置popperVisible.value = false，因为Unmount之后watch不执行了
       if (popperVisible.value && popperIns) {
         popperVisible.value = false;
@@ -84,11 +93,19 @@ export default defineComponent({
     });
 
     watch(
+      () => [props.disabled, props.hoverShowDelay, props.hoverHideDelay] as const,
+      ([nextDisabled, showDelay, hideDelay]) => {
+        visibilityController.setOptions({ disabled: nextDisabled, showDelay, hideDelay });
+      },
+    );
+
+    watch(
       () => props.visible,
       newValue => {
         if (disabled.value) return false;
 
         if (props.trigger === 'manual') {
+          visibilityController.syncOpen(newValue);
           popperVisible.value = newValue;
         }
       },
@@ -141,27 +158,12 @@ export default defineComponent({
       void popperIns?.update();
     }
 
-    const clearHoverShowTimer = () => {
-      if (hoverShowTimer !== null) {
-        window.clearTimeout(hoverShowTimer);
-        hoverShowTimer = null;
-      }
-    };
-
-    const clearHoverHideTimer = () => {
-      if (hoverHideTimer !== null) {
-        window.clearTimeout(hoverHideTimer);
-        hoverHideTimer = null;
-      }
-    };
-
     const onEnterReference = (evt: MouseEvent) => {
       if (disabled.value) return false;
 
       if (props.trigger === 'hover') {
-        hoverShowTimer = window.setTimeout(() => {
-          popperVisible.value = true;
-        }, props.hoverShowDelay);
+        visibilityController.syncOpen(popperVisible.value);
+        visibilityController.requestOpen('hover');
       }
       onEnterPopper();
 
@@ -172,13 +174,7 @@ export default defineComponent({
       if (disabled.value) return false;
 
       if (props.trigger === 'hover') {
-        if (hoverHideTimer === null) {
-          hoverHideTimer = window.setTimeout(() => {
-            popperVisible.value = false;
-            hoverHideTimer = null;
-          }, props.hoverHideDelay);
-        }
-        clearHoverShowTimer();
+        visibilityController.requestClose('hover');
       }
 
       emit('leaveReference', evt);
@@ -188,7 +184,7 @@ export default defineComponent({
       if (disabled.value) return false;
 
       if (props.trigger === 'focus') {
-        popperVisible.value = true;
+        visibilityController.openImmediately('focus');
       }
     };
 
@@ -196,7 +192,7 @@ export default defineComponent({
       if (disabled.value) return false;
 
       if (props.trigger === 'focus') {
-        popperVisible.value = false;
+        visibilityController.closeImmediately('focus');
       }
     };
 
@@ -208,7 +204,9 @@ export default defineComponent({
           e.stopPropagation();
         }
 
-        popperVisible.value = !popperVisible.value;
+        visibilityController.syncOpen(popperVisible.value);
+        if (popperVisible.value) visibilityController.closeImmediately('click');
+        else visibilityController.openImmediately('click');
         if (popperVisible.value) {
           window.setTimeout(() => {
             document.addEventListener(props.hideEventType, hideClickShowPop);
@@ -227,7 +225,8 @@ export default defineComponent({
       // 如果 要切换的状态 和 当前状态 相同，则不处理
       if (visible === popperVisible.value) return;
 
-      popperVisible.value = visible;
+      if (visible) visibilityController.openImmediately();
+      else visibilityController.closeImmediately();
       if (popperVisible.value) {
         window.setTimeout(() => {
           document.addEventListener(props.hideEventType, hideClickShowPop);
@@ -249,17 +248,9 @@ export default defineComponent({
       if (disabled.value) return false;
 
       if (props.trigger === 'hover') {
-        clearHoverHideTimer();
+        visibilityController.cancelClose();
       }
     };
-
-    watch(disabled, val => {
-      if (val) {
-        popperVisible.value = false;
-        clearHoverShowTimer();
-        clearHoverHideTimer();
-      }
-    });
 
     const toRef = computed(() => {
       // to 优先级高于 toBody

@@ -19,6 +19,8 @@ import {
   inputManifest,
   linkManifest,
   paginationManifest,
+  popContentManifest,
+  popoverManifest,
   progressManifest,
   rateManifest,
   radioManifest,
@@ -55,6 +57,8 @@ const manifests = [
   inputManifest,
   linkManifest,
   paginationManifest,
+  popoverManifest,
+  popContentManifest,
   progressManifest,
   rateManifest,
   radioManifest,
@@ -409,6 +413,76 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     props: { omit: ['value'] },
     regions: { rename: { content: 'default' } },
   },
+  Popover: {
+    props: {
+      rename: {
+        open: 'visible',
+        portal: 'toBody',
+        showDelay: 'hoverShowDelay',
+        hideDelay: 'hoverHideDelay',
+        hideEvent: 'hideEventType',
+        mask: 'showWithMask',
+      },
+      omit: ['defaultOpen'],
+      extend: [
+        {
+          name: 'popperClass',
+          type: 'string',
+          description: { zh: '浮层类名', en: 'Floating class name' },
+        },
+        {
+          name: 'popperStyle',
+          type: 'CSSProperties',
+          description: { zh: '浮层样式', en: 'Floating styles' },
+        },
+        {
+          name: 'to',
+          type: "TeleportProps['to']",
+          description: { zh: '挂载目标', en: 'Teleport destination' },
+        },
+        {
+          name: 'referenceClass',
+          type: 'string',
+          description: { zh: '触发器包装类名', en: 'Reference wrapper class' },
+        },
+        {
+          name: 'transitionName',
+          type: "TransitionName | 'none'",
+          defaultValue: 'fade-in',
+          description: { zh: '过渡名称', en: 'Transition name' },
+        },
+        {
+          name: 'transitionSpeed',
+          type: 'TransitionSpeed',
+          defaultValue: 'slow',
+          description: { zh: '过渡速度', en: 'Transition speed' },
+        },
+      ],
+    },
+    events: { omit: ['openChange'] },
+    regions: { rename: { trigger: 'reference', content: 'popper' } },
+    commands: {
+      omit: ['open', 'close'],
+      extend: [
+        {
+          name: 'switchVisible',
+          type: '(visible: boolean) => void',
+          description: { zh: '切换显隐', en: 'Sets visibility' },
+        },
+        {
+          name: 'referenceDom',
+          type: 'HTMLSpanElement',
+          description: { zh: '触发器 DOM', en: 'Reference DOM' },
+        },
+        {
+          name: 'popoverDom',
+          type: 'HTMLSpanElement',
+          description: { zh: '浮层 DOM', en: 'Floating DOM' },
+        },
+      ],
+    },
+  },
+  PopContent: { regions: { rename: { content: 'default' } } },
   Timeline: {
     props: {
       override: {
@@ -633,6 +707,20 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     events: { rename: { click: 'onClick', close: 'onClose' } },
     regions: { rename: { content: 'children' }, omit: ['icon'] },
   },
+  Popover: {
+    events: {
+      rename: {
+        openChange: 'onOpenChange',
+        show: 'onShow',
+        hide: 'onHide',
+        enterReference: 'onEnterReference',
+        leaveReference: 'onLeaveReference',
+        click: 'onClick',
+      },
+    },
+    regions: { rename: { trigger: 'children', content: 'content' } },
+  },
+  PopContent: { regions: { rename: { content: 'children' } } },
   Timeline: {
     props: {
       override: {

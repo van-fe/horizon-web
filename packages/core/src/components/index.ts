@@ -14,6 +14,7 @@ export * from './Empty';
 export * from './Input';
 export * from './Link';
 export * from './Pagination';
+export * from './Popover';
 export * from './Progress';
 export * from './Result';
 export * from './Rate';

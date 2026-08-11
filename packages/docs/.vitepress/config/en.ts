@@ -27,6 +27,7 @@ const reactSidebar = [
       { text: 'Statistic', link: 'components/Statistic' },
       { text: 'Space', link: 'components/Space' },
       { text: 'Tooltip', link: 'components/Tooltip' },
+      { text: 'Popover', link: 'components/Popover' },
     ],
   },
   {

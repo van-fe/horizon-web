@@ -16,6 +16,7 @@
 @use './components/input/variables' as input;
 @use './components/link/variables' as link;
 @use './components/pagination/variables' as pagination;
+@use './components/popover/variables' as popover;
 @use './components/progress/variables' as progress;
 @use './components/rate/variables' as rate;
 @use './components/radio/variables' as radio;
@@ -50,6 +51,7 @@ $values: function.map-merge-multi(
   function.flatten-variables(input.$values, 'input'),
   function.flatten-variables(link.$values, 'link'),
   function.flatten-variables(pagination.$values, 'pagination'),
+  function.flatten-variables(popover.$values, 'popover'),
   function.flatten-variables(progress.$values, 'progress'),
   function.flatten-variables(rate.$values, 'rate'),
   function.flatten-variables(radio.$values, 'radio'),

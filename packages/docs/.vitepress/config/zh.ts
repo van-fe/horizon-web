@@ -27,6 +27,7 @@ const reactSidebar = [
       { text: 'Statistic 统计数值', link: 'components/Statistic' },
       { text: 'Space 间距', link: 'components/Space' },
       { text: 'Tooltip 文字提示', link: 'components/Tooltip' },
+      { text: 'Popover 气泡卡片', link: 'components/Popover' },
     ],
   },
   {

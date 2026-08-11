@@ -49,8 +49,8 @@ import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
 
 export default defineComponent({
   name: `${useNamespace()}TagGroup`,
-  desc: "组织一组相关标签",
-  descLocales: { en: "Groups related tags." },
+  desc: '组织一组相关标签',
+  descLocales: { en: 'Groups related tags.' },
   components: {
     HPopover,
     HScrollbar,
@@ -245,7 +245,11 @@ export default defineComponent({
     let prevTagsAmount = 0;
     async function doCollapseCalculate() {
       const target: Element | null = tagGroupContainerRef.value;
-      if (!target || isDuringRenderCalculating.value) return;
+      if (!target) return;
+      if (isDuringRenderCalculating.value) {
+        await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+        return doCollapseCalculate();
+      }
 
       if (isDefined(props.minDisplayed)) {
         visibleItemsAmount.value = props.minDisplayed;

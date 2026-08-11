@@ -1,35 +1,22 @@
+import type {
+  AdaptComponentApiShape,
+  ComponentEventValidators,
+  PopoverEventMap,
+} from '@aurora/core';
+
+type PopoverVueEventMap = AdaptComponentApiShape<PopoverEventMap<MouseEvent>, {}, 'openChange'>;
+
 export const usePopoverEmits = {
-  /**
-   * popper 显示
-    * @en Emitted when show changes.
-   */
+  /** 浮层显示。 @en Popover shown. */
   show: () => true,
-  /**
-   * popper 隐藏
-    * @en Emitted when hide changes.
-   */
+  /** 浮层隐藏。 @en Popover hidden. */
   hide: () => true,
-  /**
-   * 进入触发器回调
-   * @param evt 鼠标事件
-   * @paramEn evt The evt value.
-    * @en Emitted when enter reference changes.
-   */
-  enterReference: (evt: MouseEvent) => evt instanceof MouseEvent,
-  /**
-   * 离开触发器回调
-   * @param evt 鼠标事件
-   * @paramEn evt The evt value.
-    * @en Emitted when leave reference changes.
-   */
-  leaveReference: (evt: MouseEvent) => evt instanceof MouseEvent,
-  /**
-   * 点击时触发
-   * @param evt 鼠标事件
-   * @paramEn evt The evt value.
-    * @en Emitted when click changes.
-   */
-  click: (evt: MouseEvent) => evt instanceof MouseEvent,
-};
+  /** 指针进入触发器。 @en Pointer entered the reference. */
+  enterReference: (event: MouseEvent) => event instanceof MouseEvent,
+  /** 指针离开触发器。 @en Pointer left the reference. */
+  leaveReference: (event: MouseEvent) => event instanceof MouseEvent,
+  /** 点击触发器。 @en Reference clicked. */
+  click: (event: MouseEvent) => event instanceof MouseEvent,
+} satisfies ComponentEventValidators<PopoverVueEventMap>;
 
 export type PopoverEmits = typeof usePopoverEmits;

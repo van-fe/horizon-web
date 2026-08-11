@@ -48,6 +48,7 @@ export interface PositionerOptions {
   arrowPadding?: number;
   hideWhenReferenceHidden?: boolean;
   autoUpdate?: boolean;
+  observeResize?: boolean;
   onPosition?: (snapshot: PositionSnapshot) => void;
 }
 
@@ -140,12 +141,13 @@ export function computePositionSnapshot(
   const distance = options.distance ?? 0;
   const skidding = options.skidding ?? 0;
   const padding = Math.max(0, options.padding ?? 8);
-  const candidates = options.flip === false
-    ? [requestedPlacement]
-    : [
-        requestedPlacement,
-        ...(options.fallbackPlacements ?? [oppositePlacement(requestedPlacement)]),
-      ];
+  const candidates =
+    options.flip === false
+      ? [requestedPlacement]
+      : [
+          requestedPlacement,
+          ...(options.fallbackPlacements ?? [oppositePlacement(requestedPlacement)]),
+        ];
 
   let placement = candidates[0];
   let coordinates = baseCoordinates(reference, floating, placement, distance, skidding);
@@ -181,20 +183,26 @@ export function computePositionSnapshot(
   if (options.arrowElement) {
     if (side === 'top' || side === 'bottom') {
       arrowX = Math.min(
-        Math.max(reference.left + reference.width / 2 - coordinates.x - arrowWidth / 2, arrowPadding),
+        Math.max(
+          reference.left + reference.width / 2 - coordinates.x - arrowWidth / 2,
+          arrowPadding,
+        ),
         Math.max(arrowPadding, floating.width - arrowWidth - arrowPadding),
       );
     } else {
       arrowY = Math.min(
-        Math.max(reference.top + reference.height / 2 - coordinates.y - arrowHeight / 2, arrowPadding),
+        Math.max(
+          reference.top + reference.height / 2 - coordinates.y - arrowHeight / 2,
+          arrowPadding,
+        ),
         Math.max(arrowPadding, floating.height - arrowHeight - arrowPadding),
       );
     }
   }
 
   return {
-    x: coordinates.x + (options.strategy === 'absolute' ? viewport.scrollX ?? 0 : 0),
-    y: coordinates.y + (options.strategy === 'absolute' ? viewport.scrollY ?? 0 : 0),
+    x: coordinates.x + (options.strategy === 'absolute' ? (viewport.scrollX ?? 0) : 0),
+    y: coordinates.y + (options.strategy === 'absolute' ? (viewport.scrollY ?? 0) : 0),
     placement,
     strategy: options.strategy ?? 'fixed',
     referenceHidden:
@@ -217,7 +225,9 @@ export function createPositioner(
   let destroyed = false;
   const ownerWindow = reference.ownerDocument.defaultView;
   const resizeObserver =
-    options.autoUpdate === false || typeof ResizeObserver === 'undefined'
+    options.autoUpdate === false ||
+    options.observeResize === false ||
+    typeof ResizeObserver === 'undefined'
       ? undefined
       : new ResizeObserver(() => void update());
 

@@ -22,6 +22,8 @@ export interface TooltipControllerOptions {
   disabled?: boolean;
   showDelay?: number;
   hideDelay?: number;
+  /** Schedule zero-delay requests instead of committing them synchronously. */
+  deferZeroDelay?: boolean;
   onOpenChange?: (open: boolean, details: TooltipChangeDetails) => void;
   scheduler?: TooltipScheduler;
 }
@@ -60,7 +62,9 @@ export function resolveTooltipState(
  */
 export class TooltipOpenController {
   private state: TooltipState;
-  private options: Required<Pick<TooltipControllerOptions, 'showDelay' | 'hideDelay' | 'scheduler'>> &
+  private options: Required<
+    Pick<TooltipControllerOptions, 'showDelay' | 'hideDelay' | 'deferZeroDelay' | 'scheduler'>
+  > &
     Pick<TooltipControllerOptions, 'onOpenChange'>;
   private showTimer: unknown;
   private hideTimer: unknown;
@@ -74,6 +78,7 @@ export class TooltipOpenController {
     this.options = {
       showDelay: Math.max(0, options.showDelay ?? 0),
       hideDelay: Math.max(0, options.hideDelay ?? 0),
+      deferZeroDelay: options.deferZeroDelay ?? false,
       onOpenChange: options.onOpenChange,
       scheduler: options.scheduler ?? defaultTooltipScheduler,
     };
@@ -88,6 +93,7 @@ export class TooltipOpenController {
     this.options = {
       showDelay: Math.max(0, options.showDelay ?? this.options.showDelay),
       hideDelay: Math.max(0, options.hideDelay ?? this.options.hideDelay),
+      deferZeroDelay: options.deferZeroDelay ?? this.options.deferZeroDelay,
       onOpenChange: options.onOpenChange ?? this.options.onOpenChange,
       scheduler: options.scheduler ?? this.options.scheduler,
     };
@@ -113,7 +119,7 @@ export class TooltipOpenController {
     if (this.destroyed || this.state.disabled) return;
     this.cancelHide();
     this.cancelShow();
-    if (this.options.showDelay === 0) {
+    if (this.options.showDelay === 0 && !this.options.deferZeroDelay) {
       this.commit(true, reason);
       return;
     }
@@ -127,7 +133,7 @@ export class TooltipOpenController {
     if (this.destroyed) return;
     this.cancelShow();
     this.cancelHide();
-    if (this.options.hideDelay === 0) {
+    if (this.options.hideDelay === 0 && !this.options.deferZeroDelay) {
       this.commit(false, reason);
       return;
     }

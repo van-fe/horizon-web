@@ -5,334 +5,168 @@ import type {
   RendererElement,
   TeleportProps,
 } from 'vue';
+import type {
+  AdaptComponentApiShape,
+  ComponentRendererPropDefinitions,
+  PopContentCommonProps,
+  PopoverCommonProps,
+  PopoverMaskOptions,
+  PopoverPlacement,
+} from '@aurora/core';
+import {
+  isPopoverHideEvent,
+  isPopoverPlacement,
+  isPopoverStrategy,
+  isPopoverTheme,
+  isPopoverTrigger,
+  POP_CONTENT_DEFAULTS,
+  POPOVER_DEFAULTS,
+} from '@aurora/core';
 import { declarePropType } from '@aurora/utils';
 import type { TransitionProps } from '~/components/Transition/src/composables/useProps';
 
-export type HPopoverShowWithMask = {
-  enable?: boolean;
-  style?: Partial<CSSProperties>;
+export type HPopoverShowWithMask = Omit<
+  PopoverMaskOptions<Partial<CSSProperties>, string, string | RendererElement>,
+  'className' | 'target'
+> & {
   class?: string;
   to?: string | RendererElement;
 };
 
+type PopoverVueProps = AdaptComponentApiShape<
+  PopoverCommonProps<HPopoverShowWithMask>,
+  {
+    open: 'visible';
+    portal: 'toBody';
+    showDelay: 'hoverShowDelay';
+    hideDelay: 'hoverHideDelay';
+    hideEvent: 'hideEventType';
+    mask: 'showWithMask';
+  },
+  'defaultOpen',
+  {
+    popperClass?: string;
+    popperStyle?: Partial<CSSProperties>;
+    to?: TeleportProps['to'];
+    referenceOverflowRoot?: HTMLElement;
+    referenceClass?: string;
+    transitionName?: TransitionProps['name'] | 'none';
+    transitionSpeed?: TransitionProps['speed'];
+  }
+>;
+
 export const usePopoverProps = declarePropType({
-  /**
-   * 触发方式
-    * @en Configuration for trigger.
-   */
+  /** 触发方式。 @en Interaction used to open the popover. */
   trigger: {
-    type: String as PropType<'hover' | 'click' | 'focus' | 'manual'>,
-    default: 'hover',
+    type: String as PropType<PopoverVueProps['trigger']>,
+    default: POPOVER_DEFAULTS.trigger,
+    validator: isPopoverTrigger,
   },
-  /**
-   * `popper` 是否可见，`trigger` 为 'manual' 时生效
-    * @en Configuration for visible.
-   */
-  visible: {
-    type: Boolean,
-    default: false,
-  },
-  /**
-   * 弹出位置
-    * @en Configuration for placement.
-   */
+  /** 手动触发时的可见状态。 @en Visible state used by the manual trigger. */
+  visible: { type: Boolean, default: POPOVER_DEFAULTS.defaultOpen },
+  /** 首选浮层位置。 @en Preferred floating placement. */
   placement: {
-    type: String as PropType<
-      | 'auto'
-      | 'auto-start'
-      | 'auto-end'
-      | 'top-start'
-      | 'top-end'
-      | 'bottom-start'
-      | 'bottom-end'
-      | 'right-start'
-      | 'right-end'
-      | 'left-start'
-      | 'left-end'
-      | 'top'
-      | 'bottom'
-      | 'right'
-      | 'left'
-    >,
-    default: 'top',
+    type: String as PropType<PopoverPlacement>,
+    default: POPOVER_DEFAULTS.placement,
+    validator: isPopoverPlacement,
   },
-  /**
-   * `popper` 在辅助方向上的的偏移，正值表示 `popper` 向 `end` 方向偏移 ，负值表示 `popper` 向 `start` 方向偏移
-    * @en Configuration for skidding.
-   */
-  skidding: { type: Number, default: 0 },
-  /**
-   * `popper` 在主方向上的偏移，正值表示 `popper` 远离 `reference`，负值表示 `popper` 靠近 `reference`
-    * @en Configuration for distance.
-   */
-  distance: { type: Number, default: 8 },
-  /**
-   * 当原本的显示位置空间不够时，是否允许 `popper` 显示到对面的位置
-    * @en Configuration for flip.
-   */
-  flip: { type: Boolean, default: true },
-  /**
-   * 是否带小箭头
-    * @en Configuration for arrow.
-   */
-  arrow: {
-    type: Boolean,
-    default: true,
-  },
-  /**
-   * 小箭头的参数
-    * @en Configuration for arrow options.
-   */
+  /** 交叉轴偏移。 @en Cross-axis offset. */
+  skidding: { type: Number, default: POPOVER_DEFAULTS.skidding },
+  /** 主轴间距。 @en Main-axis distance. */
+  distance: { type: Number, default: POPOVER_DEFAULTS.distance },
+  /** 空间不足时翻转。 @en Flips when the preferred placement does not fit. */
+  flip: { type: Boolean, default: POPOVER_DEFAULTS.flip },
+  /** 展示箭头。 @en Shows the floating arrow. */
+  arrow: { type: Boolean, default: POPOVER_DEFAULTS.arrow },
+  /** 箭头参数。 @en Arrow options. */
   arrowOptions: {
-    type: Object,
-    default: () => {
-      return { size: 8 };
-    },
+    type: Object as PropType<PopoverVueProps['arrowOptions']>,
+    default: () => ({ ...POPOVER_DEFAULTS.arrowOptions }),
   },
-  /**
-   * `popper` 部分 的 `class`
-    * @en Configuration for popper class.
-   */
-  popperClass: {
-    type: String,
-  },
-  /**
-   * `popper` 部分 的 `style`
-    * @en Configuration for popper style.
-   */
-  popperStyle: {
-    type: Object as PropType<Partial<CSSProperties>>,
-  },
-  /**
-   * 是否在 `popper` 隐藏后销毁 `popper` 的内容
-    * @en Configuration for destroy on hide.
-   */
-  destroyOnHide: {
-    type: Boolean,
-    default: true,
-  },
-  /**
-   * 是否将 `popper` 渲染到 `body` 上
-    * @en Configuration for to body.
-   */
-  toBody: {
-    type: Boolean,
-    default: true,
-  },
-  /**
-   * `popper` 的渲染目标，参考 Teleport 的 to 取值
-    * @en Configuration for to.
-   */
-  to: {
-    type: [String, Object] as PropType<TeleportProps['to']>,
-    required: false,
-  },
-  /**
-   * 是否监听 `reference` 和 `popper` 的大小以更新位置
-    * @en Configuration for resize observe.
-   */
-  resizeObserve: {
-    type: Boolean,
-    default: false,
-  },
-  /**
-   * 是否监听 `reference` 的溢出
-    * @en Configuration for reference overflow observe.
-   */
+  /** 浮层 class。 @en Class applied to the floating element. */
+  popperClass: { type: String, required: false },
+  /** 浮层 style。 @en Style applied to the floating element. */
+  popperStyle: { type: Object as PropType<Partial<CSSProperties>>, required: false },
+  /** 隐藏后销毁内容。 @en Unmounts content after it closes. */
+  destroyOnHide: { type: Boolean, default: POPOVER_DEFAULTS.destroyOnHide },
+  /** 将浮层 Teleport 到挂载容器。 @en Teleports the floating content. */
+  toBody: { type: Boolean, default: POPOVER_DEFAULTS.portal },
+  /** Teleport 目标。 @en Teleport destination. */
+  to: { type: [String, Object] as PropType<TeleportProps['to']>, required: false },
+  /** 监听尺寸变化并更新位置。 @en Repositions after element size changes. */
+  resizeObserve: { type: Boolean, default: POPOVER_DEFAULTS.resizeObserve },
+  /** 监听触发元素是否溢出。 @en Observes whether the reference becomes hidden. */
   referenceOverflowObserve: {
     type: Boolean,
-    default: false,
-    required: false,
+    default: POPOVER_DEFAULTS.referenceOverflowObserve,
   },
-  /**
-   * 监听 `reference` 溢出的root节点
-    * @en Configuration for reference overflow root.
-   */
+  /** 触发元素溢出监听根节点。 @en Root used to observe reference visibility. */
   referenceOverflowRoot: {
     type: Object as PropType<HTMLElement>,
     default: () => document.body,
     required: false,
   },
-  /**
-   * 是否保持 `popper` 和 `reference` 宽度相等
-    * @en Configuration for same width.
-   */
-  sameWidth: {
-    type: Boolean,
-    default: false,
-  },
-  /**
-   * 在开启 `sameWidth` 时，是否使用 `minWidth` 去设置 `popper`
-    * @en Configuration for set min width.
-   */
-  setMinWidth: {
-    type: Boolean,
-    default: false,
-  },
-  /**
-   * 是否保持 `popper` 和 `reference` 高度相等
-    * @en Configuration for same height.
-   */
-  sameHeight: {
-    type: Boolean,
-    default: false,
-  },
-  /**
-   * 鼠标进入 `reference` 后，`popper` 延迟出现的时长
-    * @en Configuration for hover show delay.
-   */
-  hoverShowDelay: {
-    type: Number,
-    default: 0,
-  },
-  /**
-   * 鼠标离开 `reference` 后，`popper` 延迟隐藏的时长，会影响鼠标从 `reference` 移动到 `popper` 的过程中 `popper` 是否会隐藏
-    * @en Configuration for hover hide delay.
-   */
-  hoverHideDelay: {
-    type: Number,
-    default: 100,
-  },
-  /**
-   * 附加给 `popover-reference` 的 `class`
-    * @en Configuration for reference class.
-   */
-  referenceClass: {
-    type: String,
-    required: false,
-  },
-  /**
-   * 与 `flip` 配合使用，如果对面与当前位置都不够，还希望能调整到其他位置时，可以设置该属性
-    * @en Configuration for fallback placements.
-   */
-  fallbackPlacements: {
-    type: Array as PropType<
-      Array<
-        | 'auto'
-        | 'auto-start'
-        | 'auto-end'
-        | 'top-start'
-        | 'top-end'
-        | 'bottom-start'
-        | 'bottom-end'
-        | 'right-start'
-        | 'right-end'
-        | 'left-start'
-        | 'left-end'
-        | 'top'
-        | 'bottom'
-        | 'right'
-        | 'left'
-      >
-    >,
-    required: false,
-  },
-  /**
-   * 层级，会被 `popperStyle` 的 `z-index` 覆盖
-    * @en Configuration for z index.
-   */
-  zIndex: {
-    type: Number,
-    required: false,
-  },
-  /**
-   * 自定义隐藏事件
-    * @en Configuration for hide event type.
-   */
+  /** 与触发元素同宽。 @en Matches the reference width. */
+  sameWidth: { type: Boolean, default: POPOVER_DEFAULTS.sameWidth },
+  /** 同宽时使用最小宽度。 @en Uses min-width while matching the reference. */
+  setMinWidth: { type: Boolean, default: POPOVER_DEFAULTS.setMinWidth },
+  /** 与触发元素同高。 @en Matches the reference height. */
+  sameHeight: { type: Boolean, default: POPOVER_DEFAULTS.sameHeight },
+  /** 鼠标进入后的打开延迟。 @en Delay before opening after pointer enter. */
+  hoverShowDelay: { type: Number, default: POPOVER_DEFAULTS.showDelay },
+  /** 鼠标离开后的关闭延迟。 @en Delay before closing after pointer leave. */
+  hoverHideDelay: { type: Number, default: POPOVER_DEFAULTS.hideDelay },
+  /** 触发元素包装层 class。 @en Class applied to the reference wrapper. */
+  referenceClass: { type: String, required: false },
+  /** 备选位置。 @en Alternative placements. */
+  fallbackPlacements: { type: Array as PropType<PopoverPlacement[]>, required: false },
+  /** CSS 层级。 @en Floating z-index. */
+  zIndex: { type: Number, required: false },
+  /** 点击触发时的外部关闭事件。 @en Outside event used by click-triggered popovers. */
   hideEventType: {
-    type: String as PropType<'click' | 'mousedown' | 'mouseup'>,
-    required: false,
-    default: 'click',
+    type: String as PropType<PopoverVueProps['hideEventType']>,
+    default: POPOVER_DEFAULTS.hideEvent,
+    validator: isPopoverHideEvent,
   },
-  /**
-   * 是否禁用
-    * @en Configuration for disabled.
-   */
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-  /**
-   * 渐变动画名称
-    * @en Configuration for transition name.
-   */
+  /** 禁用交互。 @en Disables the popover. */
+  disabled: { type: Boolean, default: POPOVER_DEFAULTS.disabled },
+  /** Vue 过渡名称。 @en Vue transition name. */
   transitionName: {
     type: String as PropType<TransitionProps['name'] | 'none'>,
     default: 'fade-in',
   },
-  /**
-   * 渐变动画速度
-    * @en Configuration for transition speed.
-   */
-  transitionSpeed: {
-    type: String as PropType<TransitionProps['speed']>,
-    default: 'slow',
-  },
-  /**
-   * popper显示时是否带mask
-    * @en Configuration for show with mask.
-   */
-  showWithMask: {
-    type: Object as PropType<HPopoverShowWithMask>,
-    required: false,
-  },
-  /**
-   * 是否在 trigger 为 `click` 时拦截冒泡
-    * @en Configuration for stop propagation.
-   */
-  stopPropagation: {
-    type: Boolean,
-    default: false,
-  },
-  /**
-   * 主题
-    * @en Configuration for theme.
-   */
+  /** Vue 过渡速度。 @en Vue transition speed. */
+  transitionSpeed: { type: String as PropType<TransitionProps['speed']>, default: 'slow' },
+  /** 浮层遮罩。 @en Optional overlay mask. */
+  showWithMask: { type: Object as PropType<HPopoverShowWithMask>, required: false },
+  /** 点击触发时阻止冒泡。 @en Stops trigger click propagation. */
+  stopPropagation: { type: Boolean, default: POPOVER_DEFAULTS.stopPropagation },
+  /** 视觉主题。 @en Visual theme. */
   theme: {
-    type: String as PropType<'light' | 'dark'>,
-    default: 'light',
+    type: String as PropType<PopoverVueProps['theme']>,
+    default: POPOVER_DEFAULTS.theme,
+    validator: isPopoverTheme,
   },
-  /**
-   * 是否阻止 `popper` 超出边界，即 `popper.js` 检查副轴遮挡
-   * 通常情况下，不会检查副轴的遮挡
-   * 但对于空间较小的情况下，需要设置为 true，防止被屏幕裁剪
-    * @en Configuration for prevent overflow.
-   */
-  preventOverflow: {
-    type: Boolean,
-    default: false,
-  },
-  /**
-   * 检查主轴遮挡
-   * 对于 top/bottom，检查 x轴是否有遮挡
-   * 对于 left/right，检查 y轴是否有遮挡
-   * @verison latest
-    * @en Configuration for main axis check.
-   */
-  mainAxisCheck: {
-    type: Boolean,
-    default: true,
-  },
-  /**
-   * 定位方式
-    * @en Configuration for strategy.
-   */
+  /** 将浮层限制在视口内。 @en Shifts the floating element into the viewport. */
+  preventOverflow: { type: Boolean, default: POPOVER_DEFAULTS.preventOverflow },
+  /** 检查主轴遮挡。 @en Checks overflow on the main axis. */
+  mainAxisCheck: { type: Boolean, default: POPOVER_DEFAULTS.mainAxisCheck },
+  /** 定位策略。 @en Positioning strategy. */
   strategy: {
-    type: String as PropType<'fixed' | 'absolute'>,
-    default: 'fixed',
+    type: String as PropType<PopoverVueProps['strategy']>,
+    default: POPOVER_DEFAULTS.strategy,
+    validator: isPopoverStrategy,
   },
-});
+} satisfies ComponentRendererPropDefinitions<PopoverVueProps>);
 
 export const usePopContentProps = declarePropType({
-  /**
-   * 主题
-    * @en Configuration for theme.
-   */
+  /** 视觉主题。 @en Visual theme. */
   theme: {
-    type: String as PropType<'light' | 'dark'>,
-    default: 'light',
+    type: String as PropType<PopContentCommonProps['theme']>,
+    default: POP_CONTENT_DEFAULTS.theme,
+    validator: isPopoverTheme,
   },
-});
+} satisfies ComponentRendererPropDefinitions<PopContentCommonProps>);
 
 export type PopoverProps = ExtractPropTypes<typeof usePopoverProps>;
 export type PopContentProps = ExtractPropTypes<typeof usePopContentProps>;

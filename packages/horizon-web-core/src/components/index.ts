@@ -4,6 +4,7 @@ export * from './Collapse';
 export * from './Input';
 export * from './Link';
 export * from './Pagination';
+export * from './Popover';
 export * from './Radio';
 export * from './Select';
 export * from './Slider';

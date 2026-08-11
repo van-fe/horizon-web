@@ -36,4 +36,33 @@ describe('Tooltip state protocol', () => {
     controller.destroy();
     vi.useRealTimers();
   });
+
+  it('can preserve renderer scheduling for zero-delay requests', () => {
+    const callbacks: Array<() => void> = [];
+    const changes: boolean[] = [];
+    const controller = new TooltipOpenController({
+      deferZeroDelay: true,
+      onOpenChange: open => changes.push(open),
+      scheduler: {
+        set(callback) {
+          callbacks.push(callback);
+          return callback;
+        },
+        clear(handle) {
+          const index = callbacks.indexOf(handle as () => void);
+          if (index >= 0) callbacks.splice(index, 1);
+        },
+      },
+    });
+
+    controller.requestOpen('hover');
+    expect(changes).toEqual([]);
+    callbacks.shift()?.();
+    expect(changes).toEqual([true]);
+
+    controller.requestClose('hover');
+    expect(changes).toEqual([true]);
+    callbacks.shift()?.();
+    expect(changes).toEqual([true, false]);
+  });
 });
