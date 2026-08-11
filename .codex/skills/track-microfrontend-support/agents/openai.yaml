@@ -1,0 +1,4 @@
+interface:
+  display_name: "Track Microfrontend Support"
+  short_description: "Keep the microfrontend task checklist accurate"
+  default_prompt: "Use $track-microfrontend-support to complete the next verified microfrontend support task and update the checklist."

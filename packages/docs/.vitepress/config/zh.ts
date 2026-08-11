@@ -21,6 +21,7 @@ const zhGuideSidebar = [
       { text: '快速开始', link: 'start' },
       { text: '按需引入', link: 'on-demand-import' },
       { text: '命名空间', link: 'namespace' },
+      { text: '微前端架构契约', link: 'microfrontend' },
       { text: 'Aurora 多产品整改指南', link: 'multi-platform-refactor' },
       { text: 'Aurora 多产品项目计划', link: 'multi-platform-project-plan' },
       { text: 'FAQ', link: 'FAQ' },

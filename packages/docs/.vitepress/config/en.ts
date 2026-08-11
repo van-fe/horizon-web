@@ -21,6 +21,7 @@ const guideSidebar = [
       { text: 'Getting started', link: 'start' },
       { text: 'On-demand imports', link: 'on-demand-import' },
       { text: 'Namespace', link: 'namespace' },
+      { text: 'Microfrontend contract', link: 'microfrontend' },
       { text: 'FAQ', link: 'FAQ' },
     ],
   },
