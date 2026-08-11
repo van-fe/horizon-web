@@ -193,14 +193,12 @@ export default defineComponent({
     }
 
     function onPressArrowLeft() {
-      if (parentProps.disabled) return;
       clearKeyDownTimer();
       reduceValue();
       keyDownTimer = setInterval(reduceValue, 200);
     }
 
     function onPressArrowRight() {
-      if (parentProps.disabled) return;
       clearKeyDownTimer();
       increaseValue();
       keyDownTimer = setInterval(increaseValue, 200);

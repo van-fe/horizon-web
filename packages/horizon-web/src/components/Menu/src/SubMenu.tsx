@@ -116,35 +116,34 @@ export default defineComponent({
     });
 
     function onMouseEnter() {
-      if (textRef.value) {
-        if (parentProps.submenuExpandType === 'full') {
-          activeTopMenuUuid && !props.disabled && (activeTopMenuUuid.value = uuid);
-          if (textRef.value?.scrollWidth > textRef.value?.clientWidth) {
-            toggleTooltip();
-          }
-          return;
+      const text = textRef.value!;
+      if (parentProps.submenuExpandType === 'full') {
+        activeTopMenuUuid && !props.disabled && (activeTopMenuUuid.value = uuid);
+        if (text.scrollWidth > text.clientWidth) {
+          toggleTooltip();
         }
+        return;
+      }
 
-        if (parentProps.mode === 'horizontal') {
-          if (textRef.value?.scrollWidth > textRef.value?.clientWidth) {
-            toggleTooltip();
-          }
-          dropdownVisible.value = true;
-          return;
+      if (parentProps.mode === 'horizontal') {
+        if (text.scrollWidth > text.clientWidth) {
+          toggleTooltip();
         }
-        if (parentProps.collapseForever === true) {
-          if (textRef.value?.scrollWidth > textRef.value?.clientWidth) {
-            toggleTooltip();
-          }
+        dropdownVisible.value = true;
+        return;
+      }
+      if (parentProps.collapseForever === true) {
+        if (text.scrollWidth > text.clientWidth) {
+          toggleTooltip();
+        }
+      } else {
+        if (isCollapsed?.value) {
+          dropdownVisible.value = true;
+          toggleTooltip(!props.disabled);
         } else {
-          if (isCollapsed?.value) {
-            dropdownVisible.value = true;
-            toggleTooltip(props.disabled);
-          } else {
-            dropdownVisible.value = false;
-            if (textRef.value?.scrollWidth > textRef.value?.clientWidth) {
-              toggleTooltip();
-            }
+          dropdownVisible.value = false;
+          if (text.scrollWidth > text.clientWidth) {
+            toggleTooltip();
           }
         }
       }
@@ -384,8 +383,8 @@ export default defineComponent({
                   parentProps.collapseForever ||
                   props.disabled
                 }
-                distance={8}
-                toBody={false}
+                distance={props.popperOffset}
+                toBody={props.toBody}
                 popoverOptions={{ flip: false }}
                 theme={parentProps.theme}
                 placement={
@@ -490,8 +489,7 @@ export default defineComponent({
                                     disabled={item.props.disabled}
                                     icon={item.props.icon}
                                     active={
-                                      activatedMenus?.value.some(curr => curr.uuid === item.uuid) ??
-                                      false
+                                      activatedMenus?.value.some(curr => curr.uuid === item.uuid)
                                     }
                                     selected={activatedMenus?.value?.[0]?.uuid === item.uuid}
                                     popoverOptions={
@@ -506,7 +504,7 @@ export default defineComponent({
                                       icon: item.slots.icon,
                                       default: () => (
                                         <Fragment>
-                                          {Array.from(item.children?.values() ?? []).map(curr =>
+                                          {Array.from(item.children!.values()).map(curr =>
                                             renderFunc(curr, level + 1),
                                           )}
                                         </Fragment>
@@ -518,8 +516,7 @@ export default defineComponent({
                                 return (
                                   <HDropdownItem
                                     active={
-                                      activatedMenus?.value.some(curr => curr.uuid === item.uuid) ??
-                                      false
+                                      activatedMenus?.value.some(curr => curr.uuid === item.uuid)
                                     }
                                     icon={level > 0 ? undefined : item.props.icon}
                                     disabled={item.props.disabled}
@@ -554,7 +551,7 @@ export default defineComponent({
           }}
         </HTooltip>
         {slots.default && (
-          <HTransition name="collapse">
+          <HTransition name="collapse" css={parentProps.collapseTransition}>
             <div v-show={expandedMenu?.value.has(uuid)} class={cls(classHelper.e('inner'))}>
               {slots.default()}
             </div>

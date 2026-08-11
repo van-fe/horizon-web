@@ -59,7 +59,7 @@ export default defineComponent({
     const targetRef = ref<HTMLElement | null>(null);
     const currentIndex = ref<number | null>(props.index ?? null);
 
-    const parentProps = inject(HGuidePropsInjectKey);
+    const parentProps = inject(HGuidePropsInjectKey)!;
     const collectItem = inject(HGuideCollectItemInjectKey);
     const removeItem = inject(HGuideRemoveItemInjectKey);
     const guideItems = inject(HGuideItemsInjectKey)!;
@@ -72,7 +72,7 @@ export default defineComponent({
     const customStyle = ref<CSSProperties>({});
 
     const visible = computed(() => current?.value === currentIndex.value);
-    const draggable = computed(() => props.draggable || parentProps?.draggable || false);
+    const draggable = computed(() => props.draggable ?? parentProps.draggable);
 
     watch([isStarted, visible], ([isStartedValue, isVisibleValue]) => {
       if (isStartedValue && isVisibleValue) {
@@ -87,12 +87,12 @@ export default defineComponent({
         triggerExist.value = true;
         customStyle.value = {};
 
-        if (props.scrollIntoView ?? parentProps?.scrollIntoView) {
+        if (props.scrollIntoView ?? parentProps.scrollIntoView) {
           trigger.scrollIntoView(
             typeof props.scrollIntoView === 'object'
               ? props.scrollIntoView
-              : typeof parentProps?.scrollIntoView === 'object'
-                ? parentProps?.scrollIntoView
+              : typeof parentProps.scrollIntoView === 'object'
+                ? parentProps.scrollIntoView
                 : { behavior: 'smooth', block: 'center', inline: 'center' },
           );
         }
@@ -100,16 +100,16 @@ export default defineComponent({
         await nextTick();
 
         usePopper(trigger, itemDomRef.value, {
-          placement: props.placement ?? parentProps?.placement,
-          arrow: props.arrow ?? parentProps?.arrow,
+          placement: props.placement ?? parentProps.placement,
+          arrow: props.arrow ?? parentProps.arrow,
           distance:
-            ((props.distance ?? parentProps?.distance) || 8) +
-            (props.mask ?? parentProps?.mask
-              ? (props.maskTriggerPadding ?? parentProps?.maskTriggerPadding) || 8
+            (props.distance ?? parentProps.distance) +
+            (props.mask ?? parentProps.mask
+              ? (props.maskTriggerPadding ?? parentProps.maskTriggerPadding)
               : 0) +
             4,
-          skidding: props.skidding ?? parentProps?.skidding,
-          flip: props.flip ?? parentProps?.flip,
+          skidding: props.skidding ?? parentProps.skidding,
+          flip: props.flip ?? parentProps.flip,
           resizeObserve: true,
         });
       } else {
@@ -122,9 +122,7 @@ export default defineComponent({
       }
     }
 
-    const closeable = computed(() => props.closable ?? parentProps?.closable ?? true);
-
-    expose({});
+    const closeable = computed(() => props.closable ?? parentProps.closable);
 
     function onClickClose() {
       emit('close');
@@ -148,11 +146,15 @@ export default defineComponent({
       }
     }
 
+    expose({
+      close: onClickClose,
+    });
+
     onMounted(() => {
       collectItem?.({
         uuid,
         props,
-        getIndex: () => currentIndex.value ?? 0,
+        getIndex: () => currentIndex.value!,
         setIndex: (index: number) => {
           currentIndex.value = index;
         },
@@ -167,7 +169,7 @@ export default defineComponent({
       <div
         ref={itemDomRef}
         v-show={visible.value}
-        class={cls(classHelper.block, classHelper.m(props.type || parentProps?.type))}
+        class={cls(classHelper.block, classHelper.m(props.type ?? parentProps.type))}
         style={customStyle.value}
         data-index={currentIndex.value}
       >
@@ -191,11 +193,12 @@ export default defineComponent({
         <div class={classHelper.e('body')}>
           {(slots.image || props.image) && (
             <div class={classHelper.em('body', 'image')}>
-              {slots.image?.() ?? typeof props.image === 'object' ? (
-                props.image
-              ) : (
-                <img src={props.image} alt={`guide item's image`} />
-              )}
+              {slots.image?.() ??
+                (typeof props.image === 'object' ? (
+                  props.image
+                ) : (
+                  <img src={props.image} alt={`guide item's image`} />
+                ))}
             </div>
           )}
           {(slots.content || props.content) && (

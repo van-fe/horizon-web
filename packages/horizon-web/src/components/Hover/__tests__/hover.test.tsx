@@ -1,5 +1,5 @@
 import { mount, shallowMount } from '@vue/test-utils';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 import HHover from '../src/Hover';
 import { nextTick } from 'vue';
 import { sleep } from '~/utils/tools';
@@ -89,5 +89,29 @@ describe('Hover.tsx', () => {
     expect(wrapper.find('.del-button').exists()).toBe(true);
     await sleep(50);
     expect(wrapper.find('.del-button').exists()).toBe(false);
+  });
+
+  test('emits each native mouse event once with its browser payload', async () => {
+    const onMouseEnter = vi.fn();
+    const onMouseMove = vi.fn();
+    const onMouseLeave = vi.fn();
+    const wrapper = mount(HHover, {
+      props: { onMouseEnter, onMouseMove, onMouseLeave },
+      slots: {
+        default: ({ hover }) => <button data-test="hover-target">{String(hover)}</button>,
+      },
+    });
+    const target = wrapper.get('[data-test="hover-target"]');
+
+    await target.trigger('mouseenter');
+    await target.trigger('mousemove');
+    await target.trigger('mouseleave');
+
+    expect(onMouseEnter).toHaveBeenCalledTimes(1);
+    expect(onMouseMove).toHaveBeenCalledTimes(1);
+    expect(onMouseLeave).toHaveBeenCalledTimes(1);
+    expect(onMouseEnter.mock.calls[0][0]).toBeInstanceOf(MouseEvent);
+    expect(onMouseMove.mock.calls[0][0]).toBeInstanceOf(MouseEvent);
+    expect(onMouseLeave.mock.calls[0][0]).toBeInstanceOf(MouseEvent);
   });
 });

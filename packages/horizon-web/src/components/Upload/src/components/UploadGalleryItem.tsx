@@ -44,16 +44,9 @@ export default defineComponent({
     const fileIcon = computed(() => fileTypeIconMapping[file.value.type]);
 
     const iconSize = computed(() => {
-      switch (sizeRef.value) {
-        case 'small':
-          return 24;
-        default:
-        case 'medium':
-          return 32;
-        case 'large':
-        case 'huge':
-          return 40;
-      }
+      if (sizeRef.value === 'small') return 24;
+      if (sizeRef.value === 'medium') return 32;
+      return 40;
     });
 
     return () => {

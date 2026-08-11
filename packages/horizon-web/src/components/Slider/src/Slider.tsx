@@ -84,15 +84,11 @@ export default defineComponent({
 
     watch(
       [firstValue, secondValue],
-      ([first, second], [oldFirst, oldSecond]) => {
+      ([first, second]) => {
         if (range.value) {
-          if (first !== oldFirst || second !== oldSecond) {
-            updateModelValue([Math.min(first, second), Math.max(first, second)]);
-          }
+          updateModelValue([Math.min(first, second), Math.max(first, second)]);
         } else {
-          if (first !== oldFirst) {
-            updateModelValue(first);
-          }
+          updateModelValue(first);
         }
       },
       {

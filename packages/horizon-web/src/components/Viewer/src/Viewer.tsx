@@ -138,31 +138,36 @@ export default defineComponent({
 
     const previewBottomRef = ref(108);
     const previewElWrap = ref<HTMLElement | null>(null);
+    const showThumbnailRef = ref(false);
 
     // 设置 preview 的初始宽高
-    watch(modelValueRef, val => {
-      if (val) {
-        previewBottomRef.value = sourcesRef.value.length > 1 ? 208 : 108;
-        showThumbnailRef.value = sourcesRef.value.length > 1;
-        currentIndexRef.value = initIndexRef.value;
-        zIndex.value = zIndexHandler.next();
-        nextTick(() => {
-          if (previewElWrap.value) {
-            viewportInfo.width = previewElWrap.value.clientWidth;
-            viewportInfo.height = previewElWrap.value.clientHeight;
-            // 当检测到 preview 容器大小改变后，去修正大图的尺寸
-            useResizeObserver(previewElWrap, entries => {
-              const entry = entries[0];
-              const { width, height } = entry.contentRect;
-              viewportInfo.width = width;
-              viewportInfo.height = height;
-              zoomToAdjust();
-              moveToStart();
-            });
-          }
-        });
-      }
-    });
+    watch(
+      modelValueRef,
+      val => {
+        if (val) {
+          previewBottomRef.value = sourcesRef.value.length > 1 ? 208 : 108;
+          showThumbnailRef.value = sourcesRef.value.length > 1;
+          currentIndexRef.value = initIndexRef.value;
+          zIndex.value = zIndexHandler.next();
+          nextTick(() => {
+            if (previewElWrap.value) {
+              viewportInfo.width = previewElWrap.value.clientWidth;
+              viewportInfo.height = previewElWrap.value.clientHeight;
+              // 当检测到 preview 容器大小改变后，去修正大图的尺寸
+              useResizeObserver(previewElWrap, entries => {
+                const entry = entries[0];
+                const { width, height } = entry.contentRect;
+                viewportInfo.width = width;
+                viewportInfo.height = height;
+                zoomToAdjust();
+                moveToStart();
+              });
+            }
+          });
+        }
+      },
+      { immediate: true },
+    );
     const videoSizeRef = computed(() => {
       const height = Math.min(viewportInfo.height, 507);
       const width = height * (900 / 507);
@@ -171,7 +176,6 @@ export default defineComponent({
         height: `${height}px`,
       };
     });
-    const showThumbnailRef = ref(false);
     const toggleThumbnail = () => {
       showThumbnailRef.value = !showThumbnailRef.value;
       previewBottomRef.value = showThumbnailRef.value ? 208 : 108;

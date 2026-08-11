@@ -1,100 +1,101 @@
-import { onBeforeUnmount, onMounted, watchEffect, type ComputedRef, type Ref } from 'vue'
+import { onBeforeUnmount, onMounted, watchEffect, type ComputedRef, type Ref } from 'vue';
 
 export const useDrag = (
-    itemDomRef: Ref<HTMLElement | null>,
-    targetRef: Ref<HTMLElement | null>,
-    draggable: ComputedRef<boolean>,
+  itemDomRef: Ref<HTMLElement | null>,
+  targetRef: Ref<HTMLElement | null>,
+  draggable: ComputedRef<boolean>,
 ) => {
-    onMounted(() => {
-        watchEffect(() => {
-            if (draggable.value) {
-                onDraggable()
-            } else {
-                offDraggable()
-            }
-        })
-    })
+  let activeMousemove: ((event: MouseEvent) => void) | undefined;
+  let activeMouseup: (() => void) | undefined;
 
-    onBeforeUnmount(() => {
-        offDraggable()
-    })
+  const stopDragging = () => {
+    document.body.style.cursor = 'default';
+    if (activeMousemove) {
+      document.removeEventListener('mousemove', activeMousemove);
+      activeMousemove = undefined;
+    }
+    if (activeMouseup) {
+      document.removeEventListener('mouseup', activeMouseup);
+      activeMouseup = undefined;
+    }
+  };
 
-    const onMousedown = (e: MouseEvent) => {
-        const downX = e.clientX;
-        const downY = e.clientY;
+  const onMouseenter = () => {
+    document.body.style.cursor = 'move';
+  };
 
-        const initOffsetX = itemDomRef.value
-            ? itemDomRef.value.style.transform.includes('%')
-                ? 0 - itemDomRef.value.offsetWidth / 2
-                : parseInt(itemDomRef.value.style.transform.split('(')[1].split('px')[0])
-            : 0;
-        const initOffsetY = itemDomRef.value
-            ? itemDomRef.value.style.transform.includes('%')
-                ? 0 - itemDomRef.value.offsetHeight / 2
-                : parseInt(itemDomRef.value.style.transform.split(', ')[1].split('px')[0])
-            : 0;
+  const onMouseleave = () => {
+    document.body.style.cursor = 'default';
+  };
 
-        const offsetX = initOffsetX;
-        const offsetY = initOffsetY;
+  const onMousedown = (event: MouseEvent) => {
+    const item = itemDomRef.value;
+    const target = targetRef.value;
+    if (!item || !target) {
+      return;
+    }
 
-        const targetRect = targetRef.value!.getBoundingClientRect();
-        const targetLeft = targetRect.left;
-        const targetTop = targetRect.top;
-        const targetWidth = targetRect.width;
-        const targetHeight = targetRect.height;
+    stopDragging();
+    const downX = event.clientX;
+    const downY = event.clientY;
+    const transform = item.style.transform;
+    const translate = transform.match(
+      /translate(?:3d)?\(\s*(-?\d+(?:\.\d+)?)px\s*,\s*(-?\d+(?:\.\d+)?)px/,
+    );
+    const offsetX = transform.includes('%')
+      ? -item.offsetWidth / 2
+      : Number(translate?.[1] ?? 0);
+    const offsetY = transform.includes('%')
+      ? -item.offsetHeight / 2
+      : Number(translate?.[2] ?? 0);
 
-        const clientWidth = document.documentElement.clientWidth;
-        const clientHeight = document.documentElement.clientHeight;
+    const targetRect = target.getBoundingClientRect();
+    const minLeft = -targetRect.left + offsetX;
+    const minTop = -targetRect.top + offsetY;
+    const maxLeft = document.documentElement.clientWidth - targetRect.right + offsetX;
+    const maxTop = document.documentElement.clientHeight - targetRect.bottom + offsetY;
 
-        const minLeft = -targetLeft + offsetX;
-        const minTop = -targetTop + offsetY;
-        const maxLeft = clientWidth - targetLeft - targetWidth + offsetX;
-        const maxTop = clientHeight - targetTop - targetHeight + offsetY;
+    activeMousemove = moveEvent => {
+      const moveX = Math.min(Math.max(offsetX + moveEvent.clientX - downX, minLeft), maxLeft);
+      const moveY = Math.min(Math.max(offsetY + moveEvent.clientY - downY, minTop), maxTop);
 
-        const onMousemove = (e: MouseEvent) => {
-            let moveX = offsetX + e.clientX - downX;
-            let moveY = offsetY + e.clientY - downY;
-
-            moveX = Math.min(Math.max(moveX, minLeft), maxLeft);
-            moveY = Math.min(Math.max(moveY, minTop), maxTop);
-
-            if (itemDomRef.value) {
-                itemDomRef.value.style.transform = `translate(${moveX}px, ${moveY}px)`;
-            }
-        };
-
-        const onMouseup = () => {
-            document.body.style.cursor = 'default';
-            document.removeEventListener('mousemove', onMousemove);
-            document.removeEventListener('mouseup', onMouseup);
-        };
-
-        document.addEventListener('mousemove', onMousemove);
-        document.addEventListener('mouseup', onMouseup);
+      if (itemDomRef.value) {
+        itemDomRef.value.style.transform = `translate(${moveX}px, ${moveY}px)`;
+      }
     };
+    activeMouseup = stopDragging;
+    document.addEventListener('mousemove', activeMousemove);
+    document.addEventListener('mouseup', activeMouseup);
+  };
 
-    const onDraggable = () => {
-        if (itemDomRef.value && targetRef.value) {
-            targetRef.value.addEventListener('mousedown', onMousedown);
-            targetRef.value.addEventListener('mouseenter', () => {
-                console.info('mouseenter11111');
-                document.body.style.cursor = 'move';
-            });
-            targetRef.value.addEventListener('mouseleave', () => {
-                document.body.style.cursor = 'default';
-            });
-        }
-    };
-    const offDraggable = () => {
-        if (itemDomRef.value && targetRef.value) {
-            targetRef.value.removeEventListener('mousedown', onMousedown);
-            targetRef.value.removeEventListener('mouseenter', () => {
-                document.body.style.cursor = 'move';
-            });
-            targetRef.value.removeEventListener('mouseleave', () => {
-                document.body.style.cursor = 'default';
-            });
-        }
-    };
+  const onDraggable = () => {
+    const target = targetRef.value;
+    if (itemDomRef.value && target) {
+      target.addEventListener('mousedown', onMousedown);
+      target.addEventListener('mouseenter', onMouseenter);
+      target.addEventListener('mouseleave', onMouseleave);
+    }
+  };
 
-}
+  const offDraggable = () => {
+    const target = targetRef.value;
+    if (target) {
+      target.removeEventListener('mousedown', onMousedown);
+      target.removeEventListener('mouseenter', onMouseenter);
+      target.removeEventListener('mouseleave', onMouseleave);
+    }
+    stopDragging();
+  };
+
+  onMounted(() => {
+    watchEffect(() => {
+      if (draggable.value) {
+        onDraggable();
+      } else {
+        offDraggable();
+      }
+    });
+  });
+
+  onBeforeUnmount(offDraggable);
+};

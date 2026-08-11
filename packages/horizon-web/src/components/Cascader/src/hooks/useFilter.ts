@@ -22,7 +22,7 @@ export default function useFilter(
   const popperVisible = ref(false);
 
   const useFilter = computed(() => !!props.filter || props.filterable);
-  const inputable = computed(() => useFilter.value);
+  const inputable = computed(() => useFilter.value || props.inputAble);
   const isReadonly = computed(() => !(inputable.value && popperVisible.value));
   const inputValueMerged = computed(() => inputValue.value || props.panelFilterInputValue);
 
@@ -39,9 +39,7 @@ export default function useFilter(
     }
 
     if (props.panelFilterOption) {
-      return typeof props.panelFilterOption === 'boolean'
-        ? defaultFilterMethod
-        : props.panelFilterOption;
+      return defaultFilterMethod;
     }
 
     return defaultFilterMethod;
@@ -102,6 +100,7 @@ export default function useFilter(
 
   watch(inputValue, value => {
     context.emit('input', value);
+    if (useFilter.value) context.emit('search', value);
   });
   watch(popperVisible, value => {
     context.emit('dropdownVisibleChange', value);

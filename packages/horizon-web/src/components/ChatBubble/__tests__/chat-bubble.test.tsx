@@ -45,6 +45,30 @@ describe('ChatBubble', () => {
     expect(wrapper.get('button').text()).toBe('Reply');
   });
 
+  test('all metadata slots override their prop fallbacks', () => {
+    const wrapper = mount(ChatBubble, {
+      props: {
+        avatar: '/fallback.png',
+        name: 'Fallback name',
+        datetime: 'Fallback time',
+        status: 'Fallback status',
+      },
+      slots: {
+        avatar: () => <span class="avatar-slot">Avatar</span>,
+        name: () => <span class="name-slot">Name</span>,
+        datetime: () => <span class="datetime-slot">Time</span>,
+        status: () => <span class="status-slot">Status</span>,
+      },
+    });
+
+    expect(wrapper.get('.avatar-slot').text()).toBe('Avatar');
+    expect(wrapper.get('.name-slot').text()).toBe('Name');
+    expect(wrapper.get('.datetime-slot').text()).toBe('Time');
+    expect(wrapper.get('.status-slot').text()).toBe('Status');
+    expect(wrapper.findComponent(Avatar).exists()).toBe(false);
+    expect(wrapper.text()).not.toContain('Fallback name');
+  });
+
   test('applies numeric and string maximum widths', async () => {
     const wrapper = mount(ChatBubble, { props: { maxWidth: 320 } });
     expect(wrapper.get('.h-chat-bubble__main').attributes('style')).toContain('max-width: 320px');
@@ -85,6 +109,16 @@ describe('ChatBubbleList', () => {
     expect(wrapper.findAllComponents(ChatBubble).length).toBeLessThan(items.length);
   });
 
+  test('maxHeight constrains the real virtual-scroller viewport', () => {
+    const wrapper = mount(ChatBubbleList, {
+      props: { items: items.slice(0, 2), height: 400, maxHeight: 180 },
+    });
+
+    const viewport = wrapper.get('.h-scrollbar__wrap');
+    expect(viewport.attributes('style')).toContain('height: 400px');
+    expect(viewport.attributes('style')).toContain('max-height: 180px');
+  });
+
   test('forwards scrolling methods through its public exposes', () => {
     const wrapper = mount(ChatBubbleList, { props: { items: items.slice(0, 10) } });
     const scroller = wrapper.findComponent(VirtualScroller);
@@ -118,5 +152,44 @@ describe('ChatBubbleList', () => {
     await nextTick();
     await nextTick();
     expect(wrapper.get('.empty-message').text()).toBe('No messages');
+  });
+
+  test('forwards complete item slot scope and before/after slots', async () => {
+    const scopes: ChatBubbleListSlotScope[] = [];
+    const wrapper = mount(ChatBubbleList, {
+      props: { items: items.slice(0, 2), keyField: 'id', minItemSize: 32, buffer: 1 },
+      slots: {
+        before: () => <div class="before-slot">Before</div>,
+        after: () => <div class="after-slot">After</div>,
+        default: (scope: ChatBubbleListSlotScope) => {
+          scopes.push(scope);
+          return <div class="scope-slot">{`${scope.index}:${scope.active}`}</div>;
+        },
+      },
+    });
+
+    await updateViewport(wrapper);
+    expect(wrapper.get('.before-slot').text()).toBe('Before');
+    expect(wrapper.get('.after-slot').text()).toBe('After');
+    expect(scopes[0].item).toMatchObject({ id: 0, content: 'Message 0' });
+    expect(scopes[0].index).toBe(0);
+    expect(typeof scopes[0].active).toBe('boolean');
+    expect(wrapper.emitted('update')?.[0]).toEqual([
+      expect.any(Number),
+      expect.any(Number),
+      expect.any(Number),
+      expect.any(Number),
+    ]);
+  });
+
+  test('wires virtual scroller boundary events to public list emits', () => {
+    const wrapper = mount(ChatBubbleList, { props: { items: items.slice(0, 2) } });
+    const scroller = wrapper.findComponent(VirtualScroller);
+
+    scroller.vm.$emit('scrollStart');
+    scroller.vm.$emit('scrollEnd');
+
+    expect(wrapper.emitted('reachStart')).toHaveLength(1);
+    expect(wrapper.emitted('reachEnd')).toHaveLength(1);
   });
 });

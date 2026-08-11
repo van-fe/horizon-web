@@ -3,7 +3,6 @@ import type { HorizonWebSetupContext } from '@aurora/utils';
 import {
   ComponentClassBlock,
   getUnitString,
-  isNumber,
   isString,
   slotVNodes,
   useLockScroll,
@@ -92,11 +91,8 @@ export default defineComponent({
     );
     const top = computed(() => props.top);
     const to = computed(() => {
-      if (props.to || typeof props.to !== 'undefined') return props.to;
-
-      if (popupContainerGetter.value) return popupContainerGetter.value();
-
-      return undefined;
+      if (typeof props.to !== 'undefined') return props.to;
+      return popupContainerGetter.value?.() ?? 'body';
     });
 
     const closeDirectly = () => {
@@ -343,7 +339,6 @@ export default defineComponent({
                 zIndex: zIndex.value + 1,
                 // top: props.verticalPosition === 'top' ? getUnitString(props.top) : undefined,
                 top: top.value ? getUnitString(props.top) : undefined,
-                width: isNumber(sizeRef.value) ? getUnitString(sizeRef.value) : undefined,
                 transform: top.value ? `translateY(0)` : undefined,
               },
             },

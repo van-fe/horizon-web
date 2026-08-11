@@ -4,6 +4,9 @@ import { afterEach, describe, expect, test, vi } from 'vitest';
 import { ref, nextTick } from 'vue';
 import type { SliderProps } from '../src/composables/useProps';
 import SliderCursor from '../src/components/SliderCursor';
+import HInputNumber from '../../InputNumber/src/InputNumber';
+import HTooltip from '../../Tooltip/src/Tooltip';
+import { useSliderCursorEmits } from '../src/composables/useEmits';
 
 describe('Slider.tsx', () => {
   afterEach(() => {
@@ -12,6 +15,41 @@ describe('Slider.tsx', () => {
   });
 
   describe('basic', () => {
+    test('renders separators, custom progress, input options and tooltip options', async () => {
+      const onUpdateModelValue = vi.fn();
+      const tooltipFormatter = vi.fn((value: number) => `Value ${value}`);
+      const wrapper = mount(HSlider, {
+        props: {
+          modelValue: 25,
+          step: 25,
+          showSeparator: true,
+          color: 'rgb(1, 2, 3)',
+          inputEnable: true,
+          inputProps: { precision: 2 },
+          tooltipEnable: true,
+          tooltipPlacement: 'bottom',
+          tooltipFormatter,
+          'onUpdate:modelValue': onUpdateModelValue,
+        },
+      });
+
+      expect(wrapper.findAll('.h-slider__separator--item')).toHaveLength(3);
+      expect(wrapper.get('.h-slider__progress').attributes('style')).toContain(
+        'background: rgb(1, 2, 3)',
+      );
+      expect(wrapper.getComponent(HInputNumber).props('precision')).toBe(2);
+      expect(wrapper.getComponent(HTooltip).props()).toMatchObject({
+        disabled: false,
+        placement: 'bottom',
+      });
+      await wrapper.get('[role="slider"]').trigger('keydown', { code: 'ArrowRight' });
+      await wrapper.get('[role="slider"]').trigger('keyup');
+      await nextTick();
+      expect(onUpdateModelValue).toHaveBeenCalledWith(50);
+      expect(tooltipFormatter).toHaveBeenCalled();
+      expect(useSliderCursorEmits['update:modelValue'](50)).toBe(true);
+    });
+
     test('create', async () => {
       const modelValue = ref();
       const wrapper = shallowMount(() => <HSlider v-model={modelValue.value} />);

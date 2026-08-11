@@ -1,5 +1,8 @@
-export const handleFlatTree = (treeArr: Array<any> | undefined, children = 'children') => {
-  if (treeArr === undefined) return [];
+export const handleFlatTree = (
+  treeArr: Array<any> | null | undefined,
+  children = 'children',
+) => {
+  if (!treeArr) return [];
   let result: Array<any> = [];
   for (const item of treeArr) {
     if (item[children]) {

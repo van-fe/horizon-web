@@ -66,6 +66,7 @@ export default function useTagRender(
   watch(
     () => [
       props.useCheckAllSummary,
+      props.showValueUnMatch,
       options.optionsMap.size,
       ...Array.from(options.optionsMap.values()).flatMap(option => [
         option.props.label,
@@ -131,7 +132,7 @@ export default function useTagRender(
             disabled={options.isDisabled.value}
             onClose={options.handleClear}
           >
-            {props.checkAllSummaryText ?? useLocaleLang('select.all').value}
+            {props.checkAllSummaryText ?? useLocaleLang('select.all', 'All').value}
           </HTag>,
           {
             disabled: !props.collapseTagsTooltip,

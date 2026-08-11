@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { nextTick, ref } from 'vue';
+import { KeepAlive, defineComponent, nextTick, ref } from 'vue';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import HWatermark from '..';
 import { getDpr, rotateCanvas, setWaterMarkStyle } from '../src/utils/base';
@@ -29,7 +29,9 @@ describe('Watermark', () => {
 
   afterEach(() => {
     vi.restoreAllMocks();
+    vi.unstubAllGlobals();
     context.fillText.mockClear();
+    context.drawImage.mockClear();
   });
 
   test('renders slot content and a non-interactive watermark layer', async () => {
@@ -114,6 +116,115 @@ describe('Watermark', () => {
     });
     expect((wrapper.element.lastElementChild as HTMLElement).style.pointerEvents).toBe('none');
   });
+
+  test('reports an edited layer and redraws after a real mutation', async () => {
+    const wrapper = mount(HWatermark, { props: { content: 'Protected' } });
+    await nextTick();
+    await new Promise(resolve => setTimeout(resolve));
+
+    const component = wrapper.findComponent(HWatermark);
+    const firstLayer = wrapper.element.lastElementChild as HTMLElement;
+    firstLayer.style.opacity = '0.9';
+
+    await vi.waitFor(() => expect(component.emitted('tampered')).toHaveLength(1));
+    expect(wrapper.element.lastElementChild).not.toBe(firstLayer);
+  });
+
+  test('draws image watermarks and falls back to text when loading fails', async () => {
+    const images: Array<{
+      crossOrigin: string;
+      src: string;
+      onload: null | (() => void);
+      onerror: null | (() => void);
+    }> = [];
+    class TestImage {
+      crossOrigin = '';
+      src = '';
+      onload: null | (() => void) = null;
+      onerror: null | (() => void) = null;
+      constructor() {
+        images.push(this);
+      }
+    }
+    vi.stubGlobal('Image', TestImage);
+    const wrapper = mount(HWatermark, {
+      props: { image: '/mark-one.png', content: 'Fallback', width: 80, height: 40 },
+    });
+    await nextTick();
+
+    expect(images[0]).toMatchObject({ crossOrigin: 'anonymous', src: '/mark-one.png' });
+    images[0].onload?.();
+    expect(context.drawImage).toHaveBeenCalledWith(
+      images[0],
+      expect.any(Number),
+      expect.any(Number),
+      160,
+      80,
+    );
+
+    await wrapper.setProps({ image: '/mark-two.png' });
+    await nextTick();
+    images.at(-1)?.onerror?.();
+    expect(context.fillText).toHaveBeenCalledWith(
+      'Fallback',
+      expect.any(Number),
+      expect.any(Number),
+      40,
+    );
+  });
+
+  test('deactivates, clears and restores the watermark through KeepAlive', async () => {
+    const show = ref(true);
+    const Host = defineComponent({
+      setup() {
+        return () => (
+          <KeepAlive>{show.value ? <HWatermark content="Cached">content</HWatermark> : null}</KeepAlive>
+        );
+      },
+    });
+    const wrapper = mount(Host);
+    await nextTick();
+    expect(wrapper.find('.h-watermark').element.children).toHaveLength(1);
+
+    show.value = false;
+    await nextTick();
+    show.value = true;
+    await nextTick();
+    expect(wrapper.find('.h-watermark').element.children).toHaveLength(1);
+  });
+
+  test('gracefully skips rendering when Canvas 2D is unavailable', async () => {
+    vi.mocked(HTMLCanvasElement.prototype.getContext).mockReturnValueOnce(null);
+    const wrapper = mount(HWatermark, { props: { content: 'No canvas' } });
+    await nextTick();
+    expect(wrapper.find('.h-watermark').element.children).toHaveLength(0);
+  });
+
+  test('ignores a stale asynchronous image load after unmount', async () => {
+    let pendingImage!: {
+      crossOrigin: string;
+      src: string;
+      onload: null | (() => void);
+      onerror: null | (() => void);
+    };
+    vi.stubGlobal(
+      'Image',
+      class {
+        crossOrigin = '';
+        src = '';
+        onload: null | (() => void) = null;
+        onerror: null | (() => void) = null;
+        constructor() {
+          pendingImage = this;
+        }
+      },
+    );
+    const wrapper = mount(HWatermark, { props: { image: '/slow.png' } });
+    await nextTick();
+    wrapper.unmount();
+    pendingImage.onload?.();
+    expect(document.body.querySelector('.h-watermark')).toBeNull();
+  });
 });
 
 describe('watermark canvas helpers', () => {
@@ -140,5 +251,10 @@ describe('watermark canvas helpers', () => {
     expect(canvasContext.rotate).toHaveBeenCalledWith(Math.PI / 2);
     expect(canvasContext.translate).toHaveBeenNthCalledWith(2, -10, -20);
     expect(getDpr()).toBeGreaterThanOrEqual(2);
+  });
+
+  test('uses a device pixel ratio above the minimum', () => {
+    vi.spyOn(window, 'devicePixelRatio', 'get').mockReturnValue(3);
+    expect(getDpr()).toBe(3);
   });
 });

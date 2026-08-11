@@ -1,11 +1,39 @@
 import { mount } from '@vue/test-utils';
 import HSelect from '../src/Select';
 import HOption from '../src/Option';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 import { HOptionGroup } from '../index';
 import { sleep } from '~/utils/tools';
 import type { OptionGroupProps, OptionProps } from '~/components/Select/src/composables/useProps';
-import { nextTick, ref } from 'vue';
+import { computed, defineComponent, inject, nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
+import {
+  HSelectAddOptionInjectKey,
+  HSelectRemoveOptionInjectKey,
+  HSelectVisibleOptionsInjectKey,
+  type SelectCollectedOptionData,
+} from '../src/utils/injectKeys';
+
+const ProbeOption = defineComponent({
+  props: { value: { type: String, required: true } },
+  setup(props) {
+    const addOption = inject(HSelectAddOptionInjectKey);
+    const removeOption = inject(HSelectRemoveOptionInjectKey);
+    const data = {
+      type: 'option',
+      props: { value: props.value, label: props.value },
+      slots: {},
+      attrs: {},
+      el: ref<HTMLElement | null>(null),
+      active: computed(() => false),
+      disabled: computed(() => false),
+      children: null,
+    } as SelectCollectedOptionData<'option'>;
+
+    onMounted(() => addOption?.(data));
+    onBeforeUnmount(() => removeOption?.(props.value));
+    return () => <div data-probe={props.value} />;
+  },
+});
 
 describe('OptionGroup.tsx', () => {
   test('enable filterable and the group which not includes visible options will disappear', async () => {
@@ -100,5 +128,72 @@ describe('OptionGroup.tsx', () => {
     await nextTick();
 
     expect(wrapper.findAllComponents(HOption).length).toBe(10);
+  });
+
+  test('renders titled and untitled group recipes and inherits disabled state', async () => {
+    const wrapper = mount(() => (
+      <HSelect toBody={false}>
+        <HOptionGroup label="Disabled group" disabled>
+          <HOption value="disabled" label="Disabled option" />
+        </HOptionGroup>
+        <HOptionGroup>
+          <HOption value="plain" label="Plain option" />
+        </HOptionGroup>
+      </HSelect>
+    ));
+    await wrapper.findComponent(HSelect).trigger('click');
+    const groups = wrapper.findAllComponents(HOptionGroup);
+
+    expect(groups[0].classes()).toContain('has-title');
+    expect(groups[0].get('.h-select-option-group__title').text()).toBe('Disabled group');
+    expect(groups[0].get('.h-select-option').classes()).toContain('is-disabled');
+    expect(groups[1].find('.h-select-option-group__title').exists()).toBe(false);
+    expect(groups[1].find('.h-select-option-group__divider').exists()).toBe(true);
+  });
+
+  test('forwards options added and removed after mount and unregisters the group', async () => {
+    const showProbe = ref(false);
+    const addOption = vi.fn();
+    const removeOption = vi.fn();
+    const visibleOptions = ref([
+      { props: { value: 'late' } } as SelectCollectedOptionData<'option'>,
+    ]);
+    const wrapper = mount(
+      () => (
+        <HOptionGroup label="Lifecycle group" disabled data-group="forwarded">
+          {showProbe.value && <ProbeOption value="late" />}
+        </HOptionGroup>
+      ),
+      {
+        global: {
+          provide: {
+            [HSelectAddOptionInjectKey as symbol]: addOption,
+            [HSelectRemoveOptionInjectKey as symbol]: removeOption,
+            [HSelectVisibleOptionsInjectKey as symbol]: visibleOptions,
+          },
+        },
+      },
+    );
+    await nextTick();
+
+    const group = addOption.mock.calls[0][0] as SelectCollectedOptionData<'option-group'>;
+    expect(group.type).toBe('option-group');
+    expect(group.attrs).toMatchObject({ 'data-group': 'forwarded' });
+    expect(group.active.value).toBe(false);
+    expect(group.disabled.value).toBe(true);
+
+    showProbe.value = true;
+    await nextTick();
+    expect(addOption).toHaveBeenCalledTimes(2);
+    expect(addOption.mock.calls[1][0]).toMatchObject({ type: 'option', props: { value: 'late' } });
+    expect(wrapper.find('[data-probe="late"]').exists()).toBe(true);
+
+    showProbe.value = false;
+    await nextTick();
+    expect(removeOption).toHaveBeenCalledWith('late');
+
+    wrapper.unmount();
+    expect(removeOption).toHaveBeenCalledTimes(2);
+    expect(removeOption.mock.calls[1][0]).not.toBe('late');
   });
 });

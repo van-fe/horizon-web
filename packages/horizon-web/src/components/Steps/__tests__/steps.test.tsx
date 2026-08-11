@@ -6,6 +6,58 @@ import { nextTick, ref } from 'vue';
 import type { StepsProps } from '../src/composables/useProps';
 
 describe('Steps.tsx', () => {
+  test('renders every layout/detail slot contract and emits both controlled update aliases', async () => {
+    const onUpdateModelValue = vi.fn();
+    const onUpdateCurrent = vi.fn();
+    const wrapper = mount(() => (
+      <HSteps
+        modelValue={1}
+        direction="vertical"
+        labelPlacement="vertical"
+        size="small"
+        status="error"
+        progressDot
+        initial={1}
+        labelAlign="left"
+        clickable
+        onUpdate:modelValue={onUpdateModelValue}
+        onUpdate:current={onUpdateCurrent}
+      >
+        {{
+          default: () => [
+            <HStep title="Props title" subtitle="Props subtitle" description="Props description" />,
+            <HStep title="Slot title">
+              {{
+                subtitle: () => <span data-test="step-subtitle">Slot subtitle</span>,
+                description: () => <span data-test="step-description">Slot description</span>,
+                icon: () => <span data-test="step-icon">I</span>,
+              }}
+            </HStep>,
+          ],
+        }}
+      </HSteps>
+    ));
+    await nextTick();
+    expect(wrapper.get('.h-steps').classes()).toEqual(
+      expect.arrayContaining([
+        'is-vertical',
+        'is-small',
+        'is-dot',
+        'is-label-placement-vertical',
+        'is-label-align-left',
+      ]),
+    );
+    expect(wrapper.text()).toContain('Props subtitle');
+    expect(wrapper.text()).toContain('Props description');
+    expect(wrapper.get('[data-test="step-subtitle"]').text()).toBe('Slot subtitle');
+    expect(wrapper.get('[data-test="step-description"]').text()).toBe('Slot description');
+    expect(wrapper.get('[data-test="step-icon"]').text()).toBe('I');
+
+    await wrapper.findAllComponents(HStep)[1].trigger('click');
+    expect(onUpdateModelValue).toHaveBeenCalledWith(2);
+    expect(onUpdateCurrent).toHaveBeenCalledWith(2);
+  });
+
   test('basic', async () => {
     const wrapper = shallowMount(() => <HSteps />);
     const element = wrapper.findComponent(HSteps);
@@ -255,6 +307,26 @@ describe('Steps.tsx', () => {
 
       expect(current.value).toBe(0);
       expect(disabledStep.emitted('click')).toBeUndefined();
+    });
+
+    test('renders finish and error icons when progress dots are disabled', async () => {
+      const current = ref(1);
+      const status = ref<StepsProps['status']>('error');
+      const wrapper = mount(() => (
+        <HSteps modelValue={current.value} status={status.value} size="medium">
+          <HStep title="Finished" />
+          <HStep title="Errored" />
+          <HStep title="Waiting" />
+        </HSteps>
+      ));
+      await nextTick();
+      const steps = wrapper.findAllComponents(HStep);
+      expect(steps[0].classes()).toContain('is-finish');
+      expect(steps[0].find('svg').exists()).toBe(true);
+      expect(steps[1].classes()).toContain('is-error');
+      expect(steps[1].find('svg').exists()).toBe(true);
+      expect(steps[2].classes()).toContain('is-wait');
+      expect(steps[2].get('.h-step__icon--number').text()).toBe('3');
     });
   });
 });

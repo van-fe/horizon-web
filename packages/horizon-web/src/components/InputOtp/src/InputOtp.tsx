@@ -2,7 +2,6 @@ import type { CSSProperties } from 'vue';
 import { computed, defineComponent, inject, nextTick, ref, watch } from 'vue';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
-import type { HApplicationSizeType } from '~/components/Application/src/composables/useProps';
 import { GlobalSizeInjectedKey } from '~/components/Application/src/utils/injectedKeys';
 import {
   HFormDisabledInjectedKey,
@@ -46,17 +45,15 @@ export default defineComponent({
     const formError = inject(HFormItemErrorInjectedKey, undefined);
     const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
 
-    const normalize = (value: unknown) => {
-      const input = String(value ?? '');
+    const normalize = (value: string) => {
+      const input = String(value);
       const filtered =
         props.type === 'numeric' ? input.replace(/\D/g, '') : input.replace(/[^a-z\d]/gi, '');
       return filtered.slice(0, props.length);
     };
 
     const localValue = ref(normalize(props.modelValue));
-    const size = computed(
-      () => (props.size || globalSize.value || 'medium') as HApplicationSizeType,
-    );
+    const size = computed(() => props.size || globalSize.value);
     const isDisabled = computed(() => Boolean(formDisabled?.value || props.disabled));
     const isError = computed(() => Boolean(formError?.value || props.status === 'error'));
     const activeIndex = computed(() => Math.min(localValue.value.length, props.length - 1));
@@ -99,14 +96,16 @@ export default defineComponent({
       if (pastedText === undefined) return;
 
       evt.preventDefault();
-      const input = inputRef.value;
-      const start = input?.selectionStart ?? localValue.value.length;
-      const end = input?.selectionEnd ?? start;
+      // A paste event can only originate from the mounted text input, whose selection offsets
+      // are always numeric according to the native text-control contract.
+      const input = inputRef.value!;
+      const start = input.selectionStart!;
+      const end = input.selectionEnd!;
       const pastedValue = normalize(pastedText);
       const nextValue = `${localValue.value.slice(0, start)}${pastedValue}${localValue.value.slice(end)}`;
       const value = updateValue(nextValue, evt);
       emit('paste', pastedValue, evt);
-      nextTick(() => input?.setSelectionRange(value.length, value.length));
+      nextTick(() => input.setSelectionRange(value.length, value.length));
     };
 
     const handleFocus = (evt: FocusEvent) => {

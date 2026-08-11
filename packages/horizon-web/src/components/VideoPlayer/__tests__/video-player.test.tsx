@@ -5,6 +5,7 @@ import HSelect from '../../Select/src/Select';
 import HSlider from '../../Slider/src/Slider';
 import HButton from '../../Button/src/Button';
 import { dictionaries } from '~/locales';
+import { nextTick } from 'vue';
 
 const sources = [
   { src: '/video-hd.mp4', type: 'video/mp4', label: 'HD', default: true },
@@ -43,6 +44,44 @@ describe('VideoPlayer.tsx', () => {
       { value: 0, label: 'HD' },
       { value: 1, label: 'SD' },
     ]);
+  });
+
+  test('forwards native presentation props and emits ended/volume/fullscreen events', async () => {
+    const wrapper = shallowMount(HVideoPlayer, {
+      props: {
+        sources,
+        poster: '/poster.png',
+        rotate: 0,
+        autoplay: true,
+        loop: true,
+        muted: true,
+        preload: 'auto',
+        playbackRates: [1, 1.75],
+      },
+    });
+    const video = wrapper.get<HTMLVideoElement>('video');
+    expect(video.attributes('poster')).toBe('/poster.png');
+    expect(video.attributes('autoplay')).toBeDefined();
+    expect(video.attributes('loop')).toBeDefined();
+    expect(video.element.muted).toBe(true);
+    expect(video.attributes('preload')).toBe('auto');
+    await wrapper.setProps({ rotate: 90 });
+    await wrapper.vm.$nextTick();
+    await wrapper.vm.$nextTick();
+    expect(video.element.style.transform).toContain('rotate(90deg)');
+    expect(wrapper.findAllComponents(HSelect)[0].props('options')).toEqual([
+      { value: 1, label: '1×' },
+      { value: 1.75, label: '1.75×' },
+    ]);
+
+    await video.trigger('ended');
+    expect(wrapper.emitted('ended')?.[0]?.[0]).toBeInstanceOf(Event);
+    wrapper.findAllComponents(HSlider)[1].vm.$emit('update:modelValue', 25);
+    await wrapper.vm.$nextTick();
+    expect(wrapper.emitted('volumeChange')?.at(-1)).toEqual([0.25, false]);
+
+    document.dispatchEvent(new Event('fullscreenchange'));
+    expect(wrapper.emitted('fullscreenChange')?.at(-1)).toEqual([false]);
   });
 
   test('renders Horizon controls in a full mount', () => {
@@ -136,6 +175,67 @@ describe('VideoPlayer.tsx', () => {
     await wrapper.trigger('keydown', { key: 'k' });
 
     expect(HTMLMediaElement.prototype.play).toHaveBeenCalled();
+  });
+
+  test('drives loading, playing, controls, fullscreen and picture-in-picture through native events', async () => {
+    Object.defineProperty(document, 'pictureInPictureEnabled', {
+      configurable: true,
+      value: true,
+    });
+    const requestFullscreen = vi.fn().mockResolvedValue(undefined);
+    const requestPictureInPicture = vi.fn().mockResolvedValue({});
+    const wrapper = mount(HVideoPlayer, {
+      props: { sources, volume: 0.6 },
+      attachTo: document.body,
+    });
+    const root = wrapper.get<HTMLElement>('.h-video-player');
+    const video = wrapper.get<HTMLVideoElement>('video');
+    Object.defineProperties(root.element, {
+      requestFullscreen: { configurable: true, value: requestFullscreen },
+    });
+    Object.defineProperties(video.element, {
+      requestPictureInPicture: { configurable: true, value: requestPictureInPicture },
+      duration: { configurable: true, value: 90 },
+      currentTime: { configurable: true, writable: true, value: 10 },
+    });
+
+    await root.trigger('mousemove');
+    await root.trigger('mouseleave');
+    await root.trigger('focusin');
+    await video.trigger('waiting');
+    expect(wrapper.get('[role="status"]').attributes('aria-label')).toBeTruthy();
+    await video.trigger('canplay');
+    expect(wrapper.find('[role="status"]').exists()).toBe(false);
+
+    await video.trigger('play');
+    expect(root.classes()).toContain('is-playing');
+    await wrapper.get('.h-video-player__controls').trigger('click');
+    video.element.dispatchEvent(new Event('pause'));
+    await nextTick();
+    expect(root.classes()).not.toContain('is-playing');
+
+    await video.trigger('dblclick');
+    expect(requestFullscreen).toHaveBeenCalledOnce();
+    const iconButtons = wrapper.findAll('button.h-video-player__icon-button');
+    await iconButtons.at(-2)!.trigger('click');
+    expect(requestPictureInPicture).toHaveBeenCalledOnce();
+    video.element.dispatchEvent(new Event('enterpictureinpicture'));
+    await nextTick();
+    video.element.dispatchEvent(new Event('leavepictureinpicture'));
+
+    Object.defineProperty(document, 'fullscreenElement', {
+      configurable: true,
+      value: root.element,
+    });
+    document.dispatchEvent(new Event('fullscreenchange'));
+    await nextTick();
+    expect(root.classes()).toContain('is-fullscreen');
+    await iconButtons.at(-1)!.trigger('click');
+
+    await video.trigger('error');
+    await wrapper.get('.h-video-player__error button').trigger('click');
+    expect(HTMLMediaElement.prototype.load).toHaveBeenCalled();
+    wrapper.unmount();
   });
 
   test('provides every control label in all supported locales', () => {

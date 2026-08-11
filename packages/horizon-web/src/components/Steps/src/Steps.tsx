@@ -36,6 +36,7 @@ export default defineComponent({
         activeIndex.value = index;
 
         emit('update:modelValue', index);
+        emit('update:current', index);
 
         if (triggerChange) {
           emit('change', index);

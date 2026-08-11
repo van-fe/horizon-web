@@ -10,14 +10,14 @@ export default defineComponent({
   name: 'ColorEditForm',
   setup() {
     const classHelper = new ComponentClassBlock('color-picker-edit-form');
-    const parentProps = inject(ColorPickerProps);
-    const parentEmit = inject(ColorPickerEmit);
-    const currentValue = inject(ColorPickerCurrentValue);
-    const hex = ref(currentValue?.currentActiveColorTarget?.color.toHex().replace('#', '') || '');
+    const parentProps = inject(ColorPickerProps)!;
+    const parentEmit = inject(ColorPickerEmit)!;
+    const currentValue = inject(ColorPickerCurrentValue)!;
+    const hex = ref(currentValue.currentActiveColorTarget.color.toHex().replace('#', ''));
     const alpha = ref(
-      (currentValue?.currentActiveColorTarget?.color.get('alpha') || 100).toString(),
+      currentValue.currentActiveColorTarget.color.get('alpha').toString(),
     );
-    const currentFormat = ref<'hex' | 'rgb' | 'hsl' | 'hsv'>(parentProps?.editMode ?? 'hex');
+    const currentFormat = ref<'hex' | 'rgb' | 'hsl' | 'hsv'>(parentProps.editMode);
 
     const input1 = ref<number>(0);
     const input2 = ref<number>(0);
@@ -29,7 +29,7 @@ export default defineComponent({
         void nextTick(() => {
           resetThreeValues();
 
-          oldValue && parentEmit?.('update:editMode', val);
+          oldValue && parentEmit('update:editMode', val);
         });
       },
       {
@@ -38,7 +38,7 @@ export default defineComponent({
     );
 
     watch(
-      () => currentValue?.currentActiveColorTarget.color.value,
+      () => currentValue.currentActiveColorTarget.color.value,
       () => {
         initHex();
         initAlpha();
@@ -47,11 +47,9 @@ export default defineComponent({
     );
 
     watch(
-      () => parentProps?.editMode,
+      () => parentProps.editMode,
       val => {
-        if (val) {
-          currentFormat.value = val;
-        }
+        currentFormat.value = val;
       },
     );
 
@@ -59,13 +57,13 @@ export default defineComponent({
       let values = [0, 0, 0];
       switch (currentFormat.value) {
         case 'hsl':
-          values = currentValue?.currentActiveColorTarget?.color.toHslArr() ?? [0, 0, 0];
+          values = currentValue.currentActiveColorTarget.color.toHslArr();
           break;
         case 'rgb':
-          values = currentValue?.currentActiveColorTarget?.color.toRgbArr() ?? [0, 0, 0];
+          values = currentValue.currentActiveColorTarget.color.toRgbArr();
           break;
         case 'hsv':
-          values = currentValue?.currentActiveColorTarget?.color.toHsvArr() ?? [0, 0, 0];
+          values = currentValue.currentActiveColorTarget.color.toHsvArr();
           break;
       }
 
@@ -73,57 +71,57 @@ export default defineComponent({
     }
 
     watch([input1, input2, input3], ([v1, v2, v3]) => {
-      if (isNumber(v1) && isNumber(v2) && isNumber(v3) && parentProps?.updateOnInput) {
+      if (isNumber(v1) && isNumber(v2) && isNumber(v3) && parentProps.updateOnInput) {
         onThreeValuesChange();
       }
     });
 
     watch(alpha, val => {
-      if (isNumber(val) && parentProps?.updateOnInput) {
+      if (isNumber(val) && parentProps.updateOnInput) {
         onHexChange();
       }
     });
 
     watch(hex, val => {
-      if (val && parentProps?.updateOnInput) {
+      if (val && parentProps.updateOnInput) {
         onHexChange();
       }
     });
 
     function onUpdateHex(hex: string) {
-      if (hex && parentProps?.updateOnInput) {
-        currentValue?.currentActiveColorTarget?.color.analysis(hex, Number(alpha.value));
+      if (hex && parentProps.updateOnInput) {
+        currentValue.currentActiveColorTarget.color.analysis(hex, Number(alpha.value));
       }
     }
 
     function onHexChange() {
-      currentValue?.currentActiveColorTarget?.color.analysis(hex.value, Number(alpha.value));
+      currentValue.currentActiveColorTarget.color.analysis(hex.value, Number(alpha.value));
     }
 
     function onAlphaChange(e: KeyboardEvent | Event) {
       if (e.type === 'keydown' && (e as KeyboardEvent).code !== 'Enter') return;
       if (parseInt(alpha.value) >= 0 && parseInt(alpha.value) <= 100) {
-        currentValue?.currentActiveColorTarget?.color.set('alpha', parseInt(alpha.value));
+        currentValue.currentActiveColorTarget.color.set('alpha', parseInt(alpha.value));
       } else {
         initAlpha();
       }
     }
 
     function onThreeValuesChange() {
-      const alphaStr = parentProps?.alpha ? `,${parseInt(alpha.value) / 100}` : '';
+      const alphaStr = parentProps.alpha ? `,${parseInt(alpha.value) / 100}` : '';
       switch (currentFormat.value) {
         case 'hsl':
-          currentValue?.currentActiveColorTarget?.color.analysis(
+          currentValue.currentActiveColorTarget.color.analysis(
             `hsl(${input1.value},${input2.value}%,${input3.value}%${alphaStr})`,
           );
           break;
         case 'hsv':
-          currentValue?.currentActiveColorTarget?.color.analysis(
+          currentValue.currentActiveColorTarget.color.analysis(
             `hsv(${input1.value},${input2.value}%,${input3.value}%${alphaStr})`,
           );
           break;
         case 'rgb':
-          currentValue?.currentActiveColorTarget?.color.analysis(
+          currentValue.currentActiveColorTarget.color.analysis(
             `rgb(${input1.value},${input2.value},${input3.value}${alphaStr})`,
           );
           break;
@@ -133,18 +131,18 @@ export default defineComponent({
     }
 
     function initHex() {
-      hex.value = currentValue?.currentActiveColorTarget?.color.toHex().replace('#', '') || '';
+      hex.value = currentValue.currentActiveColorTarget.color.toHex().replace('#', '');
     }
 
     function initAlpha() {
-      alpha.value = (currentValue?.currentActiveColorTarget?.color.get('alpha') || 0).toString();
+      alpha.value = currentValue.currentActiveColorTarget.color.get('alpha').toString();
     }
 
     return () => (
       <div class={classHelper.block}>
         <div class={classHelper.e('type-picker')}>
           <HSelect v-model={currentFormat.value} size="small" toBody={false}>
-            {['hex', ...(parentProps?.editableModes ?? [])]?.map(mode => (
+            {['hex', ...parentProps.editableModes].map(mode => (
               <HOption value={mode} label={mode.toUpperCase()} />
             ))}
           </HSelect>

@@ -386,8 +386,10 @@ describe('Dropdown.tsx', () => {
     });
 
     test('z-index', async () => {
+      const sessionZIndex = Number(sessionStorage.getItem('horizon-web-z-index') ?? 2000);
+      const requestedZIndex = sessionZIndex + 100;
       const wrapper = mount(() => (
-        <HDropdown toBody={false} zIndex={1000}>
+        <HDropdown toBody={false} zIndex={requestedZIndex}>
           {{
             default: () => <HButton>Trigger</HButton>,
             dropdown: () => (
@@ -407,7 +409,9 @@ describe('Dropdown.tsx', () => {
 
       await sleep(620);
 
-      expect(wrapper.find('.h-popover__popper').attributes('style')).toContain('z-index: 2013;');
+      expect(
+        Number((wrapper.get('.h-popover__popper').element as HTMLElement).style.zIndex),
+      ).toBe(requestedZIndex + 1);
     });
   });
 

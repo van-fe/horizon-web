@@ -29,6 +29,16 @@ import type { TableColumnProps } from '../composables/useProps';
 import { warn } from '~/utils/useLog';
 import { getColumnRuntime } from './useColumnRuntime';
 
+export function isTableFilterValueEmpty(value: unknown, seen = new WeakSet<object>()): boolean {
+  if (!Array.isArray(value)) return isNil(value);
+  if (seen.has(value)) return false;
+
+  seen.add(value);
+  const empty = value.length === 0 || value.every(item => isTableFilterValueEmpty(item, seen));
+  seen.delete(value);
+  return empty;
+}
+
 export function useSortPlugin(column: HTableColumnData) {
   if (!column.props.field) {
     return [];
@@ -162,15 +172,26 @@ export function useFilterPlugin(
       break;
   }
 
-  function checkValueEmpty(value = column[HTableColumnFilterKey].currentFilterValue.value) {
-    if (Array.isArray(value)) {
-      return value.length === 0 || value.every(checkValueEmpty);
-    } else {
-      return isNil(value);
-    }
-  }
-
-  const isValueIsEmpty = checkValueEmpty();
+  const isValueIsEmpty = isTableFilterValueEmpty(
+    column[HTableColumnFilterKey].currentFilterValue.value,
+  );
+  const renderPickerOuter = (modelValue?: string) => (
+    <HTooltip disabled={isValueIsEmpty} content={modelValue}>
+      <HButton
+        class={cls(classHelper.em('header', 'filter-icon'))}
+        size="small"
+        text={true}
+        active={!isValueIsEmpty}
+        type={!isValueIsEmpty ? 'primary' : 'normal'}
+        icon={triggerIcon}
+        iconSize={16}
+        disabled={column.props.filterDisabled}
+      />
+    </HTooltip>
+  );
+  const triggerSlots = ['cascader', 'tree-select'].includes(column.props.filterType)
+    ? { default: () => renderPickerOuter() }
+    : { pickerOuter: renderPickerOuter };
 
   return (
     <RenderComponent
@@ -189,22 +210,7 @@ export function useFilterPlugin(
       {...(column.props.filterOptions ?? {})}
       onCancel={() => (column[HTableColumnFilterKey].currentFilterValue.value = undefined)}
     >
-      {{
-        pickerOuter: (modelValue?: string) => (
-          <HTooltip disabled={isValueIsEmpty} content={modelValue}>
-            <HButton
-              class={cls(classHelper.em('header', 'filter-icon'))}
-              size="small"
-              text={true}
-              active={!isValueIsEmpty}
-              type={!isValueIsEmpty ? 'primary' : 'normal'}
-              icon={triggerIcon}
-              iconSize={16}
-              disabled={column.props.filterDisabled}
-            />
-          </HTooltip>
-        ),
-      }}
+      {triggerSlots}
     </RenderComponent>
   );
 }

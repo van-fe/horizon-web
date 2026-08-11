@@ -18,7 +18,7 @@ export default defineComponent({
   exposes: useImageCropperExposes,
   setup(props, { slots, emit, expose }) {
     const c = new ComponentClassBlock('image-cropper');
-    const state = useImageCropper(props, emit as any);
+    const state = useImageCropper(props, emit);
     const rotateLabel = useLocaleLang('imageCropper.rotate', 'Rotate');
     const resetLabel = useLocaleLang('imageCropper.reset', 'Reset');
     const cropLabel = useLocaleLang('imageCropper.crop', 'Crop');

@@ -64,4 +64,20 @@ describe('Count.tsx', () => {
     expect(wrapper.find('.h-count__content').text()).toBe('5');
     expect(wrapper.findComponent(HCount).emitted('change')?.at(-1)).toEqual([5]);
   });
+
+  test('advances by the configured step and emits every displayed value', async () => {
+    vi.useFakeTimers();
+    const wrapper = mount(() => (
+      <HCount startValue={1} endValue={201} step={2} delay={25} autoPlay />
+    ));
+
+    expect(wrapper.get('.h-count__content').text()).toBe('1');
+    await vi.advanceTimersByTimeAsync(25);
+    await nextTick();
+    expect(wrapper.get('.h-count__content').text()).toBe('101');
+    await vi.advanceTimersByTimeAsync(25);
+    await nextTick();
+    expect(wrapper.get('.h-count__content').text()).toBe('201');
+    expect(wrapper.findComponent(HCount).emitted('change')).toEqual([[1], [101], [201]]);
+  });
 });

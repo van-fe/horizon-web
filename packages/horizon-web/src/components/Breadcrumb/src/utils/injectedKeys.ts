@@ -1,7 +1,7 @@
 import type { InjectionKey } from 'vue';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { generatorInjectedKeyName } from '@aurora/utils';
-import type { BreadcrumbItemProps, BreadcrumbProps } from '../composables/useProps';
+import type { BreadcrumbItem, BreadcrumbProps } from '../composables/useProps';
 import type { BreadcrumbSlots } from '../composables/useSlots';
 
 export const HBreadcrumbProps = Symbol(
@@ -14,4 +14,4 @@ export const HBreadcrumbSlots = Symbol(
 
 export const HBreadcrumbItemClickInjectKey = Symbol(
   generatorInjectedKeyName('breadcrumb', 'item-click'),
-) as InjectionKey<(props: BreadcrumbItemProps, evt: MouseEvent) => void>;
+) as InjectionKey<(props: BreadcrumbItem, evt: MouseEvent) => void>;

@@ -213,8 +213,7 @@ export default class ColorPickerColor {
   public analyseGradientColor(color: string) {
     const values = color.match(/\w+-gradient\((.*?)\)/)?.[1] || '';
     const matches = values.split(',');
-    if (matches) {
-      if (color.includes('linear-gradient')) {
+    if (color.includes('linear-gradient')) {
         this.colorType.value = ColorTypeEnum.Linear;
         if (/^\d+deg\s*/.test(matches[0])) {
           this.degree.value = Number(matches[0].replace(/deg\s*/, '')) || 90;
@@ -228,17 +227,17 @@ export default class ColorPickerColor {
           this.degree.value = gradientColorDirectionToDegree[direction];
           matches.shift();
         }
-      } else if (color.includes('radial-gradient')) {
+    } else if (color.includes('radial-gradient')) {
         this.colorType.value = ColorTypeEnum.Radial;
         if (['circle', 'ellipse'].includes(matches[0].trim())) {
           this.radialType.value = matches[0].trim() as 'circle' | 'ellipse';
           matches.shift();
         }
-      } else if (color.includes('conic-gradient')) {
+    } else if (color.includes('conic-gradient')) {
         this.colorType.value = ColorTypeEnum.Conic;
       }
 
-      this.values.value = matches.map((color, index, sum) => {
+    this.values.value = matches.map((color, index, sum) => {
         const value = color.trim().split(' ');
 
         let percent;
@@ -263,8 +262,7 @@ export default class ColorPickerColor {
           percent,
           id: uniqueId(),
         };
-      });
-    }
+    });
   }
 
   public addColor(color: string, percent = 0) {

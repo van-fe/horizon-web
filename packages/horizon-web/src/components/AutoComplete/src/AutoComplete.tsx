@@ -78,6 +78,7 @@ export default defineComponent({
       externalPanelStyle: externalPanelStyleProp,
       externalPanelClass: externalPanelClassProp,
       externalStyle: externalStyleProp,
+      externalClass: externalClassProp,
       loading: loadingProp,
       loadingText: loadingTextProp,
       inputStatus: inputStatusProp,
@@ -157,7 +158,17 @@ export default defineComponent({
 
     const isDuringComposition = ref(false);
 
-    const visibleOptions = computed(() => Array.from(optionList.value.values()));
+    const visibleOptions = computed(() => {
+      const options = Array.from(optionList.value.values());
+      if (!props.selectedOptionOrderToTop || !popperVisible.value || isNil(modelValue.value)) {
+        return options;
+      }
+      return options.toSorted((left, right) => {
+        const leftSelected = isEqualLoose(left.value ?? left.label, modelValue.value);
+        const rightSelected = isEqualLoose(right.value ?? right.label, modelValue.value);
+        return Number(rightSelected) - Number(leftSelected);
+      });
+    });
 
     provide(HAutoCompleteVisibleOptionsInjectKey, visibleOptions);
 
@@ -367,7 +378,7 @@ export default defineComponent({
         ref={pickerDomRef}
         size={sizeRef.value}
         modelValue={modelValue.value}
-        class={cls(classHelper.block)}
+        class={cls(classHelper.block, externalClassProp.value)}
         inputable
         inputIsSearching
         inputStatus={!!nFormError?.value ? 'error' : inputStatusProp.value}

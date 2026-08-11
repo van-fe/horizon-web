@@ -161,17 +161,17 @@ export default defineComponent({
 
     onKeyStroke('Escape', onESCKeydown);
 
-    const onVisibleChanged = (oldVal: boolean, val: boolean) => {
-      if (visible.value) {
+    const onVisibleChanged = (val: boolean, oldVal: boolean | undefined) => {
+      if (val) {
         emit('open');
         open();
       } else {
-        if (oldVal !== val) emit('close');
+        if (oldVal !== undefined && oldVal !== val) emit('close');
         instances.value = instances.value.filter(inst => inst !== instance);
       }
     };
 
-    watch(visible, onVisibleChanged);
+    watch(visible, onVisibleChanged, { immediate: true });
 
     const onDefaultCancel = async () => {
       emit('cancel');
@@ -184,8 +184,6 @@ export default defineComponent({
 
     const handleCloseIconClick = () => {
       emit('iconClick');
-
-      if (!closable.value) return;
       return onClose();
     };
 
@@ -227,6 +225,7 @@ export default defineComponent({
     provide(HScrollbarUpdateDelayInjectKey, 400);
 
     onBeforeUnmount(() => {
+      instances.value = instances.value.filter(inst => inst !== instance);
       if (shouldLockScroll.value) {
         useLockScroll(false);
       }
@@ -299,6 +298,7 @@ export default defineComponent({
                         onClick={onDefaultOk}
                         style={{ marginLeft: cssVariable('spacing-5') }}
                         {...okButtonProps.value}
+                        loading={props.loading}
                       >
                         {okButtonText.value}
                       </HButton>

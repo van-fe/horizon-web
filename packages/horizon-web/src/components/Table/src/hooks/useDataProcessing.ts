@@ -50,7 +50,7 @@ interface HTableDataProcessingHookOptions {
   emit: SetupContext<TableEmits>['emit'];
 }
 
-interface NormalizedDataProcessingOptions {
+export interface NormalizedDataProcessingOptions {
   mode: HTableDataProcessingMode;
   workerThreshold: number;
   debounce: number;
@@ -64,7 +64,9 @@ function now() {
     : Date.now();
 }
 
-function normalizeOptions(value: TableProps['dataProcessing']): NormalizedDataProcessingOptions {
+export function normalizeTableDataProcessingOptions(
+  value: TableProps['dataProcessing'],
+): NormalizedDataProcessingOptions {
   const options: HTableDataProcessingOptions =
     value && typeof value === 'object' ? value : { mode: value || 'sync' };
   return {
@@ -89,7 +91,7 @@ function normalizeOptions(value: TableProps['dataProcessing']): NormalizedDataPr
   };
 }
 
-function isStrictPrimitive(value: unknown): value is HTableDataPrimitive {
+export function isTableDataStrictPrimitive(value: unknown): value is HTableDataPrimitive {
   return (
     value === null ||
     value === undefined ||
@@ -99,31 +101,31 @@ function isStrictPrimitive(value: unknown): value is HTableDataPrimitive {
   );
 }
 
-function mapStrictPrimitiveColumn(
+export function mapTableStrictPrimitiveColumn(
   rows: HTableTransformedRowDataType[],
   field: string,
 ): HTableDataPrimitive[] | undefined {
   const values = new Array<HTableDataPrimitive>(rows.length);
   for (let index = 0; index < rows.length; index++) {
     const value = get(rows[index], field);
-    if (!isStrictPrimitive(value)) return undefined;
+    if (!isTableDataStrictPrimitive(value)) return undefined;
     values[index] = value;
   }
   return values;
 }
 
-function mapStringColumn(rows: HTableTransformedRowDataType[], field: string) {
+export function mapTableStringColumn(rows: HTableTransformedRowDataType[], field: string) {
   return rows.map(row => String(get(row, field) ?? ''));
 }
 
-function mapSortColumn(rows: HTableTransformedRowDataType[], field: string) {
+export function mapTableSortColumn(rows: HTableTransformedRowDataType[], field: string) {
   return rows.map(row => {
     const value = get(row, field);
     return typeof value === 'number' ? value : String(value ?? '');
   });
 }
 
-function buildWorkerInput(
+export function buildTableWorkerInput(
   rows: HTableTransformedRowDataType[],
   filters: HTableColumnData[],
   sorts: Array<[HTableColumnData, HTableSortOrderEnum]>,
@@ -146,7 +148,7 @@ function buildWorkerInput(
     switch (column.props.filterType) {
       case 'input':
       case 'input-number':
-        projectionColumns[key] = mapStringColumn(rows, field);
+        projectionColumns[key] = mapTableStringColumn(rows, field);
         workerFilters.push({ column: key, operator: 'contains', value: String(value) });
         break;
       case 'select':
@@ -156,11 +158,11 @@ function buildWorkerInput(
         const multiple = (column.props.filterOptions as { multiple?: boolean } | undefined)
           ?.multiple;
         if (multiple === false) {
-          projectionColumns[key] = mapStringColumn(rows, field);
+          projectionColumns[key] = mapTableStringColumn(rows, field);
           workerFilters.push({ column: key, operator: 'equals', value: String(values[0] ?? '') });
         } else {
-          if (!values.every(isStrictPrimitive)) return undefined;
-          const projected = mapStrictPrimitiveColumn(rows, field);
+          if (!values.every(isTableDataStrictPrimitive)) return undefined;
+          const projected = mapTableStrictPrimitiveColumn(rows, field);
           if (!projected) return undefined;
           projectionColumns[key] = projected;
           workerFilters.push({ column: key, operator: 'in', values });
@@ -178,7 +180,7 @@ function buildWorkerInput(
     if (!field || column.props.sortMethod || column.props.sortBy) return undefined;
 
     const key = `sort:${index}`;
-    projectionColumns[key] = mapSortColumn(rows, field);
+    projectionColumns[key] = mapTableSortColumn(rows, field);
     workerSorts.push({
       column: key,
       direction: order === HTableSortOrderEnum.ASC ? 'asc' : 'desc',
@@ -202,7 +204,7 @@ export default function useDataProcessing(options: HTableDataProcessingHookOptio
   const processingState = shallowRef<HTableDataProcessingState>({
     revision: 0,
     status: 'idle',
-    requestedMode: normalizeOptions(options.props.dataProcessing).mode,
+    requestedMode: normalizeTableDataProcessingOptions(options.props.dataProcessing).mode,
     mode: 'sync',
     rowCount: options.rows.value.length,
     resultRowCount: options.rows.value.length,
@@ -215,7 +217,9 @@ export default function useDataProcessing(options: HTableDataProcessingHookOptio
   let activeExecutorWorkerFactory: HTableDataWorkerFactory | undefined;
   let disposed = false;
 
-  const normalizedOptions = computed(() => normalizeOptions(options.props.dataProcessing));
+  const normalizedOptions = computed(() =>
+    normalizeTableDataProcessingOptions(options.props.dataProcessing),
+  );
 
   const querySnapshot = computed(() => ({
     filters: options.columns.value.flattenColumns.map(column => {
@@ -374,7 +378,7 @@ export default function useDataProcessing(options: HTableDataProcessingHookOptio
       let result: HTableTransformedRowDataType[];
       let mode: 'sync' | 'worker' = 'sync';
       let fallbackReason: HTableDataProcessingFallbackReason | undefined;
-      const workerInput = requestedWorker ? buildWorkerInput(source, filters, sorts) : undefined;
+      const workerInput = requestedWorker ? buildTableWorkerInput(source, filters, sorts) : undefined;
 
       if (!requestedWorker || !workerInput) {
         disposeExecutor();

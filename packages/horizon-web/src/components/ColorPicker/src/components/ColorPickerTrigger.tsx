@@ -8,16 +8,10 @@ import {
 
 export default defineComponent({
   name: 'ColorPickerTrigger',
-  props: {
-    withText: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  setup(props) {
+  setup() {
     const classHelper = new ComponentClassBlock('color-picker-trigger');
-    const parentProps = inject(ColorPickerProps);
-    const parentSlots = inject(ColorPickerSlotsInjectedKey);
+    const parentProps = inject(ColorPickerProps)!;
+    const parentSlots = inject(ColorPickerSlotsInjectedKey)!;
     const modelColor = inject(ColorPickerModelValue)!;
 
     return () => (
@@ -25,23 +19,20 @@ export default defineComponent({
         <div
           class={cls(
             classHelper.em('color', 'wrapper'),
-            classHelper.is('alpha', parentProps?.alpha),
+            classHelper.is('alpha', parentProps.alpha),
           )}
         >
           <div
             class={cls(
               classHelper.e('color'),
-              classHelper.is('empty', !modelColor?.resultsValue.value),
+              classHelper.is('empty', !modelColor.resultsValue.value),
             )}
-            style={{ background: modelColor?.resultsValue.value }}
+            style={{ background: modelColor.resultsValue.value }}
           />
         </div>
-        {(parentProps?.squareText || props.withText) &&
-          parentProps?.triggerType === 'square' &&
-          modelColor?.resultsValue.value && (
+        {parentProps.squareText && parentProps.triggerType === 'square' && modelColor.resultsValue.value && (
             <div class={classHelper.e('text')}>
-              {parentSlots?.squareText?.(modelColor) ??
-                (props.withText ? modelColor?.resultsValue.value : '')}
+              {parentSlots.squareText?.(modelColor) ?? modelColor.resultsValue.value}
             </div>
           )}
       </div>

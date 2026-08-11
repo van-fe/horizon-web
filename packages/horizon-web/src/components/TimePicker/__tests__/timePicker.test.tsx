@@ -103,7 +103,7 @@ describe('TimePicker.tsx', () => {
     expect(onChange).toHaveBeenLastCalledWith(['08:15:00', '18:30:00']);
   });
 
-  test.fails(
+  test(
     'single-trigger range preserves incomplete values without displaying undefined',
     () => {
       const wrapper = mount(HTimePicker, {

@@ -6,7 +6,7 @@ import { computed, nextTick, ref } from 'vue';
 import { HButton } from '../../../components/Button';
 
 describe('v-popconfirm.tsx', () => {
-  test.only('update options', async () => {
+  test('update options', async () => {
     const isOnline = ref(false);
 
     const popconfirmOption = computed(() => ({

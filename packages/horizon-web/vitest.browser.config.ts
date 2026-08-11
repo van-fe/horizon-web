@@ -2,8 +2,16 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import vue from '@vitejs/plugin-vue';
 import { playwright } from '@vitest/browser-playwright';
 import { defineConfig } from 'vitest/config';
+import { readdirSync } from 'node:fs';
 import * as path from 'path';
 import { scssPreprocessorOptions } from './build/sass-options';
+
+const componentCoverageIncludes = readdirSync(
+  path.join(__dirname, 'src/components'),
+  { withFileTypes: true },
+)
+  .filter((entry) => entry.isDirectory())
+  .map((entry) => `src/components/${entry.name}/**/*.{ts,tsx}`);
 
 export default defineConfig({
   css: { preprocessorOptions: scssPreprocessorOptions },
@@ -54,6 +62,23 @@ export default defineConfig({
     ],
     setupFiles: [path.join(__dirname, './vitest.setup.ts')],
     testTimeout: 10000,
+    coverage: {
+      provider: 'v8',
+      include: componentCoverageIncludes,
+      exclude: [
+        'src/components/**/__tests__/**',
+        'src/components/**/*.{test,spec}.{ts,tsx}',
+        'src/components/**/*.d.ts',
+      ],
+      reporter: ['text', 'json-summary', 'html'],
+      reportOnFailure: true,
+      thresholds: {
+        statements: 95,
+        branches: 95,
+        functions: 95,
+        lines: 95,
+      },
+    },
     browser: {
       api: { host: '127.0.0.1' },
       enabled: true,

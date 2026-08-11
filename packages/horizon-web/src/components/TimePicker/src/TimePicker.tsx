@@ -130,10 +130,12 @@ export default defineComponent({
         type: 'start' | 'end' = 'start',
       ) => {
         if (type === 'start') {
-          startTimePanelDomRef.value?.clickTimeCell(time, triggerType);
+          onUpdateTime(time, endTime.value, triggerType);
         } else {
-          endTimePanelDomRef.value?.clickTimeCell(time, triggerType);
+          onUpdateTime(startTime.value, time, triggerType);
         }
+
+        return true;
       },
       changePanelVisible: modifyPanelVisible,
       confirmHandle: doConfirm,
@@ -164,6 +166,7 @@ export default defineComponent({
         size={size.value}
         class={cls(classHelper.block, classHelper.is('clearable', propRefs.clearable.value))}
         trigger={propRefs.trigger.value}
+        placement={propRefs.placement.value}
         inputable={propRefs.inputable.value}
         inputStyle={propRefs.inputStyle.value}
         inputStatus={!!formItemError?.value ? 'error' : propRefs.inputStatus?.value}
@@ -183,8 +186,13 @@ export default defineComponent({
           propRefs.placeholder?.value ?? (useLocaleLang('timePicker.placeholder').value as string)
         }
         dropdownIcon={propRefs.suffixIcon?.value}
+        clearIcon={propRefs.clearIcon?.value}
         dropdownIconCanTurned={false}
-        preserveSuffixIconSpace={false}
+        preserveSuffixIconSpace={propRefs.preserveSuffixIconSpace.value}
+        emptyText={propRefs.emptyText?.value}
+        destroyOnHide={propRefs.destroyOnHide.value}
+        hoverShowDelay={propRefs.hoverShowDelay.value}
+        hoverHideDelay={propRefs.hoverHideDelay.value}
         confirmDisabled={!canConfirmBtnClick.value}
         panelClass={propRefs.panelClass?.value}
         panelStyle={propRefs.panelStyle?.value}

@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { HRecycleScroller, HVirtualScroller } from '..';
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import { nextTick, ref } from 'vue';
+import { KeepAlive, defineComponent, nextTick, ref } from 'vue';
 import type { VirtualScrollerRenderlessScope } from '../src/composables/useSlots';
 
 type Item = {
@@ -219,5 +219,247 @@ describe('VirtualScroller.tsx', () => {
 
     wrapper.findComponent(HVirtualScroller).getCurrentComponent().exposed?.scrollToItem(20);
     expect(container.value!.scrollTop).toBe(400);
+  });
+
+  test('scrolls a component-owned viewport to the stable bottom and ignores duplicate requests', async () => {
+    vi.spyOn(window, 'requestAnimationFrame').mockImplementation(callback => {
+      callback(0);
+      return 1;
+    });
+    const wrapper = mount(
+      HVirtualScroller,
+      {
+        props: {
+          items: getData().slice(0, 20),
+          itemSize: 20,
+          minItemSize: 20,
+          scrollerHeight: 100,
+        },
+        attachTo: document.body,
+      },
+    );
+    await nextTick();
+    const scroll = wrapper.get<HTMLElement>('.h-scrollbar__wrap').element;
+    Object.defineProperties(scroll, {
+      scrollHeight: { configurable: true, value: 400 },
+      scrollTop: { configurable: true, writable: true, value: 0 },
+    });
+    (wrapper.vm as any).scrollToBottom();
+    (wrapper.vm as any).scrollToBottom();
+    await nextTick();
+    expect(scroll.scrollTop).toBe(400);
+    wrapper.unmount();
+  });
+
+  test('supports horizontal renderless scrolling to an item and the bottom', async () => {
+    vi.spyOn(window, 'requestAnimationFrame').mockImplementation(callback => {
+      callback(0);
+      return 1;
+    });
+    const container = ref<HTMLElement>();
+    const scroller = ref<any>();
+    const wrapper = mount(
+      () => (
+        <div ref={container} style="width: 100px; overflow: auto">
+          <HVirtualScroller
+            ref={scroller}
+            items={getData().slice(0, 10)}
+            itemSize={25}
+            minItemSize={25}
+            direction="horizontal"
+            renderless
+            scrollContainer={container.value}
+          >
+            {{ renderless: () => <div>horizontal renderless</div> }}
+          </HVirtualScroller>
+        </div>
+      ),
+      { attachTo: document.body },
+    );
+    await nextTick();
+    await wrapper.get('div').trigger('scroll');
+    await nextTick();
+    Object.defineProperty(container.value!, 'scrollLeft', {
+      configurable: true,
+      writable: true,
+      value: 0,
+    });
+    scroller.value.scrollToItem(3);
+    expect(container.value?.scrollLeft).toBe(75);
+    scroller.value.scrollToBottom();
+    expect(container.value?.scrollLeft).toBe(250);
+    wrapper.unmount();
+  });
+
+  test('preserves the visible anchor when rows are prepended in both directions', async () => {
+    const verticalItems = ref(Array.from({ length: 8 }, (_, id) => ({ id })));
+    const verticalContainer = ref<HTMLElement>();
+    const vertical = mount(
+      () => (
+        <div ref={verticalContainer} style="height: 60px; overflow: auto">
+          <HVirtualScroller
+            items={verticalItems.value}
+            itemSize={20}
+            minItemSize={20}
+            scrollerHeight={60}
+            buffer={0}
+            renderless
+            scrollContainer={verticalContainer.value}
+          >
+            {{ renderless: () => <div>vertical anchor</div> }}
+          </HVirtualScroller>
+        </div>
+      ),
+      { attachTo: document.body },
+    );
+    await nextTick();
+    await vertical.get('div').trigger('scroll');
+    const verticalScroll = verticalContainer.value!;
+    Object.defineProperty(verticalScroll, 'scrollTop', {
+      configurable: true,
+      writable: true,
+      value: 45,
+    });
+    verticalItems.value = [{ id: -2 }, { id: -1 }, ...verticalItems.value];
+    await nextTick();
+    await nextTick();
+    expect(verticalScroll.scrollTop).toBe(85);
+    vertical.unmount();
+
+    const horizontalItems = ref(Array.from({ length: 8 }, (_, id) => ({ id })));
+    const horizontalContainer = ref<HTMLElement>();
+    const horizontal = mount(
+      () => (
+        <div ref={horizontalContainer} style="width: 60px; overflow: auto">
+          <HVirtualScroller
+            items={horizontalItems.value}
+            itemSize={20}
+            minItemSize={20}
+            direction="horizontal"
+            scrollerHeight={60}
+            buffer={0}
+            renderless
+            scrollContainer={horizontalContainer.value}
+          >
+            {{ renderless: () => <div>horizontal anchor</div> }}
+          </HVirtualScroller>
+        </div>
+      ),
+      { attachTo: document.body },
+    );
+    await nextTick();
+    await horizontal.get('div').trigger('scroll');
+    const horizontalScroll = horizontalContainer.value!;
+    Object.defineProperty(horizontalScroll, 'scrollLeft', {
+      configurable: true,
+      writable: true,
+      value: 45,
+    });
+    horizontalItems.value = [{ id: -2 }, { id: -1 }, ...horizontalItems.value];
+    await nextTick();
+    await nextTick();
+    expect(horizontalScroll.scrollLeft).toBe(85);
+    horizontal.unmount();
+  });
+
+  test('reacts to simple arrays, direction/key changes and KeepAlive activation', async () => {
+    const show = ref(true);
+    const direction = ref<'vertical' | 'horizontal'>('vertical');
+    const keyField = ref('id');
+    const items = ref<any[]>(['a', 'b', 'c']);
+    const Host = defineComponent({
+      setup() {
+        return () => (
+          <KeepAlive>
+            {show.value ? (
+              <HVirtualScroller
+                items={items.value}
+                itemSize={20}
+                minItemSize={20}
+                direction={direction.value}
+                keyField={keyField.value}
+                scrollerHeight={60}
+              />
+            ) : null}
+          </KeepAlive>
+        );
+      },
+    });
+    const wrapper = mount(Host);
+    await nextTick();
+    expect(wrapper.findComponent(HVirtualScroller).exists()).toBe(true);
+    direction.value = 'horizontal';
+    items.value = [{ code: 'a' }, { code: 'b' }];
+    keyField.value = 'code';
+    await nextTick();
+    show.value = false;
+    await nextTick();
+    show.value = true;
+    await nextTick();
+    expect(wrapper.findComponent(HVirtualScroller).exists()).toBe(true);
+  });
+
+  test('measures and scrolls page-mode viewports in vertical and horizontal directions', async () => {
+    const direction = ref<'vertical' | 'horizontal'>('vertical');
+    const outer = document.createElement('div');
+    outer.style.overflow = 'auto';
+    document.body.append(outer);
+    Object.defineProperties(outer, {
+      clientHeight: { configurable: true, value: 100 },
+      clientWidth: { configurable: true, value: 120 },
+      scrollTop: { configurable: true, writable: true, value: 5 },
+      scrollLeft: { configurable: true, writable: true, value: 7 },
+    });
+    vi.spyOn(outer, 'getBoundingClientRect').mockReturnValue({
+      top: 10,
+      left: 15,
+      right: 135,
+      bottom: 110,
+      width: 120,
+      height: 100,
+      x: 15,
+      y: 10,
+      toJSON: () => ({}),
+    });
+    const outerScroll = vi.spyOn(outer, 'scroll').mockImplementation(() => undefined);
+    const wrapper = mount(
+      () => (
+        <HRecycleScroller
+          items={getData().slice(0, 20)}
+          itemSize={20}
+          minItemSize={20}
+          direction={direction.value}
+          pageMode
+          scrollOption={{ behavior: 'smooth' }}
+        />
+      ),
+      { attachTo: outer },
+    );
+    await nextTick();
+    await nextTick();
+    const root = wrapper.get<HTMLElement>('.h-scrollbar__wrap').element;
+    vi.spyOn(root, 'getBoundingClientRect').mockReturnValue({
+      top: 40,
+      left: 55,
+      right: 255,
+      bottom: 240,
+      width: 200,
+      height: 200,
+      x: 55,
+      y: 40,
+      toJSON: () => ({}),
+    });
+    outer.dispatchEvent(new Event('scroll'));
+    await nextTick();
+    wrapper.getComponent(HRecycleScroller).getCurrentComponent().exposed?.scrollToItem(2);
+    expect(outerScroll).toHaveBeenCalledWith({ top: 75, behavior: 'smooth' });
+
+    direction.value = 'horizontal';
+    await nextTick();
+    outer.dispatchEvent(new Event('scroll'));
+    wrapper.getComponent(HRecycleScroller).getCurrentComponent().exposed?.scrollToItem(3);
+    expect(outerScroll).toHaveBeenCalledWith({ left: 107, behavior: 'smooth' });
+    wrapper.unmount();
+    outer.remove();
   });
 });

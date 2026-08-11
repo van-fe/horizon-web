@@ -251,6 +251,16 @@ export default class UploadHelper extends UploadHelperOptions {
 
   public async uploadFile(file: HUploadFileType) {
     this.removeFileFromReadyUploadFilesQueue(file);
+    if (
+      [
+        HUploadFileStatusEnum.Fail,
+        HUploadFileStatusEnum.Canceling,
+        HUploadFileStatusEnum.Canceled,
+      ].includes(file.status)
+    ) {
+      this.setStatus(file, HUploadFileStatusEnum.Retrying);
+    }
+    this.eventEmitter.emit('upload', file);
 
     if (this.multipart) {
       const existingHelper = this.multipartUploadHelpers.get(file.uuid);
@@ -302,12 +312,13 @@ export default class UploadHelper extends UploadHelperOptions {
   }
 
   public continueUpload(file: HUploadFileType) {
+    this.eventEmitter.emit('continue', file);
     const multipartHelper = this.multipartUploadHelpers.get(file.uuid);
     if (multipartHelper) {
       this.setStatus(file, HUploadFileStatusEnum.Retrying);
       void multipartHelper.resume();
     } else {
-      this.uploadFileDirectly(file);
+      void this.uploadFile(file);
     }
   }
 

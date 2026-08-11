@@ -30,7 +30,7 @@ export default defineComponent({
     const itemRef = ref<Record<string, HTMLElement>>({});
     const locale = inject(localeInjectKey, defaultLocale);
     const isDuringDrag = ref(false);
-    const parentProps = inject(ColorPickerProps);
+    const parentProps = inject(ColorPickerProps)!;
 
     useResizeObserver(trackRef, params => {
       trackWidth.value = params[0].contentRect.width;
@@ -71,14 +71,12 @@ export default defineComponent({
 
     function setDraggable(id: string) {
       function handleDrag(position: Position, event: MouseEvent | TouchEvent) {
-        if (isDuringDrag.value) {
-          const rect = trackRef.value!.getBoundingClientRect();
-          const { clientX } = getClientXY(event);
+        const rect = trackRef.value!.getBoundingClientRect();
+        const { clientX } = getClientXY(event);
 
-          const left = clamp(clientX - rect.left, 0, rect.width); // 鼠标到轨道最左侧的距离
+        const left = clamp(clientX - rect.left, 0, rect.width); // 鼠标到轨道最左侧的距离
 
-          currentColor.setColorPercent((left / rect.width) * 100);
-        }
+        currentColor.setColorPercent((left / rect.width) * 100);
       }
 
       useDraggable(itemRef.value[id], {
@@ -106,7 +104,7 @@ export default defineComponent({
     }
 
     watch(
-      () => parentProps?.gradientList,
+      () => parentProps.gradientList,
       val => {
         if (val && val.length === 1) {
           switchColorType(val[0] as ColorTypeEnum);
@@ -128,22 +126,22 @@ export default defineComponent({
     return () => (
       <div class={cls(classHelper.block)}>
         <div
-          v-show={(parentProps?.gradientList?.length || 0) > 1}
+          v-show={parentProps.gradientList.length > 1}
           class={cls(classHelper.em('list', 'wrapper'))}
         >
           <div class={cls(classHelper.e('list'))}>
-            {['pure', ...(parentProps?.gradientList || [])].map(key => {
+            {['pure', ...parentProps.gradientList].map(key => {
               const colorTypeKey = key as 'pure' | 'linear' | 'radial' | 'conic';
               return (
                 <HTooltip
                   showAfter={200}
-                  content={locale?.value?.langService.td().horizonWeb.colorPicker[colorTypeKey]}
+                  content={locale.value?.langService.td().horizonWeb.colorPicker[colorTypeKey]}
                 >
                   <div
                     class={cls(
                       classHelper.e('item'),
                       classHelper.is(colorTypeKey),
-                      classHelper.is('active', currentColor?.colorType.value === colorTypeKey),
+                      classHelper.is('active', currentColor.colorType.value === colorTypeKey),
                     )}
                     onClick={() => switchColorType(colorTypeKey as ColorTypeEnum)}
                   />
@@ -161,11 +159,7 @@ export default defineComponent({
               <div
                 class={classHelper.em('gradient', 'track-color')}
                 style={{ background: currentColor.getTrackResultColor() }}
-                onClick={(e) => {
-                  if (e.target === e.currentTarget) {
-                    addGradient(e);
-                  }
-                }}
+                onClick={addGradient}
               />
               {currentColor.values.value.map((item, index) => (
                 <div

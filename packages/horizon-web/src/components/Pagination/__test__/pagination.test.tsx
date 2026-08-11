@@ -11,8 +11,30 @@ import SimplestPager from '../src/components/SimplestPager';
 import Pagination from '../index';
 import HInputNumber from '../../InputNumber';
 import { sleep } from '~/utils/tools';
+import { localeInjectKey } from '~/provides';
+import { usePaginationEmits } from '../src/composables/useEmits';
 
 describe('Pagination.tsx', () => {
+  test('validates every public emit payload defensively', () => {
+    const singleValueValidators = [
+      usePaginationEmits['update:pageSize'],
+      usePaginationEmits['update:currentPage'],
+      usePaginationEmits.sizeChange,
+      usePaginationEmits.clickPrevPage,
+      usePaginationEmits.clickCurrentPage,
+      usePaginationEmits.clickNextPage,
+      usePaginationEmits.jump,
+      usePaginationEmits.currentChange,
+    ];
+    for (const validator of singleValueValidators) {
+      expect(validator(1)).toBe(true);
+      expect(validator('1' as never)).toBe(false);
+    }
+    expect(usePaginationEmits.modify(1, 10)).toBe(true);
+    expect(usePaginationEmits.modify('1' as never, 10)).toBe(false);
+    expect(usePaginationEmits.modify(1, '10' as never)).toBe(false);
+  });
+
   test('basic', async () => {
     const wrapper = mount(() => <HPagination total={10} />);
     const element = wrapper.findComponent(HPagination);
@@ -125,6 +147,37 @@ describe('Pagination.tsx', () => {
       expect(wrapper.findAll('.h-pagination__pager--item').length).eq(11);
     });
 
+    test('pager advances through collapsed ranges and supports native Enter activation', async () => {
+      const currentPage = ref(5);
+      const wrapper = mount(() => (
+        <HPagination
+          total={200}
+          pagerCount={5}
+          layout="pager"
+          v-model:currentPage={currentPage.value}
+        />
+      ));
+
+      await wrapper.get('[data-num="prev"]').trigger('click');
+      expect(currentPage.value).toBe(2);
+      await wrapper.get('[data-num="next"]').trigger('keyup', { key: 'Enter' });
+      expect(currentPage.value).toBe(5);
+
+      await wrapper.get('.is-prev').trigger('keyup', { key: 'Enter' });
+      expect(currentPage.value).toBe(4);
+      await wrapper.get('.is-next').trigger('keyup', { key: 'Enter' });
+      expect(currentPage.value).toBe(5);
+
+      currentPage.value = 1;
+      await nextTick();
+      await wrapper.get('.is-prev').trigger('click');
+      expect(currentPage.value).toBe(1);
+      currentPage.value = 20;
+      await nextTick();
+      await wrapper.get('.is-next').trigger('click');
+      expect(currentPage.value).toBe(20);
+    });
+
     test('layout', async () => {
       const layout = ref('pager, sizes');
 
@@ -235,6 +288,7 @@ describe('Pagination.tsx', () => {
       expect(wrapper.findComponent(HPagination).classes('is-disabled')).toBeTruthy();
 
       await wrapper.findComponent(Pager).find('.is-next').trigger('click');
+      await wrapper.findComponent(Pager).get('[data-num="2"]').trigger('click');
 
       expect(currentPage.value).toBe(1);
 
@@ -272,6 +326,130 @@ describe('Pagination.tsx', () => {
       expect(
         wrapper.findComponent(SimplestPager).findComponent(HInputNumber).classes('is-disabled'),
       ).toBeTruthy();
+    });
+
+    test('simplest pager arrows navigate and stop at both boundaries', async () => {
+      const currentPage = ref(3);
+      const wrapper = mount(() => (
+        <HPagination
+          v-model:currentPage={currentPage.value}
+          total={50}
+          layout="pager"
+          type="simplest"
+        />
+      ));
+      const simplest = wrapper.findComponent(SimplestPager);
+      const prev = simplest.get('[aria-label="Previous page"]');
+      const next = simplest.get('[aria-label="Next page"]');
+
+      await prev.trigger('click');
+      expect(currentPage.value).toBe(2);
+      await next.trigger('keyup', { key: 'Enter' });
+      expect(currentPage.value).toBe(3);
+      await simplest.get('input').trigger('keyup', { key: 'Enter' });
+      currentPage.value = 1;
+      await nextTick();
+      await prev.trigger('click');
+      expect(currentPage.value).toBe(1);
+      currentPage.value = 5;
+      await nextTick();
+      await next.trigger('click');
+      expect(currentPage.value).toBe(5);
+    });
+
+    test('snake-case labels and keyboard size selection keep accessible popup state', async () => {
+      const pageSize = ref(10);
+      const wrapper = mount(() => (
+        <HPagination
+          total={100}
+          layout="sizes, jumper"
+          v-model:pageSize={pageSize.value}
+          pageSizes={[10, 20]}
+          pageSizesToBody={false}
+          label={{
+            size_text: ' rows',
+            size_item_text: ' each',
+            jump_prefix_text: 'Jump ',
+            jump_suffix_text: ' now',
+          }}
+        />
+      ));
+      const sizes = wrapper.get('.h-pagination__sizes');
+      expect(sizes.text()).toContain('rows');
+      expect(wrapper.get('.h-pagination__jumper').text()).toContain('Jump');
+      expect(wrapper.get('.h-pagination__jumper').text()).toContain('now');
+
+      await sizes.trigger('keyup', { key: 'Enter' });
+      expect(sizes.attributes('aria-expanded')).toBe('true');
+      const sizeItems = wrapper.findAll('.h-pagination__sizes-item');
+      expect(sizeItems[1].text()).toContain('each');
+      await sizeItems[1].trigger('keydown', { key: 'Escape' });
+      expect(pageSize.value).toBe(10);
+      await sizeItems[1].trigger('keydown', { key: ' ' });
+      expect(pageSize.value).toBe(20);
+
+      const jumpInput = wrapper.get('.h-pagination__jumper input');
+      await jumpInput.trigger('blur');
+      await jumpInput.setValue('1');
+      await jumpInput.trigger('blur');
+      expect(wrapper.emitted('jump')).toBeUndefined();
+    });
+
+    test('label and showRange customize visible copy and model update payloads', async () => {
+      const onUpdatePageSize = vi.fn();
+      const onUpdateCurrentPage = vi.fn();
+      const wrapper = mount(HPagination, {
+        props: {
+          total: 35,
+          currentPage: 2,
+          pageSize: 10,
+          pageSizes: [10, 20],
+          pageSizesToBody: false,
+          layout: 'total, pager, sizes, jumper',
+          showRange: true,
+          label: {
+            sizeText: ' rows',
+            sizeItemText: ' each',
+            jumpPrefixText: 'Go ',
+            jumpSuffixText: ' page',
+          },
+          'onUpdate:pageSize': onUpdatePageSize,
+          'onUpdate:currentPage': onUpdateCurrentPage,
+        },
+        global: {
+          provide: {
+            [localeInjectKey as symbol]: ref({
+              langService: {
+                td: () => ({
+                  horizonWeb: {
+                    pagination: {
+                      rangeTotal: '{range} of {total}',
+                      total: 'Total {total}',
+                    },
+                  },
+                }),
+              },
+            }),
+          },
+        },
+      });
+
+      expect(wrapper.get('.h-pagination__total').text()).toContain('11-20');
+      expect(wrapper.get('.h-pagination__sizes').text()).toContain('10 rows');
+      expect(wrapper.get('.h-pagination__jumper').text()).toContain('Go');
+      expect(wrapper.get('.h-pagination__jumper').text()).toContain('page');
+
+      await wrapper.get('.h-pagination__pager--item[data-num="3"]').trigger('click');
+      expect(onUpdateCurrentPage).toHaveBeenCalledWith(3);
+
+      await wrapper.get('.h-pagination__sizes').trigger('click');
+      expect(wrapper.findAll('.h-pagination__sizes-item')[1].text()).toBe('20 each');
+      await wrapper.findAll('.h-pagination__sizes-item')[1].trigger('click');
+      expect(onUpdatePageSize).toHaveBeenCalledWith(20);
+
+      await wrapper.setProps({ showRange: false });
+      expect(wrapper.get('.h-pagination__total').text()).not.toContain('11-20');
+      expect(wrapper.get('.h-pagination__total').text()).toContain('35');
     });
   });
 

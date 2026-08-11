@@ -1,8 +1,9 @@
 import { mount } from '@vue/test-utils';
-import { defineComponent, nextTick, ref } from 'vue';
+import { computed, defineComponent, nextTick, ref } from 'vue';
 import { describe, expect, test, vi } from 'vitest';
 import HInput from '../src/Input';
 import type { InputExposes } from '../src/composables/useExposes';
+import { useInputField } from '../src/hooks/useInputField';
 
 describe('Input hook boundaries', () => {
   test('buffers IME input until composition ends', async () => {
@@ -65,5 +66,20 @@ describe('Input hook boundaries', () => {
     expect(componentRef.value?.focus).toBeTypeOf('function');
     expect(componentRef.value?.blur).toBeTypeOf('function');
     expect(componentRef.value?.select).toBeTypeOf('function');
+  });
+
+  test('field controls are safe before mount and clear focus when disabled', async () => {
+    const disabled = ref(false);
+    const field = useInputField(computed(() => disabled.value));
+    field.focus();
+    field.blur();
+    field.select();
+    await nextTick();
+    expect(field.inputRef.value).toBeNull();
+
+    field.focused.value = true;
+    disabled.value = true;
+    await nextTick();
+    expect(field.focused.value).toBe(false);
   });
 });

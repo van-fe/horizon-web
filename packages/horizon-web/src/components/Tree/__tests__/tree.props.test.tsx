@@ -20,6 +20,11 @@ import HCheckbox from '../../Checkbox';
 import { sleep } from '~/utils/tools';
 import HRadio from '../../Radio';
 import { SORTABLE_MOTION_FLIP_OPTIONS } from '~/utils/useSortableMotion';
+import TreeHelper from '~/utils/useTree';
+import { transformUuid } from '../src/utils/config';
+import HVirtualScroller from '../../VirtualScroller/src/VirtualScroller';
+import HTooltip from '../../Tooltip/src/Tooltip';
+import { useTreeItemProps } from '../src/composables/useProps';
 
 const treeClassHelper = new ComponentClassBlock('tree');
 const treeItemClassHelper = new ComponentClassBlock('tree-item');
@@ -38,6 +43,54 @@ const createRect = (top: number, height = 32): DOMRect =>
   }) as DOMRect;
 
 describe('Tree.tsx props', () => {
+  test('uses an external treeHelper and forwards virtual/tooltip/drag/line contracts', async () => {
+    const externalData: HTreeData[] = [
+      {
+        value: 'parent',
+        label: 'External parent',
+        children: [
+          { value: 'child', label: 'External child', draggable: false },
+          { value: 'leaf', label: 'External leaf', isLeaf: true },
+        ],
+      },
+    ];
+    const treeHelper = new TreeHelper<HTreeData, HTreeExtendsData>(
+      externalData,
+      {},
+      transformUuid,
+    );
+    const { wrapper, element } = await createInstance({
+      treeHelper,
+      filterValue: 'External',
+      useVirtualScroll: true,
+      height: 160,
+      virtualScrollBuffer: 77,
+      expandWrapperByChildren: true,
+      isDefaultExpandAll: true,
+      tooltip: true,
+      tooltipShowAfter: 11,
+      tooltipHideAfter: 13,
+      draggable: true,
+      draggableIcon: IconAdd,
+      undraggableIcon: IconReduce,
+      draggableIconAlwaysVisible: true,
+      dragToLeaf: false,
+      showLine: true,
+    });
+    expect(element.text()).toContain('External parent');
+    const scroller = wrapper.getComponent(HVirtualScroller);
+    expect(scroller.props()).toMatchObject({ buffer: 77, expandWrapperByChildren: true });
+    const tooltip = wrapper.findComponent(HTooltip);
+    expect(tooltip.props()).toMatchObject({ showAfter: 11, hideAfter: 13 });
+    expect(wrapper.findComponent(IconAdd).exists()).toBe(true);
+    expect(wrapper.findComponent(IconReduce).exists()).toBe(true);
+    expect(
+      wrapper.findAll('.h-tree-item__draggable-icon.is-always-visible').length,
+    ).toBeGreaterThanOrEqual(2);
+    expect(wrapper.find('.h-tree-item__parent-shown-line').exists()).toBe(true);
+    expect(useTreeItemProps.shadow.default).toBe(false);
+  });
+
   test('size', async () => {
     const size = ref<TreeProps['size']>();
 

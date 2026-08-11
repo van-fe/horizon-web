@@ -78,4 +78,85 @@ describe('Descriptions.tsx', () => {
     expect(wrapper.get('.h-descriptions__item').attributes('style')).toContain('display: block');
     expect(wrapper.get('.h-descriptions__value').text()).toBe('after');
   });
+
+  test('applies the explicit component size', () => {
+    const wrapper = mount(() => (
+      <HDescriptions size="small" title="Compact">
+        <HDescriptionItem label="Name" value="Ada" />
+      </HDescriptions>
+    ));
+
+    expect(wrapper.get('.h-descriptions__content').classes()).toContain('h-descriptions--small');
+    expect(wrapper.get('.h-descriptions__title').classes()).toContain(
+      'h-descriptions__title--small',
+    );
+  });
+
+  test('renders an empty public default slot without synthesizing items', () => {
+    const wrapper = mount(HDescriptions, { props: { title: 'Empty details' } });
+
+    expect(wrapper.get('.h-descriptions__title').text()).toBe('Empty details');
+    expect(wrapper.findAll('.h-descriptions__item')).toHaveLength(0);
+  });
+
+  test.each([
+    { width: 400, breakpoint: 'xs', column: 1, span: 5 },
+    { width: 600, breakpoint: 'sm', column: 2, span: 4 },
+    { width: 900, breakpoint: 'md', column: 3, span: 3 },
+    { width: 1300, breakpoint: 'lg', column: 4, span: 2 },
+    { width: 1700, breakpoint: 'xl', column: 5, span: 1 },
+  ])(
+    'uses $breakpoint responsive columns and item spans at $width px',
+    async ({ width, column, span }) => {
+      const wrapper = mount(HDescriptions, {
+        props: { type: 'vertical', column: 6, xs: 1, sm: 2, md: 3, lg: 4, xl: 5 },
+        attrs: { style: `width: ${width}px` },
+        slots: {
+          default: () => (
+            <HDescriptionItem
+              label="Responsive"
+              value="Value"
+              spanCol={6}
+              xs={5}
+              sm={4}
+              md={3}
+              lg={2}
+              xl={1}
+            />
+          ),
+        },
+        attachTo: document.body,
+      });
+
+      await new Promise(resolve => setTimeout(resolve, 80));
+      await nextTick();
+      expect(wrapper.get('.h-descriptions__content').attributes('style')).toContain(
+        `grid-template-columns: repeat(${column}, 1fr)`,
+      );
+      expect((wrapper.get('.h-descriptions__item').element as HTMLElement).style.gridColumn).toBe(
+        `span ${span}`,
+      );
+      wrapper.unmount();
+
+      const fallback = mount(HDescriptions, {
+        props: { type: 'vertical', column: 6 },
+        attrs: { style: `width: ${width}px` },
+        slots: {
+          default: () => (
+            <HDescriptionItem label="Fallback" value="Value" spanCol={6} />
+          ),
+        },
+        attachTo: document.body,
+      });
+      await new Promise(resolve => setTimeout(resolve, 80));
+      await nextTick();
+      expect(fallback.get('.h-descriptions__content').attributes('style')).toContain(
+        'grid-template-columns: repeat(6, 1fr)',
+      );
+      expect(
+        (fallback.get('.h-descriptions__item').element as HTMLElement).style.gridColumn,
+      ).toBe('span 6');
+      fallback.unmount();
+    },
+  );
 });

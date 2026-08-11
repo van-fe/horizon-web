@@ -28,6 +28,7 @@
     "recorrect:tsc-alias": "tsc -p ./build/tsc-alias/tsconfig.json && tsc-alias -p tsconfig.json",
     "ts:check": "bunx --bun typescript@7.0.2 --noEmit",
     "test": "vitest --config ./vitest.browser.config.ts",
+    "test:coverage": "vitest run --coverage --config ./vitest.browser.config.ts",
     "test:node": "vitest --config ./vitest.config.ts",
     "lint": "bunx oxlint && eslint --fix --ext .jsx,.js,.ts,.tsx ./src"
   },

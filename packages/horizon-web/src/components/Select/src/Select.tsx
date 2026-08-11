@@ -494,6 +494,7 @@ export default defineComponent({
           panelInputPlaceholder={
             props.panelInputPlaceholder ?? (useLocaleLang('select.pleaseSearch').value as string)
           }
+          panelInputPrefixIcon={props.searchIcon}
           searchIcon={props.searchIcon}
           fitContentInputMinWidth={props.fitContentInputMinWidth}
           style={props.externalSelectStyle}

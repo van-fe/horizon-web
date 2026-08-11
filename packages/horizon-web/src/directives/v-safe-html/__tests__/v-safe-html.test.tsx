@@ -3,24 +3,19 @@ import HVSafeHtml from '../index';
 import { describe, expect, test } from 'vitest';
 
 describe('v-safe-html.tsx', () => {
-  test('basic', async () => {
+  test('sanitizes unsafe attributes while preserving safe markup', () => {
     const xss = `<span>some text</span><img src="xxx" onerror="console.info('XSS attack with v-html!')">`;
 
-    // vitest bug!
-    // TypeError: Cannot read properties of undefined (reading 'call') at ...dompurify@2.4.1/node_modules/dompurify/src/purify.js:880:31
+    const wrapper = mount(() => <div class="wrapper" v-safe-html={xss} />, {
+      global: {
+        directives: {
+          [HVSafeHtml.name]: HVSafeHtml,
+        },
+      },
+    });
 
-    // const wrapper = mount(() => <div class="wrapper" v-safe-html={xss} />, {
-    //   global: {
-    //     directives: {
-    //       [HVSafeHtml.name]: HVSafeHtml,
-    //     },
-    //   },
-    // });
-
-    // const img = wrapper.find('img');
-    //
-    // console.info(img.attributes());
-    //
-    // expect(img.attributes('onerror')).toBe(false);
+    expect(wrapper.get('span').text()).toBe('some text');
+    expect(wrapper.get('img').attributes('src')).toBe('xxx');
+    expect(wrapper.get('img').attributes('onerror')).toBeUndefined();
   });
 });

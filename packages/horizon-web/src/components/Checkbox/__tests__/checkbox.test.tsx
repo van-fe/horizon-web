@@ -151,6 +151,111 @@ test('true-label/false-label', async () => {
   expect(checkedButtonElArr.length).toBe(2);
 });
 
+test('Checkbox trueLabel and falseLabel drive native toggles and visible fallback text', async () => {
+  const modelValue = ref<string>('off');
+  const wrapper = mount(() => (
+    <HCheckbox v-model={modelValue.value} trueLabel="on" falseLabel="off" />
+  ));
+
+  expect(wrapper.text()).toContain('off');
+  await wrapper.get('input').setValue(true);
+  expect(modelValue.value).toBe('on');
+  expect(wrapper.text()).toContain('on');
+  await wrapper.get('input').setValue(false);
+  expect(modelValue.value).toBe('off');
+});
+
+test('CheckboxButton trueLabel, falseLabel and fill map to state, text and real styles', async () => {
+  const modelValue = ref<string>('no');
+  const wrapper = mount(() => (
+    <HCheckboxButton
+      v-model={modelValue.value}
+      trueLabel="yes"
+      falseLabel="no"
+      fill="#123456"
+    />
+  ));
+
+  expect(wrapper.text()).toContain('no');
+  expect((wrapper.element as HTMLElement).style.backgroundColor).toBe('rgb(18, 52, 86)');
+  expect((wrapper.element as HTMLElement).style.borderColor).toBe('rgb(18, 52, 86)');
+  await wrapper.get('input').setValue(true);
+  expect(modelValue.value).toBe('yes');
+  expect(wrapper.text()).toContain('yes');
+  await wrapper.get('input').setValue(false);
+  expect(modelValue.value).toBe('no');
+});
+
+test('Checkbox indeterminate renders its mixed-state class and icon', () => {
+  const wrapper = mount(() => <HCheckbox indeterminate>Mixed</HCheckbox>);
+
+  expect(wrapper.classes()).toContain('h-checkbox--indeterminate');
+  expect(wrapper.find('svg').exists()).toBe(true);
+  expect(wrapper.get('.h-checkbox__label').text()).toBe('Mixed');
+});
+
+test('Checkbox, CheckboxButton and CheckboxGroup viewable only render selected values', () => {
+  const standalone = mount(() => <HCheckbox modelValue viewable>Standalone</HCheckbox>);
+  const button = mount(() => <HCheckboxButton modelValue viewable>Button</HCheckboxButton>);
+  const group = mount(() => (
+    <HCheckboxGroup modelValue={['kept']} viewable>
+      <HCheckbox label="kept">Kept</HCheckbox>
+      <HCheckboxButton label="hidden">Hidden</HCheckboxButton>
+    </HCheckboxGroup>
+  ));
+
+  expect(standalone.classes()).toContain('h-checkbox--viewable');
+  expect(standalone.get('label').attributes('style')).toContain('display: inline-flex');
+  expect(button.classes()).toContain('H-checkbox--viewable');
+  expect(button.get('label').attributes('style')).toContain('display: inline-flex');
+  const groupLabels = group.findAll('label');
+  expect(groupLabels[0].attributes('style')).toContain('display: inline-flex');
+  expect(groupLabels[1].attributes('style')).toContain('display: none');
+});
+
+test('Checkbox, CheckboxButton and CheckboxGroup render their default slots', () => {
+  const wrapper = mount(() => (
+    <HCheckboxGroup modelValue={[]}>
+      <span class="group-default">
+        <HCheckbox><strong class="checkbox-default">Checkbox slot</strong></HCheckbox>
+        <HCheckboxButton><strong class="button-default">Button slot</strong></HCheckboxButton>
+      </span>
+    </HCheckboxGroup>
+  ));
+
+  expect(wrapper.find('.group-default').exists()).toBe(true);
+  expect(wrapper.get('.checkbox-default').text()).toBe('Checkbox slot');
+  expect(wrapper.get('.button-default').text()).toBe('Button slot');
+});
+
+test('Checkbox blur and click emits preserve native browser events', async () => {
+  const onBlur = vi.fn();
+  const onClick = vi.fn();
+  const wrapper = mount(() => <HCheckbox onBlur={onBlur} onClick={onClick}>Events</HCheckbox>, {
+    attachTo: document.body,
+  });
+  const input = wrapper.get('input').element as HTMLInputElement;
+
+  input.focus();
+  input.click();
+  input.blur();
+  await nextTick();
+
+  expect(onClick).toHaveBeenCalledOnce();
+  expect(onClick.mock.calls[0][0]).toBeInstanceOf(MouseEvent);
+  expect(onBlur).toHaveBeenCalledOnce();
+  expect(onBlur.mock.calls[0][0]).toBeInstanceOf(FocusEvent);
+  wrapper.unmount();
+});
+
+test('CheckboxButton click is wired through its declared public emit', async () => {
+  const onClick = vi.fn();
+  const wrapper = mount(() => <HCheckboxButton onClick={onClick}>Events</HCheckboxButton>);
+
+  await wrapper.get('input').trigger('click');
+  expect(onClick).toHaveBeenCalledWith(expect.any(MouseEvent));
+});
+
 test('checked', async () => {
   const checkboxModelValue = ref(true);
   const checkboxGroupModelValue = ref(['hh']);

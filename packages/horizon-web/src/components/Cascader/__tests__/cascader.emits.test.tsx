@@ -4,14 +4,45 @@ import {
   closeCascader,
   clickOptionByOrder,
   createInstance,
+  maskClearIconVisible,
   openCascader,
 } from './cascader-helper';
 import CascaderPanel from '~/components/Cascader/src/components/CascaderPanel';
 import CascaderItem from '~/components/Cascader/src/components/CascaderItem';
 import HCheckbox from '~/components/Checkbox/src/Checkbox';
 import HTag from '~/components/Tag/src/Tag';
+import { sleep } from '~/utils/tools';
+import HPicker from '~/components/Picker/src/Picker';
 
 describe('Cascader.tsx emits', () => {
+  test('input and search share the real filter input value', async () => {
+    const onInput = vi.fn();
+    const onSearch = vi.fn();
+    const { pickerInput } = createInstance({ filterable: true, onInput, onSearch });
+
+    await pickerInput.find('input').setValue('feedback');
+    await sleep(220);
+
+    expect(onInput).toHaveBeenLastCalledWith('feedback');
+    expect(onSearch).toHaveBeenLastCalledWith('feedback');
+  });
+
+  test('click and clear preserve their native/user trigger contracts', async () => {
+    const onClick = vi.fn();
+    const onClear = vi.fn();
+    const { wrapper } = createInstance({
+      modelValue: ['guide', 'disciplines', 'feedback'],
+      clearable: true,
+      onClick,
+      onClear,
+    });
+
+    await wrapper.findComponent(HPicker).trigger('click');
+    expect(onClick.mock.calls[0][0]).toBeInstanceOf(MouseEvent);
+    await maskClearIconVisible(wrapper);
+    await wrapper.get('.h-picker__input--icon.is-clear').trigger('click');
+    expect(onClear).toHaveBeenCalledTimes(1);
+  });
   test('change', async () => {
     const onChange = vi.fn();
 

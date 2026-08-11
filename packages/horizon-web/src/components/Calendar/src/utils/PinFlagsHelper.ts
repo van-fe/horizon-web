@@ -104,7 +104,9 @@ export default class PinFlagsHelper {
     this.flagsInWeekdays.value.clear();
     if (!this._pinFlags.value.length) return;
 
-    const minDate = getMinDate(...this._pinFlags.value.map(flag => flag._startAt!)).day(0);
+    const minDate = getMinDate(...this._pinFlags.value.map(flag => flag._startAt!))
+      .day(0)
+      .startOf('day');
     const maxDate = getMaxDate(...this._pinFlags.value.map(flag => flag._endAt!));
 
     for (let i = minDate; i.isBefore(maxDate); i = i.add(7, 'days')) {
@@ -288,9 +290,9 @@ export default class PinFlagsHelper {
 
     return flags.some(curr => {
       if (check === 'start') {
-        return curr._endAt?.isSame(flag._startAt) ?? false;
+        return curr._endAt!.isSame(flag._startAt);
       } else {
-        return curr._startAt?.isSame(flag._endAt) ?? false;
+        return curr._startAt!.isSame(flag._endAt);
       }
     });
   }

@@ -8,6 +8,50 @@ import HTabs from '../src/Tabs';
 import type { HTabType, HTabValue } from '../src/composables/useProps';
 
 describe('Tabs.tsx', () => {
+  test('covers uncontrolled focus/scroll/drag props and emits update/change/sort payloads', async () => {
+    const beforeChange = vi.fn(async () => true);
+    const onUpdateActiveKey = vi.fn();
+    const onChange = vi.fn();
+    const onSort = vi.fn();
+    const wrapper = mount(() => (
+      <HTabs
+        defaultActiveKey="one"
+        draggable
+        scrollable={false}
+        focusable={false}
+        beforeChange={beforeChange}
+        onUpdate:activeKey={onUpdateActiveKey}
+        onChange={onChange}
+        onSort={onSort}
+        arrow={false}
+      >
+        <HTab key="one" label="One" icon="star" iconSize={20} />
+        <HTab key="two" label="Two" />
+        <HTab key="locked" label="Locked drag" draggable={false} />
+      </HTabs>
+    ));
+    const tabs = wrapper.findAll<HTMLElement>('[role="tab"]');
+    expect(tabs[0].attributes('aria-selected')).toBe('true');
+    expect(tabs[0].attributes('draggable')).toBe('true');
+    expect(tabs[2].attributes('draggable')).toBeUndefined();
+    expect(wrapper.findAllComponents(AIcon).some(icon => icon.props('size') === 20)).toBe(true);
+
+    await tabs[1].trigger('click');
+    await vi.waitFor(() => expect(onUpdateActiveKey).toHaveBeenCalledWith('two'));
+    expect(beforeChange).toHaveBeenCalledWith('two');
+    expect(onChange).toHaveBeenCalledWith('two');
+
+    const dataTransfer = new DataTransfer();
+    tabs[0].element.dispatchEvent(
+      new DragEvent('dragstart', { bubbles: true, dataTransfer }),
+    );
+    tabs[1].element.dispatchEvent(
+      new DragEvent('dragover', { bubbles: true, cancelable: true, dataTransfer }),
+    );
+    tabs[1].element.dispatchEvent(new DragEvent('drop', { bubbles: true, dataTransfer }));
+    expect(onSort).toHaveBeenCalledWith(0, 1, ['two', 'one', 'locked']);
+  });
+
   test('render', async () => {
     const activeKey = ref('');
     const wrapper = mount(() => (
@@ -281,30 +325,57 @@ describe('Tabs.tsx', () => {
     try {
       const tooltips = wrapper.findAllComponents(HTooltip);
       const labels = wrapper.findAll('.h-tabs__tab-text');
+      const fittingLabel = labels.find(label => label.text() === 'Fits');
+      const overflowingLabel = labels.find(label => label.text() === fullLabel);
+      const existingTooltipRoots = new Set(document.body.querySelectorAll('.h-tooltip'));
+      const getOwnTooltipRoots = () =>
+        Array.from(document.body.querySelectorAll<HTMLElement>('.h-tooltip')).filter(
+          tooltip => !existingTooltipRoots.has(tooltip),
+        );
+      const getOwnTooltipRootsWithContent = (content: string) =>
+        getOwnTooltipRoots().filter(
+          tooltip => tooltip.querySelector('.h-tooltip__content')?.textContent === content,
+        );
       expect(tooltips).toHaveLength(2);
-      expect(tooltips[1].props('overflow')).toBe(true);
-      expect(tooltips[1].props('content')).toBe(fullLabel);
+      expect(fittingLabel).toBeDefined();
+      expect(overflowingLabel).toBeDefined();
+      expect(tooltips.find(tooltip => tooltip.props('content') === fullLabel)?.props('overflow')).toBe(
+        true,
+      );
 
-      for (const [index, label] of labels.entries()) {
-        Object.defineProperties(label.element, {
-          scrollWidth: { configurable: true, value: index === 0 ? 80 : 180 },
-          scrollHeight: { configurable: true, value: 20 },
-          getBoundingClientRect: {
-            configurable: true,
-            value: () => ({ width: 100, height: 20 }),
-          },
-        });
-      }
+      Object.defineProperties(fittingLabel!.element, {
+        scrollWidth: { configurable: true, value: 80 },
+        scrollHeight: { configurable: true, value: 20 },
+        getBoundingClientRect: {
+          configurable: true,
+          value: () => ({ width: 100, height: 20 }),
+        },
+      });
+      Object.defineProperties(overflowingLabel!.element, {
+        scrollWidth: { configurable: true, value: 180 },
+        scrollHeight: { configurable: true, value: 20 },
+        getBoundingClientRect: {
+          configurable: true,
+          value: () => ({ width: 100, height: 20 }),
+        },
+      });
 
-      await labels[0].trigger('mouseenter');
+      expect(fittingLabel!.element.scrollWidth).toBeLessThanOrEqual(100);
+      expect(overflowingLabel!.element.scrollWidth).toBeGreaterThan(100);
+
+      await fittingLabel!.trigger('mouseenter');
       await vi.advanceTimersByTimeAsync(200);
       await nextTick();
-      expect(document.body.querySelector('.h-tooltip__content')).toBeNull();
+      expect(getOwnTooltipRootsWithContent('Fits')).toHaveLength(0);
 
-      await labels[1].trigger('mouseenter');
+      await overflowingLabel!.trigger('mouseenter');
       await vi.advanceTimersByTimeAsync(200);
       await nextTick();
-      expect(document.body.querySelector('.h-tooltip__content')?.textContent).toBe(fullLabel);
+      const ownTooltipRoots = getOwnTooltipRootsWithContent(fullLabel);
+      expect(ownTooltipRoots).toHaveLength(1);
+      expect(ownTooltipRoots[0].querySelector('.h-tooltip__content')?.textContent).toBe(
+        fullLabel,
+      );
     } finally {
       wrapper.unmount();
       vi.clearAllTimers();

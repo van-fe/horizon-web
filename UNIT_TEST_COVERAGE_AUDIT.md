@@ -1,19 +1,46 @@
 # Horizon Web 单元测试覆盖审计与补测计划
 
-> 审计日期：2026-08-10
+> 审计日期：2026-08-11
 > 范围：`packages/horizon-web/src/components` 下 87 个一级组件包
 > 原则：测试公开行为和用户可观察结果，不以私有实现或快照数量代替行为覆盖。
 
 ## 当前实施结果
 
 - [x] 所有 Horizon Web DOM、组件、指令、交互、布局和可访问性测试已迁移到 Vitest Browser Mode，并由 Playwright headless Chromium 执行。
-- [x] 全量真实浏览器回归：181 个测试文件，1237 个通过，2 个预期失败，共 1239 个测试。
+- [x] 全量真实浏览器回归：265 个测试文件，2,295 个通过，1 个预期失败，共 2,296 个测试。
 - [x] 纯源码分析、Sass 规则和 Bun runtime 测试已拆到独立 Node 项目：10 个测试文件，23 个测试全部通过。
 - [x] `happy-dom`、`jsdom` 已从直接开发依赖和测试配置中移除；仓库源码与配置无相关环境引用。
 - [x] 根目录及 `horizon-web`、`horizon-web-react`、`colors`、`upload-adapters`、`unplugin-resolver`、`locale-react` 的 DOM 测试入口统一为无头 Chromium。
 - [x] 组件开发 skill 已固化真实浏览器要求，后续不得以 DOM 模拟器作为组件测试回退方案。
 
 本清单下方的“足够 / 部分 / 不足”分类保留为补测前的审计基线，用于说明本轮为何选择这些补测场景；不能再当作迁移后的实时覆盖率结论。重新采集 Browser Mode 覆盖率后再更新百分比。
+
+## 第二轮：完整公开 API 契约与 95% 覆盖率
+
+验收口径：
+
+- 每个公开 prop 至少有一个用户可观察的渲染、状态、样式、子组件配置或交互结果断言。
+- 每个 emit 都验证真实触发路径、调用次数和 payload；不直接调用 emit validator 代替行为测试。
+- 每个 slot 都验证实际渲染位置；作用域 slot 同时验证 slot props。
+- click、input、change、keydown、focus、blur、pointer、drag、scroll 和媒体生命周期等事件使用 Chromium 原生行为验证。
+- Browser Mode 的全局 setup 必须载入 `src/styles/index.scss`，几何、可见性、动画、overflow、响应式和 placement 断言均基于真实 Horizon CSS。
+- 覆盖率由 Vitest Browser Mode + Playwright headless Chromium + coverage-v8 采集。
+- Statements、Branches、Functions、Lines 四项全局指标必须分别达到 95%，并写入测试配置作为硬阈值。
+- 不通过排除生产组件源码、忽略困难分支或只断言 API “当前无效”来提高覆盖率；仅测试文件、生成文件和纯类型声明可合理排除。
+
+补测前的静态排查下限识别出 1,928 个 prop 声明、464 个 emit 和 378 个 slot。其中至少 944/182/164 项在组件自身测试中没有明确 API 引用。该扫描包含公开子组件 API，也无法证明字符串引用等于行为覆盖，因此最终结论以行为测试审查和 coverage-v8 报告为准。
+
+### 第二轮实测进度
+
+- [x] 87/87 个一级组件包的公开 API 静态缺项已清零：当前元数据共 1,929 个 props、465 个 emits、378 个 slots，未明确映射到组件测试的项目为 0/0/0。
+- [x] 所有新增 DOM 测试均由 Vitest Browser Mode、Playwright headless Chromium 和真实 `src/styles/index.scss` 执行。
+- [x] A–D 范围严格生产源码聚合覆盖率：Statements 98.43%、Branches 95.01%、Functions 97.92%、Lines 98.71%；74 个文件、632 个测试全部通过。
+- [x] D–P 范围严格生产源码聚合覆盖率：Statements 98.26%、Branches 95.42%、Functions 98.79%、Lines 98.48%；52 个文件、494 个测试全部通过。
+- [x] P–W 范围已按 Table、小组件、交互组件和媒体/虚拟化四组完成真实浏览器覆盖率验收；各组四项均达到 95%，其中 Table 为 98.15% / 95.50% / 98.15% / 98.63%，媒体/虚拟化为 98.44% / 97.01% / 98.57% / 98.76%。
+- [x] Browser 配置已写入 coverage-v8 四项 95% 阈值；不得通过排除生产 hooks、exposes、元数据模块或添加 coverage-ignore 达标。
+- [x] 87 个一级组件包统一验收：Statements 98.09%（21,337/21,752）、Branches 95.35%（13,900/14,577）、Functions 97.89%（6,146/6,278）、Lines 98.33%（19,897/20,233）；265 个 Browser Mode 测试文件全部通过。
+
+上述覆盖率均只统计 87 个一级组件包的生产源码，不把 `__tests__` 计入分子或分母。coverage include 由配置枚举 `src/components` 的实际一级目录生成，避免误匹配 `src/methods/*/src/components` 下的内部实现。
 
 ## 迁移前审计基线
 
@@ -153,22 +180,22 @@
 
 ### P1：已有测试但重要契约缺失
 
-- [ ] 输入与选择：AutoComplete、Checkbox、Input、Rate、Segmented、Transfer、TreeSelect
-- [ ] 弹层与导航：Breadcrumb、Calendar、Collapse、CommandPalette、Dialog、Drawer、Dropdown、Popconfirm、Popover、Steps、Tabs
-- [ ] 展示与基础：Badge、Card、Controls、Count、Divider、Form、Tag
-- [ ] 媒体与性能：AudioPlayer、VirtualScroller、Watermark
+- [x] 输入与选择：AutoComplete、Checkbox、Input、Rate、Segmented、Transfer、TreeSelect
+- [x] 弹层与导航：Breadcrumb、Calendar、Collapse、CommandPalette、Dialog、Drawer、Dropdown、Popconfirm、Popover、Steps、Tabs
+- [x] 展示与基础：Badge、Card、Controls、Count、Divider、Form、Tag
+- [x] 媒体与性能：AudioPlayer、VirtualScroller、Watermark
 
-本轮已补充 P1 中的 Badge、Card、Checkbox、Controls、Count、Dialog、Divider、Input、Popconfirm、Rate、Steps、Tag、Watermark；其余 P1 项仍保留为后续行为覆盖工作，不因完成浏览器迁移而自动视为覆盖充分。
+P0、P1 的公开行为、边界条件、异步清理和真实浏览器分支均已纳入本轮补测；最终结论由 API 静态审计、focused Browser Mode 和统一 coverage-v8 三类证据共同确认。
 
 ## 每个组件的完成条件
 
-- [ ] 测试覆盖正常交互和禁用行为。
-- [ ] 适用时覆盖键盘、焦点、ARIA 和 Tab 顺序。
-- [ ] 受控 props、内部状态和 emitted payload 保持同步。
-- [ ] 适用时覆盖空态、加载、失败、重试和清理。
-- [ ] 异步逻辑不会重复触发，也不会接受陈旧结果。
-- [ ] 对重要复用控件添加集成契约测试。
-- [ ] 测试场景有开源同类组件或真实回归场景依据。
-- [ ] 聚焦单测通过。
+- [x] 测试覆盖正常交互和禁用行为。
+- [x] 适用时覆盖键盘、焦点、ARIA 和 Tab 顺序。
+- [x] 受控 props、内部状态和 emitted payload 保持同步。
+- [x] 适用时覆盖空态、加载、失败、重试和清理。
+- [x] 异步逻辑不会重复触发，也不会接受陈旧结果。
+- [x] 对重要复用控件添加集成契约测试。
+- [x] 测试场景有开源同类组件或真实回归场景依据。
+- [x] 聚焦单测通过。
 - [x] 全量 headless Chromium 与独立 Node-only 测试通过。
-- [ ] 重新采集覆盖率并更新本清单。
+- [x] 重新采集覆盖率并更新本清单。

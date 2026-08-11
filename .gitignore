@@ -41,3 +41,9 @@ packages/horizon-web/build/**/*.js
 packages/docs/.vitepress/dist
 packages/docs/.vitepress/cache
 .vscode
+
+# test artifacts
+packages/horizon-web/.vitest-attachments/
+packages/horizon-web/coverage*/
+packages/horizon-web/packages/horizon-web/coverage*/
+packages/horizon-web/src/components/**/__screenshots__/

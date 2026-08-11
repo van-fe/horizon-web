@@ -1,4 +1,4 @@
-import { computed, defineComponent, inject, onBeforeUnmount, ref, toRefs, watch } from 'vue';
+import { computed, defineComponent, h, inject, onBeforeUnmount, ref, toRefs, watch } from 'vue';
 import { ComponentClassBlock, cls, useNamespace, cssVariable } from '@aurora/utils';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { useFloatButtonProps } from './composables/useProps';
@@ -87,7 +87,7 @@ export default defineComponent({
     const isVisible = computed(() =>
       canPushToStack.value
         ? visibleComputed.value
-        : (passiveVisible?.value ?? (!groupProps?.useCollapse || collapseButtonProp?.value)),
+        : passiveVisible!.value,
     );
 
     const tooltipOptions = computed<Partial<TooltipProps>>(() => {
@@ -99,7 +99,7 @@ export default defineComponent({
     const currentPosition = ref<Position>();
 
     const { style, isDragging, updatePosition } = useDrag(targetDomRef, {
-      disabled: draggableProp,
+      disabled: computed(() => !draggableProp.value),
       initialValue: currentPosition.value ?? undefined,
       onStart() {
         if (draggableProp.value) {
@@ -195,18 +195,20 @@ export default defineComponent({
 
     return () => (
       <HTransition appear>
-        <div
-          ref={targetDomRef}
-          v-show={isVisible.value}
-          class={cls(
+        {h(props.href ? 'a' : 'div', {
+          ref: targetDomRef,
+          href: props.href,
+          target: props.href ? props.target : undefined,
+          class: cls(
             classHelper.block,
             classHelper.m(groupProps?.shape ?? shapeProp.value),
             classHelper.m(groupProps?.type ?? typeProp.value),
             classHelper.is('draggable', hasDragged.value),
             classHelper.is('dragging', isDragging.value),
             classHelper.is('static', !canPushToStack.value),
-          )}
-          style={[
+          ),
+          style: [
+            { display: isVisible.value ? undefined : 'none' },
             draggableProp.value && hasDragged.value
               ? isDragging.value
                 ? style.value
@@ -220,40 +222,39 @@ export default defineComponent({
                       )} + ${cssVariable('float-button', 'size')}) * ${stackIndex.value}) + (${cssVariable('float-button', 'size', 'large')} - ${cssVariable('float-button', 'size')}) * ${stackInfoIndex.value[stackIndex.value]})`
                     : undefined,
                 },
-          ]}
-          {...attrs}
-          onClick={evt => emit('click', evt)}
-        >
-          <HBadge {...badgeProps.value}>
-            <HTooltip
-              placement="left"
-              popperReferenceHidden={false}
-              size="small"
-              {...tooltipOptions.value}
-              disabled={Object.keys(tooltipOptions.value).length === 0}
-            >
-              <div
-                class={cls(
-                  classHelper.e('inner'),
-                  classHelper.e('inner_all', hasIcon.value && hasDescription.value),
-                )}
+          ],
+          ...attrs,
+          onClick: (evt: MouseEvent) => emit('click', evt),
+        },
+        <HBadge {...badgeProps.value}>
+              <HTooltip
+                placement="left"
+                popperReferenceHidden={false}
+                size="small"
+                {...tooltipOptions.value}
+                disabled={Object.keys(tooltipOptions.value).length === 0}
               >
-                {hasIcon.value && (
-                  <div class={cls(classHelper.e('icon'))}>
-                    {renderIcon(iconProp?.value, slots.icon, {
-                      size: 20,
-                    })}
-                  </div>
-                )}
-                {hasDescription.value && (
-                  <div class={cls(classHelper.e('description'))}>
-                    {slots.description?.() ?? descriptionProp?.value}
-                  </div>
-                )}
-              </div>
-            </HTooltip>
-          </HBadge>
-        </div>
+                <div
+                  class={cls(
+                    classHelper.e('inner'),
+                    classHelper.e('inner_all', hasIcon.value && hasDescription.value),
+                  )}
+                >
+                  {hasIcon.value && (
+                    <div class={cls(classHelper.e('icon'))}>
+                      {renderIcon(iconProp?.value, slots.icon, {
+                        size: 20,
+                      })}
+                    </div>
+                  )}
+                  {hasDescription.value && (
+                    <div class={cls(classHelper.e('description'))}>
+                      {slots.description?.() ?? descriptionProp?.value}
+                    </div>
+                  )}
+                </div>
+              </HTooltip>
+        </HBadge>)}
       </HTransition>
     );
   },

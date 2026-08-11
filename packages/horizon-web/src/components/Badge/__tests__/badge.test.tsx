@@ -65,4 +65,17 @@ describe('Badge.tsx', () => {
     expect(wrapper.find('.h-badge__content').attributes('style')).toContain('right: 4px');
     expect(wrapper.find('.h-badge__content').attributes('style')).toContain('top: 6px');
   });
+
+  test('renders icon content with its public size and color props', () => {
+    const wrapper = mount(() => (
+      <HBadge type="icon" content="success_filled" iconSize={22} iconColor="#123456">
+        <span>Target</span>
+      </HBadge>
+    ));
+
+    const icon = wrapper.get('.h-badge__content svg');
+    expect(wrapper.get('.h-badge').classes()).toContain('h-badge--icon');
+    expect(icon.attributes('style')).toContain('width: 22px');
+    expect(icon.html()).toContain('#123456');
+  });
 });

@@ -34,8 +34,9 @@ export default function useData(
    * @en Description for watch.
  */
   watch(
-    () => props.modelValue?.value,
-    val => {
+    () => [props.modelValue?.value, props.selectedValues.value] as const,
+    ([modelValueProp, selectedValues]) => {
+      const val = modelValueProp === undefined ? selectedValues : modelValueProp;
       if (isNil(val)) {
         modelValueSet.value.clear();
       } else {

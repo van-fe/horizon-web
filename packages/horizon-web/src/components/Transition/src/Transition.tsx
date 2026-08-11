@@ -23,8 +23,6 @@ export default defineComponent({
     const isLeaved = ref(true);
 
     function onBeforeEnter(el: RendererElement) {
-      if (!el.dataset) el.dataset = {};
-
       if (props.name === 'collapse') {
         el.dataset.oldPaddingTop = el.style.paddingTop;
         el.dataset.oldPaddingBottom = el.style.paddingBottom;
@@ -91,14 +89,12 @@ export default defineComponent({
 
     function onBeforeLeave(el: RendererElement) {
       if (props.name === 'collapse') {
-        if (!el.dataset) el.dataset = {};
         el.dataset.oldPaddingTop = el.style.paddingTop;
         el.dataset.oldPaddingBottom = el.style.paddingBottom;
         el.dataset.oldOverflow = el.style.overflow;
         el.style.maxHeight = `${el.scrollHeight}px`;
         el.style.overflow = 'hidden';
       } else if (props.name === 'collapse-horizontal') {
-        if (!el.dataset) el.dataset = {};
         el.dataset.oldPaddingLeft = el.style.paddingLeft;
         el.dataset.oldPaddingRight = el.style.paddingRight;
         el.dataset.oldOverflow = el.style.overflow;

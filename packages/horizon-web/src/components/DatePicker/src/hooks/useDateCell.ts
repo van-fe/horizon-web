@@ -4,7 +4,6 @@ import type { Dayjs } from 'dayjs';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock } from '@aurora/utils';
 import {
-  HDatePickerEmitsInjectKey,
   HDatePickerFormatInjectKey,
   HDatePickerPropsInjectKey,
 } from '../utils/injectKeys';
@@ -31,7 +30,6 @@ export default function useDateCell(
 
   const panelFirstDate = computed(() => {
     switch (panelType) {
-      default:
       case 'day':
         return props.panelShowDate.startOf('month');
       case 'month':
@@ -45,7 +43,6 @@ export default function useDateCell(
 
   const panelLastDate = computed(() => {
     switch (panelType) {
-      default:
       case 'day':
         return props.panelShowDate.endOf('month');
       case 'month':

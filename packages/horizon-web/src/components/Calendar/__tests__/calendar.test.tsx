@@ -10,6 +10,7 @@ import YearCalendar from '../src/components/YearCalendar';
 import MonthCalendar from '../src/components/MonthCalendar';
 import DayCalendar from '../src/components/DayCalendar';
 import WeekCalendar from '../src/components/WeekCalendar';
+import { getOneHourHeightPx } from '../src/utils/timeHelper';
 
 describe('Calendar.tsx', () => {
   describe('base', () => {
@@ -43,6 +44,23 @@ describe('Calendar.tsx', () => {
   });
 
   describe('props', () => {
+    test('defaultStartHour scrolls day and week calendars to the requested hour', async () => {
+      const scrollTo = vi.spyOn(HTMLElement.prototype, 'scrollTo');
+      mount(() => <HCalendar mode="day" modeSwitchableList={['day']} defaultStartHour={6} />);
+      await nextTick();
+      expect(scrollTo).toHaveBeenCalledWith({ top: 6 * getOneHourHeightPx() });
+
+      scrollTo.mockClear();
+      mount(() => <HCalendar mode="week" defaultStartHour={10} />);
+      await nextTick();
+      expect(scrollTo).toHaveBeenCalledWith({ top: 10 * getOneHourHeightPx() });
+    });
+
+    test('autoFit marks the calendar for parent-filling layout', () => {
+      const wrapper = mount(() => <HCalendar autoFit />);
+      expect(wrapper.findComponent(HCalendar).classes()).toContain('is-auto-fit');
+    });
+
     test('switch mode', async () => {
       const mode = ref<'year' | 'month'>('month');
 

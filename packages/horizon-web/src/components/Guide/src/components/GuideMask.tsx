@@ -66,7 +66,7 @@ export default defineComponent({
           x1 - radius
         }Q${x1} ${y1} ${x1} ${y1 + radius}V${y2 - radius}Q${x2} ${y2} ${x2 - radius} ${y2}H${
           x3 + radius
-        }Q${x3} ${y3} ${x3} ${y3 - radius}V${x0 + radius}Z`;
+        }Q${x3} ${y3} ${x3} ${y3 - radius}V${y0 + radius}Z`;
       }
 
       return path;

@@ -58,4 +58,17 @@ describe('Mask.tsx', () => {
     expect(style).toContain('opacity: 1');
     expect(style).toContain('backdrop-filter: blur(8px)');
   });
+
+  test('reacts to visibility and mask type through browser-observable styles', async () => {
+    const wrapper = mount(HMask, { props: { value: true, type: 'transparent' } });
+    const scrim = wrapper.get('.h-mask__scrim');
+
+    expect(wrapper.attributes('style')).toContain('opacity: 1');
+    expect(wrapper.attributes('style')).toContain('pointer-events: auto');
+    expect(scrim.attributes('style')).toContain('background-color: var(--h-bg-transparent)');
+
+    await wrapper.setProps({ value: false, type: 'strong' });
+    expect(wrapper.attributes('style')).toContain('opacity: 0');
+    expect(scrim.attributes('style')).toContain('background-color: var(--h-bg-overlay-strong)');
+  });
 });

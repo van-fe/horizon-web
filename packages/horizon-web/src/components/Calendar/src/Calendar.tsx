@@ -74,7 +74,6 @@ export default defineComponent({
 
     const currentFormatByMode = computed(() => {
       switch (currentMode.value) {
-        default:
         case 'month':
           return 'YYYY-MM';
         case 'year':
@@ -167,7 +166,6 @@ export default defineComponent({
 
     const bodyRender = computed(() => {
       switch (currentMode.value) {
-        default:
         case 'month':
           return <MonthCalendar onCurrentDateChange={date => (currentDate.value = date)} />;
         case 'year':

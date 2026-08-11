@@ -14,6 +14,20 @@ const templateData = Array(20)
 
 describe('ListItem.tsx', () => {
   describe('props', () => {
+    test('renders the complete title, subtitle and description fallback contract', () => {
+      const wrapper = mount(HListItem, {
+        props: {
+          title: 'Primary',
+          subtitle: 'Secondary',
+          describe: 'Details',
+        },
+      });
+
+      expect(wrapper.get('.h-list-item__main--title').text()).toBe('Primary');
+      expect(wrapper.get('.h-list-item__main--subtitle').text()).toBe('Secondary');
+      expect(wrapper.get('.h-list-item__main--describe').text()).toBe('Details');
+    });
+
     test('titleSize', async () => {
       const titleSize = ref<ListItemProps['titleSize']>('small');
       const wrapper = mount(() => (

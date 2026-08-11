@@ -29,6 +29,11 @@ describe('Backtop.tsx', () => {
       slots: { default: () => <span>Top now</span> },
     });
 
+    target.scrollTop = 99;
+    target.dispatchEvent(new Event('scroll'));
+    await new Promise(resolve => setTimeout(resolve, 350));
+    expect(wrapper.find('.h-backtop').exists()).toBe(false);
+
     target.scrollTop = 101;
     target.dispatchEvent(new Event('scroll'));
     await new Promise(resolve => setTimeout(resolve, 350));
@@ -66,5 +71,30 @@ describe('Backtop.tsx', () => {
 
     wrapper.unmount();
     target.remove();
+  });
+
+  test('falls back to window scrolling, renders the default icon and reaches zero', async () => {
+    const originalScrollY = Object.getOwnPropertyDescriptor(window, 'scrollY');
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: 500 });
+    const scrollTo = vi.spyOn(window, 'scrollTo').mockImplementation((_, top) => {
+      Object.defineProperty(window, 'scrollY', { configurable: true, value: Number(top) });
+    });
+    const wrapper = mount(HBacktop, {
+      props: { target: '#missing-backtop-target', visibilityHeight: 10 },
+    });
+
+    window.dispatchEvent(new Event('scroll'));
+    await new Promise(resolve => setTimeout(resolve, 350));
+    const button = wrapper.get('.h-backtop');
+    expect(button.find('.h-backtop__icon').exists()).toBe(true);
+    await button.trigger('click');
+    await new Promise(resolve => setTimeout(resolve, 550));
+
+    expect(scrollTo).toHaveBeenLastCalledWith(0, 0);
+    expect(wrapper.emitted('click')?.[0]?.[0]).toBeInstanceOf(MouseEvent);
+    wrapper.unmount();
+    scrollTo.mockRestore();
+    if (originalScrollY) Object.defineProperty(window, 'scrollY', originalScrollY);
+    else Reflect.deleteProperty(window, 'scrollY');
   });
 });

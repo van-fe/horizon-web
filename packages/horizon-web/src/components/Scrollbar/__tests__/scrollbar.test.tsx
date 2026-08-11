@@ -2,6 +2,7 @@ import { mount } from '@vue/test-utils';
 import HScrollbar from '../src/Scrollbar';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { nextTick } from 'vue';
+import { useScrollbarEmits } from '../src/composables/useEmits';
 
 function setElementSize(
   element: HTMLElement,
@@ -145,5 +146,162 @@ describe('Scrollbar.tsx', () => {
     });
     expect(scrollTo).toHaveBeenNthCalledWith(4, 8, 16);
     expect(scroll).toHaveBeenCalledTimes(1);
+  });
+
+  test('applies track constraints and emits real hover lifecycle events', async () => {
+    const onMouseEnter = vi.fn();
+    const onMouseLeave = vi.fn();
+    const wrapper = mount(HScrollbar, {
+      props: {
+        noResize: true,
+        minSize: 32,
+        zIndex: 7,
+        horizontalVisible: false,
+        verticalVisible: true,
+        trackBeginEndSpacing: [[4, 6], [8, 10]],
+        preventScrollByTrackBeginEndSpacing: false,
+        trackSticky: false,
+        always: true,
+        updateDelay: 0,
+        onMouseEnter,
+        onMouseLeave,
+      },
+      slots: { default: () => <div>Track contract</div> },
+    });
+    const wrap = wrapper.get('.h-scrollbar__wrap');
+    setElementSize(wrap.element as HTMLElement, {
+      width: 100,
+      height: 80,
+      scrollWidth: 300,
+      scrollHeight: 240,
+    });
+    await flushUpdate(wrapper, 0);
+
+    expect(wrapper.get('.h-scrollbar').classes()).not.toContain('is-track-sticky');
+    const tracks = wrapper.findAll('.h-scrollbar__track');
+    expect(tracks).toHaveLength(1);
+    expect(tracks[0].classes()).toContain('is-vertical');
+    expect(tracks[0].attributes('style')).toContain('z-index: 7');
+    expect(tracks[0].attributes('style')).toContain('top: 4px');
+    expect(tracks[0].attributes('style')).toContain('bottom: 6px');
+    expect(wrapper.get('.h-scrollbar__track--thumb').attributes('style')).toContain(
+      'height: 32px',
+    );
+
+    await wrapper.get('.h-scrollbar').trigger('mouseenter');
+    await wrapper.get('.h-scrollbar').trigger('mousemove', { clientX: 0, clientY: 0 });
+    expect(wrap.attributes('style')).toContain('overflow: auto');
+    await wrapper.get('.h-scrollbar').trigger('mouseleave');
+    expect(onMouseEnter.mock.calls[0][0]).toBeInstanceOf(MouseEvent);
+    expect(onMouseLeave.mock.calls[0][0]).toBeInstanceOf(MouseEvent);
+  });
+
+  test('renders both tracks and converts real thumb dragging into scroll positions', async () => {
+    const wrapper = mount(HScrollbar, {
+      props: {
+        always: true,
+        minSize: 20,
+        updateDelay: 0,
+        trackBeginEndSpacing: [[2, 4], [6, 8]],
+      },
+      slots: { default: () => <div>two-dimensional overflow</div> },
+      attachTo: document.body,
+    });
+    const wrap = wrapper.get<HTMLElement>('.h-scrollbar__wrap');
+    setElementSize(wrap.element, {
+      width: 100,
+      height: 80,
+      scrollWidth: 300,
+      scrollHeight: 240,
+    });
+    const scrollTo = vi.spyOn(wrap.element, 'scrollTo').mockImplementation(() => undefined);
+    await flushUpdate(wrapper, 0);
+
+    const vertical = wrapper.get<HTMLElement>('.h-scrollbar__track.is-vertical');
+    const horizontal = wrapper.get<HTMLElement>('.h-scrollbar__track.is-horizon');
+    setElementSize(vertical.element, { width: 8, height: 74, scrollWidth: 8, scrollHeight: 74 });
+    setElementSize(horizontal.element, { width: 86, height: 8, scrollWidth: 86, scrollHeight: 8 });
+    const verticalThumb = vertical.get<HTMLElement>('.h-scrollbar__track--thumb');
+    const horizontalThumb = horizontal.get<HTMLElement>('.h-scrollbar__track--thumb');
+
+    verticalThumb.element.dispatchEvent(
+      new PointerEvent('pointerdown', { bubbles: true, clientX: 4, clientY: 10, pointerId: 1 }),
+    );
+    window.dispatchEvent(
+      new PointerEvent('pointermove', { bubbles: true, clientX: 4, clientY: 40, pointerId: 1 }),
+    );
+    window.dispatchEvent(
+      new PointerEvent('pointerup', { bubbles: true, clientX: 4, clientY: 50, pointerId: 1 }),
+    );
+    horizontalThumb.element.dispatchEvent(
+      new PointerEvent('pointerdown', { bubbles: true, clientX: 10, clientY: 4, pointerId: 2 }),
+    );
+    window.dispatchEvent(
+      new PointerEvent('pointermove', { bubbles: true, clientX: 50, clientY: 4, pointerId: 2 }),
+    );
+    window.dispatchEvent(
+      new PointerEvent('pointerup', { bubbles: true, clientX: 60, clientY: 4, pointerId: 2 }),
+    );
+    await nextTick();
+
+    expect(scrollTo.mock.calls.some(([options]) => typeof options === 'object' && 'top' in options)).toBe(
+      true,
+    );
+    expect(
+      scrollTo.mock.calls.some(([options]) => typeof options === 'object' && 'left' in options),
+    ).toBe(true);
+    wrapper.unmount();
+  });
+
+  test('blocks overflow only inside configured begin/end spacing and reacts to resize mode changes', async () => {
+    const wrapper = mount(HScrollbar, {
+      props: {
+        always: true,
+        noResize: false,
+        updateDelay: 0,
+        preventScrollByTrackBeginEndSpacing: true,
+        trackBeginEndSpacing: [[10, 12], [14, 16]],
+      },
+    });
+    const root = wrapper.get('.h-scrollbar');
+    const wrap = wrapper.get<HTMLElement>('.h-scrollbar__wrap');
+    setElementSize(wrap.element, {
+      width: 100,
+      height: 80,
+      scrollWidth: 300,
+      scrollHeight: 240,
+    });
+    await flushUpdate(wrapper, 0);
+
+    await root.trigger('mousemove', { clientX: 2, clientY: 2 });
+    expect(wrap.element.style.overflowX).toBe('hidden');
+    expect(wrap.element.style.overflowY).toBe('hidden');
+    await root.trigger('mousemove', { clientX: 50, clientY: 40 });
+    expect(wrap.element.style.overflowX).toBe('auto');
+    expect(wrap.element.style.overflowY).toBe('auto');
+    await root.trigger('mousemove', { clientX: 99, clientY: 79 });
+    expect(wrap.element.style.overflowX).toBe('hidden');
+    expect(wrap.element.style.overflowY).toBe('hidden');
+
+    await wrapper.setProps({ noResize: true });
+    await wrapper.setProps({ noResize: false, trackBeginEndSpacing: [[1, 1], [1, 1]] });
+    await vi.advanceTimersByTimeAsync(0);
+    expect(wrapper.emitted('update')).toBeDefined();
+  });
+
+  test('validates every public native event payload', () => {
+    const mouse = new MouseEvent('mouseenter');
+    const event = new Event('scroll');
+    expect(useScrollbarEmits.scroll({ scrollTop: 1, scrollLeft: 2 }, event)).toBe(true);
+    expect(useScrollbarEmits.scroll({ scrollTop: '1' as never, scrollLeft: 2 }, event)).toBe(true);
+    expect(useScrollbarEmits.mouseEnter(mouse)).toBe(true);
+    expect(useScrollbarEmits.mouseEnter(event as never)).toBe(false);
+    expect(useScrollbarEmits.mouseLeave(mouse)).toBe(true);
+    expect(useScrollbarEmits.reachTop(event)).toBe(true);
+    expect(useScrollbarEmits.reachBottom(event)).toBe(true);
+    expect(useScrollbarEmits.reachLeft(event)).toBe(true);
+    expect(useScrollbarEmits.reachRight(event)).toBe(true);
+    expect(useScrollbarEmits.scrollEnd()).toBe(true);
+    expect(useScrollbarEmits.update()).toBe(true);
   });
 });

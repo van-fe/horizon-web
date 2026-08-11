@@ -1,4 +1,5 @@
 import { computed, defineComponent, mergeProps, useId } from 'vue';
+import type { StyleValue } from 'vue';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import HPopover from '~/components/Popover/src/Popover';
 import HPopContent from '~/components/Popover/src/PopContent';
@@ -21,7 +22,7 @@ export default defineComponent({
     const c = new ComponentClassBlock('mentions');
     const dropdownClass = new ComponentClassBlock('dropdown');
     const dropdownItemClass = new ComponentClassBlock('dropdown-item');
-    const state = useMentions(props, emit as any);
+    const state = useMentions(props, emit);
     const measure = useMentionsMeasure({
       textarea: state.textarea,
       value: state.currentValue,
@@ -72,7 +73,7 @@ export default defineComponent({
       return (
         <div
           class={[c.block, c.is('disabled', props.disabled), externalClass]}
-          style={externalStyle as any}
+          style={externalStyle as StyleValue}
         >
           <textarea {...inputProps} />
           <div

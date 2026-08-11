@@ -30,10 +30,11 @@ export default function useExposes(
     clear: options.handleClear,
     renderedModelValueTags: options.renderedModelValueTags,
     focus: () => {
-      options.domRefs.pickerDomRef.value?.focus();
+      options.focusInput();
     },
     blur: () => {
-      options.domRefs.pickerDomRef.value?.forceBlur();
+      options.domRefs.filterInputDomRef.value?.blur();
+      options.domRefs.pickerDomRef.value?.blur();
     },
   });
 

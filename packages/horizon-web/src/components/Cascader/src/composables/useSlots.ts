@@ -34,7 +34,7 @@ export const useCascaderSlots = Object as SlotsType<{
    * @paramEn data The data value.
    * @en Content slot for search panel render.
    */
-  searchPanelRender: { paths: HCascaderFilterPathData[]; inputValue: string };
+  searchPanelRender?: { paths: HCascaderFilterPathData[]; inputValue: string };
   /**
    * 自定义 `cascaderPanel` 空列表渲染内容
    * @en Custom content for the empty slot.
@@ -46,7 +46,7 @@ export const useCascaderSlots = Object as SlotsType<{
    * @paramEn handler The handler value.
    * @en Content slot for confirm render.
    */
-  confirmRender: {
+  confirmRender?: {
     cancelHandle: () => void;
     confirmHandle: () => void;
   };

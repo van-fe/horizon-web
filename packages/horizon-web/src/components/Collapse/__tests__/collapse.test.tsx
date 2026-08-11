@@ -2,6 +2,8 @@ import { mount } from '@vue/test-utils';
 import { HCollapse, HCollapseItem } from '../index';
 import { describe, expect, test, vi } from 'vitest';
 import { ref, nextTick } from 'vue';
+import { AIcon } from '@aurora/icon';
+import { useCollapseEmits } from '../src/composables/useEmits';
 
 describe('Collapse.tsx', () => {
   test('basic', async () => {
@@ -50,6 +52,77 @@ describe('Collapse.tsx', () => {
   });
 
   describe('props', () => {
+    test('border, filled, expandIconPosition and size produce public layout classes', () => {
+      const wrapper = mount(() => (
+        <HCollapse border filled expandIconPosition="right" size="large">
+          <HCollapseItem name="layout">Layout</HCollapseItem>
+        </HCollapse>
+      ));
+      const collapse = wrapper.findComponent(HCollapse);
+
+      expect(collapse.classes()).toEqual(
+        expect.arrayContaining([
+          'h-collapse--border',
+          'h-collapse--filled',
+          'h-collapse--right',
+          'h-collapse--large',
+        ]),
+      );
+    });
+
+    test('CollapseItem disabled prevents pointer and keyboard expansion', async () => {
+      const onChange = vi.fn();
+      const wrapper = mount(() => (
+        <HCollapse onChange={onChange}>
+          <HCollapseItem name="disabled" disabled>Disabled body</HCollapseItem>
+        </HCollapse>
+      ));
+      const header = wrapper.get('[role="button"]');
+
+      expect(header.attributes()).toMatchObject({ 'aria-disabled': 'true', tabindex: '-1' });
+      await header.trigger('click');
+      await header.trigger('keydown', { key: 'Enter' });
+      expect(onChange).not.toHaveBeenCalled();
+      expect(wrapper.find('.h-collapse-item--expand').exists()).toBe(false);
+    });
+
+    test('CollapseItem expandIcon, color and background customize observable output', () => {
+      const wrapper = mount(() => (
+        <HCollapse>
+          <HCollapseItem
+            name="styled"
+            expandIcon="add"
+            color="rgb(1, 2, 3)"
+            background="rgb(4, 5, 6)"
+          >
+            Styled body
+          </HCollapseItem>
+        </HCollapse>
+      ));
+      const item = wrapper.findComponent(HCollapseItem);
+
+      expect((item.element as HTMLElement).style.borderBottomColor).toBe('rgb(1, 2, 3)');
+      expect((item.get('.h-collapse-item__header').element as HTMLElement).style.backgroundColor)
+        .toBe('rgb(4, 5, 6)');
+      expect(item.findComponent(AIcon).props('name')).toBe('add');
+    });
+
+    test('CollapseItem directive if creates content only while expanded', async () => {
+      const activeKey = ref<(string | number)[]>([]);
+      const wrapper = mount(() => (
+        <HCollapse v-model:activeKey={activeKey.value}>
+          <HCollapseItem name="conditional" directive="if">
+            <span class="conditional-body">Conditional</span>
+          </HCollapseItem>
+        </HCollapse>
+      ));
+
+      expect(wrapper.find('.conditional-body').exists()).toBe(false);
+      await wrapper.get('[role="button"]').trigger('click');
+      expect(wrapper.get('.conditional-body').text()).toBe('Conditional');
+      await wrapper.get('[role="button"]').trigger('click');
+      expect(wrapper.find('.conditional-body').exists()).toBe(false);
+    });
     test('activeKey', async () => {
       const activeKeyModel = ref(['1', '2']);
       const wrapper = mount(() => (
@@ -99,6 +172,56 @@ describe('Collapse.tsx', () => {
     });
   });
 
+  test('Collapse and CollapseItem default slots plus the item icon slot render in place', () => {
+    const wrapper = mount(() => (
+      <HCollapse activeKey={['slots']}>
+        <div class="collapse-default">
+          <HCollapseItem
+            name="slots"
+            v-slots={{
+              default: () => <span class="item-default">Item body</span>,
+              icon: () => <span class="item-icon">Custom icon</span>,
+            }}
+          />
+        </div>
+      </HCollapse>
+    ));
+
+    expect(wrapper.find('.collapse-default').exists()).toBe(true);
+    expect(wrapper.get('.item-default').text()).toBe('Item body');
+    expect(wrapper.get('.item-icon').text()).toBe('Custom icon');
+    expect(wrapper.findComponent(AIcon).exists()).toBe(false);
+  });
+
+  test('renders title and nested panel slots and ignores unrelated header keys', async () => {
+    const onChange = vi.fn();
+    const wrapper = mount(() => (
+      <HCollapse activeKey={['outer']} onChange={onChange}>
+        <HCollapseItem
+          name="outer"
+          v-slots={{
+            title: () => <strong class="title-slot">Nested title</strong>,
+            default: () => (
+              <HCollapse activeKey={['inner']}>
+                <HCollapseItem name="inner" title="Inner">
+                  Inner body
+                </HCollapseItem>
+              </HCollapse>
+            ),
+          }}
+        />
+      </HCollapse>
+    ));
+
+    expect(wrapper.get('.title-slot').text()).toBe('Nested title');
+    expect(wrapper.get('.h-collapse-item').classes()).toContain('h-collapse-item--nest');
+    expect(wrapper.get('.h-collapse-item__content').classes()).toContain(
+      'h-collapse-item__content--nest',
+    );
+    await wrapper.get('.h-collapse-item__header').trigger('keydown', { key: 'Escape' });
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
   describe('emit', () => {
     test('update:activeKey', async () => {
       const activeKeyModel = ref('1');
@@ -135,6 +258,36 @@ describe('Collapse.tsx', () => {
       await lastItem!.find('.h-collapse-item__header').trigger('click');
 
       expect(onChange).toHaveBeenCalledWith('4');
+    });
+
+    test('accordion clicking the active item emits an undefined close value', async () => {
+      const onChange = vi.fn();
+      const onUpdate = vi.fn();
+      const wrapper = mount(() => (
+        <HCollapse
+          activeKey="active"
+          accordion
+          onChange={onChange}
+          onUpdate:activeKey={onUpdate}
+        >
+          <HCollapseItem name="active" title="Active" />
+        </HCollapse>
+      ));
+
+      await wrapper.get('.h-collapse-item__header').trigger('click');
+      expect(onChange).toHaveBeenCalledOnce();
+      expect(onChange).toHaveBeenCalledWith(undefined);
+      expect(onUpdate).toHaveBeenCalledWith(undefined);
+    });
+
+    test('validators accept every public active-key shape and reject other payloads', () => {
+      for (const validator of [useCollapseEmits.change, useCollapseEmits['update:activeKey']]) {
+        expect(validator('panel')).toBe(true);
+        expect(validator(1)).toBe(true);
+        expect(validator(['panel', 1])).toBe(true);
+        expect(validator(undefined)).toBe(true);
+        expect(validator(null as never)).toBe(false);
+      }
     });
   });
 

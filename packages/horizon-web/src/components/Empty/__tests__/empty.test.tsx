@@ -55,4 +55,27 @@ describe('Empty.tsx', () => {
       expect(element.find('.h-empty__image').attributes('style')).toContain('width: 160px');
     });
   });
+
+  test('renders each public slot and lets slots override fallback content', () => {
+    const wrapper = mount(HEmpty, {
+      props: { image: 'fallback.png', description: 'Fallback description' },
+      slots: {
+        image: () => <svg data-test="empty-image" aria-label="Custom empty image" />,
+        description: () => <span data-test="empty-description">Custom description</span>,
+        default: () => <button data-test="empty-action">Retry</button>,
+      },
+    });
+
+    expect(wrapper.get('[data-test="empty-image"]').attributes('aria-label')).toBe(
+      'Custom empty image',
+    );
+    // The description prop intentionally takes precedence over the description slot.
+    expect(wrapper.find('[data-test="empty-description"]').exists()).toBe(false);
+    expect(wrapper.get('.h-empty__description').text()).toBe('Fallback description');
+    expect(wrapper.get('[data-test="empty-action"]').text()).toBe('Retry');
+
+    return wrapper.setProps({ description: undefined }).then(() => {
+      expect(wrapper.get('[data-test="empty-description"]').text()).toBe('Custom description');
+    });
+  });
 });

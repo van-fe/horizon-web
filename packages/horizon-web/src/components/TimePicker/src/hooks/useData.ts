@@ -117,10 +117,22 @@ export default function useData(
       const [startVal, endVal] = value;
 
       if (propRefs.isRange.value) {
-        startTime.value = isDayjs(startVal) ? startVal : dayjs(startVal, dayjsFormat.value);
-        endTime.value = isDayjs(endVal) ? endVal : dayjs(endVal, dayjsFormat.value);
+        startTime.value = isNil(startVal)
+          ? undefined
+          : isDayjs(startVal)
+            ? startVal
+            : dayjs(startVal, dayjsFormat.value);
+        endTime.value = isNil(endVal)
+          ? undefined
+          : isDayjs(endVal)
+            ? endVal
+            : dayjs(endVal, dayjsFormat.value);
       } else {
-        startTime.value = isDayjs(startVal) ? startVal : dayjs(startVal, dayjsFormat.value);
+        startTime.value = isNil(startVal)
+          ? undefined
+          : isDayjs(startVal)
+            ? startVal
+            : dayjs(startVal, dayjsFormat.value);
       }
     } else {
       startTime.value = undefined;
@@ -135,22 +147,6 @@ export default function useData(
     end: Dayjs | undefined | null,
   ) {
     let timePreview: Dayjs | undefined | null = previewTime.value;
-
-    if (previewTime.value) {
-      if (!timePreview) {
-        if (propRefs.isRange.value) {
-          if (startTime.value && endTime.value) {
-            timePreview = startTime.value;
-          } else if (startTime.value) {
-            timePreview = endTime.value;
-          } else {
-            timePreview = start;
-          }
-        } else {
-          timePreview = startTime.value ?? start;
-        }
-      }
-    }
 
     if (propRefs.hoverToDisplayValue.value && timePreview) {
       if (propRefs.isRange.value) {
@@ -195,7 +191,12 @@ export default function useData(
   watch(
     () => propRefs.modelValue?.value,
     () => {
-      prevEmitChangeValue = transformModelValue();
+      const transformedValue = transformModelValue();
+      prevEmitChangeValue = transformedValue
+        ? propRefs.isRange.value
+          ? [formatValue(startTime.value), formatValue(endTime.value)]
+          : formatValue(startTime.value)
+        : transformedValue;
       refreshShowValue();
     },
     {
@@ -216,6 +217,14 @@ export default function useData(
   watch(previewTime, val => {
     context.emit('update:previewTime', val);
   });
+
+  watch(
+    () => propRefs.previewTime?.value,
+    val => {
+      previewTime.value = val;
+    },
+    { immediate: true },
+  );
 
   let stopWatchHoverToDisplayValue: WatchStopHandle;
 

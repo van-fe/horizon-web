@@ -114,6 +114,7 @@ export default defineComponent({
         label={propLabel.value}
         trueLabel={propTrueLabel.value}
         viewable={viewable.value}
+        onClick={(evt: MouseEvent) => emit('click', evt)}
         onChangeInput={changeCheckboxButton}
         onBlur={onBlur}
       >

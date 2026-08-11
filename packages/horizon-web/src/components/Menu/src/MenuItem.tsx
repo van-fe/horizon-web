@@ -75,18 +75,17 @@ export default defineComponent({
     const scrollToTop = inject(HMenuScrollTopTopInjectKey);
 
     function onMouseEnter() {
-      if (textRef.value) {
-        if (parentProps.collapseForever === true) {
-          if (textRef.value?.scrollWidth > textRef.value?.clientWidth) {
-            toggleTooltip();
-          }
+      const text = textRef.value!;
+      if (parentProps.collapseForever === true) {
+        if (text.scrollWidth > text.clientWidth) {
+          toggleTooltip();
+        }
+      } else {
+        if (isCollapsed?.value) {
+          toggleTooltip();
         } else {
-          if (isCollapsed?.value) {
+          if (text.scrollWidth > text.clientWidth) {
             toggleTooltip();
-          } else {
-            if (textRef.value?.scrollWidth > textRef.value?.clientWidth) {
-              toggleTooltip();
-            }
           }
         }
       }

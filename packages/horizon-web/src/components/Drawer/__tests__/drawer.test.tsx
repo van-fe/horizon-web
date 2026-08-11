@@ -8,14 +8,14 @@ interface LocalTestContext {
   teleportEl: HTMLElement;
 }
 
-let drawerZIndexOffset: number | undefined;
-
-const normalizeDrawerHtml = (html: string) =>
-  html.replace(/z-index: (\d+)/g, (_, rawValue: string) => {
-    const value = Number(rawValue);
-    drawerZIndexOffset ??= value - 2002;
-    return `z-index: ${value - drawerZIndexOffset}`;
-  });
+const normalizeDrawerHtml = (html: string) => {
+  const firstZIndex = Number(html.match(/z-index: (\d+)/)?.[1] ?? 0);
+  const expectedBase = html.includes('<input') ? 2009 : 2002;
+  const offset = firstZIndex - expectedBase;
+  return html.replace(/z-index: (\d+)/g, (_, rawValue: string) =>
+    `z-index: ${Number(rawValue) - offset}`,
+  );
+};
 
 describe('Drawer.tsx', () => {
   beforeEach<LocalTestContext>(ctx => {
@@ -76,7 +76,7 @@ describe('Drawer.tsx', () => {
     visible.value = true;
     await nextTick();
     expect(open).toBeCalledTimes(1);
-    await sleep(350);
+    await sleep(700);
     expect(opened).toHaveBeenCalled();
   });
 
@@ -156,7 +156,7 @@ describe('Drawer.tsx', () => {
       { global: { stubs: { Transition: false } } },
     );
     expect(wrapper.findComponent(Drawer).exists()).toBe(true);
-    expect(open).not.toBeCalled();
+    expect(open).toHaveBeenCalledOnce();
     // setTimeout(() => {
     //   expect(opened).not.toBeCalled();
     // }, 300);

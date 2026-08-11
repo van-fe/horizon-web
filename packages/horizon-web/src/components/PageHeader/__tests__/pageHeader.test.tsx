@@ -148,5 +148,36 @@ describe('PageHeader.tsx', () => {
 
       expect(wrapper.find('.h-page-header__breadcrumb').text()).toBe('BREADCRUMB');
     });
+
+    test('header replaces the complete title and tags region', () => {
+      const wrapper = mount(() => (
+        <HPageHeader title="Fallback title">
+          {{
+            header: () => <strong data-test="custom-header">Custom header</strong>,
+            tags: () => <span data-test="unused-tags">Tag</span>,
+          }}
+        </HPageHeader>
+      ));
+
+      expect(wrapper.get('[data-test="custom-header"]').text()).toBe('Custom header');
+      expect(wrapper.find('[data-test="unused-tags"]').exists()).toBe(false);
+      expect(wrapper.find('.h-page-header__header--title').exists()).toBe(false);
+    });
+
+    test('titleOuter replaces the tooltip title and disabledHeaderTooltip reaches Tooltip', () => {
+      const wrapper = mount(() => (
+        <HPageHeader title="Fallback title" disabledHeaderTooltip>
+          {{ titleOuter: () => <h1 data-test="title-outer">Custom title</h1> }}
+        </HPageHeader>
+      ));
+
+      expect(wrapper.get('[data-test="title-outer"]').text()).toBe('Custom title');
+      expect(wrapper.findComponent({ name: 'HTooltip' }).exists()).toBe(false);
+
+      const fallback = mount(HPageHeader, {
+        props: { title: 'Fallback title', disabledHeaderTooltip: true },
+      });
+      expect(fallback.findComponent({ name: 'HTooltip' }).props('disabled')).toBe(true);
+    });
   });
 });

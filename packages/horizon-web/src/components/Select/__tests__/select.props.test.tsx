@@ -8,12 +8,112 @@ import HPickerInput from '../../Picker/src/components/PickerInput';
 import { IconArrowDown, IconCloseFilled, IconPinned } from '@aurora/icon';
 import type { OptionProps, SelectProps } from '../src/composables/useProps';
 import HPickerPopper from '../../Picker/src/components/PickerPopper';
+import HPicker from '../../Picker/src/Picker';
 import HPopover from '../../Popover';
 import { sleep } from '~/utils/tools';
 import HTag from '../../Tag';
+import HTagGroup from '../../Tag/src/TagGroup';
 import SelectHelper from './SelectHelper';
 
 describe('Select.tsx', () => {
+  test('forwards remaining picker/tag props and renders every structural slot', async () => {
+    const wrapper = mount(
+      () => (
+        <HSelect
+          modelValue={[1, 2, 3]}
+          multiple
+          fitInputWidth={false}
+          panelInputPlaceholder="Filter contracts"
+          useBuildInPanelFilter
+          searchIcon={IconPinned}
+          fitContentInputMinWidth={260}
+          showPopoverContentOnly={false}
+          needConfirm
+          toBody={false}
+          options={[
+            { value: 1, label: 'One' },
+            { value: 2, label: 'Two' },
+            { value: 3, label: 'Three' },
+          ]}
+        >
+          {{
+            panelFooterRender: () => <footer data-test="panel-footer">Footer</footer>,
+            dropConfirmRender: () => <div data-test="drop-confirm">Confirm slot</div>,
+            pickerInner: () => <span data-test="picker-inner">Inner shell</span>,
+          }}
+        </HSelect>
+      ),
+      { attachTo: document.body },
+    );
+    const picker = wrapper.getComponent(HPicker);
+    expect(picker.props()).toMatchObject({
+      fitInputWidth: false,
+      panelInputPlaceholder: 'Filter contracts',
+      panelInputPrefixIcon: IconPinned,
+      fitContentInputMinWidth: 260,
+      showPopoverContentOnly: false,
+    });
+    expect(wrapper.get('[data-test="picker-inner"]').text()).toBe('Inner shell');
+    await picker.trigger('click');
+    expect(wrapper.get('.h-picker__panel-input input.h-input__inner').attributes('placeholder')).toBe(
+      'Filter contracts',
+    );
+    expect(wrapper.get('[data-test="panel-footer"]').text()).toBe('Footer');
+    expect(wrapper.get('[data-test="drop-confirm"]').text()).toBe('Confirm slot');
+    wrapper.unmount();
+
+    const outer = mount(() => (
+      <HSelect>
+        {{ pickerOuter: () => <button data-test="picker-outer">Whole select</button> }}
+      </HSelect>
+    ));
+    expect(outer.get('[data-test="picker-outer"]').text()).toBe('Whole select');
+  });
+
+  test('renders panelConfirmLeft in the built-in confirmation area', async () => {
+    const wrapper = mount(HSelect, {
+      props: {
+        needConfirm: true,
+        toBody: false,
+        options: [{ value: 1, label: 'One' }],
+      },
+      slots: {
+        panelConfirmLeft: () => <span data-test="confirm-left">Left action</span>,
+      },
+    });
+
+    await wrapper.getComponent(HPicker).trigger('click');
+    expect(wrapper.get('[data-test="confirm-left"]').text()).toBe('Left action');
+  });
+
+  test('forwards collapsed-tag props through a controlled multiple selection', async () => {
+    const wrapper = mount(HSelect, {
+      props: {
+        multiple: true,
+        modelValue: [1, 2, 3],
+        collapseTags: true,
+        maxCollapseTags: 1,
+        collapseTagsFillUp: true,
+        collapsedTagsProps: { type: 'warning' },
+        options: [
+          { value: 1, label: 'One' },
+          { value: 2, label: 'Two' },
+          { value: 3, label: 'Three' },
+        ],
+      },
+      attachTo: document.body,
+    });
+    await nextTick();
+    await nextTick();
+
+    expect(wrapper.find('.h-tag-group').exists()).toBe(true);
+    const group = wrapper.getComponent(HTagGroup);
+    expect(group.props('fillUp')).toBe(true);
+    expect(group.props('minDisplayed')).toBe(1);
+    expect(group.props('collapseTagProps')).toMatchObject({ type: 'warning' });
+    wrapper.unmount();
+  });
+
   test('disabled', async () => {
     const disabled = ref(true);
 
@@ -1124,6 +1224,7 @@ describe('Select.tsx', () => {
   test('use-statistic', async () => {
     const modelValue = ref<number | number[]>([1, 2]);
     const useStatistic = ref(false);
+    const statisticShowTooltip = ref(false);
 
     const wrapper = mount(
       () => (
@@ -1132,6 +1233,8 @@ describe('Select.tsx', () => {
           toBody={false}
           useStatistic={useStatistic.value}
           statisticText="Options"
+          statisticShowTooltip={statisticShowTooltip.value}
+          tooltipShowAfter={0}
           multiple={true}
         >
           <HOption value={1} label="A" />
@@ -1153,6 +1256,30 @@ describe('Select.tsx', () => {
     const statisticElement = wrapper.find('.h-picker__input--static-text');
     expect(statisticElement.exists()).toBeTruthy();
     expect(statisticElement.text()).toEqual('Options (2)');
+    expect(
+      wrapper
+        .findAllComponents(HPopover)
+        .some(popover => popover.props('distance') === 12 && popover.props('disabled') === true),
+    ).toBe(true);
+
+    const existingPoppers = new Set(document.body.querySelectorAll('.h-popover__popper'));
+    statisticShowTooltip.value = true;
+    await nextTick();
+    const statisticPopover = wrapper
+      .findAllComponents(HPopover)
+      .find(popover => popover.props('distance') === 12);
+    await statisticPopover?.get('.h-popover__reference').trigger('mouseenter');
+    await vi.waitFor(() => {
+      const statisticPopper = Array.from(
+        document.body.querySelectorAll<HTMLElement>('.h-popover__popper'),
+      ).find(popper => !existingPoppers.has(popper));
+      expect(statisticPopover?.props('disabled')).toBe(false);
+      expect(statisticPopper).toBeDefined();
+      expect(getComputedStyle(statisticPopper as HTMLElement).display).not.toBe('none');
+      expect(statisticPopper?.textContent).toContain('A');
+      expect(statisticPopper?.textContent).toContain('B');
+    });
+    wrapper.unmount();
   });
 
   test('selected-visible in single', async () => {

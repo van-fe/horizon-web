@@ -248,6 +248,7 @@ export default defineComponent({
           .then(() => {
             emit('close', e);
           })
+          .catch(() => undefined)
           .finally(() => {
             isWaitingForConfirm.value = false;
           });
@@ -303,16 +304,17 @@ export default defineComponent({
     }
 
     function onBlur() {
+      if (isWaitingForConfirm.value) return;
       isEditing.value = false;
 
       if (inputValue.value.trim() && inputValue.value !== inputPreValue.value) {
         if (onEditNotice) {
           isWaitingForConfirm.value = true;
-          onEditNotice(inputValue.value.trim(), inputPreValue.value.trim(), props.id).finally(
-            () => {
+          onEditNotice(inputValue.value.trim(), inputPreValue.value.trim(), props.id)
+            .catch(() => undefined)
+            .finally(() => {
               isWaitingForConfirm.value = false;
-            },
-          );
+            });
         }
       }
     }

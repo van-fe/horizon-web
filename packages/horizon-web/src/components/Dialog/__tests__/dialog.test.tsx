@@ -328,13 +328,14 @@ describe('Dialog.tsx', () => {
       const getPopupContainer = vi.fn(() => el);
       const wrapper = mount(() => (
         <HApplication getPopupContainer={getPopupContainer}>
-          <HDialog visible={true} to={el}>
+          <HDialog visible={true}>
             <div>Hello World</div>
           </HDialog>
         </HApplication>
       ));
 
       expect(wrapper.findComponent(HDialog).exists()).toBe(true);
+      expect(getPopupContainer).toHaveBeenCalled();
       expect(el.querySelector('.h-dialog')).not.toBeNull();
       expect(el.querySelector('.h-dialog__body')?.textContent).toBe('Hello World');
 

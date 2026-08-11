@@ -2,11 +2,13 @@ import { mount } from '@vue/test-utils';
 import HButton from '../src/Button';
 import { describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
+import type { App } from 'vue';
 import type { ButtonProps } from '../src/composables/useProps';
 import { IconEye } from '@aurora/icon';
 import { sleep } from '../../../utils/tools';
 import LoadingIcon from '../../../directives/v-loading/src/components/LoadingIcon';
 import { buttonActionTestVectors, resolveButtonAction } from '@aurora/core';
+import type { Router } from 'vue-router';
 
 describe('Button.tsx', () => {
   test.each(buttonActionTestVectors)(
@@ -24,6 +26,74 @@ describe('Button.tsx', () => {
   });
 
   describe('props', () => {
+    test('href opens the requested target without emitting a normal click', async () => {
+      const open = vi.spyOn(window, 'open').mockReturnValue(null);
+      const wrapper = mount(() => (
+        <HButton tag="a" href="https://example.test/download" target="_blank">
+          Download
+        </HButton>
+      ));
+
+      await wrapper.get('a').trigger('click');
+
+      expect(open).toHaveBeenCalledWith('https://example.test/download');
+      expect(wrapper.findComponent(HButton).emitted('click')).toBeUndefined();
+    });
+
+    test('href supports parent and top browsing contexts', async () => {
+      const parentOpen = vi.spyOn(window.parent, 'open').mockReturnValue(null);
+      const topOpen = vi.spyOn(window.top!, 'open').mockReturnValue(null);
+      const wrapper = mount(() => (
+        <div>
+          <HButton tag="a" href="https://example.test/parent" target="_parent">
+            Parent
+          </HButton>
+          <HButton tag="a" href="https://example.test/top" target="_top">
+            Top
+          </HButton>
+        </div>
+      ));
+
+      const links = wrapper.findAll('a');
+      await links[0].trigger('click');
+      await links[1].trigger('click');
+      expect(parentOpen).toHaveBeenCalledWith('https://example.test/parent');
+      expect(topOpen).toHaveBeenCalledWith('https://example.test/top');
+    });
+
+    test('routes through push and replace exactly once', async () => {
+      const router = { push: vi.fn(), replace: vi.fn() };
+      const wrapper = mount(
+        () => (
+          <div>
+            <HButton to="/push">Push</HButton>
+            <HButton to="/replace" replace>
+              Replace
+            </HButton>
+          </div>
+        ),
+        {
+          global: {
+            plugins: [
+              {
+                install(app: App) {
+                  app.config.globalProperties.$router = router as unknown as Router;
+                },
+              },
+            ],
+          },
+        },
+      );
+
+      const buttons = wrapper.findAll('button');
+      await buttons[0].trigger('click');
+      await buttons[1].trigger('click');
+      expect(router.push).toHaveBeenCalledOnce();
+      expect(router.push).toHaveBeenCalledWith('/push');
+      expect(router.replace).toHaveBeenCalledOnce();
+      expect(router.replace).toHaveBeenCalledWith('/replace');
+    });
+
     test('type', async () => {
       const type = ref<ButtonProps['type']>();
       const wrapper = mount(() => <HButton type={type.value}>OK</HButton>);
@@ -188,6 +258,15 @@ describe('Button.tsx', () => {
       expect(wrapper.findComponent(IconEye).exists()).toBeTruthy();
 
       // icon-size can't be displayed
+    });
+
+    test('derives default icon sizes for string and component-only buttons', () => {
+      const stringIcon = mount(() => <HButton icon="eye" />);
+      expect(stringIcon.getComponent({ name: 'AIcon' }).props('size')).toBeTypeOf('number');
+
+      const componentIcon = mount(() => <HButton icon={IconEye} />);
+      expect(componentIcon.getComponent(IconEye).props('size')).toBeTypeOf('number');
+      expect(componentIcon.findComponent(HButton).classes()).toContain('h-button--equally');
     });
 
     test('native-type', async () => {
@@ -386,6 +465,52 @@ describe('Button.tsx', () => {
 
       expect(onClickCb).toHaveBeenCalledOnce();
     });
+
+    test('does not emit debounceFinished after unmount and recovers from rejection', async () => {
+      let resolve!: () => void;
+      const pending = new Promise<void>(done => {
+        resolve = done;
+      });
+      const afterUnmount = vi.fn();
+      const first = mount(HButton, {
+        props: { debounceFn: () => pending, onDebounceFinished: afterUnmount },
+        slots: { default: () => 'Save' },
+      });
+      await first.trigger('click');
+      first.unmount();
+      resolve();
+      await pending;
+      await nextTick();
+      expect(afterUnmount).not.toHaveBeenCalled();
+
+      const rejectedFinished = vi.fn();
+      const rejected = mount(HButton, {
+        props: {
+          debounceFn: () => Promise.reject(new Error('save failed')),
+          onDebounceFinished: rejectedFinished,
+        },
+        slots: { default: () => 'Retry' },
+      });
+      await rejected.trigger('click');
+      await sleep(0);
+      expect(rejectedFinished).not.toHaveBeenCalled();
+      expect(rejected.classes()).not.toContain('is-loading');
+    });
+  });
+
+  test('emits blur with the native FocusEvent from a real focus transition', async () => {
+    const onBlur = vi.fn();
+    const wrapper = mount(() => <HButton onBlur={onBlur}>Focusable</HButton>, {
+      attachTo: document.body,
+    });
+    const button = wrapper.get('button').element as HTMLButtonElement;
+    button.focus();
+    button.blur();
+    await nextTick();
+
+    expect(onBlur).toHaveBeenCalledOnce();
+    expect(onBlur.mock.calls[0][0]).toBeInstanceOf(FocusEvent);
+    wrapper.unmount();
   });
 
   describe('emit', () => {

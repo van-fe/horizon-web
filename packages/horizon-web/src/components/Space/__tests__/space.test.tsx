@@ -1,12 +1,29 @@
 import { mount } from '@vue/test-utils';
 import { describe, expect, test, vi } from 'vitest';
-import { nextTick, ref } from 'vue';
+import { Fragment, nextTick, ref } from 'vue';
 import { HButton } from '../../Button';
 import HSpace from '../src/Space';
 import type { HSpaceSize } from '../src/composables/useProps';
+import SpaceItem from '../src/SpaceItem';
 
 describe('Space.tsx', () => {
   describe('test props', () => {
+    test('block/align/fragment produce the public layout contract', () => {
+      const wrapper = mount(() => (
+        <HSpace block align="end" fragment>
+          <Fragment>
+            <span>A</span>
+            <span>B</span>
+          </Fragment>
+        </HSpace>
+      ));
+      expect(wrapper.get('.h-space').classes()).toEqual(
+        expect.arrayContaining(['h-space--block', 'h-space--end']),
+      );
+      expect(wrapper.findAll('.h-space--item')).toHaveLength(2);
+      expect(wrapper.findAll('.h-space--item').map(item => item.text())).toEqual(['A', 'B']);
+    });
+
     test('test basic #render', async () => {
       const wrapper = mount(() => (
         <HSpace>
@@ -91,6 +108,37 @@ describe('Space.tsx', () => {
       const space = wrapper.findComponent(HSpace);
       expect(space.exists()).toBe(true);
       expect(space.findAll('.h-divider--vertical')).toHaveLength(1);
+    });
+
+    test('normalizes invalid direction and maps custom spacing on both axes', () => {
+      const horizontal = mount(HSpace, {
+        props: { direction: 'diagonal' as never, size: '12px', wrap: true },
+        attrs: { style: { color: 'red' } },
+        slots: { default: () => <span>A</span> },
+      });
+      const horizontalStyle = horizontal.element as HTMLElement;
+      expect(horizontal.classes()).toEqual(
+        expect.arrayContaining(['h-space--horizontal', 'h-space--center', 'h-space--wrap']),
+      );
+      expect(horizontalStyle.style.columnGap).toBe('12px');
+      expect(horizontalStyle.style.gap).toBe('12px');
+      expect(horizontalStyle.style.color).toBe('red');
+
+      const vertical = mount(HSpace, {
+        props: { direction: 'vertical', size: 8, wrap: true },
+        slots: { default: () => <SpaceItem>Existing item</SpaceItem> },
+      });
+      expect(vertical.classes()).toContain('h-space--vertical');
+      expect(vertical.classes()).not.toContain('h-space--wrap');
+      expect(vertical.classes()).not.toContain('h-space--center');
+      expect((vertical.element as HTMLElement).style.rowGap).toBe('8px');
+      expect(vertical.findAll('.h-space--item')).toHaveLength(1);
+    });
+
+    test('does not render a separator without neighboring content', () => {
+      const wrapper = mount(HSpace, { props: { separator: true } });
+      expect(wrapper.find('.h-divider').exists()).toBe(false);
+      expect(wrapper.findAll('.h-space--item')).toHaveLength(0);
     });
   });
 

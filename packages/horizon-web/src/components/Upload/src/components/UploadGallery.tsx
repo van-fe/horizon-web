@@ -51,9 +51,11 @@ export default defineComponent({
       >
         {shouldShowAddFile.value && (
           <div class={cls(classHelper.e('item'), classHelper.e('add-file'))} onClick={onClick}>
-            <div class={classHelper.em('add-file', 'icon')}>
-              {slots.icon?.() ?? <IconAdd size="var(--font-size--add-file--icon)" />}
-            </div>
+            {slots.trigger?.() ?? (
+              <div class={classHelper.em('add-file', 'icon')}>
+                {slots.icon?.() ?? <IconAdd size="var(--font-size--add-file--icon)" />}
+              </div>
+            )}
           </div>
         )}
       </div>

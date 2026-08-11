@@ -27,6 +27,16 @@ describe('Container.tsx', () => {
     expect(wrapper.get('footer').attributes('style')).toContain('height: 48px');
   });
 
+  test('renders the Container, Header, Aside, Main and Footer default slots', () => {
+    const wrapper = mount(() => (
+      <HContainer><span class="container-default"><HHeader><span class="header-default">Header</span></HHeader><HAside><span class="aside-default">Aside</span></HAside><HMain><span class="main-default">Main</span></HMain><HFooter><span class="footer-default">Footer</span></HFooter></span></HContainer>
+    ));
+
+    for (const region of ['container', 'header', 'aside', 'main', 'footer']) {
+      expect(wrapper.find(`.${region}-default`).exists()).toBe(true);
+    }
+  });
+
   test('infers horizontal layout without header/footer and respects an explicit direction', () => {
     const horizontal = mount(() => (
       <HContainer>

@@ -110,12 +110,12 @@ export default defineComponent({
               size={16}
               color={cssVariable('upload', 'color', 'file-list-item', 'success')}
             />
-          ) : status === HUploadFileStatusEnum.Fail ? (
+          ) : (
             <IconRemind
               size={16}
               color={cssVariable('upload', 'color', 'file-list-item', 'fail')}
             />
-          ) : undefined}
+          )}
         </div>
       ) : undefined;
     };

@@ -40,8 +40,8 @@ export default defineComponent({
       viewerSources = allImgs.map(({ props }) => {
         return {
           type: 'image',
-          cover: props?.viewerSrc || props?.src || '',
-          thumbnail: props?.src,
+          cover: props!.viewerSrc || props!.src,
+          thumbnail: props!.src,
           title: props?.title || props?.alt || '',
         };
       });
@@ -49,16 +49,14 @@ export default defineComponent({
       images = allImgs.length <= props.limit ? allImgs : allImgs.slice(0, props.limit);
     };
     const viewerIndex = ref(0);
-    const onClick = (imgProps: any) => {
-      if (!imgProps.showViewer && !imgProps['show-viewer']) {
+    const onClick = (imgProps: VNode['props']) => {
+      if (!imgProps?.showViewer && !imgProps?.['show-viewer']) {
         return;
       }
-      const idx = viewerSources.findIndex(t => t.thumbnail === imgProps.src);
-      if (idx >= 0) {
-        viewerIndex.value = idx;
-      } else {
-        viewerIndex.value = 0;
-      }
+      viewerIndex.value = Math.max(
+        0,
+        viewerSources.findIndex(t => t.thumbnail === imgProps?.src),
+      );
       viewerShown.value = true;
     };
 

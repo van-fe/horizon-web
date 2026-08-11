@@ -5,7 +5,7 @@ import { describe, expect, test } from 'vitest';
 import { nextTick } from 'vue';
 
 describe('v-popconfirm.tsx', () => {
-  test.only('basic', async () => {
+  test('basic', async () => {
     const wrapper = mount(
       () => <div v-popconfirm class="need-click" style="width: 300px; height: 300px;" />,
       {

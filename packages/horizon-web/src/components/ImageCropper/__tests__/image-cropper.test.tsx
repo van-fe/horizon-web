@@ -1,8 +1,11 @@
 import { flushPromises, mount } from '@vue/test-utils';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
-import { defineComponent, reactive } from 'vue';
-import HImageCropper from '../src/ImageCropper';
+import { defineComponent, nextTick, reactive } from 'vue';
+import { HImageCropper } from '..';
 import { useImageCropper } from '../src/hooks/useImageCropper';
+import { useImageCropperEmits } from '../src/composables/useEmits';
+import type { ImageCropperProps } from '../src/composables/useProps';
+import type { ImageCropperExposes } from '../src/composables/useExposes';
 
 interface MockImage {
   crossOrigin: string | null;
@@ -53,7 +56,7 @@ function mountHook(overrides: Record<string, unknown> = {}) {
   const host = mount(
     defineComponent({
       setup() {
-        state = useImageCropper(props as any, emit);
+        state = useImageCropper(props as ImageCropperProps, emit);
         return () => null;
       },
     }),
@@ -76,12 +79,26 @@ describe('ImageCropper', () => {
     images.length = 0;
     Object.values(context).forEach(mock => mock.mockClear());
     installImageMock();
-    vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue(context as any);
+    vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue(
+      context as unknown as CanvasRenderingContext2D,
+    );
   });
 
   afterEach(() => {
     vi.restoreAllMocks();
     vi.unstubAllGlobals();
+  });
+
+  test('validates every public emit payload defensively', () => {
+    expect(useImageCropperEmits.change({ zoom: 1, rotation: 0, x: 0, y: 0 })).toBe(true);
+    expect(useImageCropperEmits.change(undefined as never)).toBe(false);
+    expect(useImageCropperEmits.load()).toBe(true);
+    expect(useImageCropperEmits.error(new Event('error'))).toBe(true);
+    expect(useImageCropperEmits.error({} as never)).toBe(false);
+    const blob = new Blob(['crop'], { type: 'image/png' });
+    expect(useImageCropperEmits.crop(blob, 'data:image/png;base64,out')).toBe(true);
+    expect(useImageCropperEmits.crop({} as never, 'data:image/png;base64,out')).toBe(false);
+    expect(useImageCropperEmits.crop(blob, 1 as never)).toBe(false);
   });
 
   test('loads with the configured CORS mode, resets transforms and draws the image', async () => {
@@ -159,6 +176,16 @@ describe('ImageCropper', () => {
     state.onWheel({ deltaY: -1, preventDefault } as unknown as WheelEvent);
     expect(preventDefault).toHaveBeenCalledTimes(1);
     expect(state.zoom.value).toBe(1.1);
+    state.onWheel({ deltaY: 1, preventDefault } as unknown as WheelEvent);
+    expect(state.zoom.value).toBe(1);
+    host.unmount();
+  });
+
+  test('handles pointer release and crop before a canvas is available', async () => {
+    const { host, state } = mountHook();
+    state.onPointerdown({ clientX: 0, clientY: 0, pointerId: 1 } as PointerEvent);
+    state.onPointerup({ pointerId: 1 } as PointerEvent);
+    await expect(state.crop()).rejects.toThrow('Crop canvas is not ready.');
     host.unmount();
   });
 
@@ -183,7 +210,7 @@ describe('ImageCropper', () => {
       props: { src: 'photo.png', outputType: 'image/webp', quality: 0.8 },
     });
 
-    const result = await (wrapper.vm as any).crop();
+    const result = await (wrapper.vm as unknown as ImageCropperExposes).crop();
 
     expect(result).toEqual({ blob, dataUrl: 'data:image/webp;base64,out' });
     expect(HTMLCanvasElement.prototype.toDataURL).toHaveBeenCalledWith('image/webp', 0.8);
@@ -195,9 +222,78 @@ describe('ImageCropper', () => {
     vi.spyOn(HTMLCanvasElement.prototype, 'toBlob').mockImplementation(callback => callback(null));
     const wrapper = mount(HImageCropper, { props: { src: 'photo.png' } });
 
-    await expect((wrapper.vm as any).crop()).rejects.toThrow(
+    await expect((wrapper.vm as unknown as ImageCropperExposes).crop()).rejects.toThrow(
       'Unable to export cropped image.',
     );
     expect(wrapper.emitted('crop')).toBeUndefined();
+  });
+
+  test('exposes action slot callbacks and renders zoom bounds and viewport dimensions', async () => {
+    const blob = new Blob(['slot-crop'], { type: 'image/png' });
+    vi.spyOn(HTMLCanvasElement.prototype, 'toDataURL').mockReturnValue('data:image/png;base64,slot');
+    vi.spyOn(HTMLCanvasElement.prototype, 'toBlob').mockImplementation(callback => callback(blob));
+    let actions!: {
+      reset: () => void;
+      rotate: (degrees?: number) => void;
+      crop: () => Promise<void>;
+    };
+    const wrapper = mount(HImageCropper, {
+      props: {
+        src: 'photo.png',
+        width: 320,
+        height: 180,
+        minZoom: 0.5,
+        maxZoom: 4,
+        zoomStep: 0.25,
+      },
+      slots: {
+        actions: (slotActions?: typeof actions) => {
+          if (!slotActions) return null;
+          actions = slotActions;
+          return <button data-test="custom-actions">Custom actions</button>;
+        },
+      },
+    });
+
+    expect(wrapper.get('.h-image-cropper__viewport').attributes('style')).toContain('width: 320px');
+    expect(wrapper.get('.h-image-cropper__viewport').attributes('style')).toContain('height: 180px');
+    expect(wrapper.get('canvas').attributes()).toMatchObject({ width: '320', height: '180' });
+    expect(wrapper.get('input[type="range"]').attributes()).toMatchObject({
+      min: '0.5',
+      max: '4',
+      step: '0.25',
+    });
+    expect(wrapper.get('[data-test="custom-actions"]').text()).toBe('Custom actions');
+
+    actions.rotate(45);
+    expect(wrapper.emitted('change')?.at(-1)?.[0]).toMatchObject({ rotation: 45 });
+    actions.reset();
+    expect(wrapper.emitted('change')?.at(-1)?.[0]).toMatchObject({ rotation: 0, zoom: 0.5 });
+    await actions.crop();
+    expect(wrapper.emitted('crop')).toEqual([[blob, 'data:image/png;base64,slot']]);
+
+    await wrapper.setProps({ width: 321, height: 181 });
+    await nextTick();
+    expect(wrapper.get('.h-image-cropper__viewport').attributes('style')).toContain('width: 321px');
+  });
+
+  test('runs default toolbar actions and the native range input', async () => {
+    const blob = new Blob(['crop'], { type: 'image/png' });
+    vi.spyOn(HTMLCanvasElement.prototype, 'toDataURL').mockReturnValue('data:image/png;base64,out');
+    vi.spyOn(HTMLCanvasElement.prototype, 'toBlob').mockImplementation(callback => callback(blob));
+    const wrapper = mount(HImageCropper, { props: { src: 'photo.png' } });
+    images[0].onload?.();
+    await flushPromises();
+
+    const buttons = wrapper.findAll('button');
+    await buttons[0].trigger('click');
+    expect(wrapper.emitted('change')?.at(-1)?.[0]).toMatchObject({ rotation: 90 });
+    await buttons[1].trigger('click');
+    expect(wrapper.emitted('change')?.at(-1)?.[0]).toMatchObject({ rotation: 0 });
+    await wrapper.get('input[type="range"]').setValue('1.5');
+    expect(wrapper.emitted('change')?.at(-1)?.[0]).toMatchObject({ zoom: 1.5 });
+    await buttons[2].trigger('click');
+    await nextTick();
+    expect(wrapper.emitted('crop')).toEqual([[blob, 'data:image/png;base64,out']]);
   });
 });

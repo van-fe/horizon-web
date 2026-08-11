@@ -29,8 +29,7 @@ export default defineComponent({
     const tooltipVisible = ref(false);
 
     function onMouseEnter() {
-      tooltipVisible.value =
-        (titleRef.value?.scrollWidth ?? 0) > (titleRef.value?.clientWidth ?? 0);
+      tooltipVisible.value = titleRef.value!.scrollWidth > titleRef.value!.clientWidth;
     }
 
     function onMouseLeave() {

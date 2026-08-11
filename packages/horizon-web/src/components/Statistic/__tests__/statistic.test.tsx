@@ -51,4 +51,62 @@ describe('Statistic', () => {
       expect(dictionary.horizonWeb.statistic.decrease).toBeTruthy();
     });
   });
+
+  test('can disable grouping and renders string values and suffixes unchanged', () => {
+    const number = mount(HStatistic, {
+      props: { value: 12345.6, useGrouping: false, suffix: 'ms' },
+    });
+    const string = mount(HStatistic, { props: { value: 'N/A' } });
+
+    expect(number.get('.h-statistic__number').text()).toBe('12345.6');
+    expect(number.get('.h-statistic__suffix').text()).toBe('ms');
+    expect(string.get('.h-statistic__number').text()).toBe('N/A');
+  });
+
+  test('all presentation slots override their matching props', () => {
+    const wrapper = mount(HStatistic, {
+      props: {
+        title: 'prop title',
+        value: 1,
+        prefix: '$',
+        suffix: 'USD',
+        trend: 'down',
+        trendValue: '1%',
+      },
+      slots: {
+        title: '<b data-title>slot title</b>',
+        default: '<b data-value>slot value</b>',
+        prefix: '<b data-prefix>slot prefix</b>',
+        suffix: '<b data-suffix>slot suffix</b>',
+        trend: '<b data-trend>slot trend</b>',
+      },
+    });
+
+    expect(wrapper.get('[data-title]').text()).toBe('slot title');
+    expect(wrapper.get('[data-value]').text()).toBe('slot value');
+    expect(wrapper.get('[data-prefix]').text()).toBe('slot prefix');
+    expect(wrapper.get('[data-suffix]').text()).toBe('slot suffix');
+    expect(wrapper.get('[data-trend]').text()).toBe('slot trend');
+    expect(wrapper.text()).not.toContain('prop title');
+  });
+
+  test.each([
+    ['up', 'success', 'Increased'],
+    ['down', 'neutral', 'Decreased'],
+  ] as const)('renders %s trend using the explicit %s semantic', (trend, trendType, label) => {
+    const wrapper = mount(HStatistic, { props: { value: 1, trend, trendType } });
+    const output = wrapper.get('.h-statistic__trend');
+
+    expect(output.classes()).toContain(`h-statistic--trend-${trendType}`);
+    expect(output.attributes('aria-label')).toBe(label);
+    expect(output.find('svg').exists()).toBe(true);
+  });
+
+  test('renders a trend value without directional icon semantics', () => {
+    const wrapper = mount(HStatistic, { props: { value: 5, trend: 'none', trendValue: 'baseline' } });
+    const trend = wrapper.get('.h-statistic__trend');
+    expect(trend.text()).toBe('baseline');
+    expect(trend.attributes('aria-label')).toBeUndefined();
+    expect(trend.find('svg').exists()).toBe(false);
+  });
 });
