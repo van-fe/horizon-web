@@ -1,21 +1,30 @@
-import { defineComponent, provide, toRefs, ref, watchEffect, onMounted } from 'vue';
+import { defineComponent, onMounted, provide, ref, toRefs, watchEffect } from 'vue';
 import type { InjectionKey, Ref } from 'vue';
+import type { CollapseKey, CollapseValue } from '@aurora/core';
+import {
+  normalizeCollapseValue,
+  resolveCollapseInitialValue,
+  toggleCollapseValue,
+} from '@aurora/core';
+import { focusCollapseHeader } from '@aurora/horizon-web-core';
 import { useCollapseProps } from './composables/useProps';
 import type { CollapseProps } from './composables/useProps';
 import { useCollapseEmits } from './composables/useEmits';
 import type { CollapseSlots } from './composables/useSlots';
 import { useCollapseSlots } from './composables/useSlots';
 import type { CollapseEmits } from './composables/useEmits';
+import { useCollapseExposes } from './composables/useExposes';
+import type { CollapseExposes } from './composables/useExposes';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, generatorInjectedKeyName, useNamespace } from '@aurora/utils';
 import useSize from '~/utils/useSize';
 
 export interface CollapseProvidesData {
-  activeKeys: Ref<string | number | undefined | (string | number)[]>;
+  activeKeys: Ref<CollapseValue>;
   accordionProp: Ref<boolean>;
   expandAllProp: Ref<boolean>;
-  changeExpandItem: (itemName: string | number) => void;
-  handleExpandAll: (itemName: string | number) => void;
+  changeExpandItem: (itemName: CollapseKey) => void;
+  handleExpandAll: (itemName: CollapseKey) => void;
 }
 
 export const injectedKey = Symbol(
@@ -29,7 +38,12 @@ export default defineComponent({
   props: useCollapseProps,
   emits: useCollapseEmits,
   slots: useCollapseSlots,
-  setup(props: CollapseProps, { emit, slots }: HorizonWebSetupContext<CollapseEmits, CollapseSlots>) {
+  exposes: useCollapseExposes,
+  setup(
+    props: CollapseProps,
+    { emit, expose, slots }: HorizonWebSetupContext<CollapseEmits, CollapseSlots, CollapseExposes>,
+  ) {
+    const rootRef = ref<HTMLElement | null>(null);
     const {
       activeKey: activeKeyProp,
       accordion: accordionProp,
@@ -43,39 +57,27 @@ export default defineComponent({
     const sizeRef = useSize(size, 'medium');
 
     const classHelper = new ComponentClassBlock('collapse');
-    const activeKeys = ref<string | number | undefined | (string | number)[]>([]);
+    const activeKeys = ref<CollapseValue>([]);
 
-    const handleAccordionExpandItem = (itemName: string | number) => {
-      activeKeys.value = activeKeys.value === itemName ? undefined : itemName;
-    };
-    const handleExpandItem = (itemName: string | number, oldActiveKeys: (string | number)[]) => {
-      activeKeys.value = oldActiveKeys.includes(itemName)
-        ? oldActiveKeys.filter(name => name !== itemName)
-        : [...oldActiveKeys, itemName];
-    };
-    const changeExpandItem = (itemName: string | number) => {
-      if (accordionProp.value) {
-        handleAccordionExpandItem(itemName);
-      } else {
-        handleExpandItem(itemName, activeKeys.value as (string | number)[]);
-      }
+    const changeExpandItem = (itemName: CollapseKey) => {
+      activeKeys.value = toggleCollapseValue(activeKeys.value, itemName, accordionProp.value);
       emit('change', activeKeys.value);
       emit('update:activeKey', activeKeys.value);
     };
 
     watchEffect(() => {
-      if (accordionProp.value) {
-        activeKeys.value = activeKeyProp?.value ?? undefined;
-      } else {
-        activeKeys.value = Array.isArray(activeKeyProp?.value) ? activeKeyProp?.value : [];
-      }
+      activeKeys.value = normalizeCollapseValue(activeKeyProp?.value, accordionProp.value);
     });
 
     const collapseMounted = ref(false);
-    const handleExpandAll = (itemName: string | number) => {
-      if (!collapseMounted.value && !(activeKeys.value as (string | number)[]).includes(itemName)) {
-        activeKeys.value = [...(activeKeys.value as (string | number)[]), itemName];
-      }
+    const handleExpandAll = (itemName: CollapseKey) => {
+      if (collapseMounted.value) return;
+      activeKeys.value = resolveCollapseInitialValue(
+        activeKeys.value,
+        [{ name: itemName }],
+        accordionProp.value,
+        expandAllProp.value,
+      );
     };
     onMounted(() => {
       collapseMounted.value = true;
@@ -89,8 +91,11 @@ export default defineComponent({
       handleExpandAll,
     });
 
+    expose({ focus: (key?: CollapseKey) => void focusCollapseHeader(rootRef.value, key) });
+
     return () => (
       <div
+        ref={rootRef}
         class={cls(
           classHelper.block,
           classHelper.m('filled', filledProp.value),

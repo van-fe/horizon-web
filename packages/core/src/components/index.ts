@@ -7,6 +7,7 @@ export * from './Breadcrumb';
 export * from './Button';
 export * from './Card';
 export * from './Checkbox';
+export * from './Collapse';
 export * from './Count';
 export * from './Divider';
 export * from './Empty';

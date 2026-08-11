@@ -49,6 +49,7 @@ const reactSidebar = [
     items: [
       { text: 'Link 文字链接', link: 'components/Link' },
       { text: 'Breadcrumb 面包屑', link: 'components/Breadcrumb' },
+      { text: 'Collapse 折叠面板', link: 'components/Collapse' },
       { text: 'Steps 步骤条', link: 'components/Steps' },
       { text: 'Pagination 分页', link: 'components/Pagination' },
       { text: 'Timeline 时间轴', link: 'components/Timeline' },

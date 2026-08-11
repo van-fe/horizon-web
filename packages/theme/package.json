@@ -42,6 +42,8 @@
     "./styles/card-variables": "./styles/components/card/variables.scss",
     "./styles/checkbox": "./styles/components/checkbox/index.scss",
     "./styles/checkbox-variables": "./styles/components/checkbox/variables.scss",
+    "./styles/collapse": "./styles/components/collapse/index.scss",
+    "./styles/collapse-variables": "./styles/components/collapse/variables.scss",
     "./styles/count": "./styles/components/count/index.scss",
     "./styles/count-variables": "./styles/components/count/variables.scss",
     "./styles/divider": "./styles/components/divider/index.scss",

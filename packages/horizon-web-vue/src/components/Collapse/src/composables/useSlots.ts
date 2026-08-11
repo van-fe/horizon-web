@@ -1,28 +1,25 @@
 import type { SlotsType } from 'vue';
+import type {
+  AdaptComponentApiShape,
+  CollapseItemRegionMap,
+  CollapseRegionMap,
+} from '@aurora/core';
+
+type CollapseVueSlots = AdaptComponentApiShape<CollapseRegionMap, { content: 'default' }>;
+type CollapseItemVueSlots = AdaptComponentApiShape<CollapseItemRegionMap, { content: 'default' }>;
+
 export const useCollapseSlots = Object as SlotsType<{
-  /**
-   * 默认插槽，用来承放 `h-collapse-item`
-    * @en Custom content for the default slot.
-   */
-  default?: {};
+  /** 面板条目。 @en Composed collapse items. */
+  default?: CollapseVueSlots['default'];
 }>;
 
 export const useCollapseItemSlots = Object as SlotsType<{
-  /**
-   * 折叠面板节点的内容
-    * @en Custom content for the default slot.
-   */
-  default?: {};
-  /**
-   * 折叠面板节点头部的内容
-    * @en Custom content for the title slot.
-   */
-  title?: {};
-  /**
-   * 折叠面板节点头部的自定义图标
-    * @en Custom content for the icon slot.
-   */
-  icon?: {};
+  /** 面板正文。 @en Panel body. */
+  default?: CollapseItemVueSlots['default'];
+  /** 面板标题。 @en Panel title. */
+  title?: CollapseItemVueSlots['title'];
+  /** 展开图标。 @en Expand icon. */
+  icon?: CollapseItemVueSlots['icon'];
 }>;
 
 export type CollapseSlots = typeof useCollapseSlots;

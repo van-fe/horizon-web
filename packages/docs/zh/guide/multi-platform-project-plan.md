@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B9 Pagination 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B10 Collapse 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -506,6 +506,18 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DS-B9-001 | Done | Pagination Sass、变量与视觉基础迁入 `@aurora/theme`，Vue 使用包导出代理，React 使用同源样式并补齐原生按钮、选择器、数字输入的 reset、焦点环和禁用规则 |
 | DOC-B9-001 | Done | Pagination 中英文 React 页面、独立 TSX 示例与导航侧边栏入口完成；28 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
 | QA-B9-001 | Done | Core 102、Web Core Node 8/Chromium 21、React Chromium 107、Vue Chromium 2301 项（含 1 项预期失败）全部通过，覆盖率为 97.98% / 95.15% / 97.77% / 98.27%；五个包构建、文档、Vue/React/SSR 消费工程及中英文、暗色、390px 真实浏览器验收通过 |
+
+#### M6-B10 第十批实施记录（2026-08-12）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B10-001 | Done | Collapse 与 CollapseItem 的公共 props、默认值、枚举、校验器、事件、内容区域、命令以及激活值归一化、切换、展开全部和键盘激活算法迁入 `@aurora/core`；两端公共 API 语义仅定义一次 |
+| WEB-B10-001 | Done | 在同名 Web Core 目录提供首个可用标题或指定面板的 DOM 聚焦 primitive，同时兼容 Vue 直系焦点节点与 React 原生按钮结构，并补齐 Chromium 测试 |
+| VUE-B10-001 | Done | Vue props/emits/slots/exposes 通过类型化 rename/omit/extend 适配消费公共契约，仅保留 runtime props、`activeKey` 双向绑定、VNode、Transition 与 Application 尺寸适配；面板状态、展开全部、键盘和聚焦复用 Core/Web Core |
+| REACT-B10-001 | Done | 完成原生按钮与 region 语义、受控和非受控多选/手风琴状态、条件挂载、富标题与图标、嵌套面板、原生属性和命令 ref；ReactNode 与 HTML 属性只保留在 renderer 适配层 |
+| DS-B10-001 | Done | Collapse Sass、变量与视觉基础迁入 `@aurora/theme`，Vue 使用包导出代理，React 使用同源样式并补齐原生按钮 reset、焦点环、禁用与 hidden 规则 |
+| DOC-B10-001 | Done | Collapse 中英文 React 页面、独立 TSX 示例与导航侧边栏入口完成；30 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
+| QA-B10-001 | Done | Core 106、Web Core Node 8/Chromium 22、React Chromium 112、Vue Chromium 2302 项（含 1 项预期失败）全部通过，覆盖率为 97.98% / 95.14% / 97.78% / 98.27%；五个包构建、文档、Vue/React/SSR 消费工程及中英文 390px 真实浏览器验收通过 |
 
 ### 批次 C：浮层与容器
 

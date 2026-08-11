@@ -9,6 +9,7 @@ declare module '@aurora/theme/styles/breadcrumb';
 declare module '@aurora/theme/styles/button';
 declare module '@aurora/theme/styles/card';
 declare module '@aurora/theme/styles/checkbox';
+declare module '@aurora/theme/styles/collapse';
 declare module '@aurora/theme/styles/count';
 declare module '@aurora/theme/styles/divider';
 declare module '@aurora/theme/styles/empty';

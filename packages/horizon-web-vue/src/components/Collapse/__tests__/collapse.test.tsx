@@ -4,6 +4,7 @@ import { describe, expect, test, vi } from 'vitest';
 import { ref, nextTick } from 'vue';
 import { AIcon } from '@aurora/icon';
 import { useCollapseEmits } from '../src/composables/useEmits';
+import type { CollapseExposes } from '../src/composables/useExposes';
 
 describe('Collapse.tsx', () => {
   test('basic', async () => {
@@ -51,6 +52,27 @@ describe('Collapse.tsx', () => {
     expect(header.attributes('aria-expanded')).toBe('true');
   });
 
+  test('exposes focus for the first or a requested enabled panel', async () => {
+    const collapseRef = ref<CollapseExposes | null>(null);
+    const wrapper = mount(
+      () => (
+        <HCollapse ref={collapseRef}>
+          <HCollapseItem name="disabled" title="Disabled" disabled />
+          <HCollapseItem name="first" title="First" />
+          <HCollapseItem name="second" title="Second" />
+        </HCollapse>
+      ),
+      { attachTo: document.body },
+    );
+    await nextTick();
+
+    collapseRef.value?.focus();
+    expect(document.activeElement?.textContent).toContain('First');
+    collapseRef.value?.focus('second');
+    expect(document.activeElement?.textContent).toContain('Second');
+    wrapper.unmount();
+  });
+
   describe('props', () => {
     test('border, filled, expandIconPosition and size produce public layout classes', () => {
       const wrapper = mount(() => (
@@ -74,7 +96,9 @@ describe('Collapse.tsx', () => {
       const onChange = vi.fn();
       const wrapper = mount(() => (
         <HCollapse onChange={onChange}>
-          <HCollapseItem name="disabled" disabled>Disabled body</HCollapseItem>
+          <HCollapseItem name="disabled" disabled>
+            Disabled body
+          </HCollapseItem>
         </HCollapse>
       ));
       const header = wrapper.get('[role="button"]');
@@ -102,8 +126,9 @@ describe('Collapse.tsx', () => {
       const item = wrapper.findComponent(HCollapseItem);
 
       expect((item.element as HTMLElement).style.borderBottomColor).toBe('rgb(1, 2, 3)');
-      expect((item.get('.h-collapse-item__header').element as HTMLElement).style.backgroundColor)
-        .toBe('rgb(4, 5, 6)');
+      expect(
+        (item.get('.h-collapse-item__header').element as HTMLElement).style.backgroundColor,
+      ).toBe('rgb(4, 5, 6)');
       expect(item.findComponent(AIcon).props('name')).toBe('add');
     });
 
@@ -264,12 +289,7 @@ describe('Collapse.tsx', () => {
       const onChange = vi.fn();
       const onUpdate = vi.fn();
       const wrapper = mount(() => (
-        <HCollapse
-          activeKey="active"
-          accordion
-          onChange={onChange}
-          onUpdate:activeKey={onUpdate}
-        >
+        <HCollapse activeKey="active" accordion onChange={onChange} onUpdate:activeKey={onUpdate}>
           <HCollapseItem name="active" title="Active" />
         </HCollapse>
       ));

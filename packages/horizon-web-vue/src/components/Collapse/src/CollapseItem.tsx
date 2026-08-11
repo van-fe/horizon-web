@@ -1,5 +1,6 @@
 import type { Component } from 'vue';
 import { defineComponent, inject, toRefs, onMounted, useId } from 'vue';
+import { isCollapseActivationKey, isCollapseItemActive } from '@aurora/core';
 import { useCollapseItemProps } from './composables/useProps';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
@@ -12,8 +13,8 @@ import HTransition from '~/components/Transition/src/Transition';
 
 export default defineComponent({
   name: `${useNamespace()}CollapseItem`,
-  desc: "折叠面板中的单个内容项",
-  descLocales: { en: "A single content panel within Collapse." },
+  desc: '折叠面板中的单个内容项',
+  descLocales: { en: 'A single content panel within Collapse.' },
   components: { AIcon },
   props: useCollapseItemProps,
   slots: useCollapseItemSlots,
@@ -33,9 +34,11 @@ export default defineComponent({
     const panelId = useId();
 
     const verifyNameIsActive = () => {
-      return injectCollapse.accordionProp.value
-        ? injectCollapse.activeKeys.value === nameProp.value
-        : (injectCollapse.activeKeys.value as (string | number)[]).includes(nameProp.value);
+      return isCollapseItemActive(
+        injectCollapse.activeKeys.value,
+        nameProp.value!,
+        injectCollapse.accordionProp.value,
+      );
     };
 
     const clickHeader = () => {
@@ -61,6 +64,7 @@ export default defineComponent({
       const isActiveName = verifyNameIsActive();
       return (
         <div
+          data-collapse-key={nameProp.value}
           class={[
             `${classHelper.block}`,
             isActiveName && classHelper.m('expand'),
@@ -80,7 +84,7 @@ export default defineComponent({
             style={{ backgroundColor: backgroundProp.value }}
             onClick={clickHeader}
             onKeydown={(evt: KeyboardEvent) => {
-              if (evt.key === 'Enter' || evt.key === ' ') {
+              if (isCollapseActivationKey(evt.key)) {
                 evt.preventDefault();
                 clickHeader();
               }

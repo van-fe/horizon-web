@@ -9,6 +9,8 @@ import {
   buttonManifest,
   cardManifest,
   checkboxManifest,
+  collapseItemManifest,
+  collapseManifest,
   countManifest,
   createReactComponentManifest,
   createVueComponentManifest,
@@ -43,6 +45,8 @@ const manifests = [
   buttonManifest,
   cardManifest,
   checkboxManifest,
+  collapseManifest,
+  collapseItemManifest,
   countManifest,
   dividerManifest,
   emptyManifest,
@@ -123,6 +127,20 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     },
     regions: { rename: { label: 'default' } },
   },
+  Collapse: {
+    props: { rename: { value: 'activeKey' }, omit: ['defaultValue'] },
+    events: {
+      extend: [
+        {
+          name: 'update:activeKey',
+          type: 'CollapseValue',
+          description: { zh: '更新绑定展开项', en: 'Updates the bound expanded panels' },
+        },
+      ],
+    },
+    regions: { rename: { content: 'default' } },
+  },
+  CollapseItem: { regions: { rename: { content: 'default' } } },
   Divider: {
     props: { rename: { variant: 'type' } },
     regions: { rename: { title: 'default' } },
@@ -430,6 +448,16 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
   Checkbox: {
     events: { rename: { change: 'onChange', blur: 'onBlur', click: 'onClick' } },
     regions: { rename: { label: 'children' } },
+  },
+  Collapse: {
+    events: { rename: { change: 'onChange' } },
+    regions: { rename: { content: 'children' } },
+  },
+  CollapseItem: {
+    props: {
+      override: { title: { type: 'ReactNode' }, expandIcon: { type: 'ReactNode' } },
+    },
+    regions: { rename: { content: 'children' }, omit: ['title', 'icon'] },
   },
   Count: { events: { rename: { change: 'onChange' } } },
   Divider: { regions: { rename: { title: 'children' } } },
