@@ -1,2 +1,2 @@
-export * from './browser';
-export * from './scrollLock';
+export * from './components';
+export * from './utils';

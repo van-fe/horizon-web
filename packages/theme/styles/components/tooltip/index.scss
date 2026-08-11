@@ -1,0 +1,115 @@
+@use '../../mixins';
+
+@include mixins.b('tooltip') {
+  position: fixed;
+  box-sizing: border-box;
+  padding: mixins.css-variable('tooltip', 'spacing', 'padding');
+  font-size: mixins.css-variable('tooltip', 'font-size');
+  font-style: normal;
+  font-weight: mixins.css-variable('tooltip', 'font-weight');
+  line-height: mixins.css-variable('tooltip', 'line-height');
+  color: mixins.css-variable('tooltip', 'color');
+  background-color: mixins.css-variable('tooltip', 'background');
+  border: 1px solid mixins.css-variable('tooltip', 'border-color');
+  border-radius: mixins.css-variable('tooltip', 'border-radius');
+
+  @include mixins.e('content') {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: mixins.css-variable('tooltip', 'size', 'min', 'width');
+    max-width: mixins.css-variable('tooltip', 'size', 'max', 'width');
+    overflow-wrap: anywhere;
+    white-space: normal;
+
+    @include mixins.is('clickable') {
+      cursor: pointer;
+    }
+  }
+
+  @include mixins.m('large') {
+    padding: mixins.css-variable('tooltip', 'spacing', 'padding', 'large');
+    font-size: mixins.css-variable('tooltip', 'font-size', 'large');
+  }
+
+  @include mixins.m('small') {
+    padding: mixins.css-variable('tooltip', 'spacing', 'padding', 'small');
+  }
+
+  @include mixins.m('light') {
+    #{mixins.css-variable-name('tooltip', 'background')}: #{mixins.css-variable('tooltip', 'background', 'light')};
+    #{mixins.css-variable-name('tooltip', 'color')}: #{mixins.css-variable('tooltip', 'color', 'light')};
+    #{mixins.css-variable-name('tooltip', 'border-color')}: #{mixins.css-variable('tooltip', 'border-color', 'light')};
+    box-shadow:
+      0 4px 6px 0 rgb(0, 22, 60, 2%),
+      0 2px 4px 0 rgb(0, 22, 60, 2%),
+      0 1px 2px 0 rgb(0, 0, 60, 1%);
+  }
+
+  @include mixins.e('arrow') {
+    position: absolute;
+    z-index: -1;
+    width: mixins.css-variable('tooltip', 'size', 'arrow');
+    height: mixins.css-variable('tooltip', 'size', 'arrow');
+    pointer-events: none;
+
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+    &::before {
+      box-sizing: border-box;
+      display: block;
+      width: 100%;
+      height: 100%;
+      content: '';
+      background-color: mixins.css-variable('tooltip', 'background');
+      border: 1px solid;
+      border-color: transparent mixins.css-variable('tooltip', 'border-color')
+        mixins.css-variable('tooltip', 'border-color') transparent;
+      border-radius: 1px;
+      clip-path: circle(65%);
+      transform: mixins.css-variable('tooltip', 'transform', 'arrow', 'rotate');
+    }
+  }
+
+  @include mixins.m('hidden') {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+  &[data-popper-reference-hidden] {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+  &[data-popper-placement^='top'] {
+    @include mixins.be('tooltip', 'arrow', false) {
+      #{mixins.css-variable-name('tooltip', 'transform', 'arrow', 'rotate')}: rotate(45deg);
+      bottom: mixins.css-variable('tooltip', 'size', 'arrow', 'offset');
+    }
+  }
+
+  /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+  &[data-popper-placement^='bottom'] {
+    @include mixins.be('tooltip', 'arrow', false) {
+      #{mixins.css-variable-name('tooltip', 'transform', 'arrow', 'rotate')}: rotate(-135deg);
+      top: mixins.css-variable('tooltip', 'size', 'arrow', 'offset');
+    }
+  }
+
+  /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+  &[data-popper-placement^='left'] {
+    @include mixins.be('tooltip', 'arrow', false) {
+      #{mixins.css-variable-name('tooltip', 'transform', 'arrow', 'rotate')}: rotate(-45deg);
+      right: mixins.css-variable('tooltip', 'size', 'arrow', 'offset');
+    }
+  }
+
+  /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+  &[data-popper-placement^='right'] {
+    @include mixins.be('tooltip', 'arrow', false) {
+      #{mixins.css-variable-name('tooltip', 'transform', 'arrow', 'rotate')}: rotate(135deg);
+      left: mixins.css-variable('tooltip', 'size', 'arrow', 'offset');
+    }
+  }
+}

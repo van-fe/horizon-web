@@ -23,7 +23,9 @@
     "build:dist": "bunx --bun vite build",
     "build:types": "rm -rf types && tsc -d --pretty --emitDeclarationOnly --declarationDir ./types",
     "typecheck": "tsc --noEmit --pretty false",
-    "test": "bun run --bun vitest run --config ./vitest.config.ts"
+    "test": "bun run test:node && bun run test:browser",
+    "test:node": "bun run --bun vitest run --config ./vitest.config.ts",
+    "test:browser": "bun run --bun vitest run --config ./vitest.browser.config.ts"
   },
   "publishConfig": {
     "access": "public"

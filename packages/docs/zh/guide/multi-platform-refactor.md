@@ -196,7 +196,22 @@ Vue 组件文件应主要负责渲染、布局、公开 API 接线和组合能�
 
 React 包不能导入 `@aurora/horizon-web-vue` 或通过挂载 Vue 组件实现功能。
 
-### 4.6 Skyline Mobile 扩展边界
+### 4.6 同名组件目录规则
+
+组件能力下沉到公共包时，四个包必须使用相同的、区分大小写的组件目录名：
+
+```text
+packages/core/src/components/Tooltip
+packages/horizon-web-core/src/components/Tooltip
+packages/horizon-web-vue/src/components/Tooltip
+packages/horizon-web-react/src/components/Tooltip
+```
+
+`core` 的同名目录保存框架和平台无关的类型、状态机、算法及测试向量；`horizon-web-core` 的同名目录保存该组件使用的 DOM、定位、焦点和浏览器生命周期能力；Vue/React 同名目录只保存各自 renderer 的 API 接线与渲染代码。Button、Switch、Select 等后续组件遵循同一规则。
+
+真正跨组件的能力可以放入 `src/utils` 或显式的 `src/components/_shared`，但组件私有能力不得平铺到包级 `src` 根目录。每个包通过 `src/components/index.ts` 和 `src/index.ts` 统一导出，消费端不引用私有源码路径。
+
+### 4.7 Skyline Mobile 扩展边界
 
 未来的 `@aurora/skyline-mobile-core` 复用真正跨产品、跨平台的 `@aurora/core`，Skyline renderer 同时消费统一的 `@aurora/theme`，并单独承载移动端交互能力：
 

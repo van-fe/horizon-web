@@ -1,5 +1,6 @@
-import type { ButtonActionInput, ButtonActionKind } from './button';
-import type { SwitchStateInput } from './switch';
+import type { ButtonActionInput, ButtonActionKind } from '../components/Button';
+import type { SwitchStateInput } from '../components/Switch';
+import type { TooltipOpenReason, TooltipState } from '../components/Tooltip';
 
 export const buttonActionTestVectors: ReadonlyArray<{
   name: string;
@@ -43,4 +44,30 @@ export const switchStateTestVectors: ReadonlyArray<{
   { name: 'disabled', input: { value: false, disabled: true }, interactive: false },
   { name: 'readonly', input: { value: true, readonly: true }, interactive: false },
   { name: 'pending', input: { value: true, pending: true }, interactive: false },
+];
+
+export const tooltipStateTestVectors: ReadonlyArray<{
+  name: string;
+  state: TooltipState;
+  action: { open: boolean; reason: TooltipOpenReason };
+  expectedOpen: boolean;
+}> = [
+  {
+    name: 'hover opens an enabled tooltip',
+    state: { open: false, disabled: false },
+    action: { open: true, reason: 'hover' },
+    expectedOpen: true,
+  },
+  {
+    name: 'disabled tooltips reject open requests',
+    state: { open: false, disabled: true },
+    action: { open: true, reason: 'focus' },
+    expectedOpen: false,
+  },
+  {
+    name: 'escape closes an open tooltip',
+    state: { open: true, disabled: false },
+    action: { open: false, reason: 'escape' },
+    expectedOpen: false,
+  },
 ];

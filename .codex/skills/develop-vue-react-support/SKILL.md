@@ -30,6 +30,13 @@ Keep all Vue/React renderer-splitting work integrated on `feature/vue-react-supp
 - Do not import Vue from shared core/theme or React packages, and do not import React from Vue packages.
 - Reuse common behavior through typed contracts and test vectors rather than one renderer wrapping the other.
 
+## Mirror component directories across packages
+
+- For every extracted component, keep the same case-sensitive component directory in all participating packages: `packages/core/src/components/<Component>`, `packages/horizon-web-core/src/components/<Component>`, `packages/horizon-web-vue/src/components/<Component>`, and `packages/horizon-web-react/src/components/<Component>`.
+- Put framework-neutral state and algorithms in the matching Core component directory, browser-only primitives in the matching Horizon Web Core component directory, and renderer code in its matching Vue or React directory.
+- Keep genuinely cross-component helpers under `src/utils` or an explicit `src/components/_shared` directory. Do not flatten component-owned files into a package-level `src` root.
+- Preserve root exports through package-level `src/components/index.ts` and `src/index.ts`; consumers must not need private source paths.
+
 ## Keep renderer documentation isolated
 
 - Store Vue pages under `packages/docs/{locale}/vue/` and Vue demos under `packages/docs/demos/vue/`.

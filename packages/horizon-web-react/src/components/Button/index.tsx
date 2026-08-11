@@ -10,7 +10,7 @@ import { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
 import { ButtonAsyncActionGuard, getButtonState, resolveButtonAction } from '@aurora/core';
 import type { ButtonAsyncState } from '@aurora/core';
 import { cls, ComponentClassBlock } from '@aurora/theme';
-import { useHorizonWebConfig } from '../provider';
+import { useHorizonWebConfig } from '../../provider';
 import { LoadingIcon } from './LoadingIcon';
 
 export type ButtonVariant = 'primary' | 'normal' | 'danger';

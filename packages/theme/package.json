@@ -20,7 +20,9 @@
     "./styles/mixins": "./styles/mixins/index.scss",
     "./styles/mixins/*": "./styles/mixins/*.scss",
     "./styles/switch": "./styles/components/switch/index.scss",
-    "./styles/switch-variables": "./styles/components/switch/variables.scss"
+    "./styles/switch-variables": "./styles/components/switch/variables.scss",
+    "./styles/tooltip": "./styles/components/tooltip/index.scss",
+    "./styles/tooltip-variables": "./styles/components/tooltip/variables.scss"
   },
   "files": [
     "dist",

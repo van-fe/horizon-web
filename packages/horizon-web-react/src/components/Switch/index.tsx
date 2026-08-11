@@ -3,7 +3,7 @@ import { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
 import { getSwitchState, resolveControllableValue, resolveSwitchChange } from '@aurora/core';
 import type { SwitchBeforeChange, SwitchChangeResult } from '@aurora/core';
 import { cls, ComponentClassBlock } from '@aurora/theme';
-import { useHorizonWebConfig } from '../provider';
+import { useHorizonWebConfig } from '../../provider';
 
 export type SwitchSize = 'small' | 'medium' | 'large';
 export type SwitchLabelPosition = 'top' | 'left' | 'right';

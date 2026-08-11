@@ -15,7 +15,14 @@ export default defineConfig({
       fileName: format => `index.${format === 'es' ? 'js' : 'cjs'}`,
     },
     rollupOptions: {
-      external: ['react', '@aurora/core', '@aurora/horizon-web-core', '@aurora/theme'],
+      external: [
+        'react',
+        'react-dom',
+        'react/jsx-runtime',
+        '@aurora/core',
+        '@aurora/horizon-web-core',
+        '@aurora/theme',
+      ],
       output: {
         exports: 'named',
       },

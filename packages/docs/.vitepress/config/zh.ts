@@ -19,6 +19,7 @@ const reactSidebar = [
     items: [
       { text: 'Button 按钮', link: 'components/Button' },
       { text: 'Switch 开关', link: 'components/Switch' },
+      { text: 'Tooltip 文字提示', link: 'components/Tooltip' },
     ],
   },
 ];

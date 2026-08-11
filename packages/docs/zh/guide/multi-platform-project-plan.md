@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M2 基础试点已完成，M3 浮层试点待启动 |
+| 计划状态 | M3 浮层试点已完成，M4 Select 复杂试点待启动 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -243,6 +243,22 @@ M2 的公共抽取只包含与渲染框架无关的状态和行为协议。组�
 | REACT-TT-001 | React Tooltip | Portal、render content、open API | focus、hover、Escape、StrictMode 通过 |
 
 退出门槛：Vue/React 不共享渲染代码，但共享定位、dismiss、焦点协议和行为测试。
+
+#### M3 实施记录（2026-08-11）
+
+| 任务 | 状态 | 实施结果 |
+| --- | --- | --- |
+| WEB-OV-001 | Done | 在 `@aurora/horizon-web-core/src/components/Tooltip` 提供 SSR 安全的 Positioner，支持 12 个位置、distance、skidding、flip、fallback、shift、箭头和 reference hidden 检测 |
+| WEB-OV-002 | Done | 建立只响应顶层浮层的 Dismissable Layer，覆盖 Escape、outside pointer、嵌套层和 trigger branch |
+| WEB-OV-003 | Done | 建立 Focus Scope、焦点恢复、Tab 循环和 roving tabindex primitives，并在真实 Chromium 中验证 |
+| WEB-OV-004 | Done | 复用计数式 body scroll lock，新增 SSR 安全的 Portal container 解析和浮层 cleanup 协议 |
+| CORE-TT-001 | Done | 在 `@aurora/core` 建立可注入 scheduler 的 Tooltip 延迟状态协议、open reason 和共享测试向量 |
+| VUE-TT-001 | Done | Vue Tooltip 回接共享 controller 与 Positioner，保留既有 props、slots、exposes、复制和 Teleport 行为 |
+| REACT-TT-001 | Done | React Tooltip 提供原生 children、Portal、受控/非受控状态、ref、ARIA、hover/focus/click/contextmenu、Escape 与外部关闭 |
+| DS-TT-001 | Done | Tooltip Sass 和变量迁入 `@aurora/theme`，Vue 使用兼容代理，React 构建输出同源 CSS |
+| DOC-TT-001 | Done | React Tooltip 中英文页面、独立 TSX 示例和侧边栏入口完成，renderer 隔离检查通过 |
+
+从 M3 起，`core`、`horizon-web-core`、`horizon-web-vue` 和 `horizon-web-react` 的组件能力统一放入大小写一致的 `src/components/<Component>` 目录；通用工具进入 `src/utils`，不再将组件文件平铺在公共包的 `src` 根目录。
 
 ### 迭代 5：Select Core 与 Vue 回接
 

@@ -4,12 +4,14 @@
 @use './element';
 @use './components/button/variables' as button;
 @use './components/switch/variables' as switch;
+@use './components/tooltip/variables' as tooltip;
 
 $values: function.map-merge-multi(
   function.flatten-variables(basic.$values),
   function.flatten-variables(element.$values),
   function.flatten-variables(button.$values, 'button'),
-  function.flatten-variables(switch.$values, 'switch')
+  function.flatten-variables(switch.$values, 'switch'),
+  function.flatten-variables(tooltip.$values, 'tooltip')
 );
 
 @include mixins.create-root($values);

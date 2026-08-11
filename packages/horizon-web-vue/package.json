@@ -51,6 +51,7 @@
     "@aurora/core": "workspace:*",
     "@aurora/colors": "workspace:*",
     "@aurora/icon": "workspace:*",
+    "@aurora/horizon-web-core": "workspace:*",
     "@aurora/locale-vue": "workspace:*",
     "@aurora/theme": "workspace:*",
     "@aurora/utils": "workspace:*",

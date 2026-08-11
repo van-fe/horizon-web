@@ -77,6 +77,10 @@ export default defineConfig({
           replacement: path.join(__dirname, '../../../core/src/index.ts'),
         },
         {
+          find: /^@aurora\/horizon-web-core$/,
+          replacement: path.join(__dirname, '../../../horizon-web-core/src/index.ts'),
+        },
+        {
           find: /^@aurora\/theme$/,
           replacement: path.join(__dirname, '../../../theme/src/index.ts'),
         },

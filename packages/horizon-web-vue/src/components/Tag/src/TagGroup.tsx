@@ -317,13 +317,12 @@ export default defineComponent({
       if (useCollapse.value) {
         visibleItemsAmount.value = prevVisibleItemsAmount;
         setResizeObserver();
+        void debouncedDoCollapse();
       } else {
         stopResizeObserver();
         prevVisibleItemsAmount = visibleItemsAmount.value;
         visibleItemsAmount.value = needRenderedItemsLength.value;
       }
-
-      void debouncedDoCollapse();
     }
 
     watch(

@@ -1,5 +1,9 @@
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, HChildOnly, cls, useNamespace, useZIndex } from '@aurora/utils';
+import { TooltipOpenController } from '@aurora/core';
+import type { TooltipOpenReason } from '@aurora/core';
+import { createPositioner } from '@aurora/horizon-web-core';
+import type { PositionerInstance, WebPlacement } from '@aurora/horizon-web-core';
 import { useClipboard, useMutationObserver, useResizeObserver } from '@vueuse/core';
 import {
   Teleport,
@@ -7,6 +11,7 @@ import {
   computed,
   defineComponent,
   nextTick,
+  onBeforeUnmount,
   onDeactivated,
   ref,
   toRef,
@@ -15,8 +20,6 @@ import {
 } from 'vue';
 import HTransition from '~/components/Transition/src/Transition';
 import { $message } from '~/methods';
-import type { PopperInstance } from '~/utils/popper';
-import { usePopper } from '~/utils/popper';
 import useLocaleLang from '~/utils/useLocaleLang';
 import useOverflow from '~/utils/useOverflow';
 import useSize from '~/utils/useSize';
@@ -41,7 +44,7 @@ export default defineComponent({
     props,
     { emit, slots, expose }: HorizonWebSetupContext<TooltipEmits, TooltipSlots, TooltipExposes>,
   ) {
-    let instance: PopperInstance | null = null;
+    let instance: PositionerInstance | null = null;
 
     const classHelper = new ComponentClassBlock('tooltip');
     const tooltipRef = ref<HTMLElement | null>(null);
@@ -51,9 +54,17 @@ export default defineComponent({
     const tooltipDisabled = ref(props.disabled);
 
     let isEnteredInTooltip = false;
-    let mouseEnterTimer: ReturnType<typeof setTimeout> | null = null;
-    let mouseLeaveTimer: ReturnType<typeof setTimeout> | null = null;
     const referenceRef = ref<any>(null);
+
+    const tooltipController = new TooltipOpenController({
+      open: props.visible,
+      disabled: props.disabled,
+      showDelay: props.showAfter,
+      hideDelay: props.hideAfter,
+      onOpenChange: open => {
+        tooltipVisible.value = open;
+      },
+    });
 
     const sizeRef = useSize(toRef(props, 'size'), 'medium');
 
@@ -71,6 +82,7 @@ export default defineComponent({
       () => props.visible,
       val => {
         if (props.trigger === 'manual') {
+          tooltipController.syncOpen(val);
           tooltipVisible.value = val;
 
           if (val) {
@@ -79,6 +91,15 @@ export default defineComponent({
         }
       },
     );
+
+    watch(
+      [() => props.showAfter, () => props.hideAfter],
+      ([showDelay, hideDelay]) => {
+        tooltipController.setOptions({ showDelay, hideDelay });
+      },
+    );
+
+    watch(tooltipDisabled, disabled => tooltipController.setDisabled(disabled));
 
     watch(tooltipVisible, val => {
       if (val) {
@@ -90,36 +111,16 @@ export default defineComponent({
 
     watch(sizeRef, () => instance?.update?.());
 
-    function clearMouseEnterTimer() {
-      if (mouseEnterTimer !== null) {
-        clearTimeout(mouseEnterTimer);
-        mouseEnterTimer = null;
-      }
-    }
-    function clearMouseLeaveTimer() {
-      if (mouseLeaveTimer !== null) {
-        clearTimeout(mouseLeaveTimer);
-        mouseLeaveTimer = null;
-      }
-    }
-
-    function showTooltip() {
+    function showTooltip(reason: TooltipOpenReason = props.trigger) {
       if (tooltipDisabled.value) return;
 
       zIndex.value = props.zIndex ?? zIndexHandler.next();
-      clearMouseEnterTimer();
-      mouseEnterTimer = setTimeout(() => {
-        tooltipVisible.value = true;
-        instance?.update?.();
-      }, props.showAfter);
+      tooltipController.requestOpen(reason);
+      void instance?.update();
     }
 
-    function hideTooltip() {
-      clearMouseEnterTimer();
-      clearMouseLeaveTimer();
-      mouseLeaveTimer = setTimeout(() => {
-        tooltipVisible.value = false;
-      }, props.hideAfter);
+    function hideTooltip(reason: TooltipOpenReason = props.trigger) {
+      tooltipController.requestClose(reason);
     }
 
     function useTooltipObserver(target: HTMLElement) {
@@ -136,32 +137,32 @@ export default defineComponent({
       if (props.disabled || props.trigger !== 'hover') return;
       isEnteredInTooltip = false;
       useTooltipObserver(event.target as HTMLElement);
-      showTooltip();
+      showTooltip('hover');
     };
 
     const onMouseleave = () => {
       if (tooltipDisabled.value || props.trigger !== 'hover' || isEnteredInTooltip) return;
-      hideTooltip();
+      hideTooltip('hover');
     };
 
     const onMousedown = (event: MouseEvent) => {
       if (props.disabled || props.trigger !== 'focus') return;
       useTooltipObserver(event.target as HTMLElement);
-      showTooltip();
+      showTooltip('focus');
     };
 
     const onMouseup = () => {
       if (tooltipDisabled.value || props.trigger !== 'focus') return;
-      hideTooltip();
+      hideTooltip('focus');
     };
 
     const onHandleClick = (event: MouseEvent) => {
       if (props.disabled || props.trigger !== 'click') return;
       if (tooltipVisible.value) {
-        hideTooltip();
+        hideTooltip('click');
       } else {
         useTooltipObserver(event.target as HTMLElement);
-        showTooltip();
+        showTooltip('click');
       }
     };
 
@@ -169,10 +170,10 @@ export default defineComponent({
       event.preventDefault();
       if (props.disabled || props.trigger !== 'contextmenu') return;
       if (tooltipVisible.value) {
-        hideTooltip();
+        hideTooltip('contextmenu');
       } else {
         useTooltipObserver(event.target as HTMLElement);
-        showTooltip();
+        showTooltip('contextmenu');
       }
     };
 
@@ -181,10 +182,10 @@ export default defineComponent({
     function onMouseEnterTooltip() {
       if (props.trigger === 'manual') return;
       if (!props.enterable) {
-        hideTooltip();
+        hideTooltip(props.trigger);
       } else {
         isEnteredInTooltip = true;
-        clearMouseLeaveTimer();
+        tooltipController.cancelClose();
       }
     }
 
@@ -192,7 +193,7 @@ export default defineComponent({
       if (props.trigger === 'manual') return;
 
       if (isEnteredInTooltip) {
-        hideTooltip();
+        hideTooltip(props.trigger);
         isEnteredInTooltip = false;
       }
     }
@@ -258,24 +259,28 @@ export default defineComponent({
     // }
 
     watch(
-      () => tooltipVisible.value,
-      isVisible => {
-        if (isVisible) {
+      [tooltipVisible, tooltipRef],
+      ([isVisible, floating]) => {
+        if (isVisible && floating) {
           nextTick(() => {
             if (!instance && isElementNode()) {
-              instance = usePopper(referenceRef.value.el, tooltipRef.value as HTMLElement, {
-                placement: props.placement,
+              instance = createPositioner(referenceRef.value.el, floating, {
+                placement: props.placement as WebPlacement,
                 skidding: props.skidding,
                 distance: props.distance,
-                arrow: props.arrow,
+                arrowElement: props.arrow ? arrowRef.value : null,
                 flip: props.flip,
-                fallbackPlacements: props.fallbackPlacements,
-                referenceOverflowObserve: props.referenceHiddenObserve,
-                referenceOverflowCallback: overflow => overflow && (tooltipVisible.value = false),
-                arrowOption: { padding: 3 },
-                preventOverflow: props.preventOverflow,
+                fallbackPlacements: props.fallbackPlacements?.filter(
+                  placement => placement !== 'auto',
+                ) as WebPlacement[] | undefined,
+                hideWhenReferenceHidden: props.popperReferenceHidden,
+                shift: props.preventOverflow,
                 strategy: props.strategy,
-                // onApplyArrowHide,
+                onPosition: snapshot => {
+                  if (props.referenceHiddenObserve && snapshot.referenceHidden) {
+                    tooltipController.closeImmediately('reference-hidden');
+                  }
+                },
               });
             } else {
               instance?.update?.();
@@ -288,18 +293,25 @@ export default defineComponent({
 
     expose({
       updateTooltip() {
-        instance?.update?.();
+        void instance?.update();
       },
       switchVisible: (visible: boolean) => {
         // 如果 要切换的状态 和 当前状态 相同，则不处理
         if (visible === tooltipVisible.value) return;
 
-        tooltipVisible.value = visible;
+        if (visible) tooltipController.openImmediately();
+        else tooltipController.closeImmediately();
       },
     });
 
     onDeactivated(() => {
-      tooltipVisible.value = false;
+      tooltipController.closeImmediately();
+    });
+
+    onBeforeUnmount(() => {
+      tooltipController.destroy();
+      instance?.destroy();
+      instance = null;
     });
 
     let stopResizeObserver: (() => void) | undefined = undefined;
@@ -318,13 +330,13 @@ export default defineComponent({
     });
 
     const onAfterLeave = () => {
-      instance?.destroy?.();
+      instance?.destroy();
       instance = null;
     };
 
     const onTextMutation = () => {
       if (!instance) return;
-      instance.update();
+      void instance.update();
     };
     useMutationObserver(contentRef, onTextMutation, {
       characterData: true,

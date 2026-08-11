@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { BodyScrollLock } from '../scrollLock';
+import { BodyScrollLock } from './scrollLock';
 
 describe('BodyScrollLock', () => {
   it('locks until every visible overlay has released its claim', () => {

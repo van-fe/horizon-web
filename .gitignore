@@ -46,6 +46,8 @@ packages/docs/.vitepress/cache
 
 # test artifacts
 packages/horizon-web-vue/.vitest-attachments/
+packages/horizon-web-core/.vitest-attachments/
+packages/horizon-web-react/.vitest-attachments/
 packages/horizon-web-vue/coverage*/
 packages/horizon-web-vue/packages/horizon-web-vue/coverage*/
 packages/horizon-web-vue/src/components/**/__screenshots__/

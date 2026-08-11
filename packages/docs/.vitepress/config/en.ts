@@ -19,6 +19,7 @@ const reactSidebar = [
     items: [
       { text: 'Button', link: 'components/Button' },
       { text: 'Switch', link: 'components/Switch' },
+      { text: 'Tooltip', link: 'components/Tooltip' },
     ],
   },
 ];
