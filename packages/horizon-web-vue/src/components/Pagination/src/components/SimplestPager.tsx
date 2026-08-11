@@ -1,4 +1,5 @@
 import { computed, defineComponent, inject, PropType, withKeys } from 'vue';
+import { PAGINATION_DEFAULT_LABELS, resolvePaginationSelection } from '@aurora/core';
 import { cls, ComponentClassBlock, isNumber, useNamespace } from '@aurora/utils';
 import { IconArrowLeft, IconArrowRight } from '@aurora/icon';
 import {
@@ -37,13 +38,19 @@ export default defineComponent({
     const currentPage = computed(() => props.currentPage!);
 
     function onPickPage(page: number | null | string | undefined) {
-      page = Number(page);
-      if (page) {
-        if (page === currentPage.value) {
-          parentEmits('clickCurrentPage', page);
-        }
-        emit('update:currentPage', page);
+      const requested = Number(page);
+      if (!requested) return false;
+      const selection = resolvePaginationSelection(
+        currentPage.value,
+        requested,
+        props.pages,
+        parentProps.disabled,
+      );
+      if (!selection.accepted) {
+        if (selection.reason === 'same') parentEmits('clickCurrentPage', selection.page);
+        return false;
       }
+      emit('update:currentPage', selection.page);
     }
 
     function prevPage() {
@@ -69,7 +76,7 @@ export default defineComponent({
             classHelper.is('disabled', currentPage.value <= 1),
           )}
           role="button"
-          aria-label="Previous page"
+          aria-label={PAGINATION_DEFAULT_LABELS.previousPage}
           aria-disabled={currentPage.value <= 1 || parentProps.disabled}
           tabindex={currentPage.value <= 1 || parentProps.disabled ? -1 : 0}
           onClick={prevPage}
@@ -100,7 +107,7 @@ export default defineComponent({
             classHelper.is('disabled', currentPage.value >= props.pages),
           )}
           role="button"
-          aria-label="Next page"
+          aria-label={PAGINATION_DEFAULT_LABELS.nextPage}
           aria-disabled={currentPage.value >= props.pages || parentProps.disabled}
           tabindex={currentPage.value >= props.pages || parentProps.disabled ? -1 : 0}
           onClick={nextPage}

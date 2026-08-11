@@ -1,71 +1,44 @@
-import { isNumber } from '@aurora/utils';
+import type {
+  AdaptComponentApiShape,
+  ComponentEventValidators,
+  PaginationEventMap,
+} from '@aurora/core';
+import { isPaginationPage, isPaginationPageSize } from '@aurora/core';
+
+type PaginationVueEventMap = AdaptComponentApiShape<
+  PaginationEventMap,
+  {
+    change: 'modify';
+    pageChange: 'currentChange';
+    pageSizeChange: 'sizeChange';
+    previous: 'clickPrevPage';
+    currentPageClick: 'clickCurrentPage';
+    next: 'clickNextPage';
+  },
+  never,
+  { 'update:pageSize': [pageSize: number]; 'update:currentPage': [currentPage: number] }
+>;
 
 export const usePaginationEmits = {
-  /**
-   * 每页显示个数更新事件，可以使用 `v-model:pageSize` 做双向绑定
-   * @param pageSize 分页大小
-   * @paramEn pageSize The page size value.
-   * @en Emitted when update:page size changes.
-   */
-  'update:pageSize': (pageSize: number) => isNumber(pageSize),
-  /**
-   * 当前页数更新事件，可以使用 `v-model:currentPage` 做双向绑定
-   * @param currentPage 当前页数
-   * @paramEn currentPage The current page value.
-   * @en Emitted when update:current page changes.
-   */
-  'update:currentPage': (currentPage: number) => isNumber(currentPage),
-  /**
-   * 改变每页显示个数
-   * @param pageSize 分页大小
-   * @paramEn pageSize The page size value.
-   * @en Emitted when size change changes.
-   */
-  sizeChange: (pageSize: number) => isNumber(pageSize),
-  /**
-   * 上一页
-   * @param currentPage 当前页数
-   * @paramEn currentPage The current page value.
-   * @en Emitted when click prev page changes.
-   */
-  clickPrevPage: (currentPage: number) => isNumber(currentPage),
-  /**
-   * 点击当前页
-   * @param currentPage 当前页数
-   * @paramEn currentPage The current page value.
-   * @en Emitted when click current page changes.
-   */
-  clickCurrentPage: (currentPage: number) => isNumber(currentPage),
-  /**
-   * 下一页
-   * @param currentPage 当前页数
-   * @paramEn currentPage The current page value.
-   * @en Emitted when click next page changes.
-   */
-  clickNextPage: (currentPage: number) => isNumber(currentPage),
-  /**
-   * 跳转页
-   * @param currentPage 当前页数
-   * @paramEn currentPage The current page value.
-   * @en Emitted when jump changes.
-   */
-  jump: (currentPage: number) => isNumber(currentPage),
-  /**
-   * 当前页码改变时触发
-   * @param currentPage 当前页数
-   * @paramEn currentPage The current page value.
-   * @en Emitted when current change changes.
-   */
-  currentChange: (currentPage: number) => isNumber(currentPage),
-  /**
-   * 当 `current-page` 或 `page-size` 改变时触发
-   * @param currentPage 当前页数
-   * @paramEn currentPage The current page value.
-   * @param pageSize 分页大小
-   * @paramEn pageSize The page size value.
-   * @en Emitted when modify changes.
-   */
-  modify: (currentPage: number, pageSize: number) => isNumber(currentPage) && isNumber(pageSize),
-};
+  /** 更新每页数量绑定值。 @en Updates the bound page size. */
+  'update:pageSize': isPaginationPageSize,
+  /** 更新当前页绑定值。 @en Updates the bound current page. */
+  'update:currentPage': isPaginationPage,
+  /** 每页数量变化。 @en Page size changed. */
+  sizeChange: isPaginationPageSize,
+  /** 上一页操作完成。 @en Previous-page action completed. */
+  clickPrevPage: isPaginationPage,
+  /** 再次激活当前页。 @en Current page activated again. */
+  clickCurrentPage: isPaginationPage,
+  /** 下一页操作完成。 @en Next-page action completed. */
+  clickNextPage: isPaginationPage,
+  /** 跳转操作完成。 @en Jump action completed. */
+  jump: isPaginationPage,
+  /** 当前页变化。 @en Current page changed. */
+  currentChange: isPaginationPage,
+  /** 页码或每页数量变化。 @en Page or page size changed. */
+  modify: (currentPage: number, pageSize: number) =>
+    isPaginationPage(currentPage) && isPaginationPageSize(pageSize),
+} satisfies ComponentEventValidators<PaginationVueEventMap>;
 
 export type PaginationEmits = typeof usePaginationEmits;

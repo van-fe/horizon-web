@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B8 Steps 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B9 Pagination 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -494,6 +494,18 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DS-B8-001 | Done | Steps Sass、变量与视觉基础迁入 `@aurora/theme`，Vue 使用包导出代理，React 使用同源样式并补充原生交互按钮焦点规则 |
 | DOC-B8-001 | Done | Steps 中英文 React 页面、独立 TSX 示例与导航侧边栏入口完成；27 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
 | QA-B8-001 | Done | Core 96、Web Core Node 8/Chromium 20、React Chromium 101、Vue Chromium 2300 项全部通过，覆盖率为 97.98% / 95.16% / 97.77% / 98.27%；五个包构建、文档、Vue/React/SSR 消费工程及中英文、暗色、390px 真实浏览器验收通过 |
+
+#### M6-B9 第九批实施记录（2026-08-12）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B9-001 | Done | Pagination 的公共 props、默认值、枚举、校验器、事件、内容区域、命令以及总页数、页码边界、范围、折叠窗口、跳转、选择和页容量算法迁入 `@aurora/core`；两端公共 API 语义仅定义一次 |
+| WEB-B9-001 | Done | 在同名 Web Core 目录提供首个可用操作或指定页码的 DOM 聚焦 primitive，同时兼容 Vue 直系焦点节点与 React 原生控件结构，并补齐 Chromium 测试 |
+| VUE-B9-001 | Done | Vue props/emits/slots/exposes 通过类型化 rename/omit/extend 适配消费公共契约，仅保留 runtime props、`currentPage`/`pageSize` 双向绑定、历史 label、Teleport、VNode 与 Application 尺寸适配；页码状态、布局、范围和跳转复用 Core/Web Core |
+| REACT-B9-001 | Done | 完成原生 `nav`/`button`/`select`/数字输入语义、受控与非受控页码及页容量、Provider 文案、七类回调、四个内容区域、原生属性和命令 ref；ReactNode 与 HTML 属性只保留在 renderer 适配层 |
+| DS-B9-001 | Done | Pagination Sass、变量与视觉基础迁入 `@aurora/theme`，Vue 使用包导出代理，React 使用同源样式并补齐原生按钮、选择器、数字输入的 reset、焦点环和禁用规则 |
+| DOC-B9-001 | Done | Pagination 中英文 React 页面、独立 TSX 示例与导航侧边栏入口完成；28 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
+| QA-B9-001 | Done | Core 102、Web Core Node 8/Chromium 21、React Chromium 107、Vue Chromium 2301 项（含 1 项预期失败）全部通过，覆盖率为 97.98% / 95.15% / 97.77% / 98.27%；五个包构建、文档、Vue/React/SSR 消费工程及中英文、暗色、390px 真实浏览器验收通过 |
 
 ### 批次 C：浮层与容器
 

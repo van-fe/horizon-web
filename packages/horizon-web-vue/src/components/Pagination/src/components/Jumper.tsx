@@ -1,4 +1,5 @@
 import { defineComponent, inject, nextTick, PropType, ref, withKeys } from 'vue';
+import { resolvePaginationSelection } from '@aurora/core';
 import { ComponentClassBlock, isNumber, useNamespace } from '@aurora/utils';
 import { defaultLocale, localeInjectKey } from '~/provides';
 import { HPaginationEmitInjectKey, HPaginationPropsInjectKey } from '../utils/injectKeys';
@@ -34,9 +35,15 @@ export default defineComponent({
     function changeCurrentPage() {
       if (!jumpTo.value) return;
 
-      if (jumpTo.value !== props.currentPage) {
-        emit('update:currentPage', jumpTo.value);
-        parentEmits('jump', jumpTo.value);
+      const selection = resolvePaginationSelection(
+        props.currentPage ?? 1,
+        Number(jumpTo.value),
+        props.pages,
+        parentProps.disabled,
+      );
+      if (selection.accepted) {
+        emit('update:currentPage', selection.page);
+        parentEmits('jump', selection.page);
       }
 
       if (inputNumberRef.value) {

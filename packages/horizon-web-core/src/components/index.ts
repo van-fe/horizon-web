@@ -2,6 +2,7 @@ export * from './Breadcrumb';
 export * from './Checkbox';
 export * from './Input';
 export * from './Link';
+export * from './Pagination';
 export * from './Radio';
 export * from './Select';
 export * from './Slider';

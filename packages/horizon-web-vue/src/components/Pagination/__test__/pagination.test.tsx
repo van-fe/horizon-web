@@ -42,6 +42,21 @@ describe('Pagination.tsx', () => {
     expect(element.exists()).toBe(true);
   });
 
+  test('uses navigation semantics, reports an empty range and exposes the shared focus command', () => {
+    const wrapper = mount(HPagination, {
+      attachTo: document.body,
+      props: { layout: 'total, pager', total: 0 },
+    });
+
+    expect(wrapper.element.tagName).toBe('NAV');
+    expect(wrapper.attributes('aria-label')).toBe('Pagination');
+    expect(wrapper.get('.h-pagination__total').text()).toContain('0-0');
+    const firstPage = wrapper.get('[data-page="1"]').element;
+    (wrapper.vm as unknown as { focus: (page?: number) => void }).focus(1);
+    expect(document.activeElement).toBe(firstPage);
+    wrapper.unmount();
+  });
+
   describe('props', () => {
     test('currentPage', async () => {
       const currentPage = ref(1);

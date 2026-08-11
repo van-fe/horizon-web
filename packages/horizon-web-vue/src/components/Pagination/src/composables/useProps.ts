@@ -1,156 +1,134 @@
 import type { ExtractPropTypes, PropType } from 'vue';
+import type {
+  AdaptComponentApiShape,
+  ComponentRendererPropDefinitions,
+  PaginationAlign,
+  PaginationCommonProps,
+  PaginationLayout,
+  PaginationSize,
+  PaginationVariant,
+} from '@aurora/core';
+import {
+  isPaginationAlign,
+  isPaginationLayout,
+  isPaginationPage,
+  isPaginationPageSize,
+  isPaginationPageSizes,
+  isPaginationPagerCount,
+  isPaginationSize,
+  isPaginationTotal,
+  isPaginationVariant,
+  PAGINATION_DEFAULTS,
+} from '@aurora/core';
 import { declarePropType } from '@aurora/utils';
 
 export interface PaginationLabelType {
-  /**
-   * 每页显示数量的后置文字
-   */
+  /** 每页数量后缀。 @en Page-size suffix. */
   sizeText?: string;
-  /**
-   * 每页显示数量的后置文字
-   */
+  /** 每页数量后缀的历史蛇形命名。 @en Legacy snake-case page-size suffix. */
   size_text?: string;
-  /**
-   * 每页显示弹出层的子元素后置文字
-   */
+  /** 每页数量选项后缀。 @en Page-size option suffix. */
   sizeItemText?: string;
-  /**
-   * 每页显示弹出层的子元素后置文字
-   */
+  /** 每页数量选项后缀的历史蛇形命名。 @en Legacy snake-case option suffix. */
   size_item_text?: string;
-  /**
-   * 跳转前置文字
-   */
+  /** 跳转输入前缀。 @en Jump-input prefix. */
   jumpPrefixText?: string;
-  /**
-   * 跳转前置文字
-   */
+  /** 跳转输入前缀的历史蛇形命名。 @en Legacy snake-case jump prefix. */
   jump_prefix_text?: string;
-  /**
-   * 跳转后置文字
-   */
+  /** 跳转输入后缀。 @en Jump-input suffix. */
   jumpSuffixText?: string;
-  /**
-   * 跳转后置文字
-   */
+  /** 跳转输入后缀的历史蛇形命名。 @en Legacy snake-case jump suffix. */
   jump_suffix_text?: string;
 }
 
+type PaginationVueProps = AdaptComponentApiShape<
+  PaginationCommonProps,
+  { value: 'currentPage'; variant: 'type' },
+  'defaultValue' | 'defaultPageSize' | 'labels',
+  { label?: PaginationLabelType; pageSizesToBody?: boolean }
+>;
+
 export const usePaginationProps = declarePropType({
-  /**
-   * 尺寸
-    * @en Configuration for size.
-   */
+  /** 组件尺寸；未设置时继承 Application。 @en Component size; inherits Application when omitted. */
   size: {
-    type: String as PropType<'medium' | 'large'>,
+    type: String as PropType<PaginationSize>,
+    required: false,
+    validator: isPaginationSize,
   },
-  /**
-   * 当前页数
-    * @en Configuration for current page.
-   */
+  /** 当前页数。 @en Current page. */
   currentPage: {
     type: Number,
-    default: 1,
+    default: PAGINATION_DEFAULTS.defaultValue,
+    validator: isPaginationPage,
   },
-  /**
-   * 数据总数
-    * @en Configuration for total.
-   */
+  /** 数据总数。 @en Total item count. */
   total: {
     type: Number,
     required: true,
-    default: 0,
+    default: PAGINATION_DEFAULTS.total,
+    validator: isPaginationTotal,
   },
-  /**
-   * 指定每页可显示多少条
-    * @en Configuration for page sizes.
-   */
+  /** 可选择的每页数量。 @en Available page sizes. */
   pageSizes: {
-    type: Array as PropType<number[]>,
-    default: () => [10, 20, 30, 40, 50],
+    type: Array as PropType<readonly number[]>,
+    default: () => [...PAGINATION_DEFAULTS.pageSizes],
+    validator: isPaginationPageSizes,
   },
-  /**
-   * 每页条数
-    * @en Configuration for page size.
-   */
+  /** 每页数量。 @en Page size. */
   pageSize: {
     type: Number,
-    default: 10,
+    default: PAGINATION_DEFAULTS.defaultPageSize,
+    validator: isPaginationPageSize,
   },
-  /**
-   * 最大页面按钮数，超出此数量的按钮会被折叠
-    * @en Configuration for pager count.
-   */
+  /** 最大页码按钮数量。 @en Maximum pager item count. */
   pagerCount: {
     type: Number,
-    default: 7,
+    default: PAGINATION_DEFAULTS.pagerCount,
+    validator: isPaginationPagerCount,
   },
-  /**
-   * 所需子组件的布局
-   * 2.0.0-beta.4 支持字符串形式，每个子组件需要用逗号分隔开
-    * @en Configuration for layout.
-   */
+  /** 子区域布局。 @en Visible pagination regions. */
   layout: {
-    type: [Array, String] as PropType<string | Array<'pager' | 'sizes' | 'jumper' | 'total'>>,
-    default: 'pager, sizes, jumper, total',
+    type: [Array, String] as PropType<PaginationLayout>,
+    default: PAGINATION_DEFAULTS.layout.join(', '),
+    validator: isPaginationLayout,
   },
-  /**
-   * 模式选择，可以选择简要或极简
-    * @en Configuration for type.
-   */
+  /** 展示模式。 @en Presentation variant. */
   type: {
-    type: String as PropType<'default' | 'simple' | 'simplest'>,
-    default: 'default',
+    type: String as PropType<PaginationVariant>,
+    default: PAGINATION_DEFAULTS.variant,
+    validator: isPaginationVariant,
   },
-  /**
-   * 替换文字
-   * 2.0.0-beta.4 开始使用国际化，所以可以不用设置此项
-    * @en Configuration for label.
-   */
+  /** 历史局部文案覆盖。 @en Legacy local label overrides. */
   label: {
     type: Object as PropType<PaginationLabelType>,
+    required: false,
   },
-  /**
-   * 在仅有一页时，是否不显示 `pagination`
-    * @en Configuration for hide on single page.
-   */
+  /** 单页时隐藏。 @en Hides the control for a single page. */
   hideOnSinglePage: {
     type: Boolean,
-    default: false,
+    default: PAGINATION_DEFAULTS.hideOnSinglePage,
   },
-  /**
-   * 是否展示显示范围
-    * @en Configuration for show range.
-   */
+  /** 总数区域展示当前范围。 @en Shows the current range in total copy. */
   showRange: {
     type: Boolean,
-    default: true,
+    default: PAGINATION_DEFAULTS.showRange,
   },
-  /**
-   * 布局方向
-    * @en Configuration for align.
-   */
+  /** 水平对齐方式。 @en Horizontal alignment. */
   align: {
-    type: String as PropType<'left' | 'center' | 'right'>,
-    default: 'right',
+    type: String as PropType<PaginationAlign>,
+    default: PAGINATION_DEFAULTS.align,
+    validator: isPaginationAlign,
   },
-  /**
-   * 是否禁用
-   * 在分页获取数据时，可以设置禁用，防止此时用户点击而错误地请求
-    * @en Configuration for disabled.
-   */
+  /** 是否禁用交互。 @en Whether interaction is disabled. */
   disabled: {
     type: Boolean,
-    default: false,
+    default: PAGINATION_DEFAULTS.disabled,
   },
-  /**
-   * 是否将选择每页多少的弹窗传送到 `body` 节点
-    * @en Configuration for page sizes to body.
-   */
+  /** 将每页数量面板传送至 body。 @en Teleports the page-size panel to body. */
   pageSizesToBody: {
     type: Boolean,
     default: false,
   },
-});
+} satisfies ComponentRendererPropDefinitions<PaginationVueProps>);
 
 export type PaginationProps = ExtractPropTypes<typeof usePaginationProps>;

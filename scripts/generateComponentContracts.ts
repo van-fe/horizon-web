@@ -16,6 +16,7 @@ import {
   emptyManifest,
   inputManifest,
   linkManifest,
+  paginationManifest,
   progressManifest,
   rateManifest,
   radioManifest,
@@ -47,6 +48,7 @@ const manifests = [
   emptyManifest,
   inputManifest,
   linkManifest,
+  paginationManifest,
   progressManifest,
   rateManifest,
   radioManifest,
@@ -197,6 +199,56 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
       ],
     },
     regions: { rename: { content: 'default' } },
+  },
+  Pagination: {
+    props: {
+      rename: { value: 'currentPage', variant: 'type' },
+      omit: ['defaultValue', 'defaultPageSize', 'labels'],
+      override: {
+        value: { defaultValue: '1' },
+        pageSize: { defaultValue: '10' },
+        layout: {
+          type: "string | Array<'pager' | 'sizes' | 'jumper' | 'total'>",
+          defaultValue: "'pager, sizes, jumper, total'",
+        },
+      },
+      extend: [
+        {
+          name: 'label',
+          type: 'PaginationLabelType',
+          description: { zh: '兼容文案覆盖', en: 'Legacy label overrides' },
+        },
+        {
+          name: 'pageSizesToBody',
+          type: 'boolean',
+          defaultValue: 'false',
+          description: { zh: '每页数量面板传送至 body', en: 'Teleports the size panel to body' },
+        },
+      ],
+    },
+    events: {
+      rename: {
+        change: 'modify',
+        pageChange: 'currentChange',
+        pageSizeChange: 'sizeChange',
+        previous: 'clickPrevPage',
+        currentPageClick: 'clickCurrentPage',
+        next: 'clickNextPage',
+      },
+      extend: [
+        {
+          name: 'update:currentPage',
+          type: 'number',
+          description: { zh: '更新当前页', en: 'Updates the current page' },
+        },
+        {
+          name: 'update:pageSize',
+          type: 'number',
+          description: { zh: '更新每页数量', en: 'Updates the page size' },
+        },
+      ],
+    },
+    regions: { rename: { previous: 'prev' } },
   },
   Progress: { regions: { rename: { label: 'default' } } },
   Rate: {
@@ -439,6 +491,19 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     },
     events: { rename: { click: 'onClick' } },
     regions: { rename: { content: 'children' } },
+  },
+  Pagination: {
+    events: {
+      rename: {
+        change: 'onChange',
+        pageChange: 'onPageChange',
+        pageSizeChange: 'onPageSizeChange',
+        previous: 'onPrevious',
+        currentPageClick: 'onCurrentPageClick',
+        next: 'onNext',
+        jump: 'onJump',
+      },
+    },
   },
   Progress: { regions: { rename: { label: 'children' } } },
   Rate: {

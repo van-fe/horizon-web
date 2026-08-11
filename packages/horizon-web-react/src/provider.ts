@@ -1,5 +1,7 @@
 import type { PropsWithChildren, ReactElement } from 'react';
 import { createContext, createElement, useContext, useMemo } from 'react';
+import type { PaginationLabels } from '@aurora/core';
+import { PAGINATION_DEFAULT_LABELS } from '@aurora/core';
 import { DEFAULT_NAMESPACE } from '@aurora/theme';
 
 export interface HorizonWebConfig {
@@ -27,6 +29,7 @@ export interface HorizonWebConfig {
   stepsLabels: {
     progress: string;
   };
+  paginationLabels: PaginationLabels;
 }
 
 export type HorizonWebProviderProps = PropsWithChildren<
@@ -34,6 +37,7 @@ export type HorizonWebProviderProps = PropsWithChildren<
     Partial<HorizonWebConfig>,
     | 'breadcrumbLabels'
     | 'linkLabels'
+    | 'paginationLabels'
     | 'selectLabels'
     | 'stepsLabels'
     | 'switchLabels'
@@ -45,6 +49,7 @@ export type HorizonWebProviderProps = PropsWithChildren<
     breadcrumbLabels?: Partial<HorizonWebConfig['breadcrumbLabels']>;
     timelineLabels?: Partial<HorizonWebConfig['timelineLabels']>;
     stepsLabels?: Partial<HorizonWebConfig['stepsLabels']>;
+    paginationLabels?: Partial<HorizonWebConfig['paginationLabels']>;
   }
 >;
 
@@ -56,6 +61,7 @@ const defaultConfig: HorizonWebConfig = Object.freeze({
   breadcrumbLabels: { collapsed: 'Show collapsed breadcrumb items' },
   timelineLabels: { toggle: 'Toggle hidden timeline items' },
   stepsLabels: { progress: 'Progress steps' },
+  paginationLabels: PAGINATION_DEFAULT_LABELS,
 });
 
 export const HorizonWebContext = createContext<HorizonWebConfig>(defaultConfig);
@@ -70,6 +76,7 @@ export function HorizonWebProvider({
   breadcrumbLabels,
   timelineLabels,
   stepsLabels,
+  paginationLabels,
   children,
 }: HorizonWebProviderProps): ReactElement {
   const parent = useContext(HorizonWebContext);
@@ -103,6 +110,10 @@ export function HorizonWebProvider({
         ...parent.stepsLabels,
         ...stepsLabels,
       },
+      paginationLabels: {
+        ...parent.paginationLabels,
+        ...paginationLabels,
+      },
     }),
     [
       namespace,
@@ -115,6 +126,7 @@ export function HorizonWebProvider({
       switchLabels,
       timelineLabels,
       stepsLabels,
+      paginationLabels,
     ],
   );
 

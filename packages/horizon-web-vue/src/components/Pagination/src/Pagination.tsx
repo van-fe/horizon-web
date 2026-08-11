@@ -1,4 +1,6 @@
-import { computed, defineComponent, provide, ref, toRefs, watch } from 'vue';
+import { computed, defineComponent, provide, ref, toRefs } from 'vue';
+import { PAGINATION_DEFAULT_LABELS } from '@aurora/core';
+import { focusPaginationItem } from '@aurora/horizon-web-core';
 import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { usePaginationProps } from './composables/useProps';
@@ -20,19 +22,25 @@ import Sizes from './components/Sizes';
 import Jumper from './components/Jumper';
 import SimplestPager from '~/components/Pagination/src/components/SimplestPager';
 import useSize from '~/utils/useSize';
+import { usePaginationController } from './hooks/usePaginationController';
 
 export default defineComponent({
   name: `${useNamespace()}Pagination`,
   desc: '采用分页的形式分隔长列表，每次只加载一个页面',
-  descLocales: { en: "Control the maximum number of page buttons through `pager-count`" },
+  descLocales: { en: 'Control the maximum number of page buttons through `pager-count`' },
   props: usePaginationProps,
   emits: usePaginationEmits,
   slots: usePaginationSlots,
   exposes: usePaginationExposes,
   setup(
     props: PaginationProps,
-    { emit, slots }: HorizonWebSetupContext<PaginationEmits, PaginationSlots, PaginationExposes>,
+    {
+      emit,
+      slots,
+      expose,
+    }: HorizonWebSetupContext<PaginationEmits, PaginationSlots, PaginationExposes>,
   ) {
+    const rootRef = ref<HTMLElement | null>(null);
     const { size } = toRefs(props);
     const classHelper = new ComponentClassBlock('pagination');
     const sizeRef = useSize(size, 'medium');
@@ -44,86 +52,31 @@ export default defineComponent({
       return sizeMap[sizeRef.value] || 'small';
     });
 
-    const pageSize = ref(Math.abs(props.pageSize));
-    const pages = computed(() => Math.ceil(props.total / pageSize.value));
-    const currentPage = ref(Math.min(Math.max(1, props.currentPage), Math.max(pages.value, 1)));
-
-    watch(pages, () => {
-      fitCurrentPage();
+    const controller = usePaginationController(props, {
+      updatePageSize: value => emit('update:pageSize', value),
+      updateCurrentPage: value => emit('update:currentPage', value),
+      pageSizeChange: value => emit('sizeChange', value),
+      pageChange: value => emit('currentChange', value),
+      change: (page, pageSize) => emit('modify', page, pageSize),
     });
-
-    watch(pageSize, val => {
-      emit('update:pageSize', val);
-      emit('sizeChange', val);
-    });
-
-    watch(currentPage, val => {
-      emit('update:currentPage', val);
-      emit('currentChange', val);
-    });
-
-    watch(
-      [pageSize, currentPage],
-      ([pageSize, currentPage]) => {
-        emit('modify', currentPage, pageSize);
-      },
-      {
-        flush: 'post',
-      },
-    );
-
-    watch(
-      () => props.pageSize,
-      val => {
-        pageSize.value = val;
-      },
-    );
-
-    watch(
-      () => props.currentPage,
-      val => {
-        fitCurrentPage(val);
-      },
-    );
 
     provide(HPaginationPropsInjectKey, props);
     provide(HPaginationEmitInjectKey, emit);
     provide(HPaginationSlotsInjectKey, slots);
 
-    const layoutComponents = computed(() => {
-      switch (props.type) {
-        case 'simple':
-          return ['total', 'pager'];
-        case 'simplest':
-          return ['simplest-pager'];
-        default:
-          return Array.isArray(props.layout)
-            ? props.layout
-            : props.layout.replace(/\s/g, '').split(',');
-      }
-    });
-
-    const range = computed(
-      () =>
-        `${Math.max(0, (currentPage.value - 1) * pageSize.value + 1)}-${Math.min(
-          currentPage.value * pageSize.value,
-          Math.max(props.total, 1),
-        )}`,
-    );
-
     function onCurrentPageUpdate(currCurrentPage: number) {
-      if (currCurrentPage !== currentPage.value) {
-        fitCurrentPage(currCurrentPage);
+      if (currCurrentPage !== controller.currentPage.value) {
+        controller.fitCurrentPage(currCurrentPage);
       }
     }
 
-    function fitCurrentPage(value: number = currentPage.value) {
-      currentPage.value = Math.min(Math.max(1, value), Math.max(pages.value, 1));
-    }
+    expose({ focus: (page?: number) => void focusPaginationItem(rootRef.value, page) });
 
     return () => (
-      <div
-        v-show={props.hideOnSinglePage ? pages.value > 1 : true}
+      <nav
+        ref={rootRef}
+        aria-label={PAGINATION_DEFAULT_LABELS.navigation}
+        v-show={props.hideOnSinglePage ? controller.pageCount.value > 1 : true}
         class={cls(
           classHelper.block,
           classHelper.m(sizeRef.value),
@@ -132,28 +85,33 @@ export default defineComponent({
         )}
       >
         {slots.prefix?.()}
-        {layoutComponents.value.includes('total') && <Total range={range.value} />}
-        {layoutComponents.value.includes('pager') && (
-          <Pager v-model:currentPage={currentPage.value} pages={pages.value} />
+        {controller.layout.value.includes('total') && <Total range={controller.range.value.text} />}
+        {controller.layout.value.includes('pager') && (
+          <Pager
+            v-model:currentPage={controller.currentPage.value}
+            pages={controller.pageCount.value}
+          />
         )}
-        {layoutComponents.value.includes('simplest-pager') && (
+        {controller.layout.value.includes('simplest-pager') && (
           <SimplestPager
-            v-model:currentPage={currentPage.value}
-            pages={pages.value}
+            v-model:currentPage={controller.currentPage.value}
+            pages={controller.pageCount.value}
             size={childSizeRef.value}
           />
         )}
-        {layoutComponents.value.includes('sizes') && <Sizes v-model:pageSize={pageSize.value} />}
-        {layoutComponents.value.includes('jumper') && (
+        {controller.layout.value.includes('sizes') && (
+          <Sizes v-model:pageSize={controller.pageSize.value} />
+        )}
+        {controller.layout.value.includes('jumper') && (
           <Jumper
-            currentPage={currentPage.value}
-            pages={pages.value}
+            currentPage={controller.currentPage.value}
+            pages={controller.pageCount.value}
             size={childSizeRef.value}
             onUpdate:currentPage={onCurrentPageUpdate}
           />
         )}
         {slots.suffix?.()}
-      </div>
+      </nav>
     );
   },
 });

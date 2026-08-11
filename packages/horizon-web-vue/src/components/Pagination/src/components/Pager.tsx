@@ -1,4 +1,11 @@
 import { computed, defineComponent, inject, withKeys } from 'vue';
+import {
+  getPaginationJumpTarget,
+  getPaginationPagerItems,
+  PAGINATION_DEFAULT_LABELS,
+  resolvePaginationSelection,
+} from '@aurora/core';
+import type { PaginationPagerItem } from '@aurora/core';
 import { cls, ComponentClassBlock, isNumber, useNamespace } from '@aurora/utils';
 import { IconArrowLeft, IconArrowRight, IconToggleLeft, IconToggleRight } from '@aurora/icon';
 import {
@@ -29,83 +36,54 @@ export default defineComponent({
 
     const currentPage = computed(() => props.currentPage!);
 
-    function onPickPage(page: number | 'prev' | 'next') {
+    function onPickPage(page: PaginationPagerItem) {
       if (parentProps.disabled) return false;
 
-      if (page === 'prev') {
-        emit('update:currentPage', Math.max(2, currentPage.value - (parentProps.pagerCount - 2)));
-      } else if (page === 'next') {
-        emit(
-          'update:currentPage',
-          Math.min(props.pages - 1, currentPage.value + (parentProps.pagerCount - 2)),
-        );
-      } else {
-        if (page === currentPage.value) {
-          parentEmits('clickCurrentPage', page);
+      const requested =
+        typeof page === 'number'
+          ? page
+          : getPaginationJumpTarget(
+              currentPage.value,
+              page === 'jump-prev' ? 'previous' : 'next',
+              props.pages,
+              parentProps.pagerCount,
+            );
+      const selection = resolvePaginationSelection(
+        currentPage.value,
+        requested,
+        props.pages,
+        parentProps.disabled,
+      );
+      if (!selection.accepted) {
+        if (selection.reason === 'same' && typeof page === 'number') {
+          parentEmits('clickCurrentPage', selection.page);
         }
-
-        emit('update:currentPage', page);
+        return false;
       }
+      emit('update:currentPage', selection.page);
     }
 
     function prevPage() {
       if (parentProps.disabled) return false;
       if (currentPage.value > 1) {
-        onPickPage(currentPage.value - 1);
-        parentEmits('clickPrevPage', currentPage.value - 1);
+        const page = currentPage.value - 1;
+        onPickPage(page);
+        parentEmits('clickPrevPage', page);
       }
     }
 
     function nextPage() {
       if (parentProps.disabled) return false;
       if (currentPage.value < props.pages) {
-        onPickPage(currentPage.value + 1);
-        parentEmits('clickNextPage', currentPage.value + 1);
+        const page = currentPage.value + 1;
+        onPickPage(page);
+        parentEmits('clickNextPage', page);
       }
     }
 
-    const pagesList = computed<Array<number | 'prev' | 'next'>>(() => {
-      if (props.pages <= 1) {
-        return [1];
-      }
-
-      const pages = new Set([1, props.pages, currentPage.value]);
-
-      let left = 1;
-      let right = 1;
-      let current = 'left';
-      while (pages.size < Math.min(parentProps.pagerCount, props.pages)) {
-        if (current === 'left') {
-          const temp = currentPage.value - left;
-          temp > 1 && pages.add(temp);
-          left++;
-          current = 'right';
-        } else {
-          const temp = currentPage.value + right;
-          temp < props.pages && pages.add(temp);
-          right++;
-          current = 'left';
-        }
-      }
-
-      const res: Array<number | 'prev' | 'next'> = [...pages].sort((a, b) => a - b);
-
-      if (res.length < props.pages) {
-        for (let i = 1; i < res.length; i++) {
-          const current = res[i];
-          const prev = res[i - 1];
-          if (isNumber(current) && isNumber(prev) && current - 1 !== prev) {
-            if (current > currentPage.value) {
-              res[i - 1] = 'next';
-            } else {
-              res[i] = 'prev';
-            }
-          }
-        }
-      }
-
-      return res;
-    });
+    const pagesList = computed(() =>
+      getPaginationPagerItems(currentPage.value, props.pages, parentProps.pagerCount),
+    );
 
     return () => (
       <div class={cls(classHelper.e('pager'))}>
@@ -116,7 +94,7 @@ export default defineComponent({
             classHelper.is('disabled', currentPage.value <= 1 || parentProps.disabled),
           )}
           role="button"
-          aria-label="Previous page"
+          aria-label={PAGINATION_DEFAULT_LABELS.previousPage}
           aria-disabled={currentPage.value <= 1 || parentProps.disabled}
           tabindex={currentPage.value <= 1 || parentProps.disabled ? -1 : 0}
           onClick={prevPage}
@@ -132,15 +110,22 @@ export default defineComponent({
               classHelper.is('disabled', parentProps.disabled),
             )}
             role="button"
-            aria-label={typeof num === 'number' ? `Page ${num}` : `${num} pages`}
+            aria-label={
+              typeof num === 'number'
+                ? PAGINATION_DEFAULT_LABELS.page.replace('{page}', String(num))
+                : num === 'jump-prev'
+                  ? PAGINATION_DEFAULT_LABELS.jumpPrevious
+                  : PAGINATION_DEFAULT_LABELS.jumpNext
+            }
             aria-current={currentPage.value === num ? 'page' : undefined}
             aria-disabled={parentProps.disabled}
             tabindex={parentProps.disabled ? -1 : 0}
-            data-num={num}
+            data-num={num === 'jump-prev' ? 'prev' : num === 'jump-next' ? 'next' : num}
+            data-page={typeof num === 'number' ? num : undefined}
             onClick={() => onPickPage(num)}
             onKeyup={withKeys(() => onPickPage(num), ['enter'])}
           >
-            {num === 'prev' ? (
+            {num === 'jump-prev' ? (
               <div class={classHelper.em('pager', 'advance')}>
                 <div class={cls(classHelper.em('pager', 'advance'), classHelper.is('origin'))}>
                   ...
@@ -149,7 +134,7 @@ export default defineComponent({
                   <IconToggleLeft size={12} />
                 </div>
               </div>
-            ) : num === 'next' ? (
+            ) : num === 'jump-next' ? (
               <div class={classHelper.em('pager', 'advance')}>
                 <div class={cls(classHelper.em('pager', 'advance'), classHelper.is('origin'))}>
                   ...
@@ -170,7 +155,7 @@ export default defineComponent({
             classHelper.is('disabled', currentPage.value >= props.pages || parentProps.disabled),
           )}
           role="button"
-          aria-label="Next page"
+          aria-label={PAGINATION_DEFAULT_LABELS.nextPage}
           aria-disabled={currentPage.value >= props.pages || parentProps.disabled}
           tabindex={currentPage.value >= props.pages || parentProps.disabled ? -1 : 0}
           onClick={nextPage}

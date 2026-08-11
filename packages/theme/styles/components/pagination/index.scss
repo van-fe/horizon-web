@@ -1,0 +1,277 @@
+@use '../../mixins';
+@use 'simplest';
+@use 'size';
+
+/* stylelint-disable nesting-selector-no-missing-scoping-root -- BEM mixins provide the selector roots. */
+
+@include mixins.b('pagination') {
+  display: flex;
+  column-gap: mixins.css-variable('pagination', 'spacing', 'components', 'gap');
+  align-items: center;
+  line-height: mixins.css-variable('pagination', 'line-height');
+  white-space: nowrap;
+
+  &[hidden] {
+    display: none;
+  }
+
+  @include mixins.m('left') {
+    justify-content: flex-start;
+  }
+
+  @include mixins.m('center') {
+    justify-content: center;
+  }
+
+  @include mixins.m('right') {
+    justify-content: flex-end;
+  }
+
+  @include mixins.e('total') {
+    font-size: mixins.css-variable('pagination', 'font-size');
+    color: mixins.css-variable('pagination', 'color', 'secondary');
+    white-space: nowrap;
+  }
+
+  @include mixins.e('pager') {
+    display: flex;
+    column-gap: mixins.css-variable('pagination', 'spacing', 'inside', 'gap');
+    white-space: nowrap;
+
+    @include mixins.m('item') {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: mixins.css-variable('pagination', 'size', 'height');
+      min-height: mixins.css-variable('pagination', 'size', 'height');
+      padding: 0 mixins.css-variable('pagination', 'spacing', 'pager-item', 'padding-x');
+      font: inherit;
+      vertical-align: middle;
+      color: inherit;
+      text-align: center;
+      appearance: none;
+      cursor: pointer;
+      user-select: none;
+      background: mixins.css-variable('pagination', 'background');
+      border: mixins.css-variable('pagination', 'border');
+      border-radius: mixins.css-variable('pagination', 'border-radius');
+      transition: mixins.css-variable('pagination', 'transition', 'all');
+
+      &:hover,
+      &:focus {
+        color: mixins.css-variable('pagination', 'color', 'pager-item', 'hover');
+        outline: none;
+        border-color: mixins.css-variable('pagination', 'border-color', 'hover');
+      }
+
+      &:focus-visible {
+        @include mixins.focus-ring-inset(mixins.css-variable('pagination', 'border-radius'));
+      }
+
+      &:active {
+        color: mixins.css-variable('pagination', 'color', 'pager-item', 'press');
+        border-color: mixins.css-variable('pagination', 'border-color', 'press');
+      }
+
+      @include mixins.is('active') {
+        color: mixins.css-variable('pagination', 'color', 'pager-item', 'active');
+        background: mixins.css-variable('pagination', 'background', 'pager-item', 'active');
+        border-color: mixins.css-variable('pagination', 'border-color', 'active');
+      }
+
+      &:disabled,
+      &.is-disabled {
+        color: mixins.css-variable('pagination', 'color', 'pager-item', 'disabled');
+        cursor: not-allowed;
+        background: mixins.css-variable('pagination', 'background', 'pager-item', 'disabled');
+        border-color: mixins.css-variable('pagination', 'border-color');
+
+        @include mixins.is('active') {
+          color: mixins.css-variable('pagination', 'color', 'pager-item', 'disabled-active');
+          background: mixins.css-variable(
+            'pagination',
+            'background',
+            'pager-item',
+            'disabled-active'
+          );
+          border-color: mixins.css-variable('pagination', 'border-color', 'disabled-active');
+        }
+      }
+    }
+
+    @include mixins.m('advance') {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+
+      @include mixins.is('icon') {
+        display: none;
+      }
+
+      &:hover {
+        .is-icon {
+          display: inline-flex;
+        }
+
+        .is-origin {
+          display: none;
+        }
+      }
+    }
+  }
+
+  @include mixins.e('sizes') {
+    display: flex;
+    column-gap: mixins.css-variable('pagination', 'spacing', 'sizes', 'gap');
+    align-items: center;
+    justify-content: center;
+    min-height: mixins.css-variable('pagination', 'size', 'height');
+    padding: mixins.css-variable('pagination', 'spacing', 'sizes', 'padding');
+    color: mixins.css-variable('pagination', 'color', 'popper');
+    white-space: nowrap;
+    cursor: pointer;
+    border: mixins.css-variable('pagination', 'border');
+    border-radius: mixins.css-variable('pagination', 'border-radius');
+    transition: mixins.css-variable('pagination', 'transition', 'all');
+
+    &:hover,
+    &:focus {
+      outline: none;
+      border-color: mixins.css-variable('pagination', 'border-color', 'hover');
+    }
+
+    &:focus-visible {
+      @include mixins.focus-ring-inset(mixins.css-variable('pagination', 'border-radius'));
+    }
+
+    &:active {
+      border-color: mixins.css-variable('pagination', 'border-color', 'press');
+    }
+
+    @include mixins.is('active') {
+      border-color: mixins.css-variable('pagination', 'border-color', 'sizes', 'activated');
+    }
+
+    @include mixins.is('disabled') {
+      color: mixins.css-variable('pagination', 'color', 'popper', 'disabled');
+      cursor: not-allowed;
+      background: mixins.css-variable('pagination', 'background', 'popper', 'disabled');
+      border-color: mixins.css-variable('pagination', 'border-color', 'disabled');
+    }
+  }
+
+  @include mixins.e('sizes-select') {
+    box-sizing: border-box;
+    min-height: mixins.css-variable('pagination', 'size', 'height');
+    padding: mixins.css-variable('pagination', 'spacing', 'sizes', 'padding');
+    font: inherit;
+    color: mixins.css-variable('pagination', 'color', 'popper');
+    cursor: pointer;
+    background: mixins.css-variable('pagination', 'background');
+    border: mixins.css-variable('pagination', 'border');
+    border-radius: mixins.css-variable('pagination', 'border-radius');
+    transition: mixins.css-variable('pagination', 'transition', 'all');
+
+    &:hover {
+      border-color: mixins.css-variable('pagination', 'border-color', 'hover');
+    }
+
+    &:focus {
+      outline: none;
+      border-color: mixins.css-variable('pagination', 'border-color', 'hover');
+    }
+
+    &:focus-visible {
+      @include mixins.focus-ring-inset(mixins.css-variable('pagination', 'border-radius'));
+    }
+
+    &:disabled {
+      color: mixins.css-variable('pagination', 'color', 'popper', 'disabled');
+      cursor: not-allowed;
+      background: mixins.css-variable('pagination', 'background', 'popper', 'disabled');
+      border-color: mixins.css-variable('pagination', 'border-color', 'disabled');
+    }
+  }
+
+  @include mixins.e('sizes-popper') {
+    padding: mixins.css-variable('pagination', 'spacing', 'sizes-popper', 'padding') !important;
+  }
+
+  @include mixins.e('sizes-item') {
+    height: mixins.css-variable('pagination', 'size', 'sizes-item', 'height');
+    padding: mixins.css-variable('pagination', 'spacing', 'sizes-item', 'padding');
+    color: mixins.css-variable('pagination', 'color', 'primary');
+    cursor: pointer;
+    transition: mixins.css-variable('pagination', 'transition', 'all');
+
+    &:hover {
+      background: mixins.css-variable('pagination', 'background', 'sizes-item', 'hover');
+    }
+
+    @include mixins.is('active') {
+      color: mixins.css-variable('pagination', 'color', 'sizes-item', 'active');
+    }
+  }
+
+  @include mixins.e('jumper') {
+    display: flex;
+    column-gap: mixins.css-variable('pagination', 'spacing', 'inside', 'gap');
+    align-items: center;
+    color: mixins.css-variable('pagination', 'color', 'secondary');
+    white-space: nowrap;
+
+    @include mixins.b('input-number', false) {
+      width: mixins.css-variable('pagination', 'size', 'input-number', 'width');
+      min-width: auto;
+      font-size: mixins.css-variable('pagination', 'font-size');
+      border-radius: mixins.css-variable('pagination', 'border-radius');
+
+      @include mixins.be('input-number', 'inner', false) {
+        padding: mixins.css-variable('pagination', 'spacing', 'jumper-input', 'padding') !important;
+      }
+    }
+  }
+
+  @include mixins.e('jumper-input') {
+    box-sizing: border-box;
+    width: mixins.css-variable('pagination', 'size', 'input-number', 'width');
+    min-height: mixins.css-variable('pagination', 'size', 'height');
+    padding: mixins.css-variable('pagination', 'spacing', 'jumper-input', 'padding');
+    font: inherit;
+    color: mixins.css-variable('pagination', 'color', 'primary');
+    text-align: center;
+    appearance: textfield;
+    background: mixins.css-variable('pagination', 'background');
+    border: mixins.css-variable('pagination', 'border');
+    border-radius: mixins.css-variable('pagination', 'border-radius');
+    transition: mixins.css-variable('pagination', 'transition', 'all');
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      margin: 0;
+      appearance: none;
+    }
+
+    &:hover {
+      border-color: mixins.css-variable('pagination', 'border-color', 'hover');
+    }
+
+    &:focus {
+      outline: none;
+      border-color: mixins.css-variable('pagination', 'border-color', 'hover');
+    }
+
+    &:focus-visible {
+      @include mixins.focus-ring-inset(mixins.css-variable('pagination', 'border-radius'));
+    }
+
+    &:disabled {
+      color: mixins.css-variable('pagination', 'color', 'popper', 'disabled');
+      cursor: not-allowed;
+      background: mixins.css-variable('pagination', 'background', 'popper', 'disabled');
+      border-color: mixins.css-variable('pagination', 'border-color', 'disabled');
+    }
+  }
+}

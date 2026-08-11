@@ -1,28 +1,17 @@
 import type { SlotsType } from 'vue';
+import type { AdaptComponentApiShape, PaginationRegionMap } from '@aurora/core';
+
+type PaginationVueSlots = AdaptComponentApiShape<PaginationRegionMap, { previous: 'prev' }>;
+
 export const usePaginationSlots = Object as SlotsType<{
-  /**
-   * 分页前缀
-    * @en Custom content for the prefix slot.
-   */
-  prefix?: {};
-
-  /**
-   * 上一页
-    * @en Custom content for the prev slot.
-   */
-  prev?: {};
-
-  /**
-   * 下一页
-    * @en Custom content for the next slot.
-   */
-  next?: {};
-
-  /**
-   * 分页后缀
-    * @en Custom content for the suffix slot.
-   */
-  suffix?: {};
+  /** 分页前缀。 @en Content before the pagination controls. */
+  prefix?: PaginationVueSlots['prefix'];
+  /** 上一页内容。 @en Previous-page content. */
+  prev?: PaginationVueSlots['prev'];
+  /** 下一页内容。 @en Next-page content. */
+  next?: PaginationVueSlots['next'];
+  /** 分页后缀。 @en Content after the pagination controls. */
+  suffix?: PaginationVueSlots['suffix'];
 }>;
 
 export type PaginationSlots = typeof usePaginationSlots;
