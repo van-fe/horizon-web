@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import type { HTreeNodeData } from '@aurora/horizon-web';
+import type { HTreeNodeData } from '@aurora/horizon-web-vue';
 
 const expandValues = ref<Array<string | number>>(['platform']);
 const architectureTree: HTreeNodeData[] = [

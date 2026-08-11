@@ -38,9 +38,9 @@ jobs:
           bun --filter @aurora/horizon-web-core build
           bun --filter @aurora/utils build
           bun --filter @aurora/icon generate
-          bun --filter @aurora/horizon-web build:index
+          bun --filter @aurora/horizon-web-vue build:index
           mkdir -p packages/doc/src/config/themes packages/doc/docs/features/tokens/demos
-          bun --filter @aurora/horizon-web build:theme
+          bun --filter @aurora/horizon-web-vue build:theme
 
       - name: Build documentation
         run: bun run docs:build

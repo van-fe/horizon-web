@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import type { HFormInstance, HFormRule } from '@aurora/horizon-web';
+import type { HFormInstance, HFormRule } from '@aurora/horizon-web-vue';
 import { reactive, ref } from 'vue';
 
 let nextReviewerId = 2;

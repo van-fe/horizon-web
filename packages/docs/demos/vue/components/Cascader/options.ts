@@ -1,4 +1,4 @@
-import type { HCascaderOption } from '@aurora/horizon-web';
+import type { HCascaderOption } from '@aurora/horizon-web-vue';
 
 export const workspaceOptions: HCascaderOption[] = [
   {

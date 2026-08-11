@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import type { HUploadFileType, HUploadRawFileType } from '@aurora/horizon-web';
+import type { HUploadFileType, HUploadRawFileType } from '@aurora/horizon-web-vue';
 import {
   createMemoryCheckpointStore,
   type AliyunOssClientLike,

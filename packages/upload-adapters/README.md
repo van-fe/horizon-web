@@ -1,6 +1,6 @@
 # @aurora/upload-adapters
 
-独立、可摇树优化的分片断点续传适配器。它不依赖 `@aurora/horizon-web` 的运行时代码，只通过结构化类型把云存储协议转换成 Upload 的 `multipart` 配置。
+独立、可摇树优化的分片断点续传适配器。它不依赖 `@aurora/horizon-web-vue` 的运行时代码，只通过结构化类型把云存储协议转换成 Upload 的 `multipart` 配置。
 
 当前内置：
 

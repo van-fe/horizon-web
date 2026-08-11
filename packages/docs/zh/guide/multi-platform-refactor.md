@@ -16,7 +16,7 @@
 
 当前仓库具有以下特点：
 
-- `packages/horizon-web` 是 Vue 3 组件包，公开入口、安装器、组件类型和构建流程均直接依赖 Vue；
+- `packages/horizon-web-vue` 是 Vue 3 组件包，公开入口、安装器、组件类型和构建流程均直接依赖 Vue；
 - 组件源码中大量使用 `ref`、`computed`、`watch`、`provide/inject`、VNode、Teleport 和 Vue Router；
 - `@aurora/utils` 同时包含纯 TypeScript 工具与 Vue 专属组件、类型及 composable，当前不能直接作为 React 的公共依赖；
 - `@aurora/icon` 是 Vue 图标组件包，需要抽离图标数据后才能提供 React renderer；
@@ -65,8 +65,8 @@ packages/horizon-web-react   -> @aurora/horizon-web-react
 
 ```text
 packages/horizon-web         -> @aurora/horizon-web
-                              重新导出 @aurora/horizon-web-vue
-                              并在文档和发布信息中标记 deprecated
+                               重新导出 @aurora/horizon-web-vue
+                               并在文档和发布信息中标记 deprecated
 ```
 
 兼容期至少覆盖一个完整的大版本周期。兼容包应满足：
@@ -171,7 +171,7 @@ flowchart TB
 
 ### 4.4 `@aurora/horizon-web-vue`
 
-由当前 `packages/horizon-web` 演进而来，负责：
+由原 `packages/horizon-web` 演进而来，目前源码位于 `packages/horizon-web-vue`，负责：
 
 - `defineComponent`、Vue JSX、props/emits/slots/exposes；
 - `ref`、`computed`、`watch`、生命周期和 effect cleanup；

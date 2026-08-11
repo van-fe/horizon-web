@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { HTree, useTreeExposes, type HTreeNodeData } from '@aurora/horizon-web';
+import { HTree, useTreeExposes, type HTreeNodeData } from '@aurora/horizon-web-vue';
 import type { ExtractExposeTypes } from '@aurora/utils';
 
 type TreeInstance = InstanceType<typeof HTree> & ExtractExposeTypes<typeof useTreeExposes>;

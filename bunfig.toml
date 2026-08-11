@@ -1,5 +1,5 @@
 [alias]
 "@aurora/utils" = "./packages/utils"
-"@aurora/horizon-web" = "./packages/horizon-web"
+"@aurora/horizon-web-vue" = "./packages/horizon-web-vue"
 
 

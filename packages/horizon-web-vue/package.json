@@ -1,7 +1,7 @@
 {
-  "name": "@aurora/horizon-web",
+  "name": "@aurora/horizon-web-vue",
   "version": "1.0.0",
-  "description": "Vue3 UI components library.",
+  "description": "Vue 3 renderer for Horizon Web.",
   "main": "lib/index.js",
   "module": "es/index.js",
   "unpkg": "dist/horizon-web-browser.umd.js",

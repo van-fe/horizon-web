@@ -1,7 +1,7 @@
 {
   "name": "@aurora/utils",
   "version": "1.0.0",
-  "description": "For @aurora/horizon-web. Include a series of functions for developing.",
+  "description": "For @aurora/horizon-web-vue. Include a series of functions for developing.",
   "main": "dist/utils.cjs",
   "module": "dist/utils.js",
   "unpkg": "dist/utils.umd.js",

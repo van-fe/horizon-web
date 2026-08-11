@@ -373,4 +373,4 @@ and combine processing with virtual scrolling.
 
 ## Type Definitions
 
-:::code ../../../../horizon-web/src/components/Table/src/utils/types.ts :::
+:::code ../../../../horizon-web-vue/src/components/Table/src/utils/types.ts :::

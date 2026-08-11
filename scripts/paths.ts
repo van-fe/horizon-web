@@ -27,7 +27,7 @@ export const apiGeneratorOutPut = resolve(apiGeneratorRoot, 'dist');
 /**
  * horizon-web
  */
-export const horizonwebProjectRoot = resolve(packagesRoot, 'horizon-web');
+export const horizonwebProjectRoot = resolve(packagesRoot, 'horizon-web-vue');
 export const horizonwebSourceRoot = resolve(horizonwebProjectRoot, 'src');
 export const componentRoot = resolve(horizonwebSourceRoot, 'components');
 export const directiveRoot = resolve(horizonwebSourceRoot, 'directives');

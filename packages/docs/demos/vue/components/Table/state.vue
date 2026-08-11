@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, shallowRef } from 'vue';
-import type { HTableState } from '@aurora/horizon-web';
+import type { HTableState } from '@aurora/horizon-web-vue';
 
 const tableRef = ref<{
   exportState: () => HTableState;

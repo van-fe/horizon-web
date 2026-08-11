@@ -85,14 +85,14 @@ const resolveComponents = (name: string, options: HorizonWebResolverOption) => {
   });
 
   if (matched) {
-    const from = `@aurora/horizon-web/${dirType}/components/${matched[0]}`;
+    const from = `@aurora/horizon-web-vue/${dirType}/components/${matched[0]}`;
     const sideEffects: string[] = [];
 
     if (options.importStyle) {
       sideEffects.push(
-        `@aurora/horizon-web/${dirType}/styles/base.${styleExt}`,
-        `@aurora/horizon-web/${dirType}/styles/global-variables.${styleExt}`,
-        `@aurora/horizon-web/${dirType}/components/${matched[0]}/src/style/index.${
+        `@aurora/horizon-web-vue/${dirType}/styles/base.${styleExt}`,
+        `@aurora/horizon-web-vue/${dirType}/styles/global-variables.${styleExt}`,
+        `@aurora/horizon-web-vue/${dirType}/components/${matched[0]}/src/style/index.${
           styleExt === 'scss' ? 'unplugin.scss' : 'css'
         }`,
       );
@@ -124,13 +124,13 @@ const resolveDirectives = (name: string, options: HorizonWebResolverOption) => {
 
   if (options.importStyle) {
     sideEffects.push(
-      `@aurora/horizon-web/${dirType}/styles/base.${styleExt}`,
-      `@aurora/horizon-web/${dirType}/styles/global-variables.${styleExt}`,
+      `@aurora/horizon-web-vue/${dirType}/styles/base.${styleExt}`,
+      `@aurora/horizon-web-vue/${dirType}/styles/global-variables.${styleExt}`,
     );
 
     if (directive.hasStyle) {
       sideEffects.push(
-        `@aurora/horizon-web/${dirType}/directives/${directive.from}/src/style/index.${
+        `@aurora/horizon-web-vue/${dirType}/directives/${directive.from}/src/style/index.${
           styleExt === 'scss' ? 'unplugin.scss' : 'css'
         }`,
       );
@@ -139,7 +139,7 @@ const resolveDirectives = (name: string, options: HorizonWebResolverOption) => {
 
   return {
     name: directive.importName,
-    from: `@aurora/horizon-web/${dirType}/directives/${directive.from}`,
+    from: `@aurora/horizon-web-vue/${dirType}/directives/${directive.from}`,
     sideEffects,
   };
 };
@@ -171,7 +171,7 @@ export function HorizonWebVitePluginStyleImportResolvers(options: HorizonWebBase
   };
 
   return {
-    libraryName: '@aurora/horizon-web',
+    libraryName: '@aurora/horizon-web-vue',
     resolveStyle: (name: string) => {
       name = pascalize(name);
 
@@ -187,7 +187,7 @@ export function HorizonWebVitePluginStyleImportResolvers(options: HorizonWebBase
       });
 
       if (matched) {
-        return `@aurora/horizon-web/${dirType}/components/${matched[0]}/src/style/index${
+        return `@aurora/horizon-web-vue/${dirType}/components/${matched[0]}/src/style/index${
           options.importStyle === 'css' ? '.css' : 'unplugin.scss'
         }`;
       }

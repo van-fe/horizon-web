@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts" setup>
-import { $message } from '@aurora/horizon-web';
+import { $message } from '@aurora/horizon-web-vue';
 const open1 = () => {
   $message({
     showClose: true,

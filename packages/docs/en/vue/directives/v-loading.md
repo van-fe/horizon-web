@@ -31,7 +31,7 @@ Showing a loading mask immediately for a fast request can cause a distracting fl
 If another component library registers a directive named `v-loading`, register Horizon Web's loading directive under a different name:
 
 ```javascript
-import { loading } from '@aurora/horizon-web';
+import { loading } from '@aurora/horizon-web-vue';
 
 app.directive('my-loading', loading);
 ```
@@ -49,7 +49,7 @@ app.directive('my-loading', loading);
 Import `LoadingService` to create a loading state programmatically:
 
 ```ts
-import { LoadingService } from '@aurora/horizon-web';
+import { LoadingService } from '@aurora/horizon-web-vue';
 
 const { close } = LoadingService(document.body, {
   fullscreen: true,

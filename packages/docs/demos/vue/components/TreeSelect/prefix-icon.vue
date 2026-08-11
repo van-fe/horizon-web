@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { IconCar } from '@aurora/icon';
-import type { HTreeNodeData } from '@aurora/horizon-web';
+import type { HTreeNodeData } from '@aurora/horizon-web-vue';
 
 const selectedValue = ref<string | number>('vehicle-018');
 const treeData: HTreeNodeData[] = [

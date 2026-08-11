@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { dayjs } from '@aurora/horizon-web';
-import type { TimePickerProps } from '@aurora/horizon-web';
+import { dayjs } from '@aurora/horizon-web-vue';
+import type { TimePickerProps } from '@aurora/horizon-web-vue';
 
 const value = ref<string>();
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
-import type { HFormInstance } from '@aurora/horizon-web';
+import type { HFormInstance } from '@aurora/horizon-web-vue';
 
 const formRef = ref<HFormInstance>();
 const values = reactive<{ cadence?: string }>({ cadence: undefined });

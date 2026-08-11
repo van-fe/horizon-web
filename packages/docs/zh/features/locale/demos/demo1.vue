@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { inject } from 'vue';
-import { localeInjectKey, defaultLocale } from '@aurora/horizon-web';
+import { localeInjectKey, defaultLocale } from '@aurora/horizon-web-vue';
 
 const locale = inject(localeInjectKey, defaultLocale);
 </script>

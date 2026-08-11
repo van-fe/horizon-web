@@ -16,7 +16,7 @@ export default function replaceShared(params: AliasReplacerArguments) {
       return `import('${pkgName}')`;
     } else {
       throw new Error(
-        `Uncought package import path: ${params.orig}. You should add this pkgName to 'packages/horizon-web/build/tsc-alias/shared.ts' file's mapping variable.`,
+        `Uncought package import path: ${params.orig}. You should add this pkgName to 'packages/horizon-web-vue/build/tsc-alias/shared.ts' file's mapping variable.`,
       );
     }
   }

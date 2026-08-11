@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { HTreeNodeData } from '@aurora/horizon-web';
+import type { HTreeNodeData } from '@aurora/horizon-web-vue';
 
 const costCenter = ref<string | number>('cc-product');
 const treeData: HTreeNodeData[] = [

@@ -1,6 +1,6 @@
 ---
 name: develop-horizon-components
-description: Develop or document Vue and React components in the horizon-web repository while following component APIs, styling, localization, renderer-separated documentation, demos, JSDoc, and headless real-browser test conventions. Use for work under packages/horizon-web/src/components, packages/horizon-web-react/src, related component demos or docs, or reviews and fixes that affect Horizon component behavior.
+description: Develop or document Vue and React components in the horizon-web repository while following component APIs, styling, localization, renderer-separated documentation, demos, JSDoc, and headless real-browser test conventions. Use for work under packages/horizon-web-vue/src/components, packages/horizon-web-react/src, related component demos or docs, or reviews and fixes that affect Horizon component behavior.
 ---
 
 # Develop Horizon Components

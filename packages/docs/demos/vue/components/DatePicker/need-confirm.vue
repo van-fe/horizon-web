@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import { dayjs } from '@aurora/horizon-web';
+import { dayjs } from '@aurora/horizon-web-vue';
 
 type PickerType = 'date' | 'date-range' | 'datetime';
 

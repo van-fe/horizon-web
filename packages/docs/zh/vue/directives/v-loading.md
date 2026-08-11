@@ -31,7 +31,7 @@
 当项目中的其他组件库注册了同名 `v-loading` 指令时，可以为 Horizon Web 的 loading 指令重新注册一个名称：
 
 ```javascript
-import { loading } from '@aurora/horizon-web';
+import { loading } from '@aurora/horizon-web-vue';
 
 app.directive('my-loading', loading);
 ```
@@ -49,7 +49,7 @@ app.directive('my-loading', loading);
 可以引入 `LoadingService`，使用函数形式调用 loading：
 
 ```ts
-import { LoadingService } from '@aurora/horizon-web';
+import { LoadingService } from '@aurora/horizon-web-vue';
 
 const { close } = LoadingService(document.body, {
   fullscreen: true,

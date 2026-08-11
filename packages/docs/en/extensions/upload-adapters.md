@@ -1,7 +1,7 @@
 # Upload Adapters
 
 Cloud integrations live in the standalone `@aurora/upload-adapters` package, so
-`@aurora/horizon-web` has no runtime dependency on a vendor SDK. Each preset returns both
+`@aurora/horizon-web-vue` has no runtime dependency on a vendor SDK. Each preset returns both
 `multipart` and `multipartChunkSize` and can be passed with `v-bind`, preventing Upload and the
 provider from using different part boundaries. See
 [Resumable Multipart Upload](/en/vue/components/Upload#resumable-multipart-upload) for Upload's

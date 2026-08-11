@@ -1,5 +1,5 @@
 import { defineComponent, ref } from 'vue';
-import { HRecycleScroller } from '@aurora/horizon-web';
+import { HRecycleScroller } from '@aurora/horizon-web-vue';
 import { faker } from '@faker-js/faker';
 
 type Item = {

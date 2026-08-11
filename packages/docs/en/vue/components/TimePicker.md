@@ -107,4 +107,4 @@ The component does not provide a `multiple` prop. To manage independent times, r
 
 ## Type definitions
 
-:::code ../../../../horizon-web/src/components/TimePicker/src/utils/types.ts :::
+:::code ../../../../horizon-web-vue/src/components/TimePicker/src/utils/types.ts :::

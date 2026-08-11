@@ -4,7 +4,7 @@
 </template>
 
 <script setup lang="ts">
-import { $alert, $confirm, $message } from '@aurora/horizon-web';
+import { $alert, $confirm, $message } from '@aurora/horizon-web-vue';
 
 const showAlert = () => {
   $alert('这是一段文本', '提示', {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { HTreeFilterMethodType, HTreeNodeData } from '@aurora/horizon-web';
+import type { HTreeFilterMethodType, HTreeNodeData } from '@aurora/horizon-web-vue';
 
 const owner = ref<string | number>();
 const treeData: HTreeNodeData[] = [

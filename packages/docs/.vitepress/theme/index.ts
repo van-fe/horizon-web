@@ -1,11 +1,11 @@
 import type { Theme } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
-import { HorizonWebProvides, defaultLocale } from '@aurora/horizon-web';
+import { HorizonWebProvides, defaultLocale } from '@aurora/horizon-web-vue';
 import { LocaleSupportLang } from '@aurora/locale';
-import * as components from '../../../horizon-web/src/components';
-import * as directives from '../../../horizon-web/src/directives';
-import methodsRegister from '../../../horizon-web/src/methods';
-import '../../../horizon-web/src/styles/index.scss';
+import * as components from '../../../horizon-web-vue/src/components';
+import * as directives from '../../../horizon-web-vue/src/directives';
+import methodsRegister from '../../../horizon-web-vue/src/methods';
+import '../../../horizon-web-vue/src/styles/index.scss';
 import './tailwind.css';
 import './demo.css';
 import DemoBlock from '../components/DemoBlock.vue';

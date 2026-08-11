@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { h, ref } from 'vue';
-import { dayjs } from '@aurora/horizon-web';
+import { dayjs } from '@aurora/horizon-web-vue';
 import { IconFlip } from '@aurora/icon';
 
 type IconMode = 'prefix' | 'suffix';

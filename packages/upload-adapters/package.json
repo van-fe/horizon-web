@@ -56,6 +56,6 @@
   ],
   "license": "ISC",
   "devDependencies": {
-    "@aurora/horizon-web": "workspace:*"
+    "@aurora/horizon-web-vue": "workspace:*"
   }
 }

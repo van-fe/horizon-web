@@ -25,7 +25,7 @@
 <script lang="ts">
 import { defineComponent, ref, h, watchEffect } from 'vue';
 
-import { $themes, colors } from '@aurora/horizon-web';
+import { $themes, colors } from '@aurora/horizon-web-vue';
 
 export default defineComponent({
   setup() {

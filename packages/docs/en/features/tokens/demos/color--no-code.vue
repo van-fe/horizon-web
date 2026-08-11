@@ -4,7 +4,7 @@ import type { TinyColor } from '@aurora/colors';
 import tokens from './theme.json';
 import { ref } from 'vue';
 import { groupBy } from 'lodash-es';
-import { ThemeType } from '@aurora/horizon-web';
+import { ThemeType } from '@aurora/horizon-web-vue';
 import { snakeCase } from '@aurora/utils';
 
 interface GroupedBasicOpacityItem {

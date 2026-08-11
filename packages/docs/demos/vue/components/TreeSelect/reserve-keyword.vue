@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import type { HTreeNodeData } from '@aurora/horizon-web';
+import type { HTreeNodeData } from '@aurora/horizon-web-vue';
 
 type KeywordMode = 'always' | 'clear' | 'deselect' | 'sticky';
 type ReserveKeyword = boolean | 'reserve-deselect' | 'reserve-special';

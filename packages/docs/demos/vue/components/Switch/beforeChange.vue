@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { $confirm } from '@aurora/horizon-web';
+import { $confirm } from '@aurora/horizon-web-vue';
 
 const enabled = ref(false);
 const status = ref('生产环境发布保护已开启');

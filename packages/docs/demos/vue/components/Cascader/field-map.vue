@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { HCascaderOption } from '@aurora/horizon-web';
+import type { HCascaderOption } from '@aurora/horizon-web-vue';
 import { ref } from 'vue';
 import { formatPath } from './options';
 

@@ -15,7 +15,7 @@ const vueDocRules: Rule[] = [
 const reactDocRules: Rule[] = [
   {
     message: 'references the Vue package',
-    pattern: /@aurora\/horizon-web(?!-react)/,
+    pattern: /@aurora\/horizon-web(?:-vue)?(?=\/|['"\s`]|$)/,
   },
   { message: 'uses a Vue demo container', pattern: /:::demo\b/ },
   { message: 'references the Vue demo tree', pattern: /(?:^|[/'"`])demos\/vue\//m },
@@ -27,7 +27,7 @@ const vueDemoRules: Rule[] = [
 const reactDemoRules: Rule[] = [
   {
     message: 'imports the Vue package',
-    pattern: /@aurora\/horizon-web(?!-react)/,
+    pattern: /@aurora\/horizon-web(?:-vue)?(?=\/|['"\s`]|$)/,
   },
   { message: 'imports Vue', pattern: /from\s+['"]vue(?:\/[^'"]*)?['"]/ },
 ];

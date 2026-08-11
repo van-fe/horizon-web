@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { IconStarFilled } from '@aurora/icon';
-import type { HCascaderOption } from '@aurora/horizon-web';
+import type { HCascaderOption } from '@aurora/horizon-web-vue';
 import { h, ref } from 'vue';
 
 const value = ref<string[]>(['customer-impact', 'high']);

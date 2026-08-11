@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { HTabValue } from '@aurora/horizon-web';
+import type { HTabValue } from '@aurora/horizon-web-vue';
 
 interface DocumentTab {
   key: string;

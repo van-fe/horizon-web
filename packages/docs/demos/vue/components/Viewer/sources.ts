@@ -1,5 +1,5 @@
 import { demoAssetUrl, publicAssetUrl } from '../../../demo-assets';
-import type { HViewerSource } from '@aurora/horizon-web';
+import type { HViewerSource } from '@aurora/horizon-web-vue';
 
 const localVideo = publicAssetUrl('aurora-background.mp4');
 

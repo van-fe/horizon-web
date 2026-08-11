@@ -137,7 +137,7 @@
 如需扩展 TypeScript 类型，可在项目中补充 `HCascaderOption` 声明：
 
 ```ts
-declare module '@aurora/horizon-web' {
+declare module '@aurora/horizon-web-vue' {
   interface HCascaderOption {
     id?: HCascaderOption['value'];
     tag?: HCascaderOption['label'];

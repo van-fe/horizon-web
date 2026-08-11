@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { HViewerCustomToolItem } from '@aurora/horizon-web';
+import type { HViewerCustomToolItem } from '@aurora/horizon-web-vue';
 import { createImageReviewSources } from './sources';
 
 const visible = ref(false);

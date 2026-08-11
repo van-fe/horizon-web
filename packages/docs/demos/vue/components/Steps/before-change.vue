@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { $confirm } from '@aurora/horizon-web';
+import { $confirm } from '@aurora/horizon-web-vue';
 
 const current = ref(0);
 const status = ref('切换步骤前需要确认');

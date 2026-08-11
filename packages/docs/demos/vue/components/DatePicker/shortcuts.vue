@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { dayjs } from '@aurora/horizon-web';
-import type { HDatePickerShortcutsType } from '@aurora/horizon-web';
+import { dayjs } from '@aurora/horizon-web-vue';
+import type { HDatePickerShortcutsType } from '@aurora/horizon-web-vue';
 
 const reportingRange = ref([dayjs().subtract(1, 'week'), dayjs()]);
 const shortcuts: HDatePickerShortcutsType[] = [

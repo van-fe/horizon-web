@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { nextTick, ref } from 'vue';
-import type { HTableVisibleRange } from '@aurora/horizon-web';
+import type { HTableVisibleRange } from '@aurora/horizon-web-vue';
 
 const tableRef = ref<{
   scrollToIndex: (index: number) => void;

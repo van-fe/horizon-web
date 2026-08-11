@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { dayjs } from '@aurora/horizon-web';
+import { dayjs } from '@aurora/horizon-web-vue';
 
 const publishAt = ref(dayjs().add(1, 'day').hour(9).minute(30));
 const label = computed(() => `Publish · ${publishAt.value.format('MMM D, HH:mm')}`);

@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts" setup>
-import { $message } from '@aurora/horizon-web';
+import { $message } from '@aurora/horizon-web-vue';
 import { ref } from 'vue';
 
 const opened = ref(false);

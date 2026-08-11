@@ -1,5 +1,8 @@
 import { describe, expect, test } from 'vitest';
-import { HorizonWebPluginResolvers } from '../src';
+import {
+  HorizonWebPluginResolvers,
+  HorizonWebVitePluginStyleImportResolvers,
+} from '../src';
 import components from '../../api-generator/dist/components-dependencies.json';
 import directives from '../../api-generator/dist/directives-dependencies.json';
 
@@ -11,6 +14,7 @@ describe('unplugin-resolver', () => {
       const res = component.resolve(comp.name);
       expect(res).not.toBeUndefined();
       expect(res?.name).toEqual(comp.name);
+      expect(res?.from).toMatch(/^@aurora\/horizon-web-vue\//);
       expect(res?.from).toContain(comp.dirName);
       expect(res?.sideEffects).toEqual(
         expect.arrayContaining([expect.stringMatching(new RegExp(comp.dirName))]),
@@ -24,6 +28,7 @@ describe('unplugin-resolver', () => {
       const res = directive.resolve(dirName);
       expect(res).not.toBeUndefined();
       expect(res?.name).toEqual(dir.name);
+      expect(res?.from).toMatch(/^@aurora\/horizon-web-vue\//);
       expect(res?.from).toContain(dir.dirName);
       if (res?.sideEffects.length && res?.sideEffects.length > 3) {
         expect(res.sideEffects).toEqual(
@@ -121,5 +126,14 @@ describe('unplugin-resolver', () => {
 
     expect(componentWithoutStyle.resolve('HButton')?.sideEffects).toStrictEqual([]);
     expect(directiveWithoutStyle.resolve('Loading')?.sideEffects).toStrictEqual([]);
+  });
+
+  test('uses the Vue renderer package for Vite style imports', () => {
+    const resolver = HorizonWebVitePluginStyleImportResolvers();
+
+    expect(resolver.libraryName).toBe('@aurora/horizon-web-vue');
+    expect(resolver.resolveStyle('h-button')).toBe(
+      '@aurora/horizon-web-vue/es/components/Button/src/style/index.css',
+    );
   });
 });

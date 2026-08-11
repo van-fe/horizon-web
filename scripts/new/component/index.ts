@@ -6,7 +6,7 @@ import fs from 'fs';
 import chalk from 'chalk';
 
 function writeFiles(replacer: Record<string, string>) {
-  const mainDir = resolve(__dirname, '../../../packages/horizon-web/src/components', replacer.capitalName);
+  const mainDir = resolve(__dirname, '../../../packages/horizon-web-vue/src/components', replacer.capitalName);
 
   fs.mkdirSync(mainDir, { recursive: true });
 

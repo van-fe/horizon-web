@@ -7,7 +7,7 @@
     <h-typography block>
       标题帮助读者快速定位主题，正文承载主要信息，辅助文字则用于解释时间、来源或补充条件。
     </h-typography>
-    <h-typography code>pnpm add @aurora/horizon-web</h-typography>
+    <h-typography code>pnpm add @aurora/horizon-web-vue</h-typography>
 
     <div class="tone-list">
       <h-typography type="success">配置已保存</h-typography>

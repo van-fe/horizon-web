@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { $notify, $message } from '@aurora/horizon-web';
+import { $notify, $message } from '@aurora/horizon-web-vue';
 
 export default defineComponent({
   setup() {

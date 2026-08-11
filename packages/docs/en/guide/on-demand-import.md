@@ -23,8 +23,8 @@ $ bun add unplugin-vue-components @aurora/horizon-web-unplugin-resolver -D
 ```ts {3,4,7}
 import { createApp } from 'vue';
 import App from './App.vue';
-import { HorizonWebProvides } from '@aurora/horizon-web';
-import '@aurora/horizon-web/es/styles/base.css';
+import { HorizonWebProvides } from '@aurora/horizon-web-vue';
+import '@aurora/horizon-web-vue/es/styles/base.css';
 
 createApp(App)
   .use(HorizonWebProvides)

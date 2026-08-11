@@ -5,7 +5,7 @@ import watchDemos from './watchDemos';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import path from 'path';
 import { liveDemoPlugin } from './liveDemoPlugin';
-import { scssPreprocessorOptions } from '../../../horizon-web/build/sass-options';
+import { scssPreprocessorOptions } from '../../../horizon-web-vue/build/sass-options';
 import { legacyVueDocsRedirectPlugin } from './legacyVueDocsRedirectPlugin';
 import { reactDocsTsxPlugin } from './reactDocsTsxPlugin';
 
@@ -65,8 +65,8 @@ export default defineConfig({
           replacement: 'vue/dist/vue.esm-bundler.js',
         },
         {
-          find: /^@aurora\/horizon-web$/,
-          replacement: path.join(__dirname, '../../../../node_modules/@aurora/horizon-web/src/'),
+          find: /^@aurora\/horizon-web-vue$/,
+          replacement: path.join(__dirname, '../../../../node_modules/@aurora/horizon-web-vue/src/'),
         },
         {
           find: /^@aurora\/horizon-web-react$/,
@@ -113,26 +113,26 @@ export default defineConfig({
         })),
         {
           find: /^horizon-web-package\//,
-          replacement: path.join(__dirname, '../../../../node_modules/@aurora/horizon-web/'),
+          replacement: path.join(__dirname, '../../../../node_modules/@aurora/horizon-web-vue/'),
         },
         {
           // Demos are compiled from the docs workspace, while these runtime
           // dependencies are declared by the component package.
           find: /^dayjs$/,
-          replacement: path.join(__dirname, '../../../../packages/horizon-web/node_modules/dayjs'),
+          replacement: path.join(__dirname, '../../../../packages/horizon-web-vue/node_modules/dayjs'),
         },
         {
           find: /^decimal\.js$/,
           replacement: path.join(
             __dirname,
-            '../../../../packages/horizon-web/node_modules/decimal.js',
+            '../../../../packages/horizon-web-vue/node_modules/decimal.js',
           ),
         },
         {
           find: /^lodash-es$/,
           replacement: path.join(
             __dirname,
-            '../../../../packages/horizon-web/node_modules/lodash-es/lodash.js',
+            '../../../../packages/horizon-web-vue/node_modules/lodash-es/lodash.js',
           ),
         },
       ],

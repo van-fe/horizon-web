@@ -17,7 +17,7 @@ const { confirm, tag } = argv;
 
 // the packages of need to be published
 const publishPackages = [
-  'horizon-web',
+  'horizon-web-vue',
   'utils',
   'locale',
   'locale-vue',
@@ -115,7 +115,7 @@ async function ensureVersion() {
   // empty dir
   shell.rm('-rf', '../dist/*');
 
-  cloneBrowserBuildFileToDist(versions['horizon-web']);
+  cloneBrowserBuildFileToDist(versions['horizon-web-vue']);
   cloneBrowserBuildFileToDist(tag || 'latest');
 
   // publish doc to fx manually

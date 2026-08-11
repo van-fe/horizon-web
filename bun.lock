@@ -10,7 +10,7 @@
       },
       "devDependencies": {
         "@aurora/eslint-plugin-horizon-web": "workspace:*",
-        "@aurora/horizon-web": "workspace:*",
+        "@aurora/horizon-web-vue": "workspace:*",
         "@aurora/icon": "workspace:*",
         "@aurora/locale": "workspace:*",
         "@aurora/locale-vue": "workspace:*",
@@ -156,8 +156,8 @@
       "name": "@aurora/eslint-plugin-horizon-web",
       "version": "1.0.0",
     },
-    "packages/horizon-web": {
-      "name": "@aurora/horizon-web",
+    "packages/horizon-web-vue": {
+      "name": "@aurora/horizon-web-vue",
       "version": "1.0.0",
       "dependencies": {
         "@aurora/colors": "workspace:*",
@@ -283,7 +283,7 @@
       "name": "@aurora/upload-adapters",
       "version": "1.0.0",
       "devDependencies": {
-        "@aurora/horizon-web": "workspace:*",
+        "@aurora/horizon-web-vue": "workspace:*",
       },
     },
     "packages/utils": {
@@ -368,7 +368,7 @@
 
     "@aurora/eslint-plugin-horizon-web": ["@aurora/eslint-plugin-horizon-web@workspace:packages/eslint-plugin-horizon-web"],
 
-    "@aurora/horizon-web": ["@aurora/horizon-web@workspace:packages/horizon-web"],
+    "@aurora/horizon-web-vue": ["@aurora/horizon-web-vue@workspace:packages/horizon-web-vue"],
 
     "@aurora/horizon-web-core": ["@aurora/horizon-web-core@workspace:packages/horizon-web-core"],
 

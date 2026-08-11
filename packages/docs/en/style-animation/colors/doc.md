@@ -19,7 +19,7 @@ The `horizon-web` module exports an object called `colors`. For the theme colors
 
 ## Demo
 ```js
-import { colors } from '@aurora/horizon-web';
+import { colors } from '@aurora/horizon-web-vue';
 colors.gray; // ['#FFFFFF', '#F4F5F7', '#E9EAEC', '#DFE1E5', '#CED0D6', '#929398', '#6C6E73', '#54565A', '#242629', '#000000']
 colors.white; // #FFFFFF
 colors.red[5]; // #E83030

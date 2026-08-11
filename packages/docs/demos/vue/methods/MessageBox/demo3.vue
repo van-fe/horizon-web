@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { $alert, $confirm } from '@aurora/horizon-web';
+import { $alert, $confirm } from '@aurora/horizon-web-vue';
 export default defineComponent({
   setup() {
     const showAlert = () => {

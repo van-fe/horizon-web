@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { HCascaderExtendOption } from '@aurora/horizon-web';
+import type { HCascaderExtendOption } from '@aurora/horizon-web-vue';
 import { ref } from 'vue';
 import { workspaceOptions } from './options';
 

@@ -10,8 +10,8 @@ Usually we use horizon-web in the following way:
 
 ```ts
 import { createApp } from 'vue';
-import { HorizonWeb } from '@aurora/horizon-web';
-import '@aurora/horizon-web/dist/style.css'; 
+import { HorizonWeb } from '@aurora/horizon-web-vue';
+import '@aurora/horizon-web-vue/dist/style.css';
 
 import App from './App.vue';
 
@@ -28,9 +28,9 @@ Based on the tree-shaking capability of es module, you can easily achieve on-dem
 
 ```javascript
 import { createApp } from 'vue';
-import { HButton, HInput } from 'packages/horizon-web/src/index';
-import 'packages/horizon-web/es/components/Button/src/style/index.css';
-import 'packages/horizon-web/es/components/Input/src/style/index.css';
+import { HButton, HInput } from 'packages/horizon-web-vue/src/index';
+import 'packages/horizon-web-vue/es/components/Button/src/style/index.css';
+import 'packages/horizon-web-vue/es/components/Input/src/style/index.css';
 
 import App from './App.vue';
 
@@ -70,7 +70,7 @@ After configuring as above, you can achieve automatic on-demand import. Consider
 ```ts
 // main.ts
 import { createApp } from 'vue';
-import { HorizonWebProvides } from '@aurora/horizon-web';
+import { HorizonWebProvides } from '@aurora/horizon-web-vue';
 import App from './App.vue';
 
 const app = createApp(App).use(HorizonWebProvides);

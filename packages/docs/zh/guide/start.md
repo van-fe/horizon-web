@@ -13,13 +13,13 @@
 
 ::: code-group
 ```sh [bun]
-$ bun add @aurora/horizon-web
+$ bun add @aurora/horizon-web-vue
 ```
 ```sh [yarn]
-$ yarn add @aurora/horizon-web
+$ yarn add @aurora/horizon-web-vue
 ```
 ```sh [npm]
-$ npm install @aurora/horizon-web
+$ npm install @aurora/horizon-web-vue
 ```
 :::
 
@@ -30,7 +30,7 @@ $ npm install @aurora/horizon-web
 
 - **样式文件**
 ```html
-<link rel="stylesheet" href="//unpkg.com/@aurora/horizon-web/es/styles/index.css" />
+<link rel="stylesheet" href="//unpkg.com/@aurora/horizon-web-vue/es/styles/index.css" />
 ```
 
 - **脚本文件**
@@ -39,13 +39,13 @@ $ npm install @aurora/horizon-web
 <!-- Import Vue 3 -->
 <script src="//cdn.jsdelivr.net/npm/vue@3"></script>
 <!-- Import component library -->
-<script src="//unpkg.com/@aurora/horizon-web/dist/horizon-web-browser.iife.js"></script>
+<script src="//unpkg.com/@aurora/horizon-web-vue/dist/horizon-web-browser.iife.js"></script>
 ```
 ```html [UMD]
 <!-- Import Vue 3 -->
 <script src="//cdn.jsdelivr.net/npm/vue@3"></script>
 <!-- Import component library -->
-<script src="//unpkg.com/@aurora/horizon-web/dist/horizon-web-browser.umd.js"></script>
+<script src="//unpkg.com/@aurora/horizon-web-vue/dist/horizon-web-browser.umd.js"></script>
 ```
 :::
 
@@ -60,9 +60,9 @@ $ npm install @aurora/horizon-web
 ```ts
 import { createApp } from 'vue';
 import App from './App.vue';
-import HorizonWeb from '@aurora/horizon-web';
-import '@aurora/horizon-web/es/styles/index.css';
-// import '@aurora/horizon-web/es/styles/index.scss'; // for scss
+import HorizonWeb from '@aurora/horizon-web-vue';
+import '@aurora/horizon-web-vue/es/styles/index.css';
+// import '@aurora/horizon-web-vue/es/styles/index.scss'; // for scss
 
 createApp(App)
   .use(HorizonWeb)
@@ -77,11 +77,11 @@ createApp(App)
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <link rel="stylesheet" href="//unpkg.com/@aurora/horizon-web/es/styles/index.css" />
+    <link rel="stylesheet" href="//unpkg.com/@aurora/horizon-web-vue/es/styles/index.css" />
     <!-- Import Vue 3 -->
     <script src="//cdn.jsdelivr.net/npm/vue@3"></script>
     <!-- Import component library -->
-    <script src="//unpkg.com/@aurora/horizon-web/dist/horizon-web-browser.iife.js"></script>
+    <script src="//unpkg.com/@aurora/horizon-web-vue/dist/horizon-web-browser.iife.js"></script>
     <title>Horizon Web demo</title>
   </head>
   <body>

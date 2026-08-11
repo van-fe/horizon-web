@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import { $message } from '@aurora/horizon-web';
+import { $message } from '@aurora/horizon-web-vue';
 
 const open = () => {
   $message({ message: 'This message will automatically close after 3 seconds.' });

@@ -9,7 +9,7 @@ HorizonWeb 提供了全局配置国际化的配置。
 ```ts
 import App from './App.vue';
 import { createApp } from 'vue';
-import horizon-web, { defineOption } from '@aurora/horizon-web';
+import horizon-web, { defineOption } from '@aurora/horizon-web-vue';
 import { LocaleSupportLang } from "@aurora/locale-vue";
 
 createApp(App)
@@ -29,7 +29,7 @@ createApp(App)
 ```ts
 import App from './App.vue';
 import { createApp } from 'vue';
-import { HorizonWebProvides, defineOption } from '@aurora/horizon-web';
+import { HorizonWebProvides, defineOption } from '@aurora/horizon-web-vue';
 import { LocaleSupportLang } from "@aurora/locale-vue";
 
 createApp(App)
@@ -59,7 +59,7 @@ HorizonWeb 还提供了一个 Vue 组件 [Application](../../vue/components/Appl
 如果业务中有需要使用自定义的语言包，可以配置如下：
 
 ```ts
-import { HorizonWebProvides, defineOption } from "@aurora/horizon-web";
+import { HorizonWebProvides, defineOption } from "@aurora/horizon-web-vue";
 import { LocaleSupportLang } from "@aurora/locale-vue";
 import En from "your-En-dictionary-file-path";
 import ZhCN from "your-ZhCn-dictionary-file-path";
@@ -103,7 +103,7 @@ declare module '@vue/runtime-core' {
 ```ts
 import { defineComponent } from 'vue';
 import { localeInjectKey, defaultLocale } from '~/provides/localable'; // for horizon-web developer
-// import { localeInjectKey } from '@aurora/horizon-web'; // for third-part developer
+// import { localeInjectKey } from '@aurora/horizon-web-vue'; // for third-part developer
 import { inject } from '@vue/runtime-core';
 
 export default defineComponent({

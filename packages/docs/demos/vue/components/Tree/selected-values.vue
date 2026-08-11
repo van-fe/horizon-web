@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { HTreeNodeData } from '@aurora/horizon-web';
+import type { HTreeNodeData } from '@aurora/horizon-web-vue';
 
 const selectedValues = ref<Array<string | number>>(['color', 'typography']);
 const treeData: HTreeNodeData[] = [

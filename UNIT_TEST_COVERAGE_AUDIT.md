@@ -1,7 +1,7 @@
 # Horizon Web 单元测试覆盖审计与补测计划
 
 > 审计日期：2026-08-11
-> 范围：`packages/horizon-web/src/components` 下 87 个一级组件包
+> 范围：`packages/horizon-web-vue/src/components` 下 87 个一级组件包
 > 原则：测试公开行为和用户可观察结果，不以私有实现或快照数量代替行为覆盖。
 
 ## 当前实施结果

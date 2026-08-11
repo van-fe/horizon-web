@@ -24,7 +24,7 @@ export default function (
 
   try {
     fs.rmdirSync(resolve(styleRoot, 'theme-types'));
-  } catch (e) {
+  } catch {
     // ignore
   }
 

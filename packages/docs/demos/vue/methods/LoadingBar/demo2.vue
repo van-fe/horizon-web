@@ -4,7 +4,7 @@
 
 <script lang="ts" setup>
 import { onUnmounted } from 'vue';
-import { $loadingBar } from '@aurora/horizon-web';
+import { $loadingBar } from '@aurora/horizon-web-vue';
 $loadingBar.config({
   height: 2,
 });

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { dayjs } from '@aurora/horizon-web';
-import type { DatePickerProps } from '@aurora/horizon-web';
+import { dayjs } from '@aurora/horizon-web-vue';
+import type { DatePickerProps } from '@aurora/horizon-web-vue';
 
 const reviewWindow = ref([dayjs().add(1, 'day'), dayjs().add(3, 'day')]);
 const formatTriggerText: DatePickerProps['formatTriggerText'] = days => {

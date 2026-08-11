@@ -18,23 +18,23 @@ packages/utils/plugins/*.js
 packages/utils/plugins/*.js.map
 
 # horizon-web
-packages/horizon-web/src/styles/colors.ts
-packages/horizon-web/src/styles/theme-config.ts
-packages/horizon-web/src/styles/theme-types.ts
-packages/horizon-web/src/styles/basicTokens.ts
-packages/horizon-web/src/styles/elementTokens.ts
-packages/horizon-web/json/
-packages/horizon-web/coverage/
-packages/horizon-web/src/components/emits.ts
-packages/horizon-web/src/components/slots.ts
-packages/horizon-web/src/components/exposes.ts
-packages/horizon-web/src/components/globalComponents.ts
-packages/horizon-web/src/components/globalTypes.ts
-packages/horizon-web/src/components/index.ts
-packages/horizon-web/src/components/props.ts
-packages/horizon-web/src/directives/index.ts
-packages/horizon-web/src/methods/index.ts
-packages/horizon-web/build/**/*.js
+packages/horizon-web-vue/src/styles/colors.ts
+packages/horizon-web-vue/src/styles/theme-config.ts
+packages/horizon-web-vue/src/styles/theme-types.ts
+packages/horizon-web-vue/src/styles/basicTokens.ts
+packages/horizon-web-vue/src/styles/elementTokens.ts
+packages/horizon-web-vue/json/
+packages/horizon-web-vue/coverage/
+packages/horizon-web-vue/src/components/emits.ts
+packages/horizon-web-vue/src/components/slots.ts
+packages/horizon-web-vue/src/components/exposes.ts
+packages/horizon-web-vue/src/components/globalComponents.ts
+packages/horizon-web-vue/src/components/globalTypes.ts
+packages/horizon-web-vue/src/components/index.ts
+packages/horizon-web-vue/src/components/props.ts
+packages/horizon-web-vue/src/directives/index.ts
+packages/horizon-web-vue/src/methods/index.ts
+packages/horizon-web-vue/build/**/*.js
 *.temp.*
 
 # docs
@@ -43,7 +43,7 @@ packages/docs/.vitepress/cache
 .vscode
 
 # test artifacts
-packages/horizon-web/.vitest-attachments/
-packages/horizon-web/coverage*/
-packages/horizon-web/packages/horizon-web/coverage*/
-packages/horizon-web/src/components/**/__screenshots__/
+packages/horizon-web-vue/.vitest-attachments/
+packages/horizon-web-vue/coverage*/
+packages/horizon-web-vue/packages/horizon-web-vue/coverage*/
+packages/horizon-web-vue/src/components/**/__screenshots__/

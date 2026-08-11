@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import { dayjs } from '@aurora/horizon-web';
+import { dayjs } from '@aurora/horizon-web-vue';
 
 type ValueMode = 'dayjs' | 'string' | 'unix';
 

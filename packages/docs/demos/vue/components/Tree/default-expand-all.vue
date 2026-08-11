@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { HTreeNodeData } from '@aurora/horizon-web';
+import type { HTreeNodeData } from '@aurora/horizon-web-vue';
 
 const treeData: HTreeNodeData[] = [
   {

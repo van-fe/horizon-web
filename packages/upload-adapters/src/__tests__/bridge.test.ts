@@ -1,5 +1,5 @@
 import { describe, expect, test, vi } from 'vitest';
-import type { HUploadMultipartSetting } from '../../../horizon-web/src/components/Upload/src/composables/useMultipartUpload';
+import type { HUploadMultipartSetting } from '../../../horizon-web-vue/src/components/Upload/src/composables/useMultipartUpload';
 import {
   createCheckpointKey,
   createMemoryCheckpointStore,

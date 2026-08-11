@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { HUploadFileType, HUploadUserFile } from '@aurora/horizon-web';
+import type { HUploadFileType, HUploadUserFile } from '@aurora/horizon-web-vue';
 import { onBeforeUnmount, ref } from 'vue';
 import { createMockUploader, resolveLocalUpload } from './mockUpload';
 

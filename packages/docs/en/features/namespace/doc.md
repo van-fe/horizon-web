@@ -21,7 +21,7 @@ If you don't use `HApplication`, you can use the `setNamespace` method to modify
 You need to ensure that `setNamespace` runs before calling `createApp`.
 
 ```ts
-import { setNamespace } from '@aurora/horizon-web';
+import { setNamespace } from '@aurora/horizon-web-vue';
 
 setNamespace('x');
 
@@ -36,7 +36,7 @@ setNamespace('x');
 Create an `scss` file in your project: `For example: (styles/horizon-web.scss)`:
 
 ```scss
-@forward '@aurora/horizon-web/es/styles/index.scss' with (
+@forward '@aurora/horizon-web-vue/es/styles/index.scss' with (
   $namespace: 'x',
 );
 
@@ -62,7 +62,7 @@ If you also use `table`, follow the `Full Import` above, keep the `table` config
 
 
 ```scss
-@forward '@aurora/horizon-web/es/styles/mixins/config.scss' with (
+@forward '@aurora/horizon-web-vue/es/styles/mixins/config.scss' with (
   $namespace: 'x',
 );
 ```
@@ -125,12 +125,12 @@ module.exports = {
 
 ## On-Demand Import + SCSS Variables
 
-On-demand import is only supported by `@aurora/horizon-web`. `@aurora/horizon-web-table` uses a full style import.
+On-demand import is only supported by `@aurora/horizon-web-vue`. `@aurora/horizon-web-table` uses a full style import.
 
 The difference from the above **Set SCSS Variables** is that the content of `styles/horizon-web.scss` is changed to:
 
 ```scss
-@forward '@aurora/horizon-web/es/styles/mixins/config.scss' with (
+@forward '@aurora/horizon-web-vue/es/styles/mixins/config.scss' with (
   $namespace: 'x',
 );
 

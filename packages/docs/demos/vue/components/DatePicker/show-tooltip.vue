@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { dayjs } from '@aurora/horizon-web';
+import { dayjs } from '@aurora/horizon-web-vue';
 import type { Dayjs } from 'dayjs';
 
 const appointment = ref(dayjs().add(1, 'day').hour(10).minute(30));

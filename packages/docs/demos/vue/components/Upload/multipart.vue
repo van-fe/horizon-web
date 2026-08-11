@@ -40,7 +40,7 @@ import type {
   HUploadFileType,
   HUploadMultipartSetting,
   HUploadRawFileType,
-} from '@aurora/horizon-web';
+} from '@aurora/horizon-web-vue';
 import { onBeforeUnmount, reactive, ref } from 'vue';
 
 interface UploadDemoExpose {

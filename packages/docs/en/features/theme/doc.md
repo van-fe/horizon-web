@@ -11,7 +11,7 @@ Horizon Web provides a way to dynamically modify theme colors. See the following
 Horizon Web internally provides a theme switching tool. In `ESModule`, you can import this tool in the following way:
 
 ```typescript
-import { $themes } from '@aurora/horizon-web';
+import { $themes } from '@aurora/horizon-web-vue';
 ```
 
 The `$themes` tool object provides type support based on `typescript`. Combined with `typescript`, it can make it more convenient for you to set the currently supported `css` variables
@@ -51,7 +51,7 @@ $themes.remove('#app')
 ## css variables
 Because there are too many configurable variables, they are not printed here
 
-Configurable css variables can refer to [here](https://git.nevint.com/horizon-web/horizon-web/-/tree/master/packages/horizon-web/src/styles/element)
+Configurable css variables can refer to [here](https://git.nevint.com/horizon-web/horizon-web/-/tree/master/packages/horizon-web-vue/src/styles/element)
 
 
 

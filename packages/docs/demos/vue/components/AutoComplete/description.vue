@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { HAutoCompleteOption } from '@aurora/horizon-web';
+import type { HAutoCompleteOption } from '@aurora/horizon-web-vue';
 
 const position = ref<'right' | 'bottom'>('right');
 const value = ref('');

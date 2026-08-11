@@ -25,7 +25,7 @@ Keep all Vue/React renderer-splitting work integrated on `feature/vue-react-supp
 
 - Put renderer-agnostic behavior and state machines in `@aurora/core`.
 - Put shared tokens, styles, namespace utilities, and visual foundations in `@aurora/theme`.
-- Keep Vue rendering and Vue-only APIs in `@aurora/horizon-web`.
+- Keep Vue rendering and Vue-only APIs in `@aurora/horizon-web-vue`.
 - Keep React rendering, hooks, providers, React props, callbacks, children, and refs in `@aurora/horizon-web-react`.
 - Do not import Vue from shared core/theme or React packages, and do not import React from Vue packages.
 - Reuse common behavior through typed contracts and test vectors rather than one renderer wrapping the other.

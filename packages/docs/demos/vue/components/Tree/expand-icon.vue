@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, h, ref } from 'vue';
 import { IconAdd, IconArrowRight, IconReduce } from '@aurora/icon';
-import type { HTreeNodeData } from '@aurora/horizon-web';
+import type { HTreeNodeData } from '@aurora/horizon-web-vue';
 
 type IconMode = 'rotate' | 'explicit';
 

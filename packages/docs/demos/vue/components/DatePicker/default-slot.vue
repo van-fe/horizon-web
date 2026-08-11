@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { dayjs } from '@aurora/horizon-web';
+import { dayjs } from '@aurora/horizon-web-vue';
 import type { Dayjs } from 'dayjs';
 
 const selectedDate = ref(dayjs().date(14));

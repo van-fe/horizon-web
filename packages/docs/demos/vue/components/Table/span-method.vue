@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { HTableSpanMethodType } from '@aurora/horizon-web';
+import type { HTableSpanMethodType } from '@aurora/horizon-web-vue';
 
 const lineItems = [
   { id: 1, order: 'ORD-4821', item: 'Team plan', quantity: 24, state: 'Approved' },

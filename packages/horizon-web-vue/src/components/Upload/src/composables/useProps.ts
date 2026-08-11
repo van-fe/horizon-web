@@ -370,7 +370,7 @@ export const useUploadProps = declarePropType({
   },
   /**
    * 覆盖默认的上传函数
-   * 需参考 [uploadFileDirectly](https://git.nevint.com/horizon-web/horizon-web/-/blob/master/packages/horizon-web/src/components/Upload/src/utils/UploadHelper.ts) 的行为
+   * 需参考 [uploadFileDirectly](https://git.nevint.com/horizon-web/horizon-web/-/blob/master/packages/horizon-web-vue/src/components/Upload/src/utils/UploadHelper.ts) 的行为
     * @en Configuration for http request.
    */
   httpRequest: {

@@ -163,7 +163,7 @@ flowchart LR
 | PKG-002 | Done | 新建 `@aurora/horizon-web-core`，首批抽出 SSR 安全的 browser detection 与 body scroll lock |
 | PKG-003 | Done | 新建统一的 `@aurora/theme`，提供 namespace、class contract、Token 展平与 CSS variable 输出骨架 |
 | PKG-004 | Done | 新建 `@aurora/horizon-web-react`，完成 Provider、context/hook、React 18/19 peer range 与 SSR smoke test |
-| PKG-005 | Done | 保留 `@aurora/horizon-web` 作为 Vue 兼容入口，本期不移动 87 个组件；后续迁移目标固定为 `@aurora/horizon-web-vue` |
+| PKG-005 | Done | Vue 实现已迁移到 `packages/horizon-web-vue` 并更名为 `@aurora/horizon-web-vue`；旧 `@aurora/horizon-web` 兼容转发包仍按 PKG-008 单独实现 |
 | UTIL-002 | Done | `@aurora/utils` 通过兼容转发消费 `core/theme/web-core`，现有 Vue 导入路径保持有效 |
 | QA-002 | Done | 新增 foundation package boundary scan，并接入根测试命令和 Pages 构建依赖顺序 |
 
