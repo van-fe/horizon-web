@@ -24,7 +24,7 @@ export default defineComponent({
   exposes: useAffixExposes,
   setup(
     props: AffixProps,
-    { slots, expose, attrs }: HorizonWebSetupContext<AffixEmits, AffixSlots, AffixExposes>,
+    { slots, expose, attrs, emit }: HorizonWebSetupContext<AffixEmits, AffixSlots, AffixExposes>,
   ) {
     const classHelper = new ComponentClassBlock('affix');
 
@@ -39,7 +39,13 @@ export default defineComponent({
       placeholderRef,
       placeholderStyle,
       updatePosition,
-    } = useAffixPosition({ target, position, offset, zIndex });
+    } = useAffixPosition({
+      target,
+      position,
+      offset,
+      zIndex,
+      onChange: affixed => emit('change', affixed),
+    });
 
     expose({
       updatePosition,

@@ -39,8 +39,9 @@ describe('Affix.tsx', () => {
 
   test('affixes to the viewport top with the requested offset, width, and z-index', async () => {
     mockElementRect(createRect({ top: -20, bottom: 20, left: 18, width: 240 }));
+    const onChange = vi.fn();
     const wrapper = mount(() => (
-      <HAffix offset={12} zIndex={123}>
+      <HAffix offset={12} zIndex={123} onChange={onChange}>
         toolbar
       </HAffix>
     ));
@@ -53,6 +54,7 @@ describe('Affix.tsx', () => {
     expect(style.width).toBe('240px');
     expect(style.zIndex).toBe('123');
     expect(wrapper.find('[aria-hidden="true"]').exists()).toBe(true);
+    expect(onChange).toHaveBeenCalledWith(true);
   });
 
   test('uses the viewport height for the default bottom boundary', async () => {

@@ -1,0 +1,5 @@
+@use '../../mixins';
+
+@include mixins.b('affix') {
+  display: block;
+}

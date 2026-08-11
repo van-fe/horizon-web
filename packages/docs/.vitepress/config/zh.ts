@@ -34,6 +34,7 @@ const reactSidebar = [
       { text: 'Drawer 抽屉', link: 'components/Drawer' },
       { text: 'FloatButton 悬浮按钮', link: 'components/FloatButton' },
       { text: 'Backtop 回到顶部', link: 'components/Backtop' },
+      { text: 'Affix 固钉', link: 'components/Affix' },
     ],
   },
   {

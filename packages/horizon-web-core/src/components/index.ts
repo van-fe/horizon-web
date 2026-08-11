@@ -1,3 +1,4 @@
+export * from './Affix';
 export * from './Backtop';
 export * from './Breadcrumb';
 export * from './Checkbox';

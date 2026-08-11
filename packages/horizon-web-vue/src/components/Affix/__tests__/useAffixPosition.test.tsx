@@ -136,6 +136,7 @@ describe('useAffixPosition', () => {
     expect(animationFrames).not.toHaveLength(0);
     animationFrames.shift()?.(0);
     await nextTick();
+    animationFrames.shift()?.(16);
     await nextTick();
 
     expect((wrapper.find('[data-content]').element as HTMLElement).style.width).toBe('320px');

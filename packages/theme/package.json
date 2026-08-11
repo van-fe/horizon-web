@@ -30,6 +30,8 @@
     },
     "./styles/alert": "./styles/components/alert/index.scss",
     "./styles/alert-variables": "./styles/components/alert/variables.scss",
+    "./styles/affix": "./styles/components/affix/index.scss",
+    "./styles/affix-variables": "./styles/components/affix/variables.scss",
     "./styles/avatar": "./styles/components/avatar/index.scss",
     "./styles/avatar-variables": "./styles/components/avatar/variables.scss",
     "./styles/backtop": "./styles/components/backtop/index.scss",

@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {
+  affixManifest,
   adaptManifestFields,
   alertManifest,
   avatarManifest,
@@ -53,6 +54,7 @@ import {
 import type { ManifestFieldAdaptation } from '../packages/core/src';
 
 const manifests = [
+  affixManifest,
   alertManifest,
   avatarManifest,
   backtopManifest,
@@ -108,6 +110,7 @@ interface RendererApiAdaptation {
 }
 
 const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
+  Affix: { regions: { rename: { content: 'default' } } },
   Alert: { regions: { rename: { content: 'default' } } },
   Avatar: {
     props: { rename: { fallbackSrc: 'default' } },

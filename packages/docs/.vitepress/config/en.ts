@@ -34,6 +34,7 @@ const reactSidebar = [
       { text: 'Drawer', link: 'components/Drawer' },
       { text: 'FloatButton', link: 'components/FloatButton' },
       { text: 'Backtop', link: 'components/Backtop' },
+      { text: 'Affix', link: 'components/Affix' },
     ],
   },
   {

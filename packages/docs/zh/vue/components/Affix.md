@@ -27,3 +27,7 @@ Affix 会自动监听目标容器及其外层滚动，并在窗口或目标容�
 设置 `position="bottom"` 后，可配合 `offset` 构建始终可见的提交或保存操作。未提供 `target` 时使用窗口底部，提供目标容器时则限制在该容器边界内。
 
 :::demo vue/components/Affix/bottom.vue :::
+
+## API
+
+属性包括 `offset`（默认 `0`）、`position`（`top` 或 `bottom`）、`target`（选择器或元素）和 `z-index`。默认插槽承载固定内容，`change` 返回状态变化，模板 ref 提供 `updatePosition()`。

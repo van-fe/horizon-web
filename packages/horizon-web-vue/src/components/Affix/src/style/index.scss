@@ -1,5 +1,1 @@
-@use '../../../../styles/mixins';
-
-@include mixins.b('affix') {
-  // nothing
-}
+@use 'pkg:@aurora/theme/styles/affix';

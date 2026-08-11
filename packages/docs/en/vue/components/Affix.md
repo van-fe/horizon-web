@@ -26,3 +26,7 @@ Affix automatically responds to scrolling in the target and its outer containers
 Set `position="bottom"` and combine it with `offset` for persistent submit or save actions. Without `target`, Affix uses the viewport bottom; with a target container, it stays within that container boundary.
 
 :::demo vue/components/Affix/bottom.vue :::
+
+## API
+
+Props are `offset` (`0`), `position` (`top` or `bottom`), `target` (selector or element), and `z-index`. The default slot contains the affixed content, `change` reports state changes, and a template ref exposes `updatePosition()`.
