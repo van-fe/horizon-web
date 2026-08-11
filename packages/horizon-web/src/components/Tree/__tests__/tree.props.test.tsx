@@ -20,6 +20,11 @@ import HCheckbox from '../../Checkbox';
 import { sleep } from '~/utils/tools';
 import HRadio from '../../Radio';
 import { SORTABLE_MOTION_FLIP_OPTIONS } from '~/utils/useSortableMotion';
+import TreeHelper from '~/utils/useTree';
+import { transformUuid } from '../src/utils/config';
+import HVirtualScroller from '../../VirtualScroller/src/VirtualScroller';
+import HTooltip from '../../Tooltip/src/Tooltip';
+import { useTreeItemProps } from '../src/composables/useProps';
 
 const treeClassHelper = new ComponentClassBlock('tree');
 const treeItemClassHelper = new ComponentClassBlock('tree-item');
@@ -38,6 +43,54 @@ const createRect = (top: number, height = 32): DOMRect =>
   }) as DOMRect;
 
 describe('Tree.tsx props', () => {
+  test('uses an external treeHelper and forwards virtual/tooltip/drag/line contracts', async () => {
+    const externalData: HTreeData[] = [
+      {
+        value: 'parent',
+        label: 'External parent',
+        children: [
+          { value: 'child', label: 'External child', draggable: false },
+          { value: 'leaf', label: 'External leaf', isLeaf: true },
+        ],
+      },
+    ];
+    const treeHelper = new TreeHelper<HTreeData, HTreeExtendsData>(
+      externalData,
+      {},
+      transformUuid,
+    );
+    const { wrapper, element } = await createInstance({
+      treeHelper,
+      filterValue: 'External',
+      useVirtualScroll: true,
+      height: 160,
+      virtualScrollBuffer: 77,
+      expandWrapperByChildren: true,
+      isDefaultExpandAll: true,
+      tooltip: true,
+      tooltipShowAfter: 11,
+      tooltipHideAfter: 13,
+      draggable: true,
+      draggableIcon: IconAdd,
+      undraggableIcon: IconReduce,
+      draggableIconAlwaysVisible: true,
+      dragToLeaf: false,
+      showLine: true,
+    });
+    expect(element.text()).toContain('External parent');
+    const scroller = wrapper.getComponent(HVirtualScroller);
+    expect(scroller.props()).toMatchObject({ buffer: 77, expandWrapperByChildren: true });
+    const tooltip = wrapper.findComponent(HTooltip);
+    expect(tooltip.props()).toMatchObject({ showAfter: 11, hideAfter: 13 });
+    expect(wrapper.findComponent(IconAdd).exists()).toBe(true);
+    expect(wrapper.findComponent(IconReduce).exists()).toBe(true);
+    expect(
+      wrapper.findAll('.h-tree-item__draggable-icon.is-always-visible').length,
+    ).toBeGreaterThanOrEqual(2);
+    expect(wrapper.find('.h-tree-item__parent-shown-line').exists()).toBe(true);
+    expect(useTreeItemProps.shadow.default).toBe(false);
+  });
+
   test('size', async () => {
     const size = ref<TreeProps['size']>();
 
@@ -829,11 +882,16 @@ describe('Tree.tsx props', () => {
 
     const handler = guide.find(`.${treeItemClassHelper.e('draggable-icon')}`);
 
-    await handler.trigger('pointerdown', { button: 0, clientY: 10 });
-    await handler.trigger('pointermove', { clientY: 34 });
+    handler.element.dispatchEvent(
+      new PointerEvent('pointerdown', { bubbles: true, button: 0, clientY: 10 }),
+    );
+    handler.element.dispatchEvent(
+      new PointerEvent('pointermove', { bubbles: true, clientY: 34 }),
+    );
+    await nextTick();
 
     expect(guide.classes()).toContain(treeItemClassHelper.is('dragging'));
-    expect(guide.attributes('style')).toContain('translate3d(0, 24px, 0)');
+    expect(guide.attributes('style')).toContain('translate3d(0px, 24px, 0px)');
   });
 
   test('drag root node behind sibling without losing it', async () => {
@@ -870,8 +928,13 @@ describe('Tree.tsx props', () => {
     const [source, target] = element.findAllComponents(HTreeItem);
     const handler = source.find(`.${treeItemClassHelper.e('draggable-icon')}`);
 
-    await handler.trigger('pointerdown', { button: 0, clientY: 10 });
-    await target.trigger('pointermove', { clientY: 44 });
+    handler.element.dispatchEvent(
+      new PointerEvent('pointerdown', { bubbles: true, button: 0, clientY: 10 }),
+    );
+    target.element.dispatchEvent(
+      new PointerEvent('pointermove', { bubbles: true, clientY: 44 }),
+    );
+    await nextTick();
 
     const siblingDropArea = element.find(
       `.${treeItemClassHelper.e('drag-over-wrap')}.${treeItemClassHelper.is('sibling')}`,
@@ -879,7 +942,7 @@ describe('Tree.tsx props', () => {
 
     expect(siblingDropArea.exists()).toBeTruthy();
 
-    await siblingDropArea.trigger('pointerup');
+    siblingDropArea.element.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
     await nextTick();
     await nextTick();
 
@@ -920,14 +983,19 @@ describe('Tree.tsx props', () => {
     const [source, target] = element.findAllComponents(HTreeItem);
     const handler = source.find(`.${treeItemClassHelper.e('draggable-icon')}`);
 
-    await handler.trigger('pointerdown', { button: 0, clientY: 10 });
-    await target.trigger('pointermove', { clientY: 44 });
+    handler.element.dispatchEvent(
+      new PointerEvent('pointerdown', { bubbles: true, button: 0, clientY: 10 }),
+    );
+    target.element.dispatchEvent(
+      new PointerEvent('pointermove', { bubbles: true, clientY: 44 }),
+    );
+    await nextTick();
 
     const siblingDropArea = element.find(
       `.${treeItemClassHelper.e('drag-over-wrap')}.${treeItemClassHelper.is('sibling')}`,
     );
 
-    await siblingDropArea.trigger('pointerup');
+    siblingDropArea.element.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
     await sleep();
     await nextTick();
 
@@ -959,8 +1027,13 @@ describe('Tree.tsx props', () => {
     const [source, target] = element.findAllComponents(HTreeItem);
     const handler = source.find(`.${treeItemClassHelper.e('draggable-icon')}`);
 
-    await handler.trigger('pointerdown', { button: 0, clientY: 10 });
-    await target.trigger('pointermove', { clientY: 44 });
+    handler.element.dispatchEvent(
+      new PointerEvent('pointerdown', { bubbles: true, button: 0, clientY: 10 }),
+    );
+    target.element.dispatchEvent(
+      new PointerEvent('pointermove', { bubbles: true, clientY: 44 }),
+    );
+    await nextTick();
 
     const childDropArea = element.find(
       `.${treeItemClassHelper.e('drag-over-wrap')}.${treeItemClassHelper.is('child')}`,
@@ -968,7 +1041,7 @@ describe('Tree.tsx props', () => {
 
     expect(childDropArea.exists()).toBeTruthy();
 
-    await childDropArea.trigger('pointerup');
+    childDropArea.element.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
     await nextTick();
 
     expect(treeData.value).toStrictEqual([
@@ -1048,19 +1121,29 @@ describe('Tree.tsx props', () => {
 
     const handler = guide.find(`.${treeItemClassHelper.e('draggable-icon')}`);
 
-    await handler.trigger('pointerdown', { button: 0, clientY: 10 });
-    await handler.trigger('pointermove', { clientY: 34 });
+    handler.element.dispatchEvent(
+      new PointerEvent('pointerdown', { bubbles: true, button: 0, clientY: 10 }),
+    );
+    handler.element.dispatchEvent(
+      new PointerEvent('pointermove', { bubbles: true, clientY: 34 }),
+    );
+    await nextTick();
 
     expect(guide.classes()).toContain(treeItemClassHelper.is('dragging'));
 
-    await handler.trigger('pointerup');
+    handler.element.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
 
     dragOnHandler.value = false;
 
     await nextTick();
 
-    await guide.trigger('pointerdown', { button: 0, clientY: 10 });
-    await guide.trigger('pointermove', { clientY: 34 });
+    guide.element.dispatchEvent(
+      new PointerEvent('pointerdown', { bubbles: true, button: 0, clientY: 10 }),
+    );
+    guide.element.dispatchEvent(
+      new PointerEvent('pointermove', { bubbles: true, clientY: 34 }),
+    );
+    await nextTick();
 
     expect(guide.classes()).toContain(treeItemClassHelper.is('dragging'));
   });

@@ -1,7 +1,7 @@
 import type { CSSProperties, ExtractPropTypes, PropType, StyleValue, VNode } from 'vue';
 import { declarePropType, isDefined, isNil } from '@aurora/utils';
-import { IconMaybeFalsyPropType, IconNullablePropType } from '~/utils/useIcon';
-import { IconArrowDown, IconLoadingLine, IconSearch } from '@aurora/icon';
+import { IconMaybeFalsyPropType, IconNullablePropType, IconPropType } from '~/utils/useIcon';
+import { IconArrowDown, IconCloseFilled, IconLoadingLine, IconSearch } from '@aurora/icon';
 import type { PopoverProps } from '~/components/Popover/src/composables/useProps';
 import type { ButtonProps } from '~/components/Button/src/composables/useProps';
 
@@ -166,6 +166,14 @@ export const usePickerProps = declarePropType({
   dropdownIcon: {
     type: IconMaybeFalsyPropType,
     default: IconArrowDown,
+  },
+  /**
+   * 清空图标
+   * @en Clear icon.
+   */
+  clearIcon: {
+    type: IconPropType,
+    default: IconCloseFilled,
   },
   /**
    * 下拉图标是否自动旋转

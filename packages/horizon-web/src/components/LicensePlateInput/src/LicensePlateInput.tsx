@@ -245,10 +245,9 @@ export default defineComponent({
             class={classHelper.e('keyboard')}
             role="group"
             aria-label={
-              props.keyboardAriaLabel ||
-              (keyboard.activeIndex.value === 0
-                ? labels.value.provinceLabel
-                : labels.value.keyboardLabel)
+              keyboard.activeIndex.value === 0
+                ? props.provinceAriaLabel || labels.value.provinceLabel
+                : props.keyboardAriaLabel || labels.value.keyboardLabel
             }
           >
             <div

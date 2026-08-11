@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import HVInfiniteScroll from '../index';
-import { describe, test, vi } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 import { ref } from 'vue';
 
 describe('v-infinite-scroll.tsx', () => {
@@ -10,7 +10,13 @@ describe('v-infinite-scroll.tsx', () => {
       onReachTop: vi.fn(),
     };
 
-    const list = ref<Date[]>([new Date(), new Date(), new Date()]);
+    const list = ref<Date[]>([
+      new Date(2026, 0, 1),
+      new Date(2026, 0, 2),
+      new Date(2026, 0, 3),
+      new Date(2026, 0, 4),
+      new Date(2026, 0, 5),
+    ]);
 
     const wrapper = mount(
       () => (
@@ -36,16 +42,10 @@ describe('v-infinite-scroll.tsx', () => {
 
     const element = wrapper.find('.wrapper');
 
-    element.element.scroll({
-      top: 1000,
-    });
-
-    // element.element.scrollHeight = 150;
-    // element.element.clientHeight = 90;
-
+    element.element.scrollTop = element.element.scrollHeight;
     await element.trigger('scroll');
 
-    // happy-dom cannot simulate scroll event
-    // expect(param.onReachBottom).toHaveBeenCalledOnce();
+    expect(element.element.scrollHeight).toBeGreaterThan(element.element.clientHeight);
+    await vi.waitFor(() => expect(param.onReachBottom).toHaveBeenCalledOnce());
   });
 });

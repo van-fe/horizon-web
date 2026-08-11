@@ -107,7 +107,7 @@ function sliceInWorker(file: Blob, chunkSize: number, totalChunks: number) {
   return new Promise<MultipartChunkPart[]>((resolve, reject) => {
     const chunks: MultipartChunkPart[] = [];
     const workerUrl = URL.createObjectURL(new Blob([workerSource], { type: 'text/javascript' }));
-    let worker: MultipartChunkWorker;
+    let worker!: MultipartChunkWorker;
     let stallTimer: ReturnType<typeof setTimeout> | undefined;
     let settled = false;
 
@@ -120,11 +120,9 @@ function sliceInWorker(file: Blob, chunkSize: number, totalChunks: number) {
     };
     const cleanup = () => {
       clearTimeout(stallTimer);
-      if (worker) {
-        worker.onmessage = null;
-        worker.onerror = null;
-        worker.terminate();
-      }
+      worker.onmessage = null;
+      worker.onerror = null;
+      worker.terminate();
       URL.revokeObjectURL(workerUrl);
     };
     const fail = (error: Error) => {

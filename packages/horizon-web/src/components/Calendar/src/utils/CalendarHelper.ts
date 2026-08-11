@@ -125,7 +125,7 @@ export default class CalendarHelper {
     const firstDayWeek = firstDay.format('d');
 
     resDates.unshift(
-      ...Array.from(Array(firstDayWeek).keys())
+      ...Array.from(Array(Number(firstDayWeek)).keys())
         .map((index: number) => firstDay.subtract(index + 1, 'd'))
         .reverse(),
     );

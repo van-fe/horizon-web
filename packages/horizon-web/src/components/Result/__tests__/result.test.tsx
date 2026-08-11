@@ -118,6 +118,15 @@ describe('Result.tsx', () => {
 
       expect(imageSrc()).toBe(serverError);
     });
+
+    test.each([
+      ['403', notAllowed],
+      ['404', notFound],
+      ['500', serverError],
+    ] as const)('supports the string status %s', (status, source) => {
+      const wrapper = mount(() => <HResult type={status} />);
+      expect(wrapper.get('.h-result__image img').attributes('src')).toBe(source);
+    });
   });
 
   describe('event', () => {

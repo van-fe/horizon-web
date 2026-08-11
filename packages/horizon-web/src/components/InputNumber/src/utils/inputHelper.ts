@@ -11,11 +11,6 @@ export function sanitizeInput(input: string) {
     input = parts[0] + '.' + parts.slice(1).join('');
   }
 
-  // 确保负号只在首位
-  if (input.indexOf('-') > 0) {
-    input = input.replace(/-/g, '');
-  }
-
   if (input.toString().startsWith('-.')) {
     input = input.toString().replace(/^-\./, '-0.');
   }

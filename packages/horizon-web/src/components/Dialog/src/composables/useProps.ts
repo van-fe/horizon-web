@@ -159,7 +159,6 @@ export const useDialogProps = declarePropType({
   to: {
     type: [String, Object] as PropType<string | HTMLElement | null>,
     required: false,
-    default: 'body',
   },
 
   /**

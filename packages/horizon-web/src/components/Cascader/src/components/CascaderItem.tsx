@@ -1,4 +1,4 @@
-import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
+import { cls, ComponentClassBlock, sizeUnitTransform, useNamespace } from '@aurora/utils';
 import {
   computed,
   defineComponent,
@@ -243,9 +243,18 @@ export default defineComponent({
                 </div>
               )
             ) : undefined}
-            <div class={classHelper.e('content-wrapper')}>
+            <div
+              class={classHelper.e('content-wrapper')}
+              style={{
+                maxWidth:
+                  typeof parentProps.maxPanelItemWidth === 'number'
+                    ? sizeUnitTransform(parentProps.maxPanelItemWidth)
+                    : undefined,
+                whiteSpace: parentProps.showTooltip ? undefined : 'normal',
+              }}
+            >
               <HTooltip
-                overflow={true}
+                overflow={parentProps.showTooltip}
                 showAfter={parentProps.tooltipShowAfter}
                 hideAfter={parentProps.tooltipHideAfter}
               >

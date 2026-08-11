@@ -91,6 +91,24 @@ describe('List.tsx', () => {
   });
 
   describe('slots', () => {
+    test('item receives the source item and stable index while max-height reaches Scrollbar', () => {
+      const data = [{ id: 'alpha' }, { id: 'beta' }];
+      const wrapper = mount(() => (
+        <HList data={data} maxHeight={180} size="small">
+          {{
+            item: ({ item, index }: { item: (typeof data)[number]; index: number }) => (
+              <div data-test={`row-${index}`}>{`${index}:${item.id}`}</div>
+            ),
+          }}
+        </HList>
+      ));
+
+      expect(wrapper.get('.h-list').classes()).toContain('h-list--small');
+      expect(wrapper.get('[data-test="row-0"]').text()).toBe('0:alpha');
+      expect(wrapper.get('[data-test="row-1"]').text()).toBe('1:beta');
+      expect(wrapper.findComponent({ name: 'HScrollbar' }).props('maxHeight')).toBe(180);
+    });
+
     test('default', () => {
       const wrapper = mount(() => (
         <HList data={templateData}>

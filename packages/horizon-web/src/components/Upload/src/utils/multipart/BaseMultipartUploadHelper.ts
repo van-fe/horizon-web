@@ -145,7 +145,7 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
 
   private completeChunk(chunk: HUploadChunk, response: unknown) {
     this.clearChunkLoadedBytes(chunk.index);
-    if (chunk.status !== 'success') this.completedBytes += chunk.size;
+    this.completedBytes += chunk.size;
     chunk.status = 'success';
     chunk.response = response;
   }
@@ -153,7 +153,7 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
   private abortActiveRequests() {
     this.requests.forEach((xhr, index) => {
       const chunk = this.chunks[index];
-      if (chunk?.status === 'uploading') chunk.status = 'pending';
+      chunk.status = 'pending';
       xhr.abort();
     });
     this.requests.clear();
@@ -276,7 +276,7 @@ export default abstract class BaseMultipartUploadHelper extends UploadHelperOpti
       settled = true;
       this.requests.delete(chunk.index);
       this.clearChunkLoadedBytes(chunk.index);
-      if (chunk.status === 'uploading') chunk.status = 'pending';
+      chunk.status = 'pending';
     };
 
     const formData = new FormData();

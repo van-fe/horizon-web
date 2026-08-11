@@ -11,7 +11,7 @@ export default defineComponent({
     const colorBoardRef = ref<HTMLElement | null>(null);
     const colorCursorRef = ref<HTMLElement | null>(null);
     const classHelper = new ComponentClassBlock('color-picker-panel__color-board');
-    const currentValue = inject(ColorPickerCurrentValue);
+    const currentValue = inject(ColorPickerCurrentValue)!;
     const cursorPosition = ref({
       x: 0,
       y: 0,
@@ -22,7 +22,7 @@ export default defineComponent({
     });
 
     watch(
-      () => currentValue?.currentActiveColorTarget?.color.value,
+      () => currentValue.currentActiveColorTarget.color.value,
       () => {
         updateCursorPosition();
       },
@@ -30,9 +30,11 @@ export default defineComponent({
 
     function updateCursorPosition() {
       if (isCursorDragging.value) return;
-      const rect = colorBoardRef.value!.getBoundingClientRect();
-      const saturation = currentValue?.currentActiveColorTarget?.color.get('saturation') || 0;
-      const value = currentValue?.currentActiveColorTarget?.color.get('value') || 0;
+      const board = colorBoardRef.value;
+      if (!board) return;
+      const rect = board.getBoundingClientRect();
+      const saturation = currentValue.currentActiveColorTarget.color.get('saturation');
+      const value = currentValue.currentActiveColorTarget.color.get('value');
       const cursorWidth = colorCursorRef.value?.offsetWidth || 18;
 
       cursorPosition.value.x = (saturation / 100) * (rect.width || 232) - cursorWidth / 2;
@@ -53,7 +55,7 @@ export default defineComponent({
       cursorPosition.value.x = left - cursorWidth / 2;
       cursorPosition.value.y = top - cursorWidth / 2;
 
-      currentValue?.currentActiveColorTarget?.color.set(
+      currentValue.currentActiveColorTarget.color.set(
         {
           saturation: (left / (rect.width || 232)) * 100,
           value: 100 - (top / (rect.height || 160)) * 100,
@@ -74,9 +76,7 @@ export default defineComponent({
           ref={colorBoardRef}
           class={classHelper.block}
           style={{
-            background: `hsl(${currentValue?.currentActiveColorTarget?.color.get(
-              'hue',
-            )}, 100%, 50%)`,
+            background: `hsl(${currentValue.currentActiveColorTarget.color.get('hue')}, 100%, 50%)`,
           }}
           onMouseup={(evt: MouseEvent) => evt.stopPropagation()}
         >
@@ -89,7 +89,7 @@ export default defineComponent({
           style={{
             top: cursorPosition.value.y + 'px',
             left: cursorPosition.value.x + 'px',
-            background: currentValue?.currentActiveColorTarget?.color.valueWithoutAlpha,
+            background: currentValue.currentActiveColorTarget.color.valueWithoutAlpha,
           }}
           draggable={false}
         />

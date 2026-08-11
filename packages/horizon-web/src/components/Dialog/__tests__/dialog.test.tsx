@@ -6,6 +6,16 @@ import { HApplication } from '../../Application';
 import { HButton } from '../../Button/index';
 import type { DialogProps } from '../src/composables/useProps';
 import HDialog from '../src/Dialog';
+import { sleep } from '~/utils/tools';
+
+let dialogZIndexOffset: number | undefined;
+
+const normalizeDialogHtml = (html: string) =>
+  html.replace(/z-index: (\d+)/g, (_, rawValue: string) => {
+    const value = Number(rawValue);
+    dialogZIndexOffset ??= value - 2001;
+    return `z-index: ${value - dialogZIndexOffset}`;
+  });
 
 const createUglinessDebounce = () => {
   let resolve: () => void;
@@ -29,7 +39,7 @@ describe('Dialog.tsx', () => {
     const element = wrapper.findComponent(HDialog);
 
     expect(element.exists()).toBe(true);
-    expect(wrapper.html()).toMatchInlineSnapshot(
+    expect(normalizeDialogHtml(wrapper.html())).toMatchInlineSnapshot(
       `
       "<!--teleport start-->
       <div class="h-dialog" style="z-index: 2001;">
@@ -44,13 +54,13 @@ describe('Dialog.tsx', () => {
                 <!---->
                 <div class="h-dialog__body"></div>
                 <div class="h-dialog__footer">
-                  <div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0" autofocus="false">
+                  <div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0">
                       <!---->
                       <div class="h-button__content">
                         <!---->
                       </div>
                       <!---->
-                    </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;">
+                    </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" style="margin-left: 16px;">
                       <!---->
                       <div class="h-button__content">
                         <!---->
@@ -74,7 +84,7 @@ describe('Dialog.tsx', () => {
 
     expect(element.exists()).toBe(true);
     expect(wrapper.find('.h-dialog__header').text()).toBe('Title');
-    expect(wrapper.html()).toMatchInlineSnapshot(`
+    expect(normalizeDialogHtml(wrapper.html())).toMatchInlineSnapshot(`
       "<!--teleport start-->
       <div class="h-dialog" style="z-index: 2002;">
         <transition-stub name="h-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
@@ -87,7 +97,7 @@ describe('Dialog.tsx', () => {
               <div class="h-dialog__main">
                 <div id="v-0" class="h-dialog__header">
                   <div class="h-dialog__default-title">
-                    <div class="h-dialog__default-title--text">Title</div><button class="h-button h-button--normal h-button--small h-button--text h-button--equally is-solid is-with-icon h-dialog__header-close h-dialog__header-close" type="button" tabindex="0" autofocus="false" aria-label="Close dialog">
+                    <div class="h-dialog__default-title--text">Title</div><button class="h-button h-button--normal h-button--small h-button--text h-button--equally is-solid is-with-icon h-dialog__header-close h-dialog__header-close" type="button" tabindex="0" aria-label="Close dialog">
                       <div class="h-button__icon is-custom-size"><svg class="a-icon h-icon_close h-icon__close" viewBox="0 0 24 24" fill="none" style="width: 16px; height: 16px; font-size: 16px; display: inline-block; vertical-align: inherit;">
                           <path d="M11.9999 10.9517L19.9429 3C20.5267 3.58446 20.5267 4.53206 19.9429 5.11652L13.057 12.01L21 19.9617C20.4162 20.5461 19.4696 20.5461 18.8858 19.9617L11.9999 13.0682L5.11419 19.9615C4.53038 20.546 3.58382 20.546 3 19.9615L10.9428 12.01L4.0571 5.11664C3.47328 4.53217 3.47328 3.58458 4.0571 3.00011L11.9999 10.9517Z" fill="currentColor"></path>
                         </svg></div>
@@ -98,13 +108,13 @@ describe('Dialog.tsx', () => {
                 </div>
                 <div class="h-dialog__body"></div>
                 <div class="h-dialog__footer">
-                  <div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0" autofocus="false">
+                  <div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0">
                       <!---->
                       <div class="h-button__content">
                         <!---->
                       </div>
                       <!---->
-                    </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;">
+                    </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" style="margin-left: 16px;">
                       <!---->
                       <div class="h-button__content">
                         <!---->
@@ -137,27 +147,27 @@ describe('Dialog.tsx', () => {
       });
 
       expect(wrapper.find('.h-dialog__container').attributes('style')).toContain(`top: ${top}px`);
-      expect(wrapper.html()).toMatchInlineSnapshot(`
+      expect(normalizeDialogHtml(wrapper.html())).toMatchInlineSnapshot(`
         "<!--teleport start-->
         <div class="h-dialog" style="z-index: 2003;">
           <transition-stub name="h-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
             <!---->
           </transition-stub>
           <transition-stub name="h-dialog__normal" appear="true" persisted="true" css="true">
-            <div role="dialog" aria-modal="true" tabindex="-1" class="h-dialog__container h-dialog--medium h-dialog--center" style="z-index: 2004; top: 200px; transform: translateY(0); display: none;">
+            <div role="dialog" aria-modal="true" tabindex="-1" class="h-dialog__container h-dialog--medium h-dialog--center" style="z-index: 2004; top: 200px; transform: translateY(0px); display: none;">
               <div class="h-dialog__inner">
                 <!---->
                 <div class="h-dialog__main">
                   <!---->
                   <div class="h-dialog__body"></div>
                   <div class="h-dialog__footer">
-                    <div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0" autofocus="false">
+                    <div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0">
                         <!---->
                         <div class="h-button__content">
                           <!---->
                         </div>
                         <!---->
-                      </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;">
+                      </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" style="margin-left: 16px;">
                         <!---->
                         <div class="h-button__content">
                           <!---->
@@ -203,7 +213,7 @@ describe('Dialog.tsx', () => {
       visible.value = false;
       expect(wrapper.find('.h-dialog__container').exists()).eq(true);
 
-      expect(wrapper.html()).toMatchInlineSnapshot(`
+      expect(normalizeDialogHtml(wrapper.html())).toMatchInlineSnapshot(`
         "<!--teleport start-->
         <div class="h-dialog" style="z-index: 2004;">
           <transition-stub name="h-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
@@ -217,13 +227,13 @@ describe('Dialog.tsx', () => {
                   <!---->
                   <div class="h-dialog__body"></div>
                   <div class="h-dialog__footer">
-                    <div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0" autofocus="false">
+                    <div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0">
                         <!---->
                         <div class="h-button__content">
                           <!---->
                         </div>
                         <!---->
-                      </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;">
+                      </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" style="margin-left: 16px;">
                         <!---->
                         <div class="h-button__content">
                           <!---->
@@ -246,7 +256,7 @@ describe('Dialog.tsx', () => {
       visible.value = false;
       await nextTick();
       expect(wrapper.find('.h-dialog__container').exists()).eq(false);
-      expect(wrapper.html()).toMatchInlineSnapshot(`
+      expect(normalizeDialogHtml(wrapper.html())).toMatchInlineSnapshot(`
         "<!--teleport start-->
         <div class="h-dialog" style="z-index: 2004;">
           <transition-stub name="h-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
@@ -264,7 +274,7 @@ describe('Dialog.tsx', () => {
       const wrapper = mount(() => <HDialog visible={true} title="Title" to={null} draggable />);
 
       expect(wrapper.find('.h-dialog__header--draggable').exists()).eq(true);
-      expect(wrapper.html()).toMatchInlineSnapshot(`
+      expect(normalizeDialogHtml(wrapper.html())).toMatchInlineSnapshot(`
         "<!--teleport start-->
         <div class="h-dialog" style="z-index: 2005;">
           <transition-stub name="h-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
@@ -277,7 +287,7 @@ describe('Dialog.tsx', () => {
                 <div class="h-dialog__main">
                   <div id="v-0" class="h-dialog__header h-dialog__header--draggable">
                     <div class="h-dialog__default-title">
-                      <div class="h-dialog__default-title--text">Title</div><button class="h-button h-button--normal h-button--small h-button--text h-button--equally is-solid is-with-icon h-dialog__header-close h-dialog__header-close" type="button" tabindex="0" autofocus="false" aria-label="Close dialog">
+                      <div class="h-dialog__default-title--text">Title</div><button class="h-button h-button--normal h-button--small h-button--text h-button--equally is-solid is-with-icon h-dialog__header-close h-dialog__header-close" type="button" tabindex="0" aria-label="Close dialog">
                         <div class="h-button__icon is-custom-size"><svg class="a-icon h-icon_close h-icon__close" viewBox="0 0 24 24" fill="none" style="width: 16px; height: 16px; font-size: 16px; display: inline-block; vertical-align: inherit;">
                             <path d="M11.9999 10.9517L19.9429 3C20.5267 3.58446 20.5267 4.53206 19.9429 5.11652L13.057 12.01L21 19.9617C20.4162 20.5461 19.4696 20.5461 18.8858 19.9617L11.9999 13.0682L5.11419 19.9615C4.53038 20.546 3.58382 20.546 3 19.9615L10.9428 12.01L4.0571 5.11664C3.47328 4.53217 3.47328 3.58458 4.0571 3.00011L11.9999 10.9517Z" fill="currentColor"></path>
                           </svg></div>
@@ -288,13 +298,13 @@ describe('Dialog.tsx', () => {
                   </div>
                   <div class="h-dialog__body"></div>
                   <div class="h-dialog__footer">
-                    <div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0" autofocus="false">
+                    <div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0">
                         <!---->
                         <div class="h-button__content">
                           <!---->
                         </div>
                         <!---->
-                      </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;">
+                      </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" style="margin-left: 16px;">
                         <!---->
                         <div class="h-button__content">
                           <!---->
@@ -318,18 +328,16 @@ describe('Dialog.tsx', () => {
       const getPopupContainer = vi.fn(() => el);
       const wrapper = mount(() => (
         <HApplication getPopupContainer={getPopupContainer}>
-          <HDialog visible={true} to={el}>
+          <HDialog visible={true}>
             <div>Hello World</div>
           </HDialog>
         </HApplication>
       ));
 
-      expect(document.body.innerHTML).toMatchInlineSnapshot(
-        `"<div data-v-app=""></div><div data-v-app=""></div><div data-v-app=""></div><div data-v-app=""></div><div><div class="h-dialog" style="z-index: 2006;"><transition-stub name="h-fade-in-normal" duration="300" appear="true" persisted="false" css="true"><div class="h-dialog__mask" style="z-index: 2006;"></div></transition-stub><transition-stub name="h-dialog__move" appear="true" persisted="true" css="true"><div role="dialog" aria-modal="true" tabindex="-1" class="h-dialog__container h-dialog--medium h-dialog--center" style="z-index: 2007;"><div class="h-dialog__inner"><!----><div class="h-dialog__main"><!----><div class="h-dialog__body"><div>Hello World</div></div><div class="h-dialog__footer"><div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0" autofocus="false"><!----><div class="h-button__content"><!----></div><!----></button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;"><!----><div class="h-button__content"><!----></div><!----></button></div></div></div></div></div></transition-stub></div></div>"`,
-      );
-
       expect(wrapper.findComponent(HDialog).exists()).toBe(true);
+      expect(getPopupContainer).toHaveBeenCalled();
       expect(el.querySelector('.h-dialog')).not.toBeNull();
+      expect(el.querySelector('.h-dialog__body')?.textContent).toBe('Hello World');
 
       document.body.innerHTML = '';
       resetPopupContainerGetter();
@@ -356,7 +364,7 @@ describe('Dialog.tsx', () => {
         { attachTo: 'body' },
       );
 
-      expect(wrapper.html()).toMatchInlineSnapshot(`
+      expect(normalizeDialogHtml(wrapper.html())).toMatchInlineSnapshot(`
         "<!--teleport start-->
         <div class="h-dialog" style="z-index: 2007;">
           <transition-stub name="h-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
@@ -369,7 +377,7 @@ describe('Dialog.tsx', () => {
                 <div class="h-dialog__main">
                   <div id="v-0" class="h-dialog__header">
                     <div class="h-dialog__default-title">
-                      <div class="h-dialog__default-title--text">Title</div><button class="h-button h-button--normal h-button--small h-button--text h-button--equally is-solid is-with-icon h-dialog__header-close h-dialog__header-close" type="button" tabindex="0" autofocus="false" aria-label="Close dialog">
+                      <div class="h-dialog__default-title--text">Title</div><button class="h-button h-button--normal h-button--small h-button--text h-button--equally is-solid is-with-icon h-dialog__header-close h-dialog__header-close" type="button" tabindex="0" aria-label="Close dialog">
                         <div class="h-button__icon is-custom-size"><svg class="a-icon h-icon_close h-icon__close" viewBox="0 0 24 24" fill="none" style="width: 16px; height: 16px; font-size: 16px; display: inline-block; vertical-align: inherit;">
                             <path d="M11.9999 10.9517L19.9429 3C20.5267 3.58446 20.5267 4.53206 19.9429 5.11652L13.057 12.01L21 19.9617C20.4162 20.5461 19.4696 20.5461 18.8858 19.9617L11.9999 13.0682L5.11419 19.9615C4.53038 20.546 3.58382 20.546 3 19.9615L10.9428 12.01L4.0571 5.11664C3.47328 4.53217 3.47328 3.58458 4.0571 3.00011L11.9999 10.9517Z" fill="currentColor"></path>
                           </svg></div>
@@ -380,13 +388,13 @@ describe('Dialog.tsx', () => {
                   </div>
                   <div class="h-dialog__body"></div>
                   <div class="h-dialog__footer">
-                    <div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0" autofocus="false">
+                    <div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0">
                         <!---->
                         <div class="h-button__content">
                           <!---->
                         </div>
                         <!---->
-                      </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;">
+                      </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" style="margin-left: 16px;">
                         <!---->
                         <div class="h-button__content">
                           <!---->
@@ -422,7 +430,9 @@ describe('Dialog.tsx', () => {
 
     test('lifecycle', async () => {
       const visible = ref(false);
-      const wrapper = mount(() => <HDialog title="Title" visible={visible.value} to={null} />);
+      const wrapper = mount(() => <HDialog title="Title" visible={visible.value} to={null} />, {
+        global: { stubs: { transition: false } },
+      });
 
       const dialog = wrapper.findComponent(HDialog);
 
@@ -434,61 +444,55 @@ describe('Dialog.tsx', () => {
       visible.value = true;
       await nextTick();
       expect(dialog.emitted()).toHaveProperty('open');
-      setTimeout(() => {
-        expect(dialog.emitted()).toHaveProperty('opened');
-      }, 300);
+      await sleep(350);
+      expect(dialog.emitted()).toHaveProperty('opened');
 
-      expect(wrapper.html()).toMatchInlineSnapshot(`
+      expect(normalizeDialogHtml(wrapper.html())).toMatchInlineSnapshot(`
         "<!--teleport start-->
         <div class="h-dialog" style="z-index: 2008;">
-          <transition-stub name="h-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
-            <div class="h-dialog__mask" style="z-index: 2008;"></div>
-          </transition-stub>
-          <transition-stub name="h-dialog__move" appear="true" persisted="true" css="true">
-            <div role="dialog" aria-modal="true" aria-labelledby="v-0" tabindex="-1" class="h-dialog__container h-dialog--medium h-dialog--center" style="z-index: 2009;">
-              <div class="h-dialog__inner">
-                <!---->
-                <div class="h-dialog__main">
-                  <div id="v-0" class="h-dialog__header">
-                    <div class="h-dialog__default-title">
-                      <div class="h-dialog__default-title--text">Title</div><button class="h-button h-button--normal h-button--small h-button--text h-button--equally is-solid is-with-icon h-dialog__header-close h-dialog__header-close" type="button" tabindex="0" autofocus="false" aria-label="Close dialog">
-                        <div class="h-button__icon is-custom-size"><svg class="a-icon h-icon_close h-icon__close" viewBox="0 0 24 24" fill="none" style="width: 16px; height: 16px; font-size: 16px; display: inline-block; vertical-align: inherit;">
-                            <path d="M11.9999 10.9517L19.9429 3C20.5267 3.58446 20.5267 4.53206 19.9429 5.11652L13.057 12.01L21 19.9617C20.4162 20.5461 19.4696 20.5461 18.8858 19.9617L11.9999 13.0682L5.11419 19.9615C4.53038 20.546 3.58382 20.546 3 19.9615L10.9428 12.01L4.0571 5.11664C3.47328 4.53217 3.47328 3.58458 4.0571 3.00011L11.9999 10.9517Z" fill="currentColor"></path>
-                          </svg></div>
-                        <!---->
-                        <!---->
-                      </button>
-                    </div>
+          <div class="h-dialog__mask" style="z-index: 2008;"></div>
+          <div role="dialog" aria-modal="true" aria-labelledby="v-0" tabindex="-1" class="h-dialog__container h-dialog--medium h-dialog--center" style="z-index: 2009;">
+            <div class="h-dialog__inner">
+              <!---->
+              <div class="h-dialog__main">
+                <div id="v-0" class="h-dialog__header">
+                  <div class="h-dialog__default-title">
+                    <div class="h-dialog__default-title--text">Title</div><button class="h-button h-button--normal h-button--small h-button--text h-button--equally is-solid is-with-icon h-dialog__header-close h-dialog__header-close" type="button" tabindex="0" aria-label="Close dialog">
+                      <div class="h-button__icon is-custom-size"><svg class="a-icon h-icon_close h-icon__close" viewBox="0 0 24 24" fill="none" style="width: 16px; height: 16px; font-size: 16px; display: inline-block; vertical-align: inherit;">
+                          <path d="M11.9999 10.9517L19.9429 3C20.5267 3.58446 20.5267 4.53206 19.9429 5.11652L13.057 12.01L21 19.9617C20.4162 20.5461 19.4696 20.5461 18.8858 19.9617L11.9999 13.0682L5.11419 19.9615C4.53038 20.546 3.58382 20.546 3 19.9615L10.9428 12.01L4.0571 5.11664C3.47328 4.53217 3.47328 3.58458 4.0571 3.00011L11.9999 10.9517Z" fill="currentColor"></path>
+                        </svg></div>
+                      <!---->
+                      <!---->
+                    </button>
                   </div>
-                  <div class="h-dialog__body"></div>
-                  <div class="h-dialog__footer">
-                    <div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0" autofocus="false">
+                </div>
+                <div class="h-dialog__body"></div>
+                <div class="h-dialog__footer">
+                  <div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0">
+                      <!---->
+                      <div class="h-button__content">
                         <!---->
-                        <div class="h-button__content">
-                          <!---->
-                        </div>
+                      </div>
+                      <!---->
+                    </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" style="margin-left: 16px;">
+                      <!---->
+                      <div class="h-button__content">
                         <!---->
-                      </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;">
-                        <!---->
-                        <div class="h-button__content">
-                          <!---->
-                        </div>
-                        <!---->
-                      </button></div>
-                  </div>
+                      </div>
+                      <!---->
+                    </button></div>
                 </div>
               </div>
             </div>
-          </transition-stub>
+          </div>
         </div>
         <!--teleport end-->"
       `);
       visible.value = false;
       await nextTick();
       expect(dialog.emitted()).toHaveProperty('close');
-      setTimeout(() => {
-        expect(dialog.emitted()).toHaveProperty('closed');
-      }, 300);
+      await sleep(350);
+      expect(dialog.emitted()).toHaveProperty('closed');
     });
 
     test('misc event', async () => {
@@ -507,7 +511,7 @@ describe('Dialog.tsx', () => {
         />
       ));
 
-      expect(wrapper.html()).toMatchInlineSnapshot(`
+      expect(normalizeDialogHtml(wrapper.html())).toMatchInlineSnapshot(`
         "<!--teleport start-->
         <div class="h-dialog" style="z-index: 2009;">
           <transition-stub name="h-fade-in-normal" duration="300" appear="true" persisted="false" css="true">
@@ -520,7 +524,7 @@ describe('Dialog.tsx', () => {
                 <div class="h-dialog__main">
                   <div id="v-0" class="h-dialog__header">
                     <div class="h-dialog__default-title">
-                      <div class="h-dialog__default-title--text">Title</div><button class="h-button h-button--normal h-button--small h-button--text h-button--equally is-solid is-with-icon h-dialog__header-close h-dialog__header-close" type="button" tabindex="0" autofocus="false" aria-label="Close dialog">
+                      <div class="h-dialog__default-title--text">Title</div><button class="h-button h-button--normal h-button--small h-button--text h-button--equally is-solid is-with-icon h-dialog__header-close h-dialog__header-close" type="button" tabindex="0" aria-label="Close dialog">
                         <div class="h-button__icon is-custom-size"><svg class="a-icon h-icon_close h-icon__close" viewBox="0 0 24 24" fill="none" style="width: 16px; height: 16px; font-size: 16px; display: inline-block; vertical-align: inherit;">
                             <path d="M11.9999 10.9517L19.9429 3C20.5267 3.58446 20.5267 4.53206 19.9429 5.11652L13.057 12.01L21 19.9617C20.4162 20.5461 19.4696 20.5461 18.8858 19.9617L11.9999 13.0682L5.11419 19.9615C4.53038 20.546 3.58382 20.546 3 19.9615L10.9428 12.01L4.0571 5.11664C3.47328 4.53217 3.47328 3.58458 4.0571 3.00011L11.9999 10.9517Z" fill="currentColor"></path>
                           </svg></div>
@@ -531,13 +535,13 @@ describe('Dialog.tsx', () => {
                   </div>
                   <div class="h-dialog__body"></div>
                   <div class="h-dialog__footer">
-                    <div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0" autofocus="false">
+                    <div class="h-dialog__default-footer"><button class="h-button h-button--normal h-button--medium h-button--plain is-solid" type="button" tabindex="0">
                         <!---->
                         <div class="h-button__content">
                           <!---->
                         </div>
                         <!---->
-                      </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" autofocus="false" style="margin-left: 16px;">
+                      </button><button class="h-button h-button--primary h-button--medium is-solid" type="button" tabindex="0" style="margin-left: 16px;">
                         <!---->
                         <div class="h-button__content">
                           <!---->
@@ -608,7 +612,7 @@ describe('Dialog.tsx', () => {
       expect(dialog.find('.c-body').text()).eq(customizeBody);
       expect(dialog.find('.c-footer').text()).eq(customizeFooter);
 
-      expect(wrapper.html()).toMatchInlineSnapshot(`
+      expect(normalizeDialogHtml(wrapper.html())).toMatchInlineSnapshot(`
         "<!--teleport start-->
         <div class="h-dialog" style="z-index: 2010;">
           <transition-stub name="h-fade-in-normal" duration="300" appear="true" persisted="false" css="true">

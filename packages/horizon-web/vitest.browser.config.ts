@@ -2,15 +2,83 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import vue from '@vitejs/plugin-vue';
 import { playwright } from '@vitest/browser-playwright';
 import { defineConfig } from 'vitest/config';
+import { readdirSync } from 'node:fs';
 import * as path from 'path';
 import { scssPreprocessorOptions } from './build/sass-options';
 
+const componentCoverageIncludes = readdirSync(
+  path.join(__dirname, 'src/components'),
+  { withFileTypes: true },
+)
+  .filter((entry) => entry.isDirectory())
+  .map((entry) => `src/components/${entry.name}/**/*.{ts,tsx}`);
+
 export default defineConfig({
   css: { preprocessorOptions: scssPreprocessorOptions },
+  optimizeDeps: {
+    force: true,
+    include: [
+      'async-validator',
+      'dayjs',
+      'dayjs/locale/de',
+      'dayjs/locale/en',
+      'dayjs/locale/en-sg',
+      'dayjs/locale/nb',
+      'dayjs/locale/se',
+      'dayjs/locale/sv',
+      'dayjs/locale/zh-cn',
+      'dayjs/locale/zh-tw',
+      'dayjs/plugin/advancedFormat',
+      'dayjs/plugin/arraySupport',
+      'dayjs/plugin/customParseFormat',
+      'dayjs/plugin/isSameOrAfter',
+      'dayjs/plugin/isSameOrBefore',
+      'dayjs/plugin/isoWeek',
+      'dayjs/plugin/localizedFormat',
+      'dayjs/plugin/minMax',
+      'dayjs/plugin/objectSupport',
+      'dayjs/plugin/timezone',
+      'dayjs/plugin/toObject',
+      'dayjs/plugin/utc',
+      'dayjs/plugin/weekOfYear',
+      'dayjs/plugin/weekYear',
+      'dayjs/plugin/weekday',
+      'decimal.js',
+      'deepmerge',
+      'dompurify',
+      'lodash-es',
+      'qrcode',
+      'vue/server-renderer',
+    ],
+  },
   root: __dirname,
   plugins: [vue(), vueJsx()],
   test: {
-    include: ['src/**/*.browser.test.{ts,tsx}'],
+    globals: true,
+    include: ['src/**/*.{test,spec}.{ts,tsx}'],
+    exclude: [
+      'src/**/*.node.test.{ts,tsx}',
+      'src/__tests__/bun-runtime.test.ts',
+    ],
+    setupFiles: [path.join(__dirname, './vitest.setup.ts')],
+    testTimeout: 10000,
+    coverage: {
+      provider: 'v8',
+      include: componentCoverageIncludes,
+      exclude: [
+        'src/components/**/__tests__/**',
+        'src/components/**/*.{test,spec}.{ts,tsx}',
+        'src/components/**/*.d.ts',
+      ],
+      reporter: ['text', 'json-summary', 'html'],
+      reportOnFailure: true,
+      thresholds: {
+        statements: 95,
+        branches: 95,
+        functions: 95,
+        lines: 95,
+      },
+    },
     browser: {
       api: { host: '127.0.0.1' },
       enabled: true,
@@ -19,6 +87,7 @@ export default defineConfig({
       instances: [{ browser: 'chromium' }],
     },
   },
+  define: { global: 'window' },
   resolve: {
     alias: [
       {

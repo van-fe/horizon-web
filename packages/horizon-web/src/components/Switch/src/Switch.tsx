@@ -11,6 +11,7 @@ import {
 import useSize from '~/utils/useSize';
 import useLocaleLang from '~/utils/useLocaleLang';
 import { useSwitchState } from './composables/useSwitchState';
+import { useSwitchSlots, type SwitchSlots } from './composables/useSlots';
 
 export default defineComponent({
   name: `${useNamespace()}Switch`,
@@ -18,7 +19,8 @@ export default defineComponent({
   descLocales: { en: 'Switch control for toggling between two states.' },
   props: useSwitchProps,
   emits: useSwitchEmits,
-  setup(props, { emit }: HorizonWebSetupContext<SwitchEmits>) {
+  slots: useSwitchSlots,
+  setup(props, { emit, slots }: HorizonWebSetupContext<SwitchEmits, SwitchSlots>) {
     const {
       modelValue: modelValueRef,
       status: statusRef,
@@ -59,7 +61,9 @@ export default defineComponent({
         )}
         onClick={() => onChange()}
       >
-        {labelRef.value && <span class={classHelper.e('label')}>{labelRef.value}</span>}
+        {(labelRef.value || slots.default) && (
+          <span class={classHelper.e('label')}>{slots.default?.() ?? labelRef.value}</span>
+        )}
         <span class={classHelper.e('main')}>
           <span
             class={cls(

@@ -80,11 +80,13 @@ export default defineComponent({
 
     const editingSet = ref(new Set<string>());
     const onEditing = (uid: string, status: boolean) => {
+      const nextEditingSet = new Set(editingSet.value);
       if (status) {
-        editingSet.value.add(uid);
+        nextEditingSet.add(uid);
       } else {
-        editingSet.value.delete(uid);
+        nextEditingSet.delete(uid);
       }
+      editingSet.value = nextEditingSet;
     };
 
     watch(editingSet, val => {
@@ -213,7 +215,7 @@ export default defineComponent({
 
     function toggle(expand?: boolean, manual = false) {
       if ((!collapseProp.value || !props.expand) && !manual) return;
-      switchCollapsed(expand);
+      switchCollapsed(isUndefined(expand) ? undefined : !expand);
     }
 
     watch(

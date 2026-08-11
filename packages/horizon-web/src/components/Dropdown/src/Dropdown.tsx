@@ -7,6 +7,7 @@ import {
   isDefined,
   useZIndex,
   isUndefined,
+  getUnitString,
 } from '@aurora/utils';
 import type { HorizonWebSetupContext, HorizonWebComponentInstance } from '@aurora/utils';
 import { useDropdownProps } from './composables/useProps';
@@ -64,7 +65,7 @@ export default defineComponent({
     const popoverRef = ref<HorizonWebComponentInstance<typeof HPopover, PopoverExposes> | null>(
       null,
     );
-    const popContentDomRef = ref<HorizonWebComponentInstance<typeof HPopContent> | null>(null);
+    const popContentDomRef = ref<HTMLElement | null>(null);
 
     const { dropdownTree, appendChild, removeChild, renderContent } = useDropdownTree();
     const zIndex = useZIndex(props.zIndex);
@@ -102,6 +103,8 @@ export default defineComponent({
     watch(
       () => props.visible,
       val => {
+        if (val === visible.value) return;
+
         if (val) {
           handleOpen();
         } else {
@@ -114,11 +117,19 @@ export default defineComponent({
     );
 
     const contextMenuStyle = ref<CSSProperties>({});
+    let focusFirstItemOnOpen = false;
+
+    function setContextMenuVisible(value: boolean) {
+      if (visible.value === value) return;
+      visible.value = value;
+      emit('update:visible', value);
+      emit('visibleChange', value);
+      if (value) currentOpenedDropdown.value = uuid;
+    }
 
     function onContextMenu(evt: MouseEvent) {
-      visible.value = true;
+      setContextMenuVisible(true);
       evt.preventDefault();
-      currentOpenedDropdown.value = uuid;
 
       contextMenuStyle.value = {
         position: 'fixed',
@@ -133,7 +144,7 @@ export default defineComponent({
       isDefined(commandParam) && emit('command', commandParam);
 
       if (trigger.value === 'context-menu') {
-        visible.value = false;
+        setContextMenuVisible(false);
       } else {
         popoverRef.value?.switchVisible();
       }
@@ -141,7 +152,7 @@ export default defineComponent({
 
     function handleOpen() {
       if (trigger.value === 'context-menu') {
-        visible.value = true;
+        setContextMenuVisible(true);
       } else {
         popoverRef.value?.switchVisible(true);
       }
@@ -150,7 +161,7 @@ export default defineComponent({
     function handleClose() {
       nextTick(() => {
         if (trigger.value === 'context-menu') {
-          visible.value = false;
+          setContextMenuVisible(false);
         } else {
           popoverRef.value?.switchVisible(false);
         }
@@ -162,6 +173,10 @@ export default defineComponent({
       emit('update:visible', true);
       emit('visibleChange', true);
       currentOpenedDropdown.value = uuid;
+      if (focusFirstItemOnOpen) {
+        // HPopover makes the popper focusable in its already queued appear task.
+        window.setTimeout(focusFirstEnabledMenuItem);
+      }
     }
 
     function onHide() {
@@ -171,12 +186,16 @@ export default defineComponent({
     }
 
     function getEnabledMenuItems() {
-      const popContent = popContentDomRef.value?.$el as HTMLElement | undefined;
       return Array.from(
-        popContent?.querySelectorAll<HTMLElement>(
+        popContentDomRef.value!.querySelectorAll<HTMLElement>(
           '[role="menuitem"]:not([aria-disabled="true"])',
-        ) ?? [],
+        ),
       );
+    }
+
+    function focusFirstEnabledMenuItem() {
+      focusFirstItemOnOpen = false;
+      getEnabledMenuItems().at(0)?.focus();
     }
 
     function handleKeydown(evt: KeyboardEvent) {
@@ -192,8 +211,11 @@ export default defineComponent({
       if (!visible.value) {
         if (props.disabled) return;
         evt.preventDefault();
+        focusFirstItemOnOpen = true;
         handleOpen();
-        void nextTick(() => getEnabledMenuItems().at(0)?.focus());
+        if (trigger.value === 'context-menu') {
+          void nextTick(focusFirstEnabledMenuItem);
+        }
         return;
       }
 
@@ -251,18 +273,19 @@ export default defineComponent({
             <Teleport to={props.teleportTo} disabled={!props.toBody}>
               <HTransition appear name="dropdown" speed="slow">
                 <HPopContent
-                  ref={popContentDomRef}
                   v-click-outside={handleClose}
                   v-show={visible.value}
                   class={cls(classHelper.e('inner'), classHelper.em('inner', props.theme))}
                   style={{
                     ...contextMenuStyle.value,
                     ...(props.popperWidth && {
-                      '--h-dropdown-size-container-width': props.popperWidth + 'px',
+                      '--h-dropdown-size-container-width': getUnitString(props.popperWidth),
                     }),
                   }}
                 >
-                  <div onKeydown={handleKeydown}>{renderContent(popper)}</div>
+                  <div ref={popContentDomRef} onKeydown={handleKeydown}>
+                    {renderContent(popper)}
+                  </div>
                 </HPopContent>
               </HTransition>
             </Teleport>
@@ -304,10 +327,9 @@ export default defineComponent({
               reference: () => reference,
               popper: () => (
                 <HPopContent
-                  ref={popContentDomRef}
                   style={
                     props.popperWidth
-                      ? { '--h-dropdown-size-container-width': props.popperWidth + 'px' }
+                      ? { '--h-dropdown-size-container-width': getUnitString(props.popperWidth) }
                       : undefined
                   }
                   class={cls(
@@ -316,7 +338,9 @@ export default defineComponent({
                     classHelper.em('inner', size.value),
                   )}
                 >
-                  <div onKeydown={handleKeydown}>{renderContent(popper)}</div>
+                  <div ref={popContentDomRef} onKeydown={handleKeydown}>
+                    {renderContent(popper)}
+                  </div>
                 </HPopContent>
               ),
             }}

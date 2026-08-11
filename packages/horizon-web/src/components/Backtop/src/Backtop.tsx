@@ -20,7 +20,7 @@ export default defineComponent({
   slots: useBacktopSlots,
   setup(props, { emit, slots }: HorizonWebSetupContext<BacktopEmits, BacktopSlots>) {
     const visible = ref(false);
-    const el = shallowRef<HTMLElement | Window | undefined>(window);
+    const el = shallowRef<HTMLElement | Window>(window);
     const container = shallowRef<Window | HTMLElement>(window);
     const styleBottom = computed(() => `${props.bottom}px`);
     const styleRight = computed(() => `${props.right}px`);
@@ -28,11 +28,9 @@ export default defineComponent({
     const classHelper = new ComponentClassBlock('backtop');
 
     const scrollToTop = () => {
-      if (!el.value) return;
       const startTime = Date.now();
       const startValue = el.value instanceof Window ? window.scrollY : el.value.scrollTop;
       const frameFunc = () => {
-        if (!el.value) return;
         const timeDiff = Date.now() - startTime;
         if (timeDiff < 500) {
           if (el.value instanceof Window) {
@@ -53,7 +51,6 @@ export default defineComponent({
     };
 
     const observerScroll = () => {
-      if (!el.value) return;
       const scrollY = el.value instanceof Window ? window.scrollY : el.value.scrollTop;
       visible.value = scrollY >= props.visibilityHeight;
     };
@@ -67,13 +64,15 @@ export default defineComponent({
     const scrollThrottled = useDebounceFn(observerScroll, 300);
 
     onMounted(() => {
-      el.value = props.target ? (document.querySelector<HTMLElement>(props.target) ?? undefined) : undefined;
+      const target = props.target
+        ? (document.querySelector<HTMLElement>(props.target) ?? undefined)
+        : undefined;
 
-      if (!el.value) {
+      if (!target) {
         warn('backtop', `target is not existed: ${props.target}. So downgrade to window`);
-        el.value = window;
       }
 
+      el.value = target ?? window;
       container.value = el.value;
 
       useEventListener(container, 'scroll', scrollThrottled);

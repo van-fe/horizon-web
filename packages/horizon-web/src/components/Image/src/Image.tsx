@@ -54,21 +54,17 @@ export default defineComponent({
     const imgRef = ref<HTMLElement | null>(null);
     const realSrc = ref(props.lazyload ? undefined : props.src);
     const lazyLoad = () => {
-      if (!imgRef.value) {
-        return;
-      }
+      const imageElement = imgRef.value!;
       const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entrie => {
           if (entrie.isIntersecting) {
             // 进入可见范围内
             realSrc.value = props.src;
-            if (imgRef.value) {
-              observer.unobserve(imgRef.value);
-            }
+            observer.unobserve(imageElement);
           }
         });
       }, {});
-      observer.observe(imgRef.value);
+      observer.observe(imageElement);
     };
     watch(
       () => props.src,
@@ -96,16 +92,12 @@ export default defineComponent({
     const adjustActionsPosition = ref('center');
     const adjustActionsType = ref('icon');
     const adjustActions = () => {
-      if (props.showActions && props.actionsList && props.actionsList.length > 0) {
+      if (props.showActions && props.actionsList.length > 0) {
         // 操作按钮位置
         if (props.actionsPosition === 'auto') {
-          if (imgRef.value) {
-            const wrapSize = Math.min(imgRef.value.clientWidth, imgRef.value.clientHeight);
-            if (wrapSize > 80) {
-              adjustActionsPosition.value = 'bottom-right';
-            } else {
-              adjustActionsPosition.value = 'center';
-            }
+          const wrapSize = Math.min(imgRef.value!.clientWidth, imgRef.value!.clientHeight);
+          if (wrapSize > 80) {
+            adjustActionsPosition.value = 'bottom-right';
           } else {
             adjustActionsPosition.value = 'center';
           }
@@ -115,15 +107,11 @@ export default defineComponent({
 
         // 操作按钮类型
         if (props.actionsType === 'auto') {
-          if (imgRef.value) {
-            const wrapSize = Math.min(imgRef.value.clientWidth, imgRef.value.clientHeight);
-            if (wrapSize > 40) {
-              adjustActionsType.value = 'icon';
-            } else {
-              adjustActionsType.value = 'dropdown';
-            }
-          } else {
+          const wrapSize = Math.min(imgRef.value!.clientWidth, imgRef.value!.clientHeight);
+          if (wrapSize > 40) {
             adjustActionsType.value = 'icon';
+          } else {
+            adjustActionsType.value = 'dropdown';
           }
         } else {
           adjustActionsType.value = props.actionsType;
@@ -149,14 +137,13 @@ export default defineComponent({
         lazyLoad();
       }
       nextTick(() => {
-        if (imgRef.value) {
+        const imageElement = imgRef.value!;
+        adjustIconSize();
+        adjustActions();
+        useResizeObserver(imageElement, () => {
           adjustIconSize();
           adjustActions();
-          useResizeObserver(imgRef.value, () => {
-            adjustIconSize();
-            adjustActions();
-          });
-        }
+        });
       });
     });
     return () => (
@@ -216,7 +203,7 @@ export default defineComponent({
           ))}
         {slots.default && <div class={classHelper.e('content')}>{slots.default()}</div>}
         {slots.hover && <div class={classHelper.e('hover-content')}>{slots.hover()}</div>}
-        {props.showActions && props.actionsList && props.actionsList.length > 0 && (
+        {props.showActions && props.actionsList.length > 0 && (
           <div class={[classHelper.e('actions-container'), adjustActionsPosition.value]}>
             {adjustActionsType.value === 'dropdown' ? (
               <div class={classHelper.e('actions-dropdown')}>
@@ -231,7 +218,7 @@ export default defineComponent({
                       <HDropdownItem>
                         <div
                           class={classHelper.e('actions-dropdown-item')}
-                          onClick={() => action.handler(props.src || '')}
+                          onClick={() => action.handler(props.src)}
                         >
                           <AIcon name={action.icon} size={14} />
                           <span>{action.title}</span>
@@ -249,7 +236,7 @@ export default defineComponent({
                     name={action.icon}
                     size={16}
                     color="#fff"
-                    onClick={() => action.handler(props.src || '')}
+                    onClick={() => action.handler(props.src)}
                   />
                 ))}
               </div>
@@ -262,9 +249,9 @@ export default defineComponent({
             sources={[
               {
                 type: 'image',
-                cover: props.viewerSrc || props.src || '',
+                cover: props.viewerSrc || props.src,
                 thumbnail: props.src,
-                title: props.title || props.alt || '',
+                title: props.title || props.alt,
               },
             ]}
           />

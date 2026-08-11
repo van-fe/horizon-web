@@ -23,15 +23,15 @@ export function useDnd(
     evt.dataTransfer!.effectAllowed = 'move';
   };
 
-  const onDrag = (key: HTabValue, evt: DragEvent) => {
+  const onDrag = (_key: HTabValue, _evt: DragEvent) => {
     // todo
   };
-  const onDragend = (key: HTabValue, evt: DragEvent) => {
+  const onDragend = (_key: HTabValue, _evt: DragEvent) => {
     dragging.value = false;
     moveKey.value = undefined;
   };
 
-  const onDragenter = (key: HTabValue, evt: DragEvent) => {
+  const onDragenter = (_key: HTabValue, _evt: DragEvent) => {
     // todo
   };
   const onDragover = (key: HTabValue, evt: DragEvent) => {
@@ -39,7 +39,7 @@ export function useDnd(
     evt.preventDefault();
     overKey.value = key;
   };
-  const onDragleave = (key: HTabValue, evt: DragEvent) => {
+  const onDragleave = (_key: HTabValue, _evt: DragEvent) => {
     // todo
   };
 

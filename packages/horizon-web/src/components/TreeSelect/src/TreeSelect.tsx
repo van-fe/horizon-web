@@ -90,6 +90,9 @@ export default defineComponent({
       tooltipHideAfter: tooltipHideAfterProp,
       treeWidth: treeWidthProp,
       fitContentInputMinWidth: fitContentInputMinWidthProp,
+      searchPanelWidth: searchPanelWidthProp,
+      searchIcon: searchIconProp,
+      searchInputPlaceholder: searchInputPlaceholderProp,
     } = refProps;
 
     /**
@@ -322,15 +325,17 @@ export default defineComponent({
         }
         dropdownIcon={dropdownIconProp?.value}
         panelClass={cls(classHelper.e('panel'), popperClassNameProp?.value)}
-        popoverOptions={popoverOptionsProp?.value}
+        popoverOptions={{ ...popoverOptionsProp?.value, flip: props.flip }}
         useFitContentInput
         usePanelInput={useBuildInPanelFilterProp.value}
         panelInputPlaceholder={
-          panelInputPlaceholderProp?.value ?? (useLocaleLang('select.pleaseSearch').value as string)
+          panelInputPlaceholderProp?.value ??
+          searchInputPlaceholderProp?.value ??
+          (useLocaleLang('select.pleaseSearch').value as string)
         }
-        panelInputPrefixIcon={IconSearch}
+        panelInputPrefixIcon={searchIconProp?.value ?? IconSearch}
         fitInputWidth={fitInputWidthProp.value}
-        panelWidth={treeWidthProp?.value}
+        panelWidth={treeWidthProp?.value ?? searchPanelWidthProp?.value}
         fitContentInputMinWidth={fitContentInputMinWidthProp?.value}
         onClick={handleClick}
         onClear={handleClear}
@@ -360,7 +365,15 @@ export default defineComponent({
           panelPrefix: slots.panelHeaderRender,
           panelSuffix: slots.panelFooterRender,
           panelConfirm: slots.confirmRender,
-          picker: slots.selectRender,
+          picker: slots.selectRender
+            ? () => {
+                const value = modelValueSet.value.values().next().value;
+                const option = value === undefined ? undefined : treeDataMapping.value.get(value);
+                return option
+                  ? slots.selectRender?.({ ...option, label: option.fullPathLabel })
+                  : undefined;
+              }
+            : undefined,
           pickerOuter: slots.default
             ? () =>
                 slots.default?.({

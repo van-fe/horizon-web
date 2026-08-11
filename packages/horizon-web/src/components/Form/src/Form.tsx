@@ -77,26 +77,22 @@ export default defineComponent({
       }
 
       return new Promise<void>((resolve, reject) => {
-        Promise.allSettled(validateComponents.value.map(t => t.validate()))
-          .then(res => {
-            const rejected = res.filter(item => item.status === 'rejected') as {
-              status: 'rejected' | 'fulfilled';
-              reason: ValidateReturnType;
-            }[];
+        Promise.allSettled(validateComponents.value.map(t => t.validate())).then(res => {
+          const rejected = res.filter(item => item.status === 'rejected') as {
+            status: 'rejected' | 'fulfilled';
+            reason: ValidateReturnType;
+          }[];
 
-            if (rejected.length) {
-              reject(rejected.map(rej => rej.reason.errors).flat());
+          if (rejected.length) {
+            reject(rejected.map(rej => rej.reason.errors).flat());
 
-              if (props.scrollToError) {
-                scrollToField(rejected[0].reason.errors[0].field);
-              }
-            } else {
-              resolve();
+            if (props.scrollToError) {
+              scrollToField(rejected[0].reason.errors[0].field);
             }
-          })
-          .catch(err => {
-            console.error(err);
-          });
+          } else {
+            resolve();
+          }
+        });
       });
     };
 
@@ -113,26 +109,22 @@ export default defineComponent({
           validateComponents.value
             .filter(item => item.props.prop && itemProps.includes(item.props.prop))
             .map(t => t.validate()),
-        )
-          .then(res => {
-            const rejected = res.filter(item => item.status === 'rejected') as {
-              status: 'rejected' | 'fulfilled';
-              reason: ValidateReturnType;
-            }[];
+        ).then(res => {
+          const rejected = res.filter(item => item.status === 'rejected') as {
+            status: 'rejected' | 'fulfilled';
+            reason: ValidateReturnType;
+          }[];
 
-            if (rejected.length) {
-              reject(rejected.map(rej => rej.reason.errors).flat());
+          if (rejected.length) {
+            reject(rejected.map(rej => rej.reason.errors).flat());
 
-              if (props.scrollToError) {
-                scrollToField(rejected[0].reason.errors[0].field);
-              }
-            } else {
-              resolve(itemProps);
+            if (props.scrollToError) {
+              scrollToField(rejected[0].reason.errors[0].field);
             }
-          })
-          .catch(err => {
-            console.error(err);
-          });
+          } else {
+            resolve(itemProps);
+          }
+        });
       });
     };
 

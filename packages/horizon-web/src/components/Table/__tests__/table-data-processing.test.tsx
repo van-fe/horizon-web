@@ -581,4 +581,79 @@ describe('Table data processing integration', () => {
     expect(table.getDataProcessingState().status).toBe('cancelled');
     expect(workers.some(worker => worker.terminate.mock.calls.length > 0)).toBe(true);
   });
+
+  test('reports worker-error when transport fallback succeeds synchronously', async () => {
+    class ThrowingWorker extends EventTarget {
+      terminate = vi.fn();
+      postMessage() {
+        throw new Error('structured clone failed');
+      }
+    }
+
+    const worker = new ThrowingWorker();
+    const wrapper = mount(() => (
+      <HTable
+        data={[{ id: 1, score: 1 }, { id: 2, score: 2 }]}
+        rowKey="id"
+        defaultSort={[{ prop: 'score', order: HTableSortOrderEnum.DESC }]}
+        dataProcessing={{
+          mode: 'worker',
+          debounce: 0,
+          workerFactory: () => worker as unknown as Worker,
+        }}
+      >
+        <HTableColumn title="Score" field="score" sortable />
+      </HTable>
+    ));
+    await settleProcessing();
+    await settleProcessing();
+
+    const state = wrapper.findComponent(HTable).getCurrentComponent().exposed!.getDataProcessingState();
+    expect(state).toMatchObject({ status: 'ready', mode: 'sync', fallbackReason: 'worker-error' });
+    expect(wrapper.findAll('tbody tr').map(row => row.text())).toEqual(['2', '1']);
+  });
+
+  test('disposes the idle executor when workerFactory function availability changes', async () => {
+    const workers: EngineBackedWorker[] = [];
+    const workerFactory = ref<(() => Worker) | undefined>(() => {
+      const worker = new EngineBackedWorker();
+      workers.push(worker);
+      return worker as unknown as Worker;
+    });
+    const wrapper = mount(() => (
+      <HTable
+        data={[{ id: 1, score: 1 }, { id: 2, score: 2 }]}
+        rowKey="id"
+        defaultSort={[{ prop: 'score', order: HTableSortOrderEnum.ASC }]}
+        dataProcessing={{ mode: 'worker', debounce: 0, workerFactory: workerFactory.value }}
+      >
+        <HTableColumn title="Score" field="score" sortable />
+      </HTable>
+    ));
+    await settleProcessing();
+    await settleProcessing();
+    expect(workers).toHaveLength(1);
+
+    vi.stubGlobal('Worker', undefined);
+    workerFactory.value = undefined;
+    await settleProcessing();
+    await settleProcessing();
+    expect(workers[0].terminate).toHaveBeenCalledOnce();
+    expect(
+      wrapper.findComponent(HTable).getCurrentComponent().exposed!.getDataProcessingState(),
+    ).toMatchObject({ status: 'ready', mode: 'sync', fallbackReason: 'worker-unavailable' });
+  });
+
+  test('returns a cancelled refresh after the hook has been disposed', async () => {
+    const wrapper = mount(() => (
+      <HTable data={[{ id: 1 }]} rowKey="id">
+        <HTableColumn title="ID" field="id" />
+      </HTable>
+    ));
+    await settleProcessing();
+    const table = wrapper.findComponent(HTable).getCurrentComponent().exposed!;
+    wrapper.unmount();
+
+    await expect(table.refreshDataProcessing()).resolves.toMatchObject({ status: 'cancelled' });
+  });
 });

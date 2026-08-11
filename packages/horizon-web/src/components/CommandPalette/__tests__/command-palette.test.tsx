@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, expect, test, vi } from 'vitest';
-import { defineComponent, reactive } from 'vue';
+import { defineComponent, nextTick, reactive } from 'vue';
 import HCommandPalette from '../src/CommandPalette';
 import { useCommandPalette } from '../src/hooks/useCommandPalette';
 describe('CommandPalette', () => {
@@ -47,6 +47,169 @@ describe('CommandPalette', () => {
     await wrapper.vm.$nextTick();
     expect(perform).toHaveBeenCalledOnce();
     expect(wrapper.emitted('select')?.[0]?.[0]).toMatchObject({ id: 'open' });
+    wrapper.unmount();
+  });
+
+  test('renders placeholder and empty fallbacks while emitting native search input', async () => {
+    const onSearch = vi.fn();
+    const wrapper = mount(HCommandPalette, {
+      props: {
+        visible: true,
+        commands: [{ id: 'open', label: 'Open file' }],
+        placeholder: 'Search actions',
+        emptyText: 'Nothing here',
+        onSearch,
+      },
+      attachTo: document.body,
+    });
+    await nextTick();
+    const input = document.body.querySelector('.h-command-palette__input') as HTMLInputElement;
+    expect(input.placeholder).toBe('Search actions');
+    input.value = 'missing';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await nextTick();
+
+    expect(onSearch).toHaveBeenCalledWith('missing');
+    expect(document.body.querySelector('.h-command-palette__empty')?.textContent).toBe(
+      'Nothing here',
+    );
+    wrapper.unmount();
+  });
+
+  test('renders command and empty slots with their public scope', async () => {
+    const slotCalls: Array<{ id: string; active: boolean }> = [];
+    const wrapper = mount(HCommandPalette, {
+      props: { visible: true, commands: [{ id: 'save', label: 'Save' }] },
+      slots: {
+        command: (scope?: any) => {
+          const { command, active } = scope ?? { command: { id: '' }, active: false };
+          slotCalls.push({ id: command.id, active });
+          return <span class="command-slot">{`${command.id}:${active}`}</span>;
+        },
+        empty: () => <span class="empty-slot">No custom matches</span>,
+      },
+      attachTo: document.body,
+    });
+    await nextTick();
+    expect(document.body.querySelector('.command-slot')?.textContent).toBe('save:true');
+    expect(slotCalls).toContainEqual({ id: 'save', active: true });
+
+    const input = document.body.querySelector('.h-command-palette__input') as HTMLInputElement;
+    input.value = 'missing';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await nextTick();
+    expect(document.body.querySelector('.empty-slot')?.textContent).toBe('No custom matches');
+    wrapper.unmount();
+  });
+
+  test('uses custom filtering and keyboard navigation but skips disabled execution', async () => {
+    const first = vi.fn();
+    const disabled = vi.fn();
+    const filter = vi.fn((query: string, command: { id: string }) => command.id.startsWith(query));
+    const onSelect = vi.fn();
+    const wrapper = mount(HCommandPalette, {
+      props: {
+        visible: true,
+        closeOnSelect: false,
+        filter,
+        commands: [
+          { id: 'alpha', label: 'First', perform: first },
+          { id: 'beta', label: 'Second', disabled: true, perform: disabled },
+        ],
+        onSelect,
+      },
+      attachTo: document.body,
+    });
+    await nextTick();
+    const input = document.body.querySelector('.h-command-palette__input') as HTMLInputElement;
+    input.value = '';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
+    await nextTick();
+    expect(document.body.querySelectorAll('[role="option"]')[1].getAttribute('aria-selected')).toBe(
+      'true',
+    );
+    input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    await nextTick();
+    expect(disabled).not.toHaveBeenCalled();
+    expect(onSelect).not.toHaveBeenCalled();
+
+    input.value = 'alp';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await nextTick();
+    expect(filter).toHaveBeenCalledWith('alp', expect.objectContaining({ id: 'alpha' }));
+    input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    await nextTick();
+    expect(first).toHaveBeenCalledOnce();
+    expect(onSelect).toHaveBeenCalledWith(expect.objectContaining({ id: 'alpha' }));
+    expect(wrapper.emitted('update:visible')).toBeUndefined();
+    wrapper.unmount();
+  });
+
+  test('global hotkey follows hotkey and visible props', async () => {
+    const onUpdate = vi.fn();
+    const wrapper = mount(HCommandPalette, {
+      props: { visible: false, commands: [], hotkey: true, 'onUpdate:visible': onUpdate },
+    });
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', ctrlKey: true, bubbles: true }));
+    expect(onUpdate).toHaveBeenCalledWith(true);
+
+    await wrapper.setProps({ hotkey: false });
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', ctrlKey: true, bubbles: true }));
+    expect(onUpdate).toHaveBeenCalledOnce();
+  });
+
+  test('renders command metadata and wraps keyboard navigation in both directions', async () => {
+    const onSelect = vi.fn();
+    const wrapper = mount(HCommandPalette, {
+      props: {
+        visible: true,
+        commands: [
+          {
+            id: 'open',
+            label: 'Open file',
+            description: 'Open a local document',
+            shortcut: '⌘O',
+          },
+          { id: 'save', label: 'Save file' },
+        ],
+        onSelect,
+      },
+      attachTo: document.body,
+    });
+    await nextTick();
+    const input = document.body.querySelector('.h-command-palette__input') as HTMLInputElement;
+    const options = Array.from(
+      document.body.querySelectorAll<HTMLButtonElement>('.h-command-palette__item'),
+    );
+    expect(options[0].querySelector('small')?.textContent).toBe('Open a local document');
+    expect(options[0].querySelector('kbd')?.textContent).toBe('⌘O');
+
+    options[1].dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+    await nextTick();
+    expect(options[1].getAttribute('aria-selected')).toBe('true');
+    input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));
+    await nextTick();
+    expect(options[0].getAttribute('aria-selected')).toBe('true');
+
+    input.value = 'missing';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await nextTick();
+    expect(document.body.querySelector('.h-command-palette__empty')?.textContent?.trim()).not.toBe(
+      '',
+    );
+    input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
+    input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    await nextTick();
+    expect(onSelect).not.toHaveBeenCalled();
+
+    await wrapper.setProps({ visible: false });
+    await wrapper.setProps({ visible: true });
+    await nextTick();
+    await nextTick();
+    expect(input.value).toBe('');
+    expect(document.activeElement).toBe(input);
     wrapper.unmount();
   });
 });

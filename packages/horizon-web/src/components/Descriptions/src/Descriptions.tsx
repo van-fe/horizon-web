@@ -52,15 +52,10 @@ export default defineComponent({
       labelWidthArr: [],
       itemLen: 0,
     });
-    const setLabelWidth = (val: number | string) => {
-      if (typeof val === 'string') {
-        labelWidth.value = val;
-      } else {
-        descriptionItemObj.labelWidthArr.push(val);
-        if (descriptionItemObj.labelWidthArr.length === descriptionItemObj.itemLen) {
-          const maxLength = Math.max(...descriptionItemObj.labelWidthArr);
-          labelWidth.value = maxLength ? `${maxLength}px` : 'auto';
-        }
+    const setLabelWidth = (val: number) => {
+      descriptionItemObj.labelWidthArr.push(val);
+      if (descriptionItemObj.labelWidthArr.length === descriptionItemObj.itemLen) {
+        labelWidth.value = `${Math.max(...descriptionItemObj.labelWidthArr)}px`;
       }
     };
 

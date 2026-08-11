@@ -17,7 +17,7 @@ import {
   HPickerStatusInjectKey,
 } from '../utils/InjectKeys';
 import HPopContent from '~/components/Popover/src/PopContent';
-import { IconLoadingLine, IconSearch } from '@aurora/icon';
+import { IconLoadingLine } from '@aurora/icon';
 import ClickOutside from '~/directives/v-click-outside';
 import Loading from '~/directives/v-loading';
 import useLocaleLang from '~/utils/useLocaleLang';
@@ -179,11 +179,7 @@ export default defineComponent({
                     onInput={(val: string, evt: Event) => onInput(evt)}
                     onFocus={onInputFocus}
                     onBlur={onInputBlur}
-                  >
-                    {{
-                      prefix: () => <IconSearch />,
-                    }}
-                  </HInput>
+                  />
                 </div>
               )}
               <div
@@ -207,6 +203,8 @@ export default defineComponent({
                 >
                   {parentSlots.default?.(parentProps.modelValue, pickerStatus.value)}
                 </div>
+                {parentProps.panelStatus === 'loading' &&
+                  parentSlots.panelLoading?.(parentProps.modelValue, pickerStatus.value)}
                 {parentProps.panelStatus === 'empty' &&
                   (parentSlots.panelEmpty?.(parentProps.modelValue, pickerStatus.value) ?? (
                     <div class={classHelper.em('pop-content', 'empty')}>

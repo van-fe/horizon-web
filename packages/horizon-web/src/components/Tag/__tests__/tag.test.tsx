@@ -278,6 +278,49 @@ describe('Tag.tsx', () => {
 
       expect(onClose).toHaveBeenCalledOnce();
     });
+
+    test('close does not also trigger the clickable tag action', async () => {
+      const onClick = vi.fn();
+      const onClose = vi.fn();
+      const wrapper = mount(() => (
+        <HTag clickable closable onClick={onClick} onClose={onClose}>
+          Removable
+        </HTag>
+      ));
+
+      await wrapper.find('.h-tag__close').trigger('click');
+
+      expect(onClose).toHaveBeenCalledOnce();
+      expect(onClick).not.toHaveBeenCalled();
+    });
+
+    test('a controlled boolean requests a toggle without changing until the parent updates', async () => {
+      const wrapper = mount(HTag, { props: { modelValue: false } });
+      const tag = wrapper.find('.h-tag');
+
+      await tag.trigger('click');
+
+      expect(wrapper.emitted('update:modelValue')).toEqual([[true]]);
+      expect(tag.classes()).not.toContain('is-active');
+
+      await wrapper.setProps({ modelValue: true });
+      expect(tag.classes()).toContain('is-active');
+    });
+
+    test('disabled tags cannot toggle, click or close', async () => {
+      const onClick = vi.fn();
+      const onClose = vi.fn();
+      const wrapper = mount(HTag, {
+        props: { modelValue: false, disabled: true, closable: true, onClick, onClose },
+      });
+
+      expect(wrapper.find('.h-tag__close').exists()).toBe(false);
+      await wrapper.find('.h-tag').trigger('click');
+
+      expect(wrapper.emitted('update:modelValue')).toBeUndefined();
+      expect(onClick).not.toHaveBeenCalled();
+      expect(onClose).not.toHaveBeenCalled();
+    });
   });
 
   describe('slots', () => {

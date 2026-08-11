@@ -61,12 +61,11 @@ export default defineComponent({
       if (isDisabled.value) return;
 
       const files = Array.from(e.dataTransfer?.files ?? []);
+      isDragOver.value = false;
 
       if (files.length) {
         await uploadFileHelper.addFiles(files);
       }
-
-      isDragOver.value = false;
     }
 
     function onDragOver(e: DragEvent) {
@@ -80,6 +79,7 @@ export default defineComponent({
     function onDragLeave(e: DragEvent) {
       e.stopPropagation();
       e.preventDefault();
+      isDragOver.value = false;
     }
 
     function onClick() {
@@ -106,7 +106,8 @@ export default defineComponent({
         onDrop={onDrop}
         onClick={onClick}
       >
-        {slots.default?.() ?? (
+        {slots.trigger?.() ??
+          slots.default?.() ?? (
           <div class={cls(classHelper.e('inner'))}>
             <div class={classHelper.e('title')}>
               <div class={classHelper.em('title', 'icon')}>
@@ -120,7 +121,7 @@ export default defineComponent({
             </div>
             <div class={classHelper.e('tips')}>{slots.tips?.() ?? tipsText.value}</div>
           </div>
-        )}
+          )}
       </div>
     );
   },

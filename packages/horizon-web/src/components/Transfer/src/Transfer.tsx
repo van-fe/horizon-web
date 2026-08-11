@@ -100,7 +100,7 @@ export default defineComponent({
     const leftPanelData = ref<TransferDataProps[]>([]);
     const rightPanelData = ref<TransferDataProps[]>([]);
 
-    const flattenData = computed(() => handleFlatTree(dataProp.value) ?? []);
+    const flattenData = computed(() => handleFlatTree(dataProp.value));
 
     // 左侧已选中数据，不包含分组项、禁用项
     const panelCheckedData = computed(() =>
@@ -157,8 +157,13 @@ export default defineComponent({
       }
     });
 
-    function updateModelValue(val: TransferProps['modelValue']) {
+    function updateModelValue(
+      val: TransferProps['modelValue'],
+      direction?: 'left' | 'right',
+      moveKeys: CheckboxUnionType[] = [],
+    ) {
       emit('update:modelValue', val);
+      if (direction) emit('change', val, direction, moveKeys);
       nextTick().then(() => {
         formItemTrigger?.('change');
       });
@@ -195,9 +200,16 @@ export default defineComponent({
      */
     const checkedAll = ref(false);
     const indeterminate = ref(false);
+    const isCheckboxKey = (key: unknown): key is CheckboxUnionType =>
+      typeof key === 'string' || typeof key === 'number' || typeof key === 'boolean';
     const handleCheckedAll = (isCheckedAll: CheckboxUnionType | CheckboxUnionType[]) => {
       if (isCheckedAll) {
-        updateModelValue(panelCheckedData.value.map(item => item[itemKeyMap.value.key]));
+        const nextKeys = panelCheckedData.value
+          .map(item => item[itemKeyMap.value.key])
+          .filter(isCheckboxKey);
+        const moveKeys = nextKeys.filter(key => !modelValueProp.value.includes(key));
+        updateModelValue(nextKeys, 'right', moveKeys);
+        emit('leftCheckChange', nextKeys);
       } else {
         clearChecked();
       }
@@ -214,10 +226,13 @@ export default defineComponent({
         .filter(
           (item: TransferDataProps) => !item[itemKeyMap.value.disabled as keyof TransferDataProps],
         )
-        .map(item => item[itemKeyMap.value.key as keyof TransferDataProps]);
-      updateModelValue(
-        modelValueProp.value.filter((val: CheckboxUnionType) => !disabledValue.includes(val)),
+        .map(item => item[itemKeyMap.value.key as keyof TransferDataProps])
+        .filter(isCheckboxKey);
+      const nextKeys = modelValueProp.value.filter(
+        (val: CheckboxUnionType) => !disabledValue.includes(val),
       );
+      updateModelValue(nextKeys, 'left', disabledValue);
+      emit('rightCheckChange', nextKeys);
     }
 
     /**
@@ -227,10 +242,16 @@ export default defineComponent({
       const checkedArr = modelValueProp.value.filter(
         (item: CheckboxUnionType) => !removeArr.includes(item),
       );
-      updateModelValue(checkedArr);
+      updateModelValue(checkedArr, 'left', removeArr);
+      emit('rightCheckChange', checkedArr);
     };
     const handleTransferToRight = (checkedArr: CheckboxUnionType[]) => {
-      updateModelValue(checkedArr);
+      const currentRightKeys = rightPanelData.value
+        .map(item => item[itemKeyMap.value.key as keyof TransferDataProps])
+        .filter(isCheckboxKey);
+      const moveKeys = checkedArr.filter(key => !currentRightKeys.includes(key));
+      updateModelValue(checkedArr, 'right', moveKeys);
+      emit('leftCheckChange', checkedArr);
     };
 
     // 更新右侧面板数据
@@ -298,8 +319,8 @@ export default defineComponent({
     );
 
     watch(
-      () => modelValueProp.value,
-      val => {
+      [() => modelValueProp.value, () => targetOrderProp.value],
+      ([val]) => {
         updateRightPanelData(val);
         // 右侧面板有数据,且数据部分被选中(控制表头选择框的半选模式)
         indeterminate.value =
@@ -333,6 +354,7 @@ export default defineComponent({
           emptyTxt={emptyTxtProp.value[0]}
           class={`${classHelper.m('left')}`}
           onTransfer={handleTransferToRight}
+          onSearch={value => emit('search', value)}
           onExpand={handleExpandChildren}
           disabled={isDisabled.value}
           v-slots={{

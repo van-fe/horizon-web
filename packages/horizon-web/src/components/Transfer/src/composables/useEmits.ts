@@ -1,5 +1,5 @@
 import type { TransferDataProps, CheckboxUnionType } from './useProps';
-import { isObject, isString } from '@aurora/utils';
+import { isBoolean, isObject, isString, isUndefined } from '@aurora/utils';
 
 export const useTransferEmits = {
   /**
@@ -52,6 +52,11 @@ export type TransferEmits = typeof useTransferEmits;
 
 export const useTransferPanelEmits = {
   /**
+   * 筛选内容变化时触发
+   * @en Emitted when the panel search value changes.
+   */
+  search: (value: string) => typeof value === 'string',
+  /**
    *
    * @param value 选中key值
    * @paramEn value The value value.
@@ -75,7 +80,8 @@ export const useTransferPanelEmits = {
    * @returns
     * @en Emitted when expand changes.
    */
-  expand: (isExpandRoot: boolean, value?: TransferDataProps) => value,
+  expand: (isExpandRoot: boolean, value?: TransferDataProps) =>
+    isBoolean(isExpandRoot) && (isObject(value) || isUndefined(value)),
 };
 
 export type TransferPanelEmits = typeof useTransferPanelEmits;

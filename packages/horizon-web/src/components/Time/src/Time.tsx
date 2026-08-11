@@ -1,4 +1,4 @@
-import { computed, defineComponent, onMounted, toRefs, ref, watch } from 'vue';
+import { computed, defineComponent, onBeforeUnmount, onMounted, toRefs, ref, watch } from 'vue';
 import { useTimeProps } from './composables/useProps';
 import { useTimeEmits } from './composables/useEmits';
 import type { TimeSlots } from './composables/useSlots';
@@ -88,6 +88,9 @@ export default defineComponent({
     );
     onMounted(() => {
       handleCountDown();
+    });
+    onBeforeUnmount(() => {
+      if (setTimeoutId !== null) window.clearTimeout(setTimeoutId);
     });
     return () => (
       <div class={`${classHelper.block}`}>

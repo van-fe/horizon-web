@@ -113,17 +113,17 @@ export default defineComponent({
       handleClose();
     }
 
-    let prevColor = modelValue?.resultsValue.value;
+    let prevColor = modelValue.resultsValue.value;
     function onClose() {
-      if (props.recentlyColors && prevColor !== modelValue?.resultsValue.value) {
+      if (props.recentlyColors && prevColor !== modelValue.resultsValue.value) {
         currentRecordRecentlyColor();
       }
     }
 
     function currentRecordRecentlyColor() {
-      if (modelValue?.resultsValue.value) {
-        recordRecentlyColor(modelValue?.resultsValue.value);
-        prevColor = modelValue?.resultsValue.value;
+      if (modelValue.resultsValue.value) {
+        recordRecentlyColor(modelValue.resultsValue.value);
+        prevColor = modelValue.resultsValue.value;
       }
     }
 
@@ -137,11 +137,7 @@ export default defineComponent({
     provide(ColorPickerOnClear, onClear);
 
     function handleClose() {
-      manualControlVisible(false);
-    }
-
-    function manualControlVisible(visible: boolean) {
-      visible ? pickerRef.value?.show?.() : pickerRef.value?.hide?.();
+      pickerRef.value?.hide?.();
     }
 
     function onBlur() {
@@ -169,7 +165,11 @@ export default defineComponent({
     const error = inject(HFormItemErrorInjectedKey, ref(''));
 
     expose({
-      colorPicker: pickerRef.value?.wrapperDom?.().input,
+      get colorPicker() {
+        return (pickerRef.value!.wrapperDom() as HTMLElement).querySelector<HTMLInputElement>(
+          'input',
+        );
+      },
     });
 
     return () => (
@@ -182,7 +182,7 @@ export default defineComponent({
           classHelper.m(sizeRef.value),
         )}
         size={sizeRef.value}
-        inputStatus={!!error?.value ? 'error' : undefined}
+        inputStatus={!!error.value ? 'error' : undefined}
         disabled={isDisabled.value}
         fitInputWidth="fit-content"
         placement={props.triggerType === 'square' ? 'bottom' : 'bottom-end'}
@@ -193,7 +193,7 @@ export default defineComponent({
         confirmAreaPadding={cssVariable('color-picker', 'spacing', 'confirm', 'padding')}
         confirmNeedClear={props.clearable}
         destroyOnHide={true}
-        popoverOptions={{ hideEventType: 'mousedown' }}
+        popoverOptions={{ hideEventType: 'mousedown', ...props.popoverProps }}
         hideInput={props.triggerType === 'square'}
         toBody={props.toBody}
         {...attrs}
@@ -207,7 +207,7 @@ export default defineComponent({
         {{
           default: () => <ColorPickerPanel />,
           pickerIcon: () => (
-            <ColorPickerTrigger withText={props.triggerType === 'square' && props.squareText} />
+            <ColorPickerTrigger />
           ),
           ...(slots.trigger ? { pickerOuter: () => slots.trigger?.(modelValue) } : {}),
         }}

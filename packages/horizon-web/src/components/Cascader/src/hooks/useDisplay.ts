@@ -22,6 +22,8 @@ export default function useDisplay(
 ) {
   let prevSelectedValue: HCascaderUuidType | null = null;
   let prevSelectedLabel = '';
+  const statisticText = useLocaleLang('cascader.statistic');
+  const statisticsText = useLocaleLang('cascader.statistics');
 
   const showValue = computed(() => {
     if (props.multiple) {
@@ -29,8 +31,8 @@ export default function useDisplay(
         return props.statisticText
           ? `${props.statisticText} (${options.modelValueSet.value.size})`
           : options.modelValueSet.value.size <= 1
-            ? (useLocaleLang('cascader.statistic').value as string)
-            : `${useLocaleLang('cascader.statistics').value} (${options.modelValueSet.value.size})`;
+            ? (statisticText.value as string)
+            : `${statisticsText.value} (${options.modelValueSet.value.size})`;
       }
 
       if (

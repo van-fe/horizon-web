@@ -141,7 +141,6 @@ export default defineComponent({
         ) : (
           <div class={classHelper.e('empty')}>
             {parentSlots.empty?.() ??
-              parentSlots.empty?.() ??
               parentProps.emptyText ??
               useLocaleLang('cascader.noData').value}
           </div>

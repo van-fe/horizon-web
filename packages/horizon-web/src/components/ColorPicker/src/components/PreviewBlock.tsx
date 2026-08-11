@@ -32,15 +32,15 @@ export default defineComponent({
       onEnd: handleAlphaTrackDrag,
     });
     const classHelper = new ComponentClassBlock('color-picker-panel');
-    const currentColor = inject(ColorPickerCurrentValue);
-    const parentProps = inject(ColorPickerProps);
+    const currentColor = inject(ColorPickerCurrentValue)!;
+    const parentProps = inject(ColorPickerProps)!;
     const locale = inject(localeInjectKey, defaultLocale);
     const colorCursorLeft = ref(0);
     const alphaCursorLeft = ref(0);
 
     const alphaBackground = computed(() => {
-      if (currentColor?.currentActiveColorTarget.color.value) {
-        const [r, g, b] = currentColor?.currentActiveColorTarget.color.toRgbArr();
+      if (currentColor.currentActiveColorTarget.color.value) {
+        const [r, g, b] = currentColor.currentActiveColorTarget.color.toRgbArr();
         return `linear-gradient(to right, rgba(${r}, ${g}, ${b}, 0) 0%, rgba(${r}, ${g}, ${b}, 1) 100%)`;
       } else {
         return undefined;
@@ -48,7 +48,7 @@ export default defineComponent({
     });
 
     watch(
-      () => currentColor?.currentActiveColorTarget?.color.value,
+      () => currentColor.currentActiveColorTarget.color.value,
       () => {
         initColorCursorPosition();
         initAlphaCursorPosition();
@@ -57,7 +57,7 @@ export default defineComponent({
 
     function initColorCursorPosition() {
       if (colorCursorIsDragging.value) return;
-      const hue = currentColor?.currentActiveColorTarget?.color.get('hue') || 0;
+      const hue = currentColor.currentActiveColorTarget.color.get('hue');
       const trackWidth = colorTrackRef.value?.offsetWidth || 190;
       const cursorWidth = colorCursorRef.value?.offsetWidth || 18;
 
@@ -66,7 +66,7 @@ export default defineComponent({
 
     function initAlphaCursorPosition() {
       if (alphaCursorIsDragging.value) return;
-      const alpha = currentColor?.currentActiveColorTarget?.color.get('alpha') || 0;
+      const alpha = currentColor.currentActiveColorTarget.color.get('alpha');
       const trackWidth = alphaTrackRef.value?.offsetWidth || 190;
       const cursorWidth = alphaCursorRef.value?.offsetWidth || 18;
 
@@ -82,7 +82,7 @@ export default defineComponent({
 
       colorCursorLeft.value = left - cursorWidth / 2;
 
-      currentColor?.currentActiveColorTarget?.color.set(
+      currentColor.currentActiveColorTarget.color.set(
         'hue',
         Math.round((left / rect.width) * 360),
         true,
@@ -98,7 +98,7 @@ export default defineComponent({
 
       alphaCursorLeft.value = left - cursorWidth / 2;
 
-      currentColor?.currentActiveColorTarget?.color.set(
+      currentColor.currentActiveColorTarget.color.set(
         'alpha',
         Math.round((left / rect.width) * 100),
         true,
@@ -106,17 +106,15 @@ export default defineComponent({
     }
 
     function runEyeDropper() {
-      if (parentProps?.enableEyeDropper) {
-        if (!window.EyeDropper) {
-          $message.error(locale?.value?.langService?.td().horizonWeb.colorPicker.noEyeDropper || '');
-          return;
-        }
-
-        const picker = new EyeDropper();
-        picker.open().then(val => {
-          currentColor?.currentActiveColorTarget?.color.analysis(val.sRGBHex);
-        });
+      if (!window.EyeDropper) {
+        $message.error(locale.value?.langService.td().horizonWeb.colorPicker.noEyeDropper || '');
+        return;
       }
+
+      const picker = new EyeDropper();
+      picker.open().then(val => {
+        currentColor.currentActiveColorTarget.color.analysis(val.sRGBHex);
+      });
     }
 
     onMounted(() => {
@@ -128,7 +126,7 @@ export default defineComponent({
 
     return () => (
       <div class={classHelper.e('preview')}>
-        {parentProps?.enableEyeDropper && (
+        {parentProps.enableEyeDropper && (
           <div class={classHelper.em('preview', 'picker')} onClick={runEyeDropper}>
             <svg
               width="16"
@@ -151,28 +149,28 @@ export default defineComponent({
               class="cursor"
               style={{
                 left: colorCursorLeft.value + 'px',
-                background: currentColor?.currentActiveColorTarget?.color.pureValue,
+                background: currentColor.currentActiveColorTarget.color.pureValue,
               }}
             />
           </div>
-          <div v-show={parentProps?.alpha} ref={alphaTrackRef} class="alpha">
+          <div v-show={parentProps.alpha} ref={alphaTrackRef} class="alpha">
             <div class="alpha-color-bg" style={{ background: alphaBackground.value }} />
             <div
               ref={alphaCursorRef}
               class="cursor"
               style={{
                 left: alphaCursorLeft.value + 'px',
-                background: currentColor?.currentActiveColorTarget?.color.value,
+                background: currentColor.currentActiveColorTarget.color.value,
               }}
             />
           </div>
         </div>
         <div class={classHelper.em('preview', 'dot')}>
-          <div v-show={parentProps?.alpha} class="alpha" />
+          <div v-show={parentProps.alpha} class="alpha" />
           <div
             class={cls('current-color')}
             style={{
-              background: currentColor?.currentActiveColorTarget?.color.value,
+              background: currentColor.currentActiveColorTarget.color.value,
             }}
           />
         </div>

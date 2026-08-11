@@ -173,11 +173,11 @@ export default defineComponent({
                 size={iconSize.value}
                 onClick={handleToggleShowPassword}
               />
-            ) : (
+            ) : null}
+            {(slots.suffix || props.suffixIcon) &&
               useIconRender(props.suffixIcon, slots.suffix, {
                 size: iconSize.value,
-              })
-            )}
+              })}
           </span>
         );
       } else {

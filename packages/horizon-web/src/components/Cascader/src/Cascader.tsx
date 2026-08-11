@@ -235,13 +235,13 @@ export default defineComponent({
         }
         dropdownIcon={dropdownIconRef?.value}
         panelClass={popperClassNameRef?.value}
-        popoverOptions={popoverOptionsRef?.value}
         useFitContentInput={true}
         usePanelInput={useBuildInPanelFilterRef.value}
         panelInputPlaceholder={
           panelInputPlaceholderRef?.value ??
           (useLocaleLang('cascader.pleaseSearch').value as string)
         }
+        searchIcon={props.searchIcon}
         fitInputWidth={
           !!inputValueMerged.value
             ? fitInputWidthRef.value
@@ -250,6 +250,7 @@ export default defineComponent({
               : 'fit-content'
         }
         fitContentInputMinWidth={fitContentInputMinWidthRef?.value}
+        popoverOptions={{ ...popoverOptionsRef?.value, flip: props.flip }}
         showPopoverContentOnly={props.showPopoverContentOnly}
         hideContentInnerWhenEmpty={true}
         onClick={handleClick}

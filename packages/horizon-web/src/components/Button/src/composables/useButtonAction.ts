@@ -23,10 +23,8 @@ export function useButtonAction(
   );
 
   async function runAsyncAction(): Promise<void> {
-    if (!props.debounceFn || pending.value) return;
-
     pending.value = true;
-    const result = await guard.run(props.debounceFn);
+    const result = await guard.run(props.debounceFn!);
     if (!active) return;
     pending.value = false;
     if (result.status === 'completed') emit('debounceFinished');

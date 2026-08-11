@@ -100,7 +100,7 @@ export const useProgressProps = declarePropType({
     * @en Configuration for color.
    */
   color: {
-    type: [String, Array, Function] as PropType<string | Color[] | ProgressFn>,
+    type: [String, Array, Function] as PropType<string | Array<string | Color> | ProgressFn>,
     default: '',
   },
 });

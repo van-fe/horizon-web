@@ -91,7 +91,7 @@ export default defineComponent({
         tempPinFlag.value = cloneDeep(
           pinFlags.addTempPinFlag(
             newPinFlagStartAt.value,
-            newPinFlagEndAt.value ?? newPinFlagStartAt.value!.add(1, 'd'),
+            newPinFlagEndAt.value!,
             cbData?.title,
             cbData?.type,
           ),
@@ -344,16 +344,14 @@ export default defineComponent({
                               </div>
                             </div>
                           )}
-                          {pinFlags.pinFlags && (
-                            <div
-                              class={cls(classHelper.em('flag', 'placeholder'))}
-                              style={{
-                                height: `calc(${pinFlags.getFlagsAmountInDay(
-                                  date,
-                                )}  * (${cssVariable('calendar', 'size', 'flag', 'month', 'height')} + ${cssVariable('calendar', 'spacing', 'flag', 'month', 'margin-bottom')}))`,
-                              }}
-                            />
-                          )}
+                          <div
+                            class={cls(classHelper.em('flag', 'placeholder'))}
+                            style={{
+                              height: `calc(${pinFlags.getFlagsAmountInDay(
+                                date,
+                              )}  * (${cssVariable('calendar', 'size', 'flag', 'month', 'height')} + ${cssVariable('calendar', 'spacing', 'flag', 'month', 'margin-bottom')}))`,
+                            }}
+                          />
                           <div class={classHelper.em('day', 'cell-append')}>
                             {parentSlots.dateCellAppend?.(date.format(props.format), date)}
                           </div>

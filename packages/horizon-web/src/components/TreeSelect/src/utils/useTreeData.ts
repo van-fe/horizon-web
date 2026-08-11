@@ -8,8 +8,8 @@ import { transformUuid } from '~/components/Tree/src/utils/config';
 
 export default function (
   props: ToRefs<TreeSelectProps>,
-  context: HTreeSelectContext,
-  domRefs: HTreeSelectDomRefs,
+  _context: HTreeSelectContext,
+  _domRefs: HTreeSelectDomRefs,
 ) {
   const treeHelper = new TreeHelper<HTreeData, HTreeExtendsData>(
     props.treeData.value,

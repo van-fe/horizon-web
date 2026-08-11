@@ -329,7 +329,7 @@ export const useGuideItemProps = declarePropType({
    */
   draggable: {
     type: Boolean,
-    default: false,
+    default: undefined,
   },
 });
 

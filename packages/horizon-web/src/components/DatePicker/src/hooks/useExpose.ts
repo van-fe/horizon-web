@@ -21,12 +21,16 @@ export default function useExpose(
   context.expose({
     changePanelVisible: options.modifyPanelVisible,
     increaseYear: (amount: number) => {
-      options.switchPanelShowDate('start', options.startPanelShowDate.value.add(amount, 'year'));
-      options.switchPanelShowDate('end', options.startPanelShowDate.value.add(amount, 'year'));
+      const startTarget = options.startPanelShowDate.value.add(amount, 'year');
+      const endTarget = options.endPanelShowDate.value.add(amount, 'year');
+      options.switchPanelShowDate('start', startTarget);
+      options.switchPanelShowDate('end', endTarget);
     },
     increaseMonth: (amount: number) => {
-      options.switchPanelShowDate('start', options.startPanelShowDate.value.add(amount, 'month'));
-      options.switchPanelShowDate('end', options.startPanelShowDate.value.add(amount, 'month'));
+      const startTarget = options.startPanelShowDate.value.add(amount, 'month');
+      const endTarget = options.endPanelShowDate.value.add(amount, 'month');
+      options.switchPanelShowDate('start', startTarget);
+      options.switchPanelShowDate('end', endTarget);
     },
     confirmHandle: () => options.doConfirm(true),
     cancelHandle: options.doCancel,

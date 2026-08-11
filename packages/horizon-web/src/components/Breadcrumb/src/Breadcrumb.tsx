@@ -70,7 +70,13 @@ export default defineComponent({
 
     const renderItem = (arr: BreadcrumbItem[] = []) => {
       return arr.map((v, k) => (
-        <HBreadcrumbItem key={k} size={sizeRef.value} {...v} title={title.value}>
+        <HBreadcrumbItem
+          key={k}
+          size={sizeRef.value}
+          {...v}
+          {...({ _sourceItem: v } as Record<string, unknown>)}
+          title={title.value}
+        >
           {{
             default: () => v.text,
             separator: slots.separator,
@@ -81,10 +87,7 @@ export default defineComponent({
 
     function onClickItem(props: BreadcrumbItem, e: MouseEvent) {
       onClickBreadcrumbItem(props, router);
-
-      if (isItemClickable(props)) {
-        emit('itemClick', props, e);
-      }
+      emit('itemClick', props, e);
     }
 
     provide(HBreadcrumbItemClickInjectKey, onClickItem);

@@ -81,4 +81,152 @@ describe('Typography', () => {
       expect(dictionary.horizonWeb.typography.edit).toBeTruthy();
     });
   });
+
+  test('maps every text presentation prop to semantic classes and attributes', () => {
+    const wrapper = mount(HTypography, {
+      props: {
+        tag: 'article',
+        type: 'success',
+        size: 'large',
+        weight: 'bold',
+        block: true,
+        italic: true,
+        underline: true,
+        deleted: true,
+        code: true,
+      },
+      attrs: { id: 'contract-copy' },
+      slots: { default: 'Styled text' },
+    });
+
+    expect(wrapper.element.tagName).toBe('ARTICLE');
+    expect(wrapper.attributes('id')).toBe('contract-copy');
+    expect(wrapper.classes()).toEqual(
+      expect.arrayContaining([
+        'h-typography--success',
+        'h-typography--large',
+        'h-typography--bold',
+        'is-block',
+        'is-italic',
+        'is-underline',
+        'is-deleted',
+        'is-code',
+      ]),
+    );
+  });
+
+  test('renders prefix and suffix slots around controlled content', () => {
+    const wrapper = mount(HTypography, {
+      props: { modelValue: '42' },
+      slots: {
+        prefix: '<span data-prefix>$</span>',
+        default: '<span data-unused>unused</span>',
+        suffix: '<span data-suffix>USD</span>',
+      },
+    });
+
+    expect(wrapper.get('[data-prefix]').text()).toBe('$');
+    expect(wrapper.get('.h-typography__content').text()).toBe('42');
+    expect(wrapper.find('[data-unused]').exists()).toBe(false);
+    expect(wrapper.get('[data-suffix]').text()).toBe('USD');
+  });
+
+  test('commits editing on Enter and emits update and change payloads once', async () => {
+    const onUpdate = vi.fn();
+    const onChange = vi.fn();
+    const wrapper = mount(HTypography, {
+      props: {
+        modelValue: 'before',
+        editable: true,
+        'onUpdate:modelValue': onUpdate,
+        onChange,
+      },
+    });
+
+    await wrapper.findComponent(HButton).trigger('click');
+    await wrapper.get('input').setValue('after');
+    await wrapper.get('input').trigger('keydown', { key: 'Enter' });
+
+    expect(onUpdate).toHaveBeenCalledOnce();
+    expect(onUpdate).toHaveBeenCalledWith('after');
+    expect(onChange).toHaveBeenCalledOnce();
+    expect(onChange).toHaveBeenCalledWith('after');
+    expect(wrapper.findComponent(HInput).exists()).toBe(false);
+  });
+
+  test('supports the JSX update:modelValue listener contract', async () => {
+    const onUpdateModelValue = vi.fn();
+    const wrapper = mount(() => (
+      <HTypography
+        modelValue="before"
+        editable
+        onUpdate:modelValue={onUpdateModelValue}
+      />
+    ));
+    await wrapper.findComponent(HButton).trigger('click');
+    await wrapper.get('input').setValue('after');
+    await wrapper.get('input').trigger('keydown', { key: 'Enter' });
+    expect(onUpdateModelValue).toHaveBeenCalledWith('after');
+  });
+
+  test('uses the legacy clipboard fallback and reports native clipboard rejection', async () => {
+    Object.defineProperty(navigator, 'clipboard', { configurable: true, value: undefined });
+    const execCommand = vi.fn(() => true);
+    Object.defineProperty(document, 'execCommand', { configurable: true, value: execCommand });
+    const legacy = mount(HTypography, { props: { modelValue: 'legacy copy', copyable: true } });
+    await legacy.findComponent(HButton).trigger('click');
+    expect(execCommand).toHaveBeenCalledWith('copy');
+    expect(legacy.emitted('copy')?.[0]).toEqual(['legacy copy', true]);
+    expect(document.querySelector('textarea')).toBeNull();
+
+    const writeText = vi.fn().mockRejectedValue(new Error('permission denied'));
+    Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText } });
+    const rejected = mount(HTypography, { props: { modelValue: 'native copy', copyable: true } });
+    await rejected.findComponent(HButton).trigger('click');
+    expect(rejected.emitted('copy')?.[0]).toEqual(['native copy', false]);
+  });
+
+  test('keeps an active draft isolated, commits on blur, and renders single-line ellipsis', async () => {
+    const wrapper = mount(HTypography, {
+      props: { modelValue: 'before', editable: true, ellipsis: true },
+    });
+    expect(wrapper.classes()).toContain('is-ellipsis');
+    expect((wrapper.element as HTMLElement).style.webkitLineClamp).toBe('');
+
+    await wrapper.findComponent(HButton).trigger('click');
+    await wrapper.get('input').setValue('draft');
+    await wrapper.setProps({ modelValue: 'external' });
+    expect((wrapper.get('input').element as HTMLInputElement).value).toBe('draft');
+    await wrapper.get('input').trigger('keydown', { key: 'Enter', isComposing: true });
+    expect(wrapper.findComponent(HInput).exists()).toBe(true);
+    await wrapper.get('input').trigger('blur');
+    expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual(['draft']);
+    expect(wrapper.emitted('change')?.at(-1)).toEqual(['draft']);
+
+    await wrapper.setProps({ modelValue: undefined });
+    await nextTick();
+    expect(wrapper.get('.h-typography__content').text()).toBe('');
+  });
+
+  test('covers exposed action guards and empty uncontrolled copy content', async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText } });
+    const plain = mount(HTypography, { props: { copyable: true } });
+    const plainApi = plain.getCurrentComponent().exposed!;
+
+    plainApi.edit();
+    expect(plain.findComponent(HInput).exists()).toBe(false);
+    plainApi.cancelEdit();
+    await expect(plainApi.copy()).resolves.toBe(true);
+    expect(writeText).toHaveBeenCalledWith('');
+
+    const disabled = mount(HTypography, {
+      props: { modelValue: undefined, editable: true, copyable: true, disabled: true },
+    });
+    const disabledApi = disabled.getCurrentComponent().exposed!;
+    disabledApi.edit();
+    disabledApi.cancelEdit();
+    await expect(disabledApi.copy()).resolves.toBe(false);
+    expect(disabled.findComponent(HInput).exists()).toBe(false);
+  });
 });

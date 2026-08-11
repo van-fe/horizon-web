@@ -21,9 +21,9 @@ export function useResize(opts: ToRefs<IndicatorOptions>, resize: () => void) {
 
   const containerObserver = shallowRef<ResizeObserver>();
   const createContainerObserver = () => {
-    if (!['segment', 'line'].includes(type.value)) return;
+    if (!container.value || !['segment', 'line'].includes(type.value)) return;
     const ob = new ResizeObserver(resize);
-    ob.observe(container.value!, { box: 'border-box' });
+    ob.observe(container.value, { box: 'border-box' });
     containerObserver.value = ob;
   };
   onMounted(createContainerObserver);

@@ -7,6 +7,53 @@ import { sleep } from '~/utils/tools';
 import { IconClose, IconSearch } from '@aurora/icon';
 
 describe('InputNumber.tsx props', () => {
+  test('inputStyle, size and wheelToChange affect classes and native wheel cancellation', async () => {
+    const wrapper = mount(HInputNumber, {
+      attachTo: document.body,
+      props: {
+        inputStyle: 'emphasize',
+        size: 'large',
+        wheelToChange: false,
+        prefixIcon: IconClose,
+      },
+    });
+    const input = wrapper.get('input');
+    const groupInner = wrapper.get('.h-input-number__group--inner');
+    expect(wrapper.classes()).toEqual(
+      expect.arrayContaining(['h-input-number--emphasize', 'h-input-number--large']),
+    );
+    expect(wrapper.findComponent(IconClose).props('size')).toBe(14);
+
+    const unfocusedWheel = new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: 1 });
+    input.element.dispatchEvent(unfocusedWheel);
+    expect(unfocusedWheel.defaultPrevented).toBe(false);
+
+    await groupInner.trigger('mouseenter');
+    expect(wrapper.classes()).toContain('is-inner-active');
+    await groupInner.trigger('mouseleave');
+    expect(wrapper.classes()).not.toContain('is-inner-active');
+
+    await wrapper.get('.h-input-number__prefix').trigger('click');
+    expect(document.activeElement).toBe(input.element);
+
+    await input.trigger('focus');
+    const blockedWheel = new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: 1 });
+    input.element.dispatchEvent(blockedWheel);
+    expect(blockedWheel.defaultPrevented).toBe(true);
+
+    await wrapper.setProps({ wheelToChange: true });
+    const allowedWheel = new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: 1 });
+    input.element.dispatchEvent(allowedWheel);
+    expect(allowedWheel.defaultPrevented).toBe(false);
+
+    await wrapper.setProps({ size: 'small', disabled: true });
+    expect(wrapper.findComponent(IconClose).props('size')).toBe(9);
+    await input.trigger('blur');
+    await groupInner.trigger('mouseenter');
+    expect(wrapper.classes()).not.toContain('is-inner-active');
+    wrapper.unmount();
+  });
+
   test('status.error', () => {
     const wrapper = mount(() => <HInputNumber status="error" />);
 
@@ -169,6 +216,31 @@ describe('InputNumber.tsx props', () => {
 
     await wrapper.find('.h-input-number__step-up').trigger('click');
     expect(modelValue.value).eq(0);
+
+    const input = wrapper.get('input');
+    await input.trigger('keydown', { code: 'ArrowRight' });
+    expect(modelValue.value).eq(1);
+    await input.trigger('keydown', { code: 'ArrowLeft' });
+    expect(modelValue.value).eq(0);
+    await wrapper.find('.h-input-number__step-minus').trigger('mousedown');
+    await wrapper.find('.h-input-number__step-minus').trigger('mouseup');
+  });
+
+  test('step controls remain inert at both bounds and while disabled', async () => {
+    const modelValue = ref(1);
+    const wrapper = mount(() => (
+      <HInputNumber v-model={modelValue.value} min={1} max={1} enableLangPress />
+    ));
+
+    await wrapper.get('.h-input-number__step-up').trigger('click');
+    await wrapper.get('.h-input-number__step-down').trigger('click');
+    await wrapper.get('.h-input-number__step-up').trigger('mousedown');
+    expect(modelValue.value).toBe(1);
+
+    const disabledValue = ref(0);
+    const disabled = mount(() => <HInputNumber v-model={disabledValue.value} disabled />);
+    await disabled.get('.h-input-number__step-up').trigger('click');
+    expect(disabledValue.value).toBe(0);
   });
 
   test('name', async () => {

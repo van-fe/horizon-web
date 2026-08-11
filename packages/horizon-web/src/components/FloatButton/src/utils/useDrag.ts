@@ -1,8 +1,8 @@
 import type { Ref } from 'vue';
-import { unref, computed, ref, watch, readonly } from 'vue';
+import { unref, computed, ref, watch, readonly, onBeforeUnmount } from 'vue';
 import type { Position } from '@vueuse/core';
 import type { MaybeRef } from '@aurora/utils';
-import { getClientXY, isDefined } from '@aurora/utils';
+import { getClientXY } from '@aurora/utils';
 
 export interface UseDragOption {
   disabled?: MaybeRef<boolean>;
@@ -13,20 +13,19 @@ export interface UseDragOption {
 }
 
 export default function (target: Ref<HTMLElement | null>, options?: UseDragOption) {
-  watch(target, val => {
-    if (val) {
-      val.addEventListener('mousedown', onMouseDown);
-    }
-  });
-
   watch(
-    () => options?.disabled,
-    val => {
-      if (isDefined(unref(val))) {
-        target.value?.removeEventListener('mousedown', onMouseDown);
+    [target, () => unref(options?.disabled) ?? false] as const,
+    ([currentTarget, disabled], [previousTarget]) => {
+      previousTarget?.removeEventListener('mousedown', onMouseDown);
+
+      if (currentTarget && !disabled) {
+        currentTarget.addEventListener('mousedown', onMouseDown);
       }
     },
+    { immediate: true },
   );
+
+  onBeforeUnmount(() => target.value?.removeEventListener('mousedown', onMouseDown));
 
   const isDragging = ref(false);
   const x = ref(unref(options?.initialValue)?.x ?? 0);

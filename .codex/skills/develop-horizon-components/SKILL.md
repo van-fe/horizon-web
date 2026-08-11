@@ -1,6 +1,6 @@
 ---
 name: develop-horizon-components
-description: Develop or document Vue and React components in the horizon-web repository while following its component APIs, styling, localization, renderer-separated documentation, demos, JSDoc, and test conventions. Use for work under packages/horizon-web/src/components, packages/horizon-web-react/src, related component demos or docs, or reviews and fixes that affect Horizon component behavior.
+description: Develop or document Vue and React components in the horizon-web repository while following component APIs, styling, localization, renderer-separated documentation, demos, JSDoc, and headless real-browser test conventions. Use for work under packages/horizon-web/src/components, packages/horizon-web-react/src, related component demos or docs, or reviews and fixes that affect Horizon component behavior.
 ---
 
 # Develop Horizon Components
@@ -95,6 +95,9 @@ Build components as native members of Horizon Web rather than isolated widgets. 
 
 Cover the component's core state transitions and public contract, including:
 
+- every public prop through an observable rendering, state, style, child configuration, or interaction assertion;
+- every emit through its real trigger path, invocation count, and payload, and every slot through its rendered position and scoped slot props;
+- native pointer, keyboard, input, focus, blur, drag, scroll, and media events in Chromium whenever they are part of the public contract;
 - normal interaction and disabled behavior;
 - keyboard and accessibility behavior;
 - controlled inputs and emitted payloads;
@@ -103,7 +106,18 @@ Cover the component's core state transitions and public contract, including:
 - integration assumptions involving reused Horizon Web components;
 - the actual bug scenario for every regression fix.
 
-Run focused unit tests, TypeScript checks, lint/format checks, and style compilation in proportion to the change. Compile new Vue demos independently when a full documentation build is blocked by unrelated repository errors. Report unrelated blockers precisely without changing them.
+### Run DOM tests in a real browser
+
+- Run every component, directive, interaction, accessibility, layout, and other DOM-dependent test in Vitest Browser Mode with the Playwright provider and headless Chromium.
+- Load the Horizon Web production style entry (`src/styles/index.scss`) in the Browser Mode global setup. Visibility, geometry, overflow, placement, animation, responsive, and computed-style assertions must execute with the real component-library CSS applied.
+- Do not add or retain `happy-dom` or `jsdom` environments for DOM tests. Do not treat DOM emulation results as component-test validation.
+- Vue Test Utils may be used for component wrappers and emitted-event inspection only when the test itself executes inside the real-browser runner. Prefer `vitest/browser` locators and `userEvent` for pointer, keyboard, focus, visibility, accessibility, and layout behavior.
+- Use native browser geometry, computed styles, events, observers, media APIs, focus behavior, and animation behavior wherever they form part of the contract. Mock only unavailable external boundaries such as network services or deterministic media data.
+- Keep pure source-analysis, build-tool, and runtime smoke tests in a separate Node or Bun project only when they do not touch DOM APIs. Never route component tests through that project as a fallback.
+- Run focused browser tests during development, then the complete headless-browser suite before handoff. If the browser runner needs a local port that the sandbox blocks, request the required execution approval rather than falling back to a DOM emulator.
+- Before handoff, collect component-source coverage with coverage-v8 and require Statements, Branches, Functions, and Lines to each reach at least 95%. Do not raise the result by excluding production hooks, exposes, metadata modules, or difficult branches, and do not add coverage-ignore directives for reachable production behavior.
+
+Run focused real-browser tests, TypeScript checks, lint/format checks, and style compilation in proportion to the change. Compile new Vue demos independently when a full documentation build is blocked by unrelated repository errors. Report unrelated blockers precisely without changing them.
 
 ## Completion checklist
 
@@ -117,7 +131,7 @@ Before handing off, confirm:
 - styles use Horizon Web tokens and conventions;
 - localization covers every supported dictionary;
 - Chinese and English docs, demos, navigation, and API descriptions are present;
-- focused tests cover behavior and the regression scenario;
+- focused headless Chromium tests cover behavior and the regression scenario;
 - formatting, linting, style compilation, and available type/build checks pass or have clearly identified unrelated blockers.
 
 ## Commit and push every completed task

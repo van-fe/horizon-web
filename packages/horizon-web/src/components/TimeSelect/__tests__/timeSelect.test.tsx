@@ -4,6 +4,7 @@ import HSelect from '../../Select/src/Select';
 import HOption from '../../Select/src/Option';
 import HTimeSelect from '../src/TimeSelect';
 import { createTimeSelectOptions } from '../src/utils/time';
+import { useTimeSelectEmits } from '../src/composables/useEmits';
 
 describe('TimeSelect.tsx', () => {
   test('uses Horizon Select and generates fixed options', () => {
@@ -89,5 +90,117 @@ describe('TimeSelect.tsx', () => {
     expect(onUpdate).toHaveBeenCalledWith('09:30');
     expect(onChange).toHaveBeenCalledWith('09:30');
     expect(onClear).toHaveBeenCalledOnce();
+  });
+
+  test('normalizes defensive payloads and executes every public expose', async () => {
+    const wrapper = mount(HTimeSelect, { props: { modelValue: '09:00', clearable: true, toBody: false } });
+    const select = wrapper.getComponent(HSelect);
+
+    select.vm.$emit('update:modelValue', 123);
+    select.vm.$emit('change', '', null);
+    await wrapper.vm.$nextTick();
+    expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual([undefined]);
+    expect(wrapper.emitted('change')?.at(-1)).toEqual([null]);
+
+    (wrapper.vm as any).focus();
+    (wrapper.vm as any).blur();
+    (wrapper.vm as any).clear();
+    (wrapper.vm as any).changePanelVisible(true);
+    await wrapper.vm.$nextTick();
+    expect(select.getCurrentComponent().exposed).toBeTruthy();
+
+    expect(useTimeSelectEmits['update:modelValue']('10:00')).toBe(true);
+    expect(useTimeSelectEmits['update:modelValue'](10 as never)).toBe(false);
+    expect(useTimeSelectEmits.change(undefined)).toBe(true);
+    expect(useTimeSelectEmits.change({} as never)).toBe(false);
+    expect(useTimeSelectEmits.dropdownVisibleChange(true)).toBe(true);
+    expect(useTimeSelectEmits.dropdownVisibleChange('true' as never)).toBe(false);
+  });
+
+  test('forwards every presentation prop to the observable Select contract', () => {
+    const panelStyle = { width: '320px' };
+    const popoverOptions = { distance: 20 };
+    const wrapper = mount(HTimeSelect, {
+      props: {
+        modelValue: '09:00',
+        disabled: true,
+        editable: true,
+        clearable: false,
+        size: 'small',
+        placeholder: 'Choose time',
+        inputStyle: 'no-border',
+        inputStatus: 'warning',
+        placement: 'top',
+        toBody: false,
+        fitInputWidth: false,
+        optionListMaxHeight: 144,
+        emptyText: 'No time',
+        panelClass: 'time-panel-contract',
+        panelStyle,
+        popoverOptions,
+      },
+    });
+    const select = wrapper.getComponent(HSelect);
+
+    expect(select.props()).toMatchObject({
+      modelValue: '09:00',
+      disabled: true,
+      filterable: true,
+      clearable: false,
+      size: 'small',
+      placeholder: 'Choose time',
+      inputStatus: 'warning',
+      placement: 'top',
+      toBody: false,
+      fitInputWidth: false,
+      optionListMaxHeight: 144,
+      emptyText: 'No time',
+      externalPanelClass: 'time-panel-contract',
+      externalPanelStyle: panelStyle,
+      popoverOptions,
+    });
+    expect(select.props('inputStyle')).toBe('no-border');
+  });
+
+  test('renders every panel slot through the real open panel', async () => {
+    const wrapper = mount(HTimeSelect, {
+      props: { step: 'invalid', toBody: false },
+      slots: {
+        empty: '<div data-empty>No times</div>',
+        panelHeaderRender: '<header data-panel-header>Morning</header>',
+        panelFooterRender: '<footer data-panel-footer>Timezone UTC</footer>',
+      },
+    });
+
+    (wrapper.vm as any).changePanelVisible(true);
+    await wrapper.vm.$nextTick();
+
+    expect(wrapper.get('[data-empty]').text()).toBe('No times');
+    expect(wrapper.get('[data-panel-header]').text()).toBe('Morning');
+    expect(wrapper.get('[data-panel-footer]').text()).toBe('Timezone UTC');
+  });
+
+  test('emits focus, blur and visibility from real browser interactions', async () => {
+    const onFocus = vi.fn();
+    const onBlur = vi.fn();
+    const onDropdownVisibleChange = vi.fn();
+    const wrapper = mount(HTimeSelect, {
+      props: { toBody: false, onFocus, onBlur, onDropdownVisibleChange },
+      attachTo: document.body,
+    });
+    const input = wrapper.get('input');
+
+    const outside = document.createElement('button');
+    document.body.append(outside);
+    (input.element as HTMLInputElement).focus();
+    await input.trigger('click');
+    outside.focus();
+    await wrapper.vm.$nextTick();
+
+    expect(onFocus).toHaveBeenCalledOnce();
+    expect(onBlur).toHaveBeenCalledOnce();
+    expect(onDropdownVisibleChange).toHaveBeenCalledWith(true);
+    outside.remove();
+    wrapper.unmount();
   });
 });

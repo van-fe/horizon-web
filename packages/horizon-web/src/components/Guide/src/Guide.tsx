@@ -96,20 +96,24 @@ export default defineComponent({
 
     watchEffect(
       () => {
-        let prevIndex = 0;
+        const usedIndexes = new Set(
+          guideItems.filter(item => isNumber(item.props.index)).map(item => item.props.index!),
+        );
+        let nextIndex = 0;
 
-        guideItems
-          .sort((a, b) => (a.props.index ?? 0) - (b.props.index ?? 0))
-          .forEach(item => {
-            if (isNumber(item.props.index)) {
-              item.setIndex(item.props.index);
-              prevIndex = item.props.index;
-            } else {
-              item.setIndex(prevIndex);
-            }
+        guideItems.forEach(item => {
+          if (isNumber(item.props.index)) {
+            item.setIndex(item.props.index);
+            return;
+          }
 
-            prevIndex++;
-          });
+          while (usedIndexes.has(nextIndex)) {
+            nextIndex++;
+          }
+          item.setIndex(nextIndex);
+          usedIndexes.add(nextIndex);
+          nextIndex++;
+        });
       },
       {
         flush: 'pre',
@@ -154,7 +158,7 @@ export default defineComponent({
         return (
           <Fragment>
             {props.itemList.map(item => (
-              <HGuideItem {...(item || {})} />
+              <HGuideItem {...item} />
             ))}
           </Fragment>
         );
@@ -190,7 +194,7 @@ export default defineComponent({
     return () => (
       <div v-show={visible.value} class={cls(classHelper.block)} style={{ zIndex: zIndex.value }}>
         {renderItems()}
-        {props.mask && visible.value && currentItem.value && (
+        {(currentItem.value?.props.mask ?? props.mask) && visible.value && currentItem.value && (
           <GuideMask currentItem={currentItem.value} />
         )}
       </div>

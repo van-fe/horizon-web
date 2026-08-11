@@ -38,7 +38,7 @@ export default defineComponent({
       size: string;
       labelClass: string;
       valueClass: string;
-      setLabelWidth: (val: number | string) => void;
+      setLabelWidth: (val: number) => void;
     }>('HDescriptions');
     const labelRef = ref<HTMLElement | null>(null);
 

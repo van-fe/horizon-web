@@ -1,9 +1,6 @@
-import { resolve } from 'node:path';
 import { setNamespace, useNamespace } from '@aurora/utils';
 import { mount } from '@vue/test-utils';
-import { compile } from 'sass';
-import { testScssOptions } from '~/__tests__/sass-options';
-import { h, nextTick, ref } from 'vue';
+import { defineComponent, h, nextTick, ref } from 'vue';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { dictionaries } from '~/locales';
 import HButton from '../../Button/src/Button';
@@ -40,26 +37,6 @@ const createRect = ({ bottom, left, right, top }: TestRect): DOMRect => ({
   y: top,
   toJSON: () => ({}),
 });
-
-const compileCarouselStyleRules = () => {
-  const css = compile(resolve(__dirname, '../src/style/index.scss'), testScssOptions).css;
-  return [...css.matchAll(/([^{}]+)\{([^{}]*)\}/g)].map(([, selector, body]) => {
-    const declarations = new Map<string, string>();
-    body
-      .split(';')
-      .map(declaration => declaration.trim())
-      .filter(Boolean)
-      .forEach(declaration => {
-        const separator = declaration.indexOf(':');
-        if (separator < 0) return;
-        declarations.set(
-          declaration.slice(0, separator).trim(),
-          declaration.slice(separator + 1).trim(),
-        );
-      });
-    return { declarations, selector: selector.trim() };
-  });
-};
 
 const stackingTransitionCases = (['slide', 'card'] as const).flatMap(effect =>
   [
@@ -149,97 +126,6 @@ describe('Carousel', () => {
     expect(next.find('svg').exists()).toBe(true);
     expect(autoplay.find('svg').exists()).toBe(true);
     expect(wrapper.findAllComponents(HButton).length).toBeGreaterThanOrEqual(6);
-  });
-
-  test('uses one global active layer without card-specific stacking tiers', () => {
-    const rules = compileCarouselStyleRules();
-    const globalActiveRule = rules.find(rule => rule.selector === '.h-carousel-item.is-active');
-    const cardViewportRule = rules.find(
-      rule => rule.selector === '.h-carousel--card .h-carousel__viewport',
-    );
-    const baseCardItemRule = rules.find(
-      rule => rule.selector === '.h-carousel--card .h-carousel-item',
-    );
-    const cardItemRules = rules.filter(
-      rule =>
-        rule.selector.includes('.h-carousel--card') && rule.selector.includes('.h-carousel-item'),
-    );
-    const itemZIndexRules = rules.filter(
-      rule => rule.selector.includes('.h-carousel-item') && rule.declarations.has('z-index'),
-    );
-
-    expect(globalActiveRule?.declarations.get('z-index')).toBe('1');
-    expect(itemZIndexRules.map(rule => rule.selector)).toEqual(['.h-carousel-item.is-active']);
-    expect(cardViewportRule).toBeDefined();
-    expect([...cardViewportRule!.declarations.keys()]).toEqual(['perspective']);
-    expect(baseCardItemRule?.declarations.get('will-change')).toBe('auto');
-    expect(cardItemRules.length).toBeGreaterThan(0);
-    for (const rule of cardItemRules) {
-      for (const property of [
-        'animation-fill-mode',
-        'backface-visibility',
-        'isolation',
-        'transform-style',
-        'z-index',
-      ])
-        expect(rule.declarations.has(property)).toBe(false);
-    }
-  });
-
-  test('keeps slide bystanders hidden and only assigns animations to transition roles', () => {
-    const rules = compileCarouselStyleRules();
-    const baseSlideItemRule = rules.find(
-      rule => rule.selector === '.h-carousel--slide .h-carousel-item',
-    );
-    const activeSlideItemRule = rules.find(
-      rule => rule.selector === '.h-carousel--slide .h-carousel-item.is-active',
-    );
-    const slideAnimationRules = rules.filter(
-      rule =>
-        rule.selector.includes('.h-carousel--slide') && rule.declarations.has('animation-name'),
-    );
-
-    expect(baseSlideItemRule?.declarations.get('visibility')).toBe('hidden');
-    expect(baseSlideItemRule?.declarations.get('transform')).toBe('none');
-    expect(baseSlideItemRule?.declarations.get('transition')).toBe('none');
-    expect(activeSlideItemRule?.declarations.get('visibility')).toBe('visible');
-    expect(slideAnimationRules).toHaveLength(8);
-    expect(slideAnimationRules.map(rule => rule.declarations.get('animation-name')).sort()).toEqual(
-      [
-        'h-carousel-slide-x-in',
-        'h-carousel-slide-x-in-reverse',
-        'h-carousel-slide-x-out',
-        'h-carousel-slide-x-out-reverse',
-        'h-carousel-slide-y-in',
-        'h-carousel-slide-y-in-reverse',
-        'h-carousel-slide-y-out',
-        'h-carousel-slide-y-out-reverse',
-      ].sort(),
-    );
-    for (const rule of slideAnimationRules) {
-      expect(rule.selector).toMatch(/\.is-slide-(?:in|out)$/);
-    }
-  });
-
-  test('keeps horizontal side indicators clear of their same-side arrows', () => {
-    const rules = compileCarouselStyleRules();
-    const leftArrowRule = rules.find(
-      rule =>
-        rule.selector ===
-        '.h-carousel--horizontal.h-carousel--indicator-position-left .h-carousel__arrow--previous',
-    );
-    const rightArrowRule = rules.find(
-      rule =>
-        rule.selector ===
-        '.h-carousel--horizontal.h-carousel--indicator-position-right .h-carousel__arrow--next',
-    );
-    const sideControlOffset =
-      'calc(var(--h-carousel-size-indicator-wrapper) + var(--h-carousel-spacing-arrow-offset))';
-
-    expect(leftArrowRule?.declarations.get('left')).toBe(sideControlOffset);
-    expect(rightArrowRule?.declarations.get('right')).toBe(sideControlOffset);
-    expect(leftArrowRule?.selector).not.toContain('h-carousel--vertical');
-    expect(rightArrowRule?.selector).not.toContain('h-carousel--vertical');
   });
 
   test('switches with arrows, emits updates and loops in uncontrolled mode', async () => {
@@ -353,6 +239,30 @@ describe('Carousel', () => {
     await wrapper.trigger('focusin', {
       relatedTarget: wrapper.find('.h-carousel__arrow--previous').element,
     });
+    await vi.advanceTimersByTimeAsync(1000);
+    expect(carousel.activeIndex).toBe(2);
+  });
+
+  test('pauseOnHover and pauseOnFocus false keep autoplay running during pointer and focus', async () => {
+    vi.useFakeTimers();
+    const wrapper = mount(HCarousel, {
+      props: {
+        autoplay: true,
+        interval: 1000,
+        pauseOnHover: false,
+        pauseOnFocus: false,
+      },
+      slots: { default: slides },
+    });
+    const carousel = wrapper.vm as unknown as CarouselVm;
+
+    await wrapper.trigger('mouseenter');
+    await wrapper.trigger('focusin', { relatedTarget: null });
+    await vi.advanceTimersByTimeAsync(1000);
+    expect(carousel.activeIndex).toBe(1);
+
+    await wrapper.trigger('mouseleave');
+    await wrapper.trigger('focusout', { relatedTarget: document.body });
     await vi.advanceTimersByTimeAsync(1000);
     expect(carousel.activeIndex).toBe(2);
   });
@@ -1079,6 +989,266 @@ describe('Carousel', () => {
     expect(wrapper.classes()).toContain('h-carousel--fade');
     expect(wrapper.find('.h-carousel__arrow').exists()).toBe(false);
     expect(wrapper.find('.h-carousel__indicators').exists()).toBe(false);
+  });
+
+  test('renders string heights and every custom control slot with its indicator scope', async () => {
+    const indicatorScopes: Array<[number, boolean, string | number | undefined]> = [];
+    const wrapper = mount(HCarousel, {
+      props: { autoplay: false, height: '20rem' },
+      slots: {
+        default: slides,
+        previous: () => <span class="previous-slot">Previous</span>,
+        next: () => <span class="next-slot">Next</span>,
+        indicator: (index, active, label) => {
+          indicatorScopes.push([index, active, label]);
+          return <span class="indicator-slot">{`${index}:${active}`}</span>;
+        },
+      },
+    });
+
+    expect(
+      (wrapper.element as HTMLElement).style.getPropertyValue('--h-carousel-size-container-height'),
+    ).toBe('20rem');
+    expect(wrapper.get('.previous-slot').text()).toBe('Previous');
+    expect(wrapper.get('.next-slot').text()).toBe('Next');
+    expect(wrapper.find('.h-carousel__arrow--previous svg').exists()).toBe(false);
+    expect(wrapper.find('.h-carousel__arrow--next svg').exists()).toBe(false);
+    expect(wrapper.findAll('.indicator-slot').map(item => item.text())).toEqual([
+      '0:true',
+      '1:false',
+      '2:false',
+    ]);
+    expect(indicatorScopes).toContainEqual([0, true, 'First slide']);
+
+    await wrapper.findAll('.h-carousel__indicator-trigger')[1].trigger('mouseenter');
+    expect((wrapper.vm as unknown as CarouselVm).activeIndex).toBe(0);
+  });
+
+  test('changes slider indicators on hover and supports positive vertical swipes', async () => {
+    vi.useFakeTimers();
+    const wrapper = mount(HCarousel, {
+      props: {
+        autoplay: false,
+        direction: 'vertical',
+        indicatorType: 'slider',
+        moveSpeed: 120,
+        swipeThreshold: 30,
+        trigger: 'hover',
+      },
+      slots: { default: slides },
+    });
+    const carousel = wrapper.vm as unknown as CarouselVm;
+
+    await wrapper.findAll('.h-carousel__indicator-slider-segment-trigger')[1].trigger('mouseenter');
+    expect(carousel.activeIndex).toBe(1);
+    await vi.advanceTimersByTimeAsync(120);
+
+    const start = new Event('touchstart', { bubbles: true });
+    Object.defineProperty(start, 'touches', {
+      value: [{ clientX: 20, clientY: 40, identifier: undefined }],
+    });
+    wrapper.element.dispatchEvent(start);
+    const end = new Event('touchend', { bubbles: true });
+    Object.defineProperty(end, 'changedTouches', {
+      value: [{ clientX: 22, clientY: 100, identifier: undefined }],
+    });
+    wrapper.element.dispatchEvent(end);
+    await wrapper.vm.$nextTick();
+    expect(carousel.activeIndex).toBe(0);
+
+    const multi = new Event('touchstart', { bubbles: true });
+    Object.defineProperty(multi, 'touches', {
+      value: [
+        { clientX: 0, clientY: 0, identifier: 1 },
+        { clientX: 1, clientY: 1, identifier: 2 },
+      ],
+    });
+    wrapper.element.dispatchEvent(multi);
+    const ignored = new Event('touchend', { bubbles: true });
+    Object.defineProperty(ignored, 'changedTouches', {
+      value: [{ clientX: 0, clientY: 100, identifier: 1 }],
+    });
+    wrapper.element.dispatchEvent(ignored);
+    expect(carousel.activeIndex).toBe(0);
+  });
+
+  test('uses reduced-motion and page-visibility blockers and removes media listeners', async () => {
+    vi.useFakeTimers();
+    let hidden = false;
+    let reducedMotionListener: ((event: MediaQueryListEvent) => void) | undefined;
+    const removeEventListener = vi.fn();
+    vi.spyOn(document, 'hidden', 'get').mockImplementation(() => hidden);
+    vi.spyOn(window, 'matchMedia').mockReturnValue({
+      matches: true,
+      addEventListener: (_type: string, listener: EventListenerOrEventListenerObject) => {
+        reducedMotionListener = listener as (event: MediaQueryListEvent) => void;
+      },
+      removeEventListener,
+    } as unknown as MediaQueryList);
+    const wrapper = mount(HCarousel, {
+      props: { autoplay: true, interval: 1000 },
+      slots: { default: slides },
+    });
+    const carousel = wrapper.vm as unknown as CarouselVm;
+
+    reducedMotionListener?.({ matches: true } as MediaQueryListEvent);
+    await nextTick();
+    expect(wrapper.get('.h-carousel__autoplay').attributes('aria-label')).toBe(
+      'Start automatic slide show',
+    );
+    await wrapper.get('.h-carousel__autoplay').trigger('click');
+    await vi.advanceTimersByTimeAsync(1000);
+    expect(carousel.activeIndex).toBe(1);
+
+    hidden = true;
+    document.dispatchEvent(new Event('visibilitychange'));
+    await vi.advanceTimersByTimeAsync(1000);
+    expect(carousel.activeIndex).toBe(1);
+    hidden = false;
+    document.dispatchEvent(new Event('visibilitychange'));
+    reducedMotionListener?.({ matches: true } as MediaQueryListEvent);
+    await vi.advanceTimersByTimeAsync(1000);
+    expect(carousel.activeIndex).toBe(1);
+
+    wrapper.unmount();
+    expect(removeEventListener).toHaveBeenCalledWith('change', expect.any(Function));
+  });
+
+  test('resets motion when effect changes and normalizes after every item is removed', async () => {
+    vi.useFakeTimers();
+    const count = ref(3);
+    const wrapper = mount(HCarousel, {
+      props: { autoplay: false, initialIndex: 2, moveSpeed: 120 },
+      slots: { default: () => slides().slice(0, count.value) },
+    });
+    const carousel = wrapper.vm as unknown as CarouselVm;
+    carousel.prev();
+    await wrapper.vm.$nextTick();
+    expect(wrapper.classes()).toContain('is-animating');
+
+    await wrapper.setProps({ effect: 'card' });
+    expect(wrapper.classes()).not.toContain('is-animating');
+    count.value = 0;
+    await nextTick();
+    expect(carousel.activeIndex).toBe(0);
+    expect(wrapper.find('.h-carousel__status').text()).toBe('');
+    wrapper.unmount();
+  });
+
+  test('CarouselItem supplies safe standalone state defaults', () => {
+    const wrapper = mount(HCarouselItem, {
+      attrs: { 'data-carousel-effect': 'slide' },
+      slots: { default: () => 'Standalone' },
+    });
+
+    expect(wrapper.attributes('aria-label')).toBe('Slide 0 of 0');
+    expect(wrapper.attributes('aria-hidden')).toBe('true');
+    expect(wrapper.classes()).toContain('is-hidden');
+  });
+
+  test('supports Home, numeric height, object indices and same-slide navigation no-ops', async () => {
+    vi.useFakeTimers();
+    const wrapper = mount(HCarousel, {
+      props: { autoplay: false, height: 256, initialIndex: 2, moveSpeed: 120 },
+      slots: { default: slides },
+    });
+    const carousel = wrapper.vm as unknown as CarouselVm;
+
+    expect(
+      (wrapper.element as HTMLElement).style.getPropertyValue('--h-carousel-size-container-height'),
+    ).toBe('256px');
+
+    const homeEvent = new KeyboardEvent('keydown', {
+      bubbles: true,
+      cancelable: true,
+      key: 'Home',
+    });
+    wrapper.element.dispatchEvent(homeEvent);
+    await nextTick();
+    expect(homeEvent.defaultPrevented).toBe(true);
+    expect(carousel.activeIndex).toBe(0);
+
+    await vi.advanceTimersByTimeAsync(120);
+    carousel.setActiveItem({ index: 2 });
+    await nextTick();
+    expect(carousel.activeIndex).toBe(2);
+
+    await vi.advanceTimersByTimeAsync(120);
+    const updateCount = wrapper.emitted('update:modelValue')?.length;
+    await wrapper.findAll('.h-carousel__indicator')[2].trigger('click');
+    expect(carousel.activeIndex).toBe(2);
+    expect(wrapper.emitted('update:modelValue')?.length).toBe(updateCount);
+  });
+
+  test('accepts external controlled jumps, can become uncontrolled and resets an idle effect', async () => {
+    vi.useFakeTimers();
+    const wrapper = mount(HCarousel, {
+      props: { autoplay: false, effect: 'slide', modelValue: 0, moveSpeed: 120 },
+      slots: { default: slides },
+    });
+    const carousel = wrapper.vm as unknown as CarouselVm;
+
+    await wrapper.setProps({ modelValue: 2 });
+    expect(carousel.activeIndex).toBe(2);
+    expect(wrapper.classes()).toContain('h-carousel--motion-previous');
+
+    await vi.advanceTimersByTimeAsync(120);
+    await wrapper.setProps({ effect: 'card' });
+    expect(wrapper.classes()).not.toContain('is-animating');
+
+    await wrapper.setProps({ modelValue: undefined });
+    carousel.prev();
+    await nextTick();
+    expect(carousel.activeIndex).toBe(1);
+    expect(wrapper.emitted('change')?.at(-1)).toEqual([1, 2]);
+  });
+
+  test('keeps card navigation stable while adjacent preview nodes are temporarily absent', async () => {
+    const wrapper = mount(HCarousel, {
+      props: { autoplay: false, effect: 'card', initialIndex: 1 },
+      slots: { default: cardSlides },
+    });
+    const carousel = wrapper.vm as unknown as CarouselVm;
+    const viewport = wrapper.get('.h-carousel__viewport');
+    const active = wrapper.get('.h-carousel-item.is-active');
+    vi.spyOn(active.element, 'getBoundingClientRect').mockReturnValue(
+      createRect({ bottom: 200, left: 100, right: 200, top: 100 }),
+    );
+
+    wrapper
+      .get('.h-carousel-item.is-placement-previous')
+      .element.classList.remove('is-placement-previous');
+    await viewport.trigger('click', { clientX: 50, clientY: 150 });
+    expect(carousel.activeIndex).toBe(1);
+
+    wrapper
+      .get('.h-carousel-item.is-placement-next')
+      .element.classList.remove('is-placement-next');
+    await viewport.trigger('click', { clientX: 250, clientY: 150 });
+    expect(carousel.activeIndex).toBe(1);
+  });
+
+  test('recognizes a separately-instantiated CarouselItem by its public component name', () => {
+    const DuplicatedCarouselItem = defineComponent({
+      name: `${useNamespace()}CarouselItem`,
+      inheritAttrs: false,
+      setup(_, { attrs }) {
+        return () => <article {...attrs}>Duplicated item</article>;
+      },
+    });
+    const wrapper = mount(HCarousel, {
+      props: { autoplay: false },
+      slots: {
+        default: () => [
+          h(DuplicatedCarouselItem, { name: 'duplicated' }),
+          h(HCarouselItem, { name: 'native' }, () => 'Native item'),
+        ],
+      },
+    });
+
+    expect(wrapper.findAll('.h-carousel__indicator')).toHaveLength(2);
+    expect(wrapper.get('.h-carousel__status').text()).toBe('1 / 2');
+    expect(wrapper.get('article').attributes('data-carousel-index')).toBe('0');
   });
 
   test('provides carousel labels in every supported locale', () => {

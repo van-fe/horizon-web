@@ -7,9 +7,11 @@ export function sortDays(...days: Dayjs[]) {
 }
 
 export function sortDayRanges(...dayRanges: [Dayjs, Dayjs][]) {
-  return dayRanges.sort((r1, r2) =>
-    r1[0].isBefore(r2[0]) ? -1 : r1[0].isSame(r2[0]) ? (r1[1].isBefore(r2[1]) ? -1 : 1) : 1,
-  );
+  return dayRanges.sort((r1, r2) => {
+    if (r1[0].isBefore(r2[0])) return -1;
+    if (!r1[0].isSame(r2[0])) return 1;
+    return r1[1].isBefore(r2[1]) ? -1 : 1;
+  });
 }
 
 export function minDayjs(...days: Dayjs[]) {

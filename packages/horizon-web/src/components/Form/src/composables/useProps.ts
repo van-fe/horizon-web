@@ -402,7 +402,7 @@ export const useFormItemProps = declarePropType({
    */
   requiredUseLabel: {
     type: Boolean,
-    default: undefined,
+    default: () => undefined,
   },
   /**
    * 当前项的验证规则中包含了必填项（`required` 为 `true`）时，是否在标签后展示星号

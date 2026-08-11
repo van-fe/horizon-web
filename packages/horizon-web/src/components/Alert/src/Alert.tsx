@@ -28,6 +28,7 @@ export default defineComponent({
     const classHelper = new ComponentClassBlock('alert');
     const visible = ref(true);
     const lineCount = ref(0);
+    let measureFrame = 0;
     const showBtn = computed(() => !!props.primaryButtonText || !!props.defaultButtonText);
     const showCloseIcon = computed(() => !showBtn.value && props.closable);
 
@@ -35,7 +36,7 @@ export default defineComponent({
     const size = toRef(props, 'size');
     const sizeRef = useSize(size, 'medium');
 
-    const close = (evt: MouseEvent) => {
+    const close = (evt: MouseEvent | KeyboardEvent) => {
       visible.value = false;
       emit('close', evt);
     };
@@ -50,11 +51,12 @@ export default defineComponent({
       return Math.round(h / lh);
     };
 
-    function countLine() {
-      throttle(() => {
+    const countLine = throttle(() => {
+      cancelAnimationFrame(measureFrame);
+      measureFrame = requestAnimationFrame(() => {
         lineCount.value = countLines(textRef.value as Element);
-      }, 200)();
-    }
+      });
+    }, 200);
 
     const { stop: intersectionObserveStop } = useIntersectionObserver(
       textRef,
@@ -72,6 +74,8 @@ export default defineComponent({
     });
 
     onBeforeUnmount(() => {
+      countLine.cancel();
+      cancelAnimationFrame(measureFrame);
       intersectionObserveStop();
       resizeStop();
     });
@@ -147,7 +151,7 @@ export default defineComponent({
               onKeydown={(evt: KeyboardEvent) => {
                 if (evt.key === 'Enter' || evt.key === ' ') {
                   evt.preventDefault();
-                  close(evt as unknown as MouseEvent);
+                  close(evt);
                 }
               }}
             >

@@ -126,7 +126,7 @@ export function useResponsiveSize(
     }
   };
 
-  watch([propSize, propPlacement, visible], onGutterResize, { immediate: true });
+  watch([width, propSize, propPlacement, visible], onGutterResize, { immediate: true });
 
   return { sizeStyle, handleEl };
 }

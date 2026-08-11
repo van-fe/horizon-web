@@ -56,7 +56,14 @@ export default defineComponent({
     }
 
     return () => (
-      <div class={classHelper.block}>
+      <div
+        class={classHelper.block}
+        style={{
+          width: parentProps.searchPanelWidth
+            ? sizeUnitTransform(parentProps.searchPanelWidth)
+            : undefined,
+        }}
+      >
         {parentProps.multiple && parentProps.useFilterCheckAll && (
           <div class={cls(classHelper.e('check-all'))} onClick={toggleCheckAll}>
             <HCheckbox modelValue={isCheckAll.value} indeterminate={isIndeterminate.value}>

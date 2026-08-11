@@ -195,11 +195,8 @@ export default defineComponent({
         if (!router) {
           warn('menu', `You haven't import and set "vue-router"`);
         } else {
-          const target = getNodeByUuid(uuid);
-
-          if (target) {
-            target.props.value && router.push(target.props.value);
-          }
+          const target = getNodeByUuid(uuid)!;
+          target.props.value && router.push(target.props.value);
         }
       }
     }
@@ -411,11 +408,12 @@ export default defineComponent({
           classHelper.block,
           classHelper.m(props.theme),
           classHelper.is(props.mode),
+          classHelper.is('ellipsis', props.mode === 'horizontal' && props.ellipsis),
           classHelper.is('collapsed', isCollapse.value),
           classHelper.is('collapsed-forever', props.collapseForever ?? false),
           classHelper.is(
             'collapsed-show-title',
-            props.collapseForever ?? props.collapseShowTitle ?? false,
+            props.collapseForever || props.collapseShowTitle,
           ),
           classHelper.is(`active-type-${activeType.value}`),
           classHelper.is('dragging', isDragging.value),
@@ -432,6 +430,7 @@ export default defineComponent({
           class={cls(classHelper.e('container'))}
           style={{
             maxWidth: props.mode === 'horizontal' ? sizeUnitTransform(props.maxWidth) : undefined,
+            overflow: props.mode === 'horizontal' && !props.ellipsis ? 'visible' : undefined,
           }}
           onMouseleave={onMouseLeaveContainer}
         >
@@ -453,7 +452,7 @@ export default defineComponent({
                   </div>
                 )}
                 {slots.append && (
-                  <HTransition name="collapse-horizontal">
+                  <HTransition name="collapse-horizontal" css={props.collapseTransition}>
                     <div v-show={!isCollapse.value} class={cls(classHelper.em('append', 'inner'))}>
                       {slots.append?.(isCollapse)}
                     </div>
@@ -470,7 +469,7 @@ export default defineComponent({
         </div>
 
         {props.submenuExpandType === 'full' && (
-          <HTransition name="collapse">
+          <HTransition name="collapse" css={props.collapseTransition}>
             <FullViewMenu
               v-show={fullViewMenuVisible.value}
               menuTree={menuTree.value}

@@ -1,9 +1,13 @@
 import { mount, shallowMount } from '@vue/test-utils';
 import HSwitch from '../src/Switch';
 import { describe, expect, test, vi, Mock } from 'vitest';
-import { nextTick, ref } from 'vue';
+import { defineComponent, nextTick, reactive, ref } from 'vue';
 import type { Awaitable } from '@aurora/utils';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import { getSwitchState, switchStateTestVectors } from '@aurora/core';
+import { useSwitchState } from '../src/composables/useSwitchState';
+import type { SwitchEmits } from '../src/composables/useEmits';
+import type { SwitchProps } from '../src/composables/useProps';
 
 describe('Switch.tsx', () => {
   test.each(switchStateTestVectors)(
@@ -26,6 +30,19 @@ describe('Switch.tsx', () => {
 
     expect(input.attributes()).toHaveProperty('data-focus-visible-proxy');
     expect((input.element as HTMLInputElement).tabIndex).toBe(0);
+  });
+
+  test('renders the default label slot at the requested size and emits native blur', async () => {
+    const onBlur = vi.fn();
+    const wrapper = mount(() => (
+      <HSwitch modelValue={false} size="large" onBlur={onBlur}>
+        {{ default: () => <strong data-test="switch-label">Slot label</strong> }}
+      </HSwitch>
+    ));
+    expect(wrapper.get('.h-switch').classes()).toContain('h-switch--large');
+    expect(wrapper.get('[data-test="switch-label"]').text()).toBe('Slot label');
+    await wrapper.get('input[role="switch"]').trigger('blur');
+    expect(onBlur.mock.calls[0][0]).toBeInstanceOf(FocusEvent);
   });
 
   test('clicking anywhere in the switch toggles it', async () => {
@@ -73,6 +90,18 @@ describe('Switch.tsx', () => {
     await wrapper.find('.h-switch').trigger('click');
     expect(innerText.text()).toBe('ON');
     expect(innerText.classes('is-active')).toBe(true);
+  });
+
+  test('readonly native and wrapper clicks remain inert and expose readonly semantics', async () => {
+    const onUpdate = vi.fn();
+    const wrapper = mount(() => (
+      <HSwitch modelValue={false} readonly label="Readonly" onUpdate:modelValue={onUpdate} />
+    ));
+    expect(wrapper.get('.h-switch__core').classes()).toContain('is-readonly');
+    expect(wrapper.get('input').attributes('aria-readonly')).toBe('true');
+    await wrapper.get('input').trigger('click');
+    await wrapper.get('.h-switch').trigger('click');
+    expect(onUpdate).not.toHaveBeenCalled();
   });
 
   describe('props', () => {
@@ -149,5 +178,45 @@ describe('Switch.tsx', () => {
       await core.trigger('click');
       expect(beforeChange.value).toHaveBeenLastCalledWith(false);
     });
+  });
+
+  test('drops an async transition after scope disposal and supports scope-free state reads', async () => {
+    let resolve!: (accepted: boolean) => void;
+    const props = reactive({
+      modelValue: false,
+      disabled: false,
+      readonly: false,
+      status: false,
+      statusPosition: 'outside',
+      statusOnText: '',
+      statusOffText: '',
+      label: '',
+      labelPosition: 'top',
+      beforeChange: () => new Promise<boolean>(done => (resolve = done)),
+    }) as SwitchProps;
+    const emit = vi.fn() as HorizonWebSetupContext<SwitchEmits>['emit'];
+    let stateApi!: ReturnType<typeof useSwitchState>;
+    const Harness = defineComponent({
+      setup() {
+        stateApi = useSwitchState(props, undefined, undefined, emit);
+        return () => null;
+      },
+    });
+    const wrapper = mount(Harness);
+    stateApi.onChange();
+    expect(stateApi.pending.value).toBe(true);
+    wrapper.unmount();
+    resolve(true);
+    await Promise.resolve();
+    await Promise.resolve();
+    expect(emit).not.toHaveBeenCalled();
+
+    const scopeFree = useSwitchState(
+      reactive({ modelValue: false, disabled: false, readonly: false }) as SwitchProps,
+      undefined,
+      undefined,
+      vi.fn() as HorizonWebSetupContext<SwitchEmits>['emit'],
+    );
+    expect(scopeFree.state.value.interactive).toBe(true);
   });
 });

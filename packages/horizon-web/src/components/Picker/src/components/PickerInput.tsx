@@ -33,7 +33,6 @@ import {
   HPickerStatusInjectKey,
 } from '../utils/InjectKeys';
 import useSize from '~/utils/useSize';
-import { IconCloseFilled } from '@aurora/icon';
 import { unrefElement, useResizeObserver } from '@vueuse/core';
 import PickerFitContentInput from './PickerFitContentInput';
 import HTooltip from '~/components/Tooltip/src/Tooltip';
@@ -151,6 +150,9 @@ export default defineComponent({
     /******* focus/blur ********/
 
     const inputValue = ref('');
+    const formattedModelValue = computed(() =>
+      parentProps.valueFormat ? parentProps.valueFormat(parentProps.modelValue) : undefined,
+    );
     const tooltipShowContent = ref('');
     const isInputFocus = ref(false);
     function onInputFocus(evt: FocusEvent) {
@@ -216,7 +218,10 @@ export default defineComponent({
         }
       }
 
-      inputValue.value = parentProps.modelValue || '';
+      inputValue.value =
+        typeof formattedModelValue.value === 'string'
+          ? formattedModelValue.value
+          : parentProps.modelValue || '';
     });
 
     function onClear(evt: MouseEvent) {
@@ -252,7 +257,8 @@ export default defineComponent({
         onInputBlur,
       );
 
-      return Array.isArray(content) && isVNodeEmpty(content) ? undefined : content;
+      const slotContent = Array.isArray(content) && isVNodeEmpty(content) ? undefined : content;
+      return slotContent ?? (isVNode(formattedModelValue.value) ? formattedModelValue.value : undefined);
     }
 
     useResizeObserver(inputPrependDomRef, ([entry]) => {
@@ -321,7 +327,7 @@ export default defineComponent({
           ) ?? (
             <Fragment>
               {parentProps.pickerPrefixIcon && (
-                <div class={classHelper.em('input', 'prepend-icon')}>
+                <div ref={inputPrependDomRef} class={classHelper.em('input', 'prepend-icon')}>
                   {renderIcon(parentProps.pickerPrefixIcon)}
                 </div>
               )}
@@ -430,7 +436,10 @@ export default defineComponent({
                   class={cls(classHelper.em('input', 'icon'), classHelper.is('clear'))}
                   onClick={onClear}
                 >
-                  <IconCloseFilled size={16} class={classHelper.em('input', 'close')} />
+                  {renderIcon(parentProps.clearIcon, undefined, {
+                    size: 16,
+                    class: classHelper.em('input', 'close'),
+                  })}
                 </div>
               )}
 

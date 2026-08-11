@@ -490,7 +490,9 @@ export default defineComponent({
         parentProps.panelFilterOption === false
       ) {
         if (modelValueSet.value.size > 0) {
-          pickOption(Array.from(modelValueSet.value.values()).at(-1)!, true, true);
+          const committedValues = Array.from(modelValueSet.value.values());
+          presetModelValueSet.value = new Set(committedValues);
+          pickOption(committedValues.at(-1)!, true, true);
         }
       }
 

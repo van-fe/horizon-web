@@ -204,7 +204,12 @@ describe('Mentions caret popup', () => {
           }),
           h(
             HDropdown,
-            { visible: true, trigger: 'manual', size: 'medium' },
+            {
+              visible: true,
+              trigger: 'manual',
+              size: 'medium',
+              popperClass: 'mentions-reference-dropdown',
+            },
             {
               default: () => [
                 h('button', 'Dropdown reference'),
@@ -235,9 +240,9 @@ describe('Mentions caret popup', () => {
 
     const getSurfaces = () => {
       const mentions = document.querySelector<HTMLElement>('.h-mentions__dropdown');
-      const dropdown = Array.from(
-        document.querySelectorAll<HTMLElement>('.h-dropdown__inner--default'),
-      ).find(element => !element.classList.contains('h-mentions__dropdown'));
+      const dropdown = document.querySelector<HTMLElement>(
+        '.mentions-reference-dropdown .h-dropdown__inner--default',
+      );
       return { mentions, dropdown };
     };
     await vi.waitFor(
@@ -248,6 +253,7 @@ describe('Mentions caret popup', () => {
       },
       { timeout: 1500, interval: 20 },
     );
+    await new Promise(resolve => window.setTimeout(resolve, 450));
 
     const surfaceProperties = [
       'background-color',
@@ -263,11 +269,24 @@ describe('Mentions caret popup', () => {
       'padding-bottom',
       'padding-left',
     ];
-    const itemProperties = ['color', 'cursor', 'font-size', 'font-weight'];
+    const itemProperties = [
+      'box-sizing',
+      'color',
+      'cursor',
+      'display',
+      'font-size',
+      'font-weight',
+      'height',
+      'line-height',
+      'min-height',
+      'padding-top',
+      'padding-bottom',
+    ];
     const itemInnerProperties = [
       'align-items',
       'background-color',
       'display',
+      'line-height',
       'min-height',
       'padding-left',
       'padding-right',

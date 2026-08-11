@@ -9,6 +9,41 @@ import HSegmentedItem from '../src/SegmentedItem';
 import type { HSegmentedValue } from '../src/composables/useProps';
 
 describe('Segmented.tsx', () => {
+  test('scrollable/focusable navigation repositions the active item and forwards iconSize', async () => {
+    const activeKey = ref<HSegmentedValue>('first');
+    const wrapper = mount(() => (
+      <HSegmented
+        activeKey={activeKey.value}
+        scrollable
+        focusable
+        onUpdate:activeKey={value => (activeKey.value = value)}
+      >
+        <HSegmentedItem value="first" label="First" />
+        <HSegmentedItem value="second" label="Second" icon="add" iconSize={22} />
+      </HSegmented>
+    ));
+    const navWrap = wrapper.get<HTMLElement>('.h-segmented__nav-wrap').element;
+    const navList = wrapper.get<HTMLElement>('.h-segmented__nav-list').element;
+    const items = wrapper.findAll<HTMLElement>('[role="tab"]');
+    Object.defineProperties(navWrap, {
+      clientWidth: { configurable: true, value: 80 },
+      scrollWidth: { configurable: true, value: 200 },
+    });
+    Object.defineProperties(items[1].element, {
+      clientWidth: { configurable: true, value: 60 },
+      offsetLeft: { configurable: true, value: 120 },
+    });
+
+    await items[1].trigger('click');
+    await nextTick();
+    expect(navList.style.transform).toContain('translate3d(-120px');
+    expect(wrapper.findAllComponents(AIcon).some(icon => icon.props('size') === 22)).toBe(true);
+
+    const wheel = new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: 20 });
+    navList.dispatchEvent(wheel);
+    expect(wheel.defaultPrevented).toBe(true);
+  });
+
   test('test basic #render', () => {
     const wrapper = mount(() => <HSegmented />);
     const element = wrapper.findComponent(HSegmented);
@@ -507,18 +542,18 @@ describe('Segmented.tsx', () => {
     activeKey.value = 'second';
     await nextTick();
     expect(indicator.attributes('style')).toContain('width: 90px');
-    expect(indicator.attributes('style')).toContain('translate3d(50px, 0, 0)');
+    expect(indicator.attributes('style')).toContain('translate3d(50px, 0px, 0px)');
 
     firstValue.value = 'second';
     secondValue.value = 'first';
     await nextTick();
     expect(items[0].attributes('aria-selected')).toBe('true');
     expect(indicator.attributes('style')).toContain('width: 40px');
-    expect(indicator.attributes('style')).toContain('translate3d(0px, 0, 0)');
+    expect(indicator.attributes('style')).toContain('translate3d(0px, 0px, 0px)');
 
     firstValue.value = 'third';
     await nextTick();
     expect(items.every(item => item.attributes('aria-selected') === 'false')).toBe(true);
-    expect(indicator.attributes('style')).toBeUndefined();
+    expect(indicator.attributes('style') ?? '').toBe('');
   });
 });

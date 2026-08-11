@@ -120,11 +120,15 @@ export default defineComponent({
       nForm.unbindValidate(uid);
     });
 
-    watch([onlyRenderRef, errorRef], ([onlyRenderValue, errorValue]) => {
-      if (onlyRenderValue) {
-        error.value = errorValue;
-      }
-    });
+    watch(
+      [onlyRenderRef, errorRef],
+      ([onlyRenderValue, errorValue]) => {
+        if (onlyRenderValue) {
+          error.value = errorValue;
+        }
+      },
+      { immediate: true },
+    );
 
     const requiredMessage = useLocaleLang('form.required');
 
@@ -258,7 +262,7 @@ export default defineComponent({
 
     expose({
       validate,
-      resetField,
+      resetFields: resetField,
       clearValidate,
     });
 

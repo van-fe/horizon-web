@@ -180,7 +180,7 @@ describe('Select.tsx', () => {
 
     await trigger.trigger('click');
 
-    const value1 = wrapper.find('.h-select-option[data-value=1]');
+    const value1 = wrapper.find('.h-select-option[data-value="1"]');
 
     await value1.trigger('click');
     expect(modelValue.value?.length).eq(1);
@@ -218,7 +218,7 @@ describe('Select.tsx', () => {
 
     await trigger.trigger('click');
 
-    const value1 = wrapper.find('.h-select-option[data-value=1]');
+    const value1 = wrapper.find('.h-select-option[data-value="1"]');
 
     await value1.trigger('click');
 

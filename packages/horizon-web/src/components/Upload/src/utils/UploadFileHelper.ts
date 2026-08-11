@@ -176,6 +176,7 @@ export default class UploadFileHelper extends UploadHelper {
       if (!this.createInputElement()) {
         return false;
       }
+      this.containerEl?.append(this.inputEl!);
     }
 
     this.inputEl!.click();
@@ -201,18 +202,16 @@ export default class UploadFileHelper extends UploadHelper {
   }
 
   public isValidFile(file: HUploadFileType) {
-    const acceptList = this.accept.value?.split(',') ?? [];
+    if (!this.accept.value) return true;
 
-    if (acceptList) {
-      return acceptList.some(accept => {
-        if (accept.startsWith('.')) {
-          return file.name.toLowerCase().endsWith(accept.toLowerCase());
-        } else {
-          const fileType = file.raw?.type;
-          return fileType === accept.toLowerCase() || fileType?.startsWith(accept.replace('*', ''));
-        }
-      });
-    } else return true;
+    return this.accept.value.split(',').some(accept => {
+      if (accept.startsWith('.')) {
+        return file.name.toLowerCase().endsWith(accept.toLowerCase());
+      }
+
+      const fileType = file.raw?.type;
+      return fileType === accept.toLowerCase() || fileType?.startsWith(accept.replace('*', ''));
+    });
   }
 
   public async addFiles(fileList: Arrayable<HUploadRawFileType> | FileList, fromUser = true) {
@@ -412,7 +411,7 @@ export default class UploadFileHelper extends UploadHelper {
 
   private setModifyListener() {
     watch([this.accept, this.multiple], () => {
-      this.createInputElement();
+      this.createInputArea(this.containerEl ?? document.body);
     });
   }
 

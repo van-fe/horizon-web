@@ -1,10 +1,10 @@
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, HChildOnly, cls, useNamespace, useZIndex } from '@aurora/utils';
 import { useClipboard, useMutationObserver, useResizeObserver } from '@vueuse/core';
-import type { ComputedRef } from 'vue';
 import {
   Teleport,
   cloneVNode,
+  computed,
   defineComponent,
   nextTick,
   onDeactivated,
@@ -122,17 +122,13 @@ export default defineComponent({
       }, props.hideAfter);
     }
 
-    function useTooltipObserver(target: HTMLElement | null) {
-      if (!target) {
+    function useTooltipObserver(target: HTMLElement) {
+      const isOverflow = useOverflow(target, props.referenceScale);
+
+      if (!isOverflow && props.overflow) {
         tooltipDisabled.value = true;
       } else {
-        const isOverflow = useOverflow(target, props.referenceScale);
-
-        if (!isOverflow && props.overflow) {
-          tooltipDisabled.value = true;
-        } else {
-          tooltipDisabled.value = props.disabled;
-        }
+        tooltipDisabled.value = props.disabled;
       }
     }
 
@@ -205,17 +201,32 @@ export default defineComponent({
       return referenceRef.value && referenceRef.value.el && referenceRef.value.el.nodeType === 1;
     }
 
-    const copySuccessText = (props.copySuccessText ??
-      useLocaleLang('tooltip.copySuccess', 'Successful replication')) as ComputedRef<string>;
+    const localeCopySuccessText = useLocaleLang(
+      'tooltip.copySuccess',
+      'Successful replication',
+    );
+    const localeCopyFailText = useLocaleLang('tooltip.copyFail', 'Replication failure');
+    const copySuccessText = computed<string>(
+      () => props.copySuccessText ?? String(localeCopySuccessText.value),
+    );
+    const copyFailText = computed<string>(
+      () => props.copyFailText ?? String(localeCopyFailText.value),
+    );
 
-    const copyFailText = (props.copyFailText ??
-      useLocaleLang('tooltip.copyFail', 'Replication failure')) as ComputedRef<string>;
+    const { copy: legacyCopyText } = useClipboard({ legacy: true });
+
+    function copyText(value: string) {
+      // Prefer the native API whenever it exists. `useClipboard` waits for an
+      // asynchronous permission query and can otherwise route the first click to
+      // its legacy fallback, hiding a real Clipboard API rejection from consumers.
+      return navigator.clipboard?.writeText
+        ? navigator.clipboard.writeText(value)
+        : legacyCopyText(value);
+    }
 
     function onClickContent() {
       if (props.clickToCopy) {
-        const { copy } = useClipboard();
-
-        copy(
+        copyText(
           (props.copyTarget === 'content' ? contentRef.value : referenceRef.value?.el)?.innerText,
         )
           .then(() => {

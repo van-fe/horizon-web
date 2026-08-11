@@ -52,7 +52,7 @@ export default function usePanel(
   const endPanelShowDate = ref(dayjs().add(1, 'month'));
 
   const showBeforeAfterDate = computed(() =>
-    ['year', 'yearRange', 'week'].includes(options.pickerType.value)
+    ['year', 'year-range', 'week'].includes(options.pickerType.value)
       ? true
       : propRefs.showBeforeAfterDate.value,
   );
@@ -123,7 +123,7 @@ export default function usePanel(
   });
 
   watch([options.startDate, options.endDate], () => {
-    if (!options.visible) {
+    if (!options.visible.value) {
       refreshPanelShowDate();
     }
   });

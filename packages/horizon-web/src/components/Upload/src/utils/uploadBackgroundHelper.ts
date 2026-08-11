@@ -2,7 +2,6 @@ import type { App, ComponentPublicInstance, ObjectEmitsOptions } from 'vue';
 import { createApp } from 'vue';
 import UploadBackground from '../components/UploadBackground';
 import type { UploadProps } from '../composables/useProps';
-import { isObject } from '@aurora/utils';
 import { error } from '~/utils/useLog';
 import type { UploadBackgroundExposes } from '../composables/useExposes';
 import type { UploadBackgroundEmits } from '../composables/useEmits';
@@ -21,8 +20,10 @@ declare global {
 
 export function destroyBackgroundUploadInstance(id: string | undefined, index: number | null) {
   if (instances.length && containers.length) {
-    const removedContainer = containers.splice(index ?? -1, 1);
-    const removedApp = apps.splice(index ?? -1, 1);
+    const targetIndex = index ?? -1;
+    const removedContainer = containers.splice(targetIndex, 1);
+    const removedApp = apps.splice(targetIndex, 1);
+    instances.splice(targetIndex, 1);
 
     removedApp[0]?.unmount();
     removedContainer[0].parentElement?.removeChild(removedContainer[0]);
@@ -56,16 +57,6 @@ export function createBackgroundUploadInstance(
         uploadProps: props,
         ...eventListener,
         onDestroy: () => destroyBackgroundUploadInstance(props.id, instances.length - 1),
-        onVisibleSwitched: (visible: boolean) => {
-          window.dispatchEvent(
-            new CustomEvent('backgroundUploadVisibleSwitched', {
-              detail: {
-                visible,
-                id: props.id,
-              },
-            }),
-          );
-        },
       }),
     );
 
@@ -84,18 +75,20 @@ export function createBackgroundUploadInstance(
       >,
     );
 
+    const teleportTarget =
+      typeof props.backgroundTeleportTo === 'string' ? props.backgroundTeleportTo : 'body';
     let target: HTMLElement | null;
 
-    if (isObject(props.backgroundTeleportTo)) {
+    if (props.backgroundTeleportTo instanceof HTMLElement) {
       target = props.backgroundTeleportTo;
     } else {
-      target = document.querySelector(props.backgroundTeleportTo || 'body');
+      target = document.querySelector(teleportTarget);
     }
 
     if (!target) {
       error(
         'upload',
-        `The backgroundTeleportTo: (${props.backgroundTeleportTo || 'body'}) cannot be found.`,
+        `The backgroundTeleportTo: (${teleportTarget}) cannot be found.`,
       );
       target = document.body;
     }

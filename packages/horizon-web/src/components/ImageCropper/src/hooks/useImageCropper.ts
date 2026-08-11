@@ -1,9 +1,11 @@
 import { nextTick, onBeforeUnmount, ref, watch } from 'vue';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { ImageCropperProps } from '../composables/useProps';
+import type { ImageCropperEmits } from '../composables/useEmits';
 
 export function useImageCropper(
   props: ImageCropperProps,
-  emit: (event: string, ...args: any[]) => void,
+  emit: HorizonWebSetupContext<ImageCropperEmits>['emit'],
 ) {
   const canvas = ref<HTMLCanvasElement>();
   const image = new Image();
@@ -62,7 +64,7 @@ export function useImageCropper(
       reset();
       emit('load');
     };
-    image.onerror = event => emit('error', event);
+    image.onerror = event => emit('error', event instanceof Event ? event : new Event('error'));
     image.src = props.src;
   }
   function onPointerdown(event: PointerEvent) {

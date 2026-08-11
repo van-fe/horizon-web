@@ -14,6 +14,7 @@ import {
 import { onClickBreadcrumbItem } from './utils/helpers';
 import type { BreadcrumbItemEmits } from './composables/useEmits';
 import { useBreadcrumbItemEmits } from './composables/useEmits';
+import type { BreadcrumbItem } from './composables/useProps';
 
 export default defineComponent({
   name: `${useNamespace()}BreadcrumbItem`,
@@ -22,7 +23,11 @@ export default defineComponent({
   props: useBreadcrumbItemProps,
   emits: useBreadcrumbItemEmits,
   slots: useBreadcrumbItemSlots,
-  setup(props, { emit, slots }: HorizonWebSetupContext<BreadcrumbItemEmits, BreadcrumbItemSlots>) {
+  inheritAttrs: false,
+  setup(
+    props,
+    { attrs, emit, slots }: HorizonWebSetupContext<BreadcrumbItemEmits, BreadcrumbItemSlots>,
+  ) {
     const classHelper = new ComponentClassBlock('breadcrumb-item');
     const { size } = toRefs(props);
 
@@ -37,17 +42,24 @@ export default defineComponent({
     const clickable = computed(() => !!props.to || props.clickable);
 
     const parentItemClick = inject(HBreadcrumbItemClickInjectKey, undefined);
+    const sourceItem = computed(() => (attrs._sourceItem as BreadcrumbItem | undefined) ?? props);
+    const rootAttrs = computed(() =>
+      Object.fromEntries(Object.entries(attrs).filter(([key]) => key !== '_sourceItem')),
+    );
 
     const onClick = (evt: MouseEvent) => {
       if (clickable.value) {
-        onClickBreadcrumbItem(props, router);
         emit('click', evt);
-        parentItemClick?.(props, evt);
+        if (parentItemClick) {
+          parentItemClick(sourceItem.value, evt);
+        } else {
+          onClickBreadcrumbItem(props, router);
+        }
       }
     };
 
     return () => (
-      <span class={cls(classHelper.block)}>
+      <span {...rootAttrs.value} class={cls(classHelper.block)}>
         <HTooltip overflow={true}>
           {{
             default: () => (
@@ -70,12 +82,12 @@ export default defineComponent({
           {slots.separator?.() ??
             parentSlots?.separator?.() ??
             (props.separator
-              ? typeof props.separator === 'object'
+              ? typeof props.separator !== 'string'
                 ? h(props.separator, {
                     size: 12,
                   })
                 : props.separator
-              : typeof parentProps?.separator === 'object'
+              : parentProps?.separator && typeof parentProps.separator !== 'string'
                 ? h(parentProps.separator, {
                     size: 12,
                   })

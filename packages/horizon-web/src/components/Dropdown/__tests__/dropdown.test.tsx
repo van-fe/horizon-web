@@ -192,20 +192,25 @@ describe('Dropdown.tsx', () => {
 
     test('placement', async () => {
       const placement = ref<DropdownProps['placement']>('top');
-      const wrapper = mount(() => (
-        <HDropdown placement={placement.value} toBody={false}>
-          {{
-            default: () => <HButton>Trigger</HButton>,
-            dropdown: () => (
-              <HDropdownMenu>
-                <HDropdownItem>1</HDropdownItem>
-                <HDropdownItem>2</HDropdownItem>
-                <HDropdownItem>3</HDropdownItem>
-              </HDropdownMenu>
-            ),
-          }}
-        </HDropdown>
-      ));
+      const wrapper = mount(
+        () => (
+          <div style="padding: 300px; width: 800px; height: 800px;">
+            <HDropdown placement={placement.value} toBody={false}>
+              {{
+                default: () => <HButton>Trigger</HButton>,
+                dropdown: () => (
+                  <HDropdownMenu>
+                    <HDropdownItem>1</HDropdownItem>
+                    <HDropdownItem>2</HDropdownItem>
+                    <HDropdownItem>3</HDropdownItem>
+                  </HDropdownMenu>
+                ),
+              }}
+            </HDropdown>
+          </div>
+        ),
+        { attachTo: document.body },
+      );
 
       const triggerEle = wrapper.findComponent(HPopover);
 
@@ -381,8 +386,10 @@ describe('Dropdown.tsx', () => {
     });
 
     test('z-index', async () => {
+      const sessionZIndex = Number(sessionStorage.getItem('horizon-web-z-index') ?? 2000);
+      const requestedZIndex = sessionZIndex + 100;
       const wrapper = mount(() => (
-        <HDropdown toBody={false} zIndex={1000}>
+        <HDropdown toBody={false} zIndex={requestedZIndex}>
           {{
             default: () => <HButton>Trigger</HButton>,
             dropdown: () => (
@@ -402,7 +409,9 @@ describe('Dropdown.tsx', () => {
 
       await sleep(620);
 
-      expect(wrapper.find('.h-popover__popper').attributes('style')).toContain('z-index: 2013;');
+      expect(
+        Number((wrapper.get('.h-popover__popper').element as HTMLElement).style.zIndex),
+      ).toBe(requestedZIndex + 1);
     });
   });
 

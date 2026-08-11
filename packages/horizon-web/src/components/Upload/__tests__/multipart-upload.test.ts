@@ -74,8 +74,12 @@ function createFile(size = 2.5 * 1024 * 1024): HUploadFileType {
   };
 }
 
-function createUploader(setting: HUploadMultipartSetting, maxConcurrency = 2) {
-  const file = createFile();
+function createUploader(
+  setting: HUploadMultipartSetting,
+  maxConcurrency = 2,
+  file = createFile(),
+  overrides: Partial<UploadProps> = {},
+) {
   const methods: HUploadHttpRequestInstanceMethods = {
     setStatus: vi.fn((target, status, args) => {
       target.status = status;
@@ -96,6 +100,7 @@ function createUploader(setting: HUploadMultipartSetting, maxConcurrency = 2) {
       multipartChunkSize: 1,
       multipartMaxAmountUploadingAtSameTime: maxConcurrency,
       name: 'file',
+      ...overrides,
     }),
   );
   const uploader = new CustomMultipleUploader(
@@ -344,5 +349,326 @@ describe('multipart upload', () => {
     await uploader.resume();
     expect(initUpload).toHaveBeenCalledOnce();
     expect(beforePartUpload).toHaveBeenCalledTimes(3);
+  });
+
+  test('ignores start, pause and resume calls after there is no work or upload is completed', async () => {
+    const noRaw = createFile(1);
+    delete noRaw.raw;
+    const empty = createUploader({ handleMerge: vi.fn() }, 1, noRaw);
+    await empty.uploader.start();
+    expect(empty.methods.addUploadingQueue).not.toHaveBeenCalled();
+
+    const completed = createUploader(
+      {
+        uploadPart: () => Promise.resolve('part'),
+        handleMerge: () => 'merged',
+      },
+      4,
+      createFile(10),
+    );
+    await completed.uploader.start();
+    await flushPromises();
+    completed.uploader.pause();
+    await completed.uploader.resume();
+    expect(completed.methods.onUploadSuccess).toHaveBeenCalledWith(completed.file, 'merged');
+    expect(completed.methods.addUploadingQueue).toHaveBeenCalledOnce();
+  });
+
+  test('serializes null merge responses and reports non-Error merge failures', async () => {
+    const nullMerge = createUploader(
+      { uploadPart: () => Promise.resolve('part'), handleMerge: () => null },
+      1,
+      createFile(10),
+    );
+    await nullMerge.uploader.start();
+    await flushPromises();
+    expect(nullMerge.methods.onUploadSuccess).toHaveBeenCalledWith(nullMerge.file, '{}');
+
+    const failedMerge = createUploader(
+      {
+        uploadPart: () => Promise.resolve('part'),
+        handleMerge: () => Promise.reject('merge failed'),
+      },
+      1,
+      createFile(10),
+    );
+    await failedMerge.uploader.start();
+    await flushPromises();
+    expect(failedMerge.methods.onUploadFail).toHaveBeenCalledWith(
+      failedMerge.file,
+      'merge failed',
+      JSON.stringify({ reason: 'merge failed' }),
+    );
+  });
+
+  test('reports thrown and rejected custom upload adapters with Error and non-Error reasons', async () => {
+    const thrown = createUploader(
+      {
+        uploadPart: () => {
+          throw 'sync failure';
+        },
+        handleMerge: vi.fn(),
+      },
+      1,
+      createFile(10),
+    );
+    await thrown.uploader.start();
+    expect(thrown.methods.onUploadFail).toHaveBeenCalledWith(
+      thrown.file,
+      'sync failure',
+      'sync failure',
+    );
+
+    const rejected = createUploader(
+      { uploadPart: () => Promise.reject('async failure'), handleMerge: vi.fn() },
+      1,
+      createFile(10),
+    );
+    await rejected.uploader.start();
+    await flushPromises();
+    expect(rejected.methods.onUploadFail).toHaveBeenCalledWith(
+      rejected.file,
+      'async failure',
+      'async failure',
+    );
+  });
+
+  test('covers xhr network errors, abort idempotence and zero-byte progress', async () => {
+    const zero = createUploader({ handleMerge: vi.fn() }, 1, createFile(0));
+    await zero.uploader.start();
+    expect(zero.file.percentage).toBe(100);
+
+    const failed = createUploader({ handleMerge: vi.fn() }, 1, createFile(10));
+    await failed.uploader.start();
+    const xhr = MockXMLHttpRequest.instances.at(-1)!;
+    xhr.responseText = 'network down';
+    xhr.response = { reason: 'network down' } as never;
+    xhr.onerror?.();
+    xhr.onerror?.();
+    xhr.onabort?.();
+    expect(failed.methods.onUploadFail).toHaveBeenCalledOnce();
+  });
+
+  test('does not start chunks when paused while initialization is pending', async () => {
+    let resolveInit!: (value: Record<string, string>) => void;
+    const initUpload = vi.fn(
+      () =>
+        new Promise<Record<string, string>>(resolve => {
+          resolveInit = resolve;
+        }),
+    );
+    const pending = createUploader(
+      { initUpload, uploadPart: vi.fn(), handleMerge: vi.fn() },
+      1,
+      createFile(10),
+    );
+    const startPromise = pending.uploader.start();
+    pending.uploader.pause();
+    resolveInit({ uploadId: 'paused' });
+    await startPromise;
+    expect(MockXMLHttpRequest.instances).toHaveLength(0);
+  });
+
+  test('uses default chunk/concurrency fallbacks and appends configured xhr headers', async () => {
+    const upload = createUploader(
+      { beforePartUpload: () => ({ chunkToken: 'part' }), handleMerge: vi.fn() },
+      0,
+      createFile(10),
+      {
+        multipartChunkSize: 0,
+        header: { Authorization: 'token', Version: 2 },
+        data: { folder: 'reports' },
+      },
+    );
+    await upload.uploader.start();
+
+    expect(MockXMLHttpRequest.instances).toHaveLength(1);
+    const xhr = MockXMLHttpRequest.instances[0];
+    expect(xhr.setRequestHeader).toHaveBeenCalledWith('Authorization', 'token');
+    expect(xhr.setRequestHeader).toHaveBeenCalledWith('Version', '2');
+    expect(xhr.body?.get('folder')).toBe('reports');
+    expect(xhr.body?.get('chunkToken')).toBe('part');
+
+    xhr.respond();
+    xhr.progress(5, 10);
+    xhr.respond();
+    xhr.onerror?.();
+    xhr.onabort?.();
+    await flushPromises();
+  });
+
+  test('restarts after flagged non-Error initialization and scheduling failures', async () => {
+    const initUpload = vi
+      .fn()
+      .mockRejectedValueOnce({ requiresFullRestart: true, code: 'expired-init' })
+      .mockResolvedValue({ uploadId: 'renewed' });
+    const initialized = createUploader(
+      { initUpload, uploadPart: () => new Promise(() => undefined), handleMerge: vi.fn() },
+      1,
+      createFile(10),
+    );
+    await initialized.uploader.start();
+    expect(initialized.methods.onUploadFail).toHaveBeenCalledWith(
+      initialized.file,
+      '[object Object]',
+      JSON.stringify({ reason: '[object Object]' }),
+    );
+    await initialized.uploader.resume();
+    expect(initUpload).toHaveBeenCalledTimes(2);
+    initialized.uploader.pause();
+
+    const beforePartUpload = vi
+      .fn()
+      .mockImplementationOnce(() => {
+        throw { requiresFullRestart: true, code: 'expired-schedule' };
+      })
+      .mockReturnValue({});
+    const scheduled = createUploader(
+      { beforePartUpload, uploadPart: () => new Promise(() => undefined), handleMerge: vi.fn() },
+      1,
+      createFile(10),
+    );
+    await scheduled.uploader.start();
+    expect(scheduled.methods.onUploadFail).toHaveBeenCalledWith(
+      scheduled.file,
+      '[object Object]',
+      JSON.stringify({ reason: '[object Object]' }),
+    );
+    await scheduled.uploader.resume();
+    expect(beforePartUpload).toHaveBeenCalledTimes(2);
+    scheduled.uploader.pause();
+  });
+
+  test('marks flagged chunk and merge errors for a full multipart restart', async () => {
+    const initUpload = vi.fn(() => ({ uploadId: 'first' }));
+    const uploadPart = vi
+      .fn()
+      .mockRejectedValueOnce(
+        Object.assign(new Error('expired chunk'), { requiresFullRestart: true }),
+      )
+      .mockImplementation(() => Promise.resolve('part'));
+    const chunkFailure = createUploader(
+      { initUpload, uploadPart, handleMerge: () => 'merged' },
+      1,
+      createFile(10),
+    );
+    await chunkFailure.uploader.start();
+    await flushPromises();
+    expect(chunkFailure.methods.onUploadFail).toHaveBeenCalledWith(
+      chunkFailure.file,
+      'expired chunk',
+      expect.any(String),
+    );
+    await chunkFailure.uploader.resume();
+    await flushPromises();
+    expect(initUpload).toHaveBeenCalledTimes(2);
+
+    const mergeInit = vi.fn(() => ({ uploadId: 'merge' }));
+    const mergeFailure = createUploader(
+      {
+        initUpload: mergeInit,
+        uploadPart: () => Promise.resolve('part'),
+        handleMerge: () =>
+          Promise.reject(Object.assign(new Error('expired merge'), { requiresFullRestart: true })),
+      },
+      1,
+      createFile(10),
+    );
+    await mergeFailure.uploader.start();
+    await flushPromises();
+    expect(mergeFailure.methods.onUploadFail).toHaveBeenCalledWith(
+      mergeFailure.file,
+      'expired merge',
+      JSON.stringify({ reason: 'expired merge' }),
+    );
+    await mergeFailure.uploader.resume();
+    expect(mergeInit).toHaveBeenCalledTimes(2);
+  });
+
+  test('falls back to an empty multipart action when no action is available', () => {
+    const { uploader } = createUploader({ handleMerge: vi.fn() }, 1, createFile(10));
+    Object.assign(uploader, { action: undefined });
+    expect(uploader.uploadActionModify()).toBe('');
+  });
+
+  test('ignores custom progress after pause and reports a synchronously thrown Error', async () => {
+    let reportProgress!: (loaded: number) => void;
+    const pending = createUploader(
+      {
+        uploadPart: (_file, _chunk, { onProgress }) => {
+          reportProgress = onProgress;
+          return new Promise(() => undefined);
+        },
+        handleMerge: vi.fn(),
+      },
+      1,
+      createFile(10),
+    );
+    await pending.uploader.start();
+    reportProgress(5);
+    const percentage = pending.file.percentage;
+    pending.uploader.pause();
+    reportProgress(9);
+    expect(pending.file.percentage).toBe(percentage);
+
+    const thrown = createUploader(
+      {
+        uploadPart: () => {
+          throw new Error('sync Error');
+        },
+        handleMerge: vi.fn(),
+      },
+      1,
+      createFile(10),
+    );
+    await thrown.uploader.start();
+    expect(thrown.methods.onUploadFail).toHaveBeenCalledWith(
+      thrown.file,
+      'sync Error',
+      expect.any(String),
+    );
+  });
+
+  test('shares and clears a rejected initialization promise across concurrent starts', async () => {
+    let rejectInit!: (reason: unknown) => void;
+    const initUpload = vi.fn(
+      () =>
+        new Promise<Record<string, string>>((_resolve, reject) => {
+          rejectInit = reject;
+        }),
+    );
+    const upload = createUploader(
+      { initUpload, uploadPart: vi.fn(), handleMerge: vi.fn() },
+      1,
+      createFile(10),
+    );
+    const first = upload.uploader.start();
+    const second = upload.uploader.start();
+    rejectInit(new Error('shared initialization failure'));
+    await Promise.all([first, second]);
+    expect(initUpload).toHaveBeenCalledOnce();
+    expect(upload.methods.onUploadFail).toHaveBeenCalledTimes(2);
+  });
+
+  test('does not schedule more chunks while a merge is already pending', async () => {
+    let resolveMerge!: (value: string) => void;
+    const handleMerge = vi.fn(
+      () =>
+        new Promise<string>(resolve => {
+          resolveMerge = resolve;
+        }),
+    );
+    const upload = createUploader(
+      { uploadPart: () => Promise.resolve('part'), handleMerge },
+      1,
+      createFile(10),
+    );
+    const start = upload.uploader.start();
+    await vi.waitFor(() => expect(handleMerge).toHaveBeenCalledOnce());
+    const resume = upload.uploader.resume();
+    await flushPromises();
+    expect(handleMerge).toHaveBeenCalledOnce();
+    resolveMerge('merged');
+    await Promise.all([start, resume]);
   });
 });

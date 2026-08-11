@@ -48,7 +48,8 @@ export default defineComponent({
           disabled={isDisabled.value}
           onClick={onClick}
         >
-          {slots.default?.() ?? (
+          {slots.trigger?.() ??
+            slots.default?.() ?? (
             <div class={classHelper.e('inner')}>
               {slots.icon?.() ?? (
                 <span class={classHelper.e('icon')}>
@@ -57,7 +58,7 @@ export default defineComponent({
               )}
               {props.buttonText ?? slots.text?.() ?? useLocaleLang('upload.upload').value}
             </div>
-          )}
+            )}
         </HButton>
       </div>
     );

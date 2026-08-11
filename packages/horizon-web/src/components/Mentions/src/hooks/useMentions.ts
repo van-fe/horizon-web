@@ -1,5 +1,7 @@
 import { computed, nextTick, ref, watch } from 'vue';
+import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { HMentionsOption, MentionsProps } from '../composables/useProps';
+import type { MentionsEmits } from '../composables/useEmits';
 
 type MentionQuery = {
   trigger: string;
@@ -7,7 +9,10 @@ type MentionQuery = {
   start: number;
 };
 
-export function useMentions(props: MentionsProps, emit: (event: string, ...args: any[]) => void) {
+export function useMentions(
+  props: MentionsProps,
+  emit: HorizonWebSetupContext<MentionsEmits>['emit'],
+) {
   const textarea = ref<HTMLTextAreaElement>();
   const listbox = ref<HTMLElement>();
   const currentValue = ref(props.modelValue);

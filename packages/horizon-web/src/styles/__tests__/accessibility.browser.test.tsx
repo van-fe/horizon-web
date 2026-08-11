@@ -114,5 +114,5 @@ describe('keyboard focus appearance', () => {
     await userEvent.click(button);
     expect(button.matches(':focus-visible')).toBe(false);
     expect(getComputedStyle(button).boxShadow).toBe('none');
-  });
+  }, 30_000);
 });

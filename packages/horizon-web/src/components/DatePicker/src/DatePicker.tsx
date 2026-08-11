@@ -212,6 +212,7 @@ export default defineComponent({
         inputStatus={!!formItemError?.value ? 'error' : propRefs.inputStatus?.value}
         needConfirm={propRefs.needConfirm.value}
         fitInputWidth={propRefs.fitInputWidth.value}
+        panelWidth={propRefs.panelWidth?.value}
         panelMaxWidth={propRefs.panelMaxWidth.value}
         panelMinWidth={propRefs.panelMinWidth?.value}
         pickerMinWidth={propRefs.pickerMinWidth?.value ?? (isRange.value ? 256 : 160)}
@@ -226,6 +227,7 @@ export default defineComponent({
           propRefs.placeholder?.value ?? (useLocaleLang('datePicker.placeholder').value as string)
         }
         dropdownIcon={propRefs.suffixIcon?.value}
+        clearIcon={propRefs.clearIcon?.value}
         confirmDisabled={!canConfirmBtnClick.value}
         panelClass={propRefs.panelClass?.value}
         panelStyle={propRefs.panelStyle?.value}
@@ -291,7 +293,7 @@ export default defineComponent({
                     v-show={isContainTime.value && isRange.value}
                     class={classHelper.e('range-panel-separator')}
                   >
-                    {context.slots.rangePanelSeparator?.() ?? props.rangePanelSeparator ?? '-'}
+                    {context.slots.rangePanelSeparator?.() ?? props.rangePanelSeparator}
                   </div>
                   <DatePanel
                     ref={endDatePanelsDomRef}

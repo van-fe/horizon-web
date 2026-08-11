@@ -176,6 +176,7 @@ export default defineComponent({
         immediate: true,
       },
     );
+    watch(searchInput, value => emit('search', value));
 
     expose({
       showBreadcrumb,
@@ -223,7 +224,9 @@ export default defineComponent({
                     separator: () => <AIcon name="arrow_right" size="12" />,
                   }}
                 >
-                  <span onClick={handleCollapseItem}>{breadcrumbProp.value}</span>
+                  <span onClick={handleCollapseItem}>
+                    {slots.breadcrumb?.() ?? breadcrumbProp.value}
+                  </span>
                 </HBreadcrumbItem>
                 {breadcrumbArr.value.map((item: any, index) => {
                   return (
@@ -235,7 +238,7 @@ export default defineComponent({
                       }}
                     >
                       <span onClick={() => handleClickBreadcrumbItem(item, index)}>
-                        {item[propsProp.value.label as string]}
+                        {slots.breadcrumbItem?.() ?? item[propsProp.value.label as string]}
                       </span>
                     </HBreadcrumbItem>
                   );
@@ -432,7 +435,7 @@ export default defineComponent({
           </div>
           {slots.footer && (
             <div class={[classHelper.e('footer')]}>
-              {slots.footer({ filterData: dataProp.value ?? [], type: typeProp.value })}
+              {slots.footer({ filterData: dataProp.value, type: typeProp.value })}
             </div>
           )}
         </div>
