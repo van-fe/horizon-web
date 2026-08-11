@@ -1,5 +1,6 @@
 import { computed, nextTick, ref, watch } from 'vue';
 import type { ComputedRef } from 'vue';
+import { blurInputElement, focusInputElement, selectInputElement } from '@aurora/horizon-web-core';
 
 /** Owns the native input/textarea references and focus state. */
 export function useInputField(isDisabled: ComputedRef<boolean>) {
@@ -9,15 +10,15 @@ export function useInputField(isDisabled: ComputedRef<boolean>) {
   const inputOrTextarea = computed(() => inputRef.value || textareaRef.value);
 
   function focus() {
-    nextTick(() => inputOrTextarea.value?.focus());
+    nextTick(() => focusInputElement(inputOrTextarea.value));
   }
 
   function blur() {
-    inputOrTextarea.value?.blur();
+    blurInputElement(inputOrTextarea.value);
   }
 
   function select() {
-    inputOrTextarea.value?.select();
+    selectInputElement(inputOrTextarea.value);
   }
 
   watch(isDisabled, disabled => {

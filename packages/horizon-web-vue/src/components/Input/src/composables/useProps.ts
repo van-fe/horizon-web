@@ -1,243 +1,113 @@
 import type { CSSProperties, ExtractPropTypes, PropType } from 'vue';
+import { declarePropType } from '@aurora/utils';
 import { IconMaybeFalsyPropType } from '~/utils/useIcon';
+import type {
+  AdaptComponentApiShape,
+  ChoiceSize,
+  ComponentRendererPropDefinitions,
+  InputAutoSize,
+  InputCommonProps,
+  InputResizeMode,
+  InputStatus,
+  InputType,
+  InputVariant,
+} from '@aurora/core';
+import { INPUT_DEFAULTS } from '@aurora/core';
 
-export const useInputProps = {
-  /** 
-   * 绑定值
-    * @en Configuration for model value.
-   */
-  modelValue: {
-    type: String,
-    default: '',
+interface InputVueExtensions {
+  prefixIcon?: unknown;
+  suffixIcon?: unknown;
+  embedded?: boolean;
+  fitContent?: boolean;
+  fitContentMinWidth?: string | number;
+  fitContentClass?: string;
+  fitContentMirrorClass?: string;
+  embeddedClass?: string;
+  embeddedStyle?: CSSProperties;
+  embeddedInputHandler?: (event: Event) => void;
+  tabindex?: string | number;
+  autocomplete?: string;
+  unselectable?: 'on' | 'off';
+}
+
+type InputVueProps = AdaptComponentApiShape<
+  InputCommonProps,
+  {
+    value: 'modelValue';
+    readOnly: 'readonly';
+    maxLength: 'maxlength';
+    allowOverflow: 'enableOutOfExceeded';
+    minLength: 'minlength';
+    variant: 'inputStyle';
   },
-  /** 
-   * 类型，目前仅支持三种
-    * @en Configuration for type.
-   */
-  type: {
-    type: String as PropType<'text' | 'textarea' | 'password'>,
-    default: 'text',
-  },
-  /** 
-   * 尺寸
-    * @en Configuration for size.
-   */
-  size: {
-    type: String as PropType<'small' | 'medium' | 'large'>,
-    required: false,
-  },
-  /** 
-   * 占位文本
-    * @en Configuration for placeholder.
-   */
-  placeholder: {
-    type: String,
-  },
-  /** 
-   * 是否可清空
-    * @en Configuration for clearable.
-   */
-  clearable: {
-    type: Boolean,
-    default: false,
-  },
-  /** 
-   * 是否只读，原生属性
-    * @en Configuration for readonly.
-   */
-  readonly: {
-    type: Boolean,
-    default: false,
-  },
-  /** 
-   * 前缀图标
-    * @en Configuration for prefix icon.
-   */
-  prefixIcon: {
-    type: IconMaybeFalsyPropType,
-  },
-  /** 
-   * 后缀图标
-    * @en Configuration for suffix icon.
-   */
-  suffixIcon: {
-    type: IconMaybeFalsyPropType,
-  },
-  /** 
-   * 是否禁用
-    * @en Configuration for disabled.
-   */
-  disabled: {
-    type: Boolean,
-    default: undefined,
-  },
-  /** 
-   * 是否显示切换密码图标
-    * @en Configuration for show password.
-   */
-  showPassword: {
-    type: Boolean,
-    default: false,
-  },
-  /** 
-   * 是否显示输入字数统计，需要与maxlength配合使用
-    * @en Configuration for show limit.
-   */
-  showLimit: {
-    type: Boolean,
-    default: false,
-  },
-  /** 
-   * 原生属性，最大输入长度
-    * @en Configuration for maxlength.
-   */
-  maxlength: {
-    type: Number,
-    required: false,
-  },
-  /**
-   * 允许在设置了 `maxlength` 后仍超出输入范围
-   * 但此时会提示 `error`
-    * @en Configuration for enable out of exceeded.
-   */
-  enableOutOfExceeded: {
-    type: Boolean,
-    default: false,
-  },
-  /** 
-   * 原生属性，最小输入长度
-    * @en Configuration for minlength.
-   */
-  minlength: {
-    type: Number,
-    required: false,
-  },
-  /** 
-   * type为textarea时的初始行数
-    * @en Configuration for rows.
-   */
-  rows: {
-    type: Number,
-    default: 2,
-  },
-  /** 
-   * 是否可改变textarea大小
-    * @en Configuration for resize.
-   */
-  resize: {
-    type: String as PropType<'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline'>,
-    default: 'vertical',
-  },
-  /**
-   * inputStyle属性
-    * @en Configuration for input style.
-   */
-  inputStyle: {
-    type: String as PropType<'normal' | 'emphasize' | 'no-border'>,
-    default: 'normal',
-  },
-  /** 
-   * 输入框状态
-    * @en Configuration for status.
-   */
-  status: {
-    type: String as PropType<'error'>,
-    required: false,
-  },
-  /**
-   * 自适应内容高度，可设置为 true | false 或对象：{ minRows: 2, maxRows: 6 }
-    * @en Configuration for auto size.
-   */
+  'defaultValue',
+  InputVueExtensions
+>;
+
+export const useInputProps = declarePropType({
+  /** 绑定值。@en Bound input value. */
+  modelValue: { type: String, default: INPUT_DEFAULTS.defaultValue },
+  /** 输入类型。@en Input type. */
+  type: { type: String as PropType<InputType>, default: INPUT_DEFAULTS.type },
+  /** 尺寸。@en Input size. */
+  size: { type: String as PropType<ChoiceSize>, required: false },
+  /** 占位文本。@en Placeholder text. */
+  placeholder: { type: String, required: false },
+  /** 是否可清空。@en Whether the value can be cleared. */
+  clearable: { type: Boolean, default: INPUT_DEFAULTS.clearable },
+  /** 是否只读。@en Whether the input is read only. */
+  readonly: { type: Boolean, default: INPUT_DEFAULTS.readOnly },
+  /** 前缀图标。@en Prefix icon. */
+  prefixIcon: { type: IconMaybeFalsyPropType, required: false },
+  /** 后缀图标。@en Suffix icon. */
+  suffixIcon: { type: IconMaybeFalsyPropType, required: false },
+  /** 是否禁用；undefined 允许继承 Form 状态。@en Disabled state; undefined inherits Form. */
+  disabled: { type: Boolean, default: undefined },
+  /** 是否显示密码切换。@en Whether to show the password toggle. */
+  showPassword: { type: Boolean, default: INPUT_DEFAULTS.showPassword },
+  /** 是否显示字数。@en Whether to show the character count. */
+  showLimit: { type: Boolean, default: INPUT_DEFAULTS.showLimit },
+  /** 最大输入长度。@en Maximum input length. */
+  maxlength: { type: Number, required: false },
+  /** 是否允许超出最大长度。@en Whether values may exceed max length. */
+  enableOutOfExceeded: { type: Boolean, default: INPUT_DEFAULTS.allowOverflow },
+  /** 最小输入长度。@en Minimum input length. */
+  minlength: { type: Number, required: false },
+  /** 文本域初始行数。@en Initial textarea rows. */
+  rows: { type: Number, default: INPUT_DEFAULTS.rows },
+  /** 文本域缩放方式。@en Textarea resize mode. */
+  resize: { type: String as PropType<InputResizeMode>, default: INPUT_DEFAULTS.resize },
+  /** 视觉样式。@en Visual variant. */
+  inputStyle: { type: String as PropType<InputVariant>, default: INPUT_DEFAULTS.variant },
+  /** 校验状态。@en Validation status. */
+  status: { type: String as PropType<InputStatus>, required: false },
+  /** 文本域自适应高度。@en Automatic textarea height. */
   autoSize: {
-    type: [Boolean, Object] as PropType<boolean | { minRows?: number; maxRows?: number }>,
-    default: false,
+    type: [Boolean, Object] as PropType<InputAutoSize>,
+    default: INPUT_DEFAULTS.autoSize,
   },
-  /**
-   * 是否作为复合表单组件的无外观输入框使用
-   * 启用后仅渲染原生输入能力，不渲染 Input 的边框、前后缀和字数统计
-   * @en Whether to render as an unstyled input embedded in a composite form control.
-   */
-  embedded: {
-    type: Boolean,
-    default: false,
-  },
-  /**
-   * 是否使嵌入式输入框宽度自适应内容
-   * 仅在 `embedded` 为 `true` 且 `type` 为 `text` 时生效
-   * @en Whether an embedded text input should fit its content width.
-   */
-  fitContent: {
-    type: Boolean,
-    default: false,
-  },
-  /**
-   * 自适应内容输入框的最小宽度
-   * @en Minimum width of a fit-content input.
-   */
-  fitContentMinWidth: {
-    type: [String, Number],
-  },
-  /**
-   * 自适应内容输入框根节点的类名
-   * 复合组件可通过该属性保持已有 DOM 样式契约
-   * @en Root class name of a fit-content input.
-   */
-  fitContentClass: {
-    type: String,
-  },
-  /**
-   * 自适应内容输入框尺寸镜像节点的类名
-   * 复合组件可通过该属性保持已有 DOM 样式契约
-   * @en Sizing mirror class name of a fit-content input.
-   */
-  fitContentMirrorClass: {
-    type: String,
-  },
-  /**
-   * 嵌入式原生输入框的类名，供复合组件衔接既有样式
-   * @en Class name applied to the embedded native input.
-   */
-  embeddedClass: {
-    type: String,
-  },
-  /**
-   * 嵌入式原生输入框的样式，供复合组件控制原生输入区域
-   * @en Styles applied to the embedded native input.
-   */
-  embeddedStyle: {
-    type: Object as PropType<CSSProperties>,
-  },
-  /**
-   * 嵌入式原生输入框的输入事件处理器
-   * 复合组件可用它保持原生事件时序，包括输入法组合输入期间的事件
-   * @param evt 原生输入事件
-   * @paramEn evt Native input event.
-   * @en Native input handler for preserving event timing in composite controls.
-   */
-  embeddedInputHandler: {
-    type: Function as PropType<(evt: Event) => void>,
-  },
-  /**
-   * 原生输入框的 tab 顺序
-   * @en Native input tab order.
-   */
-  tabindex: {
-    type: [String, Number],
-  },
-  /**
-   * 原生输入框的自动完成策略
-   * @en Native input autocomplete strategy.
-   */
-  autocomplete: {
-    type: String,
-  },
-  /**
-   * 原生输入框是否可被选择
-   * @en Native input selection hint.
-   */
-  unselectable: {
-    type: String as PropType<'on' | 'off'>,
-  },
-};
+  /** 是否作为复合控件的无外观输入使用。@en Unstyled composite-control input. */
+  embedded: { type: Boolean, default: false },
+  /** 嵌入输入是否按内容适配宽度。@en Whether embedded width fits its content. */
+  fitContent: { type: Boolean, default: false },
+  /** 自适应内容的最小宽度。@en Minimum fit-content width. */
+  fitContentMinWidth: { type: [String, Number], required: false },
+  /** 自适应根节点类名。@en Fit-content root class. */
+  fitContentClass: { type: String, required: false },
+  /** 尺寸镜像节点类名。@en Sizing mirror class. */
+  fitContentMirrorClass: { type: String, required: false },
+  /** 嵌入原生输入类名。@en Embedded native input class. */
+  embeddedClass: { type: String, required: false },
+  /** 嵌入原生输入样式。@en Embedded native input styles. */
+  embeddedStyle: { type: Object as PropType<CSSProperties>, required: false },
+  /** 嵌入原生输入事件处理器。@en Embedded native input handler. */
+  embeddedInputHandler: { type: Function as PropType<(event: Event) => void>, required: false },
+  /** 原生 tab 顺序。@en Native tab order. */
+  tabindex: { type: [String, Number], required: false },
+  /** 原生自动完成策略。@en Native autocomplete strategy. */
+  autocomplete: { type: String, required: false },
+  /** 原生选择提示。@en Native selection hint. */
+  unselectable: { type: String as PropType<'on' | 'off'>, required: false },
+} satisfies ComponentRendererPropDefinitions<InputVueProps>);
 
 export type InputProps = ExtractPropTypes<typeof useInputProps>;

@@ -1,7 +1,5 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import calculateAutoSizeStyle, {
-  calculateNodeStyling,
-} from '../src/utils/calculateNodeHeight';
+import calculateAutoSizeStyle, { calculateNodeStyling } from '../src/utils/calculateNodeHeight';
 
 afterEach(() => {
   vi.restoreAllMocks();

@@ -1,10 +1,10 @@
 @use 'sass:map';
-@use '../../../../styles/mixins';
+@use '../../mixins';
 
 @mixin input() {
   position: relative;
-  display: inline-flex;
   box-sizing: border-box;
+  display: inline-flex;
   width: 100%;
   padding: mixins.css-variable('input', 'spacing', 'inner-wrap', 'padding');
   background-color: mixins.css-variable('input', 'background', 'inner');
@@ -14,15 +14,15 @@
 }
 
 @mixin active() {
-  border-color: mixins.css-variable('input', 'border-color', 'focus');
   outline: none;
+  border-color: mixins.css-variable('input', 'border-color', 'focus');
 }
 
 @mixin disabled() {
   color: mixins.css-variable('input', 'color', 'inner', 'disabled');
+  cursor: not-allowed;
   background-color: mixins.css-variable('input', 'background', 'disabled');
   border-color: mixins.css-variable('input', 'border-color', 'disabled');
-  cursor: not-allowed;
 }
 
 @mixin error() {
@@ -34,20 +34,20 @@
 }
 
 @mixin mixed($type) {
-  display: table-cell;
   box-sizing: border-box;
+  display: table-cell;
   width: 1px;
   height: mixins.css-variable('input', 'size', 'height');
   padding: mixins.css-variable('input', 'spacing', 'prepend-append', 'padding');
+  vertical-align: middle;
   color: mixins.css-variable('input', 'color', 'prepend-append');
   white-space: nowrap;
-  vertical-align: middle;
   background: mixins.css-variable('input', 'background', 'prepend-append');
   border: mixins.css-variable('input', 'border');
 
   #{mixins.block-name('select')} {
-    display: block;
     box-sizing: border-box;
+    display: block;
     max-width: none;
     margin: -1px
       calc(0px - #{mixins.css-variable('input', 'spacing', 'textarea-inner', 'padding-x')} - 1px);

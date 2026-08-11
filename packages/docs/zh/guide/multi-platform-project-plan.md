@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B3 Slider 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B4 Input 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -433,6 +433,18 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DS-B3-001 | Done | Slider Sass 与变量迁入 `@aurora/theme`，Vue 使用包导出代理，React 使用同源样式并补齐原生输入和 tooltip 规则 |
 | DOC-B3-001 | Done | Slider 中英文 React 页面、独立 TSX 示例和表单侧边栏入口完成；22 组 Vue/React 契约生成且 renderer 隔离检查通过 |
 | QA-B3-001 | Done | Core 77、Web Core Node 7/Chromium 11、React Chromium 77、Vue 2297 项通过且 1 项预期失败，覆盖率为 98.00% / 95.23% / 97.76% / 98.27%，五个包构建、文档和 Vue/React/SSR 消费工程通过 |
+
+#### M6-B4 第四批实施记录（2026-08-11）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B4-001 | Done | Input 的公共 props、默认值、枚举、校验器、事件载荷、渲染区域、命令以及类型归一、超限和 change 判定算法迁入 `@aurora/core` |
+| WEB-B4-001 | Done | 在同名 Web Core 目录提供 textarea 自适应高度计算与 input focus/blur/select primitives，并覆盖 Node/Chromium 测试 |
+| VUE-B4-001 | Done | Vue props/emits/slots/exposes 通过类型化适配消费公共契约，仅保留 modelValue、Vue runtime props、图标与原生属性等 renderer 差异；输入、布局与命令复用 Core/Web Core |
+| REACT-B4-001 | Done | 完成 Input 单行、textarea、密码、受控/非受控、IME、清空、长度统计、自适应高度、四个渲染区域与 ref 命令 |
+| DS-B4-001 | Done | Input Sass 与变量迁入 `@aurora/theme`，Vue 使用包导出代理，React 使用同源样式并补齐清空和密码按钮规则 |
+| DOC-B4-001 | Done | Input 中英文 React 页面、独立 TSX 示例和表单侧边栏入口完成；23 组 Vue/React 契约生成且 renderer 隔离检查通过 |
+| QA-B4-001 | Done | Core 80、Web Core Node 7/Chromium 13、React Chromium 81、Vue 2297 项通过且 1 项预期失败，覆盖率为 98.00% / 95.25% / 97.78% / 98.27%，五个包构建、文档和 Vue/React/SSR 消费工程通过 |
 
 ### 批次 C：浮层与容器
 

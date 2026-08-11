@@ -63,7 +63,12 @@ describe('Input public API contracts', () => {
     const input = wrapper.get('input');
 
     expect(wrapper.classes()).toEqual(
-      expect.arrayContaining(['h-input--large', 'h-input--no-border', 'h-input--with-prepend', 'h-input--with-append']),
+      expect.arrayContaining([
+        'h-input--large',
+        'h-input--no-border',
+        'h-input--with-prepend',
+        'h-input--with-append',
+      ]),
     );
     expect(input.attributes()).toMatchObject({
       type: 'password',

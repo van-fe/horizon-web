@@ -1,6 +1,7 @@
 import { ref, toRef, watch } from 'vue';
 import type { InputProps } from '../composables/useProps';
 import type { InputEmit } from '../types';
+import { shouldEmitInputChange } from '@aurora/core';
 
 /** Owns local/model value synchronization and change-session tracking. */
 export function useInputValue(props: Readonly<InputProps>, emit: InputEmit) {
@@ -17,7 +18,7 @@ export function useInputValue(props: Readonly<InputProps>, emit: InputEmit) {
   }
 
   function emitChange() {
-    if (valueAtFocus === localValue.value) return;
+    if (!shouldEmitInputChange(valueAtFocus, localValue.value)) return;
     valueAtFocus = localValue.value;
     emit('change', localValue.value);
   }

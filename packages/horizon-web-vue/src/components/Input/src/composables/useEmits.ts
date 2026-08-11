@@ -1,95 +1,46 @@
-import { isString } from '@aurora/utils';
+import type { AdaptComponentApiShape, ComponentEventValidators, InputEventMap } from '@aurora/core';
+import { isInputString } from '@aurora/core';
+
+type InputVueEventMap = AdaptComponentApiShape<
+  InputEventMap<Event, MouseEvent, FocusEvent, KeyboardEvent, CompositionEvent>,
+  {
+    valueChange: 'update:modelValue';
+    keyDown: 'keydown';
+    keyPress: 'keypress';
+    keyUp: 'keyup';
+    compositionStart: 'compositionstart';
+    compositionUpdate: 'compositionupdate';
+    compositionEnd: 'compositionend';
+  }
+>;
 
 export const useInputEmits = {
-  /**
-   *  更新 `modelValue`
-    * @en Emitted when update:model value changes.
-   */
-  'update:modelValue': (value: string) => isString(value),
-  /**
-   * 鼠标点击时触发
-   * @param evt 鼠标事件
-   * @paramEn evt The evt value.
-    * @en Emitted when click changes.
-   */
-  click: (evt: MouseEvent) => evt instanceof MouseEvent,
-  /**
-   * 在 Input 值改变时触发
-   * @param value input值
-   * @paramEn value The value value.
-   * @param evt 输入事件
-   * @paramEn evt The evt value.
-    * @en Emitted when input changes.
-   */
-  input: (value: string, evt: Event) => isString(value) && evt instanceof Event,
-  /**
-   * 在 Input 失去焦点且值发生变化时触发
-   * @param value input值
-   * @paramEn value The value value.
-    * @en Emitted when change changes.
-   */
-  change: (value: string) => isString(value),
-  /**
-   * 在 Input 获得焦点时触发
-   * @param evt 聚焦事件
-   * @paramEn evt The evt value.
-    * @en Emitted when focus changes.
-   */
-  focus: (evt: FocusEvent) => evt instanceof FocusEvent,
-  /**
-   * 在 Input 失去焦点时触发
-   * @param evt 失焦事件
-   * @paramEn evt The evt value.
-    * @en Emitted when blur changes.
-   */
-  blur: (evt: FocusEvent) => evt instanceof FocusEvent,
-  /**
-   * 在点击由 clearable 属性生成的清空按钮时触发
-    * @en Emitted when clear changes.
-   */
+  /** 更新绑定值。@en Updates the bound value. */
+  'update:modelValue': (value: string) => isInputString(value),
+  /** 点击原生输入。@en Native input clicked. */
+  click: (event: MouseEvent) => event instanceof MouseEvent,
+  /** 收到输入。@en Input received. */
+  input: (value: string, event: Event) => isInputString(value) && event instanceof Event,
+  /** 值提交变化。@en Value change committed. */
+  change: (value: string) => isInputString(value),
+  /** 获得焦点。@en Input focused. */
+  focus: (event: FocusEvent) => event instanceof FocusEvent,
+  /** 失去焦点。@en Input blurred. */
+  blur: (event: FocusEvent) => event instanceof FocusEvent,
+  /** 值已清空。@en Value cleared. */
   clear: () => true,
-  /**
-   * 键盘按键按下事件
-   * @param evt 键盘事件
-   * @paramEn evt The evt value.
-    * @en Emitted when keydown changes.
-   */
-  keydown: (evt: KeyboardEvent) => evt instanceof KeyboardEvent,
-  /**
-   * 键盘按键事件
-   * @param evt 键盘事件
-   * @paramEn evt The evt value.
-    * @en Emitted when keypress changes.
-   */
-  keypress: (evt: KeyboardEvent) => evt instanceof KeyboardEvent,
-  /**
-   * 键盘按键按下后抬起事件
-   * @param evt 键盘事件
-   * @paramEn evt The evt value.
-    * @en Emitted when keyup changes.
-   */
-  keyup: (evt: KeyboardEvent) => evt instanceof KeyboardEvent,
-  /**
-   * 组合输入事件开始时触发，如中文拼音
-   * @param evt 组合输入事件
-   * @paramEn evt The evt value.
-    * @en Emitted when compositionstart changes.
-   */
-  compositionstart: (evt: CompositionEvent) => evt instanceof CompositionEvent,
-  /**
-   * 组合输入事件结束时触发，如中文拼音
-   * @param evt 组合输入事件
-   * @paramEn evt The evt value.
-    * @en Emitted when compositionupdate changes.
-   */
-  compositionupdate: (evt: CompositionEvent) => evt instanceof CompositionEvent,
-  /**
-   * 组合输入事件变化时触发，如中文拼音
-   * @param evt 组合输入事件
-   * @paramEn evt The evt value.
-    * @en Emitted when compositionend changes.
-   */
-  compositionend: (evt: CompositionEvent) => evt instanceof CompositionEvent,
-};
+  /** 按键按下。@en Key pressed down. */
+  keydown: (event: KeyboardEvent) => event instanceof KeyboardEvent,
+  /** 按键输入。@en Key pressed. */
+  keypress: (event: KeyboardEvent) => event instanceof KeyboardEvent,
+  /** 按键抬起。@en Key released. */
+  keyup: (event: KeyboardEvent) => event instanceof KeyboardEvent,
+  /** 组合输入开始。@en Composition started. */
+  compositionstart: (event: CompositionEvent) => event instanceof CompositionEvent,
+  /** 组合输入更新。@en Composition updated. */
+  compositionupdate: (event: CompositionEvent) => event instanceof CompositionEvent,
+  /** 组合输入结束。@en Composition ended. */
+  compositionend: (event: CompositionEvent) => event instanceof CompositionEvent,
+} satisfies ComponentEventValidators<InputVueEventMap>;
 
 export type InputEmits = typeof useInputEmits;

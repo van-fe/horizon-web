@@ -9,6 +9,7 @@ export * from './Checkbox';
 export * from './Count';
 export * from './Divider';
 export * from './Empty';
+export * from './Input';
 export * from './Progress';
 export * from './Result';
 export * from './Rate';

@@ -34,6 +34,7 @@ const reactSidebar = [
     collapsed: false,
     items: [
       { text: 'Checkbox', link: 'components/Checkbox' },
+      { text: 'Input', link: 'components/Input' },
       { text: 'Rate', link: 'components/Rate' },
       { text: 'Radio', link: 'components/Radio' },
       { text: 'Segmented', link: 'components/Segmented' },

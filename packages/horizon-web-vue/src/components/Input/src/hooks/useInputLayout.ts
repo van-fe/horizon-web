@@ -8,6 +8,7 @@ import type { InputValueController } from './useInputValue';
 import useLocaleLang from '~/utils/useLocaleLang';
 import useSize from '~/utils/useSize';
 import { warn } from '~/utils/useLog';
+import { isInputType, isInputValueOverflow, normalizeInputType } from '@aurora/core';
 
 /** Owns visual derivatives, password visibility and textarea sizing. */
 export function useInputLayout(
@@ -18,22 +19,26 @@ export function useInputLayout(
   const showPassword = ref(false);
   const sizeRef = useSize(toRef(props, 'size'), 'medium');
   const placeholder = useLocaleLang('input.placeholder');
-  const autoSizeStyle = useAutoSizeStyle(field.textareaRef, value.modelValue, toRef(props, 'autoSize'));
+  const autoSizeStyle = useAutoSizeStyle(
+    field.textareaRef,
+    value.modelValue,
+    toRef(props, 'autoSize'),
+  );
   const limitCountStyle = useLimitStyle(field.textareaRef, value.modelValue);
 
   const checkedType = computed(() => {
-    if (['text', 'textarea', 'password'].includes(props.type)) return props.type;
+    if (isInputType(props.type)) return props.type;
     warn(
       'input',
       'Please use one of these values as the input prop "type": "text"/"textarea"/"password". Or it will be converted to "text".',
     );
-    return 'text';
+    return normalizeInputType(props.type);
   });
   const isOutOfExceeded = computed(
     () =>
       isDefined(props.maxlength) &&
       props.enableOutOfExceeded &&
-      value.localValue.value.length > props.maxlength,
+      isInputValueOverflow(value.localValue.value, props.maxlength),
   );
   const iconSize = computed(() => (sizeRef.value === 'small' ? 12 : 16));
 

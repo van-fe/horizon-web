@@ -1,4 +1,5 @@
 declare module '@aurora/theme/styles/foundations';
+declare module '@aurora/theme/styles/input';
 declare module '@aurora/theme/styles/alert';
 declare module '@aurora/theme/styles/avatar';
 declare module '@aurora/theme/styles/badge';

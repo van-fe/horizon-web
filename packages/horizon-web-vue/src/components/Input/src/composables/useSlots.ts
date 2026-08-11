@@ -1,25 +1,10 @@
-import type { SlotsType } from 'vue';
+import type { Slot, SlotsType } from 'vue';
+import type { AdaptComponentApiShape, InputRegionMap } from '@aurora/core';
+
+type InputVueSlots = AdaptComponentApiShape<InputRegionMap>;
+
 export const useInputSlots = Object as SlotsType<{
-  /**
-   * 输入框头部内容
-    * @en Custom content for the prefix slot.
-   */
-  prefix?: {};
-  /**
-   * 输入框尾部内容
-    * @en Custom content for the suffix slot.
-   */
-  suffix?: {};
-  /**
-   * 输入框前置内容
-    * @en Custom content for the prepend slot.
-   */
-  prepend?: {};
-  /**
-   * 输入框后置内容
-    * @en Custom content for the append slot.
-   */
-  append?: {};
+  [Name in keyof InputVueSlots]?: Slot;
 }>;
 
 export type InputSlots = typeof useInputSlots;

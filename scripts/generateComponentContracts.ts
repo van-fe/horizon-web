@@ -13,6 +13,7 @@ import {
   createVueComponentManifest,
   dividerManifest,
   emptyManifest,
+  inputManifest,
   progressManifest,
   rateManifest,
   radioManifest,
@@ -39,6 +40,7 @@ const manifests = [
   countManifest,
   dividerManifest,
   emptyManifest,
+  inputManifest,
   progressManifest,
   rateManifest,
   radioManifest,
@@ -106,6 +108,54 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     regions: { rename: { title: 'default' } },
   },
   Empty: { regions: { rename: { footer: 'default' } } },
+  Input: {
+    props: {
+      rename: {
+        value: 'modelValue',
+        readOnly: 'readonly',
+        maxLength: 'maxlength',
+        allowOverflow: 'enableOutOfExceeded',
+        minLength: 'minlength',
+        variant: 'inputStyle',
+      },
+      omit: ['defaultValue'],
+      extend: [
+        {
+          name: 'prefixIcon',
+          type: 'IconMaybeFalsy',
+          description: { zh: '前缀图标', en: 'Prefix icon' },
+        },
+        {
+          name: 'suffixIcon',
+          type: 'IconMaybeFalsy',
+          description: { zh: '后缀图标', en: 'Suffix icon' },
+        },
+        {
+          name: 'embedded',
+          type: 'boolean',
+          defaultValue: 'false',
+          description: { zh: '无外观嵌入模式', en: 'Unstyled embedded mode' },
+        },
+        {
+          name: 'fitContent',
+          type: 'boolean',
+          defaultValue: 'false',
+          description: { zh: '按内容适配宽度', en: 'Fits content width' },
+        },
+      ],
+    },
+    events: {
+      rename: {
+        valueChange: 'update:modelValue',
+        keyDown: 'keydown',
+        keyPress: 'keypress',
+        keyUp: 'keyup',
+        compositionStart: 'compositionstart',
+        compositionUpdate: 'compositionupdate',
+        compositionEnd: 'compositionend',
+      },
+    },
+  },
   Progress: { regions: { rename: { label: 'default' } } },
   Rate: {
     props: {
@@ -253,6 +303,39 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
   Count: { events: { rename: { change: 'onChange' } } },
   Divider: { regions: { rename: { title: 'children' } } },
   Empty: { regions: { rename: { footer: 'children' } } },
+  Input: {
+    props: {
+      extend: [
+        {
+          name: 'inputProps',
+          type: 'InputHTMLAttributes<HTMLInputElement>',
+          description: { zh: '原生 input 属性', en: 'Native input attributes' },
+        },
+        {
+          name: 'textareaProps',
+          type: 'TextareaHTMLAttributes<HTMLTextAreaElement>',
+          description: { zh: '原生 textarea 属性', en: 'Native textarea attributes' },
+        },
+      ],
+    },
+    events: {
+      rename: {
+        valueChange: 'onValueChange',
+        click: 'onClick',
+        input: 'onInput',
+        change: 'onChange',
+        focus: 'onFocus',
+        blur: 'onBlur',
+        clear: 'onClear',
+        keyDown: 'onKeyDown',
+        keyPress: 'onKeyPress',
+        keyUp: 'onKeyUp',
+        compositionStart: 'onCompositionStart',
+        compositionUpdate: 'onCompositionUpdate',
+        compositionEnd: 'onCompositionEnd',
+      },
+    },
+  },
   Progress: { regions: { rename: { label: 'children' } } },
   Rate: {
     events: { rename: { change: 'onChange', blur: 'onBlur' } },

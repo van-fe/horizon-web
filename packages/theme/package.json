@@ -46,6 +46,8 @@
     "./styles/divider-variables": "./styles/components/divider/variables.scss",
     "./styles/empty": "./styles/components/empty/index.scss",
     "./styles/empty-variables": "./styles/components/empty/variables.scss",
+    "./styles/input": "./styles/components/input/index.scss",
+    "./styles/input-variables": "./styles/components/input/variables.scss",
     "./styles/foundations": "./styles/foundations.scss",
     "./styles/basic": "./styles/basic/index.scss",
     "./styles/element": "./styles/element/index.scss",
