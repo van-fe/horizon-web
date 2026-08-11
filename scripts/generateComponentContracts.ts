@@ -2,44 +2,156 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {
   adaptManifestFields,
+  avatarManifest,
+  badgeManifest,
   buttonManifest,
   createReactComponentManifest,
   createVueComponentManifest,
+  dividerManifest,
   selectManifest,
+  spaceManifest,
   switchManifest,
   tooltipManifest,
 } from '../packages/core/src';
+import type { ManifestFieldAdaptation } from '../packages/core/src';
 
-const manifests = [buttonManifest, switchManifest, tooltipManifest, selectManifest] as const;
-const vuePropAdaptations = {
-  Button: { rename: { variant: 'type', asyncState: 'debounceType' } },
-  Switch: { rename: { value: 'modelValue', readOnly: 'readonly' }, omit: ['defaultValue'] },
-  Tooltip: {
-    rename: { open: 'visible', showDelay: 'showAfter', hideDelay: 'hideAfter' },
-    omit: ['defaultOpen'],
+const manifests = [
+  avatarManifest,
+  badgeManifest,
+  buttonManifest,
+  dividerManifest,
+  selectManifest,
+  spaceManifest,
+  switchManifest,
+  tooltipManifest,
+] as const;
+
+interface RendererApiAdaptation {
+  props?: ManifestFieldAdaptation;
+  events?: ManifestFieldAdaptation;
+  regions?: ManifestFieldAdaptation;
+  commands?: ManifestFieldAdaptation;
+}
+
+const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
+  Avatar: {
+    props: { rename: { fallbackSrc: 'default' } },
+    regions: { rename: { content: 'default', fallback: 'error' } },
   },
-  Select: { rename: { value: 'modelValue' }, omit: ['defaultValue', 'open'] },
-} as const;
-const reactPropAdaptations = {
-  Tooltip: { rename: { showDelay: 'showAfter', hideDelay: 'hideAfter' } },
-} as const;
+  Badge: {
+    regions: { rename: { content: 'default' }, omit: ['icon'] },
+  },
+  Button: { props: { rename: { variant: 'type', asyncState: 'debounceType' } } },
+  Divider: {
+    props: { rename: { variant: 'type' } },
+    regions: { rename: { title: 'default' } },
+  },
+  Select: { props: { rename: { value: 'modelValue' }, omit: ['defaultValue', 'open'] } },
+  Space: {
+    props: {
+      extend: [
+        {
+          name: 'fragment',
+          type: 'boolean',
+          defaultValue: 'true',
+          description: { zh: '展开 Fragment 子节点', en: 'Flattens Fragment children' },
+        },
+        {
+          name: 'separator',
+          type: 'boolean',
+          defaultValue: 'false',
+          description: { zh: '启用默认分隔符', en: 'Enables the default separator' },
+        },
+      ],
+    },
+    regions: { rename: { content: 'default' } },
+  },
+  Switch: {
+    props: { rename: { value: 'modelValue', readOnly: 'readonly' }, omit: ['defaultValue'] },
+  },
+  Tooltip: {
+    props: {
+      rename: { open: 'visible', showDelay: 'showAfter', hideDelay: 'hideAfter' },
+      omit: ['defaultOpen'],
+    },
+    regions: { rename: { trigger: 'default' } },
+  },
+};
 
-const vue = manifests.map(manifest =>
-  createVueComponentManifest(manifest, {
-    props: adaptManifestFields(
-      manifest.contract.props,
-      vuePropAdaptations[manifest.name as keyof typeof vuePropAdaptations],
-    ),
-  }),
-);
-const react = manifests.map(manifest =>
-  createReactComponentManifest(manifest, {
-    props: adaptManifestFields(
-      manifest.contract.props,
-      reactPropAdaptations[manifest.name as keyof typeof reactPropAdaptations],
-    ),
-  }),
-);
+const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
+  Avatar: {
+    events: { rename: { error: 'onError' } },
+    regions: { rename: { content: 'children' } },
+  },
+  Badge: { regions: { rename: { content: 'children' } } },
+  Button: {
+    events: {
+      rename: {
+        press: 'onClick',
+        actionFinished: 'onActionFinished',
+        actionError: 'onActionError',
+      },
+    },
+    regions: { rename: { default: 'children' } },
+  },
+  Divider: { regions: { rename: { title: 'children' } } },
+  Select: {
+    events: { rename: { change: 'onChange', openChange: 'onOpenChange' } },
+    regions: {
+      rename: {
+        option: 'renderOption',
+        empty: 'emptyContent',
+        header: 'panelHeader',
+        footer: 'panelFooter',
+      },
+    },
+  },
+  Space: {
+    props: {
+      extend: [
+        {
+          name: 'separator',
+          type: 'boolean | ReactNode',
+          defaultValue: 'false',
+          description: {
+            zh: '默认或自定义分隔内容',
+            en: 'Default or custom separator content',
+          },
+        },
+      ],
+    },
+    regions: { rename: { content: 'children' }, omit: ['separator'] },
+  },
+  Switch: {
+    events: { rename: { change: 'onChange' } },
+    regions: { omit: ['status'] },
+  },
+  Tooltip: {
+    props: { rename: { showDelay: 'showAfter', hideDelay: 'hideAfter' } },
+    events: { rename: { openChange: 'onOpenChange' } },
+    regions: { rename: { trigger: 'children' } },
+  },
+};
+
+const vue = manifests.map(manifest => {
+  const adaptation = vueApiAdaptations[manifest.name];
+  return createVueComponentManifest(manifest, {
+    props: adaptManifestFields(manifest.contract.props, adaptation?.props),
+    emits: adaptManifestFields(manifest.contract.emits, adaptation?.events),
+    slots: adaptManifestFields(manifest.contract.slots, adaptation?.regions),
+    exposes: adaptManifestFields(manifest.contract.exposes, adaptation?.commands),
+  });
+});
+
+const react = manifests.map(manifest => {
+  const adaptation = reactApiAdaptations[manifest.name];
+  return createReactComponentManifest(manifest, {
+    props: adaptManifestFields(manifest.contract.props, adaptation?.props),
+    callbacks: adaptManifestFields(manifest.contract.emits, adaptation?.events),
+    renderers: adaptManifestFields(manifest.contract.slots, adaptation?.regions),
+    ref: adaptManifestFields(manifest.contract.exposes, adaptation?.commands),
+  });
+});
 
 const output = path.resolve(__dirname, '../packages/docs/.vitepress/generated');
 fs.mkdirSync(output, { recursive: true });

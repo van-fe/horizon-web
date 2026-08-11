@@ -1,4 +1,5 @@
 import { computed, defineComponent, toRefs } from 'vue';
+import { formatBadgeContent } from '@aurora/core';
 import { useBadgeProps } from './composables/useProps';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { slotVNodes, ComponentClassBlock, useNamespace } from '@aurora/utils';
@@ -9,7 +10,9 @@ import { useBadgeSlots } from './composables/useSlots';
 export default defineComponent({
   name: `${useNamespace()}Badge`,
   desc: '元素上的状态或数字标记',
-  descLocales: { en: "Badge adds a new-state, quantity, or identity marker to a meaningful target. It should supplement readable content rather than replace it." },
+  descLocales: {
+    en: 'Badge adds a new-state, quantity, or identity marker to a meaningful target. It should supplement readable content rather than replace it.',
+  },
   components: {
     AIcon,
   },
@@ -28,12 +31,7 @@ export default defineComponent({
       offset: offsetRef,
       color: colorRef,
     } = toRefs(props);
-    const numDisplayRef = computed(() => {
-      if (Number(contentRef.value) <= numMaxRef.value) {
-        return contentRef.value;
-      }
-      return `${numMaxRef.value}+`;
-    });
+    const numDisplayRef = computed(() => formatBadgeContent(contentRef.value, numMaxRef.value));
     const cls = new ComponentClassBlock('badge');
     return () => {
       const vnodes = slotVNodes(slots.default);

@@ -2,16 +2,24 @@
 @use './mixins/mixins';
 @use './basic';
 @use './element';
+@use './components/avatar/variables' as avatar;
+@use './components/badge/variables' as badge;
 @use './components/button/variables' as button;
+@use './components/divider/variables' as divider;
 @use './components/select/variables' as select;
+@use './components/space/variables' as space;
 @use './components/switch/variables' as switch;
 @use './components/tooltip/variables' as tooltip;
 
 $values: function.map-merge-multi(
   function.flatten-variables(basic.$values),
   function.flatten-variables(element.$values),
+  function.flatten-variables(avatar.$values, 'avatar'),
+  function.flatten-variables(badge.$values, 'badge'),
   function.flatten-variables(button.$values, 'button'),
+  function.flatten-variables(divider.$values, 'divider'),
   function.flatten-variables(select.$values, 'select'),
+  function.flatten-variables(space.$values, 'space'),
   function.flatten-variables(switch.$values, 'switch'),
   function.flatten-variables(tooltip.$values, 'tooltip')
 );

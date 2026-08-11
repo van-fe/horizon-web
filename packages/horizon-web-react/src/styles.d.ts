@@ -1,5 +1,9 @@
 declare module '@aurora/theme/styles/foundations';
+declare module '@aurora/theme/styles/avatar';
+declare module '@aurora/theme/styles/badge';
 declare module '@aurora/theme/styles/button';
+declare module '@aurora/theme/styles/divider';
 declare module '@aurora/theme/styles/switch';
 declare module '@aurora/theme/styles/tooltip';
 declare module '@aurora/theme/styles/select';
+declare module '@aurora/theme/styles/space';

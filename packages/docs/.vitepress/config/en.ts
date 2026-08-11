@@ -18,6 +18,10 @@ const reactSidebar = [
     collapsed: false,
     items: [
       { text: 'Button', link: 'components/Button' },
+      { text: 'Avatar', link: 'components/Avatar' },
+      { text: 'Badge', link: 'components/Badge' },
+      { text: 'Divider', link: 'components/Divider' },
+      { text: 'Space', link: 'components/Space' },
       { text: 'Switch', link: 'components/Switch' },
       { text: 'Select', link: 'components/Select' },
       { text: 'Tooltip', link: 'components/Tooltip' },

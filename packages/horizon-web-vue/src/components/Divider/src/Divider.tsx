@@ -1,4 +1,5 @@
 import { computed, defineComponent, Fragment } from 'vue';
+import { normalizeDividerVariant } from '@aurora/core';
 import { useDividerProps } from './composables/useProps';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, sizeUnitTransform, useNamespace } from '@aurora/utils';
@@ -8,7 +9,7 @@ import { useDividerSlots } from './composables/useSlots';
 export default defineComponent({
   name: `${useNamespace()}Divider`,
   desc: '分割线用于分割内容\n有两种颜色的分割线，通常使用常规分割线，特殊情况下，如分割内部的元素或区块，可使用辅助分割线（次要分割线）',
-  descLocales: { en: "By configuring `line-style`, you can change the line type" },
+  descLocales: { en: 'By configuring `line-style`, you can change the line type' },
   props: useDividerProps,
   slots: useDividerSlots,
   setup(props, { slots }: HorizonWebSetupContext<{}, DividerSlots>) {
@@ -20,9 +21,7 @@ export default defineComponent({
       };
     });
 
-    const type = computed(() =>
-      props.type === 'primary' ? 'default' : props.type === 'secondary' ? 'strong' : props.type,
-    );
+    const type = computed(() => normalizeDividerVariant(props.type));
 
     return () => (
       <div

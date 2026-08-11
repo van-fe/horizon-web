@@ -52,4 +52,5 @@ packages/horizon-web-react/.vitest-attachments/
 packages/horizon-web-vue/coverage*/
 packages/horizon-web-vue/packages/horizon-web-vue/coverage*/
 packages/horizon-web-vue/src/components/**/__screenshots__/
+packages/horizon-web-react/src/components/**/__screenshots__/
 tests/consumers/.output/

@@ -1,4 +1,17 @@
 import type { ExtractPropTypes, PropType } from 'vue';
+import type {
+  DividerDirection,
+  DividerLineStyle,
+  DividerTitlePlacement,
+  DividerVariant,
+} from '@aurora/core';
+import {
+  DIVIDER_DEFAULTS,
+  isDividerDirection,
+  isDividerLineStyle,
+  isDividerTitlePlacement,
+  isDividerVariant,
+} from '@aurora/core';
 import { declarePropType, cssVariable } from '@aurora/utils';
 
 export const useDividerProps = declarePropType({
@@ -9,8 +22,9 @@ export const useDividerProps = declarePropType({
    * @en Configuration for type.
    */
   type: {
-    type: String as PropType<'default' | 'strong' | 'primary' | 'secondary'>,
-    default: 'default',
+    type: String as PropType<DividerVariant>,
+    default: DIVIDER_DEFAULTS.variant,
+    validator: isDividerVariant,
   },
   /**
    * 分割线方向
@@ -18,24 +32,27 @@ export const useDividerProps = declarePropType({
    * @en Configuration for direction.
    */
   direction: {
-    type: String as PropType<'horizontal' | 'vertical'>,
-    default: 'horizontal',
+    type: String as PropType<DividerDirection>,
+    default: DIVIDER_DEFAULTS.direction,
+    validator: isDividerDirection,
   },
   /**
    * 线的类型
    * @en Configuration for line style.
    */
   lineStyle: {
-    type: String as PropType<'solid' | 'dashed' | 'dotted'>,
-    default: 'solid',
+    type: String as PropType<DividerLineStyle>,
+    default: DIVIDER_DEFAULTS.lineStyle,
+    validator: isDividerLineStyle,
   },
   /**
    * 标题位置
    * @en Configuration for title placement.
    */
   titlePlacement: {
-    type: String as PropType<'left' | 'center' | 'right'>,
-    default: 'center',
+    type: String as PropType<DividerTitlePlacement>,
+    default: DIVIDER_DEFAULTS.titlePlacement,
+    validator: isDividerTitlePlacement,
   },
   /**
    * 上下间距

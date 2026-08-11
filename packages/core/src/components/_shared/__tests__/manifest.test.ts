@@ -1,7 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import {
   adaptManifestFields,
+  avatarApiContract,
   buttonManifest,
+  createManifestFields,
+  createPropManifestFields,
   createReactComponentManifest,
   createVueComponentManifest,
   selectManifest,
@@ -46,11 +49,34 @@ describe('component manifests', () => {
       rename: { variant: 'type' },
       omit: ['asyncState'],
       extend: [
-        { name: 'debounceType', type: 'ButtonAsyncState', description: { zh: '防抖状态', en: 'Debounce state' } },
+        {
+          name: 'debounceType',
+          type: 'ButtonAsyncState',
+          description: { zh: '防抖状态', en: 'Debounce state' },
+        },
       ],
     });
     expect(vueProps.some(field => field.name === 'type')).toBe(true);
     expect(vueProps.some(field => field.name === 'asyncState')).toBe(false);
     expect(common.some(field => field.name === 'variant')).toBe(true);
+  });
+
+  it('derives field names and defaults from the typed API contract', () => {
+    const props = createPropManifestFields(avatarApiContract, {
+      size: { type: 'AvatarSize', description: { zh: '尺寸', en: 'Size' } },
+      src: { type: 'string', description: { zh: '来源', en: 'Source' } },
+      fit: { type: 'AvatarFit', description: { zh: '适应', en: 'Fit' } },
+      type: { type: 'AvatarType', description: { zh: '类型', en: 'Type' } },
+      fallbackSrc: { type: 'string', description: { zh: '兜底', en: 'Fallback' } },
+    });
+    const regions = createManifestFields<{ content: unknown }>({
+      content: { type: 'content', description: { zh: '内容', en: 'Content' } },
+    });
+
+    expect(props.find(field => field.name === 'size')?.defaultValue).toBe('medium');
+    expect(props.find(field => field.name === 'src')?.defaultValue).toBeUndefined();
+    expect(regions).toEqual([
+      { name: 'content', type: 'content', description: { zh: '内容', en: 'Content' } },
+    ]);
   });
 });

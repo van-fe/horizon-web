@@ -22,6 +22,10 @@ export async function click(element: Element): Promise<void> {
   });
 }
 
+export async function dispatch(target: EventTarget, event: Event): Promise<void> {
+  await act(async () => target.dispatchEvent(event));
+}
+
 beforeEach(() => {
   container = document.createElement('div');
   document.body.append(container);

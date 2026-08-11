@@ -1,4 +1,5 @@
 import type { HorizonWebSetupContext } from '@aurora/utils';
+import { resolveSpaceAlign } from '@aurora/core';
 import { ComponentClassBlock, getUnitString, isVNodeEmpty, useNamespace } from '@aurora/utils';
 import type { CSSProperties, Ref, VNode } from 'vue';
 import { Fragment, computed, defineComponent, inject, ref } from 'vue';
@@ -44,11 +45,7 @@ export default defineComponent({
       return ['horizontal', 'vertical'].includes(props.direction) ? props.direction : 'horizontal';
     });
 
-    const align = computed(() => {
-      if (props.align) return props.align;
-
-      return direction.value === 'horizontal' ? 'center' : null;
-    });
+    const align = computed(() => resolveSpaceAlign(direction.value, props.align));
 
     const style = computed<CSSProperties>(() => {
       const result: CSSProperties = { ...(attrs.style as CSSProperties) };

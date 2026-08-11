@@ -1,3 +1,5 @@
+import type { ComponentApiContract } from './api';
+
 export type ComponentRenderer = 'vue' | 'react';
 
 export interface ComponentManifestField {
@@ -48,6 +50,49 @@ export interface ManifestFieldAdaptation {
   rename?: Readonly<Record<string, string>>;
   omit?: readonly string[];
   extend?: readonly ComponentManifestField[];
+}
+
+export type ComponentManifestFieldDefinition = Omit<
+  ComponentManifestField,
+  'defaultValue' | 'name'
+>;
+
+export type ComponentManifestFieldDefinitions<Shape extends object> = {
+  [Name in keyof Shape]-?: ComponentManifestFieldDefinition;
+};
+
+export function formatManifestDefault(value: unknown): string {
+  if (value === null) return 'null';
+  if (value === Number.POSITIVE_INFINITY) return 'Infinity';
+  if (typeof value === 'string') return value === '' ? "''" : value;
+  if (typeof value === 'object') return JSON.stringify(value);
+  return String(value);
+}
+
+export function createManifestFields<Shape extends object>(
+  definitions: ComponentManifestFieldDefinitions<Shape>,
+): ComponentManifestField[] {
+  return Object.entries(definitions).map(([name, definition]) => ({
+    name,
+    ...(definition as ComponentManifestFieldDefinition),
+  }));
+}
+
+export function createPropManifestFields<
+  Props extends object,
+  Events extends object,
+  Regions extends object,
+  Commands extends object,
+>(
+  contract: ComponentApiContract<Props, Events, Regions, Commands>,
+  definitions: ComponentManifestFieldDefinitions<Props>,
+): ComponentManifestField[] {
+  const defaults = contract.defaults as Readonly<Record<string, unknown>>;
+  return createManifestFields(definitions).map(field =>
+    Object.hasOwn(defaults, field.name)
+      ? { ...field, defaultValue: formatManifestDefault(defaults[field.name]) }
+      : field,
+  );
 }
 
 export function adaptManifestFields(
