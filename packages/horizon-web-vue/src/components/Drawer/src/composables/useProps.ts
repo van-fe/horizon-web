@@ -1,194 +1,107 @@
+import type {
+  AdaptComponentApiShape,
+  ComponentRendererPropDefinitions,
+  DrawerCommonProps,
+  DrawerPlacement as CoreDrawerPlacement,
+  DrawerSize as CoreDrawerSize,
+} from '@aurora/core';
+import {
+  DRAWER_DEFAULTS,
+  isDialogButtonOptions,
+  isDrawerPlacement,
+  isDrawerSize,
+} from '@aurora/core';
 import { declarePropType } from '@aurora/utils';
 import type { ExtractPropTypes, PropType, TeleportProps } from 'vue';
-import { type ButtonProps } from '~/components/Button/src/composables/useProps';
+import type { ButtonProps } from '~/components/Button/src/composables/useProps';
 
-export type DrawerSize = 'small' | 'medium' | 'large' | string | number;
-export type DrawerPlacement = 'left' | 'right' | 'top' | 'bottom';
+type DrawerVueProps = AdaptComponentApiShape<
+  DrawerCommonProps<Partial<ButtonProps>, Partial<ButtonProps>>,
+  { open: 'visible' },
+  'defaultOpen',
+  {
+    /** Teleport 挂载目标。 @en Teleport mount target. */
+    to?: TeleportProps['to'] | null;
+    /** 无可见标题时的可访问名称。 @en Accessible name when no visible title exists. */
+    ariaLabel?: string;
+  }
+>;
 
 export const useDrawerProps = declarePropType({
-  /**
-   * 抽屉的展示状态(v-model:visible)
-   * @en Configuration for visible.
-   **/
+  /** 抽屉的展示状态，支持 `v-model:visible`。 @en Controlled visibility. */
   visible: {
     type: Boolean,
+    default: DRAWER_DEFAULTS.defaultOpen,
     required: false,
   },
-
-  /**
-   * 抽屉位置
-   * @en Configuration for placement.
-   **/
+  /** 抽屉位置。 @en Side from which the drawer opens. */
   placement: {
-    type: String as PropType<DrawerPlacement>,
+    type: String as PropType<CoreDrawerPlacement>,
     required: false,
-    default: 'right',
+    default: DRAWER_DEFAULTS.placement,
+    validator: isDrawerPlacement,
   },
-
-  /** 抽屉标题
-   * @en Configuration for title.
-   */
-  title: {
-    type: String,
-    required: false,
-  },
-
-  /** 抽屉尺寸，如果是数值会自动加上 `px`，也可以是字符串如 `40%`
-   * @en Configuration for size.
-   */
+  /** 抽屉标题。 @en Drawer title. */
+  title: { type: String, required: false },
+  /** 无可见标题时的可访问名称。 @en Accessible name when no visible title exists. */
+  ariaLabel: { type: String, required: false },
+  /** 抽屉尺寸；数值自动使用 px，也支持百分比等 CSS 长度。 @en Drawer extent. */
   size: {
-    type: [Number, String] as PropType<DrawerSize>,
+    type: [Number, String] as PropType<CoreDrawerSize>,
     required: false,
-    default: 'medium',
+    default: DRAWER_DEFAULTS.size,
+    validator: isDrawerSize,
   },
-
-  /** 是否显示蒙层
-   * @en Configuration for mask.
-   */
-  mask: {
-    type: Boolean,
-    default: true,
-    required: false,
-  },
-
-  /** 点击蒙层是否关闭抽屉
-   * @en Configuration for mask closable.
-   */
-  maskClosable: {
-    type: Boolean,
-    default: true,
-    required: false,
-  },
-
-  /**
-   * 按下 ESC 键是否关闭抽屉
-   * @en Configuration for esc closable.
-   **/
-  escClosable: {
-    type: Boolean,
-    default: true,
-    required: false,
-  },
-
-  /**
-   * 是否显示右上角关闭按钮
-   * @en Configuration for closable.
-   **/
-  closable: {
-    type: Boolean,
-    default: true,
-    required: false,
-  },
-
-  /**
-   * 是否展示底部内容
-   * @en Configuration for footer.
-   **/
-  footer: {
-    type: Boolean,
-    default: true,
-  },
-
-  /**
-   * 是否展示头部内容
-   * @en Configuration for header.
-   **/
-  header: {
-    type: Boolean,
-    default: true,
-  },
-
-  /**
-   * 是否显示主要按钮
-   * @en Configuration for ok button.
-   **/
+  /** 是否显示蒙层。 @en Whether to show the mask. */
+  mask: { type: Boolean, default: DRAWER_DEFAULTS.mask, required: false },
+  /** 点击蒙层是否请求关闭。 @en Whether a mask click requests closing. */
+  maskClosable: { type: Boolean, default: DRAWER_DEFAULTS.maskClosable, required: false },
+  /** 按下 Escape 是否请求关闭。 @en Whether Escape requests closing. */
+  escClosable: { type: Boolean, default: DRAWER_DEFAULTS.escClosable, required: false },
+  /** 是否显示标题栏关闭按钮。 @en Whether to show the close button. */
+  closable: { type: Boolean, default: DRAWER_DEFAULTS.closable, required: false },
+  /** 是否展示底部内容。 @en Whether to show the footer. */
+  footer: { type: Boolean, default: DRAWER_DEFAULTS.footer },
+  /** 是否展示头部内容。 @en Whether to show the header. */
+  header: { type: Boolean, default: DRAWER_DEFAULTS.header },
+  /** 是否显示主要按钮或设置其属性。 @en Confirm action visibility or props. */
   okButton: {
-    type: [Boolean, Object] as PropType<boolean | ButtonProps>,
-    default: true,
+    type: [Boolean, Object] as PropType<boolean | Partial<ButtonProps>>,
+    default: DRAWER_DEFAULTS.okButton,
+    validator: isDialogButtonOptions,
     required: false,
   },
-
-  /**
-   * 主要按钮的文本
-   * @en Configuration for ok button text.
-   **/
-  okButtonText: {
-    type: String,
-    required: false,
-  },
-
-  /**
-   * 是否显示次要按钮
-   * @en Configuration for cancel button.
-   **/
+  /** 主要按钮文本。 @en Confirm action label. */
+  okButtonText: { type: String, required: false },
+  /** 是否显示次要按钮或设置其属性。 @en Cancel action visibility or props. */
   cancelButton: {
-    type: [Boolean, Object] as PropType<boolean | ButtonProps>,
-    default: true,
+    type: [Boolean, Object] as PropType<boolean | Partial<ButtonProps>>,
+    default: DRAWER_DEFAULTS.cancelButton,
+    validator: isDialogButtonOptions,
     required: false,
   },
-
-  /**
-   * 次要按钮的文本
-   * @en Configuration for cancel button text.
-   **/
-  cancelButtonText: {
-    type: String,
-    required: false,
-  },
-
-  /**
-   * 关闭之前的回调，返回false 或者 Promise.resolve(false) 会停止关闭抽屉。
-   * PS：请注意默认close动作，都会在 beforeClose 后执行，等待 beforeClose 执行完成后触发
-   * @en Configuration for before close.
-   **/
+  /** 次要按钮文本。 @en Cancel action label. */
+  cancelButtonText: { type: String, required: false },
+  /** 返回 false 或拒绝 Promise 时阻止关闭。 @en Prevents closing on false or rejection. */
   beforeClose: {
-    type: Function as PropType<() => void | boolean | PromiseLike<boolean | void>>,
+    type: Function as PropType<DrawerVueProps['beforeClose']>,
     required: false,
   },
-
-  /**
-   * 弹出框的挂载容器，和 `<teleport>` 保持一致
-   * @en Configuration for to.
-   **/
+  /** Teleport 挂载目标。 @en Teleport mount target. */
   to: {
-    type: [String, Object] as PropType<string | TeleportProps['to'] | HTMLElement>,
+    type: [String, Object] as PropType<TeleportProps['to'] | null>,
     default: 'body',
   },
-  /**
-   * 是否在 `Drawer` 出现时将 `body` 滚动锁定
-   * 如果没有设置，则在 `mask = true` 时自动开启
-   * @en Configuration for lock scroll.
-   */
-  lockScroll: {
-    type: Boolean,
-    default: undefined,
-  },
-
-  /**
-   * 启用则可以使用鼠标拖拽抽屉尺寸
-   * @en Configuration for size draggable.
-   */
-  sizeDraggable: {
-    type: Boolean,
-    default: false,
-  },
-
-  /*
-   * 设置抽屉的加载状态
-   */
-  loading: {
-    type: Boolean,
-    default: false,
-  },
-
-  /**
-   * 关闭后是否销毁抽屉
-   * @en Configuration for destroy on close.
-   */
-  destroyOnClose: {
-    type: Boolean,
-    default: true,
-  },
-});
+  /** 是否锁定背景滚动；未设置时跟随 mask。 @en Background scroll lock strategy. */
+  lockScroll: { type: Boolean, default: undefined },
+  /** 是否允许指针拖拽调整尺寸。 @en Whether pointer resizing is enabled. */
+  sizeDraggable: { type: Boolean, default: DRAWER_DEFAULTS.sizeDraggable },
+  /** 主要按钮加载状态。 @en Confirm action loading state. */
+  loading: { type: Boolean, default: DRAWER_DEFAULTS.loading },
+  /** 关闭后是否销毁内容。 @en Whether to unmount content after closing. */
+  destroyOnClose: { type: Boolean, default: DRAWER_DEFAULTS.destroyOnClose },
+} satisfies ComponentRendererPropDefinitions<DrawerVueProps>);
 
 export type DrawerProps = ExtractPropTypes<typeof useDrawerProps>;
+export type DrawerSize = CoreDrawerSize;
+export type DrawerPlacement = CoreDrawerPlacement;

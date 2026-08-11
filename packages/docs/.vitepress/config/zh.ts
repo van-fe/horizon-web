@@ -31,6 +31,7 @@ const reactSidebar = [
       { text: 'Dropdown 下拉菜单', link: 'components/Dropdown' },
       { text: 'Popconfirm 气泡确认框', link: 'components/Popconfirm' },
       { text: 'Dialog 对话框', link: 'components/Dialog' },
+      { text: 'Drawer 抽屉', link: 'components/Drawer' },
     ],
   },
   {

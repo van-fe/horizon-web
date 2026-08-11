@@ -1,132 +1,106 @@
+import type { DrawerPresetSize } from '@aurora/core';
+import {
+  DRAWER_PRESET_SIZES,
+  isHorizontalDrawerPlacement,
+  isVerticalDrawerPlacement,
+  resolveDrawerPresetExtent,
+} from '@aurora/core';
+import type { DrawerResizeController } from '@aurora/horizon-web-core';
+import { createDrawerResizeController } from '@aurora/horizon-web-core';
 import { getUnitString } from '@aurora/utils';
-import { useDraggable, useWindowSize, type Position } from '@vueuse/core';
-import { computed, reactive, ref, watch, type Ref } from 'vue';
-import { type DrawerPlacement, type DrawerSize } from './useProps';
+import { computed, onBeforeUnmount, onMounted, ref, watch, type Ref } from 'vue';
+import type { DrawerPlacement, DrawerSize } from './useProps';
 
-export interface ResponsiveLayout {
-  cell: number;
-  gutter: number;
-  col: number;
-  margin: number;
+function isPresetSize(size: DrawerSize): size is DrawerPresetSize {
+  return DRAWER_PRESET_SIZES.includes(size as DrawerPresetSize);
 }
-
-const sizes: Record<DrawerSize, ResponsiveLayout> = {
-  small: { cell: 6, gutter: 16, col: 24, margin: 24 },
-  medium: { cell: 8, gutter: 24, col: 24, margin: 24 },
-  large: { cell: 12, gutter: 24, col: 24, margin: 24 },
-};
 
 export function useResponsiveSize(
   visible: Ref<boolean>,
   propSize: Ref<DrawerSize>,
   propPlacement: Ref<DrawerPlacement>,
+  panelEl: Ref<HTMLElement | undefined>,
+  sizeDraggable: Ref<boolean>,
 ) {
   const handleEl = ref<HTMLElement>();
+  const viewportWidth = ref(typeof window === 'undefined' ? 0 : window.innerWidth);
+  const resizedWidth = ref(480);
+  const resizedHeight = ref(320);
+  const moved = ref(false);
+  let resizeController: DrawerResizeController | null = null;
 
-  const { width } = useWindowSize();
+  const isHorizontal = computed(() => isHorizontalDrawerPlacement(propPlacement.value));
+  const isVertical = computed(() => isVerticalDrawerPlacement(propPlacement.value));
+  const isSupportedSize = computed(() => isPresetSize(propSize.value));
 
-  const isHorizontal = computed(
-    () => propPlacement.value === 'left' || propPlacement.value === 'right',
-  );
-  const isVertical = computed(
-    () => propPlacement.value === 'top' || propPlacement.value === 'bottom',
-  );
+  const sizeStyle = computed(() => ({
+    width: isHorizontal.value
+      ? isSupportedSize.value || moved.value
+        ? `${resizedWidth.value}px`
+        : getUnitString(propSize.value)
+      : '100%',
+    height: isVertical.value
+      ? isSupportedSize.value || moved.value
+        ? `${resizedHeight.value}px`
+        : getUnitString(propSize.value)
+      : '100%',
+  }));
 
-  const isSupportedSize = computed(() => Object.keys(sizes).includes(propSize.value as string));
+  const updatePresetSize = () => {
+    if (!visible.value || !isPresetSize(propSize.value)) return;
+    const extent = resolveDrawerPresetExtent(propSize.value, viewportWidth.value);
+    if (isHorizontal.value) resizedWidth.value = extent;
+    else resizedHeight.value = extent;
+  };
 
-  const rw = ref(480);
-  const rh = ref(320);
+  watch(visible, open => {
+    if (open) return;
+    if (isSupportedSize.value) {
+      updatePresetSize();
+      return;
+    }
+    resizedWidth.value = 480;
+    resizedHeight.value = 320;
+  });
+  watch([viewportWidth, propSize, propPlacement, visible], updatePresetSize, { immediate: true });
 
-  const dCtx = reactive({ start: 0, distance: 0, moved: false });
+  const destroyResizeController = () => {
+    resizeController?.destroy();
+    resizeController = null;
+  };
 
-  const sizeStyle = computed(() => {
-    return {
-      width: isHorizontal.value
-        ? isSupportedSize.value || dCtx.moved
-          ? `${rw.value}px`
-          : getUnitString(propSize.value)
-        : '100%',
-      height: isVertical.value
-        ? isSupportedSize.value || dCtx.moved
-          ? `${rh.value}px`
-          : getUnitString(propSize.value)
-        : '100%',
-    };
+  const setupResizeController = () => {
+    destroyResizeController();
+    if (!visible.value || !sizeDraggable.value || !handleEl.value || !panelEl.value) return;
+    const resizePanel = handleEl.value.parentElement ?? panelEl.value;
+    resizeController = createDrawerResizeController(handleEl.value, resizePanel, {
+      placement: propPlacement.value,
+      onResize: extent => {
+        moved.value = true;
+        if (isHorizontal.value) resizedWidth.value = extent;
+        else if (isVertical.value) resizedHeight.value = extent;
+      },
+    });
+  };
+
+  watch([visible, sizeDraggable, propPlacement, handleEl, panelEl], setupResizeController, {
+    flush: 'post',
   });
 
-  const resetSize = () => {
-    if (!visible.value) {
-      if (isSupportedSize.value) return onGutterResize();
-      rw.value = 480;
-      rh.value = 320;
-    }
+  const onViewportResize = () => {
+    viewportWidth.value = window.innerWidth;
   };
 
-  watch(visible, resetSize);
-
-  const onStart = (_: Position, evt: PointerEvent) => {
-    if (!dCtx.moved) dCtx.moved = true;
-
-    if (isHorizontal.value) {
-      dCtx.start = evt.clientX;
-      rw.value = handleEl.value?.parentElement?.clientWidth ?? rw.value;
-      dCtx.distance = rw.value;
-    }
-
-    if (isVertical.value) {
-      dCtx.start = evt.clientY;
-      rh.value = handleEl.value?.parentElement?.clientHeight ?? rh.value;
-      dCtx.distance = rh.value;
-    }
-  };
-
-  const onMove = (_: Position, evt: PointerEvent) => {
-    if (isHorizontal.value) {
-      const delta = evt.clientX - dCtx.start;
-      rw.value = Math.max(
-        8,
-        propPlacement.value === 'left' ? dCtx.distance + delta : dCtx.distance - delta,
-      );
-    }
-
-    if (isVertical.value) {
-      const delta = evt.clientY - dCtx.start;
-      rh.value = Math.max(
-        8,
-        propPlacement.value === 'top' ? dCtx.distance + delta : dCtx.distance - delta,
-      );
-    }
-  };
-
-  useDraggable(handleEl, {
-    onStart,
-    onMove,
-    preventDefault: true,
-    stopPropagation: true,
+  onMounted(() => {
+    window.addEventListener('resize', onViewportResize);
+    onViewportResize();
+    setupResizeController();
   });
 
-  const onGutterResize = () => {
-    if (!isSupportedSize.value || !visible.value) return;
-
-    const grid = sizes[propSize.value];
-    let unit = 0;
-
-    if (width.value <= 1280) {
-      unit = (1280 - grid.margin * 2 - grid.gutter * (grid.col - 1)) / grid.col;
-    } else if (width.value <= 1440) {
-      unit = (1440 - grid.margin * 2 - grid.gutter * (grid.col - 1)) / grid.col;
-    } else {
-      unit = (1920 - grid.margin * 2 - grid.gutter * (grid.col - 1)) / grid.col;
-    }
-
-    if (isHorizontal.value) {
-      rw.value = unit * grid.cell + grid.gutter * (grid.cell - 1) + grid.margin;
-    } else {
-      rh.value = unit * grid.cell + grid.gutter * (grid.cell - 1) + grid.margin;
-    }
-  };
-
-  watch([width, propSize, propPlacement, visible], onGutterResize, { immediate: true });
+  onBeforeUnmount(() => {
+    destroyResizeController();
+    window.removeEventListener('resize', onViewportResize);
+  });
 
   return { sizeStyle, handleEl };
 }

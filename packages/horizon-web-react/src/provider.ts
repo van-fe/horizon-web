@@ -40,6 +40,12 @@ export interface HorizonWebConfig {
     close: string;
     dialog: string;
   };
+  drawerLabels: {
+    ok: string;
+    cancel: string;
+    close: string;
+    drawer: string;
+  };
 }
 
 export type HorizonWebProviderProps = PropsWithChildren<
@@ -47,6 +53,7 @@ export type HorizonWebProviderProps = PropsWithChildren<
     Partial<HorizonWebConfig>,
     | 'breadcrumbLabels'
     | 'dialogLabels'
+    | 'drawerLabels'
     | 'linkLabels'
     | 'paginationLabels'
     | 'popconfirmLabels'
@@ -64,6 +71,7 @@ export type HorizonWebProviderProps = PropsWithChildren<
     paginationLabels?: Partial<HorizonWebConfig['paginationLabels']>;
     popconfirmLabels?: Partial<HorizonWebConfig['popconfirmLabels']>;
     dialogLabels?: Partial<HorizonWebConfig['dialogLabels']>;
+    drawerLabels?: Partial<HorizonWebConfig['drawerLabels']>;
   }
 >;
 
@@ -78,6 +86,7 @@ const defaultConfig: HorizonWebConfig = Object.freeze({
   paginationLabels: PAGINATION_DEFAULT_LABELS,
   popconfirmLabels: { confirm: 'Confirm', cancel: 'Cancel' },
   dialogLabels: { ok: 'OK', cancel: 'Cancel', close: 'Close dialog', dialog: 'Dialog' },
+  drawerLabels: { ok: 'OK', cancel: 'Cancel', close: 'Close drawer', drawer: 'Drawer' },
 });
 
 export const HorizonWebContext = createContext<HorizonWebConfig>(defaultConfig);
@@ -95,6 +104,7 @@ export function HorizonWebProvider({
   paginationLabels,
   popconfirmLabels,
   dialogLabels,
+  drawerLabels,
   children,
 }: HorizonWebProviderProps): ReactElement {
   const parent = useContext(HorizonWebContext);
@@ -140,6 +150,10 @@ export function HorizonWebProvider({
         ...parent.dialogLabels,
         ...dialogLabels,
       },
+      drawerLabels: {
+        ...parent.drawerLabels,
+        ...drawerLabels,
+      },
     }),
     [
       namespace,
@@ -155,6 +169,7 @@ export function HorizonWebProvider({
       paginationLabels,
       popconfirmLabels,
       dialogLabels,
+      drawerLabels,
     ],
   );
 

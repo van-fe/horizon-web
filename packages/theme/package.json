@@ -50,6 +50,8 @@
     "./styles/divider-variables": "./styles/components/divider/variables.scss",
     "./styles/dialog": "./styles/components/dialog/index.scss",
     "./styles/dialog-variables": "./styles/components/dialog/variables.scss",
+    "./styles/drawer": "./styles/components/drawer/index.scss",
+    "./styles/drawer-variables": "./styles/components/drawer/variables.scss",
     "./styles/dropdown": "./styles/components/dropdown/index.scss",
     "./styles/dropdown-variables": "./styles/components/dropdown/variables.scss",
     "./styles/empty": "./styles/components/empty/index.scss",

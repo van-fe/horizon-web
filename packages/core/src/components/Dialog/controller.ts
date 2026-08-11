@@ -1,5 +1,5 @@
 import type {
-  DialogBeforeClose,
+  DialogClose,
   DialogOpenChangeDetails,
   DialogOpenReason,
   DialogState,
@@ -7,6 +7,8 @@ import type {
 import { resolveDialogOpenState } from './contract';
 
 export type DialogCloseRequestStatus = 'closed' | 'pending' | 'ignored';
+export type DialogCloseGuardMode = 'callback' | 'result';
+export type DialogCloseGuard = (close: DialogClose) => void | boolean | PromiseLike<boolean | void>;
 
 export interface DialogControllerOptions {
   /** 受控打开状态。 @en Controlled open state. */
@@ -14,7 +16,9 @@ export interface DialogControllerOptions {
   /** 非受控初始状态。 @en Initial uncontrolled open state. */
   defaultOpen?: boolean;
   /** 关闭守卫。 @en Close guard. */
-  beforeClose?: DialogBeforeClose;
+  beforeClose?: DialogCloseGuard;
+  /** 守卫授权协议。 @en Guard authorization protocol. */
+  closeGuardMode?: DialogCloseGuardMode;
   /** 打开状态变化回调。 @en Open-state change callback. */
   onOpenChange?: (open: boolean, details: DialogOpenChangeDetails) => void;
   /** 关闭守卫等待状态变化回调。 @en Close-guard pending change callback. */
@@ -28,7 +32,8 @@ export interface DialogControllerOptions {
 export class DialogController {
   private state: DialogState;
   private controlled: boolean;
-  private beforeClose?: DialogBeforeClose;
+  private beforeClose?: DialogCloseGuard;
+  private closeGuardMode: DialogCloseGuardMode;
   private onOpenChange?: DialogControllerOptions['onOpenChange'];
   private onClosePendingChange?: DialogControllerOptions['onClosePendingChange'];
   private closeOperation = 0;
@@ -40,6 +45,7 @@ export class DialogController {
       closePending: false,
     };
     this.beforeClose = options.beforeClose;
+    this.closeGuardMode = options.closeGuardMode ?? 'callback';
     this.onOpenChange = options.onOpenChange;
     this.onClosePendingChange = options.onClosePendingChange;
   }
@@ -56,6 +62,7 @@ export class DialogController {
    */
   public setOptions(options: DialogControllerOptions): void {
     if (Object.hasOwn(options, 'beforeClose')) this.beforeClose = options.beforeClose;
+    if (options.closeGuardMode !== undefined) this.closeGuardMode = options.closeGuardMode;
     if (Object.hasOwn(options, 'onOpenChange')) this.onOpenChange = options.onOpenChange;
     if (Object.hasOwn(options, 'onClosePendingChange')) {
       this.onClosePendingChange = options.onClosePendingChange;
@@ -90,8 +97,8 @@ export class DialogController {
   }
 
   /**
-   * 请求关闭对话框；存在守卫时等待守卫调用 close。
-   * @en Requests closing the dialog; a guard must invoke close to authorize it.
+   * 请求关闭浮层，并按配置的守卫协议等待授权。
+   * @en Requests closing the overlay and waits for the configured guard protocol.
    * @param reason 关闭原因。
    * @paramEn reason Close reason.
    */
@@ -114,15 +121,34 @@ export class DialogController {
     };
 
     try {
-      this.beforeClose(close);
+      const result = this.beforeClose(close);
+      if (authorized || this.closeGuardMode === 'callback') {
+        return authorized ? 'closed' : 'pending';
+      }
+      if (isPromiseLike(result)) {
+        Promise.resolve(result).then(
+          value => {
+            if (operation !== this.closeOperation) return;
+            if (value === false) this.preventCloseRequest(operation);
+            else close();
+          },
+          () => this.preventCloseRequest(operation),
+        );
+        return 'pending';
+      }
+      if (result === false) {
+        this.preventCloseRequest(operation);
+        return 'ignored';
+      }
+      close();
+      return 'closed';
     } catch (error) {
       if (operation === this.closeOperation) {
-        this.closeOperation += 1;
-        this.setClosePending(false);
+        this.preventCloseRequest(operation);
       }
+      if (this.closeGuardMode === 'result') return 'ignored';
       throw error;
     }
-    return authorized ? 'closed' : 'pending';
   }
 
   /**
@@ -149,9 +175,23 @@ export class DialogController {
     this.setClosePending(false);
   }
 
+  private preventCloseRequest(operation: number): void {
+    if (operation !== this.closeOperation) return;
+    this.closeOperation += 1;
+    this.setClosePending(false);
+  }
+
   private setClosePending(closePending: boolean): void {
     if (closePending === this.state.closePending) return;
     this.state = { ...this.state, closePending };
     this.onClosePendingChange?.(closePending);
   }
+}
+
+function isPromiseLike(value: unknown): value is PromiseLike<boolean | void> {
+  return (
+    (typeof value === 'object' || typeof value === 'function') &&
+    value !== null &&
+    typeof (value as PromiseLike<unknown>).then === 'function'
+  );
 }

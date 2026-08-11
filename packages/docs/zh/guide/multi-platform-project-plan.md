@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B15 Dialog 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B16 Drawer 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -70,22 +70,22 @@ MVP 达到以下指标才允许进入批量组件迁移：
 
 项目拆为九条工作流：
 
-| 工作流 | 代码 | 目标 |
-| --- | --- | --- |
-| 治理与基线 | GOV | 冻结边界、记录现状、控制 breaking change |
-| 包与构建 | PKG | 建立 core、platform core 和双 renderer 构建链路 |
-| 公共工具 | UTIL | 将纯工具与 Vue 工具分离 |
-| 主题与图标 | DS | 共享 Token、CSS 和图标数据 |
-| 行为内核 | CORE | 建立 reducer/controller/adapter 模型 |
-| Vue 兼容 | VUE | 让现有 Vue 实现消费公共能力且行为不回退 |
-| React renderer | REACT | 提供 React 原生 API 和运行时实现 |
-| 文档与生成器 | DOC | 双框架文档、manifest、API Generator 和 resolver |
-| 质量与发布 | QA | 契约测试、SSR、bundle、版本、兼容包和发布演练 |
+| 工作流         | 代码  | 目标                                            |
+| -------------- | ----- | ----------------------------------------------- |
+| 治理与基线     | GOV   | 冻结边界、记录现状、控制 breaking change        |
+| 包与构建       | PKG   | 建立 core、platform core 和双 renderer 构建链路 |
+| 公共工具       | UTIL  | 将纯工具与 Vue 工具分离                         |
+| 主题与图标     | DS    | 共享 Token、CSS 和图标数据                      |
+| 行为内核       | CORE  | 建立 reducer/controller/adapter 模型            |
+| Vue 兼容       | VUE   | 让现有 Vue 实现消费公共能力且行为不回退         |
+| React renderer | REACT | 提供 React 原生 API 和运行时实现                |
+| 文档与生成器   | DOC   | 双框架文档、manifest、API Generator 和 resolver |
+| 质量与发布     | QA    | 契约测试、SSR、bundle、版本、兼容包和发布演练   |
 
 ## 5. 里程碑总览
 
 | 里程碑 | 目标 | 初始工程量 | 退出结果 |
-| --- | --- | ---: | --- |
+| --- | --- | --: | --- |
 | M0 架构冻结 | 建立边界、基线和执行规则 | 8–12 工程日 | 团队可以在不争论基础命名和依赖方向的情况下开发 |
 | M1 基础设施 | 建立包、构建、工具、主题和 React 测试骨架 | 18–28 工程日 | 空包可构建，Core 边界受 CI 保护 |
 | M2 基础试点 | 完成 Button、Switch | 18–26 工程日 | 受控状态、Form、样式和基础 API 模型成立 |
@@ -578,6 +578,18 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DS-B15-001 | Done | Dialog Sass、变量与视觉基础迁入 `@aurora/theme`，Vue/React 使用同源样式；底部按钮间距归入 Theme，huge 尺寸改为窄屏安全的 `min(920px, 92vw)` |
 | DOC-B15-001 | Done | Dialog 中英文 React 页面、4 个独立 TSX 示例与侧边栏入口完成；41 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
 | QA-B15-001 | Done | Core 132、Web Core Node 10/Chromium 34、React Chromium 144、Vue Chromium 2309 项（2308 通过、1 项预期失败）全部通过，覆盖率为 97.96% / 95.09% / 97.79% / 98.28%；五个包构建、文档、Vue/React/SSR 消费工程及四个中英文 renderer 路由的真实浏览器验收通过 |
+
+#### M6-B16 第十六批实施记录（2026-08-12）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B16-001 | Done | Drawer 的公共 props、默认值、位置与尺寸枚举、校验器、事件、内容区域、命令、响应式网格、滚动锁策略、方向尺寸算法和返回值式关闭控制器迁入 `@aurora/core`；异步守卫、pending 去重、陈旧结果失效与受控状态只定义一次 |
+| WEB-B16-001 | Done | 在同名 Web Core 目录提供四方向指针尺寸控制器，并复用 Dialog interaction layer 的顶层关闭、FocusScope 嵌套暂停/恢复及滚动锁引用计数；DOM 指针监听、焦点和清理行为由两端共享 |
+| VUE-B16-001 | Done | Vue props/emits/slots/exposes 通过类型化适配消费公共契约，保留 `visible`、Teleport、Transition、locale、历史按钮参数和事件顺序；移除本地实例栈、Escape/Tab、滚动锁、网格与拖拽副本，并保持 maskClick 总触发、OK 不自动关闭及 Promise 守卫语义 |
+| REACT-B16-001 | Done | 完成原生受控与非受控 Drawer、返回值式异步守卫、Portal、遮罩、四方向与响应式/自定义尺寸、顶层 Escape、焦点回归、动态滚动锁、可拖拽尺寸、自定义头尾区域、Provider 文案和命令 ref |
+| DS-B16-001 | Done | Drawer Sass、变量、四方向布局与过渡迁入 `@aurora/theme`，Vue/React 使用同源样式；原生按钮 reset 排除 Horizon Button，并补充窄屏、长标题、正文与 footer 子项的防溢出规则 |
+| DOC-B16-001 | Done | Drawer 中英文 React 页面、4 个独立 TSX 示例与侧边栏入口完成；42 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
+| QA-B16-001 | Done | Core 141、Web Core Node 10/Chromium 36、React Chromium 153、Vue Chromium 2314 项（2313 通过、1 项预期失败）全部通过，覆盖率为 97.96% / 95.06% / 97.79% / 98.28%；五个包构建、文档、Vue/React/SSR 消费工程及中英文 renderer 路由验收通过 |
 
 ### 批次 C：浮层与容器
 

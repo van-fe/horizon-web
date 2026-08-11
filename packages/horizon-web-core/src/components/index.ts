@@ -3,6 +3,7 @@ export * from './Checkbox';
 export * from './Collapse';
 export * from './Dropdown';
 export * from './Dialog';
+export * from './Drawer';
 export * from './Input';
 export * from './Link';
 export * from './Pagination';

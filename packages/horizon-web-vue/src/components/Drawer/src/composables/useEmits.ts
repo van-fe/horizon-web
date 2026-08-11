@@ -1,59 +1,31 @@
+import type {
+  AdaptComponentApiShape,
+  ComponentEventValidators,
+  DrawerEventMap,
+} from '@aurora/core';
 import { isBoolean } from '@aurora/utils';
 
+type DrawerVueEvents = AdaptComponentApiShape<DrawerEventMap, { openChange: 'update:visible' }>;
+
 export const useDrawerEmits = {
-  /**
-   * 更新 visible
-   * @en Emitted when update:visible changes.
-   **/
-  'update:visible': (value: false) => isBoolean(value),
-
-  /**
-   * 点击确定按钮时触发
-   * @en Emitted when ok changes.
-   **/
+  /** 更新 visible。 @en Emitted when visibility changes. */
+  'update:visible': (value: boolean) => isBoolean(value),
+  /** 点击确定按钮。 @en Confirm action. */
   ok: () => true,
-
-  /**
-   * 点击取消、关闭按钮时触发
-   * @en Emitted when cancel changes.
-   **/
+  /** 点击取消按钮。 @en Cancel action. */
   cancel: () => true,
-
-  /**
-   * 打开抽屉前的回调
-   * @en Emitted when open changes.
-   */
+  /** 开始打开。 @en Opening started. */
   open: () => true,
-
-  /**
-   * 抽屉动画完成后的回调
-   * @en Emitted when opened changes.
-   */
+  /** 打开动画完成。 @en Opening completed. */
   opened: () => true,
-
-  /**
-   * 关闭抽屉前的回调
-   * @en Emitted when close changes.
-   */
+  /** 开始关闭。 @en Closing started. */
   close: () => true,
-
-  /**
-   * 抽屉动画完全完成后回调
-   * @en Emitted when closed changes.
-   */
+  /** 关闭动画完成。 @en Closing completed. */
   closed: () => true,
-
-  /**
-   * 点击遮罩层时的回调
-   * @en Emitted when mask click changes.
-   */
+  /** 点击遮罩层。 @en Background mask clicked. */
   maskClick: () => true,
-
-  /**
-   * 点击抽屉头部的关闭按钮时的回调
-   * @en Emitted when icon click changes.
-   */
+  /** 点击标题栏关闭按钮。 @en Header close button clicked. */
   iconClick: () => true,
-};
+} satisfies ComponentEventValidators<DrawerVueEvents>;
 
 export type DrawerEmits = typeof useDrawerEmits;

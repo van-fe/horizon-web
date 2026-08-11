@@ -21,6 +21,15 @@ function DialogLabelsProbe() {
   );
 }
 
+function DrawerLabelsProbe() {
+  const { drawerLabels } = useHorizonWebConfig();
+  return createElement(
+    'span',
+    null,
+    `${drawerLabels.ok}/${drawerLabels.cancel}/${drawerLabels.close}/${drawerLabels.drawer}`,
+  );
+}
+
 describe('HorizonWebProvider', () => {
   it('is SSR-safe and exposes renderer configuration', () => {
     const html = renderToStaticMarkup(
@@ -56,5 +65,17 @@ describe('HorizonWebProvider', () => {
     );
 
     expect(html).toContain('Save/Cancel/Dismiss/Dialog');
+  });
+
+  it('merges Drawer labels with provider defaults', () => {
+    const html = renderToStaticMarkup(
+      createElement(
+        HorizonWebProvider,
+        { drawerLabels: { ok: 'Apply', close: 'Dismiss' } },
+        createElement(DrawerLabelsProbe),
+      ),
+    );
+
+    expect(html).toContain('Apply/Cancel/Dismiss/Drawer');
   });
 });

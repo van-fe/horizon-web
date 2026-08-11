@@ -97,7 +97,9 @@ export default class DrawerHelper<
   private mountComponent(mountDirectly = true) {
     mountDirectly ? this.mountDirectly() : this.mountByVisible();
 
-    this.element = this.wrapper.findComponent(HDrawer);
+    this.element = this.wrapper.findComponent(HDrawer) as VueWrapper<
+      HorizonWebComponentInstance<typeof HDrawer, DrawerExposes>
+    >;
     this.openButton = this.wrapper
       .findAllComponents(HButton)
       .find(comp => comp.attributes('id') === 'open') as VueWrapper<

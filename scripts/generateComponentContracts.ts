@@ -16,6 +16,7 @@ import {
   createVueComponentManifest,
   dividerManifest,
   dialogManifest,
+  drawerManifest,
   dropdownGroupManifest,
   dropdownItemManifest,
   dropdownManifest,
@@ -61,6 +62,7 @@ const manifests = [
   countManifest,
   dividerManifest,
   dialogManifest,
+  drawerManifest,
   dropdownManifest,
   dropdownMenuManifest,
   dropdownGroupManifest,
@@ -190,6 +192,40 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
           name: 'classNames',
           type: 'DialogClassNames',
           description: { zh: '内置区域 class', en: 'Classes for built-in regions' },
+        },
+      ],
+    },
+    events: {
+      omit: ['openChange'],
+      extend: [
+        {
+          name: 'update:visible',
+          type: 'boolean',
+          description: { zh: '更新绑定显隐', en: 'Updates bound visibility' },
+        },
+      ],
+    },
+    regions: { rename: { content: 'default' } },
+  },
+  Drawer: {
+    props: {
+      rename: { open: 'visible' },
+      omit: ['defaultOpen'],
+      override: {
+        okButton: { type: 'boolean | Partial<ButtonProps>' },
+        cancelButton: { type: 'boolean | Partial<ButtonProps>' },
+      },
+      extend: [
+        {
+          name: 'to',
+          type: 'string | HTMLElement | null',
+          defaultValue: 'body',
+          description: { zh: '挂载目标', en: 'Teleport destination' },
+        },
+        {
+          name: 'ariaLabel',
+          type: 'string',
+          description: { zh: '可访问名称', en: 'Accessible name' },
         },
       ],
     },
@@ -764,6 +800,60 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
       },
     },
     regions: { rename: { content: 'children', footer: 'footer' }, omit: ['title'] },
+  },
+  Drawer: {
+    props: {
+      override: {
+        title: { type: 'ReactNode' },
+        header: { type: 'ReactNode | boolean' },
+        footer: { type: 'ReactNode | boolean' },
+        okButton: { type: 'boolean | Partial<ButtonProps>' },
+        cancelButton: { type: 'boolean | Partial<ButtonProps>' },
+      },
+      extend: [
+        {
+          name: 'ariaLabel',
+          type: 'string',
+          description: { zh: '可访问名称', en: 'Accessible name' },
+        },
+        {
+          name: 'portalContainer',
+          type: 'PortalTarget',
+          defaultValue: "'body'",
+          description: { zh: 'Portal 容器', en: 'Portal destination' },
+        },
+        {
+          name: 'portal',
+          type: 'boolean',
+          defaultValue: 'true',
+          description: { zh: '使用 Portal', en: 'Uses a Portal' },
+        },
+        {
+          name: 'zIndex',
+          type: 'number',
+          description: { zh: '浮层层级', en: 'Floating z-index' },
+        },
+        {
+          name: 'classNames',
+          type: 'DrawerClassNames',
+          description: { zh: '内置区域 class', en: 'Classes for built-in regions' },
+        },
+      ],
+    },
+    events: {
+      rename: {
+        openChange: 'onOpenChange',
+        ok: 'onOk',
+        cancel: 'onCancel',
+        open: 'onOpen',
+        opened: 'onOpened',
+        close: 'onClose',
+        closed: 'onClosed',
+        maskClick: 'onMaskClick',
+        iconClick: 'onIconClick',
+      },
+    },
+    regions: { rename: { content: 'children' }, omit: ['title', 'header', 'footer'] },
   },
   Dropdown: {
     events: { rename: { openChange: 'onOpenChange', command: 'onCommand' } },

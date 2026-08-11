@@ -1,4 +1,5 @@
 import { mount } from '@vue/test-utils';
+import { bodyScrollLock } from '@aurora/horizon-web-core';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
 import Drawer from '../src/Drawer';
@@ -88,12 +89,7 @@ describe('Drawer public API contracts', () => {
 
   test('forwards object props to the cancel action', () => {
     const wrapper = mount(() => (
-      <Drawer
-        to={null}
-        visible
-        cancelButton={{ disabled: true } as ButtonProps}
-        okButton={false}
-      />
+      <Drawer to={null} visible cancelButton={{ disabled: true } as ButtonProps} okButton={false} />
     ));
 
     const cancel = wrapper.get('.h-drawer__footer button');
@@ -160,17 +156,17 @@ describe('Drawer public API contracts', () => {
       <Drawer to={null} visible escClosable={escClosable.value} onUpdate:visible={onUpdate} />
     ));
 
-    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
     await new Promise(resolve => setTimeout(resolve, 5));
     expect(onUpdate).not.toHaveBeenCalled();
 
     escClosable.value = true;
     await nextTick();
-    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
     await vi.waitFor(() => expect(onUpdate).toHaveBeenCalledWith(false));
   });
 
-  test('Escape only closes the topmost visible drawer', async () => {
+  test('a controlled drawer that rejects an update remains the topmost Escape target', async () => {
     const firstUpdate = vi.fn();
     const secondUpdate = vi.fn();
     mount(() => (
@@ -180,8 +176,12 @@ describe('Drawer public API contracts', () => {
       </>
     ));
 
-    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
     await vi.waitFor(() => expect(secondUpdate).toHaveBeenCalledWith(false));
+    expect(firstUpdate).not.toHaveBeenCalled();
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    await vi.waitFor(() => expect(secondUpdate).toHaveBeenCalledTimes(2));
     expect(firstUpdate).not.toHaveBeenCalled();
   });
 
@@ -249,12 +249,7 @@ describe('Drawer public API contracts', () => {
     );
     const onUpdate = vi.fn();
     const wrapper = mount(() => (
-      <Drawer
-        to={null}
-        visible
-        beforeClose={beforeClose}
-        onUpdate:visible={onUpdate}
-      />
+      <Drawer to={null} visible beforeClose={beforeClose} onUpdate:visible={onUpdate} />
     ));
 
     await wrapper.get('.h-drawer__mask').trigger('click');
@@ -266,16 +261,156 @@ describe('Drawer public API contracts', () => {
     await vi.waitFor(() => expect(onUpdate).toHaveBeenCalledWith(false));
   });
 
-  test('real pointer drags resize horizontal and vertical drawers in placement direction', async () => {
-    const placement = ref<'left' | 'right' | 'top' | 'bottom'>('left');
+  test('deduplicates pending close guards while still reporting every mask click', async () => {
+    let resolveClose!: (value: boolean) => void;
+    const beforeClose = vi.fn(() => new Promise<boolean>(resolve => (resolveClose = resolve)));
+    const onMaskClick = vi.fn();
+    const onUpdate = vi.fn();
     const wrapper = mount(() => (
       <Drawer
         to={null}
         visible
-        placement={placement.value}
-        size="40%"
-        sizeDraggable
+        beforeClose={beforeClose}
+        onMaskClick={onMaskClick}
+        onUpdate:visible={onUpdate}
       />
+    ));
+
+    await wrapper.get('.h-drawer__mask').trigger('click');
+    await wrapper.get('.h-drawer__mask').trigger('click');
+    expect(onMaskClick).toHaveBeenCalledTimes(2);
+    expect(beforeClose).toHaveBeenCalledOnce();
+    expect(wrapper.get('[role="dialog"]').attributes('aria-busy')).toBe('true');
+    expect(onUpdate).not.toHaveBeenCalled();
+
+    resolveClose(true);
+    await vi.waitFor(() => expect(onUpdate).toHaveBeenCalledOnce());
+    expect(onUpdate).toHaveBeenCalledWith(false);
+    expect(wrapper.get('[role="dialog"]').attributes('aria-busy')).toBeUndefined();
+  });
+
+  test('exposes open and close, supplies an accessible label, and keeps OK action-only', async () => {
+    const onUpdate = vi.fn();
+    const onOk = vi.fn();
+    const wrapper = mount(Drawer, {
+      props: {
+        visible: false,
+        to: null,
+        header: false,
+        ariaLabel: 'Account settings',
+        onOk,
+        'onUpdate:visible': onUpdate,
+      },
+    });
+    const commands = wrapper.vm as unknown as { open: () => void; close: () => void };
+
+    commands.open();
+    expect(onUpdate).toHaveBeenLastCalledWith(true);
+    await wrapper.setProps({ visible: true });
+    expect(wrapper.get('[role="dialog"]').attributes('aria-label')).toBe('Account settings');
+    await wrapper.get('.h-drawer__footer .h-button--primary').trigger('click');
+    expect(onOk).toHaveBeenCalledOnce();
+    expect(onUpdate).not.toHaveBeenCalledWith(false);
+
+    commands.close();
+    expect(onUpdate).toHaveBeenLastCalledWith(false);
+  });
+
+  test('updates mask-derived scroll locking dynamically without leaking', async () => {
+    bodyScrollLock.reset(document);
+    const mask = ref(true);
+    const lockScroll = ref<boolean>();
+    const wrapper = mount(
+      () => (
+        <Drawer
+          to={null}
+          visible
+          mask={mask.value}
+          lockScroll={lockScroll.value}
+          title="Dynamic lock"
+        />
+      ),
+      { attachTo: document.body },
+    );
+    expect(bodyScrollLock.current).toBe(1);
+
+    mask.value = false;
+    await nextTick();
+    expect(bodyScrollLock.current).toBe(0);
+    expect(document.body.dataset.popupParentHidden).toBeUndefined();
+
+    lockScroll.value = true;
+    await nextTick();
+    expect(bodyScrollLock.current).toBe(1);
+    mask.value = true;
+    await nextTick();
+    expect(bodyScrollLock.current).toBe(1);
+
+    lockScroll.value = false;
+    await nextTick();
+    expect(bodyScrollLock.current).toBe(0);
+    wrapper.unmount();
+    expect(bodyScrollLock.current).toBe(0);
+  });
+
+  test('restores nested focus and releases one scroll lock per closed drawer', async () => {
+    bodyScrollLock.reset(document);
+    const trigger = document.createElement('button');
+    document.body.append(trigger);
+    trigger.focus();
+    const parentVisible = ref(true);
+    const childVisible = ref(false);
+    const wrapper = mount(
+      () => (
+        <>
+          <Drawer
+            class="parent-drawer"
+            to={null}
+            visible={parentVisible.value}
+            title="Parent"
+            onUpdate:visible={value => (parentVisible.value = value)}
+          />
+          <Drawer
+            class="child-drawer"
+            to={null}
+            visible={childVisible.value}
+            title="Child"
+            onUpdate:visible={value => (childVisible.value = value)}
+          />
+        </>
+      ),
+      { attachTo: document.body },
+    );
+    const parentDialog = document.querySelector<HTMLElement>('.parent-drawer [role="dialog"]')!;
+    await vi.waitFor(() => expect(document.activeElement).toBe(parentDialog));
+
+    childVisible.value = true;
+    await nextTick();
+    const childDialog = document.querySelector<HTMLElement>('.child-drawer [role="dialog"]')!;
+    await vi.waitFor(() => expect(document.activeElement).toBe(childDialog));
+    expect(bodyScrollLock.current).toBe(2);
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    await nextTick();
+    expect(childVisible.value).toBe(false);
+    expect(parentVisible.value).toBe(true);
+    expect(bodyScrollLock.current).toBe(1);
+    expect(document.activeElement).toBe(parentDialog);
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    await nextTick();
+    expect(parentVisible.value).toBe(false);
+    expect(bodyScrollLock.current).toBe(0);
+    expect(document.activeElement).toBe(trigger);
+
+    wrapper.unmount();
+    trigger.remove();
+  });
+
+  test('real pointer drags resize horizontal and vertical drawers in placement direction', async () => {
+    const placement = ref<'left' | 'right' | 'top' | 'bottom'>('left');
+    const wrapper = mount(() => (
+      <Drawer to={null} visible placement={placement.value} size="40%" sizeDraggable />
     ));
     await nextTick();
     let dialog = wrapper.get<HTMLElement>('[role="dialog"]');
@@ -292,10 +427,10 @@ describe('Drawer public API contracts', () => {
         bubbles: true,
       }),
     );
-    window.dispatchEvent(
+    document.dispatchEvent(
       new PointerEvent('pointermove', { clientX: 140, clientY: 0, pointerId: 1, bubbles: true }),
     );
-    window.dispatchEvent(new PointerEvent('pointerup', { pointerId: 1, bubbles: true }));
+    document.dispatchEvent(new PointerEvent('pointerup', { pointerId: 1, bubbles: true }));
     await nextTick();
     expect(dialog.element.style.width).toBe('340px');
 
@@ -315,10 +450,10 @@ describe('Drawer public API contracts', () => {
         bubbles: true,
       }),
     );
-    window.dispatchEvent(
+    document.dispatchEvent(
       new PointerEvent('pointermove', { clientX: 140, clientY: 0, pointerId: 3, bubbles: true }),
     );
-    window.dispatchEvent(new PointerEvent('pointerup', { pointerId: 3, bubbles: true }));
+    document.dispatchEvent(new PointerEvent('pointerup', { pointerId: 3, bubbles: true }));
     await nextTick();
     expect(dialog.element.style.width).toBe('300px');
 
@@ -338,10 +473,10 @@ describe('Drawer public API contracts', () => {
         bubbles: true,
       }),
     );
-    window.dispatchEvent(
+    document.dispatchEvent(
       new PointerEvent('pointermove', { clientX: 0, clientY: 135, pointerId: 2, bubbles: true }),
     );
-    window.dispatchEvent(new PointerEvent('pointerup', { pointerId: 2, bubbles: true }));
+    document.dispatchEvent(new PointerEvent('pointerup', { pointerId: 2, bubbles: true }));
     await nextTick();
     expect(dialog.element.style.height).toBe('235px');
 
@@ -361,12 +496,53 @@ describe('Drawer public API contracts', () => {
         bubbles: true,
       }),
     );
-    window.dispatchEvent(
+    document.dispatchEvent(
       new PointerEvent('pointermove', { clientX: 0, clientY: 135, pointerId: 4, bubbles: true }),
     );
-    window.dispatchEvent(new PointerEvent('pointerup', { pointerId: 4, bubbles: true }));
+    document.dispatchEvent(new PointerEvent('pointerup', { pointerId: 4, bubbles: true }));
     await nextTick();
     expect(dialog.element.style.height).toBe('200px');
+  });
+
+  test('ignores non-primary resize starts and clamps pointer resizing to the minimum', async () => {
+    const wrapper = mount(() => (
+      <Drawer to={null} visible placement="right" size="40%" sizeDraggable />
+    ));
+    await nextTick();
+    const dialog = wrapper.get<HTMLElement>('[role="dialog"]');
+    const handle = wrapper.get<HTMLElement>('.h-drawer__draggable');
+    Object.defineProperty(handle.element.parentElement, 'clientWidth', {
+      configurable: true,
+      value: 40,
+    });
+
+    handle.element.dispatchEvent(
+      new PointerEvent('pointerdown', {
+        button: 1,
+        clientX: 0,
+        pointerId: 20,
+        bubbles: true,
+      }),
+    );
+    document.dispatchEvent(
+      new PointerEvent('pointermove', { clientX: 100, pointerId: 20, bubbles: true }),
+    );
+    expect(dialog.element.style.width).toBe('40%');
+
+    handle.element.dispatchEvent(
+      new PointerEvent('pointerdown', {
+        button: 0,
+        clientX: 0,
+        pointerId: 21,
+        bubbles: true,
+      }),
+    );
+    document.dispatchEvent(
+      new PointerEvent('pointermove', { clientX: 100, pointerId: 21, bubbles: true }),
+    );
+    document.dispatchEvent(new PointerEvent('pointerup', { pointerId: 21, bubbles: true }));
+    await nextTick();
+    expect(dialog.element.style.width).toBe('8px');
   });
 
   test('custom vertical sizes reset while hidden and responsive sizes track viewport bands', async () => {
@@ -387,9 +563,7 @@ describe('Drawer public API contracts', () => {
 
     const originalWidth = window.innerWidth;
     Object.defineProperty(window, 'innerWidth', { configurable: true, value: 1200 });
-    const responsive = mount(() => (
-      <Drawer to={null} visible placement="top" size="medium" />
-    ));
+    const responsive = mount(() => <Drawer to={null} visible placement="top" size="medium" />);
     window.dispatchEvent(new Event('resize'));
     await nextTick();
     const dialog = responsive.get<HTMLElement>('[role="dialog"]');
