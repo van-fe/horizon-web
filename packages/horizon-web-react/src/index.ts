@@ -1,6 +1,7 @@
 import '@aurora/theme/styles/foundations';
 import '@aurora/theme/styles/alert';
 import '@aurora/theme/styles/avatar';
+import '@aurora/theme/styles/backtop';
 import '@aurora/theme/styles/badge';
 import '@aurora/theme/styles/breadcrumb';
 import '@aurora/theme/styles/button';
@@ -39,6 +40,7 @@ import '@aurora/theme/styles/typography';
 export * from './components/Button';
 export * from './components/Alert';
 export * from './components/Avatar';
+export * from './components/Backtop';
 export * from './components/Badge';
 export * from './components/Breadcrumb';
 export * from './components/Card';

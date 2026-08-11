@@ -4,6 +4,7 @@ import {
   adaptManifestFields,
   alertManifest,
   avatarManifest,
+  backtopManifest,
   badgeManifest,
   breadcrumbManifest,
   buttonManifest,
@@ -54,6 +55,7 @@ import type { ManifestFieldAdaptation } from '../packages/core/src';
 const manifests = [
   alertManifest,
   avatarManifest,
+  backtopManifest,
   badgeManifest,
   breadcrumbManifest,
   buttonManifest,
@@ -110,6 +112,18 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
   Avatar: {
     props: { rename: { fallbackSrc: 'default' } },
     regions: { rename: { content: 'default', fallback: 'error' } },
+  },
+  Backtop: {
+    props: {
+      extend: [
+        {
+          name: 'ariaLabel',
+          type: 'string',
+          description: { zh: '可访问名称', en: 'Accessible name' },
+        },
+      ],
+    },
+    regions: { rename: { content: 'default' } },
   },
   Badge: {
     regions: { rename: { content: 'default' }, omit: ['icon'] },

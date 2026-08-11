@@ -1,0 +1,48 @@
+@use '../../mixins';
+
+/* stylelint-disable nesting-selector-no-missing-scoping-root -- BEM mixin provides the selector root. */
+
+@include mixins.b('backtop') {
+  position: fixed;
+  z-index: 9;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  font-size: mixins.css-variable('backtop', 'font-size');
+  color: mixins.css-variable('backtop', 'color');
+  text-decoration: none;
+  appearance: none;
+  cursor: pointer;
+  background-color: mixins.css-variable('backtop', 'background');
+  border: 0;
+  border-radius: mixins.css-variable('backtop', 'border-radius');
+  box-shadow: mixins.css-variable('backtop', 'box-shadow');
+
+  &:hover {
+    color: mixins.css-variable('backtop', 'color', 'hover');
+  }
+
+  &:active {
+    color: mixins.css-variable('backtop', 'color', 'active');
+  }
+
+  &:focus-visible {
+    @include mixins.focus-outline;
+  }
+
+  &:disabled,
+  &[aria-disabled='true'] {
+    color: mixins.css-variable('text-disabled');
+    pointer-events: none;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+/* stylelint-enable nesting-selector-no-missing-scoping-root */

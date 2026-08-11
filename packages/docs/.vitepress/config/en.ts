@@ -33,6 +33,7 @@ const reactSidebar = [
       { text: 'Dialog', link: 'components/Dialog' },
       { text: 'Drawer', link: 'components/Drawer' },
       { text: 'FloatButton', link: 'components/FloatButton' },
+      { text: 'Backtop', link: 'components/Backtop' },
     ],
   },
   {

@@ -4,6 +4,7 @@
 @use './element';
 @use './components/avatar/variables' as avatar;
 @use './components/alert/variables' as alert;
+@use './components/backtop/variables' as backtop;
 @use './components/badge/variables' as badge;
 @use './components/breadcrumb/variables' as breadcrumb;
 @use './components/button/variables' as button;
@@ -44,6 +45,7 @@ $values: function.map-merge-multi(
   function.flatten-variables(element.$values),
   function.flatten-variables(alert.$values, 'alert'),
   function.flatten-variables(avatar.$values, 'avatar'),
+  function.flatten-variables(backtop.$values, 'backtop'),
   function.flatten-variables(badge.$values, 'badge'),
   function.flatten-variables(breadcrumb.$values, 'breadcrumb'),
   function.flatten-variables(button.$values, 'button'),

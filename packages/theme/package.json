@@ -32,6 +32,8 @@
     "./styles/alert-variables": "./styles/components/alert/variables.scss",
     "./styles/avatar": "./styles/components/avatar/index.scss",
     "./styles/avatar-variables": "./styles/components/avatar/variables.scss",
+    "./styles/backtop": "./styles/components/backtop/index.scss",
+    "./styles/backtop-variables": "./styles/components/backtop/variables.scss",
     "./styles/badge": "./styles/components/badge/index.scss",
     "./styles/badge-variables": "./styles/components/badge/variables.scss",
     "./styles/breadcrumb": "./styles/components/breadcrumb/index.scss",

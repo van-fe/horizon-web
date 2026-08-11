@@ -13,7 +13,7 @@ describe('DropdownGroup.tsx', () => {
     const wrapper = mount(
       () => (
         <Fragment>
-          <HDropdown toBody={false}>
+          <HDropdown showAfter={0} toBody={false}>
             {{
               default: () => <HButton>Trigger</HButton>,
               dropdown: () => (
@@ -38,7 +38,7 @@ describe('DropdownGroup.tsx', () => {
 
     await triggerEle.trigger('mouseenter');
 
-    await sleep(200);
+    await sleep(50);
 
     expect(wrapper.find('.h-dropdown-group__title').text()).eq('Group');
   });
@@ -48,7 +48,7 @@ describe('DropdownGroup.tsx', () => {
       const wrapper = mount(
         () => (
           <>
-            <HDropdown toBody={false}>
+            <HDropdown showAfter={0} toBody={false}>
               {{
                 default: () => <HButton>Trigger</HButton>,
                 dropdown: () => (
@@ -76,7 +76,7 @@ describe('DropdownGroup.tsx', () => {
 
       await triggerEle.trigger('mouseenter');
 
-      await sleep(200);
+      await sleep(50);
 
       const tooltip = wrapper.findComponent(HTooltip);
 

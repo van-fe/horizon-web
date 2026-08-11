@@ -39,6 +39,10 @@ function FloatButtonLabelsProbe() {
   );
 }
 
+function BacktopLabelsProbe() {
+  return createElement('span', null, useHorizonWebConfig().backtopLabels.button);
+}
+
 describe('HorizonWebProvider', () => {
   it('is SSR-safe and exposes renderer configuration', () => {
     const html = renderToStaticMarkup(
@@ -98,5 +102,17 @@ describe('HorizonWebProvider', () => {
     );
 
     expect(html).toContain('Floating action/Show actions/Collapse floating actions');
+  });
+
+  it('merges Backtop labels with provider defaults', () => {
+    const html = renderToStaticMarkup(
+      createElement(
+        HorizonWebProvider,
+        { backtopLabels: { button: 'Return to start' } },
+        createElement(BacktopLabelsProbe),
+      ),
+    );
+
+    expect(html).toContain('Return to start');
   });
 });

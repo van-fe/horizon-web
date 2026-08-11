@@ -2,6 +2,7 @@ import { mount, shallowMount } from '@vue/test-utils';
 import HBacktop from '../src/Backtop';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { nextTick } from 'vue';
+import { useBacktopExposes, type BacktopExposes } from '../src/composables/useExposes';
 
 afterEach(() => {
   vi.useRealTimers();
@@ -40,9 +41,41 @@ describe('Backtop.tsx', () => {
     await nextTick();
 
     const button = wrapper.get('.h-backtop');
+    expect(button.element.tagName).toBe('BUTTON');
+    expect(button.attributes('type')).toBe('button');
     expect(button.text()).toBe('Top now');
     expect(button.attributes('style')).toContain('bottom: 20px');
     expect(button.attributes('style')).toContain('right: 30px');
+
+    wrapper.unmount();
+    target.remove();
+  });
+
+  test('synchronizes a changed threshold and exposes scroll and focus commands', async () => {
+    const target = document.createElement('div');
+    target.id = 'backtop-command-target';
+    target.style.cssText = 'height: 40px; overflow: auto;';
+    const content = document.createElement('div');
+    content.style.height = '1000px';
+    target.appendChild(content);
+    document.body.appendChild(target);
+    target.scrollTop = 80;
+    const wrapper = mount(HBacktop, {
+      props: { target: '#backtop-command-target', visibilityHeight: 100 },
+      attachTo: document.body,
+    });
+
+    expect(Object.keys(useBacktopExposes)).toEqual(['scrollToTop', 'focus']);
+    expect(wrapper.find('.h-backtop').exists()).toBe(false);
+    await wrapper.setProps({ visibilityHeight: 40 });
+    await nextTick();
+    const button = wrapper.get<HTMLButtonElement>('.h-backtop');
+    const commands = wrapper.vm as unknown as BacktopExposes;
+    commands.focus();
+    expect(document.activeElement).toBe(button.element);
+    commands.scrollToTop();
+    await new Promise(resolve => setTimeout(resolve, 550));
+    expect(target.scrollTop).toBe(0);
 
     wrapper.unmount();
     target.remove();

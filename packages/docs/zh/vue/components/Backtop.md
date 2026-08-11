@@ -17,3 +17,15 @@ Backtop 用于长页面或独立滚动容器，达到指定滚动距离后提供
 通过 `target` 监听局部滚动区域。目标元素应可滚动、可聚焦，并使用唯一选择器避免多个示例互相影响。
 
 :::demo vue/components/Backtop/target.vue :::
+
+## API
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `visibility-height` | `number` | `400` | 显示操作的滚动阈值 |
+| `bottom` | `number` | `120` | 距离视口底部的像素值 |
+| `right` | `number` | `24` | 距离视口右侧的像素值 |
+| `target` | `string` | `window` | 被监听滚动元素的选择器 |
+| `aria-label` | `string` | `Back to top` | 可访问名称 |
+
+默认插槽会替换箭头内容，`click` 事件返回原生鼠标事件。模板 ref 提供 `scrollToTop()` 和 `focus()`。
