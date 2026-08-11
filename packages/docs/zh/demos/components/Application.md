@@ -2,6 +2,8 @@
 
 `Application` 会把 `locale` 提供给内部组件。示例使用独立的局部状态，因此切换语言不会影响文档页面中的其他 Demo。打开日期面板可以观察月份、星期和操作文案的变化。
 
+每个 Vue App 安装 Horizon Web 时都会创建独立的 Application 上下文；嵌套的 `h-application` 只覆盖其组件子树，不会改写另一个 Vue App 的上下文。
+
 :::demo components/Application/i18n.vue :::
 
 ## 统一组件尺寸

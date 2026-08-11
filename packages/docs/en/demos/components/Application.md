@@ -1,5 +1,7 @@
 ## Scoped locale
 
+Installing Horizon Web creates an independent Application context for each Vue App. A nested `h-application` overrides only its component subtree and does not replace another Vue App's context.
+
 
 :::demo components/Application/i18n.vue :::
 

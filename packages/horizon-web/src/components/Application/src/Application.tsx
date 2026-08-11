@@ -1,5 +1,4 @@
-import { defineComponent, inject, provide, ref, toRef, watch } from 'vue';
-import type { ApplicationProps } from './composables/useProps';
+import { computed, defineComponent, inject, provide, watch } from 'vue';
 import { useApplicationProps } from './composables/useProps';
 import { defaultLocale, localeInjectKey } from '~/provides/localable';
 import {
@@ -14,6 +13,10 @@ import {
   useNamespace,
   setPopupContainerGetter,
 } from '@aurora/utils';
+import {
+  HApplicationContextInjectedKey,
+  type HApplicationContext,
+} from './applicationContext';
 
 export default defineComponent({
   name: `${useNamespace()}Application`,
@@ -23,18 +26,22 @@ export default defineComponent({
   slots: useApplicationSlots,
   setup(props, { slots }: HorizonWebSetupContext<{}, ApplicationSlots>) {
     const locale = inject(localeInjectKey, defaultLocale);
+    const parentApplicationContext = inject(HApplicationContextInjectedKey, undefined);
+    const applicationContext: HApplicationContext = {
+      locale: computed(() => props.locale ?? parentApplicationContext?.locale.value),
+      size: computed(() => props.size ?? parentApplicationContext?.size.value),
+      namespace: computed(() => props.namespace ?? parentApplicationContext?.namespace.value),
+      getPopupContainer: computed(
+        () => props.getPopupContainer ?? parentApplicationContext?.getPopupContainer.value,
+      ),
+      showTimeZone: computed(
+        () => props.showTimeZone ?? parentApplicationContext?.showTimeZone.value,
+      ),
+    };
 
-    const sizeRef = ref<ApplicationProps['size']>(props.size);
-
-    provide(GlobalSizeInjectedKey, sizeRef);
-    provide(HApplicationShowTimeZoneInjectedKey, toRef(props, 'showTimeZone'));
-
-    watch(
-      () => props.size,
-      val => {
-        sizeRef.value = val;
-      },
-    );
+    provide(HApplicationContextInjectedKey, applicationContext);
+    provide(GlobalSizeInjectedKey, applicationContext.size);
+    provide(HApplicationShowTimeZoneInjectedKey, applicationContext.showTimeZone);
 
     watch(
       () => props.namespace,
