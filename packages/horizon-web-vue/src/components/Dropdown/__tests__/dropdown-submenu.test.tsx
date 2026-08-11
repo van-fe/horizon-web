@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import HDropdown from '../src/Dropdown';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 import HButton from '../../Button';
 import { HDropdownItem, HDropdownMenu, HDropdownSubmenu } from '../index';
 import { sleep } from '../../../utils/tools';
@@ -12,7 +12,7 @@ describe('DropdownSubmenu.tsx', () => {
     const wrapper = mount(
       () => (
         <Fragment>
-          <HDropdown toBody={false}>
+          <HDropdown toBody={false} showAfter={0}>
             {{
               default: () => <HButton>Trigger</HButton>,
               dropdown: () => (
@@ -37,7 +37,7 @@ describe('DropdownSubmenu.tsx', () => {
 
     await triggerEle.trigger('mouseenter');
 
-    await sleep(200);
+    await vi.waitFor(() => expect(wrapper.findComponent(HDropdownSubmenu).exists()).toBe(true));
 
     expect(wrapper.findComponent(HDropdownSubmenu).exists()).toBeTruthy();
     expect(wrapper.findComponent(HDropdownSubmenu).text()).eq('Submenu123');
@@ -92,7 +92,7 @@ describe('DropdownSubmenu.tsx', () => {
       const wrapper = mount(
         () => (
           <>
-            <HDropdown toBody={false}>
+            <HDropdown toBody={false} showAfter={0}>
               {{
                 default: () => <HButton>Trigger</HButton>,
                 dropdown: () => (
@@ -117,7 +117,7 @@ describe('DropdownSubmenu.tsx', () => {
 
       await triggerEle.trigger('mouseenter');
 
-      await sleep(200);
+      await vi.waitFor(() => expect(wrapper.findComponent(HDropdownSubmenu).exists()).toBe(true));
 
       await expect(wrapper.findComponent(HDropdownSubmenu).classes('is-disabled')).toBeTruthy();
     });
@@ -126,7 +126,7 @@ describe('DropdownSubmenu.tsx', () => {
       const wrapper = mount(
         () => (
           <>
-            <HDropdown toBody={false}>
+            <HDropdown toBody={false} showAfter={0}>
               {{
                 default: () => <HButton>Trigger</HButton>,
                 dropdown: () => (
@@ -151,7 +151,7 @@ describe('DropdownSubmenu.tsx', () => {
 
       await triggerEle.trigger('mouseenter');
 
-      await sleep(200);
+      await vi.waitFor(() => expect(wrapper.findComponent(HDropdownSubmenu).exists()).toBe(true));
 
       await expect(wrapper.findComponent(HDropdownSubmenu).find('.a-icon').exists()).toBeTruthy();
     });
@@ -160,7 +160,7 @@ describe('DropdownSubmenu.tsx', () => {
       const wrapper = mount(
         () => (
           <>
-            <HDropdown toBody={false}>
+            <HDropdown toBody={false} showAfter={0}>
               {{
                 default: () => <HButton>Trigger</HButton>,
                 dropdown: () => (
@@ -185,7 +185,7 @@ describe('DropdownSubmenu.tsx', () => {
 
       await triggerEle.trigger('mouseenter');
 
-      await sleep(200);
+      await vi.waitFor(() => expect(wrapper.findComponent(HDropdownSubmenu).exists()).toBe(true));
 
       await expect(wrapper.findComponent(HDropdownSubmenu).classes('is-active')).toBeTruthy();
     });
