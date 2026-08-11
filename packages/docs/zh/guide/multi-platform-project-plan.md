@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M3 浮层试点已完成，M4 Select 复杂试点待启动 |
+| 计划状态 | M4 Select 单选复杂试点已完成，M5 工具链与消费矩阵待启动 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -290,9 +290,20 @@ M2 的公共抽取只包含与渲染框架无关的状态和行为协议。组�
 | REACT-SEL-003 | React panel/renderers | option、empty、header、footer render API | 自定义渲染不进入 Core |
 | REACT-SEL-004 | Form 与 locale 集成 | Provider、error、change trigger、字典 | 多语言与 Form 测试通过 |
 | QA-SEL-002 | 浏览器契约测试 | keyboard、focus、ARIA、popup、narrow viewport | Vue/React 关键流程和视觉验收通过 |
-| DOC-SEL-001 | Select 双框架文档 | API 映射、示例、差异说明 | 中英文文档构建通过 |
+| DOC-SEL-001 | Select 分框架文档 | React 原生页面与示例、Vue 独立页面 | 中英文文档构建通过且页面不混写 renderer |
 
 退出门槛：Select 单选模式证明 controller、overlay、Form、locale、render API 和共享 CSS 可以形成闭环。
+
+#### M4 实施记录
+
+| 能力 | 状态 | 实施结果 |
+| --- | --- | --- |
+| CORE-SEL-001–004 | Done | `@aurora/core/src/components/Select` 提供公共类型、值归一化、格式化值协议、深比较、Option collection、过滤、键盘导航和受控同步 controller |
+| WEB-SEL-001 | Done | `@aurora/horizon-web-core/src/components/Select` 提供 combobox/listbox/option ARIA、DOM 键盘 adapter 与 active option 滚动 |
+| VUE-SEL-001 | Done | Vue Select 的模型归一化和 value-format 协议回接 Core，保持既有组件 API 与测试基线 |
+| REACT-SEL-001–004 | Done | React Select 支持受控/非受控值与面板、data/children Option、OptionGroup、过滤、Portal、浮层定位、Provider 字典、表单字段和 render API |
+| DS-SEL-001 | Done | Select 样式与变量迁入 `@aurora/theme`；Vue 使用兼容代理，React 复用相同视觉变量与 Option 样式 |
+| DOC-SEL-001 | Done | React Select 中英文页面、独立 TSX 示例和侧边栏入口完成，不在组件文档中描述框架映射关系 |
 
 ### 迭代 7：生成器、resolver、发布和 MVP 验收
 

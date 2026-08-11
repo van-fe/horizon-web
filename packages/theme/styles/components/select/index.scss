@@ -1,0 +1,242 @@
+@use '../../mixins';
+@use 'option';
+@use 'option-group';
+@use 'input';
+
+@include mixins.b('select') {
+  @include mixins.e('check-all') {
+    display: flex;
+    align-items: center;
+    height: mixins.css-variable('select', 'size', 'check-all', 'height');
+    padding: mixins.css-variable('select', 'spacing', 'check-all', 'padding');
+    cursor: pointer;
+    border-bottom: 1px solid
+      mixins.css-variable('select', 'border-color', 'option-group', 'divider');
+    transition: mixins.css-variable('select', 'transition');
+
+    @include mixins.is('focus') {
+      background: mixins.css-variable('select', 'background', 'option', 'hover');
+    }
+
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+    &:hover {
+      background: mixins.css-variable('select', 'background', 'option', 'hover');
+    }
+
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+    &-label {
+      display: inline-flex;
+      align-items: center;
+
+      @include mixins.is('active') {
+        font-weight: mixins.css-variable('select', 'font-weight', 'active');
+      }
+
+      @include mixins.m('count') {
+        margin-left: mixins.css-variable('select', 'spacing', 'check-all-count', 'left', 'margin');
+      }
+    }
+  }
+
+  @include mixins.e('create-option') {
+    display: flex;
+    align-items: center;
+    min-height: mixins.css-variable('select', 'size', 'option', 'height');
+    padding: mixins.css-variable('select', 'spacing', 'option', 'padding');
+    font-size: mixins.css-variable('select', 'font-size', 'create-option');
+    cursor: pointer;
+    background: mixins.css-variable('select', 'background', 'option');
+    transition: mixins.css-variable('select', 'transition');
+
+    @include mixins.m('prefix') {
+      margin-right: mixins.css-variable('select', 'spacing', 'create-option', 'prefix', 'margin-right');
+      color: mixins.css-variable('select', 'color', 'create-option', 'prefix');
+    }
+
+    @include mixins.m('content') {
+      display: -webkit-box;
+      flex: 1;
+      overflow: hidden;
+      -webkit-line-clamp: mixins.css-variable-with-default-value('select-size-option-max-line', 1);
+      word-break: break-all;
+      -webkit-box-orient: vertical;
+    }
+
+    @include mixins.is('focus') {
+      background: mixins.css-variable('select', 'background', 'option', 'hover');
+    }
+
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+    &:hover {
+      background: mixins.css-variable('select', 'background', 'option', 'hover');
+    }
+  }
+
+  @include mixins.nested('picker__pop-content--inner') {
+    height: 100%;
+  }
+
+  @include mixins.e('panel-content') {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+
+    @include mixins.e('panel-tags') {
+      min-height: fit-content;
+      max-height: mixins.css-variable('select', 'size', 'panel-tags', 'max-height');
+      margin-bottom: mixins.css-variable('select', 'spacing', 'panel-tags', 'bottom', 'margin');
+      overflow-y: auto;
+    }
+  }
+
+  @include mixins.e('panel') {
+    @include mixins.nested('scrollbar') {
+      margin: mixins.css-variable('select', 'spacing', 'scrollbar', 'margin-y') 0;
+
+      /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+      &__view {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        min-height: 0;
+      }
+
+      @include mixins.is('empty') {
+        margin: 0;
+      }
+
+      @include mixins.has('panel-input') {
+        margin-top: 0;
+      }
+    }
+  }
+
+  // Renderer-neutral Select shell. Vue keeps its Picker composition while React
+  // consumes these direct trigger/panel elements.
+  position: relative;
+  display: inline-flex;
+  width: 240px;
+  max-width: 100%;
+
+  @include mixins.e('trigger') {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 40px;
+    padding: 0 mixins.css-variable('spacing-4');
+    font: inherit;
+    color: mixins.css-variable('text-primary');
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+    background: mixins.css-variable('bg-default');
+    border: 1px solid mixins.css-variable('border-default');
+    border-radius: mixins.css-variable('radius-m');
+
+    /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+    &:focus-visible {
+      border-color: mixins.css-variable('border-brand-default');
+      box-shadow: 0 0 0 2px mixins.css-variable('border-focused');
+    }
+  }
+
+  @include mixins.e('value') {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    @include mixins.is('placeholder') {
+      color: mixins.css-variable('text-disabled');
+    }
+  }
+
+  @include mixins.e('arrow') {
+    margin-left: mixins.css-variable('spacing-3');
+    transition: transform mixins.css-variable('transition-duration-fast');
+  }
+
+  @include mixins.e('clear') {
+    position: absolute;
+    top: 50%;
+    right: mixins.css-variable('spacing-4');
+    padding: 0;
+    font: inherit;
+    color: mixins.css-variable('text-tertiary');
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    transform: translateY(-50%);
+  }
+
+  @include mixins.e('panel') {
+    position: fixed;
+    z-index: 1000;
+    box-sizing: border-box;
+    min-width: 160px;
+    max-height: 320px;
+    overflow: hidden;
+    background: mixins.css-variable('bg-default');
+    border: 1px solid mixins.css-variable('border-noninteractive');
+    border-radius: mixins.css-variable('radius-m');
+    box-shadow: mixins.css-variable('shadow-down');
+  }
+
+  @include mixins.e('listbox') {
+    max-height: 280px;
+    padding: mixins.css-variable('spacing-3') 0;
+    overflow: auto;
+    outline: none;
+  }
+
+  @include mixins.e('empty') {
+    padding: mixins.css-variable('spacing-5') mixins.css-variable('spacing-4');
+    color: mixins.css-variable('text-tertiary');
+    text-align: center;
+  }
+
+  @include mixins.e('panel-header') {
+    padding: mixins.css-variable('spacing-3') mixins.css-variable('spacing-4');
+    border-bottom: 1px solid mixins.css-variable('border-noninteractive');
+  }
+
+  @include mixins.e('panel-footer') {
+    padding: mixins.css-variable('spacing-3') mixins.css-variable('spacing-4');
+    border-top: 1px solid mixins.css-variable('border-noninteractive');
+  }
+
+  @include mixins.m('small') {
+    @include mixins.e('trigger', false) {
+      min-height: 32px;
+    }
+  }
+
+  @include mixins.m('large') {
+    @include mixins.e('trigger', false) {
+      min-height: 48px;
+    }
+  }
+
+  @include mixins.is('open') {
+    @include mixins.e('arrow', false) {
+      transform: rotate(180deg);
+    }
+  }
+
+  @include mixins.is('disabled') {
+    @include mixins.e('trigger', false) {
+      color: mixins.css-variable('text-disabled');
+      cursor: not-allowed;
+      background: mixins.css-variable('bg-secondary');
+      border-color: mixins.css-variable('border-disabled');
+    }
+  }
+
+  @include mixins.is('invalid') {
+    @include mixins.e('trigger', false) {
+      border-color: mixins.css-variable('border-error-default');
+    }
+  }
+}

@@ -9,17 +9,24 @@ export interface HorizonWebConfig {
     on: string;
     off: string;
   };
+  selectLabels: {
+    placeholder: string;
+    empty: string;
+    clear: string;
+  };
 }
 
 export type HorizonWebProviderProps = PropsWithChildren<
-  Omit<Partial<HorizonWebConfig>, 'switchLabels'> & {
+  Omit<Partial<HorizonWebConfig>, 'selectLabels' | 'switchLabels'> & {
     switchLabels?: Partial<HorizonWebConfig['switchLabels']>;
+    selectLabels?: Partial<HorizonWebConfig['selectLabels']>;
   }
 >;
 
 const defaultConfig: HorizonWebConfig = Object.freeze({
   namespace: DEFAULT_NAMESPACE,
   switchLabels: { on: 'On', off: 'Off' },
+  selectLabels: { placeholder: 'Please select', empty: 'No options', clear: 'Clear selection' },
 });
 
 export const HorizonWebContext = createContext<HorizonWebConfig>(defaultConfig);
@@ -28,6 +35,7 @@ export function HorizonWebProvider({
   namespace,
   navigate,
   switchLabels,
+  selectLabels,
   children,
 }: HorizonWebProviderProps): ReactElement {
   const parent = useContext(HorizonWebContext);
@@ -40,8 +48,12 @@ export function HorizonWebProvider({
         ...parent.switchLabels,
         ...switchLabels,
       },
+      selectLabels: {
+        ...parent.selectLabels,
+        ...selectLabels,
+      },
     }),
-    [namespace, navigate, parent, switchLabels],
+    [namespace, navigate, parent, selectLabels, switchLabels],
   );
 
   return createElement(HorizonWebContext.Provider, { value }, children);

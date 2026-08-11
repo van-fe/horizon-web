@@ -1,0 +1,37 @@
+@use '../../mixins';
+
+@include mixins.b('select-option-group') {
+  display: flex;
+  flex-direction: column;
+
+  @include mixins.e('title') {
+    padding: mixins.css-variable('select', 'spacing', 'option-group', 'title', 'padding');
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: mixins.css-variable('select', 'font-size', 'option-group', 'title');
+    color: mixins.css-variable('select', 'color', 'option-group', 'title');
+    white-space: nowrap;
+  }
+
+  @include mixins.e('divider') {
+    order: 99999;
+    height: 1px;
+    margin: mixins.css-variable('select', 'spacing', 'option-group', 'divider', 'margin');
+    background: mixins.css-variable('select', 'border-color', 'option-group', 'divider');
+  }
+
+  @include mixins.has('title') {
+    margin-bottom: mixins.css-variable('select', 'spacing', 'option-group', 'title', 'margin-bottom');
+  }
+
+  /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+  &:last-child {
+    @include mixins.e('divider', false) {
+      display: none;
+    }
+
+    @include mixins.has('title') {
+      margin-bottom: 0;
+    }
+  }
+}

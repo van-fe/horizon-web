@@ -1,19 +1,23 @@
 import type { OptionProps } from '../composables/useProps';
 import { isObject } from '@aurora/utils';
-import { isEqual } from 'lodash-es';
 import type { ModelValueSingleType, ModelValueFormattedType } from './types';
-import { HSelectValueFormatSymbol } from './types';
+import {
+  isSelectFormattedValue,
+  isSelectValueEqual,
+  removeSelectValueMetadata,
+  unwrapSelectValue,
+  wrapSelectFormattedValue,
+} from '@aurora/core';
 
 export type ObjectWithCtx = Record<string & '_ctx', unknown>;
 export type ObjectWithoutCtx = Omit<ObjectWithCtx, '_ctx'>;
 
 export function isEqualIgnoreCtx(val1: unknown, val2: unknown) {
-  if (val1 === val2) return true;
-  return isEqual(removeObjectCtx(val1), removeObjectCtx(val2));
+  return isSelectValueEqual(removeObjectCtx(val1), removeObjectCtx(val2));
 }
 
 export function isValueFormatWrapped(val: unknown): val is Required<ModelValueFormattedType> {
-  return isObject(val) && HSelectValueFormatSymbol in val;
+  return isSelectFormattedValue(val);
 }
 
 export function isValueHasCtx(val: unknown): val is ObjectWithCtx {
@@ -33,11 +37,7 @@ export function removeObjectCtx<T = any>(
 }
 
 export function unwrapValueFormattedValue(val: ModelValueSingleType | undefined | null) {
-  if (isValueFormatWrapped(val)) {
-    return val[HSelectValueFormatSymbol];
-  } else {
-    return val;
-  }
+  return isValueFormatWrapped(val) ? unwrapSelectValue(val) : val;
 }
 
 /**
@@ -47,16 +47,8 @@ export function wrapValueFormattedValue(
   formattedValue: ModelValueFormattedType & Record<string, unknown>,
   optionValue: OptionProps['value'],
 ): Required<ModelValueFormattedType> & Record<string, unknown> {
-  const wrappedValue = (
-    Array.isArray(formattedValue) ? [...formattedValue] : { ...formattedValue }
-  ) as Required<ModelValueFormattedType> & Record<string, unknown>;
-
-  Object.defineProperty(wrappedValue, HSelectValueFormatSymbol, {
-    configurable: true,
-    value: optionValue,
-  });
-
-  return wrappedValue;
+  return wrapSelectFormattedValue(formattedValue, optionValue) as Required<ModelValueFormattedType> &
+    Record<string, unknown>;
 }
 
 /**
@@ -90,14 +82,7 @@ export function isModelValueMatchingOption(
  * 移除格式化值上的内部元数据，仅保留向用户公开的数据结构。
  */
 export function removeValueFormatMetadata<T>(value: T): T {
-  if (!isValueFormatWrapped(value)) return value;
-
-  const publicValue = (Array.isArray(value) ? [...value] : { ...value }) as T &
-    ModelValueFormattedType;
-
-  delete publicValue[HSelectValueFormatSymbol];
-
-  return publicValue;
+  return removeSelectValueMetadata(value);
 }
 
 export function isOptionChecked(

@@ -10,6 +10,7 @@ import { HSelectModelValueInjectKey, HSelectPresetModelValueInjectKey } from '..
 import type { ModelValueType, ModelValueSingleType } from '../utils/types';
 import { HSelectValueFormatSymbol } from '../utils/types';
 import type { JSX } from 'vue/jsx-runtime';
+import { normalizeSelectValues } from '@aurora/core';
 
 export default function useData(
   props: SelectProps,
@@ -31,15 +32,10 @@ export default function useData(
   watch(
     () => props.modelValue,
     val => {
-      let nextModelValueSet: Set<ModelValueSingleType>;
-
-      if (isNil(val)) {
-        nextModelValueSet = new Set();
-      } else if (props.multiple) {
-        nextModelValueSet = new Set(Array.isArray(val) ? val : [val]);
-      } else {
-        nextModelValueSet = new Set([val]);
-      }
+      const nextModelValueSet = normalizeSelectValues<ModelValueSingleType>(
+        isNil(val) ? undefined : val,
+        props.multiple,
+      );
 
       if (initialModelValueHasSynced) {
         modelValueSetsFromProps.add(toRaw(nextModelValueSet));

@@ -10,10 +10,9 @@ import type HScrollbar from '~/components/Scrollbar';
 import type { HTagGroup } from '~/components/Tag';
 import type VirtualScrollList from '../components/VirtualScrollList';
 import type { SelectVirtualScrollListExposes } from '../composables/useExposes';
+import { SELECT_VALUE_FORMAT_SYMBOL } from '@aurora/core';
 
-export const HSelectValueFormatSymbol = Symbol.for(
-  generatorInjectedKeyName('select', 'value-format-symbol'),
-);
+export const HSelectValueFormatSymbol = SELECT_VALUE_FORMAT_SYMBOL;
 
 export const HSelectInitialValueUndefined = Symbol.for(
   generatorInjectedKeyName('select', 'initial-value-undefined'),
