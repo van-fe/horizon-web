@@ -28,7 +28,7 @@
 - [x] 将 Vue 等宿主运行时依赖调整为正确的 `peerDependencies`，并验证安装行为。
 - [x] 补齐 Horizon 主包 `exports`，明确 ESM、CJS、类型、全量样式和按需样式入口。
 - [x] 校验所有包的 `sideEffects`、external 和 tree-shaking 行为，避免重复运行时或样式丢失。
-- [ ] 提供 Module Federation、qiankun、wujie 可复用的共享依赖配置示例。
+- [x] 提供 Module Federation、qiankun、wujie 可复用的共享依赖配置示例。
 
 ## 3. App 级配置与状态隔离
 

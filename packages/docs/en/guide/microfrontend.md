@@ -39,6 +39,94 @@ Shared-module configuration must enable singleton and strict version checks. A m
 
 Applications may bundle ordinary utilities that have no cross-app state. Any new module-level coordinator added to the library must declare whether it is page-shared or isolated per App.
 
+## Framework integration configuration
+
+### Reusable Module Federation share map
+
+The host and every remote must import the share map from one file. The versions below match the current `1.0.0` workspace. A release upgrade must update them and CI must compare the actual versions resolved by the host, every remote, and their lockfiles:
+
+```ts
+export const horizonShared = {
+  vue: { singleton: true, requiredVersion: '3.5.26' },
+  '@aurora/horizon-web': { singleton: true, requiredVersion: '1.0.0' },
+  '@aurora/utils': { singleton: true, requiredVersion: '1.0.0' },
+  '@aurora/theme': { singleton: true, requiredVersion: '1.0.0' },
+  '@aurora/locale-vue': { singleton: true, requiredVersion: '1.0.0' },
+  '@aurora/horizon-web-core': { singleton: true, requiredVersion: '1.0.0' },
+} as const;
+
+export const horizonRemoteShared = Object.fromEntries(
+  Object.entries(horizonShared).map(([name, options]) => [
+    name,
+    { ...options, import: false },
+  ]),
+);
+```
+
+The host uses `horizonShared`; remotes use `horizonRemoteShared`. `import: false` prevents a remote from silently bundling its own fallback, so the host must provide every module first. Module Federation Enhanced can warn and choose another version when `requiredVersion` is incompatible, so that option does not replace the strict version gate required by this contract. Before publishing artifacts, the deployment pipeline must compare the actual resolved versions of all six packages and fail on any mismatch. Integration tests must also cover a missing provider and an incompatible version.
+
+### qiankun
+
+qiankun manages containers and lifecycles; it does not create a dependency share scope. In the standard shared-runtime profile, the host and micro-app still use the Module Federation share map above at the build layer. A qiankun UMD lifecycle configuration without a sharing layer does not satisfy the initial support boundary.
+
+```ts
+// qiankun-entry.ts
+import { mountHorizonApp, updateHorizonApp, unmountHorizonApp } from './horizon-adapter';
+
+export async function bootstrap() {}
+
+export async function mount(props: MicroAppProps) {
+  await mountHorizonApp({
+    ...props.horizon,
+    container: props.container.querySelector('[data-micro-root]'),
+    popupRoot: props.container.querySelector('[data-horizon-popup-root]'),
+  });
+}
+
+export async function update(props: MicroAppProps) {
+  await updateHorizonApp(props.horizon);
+}
+
+export async function unmount() {
+  await unmountHorizonApp();
+}
+```
+
+The host-provided `container` must include both the application root and a dedicated popup root. Following this page's lifecycle contract, `unmountHorizonApp` disposes the Horizon runtime before unmounting the Vue App.
+
+### wujie
+
+wujie executes child application code in a separate iframe context, so the child and parent cannot participate in one Module Federation share scope. This is an isolated-runtime profile: host and child can pin identical versions, but the configuration must not be advertised as shared-singleton support. Cross-iframe overlays are also outside the initial boundary.
+
+```ts
+// host
+await startApp({
+  name: 'orders',
+  url: '/micro/orders/',
+  el: '#orders-container',
+  alive: false,
+  props: {
+    horizon: { id: 'orders', locale: 'en-US', zIndexBase: 3000 },
+  },
+});
+
+// child entry
+window.__WUJIE_MOUNT = () => {
+  const options = window.$wujie?.props?.horizon;
+  return mountHorizonApp({
+    ...options,
+    container: document.querySelector('[data-micro-root]'),
+    popupRoot: document.querySelector('[data-horizon-popup-root]'),
+  });
+};
+
+window.__WUJIE_UNMOUNT = () => unmountHorizonApp();
+```
+
+With `alive: false`, every exit runs unmount and resource cleanup. If an application enables keep-alive mode, `deactivated` only pauses business interaction and is not final disposal. Call Horizon `dispose()` only when the application is actually destroyed.
+
+Official references: [Module Federation `shared`](https://module-federation.io/configure/shared), [qiankun getting started](https://qiankun.umijs.org/guide/getting-started), [wujie `startApp`](https://wujie-micro.github.io/doc/api/startApp.html), and [wujie lifecycles](https://wujie-micro.github.io/doc/guide/lifecycle.html).
+
 ## Horizon App context
 
 The target API uses an App-level runtime to own mutable configuration and resources. Final names may be adjusted to repository conventions during implementation, but the capability boundary must remain intact:

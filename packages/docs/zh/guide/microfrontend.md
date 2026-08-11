@@ -39,6 +39,94 @@
 
 业务可以单独打包不含跨应用状态的普通工具依赖。任何新出现的模块级协调器在加入组件库时，都必须明确它属于页面级共享状态还是 App 级隔离状态。
 
+## 框架接入配置
+
+### 可复用的 Module Federation 共享表
+
+基座和所有 remote 应从同一个文件导入共享表。下面版本对应当前 `1.0.0` 工作区；发布升级时必须同步更新，并在 CI 中比较基座、remote 和 lockfile 的实际解析版本：
+
+```ts
+export const horizonShared = {
+  vue: { singleton: true, requiredVersion: '3.5.26' },
+  '@aurora/horizon-web': { singleton: true, requiredVersion: '1.0.0' },
+  '@aurora/utils': { singleton: true, requiredVersion: '1.0.0' },
+  '@aurora/theme': { singleton: true, requiredVersion: '1.0.0' },
+  '@aurora/locale-vue': { singleton: true, requiredVersion: '1.0.0' },
+  '@aurora/horizon-web-core': { singleton: true, requiredVersion: '1.0.0' },
+} as const;
+
+export const horizonRemoteShared = Object.fromEntries(
+  Object.entries(horizonShared).map(([name, options]) => [
+    name,
+    { ...options, import: false },
+  ]),
+);
+```
+
+基座使用 `horizonShared`，remote 使用 `horizonRemoteShared`。`import: false` 禁止 remote 静默打包自己的 fallback；基座必须先提供这些模块。Module Federation Enhanced 当前的 `requiredVersion` 在不兼容时可能只警告并选择其他版本，因此它不能替代严格版本门禁。部署流水线必须在产物发布前比较上述六个包的实际解析版本，不一致就失败；集成测试还要覆盖缺失 provider 和版本不兼容两种失败路径。
+
+### qiankun
+
+qiankun 负责容器和生命周期，不创建依赖共享域。标准共享运行时模式下，基座和微应用仍需在构建层使用上面的 Module Federation 共享表；只配置 qiankun UMD 生命周期而没有共享层，不符合首期支持边界。
+
+```ts
+// qiankun-entry.ts
+import { mountHorizonApp, updateHorizonApp, unmountHorizonApp } from './horizon-adapter';
+
+export async function bootstrap() {}
+
+export async function mount(props: MicroAppProps) {
+  await mountHorizonApp({
+    ...props.horizon,
+    container: props.container.querySelector('[data-micro-root]'),
+    popupRoot: props.container.querySelector('[data-horizon-popup-root]'),
+  });
+}
+
+export async function update(props: MicroAppProps) {
+  await updateHorizonApp(props.horizon);
+}
+
+export async function unmount() {
+  await unmountHorizonApp();
+}
+```
+
+基座传入的 `container` 必须同时包含应用根节点和独立 popup root。`unmountHorizonApp` 按本文生命周期契约先 `dispose()` Horizon runtime，再卸载 Vue App。
+
+### wujie
+
+wujie 子应用代码运行在独立 iframe 上下文，因此不能与父窗口形成同一个 Module Federation share scope。它属于隔离运行时模式：主子应用可以锁定相同版本，但不能把这种配置声明为“共享单例”支持；跨 iframe 弹层也不在首期范围内。
+
+```ts
+// host
+await startApp({
+  name: 'orders',
+  url: '/micro/orders/',
+  el: '#orders-container',
+  alive: false,
+  props: {
+    horizon: { id: 'orders', locale: 'zh-CN', zIndexBase: 3000 },
+  },
+});
+
+// child entry
+window.__WUJIE_MOUNT = () => {
+  const options = window.$wujie?.props?.horizon;
+  return mountHorizonApp({
+    ...options,
+    container: document.querySelector('[data-micro-root]'),
+    popupRoot: document.querySelector('[data-horizon-popup-root]'),
+  });
+};
+
+window.__WUJIE_UNMOUNT = () => unmountHorizonApp();
+```
+
+使用 `alive: false` 时，每次离开都会执行卸载和资源清理。若业务启用保活模式，`deactivated` 只暂停业务交互，不能冒充最终释放；仅在应用真正销毁时调用 Horizon `dispose()`。
+
+官方参考：[Module Federation `shared`](https://module-federation.io/configure/shared)、[qiankun 快速上手](https://qiankun.umijs.org/zh/guide/getting-started/)、[wujie `startApp`](https://wujie-micro.github.io/doc/api/startApp.html) 和 [wujie 生命周期](https://wujie-micro.github.io/doc/guide/lifecycle.html)。
+
 ## Horizon App 上下文
 
 目标 API 使用一个 App 级 runtime 承载所有可变配置和资源所有权。接口名称在实现阶段可以按仓库规范微调，但能力边界必须保持一致：
