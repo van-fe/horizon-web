@@ -1,6 +1,7 @@
 export * from './Breadcrumb';
 export * from './Checkbox';
 export * from './Collapse';
+export * from './Dropdown';
 export * from './Input';
 export * from './Link';
 export * from './Pagination';

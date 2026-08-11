@@ -1,16 +1,11 @@
+import type { DropdownCommandMap } from '@aurora/core';
 import type { ExposeType, ExtractExposeTypes } from '@aurora/utils';
 
 export const useDropdownExposes = {
-  /**
-   * 打开下拉菜单
-    * @en Controls handle open.
-   */
-  handleOpen: Function as ExposeType<() => void>,
-  /**
-   * 关闭下拉菜单
-    * @en Controls handle close.
-   */
-  handleClose: Function as ExposeType<() => void>,
+  /** 打开下拉菜单。 @en Opens the menu. */
+  handleOpen: Function as ExposeType<DropdownCommandMap['open']>,
+  /** 关闭下拉菜单。 @en Closes the menu. */
+  handleClose: Function as ExposeType<DropdownCommandMap['close']>,
 };
 
 export const useDropdownGroupExpose = {};

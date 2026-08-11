@@ -1,53 +1,47 @@
+import type {
+  AdaptComponentApiShape,
+  ComponentEventValidators,
+  DropdownEventMap,
+  DropdownItemEventMap,
+  DropdownSubmenuEventMap,
+} from '@aurora/core';
 import { isBoolean, isDefined } from '@aurora/utils';
 
+type DropdownVueEvents = AdaptComponentApiShape<DropdownEventMap, { openChange: 'visibleChange' }>;
+type DropdownItemVueEvents = AdaptComponentApiShape<
+  DropdownItemEventMap<MouseEvent | KeyboardEvent>,
+  { press: 'click' }
+>;
+type DropdownSubmenuVueEvents = AdaptComponentApiShape<
+  DropdownSubmenuEventMap<MouseEvent | KeyboardEvent>,
+  { press: 'click' }
+>;
+
 export const useDropdownEmits = {
-  /**
-   * 当 `dropdown` 显隐时触发
-   * @param isVisible 是否显示
-   * @paramEn isVisible The is visible value.
-    * @en Emitted when visible change changes.
-   */
-  visibleChange: (isVisible: boolean) => isBoolean(isVisible),
-  /**
-   * 指令
-   * @param value 由 `dropdown-item` 的 `props.command` 传递
-   * @paramEn value The value value.
-    * @en Emitted when command changes.
-   */
-  command: (value: unknown) => isDefined(value),
-  /**
-   * `visible` 变化时的通知
-   * @param status 是否显示
-   * @paramEn status The status value.
-    * @en Emitted when update:visible changes.
-   */
-  'update:visible': (status: boolean) => isBoolean(status),
+  /** 菜单显隐变化。 @en Menu visibility changed. */
+  visibleChange: (visible: boolean) => isBoolean(visible),
+  /** 菜单命令。 @en Menu command. */
+  command: (command: unknown) => isDefined(command),
+  /** `visible` 双向绑定通知。 @en `visible` model update. */
+  'update:visible': (visible: boolean) => isBoolean(visible),
+} satisfies ComponentEventValidators<DropdownVueEvents> & {
+  'update:visible': (visible: boolean) => boolean;
 };
+
+const isActivationEvent = (event: MouseEvent | KeyboardEvent) =>
+  event instanceof MouseEvent || event instanceof KeyboardEvent;
 
 export const useDropdownItemEmits = {
-  /**
-   * 当点击子元素时触发
-   * @param evt 鼠标事件或键盘事件
-   * @paramEn evt The evt value.
-    * @en Emitted when click changes.
-   */
-  click: (evt: MouseEvent | KeyboardEvent) =>
-    evt instanceof MouseEvent || evt instanceof KeyboardEvent,
-};
-
-export const useDropdownMenuEmits = {};
+  /** 菜单项被激活。 @en Item activated. */
+  click: isActivationEvent,
+} satisfies ComponentEventValidators<DropdownItemVueEvents>;
 
 export const useDropdownSubmenuEmits = {
-  /**
-   * 当点击时触发
-   * @param evt 鼠标事件或键盘事件
-   * @paramEn evt The evt value.
-    * @en Emitted when click changes.
-   */
-  click: (evt: MouseEvent | KeyboardEvent) =>
-    evt instanceof MouseEvent || evt instanceof KeyboardEvent,
-};
+  /** 子菜单触发器被激活。 @en Submenu trigger activated. */
+  click: isActivationEvent,
+} satisfies ComponentEventValidators<DropdownSubmenuVueEvents>;
 
+export const useDropdownMenuEmits = {};
 export const useDropdownGroupEmits = {};
 
 export type DropdownEmits = typeof useDropdownEmits;

@@ -28,6 +28,7 @@ const reactSidebar = [
       { text: 'Space', link: 'components/Space' },
       { text: 'Tooltip', link: 'components/Tooltip' },
       { text: 'Popover', link: 'components/Popover' },
+      { text: 'Dropdown', link: 'components/Dropdown' },
     ],
   },
   {

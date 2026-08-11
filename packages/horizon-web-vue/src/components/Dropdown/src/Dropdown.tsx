@@ -9,6 +9,17 @@ import {
   isUndefined,
   getUnitString,
 } from '@aurora/utils';
+import {
+  DROPDOWN_DEFAULTS,
+  normalizeDropdownTrigger,
+  resolveDropdownPlacement,
+  type DropdownNavigationKey,
+} from '@aurora/core';
+import {
+  focusDropdownItem,
+  getEnabledDropdownItems,
+  resolveDropdownContextMenuPosition,
+} from '@aurora/horizon-web-core';
 import type { HorizonWebSetupContext, HorizonWebComponentInstance } from '@aurora/utils';
 import { useDropdownProps } from './composables/useProps';
 import { useDropdownEmits } from './composables/useEmits';
@@ -41,7 +52,9 @@ import useDropdownTree from './composables/useDropdownTree';
 export default defineComponent({
   name: `${useNamespace()}Dropdown`,
   desc: '下拉菜单是轻量级的快捷菜单，用于页面内部的内容导航和相关操作。主要用于导航、工具菜单以及部分操作集合，通过下拉菜单将某功能下面的子系统、功能集合等统一放在一起。',
-  descLocales: { en: "Provides `#dropdown` slot to place `h-dropdown-menu`, or you can directly place `h-dropdown-menu` in `#default` without using named slots" },
+  descLocales: {
+    en: 'Provides `#dropdown` slot to place `h-dropdown-menu`, or you can directly place `h-dropdown-menu` in `#default` without using named slots',
+  },
   components: {
     HPopover,
   },
@@ -81,24 +94,11 @@ export default defineComponent({
       }
     });
 
-    const placement = computed(
-      () =>
-        props.placement ??
-        (props.align === 'left'
-          ? 'bottom-start'
-          : props.align === 'right'
-            ? 'bottom-end'
-            : 'bottom'),
-    );
+    const placement = computed(() => resolveDropdownPlacement(props.placement, props.align));
 
-    const trigger = computed(() => {
-      switch (props.trigger) {
-        case 'contextMenu':
-          return 'context-menu';
-        default:
-          return props.trigger;
-      }
-    });
+    const trigger = computed(() =>
+      normalizeDropdownTrigger(props.trigger ?? DROPDOWN_DEFAULTS.trigger),
+    );
 
     watch(
       () => props.visible,
@@ -131,11 +131,13 @@ export default defineComponent({
       setContextMenuVisible(true);
       evt.preventDefault();
 
+      const position = resolveDropdownContextMenuPosition(evt.clientX, evt.clientY);
+
       contextMenuStyle.value = {
-        position: 'fixed',
+        position: position.position,
         top: 0,
         left: 0,
-        transform: `translate(${evt.clientX}px, ${evt.clientY}px)`,
+        transform: `translate(${position.x}px, ${position.y}px)`,
         zIndex: zIndex.next(),
       };
     }
@@ -186,11 +188,7 @@ export default defineComponent({
     }
 
     function getEnabledMenuItems() {
-      return Array.from(
-        popContentDomRef.value!.querySelectorAll<HTMLElement>(
-          '[role="menuitem"]:not([aria-disabled="true"])',
-        ),
-      );
+      return getEnabledDropdownItems(popContentDomRef.value!);
     }
 
     function focusFirstEnabledMenuItem() {
@@ -221,23 +219,13 @@ export default defineComponent({
 
       if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(evt.key)) return;
 
-      const items = getEnabledMenuItems();
-      if (items.length === 0) return;
+      if (getEnabledMenuItems().length === 0) return;
       evt.preventDefault();
-
-      const currentIndex = items.indexOf(document.activeElement as HTMLElement);
-      const nextIndex =
-        evt.key === 'Home'
-          ? 0
-          : evt.key === 'End'
-            ? items.length - 1
-            : currentIndex < 0
-              ? evt.key === 'ArrowUp'
-                ? items.length - 1
-                : 0
-              : (currentIndex + (evt.key === 'ArrowUp' ? -1 : 1) + items.length) % items.length;
-
-      items[nextIndex]?.focus();
+      focusDropdownItem(
+        popContentDomRef.value!,
+        evt.key as DropdownNavigationKey,
+        document.activeElement,
+      );
     }
 
     expose({

@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B12 Popover 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B13 Dropdown 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -543,10 +543,22 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DOC-B12-001 | Done | Popover 中英文 React 页面、独立 TSX 示例与反馈侧边栏入口完成；34 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
 | QA-B12-001 | Done | Core 112、Web Core Node 9/Chromium 27、React Chromium 123、Vue Chromium 2303 项（2302 通过、1 项预期失败）全部通过，覆盖率为 97.97% / 95.12% / 97.76% / 98.27%；五个包构建、文档、Vue/React/SSR 消费工程及四个中英文 renderer 路由的暗色 390×844 真实浏览器验收通过 |
 
+#### M6-B13 第十三批实施记录（2026-08-12）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B13-001 | Done | Dropdown、DropdownMenu、DropdownGroup、DropdownItem 与 DropdownSubmenu 的公共 props、默认值、枚举、校验器、事件、内容区域、命令以及触发方式归一化、位置解析和键盘索引算法迁入 `@aurora/core`；五组公共 API 语义仅定义一次 |
+| WEB-B13-001 | Done | 在同名 Web Core 目录提供可用菜单项查询与聚焦、右键菜单坐标解析 primitives；React 右键菜单复用 Popover 外部指针与 Escape 关闭层，并覆盖 Node/真实 Chromium 测试 |
+| VUE-B13-001 | Done | Vue props/emits/slots/exposes 通过类型化 rename/omit/extend 适配消费公共契约，仅保留 runtime props、VNode、Teleport、历史属性名与 Tooltip 选项适配；位置、触发归一化、键盘和右键菜单坐标复用 Core/Web Core |
+| REACT-B13-001 | Done | 完成五个原生组合组件、受控与非受控状态、hover/click/context-menu/manual 触发、Portal、互斥菜单、分组与嵌套菜单、命令关闭、外部关闭、Escape 焦点回归、键盘导航、原生菜单语义和命令 ref |
+| DS-B13-001 | Done | Dropdown Sass、尺寸、主题与变量迁入 `@aurora/theme`，Vue 使用包导出代理，React 使用同源样式并补齐原生按钮 reset、焦点环、隐藏与禁用规则 |
+| DOC-B13-001 | Done | Dropdown 中英文 React 页面、独立 TSX 示例与导航侧边栏入口完成；39 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
+| QA-B13-001 | Done | Core 115、Web Core Node 10/Chromium 28、React Chromium 128、Vue Chromium 2303 项（2302 通过、1 项预期失败）全部通过，覆盖率为 97.97% / 95.12% / 97.78% / 98.28%；五个包构建、文档、Vue/React/SSR 消费工程及四个中英文 renderer 路由的 390×844 真实浏览器验收通过 |
+
 ### 批次 C：浮层与容器
 
 ```text
-Popover Dropdown Popconfirm Dialog Drawer FloatButton Backtop
+Popconfirm Dialog Drawer FloatButton Backtop
 ```
 
 依赖：M3 overlay primitives、层级系统、focus trap、scroll lock。

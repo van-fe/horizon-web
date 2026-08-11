@@ -15,6 +15,11 @@ import {
   createReactComponentManifest,
   createVueComponentManifest,
   dividerManifest,
+  dropdownGroupManifest,
+  dropdownItemManifest,
+  dropdownManifest,
+  dropdownMenuManifest,
+  dropdownSubmenuManifest,
   emptyManifest,
   inputManifest,
   linkManifest,
@@ -53,6 +58,11 @@ const manifests = [
   collapseItemManifest,
   countManifest,
   dividerManifest,
+  dropdownManifest,
+  dropdownMenuManifest,
+  dropdownGroupManifest,
+  dropdownItemManifest,
+  dropdownSubmenuManifest,
   emptyManifest,
   inputManifest,
   linkManifest,
@@ -152,6 +162,92 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
   Divider: {
     props: { rename: { variant: 'type' } },
     regions: { rename: { title: 'default' } },
+  },
+  Dropdown: {
+    props: {
+      rename: {
+        open: 'visible',
+        width: 'popperWidth',
+        portal: 'toBody',
+        showDelay: 'showAfter',
+        hideDelay: 'hideAfter',
+        hideEvent: 'hideEventType',
+      },
+      omit: ['defaultOpen'],
+      extend: [
+        { name: 'menu', type: 'VNode', description: { zh: '菜单 VNode', en: 'Menu VNode' } },
+        {
+          name: 'popperClass',
+          type: 'string',
+          description: { zh: '浮层类名', en: 'Floating class name' },
+        },
+        {
+          name: 'teleportTo',
+          type: "TeleportProps['to']",
+          defaultValue: 'body',
+          description: { zh: '挂载目标', en: 'Teleport destination' },
+        },
+        {
+          name: 'popoverOptions',
+          type: 'Partial<PopoverProps>',
+          description: { zh: 'Popover 参数', en: 'Popover options' },
+        },
+      ],
+    },
+    events: {
+      rename: { openChange: 'visibleChange' },
+      extend: [
+        {
+          name: 'update:visible',
+          type: 'boolean',
+          description: { zh: '显隐双向绑定', en: 'Visibility model update' },
+        },
+      ],
+    },
+    regions: { rename: { trigger: 'default', menu: 'dropdown' } },
+    commands: { rename: { open: 'handleOpen', close: 'handleClose' }, omit: ['focusFirst'] },
+  },
+  DropdownMenu: { regions: { rename: { content: 'default' } } },
+  DropdownGroup: {
+    props: {
+      extend: [
+        {
+          name: 'titleTooltipOptions',
+          type: 'Partial<TooltipProps>',
+          description: { zh: '标题 Tooltip 参数', en: 'Title Tooltip options' },
+        },
+      ],
+    },
+    regions: { rename: { content: 'default' } },
+  },
+  DropdownItem: {
+    props: {
+      rename: { allowImmediatePropagation: 'forbidEvtStop' },
+      extend: [
+        { name: 'icon', type: 'IconPropType', description: { zh: '图标', en: 'Icon' } },
+        {
+          name: 'tooltipOptions',
+          type: 'Partial<TooltipProps>',
+          description: { zh: 'Tooltip 参数', en: 'Tooltip options' },
+        },
+      ],
+    },
+    events: { rename: { press: 'click' } },
+    regions: { rename: { content: 'default' } },
+  },
+  DropdownSubmenu: {
+    props: {
+      extend: [
+        { name: 'icon', type: 'IconPropType', description: { zh: '图标', en: 'Icon' } },
+        {
+          name: 'popoverOptions',
+          type: 'Partial<PopoverProps>',
+          description: { zh: 'Popover 参数', en: 'Popover options' },
+        },
+      ],
+    },
+    events: { rename: { press: 'click' } },
+    regions: { rename: { content: 'title', submenu: 'default' } },
   },
   Empty: { regions: { rename: { footer: 'default' } } },
   Input: {
@@ -556,6 +652,20 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
   },
   Count: { events: { rename: { change: 'onChange' } } },
   Divider: { regions: { rename: { title: 'children' } } },
+  Dropdown: {
+    events: { rename: { openChange: 'onOpenChange', command: 'onCommand' } },
+    regions: { rename: { trigger: 'children', menu: 'menu' } },
+  },
+  DropdownMenu: { regions: { rename: { content: 'children' } } },
+  DropdownGroup: { regions: { rename: { content: 'children', title: 'titleContent' } } },
+  DropdownItem: {
+    events: { rename: { press: 'onPress' } },
+    regions: { rename: { content: 'children', icon: 'icon' } },
+  },
+  DropdownSubmenu: {
+    events: { rename: { press: 'onPress' } },
+    regions: { rename: { content: 'children', icon: 'icon', submenu: 'submenu' } },
+  },
   Empty: { regions: { rename: { footer: 'children' } } },
   Input: {
     props: {

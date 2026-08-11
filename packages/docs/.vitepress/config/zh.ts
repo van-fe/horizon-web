@@ -28,6 +28,7 @@ const reactSidebar = [
       { text: 'Space 间距', link: 'components/Space' },
       { text: 'Tooltip 文字提示', link: 'components/Tooltip' },
       { text: 'Popover 气泡卡片', link: 'components/Popover' },
+      { text: 'Dropdown 下拉菜单', link: 'components/Dropdown' },
     ],
   },
   {

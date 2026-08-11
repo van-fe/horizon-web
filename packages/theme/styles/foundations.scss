@@ -12,6 +12,7 @@
 @use './components/collapse/variables' as collapse;
 @use './components/count/variables' as count;
 @use './components/divider/variables' as divider;
+@use './components/dropdown/variables' as dropdown;
 @use './components/empty/variables' as empty;
 @use './components/input/variables' as input;
 @use './components/link/variables' as link;
@@ -47,6 +48,7 @@ $values: function.map-merge-multi(
   function.flatten-variables(collapse.$values, 'collapse'),
   function.flatten-variables(count.$values, 'count'),
   function.flatten-variables(divider.$values, 'divider'),
+  function.flatten-variables(dropdown.$values, 'dropdown'),
   function.flatten-variables(empty.$values, 'empty'),
   function.flatten-variables(input.$values, 'input'),
   function.flatten-variables(link.$values, 'link'),

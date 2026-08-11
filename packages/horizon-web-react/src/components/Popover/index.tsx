@@ -284,7 +284,7 @@ export const Popover = forwardRef<PopoverHandle, PopoverProps>(function Popover(
   const triggerElement = cloneElement(child, {
     'aria-controls': currentOpen ? floatingId : childProps['aria-controls'],
     'aria-expanded': currentOpen,
-    'aria-haspopup': 'dialog',
+    'aria-haspopup': childProps['aria-haspopup'] ?? 'dialog',
     className: cls(childProps.className, referenceClassName),
     ref: (node: HTMLElement | null) => {
       referenceRef.current = node;
@@ -373,12 +373,10 @@ export const Popover = forwardRef<PopoverHandle, PopoverProps>(function Popover(
   );
 });
 
-export function PopContent({
-  theme,
-  className,
-  children,
-  ...nativeProps
-}: PopContentProps): ReactElement {
+export const PopContent = forwardRef<HTMLDivElement, PopContentProps>(function PopContent(
+  { theme, className, children, ...nativeProps },
+  forwardedRef,
+): ReactElement {
   const inheritedTheme = useContext(PopoverThemeContext);
   const config = useHorizonWebConfig();
   const classes = useMemo(
@@ -390,11 +388,12 @@ export function PopContent({
     <div
       {...nativeProps}
       className={cls(classes.e('popcontent'), classes.is(resolvedTheme), className)}
+      ref={forwardedRef}
     >
       {children}
     </div>
   );
-}
+});
 
 export const HPopover = Popover;
 export const HPopContent = PopContent;
