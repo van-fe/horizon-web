@@ -440,6 +440,14 @@ packages/horizon-web-react/src/components/<Component>/
 
 公共层只描述 API 的语义，不包含 `VNode`、`ReactNode`、框架 Ref 或生命周期。两端必须复用公共枚举、默认值、校验器、事件 payload/reason 和命令签名；renderer adapter 可以按各自习惯调整名称与形态，不追求虚假的逐字段相同。
 
+公共 contract 是组件 API 的唯一语义来源。renderer adapter 必须通过类型化的字段重命名、删减和扩展得到自身 API 形状，并由编译期约束保证：
+
+- Vue runtime props 完整覆盖适配后的公共 props；仅 `PropType`、构造器、Vue 默认值工厂和兼容字段留在 Vue 包；
+- Vue emits、slots、exposes 分别从公共 events、regions、commands 推导载荷和命令签名；
+- React Props 直接组合公共 props，并从 events、regions、commands 推导 callbacks、render functions 和 ref handle；
+- DOM/框架原生事件、`VNode`、`ReactNode`、元素 ref 和生命周期仍由 renderer 扩展，不进入公共 contract；
+- 新增或删除公共字段时，任一 renderer 未同步适配必须在类型检查阶段失败，不能依赖人工比对发现漂移。
+
 API Generator 应从 manifest 生成：
 
 - Vue 与 React 的 API 表格；

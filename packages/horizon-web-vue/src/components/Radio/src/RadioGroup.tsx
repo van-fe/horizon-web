@@ -5,8 +5,8 @@ import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { RadioEmits } from './composables/useEmits';
 import { useRadioEmits } from './composables/useEmits';
-import type { RadioSlots } from './composables/useSlots';
-import { useRadioSlots } from './composables/useSlots';
+import type { RadioGroupSlots } from './composables/useSlots';
+import { useRadioGroupSlots } from './composables/useSlots';
 import {
   HFormDisabledInjectedKey,
   HFormItemTriggerInjectedKey,
@@ -16,12 +16,12 @@ import useSize from '~/utils/useSize';
 
 export default defineComponent({
   name: `${useNamespace()}RadioGroup`,
-  desc: "管理一组单选项的选中值",
-  descLocales: { en: "Manages the selected value of a radio collection." },
+  desc: '管理一组单选项的选中值',
+  descLocales: { en: 'Manages the selected value of a radio collection.' },
   props: useRadioGroupProps,
   emits: useRadioEmits,
-  slots: useRadioSlots,
-  setup(props, { slots, emit }: HorizonWebSetupContext<RadioEmits, RadioSlots>) {
+  slots: useRadioGroupSlots,
+  setup(props, { slots, emit }: HorizonWebSetupContext<RadioEmits, RadioGroupSlots>) {
     const {
       modelValue: propModelValue,
       disabled: propDisabled,

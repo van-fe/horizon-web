@@ -6,6 +6,49 @@ export type ComponentPropValidators<Props extends object> = Readonly<
 
 export type EmptyComponentApi = Readonly<Record<never, never>>;
 
+export type ComponentApiKeyRename<Shape extends object> = Readonly<
+  Partial<{ [Name in keyof Shape]: PropertyKey }>
+>;
+
+type AdaptedComponentApiKey<
+  Name extends PropertyKey,
+  Rename extends Readonly<Partial<Record<PropertyKey, PropertyKey>>>,
+> = Name extends keyof Rename
+  ? NonNullable<Rename[Name]> extends PropertyKey
+    ? NonNullable<Rename[Name]>
+    : never
+  : Name;
+
+/**
+ * Adapts a semantic component API shape without introducing renderer types into Core.
+ * Renderers use this for public-name changes, omissions and native extensions.
+ */
+export type AdaptComponentApiShape<
+  Shape extends object,
+  Rename extends ComponentApiKeyRename<Shape> = EmptyComponentApi,
+  Omitted extends keyof Shape = never,
+  Extended extends object = EmptyComponentApi,
+> = {
+  [Name in Exclude<keyof Shape, Omitted> as AdaptedComponentApiKey<Name, Rename>]: Shape[Name];
+} & Extended;
+
+/** Forces renderer runtime declarations to cover every adapted prop exactly once. */
+export type ComponentRendererPropDefinitions<Props extends object> = {
+  [Name in keyof Props]-?: unknown;
+};
+
+export type ComponentEventValidators<Events extends object> = {
+  [Name in keyof Events]-?: Events[Name] extends readonly unknown[]
+    ? (...args: Events[Name]) => boolean
+    : never;
+};
+
+export type ComponentEventHandlers<Events extends object> = {
+  [Name in keyof Events]?: Events[Name] extends readonly unknown[]
+    ? (...args: Events[Name]) => void
+    : never;
+};
+
 export interface ComponentApiContractDefinition<Props extends object> {
   defaults: Readonly<Partial<Props>>;
   validators?: ComponentPropValidators<Props>;

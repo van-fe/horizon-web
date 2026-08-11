@@ -10,4 +10,7 @@ export const HRadio = withInstall(Radio, {
 export const HRadioButton = withNoopInstall(RadioButton);
 export const HRadioGroup = withNoopInstall(RadioGroup);
 
+export type { RadioExposes } from './src/composables/useExposes';
+export type { RadioProps, RadioButtonProps, RadioGroupProps } from './src/composables/useProps';
+
 export default HRadio;

@@ -9,3 +9,10 @@ export default HCheckbox;
 
 export const HCheckboxButton = withNoopInstall(CheckboxButton);
 export const HCheckboxGroup = withNoopInstall(CheckboxGroup);
+
+export type {
+  CheckboxProps,
+  CheckboxButtonProps,
+  CheckboxGroupProps,
+} from './src/composables/useProps';
+export type { CheckboxExposes } from './src/composables/useExposes';

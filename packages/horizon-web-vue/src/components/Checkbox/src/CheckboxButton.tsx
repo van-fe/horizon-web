@@ -23,8 +23,8 @@ import useSize from '~/utils/useSize';
 
 export default defineComponent({
   name: `${useNamespace()}CheckboxButton`,
-  desc: "按钮样式的多选项",
-  descLocales: { en: "A button-styled checkbox option." },
+  desc: '按钮样式的多选项',
+  descLocales: { en: 'A button-styled checkbox option.' },
   components: { Checkbox },
   props: useCheckboxButtonProps,
   emits: useCheckboxEmits,
@@ -62,7 +62,7 @@ export default defineComponent({
         ? HCheckboxGroup!.value
         : propModelValue.value,
     );
-    const color = computed(() => useColors(propFill.value));
+    const color = computed(() => useColors(propFill.value ?? ''));
 
     // form disabled inject
     const formDisabled = inject(HFormDisabledInjectedKey, undefined);
@@ -85,6 +85,14 @@ export default defineComponent({
       );
     };
 
+    const checked = computed(() =>
+      isChecked(
+        modelValue.value as CheckboxUnionType | CheckboxUnionType[],
+        propLabel.value,
+        propTrueLabel.value,
+      ),
+    );
+
     const onBlur = (evt: FocusEvent) => {
       handleBlur(evt, emit, HCheckboxGroup, formItemTrigger);
     };
@@ -93,11 +101,7 @@ export default defineComponent({
       <Checkbox
         class={[
           classHelper.block,
-          isChecked(
-            modelValue.value as CheckboxUnionType | CheckboxUnionType[],
-            propLabel.value,
-            propTrueLabel.value,
-          )
+          checked.value
             ? isDisabled.value
               ? classHelper.m('checked-disabled')
               : classHelper.m('checked')
@@ -118,15 +122,9 @@ export default defineComponent({
         onChangeInput={changeCheckboxButton}
         onBlur={onBlur}
       >
-        {slots?.default?.() ||
+        {slots?.default?.({ checked: checked.value, value: propLabel.value }) ||
           propLabel.value ||
-          (isChecked(
-            modelValue.value as CheckboxUnionType | CheckboxUnionType[],
-            propLabel.value,
-            propTrueLabel.value,
-          )
-            ? propTrueLabel.value
-            : propFalseLabel.value)}
+          (checked.value ? propTrueLabel.value : propFalseLabel.value)}
       </Checkbox>
     );
   },

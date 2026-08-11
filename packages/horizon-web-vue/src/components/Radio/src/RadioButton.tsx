@@ -1,4 +1,4 @@
-import { defineComponent, inject, computed, toRefs, provide } from 'vue';
+import { defineComponent, inject, computed, toRefs, provide, ref } from 'vue';
 import { useRadioButtonProps, handleChange, handleBlur } from './composables/useProps';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import type { HorizonWebSetupContext } from '@aurora/utils';
@@ -13,17 +13,23 @@ import {
 import { HRadioGroupInjectedKey } from '~/components/Radio/src/utils/injectedKeys';
 import type { RadioSlots } from './composables/useSlots';
 import { useRadioSlots } from './composables/useSlots';
+import type { RadioExposes } from './composables/useExposes';
+import { useRadioExposes } from './composables/useExposes';
 import useSize from '~/utils/useSize';
 
 export default defineComponent({
   name: `${useNamespace()}RadioButton`,
-  desc: "按钮样式的单选项",
-  descLocales: { en: "A button-styled radio option." },
+  desc: '按钮样式的单选项',
+  descLocales: { en: 'A button-styled radio option.' },
   components: { Radio },
   props: useRadioButtonProps,
   emits: useRadioEmits,
   slots: useRadioSlots,
-  setup(props, { slots, emit }: HorizonWebSetupContext<RadioEmits, RadioSlots>) {
+  exposes: useRadioExposes,
+  setup(
+    props,
+    { slots, emit, expose }: HorizonWebSetupContext<RadioEmits, RadioSlots, RadioExposes>,
+  ) {
     const {
       modelValue: propModelValue,
       disabled: propDisabled,
@@ -34,6 +40,7 @@ export default defineComponent({
       name: propName,
     } = toRefs(props);
     const classHelper = new ComponentClassBlock('radio-button');
+    const radioRef = ref<{ focus: () => void }>();
     const HRadioGroup = inject(HRadioGroupInjectedKey, undefined);
     provide('type', 'radio-button');
     const isGroup = computed(() => !!HRadioGroup);
@@ -58,7 +65,7 @@ export default defineComponent({
     const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
 
     const modelValue = computed(() => (isGroup.value ? HRadioGroup!.value : propModelValue.value));
-    const color = computed(() => useColors(propFill.value));
+    const color = computed(() => useColors(propFill.value ?? ''));
     const changeRadioButton = () => {
       handleChange(radioButtonValue.value, emit, HRadioGroup, formItemTrigger);
     };
@@ -67,8 +74,11 @@ export default defineComponent({
       handleBlur(e, emit, HRadioGroup, formItemTrigger);
     }
 
+    expose({ focus: () => radioRef.value?.focus() });
+
     return () => (
       <Radio
+        ref={radioRef}
         class={[
           classHelper.block,
           modelValue.value === radioButtonValue.value
@@ -91,7 +101,10 @@ export default defineComponent({
         onChangeInput={changeRadioButton}
         onBlur={onBlur}
       >
-        {slots?.default?.() || radioButtonValue.value}
+        {slots?.default?.({
+          checked: modelValue.value === radioButtonValue.value,
+          value: radioButtonValue.value,
+        }) || radioButtonValue.value}
       </Radio>
     );
   },

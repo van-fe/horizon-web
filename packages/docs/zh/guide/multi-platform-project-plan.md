@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B1 Rate/Segmented 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B2 Checkbox/Radio 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -408,6 +408,19 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DS-B1-001 | Done | 两组 Sass 与变量迁入 `@aurora/theme`，Vue 使用包导出代理，React 构建输出同源样式 |
 | DOC-B1-001 | Done | 两个组件的中英文 React 页面、独立 TSX 示例和表单组件侧边栏入口完成，renderer 隔离检查通过 |
 | QA-B1-001 | Done | 19 组 Vue/React 契约生成；Core 65、React Chromium 64、Vue 全量测试通过，覆盖率为 98.04% / 95.29% / 97.81% / 98.30%，四个包构建、文档和 Vue/React/SSR 消费工程通过 |
+
+#### M6-B2 第二批实施记录（2026-08-11）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-API-003 | Done | 增加框架无关的 API 形状适配、renderer prop 完整性约束以及 event validator/handler 推导；公共 props/events/regions/commands 成为两端唯一语义来源 |
+| CORE-B2-001 | Done | Checkbox、Radio 及其 Group 的公共 props、默认值、校验器、事件载荷、渲染区域、命令和值选择算法迁入 `@aurora/core`；Choice 类型由两组件共享 |
+| WEB-B2-001 | Done | 在同名 Web Core 目录提供原生 checkbox indeterminate 同步与 radio input focus primitives，并覆盖 Node/Chromium 测试 |
+| VUE-B2-001 | Done | Vue props/emits/slots/exposes 通过类型化适配消费公共契约，保留 modelValue、Vue runtime props、可变数组兼容和原生事件；补齐 scoped slot、focus 与 indeterminate 行为 |
+| REACT-B2-001 | Done | 完成 Checkbox、CheckboxButton、CheckboxGroup、Radio、RadioButton、RadioGroup 的受控/非受控实现；callbacks、render regions 和 ref commands 从公共契约推导并保留 React 原生扩展 |
+| DS-B2-001 | Done | Checkbox、Radio Sass 与变量迁入 `@aurora/theme`，Vue 使用包导出代理，React 使用同源样式和 renderer 专属 indicator 规则 |
+| DOC-B2-001 | Done | Checkbox、Radio 的中英文 React 页面、独立 TSX 示例和表单侧边栏入口完成；组件文档保持 renderer 原生表达 |
+| QA-B2-001 | Done | 21 组 Vue/React 契约生成；Core 72、Web Core Node 7/Chromium 9、React Chromium 73、Vue 2297 项通过且 1 项预期失败，覆盖率为 98.04% / 95.27% / 97.80% / 98.30%，包构建、文档和 Vue/React/SSR 消费工程通过 |
 
 ### 批次 C：浮层与容器
 

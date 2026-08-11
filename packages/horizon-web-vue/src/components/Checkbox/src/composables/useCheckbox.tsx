@@ -1,8 +1,9 @@
-import { defineComponent, toRefs, inject } from 'vue';
+import { defineComponent, toRefs, inject, ref, watchEffect } from 'vue';
 import { useCheckboxProps, isChecked } from './useProps';
 import { ComponentClassBlock } from '@aurora/utils';
 import { IconCheckboxHalfFilled, IconCheckboxFilled } from '@aurora/icon';
 import { nanoid } from 'nanoid';
+import { syncCheckboxIndeterminate } from '@aurora/horizon-web-core';
 
 export default defineComponent({
   name: 'Checkbox',
@@ -24,6 +25,14 @@ export default defineComponent({
     } = toRefs(props);
 
     const uuid = nanoid();
+    const inputRef = ref<HTMLInputElement | null>(null);
+
+    watchEffect(() => syncCheckboxIndeterminate(inputRef.value, propIndeterminate.value));
+
+    function setInputRef(element: unknown): void {
+      inputRef.value = element as HTMLInputElement | null;
+      syncCheckboxIndeterminate(inputRef.value, propIndeterminate.value);
+    }
 
     const type = inject('type', 'checkbox');
     const classHelper = new ComponentClassBlock(`${type}`);
@@ -56,13 +65,20 @@ export default defineComponent({
         <label for={uuid}>
           {type === 'checkbox' &&
             (propIndeterminate.value ? (
-              <IconCheckboxHalfFilled color={classHelper.color('text-brand-default')} class={classHelper.e('icon')} />
+              <IconCheckboxHalfFilled
+                color={classHelper.color('text-brand-default')}
+                class={classHelper.e('icon')}
+              />
             ) : isChecked(propModelValue.value, propLabel.value, propTrueLabel.value) ? (
-              <IconCheckboxFilled color={classHelper.color('text-brand-default')} class={classHelper.e('icon')} />
+              <IconCheckboxFilled
+                color={classHelper.color('text-brand-default')}
+                class={classHelper.e('icon')}
+              />
             ) : (
               <i class={classHelper.e('icon')}></i>
             ))}
           <input
+            ref={setInputRef}
             data-focus-visible-proxy
             type="checkbox"
             id={uuid}

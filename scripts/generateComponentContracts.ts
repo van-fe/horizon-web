@@ -7,6 +7,7 @@ import {
   badgeManifest,
   buttonManifest,
   cardManifest,
+  checkboxManifest,
   countManifest,
   createReactComponentManifest,
   createVueComponentManifest,
@@ -14,6 +15,7 @@ import {
   emptyManifest,
   progressManifest,
   rateManifest,
+  radioManifest,
   resultManifest,
   segmentedManifest,
   selectManifest,
@@ -32,11 +34,13 @@ const manifests = [
   badgeManifest,
   buttonManifest,
   cardManifest,
+  checkboxManifest,
   countManifest,
   dividerManifest,
   emptyManifest,
   progressManifest,
   rateManifest,
+  radioManifest,
   resultManifest,
   segmentedManifest,
   selectManifest,
@@ -66,6 +70,35 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
   },
   Button: { props: { rename: { variant: 'type', asyncState: 'debounceType' } } },
   Card: { regions: { rename: { content: 'default' } } },
+  Checkbox: {
+    props: {
+      rename: {
+        value: 'modelValue',
+        optionValue: 'label',
+        trueValue: 'trueLabel',
+        falseValue: 'falseLabel',
+        readOnly: 'viewable',
+        bordered: 'border',
+      },
+      omit: ['defaultValue', 'variant', 'fill'],
+    },
+    events: {
+      omit: ['change'],
+      extend: [
+        {
+          name: 'change',
+          type: 'CheckboxValue',
+          description: { zh: '值变化', en: 'Value changed' },
+        },
+        {
+          name: 'update:modelValue',
+          type: 'CheckboxValue',
+          description: { zh: '更新绑定值', en: 'Updates the bound value' },
+        },
+      ],
+    },
+    regions: { rename: { label: 'default' } },
+  },
   Divider: {
     props: { rename: { variant: 'type' } },
     regions: { rename: { title: 'default' } },
@@ -87,6 +120,28 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
       ],
     },
     regions: { rename: { icon: 'default' } },
+  },
+  Radio: {
+    props: {
+      rename: {
+        value: 'modelValue',
+        optionValue: 'value',
+        readOnly: 'viewable',
+        bordered: 'border',
+      },
+      omit: ['defaultValue', 'variant', 'fill'],
+      override: { value: { defaultValue: "''" } },
+    },
+    events: {
+      extend: [
+        {
+          name: 'update:modelValue',
+          type: 'ChoiceValue',
+          description: { zh: '更新绑定值', en: 'Updates the bound value' },
+        },
+      ],
+    },
+    regions: { rename: { label: 'default' } },
   },
   Result: {},
   Segmented: {
@@ -165,6 +220,10 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     regions: { rename: { default: 'children' } },
   },
   Card: { regions: { rename: { content: 'children' } } },
+  Checkbox: {
+    events: { rename: { change: 'onChange', blur: 'onBlur', click: 'onClick' } },
+    regions: { rename: { label: 'children' } },
+  },
   Count: { events: { rename: { change: 'onChange' } } },
   Divider: { regions: { rename: { title: 'children' } } },
   Empty: { regions: { rename: { footer: 'children' } } },
@@ -172,6 +231,10 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
   Rate: {
     events: { rename: { change: 'onChange', blur: 'onBlur' } },
     regions: { rename: { icon: 'renderIcon' } },
+  },
+  Radio: {
+    events: { rename: { change: 'onChange', blur: 'onBlur' } },
+    regions: { rename: { label: 'children' } },
   },
   Result: {
     events: {

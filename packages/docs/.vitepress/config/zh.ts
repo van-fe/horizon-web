@@ -33,7 +33,9 @@ const reactSidebar = [
     text: '表单组件',
     collapsed: false,
     items: [
+      { text: 'Checkbox 多选框', link: 'components/Checkbox' },
       { text: 'Rate 评分', link: 'components/Rate' },
+      { text: 'Radio 单选框', link: 'components/Radio' },
       { text: 'Segmented 分段控制器', link: 'components/Segmented' },
       { text: 'Select 选择器', link: 'components/Select' },
       { text: 'Switch 开关', link: 'components/Switch' },

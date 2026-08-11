@@ -2,226 +2,137 @@ import type {
   ComputedRef,
   ExtractPropTypes,
   PropType,
-  SetupContext,
   Ref,
+  SetupContext,
   UnwrapNestedRefs,
 } from 'vue';
+import { nextTick } from 'vue';
+import type {
+  AdaptComponentApiShape,
+  ChoiceSize,
+  ChoiceValue,
+  ComponentRendererPropDefinitions,
+  RadioCommonProps,
+  RadioGroupCommonProps,
+} from '@aurora/core';
+import { RADIO_DEFAULTS, resolveRadioSelection } from '@aurora/core';
 import type { RadioEmits } from './useEmits';
 import { declarePropType } from '@aurora/utils';
 import type { HFormItemTriggerType } from '~/components/Form/src/utils/injectedKeys';
-import { nextTick } from 'vue';
+
+const choiceValueType = [String, Number, Boolean] as PropType<ChoiceValue>;
+
+type RadioVueProps = AdaptComponentApiShape<
+  RadioCommonProps,
+  {
+    value: 'modelValue';
+    optionValue: 'value';
+    readOnly: 'viewable';
+    bordered: 'border';
+  },
+  'defaultValue' | 'variant' | 'fill'
+>;
+
+type RadioButtonVueProps = AdaptComponentApiShape<
+  RadioCommonProps,
+  { value: 'modelValue'; optionValue: 'value'; readOnly: 'viewable' },
+  'defaultValue' | 'variant' | 'bordered'
+>;
+
+type RadioGroupVueProps = AdaptComponentApiShape<
+  RadioGroupCommonProps,
+  { value: 'modelValue'; readOnly: 'viewable' },
+  'defaultValue'
+>;
 
 export const useRadioProps = declarePropType({
-  /**
-   * 选中项绑定值
-   * @en Configuration for model value.
-   */
-  modelValue: {
-    type: [String, Number, Boolean],
-    required: false,
-    default: '',
-  },
-  /**
-   * 单选框按钮对应的值
-   * @en Configuration for value.
-   */
-  value: {
-    type: [String, Number, Boolean],
-    required: false,
-    default: '',
-  },
-  /**
-   * 是否禁用单选框
-   * @en Configuration for disabled.
-   */
-  disabled: {
-    type: Boolean,
-    default: undefined,
-  },
-  /**
-   * 是否显示边框
-   * @en Configuration for border.
-   */
-  border: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-  /**
-   * 开启只读模式
-   * @en Configuration for viewable.
-   */
-  viewable: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-  /**
-   *  单选框对应尺寸，仅在开启border有效
-   * @en Configuration for size.
-   */
-  size: {
-    type: String as PropType<'small' | 'medium' | 'large'>,
-    required: false,
-  },
-  /**
-   * 同原生 `name`
-   * @en Configuration for name.
-   */
-  name: {
-    type: String,
-  },
-});
+  /** 选中项绑定值。@en Bound selected value. */
+  modelValue: { type: choiceValueType, required: false, default: RADIO_DEFAULTS.defaultValue },
+  /** 单选框对应的值。@en Value represented by this option. */
+  value: { type: choiceValueType, required: false, default: RADIO_DEFAULTS.optionValue },
+  /** 是否禁用单选框。@en Whether the radio is disabled. */
+  disabled: { type: Boolean, default: undefined },
+  /** 是否显示边框。@en Whether to show a border. */
+  border: { type: Boolean, default: RADIO_DEFAULTS.bordered },
+  /** 开启只读展示模式。@en Enables read-only display mode. */
+  viewable: { type: Boolean, default: RADIO_DEFAULTS.readOnly },
+  /** 单选框尺寸，仅在开启边框时有效。@en Size used by bordered radios. */
+  size: { type: String as PropType<ChoiceSize>, required: false },
+  /** 同原生 name。@en Native radio name. */
+  name: { type: String },
+} satisfies ComponentRendererPropDefinitions<RadioVueProps>);
 
 export const useRadioButtonProps = declarePropType({
-  /**
-   * 选中项绑定值
-   * @en Configuration for model value.
-   */
-  modelValue: {
-    type: [String, Number, Boolean],
-    required: false,
-    default: '',
-  },
-  /**
-   * 单选框按钮对应的值
-   * @en Configuration for value.
-   */
-  value: {
-    type: [String, Number, Boolean],
-    required: false,
-    default: '',
-  },
-  /**
-   * 是否禁用单选框按钮
-   * @en Configuration for disabled.
-   */
-  disabled: {
-    type: Boolean,
-    default: undefined,
-  },
-  /**
-   *  单选框按钮对应尺寸
-   * @en Configuration for size.
-   */
-  size: {
-    type: String as PropType<'small' | 'medium' | 'large'>,
-    required: false,
-  },
-  /**
-   * 开启只读模式
-   * @en Configuration for viewable.
-   */
-  viewable: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-  /**
-   * 填充色
-   * 支持全部主题色
-   * @en Configuration for fill.
-   */
-  fill: {
-    type: String,
-    required: false,
-    default: '',
-  },
-  /**
-   * 同原生 `name`
-   * @en Configuration for name.
-   */
-  name: {
-    type: String,
-  },
-});
+  /** 选中项绑定值。@en Bound selected value. */
+  modelValue: { type: choiceValueType, required: false, default: RADIO_DEFAULTS.defaultValue },
+  /** 单选框按钮对应的值。@en Value represented by this button. */
+  value: { type: choiceValueType, required: false, default: RADIO_DEFAULTS.optionValue },
+  /** 是否禁用单选框按钮。@en Whether the radio button is disabled. */
+  disabled: { type: Boolean, default: undefined },
+  /** 单选框按钮尺寸。@en Radio button size. */
+  size: { type: String as PropType<ChoiceSize>, required: false },
+  /** 开启只读展示模式。@en Enables read-only display mode. */
+  viewable: { type: Boolean, default: RADIO_DEFAULTS.readOnly },
+  /** 填充色。@en Checked fill color. */
+  fill: { type: String, default: RADIO_DEFAULTS.fill },
+  /** 同原生 name。@en Native radio name. */
+  name: { type: String },
+} satisfies ComponentRendererPropDefinitions<RadioButtonVueProps>);
 
 export const useRadioGroupProps = declarePropType({
-  /**
-   * 选中项绑定值
-   * @en Configuration for model value.
-   */
-  modelValue: {
-    type: [String, Number, Boolean],
-    required: true,
-  },
-  /**
-   * 是否禁用单选框(按钮)组
-   * @en Configuration for disabled.
-   */
-  disabled: {
-    type: Boolean,
-    default: undefined,
-  },
-  /**
-   *  单选框组尺寸
-   * @en Configuration for size.
-   */
-  size: {
-    type: String as PropType<'small' | 'medium' | 'large'>,
-    required: false,
-  },
-  /**
-   * 开启只读模式
-   * @en Configuration for viewable.
-   */
-  viewable: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-  /**
-   * 同原生 `name`，会设置给子元素
-   * @en Configuration for name.
-   */
-  name: {
-    type: String,
-  },
-});
+  /** 选中项绑定值。@en Bound selected value. */
+  modelValue: { type: choiceValueType, required: true },
+  /** 是否禁用单选框组。@en Whether the group is disabled. */
+  disabled: { type: Boolean, default: undefined },
+  /** 单选框组尺寸。@en Radio group size. */
+  size: { type: String as PropType<ChoiceSize>, required: false },
+  /** 开启只读展示模式。@en Enables read-only display mode. */
+  viewable: { type: Boolean, default: RADIO_DEFAULTS.readOnly },
+  /** 设置给子元素的原生 name。@en Native name passed to child radios. */
+  name: { type: String },
+} satisfies ComponentRendererPropDefinitions<RadioGroupVueProps>);
 
 export interface RadioGroupPropsProvideType {
-  value?: ComputedRef<string | number | boolean | undefined>;
-  changeEvent?: Function;
-  blurEvent?: Function;
+  value?: ComputedRef<ChoiceValue | undefined>;
+  changeEvent?: (value: ChoiceValue) => void;
+  blurEvent?: (event: FocusEvent) => void;
   disabled?: ComputedRef<boolean | undefined>;
   viewable?: ComputedRef<boolean | undefined>;
-  size?: ComputedRef<'small' | 'medium' | 'large' | undefined>;
+  size?: ComputedRef<ChoiceSize | undefined>;
   name?: Ref<string | undefined>;
 }
 
 export function handleChange(
-  value: string | number | boolean,
+  value: ChoiceValue,
   emit: SetupContext<RadioEmits>['emit'],
-  RadioGroupInject: UnwrapNestedRefs<RadioGroupPropsProvideType> | undefined,
+  radioGroupInject: UnwrapNestedRefs<RadioGroupPropsProvideType> | undefined,
   formItemTrigger?: HFormItemTriggerType,
 ): void {
-  if (!!RadioGroupInject) {
-    emit('change', value);
-    RadioGroupInject?.changeEvent?.(value);
-  } else {
-    emit('change', value);
-    emit('update:modelValue', value);
-    nextTick().then(() => {
-      formItemTrigger?.('change');
-    });
+  const currentValue = radioGroupInject?.value;
+  const result = resolveRadioSelection(currentValue, value);
+  if (!result.accepted && result.reason === 'already-selected') return;
+
+  emit('change', value);
+  if (radioGroupInject) {
+    radioGroupInject.changeEvent?.(value);
+    return;
   }
+  emit('update:modelValue', value);
+  void nextTick().then(() => formItemTrigger?.('change'));
 }
 
 export function handleBlur(
-  evt: FocusEvent,
+  event: FocusEvent,
   emit: SetupContext<RadioEmits>['emit'],
-  RadioGroupInject: UnwrapNestedRefs<RadioGroupPropsProvideType> | undefined,
+  radioGroupInject: UnwrapNestedRefs<RadioGroupPropsProvideType> | undefined,
   formItemTrigger?: HFormItemTriggerType,
-) {
-  if (!!RadioGroupInject) {
-    emit('blur', evt);
-    RadioGroupInject?.blurEvent?.(evt);
-  } else {
-    emit('blur', evt);
-    nextTick().then(() => {
-      formItemTrigger?.('blur');
-    });
+): void {
+  emit('blur', event);
+  if (radioGroupInject) {
+    radioGroupInject.blurEvent?.(event);
+    return;
   }
+  void nextTick().then(() => formItemTrigger?.('blur'));
 }
 
 export type RadioProps = ExtractPropTypes<typeof useRadioProps>;

@@ -1,4 +1,4 @@
-import { computed, defineComponent, inject, toRefs } from 'vue';
+import { computed, defineComponent, inject, ref, toRefs } from 'vue';
 import { useRadioProps, handleChange, handleBlur } from './composables/useProps';
 import Radio from './composables/useRadio';
 import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
@@ -7,6 +7,8 @@ import type { RadioEmits } from './composables/useEmits';
 import { useRadioEmits } from './composables/useEmits';
 import type { RadioSlots } from './composables/useSlots';
 import { useRadioSlots } from './composables/useSlots';
+import type { RadioExposes } from './composables/useExposes';
+import { useRadioExposes } from './composables/useExposes';
 import {
   HFormDisabledInjectedKey,
   HFormItemTriggerInjectedKey,
@@ -22,7 +24,11 @@ export default defineComponent({
   props: useRadioProps,
   emits: useRadioEmits,
   slots: useRadioSlots,
-  setup(props, { slots, emit }: HorizonWebSetupContext<RadioEmits, RadioSlots>) {
+  exposes: useRadioExposes,
+  setup(
+    props,
+    { slots, emit, expose }: HorizonWebSetupContext<RadioEmits, RadioSlots, RadioExposes>,
+  ) {
     const {
       modelValue: propModelValue,
       border: propBorder,
@@ -33,6 +39,7 @@ export default defineComponent({
       name: propName,
     } = toRefs(props);
     const classHelper = new ComponentClassBlock('radio');
+    const radioRef = ref<{ focus: () => void }>();
     const HRadioGroup = inject(HRadioGroupInjectedKey, undefined);
     const isGroup = computed(() => !!HRadioGroup);
 
@@ -66,8 +73,11 @@ export default defineComponent({
       handleBlur(e, emit, HRadioGroup, formItemTrigger);
     }
 
+    expose({ focus: () => radioRef.value?.focus() });
+
     return () => (
       <Radio
+        ref={radioRef}
         class={cls(
           classHelper.block,
           classHelper.m('checked', modelValue.value === radioValue.value),
@@ -84,7 +94,10 @@ export default defineComponent({
         onBlur={onBlur}
         onChangeInput={changeRadio}
       >
-        {slots?.default?.() || radioValue.value}
+        {slots?.default?.({
+          checked: modelValue.value === radioValue.value,
+          value: radioValue.value,
+        }) || radioValue.value}
       </Radio>
     );
   },

@@ -80,6 +80,14 @@ export default defineComponent({
       );
     };
 
+    const checked = computed(() =>
+      isChecked(
+        modelValue.value as CheckboxUnionType | CheckboxUnionType[],
+        propLabel.value,
+        propTrueLabel.value,
+      ),
+    );
+
     const toggle = () => {
       changeCheckbox();
     };
@@ -96,11 +104,7 @@ export default defineComponent({
       <Checkbox
         class={[
           classHelper.block,
-          isChecked(
-            modelValue.value as CheckboxUnionType | CheckboxUnionType[],
-            propLabel.value,
-            propTrueLabel.value,
-          ) && classHelper.m('checked'),
+          checked.value && classHelper.m('checked'),
           propBorder.value && classHelper.m('border'),
           propBorder.value && classHelper.m(sizeRef.value),
           isDisabled.value && classHelper.m('disabled'),
@@ -117,15 +121,9 @@ export default defineComponent({
         onChangeInput={changeCheckbox}
         onBlur={onBlur}
       >
-        {slots?.default?.() ||
+        {slots?.default?.({ checked: checked.value, value: propLabel.value }) ||
           propLabel.value ||
-          (isChecked(
-            modelValue.value as CheckboxUnionType | CheckboxUnionType[],
-            propLabel.value,
-            propTrueLabel.value,
-          )
-            ? propTrueLabel.value
-            : propFalseLabel.value)}
+          (checked.value ? propTrueLabel.value : propFalseLabel.value)}
       </Checkbox>
     );
   },

@@ -49,6 +49,7 @@ export interface RendererComponentManifest<Extension> {
 export interface ManifestFieldAdaptation {
   rename?: Readonly<Record<string, string>>;
   omit?: readonly string[];
+  override?: Readonly<Record<string, Partial<Omit<ComponentManifestField, 'name'>>>>;
   extend?: readonly ComponentManifestField[];
 }
 
@@ -103,7 +104,11 @@ export function adaptManifestFields(
   return [
     ...fields
       .filter(field => !omitted.has(field.name))
-      .map(field => ({ ...field, name: adaptation.rename?.[field.name] ?? field.name })),
+      .map(field => ({
+        ...field,
+        ...adaptation.override?.[field.name],
+        name: adaptation.rename?.[field.name] ?? field.name,
+      })),
     ...(adaptation.extend ?? []),
   ];
 }

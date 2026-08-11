@@ -2,8 +2,13 @@ import { mount } from '@vue/test-utils';
 import { nextTick, ref } from 'vue';
 import { describe, expect, test, vi } from 'vitest';
 import { HRadio, HRadioButton, HRadioGroup } from '..';
+import type { RadioLabelRegionContext } from '@aurora/core';
 import { useRadioEmits } from '../src/composables/useEmits';
-import { useRadioButtonProps, useRadioGroupProps, useRadioProps } from '../src/composables/useProps';
+import {
+  useRadioButtonProps,
+  useRadioGroupProps,
+  useRadioProps,
+} from '../src/composables/useProps';
 
 describe('Radio interaction', () => {
   test('forwards viewable/name/fill/default slot and preserves group update/blur contracts', async () => {
@@ -108,5 +113,20 @@ describe('Radio interaction', () => {
     expect(useRadioEmits['update:modelValue'](null as never)).toBe(false);
     expect(useRadioEmits.blur(new FocusEvent('blur'))).toBe(true);
     expect(useRadioEmits.blur(new Event('blur') as FocusEvent)).toBe(false);
+  });
+
+  test('default slot receives shared checked/value context and focus is exposed', () => {
+    const wrapper = mount(HRadio, {
+      attachTo: document.body,
+      props: { modelValue: 'selected', value: 'selected' },
+      slots: {
+        default: (context?: RadioLabelRegionContext) => `${context?.value}:${context?.checked}`,
+      },
+    });
+
+    wrapper.getCurrentComponent().exposed?.focus();
+    expect(wrapper.text()).toContain('selected:true');
+    expect(document.activeElement).toBe(wrapper.get('input').element);
+    wrapper.unmount();
   });
 });

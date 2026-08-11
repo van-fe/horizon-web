@@ -1,6 +1,7 @@
 import { defineComponent, toRefs, inject, ref, watch, computed, nextTick } from 'vue';
 import { useRadioProps } from './useProps';
 import { cls, ComponentClassBlock } from '@aurora/utils';
+import { focusRadioInput } from '@aurora/horizon-web-core';
 
 export default defineComponent({
   name: 'Radio',
@@ -9,7 +10,7 @@ export default defineComponent({
     blur: (evt: FocusEvent) => evt instanceof FocusEvent,
     changeInput: () => true,
   },
-  setup(props, { slots, emit }) {
+  setup(props, { slots, emit, expose }) {
     const {
       modelValue: propModelValue,
       disabled: propDisabled,
@@ -44,6 +45,8 @@ export default defineComponent({
         inputDomRef.value.checked = isChecked.value;
       }
     }
+
+    expose({ focus: () => focusRadioInput(inputDomRef.value ?? null) });
 
     return () =>
       propViewable.value ? (

@@ -2,6 +2,7 @@ import { mount } from '@vue/test-utils';
 import { HCheckbox, HCheckboxGroup, HCheckboxButton } from '..';
 import { describe, expect, test, vi } from 'vitest';
 import { ref, nextTick } from 'vue';
+import type { CheckboxLabelRegionContext } from '@aurora/core';
 
 describe('Checkbox.tsx', () => {
   test('basic', async () => {
@@ -168,12 +169,7 @@ test('Checkbox trueLabel and falseLabel drive native toggles and visible fallbac
 test('CheckboxButton trueLabel, falseLabel and fill map to state, text and real styles', async () => {
   const modelValue = ref<string>('no');
   const wrapper = mount(() => (
-    <HCheckboxButton
-      v-model={modelValue.value}
-      trueLabel="yes"
-      falseLabel="no"
-      fill="#123456"
-    />
+    <HCheckboxButton v-model={modelValue.value} trueLabel="yes" falseLabel="no" fill="#123456" />
   ));
 
   expect(wrapper.text()).toContain('no');
@@ -195,8 +191,16 @@ test('Checkbox indeterminate renders its mixed-state class and icon', () => {
 });
 
 test('Checkbox, CheckboxButton and CheckboxGroup viewable only render selected values', () => {
-  const standalone = mount(() => <HCheckbox modelValue viewable>Standalone</HCheckbox>);
-  const button = mount(() => <HCheckboxButton modelValue viewable>Button</HCheckboxButton>);
+  const standalone = mount(() => (
+    <HCheckbox modelValue viewable>
+      Standalone
+    </HCheckbox>
+  ));
+  const button = mount(() => (
+    <HCheckboxButton modelValue viewable>
+      Button
+    </HCheckboxButton>
+  ));
   const group = mount(() => (
     <HCheckboxGroup modelValue={['kept']} viewable>
       <HCheckbox label="kept">Kept</HCheckbox>
@@ -217,8 +221,12 @@ test('Checkbox, CheckboxButton and CheckboxGroup render their default slots', ()
   const wrapper = mount(() => (
     <HCheckboxGroup modelValue={[]}>
       <span class="group-default">
-        <HCheckbox><strong class="checkbox-default">Checkbox slot</strong></HCheckbox>
-        <HCheckboxButton><strong class="button-default">Button slot</strong></HCheckboxButton>
+        <HCheckbox>
+          <strong class="checkbox-default">Checkbox slot</strong>
+        </HCheckbox>
+        <HCheckboxButton>
+          <strong class="button-default">Button slot</strong>
+        </HCheckboxButton>
       </span>
     </HCheckboxGroup>
   ));
@@ -231,9 +239,16 @@ test('Checkbox, CheckboxButton and CheckboxGroup render their default slots', ()
 test('Checkbox blur and click emits preserve native browser events', async () => {
   const onBlur = vi.fn();
   const onClick = vi.fn();
-  const wrapper = mount(() => <HCheckbox onBlur={onBlur} onClick={onClick}>Events</HCheckbox>, {
-    attachTo: document.body,
-  });
+  const wrapper = mount(
+    () => (
+      <HCheckbox onBlur={onBlur} onClick={onClick}>
+        Events
+      </HCheckbox>
+    ),
+    {
+      attachTo: document.body,
+    },
+  );
   const input = wrapper.get('input').element as HTMLInputElement;
 
   input.focus();
@@ -373,4 +388,16 @@ test('toggle expose follows the same value contract as native interaction', asyn
   await nextTick();
 
   expect(modelValue.value).toBe(true);
+});
+
+test('default slot receives shared checked/value context and mixed state reaches the native input', () => {
+  const wrapper = mount(HCheckbox, {
+    props: { indeterminate: true, label: 'choice', modelValue: ['choice'] },
+    slots: {
+      default: (context?: CheckboxLabelRegionContext) => `${context?.value}:${context?.checked}`,
+    },
+  });
+
+  expect(wrapper.text()).toContain('choice:true');
+  expect((wrapper.get('input').element as HTMLInputElement).indeterminate).toBe(true);
 });

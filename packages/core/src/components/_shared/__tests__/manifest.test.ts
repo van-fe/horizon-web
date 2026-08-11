@@ -48,6 +48,7 @@ describe('component manifests', () => {
     const vueProps = adaptManifestFields(common, {
       rename: { variant: 'type' },
       omit: ['asyncState'],
+      override: { variant: { defaultValue: 'primary' } },
       extend: [
         {
           name: 'debounceType',
@@ -57,6 +58,7 @@ describe('component manifests', () => {
       ],
     });
     expect(vueProps.some(field => field.name === 'type')).toBe(true);
+    expect(vueProps.find(field => field.name === 'type')?.defaultValue).toBe('primary');
     expect(vueProps.some(field => field.name === 'asyncState')).toBe(false);
     expect(common.some(field => field.name === 'variant')).toBe(true);
   });
