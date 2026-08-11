@@ -26,7 +26,10 @@ describe('BreadcrumbItem.tsx', () => {
 
       await nextTick();
 
-      await wrapper.find('.h-breadcrumb-item__text').trigger('click');
+      const button = wrapper.get('button.h-breadcrumb-item__text');
+      expect(button.attributes('type')).toBe('button');
+      (button.element as HTMLButtonElement).click();
+      await nextTick();
 
       expect(onClick).toHaveBeenCalledOnce();
       expect(onClick.mock.calls[0][0]).toBeInstanceOf(MouseEvent);
@@ -60,9 +63,7 @@ describe('BreadcrumbItem.tsx', () => {
       ));
       expect(componentSeparator.find('.h-breadcrumb-item__suffix svg').exists()).toBe(true);
 
-      const directComponentSeparator = mount(() => (
-        <HBreadcrumbItem separator={IconArrowRight} />
-      ));
+      const directComponentSeparator = mount(() => <HBreadcrumbItem separator={IconArrowRight} />);
       expect(directComponentSeparator.find('.h-breadcrumb-item__suffix svg').exists()).toBe(true);
       expect(directComponentSeparator.get('.h-breadcrumb-item__text').text()).toBe('');
     });

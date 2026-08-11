@@ -34,6 +34,8 @@
     "./styles/avatar-variables": "./styles/components/avatar/variables.scss",
     "./styles/badge": "./styles/components/badge/index.scss",
     "./styles/badge-variables": "./styles/components/badge/variables.scss",
+    "./styles/breadcrumb": "./styles/components/breadcrumb/index.scss",
+    "./styles/breadcrumb-variables": "./styles/components/breadcrumb/variables.scss",
     "./styles/button": "./styles/components/button/index.scss",
     "./styles/button-variables": "./styles/components/button/variables.scss",
     "./styles/card": "./styles/components/card/index.scss",

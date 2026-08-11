@@ -4,6 +4,7 @@ declare module '@aurora/theme/styles/link';
 declare module '@aurora/theme/styles/alert';
 declare module '@aurora/theme/styles/avatar';
 declare module '@aurora/theme/styles/badge';
+declare module '@aurora/theme/styles/breadcrumb';
 declare module '@aurora/theme/styles/button';
 declare module '@aurora/theme/styles/card';
 declare module '@aurora/theme/styles/checkbox';

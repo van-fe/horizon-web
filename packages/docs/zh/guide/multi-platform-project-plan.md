@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B5 Link 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B6 Breadcrumb 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -458,6 +458,18 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DS-B5-001 | Done | Link Sass 与变量迁入 `@aurora/theme`，Vue 使用包导出代理，React 使用同源样式与 loading icon 视觉基础 |
 | DOC-B5-001 | Done | Link 中英文 React 页面、独立 TSX 示例和导航侧边栏入口完成；24 组 Vue/React 契约生成且 renderer 隔离检查通过 |
 | QA-B5-001 | Done | Core 84、Web Core Node 7/Chromium 17、React Chromium 86、Vue 2297 项通过且 1 项预期失败，覆盖率为 98.00% / 95.23% / 97.76% / 98.27%，五个包构建、文档和 Vue/React/SSR 消费工程通过 |
+
+#### M6-B6 第六批实施记录（2026-08-12）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B6-001 | Done | Breadcrumb 及 BreadcrumbItem 的公共 props、默认值、枚举、校验器、事件载荷、内容区域、命令与折叠/导航算法迁入 `@aurora/core`；Core contract 成为两端 API 语义的唯一来源 |
+| WEB-B6-001 | Done | 在同名 Web Core 目录提供容器、层级项与省略项的 DOM 尺寸测量 primitive，折叠数量由 Core 纯算法计算 |
+| VUE-B6-001 | Done | Vue props/emits/slots/exposes 通过类型化适配消费公共契约，仅保留 Vue runtime props、Vue Router、VNode 分隔符和生命周期适配；折叠观测与导航行为复用 Core/Web Core |
+| REACT-B6-001 | Done | 完成数据驱动与组合 children、Provider 路由导航、原生语义链接/按钮、ref、响应式折叠与可访问 disclosure；callbacks、children 区域和默认值由公共契约推导 |
+| DS-B6-001 | Done | Breadcrumb Sass 与变量迁入 `@aurora/theme`，Vue 使用包导出代理，React 使用同源样式并补充原生 disclosure 视觉规则 |
+| DOC-B6-001 | Done | Breadcrumb 中英文 React 页面、独立 TSX 示例与导航侧边栏入口完成；25 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
+| QA-B6-001 | Done | Core 87、Web Core Node 7/Chromium 18、React Chromium 91、Vue 2297 项通过且 1 项预期失败，覆盖率为 98.00% / 95.22% / 97.77% / 98.27%；五个包构建、文档、Vue/React/SSR 消费工程与中英文真实浏览器验收通过 |
 
 ### 批次 C：浮层与容器
 

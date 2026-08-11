@@ -18,13 +18,20 @@ export interface HorizonWebConfig {
   linkLabels: {
     loading: string;
   };
+  breadcrumbLabels: {
+    collapsed: string;
+  };
 }
 
 export type HorizonWebProviderProps = PropsWithChildren<
-  Omit<Partial<HorizonWebConfig>, 'linkLabels' | 'selectLabels' | 'switchLabels'> & {
+  Omit<
+    Partial<HorizonWebConfig>,
+    'breadcrumbLabels' | 'linkLabels' | 'selectLabels' | 'switchLabels'
+  > & {
     switchLabels?: Partial<HorizonWebConfig['switchLabels']>;
     selectLabels?: Partial<HorizonWebConfig['selectLabels']>;
     linkLabels?: Partial<HorizonWebConfig['linkLabels']>;
+    breadcrumbLabels?: Partial<HorizonWebConfig['breadcrumbLabels']>;
   }
 >;
 
@@ -33,6 +40,7 @@ const defaultConfig: HorizonWebConfig = Object.freeze({
   switchLabels: { on: 'On', off: 'Off' },
   selectLabels: { placeholder: 'Please select', empty: 'No options', clear: 'Clear selection' },
   linkLabels: { loading: 'Loading' },
+  breadcrumbLabels: { collapsed: 'Show collapsed breadcrumb items' },
 });
 
 export const HorizonWebContext = createContext<HorizonWebConfig>(defaultConfig);
@@ -44,6 +52,7 @@ export function HorizonWebProvider({
   switchLabels,
   selectLabels,
   linkLabels,
+  breadcrumbLabels,
   children,
 }: HorizonWebProviderProps): ReactElement {
   const parent = useContext(HorizonWebContext);
@@ -65,8 +74,21 @@ export function HorizonWebProvider({
         ...parent.linkLabels,
         ...linkLabels,
       },
+      breadcrumbLabels: {
+        ...parent.breadcrumbLabels,
+        ...breadcrumbLabels,
+      },
     }),
-    [namespace, navigate, resolveHref, parent, linkLabels, selectLabels, switchLabels],
+    [
+      namespace,
+      navigate,
+      resolveHref,
+      parent,
+      breadcrumbLabels,
+      linkLabels,
+      selectLabels,
+      switchLabels,
+    ],
   );
 
   return createElement(HorizonWebContext.Provider, { value }, children);

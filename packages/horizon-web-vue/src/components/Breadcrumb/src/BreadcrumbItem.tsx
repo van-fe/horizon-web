@@ -1,4 +1,5 @@
 import { defineComponent, toRefs, getCurrentInstance, h, inject, computed } from 'vue';
+import { isBreadcrumbItemClickable } from '@aurora/core';
 import { useBreadcrumbItemProps } from './composables/useProps';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
@@ -18,8 +19,8 @@ import type { BreadcrumbItem } from './composables/useProps';
 
 export default defineComponent({
   name: `${useNamespace()}BreadcrumbItem`,
-  desc: "面包屑导航中的单个层级项",
-  descLocales: { en: "A single hierarchy item within Breadcrumb." },
+  desc: '面包屑导航中的单个层级项',
+  descLocales: { en: 'A single hierarchy item within Breadcrumb.' },
   props: useBreadcrumbItemProps,
   emits: useBreadcrumbItemEmits,
   slots: useBreadcrumbItemSlots,
@@ -39,7 +40,9 @@ export default defineComponent({
     const instance = getCurrentInstance();
     const router = instance?.appContext.config.globalProperties.$router;
 
-    const clickable = computed(() => !!props.to || props.clickable);
+    const clickable = computed(() =>
+      isBreadcrumbItemClickable({ route: props.to, clickable: props.clickable }),
+    );
 
     const parentItemClick = inject(HBreadcrumbItemClickInjectKey, undefined);
     const sourceItem = computed(() => (attrs._sourceItem as BreadcrumbItem | undefined) ?? props);
@@ -49,6 +52,7 @@ export default defineComponent({
 
     const onClick = (evt: MouseEvent) => {
       if (clickable.value) {
+        if (props.to !== undefined) evt.preventDefault();
         emit('click', evt);
         if (parentItemClick) {
           parentItemClick(sourceItem.value, evt);
@@ -58,12 +62,24 @@ export default defineComponent({
       }
     };
 
+    const routeHref = computed(() => {
+      if (props.to === undefined || !router || typeof router.resolve !== 'function') {
+        return undefined;
+      }
+      return router.resolve(props.to).href;
+    });
+    const textElement = computed(() =>
+      props.to !== undefined ? 'a' : clickable.value ? 'button' : 'span',
+    );
+
     return () => (
-      <span {...rootAttrs.value} class={cls(classHelper.block)}>
+      <span {...rootAttrs.value} data-breadcrumb-item="" class={cls(classHelper.block)}>
         <HTooltip overflow={true}>
           {{
             default: () => (
-              <div
+              <textElement.value
+                type={props.to === undefined && clickable.value ? 'button' : undefined}
+                href={routeHref.value}
                 class={cls(
                   classHelper.e('text'),
                   classHelper.e('link', clickable.value),
@@ -73,7 +89,7 @@ export default defineComponent({
                 onClick={onClick}
               >
                 {slots.default?.()}
-              </div>
+              </textElement.value>
             ),
             content: () => slots.default?.() ?? '',
           }}

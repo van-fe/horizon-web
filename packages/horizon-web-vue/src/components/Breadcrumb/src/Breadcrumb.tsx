@@ -4,6 +4,7 @@ import {
   defineComponent,
   getCurrentInstance,
   nextTick,
+  onBeforeUnmount,
   provide,
   ref,
   toRef,
@@ -11,6 +12,8 @@ import {
   watch,
 } from 'vue';
 import { IconEllipsis } from '@aurora/icon';
+import { calculateBreadcrumbCollapseCount, isBreadcrumbItemClickable } from '@aurora/core';
+import { measureBreadcrumbLayout } from '@aurora/horizon-web-core';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, useNamespace, getSymbolNodeChildren } from '@aurora/utils';
 import tooltip from '~/directives/v-tooltip';
@@ -22,7 +25,6 @@ import type { BreadcrumbItem, BreadcrumbItemProps } from './composables/useProps
 import { useBreadcrumbProps } from './composables/useProps';
 import type { BreadcrumbSlots } from './composables/useSlots';
 import { useBreadcrumbSlots } from './composables/useSlots';
-import HLink from '~/components/Link/src/Link';
 import useSize from '~/utils/useSize';
 import type { ResizeObserverEntry } from '@vueuse/core';
 import { useResizeObserver } from '@vueuse/core';
@@ -43,7 +45,6 @@ export default defineComponent({
   directives: { tooltip },
   components: {
     HBreadcrumbItem,
-    HLink,
     IconEllipsis,
     HDropdown,
     HDropdownMenu,
@@ -100,27 +101,23 @@ export default defineComponent({
     );
 
     function isItemClickable(props: BreadcrumbItem) {
-      return !!props.to || props.clickable;
+      return isBreadcrumbItemClickable({ route: props.to, clickable: props.clickable });
     }
 
-    let stopObserve: null | (() => void) = null;
-    let prevClientWidth = 0;
+    const resizeObserverControl: { stop?: () => void } = {};
+
+    function stopResizeObserver() {
+      resizeObserverControl.stop?.();
+      resizeObserverControl.stop = undefined;
+    }
 
     async function doCollapse(entry: ResizeObserverEntry) {
-      if (entry.target.clientWidth > prevClientWidth) {
-        ellipsisItemsAmount.value = 0;
-      }
+      ellipsisItemsAmount.value = 0;
       await nextTick();
-
-      while (
-        entry.target.scrollWidth > entry.target.clientWidth &&
-        ellipsisItemsAmount.value < needRenderedItems.value.length - 2
-      ) {
-        ellipsisItemsAmount.value++;
-        await nextTick();
-      }
-
-      prevClientWidth = entry.target.clientWidth;
+      if (!(entry.target instanceof HTMLElement)) return;
+      ellipsisItemsAmount.value = calculateBreadcrumbCollapseCount(
+        measureBreadcrumbLayout(entry.target),
+      );
     }
 
     const debouncedDoCollapse = debounce(doCollapse, 500);
@@ -128,19 +125,25 @@ export default defineComponent({
     watch(
       () => props.displayType,
       val => {
+        stopResizeObserver();
+        debouncedDoCollapse.cancel();
         if (val === 'ellipsis') {
-          stopObserve = useResizeObserver(breadcrumbRef, async ([entry]) => {
+          resizeObserverControl.stop = useResizeObserver(breadcrumbRef, async ([entry]) => {
             await debouncedDoCollapse(entry);
           }).stop;
         } else {
           ellipsisItemsAmount.value = 0;
-          stopObserve?.();
         }
       },
       {
         immediate: true,
       },
     );
+
+    onBeforeUnmount(() => {
+      stopResizeObserver();
+      debouncedDoCollapse.cancel();
+    });
 
     function onClickItemNode(item: VNode, e: Event) {
       const props = item.props as BreadcrumbItemProps;
@@ -187,6 +190,19 @@ export default defineComponent({
             </HBreadcrumbItem>
           )}
           {...needRenderedItems.value.slice(ellipsisItemsAmount.value + 1)}
+          {props.displayType === 'ellipsis' && needRenderedItems.value.length > 2 && (
+            <div
+              aria-hidden="true"
+              data-breadcrumb-ellipsis-measure=""
+              class={classHelper.e('ellipsis-measure')}
+            >
+              <HBreadcrumbItem>
+                <span class={classHelper.e('ellipsis-measure-glyph')}>
+                  <IconEllipsis size={12} />
+                </span>
+              </HBreadcrumbItem>
+            </div>
+          )}
         </div>
       );
     };

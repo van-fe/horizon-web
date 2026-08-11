@@ -5,6 +5,7 @@ import {
   alertManifest,
   avatarManifest,
   badgeManifest,
+  breadcrumbManifest,
   buttonManifest,
   cardManifest,
   checkboxManifest,
@@ -35,6 +36,7 @@ const manifests = [
   alertManifest,
   avatarManifest,
   badgeManifest,
+  breadcrumbManifest,
   buttonManifest,
   cardManifest,
   checkboxManifest,
@@ -73,6 +75,16 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
   },
   Badge: {
     regions: { rename: { content: 'default' }, omit: ['icon'] },
+  },
+  Breadcrumb: {
+    props: {
+      rename: { items: 'texts' },
+      override: {
+        separator: { type: 'string | Component' },
+        items: { type: 'BreadcrumbItem[]' },
+      },
+    },
+    regions: { rename: { content: 'default' } },
   },
   Button: { props: { rename: { variant: 'type', asyncState: 'debounceType' } } },
   Card: { regions: { rename: { content: 'default' } } },
@@ -311,6 +323,16 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     regions: { rename: { content: 'children' } },
   },
   Badge: { regions: { rename: { content: 'children' } } },
+  Breadcrumb: {
+    props: {
+      override: {
+        separator: { type: 'ReactNode' },
+        items: { type: 'readonly BreadcrumbItemData[]' },
+      },
+    },
+    events: { rename: { itemClick: 'onItemClick' } },
+    regions: { rename: { content: 'children' }, omit: ['separator'] },
+  },
   Button: {
     events: {
       rename: {
