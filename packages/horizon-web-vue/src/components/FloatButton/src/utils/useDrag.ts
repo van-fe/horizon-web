@@ -1,101 +1,64 @@
-import type { Ref } from 'vue';
-import { unref, computed, ref, watch, readonly, onBeforeUnmount } from 'vue';
-import type { Position } from '@vueuse/core';
+import type { FloatButtonPosition } from '@aurora/core';
+import type { FloatButtonDragController, FloatButtonDragDetails } from '@aurora/horizon-web-core';
+import { createFloatButtonDragController } from '@aurora/horizon-web-core';
 import type { MaybeRef } from '@aurora/utils';
-import { getClientXY } from '@aurora/utils';
+import type { Ref } from 'vue';
+import { computed, onBeforeUnmount, readonly, ref, unref, watch } from 'vue';
 
 export interface UseDragOption {
   disabled?: MaybeRef<boolean>;
-  initialValue?: MaybeRef<Position>;
-  onStart?: (position: Position, event: MouseEvent) => void | false;
-  onMove?: (position: Position, event: MouseEvent) => void;
-  onEnd?: (position: Position, event: MouseEvent) => void;
+  initialValue?: MaybeRef<FloatButtonPosition>;
+  onStart?: (position: FloatButtonPosition, event: PointerEvent) => void | false;
+  onMove?: (position: FloatButtonPosition, event: PointerEvent) => void;
+  onEnd?: (position: FloatButtonPosition, event: PointerEvent) => void;
 }
 
-export default function (target: Ref<HTMLElement | null>, options?: UseDragOption) {
-  watch(
-    [target, () => unref(options?.disabled) ?? false] as const,
-    ([currentTarget, disabled], [previousTarget]) => {
-      previousTarget?.removeEventListener('mousedown', onMouseDown);
-
-      if (currentTarget && !disabled) {
-        currentTarget.addEventListener('mousedown', onMouseDown);
-      }
-    },
-    { immediate: true },
-  );
-
-  onBeforeUnmount(() => target.value?.removeEventListener('mousedown', onMouseDown));
-
+export default function useDrag(target: Ref<HTMLElement | null>, options?: UseDragOption) {
+  const initial = unref(options?.initialValue);
+  const position = ref<FloatButtonPosition>({ x: initial?.x ?? 0, y: initial?.y ?? 0 });
   const isDragging = ref(false);
-  const x = ref(unref(options?.initialValue)?.x ?? 0);
-  const y = ref(unref(options?.initialValue)?.y ?? 0);
-  const xDiff = ref(0);
-  const yDiff = ref(0);
+  let controller: FloatButtonDragController | null = null;
 
-  const position = computed(() => ({
-    x: x.value - xDiff.value,
-    y: y.value - yDiff.value,
-  }));
+  const destroyController = () => {
+    controller?.destroy();
+    controller = null;
+    isDragging.value = false;
+  };
+  const updateFromDetails = (details: FloatButtonDragDetails) => {
+    position.value = { x: details.position.left, y: details.position.top };
+  };
+  const setupController = (element: HTMLElement | null) => {
+    destroyController();
+    if (!element) return;
+    controller = createFloatButtonDragController(element, {
+      disabled: () => unref(options?.disabled) ?? false,
+      onStart(details, event) {
+        updateFromDetails(details);
+        if (options?.onStart?.(position.value, event) === false) return false;
+        isDragging.value = true;
+      },
+      onMove(details, event) {
+        updateFromDetails(details);
+        options?.onMove?.(position.value, event);
+      },
+      onEnd(details, event) {
+        updateFromDetails(details);
+        isDragging.value = false;
+        options?.onEnd?.(position.value, event);
+      },
+    });
+  };
 
-  function initialDiff() {
-    xDiff.value = 0;
-    yDiff.value = 0;
-  }
-
-  function updatePosition(evt: MouseEvent) {
-    ({ clientX: x.value, clientY: y.value } = getClientXY(evt));
-  }
-
-  function onMouseDown(evt: MouseEvent) {
-    evt.preventDefault();
-    updatePosition(evt);
-    const rect = target.value!.getBoundingClientRect();
-
-    xDiff.value = x.value - rect.x;
-    yDiff.value = y.value - rect.y;
-
-    if (options?.onStart?.(position.value, evt) !== false) {
-      isDragging.value = true;
-
-      document.addEventListener('mousemove', onMouseMove);
-      document.addEventListener('mouseup', onMouseUp);
-    }
-  }
-
-  function onMouseMove(evt: MouseEvent) {
-    if (isDragging.value) {
-      evt.preventDefault();
-      updatePosition(evt);
-
-      options?.onMove?.(position.value, evt);
-    }
-  }
-
-  function onMouseUp(evt: MouseEvent) {
-    if (isDragging.value) {
-      evt.preventDefault();
-      updatePosition(evt);
-
-      options?.onEnd?.(position.value, evt);
-
-      isDragging.value = false;
-
-      initialDiff();
-    }
-
-    document.removeEventListener('mousemove', onMouseMove);
-    document.removeEventListener('mouseup', onMouseUp);
-  }
+  watch(target, setupController, { immediate: true, flush: 'post' });
+  onBeforeUnmount(destroyController);
 
   return {
     isDragging: readonly(isDragging),
     x: computed(() => position.value.x),
     y: computed(() => position.value.y),
-    style: computed(() => ({ left: position.value.x + 'px', top: position.value.y + 'px' })),
-    updatePosition(pos: MaybeRef<Position>) {
-      initialDiff();
-      ({ x: x.value, y: y.value } = unref(pos));
+    style: computed(() => ({ left: `${position.value.x}px`, top: `${position.value.y}px` })),
+    updatePosition(nextPosition: MaybeRef<FloatButtonPosition>) {
+      position.value = { ...unref(nextPosition) };
     },
   };
 }

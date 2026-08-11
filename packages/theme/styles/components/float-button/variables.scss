@@ -1,0 +1,45 @@
+@use '../../mixins/function';
+
+$inline-spacing: function.css-variable('float-button', 'spacing', 'right');
+$values: (
+  size: (
+    '': 40px,
+    large: 54px,
+    max-inline: calc(100vw - #{$inline-spacing} - #{$inline-spacing}),
+  ),
+  font-size: #{function.css-variable('text-sm')},
+  color: (
+    '': #{function.css-variable('text-primary')},
+    hover: #{function.css-variable('text-brand-hover')},
+    press: #{function.css-variable('text-brand-press')},
+    primary: #{function.css-variable('text-inverse')},
+    disabled: #{function.css-variable('text-disabled')},
+  ),
+  border-radius: (
+    '': calc(#{function.css-variable('float-button', 'size')} / 2),
+    square: #{function.css-variable('radius-m')},
+  ),
+  background: (
+    '': #{function.css-variable('bg-default')},
+    primary: (
+      '': #{function.css-variable('bg-brand-default')},
+      hover: #{function.css-variable('bg-brand-hover')},
+      press: #{function.css-variable('bg-brand-press')},
+    ),
+    disabled: #{function.css-variable('bg-disabled')},
+  ),
+  spacing: (
+    bottom: 100px,
+    right: #{function.css-variable('spacing-7')},
+    gap: #{function.css-variable('spacing-4')},
+  ),
+  box-shadow: #{function.css-variable('shadow-modal')},
+  transition: (
+    '': #{#{function.css-variable('float-button', 'transition', 'no-position')},
+    top #{function.css-variable('transition-time')},
+    left #{function.css-variable('transition-time')}},
+    no-position: #{color #{function.css-variable('transition-time')},
+    background #{function.css-variable('transition-time')}},
+  ),
+  z-index: 10,
+);

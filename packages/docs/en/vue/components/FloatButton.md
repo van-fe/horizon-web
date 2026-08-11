@@ -23,3 +23,9 @@ If you want to rearrange the dragged floating button, you need to toggle the `vi
 Use `h-float-button-group` to enable button group
 
 :::demo vue/components/FloatButton/group.vue :::
+
+## Visibility and commands
+
+Use `visible` or `v-model:visible` to own a floating button's visibility. Its template ref exposes `show()`, `hide()`, and `focus()`; controlled visibility changes only after the bound value is updated.
+
+FloatButtonGroup accepts `expanded`, `default-expanded`, and `v-model:expanded`. Its template ref exposes `show()`, `hide()`, `expand()`, `fold()`, and `toggle()`. The `update:expanded` payload also includes the interaction reason.

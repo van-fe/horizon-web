@@ -7,6 +7,7 @@ declare module '@aurora/theme/styles/popover';
 declare module '@aurora/theme/styles/popconfirm';
 declare module '@aurora/theme/styles/dialog';
 declare module '@aurora/theme/styles/drawer';
+declare module '@aurora/theme/styles/float-button';
 declare module '@aurora/theme/styles/alert';
 declare module '@aurora/theme/styles/avatar';
 declare module '@aurora/theme/styles/badge';

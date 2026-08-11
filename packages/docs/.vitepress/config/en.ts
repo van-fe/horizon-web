@@ -32,6 +32,7 @@ const reactSidebar = [
       { text: 'Popconfirm', link: 'components/Popconfirm' },
       { text: 'Dialog', link: 'components/Dialog' },
       { text: 'Drawer', link: 'components/Drawer' },
+      { text: 'FloatButton', link: 'components/FloatButton' },
     ],
   },
   {

@@ -1,0 +1,34 @@
+@use '../../mixins';
+
+/* stylelint-disable nesting-selector-no-missing-scoping-root -- BEM mixins provide the selector roots. */
+
+@include mixins.b('float-button') {
+  background: mixins.css-variable('float-button', 'background');
+
+  @include mixins.m('normal') {
+    color: mixins.css-variable('float-button', 'color');
+
+    &:hover {
+      color: mixins.css-variable('float-button', 'color', 'hover');
+    }
+
+    &:active {
+      color: mixins.css-variable('float-button', 'color', 'press');
+    }
+  }
+
+  @include mixins.m('primary') {
+    color: mixins.css-variable('float-button', 'color', 'primary');
+    background: mixins.css-variable('float-button', 'background', 'primary');
+
+    &:hover {
+      background: mixins.css-variable('float-button', 'background', 'primary', 'hover');
+    }
+
+    &:active {
+      background: mixins.css-variable('float-button', 'background', 'primary', 'press');
+    }
+  }
+}
+
+/* stylelint-enable nesting-selector-no-missing-scoping-root */

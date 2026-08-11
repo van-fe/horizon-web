@@ -46,6 +46,11 @@ export interface HorizonWebConfig {
     close: string;
     drawer: string;
   };
+  floatButtonLabels: {
+    button: string;
+    expand: string;
+    fold: string;
+  };
 }
 
 export type HorizonWebProviderProps = PropsWithChildren<
@@ -54,6 +59,7 @@ export type HorizonWebProviderProps = PropsWithChildren<
     | 'breadcrumbLabels'
     | 'dialogLabels'
     | 'drawerLabels'
+    | 'floatButtonLabels'
     | 'linkLabels'
     | 'paginationLabels'
     | 'popconfirmLabels'
@@ -72,6 +78,7 @@ export type HorizonWebProviderProps = PropsWithChildren<
     popconfirmLabels?: Partial<HorizonWebConfig['popconfirmLabels']>;
     dialogLabels?: Partial<HorizonWebConfig['dialogLabels']>;
     drawerLabels?: Partial<HorizonWebConfig['drawerLabels']>;
+    floatButtonLabels?: Partial<HorizonWebConfig['floatButtonLabels']>;
   }
 >;
 
@@ -87,6 +94,11 @@ const defaultConfig: HorizonWebConfig = Object.freeze({
   popconfirmLabels: { confirm: 'Confirm', cancel: 'Cancel' },
   dialogLabels: { ok: 'OK', cancel: 'Cancel', close: 'Close dialog', dialog: 'Dialog' },
   drawerLabels: { ok: 'OK', cancel: 'Cancel', close: 'Close drawer', drawer: 'Drawer' },
+  floatButtonLabels: {
+    button: 'Floating action',
+    expand: 'Expand floating actions',
+    fold: 'Collapse floating actions',
+  },
 });
 
 export const HorizonWebContext = createContext<HorizonWebConfig>(defaultConfig);
@@ -105,6 +117,7 @@ export function HorizonWebProvider({
   popconfirmLabels,
   dialogLabels,
   drawerLabels,
+  floatButtonLabels,
   children,
 }: HorizonWebProviderProps): ReactElement {
   const parent = useContext(HorizonWebContext);
@@ -154,6 +167,10 @@ export function HorizonWebProvider({
         ...parent.drawerLabels,
         ...drawerLabels,
       },
+      floatButtonLabels: {
+        ...parent.floatButtonLabels,
+        ...floatButtonLabels,
+      },
     }),
     [
       namespace,
@@ -170,6 +187,7 @@ export function HorizonWebProvider({
       popconfirmLabels,
       dialogLabels,
       drawerLabels,
+      floatButtonLabels,
     ],
   );
 

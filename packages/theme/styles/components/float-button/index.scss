@@ -1,0 +1,92 @@
+@use '../../mixins';
+@use 'shape';
+@use 'type';
+@use 'group';
+
+/* stylelint-disable nesting-selector-no-missing-scoping-root -- BEM mixins provide the selector roots. */
+
+@include mixins.b('float-button') {
+  position: fixed;
+  right: mixins.css-variable('float-button', 'spacing', 'right');
+  z-index: mixins.css-variable('float-button', 'z-index');
+  box-sizing: border-box;
+  width: mixins.css-variable('float-button', 'size');
+  max-width: mixins.css-variable('float-button', 'size', 'max-inline');
+  font-size: mixins.css-variable('float-button', 'font-size');
+  cursor: pointer;
+  background-clip: padding-box;
+  box-shadow: mixins.css-variable('float-button', 'box-shadow');
+  transition: mixins.css-variable('float-button', 'transition', 'no-position');
+
+  &:is(button, a):not(#{mixins.block-name('button')}) {
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    font-size: mixins.css-variable('float-button', 'font-size');
+    text-decoration: none;
+    appearance: none;
+    border: 0;
+
+    &:focus-visible {
+      @include mixins.focus-outline;
+    }
+
+    &:disabled,
+    &[aria-disabled='true'] {
+      color: mixins.css-variable('float-button', 'color', 'disabled');
+      pointer-events: none;
+      cursor: not-allowed;
+      background: mixins.css-variable('float-button', 'background', 'disabled');
+      box-shadow: none;
+    }
+  }
+
+  @include mixins.e('inner') {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: mixins.css-variable('float-button', 'size');
+    max-width: 100%;
+    height: mixins.css-variable('float-button', 'size');
+  }
+
+  @include mixins.e('inner_all') {
+    gap: 2px;
+    height: mixins.css-variable('float-button', 'size', 'large');
+    padding: 8px;
+  }
+
+  @include mixins.e('icon') {
+    flex: none;
+    line-height: 1;
+  }
+
+  @include mixins.e('description') {
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @include mixins.is('draggable') {
+    position: fixed;
+    cursor: grab;
+  }
+
+  @include mixins.is('dragging') {
+    cursor: grabbing;
+  }
+
+  @include mixins.is-not('dragging') {
+    transition: mixins.css-variable('float-button', 'transition');
+  }
+
+  @include mixins.is('static') {
+    position: static;
+  }
+}
+
+/* stylelint-enable nesting-selector-no-missing-scoping-root */

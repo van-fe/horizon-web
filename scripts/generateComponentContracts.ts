@@ -23,6 +23,8 @@ import {
   dropdownMenuManifest,
   dropdownSubmenuManifest,
   emptyManifest,
+  floatButtonGroupManifest,
+  floatButtonManifest,
   inputManifest,
   linkManifest,
   paginationManifest,
@@ -69,6 +71,8 @@ const manifests = [
   dropdownItemManifest,
   dropdownSubmenuManifest,
   emptyManifest,
+  floatButtonManifest,
+  floatButtonGroupManifest,
   inputManifest,
   linkManifest,
   paginationManifest,
@@ -238,6 +242,46 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
           description: { zh: '更新绑定显隐', en: 'Updates bound visibility' },
         },
       ],
+    },
+    regions: { rename: { content: 'default' } },
+  },
+  FloatButton: {
+    props: {
+      rename: { variant: 'type' },
+      omit: ['defaultVisible'],
+      override: {
+        icon: { type: 'IconProp' },
+        description: { type: 'string | VNode' },
+        tooltip: { type: 'string | Partial<TooltipProps>' },
+        badge: { type: 'boolean | Partial<BadgeProps>' },
+      },
+      extend: [
+        {
+          name: 'ariaLabel',
+          type: 'string',
+          description: { zh: '可访问名称', en: 'Accessible name' },
+        },
+      ],
+    },
+    events: { rename: { visibleChange: 'update:visible' } },
+  },
+  FloatButtonGroup: {
+    props: {
+      rename: { variant: 'type' },
+      omit: ['defaultVisible'],
+      override: {
+        expandIcon: { type: 'IconProp' },
+        foldIcon: { type: 'IconProp' },
+        expandTooltip: { type: 'string | Partial<TooltipProps>' },
+        foldTooltip: { type: 'string | Partial<TooltipProps>' },
+        badge: { type: 'Partial<BadgeProps>' },
+      },
+    },
+    events: {
+      rename: {
+        visibleChange: 'update:visible',
+        expandedChange: 'update:expanded',
+      },
     },
     regions: { rename: { content: 'default' } },
   },
@@ -854,6 +898,53 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
       },
     },
     regions: { rename: { content: 'children' }, omit: ['title', 'header', 'footer'] },
+  },
+  FloatButton: {
+    props: {
+      override: {
+        icon: { type: 'ReactNode' },
+        description: { type: 'ReactNode' },
+        tooltip: { type: 'string | FloatButtonTooltipOptions' },
+        badge: { type: 'boolean | FloatButtonBadgeOptions' },
+      },
+      extend: [
+        {
+          name: 'ariaLabel',
+          type: 'string',
+          description: { zh: '可访问名称', en: 'Accessible name' },
+        },
+      ],
+    },
+    events: {
+      rename: {
+        click: 'onClick',
+        visibleChange: 'onVisibleChange',
+        dragStart: 'onDragStart',
+        dragging: 'onDragging',
+        dragEnd: 'onDragEnd',
+      },
+    },
+  },
+  FloatButtonGroup: {
+    props: {
+      override: {
+        expandIcon: { type: 'ReactNode' },
+        foldIcon: { type: 'ReactNode' },
+        expandTooltip: { type: 'string | FloatButtonTooltipOptions' },
+        foldTooltip: { type: 'string | FloatButtonTooltipOptions' },
+        badge: { type: 'FloatButtonBadgeOptions' },
+      },
+    },
+    events: {
+      rename: {
+        visibleChange: 'onVisibleChange',
+        expandedChange: 'onExpandedChange',
+        expand: 'onExpand',
+        fold: 'onFold',
+        click: 'onClick',
+      },
+    },
+    regions: { rename: { content: 'children' } },
   },
   Dropdown: {
     events: { rename: { openChange: 'onOpenChange', command: 'onCommand' } },

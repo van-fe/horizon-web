@@ -30,6 +30,15 @@ function DrawerLabelsProbe() {
   );
 }
 
+function FloatButtonLabelsProbe() {
+  const { floatButtonLabels } = useHorizonWebConfig();
+  return createElement(
+    'span',
+    null,
+    `${floatButtonLabels.button}/${floatButtonLabels.expand}/${floatButtonLabels.fold}`,
+  );
+}
+
 describe('HorizonWebProvider', () => {
   it('is SSR-safe and exposes renderer configuration', () => {
     const html = renderToStaticMarkup(
@@ -77,5 +86,17 @@ describe('HorizonWebProvider', () => {
     );
 
     expect(html).toContain('Apply/Cancel/Dismiss/Drawer');
+  });
+
+  it('merges FloatButton labels with provider defaults', () => {
+    const html = renderToStaticMarkup(
+      createElement(
+        HorizonWebProvider,
+        { floatButtonLabels: { expand: 'Show actions' } },
+        createElement(FloatButtonLabelsProbe),
+      ),
+    );
+
+    expect(html).toContain('Floating action/Show actions/Collapse floating actions');
   });
 });

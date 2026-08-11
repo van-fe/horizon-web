@@ -32,6 +32,7 @@ const reactSidebar = [
       { text: 'Popconfirm 气泡确认框', link: 'components/Popconfirm' },
       { text: 'Dialog 对话框', link: 'components/Dialog' },
       { text: 'Drawer 抽屉', link: 'components/Drawer' },
+      { text: 'FloatButton 悬浮按钮', link: 'components/FloatButton' },
     ],
   },
   {

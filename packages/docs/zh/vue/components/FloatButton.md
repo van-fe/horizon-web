@@ -24,3 +24,9 @@
 使用 `h-float-button-group` 可以开启按钮组
 
 :::demo vue/components/FloatButton/group.vue :::
+
+## 显隐与命令
+
+使用 `visible` 或 `v-model:visible` 管理悬浮按钮的显隐状态。组件模板 ref 提供 `show()`、`hide()` 和 `focus()`；受控使用时，绑定值更新后界面才会变化。
+
+FloatButtonGroup 支持 `expanded`、`default-expanded` 与 `v-model:expanded`。按钮组模板 ref 提供 `show()`、`hide()`、`expand()`、`fold()` 和 `toggle()`，`update:expanded` 还会返回本次交互原因。

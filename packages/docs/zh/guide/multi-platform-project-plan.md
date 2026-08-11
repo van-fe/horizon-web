@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B16 Drawer 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B17 FloatButton 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -590,6 +590,18 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DS-B16-001 | Done | Drawer Sass、变量、四方向布局与过渡迁入 `@aurora/theme`，Vue/React 使用同源样式；原生按钮 reset 排除 Horizon Button，并补充窄屏、长标题、正文与 footer 子项的防溢出规则 |
 | DOC-B16-001 | Done | Drawer 中英文 React 页面、4 个独立 TSX 示例与侧边栏入口完成；42 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
 | QA-B16-001 | Done | Core 141、Web Core Node 10/Chromium 36、React Chromium 153、Vue Chromium 2314 项（2313 通过、1 项预期失败）全部通过，覆盖率为 97.96% / 95.06% / 97.79% / 98.28%；五个包构建、文档、Vue/React/SSR 消费工程及中英文 renderer 路由验收通过 |
+
+#### M6-B17 第十七批实施记录（2026-08-12）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B17-001 | Done | FloatButton 与 FloatButtonGroup 的公共 props、默认值、枚举、校验器、事件、内容区域、命令及 manifest 迁入 `@aurora/core`；徽标布局、堆叠位置与偏移、拖拽吸附和按钮组受控/非受控状态只定义一次 |
+| WEB-B17-001 | Done | 在同名 Web Core 目录提供 primary Pointer 拖拽控制器，统一起点、移动、结束、pointer capture 与销毁清理；拖拽中卸载不会遗留 document 监听 |
+| VUE-B17-001 | Done | Vue props/emits/slots/exposes 通过类型化适配消费公共契约，保留 `type`、VNode、Icon、Tooltip、Badge、Popover 和 provide/inject 扩展；无链接时改为语义 button，badge/stack/adsorb 与拖拽均复用 Core/Web Core，并新增受控展开、显隐命令和动态堆叠 |
+| REACT-B17-001 | Done | 完成原生 button/link FloatButton、受控与非受控显隐、Tooltip、Badge、自动堆叠、Pointer 拖拽、边缘吸附、Provider 可访问文案及命令 ref；FloatButtonGroup 支持 click/hover、受控展开、共享外观与组命令 |
+| DS-B17-001 | Done | FloatButton Sass、变量、shape/type/group 规则迁入 `@aurora/theme`，Vue/React 使用同源样式；原生 reset 仅作用于语义 action，并补充窄屏限宽、描述省略、拖拽状态、暗色 token 与 Badge 溢出保护 |
+| DOC-B17-001 | Done | FloatButton 中英文 React 页面、4 个独立 TSX 示例、Vue 显隐/命令说明与双语侧边栏入口完成；44 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
+| QA-B17-001 | Done | Core 149、Web Core Node 10/Chromium 39、React Chromium 162、Vue Chromium 2318 项（2317 通过、1 项预期失败）全部通过，覆盖率为 97.92% / 95.06% / 97.69% / 98.24%；Vue Node 23、resolver 12、colors 1、upload adapters 66 项通过 |
 
 ### 批次 C：浮层与容器
 

@@ -16,6 +16,7 @@
 @use './components/drawer/variables' as drawer;
 @use './components/dropdown/variables' as dropdown;
 @use './components/empty/variables' as empty;
+@use './components/float-button/variables' as float-button;
 @use './components/input/variables' as input;
 @use './components/link/variables' as link;
 @use './components/pagination/variables' as pagination;
@@ -55,6 +56,7 @@ $values: function.map-merge-multi(
   function.flatten-variables(drawer.$values, 'drawer'),
   function.flatten-variables(dropdown.$values, 'dropdown'),
   function.flatten-variables(empty.$values, 'empty'),
+  function.flatten-variables(float-button.$values, 'float-button'),
   function.flatten-variables(input.$values, 'input'),
   function.flatten-variables(link.$values, 'link'),
   function.flatten-variables(pagination.$values, 'pagination'),

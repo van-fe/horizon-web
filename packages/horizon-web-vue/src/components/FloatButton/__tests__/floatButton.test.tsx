@@ -3,12 +3,12 @@ import { HFloatButton, HFloatButtonGroup } from '..';
 import { describe, expect, test, vi } from 'vitest';
 import { defineComponent, nextTick, ref } from 'vue';
 import { useFloatButtonEmits, useFloatButtonGroupEmits } from '../src/composables/useEmits';
-import { useFloatButtonExposes } from '../src/composables/useExposes';
+import { useFloatButtonExposes, useFloatButtonGroupExposes } from '../src/composables/useExposes';
 import { getBadgeDefaultOption } from '../src/utils/badgeOptions';
 import useDrag from '../src/utils/useDrag';
 
 describe('FloatButton.tsx', () => {
-  test('validates emits, empty exposes and every badge-layout branch', () => {
+  test('validates emits, exposes and every badge-layout branch', () => {
     expect(useFloatButtonEmits.click(new MouseEvent('click'))).toBe(true);
     expect(useFloatButtonEmits.click(new Event('click') as MouseEvent)).toBe(false);
     expect(useFloatButtonEmits.dragStart()).toBe(true);
@@ -17,18 +17,28 @@ describe('FloatButton.tsx', () => {
     expect(useFloatButtonGroupEmits.expand()).toBe(true);
     expect(useFloatButtonGroupEmits.fold()).toBe(true);
     expect(useFloatButtonGroupEmits.click()).toBe(true);
-    expect(useFloatButtonExposes).toEqual({});
+    expect(useFloatButtonEmits['update:visible'](false)).toBe(true);
+    expect(useFloatButtonGroupEmits['update:visible'](true)).toBe(true);
+    expect(useFloatButtonGroupEmits['update:expanded'](true, { reason: 'imperative' })).toBe(true);
+    expect(Object.keys(useFloatButtonExposes)).toEqual(['show', 'hide', 'focus']);
+    expect(Object.keys(useFloatButtonGroupExposes)).toEqual([
+      'show',
+      'hide',
+      'expand',
+      'fold',
+      'toggle',
+    ]);
 
     expect(getBadgeDefaultOption(true, 'circle', false, false)).toMatchObject({
       align: undefined,
       offset: { top: '5px', right: '5px' },
     });
-    expect(
-      getBadgeDefaultOption({ type: 'num', content: 2 }, 'circle', true, false),
-    ).toMatchObject({ align: 'fix-left', offset: { top: '3px', right: '3px' } });
-    expect(
-      getBadgeDefaultOption({ type: 'num', content: 2 }, 'circle', true, true),
-    ).toMatchObject({ align: undefined });
+    expect(getBadgeDefaultOption({ type: 'num', content: 2 }, 'circle', true, false)).toMatchObject(
+      { align: 'fix-left', offset: { top: '3px', right: '3px' } },
+    );
+    expect(getBadgeDefaultOption({ type: 'num', content: 2 }, 'circle', true, true)).toMatchObject({
+      align: undefined,
+    });
     expect(
       getBadgeDefaultOption({ type: 'num', content: 2 }, 'circle', false, false),
     ).toMatchObject({ align: undefined });
@@ -38,10 +48,15 @@ describe('FloatButton.tsx', () => {
   });
 
   test('basic', async () => {
-    const wrapper = mount(() => <HFloatButton />);
+    const wrapper = mount(() => <HFloatButton ariaLabel="Quick action" />);
     const element = wrapper.findComponent(HFloatButton);
 
     expect(element.exists()).toBe(true);
+    expect(wrapper.get('.h-float-button').element.tagName).toBe('BUTTON');
+    expect(wrapper.get('.h-float-button').attributes()).toMatchObject({
+      type: 'button',
+      'aria-label': 'Quick action',
+    });
   });
 
   test('renders public content, shape/type, tooltip and badge options', () => {
@@ -121,7 +136,7 @@ describe('FloatButton.tsx', () => {
     expect(wrapper.get('[data-test="float-description"]').text()).toBe('Custom description');
   });
 
-  test('emits one drag lifecycle for a real mouse gesture and applies adsorbed coordinates', async () => {
+  test('emits one drag lifecycle for a real pointer gesture and applies adsorbed coordinates', async () => {
     const onDragStart = vi.fn();
     const onDragging = vi.fn();
     const onDragEnd = vi.fn();
@@ -138,14 +153,35 @@ describe('FloatButton.tsx', () => {
     const button = wrapper.get('.h-float-button');
 
     button.element.dispatchEvent(
-      new MouseEvent('mousedown', { bubbles: true, clientX: 10, clientY: 10 }),
+      new PointerEvent('pointerdown', {
+        bubbles: true,
+        button: 0,
+        clientX: 10,
+        clientY: 10,
+        isPrimary: true,
+        pointerId: 1,
+      }),
     );
     document.dispatchEvent(
-      new MouseEvent('mousemove', { bubbles: true, clientX: 30, clientY: 40 }),
+      new PointerEvent('pointermove', {
+        bubbles: true,
+        clientX: 30,
+        clientY: 40,
+        isPrimary: true,
+        pointerId: 1,
+      }),
     );
     await nextTick();
     expect(button.classes()).toContain('is-dragging');
-    document.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, clientX: 30, clientY: 40 }));
+    document.dispatchEvent(
+      new PointerEvent('pointerup', {
+        bubbles: true,
+        clientX: 30,
+        clientY: 40,
+        isPrimary: true,
+        pointerId: 1,
+      }),
+    );
     await new Promise(resolve => requestAnimationFrame(resolve));
     await nextTick();
 
@@ -153,7 +189,7 @@ describe('FloatButton.tsx', () => {
     expect(onDragging).toHaveBeenCalledTimes(1);
     expect(onDragEnd).toHaveBeenCalledTimes(1);
     expect(button.classes()).toContain('is-draggable');
-    expect(button.attributes('style')).toContain('left:');
+    expect(button.attributes('style')).toContain(`left: ${window.innerWidth - 64}px`);
   });
 
   test('useDrag honors reactive disabled state, rejected starts and public position output', async () => {
@@ -190,15 +226,36 @@ describe('FloatButton.tsx', () => {
     const wrapper = mount(Harness);
     await nextTick();
     const target = wrapper.get('[data-test="drag-target"]');
+    let pointerId = 1;
     const gesture = () => {
+      const currentPointerId = pointerId++;
       target.element.dispatchEvent(
-        new MouseEvent('mousedown', { bubbles: true, clientX: 10, clientY: 10 }),
+        new PointerEvent('pointerdown', {
+          bubbles: true,
+          button: 0,
+          clientX: 10,
+          clientY: 10,
+          isPrimary: true,
+          pointerId: currentPointerId,
+        }),
       );
       document.dispatchEvent(
-        new MouseEvent('mousemove', { bubbles: true, clientX: 20, clientY: 25 }),
+        new PointerEvent('pointermove', {
+          bubbles: true,
+          clientX: 20,
+          clientY: 25,
+          isPrimary: true,
+          pointerId: currentPointerId,
+        }),
       );
       document.dispatchEvent(
-        new MouseEvent('mouseup', { bubbles: true, clientX: 30, clientY: 35 }),
+        new PointerEvent('pointerup', {
+          bubbles: true,
+          clientX: 30,
+          clientY: 35,
+          isPrimary: true,
+          pointerId: currentPointerId,
+        }),
       );
     };
 
@@ -217,7 +274,7 @@ describe('FloatButton.tsx', () => {
     await nextTick();
     expect(onMove).toHaveBeenCalledTimes(1);
     expect(onEnd).toHaveBeenCalledTimes(1);
-    expect(target.attributes()).toMatchObject({ 'data-x': '30', 'data-y': '35' });
+    expect(target.attributes()).toMatchObject({ 'data-x': '20', 'data-y': '25' });
 
     updatePosition({ x: 48, y: 52 });
     await nextTick();
@@ -228,7 +285,41 @@ describe('FloatButton.tsx', () => {
     await nextTick();
     gesture();
     expect(onStart).toHaveBeenCalledTimes(2);
+
+    disabled.value = false;
+    await nextTick();
+    target.element.dispatchEvent(
+      new PointerEvent('pointerdown', {
+        bubbles: true,
+        button: 0,
+        clientX: 10,
+        clientY: 10,
+        isPrimary: true,
+        pointerId: 99,
+      }),
+    );
+    expect(onStart).toHaveBeenCalledTimes(3);
     wrapper.unmount();
+    document.dispatchEvent(
+      new PointerEvent('pointermove', {
+        bubbles: true,
+        clientX: 100,
+        clientY: 100,
+        isPrimary: true,
+        pointerId: 99,
+      }),
+    );
+    document.dispatchEvent(
+      new PointerEvent('pointerup', {
+        bubbles: true,
+        clientX: 100,
+        clientY: 100,
+        isPrimary: true,
+        pointerId: 99,
+      }),
+    );
+    expect(onMove).toHaveBeenCalledTimes(1);
+    expect(onEnd).toHaveBeenCalledTimes(1);
 
     const NoOptionsHarness = defineComponent({
       setup() {
@@ -241,14 +332,35 @@ describe('FloatButton.tsx', () => {
     await nextTick();
     const plainTarget = plainWrapper.get('[data-test="plain-drag-target"]');
     plainTarget.element.dispatchEvent(
-      new MouseEvent('mousedown', { bubbles: true, clientX: 5, clientY: 5 }),
+      new PointerEvent('pointerdown', {
+        bubbles: true,
+        button: 0,
+        clientX: 5,
+        clientY: 5,
+        isPrimary: true,
+        pointerId: 20,
+      }),
     );
     document.dispatchEvent(
-      new MouseEvent('mousemove', { bubbles: true, clientX: 16, clientY: 20 }),
+      new PointerEvent('pointermove', {
+        bubbles: true,
+        clientX: 16,
+        clientY: 20,
+        isPrimary: true,
+        pointerId: 20,
+      }),
     );
-    document.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, clientX: 21, clientY: 25 }));
+    document.dispatchEvent(
+      new PointerEvent('pointerup', {
+        bubbles: true,
+        clientX: 21,
+        clientY: 25,
+        isPrimary: true,
+        pointerId: 20,
+      }),
+    );
     await nextTick();
-    expect(plainTarget.attributes('style')).toContain('left: 21px');
+    expect(plainTarget.attributes('style')).toContain('left: 16px');
     plainWrapper.unmount();
   });
 
@@ -284,6 +396,46 @@ describe('FloatButton.tsx', () => {
     wrapper.unmount();
   });
 
+  test('dynamically removes and restores visible buttons in stack order', async () => {
+    const secondVisible = ref(true);
+    const wrapper = mount(() => (
+      <>
+        <HFloatButton data-test="stack-first" description="First" />
+        <HFloatButton data-test="stack-second" visible={secondVisible.value} description="Second" />
+      </>
+    ));
+    const first = wrapper.get<HTMLElement>('[data-test="stack-first"]');
+    const second = wrapper.get<HTMLElement>('[data-test="stack-second"]');
+    expect(first.element.style.bottom).toContain('* 0');
+    expect(second.element.style.bottom).toContain('* 1');
+
+    secondVisible.value = false;
+    await nextTick();
+    expect(second.element.style.display).toBe('none');
+    expect(first.element.style.bottom).toContain('* 0');
+
+    secondVisible.value = true;
+    await nextTick();
+    expect(second.element.style.bottom).toContain('* 1');
+  });
+
+  test('nested groups apply the nearest provided shape and type', () => {
+    const wrapper = mount(() => (
+      <HFloatButtonGroup type="primary" shape="circle">
+        <HFloatButton data-test="outer-action" description="Outer" />
+        <HFloatButtonGroup type="normal" shape="square">
+          <HFloatButton data-test="inner-action" description="Inner" />
+        </HFloatButtonGroup>
+      </HFloatButtonGroup>
+    ));
+    expect(wrapper.get('[data-test="outer-action"]').classes()).toContain(
+      'h-float-button--primary',
+    );
+    expect(wrapper.get('[data-test="inner-action"]').classes()).toEqual(
+      expect.arrayContaining(['h-float-button--normal', 'h-float-button--square']),
+    );
+  });
+
   test('group expandIcon, foldIcon and default slot follow the expanded state', async () => {
     const wrapper = mount(HFloatButtonGroup, {
       props: {
@@ -302,6 +454,56 @@ describe('FloatButton.tsx', () => {
     await nextTick();
     expect(wrapper.get('[data-test="fold-icon"]').text()).toBe('Fold');
     expect(document.querySelector('[data-test="group-default"]')).toBeInstanceOf(HTMLElement);
+    wrapper.unmount();
+  });
+
+  test('keeps controlled expansion authoritative and exposes group commands', async () => {
+    const onExpanded = vi.fn();
+    const onVisible = vi.fn();
+    const onExpand = vi.fn();
+    const wrapper = mount(HFloatButtonGroup, {
+      props: {
+        useCollapse: true,
+        expanded: false,
+        'onUpdate:expanded': onExpanded,
+        'onUpdate:visible': onVisible,
+        onExpand,
+      },
+      slots: { default: () => <HFloatButton description="Controlled child" /> },
+    });
+    const commands = wrapper.vm as unknown as {
+      expand: () => void;
+      hide: () => void;
+    };
+
+    await wrapper.get('.h-float-button-group__collapse-button').trigger('click');
+    expect(onExpanded).toHaveBeenCalledWith(true, { reason: 'click' });
+    expect(onExpand).toHaveBeenCalledOnce();
+    expect(wrapper.find('.h-float-button-group__collapse-button.is-expanded').exists()).toBe(false);
+
+    commands.expand();
+    expect(onExpanded).toHaveBeenLastCalledWith(true, { reason: 'imperative' });
+    commands.hide();
+    expect(onVisible).toHaveBeenCalledWith(false);
+  });
+
+  test('group visibility hides both the collapse trigger and expanded children', async () => {
+    const visible = ref(true);
+    const wrapper = mount(() => (
+      <HFloatButtonGroup useCollapse expanded visible={visible.value}>
+        <HFloatButton data-test="visible-child" description="Visible child" />
+      </HFloatButtonGroup>
+    ));
+    await nextTick();
+    const trigger = wrapper.get<HTMLElement>('.h-float-button-group__collapse-button');
+    const child = document.querySelector<HTMLElement>('[data-test="visible-child"]')!;
+    expect(trigger.element.style.display).toBe('');
+    expect(child.style.display).toBe('');
+
+    visible.value = false;
+    await nextTick();
+    expect(trigger.element.style.display).toBe('none');
+    expect(child.style.display).toBe('none');
     wrapper.unmount();
   });
 
@@ -330,22 +532,43 @@ describe('FloatButton.tsx', () => {
     await collapseButton.trigger('click');
     expect(onClick).not.toHaveBeenCalled();
     await popoverReference.trigger('mouseenter');
-    await new Promise(resolve => setTimeout(resolve, 20));
+    await new Promise(resolve => setTimeout(resolve, 120));
     expect(onExpand).toHaveBeenCalledTimes(1);
     await popoverReference.trigger('mouseleave');
-    await new Promise(resolve => setTimeout(resolve, 20));
+    await new Promise(resolve => setTimeout(resolve, 120));
     expect(onFold).toHaveBeenCalledTimes(1);
 
     collapseButton.element.dispatchEvent(
-      new MouseEvent('mousedown', { bubbles: true, clientX: 12, clientY: 12 }),
+      new PointerEvent('pointerdown', {
+        bubbles: true,
+        button: 0,
+        clientX: 12,
+        clientY: 12,
+        isPrimary: true,
+        pointerId: 30,
+      }),
     );
     document.dispatchEvent(
-      new MouseEvent('mousemove', { bubbles: true, clientX: 40, clientY: 44 }),
+      new PointerEvent('pointermove', {
+        bubbles: true,
+        clientX: 40,
+        clientY: 44,
+        isPrimary: true,
+        pointerId: 30,
+      }),
     );
     await nextTick();
     expect(wrapper.findComponent({ name: 'HTooltip' }).props('content')).toBe('');
     expect(wrapper.findComponent({ name: 'HPopover' }).props('disabled')).toBe(true);
-    document.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, clientX: 40, clientY: 44 }));
+    document.dispatchEvent(
+      new PointerEvent('pointerup', {
+        bubbles: true,
+        clientX: 40,
+        clientY: 44,
+        isPrimary: true,
+        pointerId: 30,
+      }),
+    );
     await new Promise(resolve => setTimeout(resolve, 320));
     await nextTick();
     expect(wrapper.findComponent({ name: 'HPopover' }).props('disabled')).toBe(false);

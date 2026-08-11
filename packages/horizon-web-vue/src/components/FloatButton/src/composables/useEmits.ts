@@ -1,45 +1,47 @@
+import type {
+  AdaptComponentApiShape,
+  ComponentEventValidators,
+  FloatButtonEventMap,
+  FloatButtonGroupEventMap,
+  FloatButtonGroupExpansionDetails,
+} from '@aurora/core';
+import { isBoolean } from '@aurora/utils';
+
+type FloatButtonVueEvents = AdaptComponentApiShape<
+  FloatButtonEventMap<MouseEvent>,
+  { visibleChange: 'update:visible' }
+>;
+type FloatButtonGroupVueEvents = AdaptComponentApiShape<
+  FloatButtonGroupEventMap,
+  { visibleChange: 'update:visible'; expandedChange: 'update:expanded' }
+>;
+
 export const useFloatButtonEmits = {
-  /**
-   * 点击事件
-   * @param evt 鼠标事件
-   * @paramEn evt The evt value.
-    * @en Emitted when click changes.
-   */
+  /** 点击事件。 @en Native activation event. */
   click: (evt: MouseEvent) => evt instanceof MouseEvent,
-  /**
-   * 拖拽开始
-    * @en Emitted when drag start changes.
-   */
+  /** 请求更新可见状态。 @en Requests a visibility update. */
+  'update:visible': (visible: boolean) => isBoolean(visible),
+  /** 拖拽开始。 @en Drag started. */
   dragStart: () => true,
-  /**
-   * 拖拽中
-    * @en Emitted when dragging changes.
-   */
+  /** 拖拽中。 @en Drag moved. */
   dragging: () => true,
-  /**
-   * 拖拽结束
-    * @en Emitted when drag end changes.
-   */
+  /** 拖拽结束。 @en Drag ended. */
   dragEnd: () => true,
-};
+} satisfies ComponentEventValidators<FloatButtonVueEvents>;
 
 export const useFloatButtonGroupEmits = {
-  /**
-   * 展开
-    * @en Emitted when expand changes.
-   */
+  /** 请求更新可见状态。 @en Requests a visibility update. */
+  'update:visible': (visible: boolean) => isBoolean(visible),
+  /** 请求更新展开状态。 @en Requests an expanded-state update. */
+  'update:expanded': (expanded: boolean, details: FloatButtonGroupExpansionDetails) =>
+    isBoolean(expanded) && typeof details?.reason === 'string',
+  /** 展开。 @en Expanded. */
   expand: () => true,
-  /**
-   * 收起
-    * @en Emitted when fold changes.
-   */
+  /** 收起。 @en Folded. */
   fold: () => true,
-  /**
-   * 在点击折叠按钮时触发
-    * @en Emitted when click changes.
-   */
+  /** 点击折叠按钮。 @en Collapse action clicked. */
   click: () => true,
-};
+} satisfies ComponentEventValidators<FloatButtonGroupVueEvents>;
 
 export type FloatButtonEmits = typeof useFloatButtonEmits;
 export type FloatButtonGroupEmits = typeof useFloatButtonGroupEmits;
