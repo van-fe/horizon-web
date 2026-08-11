@@ -2,13 +2,14 @@ import { defineComponent, computed, ref, toRefs } from 'vue';
 import type { CSSProperties } from 'vue';
 import { useProgressProps } from './composables/useProps';
 import { ComponentClassBlock, cssVariable, useNamespace } from '@aurora/utils';
+import { PROGRESS_DEFAULTS, resolveProgressColor } from '@aurora/core';
 import { AIcon } from '@aurora/icon';
 import type { HApplicationSizeType } from '~/components/Application/src/composables/useProps';
 import useSize from '~/utils/useSize';
 export default defineComponent({
   name: `${useNamespace()}Progress`,
   desc: '给予用户当前系统执行中任务运行状态的反馈，多用于需要用户等待的场景，有效减轻用户在等待中产生的焦虑感',
-  descLocales: { en: "Circle progress bar with size xs does not support text and icon display" },
+  descLocales: { en: 'Circle progress bar with size xs does not support text and icon display' },
   props: useProgressProps,
   setup(props, { slots }) {
     const classHelper = new ComponentClassBlock('progress');
@@ -61,7 +62,7 @@ export default defineComponent({
     };
 
     // global size
-    const sizeRef = useSize(size, 'medium', {
+    const sizeRef = useSize(size, PROGRESS_DEFAULTS.size, {
       xs: 'mini',
       s: 'small',
       m: 'medium',
@@ -78,51 +79,23 @@ export default defineComponent({
       }
     });
 
-    const getCurrentColor = (percentage: number) => {
-      const { color } = props;
-      if (typeof color === 'function') {
-        return color(percentage);
-      } else if (typeof color === 'string') {
-        return color;
-      } else {
-        const span = 100 / color.length;
-        const seriesColors = color.map((seriesColor, index) => {
-          if (typeof seriesColor === 'string') {
-            return {
-              color: seriesColor,
-              percentage: (index + 1) * span,
-            };
-          }
-          return seriesColor;
-        });
-        const colors = seriesColors.sort((a, b) => a.percentage - b.percentage);
-
-        for (const color of colors) {
-          if (color.percentage > percentage) return color.color;
-        }
-        return colors[colors.length - 1]?.color;
-      }
-    };
-
     const stroke = computed(() => {
+      const configured = resolveProgressColor(props.color, props.percentage);
+      if (configured) return configured;
       let ret: string;
-      if (props.color) {
-        ret = getCurrentColor(props.percentage);
-      } else {
-        switch (props.status) {
-          case 'success':
-            ret = cssVariable('bg-success-default');
-            break;
-          case 'exception':
-          case 'error':
-            ret = cssVariable('bg-error-default');
-            break;
-          case 'warning':
-            ret = cssVariable('bg-warning-default');
-            break;
-          default:
-            ret = cssVariable('bg-info-default');
-        }
+      switch (props.status) {
+        case 'success':
+          ret = cssVariable('bg-success-default');
+          break;
+        case 'exception':
+        case 'error':
+          ret = cssVariable('bg-error-default');
+          break;
+        case 'warning':
+          ret = cssVariable('bg-warning-default');
+          break;
+        default:
+          ret = cssVariable('bg-info-default');
       }
       return ret;
     });
@@ -164,6 +137,7 @@ export default defineComponent({
     const formatContent = computed(() => props.format(props.percentage));
     return () => {
       const { type, status, percentage, duration, content, placement, showText, textBold } = props;
+      const statusIcon = status ? iconMap[status] : undefined;
       const classes = {
         [classHelper.block]: true,
         [`${classHelper.block}-${type}`]: true,
@@ -173,7 +147,7 @@ export default defineComponent({
       const barStyle: CSSProperties = {
         width: percentage ? `${percentage}%` : sizeMap[sizeRef.value],
         animationDuration: `${duration}s`,
-        backgroundColor: getCurrentColor(percentage),
+        backgroundColor: stroke.value,
       };
 
       const placementStyle =
@@ -248,8 +222,8 @@ export default defineComponent({
               ) : (
                 <AIcon
                   size={type == 'circle' ? circleIconSize[sizeRef.value] : 14}
-                  name={iconMap[props.status]?.icon}
-                  color={iconMap[props.status]?.color}
+                  name={statusIcon?.icon ?? ''}
+                  color={statusIcon?.color}
                 />
               )}
             </div>

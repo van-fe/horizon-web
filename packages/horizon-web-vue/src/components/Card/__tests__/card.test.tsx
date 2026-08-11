@@ -29,9 +29,7 @@ describe('Card.tsx', () => {
 
   test('title takes precedence over the header slot', () => {
     const wrapper = mount(() => (
-      <HCard title="Account">
-        {{ header: () => <span class="custom-header">Ignored</span> }}
-      </HCard>
+      <HCard title="Account">{{ header: () => <span class="custom-header">Ignored</span> }}</HCard>
     ));
 
     expect(wrapper.find('.h-card__header').text()).toBe('Account');

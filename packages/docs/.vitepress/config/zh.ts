@@ -20,11 +20,21 @@ const reactSidebar = [
       { text: 'Button 按钮', link: 'components/Button' },
       { text: 'Avatar 头像', link: 'components/Avatar' },
       { text: 'Badge 徽标', link: 'components/Badge' },
+      { text: 'Card 卡片', link: 'components/Card' },
       { text: 'Divider 分割线', link: 'components/Divider' },
+      { text: 'Typography 排版', link: 'components/Typography' },
       { text: 'Space 间距', link: 'components/Space' },
       { text: 'Switch 开关', link: 'components/Switch' },
       { text: 'Select 选择器', link: 'components/Select' },
       { text: 'Tooltip 文字提示', link: 'components/Tooltip' },
+    ],
+  },
+  {
+    text: '反馈组件',
+    collapsed: false,
+    items: [
+      { text: 'Progress 进度', link: 'components/Progress' },
+      { text: 'Skeleton 骨架屏', link: 'components/Skeleton' },
     ],
   },
 ];

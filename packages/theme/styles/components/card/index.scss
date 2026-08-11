@@ -1,0 +1,44 @@
+@use '../../mixins';
+
+@include mixins.b('card') {
+  display: flex;
+  flex-direction: column;
+  row-gap: mixins.css-variable('card', 'spacing', 'row-gap');
+  padding: mixins.css-variable('card', 'spacing', 'padding');
+  background-color: mixins.css-variable('background-color');
+
+  @include mixins.m('none') {
+    border-radius: 0;
+  }
+
+  @include mixins.m('small') {
+    border-radius: mixins.css-variable('card', 'border-radius', 'small');
+  }
+
+  @include mixins.m('medium') {
+    border-radius: mixins.css-variable('card', 'border-radius', 'medium');
+  }
+
+  @include mixins.m('large') {
+    border-radius: mixins.css-variable('card', 'border-radius', 'large');
+  }
+
+  @include mixins.is('border') {
+    border: 1px solid mixins.css-variable('card', 'border-color', 'divider');
+  }
+
+  @include mixins.e('header') {
+    font-size: mixins.css-variable('card', 'font-size', 'header');
+    font-weight: mixins.css-variable('card', 'font-weight', 'header');
+  }
+
+  @include mixins.e('content') {
+    font-size: mixins.css-variable('card', 'font-size', 'content');
+  }
+
+  @include mixins.e('divider') {
+    width: 100%;
+    height: 1px;
+    background-color: mixins.css-variable('card', 'border-color', 'divider');
+  }
+}

@@ -1,9 +1,23 @@
 import { declarePropType } from '@aurora/utils';
 import type { ExtractPropTypes, PropType } from 'vue';
+import type {
+  TypographyEllipsis,
+  TypographyLevel,
+  TypographySize,
+  TypographyVariant,
+  TypographyWeight,
+} from '@aurora/core';
+import {
+  isTypographyEllipsis,
+  isTypographyLevel,
+  isTypographySize,
+  isTypographyVariant,
+  isTypographyWeight,
+  TYPOGRAPHY_DEFAULTS,
+} from '@aurora/core';
 
-export type TypographyType = 'default' | 'secondary' | 'success' | 'warning' | 'danger';
-export type TypographySize = 'small' | 'medium' | 'large';
-export type TypographyWeight = 'regular' | 'medium' | 'semibold' | 'bold';
+export type TypographyType = TypographyVariant;
+export type { TypographySize, TypographyWeight } from '@aurora/core';
 
 export const useTypographyProps = declarePropType({
   /**
@@ -19,15 +33,15 @@ export const useTypographyProps = declarePropType({
    */
   tag: {
     type: String,
-    default: 'span',
+    default: TYPOGRAPHY_DEFAULTS.tag,
   },
   /**
    * 标题级别
    * @en Heading level.
    */
   level: {
-    type: Number as PropType<1 | 2 | 3 | 4 | 5 | 6>,
-    validator: (value: number) => Number.isInteger(value) && value >= 1 && value <= 6,
+    type: Number as PropType<TypographyLevel>,
+    validator: isTypographyLevel,
   },
   /**
    * 文本语义类型
@@ -35,8 +49,9 @@ export const useTypographyProps = declarePropType({
    */
   type: {
     type: String as PropType<TypographyType>,
-    default: 'default',
+    default: TYPOGRAPHY_DEFAULTS.variant,
     values: ['default', 'secondary', 'success', 'warning', 'danger'],
+    validator: isTypographyVariant,
   },
   /**
    * 文本尺寸；标题级别会优先决定标题尺寸
@@ -44,8 +59,9 @@ export const useTypographyProps = declarePropType({
    */
   size: {
     type: String as PropType<TypographySize>,
-    default: 'medium',
+    default: TYPOGRAPHY_DEFAULTS.size,
     values: ['small', 'medium', 'large'],
+    validator: isTypographySize,
   },
   /**
    * 字重
@@ -53,8 +69,9 @@ export const useTypographyProps = declarePropType({
    */
   weight: {
     type: String as PropType<TypographyWeight>,
-    default: 'regular',
+    default: TYPOGRAPHY_DEFAULTS.weight,
     values: ['regular', 'medium', 'semibold', 'bold'],
+    validator: isTypographyWeight,
   },
   /**
    * 是否以块级元素显示
@@ -62,7 +79,7 @@ export const useTypographyProps = declarePropType({
    */
   block: {
     type: Boolean,
-    default: false,
+    default: TYPOGRAPHY_DEFAULTS.block,
   },
   /**
    * 是否使用斜体
@@ -70,7 +87,7 @@ export const useTypographyProps = declarePropType({
    */
   italic: {
     type: Boolean,
-    default: false,
+    default: TYPOGRAPHY_DEFAULTS.italic,
   },
   /**
    * 是否添加下划线
@@ -78,7 +95,7 @@ export const useTypographyProps = declarePropType({
    */
   underline: {
     type: Boolean,
-    default: false,
+    default: TYPOGRAPHY_DEFAULTS.underline,
   },
   /**
    * 是否添加删除线
@@ -86,7 +103,7 @@ export const useTypographyProps = declarePropType({
    */
   deleted: {
     type: Boolean,
-    default: false,
+    default: TYPOGRAPHY_DEFAULTS.deleted,
   },
   /**
    * 是否使用行内代码样式
@@ -94,16 +111,16 @@ export const useTypographyProps = declarePropType({
    */
   code: {
     type: Boolean,
-    default: false,
+    default: TYPOGRAPHY_DEFAULTS.code,
   },
   /**
    * 文本省略；true 表示单行，数字表示最大显示行数
    * @en Text ellipsis. True means one line; a number sets the maximum line count.
    */
   ellipsis: {
-    type: [Boolean, Number] as PropType<boolean | number>,
-    default: false,
-    validator: (value: boolean | number) => typeof value === 'boolean' || value > 0,
+    type: [Boolean, Number] as PropType<TypographyEllipsis>,
+    default: TYPOGRAPHY_DEFAULTS.ellipsis,
+    validator: isTypographyEllipsis,
   },
   /**
    * 是否显示复制按钮
@@ -111,7 +128,7 @@ export const useTypographyProps = declarePropType({
    */
   copyable: {
     type: Boolean,
-    default: false,
+    default: TYPOGRAPHY_DEFAULTS.copyable,
   },
   /**
    * 是否允许编辑文本
@@ -119,7 +136,7 @@ export const useTypographyProps = declarePropType({
    */
   editable: {
     type: Boolean,
-    default: false,
+    default: TYPOGRAPHY_DEFAULTS.editable,
   },
   /**
    * 是否禁用复制和编辑操作
@@ -127,7 +144,7 @@ export const useTypographyProps = declarePropType({
    */
   disabled: {
     type: Boolean,
-    default: false,
+    default: TYPOGRAPHY_DEFAULTS.disabled,
   },
 });
 

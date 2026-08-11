@@ -5,13 +5,17 @@ import {
   avatarManifest,
   badgeManifest,
   buttonManifest,
+  cardManifest,
   createReactComponentManifest,
   createVueComponentManifest,
   dividerManifest,
+  progressManifest,
   selectManifest,
+  skeletonManifest,
   spaceManifest,
   switchManifest,
   tooltipManifest,
+  typographyManifest,
 } from '../packages/core/src';
 import type { ManifestFieldAdaptation } from '../packages/core/src';
 
@@ -19,11 +23,15 @@ const manifests = [
   avatarManifest,
   badgeManifest,
   buttonManifest,
+  cardManifest,
   dividerManifest,
+  progressManifest,
   selectManifest,
+  skeletonManifest,
   spaceManifest,
   switchManifest,
   tooltipManifest,
+  typographyManifest,
 ] as const;
 
 interface RendererApiAdaptation {
@@ -42,11 +50,14 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     regions: { rename: { content: 'default' }, omit: ['icon'] },
   },
   Button: { props: { rename: { variant: 'type', asyncState: 'debounceType' } } },
+  Card: { regions: { rename: { content: 'default' } } },
   Divider: {
     props: { rename: { variant: 'type' } },
     regions: { rename: { title: 'default' } },
   },
+  Progress: { regions: { rename: { label: 'default' } } },
   Select: { props: { rename: { value: 'modelValue' }, omit: ['defaultValue', 'open'] } },
+  Skeleton: { regions: { rename: { content: 'default', placeholder: 'loadingTemplate' } } },
   Space: {
     props: {
       extend: [
@@ -76,6 +87,14 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     },
     regions: { rename: { trigger: 'default' } },
   },
+  Typography: {
+    props: {
+      rename: { value: 'modelValue', variant: 'type' },
+      omit: ['defaultValue'],
+    },
+    events: { rename: { valueChange: 'update:modelValue' } },
+    regions: { rename: { content: 'default' } },
+  },
 };
 
 const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
@@ -94,7 +113,9 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     },
     regions: { rename: { default: 'children' } },
   },
+  Card: { regions: { rename: { content: 'children' } } },
   Divider: { regions: { rename: { title: 'children' } } },
+  Progress: { regions: { rename: { label: 'children' } } },
   Select: {
     events: { rename: { change: 'onChange', openChange: 'onOpenChange' } },
     regions: {
@@ -106,6 +127,7 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
       },
     },
   },
+  Skeleton: { regions: { rename: { content: 'children' } } },
   Space: {
     props: {
       extend: [
@@ -130,6 +152,12 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     props: { rename: { showDelay: 'showAfter', hideDelay: 'hideAfter' } },
     events: { rename: { openChange: 'onOpenChange' } },
     regions: { rename: { trigger: 'children' } },
+  },
+  Typography: {
+    events: {
+      rename: { valueChange: 'onValueChange', change: 'onChange', copy: 'onCopy' },
+    },
+    regions: { rename: { content: 'children' } },
   },
 };
 

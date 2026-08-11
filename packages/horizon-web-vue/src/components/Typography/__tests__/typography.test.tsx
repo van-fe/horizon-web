@@ -157,11 +157,7 @@ describe('Typography', () => {
   test('supports the JSX update:modelValue listener contract', async () => {
     const onUpdateModelValue = vi.fn();
     const wrapper = mount(() => (
-      <HTypography
-        modelValue="before"
-        editable
-        onUpdate:modelValue={onUpdateModelValue}
-      />
+      <HTypography modelValue="before" editable onUpdate:modelValue={onUpdateModelValue} />
     ));
     await wrapper.findComponent(HButton).trigger('click');
     await wrapper.get('input').setValue('after');

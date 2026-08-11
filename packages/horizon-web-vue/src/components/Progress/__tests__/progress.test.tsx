@@ -29,7 +29,9 @@ describe('Progress.tsx', () => {
 
     expect(wrapper.get('[role="progressbar"]').attributes('aria-valuetext')).toBe('25 tasks');
     expect(wrapper.get('.h-progress__text span').text()).toBe('25 tasks');
-    expect(wrapper.get('.h-progress__text span').attributes('style')).toContain('font-weight: bold');
+    expect(wrapper.get('.h-progress__text span').attributes('style')).toContain(
+      'font-weight: bold',
+    );
 
     percentage.value = 75;
     await nextTick();
@@ -62,9 +64,9 @@ describe('Progress.tsx', () => {
       'green',
     );
     expect((zero.get('.h-progress-bar__inner').element as HTMLElement).style.width).toBe('6px');
-    expect(
-      (zero.get('.h-progress-bar__inner').element as HTMLElement).style.backgroundColor,
-    ).toBe('rgb(1, 2, 3)');
+    expect((zero.get('.h-progress-bar__inner').element as HTMLElement).style.backgroundColor).toBe(
+      'rgb(1, 2, 3)',
+    );
     expect(zeroCircle.findAll('svg path')[1].attributes('stroke-width')).toBe('0');
   });
 
@@ -121,13 +123,7 @@ describe('Progress.tsx', () => {
   test('applies duration, function color, explicit content and follow placement', () => {
     const color = vi.fn((percentage: number) => (percentage > 50 ? 'rgb(255, 0, 0)' : 'blue'));
     const wrapper = mount(() => (
-      <HProgress
-        percentage={75}
-        duration={1.5}
-        color={color}
-        content="3 of 4"
-        placement="follow"
-      />
+      <HProgress percentage={75} duration={1.5} color={color} content="3 of 4" placement="follow" />
     ));
     const inner = wrapper.get('.h-progress-bar__inner').element as HTMLElement;
     const text = wrapper.get('.h-progress__text').element as HTMLElement;

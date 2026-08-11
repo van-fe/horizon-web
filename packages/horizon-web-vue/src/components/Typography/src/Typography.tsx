@@ -1,4 +1,5 @@
 import type { HorizonWebSetupContext } from '@aurora/utils';
+import { resolveTypographyEllipsisLines, resolveTypographyTag } from '@aurora/core';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { computed, defineComponent, nextTick, ref, watch } from 'vue';
 import HButton from '~/components/Button/src/Button';
@@ -45,10 +46,8 @@ export default defineComponent({
       },
     );
 
-    const rootTag = computed(() => (props.level ? `h${props.level}` : props.tag));
-    const ellipsisLines = computed(() =>
-      props.ellipsis === true ? 1 : typeof props.ellipsis === 'number' ? props.ellipsis : 0,
-    );
+    const rootTag = computed(() => resolveTypographyTag(props.tag, props.level));
+    const ellipsisLines = computed(() => resolveTypographyEllipsisLines(props.ellipsis));
     const getContent = () => props.modelValue ?? contentRef.value?.textContent ?? '';
 
     const edit = () => {

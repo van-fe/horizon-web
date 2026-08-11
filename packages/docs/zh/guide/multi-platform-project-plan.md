@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-A1 基础展示与布局组件已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-A2 第一批展示与反馈组件已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -366,6 +366,17 @@ Alert Empty Result Statistic Count
 | QA-A1-001 | Done | 8 组 Vue/React 契约生成通过；Core 42、React Chromium 35、Vue 全量 2296 项通过，Vue 覆盖率四项均超过 95% |
 
 下一批 M6-A2 迁移 `Card Typography Progress Skeleton Alert Empty Result Statistic Count`。
+
+#### M6-A2 第一批实施记录（2026-08-11）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-A2-001 | Done | Card、Typography、Progress、Skeleton 公共 props、默认值、校验器、事件元组、内容区域、命令和纯算法迁入 `@aurora/core` |
+| VUE-A2-001 | Done | 四个 Vue 组件消费公共契约和纯算法，保留现有 props、emits、slots、exposes 与组件行为 |
+| REACT-A2-001 | Done | 完成 Card、Typography、Progress、Skeleton 与 SkeletonItem 的 React 原生实现、ref、ARIA、受控与非受控行为 |
+| DS-A2-001 | Done | 四组 Sass 和变量迁入 `@aurora/theme`，Vue 通过代理入口加载，React 构建使用同源样式 |
+| DOC-A2-001 | Done | 四个组件的中英文 React 页面、独立 TSX 示例和 React 侧边栏入口完成 |
+| QA-A2-001 | Done | 12 组 Vue/React 契约生成；Core 50、React Chromium 45、Vue 全量 2296 项通过，覆盖率四项均超过 95%，包构建、文档和 Vue/React/SSR 消费工程通过 |
 
 ### 批次 B：基础表单与导航
 

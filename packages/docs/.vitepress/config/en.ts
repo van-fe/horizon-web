@@ -20,11 +20,21 @@ const reactSidebar = [
       { text: 'Button', link: 'components/Button' },
       { text: 'Avatar', link: 'components/Avatar' },
       { text: 'Badge', link: 'components/Badge' },
+      { text: 'Card', link: 'components/Card' },
       { text: 'Divider', link: 'components/Divider' },
+      { text: 'Typography', link: 'components/Typography' },
       { text: 'Space', link: 'components/Space' },
       { text: 'Switch', link: 'components/Switch' },
       { text: 'Select', link: 'components/Select' },
       { text: 'Tooltip', link: 'components/Tooltip' },
+    ],
+  },
+  {
+    text: 'Feedback Components',
+    collapsed: false,
+    items: [
+      { text: 'Progress', link: 'components/Progress' },
+      { text: 'Skeleton', link: 'components/Skeleton' },
     ],
   },
 ];
