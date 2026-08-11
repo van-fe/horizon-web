@@ -76,9 +76,8 @@
     "dist/horizon-web-browser.iife.js",
     "dist/horizon-web-browser.mjs",
     "dist/horizon-web-browser.umd.js",
-    "dist/style.css",
-    "*.css",
-    "*.scss"
+    "**/*.css",
+    "**/*.scss"
   ],
   "dependencies": {
     "@aurora/core": "workspace:*",

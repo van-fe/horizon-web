@@ -25,6 +25,7 @@
     "dist",
     "types"
   ],
+  "sideEffects": false,
   "devConfig": {
     "watch": false
   },

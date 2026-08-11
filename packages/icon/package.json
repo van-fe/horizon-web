@@ -8,6 +8,7 @@
   "files": [
     "dist"
   ],
+  "sideEffects": false,
   "scripts": {
     "generate": "rm -rf src/components/icons && bun run scripts/generate-icon-components.ts",
     "build": "bun run generate && bunx --bun vite build",

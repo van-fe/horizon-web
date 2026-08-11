@@ -12,6 +12,7 @@
     "dist",
     "types"
   ],
+  "sideEffects": false,
   "scripts": {
     "dev": "bun run build:types && bun run build:js -- --watch",
     "build": "bun run build:types && bun run build:js",
