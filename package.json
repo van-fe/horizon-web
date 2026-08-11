@@ -32,7 +32,7 @@
     "vitest:colors": "bun run --bun vitest run --dir ./packages/colors/src --config ./packages/colors/vite.config.ts",
     "vitest:upload-adapters": "bun run --bun vitest run --dir ./packages/upload-adapters --config ./packages/upload-adapters/vitest.config.ts",
     "git:prune": "git remote prune origin && git branch -vv | grep 'origin/.*: gone]' | awk '{print $1}' | xargs git branch -d",
-    "docs:prepare": "bun --filter @aurora/api-generator build",
+    "docs:prepare": "bun --filter @aurora/horizon-web-vue build:index",
     "docs:dev": "bun run docs:prepare && vitepress dev packages/docs",
     "docs:build": "bun run docs:prepare && bun run docs:check-media && bun run docs:check-renderers && vitepress build packages/docs",
     "docs:check-media": "bun run scripts/checkDocsMedia.ts",

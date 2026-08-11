@@ -23,6 +23,8 @@ packages/horizon-web-vue/src/styles/theme-config.ts
 packages/horizon-web-vue/src/styles/theme-types.ts
 packages/horizon-web-vue/src/styles/basicTokens.ts
 packages/horizon-web-vue/src/styles/elementTokens.ts
+packages/horizon-web-vue/src/styles/global-variables.scss
+packages/horizon-web-vue/src/styles/index.scss
 packages/horizon-web-vue/json/
 packages/horizon-web-vue/coverage/
 packages/horizon-web-vue/src/components/emits.ts
