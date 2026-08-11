@@ -26,9 +26,17 @@ const reactSidebar = [
       { text: 'Typography', link: 'components/Typography' },
       { text: 'Statistic', link: 'components/Statistic' },
       { text: 'Space', link: 'components/Space' },
-      { text: 'Switch', link: 'components/Switch' },
-      { text: 'Select', link: 'components/Select' },
       { text: 'Tooltip', link: 'components/Tooltip' },
+    ],
+  },
+  {
+    text: 'Form Components',
+    collapsed: false,
+    items: [
+      { text: 'Rate', link: 'components/Rate' },
+      { text: 'Segmented', link: 'components/Segmented' },
+      { text: 'Select', link: 'components/Select' },
+      { text: 'Switch', link: 'components/Switch' },
     ],
   },
   {

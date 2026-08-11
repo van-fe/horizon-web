@@ -12,8 +12,8 @@ import HTooltip from '~/components/Tooltip/src/Tooltip';
 
 export default defineComponent({
   name: `${useNamespace()}SegmentedItem`,
-  desc: "分段控制器中的单个选项",
-  descLocales: { en: "A single option within Segmented." },
+  desc: '分段控制器中的单个选项',
+  descLocales: { en: 'A single option within Segmented.' },
   components: { AIcon, HTooltip },
   props: useSegmentedItemProps,
   slots: useSegmentedItemSlots,
@@ -45,6 +45,8 @@ export default defineComponent({
 
     return () => {
       const slotDefault = slots?.default?.({
+        selected: isActivated.value,
+        value: value.value,
         state: isActivated.value,
         activeKey: ctx.activeKey.value!,
       }) as VNode[] | VNode;

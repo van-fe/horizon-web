@@ -1,0 +1,14 @@
+@use '../../mixins/function';
+
+$values: (
+  color: (
+    content: #{function.css-variable('color-3-5')},
+    empty: #{function.css-variable('border-default')},
+    disabled: #{function.css-variable('text-disabled')},
+  ),
+  spacing: (
+    tooltip: (
+      padding-left: 5px,
+    ),
+  ),
+);

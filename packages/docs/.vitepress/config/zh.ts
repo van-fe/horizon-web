@@ -26,9 +26,17 @@ const reactSidebar = [
       { text: 'Typography 排版', link: 'components/Typography' },
       { text: 'Statistic 统计数值', link: 'components/Statistic' },
       { text: 'Space 间距', link: 'components/Space' },
-      { text: 'Switch 开关', link: 'components/Switch' },
-      { text: 'Select 选择器', link: 'components/Select' },
       { text: 'Tooltip 文字提示', link: 'components/Tooltip' },
+    ],
+  },
+  {
+    text: '表单组件',
+    collapsed: false,
+    items: [
+      { text: 'Rate 评分', link: 'components/Rate' },
+      { text: 'Segmented 分段控制器', link: 'components/Segmented' },
+      { text: 'Select 选择器', link: 'components/Select' },
+      { text: 'Switch 开关', link: 'components/Switch' },
     ],
   },
   {

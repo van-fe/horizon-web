@@ -1,4 +1,4 @@
-import { isNumber, isString } from '@aurora/utils';
+import { isSegmentedValue } from '@aurora/core';
 import type { HSegmentedValue } from './useProps';
 
 export const useSegmentedEmits = {
@@ -8,7 +8,7 @@ export const useSegmentedEmits = {
    * @paramEn value Updated option value.
    * @en Emitted when the active value changes.
    */
-  'update:activeKey': (value: HSegmentedValue) => isString(value) || isNumber(value),
+  'update:activeKey': (value: HSegmentedValue) => isSegmentedValue(value),
 
   /**
    * 选项卡变化回调
@@ -16,7 +16,7 @@ export const useSegmentedEmits = {
    * @paramEn value Selected option value.
    * @en Emitted after the selected option changes.
    */
-  change: (value: HSegmentedValue) => isString(value) || isNumber(value),
+  change: (value: HSegmentedValue) => isSegmentedValue(value),
 };
 
 export const useSegmentedItemEmits = {
@@ -26,7 +26,7 @@ export const useSegmentedItemEmits = {
    * @paramEn value Current option value.
    * @en Emitted when the option is clicked.
    */
-  click: (value: HSegmentedValue) => isString(value) || isNumber(value),
+  click: (value: HSegmentedValue) => isSegmentedValue(value),
 };
 
 export type SegmentedEmits = typeof useSegmentedEmits;

@@ -13,6 +13,7 @@ import {
   watch,
 } from 'vue';
 import { type HApplicationSizeType } from '~/components/Application/src/composables/useProps';
+import { nextSegmentedIndex, resolveSegmentedValue, SEGMENTED_DEFAULTS } from '@aurora/core';
 import { GlobalSizeInjectedKey } from '~/components/Application/src/utils/injectedKeys';
 import { HFormItemTriggerInjectedKey } from '~/injectedKeys';
 import type { SegmentedEmits } from './composables/useEmits';
@@ -37,17 +38,25 @@ export default defineComponent({
   exposes: useSegmentedExposes,
   setup(
     props,
-    { emit, slots, attrs }: HorizonWebSetupContext<SegmentedEmits, SegmentedSlots, SegmentedExposes>,
+    {
+      emit,
+      slots,
+      attrs,
+      expose,
+    }: HorizonWebSetupContext<SegmentedEmits, SegmentedSlots, SegmentedExposes>,
   ) {
     const cls = new ComponentClassBlock('segmented');
 
-    const globalSize = inject<Ref<HSegmentedSize>>(GlobalSizeInjectedKey, ref('medium'));
+    const globalSize = inject<Ref<HSegmentedSize>>(
+      GlobalSizeInjectedKey,
+      ref(SEGMENTED_DEFAULTS.size),
+    );
     const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
 
     const rootDomRef = ref<HTMLElement>();
     const wrapperDomRef = ref<HTMLElement>();
     const navListDomRef = ref<HTMLElement>();
-    const activeKey = ref(props.activeKey ?? props.defaultActiveKey);
+    const activeKey = ref(resolveSegmentedValue(props.activeKey, props.defaultActiveKey));
 
     const size = computed(() => {
       return props.size || globalSize.value;
@@ -117,16 +126,19 @@ export default defineComponent({
       if (!tabs.length) return;
       const eventTab = (evt.target as HTMLElement | null)?.closest<HTMLElement>('[role="tab"]');
       const currentIndex = tabs.indexOf(eventTab ?? (document.activeElement as HTMLElement));
-      let nextIndex: number | undefined;
-      if (evt.key === 'ArrowRight') nextIndex = (currentIndex + 1) % tabs.length;
-      if (evt.key === 'ArrowLeft') nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
-      if (evt.key === 'Home') nextIndex = 0;
-      if (evt.key === 'End') nextIndex = tabs.length - 1;
+      const nextIndex = nextSegmentedIndex(currentIndex, tabs.length, evt.key);
       if (nextIndex === undefined) return;
       evt.preventDefault();
       tabs[nextIndex]?.focus();
       tabs[nextIndex]?.click();
     };
+
+    expose({
+      focus: () => {
+        const tabs = getEnabledTabs();
+        (tabs.find(tab => tab.getAttribute('aria-selected') === 'true') ?? tabs[0])?.focus();
+      },
+    });
 
     return () => {
       if (!slots.default) return null;

@@ -10,6 +10,8 @@ export * from './Divider';
 export * from './Empty';
 export * from './Progress';
 export * from './Result';
+export * from './Rate';
+export * from './Segmented';
 export * from './Select';
 export * from './Skeleton';
 export * from './Space';

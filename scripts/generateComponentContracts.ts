@@ -13,7 +13,9 @@ import {
   dividerManifest,
   emptyManifest,
   progressManifest,
+  rateManifest,
   resultManifest,
+  segmentedManifest,
   selectManifest,
   skeletonManifest,
   spaceManifest,
@@ -34,7 +36,9 @@ const manifests = [
   dividerManifest,
   emptyManifest,
   progressManifest,
+  rateManifest,
   resultManifest,
+  segmentedManifest,
   selectManifest,
   skeletonManifest,
   spaceManifest,
@@ -68,7 +72,36 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
   },
   Empty: { regions: { rename: { footer: 'default' } } },
   Progress: { regions: { rename: { label: 'default' } } },
+  Rate: {
+    props: {
+      rename: { value: 'modelValue', readOnly: 'readonly' },
+      omit: ['defaultValue'],
+    },
+    events: {
+      extend: [
+        {
+          name: 'update:modelValue',
+          type: 'number',
+          description: { zh: '更新绑定值', en: 'Updates the bound value' },
+        },
+      ],
+    },
+    regions: { rename: { icon: 'default' } },
+  },
   Result: {},
+  Segmented: {
+    props: { rename: { value: 'activeKey', defaultValue: 'defaultActiveKey' } },
+    events: {
+      extend: [
+        {
+          name: 'update:activeKey',
+          type: 'SegmentedValue',
+          description: { zh: '更新激活值', en: 'Updates the active value' },
+        },
+      ],
+    },
+    regions: { rename: { content: 'default' } },
+  },
   Select: { props: { rename: { value: 'modelValue' }, omit: ['defaultValue', 'open'] } },
   Skeleton: { regions: { rename: { content: 'default', placeholder: 'loadingTemplate' } } },
   Statistic: { regions: { rename: { value: 'default' } } },
@@ -136,10 +169,18 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
   Divider: { regions: { rename: { title: 'children' } } },
   Empty: { regions: { rename: { footer: 'children' } } },
   Progress: { regions: { rename: { label: 'children' } } },
+  Rate: {
+    events: { rename: { change: 'onChange', blur: 'onBlur' } },
+    regions: { rename: { icon: 'renderIcon' } },
+  },
   Result: {
     events: {
       rename: { primaryClick: 'onPrimaryClick', secondaryClick: 'onSecondaryClick' },
     },
+  },
+  Segmented: {
+    events: { rename: { change: 'onChange' } },
+    regions: { rename: { content: 'children' } },
   },
   Select: {
     events: { rename: { change: 'onChange', openChange: 'onOpenChange' } },

@@ -1,5 +1,12 @@
-import type { ComputedRef } from 'vue';
+import type { ComputedRef, CSSProperties } from 'vue';
 import { computed, defineComponent, inject, nextTick, ref, toRefs } from 'vue';
+import type { RateItemStatus } from '@aurora/core';
+import {
+  getRateItemStatus,
+  getRateKeyboardValue,
+  normalizeRateValue,
+  resolveRateTooltip,
+} from '@aurora/core';
 import { useRateProps } from './composables/useProps';
 import type { RateEmits } from './composables/useEmits';
 import type { HorizonWebSetupContext } from '@aurora/utils';
@@ -14,33 +21,21 @@ import {
 } from '~/components/Form/src/utils/injectedKeys';
 import type { RateSlots } from './composables/useSlots';
 import { useRateSlots } from './composables/useSlots';
-
-type RateStatus = 'full' | 'half' | 'void';
-
-type RateListItem = {
-  value: number;
-  status: RateStatus;
-};
-function getRateStatus(value: number, index: number): RateListItem {
-  if (value >= index) {
-    return { status: 'full', value: 1 };
-  } else if (value < index && value + 0.5 === index) {
-    return { status: 'half', value: 0.5 };
-  }
-  return { status: 'void', value: 0 };
-}
+import type { RateExposes } from './composables/useExposes';
+import { useRateExposes } from './composables/useExposes';
 
 export default defineComponent({
   name: `${useNamespace()}Rate`,
   desc: '用于评分操作',
-  descLocales: { en: "Use `v-model` to bind the current rating value." },
+  descLocales: { en: 'Use `v-model` to bind the current rating value.' },
   components: {
     AIcon,
   },
   props: useRateProps,
   emits: useRateEmits,
   slots: useRateSlots,
-  setup(props, { emit, slots }: HorizonWebSetupContext<RateEmits, RateSlots>) {
+  exposes: useRateExposes,
+  setup(props, { emit, slots, expose }: HorizonWebSetupContext<RateEmits, RateSlots, RateExposes>) {
     const classHelper = new ComponentClassBlock('rate');
     const iconSizeMap = {
       small: 12,
@@ -62,6 +57,7 @@ export default defineComponent({
       gutter: gutterRef,
       half: halfRef,
     } = toRefs(props);
+    const rootRef = ref<HTMLElement>();
 
     // global size
     const globalSize = inject(GlobalSizeInjectedKey, ref('medium'));
@@ -75,35 +71,19 @@ export default defineComponent({
     // form disabled inject
     const formDisabled = inject(HFormDisabledInjectedKey, undefined);
     const isDisabled = computed(() => formDisabled?.value || disabledRef.value);
+    const currentValue = computed(() =>
+      normalizeRateValue(modelValueRef.value, countRef.value, halfRef.value),
+    );
 
-    const tooltipText = computed<any[]>(() => {
-      if (shouldShowCustomTooltip.value) {
-        return tooltipRef.value;
-      }
-      return Array(+countRef.value)
-        .fill(0)
-        .map((_, index) => {
-          return index + 1;
-        });
-    });
-
-    const shouldShowCustomTooltip = computed<Boolean>(() => {
-      return (
-        JSON.stringify(tooltipRef.value.length) !== '[]' &&
-        tooltipRef.value?.length === countRef.value
-      );
-    });
     const iconList = computed(() => {
       return Array(+countRef.value)
-        .fill({})
-        .map((_, index) => {
-          return getRateStatus(modelValueRef.value, index + 1);
-        });
+        .fill(undefined)
+        .map((_, index) => getRateItemStatus(currentValue.value, index + 1));
     });
-    const renderIcons = (item: RateListItem, index: number) => {
+    const renderIcons = (status: RateItemStatus, index: number) => {
       let trueScore = index + 1;
-      const isFull: Boolean = item.status === 'full';
-      const isHalf: Boolean = item.status === 'half';
+      const isFull = status === 'full';
+      const isHalf = status === 'half';
       const sizeNumber: number =
         typeof sizeRef.value === 'number' ? sizeRef.value : iconSizeMap[sizeRef.value];
       const style = {
@@ -111,14 +91,14 @@ export default defineComponent({
         height: sizeNumber,
         marginRight: `${gutterRef.value}px`,
       };
-      const shouldIconHalf = (event: any) => {
-        const centerLine = iconSizeMap.hasOwnProperty(sizeRef.value)
+      const shouldIconHalf = (event: MouseEvent) => {
+        const centerLine = Object.hasOwn(iconSizeMap, sizeRef.value)
           ? iconSizeMap[sizeRef.value as keyof typeof iconSizeMap] / 2
           : parseInt(`${sizeRef.value}`, 10) / 2;
 
         return event.offsetX < centerLine;
       };
-      const onChange = (event: any) => {
+      const onChange = (event: MouseEvent) => {
         const shouldHalf = halfRef.value ? shouldIconHalf(event) : false;
         if (isDisabled.value || readonlyRef.value) {
           return;
@@ -139,15 +119,15 @@ export default defineComponent({
           : colorRef.value
         : voidColorRef.value;
 
-      const getSize: any = iconSizeMap.hasOwnProperty(sizeRef.value)
+      const getSize = Object.hasOwn(iconSizeMap, sizeRef.value)
         ? iconSizeMap[sizeRef.value as keyof typeof iconSizeMap]
         : sizeRef.value;
 
-      const getClass: Array<any> = [
+      const getClass = [
         classHelper.e('icon'),
         isFull ? classHelper.m('full') : classHelper.m('void'),
       ];
-      const getHalfStyle: Object = {
+      const getHalfStyle: CSSProperties = {
         position: 'absolute',
         overflow: 'hidden',
         top: 0,
@@ -165,7 +145,7 @@ export default defineComponent({
           class={getClass}
           onClick={onChange}
         >
-          {slots.default?.()}
+          {slots.default?.({ index, status, value: currentValue.value })}
           {isHalf && (
             <span
               style={{
@@ -173,7 +153,7 @@ export default defineComponent({
                 color: colorRef.value,
               }}
             >
-              {slots.default?.()}
+              {slots.default?.({ index, status, value: currentValue.value })}
             </span>
           )}
         </span>
@@ -212,22 +192,24 @@ export default defineComponent({
 
     function onKeydown(evt: KeyboardEvent) {
       if (readonlyRef.value || isDisabled.value) return;
-      const step = halfRef.value ? 0.5 : 1;
-      let value = modelValueRef.value;
-      if (evt.key === 'ArrowRight' || evt.key === 'ArrowUp') value += step;
-      else if (evt.key === 'ArrowLeft' || evt.key === 'ArrowDown') value -= step;
-      else if (evt.key === 'Home') value = 0;
-      else if (evt.key === 'End') value = countRef.value;
-      else return;
+      const value = getRateKeyboardValue(
+        currentValue.value,
+        evt.key,
+        countRef.value,
+        halfRef.value,
+      );
+      if (value === undefined) return;
       evt.preventDefault();
-      value = Math.max(0, Math.min(countRef.value, value));
       emit('update:modelValue', value);
       emit('change', value);
       nextTick().then(() => formItemTrigger?.('change'));
     }
 
+    expose({ focus: () => rootRef.value?.focus() });
+
     return () => (
       <div
+        ref={rootRef}
         class={[
           classHelper.block,
           classHelper.m('enabled', !readonlyRef.value && !isDisabled.value),
@@ -236,21 +218,19 @@ export default defineComponent({
         role="slider"
         aria-valuemin={0}
         aria-valuemax={countRef.value}
-        aria-valuenow={modelValueRef.value}
+        aria-valuenow={currentValue.value}
         aria-disabled={isDisabled.value}
         aria-readonly={readonlyRef.value}
         tabindex={isDisabled.value ? -1 : 0}
         onKeydown={onKeydown}
         onBlur={onBlur}
       >
-        {iconList.value.map((item: RateListItem, index: number) => {
-          return renderIcons(item, index);
+        {iconList.value.map((status, index) => {
+          return renderIcons(status, index);
         })}
         {showTooltipRef.value && (
           <span class={classHelper.e('tooltip')}>
-            {shouldShowCustomTooltip.value
-              ? tooltipText.value[parseInt(`${modelValueRef.value}`, 10) - 1]
-              : modelValueRef.value}
+            {resolveRateTooltip(currentValue.value, countRef.value, tooltipRef.value)}
           </span>
         )}
       </div>

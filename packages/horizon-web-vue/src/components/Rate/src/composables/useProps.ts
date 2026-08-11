@@ -1,73 +1,78 @@
 import type { ExtractPropTypes, PropType } from 'vue';
+import type { RateSize, RateTooltip } from '@aurora/core';
+import { isRateCount, isRateGutter, isRateSize, isRateValue, RATE_DEFAULTS } from '@aurora/core';
 import { cssVariable, declarePropType } from '@aurora/utils';
 
 export const useRateProps = declarePropType({
   /**
    * 绑定值
-    * @en Configuration for model value.
+   * @en Configuration for model value.
    */
   modelValue: {
     type: Number,
-    default: 3,
+    default: RATE_DEFAULTS.defaultValue,
+    validator: isRateValue,
   },
   /**
    * icon数量
-    * @en Configuration for count.
+   * @en Configuration for count.
    */
   count: {
     type: Number,
-    default: 5,
+    default: RATE_DEFAULTS.count,
+    validator: isRateCount,
   },
   /**
    * 允许半星
-    * @en Configuration for half.
+   * @en Configuration for half.
    */
   half: {
     type: Boolean,
-    default: false,
+    default: RATE_DEFAULTS.half,
   },
   /**
    * 是否显示提示文字
-    * @en Configuration for show tooltip.
+   * @en Configuration for show tooltip.
    */
   showTooltip: {
     type: Boolean,
-    default: false,
+    default: RATE_DEFAULTS.showTooltip,
   },
   /**
    * 提示文字文本
-    * @en Configuration for tooltip.
+   * @en Configuration for tooltip.
    */
   tooltip: {
-    type: Array,
-    default: [],
+    type: Array as PropType<RateTooltip[]>,
+    default: () => [...RATE_DEFAULTS.tooltip],
   },
   /**
    * 是否只读
-    * @en Configuration for readonly.
+   * @en Configuration for readonly.
    */
   readonly: {
     type: Boolean,
-    default: false,
+    default: RATE_DEFAULTS.readOnly,
   },
   /**
    * 是否禁用
-    * @en Configuration for disabled.
+   * @en Configuration for disabled.
    */
   disabled: {
     type: Boolean,
-    default: false,
+    default: RATE_DEFAULTS.disabled,
   },
   /**
    * 图标大小
-    * @en Configuration for size.
+   * @en Configuration for size.
    */
   size: {
-    type: [String, Number] as PropType<'large' | 'medium' | 'small' | number>,
+    type: [String, Number] as PropType<RateSize>,
+    validator: isRateSize,
   },
   /**
    * 自定义图标种类
-    * @en Configuration for icon.
+   * @en Configuration for icon.
    */
   icon: {
     type: String,
@@ -75,7 +80,7 @@ export const useRateProps = declarePropType({
   },
   /**
    * 自定义图标active颜色
-    * @en Configuration for color.
+   * @en Configuration for color.
    */
   color: {
     type: String,
@@ -83,7 +88,7 @@ export const useRateProps = declarePropType({
   },
   /**
    * 图标空时的颜色
-    * @en Configuration for void color.
+   * @en Configuration for void color.
    */
   voidColor: {
     type: String,
@@ -91,20 +96,22 @@ export const useRateProps = declarePropType({
   },
   /**
    * 图标禁用时的颜色
-    * @en Configuration for disabled color.
+   * @en Configuration for disabled color.
    */
   disabledColor: {
     type: String,
-    default: '#9B9DA9',
+    default: cssVariable('text-disabled'),
   },
   /**
    * icon间距
-    * @en Configuration for gutter.
+   * @en Configuration for gutter.
    */
   gutter: {
     type: Number,
-    default: 5,
+    default: RATE_DEFAULTS.gutter,
+    validator: isRateGutter,
   },
 });
 
 export type RateProps = ExtractPropTypes<typeof useRateProps>;
+export type { RatePresetSize, RateSize, RateTooltip } from '@aurora/core';

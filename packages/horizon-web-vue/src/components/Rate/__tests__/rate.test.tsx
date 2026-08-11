@@ -55,7 +55,9 @@ describe('Rate.tsx', () => {
   ] as const)('%s mode prevents pointer and keyboard updates', async (_, props) => {
     const modelValue = ref(2);
     const onChange = vi.fn();
-    const wrapper = mount(() => <HRate {...props} v-model={modelValue.value} onChange={onChange} />);
+    const wrapper = mount(() => (
+      <HRate {...props} v-model={modelValue.value} onChange={onChange} />
+    ));
     const slider = wrapper.find('[role="slider"]');
 
     await wrapper.findAll('.h-rate__icon')[3].trigger('click');
@@ -63,9 +65,7 @@ describe('Rate.tsx', () => {
 
     expect(modelValue.value).toBe(2);
     expect(onChange).not.toHaveBeenCalled();
-    expect(slider.attributes('disabled' in props ? 'aria-disabled' : 'aria-readonly')).toBe(
-      'true',
-    );
+    expect(slider.attributes('disabled' in props ? 'aria-disabled' : 'aria-readonly')).toBe('true');
   });
 
   test('renders custom tooltip text for the current score', () => {
@@ -95,9 +95,14 @@ describe('Rate.tsx', () => {
     expect((icons[2].element as HTMLElement).style.color).toBe('rgb(0, 0, 255)');
     expect((icons[0].element as HTMLElement).style.fontSize).toBe('24px');
     expect((icons[0].element as HTMLElement).style.marginRight).toBe('7px');
-    expect(icons.every(item => item.find('svg').classes().some(name => name.includes('heart')))).toBe(
-      true,
-    );
+    expect(
+      icons.every(item =>
+        item
+          .find('svg')
+          .classes()
+          .some(name => name.includes('heart')),
+      ),
+    ).toBe(true);
   });
 
   test('uses disabledColor and emits a native FocusEvent on blur', async () => {
@@ -106,9 +111,7 @@ describe('Rate.tsx', () => {
       <HRate modelValue={1} disabled disabledColor="rgb(1, 2, 3)" onBlur={onBlur} />
     ));
 
-    expect((wrapper.get('.h-rate__icon').element as HTMLElement).style.color).toBe(
-      'rgb(1, 2, 3)',
-    );
+    expect((wrapper.get('.h-rate__icon').element as HTMLElement).style.color).toBe('rgb(1, 2, 3)');
     await wrapper.get('[role="slider"]').trigger('blur');
     expect(onBlur).toHaveBeenCalledOnce();
     expect(onBlur.mock.calls[0][0]).toBeInstanceOf(FocusEvent);

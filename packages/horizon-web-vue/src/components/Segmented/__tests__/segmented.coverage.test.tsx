@@ -97,7 +97,12 @@ describe('Segmented browser coverage', () => {
     expect(document.activeElement).toBe(wrapper.findAll('[role="tab"]')[0].element);
     await wrapper.get('[aria-selected="true"]').trigger('keydown', { key: 'Home' });
     expect(active.value).toBe('one');
-    expect(scope).toEqual({ state: true, activeKey: 'one' });
+    expect(scope).toEqual({
+      activeKey: 'one',
+      selected: true,
+      state: true,
+      value: 'one',
+    });
     expect(wrapper.get('[data-test="segment-icon"]').classes()).toContain('h-segmented__icon');
     await wrapper.get('[aria-selected="true"]').trigger('keydown', { key: 'End' });
     expect(active.value).toBe(3);
@@ -142,9 +147,7 @@ describe('Segmented browser coverage', () => {
     expect(list.style.transform).toBe('translate3d(-380px, 0px, 0px)');
     expect(wrapper.get('.h-segmented__indicator').attributes('style')).toContain('width: 80px');
 
-    list.dispatchEvent(
-      new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: -60 }),
-    );
+    list.dispatchEvent(new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: -60 }));
     await nextTick();
     expect(list.style.transform).toBe('translate3d(-320px, 0px, 0px)');
     const mixed = new WheelEvent('wheel', {
@@ -166,17 +169,16 @@ describe('Segmented browser coverage', () => {
     expect(list.style.transform).toBe('translate3d(-320px, 0px, 0px)');
     await wrapper.get('[aria-label="Scroll forward"]').trigger('click');
     await nextTick();
-    expect(wrapper.get('[aria-label="Scroll forward"]').attributes('aria-disabled')).toBe(
-      'true',
-    );
+    expect(wrapper.get('[aria-label="Scroll forward"]').attributes('aria-disabled')).toBe('true');
     wrapper.unmount();
   });
 
   test('covers reactive registration, replacement, sorting and wheel guards', async () => {
     const mounted = mount(SegmentedResponsiveHarness, { attachTo: document.body });
     const api = mounted.getCurrentComponent().exposed as unknown as ResponsiveHarnessApi;
-    const container = mounted.get<HTMLElement>('[data-test="segmented-responsive-container"]')
-      .element;
+    const container = mounted.get<HTMLElement>(
+      '[data-test="segmented-responsive-container"]',
+    ).element;
     const wrapper = container.parentElement!;
     let clientWidth = 100;
     let scrollWidth = 100;

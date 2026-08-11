@@ -1,9 +1,15 @@
 import { declarePropType } from '@aurora/utils';
 import type { ExtractPropTypes, PropType } from 'vue';
+import type { SegmentedSize, SegmentedValue } from '@aurora/core';
+import {
+  isSegmentedSize,
+  isSegmentedValue,
+  SEGMENTED_DEFAULTS,
+  SEGMENTED_ITEM_DEFAULTS,
+} from '@aurora/core';
 
-export type HSegmentedSize = 'small' | 'medium' | 'large' | 'huge';
-
-export type HSegmentedValue = string | number;
+export type HSegmentedSize = SegmentedSize;
+export type HSegmentedValue = SegmentedValue;
 
 export const useSegmentedProps = declarePropType({
   /**
@@ -14,6 +20,7 @@ export const useSegmentedProps = declarePropType({
   activeKey: {
     type: [String, Number] as PropType<HSegmentedValue>,
     required: false,
+    validator: isSegmentedValue,
   },
 
   /**
@@ -24,6 +31,7 @@ export const useSegmentedProps = declarePropType({
   defaultActiveKey: {
     type: [String, Number] as PropType<HSegmentedValue>,
     required: false,
+    validator: isSegmentedValue,
   },
 
   /**
@@ -32,6 +40,7 @@ export const useSegmentedProps = declarePropType({
    **/
   size: {
     type: String as PropType<HSegmentedSize>,
+    validator: isSegmentedSize,
   },
 
   /**
@@ -40,7 +49,7 @@ export const useSegmentedProps = declarePropType({
    **/
   scrollable: {
     type: Boolean,
-    default: false,
+    default: SEGMENTED_DEFAULTS.scrollable,
   },
 
   /**
@@ -49,7 +58,7 @@ export const useSegmentedProps = declarePropType({
    **/
   focusable: {
     type: Boolean,
-    default: false,
+    default: SEGMENTED_DEFAULTS.focusable,
   },
 
   /**
@@ -58,7 +67,7 @@ export const useSegmentedProps = declarePropType({
    **/
   arrow: {
     type: Boolean,
-    default: false,
+    default: SEGMENTED_DEFAULTS.arrow,
   },
 
   /**
@@ -67,6 +76,7 @@ export const useSegmentedProps = declarePropType({
    */
   block: {
     type: Boolean,
+    default: SEGMENTED_DEFAULTS.block,
   },
 
   /**
@@ -86,6 +96,7 @@ export const useSegmentedItemProps = declarePropType({
   value: {
     type: [String, Number] as PropType<HSegmentedValue>,
     required: true,
+    validator: isSegmentedValue,
   },
 
   /**
@@ -117,9 +128,10 @@ export const useSegmentedItemProps = declarePropType({
    **/
   disabled: {
     type: Boolean,
-    default: false,
+    default: SEGMENTED_ITEM_DEFAULTS.disabled,
   },
 });
 
 export type SegmentedProps = ExtractPropTypes<typeof useSegmentedProps>;
 export type SegmentedItemProps = ExtractPropTypes<typeof useSegmentedItemProps>;
+export type { SegmentedSize, SegmentedValue } from '@aurora/core';

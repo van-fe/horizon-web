@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-A2 展示与反馈组件已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B1 Rate/Segmented 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -397,6 +397,17 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 ```
 
 依赖：Form 基础协议、controlled/uncontrolled 工具、keyboard primitives。
+
+#### M6-B1 第一批实施记录（2026-08-11）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B1-001 | Done | Rate、Segmented 的公共 props、默认值、枚举、校验器、事件载荷、渲染区域、命令和键盘纯算法迁入 `@aurora/core` |
+| VUE-B1-001 | Done | 两个 Vue 组件通过适配器消费公共契约，将 events、regions、commands 落为 emits、slots、exposes，并保留 Vue 原生类型和既有行为 |
+| REACT-B1-001 | Done | 完成 Rate、Segmented 的 React 原生受控/非受控实现、callbacks、render regions、ref commands、ARIA 和键盘交互 |
+| DS-B1-001 | Done | 两组 Sass 与变量迁入 `@aurora/theme`，Vue 使用包导出代理，React 构建输出同源样式 |
+| DOC-B1-001 | Done | 两个组件的中英文 React 页面、独立 TSX 示例和表单组件侧边栏入口完成，renderer 隔离检查通过 |
+| QA-B1-001 | Done | 19 组 Vue/React 契约生成；Core 65、React Chromium 64、Vue 全量测试通过，覆盖率为 98.04% / 95.29% / 97.81% / 98.30%，四个包构建、文档和 Vue/React/SSR 消费工程通过 |
 
 ### 批次 C：浮层与容器
 

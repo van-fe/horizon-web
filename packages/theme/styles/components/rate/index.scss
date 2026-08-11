@@ -1,0 +1,44 @@
+@use '../../mixins';
+
+/* stylelint-disable nesting-selector-no-missing-scoping-root -- BEM mixins provide the selector root. */
+
+@include mixins.b('rate') {
+  display: flex;
+  align-items: center;
+
+  @include mixins.e('content') {
+    color: mixins.css-variable('rate', 'color', 'content');
+  }
+
+  @include mixins.e('icon') {
+    position: relative;
+    line-height: 100%;
+  }
+}
+
+@include mixins.b('rate') {
+  @include mixins.m('disabled') {
+    @include mixins.e('icon') {
+      &:hover {
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  @include mixins.m('enabled') {
+    transition: transform 0.2s ease;
+
+    @include mixins.e('icon') {
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.2);
+      }
+    }
+
+    @include mixins.e('tooltip') {
+      padding-left: mixins.css-variable('rate', 'spacing', 'tooltip', 'padding-left');
+    }
+  }
+}
+
+/* stylelint-enable nesting-selector-no-missing-scoping-root */
