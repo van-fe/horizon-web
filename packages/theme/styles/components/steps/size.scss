@@ -1,4 +1,6 @@
-@use '../../../../styles/mixins';
+@use '../../mixins';
+
+/* stylelint-disable nesting-selector-no-missing-scoping-root, scss/operator-no-newline-after -- BEM mixins and multiline token calculations define the intended structure. */
 
 @include mixins.b('steps') {
   @include mixins.is('small') {

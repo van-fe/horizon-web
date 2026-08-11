@@ -1,6 +1,6 @@
 <template>
   <div class="steps-stage">
-    <h-steps :current="2" progress-dot status="process">
+    <h-steps :model-value="2" progress-dot status="process">
       <h-step title="提交申请" description="09:20" />
       <h-step title="资料审核" description="09:42" />
       <h-step title="安全检查" description="处理中" />

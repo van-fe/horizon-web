@@ -1,35 +1,24 @@
 import type { SlotsType } from 'vue';
+import type { AdaptComponentApiShape, StepRegionMap, StepsRegionMap } from '@aurora/core';
+
+type StepsVueSlots = AdaptComponentApiShape<StepsRegionMap, { content: 'default' }>;
+
 export const useStepsSlots = Object as SlotsType<{
-  /**
-   * 默认插槽
-    * @en Custom content for the default slot.
-   */
-  default?: {};
+  /** 步骤条目。 @en Step items. */
+  default?: StepsVueSlots['default'];
 }>;
 
 export type StepsSlots = typeof useStepsSlots;
 
 export const useStepSlots = Object as SlotsType<{
-  /**
-   * 标题内容
-    * @en Custom content for the title slot.
-   */
-  title?: {};
-  /**
-   * 副标题
-    * @en Custom content for the subtitle slot.
-   */
-  subtitle?: {};
-  /**
-   * 描述内容
-    * @en Custom content for the description slot.
-   */
-  description?: {};
-  /**
-   * 自定义图标区域
-    * @en Custom content for the icon slot.
-   */
-  icon?: {};
+  /** 标题内容。 @en Title content. */
+  title?: StepRegionMap['title'];
+  /** 副标题内容。 @en Subtitle content. */
+  subtitle?: StepRegionMap['subtitle'];
+  /** 描述内容。 @en Description content. */
+  description?: StepRegionMap['description'];
+  /** 节点图标内容。 @en Node icon content. */
+  icon?: StepRegionMap['icon'];
 }>;
 
 export type StepSlots = typeof useStepSlots;

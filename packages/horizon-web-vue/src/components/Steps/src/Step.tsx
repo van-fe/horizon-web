@@ -1,14 +1,21 @@
 import type { CSSProperties } from 'vue';
-import { defineComponent, inject, ref, onBeforeUnmount, computed, onMounted } from 'vue';
-import { useStepProps } from './composables/useProps';
-import type { HorizonWebSetupContext } from '@aurora/utils';
-import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
+import { computed, defineComponent, inject, onBeforeUnmount, onMounted, ref } from 'vue';
 import { IconCheck, IconClose } from '@aurora/icon';
+import {
+  getStepDisplayNumber,
+  getStepLayout,
+  getStepNextStatus,
+  getStepStatus,
+  isStepClickable,
+} from '@aurora/core';
+import type { HorizonWebSetupContext } from '@aurora/utils';
+import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
+import { nanoid } from 'nanoid';
 import type { StepEmits } from './composables/useEmits';
 import { useStepEmits } from './composables/useEmits';
+import { useStepProps } from './composables/useProps';
 import type { StepSlots } from './composables/useSlots';
 import { useStepSlots } from './composables/useSlots';
-import { nanoid } from 'nanoid';
 import {
   HStepsActiveIndexInjectKey,
   HStepsCollectInjectKey,
@@ -21,8 +28,8 @@ import {
 
 export default defineComponent({
   name: `${useNamespace()}Step`,
-  desc: "步骤条中的单个步骤",
-  descLocales: { en: "A single step within Steps." },
+  desc: '步骤条中的单个步骤',
+  descLocales: { en: 'A single step within Steps.' },
   props: useStepProps,
   emits: useStepEmits,
   slots: useStepSlots,
@@ -30,7 +37,6 @@ export default defineComponent({
     const uuid = nanoid();
     const classHelper = new ComponentClassBlock('step');
     const index = ref(-1);
-
     const parentProps = inject(HStepsPropsInjectKey)!;
     const stepsCollect = inject(HStepsCollectInjectKey)!;
     const stepsRemove = inject(HStepsRemoveInjectKey)!;
@@ -39,120 +45,77 @@ export default defineComponent({
     const onClickStep = inject(HStepsOnClickStepInjectKey)!;
     const sizeRef = inject(HStepsSizeInjectKey)!;
 
-    const isClickable = computed(
-      () => !props.disabled && (props.clickable ?? parentProps.clickable),
+    const position = computed(() =>
+      Math.max(
+        0,
+        items.value.findIndex(item => item.uuid === uuid),
+      ),
+    );
+    const isClickable = computed(() =>
+      isStepClickable(props.clickable, parentProps.clickable, props.disabled),
+    );
+    const currentStatus = computed(() =>
+      getStepStatus(index.value, activeIndex.value, parentProps.status, props.disabled),
+    );
+    const nextStatus = computed(() =>
+      getStepNextStatus(index.value, activeIndex.value, parentProps.status),
+    );
+    const stepStyle = computed<CSSProperties>(
+      () =>
+        getStepLayout(
+          position.value,
+          items.value.length,
+          parentProps.direction,
+          parentProps.labelPlacement,
+          parentProps.labelAlign,
+          parentProps.progressDot,
+        ) as CSSProperties,
     );
 
-    const currentStatus = computed(() => {
-      if (props.disabled) {
-        return 'disabled';
-      } else if (activeIndex.value > index.value) {
-        return 'finish';
-      } else if (activeIndex.value === index.value) {
-        return parentProps.status;
-      } else {
-        return 'wait';
-      }
-    });
-
-    const nextStatus = computed(() => {
-      if (activeIndex.value > index.value + 1) {
-        return 'finish';
-      } else if (activeIndex.value === index.value + 1) {
-        return parentProps.status;
-      } else {
-        return 'wait';
-      }
-    });
-
-    const stepStyle = computed(() => {
-      const style: CSSProperties = {};
-
-      if (
-        parentProps.labelAlign === 'center' &&
-        (parentProps.labelPlacement === 'vertical' || parentProps.progressDot)
-      ) {
-        style.flex = `1 1 ${(1 / items.value.length) * 100}%`;
-      } else {
-        if (index.value < items.value.length - 1 + parentProps.initial) {
-          style.flex = `1 1 ${(1 / (items.value.length - 1)) * 100}%`;
-        } else {
-          style.flex = 'auto 0 0';
-
-          if (parentProps.direction === 'vertical') {
-            style.maxHeight = `${(1 / items.value.length) * 100}%`;
-          } else {
-            style.maxWidth = `${(1 / items.value.length) * 100}%`;
-          }
-        }
-      }
-
-      return style;
-    });
-
-    function onClick(evt: MouseEvent) {
-      if (isClickable.value) {
-        emit('click', evt, index.value);
-
-        onClickStep(index.value);
-      }
+    function activate(evt: MouseEvent | KeyboardEvent): void {
+      if (!isClickable.value) return;
+      emit('click', evt, index.value);
+      void onClickStep(index.value);
     }
 
-    function onKeyDown(evt: KeyboardEvent) {
-      if ((evt.key === 'Enter' || evt.key === ' ') && isClickable.value) {
-        evt.preventDefault();
-        emit('click', evt, index.value);
-
-        onClickStep(index.value);
-      }
+    function onKeyDown(evt: KeyboardEvent): void {
+      if (evt.key !== 'Enter' && evt.key !== ' ') return;
+      evt.preventDefault();
+      activate(evt);
     }
 
     onMounted(() => {
       stepsCollect(
         props,
         uuid,
-        i => {
-          index.value = i;
-        },
+        value => (index.value = value),
         () => index.value,
       );
     });
+    onBeforeUnmount(() => stepsRemove(props, uuid));
 
-    onBeforeUnmount(() => {
-      stepsRemove(props, uuid);
-    });
-
-    const renderIcon = () => {
-      if (slots.icon) {
-        return slots.icon();
-      }
-
-      if (parentProps.progressDot) {
-        return undefined;
-      }
-
-      switch (currentStatus.value) {
-        case 'finish':
-          return <IconCheck size={sizeRef.value === 'medium' ? 16 : 12} />;
-        case 'error':
-          return <IconClose size={sizeRef.value === 'medium' ? 16 : 12} />;
-        default:
-          return (
-            <div class={classHelper.em('icon', 'number')}>
-              {index.value + 1 + parentProps.initial}
-            </div>
-          );
-      }
-    };
+    function renderIcon() {
+      if (slots.icon) return slots.icon();
+      if (parentProps.progressDot) return undefined;
+      if (currentStatus.value === 'finish')
+        return <IconCheck size={sizeRef.value === 'medium' ? 16 : 12} />;
+      if (currentStatus.value === 'error')
+        return <IconClose size={sizeRef.value === 'medium' ? 16 : 12} />;
+      return (
+        <div class={classHelper.em('icon', 'number')}>{getStepDisplayNumber(index.value)}</div>
+      );
+    }
 
     return () => {
+      const subtitle = slots.subtitle?.() ?? props.subtitle;
+      const description = slots.description?.() ?? props.description;
       return (
         <div
           class={cls(
             classHelper.block,
             classHelper.is(currentStatus.value),
             classHelper.is('dot', parentProps.progressDot),
-            classHelper.is(`next-${nextStatus.value}`, index.value < items.value.length - 1),
+            classHelper.is(`next-${nextStatus.value}`, position.value < items.value.length - 1),
             classHelper.is('clickable', isClickable.value),
           )}
           style={stepStyle.value}
@@ -161,7 +124,7 @@ export default defineComponent({
           tabindex={isClickable.value ? 0 : undefined}
           aria-current={activeIndex.value === index.value ? 'step' : undefined}
           aria-disabled={props.disabled || undefined}
-          onClick={onClick}
+          onClick={activate}
           onKeydown={onKeyDown}
         >
           <div class={classHelper.e('wrapper')}>
@@ -169,15 +132,9 @@ export default defineComponent({
             <div class={classHelper.e('icon')}>{renderIcon()}</div>
             <div class={classHelper.e('content')}>
               <div class={classHelper.em('content', 'title')}>{slots.title?.() ?? props.title}</div>
-              {(slots.subtitle?.() || props.subtitle) && (
-                <div class={classHelper.em('content', 'subtitle')}>
-                  {slots.subtitle?.() || props.subtitle}
-                </div>
-              )}
-              {(slots.description?.() || props.description) && (
-                <div class={classHelper.em('content', 'description')}>
-                  {slots.description?.() || props.description}
-                </div>
+              {subtitle && <div class={classHelper.em('content', 'subtitle')}>{subtitle}</div>}
+              {description && (
+                <div class={classHelper.em('content', 'description')}>{description}</div>
               )}
             </div>
           </div>

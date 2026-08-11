@@ -1,156 +1,136 @@
 import type { ExtractPropTypes, PropType } from 'vue';
-import type { Awaitable } from '@aurora/utils';
+import type {
+  AdaptComponentApiShape,
+  ComponentRendererPropDefinitions,
+  StepCommonProps,
+  StepsBeforeChange,
+  StepsCommonProps,
+  StepsDirection,
+  StepsLabelAlign,
+  StepsLabelPlacement,
+  StepsSize,
+  StepsStatus,
+} from '@aurora/core';
+import {
+  isStepsDirection,
+  isStepsIndex,
+  isStepsLabelAlign,
+  isStepsLabelPlacement,
+  isStepsSize,
+  isStepsStatus,
+  STEP_DEFAULTS,
+  STEPS_DEFAULTS,
+} from '@aurora/core';
 import { declarePropType } from '@aurora/utils';
 
+type StepVueProps = StepCommonProps<string, string, string>;
+type StepsVueProps = AdaptComponentApiShape<
+  StepsCommonProps<StepVueProps>,
+  { value: 'modelValue' },
+  'defaultValue'
+>;
+
 export const useStepProps = declarePropType({
-  /**
-   * 标题
-   * @en Configuration for title.
-   */
+  /** 标题。 @en Step title. */
   title: {
     type: String,
-    default: '',
+    default: STEP_DEFAULTS.title,
   },
-  /**
-   * 副标题
-   * @en Configuration for subtitle.
-   */
+  /** 副标题。 @en Step subtitle. */
   subtitle: {
     type: String,
+    required: false,
   },
-  /**
-   * 步骤的详情描述
-   * @en Configuration for description.
-   */
+  /** 步骤的详情描述。 @en Step description. */
   description: {
     type: String,
-    default: '',
+    default: STEP_DEFAULTS.description,
   },
-  /**
-   * 指定当前步骤的下标
-   * 如果某些步骤是动态渲染的，会因为渲染顺序导致步骤进度非预期，所以需要自己设置 `index`
-   * @en Configuration for index.
-   */
+  /** 显式步骤索引，用于动态步骤。 @en Explicit step index used by dynamic steps. */
   index: {
     type: Number,
+    required: false,
+    validator: isStepsIndex,
   },
-  /**
-   * 是否可点击
-   * @en Configuration for clickable.
-   */
+  /** 覆盖父级可点击设置。 @en Overrides the parent clickability. */
   clickable: {
     type: Boolean,
     default: undefined,
   },
-  /**
-   * 是否禁用
-   * @en Configuration for disabled.
-   */
+  /** 禁用步骤交互。 @en Disables step interaction. */
   disabled: {
     type: Boolean,
-    default: false,
+    default: STEP_DEFAULTS.disabled,
   },
-});
+} satisfies ComponentRendererPropDefinitions<StepVueProps>);
 
 export const useStepsProps = declarePropType({
-  /**
-   * 指定当前步骤
-   * @en Configuration for model value.
-   */
+  /** 当前步骤。 @en Current step. */
   modelValue: {
     type: Number,
-    default: 0,
+    default: STEPS_DEFAULTS.defaultValue,
+    validator: isStepsIndex,
   },
-  /**
-   * 指定步骤条方向
-   * @en Configuration for direction.
-   */
+  /** 步骤条方向。 @en Steps orientation. */
   direction: {
-    type: String as PropType<'horizontal' | 'vertical'>,
-    default: 'horizontal',
-    validator: (val: string): boolean => ['horizontal', 'vertical'].includes(val),
+    type: String as PropType<StepsDirection>,
+    default: STEPS_DEFAULTS.direction,
+    validator: isStepsDirection,
   },
-  /**
-   * 指定标签放置位置，默认水平放图标右侧，可选 `vertical` 放图标下方
-   * @en Configuration for label placement.
-   */
+  /** 标签相对节点的放置方式。 @en Label placement relative to the node. */
   labelPlacement: {
-    type: String as PropType<'horizontal' | 'vertical'>,
-    default: 'horizontal',
+    type: String as PropType<StepsLabelPlacement>,
+    default: STEPS_DEFAULTS.labelPlacement,
+    validator: isStepsLabelPlacement,
   },
-  /**
-   * 指定大小，目前支持普通（medium）和小型(small)
-   * @en Configuration for size.
-   */
+  /** 组件尺寸；未设置时继承 Application。 @en Component size; inherits Application when omitted. */
   size: {
-    type: String as PropType<'medium' | 'small'>,
+    type: String as PropType<StepsSize>,
     required: false,
+    validator: isStepsSize,
   },
-  /**
-   * 指定当前步骤的状态
-   * @en Configuration for status.
-   */
+  /** 当前步骤状态。 @en Status of the current step. */
   status: {
-    type: String as PropType<'wait' | 'process' | 'finish' | 'error'>,
-    default: 'process',
-    validator: (val: string): boolean => ['wait', 'process', 'finish', 'error'].includes(val),
+    type: String as PropType<StepsStatus>,
+    default: STEPS_DEFAULTS.status,
+    validator: isStepsStatus,
   },
-  /**
-   * 设置点状步骤条
-   * @en Configuration for progress dot.
-   */
+  /** 使用点状节点。 @en Uses dot nodes. */
   progressDot: {
     type: Boolean,
-    default: false,
+    default: STEPS_DEFAULTS.progressDot,
   },
-  /**
-   * 是否可以点击步骤
-   * @en Configuration for clickable.
-   */
+  /** 允许步骤交互。 @en Allows step interaction. */
   clickable: {
     type: Boolean,
-    default: false,
+    default: STEPS_DEFAULTS.clickable,
   },
-  /**
-   * 是否点击步骤是受控的，即点击后可以直接切换步骤
-   * @en Configuration for controllable.
-   */
+  /** 点击后自动更新当前步骤。 @en Clicking automatically updates the current step. */
   controllable: {
     type: Boolean,
-    default: true,
+    default: STEPS_DEFAULTS.controllable,
   },
-  /**
-   * 起始序号，从 0 开始记数
-   * @en Configuration for initial.
-   */
+  /** 自动索引的起始值。 @en Starting value for automatic indexes. */
   initial: {
     type: Number,
-    default: 0,
+    default: STEPS_DEFAULTS.initial,
+    validator: isStepsIndex,
   },
-  /**
-   * 文本对齐方式，在 `direction = 'horizontal'` 时有效
-   * @en Configuration for label align.
-   */
+  /** 水平布局中的标签对齐方式。 @en Label alignment in horizontal layouts. */
   labelAlign: {
-    type: String as PropType<'center' | 'left'>,
-    default: 'center',
+    type: String as PropType<StepsLabelAlign>,
+    default: STEPS_DEFAULTS.labelAlign,
+    validator: isStepsLabelAlign,
   },
   /**
-   * 手动点击 `h-step` 切换步骤前的回调
-   * 如果返回 false 或 Promise.resolve(false) Promise.reject ，则不会进行切换步骤
-   * @en Configuration for before change.
+   * 切换步骤前的异步守卫。
+   * @en Async guard invoked before changing steps.
    */
   beforeChange: {
-    type: Function as PropType<
-      (
-        next: number,
-        current: number,
-        nextProp: StepProps | undefined,
-        currentProp: StepProps | undefined,
-      ) => Awaitable<boolean>
-    >,
+    type: Function as PropType<StepsBeforeChange<StepVueProps>>,
+    required: false,
   },
-});
+} satisfies ComponentRendererPropDefinitions<StepsVueProps>);
 
 export type StepsProps = ExtractPropTypes<typeof useStepsProps>;
 export type StepProps = ExtractPropTypes<typeof useStepProps>;

@@ -4,6 +4,7 @@ import { describe, expect, test, vi } from 'vitest';
 import { HStep } from '../index';
 import { nextTick, ref } from 'vue';
 import type { StepsProps } from '../src/composables/useProps';
+import type { StepsExposes } from '../src/composables/useExposes';
 
 describe('Steps.tsx', () => {
   test('renders every layout/detail slot contract and emits both controlled update aliases', async () => {
@@ -327,6 +328,59 @@ describe('Steps.tsx', () => {
       expect(steps[1].find('svg').exists()).toBe(true);
       expect(steps[2].classes()).toContain('is-wait');
       expect(steps[2].get('.h-step__icon--number').text()).toBe('3');
+    });
+
+    test('exposes indexed focus and uses explicit indexes for status and numbering', async () => {
+      const stepsRef = ref<StepsExposes | null>(null);
+      const wrapper = mount(
+        () => (
+          <HSteps ref={stepsRef} modelValue={10} initial={10} clickable status="warning">
+            <HStep title="Start" />
+            <HStep title="Review" index={20} />
+            <HStep title="Publish" />
+          </HSteps>
+        ),
+        { attachTo: document.body },
+      );
+      await nextTick();
+
+      const steps = wrapper.findAllComponents(HStep);
+      expect(steps.map(step => step.attributes('data-index'))).toEqual(['10', '20', '21']);
+      expect(steps[0].get('.h-step__icon--number').text()).toBe('11');
+      expect(steps[0].classes()).toContain('is-warning');
+
+      stepsRef.value?.focus(21);
+      expect(document.activeElement).toBe(steps[2].element);
+      wrapper.unmount();
+    });
+
+    test('ignores stale async before-change results', async () => {
+      const current = ref(0);
+      const resolvers: Array<(accepted: boolean) => void> = [];
+      const wrapper = mount(() => (
+        <HSteps
+          v-model={current.value}
+          clickable
+          beforeChange={() => new Promise(resolve => resolvers.push(resolve))}
+        >
+          <HStep title="One" />
+          <HStep title="Two" />
+          <HStep title="Three" />
+        </HSteps>
+      ));
+      await nextTick();
+
+      await wrapper.findAllComponents(HStep)[1].trigger('click');
+      await wrapper.findAllComponents(HStep)[2].trigger('click');
+      resolvers[0]?.(true);
+      await Promise.resolve();
+      await nextTick();
+      expect(current.value).toBe(0);
+
+      resolvers[1]?.(true);
+      await Promise.resolve();
+      await nextTick();
+      expect(current.value).toBe(2);
     });
   });
 });

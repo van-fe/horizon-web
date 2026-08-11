@@ -16,7 +16,7 @@ const labelAlign = ref<'left' | 'center'>('left');
       </label>
     </div>
     <div class="steps-stage">
-      <h-steps :current="1" :label-align="labelAlign" label-placement="vertical">
+      <h-steps :model-value="1" :label-align="labelAlign" label-placement="vertical">
         <h-step title="填写信息" description="已完成" />
         <h-step title="身份验证" description="进行中" />
         <h-step title="设置偏好" description="等待中" />

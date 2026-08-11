@@ -1,4 +1,6 @@
-@use '../../../../styles/mixins';
+@use '../../mixins';
+
+/* stylelint-disable nesting-selector-no-missing-scoping-root -- BEM mixins provide the selector roots. */
 
 @include mixins.b('step') {
   @include mixins.is('dot') {
@@ -25,8 +27,8 @@
         display: block;
         width: 100%;
         height: 1px;
-        background: mixins.css-variable('steps', 'background', 'tail');
         content: '';
+        background: mixins.css-variable('steps', 'background', 'tail');
       }
     }
 

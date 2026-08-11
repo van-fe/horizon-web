@@ -24,6 +24,7 @@
 @use './components/slider/variables' as slider;
 @use './components/space/variables' as space;
 @use './components/statistic/variables' as statistic;
+@use './components/steps/variables' as steps;
 @use './components/switch/variables' as switch;
 @use './components/tooltip/variables' as tooltip;
 @use './components/timeline/variables' as timeline;
@@ -54,6 +55,7 @@ $values: function.map-merge-multi(
   function.flatten-variables(slider.$values, 'slider'),
   function.flatten-variables(space.$values, 'space'),
   function.flatten-variables(statistic.$values, 'statistic'),
+  function.flatten-variables(steps.$values, 'steps'),
   function.flatten-variables(switch.$values, 'switch'),
   function.flatten-variables(tooltip.$values, 'tooltip'),
   function.flatten-variables(timeline.$values, 'timeline'),

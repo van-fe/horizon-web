@@ -24,18 +24,27 @@ export interface HorizonWebConfig {
   timelineLabels: {
     toggle: string;
   };
+  stepsLabels: {
+    progress: string;
+  };
 }
 
 export type HorizonWebProviderProps = PropsWithChildren<
   Omit<
     Partial<HorizonWebConfig>,
-    'breadcrumbLabels' | 'linkLabels' | 'selectLabels' | 'switchLabels' | 'timelineLabels'
+    | 'breadcrumbLabels'
+    | 'linkLabels'
+    | 'selectLabels'
+    | 'stepsLabels'
+    | 'switchLabels'
+    | 'timelineLabels'
   > & {
     switchLabels?: Partial<HorizonWebConfig['switchLabels']>;
     selectLabels?: Partial<HorizonWebConfig['selectLabels']>;
     linkLabels?: Partial<HorizonWebConfig['linkLabels']>;
     breadcrumbLabels?: Partial<HorizonWebConfig['breadcrumbLabels']>;
     timelineLabels?: Partial<HorizonWebConfig['timelineLabels']>;
+    stepsLabels?: Partial<HorizonWebConfig['stepsLabels']>;
   }
 >;
 
@@ -46,6 +55,7 @@ const defaultConfig: HorizonWebConfig = Object.freeze({
   linkLabels: { loading: 'Loading' },
   breadcrumbLabels: { collapsed: 'Show collapsed breadcrumb items' },
   timelineLabels: { toggle: 'Toggle hidden timeline items' },
+  stepsLabels: { progress: 'Progress steps' },
 });
 
 export const HorizonWebContext = createContext<HorizonWebConfig>(defaultConfig);
@@ -59,6 +69,7 @@ export function HorizonWebProvider({
   linkLabels,
   breadcrumbLabels,
   timelineLabels,
+  stepsLabels,
   children,
 }: HorizonWebProviderProps): ReactElement {
   const parent = useContext(HorizonWebContext);
@@ -88,6 +99,10 @@ export function HorizonWebProvider({
         ...parent.timelineLabels,
         ...timelineLabels,
       },
+      stepsLabels: {
+        ...parent.stepsLabels,
+        ...stepsLabels,
+      },
     }),
     [
       namespace,
@@ -99,6 +114,7 @@ export function HorizonWebProvider({
       selectLabels,
       switchLabels,
       timelineLabels,
+      stepsLabels,
     ],
   );
 

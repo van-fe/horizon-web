@@ -80,6 +80,8 @@
     "./styles/space-variables": "./styles/components/space/variables.scss",
     "./styles/statistic": "./styles/components/statistic/index.scss",
     "./styles/statistic-variables": "./styles/components/statistic/variables.scss",
+    "./styles/steps": "./styles/components/steps/index.scss",
+    "./styles/steps-variables": "./styles/components/steps/variables.scss",
     "./styles/switch": "./styles/components/switch/index.scss",
     "./styles/switch-variables": "./styles/components/switch/variables.scss",
     "./styles/tooltip": "./styles/components/tooltip/index.scss",

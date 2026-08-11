@@ -26,6 +26,7 @@ import {
   sliderManifest,
   spaceManifest,
   statisticManifest,
+  stepsManifest,
   switchManifest,
   timelineManifest,
   tooltipManifest,
@@ -56,6 +57,7 @@ const manifests = [
   sliderManifest,
   spaceManifest,
   statisticManifest,
+  stepsManifest,
   switchManifest,
   timelineManifest,
   tooltipManifest,
@@ -295,6 +297,24 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     },
     regions: { rename: { content: 'default' } },
   },
+  Steps: {
+    props: { rename: { value: 'modelValue' }, omit: ['defaultValue'] },
+    events: {
+      extend: [
+        {
+          name: 'update:modelValue',
+          type: 'number',
+          description: { zh: '更新绑定步骤', en: 'Updates the bound step' },
+        },
+        {
+          name: 'update:current',
+          type: 'number',
+          description: { zh: '更新历史步骤别名', en: 'Updates the legacy step alias' },
+        },
+      ],
+    },
+    regions: { rename: { content: 'default' } },
+  },
   Switch: {
     props: { rename: { value: 'modelValue', readOnly: 'readonly' }, omit: ['defaultValue'] },
   },
@@ -478,6 +498,11 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
       ],
     },
     regions: { rename: { content: 'children' }, omit: ['separator'] },
+  },
+  Steps: {
+    props: { rename: { beforeChange: 'onBeforeChange' } },
+    events: { rename: { change: 'onChange' } },
+    regions: { rename: { content: 'children' } },
   },
   Switch: {
     events: { rename: { change: 'onChange' } },

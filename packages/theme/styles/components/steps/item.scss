@@ -1,4 +1,6 @@
-@use '../../../../styles/mixins';
+@use '../../mixins';
+
+/* stylelint-disable nesting-selector-no-missing-scoping-root -- BEM mixins provide the selector roots. */
 
 @include mixins.b('step') {
   @include mixins.e('wrapper') {
@@ -30,8 +32,8 @@
       align-items: center;
       height: mixins.css-variable('steps', 'size', 'icon');
       margin-bottom: mixins.css-variable('steps', 'spacing', 'title', 'margin-bottom');
-      color: mixins.css-variable('steps', 'color', 'title');
       font-size: mixins.css-variable('steps', 'font-size', 'title');
+      color: mixins.css-variable('steps', 'color', 'title');
       white-space: nowrap;
       transition: mixins.css-variable('steps', 'transition', 'all');
 
@@ -40,23 +42,23 @@
         flex: 1;
         height: 1px;
         margin: 0 mixins.css-variable('steps', 'spacing', 'tail', 'margin-x');
-        background: mixins.css-variable('steps', 'background', 'tail');
         content: '';
+        background: mixins.css-variable('steps', 'background', 'tail');
       }
     }
 
     @include mixins.m('subtitle') {
       margin-bottom: mixins.css-variable('steps', 'spacing', 'subtitle', 'margin-bottom');
-      color: mixins.css-variable('steps', 'color', 'subtitle');
       font-size: mixins.css-variable('steps', 'font-size', 'subtitle');
-      word-break: break-word;
+      color: mixins.css-variable('steps', 'color', 'subtitle');
+      overflow-wrap: anywhere;
       transition: mixins.css-variable('steps', 'transition', 'all');
     }
 
     @include mixins.m('description') {
-      color: mixins.css-variable('steps', 'color', 'description');
       font-size: mixins.css-variable('steps', 'font-size', 'description');
-      word-break: break-word;
+      color: mixins.css-variable('steps', 'color', 'description');
+      overflow-wrap: anywhere;
       transition: mixins.css-variable('steps', 'transition', 'all');
     }
   }

@@ -1,0 +1,38 @@
+@use '../../mixins';
+@use 'item';
+@use 'size';
+@use 'dot';
+@use 'vertical';
+@use 'clickable';
+@use 'labelVertical';
+@use 'labelAlign';
+
+/* stylelint-disable nesting-selector-no-missing-scoping-root -- BEM mixins provide the selector roots. */
+
+@include mixins.b('steps') {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+@include mixins.b('step') {
+  list-style: none;
+
+  @include mixins.e('action') {
+    display: block;
+    width: 100%;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    text-align: inherit;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    border-radius: mixins.css-variable('radius-s');
+
+    &:focus-visible {
+      @include mixins.focus-ring(mixins.css-variable('radius-s'));
+    }
+  }
+}

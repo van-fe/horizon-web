@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B7 Timeline 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B8 Steps 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -482,6 +482,18 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DS-B7-001 | Done | Timeline Sass、变量与视觉基础迁入 `@aurora/theme`，Vue 使用包导出代理，React 使用同源样式与原生折叠按钮规则 |
 | DOC-B7-001 | Done | Timeline 中英文 React 页面、独立 TSX 示例与导航侧边栏入口完成；26 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
 | QA-B7-001 | Done | Core 90、Web Core Node 8/Chromium 19、React Chromium 96、Vue 2297 项通过且 1 项预期失败，覆盖率为 97.98% / 95.18% / 97.77% / 98.26%；五个包构建、文档、Vue/React/SSR 消费工程及中英文、暗色、390px 真实浏览器验收通过 |
+
+#### M6-B8 第八批实施记录（2026-08-12）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B8-001 | Done | Steps 及 Step 的公共 props、默认值、枚举、校验器、事件、内容区域、命令与索引、状态、布局、选择、异步守卫算法迁入 `@aurora/core`；两端公共 API 语义仅定义一次 |
+| WEB-B8-001 | Done | 在同名 Web Core 目录提供可交互步骤的 DOM 聚焦 primitive，同时覆盖 Vue 直系焦点节点与 React 原生按钮结构，并补齐 Chromium 测试 |
+| VUE-B8-001 | Done | Vue props/emits/slots/exposes 通过类型化适配消费公共契约，仅保留 runtime props、`modelValue`/历史事件、VNode 与 Application 尺寸适配；动态索引、受控状态和异步竞态复用 Core 算法 |
+| REACT-B8-001 | Done | 完成原生 `ol`/`li`/`button` 语义、组合 children、受控与非受控状态、异步守卫、动态索引、Provider 文案、原生属性和命令 ref；ReactNode、DOM 事件与 HTML 属性只保留在 renderer 适配层 |
+| DS-B8-001 | Done | Steps Sass、变量与视觉基础迁入 `@aurora/theme`，Vue 使用包导出代理，React 使用同源样式并补充原生交互按钮焦点规则 |
+| DOC-B8-001 | Done | Steps 中英文 React 页面、独立 TSX 示例与导航侧边栏入口完成；27 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
+| QA-B8-001 | Done | Core 96、Web Core Node 8/Chromium 20、React Chromium 101、Vue Chromium 2300 项全部通过，覆盖率为 97.98% / 95.16% / 97.77% / 98.27%；五个包构建、文档、Vue/React/SSR 消费工程及中英文、暗色、390px 真实浏览器验收通过 |
 
 ### 批次 C：浮层与容器
 

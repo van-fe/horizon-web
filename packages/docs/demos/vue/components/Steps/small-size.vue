@@ -1,7 +1,7 @@
 <template>
   <div class="docs-demo">
     <div class="steps-stage">
-      <h-steps :current="1" size="small" status="process">
+      <h-steps :model-value="1" size="small" status="process">
         <h-step title="上传" />
         <h-step title="解析" />
         <h-step title="导入" />

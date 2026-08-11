@@ -1,4 +1,6 @@
-@use '../../../../styles/mixins';
+@use '../../mixins';
+
+/* stylelint-disable nesting-selector-no-missing-scoping-root -- BEM mixins provide the selector roots. */
 
 @include mixins.b('steps') {
   @include mixins.b('step', false) {
@@ -155,13 +157,27 @@
         @include mixins.is('finish') {
           &:hover {
             @include mixins.e('icon') {
-              background: mixins.css-variable('steps', 'background', 'icon', 'finished', 'dot', 'hover');
+              background: mixins.css-variable(
+                'steps',
+                'background',
+                'icon',
+                'finished',
+                'dot',
+                'hover'
+              );
             }
           }
 
           &:active {
             @include mixins.e('icon') {
-              background: mixins.css-variable('steps', 'background', 'icon', 'finished', 'dot', 'active');
+              background: mixins.css-variable(
+                'steps',
+                'background',
+                'icon',
+                'finished',
+                'dot',
+                'active'
+              );
             }
           }
         }

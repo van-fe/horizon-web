@@ -1,12 +1,16 @@
-import { defineComponent, provide, ref, toRefs, watch, watchEffect } from 'vue';
-import { useStepsProps } from './composables/useProps';
+import { defineComponent, provide, ref, toRefs } from 'vue';
+import { focusStepsItem } from '@aurora/horizon-web-core';
 import type { HorizonWebSetupContext } from '@aurora/utils';
-import { cls, ComponentClassBlock, isNumber, useNamespace } from '@aurora/utils';
+import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
+import useSize from '~/utils/useSize';
 import type { StepsEmits } from './composables/useEmits';
 import { useStepsEmits } from './composables/useEmits';
+import type { StepsExposes } from './composables/useExposes';
+import { useStepsExposes } from './composables/useExposes';
+import { useStepsProps } from './composables/useProps';
 import type { StepsSlots } from './composables/useSlots';
 import { useStepsSlots } from './composables/useSlots';
-import type { StepInstance } from './utils/injectedKeys';
+import { useStepsController } from './hooks/useStepsController';
 import {
   HStepsActiveIndexInjectKey,
   HStepsCollectInjectKey,
@@ -16,7 +20,6 @@ import {
   HStepsRemoveInjectKey,
   HStepsSizeInjectKey,
 } from './utils/injectedKeys';
-import useSize from '~/utils/useSize';
 
 export default defineComponent({
   name: `${useNamespace()}Steps`,
@@ -25,113 +28,46 @@ export default defineComponent({
   props: useStepsProps,
   slots: useStepsSlots,
   emits: useStepsEmits,
-  setup(props, { emit, slots }: HorizonWebSetupContext<StepsEmits, StepsSlots>) {
+  exposes: useStepsExposes,
+  setup(
+    props,
+    { emit, slots, expose }: HorizonWebSetupContext<StepsEmits, StepsSlots, StepsExposes>,
+  ) {
     const classBlock = new ComponentClassBlock('steps');
+    const rootRef = ref<HTMLElement | null>(null);
     const { direction, labelPlacement, progressDot, size, clickable, labelAlign } = toRefs(props);
-    const stepItems = ref<Array<StepInstance>>([]);
-    const activeIndex = ref(props.modelValue);
-
-    const setCurrentIndex = (index: number, triggerChange = true) => {
-      if (activeIndex.value !== index) {
-        activeIndex.value = index;
-
-        emit('update:modelValue', index);
-        emit('update:current', index);
-
-        if (triggerChange) {
-          emit('change', index);
-        }
-      }
-    };
-
-    watch(
-      () => props.modelValue,
-      val => {
-        setCurrentIndex(val, false);
-      },
-    );
-
-    watchEffect(() => {
-      let prevIndex = props.initial;
-
-      stepItems.value.forEach(step => {
-        if (isNumber(step.props.index)) {
-          step.setIndex(step.props.index);
-          prevIndex = step.props.index;
-        } else {
-          step.setIndex(prevIndex);
-        }
-
-        prevIndex++;
-      });
+    const controller = useStepsController(props, {
+      modelValue: index => emit('update:modelValue', index),
+      current: index => emit('update:current', index),
+      change: index => emit('change', index),
     });
+    const sizeRef = useSize(size, 'medium', { default: 'medium' });
 
     provide(HStepsPropsInjectKey, props);
-    provide(HStepsItemsInjectKey, stepItems);
-
-    provide(HStepsCollectInjectKey, (props, uuid, setIndex, getIndex) => {
-      stepItems.value.push({
-        uuid,
-        props,
-        setIndex,
-        getIndex,
-      });
-    });
-
-    provide(HStepsRemoveInjectKey, (step, uuid) => {
-      const index = stepItems.value.findIndex(curr => curr.uuid === uuid);
-      if (index >= 0) {
-        stepItems.value.splice(index, 1);
-      }
-    });
-
-    provide(HStepsActiveIndexInjectKey, activeIndex);
-
-    provide(HStepsOnClickStepInjectKey, (index: number) => {
-      if (props.controllable) {
-        if (props.beforeChange) {
-          Promise.resolve(
-            props.beforeChange(
-              index,
-              activeIndex.value,
-              stepItems.value.find(curr => curr.getIndex() === index)?.props,
-              stepItems.value.find(curr => curr.getIndex() === activeIndex.value)?.props,
-            ),
-          )
-            .then(status => {
-              if (status) {
-                setCurrentIndex(index);
-              }
-            })
-            .catch(() => {
-              // do nothing
-            });
-        } else {
-          setCurrentIndex(index);
-        }
-      }
-    });
-
-    // global size
-    const sizeRef = useSize(size, 'medium', { default: 'medium' });
+    provide(HStepsItemsInjectKey, controller.stepItems);
+    provide(HStepsCollectInjectKey, controller.collect);
+    provide(HStepsRemoveInjectKey, (_step, uuid) => controller.remove(uuid));
+    provide(HStepsActiveIndexInjectKey, controller.activeIndex);
+    provide(HStepsOnClickStepInjectKey, controller.requestChange);
     provide(HStepsSizeInjectKey, sizeRef);
 
-    return () => {
-      return (
-        <div
-          class={cls(
-            classBlock.block,
-            classBlock.is(sizeRef.value),
-            classBlock.is(direction.value),
-            classBlock.is('dot', !!progressDot.value),
-            classBlock.is('clickable', clickable.value),
-            classBlock.is(`label-placement-${labelPlacement.value}`),
-            classBlock.is(`label-align-${labelAlign.value}`),
-          )}
-        >
-          {slots.default?.()}
-        </div>
-      );
-    };
+    expose({ focus: (index?: number) => void focusStepsItem(rootRef.value, index) });
+
+    return () => (
+      <div
+        ref={rootRef}
+        class={cls(
+          classBlock.block,
+          classBlock.is(sizeRef.value),
+          classBlock.is(direction.value),
+          classBlock.is('dot', progressDot.value),
+          classBlock.is('clickable', clickable.value),
+          classBlock.is(`label-placement-${labelPlacement.value}`),
+          classBlock.is(`label-align-${labelAlign.value}`),
+        )}
+      >
+        {slots.default?.()}
+      </div>
+    );
   },
 });

@@ -1,4 +1,4 @@
-@use '../../../../styles/mixins';
+@use '../../mixins';
 
 @include mixins.b('steps') {
   @include mixins.is('label-align-center') {
