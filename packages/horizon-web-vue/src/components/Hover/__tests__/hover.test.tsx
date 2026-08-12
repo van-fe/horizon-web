@@ -11,6 +11,11 @@ describe('Hover.tsx', () => {
     expect(element.exists()).toBe(true);
   });
 
+  test('renders safely without default content', () => {
+    const wrapper = mount(HHover);
+    expect(wrapper.html()).toBe('');
+  });
+
   test('button should turn visible when hovering the container and turn invisible when leaving the container', async () => {
     const wrapper = mount(HHover, {
       slots: {
@@ -113,5 +118,45 @@ describe('Hover.tsx', () => {
     expect(onMouseEnter.mock.calls[0][0]).toBeInstanceOf(MouseEvent);
     expect(onMouseMove.mock.calls[0][0]).toBeInstanceOf(MouseEvent);
     expect(onMouseLeave.mock.calls[0][0]).toBeInstanceOf(MouseEvent);
+  });
+
+  test('emits visibility changes and exposes show and hide commands', async () => {
+    const onVisibleChange = vi.fn();
+    const wrapper = mount(HHover, {
+      props: { onVisibleChange },
+      slots: {
+        default: ({ hover }) => <button data-test="hover-target">{String(hover)}</button>,
+      },
+    });
+
+    (wrapper.vm as unknown as { show(): void }).show();
+    await nextTick();
+    expect(wrapper.get('[data-test="hover-target"]').text()).toBe('true');
+    (wrapper.vm as unknown as { hide(): void }).hide();
+    await nextTick();
+    expect(wrapper.get('[data-test="hover-target"]').text()).toBe('false');
+    expect(onVisibleChange.mock.calls).toEqual([[true], [false]]);
+  });
+
+  test('applies disabled and delay prop updates without recreating the target', async () => {
+    const onVisibleChange = vi.fn();
+    const wrapper = mount(HHover, {
+      props: { disabled: true, hoverShowDelay: 50, onVisibleChange },
+      slots: {
+        default: ({ hover }) => <button data-test="hover-target">{String(hover)}</button>,
+      },
+    });
+    const target = wrapper.get('[data-test="hover-target"]');
+    await target.trigger('mouseenter');
+    expect(target.text()).toBe('false');
+
+    await wrapper.setProps({ disabled: false, hoverShowDelay: 0, hoverHideDelay: 0 });
+    await target.trigger('mouseenter');
+    await nextTick();
+    expect(target.text()).toBe('true');
+    await target.trigger('mouseleave');
+    await nextTick();
+    expect(target.text()).toBe('false');
+    expect(onVisibleChange.mock.calls).toEqual([[true], [false]]);
   });
 });

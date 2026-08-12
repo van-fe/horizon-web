@@ -23,6 +23,7 @@ const reactSidebar = [
       { text: 'Card', link: 'components/Card' },
       { text: 'Container', link: 'components/Container' },
       { text: 'Layout', link: 'components/Layout' },
+      { text: 'Hover', link: 'components/Hover' },
       { text: 'Count', link: 'components/Count' },
       { text: 'Divider', link: 'components/Divider' },
       { text: 'Typography', link: 'components/Typography' },

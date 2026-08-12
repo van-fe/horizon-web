@@ -61,6 +61,7 @@ export * from './components/Empty';
 export * from './components/Input';
 export * from './components/Link';
 export * from './components/Layout';
+export * from './components/Hover';
 export * from './components/Pagination';
 export * from './components/Popover';
 export * from './components/Popconfirm';

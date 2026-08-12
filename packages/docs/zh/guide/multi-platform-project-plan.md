@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B23 Layout 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B24 Hover 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -674,6 +674,18 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DS-B23-001 | Done | Layout canonical Grid/legacy Row/Col Sass 与 gutter 变量迁入 `@aurora/theme`，Vue 仅保留包导出代理并删除三份 renderer 样式源；补充 Grid/GridItem 最小宽度与长内容防溢出规则 |
 | DOC-B23-001 | Done | Layout 中英文 React 页面、3 个独立 TSX 示例、Vue API 摘要与双语侧边栏入口完成；55 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
 | QA-B23-001 | Done | Core 165、Web Core Node 10/Chromium 52、React Chromium 182、Vue Chromium 2319 项（2318 通过、1 项预期失败）全部通过，覆盖率为 97.97% / 95.08% / 97.67% / 98.27%；Vue Node 23、resolver 12、colors 1、upload adapters 66 项通过；五包构建、Sass、文档站与 Vue/React/SSR/tree-shaking 消费工程通过 |
+
+#### M6-B24 第二十四批实施记录（2026-08-12）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B24-001 | Done | Hover 的公共 props、默认值、延迟校验器、鼠标事件、内容区域、命令及 manifest 迁入 `@aurora/core`；显示/隐藏延迟、相反操作取消、禁用与销毁清理只由公共 controller 实现 |
+| WEB-B24-001 | Done | 确认 Hover 不涉及测量、焦点、滚动、Portal 或全局 DOM 监听，本批不创建无消费者的 Web Core primitive，原生鼠标事件由各 renderer 适配 |
+| VUE-B24-001 | Done | Vue props/emits/slots/exposes 类型化消费公共契约，保留 `hoverShowDelay`、`hoverHideDelay` 与默认 slot API；移除本地定时器副本并新增 `visibleChange`、`show()`、`hide()` |
+| REACT-B24-001 | Done | 完成 React Hover，支持单一目标/render function、原生 callbacks、延迟、disabled、子元素事件合并和命令 ref，不增加 DOM 包装 |
+| DS-B24-001 | Done | 确认 Hover 没有独立视觉节点或样式，本批不新增 Theme/renderer 私有 Sass，避免形成空视觉抽象 |
+| DOC-B24-001 | Done | Hover 中英文 React 页面、3 个独立 TSX 示例、Vue API 摘要与双语侧边栏入口完成；Vue/React 组件文档保持 renderer 原生表达 |
+| QA-B24-001 | Done | Core 171、Web Core Node 10/Chromium 52、React Chromium 186、Vue Chromium 2322 项（2321 通过、1 项预期失败）全部通过；Vue 总覆盖率为 97.98% / 95.07% / 97.70% / 98.28%，Hover 文件为 100% / 100% / 100% / 100%；Vue Node 23、resolver 12、colors 1、upload adapters 66 项通过；五包构建、文档站与 Vue/React/SSR/tree-shaking 消费工程通过 |
 
 ### 批次 C：浮层与容器
 

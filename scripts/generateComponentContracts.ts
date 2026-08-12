@@ -34,6 +34,7 @@ import {
   inputManifest,
   gridItemManifest,
   gridManifest,
+  hoverManifest,
   headerManifest,
   asideManifest,
   mainManifest,
@@ -96,6 +97,7 @@ const manifests = [
   inputManifest,
   gridManifest,
   gridItemManifest,
+  hoverManifest,
   linkManifest,
   paginationManifest,
   popconfirmManifest,
@@ -490,6 +492,10 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
   },
   Grid: { regions: { rename: { content: 'default' } } },
   GridItem: { regions: { rename: { content: 'default' } } },
+  Hover: {
+    props: { rename: { showDelay: 'hoverShowDelay', hideDelay: 'hoverHideDelay' } },
+    regions: { rename: { content: 'default' } },
+  },
   Link: {
     props: {
       rename: { variant: 'type', route: 'to' },
@@ -877,6 +883,17 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
   Aside: { regions: { rename: { content: 'children' } } },
   Main: { regions: { rename: { content: 'children' } } },
   Footer: { regions: { rename: { content: 'children' } } },
+  Hover: {
+    events: {
+      rename: {
+        mouseEnter: 'onMouseEnter',
+        mouseMove: 'onMouseMove',
+        mouseLeave: 'onMouseLeave',
+        visibleChange: 'onVisibleChange',
+      },
+    },
+    regions: { rename: { content: 'children' } },
+  },
   Checkbox: {
     events: { rename: { change: 'onChange', blur: 'onBlur', click: 'onClick' } },
     regions: { rename: { label: 'children' } },
