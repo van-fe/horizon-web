@@ -1,5 +1,1 @@
-@use '../../../../styles/mixins/function';
-
-$values: (
-
-);
+@forward 'pkg:@aurora/theme/styles/panels-variables';

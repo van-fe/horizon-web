@@ -1,5 +1,7 @@
 import type { VNode, ComponentOptions } from 'vue';
-import { defineComponent, toRefs, ref, watch } from 'vue';
+import { defineComponent, h, toRefs, ref, watch } from 'vue';
+import type { PanelDescriptor, PanelsKey } from '@aurora/core';
+import { isPanelsKey, resolvePanelsTransitionDirection } from '@aurora/core';
 import type { PanelProps } from './composables/useProps';
 import { usePanelsProps } from './composables/useProps';
 import type { HorizonWebSetupContext } from '@aurora/utils';
@@ -12,15 +14,19 @@ import {
 } from '@aurora/utils';
 import type { PanelsSlots } from './composables/useSlots';
 import { usePanelsSlots } from './composables/useSlots';
+import { usePanelsExposes } from './composables/useExposes';
 import HTransition from '~/components/Transition/src/Transition';
 import type { TransitionProps } from '~/components/Transition/src/composables/useProps';
 
 export default defineComponent({
   name: `${useNamespace()}Panels`,
   desc: 'Panels 组件用来显示可切换的更多内容，可以单独使用，也常常结合 `radio`, `tabs` 等组件一起使用',
-  descLocales: { en: "By default, panels have horizontal animation effects and automatically detect whether the switching direction is from left to right or from right to left, displaying the most appropriate animation. You can also enable vertical animation by setting `vertical`." },
+  descLocales: {
+    en: 'Displays one keyed panel from a switchable content collection.',
+  },
   props: usePanelsProps,
   slots: usePanelsSlots,
+  exposes: usePanelsExposes,
   setup(props, { slots }: HorizonWebSetupContext<{}, PanelsSlots>) {
     const {
       modelValue: modelValueRef,
@@ -42,7 +48,7 @@ export default defineComponent({
 
         return (
           (panel.type as ComponentOptions).name === 'HPanel' &&
-          props.name &&
+          isPanelsKey(props.name) &&
           !getBooleanProp(props.disabled)
         );
       });
@@ -50,14 +56,13 @@ export default defineComponent({
 
     // 监听modelValue，根据切换方向和是否垂直模式，附加不同的动画效果
     watch(modelValueRef, (newVal, oldVal) => {
-      const newIndex = panels.findIndex(t => (t.props as PanelProps).name === newVal);
-      const oldIndex = panels.findIndex(t => (t.props as PanelProps).name === oldVal);
-      if (newIndex < oldIndex) {
-        // 说明是从右切换到左，或者从下切换到上
-        transitionNameRef.value = `slide-${verticalRef.value ? 'down' : 'right'}`;
-      } else {
-        transitionNameRef.value = `slide-${verticalRef.value ? 'up' : 'left'}`;
-      }
+      const descriptors = panels.map(panel => panel.props as PanelDescriptor);
+      transitionNameRef.value = `slide-${resolvePanelsTransitionDirection(
+        descriptors,
+        oldVal as PanelsKey,
+        newVal as PanelsKey,
+        verticalRef.value,
+      )}`;
     });
 
     const getActivePanel = () => {
@@ -68,7 +73,8 @@ export default defineComponent({
         </div>
       );
       if (animatedRef.value) {
-        panel = <HTransition name={transitionNameRef.value}>{panel}</HTransition>;
+        const activePanel = panel;
+        panel = h(HTransition, { name: transitionNameRef.value }, { default: () => activePanel });
       }
       return panel;
     };

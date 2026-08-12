@@ -10,6 +10,8 @@ import {
   ListItem,
   Mask,
   PageHeader,
+  Panel,
+  Panels,
   Spin,
   Time,
 } from '@aurora/horizon-web-react';
@@ -23,6 +25,7 @@ import {
 } from '@aurora/horizon-web-vue/es/components/Descriptions';
 import { HList, HListItem } from '@aurora/horizon-web-vue/es/components/List';
 import { HPageHeader } from '@aurora/horizon-web-vue/es/components/PageHeader';
+import { HPanel, HPanels } from '@aurora/horizon-web-vue/es/components/Panels';
 
 const reactHtml = renderReact(createElement(Button, null, 'React SSR'));
 if (!reactHtml.includes('React SSR')) throw new Error('React SSR consumer failed.');
@@ -58,6 +61,16 @@ const reactPageHeaderHtml = renderReact(
 );
 if (!reactPageHeaderHtml.includes('React PageHeader SSR'))
   throw new Error('React PageHeader SSR consumer failed.');
+
+const reactPanelsHtml = renderReact(
+  createElement(
+    Panels,
+    { value: 'ready' },
+    createElement(Panel, { name: 'ready' }, 'React Panels SSR'),
+  ),
+);
+if (!reactPanelsHtml.includes('React Panels SSR'))
+  throw new Error('React Panels SSR consumer failed.');
 
 const vueHtml = await renderVue(createSSRApp({ render: () => h(HButton, null, () => 'Vue SSR') }));
 if (!vueHtml.includes('Vue SSR')) throw new Error('Vue SSR consumer failed.');
@@ -102,5 +115,15 @@ const vuePageHeaderHtml = await renderVue(
 );
 if (!vuePageHeaderHtml.includes('Vue PageHeader SSR'))
   throw new Error('Vue PageHeader SSR consumer failed.');
+
+const vuePanelsHtml = await renderVue(
+  createSSRApp({
+    render: () =>
+      h(HPanels, { modelValue: 'ready' }, () => [
+        h(HPanel, { name: 'ready' }, () => 'Vue Panels SSR'),
+      ]),
+  }),
+);
+if (!vuePanelsHtml.includes('Vue Panels SSR')) throw new Error('Vue Panels SSR consumer failed.');
 
 console.info('Vue and React SSR consumers verified.');

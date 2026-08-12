@@ -8,6 +8,8 @@ import {
   ListItem,
   Mask,
   PageHeader,
+  Panel,
+  Panels,
   Select,
   Spin,
   Time,
@@ -43,5 +45,10 @@ createRoot(document.getElementById('root')!).render(
       content: 'Ready',
       showBack: false,
     }),
+    createElement(
+      Panels,
+      { value: 'ready' },
+      createElement(Panel, { name: 'ready' }, 'React panels consumer'),
+    ),
   ),
 );

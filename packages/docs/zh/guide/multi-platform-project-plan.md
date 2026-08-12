@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B32 PageHeader 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B33 Panels 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -782,6 +782,18 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DS-B32-001 | Done | PageHeader canonical Sass 与变量迁入 `@aurora/theme`，Vue 使用包导出薄代理，React 使用同源视觉；修复 390px 下长标题、说明、操作和扩展内容的横向溢出 |
 | DOC-B32-001 | Done | Vue 文档补齐 Props/Events/Slots；React 中英文页面、3 个独立 TSX 示例与双语侧边栏入口完成；67 组 Vue/React 契约生成且文档保持 renderer 原生表达 |
 | QA-B32-001 | Done | Core 193、Theme 3、Locale React 5、Web Core Node 18/Chromium 57、React Chromium 222、Vue Chromium 2324 项（2323 通过、1 项预期失败）全部通过；Vue 总覆盖率为 97.95% / 95.06% / 97.62% / 98.24%；Vue Node 25、resolver 12、colors 1、upload adapters 66 项通过；五包构建、Sass、文档站、含 PageHeader 的 Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界与旧组件包名移除约束通过 |
+
+#### M6-B33 第三十三批实施记录（2026-08-12）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B33-001 | Done | Panels 与 Panel 的公共 key、props、默认值、校验器、内容区域、启用面板查找、活动面板解析、横向/纵向切换方向算法和 manifest 迁入 `@aurora/core`，不包含 renderer 节点、DOM 或动画实现 |
+| WEB-B33-001 | Done | 本批没有独立的跨 renderer DOM 控制器需求，不创建空 Web Core 目录；切换顺序由 Core 统一，DOM 动画生命周期由 renderer 适配层管理 |
+| VUE-B33-001 | Done | Vue props/slots/exposes 类型化消费公共契约，方向计算改用 Core；保留 `modelValue`、`HTransition` 与禁用面板行为，并修复数值 `0` 作为面板 key 时被错误过滤的问题 |
+| REACT-B33-001 | Done | 完成 React Panels/Panel，支持受控 value、Fragment、禁用面板、数字 key、横向/纵向进入离开动画、tabpanel 可访问语义、原生属性和根 ref |
+| DS-B33-001 | Done | Panels canonical Sass 与变量迁入 `@aurora/theme`，Vue 使用包导出薄代理，React 使用同源动画；补齐 reduced-motion，并约束 390px 下长内容横向溢出 |
+| DOC-B33-001 | Done | Vue 文档补齐 Props/Slots；React 中英文页面、3 个独立 TSX 示例与双语侧边栏入口完成；69 组 Vue/React 契约生成且文档保持 renderer 原生表达 |
+| QA-B33-001 | Done | Core 197、Theme 3、Locale React 5、Web Core Node 18/Chromium 57、React Chromium 226、Vue Chromium 2328 项（2327 通过、1 项预期失败）全部通过；Vue 总覆盖率为 97.96% / 95.10% / 97.62% / 98.25%，Panels 组件源码四项覆盖率均为 100%；Vue Node 26、resolver 12、colors 1、upload adapters 66 项通过；五包构建、Sass、文档站、含 Panels 的 Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界与旧组件包名移除约束通过；Descriptions 响应式测试改用真实 ResizeObserver 尺寸等待以消除竞态 |
 
 ### 批次 C：浮层与容器
 

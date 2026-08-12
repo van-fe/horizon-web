@@ -48,6 +48,8 @@ import {
   listItemManifest,
   listManifest,
   paginationManifest,
+  panelManifest,
+  panelsManifest,
   pageHeaderManifest,
   popContentManifest,
   popconfirmManifest,
@@ -119,6 +121,8 @@ const manifests = [
   listItemManifest,
   maskManifest,
   paginationManifest,
+  panelsManifest,
+  panelManifest,
   pageHeaderManifest,
   popconfirmManifest,
   popoverManifest,
@@ -769,6 +773,13 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
         actions: 'extra',
       },
     },
+  },
+  Panels: {
+    props: { rename: { value: 'modelValue' } },
+    regions: { rename: { content: 'default' } },
+  },
+  Panel: {
+    regions: { rename: { content: 'default' } },
   },
   Spin: { regions: { rename: { content: 'default' } } },
   Time: { regions: { rename: { content: 'default' } } },
@@ -1438,6 +1449,12 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
         breadcrumb: 'breadcrumb',
       },
     },
+  },
+  Panels: {
+    regions: { rename: { content: 'children' } },
+  },
+  Panel: {
+    regions: { rename: { content: 'children' } },
   },
   Spin: {
     props: {

@@ -11,6 +11,7 @@ import {
 } from '@aurora/horizon-web-vue/es/components/Descriptions';
 import { HList, HListItem } from '@aurora/horizon-web-vue/es/components/List';
 import { HPageHeader } from '@aurora/horizon-web-vue/es/components/PageHeader';
+import { HPanel, HPanels } from '@aurora/horizon-web-vue/es/components/Panels';
 
 const value = ref<string>();
 const options = [
@@ -33,4 +34,7 @@ const options = [
     <HListItem title="Status" describe="Ready" />
   </HList>
   <HPageHeader :icon="null" title="Vue page header consumer" content="Ready" />
+  <HPanels model-value="ready">
+    <HPanel name="ready">Vue panels consumer</HPanel>
+  </HPanels>
 </template>

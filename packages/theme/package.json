@@ -86,6 +86,8 @@
     "./styles/pagination-variables": "./styles/components/pagination/variables.scss",
     "./styles/page-header": "./styles/components/page-header/index.scss",
     "./styles/page-header-variables": "./styles/components/page-header/variables.scss",
+    "./styles/panels": "./styles/components/panels/index.scss",
+    "./styles/panels-variables": "./styles/components/panels/variables.scss",
     "./styles/popover": "./styles/components/popover/index.scss",
     "./styles/popover-variables": "./styles/components/popover/variables.scss",
     "./styles/popconfirm": "./styles/components/popconfirm/index.scss",

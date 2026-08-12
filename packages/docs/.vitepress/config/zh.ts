@@ -73,6 +73,7 @@ const reactSidebar = [
       { text: 'Pagination 分页', link: 'components/Pagination' },
       { text: 'Timeline 时间轴', link: 'components/Timeline' },
       { text: 'PageHeader 页头', link: 'components/PageHeader' },
+      { text: 'Panels 面板切换', link: 'components/Panels' },
       { text: 'Time 计时', link: 'components/Time' },
     ],
   },

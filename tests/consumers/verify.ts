@@ -31,6 +31,9 @@ if (!reactOutput.includes('React page header consumer'))
   throw new Error('React PageHeader bundle is missing.');
 if (!vueOutput.includes('Vue page header consumer'))
   throw new Error('Vue PageHeader bundle is missing.');
+if (!reactOutput.includes('React panels consumer'))
+  throw new Error('React Panels bundle is missing.');
+if (!vueOutput.includes('Vue panels consumer')) throw new Error('Vue Panels bundle is missing.');
 if (reactOutput.includes('createDialogInteractionLayer'))
   throw new Error('React consumer retained an unused Dialog interaction implementation.');
 

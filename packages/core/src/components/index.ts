@@ -28,6 +28,7 @@ export * from './Link';
 export * from './Layout';
 export * from './List';
 export * from './PageHeader';
+export * from './Panels';
 export * from './Hover';
 export * from './Mask';
 export * from './Pagination';

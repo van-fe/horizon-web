@@ -1,10 +1,15 @@
+import type { AdaptComponentApiShape, PanelRegionMap, PanelsRegionMap } from '@aurora/core';
 import type { SlotsType } from 'vue';
+
+type PanelsVueSlots = AdaptComponentApiShape<PanelsRegionMap, { content: 'default' }>;
+type PanelVueSlots = AdaptComponentApiShape<PanelRegionMap, { content: 'default' }>;
+
 export const usePanelsSlots = Object as SlotsType<{
   /**
    * 默认展示的内容
-    * @en Custom content for the default slot.
+   * @en Composed panel items.
    */
-  default?: {};
+  default?: PanelsVueSlots['default'];
 }>;
 
 export type PanelsSlots = typeof usePanelsSlots;
@@ -12,9 +17,9 @@ export type PanelsSlots = typeof usePanelsSlots;
 export const usePanelSlots = Object as SlotsType<{
   /**
    * 默认展示的内容
-    * @en Custom content for the default slot.
+   * @en Panel content.
    */
-  default?: {};
+  default?: PanelVueSlots['default'];
 }>;
 
 export type PanelSlots = typeof usePanelSlots;

@@ -20,20 +20,23 @@ describe('React Descriptions', () => {
   });
 
   it('resolves responsive columns and spans from the root width', async () => {
-    vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function () {
-      return { width: this.classList.contains('h-descriptions') ? 900 : 80 } as DOMRect;
-    });
     await render(
       h(
-        Descriptions,
-        { type: 'vertical', column: 6, md: 3, border: true },
-        h(DescriptionItem, { label: 'State', value: 'Ready', spanCol: 6, md: 2 }),
+        'div',
+        { style: { width: 900 } },
+        h(
+          Descriptions,
+          { type: 'vertical', column: 6, md: 3, border: true },
+          h(DescriptionItem, { label: 'State', value: 'Ready', spanCol: 6, md: 2 }),
+        ),
       ),
     );
     const content = getContainer().querySelector('.h-descriptions__content') as HTMLElement;
     const item = getContainer().querySelector('.h-descriptions__item') as HTMLElement;
-    expect(content.style.gridTemplateColumns).toBe('repeat(3, 1fr)');
-    expect(item.style.gridColumn).toBe('span 2');
+    await vi.waitFor(() => {
+      expect(content.style.gridTemplateColumns).toBe('repeat(3, 1fr)');
+      expect(item.style.gridColumn).toBe('span 2');
+    });
     expect(content.classList.contains('h-descriptions--border')).toBe(true);
   });
 

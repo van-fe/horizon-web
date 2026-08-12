@@ -31,6 +31,7 @@
 @use './components/layout/variables' as layout;
 @use './components/pagination/variables' as pagination;
 @use './components/page-header/variables' as page-header;
+@use './components/panels/variables' as panels;
 @use './components/popover/variables' as popover;
 @use './components/popconfirm/variables' as popconfirm;
 @use './components/progress/variables' as progress;
@@ -84,6 +85,7 @@ $values: function.map-merge-multi(
   function.flatten-variables(layout.$values, 'layout'),
   function.flatten-variables(pagination.$values, 'pagination'),
   function.flatten-variables(page-header.$values, 'page-header'),
+  function.flatten-variables(panels.$values, 'panels'),
   function.flatten-variables(popover.$values, 'popover'),
   function.flatten-variables(popconfirm.$values, 'popconfirm'),
   function.flatten-variables(progress.$values, 'progress'),

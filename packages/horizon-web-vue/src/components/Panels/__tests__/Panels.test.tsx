@@ -70,9 +70,13 @@ describe('Panels', () => {
       props: { modelValue: 'contract' },
       slots: {
         default: () =>
-          h(HPanel, { name: 'contract' }, {
-            default: () => h('strong', { 'data-test': 'panel-default' }, 'Panel default slot'),
-          }),
+          h(
+            HPanel,
+            { name: 'contract' },
+            {
+              default: () => h('strong', { 'data-test': 'panel-default' }, 'Panel default slot'),
+            },
+          ),
       },
     });
     expect(wrapper.get('[data-test="panel-default"]').text()).toBe('Panel default slot');
@@ -82,5 +86,60 @@ describe('Panels', () => {
       slots: { default: () => <span data-test="standalone-panel">Standalone</span> },
     });
     expect(standalone.get('[data-test="standalone-panel"]').text()).toBe('Standalone');
+  });
+
+  test('resolves reverse horizontal motion with shared enabled-panel order', async () => {
+    const modelValue = ref('last');
+    const wrapper = mount(() => (
+      <HPanels modelValue={modelValue.value} animated>
+        <HPanel name="first">First</HPanel>
+        <HPanel name="disabled" disabled>
+          Disabled
+        </HPanel>
+        <HPanel name="last">Last</HPanel>
+      </HPanels>
+    ));
+
+    modelValue.value = 'first';
+    await nextTick();
+
+    expect(wrapper.findComponent({ name: 'HTransition' }).props('name')).toBe('slide-right');
+  });
+
+  test('keeps long content inside a 390px container', () => {
+    const wrapper = mount(() => (
+      <div style="width: 390px">
+        <HPanels modelValue="long">
+          <HPanel name="long">{'UnbrokenContent'.repeat(80)}</HPanel>
+        </HPanels>
+      </div>
+    ));
+    const root = wrapper.get('.h-panels').element as HTMLElement;
+
+    expect(root.scrollWidth).toBeLessThanOrEqual(root.clientWidth);
+  });
+
+  test('renders a numeric zero panel key', () => {
+    const wrapper = mount(() => (
+      <HPanels modelValue={0}>
+        <HPanel name={0}>Zero</HPanel>
+        <HPanel name={1}>One</HPanel>
+      </HPanels>
+    ));
+
+    expect(wrapper.get('[role="tabpanel"]').text()).toBe('Zero');
+  });
+
+  test('ignores slot children that are not public Panel components', () => {
+    const wrapper = mount(() => (
+      <HPanels modelValue="valid">
+        <span>Missing props</span>
+        <div data-test="native-child">Native child</div>
+        <HPanel name="valid">Valid panel</HPanel>
+      </HPanels>
+    ));
+
+    expect(wrapper.get('[role="tabpanel"]').text()).toBe('Valid panel');
+    expect(wrapper.find('[data-test="native-child"]').exists()).toBe(false);
   });
 });
