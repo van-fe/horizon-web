@@ -63,6 +63,7 @@ import {
   tabManifest,
   tabsManifest,
   timelineManifest,
+  timeManifest,
   tooltipManifest,
   typographyManifest,
 } from '../packages/core/src';
@@ -128,6 +129,7 @@ const manifests = [
   tabsManifest,
   tabManifest,
   timelineManifest,
+  timeManifest,
   tooltipManifest,
   typographyManifest,
 ] as const;
@@ -717,6 +719,7 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
   },
   Skeleton: { regions: { rename: { content: 'default', placeholder: 'loadingTemplate' } } },
   Spin: { regions: { rename: { content: 'default' } } },
+  Time: { regions: { rename: { content: 'default' } } },
   Statistic: { regions: { rename: { value: 'default' } } },
   Space: {
     props: {
@@ -1314,6 +1317,10 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
       ],
     },
     regions: { rename: { content: 'children' }, omit: ['tip'] },
+  },
+  Time: {
+    events: { rename: { finished: 'onFinished' } },
+    regions: { rename: { content: 'children' } },
   },
   Statistic: { regions: { rename: { value: 'children' } } },
   Space: {

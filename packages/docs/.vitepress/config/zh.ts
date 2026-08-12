@@ -70,6 +70,7 @@ const reactSidebar = [
       { text: 'Steps 步骤条', link: 'components/Steps' },
       { text: 'Pagination 分页', link: 'components/Pagination' },
       { text: 'Timeline 时间轴', link: 'components/Timeline' },
+      { text: 'Time 计时', link: 'components/Time' },
     ],
   },
   {

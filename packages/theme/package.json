@@ -108,6 +108,8 @@
     "./styles/skeleton-variables": "./styles/components/skeleton/variables.scss",
     "./styles/spin": "./styles/components/spin/index.scss",
     "./styles/spin-variables": "./styles/components/spin/variables.scss",
+    "./styles/time": "./styles/components/time/index.scss",
+    "./styles/time-variables": "./styles/components/time/variables.scss",
     "./styles/slider": "./styles/components/slider/index.scss",
     "./styles/slider-variables": "./styles/components/slider/variables.scss",
     "./styles/space": "./styles/components/space/index.scss",

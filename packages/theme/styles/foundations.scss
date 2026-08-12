@@ -38,6 +38,7 @@
 @use './components/select/variables' as select;
 @use './components/skeleton/variables' as skeleton;
 @use './components/spin/variables' as spin;
+@use './components/time/variables' as time;
 @use './components/slider/variables' as slider;
 @use './components/space/variables' as space;
 @use './components/statistic/variables' as statistic;
@@ -87,6 +88,7 @@ $values: function.map-merge-multi(
   function.flatten-variables(select.$values, 'select'),
   function.flatten-variables(skeleton.$values, 'skeleton'),
   function.flatten-variables(spin.$values, 'spin'),
+  function.flatten-variables(time.$values, 'time'),
   function.flatten-variables(slider.$values, 'slider'),
   function.flatten-variables(space.$values, 'space'),
   function.flatten-variables(statistic.$values, 'statistic'),

@@ -1,0 +1,6 @@
+@use '../../mixins/function';
+
+$values: (
+  font-family: #{function.css-variable('font-family')},
+  color: #{function.css-variable('text-primary')},
+);

@@ -15,3 +15,24 @@
 默认插槽会提供 `dd`、`hh`、`mm`、`ss`，可组合成数字看板或更易读的自然语言时长。
 
 :::demo vue/components/Time/slot.vue :::
+
+## Props
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `time` | `Date \| number \| string` | `10` | 时长或开始时间 |
+| `end-time` | `Date \| number \| string` | `0` | 绝对结束时间 |
+| `forward` | `boolean` | `false` | 是否正向计时 |
+| `calculative` | `boolean` | `false` | 是否静态展示两个时间值的差 |
+
+## Events
+
+| 事件 | 说明 |
+| --- | --- |
+| `finished` | 倒计时归零时触发 |
+
+## Slots
+
+| 插槽 | 参数 | 说明 |
+| --- | --- | --- |
+| `default` | `{ dd?, hh?, mm?, ss }` | 自定义时间内容 |

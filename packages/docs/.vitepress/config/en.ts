@@ -70,6 +70,7 @@ const reactSidebar = [
       { text: 'Steps', link: 'components/Steps' },
       { text: 'Pagination', link: 'components/Pagination' },
       { text: 'Timeline', link: 'components/Timeline' },
+      { text: 'Time', link: 'components/Time' },
     ],
   },
   {

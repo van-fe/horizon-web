@@ -15,7 +15,8 @@
       { "link": "components/Mask", "zh": "Mask 遮罩", "en": "Mask" },
       { "link": "components/Transition", "zh": "Transition 过渡", "en": "Transition" },
       { "link": "components/Typography", "zh": "Typography 排版", "en": "Typography" },
-      { "link": "components/Watermark", "zh": "Watermark 水印", "en": "Watermark" }
+      { "link": "components/Watermark", "zh": "Watermark 水印", "en": "Watermark" },
+      { "link": "components/Time", "zh": "Time 计时", "en": "Time" }
     ]
   },
   {
@@ -64,7 +65,11 @@
       { "link": "components/InputOtp", "zh": "InputOtp 验证码输入框", "en": "InputOtp" },
       { "link": "components/InputNumber", "zh": "InputNumber 数字输入框", "en": "InputNumber" },
       { "link": "components/Mentions", "zh": "Mentions 提及", "en": "Mentions" },
-      { "link": "components/LicensePlateInput", "zh": "LicensePlateInput 车牌号输入", "en": "LicensePlateInput" },
+      {
+        "link": "components/LicensePlateInput",
+        "zh": "LicensePlateInput 车牌号输入",
+        "en": "LicensePlateInput"
+      },
       { "link": "components/Picker", "zh": "Picker 选择器", "en": "Picker" },
       { "link": "components/Progress", "zh": "Progress 进度条", "en": "Progress" },
       { "link": "components/Radio", "zh": "Radio 单选框", "en": "Radio" },
@@ -110,7 +115,11 @@
       { "link": "components/Time", "zh": "Time 时间", "en": "Time" },
       { "link": "components/Transfer", "zh": "Transfer 穿梭框", "en": "Transfer" },
       { "link": "components/Tree", "zh": "Tree 树形控件", "en": "Tree" },
-      { "link": "components/VirtualScroller", "zh": "VirtualScroller 虚拟滚动", "en": "VirtualScroller" }
+      {
+        "link": "components/VirtualScroller",
+        "zh": "VirtualScroller 虚拟滚动",
+        "en": "VirtualScroller"
+      }
     ]
   },
   {
@@ -130,7 +139,11 @@
       { "link": "components/Anchor", "zh": "Anchor 锚点", "en": "Anchor" },
       { "link": "components/Breadcrumb", "zh": "Breadcrumb 面包屑", "en": "Breadcrumb" },
       { "link": "components/Controls", "zh": "Controls 控制器", "en": "Controls" },
-      { "link": "components/CommandPalette", "zh": "CommandPalette 命令面板", "en": "CommandPalette" },
+      {
+        "link": "components/CommandPalette",
+        "zh": "CommandPalette 命令面板",
+        "en": "CommandPalette"
+      },
       { "link": "components/Dropdown", "zh": "Dropdown 下拉菜单", "en": "Dropdown" },
       { "link": "components/Menu", "zh": "Menu 菜单", "en": "Menu" },
       { "link": "components/PageHeader", "zh": "PageHeader 页头", "en": "PageHeader" },
@@ -145,9 +158,17 @@
     "zh": "指令",
     "en": "Directives",
     "items": [
-      { "link": "directives/v-click-outside", "zh": "v-click-outside 点击外部", "en": "v-click-outside" },
+      {
+        "link": "directives/v-click-outside",
+        "zh": "v-click-outside 点击外部",
+        "en": "v-click-outside"
+      },
       { "link": "directives/v-draggable", "zh": "v-draggable 拖拽", "en": "v-draggable" },
-      { "link": "directives/v-infinite-scroll", "zh": "v-infinite-scroll 无限滚动", "en": "v-infinite-scroll" },
+      {
+        "link": "directives/v-infinite-scroll",
+        "zh": "v-infinite-scroll 无限滚动",
+        "en": "v-infinite-scroll"
+      },
       { "link": "directives/v-loading", "zh": "v-loading 加载", "en": "v-loading" },
       { "link": "directives/v-popconfirm", "zh": "v-popconfirm 气泡确认", "en": "v-popconfirm" },
       { "link": "directives/v-safe-html", "zh": "v-safe-html 安全HTML", "en": "v-safe-html" },

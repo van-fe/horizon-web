@@ -1,9 +1,9 @@
 import { shallowMount, mount } from '@vue/test-utils';
 import HTime from '../src/Time';
-import { describe, expect, test, vi } from 'vitest';
+import { afterEach, describe, expect, test, vi } from 'vitest';
 import { nextTick } from 'vue';
 
-const delay = (time: number) => new Promise(resolve => setTimeout(resolve, time));
+afterEach(() => vi.useRealTimers());
 
 describe('Time.tsx', () => {
   test('basic', async () => {
@@ -26,10 +26,12 @@ describe('Time.tsx', () => {
   });
 
   test('time', async () => {
+    vi.useFakeTimers();
     const wrapper = mount(HTime);
-    await delay(1000);
+    await vi.advanceTimersByTimeAsync(1000);
     await nextTick();
     expect(wrapper.find('.h-time').text()).toBe('00:00:09');
+    wrapper.unmount();
   });
 
   test('passes the complete duration object to the scoped default slot', async () => {
@@ -48,14 +50,16 @@ describe('Time.tsx', () => {
   });
 
   test('forward mode starts at zero and advances without emitting finished', async () => {
+    vi.useFakeTimers();
     const onFinished = vi.fn();
     const wrapper = mount(HTime, { props: { time: 2, forward: true, onFinished } });
 
     expect(wrapper.text()).toBe('00:00:00');
-    await delay(1100);
+    await vi.advanceTimersByTimeAsync(1000);
     await nextTick();
     expect(wrapper.text()).toBe('00:00:01');
     expect(onFinished).not.toHaveBeenCalled();
+    wrapper.unmount();
   });
 
   test('emits finished once the countdown crosses zero', async () => {
@@ -66,7 +70,6 @@ describe('Time.tsx', () => {
     await vi.advanceTimersByTimeAsync(2000);
     expect(onFinished).toHaveBeenCalledOnce();
     wrapper.unmount();
-    vi.useRealTimers();
   });
 
   test('formats minute/hour boundaries reactively and clears its timer on unmount', async () => {
@@ -85,6 +88,5 @@ describe('Time.tsx', () => {
     expect(vi.getTimerCount()).toBeGreaterThan(0);
     ticking.unmount();
     expect(vi.getTimerCount()).toBe(0);
-    vi.useRealTimers();
   });
 });

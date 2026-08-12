@@ -1,0 +1,10 @@
+@use '../../mixins';
+
+@include mixins.b('time') {
+  min-width: 0;
+  max-width: 100%;
+  font-family: mixins.css-variable('time', 'font-family');
+  font-variant-numeric: tabular-nums;
+  color: mixins.css-variable('time', 'color');
+  overflow-wrap: anywhere;
+}

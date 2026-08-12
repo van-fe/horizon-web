@@ -735,6 +735,18 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DOC-B28-001 | Done | Vue 文档补齐 Props/Slots；React 中英文页面、3 个独立 TSX 示例与双语侧边栏入口完成；61 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
 | QA-B28-001 | Done | Core 182、Web Core Node 15/Chromium 55、React Chromium 209、Vue Chromium 2322 项（2321 通过、1 项预期失败）全部通过；Vue 总覆盖率为 97.95% / 95.09% / 97.62% / 98.25%；Vue Node 23、resolver 12、colors 1、upload adapters 66 项通过；五包构建、Sass、文档站、含 Spin 的 Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界与旧组件包名移除约束通过 |
 
+#### M6-B29 第二十九批实施记录（2026-08-12）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B29-001 | Done | Time 的公共 props、默认值、输入校验、秒/毫秒规范化、时长解析与 `dd/hh/mm/ss` 分解格式化迁入 `@aurora/core`，不包含 renderer、DOM 或计时器实现 |
+| WEB-B29-001 | Done | 在同名 Web Core 目录提供漂移修正计时控制器，统一倒计时、正向计时、静态差值、结束去重与销毁清理，两端不再分别维护递归定时器 |
+| VUE-B29-001 | Done | Vue props/emits/slots 类型化消费公共契约，计时逻辑改用 Web Core；保留 `time`、`endTime`、`forward`、`calculative`、`finished` 与 scoped default slot，并避免 SSR setup 启动计时器 |
+| REACT-B29-001 | Done | 完成 React Time，支持倒计时、正向计时、绝对截止时间、静态差值、函数 children、`onFinished`、timer 语义、根 ref 与原生属性 |
+| DS-B29-001 | Done | Time canonical Sass、tabular number、字体与文本颜色变量迁入 `@aurora/theme`；Vue 使用包导出薄代理，React 使用同源视觉，并约束窄容器长内容 |
+| DOC-B29-001 | Done | Vue 文档补齐 Props/Events/Slots；React 中英文页面、3 个独立 TSX 示例与双语侧边栏入口完成；62 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
+| QA-B29-001 | Done | Core 185、Web Core Node 18/Chromium 55、React Chromium 212、Vue Chromium 2322 项（2321 通过、1 项预期失败）全部通过；Vue 总覆盖率为 97.95% / 95.11% / 97.62% / 98.25%；Vue Node 23、resolver 12、colors 1、upload adapters 66 项通过；五包构建、Sass、文档站、含 Time 的 Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界与旧组件包名移除约束通过 |
+
 ### 批次 C：浮层与容器
 
 ```text
