@@ -1,11 +1,11 @@
 import type { InjectionKey, Ref } from 'vue';
+import type { ApplicationShowTimeZone, ApplicationSize } from '@aurora/core';
 import { generatorInjectedKeyName } from '@aurora/utils';
-import type { ApplicationProps } from '../composables/useProps';
 
 export const GlobalSizeInjectedKey = Symbol.for(
   generatorInjectedKeyName('global', 'size'),
-) as InjectionKey<Ref<'small' | 'medium' | 'large'>>;
+) as InjectionKey<Ref<ApplicationSize>>;
 
 export const HApplicationShowTimeZoneInjectedKey = Symbol.for(
   generatorInjectedKeyName('application', 'time-zone'),
-) as InjectionKey<Ref<ApplicationProps['showTimeZone']>>;
+) as InjectionKey<Ref<ApplicationShowTimeZone>>;

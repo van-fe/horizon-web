@@ -1,8 +1,22 @@
 import type { ExtractPropTypes, PropType } from 'vue';
+import type {
+  AdaptComponentApiShape,
+  ApplicationCommonProps,
+  ApplicationShowTimeZone,
+  ApplicationSize,
+  ComponentRendererPropDefinitions,
+} from '@aurora/core';
+import { APPLICATION_DEFAULTS, isApplicationShowTimeZone, isApplicationSize } from '@aurora/core';
 import { declarePropType } from '@aurora/utils';
 import type { LocaleSupportLang } from '@aurora/locale';
 
-export type HApplicationSizeType = 'large' | 'medium' | 'small';
+export type HApplicationSizeType = ApplicationSize;
+export type ApplicationVueProps = AdaptComponentApiShape<
+  ApplicationCommonProps<LocaleSupportLang>,
+  {},
+  never,
+  { getPopupContainer?: (triggerNode?: HTMLElement) => HTMLElement }
+>;
 
 export const useApplicationProps = declarePropType({
   /**
@@ -10,7 +24,7 @@ export const useApplicationProps = declarePropType({
    * @en Configuration for locale.
    */
   locale: {
-    type: String as PropType<LocaleSupportLang | LocaleSupportLang>,
+    type: String as PropType<LocaleSupportLang>,
     required: false,
   },
   /**
@@ -18,8 +32,9 @@ export const useApplicationProps = declarePropType({
    * @en Configuration for size.
    */
   size: {
-    type: String as PropType<HApplicationSizeType>,
-    default: 'medium',
+    type: String as PropType<ApplicationSize>,
+    default: APPLICATION_DEFAULTS.size,
+    validator: isApplicationSize,
   },
   /**
    * 命名空间
@@ -45,9 +60,10 @@ export const useApplicationProps = declarePropType({
    * @en Configuration for show time zone.
    */
   showTimeZone: {
-    type: [Boolean, Array] as PropType<boolean | ['date-picker' | 'timeline']>,
-    default: false,
+    type: [Boolean, Array] as PropType<ApplicationShowTimeZone>,
+    default: APPLICATION_DEFAULTS.showTimeZone,
+    validator: isApplicationShowTimeZone,
   },
-});
+} satisfies ComponentRendererPropDefinitions<ApplicationVueProps>);
 
 export type ApplicationProps = ExtractPropTypes<typeof useApplicationProps>;

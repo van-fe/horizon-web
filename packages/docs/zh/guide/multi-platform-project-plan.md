@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B21 Container 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B22 Application 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -650,6 +650,18 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DS-B21-001 | Done | Container 五个区域的 canonical Sass 与变量入口迁入 `@aurora/theme`，Vue 使用包导出代理并删除 renderer 内五份样式源，React 使用同源样式；补充 Aside/Main 限宽、最小尺寸和长文本防溢出规则 |
 | DOC-B21-001 | Done | Container 中英文 React 页面、3 个独立 TSX 示例、Vue API 摘要与双语侧边栏入口完成；52 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
 | QA-B21-001 | Done | Core 160、Web Core Node 10/Chromium 49、React Chromium 176、Vue Chromium 2319 项（2318 通过、1 项预期失败）全部通过，覆盖率为 97.97% / 95.07% / 97.67% / 98.27%；Vue Node 23、resolver 12、colors 1、upload adapters 66 项通过；五包构建、文档站与 Vue/React/SSR/tree-shaking 消费工程通过 |
+
+#### M6-B22 第二十二批实施记录（2026-08-12）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B22-001 | Done | Application 的 locale、size、namespace、时区展示配置、默认值、校验器、内容区域及 manifest 迁入 `@aurora/core`，公共契约不依赖 Vue、React、DOM 或 locale 实现 |
+| WEB-B22-001 | Done | 在同名 Web Core 目录提供弹层容器解析能力，统一自定义 getter、触发元素与 owner document 的处理，并在 getter 缺省或无返回值时安全回退到 body |
+| VUE-B22-001 | Done | Vue props/slots 与注入键类型化消费公共契约，继续兼容现有 locale service、全局 namespace、响应式 size/timezone 以及 popup container getter；组件保持无额外 DOM 包装 |
+| REACT-B22-001 | Done | HorizonWebProvider 扩展 locale、size、showTimeZone 与 getPopupContainer 上下文；新增 Application/HApplication 入口并复用 Provider 的嵌套继承与局部覆盖能力，组件保持无额外 DOM 包装 |
+| DS-B22-001 | Done | 确认 Application 只提供运行时上下文且不渲染视觉节点，本批不新增 Theme 样式或 renderer 私有样式，避免产生没有消费者的视觉抽象 |
+| DOC-B22-001 | Done | Application 中英文 React 页面、2 个独立 TSX 示例、Vue API 摘要与双语侧边栏入口完成；53 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
+| QA-B22-001 | Done | Core 162、Web Core Node 10/Chromium 50、React Chromium 178、Vue Chromium 2319 项（2318 通过、1 项预期失败）全部通过，覆盖率为 97.97% / 95.07% / 97.67% / 98.27%；Vue Node 23、resolver 12、colors 1、upload adapters 66 项通过；五包构建、文档站与 Vue/React/SSR/tree-shaking 消费工程通过 |
 
 ### 批次 C：浮层与容器
 

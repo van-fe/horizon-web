@@ -37,6 +37,7 @@ const reactSidebar = [
       { text: 'Backtop', link: 'components/Backtop' },
       { text: 'Affix', link: 'components/Affix' },
       { text: 'Anchor', link: 'components/Anchor' },
+      { text: 'Application', link: 'components/Application' },
     ],
   },
   {

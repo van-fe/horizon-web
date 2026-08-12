@@ -37,6 +37,7 @@ const reactSidebar = [
       { text: 'Backtop 回到顶部', link: 'components/Backtop' },
       { text: 'Affix 固钉', link: 'components/Affix' },
       { text: 'Anchor 锚点导航', link: 'components/Anchor' },
+      { text: 'Application 应用配置', link: 'components/Application' },
     ],
   },
   {

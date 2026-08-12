@@ -5,6 +5,7 @@ import {
   anchorManifest,
   adaptManifestFields,
   alertManifest,
+  applicationManifest,
   avatarManifest,
   backtopManifest,
   badgeManifest,
@@ -63,6 +64,7 @@ const manifests = [
   affixManifest,
   anchorManifest,
   alertManifest,
+  applicationManifest,
   avatarManifest,
   backtopManifest,
   badgeManifest,
@@ -140,6 +142,18 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     regions: { rename: { content: 'default' }, omit: ['collapseLabel'] },
   },
   Alert: { regions: { rename: { content: 'default' } } },
+  Application: {
+    props: {
+      extend: [
+        {
+          name: 'getPopupContainer',
+          type: '(triggerNode?: HTMLElement) => HTMLElement',
+          description: { zh: '弹层挂载节点解析器', en: 'Popup container resolver' },
+        },
+      ],
+    },
+    regions: { rename: { content: 'default' } },
+  },
   Avatar: {
     props: { rename: { fallbackSrc: 'default' } },
     regions: { rename: { content: 'default', fallback: 'error' } },
@@ -812,6 +826,18 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
   },
   Alert: {
     events: { rename: { close: 'onClose' } },
+    regions: { rename: { content: 'children' } },
+  },
+  Application: {
+    props: {
+      extend: [
+        {
+          name: 'getPopupContainer',
+          type: 'ApplicationPopupContainerGetter',
+          description: { zh: '弹层挂载节点解析器', en: 'Popup container resolver' },
+        },
+      ],
+    },
     regions: { rename: { content: 'children' } },
   },
   Avatar: {

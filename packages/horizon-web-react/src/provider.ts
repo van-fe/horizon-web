@@ -1,11 +1,17 @@
 import type { PropsWithChildren, ReactElement } from 'react';
 import { createContext, createElement, useContext, useMemo } from 'react';
 import type { PaginationLabels } from '@aurora/core';
-import { PAGINATION_DEFAULT_LABELS } from '@aurora/core';
+import type { ApplicationShowTimeZone, ApplicationSize } from '@aurora/core';
+import { APPLICATION_DEFAULTS, PAGINATION_DEFAULT_LABELS } from '@aurora/core';
+import type { ApplicationPopupContainerGetter } from '@aurora/horizon-web-core';
 import { DEFAULT_NAMESPACE } from '@aurora/theme';
 
 export interface HorizonWebConfig {
   namespace: string;
+  locale?: string;
+  size: ApplicationSize;
+  showTimeZone: ApplicationShowTimeZone;
+  getPopupContainer?: ApplicationPopupContainerGetter;
   navigate?: (to: unknown, options: { replace: boolean }) => void | Promise<void>;
   resolveHref?: (to: unknown) => string | undefined;
   switchLabels: {
@@ -89,6 +95,8 @@ export type HorizonWebProviderProps = PropsWithChildren<
 
 const defaultConfig: HorizonWebConfig = Object.freeze({
   namespace: DEFAULT_NAMESPACE,
+  size: APPLICATION_DEFAULTS.size,
+  showTimeZone: APPLICATION_DEFAULTS.showTimeZone,
   switchLabels: { on: 'On', off: 'Off' },
   selectLabels: { placeholder: 'Please select', empty: 'No options', clear: 'Clear selection' },
   linkLabels: { loading: 'Loading' },
@@ -111,6 +119,10 @@ export const HorizonWebContext = createContext<HorizonWebConfig>(defaultConfig);
 
 export function HorizonWebProvider({
   namespace,
+  locale,
+  size,
+  showTimeZone,
+  getPopupContainer,
   navigate,
   resolveHref,
   switchLabels,
@@ -132,6 +144,10 @@ export function HorizonWebProvider({
     () => ({
       ...parent,
       namespace: namespace ?? parent.namespace,
+      locale: locale ?? parent.locale,
+      size: size ?? parent.size,
+      showTimeZone: showTimeZone ?? parent.showTimeZone,
+      getPopupContainer: getPopupContainer ?? parent.getPopupContainer,
       navigate: navigate ?? parent.navigate,
       resolveHref: resolveHref ?? parent.resolveHref,
       switchLabels: {
@@ -185,6 +201,10 @@ export function HorizonWebProvider({
     }),
     [
       namespace,
+      locale,
+      size,
+      showTimeZone,
+      getPopupContainer,
       navigate,
       resolveHref,
       parent,

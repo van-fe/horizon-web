@@ -42,6 +42,7 @@ import '@aurora/theme/styles/typography';
 
 export * from './components/Button';
 export * from './components/Affix';
+export * from './components/Application';
 export * from './components/Anchor';
 export * from './components/Alert';
 export * from './components/Avatar';
