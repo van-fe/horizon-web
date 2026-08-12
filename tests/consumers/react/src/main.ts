@@ -7,6 +7,7 @@ import {
   List,
   ListItem,
   Mask,
+  PageHeader,
   Select,
   Spin,
   Time,
@@ -37,5 +38,10 @@ createRoot(document.getElementById('root')!).render(
       { header: 'React list consumer' },
       createElement(ListItem, { title: 'Status', describe: 'Ready' }),
     ),
+    createElement(PageHeader, {
+      title: 'React page header consumer',
+      content: 'Ready',
+      showBack: false,
+    }),
   ),
 );

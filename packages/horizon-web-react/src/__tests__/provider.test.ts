@@ -60,6 +60,10 @@ function SpinLabelsProbe() {
   return createElement('span', null, useHorizonWebConfig().spinLabels.loading);
 }
 
+function PageHeaderLabelsProbe() {
+  return createElement('span', null, useHorizonWebConfig().pageHeaderLabels.back);
+}
+
 describe('HorizonWebProvider', () => {
   it('is SSR-safe and exposes renderer configuration', () => {
     const html = renderToStaticMarkup(
@@ -167,5 +171,17 @@ describe('HorizonWebProvider', () => {
     );
 
     expect(html).toContain('Preparing workspace');
+  });
+
+  it('merges PageHeader labels with provider defaults', () => {
+    const html = renderToStaticMarkup(
+      createElement(
+        HorizonWebProvider,
+        { pageHeaderLabels: { back: 'Return' } },
+        createElement(PageHeaderLabelsProbe),
+      ),
+    );
+
+    expect(html).toContain('Return');
   });
 });

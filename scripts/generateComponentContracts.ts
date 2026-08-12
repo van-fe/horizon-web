@@ -48,6 +48,7 @@ import {
   listItemManifest,
   listManifest,
   paginationManifest,
+  pageHeaderManifest,
   popContentManifest,
   popconfirmManifest,
   popoverManifest,
@@ -118,6 +119,7 @@ const manifests = [
   listItemManifest,
   maskManifest,
   paginationManifest,
+  pageHeaderManifest,
   popconfirmManifest,
   popoverManifest,
   popContentManifest,
@@ -736,6 +738,35 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
         leading: 'sider',
         description: 'describe',
         actions: 'right',
+      },
+    },
+  },
+  PageHeader: {
+    props: {
+      omit: ['showBack'],
+      extend: [
+        {
+          name: 'icon',
+          type: 'Icon | string | null',
+          description: {
+            zh: '返回图标，null 隐藏返回操作',
+            en: 'Back icon; null hides the action',
+          },
+        },
+        {
+          name: 'backAriaLabel',
+          type: 'string',
+          description: { zh: '返回操作可访问名称', en: 'Accessible name for the back action' },
+        },
+      ],
+    },
+    regions: {
+      rename: {
+        body: 'default',
+        backIcon: 'icon',
+        titleContainer: 'titleOuter',
+        description: 'content',
+        actions: 'extra',
       },
     },
   },
@@ -1381,6 +1412,31 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     regions: {
       rename: { content: 'children', leading: 'leading', actions: 'actions' },
       omit: ['title', 'description'],
+    },
+  },
+  PageHeader: {
+    props: {
+      extend: [
+        {
+          name: 'backAriaLabel',
+          type: 'string',
+          description: { zh: '返回操作可访问名称', en: 'Accessible name for the back action' },
+        },
+      ],
+    },
+    events: { rename: { back: 'onBack' } },
+    regions: {
+      rename: {
+        body: 'children',
+        backIcon: 'backIcon',
+        header: 'header',
+        title: 'titleContent',
+        titleContainer: 'titleContainer',
+        tags: 'tags',
+        description: 'description',
+        actions: 'actions',
+        breadcrumb: 'breadcrumb',
+      },
     },
   },
   Spin: {

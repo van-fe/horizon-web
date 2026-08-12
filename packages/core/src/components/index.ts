@@ -27,6 +27,7 @@ export * from './InputNumber';
 export * from './Link';
 export * from './Layout';
 export * from './List';
+export * from './PageHeader';
 export * from './Hover';
 export * from './Mask';
 export * from './Pagination';

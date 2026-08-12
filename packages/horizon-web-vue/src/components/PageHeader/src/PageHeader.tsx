@@ -11,11 +11,14 @@ import type { PageHeaderSlots } from './composables/useSlots';
 import { renderIcon } from '~/utils/useIcon';
 import HTooltip from '~/components/Tooltip/src/Tooltip';
 import HButton from '~/components/Button/src/Button';
+import useLocaleLang from '~/utils/useLocaleLang';
 
 export default defineComponent({
   name: `${useNamespace()}PageHeader`,
   desc: '页头位于页面内容上方，主要作用是申明页面主题、页内信息导航、页面级内容操作',
-  descLocales: { en: "Use `breadcrumb` slot to place breadcrumb" },
+  descLocales: {
+    en: 'Page header declares page context, supporting information, and page-level actions.',
+  },
   props: usePageHeaderProps,
   emits: usePageHeaderEmits,
   slots: usePageHeaderSlots,
@@ -25,13 +28,14 @@ export default defineComponent({
     { emit, slots }: HorizonWebSetupContext<PageHeaderEmits, PageHeaderSlots>,
   ) {
     const classHelper = new ComponentClassBlock('page-header');
+    const backLabel = useLocaleLang('pageHeader.title', 'Back');
 
     function onClickBackBtn() {
       emit('back');
     }
 
     return () => (
-      <div class={cls(classHelper.block, classHelper.has('divider', props.useDivider))}>
+      <header class={cls(classHelper.block, classHelper.has('divider', props.useDivider))}>
         {slots.breadcrumb && <div class={classHelper.e('breadcrumb')}>{slots.breadcrumb()}</div>}
         <div class={classHelper.e('main')}>
           {(slots.icon || props.icon) && props.icon !== null && (
@@ -39,6 +43,7 @@ export default defineComponent({
               text={true}
               type="normal"
               class={classHelper.e('back')}
+              aria-label={props.backAriaLabel ?? backLabel.value}
               onClick={onClickBackBtn}
             >
               {{
@@ -62,9 +67,9 @@ export default defineComponent({
                       {{
                         content: () => slots.title?.() ?? props.title,
                         default: () => (
-                          <div class={classHelper.em('header', 'title')}>
+                          <h1 class={classHelper.em('header', 'title')}>
                             {slots.title?.() ?? props.title}
-                          </div>
+                          </h1>
                         ),
                       }}
                     </HTooltip>
@@ -82,7 +87,7 @@ export default defineComponent({
           {slots.extra && <div class={classHelper.e('extra')}>{slots.extra()}</div>}
         </div>
         {slots.default && <div class={classHelper.e('default')}>{slots.default()}</div>}
-      </div>
+      </header>
     );
   },
 });

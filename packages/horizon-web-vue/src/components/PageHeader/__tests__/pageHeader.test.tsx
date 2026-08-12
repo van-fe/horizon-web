@@ -30,12 +30,13 @@ describe('PageHeader.tsx', () => {
       const wrapper = mount(() => <HPageHeader title="TITLE" />);
 
       expect(wrapper.text()).toBe('TITLE');
+      expect(wrapper.get('h1').text()).toBe('TITLE');
     });
 
     test('content', async () => {
-      const wrapper = mount(() => <HPageHeader title="TITLE" />);
+      const wrapper = mount(() => <HPageHeader title="TITLE" content="CONTENT" />);
 
-      expect(wrapper.text()).toBe('TITLE');
+      expect(wrapper.get('.h-page-header__inner--content').text()).toBe('CONTENT');
     });
 
     test('use-divider', async () => {
@@ -55,12 +56,21 @@ describe('PageHeader.tsx', () => {
   describe('emits', () => {
     test('back', async () => {
       const onBack = vi.fn();
-      const wrapper = mount(() => <HPageHeader onBack={onBack} />);
+      const wrapper = mount(() => (
+        <HPageHeader backAriaLabel="Return to projects" onBack={onBack} />
+      ));
       const backBtn = wrapper.findComponent(HButton);
 
+      expect(backBtn.attributes('aria-label')).toBe('Return to projects');
       await backBtn.trigger('click');
 
       expect(onBack).toHaveBeenCalledOnce();
+    });
+
+    test('icon null hides the back action', () => {
+      const wrapper = mount(() => <HPageHeader icon={null} title="TITLE" />);
+
+      expect(wrapper.findComponent(HButton).exists()).toBe(false);
     });
   });
 
@@ -179,5 +189,22 @@ describe('PageHeader.tsx', () => {
       });
       expect(fallback.findComponent({ name: 'HTooltip' }).props('disabled')).toBe(true);
     });
+  });
+
+  test('keeps long content inside a 390px container', () => {
+    const wrapper = mount(() => (
+      <div style="width: 390px">
+        <HPageHeader title="A very long page heading that must remain inside the viewport">
+          {{
+            content: () => 'Description'.repeat(80),
+            extra: () => 'Action'.repeat(40),
+            default: () => 'Body'.repeat(100),
+          }}
+        </HPageHeader>
+      </div>
+    ));
+    const root = wrapper.get('.h-page-header').element as HTMLElement;
+
+    expect(root.scrollWidth).toBeLessThanOrEqual(root.clientWidth);
   });
 });

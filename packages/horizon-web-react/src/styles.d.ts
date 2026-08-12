@@ -7,6 +7,7 @@ declare module '@aurora/theme/styles/link';
 declare module '@aurora/theme/styles/list';
 declare module '@aurora/theme/styles/layout';
 declare module '@aurora/theme/styles/pagination';
+declare module '@aurora/theme/styles/page-header';
 declare module '@aurora/theme/styles/popover';
 declare module '@aurora/theme/styles/popconfirm';
 declare module '@aurora/theme/styles/dialog';

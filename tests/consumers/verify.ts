@@ -27,8 +27,11 @@ if (!vueOutput.includes('Vue descriptions consumer'))
   throw new Error('Vue Descriptions bundle is missing.');
 if (!reactOutput.includes('React list consumer')) throw new Error('React List bundle is missing.');
 if (!vueOutput.includes('Vue list consumer')) throw new Error('Vue List bundle is missing.');
-if (reactOutput.includes('Tooltip requires one valid React element child')) {
-  throw new Error('React consumer retained an unused Tooltip implementation.');
-}
+if (!reactOutput.includes('React page header consumer'))
+  throw new Error('React PageHeader bundle is missing.');
+if (!vueOutput.includes('Vue page header consumer'))
+  throw new Error('Vue PageHeader bundle is missing.');
+if (reactOutput.includes('createDialogInteractionLayer'))
+  throw new Error('React consumer retained an unused Dialog interaction implementation.');
 
 console.info('Vite Vue/React consumer bundles and React tree-shaking verified.');

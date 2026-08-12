@@ -1,0 +1,133 @@
+@use '../../mixins';
+
+/* stylelint-disable nesting-selector-no-missing-scoping-root -- BEM mixins provide selector roots. */
+
+@include mixins.b('page-header') {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  min-height: mixins.css-variable('page-header', 'size', 'root', 'min-height');
+  padding: mixins.css-variable('page-header', 'spacing', 'root', 'padding');
+
+  @include mixins.e('breadcrumb') {
+    min-width: 0;
+    max-width: 100%;
+    padding: mixins.css-variable('page-header', 'spacing', 'items', 'padding');
+    margin-bottom: mixins.css-variable('page-header', 'spacing', 'wrapper', 'row-gap');
+    overflow-wrap: anywhere;
+  }
+
+  @include mixins.e('main') {
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    gap: mixins.css-variable('page-header', 'spacing', 'content', 'column-gap');
+    align-items: center;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    padding: mixins.css-variable('page-header', 'spacing', 'items', 'padding');
+    padding-bottom: mixins.css-variable('page-header', 'spacing', 'main', 'padding-bottom');
+  }
+
+  @include mixins.e('default') {
+    min-width: 0;
+    max-width: 100%;
+    padding: mixins.css-variable('page-header', 'spacing', 'items', 'padding');
+    margin-top: mixins.css-variable('page-header', 'spacing', 'wrapper', 'row-gap');
+    overflow-wrap: anywhere;
+  }
+
+  @include mixins.e('back') {
+    flex-shrink: 0;
+  }
+
+  @include mixins.e('inner') {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    row-gap: mixins.css-variable('page-header', 'spacing', 'inner', 'row-gap');
+    justify-content: center;
+    width: 0;
+    min-width: 0;
+
+    @include mixins.m('content') {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      min-width: 0;
+      max-width: min(100%, mixins.css-variable('page-header', 'size', 'content', 'max-width'));
+      min-height: mixins.css-variable('page-header', 'size', 'content', 'min-height');
+      color: mixins.css-variable('page-header', 'color', 'content');
+      overflow-wrap: anywhere;
+    }
+  }
+
+  @include mixins.e('header') {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    max-width: 100%;
+
+    @include mixins.m('title') {
+      min-width: 0;
+      max-width: min(100%, mixins.css-variable('page-header', 'size', 'title', 'max-width'));
+      margin: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: mixins.css-variable('page-header', 'font-size', 'title');
+      color: mixins.css-variable('page-header', 'color');
+      white-space: nowrap;
+    }
+
+    @include mixins.m('tags') {
+      flex: none;
+      min-width: 0;
+      max-width: 100%;
+    }
+  }
+
+  @include mixins.e('extra') {
+    display: flex;
+    flex: none;
+    justify-content: flex-end;
+    min-width: 0;
+    max-width: 100%;
+    margin-left: auto;
+    overflow-wrap: anywhere;
+  }
+
+  @include mixins.has('divider') {
+    @include mixins.be('page-header', 'main', false) {
+      &::after {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        height: 1px;
+        content: '';
+        background: mixins.css-variable('page-header', 'background', 'divider');
+      }
+    }
+  }
+}
+
+@media (width <= 480px) {
+  @include mixins.b('page-header') {
+    @include mixins.e('main') {
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+
+    @include mixins.e('extra') {
+      flex-basis: 100%;
+      justify-content: flex-start;
+      margin-left: 0;
+    }
+  }
+}

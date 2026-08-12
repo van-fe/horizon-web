@@ -10,6 +10,7 @@ import {
   HDescriptions,
 } from '@aurora/horizon-web-vue/es/components/Descriptions';
 import { HList, HListItem } from '@aurora/horizon-web-vue/es/components/List';
+import { HPageHeader } from '@aurora/horizon-web-vue/es/components/PageHeader';
 
 const value = ref<string>();
 const options = [
@@ -31,4 +32,5 @@ const options = [
     <template #header>Vue list consumer</template>
     <HListItem title="Status" describe="Ready" />
   </HList>
+  <HPageHeader :icon="null" title="Vue page header consumer" content="Ready" />
 </template>

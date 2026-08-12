@@ -1,50 +1,63 @@
+import type { AdaptComponentApiShape, PageHeaderRegionMap } from '@aurora/core';
 import type { SlotsType } from 'vue';
+
+type PageHeaderVueSlots = AdaptComponentApiShape<
+  PageHeaderRegionMap,
+  {
+    body: 'default';
+    backIcon: 'icon';
+    titleContainer: 'titleOuter';
+    description: 'content';
+    actions: 'extra';
+  }
+>;
+
 export const usePageHeaderSlots = Object as SlotsType<{
   /**
    * 默认插槽
-    * @en Custom content for the default slot.
+   * @en Custom content for the default slot.
    */
-  default?: {};
+  default?: PageHeaderVueSlots['default'];
   /**
    * 返回按钮插槽
-    * @en Custom content for the icon slot.
+   * @en Custom content for the icon slot.
    */
-  icon?: {};
+  icon?: PageHeaderVueSlots['icon'];
   /**
    * header插槽
-    * @en Custom content for the header slot.
+   * @en Custom content for the header slot.
    */
-  header?: {};
+  header?: PageHeaderVueSlots['header'];
   /**
    * 标题插槽
-    * @en Custom content for the title slot.
+   * @en Custom content for the title slot.
    */
-  title?: {};
+  title?: PageHeaderVueSlots['title'];
   /**
    * 标题外部插槽
-    * @en Custom content for the title outer slot.
+   * @en Custom content for the title outer slot.
    */
-  titleOuter?: {};
+  titleOuter?: PageHeaderVueSlots['titleOuter'];
   /**
    * 标签插槽
-    * @en Custom content for the tags slot.
+   * @en Custom content for the tags slot.
    */
-  tags?: {};
+  tags?: PageHeaderVueSlots['tags'];
   /**
    * 内容区域插槽
-    * @en Custom content for the content slot.
+   * @en Custom content for the content slot.
    */
-  content?: {};
+  content?: PageHeaderVueSlots['content'];
   /**
    * 额外内容插槽
-    * @en Custom content for the extra slot.
+   * @en Custom content for the extra slot.
    */
-  extra?: {};
+  extra?: PageHeaderVueSlots['extra'];
   /**
    * 面包屑插槽
-    * @en Custom content for the breadcrumb slot.
+   * @en Custom content for the breadcrumb slot.
    */
-  breadcrumb?: {};
+  breadcrumb?: PageHeaderVueSlots['breadcrumb'];
 }>;
 
 export type PageHeaderSlots = typeof usePageHeaderSlots;

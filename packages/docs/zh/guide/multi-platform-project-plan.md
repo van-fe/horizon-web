@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B31 List 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B32 PageHeader 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -770,6 +770,18 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DS-B31-001 | Done | List canonical Sass 与变量迁入 `@aurora/theme`；Vue 使用包导出薄代理，React 使用同源视觉；修复 footer 顶部分割线选择器并约束 390px 长内容 |
 | DOC-B31-001 | Done | Vue 文档补齐 Props/Slots；React 中英文页面、3 个独立 TSX 示例与双语侧边栏入口完成，文档保持 renderer 原生表达 |
 | QA-B31-001 | Done | Core 191、Theme 3、Locale React 5、Web Core Node 18/Chromium 57、React Chromium 218、Vue Chromium 2322 项（2321 通过、1 项预期失败）全部通过；Vue 总覆盖率为 97.94% / 95.06% / 97.60% / 98.24%；Vue Node 24、resolver 12、colors 1、upload adapters 66 项通过；五包构建、Sass、文档站、含 List 的 Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界与旧组件包名移除约束通过 |
+
+#### M6-B32 第三十二批实施记录（2026-08-12）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B32-001 | Done | PageHeader 的公共标题、说明、返回操作、分割线、标题提示开关、返回事件、9 个语义区域和 manifest 迁入 `@aurora/core`，不包含 renderer 节点、DOM 或 locale |
+| WEB-B32-001 | Done | 本批没有独立于 Button/Tooltip 的跨 renderer DOM 控制器需求，不创建空 Web Core 目录；两套 renderer 复用既有交互能力 |
+| VUE-B32-001 | Done | Vue props/emits/slots 类型化消费公共契约，保留 `icon=null`、titleOuter、header 和历史插槽优先级；返回按钮消费现有 locale 可访问名称，默认标题采用 heading 语义 |
+| REACT-B32-001 | Done | 完成 React PageHeader，支持返回操作、Provider 文案、标题提示、面包屑、标签、说明、页面操作、完整区域覆盖、原生 header 属性和根 ref，并复用 React Button/Tooltip |
+| DS-B32-001 | Done | PageHeader canonical Sass 与变量迁入 `@aurora/theme`，Vue 使用包导出薄代理，React 使用同源视觉；修复 390px 下长标题、说明、操作和扩展内容的横向溢出 |
+| DOC-B32-001 | Done | Vue 文档补齐 Props/Events/Slots；React 中英文页面、3 个独立 TSX 示例与双语侧边栏入口完成；67 组 Vue/React 契约生成且文档保持 renderer 原生表达 |
+| QA-B32-001 | Done | Core 193、Theme 3、Locale React 5、Web Core Node 18/Chromium 57、React Chromium 222、Vue Chromium 2324 项（2323 通过、1 项预期失败）全部通过；Vue 总覆盖率为 97.95% / 95.06% / 97.62% / 98.24%；Vue Node 25、resolver 12、colors 1、upload adapters 66 项通过；五包构建、Sass、文档站、含 PageHeader 的 Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界与旧组件包名移除约束通过 |
 
 ### 批次 C：浮层与容器
 

@@ -72,6 +72,7 @@ const reactSidebar = [
       { text: 'Steps', link: 'components/Steps' },
       { text: 'Pagination', link: 'components/Pagination' },
       { text: 'Timeline', link: 'components/Timeline' },
+      { text: 'PageHeader', link: 'components/PageHeader' },
       { text: 'Time', link: 'components/Time' },
     ],
   },
