@@ -26,6 +26,7 @@ const reactSidebar = [
       { text: 'Hover 悬停状态', link: 'components/Hover' },
       { text: 'Count 计数', link: 'components/Count' },
       { text: 'Divider 分割线', link: 'components/Divider' },
+      { text: 'Mask 遮罩', link: 'components/Mask' },
       { text: 'Typography 排版', link: 'components/Typography' },
       { text: 'Statistic 统计数值', link: 'components/Statistic' },
       { text: 'Space 间距', link: 'components/Space' },

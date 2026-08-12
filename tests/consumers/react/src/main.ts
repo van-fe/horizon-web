@@ -1,6 +1,6 @@
 import { createElement, StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Button, Select } from '@aurora/horizon-web-react';
+import { Button, Mask, Select } from '@aurora/horizon-web-react';
 import '@aurora/horizon-web-react/style.css';
 
 const options = [
@@ -14,5 +14,6 @@ createRoot(document.getElementById('root')!).render(
     null,
     createElement(Button, null, 'React consumer'),
     createElement(Select, { options }),
+    createElement(Mask, { absolute: true, visible: false }, 'React mask consumer'),
   ),
 );

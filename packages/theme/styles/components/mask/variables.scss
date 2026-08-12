@@ -1,0 +1,18 @@
+@use '../../mixins/function';
+
+$values: (
+  transition: (
+    duration: #{function.css-variable('transition-time')},
+  ),
+  background: (
+    default: #{function.css-variable('bg-overlay-default')},
+    weak: #{function.css-variable('bg-overlay-weak')},
+    strong: #{function.css-variable('bg-overlay-strong')},
+    inverse: #{function.css-variable('bg-overlay-inverse')},
+    transparent: #{function.css-variable('bg-transparent')},
+    customize: #{function.css-variable('bg-transparent')},
+    /* stylelint-disable-next-line color-function-notation -- Sass emits the project-compatible legacy color syntax */
+    fuzzified: rgb(255 255 255 / 40%),
+  ),
+  blur: 8px,
+);

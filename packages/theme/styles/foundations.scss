@@ -25,6 +25,7 @@
 @use './components/input/variables' as input;
 @use './components/input-number/variables' as input-number;
 @use './components/link/variables' as link;
+@use './components/mask/variables' as mask;
 @use './components/layout/variables' as layout;
 @use './components/pagination/variables' as pagination;
 @use './components/popover/variables' as popover;
@@ -72,6 +73,7 @@ $values: function.map-merge-multi(
   function.flatten-variables(input.$values, 'input'),
   function.flatten-variables(input-number.$values, 'input-number'),
   function.flatten-variables(link.$values, 'link'),
+  function.flatten-variables(mask.$values, 'mask'),
   function.flatten-variables(layout.$values, 'layout'),
   function.flatten-variables(pagination.$values, 'pagination'),
   function.flatten-variables(popover.$values, 'popover'),

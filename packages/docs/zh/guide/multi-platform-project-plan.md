@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B26 InputNumber 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B27 Mask 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -710,6 +710,18 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DS-B26-001 | Done | InputNumber canonical Sass、三套主题、group 与变量入口迁入 `@aurora/theme`，Vue 使用包导出薄代理并删除 renderer 私有样式源，React 使用同源样式与语义 button controls |
 | DOC-B26-001 | Done | InputNumber 中英文 React 页面、3 个独立 TSX 示例与双语 React 侧边栏入口完成；59 组 Vue/React 契约生成且两套组件文档保持 renderer 原生表达 |
 | QA-B26-001 | Done | Core 178、Web Core Node 10/Chromium 55、React Chromium 199、Vue Chromium 2322 项（2321 通过、1 项预期失败）全部通过；Vue 总覆盖率为 97.95% / 95.08% / 97.62% / 98.25%；Vue Node 23、resolver 12、colors 1、upload adapters 66 项通过；五包构建、Sass、文档站、Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界与旧组件包名移除约束通过 |
+
+#### M6-B27 第二十七批实施记录（2026-08-12）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B27-001 | Done | Mask 的公共 props、默认值、视觉类型、校验器、事件、内容区域与 manifest 迁入 `@aurora/core`，不包含 Vue、React、DOM 或产品颜色实现 |
+| WEB-B27-001 | Done | 在同名 Web Core 目录统一解析根节点显隐、pointer-events 与 z-index 样式，Vue/React 均消费同一输出，隐藏遮罩额外使用原生 inert 与 aria-hidden |
+| VUE-B27-001 | Done | Vue props/emits/slots 类型化消费公共契约与 Web Core，保留历史 `value`、`type`、`clickMask`、scrim class/style 和模糊 API；移除 renderer 内类型颜色与模糊样式计算副本 |
+| REACT-B27-001 | Done | 完成 React Mask，支持语义视觉类型、visible、absolute、custom appearance、fuzzified、full-size content、scrim callback、原生属性与根 ref；隐藏内容不可聚焦且窄屏长文本不溢出 |
+| DS-B27-001 | Done | Mask canonical Sass、语义背景、模糊变量与过渡迁入 `@aurora/theme`，Vue 使用包导出薄代理，React 使用同源样式，公共 foundations 注入完整变量 |
+| DOC-B27-001 | Done | Vue 文档补齐 Props/Events/Slots；React 中英文页面、3 个独立 TSX 示例与双语侧边栏入口完成；60 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
+| QA-B27-001 | Done | Core 180、Web Core Node 12/Chromium 55、React Chromium 204、Vue Chromium 2322 项（2321 通过、1 项预期失败）全部通过；Vue 总覆盖率为 97.96% / 95.11% / 97.63% / 98.26%；Vue Node 23、resolver 12、colors 1、upload adapters 66 项通过；五包构建、Sass、文档站、含 Mask 的 Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界与旧组件包名移除约束通过 |
 
 ### 批次 C：浮层与容器
 

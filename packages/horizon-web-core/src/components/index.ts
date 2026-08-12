@@ -14,6 +14,7 @@ export * from './InputNumber';
 export * from './Input';
 export * from './Link';
 export * from './Layout';
+export * from './Mask';
 export * from './Pagination';
 export * from './Popover';
 export * from './Popconfirm';

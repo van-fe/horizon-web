@@ -41,6 +41,7 @@ import {
   headerManifest,
   asideManifest,
   mainManifest,
+  maskManifest,
   linkManifest,
   paginationManifest,
   popContentManifest,
@@ -105,6 +106,7 @@ const manifests = [
   gridItemManifest,
   hoverManifest,
   linkManifest,
+  maskManifest,
   paginationManifest,
   popconfirmManifest,
   popoverManifest,
@@ -515,6 +517,38 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
         keyUp: 'keyup',
       },
     },
+  },
+  Mask: {
+    props: {
+      rename: {
+        variant: 'type',
+        visible: 'value',
+        fuzzified: 'isFuzzification',
+      },
+      extend: [
+        {
+          name: 'scrimClass',
+          type: 'string',
+          description: { zh: '遮罩背景 class', en: 'Scrim class name' },
+        },
+        {
+          name: 'scrimStyle',
+          type: 'CSSProperties',
+          description: { zh: '遮罩背景样式', en: 'Scrim style' },
+        },
+      ],
+    },
+    events: {
+      omit: ['maskClick'],
+      extend: [
+        {
+          name: 'clickMask',
+          type: 'void',
+          description: { zh: '点击遮罩背景', en: 'Scrim background pressed' },
+        },
+      ],
+    },
+    regions: { rename: { content: 'default' } },
   },
   Grid: { regions: { rename: { content: 'default' } } },
   GridItem: { regions: { rename: { content: 'default' } } },
@@ -947,6 +981,24 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
         wheel: 'onWheel',
       },
     },
+  },
+  Mask: {
+    props: {
+      extend: [
+        {
+          name: 'scrimClassName',
+          type: 'string',
+          description: { zh: '遮罩背景 class', en: 'Scrim class name' },
+        },
+        {
+          name: 'scrimStyle',
+          type: 'CSSProperties',
+          description: { zh: '遮罩背景样式', en: 'Scrim style' },
+        },
+      ],
+    },
+    events: { rename: { maskClick: 'onMaskClick' } },
+    regions: { rename: { content: 'children' } },
   },
   Checkbox: {
     events: { rename: { change: 'onChange', blur: 'onBlur', click: 'onClick' } },

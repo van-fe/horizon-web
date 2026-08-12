@@ -19,6 +19,8 @@ describe('Mask.tsx', () => {
     expect(wrapper.attributes('style')).toContain('opacity: 0');
     expect(wrapper.attributes('style')).toContain('pointer-events: none');
     expect(wrapper.attributes('style')).toContain('z-index: 12');
+    expect(wrapper.attributes('inert')).toBeDefined();
+    expect(wrapper.attributes('aria-hidden')).toBe('true');
     expect(wrapper.get('button').text()).toBe('Continue');
   });
 
@@ -50,25 +52,26 @@ describe('Mask.tsx', () => {
 
   test('fuzzification overrides color and opacity with a blur treatment', () => {
     const wrapper = mount(HMask, {
+      attachTo: document.body,
       props: { isFuzzification: true, color: 'black' as any, opacity: 0.2 },
     });
     const style = wrapper.get('.h-mask__scrim').attributes('style');
 
-    expect(style).toContain('background-color: rgba(255, 255, 255, 0.4)');
-    expect(style).toContain('opacity: 1');
-    expect(style).toContain('backdrop-filter: blur(8px)');
+    expect(wrapper.classes()).toContain('is-fuzzified');
+    expect(style).toContain('background-color: black');
+    const scrimStyle = getComputedStyle(wrapper.get('.h-mask__scrim').element);
+    expect(scrimStyle.getPropertyValue('backdrop-filter')).toBe('blur(8px)');
   });
 
   test('reacts to visibility and mask type through browser-observable styles', async () => {
     const wrapper = mount(HMask, { props: { value: true, type: 'transparent' } });
-    const scrim = wrapper.get('.h-mask__scrim');
 
     expect(wrapper.attributes('style')).toContain('opacity: 1');
     expect(wrapper.attributes('style')).toContain('pointer-events: auto');
-    expect(scrim.attributes('style')).toContain('background-color: var(--h-bg-transparent)');
+    expect(wrapper.classes()).toContain('h-mask--transparent');
 
     await wrapper.setProps({ value: false, type: 'strong' });
     expect(wrapper.attributes('style')).toContain('opacity: 0');
-    expect(scrim.attributes('style')).toContain('background-color: var(--h-bg-overlay-strong)');
+    expect(wrapper.classes()).toContain('h-mask--strong');
   });
 });

@@ -1,7 +1,1 @@
-@use '../../../../styles/mixins/function';
-
-$values: (
-  transition: (
-    duration: #{function.css-variable('transition-time')},
-  ),
-);
+@forward 'pkg:@aurora/theme/styles/mask-variables';
