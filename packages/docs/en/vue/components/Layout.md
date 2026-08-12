@@ -27,3 +27,7 @@ Use `gap` for uniform spacing, or control each direction with `column-gap` and `
 `cols`, `gap`, `column-gap`, `row-gap`, `span`, and `offset` accept responsive objects with `xs`, `sm`, `md`, `lg`, `xl`, and `xxl` keys. Values naturally carry forward until the next breakpoint overrides them.
 
 :::demo vue/components/Layout/responsive.vue :::
+
+## API summary
+
+Grid supports `tag`, `cols`, `gap`, `column-gap`, `row-gap`, `align`, and `justify`. GridItem supports `span` and `offset`; setting a responsive span to `0` hides the item at that breakpoint. Both components expose only the `default` slot and no events or commands.

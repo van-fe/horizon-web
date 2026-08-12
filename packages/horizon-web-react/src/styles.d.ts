@@ -2,6 +2,7 @@ declare module '@aurora/theme/styles/foundations';
 declare module '@aurora/theme/styles/dropdown';
 declare module '@aurora/theme/styles/input';
 declare module '@aurora/theme/styles/link';
+declare module '@aurora/theme/styles/layout';
 declare module '@aurora/theme/styles/pagination';
 declare module '@aurora/theme/styles/popover';
 declare module '@aurora/theme/styles/popconfirm';

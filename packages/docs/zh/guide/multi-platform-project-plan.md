@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B22 Application 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B23 Layout 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -662,6 +662,18 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DS-B22-001 | Done | 确认 Application 只提供运行时上下文且不渲染视觉节点，本批不新增 Theme 样式或 renderer 私有样式，避免产生没有消费者的视觉抽象 |
 | DOC-B22-001 | Done | Application 中英文 React 页面、2 个独立 TSX 示例、Vue API 摘要与双语侧边栏入口完成；53 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
 | QA-B22-001 | Done | Core 162、Web Core Node 10/Chromium 50、React Chromium 178、Vue Chromium 2319 项（2318 通过、1 项预期失败）全部通过，覆盖率为 97.97% / 95.07% / 97.67% / 98.27%；Vue Node 23、resolver 12、colors 1、upload adapters 66 项通过；五包构建、文档站与 Vue/React/SSR/tree-shaking 消费工程通过 |
+
+#### M6-B23 第二十三批实施记录（2026-08-12）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B23-001 | Done | Grid/GridItem 的公共 props、默认值、断点、对齐枚举、校验器、内容区域及 manifest 迁入 `@aurora/core`；响应式值继承、间距优先级、占位与偏移约束算法只定义一次 |
+| WEB-B23-001 | Done | 在同名 Web Core 目录统一把 Grid/GridItem 公共模型转换为带 namespace 的 CSS 变量，保留可配置可见 display 与 offset calc 兼容行为，不在 renderer 内复制 CSS 字符串算法 |
+| VUE-B23-001 | Done | Vue props/slots 与 Grid 注入上下文类型化消费公共契约，样式 composable 改用 Core/Web Core；保留自定义 tag、compound Item、独立 GridItem，并确认 Form/FormItem 继续复用同一 Grid 上下文 |
+| REACT-B23-001 | Done | 完成 React Grid/GridItem 与 Grid.Item，支持六档响应式列数、间距、span、offset、对齐、自定义语义元素、原生属性和双 ref，使用与 Vue 相同的算法和 CSS 变量协议 |
+| DS-B23-001 | Done | Layout canonical Grid/legacy Row/Col Sass 与 gutter 变量迁入 `@aurora/theme`，Vue 仅保留包导出代理并删除三份 renderer 样式源；补充 Grid/GridItem 最小宽度与长内容防溢出规则 |
+| DOC-B23-001 | Done | Layout 中英文 React 页面、3 个独立 TSX 示例、Vue API 摘要与双语侧边栏入口完成；55 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
+| QA-B23-001 | Done | Core 165、Web Core Node 10/Chromium 52、React Chromium 182、Vue Chromium 2319 项（2318 通过、1 项预期失败）全部通过，覆盖率为 97.97% / 95.08% / 97.67% / 98.27%；Vue Node 23、resolver 12、colors 1、upload adapters 66 项通过；五包构建、Sass、文档站与 Vue/React/SSR/tree-shaking 消费工程通过 |
 
 ### 批次 C：浮层与容器
 

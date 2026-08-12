@@ -1,4 +1,4 @@
-@use '../../../../styles/mixins';
+@use '../../mixins';
 
 @mixin responsive-grid($size) {
   @include mixins.b('grid') {
@@ -14,36 +14,38 @@
 }
 
 @include mixins.b('grid') {
+  box-sizing: border-box;
   display: grid;
   width: 100%;
-  box-sizing: border-box;
+  min-width: 0;
 }
 
 @include mixins.b('grid-item') {
-  min-width: 0;
   box-sizing: border-box;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (width <= 480px) {
   @include responsive-grid('xs');
 }
 
-@media screen and (min-width: 480px) and (max-width: 1023px) {
+@media screen and (width >= 480px) and (width <= 1023px) {
   @include responsive-grid('sm');
 }
 
-@media screen and (min-width: 1024px) and (max-width: 1439px) {
+@media screen and (width >= 1024px) and (width <= 1439px) {
   @include responsive-grid('md');
 }
 
-@media screen and (min-width: 1440px) and (max-width: 1919px) {
+@media screen and (width >= 1440px) and (width <= 1919px) {
   @include responsive-grid('lg');
 }
 
-@media screen and (min-width: 1920px) and (max-width: 2879px) {
+@media screen and (width >= 1920px) and (width <= 2879px) {
   @include responsive-grid('xl');
 }
 
-@media screen and (min-width: 2880px) {
+@media screen and (width >= 2880px) {
   @include responsive-grid('xxl');
 }

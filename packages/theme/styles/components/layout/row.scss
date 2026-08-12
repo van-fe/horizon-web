@@ -1,0 +1,72 @@
+@use '../../mixins';
+
+@mixin row-gutter($size) {
+  $gutter: mixins.css-variable('layout', 'spacing', 'grid', 'gutter', $size);
+  gap: $gutter 0;
+  margin-right: calc(#{$gutter} / -2);
+  margin-bottom: $gutter;
+  margin-left: calc(#{$gutter} / -2);
+}
+
+@include mixins.b('row') {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+
+  @media screen and (width <= 480px) {
+    @include row-gutter('xs');
+  }
+
+  @media screen and (width >= 480px) and (width <= 1023px) {
+    @include row-gutter('sm');
+  }
+
+  @media screen and (width >= 1024px) and (width <= 1439px) {
+    @include row-gutter('md');
+  }
+
+  @media screen and (width >= 1440px) and (width <= 1919px) {
+    @include row-gutter('lg');
+  }
+
+  @media screen and (width >= 1920px) and (width <= 2879px) {
+    @include row-gutter('xl');
+  }
+
+  @media screen and (width >= 2880px) {
+    @include row-gutter('xxl');
+  }
+
+  /* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  $justify-values: (
+    start: flex-start,
+    center: center,
+    end: flex-end,
+    space-between: space-between,
+    space-around: space-around,
+    space-evenly: space-evenly,
+  );
+
+  @each $name, $value in $justify-values {
+    @include mixins.is(justify-#{$name}) {
+      justify-content: $value;
+    }
+  }
+
+  @include mixins.is(align-top) {
+    align-items: flex-start;
+  }
+
+  @include mixins.is(align-middle) {
+    align-items: center;
+  }
+
+  @include mixins.is(align-bottom) {
+    align-items: flex-end;
+  }
+}

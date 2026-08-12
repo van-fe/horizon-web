@@ -11,6 +11,7 @@ export * from './Drawer';
 export * from './FloatButton';
 export * from './Input';
 export * from './Link';
+export * from './Layout';
 export * from './Pagination';
 export * from './Popover';
 export * from './Popconfirm';

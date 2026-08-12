@@ -23,6 +23,7 @@
 @use './components/float-button/variables' as float-button;
 @use './components/input/variables' as input;
 @use './components/link/variables' as link;
+@use './components/layout/variables' as layout;
 @use './components/pagination/variables' as pagination;
 @use './components/popover/variables' as popover;
 @use './components/popconfirm/variables' as popconfirm;
@@ -67,6 +68,7 @@ $values: function.map-merge-multi(
   function.flatten-variables(float-button.$values, 'float-button'),
   function.flatten-variables(input.$values, 'input'),
   function.flatten-variables(link.$values, 'link'),
+  function.flatten-variables(layout.$values, 'layout'),
   function.flatten-variables(pagination.$values, 'pagination'),
   function.flatten-variables(popover.$values, 'popover'),
   function.flatten-variables(popconfirm.$values, 'popconfirm'),

@@ -1,0 +1,83 @@
+@use 'sass:math';
+@use '../../mixins';
+
+@mixin col-positions($prefix: null) {
+  @for $i from 0 through 24 {
+    @if $prefix {
+      @include mixins.m(#{$prefix}-#{$i}) {
+        flex: 0 0 (math.div(1, 24) * $i * 100) * 1%;
+        max-width: (math.div(1, 24) * $i * 100) * 1%;
+      }
+
+      @include mixins.m(offset-#{$prefix}-#{$i}) {
+        margin-left: (math.div(1, 24) * $i * 100) * 1%;
+      }
+
+      @include mixins.m(pull-#{$prefix}-#{$i}) {
+        position: relative;
+        right: (math.div(1, 24) * $i * 100) * 1%;
+      }
+
+      @include mixins.m(push-#{$prefix}-#{$i}) {
+        position: relative;
+        left: (math.div(1, 24) * $i * 100) * 1%;
+      }
+    } @else {
+      @include mixins.m(span-#{$i}) {
+        flex: 0 0 (math.div(1, 24) * $i * 100) * 1%;
+        max-width: (math.div(1, 24) * $i * 100) * 1%;
+      }
+
+      @include mixins.m(offset-#{$i}) {
+        margin-left: (math.div(1, 24) * $i * 100) * 1%;
+      }
+
+      @include mixins.m(pull-#{$i}) {
+        position: relative;
+        right: (math.div(1, 24) * $i * 100) * 1%;
+      }
+
+      @include mixins.m(push-#{$i}) {
+        position: relative;
+        left: (math.div(1, 24) * $i * 100) * 1%;
+      }
+    }
+  }
+}
+
+@mixin responsive-col($size) {
+  @include col-positions($size);
+  padding: 0 calc(#{mixins.css-variable('layout', 'spacing', 'grid', 'gutter', $size)} / 2);
+}
+
+@include mixins.b('col') {
+  flex-grow: 1;
+  flex-basis: 0;
+  max-width: 100%;
+
+  @include col-positions;
+
+  @media screen and (width <= 480px) {
+    @include responsive-col('xs');
+  }
+
+  @media screen and (width >= 480px) and (width <= 1023px) {
+    @include responsive-col('sm');
+  }
+
+  @media screen and (width >= 1024px) and (width <= 1439px) {
+    @include responsive-col('md');
+  }
+
+  @media screen and (width >= 1440px) and (width <= 1919px) {
+    @include responsive-col('lg');
+  }
+
+  @media screen and (width >= 1920px) and (width <= 2879px) {
+    @include responsive-col('xl');
+  }
+
+  @media screen and (width >= 2880px) {
+    @include responsive-col('xxl');
+  }
+}

@@ -32,6 +32,8 @@ import {
   floatButtonGroupManifest,
   floatButtonManifest,
   inputManifest,
+  gridItemManifest,
+  gridManifest,
   headerManifest,
   asideManifest,
   mainManifest,
@@ -92,6 +94,8 @@ const manifests = [
   floatButtonManifest,
   floatButtonGroupManifest,
   inputManifest,
+  gridManifest,
+  gridItemManifest,
   linkManifest,
   paginationManifest,
   popconfirmManifest,
@@ -484,6 +488,8 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
       },
     },
   },
+  Grid: { regions: { rename: { content: 'default' } } },
+  GridItem: { regions: { rename: { content: 'default' } } },
   Link: {
     props: {
       rename: { variant: 'type', route: 'to' },
@@ -1086,6 +1092,11 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
       },
     },
   },
+  Grid: {
+    props: { override: { tag: { type: 'ElementType' } } },
+    regions: { rename: { content: 'children' } },
+  },
+  GridItem: { regions: { rename: { content: 'children' } } },
   Link: {
     props: {
       rename: { route: 'to' },

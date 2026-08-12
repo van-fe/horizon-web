@@ -27,3 +27,7 @@
 `cols`、`gap`、`column-gap`、`row-gap`、`span` 和 `offset` 均支持 `xs`、`sm`、`md`、`lg`、`xl`、`xxl` 响应式对象。未重复声明的值会从较小断点自然延续。
 
 :::demo vue/components/Layout/responsive.vue :::
+
+## API 摘要
+
+Grid 支持 `tag`、`cols`、`gap`、`column-gap`、`row-gap`、`align` 与 `justify`。GridItem 支持 `span` 和 `offset`；将某个断点的 `span` 设为 `0` 会在该断点隐藏网格项。两个组件都只提供 `default` 插槽，不包含事件或命令。
