@@ -38,9 +38,22 @@ describe('Popover browser primitives', () => {
     const reference = document.createElement('span');
     const floating = document.createElement('div');
     reference.getBoundingClientRect = () => ({ width: 72, height: 20 }) as DOMRect;
+    floating.style.width = '18rem';
     syncPopoverReferenceSize(reference, floating, { sameWidth: true, setMinWidth: true });
-    expect(floating.style.width).toBe('');
+    expect(floating.style.width).toBe('18rem');
     expect(floating.style.minWidth).toBe('72px');
+  });
+
+  it('preserves caller-owned dimensions when no size strategy manages them', () => {
+    const reference = document.createElement('span');
+    const floating = document.createElement('div');
+    floating.style.width = '22rem';
+    floating.style.minWidth = '10rem';
+    floating.style.height = '14rem';
+    syncPopoverReferenceSize(reference, floating, {});
+    expect(floating.style.width).toBe('22rem');
+    expect(floating.style.minWidth).toBe('10rem');
+    expect(floating.style.height).toBe('14rem');
   });
 
   it('dismisses on the configured outside event and Escape', () => {

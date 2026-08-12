@@ -1,4 +1,13 @@
-import { computed, defineComponent, nextTick, provide, ref, toRefs, watch } from 'vue';
+import {
+  computed,
+  defineComponent,
+  nextTick,
+  onBeforeUnmount,
+  provide,
+  ref,
+  toRefs,
+  watch,
+} from 'vue';
 import { ComponentClassBlock, cls, useNamespace, safelyGetEventTarget } from '@aurora/utils';
 import type { HorizonWebSetupContext, HorizonWebComponentInstance } from '@aurora/utils';
 import { usePickerProps } from './composables/useProps';
@@ -28,6 +37,8 @@ import PickerPopper from './components/PickerPopper';
 import { unrefElement } from '@vueuse/core';
 import type { PopoverExposes } from '~/components/Popover/src/composables/useExposes';
 import { HScrollbarUpdateDelayInjectKey } from '~/components/Scrollbar/src/utils/injectKeys';
+import type { PickerOpenReason } from '@aurora/core';
+import { PickerController } from '@aurora/core';
 
 export default defineComponent({
   name: `${useNamespace()}Picker`,
@@ -65,6 +76,18 @@ export default defineComponent({
     const popContentDomRef = ref<(InstanceType<typeof HPopContent> & HTMLElement) | null>(null);
 
     const popperVisible = ref(false);
+    const pickerController = new PickerController({
+      value: props.modelValue,
+      open: false,
+      disabled: props.disabled,
+      readonly: props.readonly,
+      trigger: props.trigger,
+      canOpen: props.popperCanBeDisplayed,
+      panelStatus: props.panelStatus,
+      onOpenChange: visible => {
+        popperVisible.value = visible;
+      },
+    });
 
     watch(popperVisible, val => {
       val ? emit('show') : emit('hide');
@@ -97,27 +120,29 @@ export default defineComponent({
     provide(HPickerPopContentDomRefInjectKey, popContentDomRef);
 
     watch(
-      () => props.disabled,
-      val => {
-        if (val) {
-          popperVisible.value = false;
-        }
+      () =>
+        [
+          props.modelValue,
+          props.disabled,
+          props.readonly,
+          props.trigger,
+          props.popperCanBeDisplayed,
+          props.panelStatus,
+        ] as const,
+      ([value, disabled, readonly, trigger, canOpen, panelStatus]) => {
+        pickerController.syncState({ value, disabled, open: popperVisible.value });
+        pickerController.setOptions({ disabled, readonly, trigger, canOpen, panelStatus });
+        popperVisible.value = pickerController.snapshot.open;
+        pickerStatus.value = pickerController.snapshot.status;
       },
-    );
-
-    watch(
-      () => props.popperCanBeDisplayed,
-      val => {
-        if (!val) {
-          popperVisible.value = false;
-        }
-      },
+      { immediate: true },
     );
 
     watch(
       () => props.showPopoverContentOnly,
       val => {
         if (val) {
+          pickerController.syncState({ open: true });
           popperVisible.value = true;
         }
       },
@@ -126,7 +151,7 @@ export default defineComponent({
       },
     );
 
-    function setPopoverVisible(status: boolean) {
+    function setPopoverVisible(status: boolean, reason: PickerOpenReason = 'trigger') {
       if (status !== popperVisible.value) {
         if (!status) {
           nextTick(() => {
@@ -143,13 +168,9 @@ export default defineComponent({
       )
         return;
 
-      popperVisible.value = status;
-
-      if (status) {
-        pickerStatus.value = props.panelStatus === 'normal' ? 'panel-visible' : props.panelStatus;
-      } else {
-        pickerStatus.value = 'panel-hide';
-      }
+      const changed = status ? pickerController.open(reason) : pickerController.close(reason);
+      if (!changed) return;
+      pickerStatus.value = pickerController.snapshot.status;
     }
 
     const isTriggerFocusEvent = ref(false);
@@ -179,10 +200,12 @@ export default defineComponent({
     }
 
     function showPopover() {
+      setPopoverVisible(true, 'imperative');
       popoverDomRef.value?.switchVisible(true);
     }
 
     function hidePopover() {
+      setPopoverVisible(false, 'imperative');
       popoverDomRef.value?.switchVisible(false);
     }
 
@@ -226,6 +249,7 @@ export default defineComponent({
       ) {
         if (popperVisible.value) {
           popoverDomRef.value?.switchVisible(false);
+          pickerController.close('outside-pointer');
         }
 
         blur();
@@ -258,6 +282,11 @@ export default defineComponent({
     }
 
     provide(HScrollbarUpdateDelayInjectKey, 400);
+
+    onBeforeUnmount(() => {
+      pickerController.destroy();
+      document.removeEventListener('mousedown', onDocumentClick, true);
+    });
 
     expose({
       showPopover,

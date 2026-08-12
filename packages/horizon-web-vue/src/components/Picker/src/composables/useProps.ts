@@ -4,19 +4,32 @@ import { IconMaybeFalsyPropType, IconNullablePropType, IconPropType } from '~/ut
 import { IconArrowDown, IconCloseFilled, IconLoadingLine, IconSearch } from '@aurora/icon';
 import type { PopoverProps } from '~/components/Popover/src/composables/useProps';
 import type { ButtonProps } from '~/components/Button/src/composables/useProps';
+import type {
+  PickerConfirmAreaSize,
+  PickerFitInputWidth,
+  PickerInputStatus,
+  PickerInputVariant,
+  PickerPanelStatus,
+  PickerStatus,
+  PickerTrigger,
+  PickerValue,
+} from '@aurora/core';
+import {
+  isPickerConfirmAreaSize,
+  isPickerFitInputWidth,
+  isPickerInputStatus,
+  isPickerInputVariant,
+  isPickerPanelStatus,
+  isPickerTrigger,
+  isPopoverPlacement,
+  PICKER_DEFAULTS,
+} from '@aurora/core';
 
-export type ModelValueType =
-  | string
-  | number
-  | boolean
-  | object
-  | undefined
-  | null
-  | Array<string | number | boolean | object>;
-export type PickerInputStatusType = 'normal' | 'error' | 'warning' | 'success';
-export type PickerPanelStatusType = 'normal' | 'empty' | 'loading';
-export type PickerStatusType = 'panel-hide' | 'panel-visible' | 'loading' | 'empty';
-export type PickerInputStyleType = 'normal' | 'emphasize' | 'no-border';
+export type ModelValueType = PickerValue;
+export type PickerInputStatusType = PickerInputStatus;
+export type PickerPanelStatusType = PickerPanelStatus;
+export type PickerStatusType = PickerStatus;
+export type PickerInputStyleType = PickerInputVariant;
 
 export const isModelValue = (val: unknown): val is ModelValueType => isDefined(val) || isNil(val);
 
@@ -35,7 +48,7 @@ export const usePickerProps = declarePropType({
    */
   disabled: {
     type: Boolean,
-    default: false,
+    default: PICKER_DEFAULTS.disabled,
   },
   /**
    * 是否正在加载中
@@ -43,7 +56,7 @@ export const usePickerProps = declarePropType({
    */
   loading: {
     type: Boolean,
-    default: false,
+    default: PICKER_DEFAULTS.loading,
   },
   /**
    * 加载中文案，默认为空
@@ -58,7 +71,7 @@ export const usePickerProps = declarePropType({
    */
   clearable: {
     type: Boolean,
-    default: false,
+    default: PICKER_DEFAULTS.clearable,
   },
   /**
    * 是否启用小箭头
@@ -66,7 +79,7 @@ export const usePickerProps = declarePropType({
    */
   arrow: {
     type: Boolean,
-    default: false,
+    default: PICKER_DEFAULTS.arrow,
   },
   /**
    * 触发方式
@@ -74,8 +87,9 @@ export const usePickerProps = declarePropType({
    * @en Configuration for trigger.
    */
   trigger: {
-    type: String as PropType<'hover' | 'click' | 'never'>,
-    default: 'click',
+    type: String as PropType<PickerTrigger>,
+    default: PICKER_DEFAULTS.trigger,
+    validator: isPickerTrigger,
   },
   /**
    * 放置位置
@@ -99,7 +113,8 @@ export const usePickerProps = declarePropType({
       | 'right'
       | 'left'
     >,
-    default: 'bottom-start',
+    default: PICKER_DEFAULTS.placement,
+    validator: isPopoverPlacement,
   },
   /**
    * panel 与 input 距离
@@ -107,7 +122,7 @@ export const usePickerProps = declarePropType({
    */
   distance: {
     type: Number,
-    default: 4,
+    default: PICKER_DEFAULTS.distance,
   },
   /**
    * panel 与 input 距离
@@ -122,7 +137,7 @@ export const usePickerProps = declarePropType({
    */
   toBody: {
     type: Boolean,
-    default: true,
+    default: PICKER_DEFAULTS.portal,
   },
   /**
    * 是否可输入
@@ -130,7 +145,7 @@ export const usePickerProps = declarePropType({
    */
   inputable: {
     type: Boolean,
-    default: false,
+    default: PICKER_DEFAULTS.inputable,
   },
   /**
    * 是否只读
@@ -138,7 +153,7 @@ export const usePickerProps = declarePropType({
    */
   readonly: {
     type: Boolean,
-    default: false,
+    default: PICKER_DEFAULTS.readonly,
   },
   /**
    * 选择器样式
@@ -149,7 +164,8 @@ export const usePickerProps = declarePropType({
    */
   inputStyle: {
     type: String as PropType<PickerInputStyleType>,
-    default: 'normal',
+    default: PICKER_DEFAULTS.inputVariant,
+    validator: isPickerInputVariant,
   },
   /**
    * 尺寸
@@ -221,7 +237,7 @@ export const usePickerProps = declarePropType({
    */
   needConfirm: {
     type: Boolean,
-    default: false,
+    default: PICKER_DEFAULTS.needConfirm,
   },
   /**
    * 确认按钮文本，默认使用国际化配置
@@ -257,7 +273,7 @@ export const usePickerProps = declarePropType({
    */
   confirmDisabled: {
     type: Boolean,
-    default: false,
+    default: PICKER_DEFAULTS.confirmDisabled,
   },
   /**
    * 确认按钮是否禁用
@@ -265,7 +281,7 @@ export const usePickerProps = declarePropType({
    */
   cancelDisabled: {
     type: Boolean,
-    default: false,
+    default: PICKER_DEFAULTS.cancelDisabled,
   },
   /**
    * 确认区域是否需要确定按钮
@@ -273,7 +289,7 @@ export const usePickerProps = declarePropType({
    */
   confirmNeedConfirm: {
     type: Boolean,
-    default: true,
+    default: PICKER_DEFAULTS.showConfirmAction,
   },
   /**
    * 确认区域是否需要取消按钮
@@ -281,7 +297,7 @@ export const usePickerProps = declarePropType({
    */
   confirmNeedCancel: {
     type: Boolean,
-    default: true,
+    default: PICKER_DEFAULTS.showCancelAction,
   },
   /**
    * 确认区域是否需要清空按钮
@@ -289,15 +305,16 @@ export const usePickerProps = declarePropType({
    */
   confirmNeedClear: {
     type: Boolean,
-    default: false,
+    default: PICKER_DEFAULTS.showClearAction,
   },
   /**
    * 确认区域尺寸
    * @en Configuration for confirm area size.
    */
   confirmAreaSize: {
-    type: String as PropType<'medium' | 'small'>,
-    default: 'medium',
+    type: String as PropType<PickerConfirmAreaSize>,
+    default: PICKER_DEFAULTS.confirmAreaSize,
+    validator: isPickerConfirmAreaSize,
   },
   /**
    * 确认区域 `padding`
@@ -340,7 +357,7 @@ export const usePickerProps = declarePropType({
    */
   destroyOnHide: {
     type: Boolean,
-    default: false,
+    default: PICKER_DEFAULTS.destroyOnHide,
   },
   /**
    * 选择器状态
@@ -348,7 +365,8 @@ export const usePickerProps = declarePropType({
    */
   inputStatus: {
     type: String as PropType<PickerInputStatusType>,
-    default: 'normal',
+    default: PICKER_DEFAULTS.inputStatus,
+    validator: isPickerInputStatus,
   },
   /**
    * 面板状态
@@ -356,7 +374,8 @@ export const usePickerProps = declarePropType({
    */
   panelStatus: {
     type: String as PropType<PickerPanelStatusType>,
-    default: 'normal',
+    default: PICKER_DEFAULTS.panelStatus,
+    validator: isPickerPanelStatus,
   },
   /**
    * 给 popover 的额外参数
@@ -373,8 +392,9 @@ export const usePickerProps = declarePropType({
    * @en Configuration for fit input width.
    */
   fitInputWidth: {
-    type: [Boolean, String] as PropType<boolean | 'fit-content'>,
-    default: true,
+    type: [Boolean, String] as PropType<PickerFitInputWidth>,
+    default: PICKER_DEFAULTS.fitInputWidth,
+    validator: isPickerFitInputWidth,
   },
   /**
    * 自定义面板宽度
@@ -425,7 +445,7 @@ export const usePickerProps = declarePropType({
    */
   hoverShowDelay: {
     type: Number,
-    default: 0,
+    default: PICKER_DEFAULTS.hoverShowDelay,
   },
   /**
    * 鼠标移出后后多久隐藏 `popper`
@@ -434,7 +454,7 @@ export const usePickerProps = declarePropType({
    */
   hoverHideDelay: {
     type: Number,
-    default: 200,
+    default: PICKER_DEFAULTS.hoverHideDelay,
   },
   /**
    * 是否隐藏 `input` 元素
@@ -466,7 +486,7 @@ export const usePickerProps = declarePropType({
    */
   popperCanBeDisplayed: {
     type: Boolean,
-    default: true,
+    default: PICKER_DEFAULTS.canOpen,
   },
   /**
    * 是否用适应文字长度的 `input`

@@ -1,3 +1,1 @@
-@use 'normal';
-@use 'emphasize';
-@use 'no-border';
+@forward 'pkg:@aurora/theme/styles/picker';

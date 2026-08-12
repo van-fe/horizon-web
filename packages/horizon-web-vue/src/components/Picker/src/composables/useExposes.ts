@@ -1,27 +1,28 @@
 import type { ExposeType, ExtractExposeTypes } from '@aurora/utils';
 import type { Ref } from 'vue';
+import type { PickerCommandMap } from '@aurora/core';
 
 export const usePickerExposes = {
   /**
    * 显示下拉框
    * @en Controls show popover.
    */
-  showPopover: Function as ExposeType<() => void>,
+  showPopover: Function as ExposeType<PickerCommandMap['open']>,
   /**
    * 隐藏下拉框
    * @en Controls hide popover.
    */
-  hidePopover: Function as ExposeType<() => void>,
+  hidePopover: Function as ExposeType<PickerCommandMap['close']>,
   /**
    * 聚焦输入框
    * @en Controls focus.
    */
-  focus: Function as ExposeType<() => void>,
+  focus: Function as ExposeType<PickerCommandMap['focus']>,
   /**
    * 失焦输入框
    * @en Controls blur.
    */
-  blur: Function as ExposeType<() => void>,
+  blur: Function as ExposeType<PickerCommandMap['blur']>,
   /**
    * @invisible
    * 强制失焦输入框

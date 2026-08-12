@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B34 AutoComplete 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B35 Picker 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -807,6 +807,19 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DOC-B34-001 | Done | Vue 文档补齐 Props/Events/Slots/Exposes；React 中英文页面、3 个独立 TSX 示例与双语侧边栏入口完成，文档保持 renderer 原生表达 |
 | PKG-B34-001 | Done | 包名迁移继续按 breaking change 执行；边界检查禁止恢复 `@aurora/horizon-web` package、依赖、发布项、alias、转发入口、resolver fallback 或兼容测试，仅保留无关的 ESLint plugin rule id |
 | QA-B34-001 | Done | Core 203、Theme 3、Locale React 5、Web Core Node 21/Chromium 57、React Chromium 233、Vue Chromium 2330 项（2329 通过、1 项预期失败）全部通过；Vue 总覆盖率为 97.97% / 95.09% / 97.65% / 98.26%，AutoComplete 组件源码四项覆盖率为 99.03% / 96.42% / 100% / 99.48%；Vue Node 26、resolver 12、colors 1、upload adapters 66 项通过；五包构建、Sass、文档站、69 组双 renderer 契约、Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界与旧组件包名移除约束通过 |
+
+#### M6-B35 第三十五批实施记录（2026-08-12）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B35-001 | Done | Picker 的公共 value/open、触发方式、输入与面板状态、确认区、事件、区域、命令、默认值、校验器、状态解析与 controller 迁入 `@aurora/core`，不包含 renderer 节点、DOM 或 locale |
+| WEB-B35-001 | Done | Picker DOM 焦点、容器判定、浮层更新与 dismissable adapter 迁入 Horizon Web Core；Popover 宽度同步不再清除调用方持有的尺寸样式 |
+| VUE-B35-001 | Done | Vue props/emits/slots/exposes 类型化消费公共契约，面板可见性、禁用、只读、触发方式与状态改用 Core controller；保留 `modelValue`、Popover、自定义区域、输入与确认区历史行为，并补齐销毁和恢复显示权限回归 |
+| REACT-B35-001 | Done | 完成 React Picker，支持 value/open 受控与非受控、可编辑输入、IME、点击/悬停触发、Portal、定位与箭头、表单、加载/空状态、自定义触发器与区域、确认/取消 ButtonProps、ARIA 和 ref commands |
+| DS-B35-001 | Done | Picker canonical Sass、输入变体与变量迁入 `@aurora/theme`，Vue 使用包导出薄代理，React 使用同源视觉；共享 Popover 箭头与尺寸策略 |
+| DOC-B35-001 | Done | Vue 文档补齐 Props/Events/Slots/Exposes；React 中英文页面、3 个独立 TSX 示例与双语侧边栏入口完成，文档保持 renderer 原生表达 |
+| PKG-B35-001 | Done | 包名迁移按 breaking change 执行；扫描与边界检查确认不存在 `@aurora/horizon-web` 兼容包、依赖、alias、转发入口、resolver fallback 或发布项，仅保留无关的 ESLint plugin rule id |
+| QA-B35-001 | Done | Core 208、Theme 3、Locale React 5、Web Core Node 21/Chromium 60、React Chromium 246、Vue Chromium 2330 项（2330 通过、1 项预期失败）全部通过；Vue 总覆盖率为 97.97% / 95.09% / 97.65% / 98.26%，Vue Picker 组件源码四项覆盖率为 99.22% / 95.86% / 99.41% / 99.18%，React Picker 为 100% / 97.29% / 100% / 100%；Picker 下游 54 文件/446 项 Chromium 回归通过；Vue Node 26、resolver 12、colors 1、upload adapters 66 项通过；五包构建、Sass、文档站、69 组双 renderer 契约、Vue/React/SSR/tree-shaking 消费工程、发布演练与包边界通过 |
 
 ### 批次 C：浮层与容器
 

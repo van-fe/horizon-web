@@ -23,6 +23,10 @@ export interface HorizonWebConfig {
     empty: string;
     clear: string;
   };
+  pickerLabels: {
+    confirm: string;
+    cancel: string;
+  };
   linkLabels: {
     loading: string;
   };
@@ -92,6 +96,7 @@ export type HorizonWebProviderProps = PropsWithChildren<
     | 'pageHeaderLabels'
     | 'popconfirmLabels'
     | 'selectLabels'
+    | 'pickerLabels'
     | 'spinLabels'
     | 'stepsLabels'
     | 'switchLabels'
@@ -99,6 +104,7 @@ export type HorizonWebProviderProps = PropsWithChildren<
   > & {
     switchLabels?: Partial<HorizonWebConfig['switchLabels']>;
     selectLabels?: Partial<HorizonWebConfig['selectLabels']>;
+    pickerLabels?: Partial<HorizonWebConfig['pickerLabels']>;
     linkLabels?: Partial<HorizonWebConfig['linkLabels']>;
     breadcrumbLabels?: Partial<HorizonWebConfig['breadcrumbLabels']>;
     timelineLabels?: Partial<HorizonWebConfig['timelineLabels']>;
@@ -122,6 +128,7 @@ const defaultConfig: HorizonWebConfig = Object.freeze({
   showTimeZone: APPLICATION_DEFAULTS.showTimeZone,
   switchLabels: { on: 'On', off: 'Off' },
   selectLabels: { placeholder: 'Please select', empty: 'No options', clear: 'Clear selection' },
+  pickerLabels: { confirm: 'Confirm', cancel: 'Cancel' },
   linkLabels: { loading: 'Loading' },
   breadcrumbLabels: { collapsed: 'Show collapsed breadcrumb items' },
   timelineLabels: { toggle: 'Toggle hidden timeline items' },
@@ -159,6 +166,7 @@ export function HorizonWebProvider({
   resolveHref,
   switchLabels,
   selectLabels,
+  pickerLabels,
   linkLabels,
   breadcrumbLabels,
   timelineLabels,
@@ -193,6 +201,10 @@ export function HorizonWebProvider({
       selectLabels: {
         ...parent.selectLabels,
         ...selectLabels,
+      },
+      pickerLabels: {
+        ...parent.pickerLabels,
+        ...pickerLabels,
       },
       linkLabels: {
         ...parent.linkLabels,
@@ -263,6 +275,7 @@ export function HorizonWebProvider({
       breadcrumbLabels,
       linkLabels,
       selectLabels,
+      pickerLabels,
       switchLabels,
       timelineLabels,
       stepsLabels,

@@ -117,9 +117,11 @@ describe('Picker public API contracts', () => {
   });
 
   test('outer slots receive model and status and replace the complete default surfaces', () => {
-    const pickerOuter = vi.fn((modelValue: unknown, inputStatus: unknown, pickerStatus: unknown) => (
-      <button data-test="picker-outer">{`${modelValue}:${inputStatus}:${pickerStatus}`}</button>
-    ));
+    const pickerOuter = vi.fn(
+      (modelValue: unknown, inputStatus: unknown, pickerStatus: unknown) => (
+        <button data-test="picker-outer">{`${modelValue}:${inputStatus}:${pickerStatus}`}</button>
+      ),
+    );
     const panelOuter = vi.fn((modelValue: unknown, pickerStatus: unknown) => (
       <div data-test="panel-outer">{`${modelValue}:${pickerStatus}`}</div>
     ));
@@ -719,9 +721,9 @@ describe('Picker public API contracts', () => {
     await input.trigger('focus');
     await input.setValue('query');
     expect(parentEmit).toHaveBeenCalledWith('update:modelValue', 'query');
-    expect(parentEmit.mock.calls.some(call => call[0] === 'input' && call[1] instanceof Event)).toBe(
-      true,
-    );
+    expect(
+      parentEmit.mock.calls.some(call => call[0] === 'input' && call[1] instanceof Event),
+    ).toBe(true);
 
     const backspace = new KeyboardEvent('keydown', { key: 'Backspace', bubbles: true });
     const stop = vi.spyOn(backspace, 'stopPropagation');
@@ -767,39 +769,42 @@ describe('Picker public API contracts', () => {
   test.each([
     ['pure input', false],
     ['fit-content input', true],
-  ])('%s reports real browser text overflow through Tooltip', async (_label, useFitContentInput) => {
-    const wrapper = mount(HPicker, {
-      props: {
-        modelValue: 'A deliberately long selected value',
-        inputable: true,
-        useFitContentInput,
-        fitContentInputMinWidth: 24,
-      },
-    });
-    const input = wrapper.get('input').element as HTMLInputElement;
-    Object.defineProperties(input, {
-      scrollWidth: { configurable: true, value: 320 },
-      scrollHeight: { configurable: true, value: 24 },
-    });
-    vi.spyOn(input, 'getBoundingClientRect').mockReturnValue({
-      x: 0,
-      y: 0,
-      width: 40,
-      height: 24,
-      top: 0,
-      right: 40,
-      bottom: 24,
-      left: 0,
-      toJSON: () => ({}),
-    });
+  ])(
+    '%s reports real browser text overflow through Tooltip',
+    async (_label, useFitContentInput) => {
+      const wrapper = mount(HPicker, {
+        props: {
+          modelValue: 'A deliberately long selected value',
+          inputable: true,
+          useFitContentInput,
+          fitContentInputMinWidth: 24,
+        },
+      });
+      const input = wrapper.get('input').element as HTMLInputElement;
+      Object.defineProperties(input, {
+        scrollWidth: { configurable: true, value: 320 },
+        scrollHeight: { configurable: true, value: 24 },
+      });
+      vi.spyOn(input, 'getBoundingClientRect').mockReturnValue({
+        x: 0,
+        y: 0,
+        width: 40,
+        height: 24,
+        top: 0,
+        right: 40,
+        bottom: 24,
+        left: 0,
+        toJSON: () => ({}),
+      });
 
-    await wrapper.get('.h-picker__input').trigger('mouseenter');
-    const tooltip = wrapper.findComponent({ name: 'HTooltip' });
-    expect(tooltip.props('visible')).toBe(true);
-    expect(tooltip.props('content')).toBe('A deliberately long selected value');
-    await wrapper.get('.h-picker__input').trigger('mouseleave');
-    expect(tooltip.props('visible')).toBe(false);
-  });
+      await wrapper.get('.h-picker__input').trigger('mouseenter');
+      const tooltip = wrapper.findComponent({ name: 'HTooltip' });
+      expect(tooltip.props('visible')).toBe(true);
+      expect(tooltip.props('content')).toBe('A deliberately long selected value');
+      await wrapper.get('.h-picker__input').trigger('mouseleave');
+      expect(tooltip.props('visible')).toBe(false);
+    },
+  );
 
   test('PickerInput internal event validators accept only their browser contracts', () => {
     const emits = PickerInput.emits as {
@@ -885,17 +890,11 @@ describe('Picker public API contracts', () => {
     const field = wrapper.get('.h-picker__input').element as HTMLElement;
     Object.defineProperty(field, 'clientWidth', { configurable: true, value: 240 });
 
-    resizeCallback(
-      [{ contentRect: { width: 32 } } as ResizeObserverEntry],
-      {} as ResizeObserver,
-    );
+    resizeCallback([{ contentRect: { width: 32 } } as ResizeObserverEntry], {} as ResizeObserver);
     await nextTick();
     expect(wrapper.get('input').attributes('style')).toContain('width: 208px');
     Object.defineProperty(field, 'clientWidth', { configurable: true, value: 0 });
-    resizeCallback(
-      [{ contentRect: { width: 0 } } as ResizeObserverEntry],
-      {} as ResizeObserver,
-    );
+    resizeCallback([{ contentRect: { width: 0 } } as ResizeObserverEntry], {} as ResizeObserver);
     await nextTick();
     expect(wrapper.get('input').attributes('style')).toContain('width: 0px');
     vi.unstubAllGlobals();
@@ -1022,6 +1021,35 @@ describe('Picker public API contracts', () => {
     expect(onFocus).not.toHaveBeenCalled();
     expect(onBlur).not.toHaveBeenCalled();
     untabbable.unmount();
+  });
+
+  test('document dismissal and restored display permission use the shared picker state', async () => {
+    const onHide = vi.fn();
+    const wrapper = mount(HPicker, {
+      attachTo: document.body,
+      props: { toBody: false, onHide },
+      slots: { default: () => <div data-test="panel-content">Panel</div> },
+    });
+
+    await wrapper.get('.h-picker').trigger('click');
+    await nextTick();
+    document.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+    await nextTick();
+    expect(onHide).toHaveBeenCalledTimes(1);
+    wrapper.unmount();
+
+    const popperCanBeDisplayed = ref(false);
+    const contentOnly = mount(() => (
+      <HPicker
+        showPopoverContentOnly
+        popperCanBeDisplayed={popperCanBeDisplayed.value}
+        trigger="click"
+      />
+    ));
+    popperCanBeDisplayed.value = true;
+    await nextTick();
+    expect(contentOnly.find('.h-picker__pop-content').exists()).toBe(true);
+    contentOnly.unmount();
   });
 
   test('emits validator contracts accept browser payloads and reject wrong payloads', () => {

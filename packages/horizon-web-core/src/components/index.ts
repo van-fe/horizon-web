@@ -18,6 +18,7 @@ export * from './Link';
 export * from './Layout';
 export * from './Mask';
 export * from './Pagination';
+export * from './Picker';
 export * from './Popover';
 export * from './Popconfirm';
 export * from './Radio';

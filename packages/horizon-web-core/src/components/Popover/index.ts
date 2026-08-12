@@ -82,9 +82,9 @@ export function syncPopoverReferenceSize(
   options: PopoverSizeOptions,
 ): void {
   const rect = reference.getBoundingClientRect();
-  floating.style.width = options.sameWidth && !options.setMinWidth ? `${rect.width}px` : '';
-  floating.style.minWidth = options.sameWidth && options.setMinWidth ? `${rect.width}px` : '';
-  floating.style.height = options.sameHeight ? `${rect.height}px` : '';
+  if (options.sameWidth && !options.setMinWidth) floating.style.width = `${rect.width}px`;
+  if (options.sameWidth && options.setMinWidth) floating.style.minWidth = `${rect.width}px`;
+  if (options.sameHeight) floating.style.height = `${rect.height}px`;
 }
 
 /** 创建带自动位置与尺寸同步的 Popover positioner。 @en Creates a Popover positioner with auto placement and size syncing. */

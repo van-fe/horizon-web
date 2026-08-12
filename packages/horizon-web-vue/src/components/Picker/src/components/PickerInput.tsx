@@ -258,7 +258,9 @@ export default defineComponent({
       );
 
       const slotContent = Array.isArray(content) && isVNodeEmpty(content) ? undefined : content;
-      return slotContent ?? (isVNode(formattedModelValue.value) ? formattedModelValue.value : undefined);
+      return (
+        slotContent ?? (isVNode(formattedModelValue.value) ? formattedModelValue.value : undefined)
+      );
     }
 
     useResizeObserver(inputPrependDomRef, ([entry]) => {

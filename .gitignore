@@ -27,6 +27,8 @@ packages/horizon-web-vue/src/styles/global-variables.scss
 packages/horizon-web-vue/src/styles/index.scss
 packages/horizon-web-vue/json/
 packages/horizon-web-vue/coverage/
+/coverage/
+packages/horizon-web-react/coverage/
 packages/horizon-web-vue/src/components/emits.ts
 packages/horizon-web-vue/src/components/slots.ts
 packages/horizon-web-vue/src/components/exposes.ts

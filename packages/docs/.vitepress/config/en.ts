@@ -58,6 +58,7 @@ const reactSidebar = [
       { text: 'Segmented', link: 'components/Segmented' },
       { text: 'Select', link: 'components/Select' },
       { text: 'AutoComplete', link: 'components/AutoComplete' },
+      { text: 'Picker', link: 'components/Picker' },
       { text: 'Slider', link: 'components/Slider' },
       { text: 'Switch', link: 'components/Switch' },
     ],
