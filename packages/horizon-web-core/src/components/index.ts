@@ -6,6 +6,7 @@ export * from './Breadcrumb';
 export * from './Checkbox';
 export * from './Collapse';
 export * from './Dropdown';
+export * from './Descriptions';
 export * from './Dialog';
 export * from './Drawer';
 export * from './FloatButton';

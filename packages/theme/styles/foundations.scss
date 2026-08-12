@@ -17,6 +17,7 @@
 @use './components/container/variables' as container;
 @use './components/divider/variables' as divider;
 @use './components/dialog/variables' as dialog;
+@use './components/descriptions/variables' as descriptions;
 @use './components/drawer/variables' as drawer;
 @use './components/dropdown/variables' as dropdown;
 @use './components/empty/variables' as empty;
@@ -67,6 +68,7 @@ $values: function.map-merge-multi(
   function.flatten-variables(container.$values, 'container'),
   function.flatten-variables(divider.$values, 'divider'),
   function.flatten-variables(dialog.$values, 'dialog'),
+  function.flatten-variables(descriptions.$values, 'descriptions'),
   function.flatten-variables(drawer.$values, 'drawer'),
   function.flatten-variables(dropdown.$values, 'dropdown'),
   function.flatten-variables(empty.$values, 'empty'),

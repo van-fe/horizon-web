@@ -1,167 +1,112 @@
+import { resolveDescriptionBreakpoint, resolveDescriptionResponsiveValue } from '@aurora/core';
 import type { ComputedRef } from 'vue';
 import {
-  defineComponent,
-  provide,
-  reactive,
-  toRefs,
-  watchEffect,
-  ref,
-  inject,
-  computed,
   cloneVNode,
-  watch,
+  computed,
+  defineComponent,
+  inject,
+  onBeforeUnmount,
+  onMounted,
+  provide,
+  ref,
+  toRef,
 } from 'vue';
+import { createDescriptionsResizeController } from '@aurora/horizon-web-core';
 import { useDescriptionsProps } from './composables/useProps';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { DescriptionsSlots } from './composables/useSlots';
 import { useDescriptionsSlots } from './composables/useSlots';
 import {
   ComponentClassBlock,
+  getSymbolNodeChildren,
   sizeAdapter,
   useNamespace,
-  getSymbolNodeChildren,
 } from '@aurora/utils';
 import { GlobalSizeInjectedKey } from '~/components/Application/src/utils/injectedKeys';
 import type { HApplicationSizeType } from '~/components/Application/src/composables/useProps';
-import { useElementSize, useDebounceFn } from '@vueuse/core';
+import { DESCRIPTIONS_CONTEXT } from './context';
 
 export default defineComponent({
   name: `${useNamespace()}Descriptions`,
   desc: '成组展示多个只读字段，一般用于详情页的信息展示',
-  descLocales: { en: "Simply display multiple read-only fields in groups, generally used for detail page information (such as user details, vehicle details)" },
+  descLocales: { en: 'Displays grouped read-only fields for detail views.' },
   props: useDescriptionsProps,
   slots: useDescriptionsSlots,
   setup(props, { slots }: HorizonWebSetupContext<{}, DescriptionsSlots>) {
-    const {
-      title: titleProp,
-      border: borderProp,
-      type: typeProp,
-      column: columnProp,
-      labelPosition: labelPositionProp,
-      xs: xsProp,
-      sm: smProp,
-      md: mdProp,
-      lg: lgProp,
-      xl: xlProp,
-      labelClass: labelClassProp,
-      valueClass: valueClassProp,
-    } = toRefs(props);
     const classHelper = new ComponentClassBlock('descriptions');
+    const rootRef = ref<HTMLElement | null>(null);
+    const width = ref<number>();
+    const labelWidths = new Map<symbol, number>();
     const labelWidth = ref('auto');
-    const descriptionItemObj = reactive<{ labelWidthArr: number[]; itemLen: number }>({
-      labelWidthArr: [],
-      itemLen: 0,
-    });
-    const setLabelWidth = (val: number) => {
-      descriptionItemObj.labelWidthArr.push(val);
-      if (descriptionItemObj.labelWidthArr.length === descriptionItemObj.itemLen) {
-        labelWidth.value = `${Math.max(...descriptionItemObj.labelWidthArr)}px`;
-      }
+    const updateLabelWidth = () => {
+      labelWidth.value = labelWidths.size ? `${Math.max(...labelWidths.values())}px` : 'auto';
     };
-
-    const columnNum = ref(columnProp.value);
-
-    const size = ref();
-
-    const provideObj = reactive({
-      type: typeProp.value,
-      labelPosition: labelPositionProp.value,
-      labelWidth: labelWidth.value,
-      column: columnNum.value,
-      size: size.value,
-      labelClass: labelClassProp.value,
-      valueClass: valueClassProp.value,
-      setLabelWidth,
-    });
-    watchEffect(() => {
-      provideObj.type = typeProp.value;
-      provideObj.labelPosition = labelPositionProp.value;
-      provideObj.labelWidth = labelWidth.value;
-      provideObj.column =  columnNum.value;
-      provideObj.size = size.value;
-      provideObj.labelClass = labelClassProp.value;
-      provideObj.valueClass = valueClassProp.value;
-    });
-    provide('HDescriptions', provideObj);
-
-    const getNeedRenderedItems = (defaultSlots: any) => {
-      const result = defaultSlots
-        ? getSymbolNodeChildren(defaultSlots).map(curr => cloneVNode(curr))
-        : [];
-      descriptionItemObj.labelWidthArr = [];
-      descriptionItemObj.itemLen = result.filter(
-        (VNode: any) => VNode.type?.name === `${useNamespace()}DescriptionItem`,
-      ).length;
-
-      return result;
+    const reportLabelWidth = (id: symbol, value?: number) => {
+      if (value === undefined) labelWidths.delete(id);
+      else labelWidths.set(id, value);
+      updateLabelWidth();
     };
+    const breakpoint = computed(() =>
+      width.value === undefined ? undefined : resolveDescriptionBreakpoint(width.value),
+    );
+    const column = computed(() =>
+      width.value === undefined
+        ? props.column
+        : resolveDescriptionResponsiveValue(width.value, props.column, props),
+    );
+    provide(DESCRIPTIONS_CONTEXT, {
+      type: toRef(props, 'type'),
+      labelPosition: toRef(props, 'labelPosition'),
+      labelWidth,
+      width,
+      breakpoint,
+      labelClass: toRef(props, 'labelClass'),
+      valueClass: toRef(props, 'valueClass'),
+      reportLabelWidth,
+    });
 
-    // global size
     const globalSize = inject(GlobalSizeInjectedKey, ref('medium'));
-    const sizeRef = computed(
-      () =>
-        sizeAdapter(props.size, {
-          middle: 'medium',
-        }) || globalSize.value,
+    const size = computed(
+      () => sizeAdapter(props.size, { middle: 'medium' }) || globalSize.value,
     ) as ComputedRef<HApplicationSizeType>;
-
-    // 响应式
-    const descriptionsRef = ref<HTMLElement | null>(null);
-
-    const { width } = useElementSize(descriptionsRef);
-
-
-
-    const _changeColNum = () => {
-      if (width.value < 456) {
-        columnNum.value = xsProp.value || columnProp.value;
-        size.value = 'xs';
-      } else if (width.value < 760) {
-        columnNum.value = smProp.value || columnProp.value;
-        size.value = 'sm';
-      } else if (width.value < 1176) {
-        columnNum.value = mdProp.value || columnProp.value;
-        size.value = 'md';
-      } else if (width.value < 1656) {
-        columnNum.value = lgProp.value || columnProp.value;
-        size.value = 'lg';
-      } else {
-        columnNum.value = xlProp.value || columnProp.value;
-        size.value = 'xl';
-      }
-    };
-    const changeColNum = useDebounceFn(_changeColNum, 50);
-
-    watch(() => width.value, () => {
-      changeColNum();
+    let resizeController: ReturnType<typeof createDescriptionsResizeController> | undefined;
+    onMounted(() => {
+      if (rootRef.value)
+        resizeController = createDescriptionsResizeController(rootRef.value, {
+          onResize: value => (width.value = value),
+        });
     });
+    onBeforeUnmount(() => resizeController?.destroy());
 
     return () => {
-      const defaultSlotsArr = getNeedRenderedItems(slots.default);
+      const items = slots.default
+        ? getSymbolNodeChildren(slots.default).map(child => cloneVNode(child))
+        : [];
       return (
         <div
-          ref={descriptionsRef}
+          ref={rootRef}
           class={[
             classHelper.block,
-            classHelper.m(typeProp.value),
-            typeProp.value === 'vertical' && classHelper.e(`col-${columnNum.value}`),
+            classHelper.m(props.type),
+            props.type === 'vertical' && classHelper.e(`col-${column.value}`),
           ]}
         >
-          {(titleProp.value || slots.title) && (
-            <div class={[classHelper.e('title'), classHelper.e(`title--${sizeRef.value}`)]}>
-              {slots.title ? slots.title() : titleProp.value}
+          {(props.title || slots.title) && (
+            <div class={[classHelper.e('title'), classHelper.e(`title--${size.value}`)]}>
+              {slots.title?.() ?? props.title}
             </div>
           )}
-          <div
+          <dl
             class={[
               classHelper.e('content'),
-              classHelper.m(sizeRef.value),
-              borderProp.value && classHelper.m('border'),
+              classHelper.m(size.value),
+              props.border && classHelper.m('border'),
             ]}
-            style={{ 'grid-template-columns': `repeat(${columnNum.value}, 1fr)` }}
+            role="list"
+            style={{ gridTemplateColumns: `repeat(${column.value}, 1fr)` }}
           >
-            {...defaultSlotsArr}
-          </div>
+            {items}
+          </dl>
         </div>
       );
     };

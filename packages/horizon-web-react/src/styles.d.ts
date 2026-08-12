@@ -26,6 +26,7 @@ declare module '@aurora/theme/styles/collapse';
 declare module '@aurora/theme/styles/count';
 declare module '@aurora/theme/styles/container';
 declare module '@aurora/theme/styles/divider';
+declare module '@aurora/theme/styles/descriptions';
 declare module '@aurora/theme/styles/empty';
 declare module '@aurora/theme/styles/progress';
 declare module '@aurora/theme/styles/rate';

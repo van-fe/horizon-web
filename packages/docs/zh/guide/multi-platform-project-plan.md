@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B28 Spin 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B30 Descriptions 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -746,6 +746,18 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DS-B29-001 | Done | Time canonical Sass、tabular number、字体与文本颜色变量迁入 `@aurora/theme`；Vue 使用包导出薄代理，React 使用同源视觉，并约束窄容器长内容 |
 | DOC-B29-001 | Done | Vue 文档补齐 Props/Events/Slots；React 中英文页面、3 个独立 TSX 示例与双语侧边栏入口完成；62 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
 | QA-B29-001 | Done | Core 185、Web Core Node 18/Chromium 55、React Chromium 212、Vue Chromium 2322 项（2321 通过、1 项预期失败）全部通过；Vue 总覆盖率为 97.95% / 95.11% / 97.62% / 98.25%；Vue Node 23、resolver 12、colors 1、upload adapters 66 项通过；五包构建、Sass、文档站、含 Time 的 Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界与旧组件包名移除约束通过 |
+
+#### M6-B30 第三十批实施记录（2026-08-12）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B30-001 | Done | Descriptions 与 DescriptionItem 的公共 props、默认值、枚举、校验器、容器断点和响应式列/跨度算法迁入 `@aurora/core`，不包含 renderer 或 DOM 实现 |
+| WEB-B30-001 | Done | 在同名 Web Core 目录提供 ResizeObserver 生命周期控制器，统一初始测量、尺寸更新与销毁清理，两端不再分别依赖框架工具库监听尺寸 |
+| VUE-B30-001 | Done | Vue props/slots 类型化消费公共契约，列数、跨度、标签宽度同步改用 Core/Web Core；保留历史 API、Application 尺寸与自定义类名，并采用描述列表语义 |
+| REACT-B30-001 | Done | 完成 React Descriptions/DescriptionItem，支持响应式列与跨度、边框、尺寸、标签位置、自定义标题/标签/值、Provider 尺寸、原生属性、根 ref 和描述列表语义 |
+| DS-B30-001 | Done | Descriptions canonical Sass、变量、边框与布局迁入 `@aurora/theme`；Vue 使用包导出薄代理，React 使用同源视觉，并约束 390px 与长内容 |
+| DOC-B30-001 | Done | Vue 文档补齐 Props/Slots；React 中英文页面、3 个独立 TSX 示例与双语侧边栏入口完成，文档保持 renderer 原生表达 |
+| QA-B30-001 | Done | Core 188、Web Core Node 18/Chromium 57、React Chromium 215、Vue Chromium 2322 项（2321 通过、1 项预期失败）全部通过；Vue 总覆盖率为 97.95% / 95.06% / 97.62% / 98.25%；Vue Node 23、resolver 12、colors 1、upload adapters 66 项通过；五包构建、Sass、文档站、含 Descriptions 的 Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界与旧组件包名移除约束通过 |
 
 ### 批次 C：浮层与容器
 

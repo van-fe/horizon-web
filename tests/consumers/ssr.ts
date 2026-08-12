@@ -2,11 +2,15 @@ import { createElement } from 'react';
 import { renderToString as renderReact } from 'react-dom/server';
 import { createSSRApp, h } from 'vue';
 import { renderToString as renderVue } from 'vue/server-renderer';
-import { Button, Mask, Spin, Time } from '@aurora/horizon-web-react';
+import { Button, DescriptionItem, Descriptions, Mask, Spin, Time } from '@aurora/horizon-web-react';
 import { HButton } from '@aurora/horizon-web-vue/es/components/Button';
 import { HMask } from '@aurora/horizon-web-vue/es/components/Mask';
 import { HSpin } from '@aurora/horizon-web-vue/es/components/Spin';
 import { HTime } from '@aurora/horizon-web-vue/es/components/Time';
+import {
+  HDescriptionItem,
+  HDescriptions,
+} from '@aurora/horizon-web-vue/es/components/Descriptions';
 
 const reactHtml = renderReact(createElement(Button, null, 'React SSR'));
 if (!reactHtml.includes('React SSR')) throw new Error('React SSR consumer failed.');
@@ -21,6 +25,16 @@ const reactTimeHtml = renderReact(
   createElement(Time, { calculative: true, time: 10, endTime: 15 }, 'React Time SSR'),
 );
 if (!reactTimeHtml.includes('React Time SSR')) throw new Error('React Time SSR consumer failed.');
+
+const reactDescriptionsHtml = renderReact(
+  createElement(
+    Descriptions,
+    { title: 'React Descriptions SSR' },
+    createElement(DescriptionItem, { label: 'Status', value: 'Ready' }),
+  ),
+);
+if (!reactDescriptionsHtml.includes('React Descriptions SSR'))
+  throw new Error('React Descriptions SSR consumer failed.');
 
 const vueHtml = await renderVue(createSSRApp({ render: () => h(HButton, null, () => 'Vue SSR') }));
 if (!vueHtml.includes('Vue SSR')) throw new Error('Vue SSR consumer failed.');
@@ -41,5 +55,16 @@ const vueTimeHtml = await renderVue(
   }),
 );
 if (!vueTimeHtml.includes('Vue Time SSR')) throw new Error('Vue Time SSR consumer failed.');
+
+const vueDescriptionsHtml = await renderVue(
+  createSSRApp({
+    render: () =>
+      h(HDescriptions, { title: 'Vue Descriptions SSR' }, () => [
+        h(HDescriptionItem, { label: 'Status', value: 'Ready' }),
+      ]),
+  }),
+);
+if (!vueDescriptionsHtml.includes('Vue Descriptions SSR'))
+  throw new Error('Vue Descriptions SSR consumer failed.');
 
 console.info('Vue and React SSR consumers verified.');

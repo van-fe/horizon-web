@@ -1,118 +1,78 @@
-import { defineComponent, inject, toRefs, ref, nextTick, onBeforeUnmount, watchEffect } from 'vue';
+import { computed, defineComponent, inject, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { resolveDescriptionResponsiveValue } from '@aurora/core';
+import { createDescriptionsResizeController } from '@aurora/horizon-web-core';
 import { useDescriptionItemProps } from './composables/useProps';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import type { DescriptionItemSlots } from './composables/useSlots';
 import { useDescriptionItemSlots } from './composables/useSlots';
-import { useIntersectionObserver } from '@vueuse/core';
-
-export type observerReturnType = {
-  isSupported: boolean | undefined;
-  stop: () => void;
-};
+import { DESCRIPTIONS_CONTEXT } from './context';
 
 export default defineComponent({
   name: `${useNamespace()}DescriptionItem`,
-  desc: "描述列表中的单个只读字段",
-  descLocales: { en: "A single read-only field within Descriptions." },
+  desc: '描述列表中的单个只读字段',
+  descLocales: { en: 'A single read-only field within Descriptions.' },
   props: useDescriptionItemProps,
   slots: useDescriptionItemSlots,
   setup(props, { slots }: HorizonWebSetupContext<{}, DescriptionItemSlots>) {
-    const {
-      label: labelProp,
-      value: valueProp,
-      spanCol: spanColProp,
-      spanRow: spanRowProp,
-      xs: xsProp,
-      sm: smProp,
-      md: mdProp,
-      lg: lgProp,
-      xl: xlProp,
-    } = toRefs(props);
     const classHelper = new ComponentClassBlock('descriptions');
-    const injectProp = inject<{
-      labelPosition: string;
-      type: string;
-      labelWidth: string;
-      column: number;
-      size: string;
-      labelClass: string;
-      valueClass: string;
-      setLabelWidth: (val: number) => void;
-    }>('HDescriptions');
+    const context = inject(DESCRIPTIONS_CONTEXT);
     const labelRef = ref<HTMLElement | null>(null);
-
-    const { stop } = useIntersectionObserver(labelRef, () => {
-      setClientWidth();
+    const labelId = Symbol('description-label');
+    const spanCol = computed(() =>
+      context?.width.value === undefined
+        ? props.spanCol
+        : resolveDescriptionResponsiveValue(context.width.value, props.spanCol, props),
+    );
+    let labelObserver: ReturnType<typeof createDescriptionsResizeController> | undefined;
+    onMounted(() => {
+      if (labelRef.value)
+        labelObserver = createDescriptionsResizeController(labelRef.value, {
+          onResize: width => {
+            if (context?.type.value === 'vertical')
+              context.reportLabelWidth(labelId, Math.ceil(width));
+          },
+        });
     });
-
-    const setClientWidth = () => {
-      nextTick(() => {
-        const clientWidth = labelRef.value?.getBoundingClientRect().width;
-        injectProp?.type === 'vertical' &&
-          clientWidth &&
-          injectProp?.setLabelWidth(Math.ceil(clientWidth));
-      });
-    };
-
-    const spanColRef = ref(spanColProp.value);
-
-    watchEffect(() => {
-      // spanColRef 根据 injectProp?.size 响应式变化
-      switch (injectProp?.size) {
-        case 'xs':
-          spanColRef.value = xsProp?.value ?? spanColProp.value;
-          break;
-        case 'sm':
-          spanColRef.value = smProp?.value ?? spanColProp.value;
-          break;
-        case 'md':
-          spanColRef.value = mdProp?.value ?? spanColProp.value;
-          break;
-        case 'lg':
-          spanColRef.value = lgProp?.value ?? spanColProp.value;
-          break;
-        case 'xl':
-          spanColRef.value = xlProp?.value ?? spanColProp.value;
-          break;
-        default:
-          spanColRef.value = spanColProp.value;
-          break;
-      }
-    });
-
+    watch(
+      () => context?.type.value,
+      type => {
+        if (type === 'vertical') labelObserver?.update();
+        else context?.reportLabelWidth(labelId);
+      },
+    );
     onBeforeUnmount(() => {
-      stop();
+      labelObserver?.destroy();
+      context?.reportLabelWidth(labelId);
     });
-
-    return () => {
-      return (
-        <div
-          class={[
-            classHelper.e('item'),
-            injectProp?.labelPosition === 'top' && classHelper.e('item--vertical'),
-            injectProp?.labelPosition === 'top' && classHelper.e('item--top'),
-          ]}
+    return () => (
+      <div
+        class={[
+          classHelper.e('item'),
+          context?.labelPosition.value === 'top' && classHelper.e('item--vertical'),
+          context?.labelPosition.value === 'top' && classHelper.e('item--top'),
+        ]}
+        role="listitem"
+        style={{
+          display: context?.labelPosition.value === 'left' ? 'flex' : 'block',
+          gridColumn: `span ${spanCol.value}`,
+          gridRow: `span ${props.spanRow}`,
+        }}
+      >
+        <dt
+          ref={labelRef}
+          class={[classHelper.e('label'), context?.labelClass.value]}
+          role="term"
           style={{
-            display: injectProp?.labelPosition === 'left' ? 'flex' : 'block',
-            'grid-column': `span ${spanColRef.value}`,
-            'grid-row': `span ${spanRowProp.value}`,
+            width: context?.labelPosition.value === 'left' ? context.labelWidth.value : 'auto',
           }}
         >
-          <div
-            ref={labelRef}
-            class={[classHelper.e('label'), injectProp?.labelClass]}
-            style={{
-              width: injectProp?.labelPosition === 'left' ? injectProp?.labelWidth : 'auto',
-            }}
-          >
-            {slots.label?.() ?? labelProp.value}
-          </div>
-          <div class={[classHelper.e('value'), injectProp?.valueClass]}>
-            {slots.default?.() ?? valueProp.value}
-          </div>
-        </div>
-      );
-    };
+          {slots.label?.() ?? props.label}
+        </dt>
+        <dd class={[classHelper.e('value'), context?.valueClass.value]} role="definition">
+          {slots.default?.() ?? props.value}
+        </dd>
+      </div>
+    );
   },
 });

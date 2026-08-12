@@ -20,6 +20,8 @@ import {
   createReactComponentManifest,
   createVueComponentManifest,
   dividerManifest,
+  descriptionItemManifest,
+  descriptionsManifest,
   dialogManifest,
   drawerManifest,
   dropdownGroupManifest,
@@ -90,6 +92,8 @@ const manifests = [
   footerManifest,
   countManifest,
   dividerManifest,
+  descriptionsManifest,
+  descriptionItemManifest,
   dialogManifest,
   drawerManifest,
   dropdownManifest,
@@ -718,6 +722,8 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     },
   },
   Skeleton: { regions: { rename: { content: 'default', placeholder: 'loadingTemplate' } } },
+  Descriptions: { regions: { rename: { content: 'default' } } },
+  DescriptionItem: { regions: { rename: { content: 'default' } } },
   Spin: { regions: { rename: { content: 'default' } } },
   Time: { regions: { rename: { content: 'default' } } },
   Statistic: { regions: { rename: { value: 'default' } } },
@@ -1306,6 +1312,30 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     events: { rename: { change: 'onChange', focus: 'onFocus', blur: 'onBlur' } },
   },
   Skeleton: { regions: { rename: { content: 'children' } } },
+  Descriptions: {
+    props: {
+      extend: [
+        {
+          name: 'titleContent',
+          type: 'ReactNode',
+          description: { zh: '自定义标题内容', en: 'Custom title content' },
+        },
+      ],
+    },
+    regions: { rename: { content: 'children' }, omit: ['title'] },
+  },
+  DescriptionItem: {
+    props: {
+      extend: [
+        {
+          name: 'labelContent',
+          type: 'ReactNode',
+          description: { zh: '自定义标签内容', en: 'Custom label content' },
+        },
+      ],
+    },
+    regions: { rename: { content: 'children' }, omit: ['label'] },
+  },
   Spin: {
     props: {
       extend: [

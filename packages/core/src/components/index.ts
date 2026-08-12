@@ -15,6 +15,7 @@ export * from './Checkbox';
 export * from './Collapse';
 export * from './Count';
 export * from './Divider';
+export * from './Descriptions';
 export * from './Dialog';
 export * from './Drawer';
 export * from './Dropdown';
