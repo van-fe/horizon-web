@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B33 Panels 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B34 AutoComplete 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -794,6 +794,19 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DS-B33-001 | Done | Panels canonical Sass 与变量迁入 `@aurora/theme`，Vue 使用包导出薄代理，React 使用同源动画；补齐 reduced-motion，并约束 390px 下长内容横向溢出 |
 | DOC-B33-001 | Done | Vue 文档补齐 Props/Slots；React 中英文页面、3 个独立 TSX 示例与双语侧边栏入口完成；69 组 Vue/React 契约生成且文档保持 renderer 原生表达 |
 | QA-B33-001 | Done | Core 197、Theme 3、Locale React 5、Web Core Node 18/Chromium 57、React Chromium 226、Vue Chromium 2328 项（2327 通过、1 项预期失败）全部通过；Vue 总覆盖率为 97.96% / 95.10% / 97.62% / 98.25%，Panels 组件源码四项覆盖率均为 100%；Vue Node 26、resolver 12、colors 1、upload adapters 66 项通过；五包构建、Sass、文档站、含 Panels 的 Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界与旧组件包名移除约束通过；Descriptions 响应式测试改用真实 ResizeObserver 尺寸等待以消除竞态 |
+
+#### M6-B34 第三十四批实施记录（2026-08-12）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B34-001 | Done | AutoComplete 的公共 value/open、触发方式、选项、说明布局、事件、区域、命令、默认值、校验器、稳定选项归一化、选中项置顶、键盘边界算法与 controller 迁入 `@aurora/core`，不包含 renderer 节点、DOM 或 locale |
+| WEB-B34-001 | Done | 可取消的输入防抖调度器迁入对应 Horizon Web Core 目录；浮层定位、Portal、dismissable layer 与 combobox ARIA 继续复用现有 Web primitives |
+| VUE-B34-001 | Done | Vue props/emits/slots/exposes 类型化消费公共契约，建议项归一化、排序与键盘算法改用 Core，防抖改用 Web Core；保留 `modelValue`、Picker/VirtualScroller、表单和 locale 行为，并补齐真实 listbox/option/active-descendant 语义及命令 exposes |
+| REACT-B34-001 | Done | 完成 React AutoComplete，支持 value/open 受控与非受控状态、防抖输入、IME、异步建议、键盘与指针选择、hover、Portal、表单、加载/空状态、自定义区域、ARIA、原生属性和 ref commands |
+| DS-B34-001 | Done | AutoComplete canonical Sass 与变量迁入 `@aurora/theme`，Vue 使用包导出薄代理，React 使用同源视觉；长内容与 390px 宽度约束完成 |
+| DOC-B34-001 | Done | Vue 文档补齐 Props/Events/Slots/Exposes；React 中英文页面、3 个独立 TSX 示例与双语侧边栏入口完成，文档保持 renderer 原生表达 |
+| PKG-B34-001 | Done | 包名迁移继续按 breaking change 执行；边界检查禁止恢复 `@aurora/horizon-web` package、依赖、发布项、alias、转发入口、resolver fallback 或兼容测试，仅保留无关的 ESLint plugin rule id |
+| QA-B34-001 | Done | Core 203、Theme 3、Locale React 5、Web Core Node 21/Chromium 57、React Chromium 233、Vue Chromium 2330 项（2329 通过、1 项预期失败）全部通过；Vue 总覆盖率为 97.97% / 95.09% / 97.65% / 98.26%，AutoComplete 组件源码四项覆盖率为 99.03% / 96.42% / 100% / 99.48%；Vue Node 26、resolver 12、colors 1、upload adapters 66 项通过；五包构建、Sass、文档站、69 组双 renderer 契约、Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界与旧组件包名移除约束通过 |
 
 ### 批次 C：浮层与容器
 

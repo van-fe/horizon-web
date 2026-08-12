@@ -4,9 +4,11 @@ import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import HTooltip from '~/components/Tooltip/src/Tooltip';
 import {
   HAutoCompleteFocusedOptionValueInjectKey,
+  HAutoCompleteModelValueInjectKey,
   HAutoCompleteMouseOverOptionInjectKey,
   HAutoCompletePickOptionInjectKey,
   HAutoCompletePropsInjectKey,
+  HAutoCompleteSlotsInjectKey,
   HAutoCompleteVirtualScrollListIsScrollingInjectKey,
 } from '../utils/injectKeys';
 import type { HAutoCompleteOptionWithUuid } from '../utils/typed';
@@ -33,6 +35,7 @@ export default defineComponent({
      */
     value: {
       type: String,
+      required: true,
     },
     /**
      * 辅助说明文字或 VNode 节点
@@ -45,6 +48,11 @@ export default defineComponent({
      */
     item: {
       type: Object as PropType<HAutoCompleteOptionWithUuid>,
+      required: true,
+    },
+    /** 选项索引。 @en Option index. */
+    index: {
+      type: Number,
       required: true,
     },
   },
@@ -60,8 +68,11 @@ export default defineComponent({
     const focusedOptionValue = inject(HAutoCompleteFocusedOptionValueInjectKey)!;
     const scrollListIsScrolling = inject(HAutoCompleteVirtualScrollListIsScrollingInjectKey)!;
     const onMouseOverOption = inject(HAutoCompleteMouseOverOptionInjectKey)!;
+    const slots = inject(HAutoCompleteSlotsInjectKey)!;
+    const modelValue = inject(HAutoCompleteModelValueInjectKey)!;
 
     const isFocused = computed(() => focusedOptionValue.value === labelProp.value);
+    const isSelected = computed(() => modelValue.value === valueProp.value);
 
     watch(isFocused, val => {
       if (val && !scrollListIsScrolling.value) {
@@ -70,12 +81,15 @@ export default defineComponent({
     });
 
     function onClick() {
-      pickOption(valueProp?.value ?? labelProp.value);
+      pickOption(valueProp.value);
     }
 
     return () => (
       <div
         ref={optionDomProp}
+        id={props.uuid}
+        role="option"
+        aria-selected={isSelected.value}
         class={cls(
           classHelper.block,
           classHelper.is('focus', isFocused.value),
@@ -86,32 +100,41 @@ export default defineComponent({
       >
         <div class={classHelper.e('inner')}>
           <div class={classHelper.e('content-wrapper')}>
-            <Fragment>
-              <HTooltip
-                overflow={true}
-                showAfter={parentProps.tooltipShowAfter}
-                hideAfter={parentProps.tooltipHideAfter}
-              >
-                {{
-                  content: () => labelProp.value,
-                  default: () => <div class={classHelper.e('content')}>{labelProp.value}</div>,
-                }}
-              </HTooltip>
-              {props.description && (
+            {slots.option ? (
+              slots.option({
+                option: props.item,
+                index: props.index,
+                active: isFocused.value,
+                selected: isSelected.value,
+              })
+            ) : (
+              <Fragment>
                 <HTooltip
                   overflow={true}
                   showAfter={parentProps.tooltipShowAfter}
                   hideAfter={parentProps.tooltipHideAfter}
                 >
                   {{
-                    content: () => props.description,
-                    default: () => (
-                      <div class={classHelper.e('description')}>{props.description}</div>
-                    ),
+                    content: () => labelProp.value,
+                    default: () => <div class={classHelper.e('content')}>{labelProp.value}</div>,
                   }}
                 </HTooltip>
-              )}
-            </Fragment>
+                {props.description && (
+                  <HTooltip
+                    overflow={true}
+                    showAfter={parentProps.tooltipShowAfter}
+                    hideAfter={parentProps.tooltipHideAfter}
+                  >
+                    {{
+                      content: () => props.description,
+                      default: () => (
+                        <div class={classHelper.e('description')}>{props.description}</div>
+                      ),
+                    }}
+                  </HTooltip>
+                )}
+              </Fragment>
+            )}
           </div>
         </div>
       </div>

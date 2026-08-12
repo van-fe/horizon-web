@@ -1,6 +1,7 @@
 export * from './_shared/api';
 export * from './_shared/manifest';
 export * from './Affix';
+export * from './AutoComplete';
 export * from './Application';
 export * from './Anchor';
 export * from './Container';

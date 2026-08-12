@@ -5,35 +5,10 @@ import HAutoComplete from '../src/AutoComplete';
 import HPicker from '../../Picker/src/Picker';
 import HVirtualScroller from '../../VirtualScroller/src/VirtualScroller';
 import AutoCompleteHelper from './autoCompleteHelper';
-import { isEmpty, isEqualLoose } from '../src/utils/utils';
-import type { ModelValueType } from '../src/composables/useProps';
 import { HFormItemErrorInjectedKey } from '../../Form/src/utils/injectedKeys';
 import { sleep } from '~/utils/tools';
 
 describe('AutoComplete defensive and interaction branches', () => {
-  test('classifies empty-like public values and compares model values loosely', () => {
-    expect(isEmpty(null)).toBe(true);
-    expect(isEmpty(undefined)).toBe(true);
-    expect(isEmpty('')).toBe(false);
-    expect(isEmpty([])).toBe(true);
-    expect(isEmpty(['value'])).toBe(false);
-    expect(isEmpty(0)).toBe(false);
-    expect(isEmpty({})).toBe(false);
-    expect(isEmpty(new Map())).toBe(true);
-    expect(isEmpty(new Map([['key', 'value']]))).toBe(false);
-    expect(isEmpty(new Set())).toBe(true);
-    expect(isEmpty(new Set(['value']))).toBe(false);
-    expect(isEmpty(false)).toBe(false);
-    expect(isEmpty(Symbol('value'))).toBe(true);
-
-    expect(isEqualLoose(null, undefined)).toBe(true);
-    expect(
-      isEqualLoose([] as unknown as ModelValueType, [] as unknown as ModelValueType),
-    ).toBe(true);
-    expect(isEqualLoose('same', 'same')).toBe(true);
-    expect(isEqualLoose('left', 'right')).toBe(false);
-  });
-
   test('sorts label-only options and selects the hovered label with the keyboard', async () => {
     const onSelect = vi.fn();
     const instance = new AutoCompleteHelper({

@@ -91,6 +91,7 @@ export type InputProps = InputCommonProps &
     | 'onKeyDown'
     | 'onKeyPress'
     | 'onKeyUp'
+    | 'prefix'
   > & {
     /** Native attributes for a single-line field. */
     inputProps?: Omit<

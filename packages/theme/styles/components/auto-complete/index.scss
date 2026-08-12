@@ -1,0 +1,157 @@
+@use '../../mixins';
+
+/* stylelint-disable nesting-selector-no-missing-scoping-root -- BEM mixins provide selector roots. */
+
+@include mixins.b('auto-complete') {
+  position: relative;
+  display: inline-flex;
+  width: 240px;
+  min-width: 0;
+  max-width: 100%;
+
+  @include mixins.e('field') {
+    width: 100%;
+  }
+
+  @include mixins.e('panel') {
+    position: fixed;
+    z-index: 1000;
+    box-sizing: border-box;
+    min-width: 160px;
+    max-width: min(100vw - 16px, 480px);
+    overflow: hidden;
+    background: mixins.css-variable('bg-default');
+    border: 1px solid mixins.css-variable('border-noninteractive');
+    border-radius: mixins.css-variable('radius-m');
+    box-shadow: mixins.css-variable('shadow-down');
+  }
+
+  @include mixins.e('listbox') {
+    max-width: 100%;
+    margin: mixins.css-variable('auto-complete', 'spacing', 'panel', 'scrollbar', 'margin');
+    overflow: auto;
+    overscroll-behavior: contain;
+    outline: none;
+  }
+
+  @include mixins.e('scrollbar') {
+    margin: mixins.css-variable('auto-complete', 'spacing', 'panel', 'scrollbar', 'margin');
+  }
+
+  @include mixins.e('empty') {
+    padding: mixins.css-variable('spacing-5') mixins.css-variable('spacing-4');
+    color: mixins.css-variable('text-tertiary');
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+
+  @include mixins.e('loading') {
+    display: flex;
+    gap: mixins.css-variable('spacing-3');
+    align-items: center;
+    justify-content: center;
+    padding: mixins.css-variable('spacing-5') mixins.css-variable('spacing-4');
+    color: mixins.css-variable('text-tertiary');
+  }
+
+  @include mixins.e('panel-header') {
+    padding: mixins.css-variable('spacing-3') mixins.css-variable('spacing-4');
+    overflow-wrap: anywhere;
+    border-bottom: 1px solid mixins.css-variable('border-noninteractive');
+  }
+
+  @include mixins.e('panel-footer') {
+    padding: mixins.css-variable('spacing-3') mixins.css-variable('spacing-4');
+    overflow-wrap: anywhere;
+    border-top: 1px solid mixins.css-variable('border-noninteractive');
+  }
+}
+
+@include mixins.b('auto-complete-option') {
+  box-sizing: border-box;
+  max-width: 100%;
+  min-height: mixins.css-variable('select', 'size', 'option', 'height');
+  color: mixins.css-variable('select', 'color', 'option');
+  cursor: pointer;
+  background: mixins.css-variable('select', 'background', 'option');
+
+  @include mixins.e('inner') {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: mixins.css-variable('select', 'size', 'option', 'height');
+    padding: mixins.css-variable('select', 'spacing', 'option', 'padding');
+    transition: mixins.css-variable('select', 'transition');
+  }
+
+  @include mixins.e('content-wrapper') {
+    display: flex;
+    flex: 1;
+    gap: mixins.css-variable('spacing-3');
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  @include mixins.e('content') {
+    display: -webkit-box;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    -webkit-line-clamp: mixins.css-variable-with-default-value('select-size-option-max-line', 1);
+    word-break: normal;
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+  }
+
+  @include mixins.e('description') {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: mixins.css-variable('select', 'color', 'option', 'description');
+    white-space: nowrap;
+  }
+
+  @include mixins.is-not('disabled') {
+    &:hover {
+      @include mixins.e('inner', false) {
+        background: mixins.css-variable('select', 'background', 'option', 'hover');
+      }
+    }
+
+    @include mixins.is('focus') {
+      background: mixins.css-variable('select', 'background', 'option', 'hover');
+    }
+  }
+
+  @include mixins.is('active') {
+    @include mixins.e('content', false) {
+      font-weight: mixins.css-variable('weight-strong');
+    }
+  }
+
+  @include mixins.is('description-bottom') {
+    @include mixins.e('content-wrapper', false) {
+      flex-wrap: wrap;
+      gap: 0;
+    }
+
+    @include mixins.e('content', false) {
+      flex-basis: 100%;
+    }
+
+    @include mixins.e('description', false) {
+      flex-basis: 100%;
+      font-size: mixins.css-variable('select', 'font-size', 'description', 'bottom');
+    }
+  }
+}
+
+@media (width <= 390px) {
+  @include mixins.b('auto-complete') {
+    width: 100%;
+
+    @include mixins.e('panel') {
+      max-width: calc(100vw - 16px);
+    }
+  }
+}

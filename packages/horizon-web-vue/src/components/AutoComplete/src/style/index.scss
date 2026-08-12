@@ -1,8 +1,1 @@
-@use '../../../../styles/mixins';
-@use 'option';
-
-@include mixins.b('auto-complete') {
-  @include mixins.e('scrollbar') {
-    margin: mixins.css-variable('auto-complete', 'spacing', 'panel', 'scrollbar', 'margin');
-  }
-}
+@use 'pkg:@aurora/theme/styles/auto-complete';

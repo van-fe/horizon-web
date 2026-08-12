@@ -1,20 +1,13 @@
-import type { VNode } from 'vue';
+import type { ResolvedAutoCompleteOption } from '@aurora/core';
+import type { HAutoCompleteOption } from '../composables/useProps';
 
-export interface HAutoCompleteOption {
-  /**
-   * 选项的展示内容
-   */
-  label: string;
-  /**
-   * 选项的值，如果没设置则以 `label` 为主
-   */
-  value?: string;
-  /**
-   * 辅助说明文字或 VNode 节点
-   */
-  description?: string | VNode;
-}
+export type { HAutoCompleteOption } from '../composables/useProps';
 
-export interface HAutoCompleteOptionWithUuid extends HAutoCompleteOption {
+export interface HAutoCompleteOptionWithUuid extends Omit<HAutoCompleteOption, 'value'> {
   uuid: string;
+  value: string;
 }
+
+export type HResolvedAutoCompleteOption = ResolvedAutoCompleteOption<
+  HAutoCompleteOption['description']
+>;

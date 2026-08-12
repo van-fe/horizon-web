@@ -57,6 +57,7 @@ const reactSidebar = [
       { text: 'Radio 单选框', link: 'components/Radio' },
       { text: 'Segmented 分段控制器', link: 'components/Segmented' },
       { text: 'Select 选择器', link: 'components/Select' },
+      { text: 'AutoComplete 自动补全', link: 'components/AutoComplete' },
       { text: 'Slider 滑块', link: 'components/Slider' },
       { text: 'Switch 开关', link: 'components/Switch' },
     ],

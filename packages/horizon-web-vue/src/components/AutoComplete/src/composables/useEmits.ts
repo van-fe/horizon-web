@@ -1,64 +1,78 @@
+import type {
+  AdaptComponentApiShape,
+  AutoCompleteEventMap,
+  ComponentEventValidators,
+} from '@aurora/core';
 import type { ModelValueType } from './useProps';
 import { isBoolean, isDefined, isNil, isString } from '@aurora/utils';
+
+type AutoCompleteVueEvents = AdaptComponentApiShape<
+  AutoCompleteEventMap<Event, Event>,
+  { valueChange: 'update:modelValue'; openChange: 'dropdownVisibleChange' }
+>;
 
 export const useAutoCompleteEmits = {
   /**
    * modelValue 变更通知
-   * @param value modelValue值
-   * @paramEn value The value value.
-    * @en Emitted when update:model value changes.
+   * @param value modelValue 值
+   * @paramEn value The model value.
+   * @en Emitted when modelValue changes.
    */
   'update:modelValue': (value: ModelValueType) => isDefined(value) || isNil(value),
   /**
    * 下拉面板显隐切换时通知
    * @param visible 是否显示
-   * @paramEn visible The visible value.
-    * @en Emitted when dropdown visible change changes.
+   * @paramEn visible Whether the popup is visible.
+   * @en Emitted when popup visibility changes.
    */
   dropdownVisibleChange: (visible: boolean) => isBoolean(visible),
   /**
    * 聚焦时通知
-    * @en Emitted when focus changes.
+   * @en Emitted when the input receives focus.
    */
   focus: () => true,
   /**
    * 失焦时通知
-    * @en Emitted when blur changes.
+   * @en Emitted when the input loses focus.
    */
   blur: () => true,
   /**
    * 输入文字时触发
-   * @param inputValue 输入的文字
-   * @paramEn inputValue The input value value.
-    * @en Emitted when search changes.
+   * @param inputValue 输入文字
+   * @paramEn inputValue The search text.
+   * @en Emitted when search text changes.
    */
   search: (inputValue: string | null | undefined) => isString(inputValue) || isNil(inputValue),
   /**
-   * 在 `option` 列表滚动到底部时触发，可以做动态载入选项的回调
-   * @param evt 滚动事件或者键盘事件
-   * @paramEn evt The evt value.
-    * @en Emitted when option list reach bottom changes.
+   * 选项列表到达底部时触发
+   * @param evt 滚动或键盘事件
+   * @paramEn evt The scroll or keyboard event.
+   * @en Emitted when navigation or scrolling reaches the list end.
    */
   optionListReachBottom: (evt: Event) => evt instanceof Event,
-  /**
-   * 清空时触发
-    * @en Emitted when clear changes.
-   */
+  /** 清空时触发。 @en Emitted when the input is cleared. */
   clear: () => true,
   /**
-   * 选中选项更改时触发
-   * @param value 选项值
-   * @paramEn value The value value.
-    * @en Emitted when change changes.
+   * 选中值变化时触发
+   * @param value 选中值
+   * @paramEn value The selected value.
+   * @en Emitted when the selected value changes.
    */
   change: (value: string | null | undefined) => isString(value) || isNil(value),
   /**
-   * 选中选项时触发
-   * @param value 选项值
-   * @paramEn value The value value.
-    * @en Emitted when select changes.
+   * 选中建议项时触发
+   * @param value 选中值
+   * @paramEn value The selected value.
+   * @en Emitted when a suggestion is selected.
    */
   select: (value: string | null | undefined) => isString(value) || isNil(value),
-};
+} satisfies ComponentEventValidators<
+  Omit<AutoCompleteVueEvents, 'focus' | 'blur' | 'change' | 'select'> & {
+    focus: [];
+    blur: [];
+    change: [value: ModelValueType];
+    select: [value: ModelValueType];
+  }
+>;
 
 export type AutoCompleteEmits = typeof useAutoCompleteEmits;

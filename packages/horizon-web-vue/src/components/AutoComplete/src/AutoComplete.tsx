@@ -1,6 +1,24 @@
-import { computed, defineComponent, inject, nextTick, provide, ref, toRefs, watch } from 'vue';
-import { ComponentClassBlock, cls, useNamespace, isNil, safelyGetEventTarget } from '@aurora/utils';
+import {
+  computed,
+  defineComponent,
+  inject,
+  nextTick,
+  onBeforeUnmount,
+  provide,
+  ref,
+  toRefs,
+  useId,
+  watch,
+} from 'vue';
+import { ComponentClassBlock, cls, useNamespace, safelyGetEventTarget } from '@aurora/utils';
 import type { HorizonWebSetupContext, HorizonWebComponentInstance } from '@aurora/utils';
+import {
+  normalizeAutoCompleteOptions,
+  normalizeAutoCompleteValue,
+  orderAutoCompleteOptions,
+  resolveAutoCompleteNavigation,
+} from '@aurora/core';
+import { createAutoCompleteInputScheduler, getSelectComboboxAria } from '@aurora/horizon-web-core';
 import { useAutoCompleteProps } from './composables/useProps';
 import { useAutoCompleteEmits } from './composables/useEmits';
 import { useAutoCompleteSlots } from './composables/useSlots';
@@ -22,26 +40,23 @@ import {
   HAutoCompleteVisibleOptionsInjectKey,
 } from './utils/injectKeys';
 import useSize from '~/utils/useSize';
-import { debounce } from 'lodash-es';
-import { clamp } from '@vueuse/core';
 import HPickerFitContentInput from '~/components/Picker/src/components/PickerFitContentInput';
 import {
   HFormItemErrorInjectedKey,
   HFormItemTriggerInjectedKey,
   HFormDisabledInjectedKey,
 } from '~/components/Form/src/utils/injectedKeys';
-import { isEqualLoose } from './utils/utils';
 import VirtualScrollList from './components/VirtualScrollList';
-import { throttle } from 'lodash-es';
-import { nanoid } from 'nanoid';
-import type { HAutoCompleteOptionWithUuid, HAutoCompleteOption } from './utils/typed';
+import type { HAutoCompleteOption } from './utils/typed';
 import type { PickerExposes } from '~/components/Picker/src/composables/useExposes';
 import useLocaleLang from '~/utils/useLocaleLang';
 
 export default defineComponent({
   name: `${useNamespace()}AutoComplete`,
   desc: '根据输入内容提供对应的输入建议',
-  descLocales: { en: "Provide suggestions through `options` and filter them in the `search` handler. Supply initial options before input if suggestions should appear on focus. The demo also compares `size` and `input-style`." },
+  descLocales: {
+    en: 'Provides and selects suggestions for typed text.',
+  },
   components: {
     HPicker,
     HPickerFitContentInput,
@@ -60,6 +75,7 @@ export default defineComponent({
     }: HorizonWebSetupContext<AutoCompleteEmits, AutoCompleteSlots, AutoCompleteExposes>,
   ) {
     const classHelper = new ComponentClassBlock('auto-complete');
+    const listboxId = `${useId()}-listbox`;
 
     const {
       size,
@@ -120,7 +136,9 @@ export default defineComponent({
     watch(
       modelValue,
       newValue => {
-        if (!isEqualLoose(newValue, modelValueProp?.value)) {
+        if (
+          normalizeAutoCompleteValue(newValue) !== normalizeAutoCompleteValue(modelValueProp?.value)
+        ) {
           emit('update:modelValue', newValue);
 
           void nextTick(() => {
@@ -144,6 +162,8 @@ export default defineComponent({
       if (!val) {
         focusedOptionValue.value = undefined;
       }
+
+      void nextTick(syncComboboxAria);
     });
 
     provide(HAutoCompletePopperVisibleInjectKey, popperVisible);
@@ -159,22 +179,19 @@ export default defineComponent({
     const isDuringComposition = ref(false);
 
     const visibleOptions = computed(() => {
-      const options = Array.from(optionList.value.values());
-      if (!props.selectedOptionOrderToTop || !popperVisible.value || isNil(modelValue.value)) {
-        return options;
-      }
-      return options.toSorted((left, right) => {
-        const leftSelected = isEqualLoose(left.value ?? left.label, modelValue.value);
-        const rightSelected = isEqualLoose(right.value ?? right.label, modelValue.value);
-        return Number(rightSelected) - Number(leftSelected);
-      });
+      const options = orderAutoCompleteOptions(
+        normalizedOptions.value,
+        modelValue.value,
+        props.selectedOptionOrderToTop && popperVisible.value,
+      );
+      return options.map(option => ({ ...option, uuid: option.id }));
     });
 
     provide(HAutoCompleteVisibleOptionsInjectKey, visibleOptions);
 
     const handleInput = (evt: Event) => {
       const target = safelyGetEventTarget(evt) as HTMLInputElement;
-      delInputDebounced(target.value);
+      inputScheduler.schedule(target.value);
     };
 
     function delInput(value: string, switchPopperVisible = true) {
@@ -188,7 +205,17 @@ export default defineComponent({
       });
     }
 
-    const delInputDebounced = debounce(delInput, inputEmitFrequencyProp.value);
+    let inputScheduler = createAutoCompleteInputScheduler({
+      delay: inputEmitFrequencyProp.value,
+      onCommit: delInput,
+    });
+
+    watch(inputEmitFrequencyProp, delay => {
+      inputScheduler.destroy();
+      inputScheduler = createAutoCompleteInputScheduler({ delay, onCommit: delInput });
+    });
+
+    onBeforeUnmount(() => inputScheduler.destroy());
 
     function onCompositionStart() {
       isDuringComposition.value = true;
@@ -200,7 +227,8 @@ export default defineComponent({
 
     function handleClear() {
       modelValue.value = '';
-      delInputDebounced('', false);
+      inputScheduler.cancel();
+      delInput('', false);
       emit('clear');
     }
 
@@ -223,6 +251,10 @@ export default defineComponent({
       pickerDomRef.value?.focus();
     }
 
+    function blurInput() {
+      pickerDomRef.value?.blur();
+    }
+
     function judgeWhetherInputCanFocus(panelVisible = true) {
       void nextTick(() => {
         focusInput();
@@ -237,17 +269,8 @@ export default defineComponent({
     /**
      * collect options
      */
-    const optionList = computed(
-      () =>
-        new Map<HAutoCompleteOptionWithUuid['label'], HAutoCompleteOptionWithUuid>(
-          optionsProp.value.map(opt => [
-            opt.label,
-            {
-              ...opt,
-              uuid: nanoid(),
-            },
-          ]),
-        ),
+    const normalizedOptions = computed(() =>
+      normalizeAutoCompleteOptions(optionsProp.value, listboxId.replaceAll(':', '')),
     );
 
     watch(popperVisible, val => {
@@ -278,11 +301,7 @@ export default defineComponent({
     watch(
       () => modelValueProp?.value,
       val => {
-        if (isNil(val)) {
-          modelValue.value = '';
-        } else {
-          modelValue.value = val;
-        }
+        modelValue.value = normalizeAutoCompleteValue(val);
       },
       {
         immediate: true,
@@ -303,26 +322,20 @@ export default defineComponent({
     >();
     provide(HAutoCompleteFocusedOptionValueInjectKey, focusedOptionValue);
 
-    const focusOnOptionByKeyboard = throttle((evt: KeyboardEvent) => {
+    function focusOnOptionByKeyboard(evt: KeyboardEvent) {
       const options = visibleOptions.value;
-
-      let index = options.findIndex(value => value.label === focusedOptionValue.value);
-
-      if (evt.key === 'ArrowUp') {
-        index -= 1;
-      } else if (evt.key === 'ArrowDown') {
-        index += 1;
-      }
-
-      const aimIndex = index;
-      index = clamp(index, 0, Math.max(options.length - 1, 0));
-
-      focusedOptionValue.value = options[index]?.label;
-
-      if (aimIndex > index && !loadingProp.value) {
+      const currentIndex = options.findIndex(value => value.label === focusedOptionValue.value);
+      const result = resolveAutoCompleteNavigation(
+        options.length,
+        currentIndex,
+        evt.key === 'ArrowUp' ? -1 : 1,
+      );
+      focusedOptionValue.value = options[result.index]?.label;
+      if (result.reachedEnd && !loadingProp.value) {
         emit('optionListReachBottom', evt);
       }
-    }, 100);
+      void nextTick(syncComboboxAria);
+    }
 
     function handleKeydown(evt: KeyboardEvent) {
       if (['ArrowUp', 'ArrowDown'].includes(evt.key) && popperVisible.value) {
@@ -342,7 +355,7 @@ export default defineComponent({
             );
 
             if (focusedOption) {
-              pickOption(focusedOption.value ?? focusedOption.label);
+              pickOption(focusedOption.value);
             }
           }
         } else {
@@ -361,6 +374,27 @@ export default defineComponent({
 
     provide(HAutoCompleteMouseOverOptionInjectKey, onMouseOverOption);
 
+    function syncComboboxAria() {
+      const input = pickerDomRef.value?.wrapperDom()?.querySelector('input');
+      if (!input) return;
+      const activeIndex = visibleOptions.value.findIndex(
+        option => option.label === focusedOptionValue.value,
+      );
+      const aria = getSelectComboboxAria({
+        listboxId,
+        open: popperVisible.value,
+        activeOptionId: activeIndex < 0 ? undefined : visibleOptions.value[activeIndex]?.id,
+        disabled: isDisabled.value,
+        invalid: Boolean(nFormError?.value) || inputStatusProp.value === 'error',
+      });
+      Object.entries(aria).forEach(([name, value]) => {
+        if (value === undefined) input.removeAttribute(name);
+        else input.setAttribute(name, String(value));
+      });
+    }
+
+    watch([visibleOptions, isDisabled, inputStatusProp], () => void nextTick(syncComboboxAria));
+
     /**
      * normal provide
      */
@@ -371,6 +405,11 @@ export default defineComponent({
 
     expose({
       changePanelVisible: manualControlPopperVisible,
+      focus: focusInput,
+      blur: blurInput,
+      open: () => manualControlPopperVisible(true),
+      close: () => manualControlPopperVisible(false),
+      clear: handleClear,
     });
 
     return () => (
@@ -388,7 +427,9 @@ export default defineComponent({
         placement={placementProp.value}
         toBody={toBodyProp.value}
         placeholder={placeholderProp?.value ?? (useLocaleLang('input.placeholder').value as string)}
-        popperCanBeDisplayed={hidePanelWhenEmptyListProp.value ? optionList.value.size > 0 : true}
+        popperCanBeDisplayed={
+          hidePanelWhenEmptyListProp.value ? normalizedOptions.value.length > 0 : true
+        }
         emptyText={emptyTextProp?.value}
         destroyOnHide={destroyOnHideProp.value}
         fitInputWidth={fitInputWidthProp.value}
@@ -427,7 +468,7 @@ export default defineComponent({
           pickerContainer: slots.pickerContainer,
           pickerInner: slots.pickerInner,
           picker: slots.picker,
-          default: () => <VirtualScrollList ref={virtualScrollListDomRef} />,
+          default: () => <VirtualScrollList ref={virtualScrollListDomRef} listboxId={listboxId} />,
         }}
       </HPicker>
     );

@@ -25,7 +25,9 @@ export default class AutoCompleteHelper<
   }>;
   public slots?: Partial<SetupContext<{}, AutoCompleteSlots>['slots']>;
   public wrapper!: VueWrapper<any, any>;
-  public element!: VueWrapper<HorizonWebComponentInstance<typeof HAutoComplete, AutoCompleteExposes>>;
+  public element!: VueWrapper<
+    HorizonWebComponentInstance<typeof HAutoComplete, AutoCompleteExposes>
+  >;
   public picker!: VueWrapper<HorizonWebComponentInstance<typeof HPicker, PickerExposes>>;
 
   constructor(

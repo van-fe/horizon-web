@@ -34,6 +34,8 @@
     "./styles/affix-variables": "./styles/components/affix/variables.scss",
     "./styles/anchor": "./styles/components/anchor/index.scss",
     "./styles/anchor-variables": "./styles/components/anchor/variables.scss",
+    "./styles/auto-complete": "./styles/components/auto-complete/index.scss",
+    "./styles/auto-complete-variables": "./styles/components/auto-complete/variables.scss",
     "./styles/avatar": "./styles/components/avatar/index.scss",
     "./styles/avatar-variables": "./styles/components/avatar/variables.scss",
     "./styles/backtop": "./styles/components/backtop/index.scss",

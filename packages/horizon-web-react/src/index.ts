@@ -1,6 +1,7 @@
 import '@aurora/theme/styles/foundations';
 import '@aurora/theme/styles/affix';
 import '@aurora/theme/styles/anchor';
+import '@aurora/theme/styles/auto-complete';
 import '@aurora/theme/styles/alert';
 import '@aurora/theme/styles/avatar';
 import '@aurora/theme/styles/backtop';
@@ -54,6 +55,7 @@ export * from './components/Button';
 export * from './components/Affix';
 export * from './components/Application';
 export * from './components/Anchor';
+export * from './components/AutoComplete';
 export * from './components/Alert';
 export * from './components/Avatar';
 export * from './components/Backtop';

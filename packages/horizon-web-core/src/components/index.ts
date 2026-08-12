@@ -1,4 +1,5 @@
 export * from './Affix';
+export * from './AutoComplete';
 export * from './Application';
 export * from './Anchor';
 export * from './Backtop';

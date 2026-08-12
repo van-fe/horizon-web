@@ -17,7 +17,14 @@ export default defineComponent({
   components: {
     SimpleOption,
   },
-  setup() {
+  props: {
+    /** 列表框 id。 @en Listbox id. */
+    listboxId: {
+      type: String,
+      required: true,
+    },
+  },
+  setup(props) {
     const classHelper = new ComponentClassBlock('auto-complete');
     const parentProps = inject(HAutoCompletePropsInjectKey)!;
     const visibleOptions = inject(HAutoCompleteVisibleOptionsInjectKey)!;
@@ -31,33 +38,40 @@ export default defineComponent({
     provide(HAutoCompleteVirtualScrollListIsScrollingInjectKey, isScrolling);
 
     return () => (
-      <HVirtualScroller
-        ref={scrollerDomRef}
-        scrollerMaxHeight={parseFloat(parentProps.optionListMaxHeight.toString())}
-        items={visibleOptions.value}
-        class={classHelper.e('scrollbar')}
-        minItemSize={parentProps.descriptionPosition === 'right' ? 40 : 57}
-        expandWrapperByChildren={parentProps.expandPanelByChildren}
-        keyField="uuid"
-        size="small"
-        onScrollBegin={() => (isScrolling.value = true)}
-        onScrollStop={() => (isScrolling.value = false)}
-      >
-        {{
-          default: (row: { item: HAutoCompleteOptionWithUuid; index: number; active: boolean }) => (
-            <HVirtualScrollerItem item={row.item} active={row.active} index={row.index}>
-              <SimpleOption
-                uuid={row.item.uuid}
-                key={row.item.uuid}
-                item={row.item}
-                label={row.item.label}
-                value={row.item.value}
-                description={row.item.description}
-              />
-            </HVirtualScrollerItem>
-          ),
-        }}
-      </HVirtualScroller>
+      <div id={props.listboxId} role="listbox">
+        <HVirtualScroller
+          ref={scrollerDomRef}
+          scrollerMaxHeight={parseFloat(parentProps.optionListMaxHeight.toString())}
+          items={visibleOptions.value}
+          class={classHelper.e('scrollbar')}
+          minItemSize={parentProps.descriptionPosition === 'right' ? 40 : 57}
+          expandWrapperByChildren={parentProps.expandPanelByChildren}
+          keyField="uuid"
+          size="small"
+          onScrollBegin={() => (isScrolling.value = true)}
+          onScrollStop={() => (isScrolling.value = false)}
+        >
+          {{
+            default: (row: {
+              item: HAutoCompleteOptionWithUuid;
+              index: number;
+              active: boolean;
+            }) => (
+              <HVirtualScrollerItem item={row.item} active={row.active} index={row.index}>
+                <SimpleOption
+                  uuid={row.item.uuid}
+                  key={row.item.uuid}
+                  item={row.item}
+                  index={row.index}
+                  label={row.item.label}
+                  value={row.item.value}
+                  description={row.item.description}
+                />
+              </HVirtualScrollerItem>
+            ),
+          }}
+        </HVirtualScroller>
+      </div>
     );
   },
 });

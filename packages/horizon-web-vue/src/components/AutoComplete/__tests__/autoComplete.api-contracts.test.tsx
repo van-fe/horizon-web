@@ -6,6 +6,7 @@ import HPicker from '../../Picker/src/Picker';
 import HPickerInput from '../../Picker/src/components/PickerInput';
 import HVirtualScroller from '../../VirtualScroller/src/VirtualScroller';
 import HTooltip from '../../Tooltip/src/Tooltip';
+import SimpleOption from '../src/components/SimpleOption';
 import AutoCompleteHelper from './autoCompleteHelper';
 import { sleep } from '~/utils/tools';
 import { useAutoCompleteEmits } from '../src/composables/useEmits';
@@ -95,6 +96,11 @@ describe('AutoComplete public API contracts', () => {
         .findAllComponents(HTooltip)
         .some(tooltip => tooltip.props('showAfter') === 11 && tooltip.props('hideAfter') === 22),
     ).toBe(true);
+    const tooltips = instance.wrapper.findComponent(SimpleOption).findAllComponents(HTooltip);
+    expect(tooltips[0].vm.$slots.content?.()[0]?.children).toBe('Alpha');
+    expect(tooltips[0].vm.$slots.default?.()[0]?.children).toEqual(['Alpha']);
+    expect(tooltips[1].vm.$slots.content?.()[0]?.children).toBe('First option');
+    expect(tooltips[1].vm.$slots.default?.()[0]?.children).toEqual(['First option']);
   });
 
   test('debounces real input and emits update:modelValue, focus, blur and clear', async () => {
@@ -135,6 +141,27 @@ describe('AutoComplete public API contracts', () => {
     expect(update).toHaveBeenLastCalledWith('');
   });
 
+  test('replaces a pending scheduler when the debounce frequency changes', async () => {
+    const search = vi.fn();
+    const wrapper = mount(HAutoComplete, {
+      props: {
+        options: suggestions,
+        inputEmitFrequency: 100,
+        toBody: false,
+        onSearch: search,
+      },
+      attachTo: document.body,
+    });
+    const input = wrapper.get('input');
+    await input.setValue('stale');
+    await wrapper.setProps({ inputEmitFrequency: 0 });
+    await input.setValue('fresh');
+    await sleep(10);
+    expect(search).toHaveBeenLastCalledWith('fresh');
+    await sleep(110);
+    expect(search).not.toHaveBeenCalledWith('stale');
+  });
+
   test('emits optionListReachBottom through real keyboard traversal unless loading', async () => {
     const reachBottom = vi.fn();
     const wrapper = mount(HAutoComplete, {
@@ -168,6 +195,21 @@ describe('AutoComplete public API contracts', () => {
     expect(instance.getAllComponents()[0].text()).toContain('Beta');
   });
 
+  test('uses label fallback for options without a value or description', async () => {
+    const onSelect = vi.fn();
+    const instance = new AutoCompleteHelper({
+      options: [{ label: 'Label only' }],
+      modelValue: 'Label only',
+      onSelect,
+    });
+    await instance.open(0);
+    const option = instance.getAllComponents()[0];
+    expect(option.attributes('aria-selected')).toBe('true');
+    expect(option.find('.h-auto-complete-option__description').exists()).toBe(false);
+    await option.trigger('click');
+    expect(onSelect).toHaveBeenLastCalledWith('Label only');
+  });
+
   test('renders panel header/footer and picker inner/container slots', async () => {
     const inner = new AutoCompleteHelper(
       { options: suggestions },
@@ -187,6 +229,45 @@ describe('AutoComplete public API contracts', () => {
     await instance.open(0);
     expect(instance.wrapper.get('.panel-header-slot').text()).toBe('Header');
     expect(instance.wrapper.get('.panel-footer-slot').text()).toBe('Footer');
+  });
+
+  test('exposes semantic commands, scoped options and combobox aria state', async () => {
+    const wrapper = mount(HAutoComplete, {
+      props: { options: suggestions, modelValue: 'a', toBody: false },
+      slots: {
+        option: ({ option, active, selected }: any) => (
+          <span class="scoped-option">
+            {option.label}:{String(active)}:{String(selected)}
+          </span>
+        ),
+      },
+      attachTo: document.body,
+    });
+    const component = wrapper.vm as any;
+    const input = wrapper.get('input');
+
+    component.open();
+    await nextTick();
+    await nextTick();
+    expect(input.attributes('role')).toBe('combobox');
+    expect(input.attributes('aria-expanded')).toBe('true');
+    expect(wrapper.get('[role="listbox"]').attributes('id')).toBe(
+      input.attributes('aria-controls'),
+    );
+    expect(wrapper.get('.scoped-option').text()).toContain('Alpha:false:true');
+
+    component.focus();
+    await nextTick();
+    expect(document.activeElement).toBe(input.element);
+    component.blur();
+    await nextTick();
+    expect(document.activeElement).not.toBe(input.element);
+    component.clear();
+    await nextTick();
+    expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual(['']);
+    component.close();
+    await sleep(300);
+    expect(input.attributes('aria-expanded')).toBe('false');
   });
 
   test('validates all public emit payload boundaries', () => {
