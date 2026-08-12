@@ -29,10 +29,21 @@ describe('InputNumber hook boundaries', () => {
     expect(toInputNumberEmitValue('2.5', false)).toBe('2.5');
     expect(toInputNumberEmitValue('not-a-number', false)).toBeNull();
     expect(
-      toInputNumberEmitValue({ toString: () => { throw new TypeError('invalid numeric value'); } } as unknown as InputNumberValue, false),
+      toInputNumberEmitValue(
+        {
+          toString: () => {
+            throw new TypeError('invalid numeric value');
+          },
+        } as unknown as InputNumberValue,
+        false,
+      ),
     ).toBeNull();
     expect(
-      toInputNumberDecimal({ toString: () => { throw new TypeError('invalid decimal'); } } as unknown as InputNumberValue),
+      toInputNumberDecimal({
+        toString: () => {
+          throw new TypeError('invalid decimal');
+        },
+      } as unknown as InputNumberValue),
     ).toBeNull();
   });
 
@@ -131,14 +142,17 @@ describe('InputNumber hook boundaries', () => {
     vi.useFakeTimers();
     const modelValue = ref(0);
     const wrapper = mount(() => (
-      <HInputNumber
-        v-model={modelValue.value}
-        enableLangPress={true}
-        langPressFrequency={10}
-      />
+      <HInputNumber v-model={modelValue.value} enableLangPress={true} langPressFrequency={10} />
     ));
 
-    await wrapper.find('.h-input-number__step-up').trigger('mousedown');
+    wrapper.find('.h-input-number__step-up').element.dispatchEvent(
+      new PointerEvent('pointerdown', {
+        bubbles: true,
+        button: 0,
+        isPrimary: true,
+        pointerId: 6,
+      }),
+    );
     wrapper.unmount();
     await vi.advanceTimersByTimeAsync(1000);
 

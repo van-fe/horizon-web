@@ -22,6 +22,7 @@ export * from './Empty';
 export * from './FloatButton';
 export * from './Form';
 export * from './Input';
+export * from './InputNumber';
 export * from './Link';
 export * from './Layout';
 export * from './Hover';

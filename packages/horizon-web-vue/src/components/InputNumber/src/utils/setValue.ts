@@ -1,12 +1,11 @@
-import { isDefined, isNil } from '@aurora/utils';
-import type { InputNumberProps } from '../composables/useProps';
-import { error } from '~/utils/useLog';
 import { Decimal } from 'decimal.js';
 import { ref } from 'vue';
+import { areInputNumberValuesEqual, verifyInputNumberValue } from '@aurora/core';
+import type { InputNumberProps } from '../composables/useProps';
 
+/** Vue 响应式边界适配；数值规则统一由 Core 实现。 @en Vue reactive boundary over Core numeric rules. */
 export default class ValueHandler {
   public props: InputNumberProps;
-
   public minRef = ref(new Decimal(-Infinity));
   public maxRef = ref(new Decimal(Infinity));
 
@@ -21,65 +20,17 @@ export default class ValueHandler {
   }
 
   public verifyValue<T extends Decimal.Value | null | undefined>(value: T, precision?: number) {
-    if (value === '' || isNil(value)) {
-      return value;
-    }
-
-    let res: Decimal.Value = new Decimal(value || 0);
-
-    if (Number.isNaN(value) || res.isNaN()) {
-      return null;
-    }
-
-    precision = precision || this.props.precision;
-
-    let max, min;
-
-    if (isDefined(precision)) {
-      max = new Decimal(this.maxRef.value.toFixed(precision, Decimal.ROUND_DOWN));
-      min = new Decimal(this.minRef.value.toFixed(precision, Decimal.ROUND_DOWN));
-    } else {
-      max = this.maxRef.value;
-      min = this.minRef.value;
-    }
-
-    if (max.lessThan(min)) {
-      error('inputNumber', 'max is less than min! So the limit of min max range will not run.');
-    } else {
-      res = res.clamp(min, max);
-    }
-
-    if (this.props.stepStrictly) {
-      res = res.toNearest(this.props.step);
-    }
-
-    if (isDefined(precision)) {
-      res = res.toFixed(precision);
-
-      if (!this.props.stringMode) {
-        res = new Decimal(res);
-      }
-    }
-
-    return res;
+    return verifyInputNumberValue(value, {
+      max: this.props.max,
+      min: this.props.min,
+      precision: precision ?? this.props.precision,
+      step: this.props.step,
+      stepStrictly: this.props.stepStrictly,
+      stringMode: this.props.stringMode,
+    });
   }
 
   static maybeNumberIsEqual<T extends Decimal.Value | null | undefined>(a: T, b: T) {
-    if (isNil(a)) {
-      if (isNil(b)) {
-        return true;
-      } else return b === '';
-    } else {
-      if (isNil(b)) {
-        return a === '';
-      } else if (b === '') {
-        return a === b;
-      } else {
-        const aRaw = Decimal.isDecimal(a) ? a.toString() : a.toString();
-        const bRaw = Decimal.isDecimal(b) ? b.toString() : b.toString();
-
-        return aRaw === bRaw;
-      }
-    }
+    return areInputNumberValuesEqual(a, b);
   }
 }

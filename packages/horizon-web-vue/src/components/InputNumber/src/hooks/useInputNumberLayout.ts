@@ -15,7 +15,9 @@ export function useInputNumberLayout(props: Readonly<InputNumberProps>, slots: S
   const hasPrefix = computed(() => !!(slots.prefix || props.prefixIcon));
   const hasSuffix = computed(() => !!(slots.suffix || props.suffixIcon));
   const prefixWrapperExist = computed(
-    () => hasPrefix.value || (props.controlsPosition === 'between' && props.controls && !props.readonly),
+    () =>
+      hasPrefix.value ||
+      (props.controlsPosition === 'between' && props.controls && !props.readonly),
   );
   const suffixWrapperExist = computed(
     () =>

@@ -1,14 +1,16 @@
-@use '../../../../../styles/mixins';
+@use '../../../mixins';
+
+/* stylelint-disable nesting-selector-no-missing-scoping-root -- BEM mixins provide the generated component root. */
 
 @include mixins.b('input-number') {
   @include mixins.m('normal') {
     @include mixins.em('group', 'inner', false) {
       color: mixins.css-variable('input-number', 'color');
+      caret-color: mixins.css-variable('input-number', 'color', 'inner', 'caret');
       background: mixins.css-variable('input-number', 'background');
       border: mixins.css-variable('input-number', 'border');
       border-radius: mixins.css-variable('input-number', 'border-radius');
       transition: mixins.css-variable('input-number', 'transition', 'border-color');
-      caret-color: mixins.css-variable('input-number', 'color', 'inner', 'caret');
 
       @include mixins.has('prepend') {
         border-top-left-radius: 0;
@@ -108,15 +110,27 @@
 
       @include mixins.be('input-number', 'step-wrapper', false) {
         @include mixins.is('left') {
-          border-right-color: mixins.css-variable('input-number', 'border-color', 'disabled') !important;
+          border-right-color: mixins.css-variable(
+            'input-number',
+            'border-color',
+            'disabled'
+          ) !important;
         }
 
         @include mixins.is('right') {
-          border-left-color: mixins.css-variable('input-number', 'border-color', 'disabled') !important;
+          border-left-color: mixins.css-variable(
+            'input-number',
+            'border-color',
+            'disabled'
+          ) !important;
         }
 
         @include mixins.e('step-down') {
-          border-top-color: mixins.css-variable('input-number', 'border-color', 'disabled') !important;
+          border-top-color: mixins.css-variable(
+            'input-number',
+            'border-color',
+            'disabled'
+          ) !important;
         }
 
         @include mixins.e('step-item') {
@@ -145,3 +159,5 @@
     }
   }
 }
+
+/* stylelint-enable nesting-selector-no-missing-scoping-root */

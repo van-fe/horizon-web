@@ -97,9 +97,8 @@ export function useInputNumberValue(
   function step(direction: InputNumberStepDirection) {
     userInput.value = null;
     const currentValue = new Decimal(localValue.value || 0);
-    const nextValue = direction === 'up'
-      ? currentValue.add(props.step)
-      : currentValue.sub(props.step);
+    const nextValue =
+      direction === 'up' ? currentValue.add(props.step) : currentValue.sub(props.step);
 
     localValue.value = verifyValue(nextValue);
     emit('update:modelValue', toEmittedValue(localValue.value));
@@ -125,7 +124,10 @@ export function useInputNumberValue(
     () => valueHandler.updateMinMax(),
     { immediate: true },
   );
-  watch(() => props.precision, () => setCurrentValue(localValue.value));
+  watch(
+    () => props.precision,
+    () => setCurrentValue(localValue.value),
+  );
 
   return {
     canStep,

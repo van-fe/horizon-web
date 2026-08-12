@@ -46,6 +46,7 @@ packages/docs/.vitepress/generated/
 .vscode
 
 # test artifacts
+.vitest-attachments/
 packages/horizon-web-vue/.vitest-attachments/
 packages/horizon-web-core/.vitest-attachments/
 packages/horizon-web-react/.vitest-attachments/

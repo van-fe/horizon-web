@@ -1,4 +1,4 @@
-@use '../../../../styles/mixins';
+@use '../../mixins';
 
 @include mixins.b('input-number') {
   @include mixins.e('group') {

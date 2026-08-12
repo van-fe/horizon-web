@@ -39,7 +39,7 @@ export function useInputNumberStepper(
     applyStep(direction === 'up' ? 'up' : 'down');
   }
 
-  function handleLongPress(event: MouseEvent, direction: InputNumberStepDirection) {
+  function handleLongPress(event: PointerEvent, direction: InputNumberStepDirection) {
     if (!props.enableLangPress || isStepBlocked(direction)) return;
     longPress.start(event, () => applyStep(direction));
   }

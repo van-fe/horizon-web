@@ -1,13 +1,15 @@
-@use '../../../../../styles/mixins';
+@use '../../../mixins';
+
+/* stylelint-disable nesting-selector-no-missing-scoping-root -- BEM mixins provide the generated component root. */
 
 @include mixins.b('input-number') {
   @include mixins.m('no-border') {
     @include mixins.em('group', 'inner', false) {
       color: mixins.css-variable('input-number', 'color', 'no-border');
+      caret-color: mixins.css-variable('input-number', 'color', 'inner', 'caret');
       background: mixins.css-variable('input-number', 'background', 'no-border');
       border: mixins.css-variable('input-number', 'border', 'no-border');
       border-radius: mixins.css-variable('input-number', 'border-radius');
-      caret-color: mixins.css-variable('input-number', 'color', 'inner', 'caret');
 
       @include mixins.has('prepend') {
         border-top-left-radius: 0;
@@ -44,7 +46,13 @@
           border-color: mixins.css-variable('input-number', 'border-color', 'no-border', 'hover');
 
           &::placeholder {
-            color: mixins.css-variable('input-number', 'color', 'placeholder', 'no-border', 'hover');
+            color: mixins.css-variable(
+              'input-number',
+              'color',
+              'placeholder',
+              'no-border',
+              'hover'
+            );
           }
         }
 
@@ -54,7 +62,13 @@
           border-color: mixins.css-variable('input-number', 'border-color', 'no-border', 'press');
 
           &::placeholder {
-            color: mixins.css-variable('input-number', 'color', 'placeholder', 'no-border', 'press');
+            color: mixins.css-variable(
+              'input-number',
+              'color',
+              'placeholder',
+              'no-border',
+              'press'
+            );
           }
         }
 
@@ -64,7 +78,13 @@
           border-color: mixins.css-variable('input-number', 'border-color', 'no-border', 'focus');
 
           &::placeholder {
-            color: mixins.css-variable('input-number', 'color', 'placeholder', 'no-border', 'focus');
+            color: mixins.css-variable(
+              'input-number',
+              'color',
+              'placeholder',
+              'no-border',
+              'focus'
+            );
           }
         }
       }
@@ -94,7 +114,13 @@
 
         @include mixins.e('inner') {
           &::placeholder {
-            color: mixins.css-variable('input-number', 'color', 'placeholder', 'no-border', 'disabled');
+            color: mixins.css-variable(
+              'input-number',
+              'color',
+              'placeholder',
+              'no-border',
+              'disabled'
+            );
           }
         }
       }
@@ -103,7 +129,14 @@
 
   @include mixins.parallel-modifier('no-border', 'large') {
     @include mixins.e('inner') {
-      padding: mixins.css-variable('input-number', 'spacing', 'inner', 'no-border', 'padding', 'large');
+      padding: mixins.css-variable(
+        'input-number',
+        'spacing',
+        'inner',
+        'no-border',
+        'padding',
+        'large'
+      );
     }
   }
 
@@ -115,7 +148,16 @@
 
   @include mixins.parallel-modifier('no-border', 'small') {
     @include mixins.e('inner') {
-      padding: mixins.css-variable('input-number', 'spacing', 'inner', 'no-border', 'padding', 'small');
+      padding: mixins.css-variable(
+        'input-number',
+        'spacing',
+        'inner',
+        'no-border',
+        'padding',
+        'small'
+      );
     }
   }
 }
+
+/* stylelint-enable nesting-selector-no-missing-scoping-root */

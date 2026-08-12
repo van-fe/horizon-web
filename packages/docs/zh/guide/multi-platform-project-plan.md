@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B25 Form/FormItem 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B26 InputNumber 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -698,6 +698,18 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DS-B25-001 | Done | Form canonical Sass、spacing 与变量入口迁入 `@aurora/theme`，Vue 使用包导出薄代理，React 使用同源样式；补充 helper 无障碍隐藏内容并保持 namespace 隔离 |
 | DOC-B25-001 | Done | Form 中英文 React 页面、3 个独立 TSX 示例与双语 React 侧边栏入口完成；58 组 Vue/React 契约生成且两套组件文档保持 renderer 原生表达 |
 | QA-B25-001 | Done | Core 174、Web Core Node 10/Chromium 53、React Chromium 192、Vue Chromium 2322 项（2321 通过、1 项预期失败）全部通过；Vue 总覆盖率为 97.95% / 95.08% / 97.64% / 98.25%；Vue Node 23、resolver 12、colors 1、upload adapters 66 项通过；五包构建、文档站与 Vue/React/SSR/tree-shaking 消费工程通过 |
+
+#### M6-B26 第二十六批实施记录（2026-08-12）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B26-001 | Done | InputNumber 的公共 props、默认值、枚举、校验器、事件、区域、命令及 manifest 迁入 `@aurora/core`；输入清洗、局部数字归一化、Decimal 精度、边界校验、步进、格式化和 string mode 算法只定义一次 |
+| WEB-B26-001 | Done | 在同名 Web Core 目录提供 Pointer 长按控制器，统一首次延迟、重复间隔、owner document 监听以及 pointerup、pointercancel 和销毁清理，并以真实 Chromium 覆盖 |
+| VUE-B26-001 | Done | Vue props/emits/slots/exposes 类型化消费公共契约，数值与输入工具改为 Core 薄适配，长按改用 Web Core Pointer 控制器；保留历史 prop 命名、Decimal exposes、键盘、滚轮、clear 和三套视觉变体 |
+| REACT-B26-001 | Done | 完成 React InputNumber，支持受控与非受控值、number/string mode、precision、formatter/parser、两种 controls 布局、键盘/滚轮/长按、Form 上下文、spinbutton ARIA、原生 input 属性与命令 ref |
+| DS-B26-001 | Done | InputNumber canonical Sass、三套主题、group 与变量入口迁入 `@aurora/theme`，Vue 使用包导出薄代理并删除 renderer 私有样式源，React 使用同源样式与语义 button controls |
+| DOC-B26-001 | Done | InputNumber 中英文 React 页面、3 个独立 TSX 示例与双语 React 侧边栏入口完成；59 组 Vue/React 契约生成且两套组件文档保持 renderer 原生表达 |
+| QA-B26-001 | Done | Core 178、Web Core Node 10/Chromium 55、React Chromium 199、Vue Chromium 2322 项（2321 通过、1 项预期失败）全部通过；Vue 总覆盖率为 97.95% / 95.08% / 97.62% / 98.25%；Vue Node 23、resolver 12、colors 1、upload adapters 66 项通过；五包构建、Sass、文档站、Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界与旧组件包名移除约束通过 |
 
 ### 批次 C：浮层与容器
 

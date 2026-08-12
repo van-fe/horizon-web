@@ -222,8 +222,15 @@ describe('InputNumber.tsx props', () => {
     expect(modelValue.value).eq(1);
     await input.trigger('keydown', { code: 'ArrowLeft' });
     expect(modelValue.value).eq(0);
-    await wrapper.find('.h-input-number__step-minus').trigger('mousedown');
-    await wrapper.find('.h-input-number__step-minus').trigger('mouseup');
+    wrapper.find('.h-input-number__step-minus').element.dispatchEvent(
+      new PointerEvent('pointerdown', {
+        bubbles: true,
+        button: 0,
+        isPrimary: true,
+        pointerId: 1,
+      }),
+    );
+    document.dispatchEvent(new PointerEvent('pointerup', { pointerId: 1 }));
   });
 
   test('step controls remain inert at both bounds and while disabled', async () => {
@@ -234,7 +241,14 @@ describe('InputNumber.tsx props', () => {
 
     await wrapper.get('.h-input-number__step-up').trigger('click');
     await wrapper.get('.h-input-number__step-down').trigger('click');
-    await wrapper.get('.h-input-number__step-up').trigger('mousedown');
+    wrapper.get('.h-input-number__step-up').element.dispatchEvent(
+      new PointerEvent('pointerdown', {
+        bubbles: true,
+        button: 0,
+        isPrimary: true,
+        pointerId: 2,
+      }),
+    );
     expect(modelValue.value).toBe(1);
 
     const disabledValue = ref(0);
@@ -312,25 +326,46 @@ describe('InputNumber.tsx props', () => {
     const increaseBtn = wrapper.find('.h-input-number__step-up');
     const decreaseBtn = wrapper.find('.h-input-number__step-down');
 
-    await increaseBtn.trigger('mousedown');
+    increaseBtn.element.dispatchEvent(
+      new PointerEvent('pointerdown', {
+        bubbles: true,
+        button: 0,
+        isPrimary: true,
+        pointerId: 3,
+      }),
+    );
     await sleep(1200);
-    await increaseBtn.trigger('mouseup');
+    document.dispatchEvent(new PointerEvent('pointerup', { pointerId: 3 }));
 
     expect(modelValue.value).eq(5);
 
     langPressFrequency.value = 100;
 
-    await increaseBtn.trigger('mousedown');
+    increaseBtn.element.dispatchEvent(
+      new PointerEvent('pointerdown', {
+        bubbles: true,
+        button: 0,
+        isPrimary: true,
+        pointerId: 4,
+      }),
+    );
 
     await sleep(800);
 
-    await increaseBtn.trigger('mouseleave');
+    document.dispatchEvent(new PointerEvent('pointercancel', { pointerId: 4 }));
 
     expect(modelValue.value).eq(8);
 
-    await decreaseBtn.trigger('mousedown');
+    decreaseBtn.element.dispatchEvent(
+      new PointerEvent('pointerdown', {
+        bubbles: true,
+        button: 0,
+        isPrimary: true,
+        pointerId: 5,
+      }),
+    );
     await sleep(1200);
-    await decreaseBtn.trigger('mouseup');
+    document.dispatchEvent(new PointerEvent('pointerup', { pointerId: 5 }));
 
     expect(modelValue.value).eq(1);
   });

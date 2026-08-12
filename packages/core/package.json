@@ -18,7 +18,8 @@
     "types"
   ],
   "dependencies": {
-    "async-validator": "^4.2.5"
+    "async-validator": "^4.2.5",
+    "decimal.js": "^10.4.3"
   },
   "sideEffects": false,
   "scripts": {

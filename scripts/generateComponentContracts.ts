@@ -34,6 +34,7 @@ import {
   formItemManifest,
   formManifest,
   inputManifest,
+  inputNumberManifest,
   gridItemManifest,
   gridManifest,
   hoverManifest,
@@ -99,6 +100,7 @@ const manifests = [
   formManifest,
   formItemManifest,
   inputManifest,
+  inputNumberManifest,
   gridManifest,
   gridItemManifest,
   hoverManifest,
@@ -491,6 +493,26 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
         compositionStart: 'compositionstart',
         compositionUpdate: 'compositionupdate',
         compositionEnd: 'compositionend',
+      },
+    },
+  },
+  InputNumber: {
+    props: {
+      rename: {
+        value: 'modelValue',
+        variant: 'inputStyle',
+        readOnly: 'readonly',
+        longPress: 'enableLangPress',
+        longPressInterval: 'langPressFrequency',
+      },
+      omit: ['defaultValue'],
+    },
+    events: {
+      rename: {
+        valueChange: 'update:modelValue',
+        keyDown: 'keydown',
+        keyPress: 'keypress',
+        keyUp: 'keyup',
       },
     },
   },
@@ -909,6 +931,22 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
   },
   FormItem: {
     regions: { rename: { content: 'children' } },
+  },
+  InputNumber: {
+    events: {
+      rename: {
+        valueChange: 'onValueChange',
+        input: 'onInput',
+        change: 'onChange',
+        focus: 'onFocus',
+        blur: 'onBlur',
+        clear: 'onClear',
+        keyDown: 'onKeyDown',
+        keyPress: 'onKeyPress',
+        keyUp: 'onKeyUp',
+        wheel: 'onWheel',
+      },
+    },
   },
   Checkbox: {
     events: { rename: { change: 'onChange', blur: 'onBlur', click: 'onClick' } },

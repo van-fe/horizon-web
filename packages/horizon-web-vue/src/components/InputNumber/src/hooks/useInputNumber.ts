@@ -16,13 +16,7 @@ export function useInputNumber(props: Readonly<InputNumberProps>, emit: InputNum
     syncInvalidInput: field.syncInvalidInput,
     userInput: field.userInput,
   });
-  const input = useInputNumberInput(
-    props,
-    emit,
-    field,
-    value,
-    () => void notifyFormItem('blur'),
-  );
+  const input = useInputNumberInput(props, emit, field, value, () => void notifyFormItem('blur'));
   const stepper = useInputNumberStepper(props, emit, isDisabled, value);
 
   return {

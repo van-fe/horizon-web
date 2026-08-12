@@ -63,6 +63,12 @@ export interface HorizonWebConfig {
   formLabels: {
     required: string;
   };
+  inputNumberLabels: {
+    placeholder: string;
+    increase: string;
+    decrease: string;
+    clear: string;
+  };
 }
 
 export type HorizonWebProviderProps = PropsWithChildren<
@@ -74,6 +80,7 @@ export type HorizonWebProviderProps = PropsWithChildren<
     | 'drawerLabels'
     | 'floatButtonLabels'
     | 'formLabels'
+    | 'inputNumberLabels'
     | 'linkLabels'
     | 'paginationLabels'
     | 'popconfirmLabels'
@@ -95,6 +102,7 @@ export type HorizonWebProviderProps = PropsWithChildren<
     floatButtonLabels?: Partial<HorizonWebConfig['floatButtonLabels']>;
     backtopLabels?: Partial<HorizonWebConfig['backtopLabels']>;
     formLabels?: Partial<HorizonWebConfig['formLabels']>;
+    inputNumberLabels?: Partial<HorizonWebConfig['inputNumberLabels']>;
   }
 >;
 
@@ -119,6 +127,12 @@ const defaultConfig: HorizonWebConfig = Object.freeze({
   },
   backtopLabels: { button: 'Back to top' },
   formLabels: { required: '{prop} is required.' },
+  inputNumberLabels: {
+    placeholder: 'Enter a number',
+    increase: 'Increase value',
+    decrease: 'Decrease value',
+    clear: 'Clear value',
+  },
 });
 
 export const HorizonWebContext = createContext<HorizonWebConfig>(defaultConfig);
@@ -144,6 +158,7 @@ export function HorizonWebProvider({
   floatButtonLabels,
   backtopLabels,
   formLabels,
+  inputNumberLabels,
   children,
 }: HorizonWebProviderProps): ReactElement {
   const parent = useContext(HorizonWebContext);
@@ -209,6 +224,10 @@ export function HorizonWebProvider({
         ...parent.formLabels,
         ...formLabels,
       },
+      inputNumberLabels: {
+        ...parent.inputNumberLabels,
+        ...inputNumberLabels,
+      },
     }),
     [
       namespace,
@@ -232,6 +251,7 @@ export function HorizonWebProvider({
       floatButtonLabels,
       backtopLabels,
       formLabels,
+      inputNumberLabels,
     ],
   );
 

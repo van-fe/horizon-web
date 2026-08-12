@@ -17,7 +17,9 @@ import useLocaleLang from '~/utils/useLocaleLang';
 export default defineComponent({
   name: `${useNamespace()}InputNumber`,
   desc: '提供一个数字输入框，可以设置最小值、最大值和步长等，返回一个数字',
-  descLocales: { en: "The component provides `large`, `medium`, and `small`, with `medium` as the default. Match the size to a prominent setup step, a standard form, or a compact policy row." },
+  descLocales: {
+    en: 'The component provides `large`, `medium`, and `small`, with `medium` as the default. Match the size to a prominent setup step, a standard form, or a compact policy row.',
+  },
   props: useInputNumberProps,
   emits: useInputNumberEmits,
   slots: useInputNumberSlots,
@@ -99,9 +101,7 @@ export default defineComponent({
         )}
       >
         <div class={classHelper.e('group')}>
-          {slots.prepend && (
-            <div class={classHelper.em('group', 'prepend')}>{slots.prepend()}</div>
-          )}
+          {slots.prepend && <div class={classHelper.em('group', 'prepend')}>{slots.prepend()}</div>}
           <div
             class={cls(
               classHelper.em('group', 'inner'),
@@ -128,7 +128,7 @@ export default defineComponent({
                       )}
                       data-trigger-type="down"
                       onClick={handleClickStep}
-                      onMousedown={evt => handleLongPress(evt, 'down')}
+                      onPointerdown={evt => handleLongPress(evt, 'down')}
                     >
                       <IconReduce size={12} />
                     </span>
@@ -149,7 +149,7 @@ export default defineComponent({
               name={props.name}
               {...attrs}
               data-focus-visible-proxy
-              placeholder={props.placeholder ?? defaultPlaceholder.value as string}
+              placeholder={props.placeholder ?? (defaultPlaceholder.value as string)}
               disabled={isDisabled.value}
               readonly={props.readonly}
               min={props.min}
@@ -187,7 +187,7 @@ export default defineComponent({
                     ]}
                     data-trigger-type="up"
                     onClick={handleClickStep}
-                    onMousedown={evt => handleLongPress(evt, 'up')}
+                    onPointerdown={evt => handleLongPress(evt, 'up')}
                   >
                     {props.controlsPosition === 'between' ? (
                       <IconAdd size={12} />
@@ -204,7 +204,7 @@ export default defineComponent({
                       ]}
                       data-trigger-type="down"
                       onClick={handleClickStep}
-                      onMousedown={evt => handleLongPress(evt, 'down')}
+                      onPointerdown={evt => handleLongPress(evt, 'down')}
                     >
                       <IconArrowDown size={9} />
                     </span>
@@ -213,9 +213,7 @@ export default defineComponent({
               </div>
             )}
           </div>
-          {slots.append && (
-            <div class={classHelper.em('group', 'append')}>{slots.append()}</div>
-          )}
+          {slots.append && <div class={classHelper.em('group', 'append')}>{slots.append()}</div>}
         </div>
       </div>
     );

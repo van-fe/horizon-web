@@ -49,6 +49,7 @@ const reactSidebar = [
       { text: 'Form 表单', link: 'components/Form' },
       { text: 'Checkbox 多选框', link: 'components/Checkbox' },
       { text: 'Input 输入框', link: 'components/Input' },
+      { text: 'InputNumber 数字输入框', link: 'components/InputNumber' },
       { text: 'Rate 评分', link: 'components/Rate' },
       { text: 'Radio 单选框', link: 'components/Radio' },
       { text: 'Segmented 分段控制器', link: 'components/Segmented' },

@@ -47,6 +47,15 @@ function FormLabelsProbe() {
   return createElement('span', null, useHorizonWebConfig().formLabels.required);
 }
 
+function InputNumberLabelsProbe() {
+  const labels = useHorizonWebConfig().inputNumberLabels;
+  return createElement(
+    'span',
+    null,
+    `${labels.placeholder}/${labels.increase}/${labels.decrease}/${labels.clear}`,
+  );
+}
+
 describe('HorizonWebProvider', () => {
   it('is SSR-safe and exposes renderer configuration', () => {
     const html = renderToStaticMarkup(
@@ -130,5 +139,17 @@ describe('HorizonWebProvider', () => {
     );
 
     expect(html).toContain('Enter {prop}');
+  });
+
+  it('merges InputNumber labels with provider defaults', () => {
+    const html = renderToStaticMarkup(
+      createElement(
+        HorizonWebProvider,
+        { inputNumberLabels: { placeholder: 'Amount' } },
+        createElement(InputNumberLabelsProbe),
+      ),
+    );
+
+    expect(html).toContain('Amount/Increase value/Decrease value/Clear value');
   });
 });

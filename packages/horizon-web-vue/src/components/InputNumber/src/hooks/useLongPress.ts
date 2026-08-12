@@ -1,41 +1,33 @@
 import { onBeforeUnmount } from 'vue';
-import { safelyGetEventTarget } from '@aurora/utils';
+import { createInputNumberLongPressController } from '@aurora/horizon-web-core';
 
 interface LongPressOptions {
   delay?: number;
   interval: () => number;
 }
 
-/** Repeats an action while the originating pointer target remains pressed. */
+/** 使用 Web Core 指针控制器重复执行操作。 @en Repeats an action through the Web Core pointer controller. */
 export function useLongPress(options: LongPressOptions) {
-  let timer: ReturnType<typeof setTimeout> | undefined;
-  let removeListeners: (() => void) | undefined;
+  let action: (() => void) | undefined;
+  const controller = createInputNumberLongPressController({
+    delay: options.delay,
+    interval: options.interval,
+    onRepeat: () => action?.(),
+  });
+
+  function start(event: PointerEvent, nextAction: () => void) {
+    action = nextAction;
+    controller.start(event);
+  }
 
   function stop() {
-    if (timer) clearTimeout(timer);
-    timer = undefined;
-    removeListeners?.();
-    removeListeners = undefined;
+    action = undefined;
+    controller.stop();
   }
 
-  function start(event: MouseEvent, action: () => void) {
-    stop();
-    const target = (event.currentTarget || safelyGetEventTarget(event)) as EventTarget | null;
-    const repeat = () => {
-      action();
-      timer = setTimeout(repeat, options.interval());
-    };
-    const handleEnd = () => stop();
-
-    removeListeners = () => {
-      target?.removeEventListener('mouseup', handleEnd);
-      target?.removeEventListener('mouseleave', handleEnd);
-    };
-    timer = setTimeout(repeat, options.delay ?? 500);
-    target?.addEventListener('mouseup', handleEnd);
-    target?.addEventListener('mouseleave', handleEnd);
-  }
-
-  onBeforeUnmount(stop);
+  onBeforeUnmount(() => {
+    action = undefined;
+    controller.destroy();
+  });
   return { start, stop };
 }

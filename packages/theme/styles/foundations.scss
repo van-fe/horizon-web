@@ -23,6 +23,7 @@
 @use './components/float-button/variables' as float-button;
 @use './components/form/variables' as form;
 @use './components/input/variables' as input;
+@use './components/input-number/variables' as input-number;
 @use './components/link/variables' as link;
 @use './components/layout/variables' as layout;
 @use './components/pagination/variables' as pagination;
@@ -69,6 +70,7 @@ $values: function.map-merge-multi(
   function.flatten-variables(float-button.$values, 'float-button'),
   function.flatten-variables(form.$values, 'form'),
   function.flatten-variables(input.$values, 'input'),
+  function.flatten-variables(input-number.$values, 'input-number'),
   function.flatten-variables(link.$values, 'link'),
   function.flatten-variables(layout.$values, 'layout'),
   function.flatten-variables(pagination.$values, 'pagination'),
