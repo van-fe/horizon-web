@@ -27,11 +27,7 @@ import type {
   SelectOption as CoreSelectOption,
   SelectValue,
 } from '@aurora/core';
-import {
-  defaultSelectFilter,
-  isSelectValueEqual,
-  SelectController,
-} from '@aurora/core';
+import { defaultSelectFilter, isSelectValueEqual, SelectController } from '@aurora/core';
 import type { PortalTarget, PositionerInstance, WebPlacement } from '@aurora/horizon-web-core';
 import {
   createDismissableLayer,
@@ -44,6 +40,7 @@ import {
 } from '@aurora/horizon-web-core';
 import { cls, ComponentClassBlock } from '@aurora/theme';
 import { useHorizonWebConfig } from '../../provider';
+import { useFormFieldControl } from '../Form/context';
 
 export type SelectSize = 'small' | 'medium' | 'large';
 
@@ -116,7 +113,10 @@ export interface SelectProps {
   /** 面板底部。@en Popup footer. */
   panelFooter?: ReactNode;
   /** 自定义选项渲染。@en Custom option renderer. */
-  renderOption?: (option: SelectOptionData, state: { selected: boolean; active: boolean }) => ReactNode;
+  renderOption?: (
+    option: SelectOptionData,
+    state: { selected: boolean; active: boolean },
+  ) => ReactNode;
   /** 根元素类名。@en Root class name. */
   className?: string;
   /** 根元素样式。@en Root style. */
@@ -146,7 +146,7 @@ function textLabel(value: ReactNode, fallback: SelectValue): string {
   return typeof value === 'string' || typeof value === 'number'
     ? String(value)
     : typeof fallback === 'symbol'
-      ? fallback.description ?? ''
+      ? (fallback.description ?? '')
       : typeof fallback === 'object'
         ? ''
         : String(fallback);
@@ -225,6 +225,9 @@ export const Select = forwardRef<SelectHandle, SelectProps>(function Select(
   forwardedRef,
 ): ReactElement {
   const config = useHorizonWebConfig();
+  const formField = useFormFieldControl();
+  const formFieldRef = useRef(formField);
+  formFieldRef.current = formField;
   const classHelper = useMemo(
     () => new ComponentClassBlock('select', config.namespace.toLowerCase()),
     [config.namespace],
@@ -257,7 +260,9 @@ export const Select = forwardRef<SelectHandle, SelectProps>(function Select(
   onChangeRef.current = onChange;
   onOpenChangeRef.current = onOpenChange;
   const currentValue = value ?? uncontrolledValue;
-  const currentOpen = !disabled && (open ?? uncontrolledOpen);
+  const resolvedDisabled = disabled || formField?.disabled === true;
+  const resolvedInvalid = invalid || formField?.invalid === true;
+  const currentOpen = !resolvedDisabled && (open ?? uncontrolledOpen);
   const currentValueRef = useRef(currentValue);
   const currentOpenRef = useRef(currentOpen);
   currentValueRef.current = currentValue;
@@ -268,13 +273,14 @@ export const Select = forwardRef<SelectHandle, SelectProps>(function Select(
     controllerRef.current = new SelectController({
       value: currentValue,
       open: currentOpen,
-      disabled,
+      disabled: resolvedDisabled,
       inputValue,
       options: coreOptions,
       filter,
       onChange: (nextValue, details) => {
         if (!controlledValueRef.current) setUncontrolledValue(nextValue);
         onChangeRef.current?.(nextValue, details);
+        formFieldRef.current?.notify('change');
         forceRender();
       },
       onOpenChange: (nextOpen, details) => {
@@ -292,9 +298,14 @@ export const Select = forwardRef<SelectHandle, SelectProps>(function Select(
   const controller = controllerRef.current;
 
   useLayoutEffect(() => {
-    controller.setOptions({ options: coreOptions, filter, disabled });
-    controller.syncState({ value: currentValue, open: currentOpen, inputValue, disabled });
-  }, [controller, coreOptions, currentOpen, currentValue, disabled, filter, inputValue]);
+    controller.setOptions({ options: coreOptions, filter, disabled: resolvedDisabled });
+    controller.syncState({
+      value: currentValue,
+      open: currentOpen,
+      inputValue,
+      disabled: resolvedDisabled,
+    });
+  }, [controller, coreOptions, currentOpen, currentValue, filter, inputValue, resolvedDisabled]);
 
   useEffect(() => () => controller.destroy(), [controller]);
 
@@ -397,8 +408,8 @@ export const Select = forwardRef<SelectHandle, SelectProps>(function Select(
       );
       return index < 0 ? undefined : `${reactId}-option-${index}`;
     })(),
-    disabled,
-    invalid,
+    disabled: resolvedDisabled,
+    invalid: resolvedInvalid,
     required,
   });
 
@@ -428,7 +439,11 @@ export const Select = forwardRef<SelectHandle, SelectProps>(function Select(
   const panel = currentOpen ? (
     <div className={classHelper.e('panel')} ref={panelRef}>
       {panelHeader && <div className={classHelper.e('panel-header')}>{panelHeader}</div>}
-      <div {...getSelectListboxAria(listboxId)} className={classHelper.e('listbox')} ref={listboxRef}>
+      <div
+        {...getSelectListboxAria(listboxId)}
+        className={classHelper.e('listbox')}
+        ref={listboxRef}
+      >
         {visibleOptions.length === 0 ? (
           <div className={classHelper.e('empty')}>{emptyContent ?? config.selectLabels.empty}</div>
         ) : (
@@ -439,7 +454,8 @@ export const Select = forwardRef<SelectHandle, SelectProps>(function Select(
             const active =
               activeValue !== undefined && isSelectValueEqual(activeValue, option.core.value);
             const showGroup =
-              option.core.group && option.core.group !== visibleOptions[visibleIndex - 1]?.core.group;
+              option.core.group &&
+              option.core.group !== visibleOptions[visibleIndex - 1]?.core.group;
             return (
               <Fragment key={option.core.id}>
                 {showGroup && (
@@ -448,32 +464,35 @@ export const Select = forwardRef<SelectHandle, SelectProps>(function Select(
                   </div>
                 )}
                 <div
-                {...getSelectOptionAria({ selected: selectedOption, disabled: option.core.disabled })}
-                className={cls(
-                  `${classHelper.block}-option`,
-                  classHelper.is('active', selectedOption),
-                  classHelper.is('focus', active),
-                  classHelper.is('disabled', option.core.disabled),
-                )}
-                id={`${reactId}-option-${index}`}
-                onMouseDown={event => !option.core.disabled && pick(option, event)}
-                onMouseEnter={() => {
-                  if (option.core.disabled) return;
-                  controller.highlightValue(option.core.value);
-                }}
-              >
-                <div className={`${classHelper.block}-option__inner`}>
-                  <span className={`${classHelper.block}-option__content`}>
-                    {renderOption?.(option.source, { selected: selectedOption, active }) ??
-                      option.content ??
-                      option.core.label}
-                  </span>
-                  {option.core.description && (
-                    <span className={`${classHelper.block}-option__description`}>
-                      {option.core.description}
-                    </span>
+                  {...getSelectOptionAria({
+                    selected: selectedOption,
+                    disabled: option.core.disabled,
+                  })}
+                  className={cls(
+                    `${classHelper.block}-option`,
+                    classHelper.is('active', selectedOption),
+                    classHelper.is('focus', active),
+                    classHelper.is('disabled', option.core.disabled),
                   )}
-                </div>
+                  id={`${reactId}-option-${index}`}
+                  onMouseDown={event => !option.core.disabled && pick(option, event)}
+                  onMouseEnter={() => {
+                    if (option.core.disabled) return;
+                    controller.highlightValue(option.core.value);
+                  }}
+                >
+                  <div className={`${classHelper.block}-option__inner`}>
+                    <span className={`${classHelper.block}-option__content`}>
+                      {renderOption?.(option.source, { selected: selectedOption, active }) ??
+                        option.content ??
+                        option.core.label}
+                    </span>
+                    {option.core.description && (
+                      <span className={`${classHelper.block}-option__description`}>
+                        {option.core.description}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </Fragment>
             );
@@ -488,10 +507,16 @@ export const Select = forwardRef<SelectHandle, SelectProps>(function Select(
   const displayValue = selected?.content ?? selected?.core.label;
   const sharedTriggerProps = {
     ...aria,
-    'aria-label': placeholder ?? config.selectLabels.placeholder,
-    'aria-invalid': invalid || undefined,
-    disabled,
-    onBlur,
+    'aria-describedby': formField?.describedBy,
+    'aria-label': formField?.labelId ? undefined : (placeholder ?? config.selectLabels.placeholder),
+    'aria-labelledby': formField?.labelId,
+    'aria-invalid': resolvedInvalid || undefined,
+    disabled: resolvedDisabled,
+    id: formField?.controlId,
+    onBlur: (event: React.FocusEvent<HTMLInputElement | HTMLButtonElement>) => {
+      onBlur?.(event);
+      formField?.notify('blur');
+    },
     onKeyDown: handleClosedKeyDown,
   };
 
@@ -500,9 +525,9 @@ export const Select = forwardRef<SelectHandle, SelectProps>(function Select(
       className={cls(
         classHelper.block,
         classHelper.m(size),
-        classHelper.is('disabled', disabled),
+        classHelper.is('disabled', resolvedDisabled),
         classHelper.is('open', currentOpen),
-        classHelper.is('invalid', invalid),
+        classHelper.is('invalid', resolvedInvalid),
         className,
       )}
       style={style}
@@ -516,7 +541,7 @@ export const Select = forwardRef<SelectHandle, SelectProps>(function Select(
             if (!currentOpen) requestOpen();
           }}
           onClick={() => !currentOpen && requestOpen()}
-          placeholder={selected ? undefined : placeholder ?? config.selectLabels.placeholder}
+          placeholder={selected ? undefined : (placeholder ?? config.selectLabels.placeholder)}
           ref={node => {
             triggerRef.current = node;
           }}
@@ -544,7 +569,7 @@ export const Select = forwardRef<SelectHandle, SelectProps>(function Select(
           </span>
         </button>
       )}
-      {clearable && currentValue !== undefined && !disabled && (
+      {clearable && currentValue !== undefined && !resolvedDisabled && (
         <button
           aria-label={config.selectLabels.clear}
           className={classHelper.e('clear')}

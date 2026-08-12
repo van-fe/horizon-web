@@ -31,6 +31,8 @@ import {
   footerManifest,
   floatButtonGroupManifest,
   floatButtonManifest,
+  formItemManifest,
+  formManifest,
   inputManifest,
   gridItemManifest,
   gridManifest,
@@ -94,6 +96,8 @@ const manifests = [
   emptyManifest,
   floatButtonManifest,
   floatButtonGroupManifest,
+  formManifest,
+  formItemManifest,
   inputManifest,
   gridManifest,
   gridItemManifest,
@@ -496,6 +500,11 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     props: { rename: { showDelay: 'hoverShowDelay', hideDelay: 'hoverHideDelay' } },
     regions: { rename: { content: 'default' } },
   },
+  Form: { regions: { rename: { content: 'default' } } },
+  FormItem: {
+    props: { rename: { field: 'prop' } },
+    regions: { rename: { content: 'default' } },
+  },
   Link: {
     props: {
       rename: { variant: 'type', route: 'to' },
@@ -892,6 +901,13 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
         visibleChange: 'onVisibleChange',
       },
     },
+    regions: { rename: { content: 'children' } },
+  },
+  Form: {
+    events: { rename: { submit: 'onSubmit', validate: 'onValidate' } },
+    regions: { rename: { content: 'children' } },
+  },
+  FormItem: {
     regions: { rename: { content: 'children' } },
   },
   Checkbox: {

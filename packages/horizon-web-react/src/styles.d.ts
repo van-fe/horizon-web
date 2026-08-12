@@ -11,6 +11,7 @@ declare module '@aurora/theme/styles/affix';
 declare module '@aurora/theme/styles/anchor';
 declare module '@aurora/theme/styles/drawer';
 declare module '@aurora/theme/styles/float-button';
+declare module '@aurora/theme/styles/form';
 declare module '@aurora/theme/styles/backtop';
 declare module '@aurora/theme/styles/alert';
 declare module '@aurora/theme/styles/avatar';

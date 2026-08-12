@@ -1,7 +1,28 @@
 import type { ExtractPropTypes, PropType, Ref, VNode } from 'vue';
-import type { RuleItem } from 'async-validator';
+import type {
+  AdaptComponentApiShape,
+  ComponentRendererPropDefinitions,
+  FormCommonProps,
+  FormItemCommonProps,
+  FormRule,
+  FormValidateTrigger,
+  GridAlignment,
+  GridValue,
+} from '@aurora/core';
+import {
+  FORM_DEFAULTS,
+  FORM_ITEM_DEFAULTS,
+  isFormHelperPlacement,
+  isFormHelperTheme,
+  isFormLabelJustifyAlignment,
+  isFormLabelPosition,
+  isFormLabelVerticalAlignment,
+  isFormRequiredMarkPosition,
+  isFormSize,
+  isFormSpacing,
+  isFormValidateTrigger,
+} from '@aurora/core';
 import { declarePropType } from '@aurora/utils';
-import type { GridValue } from '~/components/Layout/src/composables/useGridProps';
 
 export interface HFormItemHelper {
   /**
@@ -50,6 +71,12 @@ export interface HFormItemHelper {
   padding?: number | string;
 }
 
+type FormVueProps = FormCommonProps;
+type FormItemVueProps = AdaptComponentApiShape<
+  FormItemCommonProps<HFormItemHelper | string>,
+  { field: 'prop' }
+>;
+
 export const useFormProps = declarePropType({
   /**
    * 表单字段的集合，如果不需要表单验证可以不设置
@@ -58,7 +85,7 @@ export const useFormProps = declarePropType({
   model: {
     type: Object,
     required: false,
-    default: () => ({}),
+    default: () => ({ ...FORM_DEFAULTS.model }),
   },
   /**
    * 使用行内表单
@@ -66,7 +93,7 @@ export const useFormProps = declarePropType({
    */
   inline: {
     type: Boolean,
-    default: false,
+    default: FORM_DEFAULTS.inline,
   },
   /**
    * 每行的网格列数。设置后 Form 会直接启用响应式 Grid 布局，并优先于 `inline`
@@ -105,7 +132,7 @@ export const useFormProps = declarePropType({
    * @en Vertical alignment of items within their Grid areas.
    */
   align: {
-    type: String as PropType<'start' | 'center' | 'end' | 'stretch'>,
+    type: String as PropType<GridAlignment>,
     required: false,
   },
   /**
@@ -113,7 +140,7 @@ export const useFormProps = declarePropType({
    * @en Horizontal alignment of items within their Grid areas.
    */
   justify: {
-    type: String as PropType<'start' | 'center' | 'end' | 'stretch'>,
+    type: String as PropType<GridAlignment>,
     required: false,
   },
   /**
@@ -124,6 +151,7 @@ export const useFormProps = declarePropType({
   size: {
     type: String as PropType<'medium' | 'large' | 'small'>,
     required: false,
+    validator: isFormSize,
   },
   /**
    * 标签的位置
@@ -131,7 +159,8 @@ export const useFormProps = declarePropType({
    */
   labelPosition: {
     type: String as PropType<'top' | 'left'>,
-    default: 'top',
+    default: FORM_DEFAULTS.labelPosition,
+    validator: isFormLabelPosition,
   },
   /**
    * 标签的水平对齐方式，仅当 `label-position` 为 `left` 时有效
@@ -139,7 +168,8 @@ export const useFormProps = declarePropType({
    */
   labelJustifyAlign: {
     type: String as PropType<'left' | 'right'>,
-    default: 'left',
+    default: FORM_DEFAULTS.labelJustifyAlign,
+    validator: isFormLabelJustifyAlignment,
   },
   /**
    * 标签的垂直对齐方式，仅当 `label-position` 为 `left` 时有效
@@ -147,7 +177,8 @@ export const useFormProps = declarePropType({
    */
   labelVerticalAlign: {
     type: String as PropType<'top' | 'middle'>,
-    default: 'top',
+    default: FORM_DEFAULTS.labelVerticalAlign,
+    validator: isFormLabelVerticalAlignment,
   },
   /**
    * 标签宽度，`auto` 表示自动设置为合适的宽度
@@ -155,7 +186,7 @@ export const useFormProps = declarePropType({
    */
   labelWidth: {
     type: [String, Number] as PropType<'auto' | string | number>,
-    default: 'auto',
+    default: FORM_DEFAULTS.labelWidth,
   },
   /**
    * 当表单项的验证规则中包含了必填项（`required` 为 `true`）时，是否在标签后展示星号
@@ -163,14 +194,14 @@ export const useFormProps = declarePropType({
    */
   showRequireMark: {
     type: Boolean,
-    default: true,
+    default: FORM_DEFAULTS.showRequireMark,
   },
   /**
    * 验证规则
    * @en Configuration for rules.
    */
   rules: {
-    type: Object as PropType<Record<string, RuleItem[] | RuleItem>>,
+    type: Object as PropType<Record<string, FormRule[] | FormRule>>,
     required: false,
   },
   /**
@@ -179,7 +210,8 @@ export const useFormProps = declarePropType({
    */
   requireMarkPosition: {
     type: String as PropType<'left' | 'right'>,
-    default: 'right',
+    default: FORM_DEFAULTS.requireMarkPosition,
+    validator: isFormRequiredMarkPosition,
   },
   /**
    * 当验证出错时，自动滚动到第一个错误项
@@ -187,7 +219,7 @@ export const useFormProps = declarePropType({
    */
   scrollToError: {
     type: Boolean,
-    default: false,
+    default: FORM_DEFAULTS.scrollToError,
   },
   /**
    * 是否禁止 submit 事件的默认行为
@@ -195,7 +227,7 @@ export const useFormProps = declarePropType({
    */
   preventSubmitDefault: {
     type: Boolean,
-    default: true,
+    default: FORM_DEFAULTS.preventSubmitDefault,
   },
   /**
    * 校验规则变更后立刻执行一次验证
@@ -203,7 +235,7 @@ export const useFormProps = declarePropType({
    */
   validateOnRuleChange: {
     type: Boolean,
-    default: true,
+    default: FORM_DEFAULTS.validateOnRuleChange,
   },
   /**
    * 触发校验的时机
@@ -213,10 +245,9 @@ export const useFormProps = declarePropType({
    * @en Configuration for validate trigger.
    */
   validateTrigger: {
-    type: [String, Array, Boolean] as PropType<
-      'change' | 'blur' | Array<'change' | 'blur'> | false
-    >,
-    default: 'change',
+    type: [String, Array, Boolean] as PropType<FormValidateTrigger>,
+    default: FORM_DEFAULTS.validateTrigger,
+    validator: isFormValidateTrigger,
   },
   /**
    * 当前表单是否只做渲染
@@ -225,7 +256,7 @@ export const useFormProps = declarePropType({
    */
   onlyRender: {
     type: Boolean,
-    default: false,
+    default: FORM_DEFAULTS.onlyRender,
   },
   /**
    * 提示帮助放置位置
@@ -236,7 +267,8 @@ export const useFormProps = declarePropType({
    */
   helperPlacement: {
     type: String as PropType<'right' | 'after-label' | 'before-label'>,
-    default: 'right',
+    default: FORM_DEFAULTS.helperPlacement,
+    validator: isFormHelperPlacement,
   },
   /**
    * 提示帮助的主题
@@ -244,7 +276,8 @@ export const useFormProps = declarePropType({
    */
   helperTheme: {
     type: String as PropType<'light' | 'dark'>,
-    default: 'light',
+    default: FORM_DEFAULTS.helperTheme,
+    validator: isFormHelperTheme,
   },
   /**
    * 是否禁用表单组件，此设置将会覆盖表单组件的 `disabled` 属性
@@ -264,7 +297,8 @@ export const useFormProps = declarePropType({
    */
   spacing: {
     type: String as PropType<'default' | 'static' | 'compact' | 'dynamic'>,
-    default: 'default',
+    default: FORM_DEFAULTS.spacing,
+    validator: isFormSpacing,
   },
   /**
    * 是否使用 `label` 作为默认必填的显示名称
@@ -272,9 +306,9 @@ export const useFormProps = declarePropType({
    */
   requiredUseLabel: {
     type: Boolean,
-    default: false,
+    default: FORM_DEFAULTS.requiredUseLabel,
   },
-});
+} satisfies ComponentRendererPropDefinitions<FormVueProps>);
 
 export const useFormItemProps = declarePropType({
   /**
@@ -292,6 +326,7 @@ export const useFormItemProps = declarePropType({
   labelPosition: {
     type: String as PropType<'top' | 'left'>,
     required: false,
+    validator: isFormLabelPosition,
   },
   /**
    * Grid 布局中占据的列数，支持响应式对象；仅在 Form 设置 `cols` 时生效
@@ -299,7 +334,7 @@ export const useFormItemProps = declarePropType({
    */
   span: {
     type: [Number, Object] as PropType<GridValue>,
-    default: 1,
+    default: FORM_ITEM_DEFAULTS.span,
   },
   /**
    * Grid 布局中的左侧偏移列数，支持响应式对象；仅在 Form 设置 `cols` 时生效
@@ -307,7 +342,7 @@ export const useFormItemProps = declarePropType({
    */
   offset: {
     type: [Number, Object] as PropType<GridValue>,
-    default: 0,
+    default: FORM_ITEM_DEFAULTS.offset,
   },
   /**
    * 表单项的绑定字段，应该是 `h-form` 上 `model` 属性的字段名，如果不需要表单验证可以不设置
@@ -322,7 +357,7 @@ export const useFormItemProps = declarePropType({
    * @en Configuration for rules.
    */
   rules: {
-    type: [Object, Array] as PropType<RuleItem | RuleItem[]>,
+    type: [Object, Array] as PropType<FormRule | FormRule[]>,
     required: false,
   },
   /**
@@ -352,6 +387,7 @@ export const useFormItemProps = declarePropType({
    */
   helperPlacement: {
     type: String as PropType<'right' | 'after-label' | 'before-label'>,
+    validator: isFormHelperPlacement,
   },
   /**
    * 提示帮助的主题
@@ -359,6 +395,7 @@ export const useFormItemProps = declarePropType({
    */
   helperTheme: {
     type: String as PropType<'light' | 'dark'>,
+    validator: isFormHelperTheme,
   },
   /**
    * 标签的水平对齐方式，仅当 `label-position` 为 `left` 时有效
@@ -368,6 +405,7 @@ export const useFormItemProps = declarePropType({
   labelJustifyAlign: {
     type: String as PropType<'left' | 'right'>,
     required: false,
+    validator: isFormLabelJustifyAlignment,
   },
   /**
    * 标签的垂直对齐方式，仅当 `label-position` 为 `left` 时有效
@@ -377,6 +415,7 @@ export const useFormItemProps = declarePropType({
   labelVerticalAlign: {
     type: String as PropType<'top' | 'middle'>,
     required: false,
+    validator: isFormLabelVerticalAlignment,
   },
   /**
    * 标签宽度，`auto` 表示自动设置为合适的宽度
@@ -394,7 +433,7 @@ export const useFormItemProps = declarePropType({
    */
   required: {
     type: Boolean,
-    default: false,
+    default: FORM_ITEM_DEFAULTS.required,
   },
   /**
    * 是否使用 `label` 作为默认必填的显示名称
@@ -410,7 +449,7 @@ export const useFormItemProps = declarePropType({
    */
   showRequireMark: {
     type: Boolean,
-    default: true,
+    default: FORM_ITEM_DEFAULTS.showRequireMark,
   },
   /**
    * 当校验错误时显示的信息
@@ -420,7 +459,7 @@ export const useFormItemProps = declarePropType({
    */
   error: {
     type: String,
-    default: '',
+    default: FORM_ITEM_DEFAULTS.error,
   },
   /**
    * 校验触发的时机
@@ -431,13 +470,12 @@ export const useFormItemProps = declarePropType({
    * @en Configuration for validate trigger.
    */
   validateTrigger: {
-    type: [String, Array, Boolean] as PropType<
-      'change' | 'blur' | false | Array<'change' | 'blur'>
-    >,
+    type: [String, Array, Boolean] as PropType<FormValidateTrigger>,
     required: false,
     default: undefined,
+    validator: isFormValidateTrigger,
   },
-});
+} satisfies ComponentRendererPropDefinitions<FormItemVueProps>);
 
 export type FormProps = ExtractPropTypes<typeof useFormProps>;
 export type FormItemProps = ExtractPropTypes<typeof useFormItemProps>;
@@ -469,4 +507,4 @@ export interface HFormInstance {
   scrollToField: (prop: string) => void;
   clearValidate: (props?: string[]) => void;
 }
-export type HFormRule = RuleItem;
+export type HFormRule = FormRule;

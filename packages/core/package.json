@@ -17,6 +17,9 @@
     "dist",
     "types"
   ],
+  "dependencies": {
+    "async-validator": "^4.2.5"
+  },
   "sideEffects": false,
   "scripts": {
     "build": "bun run build:dist && bun run build:types",

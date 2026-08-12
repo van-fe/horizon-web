@@ -60,6 +60,9 @@ export interface HorizonWebConfig {
   backtopLabels: {
     button: string;
   };
+  formLabels: {
+    required: string;
+  };
 }
 
 export type HorizonWebProviderProps = PropsWithChildren<
@@ -70,6 +73,7 @@ export type HorizonWebProviderProps = PropsWithChildren<
     | 'dialogLabels'
     | 'drawerLabels'
     | 'floatButtonLabels'
+    | 'formLabels'
     | 'linkLabels'
     | 'paginationLabels'
     | 'popconfirmLabels'
@@ -90,6 +94,7 @@ export type HorizonWebProviderProps = PropsWithChildren<
     drawerLabels?: Partial<HorizonWebConfig['drawerLabels']>;
     floatButtonLabels?: Partial<HorizonWebConfig['floatButtonLabels']>;
     backtopLabels?: Partial<HorizonWebConfig['backtopLabels']>;
+    formLabels?: Partial<HorizonWebConfig['formLabels']>;
   }
 >;
 
@@ -113,6 +118,7 @@ const defaultConfig: HorizonWebConfig = Object.freeze({
     fold: 'Collapse floating actions',
   },
   backtopLabels: { button: 'Back to top' },
+  formLabels: { required: '{prop} is required.' },
 });
 
 export const HorizonWebContext = createContext<HorizonWebConfig>(defaultConfig);
@@ -137,6 +143,7 @@ export function HorizonWebProvider({
   drawerLabels,
   floatButtonLabels,
   backtopLabels,
+  formLabels,
   children,
 }: HorizonWebProviderProps): ReactElement {
   const parent = useContext(HorizonWebContext);
@@ -198,6 +205,10 @@ export function HorizonWebProvider({
         ...parent.backtopLabels,
         ...backtopLabels,
       },
+      formLabels: {
+        ...parent.formLabels,
+        ...formLabels,
+      },
     }),
     [
       namespace,
@@ -220,6 +231,7 @@ export function HorizonWebProvider({
       drawerLabels,
       floatButtonLabels,
       backtopLabels,
+      formLabels,
     ],
   );
 

@@ -1,9 +1,15 @@
 import type { FocusEventHandler, InputHTMLAttributes, ReactElement, ReactNode } from 'react';
 import { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
-import { getSwitchState, resolveControllableValue, resolveSwitchChange, SWITCH_DEFAULTS } from '@aurora/core';
+import {
+  getSwitchState,
+  resolveControllableValue,
+  resolveSwitchChange,
+  SWITCH_DEFAULTS,
+} from '@aurora/core';
 import type { SwitchChangeResult, SwitchCommonProps } from '@aurora/core';
 import { cls, ComponentClassBlock } from '@aurora/theme';
 import { useHorizonWebConfig } from '../../provider';
+import { useFormFieldControl } from '../Form/context';
 
 export type { SwitchLabelPosition, SwitchSize, SwitchStatusPosition } from '@aurora/core';
 
@@ -51,6 +57,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
   ref,
 ): ReactElement {
   const config = useHorizonWebConfig();
+  const formField = useFormFieldControl();
   const classHelper = useMemo(
     () => new ComponentClassBlock('switch', config.namespace.toLowerCase()),
     [config.namespace],
@@ -64,7 +71,13 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
   const mounted = useRef(true);
   const transitionId = useRef(0);
   currentValueRef.current = currentValue;
-  const state = getSwitchState({ value: currentValue, disabled, readonly: readOnly, pending });
+  const resolvedDisabled = disabled || formField?.disabled === true;
+  const state = getSwitchState({
+    value: currentValue,
+    disabled: resolvedDisabled,
+    readonly: readOnly,
+    pending,
+  });
 
   useEffect(() => {
     mounted.current = true;
@@ -77,6 +90,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
     if (!result.accepted) return;
     if (value === undefined) setUncontrolledValue(result.value);
     onChange?.(result.value, { reason: result.reason });
+    formField?.notify('change');
   }
 
   function requestChange(): void {
@@ -115,7 +129,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
         classHelper.m('active', currentValue),
         classHelper.m('sm', size === 'small'),
         classHelper.m(size),
-        classHelper.m('disabled', disabled),
+        classHelper.m('disabled', resolvedDisabled),
         className,
       )}
       onClick={requestChange}
@@ -125,7 +139,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
         <span
           className={cls(
             classHelper.e('core'),
-            classHelper.is('disabled', disabled),
+            classHelper.is('disabled', resolvedDisabled),
             classHelper.is('active', currentValue),
             classHelper.is('readonly', readOnly),
             classHelper.is('with-inner-text', status && statusPosition === 'inside'),
@@ -133,17 +147,23 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
         >
           <input
             {...inputProps}
+            aria-describedby={formField?.describedBy ?? inputProps?.['aria-describedby']}
             aria-busy={pending || undefined}
             aria-checked={currentValue}
-            aria-disabled={disabled}
+            aria-disabled={resolvedDisabled}
+            aria-invalid={formField?.invalid || undefined}
             aria-label={
               inputProps?.['aria-label'] ?? (typeof label === 'string' ? label : undefined)
             }
             aria-readonly={readOnly}
             checked={currentValue}
             data-focus-visible-proxy
-            disabled={disabled}
-            onBlur={onBlur}
+            disabled={resolvedDisabled}
+            id={formField?.controlId}
+            onBlur={event => {
+              onBlur?.(event);
+              formField?.notify('blur');
+            }}
             onChange={requestChange}
             onClick={event => event.stopPropagation()}
             readOnly={readOnly}

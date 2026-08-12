@@ -24,6 +24,7 @@ import {
 } from '@aurora/core';
 import { cls, ComponentClassBlock } from '@aurora/theme';
 import { useHorizonWebConfig } from '../../provider';
+import { useFormFieldControl } from '../Form/context';
 import type { ReactEventHandler, ReactRegionContent } from '../_shared/api';
 
 export type RateHandle = RateCommandMap;
@@ -69,6 +70,7 @@ export const Rate = forwardRef<RateHandle, RateProps>(function Rate(
   ref,
 ): ReactElement {
   const config = useHorizonWebConfig();
+  const formField = useFormFieldControl();
   const namespace = config.namespace.toLowerCase();
   const classes = useMemo(() => new ComponentClassBlock('rate', namespace), [namespace]);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -80,20 +82,22 @@ export const Rate = forwardRef<RateHandle, RateProps>(function Rate(
   const activeColor = color ?? `rgb(var(--${namespace}-rate-color-content))`;
   const emptyColor = voidColor ?? `var(--${namespace}-border-default)`;
   const inactiveColor = disabledColor ?? `var(--${namespace}-text-disabled)`;
+  const resolvedDisabled = disabled || formField?.disabled === true;
 
   useImperativeHandle(ref, () => ({ focus: () => rootRef.current?.focus() }), []);
 
   function updateValue(nextValue: number): void {
-    if (disabled || readOnly) return;
+    if (resolvedDisabled || readOnly) return;
     const normalized = normalizeRateValue(nextValue, count, half);
     if (normalized === currentValue) return;
     if (value === undefined) setUncontrolledValue(normalized);
     onChange?.(normalized);
+    formField?.notify('change');
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>): void {
     onKeyDown?.(event);
-    if (event.defaultPrevented || disabled || readOnly) return;
+    if (event.defaultPrevented || resolvedDisabled || readOnly) return;
     const nextValue = getRateKeyboardValue(currentValue, event.key, count, half);
     if (nextValue === undefined) return;
     event.preventDefault();
@@ -107,27 +111,37 @@ export const Rate = forwardRef<RateHandle, RateProps>(function Rate(
   return (
     <div
       {...nativeProps}
-      aria-disabled={disabled}
+      aria-describedby={formField?.describedBy}
+      aria-disabled={resolvedDisabled}
+      aria-invalid={formField?.invalid || undefined}
+      aria-labelledby={formField?.labelId}
       aria-readonly={readOnly}
       aria-valuemax={count}
       aria-valuemin={0}
       aria-valuenow={currentValue}
       className={cls(
         classes.block,
-        classes.m('enabled', !readOnly && !disabled),
-        classes.m('disabled', disabled),
+        classes.m('enabled', !readOnly && !resolvedDisabled),
+        classes.m('disabled', resolvedDisabled),
         className,
       )}
-      onBlur={onBlur}
+      onBlur={event => {
+        onBlur?.(event);
+        formField?.notify('blur');
+      }}
       onKeyDown={handleKeyDown}
       ref={rootRef}
       role="slider"
-      tabIndex={disabled ? -1 : 0}
+      tabIndex={resolvedDisabled ? -1 : 0}
     >
       {Array.from({ length: count }, (_, index) => {
         const itemIndex = index + 1;
         const status = getRateItemStatus(currentValue, itemIndex);
-        const itemColor = disabled ? inactiveColor : status === 'void' ? emptyColor : activeColor;
+        const itemColor = resolvedDisabled
+          ? inactiveColor
+          : status === 'void'
+            ? emptyColor
+            : activeColor;
         const style: CSSProperties = {
           color: itemColor,
           fontSize: iconSize,

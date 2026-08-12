@@ -11,7 +11,9 @@ import {
   computed,
 } from 'vue';
 import { useFormProps } from './composables/useProps';
-import type { ValidateReturnType, BindComponent } from './composables/useProps';
+import type { BindComponent } from './composables/useProps';
+import { FormController } from '@aurora/core';
+import { scrollFormFieldIntoView } from '@aurora/horizon-web-core';
 import type { Arrayable, HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import type { FormEmits } from './composables/useEmits';
@@ -71,86 +73,34 @@ export default defineComponent({
       },
     );
 
-    const validate = () => {
-      if (!validateComponents.value.length) {
-        return Promise.resolve(true);
-      }
+    const controller = new FormController({
+      onFirstInvalid: field => {
+        if (props.scrollToError) scrollToField(field);
+      },
+    });
 
-      return new Promise<void>((resolve, reject) => {
-        Promise.allSettled(validateComponents.value.map(t => t.validate())).then(res => {
-          const rejected = res.filter(item => item.status === 'rejected') as {
-            status: 'rejected' | 'fulfilled';
-            reason: ValidateReturnType;
-          }[];
-
-          if (rejected.length) {
-            reject(rejected.map(rej => rej.reason.errors).flat());
-
-            if (props.scrollToError) {
-              scrollToField(rejected[0].reason.errors[0].field);
-            }
-          } else {
-            resolve();
-          }
-        });
-      });
-    };
+    const validate = () =>
+      controller.snapshot().fieldCount ? controller.validate() : Promise.resolve(true);
 
     const validateField = (itemProps: Arrayable<string>) => {
-      if (
-        !validateComponents.value.filter(
-          item => item.props.prop && itemProps.includes(item.props.prop),
-        ).length
-      ) {
-        return Promise.resolve(true);
-      }
-      return new Promise((resolve, reject) => {
-        Promise.allSettled(
-          validateComponents.value
-            .filter(item => item.props.prop && itemProps.includes(item.props.prop))
-            .map(t => t.validate()),
-        ).then(res => {
-          const rejected = res.filter(item => item.status === 'rejected') as {
-            status: 'rejected' | 'fulfilled';
-            reason: ValidateReturnType;
-          }[];
-
-          if (rejected.length) {
-            reject(rejected.map(rej => rej.reason.errors).flat());
-
-            if (props.scrollToError) {
-              scrollToField(rejected[0].reason.errors[0].field);
-            }
-          } else {
-            resolve(itemProps);
-          }
-        });
-      });
+      const selected = validateComponents.value.filter(
+        item => item.props.prop && itemProps.includes(item.props.prop),
+      );
+      if (!selected.length) return Promise.resolve(true);
+      return controller.validateField(itemProps);
     };
 
     const resetFields = (props?: Arrayable<string>) => {
-      validateComponents.value
-        .filter(item => item.props.prop && (!props || (props && props.includes(item.props.prop))))
-        .forEach(formItem => {
-          formItem.resetField();
-        });
+      controller.resetFields(props);
     };
 
     const scrollToField = (prop: string) => {
       const targetFormItem = validateComponents.value.find(item => prop === item.props.prop);
-      if (targetFormItem) {
-        targetFormItem.$el.value?.scrollIntoView({
-          behavior: 'smooth',
-        });
-      }
+      scrollFormFieldIntoView(targetFormItem?.$el.value);
     };
 
     const clearValidate = (props?: Arrayable<string>) => {
-      validateComponents.value
-        .filter(item => item.props.prop && (!props || (props && props.includes(item.props.prop))))
-        .forEach(formItem => {
-          formItem.clearValidate();
-        });
+      controller.clearValidate(props);
     };
 
     expose({
@@ -163,6 +113,15 @@ export default defineComponent({
 
     const bindValidate = (component: BindComponent) => {
       validateComponents.value.push(component);
+      controller.register({
+        id: component.uid ?? Symbol('form-item'),
+        field: component.props.prop,
+        validate: async () => {
+          await component.validate();
+        },
+        reset: component.resetField,
+        clear: component.clearValidate,
+      });
     };
 
     const unbindValidate = (uid?: number) => {
@@ -170,6 +129,7 @@ export default defineComponent({
       if (index > -1) {
         validateComponents.value.splice(index, 1);
       }
+      if (uid !== undefined) controller.unregister(uid);
     };
 
     const autoLabelWidth = ref<string | number>('auto');

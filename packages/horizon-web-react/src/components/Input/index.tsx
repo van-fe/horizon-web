@@ -34,6 +34,7 @@ import {
 } from '@aurora/horizon-web-core';
 import { cls, ComponentClassBlock } from '@aurora/theme';
 import { useHorizonWebConfig } from '../../provider';
+import { useFormFieldControl } from '../Form/context';
 
 type InputFieldElement = HTMLInputElement | HTMLTextAreaElement;
 
@@ -184,6 +185,7 @@ export const Input = forwardRef<InputHandle, InputProps>(function Input(
   ref,
 ): ReactElement {
   const config = useHorizonWebConfig();
+  const formField = useFormFieldControl();
   const classes = useMemo(
     () => new ComponentClassBlock('input', config.namespace.toLowerCase()),
     [config.namespace],
@@ -197,9 +199,11 @@ export const Input = forwardRef<InputHandle, InputProps>(function Input(
   const currentValue = value ?? uncontrolledValue;
   const normalizedType = normalizeInputType(type);
   const isTextarea = normalizedType === 'textarea';
+  const resolvedDisabled = disabled || formField?.disabled === true;
+  const resolvedStatus = status ?? (formField?.invalid ? 'error' : undefined);
   const overflow = allowOverflow && isInputValueOverflow(currentValue, maxLength);
   const suffixVisible =
-    (!disabled && clearable && currentValue.length > 0) ||
+    (!resolvedDisabled && clearable && currentValue.length > 0) ||
     (normalizedType === 'password' && showPassword) ||
     suffix !== undefined;
 
@@ -227,10 +231,11 @@ export const Input = forwardRef<InputHandle, InputProps>(function Input(
   }, [autoSize, currentValue, isTextarea]);
 
   function updateValue(nextValue: string, event: FormEvent<InputFieldElement>): void {
-    if (disabled || readOnly || composingRef.current) return;
+    if (resolvedDisabled || readOnly || composingRef.current) return;
     if (value === undefined) setUncontrolledValue(nextValue);
     onValueChange?.(nextValue);
     onInput?.(nextValue, event);
+    formField?.notify('change');
   }
 
   function handleFocus(event: FocusEvent<InputFieldElement>): void {
@@ -246,6 +251,7 @@ export const Input = forwardRef<InputHandle, InputProps>(function Input(
       onChange?.(currentValue);
     }
     onBlur?.(event);
+    formField?.notify('blur');
   }
 
   function handleCompositionStart(event: CompositionEvent<InputFieldElement>): void {
@@ -260,19 +266,23 @@ export const Input = forwardRef<InputHandle, InputProps>(function Input(
   }
 
   function clearValue(): void {
-    if (disabled || readOnly) return;
+    if (resolvedDisabled || readOnly) return;
     const syntheticEvent = { currentTarget: fieldRef.current } as FormEvent<InputFieldElement>;
     if (value === undefined) setUncontrolledValue('');
     onValueChange?.('');
     onInput?.('', syntheticEvent);
     if (shouldEmitInputChange(valueAtFocusRef.current, '')) onChange?.('');
     valueAtFocusRef.current = '';
+    formField?.notify('change');
     onClear?.();
     focusInputElement(fieldRef.current);
   }
 
   const commonFieldProps = {
-    disabled,
+    'aria-describedby': formField?.describedBy,
+    'aria-invalid': formField?.invalid || undefined,
+    disabled: resolvedDisabled,
+    id: formField?.controlId,
     maxLength: allowOverflow ? undefined : maxLength,
     minLength,
     onBlur: handleBlur,
@@ -316,8 +326,8 @@ export const Input = forwardRef<InputHandle, InputProps>(function Input(
           classes.block,
           classes.e(`textarea--${variant}`),
           classes.em(`textarea--${variant}`, 'focused', focused),
-          classes.em(`textarea--${variant}`, 'disabled', disabled),
-          classes.is('error', status === 'error'),
+          classes.em(`textarea--${variant}`, 'disabled', resolvedDisabled),
+          classes.is('error', resolvedStatus === 'error'),
           classes.m('limit-with-multi-line', Boolean(count)),
           classes.is('out-of-exceeded', overflow),
           className,
@@ -348,7 +358,7 @@ export const Input = forwardRef<InputHandle, InputProps>(function Input(
         classes.m('no-border', variant === 'no-border'),
         classes.m('with-prepend', prepend !== undefined),
         classes.m('with-append', append !== undefined),
-        classes.em('error', variant, status === 'error'),
+        classes.em('error', variant, resolvedStatus === 'error'),
         classes.is('out-of-exceeded', overflow),
         className,
       )}
@@ -359,7 +369,7 @@ export const Input = forwardRef<InputHandle, InputProps>(function Input(
           className={cls(
             classes.e('inner-wrap'),
             classes.em('inner-wrap', 'focused', focused),
-            classes.em('inner-wrap', 'disabled', disabled),
+            classes.em('inner-wrap', 'disabled', resolvedDisabled),
           )}
         >
           {prefix !== undefined ? <span className={classes.e('prefix')}>{prefix}</span> : null}
@@ -374,7 +384,7 @@ export const Input = forwardRef<InputHandle, InputProps>(function Input(
           />
           {suffixVisible ? (
             <span className={classes.e('suffix')}>
-              {!disabled && clearable && currentValue.length > 0 ? (
+              {!resolvedDisabled && clearable && currentValue.length > 0 ? (
                 <button
                   aria-label="Clear input"
                   className={classes.m(

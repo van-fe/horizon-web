@@ -12,7 +12,7 @@ import {
   onMounted,
   Fragment,
 } from 'vue';
-import type { HFormRule, HFormItemHelper } from './composables/useProps';
+import type { HFormItemHelper } from './composables/useProps';
 import { useFormItemProps } from './composables/useProps';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import {
@@ -21,13 +21,17 @@ import {
   getTextWidth,
   cls,
   isDefined,
-  isUndefined,
   useNamespace,
   isObject,
   sizeUnitTransform,
   cssVariableKey,
 } from '@aurora/utils';
-import Schema from 'async-validator';
+import {
+  FormFieldController,
+  getFormPathValue,
+  resolveFormRequiredMark,
+  resolveFormValidateEvents,
+} from '@aurora/core';
 import type { HFormItemTriggerType } from './utils/injectedKeys';
 import {
   HFormInjectedKey,
@@ -36,7 +40,6 @@ import {
   HFormItemSlotsInjectedKey,
   HFormItemTriggerInjectedKey,
 } from './utils/injectedKeys';
-import { getProp } from './utils/helper';
 import { IconHelp } from '@aurora/icon';
 import HPopover from '~/components/Popover/src/Popover';
 import HPopContent from '~/components/Popover/src/PopContent';
@@ -44,7 +47,6 @@ import type { FormItemSlots } from './composables/useSlots';
 import { useFormItemSlots } from './composables/useSlots';
 import type { FormItemExposes } from './composables/useExposes';
 import { useFormItemExposes } from './composables/useExposes';
-import { clone } from 'lodash-es';
 import useLocaleLang from '~/utils/useLocaleLang';
 import { GRID_KEY, useGridItemStyle } from '~/components/Layout/src/composables/useGridStyles';
 
@@ -69,7 +71,6 @@ export default defineComponent({
     const grid = inject(GRID_KEY)!;
     const errorRef = toRef(props, 'error');
     const onlyRenderRef = toRef(nForm, 'onlyRender');
-    let initialValue: any = undefined;
 
     const labelPosition = computed(() => props.labelPosition ?? nForm.labelPosition);
     const labelJustifyAlign = computed(() => props.labelJustifyAlign ?? nForm.labelJustifyAlign);
@@ -79,23 +80,9 @@ export default defineComponent({
     provide(HFormItemPropsInjectedKey, props);
     provide(HFormItemSlotsInjectedKey, slots);
 
-    const currentValidateTriggers = computed(() => {
-      let validateTrigger: Array<'change' | 'blur'> = [];
-
-      if (typeof props.validateTrigger === 'string' && !!props.validateTrigger) {
-        validateTrigger.push(props.validateTrigger);
-      } else if (Array.isArray(props.validateTrigger) && props.validateTrigger.length) {
-        validateTrigger = [...validateTrigger, ...props.validateTrigger];
-      } else if (props.validateTrigger === false) {
-        validateTrigger = [];
-      } else if (typeof nForm.validateTrigger === 'string' && !!nForm.validateTrigger) {
-        validateTrigger.push(nForm.validateTrigger);
-      } else if (Array.isArray(nForm.validateTrigger) && nForm.validateTrigger.length) {
-        validateTrigger = [...validateTrigger, ...nForm.validateTrigger];
-      }
-
-      return validateTrigger;
-    });
+    const currentValidateTriggers = computed(() =>
+      resolveFormValidateEvents(props.validateTrigger, nForm.validateTrigger),
+    );
 
     onBeforeMount(() => {
       props.label && nForm.setAutoLabelWidth(getTextWidth(props.label));
@@ -110,10 +97,8 @@ export default defineComponent({
     });
 
     onMounted(() => {
-      if (props.prop) {
-        const computedValue = getProp(nForm.model, props.prop);
-        initialValue = clone(computedValue.value);
-      }
+      syncFieldOptions();
+      fieldController.captureInitialValue();
     });
 
     onBeforeUnmount(() => {
@@ -131,55 +116,43 @@ export default defineComponent({
     );
 
     const requiredMessage = useLocaleLang('form.required');
+    const resolveRules = () =>
+      props.rules ||
+      (nForm.rules && props.prop ? getFormPathValue(nForm.rules, props.prop) : undefined);
+    const syncFieldOptions = () => {
+      fieldController.setOptions({
+        field: props.prop,
+        model: nForm.model,
+        rules: resolveRules(),
+        required: props.required,
+        requiredMessage: props.error || requiredMessage.value?.toString(),
+        requiredName:
+          (props.requiredUseLabel ?? nForm.requiredUseLabel) && props.label
+            ? props.label
+            : props.prop,
+        externalError: props.error,
+        onlyRender: nForm.onlyRender,
+        onErrorChange: value => {
+          error.value = value;
+        },
+        onValidate: (field, valid, message) => nForm.emit('validate', field, valid, message),
+      });
+    };
+    const fieldController = new FormFieldController({
+      onErrorChange: value => {
+        error.value = value;
+      },
+    });
 
-    const validate = () => {
+    const validate = async () => {
       if (nForm.onlyRender) {
-        return Promise.resolve(null);
+        return null;
       } else if (!props.prop) {
-        return Promise.resolve(null);
+        return null;
       }
-
-      let rule: HFormRule | HFormRule[] | undefined =
-        props.rules || (nForm.rules && getProp(nForm.rules, props.prop).value);
-
-      if (!rule) {
-        if (!props.required) return Promise.resolve(null);
-        else {
-          rule = {
-            required: true,
-            message:
-              props.error ||
-              requiredMessage.value
-                ?.toString()
-                .replace(
-                  '{prop}',
-                  (props.requiredUseLabel ?? nForm.requiredUseLabel)
-                    ? (props.label ?? props.prop)
-                    : props.prop,
-                ),
-          };
-        }
-      }
-
-      let value = getProp(nForm.model, props.prop).value;
-
-      if (typeof value === 'string') {
-        value = value.trim();
-      }
-
-      const validator = new Schema({
-        [props.prop]: rule,
-      });
-
-      return validator.validate({ [props.prop]: value }, errors => {
-        if (errors?.length) {
-          nForm.emit('validate', props.prop!, false, errors[0].message);
-          error.value = errors[0].message;
-        } else {
-          nForm.emit('validate', props.prop!, true, '');
-          error.value = '';
-        }
-      });
+      syncFieldOptions();
+      await fieldController.validate();
+      return null;
     };
 
     provide(HFormItemErrorInjectedKey, error);
@@ -197,13 +170,14 @@ export default defineComponent({
         return false;
       }
 
-      const rules = props.rules || (nForm.rules && getProp(nForm.rules, props.prop).value);
-
-      if (!rules && isUndefined(props.required)) {
-        return false;
-      }
-
-      return Array.isArray(rules) ? rules.some(t => t.required) : rules?.required || props.required;
+      return resolveFormRequiredMark({
+        formVisible: nForm.showRequireMark,
+        fieldVisible: props.showRequireMark,
+        label: props.label,
+        field: props.prop,
+        rules: resolveRules(),
+        required: props.required,
+      });
     });
 
     const labelWidthAdjust = computed(() => {
@@ -248,16 +222,12 @@ export default defineComponent({
     });
 
     const resetField = () => {
-      if (nForm.model && props.prop) {
-        const computedValue = getProp(nForm.model, props.prop);
-        computedValue.value = clone(initialValue);
-      }
-
-      clearValidate();
+      syncFieldOptions();
+      fieldController.reset();
     };
 
     const clearValidate = () => {
-      error.value = '';
+      fieldController.clear();
     };
 
     expose({
@@ -271,7 +241,7 @@ export default defineComponent({
      */
     const onFormChildItemNotice: HFormItemTriggerType = type => {
       if (currentValidateTriggers.value.includes(type)) {
-        validate();
+        void validate().catch(() => undefined);
       }
     };
 

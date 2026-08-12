@@ -39,6 +39,7 @@ import {
 import { syncCheckboxIndeterminate } from '@aurora/horizon-web-core';
 import { cls, ComponentClassBlock } from '@aurora/theme';
 import { useHorizonWebConfig } from '../../provider';
+import { useFormFieldControl } from '../Form/context';
 
 export type {
   CheckboxChangeDetails,
@@ -133,6 +134,7 @@ export const Checkbox = forwardRef<CheckboxHandle, CheckboxProps>(function Check
   ref,
 ): ReactElement | null {
   const config = useHorizonWebConfig();
+  const formField = useFormFieldControl();
   const group = useContext(CheckboxGroupContext);
   const classHelper = useMemo(
     () =>
@@ -146,7 +148,7 @@ export const Checkbox = forwardRef<CheckboxHandle, CheckboxProps>(function Check
   const inputId = useId();
   const [uncontrolledValue, setUncontrolledValue] = useState<CheckboxValue>(defaultValue);
   const currentValue = group?.value ?? value ?? uncontrolledValue;
-  const currentDisabled = (group?.disabled ?? false) || disabled;
+  const currentDisabled = (group?.disabled ?? false) || disabled || formField?.disabled === true;
   const currentReadOnly = (group?.readOnly ?? false) || readOnly;
   const currentSize = group?.size ?? size ?? CHECKBOX_DEFAULTS.size;
   const checked = getCheckboxChecked(currentValue, optionValue, trueValue);
@@ -160,6 +162,7 @@ export const Checkbox = forwardRef<CheckboxHandle, CheckboxProps>(function Check
     if (group) group.commit(result.value as readonly ChoiceValue[]);
     else if (value === undefined) setUncontrolledValue(result.value);
     onChange?.(result.value, { checked: result.checked, optionValue });
+    formField?.notify('change');
   }
 
   useImperativeHandle(
@@ -210,7 +213,7 @@ export const Checkbox = forwardRef<CheckboxHandle, CheckboxProps>(function Check
   }
 
   return (
-    <label className={rootClass} htmlFor={inputId} style={rootStyle}>
+    <label className={rootClass} htmlFor={formField?.controlId ?? inputId} style={rootStyle}>
       {variant === 'checkbox' && (
         <span
           aria-hidden="true"
@@ -219,15 +222,18 @@ export const Checkbox = forwardRef<CheckboxHandle, CheckboxProps>(function Check
       )}
       <input
         {...inputProps}
+        aria-describedby={formField?.describedBy ?? inputProps?.['aria-describedby']}
         aria-checked={indeterminate ? 'mixed' : checked}
+        aria-invalid={formField?.invalid || undefined}
         checked={checked}
         className={classHelper.e('original')}
         data-focus-visible-proxy
         disabled={currentDisabled}
-        id={inputId}
+        id={formField?.controlId ?? inputId}
         onBlur={event => {
           onBlur?.(event);
           group?.onBlur?.(event);
+          formField?.notify('blur');
         }}
         onChange={requestToggle}
         onClick={onClick}

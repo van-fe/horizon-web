@@ -72,7 +72,9 @@ describe('Form public API contracts', () => {
     );
     expect(form.attributes('style')).toEqual(expect.stringContaining('place-items: center end'));
     expect(item.attributes('style')).toEqual(expect.stringContaining('--h-grid-item-span-xs: 3'));
-    expect(item.attributes('style')).toEqual(expect.stringContaining('--h-grid-item-offset-xs: calc'));
+    expect(item.attributes('style')).toEqual(
+      expect.stringContaining('--h-grid-item-offset-xs: calc'),
+    );
     expect(wrapper.get('.h-form-item__label').attributes('style')).toContain('width: 144px');
     expect(wrapper.get('.h-form-item__text').classes()).toEqual(
       expect.arrayContaining(['is-required', 'is-required-mark-left']),

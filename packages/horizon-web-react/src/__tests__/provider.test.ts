@@ -43,6 +43,10 @@ function BacktopLabelsProbe() {
   return createElement('span', null, useHorizonWebConfig().backtopLabels.button);
 }
 
+function FormLabelsProbe() {
+  return createElement('span', null, useHorizonWebConfig().formLabels.required);
+}
+
 describe('HorizonWebProvider', () => {
   it('is SSR-safe and exposes renderer configuration', () => {
     const html = renderToStaticMarkup(
@@ -114,5 +118,17 @@ describe('HorizonWebProvider', () => {
     );
 
     expect(html).toContain('Return to start');
+  });
+
+  it('merges Form labels with provider defaults', () => {
+    const html = renderToStaticMarkup(
+      createElement(
+        HorizonWebProvider,
+        { formLabels: { required: 'Enter {prop}' } },
+        createElement(FormLabelsProbe),
+      ),
+    );
+
+    expect(html).toContain('Enter {prop}');
   });
 });

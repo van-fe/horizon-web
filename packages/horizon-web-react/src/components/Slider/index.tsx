@@ -32,6 +32,7 @@ import {
 } from '@aurora/horizon-web-core';
 import { cls, ComponentClassBlock } from '@aurora/theme';
 import { useHorizonWebConfig } from '../../provider';
+import { useFormFieldControl } from '../Form/context';
 
 type SliderReactEventMap = AdaptComponentApiShape<
   SliderEventMap<FocusEvent<HTMLDivElement>>,
@@ -93,6 +94,7 @@ export const Slider = forwardRef<SliderHandle, SliderProps>(function Slider(
   ref,
 ): ReactElement {
   const config = useHorizonWebConfig();
+  const formField = useFormFieldControl();
   const classes = useMemo(
     () => new ComponentClassBlock('slider', config.namespace.toLowerCase()),
     [config.namespace],
@@ -108,11 +110,12 @@ export const Slider = forwardRef<SliderHandle, SliderProps>(function Slider(
   const progress = getSliderProgress(normalized.first, normalized.second, min, max, range);
   const separators = showSeparators ? getSliderSeparatorPercents(min, max, step) : [];
   const thumbHalfSize = size === 'small' ? 7 : size === 'large' ? 12 : 10;
+  const resolvedDisabled = disabled || formField?.disabled === true;
 
   useImperativeHandle(ref, () => ({ focus: () => focusSliderThumb(thumbRefs.current[0]) }), []);
 
   function commitThumb(index: number, nextThumbValue: number): void {
-    if (disabled) return;
+    if (resolvedDisabled) return;
     const nextValue = range
       ? normalizeSliderValue(
           index === 0 ? [nextThumbValue, normalized.second] : [normalized.first, nextThumbValue],
@@ -125,6 +128,7 @@ export const Slider = forwardRef<SliderHandle, SliderProps>(function Slider(
     if (sliderValuesEqual(nextValue, normalized.value)) return;
     if (value === undefined) setUncontrolledValue(nextValue);
     onChange?.(nextValue);
+    formField?.notify('change');
   }
 
   function valueFromPointer(event: { clientX: number }): number {
@@ -133,7 +137,7 @@ export const Slider = forwardRef<SliderHandle, SliderProps>(function Slider(
   }
 
   function handleTrackClick(event: MouseEvent<HTMLDivElement>): void {
-    if (disabled || !trackClickable || event.defaultPrevented) return;
+    if (resolvedDisabled || !trackClickable || event.defaultPrevented) return;
     const nextValue = valueFromPointer(event);
     const index = range ? getClosestSliderThumb(nextValue, normalized.first, normalized.second) : 0;
     commitThumb(index, nextValue);
@@ -141,7 +145,7 @@ export const Slider = forwardRef<SliderHandle, SliderProps>(function Slider(
   }
 
   function handlePointerDown(index: number, event: PointerEvent<HTMLDivElement>): void {
-    if (disabled) return;
+    if (resolvedDisabled) return;
     event.preventDefault();
     event.stopPropagation();
     captureSliderPointer(event.currentTarget, event.pointerId);
@@ -151,14 +155,14 @@ export const Slider = forwardRef<SliderHandle, SliderProps>(function Slider(
   }
 
   function handlePointerMove(index: number, event: PointerEvent<HTMLDivElement>): void {
-    if (disabled || activeThumbRef.current !== index) return;
+    if (resolvedDisabled || activeThumbRef.current !== index) return;
     event.preventDefault();
     commitThumb(index, valueFromPointer(event));
   }
 
   function handleKeyDown(index: number, event: KeyboardEvent<HTMLDivElement>): void {
     onKeyDown?.(event);
-    if (event.defaultPrevented || disabled || !keyboard) return;
+    if (event.defaultPrevented || resolvedDisabled || !keyboard) return;
     const nextValue = getSliderKeyboardValue(values[index] ?? min, event.key, min, max, step);
     if (nextValue === undefined) return;
     event.preventDefault();
@@ -168,10 +172,12 @@ export const Slider = forwardRef<SliderHandle, SliderProps>(function Slider(
   return (
     <div
       {...nativeProps}
+      aria-describedby={formField?.describedBy}
+      aria-invalid={formField?.invalid || undefined}
       aria-label={ariaLabel}
       className={cls(
         classes.block,
-        classes.is('disabled', disabled),
+        classes.is('disabled', resolvedDisabled),
         classes.m(size),
         classes.m(tone),
         className,
@@ -201,8 +207,9 @@ export const Slider = forwardRef<SliderHandle, SliderProps>(function Slider(
             const tooltip = formatTooltip?.(thumbValue) ?? String(thumbValue);
             return (
               <div
-                aria-disabled={disabled}
+                aria-disabled={resolvedDisabled}
                 aria-label={label}
+                aria-labelledby={formField?.labelId}
                 aria-orientation="horizontal"
                 aria-valuemax={Math.max(min, max)}
                 aria-valuemin={Math.min(min, max)}
@@ -214,6 +221,7 @@ export const Slider = forwardRef<SliderHandle, SliderProps>(function Slider(
                   if (activeThumbRef.current === index) activeThumbRef.current = undefined;
                   setActiveThumb(current => (current === index ? undefined : current));
                   onBlur?.(event);
+                  formField?.notify('blur');
                 }}
                 onFocus={event => {
                   activeThumbRef.current = index;
@@ -232,7 +240,7 @@ export const Slider = forwardRef<SliderHandle, SliderProps>(function Slider(
                 }}
                 role="slider"
                 style={{ left: `calc(${thumbProgress}% - ${thumbHalfSize}px)` }}
-                tabIndex={disabled ? -1 : 0}
+                tabIndex={resolvedDisabled ? -1 : 0}
                 title={showTooltip ? tooltip : undefined}
               >
                 {showTooltip && activeThumb === index ? (
@@ -255,7 +263,7 @@ export const Slider = forwardRef<SliderHandle, SliderProps>(function Slider(
             {...inputProps}
             aria-label={`${ariaLabel} input`}
             className={cls(classes.em('input', 'native'), inputProps?.className)}
-            disabled={disabled}
+            disabled={resolvedDisabled}
             max={Math.max(min, max)}
             min={Math.min(min, max)}
             onChange={event => commitThumb(0, Number(event.currentTarget.value))}

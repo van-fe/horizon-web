@@ -154,6 +154,9 @@
     "packages/core": {
       "name": "@aurora/core",
       "version": "1.0.0",
+      "dependencies": {
+        "async-validator": "^4.2.5",
+      },
     },
     "packages/eslint-plugin-horizon-web": {
       "name": "@aurora/eslint-plugin-horizon-web",
@@ -201,7 +204,6 @@
         "@floating-ui/vue": "^1.1.9",
         "@popperjs/core": "^2.11.8",
         "@vueuse/core": "^11.0.0",
-        "async-validator": "^4.2.5",
         "dayjs": "^1.11.13",
         "decimal.js": "^10.4.3",
         "deepmerge": "^4.3.1",

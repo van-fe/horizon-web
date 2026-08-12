@@ -36,6 +36,7 @@ import {
 import { focusRadioInput } from '@aurora/horizon-web-core';
 import { cls, ComponentClassBlock } from '@aurora/theme';
 import { useHorizonWebConfig } from '../../provider';
+import { useFormFieldControl } from '../Form/context';
 
 export type { ChoiceSize, ChoiceValue, RadioVariant } from '@aurora/core';
 
@@ -121,12 +122,13 @@ export const Radio = forwardRef<RadioHandle, RadioProps>(function Radio(
   ref,
 ): ReactElement | null {
   const config = useHorizonWebConfig();
+  const formField = useFormFieldControl();
   const group = useContext(RadioGroupContext);
   const generatedName = useId();
   const inputRef = useRef<HTMLInputElement>(null);
   const [uncontrolledValue, setUncontrolledValue] = useState<ChoiceValue>(defaultValue);
   const currentValue = group?.value ?? value ?? uncontrolledValue;
-  const currentDisabled = (group?.disabled ?? false) || disabled;
+  const currentDisabled = (group?.disabled ?? false) || disabled || formField?.disabled === true;
   const currentReadOnly = (group?.readOnly ?? false) || readOnly;
   const currentSize = group?.size ?? size ?? RADIO_DEFAULTS.size;
   const currentName = group?.name ?? name ?? generatedName;
@@ -152,6 +154,7 @@ export const Radio = forwardRef<RadioHandle, RadioProps>(function Radio(
     if (group) group.commit(result.value);
     else if (value === undefined) setUncontrolledValue(result.value);
     onChange?.(result.value);
+    formField?.notify('change');
   }
 
   useImperativeHandle(
@@ -195,14 +198,18 @@ export const Radio = forwardRef<RadioHandle, RadioProps>(function Radio(
         <span className={classHelper.e('input')}>
           <input
             {...inputProps}
+            aria-describedby={formField?.describedBy ?? inputProps?.['aria-describedby']}
+            aria-invalid={formField?.invalid || undefined}
             checked={checked}
             className={classHelper.em('input', 'original')}
             data-focus-visible-proxy
             disabled={currentDisabled}
+            id={formField?.controlId}
             name={currentName}
             onBlur={event => {
               onBlur?.(event);
               group?.onBlur?.(event);
+              formField?.notify('blur');
             }}
             onChange={requestSelection}
             readOnly={currentReadOnly}
@@ -216,14 +223,18 @@ export const Radio = forwardRef<RadioHandle, RadioProps>(function Radio(
       {variant === 'button' && (
         <input
           {...inputProps}
+          aria-describedby={formField?.describedBy ?? inputProps?.['aria-describedby']}
+          aria-invalid={formField?.invalid || undefined}
           checked={checked}
           className={classHelper.em('input', 'original')}
           data-focus-visible-proxy
           disabled={currentDisabled}
+          id={formField?.controlId}
           name={currentName}
           onBlur={event => {
             onBlur?.(event);
             group?.onBlur?.(event);
+            formField?.notify('blur');
           }}
           onChange={requestSelection}
           readOnly={currentReadOnly}

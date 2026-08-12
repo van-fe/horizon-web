@@ -9,6 +9,7 @@ export * from './Dropdown';
 export * from './Dialog';
 export * from './Drawer';
 export * from './FloatButton';
+export * from './Form';
 export * from './Input';
 export * from './Link';
 export * from './Layout';
