@@ -6,6 +6,7 @@ import type { ListSlots } from './composables/useSlots';
 import { useListSlots } from './composables/useSlots';
 import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
 import useSize from '~/utils/useSize';
+import { resolveListMaxHeight } from '@aurora/core';
 
 export default defineComponent({
   name: `${useNamespace()}List`,
@@ -20,7 +21,7 @@ export default defineComponent({
     // global size
     const sizeRef = useSize(size, 'medium', { large: 'medium' });
 
-    const renderListItems = (data: any[]) => {
+    const renderListItems = (data: unknown[]) => {
       return data?.map((item, index) => slots.item?.({ item, index }));
     };
 
@@ -31,8 +32,9 @@ export default defineComponent({
     };
 
     return () => (
-      <HScrollbar maxHeight={props.maxHeight > 0 ? props.maxHeight : undefined}>
+      <HScrollbar maxHeight={resolveListMaxHeight(props.maxHeight)}>
         <div
+          role="list"
           class={cls(
             classHelper.block,
             classHelper.m(sizeRef.value),
@@ -41,10 +43,18 @@ export default defineComponent({
             classHelper.is('border', border.value),
           )}
         >
-          {slots.header && <div class={classHelper.e('header')}>{slots.header()}</div>}
+          {slots.header && (
+            <div class={classHelper.e('header')} role="presentation">
+              {slots.header()}
+            </div>
+          )}
           {slots.default?.()}
           {renderItems()}
-          {slots.footer && <div class={classHelper.e('footer')}>{slots.footer()}</div>}
+          {slots.footer && (
+            <div class={classHelper.e('footer')} role="presentation">
+              {slots.footer()}
+            </div>
+          )}
         </div>
       </HScrollbar>
     );

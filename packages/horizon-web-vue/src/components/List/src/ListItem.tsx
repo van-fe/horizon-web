@@ -9,8 +9,8 @@ import useSize from '~/utils/useSize';
 
 export default defineComponent({
   name: `${useNamespace()}ListItem`,
-  desc: "列表中的单个内容项",
-  descLocales: { en: "A single content item within List." },
+  desc: '列表中的单个内容项',
+  descLocales: { en: 'A single content item within List.' },
   props: useListItemProps,
   slots: useListItemSlots,
   setup(props: ListItemProps, { slots }: HorizonWebSetupContext<{}, ListItemSlots>) {
@@ -22,7 +22,7 @@ export default defineComponent({
     const sizeRef = useSize(titleSize, 'medium');
 
     return () => (
-      <div class={classHelper.block}>
+      <div class={classHelper.block} role="listitem">
         <main class={classHelper.e('main')}>
           {slots.sider && (
             <section class={classHelper.em('main', 'sider')}>{slots.sider()}</section>

@@ -27,6 +27,7 @@ const reactSidebar = [
       { text: 'Count', link: 'components/Count' },
       { text: 'Divider', link: 'components/Divider' },
       { text: 'Descriptions', link: 'components/Descriptions' },
+      { text: 'List', link: 'components/List' },
       { text: 'Mask', link: 'components/Mask' },
       { text: 'Typography', link: 'components/Typography' },
       { text: 'Statistic', link: 'components/Statistic' },

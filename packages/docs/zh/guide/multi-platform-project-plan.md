@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B30 Descriptions 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B31 List 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -758,6 +758,18 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DS-B30-001 | Done | Descriptions canonical Sass、变量、边框与布局迁入 `@aurora/theme`；Vue 使用包导出薄代理，React 使用同源视觉，并约束 390px 与长内容 |
 | DOC-B30-001 | Done | Vue 文档补齐 Props/Slots；React 中英文页面、3 个独立 TSX 示例与双语侧边栏入口完成，文档保持 renderer 原生表达 |
 | QA-B30-001 | Done | Core 188、Web Core Node 18/Chromium 57、React Chromium 215、Vue Chromium 2322 项（2321 通过、1 项预期失败）全部通过；Vue 总覆盖率为 97.95% / 95.06% / 97.62% / 98.25%；Vue Node 23、resolver 12、colors 1、upload adapters 66 项通过；五包构建、Sass、文档站、含 Descriptions 的 Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界与旧组件包名移除约束通过 |
+
+#### M6-B31 第三十一批实施记录（2026-08-12）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B31-001 | Done | List 与 ListItem 的公共 props、默认值、尺寸与高度校验器、项目上下文、区域契约和 manifest 迁入 `@aurora/core`，不包含 renderer、DOM 或产品样式实现 |
+| WEB-B31-001 | Done | 本批无跨 renderer DOM 控制器需求，因此不创建空 Web Core 目录；限高解析保持纯逻辑并由 Core 统一提供 |
+| VUE-B31-001 | Done | Vue props/slots 类型化消费公共契约，限高解析改用 Core；保留 `data`、作用域 `item`、header/footer 与 ListItem 历史插槽，并补充列表语义 |
+| REACT-B31-001 | Done | 完成泛型 React List/ListItem，支持 data/renderItem、静态 children、header/footer、斑马纹、边框、分割线、限高、Provider 尺寸、自定义内容区域、原生属性和根 ref |
+| DS-B31-001 | Done | List canonical Sass 与变量迁入 `@aurora/theme`；Vue 使用包导出薄代理，React 使用同源视觉；修复 footer 顶部分割线选择器并约束 390px 长内容 |
+| DOC-B31-001 | Done | Vue 文档补齐 Props/Slots；React 中英文页面、3 个独立 TSX 示例与双语侧边栏入口完成，文档保持 renderer 原生表达 |
+| QA-B31-001 | Done | Core 191、Theme 3、Locale React 5、Web Core Node 18/Chromium 57、React Chromium 218、Vue Chromium 2322 项（2321 通过、1 项预期失败）全部通过；Vue 总覆盖率为 97.94% / 95.06% / 97.60% / 98.24%；Vue Node 24、resolver 12、colors 1、upload adapters 66 项通过；五包构建、Sass、文档站、含 List 的 Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界与旧组件包名移除约束通过 |
 
 ### 批次 C：浮层与容器
 

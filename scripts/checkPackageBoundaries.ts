@@ -8,6 +8,11 @@ type BoundaryRule = {
 
 const workspaceRoot = resolve(import.meta.dir, '..');
 const legacyWebPackageName = '@aurora/horizon-web';
+const ignoredDirectories = new Set(['.git', 'coverage', 'dist', 'es', 'lib', 'node_modules']);
+const legacyReferenceAllowlist = new Set([
+  'packages/eslint-plugin-horizon-web/configs/recommended.js',
+  'scripts/checkPackageBoundaries.ts',
+]);
 
 function readJson(path: string): Record<string, unknown> {
   return JSON.parse(readFileSync(path, 'utf8')) as Record<string, unknown>;
@@ -46,6 +51,19 @@ function checkLegacyWebPackage(): string[] {
   return violations;
 }
 
+function checkLegacyWebReferences(): string[] {
+  const legacyPackageReference = /@aurora\/horizon-web(?![-A-Za-z0-9_])/;
+
+  return sourceFiles(workspaceRoot).flatMap(file => {
+    const relativePath = relative(workspaceRoot, file);
+    if (legacyReferenceAllowlist.has(relativePath)) return [];
+
+    return legacyPackageReference.test(readFileSync(file, 'utf8'))
+      ? [`${relativePath} references removed package ${legacyWebPackageName}`]
+      : [];
+  });
+}
+
 const rules: BoundaryRule[] = [
   {
     roots: ['packages/core/src'],
@@ -82,14 +100,20 @@ const sassImportPattern = /@(?:use|forward|import)\s+['"]([^'"]+)['"]/g;
 
 function sourceFiles(directory: string): string[] {
   return readdirSync(directory).flatMap(entry => {
+    if (ignoredDirectories.has(entry)) return [];
     const path = resolve(directory, entry);
     if (statSync(path).isDirectory()) return sourceFiles(path);
-    return /(?:\.[cm]?[jt]sx?|\.scss)$/.test(entry) ? [path] : [];
+    const relativePath = relative(workspaceRoot, path);
+    const isHuskyHook = relativePath.startsWith('.husky/');
+    return isHuskyHook || /(?:\.[cm]?[jt]sx?|\.json|\.s?css|\.vue|\.ya?ml|\.sh)$/.test(entry)
+      ? [path]
+      : [];
   });
 }
 
 const violations = [
   ...checkLegacyWebPackage(),
+  ...checkLegacyWebReferences(),
   ...rules.flatMap(rule => {
     return rule.roots.flatMap(root => {
       return sourceFiles(resolve(workspaceRoot, root)).flatMap(file => {

@@ -4,6 +4,8 @@ import {
   Button,
   DescriptionItem,
   Descriptions,
+  List,
+  ListItem,
   Mask,
   Select,
   Spin,
@@ -29,6 +31,11 @@ createRoot(document.getElementById('root')!).render(
       Descriptions,
       { title: 'React descriptions consumer' },
       createElement(DescriptionItem, { label: 'Status', value: 'Ready' }),
+    ),
+    createElement(
+      List,
+      { header: 'React list consumer' },
+      createElement(ListItem, { title: 'Status', describe: 'Ready' }),
     ),
   ),
 );

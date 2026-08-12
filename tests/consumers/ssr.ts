@@ -2,7 +2,16 @@ import { createElement } from 'react';
 import { renderToString as renderReact } from 'react-dom/server';
 import { createSSRApp, h } from 'vue';
 import { renderToString as renderVue } from 'vue/server-renderer';
-import { Button, DescriptionItem, Descriptions, Mask, Spin, Time } from '@aurora/horizon-web-react';
+import {
+  Button,
+  DescriptionItem,
+  Descriptions,
+  List,
+  ListItem,
+  Mask,
+  Spin,
+  Time,
+} from '@aurora/horizon-web-react';
 import { HButton } from '@aurora/horizon-web-vue/es/components/Button';
 import { HMask } from '@aurora/horizon-web-vue/es/components/Mask';
 import { HSpin } from '@aurora/horizon-web-vue/es/components/Spin';
@@ -11,6 +20,7 @@ import {
   HDescriptionItem,
   HDescriptions,
 } from '@aurora/horizon-web-vue/es/components/Descriptions';
+import { HList, HListItem } from '@aurora/horizon-web-vue/es/components/List';
 
 const reactHtml = renderReact(createElement(Button, null, 'React SSR'));
 if (!reactHtml.includes('React SSR')) throw new Error('React SSR consumer failed.');
@@ -35,6 +45,11 @@ const reactDescriptionsHtml = renderReact(
 );
 if (!reactDescriptionsHtml.includes('React Descriptions SSR'))
   throw new Error('React Descriptions SSR consumer failed.');
+
+const reactListHtml = renderReact(
+  createElement(List, { header: 'React List SSR' }, createElement(ListItem, { title: 'Ready' })),
+);
+if (!reactListHtml.includes('React List SSR')) throw new Error('React List SSR consumer failed.');
 
 const vueHtml = await renderVue(createSSRApp({ render: () => h(HButton, null, () => 'Vue SSR') }));
 if (!vueHtml.includes('Vue SSR')) throw new Error('Vue SSR consumer failed.');
@@ -66,5 +81,12 @@ const vueDescriptionsHtml = await renderVue(
 );
 if (!vueDescriptionsHtml.includes('Vue Descriptions SSR'))
   throw new Error('Vue Descriptions SSR consumer failed.');
+
+const vueListHtml = await renderVue(
+  createSSRApp({
+    render: () => h(HList, null, () => [h(HListItem, { title: 'Vue List SSR' })]),
+  }),
+);
+if (!vueListHtml.includes('Vue List SSR')) throw new Error('Vue List SSR consumer failed.');
 
 console.info('Vue and React SSR consumers verified.');

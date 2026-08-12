@@ -9,6 +9,7 @@ import {
   HDescriptionItem,
   HDescriptions,
 } from '@aurora/horizon-web-vue/es/components/Descriptions';
+import { HList, HListItem } from '@aurora/horizon-web-vue/es/components/List';
 
 const value = ref<string>();
 const options = [
@@ -26,4 +27,8 @@ const options = [
   <HDescriptions title="Vue descriptions consumer">
     <HDescriptionItem label="Status" value="Ready" />
   </HDescriptions>
+  <HList>
+    <template #header>Vue list consumer</template>
+    <HListItem title="Status" describe="Ready" />
+  </HList>
 </template>

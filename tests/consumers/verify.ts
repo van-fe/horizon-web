@@ -25,6 +25,8 @@ if (!reactOutput.includes('React descriptions consumer'))
   throw new Error('React Descriptions bundle is missing.');
 if (!vueOutput.includes('Vue descriptions consumer'))
   throw new Error('Vue Descriptions bundle is missing.');
+if (!reactOutput.includes('React list consumer')) throw new Error('React List bundle is missing.');
+if (!vueOutput.includes('Vue list consumer')) throw new Error('Vue List bundle is missing.');
 if (reactOutput.includes('Tooltip requires one valid React element child')) {
   throw new Error('React consumer retained an unused Tooltip implementation.');
 }

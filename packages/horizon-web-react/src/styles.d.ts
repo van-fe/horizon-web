@@ -4,6 +4,7 @@ declare module '@aurora/theme/styles/input';
 declare module '@aurora/theme/styles/input-number';
 declare module '@aurora/theme/styles/mask';
 declare module '@aurora/theme/styles/link';
+declare module '@aurora/theme/styles/list';
 declare module '@aurora/theme/styles/layout';
 declare module '@aurora/theme/styles/pagination';
 declare module '@aurora/theme/styles/popover';

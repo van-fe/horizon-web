@@ -2,6 +2,7 @@ import { mount, shallowMount } from '@vue/test-utils';
 import { HList, HListItem } from '..';
 import { describe, expect, test } from 'vitest';
 import { nextTick, ref } from 'vue';
+import '../src/style/index.scss';
 
 const templateData = Array(20)
   .fill(0)
@@ -104,6 +105,7 @@ describe('List.tsx', () => {
       ));
 
       expect(wrapper.get('.h-list').classes()).toContain('h-list--small');
+      expect(wrapper.get('.h-list').attributes('role')).toBe('list');
       expect(wrapper.get('[data-test="row-0"]').text()).toBe('0:alpha');
       expect(wrapper.get('[data-test="row-1"]').text()).toBe('1:beta');
       expect(wrapper.findComponent({ name: 'HScrollbar' }).props('maxHeight')).toBe(180);

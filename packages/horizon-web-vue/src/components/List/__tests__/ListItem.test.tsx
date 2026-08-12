@@ -26,6 +26,7 @@ describe('ListItem.tsx', () => {
       expect(wrapper.get('.h-list-item__main--title').text()).toBe('Primary');
       expect(wrapper.get('.h-list-item__main--subtitle').text()).toBe('Secondary');
       expect(wrapper.get('.h-list-item__main--describe').text()).toBe('Details');
+      expect(wrapper.get('.h-list-item').attributes('role')).toBe('listitem');
     });
 
     test('titleSize', async () => {

@@ -1,3 +1,5 @@
+import { isListMaxHeight, isListSize, LIST_DEFAULTS, LIST_ITEM_DEFAULTS } from '@aurora/core';
+import type { ListCommonProps, ListItemCommonProps, ListSize } from '@aurora/core';
 import type { ExtractPropTypes, PropType } from 'vue';
 import { declarePropType } from '@aurora/utils';
 
@@ -7,7 +9,7 @@ export const useListProps = declarePropType({
    * @en Configuration for data.
    */
   data: {
-    type: Array as PropType<any[]>,
+    type: Array as PropType<unknown[]>,
     required: false,
   },
   /**
@@ -16,7 +18,7 @@ export const useListProps = declarePropType({
    */
   zebra: {
     type: Boolean,
-    default: false,
+    default: LIST_DEFAULTS.zebra,
   },
   /**
    * 是否带边框
@@ -24,7 +26,7 @@ export const useListProps = declarePropType({
    */
   border: {
     type: Boolean,
-    default: false,
+    default: LIST_DEFAULTS.border,
   },
   /**
    * 是否显示分割线
@@ -32,7 +34,7 @@ export const useListProps = declarePropType({
    */
   split: {
     type: Boolean,
-    default: true,
+    default: LIST_DEFAULTS.split,
   },
   /**
    * 列表的最大高度
@@ -40,17 +42,19 @@ export const useListProps = declarePropType({
    */
   maxHeight: {
     type: Number,
-    default: 0,
+    default: LIST_DEFAULTS.maxHeight,
+    validator: isListMaxHeight,
   },
   /**
    * 列表Item的大小
    * @en Configuration for size.
    */
   size: {
-    type: String as PropType<'medium' | 'small'>,
+    type: String as PropType<ListSize>,
     required: false,
+    validator: isListSize,
   },
-});
+} satisfies Record<keyof ListCommonProps, unknown>);
 
 export const useListItemProps = declarePropType({
   /**
@@ -66,8 +70,9 @@ export const useListItemProps = declarePropType({
    * @en Configuration for title size.
    */
   titleSize: {
-    type: String as PropType<'medium' | 'small'>,
+    type: String as PropType<ListSize>,
     required: false,
+    validator: isListSize,
   },
   /**
    * 列表项的副标题
@@ -83,7 +88,7 @@ export const useListItemProps = declarePropType({
    */
   titleBold: {
     type: Boolean,
-    default: true,
+    default: LIST_ITEM_DEFAULTS.titleBold,
   },
   /**
    * 列表项的内容
@@ -93,7 +98,7 @@ export const useListItemProps = declarePropType({
     type: String,
     required: false,
   },
-});
+} satisfies Record<keyof ListItemCommonProps, unknown>);
 
 export type ListProps = ExtractPropTypes<typeof useListProps>;
 export type ListItemProps = ExtractPropTypes<typeof useListItemProps>;

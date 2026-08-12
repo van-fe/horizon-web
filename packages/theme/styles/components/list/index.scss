@@ -1,0 +1,141 @@
+@use '../../mixins';
+
+/* stylelint-disable nesting-selector-no-missing-scoping-root -- BEM mixins provide selector roots. */
+
+@include mixins.b('list') {
+  min-width: 0;
+  max-width: 100%;
+  overflow: auto;
+
+  @include mixins.e('header') {
+    border-bottom: mixins.css-variable('list', 'border');
+  }
+
+  @include mixins.e('footer') {
+    border-top: mixins.css-variable('list', 'border');
+  }
+
+  @include mixins.is('border') {
+    border: mixins.css-variable('list', 'border');
+  }
+
+  @include mixins.m('medium') {
+    #{mixins.block-name('list-item')} {
+      padding: mixins.css-variable('list', 'spacing', 'list-item', 'padding');
+    }
+  }
+
+  @include mixins.m('small') {
+    #{mixins.block-name('list-item')} {
+      padding: mixins.css-variable('list', 'spacing', 'list-item', 'padding', 'small');
+    }
+  }
+
+  @include mixins.is('split') {
+    @include mixins.b('list-item', false) {
+      border-bottom: mixins.css-variable('list', 'border');
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+  @include mixins.is('zebra') {
+    @include mixins.b('list-item') {
+      &:nth-child(odd) {
+        background: mixins.css-variable('list', 'background');
+      }
+
+      &:nth-child(even) {
+        background: mixins.css-variable('list', 'background', 'even');
+      }
+    }
+  }
+}
+
+@include mixins.b('list-item') {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  min-width: 0;
+  max-width: 100%;
+  background: mixins.css-variable('list', 'background');
+
+  @include mixins.e('main') {
+    box-sizing: border-box;
+    display: flex;
+    flex: 1;
+    width: 0;
+    min-width: 0;
+
+    @include mixins.m('sider') {
+      flex: none;
+      min-width: 0;
+      margin-right: mixins.css-variable('list', 'spacing', 'main-sider', 'margin-right');
+    }
+
+    @include mixins.m('content') {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      justify-content: center;
+      width: 0;
+      min-width: 0;
+      word-break: normal;
+      overflow-wrap: anywhere;
+
+      > * {
+        min-width: 0;
+        max-width: 100%;
+        overflow-wrap: anywhere;
+      }
+    }
+
+    @include mixins.m('title-wrapper') {
+      min-width: 0;
+      overflow-wrap: anywhere;
+
+      @include mixins.is('bold') {
+        font-weight: mixins.css-variable('list', 'font-weight', 'title', 'bold');
+      }
+    }
+
+    @include mixins.m('title') {
+      margin-bottom: mixins.css-variable('list', 'spacing', 'main-title', 'margin-bottom');
+      font-size: mixins.css-variable('list', 'font-size', 'main-title');
+      font-style: normal;
+      line-height: mixins.css-variable('list', 'line-height', 'main-title');
+      color: mixins.css-variable('list', 'color', 'main-title');
+    }
+
+    @include mixins.m('subtitle') {
+      margin-left: mixins.css-variable('list', 'spacing', 'subtitle', 'margin-left');
+      font-size: mixins.css-variable('list', 'font-size', 'main-subtitle');
+      color: mixins.css-variable('list', 'color', 'main-subtitle');
+    }
+
+    @include mixins.m('describe') {
+      font-size: mixins.css-variable('list', 'font-size', 'describe');
+      font-style: normal;
+      line-height: mixins.css-variable('list', 'line-height', 'describe');
+      color: mixins.css-variable('list', 'color', 'describe');
+      overflow-wrap: anywhere;
+    }
+
+    @include mixins.m('default') {
+      font-size: mixins.css-variable('list', 'font-size');
+      font-style: normal;
+      line-height: mixins.css-variable('list', 'line-height');
+      color: mixins.css-variable('list', 'color');
+      overflow-wrap: anywhere;
+    }
+  }
+
+  @include mixins.e('right') {
+    min-width: 0;
+    max-width: 100%;
+    padding-left: mixins.css-variable('list', 'spacing', 'right', 'padding-left');
+    overflow-wrap: anywhere;
+  }
+}

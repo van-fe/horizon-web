@@ -45,6 +45,8 @@ import {
   mainManifest,
   maskManifest,
   linkManifest,
+  listItemManifest,
+  listManifest,
   paginationManifest,
   popContentManifest,
   popconfirmManifest,
@@ -112,6 +114,8 @@ const manifests = [
   gridItemManifest,
   hoverManifest,
   linkManifest,
+  listManifest,
+  listItemManifest,
   maskManifest,
   paginationManifest,
   popconfirmManifest,
@@ -724,6 +728,17 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
   Skeleton: { regions: { rename: { content: 'default', placeholder: 'loadingTemplate' } } },
   Descriptions: { regions: { rename: { content: 'default' } } },
   DescriptionItem: { regions: { rename: { content: 'default' } } },
+  List: { regions: { rename: { content: 'default' } } },
+  ListItem: {
+    regions: {
+      rename: {
+        content: 'default',
+        leading: 'sider',
+        description: 'describe',
+        actions: 'right',
+      },
+    },
+  },
   Spin: { regions: { rename: { content: 'default' } } },
   Time: { regions: { rename: { content: 'default' } } },
   Statistic: { regions: { rename: { value: 'default' } } },
@@ -1335,6 +1350,38 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
       ],
     },
     regions: { rename: { content: 'children' }, omit: ['label'] },
+  },
+  List: {
+    props: {
+      extend: [
+        {
+          name: 'renderItem',
+          type: '(item: Item, index: number) => ReactNode',
+          description: { zh: '渲染数据项目', en: 'Renders a source item' },
+        },
+      ],
+    },
+    regions: { rename: { content: 'children' }, omit: ['item'] },
+  },
+  ListItem: {
+    props: {
+      extend: [
+        {
+          name: 'titleContent',
+          type: 'ReactNode',
+          description: { zh: '自定义标题内容', en: 'Custom title content' },
+        },
+        {
+          name: 'descriptionContent',
+          type: 'ReactNode',
+          description: { zh: '自定义描述内容', en: 'Custom description content' },
+        },
+      ],
+    },
+    regions: {
+      rename: { content: 'children', leading: 'leading', actions: 'actions' },
+      omit: ['title', 'description'],
+    },
   },
   Spin: {
     props: {
