@@ -52,7 +52,7 @@
 - `@aurora/theme` 表示 Horizon 与 Skyline 共用的视觉规范、Token 值和主题输出；
 - 支撑型包可以继续使用 `locale-*`、`icon-*`、`upload-adapters` 等领域名称，不强制套用产品组件包命名规则。
 
-### 3.1 现有包改名与兼容
+### 3.1 现有包改名
 
 最终目标是：
 
@@ -61,22 +61,7 @@ packages/horizon-web-vue     -> @aurora/horizon-web-vue
 packages/horizon-web-react   -> @aurora/horizon-web-react
 ```
 
-因为现有 `@aurora/horizon-web` 可能已经被业务项目使用，所以不能在同一版本中直接删除。建议保留一个兼容包：
-
-```text
-packages/horizon-web         -> @aurora/horizon-web
-                               重新导出 @aurora/horizon-web-vue
-                               并在文档和发布信息中标记 deprecated
-```
-
-兼容期至少覆盖一个完整的大版本周期。兼容包应满足：
-
-- 默认导出、具名导出和样式入口与当前版本一致；
-- 不复制 Vue 实现，只进行转发；
-- 开发环境给出一次明确的迁移提示，生产环境不打印；
-- 提供 codemod 或可审查的批量替换脚本；
-- 文档中的新示例全部使用 `@aurora/horizon-web-vue`；
-- `@aurora/horizon-web` 与 `@aurora/horizon-web-vue` 的版本保持同步，直到兼容包正式移除。
+本次改名按 breaking change 实施，不保留 `@aurora/horizon-web` 兼容包、alias、转发入口或 resolver 回退。所有 Vue 消费端必须显式迁移至 `@aurora/horizon-web-vue`，React 消费端使用 `@aurora/horizon-web-react`。`@aurora/eslint-plugin-horizon-web` 注册的规则简写 `@aurora/horizon-web/*` 与组件包无关，继续保留。
 
 ## 4. 目标架构
 
@@ -550,17 +535,15 @@ Upload Core
 
 Tree、Table、Upload 等组件应优先抽出数据模型、算法和异步调度，再实现 React renderer，不允许直接复制整个 Vue 目录后长期双维护。
 
-### 阶段 5：包改名与兼容发布
+### 阶段 5：包改名与发布
 
 交付物：
 
 - 将现有实现迁移到 `packages/horizon-web-vue`；
 - 发布 `@aurora/horizon-web-vue`；
-- 将 `@aurora/horizon-web` 改为兼容转发包；
+- 删除 `@aurora/horizon-web` 包及其版本、发布和锁文件入口；
 - 更新文档、模板、resolver、API Generator 和内部依赖；
-- 提供业务项目迁移说明和 codemod；
-- 监控兼容包使用量和迁移问题；
-- 在预告的大版本中移除兼容包。
+- 提供业务项目迁移说明和 codemod，并将包名变更标记为 breaking change。
 
 ## 13. 组件迁移模板
 
@@ -615,7 +598,6 @@ Vue 使用 Vue Test Utils，React 使用 React Testing Library，分别验证：
 - Core、platform core 和 renderer 的版本应由统一 release plan 管理；
 - 公共契约的 breaking change 必须同时评估所有 renderer；
 - renderer 专属 API 可以独立增加，但不能悄悄改变公共语义；
-- 兼容包与 Vue renderer 在兼容期保持同版本；
 - package exports 明确区分主入口、样式入口、主题入口和可选集成；
 - peerDependencies 只声明 renderer 必需的框架运行时；
 - 所有包明确配置 `sideEffects`，CSS 入口不能被错误 tree-shake；
@@ -643,7 +625,7 @@ Vue 使用 Vue Test Utils，React 使用 React Testing Library，分别验证：
 | CSS 共享导致 DOM 结构僵化 | 维护稳定语义/class 契约，允许小范围 renderer 样式 |
 | 浮层、焦点和 SSR 问题 | 统一 Web primitives，增加浏览器及 SSR 契约测试 |
 | 包数量过多 | 只发布稳定边界；早期可先以 workspace 内部包验证 |
-| 业务迁移成本高 | 兼容包、codemod、迁移文档和完整大版本周期 |
+| 业务迁移成本高 | breaking change 说明、codemod 和可审查的迁移文档 |
 | React 实现长期落后 | 组件 Definition of Done 要求 Vue/React/API/文档同步 |
 
 ## 18. Definition of Done

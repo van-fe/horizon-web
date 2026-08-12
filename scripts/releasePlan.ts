@@ -13,7 +13,6 @@ export const publishPackages = [
   'locale-react',
   'horizon-web-vue',
   'horizon-web-react',
-  'horizon-web',
   'unplugin-resolver',
   'upload-adapters',
 ] as const;

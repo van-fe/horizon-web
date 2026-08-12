@@ -45,7 +45,6 @@
   },
   "devDependencies": {
     "@aurora/eslint-plugin-horizon-web": "workspace:*",
-    "@aurora/horizon-web": "workspace:*",
     "@aurora/horizon-web-react": "workspace:*",
     "@aurora/horizon-web-vue": "workspace:*",
     "@aurora/icon": "workspace:*",

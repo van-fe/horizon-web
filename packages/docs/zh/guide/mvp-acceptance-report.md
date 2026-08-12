@@ -13,7 +13,7 @@ M0–M5 的 Web 双 renderer MVP 已达到进入 M6 批量迁移的工程门槛�
 | 公共视觉 | `@aurora/theme`，Button、Switch、Tooltip、Select 使用同源变量与样式 |
 | Vue renderer | `@aurora/horizon-web-vue`，保留现有公开 API 和测试基线 |
 | React renderer | `@aurora/horizon-web-react`，原生受控/非受控、children/renderers、callbacks 和 ref API |
-| 兼容入口 | `@aurora/horizon-web` 转发 Vue 默认、具名和 `style.css` 入口 |
+| 包名迁移 | breaking change：只保留 `@aurora/horizon-web-vue` 与 `@aurora/horizon-web-react`，不提供旧组件包兼容入口 |
 
 边界检查覆盖 Core、Theme、Web Core 和 React renderer，当前全部通过。
 
@@ -43,14 +43,14 @@ M0–M5 的 Web 双 renderer MVP 已达到进入 M6 批量迁移的工程门槛�
 - Vue 与 React SSR render smoke 通过；
 - React 保留组件模块边界，只使用 Button/Select 时不会保留 Tooltip 实现；
 - resolver 能显式解析 Vue/React 包与样式入口；
-- 发布 dry-run 按依赖顺序覆盖 Core、Theme、Web Core、双 renderer、兼容包和扩展包；
-- 兼容包的 ESM 默认导出、具名转发、CommonJS 转发和样式入口验证通过。
+- 发布 dry-run 按依赖顺序覆盖 Core、Theme、Web Core、双 renderer 和扩展包；
+- workspace、锁文件、版本表和 release plan 均不包含 `@aurora/horizon-web` 旧组件包。
 
 ## 已知风险
 
 1. Vue Select 按需消费仍会带入较多历史依赖，当前 smoke 的 JS/CSS 体积偏大。M6/M7 应继续拆分 Picker、Tag、Scrollbar 和表单依赖，不能把现状视为最终体积目标。
 2. React JS 已可按组件 tree-shake，但 `style.css` 仍是 renderer 级样式入口。批量迁移时需要增加稳定的组件级 CSS 产物和 resolver 路径。
-3. `@aurora/horizon-web` 当前只承诺默认、具名和样式入口；历史私有深路径不进入兼容承诺。
+3. 包名迁移是 breaking change；业务项目必须将 Vue imports 显式更新为 `@aurora/horizon-web-vue`。
 4. 现有 Vue 浏览器套件仍会输出部分历史警告，需要在相应组件迁移批次中逐项消除。
 
 ## 下一阶段

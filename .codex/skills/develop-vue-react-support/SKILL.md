@@ -28,6 +28,7 @@ Keep all Vue/React renderer-splitting work integrated on `feature/vue-react-supp
 - Keep Vue rendering and Vue-only APIs in `@aurora/horizon-web-vue`.
 - Keep React rendering, hooks, providers, React props, callbacks, children, and refs in `@aurora/horizon-web-react`.
 - Do not import Vue from shared core/theme or React packages, and do not import React from Vue packages.
+- Treat the renderer package rename as a breaking migration. Do not create, publish, alias, re-export, resolve, document, test, or otherwise preserve `@aurora/horizon-web` as a compatibility package. The only Web renderer package names are `@aurora/horizon-web-vue` and `@aurora/horizon-web-react`; the scoped ESLint plugin rule id `@aurora/horizon-web/*` is unrelated and remains unchanged.
 - Reuse common behavior through typed contracts and test vectors rather than one renderer wrapping the other.
 - Define shared component API semantics once in the matching `@aurora/core/src/components/<Component>` contract: domain types, defaults, validators, event payloads/reasons, render-region semantics, and imperative commands.
 - Let Vue adapt that contract into `props`/`emits`/`slots`/`exposes`, and React adapt it into `props`/callbacks/children or renderers/refs. Renderer adapters may rename, omit, or extend fields, but must not duplicate shared enums, defaults, validators, or payload types.

@@ -26,7 +26,7 @@
 - 一个迭代为两周，计划以工程量为主，日历时间随实际投入人数调整；
 - Skyline Mobile 包只预留边界，本轮不实现移动端 renderer。
 
-如果只有 1 名工程师，保持任务顺序不变，延长日历周期；不得通过跳过测试、文档、兼容层或基础设施缩短周期。
+如果只有 1 名工程师，保持任务顺序不变，延长日历周期；不得通过跳过测试、迁移说明或基础设施缩短周期。
 
 ## 3. 项目目标
 
@@ -41,7 +41,7 @@
 - React ESM、类型声明、样式和 SSR 安全入口；
 - Vue/React 双框架文档示例；
 - 能够识别新包名的构建、resolver、版本和发布流程；
-- `@aurora/horizon-web` 兼容策略的可运行验证版本。
+- `@aurora/horizon-web-vue` 与 `@aurora/horizon-web-react` 的无歧义公开入口。
 
 ### 3.2 成功指标
 
@@ -59,7 +59,7 @@ MVP 达到以下指标才允许进入批量组件迁移：
 ### 3.3 本轮非目标
 
 - 在 M0–M5 MVP 验收前一次迁移全部 87 个组件；M6/M7 按依赖批次继续完成全量拆分；
-- 立即删除 `@aurora/horizon-web`；
+- 为 `@aurora/horizon-web` 保留兼容包、alias 或转发入口；
 - 实现 `skyline-mobile-vue/react`；
 - 强制 Vue 与 React 使用完全相同的 props 名称；
 - 创建自定义 VDOM 或通用模板 DSL；
@@ -80,7 +80,7 @@ MVP 达到以下指标才允许进入批量组件迁移：
 | Vue 兼容       | VUE   | 让现有 Vue 实现消费公共能力且行为不回退         |
 | React renderer | REACT | 提供 React 原生 API 和运行时实现                |
 | 文档与生成器   | DOC   | 双框架文档、manifest、API Generator 和 resolver |
-| 质量与发布     | QA    | 契约测试、SSR、bundle、版本、兼容包和发布演练   |
+| 质量与发布     | QA    | 契约测试、SSR、bundle、版本、包名迁移和发布演练 |
 
 ## 5. 里程碑总览
 
@@ -150,7 +150,7 @@ flowchart LR
 | PKG-002 | 创建 `horizon-web-core` | DOM 能力包骨架 | SSR import 不访问浏览器全局 |
 | PKG-003 | 创建 `theme` | 统一 Token 源及 Web/Native 输出骨架 | Web Vue/React 消费同一 CSS，Skyline 可消费同源 TS/JSON Token |
 | PKG-004 | 创建 `horizon-web-react` | React 19、类型、测试、SSR 骨架 | ESM、类型、renderToString smoke test 通过 |
-| PKG-005 | 规划 `horizon-web-vue` 迁移 | 目录迁移清单和兼容包原型 | 明确所有写死路径，不立即大规模移动源码 |
+| PKG-005 | 规划 `horizon-web-vue` 迁移 | 目录迁移清单和 breaking change 清单 | 明确所有写死路径，不立即大规模移动源码 |
 | QA-002 | 添加依赖边界检查 | CI 脚本和失败示例测试 | Core 导入 Vue/React 时 CI 必须失败 |
 
 退出门槛：所有新包独立 build/typecheck/test 通过，根工作区脚本可以发现它们，现有 Vue 测试不受影响。
@@ -163,7 +163,7 @@ flowchart LR
 | PKG-002 | Done | 新建 `@aurora/horizon-web-core`，首批抽出 SSR 安全的 browser detection 与 body scroll lock |
 | PKG-003 | Done | 新建统一的 `@aurora/theme`，提供 namespace、class contract、Token 展平与 CSS variable 输出骨架 |
 | PKG-004 | Done | 新建 `@aurora/horizon-web-react`，完成 Provider、context/hook、React 18/19 peer range 与 SSR smoke test |
-| PKG-005 | Done | Vue 实现已迁移到 `packages/horizon-web-vue` 并更名为 `@aurora/horizon-web-vue`；旧 `@aurora/horizon-web` 兼容转发包仍按 PKG-008 单独实现 |
+| PKG-005 | Done | Vue 实现已迁移到 `packages/horizon-web-vue` 并更名为 `@aurora/horizon-web-vue`；旧组件包名作为 breaking change 删除 |
 | UTIL-002 | Done | `@aurora/utils` 通过兼容转发消费 `core/theme/web-core`，现有 Vue 导入路径保持有效 |
 | QA-002 | Done | 新增 foundation package boundary scan，并接入根测试命令和 Pages 构建依赖顺序 |
 
@@ -318,7 +318,7 @@ M2 的公共抽取只包含与渲染框架无关的状态和行为协议。组�
 | DOC-003 | 双框架文档运行时 | Vue/React 示例 tab 和编译环境 | 示例独立构建且错误可定位 |
 | PKG-006 | resolver 平台化 | Vue/React package 和 style 路径解析 | 按需导入 smoke project 通过 |
 | PKG-007 | 版本与发布脚本改造 | 新包版本、依赖替换、发布顺序 | dry run 输出正确，不修改无关包 |
-| PKG-008 | 兼容包验证 | `@aurora/horizon-web` 转发原型 | 默认、具名、样式入口兼容 |
+| PKG-008 | 旧包移除验证 | 删除 `@aurora/horizon-web` | workspace、锁文件、版本表和发布计划均不存在旧组件包入口 |
 | QA-004 | 消费端矩阵 | Vite Vue、Vite React、SSR smoke projects | install/build/render/tree-shaking 通过 |
 | QA-005 | MVP 验收报告 | 指标、差异、风险和下一阶段估算 | 所有 M0–M5 退出门槛有证据 |
 
@@ -332,8 +332,8 @@ M2 的公共抽取只包含与渲染框架无关的状态和行为协议。组�
 | DOC-002 | Done | 公共 adapter 支持 renderer 字段重命名、删减和扩展，文档准备阶段分别生成 Vue/React contract JSON |
 | DOC-003 | Done | Vue/React 页面、侧边栏、示例目录、编译器和错误边界保持独立 |
 | PKG-006 | Done | resolver 显式支持 Vue/React 包名与样式入口，12 个 resolver 测试通过 |
-| PKG-007 | Done | 版本表和发布顺序覆盖 Core、Theme、Web Core、双 renderer 与兼容包；dry-run 不修改包文件 |
-| PKG-008 | Done | `@aurora/horizon-web` 默认、具名、CommonJS 和样式转发原型通过 |
+| PKG-007 | Done | 版本表和发布顺序覆盖 Core、Theme、Web Core 与双 renderer；dry-run 不修改包文件 |
+| PKG-008 | Done | `@aurora/horizon-web` 兼容包、workspace 依赖、版本键和发布入口已删除，双 renderer 使用唯一显式包名 |
 | QA-004 | Done | Vite Vue、Vite React、Vue SSR、React SSR 和 React tree-shaking smoke 通过 |
 | QA-005 | Done | [Web Vue/React MVP 验收报告](./mvp-acceptance-report.md)记录指标、风险和 M6 准入结论 |
 
@@ -783,7 +783,7 @@ codex/horizon-mvp-tooling
 - 所有发布包 build 和类型声明检查；
 - Vite Vue、Vite React、SSR 消费工程；
 - ESM/CJS 支持范围验证；
-- 兼容包入口和弃用提示；
+- breaking package rename 说明与无旧入口审计；
 - changelog、迁移指南、已知差异和回滚方案；
 - beta tag 发布，不直接覆盖 stable。
 
