@@ -5,7 +5,6 @@ import { nextTick, ref } from 'vue';
 import type { TagProps } from '../src/composables/useProps';
 import HAvatar from '../../Avatar';
 import { IconEye } from '@aurora/icon';
-import { sleep } from '../../../utils/tools';
 
 describe('Tag.tsx', () => {
   test('basic', async () => {
@@ -206,6 +205,7 @@ describe('Tag.tsx', () => {
     });
 
     test('delay-show-close', async () => {
+      vi.useFakeTimers();
       const wrapper = mount(() => (
         <HTag equally={true} closable={true} clickable={true}>
           普
@@ -214,7 +214,7 @@ describe('Tag.tsx', () => {
       const element = wrapper.find('.h-tag');
 
       await element.trigger('mouseenter');
-      await sleep(1000);
+      await vi.advanceTimersByTimeAsync(1000);
       await nextTick();
 
       expect(element.find('.h-tag__close').exists()).eq(true);
@@ -222,10 +222,12 @@ describe('Tag.tsx', () => {
       await element.trigger('mouseleave');
       await element.trigger('mouseenter');
       await element.trigger('click');
-      await sleep(1000);
+      await vi.advanceTimersByTimeAsync(1000);
       await nextTick();
 
       expect(element.find('.h-tag__close').exists()).eq(false);
+      wrapper.unmount();
+      vi.useRealTimers();
     });
 
     test('loading', async () => {

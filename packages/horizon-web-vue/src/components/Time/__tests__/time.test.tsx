@@ -59,11 +59,14 @@ describe('Time.tsx', () => {
   });
 
   test('emits finished once the countdown crosses zero', async () => {
+    vi.useFakeTimers();
     const onFinished = vi.fn();
-    mount(HTime, { props: { time: 1, onFinished } });
+    const wrapper = mount(HTime, { props: { time: 1, onFinished } });
 
-    await delay(2100);
+    await vi.advanceTimersByTimeAsync(2000);
     expect(onFinished).toHaveBeenCalledOnce();
+    wrapper.unmount();
+    vi.useRealTimers();
   });
 
   test('formats minute/hour boundaries reactively and clears its timer on unmount', async () => {
