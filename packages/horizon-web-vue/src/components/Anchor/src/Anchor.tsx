@@ -10,6 +10,18 @@ import {
   watch,
 } from 'vue';
 import type { Ref, CSSProperties, ComputedRef } from 'vue';
+import type { AnchorListItem } from '@aurora/core';
+import { resolveActiveAnchorLink } from '@aurora/core';
+import type { AnchorScrollController } from '@aurora/horizon-web-core';
+import {
+  createAnchorScrollController,
+  getAnchorCustomOffset,
+  getAnchorOffsetTop,
+  getAnchorScrollTop,
+  resolveAnchorHashTarget,
+  resolveAnchorScrollTarget,
+  scanAnchorHeadings,
+} from '@aurora/horizon-web-core';
 import type { AnchorProps } from './composables/useProps';
 import { useAnchorProps } from './composables/useProps';
 import { useAnchorEmits } from './composables/useEmits';
@@ -18,9 +30,6 @@ import { useAnchorSlots } from './composables/useSlots';
 import type { AnchorEmits } from './composables/useEmits';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
-import { customScrollTo, getCustomOffset, getOffsetTop, getScrollTop } from './utils/base';
-import { deepSearch, genListByDomList } from './utils/extra';
-import type { AnchorListItem } from './utils/extra';
 import AnchorLink from './AnchorLink';
 import HScrollbar from '~/components/Scrollbar/src/Scrollbar';
 import HTooltip from '~/components/Tooltip/src/Tooltip';
@@ -49,7 +58,9 @@ const highLightLineDefaultStyle = {
 export default defineComponent({
   name: `${useNamespace()}Anchor`,
   desc: '电梯导航用来展示当前页面中，有哪些具体内容，并可以快速定位',
-  descLocales: { en: 'Anchor navigation lists the sections on the current page and lets users jump to them quickly.' },
+  descLocales: {
+    en: 'Anchor navigation lists the sections on the current page and lets users jump to them quickly.',
+  },
   components: {
     HScrollbar,
   },
@@ -57,7 +68,10 @@ export default defineComponent({
   emits: useAnchorEmits,
   slots: useAnchorSlots,
   exposes: useAnchorExposes,
-  setup(props, { slots, emit, expose }: HorizonWebSetupContext<AnchorEmits, AnchorSlots, AnchorExposes>) {
+  setup(
+    props,
+    { slots, emit, expose }: HorizonWebSetupContext<AnchorEmits, AnchorSlots, AnchorExposes>,
+  ) {
     const classHelper = new ComponentClassBlock('anchor');
     const { size } = toRefs(props);
 
@@ -75,25 +89,18 @@ export default defineComponent({
     const anchorStyleClac = computed(() => ({ ...props.style, maxHeight: `${props.maxHeight}px` }));
 
     const scrollContainer = ref<Window | HTMLElement | null>(null);
+    let scrollController: AnchorScrollController | undefined;
 
     function updateScrollContainer() {
-      if (typeof props.scrollContainer === 'string') {
-        scrollContainer.value = document.querySelector(props.scrollContainer) as HTMLElement | null;
-      } else {
-        scrollContainer.value = props.scrollContainer ?? window;
-      }
+      scrollContainer.value = resolveAnchorScrollTarget(props.scrollContainer, document, selector =>
+        console.warn(
+          `[Horizon Web] Anchor scroll container "${selector}" was not found; using window instead.`,
+        ),
+      );
     }
 
     const getTarDomByLink = (link: string) => {
-      const resMatch = link.match(sharpLinkRegx);
-      if (!resMatch) {
-        return null;
-      }
-      const tarDom = document.getElementById(resMatch[1]);
-      if (!tarDom) {
-        return null;
-      }
-      return tarDom;
+      return resolveAnchorHashTarget(link, document);
     };
 
     const scrollToHandle = (link: string) => {
@@ -101,18 +108,15 @@ export default defineComponent({
       if (!tarDom) {
         return;
       }
-      const offsetTop = getOffsetTop(tarDom, scrollContainer.value);
-      const scrollTop = getScrollTop(scrollContainer.value);
-      const scrollOffset = getCustomOffset(props.scrollOffset, tarDom, scrollContainer.value);
+      const target = scrollContainer.value ?? window;
+      const offsetTop = getAnchorOffsetTop(tarDom, target);
+      const scrollTop = getAnchorScrollTop(target);
+      const scrollOffset = getAnchorCustomOffset(props.scrollOffset, tarDom, target);
       const resDis = offsetTop + scrollTop - scrollOffset;
 
       isScrolling.value = true;
-      customScrollTo(resDis, {
-        behavior: props.scrollBehavior,
-        scrollContainer: scrollContainer.value,
-        callback: () => {
-          isScrolling.value = false;
-        },
+      scrollController?.scrollTo(resDis, props.scrollBehavior, () => {
+        isScrolling.value = false;
       });
     };
 
@@ -147,26 +151,19 @@ export default defineComponent({
       if (isScrolling.value) {
         return;
       }
-      const resLinks: { top: number; link: string }[] = [];
-      let curActiveLink = '';
-      // 找到所有至“滚动容器顶部”的距离小于bounds的link(对应一个DOM元素)
+      const target = scrollContainer.value ?? window;
+      const sections: { top: number; link: string }[] = [];
       links.value.forEach(link => {
         const tarDom = getTarDomByLink(link);
-        if (!tarDom) {
-          return;
-        }
-        const top = getOffsetTop(tarDom, scrollContainer.value);
-        const boundsOffset = getCustomOffset(props.boundsOffset, tarDom, scrollContainer.value);
-        if (top < boundsOffset) {
-          resLinks.push({ link, top });
-        }
+        if (tarDom) sections.push({ link, top: getAnchorOffsetTop(tarDom, target) });
       });
-      // 找出上述集合中距离最远的一个link(对应一个DOM元素)
-      if (resLinks.length) {
-        const latest = resLinks.reduce((prev, cur) => (prev.top > cur.top ? prev : cur));
-        curActiveLink = latest.link;
-      }
-      updateActiveLink(curActiveLink, false);
+      const firstTarget = sections.length ? getTarDomByLink(sections[0].link) : null;
+      const boundsOffset = firstTarget
+        ? getAnchorCustomOffset(props.boundsOffset, firstTarget, target)
+        : typeof props.boundsOffset === 'number'
+          ? props.boundsOffset
+          : 0;
+      updateActiveLink(resolveActiveAnchorLink(sections, boundsOffset), false);
     };
 
     const sharedProps = computed(() => ({
@@ -220,12 +217,16 @@ export default defineComponent({
       removeEventListener();
       scrollContainer.value?.addEventListener('scroll', scrollHandle);
       prevScrollContainer = scrollContainer.value;
+      if (scrollContainer.value)
+        scrollController = createAnchorScrollController(scrollContainer.value);
     }
 
     function removeEventListener() {
       if (prevScrollContainer) {
         prevScrollContainer?.removeEventListener('scroll', scrollHandle);
       }
+      scrollController?.destroy();
+      scrollController = undefined;
     }
 
     watch(sizeRef, () => {
@@ -238,14 +239,7 @@ export default defineComponent({
         scrollContainer.value instanceof HTMLElement
           ? scrollContainer.value
           : document.documentElement;
-      const allDoms = props.autoRenderRules.map(it => {
-        const rules = typeof it === 'string' ? [it] : it;
-        return rules
-          .map(it => Array.from(containerDom.querySelectorAll(it)))
-          .flat() as HTMLElement[];
-      });
-      const resDomList = deepSearch(containerDom, ele => allDoms.findIndex(it => it.includes(ele)));
-      return genListByDomList(resDomList) as AnchorListItem[];
+      return scanAnchorHeadings(containerDom, props.autoRenderRules);
     };
 
     const renderLinks = (list?: AnchorListItem[]) => {
@@ -266,6 +260,10 @@ export default defineComponent({
     }
 
     const isCollapsed = ref(props.collapse);
+    watch(
+      () => props.collapse,
+      value => (isCollapsed.value = value),
+    );
     const showWrap = computed(() => (props.useCollapse ? !isCollapsed.value : true));
     const collapseBtnHandle = () => {
       const tarStatus = !isCollapsed.value;
@@ -290,6 +288,8 @@ export default defineComponent({
       removeEventListener();
     });
 
+    watch(() => props.scrollContainer, updateScrollContainer, { flush: 'post' });
+
     expose({
       updateActiveLink,
       refreshAnchorList,
@@ -300,7 +300,9 @@ export default defineComponent({
     return () => (
       <div class={anchorClassClac.value} ref={anchorRef} style={anchorStyleClac.value}>
         {props.useCollapse && (
-          <div
+          <button
+            type="button"
+            aria-expanded={!isCollapsed.value}
             class={cls(
               classHelper.e('collapse-btn'),
               classHelper.is('collapse', isCollapsed.value),
@@ -319,7 +321,7 @@ export default defineComponent({
                 {props.collapseText ?? useLocaleLang('anchor.navigator').value}
               </span>
             </HTooltip>
-          </div>
+          </button>
         )}
         <HScrollbar size="small" maxHeight={props.maxHeight}>
           <div class={classHelper.e('wrap')} v-show={showWrap.value}>

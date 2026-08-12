@@ -51,3 +51,7 @@ Set `use-collapse` to enable collapse mode and customize its prompt with `collap
 With `auto-render`, Anchor scans headings in the scroll container according to `auto-render-rules`. After the content structure changes, call the exposed `refreshAnchorList()` method to scan again.
 
 :::demo vue/components/Anchor/demo8.vue :::
+
+## API summary
+
+Anchor accepts size, maximum height, hash behavior, scroll target and offsets, collapse state, side-line options, tooltip placement, automatic heading rules, and a shared link target. It emits `click`, `change`, and `update:collapse`. The default slot contains AnchorLink items. Exposed commands are `updateActiveLink()`, `refreshAnchorList()`, `updateScrollContainer()`, and `getAnchorList()`.

@@ -1,4 +1,14 @@
+import type {
+  AdaptComponentApiShape,
+  AnchorEventMap,
+  ComponentEventValidators,
+} from '@aurora/core';
 import { isBoolean, isObject, isString } from '@aurora/utils';
+
+type AnchorVueEventMap = AdaptComponentApiShape<
+  AnchorEventMap<MouseEvent>,
+  { collapseChange: 'update:collapse' }
+>;
 
 export const useAnchorEmits = {
   /**
@@ -7,26 +17,26 @@ export const useAnchorEmits = {
    * @paramEn linkInfo The link info value.
    * @param e 原生的点击事件对象
    * @paramEn e The e value.
-    * @en Emitted when click changes.
+   * @en Emitted when click changes.
    */
   click: (linkInfo: { href: string; title: string }, e: MouseEvent) =>
-    isObject(linkInfo) || e instanceof MouseEvent,
+    isObject(linkInfo) && e instanceof MouseEvent,
   /**
    * change事件
    * @param link 改变之后的锚点href
    * @paramEn link The link value.
    * @param prevLink 改变之前的锚点href
    * @paramEn prevLink The prev link value.
-    * @en Emitted when change changes.
+   * @en Emitted when change changes.
    */
-  change: (link: string, prevLink: string) => isString(link) || isString(prevLink),
+  change: (link: string, prevLink: string) => isString(link) && isString(prevLink),
   /**
    * collapse 改变后的通知
    * @param collapse 改变之后是否为“折叠”状态
    * @paramEn collapse The collapse value.
-    * @en Emitted when update:collapse changes.
+   * @en Emitted when update:collapse changes.
    */
   'update:collapse': (collapse: boolean) => isBoolean(collapse),
-};
+} satisfies ComponentEventValidators<AnchorVueEventMap>;
 
 export type AnchorEmits = typeof useAnchorEmits;

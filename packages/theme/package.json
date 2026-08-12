@@ -32,6 +32,8 @@
     "./styles/alert-variables": "./styles/components/alert/variables.scss",
     "./styles/affix": "./styles/components/affix/index.scss",
     "./styles/affix-variables": "./styles/components/affix/variables.scss",
+    "./styles/anchor": "./styles/components/anchor/index.scss",
+    "./styles/anchor-variables": "./styles/components/anchor/variables.scss",
     "./styles/avatar": "./styles/components/avatar/index.scss",
     "./styles/avatar-variables": "./styles/components/avatar/variables.scss",
     "./styles/backtop": "./styles/components/backtop/index.scss",

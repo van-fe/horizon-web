@@ -1,5 +1,6 @@
 import '@aurora/theme/styles/foundations';
 import '@aurora/theme/styles/affix';
+import '@aurora/theme/styles/anchor';
 import '@aurora/theme/styles/alert';
 import '@aurora/theme/styles/avatar';
 import '@aurora/theme/styles/backtop';
@@ -40,6 +41,7 @@ import '@aurora/theme/styles/typography';
 
 export * from './components/Button';
 export * from './components/Affix';
+export * from './components/Anchor';
 export * from './components/Alert';
 export * from './components/Avatar';
 export * from './components/Backtop';

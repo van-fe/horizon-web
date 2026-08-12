@@ -1,8 +1,7 @@
-export interface AnchorListItem {
-  id: string;
-  title: string;
-  children?: AnchorListItem[];
-}
+import type { AnchorHeadingEntry, AnchorListItem } from '@aurora/core';
+import { buildAnchorList } from '@aurora/core';
+
+export type { AnchorListItem } from '@aurora/core';
 
 export interface DomWithLevel {
   dom?: HTMLElement;
@@ -30,35 +29,17 @@ export function deepSearch(
 
 /** 根据“标题DOM-数组”生成用于渲染导航的嵌套数组 */
 export function genListByDomList(domList: DomWithLevel[], level = 0, list: DomWithLevel[] = []) {
-  const tempList = domList.map((it, index) => ({ val: it, index }));
-  const curLevelList = tempList.filter(it => it.val.level === level);
-  if (curLevelList.length !== 0 && curLevelList[0].index !== 0) {
-    curLevelList.unshift({ val: { level: 0 }, index: -1 });
-  }
-
-  for (let i = 0; i < curLevelList.length; i++) {
-    const startIndex = curLevelList[i].index;
-    const endIndex = i === curLevelList.length - 1 ? domList.length : curLevelList[i + 1].index;
-    const children = domList.slice(startIndex + 1, endIndex);
-    curLevelList[i].val.children = genListByDomList(children, level + 1, []);
-  }
-  let res;
-  if (curLevelList.length === 0 && domList.length !== 0) {
-    res = [{ level, children: genListByDomList(domList, level + 1, []) }];
-  } else {
-    res = curLevelList.map(it => it.val);
-  }
-  res = res.map(item => {
-    const curDom = item.dom;
-    if (curDom && !curDom.id && curDom.innerText) {
-      curDom.id = curDom.innerText;
-    }
+  void level;
+  void list;
+  const entries = domList.map(item => {
+    const element = item.dom;
+    const title = element?.innerText;
+    if (element && !element.id && title) element.id = title;
     return {
-      id: curDom?.id,
-      title: curDom?.innerText,
-      children: item.children,
-    };
+      id: element?.id,
+      title,
+      level: item.level ?? 0,
+    } satisfies AnchorHeadingEntry;
   });
-  list.push(...res);
-  return list;
+  return buildAnchorList(entries);
 }

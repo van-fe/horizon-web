@@ -22,21 +22,11 @@ export function customScrollTo(
   } = {},
 ): void {
   const { behavior = 'smooth', scrollContainer = window, callback } = options;
-
-  const executeCbAfterScrollDone = debounce(() => {
-    scrollContainer?.removeEventListener('scroll', executeCbAfterScrollDone);
-    callback && callback();
-  }, 50);
-
-  scrollContainer?.addEventListener('scroll', executeCbAfterScrollDone);
-
-  const originalTop = getScrollTop(scrollContainer);
-
-  requestAnimationFrame(() => {
-    scrollContainer?.scrollTo({ top: originalTop });
-    requestAnimationFrame(() => {
-      scrollContainer?.scrollTo({ top: y, behavior });
-    });
+  if (!scrollContainer) return;
+  const controller = createAnchorScrollController(scrollContainer);
+  controller.scrollTo(y, behavior === 'smooth' ? 'smooth' : 'auto', () => {
+    controller.destroy();
+    callback?.();
   });
 }
 
@@ -45,45 +35,26 @@ export function getOffsetTop(
   currDom: HTMLElement,
   scrollContainer: HTMLElement | Window | null,
 ): number {
-  const curTop = currDom.getBoundingClientRect().top;
-  if (scrollContainer instanceof HTMLElement) {
-    return curTop - scrollContainer.getBoundingClientRect().top;
-  }
-  return curTop - document.documentElement.clientTop;
+  return getAnchorOffsetTop(currDom, scrollContainer ?? window);
 }
 
 /** 获取“滚动容器”当前已滚动的距离 */
 export function getScrollTop(scrollContainer: HTMLElement | Window | null): number {
-  if (scrollContainer instanceof HTMLElement) {
-    return scrollContainer.scrollTop;
-  }
-  return document.documentElement.scrollTop;
+  return getAnchorScrollTop(scrollContainer ?? window);
 }
 
 /** 获取“当前DOM元素”需要的偏移位置（相对于“滚动容器”的视口） */
 export function getCustomOffset(
-  curOffset: 'start' | 'center' | 'end' | number,
+  curOffset: AnchorOffset,
   curDom: HTMLElement,
   scrollContainer: HTMLElement | Window | null,
 ): number {
-  if (typeof curOffset === 'number') {
-    return curOffset;
-  }
-  const curDomHeight = curDom.getBoundingClientRect().height;
-  let containerHeight;
-  if (scrollContainer instanceof HTMLElement) {
-    containerHeight = scrollContainer.getBoundingClientRect().height;
-  } else {
-    containerHeight = window.innerHeight;
-  }
-  switch (curOffset) {
-    case 'start':
-      return 0;
-    case 'center':
-      return containerHeight / 2 - curDomHeight / 2;
-    case 'end':
-      return containerHeight - curDomHeight;
-    default:
-      return 0;
-  }
+  return getAnchorCustomOffset(curOffset, curDom, scrollContainer ?? window);
 }
+import type { AnchorOffset } from '@aurora/core';
+import {
+  createAnchorScrollController,
+  getAnchorCustomOffset,
+  getAnchorOffsetTop,
+  getAnchorScrollTop,
+} from '@aurora/horizon-web-core';

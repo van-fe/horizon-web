@@ -235,9 +235,11 @@ describe('Anchor.tsx', () => {
     expect(wrapper.get('.h-anchor__link-title').classes()).toContain('is-active');
     expect(change).toHaveBeenCalledWith('#encoded heading', '');
 
-    (wrapper.vm as unknown as {
-      updateActiveLink: (link: string, scroll?: boolean) => void;
-    }).updateActiveLink('', false);
+    (
+      wrapper.vm as unknown as {
+        updateActiveLink: (link: string, scroll?: boolean) => void;
+      }
+    ).updateActiveLink('', false);
     await nextTick();
     expect(wrapper.get('.h-anchor__line--highlight').attributes('style')).toContain('height: 0px');
     history.replaceState(null, '', previousUrl);
@@ -374,9 +376,11 @@ describe('Anchor.tsx', () => {
     await nextTick();
 
     window.dispatchEvent(new Event('scroll'));
-    (wrapper.vm as unknown as {
-      updateActiveLink: (link: string, scroll?: boolean) => void;
-    }).updateActiveLink('#not-rendered', false);
+    (
+      wrapper.vm as unknown as {
+        updateActiveLink: (link: string, scroll?: boolean) => void;
+      }
+    ).updateActiveLink('#not-rendered', false);
     await nextTick();
     expect(wrapper.findAll('a')).toHaveLength(3);
     expect(wrapper.find('.is-active').exists()).toBe(false);
@@ -388,7 +392,10 @@ describe('Anchor.tsx', () => {
     heading.textContent = 'Document deep heading';
     document.body.append(heading);
     const wrapper = mount(HAnchor, {
-      props: { autoRender: true, autoRenderRules: ['h1.never', 'h2.never', '#document-deep-heading'] },
+      props: {
+        autoRender: true,
+        autoRenderRules: ['h1.never', 'h2.never', '#document-deep-heading'],
+      },
     });
 
     await nextTick();

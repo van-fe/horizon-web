@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {
   affixManifest,
+  anchorManifest,
   adaptManifestFields,
   alertManifest,
   avatarManifest,
@@ -55,6 +56,7 @@ import type { ManifestFieldAdaptation } from '../packages/core/src';
 
 const manifests = [
   affixManifest,
+  anchorManifest,
   alertManifest,
   avatarManifest,
   backtopManifest,
@@ -111,6 +113,22 @@ interface RendererApiAdaptation {
 
 const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
   Affix: { regions: { rename: { content: 'default' } } },
+  Anchor: {
+    props: {
+      rename: { collapsed: 'collapse' },
+      omit: ['defaultCollapsed'],
+      override: { collapseText: { type: 'string | VNode' } },
+      extend: [
+        {
+          name: 'style',
+          type: 'CSSProperties',
+          description: { zh: '根元素样式', en: 'Root element style' },
+        },
+      ],
+    },
+    events: { rename: { collapseChange: 'update:collapse' } },
+    regions: { rename: { content: 'default' }, omit: ['collapseLabel'] },
+  },
   Alert: { regions: { rename: { content: 'default' } } },
   Avatar: {
     props: { rename: { fallbackSrc: 'default' } },
@@ -766,6 +784,17 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
 };
 
 const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
+  Anchor: {
+    props: { override: { collapseText: { type: 'ReactNode' } } },
+    events: {
+      rename: {
+        click: 'onLinkClick',
+        change: 'onChange',
+        collapseChange: 'onCollapseChange',
+      },
+    },
+    regions: { rename: { content: 'children' }, omit: ['collapseLabel'] },
+  },
   Alert: {
     events: { rename: { close: 'onClose' } },
     regions: { rename: { content: 'children' } },

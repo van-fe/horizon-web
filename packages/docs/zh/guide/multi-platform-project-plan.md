@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B19 Affix 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B20 Anchor 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -626,6 +626,18 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DS-B19-001 | Done | Affix canonical Sass 与变量入口迁入 `@aurora/theme`，Vue 使用包导出代理，React 使用同源样式；组件不再保留 renderer 内独立样式定义 |
 | DOC-B19-001 | Done | Affix 中英文 React 页面、2 个独立 TSX 示例、Vue API/事件/命令说明与双语侧边栏入口完成；46 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
 | QA-B19-001 | Done | Core 154、Web Core Node 10/Chromium 46、React Chromium 169、Vue Chromium 2319 项（2318 通过、1 项预期失败）全部通过，覆盖率为 97.97% / 95.11% / 97.71% / 98.27%；Vue Node 23、resolver 12、colors 1、upload adapters 66 项通过；五包构建、文档与 Vue/React/SSR/tree-shaking 消费工程通过 |
+
+#### M6-B20 第二十批实施记录（2026-08-12）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B20-001 | Done | Anchor 与 AnchorLink 的公共 props、默认值、枚举、校验器、事件、内容区域、命令及 manifest 迁入 `@aurora/core`；命名偏移解析、滚动激活项选择和标题层级树构建算法只定义一次 |
+| WEB-B20-001 | Done | 在同名 Web Core 目录提供选择器/元素/窗口目标解析、哈希目标解析、滚动坐标计算、可取消滚动控制器与标题扫描；控制器统一滚动完成回调、监听和计时器清理 |
+| VUE-B20-001 | Done | Vue props/emits/slots/exposes 通过类型化适配消费公共契约，保留历史 `collapse`、VNode、Tooltip、自动标题扫描和链接注册能力；移除本地激活、树构建、目标解析与滚动算法副本，折叠操作改为语义 button |
+| REACT-B20-001 | Done | 完成 React Anchor 与 AnchorLink，支持原生嵌套链接、字符串/元素/窗口/解析函数目标、滚动激活、受控与非受控折叠、自动标题扫描、哈希更新、原生 nav 属性及命令 ref |
+| DS-B20-001 | Done | Anchor canonical Sass 与变量入口迁入 `@aurora/theme`，Vue 使用包导出代理，React 使用同源样式；补充原生 button/link reset、focus-visible 和长文本换行规则 |
+| DOC-B20-001 | Done | Anchor 中英文 React 页面、3 个独立 TSX 示例、Vue API 摘要与双语侧边栏入口完成；47 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
+| QA-B20-001 | Done | Core 157、Web Core Node 10/Chromium 49、React Chromium 172、Vue Chromium 2319 项（2318 通过、1 项预期失败）全部通过，覆盖率为 97.97% / 95.07% / 97.71% / 98.27%；Vue Node 23、resolver 12、colors 1、upload adapters 66 项通过；五包构建、文档站与 Vue/React/SSR/tree-shaking 消费工程通过 |
 
 ### 批次 C：浮层与容器
 

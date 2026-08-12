@@ -16,14 +16,7 @@ describe('Anchor ellipsis and validators', () => {
     const judgeIsOverflow = vi.fn(() => false);
     const updateHighlightLine = vi.fn();
     const result = scope.run(() =>
-      useCustomEllipsis(
-        props,
-        showSuffix,
-        ref(0),
-        judgeIsOverflow,
-        ref(''),
-        updateHighlightLine,
-      ),
+      useCustomEllipsis(props, showSuffix, ref(0), judgeIsOverflow, ref(''), updateHighlightLine),
     )!;
 
     await flushTicks();
@@ -59,14 +52,7 @@ describe('Anchor ellipsis and validators', () => {
       .mockReturnValueOnce(false)
       .mockReturnValue(false);
     const result = scope.run(() =>
-      useCustomEllipsis(
-        props,
-        ref(true),
-        ref(3),
-        judgeIsOverflow,
-        ref('#active'),
-        vi.fn(),
-      ),
+      useCustomEllipsis(props, ref(true), ref(3), judgeIsOverflow, ref('#active'), vi.fn()),
     )!;
 
     await flushTicks(20);
@@ -86,10 +72,10 @@ describe('Anchor ellipsis and validators', () => {
   test('validates each public emit with valid and invalid payload combinations', () => {
     const mouse = new MouseEvent('click');
     expect(useAnchorEmits.click({ href: '#a', title: 'A' }, mouse)).toBe(true);
-    expect(useAnchorEmits.click(null as never, mouse)).toBe(true);
+    expect(useAnchorEmits.click(null as never, mouse)).toBe(false);
     expect(useAnchorEmits.click(null as never, new Event('change') as MouseEvent)).toBe(false);
     expect(useAnchorEmits.change('#a', '')).toBe(true);
-    expect(useAnchorEmits.change(null as never, '#old')).toBe(true);
+    expect(useAnchorEmits.change(null as never, '#old')).toBe(false);
     expect(useAnchorEmits.change(null as never, null as never)).toBe(false);
     expect(useAnchorEmits['update:collapse'](true)).toBe(true);
     expect(useAnchorEmits['update:collapse']('true' as never)).toBe(false);

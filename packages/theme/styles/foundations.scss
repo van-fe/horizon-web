@@ -3,6 +3,7 @@
 @use './basic';
 @use './element';
 @use './components/affix/variables' as affix;
+@use './components/anchor/variables' as anchor;
 @use './components/avatar/variables' as avatar;
 @use './components/alert/variables' as alert;
 @use './components/backtop/variables' as backtop;
@@ -45,6 +46,7 @@ $values: function.map-merge-multi(
   function.flatten-variables(basic.$values),
   function.flatten-variables(element.$values),
   function.flatten-variables(affix.$values, 'affix'),
+  function.flatten-variables(anchor.$values, 'anchor'),
   function.flatten-variables(alert.$values, 'alert'),
   function.flatten-variables(avatar.$values, 'avatar'),
   function.flatten-variables(backtop.$values, 'backtop'),

@@ -51,3 +51,7 @@
 设置 `auto-render` 后，Anchor 会按照 `auto-render-rules` 扫描滚动容器中的标题并生成层级导航。内容结构变化后，可通过暴露的 `refreshAnchorList()` 重新扫描。
 
 :::demo vue/components/Anchor/demo8.vue :::
+
+## API 摘要
+
+Anchor 支持尺寸、最大高度、hash 行为、滚动目标与偏移、折叠状态、侧边线、提示位置、自动标题规则及统一链接目标；触发 `click`、`change` 和 `update:collapse`。默认插槽放置 AnchorLink。暴露命令包括 `updateActiveLink()`、`refreshAnchorList()`、`updateScrollContainer()` 与 `getAnchorList()`。
