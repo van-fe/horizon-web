@@ -29,7 +29,22 @@ describe('Container.tsx', () => {
 
   test('renders the Container, Header, Aside, Main and Footer default slots', () => {
     const wrapper = mount(() => (
-      <HContainer><span class="container-default"><HHeader><span class="header-default">Header</span></HHeader><HAside><span class="aside-default">Aside</span></HAside><HMain><span class="main-default">Main</span></HMain><HFooter><span class="footer-default">Footer</span></HFooter></span></HContainer>
+      <HContainer>
+        <span class="container-default">
+          <HHeader>
+            <span class="header-default">Header</span>
+          </HHeader>
+          <HAside>
+            <span class="aside-default">Aside</span>
+          </HAside>
+          <HMain>
+            <span class="main-default">Main</span>
+          </HMain>
+          <HFooter>
+            <span class="footer-default">Footer</span>
+          </HFooter>
+        </span>
+      </HContainer>
     ));
 
     for (const region of ['container', 'header', 'aside', 'main', 'footer']) {

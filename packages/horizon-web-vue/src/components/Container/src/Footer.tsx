@@ -1,14 +1,15 @@
 import { computed, defineComponent } from 'vue';
+import { resolveContainerDimension } from '@aurora/core';
 import type { HorizonWebSetupContext } from '@aurora/utils';
-import { cls, ComponentClassBlock, sizeUnitTransform, useNamespace } from '@aurora/utils';
+import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { useFooterProps } from './composables/useProps';
 import type { FooterSlots } from './composables/useSlots';
 import { useFooterSlots } from './composables/useSlots';
 
 export default defineComponent({
   name: `${useNamespace()}Footer`,
-  desc: "页面布局中的底部容器",
-  descLocales: { en: "A footer region within a page layout." },
+  desc: '页面布局中的底部容器',
+  descLocales: { en: 'A footer region within a page layout.' },
   props: useFooterProps,
   slots: useFooterSlots,
   setup(props, { slots }: HorizonWebSetupContext<{}, FooterSlots>) {
@@ -17,7 +18,7 @@ export default defineComponent({
     const style = computed(() => {
       return props.height
         ? {
-            height: sizeUnitTransform(props.height),
+            height: resolveContainerDimension(props.height),
           }
         : {};
     });

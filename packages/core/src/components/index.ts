@@ -2,6 +2,7 @@ export * from './_shared/api';
 export * from './_shared/manifest';
 export * from './Affix';
 export * from './Anchor';
+export * from './Container';
 export * from './Avatar';
 export * from './Alert';
 export * from './Backtop';

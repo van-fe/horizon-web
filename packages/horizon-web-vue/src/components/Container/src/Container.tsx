@@ -1,5 +1,7 @@
 import type { Component } from 'vue';
 import { computed, defineComponent } from 'vue';
+import type { ContainerRegion } from '@aurora/core';
+import { resolveContainerDirection } from '@aurora/core';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { useContainerProps } from './composables/useProps';
@@ -15,24 +17,24 @@ export default defineComponent({
     '<h-aside>：侧边栏容器。\n' +
     '<h-main>：主要区域容器。\n' +
     '<h-footer>：底栏容器。',
-  descLocales: { en: "When a direct child is `h-header`, `h-container` automatically uses a vertical direction. This is the simplest shell for a top bar and main content." },
+  descLocales: {
+    en: 'When a direct child is `h-header`, `h-container` automatically uses a vertical direction. This is the simplest shell for a top bar and main content.',
+  },
   props: useContainerProps,
   slots: useContainerSlots,
   setup(props, { slots }: HorizonWebSetupContext<{}, ContainerSlots>) {
     const classHelper = new ComponentClassBlock('container');
 
     const isVertical = computed(() => {
-      if (props.direction) {
-        return props.direction === 'vertical';
-      } else {
-        if (slots && slots.default) {
-          return slots
-            .default()
-            .some(node => (node?.type as Component)?.name?.endsWith('Header') || (node?.type as Component)?.name?.endsWith('Footer'));
-        } else {
-          return false;
-        }
-      }
+      const regions = (slots?.default?.() ?? []).map<ContainerRegion>(node => {
+        const name = (node?.type as Component)?.name;
+        if (name?.endsWith('Header')) return 'header';
+        if (name?.endsWith('Aside')) return 'aside';
+        if (name?.endsWith('Main')) return 'main';
+        if (name?.endsWith('Footer')) return 'footer';
+        return 'other';
+      });
+      return resolveContainerDirection(props.direction, regions) === 'vertical';
     });
 
     return () => (

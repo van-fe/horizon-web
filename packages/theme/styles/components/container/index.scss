@@ -1,0 +1,49 @@
+@use '../../mixins';
+
+@include mixins.b('container') {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1;
+  flex-basis: auto;
+  flex-direction: row;
+  min-width: 0;
+  min-height: 0;
+
+  @include mixins.is('vertical') {
+    flex-direction: column;
+  }
+}
+
+@include mixins.b('header') {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  height: mixins.css-variable('container', 'size', 'header', 'height');
+  padding: mixins.css-variable('container', 'spacing', 'header', 'padding');
+}
+
+@include mixins.b('aside') {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  width: mixins.css-variable('container', 'size', 'aside', 'width');
+  max-width: 100%;
+  overflow: auto;
+}
+
+@include mixins.b('main') {
+  box-sizing: border-box;
+  display: block;
+  flex: 1;
+  flex-basis: auto;
+  min-width: 0;
+  min-height: 0;
+  padding: mixins.css-variable('container', 'spacing', 'main', 'padding');
+  overflow: auto;
+  overflow-wrap: anywhere;
+}
+
+@include mixins.b('footer') {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  height: mixins.css-variable('container', 'size', 'footer', 'height');
+  padding: mixins.css-variable('container', 'spacing', 'footer', 'padding');
+}

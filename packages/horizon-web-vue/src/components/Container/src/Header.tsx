@@ -1,14 +1,15 @@
 import { computed, defineComponent } from 'vue';
+import { resolveContainerDimension } from '@aurora/core';
 import type { HorizonWebSetupContext } from '@aurora/utils';
-import { cls, ComponentClassBlock, sizeUnitTransform, useNamespace } from '@aurora/utils';
+import { cls, ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { useHeaderProps } from './composables/useProps';
 import type { HeaderSlots } from './composables/useSlots';
 import { useHeaderSlots } from './composables/useSlots';
 
 export default defineComponent({
   name: `${useNamespace()}Header`,
-  desc: "页面布局中的顶部容器",
-  descLocales: { en: "A header region within a page layout." },
+  desc: '页面布局中的顶部容器',
+  descLocales: { en: 'A header region within a page layout.' },
   props: useHeaderProps,
   slots: useHeaderSlots,
   setup(props, { slots }: HorizonWebSetupContext<{}, HeaderSlots>) {
@@ -17,7 +18,7 @@ export default defineComponent({
     const style = computed(() => {
       return props.height
         ? {
-            height: sizeUnitTransform(props.height),
+            height: resolveContainerDimension(props.height),
           }
         : {};
     });

@@ -52,6 +52,8 @@
     "./styles/collapse-variables": "./styles/components/collapse/variables.scss",
     "./styles/count": "./styles/components/count/index.scss",
     "./styles/count-variables": "./styles/components/count/variables.scss",
+    "./styles/container": "./styles/components/container/index.scss",
+    "./styles/container-variables": "./styles/components/container/variables.scss",
     "./styles/divider": "./styles/components/divider/index.scss",
     "./styles/divider-variables": "./styles/components/divider/variables.scss",
     "./styles/dialog": "./styles/components/dialog/index.scss",

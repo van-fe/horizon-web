@@ -39,3 +39,9 @@
 侧栏、顶栏、主内容和底栏可以组合成完整应用。实际页面仍需为侧栏和固定高度区域补充窄屏回流策略。
 
 :::demo vue/components/Container/demo7.vue :::
+
+## API 摘要
+
+- Container 支持 `direction="horizontal" | "vertical"`；未设置时，直接子元素包含 Header 或 Footer 会自动采用纵向布局。
+- Header 与 Footer 支持 `height`，Aside 支持 `width`；数字会转换为像素，CSS 尺寸字符串会原样保留。
+- Container、Header、Aside、Main 与 Footer 均通过默认插槽承载内容。

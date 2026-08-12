@@ -21,6 +21,7 @@ const reactSidebar = [
       { text: 'Avatar 头像', link: 'components/Avatar' },
       { text: 'Badge 徽标', link: 'components/Badge' },
       { text: 'Card 卡片', link: 'components/Card' },
+      { text: 'Container 布局容器', link: 'components/Container' },
       { text: 'Count 计数', link: 'components/Count' },
       { text: 'Divider 分割线', link: 'components/Divider' },
       { text: 'Typography 排版', link: 'components/Typography' },

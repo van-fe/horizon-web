@@ -20,6 +20,7 @@ declare module '@aurora/theme/styles/card';
 declare module '@aurora/theme/styles/checkbox';
 declare module '@aurora/theme/styles/collapse';
 declare module '@aurora/theme/styles/count';
+declare module '@aurora/theme/styles/container';
 declare module '@aurora/theme/styles/divider';
 declare module '@aurora/theme/styles/empty';
 declare module '@aurora/theme/styles/progress';

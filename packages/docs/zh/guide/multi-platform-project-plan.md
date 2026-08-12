@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B20 Anchor 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B21 Container 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -637,7 +637,19 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | REACT-B20-001 | Done | 完成 React Anchor 与 AnchorLink，支持原生嵌套链接、字符串/元素/窗口/解析函数目标、滚动激活、受控与非受控折叠、自动标题扫描、哈希更新、原生 nav 属性及命令 ref |
 | DS-B20-001 | Done | Anchor canonical Sass 与变量入口迁入 `@aurora/theme`，Vue 使用包导出代理，React 使用同源样式；补充原生 button/link reset、focus-visible 和长文本换行规则 |
 | DOC-B20-001 | Done | Anchor 中英文 React 页面、3 个独立 TSX 示例、Vue API 摘要与双语侧边栏入口完成；47 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
-| QA-B20-001 | Done | Core 157、Web Core Node 10/Chromium 49、React Chromium 172、Vue Chromium 2319 项（2318 通过、1 项预期失败）全部通过，覆盖率为 97.97% / 95.07% / 97.71% / 98.27%；Vue Node 23、resolver 12、colors 1、upload adapters 66 项通过；五包构建、文档站与 Vue/React/SSR/tree-shaking 消费工程通过 |
+| QA-B20-001 | Done | Core 157、Web Core Node 10/Chromium 49、React Chromium 172、Vue Chromium 2319 项（2318 通过、1 项预期失败）全部通过，覆盖率为 97.97% / 95.07% / 97.67% / 98.26%；Vue Node 23、resolver 12、colors 1、upload adapters 66 项通过；五包构建、文档站与 Vue/React/SSR/tree-shaking 消费工程通过 |
+
+#### M6-B21 第二十一批实施记录（2026-08-12）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B21-001 | Done | Container、Header、Aside、Main 与 Footer 的公共 props、尺寸类型、方向枚举、校验器、内容区域及 manifest 迁入 `@aurora/core`；方向推断与数字/CSS 尺寸归一化算法只定义一次 |
+| WEB-B21-001 | Done | 确认本批不存在测量、监听、焦点、滚动或 Portal 等浏览器控制能力，不为目录对齐创建无消费者的 Web Core 抽象；DOM 语义由 renderer 原生元素承担 |
+| VUE-B21-001 | Done | Vue 五个布局区域的 props/slots 类型化消费公共契约，方向推断和尺寸转换改用 Core；保留自动纵向布局、嵌套容器与语义 section/header/aside/main/footer 行为 |
+| REACT-B21-001 | Done | 完成 React Container/Header/Aside/Main/Footer，支持自动与显式方向、数字和 CSS 尺寸、嵌套应用骨架、原生属性与五个语义元素 ref；窄屏区域可通过原生样式扩展 |
+| DS-B21-001 | Done | Container 五个区域的 canonical Sass 与变量入口迁入 `@aurora/theme`，Vue 使用包导出代理并删除 renderer 内五份样式源，React 使用同源样式；补充 Aside/Main 限宽、最小尺寸和长文本防溢出规则 |
+| DOC-B21-001 | Done | Container 中英文 React 页面、3 个独立 TSX 示例、Vue API 摘要与双语侧边栏入口完成；52 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
+| QA-B21-001 | Done | Core 160、Web Core Node 10/Chromium 49、React Chromium 176、Vue Chromium 2319 项（2318 通过、1 项预期失败）全部通过，覆盖率为 97.97% / 95.07% / 97.67% / 98.27%；Vue Node 23、resolver 12、colors 1、upload adapters 66 项通过；五包构建、文档站与 Vue/React/SSR/tree-shaking 消费工程通过 |
 
 ### 批次 C：浮层与容器
 

@@ -38,3 +38,9 @@ Place `h-aside` in the outer container to let it span the header and main conten
 Aside, header, main, and footer can form a complete application. Add an explicit narrow-screen reflow for sidebars and fixed-height regions.
 
 :::demo vue/components/Container/demo7.vue :::
+
+## API Summary
+
+- Container accepts `direction="horizontal" | "vertical"`; without it, direct Header or Footer children select vertical layout.
+- Header and Footer accept `height`; Aside accepts `width`. Numbers are converted to pixels and CSS dimension strings are preserved.
+- Container, Header, Aside, Main, and Footer expose their content through the default slot.
