@@ -69,6 +69,9 @@ export interface HorizonWebConfig {
     decrease: string;
     clear: string;
   };
+  spinLabels: {
+    loading: string;
+  };
 }
 
 export type HorizonWebProviderProps = PropsWithChildren<
@@ -85,6 +88,7 @@ export type HorizonWebProviderProps = PropsWithChildren<
     | 'paginationLabels'
     | 'popconfirmLabels'
     | 'selectLabels'
+    | 'spinLabels'
     | 'stepsLabels'
     | 'switchLabels'
     | 'timelineLabels'
@@ -103,6 +107,7 @@ export type HorizonWebProviderProps = PropsWithChildren<
     backtopLabels?: Partial<HorizonWebConfig['backtopLabels']>;
     formLabels?: Partial<HorizonWebConfig['formLabels']>;
     inputNumberLabels?: Partial<HorizonWebConfig['inputNumberLabels']>;
+    spinLabels?: Partial<HorizonWebConfig['spinLabels']>;
   }
 >;
 
@@ -133,6 +138,7 @@ const defaultConfig: HorizonWebConfig = Object.freeze({
     decrease: 'Decrease value',
     clear: 'Clear value',
   },
+  spinLabels: { loading: 'Loading' },
 });
 
 export const HorizonWebContext = createContext<HorizonWebConfig>(defaultConfig);
@@ -159,6 +165,7 @@ export function HorizonWebProvider({
   backtopLabels,
   formLabels,
   inputNumberLabels,
+  spinLabels,
   children,
 }: HorizonWebProviderProps): ReactElement {
   const parent = useContext(HorizonWebContext);
@@ -228,6 +235,10 @@ export function HorizonWebProvider({
         ...parent.inputNumberLabels,
         ...inputNumberLabels,
       },
+      spinLabels: {
+        ...parent.spinLabels,
+        ...spinLabels,
+      },
     }),
     [
       namespace,
@@ -252,6 +263,7 @@ export function HorizonWebProvider({
       backtopLabels,
       formLabels,
       inputNumberLabels,
+      spinLabels,
     ],
   );
 

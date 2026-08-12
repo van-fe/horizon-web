@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B27 Mask 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B28 Spin 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -722,6 +722,18 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DS-B27-001 | Done | Mask canonical Sass、语义背景、模糊变量与过渡迁入 `@aurora/theme`，Vue 使用包导出薄代理，React 使用同源样式，公共 foundations 注入完整变量 |
 | DOC-B27-001 | Done | Vue 文档补齐 Props/Events/Slots；React 中英文页面、3 个独立 TSX 示例与双语侧边栏入口完成；60 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
 | QA-B27-001 | Done | Core 180、Web Core Node 12/Chromium 55、React Chromium 204、Vue Chromium 2322 项（2321 通过、1 项预期失败）全部通过；Vue 总覆盖率为 97.96% / 95.11% / 97.63% / 98.26%；Vue Node 23、resolver 12、colors 1、upload adapters 66 项通过；五包构建、Sass、文档站、含 Mask 的 Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界与旧组件包名移除约束通过 |
+
+#### M6-B28 第二十八批实施记录（2026-08-12）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B28-001 | Done | Spin 的公共 props、默认值、尺寸与延迟校验器、内容区域和 manifest 迁入 `@aurora/core`，不包含 renderer、DOM、计时器或产品样式实现 |
+| WEB-B28-001 | Done | 在同名 Web Core 目录提供延迟显示控制器，统一立即显示、延迟显示、过期任务取消和销毁清理，两端不再分别维护计时器状态机 |
+| VUE-B28-001 | Done | Vue props/slots 类型化消费公共契约，延迟逻辑改用 Web Core；保留 `spinning`、本地化提示、默认/indicator/tip slots、区域遮罩和全屏 API |
+| REACT-B28-001 | Done | 完成 React Spin，支持内联/区域/全屏、延迟、三尺寸、默认和自定义指示器、Provider 加载标签、ARIA、根 ref、原生属性及窄屏长内容约束 |
+| DS-B28-001 | Done | Spin canonical Sass、变量、尺寸、遮罩、全屏、旋转与描边动画迁入 `@aurora/theme`；Vue 使用包导出薄代理，React 使用同源视觉，并提供 reduced-motion 处理 |
+| DOC-B28-001 | Done | Vue 文档补齐 Props/Slots；React 中英文页面、3 个独立 TSX 示例与双语侧边栏入口完成；61 组 Vue/React 契约生成且组件文档保持 renderer 原生表达 |
+| QA-B28-001 | Done | Core 182、Web Core Node 15/Chromium 55、React Chromium 209、Vue Chromium 2322 项（2321 通过、1 项预期失败）全部通过；Vue 总覆盖率为 97.95% / 95.09% / 97.62% / 98.25%；Vue Node 23、resolver 12、colors 1、upload adapters 66 项通过；五包构建、Sass、文档站、含 Spin 的 Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界与旧组件包名移除约束通过 |
 
 ### 批次 C：浮层与容器
 

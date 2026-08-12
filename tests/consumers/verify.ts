@@ -17,6 +17,8 @@ if (!reactOutput.includes('React consumer')) throw new Error('React consumer bun
 if (!vueOutput.includes('Vue consumer')) throw new Error('Vue consumer bundle is missing.');
 if (!reactOutput.includes('React mask consumer')) throw new Error('React Mask bundle is missing.');
 if (!vueOutput.includes('Vue mask consumer')) throw new Error('Vue Mask bundle is missing.');
+if (!reactOutput.includes('React spin consumer')) throw new Error('React Spin bundle is missing.');
+if (!vueOutput.includes('Vue spin consumer')) throw new Error('Vue Spin bundle is missing.');
 if (reactOutput.includes('Tooltip requires one valid React element child')) {
   throw new Error('React consumer retained an unused Tooltip implementation.');
 }

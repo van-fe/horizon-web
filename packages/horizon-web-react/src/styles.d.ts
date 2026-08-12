@@ -38,6 +38,7 @@ declare module '@aurora/theme/styles/tabs';
 declare module '@aurora/theme/styles/tooltip';
 declare module '@aurora/theme/styles/select';
 declare module '@aurora/theme/styles/skeleton';
+declare module '@aurora/theme/styles/spin';
 declare module '@aurora/theme/styles/space';
 declare module '@aurora/theme/styles/statistic';
 declare module '@aurora/theme/styles/steps';

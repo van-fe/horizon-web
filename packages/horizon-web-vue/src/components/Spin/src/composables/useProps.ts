@@ -1,4 +1,6 @@
+import { isSpinDelay, isSpinSize, SPIN_DEFAULTS } from '@aurora/core';
 import { declarePropType } from '@aurora/utils';
+import type { SpinCommonProps, SpinSize } from '@aurora/core';
 import type { ExtractPropTypes, PropType } from 'vue';
 
 export const useSpinProps = declarePropType({
@@ -8,16 +10,16 @@ export const useSpinProps = declarePropType({
    */
   spinning: {
     type: Boolean,
-    default: true,
+    default: SPIN_DEFAULTS.spinning,
   },
   /**
    * 加载指示器尺寸
    * @en Loading indicator size.
    */
   size: {
-    type: String as PropType<'small' | 'medium' | 'large'>,
-    default: 'medium',
-    values: ['small', 'medium', 'large'],
+    type: String as PropType<SpinSize>,
+    default: SPIN_DEFAULTS.size,
+    validator: isSpinSize,
   },
   /**
    * 延迟显示时间，单位毫秒
@@ -25,8 +27,8 @@ export const useSpinProps = declarePropType({
    */
   delay: {
     type: Number,
-    default: 0,
-    validator: (value: number) => value >= 0,
+    default: SPIN_DEFAULTS.delay,
+    validator: isSpinDelay,
   },
   /**
    * 加载提示文字
@@ -41,7 +43,7 @@ export const useSpinProps = declarePropType({
    */
   mask: {
     type: Boolean,
-    default: true,
+    default: SPIN_DEFAULTS.mask,
   },
   /**
    * 是否固定覆盖整个视口
@@ -49,8 +51,8 @@ export const useSpinProps = declarePropType({
    */
   fullscreen: {
     type: Boolean,
-    default: false,
+    default: SPIN_DEFAULTS.fullscreen,
   },
-});
+} satisfies Record<keyof SpinCommonProps, unknown>);
 
 export type SpinProps = ExtractPropTypes<typeof useSpinProps>;

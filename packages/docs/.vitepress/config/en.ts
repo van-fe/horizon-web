@@ -81,6 +81,7 @@ const reactSidebar = [
       { text: 'Progress', link: 'components/Progress' },
       { text: 'Result', link: 'components/Result' },
       { text: 'Skeleton', link: 'components/Skeleton' },
+      { text: 'Spin', link: 'components/Spin' },
     ],
   },
 ];

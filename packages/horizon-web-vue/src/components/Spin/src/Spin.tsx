@@ -1,4 +1,5 @@
 import type { HorizonWebSetupContext } from '@aurora/utils';
+import { createSpinVisibilityController } from '@aurora/horizon-web-core';
 import { ComponentClassBlock, useNamespace } from '@aurora/utils';
 import { defineComponent, onBeforeUnmount, ref, watch } from 'vue';
 import LoadingIcon from '~/directives/v-loading/src/components/LoadingIcon';
@@ -17,34 +18,20 @@ export default defineComponent({
     const classHelper = new ComponentClassBlock('spin');
     const visible = ref(false);
     const loadingText = useLocaleLang('spin.loading', 'Loading');
-    let timer: ReturnType<typeof setTimeout> | undefined;
-
-    const clearDelay = () => {
-      if (timer !== undefined) clearTimeout(timer);
-      timer = undefined;
-    };
+    const visibility = createSpinVisibilityController({
+      spinning: props.spinning,
+      delay: props.delay,
+      onVisibleChange: value => {
+        visible.value = value;
+      },
+    });
 
     watch(
       () => [props.spinning, props.delay] as const,
-      ([spinning, delay]) => {
-        clearDelay();
-        if (!spinning) {
-          visible.value = false;
-          return;
-        }
-        if (delay > 0) {
-          timer = setTimeout(() => {
-            visible.value = props.spinning;
-            timer = undefined;
-          }, delay);
-        } else {
-          visible.value = true;
-        }
-      },
-      { immediate: true },
+      ([spinning, delay]) => visibility.update(spinning, delay),
     );
 
-    onBeforeUnmount(clearDelay);
+    onBeforeUnmount(() => visibility.destroy());
 
     const renderIndicator = () => (
       <span

@@ -37,6 +37,7 @@ export * from './Radio';
 export * from './Segmented';
 export * from './Select';
 export * from './Skeleton';
+export * from './Spin';
 export * from './Slider';
 export * from './Space';
 export * from './Statistic';

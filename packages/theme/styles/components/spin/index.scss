@@ -1,0 +1,135 @@
+@use '../../mixins';
+
+@keyframes #{mixins.block('spin-icon-dash')} {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -40px;
+  }
+
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -120px;
+  }
+}
+
+@keyframes #{mixins.block('spin-icon-rotate')} {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@include mixins.b('spin') {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  color: mixins.css-variable('spin', 'color', 'indicator');
+
+  @include mixins.e('indicator') {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  @include mixins.e('icon') {
+    display: inline;
+    width: 1em;
+    height: 1em;
+    color: inherit;
+    transform-origin: center;
+    transform-box: view-box;
+    animation: #{mixins.block('spin-icon-rotate')} 2s linear infinite;
+    will-change: transform;
+
+    /* stylelint-disable-next-line selector-class-pattern -- public loading-icon class is shared with the Vue directive */
+    .h-loading-icon__path,
+    /* stylelint-disable-next-line selector-class-pattern -- public BEM element class */
+    .h-spin__icon-path {
+      stroke: currentcolor;
+      stroke-linecap: round;
+      stroke-dasharray: 90, 150;
+      stroke-dashoffset: 0;
+      animation: #{mixins.block('spin-icon-dash')} 1.5s ease-in-out infinite;
+    }
+  }
+
+  @include mixins.e('tip') {
+    max-width: 100%;
+    margin-top: mixins.css-variable('spin', 'spacing', 'tip', 'margin-top');
+    font-size: mixins.css-variable('text-sm');
+    color: mixins.css-variable('spin', 'color', 'tip');
+    overflow-wrap: anywhere;
+  }
+
+  @include mixins.e('content') {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    transition: opacity mixins.css-variable('transition-time-fast');
+  }
+
+  @include mixins.e('overlay') {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  @each $size in 'small', 'medium', 'large' {
+    @include mixins.m($size) {
+      @include mixins.e('indicator') {
+        font-size: mixins.css-variable('spin', 'font-size', 'indicator', $size);
+      }
+    }
+  }
+
+  @include mixins.is('nested') {
+    position: relative;
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+
+  @include mixins.is('masked') {
+    @include mixins.e('overlay') {
+      background: mixins.css-variable('spin', 'background', 'mask');
+    }
+  }
+
+  @include mixins.is('fullscreen') {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    box-sizing: border-box;
+    width: 100vw;
+    max-width: 100%;
+    height: 100vh;
+    max-height: 100%;
+    background: mixins.css-variable('spin', 'background', 'mask');
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* stylelint-disable selector-class-pattern -- public BEM and loading-icon classes */
+  .h-spin__icon,
+  .h-spin__icon .h-loading-icon__path,
+  .h-spin__icon .h-spin__icon-path {
+    animation-duration: 4s;
+  }
+  /* stylelint-enable selector-class-pattern */
+}

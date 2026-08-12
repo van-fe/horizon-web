@@ -56,6 +56,10 @@ function InputNumberLabelsProbe() {
   );
 }
 
+function SpinLabelsProbe() {
+  return createElement('span', null, useHorizonWebConfig().spinLabels.loading);
+}
+
 describe('HorizonWebProvider', () => {
   it('is SSR-safe and exposes renderer configuration', () => {
     const html = renderToStaticMarkup(
@@ -151,5 +155,17 @@ describe('HorizonWebProvider', () => {
     );
 
     expect(html).toContain('Amount/Increase value/Decrease value/Clear value');
+  });
+
+  it('merges Spin labels with provider defaults', () => {
+    const html = renderToStaticMarkup(
+      createElement(
+        HorizonWebProvider,
+        { spinLabels: { loading: 'Preparing workspace' } },
+        createElement(SpinLabelsProbe),
+      ),
+    );
+
+    expect(html).toContain('Preparing workspace');
   });
 });

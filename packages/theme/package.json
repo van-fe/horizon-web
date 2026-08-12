@@ -106,6 +106,8 @@
     "./styles/segmented-variables": "./styles/components/segmented/variables.scss",
     "./styles/skeleton": "./styles/components/skeleton/index.scss",
     "./styles/skeleton-variables": "./styles/components/skeleton/variables.scss",
+    "./styles/spin": "./styles/components/spin/index.scss",
+    "./styles/spin-variables": "./styles/components/spin/variables.scss",
     "./styles/slider": "./styles/components/slider/index.scss",
     "./styles/slider-variables": "./styles/components/slider/variables.scss",
     "./styles/space": "./styles/components/space/index.scss",

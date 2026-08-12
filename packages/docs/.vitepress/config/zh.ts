@@ -81,6 +81,7 @@ const reactSidebar = [
       { text: 'Progress 进度', link: 'components/Progress' },
       { text: 'Result 结果', link: 'components/Result' },
       { text: 'Skeleton 骨架屏', link: 'components/Skeleton' },
+      { text: 'Spin 加载中', link: 'components/Spin' },
     ],
   },
 ];

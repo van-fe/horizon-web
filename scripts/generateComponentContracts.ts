@@ -54,6 +54,7 @@ import {
   segmentedManifest,
   selectManifest,
   skeletonManifest,
+  spinManifest,
   sliderManifest,
   spaceManifest,
   statisticManifest,
@@ -118,6 +119,7 @@ const manifests = [
   segmentedManifest,
   selectManifest,
   skeletonManifest,
+  spinManifest,
   sliderManifest,
   spaceManifest,
   statisticManifest,
@@ -714,6 +716,7 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     },
   },
   Skeleton: { regions: { rename: { content: 'default', placeholder: 'loadingTemplate' } } },
+  Spin: { regions: { rename: { content: 'default' } } },
   Statistic: { regions: { rename: { value: 'default' } } },
   Space: {
     props: {
@@ -1300,6 +1303,18 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     events: { rename: { change: 'onChange', focus: 'onFocus', blur: 'onBlur' } },
   },
   Skeleton: { regions: { rename: { content: 'children' } } },
+  Spin: {
+    props: {
+      extend: [
+        {
+          name: 'tipContent',
+          type: 'ReactNode',
+          description: { zh: '自定义提示内容', en: 'Custom tip content' },
+        },
+      ],
+    },
+    regions: { rename: { content: 'children' }, omit: ['tip'] },
+  },
   Statistic: { regions: { rename: { value: 'children' } } },
   Space: {
     props: {
