@@ -1,5 +1,6 @@
 import type { Ref, ToRefs, VNode } from 'vue';
-import { computed, inject, nextTick, ref, watch } from 'vue';
+import { computed, inject, nextTick, onBeforeUnmount, ref, watch } from 'vue';
+import { resolveTreeSelectKeywordAfterSelection, type TreeSelectStageResult } from '@aurora/core';
 import type { TreeSelectProps } from '../composables/useProps';
 import { debounce } from 'lodash-es';
 import type { HTreeSelectContext, HTreeSelectDomRefs } from './types';
@@ -11,7 +12,6 @@ import type {
   HTreeNodeData,
 } from '~/components/Tree/src/utils/types';
 import type Tree from '~/utils/useTree/index';
-import { JSX } from 'vue/jsx-runtime';
 
 export default function (
   props: ToRefs<TreeSelectProps>,
@@ -19,11 +19,12 @@ export default function (
   domRefs: HTreeSelectDomRefs,
   modelValueSet: Ref<Set<HTreeUuidType>>,
   presetModelValueSet: Ref<Set<HTreeUuidType>>,
-  renderedModelValueTags: Ref<Array<VNode | JSX.Element>>,
   treeHelper: Tree<HTreeData, HTreeExtendsData>,
   popperVisible: Ref<boolean>,
   emitChange: () => void,
   controlVisible: (visible: boolean) => void,
+  clearValue: () => TreeSelectStageResult,
+  setFilterValue: (value: string) => boolean,
 ) {
   const inputValue = ref<string>();
   const filterValue = ref<string>();
@@ -47,7 +48,7 @@ export default function (
       if (props.useStatistic.value && modelValueSet.value.size > 0) {
         return false;
       } else if (!isFilterable.value) {
-        if (renderedModelValueTags.value.length > 0) {
+        if (modelValueSet.value.size > 0) {
           return true;
         }
       } else {
@@ -74,10 +75,7 @@ export default function (
   watch(popperVisible, val => {
     if (val) {
       presetModelValueSet.value = new Set(modelValueSet.value.values());
-
-      if (val) {
-        whetherInputCanFocus();
-      }
+      whetherInputCanFocus();
     } else {
       inputValue.value = '';
       filterValue.value = '';
@@ -116,6 +114,7 @@ export default function (
   }
 
   function handleInput(evt: Event) {
+    if (isDuringComposition.value) return;
     const target = (evt.composedPath?.()?.[0] ?? evt.target) as HTMLInputElement;
     delInputDebounced(target.value);
   }
@@ -123,6 +122,7 @@ export default function (
   function delInput(value: string) {
     inputValue.value = value;
     filterValue.value = value;
+    setFilterValue(value);
     emitChange();
 
     void nextTick(() => {
@@ -132,14 +132,26 @@ export default function (
     });
   }
 
-  const delInputDebounced = debounce(delInput, props.inputEmitFrequency.value);
+  let delInputDebounced = debounce(delInput, props.inputEmitFrequency.value);
+
+  watch(props.inputEmitFrequency, value => {
+    delInputDebounced.cancel();
+    delInputDebounced = debounce(delInput, value);
+  });
+
+  watch(popperVisible, visible => {
+    if (!visible) delInputDebounced.cancel();
+  });
+
+  onBeforeUnmount(() => delInputDebounced.cancel());
 
   function onCompositionStart() {
     isDuringComposition.value = true;
   }
 
-  function onCompositionEnd() {
+  function onCompositionEnd(evt: CompositionEvent) {
     isDuringComposition.value = false;
+    handleInput(evt);
   }
 
   function onTagGroupSuffixInputFocus(evt: FocusEvent) {
@@ -159,20 +171,7 @@ export default function (
   }
 
   function handleClear() {
-    if (props.multiple.value) {
-      for (const value of Array.from(modelValueSet.value.values())) {
-        const option = treeHelper.flattenTreeData.value.find(curr => curr.value === value);
-        if (
-          !option?.disabled &&
-          (props.checkStrictly.value || (!props.checkStrictly.value && !option?.passingDisabled))
-        ) {
-          modelValueSet.value.delete(value);
-        }
-      }
-    } else {
-      modelValueSet.value.clear();
-    }
-
+    clearValue();
     inputValue.value = '';
     filterValue.value = '';
     context.emit('clear');
@@ -181,7 +180,7 @@ export default function (
   function whetherInputCanFocus() {
     void nextTick(() => {
       if (
-        (isFilterable.value || (props.multiple.value ?? props.needConfirm.value)) &&
+        (isFilterable.value || props.multiple.value || props.needConfirm.value) &&
         popperVisible.value
       ) {
         void nextTick(() => {
@@ -204,21 +203,15 @@ export default function (
     },
   ) {
     void nextTick(() => {
-      if (props.reserveKeyword.value === false) {
-        inputValue.value = '';
-        filterValue.value = '';
-      }
-
-      if (props.reserveKeyword.value === 'reserve-deselect') {
-        if (e.checked) {
-          inputValue.value = '';
-          filterValue.value = '';
-        }
-      }
-
-      if (props.reserveKeyword.value === 'reserve-special') {
-        inputValue.value = '';
-      }
+      const keyword = resolveTreeSelectKeywordAfterSelection(
+        props.reserveKeyword.value,
+        e.checked,
+        inputValue.value ?? '',
+        filterValue.value ?? '',
+      );
+      inputValue.value = keyword.inputValue;
+      filterValue.value = keyword.filterValue;
+      setFilterValue(keyword.filterValue);
 
       void nextTick(() => {
         focusInput();

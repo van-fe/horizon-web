@@ -52,13 +52,7 @@ describe('TreeSelect public API contracts', () => {
               dataMap = treeDataMap;
               return <span data-test="outer">outer:{String(visible.value)}</span>;
             },
-            treeNodeRender: ({
-              data,
-              vnode,
-            }: {
-              data: HTreeNodeDataWithLevel;
-              vnode: VNode;
-            }) => (
+            treeNodeRender: ({ data, vnode }: { data: HTreeNodeDataWithLevel; vnode: VNode }) => (
               <span data-test={`node-${String(data.value)}`} data-vnode={String(Boolean(vnode))}>
                 node:{String(data.label)}
               </span>
@@ -203,9 +197,10 @@ describe('TreeSelect public API contracts', () => {
     const onUpdateTreeData = vi.fn();
     const onConfirm = vi.fn();
     const onCancel = vi.fn();
-    const component = ref<
-      HorizonWebComponentInstance<typeof HTreeSelect, TreeSelectExposes> | null
-    >(null);
+    const component = ref<HorizonWebComponentInstance<
+      typeof HTreeSelect,
+      TreeSelectExposes
+    > | null>(null);
     const dynamicLoad = vi.fn(async ({ node }: HTreeDynamicLoadNode) =>
       node?.value === 'root' ? [{ value: 'loaded', label: 'Loaded' }] : [],
     );
@@ -247,13 +242,13 @@ describe('TreeSelect public API contracts', () => {
     expect(useTreeSelectEmits['update:modelValue'](['leaf'])).toBe(true);
     expect(useTreeSelectEmits['update:modelValue']('leaf')).toBe(true);
     expect(useTreeSelectEmits['update:modelValue'](undefined)).toBe(true);
-    expect(useTreeSelectEmits['update:modelValue'](1 as never)).toBe(false);
+    expect(useTreeSelectEmits['update:modelValue'](1)).toBe(true);
     expect(useTreeSelectEmits['update:expandValues']([1])).toBe(true);
     expect(useTreeSelectEmits['update:expandValues']('1' as never)).toBe(false);
     expect(useTreeSelectEmits['update:treeData']([])).toBe(true);
     expect(useTreeSelectEmits['update:treeData']({} as never)).toBe(false);
     expect(useTreeSelectEmits.change(1)).toBe(true);
-    expect(useTreeSelectEmits.change(null as never)).toBe(false);
+    expect(useTreeSelectEmits.change(null)).toBe(true);
     expect(useTreeSelectEmits.visibleChange(true)).toBe(true);
     expect(useTreeSelectEmits.visibleChange('true' as never)).toBe(false);
     expect(useTreeSelectEmits.clear()).toBe(true);

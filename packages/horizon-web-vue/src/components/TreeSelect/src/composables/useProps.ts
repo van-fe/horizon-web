@@ -1,4 +1,24 @@
 import type { CSSProperties, ExtractPropTypes, PropType } from 'vue';
+import type {
+  AdaptComponentApiShape,
+  ComponentRendererPropDefinitions,
+  TreeSelectCommonProps,
+} from '@aurora/core';
+import {
+  isChoiceSize,
+  isPickerFitInputWidth,
+  isPickerInputStatus,
+  isPickerInputVariant,
+  isPickerTrigger,
+  isPopoverPlacement,
+  isTreeDimension,
+  isTreeMultipleLimit,
+  isTreeNonnegativeNumber,
+  isTreeSelectModelValue,
+  isTreeSelectReserveKeyword,
+  isTreeSize,
+  TREE_SELECT_DEFAULTS,
+} from '@aurora/core';
 import { declarePropType } from '@aurora/utils';
 import type { TagProps } from '~/components/Tag/src/composables/useProps';
 import type { PickerInputStatusType } from '~/components/Picker/src/composables/useProps';
@@ -15,6 +35,69 @@ import type {
 import { IconCheck, IconDragForm, IconTriangleRightFilled } from '@aurora/icon';
 import type { BaseTreeData } from '~/utils/useTree/types';
 import type { HTreeSelectModelValueType } from '../utils/types';
+import type { PickerNativeInputAttrs } from '~/components/Picker/src/composables/useProps';
+
+type TreeSelectVueProps = AdaptComponentApiShape<
+  TreeSelectCommonProps<HTreeData>,
+  {
+    value: 'modelValue';
+    inputVariant: 'inputStyle';
+    popupClassName: 'popperClassName';
+    portal: 'toBody';
+    confirmText: 'confirmButtonText';
+    cancelText: 'cancelButtonText';
+    useBuiltInPanelFilter: 'useBuildInPanelFilter';
+    inputDebounce: 'inputEmitFrequency';
+    filterInputValue: 'panelFilterInputValue';
+    expandWrapperByChildren: 'expandPanelByChildren';
+  },
+  | 'defaultValue'
+  | 'open'
+  | 'defaultOpen'
+  | 'filterValue'
+  | 'defaultFilterValue'
+  | 'defaultTreeData'
+  | 'defaultExpandValues'
+  | 'initialValue'
+  | 'filterMethod'
+  | 'dynamicLoad'
+  | 'beforeDrop'
+  | 'fieldMap'
+  | 'panelWidth'
+  | 'hideFilterInput'
+  | 'virtualScrollBuffer',
+  {
+    initialValue?: HTreeSelectModelValueType | symbol;
+    inputAttrs?: PickerNativeInputAttrs;
+    collapsedTagsProps?: Partial<TagProps>;
+    popoverOptions?: Partial<PopoverProps>;
+    maxHeight?: string | number;
+    dropdownIcon?: unknown;
+    emptyText?: string;
+    searchPanelWidth?: string | number;
+    searchIcon?: unknown;
+    treeWidth?: string;
+    filterMethod?: HTreeFilterMethodType;
+    panelInputPlaceholder?: string;
+    highlightMethod?: HTreeHighlightMethod;
+    fieldMap?: Partial<Record<keyof BaseTreeData, keyof BaseTreeData | string>>;
+    selectedValues?: HTreeUuidType[];
+    foldIcon?: unknown;
+    expandIcon?: unknown;
+    prefixIcon?: unknown;
+    dynamicLoad?: HTreeDynamicLoadMethod;
+    rootClassName?: string;
+    rootStyle?: CSSProperties;
+    searchInputPlaceholder?: string;
+    draggableIcon?: unknown;
+    undraggableIcon?: unknown;
+    beforeDrop?: (
+      current: HTreeNodeDataWithLevel,
+      target: HTreeNodeDataWithLevel | null,
+      prev: HTreeNodeDataWithLevel | null,
+    ) => Awaited<boolean>;
+  }
+>;
 
 export const useTreeSelectProps = declarePropType({
   /**
@@ -22,7 +105,15 @@ export const useTreeSelectProps = declarePropType({
    * @en Configuration for model value.
    */
   modelValue: {
-    type: [Array, String] as PropType<HTreeSelectModelValueType>,
+    type: [Array, String, Number] as PropType<HTreeSelectModelValueType>,
+    validator: isTreeSelectModelValue,
+  },
+  /**
+   * 主触发输入框的原生可访问性与数据属性。
+   * @en Native accessibility and data attributes for the main trigger input.
+   */
+  inputAttrs: {
+    type: Object as PropType<PickerNativeInputAttrs>,
   },
   /**
    * 触发方式
@@ -30,7 +121,8 @@ export const useTreeSelectProps = declarePropType({
    */
   trigger: {
     type: String as PropType<'hover' | 'click'>,
-    default: 'click',
+    default: TREE_SELECT_DEFAULTS.trigger,
+    validator: isPickerTrigger,
   },
 
   /**
@@ -39,7 +131,7 @@ export const useTreeSelectProps = declarePropType({
    */
   clearable: {
     type: Boolean,
-    default: false,
+    default: TREE_SELECT_DEFAULTS.clearable,
   },
 
   /**
@@ -57,7 +149,7 @@ export const useTreeSelectProps = declarePropType({
    */
   collapseTags: {
     type: Boolean,
-    default: false,
+    default: TREE_SELECT_DEFAULTS.collapseTags,
   },
 
   /**
@@ -66,7 +158,7 @@ export const useTreeSelectProps = declarePropType({
    */
   collapseTagsTooltip: {
     type: Boolean,
-    default: false,
+    default: TREE_SELECT_DEFAULTS.collapseTagsTooltip,
   },
   /**
    * 多选模式下，自己控制显示的标签个数，超出这个个数将会被折叠
@@ -74,6 +166,7 @@ export const useTreeSelectProps = declarePropType({
    */
   maxCollapseTags: {
     type: Number,
+    validator: isTreeNonnegativeNumber,
   },
   /**
    * 尽量让标签填满容器
@@ -81,7 +174,7 @@ export const useTreeSelectProps = declarePropType({
    */
   collapseTagsFillUp: {
     type: Boolean,
-    default: true,
+    default: TREE_SELECT_DEFAULTS.collapseTagsFillUp,
   },
   /**
    * 折叠的标签的 props，可以自定义 `+N` 的 `tag` 的样式
@@ -104,6 +197,7 @@ export const useTreeSelectProps = declarePropType({
   size: {
     type: String as PropType<'large' | 'medium' | 'small'>,
     required: false,
+    validator: isChoiceSize,
   },
   /**
    * 触发器样式
@@ -111,7 +205,8 @@ export const useTreeSelectProps = declarePropType({
    */
   inputStyle: {
     type: String as PropType<'normal' | 'emphasize' | 'no-border'>,
-    default: 'normal',
+    default: TREE_SELECT_DEFAULTS.inputVariant,
+    validator: isPickerInputVariant,
   },
   /**
    * 作用在 popper 上的自定义 class name
@@ -126,7 +221,8 @@ export const useTreeSelectProps = declarePropType({
    */
   inputStatus: {
     type: String as PropType<PickerInputStatusType>,
-    default: 'normal',
+    default: TREE_SELECT_DEFAULTS.inputStatus,
+    validator: isPickerInputStatus,
   },
   /**
    * 给 popover 的额外参数
@@ -141,8 +237,9 @@ export const useTreeSelectProps = declarePropType({
    * @en Configuration for initial value.
    */
   initialValue: {
-    type: [Array, null, Symbol] as PropType<Array<string | number> | null | undefined | symbol>,
-    default: () => [],
+    type: [Array, String, Number, null, Symbol] as PropType<HTreeSelectModelValueType | symbol>,
+    default: () => [...(TREE_SELECT_DEFAULTS.initialValue as Array<string | number>)],
+    validator: (value: unknown) => typeof value === 'symbol' || isTreeSelectModelValue(value),
   },
   /**
    * 鼠标悬浮后多久显示 `popper`
@@ -151,7 +248,8 @@ export const useTreeSelectProps = declarePropType({
    */
   hoverShowDelay: {
     type: Number,
-    default: 0,
+    default: TREE_SELECT_DEFAULTS.hoverShowDelay,
+    validator: isTreeNonnegativeNumber,
   },
   /**
    * 鼠标移出后后多久隐藏 `popper`
@@ -160,7 +258,8 @@ export const useTreeSelectProps = declarePropType({
    */
   hoverHideDelay: {
     type: Number,
-    default: 200,
+    default: TREE_SELECT_DEFAULTS.hoverHideDelay,
+    validator: isTreeNonnegativeNumber,
   },
   /**
    * 是否使用多选统计
@@ -168,7 +267,7 @@ export const useTreeSelectProps = declarePropType({
    */
   useStatistic: {
     type: Boolean,
-    default: false,
+    default: TREE_SELECT_DEFAULTS.useStatistic,
   },
   /**
    * 多选统计的前置文字
@@ -185,7 +284,7 @@ export const useTreeSelectProps = declarePropType({
    */
   toBody: {
     type: Boolean,
-    default: true,
+    default: TREE_SELECT_DEFAULTS.portal,
   },
   /**
    * 下拉面板高度，也是设置树组件的高度
@@ -201,6 +300,7 @@ export const useTreeSelectProps = declarePropType({
   maxHeight: {
     type: [String, Number],
     default: 256,
+    validator: isTreeDimension,
   },
   /**
    * 是否启用虚拟滚动，需同时配置 `treeHeight` 或 `treeMaxHeight`
@@ -208,7 +308,7 @@ export const useTreeSelectProps = declarePropType({
    */
   useVirtualScroll: {
     type: Boolean,
-    default: false,
+    default: TREE_SELECT_DEFAULTS.useVirtualScroll,
   },
   /**
    * 是否多选
@@ -216,7 +316,7 @@ export const useTreeSelectProps = declarePropType({
    */
   multiple: {
     type: Boolean,
-    default: false,
+    default: TREE_SELECT_DEFAULTS.multiple,
   },
   /**
    * 多选限制数量
@@ -224,7 +324,8 @@ export const useTreeSelectProps = declarePropType({
    */
   multipleLimit: {
     type: Number,
-    default: Infinity,
+    default: TREE_SELECT_DEFAULTS.multipleLimit,
+    validator: isTreeMultipleLimit,
   },
   /**
    * 自定义下拉按钮
@@ -257,7 +358,7 @@ export const useTreeSelectProps = declarePropType({
    */
   needConfirm: {
     type: Boolean,
-    default: false,
+    default: TREE_SELECT_DEFAULTS.needConfirm,
   },
   /**
    * 确认按钮文字，默认使用国际化
@@ -295,7 +396,8 @@ export const useTreeSelectProps = declarePropType({
       | 'right'
       | 'left'
     >,
-    default: 'bottom-start',
+    default: TREE_SELECT_DEFAULTS.placement,
+    validator: isPopoverPlacement,
   },
   /**
    * 当原本的显示位置空间不够时，是否允许 popper 显示到对面的位置	boolean
@@ -303,7 +405,7 @@ export const useTreeSelectProps = declarePropType({
    */
   flip: {
     type: Boolean,
-    default: true,
+    default: TREE_SELECT_DEFAULTS.flip,
   },
   /**
    * 输入触发事件的频率
@@ -312,7 +414,8 @@ export const useTreeSelectProps = declarePropType({
    */
   inputEmitFrequency: {
     type: Number,
-    default: 200,
+    default: TREE_SELECT_DEFAULTS.inputDebounce,
+    validator: isTreeNonnegativeNumber,
   },
   /**
    * 搜索 `icon`
@@ -329,7 +432,8 @@ export const useTreeSelectProps = declarePropType({
    */
   fitInputWidth: {
     type: [Boolean, String] as PropType<boolean | 'fit-content'>,
-    default: true,
+    default: TREE_SELECT_DEFAULTS.fitInputWidth,
+    validator: isPickerFitInputWidth,
   },
   /**
    * 在允许过滤且是多选时，在勾选选项后是否保留输入的文字
@@ -341,7 +445,8 @@ export const useTreeSelectProps = declarePropType({
    */
   reserveKeyword: {
     type: [Boolean, String] as PropType<boolean | 'reserve-deselect' | 'reserve-special'>,
-    default: true,
+    default: TREE_SELECT_DEFAULTS.reserveKeyword,
+    validator: isTreeSelectReserveKeyword,
   },
   /**
    * 所有有 `tooltip` 的地方，在悬浮后延迟多少毫秒显示 `tooltip`
@@ -349,7 +454,8 @@ export const useTreeSelectProps = declarePropType({
    */
   tooltipShowAfter: {
     type: Number,
-    default: 100,
+    default: TREE_SELECT_DEFAULTS.tooltipShowAfter,
+    validator: isTreeNonnegativeNumber,
   },
   /**
    * 所有有 `tooltip` 的地方，在显示后延迟多少毫秒移除 `tooltip`
@@ -357,7 +463,8 @@ export const useTreeSelectProps = declarePropType({
    */
   tooltipHideAfter: {
     type: Number,
-    default: 200,
+    default: TREE_SELECT_DEFAULTS.tooltipHideAfter,
+    validator: isTreeNonnegativeNumber,
   },
   /**
    * 树形面板尺寸
@@ -366,6 +473,7 @@ export const useTreeSelectProps = declarePropType({
   treeSize: {
     type: String as PropType<'large' | 'medium' | 'small' | 'huge'>,
     required: false,
+    validator: isTreeSize,
   },
   /**
    * 树形面板宽度
@@ -380,7 +488,7 @@ export const useTreeSelectProps = declarePropType({
    */
   treeData: {
     type: Array as PropType<HTreeData[]>,
-    default: () => [],
+    default: () => [...TREE_SELECT_DEFAULTS.treeData!] as HTreeData[],
   },
   /**
    * 是否开启过滤
@@ -402,7 +510,7 @@ export const useTreeSelectProps = declarePropType({
    */
   filterToHideChildren: {
     type: Boolean,
-    default: true,
+    default: TREE_SELECT_DEFAULTS.filterToHideChildren,
   },
   /**
    * 是否在选项列表中使用过滤功能
@@ -410,7 +518,7 @@ export const useTreeSelectProps = declarePropType({
    */
   panelFilterable: {
     type: Boolean,
-    default: false,
+    default: TREE_SELECT_DEFAULTS.panelFilterable,
   },
   /**
    * 选项列表过滤的输入框内容
@@ -426,7 +534,7 @@ export const useTreeSelectProps = declarePropType({
    */
   useBuildInPanelFilter: {
     type: Boolean,
-    default: false,
+    default: TREE_SELECT_DEFAULTS.useBuiltInPanelFilter,
   },
   /**
    * 面板输入框的占位文字
@@ -490,7 +598,7 @@ export const useTreeSelectProps = declarePropType({
    */
   expandOnClickNode: {
     type: Boolean,
-    default: true,
+    default: TREE_SELECT_DEFAULTS.expandOnClickNode,
   },
   /**
    * 前缀 `icon`
@@ -505,7 +613,7 @@ export const useTreeSelectProps = declarePropType({
    */
   checkStrictly: {
     type: Boolean,
-    default: false,
+    default: TREE_SELECT_DEFAULTS.checkStrictly,
   },
   /**
    * 选中的树节点
@@ -522,7 +630,7 @@ export const useTreeSelectProps = declarePropType({
    */
   checkOnClickNode: {
     type: Boolean,
-    default: false,
+    default: TREE_SELECT_DEFAULTS.checkOnClickNode,
   },
   /**
    * 对于多选：是否在点击叶子节点时进行选择，任意有子级的节点点击仍受 `checkOnClickNode` 控制
@@ -531,7 +639,7 @@ export const useTreeSelectProps = declarePropType({
    */
   checkOnClickLeaf: {
     type: Boolean,
-    default: true,
+    default: TREE_SELECT_DEFAULTS.checkOnClickLeaf,
   },
   /**
    * 选中强调样式
@@ -539,7 +647,7 @@ export const useTreeSelectProps = declarePropType({
    */
   stress: {
     type: Boolean,
-    default: false,
+    default: TREE_SELECT_DEFAULTS.stress,
   },
   /**
    * 动态加载数据方法
@@ -554,7 +662,7 @@ export const useTreeSelectProps = declarePropType({
    */
   isDefaultExpandAll: {
     type: Boolean,
-    default: false,
+    default: TREE_SELECT_DEFAULTS.isDefaultExpandAll,
   },
   /**
    * 展开子节点的时候是否默认展开父节点
@@ -562,7 +670,7 @@ export const useTreeSelectProps = declarePropType({
    */
   isDefaultExpandParent: {
     type: Boolean,
-    default: true,
+    default: TREE_SELECT_DEFAULTS.isDefaultExpandParent,
   },
   /**
    * 根节点 `class` 类名
@@ -591,7 +699,8 @@ export const useTreeSelectProps = declarePropType({
    */
   indent: {
     type: Number,
-    default: 24,
+    default: TREE_SELECT_DEFAULTS.indent,
+    validator: isTreeNonnegativeNumber,
   },
   /**
    * 是否显示 tooltip
@@ -599,7 +708,7 @@ export const useTreeSelectProps = declarePropType({
    */
   tooltip: {
     type: Boolean,
-    default: true,
+    default: TREE_SELECT_DEFAULTS.tooltip,
   },
   /**
    * 禁用状态下是否可以通过父节点的选中改变禁用节点，默认状态下不受父节点影响
@@ -607,7 +716,7 @@ export const useTreeSelectProps = declarePropType({
    */
   parentEffectDisabledChild: {
     type: Boolean,
-    default: false,
+    default: TREE_SELECT_DEFAULTS.parentEffectDisabledChild,
   },
   /**
    * 多选时是否使用 `checkbox` 组件
@@ -615,7 +724,7 @@ export const useTreeSelectProps = declarePropType({
    */
   showCheckbox: {
     type: Boolean,
-    default: true,
+    default: TREE_SELECT_DEFAULTS.showCheckbox,
   },
   /**
    * 单选时是否使用 `radio` 组件
@@ -623,7 +732,7 @@ export const useTreeSelectProps = declarePropType({
    */
   showRadio: {
     type: Boolean,
-    default: false,
+    default: TREE_SELECT_DEFAULTS.showRadio,
   },
   /**
    * 设置自适应文字长度的 `input` 的最小宽度
@@ -631,7 +740,8 @@ export const useTreeSelectProps = declarePropType({
    */
   fitContentInputMinWidth: {
     type: [String, Number],
-    default: 1,
+    default: TREE_SELECT_DEFAULTS.fitContentInputMinWidth,
+    validator: isTreeDimension,
   },
   /**
    * 是否显示连线
@@ -639,7 +749,7 @@ export const useTreeSelectProps = declarePropType({
    */
   showLine: {
     type: Boolean,
-    default: false,
+    default: TREE_SELECT_DEFAULTS.showLine,
   },
   /**
    * 是否在开启虚拟滚动时，允许子元素撑开容器
@@ -647,7 +757,7 @@ export const useTreeSelectProps = declarePropType({
    */
   expandPanelByChildren: {
     type: Boolean,
-    default: false,
+    default: TREE_SELECT_DEFAULTS.expandWrapperByChildren,
   },
   /**
    * 是否允许拖拽排序
@@ -655,7 +765,7 @@ export const useTreeSelectProps = declarePropType({
    */
   draggable: {
     type: Boolean,
-    default: false,
+    default: TREE_SELECT_DEFAULTS.draggable,
   },
   /**
    * 拖拽的 `icon`
@@ -682,7 +792,7 @@ export const useTreeSelectProps = declarePropType({
    */
   draggableIconAlwaysVisible: {
     type: Boolean,
-    default: false,
+    default: TREE_SELECT_DEFAULTS.draggableIconAlwaysVisible,
   },
   /**
    * 是否只能在拖拽图标上拖拽
@@ -690,7 +800,7 @@ export const useTreeSelectProps = declarePropType({
    */
   dragOnHandler: {
     type: Boolean,
-    default: true,
+    default: TREE_SELECT_DEFAULTS.dragOnHandler,
   },
   /**
    * 是否允许拖拽到叶子节点上并创建子级
@@ -698,7 +808,7 @@ export const useTreeSelectProps = declarePropType({
    */
   dragToLeaf: {
     type: Boolean,
-    default: true,
+    default: TREE_SELECT_DEFAULTS.dragToLeaf,
   },
   /**
    * 在放置节点前的回调
@@ -717,6 +827,6 @@ export const useTreeSelectProps = declarePropType({
       ) => Awaited<boolean>
     >,
   },
-});
+} satisfies ComponentRendererPropDefinitions<TreeSelectVueProps>);
 
 export type TreeSelectProps = ExtractPropTypes<typeof useTreeSelectProps>;

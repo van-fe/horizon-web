@@ -1,0 +1,73 @@
+@use '../../mixins';
+
+/* stylelint-disable nesting-selector-no-missing-scoping-root -- BEM mixins provide selector roots. */
+
+@include mixins.b('tree-select') {
+  @include mixins.e('panel') {
+    box-sizing: border-box;
+    max-width: min(100%, mixins.css-variable('tree-select', 'size', 'panel', 'max-inline'));
+
+    @include mixins.b('picker', false) {
+      @include mixins.e('panel-input') {
+        border-bottom: mixins.css-variable('tree-select', 'border', 'panel');
+      }
+    }
+
+    @include mixins.b('tree', false) {
+      min-width: 0;
+      max-width: 100%;
+
+      @include mixins.e('list') {
+        margin: mixins.css-variable('tree-select', 'spacing', 'panel', 'scrollbar', 'margin-y') 0;
+      }
+    }
+  }
+}
+
+@include mixins.b('tree-select-panel') {
+  box-sizing: border-box;
+  flex: 0 1 fit-content;
+  min-width: min(100%, mixins.css-variable('tree-select', 'size', 'panel', 'min-width'));
+  max-width: min(100%, mixins.css-variable('tree-select', 'size', 'panel', 'max-width'));
+  min-height: mixins.css-variable('tree-select', 'size', 'panel', 'min-height');
+  overflow: hidden;
+  border-right: mixins.css-variable('tree-select', 'border', 'panel');
+
+  &:last-child {
+    border-right: none;
+  }
+
+  @include mixins.e('empty') {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: mixins.css-variable('tree-select', 'font-size', 'no-data');
+    color: mixins.css-variable('tree-select', 'color', 'no-data');
+  }
+
+  @include mixins.e('group-label') {
+    padding: mixins.css-variable('select', 'spacing', 'option-group', 'title', 'padding');
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: mixins.css-variable('select', 'font-size', 'option-group', 'title');
+    color: mixins.css-variable('select', 'color', 'option-group', 'title');
+    white-space: nowrap;
+  }
+}
+
+@include mixins.b('tree-select-search-panel') {
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: min(100%, mixins.css-variable('tree-select', 'size', 'panel', 'max-inline'));
+
+  @include mixins.e('scrollbar') {
+    border-top: mixins.css-variable('tree-select', 'border', 'panel');
+
+    @include mixins.m('view') {
+      margin: mixins.css-variable('tree-select', 'spacing', 'panel', 'scrollbar', 'margin-y') 0;
+    }
+  }
+}
+
+/* stylelint-enable nesting-selector-no-missing-scoping-root */

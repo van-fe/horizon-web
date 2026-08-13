@@ -28,7 +28,9 @@ export class TreeSelectHelper<
   public modelValue = ref<HTreeUuidType | HTreeUuidType[]>();
   public selectedValues = ref();
   public expandedValues = ref();
-  public domRef = ref<HorizonWebComponentInstance<typeof HTreeSelect, TreeSelectExposes> | null>(null);
+  public domRef = ref<HorizonWebComponentInstance<typeof HTreeSelect, TreeSelectExposes> | null>(
+    null,
+  );
 
   public wrapper?: VueWrapper<any, any>;
   public element?: VueWrapper<typeof HTreeSelect, any>;
@@ -123,7 +125,9 @@ export async function createInstance<T extends string | keyof TreeSelectProps>(
 ) {
   const selectedValues = ref();
   const expandedValues = ref();
-  const domRef = ref<HorizonWebComponentInstance<typeof HTreeSelect, TreeSelectExposes> | null>(null);
+  const domRef = ref<HorizonWebComponentInstance<typeof HTreeSelect, TreeSelectExposes> | null>(
+    null,
+  );
 
   const wrapper = mount(
     () => (

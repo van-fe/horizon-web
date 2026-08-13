@@ -1,0 +1,166 @@
+@use '../../mixins';
+@use 'panel';
+@use 'item';
+
+/* stylelint-disable nesting-selector-no-missing-scoping-root -- BEM mixins provide selector roots. */
+
+@include mixins.b('tree-select') {
+  max-width: 100%;
+  #{mixins.css-variable-name('tag', 'size', 'max-width')}: #{mixins.css-variable(
+      'tree-select',
+      'size',
+      'tag',
+      'max-width'
+    )};
+  #{mixins.css-variable-name('tag', 'size', 'max-width', 'large')}: #{mixins.css-variable(
+      'tree-select',
+      'size',
+      'tag',
+      'max-width'
+    )};
+  #{mixins.css-variable-name('tag', 'size', 'max-width', 'small')}: #{mixins.css-variable(
+      'tree-select',
+      'size',
+      'tag',
+      'max-width'
+    )};
+
+  @include mixins.is('inputable') {
+    #{mixins.element-name('input', mixins.block('picker'))} {
+      cursor: text;
+    }
+  }
+
+  @include mixins.em('tag-group', 'normal') {
+    @include mixins.nested('tag-group__container') {
+      display: block;
+    }
+  }
+
+  @include mixins.em('tag-group', 'popper') {
+    #{mixins.css-variable-name('tag', 'size', 'max-width')}: #{mixins.css-variable(
+        'tree-select',
+        'size',
+        'tag',
+        'max-width'
+      )};
+    #{mixins.css-variable-name('tag', 'size', 'max-width', 'large')}: #{mixins.css-variable(
+        'tree-select',
+        'size',
+        'tag',
+        'max-width'
+      )};
+    #{mixins.css-variable-name('tag', 'size', 'max-width', 'small')}: #{mixins.css-variable(
+        'tree-select',
+        'size',
+        'tag',
+        'max-width'
+      )};
+
+    #{mixins.element-name('content', mixins.block('tag'))} {
+      max-width: 100%;
+      overflow-wrap: anywhere;
+    }
+  }
+
+  #{mixins.element-name('content', mixins.block('tag'))} {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  #{mixins.block-name('tag-group')} {
+    float: left;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  @include mixins.e('values') {
+    display: flex;
+    flex: 1;
+    gap: mixins.css-variable('tree-select', 'spacing', 'tags-container', 'column-gap');
+    align-items: center;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  @include mixins.e('tag') {
+    display: inline-flex;
+    gap: mixins.css-variable('tree-select', 'spacing', 'tag', 'gap');
+    align-items: center;
+    min-width: 0;
+    max-width: mixins.css-variable('tree-select', 'size', 'tag', 'max-width');
+    height: mixins.css-variable('tree-select', 'size', 'tag', 'height');
+    padding: 0 mixins.css-variable('tree-select', 'spacing', 'tag', 'padding-x');
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: mixins.css-variable('tree-select', 'font-size', 'tag');
+    color: mixins.css-variable('tree-select', 'color', 'tag');
+    white-space: nowrap;
+    background: mixins.css-variable('tree-select', 'background', 'tag');
+    border-radius: mixins.css-variable('tree-select', 'border-radius', 'tag');
+
+    @include mixins.is('disabled') {
+      color: mixins.css-variable('tree-select', 'color', 'tag', 'disabled');
+      background: mixins.css-variable('tree-select', 'background', 'tag', 'disabled');
+    }
+
+    &[aria-disabled='true'] {
+      color: mixins.css-variable('tree-select', 'color', 'tag', 'disabled');
+      background: mixins.css-variable('tree-select', 'background', 'tag', 'disabled');
+    }
+  }
+
+  @include mixins.e('tag-remove') {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    width: mixins.css-variable('tree-select', 'size', 'tag', 'remove');
+    height: mixins.css-variable('tree-select', 'size', 'tag', 'remove');
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    line-height: 1;
+    color: mixins.css-variable('tree-select', 'color', 'tag', 'remove');
+    appearance: none;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    border-radius: mixins.css-variable('tree-select', 'border-radius', 'tag');
+
+    &:focus-visible {
+      @include mixins.focus-ring-inset;
+    }
+
+    &:hover:not(:disabled, [aria-disabled='true']) {
+      color: mixins.css-variable('tree-select', 'color', 'tag', 'remove', 'hover');
+      background: mixins.css-variable('tree-select', 'background', 'tag', 'hover');
+    }
+
+    &:disabled,
+    &[aria-disabled='true'] {
+      color: mixins.css-variable('tree-select', 'color', 'tag', 'disabled');
+      cursor: not-allowed;
+    }
+  }
+
+  @include mixins.e('summary') {
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    overflow-wrap: anywhere;
+  }
+
+  #{mixins.element-name('container', #{mixins.block('tag-group')})} {
+    gap: mixins.css-variable('tree-select', 'spacing', 'tags-container', 'column-gap');
+  }
+
+  @include mixins.bem('picker', 'input', 'small', false) {
+    #{mixins.element-name('container', mixins.block('tag-group'))} {
+      gap: mixins.css-variable('tree-select', 'spacing', 'tags-container', 'column-gap', 'small');
+    }
+  }
+}
+
+/* stylelint-enable nesting-selector-no-missing-scoping-root */

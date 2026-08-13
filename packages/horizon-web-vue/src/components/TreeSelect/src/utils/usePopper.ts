@@ -10,10 +10,12 @@ export default function (
   context: HTreeSelectContext,
   domRefs: HTreeSelectDomRefs,
   modelValueSet: Ref<Set<HTreeUuidType>>,
+  syncOpen: (open: boolean) => void,
 ) {
   const popperVisible = ref(false);
 
   function controlPopperVisible(visible: boolean) {
+    if (visible === popperVisible.value) return;
     if (visible) {
       domRefs.picker.value?.showPopover();
     } else {
@@ -22,6 +24,7 @@ export default function (
   }
 
   watch(popperVisible, val => {
+    syncOpen(val);
     if (val && modelValueSet.value.size) {
       domRefs.tree.value?.setCollapseStatusByValue(Array.from(modelValueSet.value.values()), true);
     }

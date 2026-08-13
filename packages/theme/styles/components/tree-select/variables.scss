@@ -1,0 +1,93 @@
+@use '../../mixins';
+
+$values: (
+  size: (
+    panel: (
+      max-width: 286px,
+      min-width: 136px,
+      min-height: 256px,
+      max-inline: calc(100vw - #{mixins.css-variable('spacing-4')} * 2),
+    ),
+    tag: (
+      height: 24px,
+      max-width: 100%,
+      remove: 16px,
+    ),
+    item: (
+      min-height: 40px,
+    ),
+    item-icon: (
+      height: 16px,
+    ),
+  ),
+  font-size: (
+    no-data: #{mixins.css-variable('text-base')},
+    tag: #{mixins.css-variable('text-sm')},
+  ),
+  color: (
+    '': #{mixins.css-variable('text-primary')},
+    item: (
+      '': #{mixins.css-variable('text-primary')},
+      disabled: #{mixins.css-variable('text-disabled')},
+      keyword: #{mixins.css-variable('text-brand-default')},
+    ),
+    no-data: #{mixins.css-variable('text-disabled')},
+    tag: (
+      '': #{mixins.css-variable('text-primary')},
+      disabled: #{mixins.css-variable('text-disabled')},
+      remove: (
+        '': #{mixins.css-variable('text-tertiary')},
+        hover: #{mixins.css-variable('text-primary')},
+      ),
+    ),
+  ),
+  border-color: (
+    panel: #{mixins.css-variable('divider-default')},
+  ),
+  border: (
+    panel: 1px solid #{mixins.css-variable('tree-select', 'border-color', 'panel')},
+  ),
+  background: (
+    item: (
+      '': #{mixins.css-variable('bg-default')},
+      hover: #{mixins.css-variable('bg-hover')},
+    ),
+    tag: (
+      '': #{mixins.css-variable('bg-tertiary')},
+      hover: #{mixins.css-variable('bg-hover')},
+      disabled: #{mixins.css-variable('bg-disabled')},
+    ),
+  ),
+  border-radius: (
+    tag: #{mixins.css-variable('radius-s')},
+  ),
+  spacing: (
+    item: (
+      padding: 9px #{mixins.css-variable('spacing-4')},
+      padding-right: #{mixins.css-variable('spacing-4')},
+      has-icon: (
+        padding-right: calc(
+            #{mixins.css-variable('spacing-5')} + #{mixins.css-variable('spacing-4')}
+          ),
+      ),
+    ),
+    panel: (
+      scrollbar: (
+        margin-y: #{mixins.css-variable('spacing-3')},
+      ),
+    ),
+    tags-container: (
+      column-gap: (
+        '': #{mixins.css-variable('select', 'spacing', 'tags-container', 'column-gap')},
+        small: #{mixins.css-variable('select', 'spacing', 'tags-container', 'column-gap', 'small')},
+      ),
+    ),
+    tag: (
+      gap: #{mixins.css-variable('spacing-2')},
+      padding-x: #{mixins.css-variable('spacing-3')},
+    ),
+  ),
+  transition: (
+    background: background #{mixins.css-variable('transition', 'time', 'fast')},
+  ),
+);

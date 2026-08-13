@@ -24,11 +24,12 @@ export default function (
 
   /** watches*
    * @en Description for watch.
- */
+   */
   watch(
-    props.treeData,
-    val => {
-      treeHelper.setTreeData(val);
+    () => [props.treeData.value, props.fieldMap?.value] as const,
+    ([treeData, fieldMap]) => {
+      treeHelper.dealFieldMapping(fieldMap ?? {});
+      treeHelper.setTreeData(treeData);
     },
     {
       deep: true,

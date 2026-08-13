@@ -1,5 +1,15 @@
 import type { VNode } from 'vue';
-import { computed, defineComponent, inject, provide, ref, toRefs } from 'vue';
+import {
+  computed,
+  defineComponent,
+  inject,
+  onBeforeUnmount,
+  provide,
+  ref,
+  toRefs,
+  useId,
+  watchEffect,
+} from 'vue';
 import {
   cls,
   ComponentClassBlock,
@@ -43,6 +53,7 @@ import type { TagGroupExposes } from '~/components/Tag/src/composables/useExpose
 import type { TreeExposes } from '~/components/Tree/src/composables/useExposes';
 import type { TopBaseTreeData } from '~/utils/useTree/types';
 import { JSX } from 'vue/jsx-runtime';
+import { resolveTreeSelectDisplay } from '@aurora/core';
 
 export default defineComponent({
   name: `${useNamespace()}TreeSelect`,
@@ -93,7 +104,14 @@ export default defineComponent({
       searchPanelWidth: searchPanelWidthProp,
       searchIcon: searchIconProp,
       searchInputPlaceholder: searchInputPlaceholderProp,
+      inputAttrs: inputAttrsProp,
     } = refProps;
+    const treeId = `${useId()}-tree-select-tree`;
+    const treeA11yAttrs = { id: treeId } as Record<string, unknown>;
+    let focusTreeTimer: ReturnType<typeof setTimeout> | undefined;
+    onBeforeUnmount(() => {
+      if (focusTreeTimer) clearTimeout(focusTreeTimer);
+    });
 
     /**
      * dom ref
@@ -113,12 +131,15 @@ export default defineComponent({
      */
     const sizeRef = useSize(size, 'medium');
     const useCollapse = computed(() => collapseTagsProp.value);
-    const renderedModelValueTags = ref<Array<VNode | JSX.Element>>([]);
     // To prevent optionList changes that cause already selected options to fail to render
     const prevRenderedModelValueTags = new Map<HTreeUuidType, VNode | JSX.Element>();
 
     // form-item validate trigger
     const nFormError = inject(HFormItemErrorInjectedKey, ref(''));
+    const statisticSingularText = useLocaleLang('select.statistic');
+    const statisticPluralText = useLocaleLang('select.statistics');
+    const pickerPlaceholder = useLocaleLang('select.placeholder');
+    const pickerSearchPlaceholder = useLocaleLang('select.pleaseSearch');
 
     const { treeHelper, treeDataMapping } = useTreeData(refProps, context, domRefs);
 
@@ -128,16 +149,21 @@ export default defineComponent({
       visibleNodes,
       presetModelValueSet,
       isDisabled,
-      updateModelValue,
-      setModelValue,
-      updatePresetToFormal,
-    } = useData(refProps, context, domRefs, treeHelper, emitChange);
+      controller,
+      stageValues,
+      clearValue,
+      removeValue,
+      syncOpen,
+      syncSnapshot,
+      setFilterValue,
+    } = useData(refProps, context, treeHelper, emitChange);
 
     const { popperVisible, controlPopperVisible } = usePopper(
       refProps,
       context,
       domRefs,
       modelValueSet,
+      syncOpen,
     );
 
     const {
@@ -166,44 +192,40 @@ export default defineComponent({
       domRefs,
       modelValueSet,
       presetModelValueSet,
-      renderedModelValueTags,
       treeHelper,
       popperVisible,
       emitChange,
       controlPopperVisible,
+      clearValue,
+      setFilterValue,
     );
 
     const { needConfirm, confirmHandle, cancelHandle } = useConfirm(
       refProps,
       context,
-      domRefs,
-      modelValueSet,
-      presetModelValueSet,
       controlPopperVisible,
       whetherInputCanFocus,
-      updatePresetToFormal,
+      controller,
+      syncSnapshot,
     );
 
-    const { getShowLabel } = useTagRender(
+    const { renderTags } = useTagRender(
       refProps,
       context,
-      domRefs,
       treeHelper,
       modelValueSet,
-      presetModelValueSet,
-      renderedModelValueTags,
       prevRenderedModelValueTags,
       isDisabled,
-      updateModelValue,
-      visibleNodes,
+      removeValue,
+      controller,
     );
 
     provide(HTreeSelectInputStringInjectKey, inputValueMerged);
 
     provide(HTreeSelectPopperVisibleInjectKey, popperVisible);
 
-    function emitChange() {
-      emit('change', modelValue.value);
+    function emitChange(value?: typeof modelValue.value) {
+      emit('change', value);
     }
 
     function handleClick() {
@@ -212,7 +234,7 @@ export default defineComponent({
 
     function onSelectedValuesChanged(selectedValues: HTreeUuidType[]) {
       if (!isEqual(selectedValues, Array.from(modelValueSet.value.values()))) {
-        setModelValue(selectedValues, !needConfirm.value);
+        stageValues(selectedValues);
 
         if (!needConfirm.value) {
           if (!multipleProp.value) {
@@ -222,42 +244,31 @@ export default defineComponent({
       }
     }
 
-    // in order to prevent optionList changed after the showValue is empty
-    let prevSelectedValue: HTreeUuidType | null = null;
-    let prevSelectedLabel: string = '';
+    // Keep the last label for a controlled value while the parent replaces treeData.
+    const previousLabels = new Map<HTreeUuidType, string>();
+    watchEffect(() => {
+      const snapshot = controller.snapshot;
+      for (const value of modelValueSet.value) {
+        const label = snapshot.tree.byValue.get(value)?.stringLabel;
+        if (label !== undefined) previousLabels.set(value, label);
+      }
+    });
 
     const showValue = computed<string | undefined>(() => {
-      if (props.multiple) {
-        if (useStatisticProp.value && modelValueSet.value.size > 0) {
-          return statisticTextProp?.value
-            ? `${statisticTextProp?.value} (${modelValueSet.value.size})`
-            : modelValueSet.value.size <= 1
-              ? (useLocaleLang('select.statistic').value as string)
-              : `${useLocaleLang('select.statistics').value} (${modelValueSet.value.size})`;
-        } else if (isFilterable.value && filterValue.value && modelValueSet.value.size === 0) {
-          return filterValue.value;
-        } else {
-          return modelValueSet.value.size > 0 ? ' ' : '';
-        }
-      } else {
-        if (isFilterable.value && filterValue.value && modelValueSet.value.size === 0) {
-          return filterValue.value;
-        } else {
-          const value = modelValueSet.value.values().next().value as HTreeUuidType;
-          const option = treeDataMapping.value.get(value);
-
-          if (!option) {
-            if (value === prevSelectedValue) {
-              return prevSelectedLabel;
-            }
-          }
-
-          prevSelectedValue = value;
-          prevSelectedLabel = getShowLabel(value);
-
-          return prevSelectedLabel;
-        }
-      }
+      return resolveTreeSelectDisplay(
+        controller.snapshot.tree,
+        Array.from(modelValueSet.value.values()),
+        {
+          multiple: multipleProp.value,
+          filterable: isFilterable.value,
+          filterValue: filterValue.value,
+          useStatistic: useStatisticProp.value,
+          text: statisticTextProp?.value,
+          singularText: statisticSingularText.value as string,
+          pluralText: statisticPluralText.value as string,
+          previousLabels,
+        },
+      );
     });
 
     /**
@@ -279,7 +290,7 @@ export default defineComponent({
       getExpandNodes: () => domRefs.tree.value?.getExpandNodes(),
       setCollapseStatusByValue: (values: Array<string | number>, isExpand: boolean) =>
         domRefs.tree.value?.setCollapseStatusByValue(values, isExpand),
-      clearSelectedValues: () => domRefs.tree.value?.clearSelectedValues(),
+      clearSelectedValues: () => clearValue(),
       setAllCollapseStatus: (isExpand: boolean) =>
         domRefs.tree.value?.setAllCollapseStatus(isExpand),
       getNodeByValues: (values: Array<string | number>) =>
@@ -310,9 +321,7 @@ export default defineComponent({
         trigger={triggerProp.value}
         placement={placementProp.value}
         toBody={toBodyProp.value}
-        placeholder={
-          placeholderProp?.value ?? (useLocaleLang('select.placeholder').value as string)
-        }
+        placeholder={placeholderProp?.value ?? (pickerPlaceholder.value as string)}
         needConfirm={needConfirm.value}
         confirmButtonText={props.confirmButtonText}
         cancelButtonText={props.cancelButtonText}
@@ -331,12 +340,20 @@ export default defineComponent({
         panelInputPlaceholder={
           panelInputPlaceholderProp?.value ??
           searchInputPlaceholderProp?.value ??
-          (useLocaleLang('select.pleaseSearch').value as string)
+          (pickerSearchPlaceholder.value as string)
         }
         panelInputPrefixIcon={searchIconProp?.value ?? IconSearch}
         fitInputWidth={fitInputWidthProp.value}
         panelWidth={treeWidthProp?.value ?? searchPanelWidthProp?.value}
         fitContentInputMinWidth={fitContentInputMinWidthProp?.value}
+        inputAttrs={{
+          ...(inputAttrsProp?.value ?? {}),
+          role: 'combobox',
+          'aria-autocomplete': isFilterable.value ? 'list' : 'none',
+          'aria-expanded': popperVisible.value,
+          'aria-haspopup': 'tree',
+          'aria-controls': popperVisible.value ? treeId : undefined,
+        }}
         onClick={handleClick}
         onClear={handleClear}
         onFocus={handleFocus}
@@ -352,11 +369,26 @@ export default defineComponent({
         onCompositionEnd={onCompositionEnd}
         onKeydown={evt => {
           if (evt.key === 'Escape') {
+            if (needConfirm.value) {
+              controller.cancel();
+              syncSnapshot();
+            }
             controlPopperVisible(false);
           } else if (!popperVisible.value && ['ArrowDown', 'ArrowUp', 'Enter'].includes(evt.key)) {
             evt.preventDefault();
             controlPopperVisible(true);
-          } else if (popperVisible.value) {
+          } else if (
+            popperVisible.value &&
+            ['ArrowDown', 'ArrowUp', 'Home', 'End', 'Enter', ' '].includes(evt.key)
+          ) {
+            if (['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(evt.key)) {
+              evt.preventDefault();
+              if (focusTreeTimer) clearTimeout(focusTreeTimer);
+              focusTreeTimer = setTimeout(() => {
+                focusTreeTimer = undefined;
+                if (popperVisible.value) document.getElementById(treeId)?.focus();
+              });
+            }
             domRefs.tree.value?.keyboardEventDeal(evt);
           }
         }}
@@ -404,7 +436,7 @@ export default defineComponent({
                       }}
                     >
                       {{
-                        default: () => renderedModelValueTags.value,
+                        default: renderTags,
                         suffix: () => (
                           <HPickerFitContentInput
                             data-focus-visible-proxy=""
@@ -457,6 +489,7 @@ export default defineComponent({
           },
           default: () => (
             <HTree
+              {...treeA11yAttrs}
               ref={domRefs.tree}
               treeHelper={treeHelper}
               size={treeSizeProp?.value}

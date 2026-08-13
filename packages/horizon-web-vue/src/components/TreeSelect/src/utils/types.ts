@@ -13,8 +13,10 @@ import type {
 import type HPickerFitContentInput from '~/components/Picker/src/components/PickerFitContentInput';
 import type { TagGroupExposes } from '~/components/Tag/src/composables/useExposes';
 import type { TreeExposes } from '~/components/Tree/src/composables/useExposes';
+import type { TreeSelectModelValue } from '@aurora/core';
 
-export type HTreeSelectModelValueType = Array<string | number> | string | number | null | undefined;
+/** Vue public alias for the shared TreeSelect model domain. */
+export type HTreeSelectModelValueType = TreeSelectModelValue;
 export type HTreeSelectModelValueSetType = Array<string | number>;
 
 export type HTreeSelectContext = HorizonWebSetupContext<

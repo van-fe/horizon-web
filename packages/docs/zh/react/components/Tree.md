@@ -72,7 +72,6 @@ Tree 用于展示层级数据，并支持导航、选择、筛选、动态加载
 | `height` / `maxHeight` | `number \| string` | — | 滚动容器尺寸。 |
 | `indent` | `number` | `24` | 每级缩进的像素值。 |
 | `tooltip` | `boolean` | `true` | 将节点文字显示为原生提示。 |
-| `tooltipShowAfter` / `tooltipHideAfter` | `number` | `100` / `200` | 共享配置保留的提示延迟值。 |
 | `dynamicLoad` | `TreeDynamicLoader` | — | 加载未展开分支的子节点。 |
 | `draggable` | `boolean` | `false` | 开启拖拽排序。 |
 | `dragOnHandler` | `boolean` | `true` | 仅允许从拖拽手柄开始拖动。 |

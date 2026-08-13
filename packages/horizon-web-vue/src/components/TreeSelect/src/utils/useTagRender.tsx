@@ -1,93 +1,81 @@
 import type { ToRefs, VNode, Ref, ComputedRef } from 'vue';
 import type { TreeSelectProps } from '../composables/useProps';
-import type { HTreeSelectContext, HTreeSelectDomRefs } from './types';
+import type { HTreeSelectContext } from './types';
 import HTag from '~/components/Tag/src/Tag';
 import type { HTreeExtendsData, HTreeData, HTreeUuidType } from '~/components/Tree/src/utils/types';
 import type Tree from '~/utils/useTree/index';
-import { watch } from 'vue';
+import { watchEffect } from 'vue';
 import { JSX } from 'vue/jsx-runtime';
+import {
+  createTreeSelectTags,
+  type TreeSelectController,
+  type TreeSelectStageResult,
+  type TreeValue,
+} from '@aurora/core';
 
 export default function (
   props: ToRefs<TreeSelectProps>,
   context: HTreeSelectContext,
-  domRefs: HTreeSelectDomRefs,
   treeHelper: Tree<HTreeData, HTreeExtendsData>,
   modelValueSet: Ref<Set<HTreeUuidType>>,
-  presetModelValueSet: Ref<Set<HTreeUuidType>>,
-  renderedModelValueTags: Ref<Array<VNode | JSX.Element>>,
   prevRenderedModelValueTags: Map<HTreeUuidType, VNode | JSX.Element>,
   isDisabled: ComputedRef<boolean>,
-  updateModelValue: () => void,
-  visibleNodes: Ref<HTreeExtendsData[]>,
+  removeValue: (value: TreeValue) => TreeSelectStageResult,
+  controller: TreeSelectController<HTreeData>,
 ) {
-  watch(
-    modelValueSet,
-    () => {
-      resetRenderedTags();
-      updateModelValue();
-    },
-    {
-      deep: true,
-    },
-  );
-
-  watch(props.checkStrictly, () => {
-    resetRenderedTags();
+  const previousLabels = new Map<TreeValue, string>();
+  watchEffect(() => {
+    for (const value of modelValueSet.value) {
+      const label = controller.snapshot.tree.byValue.get(value)?.stringLabel;
+      if (label !== undefined) previousLabels.set(value, label);
+    }
   });
 
-  watch(visibleNodes, () => {
-    resetRenderedTags();
-  });
+  function renderTags(): Array<VNode | JSX.Element> {
+    const tags = createTreeSelectTags(
+      controller.snapshot.tree,
+      Array.from(modelValueSet.value.values()),
+      {
+        checkStrictly: props.checkStrictly.value,
+        disabled: isDisabled.value,
+        previousLabels,
+      },
+    );
+    for (const tag of tags) previousLabels.set(tag.value, tag.label);
 
-  watch(
-    () => props.disabled?.value,
-    () => {
-      resetRenderedTags();
-    },
-  );
-
-  function getShowLabel(uuid: HTreeUuidType) {
-    const option = treeHelper.flattenTreeDataMapping.value.get(uuid);
-
-    return option?.stringLabel ?? '';
-  }
-
-  function resetRenderedTags() {
-    renderedModelValueTags.value = Array.from(modelValueSet.value.values())
-      .map(uuid => {
+    const rendered = tags
+      .map(tag => {
+        const uuid = tag.value;
         const option = treeHelper.flattenTreeData.value.find(curr => curr._uuid === uuid);
 
         if (!option) {
-          return (
-            prevRenderedModelValueTags.get(uuid) ?? (
-              <HTag
-                clickable={false}
-                closable={true}
-                disabled={isDisabled.value}
-                onClose={() => modelValueSet.value.delete(uuid)}
-              >
-                {getShowLabel(uuid)}
-              </HTag>
-            )
+          return context.slots.tagRender && prevRenderedModelValueTags.has(uuid) ? (
+            prevRenderedModelValueTags.get(uuid)
+          ) : (
+            <HTag
+              clickable={false}
+              closable={tag.removable}
+              disabled={tag.disabled}
+              onClose={() => removeValue(uuid)}
+            >
+              {tag.label}
+            </HTag>
           );
         }
 
         const res = context.slots.tagRender?.({ ...option, label: option.fullPathLabel }) ?? (
           <HTag
             clickable={false}
-            closable={
-              !option?.disabled &&
-              !isDisabled.value &&
-              (props.checkStrictly.value || (!props.checkStrictly.value && !option.passingDisabled))
-            }
-            disabled={option?.disabled || isDisabled.value}
-            onClose={() => modelValueSet.value.delete(uuid)}
+            closable={tag.removable}
+            disabled={tag.disabled}
+            onClose={() => removeValue(uuid)}
           >
-            {getShowLabel(uuid)}
+            {tag.label}
           </HTag>
         );
 
-        prevRenderedModelValueTags.set(uuid, res as VNode | JSX.Element);
+        if (context.slots.tagRender)
+          prevRenderedModelValueTags.set(uuid, res as VNode | JSX.Element);
 
         return res;
       })
@@ -99,10 +87,10 @@ export default function (
         prevRenderedModelValueTags.delete(optValue);
       }
     }
+    return rendered;
   }
 
   return {
-    resetRenderedTags,
-    getShowLabel,
+    renderTags,
   };
 }

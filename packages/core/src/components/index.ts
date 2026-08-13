@@ -55,5 +55,6 @@ export * from './Tabs';
 export * from './Tooltip';
 export * from './Timeline';
 export * from './Tree';
+export * from './TreeSelect';
 export * from './Typography';
 export * from './_shared/choice';

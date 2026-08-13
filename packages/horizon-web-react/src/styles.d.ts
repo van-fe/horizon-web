@@ -53,3 +53,4 @@ declare module '@aurora/theme/styles/typography';
 declare module '@aurora/theme/styles/panels';
 declare module '@aurora/theme/styles/picker';
 declare module '@aurora/theme/styles/tree';
+declare module '@aurora/theme/styles/tree-select';

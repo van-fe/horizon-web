@@ -72,7 +72,6 @@ Set `draggable` to enable pointer reordering. `renderNode` receives normalized s
 | `height` / `maxHeight` | `number \| string` | — | Scroll container dimensions. |
 | `indent` | `number` | `24` | Indentation in pixels per level. |
 | `tooltip` | `boolean` | `true` | Shows the node text as a native tooltip. |
-| `tooltipShowAfter` / `tooltipHideAfter` | `number` | `100` / `200` | Tooltip timing values retained for shared configuration. |
 | `dynamicLoad` | `TreeDynamicLoader` | — | Loads children for an unopened branch. |
 | `draggable` | `boolean` | `false` | Enables drag reordering. |
 | `dragOnHandler` | `boolean` | `true` | Requires pointer drag to start from the handle. |

@@ -145,6 +145,10 @@
     "./styles/tree-draggable": "./styles/components/tree/draggable.scss",
     "./styles/tree-motion": "./styles/components/tree/motion.scss",
     "./styles/tree-variables": "./styles/components/tree/variables.scss",
+    "./styles/tree-select": "./styles/components/tree-select/index.scss",
+    "./styles/tree-select-item": "./styles/components/tree-select/item.scss",
+    "./styles/tree-select-panel": "./styles/components/tree-select/panel.scss",
+    "./styles/tree-select-variables": "./styles/components/tree-select/variables.scss",
     "./styles/typography": "./styles/components/typography/index.scss",
     "./styles/typography-variables": "./styles/components/typography/variables.scss"
   },

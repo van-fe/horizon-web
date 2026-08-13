@@ -87,6 +87,8 @@ type RendererOwnedProps =
   | 'filterInputValue'
   | 'foldIcon'
   | 'prefixIcon'
+  | 'tooltipHideAfter'
+  | 'tooltipShowAfter'
   | 'useVirtualScroll'
   | 'virtualScrollBuffer';
 

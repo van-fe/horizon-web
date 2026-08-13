@@ -846,6 +846,19 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DOC-B37A-001 | Done | Tree 已注册双 renderer 契约；Vue 文档补齐 Props/Events/Slots/Exposes，React 中英文页面、4 个独立 TSX 示例及双语入口已完成，保持各 renderer 原生表述 |
 | QA-B37A-001 | Done | Core 244、Theme 3、Locale React 5、Web Core Node 21/Chromium 69、React Chromium 293、Vue Chromium 2368 项（2367 通过、1 项既有预期失败）全部通过；Vue 总覆盖率为 98.05% / 95.25% / 97.86% / 98.43%，Vue Tree 组件源码四项覆盖率为 98.21% / 95.21% / 98.66% / 99.40%，React Tree 为 98.14% / 95.25% / 98.91% / 99.64%；Vue Tree 8 文件/98 项、React Tree 20 项及 TreeSelect 下游 7 项真实 Chromium 回归通过；Vue Node 26、resolver 12、colors 1、upload adapters 66 项通过；五包构建、Sass、文档站、70 组双 renderer 契约、Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界与旧组件包名移除约束通过 |
 
+#### M6-B37B TreeSelect 第一阶段实施记录（2026-08-13，已完成）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B37B-001 | Done | TreeSelect 自有值、面板、筛选、确认、标签展示契约与 controller 进入 `@aurora/core`，树数据、展开、选择、动态加载和拖拽语义直接复用 Tree 公共契约 |
+| WEB-B37B-001 | Done | TreeSelect 组合既有 Picker 浮层与 Tree DOM primitive，不新增 renderer 相关的浏览器行为分叉 |
+| VUE-B37B-001 | Done | Vue TreeSelect 保留原生 props、emits、slots、exposes、确认流程、过滤交互与 Tree 消费接口，公共状态语义改由 Core 提供 |
+| REACT-B37B-001 | Done | React TreeSelect 实现受控/非受控值、面板与筛选、确认暂存、多选标签、动态加载、自定义渲染、Provider 文案、ARIA 与组合 ref commands |
+| DS-B37B-001 | Done | TreeSelect canonical Sass 进入 `@aurora/theme`，Vue 使用薄代理，React 复用同源视觉与响应式规则 |
+| DOC-B37B-001 | Done | TreeSelect 注册双 renderer 契约；Vue 中英文文档补齐 Props/Events/Slots/Exposes，React 中英文页面、4 个独立 TSX 示例与双语侧边栏入口完成，组件文档保持 renderer 原生表达 |
+| PKG-B37B-001 | Done | 包名迁移继续按 breaking change 执行；不新增旧组件包兼容入口、alias、re-export、resolver fallback 或发布项 |
+| QA-B37B-001 | Done | Core 267 项、Theme 6 项、React 全包 316 项、Vue 全包 2378 项（2377 通过、1 项既有预期失败）通过；TreeSelect 定向真实 Chromium 为 React 23 项、Vue 6 文件/35 项，React 源码覆盖率 99.34% / 97.48% / 100% / 100%，Vue 源码覆盖率 98.05% / 95.40% / 98.50% / 98.19%；Core/Theme/Vue/React 构建、71 组双 renderer 契约、文档站、Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界与旧组件包名移除约束通过 |
+
 ### 批次 C：浮层与容器
 
 ```text

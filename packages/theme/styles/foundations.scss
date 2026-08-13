@@ -55,6 +55,7 @@
 @use './components/tooltip/variables' as tooltip;
 @use './components/timeline/variables' as timeline;
 @use './components/tree/variables' as tree;
+@use './components/tree-select/variables' as tree-select;
 @use './components/typography/variables' as typography;
 
 $values: function.map-merge-multi(
@@ -113,6 +114,7 @@ $values: function.map-merge-multi(
   function.flatten-variables(tooltip.$values, 'tooltip'),
   function.flatten-variables(timeline.$values, 'timeline'),
   function.flatten-variables(tree.$values, 'tree'),
+  function.flatten-variables(tree-select.$values, 'tree-select'),
   function.flatten-variables(typography.$values, 'typography')
 );
 

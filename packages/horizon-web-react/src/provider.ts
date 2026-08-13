@@ -40,6 +40,14 @@ export interface HorizonWebConfig {
     collapse: string;
     select: string;
   };
+  treeSelectLabels: {
+    placeholder: string;
+    empty: string;
+    tree: string;
+    selection: string;
+    selections: string;
+    remove: string;
+  };
   linkLabels: {
     loading: string;
   };
@@ -116,12 +124,14 @@ export type HorizonWebProviderProps = PropsWithChildren<
     | 'switchLabels'
     | 'timelineLabels'
     | 'treeLabels'
+    | 'treeSelectLabels'
   > & {
     switchLabels?: Partial<HorizonWebConfig['switchLabels']>;
     selectLabels?: Partial<HorizonWebConfig['selectLabels']>;
     pickerLabels?: Partial<HorizonWebConfig['pickerLabels']>;
     cascaderLabels?: Partial<HorizonWebConfig['cascaderLabels']>;
     treeLabels?: Partial<HorizonWebConfig['treeLabels']>;
+    treeSelectLabels?: Partial<HorizonWebConfig['treeSelectLabels']>;
     linkLabels?: Partial<HorizonWebConfig['linkLabels']>;
     breadcrumbLabels?: Partial<HorizonWebConfig['breadcrumbLabels']>;
     timelineLabels?: Partial<HorizonWebConfig['timelineLabels']>;
@@ -154,6 +164,14 @@ const defaultConfig: HorizonWebConfig = Object.freeze({
     expand: 'Expand',
     collapse: 'Collapse',
     select: 'Select',
+  },
+  treeSelectLabels: {
+    placeholder: 'Please select',
+    empty: 'No data',
+    tree: 'Tree options',
+    selection: 'Selection',
+    selections: 'Selections',
+    remove: 'Remove',
   },
   linkLabels: { loading: 'Loading' },
   breadcrumbLabels: { collapsed: 'Show collapsed breadcrumb items' },
@@ -195,6 +213,7 @@ export function HorizonWebProvider({
   pickerLabels,
   cascaderLabels,
   treeLabels,
+  treeSelectLabels,
   linkLabels,
   breadcrumbLabels,
   timelineLabels,
@@ -241,6 +260,10 @@ export function HorizonWebProvider({
       treeLabels: {
         ...parent.treeLabels,
         ...treeLabels,
+      },
+      treeSelectLabels: {
+        ...parent.treeSelectLabels,
+        ...treeSelectLabels,
       },
       linkLabels: {
         ...parent.linkLabels,
@@ -314,6 +337,7 @@ export function HorizonWebProvider({
       pickerLabels,
       cascaderLabels,
       treeLabels,
+      treeSelectLabels,
       switchLabels,
       timelineLabels,
       stepsLabels,
