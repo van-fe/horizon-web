@@ -61,6 +61,7 @@ const reactSidebar = [
       { text: 'Picker', link: 'components/Picker' },
       { text: 'Cascader', link: 'components/Cascader' },
       { text: 'TreeSelect', link: 'components/TreeSelect' },
+      { text: 'TimeSelect', link: 'components/TimeSelect' },
       { text: 'Slider', link: 'components/Slider' },
       { text: 'Switch', link: 'components/Switch' },
     ],

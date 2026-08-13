@@ -61,6 +61,7 @@ const reactSidebar = [
       { text: 'Picker 选择器基础组件', link: 'components/Picker' },
       { text: 'Cascader 级联选择器', link: 'components/Cascader' },
       { text: 'TreeSelect 树形选择器', link: 'components/TreeSelect' },
+      { text: 'TimeSelect 时间选择', link: 'components/TimeSelect' },
       { text: 'Slider 滑块', link: 'components/Slider' },
       { text: 'Switch 开关', link: 'components/Switch' },
     ],

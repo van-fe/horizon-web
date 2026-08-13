@@ -106,6 +106,7 @@ export * from './components/Select';
 export * from './components/Skeleton';
 export * from './components/Spin';
 export * from './components/Time';
+export * from './components/TimeSelect';
 export * from './components/Space';
 export * from './components/Statistic';
 export * from './components/Steps';

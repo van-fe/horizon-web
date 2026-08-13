@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B39 CommandPalette 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B40 TimeSelect 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -884,6 +884,19 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DOC-B39-001 | Done | Vue/React 中英文页面、独立 API 说明、React 三组 TSX 示例和独立侧边栏入口完成，无跨 renderer 映射文案 |
 | PKG-B39-001 | Done | 未新增旧组件包兼容入口、alias、re-export、resolver fallback 或发布项 |
 | QA-B39-001 | Done | Core 272 项、Theme 8 项、Web Core Node 22/Chromium 70、React Chromium 326、Vue Chromium 2383 项（2382 通过、1 项既有预期失败）全部通过；CommandPalette 定向真实 Chromium 为 Vue 10 项、React 6 项，Vue 组件源码覆盖率 Statements 98.88%、Branches 97.22%、Functions 97.56%、Lines 100%，React 四项均为 100%；五包构建、73 组双 renderer 契约、文档站、Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界和旧组件包名移除约束通过 |
+
+#### M6-B40 TimeSelect 实施记录（2026-08-13，已完成）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B40-001 | Done | TimeSelect 公共值、props、默认值、校验器、事件、内容区域、命令、时间解析与固定区间选项生成进入 `@aurora/core` |
+| WEB-B40-001 | Done | 基于 Day.js 的时间标签格式化进入 Horizon Web Core，Core 保持无日期库和 DOM 依赖 |
+| VUE-B40-001 | Done | Vue TimeSelect 消费公共契约、算法和 Web 格式化能力，保留原生 Select props、emits、slots 与 exposes |
+| REACT-B40-001 | Done | React TimeSelect 组合 React Select，支持受控/非受控值、筛选、边界禁用、自定义区域、表单属性与 ref 命令 |
+| DS-B40-001 | Done | TimeSelect 无独立视觉规则，Vue/React 共同复用 canonical Select Theme，不复制 renderer 样式 |
+| DOC-B40-001 | Done | React 中英文页面、三组独立 TSX 示例与独立侧边栏入口完成；Vue 继续使用独立既有页面，无跨 renderer 映射文案 |
+| PKG-B40-001 | Done | 未新增旧组件包兼容入口、alias、re-export、resolver fallback 或发布项 |
+| QA-B40-001 | Done | Core 277 项、Theme 8 项、Web Core Node 23/Chromium 70、React Chromium 332、Vue Chromium 2384 项（2383 通过、1 项既有预期失败）全部通过；TimeSelect 定向真实 Chromium 为 Vue 12 项、React 6 项，两个 renderer 的组件源码四项覆盖率均为 100%；五包构建、74 组双 renderer 契约、文档站、Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界和旧组件包名移除约束通过 |
 
 ### 批次 C：浮层与容器
 

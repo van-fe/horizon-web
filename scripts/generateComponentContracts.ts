@@ -73,6 +73,7 @@ import {
   tabsManifest,
   timelineManifest,
   timeManifest,
+  timeSelectManifest,
   treeManifest,
   treeSelectManifest,
   tooltipManifest,
@@ -150,6 +151,7 @@ const manifests = [
   tabManifest,
   timelineManifest,
   timeManifest,
+  timeSelectManifest,
   treeManifest,
   treeSelectManifest,
   tooltipManifest,
@@ -802,6 +804,36 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
   },
   Spin: { regions: { rename: { content: 'default' } } },
   Time: { regions: { rename: { content: 'default' } } },
+  TimeSelect: {
+    props: { rename: { value: 'modelValue' }, omit: ['defaultValue'] },
+    events: {
+      rename: { valueChange: 'change', openChange: 'dropdownVisibleChange' },
+      extend: [
+        {
+          name: 'update:modelValue',
+          type: 'TimeSelectValue',
+          description: { zh: '更新绑定值', en: 'Updates the bound value' },
+        },
+      ],
+    },
+    regions: {
+      rename: {
+        empty: 'empty',
+        panelHeader: 'panelHeaderRender',
+        panelFooter: 'panelFooterRender',
+      },
+    },
+    commands: {
+      omit: ['open', 'close'],
+      extend: [
+        {
+          name: 'changePanelVisible',
+          type: '(visible: boolean) => void',
+          description: { zh: '设置面板显隐', en: 'Sets popup visibility' },
+        },
+      ],
+    },
+  },
   Statistic: { regions: { rename: { value: 'default' } } },
   Space: {
     props: {
@@ -1722,6 +1754,29 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
   Time: {
     events: { rename: { finished: 'onFinished' } },
     regions: { rename: { content: 'children' } },
+  },
+  TimeSelect: {
+    events: {
+      rename: {
+        valueChange: 'onChange',
+        openChange: 'onOpenChange',
+        focus: 'onFocus',
+        blur: 'onBlur',
+      },
+      omit: ['clear'],
+    },
+    regions: {
+      rename: { empty: 'emptyContent', panelHeader: 'panelHeader', panelFooter: 'panelFooter' },
+    },
+    commands: {
+      extend: [
+        {
+          name: 'updatePosition',
+          type: '() => Promise<void>',
+          description: { zh: '更新面板位置', en: 'Updates popup position' },
+        },
+      ],
+    },
   },
   Tree: {
     props: {

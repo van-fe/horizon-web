@@ -59,6 +59,7 @@ export interface OptionGroupProps {
 
 export interface SelectHandle {
   focus(): void;
+  blur(): void;
   open(): void;
   close(): void;
   clear(): void;
@@ -123,6 +124,8 @@ export interface SelectProps {
   style?: CSSProperties;
   /** 失焦回调。@en Blur callback. */
   onBlur?: FocusEventHandler<HTMLInputElement | HTMLButtonElement>;
+  /** 聚焦回调。@en Focus callback. */
+  onFocus?: FocusEventHandler<HTMLInputElement | HTMLButtonElement>;
 }
 
 interface NormalizedOption {
@@ -221,6 +224,7 @@ export const Select = forwardRef<SelectHandle, SelectProps>(function Select(
     className,
     style,
     onBlur,
+    onFocus,
   },
   forwardedRef,
 ): ReactElement {
@@ -373,6 +377,7 @@ export const Select = forwardRef<SelectHandle, SelectProps>(function Select(
     forwardedRef,
     () => ({
       focus: () => triggerRef.current?.focus(),
+      blur: () => triggerRef.current?.blur(),
       open: () => {
         controller.syncState({ open: currentOpenRef.current });
         controller.open();
@@ -517,6 +522,7 @@ export const Select = forwardRef<SelectHandle, SelectProps>(function Select(
       onBlur?.(event);
       formField?.notify('blur');
     },
+    onFocus,
     onKeyDown: handleClosedKeyDown,
   };
 

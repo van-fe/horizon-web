@@ -3,10 +3,14 @@ import { describe, expect, test, vi } from 'vitest';
 import HSelect from '../../Select/src/Select';
 import HOption from '../../Select/src/Option';
 import HTimeSelect from '../src/TimeSelect';
+import { HTimeSelect as PublicTimeSelect } from '..';
 import { createTimeSelectOptions } from '../src/utils/time';
 import { useTimeSelectEmits } from '../src/composables/useEmits';
 
 describe('TimeSelect.tsx', () => {
+  test('exports the installable public component', () => {
+    expect(PublicTimeSelect).toBeTruthy();
+  });
   test('uses Horizon Select and generates fixed options', () => {
     const wrapper = mount(HTimeSelect, {
       props: {
@@ -93,7 +97,9 @@ describe('TimeSelect.tsx', () => {
   });
 
   test('normalizes defensive payloads and executes every public expose', async () => {
-    const wrapper = mount(HTimeSelect, { props: { modelValue: '09:00', clearable: true, toBody: false } });
+    const wrapper = mount(HTimeSelect, {
+      props: { modelValue: '09:00', clearable: true, toBody: false },
+    });
     const select = wrapper.getComponent(HSelect);
 
     select.vm.$emit('update:modelValue', 123);

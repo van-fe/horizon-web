@@ -1,3 +1,4 @@
+import type { ComponentRendererPropDefinitions, TimeSelectCommandMap } from '@aurora/core';
 import type { ExposeType, ExtractExposeTypes } from '@aurora/utils';
 
 export const useTimeSelectExposes = {
@@ -23,6 +24,10 @@ export const useTimeSelectExposes = {
    * @en Controls dropdown visibility.
    */
   changePanelVisible: Function as ExposeType<(visible: boolean) => void>,
-};
+} satisfies ComponentRendererPropDefinitions<
+  Omit<TimeSelectCommandMap, 'open' | 'close'> & {
+    changePanelVisible: (visible: boolean) => void;
+  }
+>;
 
 export type TimeSelectExposes = ExtractExposeTypes<typeof useTimeSelectExposes>;

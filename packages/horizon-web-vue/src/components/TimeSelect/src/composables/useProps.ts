@@ -1,12 +1,14 @@
 import type { CSSProperties, ExtractPropTypes, PropType, VNode } from 'vue';
 import { declarePropType } from '@aurora/utils';
+import { isTimeSelectClockValue, isTimeSelectStep, TIME_SELECT_DEFAULTS } from '@aurora/core';
+import type { TimeSelectValue } from '@aurora/core';
 import type { PopoverProps } from '~/components/Popover/src/composables/useProps';
 import type {
   PickerInputStatusType,
   PickerInputStyleType,
 } from '~/components/Picker/src/composables/useProps';
 
-export type TimeSelectModelValue = string | null | undefined;
+export type TimeSelectModelValue = TimeSelectValue;
 
 export const useTimeSelectProps = declarePropType({
   /**
@@ -31,7 +33,7 @@ export const useTimeSelectProps = declarePropType({
    */
   editable: {
     type: Boolean,
-    default: true,
+    default: TIME_SELECT_DEFAULTS.editable,
   },
   /**
    * 是否可清空
@@ -39,7 +41,7 @@ export const useTimeSelectProps = declarePropType({
    */
   clearable: {
     type: Boolean,
-    default: true,
+    default: TIME_SELECT_DEFAULTS.clearable,
   },
   /**
    * 是否将 `end` 指定的时间包含在选项中
@@ -47,7 +49,7 @@ export const useTimeSelectProps = declarePropType({
    */
   includeEndTime: {
     type: Boolean,
-    default: false,
+    default: TIME_SELECT_DEFAULTS.includeEndTime,
   },
   /**
    * 组件尺寸
@@ -67,7 +69,8 @@ export const useTimeSelectProps = declarePropType({
    */
   start: {
     type: String,
-    default: '09:00',
+    default: TIME_SELECT_DEFAULTS.start,
+    validator: isTimeSelectClockValue,
   },
   /**
    * 结束时间，格式为 `HH:mm`
@@ -75,7 +78,8 @@ export const useTimeSelectProps = declarePropType({
    */
   end: {
     type: String,
-    default: '18:00',
+    default: TIME_SELECT_DEFAULTS.end,
+    validator: isTimeSelectClockValue,
   },
   /**
    * 时间步长，格式为 `HH:mm` 且必须大于 `00:00`
@@ -83,25 +87,26 @@ export const useTimeSelectProps = declarePropType({
    */
   step: {
     type: String,
-    default: '00:30',
+    default: TIME_SELECT_DEFAULTS.step,
+    validator: isTimeSelectStep,
   },
   /**
    * 最小可选时间，早于该时间的选项将被禁用
    * @en Minimum selectable time. Earlier options are disabled.
    */
-  minTime: String,
+  minTime: { type: String, validator: isTimeSelectClockValue },
   /**
    * 最大可选时间，晚于该时间的选项将被禁用
    * @en Maximum selectable time. Later options are disabled.
    */
-  maxTime: String,
+  maxTime: { type: String, validator: isTimeSelectClockValue },
   /**
    * 时间选项的 Day.js 展示格式；绑定值始终使用 `HH:mm`
    * @en Day.js display format for time options. The binding value always uses `HH:mm`.
    */
   format: {
     type: String,
-    default: 'HH:mm',
+    default: TIME_SELECT_DEFAULTS.format,
   },
   /**
    * 输入框样式

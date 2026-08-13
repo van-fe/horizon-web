@@ -28,6 +28,7 @@ export * from './Radio';
 export * from './Select';
 export * from './Spin';
 export * from './Time';
+export * from './TimeSelect';
 export * from './Slider';
 export * from './Steps';
 export * from './Tabs';

@@ -1,4 +1,6 @@
-import { isBoolean, isNil, isString } from '@aurora/utils';
+import type { ComponentEventValidators, TimeSelectEventMap } from '@aurora/core';
+import { isTimeSelectValue } from '@aurora/core';
+import { isBoolean } from '@aurora/utils';
 import type { TimeSelectModelValue } from './useProps';
 
 export const useTimeSelectEmits = {
@@ -8,14 +10,14 @@ export const useTimeSelectEmits = {
    * @paramEn value The current time value.
    * @en Emitted when the binding value changes.
    */
-  'update:modelValue': (value: TimeSelectModelValue) => isString(value) || isNil(value),
+  'update:modelValue': (value: TimeSelectModelValue) => isTimeSelectValue(value),
   /**
    * 用户选择或清空时间后触发
    * @param value 当前时间值
    * @paramEn value The current time value.
    * @en Emitted after the user selects or clears a time.
    */
-  change: (value: TimeSelectModelValue) => isString(value) || isNil(value),
+  change: (value: TimeSelectModelValue) => isTimeSelectValue(value),
   /**
    * 聚焦时触发
    * @en Emitted when the component receives focus.
@@ -38,6 +40,12 @@ export const useTimeSelectEmits = {
    * @en Emitted when dropdown visibility changes.
    */
   dropdownVisibleChange: (visible: boolean) => isBoolean(visible),
-};
+} satisfies ComponentEventValidators<
+  Omit<TimeSelectEventMap, 'openChange' | 'valueChange'> & {
+    'update:modelValue': [value: TimeSelectModelValue];
+    change: [value: TimeSelectModelValue];
+    dropdownVisibleChange: [visible: boolean];
+  }
+>;
 
 export type TimeSelectEmits = typeof useTimeSelectEmits;
