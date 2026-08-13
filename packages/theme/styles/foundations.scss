@@ -12,6 +12,7 @@
 @use './components/breadcrumb/variables' as breadcrumb;
 @use './components/button/variables' as button;
 @use './components/card/variables' as card;
+@use './components/cascader/variables' as cascader;
 @use './components/checkbox/variables' as checkbox;
 @use './components/collapse/variables' as collapse;
 @use './components/count/variables' as count;
@@ -68,6 +69,7 @@ $values: function.map-merge-multi(
   function.flatten-variables(breadcrumb.$values, 'breadcrumb'),
   function.flatten-variables(button.$values, 'button'),
   function.flatten-variables(card.$values, 'card'),
+  function.flatten-variables(cascader.$values, 'cascader'),
   function.flatten-variables(checkbox.$values, 'checkbox'),
   function.flatten-variables(collapse.$values, 'collapse'),
   function.flatten-variables(count.$values, 'count'),

@@ -1,0 +1,105 @@
+@use '../../mixins';
+
+/* stylelint-disable nesting-selector-no-missing-scoping-root -- BEM mixins provide selector roots. */
+
+@include mixins.b('cascader-panels') {
+  display: flex;
+  width: max-content;
+  max-width: min(100%, mixins.css-variable('cascader', 'size', 'panel', 'max-inline'));
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+}
+
+@include mixins.b('cascader-panel') {
+  flex: 0 0 fit-content;
+  min-width: min(100%, mixins.css-variable('cascader', 'size', 'panel', 'min-width'));
+  max-width: min(100%, mixins.css-variable('cascader', 'size', 'panel', 'max-width'));
+  min-height: mixins.css-variable('cascader', 'size', 'panel', 'min-height');
+  overflow: hidden;
+  border-right: mixins.css-variable('cascader', 'border', 'panel');
+
+  &:last-child {
+    border-right: none;
+  }
+
+  @include mixins.e('scrollbar') {
+    margin: mixins.css-variable('cascader', 'spacing', 'panel', 'scrollbar', 'margin-y') 0;
+  }
+
+  @include mixins.e('empty') {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: mixins.css-variable('cascader', 'font-size', 'no-data');
+    color: mixins.css-variable('cascader', 'color', 'no-data');
+  }
+
+  @include mixins.e('group-label') {
+    padding: mixins.css-variable('select', 'spacing', 'option-group', 'title', 'padding');
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: mixins.css-variable('select', 'font-size', 'option-group', 'title');
+    color: mixins.css-variable('select', 'color', 'option-group', 'title');
+    white-space: nowrap;
+  }
+}
+
+@include mixins.b('cascader-search-panel') {
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: min(100%, mixins.css-variable('cascader', 'size', 'panel', 'max-inline'));
+
+  @include mixins.e('scrollbar') {
+    @include mixins.m('view') {
+      margin: mixins.css-variable('cascader', 'spacing', 'panel', 'scrollbar', 'margin-y') 0;
+    }
+  }
+
+  @include mixins.e('check-all') {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: mixins.css-variable('cascader', 'size', 'check-all', 'height');
+    padding: mixins.css-variable('cascader', 'spacing', 'check-all', 'padding');
+    text-align: left;
+    cursor: pointer;
+    background: mixins.css-variable('cascader', 'background', 'item');
+    border: 0;
+    border-bottom: mixins.css-variable('cascader', 'border', 'panel');
+    transition: mixins.css-variable('cascader', 'transition');
+
+    &:is(button):not(#{mixins.block-name('button')}) {
+      margin: 0;
+      font: inherit;
+      color: inherit;
+      appearance: none;
+
+      &:focus-visible {
+        @include mixins.focus-ring-inset;
+      }
+
+      &:disabled,
+      &[aria-disabled='true'] {
+        color: mixins.css-variable('cascader', 'color', 'item', 'disabled');
+        cursor: not-allowed;
+      }
+    }
+
+    @include mixins.is('focus') {
+      background: mixins.css-variable('cascader', 'background', 'item', 'hover');
+    }
+
+    &:hover {
+      background: mixins.css-variable('cascader', 'background', 'item', 'hover');
+    }
+  }
+}
+
+/* stylelint-enable nesting-selector-no-missing-scoping-root */
+
+@media (prefers-reduced-motion: reduce) {
+  #{mixins.element-name('check-all', mixins.block('cascader-search-panel'))} {
+    transition: none;
+  }
+}

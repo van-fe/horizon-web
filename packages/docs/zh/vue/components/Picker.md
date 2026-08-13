@@ -18,6 +18,8 @@ Picker 为选择类控件提供统一的触发器和浮层基础，也可组合�
 | `placement` | `PopoverPlacement` | `'bottom-start'` | 首选面板位置 |
 | `toBody` | `boolean` | `true` | 将面板传送到 `body` |
 | `inputable` | `boolean` | `false` | 允许文字输入 |
+| `inputAttrs` | `PickerNativeInputAttrs` | — | 主输入框的原生 ARIA、数据、命名与表单属性；值、状态和内部事件仍由 Picker 管理 |
+| `panelInputAttrs` | `PickerNativeInputAttrs` | — | 内置面板搜索输入框的原生属性 |
 | `readonly` | `boolean` | `false` | 禁止输入与打开 |
 | `inputStyle` | `'normal' \| 'emphasize' \| 'no-border'` | `'normal'` | 触发器视觉变体 |
 | `inputStatus` | `'normal' \| 'error' \| 'warning' \| 'success'` | `'normal'` | 输入校验状态 |

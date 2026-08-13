@@ -64,7 +64,7 @@ export default defineComponent({
     }
 
     return () => (
-      <div class={classHelper.block}>
+      <div class={classHelper.block} role="group">
         {props.list?.length > 0 ? (
           parentProps.useVirtualScroll ? (
             <HVirtualScroller

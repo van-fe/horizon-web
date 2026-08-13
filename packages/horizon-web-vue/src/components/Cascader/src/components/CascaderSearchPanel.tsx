@@ -5,6 +5,7 @@ import {
   HCascaderPickOptionInjectKey,
   HCascaderPresetModelValueInjectKey,
   HCascaderPropsInjectKey,
+  HCascaderFocusedOptionInjectKey,
   HCascaderTreeHelperInjectKey,
   HCascaderVisibleOptionsInjectKey,
 } from '../utils/injectKeys';
@@ -26,7 +27,13 @@ export default defineComponent({
     CascaderItem,
   },
   emits: useCascaderSearchPanelEmits,
-  setup(_, { emit }) {
+  props: {
+    treeId: {
+      type: String,
+      required: true,
+    },
+  },
+  setup(props, { emit }) {
     const classHelper = new ComponentClassBlock('cascader-search-panel');
 
     const optionList = inject(HCascaderVisibleOptionsInjectKey)!;
@@ -34,6 +41,7 @@ export default defineComponent({
     const presetModelValueSet = inject(HCascaderPresetModelValueInjectKey)!;
     const treeHelper = inject(HCascaderTreeHelperInjectKey)!;
     const pickOption = inject(HCascaderPickOptionInjectKey)!;
+    const focusedOption = inject(HCascaderFocusedOptionInjectKey)!;
 
     const scrollerDomRef = ref<HorizonWebComponentInstance<
       typeof HVirtualScroller,
@@ -58,6 +66,12 @@ export default defineComponent({
     return () => (
       <div
         class={classHelper.block}
+        id={props.treeId}
+        role="tree"
+        aria-multiselectable={parentProps.multiple || undefined}
+        aria-activedescendant={
+          focusedOption.value ? `h-cascader-option-${focusedOption.value._uuid}` : undefined
+        }
         style={{
           width: parentProps.searchPanelWidth
             ? sizeUnitTransform(parentProps.searchPanelWidth)

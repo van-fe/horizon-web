@@ -65,6 +65,7 @@ export default defineComponent({
     const activeOption = inject(HCascaderActiveOptionInPanelInjectKey, ref(undefined));
     const treeHelper = inject(HCascaderTreeHelperInjectKey)!;
     const isOutOfLimit = inject(HCascaderIsOutOfLimitInjectKey)!;
+    const pendingTimers = new Set<ReturnType<typeof setTimeout>>();
 
     const itemDomRef = ref<HTMLElement | null>(null);
     const contentDomRef = ref<HTMLElement>();
@@ -92,13 +93,14 @@ export default defineComponent({
     const isDisabled = computed(() =>
       parentProps.checkStrictly ? props.disabled : props.extendsOption.passingDisabled,
     );
+    const optionId = computed(() => `h-cascader-option-${props.extendsOption._uuid}`);
 
     const isFocus = computed(() =>
       props.duringFilter
         ? focusedOption.value === props.extendsOption
-        : focusedOption.value?.paths.includes(props.extendsOption) ??
+        : (focusedOption.value?.paths.includes(props.extendsOption) ??
           activeItemsStack.value?.includes(props.extendsOption) ??
-          false,
+          false),
     );
 
     const hasIcon = computed(
@@ -115,9 +117,11 @@ export default defineComponent({
           if (itemDomRef.value) {
             doScroll();
           } else {
-            setTimeout(() => {
+            const timer = setTimeout(() => {
+              pendingTimers.delete(timer);
               doScroll();
             });
+            pendingTimers.add(timer);
           }
         }
       },
@@ -166,13 +170,17 @@ export default defineComponent({
     onMounted(() => {
       registerVNodeGetter(props.extendsOption._uuid as HCascaderUuidType, () => instance?.vnode);
 
-      setTimeout(() => {
+      const timer = setTimeout(() => {
+        pendingTimers.delete(timer);
         startWatch();
       });
+      pendingTimers.add(timer);
     });
 
     onBeforeUnmount(() => {
       stopWatch();
+      for (const timer of pendingTimers) clearTimeout(timer);
+      pendingTimers.clear();
     });
 
     return () => {
@@ -196,13 +204,24 @@ export default defineComponent({
       const content =
         typeof props.label === 'function'
           ? props.label(props.extendsOption)
-          : parentSlots.itemRender?.(props.extendsOption) ??
+          : (parentSlots.itemRender?.(props.extendsOption) ??
             props.extendsOption.stringLabel ??
-            props.label;
+            props.label);
 
       return (
         <div
           ref={itemDomRef}
+          id={optionId.value}
+          role="treeitem"
+          tabindex={isDisabled.value || !isFocus.value ? -1 : 0}
+          data-cascader-option-id={String(props.extendsOption._uuid)}
+          aria-level={props.level + 1}
+          aria-selected={isChecked.value}
+          aria-disabled={isDisabled.value || props.extendsOption.selectable === false}
+          aria-expanded={props.isLeaf ? undefined : isFocus.value}
+          aria-checked={
+            parentProps.multiple ? (isIndeterminate.value ? 'mixed' : isChecked.value) : undefined
+          }
           class={cls(
             classHelper.block,
             classHelper.has('icon', hasIcon.value),
@@ -288,7 +307,7 @@ export default defineComponent({
                       isLoading.value ? (
                         <AIcon name="loading" spin="cw" />
                       ) : (
-                        parentProps.expandIcon ?? IconArrowRight
+                        (parentProps.expandIcon ?? IconArrowRight)
                       ),
                       undefined,
                       {

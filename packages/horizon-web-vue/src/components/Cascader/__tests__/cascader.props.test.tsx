@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
 import type { CascaderProps } from '../src/composables/useProps';
 import type { HCascaderDynamicLoadNode } from '../src/utils/types';
@@ -156,11 +156,12 @@ describe('Cascader.tsx props', () => {
 
     await openCascader(wrapper);
 
-    await clickOptionByOrder(wrapper);
-    await clickOptionByOrder(wrapper);
-    await clickOptionByOrder(wrapper);
-    await clickOptionByOrder(wrapper);
-    await clickOptionByOrder(wrapper);
+    for (let level = 0; level < 5; level++) {
+      const panels = wrapper.findAll('.h-cascader-panel');
+      await panels[level].findAll('.h-cascader-item')[0].trigger('click');
+      await vi.waitFor(() => expect(wrapper.findAll('.h-cascader-panel')).toHaveLength(level + 2));
+    }
+    await wrapper.findAll('.h-cascader-panel')[5].findAll('.h-cascader-item')[0].trigger('click');
 
     expect(modelValue.value).toStrictEqual(['root', '97(0)', '98(0)', '99(0)', '100(0)', '101(0)']);
     expect(pickerInput.text().replace(/\s/g, '')).toBe(

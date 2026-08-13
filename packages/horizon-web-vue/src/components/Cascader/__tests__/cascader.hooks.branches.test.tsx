@@ -97,11 +97,9 @@ describe('Cascader hook defensive branches', () => {
     mount(
       defineComponent({
         setup() {
-          api = useFilter(
-            props,
-            { emit } as unknown as Parameters<typeof useFilter>[1],
-            { optionList: tree.flattenTreeData },
-          );
+          api = useFilter(props, { emit } as unknown as Parameters<typeof useFilter>[1], {
+            optionList: tree.flattenTreeData,
+          });
           return () => <div />;
         },
       }),
@@ -110,7 +108,11 @@ describe('Cascader hook defensive branches', () => {
     api.inputValue.value = 'leaf';
     api.popperVisible.value = true;
     await nextTick();
-    expect(api.filterMethod.value('LEAF', [{ label: 'Leaf', value: 'leaf', option: tree.getInfoByValue('leaf')! }])).toBe(true);
+    expect(
+      api.filterMethod.value('LEAF', [
+        { label: 'Leaf', value: 'leaf', option: tree.getInfoByValue('leaf')! },
+      ]),
+    ).toBe(true);
     expect(api.visibleOptions.value.map(option => option.value)).toEqual(['leaf']);
     expect(api.isReadonly.value).toBe(false);
     expect(emit).toHaveBeenCalledWith('search', 'leaf');
@@ -136,7 +138,11 @@ describe('Cascader hook defensive branches', () => {
     expect(api.panelStatus.value).toBe('empty');
 
     props.panelFilterOption = false;
-    expect(api.filterMethod.value('leaf', [{ label: 'Leaf', value: 'leaf', option: tree.getInfoByValue('leaf')! }])).toBe(true);
+    expect(
+      api.filterMethod.value('leaf', [
+        { label: 'Leaf', value: 'leaf', option: tree.getInfoByValue('leaf')! },
+      ]),
+    ).toBe(true);
   });
 
   test('useOptions clears absent options, registers vnode getters and appends lazy children', async () => {
@@ -146,10 +152,7 @@ describe('Cascader hook defensive branches', () => {
     });
     const emit = vi.fn();
     let api!: ReturnType<typeof useOptions>;
-    let registerVNodeGetter!: (
-      uuid: string | number,
-      getter: () => VNode | undefined,
-    ) => void;
+    let registerVNodeGetter!: (uuid: string | number, getter: () => VNode | undefined) => void;
     const Probe = defineComponent({
       setup() {
         registerVNodeGetter = inject(HCascaderRegisterVNodeGetterInjectKey)!;
@@ -159,10 +162,7 @@ describe('Cascader hook defensive branches', () => {
     mount(
       defineComponent({
         setup() {
-          api = useOptions(
-            props,
-            { emit } as unknown as Parameters<typeof useOptions>[1],
-          );
+          api = useOptions(props, { emit } as unknown as Parameters<typeof useOptions>[1]);
           return () => <Probe />;
         },
       }),
@@ -197,7 +197,7 @@ describe('Cascader hook defensive branches', () => {
     const optionList = ref<HCascaderExtendOption[]>([]);
     const visibleOptions = ref<HCascaderExtendOption[]>([]);
     const wrapper = mount(CascaderPanels, {
-      props: { duringInput: false, inputValue: '' },
+      props: { duringInput: false, inputValue: '', treeId: 'test-cascader-tree' },
       global: {
         stubs: {
           HCascaderPanel: true,
@@ -209,9 +209,7 @@ describe('Cascader hook defensive branches', () => {
           [HCascaderSlotsInjectKey as symbol]: {},
           [HCascaderOptionListInjectKey as symbol]: optionList,
           [HCascaderOptionListMapInjectKey as symbol]: ref(
-            new Map<HCascaderUuidType, HCascaderExtendOption>(
-              tree.flattenTreeDataMapping.value,
-            ),
+            new Map<HCascaderUuidType, HCascaderExtendOption>(tree.flattenTreeDataMapping.value),
           ),
           [HCascaderPickOptionInjectKey as symbol]: pickOption,
           [HCascaderPopperVisibleInjectKey as symbol]: popperVisible,
@@ -283,16 +281,12 @@ describe('Cascader hook defensive branches', () => {
     let api!: ReturnType<typeof useModelValue>;
     const Harness = defineComponent({
       setup() {
-        api = useModelValue(
-          props,
-          { emit } as unknown as Parameters<typeof useModelValue>[1],
-          {
-            tree,
-            optionListMap: tree.flattenTreeDataMapping,
-            optionsVersion,
-            triggerFormChange: vi.fn(),
-          },
-        );
+        api = useModelValue(props, { emit } as unknown as Parameters<typeof useModelValue>[1], {
+          tree,
+          optionListMap: tree.flattenTreeDataMapping,
+          optionsVersion,
+          triggerFormChange: vi.fn(),
+        });
         return () => <div />;
       },
     });
@@ -353,11 +347,11 @@ describe('Cascader hook defensive branches', () => {
     mount(
       defineComponent({
         setup() {
-          api = useModelValue(
-            props,
-            { emit } as unknown as Parameters<typeof useModelValue>[1],
-            { tree, optionListMap: tree.flattenTreeDataMapping, optionsVersion },
-          );
+          api = useModelValue(props, { emit } as unknown as Parameters<typeof useModelValue>[1], {
+            tree,
+            optionListMap: tree.flattenTreeDataMapping,
+            optionsVersion,
+          });
           return () => <div />;
         },
       }),
@@ -395,28 +389,24 @@ describe('Cascader hook defensive branches', () => {
     const wrapper = mount(
       defineComponent({
         setup() {
-          api = useOption(
-            props,
-            { emit } as unknown as Parameters<typeof useOption>[1],
-            {
-              domRefs: {
-                pickerDomRef: ref(),
-                filterInputDomRef: ref(),
-                tagGroupDomRef: ref({ doCollapseCalculate: collapse }),
-                cascaderPanelsDomRef: ref(),
-              } as unknown as CascaderDomRefs,
-              optionListMap: tree.flattenTreeDataMapping,
-              modelValueSet,
-              presetModelValueSet,
-              isOutOfLimit,
-              delInput,
-              manualControlPopperVisible,
-              judgeWhetherInputCanFocus,
-              setModified,
-              emitSelectOrDeselect,
-              transformUuidsToModelValue: uuids => uuids.map(String),
-            },
-          );
+          api = useOption(props, { emit } as unknown as Parameters<typeof useOption>[1], {
+            domRefs: {
+              pickerDomRef: ref(),
+              filterInputDomRef: ref(),
+              tagGroupDomRef: ref({ doCollapseCalculate: collapse }),
+              cascaderPanelsDomRef: ref(),
+            } as unknown as CascaderDomRefs,
+            optionListMap: tree.flattenTreeDataMapping,
+            modelValueSet,
+            presetModelValueSet,
+            isOutOfLimit,
+            delInput,
+            manualControlPopperVisible,
+            judgeWhetherInputCanFocus,
+            setModified,
+            emitSelectOrDeselect,
+            transformUuidsToModelValue: uuids => uuids.map(String),
+          });
           return () => <div />;
         },
       }),
@@ -507,32 +497,28 @@ describe('Cascader hook defensive branches', () => {
     const wrapper = mount(
       defineComponent({
         setup() {
-          api = useEvents(
-            props,
-            { emit } as unknown as Parameters<typeof useEvents>[1],
-            {
-              domRefs: {
-                pickerDomRef: ref({
-                  showPopover,
-                  hidePopover,
-                  focus: focusPicker,
-                  handleInputFocus,
-                  handleInputBlur,
-                  wrapperDom: () => wrapperElement,
-                  popoverDom: () => popoverElement,
-                }),
-                filterInputDomRef: ref({ focus: focusFilter }),
-                tagGroupDomRef: ref({ doCollapseCalculate: collapse }),
-                cascaderPanelsDomRef: ref(),
-              } as unknown as CascaderDomRefs,
-              inputValue,
-              popperVisible,
-              inputable,
-              modelValueSet,
-              presetModelValueSet,
-              optionListMap: tree.flattenTreeDataMapping,
-            },
-          );
+          api = useEvents(props, { emit } as unknown as Parameters<typeof useEvents>[1], {
+            domRefs: {
+              pickerDomRef: ref({
+                showPopover,
+                hidePopover,
+                focus: focusPicker,
+                handleInputFocus,
+                handleInputBlur,
+                wrapperDom: () => wrapperElement,
+                popoverDom: () => popoverElement,
+              }),
+              filterInputDomRef: ref({ focus: focusFilter }),
+              tagGroupDomRef: ref({ doCollapseCalculate: collapse }),
+              cascaderPanelsDomRef: ref(),
+            } as unknown as CascaderDomRefs,
+            inputValue,
+            popperVisible,
+            inputable,
+            modelValueSet,
+            presetModelValueSet,
+            optionListMap: tree.flattenTreeDataMapping,
+          });
           return () => <div />;
         },
       }),
@@ -632,15 +618,19 @@ describe('Cascader hook defensive branches', () => {
     const wrapper = mount(
       defineComponent({
         setup() {
-          api = useDisplay(props, {}, {
-            modelValueSet,
-            optionListMap,
-            inputValue,
-            inputable,
-            useFilter,
-            renderedModelValueTags,
-            getShowLabel,
-          });
+          api = useDisplay(
+            props,
+            {},
+            {
+              modelValueSet,
+              optionListMap,
+              inputValue,
+              inputable,
+              useFilter,
+              renderedModelValueTags,
+              getShowLabel,
+            },
+          );
           return () => (
             <div class="display-value" data-hide-input={String(api.isHideInput.value)}>
               {String(api.showValue.value)}
@@ -780,10 +770,9 @@ describe('Cascader hook defensive branches', () => {
         const element = document.createElement('div');
         element.textContent = 'Alpha label';
         contentDomRef.value = element;
-        itemApi = useHighlightCascaderItem(
-          { value: 'highlight' } as CascaderItemProps,
-          { contentDomRef },
-        );
+        itemApi = useHighlightCascaderItem({ value: 'highlight' } as CascaderItemProps, {
+          contentDomRef,
+        });
         itemApi.startWatch();
         return () => <div />;
       },
@@ -792,7 +781,10 @@ describe('Cascader hook defensive branches', () => {
       defineComponent({
         setup() {
           useHighlight();
-          provide(HCascaderInputStringInjectKey, computed(() => input.value));
+          provide(
+            HCascaderInputStringInjectKey,
+            computed(() => input.value),
+          );
           return () => <Probe />;
         },
       }),
@@ -826,7 +818,13 @@ describe('Cascader hook defensive branches', () => {
     const selected = ref(new Set<HCascaderUuidType>([root._uuid]));
     const pickOption = vi.fn();
     const emit = vi.fn();
-    const api = useCheckAll(props, computed(() => options.value), selected, pickOption, emit);
+    const api = useCheckAll(
+      props,
+      computed(() => options.value),
+      selected,
+      pickOption,
+      emit,
+    );
 
     expect(api.isCheckAll.value).toBe(false);
     expect(api.isIndeterminate.value).toBe(true);

@@ -38,6 +38,7 @@ The default trigger uses `role="combobox"`, reports `aria-expanded`, owns the po
 | `portalContainer` | `PortalTarget` | `'body'` | Portal destination |
 | `fitInputWidth` | `boolean \| 'fit-content'` | `true` | Popup width policy |
 | `inputStyle` | `'normal' \| 'emphasize' \| 'no-border'` | `'normal'` | Trigger visual variant |
+| `inputProps` | `InputHTMLAttributes<HTMLInputElement>` | — | Native ARIA and data attributes for the default input; Picker-controlled value, handlers, and ref remain protected |
 | `inputStatus` | `'normal' \| 'error' \| 'warning' \| 'success'` | `'normal'` | Validation state |
 | `panelStatus` | `'normal' \| 'loading' \| 'empty'` | `'normal'` | Popup content state |
 | `needConfirm` | `boolean` | `false` | Shows confirmation actions |

@@ -1,13 +1,12 @@
 import type { CascaderItemProps } from '../composables/useProps';
+import { looselyEqualCascaderValues } from '@aurora/core';
 import { isObject } from '@aurora/utils';
-import { isEqual } from 'lodash-es';
 
 export type ObjectWithCtx = Record<string & '_ctx', unknown>;
 export type ObjectWithoutCtx = Omit<ObjectWithCtx, '_ctx'>;
 
 export function isEqualIgnoreCtx(val1: unknown, val2: unknown) {
-  if (val1 === val2) return true;
-  return isEqual(removeObjectCtx(val1), removeObjectCtx(val2));
+  return looselyEqualCascaderValues(removeObjectCtx(val1), removeObjectCtx(val2));
 }
 
 export function isValueHasCtx(val: unknown): val is ObjectWithCtx {

@@ -1,4 +1,11 @@
-import type { CSSProperties, ExtractPropTypes, PropType, StyleValue, VNode } from 'vue';
+import type {
+  CSSProperties,
+  ExtractPropTypes,
+  InputHTMLAttributes,
+  PropType,
+  StyleValue,
+  VNode,
+} from 'vue';
 import { declarePropType, isDefined, isNil } from '@aurora/utils';
 import { IconMaybeFalsyPropType, IconNullablePropType, IconPropType } from '~/utils/useIcon';
 import { IconArrowDown, IconCloseFilled, IconLoadingLine, IconSearch } from '@aurora/icon';
@@ -30,6 +37,33 @@ export type PickerInputStatusType = PickerInputStatus;
 export type PickerPanelStatusType = PickerPanelStatus;
 export type PickerStatusType = PickerStatus;
 export type PickerInputStyleType = PickerInputVariant;
+
+type PickerInputDataAttrs = {
+  [Key in `data-${string}`]?: string | number | boolean | null | undefined;
+};
+
+export type PickerNativeInputAttrs = Omit<
+  InputHTMLAttributes,
+  | 'autocomplete'
+  | 'checked'
+  | 'class'
+  | 'disabled'
+  | 'onBlur'
+  | 'onClick'
+  | 'onCompositionend'
+  | 'onCompositionstart'
+  | 'onCompositionupdate'
+  | 'onFocus'
+  | 'onInput'
+  | 'onKeydown'
+  | 'placeholder'
+  | 'readonly'
+  | 'style'
+  | 'tabindex'
+  | 'type'
+  | 'value'
+> &
+  PickerInputDataAttrs;
 
 export const isModelValue = (val: unknown): val is ModelValueType => isDefined(val) || isNil(val);
 
@@ -146,6 +180,20 @@ export const usePickerProps = declarePropType({
   inputable: {
     type: Boolean,
     default: PICKER_DEFAULTS.inputable,
+  },
+  /**
+   * 主触发输入框的原生属性。受控值、状态与内部事件由 Picker 管理。
+   * @en Native attributes for the main trigger input. Picker owns its controlled value, state, and internal events.
+   */
+  inputAttrs: {
+    type: Object as PropType<PickerNativeInputAttrs>,
+  },
+  /**
+   * 内置面板搜索输入框的原生属性。受控值、状态与内部事件由 Picker 管理。
+   * @en Native attributes for the built-in panel search input. Picker owns its controlled value, state, and internal events.
+   */
+  panelInputAttrs: {
+    type: Object as PropType<PickerNativeInputAttrs>,
   },
   /**
    * 是否只读

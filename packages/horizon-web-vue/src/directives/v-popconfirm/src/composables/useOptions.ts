@@ -78,7 +78,7 @@ export const usePopConfirmOptions = declareDirectiveOptionType({
     required: false,
   },
   /**
-   * 确定按钮的 `props`，传入一个对象，详见 [Button Props](/pages/horizon-web/horizon-web/components/button#Api)
+   * 确定按钮的 `props`，传入一个对象，详见 [Button Props](/zh/vue/components/Button#api)
    * @en Description
    */
   okButtonProps: {
@@ -94,8 +94,8 @@ export const usePopConfirmOptions = declareDirectiveOptionType({
     required: false,
   },
   /**
-   * 取消按钮的 `props`，传入一个对象，详见 [Button Props](/pages/horizon-web/horizon-web/components/button#Api)
-   * @en Cancelbutton的 props, Pass 一个对象, 详见 [Button Props](/pages/horizon-web/horizon-web/components/button#Api)
+   * 取消按钮的 `props`，传入一个对象，详见 [Button Props](/zh/vue/components/Button#api)
+   * @en Cancel button props. See [Button Props](/en/vue/components/Button#api).
    */
   cancelButtonProps: {
     type: Object as DirectiveOptionType<Partial<ButtonProps>>,

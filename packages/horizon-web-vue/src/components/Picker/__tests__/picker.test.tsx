@@ -29,6 +29,49 @@ describe('Picker.tsx', () => {
     expect(wrapper.find('input').attributes()).toHaveProperty('data-focus-visible-proxy');
   });
 
+  test('native input attrs reach both inputs without overriding Picker-owned behavior', async () => {
+    const unsafeHandler = vi.fn();
+    const wrapper = mount(() => (
+      <HPicker
+        inputable
+        useFitContentInput
+        usePanelInput
+        modelValue="Horizon"
+        toBody={false}
+        inputAttrs={
+          {
+            'aria-controls': 'tree-id',
+            'aria-expanded': true,
+            'data-test': 'main-input',
+            name: 'destination',
+            onInput: unsafeHandler,
+            value: 'unsafe',
+          } as never
+        }
+        panelInputAttrs={
+          {
+            'aria-controls': 'tree-id',
+            'data-test': 'panel-input',
+            onInput: unsafeHandler,
+            value: 'unsafe',
+          } as never
+        }
+      />
+    ));
+    const mainInput = wrapper.get('input[data-test="main-input"]');
+    expect(mainInput.attributes('aria-controls')).toBe('tree-id');
+    expect(mainInput.attributes('name')).toBe('destination');
+    expect((mainInput.element as HTMLInputElement).value).toBe('Horizon');
+
+    await wrapper.findComponent(HPicker).trigger('click');
+    await nextTick();
+    const panelInput = wrapper.get('input[data-test="panel-input"]');
+    expect(panelInput.attributes('aria-controls')).toBe('tree-id');
+    expect((panelInput.element as HTMLInputElement).value).toBe('');
+    await mainInput.setValue('changed');
+    expect(unsafeHandler).not.toHaveBeenCalled();
+  });
+
   test('fit-content compatibility keeps legacy DOM, styles and IME input timing', async () => {
     const componentRef = ref<HorizonWebComponentInstance<
       typeof PickerFitContentInput,

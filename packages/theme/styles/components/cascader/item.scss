@@ -1,0 +1,155 @@
+@use '../../mixins';
+
+/* stylelint-disable nesting-selector-no-missing-scoping-root -- BEM mixins provide selector roots. */
+
+@include mixins.b('cascader-item') {
+  color: mixins.css-variable('cascader', 'color', 'item');
+  cursor: pointer;
+  background: mixins.css-variable('cascader', 'background', 'item');
+  transition: mixins.css-variable('cascader', 'transition', 'background');
+
+  &:is(button):not(#{mixins.block-name('button')}) {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    appearance: none;
+    background: mixins.css-variable('cascader', 'background', 'item');
+    border: 0;
+
+    &:focus-visible {
+      @include mixins.focus-ring-inset;
+    }
+
+    &:disabled,
+    &[aria-disabled='true'] {
+      color: mixins.css-variable('cascader', 'color', 'item', 'disabled');
+      cursor: not-allowed;
+    }
+  }
+
+  &[role='option'],
+  &[role='treeitem'] {
+    &:focus-visible {
+      @include mixins.focus-ring-inset;
+    }
+
+    &[aria-disabled='true'] {
+      color: mixins.css-variable('cascader', 'color', 'item', 'disabled');
+      cursor: not-allowed;
+    }
+  }
+
+  @include mixins.e('inner') {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: mixins.css-variable('cascader', 'size', 'item', 'min-height');
+    padding: mixins.css-variable('cascader', 'spacing', 'item', 'padding');
+
+    &:is(button):not(#{mixins.block-name('button')}) {
+      width: 100%;
+      margin: 0;
+      font: inherit;
+      color: inherit;
+      text-align: left;
+      appearance: none;
+      background: transparent;
+      border: 0;
+
+      &:focus-visible {
+        @include mixins.focus-ring-inset;
+      }
+
+      &:disabled,
+      &[aria-disabled='true'] {
+        color: mixins.css-variable('cascader', 'color', 'item', 'disabled');
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  @include mixins.e('checkbox') {
+    display: flex;
+  }
+
+  @include mixins.e('radio') {
+    display: flex;
+  }
+
+  @include mixins.e('content-wrapper') {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  @include mixins.e('content') {
+    display: -webkit-box;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    -webkit-line-clamp: mixins.css-variable-with-default-value('cascader-size-item-max-line', 1);
+    word-break: normal;
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+
+    /* stylelint-disable-next-line selector-type-no-unknown */
+    &::highlight(keyword) {
+      color: mixins.css-variable('cascader', 'color', 'item', 'keyword');
+    }
+  }
+
+  @include mixins.e('icon') {
+    position: absolute;
+    top: 50%;
+    right: mixins.css-variable('cascader', 'spacing', 'item', 'padding-right');
+    display: flex;
+    align-items: center;
+    height: fit-content;
+    transform: translateY(-50%);
+  }
+
+  @include mixins.is('active') {
+    @include mixins.e('content', false) {
+      font-weight: bold;
+    }
+  }
+
+  @include mixins.has('icon') {
+    @include mixins.be('cascader-item', 'content-wrapper', false) {
+      padding-right: mixins.css-variable(
+        'cascader',
+        'spacing',
+        'item',
+        'has-icon',
+        'padding-right'
+      );
+    }
+  }
+
+  @include mixins.is-not('disabled') {
+    &:hover {
+      background: mixins.css-variable('cascader', 'background', 'item', 'hover');
+    }
+  }
+
+  @include mixins.is('focus') {
+    background: mixins.css-variable('cascader', 'background', 'item', 'hover');
+  }
+
+  @include mixins.is('disabled') {
+    color: mixins.css-variable('cascader', 'color', 'item', 'disabled');
+    cursor: not-allowed;
+  }
+}
+
+/* stylelint-enable nesting-selector-no-missing-scoping-root */
+
+@media (prefers-reduced-motion: reduce) {
+  #{mixins.block-name('cascader-item')} {
+    transition: none;
+  }
+}

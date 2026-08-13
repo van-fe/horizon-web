@@ -1,3 +1,148 @@
+# Cascader
+
+Cascader selects one or more values from a hierarchical option tree. Use `v-model` for the selected value and `v-model:options` when the tree is loaded dynamically.
+
+`HCascaderOption` requires `value: string | number` and `label: string | ((option) => VNode)`. It also supports `stringLabel`, `children`, `disabled`, `isLeaf`, `selectable`, and `groupLabel`. A value is one path (`Array<string | number>`), multiple paths, `null`, or `undefined`.
+
+## Props
+
+### Value, options, and selection
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modelValue` | `ModelValueType` | — | Bound selected path or paths |
+| `initialValue` | `Array<string \| number> \| null \| symbol` | `[]` | Initial value used when `modelValue` is empty |
+| `options` | `HCascaderOption[]` | — | Option tree; required |
+| `multiple` | `boolean` | `false` | Enables multiple selection |
+| `multipleLimit` | `number` | `Infinity` | Maximum number of selections |
+| `disabled` | `boolean` | — | Disables the cascader |
+| `clearable` | `boolean` | `false` | Shows the clear action |
+| `checkStrictly` | `boolean` | `false` | Makes parent and child selection independent |
+| `expandStrictly` | `boolean` | `true` | In strict mode, prevents selecting a branch from automatically expanding it when `true` |
+| `showCheckedStrategy` | `'fullPath' \| 'leaf'` | `'fullPath'` | Label display strategy |
+| `pathSeparator` | `string` | `'/'` | Separator between labels in a full path |
+| `fieldMap` | `Partial<Record<keyof HCascaderOption, keyof HCascaderOption \| string>>` | — | Maps option field names |
+
+### Trigger and presentation
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `trigger` | `'hover' \| 'click' \| 'never'` | `'click'` | How the outer panel opens |
+| `expandTrigger` | `'hover' \| 'click'` | `'click'` | How child panels expand |
+| `hoverShowDelay` / `hoverHideDelay` | `number` | `0` / `200` | Hover-trigger timing in milliseconds |
+| `placeholder` | `string` | — | Trigger placeholder |
+| `size` | `'large' \| 'medium' \| 'small'` | — | Trigger size |
+| `inputStyle` | `'normal' \| 'emphasize' \| 'no-border'` | `'normal'` | Trigger visual style |
+| `inputAttrs` | `PickerNativeInputAttrs` | — | Native ARIA, data, naming, and form attributes for the main input; Cascader keeps ownership of its tree relationships and internal behavior |
+| `inputStatus` | `PickerInputStatusType` | `'normal'` | Trigger validation state |
+| `maxHeight` | `string \| number` | `256` | Maximum trigger height |
+| `popperClassName` | `string` | — | Class applied to the popup |
+| `placement` | `PopoverProps['placement']` | `'bottom-start'` | Preferred popup placement |
+| `flip` | `boolean` | `true` | Allows the popup to flip when space is limited |
+| `toBody` | `boolean` | `true` | Teleports the popup to `body` |
+| `popoverOptions` | `Partial<PopoverProps>` | — | Additional Popover options |
+| `showPopoverContentOnly` | `boolean` | `false` | Renders only popup content |
+| `expandIcon` / `dropdownIcon` / `selectedIcon` | icon input / icon input or `false` / icon input | — | Icons for expansion, trigger, and single-select leaves |
+
+### Tags and option panels
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `collapseTags` | `boolean` | `false` | Collapses selected tags in multiple mode |
+| `collapseTagsTooltip` | `boolean` | `false` | Shows collapsed tags in a tooltip |
+| `maxCollapseTags` | `number` | — | Number of tags kept before collapsing |
+| `collapseTagsFillUp` | `boolean` | `true` | Lets visible tags fill available space |
+| `collapsedTagsProps` | `Partial<TagProps>` | — | Props for the collapsed `+N` tag |
+| `useStatistic` | `boolean` | `false` | Shows a multiple-selection count |
+| `statisticText` | `string` | — | Text before the selection count |
+| `showRadio` | `boolean` | `false` | Shows radios in single-select mode |
+| `maxPanelItemWidth` | `number \| boolean` | `254` | Maximum option-label width; `false` removes the limit |
+| `showTooltip` | `boolean` | `true` | Shows a tooltip for width-limited labels; `false` wraps them |
+| `optionMaxLines` | `number` | `1` | Maximum option-label lines |
+| `tooltipShowAfter` / `tooltipHideAfter` | `number` | `100` / `200` | Option-tooltip timing in milliseconds |
+| `panelsLoading` | `boolean \| LoadingOptions` | `false` | Loading state or `v-loading` options for panels |
+| `showTagsInPanel` | `boolean` | `false` | Shows selected tags inside the panel |
+| `useVirtualScroll` | `boolean` | `false` | Virtualizes long option lists |
+
+### Filtering, confirmation, and dynamic data
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `filter` | `boolean \| HCascaderSearchParams` | `false` | Enables filtering or provides `{ filter, limit?, searchPanelWidth?, sort? }` |
+| `filterable` | `boolean` | `false` | Enables trigger search |
+| `filterMethod` | `HCascaderFilterFunction` | — | `(input, paths) => boolean` match function |
+| `filterMaxResult` | `number` | `50` | Maximum filtered results |
+| `filterResultSort` | `HCascaderFilterSortFunction` | — | `(a, b, inputValue) => number` result sorter |
+| `reserveKeyword` | `boolean \| 'reserve-deselect'` | `true` | Keeps the keyword after filtered selection |
+| `inputAble` | `boolean` | `false` | Enables custom trigger input when `filter` is `false` |
+| `inputEmitFrequency` | `number` | `200` | Custom-input event interval in milliseconds |
+| `searchIcon` | icon input or `false` | check icon | Search icon, or `false` to hide it |
+| `fitInputWidth` | `boolean \| 'fit-content'` | `true` | Filter-panel width policy |
+| `fitContentInputMinWidth` | `string \| number` | `1` | Minimum width for a fit-content input |
+| `panelFilterOption` | `boolean` | `false` | Enables filtering within option panels |
+| `panelFilterInputValue` | `string` | `''` | Controlled panel-filter text |
+| `useBuildInPanelFilter` | `boolean` | `false` | Displays the built-in panel filter input |
+| `panelInputPlaceholder` | `string` | — | Panel-filter placeholder |
+| `searchPanelWidth` | `string \| number` | `''` | Search-results panel width |
+| `useFilterCheckAll` | `boolean` | `false` | Enables select-all for filtered multiple results |
+| `useCheckAllSummary` | `boolean` | `false` | Replaces an all-selected tag list with a summary |
+| `checkAllSummaryText` | `string` | — | Custom all-selected summary |
+| `needConfirm` | `boolean` | `false` | Requires explicit confirmation |
+| `confirmButtonText` / `cancelButtonText` | `string` | localized | Confirmation button labels |
+| `emptyText` | `string` | localized | Empty-state text |
+| `dynamicLoad` | `(node: HCascaderDynamicLoadNode) => Promise<HCascaderOption[]>` | — | Loads children; `node` contains `level`, `options`, and optional `vnode` |
+
+## Events
+
+| Event | Payload | Description |
+| --- | --- | --- |
+| `update:modelValue` | `value: ModelValueType` | Selected value changed |
+| `update:options` | `options: HCascaderOption[]` | Option tree changed, including dynamic-load updates |
+| `dropdownVisibleChange` | `visible: boolean` | Popup visibility changed |
+| `focus` | — | Cascader received focus |
+| `blur` | — | Cascader lost focus |
+| `input` | `value: string` | Custom input text changed |
+| `search` | `value: string` | Filter text changed |
+| `change` | `selected?: boolean, option?: HCascaderExtendOption` | An option was selected or deselected |
+| `clear` | — | Selection was cleared |
+| `select` | `valuePath?: Array<string \| number>, option?: HCascaderExtendOption` | An option was selected |
+| `deselect` | `valuePath?: Array<string \| number>, option?: HCascaderExtendOption` | An option was deselected |
+| `modify` | `modelValue: ModelValueType, selected?: boolean, option?: HCascaderExtendOption` | Committed selected options changed |
+| `confirm` | `modelValue: ModelValueType` | Staged selection was confirmed |
+| `cancel` | `modelValue: ModelValueType` | Staged selection was cancelled |
+| `panelReachBottom` | `event: Event \| undefined, parent: HCascaderOption \| null \| undefined` | A child panel reached its end |
+| `click` | `event: MouseEvent` | Trigger was clicked |
+
+## Slots
+
+| Slot | Scope | Description |
+| --- | --- | --- |
+| `default` | `{ visible: Ref<boolean> }` | Replaces the complete trigger and panel composition |
+| `tagRender` | `HCascaderExtendOption` | Renders one selected tag |
+| `selectRender` | — | Renders the complete selected-value area |
+| `itemRender` | `HCascaderExtendOption` | Renders one panel option |
+| `searchPanelRender` | `{ paths: HCascaderFilterPathData[]; inputValue: string }` | Renders filtered search results |
+| `empty` | — | Renders an empty option list |
+| `confirmRender` | `{ cancelHandle; confirmHandle }` | Renders confirmation actions |
+| `panelHeaderRender` | — | Renders panel header content |
+| `panelFooterRender` | — | Renders panel footer content |
+| `panelConfirmLeft` | — | Renders the left part of the confirmation area |
+
+## Exposes
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `confirmHandle()` | `() => void` | Confirms staged selection |
+| `cancelHandle()` | `() => void` | Cancels staged selection |
+| `focusOption(valuePath)` | `(valuePath: ModelValueSingleType) => void` | Focuses an option path |
+| `changePanelVisible(status)` | `(status: boolean) => void` | Changes popup visibility |
+| `setInputAble()` | `() => void` | Enables custom input |
+| `inputChange(value)` | `(value: string \| null) => void` | Sends custom trigger text to filtering; `null` clears it |
+| `clear()` | `() => void` | Clears selected values |
+| `renderedModelValueTags` | `Ref<Array<VNode \| JSX.Element>>` | Rendered selected-tag nodes |
+| `focus()` | `() => void` | Focuses the cascader |
+| `blur()` | `() => void` | Blurs the cascader |
+
 ## Basic usage
 
 Combine `size`, `input-style`, `disabled`, and `check-strictly` while comparing single and multiple selection. Focus and selection events are shown directly in the demo.

@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B35 Picker 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B36 Cascader 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -820,6 +820,19 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DOC-B35-001 | Done | Vue 文档补齐 Props/Events/Slots/Exposes；React 中英文页面、3 个独立 TSX 示例与双语侧边栏入口完成，文档保持 renderer 原生表达 |
 | PKG-B35-001 | Done | 包名迁移按 breaking change 执行；扫描与边界检查确认不存在 `@aurora/horizon-web` 兼容包、依赖、alias、转发入口、resolver fallback 或发布项，仅保留无关的 ESLint plugin rule id |
 | QA-B35-001 | Done | Core 208、Theme 3、Locale React 5、Web Core Node 21/Chromium 60、React Chromium 246、Vue Chromium 2330 项（2330 通过、1 项预期失败）全部通过；Vue 总覆盖率为 97.97% / 95.09% / 97.65% / 98.26%，Vue Picker 组件源码四项覆盖率为 99.22% / 95.86% / 99.41% / 99.18%，React Picker 为 100% / 97.29% / 100% / 100%；Picker 下游 54 文件/446 项 Chromium 回归通过；Vue Node 26、resolver 12、colors 1、upload adapters 66 项通过；五包构建、Sass、文档站、69 组双 renderer 契约、Vue/React/SSR/tree-shaking 消费工程、发布演练与包边界通过 |
+
+#### M6-B36 第三十六批实施记录（2026-08-13）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B36-001 | Done | Cascader 的公共选项、字段映射、值路径、筛选、分支选择、显示标签、限制规则、事件、区域、命令、默认值、校验器与 manifest 迁入 `@aurora/core`；新增受控/非受控选择 controller、确认暂存协议、键盘 reducer，以及支持请求去重、代次失效、异常收敛和销毁保护的动态加载 controller，不包含 renderer、DOM 或 locale |
+| WEB-B36-001 | Done | Cascader 活动项查询、聚焦和滚动 adapter 迁入 Horizon Web Core；纯选择、筛选、键盘和异步状态继续由 Core 统一，Web Core 不重复维护请求调度器 |
+| VUE-B36-001 | Done | Vue props/emits/slots/exposes 类型化消费公共契约，选择、筛选、宽松值比较、键盘和动态加载改用 Core，面板 DOM 导航改用 Web Core；保留历史 Vue API、确认行为、虚拟滚动和表单联动，并补齐动态 loader 更换失效、定时器清理、tree/treeitem 语义及实际聚焦输入框的 combobox/controls/active-descendant 关系 |
+| REACT-B36-001 | Done | 完成 React Cascader，支持单选/多选、受控与非受控值、确认暂存、分支联动、筛选、关键字保留策略、字段映射、动态加载、Portal、键盘导航、Provider 文案、ARIA、原生 inputProps 和 ref commands；修复受控拒绝更新、运行时 multiple/limit 收敛、StrictMode 动态加载、纯 state updater 与映射分组标题问题 |
+| DS-B36-001 | Done | Cascader canonical Sass、item、panel 与变量迁入 `@aurora/theme`，Vue 使用包导出薄代理，React 使用同源视觉；补齐暗色搜索高亮、原生 treeitem 焦点态、reduced-motion、390px 面板边界和长路径换行/滚动策略 |
+| DOC-B36-001 | Done | Vue 文档补齐 Props/Events/Slots/Exposes；React 中英文页面、4 个独立 TSX 示例与双语侧边栏入口完成；Picker 的原生输入属性文档同步补齐，文档保持 renderer 原生表达且不存在跨框架映射说明 |
+| PKG-B36-001 | Done | 包名迁移继续按 breaking change 执行；发布演练、resolver、别名、依赖、入口与边界扫描确认不存在 `@aurora/horizon-web` 兼容包、alias、re-export、resolver fallback 或发布项，仅保留无关的 ESLint plugin rule id 与明确的边界/历史说明 |
+| QA-B36-001 | Done | Core 230、Theme 3、Locale React 5、Web Core Node 21/Chromium 62、React Chromium 273、Vue Chromium 2345 项（2344 通过、1 项预期失败）全部通过；Vue 总覆盖率为 97.94% / 95.10% / 97.66% / 98.26%，Vue Cascader 组件源码四项覆盖率为 98.29% / 95.13% / 98.25% / 98.87%，React Cascader 为 99.19% / 95.45% / 100% / 99.04%；Vue Cascader 12 文件/100 项与 React Cascader 26 项真实 Chromium 回归通过；Vue Node 26、resolver 12、colors 1、upload adapters 66 项通过；五包构建、Sass、文档站、69 组双 renderer 契约、Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界与旧组件包名移除约束通过 |
 
 ### 批次 C：浮层与容器
 

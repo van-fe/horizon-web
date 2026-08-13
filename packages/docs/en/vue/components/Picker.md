@@ -18,6 +18,8 @@ Picker provides the shared trigger and popup foundation used by selection contro
 | `placement` | `PopoverPlacement` | `'bottom-start'` | Preferred popup placement |
 | `toBody` | `boolean` | `true` | Teleports the popup to `body` |
 | `inputable` | `boolean` | `false` | Allows text input |
+| `inputAttrs` | `PickerNativeInputAttrs` | — | Native ARIA, data, naming, and form attributes for the main input; Picker keeps ownership of value, state, and internal events |
+| `panelInputAttrs` | `PickerNativeInputAttrs` | — | Native attributes for the built-in panel search input |
 | `readonly` | `boolean` | `false` | Prevents editing and opening |
 | `inputStyle` | `'normal' \| 'emphasize' \| 'no-border'` | `'normal'` | Trigger visual variant |
 | `inputStatus` | `'normal' \| 'error' \| 'warning' \| 'success'` | `'normal'` | Input validation state |

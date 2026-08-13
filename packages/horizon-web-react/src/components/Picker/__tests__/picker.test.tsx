@@ -2,7 +2,7 @@ import type { ReactElement } from 'react';
 import { act, createElement as h, createRef, StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { PickerHandle } from '..';
+import type { PickerHandle, PickerProps } from '..';
 import { Picker } from '..';
 import { HorizonWebProvider } from '../../../provider';
 
@@ -281,6 +281,41 @@ describe('React Picker', () => {
     );
     expect(onCancelButtonClick).not.toHaveBeenCalled();
     expect(onConfirmButtonClick).not.toHaveBeenCalled();
+  });
+
+  it('merges input attributes without allowing picker-controlled props to be overridden', async () => {
+    const overriddenClick = vi.fn();
+    const overriddenChange = vi.fn();
+    const overriddenRef = vi.fn();
+    const unsafeInputProps = {
+      'aria-describedby': 'picker-description',
+      'data-picker-input': 'custom',
+      onChange: overriddenChange,
+      onClick: overriddenClick,
+      ref: overriddenRef,
+      value: 'overridden',
+    } as unknown as NonNullable<PickerProps<string>['inputProps']>;
+    const onInput = vi.fn();
+    await render(
+      h(Picker<string>, {
+        defaultValue: 'picker-owned',
+        inputable: true,
+        inputProps: unsafeInputProps,
+        onInput,
+      }),
+    );
+
+    const input = container.querySelector('input')!;
+    expect(input.getAttribute('aria-describedby')).toBe('picker-description');
+    expect(input.dataset.pickerInput).toBe('custom');
+    expect(input.value).toBe('picker-owned');
+    await setInputValue(input, 'updated-by-picker');
+    expect(onInput).toHaveBeenCalledOnce();
+    expect(overriddenChange).not.toHaveBeenCalled();
+    await dispatch(input, new MouseEvent('click', { bubbles: true }));
+    expect(input.getAttribute('aria-expanded')).toBe('true');
+    expect(overriddenClick).not.toHaveBeenCalled();
+    expect(overriddenRef).not.toHaveBeenCalled();
   });
 
   it('covers default formatting, editable callbacks, IME and keyboard closing paths', async () => {

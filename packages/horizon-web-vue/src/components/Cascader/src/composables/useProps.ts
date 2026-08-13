@@ -1,9 +1,26 @@
 import type { ExtractPropTypes, PropType, VNode } from 'vue';
+import type {
+  AdaptComponentApiShape,
+  CascaderCommonProps,
+  ComponentRendererPropDefinitions,
+} from '@aurora/core';
+import {
+  CASCADER_DEFAULTS,
+  isCascaderExpandTrigger,
+  isCascaderModelValue,
+  isCascaderMultipleLimit,
+  isCascaderReserveKeyword,
+  isCascaderShowStrategy,
+  isCascaderTrigger,
+} from '@aurora/core';
 import { declarePropType } from '@aurora/utils';
 import type { TagProps } from '~/components/Tag/src/composables/useProps';
 import { IconMaybeFalsyPropType, IconPropType } from '~/utils/useIcon';
 import type { PopoverProps } from '~/components/Popover/src/composables/useProps';
-import type { PickerInputStatusType } from '~/components/Picker/src/composables/useProps';
+import type {
+  PickerInputStatusType,
+  PickerNativeInputAttrs,
+} from '~/components/Picker/src/composables/useProps';
 import type {
   HCascaderOption,
   HCascaderExtendOption,
@@ -16,6 +33,65 @@ import type {
 import { IconCheck } from '@aurora/icon';
 import type { LoadingOptions } from '~/directives/v-loading/src/composables/useOptions';
 
+type CascaderVueProps = AdaptComponentApiShape<
+  CascaderCommonProps<HCascaderOption>,
+  {},
+  'defaultValue',
+  {
+    initialValue?: Array<string | number> | null | undefined | symbol;
+    collapseTags?: boolean;
+    collapseTagsTooltip?: boolean;
+    maxCollapseTags?: number;
+    collapseTagsFillUp?: boolean;
+    collapsedTagsProps?: Partial<TagProps>;
+    placeholder?: string;
+    size?: 'large' | 'medium' | 'small';
+    inputStyle?: 'normal' | 'emphasize' | 'no-border';
+    inputAttrs?: PickerNativeInputAttrs;
+    popperClassName?: string;
+    inputStatus?: PickerInputStatusType;
+    popoverOptions?: Partial<PopoverProps>;
+    hoverShowDelay?: number;
+    hoverHideDelay?: number;
+    useStatistic?: boolean;
+    statisticText?: string;
+    toBody?: boolean;
+    maxHeight?: string | number;
+    expandIcon?: unknown;
+    dropdownIcon?: unknown;
+    dynamicLoad?: (node: HCascaderDynamicLoadNode) => Promise<HCascaderOption[]>;
+    selectedIcon?: unknown;
+    emptyText?: string;
+    inputAble?: boolean;
+    searchPanelWidth?: string | number;
+    confirmButtonText?: string;
+    cancelButtonText?: string;
+    panelFilterOption?: boolean;
+    panelFilterInputValue?: string;
+    useBuildInPanelFilter?: boolean;
+    panelInputPlaceholder?: string;
+    showRadio?: boolean;
+    maxPanelItemWidth?: number | boolean;
+    showTooltip?: boolean;
+    placement?: PopoverProps['placement'];
+    flip?: boolean;
+    inputEmitFrequency?: number;
+    optionMaxLines?: number;
+    searchIcon?: unknown;
+    fitInputWidth?: boolean | 'fit-content';
+    tooltipShowAfter?: number;
+    tooltipHideAfter?: number;
+    fitContentInputMinWidth?: string | number;
+    useFilterCheckAll?: boolean;
+    useCheckAllSummary?: boolean;
+    checkAllSummaryText?: string;
+    useVirtualScroll?: boolean;
+    panelsLoading?: boolean | LoadingOptions;
+    showPopoverContentOnly?: boolean;
+    showTagsInPanel?: boolean;
+  }
+>;
+
 /**
  * Cascader 组件参数
  */
@@ -26,6 +102,7 @@ export const useCascaderProps = declarePropType({
    */
   modelValue: {
     type: Array as PropType<ModelValueType>,
+    validator: isCascaderModelValue,
   },
   /**
    * 触发方式
@@ -33,7 +110,8 @@ export const useCascaderProps = declarePropType({
    */
   trigger: {
     type: String as PropType<'hover' | 'click' | 'never'>,
-    default: 'click',
+    default: CASCADER_DEFAULTS.trigger,
+    validator: isCascaderTrigger,
   },
 
   /**
@@ -42,7 +120,7 @@ export const useCascaderProps = declarePropType({
    */
   clearable: {
     type: Boolean,
-    default: false,
+    default: CASCADER_DEFAULTS.clearable,
   },
 
   /**
@@ -101,7 +179,8 @@ export const useCascaderProps = declarePropType({
    */
   showCheckedStrategy: {
     type: String as PropType<'fullPath' | 'leaf'>,
-    default: 'fullPath',
+    default: CASCADER_DEFAULTS.showCheckedStrategy,
+    validator: isCascaderShowStrategy,
   },
   /**
    * 路径分隔符，用于在 input 中展示
@@ -109,7 +188,7 @@ export const useCascaderProps = declarePropType({
    */
   pathSeparator: {
     type: String,
-    default: '/',
+    default: CASCADER_DEFAULTS.pathSeparator,
   },
   /**
    * 是否严格的遵守父子节点**不互相关联**
@@ -119,7 +198,7 @@ export const useCascaderProps = declarePropType({
    */
   checkStrictly: {
     type: Boolean,
-    default: false,
+    default: CASCADER_DEFAULTS.checkStrictly,
   },
   /**
    * 在开启了 `checkStrictly` 后，选择非叶子节点后，是否严格的遵守父子节点**不互相关联**进行展开
@@ -129,7 +208,7 @@ export const useCascaderProps = declarePropType({
    */
   expandStrictly: {
     type: Boolean,
-    default: true,
+    default: CASCADER_DEFAULTS.expandStrictly,
   },
   /**
    * 占位内容
@@ -155,6 +234,13 @@ export const useCascaderProps = declarePropType({
   inputStyle: {
     type: String as PropType<'normal' | 'emphasize' | 'no-border'>,
     default: 'normal',
+  },
+  /**
+   * 主输入框的原生 ARIA、数据、命名和表单属性。
+   * @en Native ARIA, data, naming, and form attributes for the main input.
+   */
+  inputAttrs: {
+    type: Object as PropType<PickerNativeInputAttrs>,
   },
 
   /**
@@ -262,7 +348,8 @@ export const useCascaderProps = declarePropType({
    */
   multipleLimit: {
     type: Number,
-    default: Infinity,
+    default: CASCADER_DEFAULTS.multipleLimit,
+    validator: isCascaderMultipleLimit,
   },
 
   /**
@@ -271,7 +358,8 @@ export const useCascaderProps = declarePropType({
    */
   expandTrigger: {
     type: String as PropType<'hover' | 'click'>,
-    default: 'click',
+    default: CASCADER_DEFAULTS.expandTrigger,
+    validator: isCascaderExpandTrigger,
   },
 
   /**
@@ -327,7 +415,7 @@ export const useCascaderProps = declarePropType({
    */
   filter: {
     type: [Object, Boolean] as PropType<boolean | HCascaderSearchParams>,
-    default: false,
+    default: CASCADER_DEFAULTS.filter,
   },
   /**
    * 是否可以筛选
@@ -335,7 +423,7 @@ export const useCascaderProps = declarePropType({
    */
   filterable: {
     type: Boolean,
-    default: false,
+    default: CASCADER_DEFAULTS.filterable,
   },
   /**
    * 筛选过滤方法
@@ -400,7 +488,7 @@ export const useCascaderProps = declarePropType({
    */
   filterMaxResult: {
     type: Number,
-    default: 50,
+    default: CASCADER_DEFAULTS.filterMaxResult,
   },
   /**
    * 过滤后结果的排序函数
@@ -544,7 +632,8 @@ export const useCascaderProps = declarePropType({
    */
   reserveKeyword: {
     type: [Boolean, String] as PropType<boolean | 'reserve-deselect'>,
-    default: true,
+    default: CASCADER_DEFAULTS.reserveKeyword,
+    validator: isCascaderReserveKeyword,
   },
   /**
    * 所有有 `tooltip` 的地方，在悬浮后延迟多少毫秒显示 `tooltip`
@@ -626,7 +715,7 @@ export const useCascaderProps = declarePropType({
     type: Boolean,
     default: false,
   },
-});
+} satisfies ComponentRendererPropDefinitions<CascaderVueProps>);
 export type CascaderProps = ExtractPropTypes<typeof useCascaderProps>;
 
 export const useCascaderItemProp = declarePropType({

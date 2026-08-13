@@ -4,6 +4,7 @@ import type {
   CSSProperties,
   FocusEvent,
   HTMLAttributes,
+  InputHTMLAttributes,
   KeyboardEvent,
   MouseEvent,
   ReactElement,
@@ -132,6 +133,24 @@ export interface PickerProps<Value = PickerValue>
   panelClassName?: string;
   /** 面板样式。 @en Popup style. */
   panelStyle?: CSSProperties;
+  /** 默认输入框的原生 ARIA 与数据属性。 @en Native ARIA and data attributes for the default input. */
+  inputProps?: Omit<
+    InputHTMLAttributes<HTMLInputElement>,
+    | 'defaultValue'
+    | 'disabled'
+    | 'onBlur'
+    | 'onChange'
+    | 'onClick'
+    | 'onCompositionEnd'
+    | 'onCompositionStart'
+    | 'onFocus'
+    | 'onInput'
+    | 'onKeyDown'
+    | 'placeholder'
+    | 'readOnly'
+    | 'ref'
+    | 'value'
+  >;
   /** 确认按钮文字。 @en Confirm button text. */
   confirmText?: string;
   /** 取消按钮文字。 @en Cancel button text. */
@@ -229,6 +248,7 @@ function PickerImplementation<Value = PickerValue>(
     emptyContent,
     panelClassName,
     panelStyle,
+    inputProps,
     onValueChange,
     onOpenChange,
     onConfirm,
@@ -622,7 +642,12 @@ function PickerImplementation<Value = PickerValue>(
           <span className={classes.em('input', 'container')}>
             <input
               {...triggerProps}
-              className={cls(classes.em('input', 'inner'), classes.is('main'))}
+              {...inputProps}
+              className={cls(
+                classes.em('input', 'inner'),
+                classes.is('main'),
+                inputProps?.className,
+              )}
               data-focus-visible-proxy=""
               disabled={resolvedDisabled}
               id={formField?.controlId}

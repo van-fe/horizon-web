@@ -36,27 +36,6 @@ export default defineComponent({
     { slots, attrs, emit, expose }: HorizonWebSetupContext<InputEmits, InputSlots, InputExposes>,
   ) {
     const cHelper = new ComponentClassBlock('input');
-    const originalAttrs = pickFromObject(attrs, [
-      'id',
-      'name',
-      // 'value',
-      'min',
-      'max',
-      'autofocus',
-      'form',
-      'tabindex',
-      'cols',
-      // events
-      'onKeydown',
-      'onKeypress',
-      'onKeyup',
-      'onFocus',
-      'onBlur',
-      'onChange',
-      /^data-[\w-]+$/,
-      // 'onClick',
-      'autocomplete',
-    ]);
 
     const {
       autoSizeStyle,
@@ -117,6 +96,29 @@ export default defineComponent({
     });
 
     return () => {
+      const originalAttrs = pickFromObject(attrs, [
+        'id',
+        'name',
+        // 'value',
+        'min',
+        'max',
+        'autofocus',
+        'form',
+        'role',
+        'tabindex',
+        'cols',
+        // events
+        'onKeydown',
+        'onKeypress',
+        'onKeyup',
+        'onFocus',
+        'onBlur',
+        'onChange',
+        /^data-[\w-]+$/,
+        /^aria-[\w-]+$/,
+        // 'onClick',
+        'autocomplete',
+      ]);
       const forwardedAttrs = Object.fromEntries(
         Object.entries(attrs).filter(
           ([key]) =>
@@ -235,7 +237,6 @@ export default defineComponent({
 
         return (
           <span
-            {...forwardedAttrs}
             class={[
               props.fitContentClass || cHelper.e('fit-content'),
               attrs.class,

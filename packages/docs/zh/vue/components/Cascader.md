@@ -1,3 +1,148 @@
+# Cascader 级联选择器
+
+Cascader 用于在层级选项树中选择一个或多个值。使用 `v-model` 绑定选中值；动态加载选项树时使用 `v-model:options`。
+
+`HCascaderOption` 必须包含 `value: string | number` 与 `label: string | ((option) => VNode)`，还支持 `stringLabel`、`children`、`disabled`、`isLeaf`、`selectable` 与 `groupLabel`。选中值可以是一条路径（`Array<string | number>`）、多条路径、`null` 或 `undefined`。
+
+## Props
+
+### 值、选项与选择
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `modelValue` | `ModelValueType` | — | 绑定的选中路径或路径集合 |
+| `initialValue` | `Array<string \| number> \| null \| symbol` | `[]` | `modelValue` 为空时使用的初始值 |
+| `options` | `HCascaderOption[]` | — | 选项树，必填 |
+| `multiple` | `boolean` | `false` | 开启多选 |
+| `multipleLimit` | `number` | `Infinity` | 最多可选数量 |
+| `disabled` | `boolean` | — | 禁用组件 |
+| `clearable` | `boolean` | `false` | 显示清空操作 |
+| `checkStrictly` | `boolean` | `false` | 使父子节点可独立选择 |
+| `expandStrictly` | `boolean` | `true` | 严格选择时为 `true` 则选择父节点后不自动展开 |
+| `showCheckedStrategy` | `'fullPath' \| 'leaf'` | `'fullPath'` | 选中标签展示策略 |
+| `pathSeparator` | `string` | `'/'` | 完整路径的标签分隔符 |
+| `fieldMap` | `Partial<Record<keyof HCascaderOption, keyof HCascaderOption \| string>>` | — | 映射选项字段名 |
+
+### 触发器与展示
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `trigger` | `'hover' \| 'click' \| 'never'` | `'click'` | 外层面板触发方式 |
+| `expandTrigger` | `'hover' \| 'click'` | `'click'` | 子面板展开方式 |
+| `hoverShowDelay` / `hoverHideDelay` | `number` | `0` / `200` | 悬浮触发延迟，单位毫秒 |
+| `placeholder` | `string` | — | 触发器占位内容 |
+| `size` | `'large' \| 'medium' \| 'small'` | — | 触发器尺寸 |
+| `inputStyle` | `'normal' \| 'emphasize' \| 'no-border'` | `'normal'` | 触发器视觉样式 |
+| `inputAttrs` | `PickerNativeInputAttrs` | — | 主输入框的原生 ARIA、数据、命名与表单属性；树关系和内部行为仍由 Cascader 管理 |
+| `inputStatus` | `PickerInputStatusType` | `'normal'` | 触发器校验状态 |
+| `maxHeight` | `string \| number` | `256` | 触发器最大高度 |
+| `popperClassName` | `string` | — | 应用于浮层的自定义类名 |
+| `placement` | `PopoverProps['placement']` | `'bottom-start'` | 首选浮层位置 |
+| `flip` | `boolean` | `true` | 空间不足时允许浮层翻转 |
+| `toBody` | `boolean` | `true` | 将浮层传送到 `body` |
+| `popoverOptions` | `Partial<PopoverProps>` | — | Popover 扩展参数 |
+| `showPopoverContentOnly` | `boolean` | `false` | 仅展示浮层内容 |
+| `expandIcon` / `dropdownIcon` / `selectedIcon` | 图标输入 / 图标输入或 `false` / 图标输入 | — | 子级展开、触发器与单选叶子节点图标 |
+
+### 标签与选项面板
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `collapseTags` | `boolean` | `false` | 多选时折叠已选标签 |
+| `collapseTagsTooltip` | `boolean` | `false` | 在 tooltip 中展示折叠标签 |
+| `maxCollapseTags` | `number` | — | 折叠前保留的标签数量 |
+| `collapseTagsFillUp` | `boolean` | `true` | 让可见标签尽量填满可用空间 |
+| `collapsedTagsProps` | `Partial<TagProps>` | — | 折叠 `+N` 标签的参数 |
+| `useStatistic` | `boolean` | `false` | 显示多选数量统计 |
+| `statisticText` | `string` | — | 选择数量前的文字 |
+| `showRadio` | `boolean` | `false` | 单选时显示单选框 |
+| `maxPanelItemWidth` | `number \| boolean` | `254` | 单项标签最大宽度；`false` 不限制 |
+| `showTooltip` | `boolean` | `true` | 宽度受限时显示 tooltip；`false` 则换行 |
+| `optionMaxLines` | `number` | `1` | 单项标签最大行数 |
+| `tooltipShowAfter` / `tooltipHideAfter` | `number` | `100` / `200` | 选项 tooltip 延迟，单位毫秒 |
+| `panelsLoading` | `boolean \| LoadingOptions` | `false` | 面板加载状态或 `v-loading` 参数 |
+| `showTagsInPanel` | `boolean` | `false` | 在面板中展示已选标签 |
+| `useVirtualScroll` | `boolean` | `false` | 为长选项列表启用虚拟滚动 |
+
+### 过滤、确认与动态数据
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `filter` | `boolean \| HCascaderSearchParams` | `false` | 启用过滤，或传入 `{ filter, limit?, searchPanelWidth?, sort? }` |
+| `filterable` | `boolean` | `false` | 在触发器中启用搜索 |
+| `filterMethod` | `HCascaderFilterFunction` | — | 匹配函数：`(input, paths) => boolean` |
+| `filterMaxResult` | `number` | `50` | 最大过滤结果数 |
+| `filterResultSort` | `HCascaderFilterSortFunction` | — | 排序函数：`(a, b, inputValue) => number` |
+| `reserveKeyword` | `boolean \| 'reserve-deselect'` | `true` | 过滤选择后是否保留关键字 |
+| `inputAble` | `boolean` | `false` | `filter` 为 `false` 时允许自定义触发器输入 |
+| `inputEmitFrequency` | `number` | `200` | 自定义输入事件频率，单位毫秒 |
+| `searchIcon` | 图标输入或 `false` | check 图标 | 搜索图标；`false` 时隐藏 |
+| `fitInputWidth` | `boolean \| 'fit-content'` | `true` | 过滤面板宽度策略 |
+| `fitContentInputMinWidth` | `string \| number` | `1` | 自适应输入框最小宽度 |
+| `panelFilterOption` | `boolean` | `false` | 在选项面板内启用过滤 |
+| `panelFilterInputValue` | `string` | `''` | 受控的面板过滤文字 |
+| `useBuildInPanelFilter` | `boolean` | `false` | 显示内置面板过滤输入框 |
+| `panelInputPlaceholder` | `string` | — | 面板过滤占位内容 |
+| `searchPanelWidth` | `string \| number` | `''` | 搜索结果面板宽度 |
+| `useFilterCheckAll` | `boolean` | `false` | 多选过滤结果支持全选 |
+| `useCheckAllSummary` | `boolean` | `false` | 全选时以摘要替代标签列表 |
+| `checkAllSummaryText` | `string` | — | 自定义全选摘要文案 |
+| `needConfirm` | `boolean` | `false` | 需要显式确认选择 |
+| `confirmButtonText` / `cancelButtonText` | `string` | 国际化 | 确认操作按钮文案 |
+| `emptyText` | `string` | 国际化 | 空状态文案 |
+| `dynamicLoad` | `(node: HCascaderDynamicLoadNode) => Promise<HCascaderOption[]>` | — | 动态加载子项；`node` 包含 `level`、`options` 与可选的 `vnode` |
+
+## Events
+
+| 事件 | 参数 | 说明 |
+| --- | --- | --- |
+| `update:modelValue` | `value: ModelValueType` | 选中值变化 |
+| `update:options` | `options: HCascaderOption[]` | 选项树变化，包括动态加载更新 |
+| `dropdownVisibleChange` | `visible: boolean` | 浮层显隐变化 |
+| `focus` | — | 获得焦点 |
+| `blur` | — | 失去焦点 |
+| `input` | `value: string` | 自定义输入文字变化 |
+| `search` | `value: string` | 过滤文字变化 |
+| `change` | `selected?: boolean, option?: HCascaderExtendOption` | 一个选项被选中或取消选中 |
+| `clear` | — | 清空选中值 |
+| `select` | `valuePath?: Array<string \| number>, option?: HCascaderExtendOption` | 选中一个选项 |
+| `deselect` | `valuePath?: Array<string \| number>, option?: HCascaderExtendOption` | 取消选中一个选项 |
+| `modify` | `modelValue: ModelValueType, selected?: boolean, option?: HCascaderExtendOption` | 已提交的选项集合变化 |
+| `confirm` | `modelValue: ModelValueType` | 确认暂存选择 |
+| `cancel` | `modelValue: ModelValueType` | 取消暂存选择 |
+| `panelReachBottom` | `event: Event \| undefined, parent: HCascaderOption \| null \| undefined` | 子面板滚动至底部 |
+| `click` | `event: MouseEvent` | 点击触发器 |
+
+## Slots
+
+| 插槽 | 作用域参数 | 说明 |
+| --- | --- | --- |
+| `default` | `{ visible: Ref<boolean> }` | 替换完整的触发器与面板组合 |
+| `tagRender` | `HCascaderExtendOption` | 渲染一个已选标签 |
+| `selectRender` | — | 渲染完整的已选值区域 |
+| `itemRender` | `HCascaderExtendOption` | 渲染一个面板选项 |
+| `searchPanelRender` | `{ paths: HCascaderFilterPathData[]; inputValue: string }` | 渲染过滤搜索结果 |
+| `empty` | — | 渲染空选项列表 |
+| `confirmRender` | `{ cancelHandle; confirmHandle }` | 渲染确认操作区 |
+| `panelHeaderRender` | — | 渲染面板顶部内容 |
+| `panelFooterRender` | — | 渲染面板底部内容 |
+| `panelConfirmLeft` | — | 渲染确认区左侧内容 |
+
+## Exposes
+
+| 名称 | 类型 | 说明 |
+| --- | --- | --- |
+| `confirmHandle()` | `() => void` | 确认暂存选择 |
+| `cancelHandle()` | `() => void` | 取消暂存选择 |
+| `focusOption(valuePath)` | `(valuePath: ModelValueSingleType) => void` | 聚焦指定选项路径 |
+| `changePanelVisible(status)` | `(status: boolean) => void` | 改变浮层显隐 |
+| `setInputAble()` | `() => void` | 启用自定义输入 |
+| `inputChange(value)` | `(value: string \| null) => void` | 将自定义触发器文字传给过滤逻辑；`null` 清空 |
+| `clear()` | `() => void` | 清空已选值 |
+| `renderedModelValueTags` | `Ref<Array<VNode \| JSX.Element>>` | 已渲染的选中标签节点 |
+| `focus()` | `() => void` | 聚焦组件 |
+| `blur()` | `() => void` | 使组件失焦 |
+
 ## 基础用法
 
 组合 `size`、`input-style`、`disabled` 与 `check-strictly`，并对比单选和多选。示例中的焦点、失焦与选择结果会直接显示在页面中。

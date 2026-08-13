@@ -27,6 +27,11 @@ export interface HorizonWebConfig {
     confirm: string;
     cancel: string;
   };
+  cascaderLabels: {
+    placeholder: string;
+    empty: string;
+    level: string;
+  };
   linkLabels: {
     loading: string;
   };
@@ -86,6 +91,7 @@ export type HorizonWebProviderProps = PropsWithChildren<
     Partial<HorizonWebConfig>,
     | 'backtopLabels'
     | 'breadcrumbLabels'
+    | 'cascaderLabels'
     | 'dialogLabels'
     | 'drawerLabels'
     | 'floatButtonLabels'
@@ -105,6 +111,7 @@ export type HorizonWebProviderProps = PropsWithChildren<
     switchLabels?: Partial<HorizonWebConfig['switchLabels']>;
     selectLabels?: Partial<HorizonWebConfig['selectLabels']>;
     pickerLabels?: Partial<HorizonWebConfig['pickerLabels']>;
+    cascaderLabels?: Partial<HorizonWebConfig['cascaderLabels']>;
     linkLabels?: Partial<HorizonWebConfig['linkLabels']>;
     breadcrumbLabels?: Partial<HorizonWebConfig['breadcrumbLabels']>;
     timelineLabels?: Partial<HorizonWebConfig['timelineLabels']>;
@@ -129,6 +136,7 @@ const defaultConfig: HorizonWebConfig = Object.freeze({
   switchLabels: { on: 'On', off: 'Off' },
   selectLabels: { placeholder: 'Please select', empty: 'No options', clear: 'Clear selection' },
   pickerLabels: { confirm: 'Confirm', cancel: 'Cancel' },
+  cascaderLabels: { placeholder: 'Please select', empty: 'No options', level: 'Level' },
   linkLabels: { loading: 'Loading' },
   breadcrumbLabels: { collapsed: 'Show collapsed breadcrumb items' },
   timelineLabels: { toggle: 'Toggle hidden timeline items' },
@@ -167,6 +175,7 @@ export function HorizonWebProvider({
   switchLabels,
   selectLabels,
   pickerLabels,
+  cascaderLabels,
   linkLabels,
   breadcrumbLabels,
   timelineLabels,
@@ -205,6 +214,10 @@ export function HorizonWebProvider({
       pickerLabels: {
         ...parent.pickerLabels,
         ...pickerLabels,
+      },
+      cascaderLabels: {
+        ...parent.cascaderLabels,
+        ...cascaderLabels,
       },
       linkLabels: {
         ...parent.linkLabels,
@@ -276,6 +289,7 @@ export function HorizonWebProvider({
       linkLabels,
       selectLabels,
       pickerLabels,
+      cascaderLabels,
       switchLabels,
       timelineLabels,
       stepsLabels,

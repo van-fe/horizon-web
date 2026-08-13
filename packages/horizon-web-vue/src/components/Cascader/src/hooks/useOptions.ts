@@ -95,7 +95,7 @@ export default function useOptions(
     optionList,
     optionListMap,
     optionsVersion,
-    hasOptions: computed(() => props.options.length > 0),
+    hasOptions: computed(() => (props.options?.length ?? 0) > 0),
     modifyOptionChildrenList,
   };
 }

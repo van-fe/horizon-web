@@ -1,4 +1,4 @@
-import { cloneVNode, defineComponent, Fragment, inject, provide, ref, toRefs } from 'vue';
+import { cloneVNode, defineComponent, Fragment, inject, provide, ref, toRefs, useId } from 'vue';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import {
   cls,
@@ -58,6 +58,8 @@ export default defineComponent({
     context: HorizonWebSetupContext<CascaderEmits, CascaderSlots, CascaderExposes>,
   ) {
     const classHelper = new ComponentClassBlock('cascader');
+    const treeId = `${useId()}-tree`;
+    const activeOptionId = ref<string>();
     const { emit, slots } = context;
     const {
       size,
@@ -212,6 +214,25 @@ export default defineComponent({
         hideInput={isHideInput.value}
         class={cls(classHelper.block, classHelper.is('inputable', inputable.value))}
         inputable={!isReadonly.value}
+        inputAttrs={{
+          ...props.inputAttrs,
+          role: 'combobox',
+          'aria-activedescendant':
+            popperVisible.value && activeOptionId.value ? activeOptionId.value : undefined,
+          'aria-autocomplete': useFilter.value ? 'list' : 'none',
+          'aria-controls': popperVisible.value ? treeId : undefined,
+          'aria-expanded': popperVisible.value,
+          'aria-haspopup': 'tree',
+        }}
+        panelInputAttrs={{
+          role: 'combobox',
+          'aria-activedescendant':
+            popperVisible.value && activeOptionId.value ? activeOptionId.value : undefined,
+          'aria-autocomplete': 'list',
+          'aria-controls': popperVisible.value ? treeId : undefined,
+          'aria-expanded': popperVisible.value,
+          'aria-haspopup': 'tree',
+        }}
         inputIsSearching={useFilter.value}
         inputStatus={!!nFormError?.value ? 'error' : inputStatusRef.value}
         disabled={isDisabled.value}
@@ -374,9 +395,11 @@ export default defineComponent({
             <div class={classHelper.e('panel-content')}>
               <CascaderPanels
                 ref={cascaderPanelsDomRef}
+                treeId={treeId}
                 inputValue={inputValue.value}
                 isFocusing={isCascaderFocus.value}
                 duringInput={!!inputValueMerged.value}
+                onActiveOptionIdChange={id => (activeOptionId.value = id)}
                 onSwitchPanelStatus={status => manualControlPopperVisible(status)}
                 onConfirm={confirmHandle}
                 style={{

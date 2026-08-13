@@ -1,4 +1,5 @@
-import { provide, watch } from 'vue';
+import { onBeforeUnmount, provide, watch } from 'vue';
+import { CascaderSelectionController } from '@aurora/core';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import type { CascaderProps } from '../composables/useProps';
 import type { CascaderEmits } from '../composables/useEmits';
@@ -11,6 +12,7 @@ import type {
   ModelValueSingleType,
 } from '../utils/types';
 import { HCascaderPickOptionInjectKey } from '../utils/injectKeys';
+import { toCoreCascaderOption } from '../utils/coreAdapter';
 
 export default function useOption(
   props: CascaderProps,
@@ -34,6 +36,8 @@ export default function useOption(
     ) => ModelValueSingleType | ModelValueSingleType[] | undefined;
   },
 ) {
+  const collapseTimers = new Set<ReturnType<typeof setTimeout>>();
+  const selectionController = new CascaderSelectionController();
   function pickOption(
     uuid: HCascaderUuidType,
     singleChooseHide = true,
@@ -45,6 +49,21 @@ export default function useOption(
     const optionData = options.optionListMap.value.get(uuid);
 
     options.setModified(optionData);
+
+    if (optionData && !singlePickToClear) {
+      selectionController.setOptions({
+        value: options.transformUuidsToModelValue(
+          Array.from(options.presetModelValueSet.value),
+          props.multiple,
+        ),
+        multiple: props.multiple,
+        multipleLimit: props.multipleLimit,
+        checkStrictly: props.checkStrictly,
+        needConfirm: props.needConfirm,
+      });
+      const status = selectionController.select(toCoreCascaderOption(optionData)).status;
+      if (['disabled', 'unselectable', 'branch', 'limit', 'unchanged'].includes(status)) return;
+    }
 
     if (optionData?.disabled || (!props.checkStrictly && optionData?.passingDisabled)) return;
     if (optionData?.selectable === false) return;
@@ -99,9 +118,11 @@ export default function useOption(
       context.emit('change', options.presetModelValueSet.value.has(uuid), optionData);
     }
 
-    setTimeout(() => {
+    const collapseTimer = setTimeout(() => {
+      collapseTimers.delete(collapseTimer);
       options.domRefs.tagGroupDomRef.value?.doCollapseCalculate();
     }, 500);
+    collapseTimers.add(collapseTimer);
   }
 
   function confirmHandle(hidePopper = true, isTriggerByConfirmClick = false) {
@@ -145,6 +166,11 @@ export default function useOption(
   );
 
   provide(HCascaderPickOptionInjectKey, pickOption);
+
+  onBeforeUnmount(() => {
+    for (const timer of collapseTimers) clearTimeout(timer);
+    collapseTimers.clear();
+  });
 
   return {
     pickOption,

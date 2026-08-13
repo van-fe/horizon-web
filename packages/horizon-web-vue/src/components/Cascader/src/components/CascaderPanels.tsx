@@ -3,10 +3,20 @@ import {
   defineComponent,
   inject,
   nextTick,
+  onBeforeUnmount,
   provide,
   ref,
   watch,
 } from 'vue';
+import {
+  CascaderDynamicLoadController,
+  reduceCascaderNavigation,
+  type CascaderNavigationKey,
+} from '@aurora/core';
+import {
+  createCascaderPanelNavigation,
+  type CascaderPanelNavigation,
+} from '@aurora/horizon-web-core';
 import { ComponentClassBlock, isBoolean, useNamespace } from '@aurora/utils';
 import CascaderPanel from './CascaderPanel';
 import {
@@ -31,6 +41,7 @@ import {
 } from '../utils/injectKeys';
 import type {
   HCascaderExtendOption,
+  HCascaderOption,
   HCascaderUuidType,
   ModelValueSingleType,
 } from '../utils/types';
@@ -38,6 +49,7 @@ import CascaderSearchPanel from './CascaderSearchPanel';
 import { clamp } from '@vueuse/core';
 import { useCascaderPanelsExposes } from '../composables/useExposes';
 import VLoading from '~/directives/v-loading/src';
+import { toCoreCascaderOption } from '../utils/coreAdapter';
 
 export default defineComponent({
   name: `${useNamespace()}CascaderPanels`,
@@ -62,8 +74,13 @@ export default defineComponent({
     isFocusing: {
       type: Boolean,
     },
+    treeId: {
+      type: String,
+      required: true,
+    },
   },
   emits: {
+    activeOptionIdChange: (id: string | undefined) => id === undefined || typeof id === 'string',
     mouseEnter: (evt: MouseEvent) => evt instanceof MouseEvent,
     switchPanelStatus: (status: boolean) => isBoolean(status),
     confirm: (hidePopper: boolean, isTriggerByConfirmClick: boolean) =>
@@ -86,9 +103,11 @@ export default defineComponent({
     const treeHelper = inject(HCascaderTreeHelperInjectKey)!;
 
     const wrapperDomRef = ref<HTMLDivElement | null>(null);
+    let panelNavigation: CascaderPanelNavigation | undefined;
 
     const activatedChildNode = ref<HCascaderExtendOption>();
     const loadingNodes = ref(new Set<HCascaderExtendOption>());
+    const dynamicLoadController = new CascaderDynamicLoadController<HCascaderOption>();
 
     watch(popperVisible, val => {
       if (val) {
@@ -114,6 +133,11 @@ export default defineComponent({
     watch(optionList, () => {
       refreshCurrentExpandedPanel();
     });
+    watch(
+      () => [parentProps.options, parentProps.fieldMap, parentProps.dynamicLoad] as const,
+      () => dynamicLoadController.invalidate(),
+      { deep: true },
+    );
 
     const defaultRenderPanels = computed(() => {
       const panels: HCascaderExtendOption[][] = [];
@@ -157,30 +181,31 @@ export default defineComponent({
 
     function shouldAsyncGetChildren(option: HCascaderExtendOption) {
       if (!option.isLeaf && option.transformedChildren.length === 0 && parentProps.dynamicLoad) {
+        const coreOption = toCoreCascaderOption(option);
         loadingNodes.value.add(option);
-
-        Promise.resolve(
-          parentProps.dynamicLoad?.({
-            level: option.level,
-            options: option.paths.map(curr => curr.originOption),
-            vnode: option.vNodeGetter?.(),
-          }),
-        )
-          .then(res => {
-            if (res) {
-              modifyChildrenList(option, res);
-
-              if (res.length) {
-                nextTick(() => {
-                  onClickChildNode(option);
-                });
-              } else {
-                expandPanel(option);
-              }
+        void dynamicLoadController
+          .load(coreOption, () =>
+            parentProps.dynamicLoad!({
+              level: option.level,
+              options: option.paths.map(curr => curr.originOption),
+              vnode: option.vNodeGetter?.(),
+            }),
+          )
+          .then(result => {
+            if (result.status !== 'loaded') return;
+            if (!Array.isArray(result.children)) return;
+            const children = result.children.slice() as HCascaderOption[];
+            modifyChildrenList(option, children);
+            if (children.length) {
+              onClickChildNode(option);
+            } else {
+              expandPanel(option);
             }
           })
           .finally(() => {
-            loadingNodes.value.delete(option);
+            if (!dynamicLoadController.pendingIds.includes(coreOption.id)) {
+              loadingNodes.value.delete(option);
+            }
           });
 
         return true;
@@ -335,6 +360,22 @@ export default defineComponent({
     );
     const activeItemsStack = ref<HCascaderExtendOption[]>([]);
 
+    watch(
+      wrapperDomRef,
+      container => {
+        panelNavigation?.destroy();
+        panelNavigation = container ? createCascaderPanelNavigation({ container }) : undefined;
+      },
+      { flush: 'post' },
+    );
+
+    watch(activeItemOption, option => {
+      emit('activeOptionIdChange', option ? `h-cascader-option-${option._uuid}` : undefined);
+      if (option) {
+        void nextTick(() => panelNavigation?.scrollOptionIntoView(String(option._uuid)));
+      }
+    });
+
     function resetActiveIndex() {
       activePanelIndex.value = 0;
       activeItemIndex.value = -1;
@@ -379,11 +420,7 @@ export default defineComponent({
           ? evt.key === 'ArrowUp'
             ? filteredVisibleOptions.length - 1
             : 0
-          : clamp(
-              index + (evt.key === 'ArrowUp' ? -1 : 1),
-              0,
-              filteredVisibleOptions.length - 1,
-            );
+          : clamp(index + (evt.key === 'ArrowUp' ? -1 : 1), 0, filteredVisibleOptions.length - 1);
 
       focusedFilterOption.value = filteredVisibleOptions.at(index);
     }
@@ -416,69 +453,40 @@ export default defineComponent({
         activePanelChildren.value?.findIndex(item => item._uuid === currentActiveNode?._uuid) ?? -1;
     }
 
-    function onArrowUpOrDown(evt: KeyboardEvent) {
-      const itemCount = activePanelChildren.value?.length ?? 0;
-      if (itemCount === 0) return;
-
-      activeItemIndex.value =
-        activeItemIndex.value === -1
-          ? evt.key === 'ArrowUp'
-            ? itemCount - 1
-            : 0
-          : clamp(
-              activeItemIndex.value + (evt.key === 'ArrowUp' ? -1 : 1),
-              0,
-              itemCount - 1,
-            );
-
-      if (activeItemOption.value) {
-        activeItemsStack.value.splice(activePanelIndex.value, 1, activeItemOption.value);
-      }
+    function findOptionByCoreId(id: number | undefined) {
+      if (id === undefined) return undefined;
+      return optionList.value.find(option => toCoreCascaderOption(option).id === id);
     }
 
-    function onArrowLeftOrRight(evt: KeyboardEvent) {
-      if (evt.key === 'ArrowRight') {
-        if (activeItemOption.value && !activeItemOption.value.isLeaf) {
-          expandChildren(activeItemOption.value, false);
-          if (activeItemOption.value.transformedChildren.length > 0) {
-            activeItemsStack.value.splice(activePanelIndex.value, 1, activeItemOption.value);
-            activePanelIndex.value = Math.min(
-              activePanelIndex.value + 1,
-              renderPanels.value.length - 1,
-            );
-            activeItemIndex.value = activePanelChildren.value?.length ? 0 : -1;
-            if (activeItemOption.value) {
-              activeItemsStack.value.splice(activePanelIndex.value, 1, activeItemOption.value);
-            }
-          }
+    function navigateNormalPanel(key: CascaderNavigationKey) {
+      const current = activeItemOption.value;
+      const result = reduceCascaderNavigation(
+        optionList.value
+          .filter(option => option.level === 0)
+          .map(option => toCoreCascaderOption(option)),
+        {
+          open: popperVisible.value,
+          activeId: current ? toCoreCascaderOption(current).id : undefined,
+        },
+        key,
+        parentProps.checkStrictly,
+      );
+
+      if (result.action === 'open') {
+        emit('switchPanelStatus', true);
+      } else if (result.action === 'close') {
+        emit('switchPanelStatus', false);
+      } else if (result.action === 'activate' && current) {
+        onClickChildNode(current, true, true);
+      } else if (result.action === 'focus') {
+        const target = findOptionByCoreId(result.state.activeId);
+        if (target) {
+          if (key === 'ArrowRight' && current) expandChildren(current, false);
+          focusOption(target._uuid);
         }
-      } else if (activePanelIndex.value > 0) {
-        activeItemsStack.value.pop();
-        activePanelIndex.value -= 1;
-        const parent = activeItemsStack.value.at(-1);
-        activeItemIndex.value =
-          activePanelChildren.value?.findIndex(item => item._uuid === parent?._uuid) ?? -1;
-      }
-    }
-
-    function onHomeOrEnd(evt: KeyboardEvent) {
-      const options = props.duringInput
-        ? visibleOptions.value.filter(
-            curr =>
-              !curr.disabled &&
-              (parentProps.checkStrictly || !curr.passingDisabled) &&
-              !curr.groupLabel,
-          )
-        : activePanelChildren.value;
-
-      if (!options?.length) return;
-
-      const index = evt.key === 'Home' ? 0 : options.length - 1;
-      if (props.duringInput) {
-        focusedFilterOption.value = options[index];
-      } else {
-        activeItemIndex.value = index;
-        activeItemsStack.value.splice(activePanelIndex.value, 1, options[index]);
+      } else if (key === 'ArrowRight' && current && !current.isLeaf) {
+        // A lazy branch has no Core children until its loader resolves.
+        expandChildren(current, false);
       }
     }
 
@@ -498,34 +506,41 @@ export default defineComponent({
 
       if (['ArrowDown', 'ArrowUp'].includes(evt.key)) {
         evt.preventDefault();
-
-        if (!popperVisible.value) {
-          emit('switchPanelStatus', true);
-          return;
-        }
-
         if (props.duringInput) {
-          onArrowUpOrDownOnSearchingResults(evt);
+          if (!popperVisible.value) emit('switchPanelStatus', true);
+          else onArrowUpOrDownOnSearchingResults(evt);
         } else {
-          onArrowUpOrDown(evt);
+          navigateNormalPanel(evt.key as CascaderNavigationKey);
         }
       }
 
       if (['ArrowLeft', 'ArrowRight'].includes(evt.key)) {
         evt.preventDefault();
         if (popperVisible.value && !props.duringInput) {
-          onArrowLeftOrRight(evt);
+          navigateNormalPanel(evt.key as CascaderNavigationKey);
         }
       }
 
       if (['Home', 'End'].includes(evt.key) && popperVisible.value) {
         evt.preventDefault();
-        onHomeOrEnd(evt);
+        if (props.duringInput) {
+          const options = visibleOptions.value.filter(
+            option =>
+              !option.disabled &&
+              (parentProps.checkStrictly || !option.passingDisabled) &&
+              !option.groupLabel,
+          );
+          focusedFilterOption.value = evt.key === 'Home' ? options[0] : options.at(-1);
+        } else {
+          navigateNormalPanel(evt.key as CascaderNavigationKey);
+        }
       }
 
       if (evt.key === 'Enter') {
         evt.preventDefault();
-        if (popperVisible.value && activeItemOption.value) {
+        if (!props.duringInput) {
+          navigateNormalPanel('Enter');
+        } else if (popperVisible.value && activeItemOption.value) {
           onClickChildNode(activeItemOption.value, true, true);
         } else {
           emit('switchPanelStatus', true);
@@ -533,7 +548,8 @@ export default defineComponent({
       }
 
       if (evt.key === 'Escape') {
-        emit('switchPanelStatus', false);
+        if (props.duringInput) emit('switchPanelStatus', false);
+        else navigateNormalPanel('Escape');
       }
     }
 
@@ -561,14 +577,30 @@ export default defineComponent({
     provide(HCascaderFocusedOptionInjectKey, activeItemOption);
     provide(HCascaderFocusedOptionsStackInjectKey, activeItemsStack);
 
+    onBeforeUnmount(() => {
+      panelNavigation?.destroy();
+      dynamicLoadController.destroy();
+      loadingNodes.value.clear();
+    });
+
     return () =>
       props.duringInput ? (
-        <CascaderSearchPanel onConfirm={() => emit('confirm', false, false)} />
+        <CascaderSearchPanel
+          treeId={props.treeId}
+          onConfirm={() => emit('confirm', false, false)}
+        />
       ) : (
         <div
           v-loading={parentProps.panelsLoading}
           ref={wrapperDomRef}
           class={classHelper.block}
+          id={props.treeId}
+          role="tree"
+          aria-multiselectable={parentProps.multiple || undefined}
+          aria-busy={loadingNodes.value.size > 0 || undefined}
+          aria-activedescendant={
+            activeItemOption.value ? `h-cascader-option-${activeItemOption.value._uuid}` : undefined
+          }
           onMouseenter={onMouseEnter}
         >
           {renderPanels.value.map((panelList, index) => (

@@ -4,17 +4,10 @@ import type {
   HCascaderExtendOption,
   HCascaderOption,
 } from './types';
+import { normalizeCascaderModelValue } from '@aurora/core';
 
 export function transformModelValue(modelValue: ModelValueType) {
-  if (Array.isArray(modelValue)) {
-    if (Array.isArray(modelValue[0])) {
-      return (modelValue as ModelValueSingleType[]).map(valuePath => valuePath.slice());
-    } else if (modelValue.length > 0) {
-      return [(modelValue as ModelValueSingleType).slice()];
-    }
-  }
-
-  return [];
+  return normalizeCascaderModelValue(modelValue) as ModelValueSingleType[];
 }
 
 export function getTreeDataOriginData(treeDataList: HCascaderExtendOption[], level = 0) {

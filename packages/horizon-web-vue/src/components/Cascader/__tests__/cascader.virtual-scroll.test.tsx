@@ -12,6 +12,28 @@ import {
 } from '../src/utils/injectKeys';
 
 describe('Cascader virtual scroll', () => {
+  test('renders the default empty-panel message', () => {
+    const Host = defineComponent({
+      setup() {
+        provide(HCascaderPropsInjectKey, {
+          maxHeight: 300,
+          useBuildInPanelFilter: false,
+          useVirtualScroll: false,
+          emptyText: 'No data',
+        } as never);
+        provide(HCascaderEmitsInjectKey, (() => undefined) as never);
+        provide(HCascaderSlotsInjectKey, {} as never);
+        provide(HCascaderPopperVisibleInjectKey, ref(true));
+        provide(HCascaderTreeHelperInjectKey, {
+          getOptionValue: (option: Record<string, unknown>, key: string) => option[key],
+        } as never);
+        return () => <CascaderPanel list={[]} />;
+      },
+    });
+    const wrapper = mount(Host);
+    expect(wrapper.get('.h-cascader-panel__empty').text()).toBe('No data');
+  });
+
   test('renders string and render-function group labels', async () => {
     const list = [
       { _uuid: 'group-1', groupLabel: 'components' },

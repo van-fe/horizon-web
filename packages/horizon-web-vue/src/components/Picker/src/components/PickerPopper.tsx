@@ -6,7 +6,7 @@ import {
   useNamespace,
   safelyGetEventTarget,
 } from '@aurora/utils';
-import { defineComponent, inject, ref, watch } from 'vue';
+import { computed, defineComponent, inject, ref, watch } from 'vue';
 import {
   HPickerDomRefInjectKey,
   HPickerEmitsInjectKey,
@@ -24,6 +24,7 @@ import useLocaleLang from '~/utils/useLocaleLang';
 import HButton from '~/components/Button/src/Button';
 import HInput from '~/components/Input/src/Input';
 import { unrefElement } from '@vueuse/core';
+import { sanitizePickerNativeInputAttrs } from '../utils/nativeInputAttrs';
 
 export default defineComponent({
   name: `${useNamespace()}PickerPopper`,
@@ -64,6 +65,9 @@ export default defineComponent({
     const pickerStatus = inject(HPickerStatusInjectKey)!;
     const pickerDomRef = inject(HPickerDomRefInjectKey)!;
     const popContentDomRef = inject(HPickerPopContentDomRefInjectKey)!;
+    const panelNativeInputAttrs = computed(() =>
+      sanitizePickerNativeInputAttrs(parentProps.panelInputAttrs),
+    );
 
     watch(inputValue, val => {
       parentEmits('update:modelValue', val);
@@ -172,6 +176,7 @@ export default defineComponent({
                   }}
                 >
                   <HInput
+                    {...panelNativeInputAttrs.value}
                     ref={buildInInputDomRef}
                     v-model={inputValue.value}
                     placeholder={parentProps.panelInputPlaceholder}

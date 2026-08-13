@@ -38,6 +38,7 @@ Picker 是选择类控件的组合基础，统一管理触发器、面板状态�
 | `portalContainer` | `PortalTarget` | `'body'` | Portal 目标容器 |
 | `fitInputWidth` | `boolean \| 'fit-content'` | `true` | 面板宽度策略 |
 | `inputStyle` | `'normal' \| 'emphasize' \| 'no-border'` | `'normal'` | 触发器视觉变体 |
+| `inputProps` | `InputHTMLAttributes<HTMLInputElement>` | — | 默认输入框的原生 ARIA 与数据属性；Picker 管理的值、事件处理器和 ref 不会被覆盖 |
 | `inputStatus` | `'normal' \| 'error' \| 'warning' \| 'success'` | `'normal'` | 校验状态 |
 | `panelStatus` | `'normal' \| 'loading' \| 'empty'` | `'normal'` | 面板内容状态 |
 | `needConfirm` | `boolean` | `false` | 显示确认操作区 |

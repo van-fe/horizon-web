@@ -40,6 +40,7 @@ import useOverflow from '~/utils/useOverflow';
 import type { PickerFitContentInputExposes } from '../composables/useExposes';
 import { usePickerInputExposes } from '../composables/useExposes';
 import PickerPureInput from './PickerPureInput';
+import { sanitizePickerNativeInputAttrs } from '../utils/nativeInputAttrs';
 
 export default defineComponent({
   name: `${useNamespace()}PickerInput`,
@@ -91,6 +92,7 @@ export default defineComponent({
     const currentInputDomRef = computed(() =>
       parentProps.useFitContentInput ? fitContentInputDomRef.value : inputDomRef.value,
     );
+    const nativeInputAttrs = computed(() => sanitizePickerNativeInputAttrs(parentProps.inputAttrs));
 
     const size = useSize(toRef(parentProps, 'size'), 'medium');
 
@@ -355,6 +357,7 @@ export default defineComponent({
                     >
                       {parentProps.useFitContentInput ? (
                         <PickerFitContentInput
+                          {...nativeInputAttrs.value}
                           data-focus-visible-proxy=""
                           v-show={!parentProps.hideInput}
                           v-model={inputValue.value}
@@ -390,6 +393,7 @@ export default defineComponent({
                         />
                       ) : (
                         <PickerPureInput
+                          {...nativeInputAttrs.value}
                           data-focus-visible-proxy=""
                           v-show={!parentProps.hideInput}
                           ref={inputDomRef}
