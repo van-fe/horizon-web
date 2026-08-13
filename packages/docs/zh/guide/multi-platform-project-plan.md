@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B38 QRCode 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B39 CommandPalette 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -871,6 +871,19 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DOC-B38-001 | Done | Vue 文档补齐 Props/Events/Slots；React 中英文页面、3 个独立 TSX 示例与双语侧边栏入口完成，保持 renderer 隔离 |
 | PKG-B38-001 | Done | `qrcode` 依赖由 Vue renderer 迁到 Horizon Web Core；未新增旧组件包兼容入口、alias、re-export 或发布项 |
 | QA-B38-001 | Done | Core 269 项、Theme 7 项、Web Core Node 22/Chromium 69、React Chromium 320、Vue Chromium 2380 项（2379 通过、1 项既有预期失败）全部通过；QRCode 定向真实 Chromium 为 Vue 8 项、React 4 项，两个 renderer 的组件源码四项覆盖率均为 100%；五包构建、72 组双 renderer 契约、文档站、Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界和旧组件包名移除约束通过 |
+
+#### M6-B39 CommandPalette 实施记录（2026-08-13，已完成）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B39-001 | Done | CommandPalette 公共命令模型、props、默认值、校验器、事件、内容区域、命令、过滤/键盘算法与异步去重控制器进入 `@aurora/core` |
+| WEB-B39-001 | Done | Command/Ctrl + K 全局快捷键注册、精确组合键判定与卸载清理进入 Horizon Web Core |
+| VUE-B39-001 | Done | Vue CommandPalette 消费公共契约和控制器，保留 `visible`、emits、slots 与本地化，新增 exposes、异步错误、ARIA 和唯一列表标识 |
+| REACT-B39-001 | Done | React CommandPalette 支持受控/非受控打开、Provider 文案、异步命令、自定义过滤/渲染、ARIA 与 ref 命令 |
+| DS-B39-001 | Done | CommandPalette canonical Sass 与变量进入 `@aurora/theme`，Vue 使用薄代理，React 加载同源样式 |
+| DOC-B39-001 | Done | Vue/React 中英文页面、独立 API 说明、React 三组 TSX 示例和独立侧边栏入口完成，无跨 renderer 映射文案 |
+| PKG-B39-001 | Done | 未新增旧组件包兼容入口、alias、re-export、resolver fallback 或发布项 |
+| QA-B39-001 | Done | Core 272 项、Theme 8 项、Web Core Node 22/Chromium 70、React Chromium 326、Vue Chromium 2383 项（2382 通过、1 项既有预期失败）全部通过；CommandPalette 定向真实 Chromium 为 Vue 10 项、React 6 项，Vue 组件源码覆盖率 Statements 98.88%、Branches 97.22%、Functions 97.56%、Lines 100%，React 四项均为 100%；五包构建、73 组双 renderer 契约、文档站、Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界和旧组件包名移除约束通过 |
 
 ### 批次 C：浮层与容器
 

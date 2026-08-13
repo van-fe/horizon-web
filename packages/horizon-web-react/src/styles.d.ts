@@ -27,6 +27,7 @@ declare module '@aurora/theme/styles/button';
 declare module '@aurora/theme/styles/card';
 declare module '@aurora/theme/styles/checkbox';
 declare module '@aurora/theme/styles/collapse';
+declare module '@aurora/theme/styles/command-palette';
 declare module '@aurora/theme/styles/count';
 declare module '@aurora/theme/styles/container';
 declare module '@aurora/theme/styles/divider';

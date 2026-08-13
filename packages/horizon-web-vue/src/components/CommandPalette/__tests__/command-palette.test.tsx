@@ -1,9 +1,17 @@
 import { mount } from '@vue/test-utils';
 import { describe, expect, test, vi } from 'vitest';
 import { defineComponent, nextTick, reactive } from 'vue';
-import HCommandPalette from '../src/CommandPalette';
+import HCommandPalette from '..';
+import { useCommandPaletteProps } from '../src/composables/useProps';
 import { useCommandPalette } from '../src/hooks/useCommandPalette';
 describe('CommandPalette', () => {
+  test('publishes shared defaults and validators', () => {
+    expect((useCommandPaletteProps.commands.default as () => unknown[])()).toEqual([]);
+    expect(useCommandPaletteProps.commands.validator?.([{ id: 'open', label: 'Open' }])).toBe(true);
+    expect(useCommandPaletteProps.commands.validator?.([{ label: 'Missing id' }])).toBe(false);
+    expect(useCommandPaletteProps.filter.validator?.(() => true)).toBe(true);
+    expect(useCommandPaletteProps.filter.validator?.('invalid')).toBe(false);
+  });
   test('filters and executes through the hook', async () => {
     const perform = vi.fn();
     const emit = vi.fn();
@@ -12,7 +20,12 @@ describe('CommandPalette', () => {
       defineComponent({
         setup() {
           state = useCommandPalette(
-            reactive({ visible: true, hotkey: false, closeOnSelect: true, commands: [{ id: 'save', label: 'Save', perform }] }) as any,
+            reactive({
+              visible: true,
+              hotkey: false,
+              closeOnSelect: true,
+              commands: [{ id: 'save', label: 'Save', perform }],
+            }) as any,
             emit,
           );
           return () => null;
@@ -126,13 +139,14 @@ describe('CommandPalette', () => {
     input.dispatchEvent(new Event('input', { bubbles: true }));
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
     await nextTick();
-    expect(document.body.querySelectorAll('[role="option"]')[1].getAttribute('aria-selected')).toBe(
+    expect(document.body.querySelectorAll('[role="option"]')[0].getAttribute('aria-selected')).toBe(
       'true',
     );
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     await nextTick();
+    expect(first).toHaveBeenCalledOnce();
     expect(disabled).not.toHaveBeenCalled();
-    expect(onSelect).not.toHaveBeenCalled();
+    expect(onSelect).toHaveBeenCalledWith(expect.objectContaining({ id: 'alpha' }));
 
     input.value = 'alp';
     input.dispatchEvent(new Event('input', { bubbles: true }));
@@ -140,7 +154,7 @@ describe('CommandPalette', () => {
     expect(filter).toHaveBeenCalledWith('alp', expect.objectContaining({ id: 'alpha' }));
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     await nextTick();
-    expect(first).toHaveBeenCalledOnce();
+    expect(first).toHaveBeenCalledTimes(2);
     expect(onSelect).toHaveBeenCalledWith(expect.objectContaining({ id: 'alpha' }));
     expect(wrapper.emitted('update:visible')).toBeUndefined();
     wrapper.unmount();
@@ -152,11 +166,15 @@ describe('CommandPalette', () => {
       props: { visible: false, commands: [], hotkey: true, 'onUpdate:visible': onUpdate },
     });
 
-    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', ctrlKey: true, bubbles: true }));
+    document.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'k', ctrlKey: true, bubbles: true }),
+    );
     expect(onUpdate).toHaveBeenCalledWith(true);
 
     await wrapper.setProps({ hotkey: false });
-    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', ctrlKey: true, bubbles: true }));
+    document.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'k', ctrlKey: true, bubbles: true }),
+    );
     expect(onUpdate).toHaveBeenCalledOnce();
   });
 
@@ -211,5 +229,86 @@ describe('CommandPalette', () => {
     expect(input.value).toBe('');
     expect(document.activeElement).toBe(input);
     wrapper.unmount();
+  });
+
+  test('deduplicates pending execution and reports rejection without closing', async () => {
+    let release!: () => void;
+    const perform = vi.fn(() => new Promise<void>(resolve => (release = resolve)));
+    const onSelect = vi.fn();
+    const onError = vi.fn();
+    const wrapper = mount(HCommandPalette, {
+      props: {
+        visible: true,
+        commands: [{ id: 'sync', label: 'Synchronize', perform }],
+        onSelect,
+        onError,
+      },
+      attachTo: document.body,
+    });
+    await nextTick();
+    const option = document.body.querySelector('[role="option"]') as HTMLButtonElement;
+    option.click();
+    option.click();
+    await nextTick();
+    expect(perform).toHaveBeenCalledOnce();
+    expect(option.getAttribute('aria-busy')).toBe('true');
+    release();
+    await vi.waitFor(() => expect(onSelect).toHaveBeenCalledOnce());
+    expect(wrapper.emitted('update:visible')?.at(-1)).toEqual([false]);
+    const closeEvents = wrapper.emitted('update:visible')?.length ?? 0;
+
+    const error = new Error('failed');
+    await wrapper.setProps({
+      visible: true,
+      commands: [{ id: 'bad', label: 'Bad command', perform: () => Promise.reject(error) }],
+    });
+    await nextTick();
+    (document.body.querySelector('[role="option"]') as HTMLButtonElement).click();
+    await vi.waitFor(() =>
+      expect(onError).toHaveBeenCalledWith(error, expect.objectContaining({ id: 'bad' })),
+    );
+    expect(wrapper.emitted('update:visible')).toHaveLength(closeEvents);
+    wrapper.unmount();
+  });
+
+  test('exposes open close and focus while keeping ids unique across instances', async () => {
+    const firstUpdate = vi.fn();
+    const first = mount(HCommandPalette, {
+      props: {
+        visible: true,
+        commands: [{ id: 'one', label: 'One' }],
+        'onUpdate:visible': firstUpdate,
+      },
+      attachTo: document.body,
+    });
+    const second = mount(HCommandPalette, {
+      props: { visible: true, commands: [{ id: 'two', label: 'Two' }] },
+      attachTo: document.body,
+    });
+    await nextTick();
+    await nextTick();
+    const inputs = Array.from(
+      document.body.querySelectorAll<HTMLInputElement>('[role="combobox"]'),
+    );
+    const lists = Array.from(document.body.querySelectorAll<HTMLElement>('[role="listbox"]'));
+    expect(new Set(lists.map(list => list.id)).size).toBe(2);
+    expect(
+      inputs.every(
+        input =>
+          input.getAttribute('aria-controls') ===
+          input.closest('.h-dialog')?.querySelector('[role="listbox"]')?.id,
+      ),
+    ).toBe(true);
+    expect(inputs[0].getAttribute('aria-activedescendant')).toBe(
+      lists[0].querySelector('[role="option"]')?.id,
+    );
+
+    second.unmount();
+    (first.vm as any).close();
+    (first.vm as any).open();
+    (first.vm as any).focus();
+    expect(firstUpdate.mock.calls).toEqual([[false], [true]]);
+    expect(document.activeElement).toBe(inputs[0]);
+    first.unmount();
   });
 });

@@ -15,6 +15,7 @@
 @use './components/cascader/variables' as cascader;
 @use './components/checkbox/variables' as checkbox;
 @use './components/collapse/variables' as collapse;
+@use './components/command-palette/variables' as command-palette;
 @use './components/count/variables' as count;
 @use './components/container/variables' as container;
 @use './components/divider/variables' as divider;
@@ -75,6 +76,7 @@ $values: function.map-merge-multi(
   function.flatten-variables(cascader.$values, 'cascader'),
   function.flatten-variables(checkbox.$values, 'checkbox'),
   function.flatten-variables(collapse.$values, 'collapse'),
+  function.flatten-variables(command-palette.$values, 'command-palette'),
   function.flatten-variables(count.$values, 'count'),
   function.flatten-variables(container.$values, 'container'),
   function.flatten-variables(divider.$values, 'divider'),

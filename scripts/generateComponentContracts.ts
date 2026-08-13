@@ -15,6 +15,7 @@ import {
   checkboxManifest,
   collapseItemManifest,
   collapseManifest,
+  commandPaletteManifest,
   containerManifest,
   countManifest,
   createReactComponentManifest,
@@ -93,6 +94,7 @@ const manifests = [
   checkboxManifest,
   collapseManifest,
   collapseItemManifest,
+  commandPaletteManifest,
   containerManifest,
   headerManifest,
   asideManifest,
@@ -269,6 +271,14 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
       ],
     },
     regions: { rename: { content: 'default' } },
+  },
+  CommandPalette: {
+    props: { rename: { open: 'visible' }, omit: ['defaultOpen'] },
+    events: {
+      rename: { openChange: 'update:visible' },
+      override: { openChange: { type: 'boolean' } },
+    },
+    regions: { rename: { command: 'command', empty: 'empty' } },
   },
   CollapseItem: { regions: { rename: { content: 'default' } } },
   Divider: {
@@ -1238,6 +1248,17 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     regions: { rename: { default: 'children' } },
   },
   Card: { regions: { rename: { content: 'children' } } },
+  CommandPalette: {
+    events: {
+      rename: {
+        openChange: 'onOpenChange',
+        select: 'onSelect',
+        search: 'onSearch',
+        error: 'onError',
+      },
+    },
+    regions: { rename: { command: 'renderCommand', empty: 'renderEmpty' } },
+  },
   Container: { regions: { rename: { content: 'children' } } },
   Header: { regions: { rename: { content: 'children' } } },
   Aside: { regions: { rename: { content: 'children' } } },

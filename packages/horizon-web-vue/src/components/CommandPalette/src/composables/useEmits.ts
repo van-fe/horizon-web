@@ -1,3 +1,4 @@
+import type { CommandPaletteEventMap, ComponentEventValidators } from '@aurora/core';
 import type { CommandPaletteItem } from './useProps';
 export const useCommandPaletteEmits = {
   /** 可见状态变化 @en Emitted when visibility changes. @param value 是否显示 @paramEn value Whether visible. */ 'update:visible':
@@ -6,5 +7,11 @@ export const useCommandPaletteEmits = {
     (command: CommandPaletteItem) => Boolean(command),
   /** 搜索内容变化 @en Emitted when search changes. @param query 查询内容 @paramEn query Search query. */ search:
     (query: string) => typeof query === 'string',
-};
+  /** 命令执行失败 @en Emitted when command execution fails. @param error 错误 @paramEn error Error. @param command 命令 @paramEn command Command. */ error:
+    (error: unknown, command: CommandPaletteItem) => Boolean(error) && Boolean(command),
+} satisfies ComponentEventValidators<
+  Omit<CommandPaletteEventMap<CommandPaletteItem>, 'openChange'> & {
+    'update:visible': [visible: boolean];
+  }
+>;
 export type CommandPaletteEmits = typeof useCommandPaletteEmits;

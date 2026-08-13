@@ -90,6 +90,7 @@ const reactSidebar = [
       { text: 'Empty', link: 'components/Empty' },
       { text: 'Progress', link: 'components/Progress' },
       { text: 'QRCode', link: 'components/QRCode' },
+      { text: 'CommandPalette', link: 'components/CommandPalette' },
       { text: 'Result', link: 'components/Result' },
       { text: 'Skeleton', link: 'components/Skeleton' },
       { text: 'Spin', link: 'components/Spin' },

@@ -105,6 +105,11 @@ export interface HorizonWebConfig {
     expired: string;
     refresh: string;
   };
+  commandPaletteLabels: {
+    dialog: string;
+    placeholder: string;
+    empty: string;
+  };
 }
 
 export type HorizonWebProviderProps = PropsWithChildren<
@@ -122,6 +127,7 @@ export type HorizonWebProviderProps = PropsWithChildren<
     | 'paginationLabels'
     | 'pageHeaderLabels'
     | 'qrCodeLabels'
+    | 'commandPaletteLabels'
     | 'popconfirmLabels'
     | 'selectLabels'
     | 'pickerLabels'
@@ -153,6 +159,7 @@ export type HorizonWebProviderProps = PropsWithChildren<
     spinLabels?: Partial<HorizonWebConfig['spinLabels']>;
     pageHeaderLabels?: Partial<HorizonWebConfig['pageHeaderLabels']>;
     qrCodeLabels?: Partial<HorizonWebConfig['qrCodeLabels']>;
+    commandPaletteLabels?: Partial<HorizonWebConfig['commandPaletteLabels']>;
   }
 >;
 
@@ -204,6 +211,11 @@ const defaultConfig: HorizonWebConfig = Object.freeze({
   spinLabels: { loading: 'Loading' },
   pageHeaderLabels: { back: 'Back' },
   qrCodeLabels: { code: 'QR code', expired: 'QR code expired', refresh: 'Refresh' },
+  commandPaletteLabels: {
+    dialog: 'Command palette',
+    placeholder: 'Type a command…',
+    empty: 'No commands found',
+  },
 });
 
 export const HorizonWebContext = createContext<HorizonWebConfig>(defaultConfig);
@@ -237,6 +249,7 @@ export function HorizonWebProvider({
   spinLabels,
   pageHeaderLabels,
   qrCodeLabels,
+  commandPaletteLabels,
   children,
 }: HorizonWebProviderProps): ReactElement {
   const parent = useContext(HorizonWebContext);
@@ -334,6 +347,10 @@ export function HorizonWebProvider({
         ...parent.qrCodeLabels,
         ...qrCodeLabels,
       },
+      commandPaletteLabels: {
+        ...parent.commandPaletteLabels,
+        ...commandPaletteLabels,
+      },
     }),
     [
       namespace,
@@ -365,6 +382,7 @@ export function HorizonWebProvider({
       spinLabels,
       pageHeaderLabels,
       qrCodeLabels,
+      commandPaletteLabels,
     ],
   );
 

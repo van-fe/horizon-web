@@ -1,0 +1,24 @@
+@use '../../mixins';
+
+$values: (
+  size: (
+    list-max-height: min(420px, 55vh),
+  ),
+  color: (
+    text: #{mixins.css-variable('text-primary')},
+    secondary: #{mixins.css-variable('text-secondary')},
+  ),
+  background: (
+    active: #{mixins.css-variable('bg-hover')},
+  ),
+  border-color: #{mixins.css-variable('border-default')},
+  border-radius: #{mixins.css-variable('radius-m')},
+  spacing: (
+    input: 14px #{mixins.css-variable('spacing-4')},
+    list: #{mixins.css-variable('spacing-2')},
+    item: 10px #{mixins.css-variable('spacing-3')},
+    item-gap: #{mixins.css-variable('spacing-4')},
+    metadata-gap: #{mixins.css-variable('spacing-1')},
+    empty: #{mixins.css-variable('spacing-7')} #{mixins.css-variable('spacing-4')},
+  ),
+);

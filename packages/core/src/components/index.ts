@@ -15,6 +15,7 @@ export * from './Card';
 export * from './Cascader';
 export * from './Checkbox';
 export * from './Collapse';
+export * from './CommandPalette';
 export * from './Count';
 export * from './Divider';
 export * from './Descriptions';

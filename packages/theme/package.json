@@ -54,6 +54,8 @@
     "./styles/checkbox-variables": "./styles/components/checkbox/variables.scss",
     "./styles/collapse": "./styles/components/collapse/index.scss",
     "./styles/collapse-variables": "./styles/components/collapse/variables.scss",
+    "./styles/command-palette": "./styles/components/command-palette/index.scss",
+    "./styles/command-palette-variables": "./styles/components/command-palette/variables.scss",
     "./styles/count": "./styles/components/count/index.scss",
     "./styles/count-variables": "./styles/components/count/variables.scss",
     "./styles/container": "./styles/components/container/index.scss",
