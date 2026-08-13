@@ -55,6 +55,7 @@ import {
   popconfirmManifest,
   popoverManifest,
   progressManifest,
+  qrCodeManifest,
   rateManifest,
   radioManifest,
   resultManifest,
@@ -130,6 +131,7 @@ const manifests = [
   popoverManifest,
   popContentManifest,
   progressManifest,
+  qrCodeManifest,
   rateManifest,
   radioManifest,
   resultManifest,
@@ -658,6 +660,9 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     regions: { rename: { previous: 'prev' } },
   },
   Progress: { regions: { rename: { label: 'default' } } },
+  QRCode: {
+    regions: { rename: { expired: 'expired' } },
+  },
   Rate: {
     props: {
       rename: { value: 'modelValue', readOnly: 'readonly' },
@@ -1549,6 +1554,10 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     },
   },
   Progress: { regions: { rename: { label: 'children' } } },
+  QRCode: {
+    events: { rename: { refresh: 'onRefresh', error: 'onError' } },
+    regions: { rename: { expired: 'expiredContent' } },
+  },
   Rate: {
     events: { rename: { change: 'onChange', blur: 'onBlur' } },
     regions: { rename: { icon: 'renderIcon' } },

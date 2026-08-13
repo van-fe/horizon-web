@@ -105,6 +105,8 @@
     "./styles/mixins/*": "./styles/mixins/*.scss",
     "./styles/progress": "./styles/components/progress/index.scss",
     "./styles/progress-variables": "./styles/components/progress/variables.scss",
+    "./styles/qr-code": "./styles/components/qr-code/index.scss",
+    "./styles/qr-code-variables": "./styles/components/qr-code/variables.scss",
     "./styles/rate": "./styles/components/rate/index.scss",
     "./styles/rate-variables": "./styles/components/rate/variables.scss",
     "./styles/radio": "./styles/components/radio/index.scss",

@@ -38,6 +38,7 @@
 @use './components/popover/variables' as popover;
 @use './components/popconfirm/variables' as popconfirm;
 @use './components/progress/variables' as progress;
+@use './components/qr-code/variables' as qr-code;
 @use './components/rate/variables' as rate;
 @use './components/radio/variables' as radio;
 @use './components/result/variables' as result;
@@ -97,6 +98,7 @@ $values: function.map-merge-multi(
   function.flatten-variables(popover.$values, 'popover'),
   function.flatten-variables(popconfirm.$values, 'popconfirm'),
   function.flatten-variables(progress.$values, 'progress'),
+  function.flatten-variables(qr-code.$values, 'qr-code'),
   function.flatten-variables(rate.$values, 'rate'),
   function.flatten-variables(radio.$values, 'radio'),
   function.flatten-variables(result.$values, 'result'),

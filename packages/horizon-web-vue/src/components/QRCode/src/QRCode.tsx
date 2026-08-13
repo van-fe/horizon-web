@@ -26,7 +26,12 @@ export default defineComponent({
         style={{ width: `${props.size}px`, height: `${props.size}px` }}
         aria-busy={state.loading.value}
       >
-        <div class={c.e('canvas')} innerHTML={state.svg.value} />
+        <div
+          aria-label={props.ariaLabel || props.value}
+          class={c.e('canvas')}
+          innerHTML={state.svg.value}
+          role="img"
+        />
         {props.icon && !props.expired && (
           <img
             class={c.e('icon')}
@@ -36,12 +41,12 @@ export default defineComponent({
           />
         )}
         {state.loading.value && (
-          <div class={c.e('mask')}>
+          <div class={c.e('mask')} role="status">
             <HSpin size="small" />
           </div>
         )}
         {props.expired && (
-          <div class={c.e('mask')}>
+          <div class={c.e('mask')} role="status">
             {slots.expired?.() ?? (
               <>
                 <span>{props.expiredText || expired.value}</span>

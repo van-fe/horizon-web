@@ -83,7 +83,7 @@ export function createAnchorScrollController(target: HTMLElement | Window): Anch
   const win = document.defaultView ?? window;
   let frameOne: number | undefined;
   let frameTwo: number | undefined;
-  let settleTimer: ReturnType<typeof setTimeout> | undefined;
+  let settleTimer: number | undefined;
   let onScroll: (() => void) | undefined;
   let destroyed = false;
 

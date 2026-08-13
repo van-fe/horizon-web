@@ -38,6 +38,7 @@ export * from './Pagination';
 export * from './Popover';
 export * from './Popconfirm';
 export * from './Progress';
+export * from './QRCode';
 export * from './Result';
 export * from './Rate';
 export * from './Radio';

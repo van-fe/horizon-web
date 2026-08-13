@@ -100,6 +100,11 @@ export interface HorizonWebConfig {
   pageHeaderLabels: {
     back: string;
   };
+  qrCodeLabels: {
+    code: string;
+    expired: string;
+    refresh: string;
+  };
 }
 
 export type HorizonWebProviderProps = PropsWithChildren<
@@ -116,6 +121,7 @@ export type HorizonWebProviderProps = PropsWithChildren<
     | 'linkLabels'
     | 'paginationLabels'
     | 'pageHeaderLabels'
+    | 'qrCodeLabels'
     | 'popconfirmLabels'
     | 'selectLabels'
     | 'pickerLabels'
@@ -146,6 +152,7 @@ export type HorizonWebProviderProps = PropsWithChildren<
     inputNumberLabels?: Partial<HorizonWebConfig['inputNumberLabels']>;
     spinLabels?: Partial<HorizonWebConfig['spinLabels']>;
     pageHeaderLabels?: Partial<HorizonWebConfig['pageHeaderLabels']>;
+    qrCodeLabels?: Partial<HorizonWebConfig['qrCodeLabels']>;
   }
 >;
 
@@ -196,6 +203,7 @@ const defaultConfig: HorizonWebConfig = Object.freeze({
   },
   spinLabels: { loading: 'Loading' },
   pageHeaderLabels: { back: 'Back' },
+  qrCodeLabels: { code: 'QR code', expired: 'QR code expired', refresh: 'Refresh' },
 });
 
 export const HorizonWebContext = createContext<HorizonWebConfig>(defaultConfig);
@@ -228,6 +236,7 @@ export function HorizonWebProvider({
   inputNumberLabels,
   spinLabels,
   pageHeaderLabels,
+  qrCodeLabels,
   children,
 }: HorizonWebProviderProps): ReactElement {
   const parent = useContext(HorizonWebContext);
@@ -321,6 +330,10 @@ export function HorizonWebProvider({
         ...parent.pageHeaderLabels,
         ...pageHeaderLabels,
       },
+      qrCodeLabels: {
+        ...parent.qrCodeLabels,
+        ...qrCodeLabels,
+      },
     }),
     [
       namespace,
@@ -351,6 +364,7 @@ export function HorizonWebProvider({
       inputNumberLabels,
       spinLabels,
       pageHeaderLabels,
+      qrCodeLabels,
     ],
   );
 

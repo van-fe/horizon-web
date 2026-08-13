@@ -1,32 +1,32 @@
-import { ref, watch } from 'vue';
-import QRCode from 'qrcode';
+import { getCurrentInstance, onBeforeUnmount, ref, watch } from 'vue';
+import { QRCodeGenerationController, resolveQRCodeRenderOptions } from '@aurora/core';
+import { generateQRCodeSvg } from '@aurora/horizon-web-core';
 import type { QRCodeProps } from '../composables/useProps';
 
-export function useQRCode(props: QRCodeProps, emit: (event: string, ...args: any[]) => void) {
+export type QRCodeSvgGenerator = typeof generateQRCodeSvg;
+
+export function useQRCode(
+  props: QRCodeProps,
+  emit: (event: string, ...args: any[]) => void,
+  generate: QRCodeSvgGenerator = generateQRCodeSvg,
+) {
   const svg = ref('');
   const loading = ref(false);
   const error = ref<unknown>();
-  let request = 0;
+  const controller = new QRCodeGenerationController();
+
   async function render() {
-    const id = ++request;
     loading.value = true;
     error.value = undefined;
-    try {
-      const result = await QRCode.toString(props.value || ' ', {
-        type: 'svg',
-        width: props.size,
-        margin: props.margin,
-        errorCorrectionLevel: props.level,
-        color: { dark: props.color, light: props.background },
-      });
-      if (id === request) svg.value = result;
-    } catch (reason) {
-      if (id === request) {
-        error.value = reason;
-        emit('error', reason);
-      }
-    } finally {
-      if (id === request) loading.value = false;
+    const options = resolveQRCodeRenderOptions(props);
+    const result = await controller.render(() => generate(options));
+    if (result.status === 'rendered') {
+      svg.value = result.svg;
+      loading.value = false;
+    } else if (result.status === 'rejected') {
+      error.value = result.error;
+      loading.value = false;
+      emit('error', result.error);
     }
   }
   watch(
@@ -34,5 +34,7 @@ export function useQRCode(props: QRCodeProps, emit: (event: string, ...args: any
     render,
     { immediate: true },
   );
+
+  if (getCurrentInstance()) onBeforeUnmount(() => controller.destroy());
   return { svg, loading, error, render };
 }

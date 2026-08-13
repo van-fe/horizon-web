@@ -1,0 +1,23 @@
+@use '../../mixins';
+
+$values: (
+  background: (
+    root: #{mixins.css-variable('bg-default')},
+    icon: #{mixins.css-variable('bg-default')},
+    mask: rgb(255, 255, 255, 88%),
+  ),
+  color: (
+    mask: #{mixins.css-variable('text-primary')},
+  ),
+  border-radius: (
+    root: #{mixins.css-variable('radius-m')},
+    icon: #{mixins.css-variable('radius-s')},
+  ),
+  border: (
+    icon: 4px solid #{mixins.css-variable('qr-code', 'background', 'icon')},
+  ),
+  spacing: (
+    mask-gap: #{mixins.css-variable('spacing-3')},
+  ),
+  blur: 2px,
+);

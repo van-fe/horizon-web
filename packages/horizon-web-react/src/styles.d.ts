@@ -33,6 +33,7 @@ declare module '@aurora/theme/styles/divider';
 declare module '@aurora/theme/styles/descriptions';
 declare module '@aurora/theme/styles/empty';
 declare module '@aurora/theme/styles/progress';
+declare module '@aurora/theme/styles/qr-code';
 declare module '@aurora/theme/styles/rate';
 declare module '@aurora/theme/styles/radio';
 declare module '@aurora/theme/styles/result';

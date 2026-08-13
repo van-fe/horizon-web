@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B36 Cascader 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B38 QRCode 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -858,6 +858,19 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DOC-B37B-001 | Done | TreeSelect 注册双 renderer 契约；Vue 中英文文档补齐 Props/Events/Slots/Exposes，React 中英文页面、4 个独立 TSX 示例与双语侧边栏入口完成，组件文档保持 renderer 原生表达 |
 | PKG-B37B-001 | Done | 包名迁移继续按 breaking change 执行；不新增旧组件包兼容入口、alias、re-export、resolver fallback 或发布项 |
 | QA-B37B-001 | Done | Core 267 项、Theme 6 项、React 全包 316 项、Vue 全包 2378 项（2377 通过、1 项既有预期失败）通过；TreeSelect 定向真实 Chromium 为 React 23 项、Vue 6 文件/35 项，React 源码覆盖率 99.34% / 97.48% / 100% / 100%，Vue 源码覆盖率 98.05% / 95.40% / 98.50% / 98.19%；Core/Theme/Vue/React 构建、71 组双 renderer 契约、文档站、Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界与旧组件包名移除约束通过 |
+
+#### M6-B38 QRCode 实施记录（2026-08-13，已完成）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B38-001 | Done | QRCode 公共 props、纠错等级、默认值、校验器、事件、内容区域、渲染参数与最新请求优先控制器进入 `@aurora/core` |
+| WEB-B38-001 | Done | SVG 二维码生成进入 Horizon Web Core，renderer 不再分别依赖 `qrcode` |
+| VUE-B38-001 | Done | Vue QRCode 消费公共契约、生成器和竞态控制，保留原生 props、emits、expired slot 与本地化行为 |
+| REACT-B38-001 | Done | React QRCode 支持 SVG、中央图标、失效刷新、自定义内容、Provider 文案、ARIA 与原生 ref |
+| DS-B38-001 | Done | QRCode canonical Sass 与变量进入 `@aurora/theme`，Vue 使用薄代理，React 加载同源样式 |
+| DOC-B38-001 | Done | Vue 文档补齐 Props/Events/Slots；React 中英文页面、3 个独立 TSX 示例与双语侧边栏入口完成，保持 renderer 隔离 |
+| PKG-B38-001 | Done | `qrcode` 依赖由 Vue renderer 迁到 Horizon Web Core；未新增旧组件包兼容入口、alias、re-export 或发布项 |
+| QA-B38-001 | Done | Core 269 项、Theme 7 项、Web Core Node 22/Chromium 69、React Chromium 320、Vue Chromium 2380 项（2379 通过、1 项既有预期失败）全部通过；QRCode 定向真实 Chromium 为 Vue 8 项、React 4 项，两个 renderer 的组件源码四项覆盖率均为 100%；五包构建、72 组双 renderer 契约、文档站、Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界和旧组件包名移除约束通过 |
 
 ### 批次 C：浮层与容器
 

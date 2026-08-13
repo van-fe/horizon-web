@@ -2,15 +2,21 @@ import { mount } from '@vue/test-utils';
 import { describe, expect, test, vi } from 'vitest';
 import { reactive } from 'vue';
 import { dictionaries } from '../../../locales';
-import HQRCode from '../src/QRCode';
+import HQRCode from '..';
 import { useQRCode } from '../src/hooks/useQRCode';
-import QRCode from 'qrcode';
 import type { QRCodeProps } from '../src/composables/useProps';
 
 describe('QRCode', () => {
   test('regenerates svg in the hook', async () => {
     const state = useQRCode(
-      reactive({ value: 'hello', size: 120, margin: 1, level: 'M', color: '#000', background: '#fff' }) as any,
+      reactive({
+        value: 'hello',
+        size: 120,
+        margin: 1,
+        level: 'M',
+        color: '#000',
+        background: '#fff',
+      }) as any,
       vi.fn(),
     );
     await state.render();
@@ -22,7 +28,7 @@ describe('QRCode', () => {
       resolve: (value: string) => void;
       reject: (reason: Error) => void;
     }> = [];
-    const toString = vi.spyOn(QRCode, 'toString').mockImplementation(
+    const generate = vi.fn(
       () =>
         new Promise<string>((resolve, reject) => {
           pending.push({ resolve, reject });
@@ -37,7 +43,7 @@ describe('QRCode', () => {
       color: '#000',
       background: '#fff',
     }) as QRCodeProps;
-    const state = useQRCode(props, emit);
+    const state = useQRCode(props, emit, generate);
     const newer = state.render();
     pending[0].reject(new Error('stale failure'));
     pending[1].resolve('<svg id="newer" />');
@@ -55,17 +61,23 @@ describe('QRCode', () => {
     await latestSuccess;
     expect(state.svg.value).toBe('<svg id="latest" />');
     expect(state.loading.value).toBe(false);
-    toString.mockRestore();
   });
 
   test('renders a scannable svg and expired state', async () => {
     const wrapper = mount(HQRCode, { props: { value: 'https://example.com', expired: true } });
     await new Promise(resolve => setTimeout(resolve, 20));
     expect(wrapper.find('svg').exists()).toBe(true);
+    expect(wrapper.get('[role="img"]').attributes('aria-label')).toBe('https://example.com');
     expect(wrapper.text()).toContain('QR code expired');
     await wrapper.get('button').trigger('click');
     expect(wrapper.emitted('refresh')).toHaveLength(1);
     expect(wrapper.emitted('refresh')?.[0]?.[0]).toBeInstanceOf(MouseEvent);
+  });
+
+  test('uses an explicit accessible name', async () => {
+    const wrapper = mount(HQRCode, { props: { value: 'secret', ariaLabel: 'Sign-in code' } });
+    expect(wrapper.get('[role="img"]').attributes('aria-label')).toBe('Sign-in code');
+    wrapper.unmount();
   });
 
   test('applies rendering props and overlays an icon at the requested size', async () => {
@@ -82,7 +94,7 @@ describe('QRCode', () => {
       },
     });
 
-    await vi.waitFor(() => expect(wrapper.find('svg').exists()).toBe(true));
+    await vi.waitFor(() => expect(wrapper.find('.h-qrcode__canvas svg').exists()).toBe(true));
     expect((wrapper.element as HTMLElement).style.width).toBe('128px');
     expect((wrapper.element as HTMLElement).style.height).toBe('128px');
     const icon = wrapper.get('img').element as HTMLImageElement;

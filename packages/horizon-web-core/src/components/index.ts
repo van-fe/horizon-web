@@ -22,6 +22,7 @@ export * from './Pagination';
 export * from './Picker';
 export * from './Popover';
 export * from './Popconfirm';
+export * from './QRCode';
 export * from './Radio';
 export * from './Select';
 export * from './Spin';

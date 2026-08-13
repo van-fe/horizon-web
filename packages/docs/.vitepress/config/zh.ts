@@ -89,6 +89,7 @@ const reactSidebar = [
       { text: 'Alert 提示', link: 'components/Alert' },
       { text: 'Empty 空状态', link: 'components/Empty' },
       { text: 'Progress 进度', link: 'components/Progress' },
+      { text: 'QRCode 二维码', link: 'components/QRCode' },
       { text: 'Result 结果', link: 'components/Result' },
       { text: 'Skeleton 骨架屏', link: 'components/Skeleton' },
       { text: 'Spin 加载中', link: 'components/Spin' },
