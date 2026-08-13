@@ -1,5 +1,5 @@
 import type { ToRefs, Ref, VNode, ComputedRef } from 'vue';
-import { watch, ref } from 'vue';
+import { onBeforeUnmount, watch, ref } from 'vue';
 import type { TreeProps } from '../composables/useProps';
 import type Tree from '~/utils/useTree/index';
 import type { HTreeData, HTreeExtendsData } from '../utils/types';
@@ -22,7 +22,13 @@ export default function useScroll(
   setCollapseStatusByValue: (values: Array<string | number>, isExpand: boolean) => void,
 ) {
   const isScrolling = ref(false);
-  const scrollingEndQueue: Function[] = [];
+  const scrollingEndQueue: Array<() => void> = [];
+  let active = true;
+
+  onBeforeUnmount(() => {
+    active = false;
+    scrollingEndQueue.length = 0;
+  });
 
   watch(isScrolling, () => {
     runScrollEndQueue();
@@ -39,6 +45,7 @@ export default function useScroll(
   }
 
   async function scrollTo(value?: string | number) {
+    if (!active) return;
     if (value === undefined) {
       value = props.selectedValues?.value?.[0];
 
@@ -50,6 +57,7 @@ export default function useScroll(
 
     setCollapseStatusByValue([value], true);
     await sleep();
+    if (!active) return;
 
     if (props.useVirtualScroll.value) {
       const index = visibleItems.value.findIndex(curr => curr.value === value);
@@ -58,6 +66,7 @@ export default function useScroll(
     }
 
     scrollingEndQueue.push(() => {
+      if (!active) return;
       const itemClassHelper = new ComponentClassBlock('tree-item');
 
       vNodesMapping

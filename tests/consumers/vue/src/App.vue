@@ -12,12 +12,14 @@ import {
 import { HList, HListItem } from '@aurora/horizon-web-vue/es/components/List';
 import { HPageHeader } from '@aurora/horizon-web-vue/es/components/PageHeader';
 import { HPanel, HPanels } from '@aurora/horizon-web-vue/es/components/Panels';
+import { HTree } from '@aurora/horizon-web-vue/es/components/Tree';
 
 const value = ref<string>();
 const options = [
   { value: 'alpha', label: 'Alpha' },
   { value: 'beta', label: 'Beta' },
 ];
+const treeData = [{ value: 'ready', label: 'Vue Tree consumer' }];
 </script>
 
 <template>
@@ -26,6 +28,7 @@ const options = [
   <HMask absolute :value="false">Vue mask consumer</HMask>
   <HSpin :spinning="false">Vue spin consumer</HSpin>
   <HTime calculative :time="10" :end-time="15">Vue time consumer</HTime>
+  <HTree :tree-data="treeData" />
   <HDescriptions title="Vue descriptions consumer">
     <HDescriptionItem label="Status" value="Ready" />
   </HDescriptions>

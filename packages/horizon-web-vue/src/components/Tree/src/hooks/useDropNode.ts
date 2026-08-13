@@ -1,9 +1,11 @@
 import type { Ref, ToRefs } from 'vue';
+import { onBeforeUnmount, watch } from 'vue';
+import { normalizeTreeData, TreeDropController } from '@aurora/core';
+import type { TreeNormalizedNode } from '@aurora/core';
 import type Tree from '~/utils/useTree';
 import type { TreeProps } from '../composables/useProps';
 import type { HTreeData, HTreeExtendsData } from '../utils/types';
 import type { TreeDataMutations } from './useTreeData';
-import useTreeNodeMove from './useTreeNodeMove';
 import type { TreeDropPosition } from './useTreeNodeMove';
 
 interface TreeRootDropContext {
@@ -24,101 +26,80 @@ interface TreeDropCallbacks {
   onFinish: (moved: boolean) => void;
 }
 
+/** Vue adapter around the renderer-neutral async drop controller. */
 export default function useDropNode(
   props: ToRefs<TreeProps>,
   treeHelper: Tree<HTreeData, HTreeExtendsData>,
   isLoading: Ref<boolean>,
-  treeDataMutations: TreeDataMutations,
+  { setNodeChildren }: TreeDataMutations,
 ) {
-  const { moveNode } = useTreeNodeMove(treeHelper, treeDataMutations);
+  const controller = new TreeDropController<HTreeData>();
 
-  function canDrop(context: TreeDropContext) {
-    return context.position === 'root' || !context.toNode.uuidPath.includes(context.fromNode._uuid);
-  }
+  watch([props.treeData, () => props.fieldMap?.value], () => controller.invalidate(), {
+    deep: true,
+  });
 
-  function getNodeWithLevel(node: HTreeExtendsData) {
-    return {
-      ...node.originOption,
-      level: node.level,
-    };
-  }
+  onBeforeUnmount(() => controller.destroy());
 
-  function getBeforeDropArguments(context: TreeDropContext) {
-    const current = getNodeWithLevel(context.fromNode);
-
-    if (context.position === 'root') {
-      return [current, null, null] as const;
-    }
-
-    if (context.position === 'child') {
-      return [current, getNodeWithLevel(context.toNode), null] as const;
-    }
-
-    return [
-      current,
-      context.toNode.parent ? getNodeWithLevel(context.toNode.parent) : null,
-      getNodeWithLevel(context.toNode),
-    ] as const;
+  function getLegacyNode(node: TreeNormalizedNode<HTreeData> | null | undefined) {
+    if (!node) return null;
+    const legacy = treeHelper.flattenTreeData.value.find(item => item._uuid === node.value);
+    return legacy ? { ...legacy.originOption, level: legacy.level } : null;
   }
 
   function dropNode(context: TreeDropContext, callbacks: TreeDropCallbacks) {
-    if (!canDrop(context)) {
+    const normalized = normalizeTreeData(
+      treeHelper.originTreeData,
+      treeHelper.fieldMapping as Record<string, string>,
+    );
+    const source = normalized.byValue.get(treeHelper.getOptionValue(context.fromNode, 'value'));
+    const target =
+      context.position === 'root'
+        ? undefined
+        : normalized.byValue.get(treeHelper.getOptionValue(context.toNode, 'value'));
+
+    if (!source || (context.position !== 'root' && !target)) {
       callbacks.onFinish(false);
       return;
     }
-
-    const performMove = () => {
-      callbacks.onBeforeMove?.();
-      moveNode({
-        fromValue: treeHelper.getOptionValue(context.fromNode, 'value'),
-        toValue:
-          context.position === 'root'
-            ? undefined
-            : treeHelper.getOptionValue(context.toNode, 'value'),
-        position: context.position,
-      });
-      callbacks.onFinish(true);
-    };
 
     const beforeDrop = props.beforeDrop?.value;
+    isLoading.value = !!beforeDrop;
 
-    if (!beforeDrop) {
-      performMove();
-      return;
-    }
-
-    isLoading.value = true;
-
-    let beforeDropResult: ReturnType<typeof beforeDrop>;
-
-    try {
-      const [current, target, prev] = getBeforeDropArguments(context);
-      beforeDropResult = beforeDrop(current, target, prev);
-    } catch (error) {
-      console.error(error);
-      isLoading.value = false;
-      callbacks.onFinish(false);
-      return;
-    }
-
-    Promise.resolve(beforeDropResult)
-      .then(status => {
-        if (status !== false) {
-          performMove();
-        } else {
+    void controller
+      .drop(
+        treeHelper.originTreeData,
+        { source, target, position: context.position },
+        {
+          fieldMap: treeHelper.fieldMapping as Record<string, string>,
+          dragToLeaf: props.dragToLeaf.value,
+          beforeDrop: beforeDrop
+            ? (current, targetNode, prevNode) => {
+                const currentLegacy = getLegacyNode(current);
+                if (!currentLegacy) return false;
+                return beforeDrop(
+                  currentLegacy,
+                  getLegacyNode(targetNode),
+                  getLegacyNode(prevNode),
+                );
+              }
+            : undefined,
+        },
+      )
+      .then(result => {
+        if (result.status !== 'moved') {
+          if (result.status === 'rejected') console.error(result.error);
           callbacks.onFinish(false);
+          return;
         }
-      })
-      .catch(error => {
-        console.error(error);
-        callbacks.onFinish(false);
+        callbacks.onBeforeMove?.();
+        setNodeChildren(null, result.data as HTreeData[]);
+        callbacks.onFinish(true);
       })
       .finally(() => {
         isLoading.value = false;
       });
   }
 
-  return {
-    dropNode,
-  };
+  return { dropNode };
 }

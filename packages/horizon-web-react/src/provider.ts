@@ -32,6 +32,14 @@ export interface HorizonWebConfig {
     empty: string;
     level: string;
   };
+  treeLabels: {
+    tree: string;
+    search: string;
+    empty: string;
+    expand: string;
+    collapse: string;
+    select: string;
+  };
   linkLabels: {
     loading: string;
   };
@@ -107,11 +115,13 @@ export type HorizonWebProviderProps = PropsWithChildren<
     | 'stepsLabels'
     | 'switchLabels'
     | 'timelineLabels'
+    | 'treeLabels'
   > & {
     switchLabels?: Partial<HorizonWebConfig['switchLabels']>;
     selectLabels?: Partial<HorizonWebConfig['selectLabels']>;
     pickerLabels?: Partial<HorizonWebConfig['pickerLabels']>;
     cascaderLabels?: Partial<HorizonWebConfig['cascaderLabels']>;
+    treeLabels?: Partial<HorizonWebConfig['treeLabels']>;
     linkLabels?: Partial<HorizonWebConfig['linkLabels']>;
     breadcrumbLabels?: Partial<HorizonWebConfig['breadcrumbLabels']>;
     timelineLabels?: Partial<HorizonWebConfig['timelineLabels']>;
@@ -137,6 +147,14 @@ const defaultConfig: HorizonWebConfig = Object.freeze({
   selectLabels: { placeholder: 'Please select', empty: 'No options', clear: 'Clear selection' },
   pickerLabels: { confirm: 'Confirm', cancel: 'Cancel' },
   cascaderLabels: { placeholder: 'Please select', empty: 'No options', level: 'Level' },
+  treeLabels: {
+    tree: 'Tree',
+    search: 'Search nodes',
+    empty: 'No data',
+    expand: 'Expand',
+    collapse: 'Collapse',
+    select: 'Select',
+  },
   linkLabels: { loading: 'Loading' },
   breadcrumbLabels: { collapsed: 'Show collapsed breadcrumb items' },
   timelineLabels: { toggle: 'Toggle hidden timeline items' },
@@ -176,6 +194,7 @@ export function HorizonWebProvider({
   selectLabels,
   pickerLabels,
   cascaderLabels,
+  treeLabels,
   linkLabels,
   breadcrumbLabels,
   timelineLabels,
@@ -218,6 +237,10 @@ export function HorizonWebProvider({
       cascaderLabels: {
         ...parent.cascaderLabels,
         ...cascaderLabels,
+      },
+      treeLabels: {
+        ...parent.treeLabels,
+        ...treeLabels,
       },
       linkLabels: {
         ...parent.linkLabels,
@@ -290,6 +313,7 @@ export function HorizonWebProvider({
       selectLabels,
       pickerLabels,
       cascaderLabels,
+      treeLabels,
       switchLabels,
       timelineLabels,
       stepsLabels,

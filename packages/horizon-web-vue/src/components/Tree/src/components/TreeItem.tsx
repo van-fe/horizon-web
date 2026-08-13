@@ -25,11 +25,13 @@ import {
   HTreeHalfCheckedValuesInjectKey,
   HTreeHelperInjectKey,
   HTreeHighlightMethodInjectKey,
+  HTreeIdInjectKey,
   HTreeIsDraggingInjectKey,
   HTreeLoadingNodesInjectKey,
   HTreeOnDragStartInjectKey,
   HTreePropsInjectKey,
   HTreeSetItemElementInjectKey,
+  HTreeSelectedNodesUuidInjectKey,
   HTreeSizeInjectKey,
   HTreeSlotsInjectKey,
   HTreeSwitchNodeExpandStatusInjectKey,
@@ -69,7 +71,9 @@ export default defineComponent({
     const size = inject(HTreeSizeInjectKey)!;
     const filterInputValue = inject(HTreeFilterInputValueInjectKey)!;
     const focusedNodeUuid = inject(HTreeFocusedNodeUuidInjectKey)!;
+    const treeId = inject(HTreeIdInjectKey)!;
     const expandedNodesUuid = inject(HTreeExpandedNodesUuidInjectKey)!;
+    const selectedNodesUuid = inject(HTreeSelectedNodesUuidInjectKey)!;
     const switchExpandStatus = inject(HTreeSwitchNodeExpandStatusInjectKey)!;
     const switchCheckedStatus = inject(HTreeSwitchNodeSelectedStatusInjectKey)!;
     const highlightMethod = inject(HTreeHighlightMethodInjectKey)!;
@@ -104,6 +108,12 @@ export default defineComponent({
     });
 
     const isChecked = computed(() => fullCheckedValues.value.includes(valueProp.value._uuid));
+
+    // In strict mode a branch can appear fully checked through linked descendants, but it is not
+    // itself selected. Toggle from the controller's stored value to preserve strict-mode clicks.
+    const isInteractionChecked = computed(() =>
+      parentProps.checkStrictly ? selectedNodesUuid.has(valueProp.value._uuid) : isChecked.value,
+    );
 
     const isIndeterminate = computed(() => halfCheckedValues.value.includes(valueProp.value._uuid));
 
@@ -161,7 +171,12 @@ export default defineComponent({
               (!parentProps.multiple && !parentProps.showRadio)))) &&
         !isDisabled.value
       ) {
-        switchCheckedStatus(valueProp.value._uuid, !isChecked.value, evt, instance?.vnode);
+        switchCheckedStatus(
+          valueProp.value._uuid,
+          !isInteractionChecked.value,
+          evt,
+          instance?.vnode,
+        );
       }
 
       parentEmit('click', evt, valueProp.value.value, valueProp.value, instance?.vnode);
@@ -180,7 +195,12 @@ export default defineComponent({
     function onClickCheckbox(evt: MouseEvent) {
       if (!isDisabled.value) {
         evt.stopPropagation();
-        switchCheckedStatus(valueProp.value._uuid, !isChecked.value, evt, instance?.vnode);
+        switchCheckedStatus(
+          valueProp.value._uuid,
+          !isInteractionChecked.value,
+          evt,
+          instance?.vnode,
+        );
       }
     }
 
@@ -196,17 +216,20 @@ export default defineComponent({
       if (!shadowProp.value) setItemElement(valueProp.value._uuid, dom);
     }
 
+    let highlightStartTimer: ReturnType<typeof setTimeout> | undefined;
+
     onMounted(() => {
       if (!shadowProp.value) {
         vNodeCollection(valueProp.value._uuid, instance?.vnode);
       }
 
-      setTimeout(() => {
+      highlightStartTimer = setTimeout(() => {
         !highlightMethod.value && startWatch();
       });
     });
 
     onBeforeUnmount(() => {
+      if (highlightStartTimer) clearTimeout(highlightStartTimer);
       stopWatch();
       if (!shadowProp.value) setItemElement(valueProp.value._uuid, null);
     });
@@ -251,9 +274,16 @@ export default defineComponent({
           }}
           draggable={false}
           role="treeitem"
+          id={`${treeId.value}-item-${valueProp.value._uuid}`}
           aria-disabled={isDisabled.value}
           aria-selected={isChecked.value}
           aria-expanded={valueProp.value.isLeaf ? undefined : isExpanded.value}
+          aria-level={valueProp.value.level + 1}
+          aria-setsize={
+            valueProp.value.parent?.transformedChildren.length ??
+            treeHelper.transformedTreeData.value.length
+          }
+          aria-posinset={valueProp.value._index + 1}
           data-level={valueProp.value.level}
           data-uuid={valueProp.value._uuid}
           data-children-amount={valueProp.value.transformedChildren.length || 0}

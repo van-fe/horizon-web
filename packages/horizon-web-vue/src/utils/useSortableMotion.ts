@@ -57,6 +57,14 @@ export default function useSortableMotion<TKey extends string | number>(
     positionsBeforeSort = undefined;
   }
 
+  function setDragOffset(offset: SortableMotionOffset) {
+    dragOffset.value = offset;
+  }
+
+  function resetDragOffset() {
+    dragOffset.value = { x: 0, y: 0 };
+  }
+
   watch(
     options.keys,
     async () => {
@@ -150,6 +158,8 @@ export default function useSortableMotion<TKey extends string | number>(
     getItemElement,
     capturePositions,
     clearCapturedPositions,
+    setDragOffset,
+    resetDragOffset,
     startPointerDrag,
     stopPointerDrag,
   };

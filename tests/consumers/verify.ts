@@ -21,6 +21,8 @@ if (!reactOutput.includes('React spin consumer')) throw new Error('React Spin bu
 if (!vueOutput.includes('Vue spin consumer')) throw new Error('Vue Spin bundle is missing.');
 if (!reactOutput.includes('React time consumer')) throw new Error('React Time bundle is missing.');
 if (!vueOutput.includes('Vue time consumer')) throw new Error('Vue Time bundle is missing.');
+if (!reactOutput.includes('React Tree consumer')) throw new Error('React Tree bundle is missing.');
+if (!vueOutput.includes('Vue Tree consumer')) throw new Error('Vue Tree bundle is missing.');
 if (!reactOutput.includes('React descriptions consumer'))
   throw new Error('React Descriptions bundle is missing.');
 if (!vueOutput.includes('Vue descriptions consumer'))

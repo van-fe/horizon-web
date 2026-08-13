@@ -246,6 +246,30 @@ describe('Popover.tsx', () => {
     expect(onHide).toHaveBeenCalledTimes(initialHideCount + 1);
   });
 
+  test('external visibility closes a hover-triggered popover', async () => {
+    const visible = ref(false);
+    const wrapper = mount(() => (
+      <HPopover visible={visible.value} trigger="hover" toBody={false}>
+        {{
+          reference: () => <button>Hover reference</button>,
+          popper: () => <span data-test="controlled-hover-popper">Popup</span>,
+        }}
+      </HPopover>
+    ));
+    const reference = wrapper.get('.h-popover__reference');
+
+    await reference.trigger('mouseenter');
+    await new Promise(resolve => setTimeout(resolve));
+    expect(wrapper.get('[data-test="controlled-hover-popper"]').isVisible()).toBe(true);
+
+    visible.value = true;
+    await nextTick();
+    visible.value = false;
+    await nextTick();
+
+    expect(wrapper.find('[data-test="controlled-hover-popper"]').exists()).toBe(false);
+  });
+
   test('PopContent renders its default slot and inherits or owns the public theme', () => {
     const standalone = mount(HPopContent, {
       props: { theme: 'dark' },
@@ -324,18 +348,46 @@ describe('Popover.tsx', () => {
     expect(wrapper.find('[data-test="persistent-popper"]').exists()).toBe(true);
   });
 
+  test('closing before the enter frame cancels the pending visible state', async () => {
+    const wrapper = mount(
+      <HPopover visible={false} trigger="manual" toBody={false}>
+        {{
+          reference: () => <button>Trigger</button>,
+          popper: () => <div data-test="rapid-panel">Panel</div>,
+        }}
+      </HPopover>,
+    );
+
+    await wrapper.setProps({ visible: true });
+    await wrapper.setProps({ visible: false });
+    await new Promise(resolve => setTimeout(resolve));
+
+    expect(wrapper.find('[data-test="rapid-panel"]').exists()).toBe(false);
+  });
+
+  test('unmounting before the enter frame cancels pending popup setup', async () => {
+    const wrapper = mount(
+      <HPopover visible trigger="manual" toBody={false}>
+        {{
+          reference: () => <button>Trigger</button>,
+          popper: () => <div>Panel</div>,
+        }}
+      </HPopover>,
+    );
+
+    wrapper.unmount();
+    await new Promise(resolve => setTimeout(resolve));
+
+    expect(document.querySelector('.h-popover__popper')).toBeNull();
+  });
+
   test('click trigger honors propagation and the configured outside hide event', async () => {
     const parentClick = vi.fn();
     const wrapper = mount({
       setup() {
         return () => (
           <div onClick={parentClick}>
-            <HPopover
-              toBody={false}
-              trigger="click"
-              stopPropagation
-              hideEventType="mousedown"
-            >
+            <HPopover toBody={false} trigger="click" stopPropagation hideEventType="mousedown">
               {{
                 reference: () => <button data-test="click-reference">Click</button>,
                 popper: () => <span data-test="click-popper">Popup</span>,

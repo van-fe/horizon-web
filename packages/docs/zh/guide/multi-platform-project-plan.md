@@ -834,6 +834,18 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | PKG-B36-001 | Done | 包名迁移继续按 breaking change 执行；发布演练、resolver、别名、依赖、入口与边界扫描确认不存在 `@aurora/horizon-web` 兼容包、alias、re-export、resolver fallback 或发布项，仅保留无关的 ESLint plugin rule id 与明确的边界/历史说明 |
 | QA-B36-001 | Done | Core 230、Theme 3、Locale React 5、Web Core Node 21/Chromium 62、React Chromium 273、Vue Chromium 2345 项（2344 通过、1 项预期失败）全部通过；Vue 总覆盖率为 97.94% / 95.10% / 97.66% / 98.26%，Vue Cascader 组件源码四项覆盖率为 98.29% / 95.13% / 98.25% / 98.87%，React Cascader 为 99.19% / 95.45% / 100% / 99.04%；Vue Cascader 12 文件/100 项与 React Cascader 26 项真实 Chromium 回归通过；Vue Node 26、resolver 12、colors 1、upload adapters 66 项通过；五包构建、Sass、文档站、69 组双 renderer 契约、Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界与旧组件包名移除约束通过 |
 
+#### M6-B37A Tree 第一阶段实施记录（2026-08-13，已完成）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B37A-001 | Done | Tree 的公共数据模型、字段映射、筛选、选择与展开控制器、动态加载、键盘导航、拖放规则和契约已进入 `@aurora/core`，Vue/React 共同消费同一行为源 |
+| WEB-B37A-001 | Done | Tree 的 DOM 聚焦与指针拖拽基础能力已进入 Horizon Web Core，统一 ownerDocument 生命周期、动态落点解析、指针取消与销毁清理 |
+| VUE-B37A-001 | Done | Vue Tree 以 Core 行为为唯一来源，旧 Tree helper 仅作为 TreeSelect/VNode 投影兼容层；保留原生 props、emits、slots、exposes、事件顺序和 TreeSelect 消费接口 |
+| REACT-B37A-001 | Done | React Tree 支持受控/非受控数据、展开、选择、筛选、动态加载、拖拽、自定义渲染、Provider 文案、ARIA、真实 roving focus 与 ref 命令 |
+| DS-B37A-001 | Done | Tree canonical Sass 已迁入 `@aurora/theme`，Vue 使用薄代理、React 使用同源样式，并保留节点状态、拖拽、动效与长文本视觉规范 |
+| DOC-B37A-001 | Done | Tree 已注册双 renderer 契约；Vue 文档补齐 Props/Events/Slots/Exposes，React 中英文页面、4 个独立 TSX 示例及双语入口已完成，保持各 renderer 原生表述 |
+| QA-B37A-001 | Done | Core 244、Theme 3、Locale React 5、Web Core Node 21/Chromium 69、React Chromium 293、Vue Chromium 2368 项（2367 通过、1 项既有预期失败）全部通过；Vue 总覆盖率为 98.05% / 95.25% / 97.86% / 98.43%，Vue Tree 组件源码四项覆盖率为 98.21% / 95.21% / 98.66% / 99.40%，React Tree 为 98.14% / 95.25% / 98.91% / 99.64%；Vue Tree 8 文件/98 项、React Tree 20 项及 TreeSelect 下游 7 项真实 Chromium 回归通过；Vue Node 26、resolver 12、colors 1、upload adapters 66 项通过；五包构建、Sass、文档站、70 组双 renderer 契约、Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界与旧组件包名移除约束通过 |
+
 ### 批次 C：浮层与容器
 
 ```text

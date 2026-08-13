@@ -52,6 +52,7 @@ import '@aurora/theme/styles/statistic';
 import '@aurora/theme/styles/steps';
 import '@aurora/theme/styles/timeline';
 import '@aurora/theme/styles/typography';
+import '@aurora/theme/styles/tree';
 
 export * from './components/Button';
 export * from './components/Affix';
@@ -108,4 +109,5 @@ export * from './components/Tabs';
 export * from './components/Tooltip';
 export * from './components/Timeline';
 export * from './components/Typography';
+export * from './components/Tree';
 export * from './provider';

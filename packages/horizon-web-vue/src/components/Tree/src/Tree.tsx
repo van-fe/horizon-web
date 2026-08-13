@@ -1,4 +1,4 @@
-import { computed, defineComponent, nextTick, provide, ref, toRefs, watch } from 'vue';
+import { computed, defineComponent, nextTick, provide, ref, toRefs, useId, watch } from 'vue';
 import { ComponentClassBlock, cls, useNamespace, cssVariable } from '@aurora/utils';
 import type { HorizonWebSetupContext, HorizonWebComponentInstance } from '@aurora/utils';
 import { useTreeProps } from './composables/useProps';
@@ -21,6 +21,7 @@ import {
   HTreeHalfCheckedValuesInjectKey,
   HTreeHelperInjectKey,
   HTreeHighlightMethodInjectKey,
+  HTreeIdInjectKey,
   HTreeIsDraggingInjectKey,
   HTreeLoadingNodesInjectKey,
   HTreeOnDragStartInjectKey,
@@ -55,6 +56,7 @@ import loading from '~/directives/v-loading';
 import useScroll from './hooks/useScroll';
 import type { VirtualScrollerExposes } from '~/components/VirtualScroller/src/composables/useExposes';
 import useHighlight from './hooks/useHighlight';
+import { normalizeTreeData, reduceTreeNavigation } from '@aurora/core';
 
 export default defineComponent({
   name: `${useNamespace()}Tree`,
@@ -74,6 +76,7 @@ export default defineComponent({
     { emit, slots, expose }: HorizonWebSetupContext<TreeEmits, TreeSlots, TreeExposes>,
   ) {
     const classHelper = new ComponentClassBlock('tree');
+    const treeId = `${useId()}-tree`;
 
     const refProps = toRefs(props);
 
@@ -135,7 +138,7 @@ export default defineComponent({
 
     const hasSubTree = computed(() => tree.flattenTreeData.value.some(item => item.level > 0));
 
-    const { loadingNodes, dynamicLoad } = useDynamicLoad(refProps, setNodeChildren);
+    const { loadingNodes, dynamicLoad } = useDynamicLoad(refProps, tree, setNodeChildren);
 
     const {
       expandedNodesUuid,
@@ -152,10 +155,17 @@ export default defineComponent({
       emit,
       tree,
       expandedNodesUuid,
+      setCollapseStatusByValue,
     );
 
-    const { selectedValuesUuid, switchNodeSelectedStatus, fullCheckedValues, halfCheckedValues } =
-      useCheckable(refProps, tree, emit);
+    const {
+      selectedValuesUuid,
+      selectionChangedByInteraction,
+      switchNodeSelectedStatus,
+      fullCheckedValues,
+      halfCheckedValues,
+      clearSelectedValues,
+    } = useCheckable(refProps, tree, emit);
 
     const { vNodesMapping, collectVNode } = useVNodeCollection();
 
@@ -173,6 +183,7 @@ export default defineComponent({
       treeHelper: tree,
       setNodeExpandStatus,
       expandedNodesUuid,
+      setExpandedValues: setCollapseStatusByValue,
       treeDataMutations: {
         deleteNode,
         setNodeChildren,
@@ -194,85 +205,64 @@ export default defineComponent({
 
     const focusedNodeUuid = ref<HTreeUuidType>();
 
-    const keyboardNavigableItems = computed(() =>
-      visibleItems.value.filter(
-        node =>
-          !disabledProp.value && !node.disabled && (props.checkStrictly || !node.passingDisabled),
-      ),
-    );
-
     function focusNode(node?: HTreeExtendsData) {
       if (!node) return;
       focusedNodeUuid.value = node._uuid;
-      void nextTick(() => scrollTo(tree.getOptionValue(node, 'value')));
-    }
-
-    function getCurrentKeyboardIndex() {
-      return keyboardNavigableItems.value.findIndex(node => node._uuid === focusedNodeUuid.value);
+      void nextTick(() => {
+        wrapperDomRef.value?.focus({ preventScroll: true });
+        void scrollTo(tree.getOptionValue(node, 'value'));
+      });
     }
 
     function handleKeyboard(evt: KeyboardEvent) {
-      const options = keyboardNavigableItems.value;
-      if (options.length === 0) return;
-
       const targetIsInput = evt.target instanceof HTMLInputElement;
-      const currentIndex = getCurrentKeyboardIndex();
-      const current = options.at(currentIndex);
-
-      if (evt.key === 'ArrowDown' || evt.key === 'ArrowUp') {
-        evt.preventDefault();
-        const nextIndex =
-          currentIndex < 0
-            ? evt.key === 'ArrowUp'
-              ? options.length - 1
-              : 0
-            : Math.max(
-                0,
-                Math.min(options.length - 1, currentIndex + (evt.key === 'ArrowUp' ? -1 : 1)),
-              );
-        focusNode(options[nextIndex]);
+      if (targetIsInput && ['ArrowLeft', 'ArrowRight', ' ', 'Home', 'End'].includes(evt.key)) {
         return;
       }
 
-      if ((evt.key === 'Home' || evt.key === 'End') && !targetIsInput) {
-        evt.preventDefault();
-        focusNode(evt.key === 'Home' ? options[0] : options.at(-1));
+      if (
+        !['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight', 'Home', 'End', 'Enter', ' '].includes(
+          evt.key,
+        )
+      )
         return;
-      }
-
-      if (!current || (targetIsInput && ['ArrowLeft', 'ArrowRight', ' '].includes(evt.key))) return;
-
-      if (evt.key === 'ArrowRight') {
-        evt.preventDefault();
-        if (!current.isLeaf) {
-          if (!expandedNodesUuid.has(current._uuid)) {
-            setNodeExpandStatus(current, true, evt, vNodesMapping.get(current._uuid));
-          } else {
-            focusNode(options[currentIndex + 1]);
-          }
-        }
-        return;
-      }
-
-      if (evt.key === 'ArrowLeft') {
-        evt.preventDefault();
-        if (!current.isLeaf && expandedNodesUuid.has(current._uuid)) {
-          setNodeExpandStatus(current, false, evt, vNodesMapping.get(current._uuid));
-        } else {
-          focusNode(current.parent ?? undefined);
-        }
-        return;
-      }
-
-      if (evt.key === 'Enter' || evt.key === ' ') {
-        evt.preventDefault();
+      const coreTree = normalizeTreeData(
+        tree.originTreeData,
+        tree.fieldMapping as Record<string, string>,
+      );
+      const command = reduceTreeNavigation(
+        coreTree.flat,
+        {
+          focusedValue:
+            focusedNodeUuid.value === undefined
+              ? undefined
+              : tree.flattenTreeDataMapping.value.get(focusedNodeUuid.value)?.value,
+          expandedValues: expandedNodesUuid,
+        },
+        evt.key as Parameters<typeof reduceTreeNavigation>[2],
+        {
+          visibleNodes: visibleItems.value
+            .map(item => coreTree.byValue.get(item.value))
+            .filter((node): node is NonNullable<typeof node> => !!node),
+          isDisabled: node => (props.checkStrictly ? node.disabled : node.passingDisabled),
+        },
+      );
+      if (command.type === 'none') return;
+      const commandNode = tree.getInfoByValue(command.value);
+      if (!commandNode) return;
+      evt.preventDefault();
+      if (command.type === 'focus') focusNode(commandNode);
+      if (command.type === 'expand')
+        setNodeExpandStatus(commandNode, true, evt, vNodesMapping.get(commandNode._uuid));
+      if (command.type === 'collapse')
+        setNodeExpandStatus(commandNode, false, evt, vNodesMapping.get(commandNode._uuid));
+      if (command.type === 'select')
         switchNodeSelectedStatus(
-          current._uuid,
-          !selectedValuesUuid.has(current._uuid),
+          commandNode._uuid,
+          !selectedValuesUuid.has(commandNode._uuid),
           evt,
-          vNodesMapping.get(current._uuid),
+          vNodesMapping.get(commandNode._uuid),
         );
-      }
     }
 
     let prevEmittedExpandValues: Array<string | number> | undefined = expandValuesProp?.value;
@@ -295,10 +285,18 @@ export default defineComponent({
       selectedValuesUuid,
       val => {
         const result = Array.from(val.values());
+        // Linked multi-select retains the historical normalization event (parent input becomes
+        // leaf values). A single-select external synchronization is an acknowledgement only:
+        // echoing it makes TreeSelect treat an opened path as a user choice and close its panel.
+        if (!selectionChangedByInteraction.value && !multipleProp.value) {
+          prevEmittedSelectedValues = result;
+          return;
+        }
         if (!isEqual(result, prevEmittedSelectedValues)) {
           emit('update:selectedValues', result);
           prevEmittedSelectedValues = result;
         }
+        selectionChangedByInteraction.value = false;
       },
       {
         immediate: true,
@@ -313,6 +311,10 @@ export default defineComponent({
     provide(HTreeSlotsInjectKey, slots);
     provide(HTreeFilterInputValueInjectKey, filterValueMerged);
     provide(HTreeFocusedNodeUuidInjectKey, focusedNodeUuid);
+    provide(
+      HTreeIdInjectKey,
+      computed(() => treeId),
+    );
     provide(HTreeSizeInjectKey, size);
     provide(HTreeExpandedNodesUuidInjectKey, expandedNodesUuid);
     provide(HTreeSwitchNodeExpandStatusInjectKey, switchNodeExpandStatus);
@@ -383,9 +385,7 @@ export default defineComponent({
         };
       },
       setCollapseStatusByValue,
-      clearSelectedValues: () => {
-        selectedValuesUuid.clear();
-      },
+      clearSelectedValues,
       setAllCollapseStatus(isExpand: boolean) {
         isExpand ? expandAll() : foldAll();
       },
@@ -433,6 +433,11 @@ export default defineComponent({
         style={rootStyleProp?.value}
         role="tree"
         tabindex={disabledProp.value ? undefined : 0}
+        aria-activedescendant={
+          focusedNodeUuid.value === undefined
+            ? undefined
+            : `${treeId}-item-${focusedNodeUuid.value}`
+        }
         onKeydown={handleKeyboard}
       >
         {isUsingFilter.value && !hideFilterInputProp.value && (

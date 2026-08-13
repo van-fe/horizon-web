@@ -13,6 +13,7 @@ import {
   Select,
   Spin,
   Time,
+  Tree,
 } from '@aurora/horizon-web-react';
 import '@aurora/horizon-web-react/style.css';
 
@@ -20,6 +21,7 @@ const options = [
   { value: 'alpha', label: 'Alpha' },
   { value: 'beta', label: 'Beta' },
 ];
+const treeData = [{ value: 'ready', label: 'React Tree consumer' }];
 
 createRoot(document.getElementById('root')!).render(
   createElement(
@@ -30,6 +32,7 @@ createRoot(document.getElementById('root')!).render(
     createElement(Mask, { absolute: true, visible: false }, 'React mask consumer'),
     createElement(Spin, { spinning: false }, 'React spin consumer'),
     createElement(Time, { calculative: true, time: 10, endTime: 15 }, 'React time consumer'),
+    createElement(Tree, { defaultTreeData: treeData }),
     createElement(
       Descriptions,
       { title: 'React descriptions consumer' },

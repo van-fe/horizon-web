@@ -54,6 +54,7 @@
 @use './components/tabs/variables' as tabs;
 @use './components/tooltip/variables' as tooltip;
 @use './components/timeline/variables' as timeline;
+@use './components/tree/variables' as tree;
 @use './components/typography/variables' as typography;
 
 $values: function.map-merge-multi(
@@ -111,6 +112,7 @@ $values: function.map-merge-multi(
   function.flatten-variables(tabs.$values, 'tabs'),
   function.flatten-variables(tooltip.$values, 'tooltip'),
   function.flatten-variables(timeline.$values, 'timeline'),
+  function.flatten-variables(tree.$values, 'tree'),
   function.flatten-variables(typography.$values, 'typography')
 );
 

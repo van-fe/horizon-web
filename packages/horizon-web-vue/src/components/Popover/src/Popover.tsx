@@ -50,6 +50,8 @@ export default defineComponent({
     // 将popperVisible初始化为props.visible的值
     const popperVisible = ref<boolean>(props.visible);
     const popperAppear = ref(false);
+    let popperCreateTimer: ReturnType<typeof setTimeout> | undefined;
+    let popperAppearTimer: ReturnType<typeof setTimeout> | undefined;
     const visibilityController = new TooltipOpenController({
       open: props.visible,
       disabled: props.disabled,
@@ -76,6 +78,8 @@ export default defineComponent({
     };
 
     onBeforeUnmount(() => {
+      if (popperCreateTimer) clearTimeout(popperCreateTimer);
+      if (popperAppearTimer) clearTimeout(popperAppearTimer);
       document.removeEventListener(props.hideEventType, hideClickShowPop);
       visibilityController.destroy();
       // 不能只设置popperVisible.value = false，因为Unmount之后watch不执行了
@@ -104,10 +108,8 @@ export default defineComponent({
       newValue => {
         if (disabled.value) return false;
 
-        if (props.trigger === 'manual') {
-          visibilityController.syncOpen(newValue);
-          popperVisible.value = newValue;
-        }
+        visibilityController.syncOpen(newValue);
+        popperVisible.value = newValue;
       },
     );
 
@@ -128,7 +130,10 @@ export default defineComponent({
     function onPopperVisible() {
       // 如果还没创建，就先创建
       if (!popperIns) {
-        setTimeout(() => {
+        if (popperCreateTimer) clearTimeout(popperCreateTimer);
+        popperCreateTimer = setTimeout(() => {
+          popperCreateTimer = undefined;
+          if (!popperVisible.value || !reference.value || !popper.value) return;
           popperIns = usePopper(reference.value, popper.value, {
             ...props,
             findChild: true,
@@ -138,13 +143,23 @@ export default defineComponent({
         popperIns.update?.();
       }
       zIndex.value = zIndexHandler.next();
-      setTimeout(() => {
-        popperAppear.value = true;
+      if (popperAppearTimer) clearTimeout(popperAppearTimer);
+      popperAppearTimer = setTimeout(() => {
+        popperAppearTimer = undefined;
+        if (popperVisible.value) popperAppear.value = true;
       });
       emit('show');
     }
 
     function onPopperInVisible() {
+      if (popperCreateTimer) {
+        clearTimeout(popperCreateTimer);
+        popperCreateTimer = undefined;
+      }
+      if (popperAppearTimer) {
+        clearTimeout(popperAppearTimer);
+        popperAppearTimer = undefined;
+      }
       popperAppear.value = false;
       emit('hide');
     }

@@ -140,6 +140,11 @@
     "./styles/tooltip-variables": "./styles/components/tooltip/variables.scss",
     "./styles/timeline": "./styles/components/timeline/index.scss",
     "./styles/timeline-variables": "./styles/components/timeline/variables.scss",
+    "./styles/tree": "./styles/components/tree/index.scss",
+    "./styles/tree-item": "./styles/components/tree/item.scss",
+    "./styles/tree-draggable": "./styles/components/tree/draggable.scss",
+    "./styles/tree-motion": "./styles/components/tree/motion.scss",
+    "./styles/tree-variables": "./styles/components/tree/variables.scss",
     "./styles/typography": "./styles/components/typography/index.scss",
     "./styles/typography-variables": "./styles/components/typography/variables.scss"
   },

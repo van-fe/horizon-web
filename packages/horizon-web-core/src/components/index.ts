@@ -31,3 +31,4 @@ export * from './Steps';
 export * from './Tabs';
 export * from './Tooltip';
 export * from './Timeline';
+export * from './Tree';

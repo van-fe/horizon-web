@@ -1,4 +1,16 @@
 import type { CSSProperties, ExtractPropTypes, PropType } from 'vue';
+import type {
+  AdaptComponentApiShape,
+  ComponentRendererPropDefinitions,
+  TreeCommonProps,
+} from '@aurora/core';
+import {
+  isTreeDimension,
+  isTreeMultipleLimit,
+  isTreeNonnegativeNumber,
+  isTreeValueArray,
+  TREE_DEFAULTS,
+} from '@aurora/core';
 import { declarePropType } from '@aurora/utils';
 import type {
   HTreeData,
@@ -13,6 +25,37 @@ import type { BaseTreeData } from '~/utils/useTree/types';
 import { IconMaybeFalsyPropType, IconNullablePropType, IconPropType } from '~/utils/useIcon';
 import { IconDragForm, IconTriangleRightFilled } from '@aurora/icon';
 import type Tree from '~/utils/useTree/index';
+import type { HTreeFieldMap } from '../utils/types';
+
+type TreeVueProps = AdaptComponentApiShape<
+  TreeCommonProps<HTreeData>,
+  {},
+  | 'defaultExpandValues'
+  | 'defaultSelectedValues'
+  | 'defaultTreeData'
+  | 'filterMethod'
+  | 'dynamicLoad'
+  | 'beforeDrop',
+  {
+    treeHelper?: Tree<HTreeData, HTreeExtendsData>;
+    filterMethod?: HTreeFilterMethodType;
+    highlightMethod?: HTreeHighlightMethod;
+    filterInputProps?: Partial<InputProps>;
+    dynamicLoad?: HTreeDynamicLoadMethod;
+    beforeDrop?: (
+      current: HTreeNodeDataWithLevel,
+      target: HTreeNodeDataWithLevel | null,
+      prev: HTreeNodeDataWithLevel | null,
+    ) => Awaited<boolean>;
+    foldIcon?: unknown;
+    expandIcon?: unknown;
+    prefixIcon?: unknown;
+    draggableIcon?: unknown;
+    undraggableIcon?: unknown;
+    rootClassName?: string;
+    rootStyle?: CSSProperties;
+  }
+>;
 
 export const useTreeProps = declarePropType({
   /**
@@ -29,7 +72,7 @@ export const useTreeProps = declarePropType({
    */
   treeData: {
     type: Array as PropType<HTreeData[]>,
-    default: () => [],
+    default: () => [...TREE_DEFAULTS.treeData],
   },
   /**
    * 大小
@@ -44,7 +87,7 @@ export const useTreeProps = declarePropType({
    */
   disabled: {
     type: Boolean,
-    default: false,
+    default: TREE_DEFAULTS.disabled,
   },
   /**
    * 是否开启过滤
@@ -59,7 +102,7 @@ export const useTreeProps = declarePropType({
    */
   filterToHideChildren: {
     type: Boolean,
-    default: true,
+    default: TREE_DEFAULTS.filterToHideChildren,
   },
   /**
    * 过滤方法
@@ -103,7 +146,7 @@ export const useTreeProps = declarePropType({
    */
   hideFilterInput: {
     type: Boolean,
-    default: false,
+    default: TREE_DEFAULTS.hideFilterInput,
   },
   /**
    * 是否自动展开搜索子树
@@ -111,7 +154,7 @@ export const useTreeProps = declarePropType({
    */
   expandFilteredTree: {
     type: Boolean,
-    default: true,
+    default: TREE_DEFAULTS.expandFilteredTree,
   },
   /**
    * 字段映射
@@ -119,7 +162,9 @@ export const useTreeProps = declarePropType({
    * @en Configuration for field map.
    */
   fieldMap: {
-    type: Object as PropType<Partial<Record<keyof BaseTreeData, keyof BaseTreeData | string>>>,
+    type: Object as PropType<
+      HTreeFieldMap & Partial<Record<keyof BaseTreeData, keyof BaseTreeData | string>>
+    >,
   },
   /**
    * 树组件的高度
@@ -127,6 +172,7 @@ export const useTreeProps = declarePropType({
    */
   height: {
     type: [Number, String],
+    validator: isTreeDimension,
   },
   /**
    * 树组件的最大高度
@@ -134,6 +180,7 @@ export const useTreeProps = declarePropType({
    */
   maxHeight: {
     type: [Number, String],
+    validator: isTreeDimension,
   },
   /**
    * 是否启用虚拟滚动，需同时配置 `height` 或 `maxHeight`
@@ -141,7 +188,7 @@ export const useTreeProps = declarePropType({
    */
   useVirtualScroll: {
     type: Boolean,
-    default: false,
+    default: TREE_DEFAULTS.useVirtualScroll,
   },
   /**
    * 同 `h-virtual-scroller` 的 `buffer`
@@ -150,6 +197,7 @@ export const useTreeProps = declarePropType({
    */
   virtualScrollBuffer: {
     type: Number,
+    validator: isTreeNonnegativeNumber,
   },
   /**
    * 所有有 `tooltip` 的地方，在悬浮后延迟多少毫秒显示 `tooltip`
@@ -157,7 +205,8 @@ export const useTreeProps = declarePropType({
    */
   tooltipShowAfter: {
     type: Number,
-    default: 100,
+    default: TREE_DEFAULTS.tooltipShowAfter,
+    validator: isTreeNonnegativeNumber,
   },
   /**
    * 所有有 `tooltip` 的地方，在显示后延迟多少毫秒移除 `tooltip`
@@ -165,7 +214,8 @@ export const useTreeProps = declarePropType({
    */
   tooltipHideAfter: {
     type: Number,
-    default: 200,
+    default: TREE_DEFAULTS.tooltipHideAfter,
+    validator: isTreeNonnegativeNumber,
   },
   /**
    * 展开的节点
@@ -173,6 +223,7 @@ export const useTreeProps = declarePropType({
    */
   expandValues: {
     type: Array as PropType<Array<string | number>>,
+    validator: isTreeValueArray,
   },
   /**
    * 折叠时 `icon`
@@ -196,7 +247,7 @@ export const useTreeProps = declarePropType({
    */
   expandOnClickNode: {
     type: Boolean,
-    default: true,
+    default: TREE_DEFAULTS.expandOnClickNode,
   },
   /**
    * 前缀 `icon`
@@ -211,7 +262,7 @@ export const useTreeProps = declarePropType({
    */
   checkStrictly: {
     type: Boolean,
-    default: false,
+    default: TREE_DEFAULTS.checkStrictly,
   },
   /**
    * 是否是多选
@@ -219,7 +270,7 @@ export const useTreeProps = declarePropType({
    */
   multiple: {
     type: Boolean,
-    default: false,
+    default: TREE_DEFAULTS.multiple,
   },
   /**
    * 多选上限
@@ -227,7 +278,8 @@ export const useTreeProps = declarePropType({
    */
   multipleLimit: {
     type: Number,
-    default: Infinity,
+    default: TREE_DEFAULTS.multipleLimit,
+    validator: isTreeMultipleLimit,
   },
   /**
    * 选中的树节点
@@ -235,6 +287,7 @@ export const useTreeProps = declarePropType({
    */
   selectedValues: {
     type: Array as PropType<Array<string | number>>,
+    validator: isTreeValueArray,
   },
   /**
    * 是否在点击节点时选中节点
@@ -243,7 +296,7 @@ export const useTreeProps = declarePropType({
    */
   checkOnClickNode: {
     type: Boolean,
-    default: false,
+    default: TREE_DEFAULTS.checkOnClickNode,
   },
   /**
    * 对于多选：是否在点击叶子节点时进行选择，任意有子级的节点点击仍受 `checkOnClickNode` 控制
@@ -252,7 +305,7 @@ export const useTreeProps = declarePropType({
    */
   checkOnClickLeaf: {
     type: Boolean,
-    default: true,
+    default: TREE_DEFAULTS.checkOnClickLeaf,
   },
   /**
    * 选中强调样式
@@ -283,7 +336,7 @@ export const useTreeProps = declarePropType({
    */
   isDefaultExpandAll: {
     type: Boolean,
-    default: false,
+    default: TREE_DEFAULTS.isDefaultExpandAll,
   },
   /**
    * 展开子节点的时候是否默认展开父节点
@@ -291,7 +344,7 @@ export const useTreeProps = declarePropType({
    */
   isDefaultExpandParent: {
     type: Boolean,
-    default: true,
+    default: TREE_DEFAULTS.isDefaultExpandParent,
   },
   /**
    * 根节点 `class` 类名
@@ -320,7 +373,8 @@ export const useTreeProps = declarePropType({
    */
   indent: {
     type: Number,
-    default: 24,
+    default: TREE_DEFAULTS.indent,
+    validator: isTreeNonnegativeNumber,
   },
   /**
    * 是否显示 tooltip
@@ -328,7 +382,7 @@ export const useTreeProps = declarePropType({
    */
   tooltip: {
     type: Boolean,
-    default: true,
+    default: TREE_DEFAULTS.tooltip,
   },
   /**
    * 禁用状态下是否可以通过父节点的选中改变禁用节点，默认状态下不受父节点影响
@@ -336,7 +390,7 @@ export const useTreeProps = declarePropType({
    */
   parentEffectDisabledChild: {
     type: Boolean,
-    default: false,
+    default: TREE_DEFAULTS.parentEffectDisabledChild,
   },
   /**
    * 多选时是否使用 `checkbox` 组件
@@ -344,7 +398,7 @@ export const useTreeProps = declarePropType({
    */
   showCheckbox: {
     type: Boolean,
-    default: true,
+    default: TREE_DEFAULTS.showCheckbox,
   },
   /**
    * 单选时是否使用 `radio` 组件
@@ -352,7 +406,7 @@ export const useTreeProps = declarePropType({
    */
   showRadio: {
     type: Boolean,
-    default: false,
+    default: TREE_DEFAULTS.showRadio,
   },
   /**
    * 是否允许拖拽排序
@@ -360,7 +414,7 @@ export const useTreeProps = declarePropType({
    */
   draggable: {
     type: Boolean,
-    default: false,
+    default: TREE_DEFAULTS.draggable,
   },
   /**
    * 拖拽的 `icon`
@@ -387,7 +441,7 @@ export const useTreeProps = declarePropType({
    */
   draggableIconAlwaysVisible: {
     type: Boolean,
-    default: false,
+    default: TREE_DEFAULTS.draggableIconAlwaysVisible,
   },
   /**
    * 是否只能在拖拽图标上拖拽
@@ -395,7 +449,7 @@ export const useTreeProps = declarePropType({
    */
   dragOnHandler: {
     type: Boolean,
-    default: true,
+    default: TREE_DEFAULTS.dragOnHandler,
   },
   /**
    * 是否允许拖拽到叶子节点上并创建子级
@@ -403,7 +457,7 @@ export const useTreeProps = declarePropType({
    */
   dragToLeaf: {
     type: Boolean,
-    default: true,
+    default: TREE_DEFAULTS.dragToLeaf,
   },
   // /**
   //  * 是否允许更改拖拽节点的父节点
@@ -436,7 +490,7 @@ export const useTreeProps = declarePropType({
    */
   showLine: {
     type: Boolean,
-    default: false,
+    default: TREE_DEFAULTS.showLine,
   },
   /**
    * 是否在开启虚拟滚动时，允许子元素撑开容器
@@ -444,9 +498,9 @@ export const useTreeProps = declarePropType({
    */
   expandWrapperByChildren: {
     type: Boolean,
-    default: false,
+    default: TREE_DEFAULTS.expandWrapperByChildren,
   },
-});
+} satisfies ComponentRendererPropDefinitions<TreeVueProps>);
 
 export const useTreeItemProps = declarePropType({
   /**

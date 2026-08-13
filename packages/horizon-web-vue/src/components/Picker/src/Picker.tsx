@@ -248,8 +248,7 @@ export default defineComponent({
         !unrefElement(popContentDomRef.value)?.contains(target as Node | null)
       ) {
         if (popperVisible.value) {
-          popoverDomRef.value?.switchVisible(false);
-          pickerController.close('outside-pointer');
+          setPopoverVisible(false, 'outside-pointer');
         }
 
         blur();

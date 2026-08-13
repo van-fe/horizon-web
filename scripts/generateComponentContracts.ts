@@ -71,6 +71,7 @@ import {
   tabsManifest,
   timelineManifest,
   timeManifest,
+  treeManifest,
   tooltipManifest,
   typographyManifest,
 } from '../packages/core/src';
@@ -144,6 +145,7 @@ const manifests = [
   tabManifest,
   timelineManifest,
   timeManifest,
+  treeManifest,
   tooltipManifest,
   typographyManifest,
 ] as const;
@@ -941,6 +943,71 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     },
     regions: { rename: { content: 'default' } },
   },
+  Tree: {
+    props: {
+      omit: ['defaultTreeData', 'defaultExpandValues', 'defaultSelectedValues'],
+      extend: [
+        {
+          name: 'treeHelper',
+          type: 'Tree<HTreeData, HTreeExtendsData>',
+          description: { zh: 'TreeSelect 传入的树助手', en: 'Tree helper supplied by TreeSelect' },
+        },
+        {
+          name: 'highlightMethod',
+          type: 'HTreeHighlightMethod',
+          description: { zh: '过滤高亮渲染方法', en: 'Filter highlight renderer' },
+        },
+        {
+          name: 'filterInputProps',
+          type: 'Partial<InputProps>',
+          description: { zh: '过滤输入框属性', en: 'Filter input properties' },
+        },
+        {
+          name: 'rootClassName',
+          type: 'string',
+          description: { zh: '根节点类名', en: 'Root element class name' },
+        },
+        {
+          name: 'rootStyle',
+          type: 'CSSProperties',
+          description: { zh: '根节点样式', en: 'Root element styles' },
+        },
+      ],
+    },
+    events: {
+      rename: {
+        treeDataChange: 'update:treeData',
+        expandValuesChange: 'update:expandValues',
+        selectedValuesChange: 'update:selectedValues',
+        visibleNodesChange: 'update:visibleNodes',
+        filterValueChange: 'update:filterValue',
+        nodeClick: 'click',
+        nodeContextMenu: 'contextmenu',
+      },
+    },
+    regions: { rename: { treeNode: 'treeNodeRender' } },
+    commands: {
+      rename: {
+        getUnselectedNodes: 'getUnSelectedNodes',
+        setExpandedStatus: 'setCollapseStatusByValue',
+        setAllExpandedStatus: 'setAllCollapseStatus',
+        getNodesByValue: 'getNodeByValues',
+        deleteNodeByValue: 'delNodeByValue',
+      },
+      extend: [
+        {
+          name: 'treeTemplateRef',
+          type: 'Ref<HTMLDivElement | null>',
+          description: { zh: '树根元素引用', en: 'Tree root element ref' },
+        },
+        {
+          name: 'keyboardEventDeal',
+          type: '(event: KeyboardEvent) => void',
+          description: { zh: '处理树键盘导航', en: 'Handles tree keyboard navigation' },
+        },
+      ],
+    },
+  },
   Tooltip: {
     props: {
       rename: { open: 'visible', showDelay: 'showAfter', hideDelay: 'hideAfter' },
@@ -1471,6 +1538,78 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
   Time: {
     events: { rename: { finished: 'onFinished' } },
     regions: { rename: { content: 'children' } },
+  },
+  Tree: {
+    props: {
+      rename: { defaultExpandValues: 'defaultExpandedValues' },
+      omit: [
+        'expandIcon',
+        'expandWrapperByChildren',
+        'filterInputValue',
+        'foldIcon',
+        'prefixIcon',
+        'useVirtualScroll',
+        'virtualScrollBuffer',
+      ],
+      extend: [
+        {
+          name: 'defaultFilterValue',
+          type: 'string',
+          defaultValue: "''",
+          description: { zh: '非受控初始过滤文字', en: 'Initial uncontrolled filter text' },
+        },
+        {
+          name: 'filterInputProps',
+          type: "Omit<InputHTMLAttributes<HTMLInputElement>, 'disabled' | 'onChange' | 'placeholder' | 'value'>",
+          description: { zh: '过滤输入框原生属性', en: 'Native filter input attributes' },
+        },
+      ],
+    },
+    events: {
+      rename: {
+        treeDataChange: 'onTreeDataChange',
+        expandValuesChange: 'onExpandedValuesChange',
+        selectedValuesChange: 'onSelectedValuesChange',
+        visibleNodesChange: 'onVisibleNodesChange',
+        filterValueChange: 'onFilterValueChange',
+        expand: 'onExpand',
+        select: 'onSelect',
+        nodeClick: 'onNodeClick',
+        nodeContextMenu: 'onNodeContextMenu',
+        reachTop: 'onReachTop',
+        reachBottom: 'onReachBottom',
+      },
+      extend: [
+        {
+          name: 'onLoadError',
+          type: '(error: unknown, node: TreeNormalizedNode<TreeOption>) => void',
+          description: { zh: '动态加载失败回调', en: 'Called when dynamic loading fails' },
+        },
+        {
+          name: 'onDropError',
+          type: '(error: unknown) => void',
+          description: { zh: '异步放置失败回调', en: 'Called when an asynchronous drop fails' },
+        },
+      ],
+    },
+    regions: { rename: { treeNode: 'renderNode', empty: 'renderEmpty' } },
+    commands: {
+      extend: [
+        {
+          name: 'element',
+          type: 'HTMLDivElement | null',
+          description: { zh: '树根元素', en: 'Tree root element' },
+        },
+        {
+          name: 'focus',
+          type: '(value?: TreeValue) => void',
+          description: {
+            zh: '聚焦指定或首个可用节点',
+            en: 'Focuses a value or the first enabled node',
+          },
+        },
+      ],
+    },
   },
   Statistic: { regions: { rename: { value: 'children' } } },
   Space: {

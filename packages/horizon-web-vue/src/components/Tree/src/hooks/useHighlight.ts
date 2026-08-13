@@ -1,5 +1,5 @@
 import type { Ref, WatchStopHandle } from 'vue';
-import { ref, provide, watch, inject } from 'vue';
+import { onBeforeUnmount, ref, provide, watch, inject } from 'vue';
 import { HTreeHighlightRangesInjectKey, HTreeFilterInputValueInjectKey } from '../utils/injectKeys';
 import type { TreeItemProps } from '../composables/useProps';
 
@@ -26,6 +26,11 @@ export default function useHighlight() {
   );
 
   provide(HTreeHighlightRangesInjectKey, highlightRanges);
+
+  onBeforeUnmount(() => {
+    highlightRanges.value.clear();
+    CSS.highlights?.delete('keyword');
+  });
 }
 
 export function useHighlightTreeItem(

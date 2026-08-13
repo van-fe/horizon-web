@@ -1,6 +1,12 @@
 import type { BaseTreeData, BaseTreeWithLevelData, ExtendTreeData } from '~/utils/useTree/types';
 import type { Component, VNode } from 'vue';
 import type { Awaitable } from '@aurora/utils';
+import type { TreeFieldMap, TreeOption, TreeValue } from '@aurora/core';
+
+/** Renderer aliases for the shared Tree domain contract. */
+export type HTreeFieldMap = TreeFieldMap;
+export type HTreeContractValue = TreeValue;
+export type HTreeCoreOption = TreeOption<Component | VNode | string | null>;
 
 export type HTreeUuidType = string | number;
 

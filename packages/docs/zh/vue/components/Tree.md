@@ -135,3 +135,101 @@
 `selectable = false` 会阻止当前节点被直接选择，但仍允许展开和操作可选后代；`disabled` 则同时阻止该节点交互。
 
 :::demo vue/components/Tree/selectable.vue :::
+
+## Props
+
+### 数据、筛选与布局
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `tree-data` | `HTreeData[]` | `[]` | 层级数据，整棵树中的 `value` 必须唯一。 |
+| `field-map` | `HTreeFieldMap` | — | 将数据源字段映射到 Tree 数据字段。 |
+| `tree-helper` | `Tree<HTreeData, HTreeExtendsData>` | — | 与 TreeSelect 组合时可传入的内部树助手。 |
+| `size` | `'small' \| 'medium' \| 'large' \| 'huge'` | Provider 值 | 节点行尺寸。 |
+| `disabled` | `boolean` | `false` | 禁用整棵树。 |
+| `height` / `max-height` | `number \| string` | — | 滚动容器尺寸。 |
+| `indent` | `number` | `24` | 每层缩进的像素值。 |
+| `root-class-name` / `root-style` | `string` / `CSSProperties` | — | 根元素类名和行内样式。 |
+| `tooltip` | `boolean` | `true` | 显示节点文字提示。 |
+| `tooltip-show-after` / `tooltip-hide-after` | `number` | `100` / `200` | 提示显示与隐藏延迟。 |
+| `use-virtual-scroll` | `boolean` | `false` | 开启虚拟滚动，需要配合 `height` 或 `max-height`。 |
+| `virtual-scroll-buffer` | `number` | — | 虚拟滚动缓冲区大小。 |
+| `expand-wrapper-by-children` | `boolean` | `false` | 允许子内容撑开虚拟滚动容器。 |
+
+### 筛选
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `filterable` | `boolean` | `false` | 开启筛选。 |
+| `filter-value` | `string` | — | 筛选文字，支持 `v-model:filter-value`。 |
+| `filter-input-value` | `string` | — | 自定义筛选输入框使用的外部文字。 |
+| `filter-input-props` | `Partial<InputProps>` | — | 传给内置筛选输入框的属性。 |
+| `filter-method` | `HTreeFilterMethodType` | — | 自定义筛选断言。 |
+| `filter-to-hide-children` | `boolean` | `true` | 筛选时隐藏不匹配的子节点。 |
+| `expand-filtered-tree` | `boolean` | `true` | 展开包含筛选结果的分支。 |
+| `hide-filter-input` | `boolean` | `false` | 隐藏内置筛选输入框。 |
+| `highlight-method` | `HTreeHighlightMethod` | — | 渲染字符串标签中的高亮匹配项。 |
+| `search-input-placeholder` | `string` | 国际化值 | 筛选输入框占位文字。 |
+| `empty-text` | `string` | 国际化值 | 空结果文字。 |
+
+### 展开与选择
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `expand-values` | `(string \| number)[]` | — | 展开节点值，支持 `v-model:expand-values`。 |
+| `is-default-expand-all` | `boolean` | `false` | 创建时展开全部分支。 |
+| `is-default-expand-parent` | `boolean` | `true` | 解析展开值时自动展开父级。 |
+| `expand-on-click-node` | `boolean` | `true` | 点击分支整行时切换展开。 |
+| `fold-icon` / `expand-icon` | `Icon` | 三角图标 / — | 折叠与展开分支图标。 |
+| `prefix-icon` | `Icon` | — | 所有节点共用的前缀图标。 |
+| `selected-values` | `(string \| number)[]` | — | 选中节点值，支持 `v-model:selected-values`。 |
+| `multiple` | `boolean` | `false` | 开启多选。 |
+| `multiple-limit` | `number` | `Infinity` | 最大选中数量。 |
+| `check-strictly` | `boolean` | `false` | 让父子节点独立选择。 |
+| `check-on-click-node` | `boolean` | `false` | 点击节点整行时选择。 |
+| `check-on-click-leaf` | `boolean` | `true` | 点击叶子节点整行时选择。 |
+| `show-checkbox` / `show-radio` | `boolean` | `true` / `false` | 显示复选框或单选框。 |
+| `parent-effect-disabled-child` | `boolean` | `false` | 允许父节点选择影响禁用后代。 |
+| `stress` | `boolean` | `false` | 强调已选择的节点行。 |
+
+### 动态加载与拖拽
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `dynamic-load` | `HTreeDynamicLoadMethod` | — | 加载 `isLeaf: false` 的未展开分支。 |
+| `draggable` | `boolean` | `false` | 开启拖拽排序。 |
+| `drag-on-handler` | `boolean` | `true` | 只允许从拖拽手柄开始拖动。 |
+| `drag-to-leaf` | `boolean` | `true` | 允许将节点拖入叶子分支。 |
+| `before-drop` | `(current, target, prev) => boolean \| Promise<boolean>` | — | 提交放置前的同步或异步拦截方法。 |
+| `draggable-icon` / `undraggable-icon` | `Icon \| false` | 拖拽图标 / `false` | 可拖动或固定节点的图标。 |
+| `draggable-icon-always-visible` | `boolean` | `false` | 始终显示拖拽图标。 |
+| `show-line` | `boolean` | `false` | 显示节点连线。 |
+
+## Events
+
+| 事件 | 参数 | 说明 |
+| --- | --- | --- |
+| `update:tree-data` | `(treeData)` | 动态加载或节点命令后返回树数据。 |
+| `update:expand-values` | `(values)` | 为 `v-model:expand-values` 返回展开值。 |
+| `update:selected-values` | `(values)` | 为 `v-model:selected-values` 返回选中值。 |
+| `update:filter-value` | `(value)` | 返回筛选文字。 |
+| `update:visible-nodes` | `(nodes)` | 返回当前可见顺序中的节点。 |
+| `expand` | `(expandValues, value, details)` | 分支展开或收起后触发。 |
+| `select` | `(selectedValues, value, details)` | 选择状态变化后触发。 |
+| `click` / `contextmenu` | `(event, value, node, vnode?)` | 节点点击或右键时触发。 |
+| `reach-top` / `reach-bottom` | `()` | 滚动触及边界时触发。 |
+
+## Slots
+
+| 插槽 | 作用域 | 说明 |
+| --- | --- | --- |
+| `treeNodeRender` | `{ data, vNode?, vnode? }` | 渲染单个树节点。 |
+| `empty` | — | 渲染空结果。 |
+
+## Exposes
+
+组件引用提供 `getSelectedNodes()`、`getPartSelectedNodes()`、`getUnSelectedNodes()`、`setSelectedStatus(values, selected)`、`clearSelectedValues()`、`getExpandNodes()`、`setCollapseStatusByValue(values, isExpand)`、`setAllCollapseStatus(isExpand)`、`getNodeByValues(values)`、`setNodeByValue(treeData, value?)`、`addNodeChildrenByValue(treeDataArray, value?)`、`delNodeByValue(value?)`、`getVisibleItems()`、`scrollTo(value?)`、`treeTemplateRef` 和 `keyboardEventDeal(event)`。
+
+## 无障碍
+
+Tree 使用 `tree` 与 `treeitem` 语义，并提供层级、展开、选择、勾选和禁用状态。`ArrowUp`、`ArrowDown`、`Home`、`End` 在可用节点间移动焦点；`ArrowRight` 展开或进入分支，`ArrowLeft` 折叠或回到父级。`Enter` 与 `Space` 选择当前活动节点。内置筛选输入框保留正常的文本编辑键盘行为。

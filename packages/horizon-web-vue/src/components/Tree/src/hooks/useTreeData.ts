@@ -6,6 +6,12 @@ import type { TopBaseTreeData } from '~/utils/useTree/types';
 import type Tree from '~/utils/useTree/index';
 import type { HorizonWebSetupContext } from '@aurora/utils';
 import { isUndefined } from '@aurora/utils';
+import {
+  addTreeChildren,
+  deleteTreeNode,
+  replaceTreeChildren,
+  replaceTreeNode,
+} from '@aurora/core';
 import type { TreeEmits } from '~/components/Tree/src/composables/useEmits';
 
 export default function useTreeData(
@@ -27,28 +33,31 @@ export default function useTreeData(
     emit('update:treeData', treeHelper.originTreeData);
   }
 
-  function deleteNode(value?: string | number, emitUpdate: boolean = true): HTreeData[] {
-    let res: HTreeData[] = [];
-
-    if (isUndefined(value)) {
-      treeHelper.originTreeData = [];
-    } else {
-      res = treeHelper.deleteNodeByValue(treeHelper.originTreeData, value);
+  function replaceData(next: HTreeData[], emitUpdate = true) {
+    // Consumers (notably TreeSelect) retain the root array reference, so apply Core's
+    // immutable result through a splice instead of replacing that identity.
+    treeHelper.originTreeData.splice(0, treeHelper.originTreeData.length, ...next);
+    try {
+      treeHelper.setTreeData(treeHelper.originTreeData);
+    } catch (error) {
+      if (!(error instanceof Error) || !error.message.toLowerCase().includes('unique')) throw error;
     }
+    if (emitUpdate) emitUpdateTreeData();
+  }
 
-    emitUpdate && emitUpdateTreeData();
+  const fieldMap = () => treeHelper.fieldMapping as Record<string, string>;
 
-    return res;
+  function deleteNode(value?: string | number, emitUpdate: boolean = true): HTreeData[] {
+    const result = deleteTreeNode(treeHelper.originTreeData, value, fieldMap());
+    replaceData(result.data as HTreeData[], emitUpdate);
+    return result.deleted as HTreeData[];
   }
 
   function setNode(data: TopBaseTreeData & Partial<HTreeData>, value?: string | number) {
-    if (isUndefined(value)) {
-      treeHelper.originTreeData.push(data);
-    } else {
-      treeHelper.setBaseTreeTargetByValue(treeHelper.originTreeData, value, data);
-    }
-
-    emitUpdateTreeData();
+    const next = isUndefined(value)
+      ? addTreeChildren(treeHelper.originTreeData, undefined, [data], true, fieldMap())
+      : replaceTreeNode(treeHelper.originTreeData, value, data, fieldMap());
+    replaceData(next as HTreeData[]);
   }
 
   /**
@@ -59,19 +68,14 @@ export default function useTreeData(
    * @paramEn children The children value.
    */
   function setNodeChildren(value: string | number | null, children: HTreeData[]) {
-    if (value === null) {
-      // Keep the root array shared with `treeData`; replacing it after a drag would leave the
-      // caller's array in the intermediate state where the dragged node has only been removed.
-      treeHelper.originTreeData.splice(0, treeHelper.originTreeData.length, ...children);
-    } else {
-      const target = treeHelper.getBaseTreeTargetByValue(treeHelper.originTreeData, value);
-
-      if (target) {
-        target[treeHelper.fieldMapping['children'] as 'children'] = children;
-      }
-    }
-
-    emitUpdateTreeData();
+    replaceData(
+      replaceTreeChildren(
+        treeHelper.originTreeData,
+        value ?? undefined,
+        children,
+        fieldMap(),
+      ) as HTreeData[],
+    );
   }
 
   function addNodeChildren(
@@ -79,29 +83,15 @@ export default function useTreeData(
     value?: string | number,
     append = true,
   ) {
-    if (isUndefined(value)) {
-      if (append) {
-        treeHelper.originTreeData.push(...arr);
-      } else {
-        treeHelper.originTreeData.unshift(...arr);
-      }
-    } else {
-      const target = treeHelper.getBaseTreeTargetByValue(treeHelper.originTreeData, value);
-
-      if (target) {
-        if (!Array.isArray(treeHelper.getOptionValue(target, 'children'))) {
-          target[treeHelper.fieldMapping['children'] as 'children'] = [];
-        }
-
-        if (append) {
-          treeHelper.getOptionValue(target, 'children')!.push(...arr);
-        } else {
-          treeHelper.getOptionValue(target, 'children')!.unshift(...arr);
-        }
-      }
-    }
-
-    emitUpdateTreeData();
+    replaceData(
+      addTreeChildren(
+        treeHelper.originTreeData,
+        value,
+        arr as HTreeData[],
+        append,
+        fieldMap(),
+      ) as HTreeData[],
+    );
   }
 
   return {

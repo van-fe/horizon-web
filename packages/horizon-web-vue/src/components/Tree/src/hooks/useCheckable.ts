@@ -1,5 +1,7 @@
 import type { ToRefs, VNode } from 'vue';
-import { computed, reactive, watch } from 'vue';
+import { computed, reactive, ref, watch } from 'vue';
+import { normalizeTreeData, TreeSelectionController } from '@aurora/core';
+import type { TreeStateReason } from '@aurora/core';
 import type { TreeProps } from '../composables/useProps';
 import type Tree from '~/utils/useTree/index';
 import type { HTreeData, HTreeExtendsData, HTreeUuidType } from '../utils/types';
@@ -11,111 +13,87 @@ export default function (
   tree: Tree<HTreeData, HTreeExtendsData>,
   emit: HorizonWebSetupContext<TreeEmits>['emit'],
 ) {
-  const selectedValuesUuid = reactive<Set<HTreeUuidType>>(
-    new Set<HTreeUuidType>(props.selectedValues?.value),
-  );
-
+  const selectedValuesUuid = reactive<Set<HTreeUuidType>>(new Set());
+  const stateVersion = ref(0);
+  // Core controller synchronization acknowledges an externally controlled value. It must not be
+  // reflected back as a new user selection (TreeSelect may intentionally pass parent path values).
+  const selectionChangedByInteraction = ref(false);
+  const controller = new TreeSelectionController<HTreeData>();
   const isCheckComponentVisible = computed(() => props.showRadio.value || props.showCheckbox.value);
 
-  const fullCheckedValues = computed(() => {
-    if (props.checkStrictly.value) {
-      return Array.from(selectedValuesUuid.values());
-    } else {
-      const res: Array<string | number> = Array.from(selectedValuesUuid.values());
-      const checkedStatus = new Map<HTreeExtendsData, boolean>();
-      const stack = tree.transformedTreeData.value
-        .slice()
-        .reverse()
-        .map(node => ({ node, visited: false }));
+  function syncLegacyValues(fromInteraction = false) {
+    selectedValuesUuid.clear();
+    controller.selectedValues.forEach(value => selectedValuesUuid.add(value));
+    selectionChangedByInteraction.value = fromInteraction;
+    stateVersion.value++;
+  }
 
-      while (stack.length > 0) {
-        const { node, visited } = stack.pop()!;
-
-        if (node.isLeaf) {
-          checkedStatus.set(node, selectedValuesUuid.has(node._uuid));
-          continue;
-        }
-
-        if (!visited) {
-          stack.push({ node, visited: true });
-
-          for (let i = node.transformedChildren.length - 1; i >= 0; i--) {
-            stack.push({ node: node.transformedChildren[i], visited: false });
-          }
-
-          continue;
-        }
-
-        const checked =
-          node.transformedChildren.length > 0 &&
-          node.transformedChildren.every(child => checkedStatus.get(child));
-
-        checkedStatus.set(node, checked);
-
-        if (checked) {
-          res.push(tree.getOptionValue(node, 'value'));
-        }
+  function syncTree(values = props.selectedValues?.value) {
+    controller.setOptions({
+      multiple: props.multiple.value,
+      multipleLimit: props.multipleLimit.value,
+      checkStrictly: props.checkStrictly.value,
+      parentEffectDisabledChild: props.parentEffectDisabledChild.value,
+    });
+    try {
+      controller.setTree(
+        normalizeTreeData(tree.originTreeData, tree.fieldMapping as Record<string, string>),
+      );
+      if (Array.isArray(values)) {
+        // Vue historically gives an explicit descendant precedence over its selected parent.
+        // Normalize that input before handing the actual linked-selection transition to Core.
+        const normalized = normalizeTreeData(
+          tree.originTreeData,
+          tree.fieldMapping as Record<string, string>,
+        );
+        const requested = props.checkStrictly.value
+          ? values
+          : values.filter(value => {
+              const node = normalized.byValue.get(value);
+              return (
+                !node ||
+                node.isLeaf ||
+                !normalized.flat.some(
+                  candidate =>
+                    candidate.value !== value &&
+                    values.includes(candidate.value) &&
+                    node.keyPath.every((part, index) => candidate.keyPath[index] === part),
+                )
+              );
+            });
+        controller.sync(requested);
       }
-
-      return res;
+      syncLegacyValues();
+    } catch {
+      // Keep the legacy projection stable while callers hold temporary invalid option data.
     }
-  });
-
-  const halfCheckedValues = computed<Array<string | number>>(() => {
-    if (props.checkStrictly.value || selectedValuesUuid.size === 0) {
-      return [];
-    } else {
-      const res: Array<string | number> = [];
-      const fullyCheckedUuid = new Set(fullCheckedValues.value);
-      const indeterminateUuid = new Set<string | number>();
-
-      for (const uuid of selectedValuesUuid) {
-        let current = tree.flattenTreeDataMapping.value.get(uuid);
-
-        while (current) {
-          indeterminateUuid.add(current._uuid);
-          current = current.parent ?? undefined;
-        }
-      }
-
-      tree.flattenTreeData.value.forEach(node => {
-        if (
-          !node.isLeaf &&
-          !fullyCheckedUuid.has(node._uuid) &&
-          indeterminateUuid.has(node._uuid)
-        ) {
-          res.push(node._uuid);
-        }
-      });
-
-      return res;
-    }
-  });
+  }
 
   watch(
-    [() => props.selectedValues?.value?.slice(), tree.flattenTreeData],
-    updateSelectedStatusByProps,
-    {
-      immediate: true,
-    },
+    [
+      () => props.selectedValues?.value?.slice(),
+      tree.flattenTreeData,
+      props.multiple,
+      props.multipleLimit,
+      props.checkStrictly,
+      props.parentEffectDisabledChild,
+    ],
+    () => syncTree(),
+    { immediate: true },
   );
 
-  /**
-   * in order to remove child/root node when checkStrictly set false
-   * @en Description for watch.
-   */
-  watch(props.checkStrictly, val => {
-    if (!val) {
-      for (const uuid of selectedValuesUuid.values()) {
-        const node = tree.flattenTreeData.value.find(item => item._uuid === uuid);
-        if (node && !node.isLeaf) {
-          selectedValuesUuid.delete(uuid);
-        }
-      }
-    }
+  const fullCheckedValues = computed(() => {
+    stateVersion.value;
+    const selected = controller.selectedValues;
+    return props.checkStrictly.value
+      ? selected
+      : [...selected, ...controller.allCheckedValues.filter(value => !selected.includes(value))];
+  });
+  const halfCheckedValues = computed(() => {
+    stateVersion.value;
+    return controller.halfCheckedValues;
   });
 
-  /** methods **/
   function switchNodeSelectedStatus(
     uuid: string | number,
     check: boolean,
@@ -124,114 +102,56 @@ export default function (
     emitEvent = true,
   ) {
     const node = tree.flattenTreeData.value.find(curr => curr._uuid === uuid);
+    if (!node) return;
 
-    if (node) {
-      if (node.selectable === false) return;
+    const reason: TreeStateReason = evt instanceof KeyboardEvent ? 'keyboard' : 'pointer';
+    // Prop watchers are normally flushed before browser interaction, but synchronize the
+    // controller here as well so a same-tick checkStrictly/multiple change cannot run stale.
+    controller.setOptions({
+      multiple: props.multiple.value,
+      multipleLimit: props.multipleLimit.value,
+      checkStrictly: props.checkStrictly.value,
+      parentEffectDisabledChild: props.parentEffectDisabledChild.value,
+    });
+    if (props.checkStrictly.value) controller.sync(selectedValuesUuid);
+    // A linked parent can render checked because every descendant is checked, yet it is not in
+    // the strict controller's selected set. Its first strict-mode interaction must therefore
+    // select the branch rather than deselect the descendant-derived visual state.
+    const nextChecked = props.checkStrictly.value && !selectedValuesUuid.has(uuid) ? true : check;
+    const result = controller.set(node.value, nextChecked, reason);
+    if (['disabled', 'unselectable', 'branch', 'limit', 'missing'].includes(result.status)) return;
+    syncLegacyValues(true);
 
-      if (props.multiple.value) {
-        if (props.checkStrictly.value) {
-          if (selectedValuesUuid.has(uuid)) {
-            !check && selectedValuesUuid.delete(uuid);
-          } else {
-            if (check && props.multipleLimit.value > selectedValuesUuid.size) {
-              selectedValuesUuid.add(uuid);
-            }
-          }
-        } else {
-          switchChildrenCheckedStatus(node, check);
-        }
-      } else {
-        if (!node.isLeaf && !props.checkStrictly.value) return;
-
-        selectedValuesUuid.clear();
-        selectedValuesUuid.add(uuid);
-      }
-
-      if (emitEvent) {
-        emit(
-          'select',
-          Array.from(selectedValuesUuid.values()),
-          tree.getOptionValue(node, 'value'),
-          {
-            checked: check,
-            node: node.originOption,
-            nodeComputed: node,
-            vnode: vNode,
-            allCheckedValues: fullCheckedValues.value,
-            halfCheckedValues: halfCheckedValues.value,
-            nativeEvent: evt,
-          },
-        );
-      }
-    }
-  }
-
-  function switchChildrenCheckedStatus(node: HTreeExtendsData, check = true) {
-    const stack = [node];
-
-    while (stack.length > 0) {
-      const current = stack.pop()!;
-
-      if (
-        (!current.disabled || (current.disabled && props.parentEffectDisabledChild.value)) &&
-        current.selectable !== false &&
-        !props.checkStrictly.value &&
-        (!current.passingDisabled ||
-          (current.passingDisabled && props.parentEffectDisabledChild.value))
-      ) {
-        if (current.isLeaf) {
-          check
-            ? props.multipleLimit.value > selectedValuesUuid.size &&
-              selectedValuesUuid.add(current._uuid)
-            : selectedValuesUuid.delete(current._uuid);
-        } else {
-          for (let i = current.transformedChildren.length - 1; i >= 0; i--) {
-            stack.push(current.transformedChildren[i]);
-          }
-        }
-      }
-    }
-  }
-
-  function updateSelectedStatusByProps() {
-    const values = props.selectedValues?.value;
-
-    if (Array.isArray(values) && tree.flattenTreeData.value.length) {
-      selectedValuesUuid.clear();
-      values.forEach(value => {
-        if (props.checkStrictly.value) {
-          selectedValuesUuid.add(value);
-        } else {
-          const node = tree.getInfoByValue(value);
-          if (node) {
-            if (node.isLeaf) {
-              selectedValuesUuid.add(value);
-            } else {
-              if (
-                !tree.flattenTreeData.value.some(
-                  curr =>
-                    curr._uuid !== node._uuid &&
-                    values.includes(curr.value) &&
-                    tree.isDescendantOf(curr, node, false),
-                )
-              ) {
-                switchNodeSelectedStatus(value, true, undefined, undefined, false);
-              }
-            }
-          } else {
-            selectedValuesUuid.add(value);
-          }
-        }
+    if (emitEvent) {
+      emit('select', result.values, tree.getOptionValue(node, 'value'), {
+        checked: result.selected,
+        node: node.originOption,
+        nodeComputed: node,
+        vnode: vNode,
+        allCheckedValues: result.allCheckedValues,
+        halfCheckedValues: result.halfCheckedValues,
+        nativeEvent: evt,
       });
     }
   }
 
+  function updateSelectedStatusByProps() {
+    syncTree();
+  }
+
+  function clearSelectedValues() {
+    controller.clear('imperative');
+    syncLegacyValues(true);
+  }
+
   return {
     selectedValuesUuid,
+    selectionChangedByInteraction,
     switchNodeSelectedStatus,
     fullCheckedValues,
     halfCheckedValues,
     isCheckComponentVisible,
     updateSelectedStatusByProps,
+    clearSelectedValues,
   };
 }

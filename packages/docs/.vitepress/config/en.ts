@@ -68,6 +68,7 @@ const reactSidebar = [
     text: 'Navigation Components',
     collapsed: false,
     items: [
+      { text: 'Tree', link: 'components/Tree' },
       { text: 'Link', link: 'components/Link' },
       { text: 'Breadcrumb', link: 'components/Breadcrumb' },
       { text: 'Collapse', link: 'components/Collapse' },

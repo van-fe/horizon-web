@@ -135,3 +135,101 @@ In linked multiple selection, direct child values take precedence when parent an
 `selectable = false` prevents direct selection but still allows expansion and selectable descendants. `disabled` also blocks interaction with that node.
 
 :::demo vue/components/Tree/selectable.vue :::
+
+## Props
+
+### Data, filtering, and layout
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `tree-data` | `HTreeData[]` | `[]` | Hierarchical data; every `value` must be unique. |
+| `field-map` | `HTreeFieldMap` | — | Maps source fields to Tree data fields. |
+| `tree-helper` | `Tree<HTreeData, HTreeExtendsData>` | — | Internal Tree helper accepted when the component is composed by TreeSelect. |
+| `size` | `'small' \| 'medium' \| 'large' \| 'huge'` | provider value | Row size. |
+| `disabled` | `boolean` | `false` | Disables the whole tree. |
+| `height` / `max-height` | `number \| string` | — | Scroll container dimensions. |
+| `indent` | `number` | `24` | Indentation in pixels per level. |
+| `root-class-name` / `root-style` | `string` / `CSSProperties` | — | Root element class and inline style. |
+| `tooltip` | `boolean` | `true` | Shows node text in a tooltip. |
+| `tooltip-show-after` / `tooltip-hide-after` | `number` | `100` / `200` | Tooltip show and hide delay. |
+| `use-virtual-scroll` | `boolean` | `false` | Enables virtual scrolling; use with `height` or `max-height`. |
+| `virtual-scroll-buffer` | `number` | — | Virtual-scroller buffer size. |
+| `expand-wrapper-by-children` | `boolean` | `false` | Lets children expand the virtual-scroll wrapper. |
+
+### Filtering
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `filterable` | `boolean` | `false` | Enables filtering. |
+| `filter-value` | `string` | — | Filter text; supports `v-model:filter-value`. |
+| `filter-input-value` | `string` | — | External text for a custom filter input. |
+| `filter-input-props` | `Partial<InputProps>` | — | Props passed to the built-in filter input. |
+| `filter-method` | `HTreeFilterMethodType` | — | Custom filter predicate. |
+| `filter-to-hide-children` | `boolean` | `true` | Hides child nodes that do not match a filter. |
+| `expand-filtered-tree` | `boolean` | `true` | Expands branches containing filter results. |
+| `hide-filter-input` | `boolean` | `false` | Hides the built-in filter input. |
+| `highlight-method` | `HTreeHighlightMethod` | — | Renders highlighted matches for string labels. |
+| `search-input-placeholder` | `string` | locale value | Filter input placeholder. |
+| `empty-text` | `string` | locale value | Empty-result text. |
+
+### Expansion and selection
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `expand-values` | `(string \| number)[]` | — | Expanded node values; supports `v-model:expand-values`. |
+| `is-default-expand-all` | `boolean` | `false` | Expands all branches on creation. |
+| `is-default-expand-parent` | `boolean` | `true` | Resolves ancestors for expanded values. |
+| `expand-on-click-node` | `boolean` | `true` | Toggles a branch when its row is clicked. |
+| `fold-icon` / `expand-icon` | `Icon` | triangle / — | Icons for collapsed and expanded branches. |
+| `prefix-icon` | `Icon` | — | Shared prefix icon for nodes. |
+| `selected-values` | `(string \| number)[]` | — | Selected node values; supports `v-model:selected-values`. |
+| `multiple` | `boolean` | `false` | Enables multiple selection. |
+| `multiple-limit` | `number` | `Infinity` | Maximum selection count. |
+| `check-strictly` | `boolean` | `false` | Makes parent and child selection independent. |
+| `check-on-click-node` | `boolean` | `false` | Selects a node when its row is clicked. |
+| `check-on-click-leaf` | `boolean` | `true` | Selects a leaf when its row is clicked. |
+| `show-checkbox` / `show-radio` | `boolean` | `true` / `false` | Shows checkbox or radio controls. |
+| `parent-effect-disabled-child` | `boolean` | `false` | Lets parent selection affect disabled descendants. |
+| `stress` | `boolean` | `false` | Emphasizes selected rows. |
+
+### Loading and dragging
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `dynamic-load` | `HTreeDynamicLoadMethod` | — | Loads an unopened branch with `isLeaf: false`. |
+| `draggable` | `boolean` | `false` | Enables drag sorting. |
+| `drag-on-handler` | `boolean` | `true` | Starts a drag only from the drag handle. |
+| `drag-to-leaf` | `boolean` | `true` | Allows dropping a node into a leaf branch. |
+| `before-drop` | `(current, target, prev) => boolean \| Promise<boolean>` | — | Guards a drop before it is committed. |
+| `draggable-icon` / `undraggable-icon` | `Icon \| false` | drag icon / `false` | Icons for draggable and fixed nodes. |
+| `draggable-icon-always-visible` | `boolean` | `false` | Keeps drag icons visible. |
+| `show-line` | `boolean` | `false` | Shows connector lines. |
+
+## Events
+
+| Event | Payload | Description |
+| --- | --- | --- |
+| `update:tree-data` | `(treeData)` | Emits tree data after loading or node commands. |
+| `update:expand-values` | `(values)` | Emits expanded values for `v-model:expand-values`. |
+| `update:selected-values` | `(values)` | Emits selected values for `v-model:selected-values`. |
+| `update:filter-value` | `(value)` | Emits the filter text. |
+| `update:visible-nodes` | `(nodes)` | Emits nodes in current visible order. |
+| `expand` | `(expandValues, value, details)` | Emits after a branch expands or collapses. |
+| `select` | `(selectedValues, value, details)` | Emits after selection changes. |
+| `click` / `contextmenu` | `(event, value, node, vnode?)` | Emits node click or right-click interaction. |
+| `reach-top` / `reach-bottom` | `()` | Emits when scrolling reaches an edge. |
+
+## Slots
+
+| Slot | Scope | Description |
+| --- | --- | --- |
+| `treeNodeRender` | `{ data, vNode?, vnode? }` | Renders an individual tree node. |
+| `empty` | — | Renders the empty result. |
+
+## Exposes
+
+The component ref exposes `getSelectedNodes()`, `getPartSelectedNodes()`, `getUnSelectedNodes()`, `setSelectedStatus(values, selected)`, `clearSelectedValues()`, `getExpandNodes()`, `setCollapseStatusByValue(values, isExpand)`, `setAllCollapseStatus(isExpand)`, `getNodeByValues(values)`, `setNodeByValue(treeData, value?)`, `addNodeChildrenByValue(treeDataArray, value?)`, `delNodeByValue(value?)`, `getVisibleItems()`, `scrollTo(value?)`, `treeTemplateRef`, and `keyboardEventDeal(event)`.
+
+## Accessibility
+
+Tree renders `tree` and `treeitem` semantics with hierarchy, expanded, selected, checked, and disabled state. `ArrowUp`, `ArrowDown`, `Home`, and `End` move focus across available nodes; `ArrowRight` expands or enters a branch, and `ArrowLeft` collapses or returns to its parent. `Enter` and `Space` select the active node. The built-in filter input keeps normal text editing behavior.

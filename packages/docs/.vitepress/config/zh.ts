@@ -68,6 +68,7 @@ const reactSidebar = [
     text: '导航组件',
     collapsed: false,
     items: [
+      { text: 'Tree 树形控件', link: 'components/Tree' },
       { text: 'Link 文字链接', link: 'components/Link' },
       { text: 'Breadcrumb 面包屑', link: 'components/Breadcrumb' },
       { text: 'Collapse 折叠面板', link: 'components/Collapse' },

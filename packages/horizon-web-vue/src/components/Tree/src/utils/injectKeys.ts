@@ -103,3 +103,7 @@ export const HTreeHighlightRangesInjectKey = Symbol(
 export const HTreeFocusedNodeUuidInjectKey = Symbol(
   generatorInjectedKeyName('tree', 'focused-node-uuid'),
 ) as InjectionKey<Ref<HTreeUuidType | undefined>>;
+
+export const HTreeIdInjectKey = Symbol(generatorInjectedKeyName('tree', 'id')) as InjectionKey<
+  ComputedRef<string>
+>;

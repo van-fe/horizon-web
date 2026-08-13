@@ -62,7 +62,7 @@ export const usePopoverProps = declarePropType({
     default: POPOVER_DEFAULTS.trigger,
     validator: isPopoverTrigger,
   },
-  /** 手动触发时的可见状态。 @en Visible state used by the manual trigger. */
+  /** 外部控制的可见状态。 @en Externally controlled visible state. */
   visible: { type: Boolean, default: POPOVER_DEFAULTS.defaultOpen },
   /** 首选浮层位置。 @en Preferred floating placement. */
   placement: {

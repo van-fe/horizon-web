@@ -534,7 +534,7 @@ describe('Picker public API contracts', () => {
     expect(onClear.mock.calls[0][0]).toBeInstanceOf(MouseEvent);
 
     await wrapper.get('.h-picker').trigger('click');
-    await nextTick();
+    await new Promise(resolve => setTimeout(resolve));
     expect(wrapper.find('.h-picker__input--icon.is-search').exists()).toBe(true);
 
     await wrapper.setProps({ inputIsSearching: false });
@@ -1024,19 +1024,42 @@ describe('Picker public API contracts', () => {
   });
 
   test('document dismissal and restored display permission use the shared picker state', async () => {
+    const modelValue = ref<string>();
     const onHide = vi.fn();
-    const wrapper = mount(HPicker, {
-      attachTo: document.body,
-      props: { toBody: false, onHide },
-      slots: { default: () => <div data-test="panel-content">Panel</div> },
-    });
+    const wrapper = mount(
+      () => (
+        <HPicker modelValue={modelValue.value} toBody={false} onHide={onHide}>
+          <div data-test="panel-content">Panel</div>
+        </HPicker>
+      ),
+      {
+        attachTo: document.body,
+      },
+    );
+    const outside = document.createElement('button');
+    document.body.append(outside);
+
+    modelValue.value = 'external-value';
+    await nextTick();
 
     await wrapper.get('.h-picker').trigger('click');
-    await nextTick();
-    document.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+    await new Promise(resolve => setTimeout(resolve));
+    expect(wrapper.get('.h-picker__pop-content').isVisible()).toBe(true);
+    outside.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
     await nextTick();
     expect(onHide).toHaveBeenCalledTimes(1);
+    expect(wrapper.get('.h-picker__pop-content').isVisible()).toBe(false);
+
+    await wrapper.get('.h-picker').trigger('click');
+    await new Promise(resolve => setTimeout(resolve));
+    expect(wrapper.get('.h-picker__pop-content').isVisible()).toBe(true);
+    outside.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+    await nextTick();
+    expect(onHide).toHaveBeenCalledTimes(2);
+    expect(wrapper.get('.h-picker__pop-content').isVisible()).toBe(false);
+
     wrapper.unmount();
+    outside.remove();
 
     const popperCanBeDisplayed = ref(false);
     const contentOnly = mount(() => (

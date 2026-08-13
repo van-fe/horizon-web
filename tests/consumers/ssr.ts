@@ -14,6 +14,7 @@ import {
   Panels,
   Spin,
   Time,
+  Tree,
 } from '@aurora/horizon-web-react';
 import { HButton } from '@aurora/horizon-web-vue/es/components/Button';
 import { HMask } from '@aurora/horizon-web-vue/es/components/Mask';
@@ -26,6 +27,7 @@ import {
 import { HList, HListItem } from '@aurora/horizon-web-vue/es/components/List';
 import { HPageHeader } from '@aurora/horizon-web-vue/es/components/PageHeader';
 import { HPanel, HPanels } from '@aurora/horizon-web-vue/es/components/Panels';
+import { HTree } from '@aurora/horizon-web-vue/es/components/Tree';
 
 const reactHtml = renderReact(createElement(Button, null, 'React SSR'));
 if (!reactHtml.includes('React SSR')) throw new Error('React SSR consumer failed.');
@@ -40,6 +42,13 @@ const reactTimeHtml = renderReact(
   createElement(Time, { calculative: true, time: 10, endTime: 15 }, 'React Time SSR'),
 );
 if (!reactTimeHtml.includes('React Time SSR')) throw new Error('React Time SSR consumer failed.');
+
+const reactTreeHtml = renderReact(
+  createElement(Tree, {
+    defaultTreeData: [{ value: 'ready', label: 'React Tree SSR' }],
+  }),
+);
+if (!reactTreeHtml.includes('React Tree SSR')) throw new Error('React Tree SSR consumer failed.');
 
 const reactDescriptionsHtml = renderReact(
   createElement(
@@ -91,6 +100,13 @@ const vueTimeHtml = await renderVue(
   }),
 );
 if (!vueTimeHtml.includes('Vue Time SSR')) throw new Error('Vue Time SSR consumer failed.');
+
+const vueTreeHtml = await renderVue(
+  createSSRApp({
+    render: () => h(HTree, { treeData: [{ value: 'ready', label: 'Vue Tree SSR' }] }),
+  }),
+);
+if (!vueTreeHtml.includes('Vue Tree SSR')) throw new Error('Vue Tree SSR consumer failed.');
 
 const vueDescriptionsHtml = await renderVue(
   createSSRApp({
