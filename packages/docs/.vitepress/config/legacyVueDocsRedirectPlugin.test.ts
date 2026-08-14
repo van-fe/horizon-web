@@ -1,6 +1,7 @@
 import path from 'node:path';
 import { describe, expect, it, vi } from 'vitest';
 import {
+  isDocumentNavigation,
   legacyVueDocsRedirectPlugin,
   redirectEntries,
   redirectHtml,
@@ -25,7 +26,7 @@ describe('legacy Vue documentation redirects', () => {
     const plugin = legacyVueDocsRedirectPlugin('/horizon/');
     let middleware:
       | ((
-          request: { url?: string },
+          request: { headers: { accept?: string }; method?: string; url?: string },
           response: {
             statusCode: number;
             setHeader: ReturnType<typeof vi.fn>;
@@ -44,7 +45,15 @@ describe('legacy Vue documentation redirects', () => {
     (plugin.configureServer as (server: unknown) => void)(server);
 
     const response = { statusCode: 0, setHeader: vi.fn(), end: vi.fn() };
-    middleware?.({ url: '/horizon/en/demos/components/Button?size=small' }, response, vi.fn());
+    middleware?.(
+      {
+        headers: { accept: 'text/html,application/xhtml+xml' },
+        method: 'GET',
+        url: '/horizon/en/demos/components/Button?size=small',
+      },
+      response,
+      vi.fn(),
+    );
 
     expect(response.statusCode).toBe(302);
     expect(response.setHeader).toHaveBeenCalledWith(
@@ -52,6 +61,23 @@ describe('legacy Vue documentation redirects', () => {
       '/horizon/en/vue/components/Button?size=small',
     );
     expect(response.end).toHaveBeenCalled();
+  });
+
+  it('does not redirect Vite module requests under the demos source path', () => {
+    expect(
+      isDocumentNavigation({
+        headers: { accept: '*/*' },
+        method: 'GET',
+        url: '/demos/vue/components/Icon/all.vue',
+      }),
+    ).toBe(false);
+    expect(
+      isDocumentNavigation({
+        headers: { accept: 'text/html' },
+        method: 'GET',
+        url: '/demos/components/Button',
+      }),
+    ).toBe(true);
   });
 
   it('uses a client redirect that preserves query strings and hashes', () => {

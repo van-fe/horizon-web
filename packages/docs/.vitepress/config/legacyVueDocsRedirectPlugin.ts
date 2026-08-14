@@ -7,6 +7,20 @@ interface RedirectEntry {
   target: string;
 }
 
+interface RedirectRequest {
+  headers: { accept?: string };
+  method?: string;
+  url?: string;
+}
+
+export function isDocumentNavigation(request: RedirectRequest): boolean {
+  const method = request.method || 'GET';
+  return (
+    (method === 'GET' || method === 'HEAD') &&
+    Boolean(request.headers.accept?.includes('text/html'))
+  );
+}
+
 function collectMarkdownFiles(root: string): string[] {
   if (!fs.existsSync(root)) return [];
   return fs.readdirSync(root, { withFileTypes: true }).flatMap(entry => {
@@ -48,6 +62,11 @@ export function legacyVueDocsRedirectPlugin(base: string): Plugin {
     name: 'horizon-legacy-vue-docs-redirects',
     configureServer(server) {
       server.middlewares.use((request, response, next) => {
+        // `/demos/**` is both the legacy documentation route and the source
+        // path used by Vite's transformed demo imports. Redirect only actual
+        // page navigations so module requests can reach Vite's transformers.
+        if (!isDocumentNavigation(request)) return next();
+
         const url = new URL(request.url || '/', 'http://horizon.local');
         const pathname =
           !normalizedBase ||
