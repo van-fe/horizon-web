@@ -50,6 +50,17 @@ Keep all Vue/React renderer-splitting work integrated on `feature/vue-react-supp
 - Keep shared visual rules, tokens, and framework-neutral accessibility guidance in common documentation.
 - Redirect legacy `/demos/...` routes to canonical Vue routes instead of duplicating page content.
 
+### Enforce React demo scenario parity
+
+- Treat the existing Vue component page as the minimum demo-scenario inventory while completing the React renderer.
+- Provide at least as many runnable React demos as the corresponding Vue page provides. React may add renderer-specific demos, but it must not have fewer demos.
+- Cover every user-facing scenario demonstrated by Vue with a dedicated React demo. Do not collapse several Vue scenarios into one oversized React demo merely to claim coverage.
+- Implement each React demo with React-native props, callbacks, children, refs, state, and event handling. Never load, wrap, translate, or embed a Vue demo in React documentation.
+- Keep this parity rule internal to planning and validation. Do not write Vue-to-React mappings, comparison tables, “equivalent to Vue”, or other cross-renderer wording in component pages or demo UI.
+- Register the complete React demo set on both Chinese and English React pages, and keep both locale pages aligned.
+- Before completing a component batch, count runnable demo references on the Vue and React pages and fail the batch when `react_demo_count < vue_demo_count` or when a Vue scenario has no independent React demo.
+- Review scenario quality in addition to counts: demos must remain runnable, realistic, responsive, dark-mode compatible, and understandable without reading source code.
+
 ## Protect integrated Affix and Badge behavior
 
 - Keep Affix positioning, resize/scroll synchronization, target handling, exposes, and responsive updates in its focused composable and tests.
@@ -72,6 +83,7 @@ bun run docs:build
 ```
 
 For documentation changes, verify both renderer routes in Chinese and English, exercise React demos in the browser, and check dark mode and a 390px viewport.
+Also report the Vue and React runnable-demo counts for every component touched and confirm React scenario parity explicitly.
 
 ## Complete work on the integration branch
 

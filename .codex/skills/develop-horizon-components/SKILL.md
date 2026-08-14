@@ -71,6 +71,15 @@ Build components as native members of Horizon Web rather than isolated widgets. 
 - Explain non-obvious browser constraints and fallback behavior, such as CORS, media decoding, Teleport, or deterministic mock data.
 - Document Props, Events, Slots, and Exposes. Source JSDoc remains required even when API tables are written manually.
 
+### Match demo depth across supported renderers
+
+- When both Vue and React renderers exist, use the renderer with the larger established demo inventory as the minimum scenario baseline; during the current Vue-to-React rollout, this is normally the Vue page.
+- Require the React page to contain at least the same number of runnable demos as the corresponding Vue page and to cover every demonstrated user scenario independently.
+- Do not replace several focused scenarios with one omnibus demo just to reduce file count. Prefer one readable demo per behavior, mode, composition pattern, or important edge case.
+- Use renderer-native implementation and terminology in every demo. Keep scenario-parity notes in task plans or validation output only; never publish cross-renderer mappings or comparisons in component documentation.
+- Keep Chinese and English pages for the same renderer aligned to the same runnable demo inventory.
+- Validate counts mechanically where possible, then inspect scenario coverage manually so duplicate or trivial demos cannot satisfy the rule.
+
 ### Keep renderer documentation separate
 
 - Put Vue pages under `packages/docs/{locale}/vue/` and React pages under `packages/docs/{locale}/react/`. Use `/vue/...` and `/react/...` as canonical routes.
@@ -131,6 +140,7 @@ Before handing off, confirm:
 - styles use Horizon Web tokens and conventions;
 - localization covers every supported dictionary;
 - Chinese and English docs, demos, navigation, and API descriptions are present;
+- React runnable-demo count and scenario coverage meet or exceed the corresponding Vue component page when both renderers are supported;
 - focused headless Chromium tests cover behavior and the regression scenario;
 - formatting, linting, style compilation, and available type/build checks pass or have clearly identified unrelated blockers.
 
