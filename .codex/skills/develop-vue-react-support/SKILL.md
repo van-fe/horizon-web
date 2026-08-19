@@ -1,6 +1,6 @@
 ---
 name: develop-vue-react-support
-description: Maintain and extend the shared Vue 3 and React component-library architecture only on the feature/vue-react-support branch. Use for renderer separation, shared core or theme extraction, Horizon Vue/React package work, renderer-specific documentation and demos, or integration of related fixes into this dedicated branch. Do not use this skill on any other branch.
+description: Maintain and migrate the Core/Horizon/Skyline Vue and React component-library architecture only on the feature/vue-react-support branch. Use for target package renames, platform capability extraction, framework-free headless hooks, renderer separation, shared theme work, renderer-specific documentation and demos, or integration of related fixes. Do not use this skill on any other branch.
 ---
 
 # Develop Vue React Support
@@ -21,25 +21,64 @@ Keep all Vue/React renderer-splitting work integrated on `feature/vue-react-supp
 - Do not mix unrelated feature or maintenance commits into this branch merely because they are nearby in history.
 - Inspect the branch graph and changed paths before cherry-picking or merging. Resolve moved documentation paths against the current renderer-specific layout.
 
-## Preserve the package boundaries
+## Migrate to the target package hierarchy
 
-- Put renderer-agnostic behavior and state machines in `@aurora/core`.
-- Put shared tokens, styles, namespace utilities, and visual foundations in `@aurora/theme`.
-- Keep Vue rendering and Vue-only APIs in `@aurora/horizon-web-vue`.
-- Keep React rendering, hooks, providers, React props, callbacks, children, and refs in `@aurora/horizon-web-react`.
-- Do not import Vue from shared core/theme or React packages, and do not import React from Vue packages.
-- Treat the renderer package rename as a breaking migration. Do not create, publish, alias, re-export, resolve, document, test, or otherwise preserve `@aurora/horizon-web` as a compatibility package. The only Web renderer package names are `@aurora/horizon-web-vue` and `@aurora/horizon-web-react`; the scoped ESLint plugin rule id `@aurora/horizon-web/*` is unrelated and remains unchanged.
-- Reuse common behavior through typed contracts and test vectors rather than one renderer wrapping the other.
-- Define shared component API semantics once in the matching `@aurora/core/src/components/<Component>` contract: domain types, defaults, validators, event payloads/reasons, render-region semantics, and imperative commands.
-- Let Vue adapt that contract into `props`/`emits`/`slots`/`exposes`, and React adapt it into `props`/callbacks/children or renderers/refs. Renderer adapters may rename, omit, or extend fields, but must not duplicate shared enums, defaults, validators, or payload types.
-- Keep VNode, ReactNode, framework refs, lifecycle hooks, and framework-only event names out of the shared contract. Do not force false one-to-one API symmetry merely to remove every repeated line.
+Treat the following names and dependency graph as the required end state:
 
-## Mirror component directories across packages
+```text
+@aurora/core
+├── @aurora/horizon-core
+│   ├── @aurora/horizon-vue
+│   └── @aurora/horizon-react
+└── @aurora/skyline-core
+    ├── @aurora/skyline-vue
+    └── @aurora/skyline-react
+```
 
-- For every extracted component, keep the same case-sensitive component directory in all participating packages: `packages/core/src/components/<Component>`, `packages/horizon-web-core/src/components/<Component>`, `packages/horizon-web-vue/src/components/<Component>`, and `packages/horizon-web-react/src/components/<Component>`.
-- Put framework-neutral state and algorithms in the matching Core component directory, browser-only primitives in the matching Horizon Web Core component directory, and renderer code in its matching Vue or React directory.
-- Keep genuinely cross-component helpers under `src/utils` or an explicit `src/components/_shared` directory. Do not flatten component-owned files into a package-level `src` root.
-- Preserve root exports through package-level `src/components/index.ts` and `src/index.ts`; consumers must not need private source paths.
+- Rename `@aurora/horizon-web-core` to `@aurora/horizon-core`, `@aurora/horizon-web-vue` to `@aurora/horizon-vue`, and `@aurora/horizon-web-react` to `@aurora/horizon-react`, including package directories, workspace metadata, lockfiles, build/release scripts, aliases, resolvers, consumers, CI, tests, documentation tooling, and published package lists.
+- Introduce `@aurora/skyline-core`, `@aurora/skyline-vue`, and `@aurora/skyline-react` only when real mobile capabilities or renderers are implemented; do not create empty placeholder packages merely for symmetry.
+- Perform every rename as a breaking migration. Do not retain compatibility packages, aliases, re-exports, resolver fallbacks, publish entries, or documentation for `@aurora/horizon-web`, `@aurora/horizon-web-core`, `@aurora/horizon-web-vue`, or `@aurora/horizon-web-react` after migration. Keep the unrelated scoped ESLint rule id `@aurora/horizon-web/*` unchanged.
+- Keep `@aurora/theme` as the shared visual foundation while Horizon and Skyline use the same visual specification. Add product-specific theme layers only when an actual visual divergence appears.
+
+Enforce dependencies in one direction only:
+
+```text
+horizon-vue/react  -> horizon-core  -> core
+skyline-vue/react  -> skyline-core  -> core
+```
+
+- Never import a renderer from Core or product Core, import Vue from React, import React from Vue, or import Horizon from Skyline (and vice versa).
+- Permit a renderer to consume both its product Core and `@aurora/core` when direct shared types or pure capabilities are needed, but never bypass product Core for platform-specific behavior.
+
+## Extract capabilities instead of mirroring files
+
+- Put only cross-product, platform-neutral domain behavior in `@aurora/core`: pure algorithms, reducers, state machines, async coordination, shared domain types, and framework-free headless hooks.
+- Put desktop/browser behavior in `@aurora/horizon-core`: DOM measurement, focus, keyboard, mouse/pointer interaction, Portal, floating layers, browser scrolling, and other Horizon platform capabilities.
+- Put mobile behavior in `@aurora/skyline-core`: touch gestures, long press, safe-area behavior, mobile scrolling, device adaptation, and other Skyline platform capabilities.
+- Keep Vue/React packages focused on rendering, renderer-native public APIs, framework lifecycle binding, VNode/ReactNode content, providers, and thin hook adapters.
+- Do not create a component directory in every package just to keep trees visually symmetric. Create a Core or product-Core directory only when that layer owns a real reusable capability.
+- Start renderer-specific behavior locally. Promote it to Horizon/Skyline Core only when both renderers need the same platform behavior; promote it to `@aurora/core` only when both products can share it.
+- Do not move complete Vue props/emits/slots/exposes or React props/callbacks/renderers/refs into Core. Define only semantic inputs, state, events, and commands required by the shared capability. Keep renderer API surfaces native and local.
+- Keep VNode, ReactNode, framework refs, framework lifecycle primitives, and framework-only event names out of Core and product Core.
+
+## Implement framework-free headless hooks
+
+- Treat a headless hook as a cohesive capability, not as a renamed five-line helper. Examples include selection, async loading, confirmation workflow, calendar scheduling, focus management, and pointer dragging.
+- Use ordinary pure functions for stateless calculations and reducers for explicit state transitions. Use a subscribable capability only when it owns state or resources.
+- Prefer `getState()`, `subscribe(listener)`, `update(options)`, focused commands, and idempotent `destroy()` for stateful framework-free capabilities when applicable.
+- Name framework-free factories `createXxx` to avoid implying React hook rules. Bind them locally through Vue `useXxx` composables or React `useXxx` hooks that only synchronize framework state and lifecycle.
+- Keep listener ownership, pending async work, generation invalidation, and cleanup inside the capability that creates them. Test disposal, repeated updates, stale results, and controlled-state rollback at the owning layer.
+- Avoid duplicate state authorities. A renderer may project Core state into framework state, but it must not independently reimplement or optimistically diverge from the shared state machine.
+- Prefer direct composition over pass-through adapters. Remove an abstraction when understanding one interaction requires crossing layers without gaining reuse, isolation, or testability.
+- Share behavior through headless hooks and test vectors, never by wrapping one renderer with the other.
+
+Use this extraction decision for every capability:
+
+1. Keep pure presentation or single-renderer behavior in the renderer.
+2. Move shared Horizon Vue/React browser behavior to `@aurora/horizon-core`.
+3. Move shared Skyline Vue/React mobile behavior to `@aurora/skyline-core`.
+4. Move behavior shared by Horizon and Skyline to `@aurora/core`.
+5. Reassess existing abstractions during migration; do not preserve a strange split solely because it already exists.
 
 ## Keep renderer documentation isolated
 
@@ -75,7 +114,7 @@ Run checks in proportion to the change, including the relevant subset of:
 bun run check:boundaries
 bun --filter @aurora/core test
 bun --filter @aurora/theme test
-bun --filter @aurora/horizon-web-react test
+bun --filter @aurora/horizon-react test
 bun run vitest:horizon-web
 bun run vitest:horizon-web:browser
 bun run docs:check-renderers

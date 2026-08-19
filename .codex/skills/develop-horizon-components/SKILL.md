@@ -1,11 +1,29 @@
 ---
 name: develop-horizon-components
-description: Develop or document Vue and React components in the horizon-web repository while following component APIs, styling, localization, renderer-separated documentation, demos, JSDoc, and headless real-browser test conventions. Use for work under packages/horizon-web-vue/src/components, packages/horizon-web-react/src, related component demos or docs, or reviews and fixes that affect Horizon component behavior.
+description: Develop or document Horizon and Skyline Vue/React components using the layered @aurora/core, product Core, and renderer architecture, with framework-free headless hooks, renderer-native APIs, styling, localization, separated documentation, demo parity, JSDoc, and real-browser tests. Use for Core capability extraction, product component work, renderer packages, demos/docs, or behavior reviews and fixes.
 ---
 
-# Develop Horizon Components
+# Develop Horizon and Skyline Components
 
-Build components as native members of Horizon Web rather than isolated widgets. Preserve unrelated work in the dirty worktree.
+Build components as native members of the Horizon desktop or Skyline mobile product family rather than isolated widgets. Preserve unrelated work in the dirty worktree.
+
+## Follow the platform dependency hierarchy
+
+Use this target architecture:
+
+```text
+@aurora/core
+├── @aurora/horizon-core -> @aurora/horizon-vue, @aurora/horizon-react
+└── @aurora/skyline-core -> @aurora/skyline-vue, @aurora/skyline-react
+```
+
+- Put platform-neutral capabilities shared by Horizon and Skyline in `@aurora/core`.
+- Put desktop/browser capabilities shared by Horizon Vue and React in `@aurora/horizon-core`.
+- Put mobile capabilities shared by Skyline Vue and React in `@aurora/skyline-core`.
+- Keep renderer packages responsible for native public APIs, framework lifecycle, rendering, and thin bindings only.
+- Keep dependencies directed from renderer to product Core to Core. Do not create cross-product or cross-renderer imports.
+- Keep shared visuals in `@aurora/theme` while the products follow one visual specification.
+- Create package/component directories only for real capabilities. Do not mirror directories or split files for cosmetic symmetry.
 
 ## Follow the repository first
 
@@ -24,11 +42,15 @@ Build components as native members of Horizon Web rather than isolated widgets. 
 
 ## Split capabilities into hooks
 
-- During feature development, extract behavior and reusable capabilities into focused hooks/composables instead of accumulating them in Vue component files.
-- Keep component files responsible primarily for rendering, layout, prop/emit wiring, and composing hooks. Move state machines, async workflows, event coordination, derived state, observers, and reusable interaction logic into hooks.
-- Give each hook one cohesive responsibility with an explicit typed input and return contract. Compose small hooks when a feature spans multiple concerns so implementation details remain decoupled.
-- Avoid creating pass-through hooks that only relocate trivial code. Keep truly view-local, one-off presentation logic in the component when extraction would add indirection without improving separation.
-- Add focused tests for non-trivial hook behavior independently from component rendering, then cover the component-to-hook integration where it forms part of the public contract.
+- Implement reusable behavior first as framework-free headless hooks in the correct Core layer, without Vue refs/computed/watch, React state/effects, VNode, ReactNode, or framework lifecycle APIs.
+- Use pure functions for calculations, reducers for explicit transitions, and subscribable `createXxx` capabilities for stateful or resource-owning behavior.
+- Give stateful capabilities `getState`, `subscribe`, `update`, focused commands, and idempotent `destroy` when those lifecycle operations apply.
+- Put DOM, focus, pointer, keyboard, observer, scrolling, and measurement hooks in Horizon Core; put touch, gesture, safe-area, and mobile-device hooks in Skyline Core; keep both out of `@aurora/core`.
+- Bind `createXxx` capabilities through thin renderer-local Vue `useXxx` composables or React `useXxx` hooks. Renderer bindings may translate events and state shapes but must not become a second behavior authority.
+- Keep component files responsible primarily for rendering, layout, renderer-native public API wiring, and composing hooks.
+- Give each hook one cohesive user capability. Avoid pass-through hooks, one-function files, and abstractions that add traversal without reuse or isolation.
+- Start behavior in the renderer when only one renderer needs it. Promote it to product Core when both renderers share it, and to `@aurora/core` only when both Horizon and Skyline share it.
+- Add focused tests at the layer that owns the behavior, then cover the renderer binding with integration tests.
 
 ### Use component APIs flexibly
 
